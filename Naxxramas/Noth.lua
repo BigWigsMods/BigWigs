@@ -84,9 +84,9 @@ L:RegisterTranslations("ruRU", function() return {
 	wave = "Волны",
 	wave_desc = "Сообщать о волнах",
 	addtrigger = "Встаньте, мои воины! Встаньте и сражайтесь вновь!", 
-	wave1bar = "Волна 1",
-	wave2bar = "Волна 2",
-	wave2_message = "Волна 2 через 10 сек",
+	wave1bar = "1-я волна",
+	wave2bar = "2-я волна",
+	wave2_message = "2-я волна через 10 сек",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

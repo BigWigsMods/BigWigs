@@ -2,10 +2,12 @@
 
 ## Title: Big Wigs [|cffeda55fNorthrend|r]
 ## Title-koKR: Big Wigs [|cffeda55f노스렌드|r]
+## Title-ruRU: Big Wigs [|cffeda55fНордскол|r]
 ## Title-frFR: Big Wigs [|cffeda55fNorfendre|r]
 ## Title-zhCN: Big Wigs [|cffeda55f诺森德|r]
 ## Title-zhTW: Big Wigs [|cffeda55f北裂境|r]
 ## Notes: Big Wigs Northrend Modules
+## Notes-ruRU: Модуль Big Wigs Нордскола
 ## Notes-koKR: Big Wigs 노스렌드 경고
 ## Notes-frFR: Modules BigWigs concernant le Norfendre.
 ## Notes-zhCN: Big Wigs 诺森德模块

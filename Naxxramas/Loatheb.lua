@@ -44,16 +44,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	startwarn = "Мерзот в ярости, 2 минуты до неотвратимого рока!",
+	startwarn = "Мерзот в Бешенстве, 2 минуты до неотвратимого рока!",
 
-	--aura = "Necrotic Aura",
-	--aura_desc = "Warn for Necrotic Aura",
-	--aura_message = "Necrotic Aura - Duration 17 sec!",
-	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	aura = "Мертвенная аура",
+	aura_desc = "Предупреждать о Мертвенной ауре",
+	aura_message = "Мертвенная аура - продолжительность 17 сек!",
+	aura_warning = "Мертвенная аура спадает через 3 сек!",
 
-	--deathbloom = "Deathbloom",
-	--deathbloom_desc = "Warn for Deathbloom",
-	--deathbloom_warning = "Deathbloom in 5 sec!",
+	deathbloom = "Бутон смерти",
+	deathbloom_desc = "Предупреждать о Бутоне смерти",
+	deathbloom_warning = "Бутон смерти через 5 сек!",
 
 	doom = "Неотвратимый рок",
 	doom_desc = "Предупрежлать о неотвратимом роке",

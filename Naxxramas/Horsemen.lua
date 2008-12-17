@@ -47,8 +47,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	mark = "Знак Бломе",
-	mark_desc = "Предупреждать о знаке Бломе.",
+	mark = "Знак",
+	mark_desc = "Предупреждать о знаках.",
 	markbar = "Знак %d",
 	markwarn1 = "Знак %d!",
 	markwarn2 = "Знак %d через 5 секунд",
@@ -59,18 +59,18 @@ L:RegisterTranslations("ruRU", function() return {
 	voidbar = "Следующий портал Бездны",
 
 	meteor = "Метеор",
-	meteor_desc = "Сообщать когда Тан Кортазз кастует метеор.",
+	meteor_desc = "Сообщать когда Тан Кортазз применяет метеор.",
 	meteorwarn = "Метеор!",
 	meteorbar = "Метеор",
 
 	wrath = "Гнев небес",
-	wrath_desc = "Сообщать когда Сэр Зелиек кастует гнев небес.",
+	wrath_desc = "Сообщать когда Сэр Зелиек применяет гнев небес.",
 	wrathwarn = "Гнев небес!",
 	wrathbar = "Гнев небес",
 
 	--dies = "#%d Killed",
 
-	startwarn = "Четверо всадников вступили в бой! Знак Бломе на ~17 секунд",
+	startwarn = "Четверо всадников вступили в бой! Знак на ~17 секунд",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

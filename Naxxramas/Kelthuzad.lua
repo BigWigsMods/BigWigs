@@ -99,7 +99,7 @@ L:RegisterTranslations("ruRU", function() return {
 	frostblast = "Опасность ледяного взрыва",
 	frostblast_desc = "Сообщать, когда ледяной взрыв добирается до игроков.",
 	frostblast_bar = "Возможен ледяной взрыв",
-	--frostblast_message = "%s : Frost Blast",
+	frostblast_message = "%s : ледяной взрыв",
 	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
 
 	detonate = "Опасность взрыва маны",

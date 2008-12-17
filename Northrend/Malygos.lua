@@ -204,6 +204,43 @@ L:RegisterTranslations("zhTW", function() return {
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	sparks = "Искра мощи",
+	sparks_desc = "Предупреждать о появлениях Искры мощи.",
+	sparks_message = "Появление Искры мощи!",
+	sparks_warning = "Искра мощи через ~5сек!",
+
+	vortex = "Воронка",
+	vortex_desc = "Предупреждать о воронках и отображать полосу.",
+	vortex_message = "Воронка!",
+	vortex_warning = "Воронка через ~5сек!",
+	vortex_next = "перезарядка воронки",
+
+	breath = "Дыхание Чар",
+	breath_desc = "Предупреждать о Дыхании Чар.",
+	breath_message = "Дыхание Чар!",
+	breath_warning = "Дыхание Чар через ~5сек!",
+
+	surge = "Прилив мощи",
+	surge_desc = "Предупреждать кто получает Прилив мощи.",
+	surge_you = "На ВАС Прилив мощи!",
+
+	icon = "Отмечать икнокой",
+	icon_desc = "Отмечать рейдовой иконой игрока, попавшего под Прилив мощи (необходимо быть лидером группы или рейда)",
+
+	phase = "Фазы",
+	phase_desc = "Предупреждать о смене фаз.",
+	phase2_warning = "Скоро 2-я фаза!",
+	phase2_trigger = "I had hoped to end your lives quickly",
+	phase2_message = "Фаза 2 - Повелитель нексуса и Потомок вечности!",
+	phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic",
+	phase3_warning = "Скоро 3-я фаза!",
+	phase3_trigger = "Now your benefactors make their",
+	phase3_message = "Фаза 3!",
+
+	log = "|cffff0000"..boss.."|r:\n Для этого босса необходимы правильные данные. Пожалуйста, включите запись логов (команда /combatlog) или установите аддон transcriptor, и пришлите получившийся файл (или оставьте ссылку на файл в комментариях на curse.com).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

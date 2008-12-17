@@ -29,8 +29,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	--inject = "Вам сдедали укол",
-	--inject_desc = "Предупреждать об уколе.",
+	inject = "Вам сдедали укол",
+	inject_desc = "Предупреждать об уколе.",
 	bomb_message_you = "Вам сделали укол! Бегите от рейда!!",
 	bomb_message_other = "%s сделали укол! Бегите от него! ",
 

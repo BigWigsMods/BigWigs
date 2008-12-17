@@ -41,9 +41,9 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger2 = "Ты... следующий!",  --check this
 	starttrigger3 = "Я вижу вас...", 
 
-	engage = "Ярость",
-	engage_desc = "Предупреждать, когда Хейган впадает в ярость.",
-	engage_message = "Хейган в ярости! 90 секунд до телепорта!",
+	engage = "Исступление",
+	engage_desc = "Предупреждать, когда Хейган впадает в Исступление.",
+	engage_message = "Хейган в Исступлении! 90 секунд до телепорта!",
 
 	teleport = "Телепорт",
 	teleport_desc = "Предупреждать о телепорте.",

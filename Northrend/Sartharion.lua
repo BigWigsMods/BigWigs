@@ -227,6 +227,48 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	tsunami = "Огненное цунами",
+	tsunami_desc = "Предупреждать о взбалтывании лавы и отображать полосу.",
+	tsunami_warning = "Огненное цунами через ~5сек!",
+	tsunami_message = "Огненное цунами!",
+	tsunami_cooldown = "перезарядка цунами",
+	tsunami_trigger = "The lava surrounding %s churns!",
+
+	breath = "Огненное дыхание",
+	breath_desc = "Предупреждать о применении огненного дыхания.",
+	breath_warning = "Огненное дыхание через ~5сек!",
+	breath_message = "Огненное дыхание!",
+	breath_cooldown = "перезарядка дыхания",
+
+	drakes = "Прибавление",
+	drakes_desc = "Предупреждать когда прибавления вступают в бой.",
+	drakes_incomingbar = "%s наступает",
+	drakes_incomingsoon = "%s наступает через ~5сек!",
+	drakes_incoming = "%s наступает!",
+	drakes_activebar = "%s активный",
+	drakes_active = "%s активный!",
+
+	vesperon = "Весперон",
+	vesperon_trigger = "Vesperon, the clutch is in danger! Assist me!",
+
+	shadron = "Шадрон",
+	shadron_trigger = "Shadron! Come to me! All is at risk!",
+
+	tenebron = "Тенеброн",
+	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+
+	drakedeath = "Смерть драконов",
+	drakedeath_desc = "Предупреждать о смерти любого из дополнитеьных драконов.",
+	drakedeath_message = "%s died!",
+
+	enrage = "Исступление",
+	enrage_warning = "Скоро Исступление!",
+	enrage_message = "Исступление!",
+
+	log = "|cffff0000"..boss.."|r:\n Для этого босса необходимы правильные данные. Пожалуйста, включите запись логов (команда /combatlog) или установите аддон transcriptor, и пришлите получившийся файл (или оставьте ссылку на файл в комментариях на curse.com).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

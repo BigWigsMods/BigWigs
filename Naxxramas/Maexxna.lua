@@ -55,8 +55,8 @@ L:RegisterTranslations("ruRU", function() return {
 	webspraywarn10sec = "Появляются пауки. 10 секунд до паутины!",
 	webspraywarn5sec = "Паутина через 5 секунд!",
 	webspraywarn = "Паутина! 40 секунд до следующей!",
-	enragewarn = "Ярость - ХЛЮП ХЛЮП ХЛЮП!",
-	enragesoonwarn = "Скоро ярость - Bugsquatters out!",
+	enragewarn = "Бешенство - ХЛЮП ХЛЮП ХЛЮП!",
+	enragesoonwarn = "Скоро Бешенство!",
 
 	webspraybar = "Летящая паутина",
 	cocoonbar = "Коконы",

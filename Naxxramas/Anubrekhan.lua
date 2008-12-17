@@ -36,7 +36,7 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger1 = "Хм выхода нет ребята.", --check this
 	starttrigger2 = "Я только начинаю входить во вкус.!",  --check this
 	starttrigger3 = "Да зомби!я заставлю тебя попотеть.",  --correct this
-	engagewarn = "Ануб'Рекан в ярости! Первая волна жуков через ~90 секунд",
+	engagewarn = "Ануб'Рекан в исступлении! Первая волна жуков через ~90 секунд",
 
 	gainendwarn = "Жуки исчезают!",
 	gainnextwarn = "Следующая волна жуков через ~85 секунд",
@@ -44,7 +44,7 @@ L:RegisterTranslations("ruRU", function() return {
 	gainincbar = "Следующая волна жуков",
 	gainbar = "Жуки-трупоеды",
 
-	castwarn = "ПОЯВЛЯЕТСЯ ВОЛНА ЖУКОВ!",
+	castwarn = "Появляется волна жуков!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

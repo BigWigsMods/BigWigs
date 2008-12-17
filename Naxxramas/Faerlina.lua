@@ -44,13 +44,13 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger3 = "Вы не можете скрыться от меня!!",  --check this
 	starttrigger4 = "Бегите пока ещё можете!",  --check this
 
-	startwarn = "Великая вдова Фарлина злится, 60 секунд до ярости!",
+	startwarn = "Великая вдова Фарлина злится, 60 секунд до бешенства!",
 	enragewarn15sec = "15 секунд до ярости!",
-	enragewarn = "ЯРОСТЬ!",
-	enrageremovewarn = "Ярость спала! ~60 секунд до следующей!",
+	enragewarn = "Бешенство!",
+	enrageremovewarn = "Бешенство снято! ~60 секунд до следующего!",
+	
 	silencewarn = "Безмолвие! Задержка ярости!",
 	silencewarn5sec = "Безмолвие закончится через 5 секунд",
-
 	silencebar = "Безмолвие",
 } end )
 

@@ -127,22 +127,22 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	--shout = "Disrupting Shout",
-	--shout_desc = "Warn for Disrupting Shout.",
-	--shout_warning = "Disrupting Shout in 5sec!",
-	--shout_next = "Shout Cooldown",
+	shout = "Разрушительный крик",
+	shout_desc = "Предупреждать о  Разрушительном крике.",
+	shout_warning = "Разрушительный крик через 5сек!",
+	shout_next = "перезарядка крика",
 
-	--knife = "Jagged Knife",
-	--knife_desc = "Warn who has Jagged Knife.",
-	--knife_message = "%s: Jagged Knife",
+	knife = "Зазубренный нож",
+	knife_desc = "Предупреждать, в кого будет бошен Зазубренный нож.",
+	knife_message = "Зазубренный нож: %s",
 
-	--taunt = "Taunt",
-	--taunt_desc = "Warn for taunt.",
-	--taunt_warning = "Taunt done in 5sec!",
+	taunt = "Провокация",
+	taunt_desc = "Предупреждать о провокации.",
+	taunt_warning = "Провокация закончится через 5сек!",
 
-	--shieldwall = "Shield Wall",
-	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_warning = "Shield Wall done in 5sec!",
+	shieldwall = "Преграда из костей",
+	shieldwall_desc = "Предупреждать о Преграде из костей.",
+	shieldwall_warning = "Преграда из костей закончится через 5сек!",
 } end )
 
 ----------------------------------
