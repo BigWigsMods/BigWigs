@@ -171,9 +171,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Stomp", 60880)
+	self:AddCombatListener("SPELL_CAST_START", "Stomp", 58663, 60880)
 	self:AddCombatListener("SPELL_CAST_START", "Shards", 58678)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 61672)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 58965, 61672)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
