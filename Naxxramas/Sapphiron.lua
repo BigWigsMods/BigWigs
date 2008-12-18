@@ -47,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	deepbreath = "Ледяная бомба",
 	deepbreath_desc = "Предупреждать о ледяной бомбе Сапфирона",
-	--airphase_trigger = "%s lifts off into the air!",
+	airphase_trigger = "%s взмывает в воздух!",
 	deepbreath_incoming_message = "Ледяная бомба через 23 секунды!",
 	deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!",
 	deepbreath_incoming_bar = "Каст ледяной бомбы",

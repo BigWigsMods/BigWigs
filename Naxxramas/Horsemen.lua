@@ -68,9 +68,9 @@ L:RegisterTranslations("ruRU", function() return {
 	wrathwarn = "Гнев небес!",
 	wrathbar = "Гнев небес",
 
-	--dies = "#%d Killed",
+	dies = "#%d убит",
 
-	startwarn = "Четверо всадников вступили в бой! Знак на ~17 секунд",
+	startwarn = "Четверо всадников вступили в бой! Знак через ~17 секунд",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

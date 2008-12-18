@@ -48,15 +48,15 @@ L:RegisterTranslations("ruRU", function() return {
 
 	cocoonwarn = "%s попал в кокон!",
 
-	enragetrigger = "%s приходит в ярость!",
+	enragetrigger = "%s впадает в бешенство!",
 
-	webspraywarn30sec = "Стена коконов через 10 секунд",
-	webspraywarn20sec = "Стена коконов! 10 Секунд до появления пауков!",
+	webspraywarn30sec = "Паутина через 10 секунд",
+	webspraywarn20sec = "Паутина! 10 Секунд до появления пауков!",
 	webspraywarn10sec = "Появляются пауки. 10 секунд до паутины!",
 	webspraywarn5sec = "Паутина через 5 секунд!",
 	webspraywarn = "Паутина! 40 секунд до следующей!",
-	enragewarn = "Бешенство - ХЛЮП ХЛЮП ХЛЮП!",
-	enragesoonwarn = "Скоро Бешенство!",
+	enragewarn = "Ярость - ХЛЮП ХЛЮП ХЛЮП!",
+	enragesoonwarn = "Скоро бешенство",
 
 	webspraybar = "Летящая паутина",
 	cocoonbar = "Коконы",

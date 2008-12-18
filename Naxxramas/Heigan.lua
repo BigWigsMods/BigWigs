@@ -47,7 +47,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	teleport = "Телепорт",
 	teleport_desc = "Предупреждать о телепорте.",
-	teleport_trigger = "Закончится на вас.",  --correct this
+	teleport_trigger = "Вам конец.",  
 	teleport_1min_message = "Телепорт через 1 минуту",
 	teleport_30sec_message = "Телепорт через 30 секунд",
 	teleport_10sec_message = "Телепорт через 10 секунд!",

@@ -85,11 +85,11 @@ L:RegisterTranslations("ruRU", function() return {
 	throw = "Бросока",
 	throw_desc = "Предупреждать об обменах платформы резервуара.",
 
-	starttrigger = "Stalagg ломает тебя!",  --correct this
-	starttrigger1 = "Мастер хочеш съесть тебя =P !!",  --correct this
-	starttrigger2 = "Я сожру… ваши… кости…",  
-	starttrigger3 = "Сломаю... тебя!!",  --correct this
-	starttrigger4 = "убит...",  --correct this
+	starttrigger = "Сталагг сокрушить вас!",  
+	starttrigger1 = "Я скормлю вас господину!",  
+	starttrigger2 = "Я сожру... ваши... кости...",  
+	starttrigger3 = "Растерзаю!!!",  
+	starttrigger4 = "Убью...",  
 
 	teslaoverload = "%s перезагружается!", 
 

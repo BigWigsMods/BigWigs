@@ -41,7 +41,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	starttrigger1 = "Стань на колени, червь!",  --check this
 	starttrigger2 = "Убейте  их во имя меня!!",  --check this
-	starttrigger3 = "Вы не можете скрыться от меня!!",  --check this
+	starttrigger3 = "Вам не скрыться от меня!",  
 	starttrigger4 = "Бегите пока ещё можете!",  --check this
 
 	startwarn = "Великая вдова Фарлина злится, 60 секунд до бешенства!",

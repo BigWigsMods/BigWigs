@@ -79,7 +79,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase_desc = "Предупреждать когда босс входит в новую фазу.",
 	phase2_trigger1 = "Молите о пощаде!",  
 	phase2_trigger2 = "Кричите! Вы чуствуете дыхание вашей смерти ?!",  --correct this
-	phase2_trigger3 = "Вам конец!",  --correct this
+	phase2_trigger3 = "Вы уже мертвы!",  
 	phase2_warning = "Фаза 2, Кел'Тузад просыпается!",
 	phase2_bar = "Кел'Тузад активен!",
 	phase3_soon_warning = "Скоро Фаза 3!",

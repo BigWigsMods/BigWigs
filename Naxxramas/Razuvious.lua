@@ -133,7 +133,7 @@ L:RegisterTranslations("ruRU", function() return {
 	shout_next = "перезарядка крика",
 
 	knife = "Зазубренный нож",
-	knife_desc = "Предупреждать, в кого будет бошен Зазубренный нож.",
+	knife_desc = "Предупреждать, в кого будет брошен Зазубренный нож.",
 	knife_message = "Зазубренный нож: %s",
 
 	taunt = "Провокация",
