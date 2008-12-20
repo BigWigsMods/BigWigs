@@ -10,6 +10,7 @@ local started = nil
 local enrage_warned = nil
 local drakes = nil
 local fmt = string.format
+local shadron, tenebron, vesperon = nil, nil, nil
 
 ----------------------------
 --      Localization      --
@@ -304,6 +305,7 @@ function mod:OnEnable()
 	started = nil
 	db = self.db.profile
 	enrage_warned = false
+	shadron, tenebron, vesperon = nil, nil, nil
 	drakes = {
 		[30449] = {["name"] = L["vesperon"], ["alive"] = true,},
 		[30451] = {["name"] = L["shadron"], ["alive"] = true,},
@@ -324,21 +326,24 @@ function mod:DrakeCheck(_, spellID)
 --	Shadron called in roughly 60s after engage
 --	Vesperon called in roughly 105s after engage
 	if not db.drakes then return end
-	if spellID == 58105 then
+	if spellID == 58105 and not shadron then
 		self:CancelScheduledEvent("ShadronWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["shadron"]))
 		self:Bar(fmt(L["drakes_incomingbar"], L["shadron"]), 60, 58105)
 		self:ScheduleEvent("ShadronWarn", "BigWigs_Message", 55, fmt(L["drakes_incomingsoon"], L["shadron"]), "Attention")
-	elseif spellID == 61248 then
+		shadron = true
+	elseif spellID == 61248 and not tenebron then
 		self:CancelScheduledEvent("TenebronWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["tenebron"]))
 		self:Bar(fmt(L["drakes_incomingbar"], L["tenebron"]), 15, 61248)
 		self:ScheduleEvent("TenebronWarn", "BigWigs_Message", 10, fmt(L["drakes_incomingsoon"], L["tenebron"]), "Attention")
-	elseif spellID == 61251 then
+		tenebron = true
+	elseif spellID == 61251 and not vesperon then
 		self:CancelScheduledEvent("VesperonWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["vesperon"]))
 		self:Bar(fmt(L["drakes_incomingbar"], L["vesperon"]), 105, 61251)
 		self:ScheduleEvent("VesperonWarn", "BigWigs_Message", 100, fmt(L["drakes_incomingsoon"], L["vesperon"]), "Attention")
+		vesperon = true
 	end
 end
 
