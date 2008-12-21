@@ -9,6 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local enrageStarted = nil
+local deaths = 0
 local overloads = 1
 local teslawarn = nil
 local stage1warn = nil
@@ -365,7 +366,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	enrageStarted = nil
-	addsdead = 0
+	deaths = 0
 	teslawarn = nil
 	stage1warn = nil
 	previousCharge = ""
@@ -404,7 +405,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["startwarn"], "Important")
 		end
 		enrageStarted = nil
-		addsdead = 0
+		deaths = 0
 		teslawarn = nil
 		previousCharge = ""
 		stage1warn = true
