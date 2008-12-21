@@ -154,6 +154,29 @@ L:RegisterTranslations("ruRU", function() return {
 	icon_desc = "Отмечать рейдовой иконой игрока, на которого нацелены каменные осколки. (необходимо быть лидером группы или рейда)",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	stomp = "Stampfen",
+	stomp_desc = "Stampfen Warnungen und Timer.",
+	stomp_message = "Stampfen - Ansturm Inc!",
+	stomp_warning = "Mögliches Stampfen in ~5sek!",
+	stomp_bar = "~Stampfen Cooldown",
+
+	cloud = "Erstickende Wolke auf dir",
+	cloud_desc = "Warnt wenn du in der Erstickende Wolke bist.",
+	cloud_message = "Erstickende Wolke auf DIR!",
+
+	charge = "Ansturm",
+	charge_desc = "Warnt wenn ein Spieler angestürmt wird.",
+	charge_message = "Ansturm auf %s",
+
+	shards = "Felssplitter",
+	shards_desc = "Warnt auf wen Archavon seine Felssplitter zaubert.",
+	shards_message = "Felssplitter auf %s!",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern auf die Felssplitter gewirkt wird (benötigt Assistent oder höher)",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

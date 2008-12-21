@@ -239,6 +239,43 @@ L:RegisterTranslations("ruRU", function() return {
 	phase3_message = "Фаза 3!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	sparks = "Energiefunke",
+	sparks_desc = "Warnt wenn ein Energiefunke erscheint.",
+	sparks_message = "Energiefunke erschienen!",
+	sparks_warning = "Energiefunke in ~5sek!",
+
+	vortex = "Vortex",
+	vortex_desc = "Warnt vor Vortex und zeigt eine Leiste an.",
+	vortex_message = "Vortex!",
+	vortex_warning = "Möglicher Vortex in ~5sek!",
+	vortex_next = "Vortex Cooldown",
+
+	breath = "Tiefer Atem",
+	breath_desc = "Tiefer Atem Warnungen.",
+	breath_message = "Tiefer Atem!",
+	breath_warning = "Tiefer Atem in ~5sek!",
+
+	surge = "Kraftsog",
+	surge_desc = "Warnt wer von Kraftsog betroffen ist.",
+	surge_you = "Kraftsog auf DIR!",
+
+	icon = "Schlagzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern auf die Kraftsog gewirkt wird (benötigt Assistent oder höher)",
+
+	phase = "Phasen",
+	phase_desc = "Warnungen bei Phasenänderrungen im Kampf.",
+	phase2_warning = "Phase 2 bald!",
+	phase2_trigger = "Ich hatte gehofft, eure Leben schnell zu beenden doch ihr zeit euch.. hartnäckiger als erwartet.",
+	phase2_message = "Phase 2 - Nexuslord & Saat der Ewigkeit!",
+	phase2_end_trigger = "GENUG! Wenn ihr die Magie Azeroths zurückhaben wollt, dann sollt ihr sie bekommen!",
+	phase3_warning = "Phase 3 bald!",
+	phase3_trigger = "Eure Wohltäter sind eingetroffen",
+	phase3_message = "Phase 3!",
+
+	log = "|cffff0000"..boss.."|r:\n Dieser Boss benötigt Daten, bitte denkt darüber nach euren Kampflog zu aktivieren durch /combatlog im Spiel und die Logs an uns zu senden.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
