@@ -6,6 +6,7 @@ local boss = BB["Sapphiron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
+local breath = 1
 local pName = UnitName("player")
 
 ----------------------------
@@ -18,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 	deepbreath = "Ice Bomb",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 	airphase_trigger = "%s lifts off into the air!",
-	deepbreath_incoming_message = "Ice Bomb casting in ~23sec!",
+	deepbreath_incoming_message = "Ice Bomb casting in ~14sec!",
 	deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!",
 	deepbreath_incoming_bar = "Ice Bomb Cast",
 	deepbreath_trigger = "%s takes in a deep breath...",
@@ -78,10 +79,10 @@ L:RegisterTranslations("koKR", function() return {
 	deepbreath = "얼음 폭탄",
 	deepbreath_desc = "사피론 의 얼음 폭탄 시전을 알립니다.",
 	airphase_trigger = "사피론이 공중으로 떠오릅니다!",
-	deepbreath_incoming_message = "약 23초 이내 얼음 폭탄 시전!",
+	deepbreath_incoming_message = "약 14초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_soon_message = "약 5초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_bar = "얼음 폭탄 시전",
-	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
+	deepbreath_trigger = "사피론가 숨을 깊게 들이마십니다.",
 	deepbreath_warning = "잠시 후 얼음 폭탄!",
 	deepbreath_bar = "얼음 폭탄 떨어짐!",
 
@@ -111,7 +112,7 @@ L:RegisterTranslations("deDE", function() return {
 	lifedrain = "Lebenssauger",
 	lifedrain_desc = "Warnt vor dem Lebenssauger Fluch.",
 
-	lifedrain_message = "Lebenssauger! N\195\164chster in ~24sek!",
+	lifedrain_message = "Lebenssauger! N\195\164chster in ~14sek!",
 	lifedrain_warn1 = "Lebenssauger in 5sek!",
 	lifedrain_bar = "Lebenssauger",
 
@@ -140,7 +141,7 @@ L:RegisterTranslations("zhCN", function() return {
 	deepbreath = "冰霜吐息",
 	deepbreath_desc = "当施放冰霜吐息时发出警报。",
 	--airphase_trigger = "%s lifts off into the air!",
-	deepbreath_incoming_message = "约23秒后，冰霜吐息！",
+	deepbreath_incoming_message = "约14秒后，冰霜吐息！",
 	deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！",
 	deepbreath_incoming_bar = "<施放 冰霜吐息>",
 	deepbreath_trigger = "%s深深地吸了一口气……", 
@@ -170,7 +171,7 @@ L:RegisterTranslations("zhTW", function() return {
 	deepbreath = "冰息術",
 	deepbreath_desc = "當施放冰息術時發出警報。",
 	--airphase_trigger = "%s lifts off into the air!",
-	deepbreath_incoming_message = "約23秒後，冰息術！",
+	deepbreath_incoming_message = "約14秒後，冰息術！",
 	deepbreath_incoming_soon_message = "約5秒後，冰息術！",
 	deepbreath_incoming_bar = "<施放 冰息術>",
 	deepbreath_trigger = "%s深深地吸了一口氣……",
@@ -200,7 +201,7 @@ L:RegisterTranslations("frFR", function() return {
 	deepbreath = "Bombe de glace",
 	deepbreath_desc = "Prévient quand Saphiron commence à lancer sa Bombe de glace.",
 	airphase_trigger = "%s s'envole !",
-	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~23 sec. !",
+	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~14 sec. !",
 	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
 	deepbreath_incoming_bar = "Bombe de glace en incantation",
 	deepbreath_trigger = "%s prend une grande inspiration…",
@@ -256,6 +257,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	
 	started = nil
+	breath = 1
 end
 
 ------------------------------
@@ -269,8 +271,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		if self.db.profile.deepbreath then
 			--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
 			self:IfMessage(L["deepbreath_incoming_message"], "Attention")
-			self:Bar(L["deepbreath_incoming_bar"], 23, 43810)
-			self:DelayedMessage(18, L["deepbreath_incoming_soon_message"], "Attention")
+			self:Bar(L["deepbreath_incoming_bar"], 14, 43810)
+			self:DelayedMessage(9, L["deepbreath_incoming_soon_message"], "Attention")
 		end
 	elseif msg == L["deepbreath_trigger"] then
 		if self.db.profile.deepbreath then
@@ -282,7 +284,10 @@ end
 
 function mod:Breath(_, spellId)
 	if self.db.profile.deepbreath then
-		self:IfMessage(L["deepbreath"], "Important", spellId)
+		breath = breath + 1
+		if breath == 2 then
+			self:IfMessage(L["deepbreath"], "Important", spellId)
+		end
 	end
 end
 

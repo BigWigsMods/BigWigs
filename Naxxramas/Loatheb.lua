@@ -246,7 +246,7 @@ end
 function mod:Aura()
 	if self.db.profile.aura then
 		self:IfMessage(L["aura_message"], "Important", 55593)
-		self:Bar(L["aura"], 17, spellID)
+		self:Bar(L["aura"], 17, 55593)
 		self:DelayedMessage(14, L["aura_warning"], "Attention")
 	end
 end

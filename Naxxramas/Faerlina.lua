@@ -224,7 +224,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not started and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
 		self:Message(L["startwarn"], "Urgent")
 		if self.db.profile.enrage then
-			enrageMessageId = self:DelayedMessage(45, L["enragewarn"], "Important")
+			enrageMessageId = self:DelayedMessage(45, L["enragewarn2"], "Important")
 			self:Bar(enrageName, 60, 28798)
 		end
 		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight

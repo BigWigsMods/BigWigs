@@ -367,6 +367,7 @@ function mod:OnEnable()
 
 	enrageStarted = nil
 	deaths = 0
+	overloads = 1
 	teslawarn = nil
 	stage1warn = nil
 	previousCharge = ""

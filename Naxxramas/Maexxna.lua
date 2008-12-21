@@ -224,14 +224,14 @@ function mod:Cocoon(player)
 	end
 end
 
-function mod:Spray(_, spellID)
+function mod:Spray()
 	if self.db.profile.spray then
-		self:IfMessage(L["webspraywarn"], "Important", spellID)
+		self:IfMessage(L["webspraywarn"], "Important", 54125)
 		self:DelayedMessage(10, L["webspraywarn30sec"], "Attention")
 		self:DelayedMessage(20, L["webspraywarn20sec"], "Attention")
 		self:DelayedMessage(30, L["webspraywarn10sec"], "Attention")
 		self:DelayedMessage(35, L["webspraywarn5sec"], "Attention")
-		self:Bar(L["webspraybar"], 40, spellID)
+		self:Bar(L["webspraybar"], 40, 54125)
 	end
 	if self.db.profile.cocoon then
 		self:Bar(L["cocoonbar"], 20, 745)

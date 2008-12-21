@@ -6,6 +6,8 @@ local boss = BB["Instructor Razuvious"]
 local understudy = BB["Death knight Understudy"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+local started = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -166,6 +168,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	
+	started = nil
+	
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
 ------------------------------
@@ -199,5 +206,17 @@ end
 function mod:Knife(unit, spellID)
 	if self.db.profile.knife then
 		self:Message(L["knife_message"]:format(unit), "Important", nil, nil, nil, spellID)
+	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.shout then
+			self:Shout()
+		end
 	end
 end
