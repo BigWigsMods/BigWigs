@@ -121,13 +121,13 @@ end
 
 function mod:Tranq(_, spellID, source)
 	if self.db.profile.bars then
-		self:Bar(L["Tranq - %s"]:format(source), 20, spellID, true, 0, 1, 0)
+		self:Bar(L["Tranq - %s"]:format(source), 15, spellID, true, 0, 1, 0)
 	end
 end
 
 function mod:TranqFail(_, spellID, source)
 	if self.db.profile.bars then
-		self:Bar(L["Tranq - %s"]:format(source), 20, spellID, true, 0, 0, 1)
+		self:Bar(L["Tranq - %s"]:format(source), 15, spellID, true, 0, 0, 1)
 		self:IfMessage(L["%s's Tranq failed!"]:format(source), "Attention", spellID, "Alarm")
 	end
 end

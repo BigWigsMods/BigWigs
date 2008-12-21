@@ -148,7 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 	startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Frénésie !",
 	enragewarn15sec = "15 sec. avant Frénésie !",
 	enragewarn = "Frénésie !",
-	--enragewarn2 = "Frenzied Soon!",
+	enragewarn2 = "Frénésie imminente !",
 	enrageremovewarn = "Frénésie enlevée ! %d sec. avant la suivante !",
 
 	silencewarn = "Réduite au silence !",

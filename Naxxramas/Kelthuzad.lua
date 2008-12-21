@@ -328,7 +328,7 @@ L:RegisterTranslations("frFR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Appartements de Kel'Thuzad",
 
 	start_trigger = "Serviteurs, valets et soldats des ténèbres glaciales ! Répondez à l'appel de Kel'Thuzad !",
-	start_warning = "Kel'Thuzad engagé ! ~5 min. avant qu'il ne soit actif !",
+	start_warning = "Kel'Thuzad engagé ! ~3 min. avant qu'il ne soit actif !",
 	start_bar = "Phase 2",
 
 	phase = "Phases",
