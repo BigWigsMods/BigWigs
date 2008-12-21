@@ -66,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 	tsunami_warning = "약 5초 후 용암 파도!",
 	tsunami_message = "용암 파도!",
 	tsunami_cooldown = "용암 파도 대기시간",
-	tsunami_trigger = "%s를 둘러싼 용암이 끓어오릅니다!",
+	tsunami_trigger = "살타리온를 둘러싼 용암이 끓어오릅니다!",
 
 	breath = "화염 숨결",
 	breath_desc = "화염 숨결 시전을 알립니다.",
@@ -289,7 +289,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 61632)
-	self:AddCombatListener("SPELL_CAST_START", "Breath", 58956)
+	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 --	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
