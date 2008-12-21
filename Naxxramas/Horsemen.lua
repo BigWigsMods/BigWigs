@@ -226,7 +226,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Meteor", 28884, 57467)
+	self:AddCombatListener("SPELL_CAST_START", "Meteor", 28884, 57467)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Mograine, Mark of Zeliek
 	self:AddCombatListener("UNIT_DIED", "Deaths")
