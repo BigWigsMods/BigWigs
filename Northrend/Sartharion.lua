@@ -95,9 +95,9 @@ L:RegisterTranslations("koKR", function() return {
 	drakedeath_desc = "비룡의 죽음에 대해 알립니다.",
 	drakedeath_message = "%s 죽음!",
 
-	enrage = "격노",
-	enrage_warning = "잠시 후 격노!",
-	enrage_message = "격노!",
+	enrage = "광폭화",
+	enrage_warning = "잠시 후 광폭화!",
+	enrage_message = "광폭화!",
 
 	log = "|cffff0000"..boss.."|r:\n 해당 보스에 대한 대화 멘트, 전투로그등을 필요로 합니다. 섬게이트,인벤의 BigWigs Bossmods 안건에 /대화기록, /전투기록을 한 로그나 기타 스샷, 잘못된 타이머등 오류를 제보 부탁드립니다. 윈드러너 서버:백서향으로 바로 문의 주시면 조금 빠른 수정 업데이트가 됩니다 @_@;",
 } end )
