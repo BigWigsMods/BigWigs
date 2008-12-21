@@ -30,6 +30,11 @@ L:RegisterTranslations("enUS", function() return {
 	vortex_message = "Vortex!",
 	vortex_warning = "Possible Vortex in ~5sec!",
 	vortex_next = "Vortex Cooldown",
+	
+	overload = "Arcane Overload",
+	overload_desc = "Warn for Arcane Overload and show a bar.",
+	overload_warning = "Arcane Overload in ~5sec!",
+	overload_next = "Next Overload",
 
 	breath = "Deep Breath",
 	breath_desc = "Deep Breath warnings.",
@@ -52,8 +57,6 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_warning = "Phase 3 soon!",
 	phase3_trigger = "Now your benefactors make their",
 	phase3_message = "Phase 3!",
-
-	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -67,6 +70,11 @@ L:RegisterTranslations("koKR", function() return {
 	vortex_message = "회오리!",
 	vortex_warning = "약 5초 후 회오리 사용가능!",
 	vortex_next = "회오리 대기시간",
+	
+	overload = "비전 과부하",
+	overload_desc = "비전 과부하에 대한 알림과 바를 표시합니다.",
+	overload_warning = "약 5초 후 비전 과부하!",
+	overload_next = "다음 과부하",
 
 	breath = "깊은 숨결",
 	breath_desc = "깊은 숨결을 알립니다.",
@@ -89,8 +97,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_warning = "잠시 후 3 단계!",
 	phase3_trigger = "네놈들의 후원자가 나타났구나",
 	phase3_message = "3 단계!",
-
-	log = "|cffff0000"..boss.."|r:\n 해당 보스에 대한 대화 멘트, 전투로그등을 필요로 합니다. 섬게이트,인벤의 BigWigs Bossmods 안건에 /대화기록, /전투기록을 한 로그나 기타 스샷, 잘못된 타이머등 오류를 제보 부탁드립니다. 윈드러너 서버:백서향으로 바로 문의 주시면 조금 빠른 수정 업데이트가 됩니다 @_@;",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -126,8 +132,6 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_warning = "Phase 3 imminente !",
 	phase3_trigger = "Vos bienfaiteurs font enfin leur entrée, mais ils arrivent trop tard !",
 	phase3_message = "Phase 3 !",
-
-	log = "|cffff0000"..boss.."|r :\n Ce boss a besoin de données, merci d'activer votre /combatlog ou l'addon Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -163,8 +167,6 @@ L:RegisterTranslations("zhCN", function() return {
 	phase3_warning = "即将 第三阶段！",
 	phase3_trigger = "Now your benefactors make their", -- yell required
 	phase3_message = "第三阶段！",
-
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -200,8 +202,6 @@ L:RegisterTranslations("zhTW", function() return {
 	phase3_warning = "即將 第三階段！",
 	phase3_trigger = "現在你們幕後的主使終於出現",
 	phase3_message = "第三階段！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -237,8 +237,6 @@ L:RegisterTranslations("ruRU", function() return {
 	phase3_warning = "Скоро 3-я фаза!",
 	phase3_trigger = "Now your benefactors make their",
 	phase3_message = "Фаза 3!",
-
-	log = "|cffff0000"..boss.."|r:\n Для этого босса необходимы правильные данные. Пожалуйста, включите запись логов (команда /combatlog) или установите аддон transcriptor, и пришлите получившийся файл (или оставьте ссылку на файл в комментариях на curse.com).",
 } end )
 
 ----------------------------------
@@ -250,14 +248,13 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", "breath", "surge", -1, "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "overload", "breath", -1, "surge", "icon", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-local t = nil
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Surge", 57407, 60936)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Vortex", 56105)
@@ -271,10 +268,6 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 
-	if not t then
-		BigWigs:Print(L["log"])
-		t = true
-	end
 	started = nil
 	db = self.db.profile
 	phase = 0
@@ -359,6 +352,12 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
+function mod:RepeatOverload()
+	self:Bar(L["overload_next"], 15, 56438)
+	self:ScheduleEvent("OverloadWarn", "BigWigs_Message", 10, L["overload_next"], "Attention")
+	self:ScheduleEvent("Overload", self.RepeatOverload, 15, self)
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
 		phase = 2
@@ -371,8 +370,16 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["breath"], 92, 43810)
 			self:DelayedMessage(87, L["breath_warning"], "Attention")
 		end
+		if db.overload then
+			self:Bar(L["overload"], 30, 56438)
+			self:DelayedMessage(25, L["overload_warning"], "Attention")
+			self:ScheduleEvent("Overload", self.RepeatOverload, 27, self)
+		end
 	elseif msg:find(L["phase2_end_trigger"]) then
 		self:CancelScheduledEvent("BreathWarn")
+		self:CancelScheduledEvent("OverloadWarn")
+		self:CancelScheduledEvent("Overload")
+		self:TriggerEvent("BigWigs_StopBar", self, L["overload_next"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["breath"])
 		self:Message(L["phase3_warning"], "Attention")
 	elseif msg:find(L["phase3_trigger"]) then
