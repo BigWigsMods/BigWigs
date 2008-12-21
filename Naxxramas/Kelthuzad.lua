@@ -523,7 +523,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"])
 			self:Message(L["phase2_warning"], "Important")
-			self:Bar(L["phase2_bar"], 20, "Spell_Shadow_Charm")
+			self:Bar(L["phase2_bar"], 15, "Spell_Shadow_Charm")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
