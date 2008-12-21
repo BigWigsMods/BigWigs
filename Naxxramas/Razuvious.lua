@@ -172,10 +172,10 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Shout(_, spellID)
+function mod:Shout()
 	if self.db.profile.shout then
-		self:Message(L["shout"], "Important", spellID, "Alert")
-		self:Bar(L["shout_next"], 15, spellID)
+		self:IfMessage(L["shout"], "Important", 55543)
+		self:Bar(L["shout_next"], 15, 55543)
 		self:DelayedMessage(12, L["shout_warning"], "Attention")
 	end
 end

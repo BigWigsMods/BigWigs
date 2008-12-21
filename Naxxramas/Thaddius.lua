@@ -9,7 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local enrageStarted = nil
-local addsdead = 0
+local overloads = 1
 local teslawarn = nil
 local stage1warn = nil
 local previousCharge = ""
@@ -440,7 +440,10 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["teslaoverload"] and self.db.profile.phase and not teslawarn then
 		teslawarn = true
-		self:Message(L["thaddiusincoming"], "Important")
+		overloads = overloads + 1
+		if overloads == 2 then
+			self:Message(L["thaddiusincoming"], "Important")
+		end
 	end
 end
 

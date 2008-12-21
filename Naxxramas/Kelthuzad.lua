@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber",
 
 	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
-	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!",
+	start_warning = "Kel'Thuzad encounter started! ~3min 3sec till he is active!",
 	start_bar = "Phase 2",
 
 	phase = "Phase",
@@ -123,7 +123,7 @@ L:RegisterTranslations("koKR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
 
 	start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여! 나 켈투자드가 부르니 명을 받들라!",
-	start_warning = "켈투자드 전투 시작! 약 5분 후 활동!",
+	start_warning = "켈투자드 전투 시작! 약 3분 30초 후 활동!",
 	start_bar = "2 단계",
 
 	phase = "단계",
@@ -517,7 +517,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:Message(L["start_warning"], "Attention")
-		self:Bar(L["start_bar"], 320, "Spell_Fire_FelImmolation")
+		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")
 		for k in pairs(MCd) do MCd[k] = nil end
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
 		if self.db.profile.phase then

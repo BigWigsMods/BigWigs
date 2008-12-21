@@ -236,7 +236,7 @@ function mod:Spray(_, spellID)
 	if self.db.profile.cocoon then
 		self:Bar(L["cocoonbar"], 20, 745)
 	end
-	self:Bar(L["spiderbar"], 30, "INV_Misc_MonsterSpiderCarapace_01")
+	self:Bar(L["spiderbar"], 30, 17332)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)

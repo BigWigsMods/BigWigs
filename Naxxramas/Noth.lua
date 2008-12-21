@@ -287,7 +287,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Blink", 29209)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Blink", 29208, 29209, 29210, 29211)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -307,8 +307,8 @@ function mod:Curse(_, spellID)
 	end
 end
 
-function mod:Blink(_, spellID)
-	if self.db.profile.blink then
+function mod:Blink(unit, spellID)
+	if unit == boss and self.db.profile.blink then
 		self:IfMessage(L["blinkwarn"], "Important", spellID)
 		self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
 		self:Bar(L["blinkbar"], 30, spellID)

@@ -28,6 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	startwarn = "Faerlina engaged, 60 sec to frenzy!",
 	enragewarn15sec = "15 sec to frenzy!",
 	enragewarn = "Frenzied!",
+	enragewarn2 = "Frenzied Soon!",
 	enrageremovewarn = "Frenzy removed! ~60 sec until next!",
 
 	silencewarn = "Silenced!",
@@ -47,6 +48,7 @@ L:RegisterTranslations("ruRU", function() return {
 	startwarn = "Великая вдова Фарлина злится, 60 секунд до бешенства!",
 	enragewarn15sec = "15 секунд до ярости!",
 	enragewarn = "Бешенство!",
+	--enragewarn2 = "Frenzied Soon!",
 	enrageremovewarn = "Бешенство снято! ~60 секунд до следующего!",
 	
 	silencewarn = "Безмолвие! Задержка ярости!",
@@ -68,6 +70,7 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Wutanfall!",
 	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in ~60 Sekunden!",
 	silencewarn = "Stille! Wutanfall verz\195\182gert!",
+	--enragewarn2 = "Frenzied Soon!",
 	silencewarn5sec = "Stille endet in 5 Sekunden",
 
 	silencebar = "Stille",
@@ -85,6 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	startwarn = "귀부인 팰리나 전투 시작! 60초 후 격노!",
 	enragewarn15sec = "15초 후 격노!",
 	enragewarn = "격노!",
+	enragewarn2 = "잠시 후 격노!",
 	enrageremovewarn = "격노 사라짐! 약 ~60초 후 다음 격노",
 	silencewarn = "침묵! 격노 지연!",
 	silencewarn5sec = "5초 후 침묵 종료!",
@@ -104,6 +108,7 @@ L:RegisterTranslations("zhCN", function() return {
 	startwarn = "黑女巫法琳娜已激活 - 60秒后，激怒！",
 	enragewarn15sec = "15秒后，激怒！",
 	enragewarn = "激怒！",
+	--enragewarn2 = "Frenzied Soon!",
 	enrageremovewarn = "激怒已移除 - 约60后，激怒！",
 	silencewarn = "沉默！延缓了激怒！",
 	silencewarn5sec = "5秒后沉默结束！",
@@ -123,6 +128,7 @@ L:RegisterTranslations("zhTW", function() return {
 	startwarn = "大寡婦費琳娜已進入戰鬥 - 60秒後，狂怒！",
 	enragewarn15sec = "15秒後，狂怒！",
 	enragewarn = "狂怒！",
+	--enragewarn2 = "Frenzied Soon!",
 	enrageremovewarn = "狂怒已移除 - 約60秒後，狂怒！",
 	silencewarn = "沉默！延緩了狂怒！",
 	silencewarn5sec = "5秒後沉默結束！",
@@ -142,6 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 	startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Frénésie !",
 	enragewarn15sec = "15 sec. avant Frénésie !",
 	enragewarn = "Frénésie !",
+	--enragewarn2 = "Frenzied Soon!",
 	enrageremovewarn = "Frénésie enlevée ! %d sec. avant la suivante !",
 
 	silencewarn = "Réduite au silence !",
@@ -192,7 +199,7 @@ function mod:Silence(unit, spellID)
 		-- Reactive enrage removed
 		if self.db.profile.enrage then
 			self:Message(L["enrageremovewarn"], "Positive")
-			enrageMessageId = self:DelayedMessage(45, L["enragewarn"], "Important")
+			enrageMessageId = self:DelayedMessage(45, L["enragewarn2"], "Important")
 			self:Bar(enrageName, 60, 28798)
 		end
 		if self.db.profile.silence then

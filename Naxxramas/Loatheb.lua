@@ -213,7 +213,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16011
-mod.toggleoptions = {"aura", "doom", "spore", "bosskill"}
+mod.toggleoptions = {"aura", "deathbloom", "doom", "spore", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -243,19 +243,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Aura(_, spellID)
+function mod:Aura()
 	if self.db.profile.aura then
-		self:Message(L["aura_message"], "Important", spellID, "Alert")
+		self:IfMessage(L["aura_message"], "Important", 55593)
 		self:Bar(L["aura"], 17, spellID)
-		self:DelayedMessage(14, L["aura_warning"], "Attention", spellID)
+		self:DelayedMessage(14, L["aura_warning"], "Attention")
 	end
 end
 
 function mod:Deathbloom(_, spellID)
 	if self.db.profile.deathbloom then
-		self:Message(L["deathbloom"], "Important", spellID)
+		self:IfMessage(L["deathbloom"], "Important", spellID)
 		self:Bar(L["deathbloom"], 30, spellID)
-		self:DelayedMessage(15, L["deathbloom_warning"], "Attention", spellID)
+		self:DelayedMessage(15, L["deathbloom_warning"], "Attention")
 	end
 end
 

@@ -14,13 +14,13 @@ local pName = UnitName("player")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Grobbulus",
 
-	inject = "You're injected",
-	inject_desc = "Warn when injected.",
-	bomb_message_you = "You are injected!",
-	bomb_message_other = "%s is injected!",
+	inject = "Injected",
+	inject_desc = "Warn when Injected.",
+	bomb_message_you = "You are Injected!",
+	bomb_message_other = "%s is Injected!",
 
 	icon = "Place Icon",
-	icon_desc = "Place a raid icon on an injected person. (Requires promoted or higher)",
+	icon_desc = "Place a raid icon on an Injected person. (Requires promoted or higher)",
 
 	cloud = "Poison Cloud",
 	cloud_desc = "Warn for Poison Clouds.",
