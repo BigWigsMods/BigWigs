@@ -225,7 +225,7 @@ L:RegisterTranslations("zhCN", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅",
 
 	start_trigger = "仆从们，侍卫们，隶属于黑暗与寒冷的战士们！听从克尔苏加德的召唤！",
-	start_warning = "战斗开始，约5分钟后，克尔苏加德激活！",
+	start_warning = "战斗开始，约3分30秒后，克尔苏加德激活！",
 	start_bar = "<第二阶段>",
 
 	phase = "阶段",
@@ -241,7 +241,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	mc = "克尔苏加德锁链",
 	mc_desc = "当玩家中了克尔苏加德锁链时发出警报。",
-	mc_message = ">%s< 克尔苏加德锁链！",
+	mc_message = "克尔苏加德锁链：>%s<！",
 	mc_warning = "即将 克尔苏加德锁链！",
 	mc_nextbar = "<下一克尔苏加德锁链>",
 
@@ -258,7 +258,7 @@ L:RegisterTranslations("zhCN", function() return {
 	detonate = "自爆法力",
 	detonate_desc = "当玩家中了自爆法力时发出警报。",
 	detonate_you = ">你< 自爆法力！",
-	detonate_other = ">%s< 自爆法力！",
+	detonate_other = "自爆法力：>%s<！",
 	detonate_possible_bar = "<可能 自爆法力>",
 	detonate_warning = "约5秒后，自爆法力！",
 
@@ -277,23 +277,23 @@ L:RegisterTranslations("zhTW", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德的大廳",
 
 	start_trigger = "僕從們，侍衛們，隸屬於黑暗與寒冷的戰士！聽從科爾蘇加德的召換！",
-	start_warning = "戰斗開始，約5分鐘後，科爾蘇加德進入戰鬥！",
+	start_warning = "戰斗開始，約3分30秒後，科爾蘇加德進入戰鬥！",
 	start_bar = "<第二階段>",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
-	phase2_trigger1 = "祈禱我的慈悲吧！",
-	phase2_trigger2 = "Scream your dying breath!", -- yell required
+	phase2_trigger1 = "祈禱我的慈悲吧",
+	phase2_trigger2 = "呼出你的最後一口氣",
 	phase2_trigger3 = "The end is upon you!", -- yell required
 	phase2_warning = "第二階段 - 科爾蘇加德！",
 	phase2_bar = "<科爾蘇加德進入戰鬥>",
 	phase3_soon_warning = "即將 第三階段！",
-	phase3_trigger = "主人，我需要", -- yell required
+	phase3_trigger = "主人，我需要幫助",
 	phase3_warning = "第三階段開始， 約15秒後，寒冰皇冠守衛者出現！",
 
 	mc = "科爾蘇加德之鍊",
 	mc_desc = "當玩家中了科爾蘇加德之鍊時發出警報。",
-	mc_message = ">%s< 科爾蘇加德之鍊！",
+	mc_message = "科爾蘇加德之鍊：>%s<！",
 	mc_warning = "即將 科爾蘇加德之鍊！",
 	mc_nextbar = "<下一科爾蘇加德之鍊>",
 
@@ -310,15 +310,15 @@ L:RegisterTranslations("zhTW", function() return {
 	detonate = "爆裂法力",
 	detonate_desc = "當玩家中了爆裂法力時發出警報。",
 	detonate_you = ">你< 爆裂法力！",
-	detonate_other = ">%s< 爆裂法力！",
+	detonate_other = "爆裂法力：>%s<！",
 	detonate_possible_bar = "<可能 爆裂法力>",
 	detonate_warning = "約5秒后，爆裂法力！",
 
 	guardians = "寒冰皇冠守衛者",
 	guardians_desc = "當第三階段召喚寒冰皇冠守衛者時發出警報。",
-	guardians_trigger = "那好吧。冰冷廢墟的戰士，站起來！我命令你戰鬥，為你的主人而殺，而死！不要留一個！", -- need to check the line
+	guardians_trigger = "非常好，凍原的戰士們，起來吧!我命令你們作戰，為你們的主人殺戮或獻身吧!不要留下活口",
 	guardians_warning = "約10秒後，寒冰皇冠守衛者出現！",
-	guardians_bar = "寒冰皇冠守衛者出現！",
+	guardians_bar = "<寒冰皇冠守衛者出現>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了爆裂法力的玩家打上團隊標記。（需要權限）",

@@ -150,7 +150,7 @@ L:RegisterTranslations("zhTW", function() return {
 	tsunami_warning = "約5秒，炎嘯！",
 	tsunami_message = "炎嘯！",
 	tsunami_cooldown = "炎嘯冷卻！",
-	tsunami_trigger = "The lava surrounding %s churns!",
+	tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!",
 
 	breath = "火息術",
 	breath_desc = "當正在施放火息術時發出警報。",
@@ -173,7 +173,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shadron_trigger = "Shadron! Come to me! All is at risk!",
 
 	tenebron = "坦納伯朗",
-	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+	tenebron_trigger = "坦納伯朗!你也應該要保護龍蛋!",
 
 	drakedeath = "飛龍死亡",
 	drakedeath_desc = "當增援飛龍死亡時發出警報。",

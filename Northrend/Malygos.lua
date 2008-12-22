@@ -146,10 +146,15 @@ L:RegisterTranslations("zhCN", function() return {
 	sparks_warning = "约5秒后，能量火花！",
 
 	vortex = "漩涡",
-	vortex_desc = "当施放漩涡是发出警报及显示计时条。",
+	vortex_desc = "当施放漩涡时发出警报及显示计时条。",
 	vortex_message = "漩涡！",
 	vortex_warning = "约5秒后，可能漩涡！",
 	vortex_next = "<漩涡 冷却>",
+
+	overload = "奥术过载",
+	overload_desc = "当施放奥术过载时发出警报及显示计时条。",
+	overload_warning = "约5秒后，可能奥术过载！",
+	overload_next = "<奥术过载>",
 
 	breath = "深呼吸",
 	breath_desc = "当施放深呼吸时发出警报。",
@@ -185,6 +190,11 @@ L:RegisterTranslations("zhTW", function() return {
 	vortex_message = "漩渦！",
 	vortex_warning = "約5秒后，可能漩渦！",
 	vortex_next = "<漩渦 冷卻>",
+
+	overload = "秘法超載",
+	overload_desc = "當施放秘法超載時發出警報及顯示計時條。",
+	overload_warning = "約5秒后，可能秘法超載！",
+	overload_next = "<下一秘法超載>",
 
 	breath = "深呼吸",
 	breath_desc = "當施放深呼吸時發出警報。",

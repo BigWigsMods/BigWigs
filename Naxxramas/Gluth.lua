@@ -69,7 +69,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	startwarn = "格拉斯已激活 - 约105秒后，僵尸出现！",
+	startwarn = "格拉斯已激活 - 约105秒后，残杀！",
 
 	frenzy = "狂暴",
 	frenzy_desc = "当狂暴时发出警报。",
@@ -83,7 +83,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	startwarn = "古魯斯已進入戰鬥 - 105秒後，殭屍出現！",
+	startwarn = "古魯斯已進入戰鬥 - 105秒後，殘殺！",
 
 	frenzy = "狂暴",
 	frenzy_desc = "當狂暴時發出警報。",

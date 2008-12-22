@@ -74,7 +74,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	inject = "自身变异注射",
+	inject = "变异注射",
 	inject_desc = "当玩家中了变异注射时发出警报。",
 	bomb_message_you = ">你< 变异注射！",
 	bomb_message_other = "变异注射：>%s<！",
@@ -89,7 +89,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	inject = "自身突變注射警報",
+	inject = "突變注射警報",
 	inject_desc = "當玩家中了突變注射時發出警報。",
 	bomb_message_you = ">你< 突變注射！",
 	bomb_message_other = "突變注射：>%s<！",
