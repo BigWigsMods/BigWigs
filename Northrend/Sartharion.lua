@@ -383,7 +383,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg:find(L["tsunami_trigger"]) and db.tsunami then
 		self:CancelScheduledEvent("TsunamiWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, L["tsunami_cooldown"])
-		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
+		self:IfMessage(L["tsunami_message"], "Important", 57491)
 		self:Bar(L["tsunami_cooldown"], 30, 57491)
 		self:ScheduleEvent("TsunamiWarn", "BigWigs_Message", 25, L["tsunami_warning"], "Attention")
 	end
