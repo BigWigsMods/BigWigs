@@ -23,15 +23,7 @@ externals:
     Libs/LibDBIcon-1.0: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
     
 move-folders:
-    BigWigs/BlackTemple: BigWigs_BlackTemple
     BigWigs/Extras: BigWigs_Extras
-    BigWigs/Hyjal: BigWigs_Hyjal
-    BigWigs/Karazhan: BigWigs_Karazhan
-    BigWigs/Outland: BigWigs_Outland
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/SC: BigWigs_SC
-    BigWigs/Sunwell: BigWigs_Sunwell
-    BigWigs/TheEye: BigWigs_TheEye
-    BigWigs/ZulAman: BigWigs_ZulAman
     BigWigs/Naxxramas: BigWigs_Naxxramas
     BigWigs/Northrend: BigWigs_Northrend
