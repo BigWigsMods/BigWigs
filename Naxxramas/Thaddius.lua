@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger3 = "Break... you!!",
 	starttrigger4 = "Kill...",
 
-	teslaoverload = "%s overloads!",
+	teslaoverload = "overloads!",
 
 	pstrigger = "Now you feel pain...",
 	chargetrigger = "You are afflicted by (%w+) Charge.",
@@ -95,8 +95,7 @@ L:RegisterTranslations("ruRU", function() return {
 	teslaoverload = "%s перезагружается!", 
 
 	pstrigger = "Познайте же боль…",  
-	chargetrigger = "Ваш заряд - (%w+).",
-
+	
 	startwarn = "Таддиус фаза 1",
 	startwarn2 = "Таддиус фаза 2, ярость через 5 минут!",
 	addsdownwarn = "Таддиус появится через 10-20 секунд!",
@@ -139,11 +138,10 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "박살을 내주겠다!",
 	starttrigger4 = "죽여주마...",
 
-	teslaoverload = "테슬라 코일가 과부하 상태가 됩니다.",
+	teslaoverload = "과부하 상태가 됩니다.",
 
 	pstrigger = "자, 고통을 느껴봐라...",
-	chargetrigger = "(%w+)전하에 걸렸습니다.",
-
+	
 	startwarn = "타디우스 1 단계",
 	startwarn2 = "타디우스 2 단계, 6분 후 격노!",
 	addsdownwarn = "10~20초 이내 2단계 시작!",
@@ -186,8 +184,7 @@ L:RegisterTranslations("deDE", function() return {
 	teslaoverload = "\195\188berl\195\164dt!",
 
 	pstrigger = "Jetzt sp\195\188rt ihr den Schmerz",
-	chargetrigger = "^([^%s]+) ([^%s]+) von ([^%s]+) Ladung betroffen",
-
+	
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
 	addsdownwarn = "Thaddius kommt frei in 10-20s!",
@@ -228,8 +225,7 @@ L:RegisterTranslations("zhCN", function() return {
 	teslaoverload = "%s超载了！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
-	chargetrigger = "你受到了(.+)电荷",
-
+	
 	startwarn = "第一阶段",
 	startwarn2 = "第二阶段 - 6分钟后激怒！",
 	addsdownwarn = "10-20秒后，塔迪乌斯出现！",
@@ -276,8 +272,7 @@ L:RegisterTranslations("zhTW", function() return {
 	teslaoverload = "%s超負荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
-	chargetrigger = "^(.+)受到(.+)(.+)電荷",
-
+	
 	startwarn = "第一階段",
 	startwarn2 = "第二階段 - 6分鍾後狂怒！",
 	addsdownwarn = "10-20秒後，泰迪斯出現！",
@@ -323,8 +318,7 @@ L:RegisterTranslations("frFR", function() return {
 	teslaoverload = "%s entre en surcharge !",
 
 	pstrigger = "Maintenant toi sentir douleur...",
-	chargetrigger = "Vous subissez les effets .* Charge (%w+)",
-
+	
 	startwarn = "Thaddius - Phase 1",
 	startwarn2 = "Thaddius - Phase 2, Enrager dans 5 min. !",
 	addsdownwarn = "Arrivée de Thaddius dans 10-20 sec. !",
@@ -440,7 +434,7 @@ function mod:Deaths(unit, guid)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg == L["teslaoverload"] and self.db.profile.phase and not teslawarn then
+	if msg:find(L["teslaoverload"]) and self.db.profile.phase and not teslawarn then
 		teslawarn = true
 		overloads = overloads + 1
 		if overloads == 2 then

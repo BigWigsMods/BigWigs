@@ -34,6 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 	silencewarn = "Silenced!",
 	silencewarn5sec = "Silence ends in 5 sec",
 	silencebar = "Silence",
+	
+	rain = "Rain of Fire on You",
+	rain_desc = "Warn when you are in a Rain of Fire.",
+	rain_message = "Rain of Fire on YOU!",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -54,6 +58,10 @@ L:RegisterTranslations("ruRU", function() return {
 	silencewarn = "Безмолвие! Задержка ярости!",
 	silencewarn5sec = "Безмолвие закончится через 5 секунд",
 	silencebar = "Безмолвие",
+	
+	--rain = "Rain of Fire on You",
+	--rain_desc = "Warn when you are in a Rain of Fire.",
+	--rain_message = "Rain of Fire on YOU!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -74,6 +82,10 @@ L:RegisterTranslations("deDE", function() return {
 	silencewarn5sec = "Stille endet in 5 Sekunden",
 
 	silencebar = "Stille",
+	
+	--rain = "Rain of Fire on You",
+	--rain_desc = "Warn when you are in a Rain of Fire.",
+	--rain_message = "Rain of Fire on YOU!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -90,10 +102,14 @@ L:RegisterTranslations("koKR", function() return {
 	enragewarn = "격노!",
 	enragewarn2 = "잠시 후 격노!",
 	enrageremovewarn = "격노 사라짐! 약 ~60초 후 다음 격노",
-	silencewarn = "침묵! 격노 지연!",
+	
+	silencewarn = "침묵!",
 	silencewarn5sec = "5초 후 침묵 종료!",
-
 	silencebar = "침묵",
+	
+	rain = "자신의 불의 비",
+	rain_desc = "자신이 불의 비에 걸렸을 때 알립니다.",
+	rain_message = "당신은 불의 비!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -114,6 +130,10 @@ L:RegisterTranslations("zhCN", function() return {
 	silencewarn5sec = "5秒后沉默结束！",
 
 	silencebar = "<沉默>",
+	
+	--rain = "Rain of Fire on You",
+	--rain_desc = "Warn when you are in a Rain of Fire.",
+	--rain_message = "Rain of Fire on YOU!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -134,6 +154,10 @@ L:RegisterTranslations("zhTW", function() return {
 	silencewarn5sec = "5秒後沉默結束！",
 
 	silencebar = "<沉默>",
+	
+	--rain = "Rain of Fire on You",
+	--rain_desc = "Warn when you are in a Rain of Fire.",
+	--rain_message = "Rain of Fire on YOU!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -154,6 +178,10 @@ L:RegisterTranslations("frFR", function() return {
 	silencewarn = "Réduite au silence !",
 	silencewarn5sec = "Fin du silence dans 5 sec.",
 	silencebar = "Silence",
+	
+	--rain = "Rain of Fire on You",
+	--rain_desc = "Warn when you are in a Rain of Fire.",
+	--rain_message = "Rain of Fire on YOU!",
 } end )
 
 ----------------------------------
@@ -164,7 +192,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15953
-mod.toggleoptions = {"silence", "enrage", "bosskill"}
+mod.toggleoptions = {"silence", "rain", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -173,6 +201,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Rain", 54099)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 54100)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -207,6 +236,12 @@ function mod:Silence(unit, spellID)
 			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
  		end
 		enraged = nil
+	end
+end
+
+function mod:Rain(player)
+	if player == pName and db.rain then
+		self:LocalMessage(L["rain_message"], "Personal", 54099, "Alarm")
 	end
 end
 
