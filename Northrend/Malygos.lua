@@ -272,8 +272,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_warning = "Phase 3 bald!",
 	phase3_trigger = "Eure Wohltäter sind eingetroffen",
 	phase3_message = "Phase 3!",
-
-	log = "|cffff0000"..boss.."|r:\n Dieser Boss benötigt Daten, bitte denkt darüber nach euren Kampflog zu aktivieren durch /combatlog im Spiel und die Logs an uns zu senden.",
 } end )
 
 ----------------------------------
