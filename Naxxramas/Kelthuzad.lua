@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber",
 
 	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
-	start_warning = "Kel'Thuzad encounter started! ~3min 3sec till he is active!",
+	start_warning = "Kel'Thuzad encounter started! ~3min 30sec till he is active!",
 	start_bar = "Phase 2",
 
 	phase = "Phase",
@@ -328,7 +328,7 @@ L:RegisterTranslations("frFR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Appartements de Kel'Thuzad",
 
 	start_trigger = "Serviteurs, valets et soldats des ténèbres glaciales ! Répondez à l'appel de Kel'Thuzad !",
-	start_warning = "Kel'Thuzad engagé ! ~3 min. avant qu'il ne soit actif !",
+	start_warning = "Kel'Thuzad engagé ! ~3 min. 30 sec. avant qu'il ne soit actif !",
 	start_bar = "Phase 2",
 
 	phase = "Phases",

@@ -53,7 +53,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	--["Tranq - %s"] = true,
-	["%s's Tranq failed!"] = "Le Tir tranq. de %s a échoué !",
+	["%s's Tranq failed!"] = "Le Tir tranq. |2 %s a échoué !",
 
 	["Options for the tranq module."] = "Options concernant le module du Tir tranquilisant.",
 	["Toggle tranq bars on or off."] = "Affiche ou non les barres des Tirs tranquillisants.",

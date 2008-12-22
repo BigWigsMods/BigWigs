@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	vortex_message = "Vortex!",
 	vortex_warning = "Possible Vortex in ~5sec!",
 	vortex_next = "Vortex Cooldown",
-	
+
 	overload = "Arcane Overload",
 	overload_desc = "Warn for Arcane Overload and show a bar.",
 	overload_warning = "Arcane Overload in ~5sec!",
@@ -70,7 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 	vortex_message = "회오리!",
 	vortex_warning = "약 5초 후 회오리 사용가능!",
 	vortex_next = "회오리 대기시간",
-	
+
 	overload = "비전 과부하",
 	overload_desc = "비전 과부하에 대한 알림과 바를 표시합니다.",
 	overload_warning = "약 5초 후 비전 과부하!",
@@ -110,6 +110,11 @@ L:RegisterTranslations("frFR", function() return {
 	vortex_message = "Vortex !",
 	vortex_warning = "Vortex probable dans ~5 sec. !",
 	vortex_next = "Recharge Vortex",
+
+	overload = "Surcharge arcanique",
+	overload_desc = "Prévient de l'arrivée des Surcharges arcaniques.",
+	overload_warning = "Surcharge arcanique dans ~5 sec. !",
+	overload_next = "Prochaine Surcharge",
 
 	breath = "Inspiration profonde",
 	breath_desc = "Prévient quand Malygos inspire profondément.",
