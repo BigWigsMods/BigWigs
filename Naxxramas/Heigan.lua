@@ -51,11 +51,11 @@ L:RegisterTranslations("ruRU", function() return {
 	teleport_1min_message = "Телепорт через 1 минуту",
 	teleport_30sec_message = "Телепорт через 30 секунд",
 	teleport_10sec_message = "Телепорт через 10 секунд!",
-	on_platform_message = "Телепорт! На платформу через 45 секунд!",
+	on_platform_message = "Телепорт! 45 секунд На платформе!",
 
 	to_floor_30sec_message = "Возвращение через 30 секунд",
 	to_floor_10sec_message = "Возвращение через 10 секунд!",
-	on_floor_message = "Возвращение на этаж! 90 секунд до следующего телепорта!",
+	on_floor_message = "Возвращается! 90 секунд до следующего телепорта!",
 
 	teleport_bar = "Телепорт!",
 	back_bar = "Возвращение на этаж!",

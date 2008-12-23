@@ -45,23 +45,23 @@ L:RegisterTranslations("ruRU", function() return {
 	silence_desc = "Предупреждать о безмолвии",
 
 	starttrigger1 = "Стань на колени, червь!",  --check this
-	starttrigger2 = "Убейте  их во имя меня!!",  --check this
+	starttrigger2 = "Убейте их во имя господина!",  --!!check this again
 	starttrigger3 = "Вам не скрыться от меня!",  
-	starttrigger4 = "Бегите пока ещё можете!",  --check this
+	starttrigger4 = "Бегите, пока еще можете!!",  
 
 	startwarn = "Великая вдова Фарлина злится, 60 секунд до бешенства!",
-	enragewarn15sec = "15 секунд до ярости!",
+	enragewarn15sec = "15 секунд до Бешенства!",
 	enragewarn = "Бешенство!",
-	--enragewarn2 = "Frenzied Soon!",
+	enragewarn2 = "Скоро бешенство!",
 	enrageremovewarn = "Бешенство снято! ~60 секунд до следующего!",
 	
 	silencewarn = "Безмолвие! Задержка ярости!",
 	silencewarn5sec = "Безмолвие закончится через 5 секунд",
 	silencebar = "Безмолвие",
 	
-	--rain = "Rain of Fire on You",
-	--rain_desc = "Warn when you are in a Rain of Fire.",
-	--rain_message = "Rain of Fire on YOU!",
+	rain = "Огненный ливень на Вас!",
+	rain_desc = "Предупреждать об Огненном ливне.",
+	rain_message = "Огненный ливень на ВАС!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

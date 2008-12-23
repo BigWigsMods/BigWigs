@@ -33,18 +33,18 @@ L:RegisterTranslations("ruRU", function() return {
 	locust = "Жуки-трупоеды",
 	locust_desc = "Предупреждать о появлении жуков.",
 
-	starttrigger1 = "Хм выхода нет ребята.", --check this
-	starttrigger2 = "Я только начинаю входить во вкус.!",  --check this
+	starttrigger1 = "Посмотрим, какие вы на вкус!", 
+	starttrigger2 = "Бегите, бегите! Я люблю горячую кровь!",  
 	starttrigger3 = "Да зомби!я заставлю тебя попотеть.",  --correct this
 	engagewarn = "Ануб'Рекан в исступлении! Первая волна жуков через ~90 секунд",
 
-	gainendwarn = "Жуки исчезают!",
-	gainnextwarn = "Следующая волна жуков через ~85 секунд",
-	gainwarn10sec = "~10 до исчезновения жуков",
-	gainincbar = "Следующая волна жуков",
+	gainendwarn = "Жуки-трупоеды исчезают!",
+	gainnextwarn = "Следующая волна жуков-трупоедов через ~85 секунд",
+	gainwarn10sec = "~10 до жуков-трупоедов",
+	gainincbar = "Следующая волна жуков-трупоедов",
 	gainbar = "Жуки-трупоеды",
 
-	castwarn = "Появляется волна жуков!",
+	castwarn = "Появляются жуки-трупоеды!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

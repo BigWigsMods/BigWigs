@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	starttrigger1 = "Смерть чужакам!",  
 	starttrigger2 = "Glory to the master!",  --correct this
-	starttrigger3 = "Your life is forfeit!",  --correct this
+	starttrigger3 = "Прощайся с жизнью!", 
 	startwarn = "Нот Чумной разъярён! 90 секунд до телепорта",
 
 	blink = "Опасность скачка",

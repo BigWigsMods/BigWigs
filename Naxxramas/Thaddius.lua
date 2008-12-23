@@ -94,7 +94,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	teslaoverload = "%s перезагружается!", 
 
-	pstrigger = "Познайте же боль…",  
+	pstrigger = "Познайте же боль...",  
 	
 	startwarn = "Таддиус фаза 1",
 	startwarn2 = "Таддиус фаза 2, ярость через 5 минут!",

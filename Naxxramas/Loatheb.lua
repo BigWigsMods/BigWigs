@@ -66,8 +66,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 	spore = "Появление спор",
 	spore_desc = "Сообщать о появлении спор",
-	sporewarn = "Споры %d появляются",
-	sporebar = "Призваны споры %d",
+	sporewarn = "Появляется %d спора",
+	sporebar = "Призвана спора %d",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
