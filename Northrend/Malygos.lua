@@ -222,19 +222,19 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	sparks = "Искра мощи",
 	sparks_desc = "Предупреждать о появлениях Искры мощи.",
-	sparks_message = "Появление Искры мощи!",
+	sparks_message = "Появилась Искра мощи!",
 	sparks_warning = "Искра мощи через ~5сек!",
 
 	vortex = "Воронка",
 	vortex_desc = "Предупреждать о воронках и отображать полосу.",
 	vortex_message = "Воронка!",
 	vortex_warning = "Воронка через ~5сек!",
-	vortex_next = "перезарядка воронки",
+	vortex_next = "Перезарядка воронки",
 
-	breath = "Дыхание Чар",
-	breath_desc = "Предупреждать о Дыхании Чар.",
-	breath_message = "Дыхание Чар!",
-	breath_warning = "Дыхание Чар через ~5сек!",
+	breath = "Чародейский импульс",
+	breath_desc = "Предупреждать о Чародейском импульсе.",
+	breath_message = "Чародейский импульс!",
+	breath_warning = "Чародейский импульс через ~5 сек!",
 
 	surge = "Прилив мощи",
 	surge_desc = "Предупреждать кто получает Прилив мощи.",
@@ -245,13 +245,13 @@ L:RegisterTranslations("ruRU", function() return {
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
-	phase2_warning = "Скоро 2-я фаза!",
-	phase2_trigger = "I had hoped to end your lives quickly",
-	phase2_message = "Фаза 2 - Повелитель нексуса и Потомок вечности!",
-	phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic",
-	phase3_warning = "Скоро 3-я фаза!",
-	phase3_trigger = "Now your benefactors make their",
-	phase3_message = "Фаза 3!",
+	phase2_warning = "Скоро 2 фаза!",
+	phase2_trigger = "Я рассчитывал быстро покончить с вами, однако вы оказались более… более стойкими, чем я рассчитывал",
+	phase2_message = "2 Фаза - Повелители нексуса и Потомоки вечности!",
+	phase2_end_trigger = "ХВАТИТ! Если ты намерен вернуть себе магию Азерота, ты ее получишь!",
+	phase3_warning = "Скоро 3 фаза!",
+	phase3_trigger = "А-а, вот и твои благодетели!",
+	phase3_message = "3 Фаза!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
