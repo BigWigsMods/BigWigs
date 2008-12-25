@@ -270,6 +270,46 @@ L:RegisterTranslations("ruRU", function() return {
 	log = "|cffff0000"..boss.."|r:\n Для этого босса необходимы правильные данные. Пожалуйста, включите запись логов (команда /combatlog) или установите аддон transcriptor, и пришлите получившийся файл (или оставьте ссылку на файл в комментариях на curse.com).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	tsunami = "Flammentsunami",
+	tsunami_desc = "Warnung vor Flammentsunami und Anzeigen einer Leiste.",
+	tsunami_warning = "Flammentsunami in ~5sek!",
+	tsunami_message = "Flammentsunami!",
+	tsunami_cooldown = "Flammentsunami Cooldown",
+	tsunami_trigger = "Die Lava um %s brodelt!",
+
+	breath = "Flammenatem",
+	breath_desc = "Warnung wenn Flammenatem gewirkt wird.",
+	breath_warning = "Flammenatem in ~5sek!",
+	breath_message = "Flammenatem!",
+	breath_cooldown = "Flammenatem Cooldown",
+
+	drakes = "Drachen Adds",
+	drakes_desc = "Warnen wenn einer der Drachen dem Kampf beitritt.",
+	drakes_incomingbar = "%s kommt",
+	drakes_incomingsoon = "%s kommt in ~5sek!",
+	drakes_incoming = "%s kommt!",
+	drakes_activebar = "%s aktiv",
+	drakes_active = "%s ist aktiv!",
+
+	vesperon = "Vesperon",
+	vesperon_trigger = "Vesperon, the clutch is in danger! Assist me!",
+
+	shadron = "Shadron",
+	shadron_trigger = "Shadron! Come to me! All is at risk!",
+
+	tenebron = "Tenebron",
+	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+
+	drakedeath = "Drachen tot",
+	drakedeath_desc = "Warnen wenn einer der Drachen stirbt.",
+	drakedeath_message = "%s gestorben!",
+
+	enrage = "Wütend",
+	enrage_warning = "In Kürze Wütend!",
+	enrage_message = "Wütend!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
