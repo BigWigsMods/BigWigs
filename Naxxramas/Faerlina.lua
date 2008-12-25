@@ -131,9 +131,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	silencebar = "<沉默>",
 	
-	--rain = "Rain of Fire on You",
-	--rain_desc = "Warn when you are in a Rain of Fire.",
-	--rain_message = "Rain of Fire on YOU!",
+	rain = "自身火焰之雨",
+	rain_desc = "当你中了火焰之雨时发出自身警报。",
+	rain_message = ">你< 火焰之雨！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -155,9 +155,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	silencebar = "<沉默>",
 	
-	--rain = "Rain of Fire on You",
-	--rain_desc = "Warn when you are in a Rain of Fire.",
-	--rain_message = "Rain of Fire on YOU!",
+	rain = "自身火焰之雨",
+	rain_desc = "當你中了火焰之雨時發出自身警報。",
+	rain_message = ">你< 火焰之雨！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

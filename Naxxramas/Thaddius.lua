@@ -222,7 +222,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "打……烂……你！",
 	starttrigger4 = "杀……",
 
-	teslaoverload = "%s超载了！",
+	teslaoverload = "超载！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	
@@ -269,7 +269,7 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger3 = "打……爛……你！",
 	starttrigger4 = "殺……",
 
-	teslaoverload = "%s超負荷！",
+	teslaoverload = "超負荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	
