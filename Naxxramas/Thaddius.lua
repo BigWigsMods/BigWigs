@@ -405,7 +405,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		previousCharge = ""
 		stage1warn = true
 		self:Throw()
-		self:ScheduleRepeatingEvent("bwthaddiusthrow", self.Throw, 21, self)
 	elseif msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) or msg:find(L["starttrigger4"]) then
 		if self.db.profile.phase then
 			self:Message(L["startwarn2"], "Important")
@@ -427,10 +426,10 @@ function mod:Deaths(unit, guid)
 				self:Message(L["addsdownwarn"], "Attention")
 			end
 		end
-		return
 	end
-
-	self:BossDeath(nil, guid)
+	if unit == boss then
+		self:BossDeath(nil, self.guid)
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -484,4 +483,5 @@ function mod:Throw()
 		self:Bar(L["throwbar"], 20, "Ability_Druid_Maul")
 		self:ScheduleEvent("bwthaddiusthrowwarn", "BigWigs_Message", 15, L["throwwarn"], "Urgent")
 	end
+	self:ScheduleEvent("bwthaddiusthrow", self.Throw, 21, self)
 end
