@@ -126,7 +126,7 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "Rien qu'une petite bouchée…",
 	starttrigger2 = "Oui, courez ! Faites circuler le sang !",
 	starttrigger3 = "Nulle part pour s'enfuir.",
-	engagewarn = "Anub'Rekhan engagé ! Nuée de sauterelles dans ~90 sec.",
+	engagewarn = "Anub'Rekhan engagé ! Nuée de sauterelles dans ~90 sec. !",
 
 	gainendwarn = "Fin de la Nuée de sauterelles !",
 	gainnextwarn = "Prochaine Nuée de sauterelles dans ~85 sec.",

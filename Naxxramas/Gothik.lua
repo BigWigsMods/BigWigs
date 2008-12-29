@@ -299,7 +299,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	starttrigger1 = "Dans votre folie, vous avez provoqué votre propre mort.",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
-	startwarn = "Gothik le moissonneur engagé ! 4:30 avant son arrivée dans la salle.",
+	startwarn = "Gothik le moissonneur engagé ! 4 min. 30 sec. avant son arrivée dans la salle !",
 
 	rider = "Cavalier tenace",
 	spectral_rider = "Cavalier spectral",

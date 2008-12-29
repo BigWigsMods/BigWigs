@@ -182,7 +182,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	to_floor_30sec_message = "De retour dans 30 sec.",
 	to_floor_10sec_message = "De retour dans 10 sec. !",
-	on_floor_message = "De retour sur le sol ! 90 sec. avant téléportation !",
+	on_floor_message = "De retour sur le sol ! 90 sec. avant la prochaine téléportation !",
 
 	teleport_bar = "Téléportation !",
 	back_bar = "Retour sur le sol !",

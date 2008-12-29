@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	chargetrigger = "You are afflicted by (%w+) Charge.",
 
 	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Enrage in 6 minutes!",
+	startwarn2 = "Thaddius Phase 2, Berserk in 6 minutes!",
 	addsdownwarn = "Thaddius incoming in 10-20sec!",
 	thaddiusincoming = "Thaddius incoming in 3 sec!",
 	pswarn1 = "Thaddius begins to cast Polarity Shift!",
@@ -97,7 +97,7 @@ L:RegisterTranslations("ruRU", function() return {
 	teslaoverload = "%s перезагружается!", 
 
 	pstrigger = "Познайте же боль...",  
-	
+
 	startwarn = "Таддиус фаза 1",
 	startwarn2 = "Таддиус фаза 2, ярость через 5 минут!",
 	addsdownwarn = "Таддиус появится через 10-20 секунд!",
@@ -144,7 +144,7 @@ L:RegisterTranslations("koKR", function() return {
 	teslaoverload = "과부하 상태가 됩니다.",
 
 	pstrigger = "자, 고통을 느껴봐라...",
-	
+
 	startwarn = "타디우스 1 단계",
 	startwarn2 = "타디우스 2 단계, 6분 후 격노!",
 	addsdownwarn = "10~20초 이내 2단계 시작!",
@@ -188,7 +188,7 @@ L:RegisterTranslations("deDE", function() return {
 	teslaoverload = "\195\188berl\195\164dt!",
 
 	pstrigger = "Jetzt sp\195\188rt ihr den Schmerz",
-	
+
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
 	addsdownwarn = "Thaddius kommt frei in 10-20s!",
@@ -230,7 +230,7 @@ L:RegisterTranslations("zhCN", function() return {
 	teslaoverload = "超载！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
-	
+
 	startwarn = "第一阶段",
 	startwarn2 = "第二阶段 - 6分钟后激怒！",
 	addsdownwarn = "10-20秒后，塔迪乌斯出现！",
@@ -278,7 +278,7 @@ L:RegisterTranslations("zhTW", function() return {
 	teslaoverload = "超負荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
-	
+
 	startwarn = "第一階段",
 	startwarn2 = "第二階段 - 6分鍾後狂怒！",
 	addsdownwarn = "10-20秒後，泰迪斯出現！",
@@ -325,9 +325,9 @@ L:RegisterTranslations("frFR", function() return {
 	teslaoverload = "%s entre en surcharge !",
 
 	pstrigger = "Maintenant toi sentir douleur...",
-	
+
 	startwarn = "Thaddius - Phase 1",
-	startwarn2 = "Thaddius - Phase 2, Enrager dans 5 min. !",
+	startwarn2 = "Thaddius - Phase 2, Berserk dans 6 min. !",
 	addsdownwarn = "Arrivée de Thaddius dans 10-20 sec. !",
 	thaddiusincoming = "Arrivée de Thaddius dans 3 sec. !",
 	pswarn1 = "Thaddius commence à incanter un Changement de polarité !",

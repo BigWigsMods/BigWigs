@@ -172,7 +172,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	webspraywarn30sec = "Entoilage dans 10 sec.",
 	webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !",
-	webspraywarn10sec = "Araignées écloses. 10 sec. avant Jet de rets !",
+	webspraywarn10sec = "Araignées ! 10 sec. avant le Jet de rets !",
 	webspraywarn5sec = "Jet de rets dans 5 sec. !",
 	webspraywarn = "Jet de rets ! 40 sec. avant le suivant !",
 	enragewarn = "Frénésie !",

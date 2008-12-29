@@ -238,7 +238,7 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "Mourez, intrus !",
 	starttrigger2 = "Gloire au maître !",
 	starttrigger3 = "Vos vies ne valent plus rien !",
-	startwarn = "Noth le Porte-peste engagé ! 90 sec. avant téléportation",
+	startwarn = "Noth le Porte-peste engagé ! 90 sec. avant téléportation !",
 
 	blink = "Transfert",
 	blink_desc = "Prévient quand Noth utilise son Transfert.",
@@ -249,7 +249,7 @@ L:RegisterTranslations("frFR", function() return {
 	teleport = "Téléportation",
 	teleport_desc = "Prévient quand Noth se téléporte.",
 	teleportbar = "Téléportation",
-	backbar = "De retour dans la salle",
+	backbar = "Retour dans la salle !",
 	teleportwarn = "Téléportation ! Il est sur le balcon !",
 	teleportwarn2 = "Téléportation dans 10 sec. !",
 	backwarn = "De retour dans la salle pendant %d sec. !",

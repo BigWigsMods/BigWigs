@@ -179,11 +179,11 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	startwarn = "Horreb engagé, 2 min. avant Malédiction inévitable !",
+	startwarn = "Horreb engagé ! 2 min. avant la 1ère Malédiction inévitable !",
 
 	aura = "Aura nécrotique",
 	aura_desc = "Prévient de l'arrivée des Auras nécrotiques.",
-	aura_message = "Aura nécrotique - Durée de 17 sec. !",
+	aura_message = "Aura nécrotique pendant 17 sec. !",
 	aura_warning = "Fin de l'Aura nécrotique dans 3 sec. !",
 
 	deathbloom = "Mortelle floraison",

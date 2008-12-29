@@ -191,7 +191,7 @@ L:RegisterTranslations("frFR", function() return {
 	void = "Zone de vide",
 	void_desc = "Prévient quand Dame Blaumeux incante une Zone de vide.",
 	voidwarn = "Arrivée d'une Zone de vide",
-	voidbar = "Prochaine Zone de vide",
+	voidbar = "Proch. Zone de vide",
 
 	meteor = "Météore",
 	meteor_desc = "Prévient quand Thane incante un météore.",
@@ -205,7 +205,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	dies = "#%d tué(e)",
 
-	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec.",
+	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec. !",
 } end )
 
 

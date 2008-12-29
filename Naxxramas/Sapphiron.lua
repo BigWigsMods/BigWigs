@@ -204,7 +204,7 @@ L:RegisterTranslations("frFR", function() return {
 	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~14 sec. !",
 	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
 	deepbreath_incoming_bar = "Bombe de glace en incantation",
-	deepbreath_trigger = "%s prend une grande inspiration…",
+	deepbreath_trigger = "%s inspire profondément.",
 	deepbreath_warning = "Arrivée d'une Bombe de glace !",
 	deepbreath_bar = "Impact Bombe de glace ",
 
@@ -217,7 +217,7 @@ L:RegisterTranslations("frFR", function() return {
 	icebolt = "Eclair de glace",
 	icebolt_desc = "Fait crier à votre personnage qu'il est un bloc de glace quand c'est le cas.",
 	icebolt_other = "Bloc : %s",
-	icebolt_yell = "Je suis un bloc ! -%s-",
+	icebolt_yell = "Je suis un bloc !",
 
 	ping = "Ping",
 	ping_desc = "Pinge votre position actuelle si vous subissez les effets de l'Eclair de glace.",
@@ -255,7 +255,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	
+
 	started = nil
 	breath = 1
 end

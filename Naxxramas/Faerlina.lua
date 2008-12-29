@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	silencewarn = "Silenced!",
 	silencewarn5sec = "Silence ends in 5 sec",
 	silencebar = "Silence",
-	
+
 	rain = "Rain of Fire on You",
 	rain_desc = "Warn when you are in a Rain of Fire.",
 	rain_message = "Rain of Fire on YOU!",
@@ -54,11 +54,11 @@ L:RegisterTranslations("ruRU", function() return {
 	enragewarn = "Бешенство!",
 	enragewarn2 = "Скоро бешенство!",
 	enrageremovewarn = "Бешенство снято! ~60 секунд до следующего!",
-	
+
 	silencewarn = "Безмолвие! Задержка ярости!",
 	silencewarn5sec = "Безмолвие закончится через 5 секунд",
 	silencebar = "Безмолвие",
-	
+
 	rain = "Огненный ливень на Вас!",
 	rain_desc = "Предупреждать об Огненном ливне.",
 	rain_message = "Огненный ливень на ВАС!",
@@ -82,7 +82,7 @@ L:RegisterTranslations("deDE", function() return {
 	silencewarn5sec = "Stille endet in 5 Sekunden",
 
 	silencebar = "Stille",
-	
+
 	--rain = "Rain of Fire on You",
 	--rain_desc = "Warn when you are in a Rain of Fire.",
 	--rain_message = "Rain of Fire on YOU!",
@@ -102,11 +102,11 @@ L:RegisterTranslations("koKR", function() return {
 	enragewarn = "격노!",
 	enragewarn2 = "잠시 후 격노!",
 	enrageremovewarn = "격노 사라짐! 약 ~60초 후 다음 격노",
-	
+
 	silencewarn = "침묵!",
 	silencewarn5sec = "5초 후 침묵 종료!",
 	silencebar = "침묵",
-	
+
 	rain = "자신의 불의 비",
 	rain_desc = "자신이 불의 비에 걸렸을 때 알립니다.",
 	rain_message = "당신은 불의 비!",
@@ -130,7 +130,7 @@ L:RegisterTranslations("zhCN", function() return {
 	silencewarn5sec = "5秒后沉默结束！",
 
 	silencebar = "<沉默>",
-	
+
 	rain = "自身火焰之雨",
 	rain_desc = "当你中了火焰之雨时发出自身警报。",
 	rain_message = ">你< 火焰之雨！",
@@ -154,7 +154,7 @@ L:RegisterTranslations("zhTW", function() return {
 	silencewarn5sec = "5秒後沉默結束！",
 
 	silencebar = "<沉默>",
-	
+
 	rain = "自身火焰之雨",
 	rain_desc = "當你中了火焰之雨時發出自身警報。",
 	rain_message = ">你< 火焰之雨！",
@@ -178,10 +178,10 @@ L:RegisterTranslations("frFR", function() return {
 	silencewarn = "Réduite au silence !",
 	silencewarn5sec = "Fin du silence dans 5 sec.",
 	silencebar = "Silence",
-	
-	--rain = "Rain of Fire on You",
-	--rain_desc = "Warn when you are in a Rain of Fire.",
-	--rain_message = "Rain of Fire on YOU!",
+
+	rain = "Pluie de feu sur vous",
+	rain_desc = "Prévient quand vous vous trouvez sous une Pluie de feu.",
+	rain_message = "Pluie de feu sur VOUS !",
 } end )
 
 ----------------------------------
