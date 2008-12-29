@@ -293,13 +293,13 @@ L:RegisterTranslations("deDE", function() return {
 	drakes_active = "%s ist aktiv!",
 
 	vesperon = "Vesperon",
-	vesperon_trigger = "Vesperon, the clutch is in danger! Assist me!",
+	vesperon_trigger = "Vesperon, das Gelege ist in Gefahr! Helft mir!",
 
 	shadron = "Shadron",
-	shadron_trigger = "Shadron! Come to me! All is at risk!",
+	shadron_trigger = "Shadron! Kommt zu mir! Der Sieg steht auf Messers Schneide!",
 
 	tenebron = "Tenebron",
-	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+	tenebron_trigger = "Tenebron! Auch Ihr sollt die Eier schützen!",
 
 	drakedeath = "Drachen tot",
 	drakedeath_desc = "Warnen wenn einer der Drachen stirbt.",
