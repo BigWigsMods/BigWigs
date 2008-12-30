@@ -395,17 +395,22 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	elseif phase == 2 then
 		if db.breath then
 			--19879 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+			self:CancelScheduledEvent("OverloadWarn")
+			self:CancelScheduledEvent("Overload")
 			self:Message(L["breath_message"], "Important", 43810, "Alert")
 			self:Bar(L["breath"], 59, 43810)
+			self:Bar(L["overload"], 9, 56438)
+			self:DelayedMessage(4, L["overload_warning"], "Attention")
 			self:ScheduleEvent("BreathWarn", "BigWigs_Message", 54, L["breath_warning"], "Attention")
+			self:ScheduleEvent("Overload", self.RepeatOverload, 10, self)
 		end
 	end
 end
 
 function mod:RepeatOverload()
 	self:Bar(L["overload_next"], 15, 56438)
-	self:ScheduleEvent("OverloadWarn", "BigWigs_Message", 10, L["overload_next"], "Attention")
-	self:ScheduleEvent("Overload", self.RepeatOverload, 15, self)
+	self:ScheduleEvent("OverloadWarn", "BigWigs_Message", 10, L["overload_warning"], "Attention")
+	self:ScheduleEvent("Overload", self.RepeatOverload, 16, self)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -423,7 +428,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.overload then
 			self:Bar(L["overload"], 30, 56438)
 			self:DelayedMessage(25, L["overload_warning"], "Attention")
-			self:ScheduleEvent("Overload", self.RepeatOverload, 27, self)
+			self:ScheduleEvent("Overload", self.RepeatOverload, 31, self)
 		end
 	elseif msg:find(L["phase2_end_trigger"]) then
 		self:CancelScheduledEvent("BreathWarn")
