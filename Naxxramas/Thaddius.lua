@@ -432,6 +432,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 			end
 			self:CancelScheduledEvent("Bwthaddiusthrow")
 			self:CancelScheduledEvent("Bwthaddiusthrowwarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["throwbar"])
 		end
 	end
 end

@@ -6,7 +6,6 @@ local boss = BB["Kel'Thuzad"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local MCd = {}
-local FBd = {}
 local fmt = string.format
 local pName = UnitName("player")
 local frostBlastTime
@@ -434,26 +433,12 @@ end
 function mod:FrostBlast(player, spellID)
 	if self.db.profile.frostblast then
 		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
-			FBd[player] = true
-			self:ScheduleEvent("FBCheck", self.FBWarn, 0.5, self)
+			self:IfMessage(fmt(L["frostblast_message"], player), "Attention", spellID)
 			self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 20, L["frostblast_soon_message"])
 			self:Bar(L["frostblast_bar"], 25, spellID)
 			frostBlastTime = GetTime()
 		end
 	end
-end
-
-function mod:FBWarn()
-	local msg = nil
-	for k in pairs(FBd) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	self:IfMessage(fmt(L["frostblast_message"], msg), "Important", 27808, "Alert")
-	for k in pairs(FBd) do FBd[k] = nil end
 end
 
 function mod:Detonate(player, spellID)

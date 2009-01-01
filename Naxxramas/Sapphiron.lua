@@ -82,7 +82,7 @@ L:RegisterTranslations("koKR", function() return {
 	deepbreath_incoming_message = "약 14초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_soon_message = "약 5초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_bar = "얼음 폭탄 시전",
-	deepbreath_trigger = "사피론가 숨을 깊게 들이마십니다.",
+	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다.",
 	deepbreath_warning = "잠시 후 얼음 폭탄!",
 	deepbreath_bar = "얼음 폭탄 떨어짐!",
 
