@@ -78,14 +78,14 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Wutanfall!",
 	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in ~60 Sekunden!",
 	silencewarn = "Stille! Wutanfall verz\195\182gert!",
-	--enragewarn2 = "Frenzied Soon!",
+	enragewarn2 = "Wutanfall bald!",
 	silencewarn5sec = "Stille endet in 5 Sekunden",
 
 	silencebar = "Stille",
 
-	--rain = "Rain of Fire on You",
-	--rain_desc = "Warn when you are in a Rain of Fire.",
-	--rain_message = "Rain of Fire on YOU!",
+	rain = "Feuerregen auf dir",
+	rain_desc = "Warnung, wenn du in einem Feuerregen bist.",
+	rain_message = "Feuerregen auf DIR!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

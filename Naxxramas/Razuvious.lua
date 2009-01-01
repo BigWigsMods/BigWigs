@@ -34,22 +34,22 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--shout = "Disrupting Shout",
-	--shout_desc = "Warn for Disrupting Shout.",
-	--shout_warning = "Disrupting Shout in 5sec!",
-	--shout_next = "Shout Cooldown",
+	shout = "Unterbrechender Schrei",
+	shout_desc = "Warnung f\195\188r Unterbrechender Schrei.",
+	shout_warning = "Unterbrechender Schrei in 5 Sekunden!",
+	shout_next = "Schrei Cooldown",
 
-	--knife = "Jagged Knife",
-	--knife_desc = "Warn who has Jagged Knife.",
-	--knife_message = "%s: Jagged Knife",
-	
-	--taunt = "Taunt",
-	--taunt_desc = "Warn for taunt.",
-	--taunt_warning = "Taunt done in 5sec!",
+	knife = "Gezacktes Messer",
+	knife_desc = "Warnung, wer von Gezacktes Messer betroffen ist.",
+	knife_message = "%s: Gezacktes Messer",
 
-	--shieldwall = "Shield Wall",
-	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_warning = "Shield Wall done in 5sec!",
+	taunt = "Spott",
+	taunt_desc = "Warnung f\195\188r Spott.",
+	taunt_warning = "Spott bereit in 5 Sekunden!",
+
+	shieldwall = "Knochenbarriere",
+	shieldwall_desc = "Warnung f\195\188r Knochenbarriere.",
+	shieldwall_warning = "Knochenbarriere bereit in 5 Sekunden!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

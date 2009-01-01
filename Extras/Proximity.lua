@@ -128,7 +128,7 @@ L:RegisterTranslations("deDE", function() return {
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die Nähe Anzeige wurde deaktiviert für %s, bitte benutze die Boss Modul Optionen um sie wieder zu aktivieren.",
 
 	proximity = "Nähe Anzeige",
-	proximity_desc = "Zeigt das Nähe Fenster wenn benötigt passsend zu diesem Encounter an, auflistend die Spieler die dir zu Nahe stehn.",
+	proximity_desc = "Zeigt das Nähe Fenster an, wenn es für diesen Encounter benötigt wird. Listet alle Spieler auf, die dir zu nahe stehen.",
 
 	font = "Fonts\\FRIZQT__.TTF",
 

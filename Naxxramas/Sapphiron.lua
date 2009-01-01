@@ -124,17 +124,17 @@ L:RegisterTranslations("deDE", function() return {
 	deepbreath_warning = "Frostatem kommt!",
 	deepbreath_bar = "Frostatem!",
 
-	--icebolt = "Icebolt",
-	--icebolt_desc = "Yell when you are an Icebolt.",
-	--icebolt_other = "Block: %s",
-	--icebolt_yell = "I'm a Block! -%s-",
+	icebolt = "Eisblitz",
+	icebolt_desc = "Schreien, wenn du von Eisblitz betroffen bist.",
+	icebolt_other = "Eisblock: %s",
+	icebolt_yell = "Ich bin ein Eisblock! -%s-",
 
-	--ping = "Ping",
-	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
-	--ping_message = "Block - Pinging your location!",
+	ping = "Ping",
+	ping_desc = "Die derzeitige Position pingen, wenn du von Eisblitz betroffen bist.",
+	ping_message = "Eisblock - Position gepingt!",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
+	icon = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Eisblitz betroffen ist (ben\195\182tigt Assistent oder h\195\182her).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

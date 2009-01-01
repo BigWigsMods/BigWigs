@@ -122,7 +122,7 @@ L:RegisterTranslations("deDE", function() return {
 	wrathwarn = "Heiliger Zorn!",
 	wrathbar = "Heiliger Zorn",
 
-	--dies = "#%d Killed",
+	dies = "#%d get\195\182tet",
 
 	startwarn = "Die Vier Reiter angegriffen! Mal in ~17 Sekunden",
 } end )

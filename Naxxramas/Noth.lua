@@ -112,7 +112,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	curse = "Fluch",
 	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
-	--curseexplosion = "Curse explosion!",
+	curseexplosion = "Fluch Explosion!",
 	cursewarn = "Fluch! N\195\164chster in ~55 Sekunden",
 	curse10secwarn = "Fluch in ~10 Sekunden",
 	cursebar = "N\195\164chster Fluch",

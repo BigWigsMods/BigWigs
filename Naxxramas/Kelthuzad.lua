@@ -188,10 +188,10 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_warning = "Phase 3, W\195\164chter in ~15sek!",
 
 	mc = "Gedankenkontrolle Warnung",
-	--mc_desc = "Tells you who has been Mind Control and when the next Mind Control is coming.",
-	--mc_message = "Mind Control: %s",
-	--mc_warning = "Mind Control Cooldown Over - Inc Soon!",
-	--mc_nextbar = "~Mind Control Cooldown",
+	mc_desc = "Sagt dir, wer von Gedankenkontrolle betroffen ist und wann die n\195\164chste Gedankenkontrolle kommen wird.",
+	mc_message = "Gedankenkontrolle: %s",
+	mc_warning = "Gedankenkontrolle Cooldown vorbei - Kommt bald!",
+	mc_nextbar = "~ Gedankenkontrolle Cooldown",
 
 	fissure = "Schattenspalt Warnung",
 	fissure_desc = "Warnt vor Schattenspalt.",
@@ -199,25 +199,25 @@ L:RegisterTranslations("deDE", function() return {
 
 	frostblast = "Frostschlag Warnung",
 	frostblast_desc = "Warnt wenn Leute Frostschlag bekommen.",
-	--frostblast_bar = "Possible Frost Blast",
-	--frostblast_message = "%s : Frost Blast",
-	--frostblast_soon_message = "Possible Frost Blast in ~5sec!",
+	frostblast_bar = "M\195\182glicher Frostschlag",
+	frostblast_message = "%s : Frostschlag",
+	frostblast_soon_message = "M\195\182glicher Frostschlag in ~5 Sekunden!",
 
 	detonate = "Detonierendes Mana Warnung",
 	detonate_desc = "Warnt vor Detonierendes Mana.",
-	--detonate_you = "Detonate Mana on YOU!",
+	detonate_you = "Detonierendes Mana auf DIR!",
 	detonate_other = "Detonierendes Mana - %s",
 	detonate_possible_bar = "Detonierendes Mana",
-	--detonate_warning = "Next Detonate in 5 seconds!",
+	detonate_warning = "Detonierendes Mana in 5 Sekunden!",
 
-	guardians = "Guardian Spawns",
-	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
+	guardians = "W\195\164chter Spawns",
+	guardians_desc = "Warnt vor W\195\164chtern von Eiskrone in Phase 3.",
 	guardians_trigger = "Also gut. Erhebt euch, Krieger der eisigen Weiten! Ich befehle euch zu k\195\164mpfen, zu t\195\182ten und f\195\188r euren Meister zu sterben! Lasst keinen am Leben!",
 	guardians_warning = "W\195\164chter in ~10sek!",
 	guardians_bar = "W\195\164chter kommen!",
 
 	icon = "Schlachtzugicon bei Detonierung",
-	icon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana.",
+	icon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana (ben\195\182tigt Assistent oder h\195\182her).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

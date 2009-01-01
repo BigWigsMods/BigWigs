@@ -44,8 +44,8 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--inject = "Du bist verseucht",
-	--inject_desc = "Warnung, wenn Du von Mutagene Injektion betroffen bist.",
+	inject = "Mutagene Injektion",
+	inject_desc = "Warnung, wenn du von Mutagene Injektion betroffen bist.",
 	bomb_message_you = "Du bist verseucht!",
 	bomb_message_other = "%s ist verseucht!",
 
