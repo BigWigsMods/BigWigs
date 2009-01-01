@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	enragewarn = "5% - Enrage!",
 	starttrigger1 = "Flickwerk spielen m\195\182chte!",
-	starttrigger2 = "Kel’thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
+	starttrigger2 = "Kel'Thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
