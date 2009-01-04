@@ -161,7 +161,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
-	startwarn = "Gothik der Seelenj\195\164ger angegriffen! Im Raum in 4:30 Minuten!",
+	startwarn = "Gothik der Ernter angegriffen! Im Raum in 4:30 Minuten!",
 
 	rider = "Unerbittlicher Reiter",
 	spectral_rider = "Spektraler Reiter",
