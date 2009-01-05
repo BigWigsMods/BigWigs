@@ -72,7 +72,7 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Kniet nieder, Wurm!",
 	starttrigger2 = "T\195\182tet sie im Namen des Meisters!",
 	starttrigger3 = "Ihr k\195\182nnt euch nicht vor mir verstecken!",
-	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt",
+	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt.",
 
 	startwarn = "Gro\195\159witwe Faerlina angegriffen! Wutanfall in 60 Sekunden!",
 	enragewarn15sec = "Wutanfall in 15 Sekunden!",
@@ -241,7 +241,7 @@ function mod:Silence(unit, spellID)
 end
 
 function mod:Rain(player)
-	if player == pName and db.rain then
+	if player == pName and self.db.rain then
 		self:LocalMessage(L["rain_message"], "Personal", 54099, "Alarm")
 	end
 end
