@@ -504,6 +504,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["start_warning"], "Attention")
 		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")
 		for k in pairs(MCd) do MCd[k] = nil end
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"])
