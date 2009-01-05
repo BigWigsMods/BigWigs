@@ -12,6 +12,8 @@ local started = nil
 local phase = nil
 local p2 = nil
 local fmt = string.format
+local surgeTargets = nil
+local surgeAmount = nil
 
 ----------------------------
 --      Localization      --
@@ -44,6 +46,8 @@ L:RegisterTranslations("enUS", function() return {
 	surge = "Surge of Power",
 	surge_desc = "Warn who has Surge of Power.",
 	surge_you = "Surge of Power on YOU!",
+	surge_trigger = "%s fixes his eyes on you!",
+	surge_warning = "Surge on %s!",
 
 	icon = "Raid Target Icon",
 	icon_desc = "Place a Raid Target Icon on the player that Surge of Power is being cast on(requires promoted or higher)",
@@ -306,10 +310,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Surge", 57407, 60936)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Vortex", 56105)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -321,6 +325,8 @@ function mod:OnEnable()
 	started = nil
 	db = self.db.profile
 	phase = 0
+	surgeTargets = {}
+	surgeAmount = GetCurrentDungeonDifficulty() == 1 and 1 or 3
 end
 
 ------------------------------
@@ -344,41 +350,12 @@ function mod:Vortex(_, spellID)
 	end
 end
 
-local cachedId = nil
 
-function mod:Surge()
-	if phase == 3 then
-		if db.surge then
-			self:ScheduleRepeatingEvent("BWMalygosToTScan", self.SurgeCheck, 0.3, self)
-		end
-	end
-end
-
-local last = 0
-function mod:SurgeCheck()
-	local target
-	if UnitName("target") == boss then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "pet") or "") == boss then
-				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-				break
-			end
-		end
-	end
-	if target then
-		local time = GetTime()
-		if (time - last) > 4 then
-			last = time
-			if target == pName then
-				self:LocalMessage(L["surge_you"], "Personal", nil, "Alarm")
-			end
-			self:Icon(target, "icon")
-		end
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg, mob)
+	if phase == 3 and db.surge and msg == L["surge_trigger"] then
+		self:LocalMessage(L["surge_you"], "Personal", 56505, "Alarm")
+		self:Sync("MalygosSurge", pName)
+		self:Icon(pName)
 	end
 end
 
@@ -474,5 +451,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.enrage then
 			self:Enrage(600, true)
 		end
+	elseif sync == "MalygosSurge" and rest then
+		table.insert(surgeTargets, rest)
+		if #surgeTargets >= surgeAmount then
+			self:IfMessage(L["surge_warning"]:format(table.concat(surgeTargets)), "Attention", 56505)
+			for i = 1, #surgeTargets do
+				self:Icon(table.remove(surgeTargets))
+			end
+		end
 	end
 end
+
