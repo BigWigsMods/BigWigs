@@ -9,6 +9,7 @@ local started = nil
 local enraged = nil
 local enrageName = GetSpellInfo(28798)
 local enrageMessageId = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
