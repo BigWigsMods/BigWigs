@@ -321,6 +321,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:Throttle(0, "MalygosSurge")
 
 	started = nil
 	db = self.db.profile
