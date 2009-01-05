@@ -241,7 +241,7 @@ function mod:Silence(unit, spellID)
 end
 
 function mod:Rain(player)
-	if player == pName and self.db.rain then
+	if player == pName and self.db.profile.rain then
 		self:LocalMessage(L["rain_message"], "Personal", 54099, "Alarm")
 	end
 end
