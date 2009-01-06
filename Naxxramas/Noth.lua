@@ -25,6 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	blink = "Blink",
 	blink_desc = "Warnings when Noth blinks.",
+	blinktrigger = "%s blinks away!",
 	blinkwarn = "Blink!",
 	blinkwarn2 = "Blink in ~5 sec!",
 	blinkbar = "Blink",
@@ -61,6 +62,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	blink = "Опасность скачка",
 	blink_desc = "Предупреждать, когда Нот использует скачок",
+	--blinktrigger = "%s blinks away!",
 	blinkwarn = "Скачок!",
 	blinkwarn2 = "Скачок через 5 секунд!",
 	blinkbar = "Скачок",
@@ -97,6 +99,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	blink = "Blinzeln",
 	blink_desc = "Warnung, wenn Noth Blinzeln wirkt.",
+	blinktrigger = "%s blinzelt sich davon!",
 	blinkwarn = "Blinzeln!",
 	blinkwarn2 = "Blinzeln in ~5 Sekunden!",
 	blinkbar = "Blinzeln",
@@ -134,6 +137,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	blink = "점멸",
 	blink_desc = "점멸을 알립니다.",
+	blinktrigger = "%s|1이;가; 눈 깜짝할 사이에 도망칩니다!",
 	blinkwarn = "점멸! 어그로 초기화, 공격 금지!",
 	blinkwarn2 = "약 5초 이내 점멸!",
 	blinkbar = "점멸",
@@ -170,6 +174,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	blink = "闪现术",
 	blink_desc = "当施放闪现术时发出警报。",
+	--blinktrigger = "%s blinks away!",
 	blinkwarn = "闪现术！停止攻击！",
 	blinkwarn2 = "约5秒后，闪现术！",
 	blinkbar = "<闪现术>",
@@ -206,6 +211,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	blink = "閃現術",
 	blink_desc = "當施放閃現術時發出警報。",
+	--blinktrigger = "%s blinks away!",
 	blinkwarn = "閃現術！停止攻擊！",
 	blinkwarn2 = "約5秒後，閃現術！",
 	blinkbar = "<閃現術>",
@@ -242,6 +248,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	blink = "Transfert",
 	blink_desc = "Prévient quand Noth utilise son Transfert.",
+	--blinktrigger = "%s blinks away!",
 	blinkwarn = "Transfert !",
 	blinkwarn2 = "Transfert dans ~5 sec. !",
 	blinkbar = "Transfert",
@@ -287,11 +294,11 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Blink", 29208, 29209, 29210, 29211)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
 ------------------------------
@@ -307,11 +314,13 @@ function mod:Curse(_, spellID)
 	end
 end
 
-function mod:Blink(unit, spellID)
-	if unit == boss and self.db.profile.blink then
-		self:IfMessage(L["blinkwarn"], "Important", spellID)
-		self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
-		self:Bar(L["blinkbar"], 30, spellID)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg:find(L["blinktrigger"]) then
+		if self.db.profile.blink then
+			self:IfMessage(L["blinkwarn"], "Important", spellID)
+			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 35, L["blinkwarn2"], "Attention")
+			self:Bar(L["blinkbar"], 40, spellID)
+		end
 	end
 end
 

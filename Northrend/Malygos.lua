@@ -88,6 +88,8 @@ L:RegisterTranslations("koKR", function() return {
 	surge = "마력의 쇄도",
 	surge_desc = "마력의 쇄도의 대상을 알립니다.",
 	surge_you = "당신에게 마력의 쇄도!",
+	surge_trigger = "%s|1이;가; 당신을 주시합니다!",
+	surge_warning = "마력의 쇄도: %s!",
 
 	icon = "전술 표시",
 	icon_desc = "마력의 쇄도의 시전 대상의 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
@@ -351,7 +353,6 @@ function mod:Vortex(_, spellID)
 	end
 end
 
-
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg, mob)
 	if phase == 3 and db.surge and msg == L["surge_trigger"] then
 		self:LocalMessage(L["surge_you"], "Personal", 56505, "Alarm")
@@ -377,10 +378,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 			self:CancelScheduledEvent("Overload")
 			self:Message(L["breath_message"], "Important", 43810, "Alert")
 			self:Bar(L["breath"], 59, 43810)
-			self:Bar(L["overload"], 9, 56438)
-			self:DelayedMessage(4, L["overload_warning"], "Attention")
+			self:Bar(L["overload"], 11, 56438)
+			self:DelayedMessage(6, L["overload_warning"], "Attention")
 			self:ScheduleEvent("BreathWarn", "BigWigs_Message", 54, L["breath_warning"], "Attention")
-			self:ScheduleEvent("Overload", self.RepeatOverload, 10, self)
+			self:ScheduleEvent("Overload", self.RepeatOverload, 12, self)
 		end
 	end
 end

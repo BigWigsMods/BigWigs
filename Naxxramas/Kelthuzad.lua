@@ -5,6 +5,7 @@
 local boss = BB["Kel'Thuzad"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+local FB = {}
 local MCd = {}
 local fmt = string.format
 local pName = UnitName("player")
@@ -430,15 +431,31 @@ function mod:Fizzure()
 	end
 end
 
-function mod:FrostBlast(player, spellID)
+function mod:FrostBlast(player)
 	if self.db.profile.frostblast then
 		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
-			self:IfMessage(fmt(L["frostblast_message"], player), "Attention", spellID)
-			self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 20, L["frostblast_soon_message"])
-			self:Bar(L["frostblast_bar"], 25, spellID)
+			FB[player] = true
+			self:CancelScheduledEvent("bwktfbwarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["frostblast_bar"])
+			self:ScheduleEvent("BWFrostBlastWarn", self.FBWarn, 0.4, self)
+			self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 32, L["frostblast_soon_message"])
+			self:Bar(L["frostblast_bar"], 37, spellID)
 			frostBlastTime = GetTime()
 		end
 	end
+end
+
+function mod:FBWarn()
+	local msg = nil
+	for k in pairs(FB) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
+		end
+	end
+	self:IfMessage(L["frostblast_message"]:format(msg), "Important", 27808, "Alert")
+	for k in pairs(FB) do FB[k] = nil end
 end
 
 function mod:Detonate(player, spellID)
@@ -504,6 +521,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["start_warning"], "Attention")
 		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")
 		for k in pairs(MCd) do MCd[k] = nil end
+		for k in pairs(FB) do FB[k] = nil end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
 		if self.db.profile.phase then
