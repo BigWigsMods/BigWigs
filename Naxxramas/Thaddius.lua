@@ -312,7 +312,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, feugen, stalagg}
 mod.guid = 15928
-mod.toggleoptions = {"charge", "polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
+mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -355,7 +355,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["pstrigger"]) and self.db.profile.polarity then
-		self:RegisterEvent("PLAYER_AURAS_CHANGED")
 		self:DelayedMessage(25, L["pswarn3"], "Important")
 		self:Bar(L["bar1text"], 28, "Spell_Nature_Lightning")
 	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
