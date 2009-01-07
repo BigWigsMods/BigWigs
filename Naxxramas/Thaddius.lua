@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger3 = "Break... you!!",
 	starttrigger4 = "Kill...",
 
-	adddeath = "%s dies.",
+	adddeath = "dies.",
 	teslaoverload = "overloads!",
 
 	pstrigger = "Now you feel pain...",
@@ -80,7 +80,7 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger3 = "Растерзаю!!!",  
 	starttrigger4 = "Убью...",  
 
-	adddeath = "%s умер.",
+	adddeath = "умер.",
 	teslaoverload = "%s перезагружается!", 
 
 	pstrigger = "Познайте же боль...",
@@ -196,7 +196,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "打……烂……你！",
 	starttrigger4 = "杀……",
 
-	adddeath = "%s死了。",
+	adddeath = "死了。",
 	teslaoverload = "超载！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
@@ -239,7 +239,7 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger3 = "打……爛……你！",
 	starttrigger4 = "殺……",
 
-	adddeath = "%s死亡了。",
+	adddeath = "死亡了。",
 	teslaoverload = "超負荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
@@ -281,7 +281,7 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger3 = "Casser... toi !",
 	starttrigger4 = "Tuer…",
 
-	adddeath = "%s meurt.",
+	adddeath = "meurt.",
 	teslaoverload = "%s entre en surcharge !",
 
 	pstrigger = "Maintenant toi sentir douleur...",

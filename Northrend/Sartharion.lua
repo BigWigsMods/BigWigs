@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	tsunami_warning = "Flame Tsunami in ~5sec!",
 	tsunami_message = "Flame Tsunami!",
 	tsunami_cooldown = "Flame Tsunami Cooldown",
-	tsunami_trigger = "The lava surrounding %s churns!",
+	tsunami_trigger = "The lava surrounding Sartharion churns!",
 
 	breath = "Flame Breath",
 	breath_desc = "Warn for Flame Breath casting.",
@@ -56,8 +56,6 @@ L:RegisterTranslations("enUS", function() return {
 	enrage = "Enrage",
 	enrage_warning = "Enrage soon!",
 	enrage_message = "Enraged!",
-
-	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -98,8 +96,6 @@ L:RegisterTranslations("koKR", function() return {
 	enrage = "광폭화",
 	enrage_warning = "잠시 후 광폭화!",
 	enrage_message = "광폭화!",
-
-	log = "|cffff0000"..boss.."|r:\n 해당 보스에 대한 대화 멘트, 전투로그등을 필요로 합니다. 섬게이트,인벤의 BigWigs Bossmods 안건에 /대화기록, /전투기록을 한 로그나 기타 스샷, 잘못된 타이머등 오류를 제보 부탁드립니다. 윈드러너 서버:백서향으로 바로 문의 주시면 조금 빠른 수정 업데이트가 됩니다 @_@;",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -108,7 +104,7 @@ L:RegisterTranslations("zhCN", function() return {
 	tsunami_warning = "约5秒，烈焰之啸！",
 	tsunami_message = "烈焰之啸！",
 	tsunami_cooldown = "烈焰之啸冷却！",
-	tsunami_trigger = "The lava surrounding %s churns!",
+	tsunami_trigger = "The lava surrounding %s churns!",	--check
 
 	breath = "烈焰吐息",
 	breath_desc = "当正在施放烈焰吐息时发出警报。",
@@ -140,8 +136,6 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage = "狂暴",
 	enrage_warning = "即将 狂暴！",
 	enrage_message = "狂暴！",
-
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -150,7 +144,7 @@ L:RegisterTranslations("zhTW", function() return {
 	tsunami_warning = "約5秒，炎嘯！",
 	tsunami_message = "炎嘯！",
 	tsunami_cooldown = "炎嘯冷卻！",
-	tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!",
+	tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!",	--check
 
 	breath = "火息術",
 	breath_desc = "當正在施放火息術時發出警報。",
@@ -182,8 +176,6 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage = "狂暴",
 	enrage_warning = "即將 狂暴！",
 	enrage_message = "狂暴！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -192,7 +184,7 @@ L:RegisterTranslations("frFR", function() return {
 	tsunami_warning = "Tsunami de flammes dans ~5 sec. !",
 	tsunami_message = "Tsunami de flammes !",
 	tsunami_cooldown = "Recharge Tsunami de flammes",
-	tsunami_trigger = "La lave qui entoure %s bouillonne !",
+	tsunami_trigger = "La lave qui entoure Sartharion bouillonne !",
 
 	breath = "Souffle de flammes",
 	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
@@ -224,8 +216,6 @@ L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "Enragé !",
-
-	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -234,7 +224,7 @@ L:RegisterTranslations("ruRU", function() return {
 	tsunami_warning = "Огненное цунами через ~5сек!",
 	tsunami_message = "Огненное цунами!",
 	tsunami_cooldown = "Перезарядка цунами",
-	tsunami_trigger = "Лава вокруг %s начинает бурлить!",
+	tsunami_trigger = "Лава вокруг Сартарион начинает бурлить!",
 
 	breath = "Огненное дыхание",
 	breath_desc = "Предупреждать о применении огненного дыхания.",
@@ -266,8 +256,6 @@ L:RegisterTranslations("ruRU", function() return {
 	enrage = "Исступление",
 	enrage_warning = "Скоро Исступление!",
 	enrage_message = "Исступление!",
-
-	log = "|cffff0000"..boss.."|r:\n Для этого босса необходимы правильные данные. Пожалуйста, включите запись логов (команда /combatlog) или установите аддон transcriptor, и пришлите получившийся файл (или оставьте ссылку на файл в комментариях на curse.com).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -276,7 +264,7 @@ L:RegisterTranslations("deDE", function() return {
 	tsunami_warning = "Flammentsunami in ~5sek!",
 	tsunami_message = "Flammentsunami!",
 	tsunami_cooldown = "Flammentsunami Cooldown",
-	tsunami_trigger = "Die Lava um %s brodelt!",
+	tsunami_trigger = "Die Lava um Sartharion brodelt!",
 
 	breath = "Flammenatem",
 	breath_desc = "Warnung wenn Flammenatem gewirkt wird.",
