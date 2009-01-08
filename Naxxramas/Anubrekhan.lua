@@ -49,7 +49,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	locust = "Heuschreckenschwarm",
-	locust_desc = "Warnung, wenn Anub'Rekhan Heuschreckenschwarm wirkt.",
+	locust_desc = "Warnungen und Timer für Heuschreckenschwarm.",
 
 	starttrigger1 = "Nur einmal kosten...",
 	starttrigger2 = "Rennt! Das bringt das Blut in Wallung!",
@@ -57,9 +57,9 @@ L:RegisterTranslations("deDE", function() return {
 	engagewarn = "Anub'Rekhan angegriffen! Heuschreckenschwarm in ~90 Sekunden!",
 
 	gainendwarn = "Heuschreckenschwarm vorbei!",
-	gainnextwarn = "N\195\164chster Schwarm in ~85 Sekunden.",
+	gainnextwarn = "Nächster Schwarm in ~85 Sekunden.",
 	gainwarn10sec = "Heuschreckenschwarm in ~10 Sekunden",
-	gainincbar = "N\195\164chster Schwarm",
+	gainincbar = "Nächster Schwarm",
 	gainbar = "Heuschreckenschwarm",
 
 	castwarn = "Heuschreckenschwarm!",

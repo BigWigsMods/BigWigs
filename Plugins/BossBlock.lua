@@ -135,19 +135,19 @@ L:RegisterTranslations("deDE", function() return {
 	desc = "Boss-Warnungen und Emotes von Spielern und anderen Quellen automatisch unterdrücken.",
 
 	["Boss emotes"] = "Boss-Emotes",
-	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Unterdrücke Nachrichten die an den RaidBossEmoteFrame gesendet werden.\n\nUnterdrückt nur Nachrichten von Bossen die BigsWigs kennt, und unterdrückt nur die Anzeige in diesem Frame, nicht das (im) Chatfenster.",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Unterdrücke Nachrichten, die an den RaidBossEmoteFrame gesendet werden.\n\nUnterdrückt nur Nachrichten von Bossen die BigsWigs kennt, und unterdrückt nur die Anzeige in diesem Frame, nicht die im Chatfenster.",
 
 	["Raid chat"] = "Raidchat",
 	["Suppress messages sent to raid chat."] = "Nachrichten an den Raidchat unterdrücken.",
 
-	["Raid warning chat messages"] = "RaidWarn-Chat unterdrücken",
-	["Suppress raid warning messages from the chat window."] = "RaidWarn-Nachrichten im Chatfenster unterdrücken.",
+	["Raid warning chat messages"] = "Raidwarnung-Chat unterdrücken",
+	["Suppress raid warning messages from the chat window."] = "Raidwarnung-Nachrichten im Chatfenster unterdrücken.",
 
-	["Raid warning messages"] = "RaidWarn unterdrücken",
-	["Suppress raid warning messages from the raid message window."] = "RaidWarn Popup-Nachrichten unterdrücken.",
+	["Raid warning messages"] = "Raidwarnungen unterdrücken",
+	["Suppress raid warning messages from the raid message window."] = "Raidwarnung Popup-Nachrichten unterdrücken.",
 
 	["Raid say"] = "RaidSay unterdrücken",
-	["Suppress RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdrücken.",
+	["Suppress RaidSay popup messages."] = "CTRA RaidSay Popup-Nachrichten unterdrücken.",
 
 	["Whispers"] = "Flüstern unterdrücken",
 	["Suppress whispered messages."] = "Flüstern-Nachrichten unterdrücken.",

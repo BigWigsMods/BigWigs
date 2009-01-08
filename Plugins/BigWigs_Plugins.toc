@@ -6,6 +6,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f附加元件|r]
 ## Title-koKR: Big Wigs [|cffeda55f플러그인|r]
 ## Notes: Big Wigs Core Plugins
+## Notes-deDE: Plugins für die Grundfunktionen von Big Wigs
 ## Notes-ruRU: Модуль Big Wigs Плагины
 ## Notes-frFR: Plugins du noyau de Big Wigs.
 ## Notes-esES: Plugins del núcleo de Big Wigs.

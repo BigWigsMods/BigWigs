@@ -101,28 +101,28 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	mark = "Mal Alarm",
-	mark_desc = "Warnt vor den Mal Debuffs",
+	mark = "Male",
+	mark_desc = "Warnungen für die Mal Debuffs.",
 	markbar = "Mal",
 	markwarn1 = "Mal (%d)!",
 	markwarn2 = "Mal (%d) - 5 Sekunden",
 
-	void = "Zone der Leere Warnung",
-	void_desc = "Warnt, wenn Lady Blaumeux Zone der Leere zaubert.",
-	voidwarn = "Zone der Leere kommt",
+	void = "Zone der Leere",
+	void_desc = "Warnungen und Timer für Zone der Leere von Lady Blaumeux.",
+	voidwarn = "Zone der Leere!",
 	voidbar = "Zone der Leere",
 
-	meteor = "Meteor Alarm",
-	meteor_desc = "Warnt, wenn Thane Meteor zaubert.",
+	meteor = "Meteor",
+	meteor_desc = "Warnungen und Timer für Meteor von Than Korth'azz.",
 	meteorwarn = "Meteor!",
 	meteorbar = "Meteor",
 
-	wrath = "Heiliger Zorn Alarm",
-	wrath_desc = "Warnt, wenn Sire Zeliek Heiliger Zorn zaubert.",
+	wrath = "Heiliger Zorn",
+	wrath_desc = "Warnungen und Timer für Heiliger Zorn von Sir Zeliek.",
 	wrathwarn = "Heiliger Zorn!",
 	wrathbar = "Heiliger Zorn",
 
-	dies = "#%d get\195\182tet",
+	dies = "#%d getötet",
 
 	startwarn = "Die Vier Reiter angegriffen! Mal in ~17 Sekunden",
 } end )

@@ -67,25 +67,25 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	silence = "Stille",
-	silence_desc = "Warnung vor Stille",
+	silence_desc = "Warnungen und Timer für Stille.",
 
 	starttrigger1 = "Kniet nieder, Wurm!",
-	starttrigger2 = "T\195\182tet sie im Namen des Meisters!",
-	starttrigger3 = "Ihr k\195\182nnt euch nicht vor mir verstecken!",
-	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt.",
+	starttrigger2 = "Tötet sie im Namen des Meisters!",
+	starttrigger3 = "Ihr könnt euch nicht vor mir verstecken!",
+	starttrigger4 = "Flieht, solange ihr noch könnt.",
 
-	startwarn = "Gro\195\159witwe Faerlina angegriffen! Wutanfall in 60 Sekunden!",
+	startwarn = "Großwitwe Faerlina angegriffen! Wutanfall in 60 Sekunden!",
 	enragewarn15sec = "Wutanfall in 15 Sekunden!",
 	enragewarn = "Wutanfall!",
-	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in ~60 Sekunden!",
-	silencewarn = "Stille! Wutanfall verz\195\182gert!",
 	enragewarn2 = "Wutanfall bald!",
+	enrageremovewarn = "Wutanfall vorbei! Nächster in ~60 Sekunden!",
+	
+	silencewarn = "Stille! Wutanfall verzögert!",
 	silencewarn5sec = "Stille endet in 5 Sekunden",
-
 	silencebar = "Stille",
 
-	rain = "Feuerregen auf dir",
-	rain_desc = "Warnung, wenn du in einem Feuerregen bist.",
+	rain = "Feuerregen",
+	rain_desc = "Warnen, wenn du in einem Feuerregen bist.",
 	rain_message = "Feuerregen auf DIR!",
 } end )
 

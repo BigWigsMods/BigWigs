@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiv|r",
 	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zurückzusetzen. |cffeda55fAlt+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg-Alt+Klick|r um BigWigs komplett zu beenden.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
-	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Klick|r zum öffnen des Konfigurationsfensters.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Klick|r zum Öffnen des Konfigurationsfensters.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenwärtig deaktiviert.",
 	["Active boss modules:"] = "Aktive Boss Module:",
 	["All running modules have been reset."] = "Alle laufenden Module wurden zurückgesetzt.",

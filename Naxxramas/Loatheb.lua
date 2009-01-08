@@ -101,27 +101,27 @@ L:RegisterTranslations("deDE", function() return {
 	startwarn = "Loatheb angegriffen! 2 Minuten bis Unausweichliches Schicksal!",
 
 	aura = "Nekrotische Aura",
-	aura_desc = "Warnung f\195\188r Nekrotische Aura",
+	aura_desc = "Warnungen und Timer für Nekrotische Aura.",
 	aura_message = "Nekrotische Aura - Dauer 17 Sekunden!",
 	aura_warning = "Nekrotische Aura schwindet in 3 Sekunden!",
 
-	deathbloom = "Todesbl\195\188te",
-	deathbloom_desc = "Warnung f\195\188r Todesbl\195\188te",
-	deathbloom_warning = "Todesbl\195\188te in 5 Sekunden!",
+	deathbloom = "Todesblüte",
+	deathbloom_desc = "Warnungen und Timer für Todesblüte.",
+	deathbloom_warning = "Todesblüte in 5 Sekunden!",
 
 	doom = "Unausweichliches Schicksal",
-	doom_desc = "Warnung f\195\188r Unausweichliches Schicksal.",
+	doom_desc = "Warnungen und Timer für Unausweichliches Schicksal.",
 	doombar = "Unausweichliches Schicksal %d",
-	doomwarn = "Unausweichliches Schicksal %d! %d Sekunden bis zum n\195\164chsten.",
+	doomwarn = "Unausweichliches Schicksal %d! %d Sekunden bis zum nächsten.",
 	doomwarn5sec = "Unausweichliches Schicksal %d in 5 Sekunden",
 	doomtimerbar = "Unausweichliches Schicksal alle 15 Sekunden",
 	doomtimerwarn = "Unausweichliches Schicksal Timer Wechsel in %s Sekunden!",
-	doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15s!",
+	doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15 Sekunden!",
 
-	spore = "Warnung bei Sporen",
-	spore_desc = "Warnung wenn Sporen auftauchen",
-	sporewarn = "Spore %d aufgetaucht",
-	sporebar = "Spore beschw\195\182ren %d",
+	spore = "Sporen",
+	spore_desc = "Warnungen und Timer für das Erscheinen einer Spore.",
+	sporewarn = "Spore %d aufgetaucht!",
+	sporebar = "Spore beschwören %d",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

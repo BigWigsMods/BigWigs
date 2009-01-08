@@ -84,7 +84,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Sounds"] = "Töne",
-	["Options for sounds."] = "Optionen für Töne",
+	["Options for sounds."] = "Optionen für Töne.",
 
 	["Alarm"] = "Alarm",
 	["Info"] = "Info",

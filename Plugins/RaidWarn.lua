@@ -96,21 +96,21 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["RaidWarning"] = "RaidWarnung",
 
-	["Broadcast over RaidWarning"] = "Verbreiten über Schlachtzugswarnung",
+	["Broadcast over RaidWarning"] = "Verbreiten als Schlachtzugswarnung",
 	["Broadcast"] = "Verbreiten",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Meldungen über Schlachtzugswarnung an Alle senden.",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Meldungen als Schlachtzugswarnung an alle senden.\n\nBeachte, dass du diese Warnungen selbst nicht sehen wirst, außer du hast die entsprechende BossBlock Option deaktiviert.",
 
 	["Whisper"] = "Flüstern",
 	["Whisper warnings"] = "Warnungen flüstern",
 	["Toggle whispering warnings to players."] = "Warnungen an andere Spieler flüstern.",
 
 	["Show whispers"] = "Zeige Flüstern",
-	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Aktiviere das Lokale anzeigen von Flüstern Nachrichten, zum Beispiel wenn Spieler sachen wie die Seuche oder ähnlich haben.",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Aktiviere das lokale Anzeigen von geflüsterten Nachrichten, zum Beispiel wenn Spieler Dinge wie eine Seuche oder Ähnliches haben.",
 
 	["Broadcast to chat"] = "Schlachtzugschat benutzen",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.\n\nBeachte, dass du diese Warnungen selbst nicht sehen wirst, außer du hast die entsprechende BossBlock Option deaktiviert.",
 
-	desc = "Läst dich Justieren wohin BigWigs die Boss Nachrichten sendet, neben der Lokalen Anzeige.",
+	desc = "Lässt dich bestimmen, wie BigWigs die Boss Nachrichten verbreitet (zusätzlich zur lokalen Anzeige).",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

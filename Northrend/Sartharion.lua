@@ -260,22 +260,22 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	tsunami = "Flammentsunami",
-	tsunami_desc = "Warnung vor Flammentsunami und Anzeigen einer Leiste.",
-	tsunami_warning = "Flammentsunami in ~5sek!",
+	tsunami_desc = "Warnungen und Timer für Flammentsunami.",
+	tsunami_warning = "Flammentsunami in ~5 Sekunden!",
 	tsunami_message = "Flammentsunami!",
 	tsunami_cooldown = "Flammentsunami Cooldown",
 	tsunami_trigger = "Die Lava um Sartharion brodelt!",
 
 	breath = "Flammenatem",
-	breath_desc = "Warnung wenn Flammenatem gewirkt wird.",
-	breath_warning = "Flammenatem in ~5sek!",
+	breath_desc = "Warnungen und Timer für Flammenatem.",
+	breath_warning = "Flammenatem in ~5 Sekunden!",
 	breath_message = "Flammenatem!",
 	breath_cooldown = "Flammenatem Cooldown",
 
 	drakes = "Drachen Adds",
-	drakes_desc = "Warnen wenn einer der Drachen dem Kampf beitritt.",
+	drakes_desc = "Warnungen und Timer für den Kampfbeitritt eines Drachen.",
 	drakes_incomingbar = "%s kommt",
-	drakes_incomingsoon = "%s kommt in ~5sek!",
+	drakes_incomingsoon = "%s kommt in ~5 Sekunden!",
 	drakes_incoming = "%s kommt!",
 	drakes_activebar = "%s aktiv",
 	drakes_active = "%s ist aktiv!",
@@ -289,13 +289,13 @@ L:RegisterTranslations("deDE", function() return {
 	tenebron = "Tenebron",
 	tenebron_trigger = "Tenebron! Auch Ihr sollt die Eier schützen!",
 
-	drakedeath = "Drachen tot",
-	drakedeath_desc = "Warnen wenn einer der Drachen stirbt.",
+	drakedeath = "Tod eines Drachen",
+	drakedeath_desc = "Warnen, wenn einer der Drachen stirbt.",
 	drakedeath_message = "%s gestorben!",
 
-	enrage = "Wütend",
-	enrage_warning = "In Kürze Wütend!",
-	enrage_message = "Wütend!",
+	enrage = "Wutanfall",
+	enrage_warning = "Wutanfall in Kürze!",
+	enrage_message = "Wutanfall!",
 } end )
 
 ----------------------------------

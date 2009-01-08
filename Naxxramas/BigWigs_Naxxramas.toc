@@ -2,6 +2,7 @@
 
 ## Title: Big Wigs [|cffeda55fNaxxramas|r]
 ## Notes: Big Wigs Naxxramas Modules
+## Notes-deDE: Big Wigs Naxxramas Module
 ## Title-zhCN: Big Wigs [|cffeda55f纳克萨玛斯|r]
 ## Notes-zhCN: Big Wigs 纳克萨玛斯模块
 ## Title-zhTW: Big Wigs [|cffeda55f納克薩瑪斯|r]

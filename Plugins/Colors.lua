@@ -196,7 +196,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Urgent"] = "Dringend",
 	["Attention"] = "Achtung",
 	["Positive"] = "Positiv",
-	["Bosskill"] = "Bosskill",
+	["Bosskill"] = "Boss besiegt",
 	["Core"] = "Core",
 
 	["1st"] = "1te",

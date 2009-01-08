@@ -44,7 +44,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Tranq - %s"] = "Einlullender Schuss - %s",
-	["%s's Tranq failed!"] = "%s's Einlullender Schuss verfehlt",
+	["%s's Tranq failed!"] = "Einlullender Schuss von %s hat verfehlt!",
 
 	["Options for the tranq module."] = "Optionen für das Einlullender Schuss Modul.",
 	["Toggle tranq bars on or off."] = "Einlullender Schuss Anzeigebalken anzeigen.",

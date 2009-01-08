@@ -58,12 +58,12 @@ L:RegisterTranslations("deDE", function() return {
 	startwarn = "Gluth angegriffen! Zombies in ~105 Sekunden!",
 
 	frenzy = "Raserei",
-	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t.",
+	frenzy_desc = "Warnen, wenn Gluth in Raserei verfällt.",
 	frenzy_message = "Raserei!",
 
 	decimate = "Dezimieren",
-	decimate_desc = "Warnung vor Dezimieren.",
-	decimatesoonwarn = "Dezimieren kurz bevor",
+	decimate_desc = "Warnungen und Timer für Dezimieren.",
+	decimatesoonwarn = "Dezimieren bald!",
 	decimatewarn = "Dezimieren!",
 	decimatebartext = "Dezimieren",
 } end )

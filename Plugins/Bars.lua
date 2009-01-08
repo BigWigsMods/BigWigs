@@ -237,7 +237,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Show the bar anchor frame."] = "Die Verankerung der Balken anzeigen.",
 
 	["Enable menu"] = "Menü aktivieren",
-	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Das Balken-Konfigurationsmenü via Alt-Rechtsklick anzeigen.\n\nBeachte, daß wenn diese Option aktiviert ist, du keine Gegenstände mehr Alt-Klicken kannst.",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Das Balken-Konfigurationsmenü via Alt-Rechtsklick anzeigen.\n\nBeachte, dass wenn diese Option aktiviert ist, du keine Gegenstände mehr Alt-Klicken kannst.",
 
 	["Scale"] = "Skalierung",
 	["Set the bar scale."] = "Die Skalierung der Anzeigebalken festlegen.",
@@ -252,7 +252,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Close"] = "Schließen",
 
 	["Emphasize"] = "Hervorheben",
-	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Anzeigebalken hervorheben die kurz vor Abschluss sind (<10sek). Anzeigebalken die mit einem Timer von weniger als 15 Sekunden starten werden von Beginn weg als hervorgehobene Balken dargestellt.",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Anzeigebalken hervorheben, die kurz vor Abschluss sind (<10 Sekunden). Anzeigebalken, die mit einem Timer von weniger als 15 Sekunden starten, werden von Beginn an als hervorgehobene Balken dargestellt.",
 
 	["Enable"] = "Aktivieren",
 	["Enables emphasizing bars."] = "Aktiviert hervorgehobene Anzeigebalken.",

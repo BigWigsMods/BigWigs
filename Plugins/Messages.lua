@@ -161,6 +161,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
 	["Options for message display."] = "Optionen für die Anzeige von Nachrichten.",
 
+	["BigWigs Anchor"] = "BigWigs Verankerung",
+	["Output Settings"] = "Ausgabeeinstellungen",
+
 	["Show anchor"] = "Verankerung anzeigen",
 	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Die Verankerung des Nachrichtenfensters anzeigen.",
 
@@ -170,8 +173,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
 
-	--["Use icons"] = "",
-	--["Show icons next to messages, only works for Raid Warning."] = "",
+	["Use icons"] = "Icons benutzen",
+	["Show icons next to messages, only works for Raid Warning."] = "Icons neben Nachrichten anzeigen.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Weiß",

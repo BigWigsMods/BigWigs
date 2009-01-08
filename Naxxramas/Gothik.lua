@@ -151,13 +151,13 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	room = "Ankunft",
-	room_desc = "Warnung, wenn Gothik in den Raum kommt.",
+	room_desc = "Warnungen und Timer für die Ankunft von Gothik im Raum.",
 
 	add = "Adds",
-	add_desc = "Warnung vor Adds.",
+	add_desc = "Warnungen und Timer für die Adds.",
 
-	adddeath = "Add Stirbt",
-	adddeath_desc = "Warnung, wenn ein Add stirbt.",
+	adddeath = "Tod eines Adds",
+	adddeath_desc = "Warnen, wenn ein Add stirbt.",
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
@@ -189,7 +189,7 @@ L:RegisterTranslations("deDE", function() return {
 	dkbar = "Todesritter - %d",
 	riderbar = "Reiter - %d",
 
-	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.",
+	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenjäger.",
 	inroomwarn = "Gothik im Raum!",
 
 	inroombartext = "Im Raum",

@@ -145,36 +145,43 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
-	phase_desc = "Anzeige der Phasenwechsel.",
+	phase_desc = "Warnungen bei Phasenwechsel.",
 
-	polarity = "Polarit\195\164tsver\195\164nderung Warnung",
-	polarity_desc = "Warnung f\195\188r Polarit\195\164tsver\195\164nderung",
+	polarity = "Polaritätsveränderungen",
+	polarity_desc = "Warnen bei Polaritätsveränderung.",
 
-	power = "Energieschub Warnung",
-	power_desc = "Warnung f\195\188r Stalagg's Energieschub",
+	power = "Energieschub",
+	power_desc = "Warnungen und Timer für Energieschub von Stalagg.",
+
+	throw = "Magnetische Anziehung",
+	throw_desc = "Warnen, wenn die Tanks die Plattform wechseln.",
 
 	starttrigger = "Stalagg zerquetschen!",
-	starttrigger1 = "Verf\195\188ttere euch an Meister!",
+	starttrigger1 = "Verfüttere euch an Meister!",
 	starttrigger2 = "Eure... Knochen... zermalmen...",
 	starttrigger3 = "Euch... zerquetschen!",
-	starttrigger4 = "T\195\182ten...",
+	starttrigger4 = "Töten...",
 
 	adddeath = "stirbt.",
-	teslaoverload = "\195\188berl\195\164dt!",
+	teslaoverload = "Überlädt!",
 
-	pstrigger = "Jetzt sp\195\188rt ihr den Schmerz",
-	--polarity_trigger = "The polarity has Shifted!",
+	pstrigger = "Jetzt spürt ihr den Schmerz",
+	--polarity_trigger = "The polarity has Shifted!", -- TODO
 
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
-	addsdownwarn = "Thaddius kommt frei in 10-20s!",
-	thaddiusincoming = "Thaddius kommt frei in 3s!",
-	pswarn1 = "Thaddius beginnt Polarit\195\164tsver\195\164nderung zu wirken!",
-	pswarn2 = "28 Sekunden bis Polarit\195\164tsver\195\164nderung!",
-	pswarn3 = "3 Sekunden bis Polarit\195\164tsver\195\164nderung!",
+	addsdownwarn = "Thaddius kommt frei in 10-20 Sekunden!",
+	thaddiusincoming = "Thaddius kommt frei in 3 Sekunden!",
+	pswarn1 = "Thaddius beginnt Polaritätsveränderung zu wirken!",
+	pswarn2 = "28 Sekunden bis Polaritätsveränderung!",
+	pswarn3 = "3 Sekunden bis Polaritätsveränderung!",
+	stalaggwarn = "Energieschub auf Stalagg!",
 	powersurgebar = "Energieschub",
 
-	bar1text = "Polarit\195\164tsver\195\164nderung",
+	bar1text = "Polaritätsveränderung",
+
+	throwbar = "Magnetische Anziehung",
+	throwwarn = "Magnetische Anziehung in ~5 Sekunden!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

@@ -87,30 +87,28 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	teleport = "Teleport",
-	teleport_desc = "Warnung vor Teleport.",
-
-	engage = "Angriff",
-	engage_desc = "Warnung, wenn Heigan angegriffen wird.",
-
-	starttrigger = "Ihr geh\195\182rt mir...",
-	starttrigger2 = "Ihr seid.... als n\195\164chstes dran.",
+	starttrigger = "Ihr gehört mir...",
+	starttrigger2 = "Ihr seid.... als nächstes dran.",
 	starttrigger3 = "Ihr entgeht mir nicht...",
-	teleport_trigger = "Euer Ende naht.",
-
+	
+	engage = "Angriff",
+	engage_desc = "Warnen, wenn Heigan angegriffen wird.",
 	engage_message = "Heigan der Unreine angegriffen! Teleport in 90 Sekunden!",
-
+	
+	teleport = "Teleport",
+	teleport_desc = "Warnungen und Timer für Teleport.",
+	teleport_trigger = "Euer Ende naht.",
 	teleport_1min_message = "Teleport in 1 Minute",
 	teleport_30sec_message = "Teleport in 30 Sekunden",
 	teleport_10sec_message = "Teleport in 10 Sekunden",
-	on_platform_message = "Teleport! Auf der Plattform f\195\188r 45 Sekunden!",
+	on_platform_message = "Teleport! Auf der Plattform für 45 Sekunden!",
 
-	to_floor_30sec_message = "Zur\195\188ck im Raum in 30 Sekunden",
-	to_floor_10sec_message = "Zur\195\188ck im Raum in 10 Sekunden",
-	on_floor_message = "Zur\195\188ck im Raum! N\195\164chster Teleport in 90 Sekunden!",
+	to_floor_30sec_message = "Zurück im Raum in 30 Sekunden",
+	to_floor_10sec_message = "Zurück im Raum in 10 Sekunden",
+	on_floor_message = "Zurück im Raum! Nächster Teleport in 90 Sekunden!",
 
 	teleport_bar = "Teleport!",
-	back_bar = "R\195\188ckteleport!",
+	back_bar = "Rückteleport!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

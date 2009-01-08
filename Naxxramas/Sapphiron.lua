@@ -106,23 +106,21 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	deepbreath = "Frostatem Warnung",
-	deepbreath_desc = "Warnt, wenn Saphiron Frostatem zaubert.",
-
-	lifedrain = "Lebenssauger",
-	lifedrain_desc = "Warnt vor dem Lebenssauger Fluch.",
-
-	lifedrain_message = "Lebenssauger! N\195\164chster in ~14sek!",
-	lifedrain_warn1 = "Lebenssauger in 5sek!",
-	lifedrain_bar = "Lebenssauger",
-
-	--airphase_trigger = "%s lifts off into the air!",
-	deepbreath_incoming_message = "Frostatem in ~23sek!",
-	deepbreath_incoming_soon_message = "Frostatem in ~5sek!",
+	deepbreath = "Frostatem",
+	deepbreath_desc = "Warnungen und Timer für Frostatem.",
+	--airphase_trigger = "%s lifts off into the air!", -- TODO
+	deepbreath_incoming_message = "Frostatem in ~23 Sekunden!",
+	deepbreath_incoming_soon_message = "Frostatem in ~5 Sekunden!",
 	deepbreath_incoming_bar = "Frostatem",
 	deepbreath_trigger = "%s atmet tief ein...",
 	deepbreath_warning = "Frostatem kommt!",
-	deepbreath_bar = "Frostatem!",
+	deepbreath_bar = "Frostatem",
+
+	lifedrain = "Lebenssauger",
+	lifedrain_desc = "Warnungen und Timer für den Lebenssauger Fluch.",
+	lifedrain_message = "Lebenssauger! Nächster in ~14 Sekunden!",
+	lifedrain_warn1 = "Lebenssauger in 5 Sekunden!",
+	lifedrain_bar = "Lebenssauger",
 
 	icebolt = "Eisblitz",
 	icebolt_desc = "Schreien, wenn du von Eisblitz betroffen bist.",
@@ -133,8 +131,8 @@ L:RegisterTranslations("deDE", function() return {
 	ping_desc = "Die derzeitige Position pingen, wenn du von Eisblitz betroffen bist.",
 	ping_message = "Eisblock - Position gepingt!",
 
-	icon = "Symbol",
-	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Eisblitz betroffen ist (ben\195\182tigt Assistent oder h\195\182her).",
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Eisblitz gewirkt wird (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

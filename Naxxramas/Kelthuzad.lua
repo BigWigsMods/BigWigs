@@ -171,54 +171,54 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer",
 
-	start_trigger = "Diener, J\195\188nger, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
-	start_warning = "Kel'Thuzad Encounter gestarted! ~5min bis er aktiv wird!",
+	start_trigger = "Diener, Jünger, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
+	start_warning = "Kel'Thuzad Encounter gestarted! ~5 Minuten bis er aktiv wird!",
 	start_bar = "Phase 2",
 
-	phase = "Phasenwarnung",
-	phase_desc = "Warnt vor den verschiedenen Phasen.",
+	phase = "Phasenwarnungen",
+	phase_desc = "Warnungen bei Phasenwechsel.",
 	phase2_trigger1 = "Fleht um Gnade!",
---	phase2_trigger2 = "Scream your dying breath!",
---	phase2_trigger3 = "The end is upon you!",
+	--phase2_trigger2 = "Scream your dying breath!", -- TODO
+	--phase2_trigger3 = "The end is upon you!", -- TODO
 	phase2_warning = "Phase 2, Kel'Thuzad kommt!",
-	phase2_bar = "Kel'Thuzad aktiv!",
+	phase2_bar = "Kel'Thuzad aktiv",
 	phase3_soon_warning = "Phase 3 bald!",
 	phase3_trigger = "Meister, helft mir!",
-	phase3_warning = "Phase 3, W\195\164chter in ~15sek!",
+	phase3_warning = "Phase 3, Wächter in ~15 Sekunden!",
 
-	mc = "Gedankenkontrolle Warnung",
-	mc_desc = "Sagt dir, wer von Gedankenkontrolle betroffen ist und wann die n\195\164chste Gedankenkontrolle kommen wird.",
+	mc = "Gedankenkontrolle",
+	mc_desc = "Warnungen und Timer für Gedankenkontrolle.",
 	mc_message = "Gedankenkontrolle: %s",
 	mc_warning = "Gedankenkontrolle Cooldown vorbei - Kommt bald!",
 	mc_nextbar = "~ Gedankenkontrolle Cooldown",
 
-	fissure = "Schattenspalt Warnung",
-	fissure_desc = "Warnt vor Schattenspalt.",
+	fissure = "Schattenspalt",
+	fissure_desc = "Warnen, wenn Schattenspalt gewirkt wird.",
 	fissure_warning = "Schattenspalt!",
 
-	frostblast = "Frostschlag Warnung",
-	frostblast_desc = "Warnt wenn Leute Frostschlag bekommen.",
-	frostblast_bar = "M\195\182glicher Frostschlag",
+	frostblast = "Frostschlag",
+	frostblast_desc = "Warnungen und Timer für Frostschlag.",
+	frostblast_bar = "Möglicher Frostschlag",
 	frostblast_message = "%s : Frostschlag",
-	frostblast_soon_message = "M\195\182glicher Frostschlag in ~5 Sekunden!",
+	frostblast_soon_message = "Möglicher Frostschlag in ~5 Sekunden!",
 
-	detonate = "Detonierendes Mana Warnung",
-	detonate_desc = "Warnt vor Detonierendes Mana.",
+	detonate = "Detonierendes Mana",
+	detonate_desc = "Warnungen und Timer für Detonierendes Mana.",
 	detonate_you = "Detonierendes Mana auf DIR!",
 	detonate_other = "Detonierendes Mana - %s",
 	detonate_possible_bar = "Detonierendes Mana",
 	detonate_warning = "Detonierendes Mana in 5 Sekunden!",
 
-	guardians = "W\195\164chter Spawns",
-	guardians_desc = "Warnt vor W\195\164chtern von Eiskrone in Phase 3.",
-	guardians_trigger = "Also gut. Erhebt euch, Krieger der eisigen Weiten! Ich befehle euch zu k\195\164mpfen, zu t\195\182ten und f\195\188r euren Meister zu sterben! Lasst keinen am Leben!",
-	guardians_warning = "W\195\164chter in ~10sek!",
-	guardians_bar = "W\195\164chter kommen!",
+	guardians = "Wächter Spawns",
+	guardians_desc = "Warnungen und Timer für Wächter von Eiskrone in Phase 3.",
+	guardians_trigger = "Also gut. Erhebt euch, Krieger der eisigen Weiten! Ich befehle euch zu kämpfen, zu töten und für euren Meister zu sterben! Lasst keinen am Leben!",
+	guardians_warning = "Wächter in ~10 Sekunden!",
+	guardians_bar = "Wächter kommen!",
 
-	icon = "Schlachtzugicon bei Detonierung",
-	icon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana (ben\195\182tigt Assistent oder h\195\182her).",
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Detonierendes Mana gewirkt wird (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

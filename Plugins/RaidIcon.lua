@@ -111,18 +111,20 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	["Raid Icons"] = "Schlachtzug-Symbole",
-	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Justiere welches Symbol BigWigs benutzen soll wenn es Schlachzug Symbole auf Spielern plaziert für wichtige 'bomben'-typ Boss Fähigkeiten.",
+	["Raid Icons"] = "Schlachtzugs-Symbole",
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Bestimme welches Symbol BigWigs benutzen soll, wenn es Schlachzugs-Symbole auf Spielern platziert (für wichtige Boss Fähigkeiten).",
+
+	["RaidIcon"] = "Schlachtzugssymbol",
 
 	["Place"] = "Platzierung",
-	["Place Raid Icons"] = "Schlachtzug-Symbole platzieren",
-	["Toggle placing of Raid Icons on players."] = "Schlachtzug-Symbole auf Spieler setzen.",
+	["Place Raid Icons"] = "Schlachtzugs-Symbole platzieren",
+	["Toggle placing of Raid Icons on players."] = "Schlachtzugs-Symbole auf Spieler setzen.",
 
 	["Icon"] = "Symbol",
 	["Set Icon"] = "Symbol platzieren",
 	["Set which icon to place on players."] = "Wähle, welches Symbol auf Spieler gesetzt wird.",
 
-	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Benutze das %q Symbol wenn automatisch Schlachtzug Symbole für Boss Fähigkeiten verteillt werden.",
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Benutze das %q Symbol wenn automatisch Schlachtzugs-Symbole für Boss Fähigkeiten verteillt werden.",
 
 	["Star"] = "Stern",
 	["Circle"] = "Kreis",
