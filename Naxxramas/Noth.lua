@@ -315,11 +315,11 @@ function mod:Curse(_, spellID)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg:find(L["blinktrigger"]) then
+	if msg == L["blinktrigger"] then
 		if self.db.profile.blink then
 			self:IfMessage(L["blinkwarn"], "Important", spellID)
-			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 35, L["blinkwarn2"], "Attention")
-			self:Bar(L["blinkbar"], 40, spellID)
+			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 34, L["blinkwarn2"], "Attention")
+			self:Bar(L["blinkbar"], 39, spellID)
 		end
 	end
 end
