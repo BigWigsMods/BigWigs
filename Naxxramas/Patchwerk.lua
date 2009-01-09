@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	enragewarn = "5% - Raserei!",
 	starttrigger1 = "Flickwerk spielen möchte!",
-	starttrigger2 = "Kel'Thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
+	starttrigger2 = "Kel’Thuzad macht Flickwerk zu seinem Abgesandten von Krieg!", -- Yes, that's really a ´ instead of a '
 } end )
 
 L:RegisterTranslations("koKR", function() return {

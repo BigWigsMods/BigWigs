@@ -72,15 +72,15 @@ L:RegisterTranslations("deDE", function() return {
 
 	cocoonwarn = "%s im Fangnetz!",
 
-	enragetrigger = "%s wird wütend!",
+	enragetrigger = "%s gerät in Raserei!",
 
 	webspraywarn30sec = "Fangnetze in 10 Sekunden!",
 	webspraywarn20sec = "Fangnetze! Spinnen in 10 Sekunden!",
 	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 Sekunden!",
 	webspraywarn5sec = "Gespinstschauer in 5 Sekunden!",
 	webspraywarn = "Gespinstschauer! Nächster in 40 Sekunden!",
-	enragewarn = "Wutanfall!",
-	enragesoonwarn = "Wutanfall in Kürze!",
+	enragewarn = "Raserei!",
+	enragesoonwarn = "Raserei in Kürze!",
 
 	webspraybar = "Gespinstschauer",
 	cocoonbar = "Fangnetze",
