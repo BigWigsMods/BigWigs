@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	tsunami_warning = "Flame Tsunami in ~5sec!",
 	tsunami_message = "Flame Tsunami!",
 	tsunami_cooldown = "Flame Tsunami Cooldown",
-	tsunami_trigger = "The lava surrounding Sartharion churns!",
+	tsunami_trigger = "The lava surrounding %s churns!",
 
 	breath = "Flame Breath",
 	breath_desc = "Warn for Flame Breath casting.",
@@ -184,7 +184,7 @@ L:RegisterTranslations("frFR", function() return {
 	tsunami_warning = "Tsunami de flammes dans ~5 sec. !",
 	tsunami_message = "Tsunami de flammes !",
 	tsunami_cooldown = "Recharge Tsunami de flammes",
-	tsunami_trigger = "La lave qui entoure Sartharion bouillonne !",
+	tsunami_trigger = "La lave qui entoure %s bouillonne !",
 
 	breath = "Souffle de flammes",
 	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
@@ -264,7 +264,7 @@ L:RegisterTranslations("deDE", function() return {
 	tsunami_warning = "Flammentsunami in ~5 Sekunden!",
 	tsunami_message = "Flammentsunami!",
 	tsunami_cooldown = "Flammentsunami Cooldown",
-	tsunami_trigger = "Die Lava um Sartharion brodelt!",
+	tsunami_trigger = "Die Lava um %s brodelt!",
 
 	breath = "Flammenatem",
 	breath_desc = "Warnungen und Timer für Flammenatem.",
