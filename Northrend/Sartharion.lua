@@ -224,7 +224,7 @@ L:RegisterTranslations("ruRU", function() return {
 	tsunami_warning = "Огненное цунами через ~5сек!",
 	tsunami_message = "Огненное цунами!",
 	tsunami_cooldown = "Перезарядка цунами",
-	tsunami_trigger = "Лава вокруг Сартарион начинает бурлить!",
+	tsunami_trigger = "Лава вокруг %s начинает бурлить!",
 
 	breath = "Огненное дыхание",
 	breath_desc = "Предупреждать о применении огненного дыхания.",
@@ -408,10 +408,10 @@ function mod:Deaths(_, guid)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg:find(L["tsunami_trigger"]) and db.tsunami then
+	if msg == L["tsunami_trigger"] and db.tsunami then
 		self:CancelScheduledEvent("TsunamiWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, L["tsunami_cooldown"])
-		self:IfMessage(L["tsunami_message"], "Important", 57491)
+		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
 		self:Bar(L["tsunami_cooldown"], 30, 57491)
 		self:ScheduleEvent("TsunamiWarn", "BigWigs_Message", 25, L["tsunami_warning"], "Attention")
 	end
