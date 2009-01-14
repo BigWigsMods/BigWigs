@@ -64,7 +64,7 @@ L:RegisterTranslations("koKR", function() return {
 	tsunami_warning = "약 5초 후 용암 파도!",
 	tsunami_message = "용암 파도!",
 	tsunami_cooldown = "용암 파도 대기시간",
-	tsunami_trigger = "둘러싼 용암이 끓어오릅니다!",
+	tsunami_trigger = "%s|1을;를; 둘러싼 용암이 끓어오릅니다!",
 
 	breath = "화염 숨결",
 	breath_desc = "화염 숨결 시전을 알립니다.",
