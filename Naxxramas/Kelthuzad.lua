@@ -9,7 +9,6 @@ local FB = {}
 local MCd = {}
 local fmt = string.format
 local pName = UnitName("player")
-local frostBlastTime
 
 ----------------------------
 --      Localization      --
@@ -408,7 +407,6 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self.warnedAboutPhase3Soon = nil
-	frostBlastTime = nil
 	
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -433,15 +431,10 @@ end
 
 function mod:FrostBlast(player)
 	if self.db.profile.frostblast then
-		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
-			FB[player] = true
-			self:CancelScheduledEvent("bwktfbwarn")
-			self:TriggerEvent("BigWigs_StopBar", self, L["frostblast_bar"])
-			self:ScheduleEvent("BWFrostBlastWarn", self.FBWarn, 0.4, self)
-			self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 32, L["frostblast_soon_message"])
-			self:Bar(L["frostblast_bar"], 37, spellID)
-			frostBlastTime = GetTime()
-		end
+		FB[player] = true
+		self:ScheduleEvent("BWFrostBlastWarn", self.FBWarn, 0.4, self)
+		self:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
+		self:Bar(L["frostblast_bar"], 37, 27808)
 	end
 end
 
