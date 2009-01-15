@@ -418,3 +418,4 @@ function mod:Throw()
 		self:ScheduleEvent("Bwthaddiusthrow", self.Throw, 21, self)
 	end
 end
+

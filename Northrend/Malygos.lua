@@ -12,8 +12,6 @@ local started = nil
 local phase = nil
 local p2 = nil
 local fmt = string.format
-local surgeTargets = nil
-local surgeAmount = nil
 
 ----------------------------
 --      Localization      --
@@ -330,13 +328,10 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(0, "MalygosSurge")
 
 	started = nil
 	db = self.db.profile
 	phase = 0
-	surgeTargets = {}
-	surgeAmount = GetCurrentDungeonDifficulty() == 1 and 1 or 3
 end
 
 ------------------------------
@@ -363,7 +358,6 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg, mob)
 	if phase == 3 and db.surge and msg == L["surge_trigger"] then
 		self:LocalMessage(L["surge_you"], "Personal", 56505, "Alarm")
-		self:Sync("MalygosSurge", pName)
 		self:Icon(pName)
 	end
 end
@@ -459,14 +453,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.enrage then
 			self:Enrage(600, true)
-		end
-	elseif sync == "MalygosSurge" and rest then
-		table.insert(surgeTargets, rest)
-		if #surgeTargets >= surgeAmount then
-			self:IfMessage(L["surge_warning"]:format(table.concat(surgeTargets)), "Attention", 56505)
-			for i = 1, #surgeTargets do
-				self:Icon(table.remove(surgeTargets))
-			end
 		end
 	end
 end
