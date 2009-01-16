@@ -119,19 +119,19 @@ L:RegisterTranslations("frFR", function() return {
 	tsunami_desc = "Prévient de l'arrivée des Tsunami de flammes.",
 	tsunami_warning = "Tsunami de flammes dans ~5 sec. !",
 	tsunami_message = "Tsunami de flammes !",
-	tsunami_cooldown = "Recharge Tsunami de flammes",
+	tsunami_cooldown = "Recharge Tsunami",
 	tsunami_trigger = "La lave qui entoure %s bouillonne !",
 
 	breath = "Souffle de flammes",
 	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
 	breath_warning = "Souffle de flammes dans ~5 sec. !",
 	breath_message = "Souffle de flammes !",
-	breath_cooldown = "Recharge Souffle de flammes",
+	breath_cooldown = "Recharge Souffle",
 
 	drakes = "Arrivée des drakes",
 	drakes_desc = "Prévient quand chaque drake se joint au combat.",
 	drakes_incomingbar = "Arrivée |2 %s",
-	drakes_incomingsoon = "Arrivée |2 %s dans ~5 sec. !",
+	drakes_incomingsoon = "%s atterrit dans ~5 sec. !",
 
 	enrage = "Enrager",
 	enrage_warning = "Enrager imminent !",

@@ -277,7 +277,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("StompWarn", "BigWigs_Message", 42, L["stomp_warning"], "Attention")
 		end
 		if db.enrage then
-			self:Enrage(300)
+			self:Enrage(300, true)
 		end
 	end
 end

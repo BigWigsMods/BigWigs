@@ -128,6 +128,8 @@ L:RegisterTranslations("frFR", function() return {
 	surge = "Vague de puissance",
 	surge_desc = "Prévient quand un joueur subit les effets de la Vague de puissance.",
 	surge_you = "Vague de puissance sur VOUS !",
+	surge_trigger = "%s fixe le regard sur vous !",
+	surge_warning = "Vague sur %s !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne sur laquelle la Vague de puissance est incantée (nécessite d'être promu ou mieux).",

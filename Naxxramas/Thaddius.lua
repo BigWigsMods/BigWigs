@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	pstrigger = "Now you feel pain...",
 	polarity_trigger = "The polarity has Shifted!",
-	
+
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Berserk in 6 minutes!",
 	addsdownwarn = "Thaddius incoming in 10-20sec!",
@@ -292,7 +292,7 @@ L:RegisterTranslations("frFR", function() return {
 	teslaoverload = "%s entre en surcharge !",
 
 	pstrigger = "Maintenant toi sentir douleur...",
-	--polarity_trigger = "The polarity has Shifted!",
+	polarity_trigger = "La polarité vient de changer !",
 
 	startwarn = "Thaddius - Phase 1",
 	startwarn2 = "Thaddius - Phase 2, Berserk dans 6 min. !",
@@ -301,7 +301,6 @@ L:RegisterTranslations("frFR", function() return {
 	pswarn1 = "Thaddius commence à incanter un Changement de polarité !",
 	pswarn2 = "28 sec. avant Changement de polarité !",
 	pswarn3 = "3 sec. avant Changement de polarité !",
-	poswarn = "Vous avez maintenant une charge positive !",
 	stalaggwarn = "Vague de puissance sur Stalagg !",
 	powersurgebar = "Vague de puissance",
 
