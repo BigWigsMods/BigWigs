@@ -59,7 +59,7 @@ L:RegisterTranslations("koKR", function() return {
 	drakes = "비룡 추가",
 	drakes_desc = "각 비룡이 전투에 추가되는 것을 알립니다.",
 	drakes_incomingbar = "잠시 후 %s 출현",
-	drakes_incomingsoon = "약 5초 후 %s 출현!",
+	drakes_incomingsoon = "약 5초 후 %s 착지!",
 
 	enrage = "광폭화",
 	enrage_warning = "잠시 후 광폭화!",
