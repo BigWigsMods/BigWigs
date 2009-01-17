@@ -170,13 +170,19 @@ local function transmitSync(self, token, arguments, ...)
 	end
 end
 
+local modMissingFunction = "BigWigs Module Error: Module %q got the event %q (%d), but it doesn't know how to handle it."
 function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 	local m = self.combatLogEventMap and self.combatLogEventMap[event]
 	if m and (m[spellId] or m["*"]) then
 		if event == "UNIT_DIED" then
 			self[m["*"]](self, player, dGUID)
 		else
-			self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags)
+			local f = self[m[spellId] or m["*"]]
+			if f then
+				f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags)
+			else
+				print(modMissingFunction:format(self:ToString(), event, spellId))
+			end
 		end
 	end
 	local s = self.syncEventMap and self.syncEventMap[event]
