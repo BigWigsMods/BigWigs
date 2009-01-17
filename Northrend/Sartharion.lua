@@ -34,7 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	drakes = "Drake Adds",
 	drakes_desc = "Warn when each drake add will join the fight.",
-	drakes_incomingbar = "%s incoming",
 	drakes_incomingsoon = "%s landing in ~5sec!",
 
 	enrage = "Enrage",
@@ -58,7 +57,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	drakes = "비룡 추가",
 	drakes_desc = "각 비룡이 전투에 추가되는 것을 알립니다.",
-	drakes_incomingbar = "잠시 후 %s 출현",
 	drakes_incomingsoon = "약 5초 후 %s 착지!",
 
 	enrage = "광폭화",
@@ -82,7 +80,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	drakes = "幼龙增援",
 	drakes_desc = "当每只幼龙增援加入战斗时发出警报。",
-	drakes_incomingbar = "<%s：即将到来>",
 	drakes_incomingsoon = "约5秒后，%s即将到来！",
 
 	enrage = "狂暴",
@@ -106,7 +103,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	drakes = "飛龍增援",
 	drakes_desc = "當每只飛龍增援加入戰斗時發出警報。",
-	drakes_incomingbar = "<%s：即將到來>",
 	drakes_incomingsoon = "約5秒后。%s即將到來！",
 
 	enrage = "狂暴",
@@ -130,7 +126,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	drakes = "Arrivée des drakes",
 	drakes_desc = "Prévient quand chaque drake se joint au combat.",
-	drakes_incomingbar = "Arrivée |2 %s",
 	drakes_incomingsoon = "%s atterrit dans ~5 sec. !",
 
 	enrage = "Enrager",
@@ -154,7 +149,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	drakes = "Драконы",
 	drakes_desc = "Предупреждать когда драконы вступят в бой.",
-	drakes_incomingbar = "Прилёт %s",
 	drakes_incomingsoon = "%s прилетит через ~5сек!",
 
 	enrage = "Исступление",
@@ -178,7 +172,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	drakes = "Drachen Adds",
 	drakes_desc = "Warnungen und Timer für den Kampfbeitritt eines Drachen.",
-	drakes_incomingbar = "%s kommt",
 	drakes_incomingsoon = "%s kommt in ~5 Sekunden!",
 
 	enrage = "Wutanfall",
@@ -234,16 +227,16 @@ function mod:DrakeCheck(_, spellID)
 	-- Each drake takes around 12 seconds to land
 	if not db.drakes then return end
 	if spellID == 58105 and not shadronStarted then
-		self:Bar(shadron, 72, 58105)
-		self:DelayedMessage(67, fmt(L["drakes_incomingsoon"], shadron), "Attention")
+		self:Bar(shadron, 80, 58105)
+		self:DelayedMessage(75, fmt(L["drakes_incomingsoon"], shadron), "Attention")
 		shadronStarted = true
 	elseif spellID == 61248 and not tenebronStarted then
 		self:Bar(tenebron, 30, 61248)
-		self:DelayedMessage(22, fmt(L["drakes_incomingsoon"], tenebron), "Attention")
+		self:DelayedMessage(25, fmt(L["drakes_incomingsoon"], tenebron), "Attention")
 		tenebronStarted = true
 	elseif spellID == 61251 and not vesperonStarted then
-		self:Bar(vesperon, 117, 61251)
-		self:DelayedMessage(100, fmt(L["drakes_incomingsoon"], vesperon), "Attention")
+		self:Bar(vesperon, 120, 61251)
+		self:DelayedMessage(115, fmt(L["drakes_incomingsoon"], vesperon), "Attention")
 		vesperonStarted = true
 	end
 end
