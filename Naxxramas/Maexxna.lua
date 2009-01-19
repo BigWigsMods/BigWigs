@@ -24,8 +24,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	cocoonwarn = "%s Cocooned!",
 
-	enragetrigger = "%s becomes enraged!",
-
 	webspraywarn30sec = "Cocoons in 10 sec",
 	webspraywarn20sec = "Cocoons! Spiders in 10 sec!",
 	webspraywarn10sec = "Spiders! Spray in 10 sec!",
@@ -47,8 +45,6 @@ L:RegisterTranslations("ruRU", function() return {
 	cocoon_desc = "Предупреждать о коконах",
 
 	cocoonwarn = "%s попал в кокон!",
-
-	enragetrigger = "%s впадает в бешенство!",
 
 	webspraywarn30sec = "Паутина через 10 секунд",
 	webspraywarn20sec = "Паутина! 10 Секунд до появления пауков!",
@@ -72,8 +68,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	cocoonwarn = "%s im Fangnetz!",
 
-	enragetrigger = "%s gerät in Raserei!",
-
 	webspraywarn30sec = "Fangnetze in 10 Sekunden!",
 	webspraywarn20sec = "Fangnetze! Spinnen in 10 Sekunden!",
 	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 Sekunden!",
@@ -95,8 +89,6 @@ L:RegisterTranslations("koKR", function() return {
 	cocoon_desc = "거미줄 감싸기에 걸린 플레이어를 알립니다.",
 
 	cocoonwarn = "거미줄 감싸기: %s!",
-
-	enragetrigger = "%s|1이;가; 분노에 휩싸입니다!",
 
 	webspraywarn30sec = "10초 이내 거미줄 감싸기",
 	webspraywarn20sec = "거미줄 감싸기. 10초 후 거미 소환!",
@@ -120,8 +112,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	cocoonwarn = ">%s< 蛛网裹体！",
 
-	enragetrigger = "%s变得愤怒了！",
-
 	webspraywarn30sec = "10秒后，蛛网裹体！",
 	webspraywarn20sec = "蛛网裹体！10秒后小蜘蛛出现！",
 	webspraywarn10sec = "小蜘蛛出现！10秒后蛛网喷射！",
@@ -144,8 +134,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	cocoonwarn = ">%s< 纏繞之網！",
 
-	enragetrigger = "%s變得憤怒了！",
-
 	webspraywarn30sec = "10秒後，纏繞之網！",
 	webspraywarn20sec = "纏繞之網！10秒後小蜘蛛出現！",
 	webspraywarn10sec = "小蜘蛛出現！10秒後撒網！",
@@ -167,8 +155,6 @@ L:RegisterTranslations("frFR", function() return {
 	cocoon_desc = "Prévient quand un joueur subit les effets de l'Entoilage.",
 
 	cocoonwarn = "%s entoilé(s) !",
-
-	enragetrigger = "%s devient folle furieuse !",
 
 	webspraywarn30sec = "Entoilage dans 10 sec.",
 	webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !",
@@ -200,10 +186,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cocoon", 28622)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 54123, 54124) --Norm/Heroic
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spray", 29484, 54125)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -260,9 +246,9 @@ function mod:CocoonWarn()
 	for k in pairs(inCocoon) do inCocoon[k] = nil end
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enragetrigger"] then
-		self:Message(L["enragewarn"], "Important")
+function mod:Enrage(_, spellID)
+	if self.db.profile.enrage then
+		self:IfMessage(L["enragewarn"], "Attention", spellID, "Alarm")
 	end
 end
 

@@ -215,11 +215,9 @@ end
 
 function mod:Stomp()
 	if db.stomp then
-		self:CancelScheduledEvent("StompWarn")
-		self:TriggerEvent("BigWigs_StopBar", self, L["stomp_bar"])
 		self:IfMessage(L["stomp_message"], "Attention", 60880)
 		self:Bar(L["stomp_bar"], 47, 60880)
-		self:ScheduleEvent("StompWarn", "BigWigs_Message", 42, L["stomp_warning"], "Attention")
+		self:DelayedMessage(42, L["stomp_warning"], "Attention")
 	end
 end
 
@@ -274,7 +272,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.stomp then
 			self:Bar(L["stomp_bar"], 47, 60880)
-			self:ScheduleEvent("StompWarn", "BigWigs_Message", 42, L["stomp_warning"], "Attention")
+			self:DelayedMessage(42, L["stomp_warning"], "Attention")
 		end
 		if db.enrage then
 			self:Enrage(300, true)
