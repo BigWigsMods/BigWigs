@@ -5,6 +5,7 @@
 local boss = BB["Gluth"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
+local enrageTime = 420
 
 ----------------------------
 --      Localization      --
@@ -164,15 +165,17 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
+		enrageTime = GetCurrentDungeonDifficulty() == 1 and 480 or 420
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
+		end
 		if self.db.profile.decimate then
 			self:Message(L["startwarn"], "Attention")
 			self:Bar(L["decimatebartext"], 105, 16590)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.berserk then
-			self:Enrage(480, true, true)
+			self:Enrage(enrageTime, true, true)
 		end
 	end
 end
-

@@ -9,6 +9,7 @@ local started = nil
 local doomTime = 30
 local sporeCount = 1
 local doomCount = 1
+local sporeTime = 16
 
 ----------------------------
 --      Localization      --
@@ -274,7 +275,7 @@ function mod:Spore()
 	--spellID is a question mark, so we use our own: 38755
 	self:IfMessage(L["sporewarn"]:format(sporeCount), "Important", 38755)
 	sporeCount = sporeCount + 1
-	self:Bar(L["sporebar"]:format(sporeCount), 15, 38755) --Heroic mode base
+	self:Bar(L["sporebar"]:format(sporeCount), sporeTime, 38755)
 end
 
 local function swapTime()
@@ -287,6 +288,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		doomTime = 30
 		sporeCount = 1
 		doomCount = 1
+		sporeTime = GetCurrentDungeonDifficulty() == 1 and 36 or 16
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
@@ -306,4 +308,3 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
-
