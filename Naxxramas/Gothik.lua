@@ -157,11 +157,11 @@ L:RegisterTranslations("deDE", function() return {
 	add_desc = "Warnungen und Timer für die Adds.",
 
 	adddeath = "Tod eines Adds",
-	adddeath_desc = "Warnen, wenn ein Add stirbt.",
+	adddeath_desc = "Warnt, wenn ein Add stirbt.",
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
-	startwarn = "Gothik der Ernter angegriffen! Im Raum in 4:30 Minuten!",
+	startwarn = "Gothik der Ernter angegriffen! Im Raum in 4:30min!",
 
 	rider = "Unerbittlicher Reiter",
 	spectral_rider = "Spektraler Reiter",
@@ -173,26 +173,26 @@ L:RegisterTranslations("deDE", function() return {
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
 
-	warn1 = "Im Raum in 3 Minuten",
-	warn2 = "Im Raum in 90 Sekunden",
-	warn3 = "Im Raum in 60 Sekunden",
-	warn4 = "Im Raum in 30 Sekunden",
-	warn5 = "Gothik im Raum in 10 Sekunden",
+	warn1 = "Im Raum in 3min",
+	warn2 = "Im Raum in 90sek",
+	warn3 = "Im Raum in 60sek",
+	warn4 = "Im Raum in 30sek",
+	warn5 = "Gothik im Raum in 10sek!",
 
 	wave = "%d/25: ",
 
-	trawarn = "Lehrlinge in 3 Sekunden",
-	dkwarn = "Todesritter in 3 Sekunden",
-	riderwarn = "Reiter in 3 Sekunden",
+	trawarn = "Lehrlinge in 3sek",
+	dkwarn = "Todesritter in 3sek",
+	riderwarn = "Reiter in 3sek",
 
-	trabar = "Lehrling - %d",
-	dkbar = "Todesritter - %d",
-	riderbar = "Reiter - %d",
+	trabar = "Lehrling (%d)",
+	dkbar = "Todesritter (%d)",
+	riderbar = "Reiter (%d)",
 
 	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenjäger.",
 	inroomwarn = "Gothik im Raum!",
 
-	inroombartext = "Im Raum",
+	inroombartext = "Gothik im Raum",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

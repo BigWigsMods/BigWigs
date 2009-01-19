@@ -262,25 +262,25 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	sparks = "Energiefunke",
-	sparks_desc = "Warnungen und Timer für das Erscheinen einer Energiefunke.",
-	sparks_message = "Energiefunke erschienen!",
-	sparks_warning = "Energiefunke in ~5 Sekunden!",
+	sparks_desc = "Warnungen und Timer für das Erscheinen von Energiefunken.",
+	sparks_message = "Energiefunke!",
+	sparks_warning = "Energiefunke in ~5sek!",
 
 	vortex = "Vortex",
 	vortex_desc = "Warnungen und Timer für Vortex.",
 	vortex_message = "Vortex!",
-	vortex_warning = "Möglicher Vortex in ~5 Sekunden!",
-	vortex_next = "Vortex Cooldown",
+	vortex_warning = "Möglicher Vortex in ~5sek!",
+	vortex_next = "Vortex",
 
 	overload = "Arkane Überladung",
 	overload_desc = "Warnungen und Timer für das Erscheinen einer Arkanen Überladung.",
-	overload_warning = "Arkane Überladung in ~5 Sekunden!",
-	overload_next = "Nächste Arkane Überladung",
+	overload_warning = "Arkane Überladung in ~5sek!",
+	overload_next = "Arkane Überladung",
 
 	breath = "Arkanodem",
 	breath_desc = "Warnungen und Timer für Arkanodem.",
 	breath_message = "Arkanodem!",
-	breath_warning = "Arkanodem in ~5 Sekunden!",
+	breath_warning = "Arkanodem in ~5sek!",
 
 	surge = "Kraftsog",
 	surge_desc = "Warnen, wenn ein Spieler von Kraftsog betroffen ist.",
@@ -292,13 +292,13 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Kraftsog gewirkt wird (benötigt Assistent oder höher).",
 
 	phase = "Phasen",
-	phase_desc = "Warnungen bei Phasenänderungen im Kampf.",
+	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_warning = "Phase 2 bald!",
-	phase2_trigger = "Ich hatte gehofft, eure Leben schnell zu beenden doch ihr zeit euch.. hartnäckiger als erwartet.",
-	phase2_message = "Phase 2 - Nexuslord & Saat der Ewigkeit!",
+	phase2_trigger = "Ich hatte gehofft, eure Leben schnell zu beenden doch ihr zeigt euch.. hartnäckiger als erwartet.", -- needs verification!
+	phase2_message = "Phase 2, Nexuslord & Saat der Ewigkeit!",
 	phase2_end_trigger = "GENUG! Wenn ihr die Magie Azeroths zurückhaben wollt, dann sollt ihr sie bekommen!",
 	phase3_warning = "Phase 3 bald!",
-	phase3_trigger = "Eure Wohltäter sind eingetroffen",
+	phase3_trigger = "Eure Wohltäter sind eingetroffen", -- needs verification!
 	phase3_message = "Phase 3!",
 } end )
 

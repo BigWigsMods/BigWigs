@@ -102,10 +102,10 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	mark = "Male",
-	mark_desc = "Warnungen für die Mal Debuffs.",
-	markbar = "Mal",
+	mark_desc = "Warnungen und Timer für die Male.",
+	markbar = "Mal (%d)",
 	markwarn1 = "Mal (%d)!",
-	markwarn2 = "Mal (%d) - 5 Sekunden",
+	markwarn2 = "Mal (%d) in 5sek!",
 
 	void = "Zone der Leere",
 	void_desc = "Warnungen und Timer für Zone der Leere von Lady Blaumeux.",
@@ -124,7 +124,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	dies = "#%d getötet",
 
-	startwarn = "Die Vier Reiter angegriffen! Mal in ~17 Sekunden",
+	startwarn = "Die Vier Reiter angegriffen! Male in ~17sek.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

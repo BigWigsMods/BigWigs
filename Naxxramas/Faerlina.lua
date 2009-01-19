@@ -74,18 +74,18 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Ihr könnt euch nicht vor mir verstecken!",
 	starttrigger4 = "Flieht, solange ihr noch könnt.",
 
-	startwarn = "Großwitwe Faerlina angegriffen! Wutanfall in 60 Sekunden!",
-	enragewarn15sec = "Wutanfall in 15 Sekunden!",
-	enragewarn = "Wutanfall!",
-	enragewarn2 = "Wutanfall bald!",
-	enrageremovewarn = "Wutanfall vorbei! Nächster in ~60 Sekunden!",
+	startwarn = "Großwitwe Faerlina angegriffen! Raserei in 60sek!",
+	enragewarn15sec = "Raserei in 15sek!",
+	enragewarn = "Raserei!",
+	enragewarn2 = "Raserei bald!",
+	enrageremovewarn = "Raserei vorbei! Nächste in ~60sek!",
 	
-	silencewarn = "Stille! Wutanfall verzögert!",
-	silencewarn5sec = "Stille endet in 5 Sekunden",
+	silencewarn = "Stille! Raserei verzögert!",
+	silencewarn5sec = "Stille endet in 5sek!",
 	silencebar = "Stille",
 
 	rain = "Feuerregen",
-	rain_desc = "Warnen, wenn du in einem Feuerregen bist.",
+	rain_desc = "Warnt, wenn du in einem Feuerregen stehst.",
 	rain_message = "Feuerregen auf DIR!",
 } end )
 

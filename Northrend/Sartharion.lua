@@ -159,23 +159,23 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("deDE", function() return {
 	tsunami = "Flammentsunami",
 	tsunami_desc = "Warnungen und Timer für Flammentsunami.",
-	tsunami_warning = "Flammentsunami in ~5 Sekunden!",
+	tsunami_warning = "Flammentsunami in ~5sek!",
 	tsunami_message = "Flammentsunami!",
-	tsunami_cooldown = "Flammentsunami Cooldown",
+	tsunami_cooldown = "~Flammentsunami",
 	tsunami_trigger = "Die Lava um %s brodelt!",
 
 	breath = "Flammenatem",
 	breath_desc = "Warnungen und Timer für Flammenatem.",
-	breath_warning = "Flammenatem in ~5 Sekunden!",
+	breath_warning = "Flammenatem in ~5sek!",
 	breath_message = "Flammenatem!",
-	breath_cooldown = "Flammenatem Cooldown",
+	breath_cooldown = "~Flammenatem",
 
-	drakes = "Drachen Adds",
-	drakes_desc = "Warnungen und Timer für den Kampfbeitritt eines Drachen.",
-	drakes_incomingsoon = "%s kommt in ~5 Sekunden!",
+	drakes = "Drachen",
+	drakes_desc = "Warnungen und Timer für den Kampfbeitritt der Drachen.",
+	drakes_incomingsoon = "%s kommt in ~5sek!",
 
 	enrage = "Wutanfall",
-	enrage_warning = "Wutanfall in Kürze!",
+	enrage_warning = "Wutanfall bald!",
 	enrage_message = "Wutanfall!",
 } end )
 

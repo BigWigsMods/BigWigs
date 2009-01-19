@@ -45,8 +45,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	inject = "Mutagene Injektion",
-	inject_desc = "Warnen, wenn auf einen Spieler Mutagene Injektion gewirkt wird.",
-	bomb_message_you = "Du bist verseucht!",
+	inject_desc = "Warnt, wenn auf einen Spieler Mutagene Injektion gewirkt wird.",
+	bomb_message_you = "DU bist verseucht!",
 	bomb_message_other = "%s ist verseucht!",
 
 	icon = "Schlachtzugs-Symbol",
@@ -54,7 +54,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	cloud = "Giftwolke",
 	cloud_desc = "Warnungen und Timer für Giftwolken.",
-	cloud_warn = "Giftwolke! Nächste in ~15 Sekunden!",
+	cloud_warn = "Giftwolke! Nächste in ~15sek!",
 	cloud_bar = "Giftwolke",
 } end )
 

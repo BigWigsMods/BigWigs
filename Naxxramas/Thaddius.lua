@@ -145,16 +145,16 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
-	phase_desc = "Warnungen bei Phasenwechsel.",
+	phase_desc = "Warnt bei Phasenwechsel.",
 
-	polarity = "Polaritätsveränderungen",
-	polarity_desc = "Warnen bei Polaritätsveränderung.",
+	polarity = "Polaritätsveränderung",
+	polarity_desc = "Warnt bei Polaritätsveränderung.",
 
-	power = "Energieschub",
-	power_desc = "Warnungen und Timer für Energieschub von Stalagg.",
+	power = "Kraftsog",
+	power_desc = "Warnungen und Timer für Kraftsog von Stalagg.",
 
 	throw = "Magnetische Anziehung",
-	throw_desc = "Warnen, wenn die Tanks die Plattform wechseln.",
+	throw_desc = "Warnt, wenn die Tanks die Plattform wechseln.",
 
 	starttrigger = "Stalagg zerquetschen!",
 	starttrigger1 = "Verfüttere euch an Meister!",
@@ -169,19 +169,19 @@ L:RegisterTranslations("deDE", function() return {
 	--polarity_trigger = "The polarity has Shifted!", -- TODO
 
 	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
-	addsdownwarn = "Thaddius kommt frei in 10-20 Sekunden!",
-	thaddiusincoming = "Thaddius kommt frei in 3 Sekunden!",
+	startwarn2 = "Thaddius Phase 2, Wutanfall in 6mins!",
+	addsdownwarn = "Thaddius kommt in 10-20sek!",
+	thaddiusincoming = "Thaddius kommt in 3sek!",
 	pswarn1 = "Thaddius beginnt Polaritätsveränderung zu wirken!",
-	pswarn2 = "28 Sekunden bis Polaritätsveränderung!",
-	pswarn3 = "3 Sekunden bis Polaritätsveränderung!",
-	stalaggwarn = "Energieschub auf Stalagg!",
-	powersurgebar = "Energieschub",
+	pswarn2 = "Polaritätsveränderung in 28sek!",
+	pswarn3 = "Polaritätsveränderung in 3sek!",
+	stalaggwarn = "Kraftsog auf Stalagg!",
+	powersurgebar = "Kraftsog",
 
 	bar1text = "Polaritätsveränderung",
 
 	throwbar = "Magnetische Anziehung",
-	throwwarn = "Magnetische Anziehung in ~5 Sekunden!",
+	throwwarn = "Magnetische Anziehung in ~5sek!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

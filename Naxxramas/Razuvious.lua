@@ -36,20 +36,20 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	shout = "Unterbrechender Schrei",
 	shout_desc = "Warnungen und Timer für Unterbrechender Schrei.",
-	shout_warning = "Unterbrechender Schrei in 5 Sekunden!",
-	shout_next = "Schrei Cooldown",
+	shout_warning = "Unterbrechender Schrei in 5sek!",
+	shout_next = "~Unterbrechender Schrei",
 
 	knife = "Gezacktes Messer",
-	knife_desc = "Warnen, wer von Gezacktes Messer betroffen ist.",
-	knife_message = "%s: Gezacktes Messer",
+	knife_desc = "Warnt, wer von Gezacktes Messer betroffen ist.",
+	knife_message = "Gezacktes Messer: %s",
 
 	taunt = "Spott",
 	taunt_desc = "Warnungen und Timer für Spott.",
-	taunt_warning = "Spott bereit in 5 Sekunden!",
+	taunt_warning = "Spott bereit in 5sek!",
 
 	shieldwall = "Knochenbarriere",
 	shieldwall_desc = "Warnungen und Timer für Knochenbarriere.",
-	shieldwall_warning = "Knochenbarriere bereit in 5 Sekunden!",
+	shieldwall_warning = "Knochenbarriere weg in 5sek!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

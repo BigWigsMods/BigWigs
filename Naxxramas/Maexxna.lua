@@ -63,21 +63,21 @@ L:RegisterTranslations("deDE", function() return {
 	spray = "Gespinstschauer",
 	spray_desc = "Warnungen und Timer für Gespinstschauer und Spinnen.",
 
-	cocoon = "Fangnetz",
-	cocoon_desc = "Warnen, wenn Spieler von Fangnetz betroffen sind.",
+	cocoon = "Gespinsthülle",
+	cocoon_desc = "Warnt, wenn Spieler von Gespinsthülle betroffen sind.",
 
-	cocoonwarn = "%s im Fangnetz!",
+	cocoonwarn = "%s in Gespinsthülle!",
 
-	webspraywarn30sec = "Fangnetze in 10 Sekunden!",
-	webspraywarn20sec = "Fangnetze! Spinnen in 10 Sekunden!",
-	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 Sekunden!",
-	webspraywarn5sec = "Gespinstschauer in 5 Sekunden!",
-	webspraywarn = "Gespinstschauer! Nächster in 40 Sekunden!",
+	webspraywarn30sec = "Gespinsthülle in 10sek!",
+	webspraywarn20sec = "Gespinsthülle! Spinnen in 10sek!",
+	webspraywarn10sec = "Spinnen! Gespinstschauer in 10sek!",
+	webspraywarn5sec = "Gespinstschauer in 5sek!",
+	webspraywarn = "Gespinstschauer! Nächster in 40sek!",
 	enragewarn = "Raserei!",
-	enragesoonwarn = "Raserei in Kürze!",
+	enragesoonwarn = "Raserei bald!",
 
 	webspraybar = "Gespinstschauer",
-	cocoonbar = "Fangnetze",
+	cocoonbar = "Gespinsthülle",
 	spiderbar = "Spinnen",
 } end )
 

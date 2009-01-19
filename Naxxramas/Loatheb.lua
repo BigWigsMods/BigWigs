@@ -98,30 +98,30 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	startwarn = "Loatheb angegriffen! 2 Minuten bis Unausweichliches Schicksal!",
+	startwarn = "Loatheb angegriffen! 2mins bis Unausweichliches Schicksal!",
 
 	aura = "Nekrotische Aura",
 	aura_desc = "Warnungen und Timer für Nekrotische Aura.",
-	aura_message = "Nekrotische Aura - Dauer 17 Sekunden!",
-	aura_warning = "Nekrotische Aura schwindet in 3 Sekunden!",
+	aura_message = "Nekrotische Aura - Dauer 17sek!",
+	aura_warning = "Nekrotische Aura schwindet in 3sek!",
 
 	deathbloom = "Todesblüte",
-	deathbloom_desc = "Warnungen und Timer für Todesblüte.",
-	deathbloom_warning = "Todesblüte in 5 Sekunden!",
+	deathbloom_desc = "Warnt vor Todesblüte.",
+	deathbloom_warning = "Todesblüte in 5sek!",
 
 	doom = "Unausweichliches Schicksal",
 	doom_desc = "Warnungen und Timer für Unausweichliches Schicksal.",
 	doombar = "Unausweichliches Schicksal %d",
-	doomwarn = "Unausweichliches Schicksal %d! %d Sekunden bis zum nächsten.",
-	doomwarn5sec = "Unausweichliches Schicksal %d in 5 Sekunden",
-	doomtimerbar = "Unausweichliches Schicksal alle 15 Sekunden",
-	doomtimerwarn = "Unausweichliches Schicksal Timer Wechsel in %s Sekunden!",
-	doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15 Sekunden!",
+	doomwarn = "Unausweichliches Schicksal %d! %d sek bis zum nächsten.",
+	doomwarn5sec = "Unausweichliches Schicksal %d in 5sek!",
+	doomtimerbar = "Schicksal alle 15sek",
+	doomtimerwarn = "Schicksal: Timer Wechsel in %s sek!",
+	doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15sek!",
 
 	spore = "Sporen",
 	spore_desc = "Warnungen und Timer für das Erscheinen einer Spore.",
-	sporewarn = "Spore %d aufgetaucht!",
-	sporebar = "Spore beschwören %d",
+	sporewarn = "Spore (%d)!",
+	sporebar = "Spore (%d)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

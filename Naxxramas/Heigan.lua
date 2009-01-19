@@ -92,23 +92,23 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Ihr entgeht mir nicht...",
 	
 	engage = "Angriff",
-	engage_desc = "Warnen, wenn Heigan angegriffen wird.",
-	engage_message = "Heigan der Unreine angegriffen! Teleport in 90 Sekunden!",
+	engage_desc = "Warnt, wenn Heigan angegriffen wird.",
+	engage_message = "Heigan der Unreine angegriffen! Teleport in 90sek!",
 	
 	teleport = "Teleport",
 	teleport_desc = "Warnungen und Timer für Teleport.",
 	teleport_trigger = "Euer Ende naht.",
-	teleport_1min_message = "Teleport in 1 Minute",
-	teleport_30sec_message = "Teleport in 30 Sekunden",
-	teleport_10sec_message = "Teleport in 10 Sekunden",
-	on_platform_message = "Teleport! Auf der Plattform für 45 Sekunden!",
+	teleport_1min_message = "Teleport in 1min",
+	teleport_30sec_message = "Teleport in 30sek",
+	teleport_10sec_message = "Teleport in 10sek!",
+	on_platform_message = "Teleport! Auf Plattform für 45sek!",
 
-	to_floor_30sec_message = "Zurück im Raum in 30 Sekunden",
-	to_floor_10sec_message = "Zurück im Raum in 10 Sekunden",
-	on_floor_message = "Zurück im Raum! Nächster Teleport in 90 Sekunden!",
+	to_floor_30sec_message = "Zurück in 30sek",
+	to_floor_10sec_message = "Zurück in 10sek!",
+	on_floor_message = "Zurück im Raum! Nächster Teleport in 90sek!",
 
-	teleport_bar = "Teleport!",
-	back_bar = "Rückteleport!",
+	teleport_bar = "Teleport",
+	back_bar = "Zurück im Raum",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
