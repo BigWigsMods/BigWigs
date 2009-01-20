@@ -4,6 +4,7 @@
 
 local boss = BB["Anub'Rekhan"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local locustTime = 90
 
 ----------------------------
 --      Localization      --
@@ -183,9 +184,10 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.locust and (msg:find(L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"]) then
+		locustTime = GetCurrentDungeonDifficulty() == 1 and 102 or 90
 		self:Message(L["engagewarn"], "Urgent")
-		self:DelayedMessage(80, L["gainwarn10sec"], "Important")
-		self:Bar(L["gainincbar"], 90, 28785)
+		self:DelayedMessage(locustTime - 10, L["gainwarn10sec"], "Important")
+		self:Bar(L["gainincbar"], locustTime, 28785)
 	end
 end
 
