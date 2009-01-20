@@ -158,20 +158,20 @@ L:RegisterTranslations("deDE", function() return {
 	stomp = "Stampfen",
 	stomp_desc = "Warnungen und Timer für Stampfen.",
 	stomp_message = "Stampfen - Ansturm bald!",
-	stomp_warning = "Mögliches Stampfen in ~5 Sekunden!",
-	stomp_bar = "~Stampfen Cooldown",
+	stomp_warning = "Mögliches Stampfen in ~5 sek!",
+	stomp_bar = "~Stampfen",
 
 	cloud = "Erstickende Wolke",
-	cloud_desc = "Warnen, wenn du in der Erstickenden Wolke bist.",
+	cloud_desc = "Warnt, wenn du in der Erstickenden Wolke stehst.",
 	cloud_message = "Erstickende Wolke auf DIR!",
 
 	charge = "Ansturm",
-	charge_desc = "Warnen, wenn ein Spieler angestürmt wird.",
-	charge_message = "Ansturm auf %s.",
+	charge_desc = "Warnt, wenn ein Spieler angestürmt wird.",
+	charge_message = "Ansturm: %s!",
 
 	shards = "Felssplitter",
-	shards_desc = "Warnen, wenn auf einen Spieler Felssplitter gewirkt wird.",
-	shards_message = "Felssplitter auf %s!",
+	shards_desc = "Warnt, wenn auf einen Spieler Felssplitter gewirkt wird.",
+	shards_message = "Felssplitter: %s!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Felssplitter gewirkt wird (benötigt Assistent oder höher).",

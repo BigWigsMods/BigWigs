@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	startwarn = "Loatheb angegriffen! 2mins bis Unausweichliches Schicksal!",
+	startwarn = "Loatheb angegriffen! 2min bis Unausweichliches Schicksal!",
 
 	aura = "Nekrotische Aura",
 	aura_desc = "Warnungen und Timer für Nekrotische Aura.",
@@ -107,7 +107,7 @@ L:RegisterTranslations("deDE", function() return {
 	aura_warning = "Nekrotische Aura schwindet in 3sek!",
 
 	deathbloom = "Todesblüte",
-	deathbloom_desc = "Warnt vor Todesblüte.",
+	deathbloom_desc = "Warnungen und Timer für Todesblüte.",
 	deathbloom_warning = "Todesblüte in 5sek!",
 
 	doom = "Unausweichliches Schicksal",

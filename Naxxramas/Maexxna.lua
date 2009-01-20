@@ -60,24 +60,24 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	spray = "Gespinstschauer",
+	spray = "Gespinstschauer", -- aka "Netz versprühen", Blizzard's inconsistence
 	spray_desc = "Warnungen und Timer für Gespinstschauer und Spinnen.",
 
-	cocoon = "Gespinsthülle",
-	cocoon_desc = "Warnt, wenn Spieler von Gespinsthülle betroffen sind.",
+	cocoon = "Fangnetz", -- aka "Gespinsthülle", Blizzard's inconsistence
+	cocoon_desc = "Warnt, wenn ein Spieler von Fangnetz betroffen ist.",
 
-	cocoonwarn = "%s in Gespinsthülle!",
+	cocoonwarn = "Fangnetz: %s!",
 
-	webspraywarn30sec = "Gespinsthülle in 10sek!",
-	webspraywarn20sec = "Gespinsthülle! Spinnen in 10sek!",
-	webspraywarn10sec = "Spinnen! Gespinstschauer in 10sek!",
-	webspraywarn5sec = "Gespinstschauer in 5sek!",
-	webspraywarn = "Gespinstschauer! Nächster in 40sek!",
+	webspraywarn30sec = "Fangnetz in 10 sek!",
+	webspraywarn20sec = "Fangnetz! Spinnen in 10 sek!",
+	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 sek!",
+	webspraywarn5sec = "Gespinstschauer in 5 sek!",
+	webspraywarn = "Gespinstschauer! Nächster in 40 sek!",
 	enragewarn = "Raserei!",
 	enragesoonwarn = "Raserei bald!",
 
 	webspraybar = "Gespinstschauer",
-	cocoonbar = "Gespinsthülle",
+	cocoonbar = "Fangnetz",
 	spiderbar = "Spinnen",
 } end )
 

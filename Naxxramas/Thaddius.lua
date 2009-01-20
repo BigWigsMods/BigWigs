@@ -150,7 +150,7 @@ L:RegisterTranslations("deDE", function() return {
 	polarity = "Polaritätsveränderung",
 	polarity_desc = "Warnt bei Polaritätsveränderung.",
 
-	power = "Kraftsog",
+	power = "Kraftsog", -- aka "Energieschub", Blizzard's inconsistence
 	power_desc = "Warnungen und Timer für Kraftsog von Stalagg.",
 
 	throw = "Magnetische Anziehung",
@@ -165,23 +165,23 @@ L:RegisterTranslations("deDE", function() return {
 	adddeath = "stirbt.",
 	teslaoverload = "Überlädt!",
 
-	pstrigger = "Jetzt spürt ihr den Schmerz",
+	pstrigger = "Jetzt spürt ihr den Schmerz", -- needs verification
 	--polarity_trigger = "The polarity has Shifted!", -- TODO
 
 	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Wutanfall in 6mins!",
-	addsdownwarn = "Thaddius kommt in 10-20sek!",
-	thaddiusincoming = "Thaddius kommt in 3sek!",
+	startwarn2 = "Thaddius Phase 2, Wutanfall in 6 min!",
+	addsdownwarn = "Thaddius kommt in 10-20 sek!",
+	thaddiusincoming = "Thaddius kommt in 3 sek!",
 	pswarn1 = "Thaddius beginnt Polaritätsveränderung zu wirken!",
-	pswarn2 = "Polaritätsveränderung in 28sek!",
-	pswarn3 = "Polaritätsveränderung in 3sek!",
+	pswarn2 = "Polaritätsveränderung in 28 sek!",
+	pswarn3 = "Polaritätsveränderung in 3 sek!",
 	stalaggwarn = "Kraftsog auf Stalagg!",
 	powersurgebar = "Kraftsog",
 
 	bar1text = "Polaritätsveränderung",
 
 	throwbar = "Magnetische Anziehung",
-	throwwarn = "Magnetische Anziehung in ~5sek!",
+	throwwarn = "Magnetische Anziehung in ~5 sek!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

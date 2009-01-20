@@ -109,17 +109,17 @@ L:RegisterTranslations("deDE", function() return {
 	deepbreath = "Frostatem",
 	deepbreath_desc = "Warnungen und Timer für Frostatem.",
 	--airphase_trigger = "%s lifts off into the air!", -- TODO
-	deepbreath_incoming_message = "Frostatem in ~23sek!",
-	deepbreath_incoming_soon_message = "Frostatem in ~5sek!",
-	deepbreath_incoming_bar = "Frostatem",
+	deepbreath_incoming_message = "Frostatem in ~23 sek!",
+	deepbreath_incoming_soon_message = "Frostatem in ~5 sek!",
+	deepbreath_incoming_bar = "Frostatem", -- needs some tweaks, something like "Wirkt Frostatem..."
 	deepbreath_trigger = "%s atmet tief ein...",
 	deepbreath_warning = "Frostatem kommt!",
-	deepbreath_bar = "Frostatem",
+	deepbreath_bar = "Frostatem", -- needs some tweaks, something like "Frostatem landet"
 
-	lifedrain = "Lebensentzug",
+	lifedrain = "Lebensentzug", -- aka "Lebenssauger", Blizzard's inconsistence
 	lifedrain_desc = "Warnungen und Timer für den Lebensentzug Fluch.",
-	lifedrain_message = "Lebensentzug! Nächster in ~24sek!",
-	lifedrain_warn1 = "Lebensentzug in ~5sek!",
+	lifedrain_message = "Lebensentzug! Nächster in ~24 sek!",
+	lifedrain_warn1 = "Lebensentzug in ~5 sek!",
 	lifedrain_bar = "~Lebensentzug",
 
 	icebolt = "Eisblitz",

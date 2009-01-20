@@ -34,9 +34,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	shout = "Unterbrechender Schrei",
+	shout = "Unterbrechender Schrei", -- aka "Unterbrechungsruf", Blizzard's inconsistence
 	shout_desc = "Warnungen und Timer für Unterbrechender Schrei.",
-	shout_warning = "Unterbrechender Schrei in 5sek!",
+	shout_warning = "Unterbrechender Schrei in 5 sek!",
 	shout_next = "~Unterbrechender Schrei",
 
 	knife = "Gezacktes Messer",
@@ -45,11 +45,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	taunt = "Spott",
 	taunt_desc = "Warnungen und Timer für Spott.",
-	taunt_warning = "Spott bereit in 5sek!",
+	taunt_warning = "Spott bereit in 5 sek!",
 
 	shieldwall = "Knochenbarriere",
 	shieldwall_desc = "Warnungen und Timer für Knochenbarriere.",
-	shieldwall_warning = "Knochenbarriere weg in 5sek!",
+	shieldwall_warning = "Knochenbarriere weg in 5 sek!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
