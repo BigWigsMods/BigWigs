@@ -264,29 +264,29 @@ L:RegisterTranslations("deDE", function() return {
 	sparks = "Energiefunke",
 	sparks_desc = "Warnungen und Timer für das Erscheinen von Energiefunken.",
 	sparks_message = "Energiefunke!",
-	sparks_warning = "Energiefunke in ~5sek!",
+	sparks_warning = "Energiefunke in ~5 sek!",
 
 	vortex = "Vortex",
 	vortex_desc = "Warnungen und Timer für Vortex.",
 	vortex_message = "Vortex!",
-	vortex_warning = "Möglicher Vortex in ~5sek!",
-	vortex_next = "Vortex",
+	vortex_warning = "Vortex in ~5 sek!",
+	vortex_next = "~Vortex",
 
 	overload = "Arkane Überladung",
 	overload_desc = "Warnungen und Timer für das Erscheinen einer Arkanen Überladung.",
-	overload_warning = "Arkane Überladung in ~5sek!",
-	overload_next = "Arkane Überladung",
+	overload_warning = "Arkane Überladung in ~5 sek!",
+	overload_next = "~Arkane Überladung",
 
-	breath = "Arkanodem",
-	breath_desc = "Warnungen und Timer für Arkanodem.",
-	breath_message = "Arkanodem!",
-	breath_warning = "Arkanodem in ~5sek!",
+	breath = "Kraftsog",
+	breath_desc = "Warnungen und Timer für Kraftsog in Phase 2.",
+	breath_message = "Kraftsog!",
+	breath_warning = "Kraftsog in ~5 sek!",
 
 	surge = "Kraftsog",
-	surge_desc = "Warnen, wenn ein Spieler von Kraftsog betroffen ist.",
+	surge_desc = "Warnt, wenn ein Spieler von Kraftsog in Phase 3 betroffen ist.",
 	surge_you = "Kraftsog auf DIR!",
-	--surge_trigger = "%s fixes his eyes on you!", -- TODO
-	surge_warning = "Kraftsog auf %s!",
+	surge_trigger = "Die Augen von %s sind auf Euch fixiert!", -- needs verification!
+	surge_warning = "Kraftsog: %s!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Kraftsog gewirkt wird (benötigt Assistent oder höher).",
@@ -294,11 +294,11 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_warning = "Phase 2 bald!",
-	phase2_trigger = "Ich hatte gehofft, eure Leben schnell zu beenden doch ihr zeigt euch.. hartnäckiger als erwartet.", -- needs verification!
-	phase2_message = "Phase 2, Nexuslord & Saat der Ewigkeit!",
+	phase2_trigger = "Ich hatte gehofft, eure Leben schnell zu beenden, doch ihr zeigt euch... hartnäckiger als erwartet. Nichtsdestotrotz sind eure Bemühungen vergebens. Ihr törichten, leichtfertigen Sterblichen tragt die Schuld an diesem Krieg. Ich tue, was ich tun muss, und wenn das eure Auslöschung bedeutet... dann SOLL ES SO SEIN!",
+	phase2_message = "Phase 2, Nexuslords & Saat der Ewigkeit!",
 	phase2_end_trigger = "GENUG! Wenn ihr die Magie Azeroths zurückhaben wollt, dann sollt ihr sie bekommen!",
 	phase3_warning = "Phase 3 bald!",
-	phase3_trigger = "Eure Wohltäter sind eingetroffen", -- needs verification!
+	phase3_trigger = "Eure Wohltäter sind eingetroffen, doch sie kommen zu spät! Die hier gespeicherten Energien reichen aus, die Welt zehnmal zu zerstören. Was, denkt ihr, werden sie mit euch machen?",
 	phase3_message = "Phase 3!",
 } end )
 
@@ -351,7 +351,7 @@ function mod:Vortex(_, spellID)
 		if db.sparks then
 			self:CancelScheduledEvent("SparkWarn")
 			self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
-			self:Bar(L["sparks"], 17, 44780)
+			self:Bar(L["sparks"], 17, 56152)
 			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 12, L["sparks_warning"], "Attention")
 		end
 	end
@@ -359,7 +359,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg, mob)
 	if phase == 3 and db.surge and msg == L["surge_trigger"] then
-		self:LocalMessage(L["surge_you"], "Personal", 56505, "Alarm")
+		self:LocalMessage(L["surge_you"], "Personal", 60936, "Alarm") -- 60936 for phase 3, not 56505
 		self:Icon(pName)
 	end
 end
@@ -367,16 +367,16 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if phase == 1 then
 		if db.sparks then
-			-- 44780, looks like a Power Spark :)
 			self:CancelScheduledEvent("SparkWarn")
 			self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
-			self:Message(L["sparks_message"], "Important", 44780, "Alert")
-			self:Bar(L["sparks"], 30, 44780)
+			self:Message(L["sparks_message"], "Important", 56152, "Alert")
+			self:Bar(L["sparks"], 30, 56152)
 			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 25, L["sparks_warning"], "Attention")
 		end
 	elseif phase == 2 then
 		if db.breath then
-			--19879 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+			-- 43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+			-- Correct SpellId for 'breath" in phase 2 is 56505 
 			self:CancelScheduledEvent("OverloadWarn")
 			self:CancelScheduledEvent("Overload")
 			self:Message(L["breath_message"], "Important", 43810, "Alert")
@@ -450,7 +450,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("VortexWarn", "BigWigs_Message", 24, L["vortex_warning"], "Attention")
 		end
 		if db.sparks then
-			self:Bar(L["sparks"], 25, 44780)
+			self:Bar(L["sparks"], 25, 56152)
 			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 20, L["sparks_warning"], "Attention")
 		end
 		if db.enrage then
