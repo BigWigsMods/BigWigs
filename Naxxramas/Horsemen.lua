@@ -105,7 +105,7 @@ L:RegisterTranslations("deDE", function() return {
 	mark_desc = "Warnungen und Timer für die Male.",
 	markbar = "Mal (%d)",
 	markwarn1 = "Mal (%d)!",
-	markwarn2 = "Mal (%d) in 5sek!",
+	markwarn2 = "Mal (%d) in 5 sek!",
 
 	void = "Zone der Leere",
 	void_desc = "Warnungen und Timer für Zone der Leere von Lady Blaumeux.",
@@ -124,7 +124,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	dies = "#%d getötet",
 
-	startwarn = "Die Vier Reiter angegriffen! Male in ~17sek.",
+	startwarn = "Die Vier Reiter angegriffen! Male in ~17 sek.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -228,7 +228,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
 	self:AddCombatListener("SPELL_CAST_START", "Meteor", 28884, 57467)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Mograine, Mark of Zeliek
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Rivendare, Mark of Zeliek
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	marks = 1

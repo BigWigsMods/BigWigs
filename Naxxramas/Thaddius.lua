@@ -163,13 +163,13 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger4 = "Töten...",
 
 	adddeath = "stirbt.",
-	teslaoverload = "Überlädt!",
+	teslaoverload = "überlädt!",
 
-	pstrigger = "Jetzt spürt ihr den Schmerz", -- needs verification
-	--polarity_trigger = "The polarity has Shifted!", -- TODO
+	pstrigger = "Jetzt spürt ihr den Schmerz...",
+	polarity_trigger = "Die Polarität hat sich verschoben!",
 
-	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Wutanfall in 6 min!",
+	startwarn = "Phase 1",
+	startwarn2 = "Thaddius Phase 2, Berserker in 6 min",
 	addsdownwarn = "Thaddius kommt in 10-20 sek!",
 	thaddiusincoming = "Thaddius kommt in 3 sek!",
 	pswarn1 = "Thaddius beginnt Polaritätsveränderung zu wirken!",
