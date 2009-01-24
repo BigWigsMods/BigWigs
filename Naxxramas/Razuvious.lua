@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = BB["Instructor Razuvious"]
-local understudy = BB["Death knight Understudy"]
+local understudy = BB["Death Knight Understudy"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
