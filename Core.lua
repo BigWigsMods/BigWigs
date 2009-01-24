@@ -154,8 +154,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	bosskill = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림니다.",
-	enrage = "광폭화",
-	enrage_desc = "보스가 광폭화 상태로 변경 시 경고합니다.",
+	enrage = "격노",
+	enrage_desc = "보스가 격노 상태로 변경 시 경고합니다.",
 	berserk = "광폭화",
 	berserk_desc = "보스가 언제 광폭화가 되는지 경고합니다.",
 

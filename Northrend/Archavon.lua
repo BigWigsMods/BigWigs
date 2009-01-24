@@ -186,7 +186,7 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 31125
-mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -274,7 +274,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["stomp_bar"], 47, 60880)
 			self:DelayedMessage(42, L["stomp_warning"], "Attention")
 		end
-		if db.enrage then
+		if db.berserk then
 			self:Enrage(300, true)
 		end
 	end

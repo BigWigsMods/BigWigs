@@ -53,11 +53,11 @@ commonWords:RegisterTranslations("koKR", function() return {
 	you = "당신은",
 	are = " ",
 
-	enrage_start = "%s 전투 개시 - %d분 후 광폭화",
-	enrage_end = "%s 광폭화",
-	enrage_min = "%d분 후 광폭화",
-	enrage_sec = "%d초 후 광폭화",
-	enrage = "광폭화",
+	enrage_start = "%s 전투 개시 - %d분 후 격노",
+	enrage_end = "%s 격노",
+	enrage_min = "%d분 후 격노",
+	enrage_sec = "%d초 후 격노",
+	enrage = "격노",
 
 	berserk_start = "%s 전투 개시 - %d분 후 광폭화",
 	berserk_end = "%s 광폭화",
