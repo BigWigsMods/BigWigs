@@ -36,16 +36,16 @@ commonWords:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 
-	enrage_start = "%s angegriffen - Wutanfall in %d Minuten",
-	enrage_end = "%s bekommt einen Wutanfall",
-	enrage_min = "Wutanfall in %d Minuten",
-	enrage_sec = "Wutanfall in %d Sekunden",
+	enrage_start = "%s angegriffen - Wutanfall in %d min",
+	enrage_end = "%s bekommt Wutanfall!",
+	enrage_min = "Wutanfall in %d min",
+	enrage_sec = "Wutanfall in %d sek!",
 	enrage = "Wutanfall",
 
-	berserk_start = "%s angegriffen - Berserker in %d Minuten",
-	berserk_end = "%s wird zum Berserker",
-	berserk_min = "Berserker in %d Minuten",
-	berserk_sec = "Berserker in %d Sekunden",
+	berserk_start = "%s angegriffen - Berserker in %d min",
+	berserk_end = "%s wird zum Berserker!",
+	berserk_min = "Berserker in %d min",
+	berserk_sec = "Berserker in %d sek!",
 	berserk = "Berserker",
 } end )
 

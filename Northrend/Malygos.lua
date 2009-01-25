@@ -277,15 +277,15 @@ L:RegisterTranslations("deDE", function() return {
 	overload_warning = "Arkane Überladung in ~5 sek!",
 	overload_next = "~Arkane Überladung",
 
-	breath = "Kraftsog",
-	breath_desc = "Warnungen und Timer für Kraftsog in Phase 2.",
-	breath_message = "Kraftsog!",
-	breath_warning = "Kraftsog in ~5 sek!",
+	breath = "Tiefer Atem",
+	breath_desc = "Warnungen und Timer für Tiefer Atem (Kraftsog) in Phase 2.",
+	breath_message = "Tiefer Atem!",
+	breath_warning = "Tiefer Atem in ~5 sek!",
 
 	surge = "Kraftsog",
 	surge_desc = "Warnt, wenn ein Spieler von Kraftsog in Phase 3 betroffen ist.",
 	surge_you = "Kraftsog auf DIR!",
-	surge_trigger = "Die Augen von %s sind auf Euch fixiert!", -- needs verification!
+	surge_trigger = "Die Augen von %s sind auf Euch fixiert!",
 	surge_warning = "Kraftsog: %s!",
 
 	icon = "Schlachtzugs-Symbol",

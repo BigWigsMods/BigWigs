@@ -170,7 +170,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemach",
 
 	start_trigger = "Lakaien, Diener, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
 	start_warning = "Kel'Thuzad gestarted! ~3:30 min, bis er aktiv wird!",
@@ -179,8 +179,8 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_trigger1 = "Betet um Gnade!",
-	--phase2_trigger2 = "Scream your dying breath!", -- TODO
-	--phase2_trigger3 = "The end is upon you!", -- TODO
+	phase2_trigger2 = "Schreiend werdet ihr diese Welt verlassen!",
+	phase2_trigger3 = "Euer Ende naht!", -- needs verification!
 	phase2_warning = "Phase 2, Kel'Thuzad kommt!",
 	phase2_bar = "Kel'Thuzad aktiv",
 	phase3_soon_warning = "Phase 3 bald!",

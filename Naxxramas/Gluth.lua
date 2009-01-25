@@ -56,7 +56,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	startwarn = "Gluth angegriffen! ~105sek bis Dezimieren!",
+	startwarn = "Gluth angegriffen! ~105 sek bis Dezimieren!",
 
 	frenzy = "Raserei",
 	frenzy_desc = "Warnen, wenn Gluth in Raserei verfällt.",

@@ -74,14 +74,14 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Ihr könnt euch nicht vor mir verstecken!",
 	starttrigger4 = "Flieht, solange ihr noch könnt.",
 
-	startwarn = "Großwitwe Faerlina angegriffen! Raserei in 60sek!",
-	enragewarn15sec = "Raserei in 15sek!",
+	startwarn = "Großwitwe Faerlina angegriffen! Raserei in 60 sek!",
+	enragewarn15sec = "Raserei in 15 sek!",
 	enragewarn = "Raserei!",
 	enragewarn2 = "Raserei bald!",
-	enrageremovewarn = "Raserei vorbei! Nächste in ~60sek!",
+	enrageremovewarn = "Raserei vorbei! Nächste in ~60 sek!",
 	
 	silencewarn = "Stille! Raserei verzögert!",
-	silencewarn5sec = "Stille endet in 5sek!",
+	silencewarn5sec = "Stille endet in 5 sek!",
 	silencebar = "Stille",
 
 	rain = "Feuerregen",

@@ -161,7 +161,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
-	startwarn = "Gothik der Ernter angegriffen! Im Raum in 4:30min!",
+	startwarn = "Gothik der Ernter angegriffen! Im Raum in 4:30 min!",
 
 	rider = "Unerbittlicher Reiter",
 	spectral_rider = "Spektraler Reiter",
@@ -173,17 +173,17 @@ L:RegisterTranslations("deDE", function() return {
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
 
-	warn1 = "Im Raum in 3min",
-	warn2 = "Im Raum in 90sek",
-	warn3 = "Im Raum in 60sek",
-	warn4 = "Im Raum in 30sek",
-	warn5 = "Gothik im Raum in 10sek!",
+	warn1 = "Im Raum in 3 min",
+	warn2 = "Im Raum in 90 sek",
+	warn3 = "Im Raum in 60 sek",
+	warn4 = "Im Raum in 30 sek!",
+	warn5 = "Gothik im Raum in 10 sek!",
 
 	wave = "%d/25: ",
 
-	trawarn = "Lehrlinge in 3sek",
-	dkwarn = "Todesritter in 3sek",
-	riderwarn = "Reiter in 3sek",
+	trawarn = "Lehrlinge in 3 sek!",
+	dkwarn = "Todesritter in 3 sek!",
+	riderwarn = "Reiter in 3 sek!",
 
 	trabar = "Lehrling (%d)",
 	dkbar = "Todesritter (%d)",

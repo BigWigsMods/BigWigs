@@ -95,13 +95,13 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Sterbt, Eindringling!",
 	starttrigger2 = "Ehre unserem Meister!",
 	starttrigger3 = "Euer Leben ist verwirkt!",
-	startwarn = "Noth der Seuchenfürst angegriffen! Teleport in 90sek!",
+	startwarn = "Noth angegriffen! Teleport in 90 sek!",
 
 	blink = "Blinzeln",
 	blink_desc = "Warnungen und Timer für Blinzeln.",
 	blinktrigger = "%s blinzelt sich davon!",
 	blinkwarn = "Blinzeln!",
-	blinkwarn2 = "Blinzeln in ~5sek!",
+	blinkwarn2 = "Blinzeln in ~5 sek!",
 	blinkbar = "Blinzeln",
 
 	teleport = "Teleport",
@@ -109,15 +109,15 @@ L:RegisterTranslations("deDE", function() return {
 	teleportbar = "Teleport",
 	backbar = "Rückteleport",
 	teleportwarn = "Teleport! Noth auf dem Balkon!",
-	teleportwarn2 = "Teleport in 10sek!",
-	backwarn = "Noth zurück im Raum für %d sek.",
-	backwarn2 = "Rückteleport in 10sek!",
+	teleportwarn2 = "Teleport in 10 sek!",
+	backwarn = "Noth zurück im Raum für %d sek!",
+	backwarn2 = "Rückteleport in 10 sek!",
 
 	curse = "Fluch",
 	curse_desc = "Warnungen und Timer für Fluch des Seuchenfürsten.",
 	curseexplosion = "Fluch Explosion!",
-	cursewarn = "Fluch! Nächster in ~55sek.",
-	curse10secwarn = "Fluch in ~10sek!",
+	cursewarn = "Fluch! Nächster in ~55 sek.",
+	curse10secwarn = "Fluch in ~10 sek!",
 	cursebar = "Nächster Fluch",
 
 	wave = "Wellen",
@@ -125,7 +125,7 @@ L:RegisterTranslations("deDE", function() return {
 	addtrigger = "Erhebt euch, Soldaten! Erhebt euch und kämpft erneut!",
 	wave1bar = "Welle 1",
 	wave2bar = "Welle 2",
-	wave2_message = "Welle 2 in 10sek!",
+	wave2_message = "Welle 2 in 10 sek!",
 } end )
 
 
