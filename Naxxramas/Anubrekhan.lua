@@ -55,7 +55,7 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Nur einmal kosten...",
 	starttrigger2 = "Rennt! Das bringt das Blut in Wallung!",
 	starttrigger3 = "Es gibt kein Entkommen.",
-	engagewarn = "Anub'Rekhan angegriffen! Heuschreckenschwarm in ~90 sek!",
+	engagewarn = "Anub'Rekhan angegriffen! Heuschreckenschwarm in ~%d sek!",
 
 	gainendwarn = "Heuschreckenschwarm vorbei!",
 	gainnextwarn = "Nächster Schwarm in ~85 sek",
