@@ -433,8 +433,6 @@ function mod:FrostBlast(player)
 	if self.db.profile.frostblast then
 		FB[player] = true
 		self:ScheduleEvent("BWFrostBlastWarn", self.FBWarn, 0.4, self)
-		self:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
-		self:Bar(L["frostblast_bar"], 37, 27808)
 	end
 end
 
@@ -448,6 +446,8 @@ function mod:FBWarn()
 		end
 	end
 	self:IfMessage(L["frostblast_message"]:format(msg), "Important", 27808, "Alert")
+	self:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
+	self:Bar(L["frostblast_bar"], 37, 27808)
 	for k in pairs(FB) do FB[k] = nil end
 end
 
@@ -471,8 +471,6 @@ end
 function mod:MC(player)
 	if self.db.profile.mc then
 		MCd[player] = true
-		self:CancelScheduledEvent("MCW")
-		self:TriggerEvent("BigWigs_StopBar", self, L["mc_nextbar"])
 		self:ScheduleEvent("BWMCWarn", self.MCWarn, 0.5, self)
 	end
 end
@@ -489,7 +487,7 @@ function mod:MCWarn()
 		end
 		self:IfMessage(fmt(L["mc_message"], msg), "Important", 28410, "Alert")
 		self:Bar(L["mc"], 21, 28410)
-		self:ScheduleEvent("MCW", "BigWigs_Message", 68, L["mc_warning"], "Urgent")
+		self:DelayedMessage(68, L["mc_warning"], "Urgent")
 		self:Bar(L["mc_nextbar"], 68, 28410)
 	end
 	for k in pairs(MCd) do MCd[k] = nil end
