@@ -180,7 +180,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_trigger1 = "Betet um Gnade!",
 	phase2_trigger2 = "Schreiend werdet ihr diese Welt verlassen!",
-	phase2_trigger3 = "Euer Ende naht!", -- needs verification!
+	phase2_trigger3 = "Euer Ende ist gekommen!",
 	phase2_warning = "Phase 2, Kel'Thuzad kommt!",
 	phase2_bar = "Kel'Thuzad aktiv",
 	phase3_soon_warning = "Phase 3 bald!",

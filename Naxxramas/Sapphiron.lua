@@ -108,11 +108,11 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	deepbreath = "Frostatem",
 	deepbreath_desc = "Warnungen und Timer für Frostatem.",
-	airphase_trigger = "%s erhebt sich in die Lüfte!",
+	airphase_trigger = "Saphiron erhebt sich in die Lüfte!", -- No %s in deDE, we need the translated name!
 	deepbreath_incoming_message = "Frostatem in ~23 sek!",
 	deepbreath_incoming_soon_message = "Frostatem in ~5 sek!",
-	deepbreath_incoming_bar = "Wirkt Frostatem",
-	deepbreath_trigger = "%s atmet tief ein...",
+	deepbreath_incoming_bar = "Wirkt Frostatem...",
+	deepbreath_trigger = "%s holt tief Luft.",
 	deepbreath_warning = "Frostatem kommt!",
 	deepbreath_bar = "Frostatem landet!",
 
