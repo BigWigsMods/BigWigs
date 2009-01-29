@@ -621,7 +621,7 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 		if self:HasModule(name) then
 			self:EnableModule(name, true)
 		end
-	elseif (sync == "BWBossDeath" or sync == "BWMultiBossDeath") and self:HasModule(module) then
+	elseif (sync == "BWBossDeath" or sync == "BWMultiBossDeath") and self:HasModule(module) and self:IsModuleActive(module) then
 		local mod = self:GetModule(module)
 		if mod.db.profile.bosskill then
 			if sync == "BWBossDeath" then
