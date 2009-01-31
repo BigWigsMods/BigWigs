@@ -72,7 +72,7 @@ L:RegisterTranslations("ruRU", function() return {
 	power_desc = "Предупреждать о волне силы",
 
 	throw = "Бросока",
-	throw_desc = "Предупреждать об обменах платформы резервуара.",
+	throw_desc = "Предупреждать о смене танков на платформах.",
 
 	starttrigger = "Сталагг сокрушить вас!",  
 	starttrigger1 = "Я скормлю вас господину!",  
@@ -80,14 +80,14 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger3 = "Растерзаю!!!",  
 	starttrigger4 = "Убью...",  
 
-	adddeath = "умер.",
+	adddeath = "умирает.",
 	teslaoverload = "%s перезагружается!", 
 
 	pstrigger = "Познайте же боль...",
-	--polarity_trigger = "The polarity has Shifted!",
+	polarity_trigger = "Полярность изменилась!",
 
 	startwarn = "Таддиус фаза 1",
-	startwarn2 = "Таддиус фаза 2, ярость через 5 минут!",
+	startwarn2 = "Таддиус фаза 2, Берсерк через 6 минут!",
 	addsdownwarn = "Таддиус появится через 10-20 секунд!",
 	thaddiusincoming = "Таддиус появится через 3 секунды!",
 	pswarn1 = "Таддиус сдвигает полярность!",
