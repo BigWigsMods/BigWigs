@@ -79,7 +79,7 @@ L:RegisterTranslations("ruRU", function() return {
 	curse = "Проклятие Чумного",
 	curse_desc = "Сообщать когда Нот накладывает проклятие.",
 	curseexplosion = "Проклятый взрыв!",
-	cursewarn = "Проклятие! через ~55 секунд",
+	cursewarn = "Проклятие через ~55 секунд",
 	curse10secwarn = "Проклятие через ~10 секунд",
 	cursebar = "Следующее проклятие",
 

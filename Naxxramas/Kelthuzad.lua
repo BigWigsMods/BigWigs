@@ -69,8 +69,8 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада",
-
-	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел-Тузада!", 
+					 
+	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел'Тузада!", 
 	start_warning = "Бой с Кел'Тузадом начинается! ~3 мин 30 сек до выхода босса!", 
 	start_bar = "Фаза 2",
 
@@ -78,7 +78,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase_desc = "Предупреждать когда босс входит в новую фазу.",
 	phase2_trigger1 = "Молите о пощаде!",  
 	phase2_trigger2 = "Кричите! Кричите изо всех сил!", 
-	phase2_trigger3 = "Вы уже мертвы!",  
+	phase2_trigger3 = 	"Вы уже мертвы!",  
 	phase2_warning = "Фаза 2, Кел'Тузад просыпается!",
 	phase2_bar = "Кел'Тузад активен!",
 	phase3_soon_warning = "Скоро Фаза 3!",

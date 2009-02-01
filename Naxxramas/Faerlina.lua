@@ -45,10 +45,10 @@ L:RegisterTranslations("ruRU", function() return {
 	silence = "Безмолвие",
 	silence_desc = "Предупреждать о безмолвии",
 
-	starttrigger1 = "Стань на колени, червь!",  --check this
-	starttrigger2 = "Убейте их во имя господина!",  --!!check this again
+	starttrigger1 = "Склонитесь передо мной, черви!",  
+	starttrigger2 = "Убейте их во имя господина!",  
 	starttrigger3 = "Вам не скрыться от меня!",  
-	starttrigger4 = "Бегите, пока еще можете!!",  
+	starttrigger4 = "Бегите, пока еще можете!",  
 
 	startwarn = "Великая вдова Фарлина злится, 60 секунд до бешенства!",
 	enragewarn15sec = "15 секунд до Бешенства!",

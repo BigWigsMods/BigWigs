@@ -58,7 +58,7 @@ L:RegisterTranslations("ruRU", function() return {
 	on_floor_message = "Возвращается! 90 секунд до следующего телепорта!",
 
 	teleport_bar = "Телепорт!",
-	back_bar = "Возвращение на этаж!",
+	back_bar = "Возвращение!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

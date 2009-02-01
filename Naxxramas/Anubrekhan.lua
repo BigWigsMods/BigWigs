@@ -36,7 +36,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	starttrigger1 = "Посмотрим, какие вы на вкус!", 
 	starttrigger2 = "Бегите, бегите! Я люблю горячую кровь!",  
-	starttrigger3 = "Да зомби!я заставлю тебя попотеть.",  --correct this
+	starttrigger3 = "Вам отсюда не выбраться.",  --check this
 	engagewarn = "Ануб'Рекан в исступлении! Первая волна жуков через ~%d секунд",
 
 	gainendwarn = "Жуки-трупоеды исчезают!",
