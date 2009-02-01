@@ -173,7 +173,7 @@ L:RegisterTranslations("deDE", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemach",
 
 	start_trigger = "Lakaien, Diener, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
-	start_warning = "Kel'Thuzad gestarted! ~3:30 min, bis er aktiv wird!",
+	start_warning = "Kel'Thuzad Event gestartet! ~3:30 Min, bis er aktiv wird!",
 	start_bar = "Phase 2",
 
 	phase = "Phasen",
