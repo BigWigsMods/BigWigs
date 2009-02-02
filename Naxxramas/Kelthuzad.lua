@@ -157,7 +157,7 @@ L:RegisterTranslations("koKR", function() return {
 	detonate_you = "당신은 마나 폭발!",
 	detonate_other = "마나 폭발 - %s",
 	detonate_possible_bar = "폭발 가능",
-	detonate_warning = "약 5초 이내 마나 폭발!",
+	detonate_warning = "약 5초 이내 마나 폭발 가능!",
 
 	guardians = "수호자 생성",
 	guardians_desc = "3 단계의 수호자 소환을 알립니다.",

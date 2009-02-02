@@ -124,7 +124,7 @@ L:RegisterTranslations("koKR", function() return {
 	trainee = "무자비한 수습생",
 	spectral_trainee = "수습생 유령",
 
-	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
+	riderdiewarn = "기병 죽음!",
 	dkdiewarn = "죽음의 기사 죽음!",
 
 	warn1 = "고딕 등장 3분 전",

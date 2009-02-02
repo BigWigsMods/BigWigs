@@ -95,8 +95,8 @@ L:RegisterTranslations("koKR", function() return {
 	webspraywarn10sec = "거미 소환. 10초 후 거미줄 뿌리기!",
 	webspraywarn5sec = "5초 후 거미줄 뿌리기!",
 	webspraywarn = "거미줄 뿌리기! 다음은 40초 후!",
-	enragewarn = "격노!!",
-	enragesoonwarn = "잠시 후 격노!",
+	enragewarn = "광기!",
+	enragesoonwarn = "잠시 후 광기!",
 
 	webspraybar = "거미줄 뿌리기",
 	cocoonbar = "거미줄 감싸기",
