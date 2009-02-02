@@ -18,11 +18,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	deepbreath = "Ice Bomb",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
-	airphase_trigger = "%s lifts off into the air!",
+	airphase_trigger = "Sapphiron lifts off into the air!",
 	deepbreath_incoming_message = "Ice Bomb casting in ~14sec!",
 	deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!",
 	deepbreath_incoming_bar = "Ice Bomb Cast",
-	deepbreath_trigger = "%s takes in a deep breath...",
+	deepbreath_trigger = "%s takes a deep breath.",
 	deepbreath_warning = "Ice Bomb Incoming!",
 	deepbreath_bar = "Ice Bomb Lands!",
 
