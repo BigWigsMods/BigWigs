@@ -87,7 +87,7 @@ L:RegisterTranslations("ruRU", function() return {
 	warn4 = "В комнате через 30 секунд",
 	warn5 = "Готик появится через 10 секунд",
 
-	wave = "%d/25: ",
+	wave = "%d/23: ",
 	
 	trawarn = "Ученик через 3 секунды",
 	dkwarn = "Рыцарь Смерти через 3 секунды",
@@ -133,7 +133,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn4 = "고딕 등장 30초 전",
 	warn5 = "고딕 등장 10초 전",
 
-	wave = "%d/25: ",
+	wave = "%d/23: ",
 
 	trawarn = "수습생 3초 후 등장",
 	dkwarn = "죽음의 기사 3초 후 등장",
@@ -179,7 +179,7 @@ L:RegisterTranslations("deDE", function() return {
 	warn4 = "Im Raum in 30 sek!",
 	warn5 = "Gothik im Raum in 10 sek!",
 
-	wave = "%d/25: ",
+	wave = "%d/23: ",
 
 	trawarn = "Lehrlinge in 3 sek!",
 	dkwarn = "Todesritter in 3 sek!",
@@ -225,7 +225,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warn4 = "30秒后进入房间",
 	warn5 = "收割者戈提克10秒后进入房间！",
 	
-	wave = "%d/25：",
+	wave = "%d/23：",
 
 	trawarn = "3秒后学徒出现",
 	dkwarn = "3秒后死亡骑士出现",
@@ -271,7 +271,7 @@ L:RegisterTranslations("zhTW", function() return {
 	warn4 = "30秒後進入房間！",
 	warn5 = "10秒後進入房間！",
 	
-	wave = "%d/25：",
+	wave = "%d/23：",
 
 	trawarn = "3秒後訓練師出現",
 	dkwarn = "3秒後死亡騎士出現",
@@ -317,7 +317,7 @@ L:RegisterTranslations("frFR", function() return {
 	warn4 = "Dans la salle dans 30 sec.",
 	warn5 = "Arrivée de Gothik dans 10 sec.",
 
-	wave = "%d/25 : ",
+	wave = "%d/23 : ",
 
 	trawarn = "Jeune recrue dans 3 sec.",
 	dkwarn = "Chevalier de la mort dans 3 sec.",
@@ -399,7 +399,7 @@ end
 
 function mod:WaveWarn(message, L, color)
 	self.wave = self.wave + 1
-	if self.wave < 26 then
+	if self.wave < 24 then
 		if self.db.profile.add then 
 			self:Message(L["wave"]:format(self.wave) .. message, color) 
 		end
