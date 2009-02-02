@@ -272,9 +272,9 @@ L:RegisterTranslations("frFR", function() return {
 	wave = "Vagues",
 	wave_desc = "Prévient de l'arrivée des vagues.",
 	addtrigger = "Levez-vous, soldats ! Levez-vous et combattez une fois encore !",
-	wave1bar = "Vague 1",
-	wave2bar = "Vague 2",
-	wave2_message = "Vague 2 dans 10 sec.",
+	wave1bar = "1ère vague",
+	wave2bar = "2ème vague",
+	wave2_message = "2ème vague dans 10 sec.",
 } end )
 
 ----------------------------------

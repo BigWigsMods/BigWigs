@@ -198,10 +198,10 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	deepbreath = "Bombe de glace",
 	deepbreath_desc = "Prévient quand Saphiron commence à lancer sa Bombe de glace.",
-	airphase_trigger = "%s s'envole !",
+	airphase_trigger = "Saphiron s'envole !",
 	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~14 sec. !",
 	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
-	deepbreath_incoming_bar = "Bombe de glace en incantation",
+	deepbreath_incoming_bar = "Incantation Bombe",
 	deepbreath_trigger = "%s inspire profondément.",
 	deepbreath_warning = "Arrivée d'une Bombe de glace !",
 	deepbreath_bar = "Impact Bombe de glace ",
