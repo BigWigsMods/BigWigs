@@ -216,7 +216,6 @@ L:RegisterTranslations("zhCN", function() return {
 	pswarn1 = "塔迪乌斯开始施放极性转化！",
 	pswarn2 = "28秒后，极性转化！",
 	pswarn3 = "3秒后，极性转化！",
-	poswarn = "你是正电荷！",
 	stalaggwarn = "力量振荡！",
 	powersurgebar = "<力量振荡>",
 
@@ -259,7 +258,6 @@ L:RegisterTranslations("zhTW", function() return {
 	pswarn1 = "泰迪斯開始施放兩極移形！",
 	pswarn2 = "28秒後，兩極移形！",
 	pswarn3 = "3秒後，兩極移形！",
-	poswarn = "你是正電荷！",
 	stalaggwarn = "力量澎湃！加大對坦克的治療！",
 	powersurgebar = "<力量澎湃>",
 
