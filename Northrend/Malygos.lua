@@ -311,7 +311,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "overload", "breath", -1, "surge", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "overload", "breath", -1, "surge", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -360,7 +360,6 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg, mob)
 	if phase == 3 and db.surge and msg == L["surge_trigger"] then
 		self:LocalMessage(L["surge_you"], "Personal", 60936, "Alarm") -- 60936 for phase 3, not 56505
-		self:Icon(pName)
 	end
 end
 
