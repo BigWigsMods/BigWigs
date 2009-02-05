@@ -140,6 +140,9 @@ L:RegisterTranslations("koKR", function() return {
 	pswarn3 = "3초 이내 극성 변환!",
 	stalaggwarn = "스탈라그 마력의 쇄도!",
 	powersurgebar = "마력의 쇄도",
+	
+	polarity_changed = "극성 변경됨!",
+	polarity_nochange = "같은 극성!",
 
 	bar1text = "극성 변환",
 
