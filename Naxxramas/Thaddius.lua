@@ -181,6 +181,9 @@ L:RegisterTranslations("deDE", function() return {
 	pswarn3 = "Polaritätsveränderung in 3 sek!",
 	stalaggwarn = "Kraftsog auf Stalagg!",
 	powersurgebar = "Kraftsog",
+	
+	polarity_changed = "Polarität geändert!",
+	polarity_nochange = "Selbe Polarität!",
 
 	bar1text = "Polaritätsveränderung",
 
