@@ -458,6 +458,9 @@ do
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
 	function BigWigs:New(module, revision, ...)
+		if type(revision) ~= "number" then
+			error(("Trying to register module %q without a valid revision."):format(name))
+		end
 		if self.modules[module] then
 			local oldM = self:GetModule(module)
 			print(L["already_registered"]:format(module, oldM.revision, revision))
