@@ -497,8 +497,8 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 	end
 
 	if icon and db.useicons then
-		local _
-		_, _, icon = GetSpellInfo(icon)
+		local _, _, gsiIcon = GetSpellInfo(icon)
+		icon = gsiIcon or icon
 	else
 		icon = nil
 	end
