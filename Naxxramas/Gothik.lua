@@ -1,14 +1,20 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Gothik the Harvester"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(string.sub("$Revision$", 12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = { boss }
+mod.guid = 16060
+mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
 
 ----------------------------
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gothik",
 
@@ -333,24 +339,14 @@ L:RegisterTranslations("frFR", function() return {
 	inroombartext = "Dans la salle",
 } end )
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+------------------------------
+--      Initialization      --
+------------------------------
 
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = { boss }
-mod.guid = 16060
 mod.wipemobs = {
 	L["rider"], L["deathknight"], L["trainee"],
 	L["spectral_rider"], L["spectral_deathknight"], L["spectral_trainee"]
 }
-mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
-
-------------------------------
---      Initialization      --
-------------------------------
 
 function mod:OnEnable()
 	self.wave = 0

@@ -1,6 +1,6 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local thane = BB["Thane Korth'azz"]
 local rivendare = BB["Baron Rivendare"]
@@ -8,7 +8,17 @@ local zeliek = BB["Sir Zeliek"]
 local blaumeux = BB["Lady Blaumeux"]
 local boss = BB["The Four Horsemen"]
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
+mod.guid = 16065
+mod.toggleoptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
 local deaths = 0
 local started = nil
 local marks = 1
@@ -17,6 +27,7 @@ local marks = 1
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Horsemen",
 
@@ -207,18 +218,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec. !",
 } end )
-
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
-mod.guid = 16065
-mod.toggleoptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

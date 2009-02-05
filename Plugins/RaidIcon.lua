@@ -1,5 +1,12 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("Raid Icons", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -214,13 +221,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["Skull"] = "Череп",
 } end )
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("Raid Icons")
-
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	place = true,
 	icon = 8,

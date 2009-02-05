@@ -1,10 +1,20 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Instructor Razuvious"]
 local understudy = BB["Death Knight Understudy"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = {boss, understudy}
+mod.guid = 16061
+mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local started = nil
 
@@ -12,6 +22,7 @@ local started = nil
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razuvious",
 
@@ -146,17 +157,6 @@ L:RegisterTranslations("ruRU", function() return {
 	shieldwall_desc = "Предупреждать о Преграде из костей.",
 	shieldwall_warning = "Преграда из костей закончится через 5сек!",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = {boss, understudy}
-mod.guid = 16061
-mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

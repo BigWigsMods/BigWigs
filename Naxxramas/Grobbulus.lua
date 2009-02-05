@@ -1,9 +1,19 @@
-﻿------------------------------
+﻿----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local boss = BB["Grobbulus"]
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15931
+mod.toggleoptions = {"inject", "icon", "cloud", "berserk", "bosskill"}
+
+------------------------------
 --      Are you local?      --
 ------------------------------
 
-local boss = BB["Grobbulus"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
 local pName = UnitName("player")
 
@@ -11,6 +21,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Grobbulus",
 
@@ -117,17 +128,6 @@ L:RegisterTranslations("frFR", function() return {
 	cloud_warn = "Nuage empoisonné ! Prochain dans ~15 sec. !",
 	cloud_bar = "Prochain Nuage",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15931
-mod.toggleoptions = {"inject", "icon", "cloud", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

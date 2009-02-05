@@ -1,10 +1,19 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("Messages", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
+local sink = LibStub("LibSink-2.0")
+sink:Embed(plugin)
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
 local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChips-2.0") or nil
 
 local colorModule = nil
@@ -17,6 +26,7 @@ local GetSpellInfo = GetSpellInfo
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
 L:RegisterTranslations("enUS", function() return {
 	["Messages"] = true,
 	["Options for message display."] = true,
@@ -297,15 +307,10 @@ L:RegisterTranslations("ruRU", function() return {
 	Font = "Fonts\\NIM_____.ttf",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("Messages")
-local sink = LibStub("LibSink-2.0")
-sink:Embed(plugin)
-
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	sink20OutputSink = "RaidWarning",
 	usecolors = true,

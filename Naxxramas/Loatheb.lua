@@ -1,9 +1,18 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Loatheb"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 16011
+mod.toggleoptions = {"aura", "deathbloom", "doom", "spore", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local started = nil
 local doomTime = 30
@@ -15,6 +24,7 @@ local sporeTime = 16
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Loatheb",
 
@@ -205,17 +215,6 @@ L:RegisterTranslations("frFR", function() return {
 	sporewarn = "Spore %d invoquée",
 	sporebar = "Invocation de spore %d",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 16011
-mod.toggleoptions = {"aura", "deathbloom", "doom", "spore", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

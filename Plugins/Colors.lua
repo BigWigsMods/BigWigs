@@ -1,10 +1,15 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("Colors", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
-
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsColors")
 
 local shortBar
 local longBar
@@ -14,6 +19,7 @@ local fmt = string.format
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsColors")
 L:RegisterTranslations("enUS", function() return {
 	["Colors"] = true,
 
@@ -322,13 +328,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["4th"] = "4тый",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("Colors")
-
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	Important = { r = 1, g = 0, b = 0 }, -- Red
 	Personal = { r = 1, g = 0, b = 0 }, -- Red

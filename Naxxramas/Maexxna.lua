@@ -1,9 +1,18 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Maexxna"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15952
+mod.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local inCocoon = {}
 local started = nil
@@ -13,6 +22,7 @@ local enrageannounced = nil
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maexxna",
 
@@ -168,17 +178,6 @@ L:RegisterTranslations("frFR", function() return {
 	cocoonbar = "Entoilage",
 	spiderbar = "Araignées",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15952
-mod.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

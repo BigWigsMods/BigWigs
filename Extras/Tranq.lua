@@ -1,5 +1,13 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local mod = BigWigs:New("Tranq", tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.external = true
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -78,16 +86,13 @@ L:RegisterTranslations("ruRU", function() return {
 	["Bars"] = "Полосы",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local mod = BigWigs:NewModule("Tranq")
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.defaultDB = {
 	bars = true,
 }
-mod.external = true
 mod.consoleCmd = "Tranq"
 mod.consoleOptions = {
 	type = "group",

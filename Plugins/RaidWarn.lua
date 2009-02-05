@@ -1,10 +1,15 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("RaidWarning", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
-
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidWarn")
 
 local sentWhispers = nil
 local output = "*** %s ***"
@@ -13,6 +18,7 @@ local output = "*** %s ***"
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidWarn")
 L:RegisterTranslations("enUS", function() return {
 	["RaidWarning"] = true,
 
@@ -173,12 +179,10 @@ L:RegisterTranslations("ruRU", function() return {
 	desc = "Позволяет настроить куда BigWigs отошлет предупреждения от боссов в дополнении с локальным выводом.",
 } end )
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("RaidWarning")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	whisper = false,
 	broadcast = false,

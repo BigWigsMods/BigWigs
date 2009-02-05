@@ -1,6 +1,12 @@
 ﻿assert( BigWigs, "BigWigs not found!")
 
 -----------------------------------------------------------------------
+--      Module Declaration
+-----------------------------------------------------------------------
+local plugin = BigWigs:New("Bars", tonumber(("$Revision$"):sub(12, -3)), "CandyBar-2.0")
+if not plugin then return end
+
+-----------------------------------------------------------------------
 --      Are you local?
 -----------------------------------------------------------------------
 
@@ -403,12 +409,10 @@ L:RegisterTranslations("ruRU", function() return {
 	font = "Fonts\\NIM_____.ttf",
 } end)
 
------------------------------------------------------------------------
---      Module Declaration
------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("Bars", "CandyBar-2.0")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	altclick = true,
 	growup = false,
@@ -430,6 +434,7 @@ plugin.defaultDB = {
 	height = nil,
 	reverse = nil,
 }
+
 plugin.consoleCmd = L["Bars"]
 
 local function getOption(key)

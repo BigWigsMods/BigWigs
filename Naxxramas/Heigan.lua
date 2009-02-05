@@ -1,14 +1,20 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Heigan the Unclean"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15936
+mod.toggleoptions = {"engage", "teleport", "bosskill"}
 
 ----------------------------
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Heigan",
 
@@ -185,17 +191,6 @@ L:RegisterTranslations("frFR", function() return {
 	teleport_bar = "Téléportation !",
 	back_bar = "Retour sur le sol !",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15936
-mod.toggleoptions = {"engage", "teleport", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

@@ -1,17 +1,18 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
-
-local enablezones, enablemobs = {}, {}
-
-local monitoring = nil
+assert(BigWigs, "Big Wigs not found!")
 
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------
 
-local plugin = BigWigs:NewModule("Target Monitor")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
+local plugin = BigWigs:New("Target Monitor", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local enablezones, enablemobs = {}, {}
+local monitoring = nil
 
 ------------------------------
 --      Initialization      --

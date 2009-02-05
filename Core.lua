@@ -57,6 +57,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Load"] = true,
 	["Load All"] = true,
 	["Load all %s modules."] = true,
+	
+	already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -452,6 +454,19 @@ do
 		order = 50,
 		name = " ",
 	}
+
+	-- A wrapper for :NewModule to present users with more information in the
+	-- case where a module with the same name has already been registered.
+	function BigWigs:New(module, revision, ...)
+		if self.modules[module] then
+			local oldM = self:GetModule(module)
+			print(L["already_registered"]:format(module, oldM.revision, revision))
+		else
+			local m = self:NewModule(module, ...)
+			m.revision = revision
+			return m
+		end
+	end
 
 	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
 	-- module has not been set when it's triggered.

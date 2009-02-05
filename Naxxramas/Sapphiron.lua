@@ -1,9 +1,18 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Sapphiron"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15989
+mod.toggleoptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local started = nil
 local breath = 1
@@ -13,6 +22,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
 
@@ -224,17 +234,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être promu ou mieux).",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15989
-mod.toggleoptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

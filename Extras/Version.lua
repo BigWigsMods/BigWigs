@@ -1,7 +1,18 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+---------------------------------
+--      Addon Declaration      --
+---------------------------------
+
+local plugin = BigWigs:New("Version Query", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+plugin.external = true
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
 local BZR = nil
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 local tablet = nil
 local dewdrop = AceLibrary("Dewdrop-2.0")
 
@@ -44,6 +55,7 @@ end
 --      Localization           --
 ---------------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 L:RegisterTranslations("enUS", function() return {
 	["Version Query"] = true,
 	["Commands for querying the raid for Big Wigs versions."] = true,
@@ -281,14 +293,9 @@ L:RegisterTranslations("ruRU", function() return {
 	["Notify people with older versions that there is a new version available."] = "Уведомить людей со старыми версиями что уже есть более новая версия и можно обновиться.",
 } end )
 
----------------------------------
---      Addon Declaration      --
----------------------------------
-
-local plugin = BigWigs:NewModule("Version Query")
-
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
-plugin.external = true
+--------------------------------------------------------------------------------
+-- Options
+--
 
 plugin.consoleCmd = L["Version"]
 plugin.consoleOptions = {

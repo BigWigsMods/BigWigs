@@ -1,9 +1,19 @@
-﻿------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local boss = BB["Gluth"]
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15932
+mod.toggleoptions = {"frenzy", "decimate", "berserk", "bosskill"}
+
+------------------------------
 --      Are you local?      --
 ------------------------------
 
-local boss = BB["Gluth"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
 local enrageTime = 420
 
@@ -11,6 +21,7 @@ local enrageTime = 420
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gluth",
 
@@ -110,17 +121,6 @@ L:RegisterTranslations("frFR", function() return {
 	decimatewarn = "Décimer !",
 	decimatebartext = "~Décimer",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15932
-mod.toggleoptions = {"frenzy", "decimate", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

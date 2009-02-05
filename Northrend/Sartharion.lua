@@ -1,11 +1,21 @@
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local boss = BB["Sartharion"]
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["The Obsidian Sanctum"]
+mod.otherMenu = "Northrend"
+mod.enabletrigger = boss
+mod.guid = 28860
+mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "enrage", "bosskill"}
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
-local boss = BB["Sartharion"]
 local shadron, tenebron, vesperon = BB["Shadron"], BB["Tenebron"], BB["Vesperon"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-
 local db = nil
 local started = nil
 local enrage_warned = nil
@@ -15,6 +25,8 @@ local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 ----------------------------
 --      Localization      --
 ----------------------------
+
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sartharion",
@@ -178,18 +190,6 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_warning = "Wutanfall bald!",
 	enrage_message = "Wutanfall!",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["The Obsidian Sanctum"]
-mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
-mod.guid = 28860
-mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "enrage", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

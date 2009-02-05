@@ -1,4 +1,11 @@
-﻿----------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("BossBlock", tonumber(("$Revision$"):sub(12, -3)), "AceHook-2.1")
+if not plugin then return end
+
+----------------------------
 --      Localization      --
 ----------------------------
 
@@ -266,13 +273,10 @@ local raidchans = {
 }
 local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("BossBlock", "AceHook-2.1")
-
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	chat = true,
 	rs = true,

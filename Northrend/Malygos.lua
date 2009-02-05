@@ -1,9 +1,19 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Malygos"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["The Eye of Eternity"]
+mod.otherMenu = "Northrend"
+mod.enabletrigger = boss
+mod.guid = 28859
+mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "overload", "breath", -1, "surge", "berserk", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local UnitName = UnitName
 local pName = UnitName("player")
@@ -16,6 +26,8 @@ local fmt = string.format
 ----------------------------
 --      Localization      --
 ----------------------------
+
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Malygos",
@@ -301,18 +313,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_trigger = "Eure Wohltäter sind eingetroffen, doch sie kommen zu spät! Die hier gespeicherten Energien reichen aus, die Welt zehnmal zu zerstören. Was, denkt ihr, werden sie mit euch machen?",
 	phase3_message = "Phase 3!",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["The Eye of Eternity"]
-mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
-mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "overload", "breath", -1, "surge", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

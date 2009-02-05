@@ -1,10 +1,16 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("Sounds", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsSound")
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
 local db = nil
@@ -21,6 +27,7 @@ local sounds = {
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsSound")
 L:RegisterTranslations("enUS", function() return {
 	["Sounds"] = true,
 	["Options for sounds."] = true,
@@ -149,13 +156,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["Use only the default sound."] = "Использовать только стандартные звуки.",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("Sounds")
-
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	defaultonly = false,
 	sound = true,

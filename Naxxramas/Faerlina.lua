@@ -1,9 +1,18 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Grand Widow Faerlina"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15953
+mod.toggleoptions = {"silence", "rain", "enrage", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local started = nil
 local enraged = nil
@@ -15,6 +24,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Faerlina",
 
@@ -184,17 +194,6 @@ L:RegisterTranslations("frFR", function() return {
 	rain_desc = "Prévient quand vous vous trouvez sous une Pluie de feu.",
 	rain_message = "Pluie de feu sur VOUS !",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15953
-mod.toggleoptions = {"silence", "rain", "enrage", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

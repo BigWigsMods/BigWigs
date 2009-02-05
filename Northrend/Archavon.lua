@@ -1,9 +1,19 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Archavon the Stone Watcher"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Vault of Archavon"]
+mod.otherMenu = "Northrend"
+mod.enabletrigger = boss
+mod.guid = 31125
+mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local db = nil
 local started = nil
@@ -13,6 +23,8 @@ local fmt = string.format
 ----------------------------
 --      Localization      --
 ----------------------------
+
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Archavon",
@@ -176,18 +188,6 @@ L:RegisterTranslations("deDE", function() return {
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Felssplitter gewirkt wird (benötigt Assistent oder höher).",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Vault of Archavon"]
-mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
-mod.guid = 31125
-mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

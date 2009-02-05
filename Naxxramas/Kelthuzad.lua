@@ -1,9 +1,19 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Kel'Thuzad"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15990
+mod.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
+mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local FB = {}
 local MCd = {}
@@ -14,6 +24,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kelthuzad",
 
@@ -373,18 +384,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par Faire détoner mana (nécessite d'être promu ou mieux).",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 15990
-mod.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --

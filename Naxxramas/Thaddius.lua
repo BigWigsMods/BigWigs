@@ -1,12 +1,21 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Thaddius"]
 local feugen = BB["Feugen"]
 local stalagg = BB["Stalagg"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = {boss, feugen, stalagg}
+mod.guid = 15928
+mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local enrageStarted = nil
 local deaths = 0
@@ -19,6 +28,7 @@ local lastCharge = nil
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thaddius",
 
@@ -323,17 +333,6 @@ L:RegisterTranslations("frFR", function() return {
 	throwbar = "Lancer",
 	throwwarn = "Lancer dans ~5 sec. !",
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = {boss, feugen, stalagg}
-mod.guid = 15928
-mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

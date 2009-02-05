@@ -1,14 +1,26 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local mod = BigWigs:New("Custom Bars", tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.external = true
+
+----------------------------
+--   Are you local?       --
+----------------------------
+
+local times = nil
+local fmt = string.format
+local _G = _G
+
 ----------------------------
 --      Localization      --
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
-
-local times = nil
-local fmt = string.format
-local _G = _G
 
 L:RegisterTranslations("enUS", function() return {
 	["CustomBars"] = true,
@@ -102,13 +114,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, М:С парный, или Мм. К примеру 5, 1:20 или 2м.",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local mod = BigWigs:NewModule("Custom Bars")
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.external = true
 mod.consoleCmd = L["CustomBars"]
 mod.defaultDB = {
 	otherAddons = false,

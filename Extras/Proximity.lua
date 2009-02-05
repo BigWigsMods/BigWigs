@@ -1,10 +1,15 @@
 ﻿assert( BigWigs, "BigWigs not found!")
 
 -----------------------------------------------------------------------
---      Are you local?
+--      Module Declaration
 -----------------------------------------------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsProximity")
+local plugin = BigWigs:New("Proximity", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
+-----------------------------------------------------------------------
+--      Are you local?
+-----------------------------------------------------------------------
 
 local active = nil -- The module we're currently tracking proximity for.
 local anchor = nil
@@ -36,6 +41,7 @@ local coloredNames = setmetatable({}, {__index =
 --      Localization
 -----------------------------------------------------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsProximity")
 L:RegisterTranslations("enUS", function() return {
 	["Proximity"] = true,
 	["Close Players"] = true,
@@ -193,12 +199,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["Perform a Proximity test."] = "Тест близость",
 } end)
 
------------------------------------------------------------------------
---      Module Declaration
------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local plugin = BigWigs:NewModule("Proximity")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,

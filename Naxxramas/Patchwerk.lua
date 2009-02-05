@@ -1,14 +1,20 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+﻿----------------------------------
+--      Module Declaration      --
+----------------------------------
 
 local boss = BB["Patchwerk"]
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 16028
+mod.toggleoptions = {"enrage", "berserk", "bosskill"}
 
 ----------------------------
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Patchwerk",
 
@@ -52,17 +58,6 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger1 = "Лоскутик хочет поиграть!",  --corrected 12.13.2008
 	starttrigger2 = "Кел'Тузад объявил Лоскутика воплощением войны!", --corrected 12.13.2008
 } end )
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local mod = BigWigs:NewModule(boss)
-mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.guid = 16028
-mod.toggleoptions = {"enrage", "berserk", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

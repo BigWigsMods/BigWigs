@@ -1,10 +1,15 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
-----------------------------
---      Localization      --
-----------------------------
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlashNShake")
+local mod = BigWigs:New("Flash", tonumber(("$Revision$"):sub(12, -3)))
+if not mod then return end
+
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 -- Frames
 local flasher = nil
@@ -17,6 +22,11 @@ local SHAKE_X = 10
 local SHAKE_Y = 10
 local fail = nil
 
+----------------------------
+--      Localization      --
+----------------------------
+
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlashNShake")
 L:RegisterTranslations("enUS", function() return {
 	["FlashNShake"] = true,
 	["Flash'N'Shake"] = true,
@@ -151,12 +161,10 @@ L:RegisterTranslations("ruRU", function() return {
 	flash_warning = "Мерцание экрана неудалась. Это обычно бывает когда таблица с именами включена.\nСократите таблицу и перезагрузите UI или отключите BigWigs 'Сотрясение'. (Мерцание НЕ затронуто)",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Options
+--
 
-local mod = BigWigs:NewModule("Flash")
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.defaultDB = {
 	flash = false,
 	shake = false,

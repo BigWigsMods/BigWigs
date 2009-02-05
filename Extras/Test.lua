@@ -1,13 +1,16 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+﻿----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
+local plugin = BigWigs:New("Test", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+plugin.external = true
 
 ----------------------------
 --      Localization      --
 ----------------------------
 
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
 L:RegisterTranslations("enUS", function() return {
 	["Test"] = true,
 	["Test Bar "] = true,
@@ -128,13 +131,9 @@ L:RegisterTranslations("ruRU", function() return {
 	["Testing Sync"] = "Тестирование синхр",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local plugin = BigWigs:NewModule("Test")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
-plugin.external = true
+--------------------------------------------------------------------------------
+-- Options
+--
 
 plugin.consoleCmd = L["Test"]
 plugin.consoleOptions = {

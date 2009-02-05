@@ -1,5 +1,12 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local plugin = BigWigs:New("Comm", tonumber(("$Revision$"):sub(12, -3)))
+if not plugin then return end
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -12,13 +19,6 @@ local coreSyncs = {
 	BossDeath = 5,
 	MultiBossDeath = 5,
 }
-
-----------------------------------
---      Module Declaration      --
-----------------------------------
-
-local plugin = BigWigs:NewModule("Comm")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
