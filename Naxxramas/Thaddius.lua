@@ -374,7 +374,8 @@ function mod:UNIT_AURA()
 		local name, _, icon, stack = UnitDebuff("player", i)
 		if not name then break end
 		-- If stack > 1 we need to wait for another UNIT_AURA event.
-		if stack == 1 then
+		-- UnitDebuff returns 0 for debuffs that don't stack.
+		if stack == 0 then
 			if icon == "Interface\\Icons\\Spell_ChargeNegative" or
 			   icon == "Interface\\Icons\\Spell_ChargePositive" then
 				newCharge = icon
