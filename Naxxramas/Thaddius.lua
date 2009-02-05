@@ -195,8 +195,8 @@ L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 
-	polarity = "极性转换",
-	polarity_desc = "当施放极性转换时发出警报。",
+	polarity = "极性转化",
+	polarity_desc = "当施放极性转化时发出警报。",
 
 	power = "力量振荡",
 	power_desc = "当施放力量振荡时发出警报。",
@@ -226,6 +226,9 @@ L:RegisterTranslations("zhCN", function() return {
 	stalaggwarn = "力量振荡！",
 	powersurgebar = "<力量振荡>",
 
+	polarity_changed = "极性转化改变！",
+	polarity_nochange = "相同极性转化！",
+	
 	bar1text = "<极性转化>",
 
 	throwbar = "<投掷>",
@@ -237,8 +240,8 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
 
-	polarity = "極性轉換",
-	polarity_desc = "當施放極性轉換時發出警報。",
+	polarity = "兩極移形",
+	polarity_desc = "當施放兩極移形時發出警報。",
 
 	power = "力量澎湃",
 	power_desc = "當施放力量澎湃時發出警報。",
@@ -267,6 +270,9 @@ L:RegisterTranslations("zhTW", function() return {
 	pswarn3 = "3秒後，兩極移形！",
 	stalaggwarn = "力量澎湃！加大對坦克的治療！",
 	powersurgebar = "<力量澎湃>",
+	
+	polarity_changed = "兩極移形改变！",
+	polarity_nochange = "相同兩極移形！",
 
 	bar1text = "<兩極移形>",
 
