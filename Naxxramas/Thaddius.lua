@@ -13,6 +13,7 @@ local deaths = 0
 local overloads = 1
 local teslawarn = nil
 local stage1warn = nil
+local lastCharge = nil
 
 ----------------------------
 --      Localization      --
@@ -54,6 +55,9 @@ L:RegisterTranslations("enUS", function() return {
 	pswarn3 = "3 sec to Polarity Shift!",
 	stalaggwarn = "Power Surge on Stalagg!",
 	powersurgebar = "Power Surge",
+	
+	polarity_changed = "Polarity changed!",
+	polarity_nochange = "Same polarity!",
 
 	bar1text = "Polarity Shift",
 
@@ -333,6 +337,7 @@ function mod:OnEnable()
 	overloads = 1
 	teslawarn = nil
 	stage1warn = nil
+	lastCharge = nil
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -351,7 +356,34 @@ function mod:StalaggPower()
 	end
 end
 
+function mod:UNIT_AURA()
+	local newCharge = nil
+	for i = 1, 40 do
+		local name, _, icon, stack = UnitDebuff("player", i)
+		if not name then break end
+		-- If stack > 1 we need to wait for another UNIT_AURA event.
+		if stack == 1 then
+			if icon == "Interface\\Icons\\Spell_ChargeNegative" or
+			   icon == "Interface\\Icons\\Spell_ChargePositive" then
+				newCharge = icon
+			end
+		end
+	end
+	if newCharge then
+		if self.db.profile.polarity then
+			if newCharge == lastCharge then
+				self:LocalMessage(L["polarity_nochange"], "Positive", newCharge)
+			else
+				self:LocalMessage(L["polarity_changed"], "Personal", newCharge, "Alert")
+			end
+		end
+		lastCharge = newCharge
+		self:UnregisterEvent("UNIT_AURA")
+	end
+end
+
 function mod:Shift()
+	self:RegisterEvent("UNIT_AURA")
 	if self.db.profile.polarity then
 		self:IfMessage(L["pswarn1"], "Important", 28089)
 	end
