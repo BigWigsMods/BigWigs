@@ -164,6 +164,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
+	
+	already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
