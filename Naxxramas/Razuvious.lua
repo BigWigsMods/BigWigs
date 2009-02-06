@@ -36,12 +36,12 @@ L:RegisterTranslations("enUS", function() return {
 	knife_message = "%s: Jagged Knife",
 
 	taunt = "Taunt",
-	taunt_desc = "Warn for taunt.",
-	taunt_warning = "Taunt done in 5sec!",
+	taunt_desc = "Warn when the Taunt cooldown is over.",
+	taunt_warning = "Taunt ready in 5sec!",
 
-	shieldwall = "Shield Wall",
-	shieldwall_desc = "Warn for shieldwall.",
-	shieldwall_warning = "Shield Wall done in 5sec!",
+	shieldwall = "Bone Barrier",
+	shieldwall_desc = "Warn for Bone Barrier.",
+	shieldwall_warning = "Barrier gone in 5sec!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
