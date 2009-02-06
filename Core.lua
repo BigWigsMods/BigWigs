@@ -174,13 +174,13 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s模块已启用。",
-	["%s has been defeated"] = "%s被击败了！",
-	["%s have been defeated"] = "%s被击败了！",
+	["%s has been defeated"] = "%s被击败了！",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s被击败了！",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "首领模块",
-	["Options for bosses in %s."] = "%s首领模块选项。",
-	["Options for %s (r%d)."] = "%s首领模块版本（r%d）。",
+	["Options for bosses in %s."] = "%s首领模块选项。", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "%s首领模块版本（r%d）。",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "插件",
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 最关键的核心 - 比如信息显示，记时条以及其他必要的功能。",
 	["Extras"] = "附加功能",
@@ -206,7 +206,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Load All"] = "加载所有",
 	["Load all %s modules."] = "加载所有%s模块。",
 			
-	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
+	already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已经存在首领模块，但存在（版本 |cffffff00%d|r）模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您的插件文件夹中。建议您删除所有 Big Wigs 文件夹并重新全新安装。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -241,7 +241,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Load All"] = "載入全部",
 	["Load all %s modules."] = "載入全部%s模組。",
 			
-	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
+	already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已經存在首領模組，但存在（版本 |cffffff00%d|r）模組仍試圖重新注冊。可能由于更新失敗的原因，通常表示您有兩份模組拷貝在您插件的文件夾中。建議您刪除所有 Big Wigs 文件夾并重新全新安裝。",
 } end)
 
 L:RegisterTranslations("esES", function() return {
