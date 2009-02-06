@@ -328,6 +328,9 @@ L:RegisterTranslations("frFR", function() return {
 	stalaggwarn = "Vague de puissance sur Stalagg !",
 	powersurgebar = "Vague de puissance",
 
+	polarity_changed = "La polarité a changé !",
+	polarity_nochange = "Même polarité !",
+
 	bar1text = "Changement de polarité",
 
 	throwbar = "Lancer",

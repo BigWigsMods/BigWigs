@@ -131,8 +131,8 @@ L:RegisterTranslations("frFR", function() return {
 	knife_message = "%s : Couteau dentelé",
 
 	taunt = "Provocation",
-	taunt_desc = "Affiche une barre indiquant la durée de la Provocation en cours et prévient quand elle arrive à son terme.",
-	taunt_warning = "Provocation terminée dans 5 sec. !",
+	taunt_desc = "Prévient quand le temps de recharge de Provocation est terminé.",
+	taunt_warning = "Provocation prête dans 5 sec. !",
 
 	shieldwall = "Barrière d'os",
 	shieldwall_desc = "Affiche une barre indiquant la durée de la Barrière d'os en cours et prévient quand elle arrive à son terme.",
