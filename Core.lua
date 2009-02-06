@@ -94,12 +94,14 @@ L:RegisterTranslations("frFR", function() return {
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
 	["Load all %s modules."] = "Charge tous les modules \"%s\".",
+		
+	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
 	["%s mod enabled"] = "%s Modul aktiviert",
-	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s wurden besiegt",    -- "<bosses> have been defeated"
+	["%s has been defeated"] = "%s wurde besiegt!",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s wurden besiegt!",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "Bosse",
@@ -129,6 +131,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",
 	["Load all %s modules."] = "Alle %s Module laden.",
+			
+	already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%d|r) existiert bereits als Boss Modul in Big Wigs, aber irgend etwas versucht es erneut anzumelden (als Revision |cffffff00%d|r). Dies bedeutet, dass du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in deinem Addon-Ordner hast. Es wird empfohlen, jegliche Big Wigs Ordner zu löschen und dann von Grund auf neu zu installieren.",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -201,6 +205,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Load"] = "加载",
 	["Load All"] = "加载所有",
 	["Load all %s modules."] = "加载所有%s模块。",
+			
+	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -234,6 +240,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Load"] = "載入",
 	["Load All"] = "載入全部",
 	["Load all %s modules."] = "載入全部%s模組。",
+			
+	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
 } end)
 
 L:RegisterTranslations("esES", function() return {
@@ -267,6 +275,8 @@ L:RegisterTranslations("esES", function() return {
 	["Load"] = "Cargar",
 	["Load All"] = "Cargar todo",
 	["Load all %s modules."] = "Cargar todos los módulos de %s.",
+			
+	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -300,6 +310,8 @@ L:RegisterTranslations("ruRU", function() return {
 	["Load"] = "Загрузить",
 	["Load All"] = "Загрузить все",
 	["Load all %s modules."] = "Загрузить все модули %s.",
+				
+	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
 } end)
 
 ---------------------------------
