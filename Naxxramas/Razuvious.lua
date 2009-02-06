@@ -55,7 +55,7 @@ L:RegisterTranslations("deDE", function() return {
 	knife_message = "Gezacktes Messer: %s",
 
 	taunt = "Spott",
-	taunt_desc = "Warnungen und Timer für Spott.",
+	taunt_desc = "Warnungen und Timer für den Spott Cooldown.",
 	taunt_warning = "Spott bereit in 5 sek!",
 
 	shieldwall = "Knochenbarriere",
