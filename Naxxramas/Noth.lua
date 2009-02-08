@@ -149,7 +149,7 @@ L:RegisterTranslations("koKR", function() return {
 	blink_desc = "점멸을 알립니다.",
 	blinktrigger = "%s|1이;가; 눈 깜짝할 사이에 도망칩니다!",
 	blinkwarn = "점멸! 어그로 초기화!",
-	blinkwarn2 = "약 5초 이내 점멸!",
+	blinkwarn2 = "약 5초 이내 점멸 가능!",
 	blinkbar = "점멸",
 
 	teleport = "순간이동",
@@ -336,9 +336,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(timeroom - 10, L["teleportwarn2"], "Urgent")
 			self:Bar(L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
 		end
-		if self.db.profile.blink then
-			self:DelayedMessage(25, L["blinkwarn2"], "Attention")
-			self:Bar(L["blinkbar"], 30, 29208)
+		if GetCurrentDungeonDifficulty() == 2 then
+			if self.db.profile.blink then
+				self:DelayedMessage(25, L["blinkwarn2"], "Attention")
+				self:Bar(L["blinkbar"], 30, 29208)
+			end
 		end
 		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, timeroom, self)
 	end

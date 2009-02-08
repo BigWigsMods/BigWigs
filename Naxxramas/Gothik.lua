@@ -380,17 +380,6 @@ function mod:StopRoom()
 	self:CancelScheduledEvent("bwgothikwarn3")
 	self:CancelScheduledEvent("bwgothikwarn4")
 	self:CancelScheduledEvent("bwgothikwarn5")
-	if self.tranum and self.dknum and self.ridernum then
-		self:TriggerEvent("BigWigs_StopBar", self, L["trabar"]:format(self.tranum - 1))
-		self:TriggerEvent("BigWigs_StopBar", self, L["dkbar"]:format(self.dknum - 1))
-		self:TriggerEvent("BigWigs_StopBar", self, L["riderbar"]:format(self.ridernum - 1))
-	end
-	self:CancelScheduledEvent("bwgothiktrawarn")
-	self:CancelScheduledEvent("bwgothikdkwarn")
-	self:CancelScheduledEvent("bwgothikriderwarn")
-	self:CancelScheduledEvent("bwgothiktrarepop")
-	self:CancelScheduledEvent("bwgothikdkrepop")
-	self:CancelScheduledEvent("bwgothikriderrepop")
 end
 
 function mod:WaveWarn(message, L, color)
@@ -399,6 +388,19 @@ function mod:WaveWarn(message, L, color)
 		if self.db.profile.add then 
 			self:Message(L["wave"]:format(self.wave) .. message, color) 
 		end
+	end
+	if self.wave == 23 then
+		if self.tranum and self.dknum and self.ridernum then
+			self:TriggerEvent("BigWigs_StopBar", self, L["trabar"]:format(self.tranum - 1))
+			self:TriggerEvent("BigWigs_StopBar", self, L["dkbar"]:format(self.dknum - 1))
+			self:TriggerEvent("BigWigs_StopBar", self, L["riderbar"]:format(self.ridernum - 1))
+		end
+	self:CancelScheduledEvent("bwgothiktrawarn")
+	self:CancelScheduledEvent("bwgothikdkwarn")
+	self:CancelScheduledEvent("bwgothikriderwarn")
+	self:CancelScheduledEvent("bwgothiktrarepop")
+	self:CancelScheduledEvent("bwgothikdkrepop")
+	self:CancelScheduledEvent("bwgothikriderrepop")
 	end
 end
 

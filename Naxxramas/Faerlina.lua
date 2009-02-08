@@ -112,7 +112,7 @@ L:RegisterTranslations("koKR", function() return {
 	enragewarn15sec = "15초 후 광기!",
 	enragewarn = "광기!",
 	enragewarn2 = "잠시 후 광기!",
-	enrageremovewarn = "광기 사라짐! 약 ~60초 후 다음 광기",
+	enrageremovewarn = "광기 사라짐! 약 60초 후 다음 광기",
 
 	silencewarn = "침묵!",
 	silencewarn5sec = "5초 후 침묵 종료!",
