@@ -348,11 +348,15 @@ mod.wipemobs = {
 	L["spectral_rider"], L["spectral_deathknight"], L["spectral_trainee"]
 }
 
+local wave = 0
+local timeTrainer, timeDK, timeRider = 27, 77, 137
+local numTrainer, numDK, numRider = nil, nil, nil
+
 function mod:OnEnable()
-	self.wave = 0
-	self.tratime = 27
-	self.dktime = 77
-	self.ridertime = 137
+	wave = 0
+	timeTrainer = 27
+	timeDK = 77
+	timeRider = 137
 
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -373,90 +377,67 @@ function mod:Deaths(unit)
 	end
 end
 
-function mod:StopRoom()
-	self:TriggerEvent("BigWigs_StopBar", self, L["inroombartext"])
-	self:CancelScheduledEvent("bwgothikwarn1")
-	self:CancelScheduledEvent("bwgothikwarn2")
-	self:CancelScheduledEvent("bwgothikwarn3")
-	self:CancelScheduledEvent("bwgothikwarn4")
-	self:CancelScheduledEvent("bwgothikwarn5")
-end
-
-function mod:WaveWarn(message, L, color)
-	self.wave = self.wave + 1
-	if self.wave < 24 then
-		if self.db.profile.add then 
-			self:Message(L["wave"]:format(self.wave) .. message, color) 
-		end
+local function waveWarn(message, color)
+	wave = wave + 1
+	if wave < 24 and mod.db.profile.add then
+		mod:Message(L["wave"]:format(wave) .. message, color)
 	end
-	if self.wave == 23 then
-		if self.tranum and self.dknum and self.ridernum then
-			self:TriggerEvent("BigWigs_StopBar", self, L["trabar"]:format(self.tranum - 1))
-			self:TriggerEvent("BigWigs_StopBar", self, L["dkbar"]:format(self.dknum - 1))
-			self:TriggerEvent("BigWigs_StopBar", self, L["riderbar"]:format(self.ridernum - 1))
-		end
-	self:CancelScheduledEvent("bwgothiktrawarn")
-	self:CancelScheduledEvent("bwgothikdkwarn")
-	self:CancelScheduledEvent("bwgothikriderwarn")
-	self:CancelScheduledEvent("bwgothiktrarepop")
-	self:CancelScheduledEvent("bwgothikdkrepop")
-	self:CancelScheduledEvent("bwgothikriderrepop")
+	if wave == 23 then
+		mod:TriggerEvent("BigWigs_StopBar", mod, L["trabar"]:format(numTrainer - 1))
+		mod:TriggerEvent("BigWigs_StopBar", mod, L["dkbar"]:format(numDK - 1))
+		mod:TriggerEvent("BigWigs_StopBar", mod, L["riderbar"]:format(numRider - 1))
+		mod:CancelAllScheduledEvents()
 	end
 end
 
-function mod:Trainee()
-	if self.db.profile.add then
-		self:Bar(L["trabar"]:format(self.tranum), self.tratime, "Ability_Seal")
-	end
-	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L["trawarn"], L, "Attention")
-	self:ScheduleRepeatingEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
-	self.tranum = self.tranum + 1
+local function newTrainee()
+	mod:Bar(L["trabar"]:format(numTrainer), timeTrainer, "Ability_Seal")
+	mod:ScheduleEvent(waveWarn, timeTrainer - 3, L["trawarn"], "Attention")
+	mod:ScheduleEvent(newTrainee, timeTrainer)
+	numTrainer = numTrainer + 1
 end
 
-function mod:DeathKnight()
-	if self.db.profile.add then
-		self:Bar(L["dkbar"]:format(self.dknum), self.dktime, "INV_Boots_Plate_08")
-	end
-	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L["dkwarn"], L, "Urgent")
-	self:ScheduleRepeatingEvent("bwgothikdkrepop", self.DeathKnight, self.dktime, self)
-	self.dknum = self.dknum + 1
+local function newDeathknight()
+	mod:Bar(L["dkbar"]:format(numDK), timeDK, "INV_Boots_Plate_08")
+	mod:ScheduleEvent(waveWarn, timeDK - 3, L["dkwarn"], "Urgent")
+	mod:ScheduleEvent(newDeathknight, timeDK)
+	numDK = numDK + 1
 end
 
-function mod:Rider()
-	if self.db.profile.add then
-		self:Bar(L["riderbar"]:format(self.ridernum), self.ridertime, "Spell_Shadow_DeathPact")
-	end
-	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L["riderwarn"], L, "Important")
-	self:ScheduleRepeatingEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
-	self.ridernum = self.ridernum + 1
+local function newRider()
+	mod:Bar(L["riderbar"]:format(numRider), timeRider, "Spell_Shadow_DeathPact")
+	mod:ScheduleEvent(waveWarn, timeRider - 3, L["riderwarn"], "Important")
+	mod:ScheduleEvent(newRider, timeRider)
+	numRider = numRider + 1
 end
 
-function mod:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
 		if self.db.profile.room then
 			self:Message(L["startwarn"], "Important")
 			self:Bar(L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
-			self:ScheduleEvent("bwgothikwarn1", "BigWigs_Message", 90, L["warn1"], "Attention")
-			self:ScheduleEvent("bwgothikwarn2", "BigWigs_Message", 180, L["warn2"], "Attention")
-			self:ScheduleEvent("bwgothikwarn3", "BigWigs_Message", 210, L["warn3"], "Urgent")
-			self:ScheduleEvent("bwgothikwarn4", "BigWigs_Message", 240, L["warn4"], "Important")
-			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L["warn5"], "Important")
+			self:DelayedMessage(90, L["warn1"], "Attention")
+			self:DelayedMessage(180, L["warn2"], "Attention")
+			self:DelayedMessage(210, L["warn3"], "Urgent")
+			self:DelayedMessage(240, L["warn4"], "Important")
+			self:DelayedMessage(260, L["warn5"], "Important")
 		end
-		self.tranum = 1
-		self.dknum = 1
-		self.ridernum = 1
+		numTrainer = 1
+		numDK = 1
+		numRider = 1
 		if self.db.profile.add then
-			self:Trainee()
-			self:DeathKnight()
-			self:Rider()
+			newTrainee()
+			newDeathknight()
+			newRider()
 		end
 		-- set the new times
-		self.tratime = 20
-		self.dktime = 25
-		self.ridertime = 30
+		timeTrainer = 20
+		timeDK = 25
+		timeRider = 30
 	elseif msg == L["inroomtrigger"] then
-		if self.db.profile.room then self:Message(L["inroomwarn"], "Important") end
-		self:StopRoom()
+		if self.db.profile.room then
+			self:Message(L["inroomwarn"], "Important")
+		end
 	end
 end
 
