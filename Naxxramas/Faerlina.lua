@@ -108,11 +108,11 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "나에게서 도망칠 수는 없다!",
 	starttrigger4 = "두 발이 성할 때 도망쳐라!",
 
-	startwarn = "귀부인 팰리나 전투 시작! 60초 후 격노!",
-	enragewarn15sec = "15초 후 격노!",
-	enragewarn = "격노!",
-	enragewarn2 = "잠시 후 격노!",
-	enrageremovewarn = "격노 사라짐! 약 ~60초 후 다음 격노",
+	startwarn = "귀부인 팰리나 전투 시작! 60초 후 광기!",
+	enragewarn15sec = "15초 후 광기!",
+	enragewarn = "광기!",
+	enragewarn2 = "잠시 후 광기!",
+	enrageremovewarn = "광기 사라짐! 약 ~60초 후 다음 광기",
 
 	silencewarn = "침묵!",
 	silencewarn5sec = "5초 후 침묵 종료!",
