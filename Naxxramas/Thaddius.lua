@@ -23,6 +23,7 @@ local overloads = 1
 local teslawarn = nil
 local stage1warn = nil
 local lastCharge = nil
+local player = nil
 
 ----------------------------
 --      Localization      --
@@ -352,7 +353,8 @@ function mod:OnEnable()
 	teslawarn = nil
 	stage1warn = nil
 	lastCharge = nil
-	
+	player = "player"
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -370,7 +372,9 @@ function mod:StalaggPower()
 	end
 end
 
-function mod:UNIT_AURA()
+function mod:UNIT_AURA(unit)
+	if unit and unit ~= player then return end
+
 	local newCharge = nil
 	for i = 1, 40 do
 		local name, _, icon, stack = UnitDebuff("player", i)
