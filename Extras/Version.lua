@@ -152,6 +152,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Ancient"] = "Alt",
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Es scheint eine neuere Version von BigWigs bereit zu stehen, bitte upgraden.",
 	["Notify people with older versions that there is a new version available."] = "Personen mit einer älteren BigWigs Version benachrichtigen, dass eine neue Version bereit steht.",
+	["should_upgrade"] = "Dies scheint eine ältere Version von Big Wigs zu sein. Es wird ein Update empfohlen bevor du einen Kampf mit einem Boss beginnst.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
