@@ -237,10 +237,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Not loaded"] = "Non chargé",
 	["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "Effectue une vérification des versions du noyau de BigWigs.",
-	["Replies"] = "Nbre de réponses",
+	["Replies"] = "Réponses",
 	["Ancient"] = "Ancien",
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Une nouvelle version de Big Wigs est disponible. Mise à jour conseillée !",
-	["Notify people with older versions that there is a new version available."] = "Préviens les personnes possédant des versions anciennes qu'une nouvelle version est disponible.",
+	["Notify people with older versions that there is a new version available."] = "Prévient les personnes possédant des versions anciennes qu'une nouvelle version est disponible.",
+	["should_upgrade"] = "Il semblerait qu'il s'agisse d'une ancienne version de Big Wigs. Il est recommandé de vous mettre à jour avant d'engager un boss.",
 } end )
 
 L:RegisterTranslations("esES", function() return {
