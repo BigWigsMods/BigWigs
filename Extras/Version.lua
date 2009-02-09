@@ -14,7 +14,7 @@ plugin.external = true
 
 local BZR = nil
 local tablet = nil
-local dewdrop = AceLibrary("Dewdrop-2.0")
+local dewdrop = nil
 
 local COLOR_GREEN = "00ff00"
 local COLOR_RED = "ff0000"
@@ -26,6 +26,13 @@ local responseTable = nil
 
 local zoneRevisions = nil
 local currentZone = ""
+
+local lastPingTime = nil
+local highestRevision = nil
+local oldVersionThreshold = 10 -- 10 revisions behind means it's time to update
+local shouldUpdate = nil
+
+local playername = UnitName("player")
 
 local new, del
 do
@@ -84,6 +91,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Ancient"] = true,
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = true,
 	["Notify people with older versions that there is a new version available."] = true,
+	["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -341,12 +349,14 @@ local function addZone(zone, rev)
 -- Make sure to get the enUS zone name.
 	local z = BZR[zone] or zone
 	if not zoneRevisions[z] or rev > zoneRevisions[z] then
+		if rev > highestRevision then highestRevision = rev end
 		zoneRevisions[z] = rev
 	end
 end
 
 local function populateRevisions()
 	if not zoneRevisions then zoneRevisions = {} end
+	if not highestRevision then highestRevision = 0 end
 
 	loadBabble()
 	for name, module in BigWigs:IterateModules() do
@@ -360,12 +370,38 @@ local function populateRevisions()
 			end
 		end
 	end
-	zoneRevisions["BigWigs"] = BigWigs.revision
+
+	local bwr = BigWigs.revision
+	if bwr > highestRevision then highestRevision = bwr end
+	zoneRevisions["BigWigs"] = bwr
+end
+
+local function broadcast()
+	local inGuild = IsInGuild()
+	local inGroup = (GetNumPartyMembers() > 0) or (GetNumRaidMembers() > 0)
+	if not inGuild and not inGroup then return end
+	if not highestRevision then populateRevisions() end
+	if inGroup then SendAddonMessage("BWVB", highestRevision, "RAID") end
+	if inGuild then SendAddonMessage("BWVB", highestRevision, "GUILD") end
+end
+
+function plugin:OnRegister()
+	if BigWigsOptions and BigWigsOptions.RegisterTooltipInfo then
+		BigWigsOptions:RegisterTooltipInfo(function(tt)
+			if not shouldUpdate then return end
+			tt:AddLine(" ")
+			tt:AddLine(L["should_upgrade"], 0.6, 1, 0.2, 1)
+			tt:AddLine(" ")
+		end)
+	end
+	-- Broadcast our version every 10 minutes.
+	self:ScheduleRepeatingEvent(broadcast, 600)
 end
 
 function plugin:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterEvent("BigWigs_ModulePackLoaded", populateRevisions)
+	broadcast()
 end
 
 ------------------------------
@@ -443,7 +479,7 @@ local function updateTabletDisplay()
 end
 
 function plugin:UpdateDisplay()
-	if tablet then
+	if tablet and dewdrop then
 		if not tablet:IsRegistered("BigWigs_VersionQuery") then
 			tablet:Register("BigWigs_VersionQuery",
 				"children", function()
@@ -500,8 +536,8 @@ end
 local function resetQueryRunning()
 	queryRunning = nil
 
-	-- If the user doesn't have Tablet-2.0, just print everything to chat.
-	if not tablet and responseTable then
+	-- If the user doesn't have Tablet-2.0 or Dewdrop-2.0, just print everything to chat.
+	if (not dewdrop or not tablet) and responseTable then
 		table.sort(responseTable, sortResponses)
 		for i, info in ipairs(responseTable) do
 			local t1, t2 = getFormattedVersionText(info)
@@ -519,6 +555,7 @@ function plugin:QueryVersion(zone)
 
 	if not tablet then
 		tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0") or nil
+		dewdrop = AceLibrary:HasInstance("Dewdrop-2.0") and AceLibrary("Dewdrop-2.0") or nil
 	end
 
 	if type(zone) ~= "string" or zone == "" then zone = GetRealZoneText() end
@@ -551,7 +588,7 @@ function plugin:QueryVersion(zone)
 	responseTable = new()
 
 	if not zoneRevisions then populateRevisions() end
-	table.insert(responseTable, new(UnitName("player"), self:GetVersion(zone)))
+	table.insert(responseTable, new(playername, self:GetVersion(zone)))
 
 	self:UpdateDisplay()
 
@@ -573,11 +610,18 @@ function plugin:GetVersion(zone)
 end
 
 function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
-	if prefix == "BWVQ" and sender ~= UnitName("player") then
+	if prefix == "BWVQ" and sender ~= playername then
 		SendAddonMessage("BWVR", self:GetVersion(message), "WHISPER", sender)
 	elseif prefix == "BWVR" and queryRunning then
 		table.insert(responseTable, new(sender, tonumber(message:match("%-?%d+"))))
 		self:UpdateDisplay()
+	elseif prefix == "BWVB" and not shouldUpdate and sender ~= playername then
+		local rev = tonumber(message)
+		if not rev or type(rev) ~= "number" then return end
+		if rev > (highestRevision + oldVersionThreshold) then
+			shouldUpdate = true
+			print(L["should_upgrade"])
+		end
 	end
 end
 

@@ -162,6 +162,20 @@ function BigWigsOptions:OnInitialize()
 	end
 end
 
+--------------------------------------------------------------------------------
+-- Tooltip additions from modules
+--
+
+local tooltipFunctions = {}
+function BigWigsOptions:RegisterTooltipInfo(func)
+	for i, v in ipairs(tooltipFunctions) do
+		if v == func then
+			error(("The function %q has already been registered."):format(func))
+		end
+	end
+	table.insert(tooltipFunctions, func)
+end
+
 -----------------------------
 --      Icon Handling      --
 -----------------------------
@@ -237,9 +251,15 @@ function ldb.OnTooltipShow(tt)
 				tt:AddLine(name)
 			end
 		end
+		for i, v in ipairs(tooltipFunctions) do
+			v(tt)
+		end
 		tt:AddLine(hint, 0.2, 1, 0.2, 1)
 	else
 		tt:AddLine(L["Big Wigs is currently disabled."])
+		for i, v in ipairs(tooltipFunctions) do
+			v(tt)
+		end
 		tt:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2)
 	end
 end
