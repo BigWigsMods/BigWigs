@@ -120,8 +120,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Runs a version query on the BigWigs core."] = "BigWigs가 실행된 버전을 요청합니다.",
 	["Replies"] = "응답",
 	["Ancient"] = "아주 오래된 버젼",
-	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "당신을 위해 유요한 Big Wigs의 새버젼이 보입니다. 업데이트를 부탁합니다.",
-	["Notify people with older versions that there is a new version available."] = "유효한 새버젼이 있으므로 구버젼인 사람들에게 통지합니다.",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "당신이 적합하게 이용할 수 있는 Big Wigs의 새 버전이 있습니다. 업데이트를 부탁합니다.",
+	["Notify people with older versions that there is a new version available."] = "이용할 수 있는 새버전이 있으므로 구버전인 사람에게 알립니다.",
+	["should_upgrade"] = "Big Wigs의 구버전이 있습니다. 보스와 전투를 시작하기전에 업데이트를 권장합니다.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
