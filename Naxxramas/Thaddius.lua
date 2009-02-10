@@ -18,8 +18,6 @@ mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "boss
 ------------------------------
 
 local deaths = 0
-local overloads = 1
-local teslawarn = nil
 local stage1warn = nil
 local lastCharge = nil
 local shiftTime = nil
@@ -44,36 +42,29 @@ L:RegisterTranslations("enUS", function() return {
 	throw = "Throw",
 	throw_desc = "Warn about tank platform swaps.",
 
-	starttrigger = "Stalagg crush you!",
-	starttrigger1 = "Feed you to master!",
-	starttrigger2 = "Eat... your... bones...",
-	starttrigger3 = "Break... you!!",
-	starttrigger4 = "Kill...",
+	trigger_phase1_1 = "Stalagg crush you!",
+	trigger_phase1_2 = "Feed you to master!",
+	trigger_phase2_1 = "Eat... your... bones...",
+	trigger_phase2_2 = "Break... you!!",
+	trigger_phase2_3 = "Kill...",
 
-	adddeath = "dies.",
-	teslaoverload = "overloads!",
-
-	pstrigger = "Now you feel pain...",
-	polarity_trigger = "The polarity has Shifted!",
-
-	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Berserk in 6 minutes!",
-	addsdownwarn = "Thaddius incoming in 10-20sec!",
-	thaddiusincoming = "Thaddius incoming in 3 sec!",
-	pswarn1 = "Thaddius begins to cast Polarity Shift!",
-	pswarn2 = "28 sec to Polarity Shift!",
-	pswarn3 = "3 sec to Polarity Shift!",
-	stalaggwarn = "Power Surge on Stalagg!",
-	powersurgebar = "Power Surge",
-	
+	polarity_trigger = "Now you feel pain...",
+	polarity_message = "Polarity Shift incoming!",
+	polarity_warning = "3 sec to Polarity Shift!",
+	polarity_bar = "Polarity Shift",
 	polarity_changed = "Polarity changed!",
 	polarity_nochange = "Same polarity!",
 
-	bar1text = "Polarity Shift",
+	phase1_message = "Phase 1",
+	phase2_message = "Phase 2, Berserk in 6 minutes!",
+	phase2_warning = "Thaddius incoming in 10-20sec!",
 
-	throwbar = "Throw",
-	throwwarn = "Throw in ~5 sec!",
-} end )
+	surge_message = "Power Surge on Stalagg!",
+	surge_bar = "Power Surge",
+
+	throw_bar = "Throw",
+	throw_warning = "Throw in ~5 sec!",
+} end)
 
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
@@ -88,33 +79,27 @@ L:RegisterTranslations("ruRU", function() return {
 	throw = "Бросока",
 	throw_desc = "Предупреждать о смене танков на платформах.",
 
-	starttrigger = "Сталагг сокрушить вас!",  
-	starttrigger1 = "Я скормлю вас господину!",  
-	starttrigger2 = "Я сожру... ваши... кости...",  
-	starttrigger3 = "Растерзаю!!!",  
-	starttrigger4 = "Убью...",  
+	trigger_phase1_1 = "Сталагг сокрушить вас!",  
+	trigger_phase1_2 = "Я скормлю вас господину!",  
+	trigger_phase2_1 = "Я сожру... ваши... кости...",  
+	trigger_phase2_2 = "Растерзаю!!!",  
+	trigger_phase2_3 = "Убью...",  
 
-	adddeath = "умирает.",
-	teslaoverload = "%s перезагружается!", 
+	polarity_trigger = "Познайте же боль...",
 
-	pstrigger = "Познайте же боль...",
-	polarity_trigger = "Полярность изменилась!",
+	phase1_message = "Таддиус фаза 1",
+	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
+	phase2_warning = "Таддиус появится через 10-20 секунд!",
+	polarity_message = "Таддиус сдвигает полярность!",
+	polarity_warning = "3 секунды до сдвига полярности!",
+	surge_message = "Волна силы на Сталагге!",
+	surge_bar = "Волна силы",
 
-	startwarn = "Таддиус фаза 1",
-	startwarn2 = "Таддиус фаза 2, Берсерк через 6 минут!",
-	addsdownwarn = "Таддиус появится через 10-20 секунд!",
-	thaddiusincoming = "Таддиус появится через 3 секунды!",
-	pswarn1 = "Таддиус сдвигает полярность!",
-	pswarn2 = "28 секунд до сдвига полярности!",
-	pswarn3 = "3 секунды до сдвига полярности!",
-	stalaggwarn = "Волна силы на Сталагге!",
-	powersurgebar = "Волна силы",
+	polarity_bar = "Сдвиг полярности",
 
-	bar1text = "Сдвиг полярности",
-
-	throwbar = "Бросок",
-	throwwarn = "Бросок через 5 секунд!",
-} end )
+	throw_bar = "Бросок",
+	throw_warning = "Бросок через 5 секунд!",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계 변경",
@@ -129,36 +114,30 @@ L:RegisterTranslations("koKR", function() return {
 	throw = "던지기",
 	throw_desc = "탱커 위치 교체를 알립니다.",
 
-	starttrigger = "스탈라그, 박살낸다!",
-	starttrigger1 = "너 주인님께 바칠꺼야!",
-	starttrigger2 = "잡아... 먹어주마...",
-	starttrigger3 = "박살을 내주겠다!",
-	starttrigger4 = "죽여주마...",
+	trigger_phase1_1 = "스탈라그, 박살낸다!",
+	trigger_phase1_2 = "너 주인님께 바칠꺼야!",
+	trigger_phase2_1 = "잡아... 먹어주마...",
+	trigger_phase2_2 = "박살을 내주겠다!",
+	trigger_phase2_3 = "죽여주마...",
 
-	adddeath = "죽습니다.",
-	teslaoverload = "과부하 상태가 됩니다.",
+	polarity_trigger = "자, 고통을 느껴봐라...",
 
-	pstrigger = "자, 고통을 느껴봐라...",
-	polarity_trigger = "극성이 바뀌었습니다!",
-
-	startwarn = "타디우스 1 단계",
-	startwarn2 = "타디우스 2 단계, 6분 후 격노!",
-	addsdownwarn = "10~20초 이내 2단계 시작!",
-	thaddiusincoming = "3초 이내 2단계 시작!",
-	pswarn1 = "타디우스 극성 변환 시전!",
-	pswarn2 = "28초 이내 극성 변환!",
-	pswarn3 = "3초 이내 극성 변환!",
-	stalaggwarn = "스탈라그 마력의 쇄도!",
-	powersurgebar = "마력의 쇄도",
+	phase1_message = "타디우스 1 단계",
+	phase2_message = "타디우스 2 단계, 6분 후 격노!",
+	phase2_warning = "10~20초 이내 2단계 시작!",
+	polarity_message = "타디우스 극성 변환 시전!",
+	polarity_warning = "3초 이내 극성 변환!",
+	surge_message = "스탈라그 마력의 쇄도!",
+	surge_bar = "마력의 쇄도",
 	
 	polarity_changed = "극성 변경됨!",
 	polarity_nochange = "같은 극성!",
 
-	bar1text = "극성 변환",
+	polarity_bar = "극성 변환",
 
-	throwbar = "던지기",
-	throwwarn = "약 5초 후 던지기!",
-} end )
+	throw_bar = "던지기",
+	throw_warning = "약 5초 후 던지기!",
+} end)
 
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
@@ -173,36 +152,30 @@ L:RegisterTranslations("deDE", function() return {
 	throw = "Magnetische Anziehung",
 	throw_desc = "Warnt, wenn die Tanks die Plattform wechseln.",
 
-	starttrigger = "Stalagg zerquetschen!",
-	starttrigger1 = "Verfüttere euch an Meister!",
-	starttrigger2 = "Eure... Knochen... zermalmen...",
-	starttrigger3 = "Euch... zerquetschen!",
-	starttrigger4 = "Töten...",
+	trigger_phase1_1 = "Stalagg zerquetschen!",
+	trigger_phase1_2 = "Verfüttere euch an Meister!",
+	trigger_phase2_1 = "Eure... Knochen... zermalmen...",
+	trigger_phase2_2 = "Euch... zerquetschen!",
+	trigger_phase2_3 = "Töten...",
 
-	adddeath = "stirbt.",
-	teslaoverload = "überlädt!",
+	polarity_trigger = "Jetzt spürt ihr den Schmerz...",
 
-	pstrigger = "Jetzt spürt ihr den Schmerz...",
-	polarity_trigger = "Die Polarität hat sich verschoben!",
-
-	startwarn = "Phase 1",
-	startwarn2 = "Thaddius Phase 2, Berserker in 6 min",
-	addsdownwarn = "Thaddius kommt in 10-20 sek!",
-	thaddiusincoming = "Thaddius kommt in 3 sek!",
-	pswarn1 = "Thaddius beginnt Polaritätsveränderung zu wirken!",
-	pswarn2 = "Polaritätsveränderung in 28 sek!",
-	pswarn3 = "Polaritätsveränderung in 3 sek!",
-	stalaggwarn = "Kraftsog auf Stalagg!",
-	powersurgebar = "Kraftsog",
+	phase1_message = "Phase 1",
+	phase2_message = "Thaddius Phase 2, Berserker in 6 min",
+	phase2_warning = "Thaddius kommt in 10-20 sek!",
+	polarity_message = "Thaddius beginnt Polaritätsveränderung zu wirken!",
+	polarity_warning = "Polaritätsveränderung in 3 sek!",
+	surge_message = "Kraftsog auf Stalagg!",
+	surge_bar = "Kraftsog",
 	
 	polarity_changed = "Polarität geändert!",
 	polarity_nochange = "Selbe Polarität!",
 
-	bar1text = "Polaritätsveränderung",
+	polarity_bar = "Polaritätsveränderung",
 
-	throwbar = "Magnetische Anziehung",
-	throwwarn = "Magnetische Anziehung in ~5 sek!",
-} end )
+	throw_bar = "Magnetische Anziehung",
+	throw_warning = "Magnetische Anziehung in ~5 sek!",
+} end)
 
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
@@ -217,37 +190,31 @@ L:RegisterTranslations("zhCN", function() return {
 	throw = "投掷",
 	throw_desc = "当 MT 被投掷到对面平台时发出警报。",
 
-	starttrigger = "斯塔拉格要碾碎你！",
-	starttrigger1 = "主人要吃了你！",
-	starttrigger2 = "咬碎……你的……骨头……",
-	starttrigger3 = "打……烂……你！",
-	starttrigger4 = "杀……",
+	trigger_phase1_1 = "斯塔拉格要碾碎你！",
+	trigger_phase1_2 = "主人要吃了你！",
+	trigger_phase2_1 = "咬碎……你的……骨头……",
+	trigger_phase2_2 = "打……烂……你！",
+	trigger_phase2_3 = "杀……",
 
-	adddeath = "死了。",
-	teslaoverload = "超载！",
+	polarity_trigger = "你感受到痛苦的滋味了吧……",
 
-	pstrigger = "你感受到痛苦的滋味了吧……",
-	--polarity_trigger = "The polarity has Shifted!",
-
-	startwarn = "第一阶段",
-	startwarn2 = "第二阶段 - 6分钟后激怒！",
-	addsdownwarn = "10-20秒后，塔迪乌斯出现！",
-	thaddiusincoming = "3秒后，塔迪乌斯出现！",
-	pswarn1 = "塔迪乌斯开始施放极性转化！",
-	pswarn2 = "28秒后，极性转化！",
-	pswarn3 = "3秒后，极性转化！",
-	stalaggwarn = "力量振荡！",
-	powersurgebar = "<力量振荡>",
+	phase1_message = "第一阶段",
+	phase2_message = "第二阶段 - 6分钟后激怒！",
+	phase2_warning = "10-20秒后，塔迪乌斯出现！",
+	polarity_message = "塔迪乌斯开始施放极性转化！",
+	polarity_warning = "3秒后，极性转化！",
+	surge_message = "力量振荡！",
+	surge_bar = "<力量振荡>",
 
 	polarity_changed = "极性转化改变！",
 	polarity_nochange = "相同极性转化！",
 	
-	bar1text = "<极性转化>",
+	polarity_bar = "<极性转化>",
 
-	throwbar = "<投掷>",
-	throwwarn = "约5秒，投掷！",
+	throw_bar = "<投掷>",
+	throw_warning = "约5秒，投掷！",
 
-} end )
+} end)
 
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
@@ -262,36 +229,30 @@ L:RegisterTranslations("zhTW", function() return {
 	throw = "投擲",
 	throw_desc = "當主坦克被投擲到對面平台時發出警報。",
 
-	starttrigger = "斯塔拉格要碾碎你！",
-	starttrigger1 = "主人要吃了你！",
-	starttrigger2 = "咬碎……你的……骨頭……",
-	starttrigger3 = "打……爛……你！",
-	starttrigger4 = "殺……",
+	trigger_phase1_1 = "斯塔拉格要碾碎你！",
+	trigger_phase1_2 = "主人要吃了你！",
+	trigger_phase2_1 = "咬碎……你的……骨頭……",
+	trigger_phase2_2 = "打……爛……你！",
+	trigger_phase2_3 = "殺……",
 
-	adddeath = "死亡了。",
-	teslaoverload = "超負荷！",
+	polarity_trigger = "你感受到痛苦的滋味了吧……",
 
-	pstrigger = "你感受到痛苦的滋味了吧……",
-	--polarity_trigger = "The polarity has Shifted!",
-
-	startwarn = "第一階段",
-	startwarn2 = "第二階段 - 6分鍾後狂怒！",
-	addsdownwarn = "10-20秒後，泰迪斯出現！",
-	thaddiusincoming = "3秒後，泰迪斯出現！",
-	pswarn1 = "泰迪斯開始施放兩極移形！",
-	pswarn2 = "28秒後，兩極移形！",
-	pswarn3 = "3秒後，兩極移形！",
-	stalaggwarn = "力量澎湃！加大對坦克的治療！",
-	powersurgebar = "<力量澎湃>",
+	phase1_message = "第一階段",
+	phase2_message = "第二階段 - 6分鍾後狂怒！",
+	phase2_warning = "10-20秒後，泰迪斯出現！",
+	polarity_message = "泰迪斯開始施放兩極移形！",
+	polarity_warning = "3秒後，兩極移形！",
+	surge_message = "力量澎湃！加大對坦克的治療！",
+	surge_bar = "<力量澎湃>",
 	
 	polarity_changed = "兩極移形改变！",
 	polarity_nochange = "相同兩極移形！",
 
-	bar1text = "<兩極移形>",
+	polarity_bar = "<兩極移形>",
 
-	throwbar = "<投擲>",
-	throwwarn = "約5秒後，投擲！",
-} end )
+	throw_bar = "<投擲>",
+	throw_warning = "約5秒後，投擲！",
+} end)
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
@@ -306,36 +267,30 @@ L:RegisterTranslations("frFR", function() return {
 	throw = "Lancer",
 	throw_desc = "Prévient quand les tanks sont lancés d'une plate-forme à l'autre.",
 
-	starttrigger = "Stalagg écraser toi !",
-	starttrigger1 = "À manger pour maître !",
-	starttrigger2 = "Manger… tes… os…",
-	starttrigger3 = "Casser... toi !",
-	starttrigger4 = "Tuer…",
+	trigger_phase1_1 = "Stalagg écraser toi !",
+	trigger_phase1_2 = "À manger pour maître !",
+	trigger_phase2_1 = "Manger… tes… os…",
+	trigger_phase2_2 = "Casser... toi !",
+	trigger_phase2_3 = "Tuer…",
 
-	adddeath = "meurt.",
-	teslaoverload = "%s entre en surcharge !",
+	polarity_trigger = "Maintenant toi sentir douleur...",
 
-	pstrigger = "Maintenant toi sentir douleur...",
-	polarity_trigger = "La polarité vient de changer !",
-
-	startwarn = "Thaddius - Phase 1",
-	startwarn2 = "Thaddius - Phase 2, Berserk dans 6 min. !",
-	addsdownwarn = "Arrivée de Thaddius dans 10-20 sec. !",
-	thaddiusincoming = "Arrivée de Thaddius dans 3 sec. !",
-	pswarn1 = "Thaddius commence à incanter un Changement de polarité !",
-	pswarn2 = "28 sec. avant Changement de polarité !",
-	pswarn3 = "3 sec. avant Changement de polarité !",
-	stalaggwarn = "Vague de puissance sur Stalagg !",
-	powersurgebar = "Vague de puissance",
+	phase1_message = "Thaddius - Phase 1",
+	phase2_message = "Thaddius - Phase 2, Berserk dans 6 min. !",
+	phase2_warning = "Arrivée de Thaddius dans 10-20 sec. !",
+	polarity_message = "Thaddius commence à incanter un Changement de polarité !",
+	polarity_warning = "3 sec. avant Changement de polarité !",
+	surge_message = "Vague de puissance sur Stalagg !",
+	surge_bar = "Vague de puissance",
 
 	polarity_changed = "La polarité a changé !",
 	polarity_nochange = "Même polarité !",
 
-	bar1text = "Changement de polarité",
+	polarity_bar = "Changement de polarité",
 
-	throwbar = "Lancer",
-	throwwarn = "Lancer dans ~5 sec. !",
-} end )
+	throw_bar = "Lancer",
+	throw_warning = "Lancer dans ~5 sec. !",
+} end)
 
 ------------------------------
 --      Initialization      --
@@ -344,18 +299,15 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	deaths = 0
-	overloads = 1
-	teslawarn = nil
 	stage1warn = nil
 	lastCharge = nil
 	shiftTime = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
@@ -363,10 +315,26 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Deaths(_, guid)
+	local id = tonumber((guid):sub(-12, -7), 16)
+	if id == self.guid then
+		self:BossDeath(nil, self.guid, true)
+	elseif id == 15929 or id == 15930 then
+		deaths = deaths + 1
+		if deaths == 2 then
+			if self.db.profile.phase then
+				self:Message(L["phase2_warning"], "Attention")
+			end
+			self:CancelAllScheduledEvents()
+			self:TriggerEvent("BigWigs_StopBar", self, L["throw_bar"])
+		end
+	end
+end
+
 function mod:StalaggPower()
 	if self.db.profile.power then
-		self:IfMessage(L["stalaggwarn"], "Important", 28134)
-		self:Bar(L["powersurgebar"], 10, 28134)
+		self:IfMessage(L["surge_message"], "Important", 28134)
+		self:Bar(L["surge_bar"], 10, 28134)
 	end
 end
 
@@ -405,65 +373,36 @@ function mod:Shift()
 	shiftTime = GetTime()
 	self:RegisterEvent("UNIT_AURA")
 	if self.db.profile.polarity then
-		self:IfMessage(L["pswarn1"], "Important", 28089)
+		self:IfMessage(L["polarity_message"], "Important", 28089)
+	end
+end
+
+local function throw()
+	if mod.db.profile.throw then
+		mod:Bar(L["throw_bar"], 20, "Ability_Druid_Maul")
+		mod:DelayedMessage(15, L["throw_warning"], "Urgent")
+		mod:ScheduleEvent(throw, 21)
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["pstrigger"]) and self.db.profile.polarity then
-		self:DelayedMessage(25, L["pswarn3"], "Important")
-		self:Bar(L["bar1text"], 28, "Spell_Nature_Lightning")
-	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
+	if self.db.profile.polarity and msg:find(L["polarity_trigger"]) then
+		self:DelayedMessage(25, L["polarity_warning"], "Important")
+		self:Bar(L["polarity_bar"], 28, "Spell_Nature_Lightning")
+	elseif msg == L["trigger_phase1_1"] or msg == L["trigger_phase1_2"] then
 		if self.db.profile.phase and not stage1warn then
-			self:Message(L["startwarn"], "Important")
+			self:Message(L["phase1_message"], "Important")
 		end
 		deaths = 0
-		teslawarn = nil
 		stage1warn = true
-		self:Throw()
-	elseif msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) or msg:find(L["starttrigger4"]) then
+		throw()
+	elseif msg:find(L["trigger_phase2_1"]) or msg:find(L["trigger_phase2_2"]) or msg:find(L["trigger_phase2_3"]) then
 		if self.db.profile.phase then
-			self:Message(L["startwarn2"], "Important")
+			self:Message(L["phase2_message"], "Important")
 		end
 		if self.db.profile.berserk then
 			self:Enrage(360, true, true)
 		end
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find(L["adddeath"]) then
-		deaths = deaths + 1
-		if deaths == 2 then
-			if self.db.profile.phase then
-				self:Message(L["addsdownwarn"], "Attention")
-			end
-			self:CancelScheduledEvent("Bwthaddiusthrow")
-			self:CancelScheduledEvent("Bwthaddiusthrowwarn")
-			self:TriggerEvent("BigWigs_StopBar", self, L["throwbar"])
-		end
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg:find(L["teslaoverload"]) and self.db.profile.phase and not teslawarn then
-		teslawarn = true
-		overloads = overloads + 1
-		if overloads == 2 then
-			self:Message(L["thaddiusincoming"], "Important")
-		end
-	elseif msg:find(L["polarity_trigger"]) then
-		if self.db.profile.polarity then
-			self:Message(L["polarity_trigger"], "Attention")
-		end
-	end
-end
-
-function mod:Throw()
-	if self.db.profile.throw then
-		self:Bar(L["throwbar"], 20, "Ability_Druid_Maul")
-		self:ScheduleEvent("Bwthaddiusthrowwarn", "BigWigs_Message", 15, L["throwwarn"], "Urgent")
-		self:ScheduleEvent("Bwthaddiusthrow", self.Throw, 21, self)
 	end
 end
 
