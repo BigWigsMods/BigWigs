@@ -17,13 +17,12 @@ mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "boss
 --      Are you local?      --
 ------------------------------
 
-local enrageStarted = nil
 local deaths = 0
 local overloads = 1
 local teslawarn = nil
 local stage1warn = nil
 local lastCharge = nil
-local player = nil
+local shiftTime = nil
 
 ----------------------------
 --      Localization      --
@@ -347,13 +346,12 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
-	enrageStarted = nil
 	deaths = 0
 	overloads = 1
 	teslawarn = nil
 	stage1warn = nil
 	lastCharge = nil
-	player = "player"
+	shiftTime = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -373,7 +371,8 @@ function mod:StalaggPower()
 end
 
 function mod:UNIT_AURA(unit)
-	if unit and unit ~= player then return end
+	if unit and unit ~= "player" then return end
+	if not shiftTime or (GetTime() - shiftTime) < 3 then return end
 
 	local newCharge = nil
 	for i = 1, 40 do
@@ -397,11 +396,13 @@ function mod:UNIT_AURA(unit)
 			end
 		end
 		lastCharge = newCharge
+		shiftTime = nil
 		self:UnregisterEvent("UNIT_AURA")
 	end
 end
 
 function mod:Shift()
+	shiftTime = GetTime()
 	self:RegisterEvent("UNIT_AURA")
 	if self.db.profile.polarity then
 		self:IfMessage(L["pswarn1"], "Important", 28089)
@@ -416,7 +417,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.phase and not stage1warn then
 			self:Message(L["startwarn"], "Important")
 		end
-		enrageStarted = nil
 		deaths = 0
 		teslawarn = nil
 		stage1warn = true
