@@ -9,7 +9,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "overload", "breath", -1, "surge", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "breath", -1, "surge", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -20,7 +20,6 @@ local pName = UnitName("player")
 local db = nil
 local started = nil
 local phase = nil
-local p2 = nil
 local fmt = string.format
 
 ----------------------------
@@ -38,29 +37,20 @@ L:RegisterTranslations("enUS", function() return {
 	sparks_warning = "Power Spark in ~5sec!",
 
 	vortex = "Vortex",
-	vortex_desc = "Warn for vortex and show a bar.",
+	vortex_desc = "Warn for Vortex in phase 1.",
 	vortex_message = "Vortex!",
 	vortex_warning = "Possible Vortex in ~5sec!",
 	vortex_next = "Vortex Cooldown",
 
-	overload = "Arcane Overload",
-	overload_desc = "Warn for Arcane Overload and show a bar.",
-	overload_warning = "Arcane Overload in ~5sec!",
-	overload_next = "Next Overload",
-
 	breath = "Deep Breath",
-	breath_desc = "Deep Breath warnings.",
+	breath_desc = "Warn when Malygos is using Deep Breath in phase 2.",
 	breath_message = "Deep Breath!",
 	breath_warning = "Deep Breath in ~5sec!",
 
 	surge = "Surge of Power",
-	surge_desc = "Warn who has Surge of Power.",
+	surge_desc = "Warn when Malygos uses Surge of Power on you in phase 3.",
 	surge_you = "Surge of Power on YOU!",
 	surge_trigger = "%s fixes his eyes on you!",
-	surge_warning = "Surge on %s!",
-
-	icon = "Raid Target Icon",
-	icon_desc = "Place a Raid Target Icon on the player that Surge of Power is being cast on(requires promoted or higher)",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -85,11 +75,6 @@ L:RegisterTranslations("koKR", function() return {
 	vortex_warning = "약 5초 후 회오리 사용가능!",
 	vortex_next = "회오리 대기시간",
 
-	overload = "비전 과부하",
-	overload_desc = "비전 과부하에 대한 알림과 바를 표시합니다.",
-	overload_warning = "약 5초 후 비전 과부하!",
-	overload_next = "다음 과부하",
-
 	breath = "깊은 숨결",
 	breath_desc = "깊은 숨결을 알립니다.",
 	breath_message = "깊은 숨결!",
@@ -99,10 +84,6 @@ L:RegisterTranslations("koKR", function() return {
 	surge_desc = "마력의 쇄도의 대상을 알립니다.",
 	surge_you = "당신에게 마력의 쇄도!",
 	surge_trigger = "%s|1이;가; 당신을 주시합니다!",
-	surge_warning = "마력의 쇄도: %s!",
-
-	icon = "전술 표시",
-	icon_desc = "마력의 쇄도의 시전 대상의 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -127,11 +108,6 @@ L:RegisterTranslations("frFR", function() return {
 	vortex_warning = "Vortex probable dans ~5 sec. !",
 	vortex_next = "Recharge Vortex",
 
-	overload = "Surcharge arcanique",
-	overload_desc = "Prévient de l'arrivée des Surcharges arcaniques.",
-	overload_warning = "Surcharge arcanique dans ~5 sec. !",
-	overload_next = "Prochaine Surcharge",
-
 	breath = "Inspiration profonde",
 	breath_desc = "Prévient quand Malygos inspire profondément.",
 	breath_message = "Inspiration profonde !",
@@ -141,10 +117,6 @@ L:RegisterTranslations("frFR", function() return {
 	surge_desc = "Prévient quand un joueur subit les effets de la Vague de puissance.",
 	surge_you = "Vague de puissance sur VOUS !",
 	surge_trigger = "%s fixe le regard sur vous !",
-	surge_warning = "Vague sur %s !",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur la personne sur laquelle la Vague de puissance est incantée (nécessite d'être promu ou mieux).",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
@@ -169,11 +141,6 @@ L:RegisterTranslations("zhCN", function() return {
 	vortex_warning = "约5秒后，可能漩涡！",
 	vortex_next = "<漩涡 冷却>",
 
-	overload = "奥术过载",
-	overload_desc = "当施放奥术过载时发出警报及显示计时条。",
-	overload_warning = "约5秒后，可能奥术过载！",
-	overload_next = "<奥术过载>",
-
 	breath = "深呼吸",
 	breath_desc = "当施放深呼吸时发出警报。",
 	breath_message = "深呼吸！",
@@ -182,9 +149,6 @@ L:RegisterTranslations("zhCN", function() return {
 	surge = "能量涌动",
 	surge_desc = "当玩家中了能量涌动时发出警报。",
 	surge_you = ">你< 能量涌动！",
-
-	icon = "团队标记",
-	icon_desc = "为中了能量涌动的玩家打上团队标记。（需要权限）",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段时发出警报。",
@@ -209,11 +173,6 @@ L:RegisterTranslations("zhTW", function() return {
 	vortex_warning = "約5秒后，可能漩渦！",
 	vortex_next = "<漩渦 冷卻>",
 
-	overload = "秘法超載",
-	overload_desc = "當施放秘法超載時發出警報及顯示計時條。",
-	overload_warning = "約5秒后，可能秘法超載！",
-	overload_next = "<下一秘法超載>",
-
 	breath = "深呼吸",
 	breath_desc = "當施放深呼吸時發出警報。",
 	breath_message = "深呼吸！",
@@ -222,9 +181,6 @@ L:RegisterTranslations("zhTW", function() return {
 	surge = "力量奔騰",
 	surge_desc = "當玩家中了力量奔騰時發出警報。",
 	surge_you = ">你< 力量奔騰！",
-
-	icon = "團隊標記",
-	icon_desc = "為中了力量奔騰的玩家打上團隊標記。（需要權限）",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
@@ -249,17 +205,9 @@ L:RegisterTranslations("ruRU", function() return {
 	vortex_warning = "Воронка через ~5сек!",
 	vortex_next = "Перезарядка воронки",
 
-	breath = "Чародейский импульс",
-	breath_desc = "Предупреждать о Чародейском импульсе.",
-	breath_message = "Чародейский импульс!",
-	breath_warning = "Чародейский импульс через ~5 сек!",
-
 	surge = "Прилив мощи",
 	surge_desc = "Предупреждать кто получает Прилив мощи.",
 	surge_you = "На ВАС Прилив мощи!",
-
-	icon = "Отмечать икнокой",
-	icon_desc = "Отмечать рейдовой иконой игрока, попавшего под Прилив мощи (необходимо быть лидером группы или рейда)",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
@@ -284,11 +232,6 @@ L:RegisterTranslations("deDE", function() return {
 	vortex_warning = "Vortex in ~5 sek!",
 	vortex_next = "~Vortex",
 
-	overload = "Arkane Überladung",
-	overload_desc = "Warnungen und Timer für das Erscheinen einer Arkanen Überladung.",
-	overload_warning = "Arkane Überladung in ~5 sek!",
-	overload_next = "~Arkane Überladung",
-
 	breath = "Tiefer Atem",
 	breath_desc = "Warnungen und Timer für Tiefer Atem (Kraftsog) in Phase 2.",
 	breath_message = "Tiefer Atem!",
@@ -298,10 +241,6 @@ L:RegisterTranslations("deDE", function() return {
 	surge_desc = "Warnt, wenn ein Spieler von Kraftsog in Phase 3 betroffen ist.",
 	surge_you = "Kraftsog auf DIR!",
 	surge_trigger = "Die Augen von %s sind auf Euch fixiert!",
-	surge_warning = "Kraftsog: %s!",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Kraftsog gewirkt wird (benötigt Assistent oder höher).",
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -342,17 +281,13 @@ end
 
 function mod:Vortex(_, spellID)
 	if db.vortex then
-		self:CancelScheduledEvent("VortexWarn")
-		self:TriggerEvent("BigWigs_StopBar", self, L["vortex_next"])
 		self:Bar(L["vortex"], 10, 56105)
 		self:IfMessage(L["vortex_message"], "Attention", spellID)
 		self:Bar(L["vortex_next"], 59, 56105)
-		self:ScheduleEvent("VortexWarn", "BigWigs_Message", 54, L["vortex_warning"], "Attention")
+		self:DelayedMessage(54, L["vortex_warning"], "Attention")
 		if db.sparks then
-			self:CancelScheduledEvent("SparkWarn")
-			self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
 			self:Bar(L["sparks"], 17, 56152)
-			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 12, L["sparks_warning"], "Attention")
+			self:DelayedMessage(12, L["sparks_warning"], "Attention")
 		end
 	end
 end
@@ -366,39 +301,25 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if phase == 1 then
 		if db.sparks then
-			self:CancelScheduledEvent("SparkWarn")
-			self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
 			self:Message(L["sparks_message"], "Important", 56152, "Alert")
 			self:Bar(L["sparks"], 30, 56152)
-			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 25, L["sparks_warning"], "Attention")
+			self:DelayedMessage(25, L["sparks_warning"], "Attention")
 		end
 	elseif phase == 2 then
 		if db.breath then
 			-- 43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
 			-- Correct SpellId for 'breath" in phase 2 is 56505 
-			self:CancelScheduledEvent("OverloadWarn")
-			self:CancelScheduledEvent("Overload")
 			self:Message(L["breath_message"], "Important", 43810, "Alert")
 			self:Bar(L["breath"], 59, 43810)
-			self:Bar(L["overload"], 11, 56438)
-			self:DelayedMessage(6, L["overload_warning"], "Attention")
-			self:ScheduleEvent("BreathWarn", "BigWigs_Message", 54, L["breath_warning"], "Attention")
-			self:ScheduleEvent("Overload", self.RepeatOverload, 12, self)
+			self:DelayedMessage(54, L["breath_warning"], "Attention")
 		end
 	end
-end
-
-function mod:RepeatOverload()
-	self:Bar(L["overload_next"], 15, 56438)
-	self:ScheduleEvent("OverloadWarn", "BigWigs_Message", 10, L["overload_warning"], "Attention")
-	self:ScheduleEvent("Overload", self.RepeatOverload, 16, self)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
 		phase = 2
-		self:CancelScheduledEvent("VortexWarn")
-		self:CancelScheduledEvent("SparkWarn")
+		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["vortex_next"])
 		self:Message(L["phase2_message"], "Attention")
@@ -406,16 +327,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["breath"], 92, 43810)
 			self:DelayedMessage(87, L["breath_warning"], "Attention")
 		end
-		if db.overload then
-			self:Bar(L["overload"], 30, 56438)
-			self:DelayedMessage(25, L["overload_warning"], "Attention")
-			self:ScheduleEvent("Overload", self.RepeatOverload, 31, self)
-		end
 	elseif msg:find(L["phase2_end_trigger"]) then
-		self:CancelScheduledEvent("BreathWarn")
-		self:CancelScheduledEvent("OverloadWarn")
-		self:CancelScheduledEvent("Overload")
-		self:TriggerEvent("BigWigs_StopBar", self, L["overload_next"])
+		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["breath"])
 		self:Message(L["phase3_warning"], "Attention")
 	elseif msg:find(L["phase3_trigger"]) then
@@ -425,14 +338,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not db.phase then return end
+	if phase ~= 1 or not db.phase then return end
 	if UnitName(msg) == boss then
 		local hp = UnitHealth(msg)
-		if hp > 51 and hp <= 54 and not p2 then
+		if hp > 51 and hp <= 54 then
 			self:Message(L["phase2_warning"], "Attention")
-			p2 = true
-		elseif hp > 60 and p2 then
-			p2 = false
 		end
 	end
 end	
@@ -445,8 +355,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if db.vortex then
-		self:Bar(L["vortex_next"], 29, 56105)
-		self:ScheduleEvent("VortexWarn", "BigWigs_Message", 24, L["vortex_warning"], "Attention")
+			self:Bar(L["vortex_next"], 29, 56105)
+			self:ScheduleEvent("VortexWarn", "BigWigs_Message", 24, L["vortex_warning"], "Attention")
 		end
 		if db.sparks then
 			self:Bar(L["sparks"], 25, 56152)
