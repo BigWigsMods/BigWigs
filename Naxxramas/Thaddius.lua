@@ -347,11 +347,14 @@ function mod:UNIT_AURA(unit)
 		if not name then break end
 		-- If stack > 1 we need to wait for another UNIT_AURA event.
 		-- UnitDebuff returns 0 for debuffs that don't stack.
-		if stack == 0 then
-			if icon == "Interface\\Icons\\Spell_ChargeNegative" or
-			   icon == "Interface\\Icons\\Spell_ChargePositive" then
-				newCharge = icon
-			end
+		if icon == "Interface\\Icons\\Spell_ChargeNegative" or
+		   icon == "Interface\\Icons\\Spell_ChargePositive" then
+			if stack > 1 then return end
+			newCharge = icon
+			-- We keep scanning even though we found one, because
+			-- if we have another buff with these icons that has
+			-- stack > 1 then we need to break and wait for another
+			-- UNIT_AURA event.
 		end
 	end
 	if newCharge then
