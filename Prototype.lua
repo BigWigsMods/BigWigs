@@ -197,6 +197,12 @@ end
 
 -- XXX Proposed API, subject to change.
 function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
+	if not event or not func then
+		error(("Missing an argument to %q:AddCombatListener."):format(self:ToString()))
+	end
+	if not self[func] then
+		error(("%s tried to register the combat event %q to the method %q, but it doesn't exist in the module."):format(self:ToString(), event, func))
+	end
 	if not self.combatLogEventMap then self.combatLogEventMap = {} end
 	if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
 	local c = select("#", ...)
