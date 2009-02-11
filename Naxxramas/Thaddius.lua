@@ -274,19 +274,18 @@ L:RegisterTranslations("frFR", function() return {
 	trigger_phase2_3 = "Tuer…",
 
 	polarity_trigger = "Maintenant toi sentir douleur...",
-
-	phase1_message = "Thaddius - Phase 1",
-	phase2_message = "Thaddius - Phase 2, Berserk dans 6 min. !",
-	phase2_warning = "Arrivée de Thaddius dans 10-20 sec. !",
 	polarity_message = "Thaddius commence à incanter un Changement de polarité !",
 	polarity_warning = "3 sec. avant Changement de polarité !",
-	surge_message = "Vague de puissance sur Stalagg !",
-	surge_bar = "Vague de puissance",
-
+	polarity_bar = "Changement de polarité",
 	polarity_changed = "La polarité a changé !",
 	polarity_nochange = "Même polarité !",
 
-	polarity_bar = "Changement de polarité",
+	phase1_message = "Phase 1",
+	phase2_message = "Phase 2, Berserk dans 6 min. !",
+	phase2_warning = "Arrivée de Thaddius dans 10-20 sec. !",
+
+	surge_message = "Vague de puissance sur Stalagg !",
+	surge_bar = "Vague de puissance",
 
 	throw_bar = "Lancer",
 	throw_warning = "Lancer dans ~5 sec. !",
