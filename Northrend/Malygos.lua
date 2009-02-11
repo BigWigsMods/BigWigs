@@ -227,7 +227,7 @@ L:RegisterTranslations("deDE", function() return {
 	sparks_warning = "Energiefunke in ~5 sek!",
 
 	vortex = "Vortex",
-	vortex_desc = "Warnungen und Timer für Vortex.",
+	vortex_desc = "Warnungen und Timer für Vortex in Phase 1.",
 	vortex_message = "Vortex!",
 	vortex_warning = "Vortex in ~5 sek!",
 	vortex_next = "~Vortex",
@@ -238,7 +238,7 @@ L:RegisterTranslations("deDE", function() return {
 	breath_warning = "Tiefer Atem in ~5 sek!",
 
 	surge = "Kraftsog",
-	surge_desc = "Warnt, wenn ein Spieler von Kraftsog in Phase 3 betroffen ist.",
+	surge_desc = "Warnt, wenn du von Kraftsog in Phase 3 betroffen ist.",
 	surge_you = "Kraftsog auf DIR!",
 	surge_trigger = "Die Augen von %s sind auf Euch fixiert!",
 
