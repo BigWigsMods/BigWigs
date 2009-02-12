@@ -57,7 +57,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase1_message = "Phase 1",
 	phase2_message = "Phase 2, Berserk in 6 minutes!",
-	phase2_warning = "Thaddius incoming in 10-20sec!",
 
 	surge_message = "Power Surge on Stalagg!",
 	surge_bar = "Power Surge",
@@ -89,7 +88,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	phase1_message = "Таддиус фаза 1",
 	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
-	phase2_warning = "Таддиус появится через 10-20 секунд!",
 	polarity_message = "Таддиус сдвигает полярность!",
 	polarity_warning = "3 секунды до сдвига полярности!",
 	surge_message = "Волна силы на Сталагге!",
@@ -124,7 +122,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase1_message = "타디우스 1 단계",
 	phase2_message = "타디우스 2 단계, 6분 후 격노!",
-	phase2_warning = "10~20초 이내 2단계 시작!",
 	polarity_message = "타디우스 극성 변환 시전!",
 	polarity_warning = "3초 이내 극성 변환!",
 	surge_message = "스탈라그 마력의 쇄도!",
@@ -162,7 +159,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	phase1_message = "Phase 1",
 	phase2_message = "Thaddius Phase 2, Berserker in 6 min",
-	phase2_warning = "Thaddius kommt in 10-20 sek!",
 	polarity_message = "Thaddius beginnt Polaritätsveränderung zu wirken!",
 	polarity_warning = "Polaritätsveränderung in 3 sek!",
 	surge_message = "Kraftsog auf Stalagg!",
@@ -200,7 +196,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase1_message = "第一阶段",
 	phase2_message = "第二阶段 - 6分钟后激怒！",
-	phase2_warning = "10-20秒后，塔迪乌斯出现！",
 	polarity_message = "塔迪乌斯开始施放极性转化！",
 	polarity_warning = "3秒后，极性转化！",
 	surge_message = "力量振荡！",
@@ -239,7 +234,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	phase1_message = "第一階段",
 	phase2_message = "第二階段 - 6分鍾後狂怒！",
-	phase2_warning = "10-20秒後，泰迪斯出現！",
 	polarity_message = "泰迪斯開始施放兩極移形！",
 	polarity_warning = "3秒後，兩極移形！",
 	surge_message = "力量澎湃！加大對坦克的治療！",
@@ -282,7 +276,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase1_message = "Phase 1",
 	phase2_message = "Phase 2, Berserk dans 6 min. !",
-	phase2_warning = "Arrivée de Thaddius dans 10-20 sec. !",
 
 	surge_message = "Vague de puissance sur Stalagg !",
 	surge_bar = "Vague de puissance",
@@ -298,7 +291,7 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	deaths = 0
 	stage1warn = nil
@@ -312,22 +305,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:Deaths(_, guid)
-	local id = tonumber((guid):sub(-12, -7), 16)
-	if id == self.guid then
-		self:BossDeath(nil, self.guid, true)
-	elseif id == 15929 or id == 15930 then
-		deaths = deaths + 1
-		if deaths == 2 then
-			if self.db.profile.phase then
-				self:Message(L["phase2_warning"], "Attention")
-			end
-			self:CancelAllScheduledEvents()
-			self:TriggerEvent("BigWigs_StopBar", self, L["throw_bar"])
-		end
-	end
-end
 
 function mod:StalaggPower()
 	if self.db.profile.power then
@@ -379,11 +356,12 @@ function mod:Shift()
 end
 
 local function throw()
+	if shiftTime then return end
 	if mod.db.profile.throw then
 		mod:Bar(L["throw_bar"], 20, "Ability_Druid_Maul")
 		mod:DelayedMessage(15, L["throw_warning"], "Urgent")
-		mod:ScheduleEvent(throw, 21)
 	end
+	mod:ScheduleEvent(throw, 21)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -398,6 +376,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		stage1warn = true
 		throw()
 	elseif msg:find(L["trigger_phase2_1"]) or msg:find(L["trigger_phase2_2"]) or msg:find(L["trigger_phase2_3"]) then
+		self:CancelAllScheduledEvents()
+		self:TriggerEvent("BigWigs_StopBar", self, L["throw_bar"])
 		if self.db.profile.phase then
 			self:Message(L["phase2_message"], "Important")
 		end
