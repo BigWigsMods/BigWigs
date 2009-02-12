@@ -70,18 +70,18 @@ L:RegisterTranslations("koKR", function() return {
 	sparks_warning = "약 5초 후 마력의 불꽃!",
 
 	vortex = "회오리",
-	vortex_desc = "회오리에 대한 알림과 바를 표시합니다.",
+	vortex_desc = "1단계에서 회오리를 알립니다.",
 	vortex_message = "회오리!",
 	vortex_warning = "약 5초 후 회오리 사용가능!",
 	vortex_next = "회오리 대기시간",
 
 	breath = "깊은 숨결",
-	breath_desc = "깊은 숨결을 알립니다.",
+	breath_desc = "2단계에서 말리고스가 사용하는 깊은 숨결을 알립니다.",
 	breath_message = "깊은 숨결!",
 	breath_warning = "약 5초 후 깊은 숨결!",
 
 	surge = "마력의 쇄도",
-	surge_desc = "마력의 쇄도의 대상을 알립니다.",
+	surge_desc = "3단계에서 말리고스가 당신에게 마력의 쇄도를 사용시 알립니다.",
 	surge_you = "당신에게 마력의 쇄도!",
 	surge_trigger = "%s|1이;가; 당신을 주시합니다!",
 
