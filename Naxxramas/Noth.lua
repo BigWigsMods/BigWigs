@@ -317,7 +317,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["blinktrigger"] then
 		if self.db.profile.blink then
 			self:IfMessage(L["blinkwarn"], "Important", 29208)
-			self:DelayedMessage(34, L["blinkwarn2"], "Attention")
+			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 34, L["blinkwarn2"], "Attention")
 			self:Bar(L["blinkbar"], 39, 29208)
 		end
 	end
