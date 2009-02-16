@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	starttrigger = "Теперь вы принадлежите мне!",  
-	starttrigger2 = "Ты... следующий!",  --check this
+	starttrigger2 = "Пришло ваше время...",  
 	starttrigger3 = "Я вижу вас...", 
 
 	engage = "Исступление",
