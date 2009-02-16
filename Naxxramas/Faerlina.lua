@@ -206,6 +206,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	started = nil
+	enrageMessageId = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -251,7 +252,9 @@ function mod:Enrage(unit, spellID, _, _, spellName)
 		self:IfMessage(L["enragewarn"], "Urgent", spellID)
 	end
 	self:TriggerEvent("BigWigs_StopBar", self, enrageName)
-	self:CancelScheduledEvent(enrageMessageId) 
+	if enrageMessageId then
+		self:CancelScheduledEvent(enrageMessageId)
+	end
 	enraged = true
 end
 
