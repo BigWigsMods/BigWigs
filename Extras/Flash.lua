@@ -45,20 +45,20 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	["FlashNShake"] = "번쩍임N진동",
-	["Flash'N'Shake"] = "번쩍임과 진동",
-	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "당신에게 직접적으로 중요한 무언가가 영향을 미칠때 화면을 흔들거나 파란색으로 번쩍입니다.",
+	["FlashNShake"] = "깜박임과 진동",
+	["Flash'N'Shake"] = "깜박임과 진동",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "당신에게 직접적으로 중요한 무언가가 영향을 미칠때 화면을 흔들거나 파란색으로 깜박입니다.",
 
-	["Flash"] = "번쩍임",
-	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
+	["Flash"] = "깜박임",
+	["Toggle Flash on or off."] = "깜박임을 켜거나 끕니다.",
 
 	["Shake"] = "진동",
 	["Toggle Shake on or off."] = "진동을 켜거나 끕니다.",
 
 	["Test"] = "테스트",
-	["Perform a Flash/Shake test."] = "번쩍임/진동 테스트를 실행합니다.",
+	["Perform a Flash/Shake test."] = "깜박임/진동 테스트를 실행합니다.",
 
-	flash_warning = "화면 번쩍임은 실패했습니다. 이것은 보통 nameplates(이름표 표시)가 켜져 있을 때 일어납니다.\n nameplates(이름표 표시)를 끄고 UI를 다시 로딩을 하거나 BigWigs의 '진동'을 끄세요. (번쩍임은 영향 받지 않습니다)",
+	flash_warning = "화면 진동이 실패했습니다. 이것은 보통 nameplates(이름표 표시)가 켜져 있을 때 일어납니다.\n nameplates(이름표 표시)를 끄고 UI를 다시 로딩을 하거나 BigWigs의 '진동'을 끄세요. (깜박임은 영향 받지 않습니다)",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
