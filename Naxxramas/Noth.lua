@@ -258,7 +258,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	blink = "Transfert",
 	blink_desc = "Prévient quand Noth utilise son Transfert.",
-	blinktrigger = "%s se téléporte au loin !",
+	blinktrigger = "%s se transfère au loin !",
 	blinkwarn = "Transfert !",
 	blinkwarn2 = "Transfert dans ~5 sec. !",
 	blinkbar = "Transfert",
