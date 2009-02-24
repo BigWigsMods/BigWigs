@@ -151,7 +151,7 @@ L:RegisterTranslations("ruRU", function() return {
 	tsunami_warning = "Огненное цунами через ~5сек!",
 	tsunami_message = "Огненное цунами!",
 	tsunami_cooldown = "Перезарядка цунами",
-	tsunami_trigger = "Лава вокруг %s начинает бурлить!",
+	tsunami_trigger = "Лава вокруг |3-1(%s) начинает бурлить!",
 
 	breath = "Огненное дыхание",
 	breath_desc = "Предупреждать о применении огненного дыхания.",
