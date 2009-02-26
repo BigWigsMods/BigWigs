@@ -66,13 +66,13 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	starttrigger1 = "Смерть чужакам!",  
-	starttrigger2 = "Glory to the master!",  --correct this
+	starttrigger2 = "Слава господину!",
 	starttrigger3 = "Прощайся с жизнью!", 
 	startwarn = "Нот Чумной разъярён! 90 секунд до телепорта",
 
 	blink = "Опасность скачка",
 	blink_desc = "Предупреждать, когда Нот использует скачок",
-	--blinktrigger = "%s blinks away!",
+	blinktrigger = "%s перескакивает на другое место!",
 	blinkwarn = "Скачок!",
 	blinkwarn2 = "Скачок через 5 секунд!",
 	blinkbar = "Скачок",
