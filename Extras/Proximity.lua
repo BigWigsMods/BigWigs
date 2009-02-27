@@ -110,7 +110,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Sound"] = "Son",
 	["Play sound on proximity."] = "Joue un son quand un autre joueur est trop proche de vous.",
 	["Disabled"] = "Désactivé",
-	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité.",
+	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant.",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "L'affichage de proximité a été désactivé pour %s. Veuillez utiliser les options du module du boss pour l'activer à nouveau.",
 
 	proximity = "Proximité",

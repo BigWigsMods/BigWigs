@@ -123,17 +123,17 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	tsunami = "Tsunami de flammes",
-	tsunami_desc = "Prévient de l'arrivée des Tsunami de flammes.",
-	tsunami_warning = "Tsunami de flammes dans ~5 sec. !",
-	tsunami_message = "Tsunami de flammes !",
-	tsunami_cooldown = "Recharge Tsunami",
+	tsunami = "Vague de flammes",
+	tsunami_desc = "Prévient quand la lave bouillonne et affiche une barre.",
+	tsunami_warning = "Vague dans ~5 sec. !",
+	tsunami_message = "Vague de flammes !",
+	tsunami_cooldown = "Recharge Vague",
 	tsunami_trigger = "La lave qui entoure %s bouillonne !",
 
 	breath = "Souffle de flammes",
 	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
-	breath_warning = "Souffle de flammes dans ~5 sec. !",
-	breath_message = "Souffle de flammes !",
+	breath_warning = "Souffle dans ~5 sec. !",
+	breath_message = "Souffle !",
 	breath_cooldown = "Recharge Souffle",
 
 	drakes = "Arrivée des drakes",

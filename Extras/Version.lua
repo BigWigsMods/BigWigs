@@ -219,7 +219,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Version Query"] = "Vérification des versions",
-	["Commands for querying the raid for Big Wigs versions."] = "Commandes de vérification des version de BigWigs du raid.",
+	["Commands for querying the raid for Big Wigs versions."] = "Commandes permettant de vérifier les versions de BigWigs du raid.",
 	["Query already running, please wait 5 seconds before trying again."] = "Une vérification est déjà en cours, veuillez réessayer dans 5 secondes.",
 	["Querying versions for "] = "Vérification des versions pour ",
 	["Big Wigs Version Query"] = "Vérification des versions de BigWigs",

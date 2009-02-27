@@ -307,7 +307,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Enable"] = "Activer",
 	["Enables emphasizing bars."] = "Active la mise en évidence des barres.",
 	["Flash"] = "Clignoter",
-	["Flashes the background red for bars that are emphasized."] = "Fais clignoter en rouge l'arrière-plan des barres mises en évidence.",
+	["Flashes the background red for bars that are emphasized."] = "Fait clignoter en rouge l'arrière-plan des barres mises en évidence.",
 	["Move"] = "Déplacer",
 	["Move bars that are emphasized to a second anchor."] = "Déplace les barres mises en évidence vers une seconde ancre.",
 	["Set the scale for emphasized bars."] = "Détermine l'échelle des barres mises en évidence.",
@@ -317,7 +317,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Reverse"] = "Inverser",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "Inverse ou non les barres (les remplir au lieu de les vider).",
-	
+
 	font = "Fonts\\FRIZQT__.TTF",
 } end)
 

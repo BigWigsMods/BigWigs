@@ -111,7 +111,7 @@ commonWords:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 
 	berserk_start = "%s engagé - Berserk dans %d min.",
-	berserk_end = "%s devient berserk",
+	berserk_end = "%s devient fou furieux",
 	berserk_min = "Berserk dans %d min.",
 	berserk_sec = "Berserk dans %d sec.",
 	berserk = "Berserk",

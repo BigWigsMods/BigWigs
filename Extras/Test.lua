@@ -93,7 +93,7 @@ L:RegisterTranslations("frFR", function() return {
 	["OMG Bear!"] = "Un ours !",
 	["*RAWR*"] = "*GRRR*",
 	["Victory!"] = "Victoire !",
-	["Commands for testing bars, messages and synchronization."] = "Options concernant les tests.",
+	["Commands for testing bars, messages and synchronization."] = "Commandes permettant de tester les barres, les messages et la synchronisation.",
 	["Local test"] = "Tester localement",
 	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
 	["Sync test"] = "Tester la synchronisation",

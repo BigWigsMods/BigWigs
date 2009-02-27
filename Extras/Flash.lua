@@ -63,18 +63,18 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Flash'N'Shake"] = "Flash'N'Shake",
-	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Secoue et/ou fais flasher l'écran en bleu quand quelque chose d'important vous affecte directement.",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Secoue et/ou fait clignoter l'écran en bleu quand quelque chose d'important vous affecte directement.",
 
 	["Flash"] = "Flash",
-	["Toggle Flash on or off."] = "Fais flasher ou non l'écran.",
+	["Toggle Flash on or off."] = "Fait clignoter ou non l'écran.",
 
 	["Shake"] = "Secousse",
-	["Toggle Shake on or off."] = "Fais secouer ou non l'écran.",
+	["Toggle Shake on or off."] = "Secoue ou non l'écran.",
 
 	["Test"] = "Test",
 	["Perform a Flash/Shake test."] = "Effectue un test du flash/de la secousse.",
 
-	flash_warning = "Échec de la secousse de l'écran. Ceci arrive habituellement quand les \"nameplates\" (l'affichage des noms et des barres de vie au dessus des personnages dans le champ de jeu) sont activés.\nDésactivez-les et rechargez l'IU, ou désactivez la 'Secousse' de BigWigs (le flash n'est PAS affecté).",
+	flash_warning = "Échec de la secousse de l'écran. Ceci arrive habituellement quand les \"nameplates\" (l'affichage des noms et des barres de vie au dessus des personnages dans le champ du jeu) sont activés.\nDésactivez-les et rechargez l'IU, ou désactivez la 'Secousse' de BigWigs (le flash n'est PAS affecté).",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

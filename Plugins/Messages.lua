@@ -233,7 +233,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Reset position"] = "RÀZ position",
 	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",
-	
+
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
