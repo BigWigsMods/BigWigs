@@ -249,7 +249,7 @@ end
 
 function mod:Breath(_, spellID)
 	if db.breath then
-		self:Bar(L["breath_cooldown"], 12, 57491)
+		self:Bar(L["breath_cooldown"], 12, 58956)
 	end
 end
 
