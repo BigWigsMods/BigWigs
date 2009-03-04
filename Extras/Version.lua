@@ -351,17 +351,28 @@ local function loadBabble()
 end
 
 local function addZone(zone, rev)
--- Make sure to get the enUS zone name.
+	-- Make sure to get the enUS zone name.
 	local z = BZR[zone] or zone
 	if not zoneRevisions[z] or rev > zoneRevisions[z] then
-		if rev > highestRevision then highestRevision = rev end
+		if not highestRevision or rev > zoneRevisions[highestRevision] then
+			highestRevision = z
+		end
 		zoneRevisions[z] = rev
 	end
 end
 
+local function broadcast()
+	local inGuild = IsInGuild()
+	local inGroup = (GetNumPartyMembers() > 0) or (GetNumRaidMembers() > 0)
+	if not inGuild and not inGroup then return end
+	local m = string.format("%s:%d", highestRevision, zoneRevisions[highestRevision])
+	if inGroup then SendAddonMessage("BWVB2", m, "RAID") end
+	if inGuild then SendAddonMessage("BWVB2", m, "GUILD") end
+end
+
 local function populateRevisions()
 	if not zoneRevisions then zoneRevisions = {} end
-	if not highestRevision then highestRevision = 0 end
+	local lastHighestRevision = highestRevision
 
 	loadBabble()
 	for name, module in BigWigs:IterateModules() do
@@ -377,17 +388,13 @@ local function populateRevisions()
 	end
 
 	local bwr = BigWigs.revision
-	if bwr > highestRevision then highestRevision = bwr end
 	zoneRevisions["BigWigs"] = bwr
-end
-
-local function broadcast()
-	local inGuild = IsInGuild()
-	local inGroup = (GetNumPartyMembers() > 0) or (GetNumRaidMembers() > 0)
-	if not inGuild and not inGroup then return end
-	if not highestRevision then populateRevisions() end
-	if inGroup then SendAddonMessage("BWVB", highestRevision, "RAID") end
-	if inGuild then SendAddonMessage("BWVB", highestRevision, "GUILD") end
+	if not highestRevision or bwr > zoneRevisions[highestRevision] then
+		highestRevision = "BigWigs"
+	end
+	if highestRevision ~= lastHighestRevision then
+		broadcast()
+	end
 end
 
 function plugin:OnRegister()
@@ -399,14 +406,11 @@ function plugin:OnRegister()
 			tt:AddLine(" ")
 		end)
 	end
-	-- Broadcast our version every 10 minutes.
-	self:ScheduleRepeatingEvent(broadcast, 600)
 end
 
 function plugin:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterEvent("BigWigs_ModulePackLoaded", populateRevisions)
-	broadcast()
 end
 
 ------------------------------
@@ -620,10 +624,11 @@ function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 	elseif prefix == "BWVR" and queryRunning then
 		table.insert(responseTable, new(sender, tonumber(message:match("%-?%d+"))))
 		self:UpdateDisplay()
-	elseif prefix == "BWVB" and not shouldUpdate and sender ~= playername then
-		local rev = tonumber(message)
-		if not rev or type(rev) ~= "number" then return end
-		if rev > (highestRevision + oldVersionThreshold) then
+	elseif prefix == "BWVB2" and not shouldUpdate and sender ~= playername then
+		local zone, rev = select(3, message:find("(.*):(%d+)"))
+		if not zone or not rev or not zoneRevisions[zone] then return end
+		rev = tonumber(rev)
+		if rev > (zoneRevisions[zone] + oldVersionThreshold) then
 			shouldUpdate = true
 			print(L["should_upgrade"])
 		end
