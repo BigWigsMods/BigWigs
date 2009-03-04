@@ -37,5 +37,13 @@
 <Script file="Northrend\Archavon.lua"/>
 <Script file="Northrend\Malygos.lua"/>
 <Script file="Northrend\Sartharion.lua"/>
+
+<Script file="Ulduar\UlduarBeta.lua"/>
+<Script file="Ulduar\Freya.lua"/>
+<Script file="Ulduar\Hodir.lua"/>
+<Script file="Ulduar\Ignis.lua"/>
+<Script file="Ulduar\IronCouncil.lua"/>
+<Script file="Ulduar\Leviathan.lua"/>
+<Script file="Ulduar\Thorim.lua"/>
 <!--@end-debug@-->
 </Ui>
