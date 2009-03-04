@@ -7,8 +7,8 @@ local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
-mod.guid = 0	--모름;;
-mod.toggleoptions = {"add", "attuned", "fury", "icon", "bosskill"}
+mod.guid = 0	--Unknown
+mod.toggleoptions = {"phase", -1, "add", "attuned", "fury", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -38,6 +38,11 @@ L:RegisterTranslations("enUS", function() return {
 	
 	engage_trigger = "The Conservatory must be protected",
 	
+	phase = "Phases",
+	phase_desc = "Warn for phase changes.",
+	phase2_message = "Phase 2 !",
+	phase2_soon = "Phase 2 soon",
+
 	add = "Add Warnings",
 	add_desc = "Warn for adds",
 	conservator_trigger = "Eonar, your servant requires aid!",
@@ -50,10 +55,9 @@ L:RegisterTranslations("enUS", function() return {
 	tree_message = "Eonar's Gift spawn",
 	
 	attuned = "Attuned to Nature",
-	attuned_desc = "Warn for Attuned to Nature",
+	attuned_desc = "Warn for Attuned to Nature.",
 	attuned_message = "Attuned: (%d)",
-	attuned_soon = "Phase 2 soon!",
-	
+		
 	fury = "Nature's Fury",
 	fury_desc = "Tells you who has been hit by Nature's Fury.",
 	fury_you = "You are Nature's Fury!",
@@ -74,31 +78,35 @@ L:RegisterTranslations("koKR", function() return {
 	["Detonating Lasher"] = "Detonating Lasher",
 	["Ancient Conservator"] = "Ancient Conservator",
 	
-	engage_trigger = "The Conservatory must be protected",
+	--engage_trigger = "The Conservatory must be protected",
+	
+	phase = "단계",
+	phase_desc = "단계 변화를 알립니다.",
+	phase2_message = "2 단계 !",
+	phase2_soon = "곧 2 단계",
 	
 	add = "몹 추가 알림",
 	add_desc = "몹이 추가되는 것을 알립니다.",
-	conservator_trigger = "Eonar, your servant requires aid!",
-	detonate_trigger = "The swarm of the elements shall overtake you!",
-	elementals_trigger = "Children, assist me!",
-	tree_trigger = "A Lifebinder's Gift begins to grow!",
-	conservator_message = "Conservator 소환",
-	detonate_message = "Detonate 소환",
-	elementals_message = "Elementals 소환",
-	tree_message = "Eonar's Gift 소환",
+	--conservator_trigger = "Eonar, your servant requires aid!",
+	--detonate_trigger = "The swarm of the elements shall overtake you!",
+	--elementals_trigger = "Children, assist me!",
+	--tree_trigger = "A Lifebinder's Gift begins to grow!",
+	conservator_message = "보존자 소환",
+	detonate_message = "폭파꽃 소환",
+	elementals_message = "정령들 소환",
+	tree_message = "생명결속자의 선물 소환",
 	
-	attuned = "Attuned to Nature",
-	attuned_desc = "Warn for Attuned to Nature",
-	attuned_message = "Attuned: (%d)",
-	attuned_soon = "Phase 2 soon!",
-	
-	fury = "Nature's Fury",
-	fury_desc = "Tells you who has been hit by Nature's Fury.",
-	fury_you = "You are Nature's Fury!",
-	fury_other = "Fury: %s!",
+	attuned = "자연의 조화",
+	attuned_desc = "자연의 조화를 알립니다.",
+	attuned_message = "조화: (%d)",
+
+	fury = "자연의 분노",
+	fury_desc = "자연의 분노에 걸린 플레이어를 알립니다.",
+	fury_you = "당신은 자연의 분노!",
+	fury_other = "분노: %s!",
 	
 	icon = "전술 표시",
-	icon_desc = "Nature's Fury 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "자연의 분노 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 	
 	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 	
@@ -112,6 +120,7 @@ L:RegisterTranslations("koKR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -151,6 +160,12 @@ function mod:FuryRemove(player)
 	end
 end
 
+function mod:AttunedRemove()
+	if db.phase then
+		self:Message(L["phase2_message"], "Attention")
+	end
+end
+
 function mod:Deaths(unit)
 	if unit == L["Detonating Lasher"] then
 		attunedcount = attunedcount - 2
@@ -176,10 +191,10 @@ end
 
 function mod:AttunedWarn()
 	if db.attuned then
-		if attunedcount > 5 then
-			self:Message(L["attuned_message"]:format(attunedcount), "Attention", 62892)
-		elseif attunedcount > 1 and health <= 10 then
-			self:Message(L["attuned_soon"], "Attention")
+		if attunedcount > 3 then
+			self:Message(L["attuned_message"]:format(attunedcount), "Attention", 62519)
+		elseif attunedcount > 1 and attunedcount <= 10 and db.phase then
+			self:Message(L["phase2_soon"], "Attention")
 		end
 	end
 end
