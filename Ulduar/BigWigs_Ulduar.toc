@@ -1,8 +1,4 @@
 ## Interface: 30000
-## X-Curse-Packaged-Version: r4984
-## X-Curse-Project-Name: BigWigs Bossmods
-## X-Curse-Project-ID: big-wigs
-## X-Curse-Repository-ID: wow/big-wigs/mainline
 
 ## Title: Big Wigs [|cffeda55fUlduar|r]
 ## Notes: Big Wigs Ulduar Modules
