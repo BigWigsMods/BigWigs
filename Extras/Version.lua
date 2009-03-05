@@ -626,6 +626,7 @@ function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 		self:UpdateDisplay()
 	elseif prefix == "BWVB2" and not shouldUpdate and sender ~= playername then
 		local zone, rev = select(3, message:find("(.*):(%d+)"))
+		if not zoneRevisions then populateRevisions() end
 		if not zone or not rev or not zoneRevisions[zone] then return end
 		rev = tonumber(rev)
 		if rev > (zoneRevisions[zone] + oldVersionThreshold) then
