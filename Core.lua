@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-_G.BigWigsFubarDB = nil --temp, expire after XX time
-
 local bboss = LibStub("LibBabble-Boss-3.0")
 local bzone = LibStub("LibBabble-Zone-3.0")
 

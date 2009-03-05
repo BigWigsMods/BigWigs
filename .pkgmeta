@@ -27,4 +27,4 @@ move-folders:
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/Naxxramas: BigWigs_Naxxramas
     BigWigs/Northrend: BigWigs_Northrend
-	BigWigs/Ulduar: BigWigs_Ulduar
+    BigWigs/Ulduar: BigWigs_Ulduar

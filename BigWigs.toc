@@ -1,7 +1,6 @@
 ## Interface: 30000
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
-## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Notes-deDE: Modulare und einfache Boss Encounter Warnungen.
 ## Notes-ruRU: Модульный, облегчённый, босс мод. Оповещает и выводит таймеры способностей/действий боссов.
@@ -10,6 +9,7 @@
 ## Notes-koKR: 각종 보스 경고를 위한 모듈화, 경량화 및 무관여적으로 접근합니다.
 ## Notes-frFR: Approche modulaire, légère et non-intrusive des avertissements pour les rencontres avec les boss.
 ## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
+## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Pettigrow (frFR), Gamefaq (deDE), Kyopaxa (esES), Daemona, wolftankk@cwdg (zhCN), Tekkub Stoutwrithe (BigWigs 1) & More
 ## Version: 2.0
