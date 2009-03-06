@@ -193,9 +193,20 @@ end
 -- Event Handlers
 --
 
+-- Include some old prefixes as well, so that we don't flag people running
+-- slightly older versions as not having BW at all.
+local bwPrefixes = {
+	BWVB = true,
+	BWVB2 = true,
+	BWOOD = true,
+	BWVQ = true,
+	BWVR = true,
+}
+_G.bwPrefixes = bwPrefixes
+
 function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 	if sender == playername then return end
-	if prefix ~= "BWVB2" and prefix ~= "BWOOD" then return end
+	if not bwPrefixes[prefix] then return end
 	if not bigwigsUsers[sender] then
 		bigwigsUsers[sender] = true
 		updateBWUsers()
