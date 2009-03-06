@@ -1,8 +1,8 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
----------------------------------
---      Addon Declaration      --
----------------------------------
+--------------------------------------------------------------------------------
+-- Addon Declaration
+--
 
 local plugin = BigWigs:New("Version Checker", tonumber(("$Revision$"):sub(12, -3)))
 if not plugin then return end
@@ -38,14 +38,20 @@ local playername = UnitName("player")
 local versionBroadcastsNotChecked = {}
 local outOfDateClients = {}
 
----------------------------------
---      Localization           --
----------------------------------
+local bigwigsUsers = {
+	[playername] = true
+}
+local notUsingBW = {}
+
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionChecker")
 L:RegisterTranslations("enUS", function() return {
 	["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss.",
 	["out_of_date"] = "The following players seem to be running an old version: %s.",
+	["not_using"] = "Group members not using Big Wigs: %s.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -117,10 +123,11 @@ end
 function plugin:OnRegister()
 	if BigWigsOptions and BigWigsOptions.RegisterTooltipInfo then
 		BigWigsOptions:RegisterTooltipInfo(function(tt)
+			local addedInfo = nil
 			if shouldUpdate then
+				addedInfo = true
 				tt:AddLine(" ")
 				tt:AddLine(L["should_upgrade"], 0.6, 1, 0.2, 1)
-				tt:AddLine(" ")
 			elseif next(outOfDateClients) then
 				local ood = {}
 				for player, rev in pairs(outOfDateClients) do
@@ -129,27 +136,48 @@ function plugin:OnRegister()
 					end
 				end
 				if #ood > 0 then
+					addedInfo = true
 					tt:AddLine(" ")
 					tt:AddLine(L["out_of_date"]:format(table.concat(ood, ", ")), 0.6, 1, 0.2, 1)
-					tt:AddLine(" ")
 				end
 			end
+			if #notUsingBW > 0 then
+				addedInfo = true
+				tt:AddLine(" ")
+				tt:AddLine(L["not_using"]:format(table.concat(notUsingBW, ", ")), 0.6, 1, 0.2, 1)
+			end
+			if addedInfo then tt:AddLine(" ") end
 		end)
 	end
 
 	scanModules()
 end
 
+local function updateBWUsers()
+	notUsingBW = wipe(notUsingBW)
+	local num = GetNumRaidMembers()
+	if num then
+		for i = 1, 40 do
+			local n = GetRaidRosterInfo(i)
+			if n and not bigwigsUsers[n] then table.insert(notUsingBW, coloredNames[n]) end
+		end
+	end
+	table.sort(notUsingBW)
+end
+
 local function newGroup()
 	if not highestRevision then return end
+	for k in pairs(coloredNames) do coloredNames[k] = nil end
 	broadcast("BWVB2", string.format("%s:%d", highestRevision, revisions[highestRevision]))
 	if shouldUpdate then notify() end
+	updateBWUsers()
 end
 
 function plugin:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterBucketEvent("BigWigs_ModuleRegistered", 2, scanModules)
 	self:RegisterEvent("BigWigs_JoinedGroup", newGroup)
+	self:RegisterEvent("BigWigs_LeftGroup", updateBWUsers)
 	newGroup()
 end
 
@@ -159,6 +187,11 @@ end
 
 function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 	if sender == playername then return end
+	if prefix ~= "BWVB2" and prefix ~= "BWOOD" then return end
+	if not bigwigsUsers[sender] then
+		bigwigsUsers[sender] = true
+		updateBWUsers()
+	end
 	if prefix == "BWVB2" then
 		local module, rev = select(3, message:find("(.*):(%d+)"))
 		if not module or not rev then return end
