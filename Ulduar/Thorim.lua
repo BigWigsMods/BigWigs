@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865
-mod.toggleoptions = {"phase", "summon", "hammer", "charge", -1, "p2berserk", "bosskill"}
+mod.toggleoptions = {"phase", "summon", "hammer", "strike", "charge", -1, "p2berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -17,7 +17,8 @@ mod.toggleoptions = {"phase", "summon", "hammer", "charge", -1, "p2berserk", "bo
 
 local db = nil
 local started = nil
-local chargecount = 1
+local chargeCount = 1
+local strikeTime = 15
 
 ----------------------------
 --      Localization      --
@@ -52,6 +53,10 @@ L:RegisterTranslations("enUS", function() return {
 	hammer_desc = "Warns about Detonate Stormhammer soon.",
 	hammer_message = "Stormhammer: %s",
 	hammer_bar = "Next Stormhammer",
+	
+	strike = "Unbalancing Strike",
+	strike_desc = "Warn when a player has Unbalancing Strike.",
+	strike_message= "Unbalancing Strike: %s",
 	
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
@@ -90,6 +95,10 @@ L:RegisterTranslations("koKR", function() return {
 	hammer_message = "폭풍망치: %s",
 	hammer_bar = "다음 폭풍망치",
 	
+	strike = "Unbalancing Strike",
+	strike_desc = "Unbalancing Strike에 걸린 플레이어를 알립니다.",
+	strike_message= "Unbalancing Strike: %s",
+	
 	charge = "번개 충전",
 	charge_desc = "토림의 번개 충전과 횟수를 알립니다.",
 	charge_message = "충전: (%d)",
@@ -108,6 +117,7 @@ L:RegisterTranslations("koKR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Charge", 62279)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
 	self:AddCombatListener("SPELL_SUMMON", "Summon", 62391)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
@@ -117,7 +127,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	started = nil
-	chargecount = 1
+	chargeCount = 1
 	db = self.db.profile
 	
 	BigWigs:Print(L["log"])
@@ -129,13 +139,13 @@ end
 
 function mod:Charge(_, spellID)
 	if db.charge then
-		self:IfMessage(L["charge_message"]:format(chargecount), "Important", spellID)
-		chargecount = chargecount + 1
-		if chargecount < 61 then
-			self:Bar(L["charge_bar"]:format(chargecount), 15, spellID)
+		self:IfMessage(L["charge_message"]:format(chargeCount), "Important", spellID)
+		chargeCount = chargeCount + 1
+		if chargeCount < 61 then
+			self:Bar(L["charge_bar"]:format(chargeCount), 15, spellID)
 		else
-			chargecount = 1
-			self:Bar(L["charge_bar"]:format(chargecount), 150, spellID)
+			chargeCount = 1
+			self:Bar(L["charge_bar"]:format(chargeCount), 150, spellID)
 		end
 	end
 end
@@ -144,6 +154,14 @@ function mod:Hammer(player, spellID)
 	if db.hammer then
 		self:IfMessage(L["hammer_message"]:format(player), "Attention", spellID)
 		self:Bar(L["hammer_bar"], 16, spellID)
+	end
+end
+
+function mod:Strike(player, spellID)
+	if db.strike then
+		local msg = fmt(L["strike_message"], player)
+		self:IfMessage(msg "Attention", spellID)
+		self:Bar(msg, strikeTime, spellID)
 	end
 end
 
@@ -168,7 +186,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("warn5", "BigWigs_Message", 290, L["p2berserk_warn5"], "Important")
 		end
 	elseif msg:find(L["phase3_trigger"]) then
-		chargecount = 1
 		self:TriggerEvent("BigWigs_StopBar", self, L["p2berserk"])
 		self:CancelScheduledEvent("warn1")
 		self:CancelScheduledEvent("warn2")
@@ -179,7 +196,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["phase3_message"]:format(boss), "Attention")
 		end
 		if db.charge then
-			self:Bar(L["charge_bar"]:format(chargecount), 15, 62279)
+			self:Bar(L["charge_bar"]:format(chargeCount), 15, 62279)
 		end
 	--[[elseif msg == L["end_trigger"] then
 		if db.bosskill then
@@ -192,6 +209,8 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		chargeCount = 1
+		strikeTime = GetCurrentDungeonDifficulty() == 1 and 6 or 15
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end

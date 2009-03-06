@@ -32,6 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
 	flash_message = "%s is Flash Freeze!",
 	flash_warning = "Casting Flash Freeze!",
+	flash_soon = "Flash Freeze in 5sec!",
 	flash_bar = "Next Flash",
 	
 	frozenblow = "Frozen Blow",
@@ -51,6 +52,7 @@ L:RegisterTranslations("koKR", function() return {
 	flash_desc = "급속 냉동 시전과 급속 냉동에 걸린 플레이어를 알립니다.",
 	flash_message = "급속 냉동: %s!",
 	flash_warning = "급속 냉동 시전!",
+	flash_soon = "5초 후 급속 냉동",
 	flash_bar = "다음 급속 냉동",
 	
 	frozenblow = "극한의 숨결",
@@ -105,6 +107,7 @@ function mod:FlashCast(_, spellID)
 		self:IfMessage(L["flash_warning"], "Attention", spellID)
 		self:Bar(L["flash"], 9, spellID)
 		self:Bar(L["flash_bar"], 35, spellID)
+		self:DelayedMessage(30, L["flash_soon"], "Attention")
 	end
 end
 
