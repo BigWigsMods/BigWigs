@@ -32,7 +32,7 @@ local coloredNames = setmetatable({}, {__index =
 
 local revisions = {}
 local highestRevision = nil
-local oldVersionThreshold = 10 -- 10 revisions behind means it's time to update
+local oldVersionThreshold = 5 -- 5 revisions behind means it's time to update
 local shouldUpdate = nil
 local playername = UnitName("player")
 local versionBroadcastsNotChecked = {}
