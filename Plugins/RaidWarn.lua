@@ -11,7 +11,7 @@ if not plugin then return end
 --      Are you local?      --
 ------------------------------
 
-local sentWhispers = nil
+local sentWhispers = {}
 local output = "*** %s ***"
 
 ----------------------------
@@ -227,15 +227,17 @@ plugin.consoleOptions = {
 ------------------------------
 
 local is31 = GetEquipmentSetInfo and true or nil
-
-local function filter(self, event, ...)
-	if BigWigs:IsModuleActive("RaidWarning") and
-		not plugin.db.profile.showwhispers and
-		sentWhispers[arg1] then
-		--BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
-		if is31 then
-			return true, ...
-		else
+local filter = nil
+if is31 then
+	filter = function(self, event, msg, ...)
+		if not plugin.db.profile.showwhispers and sentWhispers[msg] then
+			return true, msg, ...
+		end
+		return false, msg, ...
+	end
+else
+	filter = function()
+		if not plugin.db.profile.showwhispers and sentWhispers[arg1] then
 			return true
 		end
 	end
@@ -249,8 +251,8 @@ end
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_SendTell")
-
-	sentWhispers = {}
+	
+	sentWhispers = wipe(sentWhispers)
 end
 
 function plugin:BigWigs_Message(msg, color, noraidsay)

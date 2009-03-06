@@ -340,15 +340,17 @@ plugin.consoleOptions = {
 ------------------------------
 
 local is31 = GetEquipmentSetInfo and true or nil
-
-local function filter(self, event, ...)
-	if BigWigs:IsModuleActive("BossBlock") and
-		plugin:IsChannelSuppressed(event) and
-		plugin:IsSpam(arg1) then
-		--BigWigs:Debug(L["Suppressing Chatframe"], event, arg1)
-		if is31 then
-			return true, ...
-		else
+local filter = nil
+if is31 then
+	filter = function(self, event, msg, ...)
+		if plugin:IsChannelSuppressed(event) and plugin:IsSpam(msg) then
+			return true, msg, ...
+		end
+		return false, msg, ...
+	end
+else
+	filter = function()
+		if plugin:IsChannelSuppressed(event) and plugin:IsSpam(arg1) then
 			return true
 		end
 	end
@@ -359,6 +361,7 @@ function plugin:OnRegister()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
+	db = self.db.profile
 end
 
 function plugin:OnEnable()
@@ -370,8 +373,6 @@ function plugin:OnEnable()
 
 	self:RegisterEvent("Ace2_AddonEnabled", "BossModEnableDisable")
 	self:RegisterEvent("Ace2_AddonDisabled", "BossModEnableDisable")
-
-	db = self.db.profile
 end
 
 do
