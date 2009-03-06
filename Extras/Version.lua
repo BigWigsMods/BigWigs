@@ -74,6 +74,12 @@ L:RegisterTranslations("frFR", function() return {
 	["should_upgrade"] = "Il semblerait qu'il s'agisse d'une ancienne version de Big Wigs. Il est recommandé de vous mettre à jour avant d'engager un boss.",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	["should_upgrade"] = "Это, кажется, старая версия Big Wigs. Мы рекомендуем вам обновить её перед началом боя с боссом.",
+	["out_of_date"] = "Следующие игроки, похоже, используют старую версию: %s.",
+	["not_using"] = "Участник группы не использующий Big Wigs: %s.",
+} end )
+
 --------------------------------------------------------------------------------
 -- Local utility functions
 --
