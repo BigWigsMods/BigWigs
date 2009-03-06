@@ -272,12 +272,12 @@ L:RegisterTranslations("frFR", function() return {
 	backwarn = "De retour dans la salle pendant %d sec. !",
 	backwarn2 = "10 sec. avant son retour dans la salle !",
 
-	curse = "Malédiction",
-	curse_desc = "Prévient quand Noth incante sa Malédiction du Porte-peste.",
+	curse = "Malédictions",
+	curse_desc = "Prévient quand Noth incante ses Malédictions du Porte-peste.",
 	curseexplosion = "Explosion des malé. !",
-	cursewarn = "Malédiction ! Prochaine dans ~55 sec.",
-	curse10secwarn = "Malédiction dans ~10 sec.",
-	cursebar = "Prochaine malédiction",
+	cursewarn = "Malédictions ! Prochaines dans ~55 sec.",
+	curse10secwarn = "Malédictions dans ~10 sec.",
+	cursebar = "Prochaines malédictions",
 
 	wave = "Vagues",
 	wave_desc = "Prévient de l'arrivée des vagues.",

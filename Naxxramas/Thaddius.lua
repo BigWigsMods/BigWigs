@@ -279,6 +279,9 @@ L:RegisterTranslations("frFR", function() return {
 	polarity_changed = "La polarité a changé !",
 	polarity_nochange = "Même polarité !",
 
+	polarity_first_positive = "Vous êtes POSITIF !",
+	polarity_first_negative = "Vous êtes NÉGATIF !",
+
 	phase1_message = "Phase 1",
 	phase2_message = "Phase 2, Berserk dans 6 min. !",
 

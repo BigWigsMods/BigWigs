@@ -73,7 +73,9 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["should_upgrade"] = "Il semblerait qu'il s'agisse d'une ancienne version de Big Wigs. Il est recommandé de vous mettre à jour avant d'engager un boss.",
+	["should_upgrade"] = "Il semblerait que vous utilisez une ancienne version de Big Wigs. Il est recommandé de vous mettre à jour avant d'engager un boss.",
+	["out_of_date"] = "Les joueurs suivants semblent utiliser une ancienne version : %s.",
+	["not_using"] = "Membres n'utilisant pas Big Wigs : %s.",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
