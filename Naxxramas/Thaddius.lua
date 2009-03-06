@@ -55,6 +55,9 @@ L:RegisterTranslations("enUS", function() return {
 	polarity_changed = "Polarity changed!",
 	polarity_nochange = "Same polarity!",
 
+	polarity_first_positive = "You're POSITIVE!",
+	polarity_first_negative = "You're NEGATIVE!",
+
 	phase1_message = "Phase 1",
 	phase2_message = "Phase 2, Berserk in 6 minutes!",
 
@@ -335,10 +338,16 @@ function mod:UNIT_AURA(unit)
 	end
 	if newCharge then
 		if self.db.profile.polarity then
-			if newCharge == lastCharge then
-				self:LocalMessage(L["polarity_nochange"], "Positive", newCharge)
+			if not lastCharge then
+				self:LocalMessage(newCharge == "Interface\\Icons\\Spell_ChargePositive" and
+					L["polarity_first_positive"] or L["polarity_first_negative"],
+					"Personal", newCharge, "Alert")
 			else
-				self:LocalMessage(L["polarity_changed"], "Personal", newCharge, "Alert")
+				if newCharge == lastCharge then
+					self:LocalMessage(L["polarity_nochange"], "Positive", newCharge)
+				else
+					self:LocalMessage(L["polarity_changed"], "Personal", newCharge, "Alert")
+				end
 			end
 		end
 		lastCharge = newCharge
