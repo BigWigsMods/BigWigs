@@ -339,19 +339,29 @@ plugin.consoleOptions = {
 --      Event Handlers      --
 ------------------------------
 
-local function filter()
-	if plugin:IsChannelSuppressed(event) and plugin:IsSpam(arg1) then
+local is31 = GetEquipmentSetInfo and true or nil
+
+local function filter(self, event, ...)
+	if BigWigs:IsModuleActive("BossBlock") and
+		plugin:IsChannelSuppressed(event) and
+		plugin:IsSpam(arg1) then
 		--BigWigs:Debug(L["Suppressing Chatframe"], event, arg1)
-		return true
+		if is31 then
+			return true, ...
+		else
+			return true
+		end
 	end
 end
 
-function plugin:OnEnable()
+function plugin:OnRegister()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
+end
 
+function plugin:OnEnable()
 	self:Hook("RaidNotice_AddMessage", "RWAddMessage", true)
 
 	if CT_RAMessageFrame then

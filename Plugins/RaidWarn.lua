@@ -226,11 +226,24 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-local function filter()
-	if not plugin.db.profile.showwhispers and sentWhispers[arg1] then
+local is31 = GetEquipmentSetInfo and true or nil
+
+local function filter(self, event, ...)
+	if BigWigs:IsModuleActive("RaidWarning") and
+		not plugin.db.profile.showwhispers and
+		sentWhispers[arg1] then
 		--BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
-		return true
+		if is31 then
+			return true, ...
+		else
+			return true
+		end
 	end
+end
+
+function plugin:OnRegister()
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 end
 
 function plugin:OnEnable()
@@ -238,8 +251,6 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_SendTell")
 
 	sentWhispers = {}
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
-	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 end
 
 function plugin:BigWigs_Message(msg, color, noraidsay)
