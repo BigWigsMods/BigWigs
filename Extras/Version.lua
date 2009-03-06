@@ -202,7 +202,6 @@ local bwPrefixes = {
 	BWVQ = true,
 	BWVR = true,
 }
-_G.bwPrefixes = bwPrefixes
 
 function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 	if sender == playername then return end
