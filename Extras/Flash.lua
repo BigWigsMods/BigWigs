@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Test"] = true,
 	["Perform a Flash/Shake test."] = true,
 
-	flash_warning = "Screen Shake failed. This is usually caused when nameplates are on.\nTurn off nameplates and reload UI or turn off BigWigs 'Shake'. (Flash is NOT affected)",
+	flash_warning = "Screen shaking failed. This is usually caused by nameplates.\nTurn off nameplates and reload your UI, or turn off the shake effect in Big Wigs.",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -166,7 +166,7 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 mod.defaultDB = {
-	flash = false,
+	flash = true,
 	shake = false,
 }
 mod.external = true
