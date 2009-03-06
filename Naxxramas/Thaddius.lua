@@ -122,19 +122,21 @@ L:RegisterTranslations("koKR", function() return {
 	trigger_phase2_3 = "죽여주마...",
 
 	polarity_trigger = "자, 고통을 느껴봐라...",
-
-	phase1_message = "타디우스 1 단계",
-	phase2_message = "타디우스 2 단계, 6분 후 격노!",
 	polarity_message = "타디우스 극성 변환 시전!",
 	polarity_warning = "3초 이내 극성 변환!",
+	polarity_bar = "극성 변환",
+	polarity_changed = "극성 변경됨!",
+	polarity_nochange = "같은 극성!",
+		
+	phase1_message = "타디우스 1 단계",
+	phase2_message = "타디우스 2 단계, 6분 후 격노!",
+	
+	polarity_first_positive = "당신은 플러스!",
+	polarity_first_negative = "당신은 마이너스!",
+
 	surge_message = "스탈라그 마력의 쇄도!",
 	surge_bar = "마력의 쇄도",
 	
-	polarity_changed = "극성 변경됨!",
-	polarity_nochange = "같은 극성!",
-
-	polarity_bar = "극성 변환",
-
 	throw_bar = "던지기",
 	throw_warning = "약 5초 후 던지기!",
 } end)

@@ -56,6 +56,8 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["should_upgrade"] = "Big Wigs의 구버전이 있습니다. 보스와 전투를 시작하기전에 업데이트를 권장합니다.",
+	["out_of_date"] = "구버전을 사용중인 플레이어: %s.",
+	["not_using"] = "Big Wigs을 미사용중인 그룹 멤버: %s.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
