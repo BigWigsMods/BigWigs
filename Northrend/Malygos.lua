@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	static = "Static Field",
 	static_desc = "Warn when you're in a Static Field.",
-	static_message = "Static Field on YOU!",
+	static_message = "in a Static Field!",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -297,7 +297,7 @@ end
 
 function mod:Static(target, spellID)
 	if target == pName and db.static then
-		self:LocalMessage(L["static_message"], "Personal", nil, "Alarm")
+		self:LocalMessage(L["static_message"], "Urgent", spellID)
 	end
 end
 
