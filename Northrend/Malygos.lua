@@ -233,7 +233,7 @@ L:RegisterTranslations("ruRU", function() return {
 	surge = "Прилив мощи",
 	surge_desc = "Предупреждать кто получает Прилив мощи.",
 	surge_you = "На ВАС Прилив мощи!",
-	surge_trigger = "%s fixes his eyes on you!",
+	surge_trigger = "%s уставился на вас!",
 	
 	static = "Статическое поле",
 	static_desc = "Предупреждать, когда вы находитесь в статическом поле.",
