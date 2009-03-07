@@ -88,15 +88,20 @@ L:RegisterTranslations("ruRU", function() return {
 	trigger_phase2_3 = "Убью...",  
 
 	polarity_trigger = "Познайте же боль...",
-
-	phase1_message = "Таддиус фаза 1",
-	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
 	polarity_message = "Таддиус сдвигает полярность!",
 	polarity_warning = "3 секунды до сдвига полярности!",
+	polarity_bar = "Сдвиг полярности",
+	polarity_changed = "Полярность сменилась!",
+	polarity_nochange = "Полярность НЕ сменилась!",
+	
+	polarity_first_positive = "Вы ПОЛОЖИТЕЛЬНЫЙ!",
+	polarity_first_negative = "Вы ОТРИЦАТЕЛЬНЫЙ!",
+	
+	phase1_message = "Таддиус фаза 1",
+	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
+
 	surge_message = "Волна силы на Сталагге!",
 	surge_bar = "Волна силы",
-
-	polarity_bar = "Сдвиг полярности",
 
 	throw_bar = "Бросок",
 	throw_warning = "Бросок через 5 секунд!",

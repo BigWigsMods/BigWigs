@@ -206,16 +206,30 @@ L:RegisterTranslations("ruRU", function() return {
 	sparks_desc = "Предупреждать о появлениях Искры мощи.",
 	sparks_message = "Появилась Искра мощи!",
 	sparks_warning = "Искра мощи через ~5сек!",
+	
+	spark = "Бафф - Яркая искра",
+	spark_desc = "Оповещать о пулучении Малигосом баффа Яркой искры.",
+	spark_message = "Малигос получил Яркую искру!",
 
 	vortex = "Воронка",
 	vortex_desc = "Предупреждать о воронках и отображать полосу.",
 	vortex_message = "Воронка!",
 	vortex_warning = "Воронка через ~5сек!",
 	vortex_next = "Перезарядка воронки",
+	
+	breath = "Глубокое дыхание",
+	breath_desc = "Оповещать кокда Малигос использует Deep Breath во 2ой фазе.",
+	breath_message = "Глубокое дыхание!",
+	breath_warning = "Глубокое дыхание через ~5сек!",
 
 	surge = "Прилив мощи",
 	surge_desc = "Предупреждать кто получает Прилив мощи.",
 	surge_you = "На ВАС Прилив мощи!",
+	surge_trigger = "%s fixes his eyes on you!",
+	
+	static = "Статическое поле",
+	static_desc = "Предупреждать, когда вы находитесь в статическом поле.",
+	static_message = "в Статическом поле!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
