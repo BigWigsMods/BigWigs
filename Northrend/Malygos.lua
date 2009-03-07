@@ -256,6 +256,10 @@ L:RegisterTranslations("deDE", function() return {
 	sparks_message = "Energiefunke!",
 	sparks_warning = "Energiefunke in ~5 sek!",
 
+	spark = "Energiefunken Buff",
+	spark_desc = "Warnt, wenn Malygos den Energiefunken Buff bekommt.",
+	spark_message = "Malygos bekommt Energiefunke!",
+	
 	vortex = "Vortex",
 	vortex_desc = "Warnungen und Timer für Vortex in Phase 1.",
 	vortex_message = "Vortex!",
@@ -272,6 +276,10 @@ L:RegisterTranslations("deDE", function() return {
 	surge_you = "Kraftsog auf DIR!",
 	surge_trigger = "Die Augen von %s sind auf Euch fixiert!",
 
+	static = "Statisches Feld",
+	static_desc = "Warnt, wenn du in einem statischem Feld bist.",
+	static_message = "Statisches Feld!",
+	
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_warning = "Phase 2 bald!",

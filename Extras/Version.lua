@@ -61,7 +61,9 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	["should_upgrade"] = "Dies scheint eine ältere Version von Big Wigs zu sein. Es wird ein Update empfohlen bevor du einen Kampf mit einem Boss beginnst.",
+	["should_upgrade"] = "Dies scheint eine ältere Version von Big Wigs zu sein. Es wird ein Update empfohlen, bevor du einen Kampf mit einem Boss beginnst.",
+	["out_of_date"] = "Die folgenden Spieler scheinen eine ältere Version zu haben: %s.",
+	["not_using"] = "Gruppenmitglieder, die nicht Big Wigs benutzen: %s.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

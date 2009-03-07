@@ -166,19 +166,21 @@ L:RegisterTranslations("deDE", function() return {
 	trigger_phase2_3 = "Töten...",
 
 	polarity_trigger = "Jetzt spürt ihr den Schmerz...",
-
-	phase1_message = "Phase 1",
-	phase2_message = "Thaddius Phase 2, Berserker in 6 min",
 	polarity_message = "Thaddius beginnt Polaritätsveränderung zu wirken!",
 	polarity_warning = "Polaritätsveränderung in 3 sek!",
+	polarity_bar = "Polaritätsveränderung",
+	polarity_changed = "Polarität geändert!",
+	polarity_nochange = "Selbe Polarität!",
+	
+	polarity_first_positive = "Du bist POSITIV!",
+	polarity_first_negative = "Du bist NEGATIV!",
+	
+	phase1_message = "Phase 1",
+	phase2_message = "Thaddius Phase 2, Berserker in 6 min",
+	
 	surge_message = "Kraftsog auf Stalagg!",
 	surge_bar = "Kraftsog",
 	
-	polarity_changed = "Polarität geändert!",
-	polarity_nochange = "Selbe Polarität!",
-
-	polarity_bar = "Polaritätsveränderung",
-
 	throw_bar = "Magnetische Anziehung",
 	throw_warning = "Magnetische Anziehung in ~5 sek!",
 } end)
