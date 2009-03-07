@@ -76,6 +76,10 @@ L:RegisterTranslations("koKR", function() return {
 	sparks_desc = "마력의 불꽃 소환을 알립니다.",
 	sparks_message = "마력의 불꽃 소환!",
 	sparks_warning = "약 5초 후 마력의 불꽃!",
+	
+	spark = "마력의 불꽃 버프",
+	spark_desc = "말리고스의 마력의 불꽃 버프 획득을 알립니다.",
+	spark_message = "말리고스 마력의 불꽃 획득!",
 
 	vortex = "회오리",
 	vortex_desc = "1단계에서 회오리를 알립니다.",
@@ -92,6 +96,10 @@ L:RegisterTranslations("koKR", function() return {
 	surge_desc = "3단계에서 말리고스가 당신에게 마력의 쇄도를 사용시 알립니다.",
 	surge_you = "당신에게 마력의 쇄도!",
 	surge_trigger = "%s|1이;가; 당신을 주시합니다!",
+	
+	static = "전자기장",
+	static_desc = "자신이 전자기장의 안속일때 알립니다.",
+	static_message = "전자기장에 들어옴!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
