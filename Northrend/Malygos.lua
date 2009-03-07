@@ -9,7 +9,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", -1, "breath", -1, "surge", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", "static", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -36,6 +36,10 @@ L:RegisterTranslations("enUS", function() return {
 	sparks_message = "Power Spark spawns!",
 	sparks_warning = "Power Spark in ~5sec!",
 
+	spark = "Power Spark Buff",
+	spark_desc = "Warns when Malygos gains the Power Spark buff.",
+	spark_message = "Malygos gains Power Spark!",
+
 	vortex = "Vortex",
 	vortex_desc = "Warn for Vortex in phase 1.",
 	vortex_message = "Vortex!",
@@ -51,6 +55,10 @@ L:RegisterTranslations("enUS", function() return {
 	surge_desc = "Warn when Malygos uses Surge of Power on you in phase 3.",
 	surge_you = "Surge of Power on YOU!",
 	surge_trigger = "%s fixes his eyes on you!",
+
+	static = "Static Field",
+	static_desc = "Warn when you're in a Static Field.",
+	static_message = "Static Field on YOU!",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -258,6 +266,8 @@ L:RegisterTranslations("deDE", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Static", 57429)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Spark", 56152)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Vortex", 56105)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -278,6 +288,18 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Spark(target, spellID)
+	if target == boss and phase == 1 and db.spark then
+		self:IfMessage(L["spark_message"], "Important", spellID)
+	end
+end
+
+function mod:Static(target, spellID)
+	if target == pName and db.static then
+		self:LocalMessage(L["static_message"], "Personal", nil, "Alarm")
+	end
+end
 
 function mod:Vortex(_, spellID)
 	if db.vortex then
