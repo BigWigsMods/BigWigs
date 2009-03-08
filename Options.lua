@@ -202,13 +202,14 @@ end
 -- God, blizzard sucks some times.
 local zoneFunctions = {"GetRealZoneText", "GetZoneText"}
 
+local function menu()
+	--Don't create a new function every time we open the menu.
+	dew:FeedAceOptionsTable(BigWigs.cmdtable)
+end
+
 function ldb.OnClick(self, button)
 	if button == "RightButton" then
-		dew:Open(self,
-			"children", function()
-				dew:FeedAceOptionsTable(BigWigs.cmdtable)
-			end
-		)
+		dew:Open(self, "children", menu)
 	else
 		if BigWigs:IsActive() then
 			if IsAltKeyDown() then
