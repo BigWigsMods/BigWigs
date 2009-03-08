@@ -118,6 +118,10 @@ L:RegisterTranslations("frFR", function() return {
 	sparks_message = "Etincelle de puissance apparue !",
 	sparks_warning = "Etincelle de puissance dans ~5 sec. !",
 
+	spark = "Etincelle de puissance - Buff",
+	spark_desc = "Prévient quand Malygos gagne l'amélioration d'une Etincelle de puissance.",
+	spark_message = "Malygos gagne Etincelle de puissance !",
+
 	vortex = "Vortex",
 	vortex_desc = "Prévient de l'arrivée des Vortex.",
 	vortex_message = "Vortex !",
@@ -133,6 +137,10 @@ L:RegisterTranslations("frFR", function() return {
 	surge_desc = "Prévient quand un joueur subit les effets de la Vague de puissance.",
 	surge_you = "Vague de puissance sur VOUS !",
 	surge_trigger = "%s fixe le regard sur vous !",
+
+	static = "Champ statique",
+	static_desc = "Prévient quand vous vous trouvez dans un Champ statique.",
+	static_message = "Dans un champ statique !",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",

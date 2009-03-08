@@ -33,9 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Module actif|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour redémarrer les modules actifs. |cffeda55fAlt+Clic|r pour les désactiver. |cffeda55fCtrl-Alt+Clic|r pour désactiver complètement Big Wigs.",
-	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
-	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r pour ouvrir la fenêtre de configuration.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic gauche|r pour redémarrer les modules actifs. |cffeda55fAlt-Clic gauche|r pour les désactiver. |cffeda55fCtrl-Alt-Clic gauche|r pour désactiver complètement Big Wigs.",
+	["|cffeda55fClick|r to enable."] = "|cffeda55fClic gauche|r pour activer.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic gauche|r pour ouvrir la fenêtre de configuration.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé.",
 	["Active boss modules:"] = "Modules de boss actifs :",
 	["All running modules have been reset."] = "Tous les modules actifs ont été réinitialisés.",
