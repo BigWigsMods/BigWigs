@@ -342,11 +342,8 @@ plugin.consoleOptions = {
 local is31 = GetEquipmentSetInfo and true or nil
 local filter = nil
 if is31 then
-	filter = function(self, event, msg, ...)
-		if plugin:IsChannelSuppressed(event) and plugin:IsSpam(msg) then
-			return true, msg, ...
-		end
-		return false, msg, ...
+	filter = function(self, event, msg)
+		if plugin:IsChannelSuppressed(event) and plugin:IsSpam(msg) then return true end
 	end
 else
 	filter = function()
