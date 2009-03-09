@@ -10,7 +10,7 @@ mod.zonename = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
-mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "enrage", "bosskill"}
+mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "portal", "twilight", "enrage", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -47,6 +47,19 @@ L:RegisterTranslations("enUS", function() return {
 	drakes = "Drake Adds",
 	drakes_desc = "Warn when each drake add will join the fight.",
 	drakes_incomingsoon = "%s landing in ~5sec!",
+
+	portal = "Twilight Portal",
+	portal_desc = "Warn when the adds open portals to the Twilight.",
+	portal_trigger = "%s begins to open a Twilight Portal!",
+	portal_message = "Portal up!",
+	
+	twilight = "Twilight Events",
+	twilight_desc = "Warn what happens in the Twilight.",
+	twilight_trigger_tenebron = "Tenebron begins to hatch eggs in the Twilight!",
+	twilight_trigger_vesperon = "A Vesperon Disciple appears in the Twilight!",
+	twilight_trigger_shadron = "A Shadron Acolyte appears in the Twilight!",
+	twilight_bar_tenebron = "Eggs hatch",
+	twilight_message = "%s add up!",
 
 	enrage = "Enrage",
 	enrage_warning = "Enrage soon!",
@@ -253,11 +266,21 @@ function mod:Breath(_, spellID)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
 	if msg == L["tsunami_trigger"] and db.tsunami then
 		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
 		self:Bar(L["tsunami_cooldown"], 30, 57491)
 		self:DelayedMessage(25, L["tsunami_warning"], "Attention")
+	elseif msg == L["portal_trigger"] and db.portal then
+		self:Message(L["portal_message"], "Attention", 11419)
+	elseif db.twilight then
+		if mob == tenebron and msg == L["twilight_trigger_tenebron"] then
+			self:Bar(L["twilight_bar_tenebron"], 20, 23851)
+		elseif mob == shadron and msg == L["twilight_trigger_shadron"] then
+			self:Message(L["twilight_message"]:format(mob), "Urgent", 59570)
+		elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
+			self:Message(L["twilight_message"]:format(mob), "Urgent", 59569)
+		end
 	end
 end
 
