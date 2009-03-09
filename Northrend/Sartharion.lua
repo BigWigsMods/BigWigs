@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	portal_desc = "Warn when the adds open portals to the Twilight.",
 	portal_trigger = "%s begins to open a Twilight Portal!",
 	portal_message = "Portal up!",
-	
+
 	twilight = "Twilight Events",
 	twilight_desc = "Warn what happens in the Twilight.",
 	twilight_trigger_tenebron = "Tenebron begins to hatch eggs in the Twilight!",
@@ -152,6 +152,19 @@ L:RegisterTranslations("frFR", function() return {
 	drakes = "Arrivée des drakes",
 	drakes_desc = "Prévient quand chaque drake se joint au combat.",
 	drakes_incomingsoon = "%s atterrit dans ~5 sec. !",
+
+	portal = "Porte du crépuscule",
+	portal_desc = "Prévient quand les drakes ouvrent leurs portes vers le crépuscule.",
+	portal_trigger = "%s commence à ouvrir une porte du crépuscule !",
+	portal_message = "Portail actif !",
+
+	twilight = "Évènements du crépuscule",
+	twilight_desc = "Prévient quand quelque chose se passe dans le crépuscule.",
+	twilight_trigger_tenebron = "Ténébron se met à poser des œufs dans le crépuscule !",
+	twilight_trigger_vesperon = "Un disciple de Vespéron apparaît dans le crépuscule !",
+	twilight_trigger_shadron = "Un disciple d'Obscuron apparaît dans le crépuscule !",
+	twilight_message_tenebron = "Éclosion des œufs",
+	twilight_message = "Disciple |2 %s actif !",
 
 	enrage = "Enrager",
 	enrage_warning = "Enrager imminent !",
