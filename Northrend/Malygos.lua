@@ -285,7 +285,7 @@ L:RegisterTranslations("deDE", function() return {
 	surge_trigger = "Die Augen von %s sind auf Euch fixiert!",
 
 	static = "Statisches Feld",
-	static_desc = "Warnt, wenn du in einem statischem Feld bist.",
+	static_desc = "Warnt, wenn du in einem statischen Feld bist.",
 	static_message = "Statisches Feld!",
 	
 	phase = "Phasen",

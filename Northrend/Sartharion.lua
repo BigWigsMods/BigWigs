@@ -225,6 +225,19 @@ L:RegisterTranslations("deDE", function() return {
 	drakes_desc = "Warnungen und Timer für den Kampfbeitritt der Drachen.",
 	drakes_incomingsoon = "%s kommt in ~5 sek!",
 
+	portal = "Zwielichtportale",
+	portal_desc = "Warnt, wenn die Drachen Portale des Zwielichts öffnen.",
+	portal_trigger = "%s beginnt, ein Portal des Zwielichts zu öffnen!",
+	portal_message = "Portal da!",
+
+	twilight = "Zwielicht Ereignisse",
+	twilight_desc = "Warnungen und Timer für Ereignisse in der Zwielichtzone.",
+	twilight_trigger_tenebron = "Tenebron beginnt im Zwielicht Eier auszubrüten!",
+	twilight_trigger_vesperon = "Ein Vesperonjünger erscheint im Zwielicht!",
+	twilight_trigger_shadron = "Ein Shadronjünger erscheint im Zwielicht!",
+	twilight_message_tenebron = "Eier schlüpfen",
+	twilight_message = "%s kommt dazu!",
+	
 	enrage = "Wutanfall",
 	enrage_warning = "Wutanfall bald!",
 	enrage_message = "Wutanfall!",
