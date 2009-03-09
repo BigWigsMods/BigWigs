@@ -83,6 +83,19 @@ L:RegisterTranslations("koKR", function() return {
 	drakes = "비룡 추가",
 	drakes_desc = "각 비룡이 전투에 추가되는 것을 알립니다.",
 	drakes_incomingsoon = "약 5초 후 %s 착지!",
+	
+	portal = "황혼의 차원문",
+	portal_desc = "황혼의 차원문이 열려서 추가되는 것을 알립니다.",
+	portal_trigger = "%s|1이;가; 황혼의 차원문을 엽니다!",
+	portal_message = "차원문 열림!",
+
+	twilight = "황혼 이벤트",
+	twilight_desc = "황혼의 안에서 무엇이 일어나는지 알립니다.",
+	twilight_trigger_tenebron = "테네브론이 황혼에서 알을 부화하기 시작합니다!",
+	twilight_trigger_vesperon = "베스페론의 신도가 황혼에서 나타납니다!",
+	twilight_trigger_shadron = "샤드론의 신도가 황혼에서 나타납니다!",
+	twilight_message_tenebron = "알 부화",
+	twilight_message = "%s 추가!",
 
 	enrage = "광폭화",
 	enrage_warning = "잠시 후 광폭화!",
