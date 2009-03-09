@@ -209,8 +209,6 @@ L:RegisterTranslations("deDE", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	-- XXX We need to warn about portals and disciples
-
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 61632)
 	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
