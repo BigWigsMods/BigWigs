@@ -277,7 +277,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
 		elseif mob == shadron and msg == L["twilight_trigger_shadron"] then
 			self:Message(L["twilight_message"]:format(mob), "Urgent", 59570)
 		elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
-			self:Message(L["twilight_message"]:format(mob), "Urgent", 59569)
+			self:Message(L["twilight_message"]:format(mob), "Personal", 59569, "Alarm")
 		end
 	end
 end
