@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 	twilight_trigger_tenebron = "Tenebron begins to hatch eggs in the Twilight!",
 	twilight_trigger_vesperon = "A Vesperon Disciple appears in the Twilight!",
 	twilight_trigger_shadron = "A Shadron Acolyte appears in the Twilight!",
-	twilight_bar_tenebron = "Eggs hatch",
+	twilight_message_tenebron = "Eggs hatching",
 	twilight_message = "%s add up!",
 
 	enrage = "Enrage",
@@ -273,7 +273,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
 		self:Message(L["portal_message"], "Attention", 11419)
 	elseif db.twilight then
 		if mob == tenebron and msg == L["twilight_trigger_tenebron"] then
-			self:Bar(L["twilight_bar_tenebron"], 20, 23851)
+			self:Bar(L["twilight_message_tenebron"], 20, 23851)
+			self:Message(L["twilight_message_tenebron"], "Attention", 23851)
 		elseif mob == shadron and msg == L["twilight_trigger_shadron"] then
 			self:Message(L["twilight_message"]:format(mob), "Urgent", 59570)
 		elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
