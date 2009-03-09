@@ -94,8 +94,8 @@ L:RegisterTranslations("koKR", function() return {
 	twilight_trigger_tenebron = "테네브론이 황혼에서 알을 부화하기 시작합니다!",
 	twilight_trigger_vesperon = "베스페론의 신도가 황혼에서 나타납니다!",
 	twilight_trigger_shadron = "샤드론의 신도가 황혼에서 나타납니다!",
-	twilight_message_tenebron = "알 부화",
-	twilight_message = "%s 추가!",
+	twilight_message_tenebron = "알 부화중",
+	twilight_message = "%s 신도 추가!",
 
 	enrage = "광폭화",
 	enrage_warning = "잠시 후 광폭화!",
