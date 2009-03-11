@@ -190,7 +190,7 @@ L:RegisterTranslations("ruRU", function() return {
 	tsunami_warning = "Огненное цунами через ~5сек!",
 	tsunami_message = "Огненное цунами!",
 	tsunami_cooldown = "Перезарядка цунами",
-	tsunami_trigger = "Лава вокруг %s начинает бурлить!",
+	tsunami_trigger = "Лава вокруг |3-1(%s) начинает бурлить!",
 
 	breath = "Огненное дыхание",
 	breath_desc = "Предупреждать о применении огненного дыхания.",
@@ -201,6 +201,19 @@ L:RegisterTranslations("ruRU", function() return {
 	drakes = "Драконы",
 	drakes_desc = "Предупреждать когда драконы вступят в бой.",
 	drakes_incomingsoon = "%s прилетит через ~5сек!",
+	
+	portal = "Сумеречный портал",
+	portal_desc = "Предупреждать когда драконы открывают Сумеречные порталы.",
+	portal_trigger = "%s начинает открывать Сумеречные порталы!",
+	portal_message = "Портал открыт!",
+
+	twilight = "События в Зоне сумерек",
+	twilight_desc = "Сообщать что происходит с Сумеречным порталом.",
+	twilight_trigger_tenebron = "Тенеброн начинает высиживать кладку в Зоне сумерек!",
+	twilight_trigger_vesperon = "В Сумраке появляется ученик Весперона!",
+	twilight_trigger_shadron = "Ученик Шадрона появляется в Зоне сумерек!",
+	twilight_message_tenebron = "Вылупление яиц",
+	twilight_message = "Появился Ученик |3-1(%s)!",
 
 	enrage = "Исступление",
 	enrage_warning = "Скоро Исступление!",
