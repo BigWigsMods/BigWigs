@@ -45,5 +45,6 @@
 <Script file="Ulduar\IronCouncil.lua"/>
 <Script file="Ulduar\Leviathan.lua"/>
 <Script file="Ulduar\Thorim.lua"/>
+<Script file="Ulduar\Mimiron.lua"/>
 <!--@end-debug@-->
 </Ui>
