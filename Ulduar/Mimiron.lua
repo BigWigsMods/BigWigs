@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33350		-- Most of the fight you fight vehicles .. does that matter..?
-mod.toggleoptions = {"plasma", "shock", "bosskill"}
+mod.toggleoptions = {"phase", -1, "plasma", "shock", "laser", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -16,8 +16,10 @@ mod.toggleoptions = {"plasma", "shock", "bosskill"}
 
 local db = nil
 local started = nil
+local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
+local laser = nil
 
 ----------------------------
 --      Localization      --
@@ -27,6 +29,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Mimiron",
+	
+	phase = "Phases",
+	phase_desc = "Warn for phase changes.",
+	phase2_warning = "Phase 2!",
+	phase2_trigger = "Behold the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
 	
 	starttrigger = "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
 	
@@ -38,6 +45,10 @@ L:RegisterTranslations("enUS", function() return {
 	shock = "Shock Blast",
 	shock_desc = "Warns when Shock Blast is casting.",
 	shock_warning = "Casting Shock Blast!",
+	
+	laser = "Laser Barrage",
+	laser_desc = "Warn when Laser Barrage is active!",
+	laser_soon = "Laser Barrage soon!",
 	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -54,13 +65,17 @@ L:RegisterTranslations("enUS", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	laser = GetSpellInfo(63274)
+	
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997) -- H id missing
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631) -- H id missing
 	--self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	--self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	
+	-- channel_start seems to fire right before any CLEU events, confirm?
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", "Laser")
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	
@@ -91,10 +106,27 @@ function mod:Shock(_, spellID)
 	end
 end
 
+function mod:Laser(unit, spell)
+	if db.laser and spell == laser then
+		self:IfMessage(L["laser"], "Important", 63274)
+		self:Bar(L["laser"], 10, spellID)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:match(L["starttrigger"]) and db.plasma then
-		self:Bar(L["plasma"], 20, spellID)
-		self:DelayedMessage(17, L["plasma_soon"], "Attention")
+	if msg:match(L["starttrigger"]) then
+		phase = 1
+		if db.plasma then
+			self:Bar(L["plasma"], 20, spellID)
+			self:DelayedMessage(17, L["plasma_soon"], "Attention")
+		end
+	elseif msg:match(L["phase2_trigger"]) then
+		phase = 2
+		self:CancelAllScheduledEvents()
+		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
+		if db.phase then
+			self:Message(L["phase2_warning"], "Attention")
+		end
 	end
 end
 
