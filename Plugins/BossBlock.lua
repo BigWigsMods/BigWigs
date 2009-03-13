@@ -401,14 +401,6 @@ do
 			self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
 		end
 	end
-
-	function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
-		if type(arg2) == "string" and bossmobs[arg2] and db.boss then
-			--BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
-			return
-		end
-		self.hooks[RaidBossEmoteFrame].AddMessage(frame, message, r, g, b, a, t)
-	end
 end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
