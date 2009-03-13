@@ -10,7 +10,7 @@ mod.zonename = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
-mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "portal", "twilight", "enrage", "bosskill"}
+mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "twilight", "enrage", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -48,11 +48,6 @@ L:RegisterTranslations("enUS", function() return {
 	drakes_desc = "Warn when each drake add will join the fight.",
 	drakes_incomingsoon = "%s landing in ~5sec!",
 
-	portal = "Twilight Portal",
-	portal_desc = "Warn when the adds open portals to the Twilight.",
-	portal_trigger = "%s begins to open a Twilight Portal!",
-	portal_message = "Portal up!",
-
 	twilight = "Twilight Events",
 	twilight_desc = "Warn what happens in the Twilight.",
 	twilight_trigger_tenebron = "Tenebron begins to hatch eggs in the Twilight!",
@@ -83,11 +78,6 @@ L:RegisterTranslations("koKR", function() return {
 	drakes = "비룡 추가",
 	drakes_desc = "각 비룡이 전투에 추가되는 것을 알립니다.",
 	drakes_incomingsoon = "약 5초 후 %s 착지!",
-	
-	portal = "황혼의 차원문",
-	portal_desc = "황혼의 차원문이 열려서 추가되는 것을 알립니다.",
-	portal_trigger = "%s|1이;가; 황혼의 차원문을 엽니다!",
-	portal_message = "차원문 열림!",
 
 	twilight = "황혼 이벤트",
 	twilight_desc = "황혼의 안에서 무엇이 일어나는지 알립니다.",
@@ -166,11 +156,6 @@ L:RegisterTranslations("frFR", function() return {
 	drakes_desc = "Prévient quand chaque drake se joint au combat.",
 	drakes_incomingsoon = "%s atterrit dans ~5 sec. !",
 
-	portal = "Porte du crépuscule",
-	portal_desc = "Prévient quand les drakes ouvrent leurs portes vers le crépuscule.",
-	portal_trigger = "%s commence à ouvrir une porte du crépuscule !",
-	portal_message = "Portail actif !",
-
 	twilight = "Évènements du crépuscule",
 	twilight_desc = "Prévient quand quelque chose se passe dans le crépuscule.",
 	twilight_trigger_tenebron = "Ténébron se met à poser des œufs dans le crépuscule !",
@@ -201,11 +186,6 @@ L:RegisterTranslations("ruRU", function() return {
 	drakes = "Драконы",
 	drakes_desc = "Предупреждать когда драконы вступят в бой.",
 	drakes_incomingsoon = "%s прилетит через ~5сек!",
-	
-	portal = "Сумеречный портал",
-	portal_desc = "Предупреждать когда драконы открывают Сумеречные порталы.",
-	portal_trigger = "%s начинает открывать Сумеречные порталы!",
-	portal_message = "Портал открыт!",
 
 	twilight = "События в Зоне сумерек",
 	twilight_desc = "Сообщать что происходит с Сумеречным порталом.",
@@ -237,11 +217,6 @@ L:RegisterTranslations("deDE", function() return {
 	drakes = "Drachen",
 	drakes_desc = "Warnungen und Timer für den Kampfbeitritt der Drachen.",
 	drakes_incomingsoon = "%s kommt in ~5 sek!",
-
-	portal = "Zwielichtportale",
-	portal_desc = "Warnt, wenn die Drachen Portale des Zwielichts öffnen.",
-	portal_trigger = "%s beginnt, ein Portal des Zwielichts zu öffnen!",
-	portal_message = "Portal da!",
 
 	twilight = "Zwielicht Ereignisse",
 	twilight_desc = "Warnungen und Timer für Ereignisse in der Zwielichtzone.",
@@ -321,8 +296,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
 		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
 		self:Bar(L["tsunami_cooldown"], 30, 57491)
 		self:DelayedMessage(25, L["tsunami_warning"], "Attention")
-	elseif msg == L["portal_trigger"] and db.portal then
-		self:Message(L["portal_message"], "Attention", 11419)
 	elseif db.twilight then
 		if mob == tenebron and msg == L["twilight_trigger_tenebron"] then
 			self:Bar(L["twilight_message_tenebron"], 20, 23851)
