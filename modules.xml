@@ -46,5 +46,9 @@
 <Script file="Ulduar\Leviathan.lua"/>
 <Script file="Ulduar\Thorim.lua"/>
 <Script file="Ulduar\Mimiron.lua"/>
+<Script file="Ulduar\Vezax.lua"/>
+<Script file="Ulduar\Kologarn.lua"/>
+<Script file="Ulduar\XT-002.lua"/>
+<Script file="Ulduar\Razorscale.lua"/>
 <!--@end-debug@-->
 </Ui>

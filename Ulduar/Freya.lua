@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
-mod.guid = 0	--Unknown
+mod.guid = 32906
 mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", "icon", "bosskill"}
 
 ------------------------------

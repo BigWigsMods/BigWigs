@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
-mod.guid = 0	--Unknown
+mod.guid = 33118
 mod.toggleoptions = {"flame", "scorch", "slagpot", "bosskill"}
 
 ------------------------------
@@ -110,7 +110,7 @@ end
 
 function mod:SlagPot(player, spellID)
 	if db.slagpot then
-		self:IfMessage(L["slagpot_message"]:format(player), "Attention", 63472)
+		self:IfMessage(L["slagpot_message"]:format(player), "Attention", spellID)
 	end
 end
 

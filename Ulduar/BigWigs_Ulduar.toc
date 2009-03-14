@@ -24,3 +24,7 @@ Leviathan.lua
 Thorim.lua
 Ignis.lua
 Mimiron.lua
+Vezax.lua
+Kologarn.lua
+XT-002.lua
+Razorscale.lua
