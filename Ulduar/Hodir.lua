@@ -72,20 +72,20 @@ L:RegisterTranslations("koKR", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	started = nil
+	db = self.db.profile
+
+	BigWigs:Print(L["log"])
+
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrozenBlow", 62478, 63512)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
+	--self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-
-	started = nil
-	db = self.db.profile
-	
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------
