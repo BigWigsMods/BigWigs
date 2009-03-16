@@ -62,7 +62,7 @@ function mod:OnEnable()
 	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	--self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 
