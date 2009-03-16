@@ -143,7 +143,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	starttrigger = "你是我的了。",
+	starttrigger = "你現在是我的了。",
 	starttrigger2 = "你……就是下一個。",
 	starttrigger3 = "我看到你了……",
 

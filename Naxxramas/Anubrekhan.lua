@@ -118,7 +118,7 @@ L:RegisterTranslations("zhTW", function() return {
 	locust_desc = "當施放蝗蟲風暴時發出警報。",
 
 	starttrigger1 = "一些小點心……",
-	starttrigger2 = "對，跑吧！那樣傷口出血就更多了！",
+	starttrigger2 = "對，跑吧!那樣傷口出血就更多了!",
 	starttrigger3 = "你們逃不掉的。",
 	engagewarn = "阿努比瑞克漢已進入戰鬥 - %d秒後，蝗蟲風暴！",
 

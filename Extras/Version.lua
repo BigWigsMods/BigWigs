@@ -68,10 +68,14 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["should_upgrade"] = "这似乎是一个旧版本的 Big Wigs。建议您在与首领战斗之前升级。",
+	["out_of_date"] = "以下玩家似乎使用旧版本：%s。",
+	["not_using"] = "团队成员没有使用 Big Wigs：%s。",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	["should_upgrade"] = "這似乎是一個舊版本的 Big Wigs。建議您在與首領戰鬥之前升級。",
+	["out_of_date"] = "以下玩家似乎使用舊版本：%s。",
+	["not_using"] = "團隊成員沒有使用 Big Wigs：%s。",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

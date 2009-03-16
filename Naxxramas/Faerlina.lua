@@ -151,10 +151,10 @@ L:RegisterTranslations("zhTW", function() return {
 	silence = "沉默",
 	silence_desc = "當施放沉默時發出警報。",
 
-	starttrigger1 = "跪下求饒吧，懦夫！",
-	starttrigger2 = "以主人之名，殺了他們！",
-	starttrigger3 = "休想從我面前逃掉！",
-	starttrigger4 = "逃啊！有本事就逃啊！",
+	starttrigger1 = "跪下求饒吧，懦夫!",
+	starttrigger2 = "以主人之名，殺了他們!",
+	starttrigger3 = "休想從我面前逃掉!",
+	starttrigger4 = "逃啊!有本事就逃啊!",
 
 	startwarn = "大寡婦費琳娜已進入戰鬥 - 60秒後，狂怒！",
 	enragewarn15sec = "15秒後，狂怒！",

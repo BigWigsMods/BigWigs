@@ -91,7 +91,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
 	["Perform a Flash/Shake test."] = "屏幕闪烁/震动测试。",
 
-	flash_warning = "屏幕震动失效。请至 界面>>名字 中关闭除 敌方玩家 之外的项目。\n关闭标示并重置 UI 或关闭 BigWigs“震动”模块。（屏幕闪烁无效）",
+	flash_warning = "屏幕震动失效。\n关闭姓名栏并重置用户界面或关闭 BigWigs“震动”模块。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -100,13 +100,15 @@ L:RegisterTranslations("zhTW", function() return {
 	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "如有重要事件發生，螢幕將會閃爍藍光/震動告知玩家。",
 
 	["Flash"] = "閃爍",
-	["Toggle Flash on or off."] = "啟用或關閉螢幕閃爍",
+	["Toggle Flash on or off."] = "啟用或關閉螢幕閃爍。",
 
 	["Shake"] = "震動",
-	["Toggle Shake on or off."] = "啟用或關閉螢幕閃震動",
+	["Toggle Shake on or off."] = "啟用或關閉螢幕震動。",
 
 	["Test"] = "測試",
-	["Perform a Flash/Shake test."] = "測試螢幕閃爍/震動",
+	["Perform a Flash/Shake test."] = "測試螢幕閃爍/震動。",
+
+	flash_warning = "螢幕震動失效。\n關閉姓名欄并重置用戶介面或關閉 BigWigs“震動”模組。",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

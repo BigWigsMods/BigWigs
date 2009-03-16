@@ -258,7 +258,7 @@ L:RegisterTranslations("zhTW", function() return {
 	adddeath_desc = "當增援死亡時發出警報。",
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
-	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
+	starttrigger2 = "Kazile Teamanare ZennshinagasRil", -- check
 	startwarn = "收割者高希已進入戰鬥 - 4:30後，進入房間！",
 
 	rider = "無情的騎兵",

@@ -178,7 +178,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	deepbreath = "冰息術",
 	deepbreath_desc = "當施放冰息術時發出警報。",
-	--airphase_trigger = "%s lifts off into the air!",
+	airphase_trigger = "%s離地升空了!",
 	deepbreath_incoming_message = "約14秒後，冰息術！",
 	deepbreath_incoming_soon_message = "約5秒後，冰息術！",
 	deepbreath_incoming_bar = "<施放 冰息術>",

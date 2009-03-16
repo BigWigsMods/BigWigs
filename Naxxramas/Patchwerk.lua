@@ -43,8 +43,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	enragewarn = "5 % - 狂怒！",
-	starttrigger1 = "縫補者要跟你玩！",
-	starttrigger2 = "縫補者是科爾蘇加德的戰神！",
+	starttrigger1 = "縫補者要跟你玩!",
+	starttrigger2 = "科爾蘇加德讓縫補者成為戰爭的化身!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

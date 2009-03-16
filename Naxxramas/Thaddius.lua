@@ -205,22 +205,23 @@ L:RegisterTranslations("zhCN", function() return {
 	trigger_phase2_3 = "杀……",
 
 	polarity_trigger = "你感受到痛苦的滋味了吧……",
+	polarity_message = "塔迪乌斯开始施放极性转化！",
+	polarity_warning = "3秒后，极性转化！",
+	polarity_bar = "<极性转化>",
+	polarity_changed = "极性转化改变！",
+	polarity_nochange = "相同极性转化！",
+
+	polarity_first_positive = "你是 >正极<！",
+	polarity_first_negative = "你是 >负极<！",
 
 	phase1_message = "第一阶段",
 	phase2_message = "第二阶段 - 6分钟后激怒！",
-	polarity_message = "塔迪乌斯开始施放极性转化！",
-	polarity_warning = "3秒后，极性转化！",
+
 	surge_message = "力量振荡！",
 	surge_bar = "<力量振荡>",
 
-	polarity_changed = "极性转化改变！",
-	polarity_nochange = "相同极性转化！",
-	
-	polarity_bar = "<极性转化>",
-
 	throw_bar = "<投掷>",
-	throw_warning = "约5秒，投掷！",
-
+	throw_warning = "约5秒后，投掷！",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -236,25 +237,27 @@ L:RegisterTranslations("zhTW", function() return {
 	throw = "投擲",
 	throw_desc = "當主坦克被投擲到對面平台時發出警報。",
 
-	trigger_phase1_1 = "斯塔拉格要碾碎你！",
-	trigger_phase1_2 = "主人要吃了你！",
+	trigger_phase1_1 = "斯塔拉格要碾碎你!",
+	trigger_phase1_2 = "主人要吃了你!",
 	trigger_phase2_1 = "咬碎……你的……骨頭……",
-	trigger_phase2_2 = "打……爛……你！",
+	trigger_phase2_2 = "打…碎…你……",
 	trigger_phase2_3 = "殺……",
 
 	polarity_trigger = "你感受到痛苦的滋味了吧……",
+	polarity_message = "泰迪斯開始施放兩極移形！",
+	polarity_warning = "3秒後，兩極移形！",
+	polarity_bar = "<兩極移形>",
+	polarity_changed = "兩極移形改變！",
+	polarity_nochange = "相同兩極移形！",
+
+	polarity_first_positive = "你是 >正極<！",
+	polarity_first_negative = "你是 >負極<！",
 
 	phase1_message = "第一階段",
 	phase2_message = "第二階段 - 6分鍾後狂怒！",
-	polarity_message = "泰迪斯開始施放兩極移形！",
-	polarity_warning = "3秒後，兩極移形！",
+
 	surge_message = "力量澎湃！加大對坦克的治療！",
 	surge_bar = "<力量澎湃>",
-	
-	polarity_changed = "兩極移形改变！",
-	polarity_nochange = "相同兩極移形！",
-
-	polarity_bar = "<兩極移形>",
 
 	throw_bar = "<投擲>",
 	throw_warning = "約5秒後，投擲！",

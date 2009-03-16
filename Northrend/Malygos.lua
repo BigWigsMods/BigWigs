@@ -159,6 +159,10 @@ L:RegisterTranslations("zhCN", function() return {
 	sparks_message = "出现 能量火花！",
 	sparks_warning = "约5秒后，能量火花！",
 
+	spark = "能量火花增益",
+	spark_desc = "当玛里苟斯获得能量火花增益时发出警报。",
+	spark_message = "玛里苟斯获得：>能量火花<！",
+
 	vortex = "漩涡",
 	vortex_desc = "当施放漩涡时发出警报及显示计时条。",
 	vortex_message = "漩涡！",
@@ -173,6 +177,11 @@ L:RegisterTranslations("zhCN", function() return {
 	surge = "能量涌动",
 	surge_desc = "当玩家中了能量涌动时发出警报。",
 	surge_you = ">你< 能量涌动！",
+	surge_trigger = "%s fixes his eyes on you!", -- yell required
+
+	static = "静电力场",
+	static_desc = "当你在静电力场时发出警报。",
+	static_message = ">你< 静电力场！",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段时发出警报。",
@@ -191,6 +200,10 @@ L:RegisterTranslations("zhTW", function() return {
 	sparks_message = "出現 力量火花！",
 	sparks_warning = "約5秒后，力量火花！",
 
+	spark = "力量火花增益",
+	spark_desc = "當瑪里苟斯獲得力量火花增益時發出警報。",
+	spark_message = "瑪里苟斯獲得：>力量火花<！",
+
 	vortex = "漩渦",
 	vortex_desc = "當施放漩渦時發出警報及顯示計時條。",
 	vortex_message = "漩渦！",
@@ -205,6 +218,11 @@ L:RegisterTranslations("zhTW", function() return {
 	surge = "力量奔騰",
 	surge_desc = "當玩家中了力量奔騰時發出警報。",
 	surge_you = ">你< 力量奔騰！",
+	surge_trigger = "%s將他的目光鎖在你身上!",
+
+	static = "靜電力場",
+	static_desc = "當你在靜電力場時發出警報。",
+	static_message = ">你< 靜電力場！",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",

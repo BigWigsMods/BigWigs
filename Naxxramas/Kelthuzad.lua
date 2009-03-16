@@ -286,19 +286,19 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德的大廳",
 
-	start_trigger = "僕從們，侍衛們，隸屬於黑暗與寒冷的戰士！聽從科爾蘇加德的召換！",
+	start_trigger = "僕從們，侍衛們，隸屬於黑暗與寒冷的戰士們!聽從科爾蘇加德的召喚!",
 	start_warning = "戰斗開始，約3分30秒後，科爾蘇加德進入戰鬥！",
 	start_bar = "<第二階段>",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
-	phase2_trigger1 = "祈禱我的慈悲吧",
-	phase2_trigger2 = "呼出你的最後一口氣",
-	phase2_trigger3 = "The end is upon you!", -- yell required
+	phase2_trigger1 = "祈禱我的慈悲吧!",
+	phase2_trigger2 = "呼出你的最後一口氣!",
+	phase2_trigger3 = "你的末日臨近了!",
 	phase2_warning = "第二階段 - 科爾蘇加德！",
 	phase2_bar = "<科爾蘇加德進入戰鬥>",
 	phase3_soon_warning = "即將 第三階段！",
-	phase3_trigger = "主人，我需要幫助",
+	phase3_trigger = "主人，我需要幫助!",
 	phase3_warning = "第三階段開始， 約15秒後，寒冰皇冠守衛者出現！",
 
 	mc = "科爾蘇加德之鍊",

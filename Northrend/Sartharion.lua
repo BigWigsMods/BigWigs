@@ -110,6 +110,14 @@ L:RegisterTranslations("zhCN", function() return {
 	drakes_desc = "当每只幼龙增援加入战斗时发出警报。",
 	drakes_incomingsoon = "约5秒后，%s即将到来！",
 
+	twilight = "暮光召唤",
+	twilight_desc = "当暮光召唤时发出警报。",
+	twilight_trigger_tenebron = "塔尼布隆在暮光中孵化龙蛋！", --check
+	twilight_trigger_vesperon = "一个维斯匹隆的信徒从暮光中出现！", --check
+	twilight_trigger_shadron = "一个沙德隆的信徒从暮光中出现！", --check
+	twilight_message_tenebron = "正在孵卵！",
+	twilight_message = "%s到来！",
+
 	enrage = "狂暴",
 	enrage_warning = "即将 狂暴！",
 	enrage_message = "狂暴！",
@@ -121,7 +129,7 @@ L:RegisterTranslations("zhTW", function() return {
 	tsunami_warning = "約5秒，炎嘯！",
 	tsunami_message = "炎嘯！",
 	tsunami_cooldown = "炎嘯冷卻！",
-	tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!",	--check
+	tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!",
 
 	breath = "火息術",
 	breath_desc = "當正在施放火息術時發出警報。",
@@ -132,6 +140,14 @@ L:RegisterTranslations("zhTW", function() return {
 	drakes = "飛龍增援",
 	drakes_desc = "當每只飛龍增援加入戰斗時發出警報。",
 	drakes_incomingsoon = "約5秒后。%s即將到來！",
+
+	twilight = "暮光召喚",
+	twilight_desc = "當暮光召喚時發出警報。",
+	twilight_trigger_tenebron = "坦納伯朗在暮光中孵化龍蛋!",
+	twilight_trigger_vesperon = "一個維斯佩朗信徒從暮光中出現!",
+	twilight_trigger_shadron = "一個夏德朗信徒從暮光中出現!",
+	twilight_message_tenebron = "正在孵卵！",
+	twilight_message = "%s到來！",
 
 	enrage = "狂暴",
 	enrage_warning = "即將 狂暴！",

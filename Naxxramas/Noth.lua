@@ -214,14 +214,14 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	starttrigger1 = "死吧，入侵者！",
-	starttrigger2 = "榮耀歸於我主！",
-	starttrigger3 = "我要沒收你的生命！",
+	starttrigger1 = "死吧，入侵者!",
+	starttrigger2 = "榮耀歸於我主!",
+	starttrigger3 = "你們終將失去生命!",
 	startwarn = "瘟疫者諾斯已進入戰斗 - 90秒後，傳送！",
 
 	blink = "閃現術",
 	blink_desc = "當施放閃現術時發出警報。",
-	--blinktrigger = "%s blinks away!",
+	blinktrigger = "%s閃現離開!",
 	blinkwarn = "閃現術！停止攻擊！",
 	blinkwarn2 = "約5秒後，閃現術！",
 	blinkbar = "<閃現術>",
@@ -244,7 +244,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	wave = "骷髏",
 	wave_desc = "當召喚骷髏時發出警報。",
-	addtrigger = "起來吧，我的戰士們！起來，再為主人盡忠一次！",
+	addtrigger = "起來吧，我的戰士們!起來，再為主人盡忠一次!",
 	wave1bar = "<第一波>",
 	wave2bar = "<第二波>",
 	wave2_message = "10秒後，第二波！",
