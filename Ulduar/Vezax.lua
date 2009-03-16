@@ -81,7 +81,7 @@ function mod:Flame(_, spellID)
 	end
 end
 
-function mod:Charge(_, spellID)
+function mod:Surge(_, spellID)
 	if db.surge then
 		self:IfMessage(L["surge_message"], "Attention", spellID)
 		self:Bar(L["surge"], 10, spellID)
