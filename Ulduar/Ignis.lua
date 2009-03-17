@@ -111,6 +111,7 @@ end
 function mod:SlagPot(player, spellID)
 	if db.slagpot then
 		self:IfMessage(L["slagpot_message"]:format(player), "Attention", spellID)
+		self:Bar(L["slagpot_message"]:format(player), 10, spellID)
 	end
 end
 
