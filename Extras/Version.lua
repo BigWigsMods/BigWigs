@@ -172,11 +172,9 @@ end
 local function updateBWUsers()
 	notUsingBW = wipe(notUsingBW)
 	local num = GetNumRaidMembers()
-	if num then
-		for i = 1, 40 do
-			local n = GetRaidRosterInfo(i)
-			if n and not bigwigsUsers[n] then table.insert(notUsingBW, coloredNames[n]) end
-		end
+	for i = 1, num do
+		local n, _, _, _, _, _, _, online = GetRaidRosterInfo(i)
+		if n and online and not bigwigsUsers[n] then table.insert(notUsingBW, coloredNames[n]) end
 	end
 	table.sort(notUsingBW)
 end
