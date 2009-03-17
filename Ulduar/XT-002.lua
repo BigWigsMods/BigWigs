@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
-mod.guid = 0	--Unknown
+mod.guid = 33293
 mod.toggleoptions = {"exposed", "gravitybomb", "lightbomb", "tympanic", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
@@ -70,10 +70,34 @@ L:RegisterTranslations("enUS", function() return {
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
 	
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on players with Bomb. (requires promoted or higher)",
+	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	exposed = "심장 노출",
+	exposed_desc = "XT-002의 심장 노출 획득을 알립니다.",
+	exposed_warning = "잠시 후 심장 노출!",
+	exposed_message = "심장 노출 - 로봇들 추가!",
+	
+	gravitybomb = "중력 폭탄",
+	gravitybomb_desc = "중력 폭탄에 걸린 플레이어를 알립니다.",
+	gravitybomb_you = "당신은 중력 폭탄!",
+	gravitybomb_other = "중력 폭탄: %s!",
+	
+	lightbomb = "빛의 폭탄",
+	lightbomb_desc = "빛의 폭탄에 걸린 플레이어를 알립니다.",
+	lightbomb_you = "당신은 빛의 폭탄!",
+	lightbomb_other = "빛의 폭탄: %s!",
+	
+	tympanic = "격분의 땅울림",
+	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
+	tympanic_message = "격분의 땅울림!",
+	
+	icon = "전술 표시",
+	icon_desc = "폭탄에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
@@ -88,7 +112,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "GravityBomb", 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightBomb", 63018)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234)
-	--self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("UNIT_HEALTH")
 	

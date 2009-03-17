@@ -86,18 +86,18 @@ L:RegisterTranslations("koKR", function() return {
 	p2berserk_warn4 = "30초 후 광폭화",
 	p2berserk_warn5 = "10초 후 광폭화",
 	
-	summon = "번개 구체 소환",
-	summon_desc = "번개 구체 소환에 대해 알립니다.",
-	summon_message = "번개 구체 소환!",
+	summon = "번개구 소환",
+	summon_desc = "번개구 소환에 대해 알립니다.",
+	summon_message = "번개구 소환!",
 	
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
 	hammer_message = "폭풍망치: %s",
 	hammer_bar = "다음 폭풍망치",
 	
-	strike = "Unbalancing Strike",
-	strike_desc = "Unbalancing Strike에 걸린 플레이어를 알립니다.",
-	strike_message= "Unbalancing Strike: %s",
+	strike = "혼란의 일격",
+	strike_desc = "혼란의 일격에 걸린 플레이어를 알립니다.",
+	strike_message= "혼란의 일격: %s",
 	
 	charge = "번개 충전",
 	charge_desc = "토림의 번개 충전과 횟수를 알립니다.",
@@ -119,7 +119,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
 	self:AddCombatListener("SPELL_SUMMON", "Summon", 62391)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	--self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

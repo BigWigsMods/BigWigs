@@ -72,7 +72,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam. (requires promoted or higher)",
 	
-	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -93,7 +93,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_soon = "곧 2 단계",
 	
 	wave = "웨이브",
-	wace_desc = "웨이브에 대해 알립니다.",
+	wave_desc = "웨이브에 대해 알립니다.",
 	wave_bar = "다음 웨이브",
 	--conservator_trigger = "Eonar, your servant requires aid!",
 	--detonate_trigger = "The swarm of the elements shall overtake you!",
@@ -104,21 +104,21 @@ L:RegisterTranslations("koKR", function() return {
 	elementals_message = "정령들 소환",
 	tree_message = "생명결속자의 선물 소환",
 	
-	attuned = "자연의 조화",
-	attuned_desc = "자연의 조화를 알립니다.",
+	attuned = "자연 조화",
+	attuned_desc = "자연 조화를 알립니다.",
 	attuned_message = "조화: (%d)",
 
-	fury = "자연의 분노",
-	fury_desc = "자연의 분노에 걸린 플레이어를 알립니다.",
-	fury_message = "분노: %s!",
+	fury = "자연의 격노",
+	fury_desc = "자연의 격노에 걸린 플레이어를 알립니다.",
+	fury_message = "자연의 격노: %s!",
 	
-	sunbeam = "태양광선",
-	sunbeam_desc = "프레이야의 태양광선 시전 대상을 알립니다.",
-	sunbeam_you = "당신에게 태양광선!",
-	sunbeam_other = "태양광선: %s",
+	sunbeam = "일광",
+	sunbeam_desc = "프레이야의 일광 시전 대상을 알립니다.",
+	sunbeam_you = "당신에게 일광!",
+	sunbeam_other = "일광: %s",
 	
 	icon = "전술 표시",
-	icon_desc = "태양광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "일광 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 	
 	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 	
@@ -226,8 +226,6 @@ function mod:Deaths(unit)
 	elseif unit == L["Ancient Conservator"] then
 		attunedCount = attunedCount - 25
 		self:AttunedWarn()
-	elseif unit == boss then
-		self:BossDeath(nil, self.guid)
 	end
 end
 
@@ -266,11 +264,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["elementals_trigger"] and db.wave then
 		self:Message(L["elementals_message"], "Positive")
 		Bar(L["wave_bar"], 60, 35594)
-	--[[elseif msg == L["end_trigger"] then
+	elseif msg == L["end_trigger"] then
 		if db.bosskill then
 			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
 		end
 		BigWigs:ToggleModuleActive(self, false)
-	]]
 	end
 end

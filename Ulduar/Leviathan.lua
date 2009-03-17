@@ -49,19 +49,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	flame = "화염 분사",
-	flame_desc = "거대 화염전차으 화염 분사 시전을 알립니다.",
-	flame_message = "화염 분사!",
+	flame = "화염 분출",
+	flame_desc = "거대 화염전차으 화염 분출 시전을 알립니다.",
+	flame_message = "화염 분출!",
 	
 	pursues = "추적",
 	pursues_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
 	pursues_other = "%s 추적!",
 	pursues_you = "당신을 추적!",
 	
-	shutdown = "시스템 종료",
-	shutdown_desc = "거대 화염전차의 시스템 종료를 알립니다.",
+	shutdown = "시스템 작동 정지",
+	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
 	--shutdown_trigger = "System malfunction. Diverting power to support systems.",
-	shutdown_message = "시스템 종료!",
+	shutdown_message = "시스템 작동 정지!",
 	
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )

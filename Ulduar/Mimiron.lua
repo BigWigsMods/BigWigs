@@ -8,6 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33350		-- Most of the fight you fight vehicles .. does that matter..?
+--  Leviathan MKII(33432), VX-001(33651), Aerial Command Unit(33670), 
 mod.toggleoptions = {"phase", -1, "plasma", "shock", "laser", "bosskill"}
 
 ------------------------------
@@ -19,7 +20,6 @@ local started = nil
 local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
-local laser = nil
 
 ----------------------------
 --      Localization      --
@@ -28,6 +28,10 @@ local laser = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
+	["MKII"] = "Leviathan MKII",
+	["VX-001"] = "VX-001",
+	["Aerial"] = "Aerial Command Unit",
+	
 	cmd = "Mimiron",
 	
 	phase = "Phases",
@@ -51,11 +55,16 @@ L:RegisterTranslations("enUS", function() return {
 	laser = "Laser Barrage",
 	laser_desc = "Warn when Laser Barrage is active!",
 	laser_soon = "Laser Barrage soon!",
+	laser_bar = "Next Laser Barrage",
 	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	["MKII"] = "Leviathan MKII",
+	["VX-001"] = "VX-001",
+	["Aerial"] = "Aerial Command Unit",
+
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	phase2_warning = "2 단계!",
@@ -77,6 +86,7 @@ L:RegisterTranslations("koKR", function() return {
 	laser = "레이저 탄막",
 	laser_desc = "레이저 탄막 활동을 알립니다!",
 	laser_soon = "곧 레이저 탄막!",
+	laser_bar = "디음 레이저 탄막",
 	
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
@@ -131,10 +141,11 @@ function mod:Shock(_, spellID)
 	end
 end
 
-function mod:Laser(_, spellID)
-	if db.laser then
+function mod:Laser(unit, spellID)
+	if unit == L["VX-001"] and db.laser then
 		self:IfMessage(L["laser"], "Important", spellID)
 		self:Bar(L["laser"], 10, spellID)
+		self:Bar(L["laser_bar"], 60, spellID)
 	end
 end
 

@@ -88,14 +88,14 @@ L:RegisterTranslations("koKR", function() return {
 	summoning_desc = "몰게임의 소환의 룬 시전을 알립니다.",
 	summoning_message = "소환의 룬 - 곧 정령 등장!",
 	
-	tendrils = "번개 덩굴손",
-	tendrils_desc = "번개 덩굴손 단계에서 대상을 알리고 전술 표시를 지정합니다.",
+	tendrils = "번개 덩굴",
+	tendrils_desc = "번개 덩굴 단계에서 대상을 알리고 전술 표시를 지정합니다.",
 	tendrils_other = "%s 추적 중!",
 	tendrils_you = "당신을 추적 중!",
 	tendrils_message = "약 5초 후 착지!",
 	
 	icon = "전술 표시",
-	icon_desc = "전하 붕괴 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "추적 중인 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	council_dies = "%s 죽음",
 	
@@ -107,11 +107,11 @@ L:RegisterTranslations("koKR", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Chain", 63479)
-	self:AddCombatListener("SPELL_CAST_START", "Overload", 63481)
+	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479)
+	self:AddCombatListener("SPELL_CAST_START", "Overload", 61869, 63481)
 	self:AddCombatListener("SPELL_CAST_START", "Power", 61974)
 	self:AddCombatListener("SPELL_CAST_START", "Summoning", 62273)	-- Molgeim abiltities plus(2 dead)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 63485)	-- Brundir abiltities plus(2 dead)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63485)	-- Brundir abiltities plus(2 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490)	-- Molgeim abiltities plus(1 dead)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	

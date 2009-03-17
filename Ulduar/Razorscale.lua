@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
-mod.guid = 0	--Unknown
+mod.guid = 33186
 mod.toggleoptions = {"bosskill"}
 
 ------------------------------
@@ -38,7 +38,7 @@ L:RegisterTranslations("koKR", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	--self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	db = self.db.profile
 	

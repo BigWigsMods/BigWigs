@@ -41,25 +41,25 @@ L:RegisterTranslations("enUS", function() return {
 	frozenblow_warning = "Frozen Blow removed in 5sec!",
 	frozenblow_bar = "Frozen Blow",
 	
-	--end_trigger = "",	--check
-	--end_message = "%s has been defeated!",
+	end_trigger = "^Thank you for freeing me!",
+	end_message = "%s has been defeated!",
 	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	flash = "급속 냉동",
-	flash_desc = "급속 냉동 시전과 급속 냉동에 걸린 플레이어를 알립니다.",
-	flash_message = "급속 냉동: %s!",
-	flash_warning = "급속 냉동 시전!",
-	flash_soon = "5초 후 급속 냉동",
-	flash_bar = "다음 급속 냉동",
+	flash = "순간 빙결",
+	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",
+	flash_message = "순간 빙결: %s!",
+	flash_warning = "순간 빙결 시전!",
+	flash_soon = "5초 후 순간 빙결",
+	flash_bar = "다음 순간 빙결",
 	
-	frozenblow = "극한의 숨결",
-	frozenblow_desc = "호디르의 극한의 숨결 획득을 알립니다.",
-	frozenblow_message = "호디르 극한의 숨결!",
-	frozenblow_warning = "극한의 숨결 5초 후 사라짐!",
-	frozenblow_bar = "극한의 숨결",
+	frozenblow = "얼음 일격",
+	frozenblow_desc = "호디르의 얼음 일격 획득을 알립니다.",
+	frozenblow_message = "호디르 얼음 일격!",
+	frozenblow_warning = "얼음 일격 5초 후 사라짐!",
+	frozenblow_bar = "얼음 일격",
 	
 	--end_trigger = "",	--check
 	--end_message = "%s 물리침!",
@@ -92,15 +92,14 @@ end
 --      Event Handlers      --
 ------------------------------
 
---[[
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["end_trigger"] then
+	if msg:find(L["end_trigger"]) then
 		if db.bosskill then
 			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
 		end
 		BigWigs:ToggleModuleActive(self, false)
 	end
-end]]
+end
 
 function mod:FlashCast(_, spellID)
 	if db.flash then

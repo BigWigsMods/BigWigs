@@ -47,6 +47,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	flame = "이글거리는 불길",
+	flame_desc = "이글거리는 불길의 시전을 알립니다.",
+	flame_message = "이글거리는 불길!",
+	
+	surge = "어둠 쇄도",
+	surge_desc = "베작스의 어둠 쇄도 획득을 알립니다.",
+	surge_message = "어둠 쇄도!",
+	surge_cast = "어둠 쇄도 시전!",
+	surge_end = "어둠 쇄도 사라짐!",
+	
+	spawn = "소환 경고",
+	spawn_desc = "소환을 알립니다",
+	spawn_warning = "곧 소환!",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )

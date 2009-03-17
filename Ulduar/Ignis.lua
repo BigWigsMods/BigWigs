@@ -62,9 +62,9 @@ L:RegisterTranslations("koKR", function() return {
 	scorch_soon = "약 5초 후 불태우기!",
 	scorch_bar = "다음 불태우기",
 	
-	slagpot = "Slag Pot",
-	slagpot_desc = "Slag Pot의 플레이어를 알립니다.",
-	slagpot_message = "Slag Pot: %s",
+	slagpot = "용암재 단지",
+	slagpot_desc = "용암재 단지의 플레이어를 알립니다.",
+	slagpot_message = "용암재 단지: %s",
 	
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
