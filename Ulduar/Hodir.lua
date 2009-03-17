@@ -78,7 +78,7 @@ function mod:OnEnable()
 	BigWigs:Print(L["log"])
 
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrozenBlow", 62478, 63512)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 

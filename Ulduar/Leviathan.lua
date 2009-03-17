@@ -71,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Flame", 62396)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Flame", 62396)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
