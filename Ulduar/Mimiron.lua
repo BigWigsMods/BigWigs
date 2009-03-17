@@ -34,6 +34,8 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn for phase changes.",
 	phase2_warning = "Phase 2!",
 	phase2_trigger = "Behold the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase3_warning = "Phase 3!",
+	phase3_trigger = "Isn't it beautiful? I call it the magnificent aerial command unit!",
 	
 	starttrigger = "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
 	
@@ -53,6 +55,32 @@ L:RegisterTranslations("enUS", function() return {
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	phase = "단계",
+	phase_desc = "단계 변화를 알립니다.",
+	phase2_warning = "2 단계!",
+	--phase2_trigger = "Behold the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase3_warning = "3 단계!",
+	--phase3_trigger = "Isn't it beautiful? I call it the magnificent aerial command unit!",
+	
+	--starttrigger = "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
+	
+	plasma = "플라스마 폭발",
+	plasma_desc = "플라스마 폭발 시전을 알립니다.",
+	plasma_warning = "플라스마 폭발 시전!",
+	plasma_soon = "곧 플라스마 폭발!",
+	
+	shock = "충격파",
+	shock_desc = "충격파 시전을 알립니다.",
+	shock_warning = "충격파 시전!",
+	
+	laser = "레이저 탄막",
+	laser_desc = "레이저 탄막 활동을 알립니다!",
+	laser_soon = "곧 레이저 탄막!",
+	
+	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+} end )
+
 
 --[[
 		Needs cooldowns off the spells.
@@ -65,17 +93,14 @@ L:RegisterTranslations("enUS", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	laser = GetSpellInfo(63274)
-	
-	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997) -- H id missing
+	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631) -- H id missing
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning ", 63414)
 	--self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	
-	-- channel_start seems to fire right before any CLEU events, confirm?
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", "Laser")
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	
@@ -106,10 +131,16 @@ function mod:Shock(_, spellID)
 	end
 end
 
-function mod:Laser(unit, spell)
-	if db.laser and spell == laser then
-		self:IfMessage(L["laser"], "Important", 63274)
+function mod:Laser(_, spellID)
+	if db.laser then
+		self:IfMessage(L["laser"], "Important", spellID)
 		self:Bar(L["laser"], 10, spellID)
+	end
+end
+
+function mod:Spinning(_, spellID)
+	if db.laser then
+		self:IfMessage(L["laser_soon"], "Important", spellID)
 	end
 end
 
@@ -126,6 +157,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
 		if db.phase then
 			self:Message(L["phase2_warning"], "Attention")
+		end
+	elseif msg:match(L["phase2_trigger"]) then
+		phase = 3
+		self:CancelAllScheduledEvents()
+		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
+		if db.phase then
+			self:Message(L["phase3_warning"], "Attention")
 		end
 	end
 end
