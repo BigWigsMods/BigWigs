@@ -4,7 +4,7 @@
 
 local behemoth = BB["Jormungar Behemoth"]
 local boss = BB["Thorim"]
-local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
@@ -219,3 +219,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+

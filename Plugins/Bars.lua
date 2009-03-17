@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------
 --      Module Declaration
 -----------------------------------------------------------------------
-local plugin = BigWigs:New("Bars", tonumber(("$Revision$"):sub(12, -3)), "CandyBar-2.0")
+local plugin = BigWigs:New("Bars", "$Revision$", "CandyBar-2.0")
 if not plugin then return end
 
 -----------------------------------------------------------------------

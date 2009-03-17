@@ -4,7 +4,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:New("Custom Bars", tonumber(("$Revision$"):sub(12, -3)))
+local mod = BigWigs:New("Custom Bars", "$Revision$")
 if not mod then return end
 mod.external = true
 

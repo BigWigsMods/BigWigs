@@ -3,7 +3,7 @@
 ----------------------------------
 
 local boss = BB["Mimiron"]
-local mod = BigWigs:New(boss, tonumber(("$Revision: 5001 $"):sub(12, -3)))
+local mod = BigWigs:New(boss, "$Revision: 5001 $")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss

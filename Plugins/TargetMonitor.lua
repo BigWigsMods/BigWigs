@@ -4,7 +4,7 @@ assert(BigWigs, "Big Wigs not found!")
 --      Addon Declaration      --
 ---------------------------------
 
-local plugin = BigWigs:New("Target Monitor", tonumber(("$Revision$"):sub(12, -3)))
+local plugin = BigWigs:New("Target Monitor", "$Revision$")
 if not plugin then return end
 
 ------------------------------

@@ -4,7 +4,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("Messages", tonumber(("$Revision$"):sub(12, -3)))
+local plugin = BigWigs:New("Messages", "$Revision$")
 if not plugin then return end
 
 local sink = LibStub("LibSink-2.0")

@@ -4,7 +4,7 @@
 --      Module Declaration
 -----------------------------------------------------------------------
 
-local plugin = BigWigs:New("Proximity", tonumber(("$Revision$"):sub(12, -3)))
+local plugin = BigWigs:New("Proximity", "$Revision$")
 if not plugin then return end
 
 -----------------------------------------------------------------------

@@ -5,7 +5,7 @@
 local boss = BB["Instructor Razuvious"]
 local understudy = BB["Death Knight Understudy"]
 
-local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, understudy}

@@ -3,7 +3,7 @@
 ----------------------------------
 
 local boss = BB["Malygos"]
-local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"

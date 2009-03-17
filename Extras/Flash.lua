@@ -4,7 +4,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:New("Flash", tonumber(("$Revision$"):sub(12, -3)))
+local mod = BigWigs:New("Flash", "$Revision$")
 if not mod then return end
 
 --------------------------------------------------------------------------------

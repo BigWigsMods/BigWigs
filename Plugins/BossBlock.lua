@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("BossBlock", tonumber(("$Revision$"):sub(12, -3)), "AceHook-2.1")
+local plugin = BigWigs:New("BossBlock", "$Revision$", "AceHook-2.1")
 if not plugin then return end
 
 ----------------------------

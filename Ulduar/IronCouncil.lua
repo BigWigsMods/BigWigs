@@ -6,7 +6,7 @@ local breaker = BB["Steelbreaker"]
 local molgeim = BB["Runemaster Molgeim"]
 local brundir = BB["Stormcaller Brundir"]
 local boss = BB["The Iron Council"]
-local mod = BigWigs:New(boss, tonumber(("$Revision$"):sub(12, -3)))
+local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}

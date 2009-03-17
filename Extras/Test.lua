@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("Test", tonumber(("$Revision$"):sub(12, -3)))
+local plugin = BigWigs:New("Test", "$Revision$")
 if not plugin then return end
 plugin.external = true
 
