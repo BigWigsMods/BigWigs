@@ -36,6 +36,8 @@ L:RegisterTranslations("enUS", function() return {
 	surge = "Surge of Darkness",
 	surge_desc = "Warn when Vezax gains Surge of Darkness.",
 	surge_message = "Surge of Darkness!",
+	surge_cast = "Surge of Darkness casting!",
+	surge_end = "Surge of Darkness faded!",
 	
 	spawn = "spawn Warnings",
 	spawn_desc = "Warn for adds",
@@ -55,7 +57,8 @@ L:RegisterTranslations("koKR", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Surge", 62042)
+	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("UNIT_HEALTH")
@@ -84,7 +87,14 @@ end
 function mod:Surge(_, spellID)
 	if db.surge then
 		self:IfMessage(L["surge_message"], "Attention", spellID)
+		self:Bar(L["surge_cast"], 3, spellID)
+	end
+end
+
+function mod:SurgeGain(_, spellID)
+	if db.surge then
 		self:Bar(L["surge"], 10, spellID)
+		self:DelayedMessage(10, L["surge_end"], "Attention")
 	end
 end
 
