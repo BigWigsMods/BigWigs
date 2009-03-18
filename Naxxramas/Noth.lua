@@ -83,7 +83,7 @@ L:RegisterTranslations("ruRU", function() return {
 	backbar = "Назад в Команту!",
 	teleportwarn = "Телепорт! Он на балконе!",
 	teleportwarn2 = "Телепорт через 10 секунд!",
-	backwarn = "Он вернётся в комнату через %d секунд!",
+	backwarn = "Он вернулся в комнату на %d секунд!",
 	backwarn2 = "10 секунд до возвращения в комнату!",
 
 	curse = "Проклятие Чумного",
