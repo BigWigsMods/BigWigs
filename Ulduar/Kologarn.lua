@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
-mod.toggleoptions = {"arm", "grip", "shockwave", "bosskill"}
+mod.toggleoptions = {"arm", "grip", "shockwave", "eyebeam", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -41,6 +41,14 @@ L:RegisterTranslations("enUS", function() return {
 	shockwave = "Shockwave",
 	shockwave_desc = "Warn when the next Shockwave is coming.",
 	shockwave_trigger = "Oblivion!",
+	
+	eyebeam = "Focused Eyebeam",
+	eyebeam_desc = "Warn who gets Focused Eyebeam.",
+	eyebeam_message = "Eyebeam: %s",
+	eyebeam_you = "Eyebeam on You!",
+	
+	icon = "Icon",
+	icon_desc = "Place a Raid Target Icon on players with Focused Eyebeam. (requires promoted or higher)",
 		
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -62,6 +70,14 @@ L:RegisterTranslations("koKR", function() return {
 	shockwave = "충격파",
 	shockwave_desc = "다음 충격파에 대하여 알립니다.",
 	--shockwave_trigger = "Oblivion!",
+	
+	eyebeam = "안광 집중",
+	eyebeam_desc = "안광 집중의 대상이된 플레이어를 알립니다.",
+	eyebeam_message = "안광 집중: %s",
+	eyebeam_you = "당신은 안광 집중!",
+	
+	icon = "전술 표시",
+	icon_desc = "안광 집중 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
@@ -72,6 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
+	self:AddCombatListener("SPELL_SUMMON", "Eyebeam", 63343, 63701)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -88,6 +105,20 @@ end
 function mod:Grip(player, spellID)
 	if db.grip then
 		self:IfMessage(L["grip_message"]:format(player), "Attention", spellID)
+	end
+end
+
+function mod:Eyebeam(_, _, source)
+	if db.eyebeam then
+		local other = L["eyebeam_message"]:format(source)
+		if source == pName then
+			self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Urgent", 63976)
+		end
+		self:Bar(other, 10, 63976)
+		self:Icon(source, "icon")
 	end
 end
 
