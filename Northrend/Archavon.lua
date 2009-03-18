@@ -94,7 +94,7 @@ L:RegisterTranslations("frFR", function() return {
 	shards_message = "Eclats de pierre sur %s !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

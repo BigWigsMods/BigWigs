@@ -33,12 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Ancient Water Spirit"] = "Ancient Water Spirit",
 	["Detonating Lasher"] = "Detonating Lasher",
 	["Ancient Conservator"] = "Ancient Conservator",
-	
+
 	cmd = "Freya",
-	
+
 	engage_trigger = "The Conservatory must be protected",
 	engage_message = "%s Engaged!",
-	
+
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase2_message = "Phase 2 !",
@@ -55,25 +55,25 @@ L:RegisterTranslations("enUS", function() return {
 	detonate_message = "Detonate spawn",
 	elementals_message = "Elementals spawn",
 	tree_message = "Eonar's Gift spawn",
-	
+
 	attuned = "Attuned to Nature",
 	attuned_desc = "Warn for Attuned to Nature.",
 	attuned_message = "Attuned: (%d)",
-		
+
 	fury = "Nature's Fury",
 	fury_desc = "Tells you who has been hit by Nature's Fury.",
 	fury_message = "Fury: %s",
-	
+
 	sunbeam = "Sunbeam",
 	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
 	sunbeam_you = "Sunbeam on You!",
 	sunbeam_other = "Sunbeam on %s",
-	
+
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam. (requires promoted or higher)",
-	
+
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
-	
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -83,15 +83,15 @@ L:RegisterTranslations("koKR", function() return {
 	["Ancient Water Spirit"] = "Ancient Water Spirit",
 	["Detonating Lasher"] = "Detonating Lasher",
 	["Ancient Conservator"] = "Ancient Conservator",
-	
+
 	--engage_trigger = "The Conservatory must be protected",
 	engage_message = "%s 전투 시작!",
-	
+
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	phase2_message = "2 단계 !",
 	phase2_soon = "곧 2 단계",
-	
+
 	wave = "웨이브",
 	wave_desc = "웨이브에 대해 알립니다.",
 	wave_bar = "다음 웨이브",
@@ -103,7 +103,7 @@ L:RegisterTranslations("koKR", function() return {
 	detonate_message = "폭파꽃 소환",
 	elementals_message = "정령들 소환",
 	tree_message = "생명결속자의 선물 소환",
-	
+
 	attuned = "자연 조화",
 	attuned_desc = "자연 조화를 알립니다.",
 	attuned_message = "조화: (%d)",
@@ -111,18 +111,66 @@ L:RegisterTranslations("koKR", function() return {
 	fury = "자연의 격노",
 	fury_desc = "자연의 격노에 걸린 플레이어를 알립니다.",
 	fury_message = "자연의 격노: %s!",
-	
+
 	sunbeam = "일광",
 	sunbeam_desc = "프레이야의 일광 시전 대상을 알립니다.",
 	sunbeam_you = "당신에게 일광!",
 	sunbeam_other = "일광: %s",
-	
+
 	icon = "전술 표시",
 	icon_desc = "일광 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
-	
+
 	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
-	
+
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	["Snaplasher"] = "Snaplasher",
+	["Storm Lasher"] = "Storm Lasher",
+	["Ancient Water Spirit"] = "Ancient Water Spirit",
+	["Detonating Lasher"] = "Detonating Lasher",
+	["Ancient Conservator"] = "Ancient Conservator",
+
+	engage_trigger = "The Conservatory must be protected",
+	engage_message = "%s engagée !",
+
+	phase = "Phases",
+	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
+	phase2_message = "Phase 2 !",
+	phase2_soon = "Phase 2 imminente",
+
+	wave = "Vagues",
+	wave_desc = "Prévient de l'arrivée des vagues.",
+	wave_bar = "Prochaine vague",
+	conservator_trigger = "Eonar, your servant requires aid !",
+	detonate_trigger = "The swarm of the elements shall overtake you !",
+	elementals_trigger = "Children, assist me !",
+	tree_trigger = "Un Don de la lieuse-de-vie commence à croître !", -- à vérifier
+	conservator_message = "Conservateur apparu",
+	detonate_message = "Detonate apparu",
+	elementals_message = "Élémentaires apparu",
+	tree_message = "Don d'Eonar apparu",
+
+	attuned = "En harmonie avec la Nature",
+	attuned_desc = "Warn for Attuned to Nature.",
+	attuned_message = "En harmonie : (%d)",
+
+	fury = "Fureur de la nature",
+	fury_desc = "Prévient quand un joueur subit les effets de la Fureur de la nature.",
+	fury_message = "Fureur : %s",
+
+	sunbeam = "Rayon de soleil",
+	sunbeam_desc = "Prévient quand un joueur subit les effets du Rayon de soleil.",
+	sunbeam_you = "Rayon de soleil sur vous !",
+	sunbeam_other = "Rayon de soleil sur %s",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de soleil (nécessite d'être assistant ou mieux).",
+
+	--end_trigger = "His hold on me dissipates. Je vois clair une fois de plus. Merci, héros.",
+
+	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 ------------------------------

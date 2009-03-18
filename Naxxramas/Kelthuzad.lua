@@ -382,7 +382,7 @@ L:RegisterTranslations("frFR", function() return {
 	guardians_bar = "Arrivée des gardiens !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par Faire détoner mana (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par Faire détoner mana (nécessite d'être assistant ou mieux).",
 } end )
 
 ------------------------------

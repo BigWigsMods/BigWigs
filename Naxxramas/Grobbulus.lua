@@ -121,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_message_other = "%s est injecté !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être assistant ou mieux).",
 
 	cloud = "Nuage empoisonné",
 	cloud_desc = "Prévient quand Globbulus lance ses nuages empoisonnés.",

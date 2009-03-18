@@ -27,23 +27,23 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Leviathan",
-	
+
 	engage_trigger = "^Hostile entities detected.",
 	engage_message = "%s Engaged!",
-	
+
 	flame = "Flame Jet",
 	flame_desc = "Warn when Flame Leviathan casts a Flame Jet.",
 	flame_message = "Flame Jet!",
-	
+
 	pursues = "pursues",
 	pursues_desc = "Warn when Flame Leviathan focuses on a player.",
 	pursues_other = "pursues on %s!",
 	pursues_you = "pursues on YOU!",
-	
+
 	shutdown = "Systems Shutdown",
 	shutdown_desc = "Warn when Flame Leviathan a Systems Shutdown",
 	shutdown_message = "Systems Shutdown!",
-	
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -51,17 +51,38 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "화염 분출",
 	flame_desc = "거대 화염전차으 화염 분출 시전을 알립니다.",
 	flame_message = "화염 분출!",
-	
+
 	pursues = "추적",
 	pursues_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
 	pursues_other = "%s 추적!",
 	pursues_you = "당신을 추적!",
-	
+
 	shutdown = "시스템 작동 정지",
 	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
 	shutdown_message = "시스템 작동 정지!",
-	
+
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	--engage_trigger = "^Hostile entities detected.",
+	engage_message = "%s engagé !",
+
+	flame = "Flots de flammes",
+	flame_desc = "Prévient quand le Léviathan des flammes incante des Flots de flammes.",
+	flame_message = "Flots de flammes !",
+
+	pursues = "Poursuite",
+	pursues_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
+	pursues_other = "Léviathan poursuit %s !",
+	pursues_you = "Léviathan VOUS poursuit !",
+
+	shutdown = "Extinction des systèmes",
+	shutdown_desc = "Warn when Flame Leviathan a Systems Shutdown",
+	--shutdown_trigger = "System malfunction. Diverting power to support systems.",
+	shutdown_message = "Extinction des systèmes !",
+
+	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 ------------------------------
@@ -72,12 +93,12 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
+
 	db = self.db.profile
-	
+
 	BigWigs:Print(L["log"])
 end
 

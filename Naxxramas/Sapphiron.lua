@@ -232,7 +232,7 @@ L:RegisterTranslations("frFR", function() return {
 	ping_message = "Bloc - Pingage de votre position !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être assistant ou mieux).",
 } end )
 
 ------------------------------

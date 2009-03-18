@@ -50,29 +50,29 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "XT-002",
-	
+
 	exposed = "Exposed Heart",
 	exposed_desc = "Warn when XT-002 gains Exposed Heart.",
 	exposed_warning = "Exposed Heart Soon!",
 	exposed_message = "Exposed Heart - adds incoming!",
-	
+
 	gravitybomb = "Gravity Bomb",
 	gravitybomb_desc = "Tells you who has been hit by Gravity Bomb.",
 	gravitybomb_you = "Gravity Bomb on YOU!",
 	gravitybomb_other = "Gravity Bomb on %s!",
-	
+
 	lightbomb = "Light Bomb",
 	lightbomb_desc = "Tells you who has been hit by Light Bomb.",
 	lightbomb_you = "Light Bomb on YOU!",
 	lightbomb_other = "Light Bomb on %s!",
-	
+
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
-	
+
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on players with Bomb. (requires promoted or higher)",
-	
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -81,25 +81,51 @@ L:RegisterTranslations("koKR", function() return {
 	exposed_desc = "XT-002의 심장 노출 획득을 알립니다.",
 	exposed_warning = "잠시 후 심장 노출!",
 	exposed_message = "심장 노출 - 로봇들 추가!",
-	
+
 	gravitybomb = "중력 폭탄",
 	gravitybomb_desc = "중력 폭탄에 걸린 플레이어를 알립니다.",
 	gravitybomb_you = "당신은 중력 폭탄!",
 	gravitybomb_other = "중력 폭탄: %s!",
-	
+
 	lightbomb = "빛의 폭탄",
 	lightbomb_desc = "빛의 폭탄에 걸린 플레이어를 알립니다.",
 	lightbomb_you = "당신은 빛의 폭탄!",
 	lightbomb_other = "빛의 폭탄: %s!",
-	
+
 	tympanic = "격분의 땅울림",
 	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
 	tympanic_message = "격분의 땅울림!",
-	
+
 	icon = "전술 표시",
 	icon_desc = "폭탄에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	exposed = "Coeur exposé",
+	exposed_desc = "Prévient quand le coeur du XT-002 est exposé.",
+	exposed_warning = "Coeur exposé imminent !",
+	exposed_message = "Coeur exposé - arrivée des renforts !",
+
+	gravitybomb = "Bombe à gravité",
+	gravitybomb_desc = "Prévient quand un joueur subit les effets d'une Bombe à gravité.",
+	gravitybomb_you = "Bombe à gravité sur VOUS !",
+	gravitybomb_other = "Bombe à gravité sur %s !",
+
+	lightbomb = "Bombe de lumière",
+	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Bombe de lumière.",
+	lightbomb_you = "Bombe de lumière sur VOUS !",
+	lightbomb_other = "Bombe de lumière sur %s !",
+
+	tympanic = "Tympanic Tantrum",
+	tympanic_desc = "Prévient quand XT-002 incante une Tympanic Tantrum.",
+	tympanic_message = "Tympanic Tantrum !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",
+
+	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 ------------------------------
@@ -112,15 +138,15 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("UNIT_HEALTH")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	
+
 	db = self.db.profile
-	
+
 	BigWigs:Print(L["log"])
 end
 

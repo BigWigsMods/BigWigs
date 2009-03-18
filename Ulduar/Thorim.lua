@@ -28,7 +28,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thorim",
-	
+
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",
@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Phase 2 - Berserk in 5min!",
 	phase3_trigger = "^Impertinent wheips. I will crush you myself!",
 	phase3_message = "Phase 3 - %s Engaged!",
-		
+
 	p2berserk = "Phase 2 - Berserk",
 	p2berserk_desc = "Warn when the boss goes Berserk in Phase 2.",
 	p2berserk_warn1 = "Berserk in 3 min",
@@ -44,28 +44,28 @@ L:RegisterTranslations("enUS", function() return {
 	p2berserk_warn3 = "Berserk in 60 sec",
 	p2berserk_warn4 = "Berserk in 30 sec",
 	p2berserk_warn5 = "Berserk in 10 sec",
-	
+
 	summon = "Summoned Lightning Orb",
 	summon_desc = "Warn when Lightning Orb are summoned.",
 	summon_message = "Lightning Orb Summoned!",
-	
+
 	hammer = "Stormhammer",
 	hammer_desc = "Warns about Detonate Stormhammer soon.",
 	hammer_message = "Stormhammer: %s",
 	hammer_bar = "Next Stormhammer",
-	
+
 	strike = "Unbalancing Strike",
 	strike_desc = "Warn when a player has Unbalancing Strike.",
 	strike_message= "Unbalancing Strike: %s",
-	
+
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
 	charge_message = "Charge: (%d)",
 	charge_bar = "Charge (%d)",
-	
+
 	--end_trigger = "",	--check
 	--end_message = "%s has been defeated!",
-	
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -77,7 +77,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "2 단계 - 5분 후 광폭화!",
 	--phase3_trigger = "",	--check
 	phase3_message = "3 단계 - %s 전투시작!",
-	
+
 	p2berserk = "2 단계 - 광폭화",
 	p2berserk_desc = "1 단계의 보스 광폭화를 알립니다.",
 	p2berserk_warn1 = "3분 후 광폭화",
@@ -85,16 +85,16 @@ L:RegisterTranslations("koKR", function() return {
 	p2berserk_warn3 = "60초 후 광폭화",
 	p2berserk_warn4 = "30초 후 광폭화",
 	p2berserk_warn5 = "10초 후 광폭화",
-	
+
 	summon = "번개구 소환",
 	summon_desc = "번개구 소환에 대해 알립니다.",
 	summon_message = "번개구 소환!",
-	
+
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
 	hammer_message = "폭풍망치: %s",
 	hammer_bar = "다음 폭풍망치",
-	
+
 	strike = "혼란의 일격",
 	strike_desc = "혼란의 일격에 걸린 플레이어를 알립니다.",
 	strike_message= "혼란의 일격: %s",
@@ -103,11 +103,52 @@ L:RegisterTranslations("koKR", function() return {
 	charge_desc = "토림의 번개 충전과 횟수를 알립니다.",
 	charge_message = "충전: (%d)",
 	charge_bar = "충전 (%d)",
-	
+
 	--end_trigger = "",	--check
 	--end_message = "%s 물리침!",
-	
+
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	phase = "Phases",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
+	phase1_message = "Début de la phase 1",
+	--phase2_trigger = "^Des intrus !", -- à vérifier
+	phase2_message = "Phase 2 - Berserk dans 5 min. !",
+	--phase3_trigger = "^Impertinent wheips. Je vais vous écraser moi-même !", -- à vérifier
+	phase3_message = "Phase 3 - %s engagé !",
+
+	p2berserk = "Phase 2 - Berserk",
+	p2berserk_desc = "Prévient quand le boss devient fou furieux en phase 2.",
+	p2berserk_warn1 = "Berserk dans 3 min.",
+	p2berserk_warn2 = "Berserk dans 90 sec.",
+	p2berserk_warn3 = "Berserk dans 60 sec.",
+	p2berserk_warn4 = "Berserk dans 30 sec.",
+	p2berserk_warn5 = "Berserk dans 10 sec.",
+
+	summon = "Invocation d'un orbe de foudre",
+	summon_desc = "Prévient quand un Orbe de foudre est invoqué.",
+	summon_message = "Orbe de foudre invoqué !",
+
+	hammer = "Marteau-tempête",
+	hammer_desc = "Warns about Detonate Stormhammer soon.",
+	hammer_message = "Marteau-tempête : %s",
+	hammer_bar = "Prochain Marteau-tempête",
+
+	strike = "Frappe déséquilibrante",
+	strike_desc = "Prévient quand un joueur subit les effets de la Frappe déséquilibrante.",
+	strike_message= "Frappe déséquilibrante : %s",
+
+	charge = "Charge de foudre",
+	charge_desc = "Compte et prévient de l'arrivée des Charges de foudre de Thorim.",
+	charge_message = "Charge : (%d)",
+	charge_bar = "Charge (%d)",
+
+	--end_trigger = "",	--check
+	--end_message = "%s has been defeated!",
+
+	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 ------------------------------
@@ -120,7 +161,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
 	self:AddCombatListener("SPELL_SUMMON", "Summon", 62391)
 	--self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -129,7 +170,7 @@ function mod:OnEnable()
 	started = nil
 	chargeCount = 1
 	db = self.db.profile
-	
+
 	BigWigs:Print(L["log"])
 end
 
