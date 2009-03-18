@@ -141,11 +141,16 @@ function mod:Shock(_, spellID)
 	end
 end
 
+local last = 0
 function mod:Laser(unit, spellID)
-	if unit == L["VX-001"] and db.laser then
-		self:IfMessage(L["laser"], "Important", spellID)
-		self:Bar(L["laser"], 10, spellID)
-		self:Bar(L["laser_bar"], 60, spellID)
+	local time = GetTime()
+	if (time - last) > 4 then
+		last = time
+		if unit == L["VX-001"] and db.laser then
+			self:IfMessage(L["laser"], "Important", spellID)
+			self:Bar(L["laser"], 15, spellID)
+			self:Bar(L["laser_bar"], 60, spellID)
+		end
 	end
 end
 

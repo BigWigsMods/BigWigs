@@ -42,7 +42,6 @@ L:RegisterTranslations("enUS", function() return {
 	
 	shutdown = "Systems Shutdown",
 	shutdown_desc = "Warn when Flame Leviathan a Systems Shutdown",
-	shutdown_trigger = "System malfunction. Diverting power to support systems.",
 	shutdown_message = "Systems Shutdown!",
 	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
@@ -60,7 +59,6 @@ L:RegisterTranslations("koKR", function() return {
 	
 	shutdown = "시스템 작동 정지",
 	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
-	--shutdown_trigger = "System malfunction. Diverting power to support systems.",
 	shutdown_message = "시스템 작동 정지!",
 	
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
@@ -71,7 +69,8 @@ L:RegisterTranslations("koKR", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Flame", 62396)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -88,29 +87,33 @@ end
 
 function mod:Flame()
 	if db.flame then
-		self:IfMessage(L["flame_message"], "Attention", spellID)
+		self:IfMessage(L["flame_message"], "Attention", 62396)
+		self:Bar(L["flame"], 10, 62396)
+	end
+end
+
+function mod:Shutdown()
+	if msg == L["shutdown_trigger"] and db.shutdown then
+		self:Message(L["shutdown_message"], "Attention")
+		self:Bar(L["shutdown"], 20, 62475)
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 	if unit == boss and db.pursues then
-		--53338, looks like a pursues :)
 		local other = fmt(L["pursues_other"], player)
 		if player == pName then
-			self:LocalMessage(L["pursues_you"], "Important", 53338, "Long")
+			self:LocalMessage(L["pursues_you"], "Important", 62374, "Long")
 			self:WideMessage(other)
 		else
-			self:IfMessage(other, "Attention", 53338)
+			self:IfMessage(other, "Attention", 62374)
 		end
-		self:Bar(other, 30, 53338)
+		self:Bar(other, 30, 62374)
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		self:Message(L["engage_message"], "Attention")
-	elseif msg == L["shutdown_trigger"] and db.shutdown then
-		self:Message(L["shutdown_message"], "Attention")
-		self:Bar(L["shutdown"], 20, 62475)
 	end
 end

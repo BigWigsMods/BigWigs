@@ -109,8 +109,7 @@ L:RegisterTranslations("koKR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Tympanic", 62775, 62776)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "GravityBomb", 63024, 64234)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LightBomb", 63018)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
@@ -136,8 +135,8 @@ function mod:Exposed(_, spellID)
 	end
 end
 
-function mod:GravityBomb(player, spellID)
-	if db.gravitybomb then
+function mod:Bomb(player, spellID)
+	if spellId == 63024 or spellId == 64234 and db.gravitybomb then
 		local other = L["gravitybomb_other"]:format(player)
 		if player == pName then
 			self:Message(L["gravitybomb_you"], "Personal", true, "Alert", nil, spellID)
@@ -147,13 +146,8 @@ function mod:GravityBomb(player, spellID)
 			self:Message(other, "Attention", nil, nil, nil, spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
-		self:Icon(player, "icon")
 		self:Bar(other, 9, spellID)
-	end
-end
-
-function mod:LightBomb(player, spellID)
-	if db.lightbomb then
+	elseif spellId == 63018 and db.lightbomb then
 		local other = L["lightbomb_other"]:format(player)
 		if player == pName then
 			self:Message(L["lightbomb_you"], "Personal", true, "Alert", nil, spellID)
@@ -163,9 +157,9 @@ function mod:LightBomb(player, spellID)
 			self:Message(other, "Attention", nil, nil, nil, spellID)
 			self:Whisper(player, L["lightbomb_you"])
 		end
-		self:Icon(player, "icon")
 		self:Bar(other, 9, spellID)
 	end
+	self:Icon(player, "icon")
 end
 
 function mod:BombRemoved(player, spellID)

@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"flame", "surge", "spawn", "bosskill"}
+mod.toggleoptions = {"crash", "mark", "flame", "surge", "vapor", "spawn", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -43,6 +43,21 @@ L:RegisterTranslations("enUS", function() return {
 	spawn_desc = "Warn for adds",
 	spawn_warning = "spawn soon",
 	
+	vapor = "Saronite Vapors",
+	vapor_desc = "Warn for Saronite Vapors spawn.",
+	vapor_bar = "Next Saronite Vapors",
+	
+	crash = "Shadow Crash",
+	crash_desc = "Warn who Vezax casts Shadow Crash on.",
+	crash_you = "Shadow Crash on You!",
+	crash_other = "Shadow Crash on %s",
+	
+	mark = "Mark of the Faceless",
+	mark_desc = "Display Place Icon for Mark of the Faceless.",
+		
+	icon = "Place Icon",
+	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash or Mark of the Faceless. (requires promoted or higher)",
+	
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -60,6 +75,21 @@ L:RegisterTranslations("koKR", function() return {
 	spawn = "소환 경고",
 	spawn_desc = "소환을 알립니다",
 	spawn_warning = "곧 소환!",
+	
+	vapor = "사로나이트 증기",
+	vapor_desc = "사로나이트 증기 소환을 알립니다.",
+	vapor_bar = "다음 증기",
+	
+	crash = "어둠 붕괴",
+	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
+	crash_you = "당신은 어둠 붕괴!",
+	crash_other = "어둠 붕괴: %s",
+	
+	mark = "얼굴 없는 자의 징표",
+	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
+		
+	icon = "전술 표시",
+	icon_desc = "어둠 붕괴 또는 얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
@@ -71,6 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660, 63276)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
@@ -78,7 +109,7 @@ function mod:OnEnable()
 	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	--self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 
@@ -90,6 +121,46 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+local function ScanTarget()
+	local target
+	if UnitName("target") == boss then
+		target = UnitName("targettarget")
+	elseif UnitName("focus") == boss then
+		target = UnitName("focustarget")
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
+				break
+			end
+		end
+	end
+	if target then
+		local other = L["crash_other"]:format(target)
+		if target == pName then
+			mod:Message(L["crash_you"], "Personal", true, "Alert", nil, 62660)
+			mod:Message(other, "Attention", nil, nil, true)
+		else
+			mod:Message(other, "Attention", nil, nil, nil, 62660)
+			mod:Whisper(player, L["crash_you"])
+		end
+		if mod.db.profile.icon then
+			mod:Icon(target)
+		end
+	end
+end
+
+function mod:Target()
+	if spellId == 60835 or spellId == 62660 and db.crash then
+		self:ScheduleEvent("BWCrashToTScan", ScanTarget, 0.1)
+		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
+	elseif spellId == 63276 and db.mark then
+		self:Icon(player, "icon")
+		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 10, self)
+	end
+end
 
 function mod:Flame(_, spellID)
 	if db.flame then
@@ -108,6 +179,13 @@ function mod:SurgeGain(_, spellID)
 	if db.surge then
 		self:Bar(L["surge"], 10, spellID)
 		self:DelayedMessage(10, L["surge_end"], "Attention")
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg == L["vapor_trigger"] and db.vapor then
+		self:IfMessage(L["vapor"], "Attention", 63322)
+		self:Bar(L["vapor_bar"], 30, 63322)
 	end
 end
 
