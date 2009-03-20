@@ -137,7 +137,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631) -- H id missing
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning ", 63414)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
 	--self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
