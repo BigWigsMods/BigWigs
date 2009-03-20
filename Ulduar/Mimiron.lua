@@ -92,19 +92,18 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-
-	["MKII"] = "Léviathan MKII",
+	["MKII"] = "Léviathan Mod. II",
 	["VX-001"] = "VX-001",
-	["Aerial"] = "Aerial Command Unit",
+	["Aerial"] = "Unité de commandement aérien",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
 	phase2_warning = "Phase 2 !",
-	--phase2_trigger = "Behold the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase2_trigger = "Je vous présente le canon d'assaut antipersonnel VX-001 ! Il pourrait être judicieux de vous mettre à l'abri.",
 	phase3_warning = "Phase 3 !",
-	--phase3_trigger = "Isn't it beautiful? I call it the magnificent aerial command unit!",
+	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
 
-	--starttrigger = "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
+	starttrigger = "Nous n'avons pas beaucoup de temps, les amis ! Vous allez m'aider à tester ma dernière création en date, la plus grande de toutes. Avant de changer d'avis, n'oubliez pas que vous me devez bien ça après m'avoir complètement déglingué le XT-002.",
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
