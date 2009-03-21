@@ -3,7 +3,7 @@
 ----------------------------------
 
 local boss = BB["Mimiron"]
-local mod = BigWigs:New(boss, "$Revision: 5062 $")
+local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
@@ -99,19 +99,15 @@ L:RegisterTranslations("koKR", function() return {
 	laser_soon = "곧 레이저 탄막!",
 	laser_bar = "디음 레이저 탄막",
 	
-	--[[ translation needed
-	
-	flamesuppressant = "Flame Suppressant",
-	flamesuppressant_desc = "Warns when Flame Suppressant is casting.",
-	flamesuppressant_warning = "Casting Flame Suppressant!",
+	flamesuppressant = "화염 억제",
+	flamesuppressant_desc = "화염 억제 시전을 알립니다.",
+	flamesuppressant_warning = "화염 억제 시전!",
 	
 	frostbomb = "Frost Bomb",
-	frostbomb_desc = "Warns when Frost Bomb is casting.",
-	frostbomb_warning = "Casting Frost Bomb!",
-	frostbomb_soon = "Frost Bomb soon!",
-	
-	]]
-	
+	frostbomb_desc = "Frost Bomb 시전을 알립니다.",
+	frostbomb_warning = "Frost Bomb 시전!",
+	frostbomb_soon = "잠시후 Frost Bomb!",
+		
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
 
