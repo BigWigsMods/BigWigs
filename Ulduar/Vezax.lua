@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	mark_desc = "Display Place Icon for Mark of the Faceless.",
 
 	icon = "Place Icon",
-	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash or Mark of the Faceless. (requires promoted or higher)",
+	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -122,7 +122,7 @@ L:RegisterTranslations("frFR", function() return {
 	mark_desc = "Display Place Icon for Mark of the Faceless.",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par u ne Déferlante d'ombre ou une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par u ne Déferlante d'ombre(nécessite d'être assistant ou mieux).",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -177,15 +177,15 @@ local function ScanTarget()
 			mod:Message(other, "Attention", nil, nil, true)
 		else
 			mod:Message(other, "Attention", nil, nil, nil, 62660)
-			mod:Whisper(player, L["crash_you"])
+			mod:Whisper(target, L["crash_you"])
 		end
-		if mod.db.profile.icon then
-			mod:Icon(target)
+		if db.icon then
+			mod:Icon(target, "icon")
 		end
 	end
 end
 
-function mod:Target()
+function mod:Target(player, spellId)
 	if spellId == 60835 or spellId == 62660 and db.crash then
 		self:ScheduleEvent("BWCrashToTScan", ScanTarget, 0.1)
 		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
