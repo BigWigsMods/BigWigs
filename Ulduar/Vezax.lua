@@ -122,7 +122,7 @@ L:RegisterTranslations("frFR", function() return {
 	mark_desc = "Display Place Icon for Mark of the Faceless.",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par u ne Déferlante d'ombre(nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre ou une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )

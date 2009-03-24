@@ -118,9 +118,9 @@ L:RegisterTranslations("frFR", function() return {
 	lightbomb_you = "Bombe de lumière sur VOUS !",
 	lightbomb_other = "Bombe de lumière sur %s !",
 
-	tympanic = "Tympanic Tantrum",
-	tympanic_desc = "Prévient quand XT-002 incante une Tympanic Tantrum.",
-	tympanic_message = "Tympanic Tantrum !",
+	tympanic = "Colère assourdissante",
+	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
+	tympanic_message = "Colère assourdissante !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",

@@ -126,13 +126,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["Snaplasher"] = "Snaplasher",
-	["Storm Lasher"] = "Storm Lasher",
-	["Ancient Water Spirit"] = "Ancient Water Spirit",
-	["Detonating Lasher"] = "Detonating Lasher",
-	["Ancient Conservator"] = "Ancient Conservator",
+	--["Snaplasher"] = "Snaplasher",
+	--["Storm Lasher"] = "Storm Lasher",
+	--["Ancient Water Spirit"] = "Ancient Water Spirit",
+	--["Detonating Lasher"] = "Detonating Lasher",
+	--["Ancient Conservator"] = "Ancient Conservator",
 
-	engage_trigger = "The Conservatory must be protected",
+	engage_trigger = "Le jardin doit être protégé", -- à vérifier
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
@@ -143,10 +143,10 @@ L:RegisterTranslations("frFR", function() return {
 	wave = "Vagues",
 	wave_desc = "Prévient de l'arrivée des vagues.",
 	wave_bar = "Prochaine vague",
-	conservator_trigger = "Eonar, your servant requires aid !",
-	detonate_trigger = "The swarm of the elements shall overtake you !",
-	elementals_trigger = "Children, assist me !",
-	tree_trigger = "Un Don de la lieuse-de-vie commence à croître !", -- à vérifier
+	conservator_trigger = "Eonar, ta servante a besoin d'aide !", -- à vérifier
+	detonate_trigger = "La nuée des éléments va vous submerger !", -- à vérifier
+	elementals_trigger = "Mes enfants, venez m'aider !", -- à vérifier
+	--tree_trigger = "A Lifebinder's Gift begins to grow!",
 	conservator_message = "Conservateur apparu",
 	detonate_message = "Detonate apparu",
 	elementals_message = "Élémentaires apparu",
@@ -168,7 +168,7 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de soleil (nécessite d'être assistant ou mieux).",
 
-	--end_trigger = "His hold on me dissipates. Je vois clair une fois de plus. Merci, héros.",
+	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.", -- à vérifier
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -183,7 +183,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
-	
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -192,7 +192,7 @@ function mod:OnEnable()
 	dCount = 1
 	eCount = 1
 	db = self.db.profile
-	
+
 	BigWigs:Print(L["log"])
 end
 

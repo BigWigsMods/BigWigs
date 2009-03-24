@@ -85,8 +85,8 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	arm = "Mort des bras",
 	arm_desc = "Prévient quand le bras gauche et/ou droit meurent.",
-	--left_trigger = "Just a scratch!",
-	--right_trigger = "Only a flesh wound!",
+	left_trigger = "C'est juste une égratignure !", -- à vérifier
+	right_trigger = "Une blessure superficielle !", -- à vérifier
 	left_dies = "Bras gauche éliminé",
 	right_dies = "Bras droit éliminé",
 	left_wipe_bar = "Réapp. bras gauche",
@@ -98,7 +98,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	shockwave = "Onde de choc",
 	shockwave_desc = "Prévient quand la prochaine Onde de choc arrive.",
-	--shockwave_trigger = "Oblivion!",
+	shockwave_trigger = "Oubli !", -- à vérifier
 
 	eyebeam = "Rayon de l'oeil focalisé",
 	eyebeam_desc = "Prévient quand un joueur est ciblé par le Rayon de l'oeil.",

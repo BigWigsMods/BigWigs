@@ -56,13 +56,13 @@ L:RegisterTranslations("enUS", function() return {
 	laser_desc = "Warn when Laser Barrage is active!",
 	laser_soon = "Laser Barrage soon!",
 	laser_bar = "Next Laser Barrage",
-	
+
 	--hard mode abilities:
-	
+
 	flamesuppressant = "Flame Suppressant",
 	flamesuppressant_desc = "Warns when Flame Suppressant is casting.",
 	flamesuppressant_warning = "Casting Flame Suppressant!",
-	
+
 	frostbomb = "Frost Bomb",
 	frostbomb_desc = "Warns when Frost Bomb is casting.",
 	frostbomb_warning = "Casting Frost Bomb!",
@@ -138,19 +138,15 @@ L:RegisterTranslations("frFR", function() return {
 	laser_desc = "Prévient quand un Barrage laser est actif.",
 	laser_soon = "Barrage laser imminent !",
 	laser_bar = "Prochain Barrage laser",
-	
-	--[[ translation needed
-	
-	flamesuppressant = "Flame Suppressant",
-	flamesuppressant_desc = "Warns when Flame Suppressant is casting.",
-	flamesuppressant_warning = "Casting Flame Suppressant!",
-	
-	frostbomb = "Frost Bomb",
-	frostbomb_desc = "Warns when Frost Bomb is casting.",
-	frostbomb_warning = "Casting Frost Bomb!",
-	frostbomb_soon = "Frost Bomb soon!",
-	
-	]]
+
+	flamesuppressant = "Coupe-flamme",
+	flamesuppressant_desc = "Prévient quand un Coupe-flamme est incanté.",
+	flamesuppressant_warning = "Coupe-flamme en incantation !",
+
+	frostbomb = "Bombe de givre",
+	frostbomb_desc = "Prévient quand une Bombe de givre est incantée.",
+	frostbomb_warning = "Bombe de givre en incantation !",
+	frostbomb_soon = "Bombe de givre imminente !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )

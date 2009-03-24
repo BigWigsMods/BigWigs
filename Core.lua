@@ -66,14 +66,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	-- AceConsole strings
 	["Bosses"] = "Boss",
-	["Options for bosses in %s."] = "Options concernant les boss dans %s.", -- "Options for bosses in <zone>"
+	["Options for bosses in %s."] = "Options concernant les boss |2 %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "Options concernant %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Plugins",
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Les plugins s'occupent des composants centraux de Big Wigs - comme l'affichage des messages, les barres temporelles, ainsi que d'autres composants essentiels.",
 	["Extras"] = "Extras",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Les extras sont des plugins tiers et incorporés dont Big Wigs peut se passer pour fonctionner correctement.",
 	["GUI"] = "GUI",
-	["Open the waterfall GUI."] = "Ouvre l'IUG de Waterfall.",
+	["Open the waterfall GUI."] = "Ouvre le GUI de Waterfall.",
 	["Active"] = "Actif",
 	["Activate or deactivate this module."] = "Active ou désactive ce module.",
 	["Reboot"] = "Redémarrer",
