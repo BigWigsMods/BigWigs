@@ -79,7 +79,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	shutdown = "Extinction des systèmes",
 	shutdown_desc = "Prévient quand le Léviathan des flammes éteint ses systèmes.",
-	shutdown_trigger = "Défaillance du système. Dérivation de puissance vers les systèmes de survie.", -- à vérifier
 	shutdown_message = "Extinction des systèmes !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",

@@ -96,7 +96,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	flame = "Flammes incendiaires",
-	flame_desc = "Prévient quand Ignis incante des Flammes incendiaires.",
+	flame_desc = "Prévient quand Vezax incante des Flammes incendiaires.",
 	flame_message = "Flammes incendiaires !",
 
 	surge = "Vague de ténèbres",
