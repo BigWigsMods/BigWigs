@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	pursue = "Pursuit",
 	pursue_desc = "Warn when Flame Leviathan pursues a player.",
-	pursue_trigger = "^%s pursues",
+	pursue_trigger = "^%%s pursues",
 	pursue_other = "Leviathan pursues %s!",
 	pursue_you = "Leviathan pursues YOU!",
 
@@ -55,7 +55,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	pursues = "추적",
 	pursues_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
-	--pursues_trigger = "^%s pursues"
+	--pursues_trigger = "^%%s pursues"
 	pursues_other = "%s 추적!",
 	pursues_you = "당신을 추적!",
 
@@ -76,7 +76,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	pursues = "Poursuite",
 	pursues_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
-	--pursues_trigger = "^%s pursues"
+	--pursues_trigger = "^%%s pursues"
 	pursues_other = "Léviathan poursuit %s !",
 	pursues_you = "Léviathan VOUS poursuit !",
 
