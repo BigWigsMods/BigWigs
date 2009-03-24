@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33113
-mod.toggleoptions = {"flame", "pursues", "shutdown", "bosskill"}
+mod.toggleoptions = {"flame", "pursue", "shutdown", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -35,10 +35,11 @@ L:RegisterTranslations("enUS", function() return {
 	flame_desc = "Warn when Flame Leviathan casts a Flame Jet.",
 	flame_message = "Flame Jet!",
 
-	pursues = "pursues",
-	pursues_desc = "Warn when Flame Leviathan focuses on a player.",
-	pursues_other = "pursues on %s!",
-	pursues_you = "pursues on YOU!",
+	pursue = "Pursuit",
+	pursue_desc = "Warn when Flame Leviathan pursues a player.",
+	pursue_trigger = "^%s pursues",
+	pursue_other = "Leviathan pursues %s!",
+	pursue_you = "Leviathan pursues YOU!",
 
 	shutdown = "Systems Shutdown",
 	shutdown_desc = "Warn when Flame Leviathan a Systems Shutdown",
@@ -54,6 +55,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	pursues = "추적",
 	pursues_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
+	--pursues_trigger = "^%s pursues"
 	pursues_other = "%s 추적!",
 	pursues_you = "당신을 추적!",
 
@@ -74,6 +76,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	pursues = "Poursuite",
 	pursues_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
+	--pursues_trigger = "^%s pursues"
 	pursues_other = "Léviathan poursuit %s !",
 	pursues_you = "Léviathan VOUS poursuit !",
 
@@ -113,22 +116,24 @@ function mod:Flame()
 end
 
 function mod:Shutdown()
-	if msg == L["shutdown_trigger"] and db.shutdown then
+	if db.shutdown then
 		self:Message(L["shutdown_message"], "Attention")
 		self:Bar(L["shutdown"], 20, 62475)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
-	if unit == boss and db.pursues then
-		local other = fmt(L["pursues_other"], player)
-		if player == pName then
-			self:LocalMessage(L["pursues_you"], "Important", 62374, "Long")
-			self:WideMessage(other)
-		else
-			self:IfMessage(other, "Attention", 62374)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
+	if unit == boss then
+		if db.pursue and message:find(L["pursue_trigger"]) then
+			local other = fmt(L["pursue_other"], player)
+			if player == pName then
+				self:LocalMessage(L["pursue_you"], "Important", 62374, "Long")
+				self:WideMessage(other)
+			else
+				self:IfMessage(other, "Attention", 62374)
+			end
+			self:Bar(other, 30, 62374)
 		end
-		self:Bar(other, 30, 62374)
 	end
 end
 
