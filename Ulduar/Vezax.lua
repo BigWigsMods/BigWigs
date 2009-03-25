@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Vezax",
 
 	flame = "Searing Flames",
-	flame_desc = "Warn when Ignis casts a Searing Flames.",
+	flame_desc = "Warn when Vezax casts a Searing Flames.",
 	flame_message = "Searing Flames!",
 
 	surge = "Surge of Darkness",
@@ -53,7 +53,9 @@ L:RegisterTranslations("enUS", function() return {
 	crash_other = "Shadow Crash on %s",
 
 	mark = "Mark of the Faceless",
-	mark_desc = "Display Place Icon for Mark of the Faceless.",
+	mark_desc = "Place Icon for Mark of the Faceless.",
+	mark_message_you = "You have Mark of the Faceless!",
+	mark_message_other = "%s has Mark of the Faceless!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash. (requires promoted or higher)",
@@ -87,6 +89,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
+	mark_message_you = "You have Mark of the Faceless!",
+	mark_message_other = "%s has Mark of the Faceless!",
 
 	icon = "전술 표시",
 	icon_desc = "어둠 붕괴 또는 얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -120,6 +124,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	mark = "Marque du Sans-visage",
 	mark_desc = "Display Place Icon for Mark of the Faceless.",
+	mark_message_you = "You have Mark of the Faceless!",
+	mark_message_other = "%s has Mark of the Faceless!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre ou une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
@@ -134,8 +140,9 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660, 63276)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 63276)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -185,13 +192,28 @@ local function ScanTarget()
 	end
 end
 
+function mod:Mark(player, spellID)
+	if db.mark then
+		local other = L["mark_message_other"]:format(player)
+		if player == pName then
+			self:Message(L["mark_message_you"], "Personal", true, "Alert", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:Whisper(player, L["mark_message_you"])
+		end
+		self:Bar(other, 10, spellID)
+		if db.icon then
+			self:Icon(player, "icon")
+			self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 10, self)
+		end
+	end
+end
+
 function mod:Target(player, spellId)
 	if spellId == 60835 or spellId == 62660 and db.crash then
 		self:ScheduleEvent("BWCrashToTScan", ScanTarget, 0.1)
 		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
-	elseif spellId == 63276 and db.mark then
-		self:Icon(player, "icon")
-		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 10, self)
 	end
 end
 
