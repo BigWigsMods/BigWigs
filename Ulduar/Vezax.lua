@@ -89,8 +89,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
-	mark_message_you = "You have Mark of the Faceless!",
-	mark_message_other = "%s has Mark of the Faceless!",
+	mark_message_you = "당신은 얼굴 없는 자의 징표!",
+	mark_message_other = "얼굴 없는 자의 징표: %s",
 
 	icon = "전술 표시",
 	icon_desc = "어둠 붕괴 또는 얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
