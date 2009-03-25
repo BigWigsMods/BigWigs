@@ -46,10 +46,11 @@ L:RegisterTranslations("enUS", function() return {
 	vapor = "Saronite Vapors",
 	vapor_desc = "Warn for Saronite Vapors spawn.",
 	vapor_bar = "Next Saronite Vapors",
+	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
-	crash_you = "Shadow Crash on You!",
+	crash_you = "Shadow Crash on YOU!",
 	crash_other = "Shadow Crash on %s",
 
 	mark = "Mark of the Faceless",
@@ -81,6 +82,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor = "사로나이트 증기",
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
 	vapor_bar = "다음 증기",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
@@ -116,6 +118,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_bar = "Prochaines Vapeurs",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
@@ -140,9 +143,9 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 63276)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -180,10 +183,10 @@ local function ScanTarget()
 	if target then
 		local other = L["crash_other"]:format(target)
 		if target == pName then
-			mod:Message(L["crash_you"], "Personal", true, "Alert", nil, 62660)
-			mod:Message(other, "Attention", nil, nil, true)
+			mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
+			mod:WideMessage(other)
 		else
-			mod:Message(other, "Attention", nil, nil, nil, 62660)
+			mod:IfMessage(other, "Attention", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
 		if db.icon then
@@ -196,10 +199,10 @@ function mod:Mark(player, spellID)
 	if db.mark then
 		local other = L["mark_message_other"]:format(player)
 		if player == pName then
-			self:Message(L["mark_message_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
+			self:WideMessage(other, "Attention")
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 			self:Whisper(player, L["mark_message_you"])
 		end
 		self:Bar(other, 10, spellID)
@@ -211,7 +214,7 @@ function mod:Mark(player, spellID)
 end
 
 function mod:Target(player, spellId)
-	if spellId == 60835 or spellId == 62660 and db.crash then
+	if db.crash then
 		self:ScheduleEvent("BWCrashToTScan", ScanTarget, 0.1)
 		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
 	end
