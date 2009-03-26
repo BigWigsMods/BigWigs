@@ -25,7 +25,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Auriaya",
-	
+
 	fear = "Terrifying Screech",
 	fear_desc = "Warn when about Horrifying Screech.",
 	fear_warning = "Fear soon!",
@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	sentinel = "Sentinel Blast",
 	sentinel_desc = "Warn when Auriaya casts a Sentinel Blast.",
 	sentinel_message = "Sentinel Blast!",
-	
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -47,6 +47,19 @@ L:RegisterTranslations("koKR", function() return {
 	sentinel = "파수꾼 폭발",
 	sentinel_desc = "아우리야의 파수꾼 폭발 시전을 알립니다.",
 	sentinel_message = "파수꾼 폭발!",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	fear = "Hurlement terrifiant",
+	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
+	fear_warning = "Hurlement imminent !",
+	fear_bar = "~Recharge Hurlement",
+
+	sentinel = "Déflagration du factionnaire",
+	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
+	sentinel_message = "Déflagration du factionnaire !",
+
+	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 ------------------------------

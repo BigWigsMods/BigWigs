@@ -126,9 +126,9 @@ L:RegisterTranslations("frFR", function() return {
 	crash_other = "Déferlante d'ombre sur %s",
 
 	mark = "Marque du Sans-visage",
-	mark_desc = "Display Place Icon for Mark of the Faceless.",
-	mark_message_you = "You have Mark of the Faceless!",
-	mark_message_other = "%s has Mark of the Faceless!",
+	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
+	mark_message_you = "Marque du Sans-visage sur VOUS !",
+	mark_message_other = "Marque du Sans-visage sur %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre ou une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
