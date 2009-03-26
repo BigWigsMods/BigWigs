@@ -53,11 +53,11 @@ L:RegisterTranslations("koKR", function() return {
 	flame_desc = "거대 화염전차으 화염 분출 시전을 알립니다.",
 	flame_message = "화염 분출!",
 
-	pursues = "추적",
-	pursues_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
-	--pursues_trigger = "^%%s pursues"
-	pursues_other = "%s 추적!",
-	pursues_you = "당신을 추적!",
+	pursue = "추적",
+	pursue_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
+	--pursue_trigger = "^%%s pursues"
+	pursue_other = "%s 추적!",
+	pursue_you = "당신을 추적!",
 
 	shutdown = "시스템 작동 정지",
 	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
@@ -74,11 +74,11 @@ L:RegisterTranslations("frFR", function() return {
 	flame_desc = "Prévient quand le Léviathan des flammes incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
 
-	pursues = "Poursuite",
-	pursues_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
-	--pursues_trigger = "^%%s pursues"
-	pursues_other = "Léviathan poursuit %s !",
-	pursues_you = "Léviathan VOUS poursuit !",
+	pursue = "Poursuite",
+	pursue_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
+	--pursue_trigger = "^%%s pursues"
+	pursue_other = "Léviathan poursuit %s !",
+	pursue_you = "Léviathan VOUS poursuit !",
 
 	shutdown = "Extinction des systèmes",
 	shutdown_desc = "Prévient quand le Léviathan des flammes éteint ses systèmes.",
