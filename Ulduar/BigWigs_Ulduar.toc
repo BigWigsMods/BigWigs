@@ -29,3 +29,4 @@ Vezax.lua
 Kologarn.lua
 XT-002.lua
 Razorscale.lua
+Auriaya.lua

@@ -50,5 +50,6 @@
 <Script file="Ulduar\Kologarn.lua"/>
 <Script file="Ulduar\XT-002.lua"/>
 <Script file="Ulduar\Razorscale.lua"/>
+<Script file="Ulduar\Auriaya.lua"/>
 <!--@end-debug@-->
 </Ui>

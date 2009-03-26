@@ -103,10 +103,10 @@ L:RegisterTranslations("koKR", function() return {
 	flamesuppressant_desc = "화염 억제 시전을 알립니다.",
 	flamesuppressant_warning = "화염 억제 시전!",
 	
-	frostbomb = "Frost Bomb",
-	frostbomb_desc = "Frost Bomb 시전을 알립니다.",
-	frostbomb_warning = "Frost Bomb 시전!",
-	frostbomb_soon = "잠시후 Frost Bomb!",
+	frostbomb = "서리 폭탄",
+	frostbomb_desc = "서리 폭탄 시전을 알립니다.",
+	frostbomb_warning = "서리 폭탄 시전!",
+	frostbomb_soon = "잠시후 서리 폭탄!",
 		
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
