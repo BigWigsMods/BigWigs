@@ -110,8 +110,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
