@@ -45,7 +45,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear_bar = "~공포 대기시간",
 
 	sentinel = "파수꾼 폭발",
-	sentinel_desc = "아우리야의 파수꾼 폭발 시전을 알립니다.",
+	sentinel_desc = "아우리아야의 파수꾼 폭발 시전을 알립니다.",
 	sentinel_message = "파수꾼 폭발!",
 } end )
 

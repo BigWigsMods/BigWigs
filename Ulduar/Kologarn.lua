@@ -56,8 +56,8 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	arm = "팔 죽음",
 	arm_desc = "왼쪽 & 오른쪽 팔의 죽음을 알립니다.",
-	--left_trigger = "Just a scratch!",
-	--right_trigger = "Only a flesh wound!",
+	left_trigger = "긁힌 정도지!",
+	right_trigger = "얕은 상처야!",
 	left_dies = "왼쪽 팔 죽음",
 	right_dies = "오른쪽 팔 죽음",
 	left_wipe_bar = "왼쪽 팔 재생성",
@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	shockwave = "충격파",
 	shockwave_desc = "다음 충격파에 대하여 알립니다.",
-	--shockwave_trigger = "Oblivion!",
+	shockwave_trigger = "망각!",
 
 	eyebeam = "안광 집중",
 	eyebeam_desc = "안광 집중의 대상이된 플레이어를 알립니다.",

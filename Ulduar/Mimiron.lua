@@ -16,7 +16,6 @@ mod.toggleoptions = {"phase", -1, "plasma", "shock", "laser", "bosskill"}
 ------------------------------
 
 local db = nil
-local started = nil
 local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
@@ -36,12 +35,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
+	starttrigger = "^We haven't much time, friends!",
 	phase2_warning = "Phase 2!",
-	phase2_trigger = "Behold the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase2_trigger = "Behold, the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
 	phase3_warning = "Phase 3!",
-	phase3_trigger = "Isn't it beautiful? I call it the magnificent aerial command unit!",
-
-	starttrigger = "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
+	phase3_trigger = "Mwahahahaha! Isn't it beautiful! I call it the magnificent Aerial Command Unit!",
+	phase4_warning = "Phase 4!",
+	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
 
 	plasma = "Plasma Blast",
 	plasma_desc = "Warns when Plasma Blast is casting.",
@@ -67,23 +67,27 @@ L:RegisterTranslations("enUS", function() return {
 	frostbomb_desc = "Warns when Frost Bomb is casting.",
 	frostbomb_warning = "Casting Frost Bomb!",
 	frostbomb_soon = "Frost Bomb soon!",
+	
+	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_message = "%s has been defeated!",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["MKII"] = "Leviathan MKII",
+	["MKII"] = "거대전차 MKII",	--check
 	["VX-001"] = "VX-001",
-	["Aerial"] = "Aerial Command Unit",
+	["Aerial"] = "공중 지휘기",	--check
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
+	starttrigger = "^시간이 없어, 친구들!",
 	phase2_warning = "2 단계!",
-	--phase2_trigger = "Behold the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase2_trigger = "보아라, VX-001 대인-공격포의 아름다운 자태를! You might want to take cover.",	--check
 	phase3_warning = "3 단계!",
-	--phase3_trigger = "Isn't it beautiful? I call it the magnificent aerial command unit!",
-
-	--starttrigger = "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
+	phase3_trigger = "정말 아름답지? 난 이걸 위대한 공중 지휘기라 부르지!",
+	phase4_warning = "4 단계!",
+	phase4_trigger = "그 장엄함을 느껴라! 영광을 흠뻑 취해...아니...영광에 취해라! I present you with...V0-L7R-0N!",	--check
 
 	plasma = "플라스마 폭발",
 	plasma_desc = "플라스마 폭발 시전을 알립니다.",
@@ -107,6 +111,9 @@ L:RegisterTranslations("koKR", function() return {
 	frostbomb_desc = "서리 폭탄 시전을 알립니다.",
 	frostbomb_warning = "서리 폭탄 시전!",
 	frostbomb_soon = "잠시후 서리 폭탄!",
+	
+	end_trigger = "^정상이야. 내가 계산을",
+	end_message = "%s 물리침!",
 		
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
@@ -118,12 +125,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
+	starttrigger = "^Nous n'avons pas beaucoup de temps, les amis !",
 	phase2_warning = "Phase 2 !",
 	phase2_trigger = "Je vous présente le canon d'assaut antipersonnel VX-001 ! Il pourrait être judicieux de vous mettre à l'abri.",
 	phase3_warning = "Phase 3 !",
 	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
-
-	starttrigger = "Nous n'avons pas beaucoup de temps, les amis ! Vous allez m'aider à tester ma dernière création en date, la plus grande de toutes. Avant de changer d'avis, n'oubliez pas que vous me devez bien ça après m'avoir complètement déglingué le XT-002.",
+	phase4_warning = "Phase 4 !",
+	--phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
@@ -147,6 +155,9 @@ L:RegisterTranslations("frFR", function() return {
 	frostbomb_desc = "Prévient quand une Bombe de givre est incantée.",
 	frostbomb_warning = "Bombe de givre en incantation !",
 	frostbomb_soon = "Bombe de givre imminente !",
+	
+	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_message = "%s has been defeated!",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -168,14 +179,9 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FrostBomb", 64623)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
-	--self:AddCombatListener("UNIT_DIED", "BossDeath")
-
+	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
 
@@ -238,34 +244,37 @@ function mod:Spinning(_, spellID)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:match(L["starttrigger"]) then
+	if msg:find(L["starttrigger"]) then
 		phase = 1
 		if db.plasma then
 			self:Bar(L["plasma"], 20, spellID)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
-	elseif msg:match(L["phase2_trigger"]) then
+	elseif msg == L["phase2_trigger"] then
 		phase = 2
 		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
 		if db.phase then
 			self:Message(L["phase2_warning"], "Attention")
 		end
-	elseif msg:match(L["phase2_trigger"]) then
+	elseif msg == L["phase3_trigger"] then
 		phase = 3
 		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
 		if db.phase then
 			self:Message(L["phase3_warning"], "Attention")
 		end
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
+	elseif msg == L["phase4_trigger"] then
+		phase = 4
+		self:CancelAllScheduledEvents()
+		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
+		if db.phase then
+			self:Message(L["phase4_warning"], "Attention")
 		end
+	elseif msg:find(L["end_trigger"]) then
+		if db.bosskill then
+			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
+		end
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end

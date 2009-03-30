@@ -49,6 +49,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "^적대적인 존재 감지.",
+	engage_message = "%s 전투 시작!",
+
 	flame = "화염 분출",
 	flame_desc = "거대 화염전차으 화염 분출 시전을 알립니다.",
 	flame_message = "화염 분출!",

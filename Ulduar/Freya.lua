@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Freya",
 
-	engage_trigger = "The Conservatory must be protected",
+	engage_trigger = "The Conservatory must be protected!",
 	engage_message = "%s Engaged!",
 
 	phase = "Phases",
@@ -73,18 +73,19 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam. (requires promoted or higher)",
 
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_message = "%s has been defeated!",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["Snaplasher"] = "Snaplasher",
-	["Storm Lasher"] = "Storm Lasher",
-	["Ancient Water Spirit"] = "Ancient Water Spirit",
-	["Detonating Lasher"] = "Detonating Lasher",
-	["Ancient Conservator"] = "Ancient Conservator",
+	["Snaplasher"] = "악어덩굴손",
+	["Storm Lasher"] = "폭풍덩굴손",
+	["Ancient Water Spirit"] = "고대 물의 정령",
+	["Detonating Lasher"] = "폭발 덩굴손",	--check
+	["Ancient Conservator"] = "고대의 수호자",	--check
 
-	--engage_trigger = "The Conservatory must be protected",
+	engage_trigger = "어떻게 해서든 정원을 수호해야 한다!",	--check
 	engage_message = "%s 전투 시작!",
 
 	phase = "단계",
@@ -95,10 +96,10 @@ L:RegisterTranslations("koKR", function() return {
 	wave = "웨이브",
 	wave_desc = "웨이브에 대해 알립니다.",
 	wave_bar = "다음 웨이브",
-	--conservator_trigger = "Eonar, your servant requires aid!",
-	--detonate_trigger = "The swarm of the elements shall overtake you!",
-	--elementals_trigger = "Children, assist me!",
-	--tree_trigger = "A Lifebinder's Gift begins to grow!",
+	conservator_trigger = "이오나여, 당신의 종이 도움을 청합니다!",	--check
+	detonate_trigger = "정령의 무리가 너희를 덮치리라!",	--check
+	elementals_trigger = "얘들아, 날 도와라!",	--check
+	tree_trigger = "A Lifebinder's Gift begins to grow!",	--check
 	conservator_message = "보존자 소환",
 	detonate_message = "폭파꽃 소환",
 	elementals_message = "정령들 소환",
@@ -120,7 +121,8 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "전술 표시",
 	icon_desc = "일광 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
-	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_trigger = "내게서 그의 지배력이 거쳤다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",	--check
+	end_message = "%s 물리침!",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
@@ -132,7 +134,7 @@ L:RegisterTranslations("frFR", function() return {
 	--["Detonating Lasher"] = "Detonating Lasher",
 	--["Ancient Conservator"] = "Ancient Conservator",
 
-	engage_trigger = "Le jardin doit être protégé", -- à vérifier
+	engage_trigger = "Le jardin doit être protégé !", -- à vérifier
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
@@ -169,6 +171,7 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de soleil (nécessite d'être assistant ou mieux).",
 
 	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.", -- à vérifier
+	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )

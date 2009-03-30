@@ -27,6 +27,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ignis",
+	
+	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
@@ -49,6 +51,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "건방진 젖먹이들이! 세상을 되찾는데 쓸 무기를 네놈들의 피로 담금질하겠다!",	--check
+
 	flame = "화염 분사",
 	flame_desc = "이그니스의 화염 분사를 알립니다.",
 	flame_message = "화염 분사!",
@@ -70,6 +74,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
+	
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
@@ -101,7 +107,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -144,15 +150,12 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
-		end
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
 		if db.flame then
 			self:Bar(L["flame_bar"], 28, 62680)
 			self:DelayedMessage(23, L["flame_soon"], "Attention")
 		end
 	end
 end
+

@@ -15,7 +15,6 @@ mod.toggleoptions = {"flash", "frozenblow", "berserk", "bosskill"}
 ------------------------------
 
 local db = nil
-local started = nil
 local FF = {}
 local fmt = string.format
 
@@ -27,6 +26,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Hodir",
+	
+	engage_trigger = "You will suffer for this trespass!",
 
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
@@ -41,13 +42,15 @@ L:RegisterTranslations("enUS", function() return {
 	frozenblow_warning = "Frozen Blow removed in 5sec!",
 	frozenblow_bar = "Frozen Blow",
 
-	end_trigger = "^Thank you for freeing me!",
+	end_trigger = "I...I am released from his grasp! At...last!",
 	end_message = "%s has been defeated!",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "침입자는 쓴맛을 보게 될게다!",
+
 	flash = "순간 빙결",
 	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",
 	flash_message = "순간 빙결: %s!",
@@ -61,13 +64,15 @@ L:RegisterTranslations("koKR", function() return {
 	frozenblow_warning = "얼음 일격 5초 후 사라짐!",
 	frozenblow_bar = "얼음 일격",
 
-	--end_trigger = "",	--check
-	--end_message = "%s 물리침!",
+	end_trigger = "드디어...드디어 그의 손아귀를!... 벗어나는구나!",	--check
+	end_message = "%s 물리침!",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "You will suffer for this trespass!",
+
 	flash = "Gel instantané",
 	flash_desc = "Prévient quand un joueur subit les effets du Gel instantané et quand le Gel instantané est incanté.",
 	flash_message = "%s est un bloc de glace !",
@@ -81,7 +86,7 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow_warning = "Fin des Coups gelés dans 5 sec. !",
 	frozenblow_bar = "Coups gelés",
 
-	end_trigger = "^Je suis libéré de son emprise", -- à vérifier
+	end_trigger = "I...I am released from his grasp! At...last!", -- à vérifier
 	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
@@ -92,7 +97,6 @@ L:RegisterTranslations("frFR", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
@@ -100,26 +104,14 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrozenBlow", 62478, 63512)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	--self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["end_trigger"]) then
-		if db.bosskill then
-			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
-		end
-		BigWigs:ToggleModuleActive(self, false)
-	end
-end
 
 function mod:FlashCast(_, spellID)
 	if db.flash then
@@ -160,17 +152,18 @@ function mod:FrozenBlow(_, spellID)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
-		end
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
 		if db.flash then
 			self:Bar(L["flash_bar"], 35, 61968)
 		end
 		if db.berserk then
 			self:Enrage(540, true)
 		end
+	elseif msg == L["end_trigger"] then
+		if db.bosskill then
+			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
+		end
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end

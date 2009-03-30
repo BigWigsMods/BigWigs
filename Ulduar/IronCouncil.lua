@@ -77,7 +77,7 @@ L:RegisterTranslations("koKR", function() return {
 	overload_message = "10초 후 폭발!",
 
 	power = "마력의 룬",
-	power_desc = "몰게임의 마력의 룬을 알립니다.",
+	power_desc = "몰가임의 마력의 룬을 알립니다.",
 	power_message = "마력의 룬 생성!",
 
 	death = "자신의 죽음의 룬",
@@ -85,7 +85,7 @@ L:RegisterTranslations("koKR", function() return {
 	death_message = "당신은 죽음의 룬!",
 
 	summoning = "소환의 룬",
-	summoning_desc = "몰게임의 소환의 룬 시전을 알립니다.",
+	summoning_desc = "몰가임의 소환의 룬 시전을 알립니다.",
 	summoning_message = "소환의 룬 - 곧 정령 등장!",
 
 	tendrils = "번개 덩굴",
