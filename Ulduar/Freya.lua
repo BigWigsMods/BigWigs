@@ -242,8 +242,16 @@ end
 
 function mod:Fury(player, spellID)
 	if db.fury then
-		self:IfMessage(L["fury_message"]:format(player), "Attention", spellID)
-		self:Bar(L["fury_message"]:format(player), 10, spellID)
+		local other = L["fury_message"]:format(player)
+		if player == pName then
+			self:Message(L["fury_you"], "Personal", true, "Alert", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:Whisper(player, L["lightbomb_you"])
+		end
+		self:Bar(other, 10, spellID)
+		self:Icon(player, "icon")
 	end
 end
 
