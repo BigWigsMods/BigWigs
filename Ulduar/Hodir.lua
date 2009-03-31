@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
-mod.toggleoptions = {"flash", "frozenblow", "berserk", "bosskill"}
+mod.toggleoptions = {"cold", "flash", "frozenblow", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -28,7 +28,11 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Hodir",
 	
 	engage_trigger = "You will suffer for this trespass!",
-
+	
+	cold = "Biting Cold(Achievement)",
+	cold_desc = "Warn when you have the Biting Cold 2stack",
+	cold_message = "Biting Cold(2Stack) - Move!",
+	
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
 	flash_message = "%s is Flash Freeze!",
@@ -50,6 +54,10 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "침입자는 쓴맛을 보게 될게다!",
+	
+	cold = "매서운 추위(업적)",
+	cold_desc = "매서운 추위 2중첩시 알립니다.",
+	cold_message = "매서운 추위(2중첩) - 이동!",
 
 	flash = "순간 빙결",
 	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",
@@ -104,6 +112,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrozenBlow", 62478, 63512)
+	self:AddCombatListener("SPELL_DAMAGE", "Cold", 62188)
+	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -166,4 +176,28 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		BigWigs:ToggleModuleActive(self, false)
 	end
+end
+
+function mod:UNIT_AURA(unit)
+	if unit and unit ~= "player" then return end
+	
+	local bitingcold = nil
+	for i = 1, 9 do
+		local name, _, icon, stack = UnitDebuff("player", i)
+		if not name then break end
+		if icon == "Interface\\Icons\\Spell_Frost_IceShock" then
+			if stack < 2 then return end
+			bitingcold = icon
+		end
+	end
+	if bitingcold then
+		if db.cold then
+			self:LocalMessage(L["cold_message"], "Personal", bitingcold, "Alert")
+		end
+		self:UnregisterEvent("UNIT_AURA")
+	end
+end
+
+function mod:Cold()
+	self:RegisterEvent("UNIT_AURA")
 end
