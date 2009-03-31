@@ -57,8 +57,6 @@ L:RegisterTranslations("enUS", function() return {
 	laser_soon = "Laser Barrage soon!",
 	laser_bar = "Next Laser Barrage",
 
-	--hard mode abilities:
-
 	flamesuppressant = "Flame Suppressant",
 	flamesuppressant_desc = "Warns when Flame Suppressant is casting.",
 	flamesuppressant_warning = "Casting Flame Suppressant!",
@@ -67,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 	frostbomb_desc = "Warns when Frost Bomb is casting.",
 	frostbomb_warning = "Casting Frost Bomb!",
 	frostbomb_soon = "Frost Bomb soon!",
-	
+
 	end_trigger = "^It would appear that I made a slight miscalculation.",
 	end_message = "%s has been defeated!",
 
@@ -102,19 +100,19 @@ L:RegisterTranslations("koKR", function() return {
 	laser_desc = "레이저 탄막 활동을 알립니다!",
 	laser_soon = "곧 레이저 탄막!",
 	laser_bar = "디음 레이저 탄막",
-	
+
 	flamesuppressant = "화염 억제",
 	flamesuppressant_desc = "화염 억제 시전을 알립니다.",
 	flamesuppressant_warning = "화염 억제 시전!",
-	
+
 	frostbomb = "서리 폭탄",
 	frostbomb_desc = "서리 폭탄 시전을 알립니다.",
 	frostbomb_warning = "서리 폭탄 시전!",
 	frostbomb_soon = "잠시후 서리 폭탄!",
-	
+
 	end_trigger = "^정상이야. 내가 계산을",
 	end_message = "%s 물리침!",
-		
+
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
 
@@ -130,7 +128,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "Je vous présente le canon d'assaut antipersonnel VX-001 ! Il pourrait être judicieux de vous mettre à l'abri.",
 	phase3_warning = "Phase 3 !",
 	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
-	phase4_warning = "Phase 4 !",
+	phase4_warning = "Phase 4 !",
 	--phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
 
 	plasma = "Explosion de plasma",
@@ -155,9 +153,9 @@ L:RegisterTranslations("frFR", function() return {
 	frostbomb_desc = "Prévient quand une Bombe de givre est incantée.",
 	frostbomb_warning = "Bombe de givre en incantation !",
 	frostbomb_soon = "Bombe de givre imminente !",
-	
-	end_trigger = "^It would appear that I made a slight miscalculation.",
-	end_message = "%s has been defeated!",
+
+	end_trigger = "^Il semblerait que j'ai pu faire une minime erreur de calcul.", -- à vérifier
+	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )

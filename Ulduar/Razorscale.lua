@@ -27,13 +27,13 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorscale",
-	
+
 	["Commander"] = "Expedition Commander",
-	
+
 	["We are ready to help!"] = true,
-	
+
 	engage_message = "%s Engaged!",
-	
+
 	phase = "Phases",
 	phase_desc = "Warn when Razorscale switches between phases.",
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
@@ -44,26 +44,26 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Phases 2!",
 	phase2_warning = "Phase 2 Soon!",
 	stun_bar = "Stun",
-	
+
 	breath = "Flame Breath",
 	breath_desc = "Flame Breath warnings.",
 	breath_trigger = "%s takes a deep breath...",
 	breath_message = "Flame Breath!",
-	
+
 	flame = "Devouring Flame on You",
 	flame_desc = "Warn when you are in a Devouring Flame.",
 	flame_message = "Devouring Flame on YOU!",
-	
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
 	["Commander"] = "원정대 사령관",
-	
+
 	["We are ready to help!"] = "우리는 도울 준비가 되었습니다!",	--check
-	
+
 	engage_message = "%s 전투 시작!",
-	
+
 	phase = "단계",
 	phase_desc = "칼날비늘의 단계 변경을 알립니다.",
 	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",
@@ -74,20 +74,46 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "2 단계!",
 	phase2_warning = "곧 2 단계!",
 	stun_bar = "기절",
-	
+
 	breath = "화염 숨결",
 	breath_desc = "화염 숨결을 알립니다.",
 	breath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다...",
 	breath_message = "화염 숨결!",
-	
+
 	flame = "자신의 파멸의 불길",
 	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
 	flame_message = "당신은 파멸의 불길!",
-	
+
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	["Commander"] = "Commandant de l'expédition",
+
+	["We are ready to help!"] = "Nous sommes prêts à aider !",
+
+	engage_message = "%s engagée !",
+
+	phase = "Phases",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
+	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !", -- à vérifier
+	ground_message = "Tranchécaille Chained up!",
+	--air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_message = "Décollage !",
+	phase2_trigger = "",
+	phase2_message = "Phases 2 !",
+	phase2_warning = "Phase 2 imminente !",
+	stun_bar = "Étourdie",
+
+	breath = "Souffle de flammes",
+	breath_desc = "Prévient de l'arrivée des Souffles de flammes.",
+	breath_trigger = "%s inspire profondément...", -- à vérifier
+	breath_message = "Souffle de flammes !",
+
+	flame = "Flamme dévorante sur vous",
+	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
+	flame_message = "Flamme dévorante sur VOUS !",
+
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
@@ -98,12 +124,12 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
-	
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 63014, 63816)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("UNIT_HEALTH")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

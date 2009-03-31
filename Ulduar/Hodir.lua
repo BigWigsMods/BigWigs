@@ -26,13 +26,13 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Hodir",
-	
+
 	engage_trigger = "You will suffer for this trespass!",
-	
+
 	cold = "Biting Cold(Achievement)",
 	cold_desc = "Warn when you have the Biting Cold 2stack",
 	cold_message = "Biting Cold(2Stack) - Move!",
-	
+
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
 	flash_message = "%s is Flash Freeze!",
@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "침입자는 쓴맛을 보게 될게다!",
-	
+
 	cold = "매서운 추위(업적)",
 	cold_desc = "매서운 추위 2중첩시 알립니다.",
 	cold_message = "매서운 추위(2중첩) - 이동!",
@@ -79,7 +79,11 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "You will suffer for this trespass!",
+	engage_trigger = "Vous allez souffrir pour cette intrusion !", -- à vérifier
+
+	cold = "Ça caille ici",
+	cold_desc = "Prévient quand Froid mordant s'est empilé 2 fois sur votre personnage.",
+	cold_message = "Froid mordant (2 cumuls) - bougez !",
 
 	flash = "Gel instantané",
 	flash_desc = "Prévient quand un joueur subit les effets du Gel instantané et quand le Gel instantané est incanté.",
@@ -94,7 +98,7 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow_warning = "Fin des Coups gelés dans 5 sec. !",
 	frozenblow_bar = "Coups gelés",
 
-	end_trigger = "I...I am released from his grasp! At...last!", -- à vérifier
+	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
 	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",

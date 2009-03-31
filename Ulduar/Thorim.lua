@@ -63,7 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
 	charge_message = "Charge: (%d)",
 	charge_bar = "Charge (%d)",
-	
+
 	end_trigger = "Stay your arms! I yield!",
 	end_message = "%s has been defeated!",
 
@@ -105,7 +105,7 @@ L:RegisterTranslations("koKR", function() return {
 	charge_desc = "토림의 번개 충전과 횟수를 알립니다.",
 	charge_message = "충전: (%d)",
 	charge_bar = "충전 (%d)",
-	
+
 	end_trigger = "무기를 거둬라! 내가 졌다!",
 	end_message = "%s 물리침!",
 
@@ -116,10 +116,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Début de la phase 1",
-	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?", -- à vérifier
-	--phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+	phase2_trigger1 = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement, allez payer ! Attendez... vous ?", -- à vérifier
+	phase2_trigger2 = "Je me souviens de vous. Les montagnes. Mais vous ! Qu'est-ce qui se passe ? Où suis-je !?", -- à vérifier
 	phase2_message = "Phase 2 - Berserk dans 5 min. !",
-	phase3_trigger = "^Avortons impertinents. Vous osez me défier sur", -- à vérifier
+	phase3_trigger = "Avortons impertinents. Vous osez me défier sur mon piédestal ! Je vais vous écraser moi-même !", -- à vérifier
 	phase3_message = "Phase 3 - %s engagé !",
 
 	p2berserk = "Phase 2 - Berserk",
@@ -147,9 +147,9 @@ L:RegisterTranslations("frFR", function() return {
 	charge_desc = "Compte et prévient de l'arrivée des Charges de foudre de Thorim.",
 	charge_message = "Charge : (%d)",
 	charge_bar = "Charge (%d)",
-	
-	--end_trigger = "Stay your arms! I yield!",
-	--end_message = "%s has been defeated!",
+
+	end_trigger = "Retenez vos coups ! Je me rends !", -- à vérifier
+	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )

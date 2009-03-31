@@ -27,7 +27,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ignis",
-	
+
 	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
 	flame = "Flame Jets",
@@ -74,8 +74,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
-	
+	engage_trigger = "Chiots insolents ! Les lames qui serviront à reconquérir ce monde seront trempés dans votre sang !", -- à vérifier
+
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
