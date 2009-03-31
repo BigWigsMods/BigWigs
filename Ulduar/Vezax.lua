@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"crash", "mark", "flame", "surge", "vapor", "spawn", "icon", "bosskill"}
+mod.toggleoptions = {"crash", "mark", "flame", "surge", "vapor", "animus", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -16,7 +16,7 @@ mod.toggleoptions = {"crash", "mark", "flame", "surge", "vapor", "spawn", "icon"
 
 local db = nil
 started = true
-add = nil
+count = 1
 local pName = UnitName("player")
 local fmt = string.format
 
@@ -39,15 +39,15 @@ L:RegisterTranslations("enUS", function() return {
 	surge_cast = "Surge of Darkness casting!",
 	surge_end = "Surge of Darkness faded!",
 
-	spawn = "spawn Warnings",
-	spawn_desc = "Warn for adds",
-	spawn_warning = "spawn soon",
+	animus = "Saronite Animus",
+	animus_desc = "Warn when the Saronite Animus spawns.",
+	animus_message = "Animus spawns!",
 
 	vapor = "Saronite Vapors",
 	vapor_desc = "Warn for Saronite Vapors spawn.",
-	vapor_bar = "Next Saronite Vapors",
-	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
-
+	vapor_message = "Saronite Vapors (%d)!",
+	vapor_bar = "Next Vapors (%d)",
+	
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
 	crash_you = "Shadow Crash on YOU!",
@@ -75,15 +75,15 @@ L:RegisterTranslations("koKR", function() return {
 	surge_cast = "어둠 쇄도 시전!",
 	surge_end = "어둠 쇄도 사라짐!",
 
-	spawn = "소환 경고",
-	spawn_desc = "소환을 알립니다",
-	spawn_warning = "곧 소환!",
+	animus = "사로나이트 원혼",
+	animus_desc = "사로나이트 원혼 소환을 알립니다.",
+	animus_message = "원혼 소환!",
 
 	vapor = "사로나이트 증기",
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
-	vapor_bar = "다음 증기",
-	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",	--check
-
+	vapor_message = "사로나이트 증기 (%d)!",
+	vapor_bar = "다음 증기 (%d)",
+	
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
@@ -111,15 +111,15 @@ L:RegisterTranslations("frFR", function() return {
 	surge_cast = "Vague de ténèbres en incantation !",
 	surge_end = "Vague de ténèbres estompée !",
 
-	spawn = "Renforts",
-	spawn_desc = "Prévient quand les renforts arrivent.",
-	spawn_warning = "Renforts imminents",
+	--animus = "Saronite Animus",
+	--animus_desc = "Warn when the Saronite Animus spawns.",
+	--animus_message = "Animus spawns!",
 
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
-	vapor_bar = "Prochaines Vapeurs",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
-
+	vapor_message = "Saronite Vapors (%d)!",
+	vapor_bar = "Prochaines Vapeurs (%d)",
+	
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
 	crash_you = "Déferlante d'ombre sur VOUS !",
@@ -146,14 +146,12 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
+	self:AddCombatListener("SPELL_SUMMON", "Summon", 63081, 63145)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	self:RegisterEvent("UNIT_HEALTH")
-
+	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
+	
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
@@ -240,30 +238,20 @@ function mod:SurgeGain(_, spellID)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["vapor_trigger"] and db.vapor then
-		self:IfMessage(L["vapor"], "Attention", 63322)
-		self:Bar(L["vapor_bar"], 30, 63322)
-	end
-end
-
-function mod:UNIT_HEALTH(msg)
-	if not db.spawn then return end
-	if UnitName(msg) == boss then
-		local hp = UnitHealth(msg)
-		if hp > 26 and hp <= 29 and not add then
-			self:Message(L["spawn_warning"], "Positive")
-			add = true
-		elseif hp > 40 and add then
-			add = false
-		end
+function mod:Summon(_, spellID)
+	if spellId == 63081 and db.vapor then
+		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
+		count = count + 1
+		self:Bar(L["vapor_bar"]:format(count), 30, 63323)
+	elseif spellId == 63145 and db.animus then
+		self:IfMessage(L["animus_message"], "Attention", 63319)
 	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		add = nil
+		count = 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
