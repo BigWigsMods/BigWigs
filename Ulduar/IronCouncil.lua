@@ -11,18 +11,40 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {"chain", "overload", "power", -1, "death", "summoning", "tendrils", -1, "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"chain", "overload", "power", -1, "death", "summoning", "tendrils", "overwhelm", -1, "icon", "berserk", "bosskill"}
+mod.proximityCheck = function( unit )
+	for k, v in pairs( bandages ) do
+		if IsItemInRange( k, unit) == 1 then
+			return true
+		end
+	end
+	return false
+end
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local db = nil
-local started = nil
 local previous = nil
 local deaths = 0
+local overwhelmTime = 30
 local pName = UnitName("player")
 local fmt = string.format
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 
 ----------------------------
 --      Localization      --
@@ -32,6 +54,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "IronCouncil",
+	
+	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+	engage_trigger2 = "Nothing short of total decimation will suffice!",
+	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
 
 	chain = "Chain Lightning",
 	chain_desc = "Warn when Brundir casts a Chain Lightning.",
@@ -58,6 +84,11 @@ L:RegisterTranslations("enUS", function() return {
 	tendrils_other = "%s being chased!",
 	tendrils_you = "YOU are being chased!",
 	tendrils_message = "Landing in ~5sec!",
+	
+	overwhelm = "Overwhelming Power",
+	overwhelm_desc = "Warn when a player has Overwhelming Power.",
+	overwhelm_you = "You are Overwhelming Power",
+	overwhelm_other = "Overwhelming Power: %s",
 
 	icon = "Raid Target Icon",
 	icon_desc = "Place a Raid Target Icon on the player being chased(requires promoted or higher).",
@@ -68,6 +99,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
  
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 거 같으냐, 침입자들아!",	--check
+	engage_trigger2 = "남김없이 쓸어 버려야 속이 시원하겠군!",	--check
+	engage_trigger3 = "세상에서 가장 큰 무기건 세상에서 가장 위대한 영웅이건, 너희는 어차피 필멸의 존재야!",	--check
+	
 	chain = "연쇄 번개",
 	chain_desc = "브룬디르의 연쇄 번개 시전을 알립니다.",
 	chain_message = "연쇄 번개!",
@@ -93,6 +128,11 @@ L:RegisterTranslations("koKR", function() return {
 	tendrils_other = "%s 추적 중!",
 	tendrils_you = "당신을 추적 중!",
 	tendrils_message = "약 5초 후 착지!",
+	
+	overwhelm = "압도적인 힘",
+	overwhelm_desc = "압도적인 힘에 걸린 플레이어를 알립니다.",
+	overwhelm_message = "당신은 압도적인 힘!",
+	overwhelm_other = "압도적인 힘: %s",
 
 	icon = "전술 표시",
 	icon_desc = "추적 중인 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -103,6 +143,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+	engage_trigger2 = "Nothing short of total decimation will suffice!",
+	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+
 	chain = "Chaîne d'éclairs",
 	chain_desc = "Prévient quand Brundir incante une Chaîne d'éclairs.",
 	chain_message = "Chaîne d'éclairs !",
@@ -128,6 +172,11 @@ L:RegisterTranslations("frFR", function() return {
 	tendrils_other = "%s est poursuivi(e) !",
 	tendrils_you = "VOUS êtes poursuivi(e) !",
 	tendrils_message = "Atterrissage dans ~5 sec. !",
+	
+	overwhelm = "Overwhelming Power",
+	overwhelm_desc = "Warn when a player has Overwhelming Power.",
+	overwhelm_you = "You are Overwhelming Power",
+	overwhelm_other = "Overwhelming Power: %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être assistant ou mieux).",
@@ -148,6 +197,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Summoning", 62273)	-- Molgeim abiltities plus(2 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63485)	-- Brundir abiltities plus(2 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490)	-- Molgeim abiltities plus(1 dead)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888)	-- Steelbreaker abiltities plus(2 dead)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -165,6 +215,22 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Overwhelm(player, spellID)
+	if db.overwhelm then
+		local other = L["overwhelm_other"]:format(player)
+		if player == pName then
+			self:Message(L["overwhelm_you"], "Personal", true, "Alert", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:Whisper(player, L["overwhelm_other"])
+		end
+		self:Bar(other, overwhelmTime, spellID)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:Chain(_, spellID)
 	if db.chain then
@@ -259,13 +325,10 @@ function mod:Deaths(unit, guid)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"])) then
 		deaths = 0
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
-		end
+		overwhelmTime = GetCurrentDungeonDifficulty() == 1 and 60 or 30
 		if db.berserk then
 			self:Enrage(600, true)
 		end

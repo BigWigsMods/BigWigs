@@ -9,6 +9,14 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
 mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", "icon", "bosskill"}
+mod.proximityCheck = function( unit )
+	for k, v in pairs( bandages ) do
+		if IsItemInRange( k, unit) == 1 then
+			return true
+		end
+	end
+	return false
+end
 
 ------------------------------
 --      Are you local?      --
@@ -20,6 +28,20 @@ local dCount = 1
 local eCount = 1
 local pName = UnitName("player")
 local fmt = string.format
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 
 ----------------------------
 --      Localization      --
@@ -62,7 +84,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	fury = "Nature's Fury",
 	fury_desc = "Tells you who has been hit by Nature's Fury.",
-	fury_message = "Fury: %s",
+	fury_you = "Fury on You!",
+	fury_other = "Fury: %s",
 
 	sunbeam = "Sunbeam",
 	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
@@ -111,7 +134,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	fury = "자연의 격노",
 	fury_desc = "자연의 격노에 걸린 플레이어를 알립니다.",
-	fury_message = "자연의 격노: %s!",
+	fury_you = "당신은 자연의 격노!",
+	fury_other = "자연의 격노: %s!",
 
 	sunbeam = "일광",
 	sunbeam_desc = "프레이야의 일광 시전 대상을 알립니다.",
@@ -160,7 +184,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	fury = "Fureur de la nature",
 	fury_desc = "Prévient quand un joueur subit les effets de la Fureur de la nature.",
-	fury_message = "Fureur : %s",
+	fury_you = "Fureur sur vous !",
+	fury_other = "Fureur : %s",
 
 	sunbeam = "Rayon de soleil",
 	sunbeam_desc = "Prévient quand un joueur subit les effets du Rayon de soleil.",
@@ -242,13 +267,14 @@ end
 
 function mod:Fury(player, spellID)
 	if db.fury then
-		local other = L["fury_message"]:format(player)
+		local other = L["fury_other"]:format(player)
 		if player == pName then
 			self:Message(L["fury_you"], "Personal", true, "Alert", nil, spellID)
 			self:Message(other, "Attention", nil, nil, true)
+			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
 			self:Message(other, "Attention", nil, nil, nil, spellID)
-			self:Whisper(player, L["lightbomb_you"])
+			self:Whisper(player, L["fury_other"])
 		end
 		self:Bar(other, 10, spellID)
 		self:Icon(player, "icon")
