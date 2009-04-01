@@ -131,7 +131,7 @@ L:RegisterTranslations("koKR", function() return {
 	
 	overwhelm = "압도적인 힘",
 	overwhelm_desc = "압도적인 힘에 걸린 플레이어를 알립니다.",
-	overwhelm_message = "당신은 압도적인 힘!",
+	overwhelm_you = "당신은 압도적인 힘!",
 	overwhelm_other = "압도적인 힘: %s",
 
 	icon = "전술 표시",
@@ -201,8 +201,6 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
 
 	started = nil
 	previous = nil
