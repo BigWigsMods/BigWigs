@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"exposed", "gravitybomb", "lightbomb", "tympanic", "bosskill"}
+mod.toggleoptions = {"exposed", "gravitybomb", "lightbomb", "tympanic", "heartbreak", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -23,6 +23,7 @@ end
 ------------------------------
 
 local db = nil
+local phase = nil
 local started = nil
 local exposed1 = nil
 local exposed2 = nil
@@ -69,6 +70,10 @@ L:RegisterTranslations("enUS", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
+	
+	heartbreak = "Heartbreak",
+	heartbreak_desc = "Warn when XT-002 gains Heartbreak",
+	heartbreak_message = "Heartbreak!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on players with Bomb. (requires promoted or higher)",
@@ -95,6 +100,10 @@ L:RegisterTranslations("koKR", function() return {
 	tympanic = "격분의 땅울림",
 	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
 	tympanic_message = "격분의 땅울림!",
+	
+	heartbreak = "부서진 심장",
+	heartbreak_desc = "XT-002의 부서진 심장 획득을 알립니다.",
+	heartbreak_message = "심장 파괴됨!",
 
 	icon = "전술 표시",
 	icon_desc = "폭탄에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -121,6 +130,10 @@ L:RegisterTranslations("frFR", function() return {
 	tympanic = "Colère assourdissante",
 	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
 	tympanic_message = "Colère assourdissante !",
+	
+	--heartbreak = "Heartbreak",
+	--heartbreak_desc = "Warn when XT-002 gains Heartbreak",
+	--heartbreak_message = "Heartbreak!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",
@@ -135,6 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Tympanic", 62775, 62776)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
@@ -158,6 +172,13 @@ function mod:Exposed(_, spellID)
 	if db.exposed then
 		self:IfMessage(L["exposed_message"], "Attention", spellID)
 		self:Bar(L["exposed"], 30, spellID)
+	end
+end
+
+function mod:Heartbreak(_, spellID)
+	phase = 2
+	if db.heartbreak then
+		self:IfMessage(L["heartbreak_message"], "Attention", spellID)
 	end
 end
 
@@ -202,16 +223,18 @@ end
 
 function mod:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss and db.exposed then
-		local health = UnitHealth(msg)
-		if not exposed1 and health > 86 and health <= 88 then
-			exposed1 = true
-			self:Message(L["exposed_warning"], "Attention")
-		elseif not exposed2 and health > 56 and health <= 58 then
-			exposed2 = true
-			self:Message(L["exposed_warning"], "Attention")
-		elseif not exposed3 and health > 26 and health <= 28 then
-			exposed3 = true
-			self:Message(L["exposed_warning"], "Attention")
+		if phase == 1 then
+			local health = UnitHealth(msg)
+			if not exposed1 and health > 86 and health <= 88 then
+				exposed1 = true
+				self:Message(L["exposed_warning"], "Attention")
+			elseif not exposed2 and health > 56 and health <= 58 then
+				exposed2 = true
+				self:Message(L["exposed_warning"], "Attention")
+			elseif not exposed3 and health > 26 and health <= 28 then
+				exposed3 = true
+				self:Message(L["exposed_warning"], "Attention")
+			end
 		end
 	end
 end
@@ -219,6 +242,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		phase = 1
 		exposed1 = nil
 		exposed2 = nil
 		exposed3 = nil
