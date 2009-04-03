@@ -3,11 +3,11 @@
 ----------------------------------
 
 local boss = BB["Razorscale"]
---local Commander = BB["Expedition Commander"]	--need the add name translated, maybe add to BabbleBoss.
+local Commander = BB["Expedition Commander"]	--need the add name translated, maybe add to BabbleBoss.
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = {--[[Commander,]] boss}
+mod.enabletrigger = {Commander, boss}
 mod.guid = 33186
 mod.toggleoptions = {"phase", "breath", "flame", "bosskill"}
 
@@ -27,8 +27,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorscale",
-
-	["Commander"] = "Expedition Commander",
 
 	["We are ready to help!"] = true,
 
@@ -58,8 +56,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["Commander"] = "원정대 사령관",
-
 	["We are ready to help!"] = "우리는 도울 준비가 되었습니다!",	--check
 
 	engage_message = "%s 전투 시작!",
@@ -88,8 +84,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["Commander"] = "Commandant de l'expédition",
-
 	["We are ready to help!"] = "Nous sommes prêts à aider !",
 
 	engage_message = "%s engagée !",
@@ -147,7 +141,7 @@ end
 function mod:GOSSIP_SHOW()
 	local target = UnitName("target")
 	local gossip = GetGossipOptions()
-	if gossip and target == L["Commander"] then
+	if gossip and target == Commander then
 		if gossip == L["We are ready to help!"] then
 			self:Sync("Start")
 		end
