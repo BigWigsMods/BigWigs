@@ -91,7 +91,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !", -- à vérifier
-	ground_message = "Tranchécaille Chained up!",
+	ground_message = "Tranchécaille enchaînée !",
 	--air_trigger = "Give us a moment to prepare to build the turrets.",
 	air_message = "Décollage !",
 	--phase2_trigger = "Razorscale lands permanently!",

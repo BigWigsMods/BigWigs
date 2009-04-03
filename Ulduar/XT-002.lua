@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
-	
+
 	heartbreak = "Heartbreak",
 	heartbreak_desc = "Warn when XT-002 gains Heartbreak",
 	heartbreak_message = "Heartbreak!",
@@ -130,10 +130,10 @@ L:RegisterTranslations("frFR", function() return {
 	tympanic = "Colère assourdissante",
 	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
 	tympanic_message = "Colère assourdissante !",
-	
-	--heartbreak = "Heartbreak",
-	--heartbreak_desc = "Warn when XT-002 gains Heartbreak",
-	--heartbreak_message = "Heartbreak!",
+
+	heartbreak = "Bris du coeur",
+	heartbreak_desc = "Prévient quand XT-002 gagne Bris du coeur.",
+	heartbreak_message = "Bris du coeur !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",

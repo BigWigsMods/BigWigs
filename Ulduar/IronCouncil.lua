@@ -54,7 +54,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "IronCouncil",
-	
+
 	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
 	engage_trigger2 = "Nothing short of total decimation will suffice!",
 	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
@@ -84,7 +84,7 @@ L:RegisterTranslations("enUS", function() return {
 	tendrils_other = "%s being chased!",
 	tendrils_you = "YOU are being chased!",
 	tendrils_message = "Landing in ~5sec!",
-	
+
 	overwhelm = "Overwhelming Power",
 	overwhelm_desc = "Warn when a player has Overwhelming Power.",
 	overwhelm_you = "You are Overwhelming Power",
@@ -102,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 거 같으냐, 침입자들아!",	--check
 	engage_trigger2 = "남김없이 쓸어 버려야 속이 시원하겠군!",	--check
 	engage_trigger3 = "세상에서 가장 큰 무기건 세상에서 가장 위대한 영웅이건, 너희는 어차피 필멸의 존재야!",	--check
-	
+
 	chain = "연쇄 번개",
 	chain_desc = "브룬디르의 연쇄 번개 시전을 알립니다.",
 	chain_message = "연쇄 번개!",
@@ -128,7 +128,7 @@ L:RegisterTranslations("koKR", function() return {
 	tendrils_other = "%s 추적 중!",
 	tendrils_you = "당신을 추적 중!",
 	tendrils_message = "약 5초 후 착지!",
-	
+
 	overwhelm = "압도적인 힘",
 	overwhelm_desc = "압도적인 힘에 걸린 플레이어를 알립니다.",
 	overwhelm_you = "당신은 압도적인 힘!",
@@ -143,9 +143,9 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
-	engage_trigger2 = "Nothing short of total decimation will suffice!",
-	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+	engage_trigger1 = "Vous ne vaincrez pas si facilement l'Assemblée du fer, envahisseurs !", -- à vérifier
+	engage_trigger2 = "Seule votre extermination complète me conviendra !", -- à vérifier
+	engage_trigger3 = "Que vous soyez les plus grandes punaises ou les plus grands héros de ce monde, vous n'êtes jamais que des mortels !", -- à vérifier
 
 	chain = "Chaîne d'éclairs",
 	chain_desc = "Prévient quand Brundir incante une Chaîne d'éclairs.",
@@ -172,11 +172,11 @@ L:RegisterTranslations("frFR", function() return {
 	tendrils_other = "%s est poursuivi(e) !",
 	tendrils_you = "VOUS êtes poursuivi(e) !",
 	tendrils_message = "Atterrissage dans ~5 sec. !",
-	
-	overwhelm = "Overwhelming Power",
-	overwhelm_desc = "Warn when a player has Overwhelming Power.",
-	overwhelm_you = "You are Overwhelming Power",
-	overwhelm_other = "Overwhelming Power: %s",
+
+	overwhelm = "Puissance accablante",
+	overwhelm_desc = "Prévient quand un joueur subit les effets d'une Puissance accablante.",
+	overwhelm_you = "Vous avez la Puissance accablante",
+	overwhelm_other = "Puissance accablante : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être assistant ou mieux).",

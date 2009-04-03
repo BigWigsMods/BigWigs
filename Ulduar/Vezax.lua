@@ -47,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 	vapor_desc = "Warn for Saronite Vapors spawn.",
 	vapor_message = "Saronite Vapors (%d)!",
 	vapor_bar = "Next Vapors (%d)",
-	
+
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
 	crash_you = "Shadow Crash on YOU!",
@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
 	vapor_message = "사로나이트 증기 (%d)!",
 	vapor_bar = "다음 증기 (%d)",
-	
+
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
@@ -111,15 +111,15 @@ L:RegisterTranslations("frFR", function() return {
 	surge_cast = "Vague de ténèbres en incantation !",
 	surge_end = "Vague de ténèbres estompée !",
 
-	--animus = "Saronite Animus",
-	--animus_desc = "Warn when the Saronite Animus spawns.",
-	--animus_message = "Animus spawns!",
+	animus = "Animus de saronite",
+	animus_desc = "Prévient quand un Animus de saronite apparaît.",
+	animus_message = "Animus apparu !",
 
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
-	vapor_message = "Saronite Vapors (%d)!",
+	vapor_message = "Vapeurs de saronite (%d) !",
 	vapor_bar = "Prochaines Vapeurs (%d)",
-	
+
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
 	crash_you = "Déferlante d'ombre sur VOUS !",
@@ -148,7 +148,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
 	self:AddCombatListener("SPELL_SUMMON", "Summon", 63081, 63145)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	
