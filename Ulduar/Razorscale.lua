@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	ground_message = "Razorscale Chained up!",
 	air_trigger = "Give us a moment to prepare to build the turrets.",
 	air_message = "Takeoff!",
-	phase2_trigger = "Razorscale lands permanently",
+	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "Phases 2!",
 	phase2_warning = "Phase 2 Soon!",
 	stun_bar = "Stun",
@@ -70,7 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 	ground_message = "칼날비늘 묶임!",
 	air_trigger = "Give us a moment to prepare to build the turrets.",	--check
 	air_message = "이륙!",
-	phase2_trigger = "Razorscale lands permanently",	--check
+	phase2_trigger = "Razorscale lands permanently!",	--check
 	phase2_message = "2 단계!",
 	phase2_warning = "곧 2 단계!",
 	stun_bar = "기절",
@@ -100,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 	ground_message = "Tranchécaille Chained up!",
 	--air_trigger = "Give us a moment to prepare to build the turrets.",
 	air_message = "Décollage !",
-	--phase2_trigger = "Razorscale lands permanently",
+	--phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "Phases 2 !",
 	phase2_warning = "Phase 2 imminente !",
 	stun_bar = "Étourdie",
