@@ -86,7 +86,7 @@ L:RegisterTranslations("frFR", function() return {
 	cold_message = "Froid mordant (2 cumuls) - bougez !",
 
 	flash = "Gel instantané",
-	flash_desc = "Prévient quand un joueur subit les effets du Gel instantané et quand le Gel instantané est incanté.",
+	flash_desc = "Prévient quand un joueur subit les effets d'un Gel instantané et quand le Gel instantané est incanté.",
 	flash_message = "%s est un bloc de glace !",
 	flash_warning = "Gel instantané en incantation !",
 	flash_soon = "Gel instantané dans 5 sec. !",

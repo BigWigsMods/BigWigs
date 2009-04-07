@@ -84,7 +84,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	arm = "Mort des bras",
-	arm_desc = "Prévient quand le bras gauche et/ou droit meurent.",
+	arm_desc = "Prévient quand le bras gauche et/ou droit meurt.",
 	left_trigger = "C'est juste une égratignure !", -- à vérifier
 	right_trigger = "Une blessure superficielle !", -- à vérifier
 	left_dies = "Bras gauche éliminé",
@@ -101,7 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 	shockwave_trigger = "Oubli !", -- à vérifier
 
 	eyebeam = "Rayon de l'oeil focalisé",
-	eyebeam_desc = "Prévient quand un joueur est ciblé par le Rayon de l'oeil.",
+	eyebeam_desc = "Prévient quand un joueur est ciblé par un Rayon de l'oeil.",
 	eyebeam_message = "Rayon de l'oeil : %s",
 	eyebeam_you = "Rayon de l'oeil sur vous !",
 

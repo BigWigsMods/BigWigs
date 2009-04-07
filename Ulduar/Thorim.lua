@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	p2berserk_warn3 = "Berserk in 60 sec",
 	p2berserk_warn4 = "Berserk in 30 sec",
 	p2berserk_warn5 = "Berserk in 10 sec",
-	
+
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
 
@@ -61,24 +61,24 @@ L:RegisterTranslations("enUS", function() return {
 	shock_message = "Lightning Shock on You! Move!",
 	shock_warning = "Charge Orb!",
 	shock_bar = "Next Charge Orb",
-	
+
 	detonation = "Runic Detonation",
 	detonation_desc = "Tells you who has been hit by Runic Detonation.",
 	detonation_message = "Runic Detonation: %s",
 	detonation_yell = "I'm a Bomb!",
-	
+
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
 	charge_message = "Charge: (%d)",
 	charge_bar = "Charge (%d)",
-	
+
 	strike = "Unbalancing Strike",
 	strike_desc = "Warn when a player has Unbalancing Strike.",
 	strike_message= "Unbalancing Strike: %s",
 
 	end_trigger = "Stay your arms! I yield!",
 	end_message = "%s has been defeated!",
-	
+
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Runic Detonation. (requires promoted or higher)",
 
@@ -102,14 +102,14 @@ L:RegisterTranslations("koKR", function() return {
 	p2berserk_warn3 = "60초 후 광폭화",
 	p2berserk_warn4 = "30초 후 광폭화",
 	p2berserk_warn5 = "10초 후 광폭화",
-	
+
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
 	hammer_bar = "다음 폭풍망치",
-	
+
 	shock = "번개 충격",
 	shock_desc = "번개구 충전과 번개 충격을 알립니다.",
 	shock_message = "당신은 번개 충격! 이동!",
@@ -120,12 +120,12 @@ L:RegisterTranslations("koKR", function() return {
 	detonation_desc = "룬 폭발에 걸린 플레이어를 알립니다.",
 	detonation_message = "룬 폭발: %s",
 	detonation_yell = "저 푹탄이에요! 피하세요!",
-	
+
 	charge = "번개 충전",
 	charge_desc = "토림의 번개 충전과 횟수를 알립니다.",
 	charge_message = "충전: (%d)",
 	charge_bar = "충전 (%d)",
-	
+
 	strike = "혼란의 일격",
 	strike_desc = "혼란의 일격에 걸린 플레이어를 알립니다.",
 	strike_message= "혼란의 일격: %s",
@@ -156,39 +156,39 @@ L:RegisterTranslations("frFR", function() return {
 	p2berserk_warn3 = "Berserk dans 60 sec.",
 	p2berserk_warn4 = "Berserk dans 30 sec.",
 	p2berserk_warn5 = "Berserk dans 10 sec.",
-	
-	--hardmode = "Hard Mode Timer",
-	--hardmode_desc = "Show Timer for Hard Mode.",
+
+	hardmode = "Délais du mode difficile",
+	hardmode_desc = "Affiche les délais du mode difficile.",
 
 	hammer = "Marteau-tempête",
-	hammer_desc = "Warns about Detonate Stormhammer soon.",
+	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
 	hammer_bar = "Prochain Marteau-tempête",
-	
-	--shock = "Lightning Shock",
-	--shock_desc = "Warn for Charge Orb and Lightning Shock.",
-	--shock_message = "Lightning Shock on You! Move!",
-	--shock_warning = "Charge Orb!",
-	--shock_bar = "Next Charge Orb",
 
-	--detonation = "Runic Detonation",
-	--detonation_desc = "Tells you who has been hit by Runic Detonation.",
-	--detonation_message = "Runic Detonation: %s",
-	--detonation_yell = "I'm a Bomb!",
-	
+	shock = "Horion de foudre",
+	shock_desc = "Prévient de l'arrivée des Horions de foudre et des Charger l'orbe.",
+	shock_message = "Horion de foudre sur vous ! Bougez !",
+	shock_warning = "Charger l'orbe !",
+	shock_bar = "Prochain Charger l'orbe",
+
+	detonation = "Détonation runique",
+	detonation_desc = "Prévient quand un joueur subit les effets d'une Détonation runique.",
+	detonation_message = "Détonation runique : %s",
+	detonation_yell = "Je suis une bombe !",
+
 	charge = "Charge de foudre",
 	charge_desc = "Compte et prévient de l'arrivée des Charges de foudre de Thorim.",
 	charge_message = "Charge : (%d)",
 	charge_bar = "Charge (%d)",
-	
+
 	strike = "Frappe déséquilibrante",
-	strike_desc = "Prévient quand un joueur subit les effets de la Frappe déséquilibrante.",
+	strike_desc = "Prévient quand un joueur subit les effets d'une Frappe déséquilibrante.",
 	strike_message= "Frappe déséquilibrante : %s",
 
 	end_trigger = "Retenez vos coups ! Je me rends !", -- à vérifier
 	end_message = "%s a été vaincu !",
-	
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Icon on the player with Runic Detonation.  (requires promoted or higher)",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Détonation runique (nécessite d'être assistant ou mieux).",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -205,7 +205,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Orb", 62016)
 	self:AddCombatListener("SPELL_DAMAGE", "Shock", 62017)
 	self:AddCombatListener("SPELL_MISSED", "Shock", 62017)
-		
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

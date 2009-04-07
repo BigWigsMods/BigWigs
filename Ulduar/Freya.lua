@@ -179,21 +179,21 @@ L:RegisterTranslations("frFR", function() return {
 	tree_message = "Don d'Eonar apparu",
 
 	attuned = "En harmonie avec la Nature",
-	attuned_desc = "Warn for Attuned to Nature.",
+	attuned_desc = "Prévient quand l'empilement d'En harmonie avec la Nature a changé.",
 	attuned_message = "En harmonie : (%d)",
 
 	fury = "Fureur de la nature",
-	fury_desc = "Prévient quand un joueur subit les effets de la Fureur de la nature.",
+	fury_desc = "Prévient quand un joueur subit les effets d'une Fureur de la nature.",
 	fury_you = "Fureur sur vous !",
 	fury_other = "Fureur : %s",
 
 	sunbeam = "Rayon de soleil",
-	sunbeam_desc = "Prévient quand un joueur subit les effets du Rayon de soleil.",
+	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
 	sunbeam_you = "Rayon de soleil sur vous !",
 	sunbeam_other = "Rayon de soleil sur %s",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de soleil (nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
 
 	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.", -- à vérifier
 	end_message = "%s a été vaincu !",
