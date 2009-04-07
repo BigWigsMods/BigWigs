@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865	--Sif(33196)
-mod.toggleoptions = {"phase", "hammer", "shock", "detonation", "charge", "strike", -1, "p2berserk", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"hammer", "shock", "detonation", "charge", "strike", -1, "phase", "p2berserk", "hardmode", "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
@@ -48,6 +48,9 @@ L:RegisterTranslations("enUS", function() return {
 	p2berserk_warn3 = "Berserk in 60 sec",
 	p2berserk_warn4 = "Berserk in 30 sec",
 	p2berserk_warn5 = "Berserk in 10 sec",
+	
+	hardmode = "Hard Mode Timer",
+	hardmode_desc = "Show Timer for Hard Mode.",
 
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
@@ -99,6 +102,9 @@ L:RegisterTranslations("koKR", function() return {
 	p2berserk_warn3 = "60초 후 광폭화",
 	p2berserk_warn4 = "30초 후 광폭화",
 	p2berserk_warn5 = "10초 후 광폭화",
+	
+	hardmode = "도전 모드 시간",
+	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
@@ -150,6 +156,9 @@ L:RegisterTranslations("frFR", function() return {
 	p2berserk_warn3 = "Berserk dans 60 sec.",
 	p2berserk_warn4 = "Berserk dans 30 sec.",
 	p2berserk_warn5 = "Berserk dans 10 sec.",
+	
+	--hardmode = "Hard Mode Timer",
+	--hardmode_desc = "Show Timer for Hard Mode.",
 
 	hammer = "Marteau-tempête",
 	hammer_desc = "Warns about Detonate Stormhammer soon.",
@@ -279,6 +288,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("warn3", "BigWigs_Message", 240, L["p2berserk_warn3"], "Urgent")
 			self:ScheduleEvent("warn4", "BigWigs_Message", 270, L["p2berserk_warn4"], "Important")
 			self:ScheduleEvent("warn5", "BigWigs_Message", 290, L["p2berserk_warn5"], "Important")
+		end
+		if db.hardmode then
+			self:Bar(L["hardmode"], 180, 64778)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["phase3_trigger"] then
