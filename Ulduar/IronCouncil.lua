@@ -223,7 +223,7 @@ function mod:Overwhelm(player, spellID)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
 			self:Message(other, "Attention", nil, nil, nil, spellID)
-			self:Whisper(player, L["overwhelm_other"])
+			self:Whisper(player, L["overwhelm_you"])
 		end
 		self:Bar(other, overwhelmTime, spellID)
 		self:Icon(player, "icon")

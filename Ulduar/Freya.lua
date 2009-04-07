@@ -274,7 +274,7 @@ function mod:Fury(player, spellID)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
 			self:Message(other, "Attention", nil, nil, nil, spellID)
-			self:Whisper(player, L["fury_other"])
+			self:Whisper(player, L["fury_you"])
 		end
 		self:Bar(other, 10, spellID)
 		self:Icon(player, "icon")

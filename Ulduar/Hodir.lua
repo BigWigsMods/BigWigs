@@ -174,6 +174,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.berserk then
 			self:Enrage(540, true)
 		end
+		for k in pairs(FF) do FF[k] = nil end
 	elseif msg == L["end_trigger"] then
 		if db.bosskill then
 			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
