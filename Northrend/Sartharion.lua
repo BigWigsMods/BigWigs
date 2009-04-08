@@ -28,9 +28,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sartharion",
-	
+
 	engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
-	
+
 	tsunami = "Flame Wave",
 	tsunami_desc = "Warn for churning lava and show a bar.",
 	tsunami_warning = "Wave in ~5sec!",
@@ -59,7 +59,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "내 임무는 알을 보호하는 것. 알에 손대지 못하게 모두 불태워 주마.",
-	
+
 	tsunami = "용암 파도",
 	tsunami_desc = "용암파도에 바와 알림입니다.",
 	tsunami_warning = "약 5초 후 용암 파도!",
@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
-	
+
 	tsunami = "烈焰之啸",
 	tsunami_desc = "当熔岩搅动时显示计时条。",
 	tsunami_warning = "约5秒，烈焰之啸！",
@@ -117,7 +117,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
-	
+
 	tsunami = "炎嘯",
 	tsunami_desc = "當熔岩攪動時發出警報及顯示計時條。",
 	tsunami_warning = "約5秒，炎嘯！",
@@ -145,8 +145,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
-	
+	engage_trigger = "Ces oeufs sont sous ma responsabilité. Je vous ferai brûler avant de vous laisser y toucher !",
+
 	tsunami = "Vague de flammes",
 	tsunami_desc = "Prévient quand la lave bouillonne et affiche une barre.",
 	tsunami_warning = "Vague dans ~5 sec. !",
@@ -175,7 +175,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
-	
+
 	tsunami = "Огненное цунами",
 	tsunami_desc = "Предупреждать о взбалтывании лавы и отображать полосу.",
 	tsunami_warning = "Огненное цунами через ~5сек!",
@@ -204,7 +204,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
-	
+
 	tsunami = "Flammentsunami",
 	tsunami_desc = "Warnungen und Timer für Flammentsunami.",
 	tsunami_warning = "Flammentsunami in ~5 sek!",
@@ -243,7 +243,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	
+
 	db = self.db.profile
 	shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 end

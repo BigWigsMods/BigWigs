@@ -152,11 +152,11 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--["Snaplasher"] = "Snaplasher",
-	--["Storm Lasher"] = "Storm Lasher",
-	--["Ancient Water Spirit"] = "Ancient Water Spirit",
-	--["Detonating Lasher"] = "Detonating Lasher",
-	--["Ancient Conservator"] = "Ancient Conservator",
+	["Snaplasher"] = "Flagellant mordant",
+	["Storm Lasher"] = "Flagellant des tempêtes",
+	["Ancient Water Spirit"] = "Esprit de l'eau ancien",
+	["Detonating Lasher"] = "Flagellant détonant", -- à vérifier
+	["Ancient Conservator"] = "Ancien conservateur", -- à vérifier
 
 	engage_trigger = "Le jardin doit être protégé !", -- à vérifier
 	engage_message = "%s engagée !",
@@ -172,9 +172,9 @@ L:RegisterTranslations("frFR", function() return {
 	conservator_trigger = "Eonar, ta servante a besoin d'aide !", -- à vérifier
 	detonate_trigger = "La nuée des éléments va vous submerger !", -- à vérifier
 	elementals_trigger = "Mes enfants, venez m'aider !", -- à vérifier
-	--tree_trigger = "A Lifebinder's Gift begins to grow!",
+	tree_trigger = "Un don de la Lieuse-de-vie commence à croître !", -- à vérifier
 	conservator_message = "Conservateur apparu",
-	detonate_message = "Detonate apparu",
+	detonate_message = "Détonant apparu",
 	elementals_message = "Élémentaires apparu",
 	tree_message = "Don d'Eonar apparu",
 
@@ -195,7 +195,7 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
 
-	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.", -- à vérifier
+	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.",
 	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
