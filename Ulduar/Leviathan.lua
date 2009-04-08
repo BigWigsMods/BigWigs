@@ -70,7 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "^Entités hostiles détectées.", -- à vérifier
+	engage_trigger = "^Entités hostiles détectées.",
 	engage_message = "%s engagé !",
 
 	flame = "Flots de flammes",
@@ -79,7 +79,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	pursue = "Poursuite",
 	pursue_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
-	pursue_trigger = "^%%s poursuit", -- à vérifier
+	pursue_trigger = "^%%s examine",
 	pursue_other = "Léviathan poursuit %s !",
 	pursue_you = "Léviathan VOUS poursuit !",
 
