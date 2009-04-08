@@ -10,15 +10,13 @@ mod.zonename = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
-mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "twilight", "enrage", "bosskill"}
+mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "twilight", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local db = nil
-local started = nil
-local enrage_warned = nil
 local fmt = string.format
 local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 
@@ -30,7 +28,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sartharion",
-
+	
+	engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	
 	tsunami = "Flame Wave",
 	tsunami_desc = "Warn for churning lava and show a bar.",
 	tsunami_warning = "Wave in ~5sec!",
@@ -55,13 +55,11 @@ L:RegisterTranslations("enUS", function() return {
 	twilight_trigger_shadron = "A Shadron Acolyte appears in the Twilight!",
 	twilight_message_tenebron = "Eggs hatching",
 	twilight_message = "%s add up!",
-
-	enrage = "Enrage",
-	enrage_warning = "Enrage soon!",
-	enrage_message = "Enraged!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "내 임무는 알을 보호하는 것. 알에 손대지 못하게 모두 불태워 주마.",
+	
 	tsunami = "용암 파도",
 	tsunami_desc = "용암파도에 바와 알림입니다.",
 	tsunami_warning = "약 5초 후 용암 파도!",
@@ -86,13 +84,11 @@ L:RegisterTranslations("koKR", function() return {
 	twilight_trigger_shadron = "샤드론의 신도가 황혼에서 나타납니다!",
 	twilight_message_tenebron = "알 부화중",
 	twilight_message = "%s 신도 추가!",
-
-	enrage = "광폭화",
-	enrage_warning = "잠시 후 광폭화!",
-	enrage_message = "광폭화!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	
 	tsunami = "烈焰之啸",
 	tsunami_desc = "当熔岩搅动时显示计时条。",
 	tsunami_warning = "约5秒，烈焰之啸！",
@@ -117,13 +113,11 @@ L:RegisterTranslations("zhCN", function() return {
 	twilight_trigger_shadron = "一个沙德隆的信徒从暮光中出现！", --check
 	twilight_message_tenebron = "正在孵卵！",
 	twilight_message = "%s到来！",
-
-	enrage = "狂暴",
-	enrage_warning = "即将 狂暴！",
-	enrage_message = "狂暴！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	
 	tsunami = "炎嘯",
 	tsunami_desc = "當熔岩攪動時發出警報及顯示計時條。",
 	tsunami_warning = "約5秒，炎嘯！",
@@ -148,13 +142,11 @@ L:RegisterTranslations("zhTW", function() return {
 	twilight_trigger_shadron = "一個夏德朗信徒從暮光中出現!",
 	twilight_message_tenebron = "正在孵卵！",
 	twilight_message = "%s到來！",
-
-	enrage = "狂暴",
-	enrage_warning = "即將 狂暴！",
-	enrage_message = "狂暴！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	
 	tsunami = "Vague de flammes",
 	tsunami_desc = "Prévient quand la lave bouillonne et affiche une barre.",
 	tsunami_warning = "Vague dans ~5 sec. !",
@@ -179,13 +171,11 @@ L:RegisterTranslations("frFR", function() return {
 	twilight_trigger_shadron = "Un disciple d'Obscuron apparaît dans le crépuscule !",
 	twilight_message_tenebron = "Éclosion des œufs",
 	twilight_message = "Disciple |2 %s actif !",
-
-	enrage = "Enrager",
-	enrage_warning = "Enrager imminent !",
-	enrage_message = "Enragé !",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
+	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	
 	tsunami = "Огненное цунами",
 	tsunami_desc = "Предупреждать о взбалтывании лавы и отображать полосу.",
 	tsunami_warning = "Огненное цунами через ~5сек!",
@@ -210,13 +200,11 @@ L:RegisterTranslations("ruRU", function() return {
 	twilight_trigger_shadron = "Ученик Шадрона появляется в Зоне сумерек!",
 	twilight_message_tenebron = "Вылупление яиц",
 	twilight_message = "Появился Ученик |3-1(%s)!",
-
-	enrage = "Исступление",
-	enrage_warning = "Скоро Исступление!",
-	enrage_message = "Исступление!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	
 	tsunami = "Flammentsunami",
 	tsunami_desc = "Warnungen und Timer für Flammentsunami.",
 	tsunami_warning = "Flammentsunami in ~5 sek!",
@@ -241,10 +229,6 @@ L:RegisterTranslations("deDE", function() return {
 	twilight_trigger_shadron = "Ein Shadronjünger erscheint im Zwielicht!",
 	twilight_message_tenebron = "Eier schlüpfen",
 	twilight_message = "%s kommt dazu!",
-	
-	enrage = "Wutanfall",
-	enrage_warning = "Wutanfall bald!",
-	enrage_message = "Wutanfall!",
 } end )
 
 ------------------------------
@@ -253,20 +237,14 @@ L:RegisterTranslations("deDE", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 61632)
 	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("UNIT_HEALTH")
-
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
-
-	started = nil
+	
 	db = self.db.profile
-	enrage_warned = false
 	shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 end
 
@@ -295,12 +273,6 @@ function mod:DrakeCheck(_, spellID)
 	end
 end
 
-function mod:Enraged(_, spellID)
-	if db.enrage then
-		self:IfMessage(L["enrage_message"], "Attention", spellID, "Alarm")
-	end
-end
-
 function mod:Breath(_, spellID)
 	if db.breath then
 		self:Bar(L["breath_cooldown"], 12, 58956)
@@ -324,27 +296,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
 	end
 end
 
-function mod:UNIT_HEALTH(msg)
-	if not db.enrage then return end
-	if UnitName(msg) == boss then
-		local hp = UnitHealth(msg)
-		if hp > 11 and hp <= 14 and not enrage_warned then
-			self:Message(L["enrage_warning"], "Attention")
-			enrage_warned = true
-		end
-	end
-end	
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
 		if db.tsunami then
 			self:Bar(L["tsunami_cooldown"], 30, 57491)
 			self:DelayedMessage(25, L["tsunami_warning"], "Attention")
 		end
+		if db.berserk then
+			self:Enrage(900, true)
+		end
 	end
 end
-
