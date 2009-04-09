@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
-mod.toggleoptions = {"cold", "flash", "frozenblow", "berserk", "bosskill"}
+mod.toggleoptions = {"hardmode", -1, "cold", "flash", "frozenblow", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -45,6 +45,10 @@ L:RegisterTranslations("enUS", function() return {
 	frozenblow_message = "Hodir gained Frozen Blow!",
 	frozenblow_warning = "Frozen Blow removed in 5sec!",
 	frozenblow_bar = "Frozen Blow",
+	
+	hardmode = "Hard Mode Timer",
+	hardmode_desc = "Show Timer for Hard Mode.",
+	hardmode_warning = "Hard Mode ends",
 
 	end_trigger = "I...I am released from his grasp! At...last!",
 	end_message = "%s has been defeated!",
@@ -71,6 +75,10 @@ L:RegisterTranslations("koKR", function() return {
 	frozenblow_message = "호디르 얼음 일격!",
 	frozenblow_warning = "얼음 일격 5초 후 사라짐!",
 	frozenblow_bar = "얼음 일격",
+	
+	hardmode = "도전 모드 시간",
+	hardmode_desc = "도전 모드의 시간을 표시합니다.",
+	hardmode_warning = "도전 모드 종료",
 
 	end_trigger = "드디어...드디어 그의 손아귀를!... 벗어나는구나!",	--check
 	end_message = "%s 물리침!",
@@ -97,6 +105,10 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow_message = "Hodir gagne Coups gelés !",
 	frozenblow_warning = "Fin des Coups gelés dans 5 sec. !",
 	frozenblow_bar = "Coups gelés",
+	
+	hardmode = "Délais du mode difficile",
+	hardmode_desc = "Affiche les délais du mode difficile.",
+	--hardmode_warning = "Hard Mode ends",
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
 	end_message = "%s a été vaincu !",
@@ -170,6 +182,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if db.flash then
 			self:Bar(L["flash_bar"], 35, 61968)
+		end
+		if db.hardmode then
+			self:Bar(L["hardmode"], 180, "Ability_warrior_innerrage")
+			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
 		end
 		if db.berserk then
 			self:Enrage(540, true)

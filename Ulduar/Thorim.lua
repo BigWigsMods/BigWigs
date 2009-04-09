@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865	--Sif(33196)
-mod.toggleoptions = {"hammer", "shock", "detonation", "charge", "strike", -1, "phase", "p2berserk", "hardmode", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"hardmode", -1, "hammer", "shock", "detonation", "charge", "strike", -1, "phase", "p2berserk", "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
@@ -51,6 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
+	hardmode_warning = "Hard Mode ends",
 
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
@@ -105,6 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
+	hardmode_warning = "도전 모드 종료",
 
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
@@ -159,6 +161,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hardmode = "Délais du mode difficile",
 	hardmode_desc = "Affiche les délais du mode difficile.",
+	--hardmode_warning = "Hard Mode ends",
 
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
@@ -290,7 +293,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("warn5", "BigWigs_Message", 290, L["p2berserk_warn5"], "Important")
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 180, 64778)
+			self:Bar(L["hardmode"], 180, "Ability_warrior_innerrage")
+			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["phase3_trigger"] then

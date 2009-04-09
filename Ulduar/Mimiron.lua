@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33350		-- Most of the fight you fight vehicles .. does that matter..?
 --  Leviathan MKII(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", -1, "plasma", "shock", "laser", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -43,6 +43,12 @@ L:RegisterTranslations("enUS", function() return {
 	phase4_warning = "Phase 4!",
 	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
 
+	hardmode = "Hard Mode Timer",
+	hardmode_desc = "Show Timer for Hard Mode.",
+	hardmode_trigger = "^Now why would you go and do something like that?",
+	hardmode_message = "Hard Mode activated!",
+	hardmode_warning = "Hard Mode ends",
+	
 	plasma = "Plasma Blast",
 	plasma_desc = "Warns when Plasma Blast is casting.",
 	plasma_warning = "Casting Plasma Blast!",
@@ -56,15 +62,6 @@ L:RegisterTranslations("enUS", function() return {
 	laser_desc = "Warn when Laser Barrage is active!",
 	laser_soon = "Laser Barrage soon!",
 	laser_bar = "Next Laser Barrage",
-
-	flamesuppressant = "Flame Suppressant",
-	flamesuppressant_desc = "Warns when Flame Suppressant is casting.",
-	flamesuppressant_warning = "Casting Flame Suppressant!",
-
-	frostbomb = "Frost Bomb",
-	frostbomb_desc = "Warns when Frost Bomb is casting.",
-	frostbomb_warning = "Casting Frost Bomb!",
-	frostbomb_soon = "Frost Bomb soon!",
 
 	end_trigger = "^It would appear that I made a slight miscalculation.",
 	end_message = "%s has been defeated!",
@@ -86,7 +83,13 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "정말 아름답지? 난 이걸 위대한 공중 지휘기라 부르지!",
 	phase4_warning = "4 단계!",
 	phase4_trigger = "그 장엄함을 느껴라! 영광을 흠뻑 취해...아니...영광에 취해라! I present you with...V0-L7R-0N!",	--check
-
+	
+	hardmode = "도전 모드 시간",
+	hardmode_desc = "도전 모드의 시간을 표시합니다.",
+	hardmode_trigger = "^아니 대체 왜 그런짓을 한거지?",	--check
+	hardmode_message = "도전 모드 활성화!",
+	hardmode_warning = "도전 모드 종료",
+	
 	plasma = "플라스마 폭발",
 	plasma_desc = "플라스마 폭발 시전을 알립니다.",
 	plasma_warning = "플라스마 폭발 시전!",
@@ -100,15 +103,6 @@ L:RegisterTranslations("koKR", function() return {
 	laser_desc = "레이저 탄막 활동을 알립니다!",
 	laser_soon = "곧 레이저 탄막!",
 	laser_bar = "디음 레이저 탄막",
-
-	flamesuppressant = "화염 억제",
-	flamesuppressant_desc = "화염 억제 시전을 알립니다.",
-	flamesuppressant_warning = "화염 억제 시전!",
-
-	frostbomb = "서리 폭탄",
-	frostbomb_desc = "서리 폭탄 시전을 알립니다.",
-	frostbomb_warning = "서리 폭탄 시전!",
-	frostbomb_soon = "잠시후 서리 폭탄!",
 
 	end_trigger = "^정상이야. 내가 계산을",
 	end_message = "%s 물리침!",
@@ -130,6 +124,12 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
 	phase4_warning = "Phase 4 !",
 	--phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
+	
+	hardmode = "Délais du mode difficile",
+	hardmode_desc = "Affiche les délais du mode difficile.",
+	--hardmode_trigger = "^Now why would you go and do something like that?",
+	--hardmode_message = "Hard Mode activated!",
+	--hardmode_warning = "Hard Mode ends",
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
@@ -145,36 +145,19 @@ L:RegisterTranslations("frFR", function() return {
 	laser_soon = "Barrage laser imminent !",
 	laser_bar = "Prochain Barrage laser",
 
-	flamesuppressant = "Coupe-flamme",
-	flamesuppressant_desc = "Prévient quand un Coupe-flamme est incanté.",
-	flamesuppressant_warning = "Coupe-flamme en incantation !",
-
-	frostbomb = "Bombe de givre",
-	frostbomb_desc = "Prévient quand une Bombe de givre est incantée.",
-	frostbomb_warning = "Bombe de givre en incantation !",
-	frostbomb_soon = "Bombe de givre imminente !",
-
 	end_trigger = "^Il semblerait que j'ai pu faire une minime erreur de calcul.", -- à vérifier
 	end_message = "%s a été vaincu !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
---[[
-		Needs cooldowns off the spells.
-
-		Plasma Blast seems to be only cast every ~30s in our limited 10man trys
-		Shock Blast didn't produce an accurate prediction.
-]]
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
-	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631) -- H id missing
-	self:AddCombatListener("SPELL_CAST_START", "FlameSuppressant", 64570)
-	self:AddCombatListener("SPELL_CAST_START", "FrostBomb", 64623)
+	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
 	
@@ -189,22 +172,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:FlameSuppressant(_, spellID)
-	if db.flamesuppressant then
-		self:IfMessage(L["flamesuppressant_warning"], "Important", spellID)
-		self:Bar(L["flamesuppressant"], 2, spellID)
-	end
-end
-
-function mod:FrostBomb(_, spellID)
-	if db.frostbomb then
-		self:IfMessage(L["frostbomb_warning"], "Important", spellID)
-		self:Bar(L["frostbomb_warning"], 2, spellID)
-		self:Bar(L["frostbomb"], 40, spellID)
-		self:DelayedMessage(38, L["frostbomb_soon"], "Attention")
-	end
-end
 
 function mod:Plasma(_, spellID)
 	if db.plasma then
@@ -242,7 +209,13 @@ function mod:Spinning(_, spellID)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["starttrigger"]) then
+	if msg:find(L["hardmode_trigger"]) then
+		if db.hardmode then
+			self:Bar(L["hardmode"], 480, 64582)
+			self:Message(L["hardmode_message"], "Attention", 64582)
+			self:DelayedMessage(480, L["hardmode_warning"], "Attention")
+		end
+	elseif msg:find(L["starttrigger"]) then
 		phase = 1
 		if db.plasma then
 			self:Bar(L["plasma"], 20, spellID)
