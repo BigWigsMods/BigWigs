@@ -96,6 +96,29 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!", -- need
+
+	flame = "Flammenstrahlen",
+	flame_desc = "Warnung vor Flammenstrahlen.",
+	flame_message = "Flammenstrahlen!",
+	flame_warning = "Flammenstrahlen bald!",
+	flame_bar = "~Strahlen Cooldown",
+
+	scorch = "Versengen",
+	scorch_desc = "Warnung vor Versengen.",
+	scorch_message = "Versengen: %s",
+	scorch_warning = "Wirkt Versengen!",
+	scorch_soon = "Versengen in ~5sec!",
+	scorch_bar = "Nächstes Versengen",
+
+	slagpot = "Schlackentopf",
+	slagpot_desc = "Warnung wer von Schlackentopf getroffen wird.",
+	slagpot_message = "Schlackentopf: %s",
+
+	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

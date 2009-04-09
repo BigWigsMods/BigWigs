@@ -90,6 +90,27 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "^Hostile entities detected.", -- need
+	engage_message = "%s angegriffen!",
+
+	flame = "Flammenstrahlen",
+	flame_desc = "Warnung für Flammenstrahlen.",
+	flame_message = "Flammenstrahlen!",
+
+	pursue = "Verfolgung",
+	pursue_desc = "Warnung wenn der Flammenleviathan einen Spieler verfolgt.",
+	pursue_trigger = "^%%s verfolgt", -- check
+	pursue_other = "Leviathan verfolgt %s!",
+	pursue_you = "Leviathan verfolgt DICH!",
+
+	shutdown = "Systemabschaltung",
+	shutdown_desc = "Warnung für Systemabschaltung",
+	shutdown_message = "Systemabschaltung!",
+
+	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

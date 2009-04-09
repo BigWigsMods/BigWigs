@@ -111,6 +111,34 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	-- ["We are ready to help!"] = true,
+
+	engage_message = "%s angregriffen!",
+
+	phase = "Phasen",
+	phase_desc = "Warnen wenn Klingenschuppe die Phase wechselt.",
+	--ground_trigger = "Move quickly! She won't remain grounded for long!",
+	ground_message = "Klingenschuppe angekettet!",
+	--air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_message = "Hebt ab!",
+	--phase2_trigger = "Razorscale lands permanently!",
+	phase2_message = "Phase 2!",
+	phase2_warning = "Phase 2 bald!",
+	stun_bar = "Stun",
+
+	breath = "Flamen Atem",
+	breath_desc = "Flamen Atem Warnung.",
+	breath_trigger = "%s holt tief Luft", -- check
+	breath_message = "Flamen Atem!",
+
+	flame = "Verschlingende Flamme",
+	flame_desc = "Warnung wenn du von Verschlingende Flamme getroffen wirst.",
+	flame_message = "Verschlingende Flamme auf DIR!",
+
+	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

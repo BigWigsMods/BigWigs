@@ -141,6 +141,36 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	exposed = "Freigelegtes Herz",
+	exposed_desc = "Warnen wenn der XT-002 ein Freigelegtes Herz hat.",
+	exposed_warning = "Freigelegtes Herz bald!",
+	exposed_message = "Freigelegtes Herz - Adds!",
+
+	gravitybomb = "Gravitationsbombe",
+	gravitybomb_desc = "Warnt wer von Gravitationsbombe getroffen wurde.",
+	gravitybomb_you = "Gravitationsbombe auf DIR!",
+	gravitybomb_other = "Gravitationsbombe auf %s!",
+
+	lightbomb = "Lichtbombe",
+	lightbomb_desc = "Warnt wer von Lichtbombe getroffen wurde.",
+	lightbomb_you = "Lichtbombe auf DIR!",
+	lightbomb_other = "Lichtbombe auf %s!",
+
+	tympanic = "Betäubender Koller",
+	tympanic_desc = "Warnt wenn XT-002 Betäubender Koller wirkt.",
+	tympanic_message = "Betäubender Koller!",
+
+	heartbreak = "Gebrochenes Herz",
+	heartbreak_desc = "Warnt wenn der XT-002 Gebrochenes Herz bekommt",
+	heartbreak_message = "Gebrochenes Herz!",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von einer Bombe getroffen werden (benötigt Assistent oder höher).",
+
+	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------
