@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode_trigger = "^Now why would you go and do something like that?",
 	hardmode_message = "Hard Mode activated!",
 	hardmode_warning = "Hard Mode ends",
-	
+
 	plasma = "Plasma Blast",
 	plasma_desc = "Warns when Plasma Blast is casting.",
 	plasma_warning = "Casting Plasma Blast!",
@@ -83,13 +83,13 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "정말 아름답지? 난 이걸 위대한 공중 지휘기라 부르지!",
 	phase4_warning = "4 단계!",
 	phase4_trigger = "그 장엄함을 느껴라! 영광을 흠뻑 취해...아니...영광에 취해라! I present you with...V0-L7R-0N!",	--check
-	
+
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_trigger = "^아니 대체 왜 그런짓을 한거지?",	--check
 	hardmode_message = "도전 모드 활성화!",
 	hardmode_warning = "도전 모드 종료",
-	
+
 	plasma = "플라스마 폭발",
 	plasma_desc = "플라스마 폭발 시전을 알립니다.",
 	plasma_warning = "플라스마 폭발 시전!",
@@ -124,12 +124,12 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
 	phase4_warning = "Phase 4 !",
 	--phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
-	
-	hardmode = "Délais du mode difficile",
-	hardmode_desc = "Affiche les délais du mode difficile.",
-	--hardmode_trigger = "^Now why would you go and do something like that?",
-	--hardmode_message = "Hard Mode activated!",
-	--hardmode_warning = "Hard Mode ends",
+
+	hardmode = "Délai du mode difficile",
+	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
+	hardmode_trigger = "^Mais pourquoi avez-vous été faire une chose pareille ?", -- à vérifier
+	hardmode_message = "Mode difficile activé !",
+	hardmode_warning = "Ne jamais toucher au bouton rouge",
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
@@ -160,7 +160,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 

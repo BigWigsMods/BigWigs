@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	frozenblow_message = "Hodir gained Frozen Blow!",
 	frozenblow_warning = "Frozen Blow removed in 5sec!",
 	frozenblow_bar = "Frozen Blow",
-	
+
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
 	hardmode_warning = "Hard Mode ends",
@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 	frozenblow_message = "호디르 얼음 일격!",
 	frozenblow_warning = "얼음 일격 5초 후 사라짐!",
 	frozenblow_bar = "얼음 일격",
-	
+
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_warning = "도전 모드 종료",
@@ -105,10 +105,10 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow_message = "Hodir gagne Coups gelés !",
 	frozenblow_warning = "Fin des Coups gelés dans 5 sec. !",
 	frozenblow_bar = "Coups gelés",
-	
-	hardmode = "Délais du mode difficile",
-	hardmode_desc = "Affiche les délais du mode difficile.",
-	--hardmode_warning = "Hard Mode ends",
+
+	hardmode = "Délai du mode difficile",
+	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant qu'Hodir ne détruise sa cache).",
+	hardmode_warning = "Jouons à casse-cache",
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
 	end_message = "%s a été vaincu !",

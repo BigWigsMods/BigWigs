@@ -159,9 +159,9 @@ L:RegisterTranslations("frFR", function() return {
 	p2berserk_warn4 = "Berserk dans 30 sec.",
 	p2berserk_warn5 = "Berserk dans 10 sec.",
 
-	hardmode = "Délais du mode difficile",
-	hardmode_desc = "Affiche les délais du mode difficile.",
-	--hardmode_warning = "Hard Mode ends",
+	hardmode = "Délai du mode difficile",
+	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse).",
+	hardmode_warning = "Sifonné",
 
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
