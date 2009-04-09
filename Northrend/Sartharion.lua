@@ -203,7 +203,7 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	engage_trigger = "Meine Aufgabe ist es, über diese Eier zu wachen. Kommt ihnen zu nahe und von euch bleibt nur ein Häuflein Asche.",
 
 	tsunami = "Flammentsunami",
 	tsunami_desc = "Warnungen und Timer für Flammentsunami.",
