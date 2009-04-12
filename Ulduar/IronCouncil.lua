@@ -11,7 +11,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {"chain", "overload", "power", -1, "death", "summoning", "tendrils", "overwhelm", -1, "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"chain", "overload", "power", "punch", -1, "death", "summoning", "tendrils", "overwhelm", -1, "icon", "berserk", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -65,11 +65,15 @@ L:RegisterTranslations("enUS", function() return {
 
 	overload = "Overload",
 	overload_desc = "Warn when Brundir casts a Overload.",
-	overload_message = "Explosion in 10sec!",
+	overload_message = "Explosion in 6sec!",
 
 	power = "Rune of Power",
 	power_desc = "Warn when Molgeim a Rune of Power.",
 	power_message = "Rune of Power!",
+	
+	punch = "Fusion Punch",
+	punch_desc = "Warn when Steelbreaker casts a Fusion Punch.",
+	punch_message = "Fusion Punch casting!",
 
 	death = "Rune of Death on You",
 	death_desc = "Warn when you are in a Rune of Death.",
@@ -109,11 +113,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	overload = "과부하",
 	overload_desc = "브룬디르의 과부하 시전을 알립니다.",
-	overload_message = "10초 후 폭발!",
+	overload_message = "6초 후 폭발!",
 
 	power = "마력의 룬",
 	power_desc = "몰가임의 마력의 룬을 알립니다.",
 	power_message = "마력의 룬 생성!",
+	
+	punch = "융해의 주먹",
+	punch_desc = "융해의 주먹 시전을 알립니다.",
+	punch_message = "융해의 주먹 시전!",
 
 	death = "자신의 죽음의 룬",
 	death_desc = "자신이 죽음의 룬에 걸렸을 때 알립니다.",
@@ -153,11 +161,15 @@ L:RegisterTranslations("frFR", function() return {
 
 	overload = "Surcharge",
 	overload_desc = "Prévient quand Brundir incante une Surcharge.",
-	overload_message = "Explosion dans 10 sec. !",
+	overload_message = "Explosion dans 6 sec. !",
 
 	power = "Rune de puissance",
 	power_desc = "Prévient quand Molgeim incante une Rune de puissance.",
 	power_message = "Rune de puissance !",
+	
+	--punch = "Fusion Punch",
+	--punch_desc = "Warn when Steelbreaker casts a Fusion Punch.",
+	--punch_message = "Fusion Punch casting!",
 
 	death = "Rune de mort sur vous",
 	death_desc = "Prévient quand vous vous trouvez  sur une Rune de mort.",
@@ -194,6 +206,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479)
 	self:AddCombatListener("SPELL_CAST_START", "Overload", 61869, 63481)
 	self:AddCombatListener("SPELL_CAST_START", "Power", 61974)
+	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493)
 	self:AddCombatListener("SPELL_CAST_START", "Summoning", 62273)	-- Molgeim abiltities plus(2 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63485)	-- Brundir abiltities plus(2 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490)	-- Molgeim abiltities plus(1 dead)
@@ -239,13 +252,19 @@ end
 function mod:Overload(_, spellID)
 	if db.overload then
 		self:IfMessage(L["overload_message"], "Attention", spellID)
-		self:Bar(L["overload"], 10, spellID)
+		self:Bar(L["overload"], 6, spellID)
 	end
 end
 
 function mod:Power(_, spellID)
 	if db.power then
 		self:IfMessage(L["power_message"], "Positive", spellID)
+	end
+end
+
+function mod:Punch(_, spellID)
+	if db.punch then
+		self:IfMessage(L["punch_message"], "Attention", spellID)
 	end
 end
 

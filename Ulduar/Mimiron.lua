@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["MKII"] = "거대전차 MKII",	--check
+	["MKII"] = "화염전차 MKII",	--check
 	["VX-001"] = "VX-001",
 	["Aerial"] = "공중 지휘기",	--check
 

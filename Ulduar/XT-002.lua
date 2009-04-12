@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"exposed", "gravitybomb", "lightbomb", "tympanic", "heartbreak", "bosskill"}
+mod.toggleoptions = {"exposed", "gravitybomb", "lightbomb", "tympanic", "voidzone", "heartbreak", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -70,6 +70,10 @@ L:RegisterTranslations("enUS", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
+	
+	voidzone = "Void Zone",
+	voidzone_desc = "Warn for Void Zone spawn.",
+	voidzone_message = "Void Zone!",
 
 	heartbreak = "Heartbreak",
 	heartbreak_desc = "Warn when XT-002 gains Heartbreak",
@@ -101,6 +105,10 @@ L:RegisterTranslations("koKR", function() return {
 	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
 	tympanic_message = "격분의 땅울림!",
 	
+	voidzone = "공허의 지대",
+	voidzone_desc = "공허의 지대 생성을 알립니다.",
+	voidzone_message = "공허의 지대!",
+	
 	heartbreak = "부서진 심장",
 	heartbreak_desc = "XT-002의 부서진 심장 획득을 알립니다.",
 	heartbreak_message = "심장 파괴됨!",
@@ -130,6 +138,10 @@ L:RegisterTranslations("frFR", function() return {
 	tympanic = "Colère assourdissante",
 	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
 	tympanic_message = "Colère assourdissante !",
+	
+	--voidzone = "Void Zone",
+	--voidzone_desc = "Warn for Void Zone spawn.",
+	--voidzone_message = "Void Zone!",
 
 	heartbreak = "Bris du coeur",
 	heartbreak_desc = "Prévient quand XT-002 gagne Bris du coeur.",
@@ -160,6 +172,10 @@ L:RegisterTranslations("deDE", function() return {
 	tympanic = "Betäubender Koller",
 	tympanic_desc = "Warnt wenn XT-002 Betäubender Koller wirkt.",
 	tympanic_message = "Betäubender Koller!",
+	
+	--voidzone = "Void Zone",
+	--voidzone_desc = "Warn for Void Zone spawn.",
+	--voidzone_message = "Void Zone!",
 
 	heartbreak = "Gebrochenes Herz",
 	heartbreak_desc = "Warnt wenn der XT-002 Gebrochenes Herz bekommt",
@@ -181,6 +197,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234)
+	self:AddCombatListener("SPELL_SUMMON", "VoidZone", 64203, 64235)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -248,6 +265,12 @@ end
 function mod:Tympanic(_, spellID)
 	if db.tympanic then
 		self:IfMessage(L["tympanic_message"], "Attention", spellID)
+	end
+end
+
+function mod:VoidZone(_, spellID)
+	if db.voidzone then
+		self:IfMessage(L["voidzone_message"], "Attention", 64235)
 	end
 end
 

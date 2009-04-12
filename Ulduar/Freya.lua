@@ -137,13 +137,13 @@ L:RegisterTranslations("koKR", function() return {
 	fury_you = "당신은 자연의 격노!",
 	fury_other = "자연의 격노: %s!",
 
-	sunbeam = "일광",
-	sunbeam_desc = "프레이야의 일광 시전 대상을 알립니다.",
-	sunbeam_you = "당신에게 일광!",
-	sunbeam_other = "일광: %s",
+	sunbeam = "태양 광선",
+	sunbeam_desc = "프레이야의 태양 광선 시전 대상을 알립니다.",
+	sunbeam_you = "당신에게 태양 광선!",
+	sunbeam_other = "태양 광선: %s",
 
 	icon = "전술 표시",
-	icon_desc = "일광 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "태양 광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	end_trigger = "내게서 그의 지배력이 거쳤다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",	--check
 	end_message = "%s 물리침!",

@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865	--Sif(33196)
-mod.toggleoptions = {"hardmode", -1, "hammer", "shock", "detonation", "charge", "strike", -1, "phase", "p2berserk", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"hardmode", -1, "hammer", "impale", "shock", "detonation", "charge", "strike", -1, "phase", "p2berserk", "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
@@ -56,6 +56,10 @@ L:RegisterTranslations("enUS", function() return {
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
 	hammer_bar = "Next Stormhammer",
+	
+	impale = "Impale",
+	impale_desc = "Warn who is afflicted by Impale.",
+	impale_message = "%s has Impale",
 
 	shock = "Lightning Shock",
 	shock_desc = "Warn for Charge Orb and Lightning Shock.",
@@ -111,6 +115,10 @@ L:RegisterTranslations("koKR", function() return {
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
 	hammer_bar = "다음 폭풍망치",
+	
+	impale = "꿰뚫기",
+	impale_desc = "꿰뚫기에 걸린 플레이어를 알립니다.",
+	impale_message = "꿰뚫기: %s",
 
 	shock = "번개 충격",
 	shock_desc = "번개구 충전과 번개 충격을 알립니다.",
@@ -166,6 +174,10 @@ L:RegisterTranslations("frFR", function() return {
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
 	hammer_bar = "Prochain Marteau-tempête",
+	
+	--impale = "Impale",
+	--impale_desc = "Warn who is afflicted by Impale.",
+	--impale_message = "%s has Impale",
 
 	shock = "Horion de foudre",
 	shock_desc = "Prévient de l'arrivée des Horions de foudre et des Charger l'orbe.",
@@ -206,6 +218,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonation", 62526)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Orb", 62016)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Impale", 62331, 62418)
 	self:AddCombatListener("SPELL_DAMAGE", "Shock", 62017)
 	self:AddCombatListener("SPELL_MISSED", "Shock", 62017)
 
@@ -250,7 +263,7 @@ end
 function mod:Orb(_, spellID)
 	if db.shock then
 		self:IfMessage(L["shock_warning"], "Urgent", spellID)
-		self:Bar(L["shock_bar"], 14, spellID)
+		self:Bar(L["shock_bar"], 15, spellID)
 	end
 end
 
@@ -262,6 +275,12 @@ function mod:Shock(player, spellID)
 		if player == pName and db.shock then
 			self:LocalMessage(L["shock_message"], "Personal", spellID, "Alarm")
 		end
+	end
+end
+
+function mod:Impale(player, spellID)
+	if db.impale then
+		self:IfMessage(L["impale_message"]:format(player), "Attention", spellID)
 	end
 end
 

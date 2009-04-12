@@ -53,11 +53,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "건방진 젖먹이들이! 세상을 되찾는데 쓸 무기를 네놈들의 피로 담금질하겠다!",	--check
 
-	flame = "화염 분사",
-	flame_desc = "이그니스의 화염 분사를 알립니다.",
-	flame_message = "화염 분사!",
-	flame_warning = "잠시후 화염 분사!",
-	flame_bar = "~분사 대기시간",
+	flame = "화염 분출",
+	flame_desc = "이그니스의 화염 분출를 알립니다.",
+	flame_message = "화염 분출!",
+	flame_warning = "잠시후 화염 분출!",
+	flame_bar = "~분출 대기시간",
 
 	scorch = "불태우기",
 	scorch_desc = "자신의 불태우기와 불태우기 시전을 알립니다.",
