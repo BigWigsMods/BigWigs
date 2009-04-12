@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
-	
+
 	voidzone = "Void Zone",
 	voidzone_desc = "Warn for Void Zone spawn.",
 	voidzone_message = "Void Zone!",
@@ -104,11 +104,11 @@ L:RegisterTranslations("koKR", function() return {
 	tympanic = "격분의 땅울림",
 	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
 	tympanic_message = "격분의 땅울림!",
-	
+
 	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대 생성을 알립니다.",
 	voidzone_message = "공허의 지대!",
-	
+
 	heartbreak = "부서진 심장",
 	heartbreak_desc = "XT-002의 부서진 심장 획득을 알립니다.",
 	heartbreak_message = "심장 파괴됨!",
@@ -138,10 +138,10 @@ L:RegisterTranslations("frFR", function() return {
 	tympanic = "Colère assourdissante",
 	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
 	tympanic_message = "Colère assourdissante !",
-	
-	--voidzone = "Void Zone",
-	--voidzone_desc = "Warn for Void Zone spawn.",
-	--voidzone_message = "Void Zone!",
+
+	voidzone = "Zone de Vide",
+	voidzone_desc = "Prévient quand une Zone de Vide apparaît.",
+	voidzone_message = "Zone de Vide !",
 
 	heartbreak = "Bris du coeur",
 	heartbreak_desc = "Prévient quand XT-002 gagne Bris du coeur.",

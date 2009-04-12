@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
 	hammer_bar = "Next Stormhammer",
-	
+
 	impale = "Impale",
 	impale_desc = "Warn who is afflicted by Impale.",
 	impale_message = "%s has Impale",
@@ -115,7 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
 	hammer_bar = "다음 폭풍망치",
-	
+
 	impale = "꿰뚫기",
 	impale_desc = "꿰뚫기에 걸린 플레이어를 알립니다.",
 	impale_message = "꿰뚫기: %s",
@@ -174,10 +174,10 @@ L:RegisterTranslations("frFR", function() return {
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
 	hammer_bar = "Prochain Marteau-tempête",
-	
-	--impale = "Impale",
-	--impale_desc = "Warn who is afflicted by Impale.",
-	--impale_message = "%s has Impale",
+
+	impale = "Empaler",
+	impale_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
+	impale_message = "Empaler : %s",
 
 	shock = "Horion de foudre",
 	shock_desc = "Prévient de l'arrivée des Horions de foudre et des Charger l'orbe.",

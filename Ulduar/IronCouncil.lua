@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 	power = "Rune of Power",
 	power_desc = "Warn when Molgeim a Rune of Power.",
 	power_message = "Rune of Power!",
-	
+
 	punch = "Fusion Punch",
 	punch_desc = "Warn when Steelbreaker casts a Fusion Punch.",
 	punch_message = "Fusion Punch casting!",
@@ -118,7 +118,7 @@ L:RegisterTranslations("koKR", function() return {
 	power = "마력의 룬",
 	power_desc = "몰가임의 마력의 룬을 알립니다.",
 	power_message = "마력의 룬 생성!",
-	
+
 	punch = "융해의 주먹",
 	punch_desc = "융해의 주먹 시전을 알립니다.",
 	punch_message = "융해의 주먹 시전!",
@@ -166,10 +166,10 @@ L:RegisterTranslations("frFR", function() return {
 	power = "Rune de puissance",
 	power_desc = "Prévient quand Molgeim incante une Rune de puissance.",
 	power_message = "Rune de puissance !",
-	
-	--punch = "Fusion Punch",
-	--punch_desc = "Warn when Steelbreaker casts a Fusion Punch.",
-	--punch_message = "Fusion Punch casting!",
+
+	punch = "Coup de poing fusion",
+	punch_desc = "Prévient quand Brise-acier incante un Coup de poing fusion.",
+	punch_message = "Coup de poing fusion en incantation !",
 
 	death = "Rune de mort sur vous",
 	death_desc = "Prévient quand vous vous trouvez  sur une Rune de mort.",
