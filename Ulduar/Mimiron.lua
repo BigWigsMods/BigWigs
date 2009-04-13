@@ -62,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 	laser_desc = "Warn when Laser Barrage is active!",
 	laser_soon = "Laser Barrage soon!",
 	laser_bar = "Next Laser Barrage",
-	
+
 	magnetic = "Magnetic Core",
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
 	magnetic_message = "Magnetic Core! DPS!",
@@ -108,7 +108,7 @@ L:RegisterTranslations("koKR", function() return {
 	laser_desc = "레이저 탄막 활동을 알립니다!",
 	laser_soon = "곧 레이저 탄막!",
 	laser_bar = "디음 레이저 탄막",
-	
+
 	magnetic = "자기 증폭기",
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
 	magnetic_message = "자기 증폭기! 극딜!",
@@ -133,7 +133,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_warning = "Phase 3 !",
 	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
 	phase4_warning = "Phase 4 !",
-	--phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
+	--phase4_trigger = "Contemplez-en la magnificence ! Imprégniez de sa glorieuse... euh... gloire ! Je vous présente... V0-7TR-ON !",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
@@ -154,11 +154,11 @@ L:RegisterTranslations("frFR", function() return {
 	laser_desc = "Prévient quand un Barrage laser est actif.",
 	laser_soon = "Barrage laser imminent !",
 	laser_bar = "Prochain Barrage laser",
-	
-	--magnetic = "Magnetic Core",
-	--magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
-	--magnetic_message = "Magnetic Core! DPS!",
-	--loot_message = "%s looted a core!",
+
+	magnetic = "Noyau magnétique",
+	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",
+	magnetic_message = "Noyau magnétique ! DPS !",
+	loot_message = "%s a ramassé un noyau !",
 
 	end_trigger = "^Il semblerait que j'ai pu faire une minime erreur de calcul.", -- à vérifier
 	end_message = "%s a été vaincu !",
@@ -176,11 +176,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Magnetic", 64436)
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_LOOT")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(2, "MimiLoot")
 
