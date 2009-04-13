@@ -133,7 +133,9 @@ end
 
 function mod:Grip(player, spellID)
 	if db.grip then
-		self:IfMessage(L["grip_message"]:format(player), "Attention", spellID)
+		local msg = L["grip_message"]:format(player)
+		self:IfMessage(msg, "Attention", spellID)
+		self:Bar(msg, 10, spellID)
 	end
 end
 
