@@ -66,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
 	shutdown_message = "시스템 작동 정지!",
 
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

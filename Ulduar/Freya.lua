@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", "icon", "bosskill"}
+mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "icon", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -123,9 +123,9 @@ L:RegisterTranslations("koKR", function() return {
 	detonate_trigger = "정령의 무리가 너희를 덮치리라!",	--check
 	elementals_trigger = "얘들아, 날 도와라!",	--check
 	tree_trigger = "A Lifebinder's Gift begins to grow!",	--check
-	conservator_message = "보존자 소환",
-	detonate_message = "폭파꽃 소환",
-	elementals_message = "정령들 소환",
+	conservator_message = "수호자 소환",
+	detonate_message = "폭발 덩굴손 소환",
+	elementals_message = "정령 3 소환",
 	tree_message = "생명결속자의 선물 소환",
 
 	attuned = "자연 조화",
@@ -148,7 +148,7 @@ L:RegisterTranslations("koKR", function() return {
 	end_trigger = "내게서 그의 지배력이 거쳤다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",	--check
 	end_message = "%s 물리침!",
 
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -397,7 +397,7 @@ end
 function mod:Deaths(unit)
 	if unit == L["Detonating Lasher"] then
 		attunedCount = attunedCount - 2
-		if dCount == 12 then
+		if dCount == 10 then
 			dCount = 0
 			self:AttunedWarn()
 		end

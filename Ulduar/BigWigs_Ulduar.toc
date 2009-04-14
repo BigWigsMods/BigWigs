@@ -4,7 +4,6 @@
 ## Notes: Big Wigs Ulduar Modules
 ## Title-koKR: Big Wigs [|cffeda55f울두아르|r]
 ## Notes-koKR: Big Wigs 울두아르 경고
-## Notes: Modules Big Wigs concernant Ulduar.
 ## Title-zhCN: Big Wigs [|cffeda55f奥杜尔|r]
 ## Notes-zhCN: Big Wigs 奥杜尔模块
 ## Title-zhTW: Big Wigs [|cffeda55f奧杜亞|r]
@@ -21,7 +20,6 @@
 
 ## Dependencies: BigWigs
 
-UlduarBeta.lua
 Freya.lua
 Hodir.lua
 IronCouncil.lua
@@ -34,3 +32,5 @@ Kologarn.lua
 XT-002.lua
 Razorscale.lua
 Auriaya.lua
+Algalon.lua
+YoggSaron.lua

@@ -11,7 +11,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {"chain", "overload", "power", "punch", -1, "death", "summoning", "tendrils", "overwhelm", -1, "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"chain", "overload", "power", "death", "overwhelm", -1, "tendrils", "summoning", "punch", -1, "icon", "berserk", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -147,7 +147,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	council_dies = "%s 죽음",
 
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 transcriptor로 저장된 데이터 보내주시기 바랍니다.",
+	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
