@@ -208,6 +208,115 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
+	phase1_message = "第一阶段！",
+	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
+	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+	phase2_message = "第二阶段 - 5分钟后，狂暴！",
+	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+	phase3_message = "第三阶段 - %s已激怒！",
+
+	p2berserk = "第二阶段 - 狂暴",
+	p2berserk_desc = "当首领在第二阶段狂暴时发出警报。",
+	p2berserk_warn1 = "3分钟后，狂暴！",
+	p2berserk_warn2 = "90秒后，狂暴！",
+	p2berserk_warn3 = "60秒后，狂暴！",
+	p2berserk_warn4 = "30秒后，狂暴！",
+	p2berserk_warn5 = "10秒后，狂暴！",
+
+	hardmode = "困难模式计时器",
+	hardmode_desc = "显示困难模式计时器。",
+
+	hammer = "风暴之锤",
+	hammer_desc = "当风暴之锤时发出警报。",
+	hammer_bar = "<下一风暴之锤>",
+
+	shock = "闪电震击",
+	shock_desc = "当宝珠充电和闪电震击时发出警报。",
+	shock_message = ">你< 闪电震击！移动！",
+	shock_warning = "宝珠充电！",
+	shock_bar = "<下一宝珠充电>",
+
+	detonation = "符文爆炸",
+	detonation_desc = "当玩家中了符文爆炸时发出警报。",
+	detonation_message = "符文爆炸：>%s<！",
+	detonation_yell = "我是炸弹！",
+
+	charge = "闪电充能",
+	charge_desc = "当托里姆施放闪电充能时记数警报。",
+	charge_message = "闪电充能：>%d<！",
+	charge_bar = "<闪电充能：%d>",
+
+	strike = "重压打击",
+	strike_desc = "当玩家中了重压打击时发出警报。",
+	strike_message= "重压打击：>%s<！",
+
+	end_trigger = "Stay your arms! I yield!",
+	end_message = "%s被击败了！",
+
+	icon = "团队标记",
+	icon_desc = "为中了符文爆炸的队员打上团队标记。（需要权限）",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	phase = "階段",
+	phase_desc = "當進入不同階段發出警報。",
+	phase1_message = "第一階段！",
+--	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
+--	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+	phase2_message = "第二階段 - 5分鐘后，狂暴！",
+--	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+	phase3_message = "第三階段 - %s已狂怒！",
+
+	p2berserk = "第二階段 - 狂暴！",
+	p2berserk_desc = "當首領在第二階段狂暴時發出警報。",
+	p2berserk_warn1 = "3分鐘后，狂暴！",
+	p2berserk_warn2 = "90秒后，狂暴！",
+	p2berserk_warn3 = "60秒后，狂暴！",
+	p2berserk_warn4 = "30秒后，狂暴！",
+	p2berserk_warn5 = "10秒后，狂暴！",
+
+	hardmode = "困難模式計時器",
+	hardmode_desc = "顯示困難模式計時器。",
+
+	hammer = "風暴之錘",
+	hammer_desc = "當風暴之錘時發出警報。",
+	hammer_bar = "<下一風暴之錘>",
+
+	shock = "閃電震擊",
+	shock_desc = "當寶珠充能和閃電震擊時發出警報。",
+	shock_message = ">你< 閃電震擊！移動！",
+	shock_warning = "寶珠充能！",
+	shock_bar = "<下一寶珠充能>",
+
+	detonation = "引爆符文",
+	detonation_desc = "當玩家中了引爆符文時發出警報。",
+	detonation_message = "引爆符文：>%s<！",
+	detonation_yell = "我是炸彈！",
+
+	charge = "閃電能量",
+	charge_desc = "當索林姆施放閃電能量時記數警報。",
+	charge_message = "閃電能量：>%d<！",
+	charge_bar = "<閃電能量：%d>",
+
+	strike = "失衡打擊",
+	strike_desc = "當玩家中了失衡打擊時發出警報。",
+	strike_message= "失衡打擊：>%s<！",
+
+--	end_trigger = "Stay your arms! I yield!",
+	end_message = "%s被擊敗了！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了引爆符文的隊員打上團隊標記。（需要權限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

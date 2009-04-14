@@ -5,6 +5,10 @@
 ## Title-koKR: Big Wigs [|cffeda55f울두아르|r]
 ## Notes-koKR: Big Wigs 울두아르 경고
 ## Notes: Modules Big Wigs concernant Ulduar.
+## Title-zhCN: Big Wigs [|cffeda55f奥杜尔|r]
+## Notes-zhCN: Big Wigs 奥杜尔模块
+## Title-zhTW: Big Wigs [|cffeda55f奧杜亞|r]
+## Notes-zhTW: Big Wigs 奧杜亞模組
 ## Author: Funkydude, Rabbit
 ## X-Credits: 7destiny
 ## Version: 2.0

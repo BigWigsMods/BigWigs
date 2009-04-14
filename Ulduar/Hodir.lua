@@ -116,6 +116,59 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	engage_trigger = "You will suffer for this trespass!",
+
+	cold = "Biting Cold（成就）",
+	cold_desc = "当你受到2层Biting Cold效果时发出警报。",
+	cold_message = "Biting Cold（2层） - 移动！",
+
+	flash = "Flash Freeze",
+	flash_desc = "当正在施放Flash Freeze和玩家中了Flash Freeze时发出警报。",
+	flash_message = "Flash Freeze：>%s<！",
+	flash_warning = "正在施放 Flash Freeze！",
+	flash_soon = "5秒后，Flash Freeze！",
+	flash_bar = "<下一Flash>",
+
+	frozenblow = "Frozen Blow",
+	frozenblow_desc = "当霍迪尔获得Frozen Blow效果时发出警报。",
+	frozenblow_message = "霍迪尔 - Frozen Blow！",
+	frozenblow_warning = "5秒后，Frozen Blow消失！",
+	frozenblow_bar = "<Frozen Blow>",
+
+	end_trigger = "I...I am released from his grasp! At...last!",
+	end_message = "%s被击败了！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	engage_trigger = "You will suffer for this trespass!",
+
+	cold = "刺骨之寒（成就）",
+	cold_desc = "當你受到2層刺骨之寒效果時發出警報。",
+	cold_message = "刺骨之寒（2層） - 移動！",
+
+	flash = "閃霜",
+	flash_desc = "當正在施放閃霜和玩家中了閃霜時發出警報。",
+	flash_message = "閃霜：>%s<！",
+	flash_warning = "正在施放 閃霜！",
+	flash_soon = "5秒后，閃霜！",
+	flash_bar = "<下一閃霜>",
+
+	frozenblow = "冰凍痛擊",
+	frozenblow_desc = "當霍迪爾獲得冰凍痛擊效果時發出警報。",
+	frozenblow_message = "霍迪爾 - 冰凍痛擊！",
+	frozenblow_warning = "5秒后，冰凍痛擊消失！",
+	frozenblow_bar = "<冰凍痛擊>",
+
+--	end_trigger = "I...I am released from his grasp! At...last!",
+	end_message = "%s被擊敗了！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

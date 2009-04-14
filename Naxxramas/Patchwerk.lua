@@ -36,13 +36,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	enragewarn = "5% - 狂暴！",
+	enragewarn = "5% - 狂乱！",
 	starttrigger1 = "帕奇维克要跟你玩！",
 	starttrigger2 = "帕奇维克是克尔苏加德的战神！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enragewarn = "5 % - 狂怒！",
+	enragewarn = "5 % - 狂亂！",
 	starttrigger1 = "縫補者要跟你玩!",
 	starttrigger2 = "科爾蘇加德讓縫補者成為戰爭的化身!",
 } end )

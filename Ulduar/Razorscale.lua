@@ -139,6 +139,63 @@ L:RegisterTranslations("deDE", function() return {
 	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	["We are ready to help!"] = true,
+
+	engage_message = "%s已激怒！",
+
+	phase = "阶段",
+	phase_desc = "当锋鳞转换不同阶段时发出警报。",
+	ground_trigger = "Move quickly! She won't remain grounded for long!",
+	ground_message = "锋鳞被锁住了！",
+	air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_message = "起飞！",
+	phase2_trigger = "Razorscale lands permanently!",
+	phase2_message = "第二阶段！",
+	phase2_warning = "即将 第二阶段！",
+	stun_bar = "<昏迷>",
+
+	breath = "烈焰喷射",
+	breath_desc = "当烈焰喷射时发出警报。",
+	breath_trigger = "%s takes a deep breath...",
+	breath_message = "烈焰喷射！",
+
+	flame = "自身Devouring Flame",
+	flame_desc = "当你中了Devouring Flame时发出警报。",
+	flame_message = ">你< Devouring Flame！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	["We are ready to help!"] = true,
+
+	engage_message = "%s已狂怒！",
+
+	phase = "階段",
+	phase_desc = "當銳鱗轉換不同階段發出警報。",
+--	ground_trigger = "Move quickly! She won't remain grounded for long!",
+	ground_message = "銳鱗被鎖住了！",
+--	air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_message = "起飛！",
+--	phase2_trigger = "Razorscale lands permanently!",
+	phase2_message = "第二階段！",
+	phase2_warning = "即將 第二階段！",
+	stun_bar = "<擊昏>",
+
+	breath = "火息術",
+	breath_desc = "當火息術時發出警報。",
+--	breath_trigger = "%s takes a deep breath...",
+	breath_message = "火息術！",
+
+	flame = "自身吞噬烈焰",
+	flame_desc = "當你中了吞噬烈焰時發出警報。",
+	flame_message = ">你< 吞噬烈焰！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

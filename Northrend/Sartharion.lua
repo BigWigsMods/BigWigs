@@ -116,7 +116,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
+	engage_trigger = "我的職責就是要看守這些龍蛋。在他們受到任何傷害之前，我將會看著你陷入火焰之中!",
 
 	tsunami = "炎嘯",
 	tsunami_desc = "當熔岩攪動時發出警報及顯示計時條。",

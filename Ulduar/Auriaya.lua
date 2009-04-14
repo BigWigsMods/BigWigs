@@ -64,6 +64,32 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	fear = "恐吓尖啸",
+	fear_desc = "当施放恐吓尖啸时发出警报。",
+	fear_warning = "即将 恐吓尖啸！",
+	fear_bar = "<恐吓尖啸 冷却>",
+
+	sentinel = "戒卫冲击",
+	sentinel_desc = "当欧尔莉亚施放戒卫冲击时发出警报。",
+	sentinel_message = "戒卫冲击！",
+
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	fear = "恐嚇尖嘯",
+	fear_desc = "當施放恐嚇尖嘯時發出警報。",
+	fear_warning = "即將 恐嚇尖嘯！",
+	fear_bar = "<恐嚇尖嘯 冷卻>",
+
+	sentinel = "哨兵衝擊",
+	sentinel_desc = "當奧芮雅施放哨兵沖擊時發出警報。",
+	sentinel_message = "哨兵沖擊！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

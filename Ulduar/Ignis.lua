@@ -119,6 +119,53 @@ L:RegisterTranslations("deDE", function() return {
 	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
+
+	flame = "Flame Jets",
+	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
+	flame_message = "Flame Jets！",
+	flame_warning = "即将 Flame Jets！",
+	flame_bar = "<Jets 冷却>",
+
+	scorch = "灼烧",
+	scorch_desc = "当正在施放灼烧和你中了灼烧时发出警报。",
+	scorch_message = "灼烧：>%s<！",
+	scorch_warning = "正在施放 灼烧！",
+	scorch_soon = "约5秒后，灼烧！",
+	scorch_bar = "<下一灼烧>",
+
+	slagpot = "熔渣炉",
+	slagpot_desc = "当玩家中了熔渣炉时发出警报。",
+	slagpot_message = "熔渣炉：>%s<！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
+
+	flame = "烈焰噴洩",
+	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",
+	flame_message = "烈焰噴洩！",
+	flame_warning = "即將 烈焰噴洩！",
+	flame_bar = "<烈焰噴洩 冷卻>",
+
+	scorch = "灼燒",
+	scorch_desc = "當正在施放灼燒和你中了灼燒時發出警報。",
+	scorch_message = "灼燒：>%s<！",
+	scorch_warning = "正在施放 灼燒！",
+	scorch_soon = "約5秒后，灼燒！",
+	scorch_bar = "<下一灼燒>",
+
+	slagpot = "熔渣之盆",
+	slagpot_desc = "當玩家中了熔渣之盆時發出警報。",
+	slagpot_message = "熔渣之盆：>%s<！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

@@ -136,6 +136,79 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	flame = "灼热烈焰",
+	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
+	flame_message = "灼热烈焰！",
+
+	surge = "Surge of Darkness",
+	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
+	surge_message = "Surge of Darkness！",
+	surge_cast = "正在施放 Surge of Darkness！",
+	surge_end = "Surge of Darkness消失！",
+
+	animus = "萨隆邪铁Animus",
+	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
+	animus_message = "萨隆邪铁Animus 出现！",
+
+	vapor = "萨隆邪铁蒸汽",
+	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
+	vapor_message = "萨隆邪铁蒸汽：>%d<！",
+	vapor_bar = "<下一萨隆邪铁蒸汽：%d>",
+
+	crash = "Shadow Crash",
+	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
+	crash_you = ">你< Shadow Crash！",
+	crash_other = "Shadow Crash：>%s<！",
+
+	mark = "无面者的印记",
+	mark_desc = "当玩家中了无面者的印记的时发出警报。",
+	mark_message_you = ">你< 无面者的印记！",
+	mark_message_other = "无面者的印记：>%s<！",
+
+	icon = "团队标记",
+	icon_desc = "为中了Shadow Crash的队员打上团队标记。（需要权限）",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	flame = "灼熱烈焰",
+	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
+	flame_message = "灼熱烈焰！",
+
+	surge = "暗鬱奔騰",
+	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
+	surge_message = "暗鬱奔騰！",
+	surge_cast = "正在施放 暗鬱奔騰！",
+	surge_end = "暗鬱奔騰 消失！",
+
+	animus = "薩倫聚惡體",
+	animus_desc = "當薩倫聚惡體出現時發出警報。",
+	animus_message = "薩倫聚惡體 出現！",
+
+	vapor = "薩倫煙霧",
+	vapor_desc = "當薩倫煙霧出現時發出警報。",
+	vapor_message = "薩倫煙霧：>%d<！",
+	vapor_bar = "<下一薩倫煙霧：%d>",
+
+	crash = "暗影暴擊",
+	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
+	crash_you = ">你< 暗影暴擊！",
+	crash_other = "暗影暴擊：>%s<！",
+
+	mark = "無面者印記",
+	mark_desc = "當玩家中了無面者印記時發出警報。",
+	mark_message_you = ">你< 無面者印記！",
+	mark_message_other = "無面者印記：>%s<！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了暗影暴擊的隊員打上團隊標記。（需要權限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

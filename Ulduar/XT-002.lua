@@ -187,6 +187,74 @@ L:RegisterTranslations("deDE", function() return {
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	exposed = "暴露心脏",
+	exposed_desc = "当 XT-002 获得暴露心脏时发出警报。",
+	exposed_warning = "即将 暴露心脏！",
+	exposed_message = "暴露心脏 - 小怪出现！",
+
+	gravitybomb = "重力炸弹",
+	gravitybomb_desc = "当玩家中了重力炸弹时发出警报。",
+	gravitybomb_you = ">你< 重力炸弹！",
+	gravitybomb_other = "重力炸弹：>%s<！",
+
+	lightbomb = "Light Bomb",
+	lightbomb_desc = "当玩家中了Light Bomb时发出警报。",
+	lightbomb_you = ">你< Light Bomb！",
+	lightbomb_other = "Light Bomb：>%s<！",
+
+	tympanic = "Tympanic Tantrum",
+	tympanic_desc = "当 XT-002 施放Tympanic Tantrum时发出警报。",
+	tympanic_message = "Tympanic Tantrum！",
+
+	voidzone = "虚空领域",
+	voidzone_desc = "当虚空领域出现时发出警报。",
+	voidzone_message = "虚空领域！",
+
+	heartbreak = "心碎",
+	heartbreak_desc = "当 XT-002 获得心碎时发出警报。",
+	heartbreak_message = "心碎！",
+
+	icon = "团队标记",
+	icon_desc = "为中了炸弹的队员打上团队标记。（需要权限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	exposed = "機心外露",
+	exposed_desc = "當 XT-002 獲得機心外露時發出警報。",
+	exposed_warning = "即將 機心外露！",
+	exposed_message = "機心外露 - 小怪出現！",
+
+	gravitybomb = "重力炸彈",
+	gravitybomb_desc = "當玩家中了重力炸彈時發出警報。",
+	gravitybomb_you = ">你< 重力炸彈！",
+	gravitybomb_other = "重力炸彈：>%s<！",
+
+	lightbomb = "裂光彈",
+	lightbomb_desc = "當玩家中了裂光彈時發出警報。",
+	lightbomb_you = ">你< 裂光彈！",
+	lightbomb_other = "裂光彈：>%s<！",
+
+	tympanic = "躁怒",
+	tympanic_desc = "當 XT-002 施放躁怒時發出警報。",
+	tympanic_message = "躁怒！",
+
+	voidzone = "虛無區域",
+	voidzone_desc = "當虛無區域出現時發出警報。",
+	voidzone_message = "虛無區域！",
+
+	heartbreak = "心碎",
+	heartbreak_desc = "當 XT-002 獲得心碎時發出警報。",
+	heartbreak_message = "心碎！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了炸彈的隊員打上團隊標記。（需要權限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

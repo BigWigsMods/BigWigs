@@ -201,6 +201,107 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	["Snaplasher"] = "Snaplasher",
+	["Storm Lasher"] = "Storm Lasher",
+	["Ancient Water Spirit"] = "Ancient Water Spirit",
+	["Detonating Lasher"] = "Detonating Lasher",
+	["Ancient Conservator"] = "Ancient Conservator",
+
+	engage_trigger = "The Conservatory must be protected!",
+	engage_message = "%s已激怒！",
+
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
+	phase2_message = "第二阶段！",
+	phase2_soon = "即将 - 第二阶段！",
+
+	wave = "波",
+	wave_desc = "当一波小怪时发出警报。",
+	wave_bar = "<下一波>",
+	conservator_trigger = "Eonar, your servant requires aid!",
+	detonate_trigger = "The swarm of the elements shall overtake you!",
+	elementals_trigger = "Children, assist me!",
+	tree_trigger = "A Lifebinder's Gift begins to grow!",
+	conservator_message = "Conservator spawn",
+	detonate_message = "Detonate spawn",
+	elementals_message = "Elementals spawn",
+	tree_message = "Eonar's Gift spawn",
+
+	attuned = "自然协调",
+	attuned_desc = "当施放自然协调时发出警报。",
+	attuned_message = "自然协调：>%d<！",
+
+	fury = "自然之怒",
+	fury_desc = "当玩家中了自然之怒时向自己发出警报。",
+	fury_you = ">你< 自然之怒！",
+	fury_other = "自然之怒：>%s<！",
+
+	sunbeam = "Sunbeam",
+	sunbeam_desc = "当弗蕾亚施放Sunbeam于玩家时发出警报。.",
+	sunbeam_you = ">你< Sunbeam！",
+	sunbeam_other = "Sunbeam：>%s<！",
+
+	icon = "位置标记",
+	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
+
+	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_message = "%s被击败了！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	["Snaplasher"] = "Snaplasher",
+--	["Storm Lasher"] = "Storm Lasher",
+--	["Ancient Water Spirit"] = "Ancient Water Spirit",
+--	["Detonating Lasher"] = "Detonating Lasher",
+--	["Ancient Conservator"] = "Ancient Conservator",
+
+--	engage_trigger = "The Conservatory must be protected!",
+	engage_message = "%s已狂怒！",
+
+	phase = "階段",
+	phase_desc = "當進入不同階段發出警報。",
+	phase2_message = "第二階段！",
+	phase2_soon = "即將 - 第二階段！",
+
+	wave = "波",
+	wave_desc = "當一波小怪時發出警報。",
+	wave_bar = "<下一波>",
+--	conservator_trigger = "Eonar, your servant requires aid!",
+--	detonate_trigger = "The swarm of the elements shall overtake you!",
+--	elementals_trigger = "Children, assist me!",
+--	tree_trigger = "A Lifebinder's Gift begins to grow!",
+--	conservator_message = "Conservator spawn",
+--	detonate_message = "Detonate spawn",
+--	elementals_message = "Elementals spawn",
+--	tree_message = "Eonar's Gift spawn",
+
+	attuned = "自然和諧",
+	attuned_desc = "當施放自然和諧時發出警報。",
+	attuned_message = "自然和諧：>%d<！",
+
+	fury = "自然烈怒",
+	fury_desc = "當玩家中了自然烈怒時向自己發出警報。",
+	fury_you = ">你< 自然烈怒！",
+	fury_other = "自然烈怒：>%s<！",
+
+	sunbeam = "太陽光束",
+	sunbeam_desc = "當芙蕾雅施放太陽光束于玩家時發出警報。",
+	sunbeam_you = ">你< 太陽光束！",
+	sunbeam_other = "太陽光束：>%s<！",
+
+	icon = "位置標記",
+	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",
+
+--	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+--	end_message = "%s被擊敗了！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

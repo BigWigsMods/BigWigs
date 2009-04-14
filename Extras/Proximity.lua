@@ -145,21 +145,21 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["Proximity"] = "鄰近顯示",
 	["Close Players"] = "鄰近玩家",
-	["Options for the Proximity Display."] = "設定鄰近顯示選項",
+	["Options for the Proximity Display."] = "設定鄰近顯示選項。",
 	["|cff777777Nobody|r"] = "|cff777777沒有玩家|r",
 	["Sound"] = "音效",
-	["Play sound on proximity."] = "當有人太靠近時發出音效",
-	["Disabled"] = "停用",
-	["Disable the proximity display for all modules that use it."] = "停用鄰近顯示功能",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s 模組的鄰近顯示功能已停用，請用模組選單啟用",
+	["Play sound on proximity."] = "當有人太靠近時發出音效。",
+	["Disabled"] = "禁用",
+	["Disable the proximity display for all modules that use it."] = "禁用鄰近顯示功能。",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的鄰近顯示功能已禁用，請用模組選單開啟。",
 
 	proximity = "鄰近顯示",
-	proximity_desc = "列出距離很近的玩家",
+	proximity_desc = "顯示近距離窗口，列出距離你很近的玩家。",
 
 	font = "Fonts\\bHEI01B.TTF",
 
 	["Test"] = "測試",
-	["Perform a Proximity test."] = "鄰近顯示測試",
+	["Perform a Proximity test."] = "鄰近顯示測試。",
 } end)
 
 L:RegisterTranslations("esES", function() return {

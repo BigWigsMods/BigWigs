@@ -111,6 +111,65 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	arm = "手臂死亡",
+	arm_desc = "当左右手臂死亡时发出警报。",
+	left_trigger = "Just a scratch!",
+	right_trigger = "Only a flesh wound!",
+	left_dies = "左臂死亡！",
+	right_dies = "右臂死亡！",
+	left_wipe_bar = "<左臂重生>",
+	right_wipe_bar = "<右臂重生>",
+
+	grip = "岩石之握",
+	grip_desc = "当玩家中了岩石之握时发出警报。",
+	grip_message = "岩石之握：>%s<！",
+
+	shockwave = "震荡波",
+	shockwave_desc = "当震荡波到来前发出警报。",
+	shockwave_trigger = "Oblivion!",
+
+	eyebeam = "Focused Eyebeam",
+	eyebeam_desc = "当玩家中了Focused Eyebeam时发出警报。",
+	eyebeam_message = "Eyebeam：>%s<！",
+	eyebeam_you = ">你< Eyebeam！",
+
+	icon = "团队标记",
+	icon_desc = "为中了Focused Eyebeam的队员打上团队标记。（需要权限）",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	arm = "手臂死亡",
+	arm_desc = "當左右手臂死亡時發出警報。",
+--	left_trigger = "Just a scratch!",
+--	right_trigger = "Only a flesh wound!",
+	left_dies = "左臂死亡！",
+	right_dies = "右臂死亡！",
+	left_wipe_bar = "<左臂重生>",
+	right_wipe_bar = "<右臂重生>",
+
+	grip = "堅石之握",
+	grip_desc = "當玩家中了堅石之握時發出警報。",
+	grip_message = "堅石之握：>%s<！",
+
+	shockwave = "震攝波",
+	shockwave_desc = "當震攝波到來前發出警報。",
+--	shockwave_trigger = "Oblivion!",
+
+	eyebeam = "集束目光",
+	eyebeam_desc = "當玩家中了集束目光時發出警報。",
+	eyebeam_message = "集束目光：>%s<！",
+	eyebeam_you = ">你< 集束目光！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了集束目光的隊員打上團隊標記。（需要權限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

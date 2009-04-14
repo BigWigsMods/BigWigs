@@ -111,6 +111,49 @@ L:RegisterTranslations("deDE", function() return {
 	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	engage_trigger = "^Hostile entities detected.",
+	engage_message = "%s已激怒！",
+
+	flame = "Flame Jet",
+	flame_desc = "当烈焰巨兽施放Flame Jet时发出警报。",
+	flame_message = "Flame Jet！",
+
+	pursue = "Pursuit",
+	pursue_desc = "当烈焰巨兽pursues玩家时发出警报。",
+	pursue_trigger = "^%%s pursues",
+	pursue_other = "烈焰巨兽pursues：>%s<！",
+	pursue_you = ">你< 烈焰巨兽pursues！",
+
+	shutdown = "Systems Shutdown",
+	shutdown_desc = "当烈焰巨兽Systems Shutdown时发出警报。",
+	shutdown_message = "Systems Shutdown！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	engage_trigger = "^Hostile entities detected.",
+	engage_message = "%s已狂怒！",
+
+	flame = "烈焰噴洩",
+	flame_desc = "當烈焰戰輪施放烈焰噴洩時發出警報。",
+	flame_message = "烈焰噴洩！",
+
+	pursue = "獵殺",
+	pursue_desc = "當烈焰戰輪獵殺玩家時發出警報。",
+--	pursue_trigger = "^%%s pursues",
+	pursue_other = "烈焰戰輪獵殺：>%s<！",
+	pursue_you = ">你< 烈焰戰輪獵殺！",
+
+	shutdown = "系統關閉",
+	shutdown_desc = "當烈焰戰輪系統關閉時發出警報。",
+	shutdown_message = "系統關閉！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

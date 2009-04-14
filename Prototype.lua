@@ -70,14 +70,14 @@ commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
 
-	enrage_start = "%s 激活 - %d分后激怒",
-	enrage_end = "%s 已激怒",
+	enrage_start = "%s激活 - %d分后激怒！",
+	enrage_end = "%s已激怒！",
 	enrage_min = "%d分后激怒！",
 	enrage_sec = "%d秒后激怒！",
 	enrage = "激怒",
 
-	berserk_start = "%s 激活 - 将在 %d 分后狂暴",
-	berserk_end = "%s 进入 狂暴",
+	berserk_start = "%s激活 - 将在%d分后狂暴！",
+	berserk_end = "%s已狂暴！",
 	berserk_min = "%d分后狂暴！",
 	berserk_sec = "%d秒后狂暴！",
 	berserk = "狂暴",
@@ -87,16 +87,16 @@ commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "到了",
 
-	enrage_start = "%s 開戰 - %d 分後狂怒",
-	enrage_end = "%s 已狂怒",
-	enrage_min = "%d 分後狂怒",
-	enrage_sec = "%d 秒後狂怒",
+	enrage_start = "%s開戰 - %d分後狂怒！",
+	enrage_end = "%s已狂怒！",
+	enrage_min = "%d分後狂怒！",
+	enrage_sec = "%d秒後狂怒！",
 	enrage = "狂怒",
 
-	berserk_start = "%s 開戰 - %d 分後狂暴",
-	berserk_end = "%s 已狂暴",
-	berserk_min = "%d 分後狂暴",
-	berserk_sec = "%d 秒後狂暴",
+	berserk_start = "%s開戰 - %d分後狂暴！",
+	berserk_end = "%s已狂暴！",
+	berserk_min = "%d分後狂暴！",
+	berserk_sec = "%d秒後狂暴！",
 	berserk = "狂暴",
 } end )
 

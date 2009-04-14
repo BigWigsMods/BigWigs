@@ -198,6 +198,95 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+	engage_trigger2 = "Nothing short of total decimation will suffice!",
+	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+
+	chain = "闪电链",
+	chain_desc = "当布隆迪尔施放闪电链时发出警报。",
+	chain_message = "闪电链！",
+
+	overload = "过载",
+	overload_desc = "当布隆迪尔施放过载时发出警报。",
+	overload_message = "10秒后，爆炸！",
+
+	power = "能量符文",
+	power_desc = "当莫尔基姆施放能量符文时发出警报。",
+	power_message = "能量符文！",
+
+	death = "自身死亡符文",
+	death_desc = "当你中了死亡符文时发出警报。",
+	death_message = ">你< 死亡符文！",
+
+	summoning = "召唤符文",
+	summoning_desc = "当莫尔基姆施放召唤符文时发出警报。",
+	summoning_message = "召唤符文 - 闪电元素即将出现！",
+
+	tendrils = "闪电之藤",
+	tendrils_desc = "当闪电之藤阶段时为目标玩家发出警报，并给他打上团队标记。",
+	tendrils_other = "闪电之藤：>%s<！",
+	tendrils_you = ">你< 闪电之藤！",
+	tendrils_message = "约5秒后，降落！",
+
+	overwhelm = "Overwhelming Power",
+	overwhelm_desc = "当玩家中了Overwhelming Power时发出警报。",
+	overwhelm_you = ">你< Overwhelming Power！",
+	overwhelm_other = "Overwhelming Power：>%s<！",
+
+	icon = "团队标记",
+	icon_desc = "为中了闪电之藤的队员打上团队标记。（需要权限）",
+
+	council_dies = "%s被击败了！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+--	engage_trigger2 = "Nothing short of total decimation will suffice!",
+--	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+
+	chain = "閃電鏈",
+	chain_desc = "當布倫迪爾施放閃電鏈時發出警報。",
+	chain_message = "閃電鏈！",
+
+	overload = "超載",
+	overload_desc = "當布倫迪爾施放超載時發出警報。",
+	overload_message = "10秒后，爆炸！",
+
+	power = "力之符文",
+	power_desc = "當墨吉姆施放力之符文時發出警報。",
+	power_message = "力之符文！",
+
+	death = "自身死亡符文",
+	death_desc = "當你中了死亡符文時發出警報。",
+	death_message = ">你< 死亡符文！",
+
+	summoning = "召喚符文",
+	summoning_desc = "當墨吉姆施放召喚符文時發出警報。",
+	summoning_message = "召喚符文 - 閃電元素即將出現！",
+
+	tendrils = "閃電觸鬚",
+	tendrils_desc = "當閃電觸鬚階段時為目標玩家發出警報，并給他打上團隊標記。",
+	tendrils_other = "閃電觸須：>%s<！",
+	tendrils_you = ">你< 閃電觸須！",
+	tendrils_message = "約5秒后，降落！",
+
+	overwhelm = "極限威能",
+	overwhelm_desc = "當玩家中了極限威能時發出警報。",
+	overwhelm_you = ">你< 極限威能！",
+	overwhelm_other = "極限威能：>%s<！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了閃電觸須的隊員打上團隊標記。（需要權限）",
+
+	council_dies = "%s被擊敗了！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

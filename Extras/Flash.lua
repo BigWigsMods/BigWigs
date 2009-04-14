@@ -83,10 +83,10 @@ L:RegisterTranslations("zhCN", function() return {
 	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "如有重要事件发生，屏幕将会蓝色闪烁/震动告知玩家。",
 
 	["Flash"] = "闪烁",
-	["Toggle Flash on or off."] = "启用或禁用屏幕闪烁通知。",
+	["Toggle Flash on or off."] = "打开或关闭屏幕闪烁。",
 
 	["Shake"] = "震动",
-	["Toggle Shake on or off."] = "启用或禁用屏幕震动通知。",
+	["Toggle Shake on or off."] = "打开或关闭屏幕震动。",
 
 	["Test"] = "测试",
 	["Perform a Flash/Shake test."] = "屏幕闪烁/震动测试。",
@@ -100,10 +100,10 @@ L:RegisterTranslations("zhTW", function() return {
 	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "如有重要事件發生，螢幕將會閃爍藍光/震動告知玩家。",
 
 	["Flash"] = "閃爍",
-	["Toggle Flash on or off."] = "啟用或關閉螢幕閃爍。",
+	["Toggle Flash on or off."] = "打開或關閉螢幕閃爍。",
 
 	["Shake"] = "震動",
-	["Toggle Shake on or off."] = "啟用或關閉螢幕震動。",
+	["Toggle Shake on or off."] = "打開或關閉螢幕震動。",
 
 	["Test"] = "測試",
 	["Perform a Flash/Shake test."] = "測試螢幕閃爍/震動。",

@@ -166,6 +166,89 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	["MKII"] = "Leviathan MKII",
+	["VX-001"] = "VX-001",
+	["Aerial"] = "Aerial Command Unit",
+
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
+	starttrigger = "^We haven't much time, friends!",
+	phase2_warning = "第二阶段！",
+	phase2_trigger = "Behold, the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase3_warning = "第三阶段！",
+	phase3_trigger = "Mwahahahaha! Isn't it beautiful! I call it the magnificent Aerial Command Unit!",
+	phase4_warning = "第四阶段",
+	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
+
+	hardmode = "困难模式计时器",
+	hardmode_desc = "显示困难模式计时器。",
+	hardmode_trigger = "^Now why would you go and do something like that?",
+	hardmode_message = "已开启困难模式！",
+	hardmode_warning = "困难模式结束！",
+
+	plasma = "Plasma Blast",
+	plasma_desc = "当正在施放Plasma Blast时发出警报。",
+	plasma_warning = "正在施放 Plasma Blast！",
+	plasma_soon = "即将 Plasma Blast！",
+
+	shock = "震爆",
+	shock_desc = "当正在施放震爆时发出警报。",
+	shock_warning = "正在施放 震爆！",
+
+	laser = "激光弹幕",
+	laser_desc = "当激光弹幕启用时发出警报。",
+	laser_soon = "即将 激光弹幕！",
+	laser_bar = "<下一激光弹幕>",
+
+	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_message = "%s被击败了！",
+]]
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	["MKII"] = "Leviathan MKII",
+--	["VX-001"] = "VX-001",
+--	["Aerial"] = "Aerial Command Unit",
+
+	phase = "階段",
+	phase_desc = "當進入不同階段發出警報。",
+--	starttrigger = "^We haven't much time, friends!",
+	phase2_warning = "第二階段！",
+--	phase2_trigger = "Behold, the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
+	phase3_warning = "第三階段！",
+--	phase3_trigger = "Mwahahahaha! Isn't it beautiful! I call it the magnificent Aerial Command Unit!",
+	phase4_warning = "第四階段！",
+	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
+
+	hardmode = "困難模式計時器",
+	hardmode_desc = "顯示困難模式計時器。",
+--	hardmode_trigger = "^Now why would you go and do something like that?",
+	hardmode_message = "已開啟困難模式！",
+	hardmode_warning = "困難模式結束！",
+
+	plasma = "離子衝擊",
+	plasma_desc = "當正在施放離子衝擊時發出警報。",
+	plasma_warning = "正在施放 離子衝擊！",
+	plasma_soon = "即將 離子衝擊！",
+
+	shock = "震爆",
+	shock_desc = "當正在施放震爆時發出警報。",
+	shock_warning = "正在施放 震爆！",
+
+	laser = "雷射彈幕",
+	laser_desc = "當雷射彈幕啟用時發出警報。",
+	laser_soon = "即將 雷射彈幕！",
+	laser_bar = "<下一雷射彈幕>",
+
+--	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_message = "%s被擊敗了！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------
