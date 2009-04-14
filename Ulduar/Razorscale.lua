@@ -3,7 +3,7 @@
 ----------------------------------
 
 local boss = BB["Razorscale"]
-local Commander = BB["Expedition Commander"]	--need the add name translated, maybe add to BabbleBoss.
+local Commander = BB["Expedition Commander"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]

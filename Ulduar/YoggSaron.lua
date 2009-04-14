@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["YoggSaron"]
+local boss = BB["Yogg-Saron"]	--need the add name translated, maybe add to BabbleBoss.
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]

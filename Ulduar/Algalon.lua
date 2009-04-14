@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Algalon"]
+local boss = BB["Algalon the Observer"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
