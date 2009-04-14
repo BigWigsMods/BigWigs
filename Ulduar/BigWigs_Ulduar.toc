@@ -9,7 +9,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f奧杜亞|r]
 ## Notes-zhTW: Big Wigs 奧杜亞模組
 ## Author: Funkydude, Rabbit
-## X-Credits: 7destiny
+## X-Credits: 7destiny, nevcairiel, maat
 ## Version: 2.0
 ## LoadOnDemand: 1
 
