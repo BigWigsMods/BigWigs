@@ -339,7 +339,7 @@ plugin.consoleOptions = {
 --      Event Handlers      --
 ------------------------------
 
-local is31 = GetEquipmentSetInfo and true or nil
+local is31 = GetNumTalentGroups and true or nil
 local filter = nil
 if is31 then
 	filter = function(self, event, msg)
