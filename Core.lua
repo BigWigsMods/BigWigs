@@ -23,7 +23,6 @@ local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterf
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	["%s mod enabled"] = true,
 	["%s has been defeated"] = true,     -- "<boss> has been defeated"
 	["%s have been defeated"] = true,    -- "<bosses> have been defeated"
 
@@ -60,7 +59,6 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["%s mod enabled"] = "Module %s activé",
 	["%s has been defeated"] = "%s a été vaincu(e)",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s ont été vaincu(e)s",    -- "<bosses> have been defeated"
 
@@ -97,7 +95,6 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	["%s mod enabled"] = "%s Modul aktiviert",
 	["%s has been defeated"] = "%s wurde besiegt!",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s wurden besiegt!",    -- "<bosses> have been defeated"
 
@@ -134,7 +131,6 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	["%s mod enabled"] = "%s 모듈 시작",
 	["%s has been defeated"] = "%s 물리침",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s 물리침",    -- "<bosses> have been defeated"
 
@@ -171,7 +167,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	["%s mod enabled"] = "%s模块已启用。",
 	["%s has been defeated"] = "%s被击败了！",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s被击败了！",    -- "<bosses> have been defeated"
 
@@ -208,7 +203,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	["%s mod enabled"] = "%s模組已啟用。",
 	["%s has been defeated"] = "%s被擊敗了！",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s被擊敗了！",    -- "<bosses> have been defeated"
 
@@ -243,7 +237,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	["%s mod enabled"] = "Módulo %s activado",
 	["%s has been defeated"] = "%s ha sido derrotado",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s han sido derrotados",    -- "<bosses> have been defeated"
 
@@ -278,7 +271,6 @@ L:RegisterTranslations("esES", function() return {
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
-	["%s mod enabled"] = "%s модуль включен",
 	["%s has been defeated"] = "%s был побежден",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s были побеждены",    -- "<bosses> have been defeated"
 
@@ -361,13 +353,6 @@ local options = {
 			args = {},
 			disabled = "~IsActive",
 			order = 203,
-		},
-		["GUI"] = waterfall and {
-			type = "execute",
-			name = L["GUI"],
-			desc = L["Open the waterfall GUI."],
-			func = function() waterfall:Open("BigWigs") end,
-			order = 204,
 		},
 		["Minimap"] = {
 			type = "toggle",
@@ -633,7 +618,7 @@ function BigWigs:EnableModule(moduleName, noSync)
 	local m = self:GetModule(moduleName)
 	if m and m:IsBossModule() and not self:IsModuleActive(m) then
 		self:ToggleModuleActive(m, true)
-		m:Message(L["%s mod enabled"]:format(moduleName or "??"), "Core", true)
+		m:Message(moduleName, "Core", true)
 		if not noSync then
 			local token = m.synctoken or BBR[moduleName] or nil
 			if not token then return end
