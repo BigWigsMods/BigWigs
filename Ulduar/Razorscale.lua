@@ -51,8 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 	flame = "Devouring Flame on You",
 	flame_desc = "Warn when you are in a Devouring Flame.",
 	flame_message = "Devouring Flame on YOU!",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -79,8 +77,6 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "자신의 파멸의 불길",
 	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
 	flame_message = "당신은 파멸의 불길!",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -107,8 +103,6 @@ L:RegisterTranslations("frFR", function() return {
 	flame = "Flamme dévorante sur vous",
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
 	flame_message = "Flamme dévorante sur VOUS !",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -135,8 +129,6 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Verschlingende Flamme",
 	flame_desc = "Warnung wenn du von Verschlingende Flamme getroffen wirst.",
 	flame_message = "Verschlingende Flamme auf DIR!",
-
-	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -165,7 +157,6 @@ L:RegisterTranslations("zhCN", function() return {
 	flame_desc = "当你中了Devouring Flame时发出警报。",
 	flame_message = ">你< Devouring Flame！",
 ]]
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -192,8 +183,6 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "自身吞噬烈焰",
 	flame_desc = "當你中了吞噬烈焰時發出警報。",
 	flame_message = ">你< 吞噬烈焰！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -215,8 +204,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "Start", 2)
 
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------

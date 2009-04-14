@@ -52,8 +52,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	end_trigger = "I...I am released from his grasp! At...last!",
 	end_message = "%s has been defeated!",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -82,8 +80,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	end_trigger = "드디어...드디어 그의 손아귀를!... 벗어나는구나!",	--check
 	end_message = "%s 물리침!",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -112,8 +108,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
 	end_message = "%s a été vaincu !",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -140,7 +134,6 @@ L:RegisterTranslations("zhCN", function() return {
 	end_trigger = "I...I am released from his grasp! At...last!",
 	end_message = "%s被击败了！",
 ]]
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -165,8 +158,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 	end_message = "%s被擊敗了！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -175,8 +166,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 function mod:OnEnable()
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)

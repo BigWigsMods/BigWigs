@@ -60,8 +60,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash. (requires promoted or higher)",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -96,8 +94,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	icon = "전술 표시",
 	icon_desc = "어둠 붕괴 또는 얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -132,8 +128,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -170,7 +164,6 @@ L:RegisterTranslations("zhCN", function() return {
 	icon = "团队标记",
 	icon_desc = "为中了Shadow Crash的队员打上团队标记。（需要权限）",
 ]]
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -205,8 +198,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	icon = "團隊標記",
 	icon_desc = "為中了暗影暴擊的隊員打上團隊標記。（需要權限）",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -228,8 +219,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------

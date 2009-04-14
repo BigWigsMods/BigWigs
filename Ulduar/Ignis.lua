@@ -46,8 +46,6 @@ L:RegisterTranslations("enUS", function() return {
 	slagpot = "Slag Pot",
 	slagpot_desc = "Warn who has Slag Pot.",
 	slagpot_message = "Slag Pot: %s",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -69,8 +67,6 @@ L:RegisterTranslations("koKR", function() return {
 	slagpot = "용암재 단지",
 	slagpot_desc = "용암재 단지의 플레이어를 알립니다.",
 	slagpot_message = "용암재 단지: %s",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -92,8 +88,6 @@ L:RegisterTranslations("frFR", function() return {
 	slagpot = "Marmite de scories",
 	slagpot_desc = "Prévient quand un joueur est envoyé dans la Marmite de scories.",
 	slagpot_message = "Marmite de scories : %s",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -115,8 +109,6 @@ L:RegisterTranslations("deDE", function() return {
 	slagpot = "Schlackentopf",
 	slagpot_desc = "Warnung wer von Schlackentopf getroffen wird.",
 	slagpot_message = "Schlackentopf: %s",
-
-	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -140,7 +132,6 @@ L:RegisterTranslations("zhCN", function() return {
 	slagpot_desc = "当玩家中了熔渣炉时发出警报。",
 	slagpot_message = "熔渣炉：>%s<！",
 ]]
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -162,8 +153,6 @@ L:RegisterTranslations("zhTW", function() return {
 	slagpot = "熔渣之盆",
 	slagpot_desc = "當玩家中了熔渣之盆時發出警報。",
 	slagpot_message = "熔渣之盆：>%s<！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -181,8 +170,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------

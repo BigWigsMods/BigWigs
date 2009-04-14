@@ -34,8 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 	sentinel = "Sentinel Blast",
 	sentinel_desc = "Warn when Auriaya casts a Sentinel Blast.",
 	sentinel_message = "Sentinel Blast!",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -47,9 +45,7 @@ L:RegisterTranslations("koKR", function() return {
 	sentinel = "파수꾼 폭발",
 	sentinel_desc = "아우리아야의 파수꾼 폭발 시전을 알립니다.",
 	sentinel_message = "파수꾼 폭발!",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
-} end )
+	} end )
 
 L:RegisterTranslations("frFR", function() return {
 	fear = "Hurlement terrifiant",
@@ -60,8 +56,6 @@ L:RegisterTranslations("frFR", function() return {
 	sentinel = "Déflagration du factionnaire",
 	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
 	sentinel_message = "Déflagration du factionnaire !",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -73,8 +67,6 @@ L:RegisterTranslations("zhCN", function() return {
 	sentinel = "戒卫冲击",
 	sentinel_desc = "当欧尔莉亚施放戒卫冲击时发出警报。",
 	sentinel_message = "戒卫冲击！",
-
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -86,8 +78,6 @@ L:RegisterTranslations("zhTW", function() return {
 	sentinel = "哨兵衝擊",
 	sentinel_desc = "當奧芮雅施放哨兵沖擊時發出警報。",
 	sentinel_message = "哨兵沖擊！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -104,8 +94,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------

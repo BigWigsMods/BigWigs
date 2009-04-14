@@ -97,8 +97,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 	end_message = "%s has been defeated!",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -147,8 +145,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	end_trigger = "내게서 그의 지배력이 거쳤다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",	--check
 	end_message = "%s 물리침!",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -197,8 +193,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.",
 	end_message = "%s a été vaincu !",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -249,7 +243,6 @@ L:RegisterTranslations("zhCN", function() return {
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 	end_message = "%s被击败了！",
 ]]
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -298,8 +291,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 --	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 --	end_message = "%s被擊敗了！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -321,8 +312,6 @@ function mod:OnEnable()
 	dCount = 1
 	eCount = 1
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------

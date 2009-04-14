@@ -44,8 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 	shutdown = "Systems Shutdown",
 	shutdown_desc = "Warn when Flame Leviathan a Systems Shutdown",
 	shutdown_message = "Systems Shutdown!",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -65,8 +63,6 @@ L:RegisterTranslations("koKR", function() return {
 	shutdown = "시스템 작동 정지",
 	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
 	shutdown_message = "시스템 작동 정지!",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 보스들의 외침, 감정표현의 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -86,8 +82,6 @@ L:RegisterTranslations("frFR", function() return {
 	shutdown = "Extinction des systèmes",
 	shutdown_desc = "Prévient quand le Léviathan des flammes éteint ses systèmes.",
 	shutdown_message = "Extinction des systèmes !",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de données, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -107,8 +101,6 @@ L:RegisterTranslations("deDE", function() return {
 	shutdown = "Systemabschaltung",
 	shutdown_desc = "Warnung für Systemabschaltung",
 	shutdown_message = "Systemabschaltung!",
-
-	log = "|cffff0000"..boss.."|r: Dieser Boss benötigt Daten, wenn möglich schalte bitte deinen /combatlog oder Transcriptor an, und übermittle die Daten.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -130,7 +122,6 @@ L:RegisterTranslations("zhCN", function() return {
 	shutdown_desc = "当烈焰巨兽Systems Shutdown时发出警报。",
 	shutdown_message = "Systems Shutdown！",
 ]]
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -150,8 +141,6 @@ L:RegisterTranslations("zhTW", function() return {
 	shutdown = "系統關閉",
 	shutdown_desc = "當烈焰戰輪系統關閉時發出警報。",
 	shutdown_message = "系統關閉！",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -167,8 +156,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 end
 
 ------------------------------
