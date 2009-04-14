@@ -495,7 +495,7 @@ do
 			module.db = self:AcquireDBNamespace(name)
 		end
 
-		-- Set up AceConsole
+		-- Set up AceConsole.
 		if module:IsBossModule() then
 			local cons = module.consoleOptions
 			local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
