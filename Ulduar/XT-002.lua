@@ -284,7 +284,7 @@ function mod:Heartbreak(_, spellID)
 end
 
 function mod:Bomb(player, spellID)
-	if spellId == 63024 or spellId == 64234 and db.gravitybomb then
+	if spellID == 63024 or spellID == 64234 and db.gravitybomb then
 		local other = L["gravitybomb_other"]:format(player)
 		if player == pName then
 			self:Message(L["gravitybomb_you"], "Personal", true, "Alert", nil, spellID)
@@ -295,7 +295,7 @@ function mod:Bomb(player, spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
 		self:Bar(other, 9, spellID)
-	elseif spellId == 63018 and db.lightbomb then
+	elseif spellID == 63018 and db.lightbomb then
 		local other = L["lightbomb_other"]:format(player)
 		if player == pName then
 			self:Message(L["lightbomb_you"], "Personal", true, "Alert", nil, spellID)
