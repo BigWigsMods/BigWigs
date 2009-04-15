@@ -8,7 +8,8 @@ local understudy = BB["Death Knight Understudy"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = {boss, understudy}
+mod.enabletrigger = boss
+mod.wipemobs = understudy
 mod.guid = 16061
 mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
 
