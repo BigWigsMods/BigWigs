@@ -251,8 +251,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Tympanic", 62775, 62776)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234, 65121)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234, 65121)
 	self:AddCombatListener("SPELL_SUMMON", "VoidZone", 64203, 64235)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -295,7 +295,7 @@ function mod:Bomb(player, spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
 		self:Bar(other, 9, spellID)
-	elseif spellID == 63018 and db.lightbomb then
+	elseif spellID == 63018 or spellID == 65121 and db.lightbomb then
 		local other = L["lightbomb_other"]:format(player)
 		if player == pName then
 			self:Message(L["lightbomb_you"], "Personal", true, "Alert", nil, spellID)
