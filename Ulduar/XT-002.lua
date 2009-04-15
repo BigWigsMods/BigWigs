@@ -22,6 +22,7 @@ end
 --      Are you local?      --
 ------------------------------
 
+local pName = UnitName("player")
 local db = nil
 local phase = nil
 local started = nil
