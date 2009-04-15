@@ -201,7 +201,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
 	if db.flame and unit == boss then
 		self:IfMessage(L["flame_message"], "Attention", 62680)
 		self:Bar(L["flame_bar"], 35, 62680)
-		self:DelayedMessage(32, L["flame_soon"], "Attention")
+		self:DelayedMessage(32, L["flame_warning"], "Attention")
 	end
 end
 
@@ -209,7 +209,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if db.flame then
 			self:Bar(L["flame_bar"], 28, 62680)
-			self:DelayedMessage(23, L["flame_soon"], "Attention")
+			self:DelayedMessage(23, L["flame_warning"], "Attention")
 		end
 	end
 end
