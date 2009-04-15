@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"heartbreak", "voidzone", -1, "exposed", "gravitybomb", "lightbomb", "tympanic","bosskill"}
+mod.toggleoptions = {"heartbreak", "voidzone", -1, "exposed", "gravitybomb", "lightbomb", "tympanic", "berserk", "bosskill"}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -354,6 +354,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		exposed1 = nil
 		exposed2 = nil
 		exposed3 = nil
+		if db.berserk and GetCurrentDungeonDifficulty() == 1 then
+			self:Enrage(360, true)
+		end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
