@@ -174,7 +174,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
 	
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 ------------------------------

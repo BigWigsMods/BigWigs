@@ -9,6 +9,20 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
 mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "icon", "bosskill"}
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -28,20 +42,6 @@ local dCount = 1
 local eCount = 1
 local pName = UnitName("player")
 local fmt = string.format
-local bandages = {
-	[21991] = true, -- Heavy Netherweave Bandage
-	[21990] = true, -- Netherweave Bandage
-	[14530] = true, -- Heavy Runecloth Bandage
-	[14529] = true, -- Runecloth Bandage
-	[8545] = true, -- Heavy Mageweave Bandage
-	[8544] = true, -- Mageweave Bandage
-	[6451] = true, -- Heavy Silk Bandage
-	[6450] = true, -- Silk Bandage
-	[3531] = true, -- Heavy Wool Bandage
-	[3530] = true, -- Wool Bandage
-	[2581] = true, -- Heavy Linen Bandage
-	[1251] = true, -- Linen Bandage
-}
 
 ----------------------------
 --      Localization      --
@@ -306,8 +306,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
+	
 	attunedCount = 150
 	dCount = 1
 	eCount = 1

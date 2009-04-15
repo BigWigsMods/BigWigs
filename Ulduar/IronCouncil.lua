@@ -12,6 +12,20 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
 mod.toggleoptions = {"chain", "overload", "power", "death", "overwhelm", -1, "tendrils", "summoning", "punch", -1, "icon", "berserk", "bosskill"}
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -31,20 +45,6 @@ local deaths = 0
 local overwhelmTime = 25
 local pName = UnitName("player")
 local fmt = string.format
-local bandages = {
-	[21991] = true, -- Heavy Netherweave Bandage
-	[21990] = true, -- Netherweave Bandage
-	[14530] = true, -- Heavy Runecloth Bandage
-	[14529] = true, -- Runecloth Bandage
-	[8545] = true, -- Heavy Mageweave Bandage
-	[8544] = true, -- Mageweave Bandage
-	[6451] = true, -- Heavy Silk Bandage
-	[6450] = true, -- Silk Bandage
-	[3531] = true, -- Heavy Wool Bandage
-	[3530] = true, -- Wool Bandage
-	[2581] = true, -- Heavy Linen Bandage
-	[1251] = true, -- Linen Bandage
-}
 
 ----------------------------
 --      Localization      --
@@ -292,8 +292,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490)	-- Molgeim abiltities plus(1 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888)	-- Steelbreaker abiltities plus(2 dead)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	started = nil
 	previous = nil

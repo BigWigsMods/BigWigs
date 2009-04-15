@@ -15,6 +15,7 @@ mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", -1, "icon", "bosskil
 ------------------------------
 
 local db = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --

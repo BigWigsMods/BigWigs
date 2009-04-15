@@ -18,7 +18,6 @@ mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "magne
 local db = nil
 local phase = nil
 local pName = UnitName("player")
-local fmt = string.format
 
 ----------------------------
 --      Localization      --
