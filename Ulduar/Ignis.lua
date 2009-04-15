@@ -15,9 +15,7 @@ mod.toggleoptions = {"flame", "scorch", "slagpot", "bosskill"}
 ------------------------------
 
 local db = nil
-local started = nil
 local pName = UnitName("player")
-local fmt = string.format
 
 ----------------------------
 --      Localization      --
