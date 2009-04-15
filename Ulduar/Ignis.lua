@@ -163,7 +163,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
