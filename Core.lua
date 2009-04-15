@@ -314,6 +314,7 @@ BigWigs = AceLibrary("AceAddon-2.0"):new(
 	"AceConsole-2.0",
 	"AceDB-2.0"
 )
+
 BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 local BigWigs = BigWigs
 
