@@ -86,18 +86,18 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
-	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !", -- à vérifier
+	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
 	ground_message = "Tranchécaille enchaînée !",
-	--air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_trigger = "Laissez un instant pour préparer la construction des tourelles.",
 	air_message = "Décollage !",
-	--phase2_trigger = "Razorscale lands permanently!",
+	phase2_trigger = "Tranchécaille bloquée au sol !",
 	phase2_message = "Phases 2 !",
 	phase2_warning = "Phase 2 imminente !",
 	stun_bar = "Étourdie",
 
 	breath = "Souffle de flammes",
 	breath_desc = "Prévient de l'arrivée des Souffles de flammes.",
-	breath_trigger = "%s inspire profondément...", -- à vérifier
+	breath_trigger = "%s inspire profondément…",
 	breath_message = "Souffle de flammes !",
 
 	flame = "Flamme dévorante sur vous",
