@@ -201,7 +201,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Start", 2)
+	self:Throttle(2, "Start")
 
 	db = self.db.profile
 end
@@ -220,8 +220,8 @@ function mod:GOSSIP_SHOW()
 	end
 end
 
-function mod:BigWigs_RecvSync( sync, rest )
-	if sync == "Start" and rest then
+function mod:BigWigs_RecvSync(sync)
+	if sync == "Start" then
 		p2 = nil
 		self:Message(L["engage_message"]:format(boss), "Attention")
 	end
