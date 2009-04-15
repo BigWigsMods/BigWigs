@@ -69,13 +69,13 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "^Entités hostiles détectées.",
 	engage_message = "%s engagé !",
 
-	flame = "Flots de flammes",
-	flame_desc = "Prévient quand le Léviathan des flammes incante des Flots de flammes.",
-	flame_message = "Flots de flammes !",
+	flame = "Décharges de flammes",
+	flame_desc = "Prévient quand le Léviathan des flammes incante des Décharges de flammes.",
+	flame_message = "Décharges de flammes !",
 
 	pursue = "Poursuite",
 	pursue_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
-	pursue_trigger = "^%%s examine",
+	pursue_trigger = "^%%s poursuit",
 	pursue_other = "Léviathan poursuit %s !",
 	pursue_you = "Léviathan VOUS poursuit !",
 
@@ -193,6 +193,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		self:Message(L["engage_message"], "Attention")
+		self:Message(L["engage_message"]:format(boss), "Attention")
 	end
 end
