@@ -9,6 +9,20 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
 mod.toggleoptions = {"heartbreak", "voidzone", -1, "exposed", "gravitybomb", "lightbomb", "tympanic", "berserk", "bosskill"}
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
@@ -29,20 +43,6 @@ local started = nil
 local exposed1 = nil
 local exposed2 = nil
 local exposed3 = nil
-local bandages = {
-	[21991] = true, -- Heavy Netherweave Bandage
-	[21990] = true, -- Netherweave Bandage
-	[14530] = true, -- Heavy Runecloth Bandage
-	[14529] = true, -- Runecloth Bandage
-	[8545] = true, -- Heavy Mageweave Bandage
-	[8544] = true, -- Mageweave Bandage
-	[6451] = true, -- Heavy Silk Bandage
-	[6450] = true, -- Silk Bandage
-	[3531] = true, -- Heavy Wool Bandage
-	[3530] = true, -- Wool Bandage
-	[2581] = true, -- Heavy Linen Bandage
-	[1251] = true, -- Linen Bandage
-}
 
 ----------------------------
 --      Localization      --
