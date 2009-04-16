@@ -85,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "^Hostile entities detected.", -- need
+	engage_trigger = "^Feindeinheiten erkannt",
 	engage_message = "%s angegriffen!",
 
 	flame = "Flammenstrahlen",
@@ -94,7 +94,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	pursue = "Verfolgung",
 	pursue_desc = "Warnung wenn der Flammenleviathan einen Spieler verfolgt.",
-	pursue_trigger = "^%%s verfolgt", -- check
+	pursue_trigger = "^%%s verfolgt",
 	pursue_other = "Leviathan verfolgt %s!",
 	pursue_you = "Leviathan verfolgt DICH!",
 

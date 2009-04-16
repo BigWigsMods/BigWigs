@@ -146,19 +146,19 @@ L:RegisterTranslations("deDE", function() return {
 
 	phase = "Phasen",
 	phase_desc = "Warnen wenn Klingenschuppe die Phase wechselt.",
-	--ground_trigger = "Move quickly! She won't remain grounded for long!",
+	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
 	ground_message = "Klingenschuppe angekettet!",
-	--air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_trigger = "Gebt uns einen Moment, damit wir uns auf den Bau der Geschütze vorbereiten können.",
 	air_message = "Hebt ab!",
-	--phase2_trigger = "Razorscale lands permanently!",
+	phase2_trigger = "%s dauerhaft an den Boden gebunden!",
 	phase2_message = "Phase 2!",
 	phase2_warning = "Phase 2 bald!",
 	stun_bar = "Stun",
 
 	breath = "Flamen Atem",
 	breath_desc = "Flamen Atem Warnung.",
-	breath_trigger = "%s holt tief Luft", -- check
-	breath_message = "Flamen Atem!",
+	breath_trigger = "%s holt tief Luft...",
+	breath_message = "Flammen Atem!",
 
 	flame = "Verschlingende Flamme",
 	flame_desc = "Warnung wenn du von Verschlingende Flamme getroffen wirst.",
