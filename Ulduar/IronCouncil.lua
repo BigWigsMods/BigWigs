@@ -147,9 +147,9 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "Vous ne vaincrez pas si facilement l'Assemblée du fer, envahisseurs !", -- à vérifier
-	engage_trigger2 = "Seule votre extermination complète me conviendra !", -- à vérifier
-	engage_trigger3 = "Que vous soyez les plus grandes punaises ou les plus grands héros de ce monde, vous n'êtes jamais que des mortels !", -- à vérifier
+	engage_trigger1 = "Vous ne vaincrez pas si facilement l'assemblée du Fer, envahisseurs !",
+	engage_trigger2 = "Seule votre extermination complète me conviendra.",
+	engage_trigger3 = "Que vous soyez les plus grandes punaises ou les plus grands héros de ce monde, vous n'êtes jamais que des mortels.",
 
 	chain = "Chaîne d'éclairs",
 	chain_desc = "Prévient quand Brundir incante une Chaîne d'éclairs.",
