@@ -55,6 +55,34 @@ L:RegisterTranslations("enUS", function() return {
 	flame_message = "Devouring Flame on YOU!",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	cmd = "Razorscale",
+
+	["We are ready to help!"] = "Дайте время подготовить пушки.",
+
+	engage_message = "%s Engaged!",
+
+	phase = "Фазы",
+	phase_desc = "Warn when Razorscale switches between phases.",
+	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
+	ground_message = "Острокрылая на привязи!",
+	air_trigger = "Дайте время подготовить пушки.",
+	air_message = "Взлет!",
+	phase2_trigger = "Razorscale lands permanently!",
+	phase2_message = "Вторая фаза!",
+	phase2_warning = "Скоро вторая фаза!",
+	stun_bar = "Stun",
+
+	breath = "Огненное дыхание",
+	breath_desc = "Flame Breath warnings.",
+	breath_trigger = "%s делает глубокий вдох...",
+	breath_message = "Огненное дыхание!",
+
+	flame = "Вы в Лавовой Бомбе!",
+	flame_desc = "Warn when you are in a Devouring Flame.",
+	flame_message = "ВЫ В ЛАВОВОЙ БОМБЕ!",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	["We are ready to help!"] = "우리는 도울 준비가 되었습니다!",	--check
 

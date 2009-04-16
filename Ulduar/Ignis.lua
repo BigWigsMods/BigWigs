@@ -46,6 +46,27 @@ L:RegisterTranslations("enUS", function() return {
 	slagpot_message = "Slag Pot: %s",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Дерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!",
+
+	flame = "Flame Jets",
+	flame_desc = "Warn when Ignis casts a Flame Jets.",
+	flame_message = "Flame Jets!",
+	flame_warning = "Flame Jets soon!",
+	flame_bar = "~Jets cooldown",
+
+	scorch = "Ожог",
+	scorch_desc = "Warn when you are in a Scorch and Scorch is casting.",
+	scorch_message = "Ожог: %s",
+	scorch_warning = "Casting Scorch!",
+	scorch_soon = "Scorch in ~5sec!",
+	scorch_bar = "Next Scorch",
+
+	slagpot = "Slag Pot",
+	slagpot_desc = "Warn who has Slag Pot.",
+	slagpot_message = "Slag Pot: %s",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "건방진 젖먹이들이! 세상을 되찾는데 쓸 무기를 네놈들의 피로 담금질하겠다!",	--check
 
