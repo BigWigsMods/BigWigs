@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
-mod.guid = 000
+mod.guid = 16777215
 mod.toggleoptions = {"bosskill"}
 
 ------------------------------
