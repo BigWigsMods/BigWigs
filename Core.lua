@@ -271,8 +271,8 @@ L:RegisterTranslations("esES", function() return {
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
-	["%s has been defeated"] = "%s был побежден",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s были побеждены",    -- "<bosses> have been defeated"
+	["%s has been defeated"] = "%s побеждён",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s побеждены",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "Боссы",
