@@ -427,17 +427,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["engage_message"]:format(boss), "Attention")
 		if db.wave then
 			--35594, looks like a wave :)
-			Bar(L["wave_bar"], 11, 35594)
+			self:Bar(L["wave_bar"], 11, 35594)
 		end
 	elseif msg == L["conservator_trigger"] and db.wave then
 		self:Message(L["conservator_message"], "Positive")
-		Bar(L["wave_bar"], 60, 35594)
+		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["detonate_trigger"] and db.wave then
 		self:Message(L["detonate_message"], "Positive")
-		Bar(L["wave_bar"], 60, 35594)
+		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["elementals_trigger"] and db.wave then
 		self:Message(L["elementals_message"], "Positive")
-		Bar(L["wave_bar"], 60, 35594)
+		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["end_trigger"] then
 		if db.bosskill then
 			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
