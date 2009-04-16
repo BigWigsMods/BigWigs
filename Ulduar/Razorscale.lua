@@ -56,8 +56,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	cmd = "Razorscale",
-
 	["We are ready to help!"] = "Дайте время подготовить пушки.",
 
 	engage_message = "%s Engaged!",
