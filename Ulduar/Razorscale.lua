@@ -18,6 +18,7 @@ mod.toggleoptions = {"phase", -1, "breath", "flame", "bosskill"}
 local db = nil
 local p2 = nil
 local pName = UnitName("player")
+local hookedGossip = nil
 local atStartNPC = nil
 
 ----------------------------
@@ -194,7 +195,10 @@ function mod:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("GOSSIP_CLOSED")
 	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
-	hooksecurefunc("SelectGossipOption", mod.selectGossip)
+	if not hookedGossip then
+		hooksecurefunc("SelectGossipOption", mod.selectGossip)
+		hookedGossip = true
+	end
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 63014, 63816)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
