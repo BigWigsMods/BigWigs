@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {Commander, boss}
 mod.guid = 33186
-mod.toggleoptions = {"phase", -1, "breath", "flame", "bosskill"}
+mod.toggleoptions = {"phase", -1, "breath", "flame", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

@@ -95,7 +95,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	shockwave = "Onde de choc",
 	shockwave_desc = "Prévient quand la prochaine Onde de choc arrive.",
-	shockwave_trigger = "Oubli !", -- à vérifier
+	shockwave_trigger = "OUBLI !",
 
 	eyebeam = "Rayon de l'oeil focalisé",
 	eyebeam_desc = "Prévient quand un joueur est ciblé par un Rayon de l'oeil.",
