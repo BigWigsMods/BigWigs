@@ -85,6 +85,18 @@ L:RegisterTranslations("zhTW", function() return {
 	sentinel_message = "哨兵沖擊！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	fear = "Ужасающий вопль",
+	fear_desc = "Предупреждать об Ужасающем вопле.",
+	fear_warning = "Скоро Ужасающий вопль!",
+	fear_message = "Применение страха!",
+	fear_bar = "~перезарядка страха",
+
+	sentinel = "Удар часового",
+	sentinel_desc = "Предупреждать когда Ауриайя применяет Удар часового.",
+	sentinel_message = "Удар часового!",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

@@ -250,6 +250,39 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為中了炸彈的隊員打上團隊標記。（需要權限）",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	exposed = "Обнаженное сердце",
+	exposed_desc = "Сообщает когда XT-002 Обнажает сердце.",
+	exposed_warning = "Скоро Обнаженное сердце!",
+	exposed_message = "Обнаженное сердце - надвигаются подмога!",
+
+	gravitybomb = "Гравитационная бомба",
+	gravitybomb_desc = "Сообщает на кого выпала честь получить Гравитационнуюя бомбу.",
+	gravitybomb_you = "Гравитационная бомба на ВАС!",
+	gravitybomb_other = "Гравитационная бомба на |3-5(%s)!",
+
+	lightbomb = "Светлый взрыв",
+	lightbomb_desc = "Сообщает на кого выпала честь получить Светлый взрыв.",
+	lightbomb_you = "Светлый взрыв на ВАС!",
+	lightbomb_other = "Светлый взрыв на |3-5(%s)!",
+
+	tympanic = "Раскаты ярости",
+	tympanic_desc = "Сообщает когда XT-002 применяет Раскаты ярости.",
+	tympanic_message = "Раскаты ярости!",
+	tympanic_bar "~перезарядка раскатов",
+
+	voidzone = "Портал Бездны",
+	voidzone_desc = "Сообщать о появлениях Порталов Бездны.",
+	voidzone_message = "Портал Бездны!",
+
+	heartbreak = "Разрыв сердца",
+	heartbreak_desc = "Сообщает когда XT-002 получает Разрыв сердца",
+	heartbreak_message = "Разрыв сердца!",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока с бомбой. (необходимо быть лидером группы или рейда)",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

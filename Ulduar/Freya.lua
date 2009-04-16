@@ -293,6 +293,54 @@ L:RegisterTranslations("zhTW", function() return {
 --	end_message = "%s被擊敗了！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	["Snaplasher"] = "Хватоплет", --need check
+	["Storm Lasher"] = "Грозовой плеточник", --need check
+	["Ancient Water Spirit"] = "Древний дух воды", --need check
+	--["Detonating Lasher"] = "Detonating Lasher", --need check
+	--["Ancient Conservator"] = "Ancient Conservator", --need check
+
+	--engage_trigger = "The Conservatory must be protected!",
+	engage_message = "%s в исступлении!",
+
+	phase = "Фазы",
+	phase_desc = "Предупреждать о смене фаз.",
+	phase2_message = "2ая фаза!",
+	phase2_soon = "Скоро начнётся 2ая фаза",
+
+	wave = "Волны",
+	wave_desc = "Предупреждать о волнах.",
+	wave_bar = "Слудующая волна",
+	--conservator_trigger = "Eonar, your servant requires aid!",
+	--detonate_trigger = "The swarm of the elements shall overtake you!",
+	--elementals_trigger = "Children, assist me!",
+	--tree_trigger = "A Lifebinder's Gift begins to grow!",
+	conservator_message = "Появление Conservator",
+	detonate_message = "Появление Detonate",
+	elementals_message = "Появление элементалей",
+	--tree_message = "Eonar's Gift spawn",
+
+	attuned = "Гармония природы",
+	attuned_desc = "Предупреждать о Гармонии природы.",
+	attuned_message = "Гармония: (%d)",
+
+	fury = "Гнев природы",
+	fury_desc = "Сообщает вам. на кого наложен Гнев природы.",
+	fury_you = "Гнев на ВАС!",
+	fury_other = "Гнев: %s",
+
+	sunbeam = "Луч солнца",
+	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
+	sunbeam_you = "Луч солнца на ВАС!",
+	sunbeam_other = "Луч солнца на |3-5(%s)",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелен Луч солнца. (необходимо быть лидером группы или рейда)",
+
+	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_message = "%s побеждена!",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

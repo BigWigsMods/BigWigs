@@ -278,6 +278,52 @@ L:RegisterTranslations("zhTW", function() return {
 	council_dies = "%s被擊敗了！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+--	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+--	engage_trigger2 = "Nothing short of total decimation will suffice!",
+--	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+
+	chain = "Цепная молния",
+	chain_desc = "Сообщает когда Брундир применяет Цепную молнию.",
+	chain_message = "Цепная молния!",
+
+	overload = "Перегрузка",
+	overload_desc = "Сообщает когда Брундир применяет Перегрузку.",
+	overload_message = "Взрыв через 6сек!",
+
+	power = "Руна мощи",
+	power_desc = "Сообщает когда Молгейм применяет Руну мощи.",
+	power_message = "Руна мощи!",
+
+	punch = "Энергетический удар",
+	punch_desc = "Сообщает когда Сталелом применяет Энергетический удар.",
+	punch_message = "Применяется Энергетический удар!",
+
+	death = "Руна смерти на ВАС",
+	death_desc = "Сообщает когда вы поподаете под воздействие Руны смерти.",
+	death_message = "На ВАС Руна СМЕРТИ!",
+
+	summoning = "Руна призыва",
+	summoning_desc = "Сообщает когда Молгейм применяет Руну призыва.",
+	summoning_message = "Руна призыва - приход Элементалей!",
+
+	tendrils = "Светящиеся придатки",
+	tendrils_desc = "Сообщает кого приследуют светящиеся придатки, и помещает на него иконку.",
+	tendrils_other = "Приследуют |3-1(%s)!",
+	tendrils_you = "ВАС приследуют!",
+	tendrils_message = "Выгрузка через ~5сек!",
+
+	overwhelm = "Переполняющая энергия",
+	overwhelm_desc = "Сообщает когда игрок подвергается воздействию Переполняющей энергии.",
+	overwhelm_you = "На ВАС Переполняющая энергия!",
+	overwhelm_other = "Переполняющая энергия на |3-5(%s)",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, being chased(необходимо быть лидером группы или рейда).",
+
+	council_dies = "%s умер",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

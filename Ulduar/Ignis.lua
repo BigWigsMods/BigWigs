@@ -49,22 +49,22 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Дерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!",
 
-	flame = "Flame Jets",
-	flame_desc = "Warn when Ignis casts a Flame Jets.",
-	flame_message = "Flame Jets!",
-	flame_warning = "Flame Jets soon!",
-	flame_bar = "~Jets cooldown",
+	flame = "Огненная струя",
+	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",
+	flame_message = "Огненная струя!",
+	flame_warning = "Скоро Огненная струя!",
+	flame_bar = "~перезарядка струи",
 
 	scorch = "Ожог",
-	scorch_desc = "Warn when you are in a Scorch and Scorch is casting.",
+	scorch_desc = "Сообщать когда вас обжигает и когда применяется Ожог.",
 	scorch_message = "Ожог: %s",
-	scorch_warning = "Casting Scorch!",
-	scorch_soon = "Scorch in ~5sec!",
-	scorch_bar = "Next Scorch",
+	scorch_warning = "Применение Ожога!",
+	scorch_soon = "Ожог через ~5сек!",
+	scorch_bar = "Следующий Ожог",
 
-	slagpot = "Slag Pot",
-	slagpot_desc = "Warn who has Slag Pot.",
-	slagpot_message = "Slag Pot: %s",
+	slagpot = "Шлаковый ковш",
+	slagpot_desc = "Сообщает кого захватывает в Шлаковый ковш.",
+	slagpot_message = "Захвачен в ковш: %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -173,6 +173,7 @@ L:RegisterTranslations("zhTW", function() return {
 	slagpot_desc = "當玩家中了熔渣之盆時發出警報。",
 	slagpot_message = "熔渣之盆：>%s<！",
 } end )
+
 
 ------------------------------
 --      Initialization      --

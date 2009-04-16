@@ -160,6 +160,34 @@ L:RegisterTranslations("zhTW", function() return {
 	end_message = "%s被擊敗了！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	--engage_trigger = "You will suffer for this trespass!",
+
+	cold = "Трескучий мороз(Достижение)",
+	cold_desc = "Сообщать когда на вас наложено 2 эффекта Трескучего мороза",
+	cold_message = "Трескучий мороз(2эффекта) - Бегите!",
+
+	flash = "Мгновенная заморозка",
+	flash_desc = "Сообщает кто подвергся мгновенной заморозке и когда она применяется.",
+	flash_message = "%s подвергся мгновенной заморозке!",
+	flash_warning = "Применение мгновенной заморозки!",
+	flash_soon = "Мгновенная заморозка через 5сек!",
+	flash_bar = "Следующая замарозка",
+
+	frozenblow = "Ледяные дуновения",
+	frozenblow_desc = "Сообщать когда Ходир накладывает на себя Ледяные дуновения.",
+	frozenblow_message = "Ходир наложил на себя Ледяные дуновения!",
+	frozenblow_warning = "Ледяные дуновения спадёт через 5сек!",
+	frozenblow_bar = "Ледяные дуновения",
+
+	hardmode = "Таймер сложного режима", --need review
+	hardmode_desc = "Отображать таймер в сложном режиме.",--need review
+	hardmode_warning = "Завершение сложного режима",--need review
+
+	--end_trigger = "I...I am released from his grasp! At...last!",
+	end_message = "%s побежден!",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

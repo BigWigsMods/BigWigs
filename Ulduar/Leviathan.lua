@@ -143,6 +143,25 @@ L:RegisterTranslations("zhTW", function() return {
 	shutdown_message = "系統關閉！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	--engage_trigger = "^Hostile entities detected.",
+	engage_message = "%s в иступлении!",
+
+	flame = "Огненная струя",
+	flame_desc = "Сообщать когда Огненный Левиафан применяет огненную струю.",
+	flame_message = "Огненная струя!",
+
+	pursue = "Погоня",
+	pursue_desc = "Сообщать когда Огненный Левиафан преследует игрока.",
+	--pursue_trigger = "^%%s pursues",
+	pursue_other = "Левиафан преследует |3-3(%s)!",
+	pursue_you = "Левиафан преследует ВАС!",
+
+	shutdown = "Отключение системы",
+	shutdown_desc = "Сообщать когда Огненный Левиафан отключает системы",
+	shutdown_message = "Отключение системы!",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

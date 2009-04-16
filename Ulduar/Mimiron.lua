@@ -254,6 +254,53 @@ L:RegisterTranslations("zhTW", function() return {
 	end_message = "%s被擊敗了！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	["MKII"] = "Левиафан MKII", -- need check
+	["VX-001"] = "VX-001",
+	["Aerial"] = "Воздушное судно",
+
+	phase = "Фазы",
+	phase_desc = "Сообщать о смене фаз.",
+	engage_warning = "1ая фаза",
+--	engage_trigger = "^We haven't much time, friends!",
+	phase2_warning = "Наступление 2ой фазы",
+--	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+	phase3_warning = "Наступление 3ей фазы",
+--	phase3_trigger = "^Thank you, friends!",
+	phase4_warning = "Наступление 4ой фазы",
+--	phase4_trigger = "^Preliminary testing phase complete",
+	phase_bar = "%d фаза",
+	
+	hardmode = "Таймеры сложного режима",
+	hardmode_desc = "Отображения таймера для сложного режима.",
+--	hardmode_trigger = "^Now why would you go and do something like that?",
+	hardmode_message = "Сложный режим активирован!",
+	hardmode_warning = "Завершение сложного режима",
+
+	plasma = "Взрыв плазмы",
+	plasma_desc = "Сообщать о применении Взрыва плазмы.",
+	plasma_warning = "Применение Взрыва плазмы!",
+	plasma_soon = "Скоро Взрыв плазмы!",
+	plasma_bar = "Следующий Взрыв плазмы",
+
+	shock = "Шоковый удар",
+	shock_desc = "Сообщать о применении Шокового удара.",
+	shock_warning = "Применение Шокового удара!",
+
+	laser = "Лазерный обстрел",
+	laser_desc = "Сообщает об активации Лазерного обстрела!",
+	laser_soon = "Скоро Лазерный обстрел!",
+	laser_bar = "Следующий обстрел",
+
+	magnetic = "Магнитное ядро",
+	magnetic_desc = "Сообщает когда Воздушное судно находится под воздействием Магнитного ядра",
+	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
+	loot_message = "Ядро у |3-1(%s)!",
+
+--	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_message = "%s побеждён!",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

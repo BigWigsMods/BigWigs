@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fUlduar|r]
 ## Notes: Big Wigs Ulduar Modules
+## Title-ruRU: Big Wigs [|cffeda55fУльдуар|r]
+## Notes-ruRU: Модуль Big Wigs - Ульдуар
 ## Title-koKR: Big Wigs [|cffeda55f울두아르|r]
 ## Notes-koKR: Big Wigs 울두아르 경고
 ## Title-zhCN: Big Wigs [|cffeda55f奥杜尔|r]

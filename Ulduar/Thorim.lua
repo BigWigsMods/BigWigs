@@ -308,6 +308,63 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為中了引爆符文的隊員打上團隊標記。（需要權限）",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Фазы",
+	phase_desc = "Сообщать о смене фаз.",
+	phase1_message = "Начало 1ой фазы",
+--	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
+--	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+	phase2_message = "2ая фаза - Исступление через 5 мин!",
+--	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+	phase3_message = "3яя фаза - %s в истеплении!",
+
+	p2berserk = "2ая фаза - Исступление",
+	p2berserk_desc = "Сообщает когда босс входит в Исступление на 2ой фазе.",
+	p2berserk_warn1 = "Исступление через 3 мин",
+	p2berserk_warn2 = "Исступление через 90 сек",
+	p2berserk_warn3 = "Исступление через 60 сек",
+	p2berserk_warn4 = "Исступление через 30 сек",
+	p2berserk_warn5 = "Исступление через 10 сек",
+
+	hardmode = "Таймеры сложного режима",
+	hardmode_desc = "Отображения таймера для сложного режима.",
+	hardmode_warning = "Завершение сложного режима",
+
+	hammer = "Молот бури",
+	hammer_desc = "Сообщает о применении Молота бури.",
+	hammer_bar = "Следующий Молот",
+
+	impale = "Прокалывание",
+	impale_desc = "Сообщает кто поражен Прокалыванием.",
+	impale_message = "Прокалот: %s! Лечите!",
+
+	shock = "Поражение громом",
+	shock_desc = "Сообщать о Заряженных сферах и Поражении громом.",
+	shock_message = "На вас Поражение громом! Шевелитесь!",
+	shock_warning = "Заряженная сфера!",
+	shock_bar = "Следующая сфера",
+
+	detonation = "Взрыв руны",
+	detonation_desc = "Сообщает кто попал под воздействие Взрыва рун.",
+	detonation_message = "Взрыв на: |3-5(%s)",
+	detonation_yell = "Я БОМБА!",
+
+	charge = "Разряд молнии",
+	charge_desc = "Подсчитывать и сообщать о разрядах молнии Торима.",
+	charge_message = "Разряд: (%d)",
+	charge_bar = "Разряд (%d)",
+
+	strike = "Дисбалансирующий удар",
+	strike_desc = "Сообщает когда игрок получает Дисбалансирующий удар.",
+	strike_message= "Удар по: |3-2(%s)",
+
+--	end_trigger = "Stay your arms! I yield!",
+	end_message = "%s побеждён!",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, который попал под воздействие Взрыва рун. (необходимо быть лидером группы или рейда)",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

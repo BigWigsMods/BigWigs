@@ -58,10 +58,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	engage_message = "%s Engaged!",
+	engage_message = "%s в иступлении!",
 
 	phase = "Фазы",
-	phase_desc = "Warn when Razorscale switches between phases.",
+	phase_desc = "Сообщать когда Острокрылая меняет фазы.",
 	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
 	ground_message = "Острокрылая на привязи!",
 	air_trigger = "Дайте время подготовить пушки.",
@@ -69,16 +69,16 @@ L:RegisterTranslations("ruRU", function() return {
 	phase2_trigger = "Острокрылая обессилела и больше не может летать!",
 	phase2_message = "Вторая фаза!",
 	phase2_warning = "Скоро вторая фаза!",
-	stun_bar = "Stun",
+	stun_bar = "Оглушение",
 
 	breath = "Огненное дыхание",
-	breath_desc = "Flame Breath warnings.",
+	breath_desc = "Сообщать об Огненном дыхании.",
 	breath_trigger = "%s делает глубокий вдох...",
 	breath_message = "Огненное дыхание!",
 
 	flame = "Вы в Лавовой Бомбе!",
-	flame_desc = "Warn when you are in a Devouring Flame.",
-	flame_message = "ВЫ В ЛАВОВОЙ БОМБЕ!",
+	flame_desc = "Сообщать когда вы поподаете под воздействие Лавовой бомбы.",
+	flame_message = "ВЫ в Лавовой БОМБЕ!",
 	
 	--harpoon = "Hapoon Turret",
 	--harpoon_desc = "Hapoon Turret announce.",
