@@ -62,7 +62,7 @@ L:RegisterTranslations("ruRU", function() return {
 	start_trigger = "Дайте время подготовить пушки.",
 	--air_trigger = "",
 	--air_message = "Взлет!",
-	phase2_trigger = "Razorscale lands permanently!",
+	phase2_trigger = "Острокрылая обессилела и больше не может летать!",
 	phase2_message = "Вторая фаза!",
 	phase2_warning = "Скоро вторая фаза!",
 	stun_bar = "Stun",
