@@ -34,14 +34,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
-	starttrigger = "^We haven't much time, friends!",
-	phase2_warning = "Phase 2!",
-	phase2_trigger = "Behold, the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
-	phase3_warning = "Phase 3!",
-	phase3_trigger = "Mwahahahaha! Isn't it beautiful! I call it the magnificent Aerial Command Unit!",
-	phase4_warning = "Phase 4!",
-	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
-
+	engage_warning = "Phase 1",
+	engage_trigger = "^We haven't much time, friends!",
+	phase2_warning = "Phase 2 incoming",
+	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+	phase3_warning = "Phase 3 incoming",
+	phase3_trigger = "^Thank you, friends!",
+	phase4_warning = "Phase 4 incoming",
+	phase4_trigger = "^Preliminary testing phase complete",
+	phase_bar = "Phase %d",
+	
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
 	hardmode_trigger = "^Now why would you go and do something like that?",
@@ -52,6 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 	plasma_desc = "Warns when Plasma Blast is casting.",
 	plasma_warning = "Casting Plasma Blast!",
 	plasma_soon = "Plasma Blast soon!",
+	plasma_bar = "Next Plasma Blast",
 
 	shock = "Shock Blast",
 	shock_desc = "Warns when Shock Blast is casting.",
@@ -78,13 +81,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
-	starttrigger = "^시간이 없어, 친구들!",
-	phase2_warning = "2 단계!",
-	phase2_trigger = "보아라, VX-001 대인-공격포의 아름다운 자태를! You might want to take cover.",	--check
-	phase3_warning = "3 단계!",
-	phase3_trigger = "정말 아름답지? 난 이걸 위대한 공중 지휘기라 부르지!",
-	phase4_warning = "4 단계!",
-	phase4_trigger = "그 장엄함을 느껴라! 영광을 흠뻑 취해...아니...영광에 취해라! I present you with...V0-L7R-0N!",	--check
+	engage_warning = "1 단계",
+	engage_trigger = "^시간이 없어, 친구들!",	--check
+	phase2_warning = "곧 2 단계",
+	phase2_trigger = "^멋지군!",	--check
+	phase3_warning = "곧 3 단계",
+	phase3_trigger = "^고맙다, 친구들!",	--check
+	phase4_warning = "곧 4 단계",
+	phase4_trigger = "^이미 시험은 이걸로 끝이다",	--check
+	phase_bar = "%d 단계",
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
@@ -96,6 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 	plasma_desc = "플라스마 폭발 시전을 알립니다.",
 	plasma_warning = "플라스마 폭발 시전!",
 	plasma_soon = "곧 플라스마 폭발!",
+	plasma_bar = "다음 플라스마 폭발",
 
 	shock = "충격파",
 	shock_desc = "충격파 시전을 알립니다.",
@@ -122,13 +128,15 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
-	starttrigger = "^Nous n'avons pas beaucoup de temps, les amis !",
-	phase2_warning = "Phase 2 !",
-	phase2_trigger = "Je vous présente le canon d'assaut antipersonnel VX-001 ! Il pourrait être judicieux de vous mettre à l'abri.",
-	phase3_warning = "Phase 3 !",
-	phase3_trigger = "Elle est belle, hein ? Je l'ai appelée la magnifique unité de commandement aérien !",
-	phase4_warning = "Phase 4 !",
-	--phase4_trigger = "Contemplez-en la magnificence ! Imprégniez de sa glorieuse... euh... gloire ! Je vous présente... V0-7TR-ON !",
+	--engage_warning = "Phase 1",
+	engage_trigger = "^Nous n'avons pas beaucoup de temps, les amis !",
+	--phase2_warning = "Phase 2 incoming",
+	--phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+	--phase3_warning = "Phase 3 incoming",
+	--phase3_trigger = "^Thank you, friends!",
+	--phase4_warning = "Phase 4 incoming",
+	--phase4_trigger = "^Preliminary testing phase complete",
+	--phase_bar = "Phase %d",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
@@ -140,6 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
 	plasma_warning = "Explosion de plasma en incantation !",
 	plasma_soon = "Explosion de plasma imminente !",
+	--plasma_bar = "Next Plasma Blast",
 
 	shock = "Horion explosif",
 	shock_desc = "Prévient quand un Horion explosif est incanté.",
@@ -167,13 +176,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
-	starttrigger = "^We haven't much time, friends!",
-	phase2_warning = "第二阶段！",
-	phase2_trigger = "Behold, the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
-	phase3_warning = "第三阶段！",
-	phase3_trigger = "Mwahahahaha! Isn't it beautiful! I call it the magnificent Aerial Command Unit!",
-	phase4_warning = "第四阶段",
-	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
+	engage_warning = "Phase 1",
+	engage_trigger = "^We haven't much time, friends!",
+	phase2_warning = "Phase 2 incoming",
+	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+	phase3_warning = "Phase 3 incoming",
+	phase3_trigger = "^Thank you, friends!",
+	phase4_warning = "Phase 4 incoming",
+	phase4_trigger = "^Preliminary testing phase complete",
+	phase_bar = "Phase %d",
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
@@ -185,6 +196,7 @@ L:RegisterTranslations("zhCN", function() return {
 	plasma_desc = "当正在施放Plasma Blast时发出警报。",
 	plasma_warning = "正在施放 Plasma Blast！",
 	plasma_soon = "即将 Plasma Blast！",
+	plasma_bar = "Next Plasma Blast",
 
 	shock = "震爆",
 	shock_desc = "当正在施放震爆时发出警报。",
@@ -207,13 +219,15 @@ L:RegisterTranslations("zhTW", function() return {
 
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
---	starttrigger = "^We haven't much time, friends!",
-	phase2_warning = "第二階段！",
---	phase2_trigger = "Behold, the VX-001 Anti-personnel Assault Cannon! You might want to take cover.",
-	phase3_warning = "第三階段！",
---	phase3_trigger = "Mwahahahaha! Isn't it beautiful! I call it the magnificent Aerial Command Unit!",
-	phase4_warning = "第四階段！",
-	phase4_trigger = "Gaze upon its magnificence! Bask in its glorious...um...glory! I present you with...V0-L7R-0N!",
+--	engage_warning = "Phase 1",
+--	engage_trigger = "^We haven't much time, friends!",
+--	phase2_warning = "Phase 2 incoming",
+--	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+--	phase3_warning = "Phase 3 incoming",
+--	phase3_trigger = "^Thank you, friends!",
+--	phase4_warning = "Phase 4 incoming",
+--	phase4_trigger = "^Preliminary testing phase complete",
+--	phase_bar = "Phase %d",
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
@@ -225,6 +239,7 @@ L:RegisterTranslations("zhTW", function() return {
 	plasma_desc = "當正在施放離子衝擊時發出警報。",
 	plasma_warning = "正在施放 離子衝擊！",
 	plasma_soon = "即將 離子衝擊！",
+--	plasma_bar = "Next Plasma Blast",
 
 	shock = "震爆",
 	shock_desc = "當正在施放震爆時發出警報。",
@@ -268,8 +283,8 @@ function mod:Plasma(_, spellID)
 	if db.plasma then
 		self:IfMessage(L["plasma_warning"], "Important", spellID)
 		self:Bar(L["plasma_warning"], 3, spellID)
-		self:Bar(L["plasma"], 30, spellID)
-		self:DelayedMessage(27, L["plasma_soon"], "Attention")
+		self:Bar(L["plasma_bar"], 30, spellID)
+		self:ScheduleEvent("PlasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
 	end
 end
 
@@ -313,32 +328,37 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["hardmode_message"], "Attention", 64582)
 			self:DelayedMessage(480, L["hardmode_warning"], "Attention")
 		end
-	elseif msg:find(L["starttrigger"]) then
+	elseif msg:find(L["engage_trigger"]) then
 		phase = 1
+		if db.phase then
+			self:Message(L["engage_warning"], "Attention")
+		end
 		if db.plasma then
 			self:Bar(L["plasma"], 20, spellID)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
-	elseif msg == L["phase2_trigger"] then
+	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
 		if db.phase then
 			self:Message(L["phase2_warning"], "Attention")
+			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
 		end
-	elseif msg == L["phase3_trigger"] then
+	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
-		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["laser"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["laser_bar"])
 		if db.phase then
 			self:Message(L["phase3_warning"], "Attention")
+			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
-	elseif msg == L["phase4_trigger"] then
+	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
-		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["magnetic"])
 		if db.phase then
 			self:Message(L["phase4_warning"], "Attention")
+			self:Bar(L["phase_bar"]:format(phase), 20, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["end_trigger"]) then
 		if db.bosskill then

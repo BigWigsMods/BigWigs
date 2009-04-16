@@ -285,7 +285,7 @@ L:RegisterTranslations("zhTW", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479)
 	self:AddCombatListener("SPELL_CAST_START", "Overload", 61869, 63481)
-	self:AddCombatListener("SPELL_CAST_START", "Power", 61974)
+	self:AddCombatListener("SPELL_CAST_START", "Power", 61973, 61974)
 	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493)
 	self:AddCombatListener("SPELL_CAST_START", "Summoning", 62273)	-- Molgeim abiltities plus(2 dead)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63485)	-- Brundir abiltities plus(2 dead)
