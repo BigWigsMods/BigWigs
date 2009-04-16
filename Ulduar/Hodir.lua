@@ -35,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
-	flash_message = "%s is Flash Freeze!",
+	flash_message = "%s has Flash Freeze!",
 	flash_warning = "Casting Flash Freeze!",
 	flash_soon = "Flash Freeze in 5sec!",
 	flash_bar = "Next Flash",
@@ -172,8 +172,9 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrozenBlow", 62478, 63512)
 	self:AddCombatListener("SPELL_DAMAGE", "Cold", 62188)
 	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
-	
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 ------------------------------
@@ -190,7 +191,7 @@ function mod:FlashCast(_, spellID)
 end
 
 function mod:Flash(player)
-	if db.flash then
+	if UnitInRaid(player) and db.flash then
 		FF[player] = true
 		self:ScheduleEvent("BWFFWarn", self.FlashWarn, 0.5, self)
 	end
