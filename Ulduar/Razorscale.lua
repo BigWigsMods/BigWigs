@@ -18,6 +18,7 @@ mod.toggleoptions = {"phase", -1, "breath", "flame", "bosskill"}
 local db = nil
 local p2 = nil
 local pName = UnitName("player")
+local atStartNPC = nil
 
 ----------------------------
 --      Localization      --
@@ -191,7 +192,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 function mod:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
+	self:RegisterEvent("GOSSIP_CLOSED")
 	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
+	hooksecurefunc("SelectGossipOption", mod.selectGossip)
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 63014, 63816)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
@@ -215,8 +218,19 @@ function mod:GOSSIP_SHOW()
 	local gossip = GetGossipOptions()
 	if gossip and target == Commander then
 		if gossip == L["We are ready to help!"] then
-			self:Sync("Start")
+			atStartNPC = true
 		end
+	end
+end
+
+function mod:GOSSIP_CLOSED()
+	atStartNPC = nil
+end
+
+function mod.selectGossip(option)
+	if atStartNPC then
+		mod:Sync("Start")
+		atStartNPC = nil
 	end
 end
 
@@ -224,6 +238,7 @@ function mod:BigWigs_RecvSync(sync)
 	if sync == "Start" then
 		p2 = nil
 		self:Message(L["engage_message"]:format(boss), "Attention")
+		self:Enrage(600, true)
 	end
 end
 
