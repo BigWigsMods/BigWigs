@@ -29,6 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	fear = "Terrifying Screech",
 	fear_desc = "Warn when about Horrifying Screech.",
 	fear_warning = "Fear soon!",
+	fear_message = "Casting Fear!",
 	fear_bar = "~Fear Cooldown",
 
 	sentinel = "Sentinel Blast",
@@ -40,6 +41,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear = "공포의 비명소리",
 	fear_desc = "공포의 비명소리에 대해 알립니다.",
 	fear_warning = "곧 공포!",
+	--fear_message = "Casting Fear!",
 	fear_bar = "~공포 대기시간",
 
 	sentinel = "파수꾼 폭발",
@@ -51,6 +53,7 @@ L:RegisterTranslations("frFR", function() return {
 	fear = "Hurlement terrifiant",
 	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
 	fear_warning = "Hurlement imminent !",
+	--fear_message = "Casting Fear!",
 	fear_bar = "~Recharge Hurlement",
 
 	sentinel = "Déflagration du factionnaire",
@@ -62,6 +65,7 @@ L:RegisterTranslations("zhCN", function() return {
 	fear = "恐吓尖啸",
 	fear_desc = "当施放恐吓尖啸时发出警报。",
 	fear_warning = "即将 恐吓尖啸！",
+	--fear_message = "Casting Fear!",
 	fear_bar = "<恐吓尖啸 冷却>",
 
 	sentinel = "戒卫冲击",
@@ -73,6 +77,7 @@ L:RegisterTranslations("zhTW", function() return {
 	fear = "恐嚇尖嘯",
 	fear_desc = "當施放恐嚇尖嘯時發出警報。",
 	fear_warning = "即將 恐嚇尖嘯！",
+	--fear_message = "Casting Fear!",
 	fear_bar = "<恐嚇尖嘯 冷卻>",
 
 	sentinel = "哨兵衝擊",
