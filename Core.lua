@@ -18,6 +18,7 @@ local icon = LibStub("LibDBIcon-1.0", true)
 
 local customBossOptions = {}
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
+
 ----------------------------
 --      Localization      --
 ----------------------------

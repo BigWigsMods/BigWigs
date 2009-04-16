@@ -18,8 +18,6 @@ mod.toggleoptions = {"phase", -1, "breath", "flame", "berserk", "bosskill"}
 local db = nil
 local p2 = nil
 local pName = UnitName("player")
-local hookedGossip = nil
-local atStartNPC = nil
 
 ----------------------------
 --      Localization      --
@@ -30,17 +28,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorscale",
 
-	["We are ready to help!"] = true,
-
 	engage_message = "%s Engaged!",
 
 	phase = "Phases",
 	phase_desc = "Warn when Razorscale switches between phases.",
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "Razorscale Chained up!",
-	air_trigger = "Give us a moment to prepare to build the turrets.",
-	air_message = "Takeoff!",
-	phase2_trigger = "Razorscale lands permanently!",
+	start_trigger = "Give us a moment to prepare to build the turrets.",
+	--air_trigger = "",
+	--air_message = "Takeoff!",
+	phase2_trigger = "%s grounded permanently!",
 	phase2_message = "Phases 2!",
 	phase2_warning = "Phase 2 Soon!",
 	stun_bar = "Stun",
@@ -56,16 +53,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	["We are ready to help!"] = "Дайте время подготовить пушки.",
-
 	engage_message = "%s Engaged!",
 
 	phase = "Фазы",
 	phase_desc = "Warn when Razorscale switches between phases.",
 	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
 	ground_message = "Острокрылая на привязи!",
-	air_trigger = "Дайте время подготовить пушки.",
-	air_message = "Взлет!",
+	start_trigger = "Дайте время подготовить пушки.",
+	--air_trigger = "",
+	--air_message = "Взлет!",
 	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "Вторая фаза!",
 	phase2_warning = "Скоро вторая фаза!",
@@ -82,16 +78,15 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["We are ready to help!"] = "우리는 도울 준비가 되었습니다!",	--check
-
 	engage_message = "%s 전투 시작!",
 
 	phase = "단계",
 	phase_desc = "칼날비늘의 단계 변경을 알립니다.",
 	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",
 	ground_message = "칼날비늘 묶임!",
-	air_trigger = "Give us a moment to prepare to build the turrets.",	--check
-	air_message = "이륙!",
+	--start_trigger = "Give us a moment to prepare to build the turrets.",	--check
+	--air_trigger = "",	--check
+	--air_message = "이륙!",
 	phase2_trigger = "Razorscale lands permanently!",	--check
 	phase2_message = "2 단계!",
 	phase2_warning = "곧 2 단계!",
@@ -108,16 +103,15 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["We are ready to help!"] = "Nous sommes prêts à aider !",
-
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
 	ground_message = "Tranchécaille enchaînée !",
-	air_trigger = "Laissez un instant pour préparer la construction des tourelles.",
-	air_message = "Décollage !",
+	start_trigger = "Laissez un instant pour préparer la construction des tourelles.",
+	--air_trigger = "",
+	--air_message = "Décollage !",
 	phase2_trigger = "Tranchécaille bloquée au sol !",
 	phase2_message = "Phases 2 !",
 	phase2_warning = "Phase 2 imminente !",
@@ -134,16 +128,15 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	-- ["We are ready to help!"] = true,
-
 	engage_message = "%s angregriffen!",
 
 	phase = "Phasen",
 	phase_desc = "Warnen wenn Klingenschuppe die Phase wechselt.",
 	--ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "Klingenschuppe angekettet!",
-	--air_trigger = "Give us a moment to prepare to build the turrets.",
-	air_message = "Hebt ab!",
+	--start_trigger = "Give us a moment to prepare to build the turrets.",
+	--air_trigger = "",
+	--air_message = "Hebt ab!",
 	--phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "Phase 2!",
 	phase2_warning = "Phase 2 bald!",
@@ -161,16 +154,15 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --[[
-	["We are ready to help!"] = true,
-
 	engage_message = "%s已激怒！",
 
 	phase = "阶段",
 	phase_desc = "当锋鳞转换不同阶段时发出警报。",
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "锋鳞被锁住了！",
-	air_trigger = "Give us a moment to prepare to build the turrets.",
-	air_message = "起飞！",
+	start_trigger = "Give us a moment to prepare to build the turrets.",
+	--air_trigger = "",
+	--air_message = "起飞！",
 	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二阶段！",
 	phase2_warning = "即将 第二阶段！",
@@ -188,16 +180,15 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	["We are ready to help!"] = true,
-
 	engage_message = "%s已狂怒！",
 
 	phase = "階段",
 	phase_desc = "當銳鱗轉換不同階段發出警報。",
 --	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "銳鱗被鎖住了！",
---	air_trigger = "Give us a moment to prepare to build the turrets.",
-	air_message = "起飛！",
+--	start_trigger = "Give us a moment to prepare to build the turrets.",
+	--air_trigger = "",
+	--air_message = "起飛！",
 --	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二階段！",
 	phase2_warning = "即將 第二階段！",
@@ -218,23 +209,12 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("GOSSIP_SHOW")
-	self:RegisterEvent("GOSSIP_CLOSED")
-	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
-	if not hookedGossip then
-		hooksecurefunc("SelectGossipOption", mod.selectGossip)
-		hookedGossip = true
-	end
-
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 63014, 63816)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
-
-	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:Throttle(2, "Start")
 
 	db = self.db.profile
 end
@@ -242,35 +222,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:GOSSIP_SHOW()
-	local target = UnitName("target")
-	local gossip = GetGossipOptions()
-	if gossip and target == Commander then
-		if gossip == L["We are ready to help!"] then
-			atStartNPC = true
-		end
-	end
-end
-
-function mod:GOSSIP_CLOSED()
-	atStartNPC = nil
-end
-
-function mod.selectGossip(option)
-	if atStartNPC then
-		mod:Sync("Start")
-		atStartNPC = nil
-	end
-end
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "Start" then
-		p2 = nil
-		self:Message(L["engage_message"]:format(boss), "Attention")
-		self:Enrage(600, true)
-	end
-end
 
 function mod:Flame(player)
 	if player == pName and db.flame then
@@ -301,11 +252,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["ground_trigger"] and db.phase then
-		--20170, looks like a stun :p
 		self:Message(L["ground_message"], "Attention", nil, "Long")
-		self:Bar(L["stun_bar"], 38, 20170)
-	elseif msg == L["air_trigger"] and db.phase then
-		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
-		self:Message(L["air_message"], "Attention", nil, "Info")
+		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
+	elseif msg == L["start_trigger"] and db.phase then
+		p2 = nil
+		self:Message(L["engage_message"]:format(boss), "Attention")
+		self:Enrage(600, true)
+		--self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
+		--self:Message(L["air_message"], "Attention", nil, "Info")
 	end
 end
