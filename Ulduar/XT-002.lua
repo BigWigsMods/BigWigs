@@ -104,7 +104,7 @@ L:RegisterTranslations("koKR", function() return {
 	tympanic = "격분의 땅울림",
 	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
 	tympanic_message = "격분의 땅울림!",
-	--tympanic_bar = "~Tantrum Cooldown",
+	tympanic_bar = "~땅울림 대기시간",
 
 	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대 생성을 알립니다.",

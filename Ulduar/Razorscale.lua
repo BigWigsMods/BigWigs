@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	ground_message = "칼날비늘 묶임!",
 	--air_trigger = "Give us a moment to prepare to build the turrets.",	--check
 	air_message = "이륙!",
-	phase2_trigger = "Razorscale lands permanently!",	--check
+	--phase2_trigger = "Razorscale lands permanently!",	--check
 	phase2_message = "2 단계!",
 	phase2_warning = "곧 2 단계!",
 	stun_bar = "기절",
@@ -108,9 +108,9 @@ L:RegisterTranslations("koKR", function() return {
 	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
 	flame_message = "당신은 파멸의 불길!",
 	
-	--harpoon = "Hapoon Turret",
-	--harpoon_desc = "Hapoon Turret announce.",
-	--harpoon_message = "Hapoon Turret(%d)",
+	harpoon = "작살 포탑",
+	harpoon_desc = "작살 포탑의 준비를 알립니다.",
+	harpoon_message = "작살 포탑(%d)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
