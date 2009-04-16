@@ -207,11 +207,10 @@ L:RegisterTranslations("zhTW", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
-	self:AddCombatListener("SPELL_CAST_START", "Animus", 63145)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
-	self:AddCombatListener("SPELL_SUMMON", "Summon", 63081)
+	self:AddCombatListener("SPELL_SUMMON", "Summon", 63081, 63145)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -301,16 +300,12 @@ function mod:SurgeGain(_, spellID)
 	end
 end
 
-function mod:Summon()
-	if db.vapor then
+function mod:Summon(_, spellID)
+	if spellId == 63081 and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
 		count = count + 1
 		self:Bar(L["vapor_bar"]:format(count), 30, 63323)
-	end
-end
-
-function mod:Animus()
-	if db.animus then
+	elseif spellId == 63145 and db.animus then
 		self:IfMessage(L["animus_message"], "Attention", 63319)
 	end
 end
