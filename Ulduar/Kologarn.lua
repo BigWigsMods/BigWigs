@@ -28,8 +28,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	arm = "Arm dies",
 	arm_desc = "Warn for Left & Right Arm dies.",
-	left_trigger = "Just a scratch!",
-	right_trigger = "Only a flesh wound!",
 	left_dies = "Left Arm dies",
 	right_dies = "Right Arm dies",
 	left_wipe_bar = "Respawn Left Arm",
@@ -55,8 +53,6 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	arm = "팔 죽음",
 	arm_desc = "왼쪽 & 오른쪽 팔의 죽음을 알립니다.",
-	left_trigger = "긁힌 정도지!",
-	right_trigger = "얕은 상처야!",
 	left_dies = "왼쪽 팔 죽음",
 	right_dies = "오른쪽 팔 죽음",
 	left_wipe_bar = "왼쪽 팔 재생성",
@@ -82,8 +78,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	arm = "Mort des bras",
 	arm_desc = "Prévient quand le bras gauche et/ou droit meurt.",
-	left_trigger = "C'est juste une égratignure !", -- à vérifier
-	right_trigger = "Une blessure superficielle !", -- à vérifier
 	left_dies = "Bras gauche éliminé",
 	right_dies = "Bras droit éliminé",
 	left_wipe_bar = "Réapp. bras gauche",
@@ -110,8 +104,6 @@ L:RegisterTranslations("zhCN", function() return {
 --[[
 	arm = "手臂死亡",
 	arm_desc = "当左右手臂死亡时发出警报。",
-	left_trigger = "Just a scratch!",
-	right_trigger = "Only a flesh wound!",
 	left_dies = "左臂死亡！",
 	right_dies = "右臂死亡！",
 	left_wipe_bar = "<左臂重生>",
@@ -138,8 +130,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	arm = "手臂死亡",
 	arm_desc = "當左右手臂死亡時發出警報。",
---	left_trigger = "Just a scratch!",
---	right_trigger = "Only a flesh wound!",
 	left_dies = "左臂死亡！",
 	right_dies = "右臂死亡！",
 	left_wipe_bar = "<左臂重生>",
@@ -169,7 +159,7 @@ L:RegisterTranslations("zhTW", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
 	self:AddCombatListener("SPELL_SUMMON", "Eyebeam", 63343, 63701)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -202,15 +192,21 @@ function mod:Eyebeam(_, _, source)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	--2062, looks like a Arms :)
-	if msg == L["left_trigger"] and db.arm then
+function mod:Deaths(_, guid)
+	guid = tonumber((guid):sub(-12,-7),16)
+	if guid == 32933 then
 		self:Message(L["left_dies"], "Attention")
-		self:Bar(L["left_wipe_bar"], 60, 2062)
-	elseif msg == L["right_trigger"] and db.arm then
+		self:Bar(L["left_wipe_bar"], 60, 2062) --2062, looks like a Arms :)
+	elseif guid == 32934 then
 		self:Message(L["right_dies"], "Attention")
-		self:Bar(L["right_wipe_bar"], 60, 2062)
-	elseif msg == L["shockwave_trigger"] and db.shockwave then
+		self:Bar(L["right_wipe_bar"], 60, 2062) --2062, looks like a Arms :)
+	elseif guid == self.guid then
+		self:BossDeath(nil, guid)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["shockwave_trigger"] and db.shockwave then
 		self:Message(L["shockwave"], "Attention")
 		self:Bar(L["shockwave"], 21, 63982)
 	end
