@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {Commander, boss}
 mod.guid = 33186
-mod.toggleoptions = {"phase", -1, "breath", "flame", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -19,6 +19,7 @@ local db = nil
 local p2 = nil
 local pName = UnitName("player")
 local started = nil
+local count = 1
 
 ----------------------------
 --      Localization      --
@@ -50,6 +51,10 @@ L:RegisterTranslations("enUS", function() return {
 	flame = "Devouring Flame on You",
 	flame_desc = "Warn when you are in a Devouring Flame.",
 	flame_message = "Devouring Flame on YOU!",
+	
+	harpoon = "Hapoon Turret",
+	harpoon_desc = "Hapoon Turret announce.",
+	harpoon_message = "Hapoon Turret(%d)",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -74,6 +79,10 @@ L:RegisterTranslations("ruRU", function() return {
 	flame = "Вы в Лавовой Бомбе!",
 	flame_desc = "Warn when you are in a Devouring Flame.",
 	flame_message = "ВЫ В ЛАВОВОЙ БОМБЕ!",
+	
+	--harpoon = "Hapoon Turret",
+	--harpoon_desc = "Hapoon Turret announce.",
+	--harpoon_message = "Hapoon Turret(%d)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -98,6 +107,10 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "자신의 파멸의 불길",
 	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
 	flame_message = "당신은 파멸의 불길!",
+	
+	--harpoon = "Hapoon Turret",
+	--harpoon_desc = "Hapoon Turret announce.",
+	--harpoon_message = "Hapoon Turret(%d)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -122,6 +135,10 @@ L:RegisterTranslations("frFR", function() return {
 	flame = "Flamme dévorante sur vous",
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
 	flame_message = "Flamme dévorante sur VOUS !",
+	
+	--harpoon = "Hapoon Turret",
+	--harpoon_desc = "Hapoon Turret announce.",
+	--harpoon_message = "Hapoon Turret(%d)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -146,6 +163,10 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Verschlingende Flamme",
 	flame_desc = "Warnung wenn du von Verschlingende Flamme getroffen wirst.",
 	flame_message = "Verschlingende Flamme auf DIR!",
+	
+	--harpoon = "Hapoon Turret",
+	--harpoon_desc = "Hapoon Turret announce.",
+	--harpoon_message = "Hapoon Turret(%d)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -171,6 +192,10 @@ L:RegisterTranslations("zhCN", function() return {
 	flame = "自身Devouring Flame",
 	flame_desc = "当你中了Devouring Flame时发出警报。",
 	flame_message = ">你< Devouring Flame！",
+	
+	harpoon = "Hapoon Turret",
+	harpoon_desc = "Hapoon Turret announce.",
+	harpoon_message = "Hapoon Turret(%d)",
 ]]
 } end )
 
@@ -196,6 +221,10 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "自身吞噬烈焰",
 	flame_desc = "當你中了吞噬烈焰時發出警報。",
 	flame_message = ">你< 吞噬烈焰！",
+	
+	--harpoon = "Hapoon Turret",
+	--harpoon_desc = "Hapoon Turret announce.",
+	--harpoon_message = "Hapoon Turret(%d)",
 } end )
 
 ------------------------------
@@ -243,6 +272,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:IfMessage(L["phase2_message"], "Attention")
 	elseif msg == L["breath_trigger"] and db.breath then
 		self:IfMessage(L["breath_message"], "Attention")
+	elseif msg == L["harpoon_trigger"] and db.harpoon then
+		self:IfMessage(L["harpoon_message"]:format(count), "Attention", 56790)
+		if count == 4 then count = 0 end
+		count = count + 1
 	end
 end
 
@@ -256,6 +289,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["engage_message"]:format(boss), "Attention")
 			self:Enrage(600, true)
 			started = true
+			count = 1
 		else
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 			self:Message(L["air_message"], "Attention", nil, "Info")
