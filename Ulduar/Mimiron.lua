@@ -128,15 +128,15 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
-	--engage_warning = "Phase 1",
+	engage_warning = "Phase 1",
 	engage_trigger = "^Nous n'avons pas beaucoup de temps, les amis !",
-	--phase2_warning = "Phase 2 incoming",
-	--phase2_trigger = "^WONDERFUL! Positively marvelous results!",
-	--phase3_warning = "Phase 3 incoming",
-	--phase3_trigger = "^Thank you, friends!",
-	--phase4_warning = "Phase 4 incoming",
-	--phase4_trigger = "^Preliminary testing phase complete",
-	--phase_bar = "Phase %d",
+	phase2_warning = "Arrivée de la phase 2",
+	phase2_trigger = "^MERVEILLEUX ! Résultats parfaitement formidables !", -- à vérifier
+	phase3_warning = "Arrivée de la phase 3",
+	phase3_trigger = "^Merci, les amis !", -- à vérifier
+	phase4_warning = "Arrivée de la phase 4",
+	phase4_trigger = "^Fin de la phase d'essai préliminaire", -- à vérifier
+	phase_bar = "Phase %d",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
@@ -148,7 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
 	plasma_warning = "Explosion de plasma en incantation !",
 	plasma_soon = "Explosion de plasma imminente !",
-	--plasma_bar = "Next Plasma Blast",
+	plasma_bar = "Proch. Explosion de plasma",
 
 	shock = "Horion explosif",
 	shock_desc = "Prévient quand un Horion explosif est incanté.",

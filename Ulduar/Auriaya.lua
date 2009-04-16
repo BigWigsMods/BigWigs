@@ -53,7 +53,7 @@ L:RegisterTranslations("frFR", function() return {
 	fear = "Hurlement terrifiant",
 	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
 	fear_warning = "Hurlement imminent !",
-	--fear_message = "Casting Fear!",
+	fear_message = "Hurlement en incantation !",
 	fear_bar = "~Recharge Hurlement",
 
 	sentinel = "Déflagration du factionnaire",
