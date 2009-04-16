@@ -71,6 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
 	tympanic_message = "Tympanic Tantrum!",
+	tympanic_bar "~Tantrum Cooldown",
 
 	voidzone = "Void Zone",
 	voidzone_desc = "Warn for Void Zone spawn.",
@@ -103,6 +104,7 @@ L:RegisterTranslations("koKR", function() return {
 	tympanic = "격분의 땅울림",
 	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
 	tympanic_message = "격분의 땅울림!",
+	--tympanic_bar "~Tantrum Cooldown",
 
 	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대 생성을 알립니다.",
@@ -135,6 +137,7 @@ L:RegisterTranslations("frFR", function() return {
 	tympanic = "Colère assourdissante",
 	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
 	tympanic_message = "Colère assourdissante !",
+	--tympanic_bar "~Tantrum Cooldown",
 
 	voidzone = "Zone de Vide",
 	voidzone_desc = "Prévient quand une Zone de Vide apparaît.",
@@ -167,7 +170,8 @@ L:RegisterTranslations("deDE", function() return {
 	tympanic = "Betäubender Koller",
 	tympanic_desc = "Warnt wenn XT-002 Betäubender Koller wirkt.",
 	tympanic_message = "Betäubender Koller!",
-	
+	--tympanic_bar "~Tantrum Cooldown",
+
 	--voidzone = "Void Zone",
 	--voidzone_desc = "Warn for Void Zone spawn.",
 	--voidzone_message = "Void Zone!",
@@ -199,6 +203,7 @@ L:RegisterTranslations("zhCN", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "当 XT-002 施放Tympanic Tantrum时发出警报。",
 	tympanic_message = "Tympanic Tantrum！",
+	--tympanic_bar "~Tantrum Cooldown",
 
 	voidzone = "虚空领域",
 	voidzone_desc = "当虚空领域出现时发出警报。",
@@ -231,6 +236,7 @@ L:RegisterTranslations("zhTW", function() return {
 	tympanic = "躁怒",
 	tympanic_desc = "當 XT-002 施放躁怒時發出警報。",
 	tympanic_message = "躁怒！",
+	--tympanic_bar "~Tantrum Cooldown",
 
 	voidzone = "虛無區域",
 	voidzone_desc = "當虛無區域出現時發出警報。",
@@ -272,6 +278,7 @@ end
 ------------------------------
 
 function mod:Exposed(_, spellID)
+	self:TriggerEvent("BigWigs_StopBar", self, L["tympanic_bar"])
 	if db.exposed then
 		self:IfMessage(L["exposed_message"], "Attention", spellID)
 		self:Bar(L["exposed"], 30, spellID)
@@ -321,6 +328,7 @@ end
 function mod:Tympanic(_, spellID)
 	if db.tympanic then
 		self:IfMessage(L["tympanic_message"], "Attention", spellID)
+		self:Bar(L["tympanic_bar"], 60, spellID)
 	end
 end
 
