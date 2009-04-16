@@ -372,7 +372,7 @@ end
 
 function mod:FuryRemove(player)
 	if db.fury then
-		self:TriggerEvent("BigWigs_StopBar", self, L["fury_message"]:format(player))
+		self:TriggerEvent("BigWigs_StopBar", self, L["fury_other"]:format(player))
 	end
 end
 
