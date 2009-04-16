@@ -230,7 +230,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
 		end
 		if db.berserk then
-			self:Enrage(540, true)
+			self:Enrage(480, true)
 		end
 		for k in pairs(FF) do FF[k] = nil end
 	elseif msg == L["end_trigger"] then
