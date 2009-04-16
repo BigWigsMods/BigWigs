@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "Razorscale Chained up!",
 	air_trigger = "Give us a moment to prepare to build the turrets.",
-	--air_message = "Takeoff!",
+	air_message = "Takeoff!",
 	phase2_trigger = "%s grounded permanently!",
 	phase2_message = "Phases 2!",
 	phase2_warning = "Phase 2 Soon!",
@@ -60,7 +60,7 @@ L:RegisterTranslations("ruRU", function() return {
 	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
 	ground_message = "Острокрылая на привязи!",
 	air_trigger = "Дайте время подготовить пушки.",
-	--air_message = "Взлет!",
+	air_message = "Взлет!",
 	phase2_trigger = "Острокрылая обессилела и больше не может летать!",
 	phase2_message = "Вторая фаза!",
 	phase2_warning = "Скоро вторая фаза!",
@@ -84,7 +84,7 @@ L:RegisterTranslations("koKR", function() return {
 	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",
 	ground_message = "칼날비늘 묶임!",
 	--air_trigger = "Give us a moment to prepare to build the turrets.",	--check
-	--air_message = "이륙!",
+	air_message = "이륙!",
 	phase2_trigger = "Razorscale lands permanently!",	--check
 	phase2_message = "2 단계!",
 	phase2_warning = "곧 2 단계!",
@@ -108,7 +108,7 @@ L:RegisterTranslations("frFR", function() return {
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
 	ground_message = "Tranchécaille enchaînée !",
 	air_trigger = "Laissez un instant pour préparer la construction des tourelles.",
-	--air_message = "Décollage !",
+	air_message = "Décollage !",
 	phase2_trigger = "Tranchécaille bloquée au sol !",
 	phase2_message = "Phases 2 !",
 	phase2_warning = "Phase 2 imminente !",
@@ -132,7 +132,7 @@ L:RegisterTranslations("deDE", function() return {
 	--ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "Klingenschuppe angekettet!",
 	--air_trigger = "Give us a moment to prepare to build the turrets.",
-	--air_message = "Hebt ab!",
+	air_message = "Hebt ab!",
 	--phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "Phase 2!",
 	phase2_warning = "Phase 2 bald!",
@@ -157,7 +157,7 @@ L:RegisterTranslations("zhCN", function() return {
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "锋鳞被锁住了！",
 	air_trigger = "Give us a moment to prepare to build the turrets.",
-	--air_message = "起飞！",
+	air_message = "起飞！",
 	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二阶段！",
 	phase2_warning = "即将 第二阶段！",
@@ -182,7 +182,7 @@ L:RegisterTranslations("zhTW", function() return {
 --	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "銳鱗被鎖住了！",
 --	air_trigger = "Give us a moment to prepare to build the turrets.",
-	--air_message = "起飛！",
+	air_message = "起飛！",
 --	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二階段！",
 	phase2_warning = "即將 第二階段！",
@@ -209,6 +209,7 @@ function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
 	started = nil
@@ -232,7 +233,7 @@ function mod:UNIT_HEALTH(msg)
 			self:Message(L["phase2_warning"], "Positive")
 			p2 = true
 		elseif hp > 70 and p2 then
-			p2 = false
+			p2 = nil
 		end
 	end
 end
