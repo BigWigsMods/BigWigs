@@ -256,8 +256,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 	elseif msg == L["start_trigger"] and db.phase then
 		p2 = nil
-		self:Message(L["engage_message"]:format(boss), "Attention")
-		self:Enrage(600, true)
+		--self:Message(L["engage_message"]:format(boss), "Attention")
+		--self:Enrage(600, true)
 		--self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 		--self:Message(L["air_message"], "Attention", nil, "Info")
 	end
