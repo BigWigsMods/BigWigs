@@ -353,7 +353,7 @@ end
 function mod:Strike(player, spellID)
 	if db.strike then
 		local msg = fmt(L["strike_message"], player)
-		self:IfMessage(msg "Attention", spellID)
+		self:IfMessage(msg, "Attention", spellID)
 		self:Bar(msg, strikeTime, spellID)
 	end
 end
