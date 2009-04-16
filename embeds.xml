@@ -16,10 +16,8 @@
 <Include file="Libs\LibBabble-Boss-3.0\lib.xml"/>
 <Include file="Libs\LibBabble-Zone-3.0\lib.xml"/>
 <Script file="Libs\Dewdrop-2.0\Dewdrop-2.0.lua"/>
-<Script file="Libs\PaintChips-2.0\PaintChips-2.0.lua"/>
 <Script file="Libs\CandyBar-2.0\CandyBar-2.0.lua"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
-<Script file="Libs\Waterfall-1.0\Waterfall-1.0.lua"/>
 <Include file="Libs\LibSink-2.0\lib.xml"/>
 <!--@end-no-lib-strip@-->
 
