@@ -264,6 +264,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
+	started = nil
 end
 
 ------------------------------
