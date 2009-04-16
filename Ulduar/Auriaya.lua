@@ -41,7 +41,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear = "공포의 비명소리",
 	fear_desc = "공포의 비명소리에 대해 알립니다.",
 	fear_warning = "곧 공포!",
-	--fear_message = "Casting Fear!",
+	fear_message = "공포 시전!",
 	fear_bar = "~공포 대기시간",
 
 	sentinel = "파수꾼 폭발",
