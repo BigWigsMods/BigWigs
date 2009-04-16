@@ -15,7 +15,7 @@ mod.toggleoptions = {"fear", "sentinel", "bosskill"}
 ------------------------------
 
 local db = nil
-started = true
+local started = nil
 
 ----------------------------
 --      Localization      --
@@ -99,6 +99,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
+	started = nil
 end
 
 ------------------------------
