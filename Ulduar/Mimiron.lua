@@ -308,10 +308,10 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Laser", 63274)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
+	--self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Magnetic", 64436)
-
+	
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_LOOT")
@@ -342,21 +342,13 @@ function mod:Shock(_, spellID)
 	end
 end
 
-local last = 0
-function mod:Laser(unit, spellID)
-	local time = GetTime()
-	if (time - last) > 4 then
-		last = time
-		if unit == L["VX-001"] and db.laser then
-			self:IfMessage(L["laser"], "Important", spellID)
-			self:Bar(L["laser"], 15, spellID)
-			self:Bar(L["laser_bar"], 60, spellID)
-		end
-	end
-end
-
-function mod:Spinning(_, spellID)
-	if db.laser then
+function mod:UNIT_SPELLCAST_CHANNEL_START(unit, spell)
+	-- Laser Barrage
+	if spell == GetSpellInfo(63274) and db.laser then
+		self:IfMessage(L["laser"], "Important", 63274)
+		self:Bar(L["laser"], 10, 63274)
+		self:Bar(L["laser_bar"], 60, 63274)
+	elseif spell == GetSpellInfo(63414) and db.laser then
 		self:IfMessage(L["laser_soon"], "Important", spellID)
 	end
 end
@@ -381,7 +373,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["engage_warning"], "Attention")
 		end
 		if db.plasma then
-			self:Bar(L["plasma"], 20, spellID)
+			self:Bar(L["plasma"], 20, 64529)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
 	elseif msg:find(L["phase2_trigger"]) then
