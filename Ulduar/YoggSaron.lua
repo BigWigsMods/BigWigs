@@ -10,7 +10,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "portal", "weakened", "madness", "beam", "bosskill"}
+mod.toggleoptions = {"phase", "portal", "weakened", "madness", "beam", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -157,6 +157,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 1
 		if db.phase then
 			self:Message(L["engage_warning"], "Important", nil, "Alarm")
+		end
+		if db.berserk then
+			self:Enrage(900, true, true)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2

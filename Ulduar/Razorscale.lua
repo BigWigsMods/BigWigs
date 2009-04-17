@@ -309,7 +309,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if not started then
 			self:Message(L["engage_message"]:format(boss), "Attention")
-			self:Enrage(600, true)
+			if db.berserk then
+				self:Enrage(600, true)
+			end
 			started = true
 		else
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
