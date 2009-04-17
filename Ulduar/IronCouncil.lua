@@ -149,6 +149,14 @@ L:RegisterTranslations("koKR", function() return {
 	overwhelm_desc = "압도적인 힘에 걸린 플레이어를 알립니다.",
 	overwhelm_you = "당신은 압도적인 힘!",
 	overwhelm_other = "압도적인 힘: %s",
+	
+	whirl = "번개 소용돌이",
+	whirl_desc = "브룬디르의 번개 소용돌이 시작을 알립니다.",
+	whirl_message = "번개 소용돌이!",
+
+	shield = "룬의 보호막",
+	shield_desc = "몰가임의 룬의 보호막 시전을 알립니다.",
+	shield_message = "룬의 보호막!",
 
 	icon = "전술 표시",
 	icon_desc = "추적 중인 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",

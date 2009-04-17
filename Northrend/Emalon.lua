@@ -40,6 +40,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	nova = "번개 회오리",
+	nova_desc = "에말론의 번개 회오리 시전을 알립니다.",
+	nova_message = "번개 회오리 시전!",
+	nova_next = "~번개 대기시간",
+
+	overcharge = "과충전",
+	overcharge_desc = "에말론이 하수인에게 과충전 사용을 알립니다.",
+	overcharge_message = "하수인 과충전!",
+	overcharge_bar = "폭발",
+	overcharge_next = "~다음 과충전",
 
 } end )
 
