@@ -232,7 +232,7 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_DAMAGE", "Flame", 63014, 64733)
+	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
