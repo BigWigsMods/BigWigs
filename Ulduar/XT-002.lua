@@ -203,7 +203,7 @@ L:RegisterTranslations("zhCN", function() return {
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "当 XT-002 施放Tympanic Tantrum时发出警报。",
 	tympanic_message = "Tympanic Tantrum！",
-	--tympanic_bar = "~Tantrum Cooldown",
+	tympanic_bar = "<Tantrum Cooldown 冷却>",
 
 	voidzone = "虚空领域",
 	voidzone_desc = "当虚空领域出现时发出警报。",
@@ -236,7 +236,7 @@ L:RegisterTranslations("zhTW", function() return {
 	tympanic = "躁怒",
 	tympanic_desc = "當 XT-002 施放躁怒時發出警報。",
 	tympanic_message = "躁怒！",
-	--tympanic_bar = "~Tantrum Cooldown",
+	tympanic_bar = "<躁怒 冷卻>",
 
 	voidzone = "虛無區域",
 	voidzone_desc = "當虛無區域出現時發出警報。",

@@ -65,7 +65,7 @@ L:RegisterTranslations("zhCN", function() return {
 	fear = "恐吓尖啸",
 	fear_desc = "当施放恐吓尖啸时发出警报。",
 	fear_warning = "即将 恐吓尖啸！",
-	--fear_message = "Casting Fear!",
+	fear_message = "正在施放 恐吓尖啸！",
 	fear_bar = "<恐吓尖啸 冷却>",
 
 	sentinel = "戒卫冲击",
@@ -77,7 +77,7 @@ L:RegisterTranslations("zhTW", function() return {
 	fear = "恐嚇尖嘯",
 	fear_desc = "當施放恐嚇尖嘯時發出警報。",
 	fear_warning = "即將 恐嚇尖嘯！",
-	--fear_message = "Casting Fear!",
+	fear_message = "正在施放 恐嚇尖嘯！",
 	fear_bar = "<恐嚇尖嘯 冷卻>",
 
 	sentinel = "哨兵衝擊",
