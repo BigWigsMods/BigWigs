@@ -10,6 +10,8 @@ mod.enabletrigger = boss
 mod.guid = 33293
 mod.toggleoptions = {"heartbreak", "voidzone", -1, "exposed", "gravitybomb", "lightbomb", "tympanic", "berserk", "bosskill"}
 local bandages = {
+	[34722] = true, -- Heavy Frostweave Bandage
+	[34721] = true, -- Frostweave Bandage
 	[21991] = true, -- Heavy Netherweave Bandage
 	[21990] = true, -- Netherweave Bandage
 	[14530] = true, -- Heavy Runecloth Bandage
@@ -254,20 +256,20 @@ L:RegisterTranslations("ruRU", function() return {
 	exposed = "Обнаженное сердце",
 	exposed_desc = "Сообщает когда XT-002 Обнажает сердце.",
 	exposed_warning = "Скоро Обнаженное сердце!",
-	exposed_message = "Обнаженное сердце - надвигаются подмога!",
+	exposed_message = "Обнаженное сердце - надвигается подмога!",
 
 	gravitybomb = "Гравитационная бомба",
-	gravitybomb_desc = "Сообщает на кого выпала честь получить Гравитационнуюя бомбу.",
+	gravitybomb_desc = "Сообщает об игроках с Гравитационной Бомбой.",
 	gravitybomb_you = "Гравитационная бомба на ВАС!",
 	gravitybomb_other = "Гравитационная бомба на |3-5(%s)!",
 
 	lightbomb = "Светлый взрыв",
-	lightbomb_desc = "Сообщает на кого выпала честь получить Светлый взрыв.",
+	lightbomb_desc = "Сообщает об игроках со Светлым взрывом.",
 	lightbomb_you = "Светлый взрыв на ВАС!",
 	lightbomb_other = "Светлый взрыв на |3-5(%s)!",
 
 	tympanic = "Раскаты ярости",
-	tympanic_desc = "Сообщает когда XT-002 применяет Раскаты ярости.",
+	tympanic_desc = "Сообщает о применении Раскатов Ярости.",
 	tympanic_message = "Раскаты ярости!",
 	tympanic_bar "~перезарядка раскатов",
 

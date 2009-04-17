@@ -80,9 +80,9 @@ L:RegisterTranslations("ruRU", function() return {
 	flame_desc = "Сообщать когда вы поподаете под воздействие Лавовой бомбы.",
 	flame_message = "ВЫ в Лавовой БОМБЕ!",
 	
-	--harpoon = "Hapoon Turret",
-	--harpoon_desc = "Hapoon Turret announce.",
-	--harpoon_message = "Hapoon Turret(%d)",
+	harpoon = "Гарпунная Пушка",
+	harpoon_desc = "Объявлять Гарпунные Пушки.",
+	harpoon_message = "Гарпунная Пушка (%d)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
