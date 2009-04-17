@@ -172,11 +172,11 @@ L:RegisterTranslations("deDE", function() return {
 	flame_desc = "Warnung wenn du von Verschlingende Flamme getroffen wirst.",
 	flame_message = "Verschlingende Flamme auf DIR!",
 
-	--harpoon = "Harpoon Turret",
-	--harpoon_desc = "Harpoon Turret announce.",
-	--harpoon_message = "Harpoon Turret(%d)",
-	--harpoon_trigger = "Harpoon Turret is ready for use!",
-	--harpoon_nextbar = "Next Harpoon (%d)",
+	harpoon = "Harpunengeschütz",
+	harpoon_desc = "Harpunengeschütz Warnung.",
+	harpoon_message = "Harpunengeschütz (%d)",
+	harpoon_trigger = "Harpunengeschütz ist einsatzbereit!",
+	harpoon_nextbar = "Nächstes Geschütz (%d)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
