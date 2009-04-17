@@ -11,7 +11,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {"chain", "overload", "power", "death", "overwhelm", -1, "tendrils", "summoning", "punch", -1, "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"chain", "overload", "whirl", "tendrils", -1, "punch", "overwhelm", -1, "shield", "power", "death", "summoning", -1, "icon", "berserk", "bosskill"}
 local bandages = {
 	[34722] = true, -- Heavy Frostweave Bandage
 	[34721] = true, -- Frostweave Bandage
@@ -67,37 +67,45 @@ L:RegisterTranslations("enUS", function() return {
 
 	overload = "Overload",
 	overload_desc = "Warn when Brundir casts a Overload.",
-	overload_message = "Explosion in 6sec!",
+	overload_message = "Overload Explosion in 6sec!",
 
 	power = "Rune of Power",
-	power_desc = "Warn when Molgeim a Rune of Power.",
+	power_desc = "Warn when Molgeim casts Rune of Power.",
 	power_message = "Rune of Power!",
 
 	punch = "Fusion Punch",
 	punch_desc = "Warn when Steelbreaker casts a Fusion Punch.",
-	punch_message = "Fusion Punch casting!",
+	punch_message = "Fusion Punch!",
 
 	death = "Rune of Death on You",
 	death_desc = "Warn when you are in a Rune of Death.",
 	death_message = "Rune of Death on YOU!",
 
 	summoning = "Rune of Summoning",
-	summoning_desc = "Warn when molgeim casts a Rune of Summoning.",
-	summoning_message = "Rune of Summoning - Elementals Inc!",
+	summoning_desc = "Warn when Molgeim casts a Rune of Summoning.",
+	summoning_message = "Rune of Summoning - Elementals Incoming!",
 
 	tendrils = "Lightning Tendrils",
-	tendrils_desc = "Warn who he targets during the Lightning Tendrils phase, and put a raid icon on them.",
-	tendrils_other = "%s being chased!",
+	tendrils_desc = "Warn who is targeted during the Lightning Tendrils.",
+	tendrils_other = "%s is being chased!",
 	tendrils_you = "YOU are being chased!",
 	tendrils_message = "Landing in ~5sec!",
 
 	overwhelm = "Overwhelming Power",
 	overwhelm_desc = "Warn when a player has Overwhelming Power.",
-	overwhelm_you = "You are Overwhelming Power",
+	overwhelm_you = "You have Overwhelming Power!",
 	overwhelm_other = "Overwhelming Power: %s",
 
+	whirl = "Lightning Whirl",
+	whirl_desc = "Warn when Brundir starts channeling Lightning Whirl.",
+	whirl_message = "Lightning Whirl!",
+
+	shield = "Shield of Runes",
+	shield_desc = "Warn when Molgeim casts Shield of Runes.",
+	shield_message = "Shield of Runes Up!",
+
 	icon = "Raid Target Icon",
-	icon_desc = "Place a Raid Target Icon on the player being chased(requires promoted or higher).",
+	icon_desc = "Place a Raid Target Icon on the player targeted during Lightning Tendrils (requires promoted or higher).",
 
 	council_dies = "%s dead",
 } end )
@@ -331,14 +339,19 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479)
-	self:AddCombatListener("SPELL_CAST_START", "Overload", 61869, 63481)
-	self:AddCombatListener("SPELL_CAST_START", "Power", 61973, 61974)
-	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493)
-	self:AddCombatListener("SPELL_CAST_START", "Summoning", 62273)	-- Molgeim abiltities plus(2 dead)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63485)	-- Brundir abiltities plus(2 dead)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490)	-- Molgeim abiltities plus(1 dead)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888)	-- Steelbreaker abiltities plus(2 dead)
+	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888) -- Steelbreaker +2
+
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 62274, 63489) -- Molgeim
+	self:AddCombatListener("SPELL_CAST_START", "RunePower", 61973) -- Molgeim ... hmm, catch on cast start or success? SPELL_CAST_SUCCESS 61974
+	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490) -- Molgeim +1
+	self:AddCombatListener("SPELL_CAST_START", "RuneSummoning", 62273) -- Molgeim +2
+
+	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479) -- Brundir 
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869) -- Brundir
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63486) -- Brundir +2
+
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	started = nil
@@ -350,6 +363,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Punch(_, spellID)
+	if db.punch then
+		self:IfMessage(L["punch_message"], "Attention", spellID)
+	end
+end
 
 function mod:Overwhelm(player, spellID)
 	if db.overwhelm then
@@ -367,6 +386,30 @@ function mod:Overwhelm(player, spellID)
 	end
 end
 
+function mod:Shield(_, spellID)
+	if db.shield then
+		self:IfMessage(L["shield_message"], "Attention", spellID)
+	end
+end
+
+function mod:RunePower(_, spellID)
+	if db.power then
+		self:IfMessage(L["power_message"], "Positive", spellID)
+	end
+end
+
+function mod:RuneDeath(player)
+	if player == pName and db.death then
+		self:LocalMessage(L["death_message"], "Personal", 63490, "Alarm")
+	end
+end
+
+function mod:RuneSummoning()
+	if db.summoning then
+		self:IfMessage(L["summoning_message"], "Attention", spellID)
+	end
+end
+
 function mod:Chain(_, spellID)
 	if db.chain then
 		self:IfMessage(L["chain_message"], "Attention", spellID)
@@ -380,45 +423,25 @@ function mod:Overload(_, spellID)
 	end
 end
 
-function mod:Power(_, spellID)
-	if db.power then
-		self:IfMessage(L["power_message"], "Positive", spellID)
-	end
-end
-
-function mod:Punch(_, spellID)
-	if db.punch then
-		self:IfMessage(L["punch_message"], "Attention", spellID)
-	end
-end
-
-function mod:RuneDeath(player)
-	if player == pName and db.death then
-		self:LocalMessage(L["death_message"], "Personal", 63490, "Alarm")
-	end
-end
-
-function mod:Summoning()
-	if db.summoning then
-		self:IfMessage(L["summoning_message"], "Attention", spellID)
+function mod:Whirl(_, spellID)
+	if db.whirl then
+		self:IfMessage(L["whirl_message"], "Attention", spellID)
 	end
 end
 
 function mod:Tendrils(_, spellID)
 	if db.tendrils then
 		self:IfMessage(L["tendrils"], "Attention", spellID)
-		self:Bar(L["tendrils"], 35, spellID)
-		self:DelayedMessage(30, L["tendrils_message"], "Attention")
+		self:Bar(L["tendrils"], 25, spellID)
+		self:DelayedMessage(20, L["tendrils_message"], "Attention")
 		self:ScheduleRepeatingEvent("BWTendrilsToTScan", self.TargetCheck, 0.2, self)
-		self:ScheduleEvent("TargetCancel", self.TendrilsRemove, 35, self)
+		self:ScheduleEvent("TargetCancel", self.TendrilsRemove, 25, self)
 	end
 end
 
 function mod:TendrilsRemove()
-	if db.tendrils then
-		self:CancelScheduledEvent("BWTendrilsToTScan")
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-	end
+	self:CancelScheduledEvent("BWTendrilsToTScan")
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
 function mod:TargetCheck()
