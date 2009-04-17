@@ -369,6 +369,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63486) -- Brundir +2
 
 	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	started = nil
 	previous = nil
