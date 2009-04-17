@@ -69,7 +69,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	eyebeam = "안광 집중",
 	eyebeam_desc = "안광 집중의 대상이된 플레이어를 알립니다.",
-	eyebeam_message = "안광 집중: %s",
+	eyebeam_message = "곧 안광 집중!",
+	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신은 안광 집중!",
 
 	icon = "전술 표시",
