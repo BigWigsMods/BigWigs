@@ -43,7 +43,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	eyebeam = "Focused Eyebeam",
 	eyebeam_desc = "Warn who gets Focused Eyebeam.",
-	eyebeam_message = "Eyebeam: %s",
+	eyebeam_message = "Eyebeam Incoming!",
+	eyebeam_bar = "~Eyebeam",
 	eyebeam_you = "Eyebeam on YOU!",
 
 	icon = "Icon",
@@ -183,11 +184,11 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
-	self:AddCombatListener("SPELL_SUMMON", "Eyebeam", 63343, 63701)
 	self:AddCombatListener("SPELL_DAMAGE", "EyebeamHit", 63976, 63346, 63368)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 
 	db = self.db.profile
 end
@@ -205,30 +206,18 @@ function mod:Grip(player, spellID)
 end
 
 function mod:EyebeamHit(player)
-	if db.eyebeam then
-		local other = L["eyebeam_message"]:format(player)
-		if player == pName then
-			self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
-			self:WideMessage(other)
-		else
-			self:IfMessage(other, "Urgent", 63976)
-		end
-		self:Bar(other, 10, 63976)
-		self:Icon(player, "icon")
+	if db.eyebeam and player == pName then
+		self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
 	end
 end
 
-function mod:Eyebeam(_, _, source)
-	if db.eyebeam then
-		local other = L["eyebeam_message"]:format(source)
-		if source == pName then
-			self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
-			self:WideMessage(other)
-		else
-			self:IfMessage(other, "Urgent", 63976)
-		end
-		self:Bar(other, 10, 63976)
-		self:Icon(source, "icon")
+local eyebeamTrigger = GetSpellInfo(63342)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spell)
+	if spell == eyebeamTrigger and db.eyebeam then
+		self:TriggerEvent("BigWigs_StopBar", self, L["eyebeam_bar"])
+		self:IfMessage(L["eyebeam_message"], "Urgent", 63976)
+		self:Bar(L["eyebeam"], 11, 63976)
+		self:Bar(L["eyebeam_bar"], 20, 63976)
 	end
 end
 
@@ -236,10 +225,10 @@ function mod:Deaths(_, guid)
 	guid = tonumber((guid):sub(-12,-7),16)
 	if guid == 32933 then
 		self:Message(L["left_dies"], "Attention")
-		self:Bar(L["left_wipe_bar"], 60, 2062) --2062, looks like a Arms :)
+		self:Bar(L["left_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
 	elseif guid == 32934 then
 		self:Message(L["right_dies"], "Attention")
-		self:Bar(L["right_wipe_bar"], 60, 2062) --2062, looks like a Arms :)
+		self:Bar(L["right_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
 	elseif guid == self.guid then
 		self:BossDeath(nil, guid)
 	end
