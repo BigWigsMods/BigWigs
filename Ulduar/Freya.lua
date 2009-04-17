@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -301,7 +301,7 @@ L:RegisterTranslations("ruRU", function() return {
 	--["Ancient Conservator"] = "Ancient Conservator", --need check
 
 	--engage_trigger = "The Conservatory must be protected!",
-	engage_message = "%s в исступлении!",
+	engage_message = "%s вступает в бой!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",

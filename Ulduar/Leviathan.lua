@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -145,7 +145,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	--engage_trigger = "^Hostile entities detected.",
-	engage_message = "%s в иступлении!",
+	engage_message = "%s вступает в бой!",
 
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Огненный Левиафан применяет огненную струю.",
