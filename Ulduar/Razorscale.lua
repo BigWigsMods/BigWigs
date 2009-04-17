@@ -51,10 +51,11 @@ L:RegisterTranslations("enUS", function() return {
 	flame = "Devouring Flame on You",
 	flame_desc = "Warn when you are in a Devouring Flame.",
 	flame_message = "Devouring Flame on YOU!",
-	
+
 	harpoon = "Harpoon Turret",
 	harpoon_desc = "Harpoon Turret announce.",
 	harpoon_message = "Harpoon Turret (%d)",
+	harpoon_trigger = "Harpoon Turret is ready for use!",
 	harpoon_nextbar = "Next Harpoon (%d)",
 } end )
 
@@ -80,10 +81,11 @@ L:RegisterTranslations("ruRU", function() return {
 	flame = "Лавовая бомба на Вас",
 	flame_desc = "Сообщать когда вы поподаете под воздействие Лавовой бомбы.",
 	flame_message = "ВЫ в Лавовой БОМБЕ!",
-	
+
 	harpoon = "Гарпунная Пушка",
 	harpoon_desc = "Объявлять Гарпунные Пушки.",
 	harpoon_message = "Гарпунная Пушка (%d)",
+	--harpoon_trigger = "Harpoon Turret is ready for use!",
 	--harpoon_nextbar = "Следующий Гарпун (%d)",
 } end )
 
@@ -109,10 +111,11 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "자신의 파멸의 불길",
 	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
 	flame_message = "당신은 파멸의 불길!",
-	
+
 	harpoon = "작살 포탑",
 	harpoon_desc = "작살 포탑의 준비를 알립니다.",
 	harpoon_message = "작살 포탑 (%d)",
+	--harpoon_trigger = "Harpoon Turret is ready for use!",
 	harpoon_nextbar = "다음 작살 (%d)",
 } end )
 
@@ -138,10 +141,11 @@ L:RegisterTranslations("frFR", function() return {
 	flame = "Flamme dévorante sur vous",
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
 	flame_message = "Flamme dévorante sur VOUS !",
-	
+
 	--harpoon = "Harpoon Turret",
 	--harpoon_desc = "Harpoon Turret announce.",
 	--harpoon_message = "Harpoon Turret(%d)",
+	--harpoon_trigger = "Harpoon Turret is ready for use!",
 	--harpoon_nextbar = "Next Harpoon (%d)",
 } end )
 
@@ -167,10 +171,11 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Verschlingende Flamme",
 	flame_desc = "Warnung wenn du von Verschlingende Flamme getroffen wirst.",
 	flame_message = "Verschlingende Flamme auf DIR!",
-	
+
 	--harpoon = "Harpoon Turret",
 	--harpoon_desc = "Harpoon Turret announce.",
 	--harpoon_message = "Harpoon Turret(%d)",
+	--harpoon_trigger = "Harpoon Turret is ready for use!",
 	--harpoon_nextbar = "Next Harpoon (%d)",
 } end )
 
@@ -197,10 +202,11 @@ L:RegisterTranslations("zhCN", function() return {
 	flame = "自身Devouring Flame",
 	flame_desc = "当你中了Devouring Flame时发出警报。",
 	flame_message = ">你< Devouring Flame！",
-	
+
 	harpoon = "Harpoon Turret",
 	harpoon_desc = "Harpoon Turret announce.",
 	harpoon_message = "Harpoon Turret(%d)",
+	harpoon_trigger = "Harpoon Turret is ready for use!",
 	harpoon_nextbar = "Next Harpoon (%d)",
 ]]
 } end )
@@ -231,6 +237,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--harpoon = "Harpoon Turret",
 	--harpoon_desc = "Harpoon Turret announce.",
 	--harpoon_message = "Harpoon Turret(%d)",
+	--harpoon_trigger = "Harpoon Turret is ready for use!",
 	--harpoon_nextbar = "Next Harpoon (%d)",
 } end )
 
