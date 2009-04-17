@@ -310,7 +310,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	--self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Magnetic", 64436)
-	
+
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -373,7 +373,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["engage_warning"], "Attention")
 		end
 		if db.plasma then
-			self:Bar(L["plasma_bar"], 20, 64529)
+			self:Bar(L["plasma_bar"], 20, 62997)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
 	elseif msg:find(L["phase2_trigger"]) then
