@@ -10,7 +10,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "portal", "weakened", "madness", "bosskill"}
+mod.toggleoptions = {"phase", "portal", "weakened", "madness", "beam", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -48,6 +48,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	madness = "Induce Madness",
 	madness_desc = "Show Timer for Induce Madness.",
+	
+	beam = "Malady of the Mind",
+	beam_desc = "Warn for Malady of the Mind",
+	beam_warning = "Malady of the Mind!",
+	beam_trigger = "Tremble, mortals, before the coming of the end!",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -72,6 +77,11 @@ L:RegisterTranslations("koKR", function() return {
 	weakened_message = "%s 약화!",
 	--weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
 
+	beam = "병든 정신",
+	beam_desc = "병든 정신에 대해 알립니다.",
+	beam_warning = "병든 정신!",
+	beam_trigger = "다가오는 종말 앞에 몸서리쳐라!",	--check
+	
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
 
@@ -137,7 +147,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		end
 	elseif msg == L["weakened_trigger"] and db.weakened then
 		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
-		self:IfMessage(L["weakened_message"]:format(boss), "Attention")
+		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661)
 		self:Bar(L["weakened"], 45, 50661)	--50661, looks like a weakened :)
 	end
 end
@@ -157,6 +167,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 3
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
+		end
+	elseif msg == L["beam_trigger"] then
+		if db.beam then
+			self:IfMessage(L["beam_warning"], "Attention", 63830)
+			self:Bar(L["beam"], 20, 63830)
 		end
 	end
 end
