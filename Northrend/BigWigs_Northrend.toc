@@ -30,3 +30,4 @@
 Archavon.lua
 Malygos.lua
 Sartharion.lua
+Emalon.lua

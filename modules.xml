@@ -37,6 +37,7 @@
 <Script file="Northrend\Archavon.lua"/>
 <Script file="Northrend\Malygos.lua"/>
 <Script file="Northrend\Sartharion.lua"/>
+<Script file="Northrend\Emalon"/>
 
 <Script file="Ulduar\Freya.lua"/>
 <Script file="Ulduar\Hodir.lua"/>
