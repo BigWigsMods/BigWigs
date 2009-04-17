@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 mod.guid = 33288
-mod.toggleoptions = {"phase", "portal", "weakened", "bosskill"}
+mod.toggleoptions = {"phase", "portal", "weakened", "madness", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -45,6 +45,8 @@ L:RegisterTranslations("enUS", function() return {
 	weakened_message = "%s is weakened!",
 	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
 	
+	madness = "Induce Madness",
+	madness_desc = "Show Timer for Induce Madness.",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -87,7 +89,11 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["portal_trigger"] and db.portal then
 		self:IfMessage(L["portal_message"], "Attention")
+		if db.madness then
+			self:Bar(L["madness"], 60, 64059)
+		end
 	elseif msg == L["weakened_trigger"] and db.weakened then
+		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
 		self:IfMessage(L["weakened_message"]:format(boss), "Attention")
 		self:Bar(L["weakened"], 45, 50661)	--50661, looks like a weakened :)
 	end
