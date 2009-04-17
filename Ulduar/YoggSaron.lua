@@ -10,7 +10,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "squeeze", "portal", "weakened", "madness", "beam", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "beam", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -18,6 +18,8 @@ mod.toggleoptions = {"phase", "squeeze", "portal", "weakened", "madness", "beam"
 
 local db = nil
 local squeezeName = GetSpellInfo(64126)
+local linkedName = GetSpellInfo(63802)
+local link_tbl = {}
 
 ----------------------------
 --      Localization      --
@@ -59,6 +61,9 @@ L:RegisterTranslations("enUS", function() return {
 	squeeze = squeezeName,
 	squeeze_desc = "Warn which player has Squeeze.",
 
+	link = linkedName,
+	link_desc = "Warn which players are linked.",
+
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
@@ -92,6 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	beam_trigger = "다가오는 종말 앞에 몸서리쳐라!",	--check
 
 	--squeeze_desc = "Warn which player has Squeeze.",
+	--link_desc = "Warn which players are linked.",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
@@ -126,13 +132,9 @@ L:RegisterTranslations("frFR", function() return {
 	--beam_trigger = "Tremble, mortals, before the coming of the end!",
 
 	--squeeze_desc = "Warn which player has Squeeze.",
+	--link_desc = "Warn which players are linked.",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
-} end )
-
-L:RegisterTranslations("deDE", function() return {
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 ------------------------------
@@ -141,6 +143,7 @@ L:RegisterTranslations("deDE", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -150,6 +153,7 @@ function mod:OnEnable()
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
+	wipe(link_tbl)
 end
 
 ------------------------------
@@ -160,6 +164,26 @@ function mod:Squeeze(player, spellID)
 	if db.squeeze then
 		self:IfMessage(squeezeName..": "..player, "Positive", spellID)
 	end
+end
+
+function mod:Linked(player, spellID)
+	if db.link then
+		link_tbl[player] = true
+		self:ScheduleEvent("BWSqWarn", self.PrintLinked, 0.3, self, spellID)
+	end
+end
+
+function mod:PrintLinked(spellID)
+	local msg = nil
+	for k in pairs(link_tbl) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
+		end
+	end
+	self:IfMessage(linkedName..": "..msg, "Attention", spellID, "Alert")
+	wipe(link_tbl)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
