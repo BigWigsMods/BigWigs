@@ -144,11 +144,11 @@ L:RegisterTranslations("frFR", function() return {
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
 	flame_message = "Flamme dévorante sur VOUS !",
 
-	--harpoon = "Harpoon Turret",
-	--harpoon_desc = "Harpoon Turret announce.",
-	--harpoon_message = "Harpoon Turret(%d)",
-	--harpoon_trigger = "Harpoon Turret is ready for use!",
-	--harpoon_nextbar = "Next Harpoon (%d)",
+	harpoon = "Tourelle à harpon",
+	harpoon_desc = "Prévient quand une tourelle à harpon est prête.",
+	harpoon_message = "Tourelle à harpon (%d)",
+	harpoon_trigger = "Tourelle à harpon prête à l'action !",
+	harpoon_nextbar = "Prochaine Tourelle (%d)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

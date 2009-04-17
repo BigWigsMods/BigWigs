@@ -63,7 +63,7 @@ L:RegisterTranslations("frFR", function() return {
 	overcharge_desc = "Prévient quand Emalon surcharge un séide.",
 	overcharge_message = "Un séide est surchargé !",
 	overcharge_bar = "Explosion",
-	overcharge_next = "~Prochaine Surchage",
+	overcharge_next = "~Prochaine Surcharge",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

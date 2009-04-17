@@ -175,7 +175,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	overload = "Surcharge",
 	overload_desc = "Prévient quand Brundir incante une Surcharge.",
-	overload_message = "Explosion dans 6 sec. !",
+	overload_message = "Explosion de la surcharge dans 6 sec. !",
 
 	power = "Rune de puissance",
 	power_desc = "Prévient quand Molgeim incante une Rune de puissance.",
@@ -183,10 +183,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	punch = "Coup de poing fusion",
 	punch_desc = "Prévient quand Brise-acier incante un Coup de poing fusion.",
-	punch_message = "Coup de poing fusion en incantation !",
+	punch_message = "Coup de poing fusion !",
 
 	death = "Rune de mort sur vous",
-	death_desc = "Prévient quand vous vous trouvez  sur une Rune de mort.",
+	death_desc = "Prévient quand vous vous trouvez sur une Rune de mort.",
 	death_message = "Rune de puissance sur VOUS !",
 
 	summoning = "Rune d'invocation",
@@ -201,8 +201,16 @@ L:RegisterTranslations("frFR", function() return {
 
 	overwhelm = "Puissance accablante",
 	overwhelm_desc = "Prévient quand un joueur subit les effets d'une Puissance accablante.",
-	overwhelm_you = "Vous avez la Puissance accablante",
+	overwhelm_you = "Vous avez la Puissance accablante !",
 	overwhelm_other = "Puissance accablante : %s",
+
+	whirl = "Eclair tourbillonnant",
+	whirl_desc = "Prévient quand Brundir commence à canaliser un Eclair tourbillonnant.",
+	whirl_message = "Eclair tourbillonnant !",
+
+	shield = "Bouclier des runes",
+	shield_desc = "Prévient quand Molgeim incante un Bouclier des runes.",
+	shield_message = "Bouclier des runes actif !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être assistant ou mieux).",
