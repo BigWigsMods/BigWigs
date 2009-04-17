@@ -9,7 +9,9 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {Commander, boss}
 mod.guid = 33186
-mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "proximity", "bosskill"}
+mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Are you local?      --
@@ -299,10 +301,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["ground_trigger"] and db.phase then
 		self:Message(L["ground_message"], "Attention", nil, "Long")
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["air_trigger"] then
 		p2 = nil
 		count = 1
 		self:Bar(L["harpoon_nextbar"]:format(count), 55, 56790)
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if not started then
 			self:Message(L["engage_message"]:format(boss), "Attention")
 			self:Enrage(600, true)
