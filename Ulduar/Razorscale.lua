@@ -32,8 +32,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorscale",
 
-	engage_message = "%s Engaged!",
-
 	phase = "Phases",
 	phase_desc = "Warn when Razorscale switches between phases.",
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
@@ -62,8 +60,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	engage_message = "%s вступает в бой!",
-
 	phase = "Фазы",
 	phase_desc = "Сообщать когда Острокрылая меняет фазы.",
 	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
@@ -92,8 +88,6 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_message = "%s 전투 시작!",
-
 	phase = "단계",
 	phase_desc = "칼날비늘의 단계 변경을 알립니다.",
 	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",
@@ -122,8 +116,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_message = "%s engagée !",
-
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
@@ -152,8 +144,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_message = "%s angregriffen!",
-
 	phase = "Phasen",
 	phase_desc = "Warnen wenn Klingenschuppe die Phase wechselt.",
 	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
@@ -183,8 +173,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --[[
-	engage_message = "%s已激怒！",
-
 	phase = "阶段",
 	phase_desc = "当锋鳞转换不同阶段时发出警报。",
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
@@ -214,8 +202,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_message = "%s已狂怒！",
-
 	phase = "階段",
 	phase_desc = "當銳鱗轉換不同階段發出警報。",
 --	ground_trigger = "Move quickly! She won't remain grounded for long!",
@@ -235,7 +221,7 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "自身吞噬烈焰",
 	flame_desc = "當你中了吞噬烈焰時發出警報。",
 	flame_message = ">你< 吞噬烈焰！",
-	
+
 	--harpoon = "Harpoon Turret",
 	--harpoon_desc = "Harpoon Turret announce.",
 	--harpoon_message = "Harpoon Turret(%d)",
@@ -308,7 +294,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["harpoon_nextbar"]:format(count), 55, 56790)
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if not started then
-			self:Message(L["engage_message"]:format(boss), "Attention")
 			if db.berserk then
 				self:Enrage(600, true)
 			end
