@@ -373,13 +373,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["engage_warning"], "Attention")
 		end
 		if db.plasma then
-			self:Bar(L["plasma"], 20, 64529)
+			self:Bar(L["plasma_bar"], 20, 64529)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["plasma"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["plasma_bar"])
 		if db.phase then
 			self:Message(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
