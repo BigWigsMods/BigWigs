@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	engage_message = "%s в иступлении!",
+	engage_message = "%s вступает в бой!",
 
 	phase = "Фазы",
 	phase_desc = "Сообщать когда Острокрылая меняет фазы.",
@@ -232,7 +232,7 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 63014, 63816)
+	self:AddCombatListener("SPELL_DAMAGE", "Flame", 63014, 64733)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -250,7 +250,7 @@ end
 
 function mod:Flame(player)
 	if player == pName and db.flame then
-		self:LocalMessage(L["flame_message"], "Personal", 63816, "Alarm")
+		self:LocalMessage(L["flame_message"], "Personal", 64733, "Alarm")
 	end
 end
 
