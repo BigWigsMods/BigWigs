@@ -370,6 +370,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	started = nil
 	previous = nil
