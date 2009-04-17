@@ -10,13 +10,14 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "portal", "weakened", "madness", "beam", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "squeeze", "portal", "weakened", "madness", "beam", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local db = nil
+local squeezeName = GetSpellInfo(64126)
 
 ----------------------------
 --      Localization      --
@@ -49,11 +50,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	madness = "Induce Madness",
 	madness_desc = "Show Timer for Induce Madness.",
-	
+
 	beam = "Malady of the Mind",
 	beam_desc = "Warn for Malady of the Mind",
 	beam_warning = "Malady of the Mind!",
 	beam_trigger = "Tremble, mortals, before the coming of the end!",
+
+	squeeze = squeezeName,
+	squeeze_desc = "Warn which player has Squeeze.",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -79,13 +83,15 @@ L:RegisterTranslations("koKR", function() return {
 	weakened_message = "%s 약화!",
 	--weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
 
+	madness = "광기 유발",
+	madness_desc = "광기 유발의 타이머를 표시합니다.",
+
 	beam = "병든 정신",
 	beam_desc = "병든 정신에 대해 알립니다.",
 	beam_warning = "병든 정신!",
 	beam_trigger = "다가오는 종말 앞에 몸서리쳐라!",	--check
-	
-	madness = "광기 유발",
-	madness_desc = "광기 유발의 타이머를 표시합니다.",
+
+	--squeeze_desc = "Warn which player has Squeeze.",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
@@ -114,6 +120,13 @@ L:RegisterTranslations("frFR", function() return {
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
 
+	--beam = "Malady of the Mind",
+	--beam_desc = "Warn for Malady of the Mind",
+	--beam_warning = "Malady of the Mind!",
+	--beam_trigger = "Tremble, mortals, before the coming of the end!",
+
+	--squeeze_desc = "Warn which player has Squeeze.",
+
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
@@ -127,6 +140,7 @@ L:RegisterTranslations("deDE", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -141,6 +155,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Squeeze(player, spellID)
+	if db.squeeze then
+		self:IfMessage(squeezeName..": "..player, "Positive", spellID)
+	end
+end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["portal_trigger"] and db.portal then
