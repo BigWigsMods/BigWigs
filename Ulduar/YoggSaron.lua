@@ -40,6 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	portal_desc = "Warn for Portals.",
 	portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "Portals open!",
+	portal_bar = "Next Portal",
 
 	weakened = "Weakened",
 	weakened_desc = "Warn for Weakened State.",
@@ -71,6 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 	portal_desc = "차원문을 알립니다.",
 	--portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "차원문 열림!",
+	--portal_bar = "Next Portal",
 
 	weakened = "약화",
 	weakened_desc = "약화 상태를 알립니다.",
@@ -102,6 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 	portal_desc = "Prévient de l'arrivée des portails.",
 	portal_trigger = "Portals open into Yogg-Saron's mind!", -- à traduire (Des portails s'ouvrent dans l'esprit de Yogg-Saron !")
 	portal_message = "Portails ouverts !",
+	--portal_bar = "Next Portal",
 
 	weakened = "Affaibli",
 	weakened_desc = "Warn for Weakened State.",
@@ -125,11 +128,11 @@ L:RegisterTranslations("deDE", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	
+
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
@@ -141,14 +144,15 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["portal_trigger"] and db.portal then
-		self:IfMessage(L["portal_message"], "Attention")
+		self:IfMessage(L["portal_message"], "Attention", 35717)
+		self:Bar(L["portal_bar"], 90, 35717)
 		if db.madness then
 			self:Bar(L["madness"], 60, 64059)
 		end
 	elseif msg == L["weakened_trigger"] and db.weakened then
 		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
 		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661)
-		self:Bar(L["weakened"], 45, 50661)	--50661, looks like a weakened :)
+		self:Bar(L["weakened"], 45, 50661) --50661, looks like a weakened :)
 	end
 end
 
@@ -161,13 +165,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.berserk then
 			self:Enrage(900, true, true)
 		end
-	elseif msg:find(L["phase2_trigger"]) then
+	elseif msg == L["phase2_trigger"] then
 		phase = 2
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Important", nil, "Alarm")
 		end
+		if db.portal then
+			self:Bar(L["portal_bar"], 78, 35717)
+		end
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
+		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
 		end
