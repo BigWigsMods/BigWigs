@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	eyebeam = "Focused Eyebeam",
 	eyebeam_desc = "Warn who gets Focused Eyebeam.",
 	eyebeam_message = "Eyebeam: %s",
-	eyebeam_you = "Eyebeam on You!",
+	eyebeam_you = "Eyebeam on YOU!",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Target Icon on players with Focused Eyebeam. (requires promoted or higher)",
@@ -184,6 +184,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
 	self:AddCombatListener("SPELL_SUMMON", "Eyebeam", 63343, 63701)
+	self:AddCombatListener("SPELL_DAMAGE", "EyebeamHit", 63976, 63346, 63368)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -200,6 +201,20 @@ function mod:Grip(player, spellID)
 		local msg = L["grip_message"]:format(player)
 		self:IfMessage(msg, "Attention", spellID)
 		self:Bar(msg, 10, spellID)
+	end
+end
+
+function mod:EyebeamHit(player)
+	if db.eyebeam then
+		local other = L["eyebeam_message"]:format(player)
+		if player == pName then
+			self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Urgent", 63976)
+		end
+		self:Bar(other, 10, 63976)
+		self:Icon(player, "icon")
 	end
 end
 
