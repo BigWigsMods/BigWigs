@@ -288,9 +288,9 @@ function BigWigs.modulePrototype:BossDeath(_, guid, multi)
 
 	if guid == self.guid then
 		if multi then
-			self:Sync("BWMultiBossDeath " .. b)
+			self:Sync("MultiDeath " .. b)
 		else
-			self:Sync("BWBossDeath " .. b)
+			self:Sync("Death " .. b)
 		end
 	end
 end
