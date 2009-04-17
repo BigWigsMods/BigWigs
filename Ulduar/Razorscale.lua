@@ -54,7 +54,8 @@ L:RegisterTranslations("enUS", function() return {
 	
 	harpoon = "Hapoon Turret",
 	harpoon_desc = "Hapoon Turret announce.",
-	harpoon_message = "Hapoon Turret(%d)",
+	harpoon_message = "Hapoon Turret (%d)",
+	harpoon_nextbar = "Next Hapoon (%d)",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -83,6 +84,7 @@ L:RegisterTranslations("ruRU", function() return {
 	harpoon = "Гарпунная Пушка",
 	harpoon_desc = "Объявлять Гарпунные Пушки.",
 	harpoon_message = "Гарпунная Пушка (%d)",
+	--harpoon_nextbar = "Next Hapoon (%d)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -110,7 +112,8 @@ L:RegisterTranslations("koKR", function() return {
 	
 	harpoon = "작살 포탑",
 	harpoon_desc = "작살 포탑의 준비를 알립니다.",
-	harpoon_message = "작살 포탑(%d)",
+	harpoon_message = "작살 포탑 (%d)",
+	harpoon_nextbar = "다음 작살 (%d)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -139,6 +142,7 @@ L:RegisterTranslations("frFR", function() return {
 	--harpoon = "Hapoon Turret",
 	--harpoon_desc = "Hapoon Turret announce.",
 	--harpoon_message = "Hapoon Turret(%d)",
+	--harpoon_nextbar = "Next Hapoon (%d)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -167,6 +171,7 @@ L:RegisterTranslations("deDE", function() return {
 	--harpoon = "Hapoon Turret",
 	--harpoon_desc = "Hapoon Turret announce.",
 	--harpoon_message = "Hapoon Turret(%d)",
+	--harpoon_nextbar = "Next Hapoon (%d)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -196,6 +201,7 @@ L:RegisterTranslations("zhCN", function() return {
 	harpoon = "Hapoon Turret",
 	harpoon_desc = "Hapoon Turret announce.",
 	harpoon_message = "Hapoon Turret(%d)",
+	harpoon_nextbar = "Next Hapoon (%d)",
 ]]
 } end )
 
@@ -225,6 +231,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--harpoon = "Hapoon Turret",
 	--harpoon_desc = "Hapoon Turret announce.",
 	--harpoon_message = "Hapoon Turret(%d)",
+	--harpoon_nextbar = "Next Hapoon (%d)",
 } end )
 
 ------------------------------
@@ -274,8 +281,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:IfMessage(L["breath_message"], "Attention")
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
 		self:IfMessage(L["harpoon_message"]:format(count), "Attention", 56790)
-		if count == 4 then count = 0 end
 		count = count + 1
+		if count < 4 then
+			self:Bar(L["harpoon_nextbar"]:format(count), 18, 56790)
+		end
 	end
 end
 
@@ -285,11 +294,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 	elseif msg == L["air_trigger"] then
 		p2 = nil
+		count = 1
+		self:Bar(L["harpoon_nextbar"]:format(count), 55, 56790)
 		if not started then
 			self:Message(L["engage_message"]:format(boss), "Attention")
 			self:Enrage(600, true)
 			started = true
-			count = 1
 		else
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 			self:Message(L["air_message"], "Attention", nil, "Info")
