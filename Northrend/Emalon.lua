@@ -87,8 +87,8 @@ L:RegisterTranslations("deDE", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216) -- need 25-man spellid
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218) -- need 25-man spellid
+	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216, 65279)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

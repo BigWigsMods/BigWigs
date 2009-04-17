@@ -94,9 +94,10 @@ L:RegisterTranslations("frFR", function() return {
 	shockwave_trigger = "OUBLI !",
 
 	eyebeam = "Rayon de l'oeil focalisé",
-	eyebeam_desc = "Prévient quand un joueur est ciblé par un Rayon de l'oeil.",
-	eyebeam_message = "Rayon de l'oeil : %s",
-	eyebeam_you = "Rayon de l'oeil sur vous !",
+	eyebeam_desc = "Prévient quand un Rayon de l'oeil est incanté.",
+	eyebeam_message = "Arrivée d'un Rayon de l'oeil !",
+	eyebeam_bar = "~Rayon de l'oeil",
+	eyebeam_you = "Rayon de l'oeil sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de l'oeil focalisé (nécessite d'être assistant ou mieux).",

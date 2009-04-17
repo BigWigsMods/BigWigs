@@ -116,23 +116,26 @@ L:RegisterTranslations("frFR", function() return {
 	portal_desc = "Prévient de l'arrivée des portails.",
 	portal_trigger = "Portals open into Yogg-Saron's mind!", -- à traduire (Des portails s'ouvrent dans l'esprit de Yogg-Saron !")
 	portal_message = "Portails ouverts !",
-	--portal_bar = "Next Portal",
+	portal_bar = "Prochain portail",
 
 	weakened = "Affaibli",
-	weakened_desc = "Warn for Weakened State.",
+	weakened_desc = "Prévient quand Yogg-Saron est affaibli.",
 	weakened_message = "%s est affaibli !",
 	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!", -- à traduire (L'Illusion se brise et un passage vers la chambre centrale s'ouvre !)
 
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
 
-	--beam = "Malady of the Mind",
-	--beam_desc = "Warn for Malady of the Mind",
-	--beam_warning = "Malady of the Mind!",
-	--beam_trigger = "Tremble, mortals, before the coming of the end!",
+	beam = "Mal de la raison",
+	beam_desc = "Prévient de l'arrivées des Mals de la raison",
+	beam_warning = "Mal de la raison !",
+	beam_trigger = "Tremble, mortals, before the coming of the end!", -- à traduire
 
-	--squeeze_desc = "Warn which player has Squeeze.",
-	--link_desc = "Warn which players are linked.",
+	squeeze = squeezeName, -- doesn't appear in the dropdown menu if not mentioned here
+	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
+
+	link = linkedName,
+	link_desc = "Indique quels joueurs sont liées.",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
