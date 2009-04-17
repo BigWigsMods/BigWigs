@@ -88,15 +88,15 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Feindeinheiten erkannt",
 	engage_message = "%s angegriffen!",
 
-	flame = "Flammenstrahlen",
-	flame_desc = "Warnung für Flammenstrahlen.",
-	flame_message = "Flammenstrahlen!",
+	flame = "Flammenstrahl",
+	flame_desc = "Warnung und Timer für Flammenstrahl.",
+	flame_message = "Flammenstrahl!",
 
 	pursue = "Verfolgung",
-	pursue_desc = "Warnung wenn der Flammenleviathan einen Spieler verfolgt.",
+	pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt.",
 	pursue_trigger = "^%%s verfolgt",
-	pursue_other = "Leviathan verfolgt %s!",
-	pursue_you = "Leviathan verfolgt DICH!",
+	pursue_other = "%s wird verfolgt!",
+	pursue_you = "DU wirst verfolgt!",
 
 	shutdown = "Systemabschaltung",
 	shutdown_desc = "Warnung für Systemabschaltung",
