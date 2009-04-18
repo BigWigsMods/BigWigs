@@ -63,12 +63,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	link = linkedName,
 	link_desc = "Warn which players are linked.",
-	
+
 	gaze = "Lunatic Gaze",
 	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
 	gaze_message = "Lunatic Gaze!",
 	gaze_bar = "~Gaze Cooldown",
-	
+
 	empower = "Empowering Shadows",
 	empower_desc = "Warn for Empowering Shadows.",
 	empower_message = "Empowering Shadows!",
@@ -106,18 +106,18 @@ L:RegisterTranslations("koKR", function() return {
 	beam_desc = "병든 정신에 대해 알립니다.",
 	beam_warning = "병든 정신!",
 	beam_trigger = "다가오는 종말 앞에 몸서리쳐라!",	--check
-	
+
 	squeeze = squeezeName,
 	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
-	
+
 	link = linkedName,
 	link_desc = "두뇌의 고리에 연결된 플레이어를 알립니다.",
-	
+
 	gaze = "광기의 시선",
 	gaze_desc = "요그사론의 광기의 시선 획득을 알립니다.",
 	gaze_message = "광기의 시선!",
 	gaze_bar = "~시선 대기시간",
-	
+
 	empower = "암흑 강화",
 	empower_desc = "암흑 강화를 알립니다.",
 	empower_message = "암흑 강화!",
@@ -161,17 +161,17 @@ L:RegisterTranslations("frFR", function() return {
 
 	link = linkedName,
 	link_desc = "Indique quels joueurs sont liées.",
-	
-	--gaze = "Lunatic Gaze",
-	--gaze_desc = "Warn when Yogg-Saron casts a Lunatic Gaze.",
-	--gaze_message = "Lunatic Gaze!",
-	--gaze_bar = "Gaze Cooldown",
-	
-	--empower = "Empowering Shadows",
-	--empower_desc = "Warn for Empowering Shadows.",
-	--empower_message = "Empowering Shadows!",
-	--empower_trigger = "%s prepares to unleash Empowering Shadows!",
-	--empower_bar = "~Empower Cooldown",
+
+	gaze = "Regard lunatique",
+	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
+	gaze_message = "Regard lunatique !",
+	gaze_bar = "Recharge Regard",
+
+	empower = "Renforcement des ombres",
+	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
+	empower_message = "Renforcement des ombres !",
+	empower_trigger = "%s prepares to unleash Empowering Shadows!",
+	empower_bar = "~Recharge Renforcement",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
