@@ -225,12 +225,13 @@ end
 
 function mod:Deaths(_, guid)
 	guid = tonumber((guid):sub(-12,-7),16)
+	local d = GetCurrentDungeonDifficulty() or 1
 	if guid == 32933 then
 		self:Message(L["left_dies"], "Attention")
-		self:Bar(L["left_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
+		self:Bar(L["left_wipe_bar"], d == 1 and 40 or 50, 2062) --2062, looks like a Arms :)
 	elseif guid == 32934 then
 		self:Message(L["right_dies"], "Attention")
-		self:Bar(L["right_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
+		self:Bar(L["right_wipe_bar"], d == 1 and 40 or 50, 2062) --2062, looks like a Arms :)
 	elseif guid == self.guid then
 		self:BossDeath(nil, guid)
 	end
@@ -242,3 +243,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["shockwave"], 21, 63982)
 	end
 end
+
