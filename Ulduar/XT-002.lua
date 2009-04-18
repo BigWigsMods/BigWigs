@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -290,7 +290,7 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Tympanic", 62775, 62776)
+	self:AddCombatListener("SPELL_CAST_START", "Tympanic", 62776)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234, 65121)
