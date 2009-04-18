@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865	--Sif(33196)
-mod.toggleoptions = {"phase", "p2berserk", "hardmode", -1, "hammer", "impale", "shock", "detonation", "charge", "strike", -1, "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", "p2berserk", "hardmode", -1, "hammer", "impale", "shock", "barrier", "detonation", "charge", "strike", -1, "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
@@ -54,6 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
+	hammer_message = "Stormhammer: %s",
 	hammer_bar = "Next Stormhammer",
 
 	impale = "Impale",
@@ -65,12 +66,16 @@ L:RegisterTranslations("enUS", function() return {
 	shock_message = "Lightning Shock on You! Move!",
 	shock_warning = "Charge Orb!",
 	shock_bar = "Next Charge Orb",
+	
+	barrier = "Runic Barrier",
+	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
+	barrier_message = "Runic Colossus gained Runic Barrier!",
 
 	detonation = "Runic Detonation",
 	detonation_desc = "Tells you who has been hit by Runic Detonation.",
 	detonation_message = "Runic Detonation: %s",
 	detonation_yell = "I'm a Bomb!",
-
+	
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
 	charge_message = "Charge: (%d)",
@@ -84,7 +89,7 @@ L:RegisterTranslations("enUS", function() return {
 	end_message = "%s has been defeated!",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player with Runic Detonation. (requires promoted or higher)",
+	icon_desc = "Place a Raid Icon on the player with Runic Detonation or Stormhammer. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -110,6 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
+	--hammer_message = "Stormhammer: %s",
 	hammer_bar = "다음 폭풍망치",
 
 	impale = "꿰뚫기",
@@ -121,6 +127,10 @@ L:RegisterTranslations("koKR", function() return {
 	shock_message = "당신은 번개 충격! 이동!",
 	shock_warning = "번개구 충전!",
 	shock_bar = "다음 번개구 충전",
+	
+	barrier = "룬문자 방벽",
+	barrier_desc = "룬문자 거인의 룬문자 방벽 획득을 알립니다.",
+	barrier_message = "거인 - 룬문자 방벽 획득!",
 
 	detonation = "룬 폭발",
 	detonation_desc = "룬 폭발에 걸린 플레이어를 알립니다.",
@@ -140,7 +150,7 @@ L:RegisterTranslations("koKR", function() return {
 	end_message = "%s 물리침!",
 	
 	icon = "전술 표시",
-	icon_desc = "룬 폭발에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "룬 폭발 또는 폭풍망치에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -166,6 +176,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
+	--hammer_message = "Stormhammer: %s",
 	hammer_bar = "Prochain Marteau-tempête",
 
 	impale = "Empaler",
@@ -177,6 +188,10 @@ L:RegisterTranslations("frFR", function() return {
 	shock_message = "Horion de foudre sur vous ! Bougez !",
 	shock_warning = "Charger l'orbe !",
 	shock_bar = "Prochain Charger l'orbe",
+	
+	--barrier = "Runic Barrier",
+	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
+	--barrier_message = "Runic Colossus gained Runic Barrier!",
 
 	detonation = "Détonation runique",
 	detonation_desc = "Prévient quand un joueur subit les effets d'une Détonation runique.",
@@ -222,6 +237,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	hammer = "风暴之锤",
 	hammer_desc = "当风暴之锤时发出警报。",
+	hammer_message = "Stormhammer: %s",
 	hammer_bar = "<下一风暴之锤>",
 
 	shock = "闪电震击",
@@ -229,6 +245,10 @@ L:RegisterTranslations("zhCN", function() return {
 	shock_message = ">你< 闪电震击！移动！",
 	shock_warning = "宝珠充电！",
 	shock_bar = "<下一宝珠充电>",
+	
+	barrier = "Runic Barrier",
+	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
+	barrier_message = "Runic Colossus gained Runic Barrier!",
 
 	detonation = "符文爆炸",
 	detonation_desc = "当玩家中了符文爆炸时发出警报。",
@@ -274,6 +294,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	hammer = "風暴之錘",
 	hammer_desc = "當風暴之錘時發出警報。",
+	--hammer_message = "Stormhammer: %s",
 	hammer_bar = "<下一風暴之錘>",
 
 	shock = "閃電震擊",
@@ -281,6 +302,10 @@ L:RegisterTranslations("zhTW", function() return {
 	shock_message = ">你< 閃電震擊！移動！",
 	shock_warning = "寶珠充能！",
 	shock_bar = "<下一寶珠充能>",
+	
+	--barrier = "Runic Barrier",
+	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
+	--barrier_message = "Runic Colossus gained Runic Barrier!",
 
 	detonation = "引爆符文",
 	detonation_desc = "當玩家中了引爆符文時發出警報。",
@@ -326,6 +351,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	hammer = "Молот бури",
 	hammer_desc = "Сообщает о применении Молота бури.",
+	--hammer_message = "Stormhammer: %s",
 	hammer_bar = "Следующий Молот",
 
 	impale = "Прокалывание",
@@ -337,6 +363,10 @@ L:RegisterTranslations("ruRU", function() return {
 	shock_message = "На вас Поражение громом! Шевелитесь!",
 	shock_warning = "Заряженная сфера!",
 	shock_bar = "Следующая сфера",
+	
+	--barrier = "Runic Barrier",
+	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
+	--barrier_message = "Runic Colossus gained Runic Barrier!",
 
 	detonation = "Взрыв руны",
 	detonation_desc = "Сообщает кто попал под воздействие Взрыва рун.",
@@ -364,12 +394,13 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Hammer", 62042)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Charge", 62279)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonation", 62526)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Orb", 62016)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Impale", 62331, 62418)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrier", 62338)
 	self:AddCombatListener("SPELL_DAMAGE", "Shock", 62017)
 	self:AddCombatListener("SPELL_MISSED", "Shock", 62017)
 
@@ -387,6 +418,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Barrier(_, spellID)
+	if db.barrier then
+		self:IfMessage(L["barrier_message"], "Urgent", spellID)
+		self:Bar(L["barrier"], 20, spellID)
+	end
+end
+
 function mod:Charge(_, spellID)
 	if db.charge then
 		self:IfMessage(L["charge_message"]:format(chargeCount), "Important", spellID)
@@ -395,9 +433,11 @@ function mod:Charge(_, spellID)
 	end
 end
 
-function mod:Hammer(_, spellID)
+function mod:Hammer(player, spellID)
 	if db.hammer then
+		self:Message(L["hammer_message"]:format(player), "Urgent", spellID)
 		self:Bar(L["hammer_bar"], 16, spellID)
+		self:Icon(player, "icon")
 	end
 end
 
@@ -467,6 +507,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["phase3_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, L["p2berserk"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["shock_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["hammer_bar"])
 		self:CancelScheduledEvent("warn1")
 		self:CancelScheduledEvent("warn2")
 		self:CancelScheduledEvent("warn3")
