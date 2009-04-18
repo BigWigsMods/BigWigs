@@ -101,7 +101,7 @@ L:RegisterTranslations("deDE", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216, 65279)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "OverchargeIcon", 64217)
+	self:AddCombatListener("SPELL_HEAL", "OverchargeIcon", 64218)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -154,6 +154,7 @@ local function ScanTarget()
 end
 
 function mod:OverchargeIcon(...)
+	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not db.icon then return end
 	guid = select(9, ...)
 	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", ScanTarget, 0.1)
