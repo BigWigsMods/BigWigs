@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -92,6 +92,22 @@ L:RegisterTranslations("deDE", function() return {
 
 	--icon = "Overcharge Icon",
 	--icon_desc = "Place a skull on the mob with Overcharge",
+} end )
+
+L:RegisterTranslations("ruRU", function() return {
+	nova = "Вспышка молнии",
+	nova_desc = "Предупреждать, когда эмалон применяет Вспышку молнии.",
+	nova_message = "Вспышка молнии!",
+	nova_next = "~Перезарядка Вспышки молнии",
+
+	overcharge = "Перегрузка",
+	overcharge_desc = "Предупреждать когда Эмалон применяет Перегрузку на Служителя бури.",
+	overcharge_message = "Служитель бури перегружен!",
+	overcharge_bar = "Взрыв Служителя бури",
+	overcharge_next = "~Следующая Перегрузка",
+
+	icon = "Иконка Перегрузки",
+	icon_desc = "Отмечать черепом Служителя бури с эффектом Перегрузки.",
 } end )
 
 ------------------------------
