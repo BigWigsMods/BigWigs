@@ -110,7 +110,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!", -- need
+	engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!", -- needs check
 
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnung vor Flammenstrahlen.",
