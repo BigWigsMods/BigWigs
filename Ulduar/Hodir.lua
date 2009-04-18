@@ -205,6 +205,10 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
+function mod:VerifyEnable(unit)
+	return UnitIsEnemy(unit, "player") and true or false
+end
+
 ------------------------------
 --      Event Handlers      --
 ------------------------------

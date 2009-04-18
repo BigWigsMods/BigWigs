@@ -322,6 +322,10 @@ function mod:OnEnable()
 	db = self.db.profile
 end
 
+function mod:VerifyEnable(unit)
+	return UnitIsEnemy(unit, "player") and true or false
+end
+
 ------------------------------
 --      Event Handlers      --
 ------------------------------

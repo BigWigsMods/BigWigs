@@ -17,7 +17,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local icon = LibStub("LibDBIcon-1.0", true)
 
 local customBossOptions = {}
-local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
 
 ----------------------------
 --      Localization      --
@@ -34,8 +33,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = true,
 	["Extras"] = true,
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = true,
-	["GUI"] = true,
-	["Open the waterfall GUI."] = true,
 	["Active"] = true,
 	["Activate or deactivate this module."] = true,
 	["Reboot"] = true,
@@ -70,8 +67,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Les plugins s'occupent des composants centraux de Big Wigs - comme l'affichage des messages, les barres temporelles, ainsi que d'autres composants essentiels.",
 	["Extras"] = "Extras",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Les extras sont des plugins tiers et incorporés dont Big Wigs peut se passer pour fonctionner correctement.",
-	["GUI"] = "GUI",
-	["Open the waterfall GUI."] = "Ouvre le GUI de Waterfall.",
 	["Active"] = "Actif",
 	["Activate or deactivate this module."] = "Active ou désactive ce module.",
 	["Reboot"] = "Redémarrer",
@@ -106,8 +101,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Plugins stellen die Grundfunktionen von Big Wigs zur Verfügung - wie das Anzeigen von Nachrichten, Zeitbalken und weiteren benötigten Funktionen.",
 	["Extras"] = "Extras",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Extras sind externe und eingebaute zusätzliche Plugins, ohne die Big Wigs auch korrekt funktioniert.",
-	["GUI"] = "GUI",
-	["Open the waterfall GUI."] = "Öffnet das Konfigurationsmenü",
 	["Active"] = "Aktivieren",
 	["Activate or deactivate this module."] = "Aktiviert oder deaktiviert dieses Modul.",
 	["Reboot"] = "Neustarten",
@@ -142,8 +135,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Big Wigs의 주요 기능을 다루는 플러그인 입니다. - 메세지 및 타이머 바 표시 기능, 기타 주요 기능 등.",
 	["Extras"] = "기타",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "기타의 것은 Big Wigs가 제대로 작용할 서드파티와 플러그 접속식을 함께 포함합니다.",
-	["GUI"] = "GUI",
-	["Open the waterfall GUI."] = "waterfall GUI 설정창을 엽니다.",
 	["Active"] = "활성화",
 	["Activate or deactivate this module."] = "해당 모듈을 활성화/비활성화 합니다.",
 	["Reboot"] = "재시작",
@@ -178,8 +169,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 最关键的核心 - 比如信息显示，记时条以及其他必要的功能。",
 	["Extras"] = "附加功能",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方捆绑插件，是 Big Wigs 功能的一个增强。",
-	["GUI"] = "图形界面",
-	["Open the waterfall GUI."] = "打开 Waterfall 图形界面。",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
 	["Reboot"] = "重置",
@@ -214,8 +203,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 的核心功能 - 如訊息顯示、計時條以及其他必要的功能。",
 	["Extras"] = "附加功能",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件，增強 Big Wigs 的功能。",
-	["GUI"] = "圖形介面",
-	["Open the waterfall GUI."] = "打開 Waterfall 圖形介面。",
 	["Active"] = "啟動",
 	["Activate or deactivate this module."] = "打開或關閉此模組。",
 	["Reboot"] = "重啟",
@@ -248,8 +235,6 @@ L:RegisterTranslations("esES", function() return {
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Los plugins administran las características de BigWigs sobre cómo mostrar mensajes, barras de tiempo y otras características esenciales.",
 	["Extras"] = "Extras",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Extras son utilidades y plugins de terceros. BigWigs puede funcionar con o sin ellos.",
-	--["GUI"] = true,
-	--["Open the waterfall GUI."] = true,
 	["Active"] = "Activo",
 	["Activate or deactivate this module."] = "Activa o desactiva este módulo.",
 	["Reboot"] = "Reiniciar",
@@ -280,8 +265,6 @@ L:RegisterTranslations("ruRU", function() return {
 	["Options for %s (r%d)."] = "Опции для %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Плагины",
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Плагины - это основная особенность Big Wigs,они показывают сообщения, время на барах и другие важные моменты при битве с боссами.",
-	["GUI"] = "Настройки",
-	["Open the waterfall GUI."] = "Открыть окно настроек",
 	["Extras"] = "Дополнения",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Дополнительные настройки для рейдов без которых Big Wigs не будет должным образом работать",
 	["Active"] = "Активен",
