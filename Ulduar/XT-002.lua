@@ -355,7 +355,7 @@ function mod:Bomb(player, spellID)
 end
 
 function mod:BombRemoved(player, spellID)
-	if db.lightbomb then
+	if spellID == 63018 or spellID == 65121 or spellID == 63024 or spellID == 64234 then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
