@@ -52,12 +52,6 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	["Snaplasher"] = "Snaplasher",
-	["Storm Lasher"] = "Storm Lasher",
-	["Ancient Water Spirit"] = "Ancient Water Spirit",
-	["Detonating Lasher"] = "Detonating Lasher",
-	["Ancient Conservator"] = "Ancient Conservator",
-
 	cmd = "Freya",
 
 	engage_trigger = "The Conservatory must be protected!",
@@ -102,12 +96,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["Snaplasher"] = "악어덩굴손",
-	["Storm Lasher"] = "폭풍덩굴손",
-	["Ancient Water Spirit"] = "고대 물의 정령",
-	["Detonating Lasher"] = "폭발 덩굴손",	--check
-	["Ancient Conservator"] = "고대의 수호자",	--check
-
 	engage_trigger = "어떻게 해서든 정원을 수호해야 한다!",	--check
 	engage_message = "%s 전투 시작!",
 
@@ -149,14 +137,7 @@ L:RegisterTranslations("koKR", function() return {
 	end_message = "%s 물리침!",
 } end )
 
-L:RegisterTranslations("frFR", function() return {
-	["Snaplasher"] = "Flagellant mordant",
-	["Storm Lasher"] = "Flagellant des tempêtes",
-	["Ancient Water Spirit"] = "Esprit de l'eau ancien",
-	["Detonating Lasher"] = "Flagellant détonant", -- à vérifier
-	["Ancient Conservator"] = "Ancien conservateur", -- à vérifier
-
-	engage_trigger = "Le jardin doit être protégé !", -- à vérifier
+L:RegisterTranslations("frFR", function() return {engage_trigger = "Le jardin doit être protégé !", -- à vérifier
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
@@ -199,12 +180,6 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --[[
-	["Snaplasher"] = "Snaplasher",
-	["Storm Lasher"] = "Storm Lasher",
-	["Ancient Water Spirit"] = "Ancient Water Spirit",
-	["Detonating Lasher"] = "Detonating Lasher",
-	["Ancient Conservator"] = "Ancient Conservator",
-
 	engage_trigger = "The Conservatory must be protected!",
 	engage_message = "%s已激怒！",
 
@@ -248,12 +223,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	["Snaplasher"] = "Snaplasher",
---	["Storm Lasher"] = "Storm Lasher",
---	["Ancient Water Spirit"] = "Ancient Water Spirit",
---	["Detonating Lasher"] = "Detonating Lasher",
---	["Ancient Conservator"] = "Ancient Conservator",
-
 --	engage_trigger = "The Conservatory must be protected!",
 	engage_message = "%s已狂怒！",
 
@@ -296,12 +265,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	["Snaplasher"] = "Хватоплет", --need check
-	["Storm Lasher"] = "Грозовой плеточник", --need check
-	["Ancient Water Spirit"] = "Древний дух воды", --need check
-	--["Detonating Lasher"] = "Detonating Lasher", --need check
-	--["Ancient Conservator"] = "Ancient Conservator", --need check
-
 	--engage_trigger = "The Conservatory must be protected!",
 	engage_message = "%s вступает в бой!",
 
@@ -432,22 +395,23 @@ function mod:AttunedRemove()
 	end
 end
 
-function mod:Deaths(unit)
-	if unit == L["Detonating Lasher"] then
+function mod:Deaths(_, guid)
+	guid = tonumber((guid):sub(-12,-7),16)
+	if guid == 32918 then
 		attunedCount = attunedCount - 2
 		if dCount == 10 then
 			dCount = 0
 			self:AttunedWarn()
 		end
 		dCount = dCount + 1
-	elseif unit == L["Storm Lasher"] or unit == L["Ancient Water Spirit"] or unit == L["Snaplasher"] then
+	elseif guid == 32919 or guid == 33202 or guid == 32916 then
 		attunedCount = attunedCount - 10
 		if eCount == 3 then
 			eCount = 0
 			self:AttunedWarn()
 		end
 		eCount = eCount + 1
-	elseif unit == L["Ancient Conservator"] then
+	elseif guid == 33203 then
 		attunedCount = attunedCount - 25
 		self:AttunedWarn()
 	end
