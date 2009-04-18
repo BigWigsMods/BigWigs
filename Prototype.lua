@@ -179,7 +179,7 @@ function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source
 		else
 			local f = self[m[spellId] or m["*"]]
 			if f then
-				f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags)
+				f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 			else
 				print(modMissingFunction:format(self:ToString(), event, spellId))
 			end
@@ -189,7 +189,7 @@ function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source
 	if s then
 		for token, data in pairs(s) do
 			if data.spellIds[spellId] then
-				transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags)
+				transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 			end
 		end
 	end
