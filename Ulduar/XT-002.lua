@@ -354,8 +354,8 @@ function mod:Bomb(player, spellID)
 	self:Icon(player, "icon")
 end
 
-function mod:BombRemoved(player, spellID)
-	if spellID == 63018 or spellID == 65121 or spellID == 63024 or spellID == 64234 then
+function mod:BombRemoved(player)
+	if player == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
