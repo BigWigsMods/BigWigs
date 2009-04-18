@@ -65,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 	link_desc = "Warn which players are linked.",
 	
 	gaze = "Lunatic Gaze",
-	gaze_desc = "Warn when Yogg-Saron casts a Lunatic Gaze.",
+	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
 	gaze_message = "Lunatic Gaze!",
 	gaze_bar = "~Gaze Cooldown",
 	
@@ -114,7 +114,7 @@ L:RegisterTranslations("koKR", function() return {
 	link_desc = "두뇌의 고리에 연결된 플레이어를 알립니다.",
 	
 	gaze = "광기의 시선",
-	gaze_desc = "요그사론의 광기의 시선 시전을 알립니다.",
+	gaze_desc = "요그사론의 광기의 시선 획득을 알립니다.",
 	gaze_message = "광기의 시선!",
 	gaze_bar = "~시선 대기시간",
 	
@@ -183,7 +183,7 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
-	self:AddCombatListener("SPELL_CAST_START", "Gaze", 64163)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -229,6 +229,7 @@ end
 function mod:Gaze(_, spellID)
 	if db.gaze then
 		self:IfMessage(L["gaze_message"], "Attention", spellID)
+		self:Bar(L["gaze"], 4, spellID)
 		self:Bar(L["gaze_bar"], 13, spellID)
 	end
 end
