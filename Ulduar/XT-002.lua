@@ -271,7 +271,7 @@ L:RegisterTranslations("ruRU", function() return {
 	tympanic = "Раскаты ярости",
 	tympanic_desc = "Сообщает о применении Раскатов Ярости.",
 	tympanic_message = "Раскаты ярости!",
-	tympanic_bar "~перезарядка раскатов",
+	tympanic_bar = "~перезарядка раскатов",
 
 	voidzone = "Портал Бездны",
 	voidzone_desc = "Сообщать о появлениях Порталов Бездны.",
