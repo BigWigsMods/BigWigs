@@ -52,6 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	madness = "Induce Madness",
 	madness_desc = "Show Timer for Induce Madness.",
+	madness_warning = "Induce Madness in 5sec!",
 
 	beam = "Malady of the Mind",
 	beam_desc = "Warn for Malady of the Mind",
@@ -101,6 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
+	madness_warning = "5초 후 광기 유발!",
 
 	beam = "병든 정신",
 	beam_desc = "병든 정신에 대해 알립니다.",
@@ -150,6 +152,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
+	--madness_warning = "Induce Madness in 5sec!",
 
 	beam = "Mal de la raison",
 	beam_desc = "Prévient de l'arrivées des Mals de la raison",
@@ -181,6 +184,7 @@ L:RegisterTranslations("frFR", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
@@ -234,17 +238,19 @@ function mod:Gaze(_, spellID)
 	end
 end
 
+function mod:Madness()
+	if db.madness then
+		self:Bar(L["madness"], 60, 64059)
+		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Attention")
+	end
+end
+
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["portal_trigger"] and db.portal then
 		self:IfMessage(L["portal_message"], "Attention", 35717)
 		self:Bar(L["portal_bar"], 90, 35717)
-		if db.madness then
-			self:Bar(L["madness"], 60, 64059)
-		end
 	elseif msg == L["weakened_trigger"] and db.weakened then
-		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
-		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661)
-		self:Bar(L["weakened"], 45, 50661) --50661, looks like a weakened :)
+		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661) --50661, looks like a weakened :)
 	elseif msg == L["empower_trigger"] and db.empower then
 		self:IfMessage(L["empower_message"], "Attention", 64486)
 		self:Bar(L["empower_bar"], 46, 64486)
@@ -270,7 +276,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
+		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
 		end
