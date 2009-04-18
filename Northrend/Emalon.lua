@@ -66,6 +66,19 @@ L:RegisterTranslations("frFR", function() return {
 	overcharge_next = "~Prochaine Surcharge",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	nova = "Blitzschlagnova",
+	nova_desc = "Warnung und Timer für Blitzschlagnova.",
+	nova_message = "Blitzschlagnova!",
+	nova_next = "~Blitzschlagnova",
+
+	overcharge = "Überladen",
+	overcharge_desc = "Warnt, wann und wenn Emalon einen Sturmdiener überläd.",
+	overcharge_message = "Sturmdiener überladen!",
+	overcharge_bar = "Explosion",
+	overcharge_next = "~Überladen",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 
 } end )
@@ -78,9 +91,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 } end )
 
-L:RegisterTranslations("deDE", function() return {
 
-} end )
 
 ------------------------------
 --      Initialization      --
