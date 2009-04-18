@@ -8,9 +8,9 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
---Sara = 33134, Yogg brain = 33890
+--Sara = 33134, Yogg brain = 33890, Corruptor Tentacle = 33985
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "beam", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "beam", "empower", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -63,6 +63,17 @@ L:RegisterTranslations("enUS", function() return {
 
 	link = linkedName,
 	link_desc = "Warn which players are linked.",
+	
+	gaze = "Lunatic Gaze",
+	gaze_desc = "Warn when Yogg-Saron casts a Lunatic Gaze.",
+	gaze_message = "Lunatic Gaze!",
+	gaze_bar = "~Gaze Cooldown",
+	
+	empower = "Empowering Shadows",
+	empower_desc = "Warn for Empowering Shadows.",
+	empower_message = "Empowering Shadows!",
+	empower_trigger = "%s prepares to unleash Empowering Shadows!",
+	empower_bar = "~Empower Cooldown",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -81,7 +92,7 @@ L:RegisterTranslations("koKR", function() return {
 	portal_desc = "차원문을 알립니다.",
 	--portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "차원문 열림!",
-	--portal_bar = "Next Portal",
+	portal_bar = "다음 차원문",
 
 	weakened = "약화",
 	weakened_desc = "약화 상태를 알립니다.",
@@ -95,9 +106,23 @@ L:RegisterTranslations("koKR", function() return {
 	beam_desc = "병든 정신에 대해 알립니다.",
 	beam_warning = "병든 정신!",
 	beam_trigger = "다가오는 종말 앞에 몸서리쳐라!",	--check
-
-	--squeeze_desc = "Warn which player has Squeeze.",
-	--link_desc = "Warn which players are linked.",
+	
+	squeeze = squeezeName,
+	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
+	
+	link = linkedName,
+	link_desc = "두뇌의 고리에 연결된 플레이어를 알립니다.",
+	
+	gaze = "광기의 시선",
+	gaze_desc = "요그사론의 광기의 시선 시전을 알립니다.",
+	gaze_message = "광기의 시선!",
+	gaze_bar = "~시선 대기시간",
+	
+	empower = "암흑 강화",
+	empower_desc = "암흑 강화를 알립니다.",
+	empower_message = "암흑 강화!",
+	--empower_trigger = "%s prepares to unleash Empowering Shadows!",
+	empower_bar = "~강화 대기시간",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
@@ -136,6 +161,17 @@ L:RegisterTranslations("frFR", function() return {
 
 	link = linkedName,
 	link_desc = "Indique quels joueurs sont liées.",
+	
+	--gaze = "Lunatic Gaze",
+	--gaze_desc = "Warn when Yogg-Saron casts a Lunatic Gaze.",
+	--gaze_message = "Lunatic Gaze!",
+	--gaze_bar = "Gaze Cooldown",
+	
+	--empower = "Empowering Shadows",
+	--empower_desc = "Warn for Empowering Shadows.",
+	--empower_message = "Empowering Shadows!",
+	--empower_trigger = "%s prepares to unleash Empowering Shadows!",
+	--empower_bar = "~Empower Cooldown",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -147,6 +183,7 @@ L:RegisterTranslations("frFR", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
+	self:AddCombatListener("SPELL_CAST_START", "Gaze", 64163)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -189,6 +226,13 @@ function mod:PrintLinked(spellID)
 	wipe(link_tbl)
 end
 
+function mod:Gaze(_, spellID)
+	if db.gaze then
+		self:IfMessage(L["gaze_message"], "Attention", spellID)
+		self:Bar(L["gaze_bar"], 13, spellID)
+	end
+end
+
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["portal_trigger"] and db.portal then
 		self:IfMessage(L["portal_message"], "Attention", 35717)
@@ -200,6 +244,9 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
 		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661)
 		self:Bar(L["weakened"], 45, 50661) --50661, looks like a weakened :)
+	elseif msg == L["empower_trigger"] and db.empower then
+		self:IfMessage(L["empower_message"], "Attention", 64486)
+		self:Bar(L["empower_bar"], 46, 64486)
 	end
 end
 
@@ -225,6 +272,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
+		end
+		if db.empower then
+			self:Bar(L["empower"], 46, 64486)
 		end
 	elseif msg == L["beam_trigger"] then
 		if db.beam then
