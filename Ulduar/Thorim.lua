@@ -35,10 +35,9 @@ L:RegisterTranslations("enUS", function() return {
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",
-	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
-	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
 	phase2_message = "Phase 2 - Berserk in 5min!",
-	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s Engaged!",
 
 	p2berserk = "Phase 2 - Berserk",
@@ -92,8 +91,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	phase1_message = "1 단계 시작",
-	phase2_trigger1 = "침입자라니! 감히 내 취미생활을 방해하는 놈들은 쓴맛을 단단히! 잠깐...너는...?",	--check
-	phase2_trigger2 = "니가 기억난다. 산속에서. 하지만! 뭐지? 난 대체!?",	--check
+	phase2_trigger = "침입자라니! 감히 내 취미생활을 방해하는 놈들은 쓴맛을 단단히! 잠깐...너는...?",	--check
 	phase2_message = "2 단계 - 5분 후 광폭화!",
 	phase3_trigger = "건방진 젖먹이 같으니! 감히 여기까지 기어올라와 내게 도전해! 내 손으로 쓸어버리겠다!",	--check
 	phase3_message = "3 단계 - %s 전투시작!",
@@ -149,8 +147,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Début de la phase 1",
-	phase2_trigger1 = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement, allez payer ! Attendez... vous ?", -- à vérifier
-	phase2_trigger2 = "Je me souviens de vous. Les montagnes. Mais vous ! Qu'est-ce qui se passe ? Où suis-je !?", -- à vérifier
+	phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement, allez payer ! Attendez... vous ?", -- à vérifier
 	phase2_message = "Phase 2 - Berserk dans 5 min. !",
 	phase3_trigger = "Avortons impertinents. Vous osez me défier sur mon piédestal ! Je vais vous écraser moi-même !", -- à vérifier
 	phase3_message = "Phase 3 - %s engagé !",
@@ -207,8 +204,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 	phase1_message = "第一阶段！",
-	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
-	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
 	phase2_message = "第二阶段 - 5分钟后，狂暴！",
 	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
 	phase3_message = "第三阶段 - %s已激怒！",
@@ -260,8 +256,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
 	phase1_message = "第一階段！",
---	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
---	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+--	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
 	phase2_message = "第二階段 - 5分鐘后，狂暴！",
 --	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
 	phase3_message = "第三階段 - %s已狂怒！",
@@ -312,8 +307,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
 	phase1_message = "Начало 1ой фазы",
---	phase2_trigger1 = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
---	phase2_trigger2 = "I remember you. In the mountains. But you! What is this? Where am-!?",
+--	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
 	phase2_message = "2ая фаза - Исступление через 5 мин!",
 --	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
 	phase3_message = "3яя фаза - %s в истеплении!",
@@ -454,7 +448,7 @@ function mod:Detonation(player, spellID)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] then
+	if msg == L["phase2_trigger"] then
 		if db.phase then
 			self:Message(L["phase2_message"], "Attention")
 		end
