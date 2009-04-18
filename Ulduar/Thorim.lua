@@ -66,7 +66,7 @@ L:RegisterTranslations("enUS", function() return {
 	shock_message = "Lightning Shock on You! Move!",
 	shock_warning = "Charge Orb!",
 	shock_bar = "Next Charge Orb",
-	
+
 	barrier = "Runic Barrier",
 	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
 	barrier_message = "Runic Colossus gained Runic Barrier!",
@@ -75,7 +75,7 @@ L:RegisterTranslations("enUS", function() return {
 	detonation_desc = "Tells you who has been hit by Runic Detonation.",
 	detonation_message = "Runic Detonation: %s",
 	detonation_yell = "I'm a Bomb!",
-	
+
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
 	charge_message = "Charge: (%d)",
@@ -176,7 +176,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
-	--hammer_message = "Stormhammer: %s",
+	hammer_message = "Marteau-tempête : %s",
 	hammer_bar = "Prochain Marteau-tempête",
 
 	impale = "Empaler",
@@ -188,10 +188,10 @@ L:RegisterTranslations("frFR", function() return {
 	shock_message = "Horion de foudre sur vous ! Bougez !",
 	shock_warning = "Charger l'orbe !",
 	shock_bar = "Prochain Charger l'orbe",
-	
-	--barrier = "Runic Barrier",
-	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
-	--barrier_message = "Runic Colossus gained Runic Barrier!",
+
+	barrier = "Barrière runique",
+	barrier_desc = "Prévient quand le Colosse runique gagne une Barrière runique.",
+	barrier_message = "Colosse runique gagne Barrière runique !",
 
 	detonation = "Détonation runique",
 	detonation_desc = "Prévient quand un joueur subit les effets d'une Détonation runique.",
@@ -245,7 +245,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shock_message = ">你< 闪电震击！移动！",
 	shock_warning = "宝珠充电！",
 	shock_bar = "<下一宝珠充电>",
-	
+
 	barrier = "Runic Barrier",
 	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
 	barrier_message = "Runic Colossus gained Runic Barrier!",
@@ -302,7 +302,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shock_message = ">你< 閃電震擊！移動！",
 	shock_warning = "寶珠充能！",
 	shock_bar = "<下一寶珠充能>",
-	
+
 	--barrier = "Runic Barrier",
 	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
 	--barrier_message = "Runic Colossus gained Runic Barrier!",
@@ -363,7 +363,7 @@ L:RegisterTranslations("ruRU", function() return {
 	shock_message = "На вас Поражение громом! Шевелитесь!",
 	shock_warning = "Заряженная сфера!",
 	shock_bar = "Следующая сфера",
-	
+
 	--barrier = "Runic Barrier",
 	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
 	--barrier_message = "Runic Colossus gained Runic Barrier!",
