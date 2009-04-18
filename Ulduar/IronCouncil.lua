@@ -366,7 +366,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479) -- Brundir 
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869) -- Brundir
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61886, 63486) -- Brundir +2
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
 
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
