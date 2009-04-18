@@ -113,21 +113,21 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!", -- needs check
 
 	flame = "Flammenstrahlen",
-	flame_desc = "Warnung vor Flammenstrahlen.",
+	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
 	flame_message = "Flammenstrahlen!",
 	flame_warning = "Flammenstrahlen bald!",
-	flame_bar = "~Strahlen Cooldown",
+	flame_bar = "~Flammenstrahlen",
 
 	scorch = "Versengen",
-	scorch_desc = "Warnung vor Versengen.",
-	scorch_message = "Versengen: %s",
-	scorch_warning = "Wirkt Versengen!",
-	scorch_soon = "Versengen in ~5sec!",
+	scorch_desc = "Warnt, wenn Versengen gewirkt wird und wer davon betroffen ist.",
+	scorch_message = "Versengen: %s!",
+	scorch_warning = "Versengen!",
+	scorch_soon = "Versengen in ~5 sek!",
 	scorch_bar = "Nächstes Versengen",
 
 	slagpot = "Schlackentopf",
-	slagpot_desc = "Warnung wer von Schlackentopf getroffen wird.",
-	slagpot_message = "Schlackentopf: %s",
+	slagpot_desc = "Warnt, wer von Schlackentopf betroffen ist.",
+	slagpot_message = "Schlackentopf: %s!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
