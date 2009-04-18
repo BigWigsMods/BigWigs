@@ -40,8 +40,8 @@ end
 
 local db = nil
 local attunedCount = 150
-local dCount = 1
-local eCount = 1
+local dCount = 0
+local eCount = 0
 local pName = UnitName("player")
 local fmt = string.format
 
@@ -320,9 +320,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	
-	attunedCount = 150
-	dCount = 1
-	eCount = 1
 	db = self.db.profile
 end
 
@@ -386,6 +383,9 @@ end
 function mod:FuryRemove(player)
 	if db.fury then
 		self:TriggerEvent("BigWigs_StopBar", self, L["fury_other"]:format(player))
+		if player == pName then
+			self:TriggerEvent("BigWigs_HideProximity", self)
+		end
 	end
 end
 
@@ -399,18 +399,18 @@ function mod:Deaths(_, guid)
 	guid = tonumber((guid):sub(-12,-7),16)
 	if guid == 32918 then
 		attunedCount = attunedCount - 2
+		dCount = dCount + 1
 		if dCount == 10 then
 			dCount = 0
 			self:AttunedWarn()
 		end
-		dCount = dCount + 1
 	elseif guid == 32919 or guid == 33202 or guid == 32916 then
 		attunedCount = attunedCount - 10
+		eCount = eCount + 1
 		if eCount == 3 then
 			eCount = 0
 			self:AttunedWarn()
 		end
-		eCount = eCount + 1
 	elseif guid == 33203 then
 		attunedCount = attunedCount - 25
 		self:AttunedWarn()
@@ -436,8 +436,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		attunedCount = 150
-		dCount = 1
-		eCount = 1
+		dCount = 0
+		eCount = 0
 		self:Message(L["engage_message"]:format(boss), "Attention")
 		if db.wave then
 			--35594, looks like a wave :)
