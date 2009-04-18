@@ -9,7 +9,7 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
-mod.toggleoptions = {"nova", "overcharge", "bosskill"}
+mod.toggleoptions = {"nova", "overcharge", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -17,6 +17,10 @@ mod.toggleoptions = {"nova", "overcharge", "bosskill"}
 
 local db = nil
 local started = nil
+local UnitGUID = _G.UnitGUID
+local GetNumRaidMembers = _G.GetNumRaidMembers
+local fmt = _G.string.format
+local guid
 
 ----------------------------
 --      Localization      --
@@ -37,6 +41,9 @@ L:RegisterTranslations("enUS", function() return {
 	overcharge_message = "A minion is overcharged!",
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Next Overcharge",
+
+	icon = "Overcharge Icon",
+	icon_desc = "Place a skull on the mob with Overcharge",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -51,6 +58,8 @@ L:RegisterTranslations("koKR", function() return {
 	overcharge_bar = "폭발",
 	overcharge_next = "~다음 과충전",
 
+	--icon = "Overcharge Icon",
+	--icon_desc = "Place a skull on the mob with Overcharge",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -64,6 +73,9 @@ L:RegisterTranslations("frFR", function() return {
 	overcharge_message = "Un séide est surchargé !",
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Prochaine Surcharge",
+
+	--icon = "Overcharge Icon",
+	--icon_desc = "Place a skull on the mob with Overcharge",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -77,21 +89,10 @@ L:RegisterTranslations("deDE", function() return {
 	overcharge_message = "Sturmdiener überladen!",
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Überladen",
+
+	--icon = "Overcharge Icon",
+	--icon_desc = "Place a skull on the mob with Overcharge",
 } end )
-
-L:RegisterTranslations("zhCN", function() return {
-
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
-
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-
-} end )
-
-
 
 ------------------------------
 --      Initialization      --
@@ -100,6 +101,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216, 65279)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "OverchargeIcon", 64217)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -127,6 +129,34 @@ function mod:Overcharge()
 		self:Bar(L["overcharge_bar"], 20, 64218)
 		self:Bar(L["overcharge_next"], 45, 64218)
 	end
+end
+
+local function ScanTarget()
+	local target
+	if UnitGUID("target") == guid then
+		target = "target"
+	elseif UnitGUID("focus") == guid then
+		target = "focus"
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local unitid = fmt("%s%d%s", "raid", i, "target")
+			if UnitGUID(unitid) == guid then
+				target = unitid
+				break
+			end
+		end
+	end
+	if target then
+		SetRaidTarget(target, 8)
+		mod:CancelScheduledEvent("BWGetOverchargeTarget")
+	end
+end
+
+function mod:OverchargeIcon(...)
+	if not db.icon then return end
+	guid = select(9, ...)
+	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", ScanTarget, 0.1)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
