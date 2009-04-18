@@ -137,7 +137,8 @@ L:RegisterTranslations("koKR", function() return {
 	end_message = "%s 물리침!",
 } end )
 
-L:RegisterTranslations("frFR", function() return {engage_trigger = "Le jardin doit être protégé !", -- à vérifier
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Le jardin doit être protégé !", -- à vérifier
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
@@ -176,6 +177,48 @@ L:RegisterTranslations("frFR", function() return {engage_trigger = "Le jardin do
 
 	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.",
 	end_message = "%s a été vaincu !",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "The Conservatory must be protected!", -- NEED!
+	engage_message = "%s angegriffen!",
+
+	phase = "Phasen",
+	phase_desc = "Warnt bei Phasenwechsel.",
+	phase2_message = "Phase 2!",
+	phase2_soon = "Phase 2 bald!",
+
+	wave = "Wellen",
+	wave_desc = "Warnt vor den Wellen.",
+	wave_bar = "Nächste Welle",
+	--conservator_trigger = "Eonar, your servant requires aid!", -- NEED!
+	--detonate_trigger = "The swarm of the elements shall overtake you!", -- NEED!
+	--elementals_trigger = "Children, assist me!", -- NEED!
+	--tree_trigger = "A Lifebinder's Gift begins to grow!", -- NEED!
+	conservator_message = "Konservator kommt!",
+	detonate_message = "Explosionspeitscher kommen!",
+	elementals_message = "Elementare kommen!",
+	tree_message = "Eonars Gabe kommt!",
+
+	attuned = "Einstimmung auf die Natur",
+	attuned_desc = "Warnt vor der Anzahl von Einstimmung auf die Natur.",
+	attuned_message = "Einstimmung: (%d)",
+
+	fury = "Furor der Natur",
+	fury_desc = "Warnt, wer von Furor der Natur getroffen wird.",
+	fury_you = "Furor auf DIR!",
+	fury_other = "Furor: %s",
+
+	sunbeam = "Sonnenstrahl",
+	sunbeam_desc = "Warnt, auf wen Sonnenstrahl gewirkt wird.",
+	sunbeam_you = "Sonnenstrahl auf DIR!",
+	sunbeam_other = "Sonnenstrahl: %s!",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl getroffen werden (benötigt Assistent oder höher).",
+
+	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.", -- NEED!
+	end_message = "%s wurde besiegt!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

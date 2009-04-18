@@ -110,6 +110,34 @@ L:RegisterTranslations("frFR", function() return {
 	end_message = "%s a été vaincu !",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "You will suffer for this trespass!", -- NEED!
+
+	cold = "Beißende Kälte (Erfolg)",
+	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
+	cold_message = "Beißende Kälte x2 - Bewege Dich!",
+
+	flash = "Blitzeis",
+	flash_desc = "Warnt, wenn Blitzeis gewirkt wird und wer davon betroffen ist.",
+	flash_message = "Blitzeis: %s!",
+	flash_warning = "Blitzeis!",
+	flash_soon = "Blitzeis in 5 sek!",
+	flash_bar = "Nächstes Blitzeis",
+
+	frozenblow = "Gefrorene Schläge",
+	frozenblow_desc = "Warnt, wenn Hodir Gefrorene Schläge bekommt.",
+	frozenblow_message = "Hodir bekommt Gefrorene Schläge!",
+	frozenblow_warning = "Gefrorene Schläge weg in 5 sek!",
+	frozenblow_bar = "Gefrorene Schläge",
+
+	hardmode = "Hard Mode",
+	hardmode_desc = "Timer für den Hard Mode.",
+	hardmode_warning = "Hard Mode beendet!",
+
+	--end_trigger = "I...I am released from his grasp! At...last!", -- NEED!
+	end_message = "%s wurde besiegt!",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 --[[
 	engage_trigger = "You will suffer for this trespass!",

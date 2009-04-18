@@ -61,6 +61,18 @@ L:RegisterTranslations("frFR", function() return {
 	sentinel_message = "Déflagration du factionnaire !",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	fear = "Schreckliches Kreischen",
+	fear_desc = "Warnungen und Timer für Schreckliches Kreischen.",
+	fear_warning = "Furcht bald!",
+	fear_message = "Furcht!",
+	fear_bar = "~Furcht",
+
+	sentinel = "Schildwachenschlag",
+	sentinel_desc = "Warnt, wenn Auriaya Schildwachenschlag wirkt.",
+	sentinel_message = "Schildwachenschlag!",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	fear = "恐吓尖啸",
 	fear_desc = "当施放恐吓尖啸时发出警报。",

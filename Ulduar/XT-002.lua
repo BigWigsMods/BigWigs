@@ -155,31 +155,31 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	exposed = "Freigelegtes Herz",
-	exposed_desc = "Warnen wenn der XT-002 ein Freigelegtes Herz hat.",
+	exposed_desc = "Warnt, wenn XT-002 ein Freigelegtes Herz hat.",
 	exposed_warning = "Freigelegtes Herz bald!",
 	exposed_message = "Freigelegtes Herz - Adds!",
 
 	gravitybomb = "Gravitationsbombe",
-	gravitybomb_desc = "Warnt wer von Gravitationsbombe getroffen wurde.",
+	gravitybomb_desc = "Warnt, wer von Gravitationsbombe getroffen wurde.",
 	gravitybomb_you = "Gravitationsbombe auf DIR!",
-	gravitybomb_other = "Gravitationsbombe auf %s!",
+	gravitybomb_other = "Gravitationsbombe: %s!",
 
 	lightbomb = "Lichtbombe",
-	lightbomb_desc = "Warnt wer von Lichtbombe getroffen wurde.",
+	lightbomb_desc = "Warnt, wer von Lichtbombe getroffen wurde.",
 	lightbomb_you = "Lichtbombe auf DIR!",
-	lightbomb_other = "Lichtbombe auf %s!",
+	lightbomb_other = "Lichtbombe: %s!",
 
 	tympanic = "Betäubender Koller",
-	tympanic_desc = "Warnt wenn XT-002 Betäubender Koller wirkt.",
+	tympanic_desc = "Warnt, wenn XT-002 Betäubender Koller wirkt.",
 	tympanic_message = "Betäubender Koller!",
-	--tympanic_bar = "~Tantrum Cooldown",
+	tympanic_bar = "~Betäubender Koller",
 
-	--voidzone = "Void Zone",
-	--voidzone_desc = "Warn for Void Zone spawn.",
-	--voidzone_message = "Void Zone!",
+	voidzone = "Zone der Leere",
+	voidzone_desc = "Warnt, wenn Zonen der Leere erscheinen.",
+	voidzone_message = "Zone der Leere!",
 
 	heartbreak = "Gebrochenes Herz",
-	heartbreak_desc = "Warnt wenn der XT-002 Gebrochenes Herz bekommt",
+	heartbreak_desc = "Warnt, wenn der XT-002 Gebrochenes Herz bekommt.",
 	heartbreak_message = "Gebrochenes Herz!",
 
 	icon = "Schlachtzugs-Symbol",
