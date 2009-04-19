@@ -117,7 +117,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	shockwave = "Schockwelle",
 	shockwave_desc = "Timer für die Schockwelle.",
-	shockwave_trigger = "Auslöschung!", -- needs verification!
+	shockwave_trigger = "AUSLÖSCHUNG!",
 
 	eyebeam = "Fokussierter Augenstrahl",
 	eyebeam_desc = "Warnt, wer von Fokussierter Augenstrahl betroffen ist.",

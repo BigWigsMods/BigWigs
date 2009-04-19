@@ -219,9 +219,9 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!", --needs verification!
-	engage_trigger2 = "Nur vollständige Dezimierung wird mich zufrieden stellen!", --needs verification!
-	engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, seid Ihr doch nichts weiter als Sterbliche!", --needs verification!
+	engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!",
+	engage_trigger2 = "Nur vollständige Dezimierung wird mich zufriedenstellen.",
+	engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, so seid Ihr doch nichts weiter als Sterbliche.",
 
 	chain = "Kettenblitz",
 	chain_desc = "Warnt, wenn Brundir Kettenblitz wirkt.",
@@ -269,7 +269,7 @@ L:RegisterTranslations("deDE", function() return {
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die während der Blitzrankenphase verfolgt werden oder von Überwältigende Kraft betroffen sind (benötigt Assistent oder höher).",
 
-	council_dies = "%s stirbt", --needs verification!
+	council_dies = "%s getötet!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
