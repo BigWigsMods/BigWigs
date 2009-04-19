@@ -58,8 +58,8 @@ L:RegisterTranslations("koKR", function() return {
 	overcharge_bar = "폭발",
 	overcharge_next = "~다음 과충전",
 
-	--icon = "Overcharge Icon",
-	--icon_desc = "Place a skull on the mob with Overcharge",
+	icon = "과충전 아이콘",
+	icon_desc = "과충전의 대상이 된 하수인에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
