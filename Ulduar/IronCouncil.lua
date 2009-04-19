@@ -341,8 +341,8 @@ L:RegisterTranslations("zhTW", function() return {
 	summoning_desc = "當墨吉姆施放召喚符文時發出警報。",
 	summoning_message = "召喚符文 - 閃電元素即將出現！",
 
-	tendrils = "閃電觸鬚",
-	tendrils_desc = "當閃電觸鬚階段時為目標玩家發出警報，并給他打上團隊標記。",
+	tendrils = "後",
+	tendrils_desc = "當後階段時為目標玩家發出警報，并給他打上團隊標記。",
 	tendrils_other = "閃電觸須：>%s<！",
 	tendrils_you = ">你< 閃電觸須！",
 	tendrils_message = "約5秒后，降落！",
