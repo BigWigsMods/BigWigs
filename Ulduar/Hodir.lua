@@ -255,7 +255,7 @@ local function flashWarn()
 		end
 		mod:IfMessage(L["flash_message"]:format(msg), "Attention", 61969, "Alert")
 	end
-	for k in pairs(FF) do FF[k] = nil end
+	wipe(FF)
 end
 
 function mod:Flash(player)
@@ -279,13 +279,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["flash_bar"], 35, 61968)
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 180, "Ability_warrior_innerrage")
-			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
+			self:Bar(L["hardmode"], 150, 6673)
+			self:DelayedMessage(150, L["hardmode_warning"], "Attention")
 		end
 		if db.berserk then
 			self:Enrage(480, true)
 		end
-		for k in pairs(FF) do FF[k] = nil end
+		wipe(FF)
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)
 	end
