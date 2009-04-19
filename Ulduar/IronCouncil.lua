@@ -2,12 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local breaker = BB["Steelbreaker"]
-local molgeim = BB["Runemaster Molgeim"]
-local brundir = BB["Stormcaller Brundir"]
 local boss = BB["The Iron Council"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local breaker = BB["Steelbreaker"]
+local molgeim = BB["Runemaster Molgeim"]
+local brundir = BB["Stormcaller Brundir"]
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
@@ -105,7 +105,7 @@ L:RegisterTranslations("enUS", function() return {
 	shield_message = "Shield of Runes Up!",
 
 	icon = "Raid Target Icon",
-	icon_desc = "Place a Raid Target Icon on the player targeted during Lightning Tendrils (requires promoted or higher).",
+	icon_desc = "Place a Raid Target Icon on the player targeted by Lightning Tendrils or Overwhelming Power (requires promoted or higher).",
 
 	council_dies = "%s dead",
 } end )
@@ -516,3 +516,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+

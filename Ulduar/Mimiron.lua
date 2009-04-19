@@ -71,7 +71,6 @@ L:RegisterTranslations("enUS", function() return {
 	loot_message = "%s looted a core!",
 
 	end_trigger = "^It would appear that I made a slight miscalculation.",
-	end_message = "%s has been defeated!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -118,7 +117,6 @@ L:RegisterTranslations("koKR", function() return {
 	loot_message = "%s - 증폭기 획득!",
 
 	end_trigger = "^정상이야. 내가 계산을",
-	end_message = "%s 물리침!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -165,7 +163,6 @@ L:RegisterTranslations("frFR", function() return {
 	loot_message = "%s a ramassé un noyau !",
 
 	end_trigger = "^Il semblerait que j'ai pu faire une minime erreur de calcul.", -- à vérifier
-	end_message = "%s a été vaincu !",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -208,7 +205,6 @@ L:RegisterTranslations("zhCN", function() return {
 	laser_bar = "<下一激光弹幕>",
 
 	end_trigger = "^It would appear that I made a slight miscalculation.",
-	end_message = "%s被击败了！",
 ]]
 } end )
 
@@ -251,7 +247,6 @@ L:RegisterTranslations("zhTW", function() return {
 	laser_bar = "<下一雷射彈幕>",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
-	end_message = "%s被擊敗了！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -298,7 +293,6 @@ L:RegisterTranslations("ruRU", function() return {
 	loot_message = "Ядро у |3-1(%s)!",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
-	end_message = "%s побеждён!",
 } end )
 
 ------------------------------
@@ -346,14 +340,19 @@ function mod:Shock(_, spellID)
 	end
 end
 
-function mod:UNIT_SPELLCAST_CHANNEL_START(unit, spell)
-	-- Laser Barrage
-	if spell == GetSpellInfo(63274) and db.laser then
-		self:IfMessage(L["laser"], "Important", 63274)
-		self:Bar(L["laser"], 10, 63274)
-		self:Bar(L["laser_bar"], 60, 63274)
-	elseif spell == GetSpellInfo(63414) and db.laser then
-		self:IfMessage(L["laser_soon"], "Important", spellID)
+do
+	local laser = GetSpellInfo(63274)
+	local spin = GetSpellInfo(63414)
+	function mod:UNIT_SPELLCAST_CHANNEL_START(unit, spell)
+		if not db.laser then return end
+		-- Laser Barrage
+		if spell == laser then
+			self:IfMessage(L["laser"], "Important", 63274)
+			self:Bar(L["laser"], 10, 63274)
+			self:Bar(L["laser_bar"], 60, 63274)
+		elseif spell == spin then
+			self:IfMessage(L["laser_soon"], "Important", 63414, "Alarm")
+		end
 	end
 end
 
@@ -404,10 +403,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["phase_bar"]:format(phase), 20, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["end_trigger"]) then
-		if db.bosskill then
-			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
-		end
-		BigWigs:ToggleModuleActive(self, false)
+		self:BossDeath(nil, self.guid)
 	end
 end
 
@@ -441,3 +437,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
 	end
 end
+

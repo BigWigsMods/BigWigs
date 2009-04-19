@@ -3,11 +3,11 @@
 ----------------------------------
 
 local boss = BB["Razorscale"]
-local Commander = BB["Expedition Commander"]
+local commander = BB["Expedition Commander"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = {Commander, boss}
+mod.enabletrigger = {commander, boss}
 mod.guid = 33186
 mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
@@ -304,3 +304,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+

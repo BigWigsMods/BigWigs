@@ -42,11 +42,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	p2berserk = "Phase 2 - Berserk",
 	p2berserk_desc = "Warn when the boss goes Berserk in Phase 2.",
-	p2berserk_warn1 = "Berserk in 3 min",
-	p2berserk_warn2 = "Berserk in 90 sec",
-	p2berserk_warn3 = "Berserk in 60 sec",
-	p2berserk_warn4 = "Berserk in 30 sec",
-	p2berserk_warn5 = "Berserk in 10 sec",
 
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
@@ -86,7 +81,6 @@ L:RegisterTranslations("enUS", function() return {
 	strike_message= "Unbalancing Strike: %s",
 
 	end_trigger = "Stay your arms! I yield!",
-	end_message = "%s has been defeated!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Runic Detonation or Stormhammer. (requires promoted or higher)",
@@ -103,11 +97,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	p2berserk = "2 단계 - 광폭화",
 	p2berserk_desc = "1 단계의 보스 광폭화를 알립니다.",
-	p2berserk_warn1 = "3분 후 광폭화",
-	p2berserk_warn2 = "90초 후 광폭화",
-	p2berserk_warn3 = "60초 후 광폭화",
-	p2berserk_warn4 = "30초 후 광폭화",
-	p2berserk_warn5 = "10초 후 광폭화",
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
@@ -147,7 +136,6 @@ L:RegisterTranslations("koKR", function() return {
 	strike_message= "혼란의 일격: %s",
 
 	end_trigger = "무기를 거둬라! 내가 졌다!",
-	end_message = "%s 물리침!",
 	
 	icon = "전술 표시",
 	icon_desc = "룬 폭발 또는 폭풍망치에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -164,11 +152,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	p2berserk = "Phase 2 - Berserk",
 	p2berserk_desc = "Prévient quand le boss devient fou furieux en phase 2.",
-	p2berserk_warn1 = "Berserk dans 3 min.",
-	p2berserk_warn2 = "Berserk dans 90 sec.",
-	p2berserk_warn3 = "Berserk dans 60 sec.",
-	p2berserk_warn4 = "Berserk dans 30 sec.",
-	p2berserk_warn5 = "Berserk dans 10 sec.",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse).",
@@ -208,7 +191,6 @@ L:RegisterTranslations("frFR", function() return {
 	strike_message= "Frappe déséquilibrante : %s",
 
 	end_trigger = "Retenez vos coups ! Je me rends !", -- à vérifier
-	end_message = "%s a été vaincu !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Détonation runique (nécessite d'être assistant ou mieux).",
@@ -226,11 +208,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	p2berserk = "第二阶段 - 狂暴",
 	p2berserk_desc = "当首领在第二阶段狂暴时发出警报。",
-	p2berserk_warn1 = "3分钟后，狂暴！",
-	p2berserk_warn2 = "90秒后，狂暴！",
-	p2berserk_warn3 = "60秒后，狂暴！",
-	p2berserk_warn4 = "30秒后，狂暴！",
-	p2berserk_warn5 = "10秒后，狂暴！",
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
@@ -265,7 +242,6 @@ L:RegisterTranslations("zhCN", function() return {
 	strike_message= "重压打击：>%s<！",
 
 	end_trigger = "Stay your arms! I yield!",
-	end_message = "%s被击败了！",
 
 	icon = "团队标记",
 	icon_desc = "为中了符文爆炸的队员打上团队标记。（需要权限）",
@@ -283,11 +259,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	p2berserk = "第二階段 - 狂暴！",
 	p2berserk_desc = "當首領在第二階段狂暴時發出警報。",
-	p2berserk_warn1 = "3分鐘后，狂暴！",
-	p2berserk_warn2 = "90秒后，狂暴！",
-	p2berserk_warn3 = "60秒后，狂暴！",
-	p2berserk_warn4 = "30秒后，狂暴！",
-	p2berserk_warn5 = "10秒后，狂暴！",
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
@@ -322,7 +293,6 @@ L:RegisterTranslations("zhTW", function() return {
 	strike_message= "失衡打擊：>%s<！",
 
 --	end_trigger = "Stay your arms! I yield!",
-	end_message = "%s被擊敗了！",
 
 	icon = "團隊標記",
 	icon_desc = "為中了引爆符文的隊員打上團隊標記。（需要權限）",
@@ -339,11 +309,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	p2berserk = "2ая фаза - Исступление",
 	p2berserk_desc = "Сообщает когда босс входит в Исступление на 2ой фазе.",
-	p2berserk_warn1 = "Исступление через 3 мин",
-	p2berserk_warn2 = "Исступление через 90 сек",
-	p2berserk_warn3 = "Исступление через 60 сек",
-	p2berserk_warn4 = "Исступление через 30 сек",
-	p2berserk_warn5 = "Исступление через 10 сек",
 
 	hardmode = "Таймеры сложного режима",
 	hardmode_desc = "Отображения таймера для сложного режима.",
@@ -383,7 +348,6 @@ L:RegisterTranslations("ruRU", function() return {
 	strike_message= "Удар по: |3-2(%s)",
 
 --	end_trigger = "Stay your arms! I yield!",
-	end_message = "%s побеждён!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, который попал под воздействие Взрыва рун. (необходимо быть лидером группы или рейда)",
@@ -482,7 +446,7 @@ function mod:Detonation(player, spellID)
 		local other = L["detonation_message"]:format(player)
 		if player == pName then
 			self:Message(other, "Attention", nil, nil, true)
-			SendChatMessage(L["detonation_yell"], "YELL")
+			SendChatMessage(L["detonation_yell"], "SAY")
 		else
 			self:Message(other, "Attention", nil, nil, nil, spellID)
 		end
@@ -497,35 +461,24 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["phase2_message"], "Attention")
 		end
 		if db.p2berserk then
-			self:Bar(L["p2berserk"], 300, 12880)
-			self:ScheduleEvent("warn1", "BigWigs_Message", 120, L["p2berserk_warn1"], "Attention")
-			self:ScheduleEvent("warn2", "BigWigs_Message", 210, L["p2berserk_warn2"], "Attention")
-			self:ScheduleEvent("warn3", "BigWigs_Message", 240, L["p2berserk_warn3"], "Urgent")
-			self:ScheduleEvent("warn4", "BigWigs_Message", 270, L["p2berserk_warn4"], "Important")
-			self:ScheduleEvent("warn5", "BigWigs_Message", 290, L["p2berserk_warn5"], "Important")
+			self:Enrage(300, true, true)
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 180, "Ability_warrior_innerrage")
+			self:Bar(L["hardmode"], 180, "Ability_Warrior_Innerrage")
 			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["phase3_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, L["p2berserk"])
+		local berserkBar = GetSpellInfo(12880)
+		self:TriggerEvent("BigWigs_StopBar", self, berserkBar)
 		self:TriggerEvent("BigWigs_StopBar", self, L["shock_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["hammer_bar"])
-		self:CancelScheduledEvent("warn1")
-		self:CancelScheduledEvent("warn2")
-		self:CancelScheduledEvent("warn3")
-		self:CancelScheduledEvent("warn4")
-		self:CancelScheduledEvent("warn5")
+		self:CancelAllScheduledEvents()
 		if db.phase then
 			self:Message(L["phase3_message"]:format(boss), "Attention")
 		end
 	elseif msg == L["end_trigger"] then
-		if db.bosskill then
-			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
-		end
-		BigWigs:ToggleModuleActive(self, false)
+		self:BossDeath(nil, self.guid)
 	end
 end
 

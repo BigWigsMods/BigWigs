@@ -92,7 +92,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam. (requires promoted or higher)",
 
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
-	end_message = "%s has been defeated!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -134,7 +133,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "태양 광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	end_trigger = "내게서 그의 지배력이 거쳤다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",	--check
-	end_message = "%s 물리침!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -176,7 +174,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
 
 	end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros.",
-	end_message = "%s a été vaincu !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -218,7 +215,6 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl getroffen werden (benötigt Assistent oder höher).",
 
 	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.", -- NEED!
-	end_message = "%s wurde besiegt!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -261,7 +257,6 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
 
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
-	end_message = "%s被击败了！",
 ]]
 } end )
 
@@ -304,7 +299,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",
 
 --	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
---	end_message = "%s被擊敗了！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -346,7 +340,6 @@ L:RegisterTranslations("ruRU", function() return {
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелен Луч солнца. (необходимо быть лидером группы или рейда)",
 
 	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
-	end_message = "%s побеждена!",
 } end )
 
 ------------------------------
@@ -374,7 +367,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function ScanTarget()
+local function scanTarget()
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
@@ -406,7 +399,7 @@ end
 
 function mod:Sunbeam()
 	if db.sunbeam then
-		self:ScheduleEvent("BWsunbeamToTScan", ScanTarget, 0.1)
+		self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1)
 		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
 	end
 end
@@ -500,9 +493,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["elementals_message"], "Positive")
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["end_trigger"] then
-		if db.bosskill then
-			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
-		end
-		BigWigs:ToggleModuleActive(self, false)
+		self:BossDeath(nil, self.guid)
 	end
 end
+

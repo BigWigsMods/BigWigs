@@ -215,3 +215,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["engage_message"]:format(boss), "Attention")
 	end
 end
+

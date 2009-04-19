@@ -45,8 +45,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	vapor = "Saronite Vapors",
 	vapor_desc = "Warn for Saronite Vapors spawn.",
-	vapor_message = "Saronite Vapors (%d)!",
-	vapor_bar = "Next Vapors (%d)",
+	vapor_message = "Saronite Vapor %d!",
+	vapor_bar = "Next Vapor (%d)",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
@@ -266,7 +266,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function ScanTarget()
+local function scanTarget()
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
@@ -290,9 +290,7 @@ local function ScanTarget()
 			mod:IfMessage(other, "Attention", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
-		if db.icon then
-			mod:Icon(target, "icon")
-		end
+		mod:Icon(target, "icon")
 	end
 end
 
@@ -307,17 +305,13 @@ function mod:Mark(player, spellID)
 			self:Whisper(player, L["mark_message_you"])
 		end
 		self:Bar(other, 10, spellID)
-		if db.icon then
-			self:Icon(player, "icon")
-			self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 10, self)
-		end
+		self:Icon(player, "icon")
 	end
 end
 
 function mod:Target(player, spellId)
 	if db.crash then
-		self:ScheduleEvent("BWCrashToTScan", ScanTarget, 0.1)
-		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
+		self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1)
 	end
 end
 
@@ -364,3 +358,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+

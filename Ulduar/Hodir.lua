@@ -29,9 +29,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger = "You will suffer for this trespass!",
 
-	cold = "Biting Cold(Achievement)",
-	cold_desc = "Warn when you have the Biting Cold 2stack",
-	cold_message = "Biting Cold(2Stack) - Move!",
+	cold = "Biting Cold",
+	cold_desc = "Warn when you have 2 or more stacks of Biting Cold.",
+	cold_message = "Biting Cold x%d!",
 
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
@@ -51,7 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode_warning = "Hard Mode ends",
 
 	end_trigger = "I...I am released from his grasp! At...last!",
-	end_message = "%s has been defeated!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -59,7 +58,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	cold = "매서운 추위(업적)",
 	cold_desc = "매서운 추위 2중첩시 알립니다.",
-	cold_message = "매서운 추위(2중첩) - 이동!",
+	cold_message = "매서운 추위(%d중첩) - 이동!",
 
 	flash = "순간 빙결",
 	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",
@@ -79,7 +78,6 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_warning = "도전 모드 종료",
 
 	end_trigger = "드디어...드디어 그의 손아귀를!... 벗어나는구나!",	--check
-	end_message = "%s 물리침!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -87,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	cold = "Ça caille ici",
 	cold_desc = "Prévient quand Froid mordant s'est empilé 2 fois sur votre personnage.",
-	cold_message = "Froid mordant (2 cumuls) - bougez !",
+	cold_message = "Froid mordant (%d cumuls) - bougez !",
 
 	flash = "Gel instantané",
 	flash_desc = "Prévient quand un joueur subit les effets d'un Gel instantané et quand le Gel instantané est incanté.",
@@ -107,7 +105,6 @@ L:RegisterTranslations("frFR", function() return {
 	hardmode_warning = "Jouons à casse-cache",
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
-	end_message = "%s a été vaincu !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -115,7 +112,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	cold = "Beißende Kälte (Erfolg)",
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
-	cold_message = "Beißende Kälte x2 - Bewege Dich!",
+	cold_message = "Beißende Kälte x%d - Bewege Dich!",
 
 	flash = "Blitzeis",
 	flash_desc = "Warnt, wenn Blitzeis gewirkt wird und wer davon betroffen ist.",
@@ -135,7 +132,6 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_warning = "Hard Mode beendet!",
 
 	--end_trigger = "I...I am released from his grasp! At...last!", -- NEED!
-	end_message = "%s wurde besiegt!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -144,7 +140,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	cold = "Biting Cold（成就）",
 	cold_desc = "当你受到2层Biting Cold效果时发出警报。",
-	cold_message = "Biting Cold（2层） - 移动！",
+	cold_message = "Biting Cold（%d层） - 移动！",
 
 	flash = "Flash Freeze",
 	flash_desc = "当正在施放Flash Freeze和玩家中了Flash Freeze时发出警报。",
@@ -160,7 +156,6 @@ L:RegisterTranslations("zhCN", function() return {
 	frozenblow_bar = "<Frozen Blow>",
 
 	end_trigger = "I...I am released from his grasp! At...last!",
-	end_message = "%s被击败了！",
 ]]
 } end )
 
@@ -169,7 +164,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	cold = "刺骨之寒（成就）",
 	cold_desc = "當你受到2層刺骨之寒效果時發出警報。",
-	cold_message = "刺骨之寒（2層） - 移動！",
+	cold_message = "刺骨之寒（%d層） - 移動！",
 
 	flash = "閃霜",
 	flash_desc = "當正在施放閃霜和玩家中了閃霜時發出警報。",
@@ -185,7 +180,6 @@ L:RegisterTranslations("zhTW", function() return {
 	frozenblow_bar = "<冰凍痛擊>",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
-	end_message = "%s被擊敗了！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -193,7 +187,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	cold = "Трескучий мороз(Достижение)",
 	cold_desc = "Сообщать когда на вас наложено 2 эффекта Трескучего мороза",
-	cold_message = "Трескучий мороз(2эффекта) - Бегите!",
+	cold_message = "Трескучий мороз(%dэффекта) - Бегите!",
 
 	flash = "Мгновенная заморозка",
 	flash_desc = "Сообщает кто подвергся мгновенной заморозке и когда она применяется.",
@@ -213,7 +207,6 @@ L:RegisterTranslations("ruRU", function() return {
 	hardmode_warning = "Завершение сложного режима",--need review
 
 	--end_trigger = "I...I am released from his grasp! At...last!",
-	end_message = "%s побежден!",
 } end )
 
 ------------------------------
@@ -250,14 +243,7 @@ function mod:FlashCast(_, spellID)
 	end
 end
 
-function mod:Flash(player)
-	if UnitInRaid(player) and db.flash then
-		FF[player] = true
-		self:ScheduleEvent("BWFFWarn", self.FlashWarn, 0.5, self)
-	end
-end
-
-function mod:FlashWarn()
+local function flashWarn()
 	if db.flash then
 		local msg = nil
 		for k in pairs(FF) do
@@ -267,9 +253,16 @@ function mod:FlashWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:IfMessage(fmt(L["flash_message"], msg), "Attention", 61969, "Alert")
+		mod:IfMessage(L["flash_message"]:format(msg), "Attention", 61969, "Alert")
 	end
 	for k in pairs(FF) do FF[k] = nil end
+end
+
+function mod:Flash(player)
+	if UnitInRaid(player) and db.flash then
+		FF[player] = true
+		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5)
+	end
 end
 
 function mod:FrozenBlow(_, spellID)
@@ -294,28 +287,24 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		for k in pairs(FF) do FF[k] = nil end
 	elseif msg == L["end_trigger"] then
-		if db.bosskill then
-			self:Message(L["end_message"]:format(boss), "Bosskill", nil, "Victory")
-		end
-		BigWigs:ToggleModuleActive(self, false)
+		self:BossDeath(nil, self.guid)
 	end
 end
 
 function mod:UNIT_AURA(unit)
 	if unit and unit ~= "player" then return end
-	
 	local bitingcold = nil
 	for i = 1, 9 do
 		local name, _, icon, stack = UnitDebuff("player", i)
 		if not name then break end
 		if icon == "Interface\\Icons\\Spell_Frost_IceShock" then
 			if stack < 2 then return end
-			bitingcold = icon
+			bitingcold = stack
 		end
 	end
 	if bitingcold then
 		if db.cold then
-			self:LocalMessage(L["cold_message"], "Personal", bitingcold, "Alert")
+			self:LocalMessage(L["cold_message"]:format(bitingcold), "Personal", "Interface\\Icons\\Spell_Frost_IceShock", "Alert")
 		end
 		self:UnregisterEvent("UNIT_AURA")
 	end
@@ -324,3 +313,4 @@ end
 function mod:Cold()
 	self:RegisterEvent("UNIT_AURA")
 end
+
