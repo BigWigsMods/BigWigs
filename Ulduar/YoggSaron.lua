@@ -19,7 +19,7 @@ mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness"
 local db = nil
 local squeezeName = GetSpellInfo(64126)
 local linkedName = GetSpellInfo(63802)
-local link_tbl = {}
+local linked = {}
 
 ----------------------------
 --      Localization      --
@@ -61,9 +61,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "Warn which player has Squeeze.",
+	squeeze_message = squeezeName .. ": %s",
 
 	link = linkedName,
 	link_desc = "Warn which players are linked.",
+	link_message = linkedName .. ": %s",
 
 	gaze = "Lunatic Gaze",
 	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
@@ -195,7 +197,7 @@ function mod:OnEnable()
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
-	wipe(link_tbl)
+	wipe(linked)
 end
 
 ------------------------------
@@ -204,28 +206,28 @@ end
 
 function mod:Squeeze(player, spellID)
 	if db.squeeze then
-		self:IfMessage(squeezeName..": "..player, "Positive", spellID)
+		self:IfMessage(L["squeeze_message"]:format(player), "Positive", spellID)
 	end
 end
 
-function mod:Linked(player, spellID)
-	if db.link then
-		link_tbl[player] = true
-		self:ScheduleEvent("BWSqWarn", self.PrintLinked, 0.3, self, spellID)
-	end
-end
-
-function mod:PrintLinked(spellID)
+local function printLinked(spellID)
 	local msg = nil
-	for k in pairs(link_tbl) do
+	for k in pairs(linked) do
 		if not msg then
 			msg = k
 		else
 			msg = msg .. ", " .. k
 		end
 	end
-	self:IfMessage(linkedName..": "..msg, "Attention", spellID, "Alert")
-	wipe(link_tbl)
+	mod:IfMessage(L["link_message"]:format(msg), "Attention", spellID, "Alert")
+	wipe(linked)
+end
+
+function mod:Linked(player, spellID)
+	if db.link then
+		linked[player] = true
+		self:ScheduleEvent("BWSqWarn", printLinked, 0.3, spellID)
+	end
 end
 
 function mod:Gaze(_, spellID)
@@ -294,3 +296,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+
