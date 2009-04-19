@@ -469,7 +469,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["phase3_trigger"] then
-		local berserkBar = GetSpellInfo(12880)
+		local berserkBar = GetSpellInfo(43)
 		self:TriggerEvent("BigWigs_StopBar", self, berserkBar)
 		self:TriggerEvent("BigWigs_StopBar", self, L["shock_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["hammer_bar"])
