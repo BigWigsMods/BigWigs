@@ -43,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	overcharge_next = "~Next Overcharge",
 
 	icon = "Overcharge Icon",
-	icon_desc = "Place a skull on the mob with Overcharge",
+	icon_desc = "Place a skull on the mob with Overcharge.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -90,8 +90,8 @@ L:RegisterTranslations("deDE", function() return {
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Überladen",
 
-	icon = "Überladen Symbol",
-	icon_desc = "Plaziert einen Totenschädel über dem Mob der Überladen wird.",
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol (Totenkopf) auf dem Sturmdiener, der von Überladen betroffen ist (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

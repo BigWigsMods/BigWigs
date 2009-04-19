@@ -86,7 +86,7 @@ L:RegisterTranslations("enUS", function() return {
 	summoning_message = "Rune of Summoning - Elementals Incoming!",
 
 	tendrils = "Lightning Tendrils",
-	tendrils_desc = "Warn who is targeted during the Lightning Tendrils.",
+	tendrils_desc = "Warn who is targeted during Lightning Tendrils.",
 	tendrils_other = "%s is being chased!",
 	tendrils_you = "YOU are being chased!",
 	tendrils_message = "Landing in ~5sec!",
@@ -216,6 +216,60 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être assistant ou mieux).",
 
 	council_dies = "%s éliminé",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	--engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!", --NEED!
+	--engage_trigger2 = "Nothing short of total decimation will suffice!", --NEED!
+	--engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!", --NEED!
+
+	chain = "Kettenblitz",
+	chain_desc = "Warnt, wenn Brundir Kettenblitz wirkt.",
+	chain_message = "Kettenblitz!",
+
+	overload = "Überladen",
+	overload_desc = "Warnt, wenn Brundir Überladen wirkt.",
+	overload_message = "Überladen Explosion in 6 sek!",
+
+	power = "Rune der Kraft",
+	power_desc = "Warnt, wenn Molgeim Rune der Kraft wirkt.",
+	power_message = "Rune der Kraft!",
+
+	punch = "Fusionshaken",
+	punch_desc = "Warnt, wenn Stahlbrecher Fusionshaken wirkt.",
+	punch_message = "Fusionshaken!",
+
+	death = "Rune des Todes",
+	death_desc = "Warnt, wenn du in einer Rune des Todes stehst.",
+	death_message = "Rune des Todes auf DIR!",
+
+	summoning = "Rune der Beschwörung",
+	summoning_desc = "Warnt, wenn Molgeim Rune der Beschwörung wirkt.",
+	summoning_message = "Rune der Beschwörung - Elementare!",
+
+	tendrils = "Blitzranken",
+	tendrils_desc = "Warnt, wer das Ziel während der Blitzrankenphase ist.",
+	tendrils_other = "%s wird verfolgt!",
+	tendrils_you = "DU wirst verfolgt!",
+	tendrils_message = "Landet in ~5 sek!",
+
+	overwhelm = "Überwältigende Kraft",
+	overwhelm_desc = "Warnt, wenn ein Spieler von Überwältigende Kraft betroffen ist.",
+	overwhelm_you = "DU hast Überwältigende Kraft!",
+	overwhelm_other = "Überwältigende Kraft: %s!",
+
+	whirl = "Blitzwirbel",
+	whirl_desc = "Warnt, wenn Brundir beginnt, Blitzwirbel zu kanalisieren.",
+	whirl_message = "Blitzwirbel!",
+
+	shield = "Runenschild",
+	shield_desc = "Warnt, wenn Molgeim Runenschild wirkt.",
+	shield_message = "Runenschild!",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die während der Blitzrankenphase verfolgt werden oder von Überwältigende Kraft betroffen sind (benötigt Assistent oder höher).",
+
+	council_dies = "%s stirbt", --needs verification!
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
