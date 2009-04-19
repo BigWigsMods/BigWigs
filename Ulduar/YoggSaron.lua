@@ -38,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "^The time to",
 	phase2_warning = "Phase 2",
 	phase2_trigger = "^I am the lucid dream",
-	phase2_warning = "Phase 3",
+	phase3_warning = "Phase 3",
 	phase3_trigger = "^Look upon the true face",
 
 	portal = "Portal",
@@ -101,7 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "^짐승의",	--check
 	phase2_warning = "2 단계",
 	phase2_trigger = "^나는 살아있는 꿈이다",	--check
-	phase2_warning = "3 단계",
+	phase3_warning = "3 단계",
 	phase3_trigger = "^죽음의 진정한 얼굴을 보아라",	--check
 
 	portal = "차원문",
@@ -162,7 +162,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "^Il sera bientôt temps de", -- à vérifier
 	phase2_warning = "Phase 2",
 	phase2_trigger = "^Je suis le rêve éveillé", -- à vérifier
-	phase2_warning = "Phase 3",
+	phase3_warning = "Phase 3",
 	phase3_trigger = "^Contemplez le vrai visage de la mort", -- à vérifier
 
 	portal = "Portail",
@@ -223,7 +223,7 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Bald ist die Zeit", -- needs verification!
 	phase2_warning = "Phase 2",
 	phase2_trigger = "^Ich bin der strahlende Traum", -- needs verification!
-	phase2_warning = "Phase 3",
+	phase3_warning = "Phase 3",
 	phase3_trigger = "^Erblicket das wahre Antlitz des Todes", -- needs verification!
 
 	portal = "Portale",
