@@ -291,6 +291,7 @@ local function scanTarget()
 			mod:Whisper(target, L["crash_you"])
 		end
 		mod:Icon(target, "icon")
+		mod:CancelScheduledEvent("BWCrashToTScan")
 	end
 end
 

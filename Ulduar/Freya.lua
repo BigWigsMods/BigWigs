@@ -391,16 +391,14 @@ local function scanTarget()
 			mod:Message(other, "Attention", nil, nil, nil, 62872)
 			mod:Whisper(player, L["sunbeam_you"])
 		end
-		if mod.db.profile.icon then
-			mod:Icon(target)
-		end
+		mod:Icon(target, "icon")
+		mod:CancelScheduledEvent("BWsunbeamToTScan")
 	end
 end
 
 function mod:Sunbeam()
 	if db.sunbeam then
 		self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1)
-		self:ScheduleEvent("BWRemovebeamIcon", "BigWigs_RemoveRaidIcon", 4, self)
 	end
 end
 

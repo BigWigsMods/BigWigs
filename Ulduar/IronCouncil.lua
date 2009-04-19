@@ -501,22 +501,7 @@ function mod:Whirl(_, spellID)
 	end
 end
 
-function mod:Tendrils(_, spellID)
-	if db.tendrils then
-		self:IfMessage(L["tendrils"], "Attention", spellID)
-		self:Bar(L["tendrils"], 25, spellID)
-		self:DelayedMessage(20, L["tendrils_message"], "Attention")
-		self:ScheduleRepeatingEvent("BWTendrilsToTScan", self.TargetCheck, 0.2, self)
-		self:ScheduleEvent("TargetCancel", self.TendrilsRemove, 25, self)
-	end
-end
-
-function mod:TendrilsRemove()
-	self:CancelScheduledEvent("BWTendrilsToTScan")
-	self:TriggerEvent("BigWigs_RemoveRaidIcon")
-end
-
-function mod:TargetCheck()
+local function targetCheck()
 	local target
 	if UnitName("target") == brundir then
 		target = UnitName("targettarget")
@@ -535,16 +520,31 @@ function mod:TargetCheck()
 		if target then
 			local other = fmt(L["tendrils_other"], target)
 			if target == pName then
-				self:LocalMessage(L["tendrils_you"], "Personal", nil, "Alarm")
-				self:WideMessage(other)
+				mod:LocalMessage(L["tendrils_you"], "Personal", nil, "Alarm")
+				mod:WideMessage(other)
 			else
-				self:Message(other, "Attention")
+				mod:Message(other, "Attention")
 			end
-			self:Icon(target, "icon")
+			mod:Icon(target, "icon")
 			previous = target
 		else
 			previous = nil
 		end
+	end
+end
+
+local function tendrilsRemove()
+	mod:CancelScheduledEvent("BWTendrilsToTScan")
+	mod:TriggerEvent("BigWigs_RemoveRaidIcon")
+end
+
+function mod:Tendrils(_, spellID)
+	if db.tendrils then
+		self:IfMessage(L["tendrils"], "Attention", spellID)
+		self:Bar(L["tendrils"], 25, spellID)
+		self:DelayedMessage(20, L["tendrils_message"], "Info")
+		self:ScheduleRepeatingEvent("BWTendrilsToTScan", targetCheck, 0.2)
+		self:ScheduleEvent("TargetCancel", tendrilsRemove, 25)
 	end
 end
 
@@ -562,7 +562,7 @@ function mod:Deaths(unit, guid)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if (msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"])) then
+	if msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"]) then
 		deaths = 0
 		overwhelmTime = GetCurrentDungeonDifficulty() == 1 and 60 or 25
 		if db.berserk then

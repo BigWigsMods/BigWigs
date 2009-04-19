@@ -216,7 +216,6 @@ end
 local eyebeamTrigger = GetSpellInfo(63342)
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spell)
 	if spell == eyebeamTrigger and db.eyebeam then
-		self:TriggerEvent("BigWigs_StopBar", self, L["eyebeam_bar"])
 		self:IfMessage(L["eyebeam_message"], "Urgent", 63976)
 		self:Bar(L["eyebeam"], 11, 63976)
 		self:Bar(L["eyebeam_bar"], 20, 63976)

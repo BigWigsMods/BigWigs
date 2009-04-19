@@ -339,6 +339,7 @@ function mod:Bomb(player, spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
 		self:Bar(other, 9, spellID)
+		self:Icon(player, "icon")
 	elseif spellID == 63018 or spellID == 65121 and db.lightbomb then
 		local other = L["lightbomb_other"]:format(player)
 		if player == pName then
@@ -350,8 +351,8 @@ function mod:Bomb(player, spellID)
 			self:Whisper(player, L["lightbomb_you"])
 		end
 		self:Bar(other, 9, spellID)
+		self:Icon(player, "icon")
 	end
-	self:Icon(player, "icon")
 end
 
 function mod:BombRemoved(player)

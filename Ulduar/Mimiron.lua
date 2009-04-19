@@ -329,7 +329,7 @@ function mod:Plasma(_, spellID)
 		self:IfMessage(L["plasma_warning"], "Important", spellID)
 		self:Bar(L["plasma_warning"], 3, spellID)
 		self:Bar(L["plasma_bar"], 30, spellID)
-		self:ScheduleEvent("PlasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
+		self:DelayedMessage(27, L["plasma_soon"], "Attention")
 	end
 end
 
