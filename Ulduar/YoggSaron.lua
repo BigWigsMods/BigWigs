@@ -2,15 +2,15 @@
 --      Module Declaration      --
 ----------------------------------
 
-local sara = BB["Sara"]	--need the add name translated, maybe add to BabbleBoss.
+local sara = BB["Sara"]
 local boss = BB["Yogg-Saron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
---Sara = 33134, Yogg brain = 33890, Corruptor Tentacle = 33985
+--Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "ray", "empower", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -28,6 +28,8 @@ local linked = {}
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
+	["Crusher Tentacle"] = true,
+	
 	cmd = "YoggSaron",
 
 	phase = "Phase",
@@ -54,6 +56,14 @@ L:RegisterTranslations("enUS", function() return {
 	madness_desc = "Show Timer for Induce Madness.",
 	madness_warning = "Induce Madness in 5sec!",
 	
+	malady = "Malady of the Mind",
+	malady_desc = "Warn when a player has Malady of the Mind.",
+	malady_message = "Malady: %s",
+	--malady_bar = "~Next Malady",
+	
+	tentacle = "Tentacle spawn",
+	tentacle_desc = "Warn for Tentacle spawn.",
+	
 	ray = "Death Ray",
 	ray_desc = "Warn when Sara casts a Death Ray.",
 	ray_message = "Death Ray!",
@@ -76,11 +86,15 @@ L:RegisterTranslations("enUS", function() return {
 	empower_desc = "Warn for Empowering Shadows.",
 	empower_message = "Empowering Shadows!",
 	empower_bar = "~Empower Cooldown",
+	
+	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	["Crusher Tentacle"] = "분쇄의 촉수",
+	
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	engage_warning = "1 단계",
@@ -109,6 +123,14 @@ L:RegisterTranslations("koKR", function() return {
 	ray_desc = "죽음의 광선 시전을 알립니다.",
 	ray_message = "죽음의 광선!",
 	ray_bar = "~다음 광선",
+	
+	malady = "병든 정신",
+	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
+	malady_message = "병든 정신: %s",
+	--malady_bar = "~다음 병든 정신",
+	
+	tentacle = "촉수 소환",
+	tentacle_desc = "촉수 소환을 알립니다.",
 
 	squeeze = squeezeName,
 	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
@@ -125,11 +147,15 @@ L:RegisterTranslations("koKR", function() return {
 	empower_desc = "암흑 강화를 알립니다.",
 	empower_message = "암흑 강화!",
 	empower_bar = "~강화 대기시간",
+	
+	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--["Crusher Tentacle"] = true,
+	
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	engage_warning = "Phase 1",
@@ -154,6 +180,14 @@ L:RegisterTranslations("frFR", function() return {
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
 	madness_warning = "Susciter la folie dans 5 sec. !",
 	
+	malady = "Mal de la raison",
+	--malady_desc = "Warn when a player has Malady of the Mind.",
+	--malady_message = "Malady: %s",
+	--malady_bar = "~Next Malady",
+	
+	--tentacle = "Tentacle spawn",
+	--tentacle_desc = "Warn for Tentacle spawn.",
+	
 	--ray = "Death Ray",
 	--ray_desc = "Warn when Sara casts a Death Ray.",
 	--ray_message = "Death Ray!",
@@ -175,10 +209,14 @@ L:RegisterTranslations("frFR", function() return {
 	empower_message = "Renforcement des ombres !",
 	empower_bar = "~Recharge Renforcement",
 
+	--icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
+
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--["Crusher Tentacle"] = true,
+	
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	engage_warning = "Phase 1",
@@ -202,6 +240,14 @@ L:RegisterTranslations("deDE", function() return {
 	madness = "Wahnsinn hervorrufen",
 	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
 	madness_warning = "Wahnsinn hervorrufen in 5 sek!",
+	
+	--malady = "Malady of the Mind",
+	--malady_desc = "Warn when a player has Malady of the Mind.",
+	--malady_message = "Malady: %s",
+	--malady_bar = "~Next Malady",
+	
+	--tentacle = "Tentacle spawn",
+	--tentacle_desc = "Warn for Tentacle spawn.",
 
 	ray = "Todesstrahl",
 	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
@@ -224,6 +270,8 @@ L:RegisterTranslations("deDE", function() return {
 	empower_message = "Machtvolle Schatten!",
 	--empower_trigger = "%s prepares to unleash Empowering Shadows!", -- NEED!
 	empower_bar = "~Machtvolle Schatten",
+	
+	--icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )
@@ -236,9 +284,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Ray", 63891)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_START", "Empower", 64465)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -254,6 +304,25 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Tentacle(unit)
+	-- Crusher Tentacle (33966) 50 sec
+	-- Corruptor Tentacle (33985) 25 sec
+	-- Constrictor Tentacle (33983) 20 sec
+	if not db.tentacle then return end
+	if unit == L["Crusher Tentacle"] then
+		self:IfMessage(L["Crusher Tentacle"], "Attention", 64139)
+		self:Bar(L["Crusher Tentacle"], 50, 64139)
+	end
+end
+
+function mod:Malady(player, spellID)
+	if db.malady then
+		self:IfMessage(L["malady_message"]:format(player), "Attention", spellID)
+		--self:Bar(L["malady_bar"], 19, spellID)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:Ray(_, spellID)
 	if db.ray then
@@ -340,6 +409,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
 		self:CancelAllScheduledEvents()
+		self:TriggerEvent("BigWigs_StopBar", self, L["Crusher Tentacle"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["ray"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["ray_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
 		if db.phase then
