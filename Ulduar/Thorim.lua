@@ -66,9 +66,9 @@ L:RegisterTranslations("enUS", function() return {
 	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
 	barrier_message = "Runic Colossus gained Runic Barrier!",
 
-	detonation = "Runic Detonation",
-	detonation_desc = "Tells you who has been hit by Runic Detonation.",
-	detonation_message = "Runic Detonation: %s",
+	detonation = "Rune Detonation",
+	detonation_desc = "Tells you who has been hit by Rune Detonation.",
+	detonation_message = "Rune Detonation: %s",
 	detonation_yell = "I'm a Bomb!",
 
 	charge = "Lightning Charge",
@@ -104,7 +104,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	hammer = "폭풍망치",
 	hammer_desc = "폭풍망치를 알립니다.",
-	--hammer_message = "Stormhammer: %s",
+	hammer_message = "폭풍망치: %s",
 	hammer_bar = "다음 폭풍망치",
 
 	impale = "꿰뚫기",
