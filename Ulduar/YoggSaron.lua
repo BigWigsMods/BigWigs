@@ -41,7 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	portal = "Portal",
 	portal_desc = "Warn for Portals.",
-	portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "Portals open!",
 	portal_bar = "Next Portal",
 
@@ -73,7 +72,6 @@ L:RegisterTranslations("enUS", function() return {
 	empower = "Empowering Shadows",
 	empower_desc = "Warn for Empowering Shadows.",
 	empower_message = "Empowering Shadows!",
-	empower_trigger = "%s prepares to unleash Empowering Shadows!",
 	empower_bar = "~Empower Cooldown",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
@@ -91,7 +89,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	portal = "차원문",
 	portal_desc = "차원문을 알립니다.",
-	--portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
 
@@ -123,7 +120,6 @@ L:RegisterTranslations("koKR", function() return {
 	empower = "암흑 강화",
 	empower_desc = "암흑 강화를 알립니다.",
 	empower_message = "암흑 강화!",
-	--empower_trigger = "%s prepares to unleash Empowering Shadows!",
 	empower_bar = "~강화 대기시간",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
@@ -141,7 +137,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	portal = "Portail",
 	portal_desc = "Prévient de l'arrivée des portails.",
-	portal_trigger = "Portals open into Yogg-Saron's mind!", -- à traduire (Des portails s'ouvrent dans l'esprit de Yogg-Saron !")
 	portal_message = "Portails ouverts !",
 	portal_bar = "Prochain portail",
 
@@ -173,7 +168,6 @@ L:RegisterTranslations("frFR", function() return {
 	empower = "Renforcement des ombres",
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
 	empower_message = "Renforcement des ombres !",
-	empower_trigger = "%s prepares to unleash Empowering Shadows!",
 	empower_bar = "~Recharge Renforcement",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
@@ -185,6 +179,7 @@ L:RegisterTranslations("frFR", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
+	self:AddCombatListener("SPELL_CAST_START", "Empower", 64465)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
@@ -243,17 +238,22 @@ function mod:Madness()
 		self:Bar(L["madness"], 60, 64059)
 		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Attention")
 	end
+	if db.portal then
+		self:IfMessage(L["portal_message"], "Attention", 35717)
+		self:Bar(L["portal_bar"], 90, 35717)
+	end
+end
+
+function mod:Empower()
+	if db.empower then
+		self:IfMessage(L["empower_message"], "Attention", 64465)
+		self:Bar(L["empower_bar"], 46, 64465)
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["portal_trigger"] and db.portal then
-		self:IfMessage(L["portal_message"], "Attention", 35717)
-		self:Bar(L["portal_bar"], 90, 35717)
-	elseif msg == L["weakened_trigger"] and db.weakened then
+	if msg == L["weakened_trigger"] and db.weakened then
 		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661) --50661, looks like a weakened :)
-	elseif msg == L["empower_trigger"] and db.empower then
-		self:IfMessage(L["empower_message"], "Attention", 64486)
-		self:Bar(L["empower_bar"], 46, 64486)
 	end
 end
 
