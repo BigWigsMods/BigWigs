@@ -41,6 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	portal = "Portal",
 	portal_desc = "Warn for Portals.",
+	portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "Portals open!",
 	portal_bar = "Next Portal",
 
@@ -89,6 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	portal = "차원문",
 	portal_desc = "차원문을 알립니다.",
+	--portal_trigger = "Portals open into Yogg-Saron's mind!",
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
 
@@ -137,6 +139,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	portal = "Portail",
 	portal_desc = "Prévient de l'arrivée des portails.",
+	portal_trigger = "Portals open into Yogg-Saron's mind!", -- à traduire (Des portails s'ouvrent dans l'esprit de Yogg-Saron !")
 	portal_message = "Portails ouverts !",
 	portal_bar = "Prochain portail",
 
@@ -238,10 +241,6 @@ function mod:Madness()
 		self:Bar(L["madness"], 60, 64059)
 		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Attention")
 	end
-	if db.portal then
-		self:IfMessage(L["portal_message"], "Attention", 35717)
-		self:Bar(L["portal_bar"], 90, 35717)
-	end
 end
 
 function mod:Empower()
@@ -252,7 +251,10 @@ function mod:Empower()
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["weakened_trigger"] and db.weakened then
+	if msg == L["portal_trigger"] and db.portal then
+		self:IfMessage(L["portal_message"], "Attention", 35717)
+		self:Bar(L["portal_bar"], 90, 35717)
+	elseif msg == L["weakened_trigger"] and db.weakened then
 		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661) --50661, looks like a weakened :)
 	end
 end
