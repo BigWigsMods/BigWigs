@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -403,7 +403,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Enrage(360, true)
 		end
 		if db.tympanic then
-			self:Bar(L["tympanic_bar"], 70, spellID)
+			self:Bar(L["tympanic_bar"], 70, 62776)
 		end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
