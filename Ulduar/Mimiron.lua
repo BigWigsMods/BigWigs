@@ -302,7 +302,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
-	--self:AddCombatListener("SPELL_AURA_APPLIED", "Spinning", 63414)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Magnetic", 64436)
 
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
@@ -340,9 +340,14 @@ function mod:Shock(_, spellID)
 	end
 end
 
+function mod:Spinning(_, spellId)
+	if db.laser then
+		self:IfMessage(L["laser_soon"], "Important", 63414, "Alarm")
+	end
+end
+
 do
 	local laser = GetSpellInfo(63274)
-	local spin = GetSpellInfo(63414)
 	function mod:UNIT_SPELLCAST_CHANNEL_START(unit, spell)
 		if not db.laser then return end
 		-- Laser Barrage
@@ -350,8 +355,6 @@ do
 			self:IfMessage(L["laser"], "Important", 63274)
 			self:Bar(L["laser"], 10, 63274)
 			self:Bar(L["laser_bar"], 60, 63274)
-		elseif spell == spin then
-			self:IfMessage(L["laser_soon"], "Important", 63414, "Alarm")
 		end
 	end
 end
