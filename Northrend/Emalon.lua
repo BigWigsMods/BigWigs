@@ -90,8 +90,8 @@ L:RegisterTranslations("deDE", function() return {
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Überladen",
 
-	--icon = "Overcharge Icon",
-	--icon_desc = "Place a skull on the mob with Overcharge",
+	icon = "Überladen Symbol",
+	icon_desc = "Plaziert einen Totenschädel über dem Mob der Überladen wird.",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
