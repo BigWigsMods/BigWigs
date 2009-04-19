@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33515
-mod.toggleoptions = {"fear", "sentinel", "bosskill"}
+mod.toggleoptions = {"fear", "sentinel", "swarm", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -16,6 +16,7 @@ mod.toggleoptions = {"fear", "sentinel", "bosskill"}
 
 local db = nil
 local started = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -35,6 +36,14 @@ L:RegisterTranslations("enUS", function() return {
 	sentinel = "Sentinel Blast",
 	sentinel_desc = "Warn when Auriaya casts a Sentinel Blast.",
 	sentinel_message = "Sentinel Blast!",
+	
+	swarm = "Guardian Swarm",
+	swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
+	swarm_other = "Swarm on %s!",
+	swarm_you = "Swarm on YOU!",
+	
+	icon = "Place Icon",
+	icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -116,6 +125,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
 	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
+	self:AddCombatListener("SPELL_CAST_START", "Swarm", 64396)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -129,6 +139,20 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Swarm(player, spellId)
+	if db.swarm then
+		local other = L["swarm_other"]:format(player)
+		if player == pName then
+			self:LocalMessage(L["swarm_you"], "Personal", spellId, "Alert")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Attention", spellId)
+			self:Whisper(player, L["swarm_you"])
+		end
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:Fear(_, spellID)
 	if db.fear then

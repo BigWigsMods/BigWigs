@@ -378,10 +378,10 @@ local function scanTarget()
 	if target then
 		local other = L["sunbeam_other"]:format(target)
 		if target == pName then
-			mod:Message(L["sunbeam_you"], "Personal", true, "Alert", nil, 62872)
-			mod:Message(other, "Attention", nil, nil, true)
+			mod:LocalMessage(L["sunbeam_you"], "Personal", 62872, "Alert")
+			mod:WideMessage(other)
 		else
-			mod:Message(other, "Attention", nil, nil, nil, 62872)
+			mod:IfMessage(other, "Attention", 62872)
 			mod:Whisper(player, L["sunbeam_you"])
 		end
 		mod:Icon(target, "icon")
@@ -399,11 +399,11 @@ function mod:Fury(player, spellID)
 	if db.fury then
 		local other = L["fury_other"]:format(player)
 		if player == pName then
-			self:Message(L["fury_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["fury_you"], "Personal", spellID, "Alert")
+			self:WideMessage(other)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 			self:Whisper(player, L["fury_you"])
 		end
 		self:Bar(other, 10, spellID)

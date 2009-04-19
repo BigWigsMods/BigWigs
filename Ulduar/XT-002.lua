@@ -308,11 +308,11 @@ function mod:Bomb(player, spellID)
 	if spellID == 63024 or spellID == 64234 and db.gravitybomb then
 		local other = L["gravitybomb_other"]:format(player)
 		if player == pName then
-			self:Message(L["gravitybomb_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["gravitybomb_you"], "Personal", spellID, "Alert")
+			self:WideMessage(other)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
 		self:Bar(other, 9, spellID)
@@ -320,11 +320,11 @@ function mod:Bomb(player, spellID)
 	elseif spellID == 63018 or spellID == 65121 and db.lightbomb then
 		local other = L["lightbomb_other"]:format(player)
 		if player == pName then
-			self:Message(L["lightbomb_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["lightbomb_you"], "Personal", spellID, "Alert")
+			self:WideMessage(other)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 			self:Whisper(player, L["lightbomb_you"])
 		end
 		self:Bar(other, 9, spellID)

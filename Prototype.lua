@@ -394,8 +394,6 @@ function BigWigs.modulePrototype:CheckForWipe()
 end
 -- Shortcuts for common actions.
 
--- ayawtflol: announce target for small adds
-
 do
 	local keys = setmetatable({}, {__index =
 		function(self, key)

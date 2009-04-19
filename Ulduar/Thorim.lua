@@ -445,10 +445,10 @@ function mod:Detonation(player, spellID)
 	if db.detonation then
 		local other = L["detonation_message"]:format(player)
 		if player == pName then
-			self:Message(other, "Attention", nil, nil, true)
+			self:WideMessage(other)
 			SendChatMessage(L["detonation_yell"], "SAY")
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 		end
 		self:Bar(other, 4, spellID)
 		self:Icon(player, "icon")

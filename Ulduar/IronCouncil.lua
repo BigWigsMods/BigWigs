@@ -446,11 +446,11 @@ function mod:Overwhelm(player, spellID)
 	if db.overwhelm then
 		local other = L["overwhelm_other"]:format(player)
 		if player == pName then
-			self:Message(L["overwhelm_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["overwhelm_you"], "Personal", spellID, "Alert")
+			self:WideMessage(other)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 			self:Whisper(player, L["overwhelm_you"])
 		end
 		self:Bar(other, overwhelmTime, spellID)
