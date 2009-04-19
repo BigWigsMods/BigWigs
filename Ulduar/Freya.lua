@@ -177,7 +177,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "The Conservatory must be protected!", -- NEED!
+	engage_trigger = "Das Konservatorium muss verteidigt werden!", -- needs verification!
 	engage_message = "%s angegriffen!",
 
 	phase = "Phasen",
@@ -188,9 +188,9 @@ L:RegisterTranslations("deDE", function() return {
 	wave = "Wellen",
 	wave_desc = "Warnt vor den Wellen.",
 	wave_bar = "Nächste Welle",
-	--conservator_trigger = "Eonar, your servant requires aid!", -- NEED!
-	--detonate_trigger = "The swarm of the elements shall overtake you!", -- NEED!
-	--elementals_trigger = "Children, assist me!", -- NEED!
+	conservator_trigger = "Eonar, Eure Dienerin braucht Hilfe!", -- needs verification!
+	detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!", -- needs verification!
+	elementals_trigger = "Helft mir, Kinder!", -- needs verification!
 	--tree_trigger = "A Lifebinder's Gift begins to grow!", -- NEED!
 	conservator_message = "Konservator kommt!",
 	detonate_message = "Explosionspeitscher kommen!",
@@ -212,9 +212,9 @@ L:RegisterTranslations("deDE", function() return {
 	sunbeam_other = "Sonnenstrahl: %s!",
 
 	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl getroffen werden (benötigt Assistent oder höher).",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl betroffen sind (benötigt Assistent oder höher).",
 
-	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.", -- NEED!
+	end_trigger = "Seine Macht über mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden.", -- needs verification!
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

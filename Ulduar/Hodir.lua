@@ -108,7 +108,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "You will suffer for this trespass!", -- NEED!
+	engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!", -- needs verification!
 
 	cold = "Beißende Kälte (Erfolg)",
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
@@ -131,7 +131,7 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_warning = "Hard Mode beendet!",
 
-	--end_trigger = "I...I am released from his grasp! At...last!", -- NEED!
+	end_trigger = "Ich...Ich bin von Ihm befreit! Endlich!", -- needs verification!
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

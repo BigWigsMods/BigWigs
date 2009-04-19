@@ -178,6 +178,56 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase = "Phasen",
+	phase_desc = "Warnt bei Phasenwechsel.",
+	engage_warning = "Phase 1",
+	engage_trigger = "^Bald ist die Zeit", -- needs verification!
+	phase2_warning = "Phase 2",
+	phase2_trigger = "^Ich bin der strahlende Traum", -- needs verification!
+	phase2_warning = "Phase 3",
+	phase3_trigger = "^Erblicket das wahre Antlitz des Todes", -- needs verification!
+
+	portal = "Portale",
+	portal_desc = "Warnt, wenn Portale erscheinen.",
+	--portal_trigger = "Portals open into Yogg-Saron's mind!", -- NEED!
+	portal_message = "Portale offen!",
+	portal_bar = "Nächsten Portale",
+
+	weakened = "Geschwächt",
+	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
+	weakened_message = "%s ist geschwächt!",
+	--weakened_trigger = "The Illusion shatters and a path to the central chamber opens!", -- NEED!
+
+	madness = "Wahnsinn hervorrufen",
+	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
+	madness_warning = "Wahnsinn hervorrufen in 5 sek!",
+
+	ray = "Todesstrahl",
+	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
+	ray_message = "Todesstrahl!",
+	ray_bar = "~Nächster Todesstrahl",
+	
+	squeeze = squeezeName,
+	squeeze_desc = "Warnt, welcher Spieler von Quetschen betroffen ist.",
+
+	link = linkedName,
+	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
+
+	gaze = "Wahnsinniger Blick",
+	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
+	gaze_message = "Wahnsinniger Blick!",
+	gaze_bar = "~Wahnsinniger Blick",
+
+	empower = "Machtvolle Schatten",
+	empower_desc = "Warnung und Timer für Machtvolle Schatten.",
+	empower_message = "Machtvolle Schatten!",
+	--empower_trigger = "%s prepares to unleash Empowering Shadows!", -- NEED!
+	empower_bar = "~Machtvolle Schatten",
+
+	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

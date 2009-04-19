@@ -103,6 +103,32 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de l'oeil focalisé (nécessite d'être assistant ou mieux).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	arm = "Arm stirbt",
+	arm_desc = "Warnung und Timer für das Sterben des linken & rechten Arms.",
+	left_dies = "Linker Arm stirbt!",
+	right_dies = "Rechter Arm stirbt!",
+	left_wipe_bar = "Neuer linker Arm",
+	right_wipe_bar = "Neuer rechter Arm",
+
+	grip = "Steinerner Griff",
+	grip_desc = "Warnt, wer von Steinerner Griff betroffen ist.",
+	grip_message = "Griff: %s",
+
+	shockwave = "Schockwelle",
+	shockwave_desc = "Timer für die Schockwelle.",
+	shockwave_trigger = "Auslöschung!", -- needs verification!
+
+	eyebeam = "Fokussierter Augenstrahl",
+	eyebeam_desc = "Warnt, wer von Fokussierter Augenstrahl betroffen ist.",
+	eyebeam_message = "Augenstrahl!",
+	eyebeam_bar = "~Augenstrahl",
+	eyebeam_you = "Augenstrahl auf DIR!",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Fokussierter Augenstrahl betroffen sind (benötigt Assistent oder höher).",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 --[[
 	arm = "手臂死亡",

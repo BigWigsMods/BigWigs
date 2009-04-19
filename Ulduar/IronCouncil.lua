@@ -219,9 +219,9 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!", --NEED!
-	--engage_trigger2 = "Nothing short of total decimation will suffice!", --NEED!
-	--engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!", --NEED!
+	engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!", --needs verification!
+	engage_trigger2 = "Nur vollständige Dezimierung wird mich zufrieden stellen!", --needs verification!
+	engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, seid Ihr doch nichts weiter als Sterbliche!", --needs verification!
 
 	chain = "Kettenblitz",
 	chain_desc = "Warnt, wenn Brundir Kettenblitz wirkt.",
