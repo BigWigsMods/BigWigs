@@ -226,7 +226,7 @@ end
 function mod:Linked(player, spellID)
 	if db.link then
 		linked[player] = true
-		self:ScheduleEvent("BWSqWarn", printLinked, 0.3, spellID)
+		self:ScheduleEvent("BWLinkedWarn", printLinked, 0.2, spellID)
 	end
 end
 
