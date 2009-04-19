@@ -290,7 +290,7 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Tympanic", 62776)
+	self:AddCombatListener("SPELL_CAST_START", "Tantrum", 62776)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234, 65121)
@@ -361,10 +361,10 @@ function mod:BombRemoved(player)
 	end
 end
 
-function mod:Tympanic(_, spellID)
+function mod:Tantrum(_, spellID)
 	if db.tympanic then
 		self:IfMessage(L["tympanic_message"], "Attention", spellID)
-		self:Bar(L["tympanic_bar"], 60, spellID)
+		self:Bar(L["tympanic_bar"], 70, spellID)
 	end
 end
 
@@ -401,6 +401,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		exposed3 = nil
 		if db.berserk then
 			self:Enrage(360, true)
+		end
+		if db.tympanic then
+			self:Bar(L["tympanic_bar"], 70, spellID)
 		end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
