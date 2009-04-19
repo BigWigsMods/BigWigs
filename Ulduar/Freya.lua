@@ -136,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Le jardin doit être protégé !", -- à vérifier ("Anciens, donnez-moi votre force !" ?)
+	engage_trigger = "Le jardin doit être protégé !", --("Anciens, donnez-moi votre force !" ?)
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
@@ -147,13 +147,13 @@ L:RegisterTranslations("frFR", function() return {
 	wave = "Vagues",
 	wave_desc = "Prévient de l'arrivée des vagues.",
 	wave_bar = "Prochaine vague",
-	conservator_trigger = "Eonar, ta servante a besoin d'aide !", -- à vérifier
-	detonate_trigger = "La nuée des éléments va vous submerger !", -- à vérifier
-	elementals_trigger = "Mes enfants, venez m'aider !", -- à vérifier
-	tree_trigger = "Un don de la Lieuse-de-vie commence à croître !", -- à vérifier
-	conservator_message = "Conservateur apparu",
-	detonate_message = "Détonant apparu",
-	elementals_message = "Élémentaires apparu",
+	conservator_trigger = "Eonar, ta servante a besoin d'aide !",
+	detonate_trigger = "La nuée des éléments va vous submerger !",
+	elementals_trigger = "Mes enfants, venez m'aider !",
+	tree_trigger = "Un |cFF00FFFFdon de la Lieuse-de-vie|r commence à pousser !",
+	conservator_message = "Ancien conservateur apparu",
+	detonate_message = "Flagellants explosifs apparus",
+	elementals_message = "Élémentaires apparus",
 	tree_message = "Don d'Eonar apparu",
 
 	attuned = "En harmonie avec la Nature",
