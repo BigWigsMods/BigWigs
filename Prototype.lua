@@ -268,7 +268,7 @@ end
 function BigWigs.modulePrototype:IsBossModule()
 	return self.zonename and self.enabletrigger and true
 end
-
+--[[
 function BigWigs.modulePrototype:GenericBossDeath(msg, multi)
 	local b = self:ToString()
 	if msg == b then
@@ -279,7 +279,7 @@ function BigWigs.modulePrototype:GenericBossDeath(msg, multi)
 		end
 	end
 end
-
+]]
 function BigWigs.modulePrototype:BossDeath(_, guid, multi)
 	local b = self:ToString()
 	if type(guid) == "string" then
@@ -393,6 +393,8 @@ function BigWigs.modulePrototype:CheckForWipe()
 	end
 end
 -- Shortcuts for common actions.
+
+-- ayawtflol: announce target for small adds
 
 do
 	local keys = setmetatable({}, {__index =

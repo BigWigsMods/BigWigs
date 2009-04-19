@@ -37,6 +37,23 @@ local coloredNames = setmetatable({}, {__index =
 	end
 })
 
+local bandages = {
+	34722, -- Heavy Frostweave Bandage
+	34721, -- Frostweave Bandage
+	21991, -- Heavy Netherweave Bandage
+	21990, -- Netherweave Bandage
+	14530, -- Heavy Runecloth Bandage
+	14529, -- Runecloth Bandage
+	8545, -- Heavy Mageweave Bandage
+	8544, -- Mageweave Bandage
+	6451, -- Heavy Silk Bandage
+	6450, -- Silk Bandage
+	3531, -- Heavy Wool Bandage
+	3530, -- Wool Bandage
+	2581, -- Heavy Linen Bandage
+	1251, -- Linen Bandage
+}
+
 -----------------------------------------------------------------------
 --      Localization
 -----------------------------------------------------------------------
@@ -332,7 +349,7 @@ function plugin:CloseProximity()
 end
 
 function plugin:OpenProximity()
-	if self.db.profile.disabled or not active or type(active.proximityCheck) ~= "function" or not active.db.profile.proximity then return end
+	if self.db.profile.disabled or not active or not active.proximityCheck or not active.db.profile.proximity then return end
 
 	self:SetupFrames()
 
@@ -355,14 +372,23 @@ function plugin:TestProximity()
 end
 
 function plugin:UpdateProximity()
-	if not active or type(active.proximityCheck) ~= "function" then return end
+	if not active or not active.proximityCheck then return end
 
 	local num = GetNumRaidMembers()
 	for i = 1, num do
 		local n = GetRaidRosterInfo(i)
 		if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
-			if active.proximityCheck(n) then
-				table.insert(tooClose, coloredNames[n])
+			if type(active.proximityCheck) == "function" then
+				if active.proximityCheck(n) then
+					table.insert(tooClose, coloredNames[n])
+				end
+			elseif active.proximityCheck == "bandage" then
+				for i, v in ipairs(bandages) do
+					if IsItemInRange(v, n) == 1 then
+						table.insert(tooClose, coloredNames[n])
+						break
+					end
+				end
 			end
 		end
 		if #tooClose > 4 then break end

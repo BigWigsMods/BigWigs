@@ -184,3 +184,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+
