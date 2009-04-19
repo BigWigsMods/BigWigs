@@ -438,7 +438,7 @@ end
 
 function mod:Punch(_, spellID)
 	if db.punch then
-		self:IfMessage(L["punch_message"], "Attention", spellID)
+		self:IfMessage(L["punch_message"], "Urgent", spellID)
 	end
 end
 
