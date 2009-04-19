@@ -47,6 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 	vapor_desc = "Warn for Saronite Vapors spawn.",
 	vapor_message = "Saronite Vapors (%d)!",
 	vapor_bar = "Next Vapors (%d)",
+	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
@@ -86,6 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
@@ -115,6 +117,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite (%d) !",
 	vapor_bar = "Prochaines Vapeurs (%d)",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
@@ -150,6 +153,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
 	vapor_bar = "<下一萨隆邪铁蒸汽：%d>",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
@@ -185,6 +189,7 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor_desc = "當薩倫煙霧出現時發出警報。",
 	vapor_message = "薩倫煙霧：>%d<！",
 	vapor_bar = "<下一薩倫煙霧：%d>",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "暗影暴擊",
 	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
@@ -219,6 +224,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor_desc = "Сообщать о появлении Саронитовые пары.",
 	vapor_message = "Саронитовые пары (%d)!",
 	vapor_bar = "Следующие Пары (%d)",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Темное сокрушение",
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
@@ -241,12 +247,13 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
+	self:AddCombatListener("SPELL_CAST_START", "Animus", 63145)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
-	self:AddCombatListener("SPELL_SUMMON", "Summon", 63081, 63145)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	
@@ -334,13 +341,17 @@ function mod:SurgeGain(_, spellID)
 	end
 end
 
-function mod:Summon(_, spellID)
-	if spellId == 63081 and db.vapor then
+function mod:Animus(_, spellID)
+	if db.animus then
+		self:IfMessage(L["animus_message"], "Attention", spellID)
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg == L["vapor_trigger"] and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
 		count = count + 1
 		self:Bar(L["vapor_bar"]:format(count), 30, 63323)
-	elseif spellId == 63145 and db.animus then
-		self:IfMessage(L["animus_message"], "Attention", 63319)
 	end
 end
 
