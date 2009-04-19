@@ -85,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	cold = "Ça caille ici",
 	cold_desc = "Prévient quand Froid mordant s'est empilé 2 fois sur votre personnage.",
-	cold_message = "Froid mordant (%d cumuls) - bougez !",
+	cold_message = "Froid mordant x%d !",
 
 	flash = "Gel instantané",
 	flash_desc = "Prévient quand un joueur subit les effets d'un Gel instantané et quand le Gel instantané est incanté.",
@@ -102,7 +102,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant qu'Hodir ne détruise sa cache).",
-	hardmode_warning = "Jouons à casse-cache",
+	hardmode_warning = "Délai du mode difficile dépassé",
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
 } end )

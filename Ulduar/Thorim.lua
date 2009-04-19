@@ -155,7 +155,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse).",
-	hardmode_warning = "Sifonné",
+	hardmode_warning = "Délai du mode difficile dépassé",
 
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",

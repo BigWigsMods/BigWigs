@@ -74,8 +74,8 @@ L:RegisterTranslations("frFR", function() return {
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Prochaine Surcharge",
 
-	--icon = "Overcharge Icon",
-	--icon_desc = "Place a skull on the mob with Overcharge",
+	icon = "Surcharger - Icône",
+	icon_desc = "Place un crâne sur le séide surchargé.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

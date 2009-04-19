@@ -152,7 +152,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
-	--madness_warning = "Induce Madness in 5sec!",
+	madness_warning = "Susciter la folie dans 5 sec. !",
 
 	beam = "Mal de la raison",
 	beam_desc = "Prévient de l'arrivées des Mals de la raison",

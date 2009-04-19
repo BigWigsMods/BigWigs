@@ -175,7 +175,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	overload = "Surcharge",
 	overload_desc = "Prévient quand Brundir incante une Surcharge.",
-	overload_message = "Explosion de la surcharge dans 6 sec. !",
+	overload_message = "Explosion de la Surcharge dans 6 sec. !",
 
 	power = "Rune de puissance",
 	power_desc = "Prévient quand Molgeim incante une Rune de puissance.",
@@ -201,7 +201,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	overwhelm = "Puissance accablante",
 	overwhelm_desc = "Prévient quand un joueur subit les effets d'une Puissance accablante.",
-	overwhelm_you = "Vous avez la Puissance accablante !",
+	overwhelm_you = "Puissance accablante sur VOUS !",
 	overwhelm_other = "Puissance accablante : %s",
 
 	whirl = "Eclair tourbillonnant",

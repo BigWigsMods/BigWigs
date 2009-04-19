@@ -43,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase4_warning = "Phase 4 incoming",
 	phase4_trigger = "^Preliminary testing phase complete",
 	phase_bar = "Phase %d",
-	
+
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
 	hardmode_trigger = "^Now why would you go and do something like that?",
@@ -140,7 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
 	hardmode_trigger = "^Mais pourquoi avez-vous été faire une chose pareille ?", -- à vérifier
 	hardmode_message = "Mode difficile activé !",
-	hardmode_warning = "Ne jamais toucher au bouton rouge",
+	hardmode_warning = "Délai du mode difficile dépassé",
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",

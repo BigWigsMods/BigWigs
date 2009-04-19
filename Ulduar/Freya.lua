@@ -136,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Le jardin doit être protégé !", -- à vérifier
+	engage_trigger = "Le jardin doit être protégé !", -- à vérifier ("Anciens, donnez-moi votre force !" ?)
 	engage_message = "%s engagée !",
 
 	phase = "Phases",
@@ -162,12 +162,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	fury = "Fureur de la nature",
 	fury_desc = "Prévient quand un joueur subit les effets d'une Fureur de la nature.",
-	fury_you = "Fureur sur vous !",
+	fury_you = "Fureur sur VOUS !",
 	fury_other = "Fureur : %s",
 
 	sunbeam = "Rayon de soleil",
 	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
-	sunbeam_you = "Rayon de soleil sur vous !",
+	sunbeam_you = "Rayon de soleil sur VOUS !",
 	sunbeam_other = "Rayon de soleil sur %s",
 
 	icon = "Icône",
