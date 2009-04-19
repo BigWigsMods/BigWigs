@@ -10,7 +10,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890, Corruptor Tentacle = 33985
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "beam", "empower", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "ray", "empower", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -53,11 +53,11 @@ L:RegisterTranslations("enUS", function() return {
 	madness = "Induce Madness",
 	madness_desc = "Show Timer for Induce Madness.",
 	madness_warning = "Induce Madness in 5sec!",
-
-	beam = "Malady of the Mind",
-	beam_desc = "Warn for Malady of the Mind",
-	beam_warning = "Malady of the Mind!",
-	beam_trigger = "Tremble, mortals, before the coming of the end!",
+	
+	ray = "Death Ray",
+	ray_desc = "Warn when Sara casts a Death Ray.",
+	ray_message = "Death Ray!",
+	ray_bar = "~Next Death Ray",
 
 	squeeze = squeezeName,
 	squeeze_desc = "Warn which player has Squeeze.",
@@ -104,11 +104,11 @@ L:RegisterTranslations("koKR", function() return {
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
 	madness_warning = "5초 후 광기 유발!",
-
-	beam = "병든 정신",
-	beam_desc = "병든 정신에 대해 알립니다.",
-	beam_warning = "병든 정신!",
-	beam_trigger = "다가오는 종말 앞에 몸서리쳐라!",	--check
+	
+	ray = "죽음의 광선",
+	ray_desc = "죽음의 광선 시전을 알립니다.",
+	ray_message = "죽음의 광선!",
+	ray_bar = "~다음 광선",
 
 	squeeze = squeezeName,
 	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
@@ -153,11 +153,11 @@ L:RegisterTranslations("frFR", function() return {
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
 	madness_warning = "Susciter la folie dans 5 sec. !",
-
-	beam = "Mal de la raison",
-	beam_desc = "Prévient de l'arrivées des Mals de la raison",
-	beam_warning = "Mal de la raison !",
-	beam_trigger = "Tremble, mortals, before the coming of the end!", -- à traduire
+	
+	--ray = "Death Ray",
+	--ray_desc = "Warn when Sara casts a Death Ray.",
+	--ray_message = "Death Ray!",
+	--ray_bar = "~Next Death Ray",
 
 	squeeze = squeezeName, -- doesn't appear in the dropdown menu if not mentioned here
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
@@ -183,6 +183,7 @@ L:RegisterTranslations("frFR", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Ray", 63891)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_START", "Empower", 64465)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
@@ -203,6 +204,14 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Ray(_, spellID)
+	if db.ray then
+		self:IfMessage(L["ray_message"], "Attention", spellID)
+		self:Bar(L["ray"], 15, spellID)
+		self:Bar(L["ray_bar"], 22, spellID)
+	end
+end
 
 function mod:Squeeze(player, spellID)
 	if db.squeeze then
@@ -288,11 +297,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.empower then
 			self:Bar(L["empower"], 46, 64486)
-		end
-	elseif msg == L["beam_trigger"] then
-		if db.beam then
-			self:IfMessage(L["beam_warning"], "Attention", 63830)
-			self:Bar(L["beam"], 20, 63830)
 		end
 	end
 end
