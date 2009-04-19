@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "icon", "bosskill"}
+mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "icon", "berserk", "bosskill"}
 local bandages = {
 	[34722] = true, -- Heavy Frostweave Bandage
 	[34721] = true, -- Frostweave Bandage
@@ -55,7 +55,6 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Freya",
 
 	engage_trigger = "The Conservatory must be protected!",
-	engage_message = "%s Engaged!",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -96,7 +95,6 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "어떻게 해서든 정원을 수호해야 한다!",	--check
-	engage_message = "%s 전투 시작!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -137,7 +135,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Le jardin doit être protégé !", --("Anciens, donnez-moi votre force !" ?)
-	engage_message = "%s engagée !",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
@@ -178,7 +175,6 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Das Konservatorium muss verteidigt werden!", -- needs verification!
-	engage_message = "%s angegriffen!",
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -220,7 +216,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --[[
 	engage_trigger = "The Conservatory must be protected!",
-	engage_message = "%s已激怒！",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
@@ -262,7 +257,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 --	engage_trigger = "The Conservatory must be protected!",
-	engage_message = "%s已狂怒！",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
@@ -303,7 +297,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	--engage_trigger = "The Conservatory must be protected!",
-	engage_message = "%s вступает в бой!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
@@ -355,7 +348,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
+
 	db = self.db.profile
 end
 
@@ -476,7 +469,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		attunedCount = 150
 		dCount = 0
 		eCount = 0
-		self:Message(L["engage_message"]:format(boss), "Attention")
+		if db.berserk then
+			self:Enrage(600, true)
+		end
 		if db.wave then
 			--35594, looks like a wave :)
 			self:Bar(L["wave_bar"], 11, 35594)
