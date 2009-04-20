@@ -417,7 +417,7 @@ end
 function mod:Magnetic(_, spellID)
 	if db.magnetic then
 		self:IfMessage(L["magnetic_message"], "Important", spellID)
-		self:Bar(L["magnetic"], 20, spellID)
+		self:Bar(L["magnetic"], 15, spellID)
 	end
 end
 
@@ -499,7 +499,7 @@ do
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MimiLoot" and rest and db.loot then
+	if sync == "MimiLoot" and rest and db.magnetic then
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
 	end
 end
