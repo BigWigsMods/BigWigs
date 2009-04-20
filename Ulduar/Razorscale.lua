@@ -22,6 +22,7 @@ local p2 = nil
 local pName = UnitName("player")
 local started = nil
 local count = 1
+local phase = nil
 
 ----------------------------
 --      Localization      --
@@ -47,6 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	breath_desc = "Flame Breath warnings.",
 	breath_trigger = "%s takes a deep breath...",
 	breath_message = "Flame Breath!",
+	breath_bar = "~Breath Cooldown",
 
 	flame = "Devouring Flame on You",
 	flame_desc = "Warn when you are in a Devouring Flame.",
@@ -75,6 +77,7 @@ L:RegisterTranslations("ruRU", function() return {
 	breath_desc = "Сообщать об Огненном дыхании.",
 	breath_trigger = "%s делает глубокий вдох…",
 	breath_message = "Огненное дыхание!",
+	--breath_bar = "~Breath Cooldown",
 
 	flame = "Лавовая бомба на Вас",
 	flame_desc = "Сообщать когда вы поподаете под воздействие Лавовой бомбы.",
@@ -103,6 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 	breath_desc = "화염 숨결을 알립니다.",
 	breath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다...",
 	breath_message = "화염 숨결!",
+	breath_bar = "~숨결 대기시간",
 
 	flame = "자신의 파멸의 불길",
 	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
@@ -131,6 +135,7 @@ L:RegisterTranslations("frFR", function() return {
 	breath_desc = "Prévient de l'arrivée des Souffles de flammes.",
 	breath_trigger = "%s inspire profondément…",
 	breath_message = "Souffle de flammes !",
+	breath_bar = "~Breath Cooldown",
 
 	flame = "Flamme dévorante sur vous",
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
@@ -159,6 +164,7 @@ L:RegisterTranslations("deDE", function() return {
 	breath_desc = "Warnt vor Flammenatem.",
 	breath_trigger = "%s holt tief Luft...",
 	breath_message = "Flammenatem!",
+	breath_bar = "~Breath Cooldown",
 
 	flame = "Verschlingende Flamme",
 	flame_desc = "Warnt, wenn du von Verschlingende Flamme getroffen wirst.",
@@ -187,6 +193,7 @@ L:RegisterTranslations("zhCN", function() return {
 	breath_desc = "当烈焰喷射时发出警报。",
 --	breath_trigger = "%s takes a deep breath...",
 	breath_message = "烈焰喷射！",
+	breath_bar = "~Breath Cooldown",
 
 	flame = "自身Devouring Flame",
 	flame_desc = "当你中了Devouring Flame时发出警报。",
@@ -215,6 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 	breath_desc = "當火息術時發出警報。",
 --	breath_trigger = "%s takes a deep breath...",
 	breath_message = "火息術！",
+	breath_bar = "~Breath Cooldown",
 
 	flame = "自身吞噬烈焰",
 	flame_desc = "當你中了吞噬烈焰時發出警報。",
@@ -269,9 +277,13 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["phase2_trigger"] and db.phase then
+		phase = 2
 		self:IfMessage(L["phase2_message"], "Attention")
 	elseif msg == L["breath_trigger"] and db.breath then
-		self:IfMessage(L["breath_message"], "Attention")
+		self:IfMessage(L["breath_message"], "Attention", 64021)
+		if phase == 2 then
+			self:Bar(L["breath_bar"], 38, 64021)
+		end
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
 		self:IfMessage(L["harpoon_message"]:format(count), "Attention", 56790)
 		count = count + 1
@@ -296,6 +308,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 				self:Enrage(600, true)
 			end
 			started = true
+			phase = 1
 		else
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 			self:Message(L["air_message"], "Attention", nil, "Info")
