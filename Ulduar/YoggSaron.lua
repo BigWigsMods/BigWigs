@@ -176,22 +176,22 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	engage_warning = "Phase 1",
-	engage_trigger = "^Il sera bientôt temps de", -- à vérifier
+	engage_trigger = "^Il sera bientôt temps de",
 	phase2_warning = "Phase 2",
-	phase2_trigger = "^Je suis le rêve éveillé", -- à vérifier
+	phase2_trigger = "^Je suis le rêve éveillé",
 	phase3_warning = "Phase 3",
-	phase3_trigger = "^Contemplez le vrai visage de la mort", -- à vérifier
+	phase3_trigger = "^Contemplez le vrai visage de la mort",
 
 	portal = "Portail",
 	portal_desc = "Prévient de l'arrivée des portails.",
-	portal_trigger = "Portals open into Yogg-Saron's mind!", -- à traduire (Des portails s'ouvrent dans l'esprit de Yogg-Saron !")
+	portal_trigger = "Des portails s'ouvrent sur l'esprit d'Yogg-Saron !",
 	portal_message = "Portails ouverts !",
 	portal_bar = "Prochain portail",
 
 	weakened = "Affaibli",
 	weakened_desc = "Prévient quand Yogg-Saron est affaibli.",
 	weakened_message = "%s est affaibli !",
-	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!", -- à traduire (L'Illusion se brise et un passage vers la chambre centrale s'ouvre !)
+	weakened_trigger = "L'illusion se brise et un chemin s'ouvre vers la salle centrale !",
 
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
@@ -210,7 +210,7 @@ L:RegisterTranslations("frFR", function() return {
 	ray_message = "Rayon mortel !",
 	ray_bar = "~Prochain Rayon mortel",
 
-	squeeze = squeezeName, -- doesn't appear in the dropdown menu if not mentioned here
+	squeeze = squeezeName,
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
 	squeeze_message = squeezeName .. " : %s",
 
@@ -232,8 +232,8 @@ L:RegisterTranslations("frFR", function() return {
 	mindcontrol_desc = "Prévient quand un joueur subit les effets d'une Emprise.",
 	mindcontrol_message = "Emprise : %s",
 
-	guardian = "Apparition du gardien", --phase 1
-	guardian_desc = "Prévient quand le Guardian of Yogg-Saron apparaît.",
+	guardian = "Apparition des gardiesn", --phase 1
+	guardian_desc = "Prévient quand un Gardien de Yogg-Saron apparaît.",
 	guardian_message = "Gardien apparu !",
 
 	icon = "Icône",

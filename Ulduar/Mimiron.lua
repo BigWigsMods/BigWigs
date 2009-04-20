@@ -129,11 +129,11 @@ L:RegisterTranslations("frFR", function() return {
 	engage_warning = "Phase 1",
 	engage_trigger = "^Nous n'avons pas beaucoup de temps, les amis !",
 	phase2_warning = "Arrivée de la phase 2",
-	phase2_trigger = "^MERVEILLEUX ! Résultats parfaitement formidables !", -- à vérifier
+	phase2_trigger = "^MERVEILLEUX ! Résultats parfaitement formidables !",
 	phase3_warning = "Arrivée de la phase 3",
-	phase3_trigger = "^Merci, les amis !", -- à vérifier
+	phase3_trigger = "^Merci, les amis !",
 	phase4_warning = "Arrivée de la phase 4",
-	phase4_trigger = "^Fin de la phase d'essais préliminaires", -- à vérifier
+	phase4_trigger = "^Fin de la phase d'essais préliminaires",
 	phase_bar = "Phase %d",
 
 	hardmode = "Délai du mode difficile",
@@ -162,7 +162,7 @@ L:RegisterTranslations("frFR", function() return {
 	magnetic_message = "Noyau magnétique ! DPS !",
 	loot_message = "%s a ramassé un noyau !",
 
-	end_trigger = "^Il semblerait que j'ai pu faire une minime erreur de calcul.", -- à vérifier
+	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
