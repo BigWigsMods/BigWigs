@@ -358,7 +358,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Magnetic", 64436)
+	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
 
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
