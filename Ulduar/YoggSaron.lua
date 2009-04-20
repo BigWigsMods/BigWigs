@@ -256,7 +256,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	portal = "Portale",
 	portal_desc = "Warnt, wenn Portale erscheinen.",
-	--portal_trigger = "Portals open into Yogg-Saron's mind!", -- NEED!
+	portal_trigger = "Portale öffnen sich im Geist von %s!",
 	portal_message = "Portale offen!",
 	portal_bar = "Nächsten Portale",
 
