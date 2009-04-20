@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	construct_message = "Activate Construct!",
 	construct_warning = "Construct in 5sec!",
 	construct_bar = "Next Construct",
-	
+
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
 	flame_message = "Flame Jets!",
@@ -61,7 +61,7 @@ L:RegisterTranslations("ruRU", function() return {
 	--construct_message = "Activate Construct!",
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
-	
+
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",
 	flame_message = "Огненная струя!",
@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	construct_message = "피조물 활성화!",
 	construct_warning = "5초 이내 피조물!",
 	construct_bar = "다음 피조물",
-	
+
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
 	flame_message = "화염 분출!",
@@ -110,12 +110,12 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Chiots insolents ! Les lames qui serviront à reconquérir ce monde seront trempées dans votre sang !",
 
-	--construct = "Activate Construct",
-	--construct_desc = "Warn for Activate Construct.",
-	--construct_message = "Activate Construct!",
-	--construct_warning = "Construct in 5sec!",
-	--construct_bar = "Next Construct",
-	
+	construct = "Activer l'assemblage",
+	construct_desc = "Prévient de l'arrivée des Assemblages.",
+	construct_message = "Assemblage activé !",
+	construct_warning = "Assemblage dans 5 sec. !",
+	construct_bar = "Prochain Assemblage",
+
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
@@ -142,7 +142,7 @@ L:RegisterTranslations("deDE", function() return {
 	--construct_message = "Activate Construct!",
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
-	
+
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
 	flame_message = "Flammenstrahlen!",
@@ -169,7 +169,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--construct_message = "Activate Construct!",
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
-	
+
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
 	flame_message = "Flame Jets！",
@@ -196,7 +196,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--construct_message = "Activate Construct!",
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
-	
+
 	flame = "烈焰噴洩",
 	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",
 	flame_message = "烈焰噴洩！",

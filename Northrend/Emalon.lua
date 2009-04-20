@@ -222,6 +222,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
+		if db.overcharge then
+			self:Bar(L["overcharge_next"], 45, 64218)
+		end
 	end
 end
 

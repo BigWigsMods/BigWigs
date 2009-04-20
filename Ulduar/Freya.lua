@@ -63,7 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
 	sunbeam_you = "Sunbeam on You!",
 	sunbeam_other = "Sunbeam on %s",
-	
+
 	tremor = "Ground Tremor",
 	tremor_desc = "Warn when Freya casts Ground Tremor.",
 	tremor_message = "Ground Tremor!",
@@ -107,7 +107,7 @@ L:RegisterTranslations("koKR", function() return {
 	sunbeam_desc = "프레이야의 태양 광선 시전 대상을 알립니다.",
 	sunbeam_you = "당신에게 태양 광선!",
 	sunbeam_other = "태양 광선: %s",
-	
+
 	tremor = "지진",
 	tremor_desc = "프레이야의 지진 시전을 알립니다.",
 	tremor_message = "지진!",
@@ -151,10 +151,10 @@ L:RegisterTranslations("frFR", function() return {
 	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
 	sunbeam_you = "Rayon de soleil sur VOUS !",
 	sunbeam_other = "Rayon de soleil sur %s",
-	
-	--tremor = "Ground Tremor",
-	--tremor_desc = "Warn when Freya casts Ground Tremor.",
-	--tremor_message = "Ground Tremor!",
+
+	tremor = "Tremblement de terre",
+	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
+	tremor_message = "Tremblement de terre !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
@@ -195,7 +195,7 @@ L:RegisterTranslations("deDE", function() return {
 	sunbeam_desc = "Warnt, auf wen Sonnenstrahl gewirkt wird.",
 	sunbeam_you = "Sonnenstrahl auf DIR!",
 	sunbeam_other = "Sonnenstrahl: %s!",
-	
+
 	--tremor = "Ground Tremor",
 	--tremor_desc = "Warn when Freya casts Ground Tremor.",
 	--tremor_message = "Ground Tremor!",
