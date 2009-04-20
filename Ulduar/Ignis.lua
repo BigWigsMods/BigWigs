@@ -38,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	brittle = "Brittle",
 	brittle_desc = "Warn when Iron Construct gains Brittle.",
 	brittle_message = "Construct gained Brittle!",
-	
+
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
 	flame_message = "Flame Jets!",
@@ -69,7 +69,7 @@ L:RegisterTranslations("ruRU", function() return {
 	--brittle = "Brittle",
 	--brittle_desc = "Warn when Iron Construct gains Brittle.",
 	--brittle_message = "Construct gained Brittle!",
-	
+
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",
 	flame_message = "Огненная струя!",
@@ -100,7 +100,7 @@ L:RegisterTranslations("koKR", function() return {
 	brittle = "Brittle",
 	brittle_desc = "Warn when Iron Construct gains Brittle.",
 	brittle_message = "Construct gained Brittle!",
-	
+
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
 	flame_message = "화염 분출!",
@@ -128,10 +128,10 @@ L:RegisterTranslations("frFR", function() return {
 	construct_warning = "Assemblage dans 5 sec. !",
 	construct_bar = "Prochain Assemblage",
 
-	--brittle = "Brittle",
-	--brittle_desc = "Warn when Iron Construct gains Brittle.",
-	--brittle_message = "Construct gained Brittle!",
-	
+	brittle = "Fragile",
+	brittle_desc = "Prévient quand un Assemblage de fer gagne Fragile.",
+	brittle_message = "Un Assemblage est devenu Fragile !",
+
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
@@ -162,7 +162,7 @@ L:RegisterTranslations("deDE", function() return {
 	brittle = "Spröde",
 	brittle_desc = "Warnt, wenn ein Eisenkonstrukte spröde wird.",
 	brittle_message = "Konstrukt wird spröde!",
-	
+
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
 	flame_message = "Flammenstrahlen!",
@@ -193,7 +193,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--brittle = "Brittle",
 	--brittle_desc = "Warn when Iron Construct gains Brittle.",
 	--brittle_message = "Construct gained Brittle!",
-	
+
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
 	flame_message = "Flame Jets！",
@@ -224,7 +224,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--brittle = "Brittle",
 	--brittle_desc = "Warn when Iron Construct gains Brittle.",
 	--brittle_message = "Construct gained Brittle!",
-	
+
 	flame = "烈焰噴洩",
 	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",
 	flame_message = "烈焰噴洩！",

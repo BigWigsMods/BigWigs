@@ -83,7 +83,7 @@ L:RegisterTranslations("frFR", function() return {
 	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
 	swarm_other = "Essaim sur %s !",
 	swarm_you = "Essaim sur VOUS !",
-	--swarm_bar = "~Swarm cooldown",
+	swarm_bar = "~Recharge Essaim",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",

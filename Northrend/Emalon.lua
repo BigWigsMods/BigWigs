@@ -9,7 +9,7 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
-mod.toggleoptions = {"nova", "overcharge", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"nova", "overcharge", "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 
@@ -224,6 +224,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.overcharge then
 			self:Bar(L["overcharge_next"], 45, 64218)
+		end
+		if db.berserk then
+		self:Enrage(360, true)
 		end
 	end
 end
