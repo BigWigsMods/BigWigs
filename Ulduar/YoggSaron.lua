@@ -153,6 +153,10 @@ L:RegisterTranslations("koKR", function() return {
 	empower_message = "암흑 강화!",
 	empower_bar = "~강화 대기시간",
 	
+	mindcontrol = "정신 지배",
+	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
+	mindcontrol_message = "정신 지배: %s",
+	
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",

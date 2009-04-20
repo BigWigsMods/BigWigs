@@ -56,7 +56,15 @@ L:RegisterTranslations("koKR", function() return {
 	sentinel = "파수꾼 폭발",
 	sentinel_desc = "아우리아야의 파수꾼 폭발 시전을 알립니다.",
 	sentinel_message = "파수꾼 폭발!",
-	} end )
+	
+	swarm = "수호자의 무리",
+	swarm_desc = "수호자의 무리 시전 대상을 알립니다.",
+	swarm_other = "수호자의 무리: %s!",
+	swarm_you = "당신은 수호자의 무리!",
+	
+	icon = "전술 표시",
+	icon_desc = "Swarm의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+} end )
 
 L:RegisterTranslations("frFR", function() return {
 	fear = "Hurlement terrifiant",
