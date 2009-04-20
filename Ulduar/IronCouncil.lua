@@ -190,7 +190,7 @@ L:RegisterTranslations("frFR", function() return {
 	shield_message = "Bouclier des runes actif !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Puissance accablante ou ciblé par un Eclair tourbillonnant (nécessite d'être assistant ou mieux).",
 
 	council_dies = "%s éliminé",
 } end )

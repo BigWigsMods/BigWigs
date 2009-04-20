@@ -203,7 +203,7 @@ L:RegisterTranslations("frFR", function() return {
 	--malady_bar = "~Prochain Mal",
 
 	tentacle = "Tentacule",
-	tentacle_desc = "Prévient quand une tentacule apparaît.",
+	tentacle_desc = "Prévient quand un tentacule apparaît.",
 
 	ray = "Rayon mortel",
 	ray_desc = "Prévient quand Sara incante un Rayon mortel.",
@@ -237,7 +237,7 @@ L:RegisterTranslations("frFR", function() return {
 	guardian_message = "Gardien apparu !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur la dernière personne affectée par un Mal de la raison (nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )

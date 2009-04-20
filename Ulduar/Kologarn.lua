@@ -100,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Rayon de l'oeil focalisé (nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de l'oeil focalisé (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

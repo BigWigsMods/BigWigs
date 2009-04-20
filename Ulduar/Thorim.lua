@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 	shock_message = "당신은 번개 충격! 이동!",
 	shock_warning = "번개구 충전!",
 	shock_bar = "다음 번개구 충전",
-	
+
 	barrier = "룬문자 방벽",
 	barrier_desc = "룬문자 거인의 룬문자 방벽 획득을 알립니다.",
 	barrier_message = "거인 - 룬문자 방벽 획득!",
@@ -136,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 	strike_message= "혼란의 일격: %s",
 
 	end_trigger = "무기를 거둬라! 내가 졌다!",
-	
+
 	icon = "전술 표시",
 	icon_desc = "룬 폭발 또는 폭풍망치에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )

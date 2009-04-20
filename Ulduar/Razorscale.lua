@@ -135,7 +135,7 @@ L:RegisterTranslations("frFR", function() return {
 	breath_desc = "Prévient de l'arrivée des Souffles de flammes.",
 	breath_trigger = "%s inspire profondément…",
 	breath_message = "Souffle de flammes !",
-	breath_bar = "~Breath Cooldown",
+	breath_bar = "~Recharge Souffle",
 
 	flame = "Flamme dévorante sur vous",
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",

@@ -69,7 +69,7 @@ L:RegisterTranslations("enUS", function() return {
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
 	magnetic_message = "Magnetic Core! DPS!",
 	loot_message = "%s looted a core!",
-	
+
 	mines = "Proximity Mines",
 	mines_desc = "Show Next Timer for Proximity Mines",
 	mines_bar = "Next Mines",
@@ -119,7 +119,7 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
 	magnetic_message = "자기 증폭기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
-	
+
 	mines = "접근 지뢰",
 	mines_desc = "접근 지뢰에 대한 다음 사용의 타이머 바를 표시합니다.",
 	mines_bar = "다음 지뢰",
@@ -169,10 +169,10 @@ L:RegisterTranslations("frFR", function() return {
 	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",
 	magnetic_message = "Noyau magnétique ! DPS !",
 	loot_message = "%s a ramassé un noyau !",
-	
-	--mines = "Proximity Mines",
-	--mines_desc = "Show Next Timer for Proximity Mines",
-	--mines_bar = "Next Mines",
+
+	mines = "Mines de proximité",
+	mines_desc = "Affiche le délai avant l'arrivée des prochaines Mines de proximité.",
+	mines_bar = "Prochaines Mines",
 
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
 } end )
@@ -219,7 +219,7 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
 	magnetic_message = "Magnetic Core! DPS!",
 	loot_message = "%s looted a core!",
-	
+
 	mines = "Proximity Mines",
 	mines_desc = "Show Next Timer for Proximity Mines",
 	mines_bar = "Next Mines",
@@ -270,7 +270,7 @@ L:RegisterTranslations("zhCN", function() return {
 	magnetic_desc = "当Aerial Command Unit获得Magnetic Core时发出警报。",
 	magnetic_message = "Magnetic Core！DPS！",
 	loot_message = ">%s< 拾取了Magnetic Core！",
-	
+
 	--mines = "Proximity Mines",
 	--mines_desc = "Show Next Timer for Proximity Mines",
 	--mines_bar = "Next Mines",
@@ -320,7 +320,7 @@ L:RegisterTranslations("zhTW", function() return {
 	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
 	magnetic_message = "磁能之核！DPS！",
 	loot_message = ">%s< 拾取了磁能之核！",
-	
+
 	--mines = "Proximity Mines",
 	--mines_desc = "Show Next Timer for Proximity Mines",
 	--mines_bar = "Next Mines",
@@ -344,7 +344,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase4_warning = "Наступление 4ой фазы",
 --	phase4_trigger = "^Preliminary testing phase complete",
 	phase_bar = "%d фаза",
-	
+
 	hardmode = "Таймеры сложного режима",
 	hardmode_desc = "Отображения таймера для сложного режима.",
 --	hardmode_trigger = "^Now why would you go and do something like that?",
@@ -370,7 +370,7 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_desc = "Сообщает когда Воздушное судно находится под воздействием Магнитного ядра",
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
-	
+
 	--mines = "Proximity Mines",
 	--mines_desc = "Show Next Timer for Proximity Mines",
 	--mines_bar = "Next Mines",
