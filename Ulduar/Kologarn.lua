@@ -233,9 +233,15 @@ function mod:Grip(player, spellID)
 	end
 end
 
-function mod:EyebeamHit(player)
-	if db.eyebeam and player == pName then
-		self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
+do
+	local last = nil
+	function mod:EyebeamHit(player)
+		if db.eyebeam and player == pName then
+			if not last or (GetTime() > last + 4) then
+				self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
+				last = GetTime()
+			end
+		end
 	end
 end
 

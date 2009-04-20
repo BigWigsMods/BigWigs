@@ -11,7 +11,7 @@ local brundir = BB["Stormcaller Brundir"]
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {"chain", "overload", "whirl", "tendrils", -1, "punch", "overwhelm", -1, "shield", "power", "death", "summoning", -1, "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"chain", "overload", "whirl", "tendrils", -1, "punch", "overwhelm", -1, "shield", "power", "death", "summoning", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -453,6 +453,7 @@ function mod:Overwhelm(player, spellID)
 			self:Whisper(player, L["overwhelm_you"])
 		end
 		self:Bar(other, overwhelmTime, spellID)
+		self:ScheduleEvent("BigWigs_HideProximity", overwhelmTime, self)
 		self:Icon(player, "icon")
 	end
 end
