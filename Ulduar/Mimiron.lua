@@ -423,6 +423,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["hardmode_trigger"]) then
+		phase = 1
+		if db.phase then
+			self:Message(L["engage_warning"], "Attention")
+		end
+		if db.plasma then
+			self:Bar(L["plasma_bar"], 20, 62997)
+			self:DelayedMessage(17, L["plasma_soon"], "Attention")
+		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 480, 64582)
 			self:Message(L["hardmode_message"], "Attention", 64582)
