@@ -176,7 +176,7 @@ L:RegisterTranslations("deDE", function() return {
 	conservator_trigger = "Eonar, Eure Dienerin braucht Hilfe!", -- needs verification!
 	detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!", -- needs verification!
 	elementals_trigger = "Helft mir, Kinder!", -- needs verification!
-	--tree_trigger = "A Lifebinder's Gift begins to grow!", -- NEED!
+	tree_trigger = "Geschenk der Lebensbinderin beginnt zu wachsen!", -- needs verification!
 	conservator_message = "Konservator kommt!",
 	detonate_message = "Explosionspeitscher kommen!",
 	elementals_message = "Elementare kommen!",
@@ -187,7 +187,7 @@ L:RegisterTranslations("deDE", function() return {
 	attuned_message = "Einstimmung: (%d)",
 
 	fury = "Furor der Natur",
-	fury_desc = "Warnt, wer von Furor der Natur getroffen wird.",
+	fury_desc = "Warnt, wer von Furor der Natur betroffen ist.",
 	fury_you = "Furor auf DIR!",
 	fury_other = "Furor: %s",
 
@@ -196,9 +196,9 @@ L:RegisterTranslations("deDE", function() return {
 	sunbeam_you = "Sonnenstrahl auf DIR!",
 	sunbeam_other = "Sonnenstrahl: %s!",
 
-	--tremor = "Ground Tremor",
-	--tremor_desc = "Warn when Freya casts Ground Tremor.",
-	--tremor_message = "Ground Tremor!",
+	tremor = "Bebende Erde",
+	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird.",
+	tremor_message = "Bebende Erde!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl betroffen sind (benötigt Assistent oder höher).",

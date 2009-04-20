@@ -164,7 +164,7 @@ L:RegisterTranslations("deDE", function() return {
 	breath_desc = "Warnt vor Flammenatem.",
 	breath_trigger = "%s holt tief Luft...",
 	breath_message = "Flammenatem!",
-	breath_bar = "~Breath Cooldown",
+	breath_bar = "~Flammenatem",
 
 	flame = "Verschlingende Flamme",
 	flame_desc = "Warnt, wenn du von Verschlingende Flamme getroffen wirst.",

@@ -153,15 +153,15 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!",
 
-	--construct = "Activate Construct",
-	--construct_desc = "Warn for Activate Construct.",
-	--construct_message = "Activate Construct!",
-	--construct_warning = "Construct in 5sec!",
-	--construct_bar = "Next Construct",
+	construct = "Konstrukt aktivieren",
+	construct_desc = "Warnung und Timer für Konstrukt aktivieren.",
+	construct_message = "Konstrukt aktiviert!",
+	construct_warning = "Konstrukt in 5 sek!",
+	construct_bar = "Nächstes Konstrukt",
 
-	--brittle = "Brittle",
-	--brittle_desc = "Warn when Iron Construct gains Brittle.",
-	--brittle_message = "Construct gained Brittle!",
+	brittle = "Spröde",
+	brittle_desc = "Warnt, wenn ein Eisenkonstrukte spröde wird.",
+	brittle_message = "Konstrukt wird spröde!",
 	
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",

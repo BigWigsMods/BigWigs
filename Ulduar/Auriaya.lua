@@ -101,10 +101,10 @@ L:RegisterTranslations("deDE", function() return {
 	sentinel_message = "Schildwachenschlag!",
 
 	swarm = "Wächterschwarm",
-	swarm_desc = "Warnt, wer von Wächterschwarm betroffen ist.",
+	swarm_desc = "Timer für Wächterschwarm und warnt, wer davon betroffen ist.",
 	swarm_other = "Wächterschwarm: %s!",
 	swarm_you = "Wächterschwarm auf DIR!",
-	--swarm_bar = "~Swarm cooldown",
+	swarm_bar = "~Wächterschwarm",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Wächterschwarm betroffen sind (benötigt Assistent oder höher).",
