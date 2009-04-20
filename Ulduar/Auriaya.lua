@@ -96,6 +96,14 @@ L:RegisterTranslations("deDE", function() return {
 	sentinel = "Schildwachenschlag",
 	sentinel_desc = "Warnt, wenn Auriaya Schildwachenschlag wirkt.",
 	sentinel_message = "Schildwachenschlag!",
+	
+	swarm = "Wächterschwarm",
+	swarm_desc = "Warnt, wer von Wächterschwarm betroffen ist.",
+	swarm_other = "Wächterschwarm: %s!",
+	swarm_you = "Wächterschwarm auf DIR!",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Wächterschwarm betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

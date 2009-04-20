@@ -165,6 +165,53 @@ L:RegisterTranslations("frFR", function() return {
 	end_trigger = "^Il semblerait que j'ai pu faire une minime erreur de calcul.", -- à vérifier
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	["MKII"] = "Leviathan Mk II", -- needs verification
+	["VX-001"] = "VX-001", -- needs verification
+	["Aerial"] = "Luftkommandoeinheit", -- needs verification
+
+	--[[ phase = "Phasen",
+	phase_desc = "Warnt bei Phasenwechsel.",
+	engage_warning = "Phase 1",
+	engage_trigger = "^We haven't much time, friends!",
+	phase2_warning = "Phase 2 kommt!",
+	phase2_trigger = "^WONDERFUL! Positively marvelous results!", 
+	phase3_warning = "Phase 3 kommt!",
+	phase3_trigger = "^Thank you, friends!", 
+	phase4_warning = "Phase 4 kommt!",
+	phase4_trigger = "^Preliminary testing phase complete", 
+	phase_bar = "Phase %d", --]]
+
+	hardmode = "Hard Mode",
+	hardmode_desc = "Timer für den Hard Mode.",
+	hardmode_trigger = "^Warum habt Ihr das jetzt gemacht?", -- needs verification
+	hardmode_message = "Hard Mode aktiviert!",
+	hardmode_warning = "Hard Mode beendet!",
+
+	--[[ plasma = "Plasma Blast",
+	plasma_desc = "Warns when Plasma Blast is casting.",
+	plasma_warning = "Casting Plasma Blast!",
+	plasma_soon = "Plasma Blast soon!",
+	plasma_bar = "Next Plasma Blast",
+
+	shock = "Shock Blast",
+	shock_desc = "Warns when Shock Blast is casting.",
+	shock_warning = "Casting Shock Blast!",
+
+	laser = "Laser Barrage",
+	laser_desc = "Warn when Laser Barrage is active!",
+	laser_soon = "Laser Barrage soon!",
+	laser_bar = "Next Laser Barrage",
+
+	magnetic = "Magnetic Core",
+	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
+	magnetic_message = "Magnetic Core! DPS!",
+	loot_message = "%s looted a core!",
+
+	end_trigger = "^It would appear that I made a slight miscalculation.", -- needs verification
+	--]]
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 --	["MKII"] = "Leviathan MKII",
 --	["VX-001"] = "VX-001",

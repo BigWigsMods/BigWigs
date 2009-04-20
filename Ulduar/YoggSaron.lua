@@ -96,7 +96,7 @@ L:RegisterTranslations("enUS", function() return {
 	guardian_message = "Guardian spawn!",
 
 	icon = "Place Icon",
-	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
+	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -242,7 +242,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--["Crusher Tentacle"] = true,
+	["Crusher Tentacle"] = "Schmettertentakel", -- needs verification!
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -268,13 +268,13 @@ L:RegisterTranslations("deDE", function() return {
 	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
 	madness_warning = "Wahnsinn hervorrufen in 5 sek!",
 
-	--malady = "Malady of the Mind",
-	--malady_desc = "Warn when a player has Malady of the Mind.",
-	--malady_message = "Malady: %s",
-	--malady_bar = "~Next Malady",
+	malady = "Geisteskrankheit",
+	malady_desc = "Warnung und Timer für Geisteskrankheit.",
+	malady_message = "Geisteskrank: %s!",
+	--malady_bar = "~Nächste Geisteskrankheit",
 
-	--tentacle = "Tentacle spawn",
-	--tentacle_desc = "Warn for Tentacle spawn.",
+	tentacle = "Tentakel",
+	tentacle_desc = "Warnung und Timer für das Auftauchen der Tentakel.",
 
 	ray = "Todesstrahl",
 	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
@@ -295,18 +295,18 @@ L:RegisterTranslations("deDE", function() return {
 	empower = "Machtvolle Schatten",
 	empower_desc = "Warnung und Timer für Machtvolle Schatten.",
 	empower_message = "Machtvolle Schatten!",
-	--empower_trigger = "%s prepares to unleash Empowering Shadows!", -- NEED!
 	empower_bar = "~Machtvolle Schatten",
 	
-	--mindcontrol = "Mind Control",
-	--mindcontrol_desc = "Warn who is Mind Controlled.",
-	--mindcontrol_message = "Mind Control: %s",
+	mindcontrol = "Gedanken beherrschen",
+	mindcontrol_desc = "Warnt, wer mit Gedanken beherrschen übernommen wurde.",
+	mindcontrol_message = "Gedanken beherrschen: %s!",
 	
-	--guardian = "Guardian spawn", --phase 1
-	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
-	--guardian_message = "Guardian spawn!",
+	guardian = "Wächter beschwören", --phase 1
+	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
+	guardian_message = "Wächter kommt!",
 
-	--icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
 
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )
