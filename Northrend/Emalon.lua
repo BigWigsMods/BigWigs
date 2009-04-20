@@ -9,7 +9,8 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
-mod.toggleoptions = {"nova", "overcharge", "icon", "bosskill"}
+mod.toggleoptions = {"nova", "overcharge", "icon", "proximity", "bosskill"}
+mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
 --      Are you local?      --
@@ -20,7 +21,7 @@ local started = nil
 local UnitGUID = _G.UnitGUID
 local GetNumRaidMembers = _G.GetNumRaidMembers
 local fmt = _G.string.format
-local guid
+local guid, overchargeTime = nil, nil
 
 ----------------------------
 --      Localization      --
@@ -156,6 +157,8 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 
+	started = nil
+	guid, overchargeTime = nil, nil
 	db = self.db.profile
 end
 
@@ -179,7 +182,7 @@ function mod:Overcharge()
 	end
 end
 
-local function ScanTarget()
+local function scanTarget()
 	local target
 	if UnitGUID("target") == guid then
 		target = "target"
@@ -198,6 +201,8 @@ local function ScanTarget()
 	if target then
 		SetRaidTarget(target, 8)
 		mod:CancelScheduledEvent("BWGetOverchargeTarget")
+	elseif (GetTime() + 20) > overchargeTime then
+		mod:CancelScheduledEvent("BWGetOverchargeTarget")
 	end
 end
 
@@ -205,12 +210,14 @@ function mod:OverchargeIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not db.icon then return end
 	guid = select(9, ...)
-	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", ScanTarget, 0.1)
+	overchargeTime = GetTime()
+	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", scanTarget, 0.1)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
