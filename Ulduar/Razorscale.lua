@@ -282,7 +282,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	elseif msg == L["breath_trigger"] and db.breath then
 		self:IfMessage(L["breath_message"], "Attention", 64021)
 		if phase == 2 then
-			self:Bar(L["breath_bar"], 38, 64021)
+			self:Bar(L["breath_bar"], 21, 64021)
 		end
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
 		self:IfMessage(L["harpoon_message"]:format(count), "Attention", 56790)
