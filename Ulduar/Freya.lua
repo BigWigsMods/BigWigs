@@ -397,6 +397,7 @@ end
 
 function mod:AttunedRemove()
 	if db.phase then
+		self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
 		self:Message(L["phase2_message"], "Attention")
 	end
 end
