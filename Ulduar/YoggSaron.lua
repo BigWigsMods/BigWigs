@@ -90,7 +90,7 @@ L:RegisterTranslations("enUS", function() return {
 	mindcontrol = "Mind Control",
 	mindcontrol_desc = "Warn who is Mind Controlled.",
 	mindcontrol_message = "Mind Control: %s",
-	
+
 	guardian = "Guardian spawn", --phase 1
 	guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
 	guardian_message = "Guardian spawn!",
@@ -156,22 +156,22 @@ L:RegisterTranslations("koKR", function() return {
 	empower_desc = "암흑 강화를 알립니다.",
 	empower_message = "암흑 강화!",
 	empower_bar = "~강화 대기시간",
-	
+
 	mindcontrol = "정신 지배",
 	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
 	mindcontrol_message = "정신 지배: %s",
-	
+
 	guardian = "수호자 소환", --phase 1
 	guardian_desc = "요그사론의 수호자 소환을 알립니다.",
 	guardian_message = "수호자 소환!",
-	
+
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--["Crusher Tentacle"] = true,
+	["Crusher Tentacle"] = "Tentacule écraseur",
 
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
@@ -227,15 +227,16 @@ L:RegisterTranslations("frFR", function() return {
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
 	empower_message = "Renforcement des ombres !",
 	empower_bar = "~Recharge Renforcement",
-	
-	--mindcontrol = "Mind Control",
-	--mindcontrol_desc = "Warn who is Mind Controlled.",
-	--mindcontrol_message = "Mind Control: %s",
-	
-	--guardian = "Guardian spawn", --phase 1
-	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
-	--guardian_message = "Guardian spawn!",
 
+	mindcontrol = "Emprise",
+	mindcontrol_desc = "Prévient quand un joueur subit les effets d'une Emprise.",
+	mindcontrol_message = "Emprise : %s",
+
+	guardian = "Apparition du gardien", --phase 1
+	guardian_desc = "Prévient quand le Guardian of Yogg-Saron apparaît.",
+	guardian_message = "Gardien apparu !",
+
+	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la dernière personne affectée par un Mal de la raison (nécessite d'être assistant ou mieux).",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
@@ -296,11 +297,11 @@ L:RegisterTranslations("deDE", function() return {
 	empower_desc = "Warnung und Timer für Machtvolle Schatten.",
 	empower_message = "Machtvolle Schatten!",
 	empower_bar = "~Machtvolle Schatten",
-	
+
 	mindcontrol = "Gedanken beherrschen",
 	mindcontrol_desc = "Warnt, wer mit Gedanken beherrschen übernommen wurde.",
 	mindcontrol_message = "Gedanken beherrschen: %s!",
-	
+
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
 	guardian_message = "Wächter kommt!",
@@ -337,15 +338,15 @@ L:RegisterTranslations("zhCN", function() return {
 	madness = "Induce Madness",
 	madness_desc = "显示Induce Madness计时器。",
 	madness_warning = "5秒后，Induce Madness！",
-	
+
 	malady = "Malady of the Mind",
 	malady_desc = "当玩家中了Malady of the Mind时发出警报。",
 	malady_message = "Malady of the Mind：>%s<！",
 	--malady_bar = "<下一Malady of the Mind>",
-	
+
 	tentacle = "触手出现",
 	tentacle_desc = "当触手出现时发出警报。",
-	
+
 	ray = "死亡射线",
 	ray_desc = "当萨拉施放死亡射线时发出警报。",
 	ray_message = "死亡射线！",
@@ -368,11 +369,11 @@ L:RegisterTranslations("zhCN", function() return {
 	empower_desc = "当Empowering Shadows时发出警报。",
 	empower_message = "Empowering Shadows！",
 	empower_bar = "<Empower Shadows 冷却>",
-	
+
 	--mindcontrol = "Mind Control",
 	--mindcontrol_desc = "Warn who is Mind Controlled.",
 	--mindcontrol_message = "Mind Control: %s",
-	
+
 	--guardian = "Guardian spawn", --phase 1
 	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
 	--guardian_message = "Guardian spawn!",
@@ -408,15 +409,15 @@ L:RegisterTranslations("zhTW", function() return {
 	madness = "瘋狂誘陷",
 	madness_desc = "顯示瘋狂誘陷計時條。",
 	madness_warning = "5秒后，瘋狂誘陷！",
-	
+
 	malady = "心靈缺陷",
 	malady_desc = "當玩家中了心靈缺陷時發出警報。",
 	malady_message = "心靈缺陷：>%s<！",
 	--malady_bar = "<下一心靈缺陷>",
-	
+
 	tentacle = "觸手出現",
 	tentacle_desc = "當觸手出現時發出警報。",
-	
+
 	ray = "死亡射線",
 	ray_desc = "當薩拉施放死亡射線時發出警報。",
 	ray_message = "死亡射線!",
@@ -439,15 +440,15 @@ L:RegisterTranslations("zhTW", function() return {
 	empower_desc = "當暗影信標時發出警報。",
 	empower_message = "暗影信標！",
 	empower_bar = "<暗影信標 冷卻>",
-	
+
 	--mindcontrol = "Mind Control",
 	--mindcontrol_desc = "Warn who is Mind Controlled.",
 	--mindcontrol_message = "Mind Control: %s",
-	
+
 	--guardian = "Guardian spawn", --phase 1
 	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
 	--guardian_message = "Guardian spawn!",
-	
+
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",

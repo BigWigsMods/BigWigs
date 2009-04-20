@@ -133,7 +133,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_warning = "Arrivée de la phase 3",
 	phase3_trigger = "^Merci, les amis !", -- à vérifier
 	phase4_warning = "Arrivée de la phase 4",
-	phase4_trigger = "^Fin de la phase d'essai préliminaire", -- à vérifier
+	phase4_trigger = "^Fin de la phase d'essais préliminaires", -- à vérifier
 	phase_bar = "Phase %d",
 
 	hardmode = "Délai du mode difficile",
