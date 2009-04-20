@@ -101,7 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow_bar = "Coups gelés",
 
 	hardmode = "Délai du mode difficile",
-	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant qu'Hodir ne détruise sa cache).",
+	hardmode_desc = "Affiche une barre de 2 min. 30 sec. pour le mode difficile (délai avant qu'Hodir ne détruise sa cache).",
 	hardmode_warning = "Délai du mode difficile dépassé",
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier

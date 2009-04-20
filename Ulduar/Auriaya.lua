@@ -36,12 +36,12 @@ L:RegisterTranslations("enUS", function() return {
 	sentinel = "Sentinel Blast",
 	sentinel_desc = "Warn when Auriaya casts a Sentinel Blast.",
 	sentinel_message = "Sentinel Blast!",
-	
+
 	swarm = "Guardian Swarm",
 	swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
 	swarm_other = "Swarm on %s!",
 	swarm_you = "Swarm on YOU!",
-	
+
 	icon = "Place Icon",
 	icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
 } end )
@@ -68,6 +68,14 @@ L:RegisterTranslations("frFR", function() return {
 	sentinel = "Déflagration du factionnaire",
 	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
 	sentinel_message = "Déflagration du factionnaire !",
+
+	swarm = "Essaim gardien",
+	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
+	swarm_other = "Essaim sur %s !",
+	swarm_you = "Essaim sur VOUS !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -92,12 +100,12 @@ L:RegisterTranslations("zhCN", function() return {
 	sentinel = "戒卫冲击",
 	sentinel_desc = "当欧尔莉亚施放戒卫冲击时发出警报。",
 	sentinel_message = "戒卫冲击！",
-	
+
 	swarm = "Guardian Swarm",
 	swarm_desc = "当欧尔莉亚施放Guardian Swarm时发出警报。",
 	swarm_other = "Swarm on：>%s<！",
 	swarm_you = ">你< Swarm！",
-	
+
 	icon = "团队标记",
 	icon_desc = "为中了Guardian Swarm的队员打上团队标记。（需要权限）",
 } end )
@@ -112,12 +120,12 @@ L:RegisterTranslations("zhTW", function() return {
 	sentinel = "哨兵衝擊",
 	sentinel_desc = "當奧芮雅施放哨兵沖擊時發出警報。",
 	sentinel_message = "哨兵沖擊！",
-	
+
 	swarm = "守護貓群",
 	swarm_desc = "當奧芮雅施放守護貓群時發出警報。",
 	swarm_other = "守護貓群：>%s<！",
 	swarm_you = ">你< 守護貓群！",
-	
+
 	icon = "團隊標記",
 	icon_desc = "為中了守護貓群的隊員打上團隊標記。（需要權限）",
 } end )

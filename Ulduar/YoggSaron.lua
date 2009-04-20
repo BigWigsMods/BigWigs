@@ -29,7 +29,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
-	
+
 	cmd = "YoggSaron",
 
 	phase = "Phase",
@@ -55,15 +55,15 @@ L:RegisterTranslations("enUS", function() return {
 	madness = "Induce Madness",
 	madness_desc = "Show Timer for Induce Madness.",
 	madness_warning = "Induce Madness in 5sec!",
-	
+
 	malady = "Malady of the Mind",
 	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
 	--malady_bar = "~Next Malady",
-	
+
 	tentacle = "Tentacle spawn",
 	tentacle_desc = "Warn for Tentacle spawn.",
-	
+
 	ray = "Death Ray",
 	ray_desc = "Warn when Sara casts a Death Ray.",
 	ray_message = "Death Ray!",
@@ -86,7 +86,7 @@ L:RegisterTranslations("enUS", function() return {
 	empower_desc = "Warn for Empowering Shadows.",
 	empower_message = "Empowering Shadows!",
 	empower_bar = "~Empower Cooldown",
-	
+
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
@@ -94,7 +94,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Crusher Tentacle"] = "분쇄의 촉수",
-	
+
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	engage_warning = "1 단계",
@@ -118,17 +118,17 @@ L:RegisterTranslations("koKR", function() return {
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
 	madness_warning = "5초 후 광기 유발!",
-	
+
 	ray = "죽음의 광선",
 	ray_desc = "죽음의 광선 시전을 알립니다.",
 	ray_message = "죽음의 광선!",
 	ray_bar = "~다음 광선",
-	
+
 	malady = "병든 정신",
 	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
 	malady_message = "병든 정신: %s",
 	--malady_bar = "~다음 병든 정신",
-	
+
 	tentacle = "촉수 소환",
 	tentacle_desc = "촉수 소환을 알립니다.",
 
@@ -155,7 +155,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	--["Crusher Tentacle"] = true,
-	
+
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	engage_warning = "Phase 1",
@@ -179,25 +179,27 @@ L:RegisterTranslations("frFR", function() return {
 	madness = "Susciter la folie",
 	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
 	madness_warning = "Susciter la folie dans 5 sec. !",
-	
+
 	malady = "Mal de la raison",
-	--malady_desc = "Warn when a player has Malady of the Mind.",
-	--malady_message = "Malady: %s",
-	--malady_bar = "~Next Malady",
-	
-	--tentacle = "Tentacle spawn",
-	--tentacle_desc = "Warn for Tentacle spawn.",
-	
-	--ray = "Death Ray",
-	--ray_desc = "Warn when Sara casts a Death Ray.",
-	--ray_message = "Death Ray!",
-	--ray_bar = "~Next Death Ray",
+	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
+	malady_message = "Mal : %s",
+	--malady_bar = "~Prochain Mal",
+
+	tentacle = "Tentacule",
+	tentacle_desc = "Prévient quand une tentacule apparaît.",
+
+	ray = "Rayon mortel",
+	ray_desc = "Prévient quand Sara incante un Rayon mortel.",
+	ray_message = "Rayon mortel !",
+	ray_bar = "~Prochain Rayon mortel",
 
 	squeeze = squeezeName, -- doesn't appear in the dropdown menu if not mentioned here
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
+	squeeze_message = squeezeName .. " : %s",
 
 	link = linkedName,
 	link_desc = "Indique quels joueurs sont liées.",
+	link_message = linkedName .. " : %s",
 
 	gaze = "Regard lunatique",
 	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
@@ -209,14 +211,14 @@ L:RegisterTranslations("frFR", function() return {
 	empower_message = "Renforcement des ombres !",
 	empower_bar = "~Recharge Renforcement",
 
-	--icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
+	icon_desc = "Place une icône de raid sur la dernière personne affectée par un Mal de la raison (nécessite d'être assistant ou mieux).",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
 	--["Crusher Tentacle"] = true,
-	
+
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	engage_warning = "Phase 1",
@@ -240,12 +242,12 @@ L:RegisterTranslations("deDE", function() return {
 	madness = "Wahnsinn hervorrufen",
 	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
 	madness_warning = "Wahnsinn hervorrufen in 5 sek!",
-	
+
 	--malady = "Malady of the Mind",
 	--malady_desc = "Warn when a player has Malady of the Mind.",
 	--malady_message = "Malady: %s",
 	--malady_bar = "~Next Malady",
-	
+
 	--tentacle = "Tentacle spawn",
 	--tentacle_desc = "Warn for Tentacle spawn.",
 
@@ -253,7 +255,7 @@ L:RegisterTranslations("deDE", function() return {
 	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
 	ray_message = "Todesstrahl!",
 	ray_bar = "~Nächster Todesstrahl",
-	
+
 	squeeze = squeezeName,
 	squeeze_desc = "Warnt, welcher Spieler von Quetschen betroffen ist.",
 
@@ -270,7 +272,7 @@ L:RegisterTranslations("deDE", function() return {
 	empower_message = "Machtvolle Schatten!",
 	--empower_trigger = "%s prepares to unleash Empowering Shadows!", -- NEED!
 	empower_bar = "~Machtvolle Schatten",
-	
+
 	--icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
@@ -333,7 +335,7 @@ L:RegisterTranslations("zhCN", function() return {
 	empower_desc = "当Empowering Shadows时发出警报。",
 	empower_message = "Empowering Shadows！",
 	empower_bar = "<Empower Shadows 冷却>",
-	
+
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 
 	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
