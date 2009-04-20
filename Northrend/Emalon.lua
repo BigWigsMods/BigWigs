@@ -11,6 +11,7 @@ mod.enabletrigger = boss
 mod.guid = 33993
 mod.toggleoptions = {"nova", "overcharge", "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Are you local?      --
