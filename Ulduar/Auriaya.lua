@@ -41,6 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
 	swarm_other = "Swarm on %s!",
 	swarm_you = "Swarm on YOU!",
+	swarm_bar = "~Swarm cooldown",
 
 	icon = "Place Icon",
 	icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
@@ -61,6 +62,7 @@ L:RegisterTranslations("koKR", function() return {
 	swarm_desc = "수호자의 무리 시전 대상을 알립니다.",
 	swarm_other = "수호자의 무리: %s!",
 	swarm_you = "당신은 수호자의 무리!",
+	swarm_bar = "~무리 대기시간",
 
 	icon = "전술 표시",
 	icon_desc = "Swarm의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -81,6 +83,7 @@ L:RegisterTranslations("frFR", function() return {
 	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
 	swarm_other = "Essaim sur %s !",
 	swarm_you = "Essaim sur VOUS !",
+	--swarm_bar = "~Swarm cooldown",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",
@@ -101,6 +104,7 @@ L:RegisterTranslations("deDE", function() return {
 	swarm_desc = "Warnt, wer von Wächterschwarm betroffen ist.",
 	swarm_other = "Wächterschwarm: %s!",
 	swarm_you = "Wächterschwarm auf DIR!",
+	--swarm_bar = "~Swarm cooldown",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Wächterschwarm betroffen sind (benötigt Assistent oder höher).",
@@ -121,6 +125,7 @@ L:RegisterTranslations("zhCN", function() return {
 	swarm_desc = "当欧尔莉亚施放Guardian Swarm时发出警报。",
 	swarm_other = "Swarm on：>%s<！",
 	swarm_you = ">你< Swarm！",
+	--swarm_bar = "~Swarm cooldown",
 
 	icon = "团队标记",
 	icon_desc = "为中了Guardian Swarm的队员打上团队标记。（需要权限）",
@@ -141,6 +146,7 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_desc = "當奧芮雅施放守護貓群時發出警報。",
 	swarm_other = "守護貓群：>%s<！",
 	swarm_you = ">你< 守護貓群！",
+	--swarm_bar = "~Swarm cooldown",
 
 	icon = "團隊標記",
 	icon_desc = "為中了守護貓群的隊員打上團隊標記。（需要權限）",
@@ -156,6 +162,12 @@ L:RegisterTranslations("ruRU", function() return {
 	sentinel = "Удар часового",
 	sentinel_desc = "Предупреждать когда Ауриайя применяет Удар часового.",
 	sentinel_message = "Удар часового!",
+	
+	--swarm = "Guardian Swarm",
+	--swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
+	--swarm_other = "Swarm on %s!",
+	--swarm_you = "Swarm on YOU!",
+	--swarm_bar = "~Swarm cooldown",
 } end )
 
 ------------------------------
@@ -190,6 +202,8 @@ function mod:Swarm(player, spellId)
 			self:IfMessage(other, "Attention", spellId)
 			self:Whisper(player, L["swarm_you"])
 		end
+		self:Bar(other, 5, spellID)
+		self:Bar(L["swarm_bar"], 37, spellId)
 		self:Icon(player, "icon")
 	end
 end
