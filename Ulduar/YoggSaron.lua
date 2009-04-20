@@ -10,7 +10,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "mindcontrol", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -87,6 +87,11 @@ L:RegisterTranslations("enUS", function() return {
 	empower_message = "Empowering Shadows!",
 	empower_bar = "~Empower Cooldown",
 
+	mindcontrol = "Mind Control",
+	mindcontrol_desc = "Warn who is Mind Controlled.",
+	mindcontrol_message = "Mind Control: %s",
+
+	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
@@ -417,6 +422,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -432,6 +438,13 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:MControl(player, spellId)
+	if db.mindcontrol then
+		self:IfMessage(L["mindcontrol_message"]:format(player), "Attention", spellId)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:Tentacle(unit)
 	-- Crusher Tentacle (33966) 50 sec
