@@ -29,10 +29,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	construct = "Construct spawn",
-	construct_desc = "Warn when the Iron Construct spawns.",
-	construct_message = "Construct spawn!",
-	construct_warning = "Construct spawn in 5sec!",
+	construct = "Activate Construct",
+	construct_desc = "Warn for Activate Construct.",
+	construct_message = "Activate Construct!",
+	construct_warning = "Construct in 5sec!",
+	construct_bar = "Next Construct",
 	
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
@@ -55,10 +56,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Дерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!",
 
-	--construct = "Construct spawn",
-	--construct_desc = "Warn when the Iron Construct spawns.",
-	--construct_message = "Construct spawn!",
-	--construct_warning = "Construct spawn in 5sec!",
+	--construct = "Activate Construct",
+	--construct_desc = "Warn for Activate Construct.",
+	--construct_message = "Activate Construct!",
+	--construct_warning = "Construct in 5sec!",
+	--construct_bar = "Next Construct",
 	
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",
@@ -81,10 +83,11 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "건방진 젖먹이들이! 세상을 되찾는데 쓸 무기를 네놈들의 피로 담금질하겠다!",	--check
 
-	construct = "피조물 소환",
-	construct_desc = "무쇠 피조물의 소환을 알립니다.",
-	construct_message = "피조물 소환!",
-	construct_warning = "Construct spawn in 5sec!",
+	construct = "피조물 활성화",
+	construct_desc = "피조물 활성화를 알립니다.",
+	construct_message = "피조물 활성화!",
+	construct_warning = "5초 이내 피조물!",
+	construct_bar = "다음 피조물",
 	
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
@@ -107,10 +110,11 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Chiots insolents ! Les lames qui serviront à reconquérir ce monde seront trempées dans votre sang !",
 
-	--construct = "Construct spawn",
-	--construct_desc = "Warn when the Iron Construct spawns.",
-	--construct_message = "Construct spawn!",
-	--construct_warning = "Construct spawn in 5sec!",
+	--construct = "Activate Construct",
+	--construct_desc = "Warn for Activate Construct.",
+	--construct_message = "Activate Construct!",
+	--construct_warning = "Construct in 5sec!",
+	--construct_bar = "Next Construct",
 	
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
@@ -133,10 +137,11 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!",
 
-	--construct = "Construct spawn",
-	--construct_desc = "Warn when the Iron Construct spawns.",
-	--construct_message = "Construct spawn!",
-	--construct_warning = "Construct spawn in 5sec!",
+	--construct = "Activate Construct",
+	--construct_desc = "Warn for Activate Construct.",
+	--construct_message = "Activate Construct!",
+	--construct_warning = "Construct in 5sec!",
+	--construct_bar = "Next Construct",
 	
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
@@ -159,10 +164,11 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	--construct = "Construct spawn",
-	--construct_desc = "Warn when the Iron Construct spawns.",
-	--construct_message = "Construct spawn!",
-	--construct_warning = "Construct spawn in 5sec!",
+	--construct = "Activate Construct",
+	--construct_desc = "Warn for Activate Construct.",
+	--construct_message = "Activate Construct!",
+	--construct_warning = "Construct in 5sec!",
+	--construct_bar = "Next Construct",
 	
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
@@ -185,10 +191,11 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 --	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	--construct = "Construct spawn",
-	--construct_desc = "Warn when the Iron Construct spawns.",
-	--construct_message = "Construct spawn!",
-	--construct_warning = "Construct spawn in 5sec!",
+	--construct = "Activate Construct",
+	--construct_desc = "Warn for Activate Construct.",
+	--construct_message = "Activate Construct!",
+	--construct_warning = "Construct in 5sec!",
+	--construct_bar = "Next Construct",
 	
 	flame = "烈焰噴洩",
 	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",
@@ -232,7 +239,7 @@ end
 
 function mod:Construct()
 	if db.construct then
-		self:IfMessage(L["construct_warning"], "Attention", "INV_Misc_Statue_07") --Views like this icon. :)
+		self:IfMessage(L["construct_message"], "Attention", "INV_Misc_Statue_07") --Views like this icon. :)
 		self:Bar(L["construct_bar"], spwanTime, "INV_Misc_Statue_07") --Views like this icon. :)
 		self:DelayedMessage(spwanTime - 5, L["construct_warning"], "Attention")
 	end
@@ -273,6 +280,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.flame then
 			self:Bar(L["flame_bar"], 28, 62680)
 			self:DelayedMessage(23, L["flame_warning"], "Attention")
+		end
+		if db.construct then
+			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")
 		end
 	end
 end
