@@ -165,7 +165,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
 	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
-	self:AddCombatListener("SPELL_CAST_START", "Swarm", 64396)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
