@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "tremor", "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -63,6 +63,10 @@ L:RegisterTranslations("enUS", function() return {
 	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
 	sunbeam_you = "Sunbeam on You!",
 	sunbeam_other = "Sunbeam on %s",
+	
+	tremor = "Ground Tremor",
+	tremor_desc = "Warn when Freya casts Ground Tremor.",
+	tremor_message = "Ground Tremor!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam. (requires promoted or higher)",
@@ -103,6 +107,10 @@ L:RegisterTranslations("koKR", function() return {
 	sunbeam_desc = "프레이야의 태양 광선 시전 대상을 알립니다.",
 	sunbeam_you = "당신에게 태양 광선!",
 	sunbeam_other = "태양 광선: %s",
+	
+	tremor = "지진",
+	tremor_desc = "프레이야의 지진 시전을 알립니다.",
+	tremor_message = "지진!",
 
 	icon = "전술 표시",
 	icon_desc = "태양 광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -143,6 +151,10 @@ L:RegisterTranslations("frFR", function() return {
 	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
 	sunbeam_you = "Rayon de soleil sur VOUS !",
 	sunbeam_other = "Rayon de soleil sur %s",
+	
+	--tremor = "Ground Tremor",
+	--tremor_desc = "Warn when Freya casts Ground Tremor.",
+	--tremor_message = "Ground Tremor!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
@@ -183,6 +195,10 @@ L:RegisterTranslations("deDE", function() return {
 	sunbeam_desc = "Warnt, auf wen Sonnenstrahl gewirkt wird.",
 	sunbeam_you = "Sonnenstrahl auf DIR!",
 	sunbeam_other = "Sonnenstrahl: %s!",
+	
+	--tremor = "Ground Tremor",
+	--tremor_desc = "Warn when Freya casts Ground Tremor.",
+	--tremor_message = "Ground Tremor!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl betroffen sind (benötigt Assistent oder höher).",
@@ -223,6 +239,10 @@ L:RegisterTranslations("zhCN", function() return {
 	sunbeam_desc = "当弗蕾亚施放Sunbeam于玩家时发出警报。.",
 	sunbeam_you = ">你< Sunbeam！",
 	sunbeam_other = "Sunbeam：>%s<！",
+	
+	--tremor = "Ground Tremor",
+	--tremor_desc = "Warn when Freya casts Ground Tremor.",
+	--tremor_message = "Ground Tremor!",
 
 	icon = "位置标记",
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
@@ -263,6 +283,10 @@ L:RegisterTranslations("zhTW", function() return {
 	sunbeam_desc = "當芙蕾雅施放太陽光束于玩家時發出警報。",
 	sunbeam_you = ">你< 太陽光束！",
 	sunbeam_other = "太陽光束：>%s<！",
+	
+	--tremor = "Ground Tremor",
+	--tremor_desc = "Warn when Freya casts Ground Tremor.",
+	--tremor_message = "Ground Tremor!",
 
 	icon = "位置標記",
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",
@@ -303,6 +327,10 @@ L:RegisterTranslations("ruRU", function() return {
 	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
 	sunbeam_you = "Луч солнца на ВАС!",
 	sunbeam_other = "Луч солнца на |3-5(%s)",
+	
+	--tremor = "Ground Tremor",
+	--tremor_desc = "Warn when Freya casts Ground Tremor.",
+	--tremor_message = "Ground Tremor!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелен Луч солнца. (необходимо быть лидером группы или рейда)",
@@ -315,6 +343,7 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859)	--HardMode abilities from Elder Stonebark 
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
@@ -334,6 +363,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Tremor()
+	if db.tremor then
+		self:Message(L["Tremor_message"], "Attention")
+	end
+end
 
 local function scanTarget()
 	local target
