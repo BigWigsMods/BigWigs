@@ -219,18 +219,13 @@ function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
 end
 
 local spellIds = {}
-local function delTable(t)
-	for k, v in pairs(t) do
-		t[k] = nil
-	end
-end
 -- XXX Proposed API, subject to change.
 function BigWigs.modulePrototype:AddSyncListener(event, ...)
 	if not self.syncEventMap then self.syncEventMap = {} end
 	if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
 	local token = nil
 	-- clean out old ids
-	delTable(spellIds)
+	wipe(spellIds)
 	local c = select("#", ...)
 	for i = 1, c do
 		local arg = select(i, ...)
@@ -238,7 +233,7 @@ function BigWigs.modulePrototype:AddSyncListener(event, ...)
 			token = arg
 			if not self.syncEventMap[event][token] then self.syncEventMap[event][token] = {} end
 			if self.syncEventMap[event][token].spellIds then
-				delTable(self.syncEventMap[event][token].spellIds)
+				wipe(self.syncEventMap[event][token].spellIds)
 			else
 				self.syncEventMap[event][token].spellIds = {}
 			end
@@ -247,7 +242,7 @@ function BigWigs.modulePrototype:AddSyncListener(event, ...)
 			end
 			if c > i then
 				if self.syncEventMap[event][token].argumentList then
-					delTable(self.syncEventMap[event][token].argumentList)
+					wipe(self.syncEventMap[event][token].argumentList)
 				else
 					self.syncEventMap[event][token].argumentList = {}
 				end
