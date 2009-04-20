@@ -334,8 +334,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	tendrils = "閃電觸鬚",
 	tendrils_desc = "當玩家中了閃電觸鬚時發出警報。",
-	tendrils_other = "閃電觸須：>%s<！",
-	tendrils_you = ">你< 閃電觸須！",
+	tendrils_other = "閃電觸鬚：>%s<！",
+	tendrils_you = ">你< 閃電觸鬚！",
 	tendrils_message = "約5秒后，降落！",
 
 	overwhelm = "極限威能",
@@ -352,7 +352,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shield_message = "符文護盾！",
 
 	icon = "團隊標記",
-	icon_desc = "為中了閃電觸須的隊員打上團隊標記。（需要權限）",
+	icon_desc = "為中了閃電觸鬚的隊員打上團隊標記。（需要權限）",
 
 	council_dies = "%s被擊敗了！",
 } end )
