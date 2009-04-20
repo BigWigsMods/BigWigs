@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33118
-mod.toggleoptions = {"construct", "flame", "scorch", "slagpot", "bosskill"}
+mod.toggleoptions = {"construct", "brittle", "flame", "scorch", "slagpot", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -35,6 +35,10 @@ L:RegisterTranslations("enUS", function() return {
 	construct_warning = "Construct in 5sec!",
 	construct_bar = "Next Construct",
 
+	brittle = "Brittle",
+	brittle_desc = "Warn when Iron Construct gains Brittle.",
+	brittle_message = "Construct gained Brittle!",
+	
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
 	flame_message = "Flame Jets!",
@@ -62,6 +66,10 @@ L:RegisterTranslations("ruRU", function() return {
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
 
+	--brittle = "Brittle",
+	--brittle_desc = "Warn when Iron Construct gains Brittle.",
+	--brittle_message = "Construct gained Brittle!",
+	
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",
 	flame_message = "Огненная струя!",
@@ -89,6 +97,10 @@ L:RegisterTranslations("koKR", function() return {
 	construct_warning = "5초 이내 피조물!",
 	construct_bar = "다음 피조물",
 
+	brittle = "Brittle",
+	brittle_desc = "Warn when Iron Construct gains Brittle.",
+	brittle_message = "Construct gained Brittle!",
+	
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
 	flame_message = "화염 분출!",
@@ -116,6 +128,10 @@ L:RegisterTranslations("frFR", function() return {
 	construct_warning = "Assemblage dans 5 sec. !",
 	construct_bar = "Prochain Assemblage",
 
+	--brittle = "Brittle",
+	--brittle_desc = "Warn when Iron Construct gains Brittle.",
+	--brittle_message = "Construct gained Brittle!",
+	
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
@@ -143,6 +159,10 @@ L:RegisterTranslations("deDE", function() return {
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
 
+	--brittle = "Brittle",
+	--brittle_desc = "Warn when Iron Construct gains Brittle.",
+	--brittle_message = "Construct gained Brittle!",
+	
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
 	flame_message = "Flammenstrahlen!",
@@ -170,6 +190,10 @@ L:RegisterTranslations("zhCN", function() return {
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
 
+	--brittle = "Brittle",
+	--brittle_desc = "Warn when Iron Construct gains Brittle.",
+	--brittle_message = "Construct gained Brittle!",
+	
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
 	flame_message = "Flame Jets！",
@@ -197,6 +221,10 @@ L:RegisterTranslations("zhTW", function() return {
 	--construct_warning = "Construct in 5sec!",
 	--construct_bar = "Next Construct",
 
+	--brittle = "Brittle",
+	--brittle_desc = "Warn when Iron Construct gains Brittle.",
+	--brittle_message = "Construct gained Brittle!",
+	
 	flame = "烈焰噴洩",
 	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",
 	flame_message = "烈焰噴洩！",
@@ -225,6 +253,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "ScorchCast", 62546, 63474)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Scorch", 62548, 63476)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -236,6 +265,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Brittle(_, spellID)
+	if db.brittle then
+		self:IfMessage(L["brittle_message"], "Important", spellID)
+	end
+end
 
 function mod:Construct()
 	if db.construct then
@@ -268,7 +303,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
 	if db.flame and unit == boss then
-		self:IfMessage(L["flame_message"], "Attention", 62680)
+		self:IfMessage(L["flame_message"], "Attention", 62680, "Alert")
 		self:Bar(L["flame_bar"], 35, 62680)
 		self:DelayedMessage(32, L["flame_warning"], "Attention")
 	end
