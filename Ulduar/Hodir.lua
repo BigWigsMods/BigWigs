@@ -135,19 +135,18 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
-	engage_trigger = "You will suffer for this trespass!",
+--	engage_trigger = "You will suffer for this trespass!",
 
 	cold = "Biting Cold（成就）",
 	cold_desc = "当你受到2层Biting Cold效果时发出警报。",
 	cold_message = "Biting Cold（%d层） - 移动！",
 
-	flash = "Flash Freeze",
-	flash_desc = "当正在施放Flash Freeze和玩家中了Flash Freeze时发出警报。",
-	flash_message = "Flash Freeze：>%s<！",
-	flash_warning = "正在施放 Flash Freeze！",
-	flash_soon = "5秒后，Flash Freeze！",
-	flash_bar = "<下一Flash>",
+	flash = "冰霜速冻",
+	flash_desc = "当正在施放冰霜速冻和玩家中了冰霜速冻时发出警报。",
+	flash_message = "冰霜速冻：>%s<！",
+	flash_warning = "正在施放 冰霜速冻！",
+	flash_soon = "5秒后，冰霜速冻！",
+	flash_bar = "<下一冰霜速冻>",
 
 	frozenblow = "Frozen Blow",
 	frozenblow_desc = "当霍迪尔获得Frozen Blow效果时发出警报。",
@@ -155,8 +154,11 @@ L:RegisterTranslations("zhCN", function() return {
 	frozenblow_warning = "5秒后，Frozen Blow消失！",
 	frozenblow_bar = "<Frozen Blow>",
 
-	end_trigger = "I...I am released from his grasp! At...last!",
-]]
+	hardmode = "困难模式计时器",
+	hardmode_desc = "显示困难模式计时器。",
+	hardmode_warning = "困难模式结束！",
+
+--	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -178,6 +180,10 @@ L:RegisterTranslations("zhTW", function() return {
 	frozenblow_message = "霍迪爾 - 冰凍痛擊！",
 	frozenblow_warning = "5秒后，冰凍痛擊消失！",
 	frozenblow_bar = "<冰凍痛擊>",
+
+	hardmode = "困難模式計時器",
+	hardmode_desc = "顯示困難模式計時器。",
+	hardmode_warning = "困難模式結束！",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )

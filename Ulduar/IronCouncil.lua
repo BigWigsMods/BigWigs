@@ -250,10 +250,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
-	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
-	engage_trigger2 = "Nothing short of total decimation will suffice!",
-	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+--	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+--	engage_trigger2 = "Nothing short of total decimation will suffice!",
+--	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
 
 	chain = "闪电链",
 	chain_desc = "当布隆迪尔施放闪电链时发出警报。",
@@ -267,6 +266,10 @@ L:RegisterTranslations("zhCN", function() return {
 	power_desc = "当莫尔基姆施放能量符文时发出警报。",
 	power_message = "能量符文！",
 
+	punch = "Fusion Punch",
+	punch_desc = "当断钢者施放Fusion Punch时发出警报。",
+	punch_message = "Fusion Punch！",
+
 	death = "自身死亡符文",
 	death_desc = "当你中了死亡符文时发出警报。",
 	death_message = ">你< 死亡符文！",
@@ -276,7 +279,7 @@ L:RegisterTranslations("zhCN", function() return {
 	summoning_message = "召唤符文 - 闪电元素即将出现！",
 
 	tendrils = "闪电之藤",
-	tendrils_desc = "当闪电之藤阶段时为目标玩家发出警报，并给他打上团队标记。",
+	tendrils_desc = "当玩家中了闪电之藤时发出警报。",
 	tendrils_other = "闪电之藤：>%s<！",
 	tendrils_you = ">你< 闪电之藤！",
 	tendrils_message = "约5秒后，降落！",
@@ -286,11 +289,18 @@ L:RegisterTranslations("zhCN", function() return {
 	overwhelm_you = ">你< Overwhelming Power！",
 	overwhelm_other = "Overwhelming Power：>%s<！",
 
+	whirl = "闪电旋风",
+	whirl_desc = "当布隆迪尔开始引导闪电旋风时发出警报。",
+	whirl_message = "闪电旋风！",
+
+	shield = "符文之盾",
+	shield_desc = "当莫尔基姆施放符文之盾时发出警报。",
+	shield_message = "符文之盾！",
+
 	icon = "团队标记",
 	icon_desc = "为中了闪电之藤的队员打上团队标记。（需要权限）",
 
 	council_dies = "%s被击败了！",
-]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -310,6 +320,10 @@ L:RegisterTranslations("zhTW", function() return {
 	power_desc = "當墨吉姆施放力之符文時發出警報。",
 	power_message = "力之符文！",
 
+	punch = "熔能拳擊",
+	punch_desc = "當破鋼者施放熔能拳擊時發出警報。",
+	punch_message = "熔能拳擊！",
+
 	death = "自身死亡符文",
 	death_desc = "當你中了死亡符文時發出警報。",
 	death_message = ">你< 死亡符文！",
@@ -318,8 +332,8 @@ L:RegisterTranslations("zhTW", function() return {
 	summoning_desc = "當墨吉姆施放召喚符文時發出警報。",
 	summoning_message = "召喚符文 - 閃電元素即將出現！",
 
-	tendrils = "後",
-	tendrils_desc = "當後階段時為目標玩家發出警報，并給他打上團隊標記。",
+	tendrils = "閃電觸鬚",
+	tendrils_desc = "當玩家中了閃電觸鬚時發出警報。",
 	tendrils_other = "閃電觸須：>%s<！",
 	tendrils_you = ">你< 閃電觸須！",
 	tendrils_message = "約5秒后，降落！",
@@ -328,6 +342,14 @@ L:RegisterTranslations("zhTW", function() return {
 	overwhelm_desc = "當玩家中了極限威能時發出警報。",
 	overwhelm_you = ">你< 極限威能！",
 	overwhelm_other = "極限威能：>%s<！",
+
+	whirl = "閃電旋風",
+	whirl_desc = "當布倫迪爾開始引導閃電旋風時發出警報。",
+	whirl_message = "閃電旋風！",
+
+	shield = "符文護盾",
+	shield_desc = "當墨吉姆施放符文護盾時發出警報。",
+	shield_message = "符文護盾！",
 
 	icon = "團隊標記",
 	icon_desc = "為中了閃電觸須的隊員打上團隊標記。（需要權限）",

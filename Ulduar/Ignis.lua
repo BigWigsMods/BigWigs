@@ -131,8 +131,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
-	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
+--	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
@@ -150,7 +149,6 @@ L:RegisterTranslations("zhCN", function() return {
 	slagpot = "熔渣炉",
 	slagpot_desc = "当玩家中了熔渣炉时发出警报。",
 	slagpot_message = "熔渣炉：>%s<！",
-]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

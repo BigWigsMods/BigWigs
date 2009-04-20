@@ -130,7 +130,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
 	arm = "手臂死亡",
 	arm_desc = "当左右手臂死亡时发出警报。",
 	left_dies = "左臂死亡！",
@@ -144,16 +143,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shockwave = "震荡波",
 	shockwave_desc = "当震荡波到来前发出警报。",
-	shockwave_trigger = "Oblivion!",
+--	shockwave_trigger = "Oblivion!",
 
 	eyebeam = "Focused Eyebeam",
 	eyebeam_desc = "当玩家中了Focused Eyebeam时发出警报。",
 	eyebeam_message = "Eyebeam：>%s<！",
+	eyebeam_bar = "<Eyebeam>",
 	eyebeam_you = ">你< Eyebeam！",
 
 	icon = "团队标记",
 	icon_desc = "为中了Focused Eyebeam的队员打上团队标记。（需要权限）",
-]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -175,6 +174,7 @@ L:RegisterTranslations("zhTW", function() return {
 	eyebeam = "集束目光",
 	eyebeam_desc = "當玩家中了集束目光時發出警報。",
 	eyebeam_message = "集束目光：>%s<！",
+	eyebeam_bar = "<集束目光>",
 	eyebeam_you = ">你< 集束目光！",
 
 	icon = "團隊標記",

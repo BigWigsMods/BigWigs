@@ -197,13 +197,12 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 	phase1_message = "第一阶段！",
-	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
+--	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
 	phase2_message = "第二阶段 - 5分钟后，狂暴！",
-	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+--	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三阶段 - %s已激怒！",
 
 	p2berserk = "第二阶段 - 狂暴",
@@ -211,11 +210,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
+	hardmode_warning = "困难模式结束！",
 
 	hammer = "风暴之锤",
 	hammer_desc = "当风暴之锤时发出警报。",
-	hammer_message = "Stormhammer: %s",
+	hammer_message = "风暴之锤：>%s<！",
 	hammer_bar = "<下一风暴之锤>",
+
+	impale = "穿刺",
+	impale_desc = "当玩家中了穿刺时发出警报。",
+	impale_message = "穿刺：>%s<！",
 
 	shock = "闪电震击",
 	shock_desc = "当宝珠充电和闪电震击时发出警报。",
@@ -223,9 +227,9 @@ L:RegisterTranslations("zhCN", function() return {
 	shock_warning = "宝珠充电！",
 	shock_bar = "<下一宝珠充电>",
 
-	barrier = "Runic Barrier",
-	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
-	barrier_message = "Runic Colossus gained Runic Barrier!",
+	barrier = "符文屏障",
+	barrier_desc = "当符文巨像获得符文屏障时发出警报。",
+	barrier_message = "符文巨像 - 符文屏障！",
 
 	detonation = "符文爆炸",
 	detonation_desc = "当玩家中了符文爆炸时发出警报。",
@@ -241,20 +245,19 @@ L:RegisterTranslations("zhCN", function() return {
 	strike_desc = "当玩家中了重压打击时发出警报。",
 	strike_message= "重压打击：>%s<！",
 
-	end_trigger = "Stay your arms! I yield!",
+--	end_trigger = "Stay your arms! I yield!",
 
 	icon = "团队标记",
 	icon_desc = "为中了符文爆炸的队员打上团队标记。（需要权限）",
-]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
 	phase1_message = "第一階段！",
---	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
+--	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
 	phase2_message = "第二階段 - 5分鐘后，狂暴！",
---	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+--	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三階段 - %s已狂怒！",
 
 	p2berserk = "第二階段 - 狂暴！",
@@ -262,11 +265,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
+	hardmode_warning = "困難模式結束！",
 
 	hammer = "風暴之錘",
 	hammer_desc = "當風暴之錘時發出警報。",
-	--hammer_message = "Stormhammer: %s",
+	hammer_message = "風暴之錘：>%s<！",
 	hammer_bar = "<下一風暴之錘>",
+
+	impale = "刺穿",
+	impale_desc = "當玩家中了刺穿時發出警報。",
+	impale_message = "刺穿：>%s<！",
 
 	shock = "閃電震擊",
 	shock_desc = "當寶珠充能和閃電震擊時發出警報。",
@@ -274,9 +282,9 @@ L:RegisterTranslations("zhTW", function() return {
 	shock_warning = "寶珠充能！",
 	shock_bar = "<下一寶珠充能>",
 
-	--barrier = "Runic Barrier",
-	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
-	--barrier_message = "Runic Colossus gained Runic Barrier!",
+	barrier = "符刻屏障",
+	barrier_desc = "當符刻巨像獲得符刻屏障時發出警報。",
+	barrier_message = "符文巨像 - 符刻屏障！",
 
 	detonation = "引爆符文",
 	detonation_desc = "當玩家中了引爆符文時發出警報。",

@@ -43,6 +43,16 @@ L:RegisterTranslations("deDE", function() return {
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

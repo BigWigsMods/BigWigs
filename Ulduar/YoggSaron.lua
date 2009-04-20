@@ -276,6 +276,132 @@ L:RegisterTranslations("deDE", function() return {
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--	["Crusher Tentacle"] = true,
+
+	phase = "阶段",
+	phase_desc = "当阶段改变发出警报。",
+	engage_warning = "第一阶段！",
+--	engage_trigger = "^The time to",
+	phase2_warning = "第二阶段！",
+--	phase2_trigger = "^I am the lucid dream",
+	phase3_warning = "第三阶段！",
+--	phase3_trigger = "^Look upon the true face",
+
+	portal = "传送门",
+	portal_desc = "当传送门时发出警报。",
+--	portal_trigger = "Portals open into Yogg-Saron's mind!",
+	portal_message = "开启传送门！",
+	portal_bar = "<下一传送门>",
+
+	weakened = "动摇的决心",
+	weakened_desc = "当玩家中了动摇的决心时发出警报。",
+	weakened_message = "动摇的决心：>%s<！",
+--	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
+
+	madness = "Induce Madness",
+	madness_desc = "显示Induce Madness计时器。",
+	madness_warning = "5秒后，Induce Madness！",
+	
+	malady = "Malady of the Mind",
+	malady_desc = "当玩家中了Malady of the Mind时发出警报。",
+	malady_message = "Malady of the Mind：>%s<！",
+	--malady_bar = "<下一Malady of the Mind>",
+	
+	tentacle = "触手出现",
+	tentacle_desc = "当触手出现时发出警报。",
+	
+	ray = "死亡射线",
+	ray_desc = "当萨拉施放死亡射线时发出警报。",
+	ray_message = "死亡射线！",
+	ray_bar = "<下一死亡射线>",
+
+	squeeze = squeezeName,
+	squeeze_desc = "当玩家中了Squeeze时发出警报。",
+	squeeze_message = squeezeName .. "：>%s<！",
+
+	link = linkedName,
+	link_desc = "当玩家被Brain Link时发出警报。",
+	link_message = linkedName .. "：>%s<！",
+
+	gaze = "疯乱凝视",
+	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
+	gaze_message = "疯乱凝视！",
+	gaze_bar = "<疯乱凝视 冷却>",
+
+	empower = "Empowering Shadows",
+	empower_desc = "当Empowering Shadows时发出警报。",
+	empower_message = "Empowering Shadows！",
+	empower_bar = "<Empower Shadows 冷却>",
+	
+	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--	["Crusher Tentacle"] = true,
+
+	phase = "階段",
+	phase_desc = "當階段改變發出警報。",
+	engage_warning = "第一階段",
+--	engage_trigger = "^The time to",
+	phase2_warning = "第二階段！",
+--	phase2_trigger = "^I am the lucid dream",
+	phase3_warning = "第三階段！",
+--	phase3_trigger = "^Look upon the true face",
+
+	portal = "傳送門",
+	portal_desc = "當傳送門時發出警報。",
+--	portal_trigger = "Portals open into Yogg-Saron's mind!",
+	portal_message = "開啟傳送門！",
+	portal_bar = "<下一傳送門>",
+
+	weakened = "弱化決心",
+	weakened_desc = "當玩家中了弱化決心時發出警報。",
+	weakened_message = "弱化決心：>%s<！",
+--	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
+
+	madness = "瘋狂誘陷",
+	madness_desc = "顯示瘋狂誘陷計時條。",
+	madness_warning = "5秒后，瘋狂誘陷！",
+	
+	malady = "心靈缺陷",
+	malady_desc = "當玩家中了心靈缺陷時發出警報。",
+	malady_message = "心靈缺陷：>%s<！",
+	--malady_bar = "<下一心靈缺陷>",
+	
+	tentacle = "觸手出現",
+	tentacle_desc = "當觸手出現時發出警報。",
+	
+	ray = "死亡射線",
+	ray_desc = "當薩拉施放死亡射線時發出警報。",
+	ray_message = "死亡射線!",
+	ray_bar = "~Next 死亡射線",
+
+	squeeze = squeezeName,
+	squeeze_desc = "當玩家中了壓榨時發出警報。",
+	squeeze_message = squeezeName .. "：>%s<！",
+
+	link = linkedName,
+	link_desc = "當玩家中了腦波連結時發出警報。",
+	link_message = linkedName .. "：>%s<！",
+
+	gaze = "癡狂凝視",
+	gaze_desc = "當尤格薩倫獲得癡狂凝視時發出警報。",
+	gaze_message = "癡狂凝視!",
+	gaze_bar = "<癡狂凝視 冷卻>",
+
+	empower = "暗影信標",
+	empower_desc = "當暗影信標時發出警報。",
+	empower_message = "暗影信標！",
+	empower_bar = "<暗影信標 冷卻>",
+	
+	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

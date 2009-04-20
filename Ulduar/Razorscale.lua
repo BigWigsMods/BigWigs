@@ -172,33 +172,31 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
 	phase = "阶段",
 	phase_desc = "当锋鳞转换不同阶段时发出警报。",
-	ground_trigger = "Move quickly! She won't remain grounded for long!",
+--	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "锋鳞被锁住了！",
-	air_trigger = "Give us a moment to prepare to build the turrets.",
+--	air_trigger = "Give us a moment to prepare to build the turrets.",
 	air_message = "起飞！",
-	phase2_trigger = "Razorscale lands permanently!",
+--	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二阶段！",
 	phase2_warning = "即将 第二阶段！",
 	stun_bar = "<昏迷>",
 
 	breath = "烈焰喷射",
 	breath_desc = "当烈焰喷射时发出警报。",
-	breath_trigger = "%s takes a deep breath...",
+--	breath_trigger = "%s takes a deep breath...",
 	breath_message = "烈焰喷射！",
 
 	flame = "自身Devouring Flame",
 	flame_desc = "当你中了Devouring Flame时发出警报。",
 	flame_message = ">你< Devouring Flame！",
 
-	harpoon = "Harpoon Turret",
-	harpoon_desc = "Harpoon Turret announce.",
-	harpoon_message = "Harpoon Turret(%d)",
-	harpoon_trigger = "Harpoon Turret is ready for use!",
-	harpoon_nextbar = "Next Harpoon (%d)",
-]]
+	harpoon = "魚叉炮台",
+	harpoon_desc = "当魚叉炮台可用时发出警报。",
+	harpoon_message = "魚叉炮台：>%d<！",
+--	harpoon_trigger = "Harpoon Turret is ready for use!",
+	harpoon_nextbar = "<下一魚叉炮台：%d>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -222,11 +220,11 @@ L:RegisterTranslations("zhTW", function() return {
 	flame_desc = "當你中了吞噬烈焰時發出警報。",
 	flame_message = ">你< 吞噬烈焰！",
 
-	--harpoon = "Harpoon Turret",
-	--harpoon_desc = "Harpoon Turret announce.",
-	--harpoon_message = "Harpoon Turret(%d)",
-	--harpoon_trigger = "Harpoon Turret is ready for use!",
-	--harpoon_nextbar = "Next Harpoon (%d)",
+	harpoon = "魚叉炮塔",
+	harpoon_desc = "當魚叉炮塔可用時發出警報。",
+	harpoon_message = "魚叉炮塔：>%d<！",
+--	harpoon_trigger = "Harpoon Turret is ready for use!",
+	harpoon_nextbar = "<下一魚叉炮塔：%d>",
 } end )
 
 ------------------------------

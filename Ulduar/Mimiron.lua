@@ -166,26 +166,25 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
-	["MKII"] = "Leviathan MKII",
-	["VX-001"] = "VX-001",
-	["Aerial"] = "Aerial Command Unit",
+--	["MKII"] = "Leviathan MKII",
+--	["VX-001"] = "VX-001",
+--	["Aerial"] = "Aerial Command Unit",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 	engage_warning = "第一阶段！",
-	engage_trigger = "^We haven't much time, friends!",
+--	engage_trigger = "^We haven't much time, friends!",
 	phase2_warning = "即将 第二阶段！",
-	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+--	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
 	phase3_warning = "即将 第三阶段！",
-	phase3_trigger = "^Thank you, friends!",
+--	phase3_trigger = "^Thank you, friends!",
 	phase4_warning = "即将 第四阶段！",
-	phase4_trigger = "^Preliminary testing phase complete",
+--	phase4_trigger = "^Preliminary testing phase complete",
 	phase_bar = "<阶段：%d>",
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
-	hardmode_trigger = "^Now why would you go and do something like that?",
+--	hardmode_trigger = "^Now why would you go and do something like that?",
 	hardmode_message = "已开启困难模式！",
 	hardmode_warning = "困难模式结束！",
 
@@ -204,8 +203,12 @@ L:RegisterTranslations("zhCN", function() return {
 	laser_soon = "即将 激光弹幕！",
 	laser_bar = "<下一激光弹幕>",
 
-	end_trigger = "^It would appear that I made a slight miscalculation.",
-]]
+	magnetic = "Magnetic Core",
+	magnetic_desc = "当Aerial Command Unit获得Magnetic Core时发出警报。",
+	magnetic_message = "Magnetic Core！DPS！",
+	loot_message = ">%s< 拾取了Magnetic Core！",
+
+--	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -245,6 +248,11 @@ L:RegisterTranslations("zhTW", function() return {
 	laser_desc = "當雷射彈幕啟用時發出警報。",
 	laser_soon = "即將 雷射彈幕！",
 	laser_bar = "<下一雷射彈幕>",
+
+	magnetic = "磁能之核",
+	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
+	magnetic_message = "磁能之核！DPS！",
+	loot_message = ">%s< 拾取了磁能之核！",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )

@@ -134,7 +134,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
 	flame = "灼热烈焰",
 	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
 	flame_message = "灼热烈焰！",
@@ -167,7 +166,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	icon = "团队标记",
 	icon_desc = "为中了Shadow Crash的队员打上团队标记。（需要权限）",
-]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

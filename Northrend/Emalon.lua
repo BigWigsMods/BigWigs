@@ -110,6 +110,38 @@ L:RegisterTranslations("ruRU", function() return {
 	icon_desc = "Отмечать черепом Служителя бури с эффектом Перегрузки.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	nova = "闪电新星",
+	nova_desc = "当艾玛尔隆施放闪电新星时发出警报。",
+	nova_message = "正在施放 闪电新星！",
+	nova_next = "<闪电新星 冷却>",
+
+	overcharge = "超载",
+	overcharge_desc = "当艾玛尔隆超载minion时发出警报。",
+	overcharge_message = "minion - 超载！",
+	overcharge_bar = "<爆炸>",
+	overcharge_next = "<下一超载>",
+
+	icon = "超载标记",
+	icon_desc = "为中了超载的怪物打上团队标记。（需要权限）",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	nova = "閃電新星",
+	nova_desc = "當艾瑪隆施放閃電新星時發出警報。",
+	nova_message = "正在施放 閃電新星！",
+	nova_next = "<閃電新星 冷卻>",
+
+	overcharge = "超載",
+	overcharge_desc = "當艾瑪隆超載minion時發出警報。",
+	overcharge_message = " minion - 超載！",
+	overcharge_bar = "<爆炸>",
+	overcharge_next = "<下一超載>",
+
+	icon = "超載標記",
+	icon_desc = "為中了超載的怪物打上團隊標記。（需要權限）",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

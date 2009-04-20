@@ -104,8 +104,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
-	engage_trigger = "^Hostile entities detected.",
+--	engage_trigger = "^Hostile entities detected.",
 	engage_message = "%s已激怒！",
 
 	flame = "Flame Jet",
@@ -114,14 +113,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 	pursue = "Pursuit",
 	pursue_desc = "当烈焰巨兽pursues玩家时发出警报。",
-	pursue_trigger = "^%%s pursues",
+--	pursue_trigger = "^%%s pursues",
 	pursue_other = "烈焰巨兽pursues：>%s<！",
 	pursue_you = ">你< 烈焰巨兽pursues！",
 
 	shutdown = "Systems Shutdown",
 	shutdown_desc = "当烈焰巨兽Systems Shutdown时发出警报。",
 	shutdown_message = "Systems Shutdown！",
-]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

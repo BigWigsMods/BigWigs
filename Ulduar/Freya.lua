@@ -191,8 +191,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---[[
-	engage_trigger = "The Conservatory must be protected!",
+--	engage_trigger = "The Conservatory must be protected!",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
@@ -202,14 +201,14 @@ L:RegisterTranslations("zhCN", function() return {
 	wave = "波",
 	wave_desc = "当一波小怪时发出警报。",
 	wave_bar = "<下一波>",
-	conservator_trigger = "Eonar, your servant requires aid!",
-	detonate_trigger = "The swarm of the elements shall overtake you!",
-	elementals_trigger = "Children, assist me!",
-	tree_trigger = "A Lifebinder's Gift begins to grow!",
-	conservator_message = "Conservator spawn",
-	detonate_message = "Detonate spawn",
-	elementals_message = "Elementals spawn",
-	tree_message = "Eonar's Gift spawn",
+--	conservator_trigger = "Eonar, your servant requires aid!",
+--	detonate_trigger = "The swarm of the elements shall overtake you!",
+--	elementals_trigger = "Children, assist me!",
+--	tree_trigger = "A Lifebinder's Gift begins to grow!",
+	conservator_message = "Conservator出现！",
+	detonate_message = "Detonate出现！",
+	elementals_message = "Elementals出现！",
+	tree_message = "Eonar's Gift出现！",
 
 	attuned = "自然协调",
 	attuned_desc = "当施放自然协调时发出警报。",
@@ -228,8 +227,7 @@ L:RegisterTranslations("zhCN", function() return {
 	icon = "位置标记",
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
 
-	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
-]]
+--	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -247,10 +245,10 @@ L:RegisterTranslations("zhTW", function() return {
 --	detonate_trigger = "The swarm of the elements shall overtake you!",
 --	elementals_trigger = "Children, assist me!",
 --	tree_trigger = "A Lifebinder's Gift begins to grow!",
---	conservator_message = "Conservator spawn",
---	detonate_message = "Detonate spawn",
---	elementals_message = "Elementals spawn",
---	tree_message = "Eonar's Gift spawn",
+	conservator_message = "Conservator出現！",
+	detonate_message = "Detonate出現！",
+	elementals_message = "Elementals出現！",
+	tree_message = "Eonar's Gift出現！",
 
 	attuned = "自然和諧",
 	attuned_desc = "當施放自然和諧時發出警報。",
