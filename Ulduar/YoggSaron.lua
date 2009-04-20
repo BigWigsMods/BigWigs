@@ -10,7 +10,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {"sara", "boss"}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "mindcontrol", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "guardian", "mindcontrol", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -90,6 +90,10 @@ L:RegisterTranslations("enUS", function() return {
 	mindcontrol = "Mind Control",
 	mindcontrol_desc = "Warn who is Mind Controlled.",
 	mindcontrol_message = "Mind Control: %s",
+	
+	guardian = "Guardian spawn", --phase 1
+	guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
+	guardian_message = "Guardian spawn!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
@@ -157,6 +161,10 @@ L:RegisterTranslations("koKR", function() return {
 	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
 	mindcontrol_message = "정신 지배: %s",
 	
+	guardian = "수호자 소환", --phase 1
+	guardian_desc = "요그사론의 수호자 소환을 알립니다.",
+	guardian_message = "수호자 소환!",
+	
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
@@ -219,6 +227,14 @@ L:RegisterTranslations("frFR", function() return {
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
 	empower_message = "Renforcement des ombres !",
 	empower_bar = "~Recharge Renforcement",
+	
+	--mindcontrol = "Mind Control",
+	--mindcontrol_desc = "Warn who is Mind Controlled.",
+	--mindcontrol_message = "Mind Control: %s",
+	
+	--guardian = "Guardian spawn", --phase 1
+	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
+	--guardian_message = "Guardian spawn!",
 
 	icon_desc = "Place une icône de raid sur la dernière personne affectée par un Mal de la raison (nécessite d'être assistant ou mieux).",
 
@@ -281,6 +297,14 @@ L:RegisterTranslations("deDE", function() return {
 	empower_message = "Machtvolle Schatten!",
 	--empower_trigger = "%s prepares to unleash Empowering Shadows!", -- NEED!
 	empower_bar = "~Machtvolle Schatten",
+	
+	--mindcontrol = "Mind Control",
+	--mindcontrol_desc = "Warn who is Mind Controlled.",
+	--mindcontrol_message = "Mind Control: %s",
+	
+	--guardian = "Guardian spawn", --phase 1
+	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
+	--guardian_message = "Guardian spawn!",
 
 	--icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 
@@ -344,6 +368,14 @@ L:RegisterTranslations("zhCN", function() return {
 	empower_desc = "当Empowering Shadows时发出警报。",
 	empower_message = "Empowering Shadows！",
 	empower_bar = "<Empower Shadows 冷却>",
+	
+	--mindcontrol = "Mind Control",
+	--mindcontrol_desc = "Warn who is Mind Controlled.",
+	--mindcontrol_message = "Mind Control: %s",
+	
+	--guardian = "Guardian spawn", --phase 1
+	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
+	--guardian_message = "Guardian spawn!",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 
@@ -408,6 +440,14 @@ L:RegisterTranslations("zhTW", function() return {
 	empower_message = "暗影信標！",
 	empower_bar = "<暗影信標 冷卻>",
 	
+	--mindcontrol = "Mind Control",
+	--mindcontrol_desc = "Warn who is Mind Controlled.",
+	--mindcontrol_message = "Mind Control: %s",
+	
+	--guardian = "Guardian spawn", --phase 1
+	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
+	--guardian_message = "Guardian spawn!",
+	
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
@@ -427,6 +467,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042)
+	self:AddCombatListener("SPELL_SUMMON", "Guardian", 62979)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -442,6 +483,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Guardian(_, spellID)
+	if db.guardian then
+		self:IfMessage(L["guardian_message"], "Attention", spellID)
+	end
+end
 
 function mod:MControl(player, spellId)
 	if db.mindcontrol then
