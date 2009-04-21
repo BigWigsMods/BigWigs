@@ -251,6 +251,7 @@ L:RegisterTranslations("zhTW", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Construct", 62488)
 	self:AddCombatListener("SPELL_CAST_START", "ScorchCast", 62546, 63474)
+	self:AddCombatListener("SPELL_CAST_START", "Jets", 62680, 63472)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Scorch", 62548, 63476)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
@@ -301,11 +302,12 @@ function mod:SlagPot(player, spellID)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
-	if db.flame and unit == boss then
-		self:IfMessage(L["flame_message"], "Attention", 62680, "Alert")
-		self:Bar(L["flame_bar"], 35, 62680)
-		self:DelayedMessage(32, L["flame_warning"], "Attention")
+function mod:Jets(_, spellID)
+	if db.flame then
+		self:IfMessage(L["flame_message"], "Personal", spellID, "Alert")
+		self:Bar(L["flame_bar"], 25, spellID)
+		self:Bar(L["flame_bar"], 2.7, spellID)
+		self:DelayedMessage(25, L["flame_warning"], "Attention")
 	end
 end
 
@@ -313,8 +315,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		spwanTime = GetCurrentDungeonDifficulty() == 1 and 40 or 30
 		if db.flame then
-			self:Bar(L["flame_bar"], 28, 62680)
-			self:DelayedMessage(23, L["flame_warning"], "Attention")
+			self:Bar(L["flame_bar"], 21, 62680)
+			self:DelayedMessage(21, L["flame_warning"], "Attention")
 		end
 		if db.construct then
 			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")
