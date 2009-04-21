@@ -412,7 +412,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888) -- Steelbreaker +2
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 62274, 63489) -- Molgeim
-	self:AddCombatListener("SPELL_CAST_START", "RunePower", 61973) -- Molgeim ... hmm, catch on cast start or success? SPELL_CAST_SUCCESS 61974
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "RunePower", 61974) -- Molgeim
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490) -- Molgeim +1
 	self:AddCombatListener("SPELL_CAST_START", "RuneSummoning", 62273) -- Molgeim +2
 
