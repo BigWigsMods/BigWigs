@@ -285,10 +285,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 			self:Bar(L["breath_bar"], 21, 64021)
 		end
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
-		self:IfMessage(L["harpoon_message"]:format(count), "Attention", 56790)
+		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "INV_Spear_06")
 		count = count + 1
 		if count < 4 then
-			self:Bar(L["harpoon_nextbar"]:format(count), 18, 56790)
+			self:Bar(L["harpoon_nextbar"]:format(count), 18, "INV_Spear_06")
 		end
 	end
 end
@@ -301,7 +301,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["air_trigger"] then
 		p2 = nil
 		count = 1
-		self:Bar(L["harpoon_nextbar"]:format(count), 55, 56790)
+		self:Bar(L["harpoon_nextbar"]:format(count), 55, "INV_Spear_06")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if not started then
 			if db.berserk then
