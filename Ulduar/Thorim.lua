@@ -45,22 +45,22 @@ L:RegisterTranslations("enUS", function() return {
 
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
-	hardmode_warning = "Hard Mode ends",
+	hardmode_warning = "Hard Mode Expires",
 
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
 	hammer_message = "Stormhammer: %s",
-	hammer_bar = "Next Stormhammer",
+	hammer_bar = "Stormhammer",
 
 	impale = "Impale",
 	impale_desc = "Warn who is afflicted by Impale.",
-	impale_message = "%s has Impale",
+	impale_message = "Impale on %s",
 
 	shock = "Lightning Shock",
 	shock_desc = "Warn for Charge Orb and Lightning Shock.",
 	shock_message = "Lightning Shock on You! Move!",
 	shock_warning = "Charge Orb!",
-	shock_bar = "Next Charge Orb",
+	shock_bar = "Charge Orb",
 
 	barrier = "Runic Barrier",
 	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
@@ -69,11 +69,11 @@ L:RegisterTranslations("enUS", function() return {
 	detonation = "Rune Detonation",
 	detonation_desc = "Tells you who has been hit by Rune Detonation.",
 	detonation_message = "Rune Detonation: %s",
-	detonation_yell = "I'm a Bomb!",
+	detonation_yell = "I'm a bomb!",
 
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
-	charge_message = "Charge: (%d)",
+	charge_message = "Charge %d!",
 	charge_bar = "Charge (%d)",
 
 	strike = "Unbalancing Strike",

@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	brittle = "Brittle",
 	brittle_desc = "Warn when Iron Construct gains Brittle.",
-	brittle_message = "Construct gained Brittle!",
+	brittle_message = "Construct is Brittle!",
 
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
@@ -289,9 +289,16 @@ function mod:ScorchCast(_, spellID)
 	end
 end
 
-function mod:Scorch(player, spellID)
-	if player == pName and db.scorch then
-		self:LocalMessage(L["scorch_message"], "Personal", spellID, "Alarm")
+do
+	local last = nil
+	function mod:Scorch(player, spellID)
+		if player == pName and db.scorch then
+			local t = GetTime()
+			if not last or (t > last + 4) then
+				self:LocalMessage(L["scorch_message"], "Personal", spellID, last and nil or "Alarm")
+				last = t
+			end
+		end
 	end
 end
 

@@ -367,7 +367,7 @@ end
 
 function mod:Tremor()
 	if db.tremor then
-		self:Message(L["Tremor_message"], "Attention")
+		self:Message(L["tremor_message"], "Attention")
 	end
 end
 

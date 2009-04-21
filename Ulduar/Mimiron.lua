@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33350		-- Most of the fight you fight vehicles .. does that matter..?
 --  Leviathan MKII(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "mines", "plasma", "shock", "laser", "magnetic", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "magnetic", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -53,26 +53,22 @@ L:RegisterTranslations("enUS", function() return {
 	plasma = "Plasma Blast",
 	plasma_desc = "Warns when Plasma Blast is casting.",
 	plasma_warning = "Casting Plasma Blast!",
-	plasma_soon = "Plasma Blast soon!",
-	plasma_bar = "Next Plasma Blast",
+	plasma_soon = "Plasma soon!",
+	plasma_bar = "Plasma",
 
 	shock = "Shock Blast",
 	shock_desc = "Warns when Shock Blast is casting.",
-	shock_warning = "Casting Shock Blast!",
+	shock_warning = "Shock Blast!",
 
 	laser = "Laser Barrage",
 	laser_desc = "Warn when Laser Barrage is active!",
-	laser_soon = "Laser Barrage soon!",
-	laser_bar = "Next Laser Barrage",
+	laser_soon = "Barrage soon!",
+	laser_bar = "Barrage",
 
 	magnetic = "Magnetic Core",
-	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
-	magnetic_message = "Magnetic Core! DPS!",
+	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core.",
+	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
-
-	mines = "Proximity Mines",
-	mines_desc = "Show Next Timer for Proximity Mines",
-	mines_bar = "Next Mines",
 
 	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
@@ -120,10 +116,6 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_message = "자기 증폭기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
 
-	mines = "접근 지뢰",
-	mines_desc = "접근 지뢰에 대한 다음 사용의 타이머 바를 표시합니다.",
-	mines_bar = "다음 지뢰",
-
 	end_trigger = "^정상이야. 내가 계산을",
 } end )
 
@@ -170,10 +162,6 @@ L:RegisterTranslations("frFR", function() return {
 	magnetic_message = "Noyau magnétique ! DPS !",
 	loot_message = "%s a ramassé un noyau !",
 
-	mines = "Mines de proximité",
-	mines_desc = "Affiche le délai avant l'arrivée des prochaines Mines de proximité.",
-	mines_bar = "Prochaines Mines",
-
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
 } end )
 
@@ -219,10 +207,6 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core",
 	magnetic_message = "Magnetic Core! DPS!",
 	loot_message = "%s looted a core!",
-
-	mines = "Proximity Mines",
-	mines_desc = "Show Next Timer for Proximity Mines",
-	mines_bar = "Next Mines",
 
 	end_trigger = "^It would appear that I made a slight miscalculation.", -- needs verification
 	--]]
@@ -271,10 +255,6 @@ L:RegisterTranslations("zhCN", function() return {
 	magnetic_message = "Magnetic Core！DPS！",
 	loot_message = ">%s< 拾取了Magnetic Core！",
 
-	--mines = "Proximity Mines",
-	--mines_desc = "Show Next Timer for Proximity Mines",
-	--mines_bar = "Next Mines",
-
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
 
@@ -320,10 +300,6 @@ L:RegisterTranslations("zhTW", function() return {
 	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
 	magnetic_message = "磁能之核！DPS！",
 	loot_message = ">%s< 拾取了磁能之核！",
-
-	--mines = "Proximity Mines",
-	--mines_desc = "Show Next Timer for Proximity Mines",
-	--mines_bar = "Next Mines",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
@@ -371,10 +347,6 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
 
-	mines = "Мины ближнего действия",
-	mines_desc = "Показывать таймер до следующей Мины ближнего действия",
-	mines_bar = "Следующая мина",
-
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
 
@@ -386,7 +358,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mines", 63027)
 	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
 
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
@@ -408,12 +379,6 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Mines(_, spellID)
-	if db.mines then
-		self:Bar(L["mines_bar"], 35, spellID)
-	end
-end
-
 function mod:Plasma(_, spellID)
 	if db.plasma then
 		self:IfMessage(L["plasma_warning"], "Important", spellID)
@@ -432,7 +397,7 @@ end
 
 function mod:Spinning(_, spellId)
 	if db.laser then
-		self:IfMessage(L["laser_soon"], "Important", 63414, "Alarm")
+		self:IfMessage(L["laser_soon"], "Important", 63414, "Long")
 	end
 end
 

@@ -39,13 +39,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	gravitybomb = "Gravity Bomb",
 	gravitybomb_desc = "Tells you who has been hit by Gravity Bomb.",
-	gravitybomb_you = "Gravity Bomb on YOU!",
-	gravitybomb_other = "Gravity Bomb on %s!",
+	gravitybomb_you = "Gravity on YOU!",
+	gravitybomb_other = "Gravity on %s!",
 
 	lightbomb = "Light Bomb",
 	lightbomb_desc = "Tells you who has been hit by Light Bomb.",
-	lightbomb_you = "Light Bomb on YOU!",
-	lightbomb_other = "Light Bomb on %s!",
+	lightbomb_you = "Light on YOU!",
+	lightbomb_other = "Light on %s!",
 
 	tympanic = "Tympanic Tantrum",
 	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",

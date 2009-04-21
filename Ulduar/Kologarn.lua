@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
-mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", -1, "icon", "bosskill"}
+mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", -1, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -48,9 +48,6 @@ L:RegisterTranslations("enUS", function() return {
 	eyebeam_message = "Eyebeam Incoming!",
 	eyebeam_bar = "~Eyebeam",
 	eyebeam_you = "Eyebeam on YOU!",
-
-	icon = "Icon",
-	icon_desc = "Place a Raid Target Icon on players with Focused Eyebeam. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -74,9 +71,6 @@ L:RegisterTranslations("koKR", function() return {
 	eyebeam_message = "곧 안광 집중!",
 	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신은 안광 집중!",
-
-	icon = "전술 표시",
-	icon_desc = "안광 집중 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -100,9 +94,6 @@ L:RegisterTranslations("frFR", function() return {
 	eyebeam_message = "Arrivée d'un Rayon de l'oeil !",
 	eyebeam_bar = "~Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de l'oeil focalisé (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -126,9 +117,6 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeam_message = "Augenstrahl!",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Fokussierter Augenstrahl betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -152,9 +140,6 @@ L:RegisterTranslations("zhCN", function() return {
 	eyebeam_message = "Eyebeam：>%s<！",
 	eyebeam_bar = "<Eyebeam>",
 	eyebeam_you = ">你< Eyebeam！",
-
-	icon = "团队标记",
-	icon_desc = "为中了Focused Eyebeam的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -178,9 +163,6 @@ L:RegisterTranslations("zhTW", function() return {
 	eyebeam_message = "集束目光：>%s<！",
 	eyebeam_bar = "<集束目光>",
 	eyebeam_you = ">你< 集束目光！",
-
-	icon = "團隊標記",
-	icon_desc = "為中了集束目光的隊員打上團隊標記。（需要權限）",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -203,9 +185,6 @@ L:RegisterTranslations("ruRU", function() return {
 	eyebeam_desc = "Сообщать кто попал под воздействие Сосредоточенный взгляд.",
 	eyebeam_message = "Взгляд на: |3-5(%s)",
 	eyebeam_you = "Взгляд на ВАС!",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока, который под воздействие Сосредоточенного взгляда. (необходимо быть лидером группы или рейда)",
 } end )
 
 ------------------------------
@@ -301,3 +280,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+

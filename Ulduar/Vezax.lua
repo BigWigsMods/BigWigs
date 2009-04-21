@@ -36,8 +36,8 @@ L:RegisterTranslations("enUS", function() return {
 	surge = "Surge of Darkness",
 	surge_desc = "Warn when Vezax gains Surge of Darkness.",
 	surge_message = "Surge of Darkness!",
-	surge_cast = "Surge of Darkness casting!",
-	surge_end = "Surge of Darkness faded!",
+	surge_cast = "Surge casting!",
+	surge_end = "Surge faded!",
 
 	animus = "Saronite Animus",
 	animus_desc = "Warn when the Saronite Animus spawns.",
@@ -46,18 +46,18 @@ L:RegisterTranslations("enUS", function() return {
 	vapor = "Saronite Vapors",
 	vapor_desc = "Warn for Saronite Vapors spawn.",
 	vapor_message = "Saronite Vapor %d!",
-	vapor_bar = "Next Vapor (%d)",
+	vapor_bar = "Vapor",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
-	crash_you = "Shadow Crash on YOU!",
-	crash_other = "Shadow Crash on %s",
+	crash_you = "Crash on YOU!",
+	crash_other = "Crash on %s",
 
 	mark = "Mark of the Faceless",
-	mark_desc = "Place Icon for Mark of the Faceless.",
-	mark_message_you = "You have Mark of the Faceless!",
-	mark_message_other = "%s has Mark of the Faceless!",
+	mark_desc = "Warn who gets the Mark of the Faceless.",
+	mark_message_you = "Mark on YOU!",
+	mark_message_other = "Mark on %s!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash. (requires promoted or higher)",
@@ -257,6 +257,7 @@ function mod:OnEnable()
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 
+	count = 1
 	db = self.db.profile
 end
 

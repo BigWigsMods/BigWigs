@@ -46,9 +46,8 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_bar = "~Swarm cooldown",
 
 	defender = "Feral Defender",
-	defender_desc = "Warn for Feral Defender lifes.",
-	defender_message = "Defender(%d lifes remaining)",
-	defender_warning = "Feral Defender spawn!",
+	defender_desc = "Warn for Feral Defender lives.",
+	defender_warning = "Defender up (%d/9)!",
 
 	sonic = "Sonic Screech",
 	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
@@ -78,8 +77,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	defender = "수호 야수",
 	defender_desc = "수호 야수의 남은 생명 횟수를 알립니다.",
-	defender_message = "야수(%d 생명 남음)",
-	defender_warning = "수호 야수 소환!",
+	--defender_warning = "수호 야수 소환!",
 
 	sonic = "음파의 비명소리",
 	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
@@ -109,8 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	defender = "Défenseur farouche",
 	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
-	defender_message = "Défenseur farouche (%d |4vie restante:vies restantes;)",
-	defender_warning = "Défenseur farouche apparu !",
+	--defender_warning = "Défenseur farouche apparu !",
 
 	sonic = "Hurlement sonore",
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
@@ -140,8 +137,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	defender = "Wilder Verteidiger",
 	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
-	defender_message = "Wilder Verteidiger (noch %d Leben)",
-	defender_warning = "Wilder Verteidiger kommt!",
+	--defender_warning = "Wilder Verteidiger kommt!",
 
 	sonic = "Überschallkreischen",
 	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
@@ -171,7 +167,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	--defender = "Feral Defender",
 	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_message = "Defender(%d lifes remaining)",
 	--defender_warning = "Feral Defender spawn!",
 
 	--sonic = "Sonic Screech",
@@ -202,7 +197,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	--defender = "Feral Defender",
 	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_message = "Defender(%d lifes remaining)",
 	--defender_warning = "Feral Defender spawn!",
 
 	--sonic = "Sonic Screech",
@@ -233,8 +227,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	defender = "Дикий защитник",
 	defender_desc = "Сообщать о жизни Дикого защитника.",
-	defender_message = "Защитник(%d осталось жизни)",
-	defender_warning = "Появился Дикий защитник!",
+	--defender_warning = "Появился Дикий защитник!",
 
 	sonic = "Ультразвуковой визг",
 	sonic_desc = "Предупреждать когда Ауриайя применяет Ультразвуковой визг.",
@@ -262,6 +255,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 
+	count = 9
 	db = self.db.profile
 	started = nil
 end
@@ -279,15 +273,12 @@ end
 
 function mod:Defender(_, spellID)
 	if db.defender then
-		self:IfMessage(L["defender_warning"], "Attention", spellID)
+		self:IfMessage(L["defender_warning"]:format(count), "Attention", spellID)
 	end
 end
 
-function mod:DefenderKill(_, spellID)
-	if db.defender then
-		count = count - 1
-		self:IfMessage(L["defender_message"]:format(count), "Attention", spellID)
-	end
+function mod:DefenderKill()
+	count = count - 1
 end
 
 function mod:Swarm(player, spellId)
