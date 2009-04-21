@@ -162,7 +162,7 @@ L:RegisterTranslations("ruRU", function() return {
 	sentinel = "Удар часового",
 	sentinel_desc = "Предупреждать когда Ауриайя применяет Удар часового.",
 	sentinel_message = "Удар часового!",
-	
+
 	--swarm = "Guardian Swarm",
 	--swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
 	--swarm_other = "Swarm on %s!",

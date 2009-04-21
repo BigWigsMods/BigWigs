@@ -167,19 +167,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Nova()
+function mod:Nova(_, spellID)
 	if db.nova then
-		self:IfMessage(L["nova_message"], "Attention", 64216)
-		self:Bar(L["nova"], 5, 64216)
-		self:Bar(L["nova_next"], 25, 64216)
+		self:IfMessage(L["nova_message"], "Attention", spellID)
+		self:Bar(L["nova"], 5, spellID)
+		self:Bar(L["nova_next"], 25, spellID)
 	end
 end
 
-function mod:Overcharge()
+function mod:Overcharge(_, spellID)
 	if db.overcharge then
-		self:IfMessage(L["overcharge_message"], "Attention", 64218)
-		self:Bar(L["overcharge_bar"], 20, 64218)
-		self:Bar(L["overcharge_next"], 45, 64218)
+		self:IfMessage(L["overcharge_message"], "Personal", spellID)
+		self:Bar(L["overcharge_bar"], 20, spellID)
+		self:Bar(L["overcharge_next"], 45, spellID)
 	end
 end
 
@@ -226,7 +226,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["overcharge_next"], 45, 64218)
 		end
 		if db.berserk then
-		self:Enrage(360, true)
+			self:Enrage(360, true)
 		end
 	end
 end
