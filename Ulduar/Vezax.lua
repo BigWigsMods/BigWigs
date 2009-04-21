@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor = "사로나이트 증기",
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
 	vapor_message = "사로나이트 증기 (%d)!",
-	vapor_bar = "다음 증기 (%d)",
+	--vapor_bar = "다음 증기 (%d)",
 
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
@@ -116,7 +116,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
-	vapor_bar = "Prochaines Vapeurs (%d)",
+	--vapor_bar = "Prochaines Vapeurs (%d)",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", -- à traduire
 
 	crash = "Déferlante d'ombre",
@@ -151,7 +151,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor = "萨隆邪铁蒸汽",
 	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
-	vapor_bar = "<下一萨隆邪铁蒸汽：%d>",
+	--vapor_bar = "<下一萨隆邪铁蒸汽：%d>",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
@@ -186,7 +186,7 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor = "薩倫煙霧",
 	vapor_desc = "當薩倫煙霧出現時發出警報。",
 	vapor_message = "薩倫煙霧：>%d<！",
-	vapor_bar = "<下一薩倫煙霧：%d>",
+	--vapor_bar = "<下一薩倫煙霧：%d>",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "暗影暴擊",
@@ -221,7 +221,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor = "Саронитовые пары",
 	vapor_desc = "Сообщать о появлении Саронитовые пары.",
 	vapor_message = "Саронитовые пары (%d)!",
-	vapor_bar = "Следующие Пары (%d)",
+	--vapor_bar = "Следующие Пары (%d)",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Темное сокрушение",
@@ -345,7 +345,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["vapor_trigger"] and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
 		count = count + 1
-		self:Bar(L["vapor_bar"]:format(count), 30, 63323)
+		self:Bar(L["vapor_bar"], 30, 63323)
 	end
 end
 
