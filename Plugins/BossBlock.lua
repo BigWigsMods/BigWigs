@@ -11,7 +11,8 @@ if not plugin then return end
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossBlock")
 local db = nil
-local fnd = string.find
+local fnd = _G.string.find
+local type = _G.type
 
 L:RegisterTranslations("enUS", function() return {
 	["BossBlock"] = true,
@@ -339,18 +340,8 @@ plugin.consoleOptions = {
 --      Event Handlers      --
 ------------------------------
 
-local is31 = GetNumTalentGroups and true or nil
-local filter = nil
-if is31 then
-	filter = function(self, event, msg)
-		if plugin:IsChannelSuppressed(event) and plugin:IsSpam(msg) then return true end
-	end
-else
-	filter = function()
-		if plugin:IsChannelSuppressed(event) and plugin:IsSpam(arg1) then
-			return true
-		end
-	end
+local function filter(self, event, msg)
+	if plugin:IsChannelSuppressed(event) and plugin:IsSpam(msg) then return true end
 end
 
 function plugin:OnRegister()
