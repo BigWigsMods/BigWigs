@@ -273,7 +273,7 @@ end
 function mod:Sonic(_, spellID)
 	if db.sonic then
 		self:IfMessage(L["sonic_message"], "Attention", spellID)
-		self:Bar(L["sonic_bar"], 28, spellId)
+		self:Bar(L["sonic_bar"], 28, spellID)
 	end
 end
 
