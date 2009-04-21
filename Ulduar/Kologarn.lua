@@ -16,6 +16,7 @@ mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", -1, "icon", "bosskil
 
 local started = nil
 local db = nil
+local gripe = {}
 local pName = UnitName("player")
 
 ----------------------------
@@ -222,17 +223,31 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	db = self.db.profile
+	wipe(gripe)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+local function gripWarn()
+	local msg = nil
+	for k in pairs(gripe) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
+		end
+	end
+	mod:IfMessage(L["grip_message"]:format(msg), "Attention", spellID, "Alert")
+	mod:Bar(L["grip"], 10, spellID)
+	wipe(gripe)
+end
+
 function mod:Grip(player, spellID)
 	if db.grip then
-		local msg = L["grip_message"]:format(player)
-		self:IfMessage(msg, "Attention", spellID)
-		self:Bar(msg, 10, spellID)
+		gripe[player] = true
+		self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2, spellID)
 	end
 end
 
