@@ -8,7 +8,8 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33515
-mod.toggleoptions = {"fear", "sentinel", "swarm", "icon", "bosskill"}
+--Feral Defender = 34035
+mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -17,6 +18,7 @@ mod.toggleoptions = {"fear", "sentinel", "swarm", "icon", "bosskill"}
 local db = nil
 local started = nil
 local pName = UnitName("player")
+local count = 9
 
 ----------------------------
 --      Localization      --
@@ -42,6 +44,16 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_other = "Swarm on %s!",
 	swarm_you = "Swarm on YOU!",
 	swarm_bar = "~Swarm cooldown",
+	
+	defender = "Feral Defender",
+	defender_desc = "Warn for Feral Defender lifes.",
+	defender_message = "Defender(%d lifes remaining)",
+	defender_warning = "Feral Defender spawn!",
+	
+	sonic = "Sonic Screech",
+	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
+	sonic_message = "Casting Sonic!",
+	sonic_bar = "~Sonic cooldown",
 
 	icon = "Place Icon",
 	icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
@@ -58,14 +70,24 @@ L:RegisterTranslations("koKR", function() return {
 	sentinel_desc = "아우리아야의 파수꾼 폭발 시전을 알립니다.",
 	sentinel_message = "파수꾼 폭발!",
 
-	swarm = "수호자의 무리",
-	swarm_desc = "수호자의 무리 시전 대상을 알립니다.",
-	swarm_other = "수호자의 무리: %s!",
-	swarm_you = "당신은 수호자의 무리!",
+	swarm = "수호자 무리",
+	swarm_desc = "수호자 무리 시전 대상을 알립니다.",
+	swarm_other = "수호자 무리: %s!",
+	swarm_you = "당신은 수호자 무리!",
 	swarm_bar = "~무리 대기시간",
+	
+	defender = "수호 야수",
+	defender_desc = "수호 야수의 남은 생명 횟수를 알립니다.",
+	defender_message = "야수(%d 생명 남음)",
+	defender_warning = "수호 야수 소환!",
+	
+	sonic = "음파의 비명소리",
+	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
+	sonic_message = "음파 시전!",
+	sonic_bar = "~음파 대기시간",
 
 	icon = "전술 표시",
-	icon_desc = "Swarm의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "수호자의 무리 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -84,6 +106,16 @@ L:RegisterTranslations("frFR", function() return {
 	swarm_other = "Essaim sur %s !",
 	swarm_you = "Essaim sur VOUS !",
 	swarm_bar = "~Recharge Essaim",
+	
+	--defender = "Feral Defender",
+	--defender_desc = "Warn for Feral Defender lifes.",
+	--defender_message = "Defender(%d lifes remaining)",
+	--defender_warning = "Feral Defender spawn!",
+	
+	--sonic = "Sonic Screech",
+	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
+	--sonic_message = "Casting Sonic!",
+	--sonic_bar = "~Sonic cooldown",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",
@@ -105,6 +137,16 @@ L:RegisterTranslations("deDE", function() return {
 	swarm_other = "Wächterschwarm: %s!",
 	swarm_you = "Wächterschwarm auf DIR!",
 	swarm_bar = "~Wächterschwarm",
+	
+	--defender = "Feral Defender",
+	--defender_desc = "Warn for Feral Defender lifes.",
+	--defender_message = "Defender(%d lifes remaining)",
+	--defender_warning = "Feral Defender spawn!",
+	
+	--sonic = "Sonic Screech",
+	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
+	--sonic_message = "Casting Sonic!",
+	--sonic_bar = "~Sonic cooldown",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Wächterschwarm betroffen sind (benötigt Assistent oder höher).",
@@ -126,6 +168,16 @@ L:RegisterTranslations("zhCN", function() return {
 	swarm_other = "Swarm on：>%s<！",
 	swarm_you = ">你< Swarm！",
 	--swarm_bar = "~Swarm cooldown",
+	
+	--defender = "Feral Defender",
+	--defender_desc = "Warn for Feral Defender lifes.",
+	--defender_message = "Defender(%d lifes remaining)",
+	--defender_warning = "Feral Defender spawn!",
+	
+	--sonic = "Sonic Screech",
+	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
+	--sonic_message = "Casting Sonic!",
+	--sonic_bar = "~Sonic cooldown",
 
 	icon = "团队标记",
 	icon_desc = "为中了Guardian Swarm的队员打上团队标记。（需要权限）",
@@ -147,6 +199,16 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_other = "守護貓群：>%s<！",
 	swarm_you = ">你< 守護貓群！",
 	--swarm_bar = "~Swarm cooldown",
+	
+	--defender = "Feral Defender",
+	--defender_desc = "Warn for Feral Defender lifes.",
+	--defender_message = "Defender(%d lifes remaining)",
+	--defender_warning = "Feral Defender spawn!",
+	
+	--sonic = "Sonic Screech",
+	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
+	--sonic_message = "Casting Sonic!",
+	--sonic_bar = "~Sonic cooldown",
 
 	icon = "團隊標記",
 	icon_desc = "為中了守護貓群的隊員打上團隊標記。（需要權限）",
@@ -168,6 +230,19 @@ L:RegisterTranslations("ruRU", function() return {
 	--swarm_other = "Swarm on %s!",
 	--swarm_you = "Swarm on YOU!",
 	--swarm_bar = "~Swarm cooldown",
+	
+	--defender = "Feral Defender",
+	--defender_desc = "Warn for Feral Defender lifes.",
+	--defender_message = "Defender(%d lifes remaining)",
+	--defender_warning = "Feral Defender spawn!",
+	
+	--sonic = "Sonic Screech",
+	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
+	--sonic_message = "Casting Sonic!",
+	--sonic_bar = "~Sonic cooldown",
+	
+	--icon = "Place Icon",
+	--icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
 } end )
 
 ------------------------------
@@ -175,9 +250,12 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64688)
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
 	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Defender", 64455)
+	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "DefenderKill", 64455)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -191,6 +269,26 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Sonic(_, spellID)
+	if db.sonic then
+		self:IfMessage(L["sonic_message"], "Attention", spellID)
+		self:Bar(L["sonic_bar"], 28, spellId)
+	end
+end
+
+function mod:Defender(_, spellID)
+	if db.defender then
+		self:IfMessage(L["defender_warning"], "Attention", spellID)
+	end
+end
+
+function mod:DefenderKill(_, spellID)
+	if db.defender then
+		count = count - 1
+		self:IfMessage(L["defender_message"]:format(count), "Attention", spellID)
+	end
+end
 
 function mod:Swarm(player, spellId)
 	if db.swarm then
@@ -225,8 +323,12 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		count = 9
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
+		end
+		if db.defender then
+			self:Bar(L["defender"], 60, 64455)
 		end
 	end
 end
