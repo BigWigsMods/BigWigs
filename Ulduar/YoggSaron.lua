@@ -76,6 +76,7 @@ L:RegisterTranslations("enUS", function() return {
 	link = linkedName,
 	link_desc = "Warn which players are linked.",
 	link_message = linkedName .. ": %s",
+	link_warning = "You are Brain Link!",
 
 	gaze = "Lunatic Gaze",
 	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
@@ -143,9 +144,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
+	squeeze_message = squeezeName .. ": %s",
 
 	link = linkedName,
 	link_desc = "두뇌의 고리에 연결된 플레이어를 알립니다.",
+	link_message = linkedName .. ": %s",
+	link_warning = "당신은 두뇌의 고리!",
 
 	gaze = "광기의 시선",
 	gaze_desc = "요그사론의 광기의 시선 획득을 알립니다.",
@@ -217,6 +221,7 @@ L:RegisterTranslations("frFR", function() return {
 	link = linkedName,
 	link_desc = "Indique quels joueurs sont liées.",
 	link_message = linkedName .. " : %s",
+	--link_warning = "You are Brain Link!",
 
 	gaze = "Regard lunatique",
 	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
@@ -287,6 +292,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	link = linkedName,
 	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
+	--link_message = linkedName .. ": %s",
+	--link_warning = "You are Brain Link!",
 
 	gaze = "Wahnsinniger Blick",
 	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
@@ -359,6 +366,7 @@ L:RegisterTranslations("zhCN", function() return {
 	link = linkedName,
 	link_desc = "当玩家被Brain Link时发出警报。",
 	link_message = linkedName .. "：>%s<！",
+	--link_warning = "You are Brain Link!",
 
 	gaze = "疯乱凝视",
 	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
@@ -430,6 +438,7 @@ L:RegisterTranslations("zhTW", function() return {
 	link = linkedName,
 	link_desc = "當玩家中了腦波連結時發出警報。",
 	link_message = linkedName .. "：>%s<！",
+	--link_warning = "You are Brain Link!",
 
 	gaze = "癡狂凝視",
 	gaze_desc = "當尤格薩倫獲得癡狂凝視時發出警報。",
@@ -548,6 +557,9 @@ function mod:Linked(player, spellID)
 	if db.link then
 		linked[player] = true
 		self:ScheduleEvent("BWLinkedWarn", printLinked, 0.2, spellID)
+		if player == pName then
+			self:LocalMessage(L["link_warning"], "Personal", spellID, "Alarm")
+		end
 	end
 end
 

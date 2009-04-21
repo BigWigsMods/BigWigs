@@ -98,8 +98,8 @@ L:RegisterTranslations("koKR", function() return {
 	construct_bar = "다음 피조물",
 
 	brittle = "Brittle",
-	brittle_desc = "Warn when Iron Construct gains Brittle.",
-	brittle_message = "Construct gained Brittle!",
+	brittle_desc = "무쇠 피조물의 Brittle 획득를 알립니다.",
+	brittle_message = "피조물 Brittle 걸림!",
 
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
