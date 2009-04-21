@@ -177,7 +177,7 @@ end
 
 function mod:Overcharge(_, spellID)
 	if db.overcharge then
-		self:IfMessage(L["overcharge_message"], "Personal", spellID)
+		self:IfMessage(L["overcharge_message"], "Positive", spellID)
 		self:Bar(L["overcharge_bar"], 20, spellID)
 		self:Bar(L["overcharge_next"], 45, spellID)
 	end
