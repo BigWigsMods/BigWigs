@@ -591,7 +591,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.berserk then
 			self:Enrage(900, true, true)
 		end
-	elseif msg == L["phase2_trigger"] then
+	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Important", nil, "Alarm")
