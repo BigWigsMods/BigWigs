@@ -14,6 +14,7 @@ mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", -1, "icon", "bosskil
 --      Are you local?      --
 ------------------------------
 
+local started = nil
 local db = nil
 local pName = UnitName("player")
 
@@ -217,6 +218,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	db = self.db.profile
 end
@@ -275,3 +278,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
+		end
+	end
+end

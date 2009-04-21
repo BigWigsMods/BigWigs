@@ -15,8 +15,8 @@ mod.toggleoptions = {"vapor", "animus", -1, "crash", "mark", "flame", "surge", -
 ------------------------------
 
 local db = nil
-started = true
-count = 1
+local started = nil
+local count = 1
 local pName = UnitName("player")
 local fmt = string.format
 
