@@ -44,12 +44,12 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_other = "Swarm on %s!",
 	swarm_you = "Swarm on YOU!",
 	swarm_bar = "~Swarm cooldown",
-	
+
 	defender = "Feral Defender",
 	defender_desc = "Warn for Feral Defender lifes.",
 	defender_message = "Defender(%d lifes remaining)",
 	defender_warning = "Feral Defender spawn!",
-	
+
 	sonic = "Sonic Screech",
 	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
 	sonic_message = "Casting Sonic!",
@@ -75,12 +75,12 @@ L:RegisterTranslations("koKR", function() return {
 	swarm_other = "수호자 무리: %s!",
 	swarm_you = "당신은 수호자 무리!",
 	swarm_bar = "~무리 대기시간",
-	
+
 	defender = "수호 야수",
 	defender_desc = "수호 야수의 남은 생명 횟수를 알립니다.",
 	defender_message = "야수(%d 생명 남음)",
 	defender_warning = "수호 야수 소환!",
-	
+
 	sonic = "음파의 비명소리",
 	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
 	sonic_message = "음파 시전!",
@@ -93,9 +93,9 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	fear = "Hurlement terrifiant",
 	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
-	fear_warning = "Hurlement imminent !",
-	fear_message = "Hurlement en incantation !",
-	fear_bar = "~Recharge Hurlement",
+	fear_warning = "Hurlement terrifiant imminent !",
+	fear_message = "Hurlement terrifiant en incantation !",
+	fear_bar = "~Recharge H. terrifiant",
 
 	sentinel = "Déflagration du factionnaire",
 	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
@@ -106,16 +106,16 @@ L:RegisterTranslations("frFR", function() return {
 	swarm_other = "Essaim sur %s !",
 	swarm_you = "Essaim sur VOUS !",
 	swarm_bar = "~Recharge Essaim",
-	
-	--defender = "Feral Defender",
-	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_message = "Defender(%d lifes remaining)",
-	--defender_warning = "Feral Defender spawn!",
-	
-	--sonic = "Sonic Screech",
-	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
-	--sonic_message = "Casting Sonic!",
-	--sonic_bar = "~Sonic cooldown",
+
+	defender = "Défenseur farouche",
+	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
+	defender_message = "Défenseur farouche (%d |4vie restante:vies restantes;)",
+	defender_warning = "Défenseur farouche apparu !",
+
+	sonic = "Hurlement sonore",
+	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
+	sonic_message = "Hurlement sonore en incantation !",
+	sonic_bar = "~Recharge H. sonore",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",
@@ -137,12 +137,12 @@ L:RegisterTranslations("deDE", function() return {
 	swarm_other = "Wächterschwarm: %s!",
 	swarm_you = "Wächterschwarm auf DIR!",
 	swarm_bar = "~Wächterschwarm",
-	
+
 	defender = "Wilder Verteidiger",
 	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
 	defender_message = "Wilder Verteidiger (noch %d Leben)",
 	defender_warning = "Wilder Verteidiger kommt!",
-	
+
 	sonic = "Überschallkreischen",
 	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
 	sonic_message = "Wirkt Überschallkreischen!",
@@ -168,12 +168,12 @@ L:RegisterTranslations("zhCN", function() return {
 	swarm_other = "Swarm on：>%s<！",
 	swarm_you = ">你< Swarm！",
 	--swarm_bar = "~Swarm cooldown",
-	
+
 	--defender = "Feral Defender",
 	--defender_desc = "Warn for Feral Defender lifes.",
 	--defender_message = "Defender(%d lifes remaining)",
 	--defender_warning = "Feral Defender spawn!",
-	
+
 	--sonic = "Sonic Screech",
 	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
 	--sonic_message = "Casting Sonic!",
@@ -199,12 +199,12 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_other = "守護貓群：>%s<！",
 	swarm_you = ">你< 守護貓群！",
 	--swarm_bar = "~Swarm cooldown",
-	
+
 	--defender = "Feral Defender",
 	--defender_desc = "Warn for Feral Defender lifes.",
 	--defender_message = "Defender(%d lifes remaining)",
 	--defender_warning = "Feral Defender spawn!",
-	
+
 	--sonic = "Sonic Screech",
 	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
 	--sonic_message = "Casting Sonic!",
@@ -230,17 +230,17 @@ L:RegisterTranslations("ruRU", function() return {
 	swarm_other = "Страж выбрал |3-5(%s)!",
 	swarm_you = "Стража выбрал ВАС!",
 	swarm_bar = "~перезарядка стража",
-	
+
 	defender = "Дикий защитник",
 	defender_desc = "Сообщать о жизни Дикого защитника.",
 	defender_message = "Защитник(%d осталось жизни)",
 	defender_warning = "Появился Дикий защитник!",
-	
+
 	sonic = "Ультразвуковой визг",
 	sonic_desc = "Предупреждать когда Ауриайя применяет Ультразвуковой визг.",
 	sonic_message = "Применение Визга!",
 	sonic_bar = "~перезарядка визга",
-	
+
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, которого Крадущийся страж выбрал своей целью.",
 } end )
