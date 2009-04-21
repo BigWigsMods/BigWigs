@@ -258,7 +258,6 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	db = self.db.profile
 end
