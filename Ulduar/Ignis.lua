@@ -60,15 +60,15 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Дерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!",
 
-	--construct = "Activate Construct",
-	--construct_desc = "Warn for Activate Construct.",
-	--construct_message = "Activate Construct!",
-	--construct_warning = "Construct in 5sec!",
-	--construct_bar = "Next Construct",
+	construct = "Задействовать создание",
+	construct_desc = "Сообщать о Задействовании создания.",
+	construct_message = "Задействовать создание!",
+	construct_warning = "Создание через 5сек!",
+	construct_bar = "Следующее создание",
 
-	--brittle = "Brittle",
-	--brittle_desc = "Warn when Iron Construct gains Brittle.",
-	--brittle_message = "Construct gained Brittle!",
+	brittle = "Ломкость",
+	brittle_desc = "Сообщать когда Железное создание подвергается воздействию Ломкости.",
+	brittle_message = "Создание подверглось Ломкости!",
 
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",

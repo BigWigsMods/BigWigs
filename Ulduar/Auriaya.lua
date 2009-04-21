@@ -225,24 +225,24 @@ L:RegisterTranslations("ruRU", function() return {
 	sentinel_desc = "Предупреждать когда Ауриайя применяет Удар часового.",
 	sentinel_message = "Удар часового!",
 
-	--swarm = "Guardian Swarm",
-	--swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
-	--swarm_other = "Swarm on %s!",
-	--swarm_you = "Swarm on YOU!",
-	--swarm_bar = "~Swarm cooldown",
+	swarm = "Крадущийся страж",
+	swarm_desc = "Предупреждать когда Ауриайя применяет Призыв крадущегося стража.",
+	swarm_other = "Страж выбрал |3-5(%s)!",
+	swarm_you = "Стража выбрал ВАС!",
+	swarm_bar = "~перезарядка стража",
 	
-	--defender = "Feral Defender",
-	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_message = "Defender(%d lifes remaining)",
-	--defender_warning = "Feral Defender spawn!",
+	defender = "Дикий защитник",
+	defender_desc = "Сообщать о жизни Дикого защитника.",
+	defender_message = "Защитник(%d осталось жизни)",
+	defender_warning = "Появился Дикий защитник!",
 	
-	--sonic = "Sonic Screech",
-	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
-	--sonic_message = "Casting Sonic!",
-	--sonic_bar = "~Sonic cooldown",
+	sonic = "Ультразвуковой визг",
+	sonic_desc = "Предупреждать когда Ауриайя применяет Ультразвуковой визг.",
+	sonic_message = "Применение Визга!",
+	sonic_bar = "~перезарядка визга",
 	
-	--icon = "Place Icon",
-	--icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, которого Крадущийся страж выбрал своей целью.",
 } end )
 
 ------------------------------

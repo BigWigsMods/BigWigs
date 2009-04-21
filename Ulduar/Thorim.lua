@@ -324,7 +324,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	hammer = "Молот бури",
 	hammer_desc = "Сообщает о применении Молота бури.",
-	--hammer_message = "Stormhammer: %s",
+	hammer_message = "Молот брошен в |3-5(%s)",
 	hammer_bar = "Следующий Молот",
 
 	impale = "Прокалывание",
@@ -337,9 +337,9 @@ L:RegisterTranslations("ruRU", function() return {
 	shock_warning = "Заряженная сфера!",
 	shock_bar = "Следующая сфера",
 
-	--barrier = "Runic Barrier",
-	--barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
-	--barrier_message = "Runic Colossus gained Runic Barrier!",
+	barrier = "Руническая преграда",
+	barrier_desc = "Сообщать когда Рунический колосс подвергается воздействию Рунической преграды.",
+	barrier_message = "Рунический колосс получил Руническую преграду!",
 
 	detonation = "Взрыв руны",
 	detonation_desc = "Сообщает кто попал под воздействие Взрыва рун.",

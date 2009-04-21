@@ -371,9 +371,9 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
 
-	--mines = "Proximity Mines",
-	--mines_desc = "Show Next Timer for Proximity Mines",
-	--mines_bar = "Next Mines",
+	mines = "Мины ближнего действия",
+	mines_desc = "Показывать таймер до следующей Мины ближнего действия",
+	mines_bar = "Следующая мина",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )

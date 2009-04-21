@@ -77,7 +77,7 @@ L:RegisterTranslations("ruRU", function() return {
 	breath_desc = "Сообщать об Огненном дыхании.",
 	breath_trigger = "%s делает глубокий вдох…",
 	breath_message = "Огненное дыхание!",
-	--breath_bar = "~Breath Cooldown",
+	breath_bar = "~перезарядка дыхания",
 
 	flame = "Лавовая бомба на Вас",
 	flame_desc = "Сообщать когда вы поподаете под воздействие Лавовой бомбы.",
