@@ -138,15 +138,15 @@ L:RegisterTranslations("deDE", function() return {
 	swarm_you = "Wächterschwarm auf DIR!",
 	swarm_bar = "~Wächterschwarm",
 	
-	--defender = "Feral Defender",
-	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_message = "Defender(%d lifes remaining)",
-	--defender_warning = "Feral Defender spawn!",
+	defender = "Wilder Verteidiger",
+	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
+	defender_message = "Wilder Verteidiger (noch %d Leben)",
+	defender_warning = "Wilder Verteidiger kommt!",
 	
-	--sonic = "Sonic Screech",
-	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
-	--sonic_message = "Casting Sonic!",
-	--sonic_bar = "~Sonic cooldown",
+	sonic = "Überschallkreischen",
+	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
+	sonic_message = "Wirkt Überschallkreischen!",
+	sonic_bar = "~Überschallkreischen",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Wächterschwarm betroffen sind (benötigt Assistent oder höher).",
@@ -250,7 +250,7 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64688)
+	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
 	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
