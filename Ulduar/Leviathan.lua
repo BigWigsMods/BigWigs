@@ -151,7 +151,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	pursue = "Погоня",
 	pursue_desc = "Сообщать когда Огненный Левиафан преследует игрока.",
-	--pursue_trigger = "^%%s pursues",
+	pursue_trigger = "^%%s наводится на",
 	pursue_other = "Левиафан преследует |3-3(%s)!",
 	pursue_you = "Левиафан преследует ВАС!",
 

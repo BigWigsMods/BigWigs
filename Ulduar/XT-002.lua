@@ -237,13 +237,13 @@ L:RegisterTranslations("ruRU", function() return {
 
 	gravitybomb = "Гравитационная бомба",
 	gravitybomb_desc = "Сообщает об игроках с Гравитационной Бомбой.",
-	gravitybomb_you = "Гравитационная бомба на ВАС!",
-	gravitybomb_other = "Гравитационная бомба на |3-5(%s)!",
+	gravitybomb_you = "Бомба на ВАС!",
+	gravitybomb_other = "Бомба на |3-5(%s)!",
 
 	lightbomb = "Светлый взрыв",
 	lightbomb_desc = "Сообщает об игроках со Светлым взрывом.",
-	lightbomb_you = "Светлый взрыв на ВАС!",
-	lightbomb_other = "Светлый взрыв на |3-5(%s)!",
+	lightbomb_you = "Взрыв на ВАС!",
+	lightbomb_other = "Взрыв на |3-5(%s)!",
 
 	tympanic = "Раскаты ярости",
 	tympanic_desc = "Сообщает о применении Раскатов Ярости.",
