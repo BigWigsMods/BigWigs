@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
-mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", "armor", -1, "bosskill"}
+mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", "armor", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	eyebeam_message = "Eyebeam Incoming!",
 	eyebeam_bar = "~Eyebeam",
 	eyebeam_you = "Eyebeam on YOU!",
-	
+
 	armor = "Crunch Armor",
 	armor_desc = "Warn when someone has 2 or more stacks of Crunch Armor.",
 	armor_message = "%dx Crunch on %s",
@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 	eyebeam_message = "곧 안광 집중!",
 	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신은 안광 집중!",
-	
+
 	armor = "Crunch Armor",
 	armor_desc = "Crunch Armor 중첩이 2이상이면 알립니다.",
 } end )
@@ -101,6 +101,10 @@ L:RegisterTranslations("frFR", function() return {
 	eyebeam_message = "Arrivée d'un Rayon de l'oeil !",
 	eyebeam_bar = "~Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
+
+	armor = "Broie armure",
+	armor_desc = "Prévient quand un joueur a 2 cumuls ou plus de Broie armure.",
+	armor_message = "%dx broyages d'armure sur %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
