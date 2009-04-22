@@ -9,9 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {commander, boss}
 mod.guid = 33186
-mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "proximity", "bosskill"}
-mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
-mod.proximitySilent = true
+mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -22,6 +20,7 @@ local p2 = nil
 local pName = UnitName("player")
 local started = nil
 local count = 1
+local totalHarpoons = 4
 local phase = nil
 
 ----------------------------
@@ -40,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	air_trigger = "Give us a moment to prepare to build the turrets.",
 	air_message = "Takeoff!",
 	phase2_trigger = "%s grounded permanently!",
-	phase2_message = "Phases 2!",
+	phase2_message = "Phase 2!",
 	phase2_warning = "Phase 2 Soon!",
 	stun_bar = "Stun",
 
@@ -50,15 +49,15 @@ L:RegisterTranslations("enUS", function() return {
 	breath_message = "Flame Breath!",
 	breath_bar = "~Breath Cooldown",
 
-	flame = "Devouring Flame on You",
+	flame = "Devouring Flame",
 	flame_desc = "Warn when you are in a Devouring Flame.",
-	flame_message = "Devouring Flame on YOU!",
+	flame_message = "Flame on YOU!",
 
 	harpoon = "Harpoon Turret",
 	harpoon_desc = "Harpoon Turret announce.",
-	harpoon_message = "Harpoon Turret (%d)",
+	harpoon_message = "Harpoon %d ready!",
 	harpoon_trigger = "Harpoon Turret is ready for use!",
-	harpoon_nextbar = "Next Harpoon (%d)",
+	harpoon_nextbar = "Harpoon %d",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -248,6 +247,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
+	totalHarpoons = GetCurrentDungeonDifficulty() == 1 and 2 or 4
 	db = self.db.profile
 	started = nil
 end
@@ -287,7 +287,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
 		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "INV_Spear_06")
 		count = count + 1
-		if count < 4 then
+		if count < totalHarpoons then
 			self:Bar(L["harpoon_nextbar"]:format(count), 18, "INV_Spear_06")
 		end
 	end
@@ -297,12 +297,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["ground_trigger"] and db.phase then
 		self:Message(L["ground_message"], "Attention", nil, "Long")
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
-		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["air_trigger"] then
 		p2 = nil
 		count = 1
 		self:Bar(L["harpoon_nextbar"]:format(count), 55, "INV_Spear_06")
-		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if not started then
 			if db.berserk then
 				self:Enrage(600, true)
