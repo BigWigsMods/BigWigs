@@ -16,7 +16,7 @@ mod.toggleoptions = {"construct", "brittle", "flame", "scorch", "slagpot", "boss
 
 local db = nil
 local pName = UnitName("player")
-local spwanTime = 30
+local spawnTime = 30
 
 ----------------------------
 --      Localization      --
@@ -42,12 +42,11 @@ L:RegisterTranslations("enUS", function() return {
 	flame = "Flame Jets",
 	flame_desc = "Warn when Ignis casts a Flame Jets.",
 	flame_message = "Flame Jets!",
-	flame_warning = "Flame Jets soon!",
 	flame_bar = "~Jets cooldown",
 
 	scorch = "Scorch",
 	scorch_desc = "Warn when you are in a Scorch and Scorch is casting.",
-	scorch_message = "Scorch: %s",
+	scorch_message = "Scorch on you!",
 	scorch_warning = "Casting Scorch!",
 	scorch_soon = "Scorch in ~5sec!",
 	scorch_bar = "Next Scorch",
@@ -73,12 +72,10 @@ L:RegisterTranslations("ruRU", function() return {
 	flame = "Огненная струя",
 	flame_desc = "Сообщать когда Игнус применяет Огненную струю.",
 	flame_message = "Огненная струя!",
-	flame_warning = "Скоро Огненная струя!",
 	flame_bar = "~перезарядка струи",
 
 	scorch = "Ожог",
 	scorch_desc = "Сообщать когда вас обжигает и когда применяется Ожог.",
-	scorch_message = "Ожог: %s",
 	scorch_warning = "Применение Ожога!",
 	scorch_soon = "Ожог через ~5сек!",
 	scorch_bar = "Следующий Ожог",
@@ -104,12 +101,10 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
 	flame_message = "화염 분출!",
-	flame_warning = "잠시후 화염 분출!",
 	flame_bar = "~분출 대기시간",
 
 	scorch = "불태우기",
 	scorch_desc = "자신의 불태우기와 불태우기 시전을 알립니다.",
-	scorch_message = "불태우기: %s",
 	scorch_warning = "불태우기 시전!",
 	scorch_soon = "약 5초 후 불태우기!",
 	scorch_bar = "다음 불태우기",
@@ -135,12 +130,10 @@ L:RegisterTranslations("frFR", function() return {
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
-	flame_warning = "Flots de flammes imminent !",
 	flame_bar = "~Recharge Flots",
 
 	scorch = "Brûlure",
 	scorch_desc = "Prévient quand vous vous trouvez dans une Brûlure et quand cette dernière est incantée.",
-	scorch_message = "Brûlure : %s",
 	scorch_warning = "Brûlure en incantation !",
 	scorch_soon = "Brûlure dans ~5 sec. !",
 	scorch_bar = "Prochaine Brûlure",
@@ -166,12 +159,10 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
 	flame_message = "Flammenstrahlen!",
-	flame_warning = "Flammenstrahlen bald!",
 	flame_bar = "~Flammenstrahlen",
 
 	scorch = "Versengen",
 	scorch_desc = "Warnt, wenn Versengen gewirkt wird und wer davon betroffen ist.",
-	scorch_message = "Versengen: %s!",
 	scorch_warning = "Versengen!",
 	scorch_soon = "Versengen in ~5 sek!",
 	scorch_bar = "Nächstes Versengen",
@@ -197,12 +188,10 @@ L:RegisterTranslations("zhCN", function() return {
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
 	flame_message = "Flame Jets！",
-	flame_warning = "即将 Flame Jets！",
 	flame_bar = "<Jets 冷却>",
 
 	scorch = "灼烧",
 	scorch_desc = "当正在施放灼烧和你中了灼烧时发出警报。",
-	scorch_message = "灼烧：>%s<！",
 	scorch_warning = "正在施放 灼烧！",
 	scorch_soon = "约5秒后，灼烧！",
 	scorch_bar = "<下一灼烧>",
@@ -228,12 +217,10 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "烈焰噴洩",
 	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",
 	flame_message = "烈焰噴洩！",
-	flame_warning = "即將 烈焰噴洩！",
 	flame_bar = "<烈焰噴洩 冷卻>",
 
 	scorch = "灼燒",
 	scorch_desc = "當正在施放灼燒和你中了灼燒時發出警報。",
-	scorch_message = "灼燒：>%s<！",
 	scorch_warning = "正在施放 灼燒！",
 	scorch_soon = "約5秒后，灼燒！",
 	scorch_bar = "<下一灼燒>",
@@ -275,8 +262,8 @@ end
 function mod:Construct()
 	if db.construct then
 		self:IfMessage(L["construct_message"], "Attention", "INV_Misc_Statue_07") --Views like this icon. :)
-		self:Bar(L["construct_bar"], spwanTime, "INV_Misc_Statue_07") --Views like this icon. :)
-		self:DelayedMessage(spwanTime - 5, L["construct_warning"], "Attention")
+		self:Bar(L["construct_bar"], spawnTime, "INV_Misc_Statue_07") --Views like this icon. :)
+		self:DelayedMessage(spawnTime - 5, L["construct_warning"], "Attention")
 	end
 end
 
@@ -313,16 +300,14 @@ function mod:Jets(_, spellID)
 		self:IfMessage(L["flame_message"], "Personal", spellID, "Alert")
 		self:Bar(L["flame_bar"], 25, spellID)
 		self:Bar(L["flame_bar"], 2.7, spellID)
-		self:DelayedMessage(25, L["flame_warning"], "Attention")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		spwanTime = GetCurrentDungeonDifficulty() == 1 and 40 or 30
+		spawnTime = GetCurrentDungeonDifficulty() == 1 and 40 or 30
 		if db.flame then
 			self:Bar(L["flame_bar"], 21, 62680)
-			self:DelayedMessage(21, L["flame_warning"], "Attention")
 		end
 		if db.construct then
 			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")

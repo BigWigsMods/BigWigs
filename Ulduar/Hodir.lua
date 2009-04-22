@@ -35,20 +35,19 @@ L:RegisterTranslations("enUS", function() return {
 
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
-	flash_message = "%s has Flash Freeze!",
+	flash_message = "Frozen: %s!",
 	flash_warning = "Casting Flash Freeze!",
 	flash_soon = "Flash Freeze in 5sec!",
-	flash_bar = "Next Flash",
+	flash_bar = "Flash",
 
-	frozenblow = "Frozen Blow",
-	frozenblow_desc = "Warn when Hodir gains Frozen Blow.",
-	frozenblow_message = "Hodir gained Frozen Blow!",
-	frozenblow_warning = "Frozen Blow removed in 5sec!",
-	frozenblow_bar = "Frozen Blow",
+	frozenblow = "Frozen Blows",
+	frozenblow_desc = "Warn when Hodir gains Frozen Blows.",
+	frozenblow_message = "Frozen Blows!",
+	frozenblow_bar = "Frozen Blows",
 
-	hardmode = "Hard Mode Timer",
-	hardmode_desc = "Show Timer for Hard Mode.",
-	hardmode_warning = "Hard Mode ends",
+	hardmode = "Hard Mode",
+	hardmode_desc = "Show timer for Hard Mode.",
+	hardmode_warning = "Hard mode",
 
 	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -70,7 +69,6 @@ L:RegisterTranslations("koKR", function() return {
 	frozenblow = "얼음 일격",
 	frozenblow_desc = "호디르의 얼음 일격 획득을 알립니다.",
 	frozenblow_message = "호디르 얼음 일격!",
-	frozenblow_warning = "얼음 일격 5초 후 사라짐!",
 	frozenblow_bar = "얼음 일격",
 
 	hardmode = "도전 모드 시간",
@@ -97,7 +95,6 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow = "Coups gelés",
 	frozenblow_desc = "Prévient quand Hodir gagne Coups gelés.",
 	frozenblow_message = "Hodir gagne Coups gelés !",
-	frozenblow_warning = "Fin des Coups gelés dans 5 sec. !",
 	frozenblow_bar = "Coups gelés",
 
 	hardmode = "Délai du mode difficile",
@@ -124,7 +121,6 @@ L:RegisterTranslations("deDE", function() return {
 	frozenblow = "Gefrorene Schläge",
 	frozenblow_desc = "Warnt, wenn Hodir Gefrorene Schläge bekommt.",
 	frozenblow_message = "Hodir bekommt Gefrorene Schläge!",
-	frozenblow_warning = "Gefrorene Schläge weg in 5 sek!",
 	frozenblow_bar = "Gefrorene Schläge",
 
 	hardmode = "Hard Mode",
@@ -151,7 +147,6 @@ L:RegisterTranslations("zhCN", function() return {
 	frozenblow = "Frozen Blow",
 	frozenblow_desc = "当霍迪尔获得Frozen Blow效果时发出警报。",
 	frozenblow_message = "霍迪尔 - Frozen Blow！",
-	frozenblow_warning = "5秒后，Frozen Blow消失！",
 	frozenblow_bar = "<Frozen Blow>",
 
 	hardmode = "困难模式计时器",
@@ -178,7 +173,6 @@ L:RegisterTranslations("zhTW", function() return {
 	frozenblow = "冰凍痛擊",
 	frozenblow_desc = "當霍迪爾獲得冰凍痛擊效果時發出警報。",
 	frozenblow_message = "霍迪爾 - 冰凍痛擊！",
-	frozenblow_warning = "5秒后，冰凍痛擊消失！",
 	frozenblow_bar = "<冰凍痛擊>",
 
 	hardmode = "困難模式計時器",
@@ -205,7 +199,6 @@ L:RegisterTranslations("ruRU", function() return {
 	frozenblow = "Ледяные дуновения",
 	frozenblow_desc = "Сообщать когда Ходир накладывает на себя Ледяные дуновения.",
 	frozenblow_message = "Ходир наложил на себя Ледяные дуновения!",
-	frozenblow_warning = "Ледяные дуновения спадёт через 5сек!",
 	frozenblow_bar = "Ледяные дуновения",
 
 	hardmode = "Таймер сложного режима", --need review
@@ -224,7 +217,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "FrozenBlow", 62478, 63512)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
 	self:AddCombatListener("SPELL_DAMAGE", "Cold", 62188)
 	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
 
@@ -271,10 +264,9 @@ function mod:Flash(player)
 	end
 end
 
-function mod:FrozenBlow(_, spellID)
+function mod:Frozen(_, spellID)
 	if db.frozenblow then
 		self:IfMessage(L["frozenblow_message"], "Attention", spellID)
-		self:DelayedMessage(15, L["frozenblow_warning"], "Attention")
 		self:Bar(L["frozenblow_bar"], 20, spellID)
 	end
 end
