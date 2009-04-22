@@ -289,6 +289,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "Warnt, welcher Spieler von Quetschen betroffen ist.",
+	squeeze_message = squeezeName .. ": %s!",
 
 	link = linkedName,
 	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",

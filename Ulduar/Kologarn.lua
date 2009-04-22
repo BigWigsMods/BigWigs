@@ -128,6 +128,10 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeam_message = "Augenstrahl!",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
+	
+	armor = "Rüstung zermalmen",
+	armor_desc = "Warnt, wenn ein Spieler von 2 oder mehr Stapel von Rüstung zermalmen betroffen ist.",
+	armor_message = "%dx Rüstung zermalmen auf %s!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

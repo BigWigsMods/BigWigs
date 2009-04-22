@@ -171,9 +171,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	harpoon = "Harpunengeschütze",
 	harpoon_desc = "Warnungen und Timer für die Harpunengeschütze.",
-	harpoon_message = "Harpunengeschütz (%d)",
+	harpoon_message = "Harpunengeschütz (%d) bereit!",
 	harpoon_trigger = "Harpunengeschütz ist einsatzbereit!",
-	harpoon_nextbar = "Nächstes Geschütz (%d)",
+	harpoon_nextbar = "Geschütz (%d)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
