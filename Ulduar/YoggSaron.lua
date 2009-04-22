@@ -292,8 +292,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	link = linkedName,
 	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
-	--link_message = linkedName .. ": %s",
-	--link_warning = "You are Brain Link!",
+	link_message = linkedName .. ": %s",
+	link_warning = "DU bist gehirnverbunden!",
 
 	gaze = "Wahnsinniger Blick",
 	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
