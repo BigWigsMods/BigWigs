@@ -128,7 +128,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	charge = "번개 충전",
 	charge_desc = "토림의 번개 충전과 횟수를 알립니다.",
-	charge_message = "충전: (%d)",
+	charge_message = "충전 (%d)!",
 	charge_bar = "충전 (%d)",
 
 	strike = "혼란의 일격",

@@ -99,21 +99,21 @@ L:RegisterTranslations("koKR", function() return {
 	plasma = "플라스마 폭발",
 	plasma_desc = "플라스마 폭발 시전을 알립니다.",
 	plasma_warning = "플라스마 폭발 시전!",
-	plasma_soon = "곧 플라스마 폭발!",
-	plasma_bar = "다음 플라스마 폭발",
+	plasma_soon = "곧 플라스마!",
+	plasma_bar = "다음 플라스마",
 
 	shock = "충격파",
 	shock_desc = "충격파 시전을 알립니다.",
-	shock_warning = "충격파 시전!",
+	shock_warning = "충격파!",
 
 	laser = "레이저 탄막",
 	laser_desc = "레이저 탄막 활동을 알립니다!",
-	laser_soon = "곧 레이저 탄막!",
-	laser_bar = "디음 레이저 탄막",
+	laser_soon = "곧 탄막!",
+	laser_bar = "다음 탄막",
 
 	magnetic = "자기 증폭기",
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
-	magnetic_message = "자기 증폭기! 극딜!",
+	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
 
 	end_trigger = "^정상이야. 내가 계산을",

@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor = "사로나이트 증기",
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
 	vapor_message = "사로나이트 증기 (%d)!",
-	--vapor_bar = "다음 증기 (%d)",
+	vapor_bar = "다음 증기",
 
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
