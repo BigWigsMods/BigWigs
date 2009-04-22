@@ -50,9 +50,8 @@ L:RegisterTranslations("enUS", function() return {
 	eyebeam_you = "Eyebeam on YOU!",
 	
 	armor = "Crunch Armor",
-	armor_desc = "Warn when you have 2 or more stacks of Crunch Armor.",
-	armor_message = "Crunch Armor x%d!",
-	armor_yell = "I'm a Crunch Armor x%d!",
+	armor_desc = "Warn when someone has 2 or more stacks of Crunch Armor.",
+	armor_message = "%dx Crunch on %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -79,8 +78,6 @@ L:RegisterTranslations("koKR", function() return {
 	
 	armor = "Crunch Armor",
 	armor_desc = "Crunch Armor 중첩이 2이상이면 알립니다.",
-	armor_message = "Crunch Armor x%d!",
-	armor_yell = "저 Crunch Armor x%d!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -204,7 +201,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
 	self:AddCombatListener("SPELL_DAMAGE", "EyebeamHit", 63976, 63346, 63368)
-	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "Armor", 63355, 64002)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -220,27 +217,20 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:UNIT_AURA(unit)
-	if unit and unit ~= "player" then return end
-	local crunchArmor = nil
-	for i = 1, 5 do
-		local name, _, icon, stack = UnitDebuff("player", i)
-		if not name then break end
-		if icon == "Interface\\Icons\\Ability_Warrior_ShieldBreak" then
-			if stack < 2 then return end
-			crunchArmor = stack
+function mod:Armor(player)
+	if db.armor then
+		local crunchArmor = nil
+		for i = 1, 10 do
+			local name, _, icon, stack = UnitDebuff(player, i)
+			if not name then break end
+			if icon == "Interface\\Icons\\Ability_Warrior_ShieldBreak" then
+				crunchArmor = stack
+				break
+			end
 		end
-	end
-	if crunchArmor then
-		self:LocalMessage(L["armor_message"]:format(crunchArmor), "Personal", "Interface\\Icons\\Ability_Warrior_ShieldBreak", "Alert")
-		SendChatMessage(L["armor_yell"], "YELL")
-		self:UnregisterEvent("UNIT_AURA")
-	end
-end
-
-function mod:SPELL_AURA_REMOVED_DOSE(player, spellID)
-	if player == pName and db.armor then
-		self:RegisterEvent("UNIT_AURA")
+		if crunchArmor then
+			self:IfMessage(L["armor_message"]:format(crunchArmor, player), "Urgent", "Interface\\Icons\\Ability_Warrior_ShieldBreak", "Info")
+		end
 	end
 end
 
