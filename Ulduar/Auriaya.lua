@@ -47,7 +47,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	defender = "Feral Defender",
 	defender_desc = "Warn for Feral Defender lives.",
-	defender_warning = "Defender up (%d/9)!",
+	defender_message = "Defender lives (%d/9)!",
+	defender_warning = "Defender up!",
 
 	sonic = "Sonic Screech",
 	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
@@ -77,7 +78,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	defender = "수호 야수",
 	defender_desc = "수호 야수의 남은 생명 횟수를 알립니다.",
-	--defender_warning = "수호 야수 소환!",
+	defender_message = "수호 야수 생명(%d/9)!",
+	defender_warning = "수호 야수 소환!",
 
 	sonic = "음파의 비명소리",
 	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
@@ -107,7 +109,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	defender = "Défenseur farouche",
 	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
-	--defender_warning = "Défenseur farouche apparu !",
+	--defender_message = "Defender lives (%d/9)!",
+	--defender_warning = "Defender up!",
 
 	sonic = "Hurlement sonore",
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
@@ -137,8 +140,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	defender = "Wilder Verteidiger",
 	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
-	--defender_warning = "Wilder Verteidiger kommt!",
-
+	--defender_message = "Defender lives (%d/9)!",
+	--defender_warning = "Defender up!",
+	
 	sonic = "Überschallkreischen",
 	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
 	sonic_message = "Wirkt Überschallkreischen!",
@@ -167,7 +171,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	defender = "野性防卫者", --check
 	defender_desc = "当野性防卫者出现时发出警报。",
-	defender_warning = "野性防卫者 出现！",
+	--defender_message = "Defender lives (%d/9)!",
+	--defender_warning = "Defender up!",
 
 	sonic = "Sonic Screech",
 	sonic_desc = "当欧尔莉亚施放Sonic Screech时发出警报。",
@@ -197,7 +202,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	defender = "野性防衛者",
 	defender_desc = "當野性防衛者出現時發出警報。",
-	defender_warning = "野性防衛者 出現！",
+	--defender_message = "Defender lives (%d/9)!",
+	--defender_warning = "Defender up!",
 
 	sonic = "音速尖嘯",
 	sonic_desc = "當奧芮雅施放音速尖嘯時發出警報。",
@@ -227,7 +233,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 	defender = "Дикий защитник",
 	defender_desc = "Сообщать о жизни Дикого защитника.",
-	--defender_warning = "Появился Дикий защитник!",
+	--defender_message = "Defender lives (%d/9)!",
+	--defender_warning = "Defender up!",
 
 	sonic = "Ультразвуковой визг",
 	sonic_desc = "Предупреждать когда Ауриайя применяет Ультразвуковой визг.",
@@ -273,12 +280,15 @@ end
 
 function mod:Defender(_, spellID)
 	if db.defender then
-		self:IfMessage(L["defender_warning"]:format(count), "Attention", spellID)
+		self:IfMessage(L["defender_warning"], "Attention", spellID)
 	end
 end
 
-function mod:DefenderKill()
-	count = count - 1
+function mod:DefenderKill(_, spellID)
+	if db.defender then
+		count = count - 1
+		self:IfMessage(L["defender_message"]:format(count), "Attention", spellID)
+	end
 end
 
 function mod:Swarm(player, spellID)
