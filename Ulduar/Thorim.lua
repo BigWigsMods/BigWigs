@@ -215,7 +215,7 @@ L:RegisterTranslations("zhCN", function() return {
 	hammer = "风暴之锤",
 	hammer_desc = "当风暴之锤时发出警报。",
 	hammer_message = "风暴之锤：>%s<！",
-	hammer_bar = "<下一风暴之锤>",
+	hammer_bar = "<风暴之锤>",
 
 	impale = "穿刺",
 	impale_desc = "当玩家中了穿刺时发出警报。",
@@ -260,7 +260,7 @@ L:RegisterTranslations("zhTW", function() return {
 --	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三階段 - %s已狂怒！",
 
-	p2berserk = "第二階段 - 狂暴！",
+	p2berserk = "第二階段 - 狂暴",
 	p2berserk_desc = "當首領在第二階段狂暴時發出警報。",
 
 	hardmode = "困難模式計時器",
@@ -270,7 +270,7 @@ L:RegisterTranslations("zhTW", function() return {
 	hammer = "風暴之錘",
 	hammer_desc = "當風暴之錘時發出警報。",
 	hammer_message = "風暴之錘：>%s<！",
-	hammer_bar = "<下一風暴之錘>",
+	hammer_bar = "<風暴之錘>",
 
 	impale = "刺穿",
 	impale_desc = "當玩家中了刺穿時發出警報。",

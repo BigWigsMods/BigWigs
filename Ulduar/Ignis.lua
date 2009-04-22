@@ -184,15 +184,15 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	--construct = "Activate Construct",
-	--construct_desc = "Warn for Activate Construct.",
-	--construct_message = "Activate Construct!",
-	--construct_warning = "Construct in 5sec!",
-	--construct_bar = "Next Construct",
+	construct = "启动傀儡",
+	construct_desc = "当启动傀儡时发出警报。",
+	construct_message = "启动傀儡！",
+	construct_warning = "5秒后，启动傀儡！",
+	construct_bar = "<下一启动傀儡>",
 
-	--brittle = "Brittle",
-	--brittle_desc = "Warn when Iron Construct gains Brittle.",
-	--brittle_message = "Construct gained Brittle!",
+	brittle = "Brittle",
+	brittle_desc = "当Iron Construct获得Brittle时发出警报。",
+	brittle_message = "Iron Construct - Brittle！",
 
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
@@ -215,15 +215,15 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 --	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	--construct = "Activate Construct",
-	--construct_desc = "Warn for Activate Construct.",
-	--construct_message = "Activate Construct!",
-	--construct_warning = "Construct in 5sec!",
-	--construct_bar = "Next Construct",
+	construct = "啟動傀儡",
+	construct_desc = "當啟動傀儡時發出警報。",
+	construct_message = "啟動傀儡！",
+	construct_warning = "5秒后，啟動傀儡！",
+	construct_bar = "<下一啟動傀儡>",
 
-	--brittle = "Brittle",
-	--brittle_desc = "Warn when Iron Construct gains Brittle.",
-	--brittle_message = "Construct gained Brittle!",
+	brittle = "脆裂",
+	brittle_desc = "當鐵之傀儡獲得脆裂時發出警報。",
+	brittle_message = "鐵之傀儡 - 脆裂！",
 
 	flame = "烈焰噴洩",
 	flame_desc = "當伊格尼司施放烈焰噴洩時發出警報。",

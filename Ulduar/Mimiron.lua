@@ -239,20 +239,20 @@ L:RegisterTranslations("zhCN", function() return {
 	plasma_desc = "当正在施放Plasma Blast时发出警报。",
 	plasma_warning = "正在施放 Plasma Blast！",
 	plasma_soon = "即将 Plasma Blast！",
-	plasma_bar = "<下一Plasma Blast>",
+	plasma_bar = "<Plasma Blast>",
 
 	shock = "震爆",
 	shock_desc = "当正在施放震爆时发出警报。",
-	shock_warning = "正在施放 震爆！",
+	shock_warning = "震爆！",
 
 	laser = "激光弹幕",
 	laser_desc = "当激光弹幕启用时发出警报。",
 	laser_soon = "即将 激光弹幕！",
-	laser_bar = "<下一激光弹幕>",
+	laser_bar = "<激光弹幕>",
 
 	magnetic = "Magnetic Core",
 	magnetic_desc = "当Aerial Command Unit获得Magnetic Core时发出警报。",
-	magnetic_message = "Magnetic Core！DPS！",
+	magnetic_message = "Aerial Command Unit 已降落！",
 	loot_message = ">%s< 拾取了Magnetic Core！",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
@@ -285,20 +285,20 @@ L:RegisterTranslations("zhTW", function() return {
 	plasma_desc = "當正在施放離子衝擊時發出警報。",
 	plasma_warning = "正在施放 離子衝擊！",
 	plasma_soon = "即將 離子衝擊！",
-	plasma_bar = "<下一離子沖擊>",
+	plasma_bar = "<離子沖擊>",
 
 	shock = "震爆",
 	shock_desc = "當正在施放震爆時發出警報。",
-	shock_warning = "正在施放 震爆！",
+	shock_warning = "震爆！",
 
 	laser = "雷射彈幕",
 	laser_desc = "當雷射彈幕啟用時發出警報。",
 	laser_soon = "即將 雷射彈幕！",
-	laser_bar = "<下一雷射彈幕>",
+	laser_bar = "<雷射彈幕>",
 
 	magnetic = "磁能之核",
 	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
-	magnetic_message = "磁能之核！DPS！",
+	magnetic_message = "空中指揮裝置 已降落！",
 	loot_message = ">%s< 拾取了磁能之核！",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",

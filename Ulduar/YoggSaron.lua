@@ -361,12 +361,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "当玩家中了Squeeze时发出警报。",
-	squeeze_message = squeezeName .. "：>%s<！",
+--	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
 	link_desc = "当玩家被Brain Link时发出警报。",
-	link_message = linkedName .. "：>%s<！",
-	--link_warning = "You are Brain Link!",
+--	link_message = linkedName .. "：>%s<！",
+	link_warning = ">你< Brain Link！",
 
 	gaze = "疯乱凝视",
 	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
@@ -378,13 +378,13 @@ L:RegisterTranslations("zhCN", function() return {
 	empower_message = "Empowering Shadows！",
 	empower_bar = "<Empower Shadows 冷却>",
 
-	--mindcontrol = "Mind Control",
-	--mindcontrol_desc = "Warn who is Mind Controlled.",
-	--mindcontrol_message = "Mind Control: %s",
+	mindcontrol = "统御意志",
+	mindcontrol_desc = "当玩家中了统御意志时发出警报。",
+	mindcontrol_message = "统御意志：>%s<！",
 
-	--guardian = "Guardian spawn", --phase 1
-	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
-	--guardian_message = "Guardian spawn!",
+	guardian = "召唤守卫者出现", --phase 1
+	guardian_desc = "当尤格-萨隆召唤守卫者出现时发出警报。",
+	guardian_message = "召唤守卫者 出现！",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 
@@ -433,12 +433,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "當玩家中了壓榨時發出警報。",
-	squeeze_message = squeezeName .. "：>%s<！",
+--	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
 	link_desc = "當玩家中了腦波連結時發出警報。",
-	link_message = linkedName .. "：>%s<！",
-	--link_warning = "You are Brain Link!",
+--	link_message = linkedName .. "：>%s<！",
+	link_warning = ">你< 腦波連結！",
 
 	gaze = "癡狂凝視",
 	gaze_desc = "當尤格薩倫獲得癡狂凝視時發出警報。",
@@ -450,13 +450,13 @@ L:RegisterTranslations("zhTW", function() return {
 	empower_message = "暗影信標！",
 	empower_bar = "<暗影信標 冷卻>",
 
-	--mindcontrol = "Mind Control",
-	--mindcontrol_desc = "Warn who is Mind Controlled.",
-	--mindcontrol_message = "Mind Control: %s",
+	mindcontrol = "支配心靈",
+	mindcontrol_desc = "當玩家中了支配心靈時發出警報。",
+	mindcontrol_message = "支配心靈：>%s<！",
 
-	--guardian = "Guardian spawn", --phase 1
-	--guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
-	--guardian_message = "Guardian spawn!",
+	guardian = "召喚守護者出現", --phase 1
+	guardian_desc = "當尤格薩倫召喚守護者出現時發出警報。",
+	guardian_message = "召喚守護者 出現！",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 

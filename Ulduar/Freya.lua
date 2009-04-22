@@ -240,9 +240,9 @@ L:RegisterTranslations("zhCN", function() return {
 	sunbeam_you = ">你< Sunbeam！",
 	sunbeam_other = "Sunbeam：>%s<！",
 	
-	--tremor = "Ground Tremor",
-	--tremor_desc = "Warn when Freya casts Ground Tremor.",
-	--tremor_message = "Ground Tremor!",
+	tremor = "大地震颤",
+	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。",
+	tremor_message = "大地震颤！",
 
 	icon = "位置标记",
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
@@ -284,9 +284,9 @@ L:RegisterTranslations("zhTW", function() return {
 	sunbeam_you = ">你< 太陽光束！",
 	sunbeam_other = "太陽光束：>%s<！",
 	
-	--tremor = "Ground Tremor",
-	--tremor_desc = "Warn when Freya casts Ground Tremor.",
-	--tremor_message = "Ground Tremor!",
+	tremor = "地面震動",
+	tremor_desc = "當芙蕾雅施放地面震動時發出警報。",
+	tremor_message = "地面震動！",
 
 	icon = "位置標記",
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",

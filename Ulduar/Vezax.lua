@@ -151,7 +151,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor = "萨隆邪铁蒸汽",
 	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
-	--vapor_bar = "<下一萨隆邪铁蒸汽：%d>",
+	vapor_bar = "<萨隆邪铁蒸汽>",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
@@ -186,7 +186,7 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor = "薩倫煙霧",
 	vapor_desc = "當薩倫煙霧出現時發出警報。",
 	vapor_message = "薩倫煙霧：>%d<！",
-	--vapor_bar = "<下一薩倫煙霧：%d>",
+	vapor_bar = "<薩倫煙霧>",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "暗影暴擊",

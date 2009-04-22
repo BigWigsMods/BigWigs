@@ -161,18 +161,18 @@ L:RegisterTranslations("zhCN", function() return {
 
 	swarm = "Guardian Swarm",
 	swarm_desc = "当欧尔莉亚施放Guardian Swarm时发出警报。",
-	swarm_other = "Swarm on：>%s<！",
-	swarm_you = ">你< Swarm！",
-	--swarm_bar = "~Swarm cooldown",
+	swarm_other = "Guardian Swarm：>%s<！",
+	swarm_you = ">你< Guardian Swarm！",
+	swarm_bar = "<Guardian Swarm 冷却>",
 
-	--defender = "Feral Defender",
-	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_warning = "Feral Defender spawn!",
+	defender = "野性防卫者", --check
+	defender_desc = "当野性防卫者出现时发出警报。",
+	defender_warning = "野性防卫者 出现！",
 
-	--sonic = "Sonic Screech",
-	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
-	--sonic_message = "Casting Sonic!",
-	--sonic_bar = "~Sonic cooldown",
+	sonic = "Sonic Screech",
+	sonic_desc = "当欧尔莉亚施放Sonic Screech时发出警报。",
+	sonic_message = "正在施放 Sonic Screech！",
+	sonic_bar = "<Sonic Screech 冷却>",
 
 	icon = "团队标记",
 	icon_desc = "为中了Guardian Swarm的队员打上团队标记。（需要权限）",
@@ -193,16 +193,16 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_desc = "當奧芮雅施放守護貓群時發出警報。",
 	swarm_other = "守護貓群：>%s<！",
 	swarm_you = ">你< 守護貓群！",
-	--swarm_bar = "~Swarm cooldown",
+	swarm_bar = "<守護貓群 冷卻>",
 
-	--defender = "Feral Defender",
-	--defender_desc = "Warn for Feral Defender lifes.",
-	--defender_warning = "Feral Defender spawn!",
+	defender = "野性防衛者",
+	defender_desc = "當野性防衛者出現時發出警報。",
+	defender_warning = "野性防衛者 出現！",
 
-	--sonic = "Sonic Screech",
-	--sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
-	--sonic_message = "Casting Sonic!",
-	--sonic_bar = "~Sonic cooldown",
+	sonic = "音速尖嘯",
+	sonic_desc = "當奧芮雅施放音速尖嘯時發出警報。",
+	sonic_message = "正在施放 音速尖嘯！",
+	sonic_bar = "<音速尖嘯 冷卻>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了守護貓群的隊員打上團隊標記。（需要權限）",
