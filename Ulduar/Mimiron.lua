@@ -26,10 +26,6 @@ local pName = UnitName("player")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	["MKII"] = "Leviathan MKII",
-	["VX-001"] = "VX-001",
-	["Aerial"] = "Aerial Command Unit",
-
 	cmd = "Mimiron",
 
 	phase = "Phases",
@@ -74,10 +70,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["MKII"] = "거대전차 MKII",	--check
-	["VX-001"] = "VX-001",
-	["Aerial"] = "공중 지휘기",
-
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	engage_warning = "1 단계",
@@ -120,10 +112,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["MKII"] = "Léviathan Mod. II",
-	["VX-001"] = "VX-001",
-	["Aerial"] = "Unité de commandement aérien",
-
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
 	engage_warning = "Phase 1",
@@ -166,10 +154,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	["MKII"] = "Leviathan Mk II", -- needs verification
-	["VX-001"] = "VX-001", -- needs verification
-	["Aerial"] = "Luftkommandoeinheit", -- needs verification
-
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	engage_warning = "Phase 1",
@@ -212,10 +196,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---	["MKII"] = "Leviathan MKII",
---	["VX-001"] = "VX-001",
---	["Aerial"] = "Aerial Command Unit",
-
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 	engage_warning = "第一阶段！",
@@ -258,10 +238,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	["MKII"] = "Leviathan MKII",
---	["VX-001"] = "VX-001",
---	["Aerial"] = "Aerial Command Unit",
-
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
 	engage_warning = "第一階段！",
@@ -304,10 +280,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	["MKII"] = "Левиафан MKII", -- need check
-	["VX-001"] = "VX-001",
-	["Aerial"] = "Воздушное судно",
-
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
 	engage_warning = "1ая фаза",
