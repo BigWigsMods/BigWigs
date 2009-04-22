@@ -281,18 +281,18 @@ function mod:DefenderKill()
 	count = count - 1
 end
 
-function mod:Swarm(player, spellId)
+function mod:Swarm(player, spellID)
 	if db.swarm then
 		local other = L["swarm_other"]:format(player)
 		if player == pName then
-			self:LocalMessage(L["swarm_you"], "Personal", spellId, "Alert")
+			self:LocalMessage(L["swarm_you"], "Personal", spellID, "Alert")
 			self:WideMessage(other)
 		else
-			self:IfMessage(other, "Attention", spellId)
+			self:IfMessage(other, "Attention", spellID)
 			self:Whisper(player, L["swarm_you"])
 		end
 		self:Bar(other, 5, spellID)
-		self:Bar(L["swarm_bar"], 37, spellId)
+		self:Bar(L["swarm_bar"], 37, spellID)
 		self:Icon(player, "icon")
 	end
 end
