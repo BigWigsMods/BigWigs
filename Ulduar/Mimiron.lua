@@ -146,20 +146,20 @@ L:RegisterTranslations("frFR", function() return {
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
 	plasma_warning = "Explosion de plasma en incantation !",
 	plasma_soon = "Explosion de plasma imminente !",
-	plasma_bar = "Proch. Explosion de plasma",
+	plasma_bar = "Explosion de plasma",
 
 	shock = "Horion explosif",
 	shock_desc = "Prévient quand un Horion explosif est incanté.",
-	shock_warning = "Horion explosif en incantation !",
+	shock_warning = "Horion explosif !",
 
 	laser = "Barrage laser",
 	laser_desc = "Prévient quand un Barrage laser est actif.",
 	laser_soon = "Barrage laser imminent !",
-	laser_bar = "Prochain Barrage laser",
+	laser_bar = "Barrage laser",
 
 	magnetic = "Noyau magnétique",
 	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",
-	magnetic_message = "Noyau magnétique ! DPS !",
+	magnetic_message = "UCA au sol !",
 	loot_message = "%s a ramassé un noyau !",
 
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",

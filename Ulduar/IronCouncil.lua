@@ -164,7 +164,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	death = "Rune de mort sur vous",
 	death_desc = "Prévient quand vous vous trouvez sur une Rune de mort.",
-	death_message = "Rune de puissance sur VOUS !",
+	death_message = "Rune de mort sur VOUS !",
 
 	summoning = "Rune d'invocation",
 	summoning_desc = "Prévient quand Molgeim incante une Rune d'invocation.",

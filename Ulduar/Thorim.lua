@@ -164,13 +164,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	impale = "Empaler",
 	impale_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
-	impale_message = "Empaler : %s",
+	impale_message = "Empaler sur %s",
 
 	shock = "Horion de foudre",
 	shock_desc = "Prévient de l'arrivée des Horions de foudre et des Charger l'orbe.",
 	shock_message = "Horion de foudre sur vous ! Bougez !",
 	shock_warning = "Charger l'orbe !",
-	shock_bar = "Prochain Charger l'orbe",
+	shock_bar = "Charger l'orbe",
 
 	barrier = "Barrière runique",
 	barrier_desc = "Prévient quand le Colosse runique gagne une Barrière runique.",
@@ -183,7 +183,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	charge = "Charge de foudre",
 	charge_desc = "Compte et prévient de l'arrivée des Charges de foudre de Thorim.",
-	charge_message = "Charge : (%d)",
+	charge_message = "Charge %d !",
 	charge_bar = "Charge (%d)",
 
 	strike = "Frappe déséquilibrante",

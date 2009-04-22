@@ -109,8 +109,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	defender = "Défenseur farouche",
 	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
-	--defender_message = "Defender lives (%d/9)!",
-	--defender_warning = "Defender up!",
+	defender_message = "Vie(s) du Défenseur (%d/9) !",
+	defender_warning = "Défenseur actif !",
 
 	sonic = "Hurlement sonore",
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",

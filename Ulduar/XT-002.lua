@@ -105,13 +105,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	gravitybomb = "Bombe à gravité",
 	gravitybomb_desc = "Prévient quand un joueur subit les effets d'une Bombe à gravité.",
-	gravitybomb_you = "Bombe à gravité sur VOUS !",
-	gravitybomb_other = "Bombe à gravité sur %s !",
+	gravitybomb_you = "Gravité sur VOUS !",
+	gravitybomb_other = "Gravité sur %s !",
 
 	lightbomb = "Bombe de lumière",
 	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Bombe de lumière.",
-	lightbomb_you = "Bombe de lumière sur VOUS !",
-	lightbomb_other = "Bombe de lumière sur %s !",
+	lightbomb_you = "Lumière sur VOUS !",
+	lightbomb_other = "Lumière sur %s !",
 
 	tympanic = "Colère assourdissante",
 	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",

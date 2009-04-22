@@ -106,28 +106,28 @@ L:RegisterTranslations("frFR", function() return {
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
 	surge_message = "Vague de ténèbres !",
-	surge_cast = "Vague de ténèbres en incantation !",
+	surge_cast = "Vague en incantation !",
 	surge_end = "Vague de ténèbres estompée !",
 
 	animus = "Animus de saronite",
-	animus_desc = "Prévient quand un Animus de saronite apparaît.",
+	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
 	animus_message = "Animus apparu !",
 
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
-	--vapor_bar = "Prochaines Vapeurs (%d)",
+	vapor_bar = "Vapeur",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", -- à traduire
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
-	crash_you = "Déferlante d'ombre sur VOUS !",
-	crash_other = "Déferlante d'ombre sur %s",
+	crash_you = "Déferlante sur VOUS !",
+	crash_other = "Déferlante sur %s",
 
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
-	mark_message_you = "Marque du Sans-visage sur VOUS !",
-	mark_message_other = "Marque du Sans-visage sur %s",
+	mark_message_you = "Marque sur VOUS !",
+	mark_message_other = "Marque sur %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
