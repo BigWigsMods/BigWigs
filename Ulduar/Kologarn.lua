@@ -224,6 +224,7 @@ function mod:Armor(player)
 			local name, _, icon, stack = UnitDebuff(player, i)
 			if not name then break end
 			if icon == "Interface\\Icons\\Ability_Warrior_ShieldBreak" then
+				if stack < 2 then break end
 				crunchArmor = stack
 				break
 			end
