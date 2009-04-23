@@ -362,11 +362,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "当玩家中了Squeeze时发出警报。",
---	squeeze_message = squeezeName .. "：>%s<！",
+	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
 	link_desc = "当玩家被Brain Link时发出警报。",
---	link_message = linkedName .. "：>%s<！",
+	link_message = linkedName .. "：>%s<！",
 	link_warning = ">你< Brain Link！",
 
 	gaze = "疯乱凝视",
@@ -434,11 +434,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	squeeze = squeezeName,
 	squeeze_desc = "當玩家中了壓榨時發出警報。",
---	squeeze_message = squeezeName .. "：>%s<！",
+	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
 	link_desc = "當玩家中了腦波連結時發出警報。",
---	link_message = linkedName .. "：>%s<！",
+	link_message = linkedName .. "：>%s<！",
 	link_warning = ">你< 腦波連結！",
 
 	gaze = "癡狂凝視",

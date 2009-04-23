@@ -155,6 +155,10 @@ L:RegisterTranslations("zhCN", function() return {
 	eyebeam_message = "Eyebeam：>%s<！",
 	eyebeam_bar = "<Eyebeam>",
 	eyebeam_you = ">你< Eyebeam！",
+
+	armor = "粉碎护甲",
+	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",
+	armor_message = "%dx 粉碎护甲：>%s<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -178,6 +182,10 @@ L:RegisterTranslations("zhTW", function() return {
 	eyebeam_message = "集束目光：>%s<！",
 	eyebeam_bar = "<集束目光>",
 	eyebeam_you = ">你< 集束目光！",
+
+	armor = "粉碎護甲",
+	armor_desc = "當玩家中了2層或更多粉碎護甲時發出警報。",
+	armor_message = "%dx 粉碎護甲：>%s<！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

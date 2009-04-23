@@ -200,9 +200,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	harpoon = "魚叉炮台",
 	harpoon_desc = "当魚叉炮台可用时发出警报。",
-	harpoon_message = "魚叉炮台：>%d<！",
+	harpoon_message = "魚叉炮台：>%d<可用！",
 --	harpoon_trigger = "Harpoon Turret is ready for use!",
-	harpoon_nextbar = "<下一魚叉炮台：%d>",
+	harpoon_nextbar = "<魚叉炮台：%d>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -229,9 +229,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	harpoon = "魚叉炮塔",
 	harpoon_desc = "當魚叉炮塔可用時發出警報。",
-	harpoon_message = "魚叉炮塔：>%d<！",
+	harpoon_message = "魚叉炮塔：>%d<可用！",
 --	harpoon_trigger = "Harpoon Turret is ready for use!",
-	harpoon_nextbar = "<下一魚叉炮塔：%d>",
+	harpoon_nextbar = "<魚叉炮塔：%d>",
 } end )
 
 ------------------------------

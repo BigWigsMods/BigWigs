@@ -151,7 +151,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
-	hardmode_warning = "困难模式结束！",
+	hardmode_warning = "困难模式！",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -177,7 +177,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
-	hardmode_warning = "困難模式結束！",
+	hardmode_warning = "困難模式！",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )

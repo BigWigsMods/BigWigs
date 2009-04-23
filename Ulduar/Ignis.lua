@@ -192,6 +192,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	scorch = "灼烧",
 	scorch_desc = "当正在施放灼烧和你中了灼烧时发出警报。",
+	scorch_message = ">你< 灼烧！",
 	scorch_warning = "正在施放 灼烧！",
 	scorch_soon = "约5秒后，灼烧！",
 	scorch_bar = "<下一灼烧>",
@@ -221,6 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	scorch = "灼燒",
 	scorch_desc = "當正在施放灼燒和你中了灼燒時發出警報。",
+	scorch_message = ">你< 灼燒！",
 	scorch_warning = "正在施放 灼燒！",
 	scorch_soon = "約5秒后，灼燒！",
 	scorch_bar = "<下一灼燒>",

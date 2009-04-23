@@ -164,11 +164,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	defender = "野性防卫者", --check
 	defender_desc = "当野性防卫者出现时发出警报。",
+	defender_message = "野性防卫者（%d/9）！",
 
 	sonic = "Sonic Screech",
 	sonic_desc = "当欧尔莉亚施放Sonic Screech时发出警报。",
-	sonic_message = "正在施放 Sonic Screech！",
-	sonic_bar = "<Sonic Screech 冷却>",
+	sonic_message = "Sonic Screech！",
+	sonic_bar = "<Sonic Screech>",
 
 	icon = "团队标记",
 	icon_desc = "为中了Guardian Swarm的队员打上团队标记。（需要权限）",
@@ -193,11 +194,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	defender = "野性防衛者",
 	defender_desc = "當野性防衛者出現時發出警報。",
+	defender_message = "野性防衛者（%d/9）！",
 
 	sonic = "音速尖嘯",
 	sonic_desc = "當奧芮雅施放音速尖嘯時發出警報。",
-	sonic_message = "正在施放 音速尖嘯！",
-	sonic_bar = "<音速尖嘯 冷卻>",
+	sonic_message = "音速尖嘯！",
+	sonic_bar = "<音速尖嘯>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了守護貓群的隊員打上團隊標記。（需要權限）",
