@@ -19,6 +19,7 @@ local db = nil
 local attunedCount = 150
 local dCount = 0
 local eCount = 0
+local p2warned = nil
 local pName = UnitName("player")
 local fmt = string.format
 
@@ -45,14 +46,14 @@ L:RegisterTranslations("enUS", function() return {
 	detonate_trigger = "The swarm of the elements shall overtake you!",
 	elementals_trigger = "Children, assist me!",
 	tree_trigger = "A Lifebinder's Gift begins to grow!",
-	conservator_message = "Conservator spawn",
-	detonate_message = "Detonate spawn",
-	elementals_message = "Elementals spawn",
-	tree_message = "Eonar's Gift spawn",
+	conservator_message = "Conservator!",
+	detonate_message = "Detonating lashers!",
+	elementals_message = "Elementals!",
+	tree_message = "Tree is up!",
 
 	attuned = "Attuned to Nature",
 	attuned_desc = "Warn for Attuned to Nature.",
-	attuned_message = "Attuned: (%d)",
+	attuned_message = "Attuned x%d",
 
 	fury = "Nature's Fury",
 	fury_desc = "Tells you who has been hit by Nature's Fury.",
@@ -365,9 +366,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Tremor()
+function mod:Tremor(_, spellId)
 	if db.tremor then
-		self:Message(L["tremor_message"], "Attention")
+		self:IfMessage(L["tremor_message"], "Important", spellId, "Long")
 	end
 end
 
@@ -434,7 +435,7 @@ end
 function mod:AttunedRemove()
 	if db.phase then
 		self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
-		self:Message(L["phase2_message"], "Attention")
+		self:Message(L["phase2_message"], "Important")
 	end
 end
 
@@ -463,16 +464,17 @@ end
 function mod:AttunedWarn()
 	if db.attuned then
 		if attunedCount > 3 then
-			self:Message(L["attuned_message"]:format(attunedCount), "Attention", 62519)
-		elseif attunedCount > 1 and attunedCount <= 10 and db.phase then
-			self:Message(L["phase2_soon"], "Attention")
+			self:IfMessage(L["attuned_message"]:format(attunedCount), "Positive", 62519)
+		elseif not p2warned and attunedCount > 1 and attunedCount <= 10 and db.phase then
+			p2warned = true
+			self:IfMessage(L["phase2_soon"], "Attention")
 		end
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["tree_trigger"] and db.wave then
-		self:Message(L["tree_message"], "Positive")
+		self:IfMessage(L["tree_message"], "Urgent", 5420, "Alarm")
 	end
 end
 
@@ -481,6 +483,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		attunedCount = 150
 		dCount = 0
 		eCount = 0
+		p2warned = nil
 		if db.berserk then
 			self:Enrage(600, true)
 		end
@@ -489,13 +492,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["wave_bar"], 11, 35594)
 		end
 	elseif msg == L["conservator_trigger"] and db.wave then
-		self:Message(L["conservator_message"], "Positive")
+		self:Message(L["conservator_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["detonate_trigger"] and db.wave then
-		self:Message(L["detonate_message"], "Positive")
+		self:Message(L["detonate_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["elementals_trigger"] and db.wave then
-		self:Message(L["elementals_message"], "Positive")
+		self:Message(L["elementals_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)
