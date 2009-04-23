@@ -377,7 +377,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		exposed2 = nil
 		exposed3 = nil
 		if db.berserk then
-			self:Enrage(360, true)
+			self:Enrage(420, true)
 		end
 		if db.tympanic then
 			self:Bar(L["tympanic_bar"], 70, 62776)
