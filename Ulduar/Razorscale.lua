@@ -19,8 +19,8 @@ local db = nil
 local p2 = nil
 local pName = UnitName("player")
 local started = nil
-local count = 1
-local totalHarpoons = 5
+local count = 0
+local totalHarpoons = 4
 local phase = nil
 
 ----------------------------
@@ -285,10 +285,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 			self:Bar(L["breath_bar"], 21, 64021)
 		end
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
-		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "INV_Spear_06")
 		count = count + 1
+		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "INV_Spear_06")
 		if count < totalHarpoons then
-			self:Bar(L["harpoon_nextbar"]:format(count), 18, "INV_Spear_06")
+			self:Bar(L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
 		end
 	end
 end
@@ -299,8 +299,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 	elseif msg == L["air_trigger"] then
 		p2 = nil
-		count = 1
-		self:Bar(L["harpoon_nextbar"]:format(count), 55, "INV_Spear_06")
+		count = 0
+		self:Bar(L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
 		if not started then
 			if db.berserk then
 				self:Enrage(600, true)
