@@ -435,7 +435,7 @@ end
 function mod:AttunedRemove()
 	if db.phase then
 		self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
-		self:Message(L["phase2_message"], "Important")
+		self:IfMessage(L["phase2_message"], "Important")
 	end
 end
 
@@ -492,13 +492,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["wave_bar"], 11, 35594)
 		end
 	elseif msg == L["conservator_trigger"] and db.wave then
-		self:Message(L["conservator_message"], "Positive", 35594)
+		self:IfMessage(L["conservator_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["detonate_trigger"] and db.wave then
-		self:Message(L["detonate_message"], "Positive", 35594)
+		self:IfMessage(L["detonate_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["elementals_trigger"] and db.wave then
-		self:Message(L["elementals_message"], "Positive", 35594)
+		self:IfMessage(L["elementals_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)

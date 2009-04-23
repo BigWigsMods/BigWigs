@@ -267,7 +267,7 @@ function mod:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 55 and not p2 then
-			self:Message(L["phase2_warning"], "Positive")
+			self:IfMessage(L["phase2_warning"], "Positive")
 			p2 = true
 		elseif hp > 70 and p2 then
 			p2 = nil
@@ -296,7 +296,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["ground_trigger"] and db.phase then
-		self:Message(L["ground_message"], "Attention", nil, "Long")
+		self:IfMessage(L["ground_message"], "Attention", nil, "Long")
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 	elseif msg == L["air_trigger"] then
 		p2 = nil
@@ -310,7 +310,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			phase = 1
 		else
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
-			self:Message(L["air_message"], "Attention", nil, "Info")
+			self:IfMessage(L["air_message"], "Attention", nil, "Info")
 		end
 	end
 end

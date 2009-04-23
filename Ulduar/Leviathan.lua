@@ -188,7 +188,7 @@ end
 
 function mod:Shutdown()
 	if db.shutdown then
-		self:Message(L["shutdown_message"], "Attention")
+		self:IfMessage(L["shutdown_message"], "Attention")
 		self:Bar(L["shutdown"], 20, 62475)
 	end
 end
@@ -210,7 +210,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		self:Message(L["engage_message"]:format(boss), "Attention")
+		self:IfMessage(L["engage_message"]:format(boss), "Attention")
 	end
 end
 

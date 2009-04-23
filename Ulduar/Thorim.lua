@@ -411,7 +411,7 @@ end
 
 function mod:Hammer(player, spellID)
 	if db.hammer then
-		self:Message(L["hammer_message"]:format(player), "Urgent", spellID)
+		self:IfMessage(L["hammer_message"]:format(player), "Urgent", spellID)
 		self:Bar(L["hammer_bar"], 16, spellID)
 		self:Icon(player, "icon")
 	end
@@ -466,7 +466,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["phase2_trigger"] then
 		if db.phase then
-			self:Message(L["phase2_message"], "Attention")
+			self:IfMessage(L["phase2_message"], "Attention")
 		end
 		if db.p2berserk then
 			self:Enrage(300, true, true)
@@ -483,7 +483,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["hammer_bar"])
 		self:CancelAllScheduledEvents()
 		if db.phase then
-			self:Message(L["phase3_message"]:format(boss), "Attention")
+			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
 		end
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)
@@ -499,7 +499,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
 		if db.phase then
-			self:Message(L["phase1_message"], "Attention")
+			self:IfMessage(L["phase1_message"], "Attention")
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end

@@ -396,7 +396,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["hardmode_trigger"]) then
 		phase = 1
 		if db.phase then
-			self:Message(L["engage_warning"], "Attention")
+			self:IfMessage(L["engage_warning"], "Attention")
 		end
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
@@ -404,13 +404,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 480, 64582)
-			self:Message(L["hardmode_message"], "Attention", 64582)
+			self:IfMessage(L["hardmode_message"], "Attention", 64582)
 			self:DelayedMessage(480, L["hardmode_warning"], "Attention")
 		end
 	elseif msg:find(L["engage_trigger"]) then
 		phase = 1
 		if db.phase then
-			self:Message(L["engage_warning"], "Attention")
+			self:IfMessage(L["engage_warning"], "Attention")
 		end
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
@@ -421,7 +421,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma_bar"])
 		if db.phase then
-			self:Message(L["phase2_warning"], "Attention")
+			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["phase3_trigger"]) then
@@ -429,14 +429,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser_bar"])
 		if db.phase then
-			self:Message(L["phase3_warning"], "Attention")
+			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
 		self:TriggerEvent("BigWigs_StopBar", self, L["magnetic"])
 		if db.phase then
-			self:Message(L["phase4_warning"], "Attention")
+			self:IfMessage(L["phase4_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 20, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["end_trigger"]) then
@@ -471,7 +471,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MimiLoot" and rest and db.magnetic then
-		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
+		self:IfMessage(L["loot_message"]:format(rest), "Positive", "INV_Gizmo_KhoriumPowerCore", "Info")
 	end
 end
 

@@ -357,13 +357,13 @@ function mod:UNIT_HEALTH(msg)
 			local health = UnitHealth(msg)
 			if not exposed1 and health > 86 and health <= 88 then
 				exposed1 = true
-				self:Message(L["exposed_warning"], "Attention")
+				self:IfMessage(L["exposed_warning"], "Attention")
 			elseif not exposed2 and health > 56 and health <= 58 then
 				exposed2 = true
-				self:Message(L["exposed_warning"], "Attention")
+				self:IfMessage(L["exposed_warning"], "Attention")
 			elseif not exposed3 and health > 26 and health <= 28 then
 				exposed3 = true
-				self:Message(L["exposed_warning"], "Attention")
+				self:IfMessage(L["exposed_warning"], "Attention")
 			end
 		end
 	end

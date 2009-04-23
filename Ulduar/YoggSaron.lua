@@ -599,7 +599,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
 		if db.phase then
-			self:Message(L["engage_warning"], "Important", nil, "Alarm")
+			self:IfMessage(L["engage_warning"], "Important", nil, "Alarm")
 		end
 		if db.berserk then
 			self:Enrage(900, true, true)
