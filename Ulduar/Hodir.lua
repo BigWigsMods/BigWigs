@@ -82,6 +82,14 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_warning = "도전 모드 종료",
+	
+	cloud = "폭풍 구름",
+	cloud_desc = "폭풍 구름을 얻은 플레이어를 알립니다.",
+	cloud_you = "당신은 폭풍 구름",
+	cloud_other = "%s: 폭풍 구름 얻음",
+
+	icon = "전술 표시",
+	icon_desc = "폭풍 구름을 얻은 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	end_trigger = "드디어... 드디어 그의 손아귀를... 벗어나는구나.",
 } end )
