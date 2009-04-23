@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase_desc = "칼날비늘의 단계 변경을 알립니다.",
 	ground_trigger = "움직이세요! 오래 붙잡아둘 순 없을 겁니다!",
 	ground_message = "칼날비늘 묶임!",
-	air_trigger = "불꽃이 꺼졌어요! 포탑을 재설치합시다!",
+	air_trigger = "저희에게 잠깐 포탑을 설치할 시간을 주세요.",
 	air_message = "이륙!",
 	phase2_trigger = "%s|1이;가; 완전히 땅에 내려앉았습니다!",
 	phase2_message = "2 단계!",
@@ -278,6 +278,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["phase2_trigger"] and db.phase then
 		phase = 2
+		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 		self:IfMessage(L["phase2_message"], "Attention")
 	elseif msg == L["breath_trigger"] and db.breath then
 		self:IfMessage(L["breath_message"], "Attention", 64021)
