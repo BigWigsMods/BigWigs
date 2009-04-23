@@ -19,8 +19,8 @@ local db = nil
 local p2 = nil
 local pName = UnitName("player")
 local started = nil
-local count = 0
-local totalHarpoons = 4
+local count = 1
+local totalHarpoons = 5
 local phase = nil
 
 ----------------------------
@@ -92,7 +92,7 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "칼날비늘의 단계 변경을 알립니다.",
-	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",
+	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",	--check
 	ground_message = "칼날비늘 묶임!",
 	--air_trigger = "Give us a moment to prepare to build the turrets.",	--check
 	air_message = "이륙!",
@@ -299,7 +299,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 	elseif msg == L["air_trigger"] then
 		p2 = nil
-		count = 0
+		count = 1
 		self:Bar(L["harpoon_nextbar"]:format(count), 55, "INV_Spear_06")
 		if not started then
 			if db.berserk then
