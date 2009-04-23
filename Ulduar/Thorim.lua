@@ -58,13 +58,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	shock = "Lightning Shock",
 	shock_desc = "Warn for Charge Orb and Lightning Shock.",
-	shock_message = "Lightning Shock on You! Move!",
+	shock_message = "You're getting shocked!",
 	shock_warning = "Charge Orb!",
 	shock_bar = "Charge Orb",
 
 	barrier = "Runic Barrier",
 	barrier_desc = "Warn when Runic Colossus gains Runic Barrier.",
-	barrier_message = "Runic Colossus gained Runic Barrier!",
+	barrier_message = "Barrier up!",
 
 	detonation = "Rune Detonation",
 	detonation_desc = "Tells you who has been hit by Rune Detonation.",
@@ -73,8 +73,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	charge = "Lightning Charge",
 	charge_desc = "Count and warn for Thorim's Lightning Charge.",
-	charge_message = "Charge %d!",
-	charge_bar = "Charge (%d)",
+	charge_message = "Charged x%d!",
+	charge_bar = "Charge %d",
 
 	strike = "Unbalancing Strike",
 	strike_desc = "Warn when a player has Unbalancing Strike.",
@@ -396,14 +396,14 @@ end
 
 function mod:Barrier(_, spellID)
 	if db.barrier then
-		self:IfMessage(L["barrier_message"], "Urgent", spellID)
+		self:IfMessage(L["barrier_message"], "Urgent", spellID, "Alarm")
 		self:Bar(L["barrier"], 20, spellID)
 	end
 end
 
 function mod:Charge(_, spellID)
 	if db.charge then
-		self:IfMessage(L["charge_message"]:format(chargeCount), "Important", spellID)
+		self:IfMessage(L["charge_message"]:format(chargeCount), "Attention", spellID)
 		chargeCount = chargeCount + 1
 		self:Bar(L["charge_bar"]:format(chargeCount), 15, spellID)
 	end
@@ -438,14 +438,14 @@ function mod:Shock(player, spellID)
 	if (time - last) > 5 then
 		last = time
 		if player == pName and db.shock then
-			self:LocalMessage(L["shock_message"], "Personal", spellID, "Alarm")
+			self:LocalMessage(L["shock_message"], "Personal", spellID, "Info")
 		end
 	end
 end
 
 function mod:Impale(player, spellID)
 	if db.impale then
-		self:IfMessage(L["impale_message"]:format(player), "Attention", spellID)
+		self:IfMessage(L["impale_message"]:format(player), "Important", spellID)
 	end
 end
 
@@ -456,7 +456,7 @@ function mod:Detonation(player, spellID)
 			self:WideMessage(other)
 			SendChatMessage(L["detonation_yell"], "SAY")
 		else
-			self:IfMessage(other, "Attention", spellID)
+			self:IfMessage(other, "Important", spellID)
 		end
 		self:Bar(other, 4, spellID)
 		self:Icon(player, "icon")
