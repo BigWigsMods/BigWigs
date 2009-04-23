@@ -7,7 +7,7 @@ local boss = BB["Yogg-Saron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = {"sara", "boss"}
+mod.enabletrigger = {sara, boss}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
 mod.toggleoptions = {"phase", "guardian", "mindcontrol", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
