@@ -387,9 +387,9 @@ L:RegisterTranslations("ruRU", function() return {
 	summoning_message = "Руна призыва - приход Элементалей!",
 
 	tendrils = "Светящиеся придатки",
-	tendrils_desc = "Сообщает кого приследуют светящиеся придатки, и помещает на него иконку.",
-	tendrils_other = "Приследуют |3-1(%s)!",
-	tendrils_you = "ВАС приследуют!",
+	tendrils_desc = "Сообщает кого преследуют светящиеся придатки, и помещает на него иконку.",
+	tendrils_other = "Преследуют |3-1(%s)!",
+	tendrils_you = "ВАС преследуют!",
 	tendrils_message = "Выгрузка через ~5сек!",
 
 	overwhelm = "Переполняющая энергия",

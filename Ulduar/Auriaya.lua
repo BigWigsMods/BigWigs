@@ -219,7 +219,7 @@ L:RegisterTranslations("ruRU", function() return {
 	swarm = "Крадущийся страж",
 	swarm_desc = "Предупреждать когда Ауриайя применяет Призыв крадущегося стража.",
 	swarm_other = "Страж выбрал |3-5(%s)!",
-	swarm_you = "Стража выбрал ВАС!",
+	swarm_you = "Страж выбрал ВАС!",
 	swarm_bar = "~перезарядка стража",
 
 	defender = "Дикий защитник",

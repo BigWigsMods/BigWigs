@@ -304,7 +304,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	wave = "Волны",
 	wave_desc = "Предупреждать о волнах.",
-	wave_bar = "Слудующая волна",
+	wave_bar = "Следующая волна",
 	--conservator_trigger = "Eonar, your servant requires aid!",
 	--detonate_trigger = "The swarm of the elements shall overtake you!",
 	--elementals_trigger = "Children, assist me!",

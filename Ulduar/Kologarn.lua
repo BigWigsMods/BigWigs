@@ -193,15 +193,15 @@ L:RegisterTranslations("ruRU", function() return {
 	arm_desc = "Сообщать о смерти левой и правой руки.",
 	left_dies = "Левая рука уничтожена",
 	right_dies = "Правая рука уничтожена",
-	left_wipe_bar = "Востоновление левой руки",
-	right_wipe_bar = "Востоновление правой руки",
+	left_wipe_bar = "Восcтaновление левой руки",
+	right_wipe_bar = "Восcтaновление правой руки",
 
 	grip = "Каменная хватка",
 	grip_desc = "Сообщать кто попал под воздействие Каменной хватки.",
 	grip_message = "Хватка: %s",
 
 	shockwave = "Ударная волна",
-	shockwave_desc = "Сообщает о гредущей Ударной волне.",
+	shockwave_desc = "Сообщает о грядущей Ударной волне.",
 --	shockwave_trigger = "Oblivion!",
 
 	eyebeam = "Сосредоточенный взгляд",

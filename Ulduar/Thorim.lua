@@ -313,7 +313,7 @@ L:RegisterTranslations("ruRU", function() return {
 --	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
 	phase2_message = "2ая фаза - Исступление через 5 мин!",
 --	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
-	phase3_message = "3яя фаза - %s в истеплении!",
+	phase3_message = "3яя фаза - %s вступает в бой!",
 
 	p2berserk = "2ая фаза - Исступление",
 	p2berserk_desc = "Сообщает когда босс входит в Исступление на 2ой фазе.",
@@ -329,7 +329,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	impale = "Прокалывание",
 	impale_desc = "Сообщает кто поражен Прокалыванием.",
-	impale_message = "Прокалот: %s! Лечите!",
+	impale_message = "%s проколот! Лечите!", 
 
 	shock = "Поражение громом",
 	shock_desc = "Сообщать о Заряженных сферах и Поражении громом.",

@@ -138,16 +138,16 @@ commonWords:RegisterTranslations("ruRU", function() return {
 	you = "Вы",
 	are = "",
 
-	enrage_start = "%s Исступление - Исступление за %d мин",
+	enrage_start = "%s вступил в бой - Исступление через %d мин",
 	enrage_end = "%s вошел в состояние Исступления",
-	enrage_min = "Исступление за %d мин",
-	enrage_sec = "Исступление за %d сек",
+	enrage_min = "Исступление через %d мин",
+	enrage_sec = "Исступление через %d сек",
 	enrage = "Исступление",
 
-	berserk_start = "%s Исступление - Берсерк за %d мин",
+	berserk_start = "%s вступил в бой - Берсерк через %d мин",
 	berserk_end = "%s вошел в состояние Берсерка",
-	berserk_min = "Берсерк за %d мин",
-	berserk_sec = "Берсерк за %d сек",
+	berserk_min = "Берсерк через %d мин",
+	berserk_sec = "Берсерк через %d сек",
 	berserk = "Берсерк",
 } end)
 
