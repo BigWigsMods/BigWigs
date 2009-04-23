@@ -56,11 +56,11 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	arm = "팔 죽음",
-	arm_desc = "왼쪽 & 오른쪽 팔의 죽음을 알립니다.",
-	left_dies = "왼쪽 팔 죽음",
-	right_dies = "오른쪽 팔 죽음",
-	left_wipe_bar = "왼쪽 팔 재생성",
-	right_wipe_bar = "오른쪽 팔 재생성",
+	arm_desc = "왼팔 & 오른팔의 죽음을 알립니다.",
+	left_dies = "왼팔 죽음",
+	right_dies = "오른팔 죽음",
+	left_wipe_bar = "왼팔 재생성",
+	right_wipe_bar = "오른팔 재생성",
 
 	grip = "바위 손아귀",
 	grip_desc = "바위 손아귀에 걸린 플레이어를 알립니다.",
@@ -76,8 +76,9 @@ L:RegisterTranslations("koKR", function() return {
 	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신은 안광 집중!",
 
-	armor = "Crunch Armor",
-	armor_desc = "Crunch Armor 중첩이 2이상이면 알립니다.",
+	armor = "방어구 씹기",
+	armor_desc = "방어구 씹기 중첩이 2이상이 된 플레이러를 알립니다.",
+	armor_message = "방어구 씹기 x%d: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -260,8 +261,8 @@ local function gripWarn()
 			msg = msg .. ", " .. k
 		end
 	end
-	mod:IfMessage(L["grip_message"]:format(msg), "Attention", spellID, "Alert")
-	mod:Bar(L["grip"], 10, spellID)
+	mod:IfMessage(L["grip_message"]:format(msg), "Attention", 64292, "Alert")
+	mod:Bar(L["grip"], 10, 64292)
 	wipe(grip)
 end
 

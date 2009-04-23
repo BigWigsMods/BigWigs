@@ -86,7 +86,7 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "건방진 젖먹이들이! 세상을 되찾는데 쓸 무기를 네놈들의 피로 담금질하겠다!",	--check
+	engage_trigger = "건방진 젖먹이들이! 세상을 되찾는 데 쓸 무기를 네놈들의 피로 담금질하겠다!",	--check
 
 	construct = "피조물 활성화",
 	construct_desc = "피조물 활성화를 알립니다.",
@@ -94,9 +94,9 @@ L:RegisterTranslations("koKR", function() return {
 	construct_warning = "5초 이내 피조물!",
 	construct_bar = "다음 피조물",
 
-	brittle = "Brittle",
-	brittle_desc = "무쇠 피조물의 Brittle 획득를 알립니다.",
-	brittle_message = "피조물 Brittle 걸림!",
+	brittle = "부서지는 몸",
+	brittle_desc = "무쇠 피조물의 부서지는 몸 획득를 알립니다.",
+	brittle_message = "피조물 부서지는 몸!",
 
 	flame = "화염 분출",
 	flame_desc = "이그니스의 화염 분출를 알립니다.",
@@ -105,7 +105,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	scorch = "불태우기",
 	scorch_desc = "자신의 불태우기와 불태우기 시전을 알립니다.",
-	scorch_warning = "불태우기 시전!",
+	scorch_warning = "불태우기!",
 	scorch_soon = "약 5초 후 불태우기!",
 	scorch_bar = "다음 불태우기",
 
@@ -239,7 +239,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Construct", 62488)
-	self:AddCombatListener("SPELL_CAST_START", "ScorchCast", 62546, 63474)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "ScorchCast", 62546, 63474)
 	self:AddCombatListener("SPELL_CAST_START", "Jets", 62680, 63472)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Scorch", 62548, 63476)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)

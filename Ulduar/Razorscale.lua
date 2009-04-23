@@ -92,18 +92,18 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "칼날비늘의 단계 변경을 알립니다.",
-	ground_trigger = "움직이세요! 오래 붙잡아둘 수는 없을 겁니다!",	--check
+	ground_trigger = "움직이세요! 오래 붙잡아둘 순 없을 겁니다!",
 	ground_message = "칼날비늘 묶임!",
-	--air_trigger = "Give us a moment to prepare to build the turrets.",	--check
+	air_trigger = "불꽃이 꺼졌어요! 포탑을 재설치합시다!",
 	air_message = "이륙!",
-	--phase2_trigger = "Razorscale lands permanently!",	--check
+	phase2_trigger = "%s|1이;가; 완전히 땅에 내려앉았습니다!",
 	phase2_message = "2 단계!",
 	phase2_warning = "곧 2 단계!",
 	stun_bar = "기절",
 
 	breath = "화염 숨결",
 	breath_desc = "화염 숨결을 알립니다.",
-	breath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다...",
+	breath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
 	breath_message = "화염 숨결!",
 	breath_bar = "~숨결 대기시간",
 
@@ -114,7 +114,7 @@ L:RegisterTranslations("koKR", function() return {
 	harpoon = "작살 포탑",
 	harpoon_desc = "작살 포탑의 준비를 알립니다.",
 	harpoon_message = "작살 포탑 (%d)",
-	--harpoon_trigger = "Harpoon Turret is ready for use!",
+	harpoon_trigger = "작살 포탑이 준비되었습니다!",
 	harpoon_nextbar = "다음 작살 (%d)",
 } end )
 

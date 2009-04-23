@@ -115,7 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 	shock_desc = "번개구 충전과 번개 충격을 알립니다.",
 	shock_message = "당신은 번개 충격! 이동!",
 	shock_warning = "번개구 충전!",
-	shock_bar = "다음 번개구 충전",
+	shock_bar = "번개구 충전",
 
 	barrier = "룬문자 방벽",
 	barrier_desc = "룬문자 거인의 룬문자 방벽 획득을 알립니다.",

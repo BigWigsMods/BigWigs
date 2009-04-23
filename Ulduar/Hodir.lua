@@ -55,9 +55,9 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "침입자는 쓴맛을 보게 될게다!",
 
-	cold = "매서운 추위(업적)",
-	cold_desc = "매서운 추위 2중첩시 알립니다.",
-	cold_message = "매서운 추위(%d중첩) - 이동!",
+	cold = "매서운 추위",
+	cold_desc = "매서운 추위 중첩이 2이상이면 알립니다.",
+	cold_message = "매서운 추위 x%d중첩!",
 
 	flash = "순간 빙결",
 	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",

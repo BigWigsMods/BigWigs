@@ -54,11 +54,11 @@ L:RegisterTranslations("koKR", function() return {
 	flame_desc = "거대 화염전차으 화염 분출 시전을 알립니다.",
 	flame_message = "화염 분출!",
 
-	pursue = "추적",
+	pursue = "추격",
 	pursue_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
-	pursue_trigger = "^%%s 추적",
-	pursue_other = "%s 추적!",
-	pursue_you = "당신을 추적!",
+	pursue_trigger = "^%|1이;가; %|1을;를; 쫓습니다",
+	pursue_other = "%s 추격!",
+	pursue_you = "당신을 추격!",
 
 	shutdown = "시스템 작동 정지",
 	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
