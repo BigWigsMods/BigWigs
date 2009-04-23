@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
-mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "berserk", "bosskill"}
+mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "berserk", "icon", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -48,11 +48,14 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode = "Hard Mode",
 	hardmode_desc = "Show timer for Hard Mode.",
 	hardmode_warning = "Hard mode",
-	
+
 	cloud = "Storm Cloud",
-	cloud_desc = "Shows who gets Storm Cloud",
-	cloud_you = "Storm Cloud on YOU",
-	cloud_other = "%s has Storm Cloud!",
+	cloud_desc = "Shows who gets Storm Cloud.",
+	cloud_you = "Storm Cloud on you",
+	cloud_other = "%s has Storm Cloud",
+
+	icon = "Place icon",
+	icon_desc = "Place a raid icon on players who get targetted with the Storm Clouds.",
 
 	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -243,10 +246,10 @@ function mod:Cloud(player, spellID)
 	if db.cloud then
 		local other = L["cloud_other"]:format(player)
 		if player == pName then
-			self:LocalMessage(L["cloud_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["cloud_you"], "Positive", spellID, "Info")
 			self:WideMessage(other)
 		else
-			self:IfMessage(other, "Attention", spellID)
+			self:IfMessage(other, "Positive", spellID)
 			self:Whisper(player, L["cloud_you"])
 		end
 		self:Bar(other, 30, spellID)
@@ -273,7 +276,7 @@ local function flashWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		mod:IfMessage(L["flash_message"]:format(msg), "Attention", 61969, "Alert")
+		mod:IfMessage(L["flash_message"]:format(msg), "Urgent", 61969, "Alert")
 	end
 	wipe(FF)
 end
@@ -287,7 +290,7 @@ end
 
 function mod:Frozen(_, spellID)
 	if db.frozenblow then
-		self:IfMessage(L["frozenblow_message"], "Attention", spellID)
+		self:IfMessage(L["frozenblow_message"], "Important", spellID)
 		self:Bar(L["frozenblow_bar"], 20, spellID)
 	end
 end
@@ -299,7 +302,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 120, 6673)
-			self:DelayedMessage(120, L["hardmode_warning"], "Attention")
+			self:DelayedMessage(120, L["hardmode_warning"], "Positive")
 		end
 		if db.berserk then
 			self:Enrage(480, true)
@@ -323,7 +326,7 @@ function mod:UNIT_AURA(unit)
 	end
 	if bitingcold then
 		if db.cold then
-			self:LocalMessage(L["cold_message"]:format(bitingcold), "Personal", "Interface\\Icons\\Spell_Frost_IceShock", "Alert")
+			self:LocalMessage(L["cold_message"]:format(bitingcold), "Personal", "Interface\\Icons\\Spell_Frost_IceShock")
 		end
 		self:UnregisterEvent("UNIT_AURA")
 	end
