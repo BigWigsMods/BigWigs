@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
-mod.toggleoptions = {"hardmode", -1, "cold", "flash", "frozenblow", "berserk", "bosskill"}
+mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -48,6 +48,11 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode = "Hard Mode",
 	hardmode_desc = "Show timer for Hard Mode.",
 	hardmode_warning = "Hard mode",
+	
+	cloud = "Storm Cloud",
+	cloud_desc = "Shows who gets Storm Cloud",
+	cloud_you = "Storm Cloud on YOU",
+	cloud_other = "%s has Storm Cloud!",
 
 	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -55,9 +60,9 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "침입자는 쓴맛을 보게 될게다!",
 
-	cold = "매서운 추위",
-	cold_desc = "매서운 추위 중첩이 2이상이면 알립니다.",
-	cold_message = "매서운 추위 x%d중첩!",
+	cold = "매서운 추위(업적)",
+	cold_desc = "매서운 추위 2중첩시 알립니다.",
+	cold_message = "매서운 추위(%d중첩) - 이동!",
 
 	flash = "순간 빙결",
 	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",
@@ -218,6 +223,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65133)
 	self:AddCombatListener("SPELL_DAMAGE", "Cold", 62188)
 	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
 
@@ -232,6 +238,21 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Cloud(player, spellID)
+	if db.cloud then
+		local other = L["cloud_other"]:format(player)
+		if player == pName then
+			self:LocalMessage(L["cloud_you"], "Personal", spellID, "Alert")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Attention", spellID)
+			self:Whisper(player, L["cloud_you"])
+		end
+		self:Bar(other, 30, spellID)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:FlashCast(_, spellID)
 	if db.flash then
@@ -277,8 +298,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["flash_bar"], 35, 61968)
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 150, 6673)
-			self:DelayedMessage(150, L["hardmode_warning"], "Attention")
+			self:Bar(L["hardmode"], 120, 6673)
+			self:DelayedMessage(120, L["hardmode_warning"], "Attention")
 		end
 		if db.berserk then
 			self:Enrage(480, true)
