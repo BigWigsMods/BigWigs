@@ -61,7 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "침입자는 쓴맛을 보게 될게다!",
+	engage_trigger = "침입자는 쓴맛을 보게 될 게다!",
 
 	cold = "매서운 추위(업적)",
 	cold_desc = "매서운 추위 2중첩시 알립니다.",
@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_warning = "도전 모드 종료",
 
-	end_trigger = "드디어...드디어 그의 손아귀를!... 벗어나는구나!",	--check
+	end_trigger = "드디어... 드디어 그의 손아귀를... 벗어나는구나.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
