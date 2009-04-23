@@ -100,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 	eyebeam = "Rayon de l'oeil focalisé",
 	eyebeam_desc = "Prévient quand un Rayon de l'oeil est incanté.",
 	eyebeam_message = "Arrivée d'un Rayon de l'oeil !",
-	eyebeam_bar = "~Rayon de l'oeil",
+	eyebeam_bar = "~Prochain Rayon",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
 
 	armor = "Broie armure",

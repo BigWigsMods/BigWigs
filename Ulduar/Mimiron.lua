@@ -132,7 +132,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
-	plasma_warning = "Explosion de plasma en incantation !",
+	plasma_warning = "Explosion en incantation !",
 	plasma_soon = "Explosion de plasma imminente !",
 	plasma_bar = "Explosion de plasma",
 
@@ -143,7 +143,7 @@ L:RegisterTranslations("frFR", function() return {
 	laser = "Barrage laser",
 	laser_desc = "Prévient quand un Barrage laser est actif.",
 	laser_soon = "Barrage laser imminent !",
-	laser_bar = "Barrage laser",
+	laser_bar = "Prochain Barrage laser",
 
 	magnetic = "Noyau magnétique",
 	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",

@@ -87,7 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Vous allez souffrir pour cette intrusion !", -- à vérifier
+	engage_trigger = "Vous allez souffrir pour cette intrusion !",
 
 	cold = "Ça caille ici",
 	cold_desc = "Prévient quand Froid mordant s'est empilé 2 fois sur votre personnage.",
@@ -95,19 +95,27 @@ L:RegisterTranslations("frFR", function() return {
 
 	flash = "Gel instantané",
 	flash_desc = "Prévient quand un joueur subit les effets d'un Gel instantané et quand le Gel instantané est incanté.",
-	flash_message = "%s est un bloc de glace !",
+	flash_message = "Gelé(s) : %s",
 	flash_warning = "Gel instantané en incantation !",
 	flash_soon = "Gel instantané dans 5 sec. !",
 	flash_bar = "Prochain Gel",
 
 	frozenblow = "Coups gelés",
 	frozenblow_desc = "Prévient quand Hodir gagne Coups gelés.",
-	frozenblow_message = "Hodir gagne Coups gelés !",
+	frozenblow_message = "Coups gelés !",
 	frozenblow_bar = "Coups gelés",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 2 min. 30 sec. pour le mode difficile (délai avant qu'Hodir ne détruise sa cache).",
 	hardmode_warning = "Délai du mode difficile dépassé",
+
+	cloud = "Nuage d'orage",
+	cloud_desc = "Prévient quand un joueur subit les effets d'un Nuage d'orage.",
+	cloud_you = "Nuage d'orage sur VOUS !",
+	cloud_other = "Nuage : %s",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Nuage d'orage (nécessite d'être assistant ou mieux).",
 
 	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
 } end )

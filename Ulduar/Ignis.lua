@@ -134,13 +134,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	scorch = "Brûlure",
 	scorch_desc = "Prévient quand vous vous trouvez dans une Brûlure et quand cette dernière est incantée.",
+	scorch_message = "Brûlure sur VOUS !",
 	scorch_warning = "Brûlure en incantation !",
 	scorch_soon = "Brûlure dans ~5 sec. !",
 	scorch_bar = "Prochaine Brûlure",
 
 	slagpot = "Marmite de scories",
 	slagpot_desc = "Prévient quand un joueur est envoyé dans la Marmite de scories.",
-	slagpot_message = "Marmite de scories : %s",
+	slagpot_message = "Marmite : %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

@@ -142,9 +142,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	harpoon = "Tourelle à harpon",
 	harpoon_desc = "Prévient quand une tourelle à harpon est prête.",
-	harpoon_message = "Tourelle à harpon (%d)",
+	harpoon_message = "Tourelle %d prête !",
 	harpoon_trigger = "Tourelle à harpon prête à l'action !",
-	harpoon_nextbar = "Prochaine Tourelle (%d)",
+	harpoon_nextbar = "Tourelle %d",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

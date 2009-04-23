@@ -116,7 +116,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
-	vapor_bar = "Vapeur",
+	vapor_bar = "Vapeurs",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", -- à traduire
 
 	crash = "Déferlante d'ombre",
@@ -127,7 +127,7 @@ L:RegisterTranslations("frFR", function() return {
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
 	mark_message_you = "Marque sur VOUS !",
-	mark_message_other = "Marque sur %s",
+	mark_message_other = "Marque : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
@@ -254,7 +254,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	count = 1

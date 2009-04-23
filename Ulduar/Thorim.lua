@@ -147,7 +147,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase1_message = "Début de la phase 1",
 	phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement, allez payer ! Attendez... vous ?", -- à vérifier
 	phase2_message = "Phase 2 - Berserk dans 5 min. !",
-	phase3_trigger = "Avortons impertinents. Vous osez me défier sur mon piédestal ! Je vais vous écraser moi-même !", -- à vérifier
+	phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !",
 	phase3_message = "Phase 3 - %s engagé !",
 
 	p2berserk = "Phase 2 - Berserk",
@@ -160,25 +160,25 @@ L:RegisterTranslations("frFR", function() return {
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
 	hammer_message = "Marteau-tempête : %s",
-	hammer_bar = "Prochain Marteau-tempête",
+	hammer_bar = "Prochain Marteau",
 
 	impale = "Empaler",
 	impale_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
-	impale_message = "Empaler sur %s",
+	impale_message = "Empaler : %s",
 
 	shock = "Horion de foudre",
 	shock_desc = "Prévient de l'arrivée des Horions de foudre et des Charger l'orbe.",
-	shock_message = "Horion de foudre sur vous ! Bougez !",
+	shock_message = "Horion de foudre sur VOUS !",
 	shock_warning = "Charger l'orbe !",
 	shock_bar = "Charger l'orbe",
 
 	barrier = "Barrière runique",
 	barrier_desc = "Prévient quand le Colosse runique gagne une Barrière runique.",
-	barrier_message = "Colosse runique gagne Barrière runique !",
+	barrier_message = "Barrière runique actif !",
 
 	detonation = "Détonation runique",
 	detonation_desc = "Prévient quand un joueur subit les effets d'une Détonation runique.",
-	detonation_message = "Détonation runique : %s",
+	detonation_message = "Détonation : %s",
 	detonation_yell = "Je suis une bombe !",
 
 	charge = "Charge de foudre",
@@ -188,9 +188,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	strike = "Frappe déséquilibrante",
 	strike_desc = "Prévient quand un joueur subit les effets d'une Frappe déséquilibrante.",
-	strike_message= "Frappe déséquilibrante : %s",
+	strike_message= "Frappe : %s",
 
-	end_trigger = "Retenez vos coups ! Je me rends !", -- à vérifier
+	end_trigger = "Retenez vos coups ! Je me rends !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Détonation runique (nécessite d'être assistant ou mieux).",

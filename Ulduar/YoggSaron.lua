@@ -212,7 +212,7 @@ L:RegisterTranslations("frFR", function() return {
 	ray = "Rayon mortel",
 	ray_desc = "Prévient quand Sara incante un Rayon mortel.",
 	ray_message = "Rayon mortel !",
-	ray_bar = "~Prochain Rayon mortel",
+	ray_bar = "~Prochain Rayon",
 
 	squeeze = squeezeName,
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
@@ -221,12 +221,12 @@ L:RegisterTranslations("frFR", function() return {
 	link = linkedName,
 	link_desc = "Indique quels joueurs sont liées.",
 	link_message = linkedName .. " : %s",
-	--link_warning = "You are Brain Link!",
+	link_warning = "Votre cerveau est lié !",
 
 	gaze = "Regard lunatique",
 	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
 	gaze_message = "Regard lunatique !",
-	gaze_bar = "Recharge Regard",
+	gaze_bar = "~Recharge Regard",
 
 	empower = "Renforcement des ombres",
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",

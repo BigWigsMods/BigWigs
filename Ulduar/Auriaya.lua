@@ -100,12 +100,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	swarm = "Essaim gardien",
 	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
-	swarm_other = "Essaim sur %s !",
-	swarm_you = "Essaim sur VOUS !",
+	swarm_other = "Essaim : %s",
+	swarm_you = "Essaim gardien sur VOUS !",
 	swarm_bar = "~Recharge Essaim",
 
 	defender = "Défenseur farouche",
 	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
+	defender_message = "Défenseur actif (%d/9) !",
 
 	sonic = "Hurlement sonore",
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
