@@ -69,10 +69,10 @@ L:RegisterTranslations("koKR", function() return {
 	sentinel_desc = "아우리아야의 파수꾼 폭발 시전을 알립니다.",
 	sentinel_message = "파수꾼 폭발!",
 
-	swarm = "수호자 무리",
-	swarm_desc = "수호자 무리 시전 대상을 알립니다.",
-	swarm_other = "수호자 무리: %s!",
-	swarm_you = "당신은 수호자 무리!",
+	swarm = "무리 수호자",
+	swarm_desc = "무리 수호자 시전 대상을 알립니다.",
+	swarm_other = "무리 수호자: %s!",
+	swarm_you = "당신은 무리 수호자!",
 	swarm_bar = "~무리 대기시간",
 
 	defender = "수호 야수",
@@ -84,7 +84,7 @@ L:RegisterTranslations("koKR", function() return {
 	sonic_bar = "~음파 대기시간",
 
 	icon = "전술 표시",
-	icon_desc = "수호자의 무리 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "무리 수호자 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -274,7 +274,10 @@ function mod:Defender(_, spellID)
 end
 
 function mod:DefenderKill(_, spellID)
-	count = count - 1
+	if db.defender then
+		count = count - 1
+		self:IfMessage(L["defender_message"]:format(count), "Attention", spellID)
+	end
 end
 
 function mod:Swarm(player, spellID)
