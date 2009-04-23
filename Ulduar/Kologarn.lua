@@ -72,12 +72,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	eyebeam = "안광 집중",
 	eyebeam_desc = "안광 집중의 대상이된 플레이어를 알립니다.",
-	eyebeam_message = "곧 안광 집중!",
+	eyebeam_message = "안광 집중!",
 	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신은 안광 집중!",
 
 	armor = "방어구 씹기",
-	armor_desc = "방어구 씹기 중첩이 2이상이 된 플레이러를 알립니다.",
+	armor_desc = "방어구 씹기 중첩이 2이상이 된 플레이어를 알립니다.",
 	armor_message = "방어구 씹기 x%d: %s",
 } end )
 
