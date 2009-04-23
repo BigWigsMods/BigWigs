@@ -77,6 +77,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	defender = "수호 야수",
 	defender_desc = "수호 야수의 남은 생명 횟수를 알립니다.",
+	defender_message = "수호 야수 (생명: %d/9)!",
 
 	sonic = "음파의 비명소리",
 	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
@@ -320,6 +321,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.defender then
 			self:Bar(L["defender"], 60, 64455)
+		end
+		if db.fear then
+			self:Bar(L["fear_bar"], 32, 64386)
+			self:DelayedMessage(32, L["fear_warning"], "Attention")
 		end
 	end
 end
