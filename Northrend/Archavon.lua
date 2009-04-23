@@ -257,8 +257,8 @@ function mod:Shards()
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, _, _, _, player)
-	if db.charge then
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
+	if db.charge and unit == boss then
 		-- 11578, looks like a charge :)
 		self:IfMessage(L["charge_message"]:format(player), "Attention", 11578)
 	end
