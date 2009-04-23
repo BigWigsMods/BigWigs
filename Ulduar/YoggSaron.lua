@@ -293,7 +293,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	link = linkedName,
 	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
-	link_message = linkedName .. ": %s",
+	link_message = linkedName .. ": %s!",
 	link_warning = "DU bist gehirnverbunden!",
 
 	gaze = "Wahnsinniger Blick",
@@ -312,7 +312,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
-	guardian_message = "Wächter kommt!",
+	guardian_message = "Wächter!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",

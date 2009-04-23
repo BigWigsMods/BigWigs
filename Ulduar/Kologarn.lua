@@ -118,14 +118,14 @@ L:RegisterTranslations("deDE", function() return {
 
 	grip = "Steinerner Griff",
 	grip_desc = "Warnt, wer von Steinerner Griff betroffen ist.",
-	grip_message = "Griff: %s",
+	grip_message = "Griff: %s!",
 
 	shockwave = "Schockwelle",
 	shockwave_desc = "Timer für die Schockwelle.",
 	shockwave_trigger = "AUSLÖSCHUNG!",
 
 	eyebeam = "Fokussierter Augenstrahl",
-	eyebeam_desc = "Warnt, wer von Fokussierter Augenstrahl betroffen ist.",
+	eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist.",
 	eyebeam_message = "Augenstrahl!",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",

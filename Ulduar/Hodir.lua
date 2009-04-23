@@ -133,7 +133,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	cold = "Beißende Kälte (Erfolg)",
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
-	cold_message = "Beißende Kälte x%d - Bewege Dich!",
+	cold_message = "Beißende Kälte x%d!",
 
 	flash = "Blitzeis",
 	flash_desc = "Warnt, wenn Blitzeis gewirkt wird und wer davon betroffen ist.",
@@ -144,12 +144,20 @@ L:RegisterTranslations("deDE", function() return {
 
 	frozenblow = "Gefrorene Schläge",
 	frozenblow_desc = "Warnt, wenn Hodir Gefrorene Schläge bekommt.",
-	frozenblow_message = "Hodir bekommt Gefrorene Schläge!",
+	frozenblow_message = "Gefrorene Schläge!",
 	frozenblow_bar = "Gefrorene Schläge",
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_warning = "Hard Mode beendet!",
+	
+	cloud = "Sturmwolke",
+	cloud_desc = "Warnt, wer von Sturmwolke betroffen ist.",
+	cloud_you = "Sturmwolke auf DIR!",
+	cloud_other = "Sturmwolke: %s!",
+
+	icon = "Place icon",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",
 
 	end_trigger = "Ich...Ich bin von Ihm befreit! Endlich!", -- needs verification!
 } end )

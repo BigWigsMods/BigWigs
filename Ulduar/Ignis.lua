@@ -154,8 +154,8 @@ L:RegisterTranslations("deDE", function() return {
 	construct_bar = "Nächstes Konstrukt",
 
 	brittle = "Spröde",
-	brittle_desc = "Warnt, wenn ein Eisenkonstrukte spröde wird.",
-	brittle_message = "Konstrukt wird spröde!",
+	brittle_desc = "Warnt, wenn ein Eisenkonstrukt spröde wird.",
+	brittle_message = "Konstrukt ist spröde!",
 
 	flame = "Flammenstrahlen",
 	flame_desc = "Warnt, wenn Flammenstrahlen gewirkt werden.",
@@ -163,7 +163,8 @@ L:RegisterTranslations("deDE", function() return {
 	flame_bar = "~Flammenstrahlen",
 
 	scorch = "Versengen",
-	scorch_desc = "Warnt, wenn Versengen gewirkt wird und wer davon betroffen ist.",
+	scorch_desc = "Warnt, wenn Versengen gewirkt wird und wenn du davon betroffen bist.",
+	scorch_message = "Versengen auf DIR!",
 	scorch_warning = "Versengen!",
 	scorch_soon = "Versengen in ~5 sek!",
 	scorch_bar = "Nächstes Versengen",

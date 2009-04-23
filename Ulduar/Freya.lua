@@ -178,10 +178,10 @@ L:RegisterTranslations("deDE", function() return {
 	detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!", -- needs verification!
 	elementals_trigger = "Helft mir, Kinder!", -- needs verification!
 	tree_trigger = "Geschenk der Lebensbinderin beginnt zu wachsen!", -- needs verification!
-	conservator_message = "Konservator kommt!",
-	detonate_message = "Explosionspeitscher kommen!",
-	elementals_message = "Elementare kommen!",
-	tree_message = "Eonars Gabe kommt!",
+	conservator_message = "Konservator!",
+	detonate_message = "Explosionspeitscher!",
+	elementals_message = "Elementare!",
+	tree_message = "Eonars Gabe!",
 
 	attuned = "Einstimmung auf die Natur",
 	attuned_desc = "Warnt vor der Anzahl von Einstimmung auf die Natur.",
@@ -190,7 +190,7 @@ L:RegisterTranslations("deDE", function() return {
 	fury = "Furor der Natur",
 	fury_desc = "Warnt, wer von Furor der Natur betroffen ist.",
 	fury_you = "Furor auf DIR!",
-	fury_other = "Furor: %s",
+	fury_other = "Furor: %s!",
 
 	sunbeam = "Sonnenstrahl",
 	sunbeam_desc = "Warnt, auf wen Sonnenstrahl gewirkt wird.",

@@ -218,7 +218,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	death = "Rune des Todes",
 	death_desc = "Warnt, wenn du in einer Rune des Todes stehst.",
-	death_message = "Rune des Todes auf DIR!",
+	death_message = "Todesrune auf DIR!",
 
 	summoning = "Rune der Beschwörung",
 	summoning_desc = "Warnt, wenn Molgeim Rune der Beschwörung wirkt.",
@@ -232,7 +232,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	overwhelm = "Überwältigende Kraft",
 	overwhelm_desc = "Warnt, wenn ein Spieler von Überwältigende Kraft betroffen ist.",
-	overwhelm_you = "DU hast Überwältigende Kraft!",
+	overwhelm_you = "Überwältigende Kraft auf DIR!",
 	overwhelm_other = "Überwältigende Kraft: %s!",
 
 	whirl = "Blitzwirbel",
