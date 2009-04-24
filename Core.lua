@@ -648,9 +648,10 @@ do
 
 	function BigWigs:BigWigs_TargetSeen(mobname, unit)
 		for name, module in self:IterateModules() do
-			if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and mobIsTrigger(module, mobname)
-				and (not module.VerifyEnable or module:VerifyEnable(unit)))) then
-				self:EnableModule(name)
+			if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and mobIsTrigger(module, mobname))) then
+				if not module.VerifyEnable or module:VerifyEnable(unit) then
+					self:EnableModule(name)
+				end
 			end
 		end
 	end
