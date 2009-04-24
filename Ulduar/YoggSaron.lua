@@ -99,7 +99,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
 
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
+	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or Transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -486,8 +486,6 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
-
-	BigWigs:Print(L["log"])
 	wipe(linked)
 end
 
@@ -604,6 +602,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.berserk then
 			self:Enrage(900, true, true)
 		end
+		BigWigs:Print(L["log"])
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		if db.phase then
