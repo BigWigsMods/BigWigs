@@ -259,15 +259,14 @@ end
 
 function mod:Brittle(_, spellID)
 	if db.brittle then
-		self:IfMessage(L["brittle_message"], "Important", spellID)
+		self:IfMessage(L["brittle_message"], "Positive", spellID)
 	end
 end
 
 function mod:Construct()
 	if db.construct then
-		self:IfMessage(L["construct_message"], "Attention", "INV_Misc_Statue_07") --Views like this icon. :)
-		self:Bar(L["construct_bar"], spawnTime, "INV_Misc_Statue_07") --Views like this icon. :)
-		self:DelayedMessage(spawnTime - 5, L["construct_warning"], "Attention")
+		self:IfMessage(L["construct_message"], "Important", "INV_Misc_Statue_07")
+		self:Bar(L["construct_bar"], spawnTime, "INV_Misc_Statue_07")
 	end
 end
 
@@ -275,7 +274,7 @@ function mod:ScorchCast(_, spellID)
 	if db.scorch then
 		self:IfMessage(L["scorch_warning"], "Attention", spellID)
 		self:Bar(L["scorch_bar"], 25, spellID)
-		self:DelayedMessage(20, L["scorch_soon"], "Attention")
+		self:DelayedMessage(20, L["scorch_soon"], "Urgent", nil, nil, nil, spellID)
 	end
 end
 
@@ -294,7 +293,7 @@ end
 
 function mod:SlagPot(player, spellID)
 	if db.slagpot then
-		self:IfMessage(L["slagpot_message"]:format(player), "Attention", spellID)
+		self:IfMessage(L["slagpot_message"]:format(player), "Important", spellID)
 		self:Bar(L["slagpot_message"]:format(player), 10, spellID)
 	end
 end

@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"heartbreak", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "tympanic", "proximity", "berserk", "bosskill"}
+mod.toggleoptions = {"heartbreak", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -47,11 +47,6 @@ L:RegisterTranslations("enUS", function() return {
 	lightbomb_you = "Light on YOU!",
 	lightbomb_other = "Light on %s!",
 
-	tympanic = "Tympanic Tantrum",
-	tympanic_desc = "Warn when XT-002 casts a Tympanic Tantrum.",
-	tympanic_message = "Tympanic Tantrum!",
-	tympanic_bar = "~Tantrum Cooldown",
-
 	voidzone = "Void Zone",
 	voidzone_desc = "Warn for Void Zone spawn.",
 	voidzone_message = "Void Zone!",
@@ -79,11 +74,6 @@ L:RegisterTranslations("koKR", function() return {
 	lightbomb_desc = "빛의 폭탄에 걸린 플레이어를 알립니다.",
 	lightbomb_you = "당신은 빛의 폭탄!",
 	lightbomb_other = "빛의 폭탄: %s!",
-
-	tympanic = "격분의 땅울림",
-	tympanic_desc = "XT-002의 격분의 땅울림 시전을 알립니다.",
-	tympanic_message = "격분의 땅울림!",
-	tympanic_bar = "~땅울림 대기시간",
 
 	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대 생성을 알립니다.",
@@ -113,11 +103,6 @@ L:RegisterTranslations("frFR", function() return {
 	lightbomb_you = "Bombe de lumière sur VOUS !",
 	lightbomb_other = "Lumière : %s",
 
-	tympanic = "Colère assourdissante",
-	tympanic_desc = "Prévient quand XT-002 incante une Colère assourdissante.",
-	tympanic_message = "Colère assourdissante !",
-	tympanic_bar = "~Recharge Colère",
-
 	voidzone = "Zone de Vide",
 	voidzone_desc = "Prévient quand une Zone de Vide apparaît.",
 	voidzone_message = "Zone de Vide !",
@@ -145,11 +130,6 @@ L:RegisterTranslations("deDE", function() return {
 	lightbomb_desc = "Warnt, wer von Lichtbombe getroffen wurde.",
 	lightbomb_you = "Lichtbombe auf DIR!",
 	lightbomb_other = "Lichtbombe: %s!",
-
-	tympanic = "Betäubender Koller",
-	tympanic_desc = "Warnt, wenn XT-002 Betäubender Koller wirkt.",
-	tympanic_message = "Betäubender Koller!",
-	tympanic_bar = "~Betäubender Koller",
 
 	voidzone = "Zone der Leere",
 	voidzone_desc = "Warnt, wenn Zonen der Leere erscheinen.",
@@ -179,11 +159,6 @@ L:RegisterTranslations("zhCN", function() return {
 	lightbomb_you = ">你< Light Bomb！",
 	lightbomb_other = "Light Bomb：>%s<！",
 
-	tympanic = "Tympanic Tantrum",
-	tympanic_desc = "当 XT-002 施放Tympanic Tantrum时发出警报。",
-	tympanic_message = "Tympanic Tantrum！",
-	tympanic_bar = "<Tympanic Tantrum 冷却>",
-
 	voidzone = "虚空领域",
 	voidzone_desc = "当虚空领域出现时发出警报。",
 	voidzone_message = "虚空领域！",
@@ -211,11 +186,6 @@ L:RegisterTranslations("zhTW", function() return {
 	lightbomb_desc = "當玩家中了裂光彈時發出警報。",
 	lightbomb_you = ">你< 裂光彈！",
 	lightbomb_other = "裂光彈：>%s<！",
-
-	tympanic = "躁怒",
-	tympanic_desc = "當 XT-002 施放躁怒時發出警報。",
-	tympanic_message = "躁怒！",
-	tympanic_bar = "<躁怒 冷卻>",
 
 	voidzone = "虛無區域",
 	voidzone_desc = "當虛無區域出現時發出警報。",
@@ -245,11 +215,6 @@ L:RegisterTranslations("ruRU", function() return {
 	lightbomb_you = "Взрыв на ВАС!",
 	lightbomb_other = "Взрыв на |3-5(%s)!",
 
-	tympanic = "Раскаты ярости",
-	tympanic_desc = "Сообщает о применении Раскатов Ярости.",
-	tympanic_message = "Раскаты ярости!",
-	tympanic_bar = "~перезарядка раскатов",
-
 	voidzone = "Портал Бездны",
 	voidzone_desc = "Сообщать о появлениях Порталов Бездны.",
 	voidzone_message = "Портал Бездны!",
@@ -267,7 +232,6 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Tantrum", 62776)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234, 65121)
@@ -290,7 +254,6 @@ end
 ------------------------------
 
 function mod:Exposed(_, spellID)
-	self:TriggerEvent("BigWigs_StopBar", self, L["tympanic_bar"])
 	if db.exposed then
 		self:IfMessage(L["exposed_message"], "Attention", spellID)
 		self:Bar(L["exposed"], 30, spellID)
@@ -338,13 +301,6 @@ function mod:BombRemoved(player)
 	end
 end
 
-function mod:Tantrum(_, spellID)
-	if db.tympanic then
-		self:IfMessage(L["tympanic_message"], "Attention", spellID)
-		self:Bar(L["tympanic_bar"], 70, spellID)
-	end
-end
-
 function mod:VoidZone(_, spellID)
 	if db.voidzone then
 		self:IfMessage(L["voidzone_message"], "Attention", 64235)
@@ -378,9 +334,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		exposed3 = nil
 		if db.berserk then
 			self:Enrage(420, true)
-		end
-		if db.tympanic then
-			self:Bar(L["tympanic_bar"], 70, 62776)
 		end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")

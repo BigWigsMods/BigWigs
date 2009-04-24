@@ -42,8 +42,8 @@ L:RegisterTranslations("enUS", function() return {
 	pursue_you = "Leviathan pursues YOU!",
 
 	shutdown = "Systems Shutdown",
-	shutdown_desc = "Warn when Flame Leviathan a Systems Shutdown",
-	shutdown_message = "Systems Shutdown!",
+	shutdown_desc = "Warn when the systems shut down.",
+	shutdown_message = "Systems down!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -181,14 +181,14 @@ end
 
 function mod:Flame()
 	if db.flame then
-		self:IfMessage(L["flame_message"], "Attention", 62396)
+		self:IfMessage(L["flame_message"], "Urgent", 62396)
 		self:Bar(L["flame"], 10, 62396)
 	end
 end
 
 function mod:Shutdown()
 	if db.shutdown then
-		self:IfMessage(L["shutdown_message"], "Attention")
+		self:IfMessage(L["shutdown_message"], "Positive", 62475, "Long")
 		self:Bar(L["shutdown"], 20, 62475)
 	end
 end
@@ -198,7 +198,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
 		if db.pursue and message:find(L["pursue_trigger"]) then
 			local other = fmt(L["pursue_other"], player)
 			if player == pName then
-				self:LocalMessage(L["pursue_you"], "Important", 62374, "Long")
+				self:LocalMessage(L["pursue_you"], "Personal", 62374, "Alarm")
 				self:WideMessage(other)
 			else
 				self:IfMessage(other, "Attention", 62374)

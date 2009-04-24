@@ -10,6 +10,7 @@ mod.enabletrigger = boss
 mod.guid = 32906
 mod.toggleoptions = {"phase", -1, "tremor", "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
+--Eonar's Gift
 
 ------------------------------
 --      Are you local?      --
@@ -36,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
-	phase2_message = "Phase 2 !",
+	phase2_message = "Phase 2!",
 	phase2_soon = "Phase 2 soon",
 
 	wave = "Waves",
@@ -70,7 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 	tremor_message = "Ground Tremor!",
 
 	icon = "Place Icon",
-	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam. (requires promoted or higher)",
+	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam and Nature's Fury. (requires promoted or higher)",
 
 	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 } end )

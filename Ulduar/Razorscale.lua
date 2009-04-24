@@ -295,9 +295,12 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["ground_trigger"] and db.phase then
-		self:IfMessage(L["ground_message"], "Attention", nil, "Long")
-		self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
+	if msg == L["ground_trigger"] then
+		if db.phase then
+			self:IfMessage(L["ground_message"], "Attention", nil, "Long")
+			self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
+		end
+		count = 0
 	elseif msg == L["air_trigger"] then
 		p2 = nil
 		count = 0

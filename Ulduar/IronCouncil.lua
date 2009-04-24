@@ -11,7 +11,7 @@ local brundir = BB["Stormcaller Brundir"]
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {"chain", "overload", "whirl", "tendrils", -1, "punch", "overwhelm", -1, "shield", "power", "death", "summoning", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"overload", "whirl", "tendrils", -1, "punch", "overwhelm", -1, "shield", "power", "death", "summoning", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -37,10 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
 	engage_trigger2 = "Nothing short of total decimation will suffice!",
 	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
-
-	chain = "Chain Lightning",
-	chain_desc = "Warn when Brundir casts a Chain Lightning.",
-	chain_message = "Chain Lightning!",
 
 	overload = "Overload",
 	overload_desc = "Warn when Brundir casts a Overload.",
@@ -92,10 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger2 = "남김없이 쓸어 버려야 속이 시원하겠군!",	--check
 	engage_trigger3 = "세상에서 가장 큰 모기건 세상에서 가장 위대한 영웅이건, 너흰 어차피 필멸의 존재야.",
 
-	chain = "연쇄 번개",
-	chain_desc = "브룬디르의 연쇄 번개 시전을 알립니다.",
-	chain_message = "연쇄 번개!",
-
 	overload = "과부하",
 	overload_desc = "브룬디르의 과부하 시전을 알립니다.",
 	overload_message = "6초 후 폭발!",
@@ -145,10 +137,6 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Vous ne vaincrez pas si facilement l'assemblée du Fer, envahisseurs !",
 	engage_trigger2 = "Seule votre extermination complète me conviendra.",
 	engage_trigger3 = "Que vous soyez les plus grandes punaises ou les plus grands héros de ce monde, vous n'êtes jamais que des mortels.",
-
-	chain = "Chaîne d'éclairs",
-	chain_desc = "Prévient quand Brundir incante une Chaîne d'éclairs.",
-	chain_message = "Chaîne d'éclairs !",
 
 	overload = "Surcharge",
 	overload_desc = "Prévient quand Brundir incante une Surcharge.",
@@ -200,10 +188,6 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger2 = "Nur vollständige Dezimierung wird mich zufriedenstellen.",
 	engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, so seid Ihr doch nichts weiter als Sterbliche.",
 
-	chain = "Kettenblitz",
-	chain_desc = "Warnt, wenn Brundir Kettenblitz wirkt.",
-	chain_message = "Kettenblitz!",
-
 	overload = "Überladen",
 	overload_desc = "Warnt, wenn Brundir Überladen wirkt.",
 	overload_message = "Überladen Explosion in 6 sek!",
@@ -253,10 +237,6 @@ L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
 --	engage_trigger2 = "Nothing short of total decimation will suffice!",
 --	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
-
-	chain = "闪电链",
-	chain_desc = "当布隆迪尔施放闪电链时发出警报。",
-	chain_message = "闪电链！",
 
 	overload = "过载",
 	overload_desc = "当布隆迪尔施放过载时发出警报。",
@@ -308,10 +288,6 @@ L:RegisterTranslations("zhTW", function() return {
 --	engage_trigger2 = "Nothing short of total decimation will suffice!",
 --	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
 
-	chain = "閃電鏈",
-	chain_desc = "當布倫迪爾施放閃電鏈時發出警報。",
-	chain_message = "閃電鏈！",
-
 	overload = "超載",
 	overload_desc = "當布倫迪爾施放超載時發出警報。",
 	overload_message = "10秒后，爆炸！",
@@ -361,10 +337,6 @@ L:RegisterTranslations("ruRU", function() return {
 --	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
 --	engage_trigger2 = "Nothing short of total decimation will suffice!",
 --	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
-
-	chain = "Цепная молния",
-	chain_desc = "Сообщает когда Брундир применяет Цепную молнию.",
-	chain_message = "Цепная молния!",
 
 	overload = "Перегрузка",
 	overload_desc = "Сообщает когда Брундир применяет Перегрузку.",
@@ -416,7 +388,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490) -- Molgeim +1
 	self:AddCombatListener("SPELL_CAST_START", "RuneSummoning", 62273) -- Molgeim +2
 
-	self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479) -- Brundir 
+	-- Chain Lightning is just spammed too much to be useful as a raid warning.
+	--self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479) -- Brundir 
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869) -- Brundir
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
@@ -479,12 +452,6 @@ end
 function mod:RuneSummoning()
 	if db.summoning then
 		self:IfMessage(L["summoning_message"], "Attention", spellID)
-	end
-end
-
-function mod:Chain(_, spellID)
-	if db.chain then
-		self:IfMessage(L["chain_message"], "Attention", spellID)
 	end
 end
 
