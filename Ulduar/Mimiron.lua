@@ -6,9 +6,9 @@ local boss = BB["Mimiron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = boss
-mod.guid = 33350		-- Most of the fight you fight vehicles .. does that matter..?
---  Leviathan MKII(33432), VX-001(33651), Aerial Command Unit(33670), 
+mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
+mod.guid = 33350
+--  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
 mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "magnetic", "bosskill"}
 
 ------------------------------
