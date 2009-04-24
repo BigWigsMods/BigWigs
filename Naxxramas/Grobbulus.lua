@@ -43,7 +43,7 @@ L:RegisterTranslations("ruRU", function() return {
 	inject = "Вам сдедали укол",
 	inject_desc = "Предупреждать об уколе.",
 	bomb_message_you = "Вам сделали укол! Бегите от рейда!!",
-	bomb_message_other = "%s сделали укол! Бегите от него! ",
+	bomb_message_other = "|3-2(%s) сделали укол! Бегите от него!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, которому был сделан укол (необходимо быть лидером группы или рейда).",
@@ -51,7 +51,7 @@ L:RegisterTranslations("ruRU", function() return {
 	cloud = "Ядовитое облако",
 	cloud_desc = "Сообщать о ядовитом облаке.",
 	cloud_warn = "Ядовитое облако! Следующее - через ~15 секунд!",
-	cloud_bar = "Следующее ядовитое облако",
+	cloud_bar = "Следующее облако",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

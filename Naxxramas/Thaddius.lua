@@ -94,8 +94,8 @@ L:RegisterTranslations("ruRU", function() return {
 	polarity_changed = "Полярность сменилась!",
 	polarity_nochange = "Полярность НЕ сменилась!",
 	
-	polarity_first_positive = "Вы ПОЛОЖИТЕЛЬНЫЙ!",
-	polarity_first_negative = "Вы ОТРИЦАТЕЛЬНЫЙ!",
+	polarity_first_positive = "Вы (+) ПОЛОЖИТЕЛЬНЫЙ!",
+	polarity_first_negative = "Вы (-) ОТРИЦАТЕЛЬНЫЙ!",
 	
 	phase1_message = "Таддиус фаза 1",
 	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",

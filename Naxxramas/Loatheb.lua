@@ -55,7 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	startwarn = "Мерзот в Бешенстве, 2 минуты до неотвратимого рока!",
+	startwarn = "Лотхиб вступает в бой, 2 минуты до неотвратимого рока!",
 
 	aura = "Мертвенная аура",
 	aura_desc = "Предупреждать о Мертвенной ауре",
@@ -73,7 +73,7 @@ L:RegisterTranslations("ruRU", function() return {
 	doomwarn5sec = "Неотвратимый рок %d через 5 секунд!",
 	doomtimerbar = "Рок каждые 15 секунд",
 	doomtimerwarn = "Рок теперь каждые %s секунд!",
-	doomtimerwarnnow = "Неотвратимый рок теперь накладывается каждые 15 секунд!",
+	doomtimerwarnnow = "Рок теперь накладывается каждые 15 секунд!",
 
 	spore = "Появление спор",
 	spore_desc = "Сообщать о появлении спор",

@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	startwarn = "Глут в бешенстве! ~105 cекунд до появления зомби!",
+	startwarn = "Глут вступает в бой! ~105 cекунд до появления зомби!",
 
 	frenzy = "Бешенство",
 	frenzy_desc = "Предупреждать о бешенстве.",

@@ -60,7 +60,7 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger3 = "Вам не скрыться от меня!",  
 	starttrigger4 = "Бегите, пока еще можете!",  
 
-	startwarn = "Великая вдова Фарлина злится, 60 секунд до бешенства!",
+	startwarn = "Великая вдова Фарлина вступает в бой, 60 секунд до бешенства!",
 	enragewarn15sec = "15 секунд до Бешенства!",
 	enragewarn = "Бешенство!",
 	enragewarn2 = "Скоро бешенство!",

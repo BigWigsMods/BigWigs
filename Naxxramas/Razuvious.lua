@@ -142,13 +142,13 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	shout = "Разрушительный крик",
-	shout_desc = "Предупреждать о  Разрушительном крике.",
+	shout_desc = "Предупреждать о Разрушительном крике.",
 	shout_warning = "Разрушительный крик через 5сек!",
-	shout_next = "перезарядка крика",
+	shout_next = "~перезарядка крика",
 
 	knife = "Зазубренный нож",
 	knife_desc = "Предупреждать, в кого будет брошен Зазубренный нож.",
-	knife_message = "Зазубренный нож: %s",
+	knife_message = "Нож в |3-5(%s)! Лечите!",
 
 	taunt = "Провокация",
 	taunt_desc = "Предупреждать о провокации.",

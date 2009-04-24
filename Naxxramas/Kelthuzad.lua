@@ -98,9 +98,9 @@ L:RegisterTranslations("ruRU", function() return {
 
 	mc = "Контроль Разума",
 	mc_desc = "Предупреждать когда Кел'Тузад начинает контролировать чей то разум.",
-	mc_message = "Контроль Разума: %s",
+	mc_message = "Контроль над |3-4(%s)",
 	mc_warning = "Скоро контроль разума!",
-	mc_nextbar = "~Контроль Разума: Восстановление",
+	mc_nextbar = "~Контроль Разума",
 
 	fissure = "Расщелина тьмы",
 	fissure_desc = "Сообщать, когда появляется расщелина тьмы.",
@@ -109,13 +109,13 @@ L:RegisterTranslations("ruRU", function() return {
 	frostblast = "Опасность ледяного взрыва",
 	frostblast_desc = "Сообщать, когда ледяной взрыв добирается до игроков.",
 	frostblast_bar = "Возможен ледяной взрыв",
-	frostblast_message = "%s : ледяной взрыв",
+	frostblast_message = "%s в Глыбе!",
 	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
 
 	detonate = "Опасность взрыва маны",
 	detonate_desc = "Сообщать о взрыве маны.",
 	detonate_you = "Взрыв маны на Вас!",
-	detonate_other = "Взрыв маны - %s",
+	detonate_other = "Взрыв маны на 3-5(%s)",
 	detonate_possible_bar = "Возможен взрыв маны",
 	detonate_warning = "Следующий взрыв маны через 5 секунд!",
 

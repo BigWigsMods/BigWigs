@@ -54,7 +54,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	enragewarn = "5% - Исступление!",
+	enragewarn = "5% - Бешенство!",
 	starttrigger1 = "Лоскутик хочет поиграть!",  --corrected 12.13.2008
 	starttrigger2 = "Кел'Тузад объявил Лоскутика воплощением войны!", --corrected 12.13.2008
 } end )

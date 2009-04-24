@@ -68,7 +68,7 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger1 = "Смерть чужакам!",  
 	starttrigger2 = "Слава господину!",
 	starttrigger3 = "Прощайся с жизнью!", 
-	startwarn = "Нот Чумной разъярён! 90 секунд до телепорта",
+	startwarn = "Нот Чумной вступает в бой! 90 секунд до телепорта",
 
 	blink = "Опасность скачка",
 	blink_desc = "Предупреждать, когда Нот использует скачок",
