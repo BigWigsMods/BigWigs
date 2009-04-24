@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	conservator_trigger = "Eonar, your servant requires aid!",
 	detonate_trigger = "The swarm of the elements shall overtake you!",
 	elementals_trigger = "Children, assist me!",
-	tree_trigger = "A Lifebinder's Gift begins to grow!",
+	tree_trigger = "A |cFF00FFFFLifebinder's Gift|r begins to grow!",
 	conservator_message = "Conservator!",
 	detonate_message = "Detonating lashers!",
 	elementals_message = "Elementals!",
@@ -76,7 +76,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "어떻게 해서든 정원을 수호해야 한다!",	--check
+	engage_trigger = "어떻게 해서든 정원을 수호해야 한다!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -86,10 +86,10 @@ L:RegisterTranslations("koKR", function() return {
 	wave = "웨이브",
 	wave_desc = "웨이브에 대해 알립니다.",
 	wave_bar = "다음 웨이브",
-	conservator_trigger = "이오나여, 당신의 종이 도움을 청합니다!",	--check
-	detonate_trigger = "정령의 무리가 너희를 덮치리라!",	--check
-	elementals_trigger = "얘들아, 날 도와라!",	--check
-	tree_trigger = "A Lifebinder's Gift begins to grow!",	--check
+	conservator_trigger = "이오나여, 당신의 종이 도움을 청합니다!",
+	detonate_trigger = "정령의 무리가 너희를 덮치리라!",
+	elementals_trigger = "얘들아, 날 도와라!",
+	tree_trigger = "|cFF00FFFF생명의 어머니의 선물|r이 자라기 시작합니다!",
 	conservator_message = "수호자 소환",
 	detonate_message = "폭발 덩굴손 소환",
 	elementals_message = "정령 3 소환",
@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "전술 표시",
 	icon_desc = "태양 광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
-	end_trigger = "내게서 그의 지배력이 거쳤다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",	--check
+	end_trigger = "내게서 그의 지배력이 걷혔다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

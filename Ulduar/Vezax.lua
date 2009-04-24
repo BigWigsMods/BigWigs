@@ -87,7 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",

@@ -73,13 +73,13 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	engage_warning = "1 단계",
-	engage_trigger = "^시간이 없어, 친구들!",	--check
+	engage_trigger = "^시간이 없어, 친구들!",
 	phase2_warning = "곧 2 단계",
-	phase2_trigger = "^멋지군!",	--check
+	phase2_trigger = "^멋지군!",
 	phase3_warning = "곧 3 단계",
-	phase3_trigger = "^고맙다, 친구들!",	--check
+	phase3_trigger = "^고맙다, 친구들!",
 	phase4_warning = "곧 4 단계",
-	phase4_trigger = "^이미 시험은 이걸로 끝이다",	--check
+	phase4_trigger = "^예비 시험은 이걸로 끝이다",
 	phase_bar = "%d 단계",
 
 	hardmode = "도전 모드 시간",
