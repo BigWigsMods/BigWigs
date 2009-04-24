@@ -250,7 +250,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65133)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
 	self:AddCombatListener("SPELL_DAMAGE", "Cold", 62188)
 	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
 
