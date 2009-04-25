@@ -108,7 +108,7 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
 
-	end_trigger = "^정상이야. 내가 계산을",
+	end_trigger = "^내가 계산을 좀 잘못한 것 같군",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
