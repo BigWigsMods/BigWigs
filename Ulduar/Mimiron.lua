@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	laser = "Laser Barrage",
 	laser_desc = "Warn when Laser Barrage is active.",
-	laser_soon = "Barrage soon!",
+	laser_soon = "Spinning up!",
 	laser_bar = "Barrage",
 
 	magnetic = "Magnetic Core",
@@ -338,6 +338,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(2, "MimiLoot")
+	self:Throttle(10, "MimiBarrage")
 
 	db = self.db.profile
 end
@@ -368,19 +369,15 @@ end
 
 function mod:Spinning(_, spellId)
 	if db.laser then
-		self:IfMessage(L["laser_soon"], "Important", 63414, "Long")
+		self:IfMessage(L["laser_soon"], "Personal", 63414, "Long")
 	end
 end
 
 do
 	local laser = GetSpellInfo(63274)
 	function mod:UNIT_SPELLCAST_CHANNEL_START(unit, spell)
-		if not db.laser then return end
-		-- Laser Barrage
 		if spell == laser then
-			self:IfMessage(L["laser"], "Important", 63274)
-			self:Bar(L["laser"], 10, 63274)
-			self:Bar(L["laser_bar"], 60, 63274)
+			self:Sync("MimiBarrage")
 		end
 	end
 end
@@ -471,7 +468,10 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MimiLoot" and rest and db.magnetic then
-		self:IfMessage(L["loot_message"]:format(rest), "Positive", "INV_Gizmo_KhoriumPowerCore", "Info")
+		self:IfMessage(L["loot_message"]:format(rest), "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
+	elseif sync == "MimiBarrage" and db.laser then
+		self:IfMessage(L["laser_bar"], "Important", 63274)
+		self:Bar(L["laser_bar"], 60, 63274)
 	end
 end
 

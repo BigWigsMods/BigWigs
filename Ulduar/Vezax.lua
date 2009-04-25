@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"vapor", "animus", -1, "crash", "mark", "flame", "surge", -1, "icon", "bosskill"}
+mod.toggleoptions = {"vapor", "animus", -1, "crash", "crashicon", "mark", "icon", "flame", "surge", -1, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -53,14 +53,17 @@ L:RegisterTranslations("enUS", function() return {
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
 	crash_you = "Crash on YOU!",
 	crash_other = "Crash on %s",
+	
+	crashicon = "Crash Icon",
+	crashicon_desc = "Place a Diamond icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
 	mark = "Mark of the Faceless",
 	mark_desc = "Warn who gets the Mark of the Faceless.",
 	mark_message_you = "Mark on YOU!",
 	mark_message_other = "Mark on %s!",
 
-	icon = "Place Icon",
-	icon_desc = "Place a Raid Target Icon on the player targetted by Shadow Crash. (requires promoted or higher)",
+	icon = "Mark Icon",
+	icon_desc = "Place a raid target icon on the player targetted by Mark of the Faceless. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -324,7 +327,9 @@ local function scanTarget()
 			mod:IfMessage(other, "Attention", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
-		mod:Icon(target, "icon")
+		if db.crashicon then
+			SetRaidTarget(target, 3)
+		end
 		mod:CancelScheduledEvent("BWCrashToTScan")
 	end
 end
