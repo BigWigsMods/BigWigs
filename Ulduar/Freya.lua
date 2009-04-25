@@ -203,7 +203,7 @@ L:RegisterTranslations("deDE", function() return {
 	tremor_message = "Bebende Erde!",
 
 	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl betroffen sind (benötigt Assistent oder höher).",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
 
 	end_trigger = "Seine Macht über mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden.", -- needs verification!
 } end )

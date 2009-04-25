@@ -133,6 +133,41 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	flame = "Sengende Flammen",
+	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
+	flame_message = "Sengende Flammen!",
+
+	surge = "Sog der Dunkelheit",
+	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
+	surge_message = "Sog der Dunkelheit!",
+	surge_cast = "Wirkt Sog",
+	surge_end = "Sog beendet!",
+
+	animus = "Saronitanimus",
+	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
+	animus_message = "Saronitanimus kommt!",
+
+	vapor = "Saronitdämpfe",
+	vapor_desc = "Warnung und Timer für das Auftauchen von Saronitdämpfen.",
+	vapor_message = "Saronitdämpfe %d!",
+	vapor_bar = "Saronitdämpfe",
+	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", --NEED!
+
+	crash = "Schattengeschoss",
+	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
+	crash_you = "Schattengeschoss auf DIR!",
+	crash_other = "Schattengeschoss: %s!",
+
+	mark = "Mal der Gesichtslosen",
+	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",
+	mark_message_you = "Mal auf DIR!",
+	mark_message_other = "Mal: %s!",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	flame = "灼热烈焰",
 	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",

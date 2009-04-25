@@ -99,7 +99,7 @@ L:RegisterTranslations("deDE", function() return {
 	pursue_you = "DU wirst verfolgt!",
 
 	shutdown = "Systemabschaltung",
-	shutdown_desc = "Warnung für Systemabschaltung",
+	shutdown_desc = "Warnung für Systemabschaltung.",
 	shutdown_message = "Systemabschaltung!",
 } end )
 

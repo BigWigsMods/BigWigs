@@ -196,6 +196,61 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Détonation runique (nécessite d'être assistant ou mieux).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase = "Phasen",
+	phase_desc = "Warnt bei Phasenwechsel.",
+	phase1_message = "Phase 1",
+	--phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...", --NEED!
+	phase2_message = "Phase 2 - Berserker in 5 min!",
+	--phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!", --NEED!
+	phase3_message = "Phase 3 - %s angegriffen!",
+
+	p2berserk = "Phase 2 - Berserker",
+	p2berserk_desc = "Warnt, wenn der Boss in Phase 2 zum Berserker wird.",
+
+	hardmode = "Hard Mode",
+	hardmode_desc = "Timer für den Hard Mode.",
+	hardmode_warning = "Hard Mode beendet!",
+
+	hammer = "Sturmhammer",
+	hammer_desc = "Warnung und Timer für Sturmhammer.",
+	hammer_message = "Sturmhammer: %s!",
+	hammer_bar = "Sturmhammer",
+
+	impale = "Durchbohren",
+	impale_desc = "Warnt, wer von Durchbohren betroffen ist.",
+	impale_message = "Durchbohren: %s!",
+
+	shock = "Blitzschock",
+	shock_desc = "Warnung und Timer für Kugel aufladen and Blitzschock.",
+	shock_message = "DU wirst geschockt!",
+	shock_warning = "Kugel aufladen!",
+	shock_bar = "Kugel aufladen",
+
+	barrier = "Runenbarriere",
+	barrier_desc = "Warnt, wenn der Runenverzierter Koloss von Runenbarriere betroffen ist.",
+	barrier_message = "Runenbarriere oben!",
+
+	detonation = "Runendetonation",
+	detonation_desc = "Warnt, wer von Runendetonation betroffen ist.",
+	detonation_message = "Runendetonation: %s!",
+	detonation_yell = "Ich bin die Bombe!",
+
+	charge = "Blitzladung",
+	charge_desc = "Warnung und Zähler für Thorims Blitzladung.",
+	charge_message = "Blitzladung x%d!",
+	charge_bar = "Blitzladung %d",
+
+	strike = "Schlag des Ungleichgewichts",
+	strike_desc = "Warnt, wenn ein Spieler von Schlag des Ungleichgewichts betroffen ist.",
+	strike_message= "Schlag des Ungleichgewichts: %s!",
+
+	--end_trigger = "Stay your arms! I yield!", --NEED!
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Runendetonation und Sturmhammer betroffen sind (benötigt Assistent oder höher).",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
