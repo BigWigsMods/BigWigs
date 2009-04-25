@@ -108,22 +108,22 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	engage_warning = "1 단계",
-	engage_trigger = "^짐승의",	--check
+	engage_trigger = "^짐승의 대장을 칠 때가 곧 다가올 거예요",
 	phase2_warning = "2 단계",
-	phase2_trigger = "^나는 살아있는 꿈이다",	--check
+	phase2_trigger = "^나는, 살아 있는 꿈이다",
 	phase3_warning = "3 단계",
-	phase3_trigger = "^죽음의 진정한 얼굴을 보아라",	--check
+	phase3_trigger = "^죽음의 진정한 얼굴을 보아라",
 
 	portal = "차원문",
 	portal_desc = "차원문을 알립니다.",
-	--portal_trigger = "Portals open into Yogg-Saron's mind!",
+	portal_trigger = "요그사론의 마음속으로 가는 차원문이 열립니다!",
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
 
 	weakened = "약화",
 	weakened_desc = "약화 상태를 알립니다.",
 	weakened_message = "%s 약화!",
-	--weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
+	weakened_trigger = "환상이 부서지며, 중앙에 있는 방으로 가는 길이 열립니다!",
 
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
@@ -473,7 +473,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_START", "Empower", 64465)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64126)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830)
