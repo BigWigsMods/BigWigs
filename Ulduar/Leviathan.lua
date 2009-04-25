@@ -142,7 +142,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	--engage_trigger = "^Hostile entities detected.",
+	engage_trigger = "^Обнаружены противники.",
 	engage_message = "%s вступает в бой!",
 
 	flame = "Огненная струя",
