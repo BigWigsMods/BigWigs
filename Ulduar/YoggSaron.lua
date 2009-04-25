@@ -237,7 +237,7 @@ L:RegisterTranslations("frFR", function() return {
 	mindcontrol_desc = "Prévient quand un joueur subit les effets d'une Emprise.",
 	mindcontrol_message = "Emprise : %s",
 
-	guardian = "Apparition des gardiesn", --phase 1
+	guardian = "Apparition des gardiens", --phase 1
 	guardian_desc = "Prévient quand un Gardien de Yogg-Saron apparaît.",
 	guardian_message = "Gardien apparu !",
 

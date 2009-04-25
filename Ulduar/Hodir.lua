@@ -125,7 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Nuage d'orage (nécessite d'être assistant ou mieux).",
 
-	end_trigger = "Je suis... libéré de son emprise ! Enfin !", -- à vérifier
+	end_trigger = "Je suis... libéré de son emprise... enfin.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -150,7 +150,7 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_warning = "Hard Mode beendet!",
-	
+
 	cloud = "Sturmwolke",
 	cloud_desc = "Warnt, wer von Sturmwolke betroffen ist.",
 	cloud_you = "Sturmwolke auf DIR!",
