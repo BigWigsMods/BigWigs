@@ -236,6 +236,14 @@ L:RegisterTranslations("ruRU", function() return {
 	hardmode = "Таймер сложного режима", --need review
 	hardmode_desc = "Отображать таймер в сложном режиме.",--need review
 	hardmode_warning = "Завершение сложного режима",--need review
+	
+	cloud = "Грозовая туча",
+	cloud_desc = "Отображает кто получает эффект Грозовой тучи.",
+	cloud_you = "Грозовая туча на ВАС",
+	cloud_other = "%s под Грозовой тучей",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелена Грозовая туча.",
 
 	--end_trigger = "I...I am released from his grasp! At...last!",
 } end )

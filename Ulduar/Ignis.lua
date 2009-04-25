@@ -76,6 +76,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	scorch = "Ожог",
 	scorch_desc = "Сообщать когда вас обжигает и когда применяется Ожог.",
+	scorch_message = "Ожог на ВАС!",
 	scorch_warning = "Применение Ожога!",
 	scorch_soon = "Ожог через ~5сек!",
 	scorch_bar = "Следующий Ожог",

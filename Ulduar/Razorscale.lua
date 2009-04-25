@@ -84,9 +84,9 @@ L:RegisterTranslations("ruRU", function() return {
 
 	harpoon = "Гарпунная Пушка",
 	harpoon_desc = "Объявлять Гарпунные Пушки.",
-	harpoon_message = "Гарпунная Пушка (%d)",
+	harpoon_message = "Пушка (%d) готова!",
 	harpoon_trigger = "Гарпунная пушка готова!",
-	harpoon_nextbar = "Следующий Гарпун (%d)",
+	harpoon_nextbar = "Гарпун (%d)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
