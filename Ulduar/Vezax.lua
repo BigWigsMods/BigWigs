@@ -117,7 +117,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
 	vapor_bar = "Vapeurs",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", -- à traduire
+	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
