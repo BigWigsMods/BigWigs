@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	crash_say = "Crash on Me!",
 	
 	crashicon = "Crash Icon",
-	crashicon_desc = "Place a Diamond icon on the player targetted by Shadow Crash. (requires promoted or higher)",
+	crashicon_desc = "Place a Blue Square icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
 	mark = "Mark of the Faceless",
 	mark_desc = "Warn who gets the Mark of the Faceless.",
@@ -95,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	crash_say = "저 어둠 붕괴요!",
 
 	crashicon = "붕괴 아이콘",
-	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 다이아몬드 표시를 지정합니다. (승급자 이상 권한 필요)",
+	--crashicon_desc = "어둠 붕괴의 대상 플레이어에게 다이아몬드 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
@@ -170,7 +170,7 @@ L:RegisterTranslations("deDE", function() return {
 	crash_say = "Schattengeschoss auf MIR!",
 
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
-	crashicon_desc = "Platziert einen Diamanten auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+	--crashicon_desc = "Platziert einen Diamanten auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 	
 	mark = "Mal der Gesichtslosen",
 	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",
@@ -344,7 +344,7 @@ local function scanTarget()
 			mod:Whisper(target, L["crash_you"])
 		end
 		if db.crashicon then
-			SetRaidTarget(target, 3)
+			SetRaidTarget(target, 6)
 		end
 		mod:CancelScheduledEvent("BWCrashToTScan")
 	end
