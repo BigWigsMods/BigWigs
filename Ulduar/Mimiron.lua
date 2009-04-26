@@ -101,7 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 	laser = "레이저 탄막",
 	laser_desc = "레이저 탄막 활동을 알립니다!",
 	laser_soon = "회전 가속!",
-	laser_bar = "다음 탄막",
+	laser_bar = "레이저 탄막",
 
 	magnetic = "자기 증폭기",
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
