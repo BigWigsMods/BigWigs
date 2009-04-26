@@ -165,7 +165,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Das Konservatorium muss verteidigt werden!", -- needs verification!
+	engage_trigger = "Das Konservatorium muss verteidigt werden!",
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -175,10 +175,10 @@ L:RegisterTranslations("deDE", function() return {
 	wave = "Wellen",
 	wave_desc = "Warnt vor den Wellen.",
 	wave_bar = "Nächste Welle",
-	conservator_trigger = "Eonar, Eure Dienerin braucht Hilfe!", -- needs verification!
-	detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!", -- needs verification!
-	elementals_trigger = "Helft mir, Kinder!", -- needs verification!
-	tree_trigger = "Geschenk der Lebensbinderin beginnt zu wachsen!", -- needs verification!
+	conservator_trigger = "Eonar, Eure Dienerin braucht Hilfe!",
+	detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!",
+	elementals_trigger = "Helft mir, Kinder!",
+	tree_trigger = "Ein |cFF00FFFFGeschenk der Lebensbinderin|r fängt an zu wachsen!",
 	conservator_message = "Konservator!",
 	detonate_message = "Explosionspeitscher!",
 	elementals_message = "Elementare!",

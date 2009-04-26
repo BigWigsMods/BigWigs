@@ -167,15 +167,18 @@ L:RegisterTranslations("deDE", function() return {
 	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
 	crash_you = "Schattengeschoss auf DIR!",
 	crash_other = "Schattengeschoss: %s!",
-	--crash_say = "Crash on Me!",
+	crash_say = "Schattengeschoss auf MIR!",
 
+	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
+	crashicon_desc = "Platziert einen Diamanten auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+	
 	mark = "Mal der Gesichtslosen",
 	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",
 	mark_message_you = "Mal auf DIR!",
 	mark_message_other = "Mal: %s!",
 
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+	icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

@@ -129,7 +129,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!", -- needs verification!
+	engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!",
 
 	cold = "Beißende Kälte (Erfolg)",
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
@@ -156,10 +156,10 @@ L:RegisterTranslations("deDE", function() return {
 	cloud_you = "Sturmwolke auf DIR!",
 	cloud_other = "Sturmwolke: %s!",
 
-	icon = "Place icon",
+	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",
 
-	end_trigger = "Ich...Ich bin von Ihm befreit! Endlich!", -- needs verification!
+	end_trigger = "Ich... bin von ihm befreit... endlich.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
