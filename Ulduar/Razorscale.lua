@@ -129,13 +129,13 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Razorscale Controller"] = "Contrôleur de Tranchécaille",
-	
+
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
 	ground_message = "Tranchécaille enchaînée !",
 	air_trigger = "Laissez un instant pour préparer la construction des tourelles.",
-	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
+	air_trigger2 = "Incendie éteint ! Reconstruisons les tourelles !",
 	air_message = "Décollage !",
 	phase2_trigger = "Tranchécaille bloquée au sol !",
 	phase2_message = "Phases 2 !",
@@ -161,7 +161,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Razorscale Controller"] = "Klingenschuppe Controller",
-	
+
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
