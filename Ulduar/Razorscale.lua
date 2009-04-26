@@ -31,6 +31,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorscale",
+	-- <nevcairiel> at least in german, the "Controller" isnt translated, so its "<boss> Controller"
+	-- <nevcairiel> in ruRU the whole thing isnt localized
+	-- <nevcairiel> in french they translated the whole thing, ha
+	-- XXX So translators make sure that the Razorscale Controller is actually
+	-- translated in your language before adding it to your locale below.
 	["Razorscale Controller"] = true,
 
 	phase = "Phases",
