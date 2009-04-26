@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"vapor", "animus", -1, "crash", "crashicon", "mark", "icon", "flame", "surge", -1, "bosskill"}
+mod.toggleoptions = {"vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", -1, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -53,6 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
 	crash_you = "Crash on YOU!",
 	crash_other = "Crash on %s",
+	crash_say = "Crash on Me!",
 	
 	crashicon = "Crash Icon",
 	crashicon_desc = "Place a Diamond icon on the player targetted by Shadow Crash. (requires promoted or higher)",
@@ -91,6 +92,7 @@ L:RegisterTranslations("koKR", function() return {
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
+	crash_say = "저 어둠 붕괴요!",
 
 	crashicon = "붕괴 아이콘",
 	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 다이아몬드 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -129,6 +131,7 @@ L:RegisterTranslations("frFR", function() return {
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
 	crash_you = "Déferlante sur VOUS !",
 	crash_other = "Déferlante sur %s",
+	--crash_say = "Crash on Me!",
 
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
@@ -164,6 +167,7 @@ L:RegisterTranslations("deDE", function() return {
 	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
 	crash_you = "Schattengeschoss auf DIR!",
 	crash_other = "Schattengeschoss: %s!",
+	--crash_say = "Crash on Me!",
 
 	mark = "Mal der Gesichtslosen",
 	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",
@@ -199,6 +203,7 @@ L:RegisterTranslations("zhCN", function() return {
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
 	crash_you = ">你< Shadow Crash！",
 	crash_other = "Shadow Crash：>%s<！",
+	--crash_say = "Crash on Me!",
 
 	mark = "无面者的印记",
 	mark_desc = "当玩家中了无面者的印记的时发出警报。",
@@ -234,6 +239,7 @@ L:RegisterTranslations("zhTW", function() return {
 	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
 	crash_you = ">你< 暗影暴擊！",
 	crash_other = "暗影暴擊：>%s<！",
+	--crash_say = "Crash on Me!",
 
 	mark = "無面者印記",
 	mark_desc = "當玩家中了無面者印記時發出警報。",
@@ -269,6 +275,7 @@ L:RegisterTranslations("ruRU", function() return {
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
 	crash_you = "Темное сокрушение на ВАС!",
 	crash_other = "Темное сокрушение на |3-5(%s)",
+	--crash_say = "Crash on Me!",
 
 	mark = "Метка Безликого",
 	mark_desc = "Помечать иконкой Метку Безликого.",
@@ -326,6 +333,9 @@ local function scanTarget()
 		if target == pName then
 			mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
 			mod:WideMessage(other)
+			if db.crashsay then
+				SendChatMessage(L["crash_say"], "SAY")
+			end
 		else
 			mod:IfMessage(other, "Attention", 62660)
 			mod:Whisper(target, L["crash_you"])
