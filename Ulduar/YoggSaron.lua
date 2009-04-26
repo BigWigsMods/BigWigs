@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	portal = "차원문",
 	portal_desc = "차원문을 알립니다.",
-	portal_trigger = "요그사론의 마음속으로 가는 차원문이 열립니다!",
+	portal_trigger = "%s의 마음속으로 가는 차원문이 열립니다!",
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
 
@@ -510,10 +510,9 @@ function mod:Tentacle(unit)
 	-- Crusher Tentacle (33966) 50 sec
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
-	if not db.tentacle then return end
-	if unit == L["Crusher Tentacle"] then
-		self:IfMessage(L["Crusher Tentacle"], "Attention", 64139)
-		self:Bar(L["Crusher Tentacle"], 50, 64139)
+	if unit == L["Crusher Tentacle"] and db.tentacle then
+		self:IfMessage(L["tentacle"], "Attention", 64139)
+		self:Bar(L["tentacle"], 50, 64139)
 	end
 end
 
