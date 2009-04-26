@@ -84,8 +84,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
  
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 거 같으냐, 침입자들아!",	--check
-	engage_trigger2 = "남김없이 쓸어 버려야 속이 시원하겠군!",	--check
+	engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 것 같으냐, 침입자들아!",
+	engage_trigger2 = "남김없이 쓸어버려야 속이 시원하겠군.",
 	engage_trigger3 = "세상에서 가장 큰 모기건 세상에서 가장 위대한 영웅이건, 너흰 어차피 필멸의 존재야.",
 
 	overload = "과부하",
