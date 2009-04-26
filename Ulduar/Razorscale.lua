@@ -7,7 +7,7 @@ local commander = BB["Expedition Commander"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = {commander, boss}
+-- mod.enabletrigger set below the localizations
 mod.guid = 33186
 mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "bosskill"}
 
@@ -31,6 +31,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorscale",
+	["Razorscale Controller"] = true,
 
 	phase = "Phases",
 	phase_desc = "Warn when Razorscale switches between phases.",
@@ -244,6 +245,8 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 --      Initialization      --
 ------------------------------
+
+mod.enabletrigger = {commander, boss, L["Razorscale Controller"]}
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
