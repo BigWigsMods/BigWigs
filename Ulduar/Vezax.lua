@@ -85,20 +85,23 @@ L:RegisterTranslations("koKR", function() return {
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
 	vapor_message = "사로나이트 증기 (%d)!",
 	vapor_bar = "다음 증기",
+	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
 
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
-	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
+
+	crashicon = "붕괴 아이콘",
+	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 다이아몬드 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
 	mark_message_you = "당신은 얼굴 없는 자의 징표!",
 	mark_message_other = "얼굴 없는 자의 징표: %s",
 
-	icon = "전술 표시",
-	icon_desc = "어둠 붕괴 또는 얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon = "징표 아이콘",
+	icon_desc = "얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -97,7 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	ground_trigger = "움직이세요! 오래 붙잡아둘 순 없을 겁니다!",
 	ground_message = "칼날비늘 묶임!",
 	air_trigger = "저희에게 잠깐 포탑을 설치할 시간을 주세요.",
-	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
+	air_trigger2 = "불꽃이 꺼졌어요! 포탑을 재설치합시다!",
 	air_message = "이륙!",
 	phase2_trigger = "%s|1이;가; 완전히 땅에 내려앉았습니다!",
 	phase2_message = "2 단계!",
