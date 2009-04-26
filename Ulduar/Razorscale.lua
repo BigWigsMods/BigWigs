@@ -37,6 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "Razorscale Chained up!",
 	air_trigger = "Give us a moment to prepare to build the turrets.",
+	air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "Takeoff!",
 	phase2_trigger = "%s grounded permanently!",
 	phase2_message = "Phase 2!",
@@ -66,6 +67,7 @@ L:RegisterTranslations("ruRU", function() return {
 	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
 	ground_message = "Острокрылая на привязи!",
 	air_trigger = "Дайте время подготовить пушки.",
+	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "Взлет!",
 	phase2_trigger = "Острокрылая обессилела и больше не может летать!",
 	phase2_message = "Вторая фаза!",
@@ -95,6 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	ground_trigger = "움직이세요! 오래 붙잡아둘 순 없을 겁니다!",
 	ground_message = "칼날비늘 묶임!",
 	air_trigger = "저희에게 잠깐 포탑을 설치할 시간을 주세요.",
+	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "이륙!",
 	phase2_trigger = "%s|1이;가; 완전히 땅에 내려앉았습니다!",
 	phase2_message = "2 단계!",
@@ -124,6 +127,7 @@ L:RegisterTranslations("frFR", function() return {
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
 	ground_message = "Tranchécaille enchaînée !",
 	air_trigger = "Laissez un instant pour préparer la construction des tourelles.",
+	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "Décollage !",
 	phase2_trigger = "Tranchécaille bloquée au sol !",
 	phase2_message = "Phases 2 !",
@@ -153,6 +157,7 @@ L:RegisterTranslations("deDE", function() return {
 	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
 	ground_message = "Angekettet!",
 	air_trigger = "Gebt uns einen Moment, damit wir uns auf den Bau der Geschütze vorbereiten können.",
+	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "Hebt ab!",
 	phase2_trigger = "%s dauerhaft an den Boden gebunden!",
 	phase2_message = "Phase 2!",
@@ -182,6 +187,7 @@ L:RegisterTranslations("zhCN", function() return {
 --	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "锋鳞被锁住了！",
 --	air_trigger = "Give us a moment to prepare to build the turrets.",
+--air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "起飞！",
 --	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二阶段！",
@@ -211,6 +217,7 @@ L:RegisterTranslations("zhTW", function() return {
 --	ground_trigger = "Move quickly! She won't remain grounded for long!",
 	ground_message = "銳鱗被鎖住了！",
 --	air_trigger = "Give us a moment to prepare to build the turrets.",
+--air_trigger2 = "Fires out! Let's rebuild those turrets!",
 	air_message = "起飛！",
 --	phase2_trigger = "Razorscale lands permanently!",
 	phase2_message = "第二階段！",
@@ -315,6 +322,15 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 			self:IfMessage(L["air_message"], "Attention", nil, "Info")
 		end
+	-- for 10man, has a different yell, and different timing <.<
+	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
+	-- just a bar for the next harpoon
+	elseif msg == L["air_trigger2"] then 
+		p2 = nil
+		count = 0
+		self:Bar(L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
+		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
+		--self:IfMessage(L["air_message"], "Attention", nil, "Info")
 	end
 end
 
