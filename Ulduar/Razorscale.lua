@@ -128,6 +128,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	["Razorscale Controller"] = "Contrôleur de Tranchécaille",
+	
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !",
@@ -158,6 +160,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	["Razorscale Controller"] = "Klingenschuppe Controller",
+	
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
