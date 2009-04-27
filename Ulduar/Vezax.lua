@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 	crash_you = "Crash on YOU!",
 	crash_other = "Crash on %s",
 	crash_say = "Crash on Me!",
-	
+
 	crashicon = "Crash Icon",
 	crashicon_desc = "Place a Blue Square icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
@@ -130,8 +130,8 @@ L:RegisterTranslations("frFR", function() return {
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
 	crash_you = "Déferlante sur VOUS !",
-	crash_other = "Déferlante sur %s",
-	--crash_say = "Crash on Me!",
+	crash_other = "Déferlante : %s",
+	crash_say = "Déferlante sur moi !",
 
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",

@@ -126,7 +126,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
-	hardmode_trigger = "^Mais pourquoi avez-vous été faire une chose pareille ?", -- à vérifier
+	hardmode_trigger = "^Mais, pourquoi avez-vous été faire une chose pareille ?",
 	hardmode_message = "Mode difficile activé !",
 	hardmode_warning = "Délai du mode difficile dépassé",
 
