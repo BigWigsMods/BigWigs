@@ -170,7 +170,7 @@ L:RegisterTranslations("deDE", function() return {
 	crash_say = "Schattengeschoss auf MIR!",
 
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
-	--crashicon_desc = "Platziert einen Diamanten auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 	
 	mark = "Mal der Gesichtslosen",
 	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",

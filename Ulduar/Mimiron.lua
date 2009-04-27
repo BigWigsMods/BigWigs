@@ -157,18 +157,18 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	engage_warning = "Phase 1",
-	--engage_trigger = "^We haven't much time, friends!", -- NEED!
+	engage_trigger = "Wir haben nicht viel Zeit, Freunde! Ihr werdet mir dabei helfen, meine neueste und großartigste Kreation zu testen. Bevor Ihr nun Eure Meinung ändert, denkt daran, dass Ihr mir etwas schuldig seid, nach dem Unfug, den Ihr mit dem XT-002 angestellt habt.",
 	phase2_warning = "Phase 2",
-	--phase2_trigger = "^WONDERFUL! Positively marvelous results!", -- NEED!
+	phase2_trigger = "WUNDERBAR! Das sind Ergebnisse nach meinem Geschmack! Integrität der Hülle bei 98,9 Prozent! So gut wie keine Dellen! Und weiter geht's.",
 	phase3_warning = "Phase 3",
-	--phase3_trigger = "^Thank you, friends!", -- NEED!
+	phase3_trigger = "^Danke Euch, Freunde! Eure Anstrengungen haben fantastische Daten geliefert!",
 	phase4_warning = "Phase 4",
 	--phase4_trigger = "^Preliminary testing phase complete", -- NEED!
 	phase_bar = "Phase %d",
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
-	hardmode_trigger = "^Warum habt Ihr das jetzt gemacht?", -- needs verification
+	hardmode_trigger = "^Warum habt Ihr das denn jetzt gemacht?",
 	hardmode_message = "Hard Mode aktiviert!",
 	hardmode_warning = "Hard Mode beendet!",
 

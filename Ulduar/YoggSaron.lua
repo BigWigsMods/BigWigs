@@ -282,8 +282,9 @@ L:RegisterTranslations("deDE", function() return {
 	malady_message = "Geisteskrank: %s!",
 	--malady_bar = "~Nächste Geisteskrankheit",
 
-	tentacle = "Tentakel",
-	tentacle_desc = "Warnung und Timer für das Auftauchen der Tentakel.",
+	tentacle = "Schmettertentakel", --right?
+	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
+	tentacle_message = "Schmettertentakel (%d)",
 
 	ray = "Todesstrahl",
 	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
