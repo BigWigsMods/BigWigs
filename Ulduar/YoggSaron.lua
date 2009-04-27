@@ -20,6 +20,7 @@ local db = nil
 local squeezeName = GetSpellInfo(64126)
 local linkedName = GetSpellInfo(63802)
 local linked = {}
+local count = 1
 
 ----------------------------
 --      Localization      --
@@ -61,8 +62,9 @@ L:RegisterTranslations("enUS", function() return {
 	malady_message = "Malady: %s",
 	--malady_bar = "~Next Malady",
 
-	tentacle = "Tentacle spawn",
-	tentacle_desc = "Warn for Tentacle spawn.",
+	tentacle = "Crusher Tentacle",
+	tentacle_desc = "Warn for Crusher Tentacle spawn.",
+	tentacle_message = "Crusher(%d)",
 
 	ray = "Death Ray",
 	ray_desc = "Warn when Sara casts a Death Ray.",
@@ -141,6 +143,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	tentacle = "촉수 소환",
 	tentacle_desc = "촉수 소환을 알립니다.",
+	tentacle_message ="분쇄의 촉수(%d)",
 
 	squeeze = squeezeName,
 	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
@@ -471,7 +474,7 @@ L:RegisterTranslations("zhTW", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Ray", 63891)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
-	self:AddCombatListener("SPELL_CAST_START", "Empower", 64465)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
@@ -487,6 +490,7 @@ function mod:OnEnable()
 
 	db = self.db.profile
 	wipe(linked)
+	count = 1
 end
 
 ------------------------------
@@ -511,8 +515,9 @@ function mod:Tentacle(_, spellID, source)
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
 	if source == L["Crusher Tentacle"] and db.tentacle then
-		self:IfMessage(L["tentacle"], "Attention", 64139)
-		self:Bar(L["tentacle"], 50, 64139)
+		self:IfMessage(L["tentacle_message"]:format(count), "Attention", 64139)
+		count = count + 1
+		self:Bar(L["tentacle_message"]:format(count), 50, 64139)
 	end
 end
 
@@ -595,6 +600,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
+		count = 1
 		if db.phase then
 			self:IfMessage(L["engage_warning"], "Important", nil, "Alarm")
 		end
