@@ -506,11 +506,11 @@ function mod:MControl(player, spellId)
 	end
 end
 
-function mod:Tentacle(unit)
+function mod:Tentacle(_, spellID, source)
 	-- Crusher Tentacle (33966) 50 sec
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
-	if unit == L["Crusher Tentacle"] and db.tentacle then
+	if source == L["Crusher Tentacle"] and db.tentacle then
 		self:IfMessage(L["tentacle"], "Attention", 64139)
 		self:Bar(L["tentacle"], 50, 64139)
 	end
