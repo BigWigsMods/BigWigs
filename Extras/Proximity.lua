@@ -128,9 +128,19 @@ L:RegisterTranslations("koKR", function() return {
 	proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 접근 표시창을 표시합니다.",
 
 	font = "Fonts\\2002.TTF",
-
+	
+	["Close"] = "닫기",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "활성화된 보스 모듈을 통해서 또는 표시된 접근 표시창을 닫습니다.",
 	["Test"] = "테스트",
 	["Perform a Proximity test."] = "접근 테스트를 실행합니다.",
+	["Display"] = "표시",
+	["Options for the Proximity display window."] = "접근 표시 창을 설정합니다.",
+	["Lock"] = "고정",
+	["Locks the display in place, preventing moving and resizing."] = "미리 이동 또는 크기조절을 하고 표시할 장소에 고정합니다.",
+	["Title"] = "제목",
+	["Shows or hides the title."] = "제목을 표시하거나 숨깁니다.",
+	["Background"] = "배경",
+	["Shows or hides the background."] = "배경을 표시하거나 숨깁니다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
