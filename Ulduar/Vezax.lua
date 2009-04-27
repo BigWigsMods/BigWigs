@@ -95,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	crash_say = "저 어둠 붕괴요!",
 
 	crashicon = "붕괴 아이콘",
-	--crashicon_desc = "어둠 붕괴의 대상 플레이어에게 다이아몬드 표시를 지정합니다. (승급자 이상 권한 필요)",
+	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 파란 네모 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	mark = "얼굴 없는 자의 징표",
 	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
