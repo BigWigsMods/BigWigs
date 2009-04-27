@@ -188,7 +188,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	portal = "Portail",
 	portal_desc = "Prévient de l'arrivée des portails.",
-	portal_trigger = "Des portails s'ouvrent sur l'esprit d'Yogg-Saron !",
+	portal_trigger = "Des portails s'ouvrent sur l'esprit |2 %s !",
 	portal_message = "Portails ouverts !",
 	portal_bar = "Prochain portail",
 

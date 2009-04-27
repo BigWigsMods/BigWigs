@@ -128,7 +128,7 @@ L:RegisterTranslations("koKR", function() return {
 	proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 접근 표시창을 표시합니다.",
 
 	font = "Fonts\\2002.TTF",
-	
+
 	["Test"] = "테스트",
 	["Perform a Proximity test."] = "접근 테스트를 실행합니다.",
 } end )
@@ -149,8 +149,18 @@ L:RegisterTranslations("frFR", function() return {
 
 	font = "Fonts\\FRIZQT__.TTF",
 
+	["Close"] = "Fermer",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Ferme l'affichage de proximité et empêche ce dernier de se montrer à nouveau pour le module de boss actif (s'il y en a un) jusqu'à ce que vous réactiviez l'affichage de proximité dans les options du boss en question.",
 	["Test"] = "Test",
 	["Perform a Proximity test."] = "Effectue un test de proximité.",
+	["Display"] = "Affichage",
+	["Options for the Proximity display window."] = "Options concernant la fenêtre d'affichage de proximité.",
+	["Lock"] = "Verrouiller",
+	["Locks the display in place, preventing moving and resizing."] = "Verrouille l'affichage à sa place actuelle, empêchant tout déplacement ou redimensionnement.",
+	["Title"] = "Titre",
+	["Shows or hides the title."] = "Affiche ou non le titre.",
+	["Background"] = "Arrière-plan",
+	["Shows or hides the background."] = "Affiche ou non l'arrière-plan.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
