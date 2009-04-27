@@ -565,7 +565,7 @@ function plugin:SetupFrames()
 	display.drag = drag
 
 	local tex = drag:CreateTexture(nil, "BACKGROUND")
-	tex:SetTexture("Interface\\AddOns\\oRA3\\media\\draghandle")
+	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
 	tex:SetWidth(16)
 	tex:SetHeight(16)
 	tex:SetBlendMode("ADD")
