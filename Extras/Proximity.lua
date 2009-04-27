@@ -428,7 +428,7 @@ function plugin:OpenProximity()
 	wipe(tooClose)
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 
-	anchor.cheader:SetText(active.proximityHeader or L["Close Players"])
+	anchor.header:SetText(active.proximityHeader or L["Close Players"])
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
 		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .5, self)
