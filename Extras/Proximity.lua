@@ -11,6 +11,10 @@ if not plugin then return end
 --      Are you local?
 -----------------------------------------------------------------------
 
+-- /script BigWigs:GetModule("Proximity"):UpdateProximity({"Applebob", "Tysste", "Foobar", "Elgen"})
+
+local dew = AceLibrary("Dewdrop-2.0")
+
 local active = nil -- The module we're currently tracking proximity for.
 local anchor = nil
 local lastplayed = 0 -- When we last played an alarm sound for proximity.
@@ -75,8 +79,18 @@ L:RegisterTranslations("enUS", function() return {
 
 	font = "Fonts\\FRIZQT__.TTF",
 
+	["Close"] = true,
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = true,
 	["Test"] = true,
 	["Perform a Proximity test."] = true,
+	["Display"] = true,
+	["Options for the Proximity display window."] = true,
+	["Lock"] = true,
+	["Locks the display in place, preventing moving and resizing."] = true,
+	["Title"] = true,
+	["Shows or hides the title."] = true,
+	["Background"] = true,
+	["Shows or hides the background."] = true,
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -223,6 +237,11 @@ L:RegisterTranslations("ruRU", function() return {
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
+	title = true,
+	background = true,
+	lock = nil,
+	width = 100,
+	height = 80,
 	sound = true,
 	disabled = nil,
 }
@@ -249,6 +268,13 @@ plugin.consoleOptions = {
 		end
 	end,
 	args = {
+		test = {
+			type = "execute",
+			name = L["Test"],
+			desc = L["Perform a Proximity test."],
+			func = "TestProximity",
+			order = 99,
+		},
 		sound = {
 			type = "toggle",
 			name = L["Sound"],
@@ -266,13 +292,47 @@ plugin.consoleOptions = {
 			name = " ",
 			order = 102,
 		},
-		[L["Test"]] = {
-			type = "execute",
-			name = L["Test"],
-			desc = L["Perform a Proximity test."],
+		display = {
+			type = "group",
+			name = L["Display"],
+			desc = L["Options for the Proximity display window."],
 			order = 103,
+			pass = true,
 			handler = plugin,
-			func = "TestProximity",
+			set = function(key, value)
+				plugin.db.profile[key] = value
+				plugin:RestyleWindow()
+			end,
+			get = function(key)
+				return plugin.db.profile[key]
+			end,
+			args = {
+				lock = {
+					type = "toggle",
+					name = L["Lock"],
+					desc = L["Locks the display in place, preventing moving and resizing."],
+					order = 1,
+				},
+				title = {
+					type = "toggle",
+					name = L["Title"],
+					desc = L["Shows or hides the title."],
+					order = 2,
+				},
+				background = {
+					type = "toggle",
+					name = L["Background"],
+					desc = L["Shows or hides the background."],
+					order = 3,
+				},
+				close = {
+					type = "execute",
+					name = L["Close"],
+					desc = L["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."],
+					func = "CloseAndDisableProximity",
+					order = 4,
+				},
+			},
 		},
 	}
 }
@@ -340,7 +400,9 @@ function plugin:CloseAndDisableProximity()
 	if active then
 		active.db.profile.proximity = nil
 		BigWigs:Print(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."]:format(active:ToString()))
+		active = nil
 	end
+	dew:Close()
 end
 
 function plugin:CloseProximity()
@@ -353,13 +415,13 @@ function plugin:OpenProximity()
 
 	self:SetupFrames()
 
-	for k in pairs(tooClose) do tooClose[k] = nil end
+	wipe(tooClose)
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 
-	anchor.cheader:SetText(L["Close Players"])
+	anchor.cheader:SetText(active.proximityHeader or L["Close Players"])
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
-		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .1, self)
+		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .5, self)
 	end
 end
 
@@ -367,38 +429,40 @@ function plugin:TestProximity()
 	self:SetupFrames()
 
 	anchor.text:SetText(L["|cff777777Nobody|r"])
-	anchor.cheader:SetText(L["Close Players"])
 	anchor:Show()
 end
 
-function plugin:UpdateProximity()
-	if not active or not active.proximityCheck then return end
-
-	local num = GetNumRaidMembers()
-	for i = 1, num do
-		local n = GetRaidRosterInfo(i)
-		if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
-			if type(active.proximityCheck) == "function" then
-				if active.proximityCheck(n) then
-					table.insert(tooClose, coloredNames[n])
-				end
-			elseif active.proximityCheck == "bandage" then
-				for i, v in ipairs(bandages) do
-					if IsItemInRange(v, n) == 1 then
+function plugin:UpdateProximity(list)
+	if not list then
+		if not active or not active.proximityCheck then return end
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local n = GetRaidRosterInfo(i)
+			if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
+				if type(active.proximityCheck) == "function" then
+					if active.proximityCheck(n) then
 						table.insert(tooClose, coloredNames[n])
-						break
+					end
+				elseif active.proximityCheck == "bandage" then
+					for i, v in ipairs(bandages) do
+						if IsItemInRange(v, n) == 1 then
+							table.insert(tooClose, coloredNames[n])
+							break
+						end
 					end
 				end
 			end
+			if #tooClose > 4 then break end
 		end
-		if #tooClose > 4 then break end
+	else
+		tooClose = list
 	end
 
 	if #tooClose == 0 then
 		anchor.text:SetText(L["|cff777777Nobody|r"])
 	else
 		anchor.text:SetText(table.concat(tooClose, "\n"))
-		for k in pairs(tooClose) do tooClose[k] = nil end
+		wipe(tooClose)
 		local t = time()
 		if t > lastplayed + 1 then
 			lastplayed = t
@@ -413,81 +477,131 @@ end
 --    Create the Anchor     --
 ------------------------------
 
+local function showConfig()
+	dew:FeedAceOptionsTable(plugin.consoleOptions.args.display)
+end
+
+local function onDragStart(self) self:StartMoving() end
+local function onDragStop(self)
+	self:StopMovingOrSizing()
+	plugin:SavePosition()
+end
+local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
+local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing() end
+local function onResize(self, width, height)
+	plugin.db.profile.width = width
+	plugin.db.profile.height = height
+end
+local function displayOnMouseDown(self, button)
+	if button == "RightButton" then
+		dew:Open(self, "children", showConfig)
+	end
+end
+
+local locked = nil
+function lockDisplay()
+	if locked then return end
+	anchor:EnableMouse(false)
+	anchor:SetMovable(false)
+	anchor:SetResizable(false)
+	anchor:RegisterForDrag()
+	anchor:SetScript("OnSizeChanged", nil)
+	anchor:SetScript("OnDragStart", nil)
+	anchor:SetScript("OnDragStop", nil)
+	anchor:SetScript("OnMouseDown", nil)
+	anchor.drag:Hide()
+	anchor.header:Hide()
+	locked = true
+end
+function unlockDisplay()
+	if not locked then return end
+	anchor:EnableMouse(true)
+	anchor:SetMovable(true)
+	anchor:SetResizable(true)
+	anchor:RegisterForDrag("LeftButton")
+	anchor:SetScript("OnSizeChanged", onResize)
+	anchor:SetScript("OnDragStart", onDragStart)
+	anchor:SetScript("OnDragStop", onDragStop)
+	anchor:SetScript("OnMouseDown", displayOnMouseDown)
+	anchor.drag:Show()
+	anchor.header:Show()
+	locked = nil
+end
+
 function plugin:SetupFrames()
 	if anchor then return end
 
-	local frame = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-	frame:Hide()
-
-	frame:SetWidth(200)
-	frame:SetHeight(100)
-
-	frame:SetBackdrop({
-		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
-		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
-		insets = {left = 1, right = 1, top = 20, bottom = 1},
-	})
-
-	frame:SetBackdropColor(24/255, 24/255, 24/255)
-	frame:ClearAllPoints()
-	frame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-	frame:EnableMouse(true)
-	frame:SetClampedToScreen(true)
-	frame:RegisterForDrag("LeftButton")
-	frame:SetMovable(true)
-	frame:SetScript("OnDragStart", function() this:StartMoving() end)
-	frame:SetScript("OnDragStop", function()
-		this:StopMovingOrSizing()
-		self:SavePosition()
-	end)
-
-	local cheader = frame:CreateFontString(nil, "OVERLAY")
-	cheader:ClearAllPoints()
-	cheader:SetWidth(190)
-	cheader:SetHeight(15)
-	cheader:SetPoint("TOP", frame, "TOP", 0, -14)
-	cheader:SetFont(L["font"], 12)
-	cheader:SetJustifyH("LEFT")
-	cheader:SetText(L["Proximity"])
-	cheader:SetShadowOffset(.8, -.8)
-	cheader:SetShadowColor(0, 0, 0, 1)
-	frame.cheader = cheader
-
-	local text = frame:CreateFontString(nil, "OVERLAY")
-	text:ClearAllPoints()
-	text:SetWidth( 190 )
-	text:SetHeight( 80 )
-	text:SetPoint( "TOP", frame, "TOP", 0, -35 )
-	text:SetJustifyH("CENTER")
-	text:SetJustifyV("TOP")
+	local display = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+	display:SetWidth(self.db.profile.width)
+	display:SetHeight(self.db.profile.height)
+	display:SetMinResize(100, 30)
+	local bg = display:CreateTexture(nil, "PARENT")
+	bg:SetAllPoints(display)
+	bg:SetBlendMode("BLEND")
+	bg:SetTexture(0, 0, 0, 0.3)
+	display.background = bg
+	local header = display:CreateFontString(nil, "OVERLAY")
+	header:SetFontObject(GameFontNormal)
+	header:SetText("Proximity")
+	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+	local text = display:CreateFontString(nil, "OVERLAY")
+	text:SetFontObject(GameFontNormal)
 	text:SetFont(L["font"], 12)
-	frame.text = text
+	text:SetText("")
+	text:SetAllPoints(display)
+	display.text = text
+	display.header = header
 
-	local close = frame:CreateTexture(nil, "ARTWORK")
-	close:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\otravi-close")
-	close:SetTexCoord(0, .625, 0, .9333)
+	local drag = CreateFrame("Frame", nil, display)
+	drag.frame = display
+	drag:SetFrameLevel(display:GetFrameLevel() + 10) -- place this above everything
+	drag:SetWidth(16)
+	drag:SetHeight(16)
+	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
+	drag:EnableMouse(true)
+	drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
+	drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
+	drag:SetAlpha(0.5)
+	display.drag = drag
 
-	close:SetWidth(20)
-	close:SetHeight(14)
-	close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -7, -15)
+	local tex = drag:CreateTexture(nil, "BACKGROUND")
+	tex:SetTexture("Interface\\AddOns\\oRA3\\media\\draghandle")
+	tex:SetWidth(16)
+	tex:SetHeight(16)
+	tex:SetBlendMode("ADD")
+	tex:SetPoint("CENTER", drag)
 
-	local closebutton = CreateFrame("Button", nil)
-	closebutton:SetParent( frame )
-	closebutton:SetWidth(20)
-	closebutton:SetHeight(14)
-	closebutton:SetPoint("CENTER", close, "CENTER")
-	closebutton:SetScript( "OnClick", function() self:CloseAndDisableProximity() end )
-
-	anchor = frame
+	anchor = display
+	self:RestyleWindow()
 
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 	if x and y then
-		local s = anchor:GetEffectiveScale()
-		anchor:ClearAllPoints()
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		local s = display:GetEffectiveScale()
+		display:ClearAllPoints()
+		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		self:ResetAnchor()
+	end
+end
+
+function plugin:RestyleWindow()
+	if self.db.profile.lock then
+		locked = nil
+		lockDisplay()
+	else
+		locked = true
+		unlockDisplay()
+	end
+	if self.db.profile.title then
+		anchor.header:Show()
+	else
+		anchor.header:Hide()
+	end
+	if self.db.profile.background then
+		anchor.background:Show()
+	else
+		anchor.background:Hide()
 	end
 end
 
@@ -501,7 +615,6 @@ end
 
 function plugin:SavePosition()
 	if not anchor then self:SetupFrames() end
-
 	local s = anchor:GetEffectiveScale()
 	self.db.profile.posx = anchor:GetLeft() * s
 	self.db.profile.posy = anchor:GetTop() * s
