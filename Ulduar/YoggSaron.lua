@@ -100,8 +100,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
-
-	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or Transcriptor and submit the logs.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -173,8 +171,6 @@ L:RegisterTranslations("koKR", function() return {
 	guardian_message = "수호자 소환!",
 
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
-
-	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -246,8 +242,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
-
-	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -320,8 +314,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
-
-	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -392,8 +384,6 @@ L:RegisterTranslations("zhCN", function() return {
 	guardian_message = "召唤守卫者 出现！",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
-
-	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -464,8 +454,6 @@ L:RegisterTranslations("zhTW", function() return {
 	guardian_message = "召喚守護者 出現！",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
-
-	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
 ------------------------------
@@ -608,7 +596,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.berserk then
 			self:Enrage(900, true, true)
 		end
-		BigWigs:Print(L["log"])
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		if db.phase then
