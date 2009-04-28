@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", -1, "bosskill"}
+mod.toggleoptions = {"vapor", "animus", -1, "crash", "berserk", "crashsay", "crashicon", "mark", "icon", "flame", "surge", -1, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -28,6 +28,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Vezax",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	flame = "Searing Flames",
 	flame_desc = "Warn when Vezax casts a Searing Flames.",
@@ -71,6 +73,8 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "이글거리는 불길",
 	flame_desc = "이글거리는 불길의 시전을 알립니다.",
 	flame_message = "이글거리는 불길!",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "어둠 쇄도",
 	surge_desc = "베작스의 어둠 쇄도 획득을 알립니다.",
@@ -110,6 +114,8 @@ L:RegisterTranslations("frFR", function() return {
 	flame = "Flammes incendiaires",
 	flame_desc = "Prévient quand Vezax incante des Flammes incendiaires.",
 	flame_message = "Flammes incendiaires !",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
@@ -146,6 +152,8 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Sengende Flammen",
 	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
 	flame_message = "Sengende Flammen!",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Sog der Dunkelheit",
 	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
@@ -185,6 +193,8 @@ L:RegisterTranslations("zhCN", function() return {
 	flame = "灼热烈焰",
 	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
 	flame_message = "灼热烈焰！",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Surge of Darkness",
 	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
@@ -221,6 +231,8 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "灼熱烈焰",
 	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
 	flame_message = "灼熱烈焰！",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "暗鬱奔騰",
 	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
@@ -257,6 +269,8 @@ L:RegisterTranslations("ruRU", function() return {
 	flame = "Жгучее пламя",
 	flame_desc = "Сообщает когда Везакс применяет Жгучее пламя.",
 	flame_message = "Жгучее пламя!",
+	
+	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Наплыв Тьмы",
 	surge_desc = "Сообщает когда Везакс применяет Наплыв Тьмы.",
@@ -303,6 +317,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
@@ -402,6 +417,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
 		count = count + 1
 		self:Bar(L["vapor_bar"], 30, 63323)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg:find(L["engage_trigger"]) then
+		if db.berserk then
+			self:Enrage(600, true, true)
+		end
 	end
 end
 
