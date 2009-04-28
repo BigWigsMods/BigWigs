@@ -297,7 +297,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	--engage_trigger = "The Conservatory must be protected!",
+	engage_trigger = "Нужно защитить Оранжерею!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
@@ -307,10 +307,10 @@ L:RegisterTranslations("ruRU", function() return {
 	wave = "Волны",
 	wave_desc = "Предупреждать о волнах.",
 	wave_bar = "Следующая волна",
-	--conservator_trigger = "Eonar, your servant requires aid!",
-	--detonate_trigger = "The swarm of the elements shall overtake you!",
-	--elementals_trigger = "Children, assist me!",
-	--tree_trigger = "A Lifebinder's Gift begins to grow!",
+	conservator_trigger = "Эонар, твоей прислужнице нужна помощь!",
+	detonate_trigger = "Вас захлестнет сила стихий!",
+	elementals_trigger = "Помогите мне, дети мои!",
+	tree_trigger = "Дар Хранительницы жизни начинает расти!",
 	conservator_message = "Появление опекуна",
 	detonate_message = "Появление Detonate",
 	elementals_message = "Появление элементалей",
@@ -337,7 +337,7 @@ L:RegisterTranslations("ruRU", function() return {
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелен Луч солнца. (необходимо быть лидером группы или рейда)",
 
-	--end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_trigger = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
 } end )
 
 ------------------------------
