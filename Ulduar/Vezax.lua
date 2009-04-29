@@ -15,7 +15,6 @@ mod.toggleoptions = {"vapor", "animus", -1, "crash", "berserk", "crashsay", "cra
 ------------------------------
 
 local db = nil
-local started = nil
 local count = 1
 local pName = UnitName("player")
 local fmt = string.format
@@ -74,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 	flame_desc = "이글거리는 불길의 시전을 알립니다.",
 	flame_message = "이글거리는 불길!",
 	
-	engage_trigger = "^Your destruction will herald a new age of suffering!",
+	engage_trigger = "^너희의 파멸은 새로운 고통의 시대를 열 것이다!",
 
 	surge = "어둠 쇄도",
 	surge_desc = "베작스의 어둠 쇄도 획득을 알립니다.",
@@ -319,10 +318,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-
+	
 	count = 1
 	db = self.db.profile
 end
@@ -422,19 +418,9 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
+		count = 1
 		if db.berserk then
 			self:Enrage(600, true, true)
 		end
 	end
 end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		count = 1
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
-		end
-	end
-end
-
