@@ -232,7 +232,7 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	["Proximity"] = "Близость",
-	["Close Players"] = "Близкие Игроки",
+	["Close Players"] = "По близости",
 	["Options for the Proximity Display."] = "Опции отображения близости",
 	["|cff777777Nobody|r"] = "|cff777777Никого|r",
 	["Sound"] = "Звук",
@@ -246,8 +246,18 @@ L:RegisterTranslations("ruRU", function() return {
 
 	font = "Fonts\\NIM_____.ttf",
 
+	["Close"] = "Закрыть",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Закрыть отображение близости и предотвращает показ его еще раз при активации модуля босса (если таковые имеются), до тех пор, пока вы зайдёте в настройки соответствующего модуля босса и не включите обратно 'Близость'.",
 	["Test"] = "Тест",
 	["Perform a Proximity test."] = "Тест близость",
+	["Display"] = "Отображение",
+	["Options for the Proximity display window."] = "Настройки окна близости.",
+	["Lock"] = "Фиксировать",
+	["Locks the display in place, preventing moving and resizing."] = "Фиксирование рамки, предотвращает перемещение и изменение размера.",
+	["Title"] = "Заглавие",
+	["Shows or hides the title."] = "Показать или скрыть заглавие.",
+	["Background"] = "Фин",
+	["Shows or hides the background."] = "Показать или скрыть фон.",
 } end)
 
 --------------------------------------------------------------------------------
