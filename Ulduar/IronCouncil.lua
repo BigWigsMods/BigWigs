@@ -156,7 +156,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	summoning = "Rune d'invocation",
 	summoning_desc = "Prévient quand Molgeim incante une Rune d'invocation.",
-	summoning_message = "Rune d'invocation - Arrivée d'élémentaires !",
+	summoning_message = "Arrivée des élémentaires !",
 
 	tendrils = "Vrilles d'éclair",
 	tendrils_desc = "Indique qui est poursuivi pendant la phase de Vrille d'éclair.",

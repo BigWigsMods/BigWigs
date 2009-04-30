@@ -205,8 +205,9 @@ L:RegisterTranslations("frFR", function() return {
 	malady_message = "Mal : %s",
 	--malady_bar = "~Prochain Mal",
 
-	tentacle = "Tentacule",
-	tentacle_desc = "Prévient quand un tentacule apparaît.",
+	tentacle = "Tentacule écraseur",
+	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
+	tentacle_message = "Écraseur (%d)",
 
 	ray = "Rayon mortel",
 	ray_desc = "Prévient quand Sara incante un Rayon mortel.",

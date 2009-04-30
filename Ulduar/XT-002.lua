@@ -91,7 +91,7 @@ L:RegisterTranslations("frFR", function() return {
 	exposed = "Coeur exposé",
 	exposed_desc = "Prévient quand le coeur du XT-002 est exposé.",
 	exposed_warning = "Coeur exposé imminent !",
-	exposed_message = "Coeur exposé - arrivée des renforts !",
+	exposed_message = "Coeur exposé - arrivée des robots !",
 
 	gravitybomb = "Bombe à gravité",
 	gravitybomb_desc = "Prévient quand un joueur subit les effets d'une Bombe à gravité.",

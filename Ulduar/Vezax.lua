@@ -27,7 +27,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Vezax",
-	
+
 	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	flame = "Searing Flames",
@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "이글거리는 불길",
 	flame_desc = "이글거리는 불길의 시전을 알립니다.",
 	flame_message = "이글거리는 불길!",
-	
+
 	engage_trigger = "^너희의 파멸은 새로운 고통의 시대를 열 것이다!",
 
 	surge = "어둠 쇄도",
@@ -110,11 +110,11 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "^Votre destruction annoncera un nouvel âge de souffrance !",
+
 	flame = "Flammes incendiaires",
 	flame_desc = "Prévient quand Vezax incante des Flammes incendiaires.",
 	flame_message = "Flammes incendiaires !",
-	
-	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
@@ -151,8 +151,8 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Sengende Flammen",
 	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
 	flame_message = "Sengende Flammen!",
-	
-	engage_trigger = "^Your destruction will herald a new age of suffering!",
+
+	--engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Sog der Dunkelheit",
 	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
@@ -178,7 +178,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
 	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
-	
+
 	mark = "Mal der Gesichtslosen",
 	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",
 	mark_message_you = "Mal auf DIR!",
@@ -192,8 +192,8 @@ L:RegisterTranslations("zhCN", function() return {
 	flame = "灼热烈焰",
 	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
 	flame_message = "灼热烈焰！",
-	
-	engage_trigger = "^Your destruction will herald a new age of suffering!",
+
+	--engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Surge of Darkness",
 	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
@@ -230,8 +230,8 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "灼熱烈焰",
 	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
 	flame_message = "灼熱烈焰！",
-	
-	engage_trigger = "^Your destruction will herald a new age of suffering!",
+
+	--engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "暗鬱奔騰",
 	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
@@ -268,8 +268,8 @@ L:RegisterTranslations("ruRU", function() return {
 	flame = "Жгучее пламя",
 	flame_desc = "Сообщает когда Везакс применяет Жгучее пламя.",
 	flame_message = "Жгучее пламя!",
-	
-	engage_trigger = "^Your destruction will herald a new age of suffering!",
+
+	--engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Наплыв Тьмы",
 	surge_desc = "Сообщает когда Везакс применяет Наплыв Тьмы.",

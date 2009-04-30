@@ -183,8 +183,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	charge = "Charge de foudre",
 	charge_desc = "Compte et prévient de l'arrivée des Charges de foudre de Thorim.",
-	charge_message = "Charge %d !",
-	charge_bar = "Charge (%d)",
+	charge_message = "Charge x%d !",
+	charge_bar = "Charge %d",
 
 	strike = "Frappe déséquilibrante",
 	strike_desc = "Prévient quand un joueur subit les effets d'une Frappe déséquilibrante.",

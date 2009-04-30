@@ -136,7 +136,7 @@ L:RegisterTranslations("frFR", function() return {
 	scorch = "Brûlure",
 	scorch_desc = "Prévient quand vous vous trouvez dans une Brûlure et quand cette dernière est incantée.",
 	scorch_message = "Brûlure sur VOUS !",
-	scorch_warning = "Brûlure en incantation !",
+	scorch_warning = "Brûlure !",
 	scorch_soon = "Brûlure dans ~5 sec. !",
 	scorch_bar = "Prochaine Brûlure",
 

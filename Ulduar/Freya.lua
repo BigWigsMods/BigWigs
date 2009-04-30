@@ -152,7 +152,7 @@ L:RegisterTranslations("frFR", function() return {
 	sunbeam = "Rayon de soleil",
 	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
 	sunbeam_you = "Rayon de soleil sur VOUS !",
-	sunbeam_other = "Rayon de soleil sur %s",
+	sunbeam_other = "Rayon de soleil : %s",
 
 	tremor = "Tremblement de terre",
 	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
