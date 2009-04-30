@@ -5,6 +5,7 @@
 <Script file="Plugins\Colors.lua"/>
 <Script file="Plugins\TargetMonitor.lua"/>
 <Script file="Plugins\Bars.lua"/>
+<!--Script file="Plugins\Bars2.lua"/-->
 <Script file="Plugins\Messages.lua"/>
 <Script file="Plugins\Sound.lua"/>
 <Script file="Plugins\RaidWarn.lua"/>
