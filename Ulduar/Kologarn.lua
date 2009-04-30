@@ -203,7 +203,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	shockwave = "Ударная волна",
 	shockwave_desc = "Сообщает о грядущей Ударной волне.",
---	shockwave_trigger = "Oblivion!",
+	shockwave_trigger = "ЗАБВЕНИЕ!",
 
 	eyebeam = "Сосредоточенный взгляд",
 	eyebeam_desc = "Сообщать кто попал под воздействие Сосредоточенный взгляд.",
