@@ -68,7 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	detonation = "Rune Detonation",
 	detonation_desc = "Tells you who has been hit by Rune Detonation.",
-	detonation_message = "Rune Detonation: %s",
+	detonation_message = "Bomb on %s!",
 	detonation_yell = "I'm a bomb!",
 
 	charge = "Lightning Charge",

@@ -31,9 +31,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	construct = "Activate Construct",
 	construct_desc = "Warn for Activate Construct.",
-	construct_message = "Activate Construct!",
-	construct_warning = "Construct in 5sec!",
-	construct_bar = "Next Construct",
+	construct_message = "Add incoming!",
+	construct_warning = "Add in 5sec!",
+	construct_bar = "Next add",
 
 	brittle = "Brittle",
 	brittle_desc = "Warn when Iron Construct gains Brittle.",
@@ -47,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 	scorch = "Scorch",
 	scorch_desc = "Warn when you are in a Scorch and Scorch is casting.",
 	scorch_message = "Scorch on you!",
-	scorch_warning = "Casting Scorch!",
+	scorch_warning = "Scorch!",
 	scorch_soon = "Scorch in ~5sec!",
 	scorch_bar = "Next Scorch",
 
@@ -266,8 +266,8 @@ end
 
 function mod:Construct()
 	if db.construct then
-		self:IfMessage(L["construct_message"], "Important", "INV_Misc_Statue_07")
-		self:Bar(L["construct_bar"], spawnTime, "INV_Misc_Statue_07")
+		self:IfMessage(L["construct_message"], "Important", "Interface\\Icons\\INV_Misc_Statue_07")
+		self:Bar(L["construct_bar"], spawnTime, "Interface\\Icons\\INV_Misc_Statue_07")
 	end
 end
 
@@ -314,7 +314,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["flame_bar"], 21, 62680)
 		end
 		if db.construct then
-			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")
+			self:Bar(L["construct_bar"], 10, "Interface\\Icons\\INV_Misc_Statue_07")
 		end
 	end
 end

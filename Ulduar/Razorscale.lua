@@ -306,7 +306,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		end
 	elseif msg == L["harpoon_trigger"] and db.harpoon then
 		count = count + 1
-		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "INV_Spear_06")
+		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
 		if count < totalHarpoons then
 			self:Bar(L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
 		end

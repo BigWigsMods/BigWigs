@@ -36,8 +36,8 @@ L:RegisterTranslations("enUS", function() return {
 	flash = "Flash Freeze",
 	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
 	flash_message = "Frozen: %s!",
-	flash_warning = "Casting Flash Freeze!",
-	flash_soon = "Flash Freeze in 5sec!",
+	flash_warning = "Freeze!",
+	flash_soon = "Freeze in 5sec!",
 	flash_bar = "Flash",
 
 	frozenblow = "Frozen Blows",
@@ -47,12 +47,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Show timer for Hard Mode.",
-	hardmode_warning = "Hard mode",
 
 	cloud = "Storm Cloud",
 	cloud_desc = "Shows who gets Storm Cloud.",
-	cloud_you = "Storm Cloud on you",
-	cloud_other = "%s has Storm Cloud",
+	cloud_you = "Cloud on you!",
+	cloud_other = "Cloud on %s!",
 
 	icon = "Place icon",
 	icon_desc = "Place a raid icon on players who get targetted with the Storm Clouds.",
@@ -81,7 +80,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
-	hardmode_warning = "도전 모드 종료",
 	
 	cloud = "폭풍 구름",
 	cloud_desc = "폭풍 구름을 얻은 플레이어를 알립니다.",
@@ -115,7 +113,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 2 min. 30 sec. pour le mode difficile (délai avant qu'Hodir ne détruise sa cache).",
-	hardmode_warning = "Délai du mode difficile dépassé",
 
 	cloud = "Nuage d'orage",
 	cloud_desc = "Prévient quand un joueur subit les effets d'un Nuage d'orage.",
@@ -149,7 +146,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
-	hardmode_warning = "Hard Mode beendet!",
 
 	cloud = "Sturmwolke",
 	cloud_desc = "Warnt, wer von Sturmwolke betroffen ist.",
@@ -183,7 +179,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
-	hardmode_warning = "困难模式！",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -209,7 +204,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
-	hardmode_warning = "困難模式！",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -235,7 +229,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	hardmode = "Таймер сложного режима", --need review
 	hardmode_desc = "Отображать таймер в сложном режиме.",--need review
-	hardmode_warning = "Завершение сложного режима",--need review
 	
 	cloud = "Грозовая туча",
 	cloud_desc = "Отображает кто получает эффект Грозовой тучи.",
@@ -334,7 +327,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 120, 6673)
-			self:DelayedMessage(120, L["hardmode_warning"], "Positive")
 		end
 		if db.berserk then
 			self:Enrage(480, true)

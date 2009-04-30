@@ -58,13 +58,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	fury = "Nature's Fury",
 	fury_desc = "Tells you who has been hit by Nature's Fury.",
-	fury_you = "Fury on You!",
+	fury_you = "Fury on YOU!",
 	fury_other = "Fury: %s",
 
 	sunbeam = "Sunbeam",
 	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
-	sunbeam_you = "Sunbeam on You!",
-	sunbeam_other = "Sunbeam on %s",
+	sunbeam_you = "Sunbeam on YOU!",
+	sunbeam_other = "Sunbeam: %s",
 
 	tremor = "Ground Tremor",
 	tremor_desc = "Warn when Freya casts Ground Tremor.",

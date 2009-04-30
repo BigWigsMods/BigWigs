@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	summoning = "Rune of Summoning",
 	summoning_desc = "Warn when Molgeim casts a Rune of Summoning.",
-	summoning_message = "Rune of Summoning - Elementals Incoming!",
+	summoning_message = "Elementals Incoming!",
 
 	tendrils = "Lightning Tendrils",
 	tendrils_desc = "Warn who is targeted during Lightning Tendrils.",
