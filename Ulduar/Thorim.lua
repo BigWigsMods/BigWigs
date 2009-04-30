@@ -524,7 +524,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
 		if db.p2berserk then
-			self:Enrage(300, true, true)
+			self:Enrage(375, true, true)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 180, "Ability_Warrior_Innerrage")
