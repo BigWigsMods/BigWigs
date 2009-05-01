@@ -55,7 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	madness = "Induce Madness",
 	madness_desc = "Show Timer for Induce Madness.",
-	madness_warning = "Induce Madness in 5sec!",
+	madness_warning = "Madness in 5sec!",
 
 	malady = "Malady of the Mind",
 	malady_desc = "Warn when a player has Malady of the Mind.",
@@ -64,7 +64,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
-	tentacle_message = "Crusher(%d)",
+	tentacle_message = "Crusher %d!",
 
 	ray = "Death Ray",
 	ray_desc = "Warn when Sara casts a Death Ray.",
@@ -78,7 +78,7 @@ L:RegisterTranslations("enUS", function() return {
 	link = linkedName,
 	link_desc = "Warn which players are linked.",
 	link_message = linkedName .. ": %s",
-	link_warning = "You are Brain Link!",
+	link_warning = "You are linked!",
 
 	gaze = "Lunatic Gaze",
 	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
@@ -96,7 +96,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	guardian = "Guardian spawn", --phase 1
 	guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
-	guardian_message = "Guardian spawn!",
+	guardian_message = "Guardian %d!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
@@ -168,7 +168,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	guardian = "수호자 소환", --phase 1
 	guardian_desc = "요그사론의 수호자 소환을 알립니다.",
-	guardian_message = "수호자 소환!",
+	guardian_message = "수호자 소환 %d!",
 
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
@@ -239,7 +239,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	guardian = "Apparition des gardiens", --phase 1
 	guardian_desc = "Prévient quand un Gardien de Yogg-Saron apparaît.",
-	guardian_message = "Gardien apparu !",
+	guardian_message = "Gardien %d !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
@@ -311,7 +311,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
-	guardian_message = "Wächter!",
+	guardian_message = "Wächter %d!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
@@ -382,7 +382,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	guardian = "召唤守卫者出现", --phase 1
 	guardian_desc = "当尤格-萨隆召唤守卫者出现时发出警报。",
-	guardian_message = "召唤守卫者 出现！",
+	guardian_message = "召唤守卫者 出现！ %d",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 } end )
@@ -452,7 +452,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	guardian = "召喚守護者出現", --phase 1
 	guardian_desc = "當尤格薩倫召喚守護者出現時發出警報。",
-	guardian_message = "召喚守護者 出現！",
+	guardian_message = "召喚守護者 出現！ %d",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
@@ -489,7 +489,8 @@ end
 
 function mod:Guardian(_, spellID)
 	if db.guardian then
-		self:IfMessage(L["guardian_message"], "Attention", spellID)
+		self:IfMessage(L["guardian_message"]:format(count), "Attention", spellID)
+		count = count + 1
 	end
 end
 
@@ -599,6 +600,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
+		count = 1
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Important", nil, "Alarm")
 		end
