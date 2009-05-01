@@ -123,7 +123,7 @@ L:RegisterTranslations("frFR", function() return {
 	surge_message = "Vague de ténèbres !",
 	surge_cast = "Vague en incantation !",
 	surge_end = "Vague de ténèbres estompée !",
-	--surge_bar = "Next Surge",
+	surge_bar = "Prochaine Vague",
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",

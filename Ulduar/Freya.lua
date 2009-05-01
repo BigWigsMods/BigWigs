@@ -123,8 +123,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "Le jardin doit être protégé !", --("Anciens, donnez-moi votre force !" ?)
-	--engage_trigger2 = "Elders, grant me your strength!",
+	engage_trigger1 = "Le jardin doit être protégé !",
+	engage_trigger2 = "Anciens, donnez-moi votre force !",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
