@@ -19,6 +19,7 @@ local db = nil
 local started = nil
 local pName = UnitName("player")
 local count = 9
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
