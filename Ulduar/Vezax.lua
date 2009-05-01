@@ -39,6 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	surge_message = "Surge of Darkness!",
 	surge_cast = "Surge casting!",
 	surge_end = "Surge faded!",
+	surge_bar = "Next Surge",
 
 	animus = "Saronite Animus",
 	animus_desc = "Warn when the Saronite Animus spawns.",
@@ -80,6 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	surge_message = "어둠 쇄도!",
 	surge_cast = "어둠 쇄도 시전!",
 	surge_end = "어둠 쇄도 사라짐!",
+	surge_bar = "다음 쇄도",
 
 	animus = "사로나이트 원혼",
 	animus_desc = "사로나이트 원혼 소환을 알립니다.",
@@ -121,6 +123,7 @@ L:RegisterTranslations("frFR", function() return {
 	surge_message = "Vague de ténèbres !",
 	surge_cast = "Vague en incantation !",
 	surge_end = "Vague de ténèbres estompée !",
+	--surge_bar = "Next Surge",
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
@@ -159,6 +162,7 @@ L:RegisterTranslations("deDE", function() return {
 	surge_message = "Sog der Dunkelheit!",
 	surge_cast = "Wirkt Sog",
 	surge_end = "Sog beendet!",
+	--surge_bar = "Next Surge",
 
 	animus = "Saronitanimus",
 	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
@@ -200,6 +204,7 @@ L:RegisterTranslations("zhCN", function() return {
 	surge_message = "Surge of Darkness！",
 	surge_cast = "正在施放 Surge of Darkness！",
 	surge_end = "Surge of Darkness消失！",
+	--surge_bar = "Next Surge",
 
 	animus = "萨隆邪铁Animus",
 	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
@@ -238,6 +243,7 @@ L:RegisterTranslations("zhTW", function() return {
 	surge_message = "暗鬱奔騰！",
 	surge_cast = "正在施放 暗鬱奔騰！",
 	surge_end = "暗鬱奔騰 消失！",
+	--surge_bar = "Next Surge",
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
@@ -276,6 +282,7 @@ L:RegisterTranslations("ruRU", function() return {
 	surge_message = "Наплыв Тьмы!",
 	surge_cast = "Применяется Наплыв Тьмы!",
 	surge_end = "Наплыв Тьмы рассеялся!",
+	--surge_bar = "Next Surge",
 
 	animus = "Саронитовый враг",
 	animus_desc = "Сообщать о появлении саронитового врага.",
@@ -392,6 +399,7 @@ function mod:Surge(_, spellID)
 	if db.surge then
 		self:IfMessage(L["surge_message"], "Attention", spellID)
 		self:Bar(L["surge_cast"], 3, spellID)
+		self:Bar(L["surge_bar"], 60, spellID)
 	end
 end
 
@@ -421,6 +429,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		count = 1
 		if db.berserk then
 			self:Enrage(600, true, true)
+		end
+		if db.surge then
+			self:Bar(L["surge_bar"], 60, 62662)
 		end
 	end
 end
