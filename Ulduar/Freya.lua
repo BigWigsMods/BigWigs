@@ -33,7 +33,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Freya",
 
-	engage_trigger = "The Conservatory must be protected!",
+	engage_trigger1 = "The Conservatory must be protected!",
+	engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -77,7 +78,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "어떻게 해서든 정원을 수호해야 한다!",
+	engage_trigger1 = "어떻게 해서든 정원을 수호해야 한다!",
+	engage_trigger2 = "장로여, 내게 힘을 나눠다오!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -121,7 +123,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Le jardin doit être protégé !", --("Anciens, donnez-moi votre force !" ?)
+	engage_trigger1 = "Le jardin doit être protégé !", --("Anciens, donnez-moi votre force !" ?)
+	--engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
@@ -165,7 +168,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Das Konservatorium muss verteidigt werden!",
+	engage_trigger1 = "Das Konservatorium muss verteidigt werden!",
+	--engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -209,7 +213,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---	engage_trigger = "The Conservatory must be protected!",
+--	engage_trigger1 = "The Conservatory must be protected!",
+--	engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
@@ -253,7 +258,8 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger = "The Conservatory must be protected!",
+--	engage_trigger1 = "The Conservatory must be protected!",
+--	engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
@@ -297,7 +303,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	engage_trigger = "Нужно защитить Оранжерею!",
+	engage_trigger1 = "Нужно защитить Оранжерею!",
+	--engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
@@ -480,7 +487,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["engage_trigger"] then
+	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		attunedCount = 150
 		dCount = 0
 		eCount = 0
