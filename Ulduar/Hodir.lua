@@ -17,6 +17,7 @@ mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "be
 local db = nil
 local FF = {}
 local fmt = string.format
+local lastCold = nil
 
 ----------------------------
 --      Localization      --
@@ -247,13 +248,14 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	db = self.db.profile
+	lastCold = nil
+	wipe(FF)
 
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
-	self:AddCombatListener("SPELL_DAMAGE", "Cold", 62188)
-	self:AddCombatListener("SPELL_MISSED", "Cold", 62188)
+	self:RegisterEvent("UNIT_AURA")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -344,19 +346,15 @@ function mod:UNIT_AURA(unit)
 		local name, _, icon, stack = UnitDebuff("player", i)
 		if not name then break end
 		if icon == "Interface\\Icons\\Spell_Frost_IceShock" then
-			if stack < 2 then return end
 			bitingcold = stack
+			break
 		end
 	end
-	if bitingcold then
-		if db.cold then
+	if bitingcold and bitingcold ~= lastCold then
+		if db.cold and bitingcold > 1 then
 			self:LocalMessage(L["cold_message"]:format(bitingcold), "Personal", "Interface\\Icons\\Spell_Frost_IceShock")
 		end
-		self:UnregisterEvent("UNIT_AURA")
+		lastCold = bitingcold
 	end
-end
-
-function mod:Cold()
-	self:RegisterEvent("UNIT_AURA")
 end
 

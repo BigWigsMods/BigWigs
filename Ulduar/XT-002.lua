@@ -34,8 +34,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	exposed = "Exposed Heart",
 	exposed_desc = "Warn when XT-002 gains Exposed Heart.",
-	exposed_warning = "Exposed Heart Soon!",
-	exposed_message = "Exposed Heart - adds incoming!",
+	exposed_warning = "Exposed soon",
+	exposed_message = "Heart exposed!",
 
 	gravitybomb = "Gravity Bomb",
 	gravitybomb_desc = "Tells you who has been hit by Gravity Bomb.",
