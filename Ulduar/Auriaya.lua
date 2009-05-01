@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33515
 --Feral Defender = 34035
-mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "icon", "bosskill"}
+mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -356,6 +356,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.fear then
 			self:Bar(L["fear_bar"], 32, 64386)
 			self:DelayedMessage(32, L["fear_warning"], "Attention")
+		end
+		if db.berserk then
+			self:Enrage(600, true)
 		end
 	end
 end
