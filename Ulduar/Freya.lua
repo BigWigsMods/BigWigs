@@ -457,9 +457,9 @@ function mod:Deaths(_, guid)
 			self:AttunedWarn()
 		end
 	elseif guid == 32919 or guid == 33202 or guid == 32916 then
-		attunedCount = attunedCount - 10
 		eCount = eCount + 1
 		if eCount == 3 then
+			attunedCount = attunedCount - 10
 			eCount = 0
 			self:AttunedWarn()
 		end
