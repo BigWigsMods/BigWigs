@@ -169,7 +169,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Das Konservatorium muss verteidigt werden!",
-	--engage_trigger2 = "Elders, grant me your strength!",
+	engage_trigger2 = "Ihr Ältesten, gewährt mir eure Macht!",-- needs check
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
