@@ -434,7 +434,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["magnetic"])
 		if db.phase then
 			self:IfMessage(L["phase4_warning"], "Attention")
-			self:Bar(L["phase_bar"]:format(phase), 20, "INV_Gizmo_01")
+			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["end_trigger"]) then
 		self:BossDeath(nil, self.guid)
