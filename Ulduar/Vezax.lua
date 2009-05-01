@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -291,14 +291,14 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor = "Саронитовые пары",
 	vapor_desc = "Сообщать о появлении Саронитовые пары.",
 	vapor_message = "Саронитовые пары (%d)!",
-	--vapor_bar = "Следующие Пары (%d)",
+	vapor_bar = "Пары",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Темное сокрушение",
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
 	crash_you = "Темное сокрушение на ВАС!",
 	crash_other = "Темное сокрушение на |3-5(%s)",
-	--crash_say = "Crash on Me!",
+	crash_say = "Сокрушение на Мне!",
 
 	mark = "Метка Безликого",
 	mark_desc = "Помечать иконкой Метку Безликого.",
