@@ -129,7 +129,7 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!",
 
-	cold = "Beißende Kälte (Erfolg)",
+	cold = "Beißende Kälte",
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
 	cold_message = "Beißende Kälte x%d!",
 
@@ -138,7 +138,7 @@ L:RegisterTranslations("deDE", function() return {
 	flash_message = "Blitzeis: %s!",
 	flash_warning = "Blitzeis!",
 	flash_soon = "Blitzeis in 5 sek!",
-	flash_bar = "Nächstes Blitzeis",
+	flash_bar = "Blitzeis",
 
 	frozenblow = "Gefrorene Schläge",
 	frozenblow_desc = "Warnt, wenn Hodir Gefrorene Schläge bekommt.",
@@ -151,7 +151,7 @@ L:RegisterTranslations("deDE", function() return {
 	cloud = "Sturmwolke",
 	cloud_desc = "Warnt, wer von Sturmwolke betroffen ist.",
 	cloud_you = "Sturmwolke auf DIR!",
-	cloud_other = "Sturmwolke: %s!",
+	cloud_other = "Sturmwolke auf %s!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",

@@ -151,18 +151,18 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "^Your destruction will herald a new age of suffering!",
+
 	flame = "Sengende Flammen",
 	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
 	flame_message = "Sengende Flammen!",
-
-	--engage_trigger = "^Your destruction will herald a new age of suffering!",
-
+	
 	surge = "Sog der Dunkelheit",
 	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
 	surge_message = "Sog der Dunkelheit!",
 	surge_cast = "Wirkt Sog",
 	surge_end = "Sog beendet!",
-	--surge_bar = "Next Surge",
+	surge_bar = "Nächster Sog",
 
 	animus = "Saronitanimus",
 	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",

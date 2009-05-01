@@ -270,7 +270,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	madness = "Wahnsinn hervorrufen",
 	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
-	madness_warning = "Wahnsinn hervorrufen in 5 sek!",
+	madness_warning = "Wahnsinn in 5 sek!",
 
 	malady = "Geisteskrankheit",
 	malady_desc = "Warnung und Timer für Geisteskrankheit.",
@@ -279,7 +279,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	tentacle = "Schmettertentakel", --right?
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
-	tentacle_message = "Schmettertentakel (%d)",
+	tentacle_message = "Schmettertentakel (%d)!",
 
 	ray = "Todesstrahl",
 	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
@@ -293,7 +293,7 @@ L:RegisterTranslations("deDE", function() return {
 	link = linkedName,
 	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
 	link_message = linkedName .. ": %s!",
-	link_warning = "DU bist gehirnverbunden!",
+	link_warning = "DU bist verbunden!",
 
 	gaze = "Wahnsinniger Blick",
 	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
@@ -307,11 +307,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	mindcontrol = "Gedanken beherrschen",
 	mindcontrol_desc = "Warnt, wer mit Gedanken beherrschen übernommen wurde.",
-	mindcontrol_message = "Gedanken beherrschen: %s!",
+	mindcontrol_message = "Gedankenkontrolle: %s!",
 
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
-	guardian_message = "Wächter %d!",
+	guardian_message = "Wächter (%d)!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",

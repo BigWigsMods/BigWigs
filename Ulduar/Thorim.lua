@@ -234,7 +234,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	detonation = "Runendetonation",
 	detonation_desc = "Warnt, wer von Runendetonation betroffen ist.",
-	detonation_message = "Runendetonation: %s!",
+	detonation_message = "Bombe: %s!",
 	detonation_yell = "Ich bin die Bombe!",
 
 	charge = "Blitzladung",

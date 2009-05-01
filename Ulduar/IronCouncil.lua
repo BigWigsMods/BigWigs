@@ -187,7 +187,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	overload = "Überladen",
 	overload_desc = "Warnt, wenn Brundir Überladen wirkt.",
-	overload_message = "Überladen Explosion in 6 sek!",
+	overload_message = "Überladen in 6 sek!",
 
 	power = "Rune der Kraft",
 	power_desc = "Warnt, wenn Molgeim Rune der Kraft wirkt.",
@@ -203,7 +203,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	summoning = "Rune der Beschwörung",
 	summoning_desc = "Warnt, wenn Molgeim Rune der Beschwörung wirkt.",
-	summoning_message = "Rune der Beschwörung - Elementare!",
+	summoning_message = "Elementare!",
 
 	tendrils = "Blitzranken",
 	tendrils_desc = "Warnt, wer das Ziel während der Blitzrankenphase ist.",

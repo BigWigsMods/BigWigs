@@ -119,7 +119,7 @@ L:RegisterTranslations("deDE", function() return {
 	exposed = "Freigelegtes Herz",
 	exposed_desc = "Warnt, wenn XT-002 ein Freigelegtes Herz hat.",
 	exposed_warning = "Freigelegtes Herz bald!",
-	exposed_message = "Freigelegtes Herz - Adds!",
+	exposed_message = "Herz freigelegt!",
 
 	gravitybomb = "Gravitationsbombe",
 	gravitybomb_desc = "Warnt, wer von Gravitationsbombe getroffen wurde.",
