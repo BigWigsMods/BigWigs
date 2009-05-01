@@ -151,7 +151,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "^Your destruction will herald a new age of suffering!",
+	engage_trigger = "^Eure Vernichtung wird ein neues Zeitalter",-- needs testing
 
 	flame = "Sengende Flammen",
 	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
