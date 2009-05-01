@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	overload = "Overload",
 	overload_desc = "Warn when Brundir casts a Overload.",
-	overload_message = "Overload Explosion in 6sec!",
+	overload_message = "Overload in 6sec!",
 
 	power = "Rune of Power",
 	power_desc = "Warn when Molgeim casts Rune of Power.",
@@ -62,7 +62,6 @@ L:RegisterTranslations("enUS", function() return {
 	tendrils_desc = "Warn who is targeted during Lightning Tendrils.",
 	tendrils_other = "%s is being chased!",
 	tendrils_you = "YOU are being chased!",
-	tendrils_message = "Landing in ~5sec!",
 
 	overwhelm = "Overwhelming Power",
 	overwhelm_desc = "Warn when a player has Overwhelming Power.",
@@ -75,7 +74,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	shield = "Shield of Runes",
 	shield_desc = "Warn when Molgeim casts Shield of Runes.",
-	shield_message = "Shield of Runes Up!",
+	shield_message = "Rune shield!",
 
 	icon = "Raid Target Icon",
 	icon_desc = "Place a Raid Target Icon on the player targeted by Lightning Tendrils or Overwhelming Power (requires promoted or higher).",
@@ -112,7 +111,6 @@ L:RegisterTranslations("koKR", function() return {
 	tendrils_desc = "번개 덩굴 단계에서 대상을 알리고 전술 표시를 지정합니다.",
 	tendrils_other = "%s 추적 중!",
 	tendrils_you = "당신을 추적 중!",
-	tendrils_message = "약 5초 후 착지!",
 
 	overwhelm = "압도적인 힘",
 	overwhelm_desc = "압도적인 힘에 걸린 플레이어를 알립니다.",
@@ -162,7 +160,6 @@ L:RegisterTranslations("frFR", function() return {
 	tendrils_desc = "Indique qui est poursuivi pendant la phase de Vrille d'éclair.",
 	tendrils_other = "%s est poursuivi(e) !",
 	tendrils_you = "VOUS êtes poursuivi(e) !",
-	tendrils_message = "Atterrissage dans ~5 sec. !",
 
 	overwhelm = "Puissance accablante",
 	overwhelm_desc = "Prévient quand un joueur subit les effets d'une Puissance accablante.",
@@ -212,7 +209,6 @@ L:RegisterTranslations("deDE", function() return {
 	tendrils_desc = "Warnt, wer das Ziel während der Blitzrankenphase ist.",
 	tendrils_other = "%s wird verfolgt!",
 	tendrils_you = "DU wirst verfolgt!",
-	tendrils_message = "Landet in ~5 sek!",
 
 	overwhelm = "Überwältigende Kraft",
 	overwhelm_desc = "Warnt, wenn ein Spieler von Überwältigende Kraft betroffen ist.",
@@ -262,7 +258,6 @@ L:RegisterTranslations("zhCN", function() return {
 	tendrils_desc = "当玩家中了闪电之藤时发出警报。",
 	tendrils_other = "闪电之藤：>%s<！",
 	tendrils_you = ">你< 闪电之藤！",
-	tendrils_message = "约5秒后，降落！",
 
 	overwhelm = "Overwhelming Power",
 	overwhelm_desc = "当玩家中了Overwhelming Power时发出警报。",
@@ -312,7 +307,6 @@ L:RegisterTranslations("zhTW", function() return {
 	tendrils_desc = "當玩家中了閃電觸鬚時發出警報。",
 	tendrils_other = "閃電觸鬚：>%s<！",
 	tendrils_you = ">你< 閃電觸鬚！",
-	tendrils_message = "約5秒后，降落！",
 
 	overwhelm = "極限威能",
 	overwhelm_desc = "當玩家中了極限威能時發出警報。",
@@ -362,7 +356,6 @@ L:RegisterTranslations("ruRU", function() return {
 	tendrils_desc = "Сообщает кого преследуют светящиеся придатки, и помещает на него иконку.",
 	tendrils_other = "Преследуют |3-1(%s)!",
 	tendrils_you = "ВАС преследуют!",
-	tendrils_message = "Выгрузка через ~5сек!",
 
 	overwhelm = "Переполняющая энергия",
 	overwhelm_desc = "Сообщает когда игрок подвергается воздействию Переполняющей энергии.",
@@ -517,7 +510,6 @@ function mod:Tendrils(_, spellID)
 	if db.tendrils then
 		self:IfMessage(L["tendrils"], "Attention", spellID)
 		self:Bar(L["tendrils"], 25, spellID)
-		self:DelayedMessage(20, L["tendrils_message"], "Info")
 		self:ScheduleRepeatingEvent("BWTendrilsToTScan", targetCheck, 0.2)
 		self:ScheduleEvent("TargetCancel", tendrilsRemove, 25)
 	end

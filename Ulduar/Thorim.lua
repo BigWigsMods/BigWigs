@@ -2,15 +2,16 @@
 --      Module Declaration      --
 ----------------------------------
 
-local behemoth = BB["Jormungar Behemoth"]
 local boss = BB["Thorim"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local behemoth = BB["Jormungar Behemoth"]
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865	--Sif(33196)
 mod.toggleoptions = {"phase", "p2berserk", "hardmode", -1, "hammer", "impale", "shock", "barrier", "detonation", "charge", "strike", -1, "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Are you local?      --
