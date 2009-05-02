@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 	frostblast = "Frost Blast",
 	frostblast_desc = "Alerts when people get Frost Blasted.",
 	frostblast_bar = "Possible Frost Blast",
-	frostblast_message = "%s : Frost Blast",
+	frostblast_message = "%s: Frost Blast",
 	frostblast_soon_message = "Possible Frost Blast in ~5 sec!",
 
 	detonate = "Detonate Mana",

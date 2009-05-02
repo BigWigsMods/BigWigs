@@ -33,24 +33,24 @@ L:RegisterTranslations("enUS", function() return {
 	aura = "Necrotic Aura",
 	aura_desc = "Warn for Necrotic Aura",
 	aura_message = "Necrotic Aura - Duration 17 sec!",
-	aura_warning = "Necrotic Aura Fade in 3 sec!",
+	aura_warning = "Aura gone in 3 sec!",
 
 	deathbloom = "Deathbloom",
 	deathbloom_desc = "Warn for Deathbloom",
-	deathbloom_warning = "Deathbloom in 5 sec!",
+	deathbloom_warning = "Bloom in 5 sec!",
 
 	doom = "Inevitable Doom",
 	doom_desc = "Warn for Inevitable Doom",
 	doombar = "Inevitable Doom %d",
-	doomwarn = "Inevitable Doom %d! %d sec to next!",
-	doomwarn5sec = "Inevitable Doom %d in 5 sec!",
+	doomwarn = "Doom %d! %d sec to next!",
+	doomwarn5sec = "Doom %d in 5 sec!",
 	doomtimerbar = "Doom every 15sec",
-	doomtimerwarn = "Doom timerchange in %s sec!",
+	doomtimerwarn = "Doom timer changes in %s sec!",
 	doomtimerwarnnow = "Doom now happens every 15 sec!",
 
 	spore = "Spore Spawning",
 	spore_desc = "Warn when a spore spawns",
-	sporewarn = "Spore %d Spawned",
+	sporewarn = "Spore %d!",
 	sporebar = "Summon Spore %d",
 } end )
 
