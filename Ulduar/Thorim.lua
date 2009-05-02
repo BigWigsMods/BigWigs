@@ -50,7 +50,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	hammer = "Stormhammer",
 	hammer_desc = "Warns for Stormhammer.",
-	hammer_message = "Stormhammer: %s",
+	hammer_message = "Hammer on %s",
 	hammer_bar = "Stormhammer",
 
 	impale = "Impale",

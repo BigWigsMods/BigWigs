@@ -12,7 +12,7 @@ if not plugin then return end
 ------------------------------
 
 local throt, times = {}, {}
-local playerName = nil
+local playerName = UnitName("player")
 
 local coreSyncs = {
 	BossEngaged = 5,
@@ -25,8 +25,6 @@ local coreSyncs = {
 ------------------------------
 
 function plugin:OnRegister()
-	playerName = UnitName("player")
-
 	for k, v in pairs(coreSyncs) do
 		self:BigWigs_ThrottleSync(k, v)
 	end
@@ -43,10 +41,7 @@ end
 ------------------------------
 
 function plugin:CHAT_MSG_ADDON(prefix, message, type, sender)
-	if prefix ~= "BigWigs" or ( type ~= "RAID" and type ~= "PARTY" ) then
-		return
-	end
-
+	if prefix ~= "BigWigs" then return end
 	local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
 	if not sync then return end
 
@@ -59,7 +54,6 @@ end
 
 function plugin:BigWigs_SendSync(msg)
 	local sync, rest = select(3, msg:find("(%S+)%s*(.*)$"))
-
 	if not sync then return end
 
 	if throt[sync] == nil then throt[sync] = 1 end

@@ -32,7 +32,7 @@ local coloredNames = setmetatable({}, {__index =
 
 local revisions = {}
 local highestRevision = nil
-local oldVersionThreshold = 5 -- 5 revisions behind means it's time to update
+local oldVersionThreshold = 10 -- 10 revisions behind means it's time to update
 local shouldUpdate = nil
 local playername = UnitName("player")
 local versionBroadcastsNotChecked = {}
@@ -50,8 +50,8 @@ local notUsingBW = {}
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionChecker")
 L:RegisterTranslations("enUS", function() return {
 	["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss.",
-	["out_of_date"] = "The following players seem to be running an old version: %s.",
-	["not_using"] = "Group members not using Big Wigs: %s.",
+	["out_of_date"] = "Players that might be running and old version: %s.",
+	["not_using"] = "Players that might not be using Big Wigs: %s.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -170,7 +170,7 @@ function plugin:OnRegister()
 end
 
 local function updateBWUsers()
-	notUsingBW = wipe(notUsingBW)
+	wipe(notUsingBW)
 	local num = GetNumRaidMembers()
 	for i = 1, num do
 		local n, _, _, _, _, _, _, online = GetRaidRosterInfo(i)
@@ -207,6 +207,7 @@ local bwPrefixes = {
 	BWOOD = true,
 	BWVQ = true,
 	BWVR = true,
+	BigWigs = true, -- Comm module
 }
 
 function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
