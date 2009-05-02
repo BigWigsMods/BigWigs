@@ -114,7 +114,7 @@ local function scanModules()
 	local lastHighestRevision = highestRevision
 	for name, module in BigWigs:IterateModules() do
 		local rev = module.revision
-		if rev then
+		if rev and module:IsBossModule() then
 			if not highestRevision or rev > revisions[highestRevision] then
 				highestRevision = name
 			end
@@ -138,6 +138,7 @@ end
 
 function plugin:OnRegister()
 	if BigWigsOptions and BigWigsOptions.RegisterTooltipInfo then
+		local ood = {}
 		BigWigsOptions:RegisterTooltipInfo(function(tt)
 			local addedInfo = nil
 			if shouldUpdate then
@@ -145,7 +146,6 @@ function plugin:OnRegister()
 				tt:AddLine(" ")
 				tt:AddLine(L["should_upgrade"], 0.6, 1, 0.2, 1)
 			elseif next(outOfDateClients) then
-				local ood = {}
 				for player, rev in pairs(outOfDateClients) do
 					if rev < revisions[highestRevision] then
 						table.insert(ood, coloredNames[player])
@@ -155,6 +155,7 @@ function plugin:OnRegister()
 					addedInfo = true
 					tt:AddLine(" ")
 					tt:AddLine(L["out_of_date"]:format(table.concat(ood, ", ")), 0.6, 1, 0.2, 1)
+					wipe(ood)
 				end
 			end
 			if #notUsingBW > 0 then
