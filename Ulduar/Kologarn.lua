@@ -207,8 +207,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 	eyebeam = "Сосредоточенный взгляд",
 	eyebeam_desc = "Сообщать кто попал под воздействие Сосредоточенный взгляд.",
+	eyebeam_message = "Взгляд!",
 	eyebeam_bar = "~Взгляд",
-	eyebeam_message = "Взгляд на: |3-5(%s)",
 	eyebeam_you = "Взгляд на ВАС!",
 	
 	armor = "Хруст доспеха",

@@ -328,9 +328,9 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
---	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
+	engage_trigger1 = "Чужаки! Вам не одалеть Железное Собрание!",
 --	engage_trigger2 = "Nothing short of total decimation will suffice!",
---	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+	engage_trigger3 = "Кто бы вы ни были - жалкие бродяги или великие герои... Вы всего лишь смертные!",
 
 	overload = "Перегрузка",
 	overload_desc = "Сообщает когда Брундир применяет Перегрузку.",
