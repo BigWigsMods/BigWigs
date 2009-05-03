@@ -18,6 +18,7 @@ local db = nil
 local count = 1
 local pName = UnitName("player")
 local fmt = string.format
+local lastVapor = nil
 
 ----------------------------
 --      Localization      --
@@ -50,6 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	vapor_message = "Saronite Vapor %d!",
 	vapor_bar = "Vapor",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+	vapor_warning = "Vapors x%d!",
 
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
@@ -92,6 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor_message = "사로나이트 증기 (%d)!",
 	vapor_bar = "다음 증기",
 	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
+	vapor_warning = "증기 x%d 중첩!",
 
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
@@ -134,6 +137,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor_message = "Vapeurs de saronite %d !",
 	vapor_bar = "Vapeurs",
 	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
+	--vapor_warning = "Vapors x%d!",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
@@ -173,6 +177,7 @@ L:RegisterTranslations("deDE", function() return {
 	vapor_message = "Saronitdämpfe %d!",
 	vapor_bar = "Saronitdämpfe",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", --NEED!
+	--vapor_warning = "Vapors x%d!",
 
 	crash = "Schattengeschoss",
 	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
@@ -215,6 +220,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
 	vapor_bar = "<萨隆邪铁蒸汽>",
 --	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+--	vapor_warning = "Vapors x%d!",
 
 	crash = "Shadow Crash",
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
@@ -246,7 +252,7 @@ L:RegisterTranslations("zhTW", function() return {
 	surge_message = "暗鬱奔騰！",
 	surge_cast = "正在施放 暗鬱奔騰！",
 	surge_end = "暗鬱奔騰 消失！",
-	--surge_bar = "Next Surge",
+--	surge_bar = "Next Surge",
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
@@ -257,6 +263,7 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor_message = "薩倫煙霧：>%d<！",
 	vapor_bar = "<薩倫煙霧>",
 --	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+--	vapor_warning = "Vapors x%d!",
 
 	crash = "暗影暴擊",
 	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
@@ -299,6 +306,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor_message = "Саронитовые пары (%d)!",
 	vapor_bar = "Пары",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+	--vapor_warning = "Vapors x%d!",
 
 	crash = "Темное сокрушение",
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
@@ -331,7 +339,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("UNIT_AURA")
 	
+	lastVapor = nil
 	count = 1
 	db = self.db.profile
 end
@@ -339,6 +349,25 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:UNIT_AURA(unit)
+	if unit and unit ~= "player" then return end
+	local saronite = nil
+	for i = 1, 10 do
+		local name, _, icon, stack = UnitDebuff("player", i)
+		if not name then break end
+		if icon == "Interface\\Icons\\INV_Ore_Saronite_01" then
+			saronite = stack
+			break
+		end
+	end
+	if saronite and saronite ~= lastVapor then
+		if db.vapor and saronite > 4 then
+			self:LocalMessage(L["cold_message"]:format(saronite), "Personal", "Interface\\Icons\\INV_Ore_Saronite_01")
+		end
+		lastVapor = saronite
+	end
+end
 
 local function scanTarget()
 	local target
