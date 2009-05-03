@@ -612,7 +612,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
 		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["Crusher Tentacle"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["tentacle_message"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["ray"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["ray_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
