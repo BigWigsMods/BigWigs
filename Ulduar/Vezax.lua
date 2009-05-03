@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"vapor", "animus", -1, "crash", "berserk", "crashsay", "crashicon", "mark", "icon", "flame", "surge", -1, "bosskill"}
+mod.toggleoptions = {"vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

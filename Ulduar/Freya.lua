@@ -71,7 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 	tremor = "Ground Tremor",
 	tremor_desc = "Warn when Freya casts Ground Tremor.",
 	tremor_message = "Ground Tremor!",
-	
+
 	root = "Iron Roots",
 	root_desc = "Warn who has Iron Roots.",
 	root_message = "Root: %s",
@@ -120,7 +120,7 @@ L:RegisterTranslations("koKR", function() return {
 	tremor = "지진",
 	tremor_desc = "프레이야의 지진 시전을 알립니다.",
 	tremor_message = "지진!",
-	
+
 	root = "무쇠 뿌리",
 	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다.",
 	root_message = "무쇠 뿌리: %s",
@@ -169,10 +169,10 @@ L:RegisterTranslations("frFR", function() return {
 	tremor = "Tremblement de terre",
 	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
 	tremor_message = "Tremblement de terre !",
-	
-	--root = "Iron Roots",
-	--root_desc = "Warn who has Iron Roots.",
-	--root_message = "Root: %s",
+
+	root = "Racines de fer",
+	root_desc = "Prévient quand un joueur subit les effets des Racines de fer.",
+	root_message = "Racines : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
@@ -218,7 +218,7 @@ L:RegisterTranslations("deDE", function() return {
 	tremor = "Bebende Erde",
 	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird.",
 	tremor_message = "Bebende Erde!",
-	
+
 	--root = "Iron Roots",
 	--root_desc = "Warn who has Iron Roots.",
 	--root_message = "Root: %s",
@@ -263,11 +263,11 @@ L:RegisterTranslations("zhCN", function() return {
 	sunbeam_desc = "当弗蕾亚施放Sunbeam于玩家时发出警报。.",
 	sunbeam_you = ">你< Sunbeam！",
 	sunbeam_other = "Sunbeam：>%s<！",
-	
+
 	tremor = "大地震颤",
 	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。",
 	tremor_message = "大地震颤！",
-	
+
 	--root = "Iron Roots",
 	--root_desc = "Warn who has Iron Roots.",
 	--root_message = "Root: %s",
@@ -312,11 +312,11 @@ L:RegisterTranslations("zhTW", function() return {
 	sunbeam_desc = "當芙蕾雅施放太陽光束于玩家時發出警報。",
 	sunbeam_you = ">你< 太陽光束！",
 	sunbeam_other = "太陽光束：>%s<！",
-	
+
 	tremor = "地面震動",
 	tremor_desc = "當芙蕾雅施放地面震動時發出警報。",
 	tremor_message = "地面震動！",
-	
+
 	--root = "Iron Roots",
 	--root_desc = "Warn who has Iron Roots.",
 	--root_message = "Root: %s",
@@ -361,11 +361,11 @@ L:RegisterTranslations("ruRU", function() return {
 	sunbeam_desc = "Предупреждать на кого Фрейя применяет Луч солнца.",
 	sunbeam_you = "Луч солнца на ВАС!",
 	sunbeam_other = "Луч солнца на |3-5(%s)",
-	
+
 	tremor = "Дрожание земли",
 	tremor_desc = "Предупреждать когда Фрейя применяет Дрожание земли.",
 	tremor_message = "Дрожание земли!",
-	
+
 	--root = "Iron Roots",
 	--root_desc = "Warn who has Iron Roots.",
 	--root_message = "Root: %s",
