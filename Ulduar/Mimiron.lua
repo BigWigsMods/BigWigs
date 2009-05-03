@@ -163,7 +163,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_warning = "Phase 3",
 	phase3_trigger = "^Danke Euch, Freunde! Eure Anstrengungen haben fantastische Daten geliefert!",
 	phase4_warning = "Phase 4",
-	phase4_trigger = "^Vorversuchsphase abgeschlossen", -- NEED!
+	phase4_trigger = "^Vorversuchsphase abgeschlossen. Jetzt kommt der eigentliche Test!",
 	phase_bar = "Phase %d",
 
 	hardmode = "Hard Mode",
