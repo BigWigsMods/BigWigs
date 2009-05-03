@@ -46,6 +46,52 @@ L:RegisterTranslations("enUS", function() return {
 	["Reset the anchor positions, moving them to their default positions."] = true,
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	["Bars"] = "计时条",
+	["Emphasized Bars"] = "醒目计时条",
+	["Options for the timer bars."] = "计时条选项。",
+	["Toggle anchors"] = "切换锚点",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "显示或隐藏计时条与醒目计时条锚点。",
+	["Scale"] = "缩放",
+	["Set the bar scale."] = "设置计时条缩放。",
+	["Grow upwards"] = "向上成长",
+	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条在锚点向上或向下成长。",
+	["Texture"] = "材质",
+	["Set the texture for the timer bars."] = "设置计时条的材质。",
+	["Test"] = "测试",
+	["Close"] = "关闭",
+	["Emphasize"] = "醒目",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "醒目计时条是当接近（小于10秒）。如果计时条开始时间小于15秒则会立刻醒目显示。",
+	["Enable"] = "启用",
+	["Enables emphasizing bars."] = "启用醒目计时条",
+	["Set the scale for emphasized bars."] = "设置醒目计时条缩放。",
+	["Reset position"] = "重置位置",
+	["Reset the anchor positions, moving them to their default positions."] = "重置锚点位置，移动它们到默认位置。",
+} end)
+
+L:RegisterTranslations("zhTW", function() return {
+	["Bars"] = "計時條",
+	["Emphasized Bars"] = "醒目計時條",
+	["Options for the timer bars."] = "計時條選項。",
+	["Toggle anchors"] = "切換錨點",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "顯示或隱藏計時條與醒目計時條錨點。",
+	["Scale"] = "縮放",
+	["Set the bar scale."] = "設置計時條縮放。",
+	["Grow upwards"] = "向上成長",
+	["Toggle bars grow upwards/downwards from anchor."] = "切換計時條在錨點向上或向下成長。",
+	["Texture"] = "材質",
+	["Set the texture for the timer bars."] = "設置計時條的材質。",
+	["Test"] = "測試",
+	["Close"] = "關閉",
+	["Emphasize"] = "醒目",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "醒目計時條是當接近（小於10秒）。如果計時條開始時間小於15秒則會立刻醒目顯示。",
+	["Enable"] = "啟用",
+	["Enables emphasizing bars."] = "啟用醒目計時條",
+	["Set the scale for emphasized bars."] = "設置醒目計時條縮放。",
+	["Reset position"] = "重置位置",
+	["Reset the anchor positions, moving them to their default positions."] = "重置錨點位置，移動它們到默認位置。",
+} end)
+
 --------------------------------------------------------------------------------
 -- Options
 --

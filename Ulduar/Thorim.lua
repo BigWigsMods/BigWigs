@@ -257,7 +257,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "当进入不同阶段发出警报。",
 	phase1_message = "第一阶段！",
 --	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "第二阶段 - 5分钟后，狂暴！",
+	phase2_message = "第二阶段 - 6分15秒后，狂暴！",
 --	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三阶段 - %s已激怒！",
 
@@ -312,7 +312,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_desc = "當進入不同階段發出警報。",
 	phase1_message = "第一階段！",
 --	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "第二階段 - 5分鐘后，狂暴！",
+	phase2_message = "第二階段 - 6分15秒後，狂暴！",
 --	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三階段 - %s已狂怒！",
 

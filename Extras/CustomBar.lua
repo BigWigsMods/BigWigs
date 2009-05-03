@@ -59,11 +59,11 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["CustomBars"] = "自定時間條",
 	["Custom Bars"] = "自定時間條",
-	["Start a custom bar, either local or global."] = "開始一個自定時間條，區域或者全域",
+	["Start a custom bar, either local or global."] = "開始一個自定時間條，區域或者全域。",
 	["Local"] = "區域",
 	["Global"] = "全域",
 	["<time> <bar text>"] = "<秒> <列文字>",
-	["Starts a custom bar with the given parameters."] = "開始一個包含參數的自定時間條",
+	["Starts a custom bar with the given parameters."] = "開始一個包含參數的自定時間條。",
 	["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。",
 } end)
 

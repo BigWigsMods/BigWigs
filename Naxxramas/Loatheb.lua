@@ -158,7 +158,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spore = "孢子",
 	spore_desc = "当孢子出现时发出警报。",
-	sporewarn = "%d孢子出现！",
+	sporewarn = "孢子：>%d<！",
 	sporebar = "<孢子：%d>",
 } end )
 
@@ -185,7 +185,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spore = "孢子",
 	spore_desc = "當孢子出現時發出警報。",
-	sporewarn = "%d孢子出現！",
+	sporewarn = "孢子：>%d<！",
 	sporebar = "<孢子：%d>",
 } end )
 

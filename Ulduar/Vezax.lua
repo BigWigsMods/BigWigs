@@ -197,14 +197,14 @@ L:RegisterTranslations("zhCN", function() return {
 	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
 	flame_message = "灼热烈焰！",
 
-	--engage_trigger = "^Your destruction will herald a new age of suffering!",
+--	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "Surge of Darkness",
 	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
 	surge_message = "Surge of Darkness！",
 	surge_cast = "正在施放 Surge of Darkness！",
 	surge_end = "Surge of Darkness消失！",
-	--surge_bar = "Next Surge",
+	surge_bar = "<下一Surge of Darkness>",
 
 	animus = "萨隆邪铁Animus",
 	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
@@ -214,13 +214,16 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
 	vapor_bar = "<萨隆邪铁蒸汽>",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+--	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "Shadow Crash",
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
 	crash_you = ">你< Shadow Crash！",
 	crash_other = "Shadow Crash：>%s<！",
-	--crash_say = "Crash on Me!",
+	crash_say = ">我< Shadow Crash！",
+
+	crashicon = "Shadow Crash标记",
+	crashicon_desc = "为中了Shadow Crash的队员打上蓝色方框团队标记。（需要权限）",
 
 	mark = "无面者的印记",
 	mark_desc = "当玩家中了无面者的印记的时发出警报。",
@@ -236,7 +239,7 @@ L:RegisterTranslations("zhTW", function() return {
 	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
 	flame_message = "灼熱烈焰！",
 
-	--engage_trigger = "^Your destruction will herald a new age of suffering!",
+--	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	surge = "暗鬱奔騰",
 	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
@@ -253,13 +256,16 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor_desc = "當薩倫煙霧出現時發出警報。",
 	vapor_message = "薩倫煙霧：>%d<！",
 	vapor_bar = "<薩倫煙霧>",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+--	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	crash = "暗影暴擊",
 	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
 	crash_you = ">你< 暗影暴擊！",
 	crash_other = "暗影暴擊：>%s<！",
-	--crash_say = "Crash on Me!",
+	crash_say = ">我< 暗影暴擊！",
+
+	crashicon = "暗影暴擊標記",
+	crashicon_desc = "為中了暗影暴擊的隊員打上藍色方框團隊標記。（需要權限）",
 
 	mark = "無面者印記",
 	mark_desc = "當玩家中了無面者印記時發出警報。",

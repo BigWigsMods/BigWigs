@@ -147,7 +147,7 @@ L:RegisterTranslations("zhCN", function() return {
 	exposed = "暴露心脏",
 	exposed_desc = "当 XT-002 获得暴露心脏时发出警报。",
 	exposed_warning = "即将 暴露心脏！",
-	exposed_message = "暴露心脏 - 小怪出现！",
+	exposed_message = "暴露心脏！",
 
 	gravitybomb = "重力炸弹",
 	gravitybomb_desc = "当玩家中了重力炸弹时发出警报。",
@@ -175,7 +175,7 @@ L:RegisterTranslations("zhTW", function() return {
 	exposed = "機心外露",
 	exposed_desc = "當 XT-002 獲得機心外露時發出警報。",
 	exposed_warning = "即將 機心外露！",
-	exposed_message = "機心外露 - 小怪出現！",
+	exposed_message = "機心外露！",
 
 	gravitybomb = "重力炸彈",
 	gravitybomb_desc = "當玩家中了重力炸彈時發出警報。",

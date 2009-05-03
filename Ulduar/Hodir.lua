@@ -169,17 +169,25 @@ L:RegisterTranslations("zhCN", function() return {
 	flash = "冰霜速冻",
 	flash_desc = "当正在施放冰霜速冻和玩家中了冰霜速冻时发出警报。",
 	flash_message = "冰霜速冻：>%s<！",
-	flash_warning = "正在施放 冰霜速冻！",
+	flash_warning = "冰霜速冻！",
 	flash_soon = "5秒后，冰霜速冻！",
-	flash_bar = "<下一冰霜速冻>",
+	flash_bar = "<冰霜速冻>",
 
 	frozenblow = "Frozen Blow",
 	frozenblow_desc = "当霍迪尔获得Frozen Blow效果时发出警报。",
-	frozenblow_message = "霍迪尔 - Frozen Blow！",
+	frozenblow_message = "Frozen Blow！",
 	frozenblow_bar = "<Frozen Blow>",
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
+
+	cloud = "Storm Cloud",
+	cloud_desc = "当玩家中了Storm Cloud时发出警报。",
+	cloud_you = ">你< Storm Cloud！",
+	cloud_other = "Storm Cloud：>%s<！",
+
+	icon = "团队标记",
+	icon_desc = "为中了Storm Cloud的队员打上团队标记。（需要权限）",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )
@@ -194,17 +202,25 @@ L:RegisterTranslations("zhTW", function() return {
 	flash = "閃霜",
 	flash_desc = "當正在施放閃霜和玩家中了閃霜時發出警報。",
 	flash_message = "閃霜：>%s<！",
-	flash_warning = "正在施放 閃霜！",
-	flash_soon = "5秒后，閃霜！",
-	flash_bar = "<下一閃霜>",
+	flash_warning = "閃霜！",
+	flash_soon = "5秒後，閃霜！",
+	flash_bar = "<閃霜>",
 
 	frozenblow = "冰凍痛擊",
 	frozenblow_desc = "當霍迪爾獲得冰凍痛擊效果時發出警報。",
-	frozenblow_message = "霍迪爾 - 冰凍痛擊！",
+	frozenblow_message = "冰凍痛擊！",
 	frozenblow_bar = "<冰凍痛擊>",
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
+
+	cloud = "風暴雷雲",
+	cloud_desc = "當玩家中了風暴雷雲時發出警報。",
+	cloud_you = ">你< 風暴雷雲！",
+	cloud_other = "風暴雷雲：>%s<！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了風暴雷雲的隊員打上團隊標記。（需要權限）",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )

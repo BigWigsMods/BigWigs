@@ -236,7 +236,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	overload = "过载",
 	overload_desc = "当布隆迪尔施放过载时发出警报。",
-	overload_message = "10秒后，爆炸！",
+	overload_message = "6秒后，过载！",
 
 	power = "能量符文",
 	power_desc = "当莫尔基姆施放能量符文时发出警报。",
@@ -252,7 +252,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	summoning = "召唤符文",
 	summoning_desc = "当莫尔基姆施放召唤符文时发出警报。",
-	summoning_message = "召唤符文 - 闪电元素即将出现！",
+	summoning_message = "闪电元素即将出现！",
 
 	tendrils = "闪电之藤",
 	tendrils_desc = "当玩家中了闪电之藤时发出警报。",
@@ -285,7 +285,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	overload = "超載",
 	overload_desc = "當布倫迪爾施放超載時發出警報。",
-	overload_message = "10秒后，爆炸！",
+	overload_message = "6秒後，超載！",
 
 	power = "力之符文",
 	power_desc = "當墨吉姆施放力之符文時發出警報。",
@@ -301,7 +301,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	summoning = "召喚符文",
 	summoning_desc = "當墨吉姆施放召喚符文時發出警報。",
-	summoning_message = "召喚符文 - 閃電元素即將出現！",
+	summoning_message = "閃電元素即將出現！",
 
 	tendrils = "閃電觸鬚",
 	tendrils_desc = "當玩家中了閃電觸鬚時發出警報。",

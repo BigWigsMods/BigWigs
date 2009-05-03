@@ -180,9 +180,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	construct = "启动傀儡",
 	construct_desc = "当启动傀儡时发出警报。",
-	construct_message = "启动傀儡！",
-	construct_warning = "5秒后，启动傀儡！",
-	construct_bar = "<下一启动傀儡>",
+	construct_message = "即将 傀儡！",
+	construct_warning = "5秒后，傀儡出现！",
+	construct_bar = "<下一傀儡>",
 
 	brittle = "Brittle",
 	brittle_desc = "当Iron Construct获得Brittle时发出警报。",
@@ -196,7 +196,7 @@ L:RegisterTranslations("zhCN", function() return {
 	scorch = "灼烧",
 	scorch_desc = "当正在施放灼烧和你中了灼烧时发出警报。",
 	scorch_message = ">你< 灼烧！",
-	scorch_warning = "正在施放 灼烧！",
+	scorch_warning = "灼烧！",
 	scorch_soon = "约5秒后，灼烧！",
 	scorch_bar = "<下一灼烧>",
 
@@ -210,9 +210,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	construct = "啟動傀儡",
 	construct_desc = "當啟動傀儡時發出警報。",
-	construct_message = "啟動傀儡！",
-	construct_warning = "5秒后，啟動傀儡！",
-	construct_bar = "<下一啟動傀儡>",
+	construct_message = "即將 傀儡！",
+	construct_warning = "5秒後，傀儡出現！",
+	construct_bar = "<下一傀儡>",
 
 	brittle = "脆裂",
 	brittle_desc = "當鐵之傀儡獲得脆裂時發出警報。",
@@ -226,8 +226,8 @@ L:RegisterTranslations("zhTW", function() return {
 	scorch = "灼燒",
 	scorch_desc = "當正在施放灼燒和你中了灼燒時發出警報。",
 	scorch_message = ">你< 灼燒！",
-	scorch_warning = "正在施放 灼燒！",
-	scorch_soon = "約5秒后，灼燒！",
+	scorch_warning = "灼燒！",
+	scorch_soon = "約5秒後，灼燒！",
 	scorch_bar = "<下一灼燒>",
 
 	slagpot = "熔渣之盆",

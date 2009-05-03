@@ -123,7 +123,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger = "^Hostile entities detected.",
+	engage_trigger = "^發現敵意實體。",
 	engage_message = "%s已狂怒！",
 
 	flame = "烈焰噴洩",
@@ -132,7 +132,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	pursue = "獵殺",
 	pursue_desc = "當烈焰戰輪獵殺玩家時發出警報。",
---	pursue_trigger = "^%%s pursues",
+	pursue_trigger = "^%%s獵殺",
 	pursue_other = "烈焰戰輪獵殺：>%s<！",
 	pursue_you = ">你< 烈焰戰輪獵殺！",
 

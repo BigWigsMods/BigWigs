@@ -349,8 +349,9 @@ L:RegisterTranslations("zhCN", function() return {
 	malady_message = "Malady of the Mind：>%s<！",
 	--malady_bar = "<下一Malady of the Mind>",
 
-	tentacle = "触手出现",
-	tentacle_desc = "当触手出现时发出警报。",
+	tentacle = "Crusher Tentacle",
+	tentacle_desc = "当Crusher Tentacle出现时发出警报。",
+	tentacle_message = "Crusher Tentacle：>%d<！",
 
 	ray = "死亡射线",
 	ray_desc = "当萨拉施放死亡射线时发出警报。",
@@ -382,7 +383,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	guardian = "召唤守卫者出现", --phase 1
 	guardian_desc = "当尤格-萨隆召唤守卫者出现时发出警报。",
-	guardian_message = "召唤守卫者 出现！ %d",
+	guardian_message = "召唤守卫者：>%d<！",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 } end )
@@ -412,15 +413,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 	madness = "瘋狂誘陷",
 	madness_desc = "顯示瘋狂誘陷計時條。",
-	madness_warning = "5秒后，瘋狂誘陷！",
+	madness_warning = "5秒後，瘋狂誘陷！",
 
 	malady = "心靈缺陷",
 	malady_desc = "當玩家中了心靈缺陷時發出警報。",
 	malady_message = "心靈缺陷：>%s<！",
 	--malady_bar = "<下一心靈缺陷>",
 
-	tentacle = "觸手出現",
-	tentacle_desc = "當觸手出現時發出警報。",
+	tentacle = "粉碎觸手",
+	tentacle_desc = "當粉碎觸手出現時發出警報。",
+	tentacle_message = "粉碎觸手：>%d<！",
 
 	ray = "死亡射線",
 	ray_desc = "當薩拉施放死亡射線時發出警報。",
@@ -452,7 +454,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	guardian = "召喚守護者出現", --phase 1
 	guardian_desc = "當尤格薩倫召喚守護者出現時發出警報。",
-	guardian_message = "召喚守護者 出現！ %d",
+	guardian_message = "召喚守護者：>%d<！ ",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )

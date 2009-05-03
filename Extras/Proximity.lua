@@ -101,16 +101,26 @@ L:RegisterTranslations("zhCN", function() return {
 	["Sound"] = "声效",
 	["Play sound on proximity."] = "近距离时声效提示。",
 	["Disabled"] = "禁用",
-	["Disable the proximity display for all modules that use it."] = "禁止所有首领模块使用此功能。",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示功能，若要再次使用请开启首领模块选项。",
+	["Disable the proximity display for all modules that use it."] = "禁止所有首领模块使用近距离。",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示，若要再次使用请开启首领模块选项。",
 
 	proximity = "近距离显示",
 	proximity_desc = "显示近距离窗口，列出距离你很近的玩家。",
 
 	font = "Fonts\\ZYKai_T.TTF",
 
+	["Close"] = "关闭",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "关闭并防止以后的首领模块（如可用）启用近距离显示，直到进入相关首领模块并打开“近距离”选项。",
 	["Test"] = "测试",
 	["Perform a Proximity test."] = "距离报警测试。",
+	["Display"] = "显示",
+	["Options for the Proximity display window."] = "近距离显示窗口选项。",
+	["Lock"] = "锁定",
+	["Locks the display in place, preventing moving and resizing."] = "锁定显示窗口，防止被移动和缩放。",
+	["Title"] = "标题",
+	["Shows or hides the title."] = "显示或隐藏标题。",
+	["Background"] = "背景",
+	["Shows or hides the background."] = "显示或隐藏背景。",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -194,23 +204,33 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	["Proximity"] = "鄰近顯示",
+	["Proximity"] = "近距離",
 	["Close Players"] = "鄰近玩家",
-	["Options for the Proximity Display."] = "設定鄰近顯示選項。",
+	["Options for the Proximity Display."] = "設定近距離選項。",
 	["|cff777777Nobody|r"] = "|cff777777沒有玩家|r",
 	["Sound"] = "音效",
-	["Play sound on proximity."] = "當有人太靠近時發出音效。",
+	["Play sound on proximity."] = "近距離時發出音效。",
 	["Disabled"] = "禁用",
-	["Disable the proximity display for all modules that use it."] = "禁用鄰近顯示功能。",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的鄰近顯示功能已禁用，請用模組選單開啟。",
+	["Disable the proximity display for all modules that use it."] = "禁止所有首领模组使用近距离。",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的近距離功能已禁用，請用模組選單開啟。",
 
-	proximity = "鄰近顯示",
-	proximity_desc = "顯示近距離窗口，列出距離你很近的玩家。",
+	proximity = "近距離",
+	proximity_desc = "顯示近距離視窗，列出距離你很近的玩家。",
 
 	font = "Fonts\\bHEI01B.TTF",
 
+	["Close"] = "關閉",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "關閉并防止以後的首領模組（如可用）啟用近距離顯示，直到進入相關首領模組并打開“近距離”選項。",
 	["Test"] = "測試",
-	["Perform a Proximity test."] = "鄰近顯示測試。",
+	["Perform a Proximity test."] = "進行近距離測試。",
+	["Display"] = "顯示",
+	["Options for the Proximity display window."] = "近距離顯示視窗選項。。",
+	["Lock"] = "鎖定",
+	["Locks the display in place, preventing moving and resizing."] = "鎖定顯示視窗，防止被移動和縮放。",
+	["Title"] = "標題",
+	["Shows or hides the title."] = "顯示或隱藏標題。",
+	["Background"] = "背景",
+	["Shows or hides the background."] = "顯示或隱藏背景。",
 } end)
 
 L:RegisterTranslations("esES", function() return {
