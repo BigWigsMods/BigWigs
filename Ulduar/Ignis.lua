@@ -303,7 +303,7 @@ function mod:Jets(_, spellID)
 	if db.flame then
 		self:IfMessage(L["flame_message"], "Personal", spellID, "Alert")
 		self:Bar(L["flame_bar"], 25, spellID)
-		self:Bar(L["flame_bar"], 2.7, spellID)
+		self:Bar(L["flame"], 2.7, spellID)
 	end
 end
 
