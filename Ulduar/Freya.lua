@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "tremor", "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "root", "tremor", "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 --Eonar's Gift
 
@@ -23,6 +23,7 @@ local eCount = 0
 local p2warned = nil
 local pName = UnitName("player")
 local fmt = string.format
+local root = {}
 
 ----------------------------
 --      Localization      --
@@ -70,6 +71,10 @@ L:RegisterTranslations("enUS", function() return {
 	tremor = "Ground Tremor",
 	tremor_desc = "Warn when Freya casts Ground Tremor.",
 	tremor_message = "Ground Tremor!",
+	
+	root = "Iron Roots",
+	root_desc = "Warn who has Iron Roots.",
+	root_message = "Root: %s",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam and Nature's Fury. (requires promoted or higher)",
@@ -100,7 +105,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	attuned = "자연 조화",
 	attuned_desc = "자연 조화를 알립니다.",
-	attuned_message = "조화: (%d)",
+	attuned_message = "조화 x%d",
 
 	fury = "자연의 격노",
 	fury_desc = "자연의 격노에 걸린 플레이어를 알립니다.",
@@ -115,6 +120,10 @@ L:RegisterTranslations("koKR", function() return {
 	tremor = "지진",
 	tremor_desc = "프레이야의 지진 시전을 알립니다.",
 	tremor_message = "지진!",
+	
+	root = "무쇠 뿌리",
+	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다.",
+	root_message = "무쇠 뿌리: %s",
 
 	icon = "전술 표시",
 	icon_desc = "태양 광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -160,6 +169,10 @@ L:RegisterTranslations("frFR", function() return {
 	tremor = "Tremblement de terre",
 	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
 	tremor_message = "Tremblement de terre !",
+	
+	--root = "Iron Roots",
+	--root_desc = "Warn who has Iron Roots.",
+	--root_message = "Root: %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
@@ -205,6 +218,10 @@ L:RegisterTranslations("deDE", function() return {
 	tremor = "Bebende Erde",
 	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird.",
 	tremor_message = "Bebende Erde!",
+	
+	--root = "Iron Roots",
+	--root_desc = "Warn who has Iron Roots.",
+	--root_message = "Root: %s",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
@@ -250,6 +267,10 @@ L:RegisterTranslations("zhCN", function() return {
 	tremor = "大地震颤",
 	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。",
 	tremor_message = "大地震颤！",
+	
+	--root = "Iron Roots",
+	--root_desc = "Warn who has Iron Roots.",
+	--root_message = "Root: %s",
 
 	icon = "位置标记",
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
@@ -295,6 +316,10 @@ L:RegisterTranslations("zhTW", function() return {
 	tremor = "地面震動",
 	tremor_desc = "當芙蕾雅施放地面震動時發出警報。",
 	tremor_message = "地面震動！",
+	
+	--root = "Iron Roots",
+	--root_desc = "Warn who has Iron Roots.",
+	--root_message = "Root: %s",
 
 	icon = "位置標記",
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",
@@ -340,6 +365,10 @@ L:RegisterTranslations("ruRU", function() return {
 	tremor = "Дрожание земли",
 	tremor_desc = "Предупреждать когда Фрейя применяет Дрожание земли.",
 	tremor_message = "Дрожание земли!",
+	
+	--root = "Iron Roots",
+	--root_desc = "Warn who has Iron Roots.",
+	--root_message = "Root: %s",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелен Луч солнца. (необходимо быть лидером группы или рейда)",
@@ -352,6 +381,7 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930)	--HardMode abilities from Elder Ironbranch
 	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859)	--HardMode abilities from Elder Stonebark 
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
@@ -364,6 +394,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
+	wipe(root)
 end
 
 function mod:VerifyEnable(unit)
@@ -373,6 +404,26 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+local function rootWarn()
+	local msg = nil
+	for k in pairs(root) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
+		end
+	end
+	mod:IfMessage(L["root_message"]:format(msg), "Attention", 62930, "Info")
+	wipe(root)
+end
+
+function mod:Root(player, spellID)
+	if db.root then
+		root[player] = true
+		self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellID)
+	end
+end
 
 function mod:Tremor(_, spellId)
 	if db.tremor then
