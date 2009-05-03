@@ -182,7 +182,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Das Konservatorium muss verteidigt werden!",
-	engage_trigger2 = "Ihr Ältesten, gewährt mir eure Macht!",-- needs check
+	engage_trigger2 = "Ihr Ältesten, gewährt mir Eure Macht!",-- needs check
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -219,9 +219,9 @@ L:RegisterTranslations("deDE", function() return {
 	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird.",
 	tremor_message = "Bebende Erde!",
 
-	--root = "Iron Roots",
-	--root_desc = "Warn who has Iron Roots.",
-	--root_message = "Root: %s",
+	root = "Eiserne Wurzeln",
+	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist.",
+	root_message = "Wurzeln: %s!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
