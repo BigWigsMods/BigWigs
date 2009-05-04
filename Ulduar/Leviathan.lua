@@ -56,7 +56,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	pursue = "추격",
 	pursue_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
-	pursue_trigger = "^%%s|1이;가;",
+	pursue_trigger = "([^%s]+)|1을;를; 쫓습니다.$",
 	pursue_other = "%s 추격!",
 	pursue_you = "당신을 추격!",
 
