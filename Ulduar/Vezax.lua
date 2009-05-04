@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33271
-mod.toggleoptions = {"vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", "berserk", "bosskill"}
+mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -51,7 +51,10 @@ L:RegisterTranslations("enUS", function() return {
 	vapor_message = "Saronite Vapor %d!",
 	vapor_bar = "Vapor",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
-	vapor_warning = "Vapors x%d!",
+	
+	vaporstack = "Vapors Stack",
+	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
+	vaporstack_message = "Vapors x%d!",
 
 	crash = "Shadow Crash",
 	crash_desc = "Warn who Vezax casts Shadow Crash on.",
@@ -94,7 +97,10 @@ L:RegisterTranslations("koKR", function() return {
 	vapor_message = "사로나이트 증기 (%d)!",
 	vapor_bar = "다음 증기",
 	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
-	vapor_warning = "증기 x%d 중첩!",
+	
+	vaporstack = "증기 중첩",
+	vaporstack_desc = "사로나이트 증기 5중첩이상을 알립니다.",
+	vaporstack_message = "증기 x%d 중첩!",
 
 	crash = "어둠 붕괴",
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
@@ -137,7 +143,10 @@ L:RegisterTranslations("frFR", function() return {
 	vapor_message = "Vapeurs de saronite %d !",
 	vapor_bar = "Vapeurs",
 	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
-	--vapor_warning = "Vapors x%d!",
+	
+	--vaporstack = "Vapors Stack",
+	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
+	--vaporstack_message = "Vapors x%d!",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
@@ -177,7 +186,10 @@ L:RegisterTranslations("deDE", function() return {
 	vapor_message = "Saronitdämpfe %d!",
 	vapor_bar = "Saronitdämpfe",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", --NEED!
-	--vapor_warning = "Vapors x%d!",
+	
+	--vaporstack = "Vapors Stack",
+	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
+	--vaporstack_message = "Vapors x%d!",
 
 	crash = "Schattengeschoss",
 	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
@@ -220,8 +232,11 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
 	vapor_bar = "<萨隆邪铁蒸汽>",
 --	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
---	vapor_warning = "Vapors x%d!",
 
+--	vaporstack = "Vapors Stack",
+--	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
+--	vaporstack_message = "Vapors x%d!",
+	
 	crash = "Shadow Crash",
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
 	crash_you = ">你< Shadow Crash！",
@@ -263,7 +278,10 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor_message = "薩倫煙霧：>%d<！",
 	vapor_bar = "<薩倫煙霧>",
 --	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
---	vapor_warning = "Vapors x%d!",
+
+--	vaporstack = "Vapors Stack",
+--	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
+--	vaporstack_message = "Vapors x%d!",
 
 	crash = "暗影暴擊",
 	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
@@ -306,7 +324,10 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor_message = "Саронитовые пары (%d)!",
 	vapor_bar = "Пары",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
-	--vapor_warning = "Vapors x%d!",
+	
+	--vaporstack = "Vapors Stack",
+	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
+	--vaporstack_message = "Vapors x%d!",
 
 	crash = "Темное сокрушение",
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
@@ -362,7 +383,7 @@ function mod:UNIT_AURA(unit)
 		end
 	end
 	if saronite and saronite ~= lastVapor then
-		if db.vapor and saronite > 4 then
+		if db.vaporstack and saronite > 4 then
 			self:LocalMessage(L["cold_message"]:format(saronite), "Personal", "Interface\\Icons\\INV_Ore_Saronite_01")
 		end
 		lastVapor = saronite
@@ -455,7 +476,9 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["vapor_trigger"] and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
 		count = count + 1
-		self:Bar(L["vapor_bar"], 30, 63323)
+		if count < 8 then
+			self:Bar(L["vapor_bar"], 30, 63323)
+		end
 	end
 end
 
