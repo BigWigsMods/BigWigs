@@ -113,7 +113,7 @@ L:RegisterTranslations("frFR", function() return {
 	frozenblow_bar = "Coups gelés",
 
 	hardmode = "Délai du mode difficile",
-	hardmode_desc = "Affiche une barre de 2 min pour le mode difficile (délai avant qu'Hodir ne détruise sa cache rare).",
+	hardmode_desc = "Affiche une barre de 3 min pour le mode difficile (délai avant qu'Hodir ne détruise sa cache rare).",
 
 	cloud = "Nuage d'orage",
 	cloud_desc = "Prévient quand un joueur subit les effets d'un Nuage d'orage.",

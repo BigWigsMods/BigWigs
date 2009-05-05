@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	vapor_message = "Saronite Vapor %d!",
 	vapor_bar = "Vapor",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
-	
+
 	vaporstack = "Vapors Stack",
 	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 	vaporstack_message = "Vapors x%d!",
@@ -97,7 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor_message = "사로나이트 증기 (%d)!",
 	vapor_bar = "다음 증기",
 	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
-	
+
 	vaporstack = "증기 중첩",
 	vaporstack_desc = "사로나이트 증기 5중첩이상을 알립니다.",
 	vaporstack_message = "증기 x%d 중첩!",
@@ -143,10 +143,10 @@ L:RegisterTranslations("frFR", function() return {
 	vapor_message = "Vapeurs de saronite %d !",
 	vapor_bar = "Vapeurs",
 	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
-	
-	--vaporstack = "Vapors Stack",
-	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
-	--vaporstack_message = "Vapors x%d!",
+
+	vaporstack = "Cumul des Vapeurs",
+	vaporstack_desc = "Prévient quand vous avez 5 cumuls ou plus de Vapeurs de saronite.",
+	vaporstack_message = "Vapeurs x%d !",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
@@ -169,7 +169,7 @@ L:RegisterTranslations("deDE", function() return {
 	flame = "Sengende Flammen",
 	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
 	flame_message = "Sengende Flammen!",
-	
+
 	surge = "Sog der Dunkelheit",
 	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
 	surge_message = "Sog der Dunkelheit!",
@@ -186,7 +186,7 @@ L:RegisterTranslations("deDE", function() return {
 	vapor_message = "Saronitdämpfe %d!",
 	vapor_bar = "Saronitdämpfe",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", --NEED!
-	
+
 	--vaporstack = "Vapors Stack",
 	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 	--vaporstack_message = "Vapors x%d!",
@@ -236,7 +236,7 @@ L:RegisterTranslations("zhCN", function() return {
 --	vaporstack = "Vapors Stack",
 --	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 --	vaporstack_message = "Vapors x%d!",
-	
+
 	crash = "Shadow Crash",
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
 	crash_you = ">你< Shadow Crash！",
@@ -324,7 +324,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor_message = "Саронитовые пары (%d)!",
 	vapor_bar = "Пары",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
-	
+
 	--vaporstack = "Vapors Stack",
 	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 	--vaporstack_message = "Vapors x%d!",
