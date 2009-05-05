@@ -344,7 +344,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["flash_bar"], 35, 61968)
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 120, 6673)
+			self:Bar(L["hardmode"], 180, 6673)
 		end
 		if db.berserk then
 			self:Enrage(480, true)

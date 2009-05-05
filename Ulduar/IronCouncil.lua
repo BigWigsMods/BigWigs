@@ -21,7 +21,7 @@ mod.proximityCheck = "bandage"
 local db = nil
 local previous = nil
 local deaths = 0
-local overwhelmTime = 25
+local overwhelmTime = 30
 local pName = UnitName("player")
 local fmt = string.format
 
@@ -531,7 +531,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"]) then
 		deaths = 0
-		overwhelmTime = GetCurrentDungeonDifficulty() == 1 and 60 or 25
+		overwhelmTime = GetCurrentDungeonDifficulty() == 1 and 60 or 30
 		if db.berserk then
 			self:Enrage(600, true)
 		end
