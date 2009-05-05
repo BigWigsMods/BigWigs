@@ -44,6 +44,10 @@ L:RegisterTranslations("enUS", function() return {
 	["Set the scale for emphasized bars."] = true,
 	["Reset position"] = true,
 	["Reset the anchor positions, moving them to their default positions."] = true,
+	["Test"] = true,
+	["Creates a new test bar."] = true,
+	["Hide"] = true,
+	["Hides the anchors."] = true,
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -301,6 +305,15 @@ local function onDragStop(self)
 	db[self.y] = self:GetTop() * s
 end
 
+local function onControlEnter(self)
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
+	GameTooltip:AddLine(self.tooltipHeader)
+	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
+	GameTooltip:Show()
+end
+local function onControlLeave() GameTooltip:Hide() end
+
 local function createAnchor(frameName, title)
 	local display = CreateFrame("Frame", frameName, UIParent)
 	local wKey, xKey, yKey = frameName .. "_width", frameName .. "_x", frameName .. "_y"
@@ -313,10 +326,6 @@ local function createAnchor(frameName, title)
 	display:SetHeight(20)
 	display:SetMinResize(80, 20)
 	display:SetMaxResize(1920, 20)
-	display:SetScript("OnSizeChanged", onResize)
-	display:SetScript("OnDragStart", onDragStart)
-	display:SetScript("OnDragStop", onDragStop)
-	display:SetScript("OnMouseDown", displayOnMouseDown)
 	display:ClearAllPoints()
 	if db[xKey] and db[yKey] then
 		local s = display:GetEffectiveScale()
@@ -349,6 +358,30 @@ local function createAnchor(frameName, title)
 	tex:SetHeight(16)
 	tex:SetBlendMode("ADD")
 	tex:SetPoint("CENTER", drag)
+	local test = CreateFrame("Button", nil, display)
+	test:SetPoint("BOTTOMLEFT", display, "BOTTOMLEFT", 3, 3)
+	test:SetHeight(14)
+	test:SetWidth(14)
+	test.tooltipHeader = L["Test"]
+	test.tooltipText = L["Creates a new test bar."]
+	test:SetScript("OnEnter", onControlEnter)
+	test:SetScript("OnLeave", onControlLeave)
+	test:SetScript("OnClick", function() plugin:SpawnTestBar() end)
+	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
+	local close = CreateFrame("Button", nil, display)
+	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
+	close:SetHeight(14)
+	close:SetWidth(14)
+	close.tooltipHeader = L["Hide"]
+	close.tooltipText = L["Hides the anchors."]
+	close:SetScript("OnEnter", onControlEnter)
+	close:SetScript("OnLeave", onControlLeave)
+	close:SetScript("OnClick", function() plugin:ShowAnchors() end)
+	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+	display:SetScript("OnSizeChanged", onResize)
+	display:SetScript("OnDragStart", onDragStart)
+	display:SetScript("OnDragStop", onDragStop)
+	display:SetScript("OnMouseDown", displayOnMouseDown)
 	display.bars = {}
 	display:Hide()
 	return display
@@ -401,6 +434,32 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
 	self:RegisterEvent("Ace2_AddonDisabled")
+end
+
+--------------------------------------------------------------------------------
+-- Test
+--
+
+do
+	local spells = nil
+	function plugin:SpawnTestBar()
+		if not spells then
+			spells = {}
+			for i = 2, MAX_SKILLLINE_TABS do
+				local _, _, offset, numSpells = GetSpellTabInfo(i)
+				if not offset then break end
+				for s = offset + 1, offset + numSpells do
+					local spell = GetSpellName(s, BOOKTYPE_SPELL)
+					tinsert(spells, spell)
+				end
+			end
+		end
+		local spell = spells[math.random(1, #spells)]
+		local name, rank, icon, _, _, time = GetSpellInfo(spell)
+		if time < 2 then time = math.random(2, 10) end
+		time = time * math.random(1.5, 4)
+		self:BigWigs_StartBar(self, name, time, icon)
+	end
 end
 
 --------------------------------------------------------------------------------
