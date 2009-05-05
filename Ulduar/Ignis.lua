@@ -267,7 +267,7 @@ end
 function mod:Construct()
 	if db.construct then
 		self:IfMessage(L["construct_message"], "Important", "Interface\\Icons\\INV_Misc_Statue_07")
-		self:Bar(L["construct_bar"], spawnTime, "Interface\\Icons\\INV_Misc_Statue_07")
+		self:Bar(L["construct_bar"], spawnTime, "INV_Misc_Statue_07")
 	end
 end
 
@@ -314,7 +314,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["flame_bar"], 21, 62680)
 		end
 		if db.construct then
-			self:Bar(L["construct_bar"], 10, "Interface\\Icons\\INV_Misc_Statue_07")
+			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")
 		end
 	end
 end
