@@ -414,7 +414,6 @@ plugin.consoleOptions = {
 
 function plugin:OnRegister()
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
-	plugin:TestProximity()
 end
 
 function plugin:OnEnable()
