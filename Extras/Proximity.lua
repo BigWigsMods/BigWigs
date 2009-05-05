@@ -15,6 +15,10 @@ if not plugin then return end
 
 local dew = AceLibrary("Dewdrop-2.0")
 
+local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
+local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
+
+local lockWarned = nil
 local active = nil -- The module we're currently tracking proximity for.
 local anchor = nil
 local lastplayed = 0 -- When we last played an alarm sound for proximity.
@@ -73,6 +77,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Disabled"] = true,
 	["Disable the proximity display for all modules that use it."] = true,
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = true,
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = true,
 
 	proximity = "Proximity display",
 	proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you.",
@@ -91,6 +96,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Shows or hides the title."] = true,
 	["Background"] = true,
 	["Shows or hides the background."] = true,
+	["Toggle sound"] = true,
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = true,
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -284,6 +291,14 @@ L:RegisterTranslations("ruRU", function() return {
 -- Options
 --
 
+local function updateSoundButton()
+	anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
+end
+local function toggleSound()
+	plugin.db.profile.sound = not plugin.db.profile.sound
+	updateSoundButton()
+end
+
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
@@ -315,6 +330,8 @@ plugin.consoleOptions = {
 			else
 				plugin:OpenProximity()
 			end
+		elseif key == "sound" then
+			updateSoundButton()
 		end
 	end,
 	args = {
@@ -351,6 +368,10 @@ plugin.consoleOptions = {
 			handler = plugin,
 			set = function(key, value)
 				plugin.db.profile[key] = value
+				if key == "lock" and value and not lockWarned then
+					BigWigs:Print(L["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."])
+					lockWarned = true
+				end
 				plugin:RestyleWindow()
 			end,
 			get = function(key)
@@ -393,6 +414,7 @@ plugin.consoleOptions = {
 
 function plugin:OnRegister()
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
+	plugin:TestProximity()
 end
 
 function plugin:OnEnable()
@@ -462,11 +484,16 @@ end
 
 function plugin:OpenProximity()
 	if self.db.profile.disabled or not active or not active.proximityCheck or not active.db.profile.proximity then return end
-
 	self:SetupFrames()
 
 	wipe(tooClose)
 	anchor.text:SetText(L["|cff777777Nobody|r"])
+
+	if active.proximitySilent then
+		anchor.sound:Hide()
+	else
+		anchor.sound:Show()
+	end
 
 	anchor.header:SetText(active.proximityHeader or L["Close Players"])
 	anchor:Show()
@@ -561,6 +588,8 @@ function lockDisplay()
 	anchor:SetScript("OnMouseDown", nil)
 	anchor.drag:Hide()
 	anchor.header:Hide()
+	anchor.close:Hide()
+	anchor.sound:Hide()
 	locked = true
 end
 function unlockDisplay()
@@ -575,8 +604,19 @@ function unlockDisplay()
 	anchor:SetScript("OnMouseDown", displayOnMouseDown)
 	anchor.drag:Show()
 	anchor.header:Show()
+	anchor.close:Show()
+	anchor.sound:Show()
 	locked = nil
 end
+
+local function onControlEnter(self)
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
+	GameTooltip:AddLine(self.tooltipHeader)
+	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
+	GameTooltip:Show()
+end
+local function onControlLeave() GameTooltip:Hide() end
 
 function plugin:SetupFrames()
 	if anchor then return end
@@ -590,17 +630,42 @@ function plugin:SetupFrames()
 	bg:SetBlendMode("BLEND")
 	bg:SetTexture(0, 0, 0, 0.3)
 	display.background = bg
+
+	local close = CreateFrame("Button", nil, display)
+	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+	close:SetHeight(16)
+	close:SetWidth(16)
+	close.tooltipHeader = L["Close"]
+	close.tooltipText = L["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."]
+	close:SetScript("OnEnter", onControlEnter)
+	close:SetScript("OnLeave", onControlLeave)
+	close:SetScript("OnClick", function() plugin:CloseAndDisableProximity() end)
+	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+	display.close = close
+
+	local sound = CreateFrame("Button", nil, display)
+	sound:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
+	sound:SetHeight(16)
+	sound:SetWidth(16)
+	sound.tooltipHeader = L["Toggle sound"]
+	sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
+	sound:SetScript("OnEnter", onControlEnter)
+	sound:SetScript("OnLeave", onControlLeave)
+	sound:SetScript("OnClick", toggleSound)
+	display.sound = sound
+
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
 	header:SetText("Proximity")
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+	display.header = header
+
 	local text = display:CreateFontString(nil, "OVERLAY")
 	text:SetFontObject(GameFontNormal)
 	text:SetFont(L["font"], 12)
 	text:SetText("")
 	text:SetAllPoints(display)
 	display.text = text
-	display.header = header
 
 	local drag = CreateFrame("Frame", nil, display)
 	drag.frame = display
@@ -653,6 +718,7 @@ function plugin:RestyleWindow()
 	else
 		anchor.background:Hide()
 	end
+	updateSoundButton()
 end
 
 function plugin:ResetAnchor()
