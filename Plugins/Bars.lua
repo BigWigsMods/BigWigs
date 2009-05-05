@@ -367,16 +367,16 @@ L:RegisterTranslations("ruRU", function() return {
 	["Bars"] = "Полосы",
 	["Emphasized Bars"] = "Увеличенные полосы",
 
-	["Options for the timer bars."] = "Опции полос времени",
+	["Options for the timer bars."] = "Опции полос времени.",
 
 	["Show anchor"] = "Якорь",
-	["Show the bar anchor frame."] = "Отображать якорь полос",
+	["Show the bar anchor frame."] = "Отображать якорь полос.",
 
 	["Enable menu"] = "Включить меню",
-	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Отображать меню настройки полосы по Alt-ПКМ\n\nЗамете что при включенной опции, вы больше не сможите нажимать Alt-Клик по игровым предметам ниже полос",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Отображать меню настройки полосы по Alt-ПКМ\n\nЗамете что при включенной опции, вы больше не сможите нажимать Alt-Клик по игровым предметам ниже полос.",
 
 	["Scale"] = "Масштаб",
-	["Set the bar scale."] = "Настройка масштаба полос",
+	["Set the bar scale."] = "Настройка масштаба полос.",
 
 	["Grow upwards"] = "Рост вверх",
 	["Toggle bars grow upwards/downwards from anchor."] = "Преключение роста полос от якоря вверх или вниз.",
@@ -393,9 +393,9 @@ L:RegisterTranslations("ruRU", function() return {
 	["Enable"] = "Включить",
 	["Enables emphasizing bars."] = "Включить увеличение полос.",
 	["Flash"] = "Мерцание",
-	["Flashes the background red for bars that are emphasized."] = "Мерцание фона красным увеличенных полос",
+	["Flashes the background red for bars that are emphasized."] = "Мерцание фона красным увеличенных полос.",
 	["Move"] = "Перемещение",
-	["Move bars that are emphasized to a second anchor."] = "Перемещение увеличенных полос второго якоря",
+	["Move bars that are emphasized to a second anchor."] = "Перемещение увеличенных полос второго якоря.",
 	["Set the scale for emphasized bars."] = "Установка масштаба увеличенных полос.",
 
 	["Reset position"] = "Сброс позиции",

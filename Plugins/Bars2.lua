@@ -46,6 +46,29 @@ L:RegisterTranslations("enUS", function() return {
 	["Reset the anchor positions, moving them to their default positions."] = true,
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	["Bars"] = "Полосы",
+	["Emphasized Bars"] = "Увеличенные полосы",
+	["Options for the timer bars."] = "Опции полос времени.",
+	["Toggle anchors"] = "Переключение якоря",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "Показать или скрыть якорь полосы для обычных и увеличенных полос.",
+	["Scale"] = "Масштаб",
+	["Set the bar scale."] = "Настройка масштаба полос.",
+	["Grow upwards"] = "Рост вверх",
+	["Toggle bars grow upwards/downwards from anchor."] = "Преключение роста полос от якоря вверх или вниз.",
+	["Texture"] = "Текстуры",
+	["Set the texture for the timer bars."] = "Установка текстур для полос времени.",
+	["Test"] = "Тест",
+	["Close"] = "Закрыть",
+	["Emphasize"] = "Увеличение",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Увеличение полос которые близятся к завершению (<10сек). Так же имейте ввиду что полосы продолжительностью менее 15 секунд буду увеличенные сразу.",
+	["Enable"] = "Включить",
+	["Enables emphasizing bars."] = "Включить увеличение полос.",
+	["Set the scale for emphasized bars."] = "Установка масштаба увеличенных полос.",
+	["Reset position"] = "Сброс позиции",
+	["Reset the anchor positions, moving them to their default positions."] = "Сброс позиций якоря, вернув его в стандартное положение.",
+} end)
+
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
 	["Emphasized Bars"] = "醒目计时条",

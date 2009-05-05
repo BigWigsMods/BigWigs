@@ -276,7 +276,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Locks the display in place, preventing moving and resizing."] = "Фиксирование рамки, предотвращает перемещение и изменение размера.",
 	["Title"] = "Заглавие",
 	["Shows or hides the title."] = "Показать или скрыть заглавие.",
-	["Background"] = "Фин",
+	["Background"] = "Фон",
 	["Shows or hides the background."] = "Показать или скрыть фон.",
 } end)
 
