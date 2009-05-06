@@ -123,6 +123,37 @@ L:RegisterTranslations("zhTW", function() return {
 	["Reset the anchor positions, moving them to their default positions."] = "重置錨點位置，移動它們到默認位置。",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	["Bars"] = "바",
+	["Emphasized Bars"] = "강조 바",
+	["Options for the timer bars."] = "타이머 바에 대한 설정입니다.",
+	["Toggle anchors"] = "앵커 토글",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "기본 바와 강조 바의 앵커를 숨기거나 표시합니다.",
+	["Scale"] = "크기",
+	["Set the bar scale."] = "바의 크기를 조절합니다.",
+	["Grow upwards"] = "생성 방향",
+	["Toggle bars grow upwards/downwards from anchor."] = "바의 생성 방향을 위/아래로 전환합니다.",
+	["Texture"] = "텍스쳐",
+	["Set the texture for the timer bars."] = "타이머 바의 텍스쳐를 설정합니다.",
+	["Test"] = "테스트",
+	["Close"] = "닫기",
+	["Emphasize"] = "강조",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "만료에 가까워진 바를 강조합니다.(10초 이하).",
+	["Enable"] = "사용",
+	["Enables emphasizing bars."] = "강조 바를 사용합니다.",
+	["Move"] = "이동",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "강조될 바를 두번째 고정위치로 이동합니다.",
+	["Set the scale for emphasized bars."] = "강조될 바의 크기를 설정합니다.",
+	["Reset position"] = "위치 초기화",
+	["Reset the anchor positions, moving them to their default positions."] = "화면의 중앙으로 고정위치를 초기화합니다.",
+	["Test"] = "테스트",
+	["Creates a new test bar."] = "새로운 테스트 바를 생성합니다.",
+	["Hide"] = "숨김",
+	["Hides the anchors."] = "앵커를 숨깁니다.",
+	["Flash"] = "섬광",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "강조된 바에 붉은색 배경을 번쩍이게 합니다.",
+} end)
+
 --------------------------------------------------------------------------------
 -- Options
 --
