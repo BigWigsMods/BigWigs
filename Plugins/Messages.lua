@@ -133,24 +133,28 @@ L:RegisterTranslations("zhCN", function() return {
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置信息显示位置，移动到默认屏幕的中间位置。",
 	
+	["Spawns a new test warning."] = "生成一个新的报警测试。",
+	["Hide"] = "隐藏",
+	["Hides the anchors."] = "隐藏锚点",
+
 	Font = "Fonts\\ZYKai_T.TTF",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
 	["Messages"] = "訊息",
-	["Options for message display."] = "訊息框架選項",
+	["Options for message display."] = "訊息框架選項。",
 
 	["BigWigs Anchor"] = "BigWigs 錨點",
 	["Output Settings"] = "輸出設定",
 
 	["Show anchor"] = "顯示錨點",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息框架錨點",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息框架錨點。",
 
 	["Use colors"] = "發送彩色訊息",
-	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息",
+	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
 
 	["Scale"] = "縮放",
-	["Set the message frame scale."] = "設定訊息框架縮放比例",
+	["Set the message frame scale."] = "設定訊息框架縮放比例。",
 
 	["Use icons"] = "使用圖示",
 	["Show icons next to messages, only works for Raid Warning."] = "顯示圖示，目前只能使用在團隊警告頻道。",
@@ -166,8 +170,12 @@ L:RegisterTranslations("zhTW", function() return {
 	["Close"] = "關閉",
 
 	["Reset position"] = "重置位置",
-	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央。",
 	
+	["Spawns a new test warning."] = "生成一個新的報警測試。",
+	["Hide"] = "隱藏",
+	["Hides the anchors."] = "隱藏錨點",
+
 	Font = "Fonts\\bHEI01B.TTF"
 } end)
 
