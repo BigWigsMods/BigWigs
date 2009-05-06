@@ -168,6 +168,37 @@ L:RegisterTranslations("koKR", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "강조된 바에 붉은색 배경을 번쩍이게 합니다.",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	["Bars"] = "Barres",
+	["Emphasized Bars"] = "Barres en évidence",
+	["Options for the timer bars."] = "Options concernant les barres temporelles.",
+	["Show anchor"] = "Afficher l'ancre",
+	["Show the bar anchors for both normal and emphasized bars."] = "Affiche l'ancre pour les barres normales et les barres en évidence.",
+	["Scale"] = "Echelle",
+	["Set the bar scale."] = "Détermine l'échelle des barres.",
+	["Grow upwards"] = "Ajouter vers le haut",
+	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
+	["Texture"] = "Texture",
+	["Set the texture for the timer bars."] = "Détermine la texture des barres temporelles.",
+	["Test"] = "Test",
+	["Close"] = "Fermer",
+	["Emphasize"] = "Mise en évidence",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Met en évidence les barres proches de la fin (< 10 sec.). Les barres d'une durée initiale de moins de 15 secondes seront directement mises en évidence.",
+	["Enable"] = "Activer",
+	["Enables emphasizing bars."] = "Active la mise en évidence des barres.",
+	["Move"] = "Déplacer",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Déplace les barres mises en évidence vers une ancre dédiée. Si cette option est désactivée, les barres mises en évidence vont simplement changer d'échelle et de couleur, et peut-être commencer à clignoter.",
+	["Set the scale for emphasized bars."] = "Détermine l'échelle des barres mises en évidence.",
+	["Reset position"] = "Réinit. la position",
+	["Reset the anchor positions, moving them to their default positions."] = "Réinitialise la position des ancres, les déplaçant à leurs positions par défaut.",
+	["Test"] = "Test",
+	["Creates a new test bar."] = "Créé une nouvelle barre de test.",
+	["Hide"] = "Cacher",
+	["Hides the anchors."] = "Cacher les ancres",
+	["Flash"] = "Clignoter",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Fait clignoter l'arrière-plan des barres en évidence afin que vous puissiez mieux les voir.",
+} end)
+
 --------------------------------------------------------------------------------
 -- Options
 --
