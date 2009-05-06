@@ -241,18 +241,18 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
 	engage_warning = "第一階段！",
---	engage_trigger = "^We haven't much time, friends!",
+	engage_trigger = "我們沒有太多時間，朋友們!你們要幫我測試我最新也是最偉大的創作。在你們改變心意之前，別忘了就是你們把XT-002搞得一團糟，你們欠我一次。",
 	phase2_warning = "即將 第二階段！",
---	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
+	phase2_trigger = "太好了!絕妙的良好結果!外殼完整度98.9%!幾乎只有一點擦痕!繼續下去。",
 	phase3_warning = "即將 第三階段！",
 --	phase3_trigger = "^Thank you, friends!",
 	phase4_warning = "即將 第四階段！",
---	phase4_trigger = "^Preliminary testing phase complete",
+	phase4_trigger = "初步測試階段完成。現在要玩真的啦!",
 	phase_bar = "<階段：%d>",
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
---	hardmode_trigger = "^Now why would you go and do something like that?",
+	hardmode_trigger = "為什麼你要做出這種事?難道你沒看見標示上寫著「請勿觸碰這個按鈕!」嗎?現在自爆裝置已經啟動了，我們要怎麼完成測試呢?",
 	hardmode_message = "已開啟困難模式！",
 	hardmode_warning = "困難模式結束！",
 
@@ -276,7 +276,7 @@ L:RegisterTranslations("zhTW", function() return {
 	magnetic_message = "空中指揮裝置 已降落！",
 	loot_message = ">%s< 拾取了磁能之核！",
 
---	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

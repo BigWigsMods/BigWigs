@@ -313,7 +313,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase1_message = "第一階段！",
 --	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
 	phase2_message = "第二階段 - 6分15秒後，狂暴！",
---	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
+	phase3_trigger = "無禮的小輩，你竟敢在我的王座之上挑戰我?我會親手碾碎你們!",
 	phase3_message = "第三階段 - %s已狂怒！",
 
 	p2berserk = "第二階段 - 狂暴",
@@ -356,7 +356,7 @@ L:RegisterTranslations("zhTW", function() return {
 	strike_desc = "當玩家中了失衡打擊時發出警報。",
 	strike_message= "失衡打擊：>%s<！",
 
---	end_trigger = "Stay your arms! I yield!",
+	end_trigger = "住手!我認輸了!",
 
 	icon = "團隊標記",
 	icon_desc = "為中了引爆符文的隊員打上團隊標記。（需要權限）",

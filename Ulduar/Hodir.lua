@@ -193,7 +193,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger = "You will suffer for this trespass!",
+	engage_trigger = "你將為擅闖付出代價!",
 
 	cold = "刺骨之寒（成就）",
 	cold_desc = "當你受到2層刺骨之寒效果時發出警報。",
@@ -222,7 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "團隊標記",
 	icon_desc = "為中了風暴雷雲的隊員打上團隊標記。（需要權限）",
 
---	end_trigger = "I...I am released from his grasp! At...last!",
+--	end_trigger = "我…我終於從他的掌控中…解脫了。",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

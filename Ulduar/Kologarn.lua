@@ -176,7 +176,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shockwave = "震攝波",
 	shockwave_desc = "當震攝波到來前發出警報。",
---	shockwave_trigger = "Oblivion!",
+	shockwave_trigger = "滅亡吧!",
 
 	eyebeam = "集束目光",
 	eyebeam_desc = "當玩家中了集束目光時發出警報。",

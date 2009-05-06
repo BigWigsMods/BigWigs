@@ -208,7 +208,7 @@ L:RegisterTranslations("zhCN", function() return {
 	breath_desc = "当烈焰喷射时发出警报。",
 --	breath_trigger = "%s takes a deep breath...",
 	breath_message = "烈焰喷射！",
-	breath_bar = "~Breath Cooldown",
+	breath_bar = "<烈焰喷射 冷却>",
 
 	flame = "自身Devouring Flame",
 	flame_desc = "当你中了Devouring Flame时发出警报。",
@@ -236,9 +236,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	breath = "火息術",
 	breath_desc = "當火息術時發出警報。",
---	breath_trigger = "%s takes a deep breath...",
+	breath_trigger = "%s深深地吸了一口氣……",
 	breath_message = "火息術！",
-	breath_bar = "~Breath Cooldown",
+	breath_bar = "<火息術 冷卻>",
 
 	flame = "自身吞噬烈焰",
 	flame_desc = "當你中了吞噬烈焰時發出警報。",

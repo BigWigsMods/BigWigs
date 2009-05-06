@@ -279,9 +279,9 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
---	engage_trigger2 = "Nothing short of total decimation will suffice!",
---	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+	engage_trigger1 = "你們別妄想擊潰鐵之集會，入侵者!",
+	engage_trigger2 = "只有全面屠殺才能滿足我。",
+	engage_trigger3 = "不管你是世界第一流的小卒，或是首屈一指的英雄人物，充其量也不過是個凡人罷了。",
 
 	overload = "超載",
 	overload_desc = "當布倫迪爾施放超載時發出警報。",

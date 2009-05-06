@@ -389,7 +389,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	["Crusher Tentacle"] = true,
+	["Crusher Tentacle"] = "粉碎觸手",
 
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",
@@ -398,11 +398,11 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_warning = "第二階段！",
 --	phase2_trigger = "^I am the lucid dream",
 	phase3_warning = "第三階段！",
---	phase3_trigger = "^Look upon the true face",
+	phase3_trigger = "看看死亡的真實面貌，瞭解你們的末日降臨了!",
 
 	portal = "傳送門",
 	portal_desc = "當傳送門時發出警報。",
---	portal_trigger = "Portals open into Yogg-Saron's mind!",
+	portal_trigger = "^傳送門開啟進入",
 	portal_message = "開啟傳送門！",
 	portal_bar = "<下一傳送門>",
 

@@ -206,7 +206,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
+	engage_trigger = "傲慢的小傢伙!你們的鮮血將會用來淬鍊重奪世界的武器!",
 
 	construct = "啟動傀儡",
 	construct_desc = "當啟動傀儡時發出警報。",

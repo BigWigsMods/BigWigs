@@ -110,6 +110,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Disabled"] = "禁用",
 	["Disable the proximity display for all modules that use it."] = "禁止所有首领模块使用近距离。",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示，若要再次使用请开启首领模块选项。",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "近距离显示已被锁定，需要移动或其他选项，右击 Big Wigs 图标，附加功能 -> 近距离 -> 显示可以切换锁定选项。",
 
 	proximity = "近距离显示",
 	proximity_desc = "显示近距离窗口，列出距离你很近的玩家。",
@@ -128,6 +129,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Shows or hides the title."] = "显示或隐藏标题。",
 	["Background"] = "背景",
 	["Shows or hides the background."] = "显示或隐藏背景。",
+	["Toggle sound"] = "切换声效",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "当近距离窗口有其他过近玩家时切换任一或关闭声效。",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -223,6 +226,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Disabled"] = "禁用",
 	["Disable the proximity display for all modules that use it."] = "禁止所有首领模组使用近距离。",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的近距離功能已禁用，請用模組選單開啟。",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = true,
 
 	proximity = "近距離",
 	proximity_desc = "顯示近距離視窗，列出距離你很近的玩家。",
@@ -241,6 +245,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Shows or hides the title."] = "顯示或隱藏標題。",
 	["Background"] = "背景",
 	["Shows or hides the background."] = "顯示或隱藏背景。",
+	["Toggle sound"] = "切換聲效",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當近距離视窗有其他過近玩家時切換任一或關閉聲效。",
 } end)
 
 L:RegisterTranslations("esES", function() return {

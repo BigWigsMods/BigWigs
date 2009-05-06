@@ -233,9 +233,9 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor_bar = "<萨隆邪铁蒸汽>",
 --	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
---	vaporstack = "Vapors Stack",
---	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
---	vaporstack_message = "Vapors x%d!",
+	vaporstack = "萨隆邪铁蒸汽堆叠",
+	vaporstack_desc = "当玩家中了5层或更多萨隆邪铁蒸汽时发出警报。",
+	vaporstack_message = "萨隆邪铁蒸汽：>x%d<！",
 
 	crash = "Shadow Crash",
 	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
@@ -260,14 +260,14 @@ L:RegisterTranslations("zhTW", function() return {
 	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
 	flame_message = "灼熱烈焰！",
 
---	engage_trigger = "^Your destruction will herald a new age of suffering!",
+	engage_trigger = "你的毀滅將會預告一個嶄新苦難時代的來臨!",
 
 	surge = "暗鬱奔騰",
 	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
 	surge_message = "暗鬱奔騰！",
 	surge_cast = "正在施放 暗鬱奔騰！",
 	surge_end = "暗鬱奔騰 消失！",
---	surge_bar = "Next Surge",
+	surge_bar = "<下一暗鬱奔騰>",
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
@@ -277,11 +277,11 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor_desc = "當薩倫煙霧出現時發出警報。",
 	vapor_message = "薩倫煙霧：>%d<！",
 	vapor_bar = "<薩倫煙霧>",
---	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+	vapor_trigger = "一片薩倫煙霧在附近聚合!",
 
---	vaporstack = "Vapors Stack",
---	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
---	vaporstack_message = "Vapors x%d!",
+	vaporstack = "薩倫煙霧堆疊",
+	vaporstack_desc = "當玩家中了5層或更多薩倫煙霧時發出警報。",
+	vaporstack_message = "薩倫煙霧：>x%d<！",
 
 	crash = "暗影暴擊",
 	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",

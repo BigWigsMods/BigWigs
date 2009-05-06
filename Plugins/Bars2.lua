@@ -95,9 +95,16 @@ L:RegisterTranslations("zhCN", function() return {
 	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "醒目计时条是当接近（小于10秒）。如果计时条开始时间小于15秒则会立刻醒目显示。",
 	["Enable"] = "启用",
 	["Enables emphasizing bars."] = "启用醒目计时条",
+	["Move"] = "移动",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "移动醒目计时条到醒目锚点。如果此选项关闭，醒目计时条将只改变缩放与颜色以及可能开始闪烁。",
 	["Set the scale for emphasized bars."] = "设置醒目计时条缩放。",
 	["Reset position"] = "重置位置",
 	["Reset the anchor positions, moving them to their default positions."] = "重置锚点位置，移动它们到默认位置。",
+	["Creates a new test bar."] = "新建测试计时条",
+	["Hide"] = "隐藏",
+	["Hides the anchors."] = "隐藏锚点",
+	["Flash"] = "闪烁",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "醒目计时条背景闪烁，方便你留意它。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -118,9 +125,16 @@ L:RegisterTranslations("zhTW", function() return {
 	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "醒目計時條是當接近（小於10秒）。如果計時條開始時間小於15秒則會立刻醒目顯示。",
 	["Enable"] = "啟用",
 	["Enables emphasizing bars."] = "啟用醒目計時條",
+	["Move"] = "移動",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "移動醒目計時條到醒目錨點。如果此選項關閉，醒目計時條將只改變縮放與顏色以及可能開始閃爍。",
 	["Set the scale for emphasized bars."] = "設置醒目計時條縮放。",
 	["Reset position"] = "重置位置",
 	["Reset the anchor positions, moving them to their default positions."] = "重置錨點位置，移動它們到默認位置。",
+	["Creates a new test bar."] = "新建測試計時條",
+	["Hide"] = "隱藏",
+	["Hides the anchors."] = "隱藏錨點",
+	["Flash"] = "閃爍",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "醒目計時條背景閃爍，方便你留意它。",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

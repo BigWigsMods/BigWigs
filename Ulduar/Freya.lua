@@ -268,9 +268,9 @@ L:RegisterTranslations("zhCN", function() return {
 	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。",
 	tremor_message = "大地震颤！",
 
-	--root = "Iron Roots",
-	--root_desc = "Warn who has Iron Roots.",
-	--root_message = "Root: %s",
+	root = "钢铁根须",
+	root_desc = "当玩家中了钢铁根须时发出警报。",
+	root_message = "钢铁根须：>%s<！",
 
 	icon = "位置标记",
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
@@ -279,7 +279,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger1 = "The Conservatory must be protected!",
+	engage_trigger1 = "必須守護大溫室!",
 --	engage_trigger2 = "Elders, grant me your strength!",
 
 	phase = "階段",
@@ -290,14 +290,14 @@ L:RegisterTranslations("zhTW", function() return {
 	wave = "波",
 	wave_desc = "當一波小怪時發出警報。",
 	wave_bar = "<下一波>",
---	conservator_trigger = "Eonar, your servant requires aid!",
---	detonate_trigger = "The swarm of the elements shall overtake you!",
---	elementals_trigger = "Children, assist me!",
---	tree_trigger = "A Lifebinder's Gift begins to grow!",
-	conservator_message = "Conservator出現！",
+	conservator_trigger = "伊歐娜，你的僕從需要協助!",
+	detonate_trigger = "元素們將襲捲你們!",
+	elementals_trigger = "孩子們，協助我!",
+	tree_trigger = "一個|cFF00FFFF生命守縛者之禮|r開始生長!",
+	conservator_message = "古樹護存者 出現！",
 	detonate_message = "Detonate出現！",
 	elementals_message = "Elementals出現！",
-	tree_message = "Eonar's Gift出現！",
+	tree_message = "伊歐娜的贈禮 出現！",
 
 	attuned = "自然和諧",
 	attuned_desc = "當施放自然和諧時發出警報。",
@@ -317,14 +317,14 @@ L:RegisterTranslations("zhTW", function() return {
 	tremor_desc = "當芙蕾雅施放地面震動時發出警報。",
 	tremor_message = "地面震動！",
 
-	--root = "Iron Roots",
-	--root_desc = "Warn who has Iron Roots.",
-	--root_message = "Root: %s",
+	root = "鐵之根鬚",
+	root_desc = "當玩家中了鐵之根鬚時發出警報。",
+	root_message = "鐵之根鬚：>%s<！",
 
 	icon = "位置標記",
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",
 
---	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
+	end_trigger = "他對我的操控已然退散。我已再次恢復神智了。感激不盡，英雄們。",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
