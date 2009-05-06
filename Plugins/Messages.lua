@@ -59,6 +59,10 @@ L:RegisterTranslations("enUS", function() return {
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
 
+	["Spawns a new test warning."] = true,
+	["Hide"] = true,
+	["Hides the anchors."] = true,
+
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
@@ -308,6 +312,88 @@ L:RegisterTranslations("ruRU", function() return {
 } end)
 
 --------------------------------------------------------------------------------
+-- Anchor
+--
+
+local function onDragStart(self) self:StartMoving() end
+local function onDragStop(self)
+	self:StopMovingOrSizing()
+    local s = self:GetEffectiveScale()
+   	plugin.db.profile.posx = self:GetLeft() * s
+	plugin.db.profile.posy = self:GetTop() * s
+end
+
+local function onControlEnter(self)
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
+	GameTooltip:AddLine(self.tooltipHeader)
+	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
+	GameTooltip:Show()
+end
+local function onControlLeave() GameTooltip:Hide() end
+
+local function createAnchor()
+	local display = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
+	display:EnableMouse(true)
+	display:SetMovable(true)
+	display:RegisterForDrag("LeftButton")
+	display:SetWidth(120)
+	display:SetHeight(20)
+	display:ClearAllPoints()
+	local x = plugin.db.profile.posx
+	local y = plugin.db.profile.posy
+    local s = display:GetEffectiveScale()
+	if not x or not y then
+		display:SetPoint("TOP", UIParent, "TOP", 0, -150)
+	else
+		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	end
+	local bg = display:CreateTexture(nil, "PARENT")
+	bg:SetAllPoints(display)
+	bg:SetBlendMode("BLEND")
+	bg:SetTexture(0, 0, 0, 0.3)
+	local header = display:CreateFontString(nil, "OVERLAY")
+	header:SetFontObject(GameFontNormal)
+	header:SetText(L["Messages"])
+	header:SetAllPoints(display)
+	header:SetJustifyH("CENTER")
+	header:SetJustifyV("MIDDLE")
+	local test = CreateFrame("Button", nil, display)
+	test:SetPoint("BOTTOMLEFT", display, "BOTTOMLEFT", 3, 3)
+	test:SetHeight(14)
+	test:SetWidth(14)
+	test.tooltipHeader = L["Test"]
+	test.tooltipText = L["Spawns a new test warning."]
+	test:SetScript("OnEnter", onControlEnter)
+	test:SetScript("OnLeave", onControlLeave)
+	test:SetScript("OnClick", function() plugin:SpawnTestMessage() end)
+	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
+	local close = CreateFrame("Button", nil, display)
+	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
+	close:SetHeight(14)
+	close:SetWidth(14)
+	close.tooltipHeader = L["Hide"]
+	close.tooltipText = L["Hides the anchors."]
+	close:SetScript("OnEnter", onControlEnter)
+	close:SetScript("OnLeave", onControlLeave)
+	close:SetScript("OnClick", function() plugin:ShowAnchors() end)
+	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+	display:SetScript("OnDragStart", onDragStart)
+	display:SetScript("OnDragStop", onDragStop)
+	display:Hide()
+	return display
+end
+
+local function resetAnchor()
+	if anchor then
+		anchor:ClearAllPoints()
+		anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
+	end
+	plugin.db.profile.posx = nil
+	plugin.db.profile.posy = nil
+end
+
+--------------------------------------------------------------------------------
 -- Options
 --
 
@@ -341,10 +427,11 @@ plugin.consoleOptions = {
 	end,
 	set = function(key, val)
 		if key == "anchor" then
+			if not anchor then anchor = createAnchor() end
 			if val then
-				plugin:BigWigs_ShowAnchors()
+				anchor:Show()
 			else
-				plugin:BigWigs_HideAnchors()
+				anchor:Hide()
 			end
 		else
 			plugin.db.profile[key] = val
@@ -397,7 +484,7 @@ plugin.consoleOptions = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = "ResetAnchor",
+			func = resetAnchor,
 			disabled = bwAnchorDisabled,
 			order = 401,
 		},
@@ -429,8 +516,6 @@ end
 
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
-	self:RegisterEvent("BigWigs_ShowAnchors")
-	self:RegisterEvent("BigWigs_HideAnchors")
 
 	if BigWigs:HasModule("Colors") then
 		colorModule = BigWigs:GetModule("Colors")
@@ -445,9 +530,7 @@ function plugin:OnEnable()
 	end
 end
 
-function plugin:OnDisable()
-	self:BigWigs_HideAnchors()
-end
+function plugin:OnDisable() if anchor then anchor:Hide() end end
 
 local function createMsgFrame()
 	if messageFrame then return end
@@ -455,8 +538,8 @@ local function createMsgFrame()
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
 
-	if not anchor then plugin:SetupFrames() end
-	messageFrame:SetPoint("TOP", anchor, "BOTTOM", 0, 0)
+	if not anchor then anchor = createAnchor() end
+	messageFrame:SetPoint("TOP", anchor, "BOTTOM")
 	messageFrame:SetScale(plugin.db.profile.scale or 1)
 	messageFrame:SetInsertMode("TOP")
 	messageFrame:SetFrameStrata("HIGH")
@@ -465,19 +548,36 @@ local function createMsgFrame()
 	messageFrame:Show()
 end
 
+--------------------------------------------------------------------------------
+-- Test
+--
+
+do
+	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
+	local spells = nil
+	local player = UnitName("player")
+	function plugin:SpawnTestMessage()
+		if not spells then
+			spells = {}
+			for i = 2, MAX_SKILLLINE_TABS do
+				local _, _, offset, numSpells = GetSpellTabInfo(i)
+				if not offset then break end
+				for s = offset + 1, offset + numSpells do
+					local spell = GetSpellName(s, BOOKTYPE_SPELL)
+					tinsert(spells, spell)
+				end
+			end
+		end
+		local spell = spells[math.random(1, #spells)]
+		local name, _, icon = GetSpellInfo(spell)
+		local color = colors[math.random(1, #colors)]
+		self:TriggerEvent("BigWigs_Message", ("%s: %s"):format(player, name), color, true, false, nil, icon)
+	end
+end
+
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function plugin:BigWigs_ShowAnchors()
-	if not anchor then self:SetupFrames() end
-	anchor:Show()
-end
-
-function plugin:BigWigs_HideAnchors()
-	if not anchor then return end
-	anchor:Hide()
-end
 
 function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	if not messageFrame then createMsgFrame() end
@@ -511,108 +611,6 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	if db.chat then
 		BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
-	end
-end
-
-------------------------------
---    Anchor                --
-------------------------------
-
-function plugin:SetupFrames()
-	if anchor then return end
-
-	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
-	anchor:Hide()
-
-	anchor:SetWidth(120)
-	anchor:SetHeight(80)
-
-	anchor:SetBackdrop({
-		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
-		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
-		insets = {left = 1, right = 1, top = 20, bottom = 1},
-	})
-
-	anchor:SetBackdropColor(24/255, 24/255, 24/255)
-	anchor:ClearAllPoints()
-	anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
-	anchor:EnableMouse(true)
-	anchor:RegisterForDrag("LeftButton")
-	anchor:SetMovable(true)
-	anchor:SetScript("OnDragStart", function() this:StartMoving() end)
-	anchor:SetScript("OnDragStop", function()
-		this:StopMovingOrSizing()
-		self:SavePosition()
-	end)
-
-	local cheader = anchor:CreateFontString(nil,"OVERLAY")
-	cheader:ClearAllPoints()
-	cheader:SetWidth(110)
-	cheader:SetHeight(15)
-	cheader:SetPoint("TOP", anchor, "TOP", 0, -14)
-	cheader:SetFont(L["Font"], 12)
-	cheader:SetJustifyH("LEFT")
-	cheader:SetText(L["Messages"])
-	cheader:SetShadowOffset(.8, -.8)
-	cheader:SetShadowColor(0, 0, 0, 1)
-
-	local close = anchor:CreateTexture(nil, "ARTWORK")
-	close:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\otravi-close")
-	close:SetTexCoord(0, .625, 0, .9333)
-
-	close:SetWidth(20)
-	close:SetHeight(14)
-	close:SetPoint("TOPRIGHT", anchor, "TOPRIGHT", -7, -15)
-
-	local closebutton = CreateFrame("Button", nil)
-	closebutton:SetParent( anchor )
-	closebutton:SetWidth(20)
-	closebutton:SetHeight(14)
-	closebutton:SetPoint("CENTER", close, "CENTER")
-	closebutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
-
-	local testbutton = CreateFrame("Button", nil, anchor, "UIPanelButtonTemplate")
-	testbutton:SetWidth(60)
-	testbutton:SetHeight(25)
-	testbutton:SetText(L["Test"])
-	testbutton:SetPoint("CENTER", anchor, "CENTER", 0, -16)
-	testbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
-
-	if not testModule then testbutton:Hide() end
-
-	self:RestorePosition()
-end
-
-function plugin:ResetAnchor()
-	if not anchor then self:SetupFrames() end
-
-	anchor:ClearAllPoints()
-	anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
-	self.db.profile.posx = nil
-	self.db.profile.posy = -150
-end
-
-function plugin:SavePosition()
-	if not anchor then self:SetupFrames() end
-
-	local s = anchor:GetEffectiveScale()
-
-	self.db.profile.posx = anchor:GetLeft() * s
-	self.db.profile.posy = anchor:GetTop() * s
-end
-
-function plugin:RestorePosition()
-	if not anchor then self:SetupFrames() end
-
-	local x = self.db.profile.posx
-	local y = self.db.profile.posy
-
-	if x and y then
-		local s = anchor:GetEffectiveScale()
-		anchor:ClearAllPoints()
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	else
-		self:ResetAnchor()
 	end
 end
 

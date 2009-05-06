@@ -193,6 +193,9 @@ plugin.consoleOptions = {
 	name = L["Bars"],
 	desc = L["Options for the timer bars."],
 	handler = plugin,
+	pass = true,
+	get = getOption,
+	set = setOption,
 	args = {
 		anchor = {
 			type = "execute",
@@ -214,9 +217,6 @@ plugin.consoleOptions = {
 			desc = L["Set the texture for the timer bars."],
 			validate = media:List(mType),
 			order = 3,
-			get = getOption,
-			set = setOption,
-			passValue = "texture",
 		},
 		spacer = {
 			type = "header",
@@ -233,9 +233,6 @@ plugin.consoleOptions = {
 			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
 			order = 100,
-			get = getOption,
-			set = setOption,
-			passValue = "growup",
 		},
 		scale = {
 			type = "range",
@@ -245,9 +242,6 @@ plugin.consoleOptions = {
 			max = 2.0,
 			step = 0.1,
 			order = 103,
-			get = getOption,
-			set = setOption,
-			passValue = "scale",
 		},
 		spacer2 = {
 			type = "header",
@@ -263,9 +257,6 @@ plugin.consoleOptions = {
 			type = "toggle",
 			name = L["Enable"],
 			desc = L["Enables emphasizing bars."],
-			get = getOption,
-			set = setOption,
-			passValue = "emphasize",
 			order = 300,
 		},
 		emphasizeFlash = {
@@ -273,9 +264,6 @@ plugin.consoleOptions = {
 			name = L["Flash"],
 			desc = L["Flashes the background of emphasized bars, which could make it easier for you to spot them."],
 			order = 301,
-			get = getOption,
-			set = setOption,
-			passValue = "emphasizeFlash",
 			disabled = shouldDisableEmphasizeOption,
 		},
 		emphasizeMove = {
@@ -283,9 +271,6 @@ plugin.consoleOptions = {
 			name = L["Move"],
 			desc = L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."],
 			order = 302,
-			get = getOption,
-			set = setOption,
-			passValue = "emphasizeMove",
 			disabled = shouldDisableEmphasizeOption,
 		},
 		emphasizeGrowup = {
@@ -293,9 +278,6 @@ plugin.consoleOptions = {
 			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
 			order = 303,
-			get = getOption,
-			set = setOption,
-			passValue = "emphasizeGrowup",
 			disabled = shouldDisableEmphasizeOption,
 		},
 		emphasizeScale = {
@@ -305,9 +287,6 @@ plugin.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			get = getOption,
-			set = setOption,
-			passValue = "emphasizeScale",
 			disabled = shouldDisableEmphasizeOption,
 			order = 304,
 		},
@@ -364,9 +343,6 @@ local function onDragHandleMouseUp(self, button) self:GetParent():StopMovingOrSi
 local function onResize(self, width)
 	db[self.w] = width
 	rearrangeBars(self)
-end
-local function onMouseDown(self, button)
-	if button == "RightButton" then showBarConfig() end
 end
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
@@ -529,7 +505,7 @@ do
 		local name, rank, icon, _, _, time = GetSpellInfo(spell)
 		if time < 2 then time = math.random(2, 10) end
 		time = time * math.random(1.5, 4)
-		self:BigWigs_StartBar(self, name, time, icon)
+		self:TriggerEvent("BigWigs_StartBar", self, name, time, icon)
 	end
 end
 
