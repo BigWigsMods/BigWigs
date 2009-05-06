@@ -222,7 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "團隊標記",
 	icon_desc = "為中了風暴雷雲的隊員打上團隊標記。（需要權限）",
 
---	end_trigger = "我…我終於從他的掌控中…解脫了。",
+	end_trigger = "我…我終於從他的掌控中…解脫了。",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

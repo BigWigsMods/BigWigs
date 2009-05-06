@@ -394,11 +394,11 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",
 	engage_warning = "第一階段",
---	engage_trigger = "^The time to",
+	engage_trigger = "我們即將有機會打擊怪物的首腦!現在將你的憤怒與仇恨貫注在他的爪牙上!",
 	phase2_warning = "第二階段！",
---	phase2_trigger = "^I am the lucid dream",
+	phase2_trigger = "我是清醒的夢境。",
 	phase3_warning = "第三階段！",
-	phase3_trigger = "看看死亡的真實面貌，瞭解你們的末日降臨了!",
+	phase3_trigger = "在我的真身面前顫抖吧。", --看看死亡的真實面貌，瞭解你們的末日降臨了!
 
 	portal = "傳送門",
 	portal_desc = "當傳送門時發出警報。",
@@ -409,7 +409,7 @@ L:RegisterTranslations("zhTW", function() return {
 	weakened = "弱化決心",
 	weakened_desc = "當玩家中了弱化決心時發出警報。",
 	weakened_message = "弱化決心：>%s<！",
---	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
+	weakened_trigger = "幻影粉碎，然後中央房間的道路就打開了!",
 
 	madness = "瘋狂誘陷",
 	madness_desc = "顯示瘋狂誘陷計時條。",
@@ -418,7 +418,7 @@ L:RegisterTranslations("zhTW", function() return {
 	malady = "心靈缺陷",
 	malady_desc = "當玩家中了心靈缺陷時發出警報。",
 	malady_message = "心靈缺陷：>%s<！",
-	--malady_bar = "<下一心靈缺陷>",
+--	malady_bar = "<下一心靈缺陷>",
 
 	tentacle = "粉碎觸手",
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
@@ -453,8 +453,8 @@ L:RegisterTranslations("zhTW", function() return {
 	mindcontrol_message = "支配心靈：>%s<！",
 
 	guardian = "召喚守護者出現", --phase 1
-	guardian_desc = "當尤格薩倫召喚守護者出現時發出警報。",
-	guardian_message = "召喚守護者：>%d<！ ",
+	guardian_desc = "當尤格薩倫守護者出現時發出警報。",
+	guardian_message = "尤格薩倫守護者：>%d<！ ",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )

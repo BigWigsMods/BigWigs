@@ -192,6 +192,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+--	["Razorscale Controller"] = true,
+
 	phase = "阶段",
 	phase_desc = "当锋鳞转换不同阶段时发出警报。",
 --	ground_trigger = "Move quickly! She won't remain grounded for long!",
@@ -222,14 +224,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	["Razorscale Controller"] = "銳鱗控制器",
+
 	phase = "階段",
 	phase_desc = "當銳鱗轉換不同階段發出警報。",
---	ground_trigger = "Move quickly! She won't remain grounded for long!",
+	ground_trigger = "快!她可不會在地面上待太久!",
 	ground_message = "銳鱗被鎖住了！",
---	air_trigger = "Give us a moment to prepare to build the turrets.",
---	air_trigger2 = "Fires out! Let's rebuild those turrets!",
+	air_trigger = "給我們一點時間來準備建造砲塔。",
+	air_trigger2 = "火熄了!讓我們重建砲塔!",
 	air_message = "起飛！",
---	phase2_trigger = "Razorscale lands permanently!",
+	phase2_trigger = "%s再也飛不動了!",
 	phase2_message = "第二階段！",
 	phase2_warning = "即將 第二階段！",
 	stun_bar = "<擊昏>",
@@ -247,7 +251,7 @@ L:RegisterTranslations("zhTW", function() return {
 	harpoon = "魚叉炮塔",
 	harpoon_desc = "當魚叉炮塔可用時發出警報。",
 	harpoon_message = "魚叉炮塔：>%d<可用！",
---	harpoon_trigger = "Harpoon Turret is ready for use!",
+	harpoon_trigger = "魚叉砲塔已經準備就緒!",
 	harpoon_nextbar = "<魚叉炮塔：%d>",
 } end )
 

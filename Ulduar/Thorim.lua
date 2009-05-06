@@ -310,7 +310,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
 	phase1_message = "第一階段！",
---	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
+	phase2_trigger = "擅闖者!像你們這種膽敢干涉我好事的凡人將付出…等等--你……",
 	phase2_message = "第二階段 - 6分15秒後，狂暴！",
 	phase3_trigger = "無禮的小輩，你竟敢在我的王座之上挑戰我?我會親手碾碎你們!",
 	phase3_message = "第三階段 - %s已狂怒！",

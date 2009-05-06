@@ -245,9 +245,9 @@ L:RegisterTranslations("zhCN", function() return {
 --	detonate_trigger = "The swarm of the elements shall overtake you!",
 --	elementals_trigger = "Children, assist me!",
 --	tree_trigger = "A Lifebinder's Gift begins to grow!",
-	conservator_message = "Conservator出现！",
-	detonate_message = "Detonate出现！",
-	elementals_message = "Elementals出现！",
+	conservator_message = "Conservator!",
+	detonate_message = "Detonating lashers!",
+	elementals_message = "Elementals!",
 	tree_message = "Eonar's Gift出现！",
 
 	attuned = "自然协调",
@@ -280,7 +280,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "必須守護大溫室!",
---	engage_trigger2 = "Elders, grant me your strength!",
+	engage_trigger2 = "長者，賦予我你們的力量!",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
@@ -294,9 +294,9 @@ L:RegisterTranslations("zhTW", function() return {
 	detonate_trigger = "元素們將襲捲你們!",
 	elementals_trigger = "孩子們，協助我!",
 	tree_trigger = "一個|cFF00FFFF生命守縛者之禮|r開始生長!",
-	conservator_message = "古樹護存者 出現！",
-	detonate_message = "Detonate出現！",
-	elementals_message = "Elementals出現！",
+	conservator_message = "古樹護存者！",
+	detonate_message = "引爆鞭笞者！",
+	elementals_message = "上古水之靈！",
 	tree_message = "伊歐娜的贈禮 出現！",
 
 	attuned = "自然和諧",

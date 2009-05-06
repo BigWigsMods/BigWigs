@@ -245,7 +245,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_warning = "即將 第二階段！",
 	phase2_trigger = "太好了!絕妙的良好結果!外殼完整度98.9%!幾乎只有一點擦痕!繼續下去。",
 	phase3_warning = "即將 第三階段！",
---	phase3_trigger = "^Thank you, friends!",
+	phase3_trigger = "感謝你，朋友們!我們的努力讓我獲得了一些絕佳的資料!現在，我把東西放在哪兒了--噢，在這裡。",
 	phase4_warning = "即將 第四階段！",
 	phase4_trigger = "初步測試階段完成。現在要玩真的啦!",
 	phase_bar = "<階段：%d>",
