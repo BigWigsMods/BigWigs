@@ -1,5 +1,3 @@
-﻿assert(BigWigs, "BigWigs not found!")
-
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -7,12 +5,6 @@
 local plugin = BigWigs:New("Colors", "$Revision$")
 if not plugin then return end
 
-------------------------------
---      Are you local?      --
-------------------------------
-
-local shortBar
-local longBar
 local fmt = string.format
 
 ----------------------------
@@ -35,12 +27,14 @@ L:RegisterTranslations("enUS", function() return {
 	["Text"] = true,
 	["Reset"] = true,
 
+	["Bar"] = true,
+	["Change the normal bar color."] = true,
+	["Emphasized bar"] = true,
+	["Change the emphasized bar color."] = true,
+
 	["Colors of messages and bars."] = true,
 	["Change the color for %q messages."] = true,
-	["Colors for short bars (< 1 minute)."] = true,
-	["Colors for long bars (> 1 minute)."] = true,
 	["Change the %s color."] = true,
-	["Number of colors the bar has."] = true,
 	["Change the bar background color."] = true,
 	["Change the bar text color."] = true,
 	["Resets all colors to defaults."] = true,
@@ -52,11 +46,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Positive"] = true,
 	["Bosskill"] = true,
 	["Core"] = true,
-
-	["1st"] = true,
-	["2nd"] = true,
-	["3rd"] = true,
-	["4th"] = true,
+	
+	upgrade = "Your color values for messages and bars have been reset in order to smooth the upgrade from last version. If you want to tweak them again, right click on Big Wigs and go to Plugins -> Colors.",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -89,11 +80,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Positive"] = "제안",
 	["Bosskill"] = "보스사망",
 	["Core"] = "코어",
-
-	["1st"] = "첫째",
-	["2nd"] = "둘째",
-	["3rd"] = "셋째",
-	["4th"] = "넷째",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -128,11 +114,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Positive"] = "醒目",
 	["Bosskill"] = "首领击杀",
 	["Core"] = "核心",
-
-	["1st"] = "第一",
-	["2nd"] = "第二",
-	["3rd"] = "第三",
-	["4th"] = "第四",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -165,11 +146,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Positive"] = "積極",
 	["Bosskill"] = "首領擊殺",
 	["Core"] = "核心",
-
-	["1st"] = "第一",
-	["2nd"] = "第二",
-	["3rd"] = "第三",
-	["4th"] = "第四",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -204,11 +180,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Positive"] = "Positiv",
 	["Bosskill"] = "Boss besiegt",
 	["Core"] = "Kern",
-
-	["1st"] = "1.",
-	["2nd"] = "2.",
-	["3rd"] = "3.",
-	["4th"] = "4.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -243,11 +214,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Positive"] = "Positif",
 	["Bosskill"] = "Défaite",
 	["Core"] = "Noyau",
-
-	["1st"] = "1er",
-	["2nd"] = "2ème",
-	["3rd"] = "3ème",
-	["4th"] = "4ème",
 } end)
 
 L:RegisterTranslations("esES", function() return {
@@ -282,11 +248,6 @@ L:RegisterTranslations("esES", function() return {
 	["Positive"] = "Positivo",
 	["Bosskill"] = "Muerte de Jefe",
 	["Core"] = "Núcleo",
-
-	["1st"] = "1º",
-	["2nd"] = "2º",
-	["3rd"] = "3º",
-	["4th"] = "4º",
 } end)
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
@@ -321,11 +282,6 @@ L:RegisterTranslations("ruRU", function() return {
 	["Positive"] = "Позитивные",
 	["Bosskill"] = "Убийство Босса",
 	["Core"] = "Ядро",
-
-	["1st"] = "1й",
-	["2nd"] = "2ой",
-	["3rd"] = "3тий",
-	["4th"] = "4тый",
 } end)
 
 --------------------------------------------------------------------------------
@@ -333,76 +289,32 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 plugin.defaultDB = {
-	Important = { r = 1, g = 0, b = 0 }, -- Red
-	Personal = { r = 1, g = 0, b = 0 }, -- Red
-	Urgent = { r = 1, g = 0.5, b = 0 }, -- Orange
-	Attention = { r = 1, g = 1, b = 0 }, -- Yellow
-	Positive = { r = 0, g = 1, b = 0 }, -- Green
-	Bosskill = { r = 0, g = 1, b = 0 }, -- Green
-	Core = { r = 0, g = 1, b = 1 }, -- Cyan
+	Important = { 1, 0, 0 }, -- Red
+	Personal = { 1, 0, 0 }, -- Red
+	Urgent = { 1, 0.5, 0 }, -- Orange
+	Attention = { 1, 1, 0 }, -- Yellow
+	Positive = { 0, 1, 0 }, -- Green
+	Bosskill = { 0, 1, 0 }, -- Green
+	Core = { 0, 1, 1 }, -- Cyan
 
-	barBackground = { r = 0.6, g = 0.1, b = 0, a = 0.5 },
-	barTextColor = { r = 1, g = 1, b = 1 },
-
-	short = {
-		amount = 3,
-		[1] = { r = 1, g = 1, b = 0 },
-		[2] = { r = 1, g = 0.5, b = 0 },
-		[3] = { r = 1, g = 0, b = 0 },
-		[4] = { r = 1, g = 0, b = 0 },
-	},
-
-	long = {
-		amount = 4,
-		[1] = { r = 0, g = 1, b = 0 },
-		[2] = { r = 1, g = 1, b = 0 },
-		[3] = { r = 1, g = 0.5, b = 0 },
-		[4] = { r = 1, g = 0, b = 0 },
-	},
+	barBackground = { 0.5, 0.5, 0.5, 0.3 },
+	barText = { 1, 1, 1 },
+	barColor = { 0.25, 0.33, 0.68, 1 },
+	barEmphasized = { 1, 0, 0, 1 },
 }
 
-local function updateColorTables()
-	if type(shortBar) == "table" then
-		for k in ipairs(shortBar) do shortBar[k] = nil end
-	else
-		shortBar = {}
-	end
-	if type(longBar) == "table" then
-		for k in ipairs(longBar) do longBar[k] = nil end
-	else
-		longBar = {}
-	end
-	local db = plugin.db.profile
-	for i = 1, db.short.amount do
-		table.insert(shortBar, db.short[i].r)
-		table.insert(shortBar, db.short[i].g)
-		table.insert(shortBar, db.short[i].b)
-	end
-	for i = 1, db.long.amount do
-		table.insert(longBar, db.long[i].r)
-		table.insert(longBar, db.long[i].g)
-		table.insert(longBar, db.long[i].b)
-	end
-end
-
-local function get(key)
-	local t = plugin.db.profile[key]
-	return t.r, t.g, t.b, t.a
-end
-
-local function set(key, r, g, b, a)
-	local t = plugin.db.profile[key]
-	t.r = r
-	t.g = g
-	t.b = b
-	t.a = a
-end
+local function get(key) return unpack(plugin.db.profile[key]) end
+local function set(key, r, g, b, a) plugin.db.profile[key] = {r, g, b, a} end
 
 plugin.consoleCmd = L["Colors"]
 plugin.consoleOptions = {
 	type = "group",
 	name = L["Colors"],
 	desc = L["Colors of messages and bars."],
+	handler = plugin,
+	pass = true,
+	get = get,
+	set = set,
 	args = {
 		messages = {
 			type = "header",
@@ -413,63 +325,42 @@ plugin.consoleOptions = {
 			name = L["Important"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Important"]),
-			passValue = "Important",
-			get = get,
-			set = set,
 			order = 2,
 		},
 		Personal = {
 			name = L["Personal"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Personal"]),
-			passValue = "Personal",
-			get = get,
-			set = set,
 			order = 3,
 		},
 		Urgent = {
 			name = L["Urgent"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Urgent"]),
-			passValue = "Urgent",
-			get = get,
-			set = set,
 			order = 4,
 		},
 		Attention = {
 			name = L["Attention"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Attention"]),
-			passValue = "Attention",
-			get = get,
-			set = set,
 			order = 5,
 		},
 		Positive = {
 			name = L["Positive"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Positive"]),
-			passValue = "Positive",
-			get = get,
-			set = set,
 			order = 6,
 		},
 		Bosskill = {
 			name = L["Bosskill"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Bosskill"]),
-			passValue = "Bosskill",
-			get = get,
-			set = set,
 			order = 7,
 		},
 		Core = {
 			name = L["Core"],
 			type = "color",
 			desc = fmt(L["Change the color for %q messages."], L["Core"]),
-			passValue = "Core",
-			get = get,
-			set = set,
 			order = 8,
 		},
 		spacer1 = { type = "header", name = " ", order = 9, },
@@ -478,151 +369,31 @@ plugin.consoleOptions = {
 			name = L["Bars"],
 			order = 10,
 		},
-		["Bar-Short"] = {
-			type = "group",
-			name = L["Short bars"],
-			desc = L["Colors for short bars (< 1 minute)."],
+		barColor = {
+			name = L["Bar"],
+			type = "color",
+			desc = L["Change the normal bar color."],
+			hasAlpha = true,
 			order = 11,
-			pass = true,
-			get = function(key)
-				if key == "Amount" then
-					return plugin.db.profile.short.amount
-				elseif type(key) == "number" then
-					local t = plugin.db.profile.short[key]
-					return t.r, t.g, t.b
-				end
-			end,
-			set = function(key, r, g, b)
-				if key == "Amount" then
-					plugin.db.profile.short.amount = r
-				elseif type(key) == "number" then
-					local t = plugin.db.profile.short[key]
-					t.r = r
-					t.g = g
-					t.b = b
-				end
-				updateColorTables()
-			end,
-			args = {
-				[1] = {
-					name = fmt("%s%d", L["Color "], 1),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["1st"]),
-					order = 1,
-				},
-				[2] = {
-					name = fmt("%s%d", L["Color "], 2),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["2nd"]),
-					disabled = function() return plugin.db.profile.short.amount < 2 end,
-					order = 2,
-				},
-				[3] = {
-					name = fmt("%s%d", L["Color "], 3),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["3rd"]),
-					disabled = function() return plugin.db.profile.short.amount < 3 end,
-					order = 3,
-				},
-				[4] = {
-					name = fmt("%s%d", L["Color "], 4),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["4th"]),
-					disabled = function() return plugin.db.profile.short.amount < 4 end,
-					order = 4,
-				},
-				Amount = {
-					name = L["Number of colors"],
-					type = "range",
-					desc = L["Number of colors the bar has."],
-					min = 1,
-					max = 4,
-					step = 1,
-					order = 5,
-				},
-			},
 		},
-		["Bar-Long"] = {
-			type = "group",
-			name = L["Long bars"],
-			desc = L["Colors for long bars (> 1 minute)."],
-			order = 12,
-			pass = true,
-			get = function(key)
-				if key == "Amount" then
-					return plugin.db.profile.long.amount
-				elseif type(key) == "number" then
-					local t = plugin.db.profile.long[key]
-					return t.r, t.g, t.b
-				end
-			end,
-			set = function(key, r, g, b)
-				if key == "Amount" then
-					plugin.db.profile.long.amount = r
-				elseif type(key) == "number" then
-					local t = plugin.db.profile.long[key]
-					t.r = r
-					t.g = g
-					t.b = b
-				end
-				updateColorTables()
-			end,
-			args = {
-				[1] = {
-					name = fmt("%s%d", L["Color "], 1),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["1st"]),
-					order = 1,
-				},
-				[2] = {
-					name = fmt("%s%d", L["Color "], 2),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["2nd"]),
-					disabled = function() return plugin.db.profile.long.amount < 2 end,
-					order = 2,
-				},
-				[3] = {
-					name = fmt("%s%d", L["Color "], 3),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["3rd"]),
-					disabled = function() return plugin.db.profile.long.amount < 3 end,
-					order = 3,
-				},
-				[4] = {
-					name = fmt("%s%d", L["Color "], 4),
-					type = "color",
-					desc = fmt(L["Change the %s color."], L["4th"]),
-					disabled = function() return plugin.db.profile.long.amount < 4 end,
-					order = 4,
-				},
-				Amount = {
-					name = L["Number of colors"],
-					type = "range",
-					desc = L["Number of colors the bar has."],
-					min = 1,
-					max = 4,
-					step = 1,
-					order = 5,
-				},
-			},
+		barEmphasized = {
+			name = L["Emphasized bar"],
+			type = "color",
+			desc = L["Change the emphasized bar color."],
+			hasAlpha = true,
+			order = 11,
 		},
-		["Bar-Background"] = {
+		barBackground = {
 			name = L["Background"],
 			type = "color",
 			desc = L["Change the bar background color."],
 			hasAlpha = true,
-			get = get,
-			set = set,
-			passValue = "barBackground",
 			order = 13,
 		},
-		["Bar-Text"] = {
+		barText = {
 			name = L["Text"],
 			type = "color",
 			desc = L["Change the bar text color."],
-			get = get,
-			set = set,
-			passValue = "barTextColor",
 			order = 14,
 		},
 		spacer2 = { type = "header", name = " ", order = 15, },
@@ -630,26 +401,19 @@ plugin.consoleOptions = {
 			type = "execute",
 			name = L["Reset"],
 			desc = L["Resets all colors to defaults."],
-			handler = plugin,
 			func = "ResetDB",
 			order = 16,
 		},
 	},
 }
 
-------------------------------
---      Initialization      --
-------------------------------
-
 function plugin:OnEnable()
-	if type(shortBar) ~= "table" then
-		updateColorTables()
+	if not self.db.profile.upgraded then
+		self:ResetDB()
+		self.db.profile.upgraded = 1
+		BigWigs:Print(L["upgrade"])
 	end
 end
-
-------------------------------
---         Handlers         --
-------------------------------
 
 local function copyTable(to, from)
 	setmetatable(to, nil)
@@ -677,17 +441,9 @@ end
 function plugin:MsgColor(hint)
 	local t = self.db.profile[hint]
 	if t then
-		return t.r, t.g, t.b
+		return unpack(t)
 	else
 		return 1, 1, 1
-	end
-end
-
-function plugin:BarColor(time)
-	if time <= 60 then
-		return unpack(shortBar)
-	else
-		return unpack(longBar)
 	end
 end
 

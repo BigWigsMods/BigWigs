@@ -1,6 +1,4 @@
-﻿assert(BigWigs, "BigWigs not found!")
-
---------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -13,6 +11,7 @@ if not plugin then return end
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars2")
 
+local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
@@ -444,7 +443,7 @@ local function createAnchor(frameName, title)
 	test.tooltipText = L["Creates a new test bar."]
 	test:SetScript("OnEnter", onControlEnter)
 	test:SetScript("OnLeave", onControlLeave)
-	test:SetScript("OnClick", function() plugin:SpawnTestBar() end)
+	test:SetScript("OnClick", function() plugin:TriggerEvent("BigWigs_Test") end)
 	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
 	local close = CreateFrame("Button", nil, display)
 	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
@@ -512,33 +511,17 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
 	self:RegisterEvent("Ace2_AddonDisabled")
+	colors = BigWigs:GetModule("Colors")
 end
 
 --------------------------------------------------------------------------------
--- Test
+-- Colors
 --
 
-do
-	local spells = nil
-	function plugin:SpawnTestBar()
-		if not spells then
-			spells = {}
-			for i = 2, MAX_SKILLLINE_TABS do
-				local _, _, offset, numSpells = GetSpellTabInfo(i)
-				if not offset then break end
-				for s = offset + 1, offset + numSpells do
-					local spell = GetSpellName(s, BOOKTYPE_SPELL)
-					tinsert(spells, spell)
-				end
-			end
-		end
-		local spell = spells[math.random(1, #spells)]
-		local name, rank, icon, _, _, time = GetSpellInfo(spell)
-		if time < 2 then time = math.random(2, 10) end
-		time = time * math.random(1.5, 4)
-		self:TriggerEvent("BigWigs_StartBar", self, name, time, icon)
-	end
-end
+local function colorNormal() return unpack(colors.db.profile.barColor) end
+local function colorEmphasized() return unpack(colors.db.profile.barEmphasized) end
+local function colorText() return unpack(colors.db.profile.barText) end
+local function colorBackground() return unpack(colors.db.profile.barBackground) end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
@@ -571,7 +554,7 @@ do
 	f:SetScript("OnUpdate", function(self, elapsed)
 		local dirty = nil
 		for k in pairs(normalAnchor.bars) do
-			if k.remaining <= 10 then
+			if not k:Get("emphasized") and k.remaining <= 10 then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
@@ -587,9 +570,11 @@ function plugin:BigWigs_StartBar(module, text, time, icon)
 	stop(module, text)
 	local bar = candy:New(media:Fetch(mType, db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
+	bar.candyBarBackground:SetVertexColor(colorBackground())
 	bar:Set("module", module)
 	bar:Set("anchor", normalAnchor)
-	bar:SetColor(0.25, 0.33, 0.68, 1)
+	bar:SetColor(colorNormal())
+	bar.candyBarLabel:SetTextColor(colorText())
 	bar:SetLabel(text)
 	bar:SetDuration(time)
 	bar:SetTimeVisibility(true)
@@ -627,7 +612,8 @@ function plugin:EmphasizeBar(bar)
 	if db.emphasizeFlash then
 		bar:AddUpdateFunction(flash)
 	end
-	bar:SetColor(1, 0, 0, 1)
+	bar:SetColor(colorEmphasized())
 	bar:SetScale(db.emphasizeScale)
+	bar:Set("emphasized", true)
 end
 

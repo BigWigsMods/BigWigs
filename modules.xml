@@ -4,8 +4,7 @@
 <Script file="Plugins\Comm.lua"/>
 <Script file="Plugins\Colors.lua"/>
 <Script file="Plugins\TargetMonitor.lua"/>
-<Script file="Plugins\Bars.lua"/>
-<!--Script file="Plugins\Bars2.lua"/-->
+<Script file="Plugins\Bars2.lua"/>
 <Script file="Plugins\Messages.lua"/>
 <Script file="Plugins\Sound.lua"/>
 <Script file="Plugins\RaidWarn.lua"/>
@@ -13,7 +12,6 @@
 <Script file="Plugins\RaidIcon.lua"/>
 
 <Script file="Extras\CustomBar.lua"/>
-<Script file="Extras\Tranq.lua"/>
 <Script file="Extras\Proximity.lua"/>
 <Script file="Extras\Version.lua"/>
 <Script file="Extras\Test.lua"/>

@@ -26,8 +26,8 @@
 ## OptionalDeps: BigWigs_Plugins
 
 CustomBar.lua
-Tranq.lua
 Proximity.lua
 Version.lua
 Test.lua
 Flash.lua
+

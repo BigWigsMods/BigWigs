@@ -11,7 +11,6 @@ externals:
     Libs/AceModuleCore-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceModuleCore-2.0
     Libs/AceOO-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceOO-2.0
     Libs/CallbackHandler-1.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/CallbackHandler-1.0
-    Libs/CandyBar-2.0: svn://svn.wowace.com/wow/candybar/mainline/trunk/CandyBar-2.0
     Libs/Dewdrop-2.0: svn://svn.wowace.com/wow/dewdroplib/mainline/trunk/Dewdrop-2.0
     Libs/LibBabble-Boss-3.0: svn://svn.wowace.com/wow/libbabble-boss-3-0/mainline/trunk
     Libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
@@ -19,6 +18,7 @@ externals:
     Libs/LibSink-2.0: svn://svn.wowace.com/wow/libsink-2-0/mainline/trunk/LibSink-2.0
     Libs/LibStub: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
     Libs/LibDBIcon-1.0: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
+    Libs/LibCandyBar-3.0: svn://svn.wowace.com/wow/libcandybar-3-0/mainline/trunk
 
 move-folders:
     BigWigs/Extras: BigWigs_Extras

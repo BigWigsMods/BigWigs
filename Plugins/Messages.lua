@@ -1,6 +1,4 @@
-﻿assert(BigWigs, "BigWigs not found!")
-
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -378,7 +376,7 @@ local function createAnchor()
 	test.tooltipText = L["Spawns a new test warning."]
 	test:SetScript("OnEnter", onControlEnter)
 	test:SetScript("OnLeave", onControlLeave)
-	test:SetScript("OnClick", function() plugin:SpawnTestMessage() end)
+	test:SetScript("OnClick", function() plugin:TriggerEvent("BigWigs_Test") end)
 	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
 	local close = CreateFrame("Button", nil, display)
 	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
@@ -388,7 +386,7 @@ local function createAnchor()
 	close.tooltipText = L["Hides the anchors."]
 	close:SetScript("OnEnter", onControlEnter)
 	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function() plugin:ShowAnchors() end)
+	close:SetScript("OnClick", function() display:Hide() end)
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
@@ -558,33 +556,6 @@ local function createMsgFrame()
 	messageFrame:SetToplevel(true)
 	messageFrame:SetFontObject(GameFontNormalLarge)
 	messageFrame:Show()
-end
-
---------------------------------------------------------------------------------
--- Test
---
-
-do
-	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
-	local spells = nil
-	local player = UnitName("player")
-	function plugin:SpawnTestMessage()
-		if not spells then
-			spells = {}
-			for i = 2, MAX_SKILLLINE_TABS do
-				local _, _, offset, numSpells = GetSpellTabInfo(i)
-				if not offset then break end
-				for s = offset + 1, offset + numSpells do
-					local spell = GetSpellName(s, BOOKTYPE_SPELL)
-					tinsert(spells, spell)
-				end
-			end
-		end
-		local spell = spells[math.random(1, #spells)]
-		local name, _, icon = GetSpellInfo(spell)
-		local color = colors[math.random(1, #colors)]
-		self:TriggerEvent("BigWigs_Message", ("%s: %s"):format(player, name), color, true, false, nil, icon)
-	end
 end
 
 ------------------------------

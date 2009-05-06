@@ -16,9 +16,9 @@
 <Include file="Libs\LibBabble-Boss-3.0\lib.xml"/>
 <Include file="Libs\LibBabble-Zone-3.0\lib.xml"/>
 <Script file="Libs\Dewdrop-2.0\Dewdrop-2.0.lua"/>
-<Script file="Libs\CandyBar-2.0\CandyBar-2.0.lua"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Include file="Libs\LibSink-2.0\lib.xml"/>
+<Script file="Libs\LibCandyBar-3.0\bars.lua"/>
 <!--@end-no-lib-strip@-->
 
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>

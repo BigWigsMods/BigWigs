@@ -1,5 +1,3 @@
-assert(BigWigs, "Big Wigs not found!")
-
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------
