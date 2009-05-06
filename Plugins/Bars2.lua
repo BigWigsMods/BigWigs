@@ -41,6 +41,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = true,
 	["Enable"] = true,
 	["Enables emphasizing bars."] = true,
+	["Move"] = true,
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = true,
 	["Set the scale for emphasized bars."] = true,
 	["Reset position"] = true,
 	["Reset the anchor positions, moving them to their default positions."] = true,
@@ -48,6 +50,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Creates a new test bar."] = true,
 	["Hide"] = true,
 	["Hides the anchors."] = true,
+	["Flash"] = true,
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = true,
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -128,6 +132,8 @@ plugin.defaultDB = {
 	texture = "BantoBar",
 	growup = true,
 	emphasize = true,
+	emphasizeFlash = true,
+	emphasizeMove = true,
 	emphasizeScale = 1.5,
 	emphasizeGrowup = nil,
 	BigWigsAnchor_width = 200,
@@ -217,11 +223,31 @@ plugin.consoleOptions = {
 			passValue = "emphasize",
 			order = 300,
 		},
+		emphasizeFlash = {
+			type = "toggle",
+			name = L["Flash"],
+			desc = L["Flashes the background of emphasized bars, which could make it easier for you to spot them."],
+			order = 301,
+			get = getOption,
+			set = setOption,
+			passValue = "emphasizeFlash",
+			disabled = shouldDisableEmphasizeOption,
+		},
+		emphasizeMove = {
+			type = "toggle",
+			name = L["Move"],
+			desc = L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."],
+			order = 302,
+			get = getOption,
+			set = setOption,
+			passValue = "emphasizeMove",
+			disabled = shouldDisableEmphasizeOption,
+		},
 		emphasizeGrowup = {
 			type = "toggle",
 			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
-			order = 301,
+			order = 303,
 			get = getOption,
 			set = setOption,
 			passValue = "emphasizeGrowup",
@@ -238,7 +264,7 @@ plugin.consoleOptions = {
 			set = setOption,
 			passValue = "emphasizeScale",
 			disabled = shouldDisableEmphasizeOption,
-			order = 302,
+			order = 304,
 		},
 	},
 }
@@ -528,10 +554,27 @@ end
 -- Emphasize
 --
 
+local function flash(self)
+	local r, g, b, a = self.candyBarBackground:GetVertexColor()
+	if self:Get("down") then
+		r = r - 0.05
+		if r <= 0 then self:Set("down", nil) end
+	else
+		r = r + 0.05
+		if r >= 1 then self:Set("down", true) end
+	end
+	self.candyBarBackground:SetVertexColor(r, g, b, a)
+end
+
 function plugin:EmphasizeBar(bar)
-	normalAnchor.bars[bar] = nil
-	emphasizeAnchor.bars[bar] = true
-	bar:Set("anchor", emphasizeAnchor)
+	if db.emphasizeMove then
+		normalAnchor.bars[bar] = nil
+		emphasizeAnchor.bars[bar] = true
+		bar:Set("anchor", emphasizeAnchor)
+	end
+	if db.emphasizeFlash then
+		bar:AddUpdateFunction(flash)
+	end
 	bar:SetColor(1, 0, 0, 1)
 	bar:SetScale(db.emphasizeScale)
 end
