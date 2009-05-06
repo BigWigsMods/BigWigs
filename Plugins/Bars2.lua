@@ -1,4 +1,4 @@
-﻿--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -116,32 +116,33 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
-	["Emphasized Bars"] = "醒目計時條",
+	["Emphasized Bars"] = "強調條",
 	["Options for the timer bars."] = "計時條選項。",
 	["Toggle anchors"] = "切換錨點",
-	["Show or hide the bar anchors for both normal and emphasized bars."] = "顯示或隱藏計時條與醒目計時條錨點。",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "顯示或隱藏計時條與強調條錨點。",
 	["Scale"] = "縮放",
-	["Set the bar scale."] = "設置計時條縮放。",
+	["Set the bar scale."] = "設定計時條縮放。",
 	["Grow upwards"] = "向上成長",
 	["Toggle bars grow upwards/downwards from anchor."] = "切換計時條在錨點向上或向下成長。",
 	["Texture"] = "材質",
-	["Set the texture for the timer bars."] = "設置計時條的材質。",
+	["Set the texture for the timer bars."] = "設定計時條的材質。",
 	["Test"] = "測試",
 	["Close"] = "關閉",
-	["Emphasize"] = "醒目",
-	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "醒目計時條是當接近（小於10秒）。如果計時條開始時間小於15秒則會立刻醒目顯示。",
+	["Emphasize"] = "強調",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "強調條是當接近（小於10秒）。如果計時條開始時間小於15秒則會立刻強調顯示。",
 	["Enable"] = "啟用",
-	["Enables emphasizing bars."] = "啟用醒目計時條",
+	["Enables emphasizing bars."] = "啟用強調條",
 	["Move"] = "移動",
-	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "移動醒目計時條到醒目錨點。如果此選項關閉，醒目計時條將只改變縮放與顏色以及可能開始閃爍。",
-	["Set the scale for emphasized bars."] = "設置醒目計時條縮放。",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "移動強調條到強調錨點。如果此選項關閉，強調條將只改變縮放與顏色以及可能開始閃爍。",
+	["Set the scale for emphasized bars."] = "設定強調條縮放。",
 	["Reset position"] = "重置位置",
-	["Reset the anchor positions, moving them to their default positions."] = "重置錨點位置，移動它們到默認位置。",
+	["Reset the anchor positions, moving them to their default positions."] = "重置錨點位置，移動它們到預設位置。",
+	["Test"] = "測試",
 	["Creates a new test bar."] = "新建測試計時條",
 	["Hide"] = "隱藏",
 	["Hides the anchors."] = "隱藏錨點",
 	["Flash"] = "閃爍",
-	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "醒目計時條背景閃爍，方便你留意它。",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "強調條背景閃爍，方便你留意它。",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

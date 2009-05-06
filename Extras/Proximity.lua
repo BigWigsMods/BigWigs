@@ -227,28 +227,28 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	["Proximity"] = "近距離",
+	["Proximity"] = "鄰近顯示",
 	["Close Players"] = "鄰近玩家",
-	["Options for the Proximity Display."] = "設定近距離選項。",
+	["Options for the Proximity Display."] = "設定鄰近顯示選項。",
 	["|cff777777Nobody|r"] = "|cff777777沒有玩家|r",
 	["Sound"] = "音效",
-	["Play sound on proximity."] = "近距離時發出音效。",
+	["Play sound on proximity."] = "接近時發出音效。",
 	["Disabled"] = "禁用",
-	["Disable the proximity display for all modules that use it."] = "禁止所有首领模组使用近距离。",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的近距離功能已禁用，請用模組選單開啟。",
-	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = true,
+	["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用。",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的鄰近顯示功能已禁用，請用模組選單開啟。",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "鄰近顯示視窗已經鎖定,你需要右鍵點擊BigWigs圖示,移到附加功能 -> 鄰近顯示 -> 切換鎖定選項如果你想要移動視窗或是透過其他設定.",
 
-	proximity = "近距離",
-	proximity_desc = "顯示近距離視窗，列出距離你很近的玩家。",
+	proximity = "鄰近顯示",
+	proximity_desc = "顯示鄰近顯示視窗，列出距離你很近的玩家。",
 
 	font = "Fonts\\bHEI01B.TTF",
 
 	["Close"] = "關閉",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "關閉并防止以後的首領模組（如可用）啟用近距離顯示，直到進入相關首領模組并打開“近距離”選項。",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "關閉並防止以後的首領模組（如可用）啟用鄰近顯示，直到進入相關首領模組並打開“鄰近顯示”選項。",
 	["Test"] = "測試",
-	["Perform a Proximity test."] = "進行近距離測試。",
+	["Perform a Proximity test."] = "進行鄰近顯示測試。",
 	["Display"] = "顯示",
-	["Options for the Proximity display window."] = "近距離顯示視窗選項。。",
+	["Options for the Proximity display window."] = "鄰近顯示視窗選項。。",
 	["Lock"] = "鎖定",
 	["Locks the display in place, preventing moving and resizing."] = "鎖定顯示視窗，防止被移動和縮放。",
 	["Title"] = "標題",
@@ -256,7 +256,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Background"] = "背景",
 	["Shows or hides the background."] = "顯示或隱藏背景。",
 	["Toggle sound"] = "切換聲效",
-	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當近距離视窗有其他過近玩家時切換任一或關閉聲效。",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當鄰近顯示視窗有其他過近玩家時切換任一或關閉聲效。",
 } end)
 
 L:RegisterTranslations("esES", function() return {

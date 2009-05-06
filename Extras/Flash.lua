@@ -106,7 +106,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Test"] = "測試",
 	["Perform a Flash/Shake test."] = "測試螢幕閃爍/震動。",
 
-	flash_warning = "螢幕震動失效。\n關閉姓名欄并重置用戶介面或關閉 BigWigs“震動”模組。",
+	flash_warning = "螢幕震動失效。\n關閉姓名欄並重置用戶介面或關閉 BigWigs“震動”模組。",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

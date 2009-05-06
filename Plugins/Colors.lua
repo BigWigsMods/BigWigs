@@ -121,6 +121,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Messages"] = "訊息",
 	["Bars"] = "計時條",
+	["Short"] = "短",
+	["Long"] = "長",
 	["Short bars"] = "短計時條",
 	["Long bars"] = "長計時條",
 	["Color "] = "顏色 ",
@@ -128,13 +130,15 @@ L:RegisterTranslations("zhTW", function() return {
 	["Background"] = "背景",
 	["Text"] = "文字",
 	["Reset"] = "重置",
-
+	
+	["Bar"] = "計時條",
+	["Change the normal bar color."] = "改變計時條顏色",
+	["Emphasized bar"] = "強調條",
+	["Change the emphasized bar color."] = "改變強調條顏色.",
+	
 	["Colors of messages and bars."] = "訊息文字與計時條顏色",
 	["Change the color for %q messages."] = "變更 %q 訊息的顏色",
-	["Colors for short bars (< 1 minute)."] = "短時計時條（小於一分鐘）的顏色",
-	["Colors for long bars (> 1 minute)."] = "長時計時條（大於一分鐘）的顏色",
 	["Change the %s color."] = "變更顏色 %s。",
-	["Number of colors the bar has."] = "計時條顏色數量",
 	["Change the bar background color."] = "變更背景顏色",
 	["Change the bar text color."] = "變更文字顏色",
 	["Resets all colors to defaults."] = "全部重置為預設狀態",
@@ -146,6 +150,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Positive"] = "積極",
 	["Bosskill"] = "首領擊殺",
 	["Core"] = "核心",
+	
+	upgrade = "為了更快升級到最新版本,訊息顏色數據和計時條已經重置. 如果你想要再次調整, 右鍵點擊 BigWigs然後移到插件 -> 顏色.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

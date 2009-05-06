@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -170,7 +170,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央。",
 	
-	["Spawns a new test warning."] = "生成一個新的報警測試。",
+	["Spawns a new test warning."] = "生成一個新的警報測試。",
 	["Hide"] = "隱藏",
 	["Hides the anchors."] = "隱藏錨點",
 
