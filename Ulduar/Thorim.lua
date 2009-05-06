@@ -20,7 +20,6 @@ mod.proximitySilent = true
 local db = nil
 local started = nil
 local chargeCount = 1
-local strikeTime = 15
 local fmt = string.format
 local pName = UnitName("player")
 
@@ -477,7 +476,7 @@ function mod:Strike(player, spellID)
 	if db.strike then
 		local msg = fmt(L["strike_message"], player)
 		self:IfMessage(msg, "Attention", spellID)
-		self:Bar(msg, strikeTime, spellID)
+		self:Bar(msg, 15, spellID)
 	end
 end
 
@@ -550,7 +549,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		chargeCount = 1
-		strikeTime = GetCurrentDungeonDifficulty() == 1 and 6 or 15
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
