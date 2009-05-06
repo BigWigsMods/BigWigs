@@ -90,8 +90,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	["Sounds"] = "Töne",
-	["Options for sounds."] = "Optionen für Töne.",
+	["Sounds"] = "Sounds",
+	["Options for sounds."] = "Optionen für die Sounds.",
 
 	["Alarm"] = "Alarm",
 	["Info"] = "Info",
@@ -99,11 +99,11 @@ L:RegisterTranslations("deDE", function() return {
 	["Long"] = "Lang",
 	["Victory"] = "Sieg",
 
-	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Lege den Ton fest, welcher für %q verwendet werden soll (Strg-Klicken um eine Vorschau den Tons zu hören).",
-	["Use sounds"] = "Töne verwenden",
-	["Toggle all sounds on or off."] = "Schalte alle Töne ein oder aus.",
-	["Default only"] = "Nur Standard",
-	["Use only the default sound."] = "Nur den Standardton verwenden.",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören.",
+	["Use sounds"] = "Sounds verwenden",
+	["Toggle all sounds on or off."] = "Schaltet alle Sounds ein oder aus.",
+	["Default only"] = "Nur Standards",
+	["Use only the default sound."] = "Verwendet nur die Standard-Sounds.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

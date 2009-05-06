@@ -69,12 +69,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["CustomBars"] = "Balken",
-	["Custom Bars"] = "Individuelle Anzeigebalken",
-	["Start a custom bar, either local or global."] = "Einen individuellen Anzeigebalken starten (entweder lokal oder global).",
+	["Custom Bars"] = "Eigene Anzeigebalken",
+	["Start a custom bar, either local or global."] = "Startet einen eigenen Anzeigebalken (entweder lokal oder global).",
 	["Local"] = "Lokal",
 	["Global"] = "Global",
 	["<time> <bar text>"] = "<Sekunden> <Balkentext>",
-	["Starts a custom bar with the given parameters."] = "Einen individuellen Anzeigebalken mit den gegebenen Parametern starten.",
+	["Starts a custom bar with the given parameters."] = "Startet einen eigenen Anzeigebalken mit den gegebenen Parametern.",
 	["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet.",
 } end)
 

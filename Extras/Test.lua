@@ -73,16 +73,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Test"] = "Test",
-	["Test Bar "] = "Test Balken ",
-	["Testing"] = "Teste",
+	["Test Bar "] = "Test Balken",
+	["Testing"] = "Teste...",
 	["OMG Bear!"] = "OMG Bär!",
-	["*RAWR*"] = "RAWR",
+	["*RAWR*"] = "*RAWR*",
 	["Victory!"] = "Sieg!",
-	["Commands for testing bars, messages and synchronization."] = "Optionen für den Test von BigWigs.",
+	["Commands for testing bars, messages and synchronization."] = "Optionen für den Test der Anzeigebalken, Nachrichten und der Synchronisation.",
 	["Local test"] = "Lokaler Test",
-	["Perform a local test of BigWigs."] = "Lokalen Test von BigWigs durchführen.",
+	["Perform a local test of BigWigs."] = "Führt einen lokalen Test von Big Wigs durch.",
 	["Sync test"] = "Synchronisations-Test",
-	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchführen.",
+	["Perform a sync test of BigWigs."] = "Führt einen Sychronisations-Test von Big Wigs durch.",
 	["Testing Sync"] = "Teste Synchronisation",
 } end)
 

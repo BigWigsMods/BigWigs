@@ -198,22 +198,34 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Proximity"] = "Nähe",
-	["Close Players"] = "Zu nahe Spieler",
-	["Options for the Proximity Display."] = "Optionen für die Nähe Anzeige.",
+	["Close Players"] = "Nahe Spieler",
+	["Options for the Proximity Display."] = "Optionen für die Anzeige naher Spieler.",
 	["|cff777777Nobody|r"] = "|cff777777Niemand|r",
 	["Sound"] = "Sound",
-	["Play sound on proximity."] = "Spielt einen Sound bei Nähe ab.",
+	["Play sound on proximity."] = "Spielt einen Sound ab, wenn du zu nahe an einem anderen Spieler stehst.",
 	["Disabled"] = "Deaktivieren",
-	["Disable the proximity display for all modules that use it."] = "Deaktiviert die Nähe Anzeige für alle Module die sie benutzen.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die Nähe Anzeige wurde deaktiviert für %s, bitte benutze die Boss Modul Optionen um sie wieder zu aktivieren.",
+	["Disable the proximity display for all modules that use it."] = "Deaktiviert die Anzeige naher Spieler für alle Module, die sie benutzen.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die Anzeige naher Spieler wurde für %s deaktiviert, bitte benutze die Optionen des Bossmoduls, um sie wieder zu aktivieren.",
 
-	proximity = "Nähe Anzeige",
-	proximity_desc = "Zeigt das Nähe Fenster an, wenn es für diesen Encounter benötigt wird. Listet alle Spieler auf, die dir zu nahe stehen.",
+	proximity = "Nähe",
+	proximity_desc = "Zeigt das Fenster für nahe Spieler an. Es listet alle Spieler auf, die dir zu nahe stehen.",
 
 	font = "Fonts\\FRIZQT__.TTF",
 
+	["Close"] = "Schließen",
+	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Schließt und verhindert zukünftig die Anzeige naher Spieler für das aktive Bossmodul (falls eines geladen ist) solange, bis du die Option 'Nähe' des entsprechenden Bossmoduls wieder einschaltest.",
 	["Test"] = "Test",
-	["Perform a Proximity test."] = "Führe einen Nähe Test durch.",
+	["Perform a Proximity test."] = "Führt einen Test der Anzeige naher Spieler durch.",
+	["Display"] = "Anzeige",
+	["Options for the Proximity display window."] = "Optionen für das Fenster der Anzeige naher Spieler.",
+	["Lock"] = "Sperren",
+	["Locks the display in place, preventing moving and resizing."] = "Sperrt die Anzeige und verhindert weiteres Verschieben und Anpassen der Größe.",
+	["Title"] = "Titel",
+	["Shows or hides the title."] = "Zeigt oder versteckt den Titel der Anzeige.",
+	["Background"] = "Hintergrund",
+	["Shows or hides the background."] = "Zeigt oder versteckt den Hintergrund der Anzeige.",
+	["Toggle sound"] = "Sound an/aus",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Schaltet den Sound ein oder aus, der gespielt wird, wenn du zu nahe an einem anderen Spieler stehst.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

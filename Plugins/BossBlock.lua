@@ -140,30 +140,30 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["BossBlock"] = "BossBlock",
-	desc = "Boss-Warnungen und Emotes von Spielern und anderen Quellen automatisch unterdrücken.",
+	desc = "Unterdrückt Boss-Warnungen und Emotes von Spielern und anderen Quellen.",
 
 	["Boss emotes"] = "Boss-Emotes",
-	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Unterdrücke Nachrichten, die an den RaidBossEmoteFrame gesendet werden.\n\nUnterdrückt nur Nachrichten von Bossen die BigsWigs kennt, und unterdrückt nur die Anzeige in diesem Frame, nicht die im Chatfenster.",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Unterdrückt Nachrichten, die an den RaidBossEmoteFrame gesendet werden.\n\nUnterdrückt nur Nachrichten von Bossen, die Big Wigs kennt und nur die Anzeige in diesem Frame, nicht die im Chatfenster.",
 
-	["Raid chat"] = "Raidchat",
-	["Suppress messages sent to raid chat."] = "Nachrichten an den Raidchat unterdrücken.",
+	["Raid chat"] = "Schlachtzug",
+	["Suppress messages sent to raid chat."] = "Unterdrückt Nachrichten, die an den Schlachtzugschat gesendet werden.",
 
-	["Raid warning chat messages"] = "Raidwarnung-Chat unterdrücken",
-	["Suppress raid warning messages from the chat window."] = "Raidwarnung-Nachrichten im Chatfenster unterdrücken.",
+	["Raid warning chat messages"] = "Schlachtzugswarnungs-Nachrichten",
+	["Suppress raid warning messages from the chat window."] = "Unterdrückt Nachrichten im Chatfenster, die an den Schlachtzugswarnungschat gesendet werden.",
 
-	["Raid warning messages"] = "Raidwarnungen unterdrücken",
-	["Suppress raid warning messages from the raid message window."] = "Raidwarnung Popup-Nachrichten unterdrücken.",
+	["Raid warning messages"] = "Schlachtzugswarnung",
+	["Suppress raid warning messages from the raid message window."] = "Unterdrückt aufpoppende Nachrichten im Schlachtzugsnachrichtenfenster, die an den Schlachtzugswarnungschat gesendet werden.",
 
-	["Raid say"] = "RaidSay unterdrücken",
-	["Suppress RaidSay popup messages."] = "CTRA RaidSay Popup-Nachrichten unterdrücken.",
+	["Raid say"] = "RaidSay",
+	["Suppress RaidSay popup messages."] = "Unterdrückt CTRA RaidSay Popup-Nachrichten.",
 
-	["Whispers"] = "Flüstern unterdrücken",
-	["Suppress whispered messages."] = "Flüstern-Nachrichten unterdrücken.",
+	["Whispers"] = "Flüstern",
+	["Suppress whispered messages."] = "Unterdrückt geflüsterte Nachrichten.",
 
-	["Suppressing Chatframe"] = "Chatframe unterdrückt",
-	["Suppressing RaidWarningFrame"] = "RaidWarningFrame unterdrücket",
-	["Suppressing CT_RAMessageFrame"] = "CT_RAMessageFrame unterdrückt",
-	["Suppressing RaidBossEmoteFrame"] = "RaidBossEmoteFrame unterdrückt",
+	["Suppressing Chatframe"] = "Unterdrückt den Chatframe.",
+	["Suppressing RaidWarningFrame"] = "Unterdrückt den RaidWarningFrame.",
+	["Suppressing CT_RAMessageFrame"] = "Unterdrückt den CT_RAMessageFrame.",
+	["Suppressing RaidBossEmoteFrame"] = "Unterdrückt den RaidBossEmoteFrame.",
 
 	["Suppressed"] = "Unterdrückt",
 	["Shown"] = "Angezeigt",

@@ -188,27 +188,27 @@ L:RegisterTranslations("deDE", function() return {
 	["Reset"] = "Zurücksetzen",
 
 	["Colors of messages and bars."] = "Farben der Nachrichten und Anzeigebalken.",
-	["Change the color for %q messages."] = "Farbe ändern für %q Nachrichten.",
+	["Change the color for %q messages."] = "Ändert die Farbe für %q Nachrichten.",
 	["Colors for short bars (< 1 minute)."] = "Farben für kurze Anzeigebalken (< 1 Minute).",
 	["Colors for long bars (> 1 minute)."] = "Farben für lange Anzeigebalken (> 1 Minute).",
-	["Change the %s color."] = "Die %s Farbe ändern.",
+	["Change the %s color."] = "Ändert die %s Farbe.",
 	["Number of colors the bar has."] = "Anzahl der Farben eines Anzeigebalkens.",
-	["Change the bar background color."] = "Hintergrund Farbe ändern.",
-	["Change the bar text color."] = "Textfarbe ändern.",
-	["Resets all colors to defaults."] = "Auf Standard zurücksetzen.",
+	["Change the bar background color."] = "Ändert die Hintergrundfarbe der Anzeigebalken.",
+	["Change the bar text color."] = "Ändert die Textfarbe der Anzeigebalken.",
+	["Resets all colors to defaults."] = "Setzt alle Farben auf Standard zurück.",
 
 	["Important"] = "Wichtig",
-	["Personal"] = "Persöhnlich",
+	["Personal"] = "Persönlich",
 	["Urgent"] = "Dringend",
 	["Attention"] = "Achtung",
 	["Positive"] = "Positiv",
 	["Bosskill"] = "Boss besiegt",
-	["Core"] = "Core",
+	["Core"] = "Kern",
 
-	["1st"] = "1te",
-	["2nd"] = "2te",
-	["3rd"] = "3te",
-	["4th"] = "4te",
+	["1st"] = "1.",
+	["2nd"] = "2.",
+	["3rd"] = "3.",
+	["4th"] = "4.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

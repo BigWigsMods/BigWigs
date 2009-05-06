@@ -235,42 +235,42 @@ L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
 	["Emphasized Bars"] = "Hervorgehobene Anzeigebalken",
 
-	["Options for the timer bars."] = "Optionen für die Timer-Anzeigebalken.",
+	["Options for the timer bars."] = "Optionen für die Anzeigebalken.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	["Show the bar anchor frame."] = "Die Verankerung der Balken anzeigen.",
+	["Show the bar anchor frame."] = "Zeigt die Verankerung der Anzeigebalken.",
 
 	["Enable menu"] = "Menü aktivieren",
-	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Das Balken-Konfigurationsmenü via Alt-Rechtsklick anzeigen.\n\nBeachte, dass wenn diese Option aktiviert ist, du keine Gegenstände mehr Alt-Klicken kannst.",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Das Balken-Konfigurationsmenü via Alt-Rechtsklick anzeigen.\n\nBeachte, dass du keine Gegenstände unter den Balken mehr Alt-Klicken kannst, sobald diese Option aktiviert ist.",
 
 	["Scale"] = "Skalierung",
-	["Set the bar scale."] = "Die Skalierung der Anzeigebalken festlegen.",
+	["Set the bar scale."] = "Legt die Skalierung der Anzeigebalken fest.",
 
 	["Grow upwards"] = "Nach oben fortsetzen",
-	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
+	["Toggle bars grow upwards/downwards from anchor."] = "Weiter Anzeigebalken werden von der Verankerung aus nach oben oder unten fortgesetzt.",
 
 	["Texture"] = "Textur",
-	["Set the texture for the timer bars."] = "Die Textur für die Timer-Balken festlegen.",
+	["Set the texture for the timer bars."] = "Legt die Textur für die Anzeigebalken fest.",
 
 	["Test"] = "Test",
 	["Close"] = "Schließen",
 
 	["Emphasize"] = "Hervorheben",
-	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Anzeigebalken hervorheben, die kurz vor Abschluss sind (<10 Sekunden). Anzeigebalken, die mit einem Timer von weniger als 15 Sekunden starten, werden von Beginn an als hervorgehobene Balken dargestellt.",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Anzeigebalken hervorheben, die kurz vor ihrem Abschluss sind (<10 Sekunden). Anzeigebalken, die mit einem Timer von weniger als 15 Sekunden starten, werden von Beginn an als hervorgehobene Balken dargestellt.",
 
 	["Enable"] = "Aktivieren",
-	["Enables emphasizing bars."] = "Aktiviert hervorgehobene Anzeigebalken.",
+	["Enables emphasizing bars."] = "Aktiviert die hervorgehobenen Anzeigebalken.",
 	["Flash"] = "Blinken",
 	["Flashes the background red for bars that are emphasized."] = "Lässt den Hintergrund von hervorgehobenen Anzeigebalken rot blinken.",
 	["Move"] = "Bewegen",
-	["Move bars that are emphasized to a second anchor."] = "Hervorgehobene Anzeigebalken zu einem zweiten Ankerpunkt bewegen.",
-	["Set the scale for emphasized bars."] = "Die Skalierung für hervorgehobene Anzeigebalken festlegen.",
+	["Move bars that are emphasized to a second anchor."] = "Bewegt hervorgehobene Anzeigebalken zu einem zweiten Ankerpunkt.",
+	["Set the scale for emphasized bars."] = "Legt die Skalierung für hervorgehobene Anzeigebalken fest.",
 
 	["Reset position"] = "Position zurücksetzen",
-	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zurücksetzen (bewegt die Balken zur Mitte deines Interfaces).",
+	["Reset the anchor position, moving it to the center of your screen."] = "Setzt die Verankerungsposition zurück und bewegt die Balken zur Mitte des Bildschirms.",
 
 	["Reverse"] = "Umkehren",
-	["Toggles if bars are reversed (fill up instead of emptying)."] = "Legt fest, ob sich die Anzeigebalken füllen oder leeren sollen.",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "Legt fest, ob sich die Anzeigebalken anstatt leeren füllen sollen.",
 	
 	font = "Fonts\\FRIZQT__.TTF",
 } end)

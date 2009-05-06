@@ -209,7 +209,11 @@ L:RegisterTranslations("deDE", function() return {
 	["Close"] = "Schließen",
 
 	["Reset position"] = "Position zurücksetzen",
-	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zurücksetzen (bewegt alles zur Mitte deines Interfaces).",
+	["Reset the anchor position, moving it to the center of your screen."] = "Die Position der Verankerung zurücksetzen (bewegt alles zur Mitte deines Interfaces).",
+	
+	["Spawns a new test warning."] = "Erzeugt eine neue Testnachricht.",
+	["Hide"] = "Schließen",
+	["Hides the anchors."] = "Versteckt die Verankerung.",
 	
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)

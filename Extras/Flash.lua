@@ -113,8 +113,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["FlashNShake"] = "Aufblitzen/Beben",
-	["Flash'N'Shake"] = "Aufblitzen/Beben",
-	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Lässt den Bildschirm beben und/oder blau aufblitzen, wenn etwas Wichtiges passiert, das direkt dich betrifft.",
+	["Flash'N'Shake"] = "Aufblitzen & Beben",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Lässt den Bildschirm beben und/oder blau aufblitzen, wenn etwas Wichtiges passiert, das dich direkt betrifft.",
 
 	["Flash"] = "Aufblitzen",
 	["Toggle Flash on or off."] = "Schaltet Aufblitzen ein oder aus.",
@@ -123,9 +123,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Toggle Shake on or off."] = "Schaltet Beben ein oder aus.",
 
 	["Test"] = "Test",
-	["Perform a Flash/Shake test."] = "Führe einen Aufblitzen/Beben Test durch.",
+	["Perform a Flash/Shake test."] = "Führe einen Test von Aufblitzen/Beben durch.",
 
-	flash_warning = "Bildschirmbeben fehlgeschlagen. Dies passiert, wenn die Gesundheitsanzeige unter den Namen eingeschaltet ist.\nSchalte diese aus und lade das UI neu oder schalte das Beben von BigWigs aus (Aufblitzen ist nicht betroffen).",
+	flash_warning = "Bildschirmbeben fehlgeschlagen. Dies passiert, wenn die Gesundheitsanzeige unter den Namen eingeschaltet ist.\nSchalte diese aus und lade deine UI neu oder schalte das Beben von Big Wigs aus.",
 } end)
 
 L:RegisterTranslations("esES", function() return {
