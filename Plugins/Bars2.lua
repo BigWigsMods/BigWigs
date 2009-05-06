@@ -71,9 +71,17 @@ L:RegisterTranslations("ruRU", function() return {
 	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Увеличение полос которые близятся к завершению (<10сек). Так же имейте ввиду что полосы продолжительностью менее 15 секунд буду увеличенные сразу.",
 	["Enable"] = "Включить",
 	["Enables emphasizing bars."] = "Включить увеличение полос.",
+	["Move"] = "Перемещение",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Перемещение увеличенных полос. Если эта опция отключена, увеличенные полосы просто можно будет изменить масштаб, окраску, и задать мигание.",
 	["Set the scale for emphasized bars."] = "Установка масштаба увеличенных полос.",
 	["Reset position"] = "Сброс позиции",
 	["Reset the anchor positions, moving them to their default positions."] = "Сброс позиций якоря, вернув его в стандартное положение.",
+	["Test"] = "Тест",
+	["Creates a new test bar."] = "Создаёт новые тестовые полосы.",
+	["Hide"] = "Скрыть",
+	["Hides the anchors."] = "Скрыть якорь.",
+	["Flash"] = "Мерцание",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Мерцание фона увеличенных полос, что может подчеркнуть их заметность.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

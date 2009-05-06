@@ -264,13 +264,15 @@ L:RegisterTranslations("ruRU", function() return {
 	["Background"] = "Фон",
 	["Text"] = "Текст",
 	["Reset"] = "Сброс",
+	
+	["Bar"] = "Полосы",
+	["Change the normal bar color."] = "Изменение цвета обычных полос.",
+	["Emphasized bar"] = "Увеличенные полосы",
+	["Change the emphasized bar color."] = "Изменение цвета увеличенных полос.",
 
 	["Colors of messages and bars."] = "Цвета сообщений и полос",
 	["Change the color for %q messages."] = "Изменить цвет %q сообщений",
-	["Colors for short bars (< 1 minute)."] = "Цвета коротких полос (< 1 минуты)",
-	["Colors for long bars (> 1 minute)."] = "Цвета длинных полос (> 1 минуты)",
 	["Change the %s color."] = "Изменить цвет %s",
-	["Number of colors the bar has."] = "Число цветов успользуемых в полосах",
 	["Change the bar background color."] = "Изменить цвет фона полосы",
 	["Change the bar text color."] = "Изменить цвет текста полосы",
 	["Resets all colors to defaults."] = "Сброс всех цветов на стандартные значения",
@@ -282,6 +284,8 @@ L:RegisterTranslations("ruRU", function() return {
 	["Positive"] = "Позитивные",
 	["Bosskill"] = "Убийство Босса",
 	["Core"] = "Ядро",
+	
+	upgrade = "Ваши установленные цвета для сообщений и полос, были сброшены в целях упрощения обновления последней версии. Если вы хотите настроить их снова, щелкните правой кнопкой мыши по Big Wigs и перейдите в Плагины -> Цвета.",
 } end)
 
 --------------------------------------------------------------------------------

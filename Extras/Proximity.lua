@@ -304,6 +304,8 @@ L:RegisterTranslations("ruRU", function() return {
 	["Shows or hides the title."] = "Показать или скрыть заглавие.",
 	["Background"] = "Фон",
 	["Shows or hides the background."] = "Показать или скрыть фон.",
+	["Toggle sound"] = "Вкл/Выкл звук",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Включить/выключить звуковое оповещение окна близости, когда вы находитесь слишком близко к другому игроку.",
 } end)
 
 --------------------------------------------------------------------------------

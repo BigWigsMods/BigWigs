@@ -103,10 +103,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fШёлкните|r, чтобы включить.",
 	["Big Wigs is currently disabled."] = "Big Wigs в данный момент отключен",
 	["Active boss modules:"] = "Активные модули боссов:",
-	["All running modules have been reset."] = "Все запущенные модули сброшены",
-	["All running modules have been disabled."] = "Все запущенные модули отключены",
+	["All running modules have been reset."] = "Все запущенные модули сброшены.",
+	["All running modules have been disabled."] = "Все запущенные модули отключены.",
 	["Menu"] = "Меню",
-	["Menu options."] = "Опции меню",
+	["Menu options."] = "Меню опций.",
 } end)
 
 ----------------------------
