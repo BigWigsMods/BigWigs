@@ -1,4 +1,4 @@
-## Interface: 30100
+﻿## Interface: 30100
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Title-ruRU: Big Wigs [|cffeda55fПлагины|r]
@@ -28,7 +28,7 @@
 Comm.lua
 Colors.lua
 TargetMonitor.lua
-Bars.lua
+Bars2.lua
 Messages.lua
 Sound.lua
 RaidWarn.lua
