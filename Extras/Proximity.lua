@@ -140,6 +140,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Disabled"] = "미사용",
 	["Disable the proximity display for all modules that use it."] = "모든 모듈의 접근 표시를 비활성화 합니다.",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s에 대한 접근 표시가 비활성화 되었습니다. 다시 사용하려면 해당 보스 모듈의 설정을 사용하세요.",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "접근 표시가 고정되어 있습니다. 고정을 해제하길 원하거나 설정하려면 Big Wigs 아이콘의 우클릭하여 기타 -> 접근 -> 표시 이곳을 통해 이동 또는 기타 설정을 할 수 있습니다.",
 
 	proximity = "접근 표시",
 	proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 접근 표시창을 표시합니다.",
@@ -158,6 +159,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Shows or hides the title."] = "제목을 표시하거나 숨깁니다.",
 	["Background"] = "배경",
 	["Shows or hides the background."] = "배경을 표시하거나 숨깁니다.",
+	["Toggle sound"] = "소리 전환",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "접근 창에 다른 플에이어와 가까이 있을 경에 알리는 경고음을 켜거나 끌수있게 합니다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
