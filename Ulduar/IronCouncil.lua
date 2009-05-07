@@ -391,7 +391,7 @@ function mod:OnEnable()
 
 	-- Chain Lightning is just spammed too much to be useful as a raid warning.
 	--self:AddCombatListener("SPELL_CAST_START", "Chain", 61879, 63479) -- Brundir 
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869) -- Brundir
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869, 63481) -- Brundir
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
 
