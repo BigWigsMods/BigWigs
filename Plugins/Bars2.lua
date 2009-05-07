@@ -24,6 +24,7 @@ local normalAnchor, emphasizeAnchor = nil, nil
 
 L:RegisterTranslations("enUS", function() return {
 	["Bars"] = true,
+	["Normal Bars"] = true,
 	["Emphasized Bars"] = true,
 	["Options for the timer bars."] = true,
 	["Toggle anchors"] = true,
@@ -51,6 +52,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Hides the anchors."] = true,
 	["Flash"] = true,
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = true,
+	["Regular bars"] = true,
+	["Emphasized bars"] = true,
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -147,6 +150,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Bars"] = "바",
+	["Normal Bars"] = "일반 바",
 	["Emphasized Bars"] = "강조 바",
 	["Options for the timer bars."] = "타이머 바에 대한 설정입니다.",
 	["Toggle anchors"] = "앵커 토글",
@@ -174,6 +178,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Hides the anchors."] = "앵커를 숨깁니다.",
 	["Flash"] = "섬광",
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "강조 바에 붉은색 배경을 번쩍이게 합니다.",
+	["Regular bars"] = "일반 바",
+	["Emphasized bars"] = "강조 바",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -264,7 +270,7 @@ plugin.consoleOptions = {
 		},
 		normal_header = {
 			type = "header",
-			name = "Regular bars",
+			name = L["Regular bars"],
 			order = 99,
 		},
 		growup = {
@@ -289,7 +295,7 @@ plugin.consoleOptions = {
 		},
 		emp_header = {
 			type = "header",
-			name = "Emphasized bars",
+			name = L["Emphasized bars"],
 			order = 299,
 		},
 		emphasize = {
@@ -513,8 +519,8 @@ function plugin:OnRegister()
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 	
 	db = self.db.profile
-	normalAnchor = createAnchor("BigWigsAnchor", "Normal Bars")
-	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", "Emphasized Bars")
+	normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
+	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
 end
 
 function plugin:OnEnable()
