@@ -672,6 +672,7 @@ function plugin:EmphasizeBar(bar)
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("anchor", emphasizeAnchor)
+		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
 	end
 	if db.emphasizeFlash then
 		bar:AddUpdateFunction(flash)
