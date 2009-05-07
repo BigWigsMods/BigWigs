@@ -62,6 +62,11 @@ L:RegisterTranslations("koKR", function() return {
 	["Background"] = "배경",
 	["Text"] = "글자",
 	["Reset"] = "초기화",
+	
+	["Bar"] = "바",
+	["Change the normal bar color."] = "기본 바 색상을 변경합니다.",
+	["Emphasized bar"] = "강조 바",
+	["Change the emphasized bar color."] = "강조 바 색상을 변경합니다.",
 
 	["Colors of messages and bars."] = "메세지와 바의 색상을 설정합니다.",
 	["Change the color for %q messages."] = "%q 메세지에 대한 색생을 변경합니다.",

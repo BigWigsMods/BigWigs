@@ -96,6 +96,10 @@ L:RegisterTranslations("koKR", function() return {
 	["Reset position"] = "위치 초기화",
 	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정 위치를 초기화합니다.",
 	
+	["Spawns a new test warning."] = "새 테스트 경고를 표시합니다.",
+	["Hide"] = "숨김",
+	["Hides the anchors."] = "앵커를 숨깁니다.",
+	
 	Font = "Fonts\\2002.TTF",
 } end)
 

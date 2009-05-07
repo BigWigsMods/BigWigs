@@ -164,8 +164,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Enable"] = "사용",
 	["Enables emphasizing bars."] = "강조 바를 사용합니다.",
 	["Move"] = "이동",
-	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "강조될 바를 두번째 고정위치로 이동합니다.",
-	["Set the scale for emphasized bars."] = "강조될 바의 크기를 설정합니다.",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "강조 바를 두번째 고정위치로 이동합니다.",
+	["Set the scale for emphasized bars."] = "강조 바의 크기를 설정합니다.",
 	["Reset position"] = "위치 초기화",
 	["Reset the anchor positions, moving them to their default positions."] = "화면의 중앙으로 고정위치를 초기화합니다.",
 	["Test"] = "테스트",
@@ -173,7 +173,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Hide"] = "숨김",
 	["Hides the anchors."] = "앵커를 숨깁니다.",
 	["Flash"] = "섬광",
-	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "강조된 바에 붉은색 배경을 번쩍이게 합니다.",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "강조 바에 붉은색 배경을 번쩍이게 합니다.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
