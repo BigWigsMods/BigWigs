@@ -299,11 +299,32 @@ function mod:SlagPot(player, spellID)
 	end
 end
 
-function mod:Jets(_, spellID)
-	if db.flame then
-		self:IfMessage(L["flame_message"], "Important", spellID, "Alert")
-		self:Bar(L["flame_bar"], 25, spellID)
-		self:Bar(L["flame"], 2.7, spellID)
+do
+	local _, class = UnitClass("player")
+	local fury = GetSpellInfo(25780)
+	local function isCaster()
+		local power = UnitPowerType("player")
+		if power ~= 0 then return nil end
+		if class == "PALADIN" then
+			for i = 1, 40 do
+				local name = UnitBuff("player", i)
+				if not name then break
+				elseif name == fury then return nil
+				end
+			end
+		end
+		return true
+	end
+
+	function mod:Jets(_, spellID)
+		if db.flame then
+			local caster = isCaster()
+			local color = caster and "Personal" or "Attention"
+			local sound = caster and "Long" or nil
+			self:IfMessage(L["flame_message"], color, spellID, sound)
+			self:Bar(L["flame_bar"], 25, spellID)
+			if caster then self:Bar(L["flame"], 2.7, spellID) end
+		end
 	end
 end
 

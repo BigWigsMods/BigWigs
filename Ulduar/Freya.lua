@@ -425,10 +425,31 @@ function mod:Root(player, spellID)
 	end
 end
 
-function mod:Tremor(_, spellID)
-	if db.tremor then
-		self:IfMessage(L["tremor_message"], "Important", spellID, "Long")
-		self:Bar(L["tremor"], 2, spellID)
+do
+	local _, class = UnitClass("player")
+	local fury = GetSpellInfo(25780)
+	local function isCaster()
+		local power = UnitPowerType("player")
+		if power ~= 0 then return nil end
+		if class == "PALADIN" then
+			for i = 1, 40 do
+				local name = UnitBuff("player", i)
+				if not name then break
+				elseif name == fury then return nil
+				end
+			end
+		end
+		return true
+	end
+
+	function mod:Tremor(_, spellID)
+		if db.tremor then
+			local caster = isCaster()
+			local color = caster and "Personal" or "Attention"
+			local sound = caster and "Long" or nil
+			self:IfMessage(L["tremor_message"], color, spellID, sound)
+			self:Bar(L["tremor"], 2, spellID)
+		end
 	end
 end
 
@@ -450,7 +471,7 @@ local function scanTarget()
 	if target then
 		local other = L["sunbeam_other"]:format(target)
 		if target == pName then
-			mod:LocalMessage(L["sunbeam_you"], "Personal", 62872, "Alert")
+			mod:LocalMessage(L["sunbeam_you"], "Attention", 62872)
 			mod:WideMessage(other)
 		else
 			mod:IfMessage(other, "Attention", 62872)
