@@ -425,9 +425,9 @@ function mod:Root(player, spellID)
 	end
 end
 
-function mod:Tremor(_, spellId)
+function mod:Tremor(_, spellID)
 	if db.tremor then
-		self:IfMessage(L["tremor_message"], "Personal", spellId, "Long")
+		self:IfMessage(L["tremor_message"], "Personal", spellID, "Long")
 		self:Bar(L["tremor"], 2, spellID)
 	end
 end
