@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -173,12 +173,15 @@ L:RegisterTranslations("deDE", function() return {
 	["Text"] = "Text",
 	["Reset"] = "Zurücksetzen",
 
+
+	["Bar"] = "Balken",
+	["Change the normal bar color."] = "Ändert die normale Farbe der Anzeigebalken.",
+	["Emphasized bar"] = "Betonte Balken",
+	["Change the emphasized bar color."] = "Ändert die Farbe der betonten Balken.",
+
 	["Colors of messages and bars."] = "Farben der Nachrichten und Anzeigebalken.",
 	["Change the color for %q messages."] = "Ändert die Farbe für %q Nachrichten.",
-	["Colors for short bars (< 1 minute)."] = "Farben für kurze Anzeigebalken (< 1 Minute).",
-	["Colors for long bars (> 1 minute)."] = "Farben für lange Anzeigebalken (> 1 Minute).",
 	["Change the %s color."] = "Ändert die %s Farbe.",
-	["Number of colors the bar has."] = "Anzahl der Farben eines Anzeigebalkens.",
 	["Change the bar background color."] = "Ändert die Hintergrundfarbe der Anzeigebalken.",
 	["Change the bar text color."] = "Ändert die Textfarbe der Anzeigebalken.",
 	["Resets all colors to defaults."] = "Setzt alle Farben auf Standard zurück.",
@@ -190,6 +193,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Positive"] = "Positiv",
 	["Bosskill"] = "Boss besiegt",
 	["Core"] = "Kern",
+
+upgrade = "Deine Farben Einstellungen für Nachrichten und Balken wurden zurückgesetzt um Probleme beim Aktualisieren von der letzten version zu vermeiden. Wenn du sie wieder ändern möchtest, rechtsklick auf Big Wigs und geh zu Plugins -> Farben.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

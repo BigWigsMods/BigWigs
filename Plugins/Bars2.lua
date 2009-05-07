@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -214,6 +214,40 @@ L:RegisterTranslations("frFR", function() return {
 	["Hides the anchors."] = "Cacher les ancres",
 	["Flash"] = "Clignoter",
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Fait clignoter l'arrière-plan des barres en évidence afin que vous puissiez mieux les voir.",
+} end)
+
+L:RegisterTranslations("deDE", function() return {
+	["Bars"] = "Anzeigebalken",
+	["Normal Bars"] = "Normale Anzeigebalken",
+	["Emphasized Bars"] = "Betonte Anzeigebalken",
+	["Options for the timer bars."] = "Optionen für die Zeitbalken.",
+	["Toggle anchors"] = "Zeige Anzeigepunkte",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "Zeige oder verstecke die Anzeigepunkte für normale und betonte Anzeigebalken.",
+	["Scale"] = "Skalierung",
+	["Set the bar scale."] = "Justiere die Balken Skalierung",
+	["Grow upwards"] = "Nach oben erweitern",
+	["Toggle bars grow upwards/downwards from anchor."] = "Justiere ob die Anzeigebalken sich nach oben oder unten vom Anzeigepunkt aus erweitern.",
+	["Texture"] = "Textur",
+	["Set the texture for the timer bars."] = "Wähle die Textur für die Zeitbalken.",
+	["Test"] = "Test",
+	["Close"] = "Schließen",
+	["Emphasize"] = "Betonen",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Betonte Balken die kurz vor dem Auslaufen sind (<10sek). Beachte zudem das Anzeigebalken die mit weniger als 15 Sekunden beginnen automatisch betont werden.",
+	["Enable"] = "Aktiv",
+	["Enables emphasizing bars."] = "Aktiviere Betonte Anzeigebalken.",
+	["Move"] = "Bewegen",
+	["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Bewegt die betonten Anzeigebalken zum Betonen Anzeigepunkt. Wenn diese Option deaktiviert ist, so werden betonte Anzeigebalken einfach nur ihre Größe und Farbe ändern, und möglicherweise anfangen zu blinken.",
+	["Set the scale for emphasized bars."] = "Justiere die Skalierung für betonte Anzeigebalken.",
+	["Reset position"] = "Resette Position",
+	["Reset the anchor positions, moving them to their default positions."] = "Setzt die Positionen der Anzeigepunkte zurrück auf ihre Grundposition.",
+	["Test"] = "Test",
+	["Creates a new test bar."] = "Erstellt eine neuen Testbalken.",
+	["Hide"] = "Verstecken",
+	["Hides the anchors."] = "Versteckt die Anzeigepunkte.",
+	["Flash"] = "Blinken",
+	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Läst den Hintergrund der betonten Anzeigebalken blinken, was es erleichtern kann sie zu erkennen.",
+	["Regular bars"] = "Normale Anzeigebalken",
+	["Emphasized bars"] = "Betonte Anzeigebalken",
 } end)
 
 --------------------------------------------------------------------------------
