@@ -346,18 +346,20 @@ local function rearrangeBars(anchor)
 		table.insert(tmp, bar)
 	end
 	table.sort(tmp, barSorter)
-	local lastBar = nil
-	local up = anchor == normalAnchor and db.growup or db.emphasizeGrowup
+	local lastDownBar, lastUpBar = nil, nil
+	local up = nil
+	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 	for i, bar in ipairs(tmp) do
 		bar:ClearAllPoints()
-		if up then
-			bar:SetPoint("BOTTOMLEFT", lastBar or anchor, "TOPLEFT")
-			bar:SetPoint("BOTTOMRIGHT", lastBar or anchor, "TOPRIGHT")
+		if up or (db.emphasizeGrowup and bar:Get("emphasized")) then
+			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
+			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
+			lastUpBar = bar
 		else
-			bar:SetPoint("TOPLEFT", lastBar or anchor, "BOTTOMLEFT")
-			bar:SetPoint("TOPRIGHT", lastBar or anchor, "BOTTOMRIGHT")
+			bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT")
+			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT")
+			lastDownBar = bar
 		end
-		lastBar = bar
 	end
 end
 
