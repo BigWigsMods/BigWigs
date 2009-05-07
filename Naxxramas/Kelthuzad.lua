@@ -284,10 +284,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("zhTW", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德的大廳",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德之間",
 
 	start_trigger = "僕從們，侍衛們，隸屬於黑暗與寒冷的戰士們!聽從科爾蘇加德的召喚!",
-	start_warning = "戰斗開始，約3分30秒後，科爾蘇加德進入戰鬥！",
+	start_warning = "戰鬥開始，約3分30秒後，科爾蘇加德進入戰鬥！",
 	start_bar = "<第二階段>",
 
 	phase = "階段",
@@ -322,13 +322,13 @@ L:RegisterTranslations("zhTW", function() return {
 	detonate_you = ">你< 爆裂法力！",
 	detonate_other = "爆裂法力：>%s<！",
 	detonate_possible_bar = "<可能 爆裂法力>",
-	detonate_warning = "約5秒后，爆裂法力！",
+	detonate_warning = "約5秒後，爆裂法力！",
 
-	guardians = "寒冰皇冠守衛者",
-	guardians_desc = "當第三階段召喚寒冰皇冠守衛者時發出警報。",
-	guardians_trigger = "非常好，凍原的戰士們，起來吧!我命令你們作戰，為你們的主人殺戮或獻身吧!不要留下活口",
-	guardians_warning = "約10秒後，寒冰皇冠守衛者出現！",
-	guardians_bar = "<寒冰皇冠守衛者出現>",
+	guardians = "寒冰皇冠守護者",
+	guardians_desc = "當第三階段召喚寒冰皇冠守護者時發出警報。",
+	guardians_trigger = "非常好，凍原的戰士們，起來吧!我命令你們作戰，為你們的主人殺戮或獻身吧!不要留下活口!",
+	guardians_warning = "約10秒後，寒冰皇冠守護者出現！",
+	guardians_bar = "<寒冰皇冠守護者出現>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了爆裂法力的玩家打上團隊標記。（需要權限）",
