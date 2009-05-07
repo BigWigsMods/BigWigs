@@ -92,6 +92,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
+	["Normal Bars"] = "一般计时条",
 	["Emphasized Bars"] = "醒目计时条",
 	["Options for the timer bars."] = "计时条选项。",
 	["Toggle anchors"] = "切换锚点",
@@ -113,11 +114,14 @@ L:RegisterTranslations("zhCN", function() return {
 	["Set the scale for emphasized bars."] = "设置醒目计时条缩放。",
 	["Reset position"] = "重置位置",
 	["Reset the anchor positions, moving them to their default positions."] = "重置锚点位置，移动它们到默认位置。",
+	["Test"] = "测试",
 	["Creates a new test bar."] = "新建测试计时条",
 	["Hide"] = "隐藏",
 	["Hides the anchors."] = "隐藏锚点",
 	["Flash"] = "闪烁",
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "醒目计时条背景闪烁，方便你留意它。",
+	["Regular bars"] = "常规计时条",
+	["Emphasized bars"] = "醒目计时条",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

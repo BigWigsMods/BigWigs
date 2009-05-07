@@ -101,12 +101,14 @@ L:RegisterTranslations("zhCN", function() return {
 	["Text"] = "文本",
 	["Reset"] = "重置",
 
+	["Bar"] = "计时条",
+	["Change the normal bar color."] = "改变一般计时条颜色。",
+	["Emphasized bar"] = "醒目计时条",
+	["Change the emphasized bar color."] = "改变醒目计时条颜色。",
+
 	["Colors of messages and bars."] = "设置信息文字与计时条的颜色。",
 	["Change the color for %q messages."] = "改变%q信息的颜色。",
-	["Colors for short bars (< 1 minute)."] = "短时间计时条 (<1 分钟)的颜色。",
-	["Colors for long bars (> 1 minute)."] = "长时间计时条 (> 1分钟)的颜色。",
-	["Change the %s color."] = "改变 %s 颜色。",
-	["Number of colors the bar has."] = "计时条的颜色数量。",
+	["Change the %s color."] = "改变%s颜色。",
 	["Change the bar background color."] = "改变计时条背景颜色。",
 	["Change the bar text color."] = "改变计时条文本显示颜色",
 	["Resets all colors to defaults."] = "重置所有颜色为默认。",
@@ -118,6 +120,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Positive"] = "醒目",
 	["Bosskill"] = "首领击杀",
 	["Core"] = "核心",
+	
+	upgrade = "信息与计时条颜色值已被重置以便升级到最新版本。如果想再次调整，右击 Big Wigs 图标选择插件 -> 颜色。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

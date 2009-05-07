@@ -137,7 +137,7 @@ L:RegisterTranslations("zhCN", function() return {
 	
 	["Spawns a new test warning."] = "生成一个新的报警测试。",
 	["Hide"] = "隐藏",
-	["Hides the anchors."] = "隐藏锚点",
+	["Hides the anchors."] = "隐藏锚点。",
 
 	Font = "Fonts\\ZYKai_T.TTF",
 } end)
@@ -176,7 +176,7 @@ L:RegisterTranslations("zhTW", function() return {
 	
 	["Spawns a new test warning."] = "生成一個新的警報測試。",
 	["Hide"] = "隱藏",
-	["Hides the anchors."] = "隱藏錨點",
+	["Hides the anchors."] = "隱藏錨點。",
 
 	Font = "Fonts\\bHEI01B.TTF"
 } end)
