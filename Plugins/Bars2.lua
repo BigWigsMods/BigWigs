@@ -187,10 +187,11 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Bars"] = "Barres",
+	["Normal Bars"] = "Barres normales",
 	["Emphasized Bars"] = "Barres en évidence",
 	["Options for the timer bars."] = "Options concernant les barres temporelles.",
-	["Show anchor"] = "Afficher l'ancre",
-	["Show the bar anchors for both normal and emphasized bars."] = "Affiche l'ancre pour les barres normales et les barres en évidence.",
+	["Toggle anchors"] = "Afficher/cacher ancres",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "Affiche l'ancre pour les barres normales et les barres en évidence.",
 	["Scale"] = "Echelle",
 	["Set the bar scale."] = "Détermine l'échelle des barres.",
 	["Grow upwards"] = "Ajouter vers le haut",
@@ -211,9 +212,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Test"] = "Test",
 	["Creates a new test bar."] = "Créé une nouvelle barre de test.",
 	["Hide"] = "Cacher",
-	["Hides the anchors."] = "Cacher les ancres",
+	["Hides the anchors."] = "Cacher les ancres.",
 	["Flash"] = "Clignoter",
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Fait clignoter l'arrière-plan des barres en évidence afin que vous puissiez mieux les voir.",
+	["Regular bars"] = "Barres normales",
+	["Emphasized bars"] = "Barres en évidence",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

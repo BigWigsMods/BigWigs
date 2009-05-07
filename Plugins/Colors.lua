@@ -212,12 +212,14 @@ L:RegisterTranslations("frFR", function() return {
 	["Text"] = "Texte",
 	["Reset"] = "RÀZ",
 
+	["Bar"] = "Barre",
+	["Change the normal bar color."] = "Change la couleur des barres normales.",
+	["Emphasized bar"] = "Barre en évidence",
+	["Change the emphasized bar color."] = "Change la couleur des barres mises en évidence.",
+
 	["Colors of messages and bars."] = "Couleurs des messages et des barres.",
 	["Change the color for %q messages."] = "Change la couleur des messages %q.",
-	["Colors for short bars (< 1 minute)."] = "Couleurs des barres de courte durée (< 1 minute).",
-	["Colors for long bars (> 1 minute)."] = "Couleurs des barres de longue durée (> 1 minute).",
 	["Change the %s color."] = "Change la couleur de %s.",
-	["Number of colors the bar has."] = "Nombre de couleurs que possède la barre.",
 	["Change the bar background color."] = "Change la couleur de l'arrière-plan.",
 	["Change the bar text color."] = "Change la couleur du texte des barres.",
 	["Resets all colors to defaults."] = "Réinitialise tous les paramètres à leurs valeurs par défaut.",
@@ -229,6 +231,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Positive"] = "Positif",
 	["Bosskill"] = "Défaite",
 	["Core"] = "Noyau",
+
+	upgrade = "Les valeurs de couleur pour vos messages & barres ont été réinitialisées afin de faciliter la mise à jour à partir de la dernière version. Si vous voulez les modifier à nouveau, faites un clic droit sur Big Wigs et allez dans Plugins -> Couleurs.",
 } end)
 
 L:RegisterTranslations("esES", function() return {
