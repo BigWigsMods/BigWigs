@@ -354,7 +354,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	tendrils = "Светящиеся придатки",
 	tendrils_desc = "Сообщает кого преследуют светящиеся придатки, и помещает на него иконку.",
-	tendrils_other = "Преследуют |3-1(%s)!",
+	tendrils_other = "Преследует |3-3(%s)!",
 	tendrils_you = "ВАС преследуют!",
 
 	overwhelm = "Переполняющая энергия",
