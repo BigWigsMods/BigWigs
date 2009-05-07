@@ -70,10 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Colors of messages and bars."] = "메세지와 바의 색상을 설정합니다.",
 	["Change the color for %q messages."] = "%q 메세지에 대한 색생을 변경합니다.",
-	["Colors for short bars (< 1 minute)."] = "짧은 바에 대한 색상을 변경합니다(1분 이하).",
-	["Colors for long bars (> 1 minute)."] = "긴 바에 대한 색상을 설정합니다 (1분 이상).",
 	["Change the %s color."] = "%s의 색상을 변경합니다.",
-	["Number of colors the bar has."] = "바 색상의 개수를 설정합니다.",
 	["Change the bar background color."] = "배경 색상을 변경합니다.",
 	["Change the bar text color."] = "글자 색상을 변경합니다.",
 	["Resets all colors to defaults."] = "모든 색상을 기본 설정으로 초기화합니다.",
@@ -85,6 +82,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Positive"] = "제안",
 	["Bosskill"] = "보스사망",
 	["Core"] = "코어",
+	
+	upgrade = "마지막 버전에서부터 새적용 사항을 작동되게 메세지와 바에 대한 색상값이 초기화 되었습니다. 만약 이것을 다시 조절하고 싶다면, Big Wigs 아이콘에 마우스 우-클릭하고 플러그인 -> 색상으로 이동하여 설정하세요.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
