@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "magnetic", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", "lootchange", -1, "plasma", "shock", "laser", "magnetic", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -65,6 +65,9 @@ L:RegisterTranslations("enUS", function() return {
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core.",
 	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
+	
+	lootchange = "Enable FFA",
+	lootchange_desc = "Turn on setting loot to Free-For-All when Phase 3. And Phase 4, Setting loot to Master Looter.(Needs Raid Leader)",
 
 	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
@@ -107,6 +110,9 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
 	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
+	
+	lootchange = "자유획득 사용",
+	lootchange_desc = "3단계시 자유획득으로 변경합니다. 그리고 4단계시 담당자 획득으로 변경합니다.(지휘관 권한 요구)",
 
 	end_trigger = "^내가 계산을 좀 잘못한 것 같군",
 } end )
@@ -149,6 +155,9 @@ L:RegisterTranslations("frFR", function() return {
 	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",
 	magnetic_message = "UCA au sol !",
 	loot_message = "%s a ramassé un noyau !",
+	
+	--lootchange = "Enable FFA",
+	--lootchange_desc = "Turn on setting loot to Free-For-All when Phase 3. And Phase 4, Setting loot to Master Looter.(Needs Raid Leader)",
 
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
 } end )
@@ -191,6 +200,9 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_desc = "Warnung und Timer, wenn ein Magnetischer Kern geplündert wurde und die Luftkommandoeinheit am Boden ist.",
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
+	
+	--lootchange = "Enable FFA",
+	--lootchange_desc = "Turn on setting loot to Free-For-All when Phase 3. And Phase 4, Setting loot to Master Looter.(Needs Raid Leader)",
 
 	end_trigger = "^Es scheint, als wäre mir", -- NEED!
 } end )
@@ -233,6 +245,9 @@ L:RegisterTranslations("zhCN", function() return {
 	magnetic_desc = "当Aerial Command Unit获得Magnetic Core时发出警报。",
 	magnetic_message = "Aerial Command Unit 已降落！",
 	loot_message = ">%s< 拾取了Magnetic Core！",
+	
+	--lootchange = "Enable FFA",
+	--lootchange_desc = "Turn on setting loot to Free-For-All when Phase 3. And Phase 4, Setting loot to Master Looter.(Needs Raid Leader)",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
@@ -275,6 +290,9 @@ L:RegisterTranslations("zhTW", function() return {
 	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
 	magnetic_message = "空中指揮裝置 已降落！",
 	loot_message = ">%s< 拾取了磁能之核！",
+	
+	--lootchange = "Enable FFA",
+	--lootchange_desc = "Turn on setting loot to Free-For-All when Phase 3. And Phase 4, Setting loot to Master Looter.(Needs Raid Leader)",
 
 	end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。",
 } end )
@@ -317,6 +335,9 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_desc = "Сообщает когда Воздушное судно находится под воздействием Магнитного ядра",
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
+	
+	--lootchange = "Enable FFA",
+	--lootchange_desc = "Turn on setting loot to Free-For-All when Phase 3. And Phase 4, Setting loot to Master Looter.(Needs Raid Leader)",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
@@ -429,12 +450,22 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
+		if IsRaidLeader() then
+			if db.lootchange then
+				SetLootMethod("freeforall")
+			end
+		end
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
 		self:TriggerEvent("BigWigs_StopBar", self, L["magnetic"])
 		if db.phase then
 			self:IfMessage(L["phase4_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
+		end
+		if IsRaidLeader() then
+			if db.lootchange then
+				SetLootMethod("master", UnitName("player"))
+			end
 		end
 	elseif msg:find(L["end_trigger"]) then
 		self:BossDeath(nil, self.guid)
