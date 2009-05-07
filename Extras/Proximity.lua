@@ -676,7 +676,7 @@ function plugin:SetupFrames()
 
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
-	header:SetText("Proximity")
+	header:SetText(L["Proximity"])
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 	display.header = header
 
