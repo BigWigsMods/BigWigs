@@ -302,18 +302,18 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	flame = "Жгучее пламя",
-	flame_desc = "Сообщает когда Везакс применяет Жгучее пламя.",
-	flame_message = "Жгучее пламя!",
-
 	--engage_trigger = "^Your destruction will herald a new age of suffering!",
 
+	flame = "Жгучее пламя",
+	flame_desc = "Сообщает когда Везакс применяет Жгучее пламя.",
+	flame_message = "Жгучее пламя!",	
+	
 	surge = "Наплыв Тьмы",
 	surge_desc = "Сообщает когда Везакс применяет Наплыв Тьмы.",
 	surge_message = "Наплыв Тьмы!",
 	surge_cast = "Применяется Наплыв Тьмы!",
 	surge_end = "Наплыв Тьмы рассеялся!",
-	--surge_bar = "Next Surge",
+	surge_bar = "Следующий наплыв",
 
 	animus = "Саронитовый враг",
 	animus_desc = "Сообщать о появлении саронитового врага.",
@@ -325,22 +325,25 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor_bar = "Пары",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
-	--vaporstack = "Vapors Stack",
-	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
-	--vaporstack_message = "Vapors x%d!",
+	vaporstack = "Сумма испарения",
+	vaporstack_desc = "Сообщать когда у вас уже 5 шт Саронитового испарения.",
+	vaporstack_message = "Испарения x%d!",
 
 	crash = "Темное сокрушение",
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
 	crash_you = "Темное сокрушение на ВАС!",
-	crash_other = "Темное сокрушение на |3-5(%s)",
+	crash_other = "Сокрушение на |3-5(%s)",
 	crash_say = "Сокрушение на Мне!",
+	
+	crashicon = "Иконка Сокрушения",
+	crashicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока, на которого наложено Темное сокрушение. (необходимо быть лидером группы или рейда)",
 
 	mark = "Метка Безликого",
 	mark_desc = "Помечать иконкой Метку Безликого.",
 	mark_message_you = "На ВАС Метка Безликого!",
 	mark_message_other = "Метка на: |3-5(%s)!",
 
-	icon = "Помечать иконкой",
+	icon = "Иконка Метки",
 	icon_desc = "Помечать рейдовой иконкой игрока, на который попал под воздействие Темного сокрушения. (необходимо быть лидером группы или рейда)",
 } end )
 

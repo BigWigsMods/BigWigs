@@ -58,6 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	["Bars"] = "Полосы",
+	["Normal Bars"] = "Обычные полосы",
 	["Emphasized Bars"] = "Увеличенные полосы",
 	["Options for the timer bars."] = "Опции полос времени.",
 	["Toggle anchors"] = "Переключение якоря",
@@ -85,6 +86,8 @@ L:RegisterTranslations("ruRU", function() return {
 	["Hides the anchors."] = "Скрыть якорь.",
 	["Flash"] = "Мерцание",
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Мерцание фона увеличенных полос, что может подчеркнуть их заметность.",
+	["Regular bars"] = "Обычные полосы",
+	["Emphasized bars"] = "Увеличенные полосы",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
