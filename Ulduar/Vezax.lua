@@ -349,6 +349,10 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	lastVapor = nil
+	count = 1
+	db = self.db.profile
+	
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
 	self:AddCombatListener("SPELL_CAST_START", "Animus", 63145)
@@ -356,15 +360,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
+	
+	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("UNIT_AURA")
-	
-	lastVapor = nil
-	count = 1
-	db = self.db.profile
 end
 
 ------------------------------
@@ -384,7 +384,7 @@ function mod:UNIT_AURA(unit)
 	end
 	if saronite and saronite ~= lastVapor then
 		if db.vaporstack and saronite > 4 then
-			self:LocalMessage(L["cold_message"]:format(saronite), "Personal", "Interface\\Icons\\INV_Ore_Saronite_01")
+			self:LocalMessage(L["vaporstack_message"]:format(saronite), "Personal", "Interface\\Icons\\INV_Ore_Saronite_01")
 		end
 		lastVapor = saronite
 	end
