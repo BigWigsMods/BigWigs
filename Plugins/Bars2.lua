@@ -119,6 +119,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
+	["Normal Bars"] = "一般計時條",
 	["Emphasized Bars"] = "強調條",
 	["Options for the timer bars."] = "計時條選項。",
 	["Toggle anchors"] = "切換錨點",
@@ -146,6 +147,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Hides the anchors."] = "隱藏錨點",
 	["Flash"] = "閃爍",
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "強調條背景閃爍，方便你留意它。",
+	["Regular bars"] = "常規計時條",
+	["Emphasized bars"] = "強調條",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
