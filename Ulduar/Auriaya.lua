@@ -247,7 +247,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
 	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
-	self:AddCombatListener("SPELL_CAST_START", "SwarmCast", 64396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Defender", 64455)
 	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "DefenderKill", 64455)
@@ -286,47 +285,18 @@ function mod:DefenderKill(_, spellID)
 	end
 end
 
-do
-	local function getTarget()
-		if UnitName("target") == boss then
-			return UnitName("targettarget")
-		elseif UnitName("focus") == boss then
-			return UnitName("focustarget")
-		else
-			local num = GetNumRaidMembers()
-			for i = 1, num do
-				if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
-					return UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-				end
-			end
-		end
+function mod:Swarm(player, spell)
+	if not db.swarm then return end
+	local other = L["swarm_other"]:format(player)
+	if player == pName then
+		mod:LocalMessage(L["swarm_you"], "Personal", spell, "Alert")
+		mod:WideMessage(other)
+	else
+		mod:IfMessage(other, "Attention", spell)
+		mod:Whisper(player, L["swarm_you"])
 	end
-	local function swarmWarning(player, spell)
-		if not db.swarm then return end
-		local other = L["swarm_other"]:format(player)
-		if player == pName then
-			mod:LocalMessage(L["swarm_you"], "Personal", spell, "Alert")
-			mod:WideMessage(other)
-		else
-			mod:IfMessage(other, "Attention", spell)
-			mod:Whisper(player, L["swarm_you"])
-		end
-		mod:Bar(L["swarm_bar"], 37, spell)
-		mod:Icon(player, "icon")
-	end
-	local swarmWarned = nil
-	function mod:SwarmCast(_, spell)
-		local player = getTarget()
-		if not player then return end
-		swarmWarning(player, spell)
-		swarmWarned = true
-	end
-	function mod:Swarm(player, spell)
-		if not swarmWarned then
-			swarmWarning(player, spell)
-		end
-		swarmWarned = nil
-	end
+	mod:Bar(L["swarm_bar"], 37, spell)
+	mod:Icon(player, "icon")
 end
 
 function mod:Fear(_, spellID)
