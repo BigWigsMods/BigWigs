@@ -12,6 +12,7 @@ if not plugin then return end
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars2")
 
 local colors = nil
+local dew = AceLibrary("Dewdrop-2.0")
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
@@ -454,6 +455,13 @@ local function onControlEnter(self)
 	GameTooltip:Show()
 end
 local function onControlLeave() GameTooltip:Hide() end
+
+local function menu() dew:FeedAceOptionsTable(plugin.consoleOptions) end
+local function displayOnMouseDown(self, button)
+	if button == "RightButton" then
+		dew:Open(self, "children", menu)
+	end
+end
 
 local function createAnchor(frameName, title)
 	local display = CreateFrame("Frame", frameName, UIParent)

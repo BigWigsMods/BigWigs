@@ -13,6 +13,7 @@ sink:Embed(plugin)
 ------------------------------
 
 local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChips-2.0") or nil
+local dew = AceLibrary("Dewdrop-2.0")
 
 local colorModule = nil
 local testModule = nil
@@ -346,6 +347,13 @@ local function onControlEnter(self)
 end
 local function onControlLeave() GameTooltip:Hide() end
 
+local function menu() dew:FeedAceOptionsTable(plugin.consoleOptions) end
+local function displayOnMouseDown(self, button)
+	if button == "RightButton" then
+		dew:Open(self, "children", menu)
+	end
+end
+
 local function createAnchor()
 	local display = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
 	display:EnableMouse(true)
@@ -394,6 +402,7 @@ local function createAnchor()
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
+	display:SetScript("OnMouseDown", displayOnMouseDown)
 	display:Hide()
 	return display
 end
