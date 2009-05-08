@@ -3,7 +3,7 @@ if not plugin then return end
 plugin.external = true
 local spells = nil
 local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
-local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false, false, false, false, false}
+local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
 local messageFormat = "%s: %s"
 
 function plugin:OnEnable()
@@ -24,7 +24,7 @@ function plugin:BigWigs_Test()
 	end
 	local spell = spells[math.random(1, #spells)]
 	local name, rank, icon = GetSpellInfo(spell)
-	local time = math.random(10, 80)
+	local time = math.random(11, 45)
 	local color = colors[math.random(1, #colors)]
 	local sound = sounds[math.random(1, #sounds)]
 	self:TriggerEvent("BigWigs_StartBar", self, name, time, icon)
