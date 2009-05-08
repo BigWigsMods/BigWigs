@@ -225,6 +225,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shock = "震爆",
 	shock_desc = "当正在施放震爆时发出警报。",
 	shock_warning = "震爆！",
+	shock_next = "下一震爆！",
 
 	laser = "激光弹幕",
 	laser_desc = "当激光弹幕启用时发出警报。",
@@ -267,6 +268,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shock = "震爆",
 	shock_desc = "當正在施放震爆時發出警報。",
 	shock_warning = "震爆！",
+	shock_next = "下一震爆！",
 
 	laser = "雷射彈幕",
 	laser_desc = "當雷射彈幕啟用時發出警報。",

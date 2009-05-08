@@ -250,6 +250,9 @@ L:RegisterTranslations("zhCN", function() return {
 	crash_you = ">你< Shadow Crash！",
 	crash_other = "Shadow Crash：>%s<！",
 	crash_say = ">我< Shadow Crash！",
+	
+	crashsay = "自身Shadow Crash",
+	crashsay_desc = "当你中了Shadow Crash时发出说话警报。",
 
 	crashicon = "Shadow Crash标记",
 	crashicon_desc = "为中了Shadow Crash的队员打上蓝色方框团队标记。（需要权限）",
@@ -296,6 +299,9 @@ L:RegisterTranslations("zhTW", function() return {
 	crash_you = ">你< 暗影暴擊！",
 	crash_other = "暗影暴擊：>%s<！",
 	crash_say = ">我< 暗影暴擊！",
+	
+	crashsay = "自身暗影暴擊",
+	crashsay_desc = "當你中了暗影暴擊時發出說話警報。",
 
 	crashicon = "暗影暴擊標記",
 	crashicon_desc = "為中了暗影暴擊的隊員打上藍色方框團隊標記。（需要權限）",

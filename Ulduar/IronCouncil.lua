@@ -251,6 +251,7 @@ L:RegisterTranslations("zhCN", function() return {
 	death = "自身死亡符文",
 	death_desc = "当你中了死亡符文时发出警报。",
 	death_message = ">你< 死亡符文！",
+	death_bar = "<死亡符文>",
 
 	summoning = "召唤符文",
 	summoning_desc = "当莫尔基姆施放召唤符文时发出警报。",
@@ -300,6 +301,7 @@ L:RegisterTranslations("zhTW", function() return {
 	death = "自身死亡符文",
 	death_desc = "當你中了死亡符文時發出警報。",
 	death_message = ">你< 死亡符文！",
+	death_bar = "<死亡符文>",
 
 	summoning = "召喚符文",
 	summoning_desc = "當墨吉姆施放召喚符文時發出警報。",

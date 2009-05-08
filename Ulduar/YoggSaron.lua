@@ -290,6 +290,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --	["Crusher Tentacle"] = true,
+--	["Brain of Yogg-Saron"] = true,
 
 	phase = "阶段",
 	phase_desc = "当阶段改变发出警报。",
@@ -306,9 +307,9 @@ L:RegisterTranslations("zhCN", function() return {
 	portal_message = "开启传送门！",
 	portal_bar = "<下一传送门>",
 
-	weakened = "动摇的决心",
-	weakened_desc = "当玩家中了动摇的决心时发出警报。",
-	weakened_message = "动摇的决心：>%s<！",
+	weakened = "昏迷",
+	weakened_desc = "当尤格-萨隆昏迷时发出警报。",
+	weakened_message = "昏迷：>%s<！",
 --	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
 
 	madness = "Induce Madness",
@@ -318,7 +319,6 @@ L:RegisterTranslations("zhCN", function() return {
 	malady = "Malady of the Mind",
 	malady_desc = "当玩家中了Malady of the Mind时发出警报。",
 	malady_message = "Malady of the Mind：>%s<！",
-	--malady_bar = "<下一Malady of the Mind>",
 
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "当Crusher Tentacle出现时发出警报。",
@@ -329,7 +329,7 @@ L:RegisterTranslations("zhCN", function() return {
 	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
-	link_desc = "当玩家被Brain Link时发出警报。",
+	link_desc = "当你被Brain Link时发出警报。",
 	link_warning = ">你< Brain Link！",
 
 	gaze = "疯乱凝视",
@@ -354,6 +354,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Crusher Tentacle"] = "粉碎觸手",
+	["Brain of Yogg-Saron"] = "尤格薩倫的腦部",
 
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",
@@ -366,13 +367,13 @@ L:RegisterTranslations("zhTW", function() return {
 
 	portal = "傳送門",
 	portal_desc = "當傳送門時發出警報。",
-	portal_trigger = "^傳送門開啟進入",
+	portal_trigger = "傳送門開啟進入%s的心靈!",
 	portal_message = "開啟傳送門！",
 	portal_bar = "<下一傳送門>",
 
-	weakened = "弱化決心",
-	weakened_desc = "當玩家中了弱化決心時發出警報。",
-	weakened_message = "弱化決心：>%s<！",
+	weakened = "昏迷",
+	weakened_desc = "當尤格薩倫昏迷時發出警報。",
+	weakened_message = "昏迷：>%s<！",
 	weakened_trigger = "幻影粉碎，然後中央房間的道路就打開了!",
 
 	madness = "瘋狂誘陷",
@@ -382,7 +383,6 @@ L:RegisterTranslations("zhTW", function() return {
 	malady = "心靈缺陷",
 	malady_desc = "當玩家中了心靈缺陷時發出警報。",
 	malady_message = "心靈缺陷：>%s<！",
---	malady_bar = "<下一心靈缺陷>",
 
 	tentacle = "粉碎觸手",
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
@@ -393,7 +393,7 @@ L:RegisterTranslations("zhTW", function() return {
 	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
-	link_desc = "當玩家中了腦波連結時發出警報。",
+	link_desc = "當你被腦波連結時發出警報。",
 	link_warning = ">你< 腦波連結！",
 
 	gaze = "癡狂凝視",
