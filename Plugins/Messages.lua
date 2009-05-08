@@ -579,7 +579,7 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
 	if icon then text = "|T"..icon..":20:20:-5|t"..text end
-	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+	messageFrame:AddMessage(text, r, g, b, 1.0)
 end
 
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
