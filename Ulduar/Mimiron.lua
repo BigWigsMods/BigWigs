@@ -55,6 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 	shock = "Shock Blast",
 	shock_desc = "Warns when Shock Blast is casting.",
 	shock_warning = "Shock Blast!",
+	shock_next = "Next Shock Blast!",
 
 	laser = "Laser Barrage",
 	laser_desc = "Warn when Laser Barrage is active.",
@@ -364,6 +365,7 @@ function mod:Shock(_, spellID)
 	if db.shock then
 		self:IfMessage(L["shock_warning"], "Important", spellID)
 		self:Bar(L["shock"], 5, spellID)
+		self:Bar(L["shock_next"], 34, spellID)
 	end
 end
 
