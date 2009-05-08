@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "guardian", "mindcontrol", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -59,7 +59,6 @@ L:RegisterTranslations("enUS", function() return {
 	malady = "Malady of the Mind",
 	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
-	--malady_bar = "~Next Malady",
 
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
@@ -449,7 +448,7 @@ end
 
 function mod:Guardian(_, spellID)
 	if db.guardian then
-		self:IfMessage(L["guardian_message"]:format(count), "Attention", spellID)
+		self:IfMessage(L["guardian_message"]:format(count), "Positive", spellID)
 		count = count + 1
 	end
 end
