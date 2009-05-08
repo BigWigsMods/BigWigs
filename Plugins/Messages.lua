@@ -412,7 +412,7 @@ end
 --
 
 plugin.defaultDB = {
-	sink20OutputSink = "RaidWarning",
+	sink20OutputSink = "BigWigs",
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,

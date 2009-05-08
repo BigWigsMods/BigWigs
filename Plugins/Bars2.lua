@@ -616,6 +616,7 @@ do
 	local f = CreateFrame("Frame")
 	local total = 0
 	f:SetScript("OnUpdate", function(self, elapsed)
+		if not db.emphasize then return end
 		local dirty = nil
 		for k in pairs(normalAnchor.bars) do
 			if not k:Get("emphasized") and k.remaining <= 10 then
