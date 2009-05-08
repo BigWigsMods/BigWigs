@@ -390,7 +390,7 @@ plugin.consoleOptions = {
 --
 
 local function barSorter(a, b)
-	return a.remaining > b.remaining and true or false
+	return a.remaining < b.remaining and true or false
 end
 local tmp = {}
 local function rearrangeBars(anchor)
