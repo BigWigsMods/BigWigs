@@ -225,6 +225,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Crusher Tentacle"] = "Schmettertentakel", -- needs verification!
+	["Brain of Yogg-Saron"] = "Yogg-Sarons Gehirn", -- needs verification!
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -253,7 +254,6 @@ L:RegisterTranslations("deDE", function() return {
 	malady = "Geisteskrankheit",
 	malady_desc = "Warnung und Timer für Geisteskrankheit.",
 	malady_message = "Geisteskrank: %s!",
-	--malady_bar = "~Nächste Geisteskrankheit",
 
 	tentacle = "Schmettertentakel", --right?
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",

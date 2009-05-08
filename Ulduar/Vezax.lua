@@ -195,9 +195,9 @@ L:RegisterTranslations("deDE", function() return {
 	vapor_bar = "Saronitdämpfe",
 	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", --NEED!
 
-	--vaporstack = "Vapors Stack",
-	--vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
-	--vaporstack_message = "Vapors x%d!",
+	vaporstack = "Saronitdämpfe Stapel",
+	vaporstack_desc = "Warnt, wenn du 5 oder mehr Stapel der Saronitdämpfe hast.",
+	vaporstack_message = "Saronitdämpfe x%d!",
 
 	crash = "Schattengeschoss",
 	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
@@ -205,6 +205,9 @@ L:RegisterTranslations("deDE", function() return {
 	crash_other = "Schattengeschoss: %s!",
 	crash_say = "Schattengeschoss auf MIR!",
 
+	crashsay = "Schattengeschoss Sagen",
+	crashsay_desc = "Warnt im Sagen Chat, wenn das Ziel eines Schattengeschosses bist.",
+	
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
 	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 

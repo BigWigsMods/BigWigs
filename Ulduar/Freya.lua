@@ -222,6 +222,8 @@ L:RegisterTranslations("deDE", function() return {
 	tremor = "Bebende Erde",
 	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird.",
 	tremor_message = "Bebende Erde!",
+	tremor_warning = "Bebende Erde bald!",
+	tremor_bar = "~Bebende Erde",
 
 	root = "Eiserne Wurzeln",
 	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist.",

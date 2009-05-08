@@ -182,7 +182,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	shock = "Schockschlag",
 	shock_desc = "Warnung und Timer, wenn Schockschlag gewirkt wird.",
-	shock_warning = "Wirkt Schockschlag!",
+	shock_warning = "Schockschlag!",
+	shock_next = "~Schockschlag",
 
 	laser = "Lasersalve",
 	laser_desc = "Warnung und Timer für Lasersalve.",
@@ -194,7 +195,7 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
 
-	end_trigger = "^Es scheint, als wäre mir", -- NEED!
+	end_trigger = "^Es scheint, als wäre mir", -- needs verification!
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

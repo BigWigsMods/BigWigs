@@ -167,7 +167,7 @@ L:RegisterTranslations("deDE", function() return {
 	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
 	ground_message = "Angekettet!",
 	air_trigger = "Gebt uns einen Moment, damit wir uns auf den Bau der Geschütze vorbereiten können.",
-	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
+	air_trigger2 = "Feuer einstellen! Lasst uns diese Geschütze reparieren!",
 	air_message = "Hebt ab!",
 	phase2_trigger = "%s dauerhaft an den Boden gebunden!",
 	phase2_message = "Phase 2!",

@@ -202,6 +202,7 @@ L:RegisterTranslations("deDE", function() return {
 	death = "Rune des Todes",
 	death_desc = "Warnt, wenn du in einer Rune des Todes stehst.",
 	death_message = "Todesrune auf DIR!",
+	death_bar = "Rune des Todes",
 
 	summoning = "Rune der Beschwörung",
 	summoning_desc = "Warnt, wenn Molgeim Rune der Beschwörung wirkt.",
