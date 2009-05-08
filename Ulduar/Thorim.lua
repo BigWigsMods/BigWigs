@@ -537,7 +537,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["hardmode"], 180, "Ability_Warrior_Innerrage")
 			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
 		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["phase3_trigger"] then
 		local berserkBar = GetSpellInfo(43)
 		self:TriggerEvent("BigWigs_StopBar", self, berserkBar)
@@ -547,6 +546,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)
 	end
