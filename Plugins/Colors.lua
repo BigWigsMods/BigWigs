@@ -254,15 +254,17 @@ L:RegisterTranslations("esES", function() return {
 	["Text"] = "Texto",
 	["Reset"] = "Reiniciar",
 
-	["Colors of messages and bars."] = "Color de mensajes y barras",
-	["Change the color for %q messages."] = "Cambiar el color para %q mensajes",
-	["Colors for short bars (< 1 minute)."] = "Color para las barras cortas (< 1 minuto).",
-	["Colors for long bars (> 1 minute)."] = "Color para barras largas (>1 minuto).",
-	["Change the %s color."] = "Cambiar el %s color",
-	["Number of colors the bar has."] = "Número de colores que tiene la barra.",
-	["Change the bar background color."] = "Cambiar el color del fondo de la barra.",
-	["Change the bar text color."] = "Cambiar el color del texto de la barra",
-	["Resets all colors to defaults."] = "Reinicia todos los colores a los de por defecto.",
+	["Bar"] = "Barra",
+	["Change the normal bar color."] = "Cambia el color de la barra normal",
+	["Emphasized bar"] = "Barra enfatizada",
+	["Change the emphasized bar color."] = "Cambia el color de la barra enfatizada",
+
+	["Colors of messages and bars."] = "Color de los mensajes y barras",
+	["Change the color for %q messages."] = "Cambia el color para %q mensajes",
+	["Change the %s color."] = "Cambia el %s color",
+	["Change the bar background color."] = "Cambia el color de fondo de la barra",
+	["Change the bar text color."] = "Cambia el color del texto de la barra",
+	["Resets all colors to defaults."] = "Reinicia todos los colores a los valores por defecto",
 
 	["Important"] = "Importante",
 	["Personal"] = "Personal",
@@ -272,6 +274,7 @@ L:RegisterTranslations("esES", function() return {
 	["Bosskill"] = "Muerte de Jefe",
 	["Core"] = "Núcleo",
 } end)
+
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	["Colors"] = "Цвета",
