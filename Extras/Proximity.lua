@@ -435,6 +435,16 @@ plugin.consoleOptions = {
 
 function plugin:OnRegister()
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
+	if CUSTOM_CLASS_COLORS then
+		local function update()
+			wipe(coloredNames)
+			for k, v in pairs(CUSTOM_CLASS_COLORS) do
+				hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
+			end
+		end
+		CUSTOM_CLASS_COLORS:RegisterCallback(update)
+		update()
+	end
 end
 
 function plugin:OnEnable()
