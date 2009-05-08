@@ -145,7 +145,7 @@ function plugin:OnRegister()
 				tt:AddLine(L["should_upgrade"], 0.6, 1, 0.2, 1)
 			elseif next(outOfDateClients) then
 				for player, rev in pairs(outOfDateClients) do
-					if rev < revisions[highestRevision] then
+					if revisions[highestRevision] and rev < revisions[highestRevision] then
 						table.insert(ood, coloredNames[player])
 					end
 				end
