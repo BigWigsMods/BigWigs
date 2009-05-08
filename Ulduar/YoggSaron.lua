@@ -98,6 +98,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Crusher Tentacle"] = "분쇄의 촉수",
+	["Brain of Yogg-Saron"] = "요그사론의 뇌",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -114,9 +115,9 @@ L:RegisterTranslations("koKR", function() return {
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
 
-	weakened = "약화",
-	weakened_desc = "약화 상태를 알립니다.",
-	weakened_message = "%s 약화!",
+	weakened = "기절",
+	weakened_desc = "기절 상태를 알립니다.",
+	weakened_message = "%s 기절!",
 	weakened_trigger = "환상이 부서지며, 중앙에 있는 방으로 가는 길이 열립니다!",
 
 	madness = "광기 유발",
