@@ -2,6 +2,8 @@
 --      Module Declaration      --
 ----------------------------------
 
+-- all messages are yellog
+
 local boss = BB["General Vezax"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
@@ -392,7 +394,7 @@ function mod:UNIT_AURA(unit)
 		end
 	end
 	if saronite and saronite ~= lastVapor then
-		if db.vaporstack and saronite > 4 then
+		if db.vaporstack and saronite > 5 then
 			self:LocalMessage(L["vaporstack_message"]:format(saronite), "Personal", "Interface\\Icons\\INV_Ore_Saronite_01")
 		end
 		lastVapor = saronite
@@ -423,7 +425,7 @@ local function scanTarget()
 				SendChatMessage(L["crash_say"], "SAY")
 			end
 		else
-			mod:IfMessage(other, "Attention", 62660)
+			mod:IfMessage(other, "Positive", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
 		if db.crashicon then
@@ -440,7 +442,7 @@ function mod:Mark(player, spellID)
 			self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
 			self:WideMessage(other)
 		else
-			self:IfMessage(other, "Attention", spellID)
+			self:IfMessage(other, "Important", spellID)
 			self:Whisper(player, L["mark_message_you"])
 		end
 		self:Bar(other, 10, spellID)
@@ -456,13 +458,13 @@ end
 
 function mod:Flame(_, spellID)
 	if db.flame then
-		self:IfMessage(L["flame_message"], "Attention", spellID)
+		self:IfMessage(L["flame_message"], "Urgent", spellID)
 	end
 end
 
 function mod:Surge(_, spellID)
 	if db.surge then
-		self:IfMessage(L["surge_message"], "Attention", spellID)
+		self:IfMessage(L["surge_message"], "Important", spellID)
 		self:Bar(L["surge_cast"], 3, spellID)
 		self:Bar(L["surge_bar"], 60, spellID)
 	end
@@ -477,13 +479,13 @@ end
 
 function mod:Animus(_, spellID)
 	if db.animus then
-		self:IfMessage(L["animus_message"], "Attention", spellID)
+		self:IfMessage(L["animus_message"], "Important", spellID)
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["vapor_trigger"] and db.vapor then
-		self:IfMessage(L["vapor_message"]:format(count), "Attention", 63323)
+		self:IfMessage(L["vapor_message"]:format(count), "Positive", 63323)
 		count = count + 1
 		if count < 8 then
 			self:Bar(L["vapor_bar"], 30, 63323)
@@ -502,3 +504,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+

@@ -7,7 +7,6 @@ local boss = BB["Yogg-Saron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = {sara, boss}
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
 mod.toggleoptions = {"phase", "guardian", "mindcontrol", "link", "squeeze", "portal", "weakened", "madness", "malady", "ray", "tentacle", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
@@ -30,6 +29,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
+	["Brain of Yogg-Saron"] = true,
 
 	cmd = "YoggSaron",
 
@@ -44,17 +44,17 @@ L:RegisterTranslations("enUS", function() return {
 
 	portal = "Portal",
 	portal_desc = "Warn for Portals.",
-	portal_trigger = "Portals open into Yogg-Saron's mind!",
+	portal_trigger = "Portals open into %s's mind!",
 	portal_message = "Portals open!",
-	portal_bar = "Next Portal",
+	portal_bar = "Next portals",
 
-	weakened = "Weakened",
-	weakened_desc = "Warn for Weakened State.",
-	weakened_message = "%s is weakened!",
-	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
+	weakened = "Stunned",
+	weakened_desc = "Warn when Yogg-saron becomes stunned.",
+	weakened_message = "%s is stunned!",
+	weakened_trigger = "The illusion shatters and a path to the central chamber opens!",
 
 	madness = "Induce Madness",
-	madness_desc = "Show Timer for Induce Madness.",
+	madness_desc = "Show timer for Induce Madness.",
 	madness_warning = "Madness in 5sec!",
 
 	malady = "Malady of the Mind",
@@ -66,13 +66,8 @@ L:RegisterTranslations("enUS", function() return {
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
 	tentacle_message = "Crusher %d!",
 
-	ray = "Death Ray",
-	ray_desc = "Warn when Sara casts a Death Ray.",
-	ray_message = "Death Ray!",
-	ray_bar = "~Next Death Ray",
-
 	squeeze = squeezeName,
-	squeeze_desc = "Warn which player has Squeeze.",
+	squeeze_desc = "Warn which player is squeezed.",
 	squeeze_message = squeezeName .. ": %s",
 
 	link = linkedName,
@@ -82,7 +77,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	gaze = "Lunatic Gaze",
 	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
-	gaze_message = "Lunatic Gaze!",
 	gaze_bar = "~Gaze Cooldown",
 
 	empower = "Empowering Shadows",
@@ -95,7 +89,7 @@ L:RegisterTranslations("enUS", function() return {
 	mindcontrol_message = "Mind Control: %s",
 
 	guardian = "Guardian spawn", --phase 1
-	guardian_desc = "Warn when the Guardian of Yogg-Saron spawns.",
+	guardian_desc = "Warn when a Guardian of Yogg-Saron spawns.",
 	guardian_message = "Guardian %d!",
 
 	icon = "Place Icon",
@@ -129,11 +123,6 @@ L:RegisterTranslations("koKR", function() return {
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
 	madness_warning = "5초 후 광기 유발!",
 
-	ray = "죽음의 광선",
-	ray_desc = "죽음의 광선 시전을 알립니다.",
-	ray_message = "죽음의 광선!",
-	ray_bar = "~다음 광선",
-
 	malady = "병든 정신",
 	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
 	malady_message = "병든 정신: %s",
@@ -154,7 +143,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	gaze = "광기의 시선",
 	gaze_desc = "요그사론의 광기의 시선 획득을 알립니다.",
-	gaze_message = "광기의 시선!",
 	gaze_bar = "~시선 대기시간",
 
 	empower = "암흑 강화",
@@ -209,11 +197,6 @@ L:RegisterTranslations("frFR", function() return {
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
 	tentacle_message = "Écraseur (%d)",
 
-	ray = "Rayon mortel",
-	ray_desc = "Prévient quand Sara incante un Rayon mortel.",
-	ray_message = "Rayon mortel !",
-	ray_bar = "~Prochain Rayon",
-
 	squeeze = squeezeName,
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
 	squeeze_message = squeezeName .. " : %s",
@@ -225,7 +208,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	gaze = "Regard lunatique",
 	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
-	gaze_message = "Regard lunatique !",
 	gaze_bar = "~Recharge Regard",
 
 	empower = "Renforcement des ombres",
@@ -281,11 +263,6 @@ L:RegisterTranslations("deDE", function() return {
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
 	tentacle_message = "Schmettertentakel (%d)!",
 
-	ray = "Todesstrahl",
-	ray_desc = "Warnung und Timer für Saras Todesstrahl.",
-	ray_message = "Todesstrahl!",
-	ray_bar = "~Nächster Todesstrahl",
-
 	squeeze = squeezeName,
 	squeeze_desc = "Warnt, welcher Spieler von Quetschen betroffen ist.",
 	squeeze_message = squeezeName .. ": %s!",
@@ -297,7 +274,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	gaze = "Wahnsinniger Blick",
 	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
-	gaze_message = "Wahnsinniger Blick!",
 	gaze_bar = "~Wahnsinniger Blick",
 
 	empower = "Machtvolle Schatten",
@@ -353,11 +329,6 @@ L:RegisterTranslations("zhCN", function() return {
 	tentacle_desc = "当Crusher Tentacle出现时发出警报。",
 	tentacle_message = "Crusher Tentacle：>%d<！",
 
-	ray = "死亡射线",
-	ray_desc = "当萨拉施放死亡射线时发出警报。",
-	ray_message = "死亡射线！",
-	ray_bar = "<下一死亡射线>",
-
 	squeeze = squeezeName,
 	squeeze_desc = "当玩家中了Squeeze时发出警报。",
 	squeeze_message = squeezeName .. "：>%s<！",
@@ -369,7 +340,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	gaze = "疯乱凝视",
 	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
-	gaze_message = "疯乱凝视！",
 	gaze_bar = "<疯乱凝视 冷却>",
 
 	empower = "Empowering Shadows",
@@ -424,11 +394,6 @@ L:RegisterTranslations("zhTW", function() return {
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
 	tentacle_message = "粉碎觸手：>%d<！",
 
-	ray = "死亡射線",
-	ray_desc = "當薩拉施放死亡射線時發出警報。",
-	ray_message = "死亡射線!",
-	ray_bar = "~Next 死亡射線",
-
 	squeeze = squeezeName,
 	squeeze_desc = "當玩家中了壓榨時發出警報。",
 	squeeze_message = squeezeName .. "：>%s<！",
@@ -440,7 +405,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	gaze = "癡狂凝視",
 	gaze_desc = "當尤格薩倫獲得癡狂凝視時發出警報。",
-	gaze_message = "癡狂凝視!",
 	gaze_bar = "<癡狂凝視 冷卻>",
 
 	empower = "暗影信標",
@@ -459,12 +423,13 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
 
+mod.enabletrigger = {boss, sara, L["Brain of Yogg-Saron"]}
+
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Ray", 63891)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
@@ -508,7 +473,7 @@ function mod:Tentacle(_, spellID, source)
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
 	if source == L["Crusher Tentacle"] and db.tentacle then
-		self:IfMessage(L["tentacle_message"]:format(count), "Attention", 64139)
+		self:IfMessage(L["tentacle_message"]:format(count), "Important", 64139)
 		count = count + 1
 		self:Bar(L["tentacle_message"]:format(count), 50, 64139)
 	end
@@ -517,16 +482,7 @@ end
 function mod:Malady(player, spellID)
 	if db.malady then
 		self:IfMessage(L["malady_message"]:format(player), "Attention", spellID)
-		--self:Bar(L["malady_bar"], 19, spellID)
 		self:Icon(player, "icon")
-	end
-end
-
-function mod:Ray(_, spellID)
-	if db.ray then
-		self:IfMessage(L["ray_message"], "Attention", spellID)
-		self:Bar(L["ray"], 15, spellID)
-		self:Bar(L["ray_bar"], 22, spellID)
 	end
 end
 
@@ -561,8 +517,6 @@ end
 
 function mod:Gaze(_, spellID)
 	if db.gaze then
-		self:IfMessage(L["gaze_message"], "Attention", spellID)
-		self:Bar(L["gaze"], 4, spellID)
 		self:Bar(L["gaze_bar"], 13, spellID)
 	end
 end
@@ -570,7 +524,7 @@ end
 function mod:Madness()
 	if db.madness then
 		self:Bar(L["madness"], 60, 64059)
-		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Attention")
+		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Urgent")
 	end
 end
 
@@ -583,10 +537,10 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["portal_trigger"] and db.portal then
-		self:IfMessage(L["portal_message"], "Attention", 35717)
+		self:IfMessage(L["portal_message"], "Positive", 35717)
 		self:Bar(L["portal_bar"], 90, 35717)
 	elseif msg == L["weakened_trigger"] and db.weakened then
-		self:IfMessage(L["weakened_message"]:format(boss), "Attention", 50661) --50661, looks like a weakened :)
+		self:IfMessage(L["weakened_message"]:format(boss), "Positive", 50661) --50661, looks like a weakened :)
 	end
 end
 
@@ -595,7 +549,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 1
 		count = 1
 		if db.phase then
-			self:IfMessage(L["engage_warning"], "Important", nil, "Alarm")
+			self:IfMessage(L["engage_warning"], "Attention")
 		end
 		if db.berserk then
 			self:Enrage(900, true, true)
@@ -604,7 +558,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 2
 		count = 1
 		if db.phase then
-			self:IfMessage(L["phase2_warning"], "Important", nil, "Alarm")
+			self:IfMessage(L["phase2_warning"], "Attention")
 		end
 		if db.portal then
 			self:Bar(L["portal_bar"], 78, 35717)
@@ -613,8 +567,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 3
 		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["tentacle_message"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["ray"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["ray_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
 		if db.phase then
