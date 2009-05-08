@@ -4,6 +4,7 @@ plugin.external = true
 local spells = nil
 local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
 local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false, false, false, false, false}
+local messageFormat = "%s: %s"
 
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Test")
@@ -27,6 +28,6 @@ function plugin:BigWigs_Test()
 	local color = colors[math.random(1, #colors)]
 	local sound = sounds[math.random(1, #sounds)]
 	self:TriggerEvent("BigWigs_StartBar", self, name, time, icon)
-	self:DelayedMessage(time, name, color, true, sound, nil, icon)
+	self:DelayedMessage(time, messageFormat:format(color, name), color, true, sound, nil, icon)
 end
 
