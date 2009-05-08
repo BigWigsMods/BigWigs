@@ -109,6 +109,9 @@ L:RegisterTranslations("koKR", function() return {
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
+	
+	crashsay = "붕괴 일반 대화",
+	crashsay_desc = "어둠의 붕괴 대상시 일반 대화로 알립니다.",
 	crash_say = "저 어둠 붕괴요!",
 
 	crashicon = "붕괴 아이콘",

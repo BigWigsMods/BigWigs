@@ -98,6 +98,7 @@ L:RegisterTranslations("koKR", function() return {
 	shock = "충격파",
 	shock_desc = "충격파 시전을 알립니다.",
 	shock_warning = "충격파!",
+	shock_next = "다음 충격파",
 
 	laser = "레이저 탄막",
 	laser_desc = "레이저 탄막 활동을 알립니다!",
