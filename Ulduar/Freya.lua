@@ -71,6 +71,8 @@ L:RegisterTranslations("enUS", function() return {
 	tremor = "Ground Tremor",
 	tremor_desc = "Warn when Freya casts Ground Tremor.",
 	tremor_message = "Ground Tremor!",
+	tremor_warning = "Ground Tremor soon!",
+	tremor_bar = "~Next Ground Tremor",
 
 	root = "Iron Roots",
 	root_desc = "Warn who has Iron Roots.",
@@ -120,6 +122,8 @@ L:RegisterTranslations("koKR", function() return {
 	tremor = "지진",
 	tremor_desc = "프레이야의 지진 시전을 알립니다.",
 	tremor_message = "지진!",
+	tremor_warning = "곧 지진!",
+	tremor_bar = "~다음 지진",
 
 	root = "무쇠 뿌리",
 	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다.",
@@ -381,8 +385,8 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930)	--HardMode abilities from Elder Ironbranch
-	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859)	--HardMode abilities from Elder Stonebark 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--HardMode abilities from Elder Ironbranch
+	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--HardMode abilities from Elder Stonebark 
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
@@ -449,6 +453,8 @@ do
 			local sound = caster and "Long" or nil
 			self:IfMessage(L["tremor_message"], color, spellID, sound)
 			self:Bar(L["tremor"], 2, spellID)
+			self:Bar(L["tremor_bar"], 30, spellID)
+			self:DelayedMessage(26, L["tremor_warning"], "Attention")
 		end
 	end
 end
@@ -532,7 +538,7 @@ function mod:Deaths(_, guid)
 	elseif guid == 32919 or guid == 33202 or guid == 32916 then
 		eCount = eCount + 1
 		if eCount == 3 then
-			attunedCount = attunedCount - 10
+			attunedCount = attunedCount - 30
 			eCount = 0
 			self:AttunedWarn()
 		end
