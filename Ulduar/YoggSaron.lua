@@ -18,7 +18,6 @@ mod.toggleoptions = {"phase", "guardian", "mindcontrol", "link", "squeeze", "por
 local db = nil
 local squeezeName = GetSpellInfo(64126)
 local linkedName = GetSpellInfo(63802)
-local linked = {}
 local count = 1
 
 ----------------------------
@@ -71,8 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 	squeeze_message = squeezeName .. ": %s",
 
 	link = linkedName,
-	link_desc = "Warn which players are linked.",
-	link_message = linkedName .. ": %s",
+	link_desc = "Warn when you get linked with someone.",
 	link_warning = "You are linked!",
 
 	gaze = "Lunatic Gaze",
@@ -139,7 +137,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	link = linkedName,
 	link_desc = "두뇌의 고리에 연결된 플레이어를 알립니다.",
-	link_message = linkedName .. ": %s",
 	link_warning = "당신은 두뇌의 고리!",
 
 	gaze = "광기의 시선",
@@ -204,7 +201,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	link = linkedName,
 	link_desc = "Indique quels joueurs sont liées.",
-	link_message = linkedName .. " : %s",
 	link_warning = "Votre cerveau est lié !",
 
 	gaze = "Regard lunatique",
@@ -270,7 +266,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	link = linkedName,
 	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
-	link_message = linkedName .. ": %s!",
 	link_warning = "DU bist verbunden!",
 
 	gaze = "Wahnsinniger Blick",
@@ -336,7 +331,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	link = linkedName,
 	link_desc = "当玩家被Brain Link时发出警报。",
-	link_message = linkedName .. "：>%s<！",
 	link_warning = ">你< Brain Link！",
 
 	gaze = "疯乱凝视",
@@ -401,7 +395,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	link = linkedName,
 	link_desc = "當玩家中了腦波連結時發出警報。",
-	link_message = linkedName .. "：>%s<！",
 	link_warning = ">你< 腦波連結！",
 
 	gaze = "癡狂凝視",
@@ -447,7 +440,6 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
-	wipe(linked)
 	count = 1
 end
 
@@ -493,26 +485,9 @@ function mod:Squeeze(player, spellID)
 	end
 end
 
-local function printLinked(spellID)
-	local msg = nil
-	for k in pairs(linked) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	mod:IfMessage(L["link_message"]:format(msg), "Attention", spellID, "Alert")
-	wipe(linked)
-end
-
 function mod:Linked(player, spellID)
-	if db.link then
-		linked[player] = true
-		self:ScheduleEvent("BWLinkedWarn", printLinked, 0.2, spellID)
-		if player == pName then
-			self:LocalMessage(L["link_warning"], "Personal", spellID, "Alarm")
-		end
+	if db.link and player == pName then
+		self:LocalMessage(L["link_warning"], "Personal", spellID, "Alarm")
 	end
 end
 
