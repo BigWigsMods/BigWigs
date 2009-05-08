@@ -173,6 +173,8 @@ L:RegisterTranslations("frFR", function() return {
 	tremor = "Tremblement de terre",
 	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
 	tremor_message = "Tremblement de terre !",
+	tremor_warning = "Tremblement de terre imminent !",
+	tremor_bar = "~Prochain Tremblement",
 
 	root = "Racines de fer",
 	root_desc = "Prévient quand un joueur subit les effets des Racines de fer.",

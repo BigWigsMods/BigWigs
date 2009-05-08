@@ -141,6 +141,7 @@ L:RegisterTranslations("frFR", function() return {
 	shock = "Horion explosif",
 	shock_desc = "Prévient quand un Horion explosif est incanté.",
 	shock_warning = "Horion explosif !",
+	shock_next = "Prochain Horion",
 
 	laser = "Barrage laser",
 	laser_desc = "Prévient quand un Barrage laser est actif.",

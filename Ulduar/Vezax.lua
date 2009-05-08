@@ -63,7 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 	crash_you = "Crash on YOU!",
 	crash_other = "Crash on %s",
 	crash_say = "Crash on Me!",
-	
+
 	crashsay = "Crash Say",
 	crashsay_desc = "Say when you are the target of Shadow Crash.",
 
@@ -111,7 +111,7 @@ L:RegisterTranslations("koKR", function() return {
 	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
-	
+
 	crashsay = "붕괴 일반 대화",
 	crashsay_desc = "어둠의 붕괴 대상시 일반 대화로 알립니다.",
 	crash_say = "저 어둠 붕괴요!",
@@ -162,13 +162,19 @@ L:RegisterTranslations("frFR", function() return {
 	crash_other = "Déferlante : %s",
 	crash_say = "Déferlante sur moi !",
 
+	crashsay = "Déferlante - Dire",
+	crashsay_desc = "Fait dire à votre personnage qu'il est ciblé par une Déferlante d'ombre quand c'est le cas.",
+
+	crashicon = "Déferlante - Icône",
+	crashicon_desc = "Place une icône de raid (carré bleu) sur le dernier joueur ciblé par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
+
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
 	mark_message_you = "Marque sur VOUS !",
 	mark_message_other = "Marque : %s",
 
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
+	icon = "Marque - Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -323,8 +329,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 	flame = "Жгучее пламя",
 	flame_desc = "Сообщает когда Везакс применяет Жгучее пламя.",
-	flame_message = "Жгучее пламя!",	
-	
+	flame_message = "Жгучее пламя!",
+
 	surge = "Наплыв Тьмы",
 	surge_desc = "Сообщает когда Везакс применяет Наплыв Тьмы.",
 	surge_message = "Наплыв Тьмы!",
@@ -351,7 +357,7 @@ L:RegisterTranslations("ruRU", function() return {
 	crash_you = "Темное сокрушение на ВАС!",
 	crash_other = "Сокрушение на |3-5(%s)",
 	crash_say = "Сокрушение на Мне!",
-	
+
 	crashicon = "Иконка Сокрушения",
 	crashicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока, на которого наложено Темное сокрушение. (необходимо быть лидером группы или рейда)",
 
@@ -372,7 +378,7 @@ function mod:OnEnable()
 	lastVapor = nil
 	count = 1
 	db = self.db.profile
-	
+
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
 	self:AddCombatListener("SPELL_CAST_START", "Animus", 63145)
@@ -380,7 +386,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

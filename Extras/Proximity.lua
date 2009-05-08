@@ -174,6 +174,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Disabled"] = "Désactivé",
 	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant.",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "L'affichage de proximité a été désactivé pour %s. Veuillez utiliser les options du module du boss pour l'activer à nouveau.",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "L'affichage de proximité a été verrouillé. Vous devez faire un clic droit sur l'icône de BigWigs, puis allez dans Extras -> Proximité -> Affichage et décocher l'option Verrouiller si vous voulez le déplacer ou accédez aux autres options.",
 
 	proximity = "Proximité",
 	proximity_desc = "Affiche la fenêtre de proximité.",
@@ -192,6 +193,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Shows or hides the title."] = "Affiche ou non le titre.",
 	["Background"] = "Arrière-plan",
 	["Shows or hides the background."] = "Affiche ou non l'arrière-plan.",
+	["Toggle sound"] = "Son",
+	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Fait ou non bipper la fenêtre de proximité quand vous êtes trop près d'un autre joueur.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
