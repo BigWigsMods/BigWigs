@@ -61,6 +61,9 @@ L:RegisterTranslations("enUS", function() return {
 	crash_you = "Crash on YOU!",
 	crash_other = "Crash on %s",
 	crash_say = "Crash on Me!",
+	
+	crashsay = "Crash Say",
+	crashsay_desc = "Say when you are the target of Shadow Crash.",
 
 	crashicon = "Crash Icon",
 	crashicon_desc = "Place a Blue Square icon on the player targetted by Shadow Crash. (requires promoted or higher)",
