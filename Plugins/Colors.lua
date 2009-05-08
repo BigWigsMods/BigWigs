@@ -316,13 +316,13 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 plugin.defaultDB = {
-	Important = { 1, 0, 0 }, -- Red
-	Personal = { 1, 0, 0 }, -- Red
-	Urgent = { 1, 0.5, 0 }, -- Orange
-	Attention = { 1, 1, 0 }, -- Yellow
-	Positive = { 0, 1, 0 }, -- Green
-	Bosskill = { 0, 1, 0 }, -- Green
-	Core = { 0, 1, 1 }, -- Cyan
+	Important = { 1, 0.2, 0.2 }, -- Red
+	Personal = { 0.2, 0.4, 1 }, -- Blue
+	Urgent = { 1, 0.5, 0.1 }, -- Orange
+	Attention = { 1, 1, 0.1 }, -- Yellow
+	Positive = { 0.2, 1, 0.2 }, -- Green
+	Bosskill = { 0.2, 1, 0.2 }, -- Green
+	Core = { 0.2, 1, 1 }, -- Cyan
 
 	barBackground = { 0.5, 0.5, 0.5, 0.3 },
 	barText = { 1, 1, 1 },
