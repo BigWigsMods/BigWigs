@@ -53,6 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 	death = "Rune of Death on You",
 	death_desc = "Warn when you are in a Rune of Death.",
 	death_message = "Rune of Death on YOU!",
+	death_bar = "Rune of Death",
 
 	summoning = "Rune of Summoning",
 	summoning_desc = "Warn when Molgeim casts a Rune of Summoning.",
@@ -102,6 +103,7 @@ L:RegisterTranslations("koKR", function() return {
 	death = "자신의 죽음의 룬",
 	death_desc = "자신이 죽음의 룬에 걸렸을 때 알립니다.",
 	death_message = "당신은 죽음의 룬!",
+	death_bar = "죽음의 룬",
 
 	summoning = "소환의 룬",
 	summoning_desc = "몰가임의 소환의 룬 시전을 알립니다.",
@@ -386,6 +388,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 62274, 63489) -- Molgeim
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "RunePower", 61974) -- Molgeim
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "RuneDeathCD", 62269, 63490) -- Molgeim +1
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490) -- Molgeim +1
 	self:AddCombatListener("SPELL_CAST_START", "RuneSummoning", 62273) -- Molgeim +2
 
@@ -441,6 +444,13 @@ end
 function mod:RunePower(_, spellID)
 	if db.power then
 		self:IfMessage(L["power_message"], "Positive", spellID)
+		self:Bar(L["power"], 30, spellID)
+	end
+end
+
+function mod:RuneDeathCD(_, spellID)
+	if db.death then
+		self:Bar(L["death_bar"], 30, spellID)
 	end
 end
 
