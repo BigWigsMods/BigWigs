@@ -22,7 +22,7 @@ local started = nil
 local UnitGUID = _G.UnitGUID
 local GetNumRaidMembers = _G.GetNumRaidMembers
 local fmt = _G.string.format
-local guid, overchargeTime = nil, nil
+local guid = nil
 
 ----------------------------
 --      Localization      --
@@ -159,7 +159,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	started = nil
-	guid, overchargeTime = nil, nil
+	guid = nil
 	db = self.db.profile
 end
 
@@ -202,8 +202,6 @@ local function scanTarget()
 	if target then
 		SetRaidTarget(target, 8)
 		mod:CancelScheduledEvent("BWGetOverchargeTarget")
-	elseif (GetTime() + 20) > overchargeTime then
-		mod:CancelScheduledEvent("BWGetOverchargeTarget")
 	end
 end
 
@@ -211,7 +209,6 @@ function mod:OverchargeIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not db.icon then return end
 	guid = select(9, ...)
-	overchargeTime = GetTime()
 	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", scanTarget, 0.1)
 end
 
