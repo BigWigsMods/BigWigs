@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -46,6 +46,10 @@ L:RegisterTranslations("enUS", function() return {
 	portal_trigger = "Portals open into %s's mind!",
 	portal_message = "Portals open!",
 	portal_bar = "Next portals",
+
+	sanity = "Sanity",
+	sanity_desc = "Warn when your Sanity stack drops below 40.",
+	sanity_message = "You're going insane!",
 
 	weakened = "Stunned",
 	weakened_desc = "Warn when Yogg-saron becomes stunned.",
@@ -430,7 +434,10 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042)
+	-- 63042 is the add MC during p1, 63120 is the MC when you go insane in p2/3.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042, 63120)
+	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
 	self:AddCombatListener("SPELL_SUMMON", "Guardian", 62979)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -445,6 +452,54 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+--[[
+-- XXX This function should work if we passed the whole tuple to combat listeners :(
+function mod:Sanity(...)
+	if not db.sanity then return end
+	local player, _, spellId = select(4, ...)
+	local amount = select(10, ...)
+	if player == pName then
+		if amount > 40 or not db.sanity then return end
+		-- If it's less than 40, warn
+		self:IfMessage(L["sanity_message"], "Personal", spellId)
+	elseif amount < 21 then
+		-- If it's less than 20, send them a whisper
+		self:Whisper(player, L["sanity_message"])
+	end
+end]]
+
+do
+	local warned = {}
+	local function getSanity(player)
+		local sanity = nil
+		for i = 1, 9 do
+			local name, _, icon, stack = UnitDebuff(player, i)
+			if not name then break end
+			if icon == "Interface\\Icons\\Spell_Arcane_MindMastery" then
+				sanity = stack
+				break
+			end
+		end
+		return sanity
+	end
+	function mod:SanityIncrease(player, spellId)
+		if not db.sanity or not warned[player] then return end
+		local sanity = getSanity(player)
+		if sanity > 70 then warned[player] = nil end
+	end
+	function mod:SanityDecrease(player, spellId)
+		if not db.sanity or warned[player] then return end
+		local sanity = getSanity(player)
+		if player == pName then
+			if sanity > 40 then return end
+			self:IfMessage(L["sanity_message"], "Personal", spellId)
+		elseif sanity < 21 then
+			self:Whisper(player, L["sanity_message"])
+		end
+		warned[player] = true
+	end
+end
 
 function mod:Guardian(_, spellID)
 	if db.guardian then
