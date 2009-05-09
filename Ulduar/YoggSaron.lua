@@ -494,10 +494,11 @@ do
 		if player == pName then
 			if sanity > 40 then return end
 			self:IfMessage(L["sanity_message"], "Personal", spellId)
+			warned[player] = true
 		elseif sanity < 21 then
 			self:Whisper(player, L["sanity_message"])
+			warned[player] = true
 		end
-		warned[player] = true
 	end
 end
 
