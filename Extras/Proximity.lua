@@ -4,6 +4,8 @@
 
 local plugin = BigWigs:New("Proximity", "$Revision$")
 if not plugin then return end
+plugin.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+plugin.proximitySilent = true
 
 -----------------------------------------------------------------------
 --      Are you local?
@@ -333,6 +335,7 @@ plugin.defaultDB = {
 	height = 80,
 	sound = true,
 	disabled = nil,
+	proximity = true,
 }
 plugin.external = true
 
@@ -536,10 +539,8 @@ function plugin:OpenProximity()
 end
 
 function plugin:TestProximity()
-	self:SetupFrames()
-
-	anchor.text:SetText(L["|cff777777Nobody|r"])
-	anchor:Show()
+	self.db.profile.proximity = true
+	self:BigWigs_ShowProximity(self)
 end
 
 function plugin:UpdateProximity(list)
