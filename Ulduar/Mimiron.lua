@@ -369,7 +369,7 @@ end
 function mod:Shock(_, spellID)
 	if db.shock then
 		self:IfMessage(L["shock_warning"], "Important", spellID)
-		self:Bar(L["shock"], 5, spellID)
+		self:Bar(L["shock"], 4, spellID)
 		self:Bar(L["shock_next"], 34, spellID)
 	end
 end
