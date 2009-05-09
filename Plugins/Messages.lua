@@ -24,7 +24,10 @@ local colorModule = nil
 local testModule = nil
 local messageFrame = nil
 local anchor = nil
-local GetSpellInfo = GetSpellInfo 
+local GetSpellInfo = GetSpellInfo
+local type = type
+local floor = math.floor
+local next = next
 
 ----------------------------
 --      Localization      --
@@ -437,6 +440,7 @@ plugin.defaultDB = {
 	posy = -150,
 	chat = nil,
 	useicons = true,
+	threeone = false,
 }
 plugin.consoleCmd = L["Messages"]
 
@@ -547,6 +551,11 @@ function plugin:OnRegister()
 end
 
 function plugin:OnEnable()
+	if not self.db.profile.threeone then
+		self.db.profile.threeone = true
+		self.db.profile.sink20OutputSink = "BigWigs"
+	end
+
 	self:RegisterEvent("BigWigs_Message")
 
 	if BigWigs:HasModule("Colors") then
@@ -589,9 +598,9 @@ local function onUpdate(self, elapsed)
 			if v.scrollTime then
 				v.scrollTime = v.scrollTime + elapsed
 				if v.scrollTime <= scaleUpTime then
-					v:SetTextHeight(math.floor(minHeight + ((maxHeight - minHeight) * v.scrollTime / scaleUpTime)))
+					v:SetTextHeight(floor(minHeight + ((maxHeight - minHeight) * v.scrollTime / scaleUpTime)))
 				elseif v.scrollTime <= scaleDownTime then
-					v:SetTextHeight(math.floor(maxHeight - ((maxHeight - minHeight) * (v.scrollTime - scaleUpTime) / (scaleDownTime - scaleUpTime))))
+					v:SetTextHeight(floor(maxHeight - ((maxHeight - minHeight) * (v.scrollTime - scaleUpTime) / (scaleDownTime - scaleUpTime))))
 				else
 					v:SetTextHeight(minHeight)
 					v.scrollTime = nil

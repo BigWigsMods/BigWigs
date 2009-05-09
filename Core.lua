@@ -21,6 +21,7 @@ local customBossOptions = {}
 ----------------------------
 --      Localization      --
 ----------------------------
+
 L:RegisterTranslations("enUS", function() return {
 	["%s has been defeated"] = true,     -- "<boss> has been defeated"
 	["%s have been defeated"] = true,    -- "<bosses> have been defeated"
