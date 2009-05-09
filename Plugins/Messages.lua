@@ -584,7 +584,7 @@ end
 
 local function onUpdate(self, elapsed)
 	local show = nil
-	for i, v in ipairs(labels) do
+	for i, v in next, labels do
 		if v:IsShown() then
 			if v.scrollTime then
 				v.scrollTime = v.scrollTime + elapsed
@@ -635,7 +635,7 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	messageFrame:Show()
 	if icon then text = "|T"..icon..":20:20:-5|t"..text end
 	local slot = nil
-	for i, v in ipairs(labels) do
+	for i, v in next, labels do
 		if not v:IsShown() then
 			slot = v
 			break
