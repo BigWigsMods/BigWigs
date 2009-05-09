@@ -164,6 +164,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Crusher Tentacle"] = "Tentacule écraseur",
+	["Brain of Yogg-Saron"] = "Cerveau de Yogg-Saron",
 
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
@@ -178,11 +179,15 @@ L:RegisterTranslations("frFR", function() return {
 	portal_desc = "Prévient de l'arrivée des portails.",
 	portal_trigger = "Des portails s'ouvrent sur l'esprit |2 %s !",
 	portal_message = "Portails ouverts !",
-	portal_bar = "Prochain portail",
+	portal_bar = "Prochains portails",
 
-	weakened = "Affaibli",
-	weakened_desc = "Prévient quand Yogg-Saron est affaibli.",
-	weakened_message = "%s est affaibli !",
+	sanity = "Santé mentale",
+	sanity_desc = "Prévient quand votre cumul de Santé mentale descend en dessous de 40.",
+	sanity_message = "Vous allez devenir fou !",
+
+	weakened = "Étourdi",
+	weakened_desc = "Prévient quand Yogg-Saron est étourdi.",
+	weakened_message = "%s est étourdi !",
 	weakened_trigger = "L'illusion se brise et un chemin s'ouvre vers la salle centrale !",
 
 	madness = "Susciter la folie",
@@ -192,11 +197,10 @@ L:RegisterTranslations("frFR", function() return {
 	malady = "Mal de la raison",
 	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
 	malady_message = "Mal : %s",
-	--malady_bar = "~Prochain Mal",
 
 	tentacle = "Tentacule écraseur",
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
-	tentacle_message = "Écraseur (%d)",
+	tentacle_message = "Écraseur %d !",
 
 	squeeze = squeezeName,
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
