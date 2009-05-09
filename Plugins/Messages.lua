@@ -12,7 +12,6 @@ sink:Embed(plugin)
 --      Are you local?      --
 ------------------------------
 
-local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChips-2.0") or nil
 local dew = AceLibrary("Dewdrop-2.0")
 
 local minHeight = 20
@@ -363,35 +362,35 @@ local function displayOnMouseDown(self, button)
 		dew:Open(self, "children", menu)
 	end
 end
-
+local createMsgFrame
 local function createAnchor()
-	local display = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
-	display:EnableMouse(true)
-	display:SetMovable(true)
-	display:RegisterForDrag("LeftButton")
-	display:SetWidth(120)
-	display:SetHeight(20)
-	display:ClearAllPoints()
+	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
+	anchor:EnableMouse(true)
+	anchor:SetMovable(true)
+	anchor:RegisterForDrag("LeftButton")
+	anchor:SetWidth(120)
+	anchor:SetHeight(20)
+	anchor:ClearAllPoints()
 	local x = plugin.db.profile.posx
 	local y = plugin.db.profile.posy
-    local s = display:GetEffectiveScale()
+	local s = anchor:GetEffectiveScale()
 	if not x or not y then
-		display:SetPoint("TOP", UIParent, "TOP", 0, -150)
+		anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
 	else
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	end
-	local bg = display:CreateTexture(nil, "PARENT")
-	bg:SetAllPoints(display)
+	local bg = anchor:CreateTexture(nil, "PARENT")
+	bg:SetAllPoints(anchor)
 	bg:SetBlendMode("BLEND")
 	bg:SetTexture(0, 0, 0, 0.3)
-	local header = display:CreateFontString(nil, "OVERLAY")
+	local header = anchor:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
 	header:SetText(L["Messages"])
-	header:SetAllPoints(display)
+	header:SetAllPoints(anchor)
 	header:SetJustifyH("CENTER")
 	header:SetJustifyV("MIDDLE")
-	local test = CreateFrame("Button", nil, display)
-	test:SetPoint("BOTTOMLEFT", display, "BOTTOMLEFT", 3, 3)
+	local test = CreateFrame("Button", nil, anchor)
+	test:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT", 3, 3)
 	test:SetHeight(14)
 	test:SetWidth(14)
 	test.tooltipHeader = L["Test"]
@@ -400,7 +399,7 @@ local function createAnchor()
 	test:SetScript("OnLeave", onControlLeave)
 	test:SetScript("OnClick", function() plugin:TriggerEvent("BigWigs_Test") end)
 	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
-	local close = CreateFrame("Button", nil, display)
+	local close = CreateFrame("Button", nil, anchor)
 	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
 	close:SetHeight(14)
 	close:SetWidth(14)
@@ -408,13 +407,13 @@ local function createAnchor()
 	close.tooltipText = L["Hides the anchors."]
 	close:SetScript("OnEnter", onControlEnter)
 	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function() display:Hide() end)
+	close:SetScript("OnClick", function() anchor:Hide() end)
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
-	display:SetScript("OnDragStart", onDragStart)
-	display:SetScript("OnDragStop", onDragStop)
-	display:SetScript("OnMouseDown", displayOnMouseDown)
-	display:Hide()
-	return display
+	anchor:SetScript("OnDragStart", onDragStart)
+	anchor:SetScript("OnDragStop", onDragStop)
+	anchor:SetScript("OnMouseDown", displayOnMouseDown)
+	anchor:Hide()
+	createMsgFrame()
 end
 
 local function resetAnchor()
@@ -460,7 +459,7 @@ plugin.consoleOptions = {
 	end,
 	set = function(key, val)
 		if key == "anchor" then
-			if not anchor then anchor = createAnchor() end
+			if not anchor then createAnchor() end
 			if val then
 				anchor:Show()
 			else
@@ -576,26 +575,11 @@ local function newFontString(i)
 	fs:SetJustifyV("MIDDLE")
 	fs:SetWidth(800)
 	fs:SetHeight(0)
-	fs.lastShow = i
 	FadingFrame_SetFadeInTime(fs, 0.2)
-	FadingFrame_SetHoldTime(fs, 10.0)
-	FadingFrame_SetFadeOutTime(fs, 3.0)
+	FadingFrame_SetHoldTime(fs, 10)
+	FadingFrame_SetFadeOutTime(fs, 3)
 	fs:Hide()
 	return fs
-end
-
-local function sort(a, b)
-	return a.lastShow < b.lastShow and true or false
-end
-local function rearrangeLabels()
-	table.sort(labels, sort)
-	for i, v in ipairs(labels) do
-		if i == 1 then
-			v:SetPoint("TOP")
-		else
-			v:SetPoint("TOP", labels[i - 1], "BOTTOM")
-		end
-	end
 end
 
 local function onUpdate(self, elapsed)
@@ -620,18 +604,23 @@ local function onUpdate(self, elapsed)
 	if not show then self:Hide() end
 end
 
-local function createMsgFrame()
+function createMsgFrame()
 	messageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
-	if not anchor then anchor = createAnchor() end
 	messageFrame:SetPoint("TOP", anchor, "BOTTOM")
 	messageFrame:SetScale(plugin.db.profile.scale or 1)
 	messageFrame:SetFrameStrata("HIGH")
 	messageFrame:SetToplevel(true)
 	messageFrame:SetScript("OnUpdate", onUpdate)
-	for i = 4, 1, -1 do
-		table.insert(labels, newFontString(i))
+	for i = 1, 4 do
+		local fs = newFontString(i)
+		table.insert(labels, fs)
+		if i == 1 then
+			fs:SetPoint("TOP")
+		else
+			fs:SetPoint("TOP", labels[i - 1], "BOTTOM")
+		end
 	end
 end
 
@@ -640,6 +629,7 @@ end
 ------------------------------
 
 function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
+	if not anchor then createAnchor() end
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
 	messageFrame:Show()
@@ -657,11 +647,9 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	end
 	slot:SetText(text)
 	slot:SetTextColor(r, g, b, 1)
-	slot.lastShow = GetTime()
 	slot.scrollTime = 0
 	slot:SetTextHeight(minHeight)
 	FadingFrame_Show(slot)
-	rearrangeLabels()
 end
 
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
@@ -674,8 +662,6 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 			r, g, b = color.r, color.g, color.b
 		elseif type(colorModule) == "table" and colorModule:HasMessageColor(color) then
 			r, g, b = colorModule:MsgColor(color)
-		elseif paint then
-			r, g, b = select(2, paint:GetRGBPercent(color or "white"))
 		end
 	end
 
