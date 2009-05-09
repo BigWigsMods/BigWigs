@@ -253,6 +253,10 @@ L:RegisterTranslations("deDE", function() return {
 	portal_message = "Portale offen!",
 	portal_bar = "Nächsten Portale",
 
+	sanity = "Geistige Gesundheit",
+	sanity_desc = "Warnt, wenn deine Geistige Gesundheit unter 40 Prozent fällt.",
+	sanity_message = "DU wirst verrückt!",
+	
 	weakened = "Geschwächt",
 	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
 	weakened_message = "%s ist geschwächt!",
