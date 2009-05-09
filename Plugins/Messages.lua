@@ -15,6 +15,12 @@ sink:Embed(plugin)
 local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChips-2.0") or nil
 local dew = AceLibrary("Dewdrop-2.0")
 
+local minHeight = 20
+local maxHeight = 30
+local scaleUpTime = 0.2
+local scaleDownTime = 0.4
+local labels = {}
+
 local colorModule = nil
 local testModule = nil
 local messageFrame = nil
@@ -559,20 +565,74 @@ end
 
 function plugin:OnDisable() if anchor then anchor:Hide() end end
 
+--------------------------------------------------------------------------------
+-- Message frame
+--
+
+local function newFontString(i)
+	local fs = messageFrame:CreateFontString(nil, "ARTWORK")
+	fs:SetFontObject(GameFontNormalHuge)
+	fs:SetJustifyH("CENTER")
+	fs:SetJustifyV("MIDDLE")
+	fs:SetWidth(800)
+	fs:SetHeight(0)
+	fs.lastShow = i
+	FadingFrame_SetFadeInTime(fs, 0.2)
+	FadingFrame_SetHoldTime(fs, 10.0)
+	FadingFrame_SetFadeOutTime(fs, 3.0)
+	fs:Hide()
+	return fs
+end
+
+local function sort(a, b)
+	return a.lastShow < b.lastShow and true or false
+end
+local function rearrangeLabels()
+	table.sort(labels, sort)
+	for i, v in ipairs(labels) do
+		if i == 1 then
+			v:SetPoint("TOP")
+		else
+			v:SetPoint("TOP", labels[i - 1], "BOTTOM")
+		end
+	end
+end
+
+local function onUpdate(self, elapsed)
+	local show = nil
+	for i, v in ipairs(labels) do
+		if v:IsShown() then
+			if v.scrollTime then
+				v.scrollTime = v.scrollTime + elapsed
+				if v.scrollTime <= scaleUpTime then
+					v:SetTextHeight(math.floor(minHeight + ((maxHeight - minHeight) * v.scrollTime / scaleUpTime)))
+				elseif v.scrollTime <= scaleDownTime then
+					v:SetTextHeight(math.floor(maxHeight - ((maxHeight - minHeight) * (v.scrollTime - scaleUpTime) / (scaleDownTime - scaleUpTime))))
+				else
+					v:SetTextHeight(minHeight)
+					v.scrollTime = nil
+				end
+			end
+			FadingFrame_OnUpdate(v)
+			show = true
+		end
+	end
+	if not show then self:Hide() end
+end
+
 local function createMsgFrame()
-	if messageFrame then return end
-	messageFrame = CreateFrame("MessageFrame", "BWMessageFrame", UIParent)
+	messageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
-
 	if not anchor then anchor = createAnchor() end
 	messageFrame:SetPoint("TOP", anchor, "BOTTOM")
 	messageFrame:SetScale(plugin.db.profile.scale or 1)
-	messageFrame:SetInsertMode("TOP")
 	messageFrame:SetFrameStrata("HIGH")
 	messageFrame:SetToplevel(true)
-	messageFrame:SetFontObject(GameFontNormalLarge)
-	messageFrame:Show()
+	messageFrame:SetScript("OnUpdate", onUpdate)
+	for i = 4, 1, -1 do
+		table.insert(labels, newFontString(i))
+	end
 end
 
 ------------------------------
@@ -582,8 +642,26 @@ end
 function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
+	messageFrame:Show()
 	if icon then text = "|T"..icon..":20:20:-5|t"..text end
-	messageFrame:AddMessage(text, r, g, b, 1.0)
+	local slot = nil
+	for i, v in ipairs(labels) do
+		if not v:IsShown() then
+			slot = v
+			break
+		end
+	end
+	if not slot then
+		table.sort(labels, sort)
+		slot = labels[1]
+	end
+	slot:SetText(text)
+	slot:SetTextColor(r, g, b, 1)
+	slot.lastShow = GetTime()
+	slot.scrollTime = 0
+	slot:SetTextHeight(minHeight)
+	FadingFrame_Show(slot)
+	rearrangeLabels()
 end
 
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
