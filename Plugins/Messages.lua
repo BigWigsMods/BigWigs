@@ -580,10 +580,9 @@ function plugin:OnDisable() if anchor then anchor:Hide() end end
 local function newFontString(i)
 	local fs = messageFrame:CreateFontString(nil, "ARTWORK")
 	fs:SetFontObject(GameFontNormalHuge)
-	fs:SetJustifyH("CENTER")
-	fs:SetJustifyV("MIDDLE")
 	fs:SetWidth(800)
 	fs:SetHeight(0)
+	fs.lastUsed = 0
 	FadingFrame_SetFadeInTime(fs, 0.2)
 	FadingFrame_SetHoldTime(fs, 10)
 	FadingFrame_SetFadeOutTime(fs, 3)
@@ -651,12 +650,18 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 		end
 	end
 	if not slot then
-		table.sort(labels, sort)
-		slot = labels[1]
+		local oldestLabel = nil
+		for i, v in next, labels do
+			if not oldestLabel then oldestLabel = v
+			elseif v.lastUsed < oldestLabel.lastUsed then oldestLabel = v
+			end
+		end
+		slot = oldestLabel
 	end
 	slot:SetText(text)
 	slot:SetTextColor(r, g, b, 1)
 	slot.scrollTime = 0
+	slot.lastUsed = GetTime()
 	slot:SetTextHeight(minHeight)
 	FadingFrame_Show(slot)
 end
