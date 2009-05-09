@@ -226,18 +226,18 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	--engage_trigger = "You will suffer for this trespass!",
+	engage_trigger = "Вы будете наказаны за это вторжение!",
 
-	cold = "Трескучий мороз(Достижение)",
+	cold = "Трескучий мороз",
 	cold_desc = "Сообщать когда на вас наложено 2 эффекта Трескучего мороза",
-	cold_message = "Трескучий мороз(%dэффекта) - Бегите!",
+	cold_message = "Трескучий мороз x%d!",
 
 	flash = "Мгновенная заморозка",
 	flash_desc = "Сообщает кто подвергся мгновенной заморозке и когда она применяется.",
-	flash_message = "%s подвергся мгновенной заморозке!",
+	flash_message = "Замарожены: %s!",
 	flash_warning = "Применение мгновенной заморозки!",
-	flash_soon = "Мгновенная заморозка через 5сек!",
-	flash_bar = "Следующая замарозка",
+	flash_soon = "Заморозка через 5сек!",
+	flash_bar = "~замарозка",
 
 	frozenblow = "Ледяные дуновения",
 	frozenblow_desc = "Сообщать когда Ходир накладывает на себя Ледяные дуновения.",
