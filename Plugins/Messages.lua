@@ -642,26 +642,26 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	messageFrame:SetScale(self.db.profile.scale)
 	messageFrame:Show()
 	if icon then text = "|T"..icon..":20:20:-5|t"..text end
-	local slot = nil
-	for i, v in next, labels do
-		if not v:IsShown() then
-			slot = v
-			break
+	
+	-- move 4 -> 1
+	local old = labels[1]
+	labels[1] = labels[4]
+	labels[4] = old
+	-- reposition
+	for i = 1, 4 do
+		labels[i]:ClearAllPoints()
+		if i == 1 then
+			labels[i]:SetPoint("TOP")
+		else
+			labels[i]:SetPoint("TOP", labels[i - 1], "BOTTOM")
 		end
 	end
-	if not slot then
-		local oldestLabel = nil
-		for i, v in next, labels do
-			if not oldestLabel then oldestLabel = v
-			elseif v.lastUsed < oldestLabel.lastUsed then oldestLabel = v
-			end
-		end
-		slot = oldestLabel
-	end
+	-- new message at 1
+	local slot = labels[1]
+
 	slot:SetText(text)
 	slot:SetTextColor(r, g, b, 1)
 	slot.scrollTime = 0
-	slot.lastUsed = GetTime()
 	slot:SetTextHeight(minHeight)
 	FadingFrame_Show(slot)
 end
