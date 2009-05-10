@@ -18,7 +18,7 @@
 <Script file="Libs\Dewdrop-2.0\Dewdrop-2.0.lua"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Include file="Libs\LibSink-2.0\lib.xml"/>
-<Script file="Libs\LibCandyBar-3.0\bars.lua"/>
+<Include file="Libs\LibCandyBar-3.0\lib.xml"/>
 <!--@end-no-lib-strip@-->
 
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
