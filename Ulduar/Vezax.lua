@@ -325,7 +325,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	--engage_trigger = "^Your destruction will herald a new age of suffering!",
+	engage_trigger = "Ваша смерть возвестит новую эру страданий!",
 
 	flame = "Жгучее пламя",
 	flame_desc = "Сообщает когда Везакс применяет Жгучее пламя.",
@@ -346,7 +346,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor_desc = "Сообщать о появлении Саронитовые пары.",
 	vapor_message = "Саронитовые пары (%d)!",
 	vapor_bar = "Пары",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
+	vapor_trigger = "Поблизости начинают возникать саронитовые испарения!",
 
 	vaporstack = "Сумма испарения",
 	vaporstack_desc = "Сообщать когда у вас уже 5 шт Саронитового испарения.",
@@ -355,7 +355,7 @@ L:RegisterTranslations("ruRU", function() return {
 	crash = "Темное сокрушение",
 	crash_desc = "Сообщает на кого Везакс применяет Темное сокрушение.",
 	crash_you = "Темное сокрушение на ВАС!",
-	crash_other = "Сокрушение на |3-5(%s)",
+	crash_other = "Сокрушение на %s",
 	crash_say = "Сокрушение на Мне!",
 
 	crashicon = "Иконка Сокрушения",
@@ -364,7 +364,7 @@ L:RegisterTranslations("ruRU", function() return {
 	mark = "Метка Безликого",
 	mark_desc = "Помечать иконкой Метку Безликого.",
 	mark_message_you = "На ВАС Метка Безликого!",
-	mark_message_other = "Метка на: |3-5(%s)!",
+	mark_message_other = "Метка на: %s!",
 
 	icon = "Иконка Метки",
 	icon_desc = "Помечать рейдовой иконкой игрока, на который попал под воздействие Темного сокрушения. (необходимо быть лидером группы или рейда)",
