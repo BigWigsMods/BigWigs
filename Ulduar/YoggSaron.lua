@@ -19,6 +19,7 @@ local db = nil
 local squeezeName = GetSpellInfo(64126)
 local linkedName = GetSpellInfo(63802)
 local count = 1
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
