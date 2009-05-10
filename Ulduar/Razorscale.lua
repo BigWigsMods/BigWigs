@@ -330,7 +330,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
 		if not started then
 			if db.berserk then
-				self:Enrage(600, true)
+				self:Enrage(900, true)
 			end
 			started = true
 			phase = 1
