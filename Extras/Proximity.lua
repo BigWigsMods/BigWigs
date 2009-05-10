@@ -735,6 +735,7 @@ function plugin:SetupFrames()
 end
 
 function plugin:RestyleWindow()
+	if not anchor then return end
 	if self.db.profile.lock then
 		locked = nil
 		lockDisplay()
