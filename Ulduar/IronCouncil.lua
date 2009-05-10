@@ -438,8 +438,8 @@ function mod:Overwhelm(player, spellID)
 	end
 end
 
-function mod:Shield(_, spellID)
-	if db.shield then
+function mod:Shield(unit, spellID)
+	if unit == molgeim and db.shield then
 		self:IfMessage(L["shield_message"], "Attention", spellID)
 	end
 end
