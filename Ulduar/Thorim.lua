@@ -379,7 +379,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	hammer = "Молот бури",
 	hammer_desc = "Сообщает о применении Молота бури.",
-	hammer_message = "Молот брошен в |3-5(%s)",
+	hammer_message = "Молот брошен в |3-3(%s)",
 	hammer_bar = "Следующий Молот",
 
 	impale = "Прокалывание",
@@ -394,17 +394,17 @@ L:RegisterTranslations("ruRU", function() return {
 
 	barrier = "Руническая преграда",
 	barrier_desc = "Сообщать когда Рунический колосс подвергается воздействию Рунической преграды.",
-	barrier_message = "Рунический колосс получил Руническую преграду!",
+	barrier_message = "Колосс под Рунической преградой!",
 
 	detonation = "Взрыв руны",
 	detonation_desc = "Сообщает кто попал под воздействие Взрыва рун.",
-	detonation_message = "Взрыв на: |3-5(%s)",
+	detonation_message = "Бомба у: |3-1(%s)",
 	detonation_yell = "Я БОМБА!",
 
 	charge = "Разряд молнии",
 	charge_desc = "Подсчитывать и сообщать о разрядах молнии Торима.",
-	charge_message = "Разряд: (%d)",
-	charge_bar = "Разряд (%d)",
+	charge_message = "Разряд: x%d",
+	charge_bar = "Разряд %d",
 
 	strike = "Дисбалансирующий удар",
 	strike_desc = "Сообщает когда игрок получает Дисбалансирующий удар.",

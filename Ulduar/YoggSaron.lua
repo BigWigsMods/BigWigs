@@ -97,6 +97,75 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	["Crusher Tentacle"] = "Тяжелое щупальце",
+	["Brain of Yogg-Saron"] = "Мозг Йогг-Сарона",
+
+	phase = "Фазы",
+	phase_desc = "Сообщать о смене фаз.",
+	engage_warning = "1-ая фаза",
+--	engage_trigger = "^The time to",
+	phase2_warning = "2-ая фаза",
+--	phase2_trigger = "^I am the lucid dream",
+	phase3_warning = "3-ая фаза",
+--	phase3_trigger = "^Look upon the true face",
+
+	portal = "Портал",
+	portal_desc = "Сообщать о портале.",
+--	portal_trigger = "Portals open into %s's mind!",
+	portal_message = "Порталы открыты!",
+	portal_bar = "Следующий портал",
+
+	sanity = "Здравомыслие",
+	sanity_desc = "Сообщать когда сумма Здравомыслия опуститься ниже 40.",
+	sanity_message = "Вы теряете рассудок!",
+
+	weakened = "Оглушение",
+	weakened_desc = "Сообщать когда Йогг-Сарон производит оглушение.",
+	weakened_message = "%s оглушен!",
+--	weakened_trigger = "The illusion shatters and a path to the central chamber opens!",
+
+	madness = "Доведение до помешательства",
+	madness_desc = "Показывает таймер Доведения до помешательства.",
+	madness_warning = "Помешательство через 5сек!",
+
+	malady = "Душевная болезнь",
+	malady_desc = "Сообщать когда игрок получает Душевную болезнь.",
+	malady_message = "Болезнь у: |3-1(%s)",
+
+	tentacle = "Тяжелое щупальце",
+	tentacle_desc = "Сообщать о появлении Тяжелого щупальца.",
+	tentacle_message = "Щупальце %d!",
+
+	squeeze = squeezeName,
+	squeeze_desc = "Сообщать который игрок подвергся Выдавливанию.",
+	squeeze_message = squeezeName .. ": %s",
+
+	link = linkedName,
+	link_desc = "Сообщает когда вы получаете Схожее мышление с кем либо.",
+	link_warning = "У вас Схожее мышление!",
+
+	gaze = "Взгляд безумца",
+	gaze_desc = "Сообщает когда Йогг-Сарон получает Взгляд безумца.",
+	gaze_bar = "~Взгляд безумца",
+
+	empower = "Сгущение тьмы",
+	empower_desc = "Сообщать о Сгущение тьмы.",
+	empower_message = "Сгущение тьмы!",
+	empower_bar = "~Сгущение тьмы",
+
+	mindcontrol = "Господство над разумом",
+	mindcontrol_desc = "Сообщает кто находиться под Господством над разумом.",
+	mindcontrol_message = "Под контролем: %s",
+
+	guardian = "Появление стража", --phase 1
+	guardian_desc = "Сообщает когда появляются Стражи Йогг-Сарона.",
+	guardian_message = "Страж %d!",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, с Душевной болезнью или находящегося под контролем разума. (необходимо быть лидером группы или рейда)",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	["Crusher Tentacle"] = "분쇄의 촉수",
 	["Brain of Yogg-Saron"] = "요그사론의 뇌",
