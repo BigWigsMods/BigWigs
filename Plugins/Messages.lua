@@ -644,9 +644,12 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	if icon then text = "|T"..icon..":20:20:-5|t"..text end
 	
 	-- move 4 -> 1
-	local old = labels[1]
-	labels[1] = labels[4]
-	labels[4] = old
+	local old = labels[4]
+	labels[4] = labels[3]
+	labels[3] = labels[2]
+	labels[2] = labels[1]
+	labels[1] = old
+	
 	-- reposition
 	for i = 1, 4 do
 		labels[i]:ClearAllPoints()
