@@ -440,7 +440,6 @@ plugin.defaultDB = {
 	posy = -150,
 	chat = nil,
 	useicons = true,
-	threeone = false,
 }
 plugin.consoleCmd = L["Messages"]
 
@@ -474,10 +473,40 @@ plugin.consoleOptions = {
 		end
 	end,
 	args = {
+		anchor = {
+			type = "toggle",
+			name = L["Show anchor"],
+			desc = L["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."],
+			disabled = bwAnchorDisabled,
+			order = 1,
+		},
+		reset = {
+			type = "execute",
+			name = L["Reset position"],
+			desc = L["Reset the anchor position, moving it to the center of your screen."],
+			func = resetAnchor,
+			disabled = bwAnchorDisabled,
+			order = 2,
+		},
+		scale = {
+			type = "range",
+			name = L["Scale"],
+			desc = L["Set the message frame scale."],
+			min = 0.2,
+			max = 5.0,
+			step = 0.1,
+			disabled = bwAnchorDisabled,
+			order = 3,
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 4,
+		},
 		generalHeader = {
 			type = "header",
 			name = L["Output Settings"],
-			order = 1,
+			order = 10,
 		},
 		chat = {
 			type = "toggle",
@@ -499,41 +528,6 @@ plugin.consoleOptions = {
 			desc = L["Show icons next to messages, only works for Raid Warning."],
 			order = 103,
 		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 200,
-		},
-		bigWigsHeader = {
-			type = "header",
-			name = L["BigWigs Anchor"],
-			order = 300,
-		},
-		anchor = {
-			type = "toggle",
-			name = L["Show anchor"],
-			desc = L["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."],
-			disabled = bwAnchorDisabled,
-			order = 400,
-		},
-		reset = {
-			type = "execute",
-			name = L["Reset position"],
-			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = resetAnchor,
-			disabled = bwAnchorDisabled,
-			order = 401,
-		},
-		scale = {
-			type = "range",
-			name = L["Scale"],
-			desc = L["Set the message frame scale."],
-			min = 0.2,
-			max = 5.0,
-			step = 0.1,
-			disabled = bwAnchorDisabled,
-			order = 402,
-		},
 	},
 }
 
@@ -551,11 +545,6 @@ function plugin:OnRegister()
 end
 
 function plugin:OnEnable()
-	if not self.db.profile.threeone then
-		self.db.profile.threeone = true
-		self.db.profile.sink20OutputSink = "BigWigs"
-	end
-
 	self:RegisterEvent("BigWigs_Message")
 
 	if BigWigs:HasModule("Colors") then

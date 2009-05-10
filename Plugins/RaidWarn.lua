@@ -188,7 +188,7 @@ plugin.defaultDB = {
 	showwhispers = true,
 }
 plugin.consoleCmd = L["RaidWarning"]
-plugin.consoleOptions = {
+plugin.advancedOptions = {
 	type = "group",
 	name = L["RaidWarning"],
 	desc = L["desc"],

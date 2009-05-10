@@ -288,7 +288,7 @@ plugin.defaultDB = {
 }
 plugin.consoleCmd = L["BossBlock"]
 
-plugin.consoleOptions = {
+plugin.advancedOptions = {
 	type = "group",
 	name = L["BossBlock"],
 	desc = L["desc"],

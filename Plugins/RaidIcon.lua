@@ -239,7 +239,7 @@ local function disabled()
 end
 
 plugin.consoleCmd = L["RaidIcon"]
-plugin.consoleOptions = {
+plugin.advancedOptions = {
 	type = "group",
 	name = L["Raid Icons"],
 	desc = L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."],

@@ -41,6 +41,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Options"] = true,
 	["Minimap icon"] = true,
 	["Toggle show/hide of the minimap icon."] = true,
+	["Advanced"] = true,
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = true,
 
 	bosskill = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
@@ -308,7 +310,7 @@ local options = {
 	type = "group",
 	handler = BigWigs,
 	args = {
-		[L["Bosses"]] = {
+		bosses = {
 			type = "header",
 			name = L["Bosses"],
 			order = 1,
@@ -318,20 +320,12 @@ local options = {
 			name = " ",
 			order = 200,
 		},
-		[L["Options"]] = {
+		options = {
 			type = "header",
 			name = L["Options"],
 			order = 201,
 		},
-		[L["Plugins"]] = {
-			type = "group",
-			name = L["Plugins"],
-			desc = L["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."],
-			args = {},
-			disabled = "~IsActive",
-			order = 202,
-		},
-		[L["Extras"]] = {
+		extras = {
 			type = "group",
 			name = L["Extras"],
 			desc = L["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."],
@@ -339,7 +333,15 @@ local options = {
 			disabled = "~IsActive",
 			order = 203,
 		},
-		["Minimap"] = {
+		advanced = {
+			type = "group",
+			name = L["Advanced"],
+			desc = L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"],
+			args = {},
+			disabled = "~IsActive",
+			order = 203,
+		},
+		minimap = {
 			type = "toggle",
 			name = L["Minimap icon"],
 			desc = L["Toggle show/hide of the minimap icon."],
@@ -563,7 +565,7 @@ do
 
 			if cons then
 				if module.external then
-					options.args[L["Extras"]].args[ML["cmd"]] = cons
+					options.args.extras.args[ML["cmd"]] = cons
 				else
 					local zone = nil
 					if module.otherMenu then
@@ -585,10 +587,16 @@ do
 			end
 		elseif module.consoleOptions then
 			if module.external then
-				options.args[L["Extras"]].args[module.consoleCmd or name] = module.consoleOptions
+				options.args.extras.args[module.consoleCmd or name] = module.consoleOptions
 			else
-				options.args[L["Plugins"]].args[module.consoleCmd or name] = module.consoleOptions
+				options.args[module.consoleCmd or name] = module.consoleOptions
+				options.args[module.consoleCmd or name].order = 202
 			end
+		elseif module.pluginOptions then
+			options.args[module.consoleCmd or name] = module.pluginOptions
+			options.args[module.consoleCmd or name].order = 202
+		elseif module.advancedOptions then
+			options.args.advanced.args[module.consoleCmd or name] = module.advancedOptions
 		end
 
 		if type(module.OnRegister) == "function" then
