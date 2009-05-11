@@ -392,6 +392,10 @@ L:RegisterTranslations("zhCN", function() return {
 	portal_message = "开启传送门！",
 	portal_bar = "<下一传送门>",
 
+	sanity = "理智",
+	sanity_desc = "当你的理智堆叠下降到40以下时发出警报。",
+	sanity_message = ">你< 即将疯狂！",
+
 	weakened = "昏迷",
 	weakened_desc = "当尤格-萨隆昏迷时发出警报。",
 	weakened_message = "昏迷：>%s<！",
@@ -455,6 +459,10 @@ L:RegisterTranslations("zhTW", function() return {
 	portal_trigger = "傳送門開啟進入%s的心靈!",
 	portal_message = "開啟傳送門！",
 	portal_bar = "<下一傳送門>",
+
+	sanity = "理智",
+	sanity_desc = "當你的理智堆疊下降到40以下時發出警報。",
+	sanity_message = ">你< 即將瘋狂！！",
 
 	weakened = "昏迷",
 	weakened_desc = "當尤格薩倫昏迷時發出警報。",

@@ -179,8 +179,10 @@ L:RegisterTranslations("zhCN", function() return {
 	["Reboot"] = "重置",
 	["Reboot this module."] = "重置此模块。",
 	["Options"] = "选项",
-	["Minimap icon"] = "小地图图标",
-	["Toggle show/hide of the minimap icon."] = "打开或关闭小地图图标。",
+	["Minimap icon"] = "迷你地图图标",
+	["Toggle show/hide of the minimap icon."] = "开启或关闭迷你地图图标。",
+	["Advanced"] = "高级",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "并不需要去修改这些选项，但如果想进行调整我们欢迎这样做！",
 
 	bosskill = "首领死亡",
 	bosskill_desc = "首领被击杀时显示提示信息。",
@@ -213,6 +215,10 @@ L:RegisterTranslations("zhTW", function() return {
 	["Reboot"] = "重啟",
 	["Reboot this module."] = "重啟此模組。",
 	["Options"] = "選項",
+	["Minimap icon"] = "迷你地圖圖示",
+	["Toggle show/hide of the minimap icon."] = "開啟或關閉迷你地圖圖示。",
+	["Advanced"] = "進階",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "并不需要去修改這些選項，但如果想進行調整我們歡迎這樣做！",
 
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",

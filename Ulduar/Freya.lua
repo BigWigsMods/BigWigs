@@ -275,6 +275,8 @@ L:RegisterTranslations("zhCN", function() return {
 	tremor = "大地震颤",
 	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。",
 	tremor_message = "大地震颤！",
+	tremor_warning = "即将 大地震颤！",
+	tremor_bar = "<下一大地震颤>",
 
 	root = "钢铁根须",
 	root_desc = "当玩家中了钢铁根须时发出警报。",
@@ -324,6 +326,8 @@ L:RegisterTranslations("zhTW", function() return {
 	tremor = "地面震動",
 	tremor_desc = "當芙蕾雅施放地面震動時發出警報。",
 	tremor_message = "地面震動！",
+	tremor_warning = "即將 地面震動！",
+	tremor_bar = "<下一地面震動>",
 
 	root = "鐵之根鬚",
 	root_desc = "當玩家中了鐵之根鬚時發出警報。",
