@@ -62,6 +62,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Right"] = true,
 	["Time"] = true,
 	["Whether to show or hide the time left on the bars."] = true,
+	["Icon"] = true,
+	["Shows or hides the bar icons."] = true,
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -278,6 +280,7 @@ plugin.defaultDB = {
 	growup = true,
 	time = true,
 	align = "LEFT",
+	icon = true,
 	emphasize = true,
 	emphasizeFlash = true,
 	emphasizeMove = true,
@@ -336,6 +339,12 @@ plugin.consoleOptions = {
 			name = L["Time"],
 			desc = L["Whether to show or hide the time left on the bars."],
 			order = 5,
+		},
+		icon = {
+			type = "toggle",
+			name = L["Icon"],
+			desc = L["Shows or hides the bar icons."],
+			order = 6,
 		},
 		spacer = {
 			type = "header",
@@ -678,7 +687,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon)
 	bar:SetLabel(text)
 	bar:SetDuration(time)
 	bar:SetTimeVisibility(db.time)
-	bar:SetIcon(icon)
+	bar:SetIcon(db.icon and icon or nil)
 	bar:SetScale(db.scale)
 	if db.emphasize and time < 15 then
 		self:EmphasizeBar(bar)
