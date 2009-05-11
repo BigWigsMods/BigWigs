@@ -98,6 +98,15 @@ L:RegisterTranslations("ruRU", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Мерцание фона увеличенных полос, что может подчеркнуть их заметность.",
 	["Regular bars"] = "Обычные полосы",
 	["Emphasized bars"] = "Увеличенные полосы",
+	["Align"] = "Выравнивание",
+	["How to align the bar labels."] = "Как выравнивать текстовые данные полосы.",
+	["Left"] = "Влево",
+	["Center"] = "По центру",
+	["Right"] = "Вправо",
+	["Time"] = "Время",
+	["Whether to show or hide the time left on the bars."] = "Показывать или скрывать остаток времени на полосах.",
+	["Icon"] = "Иконка",
+	["Shows or hides the bar icons."] = "Показывать или скрывать иконку полосы.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
