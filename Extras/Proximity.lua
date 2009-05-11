@@ -209,6 +209,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Disabled"] = "Deaktivieren",
 	["Disable the proximity display for all modules that use it."] = "Deaktiviert die Anzeige naher Spieler für alle Module, die sie benutzen.",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die Anzeige naher Spieler wurde für %s deaktiviert, bitte benutze die Optionen des Bossmoduls, um sie wieder zu aktivieren.",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Die Anzeige naher Spieler wurde gesperrt. Falls du das Fenster wieder bewegen oder Zugang zu den anderen Optionen haben willst, musst du das Big Wigs Symbol rechts-klicken, zu Extras -> Nähe -> Anzeige gehen und die Option 'Sperren' ausschalten.",
 
 	proximity = "Nähe",
 	proximity_desc = "Zeigt das Fenster für nahe Spieler an. Es listet alle Spieler auf, die dir zu nahe stehen.",

@@ -101,7 +101,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Options for bosses in %s."] = "Optionen für Bosse in %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "Optionen für %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Plugins",
-	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Plugins stellen die Grundfunktionen von Big Wigs zur Verfügung - wie das Anzeigen von Nachrichten, Zeitbalken und weiteren benötigten Funktionen.",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Plugins stellen die Grundfunktionen von Big Wigs zur Verfügung - wie das Anzeigen von Nachrichten, Timerleisten und anderen, essentiellen Funktionen.",
 	["Extras"] = "Extras",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Extras sind externe und eingebaute zusätzliche Plugins, ohne die Big Wigs auch korrekt funktioniert.",
 	["Active"] = "Aktivieren",
@@ -109,18 +109,20 @@ L:RegisterTranslations("deDE", function() return {
 	["Reboot"] = "Neustarten",
 	["Reboot this module."] = "Startet dieses Modul neu.",
 	["Options"] = "Optionen",
-	["Minimap icon"] = "Minimap Icon",
-	["Toggle show/hide of the minimap icon."] = "Minimap Icon zeigen/verstecken",
+	["Minimap icon"] = "Minimap Symbol",
+	["Toggle show/hide of the minimap icon."] = "Zeigt oder versteckt das Minimap Symbol.",
+	["Advanced"] = "Erweitert",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Diese Optionen musst du nicht unbedingt verändern, aber du kannst es natürlich, wenn du willst!",
 
 	bosskill = "Boss besiegt",
-	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
+	bosskill_desc = "Meldet, wenn ein Boss besiegt wurde.",
 	enrage = "Wutanfall",
-	enrage_desc = "Melde, wenn ein Boss einen Wutanfall bekommt.",
+	enrage_desc = "Meldet, wenn ein Boss einen Wutanfall bekommt.",
 	berserk = "Berserker",
-	berserk_desc = "Melde, wenn ein Boss zum Berserker wird.",
+	berserk_desc = "Meldet, wenn ein Boss zum Berserker wird.",
 
 	["Load"] = "Laden",
-	["Load All"] = "Alle Laden",
+	["Load All"] = "Alle laden",
 	["Load all %s modules."] = "Alle %s Module laden.",
 
 	already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%d|r) existiert bereits als Boss Modul in Big Wigs, aber irgend etwas versucht es erneut anzumelden (als Revision |cffffff00%d|r). Dies bedeutet, dass du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in deinem Addon-Ordner hast. Es wird empfohlen, jegliche Big Wigs Ordner zu löschen und dann von Grund auf neu zu installieren.",
