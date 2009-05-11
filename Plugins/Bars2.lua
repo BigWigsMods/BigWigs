@@ -55,6 +55,13 @@ L:RegisterTranslations("enUS", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = true,
 	["Regular bars"] = true,
 	["Emphasized bars"] = true,
+	["Align"] = true,
+	["How to align the bar labels."] = true,
+	["Left"] = true,
+	["Center"] = true,
+	["Right"] = true,
+	["Time"] = true,
+	["Whether to show or hide the time left on the bars."] = true,
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -269,6 +276,8 @@ plugin.defaultDB = {
 	scale = 1.0,
 	texture = "BantoBar",
 	growup = true,
+	time = true,
+	align = "LEFT",
 	emphasize = true,
 	emphasizeFlash = true,
 	emphasizeMove = true,
@@ -310,6 +319,23 @@ plugin.consoleOptions = {
 			desc = L["Set the texture for the timer bars."],
 			validate = media:List(mType),
 			order = 3,
+		},
+		align = {
+			type = "text",
+			name = L["Align"],
+			desc = L["How to align the bar labels."],
+			validate = {
+				LEFT = L["Left"],
+				CENTER = L["Center"],
+				RIGHT = L["Right"],
+			},
+			order = 4,
+		},
+		time = {
+			type = "toggle",
+			name = L["Time"],
+			desc = L["Whether to show or hide the time left on the bars."],
+			order = 5,
 		},
 		spacer = {
 			type = "header",
@@ -648,10 +674,10 @@ function plugin:BigWigs_StartBar(module, text, time, icon)
 	bar:Set("anchor", normalAnchor)
 	bar:SetColor(colorNormal())
 	bar.candyBarLabel:SetTextColor(colorText())
-	bar.candyBarLabel:SetJustifyH("LEFT")
+	bar.candyBarLabel:SetJustifyH(db.align)
 	bar:SetLabel(text)
 	bar:SetDuration(time)
-	bar:SetTimeVisibility(true)
+	bar:SetTimeVisibility(db.time)
 	bar:SetIcon(icon)
 	bar:SetScale(db.scale)
 	if db.emphasize and time < 15 then
