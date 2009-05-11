@@ -327,7 +327,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Выводить все сообщения BigWigs в стандартное окно чата в дополнении с настройками отображения",
 
-	["Chat frame"] = "Фрейм чата",
+	["Chat frame"] = "Окно чата",
 
 	["Test"] = "Тест",
 	["Close"] = "Закрыть",
@@ -335,6 +335,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["Reset position"] = "Сброс",
 	["Reset the anchor position, moving it to the center of your screen."] = "Сброс позиции якоря, переместив его в центр вашего экрана.",
 
+	["Spawns a new test warning."] = "Вывод новых тестовых сообщений.",
+	["Hide"] = "Скрыть",
+	["Hides the anchors."] = "Скрывает якорь.",
+	
 	Font = "Fonts\\NIM_____.ttf",
 } end)
 

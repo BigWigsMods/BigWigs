@@ -277,7 +277,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Options for bosses in %s."] = "Опции для боссов в %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "Опции для %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Плагины",
-	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Плагины - это основная особенность Big Wigs,они показывают сообщения, время на барах и другие важные моменты при битве с боссами.",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Плагины - это основная особенность Big Wigs,они показывают сообщения, время в полосках и другие важные моменты при битве с боссами.",
 	["Extras"] = "Дополнения",
 	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Дополнительные настройки для рейдов без которых Big Wigs не будет должным образом работать",
 	["Active"] = "Активен",
@@ -285,6 +285,10 @@ L:RegisterTranslations("ruRU", function() return {
 	["Reboot"] = "Перезагрузка",
 	["Reboot this module."] = "Перезагрузка данного модуля",
 	["Options"] = "Опции",
+	["Minimap icon"] = "Иконка у мини-карты",
+	["Toggle show/hide of the minimap icon."] = "Показать/скрыть иконку у мини-карты.",
+	["Advanced"] = "",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Вам не нужно трогать данную опцию, но если вы хотите подстроить, тогда вперёд!",
 
 	bosskill = "Смерть босса",
 	bosskill_desc = "Объявлять о смерти босса.",
@@ -297,7 +301,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Load All"] = "Загрузить все",
 	["Load all %s modules."] = "Загрузить все модули %s.",
 
-	-- already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch.",
+	already_registered = "|cffff0000Внимание:|r |cff00ff00%s|r (|cffffff00%d|r) уже существует как модуль босса Big Wigs,но чтото снова пытается его зарегистрировать (ревизия |cffffff00%d|r). Это обычно означает, что у вас две копии этого модуля в папке модификации, возможно из-за ошибки обновления программой обновления модификаций. Мы рекомендуем вам удалить все папки Big Wigs , а затем установить его заново с нуля.",
 } end)
 
 ---------------------------------

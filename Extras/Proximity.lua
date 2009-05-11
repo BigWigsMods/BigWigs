@@ -290,8 +290,9 @@ L:RegisterTranslations("ruRU", function() return {
 	["Sound"] = "Звук",
 	["Play sound on proximity."] = "Проиграть звук при приближении игроков",
 	["Disabled"] = "Отключить",
-	["Disable the proximity display for all modules that use it."] = "Отключить отображение окна сближения для всех модулей использующих его.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Отображение модуля сближения отключен в %s, пожалуйста воспользуйтесь опциями босс-модуля, для того чтобы включить его.",
+	["Disable the proximity display for all modules that use it."] = "Отключить отображение окна близости для всех модулей использующих его.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Отображение модуля близости отключен в %s, пожалуйста воспользуйтесь опциями босс-модуля, для того чтобы включить его.",
+	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Отображение модуля близости зафиксировано, вам нужно нажать правую клавишу мыши по иконке Big Wigs, перейти в Extras -> Близость -> Отображение и переключить опцию Фиксировать, если вы хотите его переместить или получить доступ к другим опциям.",
 
 	proximity = "Отображение близости",
 	proximity_desc = "Показывать окно близости при соответствующей схватке, выводя список игроков которые стоят слишком близко к вам.",
