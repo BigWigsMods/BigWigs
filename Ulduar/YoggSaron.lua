@@ -330,7 +330,7 @@ L:RegisterTranslations("deDE", function() return {
 	weakened = "Geschwächt",
 	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
 	weakened_message = "%s ist geschwächt!",
-	--weakened_trigger = "The Illusion shatters and a path to the central chamber opens!", -- NEED!
+	weakened_trigger = "Die Illusion fällt in sich zusammen und der Weg in den zentralen Raum wird frei!", -- needs verification!
 
 	madness = "Wahnsinn hervorrufen",
 	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",

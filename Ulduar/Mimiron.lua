@@ -166,7 +166,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_warning = "Phase 3",
 	phase3_trigger = "^Danke Euch, Freunde! Eure Anstrengungen haben fantastische Daten geliefert!",
 	phase4_warning = "Phase 4",
-	phase4_trigger = "^Vorversuchsphase abgeschlossen. Jetzt kommt der eigentliche Test!",
+	phase4_trigger = "Vorversuchsphase abgeschlossen. Jetzt kommt der eigentliche Test!",
 	phase_bar = "Phase %d",
 
 	hardmode = "Hard Mode",
@@ -196,7 +196,7 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
 
-	end_trigger = "^Es scheint, als wäre mir", -- needs verification!
+	end_trigger = "^Es scheint, als wäre mir",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

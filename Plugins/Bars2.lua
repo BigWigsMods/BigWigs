@@ -250,8 +250,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Normal Bars"] = "Normale Leisten",
 	["Emphasized Bars"] = "Hervorgehobene Leisten",
 	["Options for the timer bars."] = "Optionen für die Timerleisten.",
-	["Toggle anchors"] = "Verankerung",
-	["Show or hide the bar anchors for both normal and emphasized bars."] = "Zeigt oder versteckt die Verankerung für normale und hervorgehobene Leisten.",
+	["Toggle anchors"] = "Verankerungen",
+	["Show or hide the bar anchors for both normal and emphasized bars."] = "Zeigt oder versteckt die Verankerungen für normale und hervorgehobene Leisten.",
 	["Scale"] = "Skalierung",
 	["Set the bar scale."] = "Justiert die Skalierung der Leisten.",
 	["Grow upwards"] = "Nach oben erweitern",
@@ -277,6 +277,15 @@ L:RegisterTranslations("deDE", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Lässt den Hintergrund der hervorgehobenen Leisten blinken, um sie leichter zu erkennen.",
 	["Regular bars"] = "Normale Leisten",
 	["Emphasized bars"] = "Hervorgehobene Leisten",
+	["Align"] = "Ausrichtung",
+	["How to align the bar labels."] = "Bestimmt, wie der Text auf den Leisten ausgerichtet ist.",
+	["Left"] = "Links",
+	["Center"] = "Mittig",
+	["Right"] = "Rechts",
+	["Time"] = "Zeit",
+	["Whether to show or hide the time left on the bars."] = "Bestimmt, ob die verbleibende Zeit auf den Leisten angezeigt wird.",
+	["Icon"] = "Symbol",
+	["Shows or hides the bar icons."] = "Zeigt oder versteckt die Symbole auf den Leisten.",
 } end)
 
 --------------------------------------------------------------------------------

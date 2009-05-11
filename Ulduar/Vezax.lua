@@ -178,7 +178,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "^Eure Vernichtung wird ein neues Zeitalter",-- needs testing
+	engage_trigger = "Eure Vernichtung wird ein neues Zeitalter des Leids einläuten!",
 
 	flame = "Sengende Flammen",
 	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
@@ -199,7 +199,7 @@ L:RegisterTranslations("deDE", function() return {
 	vapor_desc = "Warnung und Timer für das Auftauchen von Saronitdämpfen.",
 	vapor_message = "Saronitdämpfe %d!",
 	vapor_bar = "Saronitdämpfe",
-	--vapor_trigger = "A cloud of saronite vapors coalesces nearby!", --NEED!
+	vapor_trigger = "Eine Wolke Saronitdämpfe bildet sich in der Nähe!",
 
 	vaporstack = "Saronitdämpfe Stapel",
 	vaporstack_desc = "Warnt, wenn du 5 oder mehr Stapel der Saronitdämpfe hast.",
