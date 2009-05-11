@@ -534,8 +534,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Enrage(375, true, true)
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 180, "Ability_Warrior_Innerrage")
-			self:DelayedMessage(180, L["hardmode_warning"], "Attention")
+			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
+			self:DelayedMessage(173, L["hardmode_warning"], "Attention")
 		end
 	elseif msg == L["phase3_trigger"] then
 		local berserkBar = GetSpellInfo(43)
