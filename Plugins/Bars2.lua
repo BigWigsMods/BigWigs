@@ -1,4 +1,4 @@
-﻿--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -175,6 +175,15 @@ L:RegisterTranslations("zhTW", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "強調條背景閃爍，方便你留意它。",
 	["Regular bars"] = "常規計時條",
 	["Emphasized bars"] = "強調條",
+	["Align"] = "對齊",
+	["How to align the bar labels."] = "如何對齊計時條標籤",
+	["Left"] = "置左",
+	["Center"] = "置中",
+	["Right"] = "置右",
+	["Time"] = "時間",
+	["Whether to show or hide the time left on the bars."] = "在計時條上是否顯示或隱藏剩餘時間",
+	["Icon"] = "圖示",
+	["Shows or hides the bar icons."] = "顯示或隱藏計時條圖示",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
