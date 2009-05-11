@@ -333,7 +333,10 @@ plugin.defaultDB = {
 	barEmphasized = { 1, 0, 0, 1 },
 }
 
-local function get(key) return unpack(plugin.db.profile[key]) end
+local function get(key)
+	if not key or key == "reset" then return end -- Work around AceConsole-2.0 problem.
+	return unpack(plugin.db.profile[key])
+end
 local function set(key, r, g, b, a) plugin.db.profile[key] = {r, g, b, a} end
 
 plugin.consoleCmd = L["Colors"]
@@ -427,7 +430,7 @@ plugin.consoleOptions = {
 			order = 14,
 		},
 		spacer2 = { type = "header", name = " ", order = 15, },
-		Reset = {
+		reset = {
 			type = "execute",
 			name = L["Reset"],
 			desc = L["Resets all colors to defaults."],
