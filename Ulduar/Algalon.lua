@@ -8,13 +8,14 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32871
-mod.toggleoptions = {"bosskill"}
+mod.toggleoptions = {"bosskill", "punch", "smash"}
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local db = nil
+local punch = GetSpellInfo(64412)
 
 ----------------------------
 --      Localization      --
@@ -24,6 +25,14 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Algalon",
+
+	punch = "Phase Punch",
+	punch_desc = "Warn when someone has 4 stacks of Phase Punch",
+	punch_message = "%dx Phase Punch on %s",
+
+	smash = "Cosmic Smash",
+	smash_desc = "Warn when Cosmic Smash is incoming",
+	smash_message = "Incoming Cosmic Smash!",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -58,6 +67,9 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64597)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	db = self.db.profile
@@ -68,3 +80,26 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Punch(player, spellID)
+	if db.punch then
+		self:Bar(L["punch"], 15, 64412)
+	end
+end
+
+function mod:PunchCount(player)
+	if db.punch then
+		local _, _, icon, stack = UnitDebuff(player, punch)
+		if stack >= 4 then
+			self:IfMessage(L["punch_message"]:format(stack, player), "Urgent", icon, "Info")
+		end
+	end
+end
+
+function mod:Smash(player, spellID)
+	if db.smash then
+		self:IfMessage(L["smash_message"], "Attention", 62301, "Info"  )
+		self:Bar(L["smash"], 25, 64597)
+	end
+end
+
