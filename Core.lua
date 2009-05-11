@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -217,10 +217,10 @@ L:RegisterTranslations("zhTW", function() return {
 	["Reboot"] = "重啟",
 	["Reboot this module."] = "重啟此模組。",
 	["Options"] = "選項",
-	["Minimap icon"] = "迷你地圖圖示",
-	["Toggle show/hide of the minimap icon."] = "開啟或關閉迷你地圖圖示。",
+	["Minimap icon"] = "小地圖圖示",
+	["Toggle show/hide of the minimap icon."] = "開啟或關閉小地圖圖示。",
 	["Advanced"] = "進階",
-	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "并不需要去修改這些選項，但如果想進行調整我們歡迎這樣做！",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "並不需要去修改這些選項，但如果想進行調整我們歡迎這樣做！",
 
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
@@ -233,7 +233,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Load All"] = "載入全部",
 	["Load all %s modules."] = "載入全部%s模組。",
 
-	already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已經存在首領模組，但存在（版本 |cffffff00%d|r）模組仍試圖重新注冊。可能由于更新失敗的原因，通常表示您有兩份模組拷貝在您插件的文件夾中。建議您刪除所有 Big Wigs 文件夾并重新全新安裝。",
+	already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已經存在首領模組，但存在（版本 |cffffff00%d|r）模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議您刪除所有 Big Wigs 檔案夾並重新安裝。",
 } end)
 
 L:RegisterTranslations("esES", function() return {
