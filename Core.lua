@@ -132,19 +132,21 @@ L:RegisterTranslations("koKR", function() return {
 
 	-- AceConsole strings
 	["Bosses"] = "보스",
-	["Options for bosses in %s."] = "%s에 보스들을 위한 설정입니다.", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "%s에 대한 설정입니다 (r%d).",     -- "Options for <boss> (<revision>)"
+	["Options for bosses in %s."] = "%s에 보스들을 위한 옵션입니다.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "%s에 대한 옵션입니다 (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "플러그인",
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Big Wigs의 주요 기능을 다루는 플러그인 입니다. - 메세지 및 타이머 바 표시 기능, 기타 주요 기능 등.",
 	["Extras"] = "기타",
-	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "기타의 것은 Big Wigs가 제대로 작용할 서드파티와 플러그 접속식을 함께 포함합니다.",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Big Wigs가 제대로 작동할 수 있도록 하는 플러그인입니다.",
 	["Active"] = "활성화",
 	["Activate or deactivate this module."] = "해당 모듈을 활성화/비활성화 합니다.",
 	["Reboot"] = "재시작",
 	["Reboot this module."] = "해당 모듈을 재시작합니다.",
-	["Options"] = "설정",
+	["Options"] = "옵션",
 	["Minimap icon"] = "미니맵 아이콘",
 	["Toggle show/hide of the minimap icon."] = "미니맵 아이콘을 표시/숨김으로 전환합니다.",
+	["Advanced"] = "고급",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "경보, 아이콘, 차단에 대한 고급 설정입니다. 정말로 필요하지 않은 이상 건들지 않는 것이 좋습니다.",
 
 	bosskill = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림니다.",
