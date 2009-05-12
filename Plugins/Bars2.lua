@@ -227,6 +227,13 @@ L:RegisterTranslations("koKR", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "강조 바에 붉은색 배경을 번쩍이게 합니다.",
 	["Regular bars"] = "일반 바",
 	["Emphasized bars"] = "강조 바",
+	["Align"] = "정렬",
+	["How to align the bar labels."] = "바 문자를 표시될 곳을 선택합니다.",
+	["Left"] = "좌측",
+	["Center"] = "중앙",
+	["Right"] = "우측",
+	["Time"] = "시간",
+	["Whether to show or hide the time left on the bars."] = "바의 우측에 시간을 숨기거나 표시합니다.",
 	["Icon"] = "아이콘",
 	["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니다.",
 } end)
