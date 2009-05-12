@@ -67,7 +67,7 @@ L:RegisterTranslations("enUS", function() return {
 	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
 
-	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
