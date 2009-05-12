@@ -57,7 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Place icon",
 	icon_desc = "Place a raid icon on players who get targetted with the Storm Clouds.",
 
-	end_trigger = "I...I am released from his grasp! At...last!",
+	end_trigger = "I... I am released from his grasp... at last.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
