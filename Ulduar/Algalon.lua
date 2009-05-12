@@ -38,7 +38,14 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	punch = "위상의 주먹",
+	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
+	punch_message = "위상의 주먹 %dx: %s",
 
+	smash = "우주의 강타",
+	smash_desc = "우주의 강타를 알립니다.",
+	smash_message = "곧 우주의 강타!",
+	
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
@@ -112,7 +119,7 @@ end
 
 function mod:Smash(player, spellID)
 	if db.smash then
-		self:IfMessage(L["smash_message"], "Attention", 62301, "Info"  )
+		self:IfMessage(L["smash_message"], "Attention", 64597, "Info"  )
 		self:Bar(L["smash"], 25, 64597)
 	end
 end
