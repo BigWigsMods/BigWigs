@@ -158,23 +158,23 @@ L:RegisterTranslations("esES", function() return {
 } end )
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	["RaidWarning"] = "ОбъявлениеРейду",
+	["RaidWarning"] = "Объявление рейду",
 
-	["Broadcast over RaidWarning"] = "Передача через Объявление Рейду",
+	["Broadcast over RaidWarning"] = "Передача через объявление рейду",
 	["Broadcast"] = "Передача",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Вкл/Выкл передачу сообщений вашего BigWigsа в канал Объявлений Рейда остальным игрокам рейда.\n\nЗамете что вы не увидите этих предупреждений если у вас будет включен БлокБосс.",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Вкл/Выкл передачу сообщений вашего BigWigsа в канал объявлений рейда остальным игрокам рейда.\n\nЗаметьте что вы не увидите этих предупреждений если у вас будет включен БлокБосс.",
 
 	["Whisper"] = "Шептание",
 	["Whisper warnings"] = "Предупреждать шепотом",
-	["Toggle whispering warnings to players."] = "Вкл/Выкл шептание предупреждений игрокам",
+	["Toggle whispering warnings to players."] = "Вкл/Выкл шептание предупреждений игрокам.",
 
 	["Show whispers"] = "Показывать шепот",
-	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Вкл/Выкл отображение шептаний посланных локально BigWigsои , например когда у игроков чума или подобные отрицательные эффекты.",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Вкл/Выкл отображение шептаний посланных локально BigWigs'ом, например когда у игроков чума или подобные отрицательные эффекты.",
 
 	["Broadcast to chat"] = "Передача в чат",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Вкл/Выкл передачу сообщений в чат группы или рейда вместо Рейд Объявлений о действиях боссов.\n\nЗамете что вы не увидите этих предупреждений если у вас будет включен БлокБосс.",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Вкл/Выкл передачу сообщений в чат группы или рейда вместо Объявлений рейду о действиях боссов.\n\nЗаметьте что вы не увидите этих предупреждений если у вас будет включен БлокБосс.",
 
-	desc = "Позволяет настроить куда BigWigs отошлет предупреждения от боссов в дополнении с локальным выводом.",
+	desc = "Позволяет настроить куда BigWigs будет передовать предупреждения о действиях босса в дополнении с локальным выводом.",
 } end )
 
 --------------------------------------------------------------------------------

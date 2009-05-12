@@ -145,20 +145,20 @@ L:RegisterTranslations("esES", function() return {
 
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	["FlashNShake"] = "МерцаниеИСотрясение",
+	["FlashNShake"] = "Мерцание и Сотрясение",
 	["Flash'N'Shake"] = "Мерцание и Сотрясение",
-	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Сотрясение и/или Мерцание экрана когда чтото важное случается непосредственно с вами",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Сотрясение и/или мерцание экрана синим цветом, когда происходит нечто важное, что непосредственно влияет или связано с вами.",
 
 	["Flash"] = "Мерцание",
-	["Toggle Flash on or off."] = "Вкл/Выкл мерцание экрана",
+	["Toggle Flash on or off."] = "Вкл/Выкл мерцание экрана.",
 
 	["Shake"] = "Сотрясение",
-	["Toggle Shake on or off."] = "Вкл/Выкл сотрясение экрана",
+	["Toggle Shake on or off."] = "Вкл/Выкл сотрясение экрана.",
 
 	["Test"] = "Тест",
 	["Perform a Flash/Shake test."] = "Тест Мерцание/Сотрясение.",
 
-	flash_warning = "Мерцание экрана неудалась. Это обычно бывает когда таблица с именами включена.\nСократите таблицу и перезагрузите UI или отключите BigWigs 'Сотрясение'. (Мерцание НЕ затронуто)",
+	flash_warning = "Неудалась выполнить сотрясение экрана. Это обычно бывает когда таблицы с именами включены.\nВыключите таблицы с именами и перезагрузите ваш UI или отключите эффект 'Сотрясение'.",
 } end)
 
 --------------------------------------------------------------------------------

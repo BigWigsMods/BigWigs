@@ -284,14 +284,14 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	["Proximity"] = "Близость",
-	["Close Players"] = "По близости",
-	["Options for the Proximity Display."] = "Опции отображения близости",
+	["Close Players"] = "Слишком близко",
+	["Options for the Proximity Display."] = "Опции отображения близости.",
 	["|cff777777Nobody|r"] = "|cff777777Никого|r",
 	["Sound"] = "Звук",
-	["Play sound on proximity."] = "Проиграть звук при приближении игроков",
+	["Play sound on proximity."] = "Проиграть звук при приближении игроков.",
 	["Disabled"] = "Отключить",
 	["Disable the proximity display for all modules that use it."] = "Отключить отображение окна близости для всех модулей использующих его.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Отображение модуля близости отключен в %s, пожалуйста воспользуйтесь опциями босс-модуля, для того чтобы включить его.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Отображение модуля близости отключен в %s, пожалуйста воспользуйтесь опциями босс-модуля, для того чтобы включить его снова.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Отображение модуля близости зафиксировано, вам нужно нажать правую клавишу мыши по иконке Big Wigs, перейти в Extras -> Близость -> Отображение и переключить опцию Фиксировать, если вы хотите его переместить или получить доступ к другим опциям.",
 
 	proximity = "Отображение близости",
@@ -302,7 +302,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Close"] = "Закрыть",
 	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Закрыть отображение близости и предотвращает показ его еще раз при активации модуля босса (если таковые имеются), до тех пор, пока вы зайдёте в настройки соответствующего модуля босса и не включите обратно 'Близость'.",
 	["Test"] = "Тест",
-	["Perform a Proximity test."] = "Тест близость",
+	["Perform a Proximity test."] = "Тест близости",
 	["Display"] = "Отображение",
 	["Options for the Proximity display window."] = "Настройки окна близости.",
 	["Lock"] = "Фиксировать",
