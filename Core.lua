@@ -287,7 +287,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Options"] = "Опции",
 	["Minimap icon"] = "Иконка у мини-карты",
 	["Toggle show/hide of the minimap icon."] = "Показать/скрыть иконку у мини-карты.",
-	["Advanced"] = "",
+	["Advanced"] = "Расширенные настройки",
 	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Вам не нужно трогать данную опцию, но если вы хотите подстроить, тогда вперёд!",
 
 	bosskill = "Смерть босса",

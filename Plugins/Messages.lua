@@ -307,14 +307,14 @@ L:RegisterTranslations("ruRU", function() return {
 	["Messages"] = "Сообщения",
 	["Options for message display."] = "Опции отображения сообщений",
 
-	["BigWigs Anchor"] = "Якорь BigWigsа",
+	["BigWigs Anchor"] = "Якорь BigWigs",
 	["Output Settings"] = "Настройки вывода",
 
 	["Show anchor"] = "Показать якорь",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Отображение якоря сообщений\n\nЗамете что якорь если вы выбрали 'BigWigs' для вывода сообщений.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Отображение якоря сообщений\n\nЗаметьте, что якорь доступен только если вы выбрали 'BigWigs' для вывода сообщений.",
 
 	["Use colors"] = "Использовать цвета",
-	["Toggles white only messages ignoring coloring."] = "Вкл/Выкл окраску игнорируемых сообщений, отображать белыми.",
+	["Toggles white only messages ignoring coloring."] = "Не раскрашивать сообщения (белый текст).",
 
 	["Scale"] = "Масштаб",
 	["Set the message frame scale."] = "Настройка масштаба фрейма сообщений.",
@@ -333,7 +333,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Close"] = "Закрыть",
 
 	["Reset position"] = "Сброс",
-	["Reset the anchor position, moving it to the center of your screen."] = "Сброс позиции якоря, переместив его в центр вашего экрана.",
+	["Reset the anchor position, moving it to the center of your screen."] = "Сбрасывает позицию якоря, перемещая его в центр вашего экрана.",
 
 	["Spawns a new test warning."] = "Вывод новых тестовых сообщений.",
 	["Hide"] = "Скрыть",
