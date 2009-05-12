@@ -501,7 +501,7 @@ end
 --
 local defaultPositions = {
 	BigWigsAnchor = {"CENTER", "UIParent", "CENTER", 0, -50},
-	BigWigsEmphasizeAnchor = {"CENTER", "UIParent", "CENTER", 0, 400},
+	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the default BigWigs message frame
 }
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end

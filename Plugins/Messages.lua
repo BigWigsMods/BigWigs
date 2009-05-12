@@ -382,7 +382,7 @@ local function createAnchor()
 	local y = plugin.db.profile.posy
 	local s = anchor:GetEffectiveScale()
 	if not x or not y then
-		anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
+		anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
 	else
 		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	end
@@ -426,7 +426,7 @@ end
 local function resetAnchor()
 	if anchor then
 		anchor:ClearAllPoints()
-		anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
+		anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
 	end
 	plugin.db.profile.posx = nil
 	plugin.db.profile.posy = nil
