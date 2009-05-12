@@ -141,6 +141,15 @@ L:RegisterTranslations("zhCN", function() return {
 	["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "醒目计时条背景闪烁，方便你留意它。",
 	["Regular bars"] = "常规计时条",
 	["Emphasized bars"] = "醒目计时条",
+	["Align"] = "对齐",
+	["How to align the bar labels."] = "对齐计时条标签。",
+	["Left"] = "左",
+	["Center"] = "中",
+	["Right"] = "右",
+	["Time"] = "时间",
+	["Whether to show or hide the time left on the bars."] = "在计时条上显示或隐藏时间。",
+	["Icon"] = "图标",
+	["Shows or hides the bar icons."] = "显示或隐藏计时条图标。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -176,14 +185,14 @@ L:RegisterTranslations("zhTW", function() return {
 	["Regular bars"] = "常規計時條",
 	["Emphasized bars"] = "強調條",
 	["Align"] = "對齊",
-	["How to align the bar labels."] = "如何對齊計時條標籤",
-	["Left"] = "置左",
-	["Center"] = "置中",
-	["Right"] = "置右",
+	["How to align the bar labels."] = "對齊計時條標籤。",
+	["Left"] = "左",
+	["Center"] = "中",
+	["Right"] = "右",
 	["Time"] = "時間",
-	["Whether to show or hide the time left on the bars."] = "在計時條上是否顯示或隱藏剩餘時間",
+	["Whether to show or hide the time left on the bars."] = "在計時條上顯示或隱藏時間。",
 	["Icon"] = "圖示",
-	["Shows or hides the bar icons."] = "顯示或隱藏計時條圖示",
+	["Shows or hides the bar icons."] = "顯示或隱藏計時條圖示。",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
