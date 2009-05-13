@@ -216,6 +216,16 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_desc = "Warnung und Timer, wenn ein Magnetischer Kern geplündert wurde und die Luftkommandoeinheit am Boden ist.",
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
+	
+	flames = "Löschschaum",
+	flames_desc = "Warnung und Timer für Löschschaum.",
+	flames_soon = "Löschschaum bald!",
+	flames_bar = "~Löschschaum",
+	
+	fbomb = "Frostbombe",
+	fbomb_desc = "Warnung und Timer für Frostbombe.",
+	fbomb_soon = "Frostbombe bald!",
+	fbomb_bar = "~Frostbombe",
 
 	end_trigger = "^Es scheint, als wäre mir",
 } end )
