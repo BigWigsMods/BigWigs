@@ -46,6 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	animus = "Saronite Animus",
 	animus_desc = "Warn when the Saronite Animus spawns.",
+	animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "Animus spawns!",
 
 	vapor = "Saronite Vapors",
@@ -95,6 +96,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	animus = "사로나이트 원혼",
 	animus_desc = "사로나이트 원혼 소환을 알립니다.",
+	animus_trigger = "사로나이트 증기가 한 덩어리가 되어 맹렬하게 소용돌이치며, 무시무시한 형상으로 변화합니다!",
 	animus_message = "원혼 소환!",
 
 	vapor = "사로나이트 증기",
@@ -381,7 +383,6 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
-	self:AddCombatListener("SPELL_CAST_START", "Animus", 63145)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
@@ -492,12 +493,6 @@ function mod:SurgeGain(_, spellID)
 	end
 end
 
-function mod:Animus(_, spellID)
-	if db.animus then
-		self:IfMessage(L["animus_message"], "Important", spellID)
-	end
-end
-
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["vapor_trigger"] and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(count), "Positive", 63323)
@@ -505,6 +500,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		if count < 8 then
 			self:Bar(L["vapor_bar"], 30, 63323)
 		end
+	elseif msg == L["animus_trigger"] and db.animus then
+		self:IfMessage(L["animus_message"], "Important", 63319)
 	end
 end
 
