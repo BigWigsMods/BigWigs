@@ -135,6 +135,7 @@ L:RegisterTranslations("koKR", function() return {
 	strike = "혼란의 일격",
 	strike_desc = "혼란의 일격에 걸린 플레이어를 알립니다.",
 	strike_message= "혼란의 일격: %s",
+	strike_bar = "혼란의 일격 대기시간",
 
 	end_trigger = "무기를 거둬라! 내가 졌다!",
 
