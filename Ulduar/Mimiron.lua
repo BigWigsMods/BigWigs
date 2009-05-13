@@ -70,15 +70,13 @@ L:RegisterTranslations("enUS", function() return {
 	
 	flames = "Flame Suppressant",
 	flames_desc = "Warns for Flame Suppressant",
-	flames_warning = "Flame Suppressant",
 	flames_soon = "Flame Suppressant soon!",
-	flames_bar = "Suppressant",
+	flames_bar = "Next Suppressant",
 	
 	fbomb = "Frost Bomb",
 	fbomb_desc = "Warns for Frost Bomb",
-	fbomb_warning = "Frost Bomb",
 	fbomb_soon = "Possible Frost Bomb soon!",
-	fbomb_bar = "Frost Bomb",
+	fbomb_bar = "Next Frost Bomb",
 
 	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
@@ -122,6 +120,16 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
 	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
+	
+	flames = "화염 억제",
+	flames_desc = "화염 억제를 알립니다.",
+	flames_soon = "곧 화염 억제!",
+	flames_bar = "다음 화염 억제",
+	
+	fbomb = "서리 폭탄",
+	fbomb_desc = "서리 폭탄을 알립니다.",
+	fbomb_soon = "곧 서리 폭탄 가능!",
+	fbomb_bar = "다음 서리 폭탄",
 
 	end_trigger = "^내가 계산을 좀 잘못한 것 같군",
 } end )
@@ -376,7 +384,7 @@ end
 function mod:Flames(_, spellID)
 	if db.flames then
 		self:IfMessage(L["flames_warning"], "Important", spellID)
-		self:Bar(L["flames_warning"], 3, spellID)
+		self:Bar(L["flames"], 3, spellID)
 		self:Bar(L["flames_bar"], 80, spellID)
 		self:ScheduleEvent("flamesWarning", "BigWigs_Message", 78, L["flames_soon"], "Attention")
 	end
@@ -385,7 +393,7 @@ end
 function mod:FBomb(_, spellID)
 	if db.fbomb then
 		self:IfMessage(L["fbomb_warning"], "Important", spellID)
-		self:Bar(L["fbomb_warning"], 2, spellID)
+		self:Bar(L["fbomb"], 2, spellID)
 		self:Bar(L["fbomb_bar"], 30, spellID)
 		self:ScheduleEvent("fbombWarning", "BigWigs_Message", 28, L["fbomb_soon"], "Attention")
 	end
