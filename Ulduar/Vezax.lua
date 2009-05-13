@@ -497,7 +497,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["vapor_trigger"] and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(count), "Positive", 63323)
 		count = count + 1
-		if count < 8 then
+		if count < 9 then
 			self:Bar(L["vapor_bar"], 30, 63323)
 		end
 	elseif msg == L["animus_trigger"] and db.animus then
