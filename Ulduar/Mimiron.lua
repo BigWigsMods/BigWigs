@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	shock = "Shock Blast",
 	shock_desc = "Warns when Shock Blast is casting.",
 	shock_warning = "Shock Blast!",
-	shock_next = "Next Shock Blast!",
+	shock_next = "Next Shock Blast",
 
 	laser = "Laser Barrage",
 	laser_desc = "Warn when Laser Barrage is active.",
@@ -471,7 +471,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(68, L["flames_soon"], "Attention")
 		end
 		if db.shock then
-			self:Bar(L["shock_bar"], 30, 63631)
+			self:Bar(L["shock_next"], 30, 63631)
 		end		
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
@@ -489,7 +489,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
 		end
 		if db.shock then
-			self:Bar(L["shock_bar"], 30, 63631)
+			self:Bar(L["shock_next"], 30, 63631)
 		end		
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
@@ -500,7 +500,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelAllScheduledEvents()
 		self:TriggerEvent("BigWigs_StopBar", self, L["flames_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["shock_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["shock_next"])
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
@@ -528,7 +528,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["fbomb_bar"], 30, 64623)
 		end
 		if db.shock then
-			self:Bar(L["shock_bar"], 48, 63631)
+			self:Bar(L["shock_next"], 48, 63631)
 		end
 	elseif msg:find(L["end_trigger"]) then
 		self:BossDeath(nil, self.guid)
