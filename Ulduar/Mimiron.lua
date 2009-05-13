@@ -345,6 +345,16 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_desc = "Сообщает когда Воздушное судно находится под воздействием Магнитного ядра",
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
+	
+	flames = "Подавитель пламени",
+	flames_desc = "Предупреждать о Подавлении пламени",
+	flames_soon = "Скоро Подавитель пламени!",
+	flames_bar = "Следующий Подавитель",
+	
+	fbomb = "Ледяная бомба",
+	fbomb_desc = "Предупреждать о Ледяной бомбе",
+	fbomb_soon = "Скоро Ледяная бомба!",
+	fbomb_bar = "Следущая Ледяная бомба",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
