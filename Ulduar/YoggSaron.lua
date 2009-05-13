@@ -616,10 +616,15 @@ function mod:Tentacle(_, spellID, source)
 	end
 end
 
-function mod:Malady(player, spellID)
+function mod:Malady(player, spellID, sFlags)
 	if db.malady then
-		self:IfMessage(L["malady_message"]:format(player), "Attention", spellID)
-		self:Icon(player, "icon")
+		if bit.band(sFlags, COMBATLOG_OBJECT_TYPE_PLAYER) > 0 then
+			self:IfMessage(L["malady_message"]:format(player), "Attention", spellID)
+			self:Icon(player, "icon")
+		elseif bit.band(sFlags, COMBATLOG_OBJECT_TYPE_NPC) > 0 then
+			self:IfMessage(L["malady_message"]:format(player), "Attention", spellID)
+			self:Icon(player, "icon")
+		end
 	end
 end
 
