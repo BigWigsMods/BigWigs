@@ -79,6 +79,7 @@ L:RegisterTranslations("enUS", function() return {
 	strike = "Unbalancing Strike",
 	strike_desc = "Warn when a player has Unbalancing Strike.",
 	strike_message= "Unbalancing Strike: %s",
+	strike_bar = "Unbalancing Strike CD",
 
 	end_trigger = "Stay your arms! I yield!",
 
@@ -423,6 +424,8 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Charge", 62279)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "StrikeCooldown", 62130)
+	self:AddCombatListener("SPELL_MISSED", "StrikeCooldown", 62130)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonation", 62526)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Orb", 62016)
@@ -477,6 +480,12 @@ function mod:Strike(player, spellID)
 		local msg = fmt(L["strike_message"], player)
 		self:IfMessage(msg, "Attention", spellID)
 		self:Bar(msg, 15, spellID)
+	end
+end
+
+function mod:StrikeCooldown(player, spellId)
+	if db.strike then
+		self:Bar(L["strike_bar"], 20, spellId)
 	end
 end
 
