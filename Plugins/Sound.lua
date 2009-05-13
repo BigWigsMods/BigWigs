@@ -139,7 +139,7 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	["Sounds"] = "Звуки",
-	["Options for sounds."] = "Опции звуков",
+	["Options for sounds."] = "Опции звуков.",
 
 	["Alarm"] = "Тревога",
 	["Info"] = "Информация",
@@ -147,7 +147,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Long"] = "Длинный",
 	["Victory"] = "Победа",
 
-	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Установите звук для использования в %q.\n\nCtrl-Клик для предварительного просмотра звука.",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Установите звук для использования в %q.\n\nCtrl-Клик для предварительного прослушивания звука.",
 	["Use sounds"] = "Использовать звуки",
 	["Toggle all sounds on or off."] = "Вкл/Выкл все звуки",
 	["Default only"] = "Только стандартные",
