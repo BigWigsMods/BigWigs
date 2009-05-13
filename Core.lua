@@ -77,6 +77,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Options"] = "Options",
 	["Minimap icon"] = "Icône de la minicarte",
 	["Toggle show/hide of the minimap icon."] = "Affiche ou non l'icône sur la minicarte.",
+	["Advanced"] = "Avancés",
+	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Vous n'avez normalement pas besoin de toucher à ces options, mais si vous voulez les peaufinez, n'hésitez pas !",
 
 	bosskill = "Défaite du boss",
 	bosskill_desc = "Prévient quand le boss est vaincu.",
@@ -89,7 +91,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Load All"] = "Tout charger",
 	["Load all %s modules."] = "Charge tous les modules \"%s\".",
 
-	already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%d|r) existe déjà en tant que module de boss dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau (à la révision |cffffff00%d|r). Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement.",
+	already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%d|r) existe déjà en tant que module de boss dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau (à la révision |cffffff00%d|r). Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
