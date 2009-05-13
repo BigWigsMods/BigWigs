@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "magnetic", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -17,6 +17,7 @@ mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "shock", "laser", "magne
 
 local db = nil
 local phase = nil
+local ishardmode = false
 local pName = UnitName("player")
 
 ----------------------------
@@ -66,6 +67,18 @@ L:RegisterTranslations("enUS", function() return {
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core.",
 	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
+	
+	flames = "Flame Suppressant",
+	flames_desc = "Warns for Flame Suppressant",
+	flames_warning = "Flame Suppressant",
+	flames_soon = "Flame Suppressant soon!",
+	flames_bar = "Suppressant",
+	
+	fbomb = "Frost Bomb",
+	fbomb_desc = "Warns for Frost Bomb",
+	fbomb_warning = "Frost Bomb",
+	fbomb_soon = "Possible Frost Bomb soon!",
+	fbomb_bar = "Frost Bomb",
 
 	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
@@ -334,6 +347,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
+	self:AddCombatListener("SPELL_CAST_START", "Flames", 64570)
+	self:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
 	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
@@ -357,6 +372,24 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Flames(_, spellID)
+	if db.flames then
+		self:IfMessage(L["flames_warning"], "Important", spellID)
+		self:Bar(L["flames_warning"], 3, spellID)
+		self:Bar(L["flames_bar"], 80, spellID)
+		self:ScheduleEvent("flamesWarning", "BigWigs_Message", 78, L["flames_soon"], "Attention")
+	end
+end
+
+function mod:FBomb(_, spellID)
+	if db.fbomb then
+		self:IfMessage(L["fbomb_warning"], "Important", spellID)
+		self:Bar(L["fbomb_warning"], 2, spellID)
+		self:Bar(L["fbomb_bar"], 30, spellID)
+		self:ScheduleEvent("fbombWarning", "BigWigs_Message", 28, L["fbomb_soon"], "Attention")
+	end
+end
 
 function mod:Plasma(_, spellID)
 	if db.plasma then
@@ -400,23 +433,36 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["hardmode_trigger"]) then
 		phase = 1
+		ishardmode = true
 		if db.phase then
 			self:IfMessage(L["engage_warning"], "Attention")
+			self:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
 		end
+		if db.flames then
+			self:Bar(L["flames_bar"], 70, 64570)
+			self:DelayedMessage(68, L["flames_soon"], "Attention")
+		end
+		if db.shock then
+			self:Bar(L["shock_bar"], 30, 63631)
+		end		
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
 		if db.hardmode then
-			self:Bar(L["hardmode"], 480, 64582)
+			self:Bar(L["hardmode"], 600, 64582)
 			self:IfMessage(L["hardmode_message"], "Attention", 64582)
-			self:DelayedMessage(480, L["hardmode_warning"], "Attention")
+			self:DelayedMessage(600, L["hardmode_warning"], "Attention")
 		end
 	elseif msg:find(L["engage_trigger"]) then
 		phase = 1
 		if db.phase then
 			self:IfMessage(L["engage_warning"], "Attention")
+			self:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
 		end
+		if db.shock then
+			self:Bar(L["shock_bar"], 30, 63631)
+		end		
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
@@ -424,15 +470,21 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelAllScheduledEvents()
+		self:TriggerEvent("BigWigs_StopBar", self, L["flames_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["plasma_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["shock_bar"])
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
+		end
+		if db.fbomb and ishardmode then
+			self:Bar(L["fbomb_bar"], 45, 64623)
 		end
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["fbomb_bar"])		
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
@@ -443,6 +495,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.phase then
 			self:IfMessage(L["phase4_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
+		end
+		if db.fbomb and ishardmode then
+			self:Bar(L["fbomb_bar"], 30, 64623)
+		end
+		if db.shock then
+			self:Bar(L["shock_bar"], 48, 63631)
 		end
 	elseif msg:find(L["end_trigger"]) then
 		self:BossDeath(nil, self.guid)
