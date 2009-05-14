@@ -334,7 +334,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger1 = "Чужаки! Вам не одалеть Железное Собрание!",
---	engage_trigger2 = "Nothing short of total decimation will suffice!",
+	engage_trigger2 = "Я буду спокоен, лишь когда окончательно истреблю вас.",
 	engage_trigger3 = "Кто бы вы ни были - жалкие бродяги или великие герои... Вы всего лишь смертные!",
 
 	overload = "Перегрузка",
@@ -352,6 +352,7 @@ L:RegisterTranslations("ruRU", function() return {
 	death = "Руна смерти на ВАС",
 	death_desc = "Сообщает когда вы поподаете под воздействие Руны смерти.",
 	death_message = "На ВАС Руна СМЕРТИ!",
+	death_bar = "Руна смерти",
 
 	summoning = "Руна призыва",
 	summoning_desc = "Сообщает когда Молгейм применяет Руну призыва.",
@@ -376,7 +377,7 @@ L:RegisterTranslations("ruRU", function() return {
 	shield_message = "Применён Рунический щит!",
 
 	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока, being chased(необходимо быть лидером группы или рейда).",
+	icon_desc = "Помечать рейдовой иконкой игрока, которого преследует Светящиеся придатки или Переполняющая энергия (необходимо быть лидером группы или рейда).",
 
 	council_dies = "%s умер",
 } end )
