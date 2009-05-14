@@ -327,7 +327,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["air_trigger"] then
 		p2 = nil
 		count = 0
-		self:Bar(L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
+		if db.harpoon then
+			self:Bar(L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
+		end
 		if not started then
 			if db.berserk then
 				self:Enrage(900, true)
@@ -336,7 +338,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			phase = 1
 		else
 			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
-			self:IfMessage(L["air_message"], "Attention", nil, "Info")
+			if db.phase then
+				self:IfMessage(L["air_message"], "Attention", nil, "Info")
+			end
 		end
 	-- for 10man, has a different yell, and different timing <.<
 	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
@@ -344,7 +348,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["air_trigger2"] then 
 		p2 = nil
 		count = 0
-		self:Bar(L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
+		if db.harpoon then
+			self:Bar(L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
+		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 		--self:IfMessage(L["air_message"], "Attention", nil, "Info")
 	end
