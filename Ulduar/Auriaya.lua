@@ -279,9 +279,9 @@ function mod:Defender(_, spellID)
 end
 
 function mod:DefenderKill(_, spellID)
+	count = count - 1
 	if db.defender then
-		count = count - 1
-		self:IfMessage(L["defender_message"]:format(count), "Attention", spellID)
+		self:Bar(L["defender_message"]:format(count), 30, spellID)
 	end
 end
 
