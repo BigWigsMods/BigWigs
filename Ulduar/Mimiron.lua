@@ -270,7 +270,17 @@ L:RegisterTranslations("zhCN", function() return {
 	magnetic_message = "Aerial Command Unit 已降落！",
 	loot_message = ">%s< 拾取了Magnetic Core！",
 
---	end_trigger = "^It would appear that I made a slight miscalculation.",
+	flames = "Flame Suppressant",
+	flames_desc = "当施放Flame Suppressant时发出警报。",
+	flames_soon = "即将 Flame Suppressant！",
+	flames_bar = "<下一Flame Suppressant>",
+	
+	fbomb = "冰霜炸弹",
+	fbomb_desc = "当施放冰霜炸弹时发出警报。",
+	fbomb_soon = "可能即将 冰霜炸弹！",
+	fbomb_bar = "<下一冰霜炸弹>",
+
+--	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -312,6 +322,16 @@ L:RegisterTranslations("zhTW", function() return {
 	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
 	magnetic_message = "空中指揮裝置 已降落！",
 	loot_message = ">%s< 拾取了磁能之核！",
+
+	flames = "熾焰抑制劑",
+	flames_desc = "當施放熾焰抑制劑時發出警報。",
+	flames_soon = "即將 熾焰抑制劑！",
+	flames_bar = "<下一熾焰抑制劑>",
+	
+	fbomb = "冰霜炸彈",
+	fbomb_desc = "當施放冰霜炸彈時發出警報。",
+	fbomb_soon = "可能即將 冰霜炸彈！",
+	fbomb_bar = "<下一冰霜炸彈>",
 
 	end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。",
 } end )

@@ -302,6 +302,7 @@ L:RegisterTranslations("zhCN", function() return {
 	strike = "重压打击",
 	strike_desc = "当玩家中了重压打击时发出警报。",
 	strike_message= "重压打击：>%s<！",
+	strike_bar = "<重压打击 冷却>",
 
 --	end_trigger = "Stay your arms! I yield!",
 
@@ -357,6 +358,7 @@ L:RegisterTranslations("zhTW", function() return {
 	strike = "失衡打擊",
 	strike_desc = "當玩家中了失衡打擊時發出警報。",
 	strike_message= "失衡打擊：>%s<！",
+	strike_bar = "<失衡打擊 冷卻>",
 
 	end_trigger = "住手!我認輸了!",
 

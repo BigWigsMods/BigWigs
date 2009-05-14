@@ -245,6 +245,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	animus = "萨隆邪铁Animus",
 	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
+--	animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "萨隆邪铁Animus 出现！",
 
 	vapor = "萨隆邪铁蒸汽",
@@ -294,6 +295,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
+--	animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "薩倫聚惡體 出現！",
 
 	vapor = "薩倫煙霧",
