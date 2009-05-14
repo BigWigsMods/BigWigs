@@ -487,7 +487,7 @@ end
 
 function mod:StrikeCooldown(player, spellId)
 	if db.strike then
-		self:Bar(L["strike_bar"], 20, spellId)
+		self:Bar(L["strike_bar"], 25, spellId)
 	end
 end
 
