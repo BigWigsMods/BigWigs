@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
--- all messages are yellog
+-- counter on vapor bar
 
 local boss = BB["General Vezax"]
 local mod = BigWigs:New(boss, "$Revision$")
@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	vapor = "Saronite Vapors",
 	vapor_desc = "Warn for Saronite Vapors spawn.",
 	vapor_message = "Saronite Vapor %d!",
-	vapor_bar = "Vapor",
+	vapor_bar = "Vapor %d/8",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	vaporstack = "Vapors Stack",
@@ -102,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor = "사로나이트 증기",
 	vapor_desc = "사로나이트 증기 소환을 알립니다.",
 	vapor_message = "사로나이트 증기 (%d)!",
-	vapor_bar = "다음 증기",
+	vapor_bar = "다음 증기 %d/8",
 	vapor_trigger = "가까운 사로나이트 증기 구름이 합쳐집니다!",
 
 	vaporstack = "증기 중첩",
@@ -151,7 +151,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
-	vapor_bar = "Vapeurs",
+	vapor_bar = "Vapeurs %d/8",
 	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
 
 	vaporstack = "Cumul des Vapeurs",
@@ -201,7 +201,7 @@ L:RegisterTranslations("deDE", function() return {
 	vapor = "Saronitdämpfe",
 	vapor_desc = "Warnung und Timer für das Auftauchen von Saronitdämpfen.",
 	vapor_message = "Saronitdämpfe %d!",
-	vapor_bar = "Saronitdämpfe",
+	vapor_bar = "Saronitdämpfe %d/8",
 	vapor_trigger = "Eine Wolke Saronitdämpfe bildet sich in der Nähe!",
 
 	vaporstack = "Saronitdämpfe Stapel",
@@ -251,7 +251,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor = "萨隆邪铁蒸汽",
 	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
 	vapor_message = "萨隆邪铁蒸汽：>%d<！",
-	vapor_bar = "<萨隆邪铁蒸汽>",
+	vapor_bar = "<萨隆邪铁蒸汽> %d/8",
 --	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
 
 	vaporstack = "萨隆邪铁蒸汽堆叠",
@@ -301,7 +301,7 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor = "薩倫煙霧",
 	vapor_desc = "當薩倫煙霧出現時發出警報。",
 	vapor_message = "薩倫煙霧：>%d<！",
-	vapor_bar = "<薩倫煙霧>",
+	vapor_bar = "<薩倫煙霧> %d/8",
 	vapor_trigger = "一片薩倫煙霧在附近聚合!",
 
 	vaporstack = "薩倫煙霧堆疊",
@@ -350,7 +350,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vapor = "Саронитовые пары",
 	vapor_desc = "Сообщать о появлении Саронитовые пары.",
 	vapor_message = "Саронитовые пары (%d)!",
-	vapor_bar = "Пары",
+	vapor_bar = "Пары %d/8",
 	vapor_trigger = "Поблизости начинают возникать саронитовые испарения!",
 
 	vaporstack = "Сумма испарения",
@@ -501,7 +501,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:IfMessage(L["vapor_message"]:format(count), "Positive", 63323)
 		count = count + 1
 		if count < 9 then
-			self:Bar(L["vapor_bar"], 30, 63323)
+			self:Bar(L["vapor_bar"]:format(count), 30, 63323)
 		end
 	elseif msg == L["animus_trigger"] and db.animus then
 		self:IfMessage(L["animus_message"], "Important", 63319)
