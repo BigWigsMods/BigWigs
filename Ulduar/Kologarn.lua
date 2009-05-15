@@ -18,6 +18,7 @@ local started = nil
 local db = nil
 local grip = {}
 local pName = UnitName("player")
+local crunch = GetSpellInfo(63355)
 
 ----------------------------
 --      Localization      --
@@ -241,18 +242,9 @@ end
 
 function mod:Armor(player)
 	if db.armor then
-		local crunchArmor = nil
-		for i = 1, 10 do
-			local name, _, icon, stack = UnitDebuff(player, i)
-			if not name then break end
-			if icon == "Interface\\Icons\\Ability_Warrior_ShieldBreak" then
-				if stack < 2 then break end
-				crunchArmor = stack
-				break
-			end
-		end
-		if crunchArmor then
-			self:IfMessage(L["armor_message"]:format(crunchArmor, player), "Urgent", "Interface\\Icons\\Ability_Warrior_ShieldBreak", "Info")
+		local _, _, icon, stack = UnitDebuff(player, crunch)
+		if stack and stack > 1 then
+			self:IfMessage(L["armor_message"]:format(stack, player), "Urgent", icon, "Info")
 		end
 	end
 end
