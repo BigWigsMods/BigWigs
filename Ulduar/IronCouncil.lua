@@ -90,7 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	overload = "과부하",
 	overload_desc = "브룬디르의 과부하 시전을 알립니다.",
-	overload_message = "6초 후 폭발!",
+	overload_message = "6초 후 과부하!",
 
 	power = "마력의 룬",
 	power_desc = "몰가임의 마력의 룬을 알립니다.",
