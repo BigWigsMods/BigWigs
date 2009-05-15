@@ -105,7 +105,7 @@ L:RegisterTranslations("frFR", function() return {
 	flash_message = "Gelé(s) : %s",
 	flash_warning = "Gel instantané en incantation !",
 	flash_soon = "Gel instantané dans 5 sec. !",
-	flash_bar = "Prochain Gel",
+	flash_bar = "Prochain Gel instantané",
 
 	frozenblow = "Coups gelés",
 	frozenblow_desc = "Prévient quand Hodir gagne Coups gelés.",
@@ -118,7 +118,7 @@ L:RegisterTranslations("frFR", function() return {
 	cloud = "Nuage d'orage",
 	cloud_desc = "Prévient quand un joueur subit les effets d'un Nuage d'orage.",
 	cloud_you = "Nuage d'orage sur VOUS !",
-	cloud_other = "Nuage : %s",
+	cloud_other = "Nuage d'orage : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Nuage d'orage (nécessite d'être assistant ou mieux).",

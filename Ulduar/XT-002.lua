@@ -96,12 +96,12 @@ L:RegisterTranslations("frFR", function() return {
 	gravitybomb = "Bombe à gravité",
 	gravitybomb_desc = "Prévient quand un joueur subit les effets d'une Bombe à gravité.",
 	gravitybomb_you = "Bombe à gravité sur VOUS !",
-	gravitybomb_other = "Gravité : %s",
+	gravitybomb_other = "Bombe à gravité : %s",
 
 	lightbomb = "Bombe de lumière",
 	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Bombe de lumière.",
 	lightbomb_you = "Bombe de lumière sur VOUS !",
-	lightbomb_other = "Lumière : %s",
+	lightbomb_other = "Bombe de lumière : %s",
 
 	voidzone = "Zone de Vide",
 	voidzone_desc = "Prévient quand une Zone de Vide apparaît.",

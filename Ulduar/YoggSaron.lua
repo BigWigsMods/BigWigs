@@ -185,7 +185,7 @@ L:RegisterTranslations("koKR", function() return {
 	portal_trigger = "%s의 마음속으로 가는 차원문이 열립니다!",
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
-	
+
 	sanity = "이성",
 	sanity_desc = "이성 중첩이 40이하면 알립니다.",
 	sanity_message = "당신의 이성 위험!",
@@ -202,7 +202,7 @@ L:RegisterTranslations("koKR", function() return {
 	malady = "병든 정신",
 	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
 	malady_message = "병든 정신: %s",
-	
+
 	tentacle = "촉수 소환",
 	tentacle_desc = "촉수 소환을 알립니다.",
 	tentacle_message ="분쇄의 촉수(%d)",
@@ -269,11 +269,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	malady = "Mal de la raison",
 	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
-	malady_message = "Mal : %s",
+	malady_message = "Mal de la raison : %s",
 
 	tentacle = "Tentacule écraseur",
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
-	tentacle_message = "Écraseur %d !",
+	tentacle_message = "Tentacule écraseur %d !",
 
 	squeeze = squeezeName,
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
@@ -290,7 +290,7 @@ L:RegisterTranslations("frFR", function() return {
 	empower = "Renforcement des ombres",
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
 	empower_message = "Renforcement des ombres !",
-	empower_bar = "~Recharge Renforcement",
+	empower_bar = "~Recharge Renforcement des ombres",
 
 	mindcontrol = "Emprise",
 	mindcontrol_desc = "Prévient quand un joueur subit les effets d'une Emprise.",

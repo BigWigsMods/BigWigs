@@ -140,29 +140,30 @@ L:RegisterTranslations("frFR", function() return {
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
 	surge_message = "Vague de ténèbres !",
-	surge_cast = "Vague en incantation !",
+	surge_cast = "Vague de ténèbres en incantation !",
 	surge_end = "Vague de ténèbres estompée !",
-	surge_bar = "Prochaine Vague",
+	surge_bar = "Prochaine Vague de ténèbres",
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
+	--animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "Animus apparu !",
 
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
-	vapor_bar = "Vapeurs %d/8",
+	vapor_bar = "Vapeurs de saronite %d/8",
 	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
 
 	vaporstack = "Cumul des Vapeurs",
 	vaporstack_desc = "Prévient quand vous avez 5 cumuls ou plus de Vapeurs de saronite.",
-	vaporstack_message = "Vapeurs x%d !",
+	vaporstack_message = "Vapeurs de saronite x%d !",
 
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
-	crash_you = "Déferlante sur VOUS !",
-	crash_other = "Déferlante : %s",
-	crash_say = "Déferlante sur moi !",
+	crash_you = "Déferlante d'ombre sur VOUS !",
+	crash_other = "Déferlante d'ombre : %s",
+	crash_say = "Déferlante d'ombre sur moi !",
 
 	crashsay = "Déferlante - Dire",
 	crashsay_desc = "Fait dire à votre personnage qu'il est ciblé par une Déferlante d'ombre quand c'est le cas.",
@@ -172,8 +173,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
-	mark_message_you = "Marque sur VOUS !",
-	mark_message_other = "Marque : %s",
+	mark_message_you = "Marque du Sans-visage sur VOUS !",
+	mark_message_other = "Marque du Sans-visage : %s",
 
 	icon = "Marque - Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux).",

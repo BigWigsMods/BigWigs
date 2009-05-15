@@ -163,7 +163,7 @@ L:RegisterTranslations("frFR", function() return {
 	fury = "Fureur de la nature",
 	fury_desc = "Prévient quand un joueur subit les effets d'une Fureur de la nature.",
 	fury_you = "Fureur de la nature sur VOUS !",
-	fury_other = "Fureur : %s",
+	fury_other = "Fureur de la nature : %s",
 
 	sunbeam = "Rayon de soleil",
 	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
@@ -174,11 +174,11 @@ L:RegisterTranslations("frFR", function() return {
 	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
 	tremor_message = "Tremblement de terre !",
 	tremor_warning = "Tremblement de terre imminent !",
-	tremor_bar = "~Prochain Tremblement",
+	tremor_bar = "~Prochain Tremblement de terre",
 
 	root = "Racines de fer",
 	root_desc = "Prévient quand un joueur subit les effets des Racines de fer.",
-	root_message = "Racines : %s",
+	root_message = "Racines de fer : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",

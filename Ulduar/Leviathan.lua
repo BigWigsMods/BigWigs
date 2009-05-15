@@ -77,7 +77,7 @@ L:RegisterTranslations("frFR", function() return {
 	pursue = "Poursuite",
 	pursue_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
 	pursue_trigger = "^%%s poursuit",
-	pursue_other = "Poursuivi : %s",
+	pursue_other = "Poursuivi(e) : %s",
 	pursue_you = "Léviathan des flammes VOUS poursuit !",
 
 	shutdown = "Extinction des systèmes",

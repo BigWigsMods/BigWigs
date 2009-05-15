@@ -94,7 +94,7 @@ L:RegisterTranslations("frFR", function() return {
 	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
 	fear_warning = "Hurlement terrifiant imminent !",
 	fear_message = "Hurlement terrifiant en incantation !",
-	fear_bar = "~Recharge H. terrifiant",
+	fear_bar = "~Recharge Hurlement terrifiant",
 
 	sentinel = "Déflagration du factionnaire",
 	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
@@ -102,7 +102,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	swarm = "Essaim gardien",
 	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
-	swarm_other = "Essaim : %s",
+	swarm_other = "Essaim gardien : %s",
 	swarm_you = "Essaim gardien sur VOUS !",
 	swarm_bar = "~Recharge Essaim",
 
@@ -113,7 +113,7 @@ L:RegisterTranslations("frFR", function() return {
 	sonic = "Hurlement sonore",
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
 	sonic_message = "Hurlement sonore en incantation !",
-	sonic_bar = "~Recharge H. sonore",
+	sonic_bar = "~Recharge Hurlement sonore",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",

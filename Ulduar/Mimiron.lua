@@ -67,12 +67,12 @@ L:RegisterTranslations("enUS", function() return {
 	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core.",
 	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
-	
+
 	flames = "Flame Suppressant",
 	flames_desc = "Warns for Flame Suppressant",
 	flames_soon = "Flame Suppressant soon!",
 	flames_bar = "Next Suppressant",
-	
+
 	fbomb = "Frost Bomb",
 	fbomb_desc = "Warns for Frost Bomb",
 	fbomb_soon = "Possible Frost Bomb soon!",
@@ -120,12 +120,12 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
 	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
-	
+
 	flames = "화염 억제",
 	flames_desc = "화염 억제를 알립니다.",
 	flames_soon = "곧 화염 억제!",
 	flames_bar = "다음 화염 억제",
-	
+
 	fbomb = "서리 폭탄",
 	fbomb_desc = "서리 폭탄을 알립니다.",
 	fbomb_soon = "곧 서리 폭탄 가능!",
@@ -162,7 +162,7 @@ L:RegisterTranslations("frFR", function() return {
 	shock = "Horion explosif",
 	shock_desc = "Prévient quand un Horion explosif est incanté.",
 	shock_warning = "Horion explosif !",
-	shock_next = "Prochain Horion",
+	shock_next = "Prochain Horion explosif",
 
 	laser = "Barrage laser",
 	laser_desc = "Prévient quand un Barrage laser est actif.",
@@ -216,12 +216,12 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_desc = "Warnung und Timer, wenn ein Magnetischer Kern geplündert wurde und die Luftkommandoeinheit am Boden ist.",
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
-	
+
 	flames = "Löschschaum",
 	flames_desc = "Warnung und Timer für Löschschaum.",
 	flames_soon = "Löschschaum bald!",
 	flames_bar = "~Löschschaum",
-	
+
 	fbomb = "Frostbombe",
 	fbomb_desc = "Warnung und Timer für Frostbombe.",
 	fbomb_soon = "Frostbombe bald!",
@@ -274,7 +274,7 @@ L:RegisterTranslations("zhCN", function() return {
 	flames_desc = "当施放Flame Suppressant时发出警报。",
 	flames_soon = "即将 Flame Suppressant！",
 	flames_bar = "<下一Flame Suppressant>",
-	
+
 	fbomb = "冰霜炸弹",
 	fbomb_desc = "当施放冰霜炸弹时发出警报。",
 	fbomb_soon = "可能即将 冰霜炸弹！",
@@ -327,7 +327,7 @@ L:RegisterTranslations("zhTW", function() return {
 	flames_desc = "當施放熾焰抑制劑時發出警報。",
 	flames_soon = "即將 熾焰抑制劑！",
 	flames_bar = "<下一熾焰抑制劑>",
-	
+
 	fbomb = "冰霜炸彈",
 	fbomb_desc = "當施放冰霜炸彈時發出警報。",
 	fbomb_soon = "可能即將 冰霜炸彈！",
@@ -375,12 +375,12 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_desc = "Сообщает когда Воздушное судно находится под воздействием Магнитного ядра",
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
-	
+
 	flames = "Подавитель пламени",
 	flames_desc = "Предупреждать о Подавлении пламени",
 	flames_soon = "Скоро Подавитель пламени!",
 	flames_bar = "Следующий Подавитель",
-	
+
 	fbomb = "Ледяная бомба",
 	fbomb_desc = "Предупреждать о Ледяной бомбе",
 	fbomb_soon = "Скоро Ледяная бомба!",
