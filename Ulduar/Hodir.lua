@@ -18,6 +18,7 @@ local db = nil
 local FF = {}
 local fmt = string.format
 local lastCold = nil
+local cold = GetSpellInfo(62039)
 
 ----------------------------
 --      Localization      --
@@ -357,20 +358,12 @@ end
 
 function mod:UNIT_AURA(unit)
 	if unit and unit ~= "player" then return end
-	local bitingcold = nil
-	for i = 1, 9 do
-		local name, _, icon, stack = UnitDebuff("player", i)
-		if not name then break end
-		if icon == "Interface\\Icons\\Spell_Frost_IceShock" then
-			bitingcold = stack
-			break
+	local _, _, icon, stack = UnitDebuff("player", cold)
+	if stack and stack ~= lastCold then
+		if db.cold and stack > 1 then
+			self:LocalMessage(L["cold_message"]:format(stack), "Personal", icon)
 		end
-	end
-	if bitingcold and bitingcold ~= lastCold then
-		if db.cold and bitingcold > 1 then
-			self:LocalMessage(L["cold_message"]:format(bitingcold), "Personal", "Interface\\Icons\\Spell_Frost_IceShock")
-		end
-		lastCold = bitingcold
+		lastCold = stack
 	end
 end
 
