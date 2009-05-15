@@ -23,7 +23,7 @@ function plugin:BigWigs_Test()
 		end
 	end
 	local spell = spells[math.random(1, #spells)]
-	local name, rank, icon = GetSpellInfo(spell)
+	local name, rank, icon = GetSpellInfo(spell.."()")
 	local time = math.random(11, 45)
 	local color = colors[math.random(1, #colors)]
 	local sound = sounds[math.random(1, #sounds)]
