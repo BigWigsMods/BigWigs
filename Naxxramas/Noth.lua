@@ -217,7 +217,7 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger1 = "死吧，入侵者!",
 	starttrigger2 = "榮耀歸於我主!",
 	starttrigger3 = "你們終將失去生命!",
-	startwarn = "瘟疫者諾斯已進入戰斗 - 90秒後，傳送！",
+	startwarn = "『瘟疫使者』諾斯已進入戰鬥 - 90秒後，傳送！",
 
 	blink = "閃現術",
 	blink_desc = "當施放閃現術時發出警報。",
@@ -235,12 +235,12 @@ L:RegisterTranslations("zhTW", function() return {
 	backwarn = "諾斯回到房間 - %d秒後，傳送！",
 	backwarn2 = "10秒後諾斯回到房間！",
 
-	curse = "瘟疫者詛咒",
+	curse = "瘟疫使者詛咒",
 	curse_desc = "當施放瘟疫者詛咒時發出警報。",
-	curseexplosion = "瘟疫者詛咒！",
-	cursewarn = "約55秒后，瘟疫者詛咒！",
-	curse10secwarn = "約10秒後，瘟疫者詛咒！",
-	cursebar = "<下一瘟疫者詛咒>",
+	curseexplosion = "瘟疫使者詛咒！",
+	cursewarn = "約55秒后，瘟疫使者詛咒！",
+	curse10secwarn = "約10秒後，瘟疫使者詛咒！",
+	cursebar = "<下一瘟疫使者詛咒>",
 
 	wave = "骷髏",
 	wave_desc = "當召喚骷髏時發出警報。",

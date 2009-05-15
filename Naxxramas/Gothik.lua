@@ -249,7 +249,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	room = "進入房間警報",
-	room_desc = "當收割者高希進入房間時發出警報。",
+	room_desc = "當『收割者』高希進入房間時發出警報。",
 
 	add = "增援警報",
 	add_desc = "當增援時發出警報。",
@@ -259,14 +259,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
 	starttrigger2 = "Kazile Teamanare ZennshinagasRil", -- check
-	startwarn = "收割者高希已進入戰鬥 - 4:30後，進入房間！",
+	startwarn = "『收割者』高希已進入戰鬥 - 4:30後，進入房間！",
 
 	rider = "無情的騎兵",
-	spectral_rider = "騎兵",
-	deathknight = "無情的死騎",
-	spectral_deathknight = "死騎",
-	trainee = "無情的訓練師",
-	spectral_trainee = "訓練師",
+	spectral_rider = "鬼靈騎兵",
+	deathknight = "無情的死亡騎士",
+	spectral_deathknight = "鬼靈死亡騎士",
+	trainee = "無情的受訓員",
+	spectral_trainee = "鬼靈受訓員",
 
 	riderdiewarn = "騎兵已死亡！",
 	dkdiewarn = "死亡騎士已死亡！",
@@ -279,16 +279,16 @@ L:RegisterTranslations("zhTW", function() return {
 	
 	wave = "%d/23：%s",
 
-	trawarn = "3秒後訓練師出現",
+	trawarn = "3秒後受訓員出現",
 	dkwarn = "3秒後死亡騎士出現",
 	riderwarn = "3秒後騎兵出現",
 
-	trabar = "訓練師 - %d",
+	trabar = "受訓員 - %d",
 	dkbar = "死亡騎士 - %d",
 	riderbar = "騎兵 - %d",
 
 	inroomtrigger = "我已經等待很久了。現在你們將面對靈魂的收割者。",
-	inroomwarn = "收割者高希進入了房間！",
+	inroomwarn = "『收割者』高希進入了房間！",
 
 	inroombartext = "<進入房間>",
 } end )

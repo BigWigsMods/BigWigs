@@ -135,8 +135,8 @@ L:RegisterTranslations("zhTW", function() return {
 	nova_next = "<閃電新星 冷卻>",
 
 	overcharge = "超載",
-	overcharge_desc = "當艾瑪隆超載minion時發出警報。",
-	overcharge_message = " minion - 超載！",
+	overcharge_desc = "當艾瑪隆超載暴雨爪牙時發出警報。",
+	overcharge_message = " 暴雨爪牙 - 超載！",
 	overcharge_bar = "<爆炸>",
 	overcharge_next = "<下一超載>",
 

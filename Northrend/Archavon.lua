@@ -123,17 +123,17 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	stomp = "踐踏",
 	stomp_desc = "當施放踐踏時發出警報及顯示計時條。",
-	stomp_message = "踐踏 - 即將 沖鋒！",
-	stomp_warning = "約5秒后，可能踐踏！",
+	stomp_message = "踐踏 - 即將 衝鋒！",
+	stomp_warning = "約5秒後，可能踐踏！",
 	stomp_bar = "<踐踏 冷卻>",
 
 	cloud = "自身窒息之雲",
 	cloud_desc = "當你中了窒息之雲時發出警報。",
 	cloud_message = ">你< 窒息之雲！",
 
-	charge = "沖鋒",
-	charge_desc = "當玩家中了沖鋒時發出警報。",
-	charge_message = "沖鋒：>%s<！",
+	charge = "衝鋒",
+	charge_desc = "當玩家中了衝鋒時發出警報。",
+	charge_message = "衝鋒：>%s<！",
 
 	shards = "岩石裂片",
 	shards_desc = "當亞夏梵施放岩石裂片時發出警報。",

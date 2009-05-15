@@ -168,7 +168,7 @@ L:RegisterTranslations("zhTW", function() return {
 	aura = "亡域光環",
 	aura_desc = "當施放亡域光環時發出警報。",
 	aura_message = "亡域光環 - 持續17秒！",
-	aura_warning = "3秒后，亡域光環消失！",
+	aura_warning = "3秒後，亡域光環消失！",
 
 	deathbloom = "死亡之花",
 	deathbloom_desc = "當施放死亡之花時發出警報。",
