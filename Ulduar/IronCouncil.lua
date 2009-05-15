@@ -389,7 +389,8 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888) -- Steelbreaker +2
-
+	self:AddCombatListener("SPELL_AURA_REMOVED", "OverRemove", 64637, 61888)
+	
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 62274, 63489) -- Molgeim
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "RunePower", 61974) -- Molgeim
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "RuneDeathCD", 62269, 63490) -- Molgeim +1
@@ -434,8 +435,16 @@ function mod:Overwhelm(player, spellID)
 			self:Whisper(player, L["overwhelm_you"])
 		end
 		self:Bar(other, overwhelmTime, spellID)
-		self:ScheduleEvent("BigWigs_HideProximity", overwhelmTime, self)
 		self:Icon(player, "icon")
+	end
+end
+
+function mod:OverRemove(player)
+	if db.overwhelm then
+		if player == pName then
+			self:TriggerEvent("BigWigs_HideProximity", self)
+		end
+		self:TriggerEvent("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
 	end
 end
 
