@@ -18,6 +18,7 @@ mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tent
 local db = nil
 local squeezeName = GetSpellInfo(64126)
 local linkedName = GetSpellInfo(63802)
+local sanity = GetSpellInfo(63050)
 local count = 1
 local pName = UnitName("player")
 
@@ -542,49 +543,22 @@ end
 --      Event Handlers      --
 ------------------------------
 
---[[
--- XXX This function should work if we passed the whole tuple to combat listeners :(
-function mod:Sanity(...)
-	if not db.sanity then return end
-	local player, _, spellId = select(4, ...)
-	local amount = select(10, ...)
-	if player == pName then
-		if amount > 40 or not db.sanity then return end
-		-- If it's less than 40, warn
-		self:IfMessage(L["sanity_message"], "Personal", spellId)
-	elseif amount < 21 then
-		-- If it's less than 20, send them a whisper
-		self:Whisper(player, L["sanity_message"])
-	end
-end]]
-
 do
 	local warned = {}
-	local function getSanity(player)
-		local sanity = nil
-		for i = 1, 9 do
-			local name, _, icon, stack = UnitDebuff(player, i)
-			if not name then break end
-			if icon == "Interface\\Icons\\Spell_Arcane_MindMastery" then
-				sanity = stack
-				break
-			end
-		end
-		return sanity
-	end
 	function mod:SanityIncrease(player, spellId)
 		if not db.sanity or not warned[player] then return end
-		local sanity = getSanity(player)
-		if sanity > 70 then warned[player] = nil end
+		local _, _, _, stack = UnitDebuff(player, sanity)
+		if stack and stack > 70 then warned[player] = nil end
 	end
 	function mod:SanityDecrease(player, spellId)
 		if not db.sanity or warned[player] then return end
-		local sanity = getSanity(player)
+		local _, _, _, stack = UnitDebuff(player, sanity)
+		if not stack then return end
 		if player == pName then
-			if sanity > 40 then return end
+			if stack > 40 then return end
 			self:IfMessage(L["sanity_message"], "Personal", spellId)
 			warned[player] = true
-		elseif sanity < 31 then
+		elseif stack < 31 then
 			self:Whisper(player, L["sanity_message"])
 			warned[player] = true
 		end
