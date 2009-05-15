@@ -2,8 +2,6 @@
 --      Module Declaration      --
 ----------------------------------
 
--- counter on vapor bar
-
 local boss = BB["General Vezax"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
@@ -21,6 +19,7 @@ local count = 1
 local pName = UnitName("player")
 local fmt = string.format
 local lastVapor = nil
+local vapor = GetSpellInfo(63322)
 
 ----------------------------
 --      Localization      --
@@ -404,18 +403,10 @@ end
 
 function mod:UNIT_AURA(unit)
 	if unit and unit ~= "player" then return end
-	local saronite = nil
-	for i = 1, 10 do
-		local name, _, icon, stack = UnitDebuff("player", i)
-		if not name then break end
-		if icon == "Interface\\Icons\\INV_Ore_Saronite_01" then
-			saronite = stack
-			break
-		end
-	end
-	if saronite and saronite ~= lastVapor then
-		if db.vaporstack and saronite > 5 then
-			self:LocalMessage(L["vaporstack_message"]:format(saronite), "Personal", "Interface\\Icons\\INV_Ore_Saronite_01")
+	local _, _, icon, stack = UnitDebuff("player", vapor)
+	if stack and stack ~= lastVapor then
+		if db.vaporstack and stack > 5 then
+			self:LocalMessage(L["vaporstack_message"]:format(stack), "Personal", icon)
 		end
 		lastVapor = saronite
 	end

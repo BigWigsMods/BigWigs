@@ -14,6 +14,46 @@ mod.toggleoptions = {"flame", "pursue", "shutdown", "bosskill"}
 --      Are you local?      --
 ------------------------------
 
+
+--[[
+<vhaarr> Pneumatus: does it launch the passenger onto the leviathan, or do you need to target with it?
+<Pneumatus> vhaarr: you have to target it on to his body, like all the rest of the abilties
+<vhaarr> Pneumatus: right, so you can miss
+<Pneumatus> vhaarr: yes, you can :)
+<vhaarr> Pneumatus: is it best to allow him to do a full flame vent cast and use that time to throw people on? I'm trying to iron out some strategy tips for when we are doing his hardmode
+<vhaarr> or is it very easy to hit
+<Pneumatus> vhaarr: there's a bit of leniance with the place the target lands, as you get some grappling hook thing that pulls them to the correct landing spot, but if you target miles off the passenger wil just get thrown to that location
+<Pneumatus> we've only done 2 towers, but we always cancel flame vents and just throw people up as soon as they get back in their demolishers after the last shutdown
+<vhaarr> Pneumatus: alright thanks
+<vhaarr> Pneumatus: do you throw a healer up or ranged/melee?
+<vhaarr> I was thinking 1 healer + ranged dps
+<Pneumatus> never melee
+<Pneumatus> 1 healer 2/3 casters
+<vhaarr> cool
+<Pneumatus> the more people you send up though, the less pyerite barrels the demolishers can fire
+<Pneumatus> as they dont have the top seat passenger to hook in new pyerite when they use it up
+<vhaarr> how often do you need to reload that pyrite?
+<Pneumatus> vhaarr: the demolisher has 100 pyerite at the start, and each cast of the "pyerite barrel" ability uses something like 10, so ideally you want to spam pyerite after a shutdown, then refill with 2 barrels in the kiting phase
+<Pneumatus> each barrel gives 50 pyerite
+<Megalon> 50, 5 per barrel, 25 refill
+<vhaarr> ah cool
+<Megalon> but quite the same
+<Pneumatus> ah, might be that then, i think i probably read in percent
+<Megalon> and siege tank gunners should try to take down some barrels
+<Pneumatus> yeh, as you're likely to only have 1 demolisher passenger in their vehicle 100% of the time
+<Megalon> so that the guys in demolisher just hop in, reload and fired back on leviathan as quickly as possible
+<Megalon> and if you don't do 4 towers, you can have one demolisher seated 100%
+<Megalon> don't know if that also works out on 4 towers, but I don't think so
+<Pneumatus> one alternative idea is to use less than the full amount of motorbikes, and swap alternative passengers into the demolisher seats once people have been thrown up
+<Pneumatus> so you start the fight with a couple of passengers in the motorbikes ready to switch into demolisher seats once the first guys get thrown up
+<Megalon> and just throw all shadowpriests
+<Pneumatus> yeh if you can throw a shadowpriest up, and put the other casters in his group you dont need a healer
+<Pneumatus> on 2 towers at least the damage up top wasnt too bad, VE could probably heal trhough it
+<sb|work> is it possible to cause multiple shutdowns?
+<Pneumatus> the motorbikes can heal the people up top as well once they get picked up
+
+]]
+
 local db = nil
 local started = nil
 local pName = UnitName("player")
