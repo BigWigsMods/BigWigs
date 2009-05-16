@@ -198,7 +198,7 @@ L:RegisterTranslations("zhTW", function() return {
 	sparks = "力量火花",
 	sparks_desc = "當力量火花出現時發出警報。",
 	sparks_message = "出現 力量火花！",
-	sparks_warning = "約5秒后，力量火花！",
+	sparks_warning = "約5秒後，力量火花！",
 
 	spark = "力量火花增益",
 	spark_desc = "當瑪里苟斯獲得力量火花增益時發出警報。",
@@ -207,13 +207,13 @@ L:RegisterTranslations("zhTW", function() return {
 	vortex = "漩渦",
 	vortex_desc = "當施放漩渦時發出警報及顯示計時條。",
 	vortex_message = "漩渦！",
-	vortex_warning = "約5秒后，可能漩渦！",
+	vortex_warning = "約5秒後，可能漩渦！",
 	vortex_next = "<漩渦 冷卻>",
 
 	breath = "深呼吸",
 	breath_desc = "當施放深呼吸時發出警報。",
 	breath_message = "深呼吸！",
-	breath_warning = "約5秒后，深呼吸！",
+	breath_warning = "約5秒後，深呼吸！",
 
 	surge = "力量奔騰",
 	surge_desc = "當玩家中了力量奔騰時發出警報。",
