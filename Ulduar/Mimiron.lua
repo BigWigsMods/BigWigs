@@ -237,11 +237,13 @@ L:RegisterTranslations("deDE", function() return {
 	flames_desc = "Warnung und Timer für Löschschaum.",
 	flames_soon = "Löschschaum bald!",
 	flames_bar = "~Löschschaum",
+	flames_warning = "Löschschaum kommt!",
 
 	fbomb = "Frostbombe",
 	fbomb_desc = "Warnung und Timer für Frostbombe.",
 	fbomb_soon = "Frostbombe bald!",
 	fbomb_bar = "~Frostbombe",
+	fbomb_warning = "Frostbombe kommt!",
 
 	end_trigger = "^Es scheint, als wäre mir",
 } end )
