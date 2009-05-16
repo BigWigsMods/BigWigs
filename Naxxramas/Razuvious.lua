@@ -105,7 +105,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	shout = "混亂怒吼",
 	shout_desc = "當施放混亂怒吼時發出警報。",
-	shout_warning = "5秒后，混亂怒吼！",
+	shout_warning = "5秒後，混亂怒吼！",
 	shout_next = "混亂怒吼冷卻！",
 
 	knife = "鋸齒刀",
@@ -114,11 +114,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	taunt = "嘲諷",
 	taunt_desc = "當死亡騎士實習者施放嘲諷時發出警報。",
-	taunt_warning = "5秒后，可以嘲諷！",
+	taunt_warning = "5秒後，可以嘲諷！",
 
 	shieldwall = "骸骨屏障",
 	shieldwall_desc = "當死亡騎士實習者施放骸骨屏障時發出警報。",
-	shieldwall_warning = "5秒后，可以骸骨屏障！",
+	shieldwall_warning = "5秒後，可以骸骨屏障！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
