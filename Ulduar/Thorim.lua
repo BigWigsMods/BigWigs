@@ -371,9 +371,9 @@ L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
 	phase1_message = "Начало 1-ой фазы",
---	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay! Wait...you...?",
+	phase2_trigger = "Незваные гости! Вы заплатите за то, что посмели вмешаться... Погодите, вы...",
 	phase2_message = "2ая фаза - Исступление через 6мин 15сек!",
---	phase3_trigger = "Impertinent whelps! You dare challenge me atop my pedestal! I will crush you myself!",
+	phase3_trigger = "Бесстыжие выскочки, вы решили бросить вызов мне лично? Я сокрушу вас всех!",
 	phase3_message = "3-яя фаза - %s вступает в бой!",
 
 	p2berserk = "2ая фаза - Исступление",
