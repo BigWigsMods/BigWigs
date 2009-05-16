@@ -125,13 +125,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	flames = "화염 억제",
 	flames_desc = "화염 억제를 알립니다.",
-	flames_soon = "곧 화염 억제!",
+	flames_soon = "잠시후 화염 억제!",
 	flames_bar = "다음 화염 억제",
+	flames_warning = "곧 화염 억제!",
 
 	fbomb = "서리 폭탄",
 	fbomb_desc = "서리 폭탄을 알립니다.",
-	fbomb_soon = "곧 서리 폭탄 가능!",
+	fbomb_soon = "잠시후 서리 폭탄 가능!",
 	fbomb_bar = "다음 서리 폭탄",
+	fbomb_warning = "곧 서리 폭탄!",
 
 	end_trigger = "^내가 계산을 좀 잘못한 것 같군",
 } end )

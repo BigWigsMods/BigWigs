@@ -86,10 +86,10 @@ L:RegisterTranslations("koKR", function() return {
 	cloud = "폭풍 구름",
 	cloud_desc = "폭풍 구름을 얻은 플레이어를 알립니다.",
 	cloud_you = "당신은 폭풍 구름",
-	cloud_other = "%s: 폭풍 구름 얻음",
+	cloud_other = "%s: 폭풍 구름 획득",
 
 	icon = "전술 표시",
-	icon_desc = "폭풍 구름을 얻은 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "폭풍 구름을 획득한 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	end_trigger = "드디어... 드디어 그의 손아귀를... 벗어나는구나.",
 } end )
