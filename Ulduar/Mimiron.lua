@@ -72,6 +72,7 @@ L:RegisterTranslations("enUS", function() return {
 	flames_desc = "Warns for Flame Suppressant",
 	flames_soon = "Flame Suppressant soon!",
 	flames_bar = "Next Suppressant",
+	flames_warning = "Suppressant Incoming!",
 
 	fbomb = "Frost Bomb",
 	fbomb_desc = "Warns for Frost Bomb",
