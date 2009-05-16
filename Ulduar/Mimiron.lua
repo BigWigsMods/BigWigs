@@ -77,6 +77,7 @@ L:RegisterTranslations("enUS", function() return {
 	fbomb_desc = "Warns for Frost Bomb",
 	fbomb_soon = "Possible Frost Bomb soon!",
 	fbomb_bar = "Next Frost Bomb",
+	fbomb_warning = "Frost Bomb Incoming!",
 
 	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
