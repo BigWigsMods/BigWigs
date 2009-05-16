@@ -358,7 +358,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
 	engage_warning = "1ая фаза",
---	engage_trigger = "^We haven't much time, friends!",
+	engage_trigger = "^У нас мало времени, друзья!",
 	phase2_warning = "Наступает 2-ая фаза",
 --	phase2_trigger = "^WONDERFUL! Positively marvelous results!",
 	phase3_warning = "Наступает 3-ая фаза",
@@ -398,11 +398,13 @@ L:RegisterTranslations("ruRU", function() return {
 	flames_desc = "Предупреждать о Подавлении пламени",
 	flames_soon = "Скоро Подавитель пламени!",
 	flames_bar = "Следующий Подавитель",
+	flames_warning = "Подавитель пламени!",
 
 	fbomb = "Ледяная бомба",
 	fbomb_desc = "Предупреждать о Ледяной бомбе",
 	fbomb_soon = "Скоро Ледяная бомба!",
 	fbomb_bar = "Следущая Ледяная бомба",
+	fbomb_warning = "Ледяная бомба!",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
