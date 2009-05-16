@@ -178,6 +178,18 @@ L:RegisterTranslations("frFR", function() return {
 	magnetic_message = "UCA au sol !",
 	loot_message = "%s a ramassé un noyau !",
 
+	flames = "Coupe-flamme",
+	flames_desc = "Prévient de l'arrivée des Coupes-flammes.",
+	flames_soon = "Coupe-flamme imminent !",
+	flames_bar = "Prochain Coupe-flamme",
+	flames_warning = "Arrivée d'un Coupe-flamme !",
+
+	fbomb = "Bombe de givre",
+	fbomb_desc = "Prévient de l'arrivée des Bombes de givre.",
+	fbomb_soon = "Bombe de givre imminente !",
+	fbomb_bar = "Prochaine Bombe de givre",
+	fbomb_warning = "Arrivée d'une Bombe de givre !",
+
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
 } end )
 

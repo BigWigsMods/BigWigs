@@ -45,11 +45,18 @@ L:RegisterTranslations("koKR", function() return {
 	smash = "우주의 강타",
 	smash_desc = "우주의 강타를 알립니다.",
 	smash_message = "곧 우주의 강타!",
-	
+
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	punch = "Coup de poing phasique",
+	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
+	punch_message = "%dx Coups de poing phasiques sur %s",
+
+	smash = "Choc cosmique",
+	smash_desc = "Prévient quand un Choc cosmique est sur le point d'arriver.",
+	smash_message = "Arrivée d'un Choc cosmique !",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
