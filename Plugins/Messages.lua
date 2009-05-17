@@ -94,7 +94,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Use icons"] = "아이콘 사용",
 	["Show icons next to messages, only works for Raid Warning."] = "레이드 경고를 위한, 메세지 옆에 아이콘 표시합니다.",
-
+	
+	["Class colors"] = "직업 색상",
+	["Colors player names in messages by their class."] = "메세지의 플레이어 이름에 직업 색상을 사용합니다.",
+	
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
 
