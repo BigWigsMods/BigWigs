@@ -277,7 +277,7 @@ end
 function mod:Tantrum(_, spellID)
 	if phase == 2 and db.tantrum then
 		self:IfMessage(L["tantrum_message"], "Attention", spellID)
-		self:Bar(L["tantrum_bar"], 70, spellID)
+		self:Bar(L["tantrum_bar"], 65, spellID)
 	end
 end
 
