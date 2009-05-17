@@ -102,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
-	hardmode_trigger = "^아니 대체 왜 그런짓을 한거지?",	--check
+	hardmode_trigger = "^아니, 대체 왜 그런 짓을 한 게지?",
 	hardmode_message = "도전 모드 활성화!",
 	hardmode_warning = "도전 모드 종료",
 
