@@ -206,25 +206,28 @@ L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
 	["Options for message display."] = "Optionen für die Anzeige von Nachrichten.",
 
-	["BigWigs Anchor"] = "BigWigs Verankerung",
+	["BigWigs Anchor"] = "Big Wigs Verankerung",
 	["Output Settings"] = "Ausgabeeinstellungen",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Die Verankerung des Nachrichtenfensters anzeigen.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Die Verankerung des Nachrichtenfensters anzeigen.\n\nDie Verankerung wird nur benutzt, wenn du unter 'Ausgabe' -> 'BigWigs' auswählst.",
 
 	["Use colors"] = "Farben verwenden",
-	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/weiß anzeigen.",
+	["Toggles white only messages ignoring coloring."] = "Wählt, ob Nachrichten farbig oder weiß angezeigt werden.",
 
 	["Scale"] = "Skalierung",
-	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
+	["Set the message frame scale."] = "Legt die Skalierung des Nachrichtenfensters fest.",
 
-	["Use icons"] = "Icons benutzen",
-	["Show icons next to messages, only works for Raid Warning."] = "Icons neben Nachrichten anzeigen.",
+	["Use icons"] = "Symbole benutzen",
+	["Show icons next to messages, only works for Raid Warning."] = "Zeigt Symbole neben Nachrichten an.",
+	
+	["Class colors"] = "Klassenfarben",
+	["Colors player names in messages by their class."] = "Färbt Spielernamen in Nachrichten nach deren Klasse ein.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Weiß",
 
-	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle BigsWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zur Anzeige-Einstellung.",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung von 'Ausgabe'.",
 
 	["Chat frame"] = "Chatfenster",
 
@@ -232,7 +235,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Close"] = "Schließen",
 
 	["Reset position"] = "Position zurücksetzen",
-	["Reset the anchor position, moving it to the center of your screen."] = "Die Position der Verankerung zurücksetzen (bewegt alles zur Mitte deines Interfaces).",
+	["Reset the anchor position, moving it to the center of your screen."] = "Setzt die Position der Verankerung zur Mitte deines Interfaces zurück.",
 	
 	["Spawns a new test warning."] = "Erzeugt eine neue Testnachricht.",
 	["Hide"] = "Schließen",

@@ -252,6 +252,10 @@ L:RegisterTranslations("deDE", function() return {
 	fbomb_soon = "Frostbombe bald!",
 	fbomb_bar = "~Frostbombe",
 	fbomb_warning = "Frostbombe kommt!",
+	
+	bomb = "Bombenbot",
+	bomb_desc = "Warnt vor Bombenbots.",
+	bomb_message = "Bombenbot!",
 
 	end_trigger = "^Es scheint, als wäre mir",
 } end )
