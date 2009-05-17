@@ -602,7 +602,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MimiLoot" and rest and db.magnetic then
-		self:IfMessage(L["loot_message"]:format(rest), "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
+		self:TargetMessage(L["loot_message"], rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
 	elseif sync == "MimiBarrage" and db.laser then
 		self:IfMessage(L["laser_bar"], "Important", 63274)
 		self:Bar(L["laser_bar"], 60, 63274)

@@ -297,19 +297,18 @@ function mod:Drain(_, spellID)
 end
 
 function mod:Icebolt(player, spellID)
-	if player == pName and self.db.profile.icebolt then
+	if not self.db.profile.icebolt then return end
+	if player == pName then
 		self:WideMessage(format(L["icebolt_other"], player))
 		SendChatMessage(L["icebolt_yell"], "YELL")
 		if UnitIsUnit(player, "player") and self.db.profile.ping then
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])
 		end
-	elseif self.db.profile.icebolt then
-		self:IfMessage(format(L["icebolt_other"], player), "Attention", spellID)
+	else
+		self:TargetMessage(L["icebolt_other"], player, "Attention", spellID)
 	end
-	if self.db.profile.icon then
-		self:Icon(player, "icon")
-	end
+	self:Icon(player, "icon")
 end
 
 function mod:RemoveIcon()
@@ -327,3 +326,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+

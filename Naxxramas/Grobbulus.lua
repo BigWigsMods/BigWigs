@@ -151,18 +151,15 @@ end
 
 function mod:Inject(player, spellID)
 	if self.db.profile.inject then
-		local other = L["bomb_message_other"]:format(player)
 		if player == pName then
-			self:Message(L["bomb_message_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["bomb_message_you"], "Personal", spellID, "Alert")
+			self:WideMessage(L["bomb_message_other"]:format(player))
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:TargetMessage(L["bomb_message_other"], player, "Attention", spellID)
 			self:Whisper(player, L["bomb_message_you"])
 		end
-		self:Bar(other, 10, spellID)
-		if self.db.profile.icon then
-			self:Icon(player, "icon")
-		end
+		self:Bar(L["bomb_message_other"]:format(player), 10, spellID)
+		self:Icon(player, "icon")
 	end
 end
 

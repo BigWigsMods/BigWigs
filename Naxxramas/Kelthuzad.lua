@@ -15,8 +15,8 @@ mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 --      Are you local?      --
 ------------------------------
 
-local FB = {}
-local MCd = {}
+local fbTargets = {}
+local mcTargets = {}
 local fmt = string.format
 local pName = UnitName("player")
 
@@ -424,72 +424,53 @@ end
 
 function mod:Fizzure()
 	if self.db.profile.fissure then
-		self:Message(L["fissure_warning"], "Important", 27810)
+		self:IfMessage(L["fissure_warning"], "Important", 27810)
 	end
 end
 
-function mod:FrostBlast(player)
+local function fbWarn(spellId)
+	mod:IfMessage(L["frostblast_message"]:format(table.concat(fbTargets, ", ")), "Important", spellId, "Alert")
+	mod:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
+	mod:Bar(L["frostblast_bar"], 37, spellId)
+	wipe(fbTargets)
+end
+
+function mod:FrostBlast(player, spellId)
 	if self.db.profile.frostblast then
-		FB[player] = true
-		self:ScheduleEvent("BWFrostBlastWarn", self.FBWarn, 0.4, self)
+		table.insert(fbTargets, player)
+		self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId)
 	end
-end
-
-function mod:FBWarn()
-	local msg = nil
-	for k in pairs(FB) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	self:IfMessage(L["frostblast_message"]:format(msg), "Important", 27808, "Alert")
-	self:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
-	self:Bar(L["frostblast_bar"], 37, 27808)
-	for k in pairs(FB) do FB[k] = nil end
 end
 
 function mod:Detonate(player, spellID)
 	if self.db.profile.detonate then
-		local other = L["detonate_other"]:format(player)
 		if player == pName then
-			self:Message(L["detonate_you"], "Personal", true, "Alert", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["detonate_you"], "Personal", spellID, "Alert")
+			self:WideMessage(L["detonate_other"]:format(player))
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:TargetMessage(L["detonate_other"], player, "Attention", spellID)
 			self:Whisper(player, L["detonate_you"])
 		end
 		self:Icon(player, "icon")
-		self:Bar(other, 5, spellID)
+		self:Bar(L["detonate_other"]:format(player), 5, spellID)
 		self:Bar(L["detonate_possible_bar"], 20, spellID)
 		self:DelayedMessage(15, L["detonate_warning"], "Attention")
 	end
 end
 
-function mod:MC(player)
-	if self.db.profile.mc then
-		MCd[player] = true
-		self:ScheduleEvent("BWMCWarn", self.MCWarn, 0.5, self)
-	end
+local function mcWarn(spellId)
+	mod:IfMessage(L["mc_message"]:format(table.concat(mcTargets, ", ")), "Important", spellId, "Alert")
+	mod:Bar(L["mc"], 21, 28410)
+	mod:DelayedMessage(68, L["mc_warning"], "Urgent")
+	mod:Bar(L["mc_nextbar"], 68, spellId)
+	wipe(mcTargets)
 end
 
-function mod:MCWarn()
+function mod:MC(player, spellId)
 	if self.db.profile.mc then
-		local msg = nil
-		for k in pairs(MCd) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
-		end
-		self:IfMessage(fmt(L["mc_message"], msg), "Important", 28410, "Alert")
-		self:Bar(L["mc"], 21, 28410)
-		self:DelayedMessage(68, L["mc_warning"], "Urgent")
-		self:Bar(L["mc_nextbar"], 68, 28410)
+		table.insert(mcTargets, player)
+		self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId)
 	end
-	for k in pairs(MCd) do MCd[k] = nil end
 end
 
 function mod:UNIT_HEALTH(msg)
@@ -510,8 +491,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:Message(L["start_warning"], "Attention")
 		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")
-		for k in pairs(MCd) do MCd[k] = nil end
-		for k in pairs(FB) do FB[k] = nil end
+		wipe(mcTargets)
+		wipe(fbTargets)
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
 		if self.db.profile.phase then

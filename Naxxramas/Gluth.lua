@@ -143,20 +143,20 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Frenzy()
+function mod:Frenzy(_, spellId)
 	if self.db.profile.frenzy then
-		self:IfMessage(L["frenzy_message"], "Important", 28371)
+		self:IfMessage(L["frenzy_message"], "Important", spellId)
 	end
 end
 
 local last = 0
-function mod:Decimate()
+function mod:Decimate(_, spellId)
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
 		if self.db.profile.decimate then
-			self:IfMessage(L["decimatewarn"], "Attention", 16590, "Alert")
-			self:Bar(L["decimatebartext"], 105, 16590)
+			self:IfMessage(L["decimatewarn"], "Attention", spellId, "Alert")
+			self:Bar(L["decimatebartext"], 105, spellId)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 	end
@@ -171,7 +171,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if self.db.profile.decimate then
 			self:Message(L["startwarn"], "Attention")
-			self:Bar(L["decimatebartext"], 105, 16590)
+			self:Bar(L["decimatebartext"], 105, 54426)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.berserk then
@@ -179,3 +179,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+

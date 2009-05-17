@@ -263,34 +263,33 @@ end
 function mod:Heartbreak(_, spellID)
 	phase = 2
 	if db.heartbreak then
-		self:IfMessage(L["heartbreak_message"], "Attention", spellID)
+		self:IfMessage(L["heartbreak_message"], "Important", spellID)
 	end
 end
 
 function mod:Bomb(player, spellID)
 	if spellID == 63024 or spellID == 64234 and db.gravitybomb then
-		local other = L["gravitybomb_other"]:format(player)
 		if player == pName then
 			self:LocalMessage(L["gravitybomb_you"], "Personal", spellID, "Alert")
-			self:WideMessage(other)
+			self:WideMessage(L["gravitybomb_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:IfMessage(other, "Attention", spellID)
+			self:TargetMessage(L["gravitybomb_other"], player, "Attention", spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
-		self:Bar(other, 9, spellID)
+		self:Bar(L["gravitybomb_other"]:format(player), 9, spellID)
 		self:Icon(player, "icon")
 	elseif spellID == 63018 or spellID == 65121 and db.lightbomb then
 		local other = L["lightbomb_other"]:format(player)
 		if player == pName then
 			self:LocalMessage(L["lightbomb_you"], "Personal", spellID, "Alert")
-			self:WideMessage(other)
+			self:WideMessage(L["lightbomb_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:IfMessage(other, "Attention", spellID)
+			self:TargetMessage(L["lightbomb_other"], player, "Attention", spellID)
 			self:Whisper(player, L["lightbomb_you"])
 		end
-		self:Bar(other, 9, spellID)
+		self:Bar(L["lightbomb_other"]:format(player), 9, spellID)
 		self:Icon(player, "icon")
 	end
 end
@@ -308,19 +307,17 @@ function mod:VoidZone(_, spellID)
 end
 
 function mod:UNIT_HEALTH(msg)
-	if UnitName(msg) == boss and db.exposed then
-		if phase == 1 then
-			local health = UnitHealth(msg)
-			if not exposed1 and health > 86 and health <= 88 then
-				exposed1 = true
-				self:IfMessage(L["exposed_warning"], "Attention")
-			elseif not exposed2 and health > 56 and health <= 58 then
-				exposed2 = true
-				self:IfMessage(L["exposed_warning"], "Attention")
-			elseif not exposed3 and health > 26 and health <= 28 then
-				exposed3 = true
-				self:IfMessage(L["exposed_warning"], "Attention")
-			end
+	if phase == 1 and UnitName(msg) == boss and db.exposed then
+		local health = UnitHealth(msg)
+		if not exposed1 and health > 86 and health <= 88 then
+			exposed1 = true
+			self:IfMessage(L["exposed_warning"], "Attention")
+		elseif not exposed2 and health > 56 and health <= 58 then
+			exposed2 = true
+			self:IfMessage(L["exposed_warning"], "Attention")
+		elseif not exposed3 and health > 26 and health <= 28 then
+			exposed3 = true
+			self:IfMessage(L["exposed_warning"], "Attention")
 		end
 	end
 end

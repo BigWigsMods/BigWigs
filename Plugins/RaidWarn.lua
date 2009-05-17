@@ -251,7 +251,8 @@ function plugin:BigWigs_Message(msg, color, noraidsay)
 		return
 	end
 
-	local o = output:format(msg)
+	local clean = msg:gsub("(|c%x%x%x%x%x%x%x%x)", ""):gsub("(|r)", "")
+	local o = output:format(clean)
 	if self.db.profile.useraidchannel then
 		SendChatMessage(o, inRaid and "RAID" or "PARTY")
 	else

@@ -250,23 +250,15 @@ function mod:Armor(player)
 end
 
 local function gripWarn()
-	local msg = nil
-	for k in pairs(grip) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	mod:IfMessage(L["grip_message"]:format(msg), "Attention", 64292, "Alert")
+	mod:IfMessage(L["grip_message"]:format(table.concat(grip, ", ")), "Attention", 64292, "Alert")
 	mod:Bar(L["grip"], 10, 64292)
 	wipe(grip)
 end
 
 function mod:Grip(player, spellID)
 	if db.grip then
-		grip[player] = true
-		self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2, spellID)
+		table.insert(grip, player)
+		self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2)
 	end
 end
 

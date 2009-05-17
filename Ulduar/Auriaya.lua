@@ -287,12 +287,11 @@ end
 
 function mod:Swarm(player, spell)
 	if not db.swarm then return end
-	local other = L["swarm_other"]:format(player)
 	if player == pName then
 		mod:LocalMessage(L["swarm_you"], "Personal", spell, "Alert")
-		mod:WideMessage(other)
+		mod:WideMessage(L["swarm_other"]:format(player))
 	else
-		mod:IfMessage(other, "Attention", spell)
+		mod:TargetMessage(L["swarm_other"], player, "Attention", spell)
 		mod:Whisper(player, L["swarm_you"])
 	end
 	mod:Bar(L["swarm_bar"], 37, spell)

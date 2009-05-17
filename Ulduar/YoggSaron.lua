@@ -574,7 +574,7 @@ end
 
 function mod:MControl(player, spellId)
 	if db.mindcontrol then
-		self:IfMessage(L["mindcontrol_message"]:format(player), "Attention", spellId)
+		self:TargetMessage(L["mindcontrol_message"], player, "Attention", spellId)
 		self:Icon(player, "icon")
 	end
 end
@@ -598,7 +598,7 @@ end
 
 function mod:Squeeze(player, spellID)
 	if db.squeeze then
-		self:IfMessage(L["squeeze_message"]:format(player), "Positive", spellID)
+		self:TargetMessage(L["squeeze_message"], player, "Positive", spellID)
 	end
 end
 

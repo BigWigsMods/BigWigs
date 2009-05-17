@@ -428,15 +428,14 @@ local function scanTarget()
 		end
 	end
 	if target then
-		local other = L["crash_other"]:format(target)
 		if target == pName then
 			mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
-			mod:WideMessage(other)
+			mod:WideMessage(L["crash_other"]:format(target))
 			if db.crashsay then
 				SendChatMessage(L["crash_say"], "SAY")
 			end
 		else
-			mod:IfMessage(other, "Positive", 62660)
+			mod:TargetMessage(L["crash_other"], target, "Positive", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
 		if db.crashicon then
@@ -448,15 +447,14 @@ end
 
 function mod:Mark(player, spellID)
 	if db.mark then
-		local other = L["mark_message_other"]:format(player)
 		if player == pName then
 			self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
-			self:WideMessage(other)
+			self:WideMessage(L["mark_message_other"]:format(player))
 		else
-			self:IfMessage(other, "Important", spellID)
+			self:IfMessage(L["mark_message_other"], player, "Important", spellID)
 			self:Whisper(player, L["mark_message_you"])
 		end
-		self:Bar(other, 10, spellID)
+		self:Bar(L["mark_message_other"]:format(player), 10, spellID)
 		self:Icon(player, "icon")
 	end
 end

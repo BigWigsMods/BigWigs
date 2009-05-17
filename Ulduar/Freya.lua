@@ -10,7 +10,6 @@ mod.enabletrigger = boss
 mod.guid = 32906
 mod.toggleoptions = {"phase", -1, "root", "tremor", "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
---Eonar's Gift
 
 ------------------------------
 --      Are you local?      --
@@ -420,21 +419,13 @@ end
 ------------------------------
 
 local function rootWarn()
-	local msg = nil
-	for k in pairs(root) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	mod:IfMessage(L["root_message"]:format(msg), "Attention", 62930, "Info")
+	mod:IfMessage(L["root_message"]:format(table.concat(root, ", ")), "Attention", 62930, "Info")
 	wipe(root)
 end
 
 function mod:Root(player, spellID)
 	if db.root then
-		root[player] = true
+		table.insert(root, player)
 		self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellID)
 	end
 end
@@ -485,12 +476,11 @@ local function scanTarget()
 		end
 	end
 	if target then
-		local other = L["sunbeam_other"]:format(target)
 		if target == pName then
 			mod:LocalMessage(L["sunbeam_you"], "Attention", 62872)
-			mod:WideMessage(other)
+			mod:WideMessage(L["sunbeam_other"]:format(target))
 		else
-			mod:IfMessage(other, "Attention", 62872)
+			mod:TargetMessage(L["sunbeam_other"], target, "Attention", 62872)
 			mod:Whisper(player, L["sunbeam_you"])
 		end
 		mod:Icon(target, "icon")
@@ -506,16 +496,15 @@ end
 
 function mod:Fury(player, spellID)
 	if db.fury then
-		local other = L["fury_other"]:format(player)
 		if player == pName then
 			self:LocalMessage(L["fury_you"], "Personal", spellID, "Alert")
-			self:WideMessage(other)
+			self:WideMessage(L["fury_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:IfMessage(other, "Attention", spellID)
+			self:TargetMessage(L["fury_other"], player, "Attention", spellID)
 			self:Whisper(player, L["fury_you"])
 		end
-		self:Bar(other, 10, spellID)
+		self:Bar(L["fury_other"]:format(player), 10, spellID)
 		self:Icon(player, "icon")
 	end
 end

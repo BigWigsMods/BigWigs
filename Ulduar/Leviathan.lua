@@ -200,17 +200,14 @@ function mod:Shutdown()
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
-	if unit == boss then
-		if db.pursue and message:find(L["pursue_trigger"]) then
-			local other = fmt(L["pursue_other"], player)
-			if player == pName then
-				self:LocalMessage(L["pursue_you"], "Personal", 62374, "Alarm")
-				self:WideMessage(other)
-			else
-				self:IfMessage(other, "Attention", 62374)
-			end
-			self:Bar(other, 30, 62374)
+	if unit == boss and db.pursue and message:find(L["pursue_trigger"]) then
+		if player == pName then
+			self:LocalMessage(L["pursue_you"], "Personal", 62374, "Alarm")
+			self:WideMessage(L["pursue_other"]:format(player))
+		else
+			self:TargetMessage(L["pursue_other"], player, "Attention", 62374)
 		end
+		self:Bar(L["pursue_other"]:format(player), 30, 62374)
 	end
 end
 

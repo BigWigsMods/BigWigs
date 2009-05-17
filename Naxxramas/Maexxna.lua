@@ -193,7 +193,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("UNIT_HEALTH")
 
-	for k in pairs(inCocoon) do inCocoon[k] = nil end
+	wipe(inCocoon)
 	started = nil
 	self:RegisterEvent("BigWigs_RecvSync")
 end
@@ -202,10 +202,15 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local function cocoonWarn()
+	mod:IfMessage(L["cocoonwarn"]:format(table.concat(inCocoon, ", ")), "Important", 745, "Alert")
+	wipe(inCocoon)
+end
+
 function mod:Cocoon(player)
 	if self.db.profile.cocoon then
-		inCocoon[player] = true
-		self:ScheduleEvent("Cocoons", self.CocoonWarn, 0.3, self)
+		table.insert(inCocoon, player)
+		self:ScheduleEvent("Cocoons", cocoonWarn, 0.3)
 	end
 end
 
@@ -230,19 +235,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		self:Spray()
 	end
-end
-
-function mod:CocoonWarn()
-	local msg = nil
-	for k in pairs(inCocoon) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	self:IfMessage(L["cocoonwarn"]:format(msg), "Important", 745, "Alert")
-	for k in pairs(inCocoon) do inCocoon[k] = nil end
 end
 
 function mod:Enrage(_, spellID)

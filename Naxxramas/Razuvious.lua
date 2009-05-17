@@ -206,7 +206,7 @@ end
 
 function mod:Knife(unit, spellID)
 	if self.db.profile.knife then
-		self:Message(L["knife_message"]:format(unit), "Important", nil, nil, nil, spellID)
+		self:TargetMessage(L["knife_message"], unit, "Important", spellID)
 	end
 end
 
@@ -221,3 +221,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+

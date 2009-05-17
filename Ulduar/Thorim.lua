@@ -474,7 +474,7 @@ end
 
 function mod:Hammer(player, spellID)
 	if db.hammer then
-		self:IfMessage(L["hammer_message"]:format(player), "Urgent", spellID)
+		self:TargetMessage(L["hammer_message"], player, "Urgent", spellID)
 		self:Bar(L["hammer_bar"], 16, spellID)
 		self:Icon(player, "icon")
 	end
@@ -482,9 +482,8 @@ end
 
 function mod:Strike(player, spellID)
 	if db.strike then
-		local msg = fmt(L["strike_message"], player)
-		self:IfMessage(msg, "Attention", spellID)
-		self:Bar(msg, 15, spellID)
+		self:TargetMessage(L["strike_message"], player, "Attention", spellID)
+		self:Bar(L["strike_message"]:format(player), 15, spellID)
 	end
 end
 
@@ -514,20 +513,19 @@ end
 
 function mod:Impale(player, spellID)
 	if db.impale then
-		self:IfMessage(L["impale_message"]:format(player), "Important", spellID)
+		self:TargetMessage(L["impale_message"], player, "Important", spellID)
 	end
 end
 
 function mod:Detonation(player, spellID)
 	if db.detonation then
-		local other = L["detonation_message"]:format(player)
 		if player == pName then
-			self:WideMessage(other)
+			self:WideMessage(L["detonation_message"]:format(player))
 			SendChatMessage(L["detonation_yell"], "SAY")
 		else
-			self:IfMessage(other, "Important", spellID)
+			self:TargetMessage(L["detonation_message"], player, "Important", spellID)
 		end
-		self:Bar(other, 4, spellID)
+		self:Bar(L["detonation_message"]:format(player), 4, spellID)
 		self:Icon(player, "icon")
 	end
 end

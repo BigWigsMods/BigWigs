@@ -294,7 +294,7 @@ end
 
 function mod:SlagPot(player, spellID)
 	if db.slagpot then
-		self:IfMessage(L["slagpot_message"]:format(player), "Important", spellID)
+		self:TargetMessage(L["slagpot_message"], player, "Important", spellID)
 		self:Bar(L["slagpot_message"]:format(player), 10, spellID)
 	end
 end

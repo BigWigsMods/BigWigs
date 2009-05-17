@@ -288,15 +288,14 @@ end
 
 function mod:Cloud(player, spellID)
 	if db.cloud then
-		local other = L["cloud_other"]:format(player)
 		if player == pName then
 			self:LocalMessage(L["cloud_you"], "Positive", spellID, "Info")
-			self:WideMessage(other)
+			self:WideMessage(L["cloud_other"]:format(player))
 		else
-			self:IfMessage(other, "Positive", spellID)
+			self:TargetMessage(L["cloud_other"], player, "Positive", spellID)
 			self:Whisper(player, L["cloud_you"])
 		end
-		self:Bar(other, 30, spellID)
+		self:Bar(L["cloud_other"]:format(player), 30, spellID)
 		self:Icon(player, "icon")
 	end
 end
@@ -311,23 +310,13 @@ function mod:FlashCast(_, spellID)
 end
 
 local function flashWarn()
-	if db.flash then
-		local msg = nil
-		for k in pairs(FF) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
-		end
-		mod:IfMessage(L["flash_message"]:format(msg), "Urgent", 61969, "Alert")
-	end
+	mod:IfMessage(L["flash_message"]:format(table.concat(FF, ", ")), "Urgent", 61969, "Alert")
 	wipe(FF)
 end
 
 function mod:Flash(player)
 	if UnitInRaid(player) and db.flash then
-		FF[player] = true
+		table.insert(FF, player)
 		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5)
 	end
 end

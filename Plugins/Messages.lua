@@ -53,6 +53,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Use icons"] = true,
 	["Show icons next to messages, only works for Raid Warning."] = true,
 
+	["Class colors"] = true,
+	["Colors player names in messages by their class."] = true,
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
 	["White"] = true,
 
@@ -444,6 +447,7 @@ plugin.defaultDB = {
 	posy = -150,
 	chat = nil,
 	useicons = true,
+	classcolor = true,
 }
 plugin.consoleCmd = L["Messages"]
 
@@ -526,11 +530,17 @@ plugin.consoleOptions = {
 			order = 102,
 			disabled = function() return not colorModule end,
 		},
+		classcolor = {
+			type = "toggle",
+			name = L["Class colors"],
+			desc = L["Colors player names in messages by their class."],
+			order = 103,
+		},
 		useicons = {
 			type = "toggle",
 			name = L["Use icons"],
 			desc = L["Show icons next to messages, only works for Raid Warning."],
-			order = 103,
+			order = 104,
 		},
 	},
 }
