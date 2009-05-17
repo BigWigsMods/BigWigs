@@ -116,36 +116,39 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	["Messages"] = "信息提示",
-	["Options for message display."] = "信息显示模式及相关设置。",
+	["Messages"] = "信息",
+	["Options for message display."] = "信息显示选项。",
 
 	["BigWigs Anchor"] = "BigWigs 锚点",
 	["Output Settings"] = "输出设置",
 
-	["Show anchor"] = "显示信息框体",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用 BigWigs 窗口模式）。",
+	["Show anchor"] = "显示锚点",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息锚点。\n\n只有输出为“BigWigs”时锚点可用。",
 
-	["Use colors"] = "发送彩色信息",
+	["Use colors"] = "使用彩色信息",
 	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
 
 	["Scale"] = "缩放",
-	["Set the message frame scale."] = "调整信息文字大小。",
+	["Set the message frame scale."] = "设定信息框体缩放。",
 
-	["Use icons"] = "使用技能图标",
-	["Show icons next to messages, only works for Raid Warning."] = "显示图标，目前只能使用在团队警告频道。",
+	["Use icons"] = "使用图标",
+	["Show icons next to messages, only works for Raid Warning."] = "显示图标，只能使用在团队警告频道。",
+
+	["Class colors"] = "职业颜色",
+	["Colors player names in messages by their class."] = "使用职业颜色来染色信息内玩家颜色。",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
 
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了增加显示设置之外，将所有 BigWigs 信息输出到默认聊天框。",
 
-	["Chat frame"] = "聊天框",
+	["Chat frame"] = "聊天框体",
 
 	["Test"] = "测试",
 	["Close"] = "关闭",
 
 	["Reset position"] = "重置位置",
-	["Reset the anchor position, moving it to the center of your screen."] = "重置信息显示位置，移动到默认屏幕的中间位置。",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置锚点位置，移动到屏幕的中间。",
 	
 	["Spawns a new test warning."] = "生成一个新的报警测试。",
 	["Hide"] = "隐藏",
@@ -162,16 +165,19 @@ L:RegisterTranslations("zhTW", function() return {
 	["Output Settings"] = "輸出設定",
 
 	["Show anchor"] = "顯示錨點",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息框架錨點。",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息錨點。\n\n只有輸出為“BigWigs”時錨點可用。",
 
-	["Use colors"] = "發送彩色訊息",
+	["Use colors"] = "使用彩色訊息",
 	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
 
 	["Scale"] = "縮放",
-	["Set the message frame scale."] = "設定訊息框架縮放比例。",
+	["Set the message frame scale."] = "設定訊息框架縮放。",
 
 	["Use icons"] = "使用圖示",
-	["Show icons next to messages, only works for Raid Warning."] = "顯示圖示，目前只能使用在團隊警告頻道。",
+	["Show icons next to messages, only works for Raid Warning."] = "顯示圖示，只能使用在團隊警告頻道。",
+
+	["Class colors"] = "職業顏色",
+	["Colors player names in messages by their class."] = "使用職業顏色來染色訊息內玩家顏色。",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000顏|cffff00ff色|r",
 	["White"] = "白色",
@@ -184,7 +190,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Close"] = "關閉",
 
 	["Reset position"] = "重置位置",
-	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央。",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置錨點位置，將它移至螢幕中央。",
 	
 	["Spawns a new test warning."] = "生成一個新的警報測試。",
 	["Hide"] = "隱藏",
