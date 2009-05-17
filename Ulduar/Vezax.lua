@@ -451,7 +451,7 @@ function mod:Mark(player, spellID)
 			self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
 			self:WideMessage(L["mark_message_other"]:format(player))
 		else
-			self:IfMessage(L["mark_message_other"], player, "Important", spellID)
+			self:TargetMessage(L["mark_message_other"], player, "Important", spellID)
 			self:Whisper(player, L["mark_message_you"])
 		end
 		self:Bar(L["mark_message_other"]:format(player), 10, spellID)
