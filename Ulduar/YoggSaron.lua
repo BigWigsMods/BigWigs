@@ -523,7 +523,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830, 63881)
 	-- 63042 is the add MC during p1, 63120 is the MC when you go insane in p2/3.
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042, 63120)
 	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
