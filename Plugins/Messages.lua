@@ -7,6 +7,7 @@ if not plugin then return end
 
 local sink = LibStub("LibSink-2.0")
 sink:Embed(plugin)
+sink = nil
 
 ------------------------------
 --      Are you local?      --
@@ -21,13 +22,9 @@ local scaleDownTime = 0.4
 local labels = {}
 
 local colorModule = nil
-local testModule = nil
 local messageFrame = nil
 local anchor = nil
-local GetSpellInfo = GetSpellInfo
-local type = type
 local floor = math.floor
-local next = next
 
 ----------------------------
 --      Localization      --
@@ -578,12 +575,6 @@ function plugin:OnEnable()
 	else
 		colorModule = nil
 	end
-
-	if BigWigs:HasModule("Test") then
-		testModule = BigWigs:GetModule("Test")
-	else
-		testModule = nil
-	end
 end
 
 function plugin:OnDisable() if anchor then anchor:Hide() end end
@@ -690,9 +681,9 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 	local db = self.db.profile
 	local r, g, b = 1, 1, 1 -- Default to white.
 	if db.usecolors then
-		if type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
+		if type(color) == "table" and color.r and color.g and color.b then
 			r, g, b = color.r, color.g, color.b
-		elseif type(colorModule) == "table" and colorModule:HasMessageColor(color) then
+		elseif colorModule and colorModule:HasMessageColor(color) then
 			r, g, b = colorModule:MsgColor(color)
 		end
 	end
