@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -79,6 +79,10 @@ L:RegisterTranslations("enUS", function() return {
 	fbomb_soon = "Possible Frost Bomb soon!",
 	fbomb_bar = "Next Frost Bomb",
 	fbomb_warning = "Frost Bomb Incoming!",
+	
+	bomb = "Bomb Bot",
+	bomb_desc = "Warn for Bomb Bot.",
+	bomb_message = "Bomb Bot spawned!",
 
 	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
@@ -134,6 +138,10 @@ L:RegisterTranslations("koKR", function() return {
 	fbomb_soon = "잠시후 서리 폭탄 가능!",
 	fbomb_bar = "다음 서리 폭탄",
 	fbomb_warning = "곧 서리 폭탄!",
+	
+	bomb = "폭발로봇",
+	bomb_desc = "폭발로봇 소환을 알립니다.",
+	bomb_message = "폭발로봇 소환!",
 
 	end_trigger = "^내가 계산을 좀 잘못한 것 같군",
 } end )
@@ -424,6 +432,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
 	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
+	self:AddCombatListener("SPELL_SUMMON", "Bomb", 63811)
 
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -444,6 +453,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Bomb(_, spellId)
+	if db.bomb then
+		self:IfMessage(L["bomb_message"], "Important", 63811, "Alert")
+	end
+end
 
 function mod:Flames(_, spellID)
 	if db.flames then
