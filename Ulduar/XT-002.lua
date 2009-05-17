@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"heartbreak", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "bosskill"}
+mod.toggleoptions = {"heartbreak", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "tantrum", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -54,6 +54,11 @@ L:RegisterTranslations("enUS", function() return {
 	heartbreak = "Heartbreak",
 	heartbreak_desc = "Warn when XT-002 gains Heartbreak",
 	heartbreak_message = "Heartbreak!",
+
+	tantrum = "Tympanic Tantrum",
+	tantrum_desc = "Warn when XT-002 casts Tympanic Tantrum in Hard Mode",
+	tantrum_message = "Tympanic Tantrum!",
+	tantrum_bar = "~Tantrum Cooldown",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on players with Bomb. (requires promoted or higher)",
@@ -234,8 +239,10 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Bomb", 63018, 63024, 64234, 65121)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "GravityBomb", 63024, 64234)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LightBomb", 63018, 65121)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234, 65121)
+	self:AddCombatListener("SPELL_CAST_START", "Tantrum", 62776)
 	self:AddCombatListener("SPELL_SUMMON", "VoidZone", 64203, 64235)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -267,8 +274,15 @@ function mod:Heartbreak(_, spellID)
 	end
 end
 
-function mod:Bomb(player, spellID)
-	if spellID == 63024 or spellID == 64234 and db.gravitybomb then
+function mod:Tantrum(_, spellID)
+	if phase == 2 and db.tantrum then
+		self:IfMessage(L["tantrum_message"], "Attention", spellID)
+		self:Bar(L["tantrum_bar"], 70, spellID)
+	end
+end
+
+function mod:GravityBomb(player, spellID)
+	if db.gravitybomb then
 		if player == pName then
 			self:LocalMessage(L["gravitybomb_you"], "Personal", spellID, "Alert")
 			self:WideMessage(L["gravitybomb_other"]:format(player))
@@ -279,8 +293,11 @@ function mod:Bomb(player, spellID)
 		end
 		self:Bar(L["gravitybomb_other"]:format(player), 9, spellID)
 		self:Icon(player, "icon")
-	elseif spellID == 63018 or spellID == 65121 and db.lightbomb then
-		local other = L["lightbomb_other"]:format(player)
+	end
+end
+
+function mod:LightBomb(player, spellID)
+	if db.lightbomb then
 		if player == pName then
 			self:LocalMessage(L["lightbomb_you"], "Personal", spellID, "Alert")
 			self:WideMessage(L["lightbomb_other"]:format(player))

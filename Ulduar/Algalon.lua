@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32871
-mod.toggleoptions = {"bosskill", "punch", "smash"}
+mod.toggleoptions = {"bosskill", "punch", "smash", "blackhole"}
 
 ------------------------------
 --      Are you local?      --
@@ -16,6 +16,7 @@ mod.toggleoptions = {"bosskill", "punch", "smash"}
 
 local db = nil
 local punch = GetSpellInfo(64412)
+local blackholes = 0
 
 ----------------------------
 --      Localization      --
@@ -33,6 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 	smash = "Cosmic Smash",
 	smash_desc = "Warn when Cosmic Smash is incoming",
 	smash_message = "Incoming Cosmic Smash!",
+
+	blackhole = "Black Hole",
+	blackhole_desc = "Warn when Black Holes spawn",
+	blackhole_message = "Black Hole %dx spawned",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -98,7 +103,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64597)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	db = self.db.profile
 
@@ -109,7 +118,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Punch(player, spellID)
+function mod:Punch()
 	if db.punch then
 		self:Bar(L["punch"], 15, 64412)
 	end
@@ -124,10 +133,16 @@ function mod:PunchCount(player)
 	end
 end
 
-function mod:Smash(player, spellID)
+function mod:Smash()
 	if db.smash then
 		self:IfMessage(L["smash_message"], "Attention", 64597, "Info"  )
 		self:Bar(L["smash"], 25, 64597)
 	end
 end
 
+function mod:BlackHole()
+	if db.blackhole then
+		blackholes = blackholes + 1				
+		self:IfMessage(L["blackhole_message"]:format(blackholes), "Attention") 
+	end
+end
