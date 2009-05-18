@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32871
-mod.toggleoptions = {"bosskill", "punch", "smash", "blackhole", "bigbang"}
+mod.toggleoptions = {"bosskill", "punch", "smash", "blackhole", "bigbang", "stars", "constellation" }
 
 ------------------------------
 --      Are you local?      --
@@ -45,6 +45,12 @@ L:RegisterTranslations("enUS", function() return {
 	bigbang_desc = "Warn when Big Bang starts to cast",
 	bigbang_message = "Big Bang!",
 	bigbang_cooldown = "~Big Bang Cooldown",
+
+	stars = "Collapsing Stars",
+	stars_desc = "Warn when Collapsing Stars spawn",
+
+	constellation = "Living Constellations",
+	constelllation_desc = "Warn when Living Constellations spawn",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -179,6 +185,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		blackholes = 0
 		if db.bigbang then
 			self:Bar(L["bigbang_cooldown"], 98, 64443)
+		end
+		if db.stars then
+			self:Bar(L["stars"], 24)
+		end
+		if db.constellation then
+			self:Bar(L["constellation"], 65)
 		end
 	end
 end
