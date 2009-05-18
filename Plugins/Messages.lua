@@ -91,10 +91,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Use icons"] = "아이콘 사용",
 	["Show icons next to messages, only works for Raid Warning."] = "레이드 경고를 위한, 메세지 옆에 아이콘 표시합니다.",
-	
+
 	["Class colors"] = "직업 색상",
 	["Colors player names in messages by their class."] = "메세지의 플레이어 이름에 직업 색상을 사용합니다.",
-	
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
 
@@ -107,11 +107,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Reset position"] = "위치 초기화",
 	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정 위치를 초기화합니다.",
-	
+
 	["Spawns a new test warning."] = "새 테스트 경고를 표시합니다.",
 	["Hide"] = "숨김",
 	["Hides the anchors."] = "앵커를 숨깁니다.",
-	
+
 	Font = "Fonts\\2002.TTF",
 } end)
 
@@ -149,7 +149,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置锚点位置，移动到屏幕的中间。",
-	
+
 	["Spawns a new test warning."] = "生成一个新的报警测试。",
 	["Hide"] = "隐藏",
 	["Hides the anchors."] = "隐藏锚点。",
@@ -191,7 +191,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置錨點位置，將它移至螢幕中央。",
-	
+
 	["Spawns a new test warning."] = "生成一個新的警報測試。",
 	["Hide"] = "隱藏",
 	["Hides the anchors."] = "隱藏錨點。",
@@ -217,7 +217,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Use icons"] = "Symbole benutzen",
 	["Show icons next to messages, only works for Raid Warning."] = "Zeigt Symbole neben Nachrichten an.",
-	
+
 	["Class colors"] = "Klassenfarben",
 	["Colors player names in messages by their class."] = "Färbt Spielernamen in Nachrichten nach deren Klasse ein.",
 
@@ -233,11 +233,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Reset position"] = "Position zurücksetzen",
 	["Reset the anchor position, moving it to the center of your screen."] = "Setzt die Position der Verankerung zur Mitte deines Interfaces zurück.",
-	
+
 	["Spawns a new test warning."] = "Erzeugt eine neue Testnachricht.",
 	["Hide"] = "Schließen",
 	["Hides the anchors."] = "Versteckt die Verankerung.",
-	
+
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
@@ -311,7 +311,7 @@ L:RegisterTranslations("esES", function() return {
 
 	["Reset position"] = "Reiniciar posición",
 	["Reset the anchor position, moving it to the center of your screen."] = "Reinicia la posición del ancla, moviéndola al centro de la pantalla.",
-	
+
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 -- Translated by wow.playhard.ru translators
@@ -350,7 +350,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Spawns a new test warning."] = "Вывод новых тестовых сообщений.",
 	["Hide"] = "Скрыть",
 	["Hides the anchors."] = "Скрывает якорь.",
-	
+
 	Font = "Fonts\\NIM_____.ttf",
 } end)
 

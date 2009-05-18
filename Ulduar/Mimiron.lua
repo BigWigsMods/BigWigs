@@ -79,7 +79,7 @@ L:RegisterTranslations("enUS", function() return {
 	fbomb_soon = "Possible Frost Bomb soon!",
 	fbomb_bar = "Next Frost Bomb",
 	fbomb_warning = "Frost Bomb Incoming!",
-	
+
 	bomb = "Bomb Bot",
 	bomb_desc = "Warn for Bomb Bot.",
 	bomb_message = "Bomb Bot spawned!",
@@ -138,7 +138,7 @@ L:RegisterTranslations("koKR", function() return {
 	fbomb_soon = "잠시후 서리 폭탄 가능!",
 	fbomb_bar = "다음 서리 폭탄",
 	fbomb_warning = "곧 서리 폭탄!",
-	
+
 	bomb = "폭발로봇",
 	bomb_desc = "폭발로봇 소환을 알립니다.",
 	bomb_message = "폭발로봇 소환!",
@@ -252,7 +252,7 @@ L:RegisterTranslations("deDE", function() return {
 	fbomb_soon = "Frostbombe bald!",
 	fbomb_bar = "~Frostbombe",
 	fbomb_warning = "Frostbombe kommt!",
-	
+
 	bomb = "Bombenbot",
 	bomb_desc = "Warnt vor Bombenbots.",
 	bomb_message = "Bombenbot!",
@@ -312,6 +312,10 @@ L:RegisterTranslations("zhCN", function() return {
 	fbomb_bar = "<下一冰霜炸弹>",
 	fbomb_warning = "即将 冰霜炸弹！",
 
+	bomb = "炸弹机器人",
+	bomb_desc = "当炸弹机器人出现时发出警报。",
+	bomb_message = "炸弹机器人 出现！",
+
 --	end_trigger = "^It would appear that I've made a slight miscalculation.",
 } end )
 
@@ -366,6 +370,10 @@ L:RegisterTranslations("zhTW", function() return {
 	fbomb_soon = "可能即將 冰霜炸彈！",
 	fbomb_bar = "<下一冰霜炸彈>",
 	fbomb_warning = "即將 冰霜炸彈！",
+
+	bomb = "炸彈機器人",
+	bomb_desc = "當炸彈機器人出現時發出警報。",
+	bomb_message = "炸彈機器人 出現！",
 
 	end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。",
 } end )

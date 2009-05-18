@@ -118,7 +118,7 @@ L:RegisterTranslations("koKR", function() return {
 	overwhelm_desc = "압도적인 힘에 걸린 플레이어를 알립니다.",
 	overwhelm_you = "당신은 압도적인 힘!",
 	overwhelm_other = "압도적인 힘: %s",
-	
+
 	whirl = "번개 소용돌이",
 	whirl_desc = "브룬디르의 번개 소용돌이 시작을 알립니다.",
 	whirl_message = "번개 소용돌이!",
@@ -367,7 +367,7 @@ L:RegisterTranslations("ruRU", function() return {
 	overwhelm_desc = "Сообщает когда игрок подвергается воздействию Переполняющей энергии.",
 	overwhelm_you = "На ВАС Переполняющая энергия!",
 	overwhelm_other = "Переполняющая энергия на |3-5(%s)",
-	
+
 	whirl = "Вихрь молний",
 	whirl_desc = "Сообщает когда Брундир начинает применение Вихря молний.",
 	whirl_message = "Вихрь молний!",

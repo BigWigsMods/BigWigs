@@ -80,6 +80,10 @@ L:RegisterTranslations("zhCN", function() return {
 	smash_desc = "当施放Cosmic Smash时发出警报。",
 	smash_message = "即将 Cosmic Smash！",
 
+	blackhole = "黑洞爆炸",
+	blackhole_desc = "当黑洞爆炸出现时发出警报。",
+	blackhole_message = "黑洞爆炸：>%dx< 出现！",
+
 	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
@@ -91,6 +95,10 @@ L:RegisterTranslations("zhTW", function() return {
 	smash = "宇宙潰擊",
 	smash_desc = "當施放宇宙潰擊時發出警報。",
 	smash_message = "即將 宇宙潰擊！",
+
+	blackhole = "黑洞爆炸",
+	blackhole_desc = "當黑洞爆炸出現時發出警報。",
+	blackhole_message = "黑洞爆炸：>%dx< 出現！",
 
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )

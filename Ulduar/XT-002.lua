@@ -150,7 +150,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	exposed = "暴露心脏",
-	exposed_desc = "当 XT-002 获得暴露心脏时发出警报。",
+	exposed_desc = "当 XT-002拆解者获得暴露心脏时发出警报。",
 	exposed_warning = "即将 暴露心脏！",
 	exposed_message = "暴露心脏！",
 
@@ -169,8 +169,13 @@ L:RegisterTranslations("zhCN", function() return {
 	voidzone_message = "虚空领域！",
 
 	heartbreak = "心碎",
-	heartbreak_desc = "当 XT-002 获得心碎时发出警报。",
+	heartbreak_desc = "当 XT-002拆解者获得心碎时发出警报。",
 	heartbreak_message = "心碎！",
+
+	tantrum = "Tympanic Tantrum",
+	tantrum_desc = "当困难模式 XT-002拆解者施放Tympanic Tantrum时发出警报。",
+	tantrum_message = "Tympanic Tantrum！",
+	tantrum_bar = "<Tympanic Tantrum 冷却>",
 
 	icon = "团队标记",
 	icon_desc = "为中了炸弹的队员打上团队标记。（需要权限）",
@@ -178,7 +183,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	exposed = "機心外露",
-	exposed_desc = "當 XT-002 獲得機心外露時發出警報。",
+	exposed_desc = "當 XT-002拆解者獲得機心外露時發出警報。",
 	exposed_warning = "即將 機心外露！",
 	exposed_message = "機心外露！",
 
@@ -197,8 +202,13 @@ L:RegisterTranslations("zhTW", function() return {
 	voidzone_message = "虛無區域！",
 
 	heartbreak = "心碎",
-	heartbreak_desc = "當 XT-002 獲得心碎時發出警報。",
+	heartbreak_desc = "當 XT-002拆解者獲得心碎時發出警報。",
 	heartbreak_message = "心碎！",
+
+	tantrum = "躁怒",
+	tantrum_desc = "當困難模式 XT-002拆解者施放躁怒時發出警報。",
+	tantrum_message = "躁怒！",
+	tantrum_bar = "<躁怒 冷卻>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了炸彈的隊員打上團隊標記。（需要權限）",
