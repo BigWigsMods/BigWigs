@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
-	engage_trigger = "^너희의 행동은 비논리적이다.",	--체크
+	engage_trigger = "너희 행동은 비논리적이다. 이 전투에서 가능한 결말은 모두 계산되었다. 결과와 상관없이 판테온은 관찰자의 전갈을 받을 것이다.",
 	
 	punch = "위상의 주먹",
 	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
@@ -77,11 +77,11 @@ L:RegisterTranslations("koKR", function() return {
 	bigbang_message = "대폭발!",
 	bigbang_soon = "곧 대폭발!",
 	
-	stars = "붕괴의 별",	--체크
-	stars_desc = "붕괴의 별 소환을 알립니다.",	--체크
+	stars = "붕괴하는 별",
+	stars_desc = "붕괴하는 별 소환을 알립니다.",
 
-	constellation = "살아있는 별지리",	--체크
-	constellation_desc = "살아있는 별지리 소환을 알립니다.",	--체크
+	constellation = "살아있는 별자리",
+	constellation_desc = "살아있는 별자리 소환을 알립니다.",
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
