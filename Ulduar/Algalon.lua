@@ -27,6 +27,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Algalon",
 
+	engage = "Engage",
 	engate_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 
 	punch = "Phase Punch",
@@ -44,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	bigbang = "Big Bang",
 	bigbang_desc = "Warn when Big Bang starts to cast",
 	bigbang_message = "Big Bang!",
-	bigbang_cooldown = "~Big Bang Cooldown",
+	bigbang_soon = "Big Bang soon!",
 
 	stars = "Collapsing Stars",
 	stars_desc = "Warn when Collapsing Stars spawn",
@@ -73,8 +74,7 @@ L:RegisterTranslations("koKR", function() return {
 	bigbang = "대폭발",
 	bigbang_desc = "대폭발 시전 시작을 알립니다.",
 	bigbang_message = "대폭발!",
-	bigbang_cooldown = "~대폭발 대기시간",
-
+	
 	stars = "붕괴의 별",	--체크
 	stars_desc = "붕괴의 별 소환을 알립니다.",	--체크
 
@@ -101,8 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	bigbang = "Big Bang",
 	bigbang_desc = "Prévient quand un Big Bang est incanté.",
-	bigbang_message = "Big Bang !",
-	bigbang_cooldown = "~Recharge Big Bang",
+	bigbang_message = "Big Bang !",	
 
 	stars = "Collapsing Stars",
 	stars_desc = "Warn when Collapsing Stars spawn",
@@ -210,22 +209,27 @@ function mod:BigBang()
 	if db.bigbang then
 		self:IfMessage(L["bigbang_message"], "Attention", 64443, "Urgent" )
 		self:Bar(L["bigbang"], 8, 64443)
-		self:Bar(L["bigbang_cooldown"], 98, 64443)
+		self:Bar(L["bigbang"], 90, 64443)
+		self:ScheduleEvent("bigbangWarning", "BigWigs_Message", 85, L["bigbang_soon"], "Alert")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		blackholes = 0
+		self:Bar(L["engage"], 8, "INV_Gizmo_01")
 		if db.bigbang then
-			self:Bar(L["bigbang_cooldown"], 98, 64443)
+			self:Bar(L["bigbang"], 98, 64443)
+			self:DelayedMessage(93, L["bigbang_soon"], "Alert")
 		end
 		if db.stars then
 			self:Bar(L["stars"], 24)
+		end
+		if db.smash then
+			self:Bar(L["smash"], 33, 64597)
 		end
 		if db.constellation then
 			self:Bar(L["constellation"], 65)
 		end
 	end
 end
-
