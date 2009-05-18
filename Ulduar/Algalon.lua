@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32871
-mod.toggleoptions = {"bosskill", "punch", "smash", "blackhole"}
+mod.toggleoptions = {"bosskill", "punch", "smash", "blackhole", "bigbang"}
 
 ------------------------------
 --      Are you local?      --
@@ -27,6 +27,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Algalon",
 
+	engate_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+
 	punch = "Phase Punch",
 	punch_desc = "Warn when someone has 4 stacks of Phase Punch",
 	punch_message = "%dx Phase Punch on %s",
@@ -38,6 +40,11 @@ L:RegisterTranslations("enUS", function() return {
 	blackhole = "Black Hole",
 	blackhole_desc = "Warn when Black Holes spawn",
 	blackhole_message = "Black Hole %dx spawned",
+
+	bigbang = "Big Bang",
+	bigbang_desc = "Warn when Big Bang starts to cast",
+	bigbang_message = "Big Bang!",
+	bigbang_cooldown = "~Big Bang Cooldown",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -112,14 +119,18 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64597)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122)
+	self:AddCombatListener("SPELL_CAST_START","BigBang",64443)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
+
+	blackholes = 0
 end
 
 ------------------------------
@@ -154,3 +165,21 @@ function mod:BlackHole()
 		self:IfMessage(L["blackhole_message"]:format(blackholes), "Attention") 
 	end
 end
+
+function mod:BigBang()
+	if db.bigbang then
+		self:IfMessage(L["bigbang_message"], "Attention", 64443, "Urgent" )
+		self:Bar(L["bigbang"], 8, 64443)
+		self:Bar(L["bigbang_cooldown"], 98, 64443)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg:find(L["engage_trigger"]) then
+		blackholes = 0
+		if db.bigbang then
+			self:Bar(L["bigbang_cooldown"], 98, 64443)
+		end
+	end
+end
+
