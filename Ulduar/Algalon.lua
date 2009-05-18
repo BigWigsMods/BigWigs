@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	stars_desc = "Warn when Collapsing Stars spawn",
 
 	constellation = "Living Constellations",
-	constelllation_desc = "Warn when Living Constellations spawn",
+	constellation_desc = "Warn when Living Constellations spawn",
 
 	log = "|cffff0000"..boss.."|r: This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	stars_desc = "붕괴의 별 소환을 알립니다.",	--체크
 
 	constellation = "살아있는 별지리",	--체크
-	constelllation_desc = "살아있는 별지리 소환을 알립니다.",	--체크
+	constellation_desc = "살아있는 별지리 소환을 알립니다.",	--체크
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 	stars_desc = "Warn when Collapsing Stars spawn",
 
 	constellation = "Living Constellations",
-	constelllation_desc = "Warn when Living Constellations spawn",
+	constellation_desc = "Warn when Living Constellations spawn",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -139,7 +139,7 @@ L:RegisterTranslations("deDE", function() return {
 	-- stars_desc = "Warn when Collapsing Stars spawn",
 
 	--constellation = "Living Constellations",
-	--constelllation_desc = "Warn when Living Constellations spawn",
+	--constellation_desc = "Warn when Living Constellations spawn",
 
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )
@@ -195,8 +195,6 @@ function mod:OnEnable()
 	db = self.db.profile
 
 	BigWigs:Print(L["log"])
-
-	blackholes = 0
 end
 
 ------------------------------
