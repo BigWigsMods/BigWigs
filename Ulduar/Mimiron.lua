@@ -17,7 +17,6 @@ mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shoc
 
 local db = nil
 local phase = nil
-local ishardmode = false
 local pName = UnitName("player")
 
 ----------------------------
@@ -459,6 +458,7 @@ function mod:OnEnable()
 	self:Throttle(2, "MimiLoot")
 	self:Throttle(10, "MimiBarrage")
 
+	ishardmode = false
 	db = self.db.profile
 end
 
