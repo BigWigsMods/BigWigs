@@ -87,7 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 	heartbreak = "부서진 심장",
 	heartbreak_desc = "XT-002의 부서진 심장 획득을 알립니다.",
 	heartbreak_message = "심장 파괴됨!",
-	
+
 	tantrum = "격분의 땅울림",
 	tantrum_desc = "XT-002의 도전 모드시에 격분의 땅울림 시전을 알립니다.",
 	tantrum_message = "격분의 땅울림!",
@@ -118,8 +118,13 @@ L:RegisterTranslations("frFR", function() return {
 	voidzone_message = "Zone de Vide !",
 
 	heartbreak = "Bris du coeur",
-	heartbreak_desc = "Prévient quand XT-002 gagne Bris du coeur.",
+	heartbreak_desc = "Prévient quand le XT-002 gagne Bris du coeur.",
 	heartbreak_message = "Bris du coeur !",
+
+	tantrum = "Colère assourdissante",
+	tantrum_desc = "Prévient quand le XT-002 incante une Colère assourdissante en mode difficile.",
+	tantrum_message = "Colère assourdissante!",
+	tantrum_bar = "~Recharge Colère assourdissante",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",

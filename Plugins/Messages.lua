@@ -260,6 +260,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Use icons"] = "Utiliser les icônes",
 	["Show icons next to messages, only works for Raid Warning."] = "Affiche les icônes à côté des messages. Ne fonctionne que sur l'Avertissement raid.",
 
+	["Class colors"] = "Couleurs de classe",
+	["Colors player names in messages by their class."] = "Colore le nom des joueurs dans les messages selon leur classe.",
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
 

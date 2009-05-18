@@ -85,6 +85,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engate_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
+
 	punch = "Coup de poing phasique",
 	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
 	punch_message = "%dx Coups de poing phasiques sur %s",
@@ -92,6 +94,21 @@ L:RegisterTranslations("frFR", function() return {
 	smash = "Choc cosmique",
 	smash_desc = "Prévient quand un Choc cosmique est sur le point d'arriver.",
 	smash_message = "Arrivée d'un Choc cosmique !",
+
+	blackhole = "Trou noir",
+	blackhole_desc = "Prévient quand un Trou noir apparaît.",
+	blackhole_message = "Trou noir %dx apparu",
+
+	bigbang = "Big Bang",
+	bigbang_desc = "Prévient quand un Big Bang est incanté.",
+	bigbang_message = "Big Bang !",
+	bigbang_cooldown = "~Recharge Big Bang",
+
+	stars = "Collapsing Stars",
+	stars_desc = "Warn when Collapsing Stars spawn",
+
+	constellation = "Living Constellations",
+	constelllation_desc = "Warn when Living Constellations spawn",
 
 	log = "|cffff0000"..boss.."|r : ce boss a besoin de donnees, merci d'activer votre /combatlog ou Transcriptor et de nous transmettre les logs.",
 } end )
@@ -184,7 +201,7 @@ end
 
 function mod:BlackHole()
 	if db.blackhole then
-		blackholes = blackholes + 1				
+		blackholes = blackholes + 1
 		self:IfMessage(L["blackhole_message"]:format(blackholes), "Attention") 
 	end
 end

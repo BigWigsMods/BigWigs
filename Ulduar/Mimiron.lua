@@ -198,6 +198,10 @@ L:RegisterTranslations("frFR", function() return {
 	fbomb_bar = "Prochaine Bombe de givre",
 	fbomb_warning = "Arrivée d'une Bombe de givre !",
 
+	bomb = "Robo-bombe",
+	bomb_desc = "Prévient quand un Robo-bombe apparaît.",
+	bomb_message = "Robo-bombe apparu !",
+
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
 } end )
 
