@@ -336,6 +336,9 @@ L:RegisterTranslations("ruRU", function() return {
 
 	["Use icons"] = "Использовать иконки",
 	["Show icons next to messages, only works for Raid Warning."] = "Отображать иконки сообщений, работает только для объявлений рейда.",
+	
+	["Class colors"] = "Окраска по классу",
+	["Colors player names in messages by their class."] = "Окрашивает имя игрока в сообщениях в соответствии с его классом.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00fflo|cff00ff00r|r",
 	["White"] = "Белый",

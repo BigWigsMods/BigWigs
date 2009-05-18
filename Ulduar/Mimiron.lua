@@ -432,6 +432,10 @@ L:RegisterTranslations("ruRU", function() return {
 	fbomb_soon = "Скоро Ледяная бомба!",
 	fbomb_bar = "Следущая Ледяная бомба",
 	fbomb_warning = "Ледяная бомба!",
+	
+	bomb = "Бомбот",
+	bomb_desc = "Предупреждать о Бомботе.",
+	bomb_message = "Появился Бомбот!",
 
 --	end_trigger = "^It would appear that I made a slight miscalculation.",
 } end )
