@@ -20,6 +20,7 @@ local attunedCount = 150
 local dCount = 0
 local eCount = 0
 local p2warned = nil
+local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
 local root = {}
@@ -453,9 +454,15 @@ do
 			local color = caster and "Personal" or "Attention"
 			local sound = caster and "Long" or nil
 			self:IfMessage(L["tremor_message"], color, spellID, sound)
-			self:Bar(L["tremor"], 2, spellID)
-			self:Bar(L["tremor_bar"], 30, spellID)
-			self:DelayedMessage(26, L["tremor_warning"], "Attention")
+			if phase == 1 then
+				self:Bar(L["tremor"], 2, spellID)
+				self:Bar(L["tremor_bar"], 30, spellID)
+				self:DelayedMessage(26, L["tremor_warning"], "Attention")
+			elseif phase == 2 then
+				self:Bar(L["tremor"], 2, spellID)
+				self:Bar(L["tremor_bar"], 23, spellID)
+				self:DelayedMessage(20, L["tremor_warning"], "Attention")
+			end
 		end
 	end
 end
@@ -520,6 +527,7 @@ end
 
 function mod:AttunedRemove()
 	if db.phase then
+		phase = 2
 		self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
 		self:IfMessage(L["phase2_message"], "Important")
 	end
@@ -566,6 +574,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
+		phase = 1
 		attunedCount = 150
 		dCount = 0
 		eCount = 0
