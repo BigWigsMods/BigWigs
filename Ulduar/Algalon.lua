@@ -57,6 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage = "전투 시작",
 	engate_trigger = "^너희의 행동은 비논리적이다.",	--체크
 	
 	punch = "위상의 주먹",
@@ -74,6 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 	bigbang = "대폭발",
 	bigbang_desc = "대폭발 시전 시작을 알립니다.",
 	bigbang_message = "대폭발!",
+	bigbang_soon = "곧 대폭발!",
 	
 	stars = "붕괴의 별",	--체크
 	stars_desc = "붕괴의 별 소환을 알립니다.",	--체크
