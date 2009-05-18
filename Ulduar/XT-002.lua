@@ -87,6 +87,11 @@ L:RegisterTranslations("koKR", function() return {
 	heartbreak = "부서진 심장",
 	heartbreak_desc = "XT-002의 부서진 심장 획득을 알립니다.",
 	heartbreak_message = "심장 파괴됨!",
+	
+	tantrum = "격분의 땅울림",
+	tantrum_desc = "XT-002의 도전 모드시에 격분의 땅울림 시전을 알립니다.",
+	tantrum_message = "격분의 땅울림!",
+	tantrum_bar = "~땅울림 대기시간",
 
 	icon = "전술 표시",
 	icon_desc = "폭탄에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",

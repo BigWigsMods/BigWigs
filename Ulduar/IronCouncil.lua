@@ -508,12 +508,12 @@ local function targetCheck()
 	end
 	if target ~= previous then
 		if target then
-			local other = fmt(L["tendrils_other"], target)
 			if target == pName then
 				mod:LocalMessage(L["tendrils_you"], "Personal", nil, "Alarm")
-				mod:WideMessage(other)
+				mod:WideMessage(L["tendrils_other"]:format(target))
 			else
-				mod:Message(other, "Attention")
+				mod:TargetMessage(L["tendrils_other"], target, "Attention")
+				mod:Whisper(player, L["tendrils_you"])
 			end
 			mod:Icon(target, "icon")
 			previous = target

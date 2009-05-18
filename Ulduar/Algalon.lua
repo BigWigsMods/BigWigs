@@ -56,6 +56,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engate_trigger = "^너희의 행동은 비논리적이다.",	--체크
+	
 	punch = "위상의 주먹",
 	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
 	punch_message = "위상의 주먹 %dx: %s",
@@ -63,6 +65,21 @@ L:RegisterTranslations("koKR", function() return {
 	smash = "우주의 강타",
 	smash_desc = "우주의 강타를 알립니다.",
 	smash_message = "곧 우주의 강타!",
+	
+	blackhole = "검은 구멍 폭발",
+	blackhole_desc = "검은 구멍 폭발 소환을 알립니다.",
+	blackhole_message = "검은 구멍 폭발 %dx 소환",
+
+	bigbang = "대폭발",
+	bigbang_desc = "대폭발 시전 시작을 알립니다.",
+	bigbang_message = "대폭발!",
+	bigbang_cooldown = "~대폭발 대기시간",
+
+	stars = "붕괴의 별",	--체크
+	stars_desc = "붕괴의 별 소환을 알립니다.",	--체크
+
+	constellation = "살아있는 별지리",	--체크
+	constelllation_desc = "살아있는 별지리 소환을 알립니다.",	--체크
 
 	log = "|cffff0000"..boss.."|r: 해당 보스의 데이터가 필요합니다. 채팅창에 /전투기록 , /대화기록 을 입력하여 기록된 데이터나 스샷등을 http://cafe.daum.net/SCU15 통해 알려주세요.",
 } end )
