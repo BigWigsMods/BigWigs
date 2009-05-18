@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
 	engage_trigger2 = "Nothing short of total decimation will suffice.",
-	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
+	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you are still only mortal.",
 
 	overload = "Overload",
 	overload_desc = "Warn when Brundir casts a Overload.",
