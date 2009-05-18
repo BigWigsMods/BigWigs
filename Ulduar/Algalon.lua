@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Algalon",
 
 	engage = "Engage",
-	engate_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 
 	punch = "Phase Punch",
 	punch_desc = "Warn when someone has 4 stacks of Phase Punch",
@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
-	engate_trigger = "^너희의 행동은 비논리적이다.",	--체크
+	engage_trigger = "^너희의 행동은 비논리적이다.",	--체크
 	
 	punch = "위상의 주먹",
 	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
@@ -87,7 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engate_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
+	engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
 
 	punch = "Coup de poing phasique",
 	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
@@ -115,6 +115,31 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+
+	engage_trigger = "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet.",-- needs check
+
+	punch = "Phasenschlag",
+	punch_desc = "Warnt wenn jemand 4 Stapel Phasenschlag  hat",
+	punch_message = "%dx Phasenschlag auf: %s",
+
+	smash = "Kosmischer Schlag",
+	smash_desc = "Warnt wenn Kosmischer Schlag bevorsteht",
+	smash_message = "Kosmischer Schlag kommt!",
+
+	blackhole = "Schwarzes Loch",
+	blackhole_desc = "Warnt wenn ein Schwarzes Loch spawnt",
+	blackhole_message = "Schwarzes Loch %dx gespawned",
+
+	bigbang = "Großer Knall",
+	bigbang_desc = "Warnt wenn Großer Knall kanalisiert wird",
+	bigbang_message = "Großer Knall!",
+	bigbang_soon = "Großer Knall bald!",
+
+	--stars = "Collapsing Stars",
+	-- stars_desc = "Warn when Collapsing Stars spawn",
+
+	--constellation = "Living Constellations",
+	--constelllation_desc = "Warn when Living Constellations spawn",
 
 	log = "|cffff0000"..boss.."|r: Für diesen Boss werden noch Daten benötigt, aktiviere bitte dein /combatlog oder das Addon Transcriptor und lass uns die Logs zukommen.",
 } end )

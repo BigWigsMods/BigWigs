@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	animus = "Saronite Animus",
 	animus_desc = "Warn when the Saronite Animus spawns.",
-	animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
+	animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "Animus spawns!",
 
 	vapor = "Saronite Vapors",
@@ -145,7 +145,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
-	--animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
+	--animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "Animus apparu !",
 
 	vapor = "Vapeurs de saronite",
@@ -195,7 +195,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	animus = "Saronitanimus",
 	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
-	--animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!", -- NEED!
+	--animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!", -- NEED!
 	animus_message = "Saronitanimus kommt!",
 
 	vapor = "Saronitdämpfe",
@@ -245,7 +245,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	animus = "萨隆邪铁Animus",
 	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
---	animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
+--	animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "萨隆邪铁Animus 出现！",
 
 	vapor = "萨隆邪铁蒸汽",
@@ -295,7 +295,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
---	animus_trigger = "The saroniht vapors mass and swirl violently, merging into a monstrous form!",
+--	animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "薩倫聚惡體 出現！",
 
 	vapor = "薩倫煙霧",
