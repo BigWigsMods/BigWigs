@@ -286,6 +286,10 @@ L:RegisterTranslations("zhCN", function() return {
 	root_desc = "当玩家中了钢铁根须时发出警报。",
 	root_message = "钢铁根须：>%s<！",
 
+	energy = "不稳定的能量",
+	energy_desc = "当玩家中了不稳定的能量时发出警报。",
+	energy_message = ">你<不稳定的能量！",
+
 	icon = "位置标记",
 	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
 
@@ -336,6 +340,10 @@ L:RegisterTranslations("zhTW", function() return {
 	root = "鐵之根鬚",
 	root_desc = "當玩家中了鐵之根鬚時發出警報。",
 	root_message = "鐵之根鬚：>%s<！",
+
+	energy = "不穩定的能量",
+	energy_desc = "當玩家中了不穩定的能量時發出警報。",
+	energy_message = ">你< 不穩定的能量！",
 
 	icon = "位置標記",
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",

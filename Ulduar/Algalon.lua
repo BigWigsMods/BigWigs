@@ -145,6 +145,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	engage = "激活",
+--	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+
 	punch = "Phase Punch",
 	punch_desc = "当玩家中了4层Phase Punch时发出警报。",
 	punch_message = "%dxPhase Punch：>%s<！",
@@ -157,10 +160,24 @@ L:RegisterTranslations("zhCN", function() return {
 	blackhole_desc = "当黑洞爆炸出现时发出警报。",
 	blackhole_message = "黑洞爆炸：>%dx< 出现！",
 
+	bigbang = "Big Bang",
+	bigbang_desc = "当开始施放 Big Bang 时发出警报。",
+	bigbang_message = "Big Bang！",
+	bigbang_soon = "即将 Big Bang！",
+
+	stars = "Collapsing Stars",
+	stars_desc = "当Collapsing Star出现时发出警报。",
+
+	constellation = "Living Constellations",
+	constellation_desc = "当Living Constellation出现时发出警报。",
+
 	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	engage = "開戰",
+--	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+
 	punch = "相位拳擊",
 	punch_desc = "當玩家中了4層相位拳擊時發出警報。",
 	punch_message = "%dx相位拳擊： >%s<！",
@@ -172,6 +189,17 @@ L:RegisterTranslations("zhTW", function() return {
 	blackhole = "黑洞爆炸",
 	blackhole_desc = "當黑洞爆炸出現時發出警報。",
 	blackhole_message = "黑洞爆炸：>%dx< 出現！",
+
+	bigbang = "大爆炸",
+	bigbang_desc = "當開始施放大爆炸時發出警報。",
+	bigbang_message = "大爆炸！",
+	bigbang_soon = "即將 大爆炸！",
+
+	stars = "Collapsing Stars",
+	stars_desc = "當Collapsing Star出現時發出警報。",
+
+	constellation = "Living Constellations",
+	constellation_desc = "當Living Constellation出現時發出警報。",
 
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )

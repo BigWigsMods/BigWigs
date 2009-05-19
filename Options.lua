@@ -66,11 +66,11 @@ L:RegisterTranslations("zhTW", function() return {
 	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl-Alt+點擊|r圖示關閉 BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟 BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs 目前關閉。",
-	["Active boss modules:"] = "啟動首領模組",
+	["Active boss modules:"] = "啟動首領模組：",
 	["All running modules have been reset."] = "所有運行中的模組都已重置。",
 	["All running modules have been disabled."] = "所有運行中的模組都已關閉。",
 	["Menu"] = "選單",
-	["Menu options."] = "選單設置",
+	["Menu options."] = "選單設置。",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

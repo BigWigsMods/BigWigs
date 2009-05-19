@@ -153,7 +153,7 @@ L:RegisterTranslations("deDE", function() return {
 	heartbreak = "Gebrochenes Herz",
 	heartbreak_desc = "Warnt, wenn der XT-002 Gebrochenes Herz bekommt.",
 	heartbreak_message = "Gebrochenes Herz!",
-	
+
 	tantrum = "Betäubender Koller",
 	tantrum_desc = "Warnung und Timer für Betäubender Koller im Hard Mode.",
 	tantrum_message = "Betäubender Koller!",
