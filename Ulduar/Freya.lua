@@ -107,7 +107,7 @@ L:RegisterTranslations("koKR", function() return {
 	conservator_message = "수호자 소환",
 	detonate_message = "폭발 덩굴손 소환",
 	elementals_message = "정령 3 소환",
-	tree_message = "생명결속자의 선물 소환",
+	tree_message = "이오나의 선물 소환",
 
 	attuned = "자연 조화",
 	attuned_desc = "자연 조화를 알립니다.",
@@ -124,17 +124,17 @@ L:RegisterTranslations("koKR", function() return {
 	sunbeam_other = "태양 광선: %s",
 
 	tremor = "지진",
-	tremor_desc = "프레이야의 지진 시전을 알립니다.",
+	tremor_desc = "프레이야의 지진 시전을 알립니다. (장로 돌나무껍질)",
 	tremor_message = "지진!",
 	tremor_warning = "곧 지진!",
 	tremor_bar = "~다음 지진",
 
 	root = "무쇠 뿌리",
-	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다.",
+	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다. (장로 무쇠줄기)",
 	root_message = "무쇠 뿌리: %s",
 	
 	energy = "불안정한 힘",
-	energy_desc = "불안정한 힘을 알립니다.",
+	energy_desc = "불안정한 힘을 알립니다. (장로 밝은잎)",
 	energy_message = "당신은 불안정한 힘!",
 
 	icon = "전술 표시",
