@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "root", "tremor", "wave", "attuned", "fury", "sunbeam", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "root", "tremor", "wave", "attuned", "fury", "sunbeam", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -77,6 +77,10 @@ L:RegisterTranslations("enUS", function() return {
 	root = "Iron Roots",
 	root_desc = "Warn who has Iron Roots.",
 	root_message = "Root: %s",
+
+	energy = "Unstable Energy",
+	energy_desc = "Warn on Unstable Energy",
+	energy_message = "Unstable Energy on YOU!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam and Nature's Fury. (requires promoted or higher)",
@@ -395,6 +399,8 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)			--HardMode abilities from Elder Brightleaf
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)		--HardMode abilities from Elder Brightleaf
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--HardMode abilities from Elder Ironbranch
 	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--HardMode abilities from Elder Stonebark 
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
@@ -563,6 +569,18 @@ function mod:AttunedWarn()
 			p2warned = true
 			self:IfMessage(L["phase2_soon"], "Attention")
 		end
+	end
+end
+
+function mod:Energy(player)
+	if db.energy and player == pName then
+		self:IfMessage(L["energy_message"], "Personal",  62451, "Alarm")
+	end
+end
+
+function mod:EnergyCooldown(_,spellID)
+	if db.energy then
+		self:Bar(L["energy"], 25, spellID)
 	end
 end
 
