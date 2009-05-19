@@ -439,10 +439,10 @@ do
 	}
 	function BigWigs.modulePrototype:NewTargetList()
 		local m = BigWigs:GetModule("Messages")
-		if m and m.db.profile.classcolor then
+		--if m and m.db.profile.classcolor then
 			return setmetatable({}, mt)
-		end
-		return {}
+		--end
+		--return {}
 	end
 
 	function BigWigs.modulePrototype:TargetMessage(formatString, player, color, icon, sound, ...)
