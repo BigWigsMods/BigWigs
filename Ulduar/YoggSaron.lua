@@ -220,6 +220,7 @@ L:RegisterTranslations("koKR", function() return {
 	gaze = "광기의 시선",
 	gaze_desc = "요그사론의 광기의 시선 획득을 알립니다.",
 	gaze_bar = "~시선 대기시간",
+	gaze_cast_bar = "광기의 시선 시전",
 
 	empower = "암흑 강화",
 	empower_desc = "암흑 강화를 알립니다.",
