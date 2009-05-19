@@ -59,7 +59,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
 	engage_trigger = "너희 행동은 비논리적이다. 이 전투에서 가능한 결말은 모두 계산되었다. 결과와 상관없이 판테온은 관찰자의 전갈을 받을 것이다.",
-	
+
 	punch = "위상의 주먹",
 	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
 	punch_message = "위상의 주먹 %dx: %s",
@@ -67,7 +67,7 @@ L:RegisterTranslations("koKR", function() return {
 	smash = "우주의 강타",
 	smash_desc = "우주의 강타를 알립니다.",
 	smash_message = "곧 우주의 강타!",
-	
+
 	blackhole = "검은 구멍 폭발",
 	blackhole_desc = "검은 구멍 폭발 소환을 알립니다.",
 	blackhole_message = "검은 구멍 폭발 %dx 소환",
@@ -76,7 +76,7 @@ L:RegisterTranslations("koKR", function() return {
 	bigbang_desc = "대폭발 시전 시작을 알립니다.",
 	bigbang_message = "대폭발!",
 	bigbang_soon = "곧 대폭발!",
-	
+
 	stars = "붕괴하는 별",
 	stars_desc = "붕괴하는 별 소환을 알립니다.",
 
@@ -87,6 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage = "Engagement",
 	engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
 
 	punch = "Coup de poing phasique",
@@ -103,7 +104,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	bigbang = "Big Bang",
 	bigbang_desc = "Prévient quand un Big Bang est incanté.",
-	bigbang_message = "Big Bang !",	
+	bigbang_message = "Big Bang !",
+	bigbang_soon = "Big Bang imminent !",
 
 	stars = "Collapsing Stars",
 	stars_desc = "Warn when Collapsing Stars spawn",

@@ -289,6 +289,7 @@ L:RegisterTranslations("frFR", function() return {
 	gaze = "Regard lunatique",
 	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
 	gaze_bar = "~Recharge Regard",
+	gaze_cast_bar = "Regard lunatique en incantation",
 
 	empower = "Renforcement des ombres",
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
