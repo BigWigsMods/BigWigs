@@ -634,8 +634,8 @@ end
 
 function mod:Madness()
 	if db.madness then
-		self:Bar(L["madness"], 51.4, 64059)
-		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 46.4, L["madness_warning"], "Urgent")
+		self:Bar(L["madness"], 60, 64059)
+		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Urgent")
 	end
 end
 
