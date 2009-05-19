@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	punch = "Phase Punch",
 	punch_desc = "Warn when someone has 4 stacks of Phase Punch",
-	punch_message = "%dx Phase Punch on %s",
+	punch_message = "%2$dx Phase Punch on %1$s",
 
 	smash = "Cosmic Smash",
 	smash_desc = "Warn when Cosmic Smash is incoming",
@@ -62,7 +62,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	punch = "위상의 주먹",
 	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
-	punch_message = "위상의 주먹 %dx: %s",
+	punch_message = "위상의 주먹 %2$dx: %1$s",
 
 	smash = "우주의 강타",
 	smash_desc = "우주의 강타를 알립니다.",
@@ -92,7 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	punch = "Coup de poing phasique",
 	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
-	punch_message = "%dx Coups de poing phasiques sur %s",
+	punch_message = "%2$dx Coups de poing phasiques sur %1$s",
 
 	smash = "Choc cosmique",
 	smash_desc = "Prévient quand un Choc cosmique est sur le point d'arriver.",
@@ -122,7 +122,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	punch = "Phasenschlag",
 	punch_desc = "Warnt wenn jemand 4 Stapel Phasenschlag  hat",
-	punch_message = "%dx Phasenschlag auf: %s",
+	punch_message = "%2$dx Phasenschlag auf: %1$s",
 
 	smash = "Kosmischer Schlag",
 	smash_desc = "Warnt wenn Kosmischer Schlag bevorsteht",
@@ -152,7 +152,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	punch = "Phase Punch",
 	punch_desc = "当玩家中了4层Phase Punch时发出警报。",
-	punch_message = "%dxPhase Punch：>%s<！",
+	punch_message = "%2$dxPhase Punch：>%1$s<！",
 
 	smash = "Cosmic Smash",
 	smash_desc = "当施放Cosmic Smash时发出警报。",
@@ -182,7 +182,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	punch = "相位拳擊",
 	punch_desc = "當玩家中了4層相位拳擊時發出警報。",
-	punch_message = "%dx相位拳擊： >%s<！",
+	punch_message = "%2$dx相位拳擊： >%1$s<！",
 
 	smash = "宇宙潰擊",
 	smash_desc = "當施放宇宙潰擊時發出警報。",
@@ -241,7 +241,7 @@ function mod:PunchCount(player)
 	if db.punch then
 		local _, _, icon, stack = UnitDebuff(player, punch)
 		if stack >= 4 then
-			self:IfMessage(L["punch_message"]:format(stack, player), "Urgent", icon, "Info")
+			self:TargetMessage(L["punch_message"], player, "Urgent", icon, "Info", stack)
 		end
 	end
 end
@@ -288,3 +288,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+

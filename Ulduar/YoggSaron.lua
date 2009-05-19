@@ -604,7 +604,7 @@ end
 
 function mod:RemoveMalady(player, spellID)
 	if db.malady then
-		SetRaidTarget(player, 0)
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 

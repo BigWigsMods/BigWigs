@@ -15,7 +15,7 @@ mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "be
 ------------------------------
 
 local db = nil
-local FF = {}
+local flashFreezed = mod:NewTargetList()
 local fmt = string.format
 local lastCold = nil
 local cold = GetSpellInfo(62039)
@@ -266,7 +266,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	db = self.db.profile
 	lastCold = nil
-	wipe(FF)
+	wipe(flashFreezed)
 
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
@@ -310,13 +310,12 @@ function mod:FlashCast(_, spellID)
 end
 
 local function flashWarn()
-	mod:IfMessage(L["flash_message"]:format(table.concat(FF, ", ")), "Urgent", 61969, "Alert")
-	wipe(FF)
+	mod:TargetMessage(L["flash_message"], flashFreezed, "Urgent", 61969, "Alert")
 end
 
 function mod:Flash(player)
 	if UnitInRaid(player) and db.flash then
-		table.insert(FF, player)
+		flashFreezed[#flashFreezed + 1] = player
 		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5)
 	end
 end
@@ -339,7 +338,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.berserk then
 			self:Enrage(480, true)
 		end
-		wipe(FF)
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)
 	end

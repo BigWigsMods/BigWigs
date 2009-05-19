@@ -14,7 +14,7 @@ mod.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
 --      Are you local?      --
 ------------------------------
 
-local inCocoon = {}
+local inCocoon = mod:NewTargetList()
 local started = nil
 local enrageannounced = nil
 
@@ -203,13 +203,12 @@ end
 ------------------------------
 
 local function cocoonWarn()
-	mod:IfMessage(L["cocoonwarn"]:format(table.concat(inCocoon, ", ")), "Important", 745, "Alert")
-	wipe(inCocoon)
+	mod:TargetMessage(L["cocoonwarn"], inCocoon, "Important", 745, "Alert")
 end
 
 function mod:Cocoon(player)
 	if self.db.profile.cocoon then
-		table.insert(inCocoon, player)
+		inCocoon[#inCocoon + 1] = player
 		self:ScheduleEvent("Cocoons", cocoonWarn, 0.3)
 	end
 end

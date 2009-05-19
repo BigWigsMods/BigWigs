@@ -15,8 +15,8 @@ mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 --      Are you local?      --
 ------------------------------
 
-local fbTargets = {}
-local mcTargets = {}
+local fbTargets = mod:NewTargetList()
+local mcTargets = mod:NewTargetList()
 local fmt = string.format
 local pName = UnitName("player")
 
@@ -429,15 +429,14 @@ function mod:Fizzure()
 end
 
 local function fbWarn(spellId)
-	mod:IfMessage(L["frostblast_message"]:format(table.concat(fbTargets, ", ")), "Important", spellId, "Alert")
+	mod:TargetMessage(L["frostblast_message"], fbTargets, "Important", spellId, "Alert")
 	mod:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
 	mod:Bar(L["frostblast_bar"], 37, spellId)
-	wipe(fbTargets)
 end
 
 function mod:FrostBlast(player, spellId)
 	if self.db.profile.frostblast then
-		table.insert(fbTargets, player)
+		fbTargets[#fbTargets + 1] = player
 		self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId)
 	end
 end
@@ -459,16 +458,15 @@ function mod:Detonate(player, spellID)
 end
 
 local function mcWarn(spellId)
-	mod:IfMessage(L["mc_message"]:format(table.concat(mcTargets, ", ")), "Important", spellId, "Alert")
+	mod:TargetMessage(L["mc_message"], mcTargets, "Important", spellId, "Alert")
 	mod:Bar(L["mc"], 21, 28410)
 	mod:DelayedMessage(68, L["mc_warning"], "Urgent")
 	mod:Bar(L["mc_nextbar"], 68, spellId)
-	wipe(mcTargets)
 end
 
 function mod:MC(player, spellId)
 	if self.db.profile.mc then
-		table.insert(mcTargets, player)
+		mcTargets[#mcTargets + 1] = player
 		self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId)
 	end
 end

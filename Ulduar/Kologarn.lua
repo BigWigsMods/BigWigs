@@ -16,7 +16,7 @@ mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", "armor", "bosskill"}
 
 local started = nil
 local db = nil
-local grip = {}
+local grip = mod:NewTargetList()
 local pName = UnitName("player")
 local crunch = GetSpellInfo(63355)
 
@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	armor = "Crunch Armor",
 	armor_desc = "Warn when someone has 2 or more stacks of Crunch Armor.",
-	armor_message = "%dx Crunch on %s",
+	armor_message = "%2$dx Crunch on %1$s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	armor = "방어구 씹기",
 	armor_desc = "방어구 씹기 중첩이 2이상이 된 플레이어를 알립니다.",
-	armor_message = "방어구 씹기 x%d: %s",
+	armor_message = "방어구 씹기 x%2$d: %1$s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -106,7 +106,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	armor = "Broie armure",
 	armor_desc = "Prévient quand un joueur a 2 cumuls ou plus de Broie armure.",
-	armor_message = "%dx broyages d'armure sur %s",
+	armor_message = "%2$dx broyages d'armure sur %1$s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -133,7 +133,7 @@ L:RegisterTranslations("deDE", function() return {
 	
 	armor = "Rüstung zermalmen",
 	armor_desc = "Warnt, wenn ein Spieler von 2 oder mehr Stapel von Rüstung zermalmen betroffen ist.",
-	armor_message = "%dx Rüstung zermalmen auf %s!",
+	armor_message = "%2$dx Rüstung zermalmen auf %1$s!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -160,7 +160,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	armor = "粉碎护甲",
 	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",
-	armor_message = "%dx 粉碎护甲：>%s<！",
+	armor_message = "%2$dx 粉碎护甲：>%1$s<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -187,7 +187,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	armor = "粉碎護甲",
 	armor_desc = "當玩家中了2層或更多粉碎護甲時發出警報。",
-	armor_message = "%dx 粉碎護甲：>%s<！",
+	armor_message = "%2$dx 粉碎護甲：>%1$s<！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -214,7 +214,7 @@ L:RegisterTranslations("ruRU", function() return {
 	
 	armor = "Хруст доспеха",
 	armor_desc = "Сообщать если кто получил 2 или больше эффекта Хруста доспеха.",
-	armor_message = "%dx Хруста на |3-5(%s)",
+	armor_message = "%2$dx Хруста на |3-5(%1$s)",
 } end )
 
 ------------------------------
@@ -244,20 +244,19 @@ function mod:Armor(player)
 	if db.armor then
 		local _, _, icon, stack = UnitDebuff(player, crunch)
 		if stack and stack > 1 then
-			self:IfMessage(L["armor_message"]:format(stack, player), "Urgent", icon, "Info")
+			self:TargetMessage(L["armor_message"], player, "Urgent", icon, "Info", stack)
 		end
 	end
 end
 
 local function gripWarn()
-	mod:IfMessage(L["grip_message"]:format(table.concat(grip, ", ")), "Attention", 64292, "Alert")
+	mod:TargetMessage(L["grip_message"], grip, "Attention", 64292, "Alert")
 	mod:Bar(L["grip"], 10, 64292)
-	wipe(grip)
 end
 
 function mod:Grip(player, spellID)
 	if db.grip then
-		table.insert(grip, player)
+		grip[#grip + 1] = player
 		self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2)
 	end
 end

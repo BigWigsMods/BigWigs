@@ -23,7 +23,7 @@ local p2warned = nil
 local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
-local root = {}
+local root = mod:NewTargetList()
 
 ----------------------------
 --      Localization      --
@@ -450,13 +450,12 @@ end
 ------------------------------
 
 local function rootWarn()
-	mod:IfMessage(L["root_message"]:format(table.concat(root, ", ")), "Attention", 62930, "Info")
-	wipe(root)
+	mod:TargetMessage(L["root_message"], root, "Attention", 62930, "Info")
 end
 
 function mod:Root(player, spellID)
 	if db.root then
-		table.insert(root, player)
+		root[#root + 1] = player
 		self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellID)
 	end
 end

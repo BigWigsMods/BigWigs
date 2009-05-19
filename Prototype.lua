@@ -390,6 +390,16 @@ end
 -- Shortcuts for common actions.
 
 do
+	--[[local message = {}
+	function message:Fire(elg)
+		print(elg)
+	end
+	local mt = {__index = message}
+	function BigWigs.modulePrototype:NewMessage(msg, color, icon, sound)
+		local msg = setmetatable({}, mt)
+		msg:Fire(t)
+	end]]
+
 	local keys = setmetatable({}, {__index =
 		function(self, key)
 			if not key then return end
@@ -421,13 +431,31 @@ do
 			return self[key]
 		end
 	})
+	
+	local mt = {
+		__newindex = function(self, key, value)
+			rawset(self, key, coloredNames[value])
+		end
+	}
+	function BigWigs.modulePrototype:NewTargetList()
+		local m = BigWigs:GetModule("Messages")
+		if m and m.db.profile.classcolor then
+			return setmetatable({}, mt)
+		end
+		return {}
+	end
 
-	function BigWigs.modulePrototype:TargetMessage(formatString, player, color, icon, sound)
+	function BigWigs.modulePrototype:TargetMessage(formatString, player, color, icon, sound, ...)
 		local m = BigWigs:GetModule("Messages")
 		local text = nil
-		if m and m.db.profile.classcolor then text = formatString:format(coloredNames[player])
-		else text = formatString:format(player) end
-		self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
+		if type(player) == "table" then
+			text = table.concat(player, ", ")
+			wipe(player)
+		else
+			if m and m.db.profile.classcolor then text = coloredNames[player]
+			else text = player end
+		end
+		self:TriggerEvent("BigWigs_Message", formatString:format(text, ...), color, nil, sound, nil, icon)
 	end
 
 	-- XXX Proposed API, subject to change.
