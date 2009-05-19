@@ -359,6 +359,7 @@ L:RegisterTranslations("deDE", function() return {
 	gaze = "Wahnsinniger Blick",
 	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
 	gaze_bar = "~Wahnsinniger Blick",
+	gaze_cast_bar = "Wirkt Wahnsinniger Blick",
 
 	empower = "Machtvolle Schatten",
 	empower_desc = "Warnung und Timer für Machtvolle Schatten.",

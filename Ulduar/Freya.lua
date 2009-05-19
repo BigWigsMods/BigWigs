@@ -242,7 +242,11 @@ L:RegisterTranslations("deDE", function() return {
 	root = "Eiserne Wurzeln",
 	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist.",
 	root_message = "Wurzeln: %s!",
-
+	
+	energy = "Instabile Energie",
+	energy_desc = "Warnt bei Instabiler Energie.",
+	energy_message = "Instabile Energie auf DIR!",
+	
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
 
