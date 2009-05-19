@@ -132,6 +132,10 @@ L:RegisterTranslations("koKR", function() return {
 	root = "무쇠 뿌리",
 	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다.",
 	root_message = "무쇠 뿌리: %s",
+	
+	energy = "불안정한 힘",
+	energy_desc = "불안정한 힘을 알립니다.",
+	energy_message = "당신은 불안정한 힘!",
 
 	icon = "전술 표시",
 	icon_desc = "태양 광선 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
