@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "root", "tremor", "wave", "attuned", "fury", "sunbeam", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "root", "tremor", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -69,17 +69,17 @@ L:RegisterTranslations("enUS", function() return {
 	sunbeam_other = "Sunbeam: %s",
 
 	tremor = "Ground Tremor",
-	tremor_desc = "Warn when Freya casts Ground Tremor.",
+	tremor_desc = "Warn when Freya casts Ground Tremor (Elder Stonebark).",
 	tremor_message = "Ground Tremor!",
 	tremor_warning = "Ground Tremor soon!",
 	tremor_bar = "~Next Ground Tremor",
 
 	root = "Iron Roots",
-	root_desc = "Warn who has Iron Roots.",
+	root_desc = "Warn who has Iron Roots (Elder Ironbranch).",
 	root_message = "Root: %s",
 
 	energy = "Unstable Energy",
-	energy_desc = "Warn on Unstable Energy",
+	energy_desc = "Warn on Unstable Energy (Elder Brightleaf).",
 	energy_message = "Unstable Energy on YOU!",
 
 	icon = "Place Icon",
