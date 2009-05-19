@@ -10,6 +10,7 @@
 ## Notes-koKR: Big Wigs 울두아르 경고
 ## Notes-zhCN: Big Wigs 奥杜尔模块
 ## Notes-zhTW: Big Wigs 奧杜亞模組
+## Notes-frFR: Modules Big Wigs concernant Ulduar.
 ## Author: Funkydude, Rabbit
 ## X-Credits: 7destiny, nevcairiel, maat
 ## Version: 2.0

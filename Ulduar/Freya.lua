@@ -188,6 +188,10 @@ L:RegisterTranslations("frFR", function() return {
 	root_desc = "Prévient quand un joueur subit les effets des Racines de fer.",
 	root_message = "Racines de fer : %s",
 
+	energy = "Energie instable",
+	energy_desc = "Prévient quand vous subissez les effets d'une Energie instable.",
+	energy_message = "Energie instable sur VOUS !",
+
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",
 
