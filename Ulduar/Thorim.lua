@@ -246,8 +246,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	strike = "Schlag des Ungleichgewichts",
 	strike_desc = "Warnt, wenn ein Spieler von Schlag des Ungleichgewichts betroffen ist.",
-	strike_message= "Schlag des Ungleichgewichts: %s!",
-	strike_bar = "~Schlag des Ungleichgewichts",
+	strike_message= "Schlag: %s!",
+	strike_bar = "~Schlag",
 
 	end_trigger = "Senkt Eure Waffen! Ich ergebe mich!",
 

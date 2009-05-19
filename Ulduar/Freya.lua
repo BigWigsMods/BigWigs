@@ -224,7 +224,7 @@ L:RegisterTranslations("deDE", function() return {
 	attuned_message = "Einstimmung: (%d)",
 
 	fury = "Furor der Natur",
-	fury_desc = "Warnt, wer von Furor der Natur betroffen ist.",
+	fury_desc = "Warnt, wer von Furor der Natur betroffen ist und zeigt einen Timer mit der Abklingzeit.",
 	fury_you = "Furor auf DIR!",
 	fury_other = "Furor: %s!",
 
@@ -234,17 +234,17 @@ L:RegisterTranslations("deDE", function() return {
 	sunbeam_other = "Sonnenstrahl: %s!",
 
 	tremor = "Bebende Erde",
-	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird.",
+	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird (Ältester Steinrinde).",
 	tremor_message = "Bebende Erde!",
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",
 
 	root = "Eiserne Wurzeln",
-	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist.",
+	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist (Ältester Eisenast).",
 	root_message = "Wurzeln: %s!",
 	
 	energy = "Instabile Energie",
-	energy_desc = "Warnt bei Instabiler Energie.",
+	energy_desc = "Warnung und Timer für Instabile Energie (Ältester Hellblatt).",
 	energy_message = "Instabile Energie auf DIR!",
 	
 	icon = "Schlachtzugs-Symbol",

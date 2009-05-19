@@ -152,7 +152,7 @@ L:RegisterTranslations("deDE", function() return {
 	cloud = "Sturmwolke",
 	cloud_desc = "Warnt, wer von Sturmwolke betroffen ist.",
 	cloud_you = "Sturmwolke auf DIR!",
-	cloud_other = "Sturmwolke auf %s!",
+	cloud_other = "Sturmwolke: %s!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",

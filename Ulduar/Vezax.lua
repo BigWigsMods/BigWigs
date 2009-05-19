@@ -215,7 +215,7 @@ L:RegisterTranslations("deDE", function() return {
 	crash_say = "Schattengeschoss auf MIR!",
 
 	crashsay = "Schattengeschoss Sagen",
-	crashsay_desc = "Warnt im Sagen Chat, wenn das Ziel eines Schattengeschosses bist.",
+	crashsay_desc = "Warnt im Sagen Chat, wenn du das Ziel eines Schattengeschosses bist.",
 	
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
 	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
