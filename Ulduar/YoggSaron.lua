@@ -81,6 +81,7 @@ L:RegisterTranslations("enUS", function() return {
 	gaze = "Lunatic Gaze",
 	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
 	gaze_bar = "~Gaze Cooldown",
+	gaze_cast_bar = "Casting Lunatic Gaze",
 
 	empower = "Empowering Shadows",
 	empower_desc = "Warn for Empowering Shadows.",
@@ -522,7 +523,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Gaze", 64163)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "Gaze", 64163)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "CastGaze", 64163)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830, 63881)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveMalady", 63830, 63881)
 	-- 63042 is the add MC during p1, 63120 is the MC when you go insane in p2/3.
@@ -617,7 +619,13 @@ end
 
 function mod:Gaze(_, spellID)
 	if db.gaze then
-		self:Bar(L["gaze_bar"], 13, spellID)
+		self:Bar(L["gaze_bar"], 9, spellID)
+	end
+end
+
+function mod:CastGaze(_, spellID)
+	if db.gaze then
+		self:Bar(L["gaze_cast_bar"], 4, spellID)
 	end
 end
 
