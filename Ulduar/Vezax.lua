@@ -408,7 +408,7 @@ function mod:UNIT_AURA(unit)
 		if db.vaporstack and stack > 5 then
 			self:LocalMessage(L["vaporstack_message"]:format(stack), "Personal", icon)
 		end
-		lastVapor = saronite
+		lastVapor = stack
 	end
 end
 
