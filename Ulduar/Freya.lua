@@ -35,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Freya",
 
 	engage_trigger1 = "The Conservatory must be protected!",
-	engage_trigger2 = "Elders, grant me your strength!",
+	engage_trigger2 = "Elders grant me your strength!",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -90,7 +90,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "어떻게 해서든 정원을 수호해야 한다!",
-	engage_trigger2 = "장로여, 내게 힘을 나눠다오!",
+	engage_trigger2 = "장로여 내게 힘을 나눠다오!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -145,7 +145,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Le jardin doit être protégé !",
-	engage_trigger2 = "Anciens, donnez-moi votre force !",
+	engage_trigger2 = "Anciens donnez-moi votre force !",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
@@ -200,7 +200,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Das Konservatorium muss verteidigt werden!",
-	engage_trigger2 = "Ihr Ältesten, gewährt mir Eure Macht!",-- needs check
+	engage_trigger2 = "Ihr Ältesten gewährt mir Eure Macht!",-- needs check
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -255,7 +255,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger1 = "The Conservatory must be protected!",
---	engage_trigger2 = "Elders, grant me your strength!",
+--	engage_trigger2 = "Elders grant me your strength!",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
@@ -365,7 +365,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger1 = "Нужно защитить Оранжерею!",
-	--engage_trigger2 = "Elders, grant me your strength!",
+	--engage_trigger2 = "Elders grant me your strength!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
