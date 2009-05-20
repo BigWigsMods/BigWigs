@@ -429,6 +429,7 @@ L:RegisterTranslations("zhCN", function() return {
 	gaze = "疯乱凝视",
 	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
 	gaze_bar = "<疯乱凝视 冷却>",
+	gaze_cast_bar = "<正在施放：疯乱凝视>",
 
 	empower = "Empowering Shadows",
 	empower_desc = "当Empowering Shadows时发出警报。",
@@ -497,6 +498,7 @@ L:RegisterTranslations("zhTW", function() return {
 	gaze = "癡狂凝視",
 	gaze_desc = "當尤格薩倫獲得癡狂凝視時發出警報。",
 	gaze_bar = "<癡狂凝視 冷卻>",
+	gaze_cast_bar = "<正在施放：癡狂凝視>",
 
 	empower = "暗影信標",
 	empower_desc = "當暗影信標時發出警報。",

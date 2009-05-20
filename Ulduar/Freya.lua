@@ -132,7 +132,7 @@ L:RegisterTranslations("koKR", function() return {
 	root = "무쇠 뿌리",
 	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다. (장로 무쇠줄기)",
 	root_message = "무쇠 뿌리: %s",
-	
+
 	energy = "불안정한 힘",
 	energy_desc = "불안정한 힘을 알립니다. (장로 밝은잎)",
 	energy_message = "당신은 불안정한 힘!",
@@ -242,11 +242,11 @@ L:RegisterTranslations("deDE", function() return {
 	root = "Eiserne Wurzeln",
 	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist (Ältester Eisenast).",
 	root_message = "Wurzeln: %s!",
-	
+
 	energy = "Instabile Energie",
 	energy_desc = "Warnung und Timer für Instabile Energie (Ältester Hellblatt).",
 	energy_message = "Instabile Energie auf DIR!",
-	
+
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
 
@@ -289,17 +289,17 @@ L:RegisterTranslations("zhCN", function() return {
 	sunbeam_other = "Sunbeam：>%s<！",
 
 	tremor = "大地震颤",
-	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。",
+	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。（Elder Stonebark）",
 	tremor_message = "大地震颤！",
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
 
 	root = "钢铁根须",
-	root_desc = "当玩家中了钢铁根须时发出警报。",
+	root_desc = "当玩家中了钢铁根须时发出警报。（Elder Ironbranch）",
 	root_message = "钢铁根须：>%s<！",
 
 	energy = "不稳定的能量",
-	energy_desc = "当玩家中了不稳定的能量时发出警报。",
+	energy_desc = "当玩家中了不稳定的能量时发出警报。（Elder Brightleaf）",
 	energy_message = ">你<不稳定的能量！",
 
 	icon = "位置标记",
@@ -344,17 +344,17 @@ L:RegisterTranslations("zhTW", function() return {
 	sunbeam_other = "太陽光束：>%s<！",
 
 	tremor = "地面震動",
-	tremor_desc = "當芙蕾雅施放地面震動時發出警報。",
+	tremor_desc = "當芙蕾雅施放地面震動時發出警報。（石木長者）",
 	tremor_message = "地面震動！",
 	tremor_warning = "即將 地面震動！",
 	tremor_bar = "<下一地面震動>",
 
 	root = "鐵之根鬚",
-	root_desc = "當玩家中了鐵之根鬚時發出警報。",
+	root_desc = "當玩家中了鐵之根鬚時發出警報。（鐵枝長者）",
 	root_message = "鐵之根鬚：>%s<！",
 
 	energy = "不穩定的能量",
-	energy_desc = "當玩家中了不穩定的能量時發出警報。",
+	energy_desc = "當玩家中了不穩定的能量時發出警報。（亮葉長者）",
 	energy_message = ">你< 不穩定的能量！",
 
 	icon = "位置標記",
@@ -407,7 +407,7 @@ L:RegisterTranslations("ruRU", function() return {
 	root = "Железные корни",
 	root_desc = "Сообщать кто заточен в Железные корни.",
 	root_message = "В корнях: %s",
-	
+
 	energy = "Нестабильная энергия",
 	energy_desc = "Сообщать о Нестабильной энергии",
 	energy_message = "Нестабильная энергия на ВАС!",

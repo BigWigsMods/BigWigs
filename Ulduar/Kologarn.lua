@@ -160,7 +160,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	armor = "粉碎护甲",
 	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",
-	armor_message = "%2$dx 粉碎护甲：>%1$s<！",
+	armor_message = "粉碎护甲%2$d层：>%1$s<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -187,7 +187,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	armor = "粉碎護甲",
 	armor_desc = "當玩家中了2層或更多粉碎護甲時發出警報。",
-	armor_message = "%2$dx 粉碎護甲：>%1$s<！",
+	armor_message = "粉碎護甲%2$d層：>%1$s<！",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

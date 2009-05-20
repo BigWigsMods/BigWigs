@@ -152,7 +152,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	punch = "Phase Punch",
 	punch_desc = "当玩家中了4层Phase Punch时发出警报。",
-	punch_message = "%2$dxPhase Punch：>%1$s<！",
+	punch_message = "Phase Punch%2$d层：>%1$s<！",
 
 	smash = "Cosmic Smash",
 	smash_desc = "当施放Cosmic Smash时发出警报。",
@@ -182,7 +182,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	punch = "相位拳擊",
 	punch_desc = "當玩家中了4層相位拳擊時發出警報。",
-	punch_message = "%2$dx相位拳擊： >%1$s<！",
+	punch_message = "相位拳擊%2$d層： >%1$s<！",
 
 	smash = "宇宙潰擊",
 	smash_desc = "當施放宇宙潰擊時發出警報。",
