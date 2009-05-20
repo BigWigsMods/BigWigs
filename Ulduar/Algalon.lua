@@ -118,22 +118,22 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 
-	engage_trigger = "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet.",-- needs check
+	engage_trigger = "^Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet.",-- needs check
 
 	punch = "Phasenschlag",
-	punch_desc = "Warnt wenn jemand 4 Stapel Phasenschlag  hat",
-	punch_message = "%2$dx Phasenschlag auf: %1$s",
+	punch_desc = "Warnt, wenn jemand 4 Stapel von Phasenschlag hat.",
+	punch_message = "%2$dx Phasenschlag: %1$s!",
 
 	smash = "Kosmischer Schlag",
-	smash_desc = "Warnt wenn Kosmischer Schlag bevorsteht",
+	smash_desc = "Warnt, wenn Kosmischer Schlag bevorsteht.",
 	smash_message = "Kosmischer Schlag kommt!",
 
 	blackhole = "Schwarzes Loch",
-	blackhole_desc = "Warnt wenn ein Schwarzes Loch spawnt",
-	blackhole_message = "Schwarzes Loch %dx gespawned",
+	blackhole_desc = "Warnt, wenn ein Schwarzes Loch spawnt.",
+	blackhole_message = "Schwarzes Loch %dx!",
 
 	bigbang = "Großer Knall",
-	bigbang_desc = "Warnt wenn Großer Knall kanalisiert wird",
+	bigbang_desc = "Warnt, wenn Großer Knall kanalisiert wird.",
 	bigbang_message = "Großer Knall!",
 	bigbang_soon = "Großer Knall bald!",
 
