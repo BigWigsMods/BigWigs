@@ -179,17 +179,17 @@ L:RegisterTranslations("frFR", function() return {
 	sunbeam_other = "Rayon de soleil : %s",
 
 	tremor = "Tremblement de terre",
-	tremor_desc = "Prévient quand Freya incante un Tremblement de terre.",
+	tremor_desc = "Prévient quand Freya incante un Tremblement de terre (Ancien Ecorcepierre).",
 	tremor_message = "Tremblement de terre !",
 	tremor_warning = "Tremblement de terre imminent !",
 	tremor_bar = "~Prochain Tremblement de terre",
 
 	root = "Racines de fer",
-	root_desc = "Prévient quand un joueur subit les effets des Racines de fer.",
+	root_desc = "Prévient quand un joueur subit les effets des Racines de fer (Ancien Branchefer).",
 	root_message = "Racines de fer : %s",
 
 	energy = "Energie instable",
-	energy_desc = "Prévient quand vous subissez les effets d'une Energie instable.",
+	energy_desc = "Prévient quand vous subissez les effets d'une Energie instable (Ancien Brillefeuille).",
 	energy_message = "Energie instable sur VOUS !",
 
 	icon = "Icône",

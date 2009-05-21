@@ -289,8 +289,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Whether to show or hide the time left on the bars."] = "Affiche ou non le temps restant sur les barres.",
 	["Icon"] = "Icône",
 	["Shows or hides the bar icons."] = "Affiche ou cache les icônes des barres.",
-	--["Font"] = true,
-	--["Set the font for the timer bars."] = true,
+	["Font"] = "Police d'écriture",
+	["Set the font for the timer bars."] = "Définit la police d'écriture des barres temporelles.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
