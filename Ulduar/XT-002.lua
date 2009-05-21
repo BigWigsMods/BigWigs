@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"heartbreak", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "tantrum", "bosskill"}
+mod.toggleoptions = {"heartbreak", "gravitybombicon", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "tantrum", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -41,6 +41,9 @@ L:RegisterTranslations("enUS", function() return {
 	gravitybomb_desc = "Tells you who has been hit by Gravity Bomb.",
 	gravitybomb_you = "Gravity on YOU!",
 	gravitybomb_other = "Gravity on %s!",
+	
+	gravitybombicon = "Gravity Bomb Icon",
+	gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)",
 
 	lightbomb = "Light Bomb",
 	lightbomb_desc = "Tells you who has been hit by Light Bomb.",
@@ -317,7 +320,11 @@ function mod:GravityBomb(player, spellID)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
 		self:Bar(L["gravitybomb_other"]:format(player), 9, spellID)
-		self:Icon(player, "icon")
+		if db.gravitybombicon then
+			SetRaidTarget(player, 6)
+		else
+			self:Icon(player, "icon")
+		end
 	end
 end
 
