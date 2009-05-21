@@ -199,8 +199,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Whether to show or hide the time left on the bars."] = "在計時條上顯示或隱藏時間。",
 	["Icon"] = "圖示",
 	["Shows or hides the bar icons."] = "顯示或隱藏計時條圖示。",
-	--["Font"] = true,
-	--["Set the font for the timer bars."] = true,
+	["Font"] = "字型",
+	["Set the font for the timer bars."] = "設定計時條字型",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
