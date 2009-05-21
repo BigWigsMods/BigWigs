@@ -64,6 +64,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Whether to show or hide the time left on the bars."] = true,
 	["Icon"] = true,
 	["Shows or hides the bar icons."] = true,
+	["Font"] = true,
+	["Set the font for the timer bars."] = true,
 } end)
 
 L:RegisterTranslations("ruRU", function() return {
@@ -107,6 +109,8 @@ L:RegisterTranslations("ruRU", function() return {
 	["Whether to show or hide the time left on the bars."] = "Показывать или скрывать остаток времени на полосах.",
 	["Icon"] = "Иконка",
 	["Shows or hides the bar icons."] = "Показывать или скрывать иконку полосы.",
+	--["Font"] = true,
+	--["Set the font for the timer bars."] = true,
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -150,6 +154,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Whether to show or hide the time left on the bars."] = "在计时条上显示或隐藏时间。",
 	["Icon"] = "图标",
 	["Shows or hides the bar icons."] = "显示或隐藏计时条图标。",
+	--["Font"] = true,
+	--["Set the font for the timer bars."] = true,
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -193,6 +199,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Whether to show or hide the time left on the bars."] = "在計時條上顯示或隱藏時間。",
 	["Icon"] = "圖示",
 	["Shows or hides the bar icons."] = "顯示或隱藏計時條圖示。",
+	--["Font"] = true,
+	--["Set the font for the timer bars."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -236,6 +244,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Whether to show or hide the time left on the bars."] = "바의 우측에 시간을 숨기거나 표시합니다.",
 	["Icon"] = "아이콘",
 	["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니다.",
+	--["Font"] = true,
+	--["Set the font for the timer bars."] = true,
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -279,6 +289,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Whether to show or hide the time left on the bars."] = "Affiche ou non le temps restant sur les barres.",
 	["Icon"] = "Icône",
 	["Shows or hides the bar icons."] = "Affiche ou cache les icônes des barres.",
+	--["Font"] = true,
+	--["Set the font for the timer bars."] = true,
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -322,6 +334,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Whether to show or hide the time left on the bars."] = "Bestimmt, ob die verbleibende Zeit auf den Leisten angezeigt wird.",
 	["Icon"] = "Symbol",
 	["Shows or hides the bar icons."] = "Zeigt oder versteckt die Symbole auf den Leisten.",
+	--["Font"] = true,
+	--["Set the font for the timer bars."] = true,
 } end)
 
 --------------------------------------------------------------------------------
@@ -331,6 +345,7 @@ L:RegisterTranslations("deDE", function() return {
 plugin.defaultDB = {
 	scale = 1.0,
 	texture = "BantoBar",
+	font = "Friz Quadrata TT",
 	growup = true,
 	time = true,
 	align = "LEFT",
@@ -370,12 +385,19 @@ plugin.consoleOptions = {
 			order = 2,
 			func = "ResetAnchors",
 		},
+		font = {
+			type = "text",
+			name = L["Font"],
+			desc = L["Set the font for the timer bars."],
+			validate = media:List("font"),
+			order = 3,
+		},
 		texture = {
 			type = "text",
 			name = L["Texture"],
 			desc = L["Set the texture for the timer bars."],
 			validate = media:List(mType),
-			order = 3,
+			order = 4,
 		},
 		align = {
 			type = "text",
@@ -386,19 +408,19 @@ plugin.consoleOptions = {
 				CENTER = L["Center"],
 				RIGHT = L["Right"],
 			},
-			order = 4,
+			order = 5,
 		},
 		time = {
 			type = "toggle",
 			name = L["Time"],
 			desc = L["Whether to show or hide the time left on the bars."],
-			order = 5,
+			order = 6,
 		},
 		icon = {
 			type = "toggle",
 			name = L["Icon"],
 			desc = L["Shows or hides the bar icons."],
-			order = 6,
+			order = 7,
 		},
 		spacer = {
 			type = "header",
@@ -738,6 +760,8 @@ function plugin:BigWigs_StartBar(module, text, time, icon)
 	bar:SetColor(colorNormal())
 	bar.candyBarLabel:SetTextColor(colorText())
 	bar.candyBarLabel:SetJustifyH(db.align)
+	bar.candyBarLabel:SetFont(media:Fetch("font", db.font), 10)
+	bar.candyBarDuration:SetFont(media:Fetch("font", db.font), 10)
 	bar:SetLabel(text)
 	bar:SetDuration(time)
 	bar:SetTimeVisibility(db.time)
