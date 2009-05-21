@@ -143,6 +143,9 @@ L:RegisterTranslations("deDE", function() return {
 	gravitybomb_desc = "Warnt, wer von Gravitationsbombe getroffen wurde.",
 	gravitybomb_you = "Gravitationsbombe auf DIR!",
 	gravitybomb_other = "Gravitationsbombe: %s!",
+	
+	gravitybombicon = "Gravitationsbombe: Symbol",
+	gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher).",
 
 	lightbomb = "Lichtbombe",
 	lightbomb_desc = "Warnt, wer von Lichtbombe getroffen wurde.",

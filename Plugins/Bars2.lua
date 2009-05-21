@@ -334,8 +334,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Whether to show or hide the time left on the bars."] = "Bestimmt, ob die verbleibende Zeit auf den Leisten angezeigt wird.",
 	["Icon"] = "Symbol",
 	["Shows or hides the bar icons."] = "Zeigt oder versteckt die Symbole auf den Leisten.",
-	--["Font"] = true,
-	--["Set the font for the timer bars."] = true,
+	["Font"] = "Schriftart",
+	["Set the font for the timer bars."] = "Legt die Schriftart des Textes auf den Leisten fest.",
 } end)
 
 --------------------------------------------------------------------------------
