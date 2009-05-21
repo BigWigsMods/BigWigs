@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	gravitybomb_desc = "Tells you who has been hit by Gravity Bomb.",
 	gravitybomb_you = "Gravity on YOU!",
 	gravitybomb_other = "Gravity on %s!",
-	
+
 	gravitybombicon = "Gravity Bomb Icon",
 	gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)",
 
@@ -177,6 +177,9 @@ L:RegisterTranslations("zhCN", function() return {
 	gravitybomb_you = ">你< 重力炸弹！",
 	gravitybomb_other = "重力炸弹：>%s<！",
 
+	gravitybombicon = "重力炸弹标记",
+	gravitybombicon_desc = "为中了重力炸弹的玩家打上蓝色方框标记。（需要权限）",
+
 	lightbomb = "Light Bomb",
 	lightbomb_desc = "当玩家中了Light Bomb时发出警报。",
 	lightbomb_you = ">你< Light Bomb！",
@@ -209,6 +212,9 @@ L:RegisterTranslations("zhTW", function() return {
 	gravitybomb_desc = "當玩家中了重力炸彈時發出警報。",
 	gravitybomb_you = ">你< 重力炸彈！",
 	gravitybomb_other = "重力炸彈：>%s<！",
+
+	gravitybombicon = "重力炸彈標記",
+	gravitybombicon_desc = "為中了重力炸彈的玩家打上藍色方框標記。（需要權限）",
 
 	lightbomb = "裂光彈",
 	lightbomb_desc = "當玩家中了裂光彈時發出警報。",
