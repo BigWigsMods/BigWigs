@@ -244,8 +244,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Whether to show or hide the time left on the bars."] = "바의 우측에 시간을 숨기거나 표시합니다.",
 	["Icon"] = "아이콘",
 	["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니다.",
-	--["Font"] = true,
-	--["Set the font for the timer bars."] = true,
+	["Font"] = "글꼴",
+	["Set the font for the timer bars."] = "타이머 바의 글꼴을 설정합니다.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

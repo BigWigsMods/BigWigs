@@ -77,6 +77,9 @@ L:RegisterTranslations("koKR", function() return {
 	gravitybomb_desc = "중력 폭탄에 걸린 플레이어를 알립니다.",
 	gravitybomb_you = "당신은 중력 폭탄!",
 	gravitybomb_other = "중력 폭탄: %s!",
+	
+	gravitybombicon = "중력 폭탄 아이콘",
+	gravitybombicon_desc = "중력 폭탄에 걸린 플레이어를 네모 전술로 지정합니다. (승급자 이상 권한 필요)",
 
 	lightbomb = "빛의 폭탄",
 	lightbomb_desc = "빛의 폭탄에 걸린 플레이어를 알립니다.",
