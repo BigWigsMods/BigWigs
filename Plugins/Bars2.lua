@@ -109,8 +109,8 @@ L:RegisterTranslations("ruRU", function() return {
 	["Whether to show or hide the time left on the bars."] = "Показывать или скрывать остаток времени на полосах.",
 	["Icon"] = "Иконка",
 	["Shows or hides the bar icons."] = "Показывать или скрывать иконку полосы.",
-	--["Font"] = true,
-	--["Set the font for the timer bars."] = true,
+	["Font"] = "Шрифт",
+	["Set the font for the timer bars."] = "Установка шрифта, кторый будет отображаться на полосах.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

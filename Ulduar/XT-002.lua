@@ -254,6 +254,9 @@ L:RegisterTranslations("ruRU", function() return {
 	gravitybomb_desc = "Сообщает об игроках с Гравитационной Бомбой.",
 	gravitybomb_you = "Бомба на ВАС!",
 	gravitybomb_other = "Бомба на |3-5(%s)!",
+	
+	gravitybombicon = "Иконка Гравитационной Бомбы",
+	gravitybombicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока с бомбой. (необходимо быть лидером группы или рейда)",
 
 	lightbomb = "Светлый взрыв",
 	lightbomb_desc = "Сообщает об игроках со Светлым взрывом.",
@@ -267,6 +270,11 @@ L:RegisterTranslations("ruRU", function() return {
 	heartbreak = "Разрыв сердца",
 	heartbreak_desc = "Сообщает когда XT-002 получает Разрыв сердца",
 	heartbreak_message = "Разрыв сердца!",
+	
+	tantrum = "Раскаты ярости",
+	tantrum_desc = "Сообщает когда XT-002 в сложном режиме, применяет Раскаты ярости",
+	tantrum_message = "Раскаты ярости!",
+	tantrum_bar = "~Раскаты ярости",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока с бомбой. (необходимо быть лидером группы или рейда)",
