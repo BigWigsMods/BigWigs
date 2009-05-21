@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {"heartbreak", "gravitybombicon", "voidzone", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "tantrum", "bosskill"}
+mod.toggleoptions = {"heartbreak", "gravitybombicon", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "tantrum", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -50,10 +50,6 @@ L:RegisterTranslations("enUS", function() return {
 	lightbomb_you = "Light on YOU!",
 	lightbomb_other = "Light on %s!",
 
-	voidzone = "Void Zone",
-	voidzone_desc = "Warn for Void Zone spawn.",
-	voidzone_message = "Void Zone!",
-
 	heartbreak = "Heartbreak",
 	heartbreak_desc = "Warn when XT-002 gains Heartbreak",
 	heartbreak_message = "Heartbreak!",
@@ -86,10 +82,6 @@ L:RegisterTranslations("koKR", function() return {
 	lightbomb_you = "당신은 빛의 폭탄!",
 	lightbomb_other = "빛의 폭탄: %s!",
 
-	voidzone = "공허의 지대",
-	voidzone_desc = "공허의 지대 생성을 알립니다.",
-	voidzone_message = "공허의 지대!",
-
 	heartbreak = "부서진 심장",
 	heartbreak_desc = "XT-002의 부서진 심장 획득을 알립니다.",
 	heartbreak_message = "심장 파괴됨!",
@@ -118,10 +110,6 @@ L:RegisterTranslations("frFR", function() return {
 	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Bombe de lumière.",
 	lightbomb_you = "Bombe de lumière sur VOUS !",
 	lightbomb_other = "Bombe de lumière : %s",
-
-	voidzone = "Zone de Vide",
-	voidzone_desc = "Prévient quand une Zone de Vide apparaît.",
-	voidzone_message = "Zone de Vide !",
 
 	heartbreak = "Bris du coeur",
 	heartbreak_desc = "Prévient quand le XT-002 gagne Bris du coeur.",
@@ -155,10 +143,6 @@ L:RegisterTranslations("deDE", function() return {
 	lightbomb_you = "Lichtbombe auf DIR!",
 	lightbomb_other = "Lichtbombe: %s!",
 
-	voidzone = "Zone der Leere",
-	voidzone_desc = "Warnt, wenn Zonen der Leere erscheinen.",
-	voidzone_message = "Zone der Leere!",
-
 	heartbreak = "Gebrochenes Herz",
 	heartbreak_desc = "Warnt, wenn der XT-002 Gebrochenes Herz bekommt.",
 	heartbreak_message = "Gebrochenes Herz!",
@@ -190,10 +174,6 @@ L:RegisterTranslations("zhCN", function() return {
 	lightbomb_desc = "当玩家中了Light Bomb时发出警报。",
 	lightbomb_you = ">你< Light Bomb！",
 	lightbomb_other = "Light Bomb：>%s<！",
-
-	voidzone = "虚空领域",
-	voidzone_desc = "当虚空领域出现时发出警报。",
-	voidzone_message = "虚空领域！",
 
 	heartbreak = "心碎",
 	heartbreak_desc = "当 XT-002拆解者获得心碎时发出警报。",
@@ -227,10 +207,6 @@ L:RegisterTranslations("zhTW", function() return {
 	lightbomb_you = ">你< 裂光彈！",
 	lightbomb_other = "裂光彈：>%s<！",
 
-	voidzone = "虛無區域",
-	voidzone_desc = "當虛無區域出現時發出警報。",
-	voidzone_message = "虛無區域！",
-
 	heartbreak = "心碎",
 	heartbreak_desc = "當 XT-002拆解者獲得心碎時發出警報。",
 	heartbreak_message = "心碎！",
@@ -263,10 +239,6 @@ L:RegisterTranslations("ruRU", function() return {
 	lightbomb_you = "Взрыв на ВАС!",
 	lightbomb_other = "Взрыв на |3-5(%s)!",
 
-	voidzone = "Портал Бездны",
-	voidzone_desc = "Сообщать о появлениях Порталов Бездны.",
-	voidzone_message = "Портал Бездны!",
-
 	heartbreak = "Разрыв сердца",
 	heartbreak_desc = "Сообщает когда XT-002 получает Разрыв сердца",
 	heartbreak_message = "Разрыв сердца!",
@@ -291,7 +263,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightBomb", 63018, 65121)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234, 65121)
 	self:AddCombatListener("SPELL_CAST_START", "Tantrum", 62776)
-	self:AddCombatListener("SPELL_SUMMON", "VoidZone", 64203, 64235)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -366,12 +337,6 @@ end
 function mod:BombRemoved(player)
 	if player == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self)
-	end
-end
-
-function mod:VoidZone(_, spellID)
-	if db.voidzone then
-		self:IfMessage(L["voidzone_message"], "Attention", 64235)
 	end
 end
 
