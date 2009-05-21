@@ -4,6 +4,7 @@
 
 local sara = BB["Sara"]
 local boss = BB["Yogg-Saron"]
+local brain = BB["Brain of Yogg-Saron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
@@ -30,7 +31,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
-	["Brain of Yogg-Saron"] = true,
 
 	cmd = "YoggSaron",
 
@@ -102,7 +102,6 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	["Crusher Tentacle"] = "Тяжелое щупальце",
-	["Brain of Yogg-Saron"] = "Мозг Йогг-Сарона",
 
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
@@ -171,7 +170,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Crusher Tentacle"] = "분쇄의 촉수",
-	["Brain of Yogg-Saron"] = "요그사론의 뇌",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -240,7 +238,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Crusher Tentacle"] = "Tentacule écraseur",
-	["Brain of Yogg-Saron"] = "Cerveau de Yogg-Saron",
 
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
@@ -310,7 +307,6 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Crusher Tentacle"] = "Schmettertentakel", -- needs verification!
-	["Brain of Yogg-Saron"] = "Yogg-Sarons Gehirn", -- needs verification!
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
@@ -380,7 +376,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --	["Crusher Tentacle"] = true,
---	["Brain of Yogg-Saron"] = true,
 
 	phase = "阶段",
 	phase_desc = "当阶段改变发出警报。",
@@ -449,7 +444,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Crusher Tentacle"] = "粉碎觸手",
-	["Brain of Yogg-Saron"] = "尤格薩倫的腦部",
 
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",
@@ -516,7 +510,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
 
-mod.enabletrigger = {boss, sara, L["Brain of Yogg-Saron"]}
+mod.enabletrigger = {boss, sara, brain}
 
 ------------------------------
 --      Initialization      --
