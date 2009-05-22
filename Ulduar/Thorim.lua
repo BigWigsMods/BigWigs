@@ -203,7 +203,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase1_message = "Phase 1",
-	phase2_trigger = "Eindringlinge! Ihr Sterblichen, die Ihr es wagt, Euch in mein Vergnügen einzumischen, werdet... Wartet... Ihr...",
+	phase2_trigger = " Eindringlinge! Ihr Sterblichen, die Ihr es wagt, Euch in mein Vergnügen einzumischen, werdet... Wartet... Ihr...", -- space in the beginning!
 	phase2_message = "Phase 2 - Berserker in ~6 min!",
 	phase3_trigger = "Ihr unverschämtes Geschmeiß! Ihr wagt es, mich in meinem Refugium herauszufordern? Ich werde Euch eigenhändig zerschmettern!",
 	phase3_message = "Phase 3 - %s angegriffen!",
