@@ -6,7 +6,6 @@ local boss = BB["General Vezax"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = boss
 mod.guid = 33271
 mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", "berserk", "bosskill"}
 
@@ -15,7 +14,8 @@ mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, "crash", "crashsay", "
 ------------------------------
 
 local db = nil
-local count = 1
+local vaporCount = 1
+local surgeCount = 1
 local pName = UnitName("player")
 local fmt = string.format
 local lastVapor = nil
@@ -30,6 +30,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Vezax",
 
+	["Vezax Bunny"] = true, -- For emote catching.
+
 	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
 	flame = "Searing Flames",
@@ -38,10 +40,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	surge = "Surge of Darkness",
 	surge_desc = "Warn when Vezax gains Surge of Darkness.",
-	surge_message = "Surge of Darkness!",
-	surge_cast = "Surge casting!",
-	surge_end = "Surge faded!",
-	surge_bar = "Next Surge",
+	surge_message = "Surge %d!",
+	surge_cast = "Surge %d casting!",
+	surge_bar = "Surge %d",
 
 	animus = "Saronite Animus",
 	animus_desc = "Warn when the Saronite Animus spawns.",
@@ -88,10 +89,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	surge = "어둠 쇄도",
 	surge_desc = "베작스의 어둠 쇄도 획득을 알립니다.",
-	surge_message = "어둠 쇄도!",
-	surge_cast = "어둠 쇄도 시전!",
-	surge_end = "어둠 쇄도 사라짐!",
-	surge_bar = "다음 쇄도",
+	--surge_message = "어둠 쇄도!",
+	--surge_cast = "어둠 쇄도 시전!",
+	--surge_bar = "다음 쇄도",
 
 	animus = "사로나이트 원혼",
 	animus_desc = "사로나이트 원혼 소환을 알립니다.",
@@ -138,10 +138,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
-	surge_message = "Vague de ténèbres !",
-	surge_cast = "Vague de ténèbres en incantation !",
-	surge_end = "Vague de ténèbres estompée !",
-	surge_bar = "Prochaine Vague de ténèbres",
+	--surge_message = "Vague de ténèbres !",
+	--surge_cast = "Vague de ténèbres en incantation !",
+	--surge_bar = "Prochaine Vague de ténèbres",
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
@@ -188,10 +187,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	surge = "Sog der Dunkelheit",
 	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
-	surge_message = "Sog der Dunkelheit!",
-	surge_cast = "Wirkt Sog",
-	surge_end = "Sog beendet!",
-	surge_bar = "Nächster Sog",
+	--surge_message = "Sog der Dunkelheit!",
+	--surge_cast = "Wirkt Sog",
+	--surge_bar = "Nächster Sog",
 
 	animus = "Saronitanimus",
 	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
@@ -238,10 +236,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	surge = "Surge of Darkness",
 	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
-	surge_message = "Surge of Darkness！",
-	surge_cast = "正在施放 Surge of Darkness！",
-	surge_end = "Surge of Darkness消失！",
-	surge_bar = "<下一Surge of Darkness>",
+	--surge_message = "Surge of Darkness！",
+	--surge_cast = "正在施放 Surge of Darkness！",
+	--surge_bar = "<下一Surge of Darkness>",
 
 	animus = "萨隆邪铁Animus",
 	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
@@ -288,10 +285,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	surge = "暗鬱奔騰",
 	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
-	surge_message = "暗鬱奔騰！",
-	surge_cast = "正在施放 暗鬱奔騰！",
-	surge_end = "暗鬱奔騰 消失！",
-	surge_bar = "<下一暗鬱奔騰>",
+	--surge_message = "暗鬱奔騰！",
+	--surge_cast = "正在施放 暗鬱奔騰！",
+	--surge_bar = "<下一暗鬱奔騰>",
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
@@ -338,10 +334,9 @@ L:RegisterTranslations("ruRU", function() return {
 
 	surge = "Наплыв Тьмы",
 	surge_desc = "Сообщает когда Везакс применяет Наплыв Тьмы.",
-	surge_message = "Наплыв Тьмы!",
-	surge_cast = "Применяется Наплыв Тьмы!",
-	surge_end = "Наплыв Тьмы рассеялся!",
-	surge_bar = "Следующий наплыв",
+	--surge_message = "Наплыв Тьмы!",
+	--surge_cast = "Применяется Наплыв Тьмы!",
+	--surge_bar = "Следующий наплыв",
 
 	animus = "Саронитовый враг",
 	animus_desc = "Сообщать о появлении саронитового врага.",
@@ -375,13 +370,16 @@ L:RegisterTranslations("ruRU", function() return {
 	icon_desc = "Помечать рейдовой иконкой игрока, на который попал под воздействие Темного сокрушения. (необходимо быть лидером группы или рейда)",
 } end )
 
+mod.enabletrigger = {boss, L["Vezax Bunny"]}
+
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function mod:OnEnable()
 	lastVapor = nil
-	count = 1
+	vaporCount = 1
+	surgeCount = 1
 	db = self.db.profile
 
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
@@ -429,12 +427,14 @@ local function scanTarget()
 	end
 	if target then
 		if target == pName then
-			mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
-			mod:WideMessage(L["crash_other"]:format(target))
+			if db.crash then
+				mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
+				mod:WideMessage(L["crash_other"]:format(target))
+			end
 			if db.crashsay then
 				SendChatMessage(L["crash_say"], "SAY")
 			end
-		else
+		elseif db.crash then
 			mod:TargetMessage(L["crash_other"], target, "Positive", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
@@ -460,9 +460,7 @@ function mod:Mark(player, spellID)
 end
 
 function mod:Target(player, spellId)
-	if db.crash then
-		self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1)
-	end
+	self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1)
 end
 
 function mod:Flame(_, spellID)
@@ -473,25 +471,25 @@ end
 
 function mod:Surge(_, spellID)
 	if db.surge then
-		self:IfMessage(L["surge_message"], "Important", spellID)
-		self:Bar(L["surge_cast"], 3, spellID)
-		self:Bar(L["surge_bar"], 60, spellID)
+		self:IfMessage(L["surge_message"]:format(surgeCount), "Important", spellID)
+		self:Bar(L["surge_cast"]:format(surgeCount), 3, spellID)
+		surgeCount = surgeCount + 1
+		self:Bar(L["surge_bar"]:format(surgeCount), 60, spellID)
 	end
 end
 
 function mod:SurgeGain(_, spellID)
 	if db.surge then
 		self:Bar(L["surge"], 10, spellID)
-		self:DelayedMessage(10, L["surge_end"], "Attention")
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["vapor_trigger"] and db.vapor then
-		self:IfMessage(L["vapor_message"]:format(count), "Positive", 63323)
-		count = count + 1
-		if count < 9 then
-			self:Bar(L["vapor_bar"]:format(count), 30, 63323)
+		self:IfMessage(L["vapor_message"]:format(vaporCount), "Positive", 63323)
+		vaporCount = vaporCount + 1
+		if vaporCount < 9 then
+			self:Bar(L["vapor_bar"]:format(vaporCount), 30, 63323)
 		end
 	elseif msg == L["animus_trigger"] and db.animus then
 		self:IfMessage(L["animus_message"], "Important", 63319)
@@ -500,12 +498,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		count = 1
+		vaporCount = 1
+		surgeCount = 1
 		if db.berserk then
 			self:Enrage(600, true, true)
 		end
 		if db.surge then
-			self:Bar(L["surge_bar"], 60, 62662)
+			self:Bar(L["surge_bar"]:format(surgeCount), 60, 62662)
 		end
 	end
 end
