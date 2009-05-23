@@ -258,7 +258,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193, 65737)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "GravityBomb", 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightBomb", 63018, 65121)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234, 65121)
