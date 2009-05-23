@@ -89,9 +89,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	surge = "어둠 쇄도",
 	surge_desc = "베작스의 어둠 쇄도 획득을 알립니다.",
-	--surge_message = "어둠 쇄도!",
-	--surge_cast = "어둠 쇄도 시전!",
-	--surge_bar = "다음 쇄도",
+	surge_message = "어둠 쇄도 (%d)!",
+	surge_cast = "쇄도 시전 (%d)!",
+	surge_bar = "쇄도 %d",
 
 	animus = "사로나이트 원혼",
 	animus_desc = "사로나이트 원혼 소환을 알립니다.",
