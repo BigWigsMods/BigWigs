@@ -90,7 +90,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "어떻게 해서든 정원을 수호해야 한다!",
-	engage_trigger2 = "장로여 내게 힘을 나눠다오!",
+	engage_trigger2 = "장로여, 내게 힘을 나눠다오!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
