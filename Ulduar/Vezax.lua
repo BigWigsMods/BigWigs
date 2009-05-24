@@ -187,9 +187,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	surge = "Sog der Dunkelheit",
 	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
-	--surge_message = "Sog der Dunkelheit!",
-	--surge_cast = "Wirkt Sog",
-	--surge_bar = "Nächster Sog",
+	surge_message = "Sog %d!",
+	surge_cast = "Wirkt Sog %d",
+	surge_bar = "Sog %d",
 
 	animus = "Saronitanimus",
 	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
