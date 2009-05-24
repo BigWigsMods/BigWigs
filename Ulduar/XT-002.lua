@@ -106,6 +106,9 @@ L:RegisterTranslations("frFR", function() return {
 	gravitybomb_you = "Bombe à gravité sur VOUS !",
 	gravitybomb_other = "Bombe à gravité : %s",
 
+	gravitybombicon = "Bombe à gravité - Icône",
+	gravitybombicon_desc = "Place une icône de raid bleue sur le dernier joueur affecté par une Bombe à gravité (nécessite d'être assistant ou mieux).",
+
 	lightbomb = "Bombe de lumière",
 	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Bombe de lumière.",
 	lightbomb_you = "Bombe de lumière sur VOUS !",

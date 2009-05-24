@@ -138,9 +138,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
-	--surge_message = "Vague de ténèbres !",
-	--surge_cast = "Vague de ténèbres en incantation !",
-	--surge_bar = "Prochaine Vague de ténèbres",
+	surge_message = "Vague de ténèbres %d !",
+	surge_cast = "Vague de ténèbres %d en incantation !",
+	surge_bar = "Vague de ténèbres %d",
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
