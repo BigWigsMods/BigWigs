@@ -547,6 +547,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, berserkBar)
 		self:TriggerEvent("BigWigs_StopBar", self, L["shock_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["hammer_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["hardmode"])
 		self:CancelAllScheduledEvents()
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
