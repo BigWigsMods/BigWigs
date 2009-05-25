@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "wave", "attuned", "fury", "sunbeam", -1, "root", "tremor", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "wave", "fury", "sunbeam", -1, "root", "tremor", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 
 ------------------------------
@@ -16,7 +16,6 @@ mod.proximityCheck = "bandage"
 ------------------------------
 
 local db = nil
-local attunedCount = 150
 local dCount = 0
 local eCount = 0
 local p2warned = nil
@@ -40,7 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase2_message = "Phase 2!",
-	phase2_soon = "Phase 2 soon",
 
 	wave = "Waves",
 	wave_desc = "Warn for Waves.",
@@ -53,10 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 	detonate_message = "Detonating lashers!",
 	elementals_message = "Elementals!",
 	tree_message = "Tree is up!",
-
-	attuned = "Attuned to Nature",
-	attuned_desc = "Warn for Attuned to Nature.",
-	attuned_message = "Attuned x%d",
 
 	fury = "Nature's Fury",
 	fury_desc = "Tells you who has been hit by Nature's Fury.",
@@ -95,7 +89,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
 	phase2_message = "2 단계 !",
-	phase2_soon = "곧 2 단계",
 
 	wave = "웨이브",
 	wave_desc = "웨이브에 대해 알립니다.",
@@ -108,10 +101,6 @@ L:RegisterTranslations("koKR", function() return {
 	detonate_message = "폭발 덩굴손 소환",
 	elementals_message = "정령 3 소환",
 	tree_message = "이오나의 선물 소환",
-
-	attuned = "자연 조화",
-	attuned_desc = "자연 조화를 알립니다.",
-	attuned_message = "조화 x%d",
 
 	fury = "자연의 격노",
 	fury_desc = "자연의 격노에 걸린 플레이어를 알립니다.",
@@ -150,7 +139,6 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la recontre entre dans une nouvelle phase.",
 	phase2_message = "Phase 2 !",
-	phase2_soon = "Phase 2 imminente",
 
 	wave = "Vagues",
 	wave_desc = "Prévient de l'arrivée des vagues.",
@@ -163,10 +151,6 @@ L:RegisterTranslations("frFR", function() return {
 	detonate_message = "Flagellants explosifs !",
 	elementals_message = "Élémentaires !",
 	tree_message = "Un arbre pousse !",
-
-	attuned = "En harmonie avec la Nature",
-	attuned_desc = "Prévient quand l'empilement d'En harmonie avec la Nature a changé.",
-	attuned_message = "En harmonie x%d",
 
 	fury = "Fureur de la nature",
 	fury_desc = "Prévient quand un joueur subit les effets d'une Fureur de la nature.",
@@ -205,7 +189,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_message = "Phase 2!",
-	phase2_soon = "Phase 2 bald!",
 
 	wave = "Wellen",
 	wave_desc = "Warnt vor den Wellen.",
@@ -218,10 +201,6 @@ L:RegisterTranslations("deDE", function() return {
 	detonate_message = "Explosionspeitscher!",
 	elementals_message = "Elementare!",
 	tree_message = "Eonars Gabe!",
-
-	attuned = "Einstimmung auf die Natur",
-	attuned_desc = "Warnt vor der Anzahl von Einstimmung auf die Natur.",
-	attuned_message = "Einstimmung: (%d)",
 
 	fury = "Furor der Natur",
 	fury_desc = "Warnt, wer von Furor der Natur betroffen ist und zeigt einen Timer mit der Abklingzeit.",
@@ -260,7 +239,6 @@ L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 	phase2_message = "第二阶段！",
-	phase2_soon = "即将 - 第二阶段！",
 
 	wave = "波",
 	wave_desc = "当一波小怪时发出警报。",
@@ -273,10 +251,6 @@ L:RegisterTranslations("zhCN", function() return {
 	detonate_message = "Detonating lashers!",
 	elementals_message = "Elementals!",
 	tree_message = "Eonar's Gift出现！",
-
-	attuned = "自然协调",
-	attuned_desc = "当施放自然协调时发出警报。",
-	attuned_message = "自然协调：>%d<！",
 
 	fury = "自然之怒",
 	fury_desc = "当玩家中了自然之怒时向自己发出警报。",
@@ -315,7 +289,6 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",
 	phase2_message = "第二階段！",
-	phase2_soon = "即將 - 第二階段！",
 
 	wave = "波",
 	wave_desc = "當一波小怪時發出警報。",
@@ -328,10 +301,6 @@ L:RegisterTranslations("zhTW", function() return {
 	detonate_message = "引爆鞭笞者！",
 	elementals_message = "上古水之靈！",
 	tree_message = "伊歐娜的贈禮 出現！",
-
-	attuned = "自然和諧",
-	attuned_desc = "當施放自然和諧時發出警報。",
-	attuned_message = "自然和諧：>%d<！",
 
 	fury = "自然烈怒",
 	fury_desc = "當玩家中了自然烈怒時向自己發出警報。",
@@ -370,7 +339,6 @@ L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
 	phase2_message = "2ая фаза!",
-	phase2_soon = "Скоро начнётся 2ая фаза",
 
 	wave = "Волны",
 	wave_desc = "Предупреждать о волнах.",
@@ -383,10 +351,6 @@ L:RegisterTranslations("ruRU", function() return {
 	detonate_message = "Взрывные плеточники!",
 	elementals_message = "Элементали!",
 	tree_message = "Появление Дара Эонара!",
-
-	attuned = "Гармония природы",
-	attuned_desc = "Предупреждать о Гармонии природы.",
-	attuned_message = "Гармония: (%d)",
 
 	fury = "Гнев природы",
 	fury_desc = "Сообщает вам, на кого наложен Гнев природы.",
@@ -431,7 +395,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -555,43 +518,10 @@ function mod:FuryRemove(player)
 end
 
 function mod:AttunedRemove()
+	phase = 2
+	self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
 	if db.phase then
-		phase = 2
-		self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
 		self:IfMessage(L["phase2_message"], "Important")
-	end
-end
-
-function mod:Deaths(_, guid)
-	guid = tonumber((guid):sub(-12,-7),16)
-	if guid == 32918 then
-		attunedCount = attunedCount - 2
-		dCount = dCount + 1
-		if dCount == 10 then
-			dCount = 0
-			self:AttunedWarn()
-		end
-	elseif guid == 32919 or guid == 33202 or guid == 32916 then
-		eCount = eCount + 1
-		if eCount == 3 then
-			attunedCount = attunedCount - 30
-			eCount = 0
-			self:AttunedWarn()
-		end
-	elseif guid == 33203 then
-		attunedCount = attunedCount - 25
-		self:AttunedWarn()
-	end
-end
-
-function mod:AttunedWarn()
-	if db.attuned then
-		if attunedCount > 3 then
-			self:IfMessage(L["attuned_message"]:format(attunedCount), "Positive", 62519)
-		elseif not p2warned and attunedCount > 1 and attunedCount <= 10 and db.phase then
-			p2warned = true
-			self:IfMessage(L["phase2_soon"], "Attention")
-		end
 	end
 end
 
@@ -621,7 +551,6 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		phase = 1
-		attunedCount = 150
 		dCount = 0
 		eCount = 0
 		p2warned = nil
