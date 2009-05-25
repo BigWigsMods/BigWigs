@@ -16,9 +16,6 @@ mod.proximityCheck = "bandage"
 ------------------------------
 
 local db = nil
-local dCount = 0
-local eCount = 0
-local p2warned = nil
 local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
@@ -551,9 +548,6 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		phase = 1
-		dCount = 0
-		eCount = 0
-		p2warned = nil
 		if db.berserk then
 			self:Enrage(600, true)
 		end
