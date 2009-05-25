@@ -422,17 +422,14 @@ end
 
 do
 	local _, class = UnitClass("player")
-	local fury = GetSpellInfo(25780)
 	local function isCaster()
 		local power = UnitPowerType("player")
-		if power ~= 0 then return nil end
+		if power ~= 0 then return end
 		if class == "PALADIN" then
-			for i = 1, 40 do
-				local name = UnitBuff("player", i)
-				if not name then break
-				elseif name == fury then return nil
-				end
-			end
+			local _, _, points = GetTalentTabInfo(1)
+			-- If a paladin has less than 20 points in Holy, he's not a caster.
+			-- And so it shall forever be, said the Lord.
+			if points < 20 then return end
 		end
 		return true
 	end
