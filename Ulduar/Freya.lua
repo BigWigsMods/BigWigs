@@ -595,9 +595,14 @@ function mod:AttunedWarn()
 	end
 end
 
+local last = 0
 function mod:Energy(player)
-	if db.energy and player == pName then
-		self:IfMessage(L["energy_message"], "Personal",  62451, "Alarm")
+	local time = GetTime()
+	if (time - last) > 5 then
+		last = time
+		if db.energy and player == pName then
+			self:IfMessage(L["energy_message"], "Personal",  62451, "Alarm")
+		end
 	end
 end
 
