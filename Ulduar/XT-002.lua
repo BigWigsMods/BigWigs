@@ -73,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 	gravitybomb_desc = "중력 폭탄에 걸린 플레이어를 알립니다.",
 	gravitybomb_you = "당신은 중력 폭탄!",
 	gravitybomb_other = "중력 폭탄: %s!",
-	
+
 	gravitybombicon = "중력 폭탄 아이콘",
 	gravitybombicon_desc = "중력 폭탄에 걸린 플레이어를 네모 전술로 지정합니다. (승급자 이상 권한 필요)",
 
@@ -109,10 +109,10 @@ L:RegisterTranslations("frFR", function() return {
 	gravitybombicon = "Bombe à gravité - Icône",
 	gravitybombicon_desc = "Place une icône de raid bleue sur le dernier joueur affecté par une Bombe à gravité (nécessite d'être assistant ou mieux).",
 
-	lightbomb = "Bombe de lumière",
-	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Bombe de lumière.",
-	lightbomb_you = "Bombe de lumière sur VOUS !",
-	lightbomb_other = "Bombe de lumière : %s",
+	lightbomb = "Lumière incendiaire",
+	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Lumière incendiaire.",
+	lightbomb_you = "Lumière incendiaire sur VOUS !",
+	lightbomb_other = "Lumière incendiaire : %s",
 
 	heartbreak = "Bris du coeur",
 	heartbreak_desc = "Prévient quand le XT-002 gagne Bris du coeur.",
