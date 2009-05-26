@@ -525,7 +525,7 @@ function mod:Energy(player)
 	if (time - last) > 5 then
 		last = time
 		if db.energy and player == pName then
-			self:IfMessage(L["energy_message"], "Personal",  62451, "Alarm")
+			self:LocalMessage(L["energy_message"], "Personal",  62451, "Alarm")
 		end
 	end
 end
