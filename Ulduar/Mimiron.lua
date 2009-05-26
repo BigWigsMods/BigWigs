@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -158,10 +158,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase4_trigger = "^Fin de la phase d'essais préliminaires",
 	phase_bar = "Phase %d",
 
-	hardmode = "Délai du mode difficile",
-	hardmode_desc = "Affiche une barre de 8 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
+	hardmode = "Auto-destruction",
+	hardmode_desc = "Affiche une barre de 10 minutes pour le mode difficile (mécanisme d'auto-destruction activé).",
 	hardmode_trigger = "^Mais, pourquoi avez-vous été faire une chose pareille ?",
-	hardmode_message = "Mode difficile activé !",
+	hardmode_message = "Auto-destruction activée !",
 	hardmode_warning = "Délai du mode difficile dépassé",
 
 	plasma = "Explosion de plasma",
@@ -515,7 +515,7 @@ function mod:Shock(_, spellID)
 	end
 end
 
-function mod:Spinning(_, spellId)
+function mod:Spinning()
 	if db.laser then
 		self:IfMessage(L["laser_soon"], "Personal", 63414, "Long")
 	end
@@ -551,7 +551,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.shock then
 			self:Bar(L["shock_next"], 30, 63631)
-		end		
+		end
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
@@ -569,10 +569,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.shock then
 			self:Bar(L["shock_next"], 30, 63631)
-		end		
+		end
 		if db.plasma then
 			self:Bar(L["plasma_bar"], 20, 62997)
 			self:DelayedMessage(17, L["plasma_soon"], "Attention")
+		end
+		if db.berserk then
+			self:Enrage(900, true, true)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
@@ -591,7 +594,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 3
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["fbomb_bar"])		
+		self:TriggerEvent("BigWigs_StopBar", self, L["fbomb_bar"])
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
