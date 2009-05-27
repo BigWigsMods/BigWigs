@@ -66,8 +66,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engate_trigger = "^너희의 행동은 비논리적이다.",	--체크
+	phase = "단계",
+	phase_desc = "단계 변경을 알립니다.",
+	engage_warning = "1 단계",
+	phase2_warning = "곧 2단계",
+	phase_bar = "%d 단계",
 	
+	engage = "전투 시작",
+	engage_trigger = "^너희의 행동은 비논리적이다.",
+	first_engage_trigger = "^내 눈을 통해 너희 세상을 보아라.",
+
 	punch = "위상의 주먹",
 	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
 	punch_message = "위상의 주먹 %dx: %s",
@@ -83,12 +91,13 @@ L:RegisterTranslations("koKR", function() return {
 	bigbang = "대폭발",
 	bigbang_desc = "대폭발 시전 시작을 알립니다.",
 	bigbang_message = "대폭발!",
+	bigbang_soon = "곧 대폭발!",
 	
-	stars = "붕괴의 별",	--체크
-	stars_desc = "붕괴의 별 소환을 알립니다.",	--체크
+	stars = "붕괴의 별",
+	stars_desc = "붕괴의 별 소환을 알립니다.",
 
-	constellation = "살아있는 별지리",	--체크
-	constellation_desc = "살아있는 별지리 소환을 알립니다.",	--체크
+	constellation = "살아있는 별자리",
+	constellation_desc = "살아있는 별자리 소환을 알립니다.",
 
 	
 } end )
