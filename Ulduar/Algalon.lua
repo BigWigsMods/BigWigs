@@ -132,7 +132,17 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "^Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet.",-- needs check
+
+	phase = "Phasen",
+	phase_desc = "Warnt vor Phasenwechsel.",
+	engage_warning = "Phase 1",
+	phase2_warning = "Phase 2 bald!",
+	phase_bar = "Phase %d",
+
+	engage = "Engage",
+	engage_trigger = "^Euer Handeln ist unlogisch. ",-- needs check
+	first_engage_trigger = "Seht Eure Welt durch meine Augen",
+
 
 	punch = "Phasenschlag",
 	punch_desc = "Warnt, wenn jemand 4 Stapel von Phasenschlag hat.",
@@ -151,6 +161,11 @@ L:RegisterTranslations("deDE", function() return {
 	bigbang_message = "Großer Knall!",
 	bigbang_soon = "Großer Knall bald!",
 	
+	--[[stars = "Collapsing Stars",
+	stars_desc = "Warn when Collapsing Stars spawn",
+
+	constellation = "Living Constellations",
+	constellation_desc = "Warn when Living Constellations spawn", ]]--
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
