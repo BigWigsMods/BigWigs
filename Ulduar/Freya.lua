@@ -474,7 +474,7 @@ local function scanTarget()
 			mod:WideMessage(L["sunbeam_other"]:format(target))
 		else
 			mod:TargetMessage(L["sunbeam_other"], target, "Attention", 62872)
-			mod:Whisper(player, L["sunbeam_you"])
+			mod:Whisper(target, L["sunbeam_you"])
 		end
 		mod:Icon(target, "icon")
 		mod:CancelScheduledEvent("BWsunbeamToTScan")
