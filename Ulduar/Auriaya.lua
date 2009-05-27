@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	defender = "Feral Defender",
 	defender_desc = "Warn for Feral Defender lives.",
-	defender_message = "Defender up (%d/9)!",
+	defender_message = "Defender up %d/9!",
 
 	sonic = "Sonic Screech",
 	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",

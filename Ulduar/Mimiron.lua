@@ -236,7 +236,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	laser = "Lasersalve",
 	laser_desc = "Warnung und Timer für Lasersalve.",
-	laser_soon = "Lasersalve bald!",
+	laser_soon = "Lasersalve!",
 	laser_bar = "Lasersalve",
 
 	magnetic = "Magnetischer Kern",

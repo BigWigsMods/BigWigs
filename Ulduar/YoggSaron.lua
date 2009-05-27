@@ -342,7 +342,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	tentacle = "Schmettertentakel", --right?
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
-	tentacle_message = "Schmettertentakel (%d)!",
+	tentacle_message = "Schmettertentakel %d!",
 
 	squeeze = squeezeName,
 	squeeze_desc = "Warnt, welcher Spieler von Quetschen betroffen ist.",
@@ -368,7 +368,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
-	guardian_message = "Wächter (%d)!",
+	guardian_message = "Wächter %d!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",

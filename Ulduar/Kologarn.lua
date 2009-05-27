@@ -133,7 +133,7 @@ L:RegisterTranslations("deDE", function() return {
 	
 	armor = "Rüstung zermalmen",
 	armor_desc = "Warnt, wenn ein Spieler von 2 oder mehr Stapel von Rüstung zermalmen betroffen ist.",
-	armor_message = "%2$dx Rüstung zermalmen auf %1$s!",
+	armor_message = "%2$dx Rüstung zermalmen: %1$s!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
