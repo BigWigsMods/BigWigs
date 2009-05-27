@@ -222,18 +222,9 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
-	self:AddCombatListener("SPELL_DAMAGE", "EyebeamHit", 63976, 63346, 63368)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
-
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-
 	db = self.db.profile
-	wipe(grip)
 end
 
 ------------------------------
@@ -305,6 +296,14 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
+		wipe(grip)
+		self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
+		self:AddCombatListener("SPELL_DAMAGE", "EyebeamHit", 63976, 63346, 63368)
+		self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
+		self:AddCombatListener("UNIT_DIED", "Deaths")
+
+		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 

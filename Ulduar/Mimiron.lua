@@ -445,24 +445,9 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
-	self:AddCombatListener("SPELL_CAST_START", "Flames", 64570)
-	self:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
-	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
-	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
-	self:AddCombatListener("SPELL_SUMMON", "Bomb", 63811)
-
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_LOOT")
-
-	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(2, "MimiLoot")
 	self:Throttle(10, "MimiBarrage")
-
-	ishardmode = false
 	db = self.db.profile
 end
 
@@ -537,24 +522,40 @@ function mod:Magnetic(_, spellID)
 	end
 end
 
+local function start()
+	mod:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
+	mod:AddCombatListener("SPELL_CAST_START", "Flames", 64570)
+	mod:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
+	mod:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
+	mod:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
+	mod:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
+	mod:AddCombatListener("SPELL_SUMMON", "Bomb", 63811)
+	mod:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+	mod:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	mod:RegisterEvent("CHAT_MSG_LOOT")
+	mod:RegisterEvent("BigWigs_RecvSync")
+	ishardmode = nil
+	phase = 1
+	if db.phase then
+		mod:IfMessage(L["engage_warning"], "Attention")
+		mod:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
+	end
+	if db.shock then
+		mod:Bar(L["shock_next"], 30, 63631)
+	end		
+	if db.plasma then
+		mod:Bar(L["plasma_bar"], 20, 62997)
+		mod:DelayedMessage(17, L["plasma_soon"], "Attention")
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["hardmode_trigger"]) then
-		phase = 1
+		start()
 		ishardmode = true
-		if db.phase then
-			self:IfMessage(L["engage_warning"], "Attention")
-			self:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
-		end
 		if db.flames then
 			self:Bar(L["flames_bar"], 70, 64570)
 			self:DelayedMessage(68, L["flames_soon"], "Attention")
-		end
-		if db.shock then
-			self:Bar(L["shock_next"], 30, 63631)
-		end
-		if db.plasma then
-			self:Bar(L["plasma_bar"], 20, 62997)
-			self:DelayedMessage(17, L["plasma_soon"], "Attention")
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 600, 64582)
@@ -562,18 +563,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(600, L["hardmode_warning"], "Attention")
 		end
 	elseif msg:find(L["engage_trigger"]) then
-		phase = 1
-		if db.phase then
-			self:IfMessage(L["engage_warning"], "Attention")
-			self:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
-		end
-		if db.shock then
-			self:Bar(L["shock_next"], 30, 63631)
-		end
-		if db.plasma then
-			self:Bar(L["plasma_bar"], 20, 62997)
-			self:DelayedMessage(17, L["plasma_soon"], "Attention")
-		end
+		start()
 		if db.berserk then
 			self:Enrage(900, true, true)
 		end

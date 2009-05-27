@@ -377,22 +377,8 @@ mod.enabletrigger = {boss, L["Vezax Bunny"]}
 ------------------------------
 
 function mod:OnEnable()
-	lastVapor = nil
-	vaporCount = 1
-	surgeCount = 1
 	db = self.db.profile
-
-	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
-	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	self:RegisterEvent("UNIT_AURA")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 ------------------------------
@@ -498,8 +484,19 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
+		lastVapor = nil
 		vaporCount = 1
 		surgeCount = 1
+		self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
+		self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
+		self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
+		self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
+		self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
+		self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+		self:RegisterEvent("UNIT_AURA")
+		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 		if db.berserk then
 			self:Enrage(600, true, true)
 		end

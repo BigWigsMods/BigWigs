@@ -61,8 +61,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	constellation = "Living Constellations",
 	constellation_desc = "Warn when Living Constellations spawn",
-
-	
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -231,26 +229,14 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
-	self:AddCombatListener("SPELL_CAST_START","BigBang",64443, 64584)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_HEALTH")
-
 	db = self.db.profile
-
-	blackholes = 0
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
 function mod:UNIT_HEALTH(msg)
 	if not db.phase then return end
 	if UnitName(msg) == boss then
@@ -303,8 +289,20 @@ function mod:BigBang()
 	end
 end
 
+local function register()
+	mod:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
+	mod:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
+	mod:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
+	mod:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
+	mod:AddCombatListener("SPELL_CAST_START","BigBang",64443, 64584)
+	mod:AddCombatListener("UNIT_DIED", "BossDeath")
+	mod:RegisterEvent("UNIT_HEALTH")
+	mod:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
+		register()
 		blackholes = 0
 		phase = 1
 		self:Bar(L["phase_bar"]:format(phase), 8, "INV_Gizmo_01")
@@ -325,13 +323,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["constellation"], 65)
 		end
 	elseif msg:find(L["first_engage_trigger"]) then
-		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["phase_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["bigbang"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["stars"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["smash"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["constellation"])
-		self:TriggerEvent("BigWigs_StopBar", self, berserkBar)
+		register()
 		blackholes = 0
 		phase = 1
 		self:Bar(L["phase_bar"]:format(phase), 11, "INV_Gizmo_01")	
@@ -353,3 +345,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end		
 	end
 end
+

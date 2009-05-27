@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33515
 --Feral Defender = 34035
-mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -54,9 +54,6 @@ L:RegisterTranslations("enUS", function() return {
 	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
 	sonic_message = "Sonic Screech!",
 	sonic_bar = "~Sonic",
-
-	icon = "Place Icon",
-	icon_desc = "Place a raid icon on the player targetted by Guardian Swarm.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -84,9 +81,6 @@ L:RegisterTranslations("koKR", function() return {
 	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
 	sonic_message = "음파 시전!",
 	sonic_bar = "~음파 대기시간",
-
-	icon = "전술 표시",
-	icon_desc = "무리 수호자 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -114,9 +108,6 @@ L:RegisterTranslations("frFR", function() return {
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
 	sonic_message = "Hurlement sonore en incantation !",
 	sonic_bar = "~Recharge Hurlement sonore",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Essaim gardien (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -144,9 +135,6 @@ L:RegisterTranslations("deDE", function() return {
 	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
 	sonic_message = "Überschallkreischen!",
 	sonic_bar = "~Überschallkreischen",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Wächterschwarm betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -174,9 +162,6 @@ L:RegisterTranslations("zhCN", function() return {
 	sonic_desc = "当欧尔莉亚施放Sonic Screech时发出警报。",
 	sonic_message = "Sonic Screech！",
 	sonic_bar = "<Sonic Screech>",
-
-	icon = "团队标记",
-	icon_desc = "为中了Guardian Swarm的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -204,9 +189,6 @@ L:RegisterTranslations("zhTW", function() return {
 	sonic_desc = "當奧芮雅施放音速尖嘯時發出警報。",
 	sonic_message = "音速尖嘯！",
 	sonic_bar = "<音速尖嘯>",
-
-	icon = "團隊標記",
-	icon_desc = "為中了守護貓群的隊員打上團隊標記。（需要權限）",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -234,9 +216,6 @@ L:RegisterTranslations("ruRU", function() return {
 	sonic_desc = "Предупреждать когда Ауриайя применяет Ультразвуковой визг.",
 	sonic_message = "Применение Визга!",
 	sonic_bar = "~перезарядка визга",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока, которого Крадущийся страж выбрал своей целью.",
 } end )
 
 ------------------------------
@@ -244,21 +223,10 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
-	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
-	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Defender", 64455)
-	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "DefenderKill", 64455)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
-
-	count = 9
 	db = self.db.profile
 	started = nil
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -288,19 +256,17 @@ end
 function mod:Swarm(player, spell)
 	if not db.swarm then return end
 	if player == pName then
-		mod:LocalMessage(L["swarm_you"], "Personal", spell, "Alert")
+		mod:LocalMessage(L["swarm_you"], "Attention", spell)
 		mod:WideMessage(L["swarm_other"]:format(player))
 	else
 		mod:TargetMessage(L["swarm_other"], player, "Attention", spell)
-		mod:Whisper(player, L["swarm_you"])
 	end
 	mod:Bar(L["swarm_bar"], 37, spell)
-	mod:Icon(player, "icon")
 end
 
 function mod:Fear(_, spellID)
 	if db.fear then
-		self:IfMessage(L["fear_message"], "Attention", spellID)
+		self:IfMessage(L["fear_message"], "Urgent", spellID)
 		self:Bar(L["fear_bar"], 35, spellID)
 		self:DelayedMessage(32, L["fear_warning"], "Attention")
 	end
@@ -308,12 +274,21 @@ end
 
 function mod:Sentinel(_, spellID)
 	if db.sentinel then
-		self:IfMessage(L["sentinel_message"], "Attention", spellID)
+		self:IfMessage(L["sentinel_message"], "Important", spellID)
 	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
+		self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
+		self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
+		self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
+		self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
+		self:AddCombatListener("SPELL_AURA_APPLIED", "Defender", 64455)
+		self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "DefenderKill", 64455)
+		self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 		started = true
 		count = 9
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
