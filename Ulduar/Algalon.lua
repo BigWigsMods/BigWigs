@@ -141,12 +141,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	engage = "Engage",
 	engage_trigger = "^Euer Handeln ist unlogisch. ",-- needs check
-	first_engage_trigger = "Seht Eure Welt durch meine Augen",
-
+	first_engage_trigger = "^Seht Eure Welt durch meine Augen",-- needs check
 
 	punch = "Phasenschlag",
 	punch_desc = "Warnt, wenn jemand 4 Stapel von Phasenschlag hat.",
-	punch_message = "%2$dx Phasenschlag: %1$s!",
+	punch_message = "%dx Phasenschlag: %s!",
 
 	smash = "Kosmischer Schlag",
 	smash_desc = "Warnt, wenn Kosmischer Schlag bevorsteht.",
