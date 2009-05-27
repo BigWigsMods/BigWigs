@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	hardmode = "Hard Mode Timer",
 	hardmode_desc = "Show Timer for Hard Mode.",
-	hardmode_trigger = "^Now why would you go and do something like that?",
+	hardmode_trigger = "^Now, why would you go and do something like that?",
 	hardmode_message = "Hard Mode activated!",
 	hardmode_warning = "Hard Mode ends",
 
