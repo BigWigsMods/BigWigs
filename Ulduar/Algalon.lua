@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_bar = "Phase %d",
 	
 	engage = "Engage",
-	engage_trigger = "Your actions are illogical",
+	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 	first_engage_trigger = "See your world through my eyes",
 	
 	punch = "Phase Punch",
@@ -98,16 +98,16 @@ L:RegisterTranslations("koKR", function() return {
 
 	constellation = "살아있는 별자리",
 	constellation_desc = "살아있는 별자리 소환을 알립니다.",
-
 	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engate_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
+	engage = "Engagement",
+	engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
 
 	punch = "Coup de poing phasique",
 	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
-	punch_message = "%dx Coups de poing phasiques sur %s",
+	punch_message = "%2$dx Coups de poing phasiques sur %1$s",
 
 	smash = "Choc cosmique",
 	smash_desc = "Prévient quand un Choc cosmique est sur le point d'arriver.",
@@ -119,7 +119,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	bigbang = "Big Bang",
 	bigbang_desc = "Prévient quand un Big Bang est incanté.",
-	bigbang_message = "Big Bang !",	
+	bigbang_message = "Big Bang !",
+	bigbang_soon = "Big Bang imminent !",
 
 	stars = "Collapsing Stars",
 	stars_desc = "Warn when Collapsing Stars spawn",
@@ -131,14 +132,34 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "^Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet.",-- needs check
 
+	punch = "Phasenschlag",
+	punch_desc = "Warnt, wenn jemand 4 Stapel von Phasenschlag hat.",
+	punch_message = "%2$dx Phasenschlag: %1$s!",
+
+	smash = "Kosmischer Schlag",
+	smash_desc = "Warnt, wenn Kosmischer Schlag bevorsteht.",
+	smash_message = "Kosmischer Schlag kommt!",
+
+	blackhole = "Schwarzes Loch",
+	blackhole_desc = "Warnt, wenn ein Schwarzes Loch spawnt.",
+	blackhole_message = "Schwarzes Loch %dx!",
+
+	bigbang = "Großer Knall",
+	bigbang_desc = "Warnt, wenn Großer Knall kanalisiert wird.",
+	bigbang_message = "Großer Knall!",
+	bigbang_soon = "Großer Knall bald!",
 	
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	engage = "激活",
+--	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+
 	punch = "Phase Punch",
 	punch_desc = "当玩家中了4层Phase Punch时发出警报。",
-	punch_message = "%dxPhase Punch：>%s<！",
+	punch_message = "Phase Punch%2$d层：>%1$s<！",
 
 	smash = "Cosmic Smash",
 	smash_desc = "当施放Cosmic Smash时发出警报。",
@@ -148,13 +169,27 @@ L:RegisterTranslations("zhCN", function() return {
 	blackhole_desc = "当黑洞爆炸出现时发出警报。",
 	blackhole_message = "黑洞爆炸：>%dx< 出现！",
 
+	bigbang = "Big Bang",
+	bigbang_desc = "当开始施放 Big Bang 时发出警报。",
+	bigbang_message = "Big Bang！",
+	bigbang_soon = "即将 Big Bang！",
+
+	stars = "Collapsing Stars",
+	stars_desc = "当Collapsing Star出现时发出警报。",
+
+	constellation = "Living Constellations",
+	constellation_desc = "当Living Constellation出现时发出警报。",
+
 	
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	engage = "開戰",
+--	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+
 	punch = "相位拳擊",
 	punch_desc = "當玩家中了4層相位拳擊時發出警報。",
-	punch_message = "%dx相位拳擊： >%s<！",
+	punch_message = "相位拳擊%2$d層： >%1$s<！",
 
 	smash = "宇宙潰擊",
 	smash_desc = "當施放宇宙潰擊時發出警報。",
@@ -164,6 +199,16 @@ L:RegisterTranslations("zhTW", function() return {
 	blackhole_desc = "當黑洞爆炸出現時發出警報。",
 	blackhole_message = "黑洞爆炸：>%dx< 出現！",
 
+	bigbang = "大爆炸",
+	bigbang_desc = "當開始施放大爆炸時發出警報。",
+	bigbang_message = "大爆炸！",
+	bigbang_soon = "即將 大爆炸！",
+
+	stars = "Collapsing Stars",
+	stars_desc = "當Collapsing Star出現時發出警報。",
+
+	constellation = "Living Constellations",
+	constellation_desc = "當Living Constellation出現時發出警報。",
 	
 } end )
 
