@@ -31,6 +31,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
+	["The Observation Ring"] = true,
 
 	cmd = "YoggSaron",
 
@@ -517,8 +518,32 @@ mod.enabletrigger = {boss, sara, brain}
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
+	--self:AddCombatListener("SPELL_AURA_APPLIED", "Fervor", 63138)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "Gaze", 64163)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "CastGaze", 64163)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830, 63881)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveMalady", 63830, 63881)
+	-- 63042 is the add MC during p1, 63120 is the MC when you go insane in p2/3.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042, 63120)
+	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
+	self:AddCombatListener("SPELL_SUMMON", "Guardian", 62979)
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
+end
+
+function mod:VerifyEnable()
+	local z = GetSubZoneText()
+	if z and z == L["The Observation Ring"] then return false end
+	return true
 end
 
 ------------------------------
@@ -637,25 +662,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
-		self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)
-		self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
-		--self:AddCombatListener("SPELL_AURA_APPLIED", "Fervor", 63138)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Linked", 63802)
-		self:AddCombatListener("SPELL_AURA_REMOVED", "Gaze", 64163)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "CastGaze", 64163)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830, 63881)
-		self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveMalady", 63830, 63881)
-		-- 63042 is the add MC during p1, 63120 is the MC when you go insane in p2/3.
-		self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042, 63120)
-		self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
-		self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
-		self:AddCombatListener("SPELL_SUMMON", "Guardian", 62979)
-		self:AddCombatListener("UNIT_DIED", "BossDeath")
-		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
 		phase = 1
 		count = 1
 		if db.phase then

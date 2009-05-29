@@ -225,6 +225,16 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	db = self.db.profile
 	started = nil
+
+	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
+	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
+	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Defender", 64455)
+	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "DefenderKill", 64455)
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 end
@@ -280,15 +290,6 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
-		self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
-		self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
-		self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Swarm", 64396)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Defender", 64455)
-		self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "DefenderKill", 64455)
-		self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 		started = true
 		count = 9
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 

@@ -427,6 +427,19 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Charge", 62279)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "StrikeCooldown", 62130)
+	self:AddCombatListener("SPELL_MISSED", "StrikeCooldown", 62130)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonation", 62526)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Orb", 62016)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Impale", 62331, 62418)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrier", 62338)
+	self:AddCombatListener("SPELL_DAMAGE", "Shock", 62017)
+	self:AddCombatListener("SPELL_MISSED", "Shock", 62017)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
 	db = self.db.profile
@@ -434,7 +447,7 @@ function mod:OnEnable()
 end
 
 function mod:VerifyEnable(unit)
-	return UnitIsEnemy(unit, "player") and true or false
+	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
 ------------------------------
@@ -544,19 +557,6 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
-		self:AddCombatListener("SPELL_CAST_SUCCESS", "Charge", 62279)
-		self:AddCombatListener("SPELL_CAST_SUCCESS", "StrikeCooldown", 62130)
-		self:AddCombatListener("SPELL_MISSED", "StrikeCooldown", 62130)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Strike", 62130)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Detonation", 62526)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Orb", 62016)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Impale", 62331, 62418)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Barrier", 62338)
-		self:AddCombatListener("SPELL_DAMAGE", "Shock", 62017)
-		self:AddCombatListener("SPELL_MISSED", "Shock", 62017)
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 		started = true
 		chargeCount = 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 

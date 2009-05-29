@@ -241,6 +241,13 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Construct", 62488)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "ScorchCast", 62546, 63474)
+	self:AddCombatListener("SPELL_CAST_START", "Jets", 62680, 63472)
+	self:AddCombatListener("SPELL_DAMAGE", "Scorch", 62548, 63475)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
 end
@@ -318,14 +325,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		self:AddCombatListener("SPELL_CAST_START", "Construct", 62488)
-		self:AddCombatListener("SPELL_CAST_SUCCESS", "ScorchCast", 62546, 63474)
-		self:AddCombatListener("SPELL_CAST_START", "Jets", 62680, 63472)
-		self:AddCombatListener("SPELL_DAMAGE", "Scorch", 62548, 63475)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
-		self:AddCombatListener("UNIT_DIED", "BossDeath")
-
 		spawnTime = GetCurrentDungeonDifficulty() == 1 and 40 or 30
 		if db.flame then
 			self:Bar(L["flame_bar"], 21, 62680)

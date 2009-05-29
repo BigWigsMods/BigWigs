@@ -19,6 +19,7 @@ local flashFreezed = mod:NewTargetList()
 local fmt = string.format
 local lastCold = nil
 local cold = GetSpellInfo(62039)
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -264,12 +265,18 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
+	self:RegisterEvent("UNIT_AURA")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 function mod:VerifyEnable(unit)
-	return UnitIsEnemy(unit, "player") and true or false
+	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
 ------------------------------
@@ -320,15 +327,6 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		lastCold = nil
-		wipe(flashFreezed)
-
-		self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
-		self:RegisterEvent("UNIT_AURA")
-		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
 		if db.flash then
 			self:Bar(L["flash_bar"], 35, 61968)
 		end

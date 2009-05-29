@@ -166,6 +166,12 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
 end
@@ -206,12 +212,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
-		self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
-		self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 		self:IfMessage(L["engage_message"]:format(boss), "Attention")
 	end
 end

@@ -384,12 +384,22 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)			--HardMode abilities from Elder Brightleaf
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)		--HardMode abilities from Elder Brightleaf
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--HardMode abilities from Elder Ironbranch
+	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--HardMode abilities from Elder Stonebark 
+	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
 end
 
 function mod:VerifyEnable(unit)
-	return UnitIsEnemy(unit, "player") and true or false
+	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
 ------------------------------
@@ -531,18 +541,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)			--HardMode abilities from Elder Brightleaf
-		self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)		--HardMode abilities from Elder Brightleaf
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--HardMode abilities from Elder Ironbranch
-		self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--HardMode abilities from Elder Stonebark 
-		self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
-		self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
-		self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
-		self:AddCombatListener("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
-		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-		self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-		wipe(root)
 		phase = 1
 		if db.berserk then
 			self:Enrage(600, true)

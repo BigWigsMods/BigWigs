@@ -445,6 +445,17 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
+	self:AddCombatListener("SPELL_CAST_START", "Flames", 64570)
+	self:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
+	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
+	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
+	self:AddCombatListener("SPELL_SUMMON", "Bomb", 63811)
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_LOOT")
+	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:Throttle(2, "MimiLoot")
 	self:Throttle(10, "MimiBarrage")
@@ -452,7 +463,7 @@ function mod:OnEnable()
 end
 
 function mod:VerifyEnable(unit)
-	return UnitIsEnemy(unit, "player") and true or false
+	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
 ------------------------------
@@ -523,17 +534,6 @@ function mod:Magnetic(_, spellID)
 end
 
 local function start()
-	mod:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
-	mod:AddCombatListener("SPELL_CAST_START", "Flames", 64570)
-	mod:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
-	mod:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
-	mod:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
-	mod:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
-	mod:AddCombatListener("SPELL_SUMMON", "Bomb", 63811)
-	mod:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
-	mod:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	mod:RegisterEvent("CHAT_MSG_LOOT")
-	mod:RegisterEvent("BigWigs_RecvSync")
 	ishardmode = nil
 	phase = 1
 	if db.phase then

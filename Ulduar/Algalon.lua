@@ -229,6 +229,15 @@ L:RegisterTranslations("zhTW", function() return {
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
+	self:AddCombatListener("SPELL_CAST_START","BigBang",64443, 64584)
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
 end
@@ -289,20 +298,8 @@ function mod:BigBang()
 	end
 end
 
-local function register()
-	mod:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
-	mod:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
-	mod:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
-	mod:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
-	mod:AddCombatListener("SPELL_CAST_START","BigBang",64443, 64584)
-	mod:AddCombatListener("UNIT_DIED", "BossDeath")
-	mod:RegisterEvent("UNIT_HEALTH")
-	mod:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-end
-
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		register()
 		blackholes = 0
 		phase = 1
 		self:Bar(L["phase_bar"]:format(phase), 8, "INV_Gizmo_01")
@@ -323,7 +320,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["constellation"], 65)
 		end
 	elseif msg:find(L["first_engage_trigger"]) then
-		register()
 		blackholes = 0
 		phase = 1
 		self:Bar(L["phase_bar"]:format(phase), 11, "INV_Gizmo_01")	
