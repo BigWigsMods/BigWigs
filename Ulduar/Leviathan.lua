@@ -89,9 +89,9 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Feindeinheiten erkannt",
 	engage_message = "%s angegriffen!",
 
-	flame = "Flammenstrahl",
-	flame_desc = "Warnung und Timer für Flammenstrahl.",
-	flame_message = "Flammenstrahl!",
+	flame = "Flammendüsen",
+	flame_desc = "Warnung und Timer für Flammendüsen.",
+	flame_message = "Flammendüsen!",
 
 	pursue = "Verfolgung",
 	pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt.",

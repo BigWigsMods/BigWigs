@@ -308,6 +308,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Crusher Tentacle"] = "Schmettertentakel", -- needs verification!
+	["The Observation Ring"] = "Der Beobachtungsring",
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
