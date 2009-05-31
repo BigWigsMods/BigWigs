@@ -197,7 +197,7 @@ L:RegisterTranslations("deDE", function() return {
 	conservator_message = "Konservator!",
 	detonate_message = "Explosionspeitscher!",
 	elementals_message = "Elementare!",
-	tree_message = "Eonars Gabe!",
+	tree_message = "Eonars Geschenk!",
 
 	fury = "Furor der Natur",
 	fury_desc = "Warnt, wer von Furor der Natur betroffen ist und zeigt einen Timer mit der Abklingzeit.",
