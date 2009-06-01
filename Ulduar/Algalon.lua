@@ -71,11 +71,11 @@ L:RegisterTranslations("koKR", function() return {
 	phase_bar = "%d 단계",
 	
 	engage = "전투 시작",
-	engage_trigger = "^너희의 행동은 비논리적이다.",
+	engage_trigger = "^너희 행동은 비논리적이다.",
 	first_engage_trigger = "^내 눈을 통해 너희 세상을 보아라.",
 
 	punch = "위상의 주먹",
-	punch_desc = "위상의 주먹 4중첩이상을 알립니다.",
+	punch_desc = "위상의 주먹 4중첩 이상을 알립니다.",
 	punch_message = "위상의 주먹 %dx: %s",
 
 	smash = "우주의 강타",
