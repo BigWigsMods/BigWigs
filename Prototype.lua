@@ -387,19 +387,8 @@ function BigWigs.modulePrototype:CheckForWipe()
 		self:ScheduleEvent(self.CheckForWipe, 2, self)
 	end
 end
--- Shortcuts for common actions.
 
 do
-	--[[local message = {}
-	function message:Fire(elg)
-		print(elg)
-	end
-	local mt = {__index = message}
-	function BigWigs.modulePrototype:NewMessage(msg, color, icon, sound)
-		local msg = setmetatable({}, mt)
-		msg:Fire(t)
-	end]]
-
 	local keys = setmetatable({}, {__index =
 		function(self, key)
 			if not key then return end
@@ -438,22 +427,16 @@ do
 		end
 	}
 	function BigWigs.modulePrototype:NewTargetList()
-		local m = BigWigs:GetModule("Messages")
-		--if m and m.db.profile.classcolor then
-			return setmetatable({}, mt)
-		--end
-		--return {}
+		return setmetatable({}, mt)
 	end
 
 	function BigWigs.modulePrototype:TargetMessage(formatString, player, color, icon, sound, ...)
-		local m = BigWigs:GetModule("Messages")
 		local text = nil
 		if type(player) == "table" then
 			text = table.concat(player, ", ")
 			wipe(player)
 		else
-			if m and m.db.profile.classcolor then text = coloredNames[player]
-			else text = player end
+			text = coloredNames[player]
 		end
 		self:TriggerEvent("BigWigs_Message", formatString:format(text, ...), color, nil, sound, nil, icon)
 	end

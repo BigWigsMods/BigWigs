@@ -627,7 +627,6 @@ function BigWigs:EnableModule(moduleName, noSync)
 	local m = self:GetModule(moduleName)
 	if m and m:IsBossModule() and not self:IsModuleActive(m) then
 		self:ToggleModuleActive(m, true)
-		m:Message(moduleName, "Core", true)
 		if not noSync then
 			local token = m.synctoken or BBR[moduleName] or nil
 			if not token then return end
@@ -662,23 +661,10 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 	end
 end
 
-do
-	local function mobIsTrigger(module, name)
-		local t = module.enabletrigger
-		if type(t) == "string" then return name == t
-		elseif type(t) == "table" then
-			for i,mob in ipairs(t) do if mob == name then return true end end
-		end
-	end
-
-	function BigWigs:BigWigs_TargetSeen(mobname, unit)
-		for name, module in self:IterateModules() do
-			if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and mobIsTrigger(module, mobname))) then
-				if not module.VerifyEnable or module:VerifyEnable(unit) then
-					self:EnableModule(name)
-				end
-			end
-		end
+function BigWigs:BigWigs_TargetSeen(mobname, unit, module)
+	if self:IsModuleActive(module) then return end
+	if not module.VerifyEnable or module:VerifyEnable(unit) then
+		self:EnableModule(module)
 	end
 end
 
