@@ -132,8 +132,8 @@ L:RegisterTranslations("zhTW", function() return {
 	breath_cooldown = "火息術冷卻！",
 
 	drakes = "飛龍增援",
-	drakes_desc = "當每只飛龍增援加入戰斗時發出警報。",
-	drakes_incomingsoon = "約5秒后。%s即將到來！",
+	drakes_desc = "當每只飛龍增援加入戰鬥時發出警報。",
+	drakes_incomingsoon = "約5秒後。%s即將到來！",
 
 	twilight = "暮光召喚",
 	twilight_desc = "當暮光召喚時發出警報。",
