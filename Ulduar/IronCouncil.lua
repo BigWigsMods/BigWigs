@@ -333,7 +333,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	engage_trigger1 = "Чужаки! Вам не одалеть Железное Собрание!",
+	engage_trigger1 = "Чужаки! Вам не одолеть Железное Собрание!",
 	engage_trigger2 = "Я буду спокоен, лишь когда окончательно истреблю вас.",
 	engage_trigger3 = "Кто бы вы ни были - жалкие бродяги или великие герои... Вы всего лишь смертные!",
 
