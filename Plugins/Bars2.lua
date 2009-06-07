@@ -516,7 +516,7 @@ local function rearrangeBars(anchor)
 	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 	for i, bar in ipairs(tmp) do
 		bar:ClearAllPoints()
-		if up or (db.emphasizeGrowup and bar:Get("emphasized")) then
+		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
 			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
 			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
 			lastUpBar = bar
@@ -529,7 +529,7 @@ local function rearrangeBars(anchor)
 end
 
 local function barStopped(event, bar)
-	local a = bar:Get("anchor")
+	local a = bar:Get("bigwigs:anchor")
 	if a and a.bars and a.bars[bar] then
 		a.bars[bar] = nil
 		rearrangeBars(a)
@@ -714,7 +714,7 @@ local function colorBackground() return unpack(colors.db.profile.barBackground) 
 local function stopBars(bars, module, text)
 	local dirty = nil
 	for k in pairs(bars) do
-		if k:Get("module") == module and (not text or k.candyBarLabel:GetText() == text) then
+		if k:Get("bigwigs:module") == module and (not text or k.candyBarLabel:GetText() == text) then
 			k:Stop()
 			dirty = true
 		end
@@ -739,7 +739,7 @@ do
 		if not db.emphasize then return end
 		local dirty = nil
 		for k in pairs(normalAnchor.bars) do
-			if not k:Get("emphasized") and k.remaining <= 10 then
+			if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
@@ -756,8 +756,8 @@ function plugin:BigWigs_StartBar(module, text, time, icon)
 	local bar = candy:New(media:Fetch(mType, db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
 	bar.candyBarBackground:SetVertexColor(colorBackground())
-	bar:Set("module", module)
-	bar:Set("anchor", normalAnchor)
+	bar:Set("bigwigs:module", module)
+	bar:Set("bigwigs:anchor", normalAnchor)
 	bar:SetColor(colorNormal())
 	bar.candyBarLabel:SetTextColor(colorText())
 	bar.candyBarLabel:SetJustifyH(db.align)
@@ -773,7 +773,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon)
 		self:EmphasizeBar(bar)
 	end
 	bar:Start()
-	rearrangeBars(bar:Get("anchor"))
+	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
 
 --------------------------------------------------------------------------------
@@ -782,12 +782,12 @@ end
 
 local function flash(self)
 	local r, g, b, a = self.candyBarBackground:GetVertexColor()
-	if self:Get("down") then
+	if self:Get("bigwigs:down") then
 		r = r - 0.05
-		if r <= 0 then self:Set("down", nil) end
+		if r <= 0 then self:Set("bigwigs:down", nil) end
 	else
 		r = r + 0.05
-		if r >= 1 then self:Set("down", true) end
+		if r >= 1 then self:Set("bigwigs:down", true) end
 	end
 	self.candyBarBackground:SetVertexColor(r, g, b, a)
 end
@@ -796,7 +796,7 @@ function plugin:EmphasizeBar(bar)
 	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
-		bar:Set("anchor", emphasizeAnchor)
+		bar:Set("bigwigs:anchor", emphasizeAnchor)
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
 	end
 	if db.emphasizeFlash then
@@ -804,6 +804,6 @@ function plugin:EmphasizeBar(bar)
 	end
 	bar:SetColor(colorEmphasized())
 	bar:SetScale(db.emphasizeScale)
-	bar:Set("emphasized", true)
+	bar:Set("bigwigs:emphasized", true)
 end
 
