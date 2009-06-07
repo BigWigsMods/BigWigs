@@ -83,8 +83,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	arm = "Mort des bras",
-	arm_desc = "Prévient quand le bras gauche et/ou droit meurt.",
+	arm = "Destruction des bras",
+	arm_desc = "Prévient quand le bras gauche et/ou droit est détruit.",
 	left_dies = "Bras gauche éliminé",
 	right_dies = "Bras droit éliminé",
 	left_wipe_bar = "Réapparition du bras gauche",
@@ -99,7 +99,7 @@ L:RegisterTranslations("frFR", function() return {
 	shockwave_trigger = "OUBLI !",
 
 	eyebeam = "Rayon de l'oeil focalisé",
-	eyebeam_desc = "Prévient quand un Rayon de l'oeil est incanté.",
+	eyebeam_desc = "Prévient quand un Rayon de l'oeil focalisé est incanté.",
 	eyebeam_message = "Arrivée d'un Rayon de l'oeil !",
 	eyebeam_bar = "~Prochain Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",

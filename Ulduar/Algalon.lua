@@ -34,11 +34,11 @@ L:RegisterTranslations("enUS", function() return {
 	engage_warning = "Phase 1",
 	phase2_warning = "Phase 2 incoming",
 	phase_bar = "Phase %d",
-	
+
 	engage = "Engage",
 	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 	first_engage_trigger = "See your world through my eyes",
-	
+
 	punch = "Phase Punch",
 	punch_desc = "Warn when someone has 4 stacks of Phase Punch",
 	punch_message = "%dx Phase Punch on %s",
@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_warning = "1 단계",
 	phase2_warning = "곧 2단계",
 	phase_bar = "%d 단계",
-	
+
 	engage = "전투 시작",
 	engage_trigger = "^너희 행동은 비논리적이다.",
 	first_engage_trigger = "^내 눈을 통해 너희 세상을 보아라.",
@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	smash = "우주의 강타",
 	smash_desc = "우주의 강타를 알립니다.",
 	smash_message = "곧 우주의 강타!",
-	
+
 	blackhole = "검은 구멍 폭발",
 	blackhole_desc = "검은 구멍 폭발 소환을 알립니다.",
 	blackhole_message = "검은 구멍 폭발 %dx 소환",
@@ -90,7 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 	bigbang_desc = "대폭발 시전 시작을 알립니다.",
 	bigbang_message = "대폭발!",
 	bigbang_soon = "곧 대폭발!",
-	
+
 	stars = "붕괴의 별",
 	stars_desc = "붕괴의 별 소환을 알립니다.",
 
@@ -100,8 +100,15 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	phase = "Phases",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
+	engage_warning = "Phase 1",
+	phase2_warning = "Arrivée de la phase 2",
+	phase_bar = "Phase %d",
+
 	engage = "Engagement",
 	engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
+	first_engage_trigger = "See your world through my eyes",
 
 	punch = "Coup de poing phasique",
 	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
@@ -121,12 +128,10 @@ L:RegisterTranslations("frFR", function() return {
 	bigbang_soon = "Big Bang imminent !",
 
 	stars = "Collapsing Stars",
-	stars_desc = "Warn when Collapsing Stars spawn",
+	stars_desc = "Prévient quand des Collapsing Stars apparaissent.",
 
 	constellation = "Living Constellations",
-	constellation_desc = "Warn when Living Constellations spawn",
-
-	
+	constellation_desc = "Prévient quand des Living Constellations apparaissent.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -157,7 +162,7 @@ L:RegisterTranslations("deDE", function() return {
 	bigbang_desc = "Warnt, wenn Großer Knall kanalisiert wird.",
 	bigbang_message = "Großer Knall!",
 	bigbang_soon = "Großer Knall bald!",
-	
+
 	--[[stars = "Collapsing Stars",
 	stars_desc = "Warn when Collapsing Stars spawn",
 
@@ -191,8 +196,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	constellation = "Living Constellations",
 	constellation_desc = "当Living Constellation出现时发出警报。",
-
-	
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -221,7 +224,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	constellation = "Living Constellations",
 	constellation_desc = "當Living Constellation出現時發出警報。",
-	
 } end )
 
 ------------------------------

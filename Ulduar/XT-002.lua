@@ -96,10 +96,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	exposed = "Coeur exposé",
-	exposed_desc = "Prévient quand le coeur du XT-002 est exposé.",
-	exposed_warning = "Coeur exposé imminent",
-	exposed_message = "Coeur exposé !",
+	exposed = "Cœur exposé",
+	exposed_desc = "Prévient quand le cœur du XT-002 est exposé.",
+	exposed_warning = "Cœur exposé imminent",
+	exposed_message = "Cœur exposé !",
 
 	gravitybomb = "Bombe à gravité",
 	gravitybomb_desc = "Prévient quand un joueur subit les effets d'une Bombe à gravité.",
@@ -114,9 +114,9 @@ L:RegisterTranslations("frFR", function() return {
 	lightbomb_you = "Lumière incendiaire sur VOUS !",
 	lightbomb_other = "Lumière incendiaire : %s",
 
-	heartbreak = "Bris du coeur",
-	heartbreak_desc = "Prévient quand le XT-002 gagne Bris du coeur.",
-	heartbreak_message = "Bris du coeur !",
+	heartbreak = "Bris du cœur",
+	heartbreak_desc = "Prévient quand le cœur du XT-002 est brisé.",
+	heartbreak_message = "Bris du cœur !",
 
 	tantrum = "Colère assourdissante",
 	tantrum_desc = "Prévient quand le XT-002 incante une Colère assourdissante en mode difficile.",

@@ -239,6 +239,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Crusher Tentacle"] = "Tentacule écraseur",
+	["The Observation Ring"] = "le cercle d'observation",
 
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",

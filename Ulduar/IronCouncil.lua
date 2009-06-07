@@ -140,7 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	overload = "Surcharge",
 	overload_desc = "Prévient quand Brundir incante une Surcharge.",
-	overload_message = "Explosion de la Surcharge dans 6 sec. !",
+	overload_message = "Surcharge dans 6 sec. !",
 
 	power = "Rune de puissance",
 	power_desc = "Prévient quand Molgeim incante une Rune de puissance.",
@@ -153,6 +153,7 @@ L:RegisterTranslations("frFR", function() return {
 	death = "Rune de mort sur vous",
 	death_desc = "Prévient quand vous vous trouvez sur une Rune de mort.",
 	death_message = "Rune de mort sur VOUS !",
+	death_bar = "Rune de mort",
 
 	summoning = "Rune d'invocation",
 	summoning_desc = "Prévient quand Molgeim incante une Rune d'invocation.",
@@ -174,7 +175,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	shield = "Bouclier des runes",
 	shield_desc = "Prévient quand Molgeim incante un Bouclier des runes.",
-	shield_message = "Bouclier des runes actif !",
+	shield_message = "Bouclier des runes !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Puissance accablante ou ciblé par un Eclair tourbillonnant (nécessite d'être assistant ou mieux).",
@@ -540,7 +541,7 @@ function mod:Deaths(unit, guid)
 		end
 	end
 	if deaths == 3 then
-		self:BossDeath(nil, self.guid, true)
+		self:BossDeath(nil, self.guid)
 	end
 end
 
