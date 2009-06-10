@@ -295,7 +295,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
---	animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
+	animus_trigger = "薩倫煙霧聚集起來并且劇烈地旋轉，形成一個怪物般的形體!",
 	animus_message = "薩倫聚惡體 出現！",
 
 	vapor = "薩倫煙霧",
