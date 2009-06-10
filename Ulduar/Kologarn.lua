@@ -152,11 +152,11 @@ L:RegisterTranslations("zhCN", function() return {
 	shockwave_desc = "当震荡波到来前发出警报。",
 --	shockwave_trigger = "Oblivion!",
 
-	eyebeam = "Focused Eyebeam",
-	eyebeam_desc = "当玩家中了Focused Eyebeam时发出警报。",
-	eyebeam_message = "Eyebeam：>%s<！",
-	eyebeam_bar = "<Eyebeam>",
-	eyebeam_you = ">你< Eyebeam！",
+	eyebeam = "聚焦视线",
+	eyebeam_desc = "当玩家中了聚焦视线时发出警报。",
+	eyebeam_message = "聚焦视线：>%s<！",
+	eyebeam_bar = "<聚焦视线>",
+	eyebeam_you = ">你< 聚焦视线！",
 
 	armor = "粉碎护甲",
 	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",

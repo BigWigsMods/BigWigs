@@ -154,9 +154,9 @@ L:RegisterTranslations("zhCN", function() return {
 	swarm_you = ">你< Guardian Swarm！",
 	swarm_bar = "<Guardian Swarm 冷却>",
 
-	defender = "野性防卫者", --check
-	defender_desc = "当野性防卫者出现时发出警报。",
-	defender_message = "野性防卫者（%d/9）！",
+	defender = "野性防御者",
+	defender_desc = "当野性防御者出现时发出警报。",
+	defender_message = "野性防御者（%d/9）！",
 
 	sonic = "Sonic Screech",
 	sonic_desc = "当欧尔莉亚施放Sonic Screech时发出警报。",

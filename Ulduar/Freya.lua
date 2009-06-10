@@ -246,7 +246,7 @@ L:RegisterTranslations("zhCN", function() return {
 --	tree_trigger = "A Lifebinder's Gift begins to grow!",
 	conservator_message = "Conservator!",
 	detonate_message = "Detonating lashers!",
-	elementals_message = "Elementals!",
+	elementals_message = "古代水之精魂！",
 	tree_message = "Eonar's Gift出现！",
 
 	fury = "自然之怒",
@@ -260,17 +260,17 @@ L:RegisterTranslations("zhCN", function() return {
 	sunbeam_other = "Sunbeam：>%s<！",
 
 	tremor = "大地震颤",
-	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。（Elder Stonebark）",
+	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。（石树长老）",
 	tremor_message = "大地震颤！",
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
 
 	root = "钢铁根须",
-	root_desc = "当玩家中了钢铁根须时发出警报。（Elder Ironbranch）",
+	root_desc = "当玩家中了钢铁根须时发出警报。（铁枝长老）",
 	root_message = "钢铁根须：>%s<！",
 
 	energy = "不稳定的能量",
-	energy_desc = "当玩家中了不稳定的能量时发出警报。（Elder Brightleaf）",
+	energy_desc = "当玩家中了不稳定的能量时发出警报。（明叶长老）",
 	energy_message = ">你<不稳定的能量！",
 
 	icon = "位置标记",
@@ -281,7 +281,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "必須守護大溫室!",
-	engage_trigger2 = "長者，賦予我你們的力量!",
+	engage_trigger2 = "長者們，賦予我你們的力量!",
 
 	phase = "階段",
 	phase_desc = "當進入不同階段發出警報。",

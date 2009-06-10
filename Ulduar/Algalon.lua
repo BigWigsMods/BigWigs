@@ -171,8 +171,15 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	phase = "阶段",
+	phase_desc = "当进入不同阶段时发出警报。",
+	engage_warning = "第一阶段！",
+	phase2_warning = "即将 第二阶段！",
+	phase_bar = "<阶段%d>",
+
 	engage = "激活",
 --	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+--	first_engage_trigger = "See your world through my eyes",
 
 	punch = "Phase Punch",
 	punch_desc = "当玩家中了4层Phase Punch时发出警报。",
@@ -199,8 +206,15 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	phase = "階段",
+	phase_desc = "當進入不同階段時發出警報。",
+	engage_warning = "第一階段！",
+	phase2_warning = "即將 第二階段！",
+	phase_bar = "<階段%d>",
+
 	engage = "開戰",
---	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+	engage_trigger = "你的行為毫無意義。這場沖突的結果早已計算出來了。不論結局為何，萬神殿仍將收到觀察者的訊息。",
+--	first_engage_trigger = "See your world through my eyes",
 
 	punch = "相位拳擊",
 	punch_desc = "當玩家中了4層相位拳擊時發出警報。",
@@ -219,11 +233,11 @@ L:RegisterTranslations("zhTW", function() return {
 	bigbang_message = "大爆炸！",
 	bigbang_soon = "即將 大爆炸！",
 
-	stars = "Collapsing Stars",
-	stars_desc = "當Collapsing Star出現時發出警報。",
+	stars = "崩陷之星",
+	stars_desc = "當崩陷之星出現時發出警報。",
 
-	constellation = "Living Constellations",
-	constellation_desc = "當Living Constellation出現時發出警報。",
+	constellation = "活化星宿",
+	constellation_desc = "當活化星宿出現時發出警報。",
 } end )
 
 ------------------------------

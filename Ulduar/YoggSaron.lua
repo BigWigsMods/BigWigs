@@ -379,6 +379,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 --	["Crusher Tentacle"] = true,
+--	["The Observation Ring"] = true,
 
 	phase = "阶段",
 	phase_desc = "当阶段改变发出警报。",
@@ -438,15 +439,16 @@ L:RegisterTranslations("zhCN", function() return {
 	mindcontrol_desc = "当玩家中了统御意志时发出警报。",
 	mindcontrol_message = "统御意志：>%s<！",
 
-	guardian = "召唤守卫者出现", --phase 1
-	guardian_desc = "当尤格-萨隆召唤守卫者出现时发出警报。",
-	guardian_message = "召唤守卫者：>%d<！",
+	guardian = "召唤卫士出现", --phase 1
+	guardian_desc = "当尤格-萨隆召唤卫士出现时发出警报。",
+	guardian_message = "召唤卫士：>%d<！",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	["Crusher Tentacle"] = "粉碎觸手",
+--	["The Observation Ring"] = true,
 
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",

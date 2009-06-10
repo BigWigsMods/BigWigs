@@ -164,16 +164,16 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "You will suffer for this trespass!",
 
-	cold = "Biting Cold（成就）",
-	cold_desc = "当你受到2层Biting Cold效果时发出警报。",
-	cold_message = "Biting Cold（%d层） - 移动！",
+	cold = "刺骨之寒（成就）",
+	cold_desc = "当你受到2层刺骨之寒效果时发出警报。",
+	cold_message = "刺骨之寒（%d层） - 移动！",
 
-	flash = "冰霜速冻",
-	flash_desc = "当正在施放冰霜速冻和玩家中了冰霜速冻时发出警报。",
-	flash_message = "冰霜速冻：>%s<！",
-	flash_warning = "冰霜速冻！",
-	flash_soon = "5秒后，冰霜速冻！",
-	flash_bar = "<冰霜速冻>",
+	flash = "急速冻结",
+	flash_desc = "当正在施放急速冻结和玩家中了急速冻结时发出警报。",
+	flash_message = "急速冻结：>%s<！",
+	flash_warning = "急速冻结！",
+	flash_soon = "5秒后，急速冻结！",
+	flash_bar = "<急速冻结>",
 
 	frozenblow = "Frozen Blow",
 	frozenblow_desc = "当霍迪尔获得Frozen Blow效果时发出警报。",

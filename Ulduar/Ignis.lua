@@ -178,15 +178,15 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	construct = "启动傀儡",
-	construct_desc = "当启动傀儡时发出警报。",
-	construct_message = "即将 傀儡！",
-	construct_warning = "5秒后，傀儡出现！",
-	construct_bar = "<下一傀儡>",
+	construct = "启动铸像",
+	construct_desc = "当启动铸像时发出警报。",
+	construct_message = "即将 铸像！",
+	construct_warning = "5秒后，铸像出现！",
+	construct_bar = "<下一铸像>",
 
 	brittle = "Brittle",
-	brittle_desc = "当Iron Construct获得Brittle时发出警报。",
-	brittle_message = "Iron Construct - Brittle！",
+	brittle_desc = "当铁铸像获得Brittle时发出警报。",
+	brittle_message = "铁铸像 - Brittle！",
 
 	flame = "Flame Jets",
 	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",

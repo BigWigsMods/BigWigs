@@ -228,6 +228,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+--	["Vezax Bunny"] = true, -- For emote catching.
+
 	flame = "灼热烈焰",
 	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
 	flame_message = "灼热烈焰！",
@@ -236,14 +238,14 @@ L:RegisterTranslations("zhCN", function() return {
 
 	surge = "Surge of Darkness",
 	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
-	--surge_message = "Surge of Darkness！",
-	--surge_cast = "正在施放 Surge of Darkness！",
-	--surge_bar = "<下一Surge of Darkness>",
+	surge_message = "Surge of Darkness：>%d<！",
+	surge_cast = "正在施放 Surge of Darkness：>%d<！",
+	surge_bar = "<Surge of Darkness：%d>",
 
-	animus = "萨隆邪铁Animus",
-	animus_desc = "当萨隆邪铁Animus出现时发出警报。",
+	animus = "萨隆邪铁畸体",
+	animus_desc = "当萨隆邪铁畸体出现时发出警报。",
 --	animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
-	animus_message = "萨隆邪铁Animus 出现！",
+	animus_message = "萨隆邪铁畸体 出现！",
 
 	vapor = "萨隆邪铁蒸汽",
 	vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。",
@@ -255,17 +257,17 @@ L:RegisterTranslations("zhCN", function() return {
 	vaporstack_desc = "当玩家中了5层或更多萨隆邪铁蒸汽时发出警报。",
 	vaporstack_message = "萨隆邪铁蒸汽：>x%d<！",
 
-	crash = "Shadow Crash",
-	crash_desc = "当玩家中了维扎克斯施放的Shadow Crash时发出警报。",
-	crash_you = ">你< Shadow Crash！",
-	crash_other = "Shadow Crash：>%s<！",
-	crash_say = ">我< Shadow Crash！",
+	crash = "暗影冲撞",
+	crash_desc = "当玩家中了维扎克斯施放的暗影冲撞时发出警报。",
+	crash_you = ">你< 暗影冲撞！",
+	crash_other = "暗影冲撞：>%s<！",
+	crash_say = ">我< 暗影冲撞！",
 	
-	crashsay = "自身Shadow Crash",
-	crashsay_desc = "当你中了Shadow Crash时发出说话警报。",
+	crashsay = "自身暗影冲撞",
+	crashsay_desc = "当你中了暗影冲撞时发出说话警报。",
 
-	crashicon = "Shadow Crash标记",
-	crashicon_desc = "为中了Shadow Crash的队员打上蓝色方框团队标记。（需要权限）",
+	crashicon = "暗影冲撞标记",
+	crashicon_desc = "为中了暗影冲撞的队员打上蓝色方框团队标记。（需要权限）",
 
 	mark = "无面者的印记",
 	mark_desc = "当玩家中了无面者的印记的时发出警报。",
@@ -273,10 +275,12 @@ L:RegisterTranslations("zhCN", function() return {
 	mark_message_other = "无面者的印记：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了Shadow Crash的队员打上团队标记。（需要权限）",
+	icon_desc = "为中了暗影冲撞的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+--	["Vezax Bunny"] = true, -- For emote catching.
+
 	flame = "灼熱烈焰",
 	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
 	flame_message = "灼熱烈焰！",
@@ -285,9 +289,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	surge = "暗鬱奔騰",
 	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
-	--surge_message = "暗鬱奔騰！",
-	--surge_cast = "正在施放 暗鬱奔騰！",
-	--surge_bar = "<下一暗鬱奔騰>",
+	surge_message = "暗鬱奔騰：>%d<！",
+	surge_cast = "正在施放 暗鬱奔騰：>%d<！",
+	surge_bar = "<暗鬱奔騰：%d>",
 
 	animus = "薩倫聚惡體",
 	animus_desc = "當薩倫聚惡體出現時發出警報。",
