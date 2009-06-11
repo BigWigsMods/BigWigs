@@ -76,7 +76,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Play sound on proximity."] = true,
 	["Disabled"] = true,
 	["Disable the proximity display for all modules that use it."] = true,
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = true,
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = true,
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = true,
 
 	proximity = "Proximity display",
@@ -85,7 +85,7 @@ L:RegisterTranslations("enUS", function() return {
 	font = "Fonts\\FRIZQT__.TTF",
 
 	["Close"] = true,
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = true,
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true,
 	["Test"] = true,
 	["Perform a Proximity test."] = true,
 	["Display"] = true,
@@ -109,7 +109,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Play sound on proximity."] = "近距离时声效提示。",
 	["Disabled"] = "禁用",
 	["Disable the proximity display for all modules that use it."] = "禁止所有首领模块使用近距离。",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示，若要再次使用请开启首领模块选项。",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "近距离显示已被锁定，需要移动或其他选项，右击 Big Wigs 图标，附加功能 -> 近距离 -> 显示可以切换锁定选项。",
 
 	proximity = "近距离显示",
@@ -118,7 +117,6 @@ L:RegisterTranslations("zhCN", function() return {
 	font = "Fonts\\ZYKai_T.TTF",
 
 	["Close"] = "关闭",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "关闭并防止以后的首领模块（如可用）启用近距离显示，直到进入相关首领模块并打开“近距离”选项。",
 	["Test"] = "测试",
 	["Perform a Proximity test."] = "距离报警测试。",
 	["Display"] = "显示",
@@ -142,7 +140,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Play sound on proximity."] = "접근 표시에 효과음을 재생합니다.",
 	["Disabled"] = "미사용",
 	["Disable the proximity display for all modules that use it."] = "모든 모듈의 접근 표시를 비활성화 합니다.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s에 대한 접근 표시가 비활성화 되었습니다. 다시 사용하려면 해당 보스 모듈의 설정을 사용하세요.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "접근 표시가 고정되어 있습니다. 고정을 해제하길 원하거나 설정하려면 Big Wigs 아이콘의 우클릭하여 기타 -> 접근 -> 표시 이곳을 통해 이동 또는 기타 설정을 할 수 있습니다.",
 
 	proximity = "접근 표시",
@@ -151,7 +148,6 @@ L:RegisterTranslations("koKR", function() return {
 	font = "Fonts\\2002.TTF",
 	
 	["Close"] = "닫기",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "활성화된 보스 모듈을 통해서 또는 표시된 접근 표시창을 닫습니다.",
 	["Test"] = "테스트",
 	["Perform a Proximity test."] = "접근 테스트를 실행합니다.",
 	["Display"] = "표시",
@@ -175,7 +171,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Play sound on proximity."] = "Joue un son quand un autre joueur est trop proche de vous.",
 	["Disabled"] = "Désactivé",
 	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "L'affichage de proximité a été désactivé pour %s. Veuillez utiliser les options du module du boss pour l'activer à nouveau.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "L'affichage de proximité a été verrouillé. Vous devez faire un clic droit sur l'icône de BigWigs, puis allez dans Extras -> Proximité -> Affichage et décocher l'option Verrouiller si vous voulez le déplacer ou accédez aux autres options.",
 
 	proximity = "Proximité",
@@ -184,7 +179,6 @@ L:RegisterTranslations("frFR", function() return {
 	font = "Fonts\\FRIZQT__.TTF",
 
 	["Close"] = "Fermer",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Ferme l'affichage de proximité et empêche ce dernier de se montrer à nouveau pour le module de boss actif (s'il y en a un) jusqu'à ce que vous réactiviez l'affichage de proximité dans les options du boss en question.",
 	["Test"] = "Test",
 	["Perform a Proximity test."] = "Effectue un test de proximité.",
 	["Display"] = "Affichage",
@@ -208,7 +202,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Play sound on proximity."] = "Spielt einen Sound ab, wenn du zu nahe an einem anderen Spieler stehst.",
 	["Disabled"] = "Deaktivieren",
 	["Disable the proximity display for all modules that use it."] = "Deaktiviert die Anzeige naher Spieler für alle Module, die sie benutzen.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die Anzeige naher Spieler wurde für %s deaktiviert, bitte benutze die Optionen des Bossmoduls, um sie wieder zu aktivieren.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Die Anzeige naher Spieler wurde gesperrt. Falls du das Fenster wieder bewegen oder Zugang zu den anderen Optionen haben willst, musst du das Big Wigs Symbol rechts-klicken, zu Extras -> Nähe -> Anzeige gehen und die Option 'Sperren' ausschalten.",
 
 	proximity = "Nähe",
@@ -217,7 +210,6 @@ L:RegisterTranslations("deDE", function() return {
 	font = "Fonts\\FRIZQT__.TTF",
 
 	["Close"] = "Schließen",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Schließt und verhindert zukünftig die Anzeige naher Spieler für das aktive Bossmodul (falls eines geladen ist) solange, bis du die Option 'Nähe' des entsprechenden Bossmoduls wieder einschaltest.",
 	["Test"] = "Test",
 	["Perform a Proximity test."] = "Führt einen Test der Anzeige naher Spieler durch.",
 	["Display"] = "Anzeige",
@@ -241,7 +233,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Play sound on proximity."] = "接近時發出音效。",
 	["Disabled"] = "禁用",
 	["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用。",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s模組的鄰近顯示功能已禁用，請用模組選單開啟。",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "鄰近顯示視窗已經鎖定,你需要右鍵點擊BigWigs圖示,移到附加功能 -> 鄰近顯示 -> 切換鎖定選項如果你想要移動視窗或是透過其他設定.",
 
 	proximity = "鄰近顯示",
@@ -250,7 +241,6 @@ L:RegisterTranslations("zhTW", function() return {
 	font = "Fonts\\bHEI01B.TTF",
 
 	["Close"] = "關閉",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "關閉並防止以後的首領模組（如可用）啟用鄰近顯示，直到進入相關首領模組並打開“鄰近顯示”選項。",
 	["Test"] = "測試",
 	["Perform a Proximity test."] = "進行鄰近顯示測試。",
 	["Display"] = "顯示",
@@ -274,7 +264,6 @@ L:RegisterTranslations("esES", function() return {
 	["Play sound on proximity."] = "Tocar sonido cuando est\195\169 en proximidad",
 	["Disabled"] = "Desactivado",
 	["Disable the proximity display for all modules that use it."] = "Desactivar la ventana de proximidad para todos los m\195\179dulos que lo usen",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "La ventana de proximidad ha sido desactivada por %s, por favor use las opciones de los m\195\179dulos de jefes para activarlo de nuevo",
 
 	proximity = "Ventana de proximidad",
 	proximity_desc = "Muestra la ventana de proximidad cuando sea apropiado para este encuentro, listando los jugadores que est\195\161n demasiado cerca de t\195\173.",
@@ -291,7 +280,6 @@ L:RegisterTranslations("ruRU", function() return {
 	["Play sound on proximity."] = "Проиграть звук при приближении игроков.",
 	["Disabled"] = "Отключить",
 	["Disable the proximity display for all modules that use it."] = "Отключить отображение окна близости для всех модулей использующих его.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Отображение модуля близости отключен в %s, пожалуйста воспользуйтесь опциями босс-модуля, для того чтобы включить его снова.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Отображение модуля близости зафиксировано, вам нужно нажать правую клавишу мыши по иконке Big Wigs, перейти в Extras -> Близость -> Отображение и переключить опцию Фиксировать, если вы хотите его переместить или получить доступ к другим опциям.",
 
 	proximity = "Отображение близости",
@@ -300,7 +288,6 @@ L:RegisterTranslations("ruRU", function() return {
 	font = "Fonts\\NIM_____.ttf",
 
 	["Close"] = "Закрыть",
-	["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."] = "Закрыть отображение близости и предотвращает показ его еще раз при активации модуля босса (если таковые имеются), до тех пор, пока вы зайдёте в настройки соответствующего модуля босса и не включите обратно 'Близость'.",
 	["Test"] = "Тест",
 	["Perform a Proximity test."] = "Тест близости",
 	["Display"] = "Отображение",
@@ -428,8 +415,8 @@ plugin.consoleOptions = {
 				close = {
 					type = "execute",
 					name = L["Close"],
-					desc = L["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."],
-					func = "CloseAndDisableProximity",
+					desc = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."],
+					func = "CloseProximity",
 					order = 4,
 				},
 			},
@@ -470,12 +457,8 @@ end
 -----------------------------------------------------------------------
 
 function plugin:BigWigs_ShowProximity(module)
-	if active and active ~= module then
-		error("The proximity module is already running for another boss module.")
-	end
-
+	if active then error("The proximity window is already running for another module.") end
 	active = module
-
 	self:OpenProximity()
 end
 
@@ -504,36 +487,27 @@ end
 --      Util
 -----------------------------------------------------------------------
 
-function plugin:CloseAndDisableProximity()
-	self:CloseProximity()
-
-	if active then
-		active.db.profile.proximity = nil
-		BigWigs:Print(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."]:format(active:ToString()))
-		active = nil
-	end
-	dew:Close()
-end
-
 function plugin:CloseProximity()
 	if anchor then anchor:Hide() end
 	self:CancelScheduledEvent("bwproximityupdate")
+	dew:Close()
 end
 
 function plugin:OpenProximity()
-	if self.db.profile.disabled or not active or not active.proximityCheck or not active.db.profile.proximity then return end
+	if self.db.profile.disabled then return end
+	if active and (not active.proximityCheck or not active.db.profile.proximity) then return end
 	self:SetupFrames()
 
 	wipe(tooClose)
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 
-	if active.proximitySilent then
+	if not active or active.proximitySilent then
 		anchor.sound:Hide()
 	else
 		anchor.sound:Show()
 	end
 
-	anchor.header:SetText(active.proximityHeader or L["Close Players"])
+	anchor.header:SetText(active and active.proximityHeader or L["Close Players"])
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
 		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .5, self)
@@ -541,27 +515,26 @@ function plugin:OpenProximity()
 end
 
 function plugin:TestProximity()
-	self.db.profile.proximity = true
-	self:BigWigs_ShowProximity(self)
+	if active then error("The proximity module is already running for another boss module.") end
+	self:OpenProximity()
 end
 
 function plugin:UpdateProximity(list)
 	if not list then
-		if not active or not active.proximityCheck then return end
 		local num = GetNumRaidMembers()
 		for i = 1, num do
 			local n = GetRaidRosterInfo(i)
 			if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
-				if type(active.proximityCheck) == "function" then
-					if active.proximityCheck(n) then
-						table.insert(tooClose, coloredNames[n])
-					end
-				elseif active.proximityCheck == "bandage" then
+				if not active or not active.proximityCheck or type(active.proximityCheck) == "bandage" then
 					for i, v in ipairs(bandages) do
 						if IsItemInRange(v, n) == 1 then
 							table.insert(tooClose, coloredNames[n])
 							break
 						end
+					end
+				elseif active and active.proximityCheck == "function" then
+					if active.proximityCheck(n) then
+						table.insert(tooClose, coloredNames[n])
 					end
 				end
 			end
@@ -579,7 +552,7 @@ function plugin:UpdateProximity(list)
 		local t = time()
 		if t > lastplayed + 1 then
 			lastplayed = t
-			if self.db.profile.sound and UnitAffectingCombat("player") and not active.proximitySilent then
+			if active and self.db.profile.sound and UnitAffectingCombat("player") and not active.proximitySilent then
 				self:TriggerEvent("BigWigs_Sound", "Alarm")
 			end
 		end
@@ -673,10 +646,15 @@ function plugin:SetupFrames()
 	close:SetHeight(16)
 	close:SetWidth(16)
 	close.tooltipHeader = L["Close"]
-	close.tooltipText = L["Closes the proximity display and prevents showing it ever again for the active boss module (if any), until you go into the options for the relevant boss module and toggle the 'Proximity' option back on."]
+	close.tooltipText = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."]
 	close:SetScript("OnEnter", onControlEnter)
 	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function() plugin:CloseAndDisableProximity() end)
+	close:SetScript("OnClick", function()
+		if active then
+			BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
+		end
+		plugin:CloseProximity()
+	end)
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	display.close = close
 

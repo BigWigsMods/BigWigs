@@ -9,7 +9,8 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "proximity", "berserk", "bosskill"}
+mod.proximityCheck = "bandage"
 
 ------------------------------
 --      Are you local?      --
@@ -450,6 +451,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
+	--self:AddCombatListener("SPELL_AURA_APPLIED", "Shell", 63666, 65026)
 	self:AddCombatListener("SPELL_SUMMON", "Magnetic", 64444)
 	self:AddCombatListener("SPELL_SUMMON", "Bomb", 63811)
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
@@ -469,6 +471,10 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+--[[function mod:Shell(player, spellId)
+	self:Icon(player)
+end]]
 
 function mod:Bomb(_, spellId)
 	if db.bomb then
@@ -562,6 +568,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["hardmode_message"], "Attention", 64582)
 			self:DelayedMessage(600, L["hardmode_warning"], "Attention")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		if db.berserk then
@@ -580,6 +587,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.fbomb and ishardmode then
 			self:Bar(L["fbomb_bar"], 45, 64623)
 		end
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
 		self:TriggerEvent("BigWigs_StopBar", self, L["laser"])
