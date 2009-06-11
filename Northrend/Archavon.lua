@@ -243,7 +243,7 @@ local function ScanTarget()
 		end
 	end
 	if target then
-		mod:IfMessage(fmt(L["shards_message"], target), "Important", 58678)
+		mod:TargetMessage(L["shards_message"], target, "Important", 58678)
 		if mod.db.profile.icon then
 			mod:Icon(target)
 		end
@@ -260,7 +260,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 	if db.charge and unit == boss then
 		-- 11578, looks like a charge :)
-		self:IfMessage(L["charge_message"]:format(player), "Attention", 11578)
+		self:TargetMessage(L["charge_message"], player, "Attention", 11578)
 	end
 end
 
