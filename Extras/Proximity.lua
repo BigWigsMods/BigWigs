@@ -4,14 +4,10 @@
 
 local plugin = BigWigs:New("Proximity", "$Revision$")
 if not plugin then return end
-plugin.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
-plugin.proximitySilent = true
 
 -----------------------------------------------------------------------
 --      Are you local?
 -----------------------------------------------------------------------
-
--- /script BigWigs:GetModule("Proximity"):UpdateProximity({"Applebob", "Tysste", "Foobar", "Elgen"})
 
 local dew = AceLibrary("Dewdrop-2.0")
 
@@ -523,29 +519,25 @@ function plugin:TestProximity()
 	self:OpenProximity()
 end
 
-function plugin:UpdateProximity(list)
-	if not list then
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local n = GetRaidRosterInfo(i)
-			if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
-				if not active or not active.proximityCheck or type(active.proximityCheck) == "bandage" then
-					for i, v in ipairs(bandages) do
-						if IsItemInRange(v, n) == 1 then
-							table.insert(tooClose, coloredNames[n])
-							break
-						end
-					end
-				elseif active and active.proximityCheck == "function" then
-					if active.proximityCheck(n) then
+function plugin:UpdateProximity()
+	local num = GetNumRaidMembers()
+	for i = 1, num do
+		local n = GetRaidRosterInfo(i)
+		if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
+			if not active or not active.proximityCheck or active.proximityCheck == "bandage" then
+				for i, v in next, bandages do
+					if IsItemInRange(v, n) == 1 then
 						table.insert(tooClose, coloredNames[n])
+						break
 					end
 				end
+			elseif active and type(active.proximityCheck) == "function" then
+				if active.proximityCheck(n) then
+					table.insert(tooClose, coloredNames[n])
+				end
 			end
-			if #tooClose > 4 then break end
 		end
-	else
-		tooClose = list
+		if #tooClose > 4 then break end
 	end
 
 	if #tooClose == 0 then
