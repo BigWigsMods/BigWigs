@@ -358,10 +358,10 @@ L:RegisterTranslations("deDE", function() return {
 	malady = "Geisteskrankheit",
 	malady_desc = "Warnung und Timer für Geisteskrankheit.",
 	malady_message = "Geisteskrank: %s!",
-	--malady_say = "I'm a Malady!",
+	malady_say = "Geisteskrankheit auf MIR!",
 	
-	--maladysay = "Malady Say",
-	--maladysay_desc = "Say when you have Malady of the Mind.",
+	maladysay = "Geisteskrankheit Sagen",
+	maladysay_desc = "Warnt im Sagen Chat, wenn du Geisteskrankheit hast.",
 
 	tentacle = "Schmettertentakel", --right?
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",

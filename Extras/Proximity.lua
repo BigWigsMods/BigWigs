@@ -204,6 +204,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Play sound on proximity."] = "Spielt einen Sound ab, wenn du zu nahe an einem anderen Spieler stehst.",
 	["Disabled"] = "Deaktivieren",
 	["Disable the proximity display for all modules that use it."] = "Deaktiviert die Anzeige naher Spieler für alle Module, die sie benutzen.",
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Die Anzeige naher Spieler wird beim nächsten Mal angezeigt werden. Um sie für diesen Boss vollständig zu deaktivieren, musst du die Option 'Nähe' im Bossmodul ausschalten.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Die Anzeige naher Spieler wurde gesperrt. Falls du das Fenster wieder bewegen oder Zugang zu den anderen Optionen haben willst, musst du das Big Wigs Symbol rechts-klicken, zu Extras -> Nähe -> Anzeige gehen und die Option 'Sperren' ausschalten.",
 
 	proximity = "Nähe",
@@ -212,6 +213,7 @@ L:RegisterTranslations("deDE", function() return {
 	font = "Fonts\\FRIZQT__.TTF",
 
 	["Close"] = "Schließen",
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Schließt die Anzeige naher Spieler.\n\nFalls du die Anzeige für alle Bosse deaktivieren willst, musst du die Option 'Nähe' seperat in den jeweiligen Bossmodulen ausschalten.",
 	["Test"] = "Test",
 	["Perform a Proximity test."] = "Führt einen Test der Anzeige naher Spieler durch.",
 	["Display"] = "Anzeige",
