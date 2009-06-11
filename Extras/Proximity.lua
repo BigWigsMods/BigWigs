@@ -140,6 +140,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Play sound on proximity."] = "접근 표시에 효과음을 재생합니다.",
 	["Disabled"] = "미사용",
 	["Disable the proximity display for all modules that use it."] = "모든 모듈의 접근 표시를 비활성화 합니다.",
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "다음 표시때 접근 표시를 표시하도록 합니다. 이것을 비활성화 하려면 옵션을 통해 전환하세요.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "접근 표시가 고정되어 있습니다. 고정을 해제하길 원하거나 설정하려면 Big Wigs 아이콘의 우클릭하여 기타 -> 접근 -> 표시 이곳을 통해 이동 또는 기타 설정을 할 수 있습니다.",
 
 	proximity = "접근 표시",
@@ -148,6 +149,7 @@ L:RegisterTranslations("koKR", function() return {
 	font = "Fonts\\2002.TTF",
 	
 	["Close"] = "닫기",
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "접근 표시를 닫습니다.\n\n완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 접근 표시를 끄세요.",
 	["Test"] = "테스트",
 	["Perform a Proximity test."] = "접근 테스트를 실행합니다.",
 	["Display"] = "표시",
