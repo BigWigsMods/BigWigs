@@ -10,7 +10,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "maladysay", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -66,6 +66,10 @@ L:RegisterTranslations("enUS", function() return {
 	malady = "Malady of the Mind",
 	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
+	malady_say = "I'm a Malady!",
+	
+	maladysay = "Malady Say",
+	maladysay_desc = "Say when you have Malady of the Mind.",
 
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
@@ -135,6 +139,10 @@ L:RegisterTranslations("ruRU", function() return {
 	malady = "Душевная болезнь",
 	malady_desc = "Сообщать когда игрок получает Душевную болезнь.",
 	malady_message = "Болезнь у: |3-1(%s)",
+--	malady_say = "I'm a Malady!",
+
+--	maladysay = "Malady Say",
+--	maladysay_desc = "Say when you have Malady of the Mind.",
 
 	tentacle = "Тяжелое щупальце",
 	tentacle_desc = "Сообщать о появлении Тяжелого щупальца.",
@@ -199,10 +207,14 @@ L:RegisterTranslations("koKR", function() return {
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
 	madness_warning = "5초 후 광기 유발!",
-
+	
 	malady = "병든 정신",
 	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
 	malady_message = "병든 정신: %s",
+	malady_say = "저 병든 정신요!",
+	
+	maladysay = "병든 정신 일반 대화",
+	maladysay_desc = "병든 정신에 걸렸을때 일반 대화로 알립니다.",
 
 	tentacle = "촉수 소환",
 	tentacle_desc = "촉수 소환을 알립니다.",
@@ -272,6 +284,10 @@ L:RegisterTranslations("frFR", function() return {
 	malady = "Mal de la raison",
 	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
 	malady_message = "Mal de la raison : %s",
+	--malady_say = "I'm a Malady!",
+	
+	--maladysay = "Malady Say",
+	--maladysay_desc = "Say when you have Malady of the Mind.",
 
 	tentacle = "Tentacule écraseur",
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
@@ -342,6 +358,10 @@ L:RegisterTranslations("deDE", function() return {
 	malady = "Geisteskrankheit",
 	malady_desc = "Warnung und Timer für Geisteskrankheit.",
 	malady_message = "Geisteskrank: %s!",
+	--malady_say = "I'm a Malady!",
+	
+	--maladysay = "Malady Say",
+	--maladysay_desc = "Say when you have Malady of the Mind.",
 
 	tentacle = "Schmettertentakel", --right?
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
@@ -412,6 +432,10 @@ L:RegisterTranslations("zhCN", function() return {
 	malady = "Malady of the Mind",
 	malady_desc = "当玩家中了Malady of the Mind时发出警报。",
 	malady_message = "Malady of the Mind：>%s<！",
+	--malady_say = "I'm a Malady!",
+	
+	--maladysay = "Malady Say",
+	--maladysay_desc = "Say when you have Malady of the Mind.",
 
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "当Crusher Tentacle出现时发出警报。",
@@ -481,6 +505,10 @@ L:RegisterTranslations("zhTW", function() return {
 	malady = "心靈缺陷",
 	malady_desc = "當玩家中了心靈缺陷時發出警報。",
 	malady_message = "心靈缺陷：>%s<！",
+	--malady_say = "I'm a Malady!",
+	
+	--maladysay = "Malady Say",
+	--maladysay_desc = "Say when you have Malady of the Mind.",
 
 	tentacle = "粉碎觸手",
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
@@ -607,6 +635,9 @@ end
 
 function mod:Malady(player, spellID)
 	if db.malady then
+		if player == pName and db.maladysay then
+			SendChatMessage(L["malady_say"], "SAY")
+		end
 		self:Icon(player, "icon")
 	end
 end
