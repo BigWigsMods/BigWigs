@@ -67,7 +67,7 @@ L:RegisterTranslations("enUS", function() return {
 	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
 	malady_say = "I'm a Malady!",
-	
+
 	maladysay = "Malady Say",
 	maladysay_desc = "Say when you have Malady of the Mind.",
 
@@ -284,10 +284,10 @@ L:RegisterTranslations("frFR", function() return {
 	malady = "Mal de la raison",
 	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
 	malady_message = "Mal de la raison : %s",
-	--malady_say = "I'm a Malady!",
-	
-	--maladysay = "Malady Say",
-	--maladysay_desc = "Say when you have Malady of the Mind.",
+	malady_say = "J'ai un Mal de la raison !",
+
+	maladysay = "Mal de la raison - Dire",
+	maladysay_desc = "Fait dire à votre personnage qu'il a un Mal de la raison quand c'est le cas.",
 
 	tentacle = "Tentacule écraseur",
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",

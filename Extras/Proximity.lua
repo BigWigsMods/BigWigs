@@ -169,14 +169,16 @@ L:RegisterTranslations("frFR", function() return {
 	["Play sound on proximity."] = "Joue un son quand un autre joueur est trop proche de vous.",
 	["Disabled"] = "Désactivé",
 	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant.",
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "L'affichage de proximité sera affiché la prochaine fois. Pour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\".",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "L'affichage de proximité a été verrouillé. Vous devez faire un clic droit sur l'icône de BigWigs, puis allez dans Extras -> Proximité -> Affichage et décocher l'option Verrouiller si vous voulez le déplacer ou accédez aux autres options.",
 
 	proximity = "Proximité",
-	proximity_desc = "Affiche la fenêtre de proximité.",
+	proximity_desc = "Affiche la fenêtre de proximité quand approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous.",
 
 	font = "Fonts\\FRIZQT__.TTF",
 
 	["Close"] = "Fermer",
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Ferme l'affichage de proximité.\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\".",
 	["Test"] = "Test",
 	["Perform a Proximity test."] = "Effectue un test de proximité.",
 	["Display"] = "Affichage",
