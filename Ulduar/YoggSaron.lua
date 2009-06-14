@@ -66,7 +66,7 @@ L:RegisterTranslations("enUS", function() return {
 	malady = "Malady of the Mind",
 	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
-	malady_say = "I'm a Malady!",
+	malady_say = "Malady on ME!",
 
 	maladysay = "Malady Say",
 	maladysay_desc = "Say when you have Malady of the Mind.",
