@@ -340,8 +340,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phase = 1
 		self:Bar(L["phase_bar"]:format(phase), 11, "INV_Gizmo_01")	
 		if db.bigbang then
-			self:Bar(L["bigbang"], 109, 64443)
-			self:DelayedMessage(104, L["bigbang_soon"], "Alert")
+			self:Bar(L["bigbang"], 101, 64443)
+			self:DelayedMessage(96, L["bigbang_soon"], "Alert")
 		end
 		if db.stars then
 			self:Bar(L["stars"], 35)
