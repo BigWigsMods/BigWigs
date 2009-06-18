@@ -106,6 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	scorch = "불태우기",
 	scorch_desc = "자신의 불태우기와 불태우기 시전을 알립니다.",
+	scorch_message = "당신은 불태우기!",
 	scorch_warning = "불태우기!",
 	scorch_soon = "약 5초 후 불태우기!",
 	scorch_bar = "다음 불태우기",
