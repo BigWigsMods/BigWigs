@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33113
-mod.toggleoptions = {"pyrite", "flame", "pursue", "shutdown", "bosskill"}
+mod.toggleoptions = {"flame", "pursue", "shutdown", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -31,9 +31,9 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "^Hostile entities detected.",
 	engage_message = "%s Engaged!",
 
-	pyrite = "Pyrite stack",
-	pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
-	pyrite_bar = "Pyrite stack",
+	--pyrite = "Pyrite stack",
+	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
+	--pyrite_bar = "Pyrite stack",
 
 	flame = "Flame Jet",
 	flame_desc = "Warn when Flame Leviathan casts a Flame Jet.",
@@ -172,7 +172,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Pyrite", 62489)
+	--self:AddCombatListener("SPELL_AURA_APPLIED", "Pyrite", 62489)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -184,11 +184,11 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
+--[[
 function mod:Pyrite(player, spellId)
 	if player ~= pName then return end
 	self:Bar(L["pyrite_bar"], 10, spellId)
-end
+end]]
 
 function mod:Flame()
 	if db.flame then
