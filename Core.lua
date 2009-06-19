@@ -17,6 +17,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local icon = LibStub("LibDBIcon-1.0", true)
 
 local customBossOptions = {}
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -640,9 +641,10 @@ function BigWigs:BigWigs_RebootModule(module)
 	self:ToggleModuleActive(module, true)
 end
 
-function BigWigs:BigWigs_RecvSync(sync, module)
+function BigWigs:BigWigs_RecvSync(sync, module, sender)
 	if not module then return end
 	if sync == "EnableModule" or sync == "EnableExternal" then
+		if sender == pName then return end
 		local name = BB[module] or module
 		if self:HasModule(name) then
 			self:EnableModule(name, true)
@@ -661,10 +663,12 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 	end
 end
 
-function BigWigs:BigWigs_TargetSeen(mobname, unit, module)
-	if self:IsModuleActive(module) then return end
-	if not module.VerifyEnable or module:VerifyEnable(unit) then
-		self:EnableModule(module)
+function BigWigs:BigWigs_TargetSeen(mobname, unit, moduleName)
+	local m = self:GetModule(moduleName)
+	if not m then return end
+	if self:IsModuleActive(m) then return end
+	if not m.VerifyEnable or m:VerifyEnable(unit) then
+		self:EnableModule(moduleName)
 	end
 end
 
