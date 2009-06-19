@@ -129,7 +129,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	defender = "Wilder Verteidiger",
 	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
-	defender_message = "Verteidiger da (%d/9)!",
+	defender_message = "Verteidiger da %d/9!",
 
 	sonic = "Überschallkreischen",
 	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
