@@ -96,7 +96,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	constellation = "살아있는 별자리",
 	constellation_desc = "살아있는 별자리 소환을 알립니다.",
-	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -108,7 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	engage = "Engagement",
 	engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue.", -- à vérifier
-	first_engage_trigger = "See your world through my eyes",
+	first_engage_trigger = "Voyez votre monde tel", -- à vérifier
 
 	punch = "Coup de poing phasique",
 	punch_desc = "Prévient quand un joueur a 4 cumuls de Coup de poing phasique.",
@@ -130,12 +129,11 @@ L:RegisterTranslations("frFR", function() return {
 	stars = "Collapsing Stars",
 	stars_desc = "Prévient quand des Collapsing Stars apparaissent.",
 
-	constellation = "Living Constellations",
-	constellation_desc = "Prévient quand des Living Constellations apparaissent.",
+	constellation = "Constellations vivantes",
+	constellation_desc = "Prévient quand des Constellations vivantes apparaissent.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-
 	phase = "Phasen",
 	phase_desc = "Warnt vor Phasenwechsel.",
 	engage_warning = "Phase 1",
@@ -338,7 +336,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["first_engage_trigger"]) then
 		blackholes = 0
 		phase = 1
-		self:Bar(L["phase_bar"]:format(phase), 11, "INV_Gizmo_01")	
+		self:Bar(L["phase_bar"]:format(phase), 11, "INV_Gizmo_01")
 		if db.bigbang then
 			self:Bar(L["bigbang"], 101, 64443)
 			self:DelayedMessage(96, L["bigbang_soon"], "Alert")
@@ -354,7 +352,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.constellation then
 			self:Bar(L["constellation"], 70)
-		end		
+		end
 	end
 end
 
