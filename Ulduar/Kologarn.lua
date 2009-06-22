@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
-mod.toggleoptions = {"grip", "shockwave", "eyebeam", "arm", "armor", "bosskill"}
+mod.toggleoptions = {"grip", "shockwave", "eyebeam", "eyebeamsay", "arm", "armor", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -46,9 +46,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	eyebeam = "Focused Eyebeam",
 	eyebeam_desc = "Warn who gets Focused Eyebeam.",
-	eyebeam_message = "Eyebeam Incoming!",
+	eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_message = "Eyebeam: %s",
 	eyebeam_bar = "~Eyebeam",
 	eyebeam_you = "Eyebeam on YOU!",
+	eyebeam_say = "Eyebeam on Me!",
+	
+	eyebeamsay = "Eyebeam Say",
+	eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
 	armor = "Crunch Armor",
 	armor_desc = "Warn when someone has 2 or more stacks of Crunch Armor.",
@@ -73,9 +78,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	eyebeam = "안광 집중",
 	eyebeam_desc = "안광 집중의 대상이된 플레이어를 알립니다.",
-	eyebeam_message = "안광 집중!",
+	eyebeam_trigger = "%s|1이;가; 당신에게 안광을 집중합니다!",
+	eyebeam_message = "안광 집중: %s",
 	eyebeam_bar = "~안광 집중",
-	eyebeam_you = "당신은 안광 집중!",
+	eyebeam_you = "당신에게 안광 집중!",
+	eyebeam_say = "저 안광 집중요!",
+	
+	eyebeamsay = "안광 일반 대화",
+	eyebeamsay_desc = "안광 집중의 대상시 일반 대화로 알립니다.",
 
 	armor = "방어구 씹기",
 	armor_desc = "방어구 씹기 중첩이 2이상이 된 플레이어를 알립니다.",
@@ -100,9 +110,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	eyebeam = "Rayon de l'oeil focalisé",
 	eyebeam_desc = "Prévient quand un Rayon de l'oeil focalisé est incanté.",
-	eyebeam_message = "Arrivée d'un Rayon de l'oeil !",
+	--eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_message = "Arrivée d'un Rayon de l'oeil : %s",
 	eyebeam_bar = "~Prochain Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
+	--eyebeam_say = "Eyebeam on Me!",
+	
+	--eyebeamsay = "Eyebeam Say",
+	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
 	armor = "Broie armure",
 	armor_desc = "Prévient quand un joueur a 2 cumuls ou plus de Broie armure.",
@@ -127,9 +142,14 @@ L:RegisterTranslations("deDE", function() return {
 
 	eyebeam = "Fokussierter Augenstrahl",
 	eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist.",
-	eyebeam_message = "Augenstrahl!",
+	--eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_message = "Augenstrahl: %s",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
+	--eyebeam_say = "Eyebeam on Me!",
+	
+	--eyebeamsay = "Eyebeam Say",
+	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 	
 	armor = "Rüstung zermalmen",
 	armor_desc = "Warnt, wenn ein Spieler von 2 oder mehr Stapel von Rüstung zermalmen betroffen ist.",
@@ -154,9 +174,14 @@ L:RegisterTranslations("zhCN", function() return {
 
 	eyebeam = "聚焦视线",
 	eyebeam_desc = "当玩家中了聚焦视线时发出警报。",
+--	eyebeam_trigger = "%s focuses his eyes on you!",
 	eyebeam_message = "聚焦视线：>%s<！",
 	eyebeam_bar = "<聚焦视线>",
 	eyebeam_you = ">你< 聚焦视线！",
+	--eyebeam_say = "Eyebeam on Me!",
+	
+	--eyebeamsay = "Eyebeam Say",
+	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
 	armor = "粉碎护甲",
 	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",
@@ -181,9 +206,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 	eyebeam = "集束目光",
 	eyebeam_desc = "當玩家中了集束目光時發出警報。",
+	--eyebeam_trigger = "%s focuses his eyes on you!",
 	eyebeam_message = "集束目光：>%s<！",
 	eyebeam_bar = "<集束目光>",
 	eyebeam_you = ">你< 集束目光！",
+	--eyebeam_say = "Eyebeam on Me!",
+	
+	--eyebeamsay = "Eyebeam Say",
+	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
 	armor = "粉碎護甲",
 	armor_desc = "當玩家中了2層或更多粉碎護甲時發出警報。",
@@ -208,9 +238,14 @@ L:RegisterTranslations("ruRU", function() return {
 
 	eyebeam = "Сосредоточенный взгляд",
 	eyebeam_desc = "Сообщать кто попал под воздействие Сосредоточенный взгляд.",
-	eyebeam_message = "Взгляд!",
+	--eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_message = "Взгляд: %s",
 	eyebeam_bar = "~Взгляд",
 	eyebeam_you = "Взгляд на ВАС!",
+	--eyebeam_say = "Eyebeam on Me!",
+	
+	--eyebeamsay = "Eyebeam Say",
+	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 	
 	armor = "Хруст доспеха",
 	armor_desc = "Сообщать если кто получил 2 или больше эффекта Хруста доспеха.",
@@ -223,14 +258,15 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
-	self:AddCombatListener("SPELL_DAMAGE", "EyebeamHit", 63976, 63346, 63368)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:Throttle(2, "EyeBeamWarn")
 	db = self.db.profile
 end
 
@@ -259,36 +295,24 @@ function mod:Grip(player, spellID)
 	end
 end
 
-do
-	local last = nil
-	function mod:EyebeamHit(player)
-		if db.eyebeam and player == pName then
-			if not last or (GetTime() > last + 4) then
-				self:LocalMessage(L["eyebeam_you"], "Personal", nil, "Long")
-				last = GetTime()
-			end
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg)
+	if db.eyebeam and msg == L["eyebeam_trigger"] then
+		self:LocalMessage(L["eyebeam_you"], "Personal", 63976, "Long")
+		if db.eyebeamsay then
+			SendChatMessage(L["eyebeam_say"], "SAY")
 		end
-	end
-end
-
-local eyebeamTrigger = GetSpellInfo(63342)
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spell)
-	if spell == eyebeamTrigger and db.eyebeam then
-		self:IfMessage(L["eyebeam_message"], "Urgent", 63976)
-		self:Bar(L["eyebeam"], 11, 63976)
-		self:Bar(L["eyebeam_bar"], 20, 63976)
+		self:Sync("EyeBeamWarn", pName)
 	end
 end
 
 function mod:Deaths(_, guid)
 	guid = tonumber((guid):sub(-12,-7),16)
-	local d = GetCurrentDungeonDifficulty() or 1
 	if guid == 32933 then
 		self:IfMessage(L["left_dies"], "Attention")
-		self:Bar(L["left_wipe_bar"], d == 1 and 40 or 50, 2062) --2062, looks like a Arms :)
+		self:Bar(L["left_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
 	elseif guid == 32934 then
 		self:IfMessage(L["right_dies"], "Attention")
-		self:Bar(L["right_wipe_bar"], d == 1 and 40 or 50, 2062) --2062, looks like a Arms :)
+		self:Bar(L["right_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
 	elseif guid == self.guid then
 		self:BossDeath(nil, guid)
 	end
@@ -307,6 +331,12 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
+	elseif sync == "EyeBeamWarn" and rest and db.eyebeam then
+		self:TargetMessage(L["eyebeam_message"], rest, "Positive", 63976, "Info")
+		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
+		self:Bar(L["eyebeam_bar"], 20, 63976)
+		self:Icon(rest, "icon")
+		self:ScheduleEvent("BWRemoveEyeIcon", "BigWigs_RemoveRaidIcon", 11, self)
 	end
 end
 
