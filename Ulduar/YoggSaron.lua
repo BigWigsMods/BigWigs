@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 	malady = "Malady of the Mind",
 	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
-	
+
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
 	tentacle_message = "Crusher %d!",
@@ -100,7 +100,7 @@ L:RegisterTranslations("enUS", function() return {
 	guardian = "Guardian spawn", --phase 1
 	guardian_desc = "Warn when a Guardian of Yogg-Saron spawns.",
 	guardian_message = "Guardian %d!",
-	
+
 	empowericon = "Empower Icon",
 	empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	empowericon_message = "Empower Faded!",
@@ -172,7 +172,7 @@ L:RegisterTranslations("ruRU", function() return {
 	guardian = "Появление стража", --phase 1
 	guardian_desc = "Сообщает когда появляются Стражи Йогг-Сарона.",
 	guardian_message = "Страж %d!",
-	
+
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
@@ -211,7 +211,7 @@ L:RegisterTranslations("koKR", function() return {
 	madness = "광기 유발",
 	madness_desc = "광기 유발의 타이머를 표시합니다.",
 	madness_warning = "5초 후 광기 유발!",
-	
+
 	malady = "병든 정신",
 	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
 	malady_message = "병든 정신: %s",
@@ -245,11 +245,11 @@ L:RegisterTranslations("koKR", function() return {
 	guardian = "수호자 소환", --phase 1
 	guardian_desc = "요그사론의 수호자 소환을 알립니다.",
 	guardian_message = "수호자 소환 %d!",
-	
+
 	empowericon = "암흑 강화 아이콘",
 	empowericon_desc = "암흑 강화에 걸린 수호병에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",
 	empowericon_message = "암흑 강화 사라짐!",
-	
+
 	icon = "전술 표시",
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
@@ -319,10 +319,10 @@ L:RegisterTranslations("frFR", function() return {
 	guardian = "Apparition des gardiens", --phase 1
 	guardian_desc = "Prévient quand un Gardien de Yogg-Saron apparaît.",
 	guardian_message = "Gardien %d !",
-	
-	--empowericon = "Empower Icon",
-	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
-	--empowericon_message = "Empower Faded!",
+
+	empowericon = "Renforcement - Icône",
+	empowericon_desc = "Place un crâne sur le Gardien immortel ayant Renforcement des ombres.",
+	empowericon_message = "Renforcement terminé !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
@@ -393,7 +393,7 @@ L:RegisterTranslations("deDE", function() return {
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
 	guardian_message = "Wächter %d!",
-	
+
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
@@ -467,11 +467,11 @@ L:RegisterTranslations("zhCN", function() return {
 	guardian = "召唤卫士出现", --phase 1
 	guardian_desc = "当尤格-萨隆召唤卫士出现时发出警报。",
 	guardian_message = "召唤卫士：>%d<！",
-	
+
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
-	
+
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 } end )
 
@@ -540,7 +540,7 @@ L:RegisterTranslations("zhTW", function() return {
 	guardian = "召喚守護者出現", --phase 1
 	guardian_desc = "當尤格薩倫守護者出現時發出警報。",
 	guardian_message = "尤格薩倫守護者：>%d<！ ",
-	
+
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",

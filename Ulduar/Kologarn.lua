@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	eyebeam_bar = "~Eyebeam",
 	eyebeam_you = "Eyebeam on YOU!",
 	eyebeam_say = "Eyebeam on Me!",
-	
+
 	eyebeamsay = "Eyebeam Say",
 	eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
@@ -108,16 +108,16 @@ L:RegisterTranslations("frFR", function() return {
 	shockwave_desc = "Prévient quand la prochaine Onde de choc arrive.",
 	shockwave_trigger = "OUBLI !",
 
-	eyebeam = "Rayon de l'oeil focalisé",
+	eyebeam = "Rayon de l'oeil",
 	eyebeam_desc = "Prévient quand un Rayon de l'oeil focalisé est incanté.",
-	--eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_trigger = "%s pose son regard sur vous !", -- à vérifier
 	eyebeam_message = "Arrivée d'un Rayon de l'oeil : %s",
 	eyebeam_bar = "~Prochain Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
-	--eyebeam_say = "Eyebeam on Me!",
-	
-	--eyebeamsay = "Eyebeam Say",
-	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
+	eyebeam_say = "Rayon de l'oeil sur moi !",
+
+	eyebeamsay = "Rayon de l'oeil - Dire",
+	eyebeamsay_desc = "Fait dire à votre personnage qu'il est ciblé par le Rayon de l'oeil quand c'est le cas.",
 
 	armor = "Broie armure",
 	armor_desc = "Prévient quand un joueur a 2 cumuls ou plus de Broie armure.",
