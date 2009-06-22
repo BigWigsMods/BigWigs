@@ -10,7 +10,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "empowericon", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -22,6 +22,10 @@ local linkedName = GetSpellInfo(63802)
 local sanity = GetSpellInfo(63050)
 local count = 1
 local pName = UnitName("player")
+local UnitGUID = _G.UnitGUID
+local GetNumRaidMembers = _G.GetNumRaidMembers
+local fmt = _G.string.format
+local guid = nil
 
 ----------------------------
 --      Localization      --
@@ -96,6 +100,10 @@ L:RegisterTranslations("enUS", function() return {
 	guardian = "Guardian spawn", --phase 1
 	guardian_desc = "Warn when a Guardian of Yogg-Saron spawns.",
 	guardian_message = "Guardian %d!",
+	
+	empowericon = "Empower Icon",
+	empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
+	empowericon_message = "Empower Faded!",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
@@ -164,6 +172,10 @@ L:RegisterTranslations("ruRU", function() return {
 	guardian = "Появление стража", --phase 1
 	guardian_desc = "Сообщает когда появляются Стражи Йогг-Сарона.",
 	guardian_message = "Страж %d!",
+	
+	--empowericon = "Empower Icon",
+	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
+	--empowericon_message = "Empower Faded!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, с Душевной болезнью или находящегося под контролем разума. (необходимо быть лидером группы или рейда)",
@@ -233,7 +245,12 @@ L:RegisterTranslations("koKR", function() return {
 	guardian = "수호자 소환", --phase 1
 	guardian_desc = "요그사론의 수호자 소환을 알립니다.",
 	guardian_message = "수호자 소환 %d!",
-
+	
+	empowericon = "암흑 강화 아이콘",
+	empowericon_desc = "암흑 강화에 걸린 수호병에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",
+	empowericon_message = "암흑 강화 사라짐!",
+	
+	icon = "전술 표시",
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
@@ -302,6 +319,10 @@ L:RegisterTranslations("frFR", function() return {
 	guardian = "Apparition des gardiens", --phase 1
 	guardian_desc = "Prévient quand un Gardien de Yogg-Saron apparaît.",
 	guardian_message = "Gardien %d !",
+	
+	--empowericon = "Empower Icon",
+	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
+	--empowericon_message = "Empower Faded!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
@@ -372,6 +393,10 @@ L:RegisterTranslations("deDE", function() return {
 	guardian = "Wächter beschwören", --phase 1
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
 	guardian_message = "Wächter %d!",
+	
+	--empowericon = "Empower Icon",
+	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
+	--empowericon_message = "Empower Faded!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
@@ -442,7 +467,11 @@ L:RegisterTranslations("zhCN", function() return {
 	guardian = "召唤卫士出现", --phase 1
 	guardian_desc = "当尤格-萨隆召唤卫士出现时发出警报。",
 	guardian_message = "召唤卫士：>%d<！",
-
+	
+	--empowericon = "Empower Icon",
+	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
+	--empowericon_message = "Empower Faded!",
+	
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 } end )
 
@@ -511,6 +540,10 @@ L:RegisterTranslations("zhTW", function() return {
 	guardian = "召喚守護者出現", --phase 1
 	guardian_desc = "當尤格薩倫守護者出現時發出警報。",
 	guardian_message = "尤格薩倫守護者：>%d<！ ",
+	
+	--empowericon = "Empower Icon",
+	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
+	--empowericon_message = "Empower Faded!",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
@@ -524,6 +557,8 @@ mod.enabletrigger = {boss, sara, brain}
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "EmpowerIcon", 64465)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveEmpower", 64465)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Tentacle", 64144)
 	--self:AddCombatListener("SPELL_AURA_APPLIED", "Fervor", 63138)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
@@ -542,6 +577,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
+	guid = nil
 end
 
 function mod:VerifyEnable()
@@ -653,6 +689,42 @@ function mod:Empower()
 		self:IfMessage(L["empower_message"], "Attention", 64465)
 		self:Bar(L["empower_bar"], 46, 64465)
 	end
+end
+
+function mod:RemoveEmpower(_, spellID)
+	if db.empowericon then
+		self:IfMessage(L["empowericon_message"], "Attention", 64465)
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
+	end
+end
+
+local function scanTarget()
+	local target
+	if UnitGUID("target") == guid then
+		target = "target"
+	elseif UnitGUID("focus") == guid then
+		target = "focus"
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local unitid = fmt("%s%d%s", "raid", i, "target")
+			if UnitGUID(unitid) == guid then
+				target = unitid
+				break
+			end
+		end
+	end
+	if target then
+		SetRaidTarget(target, 8)
+		mod:CancelScheduledEvent("BWGetEmpowerTarget")
+	end
+end
+
+function mod:EmpowerIcon(...)
+	if not IsRaidLeader() and not IsRaidOfficer() then return end
+	if not db.empowericon then return end
+	guid = select(9, ...)
+	self:ScheduleRepeatingEvent("BWGetEmpowerTarget", scanTarget, 0.1)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
