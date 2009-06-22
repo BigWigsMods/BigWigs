@@ -394,16 +394,16 @@ L:RegisterTranslations("deDE", function() return {
 	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
 	guardian_message = "Wächter %d!",
 
-	--empowericon = "Empower Icon",
-	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
-	--empowericon_message = "Empower Faded!",
+	empowericon = "Schatten-Symbol",
+	empowericon_desc = "Palziert einen Totenkopf über der Unvergängliche Wache mit Machtvolle Schatten.",
+	empowericon_message = "Schatten verblasst!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---	["Crusher Tentacle"] = true,
+--	["Crusher Tentacle"] = true,ha
 --	["The Observation Ring"] = true,
 
 	phase = "阶段",

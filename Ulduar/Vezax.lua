@@ -193,7 +193,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	animus = "Saronitanimus",
 	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
-	animus_trigger = "Die Saronitdämpfe sammeln sich, wirbeln heftig herum und verschmelzen zu einer monströsen Form!", -- needs verification
+	animus_trigger = "Die Saronitdämpfe sammeln sich, wirbeln heftig herum und verschmelzen zu einer monströsen Form!",
 	animus_message = "Saronitanimus kommt!",
 
 	vapor = "Saronitdämpfe",
