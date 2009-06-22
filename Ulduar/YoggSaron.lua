@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -329,7 +329,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	["Crusher Tentacle"] = "Schmettertentakel", -- needs verification!
+	["Crusher Tentacle"] = "Schmettertentakel",
 	["The Observation Ring"] = "Der Beobachtungsring",
 
 	phase = "Phasen",
@@ -364,7 +364,7 @@ L:RegisterTranslations("deDE", function() return {
 	malady_desc = "Warnung und Timer für Geisteskrankheit.",
 	malady_message = "Geisteskrank: %s!",
 
-	tentacle = "Schmettertentakel", --right?
+	tentacle = "Schmettertentakel",
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
 	tentacle_message = "Schmettertentakel %d!",
 
@@ -395,7 +395,7 @@ L:RegisterTranslations("deDE", function() return {
 	guardian_message = "Wächter %d!",
 
 	empowericon = "Schatten-Symbol",
-	empowericon_desc = "Palziert einen Totenkopf über der Unvergängliche Wache mit Machtvolle Schatten.",
+	empowericon_desc = "Platziert einen Totenkopf über der Unvergängliche Wache mit Machtvolle Schatten.",
 	empowericon_message = "Schatten verblasst!",
 
 	icon = "Schlachtzugs-Symbol",
