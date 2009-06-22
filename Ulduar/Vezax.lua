@@ -144,7 +144,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
-	--animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
+	animus_trigger = "Les vapeurs saronitiques s'amassent et tourbillonnent violemment pour former un amas monstrueux !",
 	animus_message = "Animus apparu !",
 
 	vapor = "Vapeurs de saronite",
