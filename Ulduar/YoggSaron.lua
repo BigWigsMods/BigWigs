@@ -115,15 +115,15 @@ L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
 	engage_warning = "1-ая фаза",
---	engage_trigger = "^The time to",
+	engage_trigger = "^Скоро мы сразимся с главарем этих извергов!",
 	phase2_warning = "2-ая фаза",
---	phase2_trigger = "^I am the lucid dream",
+	phase2_trigger = "^Я – это сон наяву",
 	phase3_warning = "3-ая фаза",
---	phase3_trigger = "^Look upon the true face",
+	phase3_trigger = "^ПАДИТЕ НИЦ ПЕРЕД БОГОМ СМЕРТИ!",
 
 	portal = "Портал",
 	portal_desc = "Сообщать о портале.",
---	portal_trigger = "Portals open into %s's mind!",
+	portal_trigger = "В сознание |3-1(%s) открываются порталы!",
 	portal_message = "Порталы открыты!",
 	portal_bar = "Следующий портал",
 
@@ -134,7 +134,7 @@ L:RegisterTranslations("ruRU", function() return {
 	weakened = "Оглушение",
 	weakened_desc = "Сообщать когда Йогг-Сарон производит оглушение.",
 	weakened_message = "%s оглушен!",
---	weakened_trigger = "The illusion shatters and a path to the central chamber opens!",
+	weakened_trigger = "Иллюзия разрушена и путь в центральную комнату открыт!",
 
 	madness = "Доведение до помешательства",
 	madness_desc = "Показывает таймер Доведения до помешательства.",
@@ -173,9 +173,9 @@ L:RegisterTranslations("ruRU", function() return {
 	guardian_desc = "Сообщает когда появляются Стражи Йогг-Сарона.",
 	guardian_message = "Страж %d!",
 
-	--empowericon = "Empower Icon",
-	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
-	--empowericon_message = "Empower Faded!",
+	empowericon = "Сгущение тьмы иконка",
+	empowericon_desc = "Помечать черепом Бессмертного стража со Сгущением тьмы.",
+	empowericon_message = "Сгущением тьмы закончилось!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, с Душевной болезнью или находящегося под контролем разума. (необходимо быть лидером группы или рейда)",
