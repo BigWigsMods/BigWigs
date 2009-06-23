@@ -37,6 +37,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
 	["The Observation Ring"] = true,
 
+	cmd = "YoggSaron",
+
 	phase = "Phase",
 	phase_desc = "Warn for phase changes.",
 	engage_warning = "Phase 1",
