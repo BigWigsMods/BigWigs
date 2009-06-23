@@ -282,6 +282,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Play sound on proximity."] = "Проиграть звук при приближении игроков.",
 	["Disabled"] = "Отключить",
 	["Disable the proximity display for all modules that use it."] = "Отключить отображение окна близости для всех модулей использующих его.",
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Модуль близости будет показан в следующий раз. Чтобы полностью его отключить для данного боя, вам нужно зайти в опции этого боя и отключить его там.",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Отображение модуля близости зафиксировано, вам нужно нажать правую клавишу мыши по иконке Big Wigs, перейти в Extras -> Близость -> Отображение и переключить опцию Фиксировать, если вы хотите его переместить или получить доступ к другим опциям.",
 
 	proximity = "Отображение близости",
@@ -290,6 +291,7 @@ L:RegisterTranslations("ruRU", function() return {
 	font = "Fonts\\NIM_____.ttf",
 
 	["Close"] = "Закрыть",
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Закрыть окно модуля близости.\n\nЧтобы полностью его отключить для любого боя, вам нужно зайти в опции соответствующего босса и там отключить опцию 'Близость'.",
 	["Test"] = "Тест",
 	["Perform a Proximity test."] = "Тест близости",
 	["Display"] = "Отображение",

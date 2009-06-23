@@ -338,12 +338,13 @@ L:RegisterTranslations("ruRU", function() return {
 
 	surge = "Наплыв Тьмы",
 	surge_desc = "Сообщает когда Везакс применяет Наплыв Тьмы.",
-	--surge_message = "Наплыв Тьмы!",
-	--surge_cast = "Применяется Наплыв Тьмы!",
-	--surge_bar = "Следующий наплыв",
+	surge_message = "Наплыв %d!",
+	surge_cast = "Применяется Наплыв %d!",
+	surge_bar = "Наплыв %d",
 
 	animus = "Саронитовый враг",
 	animus_desc = "Сообщать о появлении саронитового врага.",
+	--animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!",
 	animus_message = "Появление врагов!",
 
 	vapor = "Саронитовые пары",
@@ -361,6 +362,9 @@ L:RegisterTranslations("ruRU", function() return {
 	crash_you = "Темное сокрушение на ВАС!",
 	crash_other = "Сокрушение на %s",
 	crash_say = "Сокрушение на Мне!",
+	
+	crashsay = "Сказать о Сокрушении",
+	crashsay_desc = "Сказать когды вы являетесь целью Темного сокрушения.",
 
 	crashicon = "Иконка Сокрушения",
 	crashicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока, на которого наложено Темное сокрушение. (необходимо быть лидером группы или рейда)",

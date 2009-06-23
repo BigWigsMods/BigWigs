@@ -37,8 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
 	["The Observation Ring"] = true,
 
-	cmd = "YoggSaron",
-
 	phase = "Phase",
 	phase_desc = "Warn for phase changes.",
 	engage_warning = "Phase 1",
@@ -111,6 +109,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	["Crusher Tentacle"] = "Тяжелое щупальце",
+	["The Observation Ring"] = "Круг Наблюдения",
 
 	phase = "Фазы",
 	phase_desc = "Сообщать о смене фаз.",
@@ -159,6 +158,7 @@ L:RegisterTranslations("ruRU", function() return {
 	gaze = "Взгляд безумца",
 	gaze_desc = "Сообщает когда Йогг-Сарон получает Взгляд безумца.",
 	gaze_bar = "~Взгляд безумца",
+	gaze_cast_bar = "Применение Взгляда безумца",
 
 	empower = "Сгущение тьмы",
 	empower_desc = "Сообщать о Сгущение тьмы.",

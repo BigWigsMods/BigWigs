@@ -226,8 +226,8 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	exposed = "Обнаженное сердце",
 	exposed_desc = "Сообщает когда XT-002 Обнажает сердце.",
-	exposed_warning = "Скоро Обнаженное сердце!",
-	exposed_message = "Обнаженное сердце - надвигается подмога!",
+	exposed_warning = "Скоро сердце станет уязвимо!",
+	exposed_message = "Сердце уязвимо!",
 
 	gravitybomb = "Гравитационная бомба",
 	gravitybomb_desc = "Сообщает об игроках с Гравитационной Бомбой.",

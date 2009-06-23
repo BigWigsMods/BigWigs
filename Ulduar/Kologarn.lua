@@ -242,10 +242,10 @@ L:RegisterTranslations("ruRU", function() return {
 	eyebeam_message = "Взгляд: %s",
 	eyebeam_bar = "~Взгляд",
 	eyebeam_you = "Взгляд на ВАС!",
-	--eyebeam_say = "Eyebeam on Me!",
+	eyebeam_say = "Взгяд на мне!",
 	
-	--eyebeamsay = "Eyebeam Say",
-	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
+	eyebeamsay = "Сказать о взгяде",
+	eyebeamsay_desc = "Сказать когда вы цель взгляда.",
 	
 	armor = "Хруст доспеха",
 	armor_desc = "Сообщать если кто получил 2 или больше эффекта Хруста доспеха.",

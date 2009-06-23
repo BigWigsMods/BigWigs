@@ -152,11 +152,11 @@ L:RegisterTranslations("ruRU", function() return {
 
 	cloud = "Удушающее облако на вас",
 	cloud_desc = "Предупреждать если вы поподаете в Удушающее облако.",
-	cloud_message = "На ВАС Удушающее облако!",
+	cloud_message = "ВЫ в Удушающем облаке!",
 
 	charge = "Рывок",
 	charge_desc = "Предупреждать о Рывках.",
-	charge_message = "Рывок на %s",
+	charge_message = "Рывок в |3-1(%s)",
 
 	shards = "Каменные осколки",
 	shards_desc = "Предупреждать о применении Каменных осколков.",

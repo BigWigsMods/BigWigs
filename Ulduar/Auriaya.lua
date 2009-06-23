@@ -196,7 +196,7 @@ L:RegisterTranslations("ruRU", function() return {
 	fear_desc = "Предупреждать об Ужасающем вопле.",
 	fear_warning = "Скоро Ужасающий вопль!",
 	fear_message = "Применение страха!",
-	fear_bar = "~перезарядка страха",
+	fear_bar = "~страх",
 
 	sentinel = "Удар часового",
 	sentinel_desc = "Предупреждать когда Ауриайя применяет Удар часового.",

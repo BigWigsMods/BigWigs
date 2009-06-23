@@ -243,16 +243,16 @@ L:RegisterTranslations("ruRU", function() return {
 
 	frozenblow = "Ледяные дуновения",
 	frozenblow_desc = "Сообщать когда Ходир накладывает на себя Ледяные дуновения.",
-	frozenblow_message = "Ходир наложил на себя Ледяные дуновения!",
+	frozenblow_message = "Ледяные дуновения!",
 	frozenblow_bar = "Ледяные дуновения",
 
-	hardmode = "Таймер сложного режима", --need review
-	hardmode_desc = "Отображать таймер в сложном режиме.",--need review
+	hardmode = "Сложный режим",
+	hardmode_desc = "Отображать таймер сложного режима.",
 	
 	cloud = "Грозовая туча",
 	cloud_desc = "Отображает кто получает эффект Грозовой тучи.",
 	cloud_you = "Грозовая туча на ВАС",
-	cloud_other = "%s под Грозовой тучей",
+	cloud_other = "%s под Грозовой тучей!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелена Грозовая туча.",

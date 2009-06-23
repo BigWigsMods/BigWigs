@@ -238,6 +238,41 @@ L:RegisterTranslations("zhTW", function() return {
 	constellation_desc = "當活化星宿出現時發出警報。",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Фазы",
+	phase_desc = "Сообщать о смене фаз.",
+	engage_warning = "1-ая фаза",
+	phase2_warning = "Наступление 2-ой фазы",
+	phase_bar = "%d-ая фаза",
+
+	engage = "Вступление в бой",
+	--engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+	--first_engage_trigger = "See your world through my eyes",
+
+	punch = "Фазовый удар",
+	punch_desc = "Сообщать если на ком либо Фазовый удар суммировался до 4 раз",
+	punch_message = "%dx Фазовых удара на |3-5(%s)",
+
+	smash = "Кара небесная",
+	smash_desc = "Сообщать о наступлении Кары небесной",
+	smash_message = "Наступление Кары небесной!",
+
+	blackhole = "Взрыв черной дыры",
+	blackhole_desc = "Сообщать о появлении Взрыва черной дыры",
+	blackhole_message = "Появление черной дыры %dx",
+
+	bigbang = "Суровый удар",
+	bigbang_desc = "Сообщать о начале применения Сурового удара",
+	bigbang_message = "Суровый удар!",
+	bigbang_soon = "Скоро Суровый удар!",
+
+	--stars = "Collapsing Stars",
+	--stars_desc = "Warn when Collapsing Stars spawn",
+
+	--constellation = "Living Constellations",
+	--constellation_desc = "Warn when Living Constellations spawn",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------
