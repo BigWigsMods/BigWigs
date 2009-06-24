@@ -262,6 +262,7 @@ end
 
 function plugin:BigWigs_SendTell(player, msg)
 	if not self.db.profile.whisper or not player or not msg then return end
+	if not UnitIsPlayer(player) then return end
 	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 	sentWhispers[msg] = true
 	SendChatMessage(msg, "WHISPER", nil, player)
