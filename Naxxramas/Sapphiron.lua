@@ -217,10 +217,10 @@ L:RegisterTranslations("frFR", function() return {
 	deepbreath_bar = "Impact Bombe de glace ",
 
 	lifedrain = "Drain de vie",
-	lifedrain_desc = "Prévient quand le raid est affecté par le Drain de vie.",
-	lifedrain_message = "Drain de vie ! Prochain dans ~24 sec. !",
-	lifedrain_warn1 = "Drain de vie dans 5 sec. !",
-	lifedrain_bar = "Drain de vie",
+	lifedrain_desc = "Prévient quand des joueurs subissent les effets des Drains de vie.",
+	lifedrain_message = "Drains de vie ! Prochain dans ~24 sec. !",
+	lifedrain_warn1 = "Drains de vie dans 5 sec. !",
+	lifedrain_bar = "Prochains Drains de vie",
 
 	icebolt = "Eclair de glace",
 	icebolt_desc = "Fait crier à votre personnage qu'il est un bloc de glace quand c'est le cas.",
@@ -229,7 +229,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	ping = "Ping",
 	ping_desc = "Pinge votre position actuelle si vous subissez les effets de l'Eclair de glace.",
-	ping_message = "Bloc - Pingage de votre position !",
+	ping_message = "Bloc - Indication de votre position aux autres !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être assistant ou mieux).",

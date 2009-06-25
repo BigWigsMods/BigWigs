@@ -119,7 +119,7 @@ L:RegisterTranslations("frFR", function() return {
 	decimate_desc = "Prévient de l'arrivé des Décimer.",
 	decimatesoonwarn = "Décimer imminent !",
 	decimatewarn = "Décimer !",
-	decimatebartext = "~Décimer",
+	decimatebartext = "~Prochain Décimer",
 } end )
 
 ------------------------------

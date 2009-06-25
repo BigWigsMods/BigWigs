@@ -129,7 +129,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	knife = "Couteau dentelé",
 	knife_desc = "Prévient quand un joueur subit les effets du Couteau dentelé.",
-	knife_message = "%s : Couteau dentelé",
+	knife_message = "Couteau dentelé : %s",
 
 	taunt = "Provocation",
 	taunt_desc = "Prévient quand le temps de recharge de Provocation est terminé.",

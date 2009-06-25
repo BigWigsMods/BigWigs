@@ -117,8 +117,8 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	inject = "Injection mutante",
 	inject_desc = "Prévient quand un joueur subit les effets de l'Injection mutante.",
-	bomb_message_you = "Vous êtes injecté !",
-	bomb_message_other = "%s est injecté !",
+	bomb_message_you = "Injection mutante sur VOUS !",
+	bomb_message_other = "Injection mutante : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être assistant ou mieux).",

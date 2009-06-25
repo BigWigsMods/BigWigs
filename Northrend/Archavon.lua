@@ -77,7 +77,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	stomp = "Piétinement",
 	stomp_desc = "Prévient de l'arrivée des Piétinements.",
-	stomp_message = "Piétinement - Charge imminente !",
+	stomp_message = "Piétinement - Empaler imminent !",
 	stomp_warning = "Piétinement probable dans ~5 sec. !",
 	stomp_bar = "~Recharge Piétinement",
 
@@ -85,13 +85,13 @@ L:RegisterTranslations("frFR", function() return {
 	cloud_desc = "Prévient quand vous vous trouvez dans un Nuage asphyxiant.",
 	cloud_message = "Nuage asphyxiant sur VOUS !",
 
-	charge = "Charge",
-	charge_desc = "Prévient quand Archavon charge un joueur.",
-	charge_message = "Charge sur %s",
+	charge = "Empaler",
+	charge_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
+	charge_message = "Empaler : %s",
 
 	shards = "Eclats de pierre",
-	shards_desc = "Prévient sur qui Archavon incante ses Eclats de pierre.",
-	shards_message = "Eclats de pierre sur %s !",
+	shards_desc = "Prévient quand un joueur subit les effets d'Eclats de pierre.",
+	shards_message = "Eclats de pierre : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être assistant ou mieux).",

@@ -184,7 +184,7 @@ L:RegisterTranslations("frFR", function() return {
 	enragewarn15sec = "15 sec. avant Frénésie !",
 	enragewarn = "Frénésie !",
 	enragewarn2 = "Frénésie imminente !",
-	enrageremovewarn = "Frénésie enlevée ! %d sec. avant la suivante !",
+	enrageremovewarn = "Frénésie enlevée ! ~60 sec. avant la suivante !",
 
 	silencewarn = "Réduite au silence !",
 	silencewarn5sec = "Fin du silence dans 5 sec.",

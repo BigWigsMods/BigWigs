@@ -202,19 +202,19 @@ L:RegisterTranslations("frFR", function() return {
 	void = "Zone de vide",
 	void_desc = "Prévient quand Dame Blaumeux incante une Zone de vide.",
 	voidwarn = "Arrivée d'une Zone de vide",
-	voidbar = "Proch. Zone de vide",
+	voidbar = "Prochaine Zone de vide",
 
 	meteor = "Météore",
-	meteor_desc = "Prévient quand Thane incante un météore.",
+	meteor_desc = "Prévient quand le Thane Korth'azz incante un Météore.",
 	meteorwarn = "Météore !",
-	meteorbar = "Météore",
+	meteorbar = "Recharge Météore",
 
 	wrath = "Colère divine",
-	wrath_desc = "Prévient quand Zeliek incante sa Colère divine.",
+	wrath_desc = "Prévient quand Sire Zeliek incante une Colère divine.",
 	wrathwarn = "Colère divine !",
-	wrathbar = "Colère divine",
+	wrathbar = "Recharge Colère divine",
 
-	dies = "#%d tué(e)",
+	dies = "#%d éliminé(e)",
 
 	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec. !",
 } end )

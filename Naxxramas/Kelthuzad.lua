@@ -365,13 +365,13 @@ L:RegisterTranslations("frFR", function() return {
 	frostblast = "Trait de givre",
 	frostblast_desc = "Prévient quand des joueurs subissent les effets du Trait de givre.",
 	frostblast_bar = "Trait de givre probable",
-	frostblast_message = "%s : Trait de givre",
+	frostblast_message = "Trait de givre : %s",
 	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
 
 	detonate = "Faire détoner mana",
 	detonate_desc = "Prévient quand un joueur subit les effets de Faire détoner mana.",
 	detonate_you = "Faire détoner mana sur VOUS !",
-	detonate_other = "Détoner mana - %s",
+	detonate_other = "Détoner mana : %s",
 	detonate_possible_bar = "~Prochain Détoner",
 	detonate_warning = "Prochain Faire détoner mana dans 5 sec. !",
 

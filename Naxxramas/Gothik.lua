@@ -314,8 +314,8 @@ L:RegisterTranslations("frFR", function() return {
 	trainee = "Jeune recrue tenace",
 	spectral_trainee = "Jeune recrue spectral",
 
-	riderdiewarn = "Cavalier mort !",
-	dkdiewarn = "Chevalier mort !",
+	riderdiewarn = "Cavalier éliminé !",
+	dkdiewarn = "Chevalier éliminé !",
 
 	warn1 = "Dans la salle dans 3 min.",
 	warn2 = "Dans la salle dans 90 sec.",

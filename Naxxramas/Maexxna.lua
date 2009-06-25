@@ -164,7 +164,7 @@ L:RegisterTranslations("frFR", function() return {
 	cocoon = "Entoilage",
 	cocoon_desc = "Prévient quand un joueur subit les effets de l'Entoilage.",
 
-	cocoonwarn = "%s entoilé(s) !",
+	cocoonwarn = "Entoilage : %s",
 
 	webspraywarn30sec = "Entoilage dans 10 sec.",
 	webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !",
