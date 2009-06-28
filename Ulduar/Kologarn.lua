@@ -78,7 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	eyebeam = "안광 집중",
 	eyebeam_desc = "안광 집중의 대상이된 플레이어를 알립니다.",
-	eyebeam_trigger = "%s|1이;가; 당신에게 안광을 집중합니다!",
+	eyebeam_trigger = "콜로간이 당신에게 안광을 집중합니다!",
 	eyebeam_message = "안광 집중: %s",
 	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신에게 안광 집중!",

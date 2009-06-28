@@ -185,6 +185,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Crusher Tentacle"] = "분쇄의 촉수",
+	["The Observation Ring"] = "관찰 지구",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",

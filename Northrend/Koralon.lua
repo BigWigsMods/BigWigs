@@ -50,6 +50,16 @@ L:RegisterTranslations("frFR", function() return {
 	cinder_message = "Braise enflammée !",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	fists = "유성 주먹",
+	fists_desc = "코랄론의 유성 주먹 시전을 알립니다.",
+	fists_message = "유성 주먹!",
+
+	cinder = "잿더미",
+	cinder_desc = "코랄론의 불타는 잿더미 시전을 알립니다.",
+	cinder_message = "불타는 잿더미!",
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------
