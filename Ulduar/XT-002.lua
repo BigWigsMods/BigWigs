@@ -104,7 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 	gravitybomb = "Bombe à gravité",
 	gravitybomb_desc = "Prévient quand un joueur subit les effets d'une Bombe à gravité.",
 	gravitybomb_you = "Bombe à gravité sur VOUS !",
-	gravitybomb_other = "Bombe à gravité : %s",
+	gravitybomb_other = "Gravité : %s",
 
 	gravitybombicon = "Bombe à gravité - Icône",
 	gravitybombicon_desc = "Place une icône de raid bleue sur le dernier joueur affecté par une Bombe à gravité (nécessite d'être assistant ou mieux).",
@@ -112,7 +112,7 @@ L:RegisterTranslations("frFR", function() return {
 	lightbomb = "Lumière incendiaire",
 	lightbomb_desc = "Prévient quand un joueur subit les effets d'une Lumière incendiaire.",
 	lightbomb_you = "Lumière incendiaire sur VOUS !",
-	lightbomb_other = "Lumière incendiaire : %s",
+	lightbomb_other = "Lumière : %s",
 
 	heartbreak = "Bris du cœur",
 	heartbreak_desc = "Prévient quand le cœur du XT-002 est brisé.",
@@ -121,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 	tantrum = "Colère assourdissante",
 	tantrum_desc = "Prévient quand le XT-002 incante une Colère assourdissante en mode difficile.",
 	tantrum_message = "Colère assourdissante!",
-	tantrum_bar = "~Recharge Colère assourdissante",
+	tantrum_bar = "~Recharge Colère",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",

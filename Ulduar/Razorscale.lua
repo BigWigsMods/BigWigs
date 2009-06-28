@@ -146,7 +146,7 @@ L:RegisterTranslations("frFR", function() return {
 	breath_desc = "Prévient de l'arrivée des Souffles de flammes.",
 	breath_trigger = "%s inspire profondément…",
 	breath_message = "Souffle de flammes !",
-	breath_bar = "~Recharge Souffle de flammes",
+	breath_bar = "~Recharge Souffle",
 
 	flame = "Flamme dévorante sur vous",
 	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
@@ -156,7 +156,7 @@ L:RegisterTranslations("frFR", function() return {
 	harpoon_desc = "Prévient quand une tourelle à harpon est prête.",
 	harpoon_message = "Tourelle à harpon %d prête !",
 	harpoon_trigger = "Tourelle à harpon prête à l'action !",
-	harpoon_nextbar = "Tourelle à harpon %d",
+	harpoon_nextbar = "Tourelle %d",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

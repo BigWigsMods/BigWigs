@@ -148,7 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Début de la phase 1",
 	phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement allez pay -  Attendez, vous -",
-	phase2_message = "Phase 2 - Berserk dans 5 min. !",
+	phase2_message = "Phase 2 - Berserk dans 6 min. 15 sec. !",
 	phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !",
 	phase3_message = "Phase 3 - %s engagé !",
 
@@ -162,7 +162,7 @@ L:RegisterTranslations("frFR", function() return {
 	hammer = "Marteau-tempête",
 	hammer_desc = "Affiche une barre indiquant le prochain Marteau-tempête.",
 	hammer_message = "Marteau-tempête : %s",
-	hammer_bar = "Prochain Marteau-tempête",
+	hammer_bar = "Marteau-tempête",
 
 	impale = "Empaler",
 	impale_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
@@ -180,18 +180,18 @@ L:RegisterTranslations("frFR", function() return {
 
 	detonation = "Détonation runique",
 	detonation_desc = "Prévient quand un joueur subit les effets d'une Détonation runique.",
-	detonation_message = "Détonation runique : %s",
+	detonation_message = "Détonation : %s",
 	detonation_yell = "Je suis une bombe !",
 
 	charge = "Charge de foudre",
 	charge_desc = "Compte et prévient de l'arrivée des Charges de foudre de Thorim.",
 	charge_message = "Charge de foudre x%d !",
-	charge_bar = "Charge de foudre %d",
+	charge_bar = "Charge %d",
 
 	strike = "Frappe déséquilibrante",
 	strike_desc = "Prévient quand un joueur subit les effets d'une Frappe déséquilibrante.",
-	strike_message= "Frappe déséquilibrante : %s",
-	strike_bar = "Recharge Frappe déséquilibrante",
+	strike_message = "Frappe : %s",
+	strike_bar = "Recharge Frappe",
 
 	end_trigger = "Retenez vos coups ! Je me rends !",
 

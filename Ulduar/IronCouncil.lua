@@ -167,7 +167,7 @@ L:RegisterTranslations("frFR", function() return {
 	overwhelm = "Puissance accablante",
 	overwhelm_desc = "Prévient quand un joueur subit les effets d'une Puissance accablante.",
 	overwhelm_you = "Puissance accablante sur VOUS !",
-	overwhelm_other = "Puissance accablante : %s",
+	overwhelm_other = "P. accablante : %s",
 
 	whirl = "Eclair tourbillonnant",
 	whirl_desc = "Prévient quand Brundir commence à canaliser un Eclair tourbillonnant.",

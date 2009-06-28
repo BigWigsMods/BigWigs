@@ -152,22 +152,22 @@ L:RegisterTranslations("frFR", function() return {
 	fury = "Fureur de la nature",
 	fury_desc = "Prévient quand un joueur subit les effets d'une Fureur de la nature.",
 	fury_you = "Fureur de la nature sur VOUS !",
-	fury_other = "Fureur de la nature : %s",
+	fury_other = "Fureur : %s",
 
 	sunbeam = "Rayon de soleil",
 	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
 	sunbeam_you = "Rayon de soleil sur VOUS !",
-	sunbeam_other = "Rayon de soleil : %s",
+	sunbeam_other = "Rayon : %s",
 
 	tremor = "Tremblement de terre",
 	tremor_desc = "Prévient quand Freya incante un Tremblement de terre (Ancien Ecorcepierre).",
 	tremor_message = "Tremblement de terre !",
 	tremor_warning = "Tremblement de terre imminent !",
-	tremor_bar = "~Prochain Tremblement de terre",
+	tremor_bar = "~Prochain Tremblement",
 
 	root = "Racines de fer",
 	root_desc = "Prévient quand un joueur subit les effets des Racines de fer (Ancien Branchefer).",
-	root_message = "Racines de fer : %s",
+	root_message = "Racines : %s",
 
 	energy = "Energie instable",
 	energy_desc = "Prévient quand vous subissez les effets d'une Energie instable (Ancien Brillefeuille).",

@@ -88,7 +88,7 @@ L:RegisterTranslations("frFR", function() return {
 	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
 	fear_warning = "Hurlement terrifiant imminent !",
 	fear_message = "Hurlement terrifiant en incantation !",
-	fear_bar = "~Recharge Hurlement terrifiant",
+	fear_bar = "~H. terrifiant",
 
 	sentinel = "Déflagration du factionnaire",
 	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
@@ -96,9 +96,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	swarm = "Essaim gardien",
 	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
-	swarm_other = "Essaim gardien : %s",
+	swarm_other = "Essaim : %s",
 	swarm_you = "Essaim gardien sur VOUS !",
-	swarm_bar = "~Recharge Essaim",
+	swarm_bar = "~Essaim",
 
 	defender = "Défenseur farouche",
 	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
@@ -107,7 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 	sonic = "Hurlement sonore",
 	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
 	sonic_message = "Hurlement sonore en incantation !",
-	sonic_bar = "~Recharge Hurlement sonore",
+	sonic_bar = "~H. sonore",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

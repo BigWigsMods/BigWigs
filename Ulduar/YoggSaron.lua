@@ -290,11 +290,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	malady = "Mal de la raison",
 	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
-	malady_message = "Mal de la raison : %s",
+	malady_message = "Mal : %s",
 
 	tentacle = "Tentacule écraseur",
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
-	tentacle_message = "Tentacule écraseur %d !",
+	tentacle_message = "Écraseur %d !",
 
 	squeeze = squeezeName,
 	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
@@ -307,12 +307,12 @@ L:RegisterTranslations("frFR", function() return {
 	gaze = "Regard lunatique",
 	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
 	gaze_bar = "~Recharge Regard",
-	gaze_cast_bar = "Regard lunatique en incantation",
+	gaze_cast_bar = "Regard en incantation",
 
 	empower = "Renforcement des ombres",
 	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
 	empower_message = "Renforcement des ombres !",
-	empower_bar = "~Recharge Renforcement des ombres",
+	empower_bar = "~Recharge Renforcement",
 
 	mindcontrol = "Emprise",
 	mindcontrol_desc = "Prévient quand un joueur subit les effets d'une Emprise.",

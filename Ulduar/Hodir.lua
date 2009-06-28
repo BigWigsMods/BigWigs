@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
-	
+
 	cloud = "폭풍 구름",
 	cloud_desc = "폭풍 구름을 얻은 플레이어를 알립니다.",
 	cloud_you = "당신은 폭풍 구름",
@@ -107,7 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 	flash_message = "Gelé(s) : %s",
 	flash_warning = "Gel instantané en incantation !",
 	flash_soon = "Gel instantané dans 5 sec. !",
-	flash_bar = "Prochain Gel instantané",
+	flash_bar = "Prochain Gel",
 
 	frozenblow = "Coups gelés",
 	frozenblow_desc = "Prévient quand Hodir gagne Coups gelés.",
@@ -120,7 +120,7 @@ L:RegisterTranslations("frFR", function() return {
 	cloud = "Nuage d'orage",
 	cloud_desc = "Prévient quand un joueur subit les effets d'un Nuage d'orage.",
 	cloud_you = "Nuage d'orage sur VOUS !",
-	cloud_other = "Nuage d'orage : %s",
+	cloud_other = "Nuage : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Nuage d'orage (nécessite d'être assistant ou mieux).",
@@ -248,7 +248,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	hardmode = "Сложный режим",
 	hardmode_desc = "Отображать таймер сложного режима.",
-	
+
 	cloud = "Грозовая туча",
 	cloud_desc = "Отображает кто получает эффект Грозовой тучи.",
 	cloud_you = "Грозовая туча на ВАС",

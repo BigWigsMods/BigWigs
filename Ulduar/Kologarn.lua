@@ -97,8 +97,8 @@ L:RegisterTranslations("frFR", function() return {
 	arm_desc = "Prévient quand le bras gauche et/ou droit est détruit.",
 	left_dies = "Bras gauche éliminé",
 	right_dies = "Bras droit éliminé",
-	left_wipe_bar = "Réapparition du bras gauche",
-	right_wipe_bar = "Réapparition du bras droit",
+	left_wipe_bar = "Réapp. bras gauche",
+	right_wipe_bar = "Réapp. bras droit",
 
 	grip = "Poigne de pierre",
 	grip_desc = "Prévient quand un joueur subit les effets d'une Poigne de pierre.",
@@ -111,8 +111,8 @@ L:RegisterTranslations("frFR", function() return {
 	eyebeam = "Rayon de l'oeil",
 	eyebeam_desc = "Prévient quand un Rayon de l'oeil focalisé est incanté.",
 	eyebeam_trigger = "%s pose son regard sur vous !", -- à vérifier
-	eyebeam_message = "Arrivée d'un Rayon de l'oeil : %s",
-	eyebeam_bar = "~Prochain Rayon de l'oeil",
+	eyebeam_message = "Rayon : %s",
+	eyebeam_bar = "~Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
 	eyebeam_say = "Rayon de l'oeil sur moi !",
 

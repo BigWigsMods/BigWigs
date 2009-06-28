@@ -167,19 +167,19 @@ L:RegisterTranslations("frFR", function() return {
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
-	plasma_warning = "Explosion en incantation !",
+	plasma_warning = "Plasma en incantation !",
 	plasma_soon = "Explosion de plasma imminente !",
-	plasma_bar = "Explosion de plasma",
+	plasma_bar = "Plasma",
 
 	shock = "Horion explosif",
 	shock_desc = "Prévient quand un Horion explosif est incanté.",
 	shock_warning = "Horion explosif !",
-	shock_next = "Prochain Horion explosif",
+	shock_next = "Prochain Horion",
 
 	laser = "Barrage laser",
 	laser_desc = "Prévient quand un Barrage laser est actif.",
-	laser_soon = "Barrage laser imminent !",
-	laser_bar = "Prochain Barrage laser",
+	laser_soon = "Accélération !",
+	laser_bar = "Barrage",
 
 	magnetic = "Noyau magnétique",
 	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",
@@ -548,7 +548,7 @@ local function start()
 	end
 	if db.shock then
 		mod:Bar(L["shock_next"], 30, 63631)
-	end		
+	end
 	if db.plasma then
 		mod:Bar(L["plasma_bar"], 20, 62997)
 		mod:DelayedMessage(17, L["plasma_soon"], "Attention")

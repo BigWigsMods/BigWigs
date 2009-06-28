@@ -139,8 +139,8 @@ L:RegisterTranslations("frFR", function() return {
 	surge = "Vague de ténèbres",
 	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
 	surge_message = "Vague de ténèbres %d !",
-	surge_cast = "Vague de ténèbres %d en incantation !",
-	surge_bar = "Vague de ténèbres %d",
+	surge_cast = "Vague %d en incantation !",
+	surge_bar = "Vague %d",
 
 	animus = "Animus de saronite",
 	animus_desc = "Prévient quand l'Animus de saronite apparaît.",
@@ -150,7 +150,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor = "Vapeurs de saronite",
 	vapor_desc = "Prévient quand des Vapeurs de saronite apparaissent.",
 	vapor_message = "Vapeurs de saronite %d !",
-	vapor_bar = "Vapeurs de saronite %d/8",
+	vapor_bar = "Vapeurs %d/8",
 	vapor_trigger = "Un nuage de vapeurs saronitiques se forme non loin !",
 
 	vaporstack = "Cumul des Vapeurs",
@@ -172,7 +172,7 @@ L:RegisterTranslations("frFR", function() return {
 	mark = "Marque du Sans-visage",
 	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
 	mark_message_you = "Marque du Sans-visage sur VOUS !",
-	mark_message_other = "Marque du Sans-visage : %s",
+	mark_message_other = "Marque : %s",
 
 	icon = "Marque - Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux).",

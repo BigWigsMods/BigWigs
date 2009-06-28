@@ -35,9 +35,19 @@ L:RegisterTranslations("enUS", function() return {
 	fists_desc = "Warn when Koralon casts Meteor Fists.",
 	fists_message = "Meteor Fists Active!",
 
-	cinder = "cinder",
-	cinder_desc = "Warn when Emalon casts Flaming Cinder.",
+	cinder = "Cinder",
+	cinder_desc = "Warn when Koralon casts Flaming Cinder.",
 	cinder_message = "Flaming Cinder!",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	fists = "Poings météoriques",
+	fists_desc = "Prévient quand Koralon incante des Poings météoriques.",
+	fists_message = "Poings météoriques actifs !",
+
+	cinder = "Braise enflammée",
+	cinder_desc = "Prévient quand Koralan incante une Braise enflammée.",
+	cinder_message = "Braise enflammée !",
 } end )
 
 ------------------------------

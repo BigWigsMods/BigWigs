@@ -132,7 +132,7 @@ L:RegisterTranslations("frFR", function() return {
 	flame = "Flots de flammes",
 	flame_desc = "Prévient quand Ignis incante des Flots de flammes.",
 	flame_message = "Flots de flammes !",
-	flame_bar = "~Recharge Flots de flammes",
+	flame_bar = "~Recharge Flots",
 
 	scorch = "Brûlure",
 	scorch_desc = "Prévient quand vous vous trouvez dans une Brûlure et quand cette dernière est incantée.",
@@ -143,7 +143,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	slagpot = "Marmite de scories",
 	slagpot_desc = "Prévient quand un joueur est envoyé dans la Marmite de scories.",
-	slagpot_message = "Marmite de scories : %s",
+	slagpot_message = "Marmite : %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
