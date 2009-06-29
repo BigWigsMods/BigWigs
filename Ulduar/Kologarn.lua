@@ -143,16 +143,16 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeam = "Fokussierter Augenstrahl",
 	eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist.",
 	eyebeam_trigger = "%s fokussiert seinen Blick auf Euch!",
-	eyebeam_message = "Augenstrahl: %s",
+	eyebeam_message = "Augenstrahl: %s!",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
 	eyebeam_say = "Augenstrahl auf MIR!",
 	
 	eyebeamsay = "Augenstrahl /sagen",
-	eyebeamsay_desc = "Verkündet wenn du das Ziel des Augenstrahls bist.",
+	eyebeamsay_desc = "Verkündet, wenn du das Ziel des Augenstrahls bist.",
 	
 	armor = "Rüstung zermalmen",
-	armor_desc = "Warnt, wenn ein Spieler von 2x oder öfter von Rüstung zermalmen betroffen ist.",
+	armor_desc = "Warnt, wenn ein Spieler 2x oder öfter von Rüstung zermalmen betroffen ist.",
 	armor_message = "%2$dx Rüstung zermalmen: %1$s!",
 } end )
 

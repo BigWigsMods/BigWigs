@@ -338,9 +338,9 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	engage_warning = "Phase 1",
-	engage_trigger = "^Bald ist die Zeit", -- needs verification!
+	engage_trigger = "^Bald ist die Zeit",
 	phase2_warning = "Phase 2",
-	phase2_trigger = "^Ich bin der strahlende Traum", -- needs verification!
+	phase2_trigger = "^Ich bin der strahlende Traum",
 	phase3_warning = "Phase 3",
 	phase3_trigger = "^Erblicket das wahre Antlitz des Todes", -- needs verification!
 
@@ -357,7 +357,7 @@ L:RegisterTranslations("deDE", function() return {
 	weakened = "Geschwächt",
 	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
 	weakened_message = "%s ist geschwächt!",
-	weakened_trigger = "Die Illusion fällt in sich zusammen und der Weg in den zentralen Raum wird frei!", -- needs verification!
+	weakened_trigger = "Die Illusion fällt in sich zusammen und der Weg in den zentralen Raum wird frei!",
 
 	madness = "Wahnsinn hervorrufen",
 	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
@@ -398,7 +398,7 @@ L:RegisterTranslations("deDE", function() return {
 	guardian_message = "Wächter %d!",
 
 	empowericon = "Schatten-Symbol",
-	empowericon_desc = "Platziert einen Totenkopf über der Unvergängliche Wache mit Machtvolle Schatten.",
+	empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher).",
 	empowericon_message = "Schatten verblasst!",
 
 	icon = "Schlachtzugs-Symbol",
