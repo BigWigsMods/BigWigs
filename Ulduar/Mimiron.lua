@@ -161,7 +161,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	hardmode = "Auto-destruction",
 	hardmode_desc = "Affiche une barre de 10 minutes pour le mode difficile (mécanisme d'auto-destruction activé).",
-	hardmode_trigger = "^Mais, pourquoi avez-vous été faire une chose pareille ?",
+	hardmode_trigger = "^Mais, pourquoi",
 	hardmode_message = "Auto-destruction activée !",
 	hardmode_warning = "Délai du mode difficile dépassé",
 
