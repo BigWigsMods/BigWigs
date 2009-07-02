@@ -236,10 +236,10 @@ L:RegisterTranslations("ruRU", function() return {
 
 	flash = "Мгновенная заморозка",
 	flash_desc = "Сообщает кто подвергся мгновенной заморозке и когда она применяется.",
-	flash_message = "Замарожены: %s!",
+	flash_message = "Заморожены: %s!",
 	flash_warning = "Применение мгновенной заморозки!",
 	flash_soon = "Заморозка через 5сек!",
-	flash_bar = "~замарозка",
+	flash_bar = "~заморозка",
 
 	frozenblow = "Ледяные дуновения",
 	frozenblow_desc = "Сообщать когда Ходир накладывает на себя Ледяные дуновения.",
