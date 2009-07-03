@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 	eyebeam_bar = "~안광 집중",
 	eyebeam_you = "당신에게 안광 집중!",
 	eyebeam_say = "저 안광 집중요!",
-	
+
 	eyebeamsay = "안광 일반 대화",
 	eyebeamsay_desc = "안광 집중의 대상시 일반 대화로 알립니다.",
 
@@ -95,10 +95,10 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	arm = "Destruction des bras",
 	arm_desc = "Prévient quand le bras gauche et/ou droit est détruit.",
-	left_dies = "Bras gauche éliminé",
-	right_dies = "Bras droit éliminé",
-	left_wipe_bar = "Réapp. bras gauche",
-	right_wipe_bar = "Réapp. bras droit",
+	left_dies = "Bras gauche détruit",
+	right_dies = "Bras droit détruit",
+	left_wipe_bar = "Repousse bras gauche",
+	right_wipe_bar = "Repousse bras droit",
 
 	grip = "Poigne de pierre",
 	grip_desc = "Prévient quand un joueur subit les effets d'une Poigne de pierre.",
@@ -110,7 +110,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	eyebeam = "Rayon de l'oeil",
 	eyebeam_desc = "Prévient quand un Rayon de l'oeil focalisé est incanté.",
-	eyebeam_trigger = "%s pose son regard sur vous !", -- à vérifier
+	eyebeam_trigger = "%s concentre son regard sur vous !",
 	eyebeam_message = "Rayon : %s",
 	eyebeam_bar = "~Rayon de l'oeil",
 	eyebeam_you = "Rayon de l'oeil sur VOUS !",
@@ -147,10 +147,10 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
 	eyebeam_say = "Augenstrahl auf MIR!",
-	
+
 	eyebeamsay = "Augenstrahl /sagen",
 	eyebeamsay_desc = "Verkündet, wenn du das Ziel des Augenstrahls bist.",
-	
+
 	armor = "Rüstung zermalmen",
 	armor_desc = "Warnt, wenn ein Spieler 2x oder öfter von Rüstung zermalmen betroffen ist.",
 	armor_message = "%2$dx Rüstung zermalmen: %1$s!",
@@ -179,7 +179,7 @@ L:RegisterTranslations("zhCN", function() return {
 	eyebeam_bar = "<聚焦视线>",
 	eyebeam_you = ">你< 聚焦视线！",
 	--eyebeam_say = "Eyebeam on Me!",
-	
+
 	--eyebeamsay = "Eyebeam Say",
 	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
@@ -211,7 +211,7 @@ L:RegisterTranslations("zhTW", function() return {
 	eyebeam_bar = "<集束目光>",
 	eyebeam_you = ">你< 集束目光！",
 	--eyebeam_say = "Eyebeam on Me!",
-	
+
 	--eyebeamsay = "Eyebeam Say",
 	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
@@ -243,10 +243,10 @@ L:RegisterTranslations("ruRU", function() return {
 	eyebeam_bar = "~Взгляд",
 	eyebeam_you = "Взгляд на ВАС!",
 	eyebeam_say = "Взгяд на мне!",
-	
+
 	eyebeamsay = "Сказать о взгяде",
 	eyebeamsay_desc = "Сказать когда вы цель взгляда.",
-	
+
 	armor = "Хруст доспеха",
 	armor_desc = "Сообщать если кто получил 2 или больше эффекта Хруста доспеха.",
 	armor_message = "%2$dx Хруста на |3-5(%1$s)",

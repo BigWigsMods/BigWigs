@@ -126,8 +126,8 @@ L:RegisterTranslations("frFR", function() return {
 	bigbang_message = "Big Bang !",
 	bigbang_soon = "Big Bang imminent !",
 
-	stars = "Collapsing Stars",
-	stars_desc = "Prévient quand des Collapsing Stars apparaissent.",
+	stars = "Étoiles s'effondrant",
+	stars_desc = "Prévient quand des Étoiles s'effondrant apparaissent.",
 
 	constellation = "Constellations vivantes",
 	constellation_desc = "Prévient quand des Constellations vivantes apparaissent.",
