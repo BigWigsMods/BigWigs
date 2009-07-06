@@ -342,7 +342,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_warning = "Phase 2",
 	phase2_trigger = "^Ich bin der strahlende Traum",
 	phase3_warning = "Phase 3",
-	phase3_trigger = "^Erblicket das wahre Antlitz des Todes", -- needs verification!
+	phase3_trigger = "^Erblickt das wahre Antlitz des Todes",
 
 	portal = "Portale",
 	portal_desc = "Warnt, wenn Portale erscheinen.",

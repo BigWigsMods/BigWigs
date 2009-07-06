@@ -141,7 +141,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase_bar = "Phase %d",
 
 	engage = "Engage",
-	engage_trigger = "^Euer Handeln ist unlogisch. ",-- needs check
+	engage_trigger = "^Euer Handeln ist unlogisch.",-- needs check
 	first_engage_trigger = "^Seht Eure Welt durch meine Augen",-- needs check
 
 	punch = "Phasenschlag",
@@ -161,11 +161,11 @@ L:RegisterTranslations("deDE", function() return {
 	bigbang_message = "Großer Knall!",
 	bigbang_soon = "Großer Knall bald!",
 
-	--[[stars = "Collapsing Stars",
-	stars_desc = "Warn when Collapsing Stars spawn",
+	stars = "Kollabierende Sterne",
+	stars_desc = "Warnung und Timer für das Auftauchen der Kollabierenden Sterne.",
 
-	constellation = "Living Constellations",
-	constellation_desc = "Warn when Living Constellations spawn", ]]--
+	constellation = "Lebende Sternbilder",
+	constellation_desc = "Warnung und Timer für das Auftauchen der Lebenden Sternbilder.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
