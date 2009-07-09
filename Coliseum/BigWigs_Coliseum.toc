@@ -1,0 +1,24 @@
+## Interface: 30100
+
+## Title: Big Wigs [|cffeda55fCrusader's Coliseum|r]
+## Notes: Big Wigs Modules for the Crusader's Coliseum
+## Author: 
+## X-Credits: 
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowwiki.com/BigWigs
+## X-Category: Raid
+
+## X-BigWigs-LoadInZone: Crusader's Coliseum
+
+## Dependencies: BigWigs
+
+Beta.lua
+Gormok.lua
+Jormungars.lua
+Icehowl.lua
+Jaraxxus.lua
+ValkyrTwins.lua
+Anubarak.lua
+Beta.lua
