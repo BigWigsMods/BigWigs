@@ -10,7 +10,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "empower", "empowericon", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "roar", "empower", "empowericon", "gaze", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -104,6 +104,12 @@ L:RegisterTranslations("enUS", function() return {
 	empowericon = "Empower Icon",
 	empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	empowericon_message = "Empower Faded!",
+	
+	roar = "Deafening Roar",
+	roar_desc = "Warns when Deafening Roar is casting.",
+	roar_message = "Deafening Roar!",
+	roar_warning = "Roar in 5sec!",
+	roar_bar = "Next Roar",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
@@ -178,6 +184,12 @@ L:RegisterTranslations("ruRU", function() return {
 	empowericon = "Сгущение тьмы иконка",
 	empowericon_desc = "Помечать черепом Бессмертного стража со Сгущением тьмы.",
 	empowericon_message = "Сгущением тьмы закончилось!",
+	
+	--roar = "Deafening Roar",
+	--roar_desc = "Warns when Deafening Roar is casting.",
+	--roar_message = "Deafening Roar!",
+	--roar_warning = "Roar in 5sec!",
+	--roar_bar = "Next Roar",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, с Душевной болезнью или находящегося под контролем разума. (необходимо быть лидером группы или рейда)",
@@ -252,6 +264,12 @@ L:RegisterTranslations("koKR", function() return {
 	empowericon = "암흑 강화 아이콘",
 	empowericon_desc = "암흑 강화에 걸린 수호병에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",
 	empowericon_message = "암흑 강화 사라짐!",
+	
+	roar = "귀청이 터질듯한 포효",
+	roar_desc = "귀청이 터질듯한 포효의 시전을 알립니다.",
+	roar_message = "귀청이 터질듯한 포효!",
+	roar_warning = "5초 후 포효!",
+	roar_bar = "다음 포효",
 
 	icon = "전술 표시",
 	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -326,6 +344,12 @@ L:RegisterTranslations("frFR", function() return {
 	empowericon = "Renforcement - Icône",
 	empowericon_desc = "Place un crâne sur le Gardien immortel ayant Renforcement des ombres.",
 	empowericon_message = "Renforcement terminé !",
+	
+	--roar = "Deafening Roar",
+	--roar_desc = "Warns when Deafening Roar is casting.",
+	--roar_message = "Deafening Roar!",
+	--roar_warning = "Roar in 5sec!",
+	--roar_bar = "Next Roar",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
@@ -400,6 +424,12 @@ L:RegisterTranslations("deDE", function() return {
 	empowericon = "Schatten-Symbol",
 	empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher).",
 	empowericon_message = "Schatten verblasst!",
+	
+	--roar = "Deafening Roar",
+	--roar_desc = "Warns when Deafening Roar is casting.",
+	--roar_message = "Deafening Roar!",
+	--roar_warning = "Roar in 5sec!",
+	--roar_bar = "Next Roar",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
@@ -474,6 +504,12 @@ L:RegisterTranslations("zhCN", function() return {
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
+	
+	--roar = "Deafening Roar",
+	--roar_desc = "Warns when Deafening Roar is casting.",
+	--roar_message = "Deafening Roar!",
+	--roar_warning = "Roar in 5sec!",
+	--roar_bar = "Next Roar",
 
 	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
 } end )
@@ -547,6 +583,12 @@ L:RegisterTranslations("zhTW", function() return {
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
+	
+	--roar = "Deafening Roar",
+	--roar_desc = "Warns when Deafening Roar is casting.",
+	--roar_message = "Deafening Roar!",
+	--roar_warning = "Roar in 5sec!",
+	--roar_bar = "Next Roar",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
@@ -558,6 +600,7 @@ mod.enabletrigger = {boss, sara, brain}
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Roar", 64189)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "EmpowerIcon", 64465)
@@ -641,6 +684,14 @@ function mod:Tentacle(_, spellID, source)
 		self:IfMessage(L["tentacle_message"]:format(count), "Important", 64139)
 		count = count + 1
 		self:Bar(L["tentacle_message"]:format(count), 50, 64139)
+	end
+end
+
+function mod:Roar(_, spellID)
+	if db.roar then
+		self:IfMessage(L["roar_message"], "Attention", spellID)
+		self:Bar(L["roar_bar"], 60, spellID)
+		self:DelayedMessage(55, L["roar_warning"], "Attention")
 	end
 end
 
