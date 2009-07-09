@@ -1,7 +1,7 @@
 ## Interface: 30100
 
-## Title: Big Wigs [|cffeda55fCrusader's Coliseum|r]
-## Notes: Big Wigs Modules for the Crusader's Coliseum
+## Title: Big Wigs [|cffeda55fThe Argent Coliseum|r]
+## Notes: Big Wigs Modules for The Argent Coliseum
 ## Author: 
 ## X-Credits: 
 ## Version: 2.0
@@ -10,7 +10,7 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-LoadInZone: Crusader's Coliseum
+## X-BigWigs-LoadInZone: The Argent Coliseum
 
 ## Dependencies: BigWigs
 
@@ -21,4 +21,4 @@ Icehowl.lua
 Jaraxxus.lua
 ValkyrTwins.lua
 Anubarak.lua
-Beta.lua
+
