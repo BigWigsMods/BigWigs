@@ -425,11 +425,11 @@ L:RegisterTranslations("deDE", function() return {
 	empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher).",
 	empowericon_message = "Schatten verblasst!",
 	
-	--roar = "Deafening Roar",
-	--roar_desc = "Warns when Deafening Roar is casting.",
-	--roar_message = "Deafening Roar!",
-	--roar_warning = "Roar in 5sec!",
-	--roar_bar = "Next Roar",
+	roar = "Ohrenbetäubendes Gebrüll",
+	roar_desc = "Warnt wenn Ohrenbetäubendes Gebrüll gewirkt wird.",
+	roar_message = "Ohrenbetäubendes Gebrüll!",
+	roar_warning = "Gebrüll in 5sek!",
+	roar_bar = "Nächstes Gebrüll",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
