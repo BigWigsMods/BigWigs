@@ -104,7 +104,7 @@ L:RegisterTranslations("enUS", function() return {
 	empowericon = "Empower Icon",
 	empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	empowericon_message = "Empower Faded!",
-	
+
 	roar = "Deafening Roar",
 	roar_desc = "Warns when Deafening Roar is casting.",
 	roar_message = "Deafening Roar!",
@@ -184,7 +184,7 @@ L:RegisterTranslations("ruRU", function() return {
 	empowericon = "Сгущение тьмы иконка",
 	empowericon_desc = "Помечать черепом Бессмертного стража со Сгущением тьмы.",
 	empowericon_message = "Сгущением тьмы закончилось!",
-	
+
 	--roar = "Deafening Roar",
 	--roar_desc = "Warns when Deafening Roar is casting.",
 	--roar_message = "Deafening Roar!",
@@ -264,7 +264,7 @@ L:RegisterTranslations("koKR", function() return {
 	empowericon = "암흑 강화 아이콘",
 	empowericon_desc = "암흑 강화에 걸린 수호병에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",
 	empowericon_message = "암흑 강화 사라짐!",
-	
+
 	roar = "귀청이 터질듯한 포효",
 	roar_desc = "귀청이 터질듯한 포효의 시전을 알립니다.",
 	roar_message = "귀청이 터질듯한 포효!",
@@ -344,12 +344,12 @@ L:RegisterTranslations("frFR", function() return {
 	empowericon = "Renforcement - Icône",
 	empowericon_desc = "Place un crâne sur le Gardien immortel ayant Renforcement des ombres.",
 	empowericon_message = "Renforcement terminé !",
-	
-	--roar = "Deafening Roar",
-	--roar_desc = "Warns when Deafening Roar is casting.",
-	--roar_message = "Deafening Roar!",
-	--roar_warning = "Roar in 5sec!",
-	--roar_bar = "Next Roar",
+
+	roar = "Rugissement assourdissant",
+	roar_desc = "Prévient quand un Rugissement assourdissant est incanté.",
+	roar_message = "Rugissement assourdissant !",
+	roar_warning = "Rugissement dans 5 sec. !",
+	roar_bar = "Prochain Rugissement",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
@@ -424,7 +424,7 @@ L:RegisterTranslations("deDE", function() return {
 	empowericon = "Schatten-Symbol",
 	empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher).",
 	empowericon_message = "Schatten verblasst!",
-	
+
 	roar = "Ohrenbetäubendes Gebrüll",
 	roar_desc = "Warnt wenn Ohrenbetäubendes Gebrüll gewirkt wird.",
 	roar_message = "Ohrenbetäubendes Gebrüll!",
@@ -504,7 +504,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
-	
+
 	--roar = "Deafening Roar",
 	--roar_desc = "Warns when Deafening Roar is casting.",
 	--roar_message = "Deafening Roar!",
@@ -583,7 +583,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--empowericon = "Empower Icon",
 	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	--empowericon_message = "Empower Faded!",
-	
+
 	--roar = "Deafening Roar",
 	--roar_desc = "Warns when Deafening Roar is casting.",
 	--roar_message = "Deafening Roar!",
