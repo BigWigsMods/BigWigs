@@ -50,6 +50,25 @@ L:RegisterTranslations("enUS", function() return {
 	vortex_dark_message = "Dark vortex!",
 } end)
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	--check
+	
+	vortex = "소용돌이",
+	vortex_desc = "쌍둥이의 소용돌이 시전을 알립니다.",
+	
+	pact = "쌍둥이의 서약",
+	pact_desc = "쌍둥이가 서로 치유시 알립니다.",
+	
+	pact_dark_message = "파멸의 암흑 치유!",	--check
+	pact_light_message = "파멸의 빛 치유!",	--check
+	
+	shield = "어둠/빛의 방패",
+	shield_desc = "어둠/빛의 방패를 알립니다.",
+	shield_light = "빛의 방패!",	
+	shield_darkness = "어둠의 방패!",
+	
+	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
+	vortex_light_message = "빛의 소용돌이!",
+	vortex_dark_message = "어둠의 소용돌이!",
 } end)
 L:RegisterTranslations("frFR", function() return {
 } end)
