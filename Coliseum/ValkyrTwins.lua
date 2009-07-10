@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local boss = "Val'kyr Twins"
+local boss = BB["The Twin Val'kyr"]
 local edyis = BB["Edyis Darkbane"]
 local fjola = BB["Fjola Lightbane"]
 local mod = BigWigs:New(boss, "$Revision$")
@@ -12,7 +12,7 @@ mod.enabletrigger = { edyis, fjola }
 mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
-mod.toggleoptions = {"vortex", "pact", "bosskill"}
+mod.toggleoptions = {"vortex", "pact", "shield", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -28,6 +28,8 @@ local essenceDark = GetSpellInfo(67176)
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "ValkyrTwins",
+
+	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
 	
 	vortex = "Vortex",
 	vortex_desc = "Warn when the twins start casting Vortexes.",
@@ -37,6 +39,11 @@ L:RegisterTranslations("enUS", function() return {
 	
 	pact_dark_message = "Darkbane healing!",
 	pact_light_message = "Lightbane healing!",
+	
+	shield = "Shield of Darkness/Light",
+	shield_desc = "Warn for Shield of Darkness/Light.",
+	shield_light = "Shield of Light!",	
+	shield_darkness = "Shield of Darkness!",
 	
 	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
 	vortex_light_message = "Light vortex!",
@@ -64,6 +71,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "LightPact", 67306)
 	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 67206)
 	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 67182)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 67257, 67260)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -82,6 +90,16 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Shield(_, spellID)
+	if db.shield then
+		if spellID == 67257 then
+			self:IfMessage(L["shield_darkness"], "Attention", spellID)
+		elseif spellID == 67260 then
+			self:IfMessage(L["shield_light"], "Attention", spellID)
+		end
+	end
+end
 
 function mod:DarkPact(_, spellId)
 	if not db.pact then return end
@@ -104,9 +122,9 @@ function mod:DarkVortex(_, spellId)
 	self:IfMessage(L["vortex_dark_message"], "Personal", spellId)
 end
 
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg:find(L["engage_trigger1"]) then
 
-
-
-
-
+	end
+end
 
