@@ -331,7 +331,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger1 = "Нужно защитить Оранжерею!",
-	--engage_trigger2 = "Elders grant me your strength!",
+	engage_trigger2 = "Древни, дайте мне силы!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",

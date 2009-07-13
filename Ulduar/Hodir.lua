@@ -257,7 +257,7 @@ L:RegisterTranslations("ruRU", function() return {
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелена Грозовая туча.",
 
-	--end_trigger = "I...I am released from his grasp! At...last!",
+	end_trigger = "Наконец-то я... свободен от его оков…",
 } end )
 
 ------------------------------

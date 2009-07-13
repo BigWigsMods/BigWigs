@@ -392,7 +392,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase3_warning = "Наступает 3-ая фаза",
 	phase3_trigger = "^Спасибо, друзья!",
 	phase4_warning = "Наступает 4-ая фаза",
---	phase4_trigger = "^Preliminary testing phase complete",
+	phase4_trigger = "^Фаза предварительной проверки завершена.",
 	phase_bar = "%d фаза",
 
 	hardmode = "Таймеры сложного режима",
@@ -438,7 +438,7 @@ L:RegisterTranslations("ruRU", function() return {
 	bomb_desc = "Предупреждать о Бомботе.",
 	bomb_message = "Появился Бомбот!",
 
---	end_trigger = "^It would appear that I made a slight miscalculation.",
+	end_trigger = "^Очевидно, я совершил небольшую ошибку в расчетах.",
 } end )
 
 ------------------------------

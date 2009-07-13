@@ -238,7 +238,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	eyebeam = "Сосредоточенный взгляд",
 	eyebeam_desc = "Сообщать кто попал под воздействие Сосредоточенный взгляд.",
-	--eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_trigger = "Кологарн устремляет на вас свой взгляд!",
 	eyebeam_message = "Взгляд: %s",
 	eyebeam_bar = "~Взгляд",
 	eyebeam_you = "Взгляд на ВАС!",

@@ -246,19 +246,19 @@ L:RegisterTranslations("ruRU", function() return {
 	phase_bar = "%d-ая фаза",
 
 	engage = "Вступление в бой",
-	--engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
-	--first_engage_trigger = "See your world through my eyes",
+	engage_trigger = "Ваши действия нелогичны. Все возможные исходы этой схватки просчитаны. Пантеон получит сообщение от Наблюдателя в любом случае.",
+	first_engage_trigger = "Взгляните на мир моими глазами: узрите необъятную вселенную, непостижимую даже для величайших умов.",
 
 	punch = "Фазовый удар",
-	punch_desc = "Сообщать если на ком либо Фазовый удар суммировался до 4 раз",
-	punch_message = "%dx Фазовых удара на |3-5(%s)",
+	punch_desc = "Сообщать о суммировании фазового удара до 4 раз",
+	punch_message = "%dx фазовых удара на |3-5(%s)",
 
 	smash = "Кара небесная",
 	smash_desc = "Сообщать о наступлении Кары небесной",
 	smash_message = "Наступление Кары небесной!",
 
 	blackhole = "Взрыв черной дыры",
-	blackhole_desc = "Сообщать о появлении Взрыва черной дыры",
+	blackhole_desc = "Сообщать о взрыве черной дыры",
 	blackhole_message = "Появление черной дыры %dx",
 
 	bigbang = "Суровый удар",
@@ -266,11 +266,11 @@ L:RegisterTranslations("ruRU", function() return {
 	bigbang_message = "Суровый удар!",
 	bigbang_soon = "Скоро Суровый удар!",
 
-	--stars = "Collapsing Stars",
-	--stars_desc = "Warn when Collapsing Stars spawn",
+	stars = "Вспыхивающие звезды",
+	stars_desc = "Сообщать о появлении выспыхивающих звёзд",
 
-	--constellation = "Living Constellations",
-	--constellation_desc = "Warn when Living Constellations spawn",
+	constellation = "Живые созвездия",
+	constellation_desc = "Сообщать о появлении живых созвездий",
 } end )
 
 ------------------------------

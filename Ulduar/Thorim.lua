@@ -416,7 +416,7 @@ L:RegisterTranslations("ruRU", function() return {
 	strike_desc = "Сообщает когда игрок получает Дисбалансирующий удар.",
 	strike_message= "Удар по: |3-2(%s)",
 
---	end_trigger = "Stay your arms! I yield!",
+	end_trigger = "Придержите мечи! Я сдаюсь.",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, который попал под воздействие Взрыва рун. (необходимо быть лидером группы или рейда)",

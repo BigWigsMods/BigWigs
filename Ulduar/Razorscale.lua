@@ -73,7 +73,7 @@ L:RegisterTranslations("ruRU", function() return {
 	ground_trigger = "Быстрее! Сейчас она снова взлетит!",
 	ground_message = "Острокрылая на привязи!",
 	air_trigger = "Дайте время подготовить пушки.",
-	--air_trigger2 = "Fires out! Let's rebuild those turrets!",
+	air_trigger2 = "Огонь прекратился! Надо починить пушки!",
 	air_message = "Взлет!",
 	phase2_trigger = "%s обессилела и больше не может летать!",
 	phase2_message = "Вторая фаза!",
