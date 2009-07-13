@@ -475,7 +475,7 @@ end
 
 function mod:Overload(_, spellID)
 	if db.overload then
-		self:IfMessage(L["overload_message"], "Attention", spellID)
+		self:IfMessage(L["overload_message"], "Personal", spellID, "Long")
 		self:Bar(L["overload"], 6, spellID)
 	end
 end
