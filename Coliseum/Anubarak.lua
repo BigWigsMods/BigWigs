@@ -6,8 +6,8 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["The Argent Coliseum"]
 mod.enabletrigger = boss
---mod.guid = -1
-mod.toggleoptions = {"bosskill", "burrow", "pursue"}
+mod.guid = 34564
+mod.toggleoptions = {"bosskill", "burrow", "pursue", "phase"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -33,6 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	burrow = "Burrow",
 	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
+	burrow_emote = "FIXME",
 	burrow_message = "Burrow",
 	burrow_cooldown = "Next Burrow",
 
@@ -60,12 +61,12 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	--self:AddCombatListener("", "", 1)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Pursue", 67574)
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	db = self.db.profile
 end
 
@@ -73,13 +74,24 @@ end
 -- Event Handlers
 --
 
+function mod:Pursue(unit)
+	if db.pursue then
+		if unit == "player" then
+			self:IfMessage(L["pursue_message"], "Important")
+		else
+			self:IfMessage(L["pursue_other"], "Attention")
+		end
+	end
+end
+
 function mod:UNIT_HEALTH(unit)
-	if not db.phase then return end
-	if UnitName(unit) == boss then
-		if UnitHealth(unit) < 30 and phase ~= 2 then
-			self:IfMessage(L["phase_message"], "Positive")
-		elseif phase ==2 then
-			phase = 1
+	if db.phase then
+		if UnitName(unit) == boss then
+			if UnitHealth(unit) < 30 and phase ~= 2 then
+				self:IfMessage(L["phase_message"], "Positive")
+			elseif phase ==2 then
+				phase = 1
+			end
 		end
 	end
 end
@@ -87,6 +99,18 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
+		if db.burrow then
+			--self:Bar(L["burrow_cooldown"], 90, 67322)
+		end
 	end
 end
 
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if db.burrow then
+		if msg:find(L["burrow_emote"]) then
+			--self:IfMessage(L["burrow"])	
+			--self:Bar(L["burrow"], 30, 67322)
+			--self:Bar(L["burrow_cooldown"], 90, 67322)
+		end
+	end
+end
