@@ -40,6 +40,16 @@ L:RegisterTranslations("enUS", function() return {
 	cinder_message = "Flaming Cinder!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	fists = "Meteorfäuste",
+	fists_desc = "Warnt wenn Koralon Meteorfäuste wirkt.",
+	fists_message = "Meteorfäuste Aktiv!",
+
+	cinder = "Zunder",
+	cinder_desc = "Warnt wenn Koralon Flammender Zunder wirkt.",
+	cinder_message = "Flammender Zunder!",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	fists = "Poings météoriques",
 	fists_desc = "Prévient quand Koralon incante des Poings météoriques.",
