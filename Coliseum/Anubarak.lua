@@ -44,6 +44,23 @@ L:RegisterTranslations("enUS", function() return {
 
 } end)
 L:RegisterTranslations("koKR", function() return {
+	engage = "전투 시작",
+	engage_trigger = "This place will serve as your tomb!",	--check
+
+	phase = "단계",
+	phase_desc = "단계 변화를 알립니다.",
+	phase_message = "2 단계!",
+
+	burrow = "소멸",
+	burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다.",
+	burrow_emote = "FIXME",	--check
+	burrow_message = "소멸!",
+	burrow_cooldown = "다음 소멸",
+
+	pursue = "추격",
+	pursue_desc = "누가 아눕아락의 추격인지 알립니다.",
+	pursue_message = "당신을 추격중!",
+	pursue_other = "추격: %s",
 } end)
 L:RegisterTranslations("frFR", function() return {
 } end)

@@ -55,6 +55,33 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end)
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "text",
+	
+	incinerate = "살점 조각",
+	incinerate_desc = "살점 조각을 알립니다.",
+	incinerate_you = "당신은 살점 조각!",
+	incinerate_other = "살점 조각: %s",
+	incinerate_bar = "~살점 조각 대기시간",
+	
+	legionflame = "불꽃 군단",
+	legionflame_desc = "불꽃 군단을 알립니다.",
+	legionflame_you = "당신은 불꽃 군단!",
+	legionflame_other = "불꽃 군단: %s!",
+	legionflame_bar = "~불꽃 군단 대기시간",
+	
+	icon = "전술 표시",
+	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",	
+	
+	netherportal = "황천의 차원문",
+	netherportal_desc = "황천의 차원문을 알립니다.",
+	netherportal_bar = "~황천 차원문 대기시간",
+	
+	netherpower = "황천의 힘",
+	netherpower_desc = "황천의 힘을 알립니다.",	
+	netherpower_bar = "~황천의 힘 대기시간",
+	
+	infernaleruption = "지옥불정령 분출",
+	infernaleruption_desc = "지옥불정령 분출을 알립니다.",
 } end)
 L:RegisterTranslations("frFR", function() return {
 } end)
