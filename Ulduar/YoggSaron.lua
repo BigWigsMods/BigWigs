@@ -426,9 +426,9 @@ L:RegisterTranslations("deDE", function() return {
 	empowericon_message = "Schatten verblasst!",
 
 	roar = "Ohrenbetäubendes Gebrüll",
-	roar_desc = "Warnt wenn Ohrenbetäubendes Gebrüll gewirkt wird.",
+	roar_desc = "Warnt, wenn Ohrenbetäubendes Gebrüll gewirkt wird.",
 	roar_message = "Ohrenbetäubendes Gebrüll!",
-	roar_warning = "Gebrüll in 5sek!",
+	roar_warning = "Gebrüll in 5 sek!",
 	roar_bar = "Nächstes Gebrüll",
 
 	icon = "Schlachtzugs-Symbol",
