@@ -16,6 +16,7 @@ mod.toggleoptions = {"stomp", "impaler", "bosskill"}
 --
 local db = nil
 local pName = UnitName("player")
+local impaler = GetSpellInfo(63355)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -76,7 +77,7 @@ end
 
 function mod:Impaler(player, spellID)
 	if db.impaler then
-		local _, _, icon, stack = UnitDebuff(player, crunch)
+		local _, _, icon, stack = UnitDebuff(player, impaler)
 		if stack and stack > 1 then
 			self:TargetMessage(L["impaler_message"], player, "Urgent", icon, "Info", stack)
 		end
