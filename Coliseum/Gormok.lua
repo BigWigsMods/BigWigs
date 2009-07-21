@@ -34,9 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 	stomp_message = "Staggering Stomp!",
 	stomp_warning = "Staggering Stomp soon!",
 	stomp_bar = "~Next Stomp",
-	
-	icon = "Place Icon",
-	icon_desc = "Place a Raid Icon on the player with Impaler. (requires promoted or higher)",
 } end)
 L:RegisterTranslations("koKR", function() return {
 	impaler = "꿰뚫기",
@@ -48,9 +45,6 @@ L:RegisterTranslations("koKR", function() return {
 	stomp_message = "진동의 발구르기!",
 	stomp_warning = "잠시 후 발구르기!",
 	stomp_bar = "~다음 발구르기",
-	
-	icon = "전술 표시",
-	icon_desc = "꿰뚫기 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end)
 L:RegisterTranslations("frFR", function() return {
 } end)
