@@ -11,13 +11,14 @@ mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe
 mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = { acidmaw, dreadscale }
 mod.guid = 34799--Dreadscale, 35144 = Acidmaw
-mod.toggleoptions = {"bosskill"}
+mod.toggleoptions = {"spew", "enrage", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 local db = nil
 local deaths = 0
+local burn = mod:NewTargetList()
 local pName = UnitName("player")
 local fmt = string.format
 
@@ -29,6 +30,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jormungars",
 	
+	spew = "Acidic/Molten Spew",
+	spew_desc = "Warn for Acidic/Molten Spew.",
+	acidic_message = "Acidic Spew!",
+	molten_message = "Molten Spew!",
+	
+	burn = "Burning Bile",
+	burn_desc = "Warn who has Burning Bile.",
+	burn_you = "Burning Bile on you!",
+	burn_other = "Burning Bile: %s",
+	
 	enrage = "Enrage",
 	enrage_desc = "Warn for Enrage.",
 	enrage_message = "Enrage!",
@@ -36,6 +47,15 @@ L:RegisterTranslations("enUS", function() return {
 	jormungars_dies = "%s dead",
 } end)
 L:RegisterTranslations("koKR", function() return {
+	spew = "산성/용암 내뿜기",
+	spew_desc = "산성/용암 내뿜기를 알립니다.",
+	acidic_message = "산성 내뿜기!",
+	molten_message = "용암 내뿜기!",
+	
+	burn = "불타는 담즙",
+	burn_desc = "불타는 담즙에 걸린 플레이어를 알립니다.",
+	burn_message = "불타는 담즙: %s",
+	
 	enrage = "격노",
 	enrage_desc = "격노를 알립니다.",
 	enrage_message = "격노!",
@@ -58,6 +78,9 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Acidic", 66818)
+	self:AddCombatListener("SPELL_CAST_START", "Molten", 66821)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 66869)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 68335)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	
@@ -68,6 +91,32 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Molten(_, spellID)
+	if db.spew then
+		self:IfMessage(L["molten_message"], "Attention", spellID)
+	end
+end
+
+function mod:Acidic(_, spellID)
+	if db.spew then
+		self:IfMessage(L["acidic_message"], "Attention", spellID)
+	end
+end
+
+local function burnWarn()
+	mod:TargetMessage(L["burn_other"], burn, "Urgent", 64292, "Alert")
+end
+
+function mod:Burn(player, spellID)
+	if db.burn then
+		burn[#burn + 1] = player
+		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2)
+		if player == pName then
+			mod:LocalMessage(L["burn_you"], "Positive", spellID, "Info")
+		end
+	end
+end
 
 function mod:Enraged(_, spellID)
 	if db.enrage then

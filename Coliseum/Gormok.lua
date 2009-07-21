@@ -16,7 +16,7 @@ mod.toggleoptions = {"stomp", "impaler", "bosskill"}
 --
 local db = nil
 local pName = UnitName("player")
-local impaler = GetSpellInfo(63355)
+local impaler = GetSpellInfo(67477)
 
 --------------------------------------------------------------------------------
 -- Localization
