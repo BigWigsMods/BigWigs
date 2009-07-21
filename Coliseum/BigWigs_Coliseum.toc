@@ -1,4 +1,8 @@
 ## Interface: 30100
+## X-Curse-Packaged-Version: r5766
+## X-Curse-Project-Name: BigWigs Bossmods
+## X-Curse-Project-ID: big-wigs
+## X-Curse-Repository-ID: wow/big-wigs/mainline
 
 ## Title: Big Wigs [|cffeda55fThe Argent Coliseum|r]
 ## Title-koKR: Big Wigs [|cffeda55f십자군 원형경기장|r]
@@ -12,7 +16,8 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-LoadInZone: The Argent Coliseum
+## X-BigWigs-Menu: The Argent Coliseum
+## X-BigWigs-LoadInZone: Trial of the Crusader
 
 ## Dependencies: BigWigs
 

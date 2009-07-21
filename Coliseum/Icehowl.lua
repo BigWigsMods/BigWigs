@@ -5,14 +5,17 @@
 local boss = BB["Icehowl"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["The Argent Coliseum"]
+mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe add to BabbleZone.
+mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = boss
---mod.guid = -1
+mod.guid = 34797
 mod.toggleoptions = {"bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
+local db
+local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -40,11 +43,11 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	--self:AddCombatListener("", "", 1)
+	
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
-	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	db = self.db.profile
 end
 
 --------------------------------------------------------------------------------
