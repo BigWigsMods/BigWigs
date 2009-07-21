@@ -71,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 	burn = "불타는 담즙",
 	burn_desc = "불타는 담즙에 걸린 플레이어를 알립니다.",
 	burn_you = "당신은 불타는 담즙!",
-	burn_message = "불타는 담즙: %s",
+	burn_other = "불타는 담즙: %s",
 	
 	slime = "진흙 웅덩이",
 	slime_desc = "진흙 웅덩이를 알립니다.",
