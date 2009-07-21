@@ -57,11 +57,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "text",
 	
-	incinerate = "살점 조각",
-	incinerate_desc = "살점 조각을 알립니다.",
-	incinerate_you = "당신은 살점 조각!",
-	incinerate_other = "살점 조각: %s",
-	incinerate_bar = "~살점 조각 대기시간",
+	incinerate = "살점 소각",
+	incinerate_desc = "살점 소각을 알립니다.",
+	incinerate_you = "당신은 살점 소각!",
+	incinerate_other = "살점 소각: %s",
+	incinerate_bar = "~살점 소각 대기시간",
 	
 	legionflame = "불꽃 군단",
 	legionflame_desc = "불꽃 군단을 알립니다.",
