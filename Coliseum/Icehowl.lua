@@ -9,7 +9,7 @@ mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe
 mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = boss
 mod.guid = 34797
-mod.toggleoptions = {"butt", "charge", "bosskill"}
+mod.toggleoptions = {"butt", "charge", "daze", "rage", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -36,6 +36,14 @@ L:RegisterTranslations("enUS", function() return {
 	charge_other = "Furious Charge: %s!",
 	charge_you = "Furious Charge YOU!",
 	charge_warning = "Trample soon",
+	
+	daze = "Staggered Daze",
+	daze_desc = "Warn when Icehowl gains Staggered Daze.",
+	daze_message = "Staggered Daze!",
+	
+	rage = "Frothing Rage",
+	rage_desc = "Warn when Icehowl gains Frothing Rage.",
+	rage_message = "Frothing Rage!",
 } end)
 L:RegisterTranslations("koKR", function() return {
 	butt = "흉포한 박치기",
@@ -49,6 +57,14 @@ L:RegisterTranslations("koKR", function() return {
 	charge_other = "사나운 돌진: %s!",
 	charge_you = "당신에게 사나운 돌진!",
 	charge_warning = "곧 밟아 뭉개기",
+	
+	daze = "진동으로 멍해짐",
+	daze_desc = "얼음울음의 진동으로 멍해짐 상태를 알립니다.",
+	daze_message = "멍해짐!",
+	
+	rage = "거품 이는 분노",
+	rage_desc = "얼음울음의 거품 이는 분노 상태를 알립니다.",
+	rage_message = "분노!",
 } end)
 L:RegisterTranslations("frFR", function() return {
 } end)
@@ -66,6 +82,8 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 66759)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Daze", 66758)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Butt", 67654)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	
@@ -77,6 +95,20 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Rage(_, spellID)
+	if db.rage then
+		self:IfMessage(L["rage_message"], "Important", spellID)
+		self:Bar(L["rage_bar"], 15, spellID)
+	end
+end
+
+function mod:Daze(_, spellID)
+	if db.daze then
+		self:IfMessage(L["daze_message"], "Important", spellID)
+		self:Bar(L["daze_bar"], 15, spellID)
+	end
+end
 
 function mod:Butt(player, spellID)
 	if db.butt then
