@@ -100,8 +100,8 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049)	
-	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049)	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67051)	
+	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67051)	
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68125)	
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68128)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67108)		
