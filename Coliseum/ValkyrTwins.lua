@@ -57,7 +57,9 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	--check
+	engage_trigger1 = "어둠의 주인님을 받들어",	--check
+	
+	vortex_or_shield_cd = "소용돌이/방패 대기시간",
 	
 	vortex = "소용돌이",
 	vortex_desc = "쌍둥이의 소용돌이 시전을 알립니다.",
@@ -70,6 +72,13 @@ L:RegisterTranslations("koKR", function() return {
 	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
 	vortex_light_message = "빛의 소용돌이!",
 	vortex_dark_message = "어둠의 소용돌이!",
+	
+	touch = "어둠/빛의 손길",
+	touch_desc = "어둠/빛의 손길을 알립니다.",
+	touch_of_light_on_you = "당신은 빛의 손길!",
+	touch_of_light_on_other = "빛의 손길: %s",
+	touch_of_dark_on_you = "당신은 어둠의 손길!",
+	touch_of_dark_on_other = "어둠의 손길: %s",
 } end)
 L:RegisterTranslations("frFR", function() return {
 } end)

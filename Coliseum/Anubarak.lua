@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
-	engage_trigger = "This place will serve as your tomb!",	--check
+	engage_trigger = "여기가 네 무덤이 되리라!",	--check
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",

@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "text",
+	engage_trigger = "불타는 군단의 에레다르 군주 자라서스님이 상대해주마",	--check
 	
 	incinerate = "살점 소각",
 	incinerate_desc = "살점 소각을 알립니다.",
