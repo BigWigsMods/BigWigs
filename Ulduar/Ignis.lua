@@ -179,20 +179,20 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
-	construct = "启动铸像",
-	construct_desc = "当启动铸像时发出警报。",
-	construct_message = "即将 铸像！",
-	construct_warning = "5秒后，铸像出现！",
+	construct = "启动铁铸像",
+	construct_desc = "当启动铁铸像时发出警报。",
+	construct_message = "即将 铁铸像！",
+	construct_warning = "5秒后，铁铸像出现！",
 	construct_bar = "<下一铸像>",
 
-	brittle = "Brittle",
-	brittle_desc = "当铁铸像获得Brittle时发出警报。",
-	brittle_message = "铁铸像 - Brittle！",
+	brittle = "脆弱",
+	brittle_desc = "当铁铸像获得脆弱时发出警报。",
+	brittle_message = "铁铸像 - 脆弱！",
 
-	flame = "Flame Jets",
-	flame_desc = "当伊格尼斯施放Flame Jets时发出警报。",
-	flame_message = "Flame Jets！",
-	flame_bar = "<Jets 冷却>",
+	flame = "烈焰喷射",
+	flame_desc = "当伊格尼斯施放烈焰喷射时发出警报。",
+	flame_message = "烈焰喷射！",
+	flame_bar = "<烈焰喷射 冷却>",
 
 	scorch = "灼烧",
 	scorch_desc = "当正在施放灼烧和你中了灼烧时发出警报。",
@@ -209,11 +209,11 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "傲慢的小傢伙!你們的鮮血將會用來淬鍊重奪世界的武器!",
 
-	construct = "啟動傀儡",
-	construct_desc = "當啟動傀儡時發出警報。",
-	construct_message = "即將 傀儡！",
-	construct_warning = "5秒後，傀儡出現！",
-	construct_bar = "<下一傀儡>",
+	construct = "啟動鐵之傀儡",
+	construct_desc = "當啟動鐵之傀儡時發出警報。",
+	construct_message = "即將 鐵之傀儡！",
+	construct_warning = "5秒後，鐵之傀儡出現！",
+	construct_bar = "<下一鐵之傀儡>",
 
 	brittle = "脆裂",
 	brittle_desc = "當鐵之傀儡獲得脆裂時發出警報。",

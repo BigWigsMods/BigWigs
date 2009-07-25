@@ -254,10 +254,10 @@ L:RegisterTranslations("zhCN", function() return {
 	fury_you = ">你< 自然之怒！",
 	fury_other = "自然之怒：>%s<！",
 
-	sunbeam = "Sunbeam",
-	sunbeam_desc = "当弗蕾亚施放Sunbeam于玩家时发出警报。.",
-	sunbeam_you = ">你< Sunbeam！",
-	sunbeam_other = "Sunbeam：>%s<！",
+	sunbeam = "阳光",
+	sunbeam_desc = "当弗蕾亚施放阳光于玩家时发出警报。.",
+	sunbeam_you = ">你< 阳光！",
+	sunbeam_other = "阳光：>%s<！",
 
 	tremor = "大地震颤",
 	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。（石树长老）",
@@ -274,7 +274,7 @@ L:RegisterTranslations("zhCN", function() return {
 	energy_message = ">你<不稳定的能量！",
 
 	icon = "位置标记",
-	icon_desc = "为中了Sunbeam的队员打上团队标记。（需要权限）",
+	icon_desc = "为中了阳光的队员打上团队标记。（需要权限）",
 
 --	end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes.",
 } end )
@@ -309,11 +309,11 @@ L:RegisterTranslations("zhTW", function() return {
 	sunbeam_you = ">你< 太陽光束！",
 	sunbeam_other = "太陽光束：>%s<！",
 
-	tremor = "地面震動",
-	tremor_desc = "當芙蕾雅施放地面震動時發出警報。（石木長者）",
-	tremor_message = "地面震動！",
-	tremor_warning = "即將 地面震動！",
-	tremor_bar = "<下一地面震動>",
+	tremor = "地面震顫",
+	tremor_desc = "當芙蕾雅施放地面震顫時發出警報。（石木長者）",
+	tremor_message = "地面震顫！",
+	tremor_warning = "即將 地面震顫！",
+	tremor_bar = "<下一地面震顫>",
 
 	root = "鐵之根鬚",
 	root_desc = "當玩家中了鐵之根鬚時發出警報。（鐵枝長者）",

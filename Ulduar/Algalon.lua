@@ -179,22 +179,22 @@ L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 --	first_engage_trigger = "See your world through my eyes",
 
-	punch = "Phase Punch",
-	punch_desc = "当玩家中了4层Phase Punch时发出警报。",
-	punch_message = "Phase Punch%2$d层：>%1$s<！",
+	punch = "相位冲压",
+	punch_desc = "当玩家中了4层相位冲压时发出警报。",
+	punch_message = "相位冲压%2$d层：>%1$s<！",
 
-	smash = "Cosmic Smash",
-	smash_desc = "当施放Cosmic Smash时发出警报。",
-	smash_message = "即将 Cosmic Smash！",
+	smash = "宇宙重击",
+	smash_desc = "当施放宇宙重击时发出警报。",
+	smash_message = "即将 宇宙重击！",
 
 	blackhole = "黑洞爆炸",
 	blackhole_desc = "当黑洞爆炸出现时发出警报。",
 	blackhole_message = "黑洞爆炸：>%dx< 出现！",
 
-	bigbang = "Big Bang",
-	bigbang_desc = "当开始施放 Big Bang 时发出警报。",
-	bigbang_message = "Big Bang！",
-	bigbang_soon = "即将 Big Bang！",
+	bigbang = "大爆炸",
+	bigbang_desc = "当开始施放大爆炸时发出警报。",
+	bigbang_message = "大爆炸！",
+	bigbang_soon = "即将 大爆炸！",
 
 	stars = "Collapsing Stars",
 	stars_desc = "当Collapsing Star出现时发出警报。",

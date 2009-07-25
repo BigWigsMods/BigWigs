@@ -175,21 +175,21 @@ L:RegisterTranslations("zhCN", function() return {
 	flash_soon = "5秒后，急速冻结！",
 	flash_bar = "<急速冻结>",
 
-	frozenblow = "Frozen Blow",
-	frozenblow_desc = "当霍迪尔获得Frozen Blow效果时发出警报。",
-	frozenblow_message = "Frozen Blow！",
-	frozenblow_bar = "<Frozen Blow>",
+	frozenblow = "冰冻重击",
+	frozenblow_desc = "当霍迪尔获得冰冻重击效果时发出警报。",
+	frozenblow_message = "冰冻重击！",
+	frozenblow_bar = "<冰冻重击>",
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
 
-	cloud = "Storm Cloud",
-	cloud_desc = "当玩家中了Storm Cloud时发出警报。",
-	cloud_you = ">你< Storm Cloud！",
-	cloud_other = "Storm Cloud：>%s<！",
+	cloud = "风暴雷云",
+	cloud_desc = "当玩家中了风暴雷云时发出警报。",
+	cloud_you = ">你< 风暴雷云！",
+	cloud_other = "风暴雷云：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了Storm Cloud的队员打上团队标记。（需要权限）",
+	icon_desc = "为中了风暴雷云的队员打上团队标记。（需要权限）",
 
 --	end_trigger = "I...I am released from his grasp! At...last!",
 } end )

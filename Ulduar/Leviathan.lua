@@ -35,9 +35,9 @@ L:RegisterTranslations("enUS", function() return {
 	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
 	--pyrite_bar = "Pyrite stack",
 
-	flame = "Flame Jet",
-	flame_desc = "Warn when Flame Leviathan casts a Flame Jet.",
-	flame_message = "Flame Jet!",
+	flame = "Flame Vents",
+	flame_desc = "Warn when Flame Leviathan casts a Flame Vents.",
+	flame_message = "Flame Vents!",
 
 	pursue = "Pursuit",
 	pursue_desc = "Warn when Flame Leviathan pursues a player.",
@@ -112,28 +112,36 @@ L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "^Hostile entities detected.",
 	engage_message = "%s已激怒！",
 
-	flame = "Flame Jet",
-	flame_desc = "当烈焰巨兽施放Flame Jet时发出警报。",
-	flame_message = "Flame Jet！",
+	--pyrite = "Pyrite stack",
+	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
+	--pyrite_bar = "Pyrite stack",
 
-	pursue = "Pursuit",
-	pursue_desc = "当烈焰巨兽pursues玩家时发出警报。",
---	pursue_trigger = "^%%s pursues",
-	pursue_other = "烈焰巨兽pursues：>%s<！",
-	pursue_you = ">你< 烈焰巨兽pursues！",
+	flame = "烈焰外洩",
+	flame_desc = "当烈焰巨兽施放烈焰外洩时发出警报。",
+	flame_message = "烈焰外洩！",
 
-	shutdown = "Systems Shutdown",
-	shutdown_desc = "当烈焰巨兽Systems Shutdown时发出警报。",
-	shutdown_message = "Systems Shutdown！",
+	pursue = "追踪",
+	pursue_desc = "当烈焰巨兽追踪玩家时发出警报。",
+--	pursue_trigger = "^%%s被追踪",
+	pursue_other = "烈焰巨兽追踪：>%s<！",
+	pursue_you = ">你< 烈焰巨兽追踪！",
+
+	shutdown = "系统关闭",
+	shutdown_desc = "当烈焰巨兽系统关闭时发出警报。",
+	shutdown_message = "系统关闭！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "發現敵意實體。啟動威脅評估協定。首要目標接近中。30秒後將再度評估。",
 	engage_message = "%s已狂怒！",
 
-	flame = "烈焰噴洩",
-	flame_desc = "當烈焰戰輪施放烈焰噴洩時發出警報。",
-	flame_message = "烈焰噴洩！",
+	--pyrite = "Pyrite stack",
+	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
+	--pyrite_bar = "Pyrite stack",
+
+	flame = "烈焰外洩",
+	flame_desc = "當烈焰戰輪施放烈焰外洩時發出警報。",
+	flame_message = "烈焰外洩！",
 
 	pursue = "獵殺",
 	pursue_desc = "當烈焰戰輪獵殺玩家時發出警報。",

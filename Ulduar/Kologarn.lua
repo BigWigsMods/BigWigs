@@ -178,10 +178,10 @@ L:RegisterTranslations("zhCN", function() return {
 	eyebeam_message = "聚焦视线：>%s<！",
 	eyebeam_bar = "<聚焦视线>",
 	eyebeam_you = ">你< 聚焦视线！",
-	--eyebeam_say = "Eyebeam on Me!",
+	eyebeam_say = ">我< 聚焦视线！",
 
-	--eyebeamsay = "Eyebeam Say",
-	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
+	eyebeamsay = "聚焦视线",
+	eyebeamsay_desc = "当你中了聚焦视线时发出自身警报。",
 
 	armor = "粉碎护甲",
 	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",
@@ -206,14 +206,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 	eyebeam = "集束目光",
 	eyebeam_desc = "當玩家中了集束目光時發出警報。",
-	--eyebeam_trigger = "%s focuses his eyes on you!",
+	eyebeam_trigger = "%s正在注視著你!",
 	eyebeam_message = "集束目光：>%s<！",
 	eyebeam_bar = "<集束目光>",
 	eyebeam_you = ">你< 集束目光！",
-	--eyebeam_say = "Eyebeam on Me!",
+	eyebeam_say = ">我< 集束目光！",
 
-	--eyebeamsay = "Eyebeam Say",
-	--eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
+	eyebeamsay = "集束目光",
+	eyebeamsay_desc = "當你中了集束目光時發出自身警報。",
 
 	armor = "粉碎護甲",
 	armor_desc = "當玩家中了2層或更多粉碎護甲時發出警報。",

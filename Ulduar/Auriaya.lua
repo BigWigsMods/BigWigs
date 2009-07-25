@@ -138,30 +138,30 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	fear = "恐吓尖啸",
-	fear_desc = "当施放恐吓尖啸时发出警报。",
-	fear_warning = "即将 恐吓尖啸！",
-	fear_message = "正在施放 恐吓尖啸！",
-	fear_bar = "<恐吓尖啸 冷却>",
+	fear = "惊骇尖啸",
+	fear_desc = "当施放惊骇尖啸时发出警报。",
+	fear_warning = "即将 惊骇尖啸！",
+	fear_message = "正在施放 惊骇尖啸！",
+	fear_bar = "<惊骇尖啸 冷却>",
 
-	sentinel = "戒卫冲击",
-	sentinel_desc = "当欧尔莉亚施放戒卫冲击时发出警报。",
-	sentinel_message = "戒卫冲击！",
+	sentinel = "警戒冲击",
+	sentinel_desc = "当欧尔莉亚施放警戒冲击时发出警报。",
+	sentinel_message = "警戒冲击！",
 
-	swarm = "Guardian Swarm",
-	swarm_desc = "当欧尔莉亚施放Guardian Swarm时发出警报。",
-	swarm_other = "Guardian Swarm：>%s<！",
-	swarm_you = ">你< Guardian Swarm！",
-	swarm_bar = "<Guardian Swarm 冷却>",
+	swarm = "守护虫群",
+	swarm_desc = "当欧尔莉亚施放守护虫群时发出警报。",
+	swarm_other = "守护虫群：>%s<！",
+	swarm_you = ">你< 守护虫群！",
+	swarm_bar = "<守护虫群 冷却>",
 
 	defender = "野性防御者",
 	defender_desc = "当野性防御者出现时发出警报。",
 	defender_message = "野性防御者（%d/9）！",
 
-	sonic = "Sonic Screech",
-	sonic_desc = "当欧尔莉亚施放Sonic Screech时发出警报。",
-	sonic_message = "Sonic Screech！",
-	sonic_bar = "<Sonic Screech>",
+	sonic = "音速尖啸",
+	sonic_desc = "当欧尔莉亚施放音速尖啸时发出警报。",
+	sonic_message = "音速尖啸！",
+	sonic_bar = "<音速尖啸>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

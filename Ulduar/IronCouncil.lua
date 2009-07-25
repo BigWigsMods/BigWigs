@@ -246,9 +246,9 @@ L:RegisterTranslations("zhCN", function() return {
 	power_desc = "当莫尔基姆施放能量符文时发出警报。",
 	power_message = "能量符文！",
 
-	punch = "Fusion Punch",
-	punch_desc = "当断钢者施放Fusion Punch时发出警报。",
-	punch_message = "Fusion Punch！",
+	punch = "熔化冲压",
+	punch_desc = "当断钢者施放熔化冲压时发出警报。",
+	punch_message = "熔化冲压！",
 
 	death = "自身死亡符文",
 	death_desc = "当你中了死亡符文时发出警报。",
@@ -264,10 +264,10 @@ L:RegisterTranslations("zhCN", function() return {
 	tendrils_other = "闪电之藤：>%s<！",
 	tendrils_you = ">你< 闪电之藤！",
 
-	overwhelm = "Overwhelming Power",
-	overwhelm_desc = "当玩家中了Overwhelming Power时发出警报。",
-	overwhelm_you = ">你< Overwhelming Power！",
-	overwhelm_other = "Overwhelming Power：>%s<！",
+	overwhelm = "压倒能量",
+	overwhelm_desc = "当玩家中了压倒能量时发出警报。",
+	overwhelm_you = ">你< 压倒能量！",
+	overwhelm_other = "压倒能量：>%s<！",
 
 	whirl = "闪电旋风",
 	whirl_desc = "当布隆迪尔开始引导闪电旋风时发出警报。",

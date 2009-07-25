@@ -463,35 +463,35 @@ L:RegisterTranslations("zhCN", function() return {
 	weakened_message = "昏迷：>%s<！",
 --	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
 
-	madness = "Induce Madness",
-	madness_desc = "显示Induce Madness计时器。",
-	madness_warning = "5秒后，Induce Madness！",
+	madness = "疯狂诱导",
+	madness_desc = "显示疯狂诱导计时器。",
+	madness_warning = "5秒后，疯狂诱导！",
 
-	malady = "Malady of the Mind",
-	malady_desc = "当玩家中了Malady of the Mind时发出警报。",
-	malady_message = "Malady of the Mind：>%s<！",
+	malady = "心灵疾病",
+	malady_desc = "当玩家中了心灵疾病时发出警报。",
+	malady_message = "心灵疾病：>%s<！",
 
-	tentacle = "Crusher Tentacle",
-	tentacle_desc = "当Crusher Tentacle出现时发出警报。",
-	tentacle_message = "Crusher Tentacle：>%d<！",
+	tentacle = "粉碎触须",
+	tentacle_desc = "当粉碎触须出现时发出警报。",
+	tentacle_message = "粉碎触须：>%d<！",
 
 	squeeze = squeezeName,
-	squeeze_desc = "当玩家中了Squeeze时发出警报。",
+	squeeze_desc = "当玩家中了挤压时发出警报。",
 	squeeze_message = squeezeName .. "：>%s<！",
 
 	link = linkedName,
-	link_desc = "当你被Brain Link时发出警报。",
-	link_warning = ">你< Brain Link！",
+	link_desc = "当你被心智链接时发出警报。",
+	link_warning = ">你< 心智链接！",
 
 	gaze = "疯乱凝视",
 	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
 	gaze_bar = "<疯乱凝视 冷却>",
 	gaze_cast_bar = "<正在施放：疯乱凝视>",
 
-	empower = "Empowering Shadows",
-	empower_desc = "当Empowering Shadows时发出警报。",
-	empower_message = "Empowering Shadows！",
-	empower_bar = "<Empower Shadows 冷却>",
+	empower = "暗影信标",
+	empower_desc = "当暗影信标时发出警报。",
+	empower_message = "暗影信标！",
+	empower_bar = "<暗影信标 冷却>",
 
 	mindcontrol = "统御意志",
 	mindcontrol_desc = "当玩家中了统御意志时发出警报。",
@@ -501,17 +501,17 @@ L:RegisterTranslations("zhCN", function() return {
 	guardian_desc = "当尤格-萨隆召唤卫士出现时发出警报。",
 	guardian_message = "召唤卫士：>%d<！",
 
-	--empowericon = "Empower Icon",
-	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
-	--empowericon_message = "Empower Faded!",
+	empowericon = "暗影信标标记",
+	empowericon_desc = "为中了暗影信标的不朽守护者打上骷髅标记。（需要权限）.",
+	empowericon_message = "暗影信标 消退！",
 
-	--roar = "Deafening Roar",
-	--roar_desc = "Warns when Deafening Roar is casting.",
-	--roar_message = "Deafening Roar!",
-	--roar_warning = "Roar in 5sec!",
-	--roar_bar = "Next Roar",
+	roar = "震耳咆哮",
+	roar_desc = "当正在施放震耳咆哮时发出警报。",
+	roar_message = "震耳咆哮！",
+	roar_warning = "5秒后，震耳咆哮！",
+	roar_bar = "<下一震耳咆哮>",
 
-	icon_desc = "为中了Malady of the Mind的队员打上团队标记。（需要权限）",
+	icon_desc = "为中了心灵疾病的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -580,15 +580,15 @@ L:RegisterTranslations("zhTW", function() return {
 	guardian_desc = "當尤格薩倫守護者出現時發出警報。",
 	guardian_message = "尤格薩倫守護者：>%d<！ ",
 
-	--empowericon = "Empower Icon",
-	--empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
-	--empowericon_message = "Empower Faded!",
+	empowericon = "暗影信標標記",
+	empowericon_desc = "為中了暗影信標的不朽守護者打上骷髏標記。（需要權限）",
+	empowericon_message = "暗影信標 消失！",
 
-	--roar = "Deafening Roar",
-	--roar_desc = "Warns when Deafening Roar is casting.",
-	--roar_message = "Deafening Roar!",
-	--roar_warning = "Roar in 5sec!",
-	--roar_bar = "Next Roar",
+	roar = "震耳咆哮",
+	roar_desc = "當正在施放震耳咆哮時發出警報。",
+	roar_message = "震耳咆哮！",
+	roar_warning = "5秒後，震耳咆哮！",
+	roar_bar = "<下一震耳咆哮>",
 
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )

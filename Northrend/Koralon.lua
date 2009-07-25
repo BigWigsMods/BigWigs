@@ -70,6 +70,30 @@ L:RegisterTranslations("koKR", function() return {
 	cinder_message = "불타는 잿더미!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+--[[
+	fists = "Meteor Fists",
+	fists_desc = "Warn when Koralon casts Meteor Fists.",
+	fists_message = "Meteor Fists Active!",
+
+	cinder = "Cinder",
+	cinder_desc = "Warn when Koralon casts Flaming Cinder.",
+	cinder_message = "Flaming Cinder!",
+]]
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+--[[
+	fists = "Meteor Fists",
+	fists_desc = "Warn when Koralon casts Meteor Fists.",
+	fists_message = "Meteor Fists Active!",
+
+	cinder = "Cinder",
+	cinder_desc = "Warn when Koralon casts Flaming Cinder.",
+	cinder_message = "Flaming Cinder!",
+]]
+} end )
+
 ------------------------------
 --      Initialization      --
 ------------------------------

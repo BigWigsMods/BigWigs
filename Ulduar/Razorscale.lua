@@ -212,9 +212,9 @@ L:RegisterTranslations("zhCN", function() return {
 	breath_message = "烈焰喷射！",
 	breath_bar = "<烈焰喷射 冷却>",
 
-	flame = "自身Devouring Flame",
-	flame_desc = "当你中了Devouring Flame时发出警报。",
-	flame_message = ">你< Devouring Flame！",
+	flame = "自身吞噬烈焰",
+	flame_desc = "当你中了吞噬烈焰时发出警报。",
+	flame_message = ">你< 吞噬烈焰！",
 
 	harpoon = "魚叉炮台",
 	harpoon_desc = "当魚叉炮台可用时发出警报。",

@@ -290,9 +290,9 @@ L:RegisterTranslations("zhCN", function() return {
 	barrier_desc = "当符文巨像获得符文屏障时发出警报。",
 	barrier_message = "符文巨像 - 符文屏障！",
 
-	detonation = "符文爆炸",
-	detonation_desc = "当玩家中了符文爆炸时发出警报。",
-	detonation_message = "符文爆炸：>%s<！",
+	detonation = "符文爆裂",
+	detonation_desc = "当玩家中了符文爆裂时发出警报。",
+	detonation_message = "符文爆裂：>%s<！",
 	detonation_yell = "我是炸弹！",
 
 	charge = "闪电充能",

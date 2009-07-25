@@ -236,11 +236,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 --	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
-	surge = "Surge of Darkness",
-	surge_desc = "当维扎克斯获得Surge of Darkness时发出警报。",
-	surge_message = "Surge of Darkness：>%d<！",
-	surge_cast = "正在施放 Surge of Darkness：>%d<！",
-	surge_bar = "<Surge of Darkness：%d>",
+	surge = "黑暗涌动",
+	surge_desc = "当维扎克斯获得黑暗涌动时发出警报。",
+	surge_message = "黑暗涌动：>%d<！",
+	surge_cast = "正在施放 黑暗涌动：>%d<！",
+	surge_bar = "<黑暗涌动：%d>",
 
 	animus = "萨隆邪铁畸体",
 	animus_desc = "当萨隆邪铁畸体出现时发出警报。",
