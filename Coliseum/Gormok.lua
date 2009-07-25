@@ -26,17 +26,17 @@ local count = 1
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gormok",
-	
+
 	impaler = "Impaler",
 	impaler_desc = "Warn when someone has 2 or more stacks of Impaler.",
 	impaler_message = "%2$dx Impaler on %1$s",
-	
+
 	stomp = "Staggering Stomp",
 	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
 	stomp_message = "Stomp %d!",
 	stomp_warning = "Stomp in 5sec!",
 	stomp_bar = "Stomp %d",
-	
+
 	firebomb = "Fire Bomb",
 	firebomb_desc = "Warn when you are in a Fire Bomb.",
 	firebomb_message = "Fire Bomb on you!",
@@ -45,18 +45,31 @@ L:RegisterTranslations("koKR", function() return {
 	impaler = "꿰뚫기",
 	impaler_desc = "꿰뚫기 중첩이 2이상이 된 플레이어를 알립니다.",
 	impaler_message = "꿰뚫기 x%2$d: %1$s",
-	
+
 	stomp = "진동의 발구르기",
 	stomp_desc = "고르목의 진동의 발구르기 시전을 알립니다.",
 	stomp_message = "발구르기 (%d)!",
 	stomp_warning = "5초 후 발구르기!",
 	stomp_bar = "~다음 발구르기(%d)",
-	
+
 	firebomb = "불 폭탄",
 	firebomb_desc = "자신이 불 폭탄에 걸렸을 때 알립니다.",
 	firebomb_message = "당신은 불 폭탄!",
 } end)
 L:RegisterTranslations("frFR", function() return {
+	impaler = "Empaler",
+	impaler_desc = "Prévient quand quelqu'un a 2 cumuls ou plus d'Empaler.",
+	impaler_message = "%2$dx Empaler sur %1$s",
+
+	stomp = "Piétinement ahurissant",
+	stomp_desc = "Prévient quand Gormok incante un Piétinement ahurissant.",
+	stomp_message = "Piétinement %d !",
+	stomp_warning = "Piétinement dans 5 sec. !",
+	stomp_bar = "Piétinement %d",
+
+	firebomb = "Bombe incendiaire",
+	firebomb_desc = "Prévient quand vous vous trouvez sur une Bombe incendiaire.",
+	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
 } end)
 L:RegisterTranslations("deDE", function() return {
 } end)
@@ -76,7 +89,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impaler", 67477)
 	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
 end

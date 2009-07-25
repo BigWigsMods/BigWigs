@@ -30,31 +30,31 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jormungars",
-	
+
 	spew = "Acidic/Molten Spew",
 	spew_desc = "Warn for Acidic/Molten Spew.",
 	acidic_message = "Acidic Spew!",
 	molten_message = "Molten Spew!",
-	
+
 	toxin = "Paralytic Toxin",
 	toxin_desc = "Warn who has Paralytic Toxin.",
 	toxin_you = "Paralytic Toxin on you!",
 	toxin_other = "Paralytic Toxin: %s",
-	
+
 	burn = "Burning Bile",
 	burn_desc = "Warn who has Burning Bile.",
 	burn_you = "Burning Bile on you!",
 	burn_other = "Burning Bile: %s",
-	
+
 	slime = "Slime Pool",
 	slime_desc = "Warn for Slime Pool.",
 	--slime_message = "Slime Pool on you!",
 	slime_warning = "Slime Pool!",
-	
+
 	enrage = "Enrage",
 	enrage_desc = "Warn for Enrage.",
 	enrage_message = "Enrage!",
-	
+
 	jormungars_dies = "%s dead",
 } end)
 L:RegisterTranslations("koKR", function() return {
@@ -62,29 +62,54 @@ L:RegisterTranslations("koKR", function() return {
 	spew_desc = "산성/용암 내뿜기를 알립니다.",
 	acidic_message = "산성 내뿜기!",
 	molten_message = "용암 내뿜기!",
-	
+
 	toxin = "마비 독",
 	toxin_desc = "마비독에 걸린 플레이어를 알립니다.",
 	toxin_you = "당신은 마비 독!",
 	toxin_other = "마비 독: %s",
-	
+
 	burn = "불타는 담즙",
 	burn_desc = "불타는 담즙에 걸린 플레이어를 알립니다.",
 	burn_you = "당신은 불타는 담즙!",
 	burn_other = "불타는 담즙: %s",
-	
+
 	slime = "진흙 웅덩이",
 	slime_desc = "진흙 웅덩이를 알립니다.",
 	--slime_message = "당신은 진흙 웅덩이!",
 	slime_warning = "진흙 웅덩이!",
-	
+
 	enrage = "격노",
 	enrage_desc = "격노를 알립니다.",
 	enrage_message = "격노!",
-	
+
 	jormungars_dies = "%s 죽음",
 } end)
 L:RegisterTranslations("frFR", function() return {
+	spew = "Crachement acide/de lave",
+	spew_desc = "Prévient de l'arrivée des Crachements acides/de lave.",
+	acidic_message = "Crachement acide !",
+	molten_message = "Crachement de lave !",
+
+	toxin = "Toxine paralysante",
+	toxin_desc = "Prévient quand un joueur subit les effets d'une Toxine paralysante.",
+	toxin_you = "Toxine paralysante sur VOUS !",
+	toxin_other = "Toxine paralysante : %s",
+
+	burn = "Bile brûlante",
+	burn_desc = "Prévient quand un joueur subit les effets d'une Bile brûlante.",
+	burn_you = "Bile brûlante sur VOUS !",
+	burn_other = "Bile brûlante : %s",
+
+	slime = "Flaque de bave",
+	slime_desc = "Prévient de l'arrivée des Flaques de bave.",
+	--slime_message = "Flaque de bave sur VOUS !",
+	slime_warning = "Flaque de bave !",
+
+	enrage = "Enrager",
+	enrage_desc = "Prévient quand un jormungar devient enragé.",
+	enrage_message = "Enrager !",
+
+	jormungars_dies = "%s éliminé",
 } end)
 L:RegisterTranslations("deDE", function() return {
 } end)

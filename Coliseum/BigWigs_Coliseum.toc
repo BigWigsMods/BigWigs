@@ -8,6 +8,8 @@
 ## Title-koKR: Big Wigs [|cffeda55f십자군 원형경기장|r]
 ## Notes: Big Wigs Modules for The Argent Coliseum
 ## Notes-koKR: Big Wigs 십자군 원형경기장 경고
+## Title-frFR: Big Wigs [|cffeda55fLe colisée d'Argent|r]
+## Notes-frFR: Modules Big Wigs concernant le colisée d'Argent.
 ## Author: 
 ## X-Credits: 
 ## Version: 2.0

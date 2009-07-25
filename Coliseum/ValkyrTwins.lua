@@ -33,46 +33,45 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "ValkyrTwins",
 
 	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
-	
+
 	vortex_or_shield_cd = "Vortex/Shield Cooldown",
-	
+
 	vortex = "Vortex",
 	vortex_desc = "Warn when the twins start casting Vortexes.",
-	
+
 	shield = "Shield of Darkness/Light",
 	shield_desc = "Warn for Shield of Darkness/Light.",
-	shield_light = "Shield of Light!",	
+	shield_light = "Shield of Light!",
 	shield_darkness = "Shield of Darkness!",
-	
+
 	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
 	vortex_light_message = "Light vortex!",
 	vortex_dark_message = "Dark vortex!",
-	
+
 	touch = "Touch of Darkness/Light",
 	touch_desc = "Warn for Touch of Darkness/Light",
 	touch_of_light_on_you = "Touch of Light on You!",
 	touch_of_light_on_other = "Touch of Light on %s",
 	touch_of_dark_on_you = "Touch of Darkness on You!",
 	touch_of_dark_on_other = "Touch of Darkness on %s",
-	
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "어둠의 주인님을 받들어",	--check
-	
+
 	vortex_or_shield_cd = "소용돌이/방패 대기시간",
-	
+
 	vortex = "소용돌이",
 	vortex_desc = "쌍둥이의 소용돌이 시전을 알립니다.",
-	
+
 	shield = "어둠/빛의 방패",
 	shield_desc = "어둠/빛의 방패를 알립니다.",
 	shield_light = "빛의 방패!",	
 	shield_darkness = "어둠의 방패!",
-	
+
 	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
 	vortex_light_message = "빛의 소용돌이!",
 	vortex_dark_message = "어둠의 소용돌이!",
-	
+
 	touch = "어둠/빛의 손길",
 	touch_desc = "어둠/빛의 손길을 알립니다.",
 	touch_of_light_on_you = "당신은 빛의 손길!",
@@ -81,6 +80,28 @@ L:RegisterTranslations("koKR", function() return {
 	touch_of_dark_on_other = "어둠의 손길: %s",
 } end)
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
+
+	vortex_or_shield_cd = "Recharge Vortex/Bouclier",
+
+	vortex = "Vortex",
+	vortex_desc = "Prévient quand les jumelles commencent à incanter des Vortex.",
+
+	shield = "Bouclier des ténèbres/des lumières",
+	shield_desc = "Prévient de l'arrivée des Boucliers des ténèbres/des lumières.",
+	shield_light = "Bouclier des lumières !",
+	shield_darkness = "Bouclier des ténèbres !",
+
+	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
+	vortex_light_message = "Vortex lumineux !",
+	vortex_dark_message = "Vortex sombre !",
+
+	touch = "Toucher des ténèbres/de lumière",
+	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
+	touch_of_light_on_you = "Toucher de lumière sur VOUS !",
+	touch_of_light_on_other = "Toucher de lumière sur %s",
+	touch_of_dark_on_you = "Toucher des ténèbres sur VOUS !",
+	touch_of_dark_on_other = "Toucher des ténèbres sur %s",
 } end)
 L:RegisterTranslations("deDE", function() return {
 } end)
@@ -104,7 +125,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67298) 
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
 	--self:RegisterEvent("")
@@ -122,7 +143,7 @@ function mod:DarkTouch(_, spellID)
 		else
 			self:TargetMessage(L["touch_of_dark_on_other"], player, "Attention", spellID)
 			self:Whisper(player, L["touch_of_dark_on_you"])
-		end		
+		end	
 	end
 end
 
@@ -134,7 +155,7 @@ function mod:LightTouch(_, spellID)
 		else
 			self:TargetMessage(L["touch_of_light_on_other"], player, "Attention", spellID)
 			self:Whisper(player, L["touch_of_light_on_you"])
-		end		
+		end	
 	end
 end
 

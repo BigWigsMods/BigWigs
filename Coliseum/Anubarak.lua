@@ -64,6 +64,23 @@ L:RegisterTranslations("koKR", function() return {
 	pursue_other = "추격: %s",
 } end)
 L:RegisterTranslations("frFR", function() return {
+	engage = "Engagement",
+	--engage_trigger = "This place will serve as your tomb!", -- à traduire
+
+	phase = "Phase",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
+	phase_message = "Phase 2 !",
+
+	burrow = "Burrow",
+	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
+	--burrow_emote = "FIXME",
+	burrow_message = "Burrow",
+	burrow_cooldown = "Next Burrow",
+
+	pursue = "Poursuite",
+	pursue_desc = "Indique qui Anub'Arak est entrain de poursuivre.",
+	pursue_message = "VOUS êtes poursuivi(e) !",
+	pursue_other = "Pursuivi(e) : %s",
 } end)
 L:RegisterTranslations("deDE", function() return {
 } end)
