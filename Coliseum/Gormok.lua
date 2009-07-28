@@ -76,6 +76,19 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	impaler = "Impaler",
+	impaler_desc = "Warn when someone has 2 or more stacks of Impaler.",
+	impaler_message = "%2$dx Impaler on %1$s",
+
+	stomp = "Staggering Stomp",
+	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
+	stomp_message = "Stomp %d!",
+	stomp_warning = "Stomp in 5sec!",
+	stomp_bar = "Stomp %d",
+
+	firebomb = "Fire Bomb",
+	firebomb_desc = "Warn when you are in a Fire Bomb.",
+	firebomb_message = "Fire Bomb on you!",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

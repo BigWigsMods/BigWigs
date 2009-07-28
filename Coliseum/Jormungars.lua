@@ -116,6 +116,31 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	spew = "Acidic/Molten Spew",
+	spew_desc = "Warn for Acidic/Molten Spew.",
+	acidic_message = "Acidic Spew!",
+	molten_message = "Molten Spew!",
+
+	toxin = "Paralytic Toxin",
+	toxin_desc = "Warn who has Paralytic Toxin.",
+	toxin_you = "Paralytic Toxin on you!",
+	toxin_other = "Paralytic Toxin: %s",
+
+	burn = "Burning Bile",
+	burn_desc = "Warn who has Burning Bile.",
+	burn_you = "Burning Bile on you!",
+	burn_other = "Burning Bile: %s",
+
+	slime = "Slime Pool",
+	slime_desc = "Warn for Slime Pool.",
+	--slime_message = "Slime Pool on you!",
+	slime_warning = "Slime Pool!",
+
+	enrage = "Enrage",
+	enrage_desc = "Warn for Enrage.",
+	enrage_message = "Enrage!",
+
+	jormungars_dies = "%s 死亡",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

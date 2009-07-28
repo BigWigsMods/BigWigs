@@ -116,6 +116,33 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "text",
+
+	incinerate = "Incinerate Flesh",
+	incinerate_desc = "Warn for Incinerate Flesh",
+	incinerate_you = "Incinerate Fles on You!",
+	incinerate_other = "Incinerate Flesh %s",
+	incinerate_bar = "~Incinerate Flash Cooldown",
+
+	legionflame = "Legion Flame",
+	legionflame_desc = "Warn for Legion Flame",
+	legionflame_you = "Legion Flame on You!",
+	legionflame_other = "Legion Flame on %s!",
+	legionflame_bar = "~Legion Flame Cooldown",
+
+	icon = "Place Icon",
+	icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)",	
+
+	netherportal = "Nether Portal",
+	netherportal_desc = "Warn for Nether Portal",
+	netherportal_bar = "~Nether Portal Cooldown",
+
+	netherpower = "Nether Power",
+	netherpower_desc = "Warn for Nether Power",
+	netherpower_bar = "~Nether Power Cooldown",
+
+	infernaleruption = "Infernal Eruption",
+	infernaleruption_desc = "Warn for Infernal Eruption",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

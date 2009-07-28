@@ -87,6 +87,23 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	engage = "Engage",
+	engage_trigger = "This place will serve as your tomb!",
+
+	phase = "Phase",
+	phase_desc = "Warn on phase transitions",
+	phase_message = "Phase 2!",
+
+	burrow = "Burrow",
+	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
+	burrow_emote = "FIXME",
+	burrow_message = "Burrow",
+	burrow_cooldown = "Next Burrow",
+
+	pursue = "Pursue",
+	pursue_desc = "Show who Anub'Arak is pursuing",
+	pursue_message = "Pursuing YOU!",
+	pursue_other = "Pursuing %s",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

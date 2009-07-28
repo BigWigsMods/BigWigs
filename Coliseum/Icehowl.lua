@@ -92,6 +92,25 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	butt = "Ferocious Butt",
+	butt_desc = "Warn for Ferocious Butt.",
+	butt_message = "Ferocious Butt: %s!",
+	butt_bar = "~Butt Cooldown",
+
+	charge = "Furious Charge",
+	charge_desc = "Warn about Furious Charge on players.",
+	charge_trigger = "^%%s",	--check
+	charge_other = "Furious Charge: %s!",
+	charge_you = "Furious Charge YOU!",
+	charge_warning = "Trample soon",
+
+	daze = "Staggered Daze",
+	daze_desc = "Warn when Icehowl gains Staggered Daze.",
+	daze_message = "Staggered Daze!",
+
+	rage = "Frothing Rage",
+	rage_desc = "Warn when Icehowl gains Frothing Rage.",
+	rage_message = "Frothing Rage!",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

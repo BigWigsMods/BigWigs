@@ -108,6 +108,28 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
+
+	vortex_or_shield_cd = "Vortex/Shield Cooldown",
+
+	vortex = "Vortex",
+	vortex_desc = "Warn when the twins start casting Vortexes.",
+
+	shield = "Shield of Darkness/Light",
+	shield_desc = "Warn for Shield of Darkness/Light.",
+	shield_light = "Shield of Light!",
+	shield_darkness = "Shield of Darkness!",
+
+	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
+	vortex_light_message = "Light vortex!",
+	vortex_dark_message = "Dark vortex!",
+
+	touch = "Touch of Darkness/Light",
+	touch_desc = "Warn for Touch of Darkness/Light",
+	touch_of_light_on_you = "Touch of Light on You!",
+	touch_of_light_on_other = "Touch of Light on %s",
+	touch_of_dark_on_you = "Touch of Darkness on You!",
+	touch_of_dark_on_other = "Touch of Darkness on %s",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)
