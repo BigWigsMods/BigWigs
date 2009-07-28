@@ -160,7 +160,7 @@ L:RegisterTranslations("frFR", function() return {
 	crash = "Déferlante d'ombre",
 	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
 	crash_you = "Déferlante d'ombre sur VOUS !",
-	crash_other = "Déferlante d'ombre : %s",
+	crash_other = "Déferlante : %s",
 	crash_say = "Déferlante d'ombre sur moi !",
 
 	crashsay = "Déferlante - Dire",

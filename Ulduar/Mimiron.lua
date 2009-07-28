@@ -159,11 +159,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase4_trigger = "^Fin de la phase d'essais préliminaires",
 	phase_bar = "Phase %d",
 
-	hardmode = "Auto-destruction",
-	hardmode_desc = "Affiche une barre de 10 minutes pour le mode difficile (mécanisme d'auto-destruction activé).",
+	hardmode = "Autodestruction",
+	hardmode_desc = "Affiche une barre de 10 minutes pour le mode difficile (mécanisme d'autodestruction activé).",
 	hardmode_trigger = "^Mais, pourquoi",
-	hardmode_message = "Auto-destruction activée !",
-	hardmode_warning = "Délai du mode difficile dépassé",
+	hardmode_message = "Autodestruction activée !",
+	hardmode_warning = "Autodestruction !",
 
 	plasma = "Explosion de plasma",
 	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",

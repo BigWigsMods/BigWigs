@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage = "Engagement",
-	--engage_trigger = "This place will serve as your tomb!", -- à traduire
+	engage_trigger = "Ce terreau sera votre tombeau !", -- à vérifier
 
 	phase = "Phase",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
