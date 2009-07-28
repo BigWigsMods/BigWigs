@@ -112,6 +112,31 @@ L:RegisterTranslations("frFR", function() return {
 	jormungars_dies = "%s éliminé",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	spew = "Ätzender/Geschmolzener Auswurf",
+	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
+	acidic_message = "Ätzender Auswurf!",
+	molten_message = "Geschmolzener Auswurf!",
+	
+	toxin = "Paralysierendes Toxin",
+	toxin_desc = "Warnt, wer von Paralysierendes Toxin betroffen ist.",
+	toxin_you = "Paralysierendes Toxin auf DIR!",
+	toxin_other = "Paralysierendes Toxin: %s",
+	
+	burn = "Brennende Galle",
+	burn_desc = "Warnt, wer von Brennende Galle betroffen ist.",
+	burn_you = "Brennende Galle auf DIR!",
+	burn_other = "Brennende Galle: %s",
+	
+	slime = "Schleimpfütze",
+	slime_desc = "Warnt vor Schleimpfütze.",
+	--slime_message = "Schleimpfütze auf DIR!",
+	slime_warning = "Schleimpfütze",
+	
+	enrage = "Wutanfall",
+	enrage_desc = "Warnt vor Wutanfall.",
+	enrage_message = "Wutanfall!",
+	
+	jormungars_dies = "%s getötet!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 } end)

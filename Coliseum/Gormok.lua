@@ -72,6 +72,19 @@ L:RegisterTranslations("frFR", function() return {
 	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	impaler = "Pfähler",
+	impaler_desc = "Warnt, wenn jemand 2 oder mehr Stapel von Pfählen hat.",
+	impaler_message = "%2$dx Pfählen auf %1$s",
+	
+	stomp = "Erschütterndes Stampfen",
+	stomp_desc = "Warnt, wenn Gormok Erschütterndes Stampfen wirkt.",
+	stomp_message = "Stampfen %d!",
+	stomp_warning = "Stampfen in 5 sek!",
+	stomp_bar = "Stampfen %d",
+	
+	firebomb = "Feuerbombe",
+	firebomb_desc = "Warnt, wenn du in einer Feuerbombe stehst.",
+	firebomb_message = "Feuerbombe auf DIR!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 } end)

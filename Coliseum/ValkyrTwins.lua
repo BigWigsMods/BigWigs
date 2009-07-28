@@ -104,6 +104,29 @@ L:RegisterTranslations("frFR", function() return {
 	touch_of_dark_on_other = "Toucher des ténèbres sur %s",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",	
+	
+	vortex_or_shield_cd = "~Vortex/Schild",
+	
+	vortex = "Vortex",
+	vortex_desc = "Warnt, wenn die Zwillinge anfangen Vortex zu wirken.",
+	
+	shield = "Schild der Nacht/Licht",
+	shield_desc = "Warnt bei Schild der Nacht/Licht.",
+	shield_light = "Schild des Lichts!",	
+	shield_darkness = "Schild der Nacht!",
+	
+	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
+	vortex_light_message = "Lichtvortex!",
+	vortex_dark_message = "Nachtvortex!",
+	
+	touch = "Berührung der Nacht/Licht",
+	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
+	touch_of_light_on_you = "Berührung des Lichts auf DIR!",
+	touch_of_light_on_other = "Berührung des Lichts: %s",
+	touch_of_dark_on_you = "Berührung der Nacht auf DIR!",
+	touch_of_dark_on_other = "Berührung der Nacht: %s",
+	
 } end)
 L:RegisterTranslations("zhCN", function() return {
 } end)

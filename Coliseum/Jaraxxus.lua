@@ -112,6 +112,33 @@ L:RegisterTranslations("frFR", function() return {
 	infernaleruption_desc = "Prévient de l'arrivée des Eruptions infernales.",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "^Ihr steht vor Jaraxxus",
+	
+	incinerate = "Fleisch einäschern",
+	incinerate_desc = "Warnt vor Fleisch einäschern.",
+	incinerate_you = "Fleisch einäschern auf DIR!",
+	incinerate_other = "Fleisch einäschern: %s",
+	incinerate_bar = "~Fleisch einäschern",
+	
+	legionflame = "Legionsflamme",
+	legionflame_desc = "Warnt vor Legionsflamme.",
+	legionflame_you = "Legionsflamme auf DIR!",
+	legionflame_other = "Legionsflamme auf: %s!",
+	legionflame_bar = "~Legionsflamme",
+	
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme. (benötigt Assistent oder höher).",
+	
+	netherportal = "Netherportal",
+	netherportal_desc = "Warnt vor Netherportal.",
+	netherportal_bar = "~Netherportal",
+	
+	netherpower = "Macht des Nether",
+	netherpower_desc = "Warnt vor Macht des Nether.",	
+	netherpower_bar = "~Macht des Nether",
+	
+	infernaleruption = "Höllische Eruption",
+	infernaleruption_desc = "Warnt vor Höllische Eruption.",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 } end)

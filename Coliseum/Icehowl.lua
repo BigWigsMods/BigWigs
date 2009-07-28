@@ -88,6 +88,25 @@ L:RegisterTranslations("frFR", function() return {
 	rage_message = "Rage écumeuse !",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	butt = "Heftiger Kopfstoß",
+	butt_desc = "Warnt vor Heftiger Kopfstoß.",
+	butt_message = "Heftiger Kopfstoß: %s!",
+	butt_bar = "~Kopfstoß",
+	
+	charge = "Wütender Ansturm",
+	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
+	charge_trigger = "^%%s",	--check
+	charge_other = "Wütender Ansturm: %s!",
+	charge_you = "Wütender Ansturm auf DIR!",
+	charge_warning = "Ansturm bald!",
+	
+	daze = "Betäubte Benommenheit",
+	daze_desc = "Warnt, wenn Eisheuler Betäubte Benommenheit bekommt.",
+	daze_message = "Betäubte Benommenheit!",
+	
+	rage = "Schäumende Wut",
+	rage_desc = "Warnt, wenn Eisheuler Schäumende Wut bekommt.",
+	rage_message = "Schäumende Wut!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 } end)
