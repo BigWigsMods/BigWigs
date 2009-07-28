@@ -170,7 +170,7 @@ L:RegisterTranslations("zhTW", function() return {
 	mark_desc = "當施放印記時發出警報。",
 	markbar = "<印記：%d>",
 	markwarn1 = "印記%d！",
-	markwarn2 = "5秒后，印記%d！",
+	markwarn2 = "5秒後，印記%d！",
 
 	void = "虛無區域",
 	void_desc = "當布洛莫斯女士施放虛無區域時警報。",

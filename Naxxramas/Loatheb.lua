@@ -172,7 +172,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	deathbloom = "死亡之花",
 	deathbloom_desc = "當施放死亡之花時發出警報。",
-	deathbloom_warning = "5秒后，死亡之花！",
+	deathbloom_warning = "5秒後，死亡之花！",
 
 	doom = "無可避免的末日",
 	doom_desc = "當施放無可避免的末日時發出警報。",

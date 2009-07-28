@@ -180,13 +180,13 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger1 = "死吧，入侵者！",
 	starttrigger2 = "荣耀归于我主！",
 	starttrigger3 = "我要没收你的生命！",
-	startwarn = "瘟疫使者诺斯已激活 - 90秒后，传送！",
+	startwarn = "瘟疫使者诺斯已激活 - 90秒後，传送！",
 
 	blink = "闪现术",
 	blink_desc = "当施放闪现术时发出警报。",
 	--blinktrigger = "%s blinks away!",
 	blinkwarn = "闪现术！停止攻击！",
-	blinkwarn2 = "约5秒后，闪现术！",
+	blinkwarn2 = "约5秒後，闪现术！",
 	blinkbar = "<闪现术>",
 
 	teleport = "传送",
@@ -194,15 +194,15 @@ L:RegisterTranslations("zhCN", function() return {
 	teleportbar = "<传送>",
 	backbar = "<回到房间>",
 	teleportwarn = "传送！",
-	teleportwarn2 = "10秒后，传送！",
-	backwarn = "诺斯回到房间 - %d秒后，传送！",
-	backwarn2 = "10秒后诺斯回到房间！",
+	teleportwarn2 = "10秒後，传送！",
+	backwarn = "诺斯回到房间 - %d秒後，传送！",
+	backwarn2 = "10秒後诺斯回到房间！",
 
 	curse = "瘟疫使者的诅咒",
 	curse_desc = "当施放瘟疫使者的诅咒时发出警报。",
 	curseexplosion = "瘟疫使者的诅咒！",
-	cursewarn = "约55秒后，瘟疫使者的诅咒！",
-	curse10secwarn = "约10秒后，瘟疫使者的诅咒！",
+	cursewarn = "约55秒後，瘟疫使者的诅咒！",
+	curse10secwarn = "约10秒後，瘟疫使者的诅咒！",
 	cursebar = "<下一瘟疫使者的诅咒>",
 
 	wave = "骷髅",
@@ -210,7 +210,7 @@ L:RegisterTranslations("zhCN", function() return {
 	addtrigger = "起来吧，我的战士们！起来，再为主人尽忠一次！",
 	wave1bar = "<第一波>",
 	wave2bar = "<第二波>",
-	wave2_message = "10秒后，第二波！",
+	wave2_message = "10秒後，第二波！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -238,7 +238,7 @@ L:RegisterTranslations("zhTW", function() return {
 	curse = "瘟疫使者詛咒",
 	curse_desc = "當施放瘟疫者詛咒時發出警報。",
 	curseexplosion = "瘟疫使者詛咒！",
-	cursewarn = "約55秒后，瘟疫使者詛咒！",
+	cursewarn = "約55秒後，瘟疫使者詛咒！",
 	curse10secwarn = "約10秒後，瘟疫使者詛咒！",
 	cursebar = "<下一瘟疫使者詛咒>",
 
