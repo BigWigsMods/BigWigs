@@ -161,9 +161,9 @@ L:RegisterTranslations("zhTW", function() return {
 	--slime_message = "Slime Pool on you!",
 	slime_warning = "Slime Pool!",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn for Enrage.",
-	enrage_message = "Enrage!",
+	enrage = "狂怒",
+	enrage_desc = "當狂怒發出警報。",
+	enrage_message = "狂怒!",
 
 	jormungars_dies = "%s 死亡",
 } end)

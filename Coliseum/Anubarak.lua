@@ -106,9 +106,9 @@ L:RegisterTranslations("zhTW", function() return {
 	engage = "Engage",
 	engage_trigger = "This place will serve as your tomb!",
 
-	phase = "Phase",
-	phase_desc = "Warn on phase transitions",
-	phase_message = "Phase 2!",
+	phase = "階段",
+	phase_desc = "當進入不同階段時發出警報。",
+	phase_message = "第二階段!",
 
 	burrow = "Burrow",
 	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
