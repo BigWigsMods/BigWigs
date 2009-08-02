@@ -516,7 +516,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Crusher Tentacle"] = "粉碎觸手",
---	["The Observation Ring"] = true,
+	["The Observation Ring"] = "觀察之環",
 
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",
