@@ -336,7 +336,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(timeroom - 10, L["teleportwarn2"], "Urgent")
 			self:Bar(L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
 		end
-		if GetCurrentDungeonDifficulty() == 2 then
+		if GetRaidDifficulty() == 2 then
 			if self.db.profile.blink then
 				self:DelayedMessage(25, L["blinkwarn2"], "Attention")
 				self:Bar(L["blinkbar"], 30, 29208)

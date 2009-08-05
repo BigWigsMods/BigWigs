@@ -549,7 +549,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"]) then
 		previous = nil
 		deaths = 0
-		overwhelmTime = GetCurrentDungeonDifficulty() == 1 and 60 or 30
+		overwhelmTime = GetRaidDifficulty() == 1 and 60 or 30
 		if db.berserk then
 			self:Enrage(900, true)
 		end

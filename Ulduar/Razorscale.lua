@@ -270,7 +270,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	totalHarpoons = GetCurrentDungeonDifficulty() == 1 and 2 or 4
+	totalHarpoons = GetRaidDifficulty() == 1 and 2 or 4
 	db = self.db.profile
 	started = nil
 end

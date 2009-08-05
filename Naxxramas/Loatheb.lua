@@ -286,7 +286,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		doomTime = 30
 		sporeCount = 1
 		doomCount = 1
-		sporeTime = GetCurrentDungeonDifficulty() == 1 and 36 or 16
+		sporeTime = GetRaidDifficulty() == 1 and 36 or 16
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

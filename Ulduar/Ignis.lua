@@ -326,7 +326,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		spawnTime = GetCurrentDungeonDifficulty() == 1 and 40 or 30
+		spawnTime = GetRaidDifficulty() == 1 and 40 or 30
 		if db.flame then
 			self:Bar(L["flame_bar"], 21, 62680)
 		end
