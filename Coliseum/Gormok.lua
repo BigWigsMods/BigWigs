@@ -87,21 +87,36 @@ L:RegisterTranslations("deDE", function() return {
 	firebomb_message = "Feuerbombe auf DIR!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-} end)
-L:RegisterTranslations("zhTW", function() return {
+-[[
 	impaler = "Impaler",
-	impaler_desc = "Warn when someone has 2 or more stacks of Impaler.",
-	impaler_message = "%2$dx Impaler on %1$s",
+	impaler_desc = "当玩家中了2层或更多Impaler时发出警报。",
+	impaler_message = "%2$dx Impaler：>%1$s<！",
 
 	stomp = "Staggering Stomp",
-	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
-	stomp_message = "Stomp %d!",
-	stomp_warning = "Stomp in 5sec!",
-	stomp_bar = "Stomp %d",
+	stomp_desc = "当 Gormok 施放Staggering Stomp时发出警报。",
+	stomp_message = "Staggering Stomp：>%d<！",
+	stomp_warning = "5秒后，Staggering Stomp！",
+	stomp_bar = "<Staggering Stomp：%d>",
 
 	firebomb = "Fire Bomb",
-	firebomb_desc = "Warn when you are in a Fire Bomb.",
-	firebomb_message = "Fire Bomb on you!",
+	firebomb_desc = "当你中了Fire Bomb时发出警报。",
+	firebomb_message = ">你< Fire Bomb！",
+-]]
+} end)
+L:RegisterTranslations("zhTW", function() return {
+	impaler = "刺穿",
+	impaler_desc = "當玩家中了2層或更多刺穿時發出警報。",
+	impaler_message = "%2$dx 刺穿：>%1$s<！",
+
+	stomp = "驚恐踐踏",
+	stomp_desc = "當Gormok施放驚恐踐踏時發出警報。",
+	stomp_message = "驚恐踐踏：>%d<！",
+	stomp_warning = "5秒後，驚恐踐踏！",
+	stomp_bar = "<驚恐踐踏：%d>",
+
+	firebomb = "燃燒彈",
+	firebomb_desc = "當你中了燃燒彈時發出警報。",
+	firebomb_message = ">你< 燃燒彈！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

@@ -436,7 +436,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
---	["Crusher Tentacle"] = true,ha
+	["Crusher Tentacle"] = "重压触须",
 --	["The Observation Ring"] = true,
 
 	phase = "阶段",

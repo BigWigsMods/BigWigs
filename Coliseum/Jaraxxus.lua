@@ -141,35 +141,64 @@ L:RegisterTranslations("deDE", function() return {
 	infernaleruption_desc = "Warnt vor Höllische Eruption.",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-} end)
-L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "text",
+-[[
+--	engage_trigger = "text",
 
 	incinerate = "Incinerate Flesh",
-	incinerate_desc = "Warn for Incinerate Flesh",
-	incinerate_you = "Incinerate Fles on You!",
-	incinerate_other = "Incinerate Flesh %s",
-	incinerate_bar = "~Incinerate Flash Cooldown",
+	incinerate_desc = "当施放Incinerate Flesh时发出警报。",
+	incinerate_you = ">你< Incinerate Flesh！",
+	incinerate_other = "Incinerate Flesh：>%s<！",
+	incinerate_bar = "<Incinerate Flash 冷却>",
 
 	legionflame = "Legion Flame",
-	legionflame_desc = "Warn for Legion Flame",
-	legionflame_you = "Legion Flame on You!",
-	legionflame_other = "Legion Flame on %s!",
-	legionflame_bar = "~Legion Flame Cooldown",
+	legionflame_desc = "当施放Legion Flame时发出警报。",
+	legionflame_you = ">你< Legion Flame！",
+	legionflame_other = "Legion Flame：>%s<！",
+	legionflame_bar = "<Legion Flame 冷却>",
 
-	icon = "Place Icon",
-	icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)",	
+	icon = "团队标记",
+	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",	
 
 	netherportal = "Nether Portal",
-	netherportal_desc = "Warn for Nether Portal",
-	netherportal_bar = "~Nether Portal Cooldown",
+	netherportal_desc = "当施放Nether Portal时发出警报。",
+	netherportal_bar = "<Nether Portal 冷却>",
 
 	netherpower = "Nether Power",
-	netherpower_desc = "Warn for Nether Power",
-	netherpower_bar = "~Nether Power Cooldown",
+	netherpower_desc = "当施放Nether Power时发出警报。",
+	netherpower_bar = "<Nether Power 冷却>",
 
 	infernaleruption = "Infernal Eruption",
-	infernaleruption_desc = "Warn for Infernal Eruption",
+	infernaleruption_desc = "当施放Infernal Eruption时发出警报。",
+-]]
+} end)
+L:RegisterTranslations("zhTW", function() return {
+--	engage_trigger = "text",
+
+	incinerate = "焚化血肉",
+	incinerate_desc = "當施放焚化血肉時發出警報。",
+	incinerate_you = ">你< 焚化血肉！",
+	incinerate_other = "焚化血肉：>%s<！",
+	incinerate_bar = "<焚化血肉 冷卻>",
+
+	legionflame = "聚合烈焰",
+	legionflame_desc = "當施放聚合烈焰時發出警報。",
+	legionflame_you = ">你< 聚合烈焰！",
+	legionflame_other = "聚合烈焰：>%s<！",
+	legionflame_bar = "<聚合烈焰 冷卻>",
+
+	icon = "團隊標記",
+	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",	
+
+	netherportal = "虛空傳送門",
+	netherportal_desc = "當施放虛空傳送門時發出警報。",
+	netherportal_bar = "<虛空傳送門 冷卻>",
+
+	netherpower = "虛空傳送門（能量）",
+	netherpower_desc = "當施放虛空傳送門（能量）時發出警報。",
+	netherpower_bar = "<虛空傳送門（能量） 冷卻>",
+
+	infernaleruption = "煉獄爆發",
+	infernaleruption_desc = "當施放煉獄爆發時發出警報。",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

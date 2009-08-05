@@ -109,27 +109,48 @@ L:RegisterTranslations("deDE", function() return {
 	rage_message = "Schäumende Wut!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-} end)
-L:RegisterTranslations("zhTW", function() return {
+-[[
 	butt = "Ferocious Butt",
-	butt_desc = "Warn for Ferocious Butt.",
-	butt_message = "Ferocious Butt: %s!",
-	butt_bar = "~Butt Cooldown",
+	butt_desc = "当施放Ferocious Butt时发出警报。",
+	butt_message = "Ferocious Butt：>%s<！",
+	butt_bar = "<Ferocious Butt 冷却>",
 
-	charge = "Furious Charge",
-	charge_desc = "Warn about Furious Charge on players.",
-	charge_trigger = "^%%s",	--check
-	charge_other = "Furious Charge: %s!",
-	charge_you = "Furious Charge YOU!",
-	charge_warning = "Trample soon",
+	charge = "野性冲锋",
+	charge_desc = "当玩家中了野性冲锋时发出警报。",
+--	charge_trigger = "^%%s",	--check
+	charge_other = "野性冲锋：>%s<！",
+	charge_you = ">你< 野性冲锋！",
+	charge_warning = "即将 践踏！",
 
 	daze = "Staggered Daze",
-	daze_desc = "Warn when Icehowl gains Staggered Daze.",
-	daze_message = "Staggered Daze!",
+	daze_desc = "当Icehowl获得Staggered Daze时发出警报。",
+	daze_message = "Staggered Daze！",
 
 	rage = "Frothing Rage",
-	rage_desc = "Warn when Icehowl gains Frothing Rage.",
+	rage_desc = "当Icehowl获得Frothing Rage时发出警报。",
 	rage_message = "Frothing Rage!",
+-]]
+} end)
+L:RegisterTranslations("zhTW", function() return {
+	butt = "兇猛頭擊",
+	butt_desc = "Warn for 兇猛頭擊",
+	butt_message = "兇猛頭擊: %s!",
+	butt_bar = "兇猛頭擊 Cooldown",
+
+	charge = "狂烈衝鋒",
+	charge_desc = "當玩家中了狂烈衝鋒時發出警報。",
+--	charge_trigger = "^%%s",	--check
+	charge_other = "狂烈衝鋒：>%s<！",
+	charge_you = ">你< 狂烈衝鋒！",
+	charge_warning = "即將 踐踏！",
+
+	daze = "驚恐暈眩",
+	daze_desc = "當冰嚎獲得驚恐暈眩時發出警報。",
+	daze_message = "驚恐暈眩！",
+
+	rage = "泡沫之怒",
+	rage_desc = "當冰嚎獲得泡沫之怒時發出警報。",
+	rage_message = "泡沫之怒！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

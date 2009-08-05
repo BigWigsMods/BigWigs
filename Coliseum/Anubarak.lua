@@ -101,25 +101,44 @@ L:RegisterTranslations("deDE", function() return {
 	pursue_other = "Verfolgt: %s",
 } end)
 L:RegisterTranslations("zhCN", function() return {
+-[[
+	engage = "激活",
+--	engage_trigger = "This place will serve as your tomb!",
+
+	phase = "阶段",
+	phase_desc = "当阶段改变时发出警报。",
+	phase_message = "第二阶段！",
+
+	burrow = "钻地",
+	burrow_desc = "当阿努巴拉克钻地时显示计时条。",
+	burrow_emote = "FIXME",
+	burrow_message = "钻地",
+	burrow_cooldown = "下一钻地",
+
+	pursue = "追击",
+	pursue_desc = "当玩家被阿努巴拉克追击时发出警报。",
+	pursue_message = ">你< 追击！",
+	pursue_other = "追击：>%s<！",
+-]]
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	engage = "Engage",
-	engage_trigger = "This place will serve as your tomb!",
+	engage = "開戰",
+--	engage_trigger = "This place will serve as your tomb!",
 
 	phase = "階段",
-	phase_desc = "當進入不同階段時發出警報。",
-	phase_message = "第二階段!",
+	phase_desc = "當階段改變發出警報。",
+	phase_message = "第二階段！",
 
-	burrow = "Burrow",
-	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
+	burrow = "鑽地",
+	burrow_desc = "當阿努巴拉克鉆地時顯示計時條。",
 	burrow_emote = "FIXME",
-	burrow_message = "Burrow",
-	burrow_cooldown = "Next Burrow",
+	burrow_message = "鑽地",
+	burrow_cooldown = "下一鉆地",
 
-	pursue = "Pursue",
-	pursue_desc = "Show who Anub'Arak is pursuing",
-	pursue_message = "Pursuing YOU!",
-	pursue_other = "Pursuing %s",
+	pursue = "追擊",
+	pursue_desc = "當玩家被阿努巴拉克追擊時發出警報。",
+	pursue_message = ">你< 追擊！",
+	pursue_other = "追擊：>%s<！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)
