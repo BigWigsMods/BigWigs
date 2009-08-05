@@ -1,4 +1,4 @@
-﻿## Interface: 30100
+﻿## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Title-ruRU: Big Wigs [|cffeda55fПлагины|r]

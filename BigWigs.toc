@@ -1,4 +1,4 @@
-## Interface: 30100
+## Interface: 30200
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
