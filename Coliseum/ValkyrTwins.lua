@@ -129,30 +129,54 @@ L:RegisterTranslations("deDE", function() return {
 	
 } end)
 L:RegisterTranslations("zhCN", function() return {
-} end)
-L:RegisterTranslations("zhTW", function() return {
-	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
+-[[
+--	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
 
-	vortex_or_shield_cd = "Vortex/Shield Cooldown",
+	vortex_or_shield_cd = "<Vortex/Shield 冷却>",
 
 	vortex = "Vortex",
-	vortex_desc = "Warn when the twins start casting Vortexes.",
+	vortex_desc = "当双子开始施放Vortexes时发出警报。",
 
 	shield = "Shield of Darkness/Light",
-	shield_desc = "Warn for Shield of Darkness/Light.",
-	shield_light = "Shield of Light!",
-	shield_darkness = "Shield of Darkness!",
+	shield_desc = "当施放Shield of Darkness/Light时发出警报。",
+	shield_light = "Shield of Light！",
+	shield_darkness = "Shield of Darkness！",
 
 	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
-	vortex_light_message = "Light vortex!",
-	vortex_dark_message = "Dark vortex!",
+	vortex_light_message = "Light vortex！",
+	vortex_dark_message = "Dark vortex！",
 
 	touch = "Touch of Darkness/Light",
-	touch_desc = "Warn for Touch of Darkness/Light",
-	touch_of_light_on_you = "Touch of Light on You!",
-	touch_of_light_on_other = "Touch of Light on %s",
-	touch_of_dark_on_you = "Touch of Darkness on You!",
-	touch_of_dark_on_other = "Touch of Darkness on %s",
+	touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。",
+	touch_of_light_on_you = ">你< Touch of Light！",
+	touch_of_light_on_other = "Touch of Light：>%s<！",
+	touch_of_dark_on_you = ">你< Touch of Darkness！",
+	touch_of_dark_on_other = "Touch of Darkness：>%s<！",
+-]]
+} end)
+L:RegisterTranslations("zhTW", function() return {
+--	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
+
+	vortex_or_shield_cd = "<漩渦/盾 冷卻>",
+
+	vortex = "漩渦",
+	vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。",
+
+	shield = "黑暗/光明之盾",
+	shield_desc = "當施放黑暗/光明之盾時發出警報。",
+	shield_light = "光明之盾！",
+	shield_darkness = "黑暗之盾！",
+
+	--vortex_same_message = "漩渦", -- If the player has the same affliction, we don't need to say anything really
+	vortex_light_message = "光明漩渦！",
+	vortex_dark_message = "黑暗漩渦！",
+
+	touch = "黑暗/光明之觸",
+	touch_desc = "當玩家中了黑暗/光明之觸時發出警報。",
+	touch_of_light_on_you = ">你< 光明之觸！",
+	touch_of_light_on_other = "光明之觸：>%s<！",
+	touch_of_dark_on_you = ">你< 黑暗之觸！",
+	touch_of_dark_on_other = "黑暗之觸：>%s<！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

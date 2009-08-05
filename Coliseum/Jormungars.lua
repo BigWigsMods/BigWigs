@@ -139,33 +139,60 @@ L:RegisterTranslations("deDE", function() return {
 	jormungars_dies = "%s getötet!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-} end)
-L:RegisterTranslations("zhTW", function() return {
+-[[
 	spew = "Acidic/Molten Spew",
-	spew_desc = "Warn for Acidic/Molten Spew.",
-	acidic_message = "Acidic Spew!",
-	molten_message = "Molten Spew!",
+	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
+	acidic_message = "Acidic Spew！",
+	molten_message = "Molten Spew！",
 
 	toxin = "Paralytic Toxin",
-	toxin_desc = "Warn who has Paralytic Toxin.",
-	toxin_you = "Paralytic Toxin on you!",
-	toxin_other = "Paralytic Toxin: %s",
+	toxin_desc = "当玩家中了Paralytic Toxin时发出警报。",
+	toxin_you = ">你< Paralytic Toxin！",
+	toxin_other = "Paralytic Toxin：>%s<！",
 
 	burn = "Burning Bile",
-	burn_desc = "Warn who has Burning Bile.",
-	burn_you = "Burning Bile on you!",
-	burn_other = "Burning Bile: %s",
+	burn_desc = "当玩家中了Burning Bile时发出警报。",
+	burn_you = ">你< Burning Bile！",
+	burn_other = "Burning Bile：>%s<！",
 
 	slime = "Slime Pool",
-	slime_desc = "Warn for Slime Pool.",
-	--slime_message = "Slime Pool on you!",
-	slime_warning = "Slime Pool!",
+	slime_desc = "当施放Slime Pool时发出警报。",
+	--slime_message = ">你< Slime Pool！",
+	slime_warning = "Slime Pool！",
+
+	enrage = "激怒",
+	enrage_desc = "当激怒时发出警报。",
+	enrage_message = "激怒！",
+
+	jormungars_dies = "%s死亡！",
+-]]
+} end)
+L:RegisterTranslations("zhTW", function() return {
+	spew = "酸液/熔火噴灑",
+	spew_desc = "當施放酸液/熔火噴灑時發出警報。",
+	acidic_message = "酸液噴灑！",
+	molten_message = "熔火噴灑！",
+
+	toxin = "痲痺劇毒",
+	toxin_desc = "當玩家中了痲痺劇毒時發出警報。",
+	toxin_you = ">你< 痲痺劇毒！",
+	toxin_other = "痲痺劇毒：>%s<！",
+
+	burn = "燃燒膽汁",
+	burn_desc = "當玩家中了燃燒膽汁時發出警報。",
+	burn_you = ">你< 燃燒膽汁！",
+	burn_other = "燃燒膽汁：>%s<！",
+
+	slime = "泥漿池",
+	slime_desc = "當施放泥漿池時發出警報。",
+	--slime_message = ">你< 泥漿池！",
+	slime_warning = "泥漿池！",
 
 	enrage = "狂怒",
-	enrage_desc = "當狂怒發出警報。",
+	enrage_desc = "當狂怒時發出警報。",
 	enrage_message = "狂怒!",
 
-	jormungars_dies = "%s 死亡",
+	jormungars_dies = "%s死亡！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 } end)

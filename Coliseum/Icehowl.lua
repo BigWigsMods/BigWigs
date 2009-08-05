@@ -134,8 +134,8 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	butt = "兇猛頭擊",
 	butt_desc = "Warn for 兇猛頭擊",
-	butt_message = "兇猛頭擊: %s!",
-	butt_bar = "兇猛頭擊 Cooldown",
+	butt_message = "兇猛頭擊：>%s<！",
+	butt_bar = "<兇猛頭擊 冷卻>",
 
 	charge = "狂烈衝鋒",
 	charge_desc = "當玩家中了狂烈衝鋒時發出警報。",
