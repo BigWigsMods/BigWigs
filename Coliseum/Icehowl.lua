@@ -184,7 +184,7 @@ end
 function mod:Daze(_, spellID)
 	if db.daze then
 		self:IfMessage(L["daze_message"], "Important", spellID)
-		self:Bar(L["daze_bar"], 15, spellID)
+		self:Bar(L["daze"], 15, spellID)
 	end
 end
 
