@@ -17,7 +17,7 @@ mod.toggleoptions = {"slime", "spew", "toxin", "burn", "enrage", "bosskill"}
 -- Locals
 --
 local db = nil
-local deaths = 0
+local deaths
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
 local pName = UnitName("player")
@@ -206,13 +206,14 @@ function mod:OnEnable()
 	--self:AddCombatListener("SPELL_DAMAGE", "Slime", 67638)
 	self:AddCombatListener("SPELL_CAST_START", "Acidic", 66818)
 	self:AddCombatListener("SPELL_CAST_START", "Molten", 66821)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 66869)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 66823)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 68335)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
+	deaths = 0
 end
 
 --------------------------------------------------------------------------------

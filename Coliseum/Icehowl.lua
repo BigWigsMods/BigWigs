@@ -162,7 +162,7 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 66759)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Daze", 66758)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Butt", 67654)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Butt", 67654, 66770)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

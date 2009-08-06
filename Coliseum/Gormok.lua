@@ -17,7 +17,7 @@ mod.toggleoptions = {"stomp", "impaler", "firebomb", "bosskill"}
 local db = nil
 local pName = UnitName("player")
 local impaler = GetSpellInfo(67477)
-local count = 1
+local count
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -126,13 +126,14 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impaler", 67477)
-	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647)
+	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impaler", 67477, 66331)
+	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 66330)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
+	count = 1
 end
 
 --------------------------------------------------------------------------------
