@@ -177,7 +177,7 @@ end
 function mod:Rage(_, spellID)
 	if db.rage then
 		self:IfMessage(L["rage_message"], "Important", spellID)
-		self:Bar(L["rage_bar"], 15, spellID)
+		self:Bar(L["rage"], 15, spellID)
 	end
 end
 
