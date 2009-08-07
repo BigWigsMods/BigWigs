@@ -9,14 +9,14 @@ mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe
 mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = boss
 mod.guid = 34796
-mod.toggleoptions = {"stomp", "impaler", "firebomb", "bosskill"}
+mod.toggleoptions = {"stomp", "impale", "firebomb", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 local db = nil
 local pName = UnitName("player")
-local impaler = GetSpellInfo(67477)
+local impale = GetSpellInfo(67477)
 local count
 
 --------------------------------------------------------------------------------
@@ -27,9 +27,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gormok",
 
-	impaler = "Impaler",
-	impaler_desc = "Warn when someone has 2 or more stacks of Impaler.",
-	impaler_message = "%2$dx Impaler on %1$s",
+	impale = "Impale",
+	impale_desc = "Warn when someone has 2 or more stacks of Impale.",
+	impale_message = "%2$dx Impale on %1$s",
 
 	stomp = "Staggering Stomp",
 	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
@@ -42,9 +42,9 @@ L:RegisterTranslations("enUS", function() return {
 	firebomb_message = "Fire Bomb on you!",
 } end)
 L:RegisterTranslations("koKR", function() return {
-	impaler = "꿰뚫기",
-	impaler_desc = "꿰뚫기 중첩이 2이상이 된 플레이어를 알립니다.",
-	impaler_message = "꿰뚫기 x%2$d: %1$s",
+	impale = "꿰뚫기",
+	impale_desc = "꿰뚫기 중첩이 2이상이 된 플레이어를 알립니다.",
+	impale_message = "꿰뚫기 x%2$d: %1$s",
 
 	stomp = "진동의 발구르기",
 	stomp_desc = "고르목의 진동의 발구르기 시전을 알립니다.",
@@ -57,9 +57,9 @@ L:RegisterTranslations("koKR", function() return {
 	firebomb_message = "당신은 불 폭탄!",
 } end)
 L:RegisterTranslations("frFR", function() return {
-	impaler = "Empaler",
-	impaler_desc = "Prévient quand quelqu'un a 2 cumuls ou plus d'Empaler.",
-	impaler_message = "%2$dx Empaler sur %1$s",
+	impale = "Empaler",
+	impale_desc = "Prévient quand quelqu'un a 2 cumuls ou plus d'Empaler.",
+	impale_message = "%2$dx Empaler sur %1$s",
 
 	stomp = "Piétinement ahurissant",
 	stomp_desc = "Prévient quand Gormok incante un Piétinement ahurissant.",
@@ -72,9 +72,9 @@ L:RegisterTranslations("frFR", function() return {
 	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	impaler = "Pfähler",
-	impaler_desc = "Warnt, wenn jemand 2 oder mehr Stapel von Pfählen hat.",
-	impaler_message = "%2$dx Pfählen auf %1$s",
+	impale = "Pfähler",
+	impale_desc = "Warnt, wenn jemand 2 oder mehr Stapel von Pfählen hat.",
+	impale_message = "%2$dx Pfählen auf %1$s",
 	
 	stomp = "Erschütterndes Stampfen",
 	stomp_desc = "Warnt, wenn Gormok Erschütterndes Stampfen wirkt.",
@@ -88,9 +88,9 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 L:RegisterTranslations("zhCN", function() return {
 -[[
-	impaler = "Impaler",
-	impaler_desc = "当玩家中了2层或更多Impaler时发出警报。",
-	impaler_message = "%2$dx Impaler：>%1$s<！",
+	impale = "Impale",
+	impale_desc = "当玩家中了2层或更多Impale时发出警报。",
+	impale_message = "%2$dx Impale：>%1$s<！",
 
 	stomp = "Staggering Stomp",
 	stomp_desc = "当 Gormok 施放Staggering Stomp时发出警报。",
@@ -104,9 +104,9 @@ L:RegisterTranslations("zhCN", function() return {
 -]]
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	impaler = "刺穿",
-	impaler_desc = "當玩家中了2層或更多刺穿時發出警報。",
-	impaler_message = "%2$dx 刺穿：>%1$s<！",
+	impale = "刺穿",
+	impale_desc = "當玩家中了2層或更多刺穿時發出警報。",
+	impale_message = "%2$dx 刺穿：>%1$s<！",
 
 	stomp = "驚恐踐踏",
 	stomp_desc = "當Gormok施放驚恐踐踏時發出警報。",
@@ -127,7 +127,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impaler", 67477, 66331)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331)
 	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 66330)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -140,18 +140,18 @@ end
 -- Event Handlers
 --
 
-function mod:Impaler(player, spellID)
-	if db.impaler then
-		local _, _, icon, stack = UnitDebuff(player, impaler)
+function mod:Impale(player, spellID)
+	if db.impale then
+		local _, _, icon, stack = UnitDebuff(player, impale)
 		if stack and stack > 1 then
-			self:TargetMessage(L["impaler_message"], player, "Urgent", icon, "Info", stack)
+			self:TargetMessage(L["impale_message"], player, "Urgent", icon, "Info", stack)
 		end
 	end
 end
 
 function mod:Stomp(_, spellID)
 	if db.stomp then
-		self:IfMessage(L["stomp_message"]:format(count), Attention, spellID, Long)
+		self:IfMessage(L["stomp_message"]:format(count), "Attention", spellID, "Long")
 		count = count + 1
 		self:Bar(L["stomp_bar"]:format(count), 21, spellID)
 		self:DelayedMessage(16, L["stomp_warning"], "Attention")
