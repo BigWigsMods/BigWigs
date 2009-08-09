@@ -25,9 +25,7 @@
 ## Dependencies: BigWigs
 
 Beta.lua
-Gormok.lua
-Jormungars.lua
-Icehowl.lua
+Beasts.lua
 Jaraxxus.lua
 ValkyrTwins.lua
 Anubarak.lua

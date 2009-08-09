@@ -637,7 +637,7 @@ end
 ------------------------------
 
 function mod:Fervor(player, spellId)
-	self:Whisper(player, "You're debuffed, watch out!")
+	self:Whisper(player, "DEBUFF, watch out!")
 end
 
 do

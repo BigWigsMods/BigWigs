@@ -54,12 +54,11 @@
 <Script file="Ulduar\YoggSaron.lua"/>
 
 <Script file="Coliseum\Beta.lua"/>
-<Script file="Coliseum\Gormok.lua"/>
-<Script file="Coliseum\Jormungars.lua"/>
-<Script file="Coliseum\Icehowl.lua"/>
+<Script file="Coliseum\Beasts.lua"/>
 <Script file="Coliseum\Jaraxxus.lua"/>
 <Script file="Coliseum\ValkyrTwins.lua"/>
 <Script file="Coliseum\Anubarak.lua"/>
 
 <!--@end-debug@-->
 </Ui>
+
