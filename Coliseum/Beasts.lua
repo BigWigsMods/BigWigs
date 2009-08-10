@@ -296,7 +296,12 @@ L:RegisterTranslations("deDE", function() return {
 	rage_message = "Schäumende Wut!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
---[[	-- Gormok
+--[[	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
+	--jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
+	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
+	boss_incoming = "即将%s！",
+
+	-- Gormok
 
 	impale = "Impale",
 	impale_desc = "当玩家中了2层或更多Impale时发出警报。",
@@ -304,9 +309,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	stomp = "Staggering Stomp",
 	stomp_desc = "当 Gormok 施放Staggering Stomp时发出警报。",
-	stomp_message = "Staggering Stomp：！",
+	stomp_message = "Staggering Stomp！",
 	stomp_warning = "5秒后，Staggering Stomp！",
-	stomp_bar = "<Staggering Stomp：>",
+	stomp_bar = "<下一Staggering Stomp>",
 
 	firebomb = "Fire Bomb",
 	firebomb_desc = "当你中了Fire Bomb时发出警报。",
@@ -364,6 +369,11 @@ L:RegisterTranslations("zhCN", function() return {
 ]]
 } end)
 L:RegisterTranslations("zhTW", function() return {
+	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
+	--jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
+	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
+	boss_incoming = "即將%s！",
+	
 	-- Gormok
 	impale = "刺穿",
 	impale_desc = "當玩家中了2層或更多刺穿時發出警報。",
@@ -371,9 +381,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	stomp = "驚恐踐踏",
 	stomp_desc = "當Gormok施放驚恐踐踏時發出警報。",
-	--stomp_message = "驚恐踐踏：>%d<！",
+	stomp_message = "驚恐踐踏！",
 	stomp_warning = "5秒後，驚恐踐踏！",
-	--stomp_bar = "<驚恐踐踏：%d>",
+	stomp_bar = "<下一驚恐踐踏>",
 
 	firebomb = "燃燒彈",
 	firebomb_desc = "當你中了燃燒彈時發出警報。",
