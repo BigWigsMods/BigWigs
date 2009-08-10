@@ -118,7 +118,7 @@ L:RegisterTranslations("koKR", function() return {
 	firebomb = "불 폭탄",
 	firebomb_desc = "자신이 불 폭탄에 걸렸을 때 알립니다.",
 	firebomb_message = "당신은 불 폭탄!",
-	
+
 	-- Jormungars
 	spew = "산성/용암 내뿜기",
 	spew_desc = "산성/용암 내뿜기를 알립니다.",
@@ -145,7 +145,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_message = "격노!",
 
 	jormungars_dies = "%s 죽음",
-	
+
 	-- Icehowl
 	butt = "흉포한 박치기",
 	butt_desc = "흉포한 박치기를 알립니다.",
@@ -168,6 +168,11 @@ L:RegisterTranslations("koKR", function() return {
 	rage_message = "분노!",
 } end)
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !",
+	jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !",
+	icehowl_trigger = "L'air se gèle à l'entrée de notre prochain combattant, Glace-hurlante ! Tuez ou soyez tués, champions !",
+	boss_incoming = "Arrivée |2 %s",
+
 	-- Gormok
 	impale = "Empaler",
 	impale_desc = "Prévient quand quelqu'un a 2 cumuls ou plus d'Empaler.",
@@ -182,7 +187,7 @@ L:RegisterTranslations("frFR", function() return {
 	firebomb = "Bombe incendiaire",
 	firebomb_desc = "Prévient quand vous vous trouvez sur une Bombe incendiaire.",
 	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
-	
+
 	-- Jormungars
 	spew = "Crachement acide/de lave",
 	spew_desc = "Prévient de l'arrivée des Crachements acides/de lave.",
@@ -209,16 +214,16 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_message = "Enrager !",
 
 	jormungars_dies = "%s éliminé",
-	
+
 	-- Icehowl
 	butt = "Coup de tête féroce",
 	butt_desc = "Prévient quand un joueur subit les effets d'un Coup de tête féroce.",
-	butt_message = "Coup de tête féroce : %s !",
+	butt_message = "Coup de tête féroce : %s",
 	butt_bar = "~Recharge Coup de tête",
 
 	charge = "Charge furieuse",
 	charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse.",
-	--charge_trigger = "", -- à traduire
+	charge_trigger = "^%%s", -- à traduire/vérifier
 	charge_other = "Charge furieuse : %s",
 	charge_you = "Charge furieuse sur VOUS !",
 	charge_warning = "Piétiner imminent",
@@ -236,61 +241,61 @@ L:RegisterTranslations("deDE", function() return {
 	impale = "Pfähler",
 	impale_desc = "Warnt, wenn jemand 2 oder mehr Stapel von Pfählen hat.",
 	impale_message = "%2$dx Pfählen auf %1$s",
-	
+
 	stomp = "Erschütterndes Stampfen",
 	stomp_desc = "Warnt, wenn Gormok Erschütterndes Stampfen wirkt.",
 	stomp_message = "Stampfen!",
 	stomp_warning = "Stampfen in 5 sek!",
 	stomp_bar = "Stampfen",
-	
+
 	firebomb = "Feuerbombe",
 	firebomb_desc = "Warnt, wenn du in einer Feuerbombe stehst.",
 	firebomb_message = "Feuerbombe auf DIR!",
-	
+
 	-- Jormungars
 	spew = "Ätzender/Geschmolzener Auswurf",
 	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
 	acidic_message = "Ätzender Auswurf!",
 	molten_message = "Geschmolzener Auswurf!",
-	
+
 	toxin = "Paralysierendes Toxin",
 	toxin_desc = "Warnt, wer von Paralysierendes Toxin betroffen ist.",
 	toxin_you = "Paralysierendes Toxin auf DIR!",
 	toxin_other = "Paralysierendes Toxin: %s",
-	
+
 	burn = "Brennende Galle",
 	burn_desc = "Warnt, wer von Brennende Galle betroffen ist.",
 	burn_you = "Brennende Galle auf DIR!",
 	burn_other = "Brennende Galle: %s",
-	
+
 	slime = "Schleimpfütze",
 	slime_desc = "Warnt vor Schleimpfütze.",
 	--slime_message = "Schleimpfütze auf DIR!",
 	slime_warning = "Schleimpfütze",
-	
+
 	enrage = "Wutanfall",
 	enrage_desc = "Warnt vor Wutanfall.",
 	enrage_message = "Wutanfall!",
-	
+
 	jormungars_dies = "%s getötet!",
-	
+
 	-- Icehowl
 	butt = "Heftiger Kopfstoß",
 	butt_desc = "Warnt vor Heftiger Kopfstoß.",
 	butt_message = "Heftiger Kopfstoß: %s!",
 	butt_bar = "~Kopfstoß",
-	
+
 	charge = "Wütender Ansturm",
 	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
 	charge_trigger = "^%%s",	--check
 	charge_other = "Wütender Ansturm: %s!",
 	charge_you = "Wütender Ansturm auf DIR!",
 	charge_warning = "Ansturm bald!",
-	
+
 	daze = "Betäubte Benommenheit",
 	daze_desc = "Warnt, wenn Eisheuler Betäubte Benommenheit bekommt.",
 	daze_message = "Betäubte Benommenheit!",
-	
+
 	rage = "Schäumende Wut",
 	rage_desc = "Warnt, wenn Eisheuler Schäumende Wut bekommt.",
 	rage_message = "Schäumende Wut!",

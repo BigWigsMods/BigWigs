@@ -104,7 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 	netherportal_bar = "~Recharge Portail",
 
 	netherpower = "Puissance du Néant",
-	netherpower_desc = "PRévient de l'arrivée des Puissances du Néant.",
+	netherpower_desc = "Prévient de l'arrivée des Puissances du Néant.",
 	netherpower_bar = "~Recharge Puissance",
 
 	infernaleruption = "Eruption infernale",
