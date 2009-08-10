@@ -11,8 +11,7 @@ local icehowl = BB["Icehowl"]
 local acidmaw = BB["Acidmaw"]
 local dreadscale = BB["Dreadscale"]
 
-mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe add to BabbleZone.
-mod.otherMenu = "The Argent Coliseum"
+mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = gormok
 --mod.guid = 34796 -- Gormok
 --mod.guid = 34799--Dreadscale, 35144 = Acidmaw
@@ -27,7 +26,6 @@ local pName = UnitName("player")
 local impale = GetSpellInfo(67477)
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
-local count
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,6 +35,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "NorthrendBeasts",
 
+	engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
+	jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
+	icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
+	boss_incoming = "%s incoming",
+
 	-- Gormok
 	impale = "Impale",
 	impale_desc = "Warn when someone has 2 or more stacks of Impale.",
@@ -44,9 +47,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	stomp = "Staggering Stomp",
 	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
-	stomp_message = "Stomp %d!",
+	stomp_message = "Stomp!",
 	stomp_warning = "Stomp in 5sec!",
-	stomp_bar = "Stomp %d",
+	stomp_bar = "Next Stomp",
 
 	firebomb = "Fire Bomb",
 	firebomb_desc = "Warn when you are in a Fire Bomb.",
@@ -108,9 +111,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	stomp = "진동의 발구르기",
 	stomp_desc = "고르목의 진동의 발구르기 시전을 알립니다.",
-	stomp_message = "발구르기 (%d)!",
+	stomp_message = "발구르기!",
 	stomp_warning = "5초 후 발구르기!",
-	stomp_bar = "~다음 발구르기(%d)",
+	stomp_bar = "~다음 발구르기",
 
 	firebomb = "불 폭탄",
 	firebomb_desc = "자신이 불 폭탄에 걸렸을 때 알립니다.",
@@ -172,9 +175,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	stomp = "Piétinement ahurissant",
 	stomp_desc = "Prévient quand Gormok incante un Piétinement ahurissant.",
-	stomp_message = "Piétinement %d !",
+	stomp_message = "Piétinement !",
 	stomp_warning = "Piétinement dans 5 sec. !",
-	stomp_bar = "Piétinement %d",
+	stomp_bar = "Piétinement",
 
 	firebomb = "Bombe incendiaire",
 	firebomb_desc = "Prévient quand vous vous trouvez sur une Bombe incendiaire.",
@@ -236,9 +239,9 @@ L:RegisterTranslations("deDE", function() return {
 	
 	stomp = "Erschütterndes Stampfen",
 	stomp_desc = "Warnt, wenn Gormok Erschütterndes Stampfen wirkt.",
-	stomp_message = "Stampfen %d!",
+	stomp_message = "Stampfen!",
 	stomp_warning = "Stampfen in 5 sek!",
-	stomp_bar = "Stampfen %d",
+	stomp_bar = "Stampfen",
 	
 	firebomb = "Feuerbombe",
 	firebomb_desc = "Warnt, wenn du in einer Feuerbombe stehst.",
@@ -301,9 +304,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	stomp = "Staggering Stomp",
 	stomp_desc = "当 Gormok 施放Staggering Stomp时发出警报。",
-	stomp_message = "Staggering Stomp：>%d<！",
+	stomp_message = "Staggering Stomp：！",
 	stomp_warning = "5秒后，Staggering Stomp！",
-	stomp_bar = "<Staggering Stomp：%d>",
+	stomp_bar = "<Staggering Stomp：>",
 
 	firebomb = "Fire Bomb",
 	firebomb_desc = "当你中了Fire Bomb时发出警报。",
@@ -368,9 +371,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	stomp = "驚恐踐踏",
 	stomp_desc = "當Gormok施放驚恐踐踏時發出警報。",
-	stomp_message = "驚恐踐踏：>%d<！",
+	--stomp_message = "驚恐踐踏：>%d<！",
 	stomp_warning = "5秒後，驚恐踐踏！",
-	stomp_bar = "<驚恐踐踏：%d>",
+	--stomp_bar = "<驚恐踐踏：%d>",
 
 	firebomb = "燃燒彈",
 	firebomb_desc = "當你中了燃燒彈時發出警報。",
@@ -437,7 +440,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331)
 	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 66330)
-	count = 1
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	-- Jormungars
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641)
@@ -464,6 +467,22 @@ end
 -- Gormok the Impaler
 --
 
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
+		if db.berserk then
+			self:Enrage(900, true, true)
+		end
+	elseif msg == L["jormungars_trigger"] then
+		local m = L["boss_incoming"]:format(BB["Jormungars"])
+		self:IfMessage(m, "Positive")
+		self:Bar(m, 15, "INV_Misc_MonsterScales_18")
+	elseif msg == L["icehowl_trigger"] then
+		local m = L["boss_incoming"]:format(icehowl)
+		self:IfMessage(m, "Positive")
+		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
+	end
+end
+
 function mod:Impale(player, spellID)
 	if db.impale then
 		local _, _, icon, stack = UnitDebuff(player, impale)
@@ -475,9 +494,8 @@ end
 
 function mod:Stomp(_, spellID)
 	if db.stomp then
-		self:IfMessage(L["stomp_message"]:format(count), "Attention", spellID, "Long")
-		count = count + 1
-		self:Bar(L["stomp_bar"]:format(count), 21, spellID)
+		self:IfMessage(L["stomp_message"], "Attention", spellID, "Long")
+		self:Bar(L["stomp_bar"], 21, spellID)
 		self:DelayedMessage(16, L["stomp_warning"], "Attention")
 	end
 end

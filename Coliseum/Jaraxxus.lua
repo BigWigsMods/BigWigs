@@ -6,7 +6,6 @@ local boss = BB["Lord Jaraxxus"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe add to BabbleZone.
-mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = boss
 mod.guid = 34780
 mod.toggleoptions = {"incinerate", "legionflame", "icon", "netherportal", "netherpower", "infernaleruption", "bosskill"}

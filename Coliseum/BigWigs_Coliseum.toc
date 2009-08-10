@@ -19,7 +19,6 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-Menu: The Argent Coliseum
 ## X-BigWigs-LoadInZone: Trial of the Crusader
 
 ## Dependencies: BigWigs

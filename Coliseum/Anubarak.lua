@@ -5,7 +5,6 @@ local boss = BB["Anub'arak"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe add to BabbleZone.
-mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = boss
 mod.guid = 34564
 mod.toggleoptions = {"bosskill", "burrow", "pursue", "phase"}

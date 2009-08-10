@@ -8,7 +8,6 @@ local fjola = BB["Fjola Lightbane"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
-mod.otherMenu = "The Argent Coliseum"
 mod.enabletrigger = { edyis, fjola }
 mod.guid = 34496
 --34496 Darkbane
