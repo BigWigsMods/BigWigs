@@ -4,7 +4,7 @@
 ## Title-deDE: Big Wigs [|cffeda55fDas Argentumkollosseum|r]
 ## Title-koKR: Big Wigs [|cffeda55f십자군 원형경기장|r]
 ## Title-frFR: Big Wigs [|cffeda55fLe colisée d'Argent|r]
-## Title-zhCN: Big Wigs [|cffeda55fLe colisée d'Argent|r]
+## Title-zhCN: Big Wigs [|cffeda55fThe Argent Coliseum|r]
 ## Title-zhTW: Big Wigs [|cffeda55f銀白大競技場|r]
 ## Notes: Big Wigs Modules for The Argent Coliseum
 ## Notes-koKR: Big Wigs 십자군 원형경기장 경고

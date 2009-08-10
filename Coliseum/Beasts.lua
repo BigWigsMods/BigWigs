@@ -293,8 +293,8 @@ L:RegisterTranslations("deDE", function() return {
 	rage_message = "Schäumende Wut!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-	-- Gormok
---[[
+--[[	-- Gormok
+
 	impale = "Impale",
 	impale_desc = "当玩家中了2层或更多Impale时发出警报。",
 	impale_message = "%2$dx Impale：>%1$s<！",
@@ -308,10 +308,9 @@ L:RegisterTranslations("zhCN", function() return {
 	firebomb = "Fire Bomb",
 	firebomb_desc = "当你中了Fire Bomb时发出警报。",
 	firebomb_message = ">你< Fire Bomb！",
-]]
 
 	-- Jormungars
---[[
+
 	spew = "Acidic/Molten Spew",
 	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
 	acidic_message = "Acidic Spew！",
@@ -337,10 +336,9 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_message = "激怒！",
 
 	jormungars_dies = "%s死亡！",
-]]
 
 	-- Icehowl
---[[
+
 	butt = "Ferocious Butt",
 	butt_desc = "当施放Ferocious Butt时发出警报。",
 	butt_message = "Ferocious Butt：>%s<！",

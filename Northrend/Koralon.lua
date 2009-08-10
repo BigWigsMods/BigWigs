@@ -73,24 +73,24 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --[[
 	fists = "Meteor Fists",
-	fists_desc = "Warn when Koralon casts Meteor Fists.",
-	fists_message = "Meteor Fists Active!",
+	fists_desc = "当Koralon施放Meteor Fists时发出警报。",
+	fists_message = "Meteor Fists！",
 
 	cinder = "Cinder",
-	cinder_desc = "Warn when Koralon casts Flaming Cinder.",
-	cinder_message = "Flaming Cinder!",
+	cinder_desc = "当Koralon施放Flaming Cinder时发出警报。",
+	cinder_message = "Flaming Cinder！",
 ]]
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 --[[
-	fists = "Meteor Fists",
-	fists_desc = "Warn when Koralon casts Meteor Fists.",
-	fists_message = "Meteor Fists Active!",
+	fists = "隕石之拳",
+	fists_desc = "當寇拉隆施放隕石之拳時發出警報。",
+	fists_message = "隕石之拳！",
 
-	cinder = "Cinder",
-	cinder_desc = "Warn when Koralon casts Flaming Cinder.",
-	cinder_message = "Flaming Cinder!",
+	cinder = "燃焰餘燼",
+	cinder_desc = "當寇拉隆施放燃焰餘燼時發出警報。",
+	cinder_message = "燃焰餘燼！",
 ]]
 } end )
 
