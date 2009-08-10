@@ -16,7 +16,9 @@ mod.enabletrigger = gormok
 --mod.guid = 34796 -- Gormok
 --mod.guid = 34799--Dreadscale, 35144 = Acidmaw
 mod.guid = 34797 -- Icehowl
-mod.toggleoptions = {"stomp", "impale", "firebomb", -1, "slime", "spew", "toxin", "burn", "enrage", -1, "butt", "charge", "daze", "rage", "bosskill"}
+mod.toggleoptions = {"stomp", "impale", "firebomb", -1, "slime", "spew", "toxin", "burn", "enrage", "proximity", -1, "butt", "charge", "daze", "rage", "bosskill"}
+mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+mod.proximitySilent = true
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -464,6 +466,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Molten", 66821)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 66823)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 68335)
 
 	-- Icehowl
@@ -484,6 +487,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
+		self:TriggerEvent("BigWigs_HideProximity", self)
 		if db.berserk then
 			self:Enrage(900, true, true)
 		end
@@ -498,7 +502,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:Impale(player, spellID)
+function mod:Impale(player, spellId)
 	if db.impale then
 		local _, _, icon, stack = UnitDebuff(player, impale)
 		if stack and stack > 1 then
@@ -507,21 +511,21 @@ function mod:Impale(player, spellID)
 	end
 end
 
-function mod:Stomp(_, spellID)
+function mod:Stomp(_, spellId)
 	if db.stomp then
-		self:IfMessage(L["stomp_message"], "Attention", spellID, "Long")
-		self:Bar(L["stomp_bar"], 21, spellID)
+		self:IfMessage(L["stomp_message"], "Attention", spellId, "Long")
+		self:Bar(L["stomp_bar"], 21, spellId)
 		self:DelayedMessage(16, L["stomp_warning"], "Attention")
 	end
 end
 
 do
 	local last = nil
-	function mod:FireBomb(player, spellID)
+	function mod:FireBomb(player, spellId)
 		if player == pName and db.firebomb then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:LocalMessage(L["firebomb_message"], "Personal", spellID, last and nil or "Alarm")
+				self:LocalMessage(L["firebomb_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
 			end
 		end
@@ -532,21 +536,21 @@ end
 -- Jormungars
 --
 
-function mod:SlimeCast(_, spellID)
+function mod:SlimeCast(_, spellId)
 	if db.slime then
-		self:IfMessage(L["slime_warning"], "Attention", spellID)
+		self:IfMessage(L["slime_warning"], "Attention", spellId)
 	end
 end
 
-function mod:Molten(_, spellID)
+function mod:Molten(_, spellId)
 	if db.spew then
-		self:IfMessage(L["molten_message"], "Attention", spellID)
+		self:IfMessage(L["molten_message"], "Attention", spellId)
 	end
 end
 
-function mod:Acidic(_, spellID)
+function mod:Acidic(_, spellId)
 	if db.spew then
-		self:IfMessage(L["acidic_message"], "Attention", spellID)
+		self:IfMessage(L["acidic_message"], "Attention", spellId)
 	end
 end
 
@@ -554,12 +558,12 @@ local function toxinWarn()
 	mod:TargetMessage(L["toxin_other"], toxin, "Urgent", 64292, "Alert")
 end
 
-function mod:Toxin(player, spellID)
+function mod:Toxin(player, spellId)
 	if db.toxin then
 		toxin[#toxin + 1] = player
 		self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2)
 		if player == pName then
-			mod:LocalMessage(L["toxin_you"], "Positive", spellID, "Info")
+			mod:LocalMessage(L["toxin_you"], "Personal", spellId, "Info")
 		end
 	end
 end
@@ -568,19 +572,26 @@ local function burnWarn()
 	mod:TargetMessage(L["burn_other"], burn, "Urgent", 64292, "Alert")
 end
 
-function mod:Burn(player, spellID)
+function mod:Burn(player, spellId)
 	if db.burn then
 		burn[#burn + 1] = player
 		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2)
 		if player == pName then
-			mod:LocalMessage(L["burn_you"], "Positive", spellID, "Info")
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+			mod:LocalMessage(L["burn_you"], "Important", spellId, "Info")
 		end
 	end
 end
 
-function mod:Enraged(_, spellID)
+function mod:BurnRemoved(player, spellId)
+	if db.burn and player == pName then
+		self:TriggerEvent("BigWigs_HideProximity", self)
+	end
+end
+
+function mod:Enraged(_, spellId)
 	if db.enrage then
-		self:IfMessage(L["enrage_message"], "Attention", spellID, "Long")
+		self:IfMessage(L["enrage_message"], "Attention", spellId, "Long")
 	end
 end
 
@@ -588,24 +599,24 @@ end
 -- Icehowl
 --
 
-function mod:Rage(_, spellID)
+function mod:Rage(_, spellId)
 	if db.rage then
-		self:IfMessage(L["rage_message"], "Important", spellID)
-		self:Bar(L["rage"], 15, spellID)
+		self:IfMessage(L["rage_message"], "Important", spellId)
+		self:Bar(L["rage"], 15, spellId)
 	end
 end
 
-function mod:Daze(_, spellID)
+function mod:Daze(_, spellId)
 	if db.daze then
-		self:IfMessage(L["daze_message"], "Positive", spellID)
-		self:Bar(L["daze"], 15, spellID)
+		self:IfMessage(L["daze_message"], "Positive", spellId)
+		self:Bar(L["daze"], 15, spellId)
 	end
 end
 
-function mod:Butt(player, spellID)
+function mod:Butt(player, spellId)
 	if db.butt then
-		self:TargetMessage(L["butt_message"], player, "Attention", spellID)
-		self:Bar(L["butt_bar"], 12, spellID)
+		self:TargetMessage(L["butt_message"], player, "Attention", spellId)
+		self:Bar(L["butt_bar"], 12, spellId)
 	end
 end
 
