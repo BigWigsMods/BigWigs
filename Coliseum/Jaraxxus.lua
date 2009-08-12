@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	legionflame_bar = "~Next Flame",
 
 	icon = "Place Icon",
-	icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)",	
+	icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)",
 
 	netherportal = "Nether Portal",
 	netherportal_desc = "Warn for Nether Portal",
@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 	legionflame_bar = "~불꽃 군단 대기시간",
 
 	icon = "전술 표시",
-	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",	
+	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	netherportal = "황천의 차원문",
 	netherportal_desc = "황천의 차원문을 알립니다.",
@@ -90,6 +90,7 @@ L:RegisterTranslations("frFR", function() return {
 	incinerate_you = "Incinérer la chair sur VOUS !",
 	incinerate_other = "Incinérer la chair : %s",
 	incinerate_bar = "~Recharge Incinérer",
+	incinerate_safe = "%s est sauf !",
 
 	legionflame = "Flamme de la Légion",
 	legionflame_desc = "Warn for Legion Flame",
@@ -113,30 +114,30 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Ihr steht vor Jaraxxus",
-	
+
 	incinerate = "Fleisch einäschern",
 	incinerate_desc = "Warnt vor Fleisch einäschern.",
 	incinerate_you = "Fleisch einäschern auf DIR!",
 	incinerate_other = "Fleisch einäschern: %s",
 	incinerate_bar = "~Fleisch einäschern",
-	
+
 	legionflame = "Legionsflamme",
 	legionflame_desc = "Warnt vor Legionsflamme.",
 	legionflame_you = "Legionsflamme auf DIR!",
 	legionflame_other = "Legionsflamme auf: %s!",
 	legionflame_bar = "~Legionsflamme",
-	
+
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme. (benötigt Assistent oder höher).",
-	
+
 	netherportal = "Netherportal",
 	netherportal_desc = "Warnt vor Netherportal.",
 	netherportal_bar = "~Netherportal",
-	
+
 	netherpower = "Macht des Nether",
-	netherpower_desc = "Warnt vor Macht des Nether.",	
+	netherpower_desc = "Warnt vor Macht des Nether.",
 	netherpower_bar = "~Macht des Nether",
-	
+
 	infernaleruption = "Höllische Eruption",
 	infernaleruption_desc = "Warnt vor Höllische Eruption.",
 } end)
@@ -157,7 +158,7 @@ L:RegisterTranslations("zhCN", function() return {
 	legionflame_bar = "<Legion Flame 冷却>",
 
 	icon = "团队标记",
-	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",	
+	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",
 
 	netherportal = "Nether Portal",
 	netherportal_desc = "当施放Nether Portal时发出警报。",
@@ -187,7 +188,7 @@ L:RegisterTranslations("zhTW", function() return {
 	legionflame_bar = "<聚合烈焰 冷卻>",
 
 	icon = "團隊標記",
-	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",	
+	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",
 
 	netherportal = "虛空傳送門",
 	netherportal_desc = "當施放虛空傳送門時發出警報。",

@@ -225,7 +225,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	charge = "Charge furieuse",
 	charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse.",
-	charge_trigger = "^%%s", -- à traduire/vérifier
+	charge_trigger = "lâche un rugissement assourdissant !$",
 	charge_other = "Charge furieuse : %s",
 	charge_you = "Charge furieuse sur VOUS !",
 	charge_warning = "Piétiner imminent",
