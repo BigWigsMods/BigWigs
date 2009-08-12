@@ -239,6 +239,11 @@ L:RegisterTranslations("frFR", function() return {
 	rage_message = "Rage écumeuse !",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!",
+	jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!",
+	icehowl_trigger = "Mit der Ankündigung unseres nächsten Kämpfers gefriert die Luft selbst: Eisheuler! Tötet oder werdet getötet, Champions!",
+	boss_incoming = "%s kommt",-- should we really translate that??
+	
 	-- Gormok
 	impale = "Pfähler",
 	impale_desc = "Warnt, wenn jemand 2 oder mehr Stapel von Pfählen hat.",
