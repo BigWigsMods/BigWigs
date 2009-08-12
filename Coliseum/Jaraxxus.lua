@@ -5,7 +5,7 @@
 local boss = BB["Lord Jaraxxus"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Trial of the Crusader"]	--need the add name translated, maybe add to BabbleZone.
+mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34780
 mod.toggleoptions = {"incinerate", "legionflame", "icon", "netherportal", "netherpower", "infernaleruption", "bosskill"}
@@ -210,10 +210,10 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67051)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67051)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68125)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68128)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67108)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "NetherPortal", 67900)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "InfernalEruption", 67903)
