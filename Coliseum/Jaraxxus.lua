@@ -229,7 +229,7 @@ end
 function mod:IncinerateFlesh(player, spellID)
 	if db.incinerate then
 		if player == pName then
-			self:LocalMessage(L["incinerate_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["incinerate_you"], "Personal", spellID, "Info")
 			self:WideMessage(L["incinerate_other"]:format(player))
 		else
 			self:TargetMessage(L["incinerate_other"], player, "Important", spellID)
