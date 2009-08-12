@@ -214,7 +214,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67108)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
@@ -275,10 +275,15 @@ end
 function mod:NetherPower(_, spellID)
 	if db.netherpower then
 		self:IfMessage(L["netherpower"], "Attention", spellID)
-		self:Bar(L["netherpower_bar"], 40, spellID)
+		self:Bar(L["netherpower_bar"], 44, spellID)
 	end
 end
-
+--[[8/12 16:39:24.156  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67898,"Nether Portal",0x20
+8/12 16:40:23.968  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67901,"Infernal Eruption",0x4
+8/12 16:41:24.953  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67898,"Nether Portal",0x20
+8/12 16:42:23.984  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67901,"Infernal Eruption",0x4
+8/12 17:04:42.312  SPELL_CAST_SUCCESS,0xF1300087DC005643,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,66269,"Nether Portal",0x20
+8/12 17:05:41.734  SPELL_CAST_SUCCESS,0xF1300087DC005643,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,66258,"Infernal Eruption",0x4]]
 function mod:NetherPortal(_, spellID)
 	if db.netherportal then
 		self:IfMessage(L["netherportal"], "Urgent", spellID, "Alarm")
