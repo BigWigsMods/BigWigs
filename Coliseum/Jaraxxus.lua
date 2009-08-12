@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 	infernaleruption_desc = "지옥불정령 분출을 알립니다.",
 } end)
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Devant vous se tient Jaraxxus, seigneur érédar de la Légion ardente !", -- à vérifier
+	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !",
 
 	incinerate = "Incinérer la chair",
 	incinerate_desc = "Warn for Incinerate Flesh",

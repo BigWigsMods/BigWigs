@@ -83,8 +83,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	bosskill = "Défaite du boss",
 	bosskill_desc = "Prévient quand le boss est vaincu.",
-	enrage = "Frénésie",
-	enrage_desc = "Prévient quand le boss devient frénétique.",
+	enrage = "Enrager",
+	enrage_desc = "Prévient quand le boss devient enragé.",
 	berserk = "Berserk",
 	berserk_desc = "Prévient quand le boss devient fou furieux.",
 
