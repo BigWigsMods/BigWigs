@@ -132,7 +132,7 @@ L:RegisterTranslations("zhTW", function() return {
 	burrow_desc = "當阿努巴拉克鉆地時顯示計時條。",
 	burrow_emote = "FIXME",
 	burrow_message = "鑽地",
-	burrow_cooldown = "下一鉆地",
+	burrow_cooldown = "下一鑽地",
 
 	pursue = "追擊",
 	pursue_desc = "當玩家被阿努巴拉克追擊時發出警報。",
