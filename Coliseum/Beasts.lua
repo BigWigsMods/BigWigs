@@ -452,7 +452,6 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-
 	-- Gormok
 	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331)

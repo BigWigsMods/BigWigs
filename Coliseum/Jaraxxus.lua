@@ -28,26 +28,27 @@ L:RegisterTranslations("enUS", function() return {
 
 	incinerate = "Incinerate Flesh",
 	incinerate_desc = "Warn for Incinerate Flesh",
-	incinerate_you = "Incinerate Fles on You!",
-	incinerate_other = "Incinerate Flesh %s",
-	incinerate_bar = "~Incinerate Flash Cooldown",
+	incinerate_you = "Incinerate on YOU!",
+	incinerate_other = "Incinerate on %s",
+	incinerate_bar = "~Next Incinerate",
+	incinerate_safe = "%s is safe!",
 
 	legionflame = "Legion Flame",
 	legionflame_desc = "Warn for Legion Flame",
-	legionflame_you = "Legion Flame on You!",
-	legionflame_other = "Legion Flame on %s!",
-	legionflame_bar = "~Legion Flame Cooldown",
+	legionflame_you = "Flame on YOU!",
+	legionflame_other = "Flame on %s!",
+	legionflame_bar = "~Next Flame",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)",	
 
 	netherportal = "Nether Portal",
 	netherportal_desc = "Warn for Nether Portal",
-	netherportal_bar = "~Nether Portal Cooldown",
+	netherportal_bar = "~Next Portal",
 
 	netherpower = "Nether Power",
 	netherpower_desc = "Warn for Nether Power",
-	netherpower_bar = "~Nether Power Cooldown",
+	netherpower_bar = "~Next Nether Power",
 
 	infernaleruption = "Infernal Eruption",
 	infernaleruption_desc = "Warn for Infernal Eruption",
@@ -241,6 +242,7 @@ end
 
 function mod:IncinerateFleshRemoved(player, spellID)
 	if db.incinerate then
+		self:TargetMessage(L["incinerate_safe"], player, "Positive", 17) -- Power Word: Shield icon.
 		self:TriggerEvent("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 	end
 end
