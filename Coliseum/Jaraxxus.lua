@@ -24,7 +24,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jaraxxus",
 
-	engage_trigger = "text",
+	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
 
 	incinerate = "Incinerate Flesh",
 	incinerate_desc = "Warn for Incinerate Flesh",
@@ -120,6 +120,7 @@ L:RegisterTranslations("deDE", function() return {
 	incinerate_you = "Fleisch einäschern auf DIR!",
 	incinerate_other = "Fleisch einäschern: %s",
 	incinerate_bar = "~Fleisch einäschern",
+	incinerate_safe = "%s ist sicher!",
 
 	legionflame = "Legionsflamme",
 	legionflame_desc = "Warnt vor Legionsflamme.",
