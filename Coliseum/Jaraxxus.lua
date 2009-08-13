@@ -24,7 +24,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jaraxxus",
 
+	engage = "Engage",
 	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
+	engage_trigger1 = "Banished to the Nether",
 
 	incinerate = "Incinerate Flesh",
 	incinerate_desc = "Warn for Incinerate Flesh",
@@ -210,12 +212,12 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128)
-	--self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051, 66237)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125, 66197)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128, 66199)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108, 66228)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -272,10 +274,12 @@ function mod:RemoveLegionFlameIcon(player, spellID)
 	end
 end
 
-function mod:NetherPower(_, spellID)
+function mod:NetherPower(unit, spellID)
 	if db.netherpower then
-		self:IfMessage(L["netherpower"], "Attention", spellID)
-		self:Bar(L["netherpower_bar"], 44, spellID)
+		if unit == boss then
+			self:IfMessage(L["netherpower"], "Attention", spellID)
+			self:Bar(L["netherpower_bar"], 44, spellID)
+		end
 	end
 end
 --[[8/12 16:39:24.156  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67898,"Nether Portal",0x20
@@ -298,8 +302,14 @@ function mod:InfernalEruption(_, spellID)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["engage_trigger"]) then
-
+	if msg:find(L["engage_trigger1"]) then
+		self:Bar(L["engage"], 11, "INV_Gizmo_01")	
+		if db.netherportal then
+			self:Bar(L["netherportal_bar"], 30, 68404) -- engage+19
+		end
+		if db.infernaleruption then
+			self:Bar(L["infernaleruption"], 90, 66258) -- engage+79
+		end
 	end
 end
 
