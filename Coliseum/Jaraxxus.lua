@@ -275,19 +275,12 @@ function mod:RemoveLegionFlameIcon(player, spellID)
 end
 
 function mod:NetherPower(unit, spellID)
-	if db.netherpower then
-		if unit == boss then
-			self:IfMessage(L["netherpower"], "Attention", spellID)
-			self:Bar(L["netherpower_bar"], 44, spellID)
-		end
+	if unit == boss and db.netherpower then
+		self:IfMessage(L["netherpower"], "Attention", spellID)
+		self:Bar(L["netherpower_bar"], 44, spellID)
 	end
 end
---[[8/12 16:39:24.156  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67898,"Nether Portal",0x20
-8/12 16:40:23.968  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67901,"Infernal Eruption",0x4
-8/12 16:41:24.953  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67898,"Nether Portal",0x20
-8/12 16:42:23.984  SPELL_CAST_SUCCESS,0xF1300087DC004AD0,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,67901,"Infernal Eruption",0x4
-8/12 17:04:42.312  SPELL_CAST_SUCCESS,0xF1300087DC005643,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,66269,"Nether Portal",0x20
-8/12 17:05:41.734  SPELL_CAST_SUCCESS,0xF1300087DC005643,"Lord Jaraxxus",0x10a48,0x0000000000000000,nil,0x80000000,66258,"Infernal Eruption",0x4]]
+
 function mod:NetherPortal(_, spellID)
 	if db.netherportal then
 		self:IfMessage(L["netherportal"], "Urgent", spellID, "Alarm")
