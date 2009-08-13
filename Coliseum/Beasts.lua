@@ -392,7 +392,7 @@ L:RegisterTranslations("zhTW", function() return {
 	impale_message = "%2$dx 刺穿：>%1$s<！",
 
 	stomp = "驚恐踐踏",
-	stomp_desc = "當Gormok施放驚恐踐踏時發出警報。",
+	stomp_desc = "當『穿刺者』戈莫克施放驚恐踐踏時發出警報。",
 	stomp_message = "驚恐踐踏！",
 	stomp_warning = "5秒後，驚恐踐踏！",
 	stomp_bar = "<下一驚恐踐踏>",

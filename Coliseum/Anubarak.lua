@@ -129,7 +129,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_message = "第二階段！",
 
 	burrow = "鑽地",
-	burrow_desc = "當阿努巴拉克鉆地時顯示計時條。",
+	burrow_desc = "當阿努巴拉克鑽地時顯示計時條。",
 	burrow_emote = "FIXME",
 	burrow_message = "鑽地",
 	burrow_cooldown = "下一鑽地",
