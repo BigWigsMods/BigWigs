@@ -154,7 +154,7 @@ L:RegisterTranslations("zhCN", function() return {
 -]]
 } end)
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
+	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",	
 
 	vortex_or_shield_cd = "<漩渦/盾 冷卻>",
 

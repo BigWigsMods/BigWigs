@@ -122,7 +122,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage = "開戰",
---	engage_trigger = "This place will serve as your tomb!",
+	engage_trigger = "這裡將會是你們的墳墓!",
 
 	phase = "階段",
 	phase_desc = "當階段改變發出警報。",
