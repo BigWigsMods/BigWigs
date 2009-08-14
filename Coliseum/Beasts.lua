@@ -450,6 +450,74 @@ L:RegisterTranslations("zhTW", function() return {
 	rage_message = "泡沫之怒！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
+	jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
+	icehowl_trigger = "В воздухе повеяло ледяным дыханием следующего бойца: на арену выходит Ледяной Рев! Сражайтесь или погибните, чемпионы!",
+	boss_incoming = "На подходе %s",
+
+	-- Gormok
+	impale = "Impale",
+	impale_desc = "Warn when someone has 2 or more stacks of Impale.",
+	impale_message = "%2$dx Impale on %1$s",
+
+	stomp = "Staggering Stomp",
+	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
+	stomp_message = "Stomp!",
+	stomp_warning = "Stomp in 5sec!",
+	stomp_bar = "Next Stomp",
+
+	firebomb = "Fire Bomb",
+	firebomb_desc = "Warn when you are in a Fire Bomb.",
+	firebomb_message = "Fire Bomb on you!",
+
+	-- Jormungars
+	spew = "Кислотная/Жгучая рвота",
+	spew_desc = "Сообщать о Кислотной/Жгучей рвоте.",
+	acidic_message = "Кислотная рвота!",
+	molten_message = "Жгучая рвота!",
+
+	toxin = "Паралитический Токсин",
+	toxin_desc = "Сообщать на ком Паралитический Токсин.",
+	toxin_you = "Паралитический Токсин на ВАС!",
+	toxin_other = "Паралитический Токсин: %s",
+
+	burn = "Горящая желчь",
+	burn_desc = "Сообщать на ком Горящая желчь.",
+	burn_you = "Горящая желчь на ВАС!",
+	burn_other = "Горящая желчь: %s",
+
+	slime = "Лужа жижи",
+	slime_desc = "Сообщать о Луже жижи.",
+	--slime_message = "Slime Pool on you!",
+	slime_warning = "Лужа жижи!",
+
+	enrage = "Ярость",
+	enrage_desc = "Сообщать, когда червь впадет в ярость после гибели близнеца.",
+	enrage_message = "Ярость!",
+
+	jormungars_dies = "%s умер",
+
+	-- Icehowl
+	butt = "Свирепое бодание",
+	butt_desc = "Сообщать о Свирепое бодании.",
+	butt_message = "Свирепое бодание на |3-5(%s)!",
+	butt_bar = "~Свирепое бодание",
+	
+	--Furious Charge, Staggered Daze - судя по транскриптору у этих спеллов нет русского перевода :(
+	charge = "Furious Charge",
+	charge_desc = "Сообщать о Furious Charge.",
+	charge_trigger = "^%%s",	--check
+	charge_other = "Furious Charge: %s!",
+	charge_you = "Furious Charge на ВАС!",
+	charge_warning = "Скоро Могучее сокрушение",
+
+	daze = "Staggered Daze",
+	daze_desc = "Сообщать когда Ледяной Рев попадет под Staggered Daze.",
+	daze_message = "Staggered Daze!",
+	
+	rage = "Frothing Rage",
+	rage_desc = "Warn when Icehowl gains Frothing Rage.",
+	rage_message = "Frothing Rage!",
 } end)
 
 --------------------------------------------------------------------------------

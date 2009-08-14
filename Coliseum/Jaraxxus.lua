@@ -205,6 +205,37 @@ L:RegisterTranslations("zhTW", function() return {
 	infernaleruption_desc = "當施放煉獄爆發時發出警報。",
 } end)
 L:RegisterTranslations("ruRU", function() return {
+	engage = "Начало битвы",
+	
+	engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!",
+	engage_trigger1 = "Отправляйся в Пустоту!",
+
+	incinerate = "Испепеление плоти",
+	incinerate_desc = "Сообщать об Испепелении плоти",
+	incinerate_you = "Испепеление плоти на ВАС!",
+	incinerate_other = "Испепеление плоти на |3-5(%s)",
+	incinerate_bar = "~Следующее Испепеление",
+	incinerate_safe = "%s спасен!",
+
+	legionflame = "Пламя Легиона",
+	legionflame_desc = "Сообщать о Пламени Легиона",
+	legionflame_you = "Пламя Легиона на ВАС!",
+	legionflame_other = "Пламя Легиона на |3-5(%s)!",
+	legionflame_bar = "~Следующее Пламя",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать иконкой игрока с Пламенем Легиона. (Необходимо быть рейд лидером или иметь промоут)",
+
+	netherportal = "Врата Пустоты",
+	netherportal_desc = "Сообщать о Вратах Пустоты",
+	netherportal_bar = "~Следующие врата",
+
+	netherpower = "Сила Пустоты",
+	netherpower_desc = "Сообщать о Силе Пустоты",
+	netherpower_bar = "~Следующая Сила Пустоты",
+
+	infernaleruption = "Вулкан инферналов",
+	infernaleruption_desc = "Сообщать о Вулкане инферналов",
 } end)
 
 --------------------------------------------------------------------------------
@@ -295,13 +326,23 @@ function mod:InfernalEruption(_, spellID)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
+--if you wipe then you never get "engage_trigger1" message again, but always "engage_trigger" message before boss start attack. 
+--Correct me if i'm wrong
 	if msg:find(L["engage_trigger1"]) then
 		self:Bar(L["engage"], 11, "INV_Gizmo_01")	
-		if db.netherportal then
+		--[[if db.netherportal then
 			self:Bar(L["netherportal_bar"], 30, 68404) -- engage+19
 		end
 		if db.infernaleruption then
 			self:Bar(L["infernaleruption"], 90, 66258) -- engage+79
+		end]]
+	end
+	if msg:find(L["engage_trigger"]) then
+		if db.netherportal then
+			self:Bar(L["netherportal_bar"], 20, 68404) 
+		end
+		if db.infernaleruption then
+			self:Bar(L["infernaleruption"], 80, 66258) 
 		end
 	end
 end
