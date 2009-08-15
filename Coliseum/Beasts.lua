@@ -106,6 +106,11 @@ L:RegisterTranslations("enUS", function() return {
 	rage_message = "Frothing Rage!",
 } end)
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!",
+	jormungars_trigger = "마음을 굳게 하게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!",
+	icehowl_trigger = "소개하는 순간 공기마저 얼어붙게 하는 얼음울음이 다음 상대일세! 죽거나 죽이거나, 선택하게 용사들이여!",
+	boss_incoming = "%s 곧 등장",
+	
 	-- Gormok
 	impale = "꿰뚫기",
 	impale_desc = "꿰뚫기 중첩이 2이상이 된 플레이어를 알립니다.",

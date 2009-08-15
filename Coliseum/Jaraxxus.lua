@@ -56,20 +56,23 @@ L:RegisterTranslations("enUS", function() return {
 	infernaleruption_desc = "Warn for Infernal Eruption",
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "불타는 군단의 에레다르 군주 자라서스님이 상대해주마",	--check
+	engage = "전투 시작",
+	engage_trigger = "불타는 군단의 에레다르 군주 자라서스 님이 상대해주마!",
+	engage_trigger1 = "황천으로",	--check
 
 	incinerate = "살점 소각",
 	incinerate_desc = "살점 소각을 알립니다.",
 	incinerate_you = "당신은 살점 소각!",
 	incinerate_other = "살점 소각: %s",
 	incinerate_bar = "~살점 소각 대기시간",
+	incinerate_safe = "%s 안전함!",
 
 	legionflame = "불꽃 군단",
 	legionflame_desc = "불꽃 군단을 알립니다.",
 	legionflame_you = "당신은 불꽃 군단!",
 	legionflame_other = "불꽃 군단: %s!",
 	legionflame_bar = "~불꽃 군단 대기시간",
-
+	
 	icon = "전술 표시",
 	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 

@@ -67,7 +67,7 @@ L:RegisterTranslations("koKR", function() return {
 	shield_light = "빛의 방패!",	
 	shield_darkness = "어둠의 방패!",
 
-	--vortex_same_message = "Vortex", -- If the player has the same affliction, we don't need to say anything really
+	--vortex_same_message = "소용돌이", -- If the player has the same affliction, we don't need to say anything really
 	vortex_light_message = "빛의 소용돌이!",
 	vortex_dark_message = "어둠의 소용돌이!",
 
