@@ -455,25 +455,25 @@ L:RegisterTranslations("zhTW", function() return {
 	rage_message = "泡沫之怒！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
-	engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
-	jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
+	engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!",
+	jormungars_trigger = "Приготовьтесь к схватке с близнецами-чудовищами, Кислотной Утробой и Жуткой Чешуей!",
 	icehowl_trigger = "В воздухе повеяло ледяным дыханием следующего бойца: на арену выходит Ледяной Рев! Сражайтесь или погибните, чемпионы!",
 	boss_incoming = "На подходе %s",
 
 	-- Gormok
-	impale = "Impale",
-	impale_desc = "Warn when someone has 2 or more stacks of Impale.",
-	impale_message = "%2$dx Impale on %1$s",
+	impale = "Прокалывание",
+	impale_desc = "Сообщать, когда у танка 2 или более стаков Прокалывания.",
+	impale_message = "%2$dx Прокалывания на %1$s",
 
-	stomp = "Staggering Stomp",
-	stomp_desc = "Warn when Gormok casts Staggering Stomp.",
-	stomp_message = "Stomp!",
-	stomp_warning = "Stomp in 5sec!",
-	stomp_bar = "Next Stomp",
+	stomp = "Сотрясающий топот",
+	stomp_desc = "Сообщать, когда Гормок использует Сотрясающий топот.",
+	stomp_message = "ТОПОТ!",
+	stomp_warning = "Топот через 5 сек!",
+	stomp_bar = "Следующий топот",
 
-	firebomb = "Fire Bomb",
-	firebomb_desc = "Warn when you are in a Fire Bomb.",
-	firebomb_message = "Fire Bomb on you!",
+	firebomb = "Огненная бомба",
+	firebomb_desc = "Сообщать, когда Огненная бомба на вас.",
+	firebomb_message = "Огненная бомба на ВАС!",
 
 	-- Jormungars
 	spew = "Кислотная/Жгучая рвота",
@@ -508,7 +508,7 @@ L:RegisterTranslations("ruRU", function() return {
 	butt_message = "Свирепое бодание на |3-5(%s)!",
 	butt_bar = "~Свирепое бодание",
 	
-	--Furious Charge, Staggered Daze - судя по транскриптору у этих спеллов нет русского перевода :(
+	--Furious Charge - судя по транскриптору нет русского перевода :(
 	charge = "Furious Charge",
 	charge_desc = "Сообщать о Furious Charge.",
 	charge_trigger = "^%%s",	--check
@@ -516,13 +516,13 @@ L:RegisterTranslations("ruRU", function() return {
 	charge_you = "Furious Charge на ВАС!",
 	charge_warning = "Скоро Могучее сокрушение",
 
-	daze = "Staggered Daze",
-	daze_desc = "Сообщать когда Ледяной Рев попадет под Staggered Daze.",
-	daze_message = "Staggered Daze!",
+	daze = "Глубокое потрясение",
+	daze_desc = "Сообщать, когда Ледяной Рев впадет в Глубокое потрясение.",
+	daze_message = "Глубокое потрясение!",
 	
-	rage = "Frothing Rage",
-	rage_desc = "Warn when Icehowl gains Frothing Rage.",
-	rage_message = "Frothing Rage!",
+	rage = "Бурлящая ярость",
+	rage_desc = "Сообщать, когда Ледяной Рев впадет в Бурлящую ярость.",
+	rage_message = "Бурлящая ярость!",
 } end)
 
 --------------------------------------------------------------------------------
