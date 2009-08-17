@@ -311,6 +311,7 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 local function updateSoundButton()
+	if not anchor then return end
 	anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
 end
 local function toggleSound()
@@ -505,7 +506,7 @@ function plugin:OpenProximity()
 	wipe(tooClose)
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 
-	if not active or active.proximitySilent then
+	if active and active.proximitySilent then
 		anchor.sound:Hide()
 	else
 		anchor.sound:Show()
@@ -549,12 +550,11 @@ function plugin:UpdateProximity()
 	else
 		anchor.text:SetText(table.concat(tooClose, "\n"))
 		wipe(tooClose)
+		if not self.db.profile.sound or (active and active.proximitySilent) then return end
 		local t = time()
 		if t > lastplayed + 1 then
 			lastplayed = t
-			if active and self.db.profile.sound and UnitAffectingCombat("player") and not active.proximitySilent then
-				self:TriggerEvent("BigWigs_Sound", "Alarm")
-			end
+			self:TriggerEvent("BigWigs_Sound", "Alarm")
 		end
 	end
 end
@@ -596,7 +596,6 @@ function lockDisplay()
 	anchor:SetScript("OnDragStop", nil)
 	anchor:SetScript("OnMouseDown", nil)
 	anchor.drag:Hide()
-	anchor.header:Hide()
 	anchor.close:Hide()
 	anchor.sound:Hide()
 	locked = true
@@ -612,9 +611,12 @@ function unlockDisplay()
 	anchor:SetScript("OnDragStop", onDragStop)
 	anchor:SetScript("OnMouseDown", displayOnMouseDown)
 	anchor.drag:Show()
-	anchor.header:Show()
 	anchor.close:Show()
-	anchor.sound:Show()
+	if not active or not active.proximitySilent then
+		anchor.sound:Show()
+	else
+		anchor.sound:Hide()
+	end
 	locked = nil
 end
 
@@ -671,7 +673,7 @@ function plugin:SetupFrames()
 
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
-	header:SetText(L["Proximity"])
+	header:SetText(L["Close Players"])
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 	display.header = header
 
@@ -717,13 +719,6 @@ end
 
 function plugin:RestyleWindow()
 	if not anchor then return end
-	if self.db.profile.lock then
-		locked = nil
-		lockDisplay()
-	else
-		locked = true
-		unlockDisplay()
-	end
 	if self.db.profile.title then
 		anchor.header:Show()
 	else
@@ -735,6 +730,13 @@ function plugin:RestyleWindow()
 		anchor.background:Hide()
 	end
 	updateSoundButton()
+	if self.db.profile.lock then
+		locked = nil
+		lockDisplay()
+	else
+		locked = true
+		unlockDisplay()
+	end
 end
 
 function plugin:ResetAnchor()
