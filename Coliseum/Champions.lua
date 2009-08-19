@@ -47,10 +47,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Polymorph", 65801)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Wyvern", 65877)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DivineShield", 66010)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bladestorm", 65946)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bladestorm", 65947)
 	self:AddCombatListener("SPELL_SUMMON", "Felhunter", 67514)
 	self:AddCombatListener("SPELL_SUMMON", "Cat", 67777)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Heroism", 65983)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	db = self.db.profile
@@ -90,6 +91,10 @@ end
 
 function mod:Heroism(player, spellId)
 	self:IfMessage("Heroism on champions!", "Important", spellId)
+end
+
+function mod:Bloodlust(player, spellId)
+	self:IfMessage("Bloodlust on champions!", "Important", spellId)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
