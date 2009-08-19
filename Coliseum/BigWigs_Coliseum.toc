@@ -28,6 +28,7 @@
 Beta.lua
 Beasts.lua
 Jaraxxus.lua
+Champions.lua
 ValkyrTwins.lua
 Anubarak.lua
 
