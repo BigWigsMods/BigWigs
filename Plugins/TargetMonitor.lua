@@ -9,7 +9,7 @@ if not plugin then return end
 --      Are you local?      --
 ------------------------------
 
-local enablezones, enablemobs = {}, {}
+local enablezones, enablemobs, enableyells = {}, {}, {}
 local monitoring = nil
 
 ------------------------------
@@ -40,11 +40,13 @@ function plugin:RegisterZone(zone)
 end
 function plugin:RegisterMob(mod)
 	local mob = mod.enabletrigger
-	if type(mob) == "string" then enablemobs[mob] = mod
+	if type(mob) == "function" then enableyells[mob] = mod
+	elseif type(mob) == "string" then enablemobs[mob] = mod
 	else for i,m in next, mob do enablemobs[m] = mod end end
 end
 function plugin:UnregisterMob(mob)
-	if type(mob) == "string" then enablemobs[mob] = nil
+	if type(mob) == "function" then enableyells[mob] = nil
+	elseif type(mob) == "string" then enablemobs[mob] = nil
 	else for i,m in next, mob do enablemobs[m] = nil end end
 end
 
@@ -76,11 +78,13 @@ function plugin:ZoneChanged()
 	if enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()] then
 		if not monitoring then
 			monitoring = true
+			self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 			self:RegisterEvent("PLAYER_TARGET_CHANGED")
 			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 		end
 	elseif monitoring then
 		monitoring = nil
+		self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 		self:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 	end
@@ -92,6 +96,14 @@ local function targetCheck(unit)
 	plugin:TriggerEvent("BigWigs_TargetSeen", n, unit, enablemobs[n].name)
 end
 
+function plugin:CHAT_MSG_MONSTER_YELL(msg, source)
+	for func, mod in pairs(enableyells) do
+		local yell = func()
+		if yell == msg then
+			self:TriggerEvent("BigWigs_TargetSeen", source, "player", mod.name)
+		end
+	end
+end
 function plugin:UPDATE_MOUSEOVER_UNIT() targetCheck("mouseover") end
 function plugin:PLAYER_TARGET_CHANGED() targetCheck("target") end
 
