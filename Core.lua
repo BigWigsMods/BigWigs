@@ -45,6 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Advanced"] = true,
 	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = true,
 
+	["Toggles whether or not the boss module should warn about %s."] = true,
 	bosskill = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
 	enrage = "Enrage",
@@ -487,7 +488,7 @@ do
 		if module:IsBossModule() then
 			self:ToggleModuleActive(module, false)
 			for i,v in ipairs(module.toggleoptions) do
-				if type(v) == "string" then
+				if type(v) == "string" or (type(v) == "number" and v > 0) then
 					opts[v] = true
 				end
 			end
@@ -545,13 +546,23 @@ do
 				local customBossOptionOrder = -100
 				for i, v in ipairs(module.toggleoptions) do
 					local x = i + 100
-					if type(v) == "number" then
+					local t = type(v)
+					if t == "number" and v < 0 then
 						cons.args[i] = {
 							type = "header",
 							order = x,
 							name = " ",
 						}
-					elseif type(v) == "string" then
+					elseif t == "number" and v > 0 then
+						local spellName = GetSpellInfo(v)
+						if not spellName then error(("Invalid option %d in module %s."):format(v, name)) end
+						cons.args[v] = {
+							type = "toggle",
+							order = x,
+							name = spellName,
+							desc = L["Toggles whether or not the boss module should warn about %s."]:format(spellName),
+						}
+					elseif t == "string" then
 						local optName, optDesc, optOrder
 						if customBossOptions[v] then
 							optName = customBossOptions[v][1]
