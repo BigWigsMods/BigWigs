@@ -56,6 +56,7 @@
 <Script file="Coliseum\Beta.lua"/>
 <Script file="Coliseum\Beasts.lua"/>
 <Script file="Coliseum\Jaraxxus.lua"/>
+<Script file="Coliseum\Champions.lua"/>
 <Script file="Coliseum\ValkyrTwins.lua"/>
 <Script file="Coliseum\Anubarak.lua"/>
 
