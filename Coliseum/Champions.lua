@@ -5,13 +5,7 @@ local boss = "Faction Champions" -- Not in babble boss yet.
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
-mod.toggleoptions = {"bosskill"}
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local db
+mod.toggleoptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,7 +48,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 --------------------------------------------------------------------------------
