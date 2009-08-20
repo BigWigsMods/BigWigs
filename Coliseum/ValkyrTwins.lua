@@ -55,7 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 	touch_of_dark_on_other = "Touch of Darkness on %s",
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "어둠의 주인님을 받들어",	--check
+	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여.",	--check
 
 	vortex_or_shield_cd = "소용돌이/방패 대기시간",
 
