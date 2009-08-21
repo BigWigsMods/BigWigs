@@ -163,7 +163,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	startwarn = "洛斯伯已進入戰鬥 - 2分鐘後，無可避免的末日！",
+	startwarn = "憎恨者已進入戰鬥 - 2分鐘後，無可避免的末日！",
 
 	aura = "亡域光環",
 	aura_desc = "當施放亡域光環時發出警報。",
