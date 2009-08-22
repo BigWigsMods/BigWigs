@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
-mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "berserk", "icon", "bosskill"}
+mod.toggleoptions = {"hardmode", -1, "cold", 65123, 61968, 62478, "berserk", "icon", "bosskill"}
 mod.consoleCmd = "Hodir"
 
 ------------------------------
@@ -35,23 +35,13 @@ L:RegisterTranslations("enUS", function() return {
 	cold_desc = "Warn when you have 2 or more stacks of Biting Cold.",
 	cold_message = "Biting Cold x%d!",
 
-	flash = "Flash Freeze",
-	flash_desc = "Tells you who has been hit by Flash Freeze and when the Flash Freeze is casting.",
 	flash_message = "Frozen: %s!",
 	flash_warning = "Freeze!",
 	flash_soon = "Freeze in 5sec!",
-	flash_bar = "Flash",
 
-	frozenblow = "Frozen Blows",
-	frozenblow_desc = "Warn when Hodir gains Frozen Blows.",
-	frozenblow_message = "Frozen Blows!",
-	frozenblow_bar = "Frozen Blows",
+	hardmode = "Hard mode",
+	hardmode_desc = "Show timer for hard mode.",
 
-	hardmode = "Hard Mode",
-	hardmode_desc = "Show timer for Hard Mode.",
-
-	cloud = "Storm Cloud",
-	cloud_desc = "Shows who gets Storm Cloud.",
 	cloud_you = "Cloud on you!",
 	cloud_other = "Cloud on %s!",
 
@@ -68,23 +58,13 @@ L:RegisterTranslations("koKR", function() return {
 	cold_desc = "매서운 추위 2중첩이상을 알립니다.",
 	cold_message = "매서운 추위 x%d - 이동!",
 
-	flash = "순간 빙결",
-	flash_desc = "순간 빙결 시전과 순간 빙결에 걸린 플레이어를 알립니다.",
 	flash_message = "순간 빙결: %s!",
 	flash_warning = "순간 빙결 시전!",
 	flash_soon = "5초 후 순간 빙결",
-	flash_bar = "다음 순간 빙결",
-
-	frozenblow = "얼음 일격",
-	frozenblow_desc = "호디르의 얼음 일격 획득을 알립니다.",
-	frozenblow_message = "호디르 얼음 일격!",
-	frozenblow_bar = "얼음 일격",
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 
-	cloud = "폭풍 구름",
-	cloud_desc = "폭풍 구름을 얻은 플레이어를 알립니다.",
 	cloud_you = "당신은 폭풍 구름",
 	cloud_other = "%s: 폭풍 구름 획득",
 
@@ -101,23 +81,13 @@ L:RegisterTranslations("frFR", function() return {
 	cold_desc = "Prévient quand Froid mordant s'est empilé 2 fois sur votre personnage.",
 	cold_message = "Froid mordant x%d !",
 
-	flash = "Gel instantané",
-	flash_desc = "Prévient quand un joueur subit les effets d'un Gel instantané et quand le Gel instantané est incanté.",
 	flash_message = "Gelé(s) : %s",
 	flash_warning = "Gel instantané en incantation !",
 	flash_soon = "Gel instantané dans 5 sec. !",
-	flash_bar = "Prochain Gel",
-
-	frozenblow = "Coups gelés",
-	frozenblow_desc = "Prévient quand Hodir gagne Coups gelés.",
-	frozenblow_message = "Coups gelés !",
-	frozenblow_bar = "Coups gelés",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 min pour le mode difficile (délai avant qu'Hodir ne détruise sa cache rare).",
 
-	cloud = "Nuage d'orage",
-	cloud_desc = "Prévient quand un joueur subit les effets d'un Nuage d'orage.",
 	cloud_you = "Nuage d'orage sur VOUS !",
 	cloud_other = "Nuage : %s",
 
@@ -134,23 +104,13 @@ L:RegisterTranslations("deDE", function() return {
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
 	cold_message = "Beißende Kälte x%d!",
 
-	flash = "Blitzeis",
-	flash_desc = "Warnt, wenn Blitzeis gewirkt wird und wer davon betroffen ist.",
 	flash_message = "Blitzeis: %s!",
 	flash_warning = "Blitzeis!",
 	flash_soon = "Blitzeis in 5 sek!",
-	flash_bar = "Blitzeis",
-
-	frozenblow = "Gefrorene Schläge",
-	frozenblow_desc = "Warnt, wenn Hodir Gefrorene Schläge bekommt.",
-	frozenblow_message = "Gefrorene Schläge!",
-	frozenblow_bar = "Gefrorene Schläge",
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
 
-	cloud = "Sturmwolke",
-	cloud_desc = "Warnt, wer von Sturmwolke betroffen ist.",
 	cloud_you = "Sturmwolke auf DIR!",
 	cloud_other = "Sturmwolke: %s!",
 
@@ -167,23 +127,13 @@ L:RegisterTranslations("zhCN", function() return {
 	cold_desc = "当你受到2层刺骨之寒效果时发出警报。",
 	cold_message = "刺骨之寒（%d层） - 移动！",
 
-	flash = "急速冻结",
-	flash_desc = "当正在施放急速冻结和玩家中了急速冻结时发出警报。",
 	flash_message = "急速冻结：>%s<！",
 	flash_warning = "急速冻结！",
 	flash_soon = "5秒后，急速冻结！",
-	flash_bar = "<急速冻结>",
-
-	frozenblow = "冰冻重击",
-	frozenblow_desc = "当霍迪尔获得冰冻重击效果时发出警报。",
-	frozenblow_message = "冰冻重击！",
-	frozenblow_bar = "<冰冻重击>",
 
 	hardmode = "困难模式计时器",
 	hardmode_desc = "显示困难模式计时器。",
 
-	cloud = "风暴雷云",
-	cloud_desc = "当玩家中了风暴雷云时发出警报。",
 	cloud_you = ">你< 风暴雷云！",
 	cloud_other = "风暴雷云：>%s<！",
 
@@ -200,23 +150,13 @@ L:RegisterTranslations("zhTW", function() return {
 	cold_desc = "當你受到2層刺骨之寒效果時發出警報。",
 	cold_message = "刺骨之寒（%d層） - 移動！",
 
-	flash = "閃霜",
-	flash_desc = "當正在施放閃霜和玩家中了閃霜時發出警報。",
 	flash_message = "閃霜：>%s<！",
 	flash_warning = "閃霜！",
 	flash_soon = "5秒後，閃霜！",
-	flash_bar = "<閃霜>",
-
-	frozenblow = "冰凍痛擊",
-	frozenblow_desc = "當霍迪爾獲得冰凍痛擊效果時發出警報。",
-	frozenblow_message = "冰凍痛擊！",
-	frozenblow_bar = "<冰凍痛擊>",
 
 	hardmode = "困難模式計時器",
 	hardmode_desc = "顯示困難模式計時器。",
 
-	cloud = "風暴雷雲",
-	cloud_desc = "當玩家中了風暴雷雲時發出警報。",
 	cloud_you = ">你< 風暴雷雲！",
 	cloud_other = "風暴雷雲：>%s<！",
 
@@ -233,23 +173,13 @@ L:RegisterTranslations("ruRU", function() return {
 	cold_desc = "Сообщать когда на вас наложено 2 эффекта Трескучего мороза",
 	cold_message = "Трескучий мороз x%d!",
 
-	flash = "Мгновенная заморозка",
-	flash_desc = "Сообщает кто подвергся мгновенной заморозке и когда она применяется.",
 	flash_message = "Заморожены: %s!",
 	flash_warning = "Применение мгновенной заморозки!",
 	flash_soon = "Заморозка через 5сек!",
-	flash_bar = "~заморозка",
-
-	frozenblow = "Ледяные дуновения",
-	frozenblow_desc = "Сообщать когда Ходир накладывает на себя Ледяные дуновения.",
-	frozenblow_message = "Ледяные дуновения!",
-	frozenblow_bar = "Ледяные дуновения",
 
 	hardmode = "Сложный режим",
 	hardmode_desc = "Отображать таймер сложного режима.",
 
-	cloud = "Грозовая туча",
-	cloud_desc = "Отображает кто получает эффект Грозовой тучи.",
 	cloud_you = "Грозовая туча на ВАС",
 	cloud_other = "%s под Грозовой тучей!",
 
@@ -283,26 +213,22 @@ end
 ------------------------------
 
 function mod:Cloud(player, spellId)
-	if db.cloud then
-		if player == pName then
-			self:LocalMessage(L["cloud_you"], "Positive", spellId, "Info")
-			self:WideMessage(L["cloud_other"]:format(player))
-		else
-			self:TargetMessage(L["cloud_other"], player, "Positive", spellId)
-			self:Whisper(player, L["cloud_you"])
-		end
-		self:Bar(L["cloud_other"]:format(player), 30, spellId)
-		self:Icon(player, "icon")
+	if player == pName then
+		self:LocalMessage(L["cloud_you"], "Positive", spellId, "Info")
+		self:WideMessage(L["cloud_other"]:format(player))
+	else
+		self:TargetMessage(L["cloud_other"], player, "Positive", spellId)
+		self:Whisper(player, L["cloud_you"])
 	end
+	self:Bar(L["cloud_other"]:format(player), 30, spellId)
+	self:Icon(player, "icon")
 end
 
-function mod:FlashCast(_, spellId)
-	if db.flash then
-		self:IfMessage(L["flash_warning"], "Attention", spellId)
-		self:Bar(L["flash"], 9, spellId)
-		self:Bar(L["flash_bar"], 35, spellId)
-		self:DelayedMessage(30, L["flash_soon"], "Attention")
-	end
+function mod:FlashCast(_, spellId, _, _, spellName)
+	self:IfMessage(L["flash_warning"], "Attention", spellId)
+	self:Bar(spellName, 9, spellId)
+	self:Bar(spellName, 35, spellId)
+	self:DelayedMessage(30, L["flash_soon"], "Attention")
 end
 
 local function flashWarn()
@@ -310,25 +236,23 @@ local function flashWarn()
 end
 
 function mod:Flash(player)
-	if UnitInRaid(player) and db.flash then
+	if UnitInRaid(player) then
 		flashFreezed[#flashFreezed + 1] = player
 		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5)
 	end
 end
 
-function mod:Frozen(_, spellId)
-	if db.frozenblow then
-		self:IfMessage(L["frozenblow_message"], "Important", spellId)
-		self:Bar(L["frozenblow_bar"], 20, spellId)
-	end
+function mod:Frozen(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(spellName, 20, spellId)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		lastCold = nil
-		if db.flash then
+		--if db.flash then
 			self:Bar(L["flash_bar"], 35, 61968)
-		end
+		--end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 180, 6673)
 		end

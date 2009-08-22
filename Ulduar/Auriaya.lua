@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33515
 --Feral Defender = 34035
-mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "berserk", "bosskill"}
+mod.toggleoptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskill"}
 mod.consoleCmd = "Auriaya"
 
 ------------------------------
@@ -29,18 +29,10 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	fear = "Terrifying Screech",
-	fear_desc = "Warn when Auriaya casts AoE fear.",
 	fear_warning = "Fear soon!",
 	fear_message = "Casting Fear!",
 	fear_bar = "~Fear",
 
-	sentinel = "Sentinel Blast",
-	sentinel_desc = "Warn when Auriaya casts a Sentinel Blast.",
-	sentinel_message = "Sentinel Blast!",
-
-	swarm = "Guardian Swarm",
-	swarm_desc = "Warn who Auriaya casts the Guardian Swarm on.",
 	swarm_other = "Swarm on %s!",
 	swarm_you = "Swarm on YOU!",
 	swarm_bar = "~Swarm",
@@ -49,25 +41,14 @@ L:RegisterTranslations("enUS", function() return {
 	defender_desc = "Warn for Feral Defender lives.",
 	defender_message = "Defender up %d/9!",
 
-	sonic = "Sonic Screech",
-	sonic_desc = "Warn when Auriaya casts a Sonic Screech.",
-	sonic_message = "Sonic Screech!",
 	sonic_bar = "~Sonic",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	fear = "공포의 비명소리",
-	fear_desc = "공포의 비명소리에 대해 알립니다.",
 	fear_warning = "곧 공포!",
 	fear_message = "공포 시전!",
 	fear_bar = "~공포 대기시간",
 
-	sentinel = "파수꾼 폭발",
-	sentinel_desc = "아우리아야의 파수꾼 폭발 시전을 알립니다.",
-	sentinel_message = "파수꾼 폭발!",
-
-	swarm = "무리 수호자",
-	swarm_desc = "무리 수호자 시전 대상을 알립니다.",
 	swarm_other = "무리 수호자: %s!",
 	swarm_you = "당신은 무리 수호자!",
 	swarm_bar = "~무리 대기시간",
@@ -76,25 +57,14 @@ L:RegisterTranslations("koKR", function() return {
 	defender_desc = "수호 야수의 남은 생명 횟수를 알립니다.",
 	defender_message = "수호 야수 (생명: %d/9)!",
 
-	sonic = "음파의 비명소리",
-	sonic_desc = "아우리아야의 음파의 비명소리 시전을 알립니다.",
-	sonic_message = "음파 시전!",
 	sonic_bar = "~음파 대기시간",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	fear = "Hurlement terrifiant",
-	fear_desc = "Prévient de l'arrivée des Hurlements terrifiants.",
 	fear_warning = "Hurlement terrifiant imminent !",
 	fear_message = "Hurlement terrifiant en incantation !",
 	fear_bar = "~H. terrifiant",
 
-	sentinel = "Déflagration du factionnaire",
-	sentinel_desc = "Prévient quand Auriaya incante une Déflagration du factionnaire.",
-	sentinel_message = "Déflagration du factionnaire !",
-
-	swarm = "Essaim gardien",
-	swarm_desc = "Prévient sur qui Auriaya incante un Essaim gardien.",
 	swarm_other = "Essaim : %s",
 	swarm_you = "Essaim gardien sur VOUS !",
 	swarm_bar = "~Essaim",
@@ -103,25 +73,14 @@ L:RegisterTranslations("frFR", function() return {
 	defender_desc = "Prévient quand le Défenseur farouche apparaît et quand il perd une vie.",
 	defender_message = "Défenseur actif %d/9 !",
 
-	sonic = "Hurlement sonore",
-	sonic_desc = "Prévient quand Auriaya incante un Hurlement sonore.",
-	sonic_message = "Hurlement sonore en incantation !",
 	sonic_bar = "~H. sonore",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	fear = "Schreckliches Kreischen",
-	fear_desc = "Warnungen und Timer für Schreckliches Kreischen.",
 	fear_warning = "Furcht bald!",
 	fear_message = "Furcht!",
 	fear_bar = "~Furcht",
 
-	sentinel = "Schildwachenschlag",
-	sentinel_desc = "Warnt, wenn Auriaya Schildwachenschlag wirkt.",
-	sentinel_message = "Schildwachenschlag!",
-
-	swarm = "Wächterschwarm",
-	swarm_desc = "Timer für Wächterschwarm und warnt, wer davon betroffen ist.",
 	swarm_other = "Wächterschwarm: %s!",
 	swarm_you = "Wächterschwarm auf DIR!",
 	swarm_bar = "~Wächterschwarm",
@@ -130,25 +89,14 @@ L:RegisterTranslations("deDE", function() return {
 	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
 	defender_message = "Verteidiger da %d/9!",
 
-	sonic = "Überschallkreischen",
-	sonic_desc = "Warnung und Timer für Auriayas Überschallkreischen.",
-	sonic_message = "Überschallkreischen!",
 	sonic_bar = "~Überschallkreischen",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	fear = "惊骇尖啸",
-	fear_desc = "当施放惊骇尖啸时发出警报。",
 	fear_warning = "即将 惊骇尖啸！",
 	fear_message = "正在施放 惊骇尖啸！",
 	fear_bar = "<惊骇尖啸 冷却>",
 
-	sentinel = "警戒冲击",
-	sentinel_desc = "当欧尔莉亚施放警戒冲击时发出警报。",
-	sentinel_message = "警戒冲击！",
-
-	swarm = "守护虫群",
-	swarm_desc = "当欧尔莉亚施放守护虫群时发出警报。",
 	swarm_other = "守护虫群：>%s<！",
 	swarm_you = ">你< 守护虫群！",
 	swarm_bar = "<守护虫群 冷却>",
@@ -157,25 +105,14 @@ L:RegisterTranslations("zhCN", function() return {
 	defender_desc = "当野性防御者出现时发出警报。",
 	defender_message = "野性防御者（%d/9）！",
 
-	sonic = "音速尖啸",
-	sonic_desc = "当欧尔莉亚施放音速尖啸时发出警报。",
-	sonic_message = "音速尖啸！",
 	sonic_bar = "<音速尖啸>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	fear = "恐嚇尖嘯",
-	fear_desc = "當施放恐嚇尖嘯時發出警報。",
 	fear_warning = "即將 恐嚇尖嘯！",
 	fear_message = "正在施放 恐嚇尖嘯！",
 	fear_bar = "<恐嚇尖嘯 冷卻>",
 
-	sentinel = "哨兵衝擊",
-	sentinel_desc = "當奧芮雅施放哨兵沖擊時發出警報。",
-	sentinel_message = "哨兵沖擊！",
-
-	swarm = "守護貓群",
-	swarm_desc = "當奧芮雅施放守護貓群時發出警報。",
 	swarm_other = "守護貓群：>%s<！",
 	swarm_you = ">你< 守護貓群！",
 	swarm_bar = "<守護貓群 冷卻>",
@@ -184,25 +121,14 @@ L:RegisterTranslations("zhTW", function() return {
 	defender_desc = "當野性防衛者出現時發出警報。",
 	defender_message = "野性防衛者（%d/9）！",
 
-	sonic = "音速尖嘯",
-	sonic_desc = "當奧芮雅施放音速尖嘯時發出警報。",
-	sonic_message = "音速尖嘯！",
 	sonic_bar = "<音速尖嘯>",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	fear = "Ужасающий вопль",
-	fear_desc = "Предупреждать об Ужасающем вопле.",
 	fear_warning = "Скоро Ужасающий вопль!",
 	fear_message = "Применение страха!",
 	fear_bar = "~страх",
 
-	sentinel = "Удар часового",
-	sentinel_desc = "Предупреждать когда Ауриайя применяет Удар часового.",
-	sentinel_message = "Удар часового!",
-
-	swarm = "Крадущийся страж",
-	swarm_desc = "Предупреждать когда Ауриайя применяет Призыв крадущегося стража.",
 	swarm_other = "Страж выбрал |3-3(%s)!",
 	swarm_you = "Страж выбрал ВАС!",
 	swarm_bar = "~стража",
@@ -211,9 +137,6 @@ L:RegisterTranslations("ruRU", function() return {
 	defender_desc = "Сообщать о жизни Дикого защитника.",
 	defender_message = "Защитник (%d/9)!",
 
-	sonic = "Ультразвуковой визг",
-	sonic_desc = "Предупреждать когда Ауриайя применяет Ультразвуковой визг.",
-	sonic_message = "Применение Визга!",
 	sonic_bar = "~перезарядка визга",
 } end )
 
@@ -242,11 +165,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Sonic(_, spellId)
-	if db.sonic then
-		self:IfMessage(L["sonic_message"], "Attention", spellId)
-		self:Bar(L["sonic_bar"], 28, spellId)
-	end
+function mod:Sonic(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Attention", spellId)
+	self:Bar(L["sonic_bar"], 28, spellId)
 end
 
 function mod:Defender(_, spellId)
@@ -258,12 +179,11 @@ end
 function mod:DefenderKill(_, spellId)
 	count = count - 1
 	if db.defender then
-		self:Bar(L["defender_message"]:format(count), 30, spellId)
+		self:Bar(L["defender_message"]:format(count), 34, spellId)
 	end
 end
 
 function mod:Swarm(player, spell)
-	if not db.swarm then return end
 	if player == pName then
 		mod:LocalMessage(L["swarm_you"], "Attention", spell)
 		mod:WideMessage(L["swarm_other"]:format(player))
@@ -274,17 +194,13 @@ function mod:Swarm(player, spell)
 end
 
 function mod:Fear(_, spellId)
-	if db.fear then
-		self:IfMessage(L["fear_message"], "Urgent", spellId)
-		self:Bar(L["fear_bar"], 35, spellId)
-		self:DelayedMessage(32, L["fear_warning"], "Attention")
-	end
+	self:IfMessage(L["fear_message"], "Urgent", spellId)
+	self:Bar(L["fear_bar"], 35, spellId)
+	self:DelayedMessage(32, L["fear_warning"], "Attention")
 end
 
-function mod:Sentinel(_, spellId)
-	if db.sentinel then
-		self:IfMessage(L["sentinel_message"], "Important", spellId)
-	end
+function mod:Sentinel(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)

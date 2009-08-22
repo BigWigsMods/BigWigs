@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleoptions = {"phase", -1, "wave", "fury", "sunbeam", -1, "root", "tremor", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, "wave", 62589, 62623, -1, 62861, 62437, 62865, -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Freya"
 
@@ -48,28 +48,15 @@ L:RegisterTranslations("enUS", function() return {
 	elementals_message = "Elementals!",
 	tree_message = "Tree is up!",
 
-	fury = "Nature's Fury",
-	fury_desc = "Tells you who has been hit by Nature's Fury.",
 	fury_you = "Fury on YOU!",
 	fury_other = "Fury: %s",
 
-	sunbeam = "Sunbeam",
-	sunbeam_desc = "Warn who Freya casts Sunbeam on.",
 	sunbeam_you = "Sunbeam on YOU!",
 	sunbeam_other = "Sunbeam: %s",
 
-	tremor = "Ground Tremor",
-	tremor_desc = "Warn when Freya casts Ground Tremor (Elder Stonebark).",
-	tremor_message = "Ground Tremor!",
 	tremor_warning = "Ground Tremor soon!",
 	tremor_bar = "~Next Ground Tremor",
-
-	root = "Iron Roots",
-	root_desc = "Warn who has Iron Roots (Elder Ironbranch).",
 	root_message = "Root: %s",
-
-	energy = "Unstable Energy",
-	energy_desc = "Warn on Unstable Energy (Elder Brightleaf).",
 	energy_message = "Unstable Energy on YOU!",
 
 	icon = "Place Icon",
@@ -98,28 +85,15 @@ L:RegisterTranslations("koKR", function() return {
 	elementals_message = "정령 3 소환",
 	tree_message = "이오나의 선물 소환",
 
-	fury = "자연의 격노",
-	fury_desc = "자연의 격노에 걸린 플레이어를 알립니다.",
 	fury_you = "당신은 자연의 격노!",
 	fury_other = "자연의 격노: %s!",
 
-	sunbeam = "태양 광선",
-	sunbeam_desc = "프레이야의 태양 광선 시전 대상을 알립니다.",
 	sunbeam_you = "당신에게 태양 광선!",
 	sunbeam_other = "태양 광선: %s",
 
-	tremor = "지진",
-	tremor_desc = "프레이야의 지진 시전을 알립니다. (장로 돌나무껍질)",
-	tremor_message = "지진!",
 	tremor_warning = "곧 지진!",
 	tremor_bar = "~다음 지진",
-
-	root = "무쇠 뿌리",
-	root_desc = "무쇠 뿌리에 걸린 플레이어를 알립니다. (장로 무쇠줄기)",
 	root_message = "무쇠 뿌리: %s",
-
-	energy = "불안정한 힘",
-	energy_desc = "불안정한 힘을 알립니다. (장로 밝은잎)",
 	energy_message = "당신은 불안정한 힘!",
 
 	icon = "전술 표시",
@@ -148,28 +122,15 @@ L:RegisterTranslations("frFR", function() return {
 	elementals_message = "Élémentaires !",
 	tree_message = "Un arbre pousse !",
 
-	fury = "Fureur de la nature",
-	fury_desc = "Prévient quand un joueur subit les effets d'une Fureur de la nature.",
 	fury_you = "Fureur de la nature sur VOUS !",
 	fury_other = "Fureur : %s",
 
-	sunbeam = "Rayon de soleil",
-	sunbeam_desc = "Prévient quand un joueur subit les effets d'un Rayon de soleil.",
 	sunbeam_you = "Rayon de soleil sur VOUS !",
 	sunbeam_other = "Rayon : %s",
 
-	tremor = "Tremblement de terre",
-	tremor_desc = "Prévient quand Freya incante un Tremblement de terre (Ancien Ecorcepierre).",
-	tremor_message = "Tremblement de terre !",
 	tremor_warning = "Tremblement de terre imminent !",
 	tremor_bar = "~Prochain Tremblement",
-
-	root = "Racines de fer",
-	root_desc = "Prévient quand un joueur subit les effets des Racines de fer (Ancien Branchefer).",
 	root_message = "Racines : %s",
-
-	energy = "Energie instable",
-	energy_desc = "Prévient quand vous subissez les effets d'une Energie instable (Ancien Brillefeuille).",
 	energy_message = "Energie instable sur VOUS !",
 
 	icon = "Icône",
@@ -198,28 +159,15 @@ L:RegisterTranslations("deDE", function() return {
 	elementals_message = "Elementare!",
 	tree_message = "Eonars Geschenk!",
 
-	fury = "Furor der Natur",
-	fury_desc = "Warnt, wer von Furor der Natur betroffen ist und zeigt einen Timer mit der Abklingzeit.",
 	fury_you = "Furor auf DIR!",
 	fury_other = "Furor: %s!",
 
-	sunbeam = "Sonnenstrahl",
-	sunbeam_desc = "Warnt, auf wen Sonnenstrahl gewirkt wird.",
 	sunbeam_you = "Sonnenstrahl auf DIR!",
 	sunbeam_other = "Sonnenstrahl: %s!",
 
-	tremor = "Bebende Erde",
-	tremor_desc = "Warnt, wenn Bebende Erde gewirkt wird (Ältester Steinrinde).",
-	tremor_message = "Bebende Erde!",
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",
-
-	root = "Eiserne Wurzeln",
-	root_desc = "Warnt, wer von Eiserne Wurzeln betroffen ist (Ältester Eisenast).",
 	root_message = "Wurzeln: %s!",
-
-	energy = "Instabile Energie",
-	energy_desc = "Warnung und Timer für Instabile Energie (Ältester Hellblatt).",
 	energy_message = "Instabile Energie auf DIR!",
 
 	icon = "Schlachtzugs-Symbol",
@@ -248,28 +196,15 @@ L:RegisterTranslations("zhCN", function() return {
 	elementals_message = "古代水之精魂！",
 	tree_message = "Eonar's Gift出现！",
 
-	fury = "自然之怒",
-	fury_desc = "当玩家中了自然之怒时向自己发出警报。",
 	fury_you = ">你< 自然之怒！",
 	fury_other = "自然之怒：>%s<！",
 
-	sunbeam = "阳光",
-	sunbeam_desc = "当弗蕾亚施放阳光于玩家时发出警报。.",
 	sunbeam_you = ">你< 阳光！",
 	sunbeam_other = "阳光：>%s<！",
 
-	tremor = "大地震颤",
-	tremor_desc = "当弗蕾亚施放大地震颤时发出警报。（石树长老）",
-	tremor_message = "大地震颤！",
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
-
-	root = "钢铁根须",
-	root_desc = "当玩家中了钢铁根须时发出警报。（铁枝长老）",
 	root_message = "钢铁根须：>%s<！",
-
-	energy = "不稳定的能量",
-	energy_desc = "当玩家中了不稳定的能量时发出警报。（明叶长老）",
 	energy_message = ">你<不稳定的能量！",
 
 	icon = "位置标记",
@@ -298,28 +233,15 @@ L:RegisterTranslations("zhTW", function() return {
 	elementals_message = "上古水之靈！",
 	tree_message = "伊歐娜的贈禮 出現！",
 
-	fury = "自然烈怒",
-	fury_desc = "當玩家中了自然烈怒時向自己發出警報。",
 	fury_you = ">你< 自然烈怒！",
 	fury_other = "自然烈怒：>%s<！",
 
-	sunbeam = "太陽光束",
-	sunbeam_desc = "當芙蕾雅施放太陽光束于玩家時發出警報。",
 	sunbeam_you = ">你< 太陽光束！",
 	sunbeam_other = "太陽光束：>%s<！",
 
-	tremor = "地面震顫",
-	tremor_desc = "當芙蕾雅施放地面震顫時發出警報。（石木長者）",
-	tremor_message = "地面震顫！",
 	tremor_warning = "即將 地面震顫！",
 	tremor_bar = "<下一地面震顫>",
-
-	root = "鐵之根鬚",
-	root_desc = "當玩家中了鐵之根鬚時發出警報。（鐵枝長者）",
 	root_message = "鐵之根鬚：>%s<！",
-
-	energy = "不穩定的能量",
-	energy_desc = "當玩家中了不穩定的能量時發出警報。（亮葉長者）",
 	energy_message = ">你< 不穩定的能量！",
 
 	icon = "位置標記",
@@ -348,28 +270,15 @@ L:RegisterTranslations("ruRU", function() return {
 	elementals_message = "Элементали!",
 	tree_message = "Появление Дара Эонара!",
 
-	fury = "Гнев природы",
-	fury_desc = "Сообщает вам, на кого наложен Гнев природы.",
 	fury_you = "Гнев на ВАС!",
 	fury_other = "Гнев на: |3-5(%s)",
 
-	sunbeam = "Луч солнца",
-	sunbeam_desc = "Предупреждать на кого Фрейя применяет Луч солнца.",
 	sunbeam_you = "Луч солнца на ВАС!",
 	sunbeam_other = "Луч солнца на |3-5(%s)",
 
-	tremor = "Дрожание земли",
-	tremor_desc = "Предупреждать когда Фрейя применяет Дрожание земли.",
-	tremor_message = "Дрожание земли!",
 	tremor_warning = "Скоро Дрожание земли!",
 	tremor_bar = "~Дрожание земли",
-
-	root = "Железные корни",
-	root_desc = "Сообщать кто заточен в Железные корни.",
 	root_message = "В корнях: %s",
-
-	energy = "Нестабильная энергия",
-	energy_desc = "Сообщать о Нестабильной энергии",
 	energy_message = "Нестабильная энергия на ВАС!",
 
 	icon = "Помечать иконкой",
@@ -383,10 +292,10 @@ L:RegisterTranslations("ruRU", function() return {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)			--HardMode abilities from Elder Brightleaf
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)		--HardMode abilities from Elder Brightleaf
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--HardMode abilities from Elder Ironbranch
-	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--HardMode abilities from Elder Stonebark 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)     -- Elder Brightleaf
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
+	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark 
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
@@ -405,15 +314,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function rootWarn()
-	mod:TargetMessage(L["root_message"], root, "Attention", 62930, "Info")
+local function rootWarn(spellId)
+	mod:TargetMessage(L["root_message"], root, "Attention", spellId, "Info")
 end
 
 function mod:Root(player, spellId)
-	if db.root then
-		root[#root + 1] = player
-		self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId)
-	end
+	root[#root + 1] = player
+	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId)
 end
 
 do
@@ -430,21 +337,19 @@ do
 		return true
 	end
 
-	function mod:Tremor(_, spellId)
-		if db.tremor then
-			local caster = isCaster()
-			local color = caster and "Personal" or "Attention"
-			local sound = caster and "Long" or nil
-			self:IfMessage(L["tremor_message"], color, spellId, sound)
-			if phase == 1 then
-				self:Bar(L["tremor"], 2, spellId)
-				self:Bar(L["tremor_bar"], 30, spellId)
-				self:DelayedMessage(26, L["tremor_warning"], "Attention")
-			elseif phase == 2 then
-				self:Bar(L["tremor"], 2, spellId)
-				self:Bar(L["tremor_bar"], 23, spellId)
-				self:DelayedMessage(20, L["tremor_warning"], "Attention")
-			end
+	function mod:Tremor(_, spellId, _, _, spellName)
+		local caster = isCaster()
+		local color = caster and "Personal" or "Attention"
+		local sound = caster and "Long" or nil
+		self:IfMessage(spellName, color, spellId, sound)
+		if phase == 1 then
+			self:Bar(spellName, 2, spellId)
+			self:Bar(L["tremor_bar"], 30, spellId)
+			self:DelayedMessage(26, L["tremor_warning"], "Attention")
+		elseif phase == 2 then
+			self:Bar(spellName, 2, spellId)
+			self:Bar(L["tremor_bar"], 23, spellId)
+			self:DelayedMessage(20, L["tremor_warning"], "Attention")
 		end
 	end
 end
@@ -478,32 +383,26 @@ local function scanTarget()
 end
 
 function mod:Sunbeam()
-	if db.sunbeam then
-		self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1)
-	end
+	self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1)
 end
 
 function mod:Fury(player, spellId)
-	if db.fury then
-		if player == pName then
-			self:LocalMessage(L["fury_you"], "Personal", spellId, "Alert")
-			self:WideMessage(L["fury_other"]:format(player))
-			self:TriggerEvent("BigWigs_ShowProximity", self)
-		else
-			self:TargetMessage(L["fury_other"], player, "Attention", spellId)
-			self:Whisper(player, L["fury_you"])
-		end
-		self:Bar(L["fury_other"]:format(player), 10, spellId)
-		self:Icon(player, "icon")
+	if player == pName then
+		self:LocalMessage(L["fury_you"], "Personal", spellId, "Alert")
+		self:WideMessage(L["fury_other"]:format(player))
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+	else
+		self:TargetMessage(L["fury_other"], player, "Attention", spellId)
+		self:Whisper(player, L["fury_you"])
 	end
+	self:Bar(L["fury_other"]:format(player), 10, spellId)
+	self:Icon(player, "icon")
 end
 
 function mod:FuryRemove(player)
-	if db.fury then
-		self:TriggerEvent("BigWigs_StopBar", self, L["fury_other"]:format(player))
-		if player == pName then
-			self:TriggerEvent("BigWigs_HideProximity", self)
-		end
+	self:TriggerEvent("BigWigs_StopBar", self, L["fury_other"]:format(player))
+	if player == pName then
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 
@@ -520,16 +419,14 @@ function mod:Energy(player)
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
-		if db.energy and player == pName then
+		if player == pName then
 			self:LocalMessage(L["energy_message"], "Personal",  62451, "Alarm")
 		end
 	end
 end
 
-function mod:EnergyCooldown(_,spellId)
-	if db.energy then
-		self:Bar(L["energy"], 25, spellId)
-	end
+function mod:EnergyCooldown(_, spellId, _, _, spellName)
+	self:Bar(spellName, 25, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
