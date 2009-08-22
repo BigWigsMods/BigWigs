@@ -157,6 +157,9 @@ function BigWigs.modulePrototype:OnInitialize()
 	BigWigs:RegisterModule(self)
 end
 
+function BigWigs.modulePrototype:GetOption(spellId)
+	return self.db.profile[(GetSpellInfo(spellId))]
+end
 
 local function transmitSync(self, token, arguments, ...)
 	if not arguments then
