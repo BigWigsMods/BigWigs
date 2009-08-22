@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15936
 mod.toggleoptions = {"engage", "teleport", "bosskill"}
+mod.consoleCmd = "Heigan"
 
 ----------------------------
 --      Localization      --
@@ -16,8 +17,6 @@ mod.toggleoptions = {"engage", "teleport", "bosskill"}
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Heigan",
-
 	starttrigger = "You are mine now.",
 	starttrigger2 = "You... are next.",
 	starttrigger3 = "I see you...",

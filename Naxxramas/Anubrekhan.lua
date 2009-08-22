@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15956
 mod.toggleoptions = {"locust", "bosskill"}
+mod.consoleCmd = "Anubrekhan"
 
 ------------------------------
 --      Are you local?      --
@@ -22,8 +23,6 @@ local locustTime = 90
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Anubrekhan",
-
 	locust = "Locust Swarm",
 	locust_desc = "Warn for Locust Swarm.",
 

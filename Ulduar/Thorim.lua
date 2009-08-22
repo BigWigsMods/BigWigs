@@ -12,6 +12,7 @@ mod.guid = 32865	--Sif(33196)
 mod.toggleoptions = {"phase", "p2berserk", "hardmode", -1, "hammer", "impale", "shock", "barrier", "detonation", "charge", "strike", -1, "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
+mod.consoleCmd = "Thorim"
 
 ------------------------------
 --      Are you local?      --
@@ -30,8 +31,6 @@ local pName = UnitName("player")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Thorim",
-
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",

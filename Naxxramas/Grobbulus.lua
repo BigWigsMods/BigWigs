@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15931
 mod.toggleoptions = {"inject", "icon", "cloud", "berserk", "bosskill"}
+mod.consoleCmd = "Grobbulus"
 
 ------------------------------
 --      Are you local?      --
@@ -23,8 +24,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Grobbulus",
-
 	inject = "Injected",
 	inject_desc = "Warn when Injected.",
 	bomb_message_you = "You are Injected!",

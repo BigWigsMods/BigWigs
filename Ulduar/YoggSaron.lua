@@ -11,6 +11,7 @@ mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
 mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "roar", "empower", "empowericon", "gaze", "icon", "berserk", "bosskill"}
+mod.consoleCmd = "Yogg"
 
 ------------------------------
 --      Are you local?      --
@@ -36,8 +37,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	["Crusher Tentacle"] = true,
 	["The Observation Ring"] = true,
-
-	cmd = "YoggSaron",
 
 	phase = "Phase",
 	phase_desc = "Warn for phase changes.",

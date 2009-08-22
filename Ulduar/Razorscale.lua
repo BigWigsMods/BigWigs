@@ -10,6 +10,7 @@ mod.zonename = BZ["Ulduar"]
 -- mod.enabletrigger set below the localizations
 mod.guid = 33186
 mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "bosskill"}
+mod.consoleCmd = "Razorscale"
 
 ------------------------------
 --      Are you local?      --
@@ -30,7 +31,6 @@ local phase = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Razorscale",
 	-- <nevcairiel> at least in german, the "Controller" isnt translated, so its "<boss> Controller"
 	-- <nevcairiel> in ruRU the whole thing isnt localized
 	-- <nevcairiel> in french they translated the whole thing, ha

@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15989
 mod.toggleoptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
+mod.consoleCmd = "Sapphiron"
 
 ------------------------------
 --      Are you local?      --
@@ -24,8 +25,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Sapphiron",
-
 	deepbreath = "Ice Bomb",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 	airphase_trigger = "Sapphiron lifts off into the air!",

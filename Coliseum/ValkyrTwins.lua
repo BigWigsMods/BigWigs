@@ -13,6 +13,7 @@ mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
 mod.toggleoptions = {"vortex", "shield", "berserk", "touch", "bosskill"}
+mod.consoleCmd = "Twins"
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,8 +30,6 @@ local essenceDark = GetSpellInfo(67176)
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "ValkyrTwins",
-
 	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
 
 	vortex_or_shield_cd = "Vortex/Shield Cooldown",

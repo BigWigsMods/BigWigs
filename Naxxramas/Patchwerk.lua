@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16028
 mod.toggleoptions = {"enrage", "berserk", "bosskill"}
+mod.consoleCmd = "Patchwerk"
 
 ----------------------------
 --      Localization      --
@@ -16,8 +17,6 @@ mod.toggleoptions = {"enrage", "berserk", "bosskill"}
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Patchwerk",
-
 	enragewarn = "5% - Enrage!",
 	starttrigger1 = "Patchwerk want to play!",
 	starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!",

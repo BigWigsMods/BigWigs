@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16011
 mod.toggleoptions = {"aura", "deathbloom", "doom", "spore", "bosskill"}
+mod.consoleCmd = "Loatheb"
 
 ------------------------------
 --      Are you local?      --
@@ -26,8 +27,6 @@ local sporeTime = 16
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Loatheb",
-
 	startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!",
 
 	aura = "Necrotic Aura",

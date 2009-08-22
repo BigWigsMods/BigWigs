@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = { boss }
 mod.guid = 16060
 mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
+mod.consoleCmd = "Gothik"
 
 ----------------------------
 --      Localization      --
@@ -16,8 +17,6 @@ mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Gothik",
-
 	room = "Room Arrival Warnings",
 	room_desc = "Warn for Gothik's arrival",
 

@@ -9,6 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
 mod.toggleoptions = {"hardmode", -1, "cold", "cloud", "flash", "frozenblow", "berserk", "icon", "bosskill"}
+mod.consoleCmd = "Hodir"
 
 ------------------------------
 --      Are you local?      --
@@ -28,8 +29,6 @@ local pName = UnitName("player")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Hodir",
-
 	engage_trigger = "You will suffer for this trespass!",
 
 	cold = "Biting Cold",

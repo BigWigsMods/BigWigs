@@ -10,6 +10,7 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
 mod.toggleoptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", "static", "berserk", "bosskill"}
+mod.consoleCmd = "Malygos"
 
 ------------------------------
 --      Are you local?      --
@@ -29,8 +30,6 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Malygos",
-
 	sparks = "Power Spark",
 	sparks_desc = "Warns on Power Spark spawns.",
 	sparks_message = "Power Spark spawns!",

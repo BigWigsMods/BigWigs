@@ -9,6 +9,7 @@ mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34780
 mod.toggleoptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
+mod.consoleCmd = "Jaraxxus"
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -22,8 +23,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Jaraxxus",
-
 	engage = "Engage",
 	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
 	engage_trigger1 = "Banished to the Nether",

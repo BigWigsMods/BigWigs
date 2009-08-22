@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15954
 mod.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
+mod.consoleCmd = "Noth"
 
 ------------------------------
 --      Are you local?      --
@@ -26,8 +27,6 @@ local wave2time = 41
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Noth",
-
 	starttrigger1 = "Die, trespasser!",
 	starttrigger2 = "Glory to the master!",
 	starttrigger3 = "Your life is forfeit!",

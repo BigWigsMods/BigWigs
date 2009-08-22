@@ -12,6 +12,7 @@ mod.guid = 33993
 mod.toggleoptions = {"nova", "overcharge", "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
+mod.consoleCmd = "Emalon"
 
 ------------------------------
 --      Are you local?      --
@@ -31,8 +32,6 @@ local guid = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Emalon",
-
 	nova = "Lightning Nova",
 	nova_desc = "Warn when Emalon cast a Lightning Nova.",
 	nova_message = "Casting Lightning Nova!",

@@ -8,6 +8,7 @@ mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34564
 mod.toggleoptions = {"bosskill", "burrow", "pursue", "phase"}
+mod.consoleCmd = "Anubarak"
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -22,8 +23,6 @@ local phase
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Anubarak",
-
 	engage = "Engage",
 	engage_trigger = "This place will serve as your tomb!",
 

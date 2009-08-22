@@ -14,6 +14,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
 mod.guid = 16065
 mod.toggleoptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
+mod.consoleCmd = "Horsemen"
 
 ------------------------------
 --      Are you local?      --
@@ -29,8 +30,6 @@ local marks = 1
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Horsemen",
-
 	mark = "Mark",
 	mark_desc = "Warn for marks.",
 	markbar = "Mark %d",

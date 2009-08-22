@@ -10,6 +10,7 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
 mod.toggleoptions = {"fists", "cinder", "berserk", "bosskill"}
+mod.consoleCmd = "Koralon"
 
 ------------------------------
 --      Are you local?      --
@@ -29,8 +30,6 @@ local guid = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Koralon",
-
 	fists = "Meteor Fists",
 	fists_desc = "Warn when Koralon casts Meteor Fists.",
 	fists_message = "Meteor Fists Active!",

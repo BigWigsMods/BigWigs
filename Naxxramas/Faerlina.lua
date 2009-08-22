@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15953
 mod.toggleoptions = {"silence", "rain", "enrage", "bosskill"}
+mod.consoleCmd = "Faerlina"
 
 ------------------------------
 --      Are you local?      --
@@ -26,8 +27,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Faerlina",
-
 	silence = "Silence",
 	silence_desc = "Warn for silence",
 

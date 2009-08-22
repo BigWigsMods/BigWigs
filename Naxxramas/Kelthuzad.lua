@@ -10,6 +10,7 @@ mod.enabletrigger = boss
 mod.guid = 15990
 mod.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+mod.consoleCmd = "Kelthuzad"
 
 ------------------------------
 --      Are you local?      --
@@ -26,8 +27,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Kelthuzad",
-
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber",
 
 	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",

@@ -12,6 +12,7 @@ mod.enabletrigger = boss
 mod.wipemobs = understudy
 mod.guid = 16061
 mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
+mod.consoleCmd = "Razuvious"
 
 ------------------------------
 --      Are you local?      --
@@ -25,8 +26,6 @@ local started = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Razuvious",
-
 	shout = "Disrupting Shout",
 	shout_desc = "Warn for Disrupting Shout.",
 	shout_warning = "Disrupting Shout in 5sec!",

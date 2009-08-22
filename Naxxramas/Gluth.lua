@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15932
 mod.toggleoptions = {"frenzy", "decimate", "berserk", "bosskill"}
+mod.consoleCmd = "Gluth"
 
 ------------------------------
 --      Are you local?      --
@@ -23,8 +24,6 @@ local enrageTime = 420
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Gluth",
-
 	startwarn = "Gluth Engaged! ~105 sec to decimate",
 
 	frenzy = "Enrage",

@@ -10,6 +10,7 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 31125
 mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
+mod.consoleCmd = "Archavon"
 
 ------------------------------
 --      Are you local?      --
@@ -27,8 +28,6 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Archavon",
-
 	stomp = "Stomp",
 	stomp_desc = "Stomp warnings and timers.",
 	stomp_message = "Stomp - Charge Inc!",

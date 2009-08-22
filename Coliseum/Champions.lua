@@ -6,6 +6,7 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
 mod.toggleoptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
+mod.consoleCmd = "Champions"
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -13,7 +14,6 @@ mod.toggleoptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 659
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Champions",
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
 } end)

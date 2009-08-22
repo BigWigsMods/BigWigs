@@ -11,6 +11,7 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
 mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "twilight", "berserk", "bosskill"}
+mod.consoleCmd = "Sartharion"
 
 ------------------------------
 --      Are you local?      --
@@ -27,8 +28,6 @@ local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Sartharion",
-
 	engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!",
 
 	tsunami = "Flame Wave",

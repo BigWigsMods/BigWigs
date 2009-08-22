@@ -19,6 +19,7 @@ mod.guid = 34797 -- Icehowl
 mod.toggleoptions = {67647, 67477, 67472, -1, 67641, "spew", 67618, 66869, 68335, "proximity", -1, 67654, "charge", 66758, 66759, "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
+mod.consoleCmd = "Beasts"
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -34,8 +35,6 @@ local toxin = mod:NewTargetList()
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "NorthrendBeasts",
-
 	engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
 	jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
 	icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",

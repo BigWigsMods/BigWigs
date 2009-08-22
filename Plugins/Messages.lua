@@ -681,7 +681,7 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	FadingFrame_Show(slot)
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
+function plugin:BigWigs_Message(text, color, _, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile

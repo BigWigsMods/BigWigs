@@ -10,6 +10,7 @@ mod.enabletrigger = boss
 mod.guid = 32906
 mod.toggleoptions = {"phase", -1, "wave", "fury", "sunbeam", -1, "root", "tremor", "energy", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
+mod.consoleCmd = "Freya"
 
 ------------------------------
 --      Are you local?      --
@@ -28,8 +29,6 @@ local root = mod:NewTargetList()
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Freya",
-
 	engage_trigger1 = "The Conservatory must be protected!",
 	engage_trigger2 = "Elders grant me your strength!",
 

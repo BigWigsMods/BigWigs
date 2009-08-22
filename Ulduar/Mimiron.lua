@@ -11,6 +11,7 @@ mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
 mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
+mod.consoleCmd = "Mimiron"
 
 ------------------------------
 --      Are you local?      --
@@ -27,8 +28,6 @@ local pName = UnitName("player")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Mimiron",
-
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	engage_warning = "Phase 1",

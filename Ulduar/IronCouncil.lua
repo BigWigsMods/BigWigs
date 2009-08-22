@@ -13,6 +13,7 @@ mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
 mod.toggleoptions = {"overload", "whirl", "tendrils", -1, "punch", "overwhelm", -1, "shield", "power", "death", "summoning", -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
+mod.consoleCmd = "Council"
 
 ------------------------------
 --      Are you local?      --
@@ -32,8 +33,6 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "IronCouncil",
-
 	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
 	engage_trigger2 = "Nothing short of total decimation will suffice.",
 	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you are still only mortal.",

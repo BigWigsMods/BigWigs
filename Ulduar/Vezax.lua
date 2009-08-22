@@ -8,6 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.guid = 33271
 mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "berserk", "bosskill"}
+mod.consoleCmd = "Vezax"
 
 ------------------------------
 --      Are you local?      --
@@ -28,8 +29,6 @@ local vapor = GetSpellInfo(63322)
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Vezax",
-
 	["Vezax Bunny"] = true, -- For emote catching.
 
 	engage_trigger = "^Your destruction will herald a new age of suffering!",

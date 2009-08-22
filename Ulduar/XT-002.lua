@@ -10,6 +10,7 @@ mod.enabletrigger = boss
 mod.guid = 33293
 mod.toggleoptions = {"heartbreak", "gravitybombicon", "exposed", -1, "gravitybomb", "lightbomb", "proximity", "berserk", "tantrum", "bosskill"}
 mod.proximityCheck = "bandage"
+mod.consoleCmd = "XT"
 
 ------------------------------
 --      Are you local?      --
@@ -30,8 +31,6 @@ local exposed3 = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "XT-002",
-
 	exposed = "Exposed Heart",
 	exposed_desc = "Warn when XT-002 gains Exposed Heart.",
 	exposed_warning = "Exposed soon",

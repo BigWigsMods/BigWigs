@@ -9,6 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
 mod.toggleoptions = {"grip", "shockwave", "eyebeam", "eyebeamsay", "arm", "armor", "bosskill"}
+mod.consoleCmd = "Kologarn"
 
 ------------------------------
 --      Are you local?      --
@@ -27,8 +28,6 @@ local crunch = GetSpellInfo(63355)
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Kologarn",
-
 	arm = "Arm dies",
 	arm_desc = "Warn for Left & Right Arm dies.",
 	left_dies = "Left Arm dies",

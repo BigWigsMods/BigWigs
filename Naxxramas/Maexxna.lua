@@ -9,6 +9,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15952
 mod.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
+mod.consoleCmd = "Maexxna"
 
 ------------------------------
 --      Are you local?      --
@@ -24,8 +25,6 @@ local enrageannounced = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Maexxna",
-
 	spray = "Web Spray",
 	spray_desc = "Warn for webspray and spiders",
 

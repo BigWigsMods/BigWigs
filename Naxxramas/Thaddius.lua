@@ -12,6 +12,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, feugen, stalagg}
 mod.guid = 15928
 mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
+mod.consoleCmd = "Thaddius"
 
 ------------------------------
 --      Are you local?      --
@@ -28,8 +29,6 @@ local shiftTime = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Thaddius",
-
 	phase = "Phase",
 	phase_desc = "Warn for Phase transitions",
 

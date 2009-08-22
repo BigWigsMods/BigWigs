@@ -10,6 +10,7 @@ mod.enabletrigger = boss
 mod.guid = 33515
 --Feral Defender = 34035
 mod.toggleoptions = {"fear", "sentinel", "swarm", "sonic", "defender", "berserk", "bosskill"}
+mod.consoleCmd = "Auriaya"
 
 ------------------------------
 --      Are you local?      --
@@ -28,8 +29,6 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Auriaya",
-
 	fear = "Terrifying Screech",
 	fear_desc = "Warn when Auriaya casts AoE fear.",
 	fear_warning = "Fear soon!",

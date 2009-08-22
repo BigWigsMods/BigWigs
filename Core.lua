@@ -599,7 +599,7 @@ do
 
 			if cons then
 				if module.external then
-					options.args.extras.args[ML["cmd"]] = cons
+					options.args.extras.args[module.consoleCmd] = cons
 				else
 					local zone = nil
 					if module.otherMenu then
@@ -616,7 +616,7 @@ do
 							disabled = "~IsActive",
 						}
 					end
-					options.args[zone].args[ML["cmd"]] = cons
+					options.args[zone].args[module.consoleCmd] = cons
 				end
 			end
 		elseif module.consoleOptions then

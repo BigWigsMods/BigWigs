@@ -9,6 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33118
 mod.toggleoptions = {"construct", "brittle", "flame", "scorch", "slagpot", "bosskill"}
+mod.consoleCmd = "Ignis"
 
 ------------------------------
 --      Are you local?      --
@@ -25,8 +26,6 @@ local spawnTime = 30
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Ignis",
-
 	engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!",
 
 	construct = "Activate Construct",

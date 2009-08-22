@@ -9,6 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32871
 mod.toggleoptions = {"phase", 64412, "berserk", 62301, 64122, 64443, "bosskill"}
+mod.consoleCmd = "Algalon"
 
 ------------------------------
 --      Are you local?      --
@@ -26,8 +27,6 @@ local blackholes = 0
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Algalon",
-
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	engage_warning = "Phase 1",
