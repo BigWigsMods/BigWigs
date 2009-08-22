@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 -- mod.enabletrigger set below the localizations
 mod.guid = 33186
-mod.toggleoptions = {"phase", -1, "breath", "flame", "harpoon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", -1, 64021, 64704, "harpoon", "berserk", "bosskill"}
 mod.consoleCmd = "Razorscale"
 
 ------------------------------
@@ -50,18 +50,14 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_warning = "Phase 2 Soon!",
 	stun_bar = "Stun",
 
-	breath = "Flame Breath",
-	breath_desc = "Flame Breath warnings.",
 	breath_trigger = "%s takes a deep breath...",
 	breath_message = "Flame Breath!",
 	breath_bar = "~Breath Cooldown",
 
-	flame = "Devouring Flame",
-	flame_desc = "Warn when you are in a Devouring Flame.",
 	flame_message = "Flame on YOU!",
 
-	harpoon = "Harpoon Turret",
-	harpoon_desc = "Harpoon Turret announce.",
+	harpoon = "Harpoons",
+	harpoon_desc = "Announce when the harpoons are ready for use.",
 	harpoon_message = "Harpoon %d ready!",
 	harpoon_trigger = "Harpoon Turret is ready for use!",
 	harpoon_nextbar = "Harpoon %d",
@@ -80,14 +76,10 @@ L:RegisterTranslations("ruRU", function() return {
 	phase2_warning = "Скоро вторая фаза!",
 	stun_bar = "Оглушение",
 
-	breath = "Огненное дыхание",
-	breath_desc = "Сообщать об Огненном дыхании.",
 	breath_trigger = "%s делает глубокий вдох…",
 	breath_message = "Огненное дыхание!",
 	breath_bar = "~перезарядка дыхания",
 
-	flame = "Лавовая бомба на Вас",
-	flame_desc = "Сообщать когда вы поподаете под воздействие Лавовой бомбы.",
 	flame_message = "ВЫ в Лавовой БОМБЕ!",
 
 	harpoon = "Гарпунная Пушка",
@@ -110,14 +102,10 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_warning = "곧 2 단계!",
 	stun_bar = "기절",
 
-	breath = "화염 숨결",
-	breath_desc = "화염 숨결을 알립니다.",
 	breath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
 	breath_message = "화염 숨결!",
 	breath_bar = "~숨결 대기시간",
 
-	flame = "자신의 파멸의 불길",
-	flame_desc = "자신이 파멸의 불길에 걸렸을 때 알립니다.",
 	flame_message = "당신은 파멸의 불길!",
 
 	harpoon = "작살 포탑",
@@ -142,14 +130,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_warning = "Phase 2 imminente !",
 	stun_bar = "Étourdie",
 
-	breath = "Souffle de flammes",
-	breath_desc = "Prévient de l'arrivée des Souffles de flammes.",
 	breath_trigger = "%s inspire profondément…",
 	breath_message = "Souffle de flammes !",
 	breath_bar = "~Recharge Souffle",
 
-	flame = "Flamme dévorante sur vous",
-	flame_desc = "Prévient quand vous vous trouvez dans une Flamme dévorante.",
 	flame_message = "Flamme dévorante sur VOUS !",
 
 	harpoon = "Tourelle à harpon",
@@ -174,14 +158,10 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_warning = "Phase 2 bald!",
 	stun_bar = "Betäubt",
 
-	breath = "Flammenatem",
-	breath_desc = "Warnt vor Flammenatem.",
 	breath_trigger = "%s holt tief Luft...",
 	breath_message = "Flammenatem!",
 	breath_bar = "~Flammenatem",
 
-	flame = "Verschlingende Flamme",
-	flame_desc = "Warnt, wenn du von Verschlingende Flamme getroffen wirst.",
 	flame_message = "Verschlingende Flamme auf DIR!",
 
 	harpoon = "Harpunengeschütze",
@@ -206,14 +186,10 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_warning = "即将 第二阶段！",
 	stun_bar = "<昏迷>",
 
-	breath = "烈焰喷射",
-	breath_desc = "当烈焰喷射时发出警报。",
 --	breath_trigger = "%s takes a deep breath...",
 	breath_message = "烈焰喷射！",
 	breath_bar = "<烈焰喷射 冷却>",
 
-	flame = "自身吞噬烈焰",
-	flame_desc = "当你中了吞噬烈焰时发出警报。",
 	flame_message = ">你< 吞噬烈焰！",
 
 	harpoon = "魚叉炮台",
@@ -238,14 +214,10 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_warning = "即將 第二階段！",
 	stun_bar = "<擊昏>",
 
-	breath = "火息術",
-	breath_desc = "當火息術時發出警報。",
 	breath_trigger = "%s深深地吸了一口氣……",
 	breath_message = "火息術！",
 	breath_bar = "<火息術 冷卻>",
 
-	flame = "自身吞噬烈焰",
-	flame_desc = "當你中了吞噬烈焰時發出警報。",
 	flame_message = ">你< 吞噬烈焰！",
 
 	harpoon = "魚叉炮塔",
@@ -280,7 +252,7 @@ end
 ------------------------------
 
 function mod:Flame(player)
-	if player == pName and db.flame then
+	if player == pName then
 		self:LocalMessage(L["flame_message"], "Personal", 64733, "Alarm")
 	end
 end
@@ -303,7 +275,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		phase = 2
 		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 		self:IfMessage(L["phase2_message"], "Attention")
-	elseif msg == L["breath_trigger"] and db.breath then
+	elseif msg == L["breath_trigger"] and self:GetOption(64021) then
 		self:IfMessage(L["breath_message"], "Attention", 64021)
 		if phase == 2 then
 			self:Bar(L["breath_bar"], 21, 64021)

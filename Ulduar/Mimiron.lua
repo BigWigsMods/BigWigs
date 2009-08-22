@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
-mod.toggleoptions = {"phase", "hardmode", -1, "plasma", "fbomb", "flames", "shock", "laser", "magnetic", "bomb", "proximity", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", "hardmode", -1, 62997, 64623, 64570, 63631, 63274, 64444, 63811, "proximity", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Mimiron"
 
@@ -40,47 +40,31 @@ L:RegisterTranslations("enUS", function() return {
 	phase4_trigger = "^Preliminary testing phase complete",
 	phase_bar = "Phase %d",
 
-	hardmode = "Hard Mode Timer",
-	hardmode_desc = "Show Timer for Hard Mode.",
+	hardmode = "Hard mode timer",
+	hardmode_desc = "Show timer for hard mode.",
 	hardmode_trigger = "^Now, why would you go and do something like that?",
-	hardmode_message = "Hard Mode activated!",
-	hardmode_warning = "Hard Mode ends",
+	hardmode_message = "Hard mode activated!",
+	hardmode_warning = "Hard mode ends",
 
-	plasma = "Plasma Blast",
-	plasma_desc = "Warns when Plasma Blast is casting.",
 	plasma_warning = "Casting Plasma Blast!",
 	plasma_soon = "Plasma soon!",
 	plasma_bar = "Plasma",
 
-	shock = "Shock Blast",
-	shock_desc = "Warns when Shock Blast is casting.",
-	shock_warning = "Shock Blast!",
 	shock_next = "Next Shock Blast",
 
-	laser = "Laser Barrage",
-	laser_desc = "Warn when Laser Barrage is active.",
 	laser_soon = "Spinning up!",
 	laser_bar = "Barrage",
 
-	magnetic = "Magnetic Core",
-	magnetic_desc = "Warn when Aerial Command Unit gains Magnetic Core.",
 	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
 
-	flames = "Flame Suppressant",
-	flames_desc = "Warns for Flame Suppressant",
 	flames_soon = "Flame Suppressant soon!",
 	flames_bar = "Next Suppressant",
 	flames_warning = "Suppressant Incoming!",
 
-	fbomb = "Frost Bomb",
-	fbomb_desc = "Warns for Frost Bomb",
 	fbomb_soon = "Possible Frost Bomb soon!",
 	fbomb_bar = "Next Frost Bomb",
-	fbomb_warning = "Frost Bomb Incoming!",
 
-	bomb = "Bomb Bot",
-	bomb_desc = "Warn for Bomb Bot.",
 	bomb_message = "Bomb Bot spawned!",
 
 	end_trigger = "^It would appear that I've made a slight miscalculation.",
@@ -105,41 +89,25 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_message = "도전 모드 활성화!",
 	hardmode_warning = "도전 모드 종료",
 
-	plasma = "플라스마 폭발",
-	plasma_desc = "플라스마 폭발 시전을 알립니다.",
 	plasma_warning = "플라스마 폭발 시전!",
 	plasma_soon = "곧 플라스마!",
 	plasma_bar = "다음 플라스마",
 
-	shock = "충격파",
-	shock_desc = "충격파 시전을 알립니다.",
-	shock_warning = "충격파!",
 	shock_next = "다음 충격파",
 
-	laser = "레이저 탄막",
-	laser_desc = "레이저 탄막 활동을 알립니다!",
 	laser_soon = "회전 가속!",
 	laser_bar = "레이저 탄막",
 
-	magnetic = "자기 증폭기",
-	magnetic_desc = "공중 지휘기의 자기 증폭기 상태를 알립니다.",
 	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
 
-	flames = "화염 억제",
-	flames_desc = "화염 억제를 알립니다.",
 	flames_soon = "잠시후 화염 억제!",
 	flames_bar = "다음 화염 억제",
 	flames_warning = "곧 화염 억제!",
 
-	fbomb = "서리 폭탄",
-	fbomb_desc = "서리 폭탄을 알립니다.",
 	fbomb_soon = "잠시후 서리 폭탄 가능!",
 	fbomb_bar = "다음 서리 폭탄",
-	fbomb_warning = "곧 서리 폭탄!",
 
-	bomb = "폭발로봇",
-	bomb_desc = "폭발로봇 소환을 알립니다.",
 	bomb_message = "폭발로봇 소환!",
 
 	end_trigger = "^내가 계산을 좀 잘못한 것 같군",
@@ -164,41 +132,25 @@ L:RegisterTranslations("frFR", function() return {
 	hardmode_message = "Autodestruction activée !",
 	hardmode_warning = "Autodestruction !",
 
-	plasma = "Explosion de plasma",
-	plasma_desc = "Prévient quand une Explosion de plasma est incantée.",
 	plasma_warning = "Plasma en incantation !",
 	plasma_soon = "Explosion de plasma imminente !",
 	plasma_bar = "Plasma",
 
-	shock = "Horion explosif",
-	shock_desc = "Prévient quand un Horion explosif est incanté.",
-	shock_warning = "Horion explosif !",
 	shock_next = "Prochain Horion",
 
-	laser = "Barrage laser",
-	laser_desc = "Prévient quand un Barrage laser est actif.",
 	laser_soon = "Accélération !",
 	laser_bar = "Barrage",
 
-	magnetic = "Noyau magnétique",
-	magnetic_desc = "Prévient quand l'Unité de commandement aérien gagne Noyau magnétique.",
 	magnetic_message = "UCA au sol !",
 	loot_message = "%s a ramassé un noyau !",
 
-	flames = "Coupe-flamme",
-	flames_desc = "Prévient de l'arrivée des Coupes-flammes.",
 	flames_soon = "Coupe-flamme imminent !",
 	flames_bar = "Prochain Coupe-flamme",
 	flames_warning = "Arrivée d'un Coupe-flamme !",
 
-	fbomb = "Bombe de givre",
-	fbomb_desc = "Prévient de l'arrivée des Bombes de givre.",
 	fbomb_soon = "Bombe de givre imminente !",
 	fbomb_bar = "Prochaine Bombe de givre",
-	fbomb_warning = "Arrivée d'une Bombe de givre !",
 
-	bomb = "Robo-bombe",
-	bomb_desc = "Prévient quand un Robo-bombe apparaît.",
 	bomb_message = "Robo-bombe apparu !",
 
 	end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul.",
@@ -223,41 +175,25 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_message = "Hard Mode aktiviert!",
 	hardmode_warning = "Hard Mode beendet!",
 
-	plasma = "Plasmaeruption",
-	plasma_desc = "Warnung und Timer, wann Plasmaeruption gewirkt wird.",
 	plasma_warning = "Wirkt Plasmaeruption!",
 	plasma_soon = "Plasmaeruption bald!",
 	plasma_bar = "Plasmaeruption",
 
-	shock = "Schockschlag",
-	shock_desc = "Warnung und Timer, wenn Schockschlag gewirkt wird.",
-	shock_warning = "Schockschlag!",
 	shock_next = "~Schockschlag",
 
-	laser = "Lasersalve",
-	laser_desc = "Warnung und Timer für Lasersalve.",
 	laser_soon = "Lasersalve!",
 	laser_bar = "Lasersalve",
 
-	magnetic = "Magnetischer Kern",
-	magnetic_desc = "Warnung und Timer, wenn ein Magnetischer Kern geplündert wurde und die Luftkommandoeinheit am Boden ist.",
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
 
-	flames = "Löschschaum",
-	flames_desc = "Warnung und Timer für Löschschaum.",
 	flames_soon = "Löschschaum bald!",
 	flames_bar = "~Löschschaum",
 	flames_warning = "Löschschaum kommt!",
 
-	fbomb = "Frostbombe",
-	fbomb_desc = "Warnung und Timer für Frostbombe.",
 	fbomb_soon = "Frostbombe bald!",
 	fbomb_bar = "~Frostbombe",
-	fbomb_warning = "Frostbombe kommt!",
 
-	bomb = "Bombenbot",
-	bomb_desc = "Warnt vor Bombenbots.",
 	bomb_message = "Bombenbot!",
 
 	end_trigger = "^Es scheint, als wäre mir",
@@ -282,41 +218,25 @@ L:RegisterTranslations("zhCN", function() return {
 	hardmode_message = "已开启困难模式！",
 	hardmode_warning = "困难模式结束！",
 
-	plasma = "等离子冲击",
-	plasma_desc = "当正在施放等离子冲击时发出警报。",
 	plasma_warning = "正在施放 等离子冲击！",
 	plasma_soon = "即将 等离子冲击！",
 	plasma_bar = "<等离子冲击>",
 
-	shock = "震荡冲击",
-	shock_desc = "当正在施放震荡冲击时发出警报。",
-	shock_warning = "震荡冲击！",
 	shock_next = "下一震荡冲击！",
 
-	laser = "P3Wx2激光弹幕",
-	laser_desc = "当 P3Wx2激光弹幕启用时发出警报。",
 	laser_soon = "即将 P3Wx2激光弹幕！",
 	laser_bar = "<P3Wx2激光弹幕>",
 
-	magnetic = "磁核",
-	magnetic_desc = "当空中指挥单位获得磁核时发出警报。",
 	magnetic_message = "空中指挥单位 已降落！",
 	loot_message = ">%s< 拾取了磁核！",
 
-	flames = "烈焰遏制",
-	flames_desc = "当施放烈焰遏制时发出警报。",
 	flames_soon = "可能即将 烈焰遏制！",
 	flames_bar = "<下一烈焰遏制>",
 	flames_warning = "即将 烈焰遏制！",
 
-	fbomb = "冰霜炸弹",
-	fbomb_desc = "当施放冰霜炸弹时发出警报。",
 	fbomb_soon = "可能即将 冰霜炸弹！",
 	fbomb_bar = "<下一冰霜炸弹>",
-	fbomb_warning = "即将 冰霜炸弹！",
 
-	bomb = "炸弹机器人",
-	bomb_desc = "当炸弹机器人出现时发出警报。",
 	bomb_message = "炸弹机器人 出现！",
 
 --	end_trigger = "^It would appear that I've made a slight miscalculation.",
@@ -341,41 +261,25 @@ L:RegisterTranslations("zhTW", function() return {
 	hardmode_message = "已開啟困難模式！",
 	hardmode_warning = "困難模式結束！",
 
-	plasma = "離子衝擊",
-	plasma_desc = "當正在施放離子衝擊時發出警報。",
 	plasma_warning = "正在施放 離子衝擊！",
 	plasma_soon = "即將 離子衝擊！",
 	plasma_bar = "<離子沖擊>",
 
-	shock = "震爆",
-	shock_desc = "當正在施放震爆時發出警報。",
-	shock_warning = "震爆！",
 	shock_next = "下一震爆！",
 
-	laser = "P3Wx2雷射彈幕",
-	laser_desc = "當 P3Wx2雷射彈幕啟用時發出警報。",
 	laser_soon = "即將 P3Wx2雷射彈幕！",
 	laser_bar = "<P3Wx2雷射彈幕>",
 
-	magnetic = "磁能之核",
-	magnetic_desc = "當空中指揮裝置獲得磁能之核時發出警報。",
 	magnetic_message = "空中指揮裝置 已降落！",
 	loot_message = ">%s< 拾取了磁能之核！",
 
-	flames = "熾焰抑制劑",
-	flames_desc = "當施放熾焰抑制劑時發出警報。",
 	flames_soon = "可能即將 熾焰抑制劑！",
 	flames_bar = "<下一熾焰抑制劑>",
 	flames_warning = "即將 熾焰抑制劑！",
 
-	fbomb = "冰霜炸彈",
-	fbomb_desc = "當施放冰霜炸彈時發出警報。",
 	fbomb_soon = "可能即將 冰霜炸彈！",
 	fbomb_bar = "<下一冰霜炸彈>",
-	fbomb_warning = "即將 冰霜炸彈！",
 
-	bomb = "炸彈機器人",
-	bomb_desc = "當炸彈機器人出現時發出警報。",
 	bomb_message = "炸彈機器人 出現！",
 
 	end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。",
@@ -400,41 +304,25 @@ L:RegisterTranslations("ruRU", function() return {
 	hardmode_message = "Сложный режим активирован!",
 	hardmode_warning = "Завершение сложного режима",
 
-	plasma = "Взрыв плазмы",
-	plasma_desc = "Сообщать о применении Взрыва плазмы.",
 	plasma_warning = "Применяется Взрыв плазмы!",
 	plasma_soon = "Скоро Взрыв плазмы!",
 	plasma_bar = "Взрыв плазмы",
 
-	shock = "Шоковый удар",
-	shock_desc = "Сообщать о применении Шокового удара.",
-	shock_warning = "Применяется Шоковый удар!",
 	shock_next = "Следующий Шоковый удар!",
 
-	laser = "Лазерный обстрел",
-	laser_desc = "Сообщает об активации Лазерного обстрела!",
 	laser_soon = "Вращение!",
 	laser_bar = "Обстрел",
 
-	magnetic = "Магнитное ядро",
-	magnetic_desc = "Сообщает когда Воздушное судно находится под воздействием Магнитного ядра",
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
 
-	flames = "Подавитель пламени",
-	flames_desc = "Предупреждать о Подавлении пламени",
 	flames_soon = "Скоро Подавитель пламени!",
 	flames_bar = "Следующий Подавитель",
 	flames_warning = "Подавитель пламени!",
 
-	fbomb = "Ледяная бомба",
-	fbomb_desc = "Предупреждать о Ледяной бомбе",
 	fbomb_soon = "Скоро Ледяная бомба!",
 	fbomb_bar = "Следущая Ледяная бомба",
-	fbomb_warning = "Ледяная бомба!",
 
-	bomb = "Бомбот",
-	bomb_desc = "Предупреждать о Бомботе.",
 	bomb_message = "Появился Бомбот!",
 
 	end_trigger = "^Очевидно, я совершил небольшую ошибку в расчетах.",
@@ -471,54 +359,40 @@ end
 --      Event Handlers      --
 ------------------------------
 
---[[function mod:Shell(player, spellId)
-	self:Icon(player)
-end]]
-
-function mod:Bomb(_, spellId)
-	if db.bomb then
-		self:IfMessage(L["bomb_message"], "Important", 63811, "Alert")
-	end
+function mod:Bomb(_, spellId, _, _, spellName)
+	self:IfMessage(L["bomb_message"], "Important", 63811, "Alert")
 end
 
-function mod:Flames(_, spellId)
-	if db.flames then
-		self:IfMessage(L["flames_warning"], "Important", spellId)
-		self:Bar(L["flames"], 3, spellId)
-		self:Bar(L["flames_bar"], 80, spellId)
-		self:ScheduleEvent("flamesWarning", "BigWigs_Message", 78, L["flames_soon"], "Attention")
-	end
+function mod:Flames(_, spellId, _, _, spellName)
+	self:IfMessage(L["flames_warning"], "Important", spellId)
+	self:Bar(spellName, 3, spellId)
+	self:Bar(L["flames_bar"], 80, spellId)
+	self:ScheduleEvent("flamesWarning", "BigWigs_Message", 78, L["flames_soon"], "Attention")
 end
 
-function mod:FBomb(_, spellId)
-	if db.fbomb then
-		self:IfMessage(L["fbomb_warning"], "Important", spellId)
-		self:Bar(L["fbomb"], 2, spellId)
-		self:Bar(L["fbomb_bar"], 30, spellId)
-		self:ScheduleEvent("fbombWarning", "BigWigs_Message", 28, L["fbomb_soon"], "Attention")
-	end
+function mod:FBomb(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(spellName, 2, spellId)
+	self:Bar(L["fbomb_bar"], 30, spellId)
+	self:ScheduleEvent("fbombWarning", "BigWigs_Message", 28, L["fbomb_soon"], "Attention")
 end
 
-function mod:Plasma(_, spellId)
-	if db.plasma then
-		self:IfMessage(L["plasma_warning"], "Important", spellId)
-		self:Bar(L["plasma_warning"], 3, spellId)
-		self:Bar(L["plasma_bar"], 30, spellId)
-		self:ScheduleEvent("PlasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
-	end
+function mod:Plasma(_, spellId, _, _, spellName)
+	self:IfMessage(L["plasma_warning"], "Important", spellId)
+	self:Bar(L["plasma_warning"], 3, spellId)
+	self:Bar(L["plasma_bar"], 30, spellId)
+	self:ScheduleEvent("PlasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
 end
 
-function mod:Shock(_, spellId)
-	if db.shock then
-		self:IfMessage(L["shock_warning"], "Important", spellId)
-		self:Bar(L["shock"], 3.5, spellId)
-		self:Bar(L["shock_next"], 34, spellId)
-	end
+function mod:Shock(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(spellName, 3.5, spellId)
+	self:Bar(L["shock_next"], 34, spellId)
 end
 
-function mod:Spinning()
-	if db.laser then
-		self:IfMessage(L["laser_soon"], "Personal", 63414, "Long")
+function mod:Spinning(_, spellId)
+	if self:GetOption(63274) then
+		self:IfMessage(L["laser_soon"], "Personal", spellId, "Long")
 	end
 end
 
@@ -531,11 +405,9 @@ do
 	end
 end
 
-function mod:Magnetic(_, spellId)
-	if db.magnetic then
-		self:IfMessage(L["magnetic_message"], "Important", spellId)
-		self:Bar(L["magnetic"], 15, spellId)
-	end
+function mod:Magnetic(_, spellId, _, _, spellName)
+	self:IfMessage(L["magnetic_message"], "Important", spellId)
+	self:Bar(spellName, 15, spellId)
 end
 
 local function start()
@@ -545,10 +417,10 @@ local function start()
 		mod:IfMessage(L["engage_warning"], "Attention")
 		mod:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
 	end
-	if db.shock then
+	if mod:GetOption(63631) then
 		mod:Bar(L["shock_next"], 30, 63631)
 	end
-	if db.plasma then
+	if mod:GetOption(62997) then
 		mod:Bar(L["plasma_bar"], 20, 62997)
 		mod:DelayedMessage(17, L["plasma_soon"], "Attention")
 	end
@@ -558,7 +430,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
-		if db.flames then
+		if self:GetOption(64570) then
 			self:Bar(L["flames_bar"], 70, 64570)
 			self:DelayedMessage(68, L["flames_soon"], "Attention")
 		end
@@ -576,37 +448,33 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["flames_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["plasma_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["shock_next"])
+		self:TriggerEvent("BigWigs_StopBars", self)
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
 		end
-		if db.fbomb and ishardmode then
+		if self:GetOption(64623) and ishardmode then
 			self:Bar(L["fbomb_bar"], 45, 64623)
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
-		self:TriggerEvent("BigWigs_StopBar", self, L["laser"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["laser_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["fbomb_bar"])
+		self:TriggerEvent("BigWigs_StopBars", self)
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
-		self:TriggerEvent("BigWigs_StopBar", self, L["magnetic"])
+		self:TriggerEvent("BigWigs_StopBars", self)
 		if db.phase then
 			self:IfMessage(L["phase4_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
-		if db.fbomb and ishardmode then
+		if self:GetOption(64623) and ishardmode then
 			self:Bar(L["fbomb_bar"], 30, 64623)
 		end
-		if db.shock then
+		if self:GetOption(63631) then
 			self:Bar(L["shock_next"], 48, 63631)
 		end
 	elseif msg:find(L["end_trigger"]) then
@@ -640,9 +508,9 @@ do
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MimiLoot" and rest and db.magnetic then
+	if sync == "MimiLoot" and rest and self:GetOption(64444) then
 		self:TargetMessage(L["loot_message"], rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
-	elseif sync == "MimiBarrage" and db.laser then
+	elseif sync == "MimiBarrage" and self:GetOption(63274) then
 		self:IfMessage(L["laser_bar"], "Important", 63274)
 		self:Bar(L["laser_bar"], 60, 63274)
 	end
