@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.guid = 33271
-mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, "crash", "crashsay", "crashicon", "mark", "icon", "flame", "surge", "berserk", "bosskill"}
+mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -34,12 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
-	flame = "Searing Flames",
-	flame_desc = "Warn when Vezax casts a Searing Flames.",
-	flame_message = "Searing Flames!",
-
-	surge = "Surge of Darkness",
-	surge_desc = "Warn when Vezax gains Surge of Darkness.",
 	surge_message = "Surge %d!",
 	surge_cast = "Surge %d casting!",
 	surge_bar = "Surge %d",
@@ -50,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	animus_message = "Animus spawns!",
 
 	vapor = "Saronite Vapors",
-	vapor_desc = "Warn for Saronite Vapors spawn.",
+	vapor_desc = "Warn when Saronite Vapors spawn.",
 	vapor_message = "Saronite Vapor %d!",
 	vapor_bar = "Vapor %d/6",
 	vapor_trigger = "A cloud of saronite vapors coalesces nearby!",
@@ -59,20 +53,15 @@ L:RegisterTranslations("enUS", function() return {
 	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 	vaporstack_message = "Vapors x%d!",
 
-	crash = "Shadow Crash",
-	crash_desc = "Warn who Vezax casts Shadow Crash on.",
 	crash_you = "Crash on YOU!",
 	crash_other = "Crash on %s",
 	crash_say = "Crash on Me!",
 
 	crashsay = "Crash Say",
 	crashsay_desc = "Say when you are the target of Shadow Crash.",
-
 	crashicon = "Crash Icon",
 	crashicon_desc = "Place a Blue Square icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
-	mark = "Mark of the Faceless",
-	mark_desc = "Warn who gets the Mark of the Faceless.",
 	mark_message_you = "Mark on YOU!",
 	mark_message_other = "Mark on %s!",
 
@@ -81,14 +70,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	flame = "이글거리는 불길",
-	flame_desc = "이글거리는 불길의 시전을 알립니다.",
-	flame_message = "이글거리는 불길!",
-
 	engage_trigger = "^너희의 파멸은 새로운 고통의 시대를 열 것이다!",
 
-	surge = "어둠 쇄도",
-	surge_desc = "베작스의 어둠 쇄도 획득을 알립니다.",
 	surge_message = "어둠 쇄도 (%d)!",
 	surge_cast = "쇄도 시전 (%d)!",
 	surge_bar = "쇄도 %d",
@@ -108,8 +91,6 @@ L:RegisterTranslations("koKR", function() return {
 	vaporstack_desc = "사로나이트 증기 5중첩이상을 알립니다.",
 	vaporstack_message = "증기 x%d 중첩!",
 
-	crash = "어둠 붕괴",
-	crash_desc = "어둠 붕괴의 대상 플레이어를 알립니다.",
 	crash_you = "당신은 어둠 붕괴!",
 	crash_other = "어둠 붕괴: %s",
 
@@ -120,8 +101,6 @@ L:RegisterTranslations("koKR", function() return {
 	crashicon = "붕괴 아이콘",
 	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 파란 네모 표시를 지정합니다. (승급자 이상 권한 필요)",
 
-	mark = "얼굴 없는 자의 징표",
-	mark_desc = "얼굴 없는 자의 징표 대상 플레이어에게 전술 표시를 합니다.",
 	mark_message_you = "당신은 얼굴 없는 자의 징표!",
 	mark_message_other = "얼굴 없는 자의 징표: %s",
 
@@ -132,12 +111,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "^Votre destruction annoncera un nouvel âge de souffrance !",
 
-	flame = "Flammes incendiaires",
-	flame_desc = "Prévient quand Vezax incante des Flammes incendiaires.",
-	flame_message = "Flammes incendiaires !",
-
-	surge = "Vague de ténèbres",
-	surge_desc = "Prévient quand Vezax gagne une Vague de ténèbres.",
 	surge_message = "Vague de ténèbres %d !",
 	surge_cast = "Vague %d en incantation !",
 	surge_bar = "Vague %d",
@@ -157,8 +130,6 @@ L:RegisterTranslations("frFR", function() return {
 	vaporstack_desc = "Prévient quand vous avez 5 cumuls ou plus de Vapeurs de saronite.",
 	vaporstack_message = "Vapeurs de saronite x%d !",
 
-	crash = "Déferlante d'ombre",
-	crash_desc = "Prévient quand un joueur subit les effets d'une Déferlante d'ombre.",
 	crash_you = "Déferlante d'ombre sur VOUS !",
 	crash_other = "Déferlante : %s",
 	crash_say = "Déferlante d'ombre sur moi !",
@@ -169,8 +140,6 @@ L:RegisterTranslations("frFR", function() return {
 	crashicon = "Déferlante - Icône",
 	crashicon_desc = "Place une icône de raid (carré bleu) sur le dernier joueur ciblé par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
 
-	mark = "Marque du Sans-visage",
-	mark_desc = "Prévient quand un joueur subit les effets d'une Marque du Sans-visage.",
 	mark_message_you = "Marque du Sans-visage sur VOUS !",
 	mark_message_other = "Marque : %s",
 
@@ -181,12 +150,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Eure Vernichtung wird ein neues Zeitalter des Leids einläuten!",
 
-	flame = "Sengende Flammen",
-	flame_desc = "Warnt, wenn Vezax Sengende Flammen wirkt.",
-	flame_message = "Sengende Flammen!",
-
-	surge = "Sog der Dunkelheit",
-	surge_desc = "Warnung und Timer für Vezaxs Sog der Dunkelheit.",
 	surge_message = "Sog %d!",
 	surge_cast = "Wirkt Sog %d",
 	surge_bar = "Sog %d",
@@ -206,8 +169,6 @@ L:RegisterTranslations("deDE", function() return {
 	vaporstack_desc = "Warnt, wenn du 5 oder mehr Stapel der Saronitdämpfe hast.",
 	vaporstack_message = "Saronitdämpfe x%d!",
 
-	crash = "Schattengeschoss",
-	crash_desc = "Warnt, wenn Vezax Schattengeschoss wirkt.",
 	crash_you = "Schattengeschoss auf DIR!",
 	crash_other = "Schattengeschoss: %s!",
 	crash_say = "Schattengeschoss auf MIR!",
@@ -218,8 +179,6 @@ L:RegisterTranslations("deDE", function() return {
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
 	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 
-	mark = "Mal der Gesichtslosen",
-	mark_desc = "Warnt, wer von Mal der Gesichtslosen betroffen ist.",
 	mark_message_you = "Mal auf DIR!",
 	mark_message_other = "Mal: %s!",
 
@@ -230,14 +189,8 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	["Vezax Bunny"] = true, -- For emote catching.
 
-	flame = "灼热烈焰",
-	flame_desc = "当维扎克斯施放灼热烈焰时发出警报。",
-	flame_message = "灼热烈焰！",
-
 --	engage_trigger = "^Your destruction will herald a new age of suffering!",
 
-	surge = "黑暗涌动",
-	surge_desc = "当维扎克斯获得黑暗涌动时发出警报。",
 	surge_message = "黑暗涌动：>%d<！",
 	surge_cast = "正在施放 黑暗涌动：>%d<！",
 	surge_bar = "<黑暗涌动：%d>",
@@ -257,8 +210,6 @@ L:RegisterTranslations("zhCN", function() return {
 	vaporstack_desc = "当玩家中了5层或更多萨隆邪铁蒸汽时发出警报。",
 	vaporstack_message = "萨隆邪铁蒸汽：>x%d<！",
 
-	crash = "暗影冲撞",
-	crash_desc = "当玩家中了维扎克斯施放的暗影冲撞时发出警报。",
 	crash_you = ">你< 暗影冲撞！",
 	crash_other = "暗影冲撞：>%s<！",
 	crash_say = ">我< 暗影冲撞！",
@@ -269,8 +220,6 @@ L:RegisterTranslations("zhCN", function() return {
 	crashicon = "暗影冲撞标记",
 	crashicon_desc = "为中了暗影冲撞的队员打上蓝色方框团队标记。（需要权限）",
 
-	mark = "无面者的印记",
-	mark_desc = "当玩家中了无面者的印记的时发出警报。",
 	mark_message_you = ">你< 无面者的印记！",
 	mark_message_other = "无面者的印记：>%s<！",
 
@@ -281,14 +230,8 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 --	["Vezax Bunny"] = true, -- For emote catching.
 
-	flame = "灼熱烈焰",
-	flame_desc = "當威札斯施放灼熱烈焰時發出警報。",
-	flame_message = "灼熱烈焰！",
-
 	engage_trigger = "你的毀滅將會預告一個嶄新苦難時代的來臨!",
 
-	surge = "暗鬱奔騰",
-	surge_desc = "當威札斯獲得暗鬱奔騰時發出警報。",
 	surge_message = "暗鬱奔騰：>%d<！",
 	surge_cast = "正在施放 暗鬱奔騰：>%d<！",
 	surge_bar = "<暗鬱奔騰：%d>",
@@ -308,8 +251,6 @@ L:RegisterTranslations("zhTW", function() return {
 	vaporstack_desc = "當玩家中了5層或更多薩倫煙霧時發出警報。",
 	vaporstack_message = "薩倫煙霧：>x%d<！",
 
-	crash = "暗影暴擊",
-	crash_desc = "當玩家中了威札斯施放的暗影暴擊時發出警報。",
 	crash_you = ">你< 暗影暴擊！",
 	crash_other = "暗影暴擊：>%s<！",
 	crash_say = ">我< 暗影暴擊！",
@@ -320,8 +261,6 @@ L:RegisterTranslations("zhTW", function() return {
 	crashicon = "暗影暴擊標記",
 	crashicon_desc = "為中了暗影暴擊的隊員打上藍色方框團隊標記。（需要權限）",
 
-	mark = "無面者印記",
-	mark_desc = "當玩家中了無面者印記時發出警報。",
 	mark_message_you = ">你< 無面者印記！",
 	mark_message_other = "無面者印記：>%s<！",
 
@@ -332,12 +271,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Ваша смерть возвестит новую эру страданий!",
 
-	flame = "Жгучее пламя",
-	flame_desc = "Сообщать о применении жгучего пламени.",
-	flame_message = "Жгучее пламя!",
-
-	surge = "Наплыв Тьмы",
-	surge_desc = "Сообщать о применении наплыва тьмы.",
 	surge_message = "Наплыв %d!",
 	surge_cast = "Применяется наплыв %d!",
 	surge_bar = "Наплыв %d",
@@ -357,8 +290,6 @@ L:RegisterTranslations("ruRU", function() return {
 	vaporstack_desc = "Сообщать, когда у вас уже 5 стаков саронитового испарения.",
 	vaporstack_message = "Испарения x%d!",
 
-	crash = "Темное сокрушение",
-	crash_desc = "Сообщать на кого Везакс применяет темное сокрушение.",
 	crash_you = "Темное сокрушение на ВАС!",
 	crash_other = "Сокрушение на %s",
 	crash_say = "Сокрушение на мне!",
@@ -369,8 +300,6 @@ L:RegisterTranslations("ruRU", function() return {
 	crashicon = "Иконка сокрушения",
 	crashicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока, на которого наложено темное сокрушение (необходимо обладать промоутом).",
 
-	mark = "Метка Безликого",
-	mark_desc = "Помечать иконкой метку безликого.",
 	mark_message_you = "На ВАС Метка Безликого!",
 	mark_message_other = "Метка на: %s!",
 
@@ -450,42 +379,34 @@ local function scanTarget()
 end
 
 function mod:Mark(player, spellID)
-	if db.mark then
-		if player == pName then
-			self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
-			self:WideMessage(L["mark_message_other"]:format(player))
-		else
-			self:TargetMessage(L["mark_message_other"], player, "Important", spellID)
-			self:Whisper(player, L["mark_message_you"])
-		end
-		self:Bar(L["mark_message_other"]:format(player), 10, spellID)
-		self:Icon(player, "icon")
+	if player == pName then
+		self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
+		self:WideMessage(L["mark_message_other"]:format(player))
+	else
+		self:TargetMessage(L["mark_message_other"], player, "Important", spellID)
+		self:Whisper(player, L["mark_message_you"])
 	end
+	self:Bar(L["mark_message_other"]:format(player), 10, spellID)
+	self:Icon(player, "icon")
 end
 
 function mod:Target(player, spellId)
 	self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1)
 end
 
-function mod:Flame(_, spellID)
-	if db.flame then
-		self:IfMessage(L["flame_message"], "Urgent", spellID)
-	end
+function mod:Flame(_, spellID, _, _, spellName)
+	self:IfMessage(spellName, "Urgent", spellID)
 end
 
 function mod:Surge(_, spellID)
-	if db.surge then
-		self:IfMessage(L["surge_message"]:format(surgeCount), "Important", spellID)
-		self:Bar(L["surge_cast"]:format(surgeCount), 3, spellID)
-		surgeCount = surgeCount + 1
-		self:Bar(L["surge_bar"]:format(surgeCount), 60, spellID)
-	end
+	self:IfMessage(L["surge_message"]:format(surgeCount), "Important", spellID)
+	self:Bar(L["surge_cast"]:format(surgeCount), 3, spellID)
+	surgeCount = surgeCount + 1
+	self:Bar(L["surge_bar"]:format(surgeCount), 60, spellID)
 end
 
-function mod:SurgeGain(_, spellID)
-	if db.surge then
-		self:Bar(L["surge"], 10, spellID)
-	end
+function mod:SurgeGain(_, spellID, _, _, spellName)
+	self:Bar(spellName, 10, spellID)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
