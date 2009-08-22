@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
-mod.toggleoptions = {"grip", "shockwave", "eyebeam", "eyebeamsay", "arm", "armor", "bosskill"}
+mod.toggleoptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
 mod.consoleCmd = "Kologarn"
 
 ------------------------------
@@ -19,7 +19,6 @@ local started = nil
 local db = nil
 local grip = mod:NewTargetList()
 local pName = UnitName("player")
-local crunch = GetSpellInfo(63355)
 
 ----------------------------
 --      Localization      --
@@ -35,8 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 	left_wipe_bar = "Respawn Left Arm",
 	right_wipe_bar = "Respawn Right Arm",
 
-	grip = "Stone Grip",
-	grip_desc = "Warn who has Stone Grip.",
 	grip_message = "Stone Grip: %s",
 
 	shockwave = "Shockwave",
@@ -54,8 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 	eyebeamsay = "Eyebeam Say",
 	eyebeamsay_desc = "Say when you are the target of Focused Eyebeam.",
 
-	armor = "Crunch Armor",
-	armor_desc = "Warn when someone has 2 or more stacks of Crunch Armor.",
 	armor_message = "%2$dx Crunch on %1$s",
 } end )
 
@@ -67,8 +62,6 @@ L:RegisterTranslations("koKR", function() return {
 	left_wipe_bar = "왼팔 재생성",
 	right_wipe_bar = "오른팔 재생성",
 
-	grip = "바위 손아귀",
-	grip_desc = "바위 손아귀에 걸린 플레이어를 알립니다.",
 	grip_message = "바위 손아귀: %s",
 
 	shockwave = "충격파",
@@ -86,8 +79,6 @@ L:RegisterTranslations("koKR", function() return {
 	eyebeamsay = "안광 일반 대화",
 	eyebeamsay_desc = "안광 집중의 대상시 일반 대화로 알립니다.",
 
-	armor = "방어구 씹기",
-	armor_desc = "방어구 씹기 중첩이 2이상이 된 플레이어를 알립니다.",
 	armor_message = "방어구 씹기 x%2$d: %1$s",
 } end )
 
@@ -99,8 +90,6 @@ L:RegisterTranslations("frFR", function() return {
 	left_wipe_bar = "Repousse bras gauche",
 	right_wipe_bar = "Repousse bras droit",
 
-	grip = "Poigne de pierre",
-	grip_desc = "Prévient quand un joueur subit les effets d'une Poigne de pierre.",
 	grip_message = "Poigne de pierre : %s",
 
 	shockwave = "Onde de choc",
@@ -118,8 +107,6 @@ L:RegisterTranslations("frFR", function() return {
 	eyebeamsay = "Rayon de l'oeil - Dire",
 	eyebeamsay_desc = "Fait dire à votre personnage qu'il est ciblé par le Rayon de l'oeil quand c'est le cas.",
 
-	armor = "Broie armure",
-	armor_desc = "Prévient quand un joueur a 2 cumuls ou plus de Broie armure.",
 	armor_message = "%2$dx broyages d'armure sur %1$s",
 } end )
 
@@ -131,8 +118,6 @@ L:RegisterTranslations("deDE", function() return {
 	left_wipe_bar = "Neuer linker Arm",
 	right_wipe_bar = "Neuer rechter Arm",
 
-	grip = "Steinerner Griff",
-	grip_desc = "Warnt, wer von Steinerner Griff betroffen ist.",
 	grip_message = "Griff: %s!",
 
 	shockwave = "Schockwelle",
@@ -150,8 +135,6 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeamsay = "Augenstrahl /sagen",
 	eyebeamsay_desc = "Verkündet, wenn du das Ziel des Augenstrahls bist.",
 
-	armor = "Rüstung zermalmen",
-	armor_desc = "Warnt, wenn ein Spieler 2x oder öfter von Rüstung zermalmen betroffen ist.",
 	armor_message = "%2$dx Rüstung zermalmen: %1$s!",
 } end )
 
@@ -163,8 +146,6 @@ L:RegisterTranslations("zhCN", function() return {
 	left_wipe_bar = "<左臂重生>",
 	right_wipe_bar = "<右臂重生>",
 
-	grip = "岩石之握",
-	grip_desc = "当玩家中了岩石之握时发出警报。",
 	grip_message = "岩石之握：>%s<！",
 
 	shockwave = "震荡波",
@@ -182,8 +163,6 @@ L:RegisterTranslations("zhCN", function() return {
 	eyebeamsay = "聚焦视线",
 	eyebeamsay_desc = "当你中了聚焦视线时发出自身警报。",
 
-	armor = "粉碎护甲",
-	armor_desc = "当玩家中了2层或更多粉碎护甲时发出警报。",
 	armor_message = "粉碎护甲%2$d层：>%1$s<！",
 } end )
 
@@ -195,8 +174,6 @@ L:RegisterTranslations("zhTW", function() return {
 	left_wipe_bar = "<左臂重生>",
 	right_wipe_bar = "<右臂重生>",
 
-	grip = "堅石之握",
-	grip_desc = "當玩家中了堅石之握時發出警報。",
 	grip_message = "堅石之握：>%s<！",
 
 	shockwave = "震攝波",
@@ -214,8 +191,6 @@ L:RegisterTranslations("zhTW", function() return {
 	eyebeamsay = "集束目光",
 	eyebeamsay_desc = "當你中了集束目光時發出自身警報。",
 
-	armor = "粉碎護甲",
-	armor_desc = "當玩家中了2層或更多粉碎護甲時發出警報。",
 	armor_message = "粉碎護甲%2$d層：>%1$s<！",
 } end )
 
@@ -227,8 +202,6 @@ L:RegisterTranslations("ruRU", function() return {
 	left_wipe_bar = "Восcтaновление левой руки",
 	right_wipe_bar = "Восcтaновление правой руки",
 
-	grip = "Каменная хватка",
-	grip_desc = "Сообщать кто попал под воздействие Каменной хватки.",
 	grip_message = "Хватка: %s",
 
 	shockwave = "Ударная волна",
@@ -246,8 +219,6 @@ L:RegisterTranslations("ruRU", function() return {
 	eyebeamsay = "Сказать о взгяде",
 	eyebeamsay_desc = "Сказать когда вы цель взгляда.",
 
-	armor = "Хруст доспеха",
-	armor_desc = "Сообщать если кто получил 2 или больше эффекта Хруста доспеха.",
 	armor_message = "%2$dx Хруста на |3-5(%1$s)",
 } end )
 
@@ -273,25 +244,21 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Armor(player)
-	if db.armor then
-		local _, _, icon, stack = UnitDebuff(player, crunch)
-		if stack and stack > 1 then
-			self:TargetMessage(L["armor_message"], player, "Urgent", icon, "Info", stack)
-		end
+function mod:Armor(player, spellId, _, _, spellName)
+	local _, _, icon, stack = UnitDebuff(player, spellName)
+	if stack and stack > 1 then
+		self:TargetMessage(L["armor_message"], player, "Urgent", icon, "Info", stack)
 	end
 end
 
 local function gripWarn()
 	mod:TargetMessage(L["grip_message"], grip, "Attention", 64292, "Alert")
-	mod:Bar(L["grip"], 10, 64292)
 end
 
-function mod:Grip(player, spellId)
-	if db.grip then
-		grip[#grip + 1] = player
-		self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2)
-	end
+function mod:Grip(player, spellId, _, _, spellName)
+	grip[#grip + 1] = player
+	self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2)
+	mod:Bar(spellName, 10, 64292)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg)
