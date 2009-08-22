@@ -212,7 +212,7 @@ L:RegisterTranslations("ruRU", function() return {
 	-- Icehowl
 	butt_message = "Свирепое бодание на |3-5(%s)!",
 	butt_bar = "~Свирепое бодание",
-	
+
 	--Furious Charge - судя по транскриптору нет русского перевода :(
 	charge = "Furious Charge",
 	charge_desc = "Сообщать о Furious Charge.",

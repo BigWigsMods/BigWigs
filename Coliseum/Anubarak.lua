@@ -70,11 +70,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase_message = "Phase 2 !",
 
-	burrow = "Burrow",
-	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
+	burrow = "Fouir",
+	burrow_desc = "Affiche un délai de la technique Fouir d'Anub'Arak.",
 	--burrow_emote = "FIXME",
-	burrow_message = "Burrow",
-	burrow_cooldown = "Next Burrow",
+	burrow_message = "Fouir",
+	burrow_cooldown = "Prochain Fouir",
 
 	pursue = "Poursuite",
 	pursue_desc = "Indique qui Anub'Arak est entrain de poursuivre.",

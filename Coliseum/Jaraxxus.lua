@@ -64,7 +64,9 @@ L:RegisterTranslations("koKR", function() return {
 	netherpower_bar = "~황천의 힘 대기시간",
 } end)
 L:RegisterTranslations("frFR", function() return {
+	engage = "Engagement",
 	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !",
+	engage_trigger1 = "Banished to the Nether",
 
 	incinerate_you = "Incinérer la chair sur VOUS !",
 	incinerate_other = "Incinérer la chair : %s",
