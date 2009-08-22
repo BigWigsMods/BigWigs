@@ -410,10 +410,10 @@ local function rootWarn()
 	mod:TargetMessage(L["root_message"], root, "Attention", 62930, "Info")
 end
 
-function mod:Root(player, spellID)
+function mod:Root(player, spellId)
 	if db.root then
 		root[#root + 1] = player
-		self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellID)
+		self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId)
 	end
 end
 
@@ -431,19 +431,19 @@ do
 		return true
 	end
 
-	function mod:Tremor(_, spellID)
+	function mod:Tremor(_, spellId)
 		if db.tremor then
 			local caster = isCaster()
 			local color = caster and "Personal" or "Attention"
 			local sound = caster and "Long" or nil
-			self:IfMessage(L["tremor_message"], color, spellID, sound)
+			self:IfMessage(L["tremor_message"], color, spellId, sound)
 			if phase == 1 then
-				self:Bar(L["tremor"], 2, spellID)
-				self:Bar(L["tremor_bar"], 30, spellID)
+				self:Bar(L["tremor"], 2, spellId)
+				self:Bar(L["tremor_bar"], 30, spellId)
 				self:DelayedMessage(26, L["tremor_warning"], "Attention")
 			elseif phase == 2 then
-				self:Bar(L["tremor"], 2, spellID)
-				self:Bar(L["tremor_bar"], 23, spellID)
+				self:Bar(L["tremor"], 2, spellId)
+				self:Bar(L["tremor_bar"], 23, spellId)
 				self:DelayedMessage(20, L["tremor_warning"], "Attention")
 			end
 		end
@@ -484,17 +484,17 @@ function mod:Sunbeam()
 	end
 end
 
-function mod:Fury(player, spellID)
+function mod:Fury(player, spellId)
 	if db.fury then
 		if player == pName then
-			self:LocalMessage(L["fury_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["fury_you"], "Personal", spellId, "Alert")
 			self:WideMessage(L["fury_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:TargetMessage(L["fury_other"], player, "Attention", spellID)
+			self:TargetMessage(L["fury_other"], player, "Attention", spellId)
 			self:Whisper(player, L["fury_you"])
 		end
-		self:Bar(L["fury_other"]:format(player), 10, spellID)
+		self:Bar(L["fury_other"]:format(player), 10, spellId)
 		self:Icon(player, "icon")
 	end
 end
@@ -527,9 +527,9 @@ function mod:Energy(player)
 	end
 end
 
-function mod:EnergyCooldown(_,spellID)
+function mod:EnergyCooldown(_,spellId)
 	if db.energy then
-		self:Bar(L["energy"], 25, spellID)
+		self:Bar(L["energy"], 25, spellId)
 	end
 end
 

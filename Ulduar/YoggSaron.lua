@@ -662,9 +662,9 @@ do
 	end
 end
 
-function mod:Guardian(_, spellID)
+function mod:Guardian(_, spellId)
 	if db.guardian then
-		self:IfMessage(L["guardian_message"]:format(count), "Positive", spellID)
+		self:IfMessage(L["guardian_message"]:format(count), "Positive", spellId)
 		count = count + 1
 	end
 end
@@ -676,7 +676,7 @@ function mod:MControl(player, spellId)
 	end
 end
 
-function mod:Tentacle(_, spellID, source)
+function mod:Tentacle(_, spellId, source)
 	-- Crusher Tentacle (33966) 50 sec
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
@@ -687,47 +687,47 @@ function mod:Tentacle(_, spellID, source)
 	end
 end
 
-function mod:Roar(_, spellID)
+function mod:Roar(_, spellId)
 	if db.roar then
-		self:IfMessage(L["roar_message"], "Attention", spellID)
-		self:Bar(L["roar_bar"], 60, spellID)
+		self:IfMessage(L["roar_message"], "Attention", spellId)
+		self:Bar(L["roar_bar"], 60, spellId)
 		self:DelayedMessage(55, L["roar_warning"], "Attention")
 	end
 end
 
-function mod:Malady(player, spellID)
+function mod:Malady(player, spellId)
 	if db.malady then
 		self:Icon(player, "icon")
 	end
 end
 
-function mod:RemoveMalady(player, spellID)
+function mod:RemoveMalady(player, spellId)
 	if db.malady then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 
-function mod:Squeeze(player, spellID)
+function mod:Squeeze(player, spellId)
 	if db.squeeze then
-		self:TargetMessage(L["squeeze_message"], player, "Positive", spellID)
+		self:TargetMessage(L["squeeze_message"], player, "Positive", spellId)
 	end
 end
 
-function mod:Linked(player, spellID)
+function mod:Linked(player, spellId)
 	if db.link and player == pName then
-		self:LocalMessage(L["link_warning"], "Personal", spellID, "Alarm")
+		self:LocalMessage(L["link_warning"], "Personal", spellId, "Alarm")
 	end
 end
 
-function mod:Gaze(_, spellID)
+function mod:Gaze(_, spellId)
 	if db.gaze then
-		self:Bar(L["gaze_bar"], 9, spellID)
+		self:Bar(L["gaze_bar"], 9, spellId)
 	end
 end
 
-function mod:CastGaze(_, spellID)
+function mod:CastGaze(_, spellId)
 	if db.gaze then
-		self:Bar(L["gaze_cast_bar"], 4, spellID)
+		self:Bar(L["gaze_cast_bar"], 4, spellId)
 	end
 end
 
@@ -745,7 +745,7 @@ function mod:Empower()
 	end
 end
 
-function mod:RemoveEmpower(_, spellID)
+function mod:RemoveEmpower(_, spellId)
 	if db.empowericon then
 		self:IfMessage(L["empowericon_message"], "Attention", 64465)
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")

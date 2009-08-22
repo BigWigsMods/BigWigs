@@ -283,25 +283,25 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Cloud(player, spellID)
+function mod:Cloud(player, spellId)
 	if db.cloud then
 		if player == pName then
-			self:LocalMessage(L["cloud_you"], "Positive", spellID, "Info")
+			self:LocalMessage(L["cloud_you"], "Positive", spellId, "Info")
 			self:WideMessage(L["cloud_other"]:format(player))
 		else
-			self:TargetMessage(L["cloud_other"], player, "Positive", spellID)
+			self:TargetMessage(L["cloud_other"], player, "Positive", spellId)
 			self:Whisper(player, L["cloud_you"])
 		end
-		self:Bar(L["cloud_other"]:format(player), 30, spellID)
+		self:Bar(L["cloud_other"]:format(player), 30, spellId)
 		self:Icon(player, "icon")
 	end
 end
 
-function mod:FlashCast(_, spellID)
+function mod:FlashCast(_, spellId)
 	if db.flash then
-		self:IfMessage(L["flash_warning"], "Attention", spellID)
-		self:Bar(L["flash"], 9, spellID)
-		self:Bar(L["flash_bar"], 35, spellID)
+		self:IfMessage(L["flash_warning"], "Attention", spellId)
+		self:Bar(L["flash"], 9, spellId)
+		self:Bar(L["flash_bar"], 35, spellId)
 		self:DelayedMessage(30, L["flash_soon"], "Attention")
 	end
 end
@@ -317,10 +317,10 @@ function mod:Flash(player)
 	end
 end
 
-function mod:Frozen(_, spellID)
+function mod:Frozen(_, spellId)
 	if db.frozenblow then
-		self:IfMessage(L["frozenblow_message"], "Important", spellID)
-		self:Bar(L["frozenblow_bar"], 20, spellID)
+		self:IfMessage(L["frozenblow_message"], "Important", spellId)
+		self:Bar(L["frozenblow_bar"], 20, spellId)
 	end
 end
 

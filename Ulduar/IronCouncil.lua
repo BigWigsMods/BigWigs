@@ -412,23 +412,23 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Punch(_, spellID)
+function mod:Punch(_, spellId)
 	if db.punch then
-		self:IfMessage(L["punch_message"], "Urgent", spellID)
+		self:IfMessage(L["punch_message"], "Urgent", spellId)
 	end
 end
 
-function mod:Overwhelm(player, spellID)
+function mod:Overwhelm(player, spellId)
 	if db.overwhelm then
 		if player == pName then
-			self:LocalMessage(L["overwhelm_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["overwhelm_you"], "Personal", spellId, "Alert")
 			self:WideMessage(L["overwhelm_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:TargetMessage(L["overwhelm_other"], player, "Attention", spellID)
+			self:TargetMessage(L["overwhelm_other"], player, "Attention", spellId)
 			self:Whisper(player, L["overwhelm_you"])
 		end
-		self:Bar(L["overwhelm_other"]:format(player), overwhelmTime, spellID)
+		self:Bar(L["overwhelm_other"]:format(player), overwhelmTime, spellId)
 		self:Icon(player, "icon")
 	end
 end
@@ -442,22 +442,22 @@ function mod:OverRemove(player)
 	end
 end
 
-function mod:Shield(unit, spellID)
+function mod:Shield(unit, spellId)
 	if unit == molgeim and db.shield then
-		self:IfMessage(L["shield_message"], "Attention", spellID)
+		self:IfMessage(L["shield_message"], "Attention", spellId)
 	end
 end
 
-function mod:RunePower(_, spellID)
+function mod:RunePower(_, spellId)
 	if db.power then
-		self:IfMessage(L["power_message"], "Positive", spellID)
-		self:Bar(L["power"], 30, spellID)
+		self:IfMessage(L["power_message"], "Positive", spellId)
+		self:Bar(L["power"], 30, spellId)
 	end
 end
 
-function mod:RuneDeathCD(_, spellID)
+function mod:RuneDeathCD(_, spellId)
 	if db.death then
-		self:Bar(L["death_bar"], 30, spellID)
+		self:Bar(L["death_bar"], 30, spellId)
 	end
 end
 
@@ -469,20 +469,20 @@ end
 
 function mod:RuneSummoning()
 	if db.summoning then
-		self:IfMessage(L["summoning_message"], "Attention", spellID)
+		self:IfMessage(L["summoning_message"], "Attention", spellId)
 	end
 end
 
-function mod:Overload(_, spellID)
+function mod:Overload(_, spellId)
 	if db.overload then
-		self:IfMessage(L["overload_message"], "Attention", spellID, "Long")
-		self:Bar(L["overload"], 6, spellID)
+		self:IfMessage(L["overload_message"], "Attention", spellId, "Long")
+		self:Bar(L["overload"], 6, spellId)
 	end
 end
 
-function mod:Whirl(_, spellID)
+function mod:Whirl(_, spellId)
 	if db.whirl then
-		self:IfMessage(L["whirl_message"], "Attention", spellID)
+		self:IfMessage(L["whirl_message"], "Attention", spellId)
 	end
 end
 
@@ -523,10 +523,10 @@ local function tendrilsRemove()
 	mod:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
-function mod:Tendrils(_, spellID)
+function mod:Tendrils(_, spellId)
 	if db.tendrils then
-		self:IfMessage(L["tendrils"], "Attention", spellID)
-		self:Bar(L["tendrils"], 25, spellID)
+		self:IfMessage(L["tendrils"], "Attention", spellId)
+		self:Bar(L["tendrils"], 25, spellId)
 		self:ScheduleRepeatingEvent("BWTendrilsToTScan", targetCheck, 0.2)
 		self:ScheduleEvent("TargetCancel", tendrilsRemove, 25)
 	end

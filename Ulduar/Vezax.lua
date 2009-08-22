@@ -378,15 +378,15 @@ local function scanTarget()
 	end
 end
 
-function mod:Mark(player, spellID)
+function mod:Mark(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["mark_message_you"], "Personal", spellID, "Alert")
+		self:LocalMessage(L["mark_message_you"], "Personal", spellId, "Alert")
 		self:WideMessage(L["mark_message_other"]:format(player))
 	else
-		self:TargetMessage(L["mark_message_other"], player, "Important", spellID)
+		self:TargetMessage(L["mark_message_other"], player, "Important", spellId)
 		self:Whisper(player, L["mark_message_you"])
 	end
-	self:Bar(L["mark_message_other"]:format(player), 10, spellID)
+	self:Bar(L["mark_message_other"]:format(player), 10, spellId)
 	self:Icon(player, "icon")
 end
 
@@ -394,19 +394,19 @@ function mod:Target(player, spellId)
 	self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1)
 end
 
-function mod:Flame(_, spellID, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellID)
+function mod:Flame(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Urgent", spellId)
 end
 
-function mod:Surge(_, spellID)
-	self:IfMessage(L["surge_message"]:format(surgeCount), "Important", spellID)
-	self:Bar(L["surge_cast"]:format(surgeCount), 3, spellID)
+function mod:Surge(_, spellId)
+	self:IfMessage(L["surge_message"]:format(surgeCount), "Important", spellId)
+	self:Bar(L["surge_cast"]:format(surgeCount), 3, spellId)
 	surgeCount = surgeCount + 1
-	self:Bar(L["surge_bar"]:format(surgeCount), 60, spellID)
+	self:Bar(L["surge_bar"]:format(surgeCount), 60, spellId)
 end
 
-function mod:SurgeGain(_, spellID, _, _, spellName)
-	self:Bar(spellName, 10, spellID)
+function mod:SurgeGain(_, spellId, _, _, spellName)
+	self:Bar(spellName, 10, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)

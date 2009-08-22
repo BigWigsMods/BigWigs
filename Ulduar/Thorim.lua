@@ -454,33 +454,33 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Barrier(_, spellID)
+function mod:Barrier(_, spellId)
 	if db.barrier then
-		self:IfMessage(L["barrier_message"], "Urgent", spellID, "Alarm")
-		self:Bar(L["barrier"], 20, spellID)
+		self:IfMessage(L["barrier_message"], "Urgent", spellId, "Alarm")
+		self:Bar(L["barrier"], 20, spellId)
 	end
 end
 
-function mod:Charge(_, spellID)
+function mod:Charge(_, spellId)
 	if db.charge then
-		self:IfMessage(L["charge_message"]:format(chargeCount), "Attention", spellID)
+		self:IfMessage(L["charge_message"]:format(chargeCount), "Attention", spellId)
 		chargeCount = chargeCount + 1
-		self:Bar(L["charge_bar"]:format(chargeCount), 15, spellID)
+		self:Bar(L["charge_bar"]:format(chargeCount), 15, spellId)
 	end
 end
 
-function mod:Hammer(player, spellID)
+function mod:Hammer(player, spellId)
 	if db.hammer then
-		self:TargetMessage(L["hammer_message"], player, "Urgent", spellID)
-		self:Bar(L["hammer_bar"], 16, spellID)
+		self:TargetMessage(L["hammer_message"], player, "Urgent", spellId)
+		self:Bar(L["hammer_bar"], 16, spellId)
 		self:Icon(player, "icon")
 	end
 end
 
-function mod:Strike(player, spellID)
+function mod:Strike(player, spellId)
 	if db.strike then
-		self:TargetMessage(L["strike_message"], player, "Attention", spellID)
-		self:Bar(L["strike_message"]:format(player), 15, spellID)
+		self:TargetMessage(L["strike_message"], player, "Attention", spellId)
+		self:Bar(L["strike_message"]:format(player), 15, spellId)
 	end
 end
 
@@ -490,39 +490,39 @@ function mod:StrikeCooldown(player, spellId)
 	end
 end
 
-function mod:Orb(_, spellID)
+function mod:Orb(_, spellId)
 	if db.shock then
-		self:IfMessage(L["shock_warning"], "Urgent", spellID)
-		self:Bar(L["shock_bar"], 15, spellID)
+		self:IfMessage(L["shock_warning"], "Urgent", spellId)
+		self:Bar(L["shock_bar"], 15, spellId)
 	end
 end
 
 local last = 0
-function mod:Shock(player, spellID)
+function mod:Shock(player, spellId)
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
 		if player == pName and db.shock then
-			self:LocalMessage(L["shock_message"], "Personal", spellID, "Info")
+			self:LocalMessage(L["shock_message"], "Personal", spellId, "Info")
 		end
 	end
 end
 
-function mod:Impale(player, spellID)
+function mod:Impale(player, spellId)
 	if db.impale then
-		self:TargetMessage(L["impale_message"], player, "Important", spellID)
+		self:TargetMessage(L["impale_message"], player, "Important", spellId)
 	end
 end
 
-function mod:Detonation(player, spellID)
+function mod:Detonation(player, spellId)
 	if db.detonation then
 		if player == pName then
 			self:WideMessage(L["detonation_message"]:format(player))
 			SendChatMessage(L["detonation_yell"], "SAY")
 		else
-			self:TargetMessage(L["detonation_message"], player, "Important", spellID)
+			self:TargetMessage(L["detonation_message"], player, "Important", spellId)
 		end
-		self:Bar(L["detonation_message"]:format(player), 4, spellID)
+		self:Bar(L["detonation_message"]:format(player), 4, spellId)
 		self:Icon(player, "icon")
 	end
 end

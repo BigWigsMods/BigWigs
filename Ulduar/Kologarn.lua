@@ -288,7 +288,7 @@ local function gripWarn()
 	mod:Bar(L["grip"], 10, 64292)
 end
 
-function mod:Grip(player, spellID)
+function mod:Grip(player, spellId)
 	if db.grip then
 		grip[#grip + 1] = player
 		self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2)

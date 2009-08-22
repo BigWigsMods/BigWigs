@@ -243,23 +243,23 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Sonic(_, spellID)
+function mod:Sonic(_, spellId)
 	if db.sonic then
-		self:IfMessage(L["sonic_message"], "Attention", spellID)
-		self:Bar(L["sonic_bar"], 28, spellID)
+		self:IfMessage(L["sonic_message"], "Attention", spellId)
+		self:Bar(L["sonic_bar"], 28, spellId)
 	end
 end
 
-function mod:Defender(_, spellID)
+function mod:Defender(_, spellId)
 	if db.defender then
-		self:IfMessage(L["defender_message"]:format(count), "Attention", spellID)
+		self:IfMessage(L["defender_message"]:format(count), "Attention", spellId)
 	end
 end
 
-function mod:DefenderKill(_, spellID)
+function mod:DefenderKill(_, spellId)
 	count = count - 1
 	if db.defender then
-		self:Bar(L["defender_message"]:format(count), 30, spellID)
+		self:Bar(L["defender_message"]:format(count), 30, spellId)
 	end
 end
 
@@ -274,17 +274,17 @@ function mod:Swarm(player, spell)
 	mod:Bar(L["swarm_bar"], 37, spell)
 end
 
-function mod:Fear(_, spellID)
+function mod:Fear(_, spellId)
 	if db.fear then
-		self:IfMessage(L["fear_message"], "Urgent", spellID)
-		self:Bar(L["fear_bar"], 35, spellID)
+		self:IfMessage(L["fear_message"], "Urgent", spellId)
+		self:Bar(L["fear_bar"], 35, spellId)
 		self:DelayedMessage(32, L["fear_warning"], "Attention")
 	end
 end
 
-function mod:Sentinel(_, spellID)
+function mod:Sentinel(_, spellId)
 	if db.sentinel then
-		self:IfMessage(L["sentinel_message"], "Important", spellID)
+		self:IfMessage(L["sentinel_message"], "Important", spellId)
 	end
 end
 

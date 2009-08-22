@@ -257,9 +257,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Brittle(_, spellID)
+function mod:Brittle(_, spellId)
 	if db.brittle then
-		self:IfMessage(L["brittle_message"], "Positive", spellID)
+		self:IfMessage(L["brittle_message"], "Positive", spellId)
 	end
 end
 
@@ -270,31 +270,31 @@ function mod:Construct()
 	end
 end
 
-function mod:ScorchCast(_, spellID)
+function mod:ScorchCast(_, spellId)
 	if db.scorch then
-		self:IfMessage(L["scorch_warning"], "Attention", spellID)
-		self:Bar(L["scorch_bar"], 25, spellID)
-		self:DelayedMessage(20, L["scorch_soon"], "Urgent", nil, nil, nil, spellID)
+		self:IfMessage(L["scorch_warning"], "Attention", spellId)
+		self:Bar(L["scorch_bar"], 25, spellId)
+		self:DelayedMessage(20, L["scorch_soon"], "Urgent", nil, nil, nil, spellId)
 	end
 end
 
 do
 	local last = nil
-	function mod:Scorch(player, spellID)
+	function mod:Scorch(player, spellId)
 		if player == pName and db.scorch then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:LocalMessage(L["scorch_message"], "Personal", spellID, last and nil or "Alarm")
+				self:LocalMessage(L["scorch_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
 			end
 		end
 	end
 end
 
-function mod:SlagPot(player, spellID)
+function mod:SlagPot(player, spellId)
 	if db.slagpot then
-		self:TargetMessage(L["slagpot_message"], player, "Important", spellID)
-		self:Bar(L["slagpot_message"]:format(player), 10, spellID)
+		self:TargetMessage(L["slagpot_message"], player, "Important", spellId)
+		self:Bar(L["slagpot_message"]:format(player), 10, spellId)
 	end
 end
 
@@ -312,14 +312,14 @@ do
 		return true
 	end
 
-	function mod:Jets(_, spellID)
+	function mod:Jets(_, spellId)
 		if db.flame then
 			local caster = isCaster()
 			local color = caster and "Personal" or "Attention"
 			local sound = caster and "Long" or nil
-			self:IfMessage(L["flame_message"], color, spellID, sound)
-			self:Bar(L["flame_bar"], 25, spellID)
-			if caster then self:Bar(L["flame"], 2.7, spellID) end
+			self:IfMessage(L["flame_message"], color, spellId, sound)
+			self:Bar(L["flame_bar"], 25, spellId)
+			if caster then self:Bar(L["flame"], 2.7, spellId) end
 		end
 	end
 end

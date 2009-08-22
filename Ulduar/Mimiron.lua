@@ -482,38 +482,38 @@ function mod:Bomb(_, spellId)
 	end
 end
 
-function mod:Flames(_, spellID)
+function mod:Flames(_, spellId)
 	if db.flames then
-		self:IfMessage(L["flames_warning"], "Important", spellID)
-		self:Bar(L["flames"], 3, spellID)
-		self:Bar(L["flames_bar"], 80, spellID)
+		self:IfMessage(L["flames_warning"], "Important", spellId)
+		self:Bar(L["flames"], 3, spellId)
+		self:Bar(L["flames_bar"], 80, spellId)
 		self:ScheduleEvent("flamesWarning", "BigWigs_Message", 78, L["flames_soon"], "Attention")
 	end
 end
 
-function mod:FBomb(_, spellID)
+function mod:FBomb(_, spellId)
 	if db.fbomb then
-		self:IfMessage(L["fbomb_warning"], "Important", spellID)
-		self:Bar(L["fbomb"], 2, spellID)
-		self:Bar(L["fbomb_bar"], 30, spellID)
+		self:IfMessage(L["fbomb_warning"], "Important", spellId)
+		self:Bar(L["fbomb"], 2, spellId)
+		self:Bar(L["fbomb_bar"], 30, spellId)
 		self:ScheduleEvent("fbombWarning", "BigWigs_Message", 28, L["fbomb_soon"], "Attention")
 	end
 end
 
-function mod:Plasma(_, spellID)
+function mod:Plasma(_, spellId)
 	if db.plasma then
-		self:IfMessage(L["plasma_warning"], "Important", spellID)
-		self:Bar(L["plasma_warning"], 3, spellID)
-		self:Bar(L["plasma_bar"], 30, spellID)
+		self:IfMessage(L["plasma_warning"], "Important", spellId)
+		self:Bar(L["plasma_warning"], 3, spellId)
+		self:Bar(L["plasma_bar"], 30, spellId)
 		self:ScheduleEvent("PlasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
 	end
 end
 
-function mod:Shock(_, spellID)
+function mod:Shock(_, spellId)
 	if db.shock then
-		self:IfMessage(L["shock_warning"], "Important", spellID)
-		self:Bar(L["shock"], 3.5, spellID)
-		self:Bar(L["shock_next"], 34, spellID)
+		self:IfMessage(L["shock_warning"], "Important", spellId)
+		self:Bar(L["shock"], 3.5, spellId)
+		self:Bar(L["shock_next"], 34, spellId)
 	end
 end
 
@@ -532,10 +532,10 @@ do
 	end
 end
 
-function mod:Magnetic(_, spellID)
+function mod:Magnetic(_, spellId)
 	if db.magnetic then
-		self:IfMessage(L["magnetic_message"], "Important", spellID)
-		self:Bar(L["magnetic"], 15, spellID)
+		self:IfMessage(L["magnetic_message"], "Important", spellId)
+		self:Bar(L["magnetic"], 15, spellId)
 	end
 end
 

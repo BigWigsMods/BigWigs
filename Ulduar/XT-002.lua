@@ -279,38 +279,38 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Exposed(_, spellID)
+function mod:Exposed(_, spellId)
 	if db.exposed then
-		self:IfMessage(L["exposed_message"], "Attention", spellID)
-		self:Bar(L["exposed"], 30, spellID)
+		self:IfMessage(L["exposed_message"], "Attention", spellId)
+		self:Bar(L["exposed"], 30, spellId)
 	end
 end
 
-function mod:Heartbreak(_, spellID)
+function mod:Heartbreak(_, spellId)
 	phase = 2
 	if db.heartbreak then
-		self:IfMessage(L["heartbreak_message"], "Important", spellID)
+		self:IfMessage(L["heartbreak_message"], "Important", spellId)
 	end
 end
 
-function mod:Tantrum(_, spellID)
+function mod:Tantrum(_, spellId)
 	if phase == 2 and db.tantrum then
-		self:IfMessage(L["tantrum_message"], "Attention", spellID)
-		self:Bar(L["tantrum_bar"], 65, spellID)
+		self:IfMessage(L["tantrum_message"], "Attention", spellId)
+		self:Bar(L["tantrum_bar"], 65, spellId)
 	end
 end
 
-function mod:GravityBomb(player, spellID)
+function mod:GravityBomb(player, spellId)
 	if db.gravitybomb then
 		if player == pName then
-			self:LocalMessage(L["gravitybomb_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["gravitybomb_you"], "Personal", spellId, "Alert")
 			self:WideMessage(L["gravitybomb_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:TargetMessage(L["gravitybomb_other"], player, "Attention", spellID)
+			self:TargetMessage(L["gravitybomb_other"], player, "Attention", spellId)
 			self:Whisper(player, L["gravitybomb_you"])
 		end
-		self:Bar(L["gravitybomb_other"]:format(player), 9, spellID)
+		self:Bar(L["gravitybomb_other"]:format(player), 9, spellId)
 		if db.gravitybombicon then
 			SetRaidTarget(player, 6)
 		else
@@ -319,17 +319,17 @@ function mod:GravityBomb(player, spellID)
 	end
 end
 
-function mod:LightBomb(player, spellID)
+function mod:LightBomb(player, spellId)
 	if db.lightbomb then
 		if player == pName then
-			self:LocalMessage(L["lightbomb_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["lightbomb_you"], "Personal", spellId, "Alert")
 			self:WideMessage(L["lightbomb_other"]:format(player))
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:TargetMessage(L["lightbomb_other"], player, "Attention", spellID)
+			self:TargetMessage(L["lightbomb_other"], player, "Attention", spellId)
 			self:Whisper(player, L["lightbomb_you"])
 		end
-		self:Bar(L["lightbomb_other"]:format(player), 9, spellID)
+		self:Bar(L["lightbomb_other"]:format(player), 9, spellId)
 		self:Icon(player, "icon")
 	end
 end
