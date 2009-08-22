@@ -694,6 +694,7 @@ function plugin:OnEnable()
 	if not media:Fetch(mType, db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
+	self:RegisterEvent("BigWigs_StopBars", "Ace2_AddonDisabled")
 	self:RegisterEvent("Ace2_AddonDisabled")
 	colors = BigWigs:GetModule("Colors")
 end
