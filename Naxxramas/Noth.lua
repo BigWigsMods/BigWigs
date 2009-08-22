@@ -304,12 +304,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Curse(_, spellID)
+function mod:Curse(_, spellId)
 	if self.db.profile.curse then
-		self:IfMessage(L["cursewarn"], "Important", spellID, "Alarm")
+		self:IfMessage(L["cursewarn"], "Important", spellId, "Alarm")
 		self:ScheduleEvent("bwnothcurse", "BigWigs_Message", cursetime - 10, L["curse10secwarn"], "Urgent")
-		self:Bar(L["cursebar"], cursetime, spellID)
-		self:Bar(L["curseexplosion"], 10, spellID)
+		self:Bar(L["cursebar"], cursetime, spellId)
+		self:Bar(L["curseexplosion"], 10, spellId)
 	end
 end
 

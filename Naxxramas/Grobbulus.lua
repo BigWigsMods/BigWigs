@@ -149,24 +149,24 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Inject(player, spellID)
+function mod:Inject(player, spellId)
 	if self.db.profile.inject then
 		if player == pName then
-			self:LocalMessage(L["bomb_message_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["bomb_message_you"], "Personal", spellId, "Alert")
 			self:WideMessage(L["bomb_message_other"]:format(player))
 		else
-			self:TargetMessage(L["bomb_message_other"], player, "Attention", spellID)
+			self:TargetMessage(L["bomb_message_other"], player, "Attention", spellId)
 			self:Whisper(player, L["bomb_message_you"])
 		end
-		self:Bar(L["bomb_message_other"]:format(player), 10, spellID)
+		self:Bar(L["bomb_message_other"]:format(player), 10, spellId)
 		self:Icon(player, "icon")
 	end
 end
 
-function mod:Cloud(_, spellID)
+function mod:Cloud(_, spellId)
 	if self.db.profile.cloud then
-		self:IfMessage(L["cloud_warn"], "Urgent", spellID)
-		self:Bar(L["cloud_bar"], 15, spellID)
+		self:IfMessage(L["cloud_warn"], "Urgent", spellId)
+		self:Bar(L["cloud_bar"], 15, spellId)
 	end
 end
 

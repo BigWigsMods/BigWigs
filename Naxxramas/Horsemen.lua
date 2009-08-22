@@ -244,24 +244,24 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:VoidZone(_, spellID)
+function mod:VoidZone(_, spellId)
 	if self.db.profile.void then
-		self:IfMessage(L["voidwarn"], "Important", spellID)
-		self:Bar(L["voidbar"], 12, spellID)
+		self:IfMessage(L["voidwarn"], "Important", spellId)
+		self:Bar(L["voidbar"], 12, spellId)
 	end
 end
 
-function mod:Meteor(_, spellID)
+function mod:Meteor(_, spellId)
 	if self.db.profile.meteor then
-		self:IfMessage(L["meteorwarn"], "Important", spellID)
-		self:Bar(L["meteorbar"], 12, spellID)
+		self:IfMessage(L["meteorwarn"], "Important", spellId)
+		self:Bar(L["meteorbar"], 12, spellId)
 	end
 end
 
-function mod:Wrath(_, spellID)
+function mod:Wrath(_, spellId)
 	if self.db.profile.wrath then
-		self:IfMessage(L["wrathwarn"], "Important", spellID)
-		self:Bar(L["wrathbar"], 12, spellID)
+		self:IfMessage(L["wrathwarn"], "Important", spellId)
+		self:Bar(L["wrathbar"], 12, spellId)
 	end
 end
 

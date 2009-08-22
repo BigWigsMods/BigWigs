@@ -188,25 +188,25 @@ function mod:Shout()
 	end
 end
 
-function mod:ShieldWall(_, spellID, _, _, spellName)
+function mod:ShieldWall(_, spellId, _, _, spellName)
 	if self.db.profile.shieldwall then
-		self:Message(spellName, "Positive", nil, nil, nil, spellID)
-		self:Bar(spellName, 20, spellID)
+		self:Message(spellName, "Positive", nil, nil, nil, spellId)
+		self:Bar(spellName, 20, spellId)
 		self:DelayedMessage(15, L["taunt_warning"], "Attention")
 	end
 end
 
-function mod:Taunt(_, spellID, _, _, spellName)
+function mod:Taunt(_, spellId, _, _, spellName)
 	if self.db.profile.taunt then
-		self:Message(spellName, "Positive", nil, nil, nil, spellID)
-		self:Bar(spellName, 20, spellID)
+		self:Message(spellName, "Positive", nil, nil, nil, spellId)
+		self:Bar(spellName, 20, spellId)
 		self:DelayedMessage(15, L["shieldwall_warning"], "Attention")
 	end
 end
 
-function mod:Knife(unit, spellID)
+function mod:Knife(unit, spellId)
 	if self.db.profile.knife then
-		self:TargetMessage(L["knife_message"], unit, "Important", spellID)
+		self:TargetMessage(L["knife_message"], unit, "Important", spellId)
 	end
 end
 

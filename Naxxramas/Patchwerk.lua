@@ -75,9 +75,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Enraged(_, spellID)
+function mod:Enraged(_, spellId)
 	if self.db.profile.enrage then
-		self:IfMessage(L["enragewarn"], "Attention", spellID, "Alarm")
+		self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
 	end
 end
 

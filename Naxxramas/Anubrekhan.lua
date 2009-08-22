@@ -165,20 +165,20 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:GainSwarm(unit, spellID)
+function mod:GainSwarm(unit, spellId)
 	if unit == boss and self.db.profile.locust then
 		self:DelayedMessage(20, L["gainendwarn"], "Important")
-		self:Bar(L["gainbar"], 20, spellID)
-		--self:IfMessage(L["gainnextwarn"], "Urgent", spellID)
+		self:Bar(L["gainbar"], 20, spellId)
+		--self:IfMessage(L["gainnextwarn"], "Urgent", spellId)
 		self:DelayedMessage(75, L["gainwarn10sec"], "Important")
-		self:Bar(L["gainincbar"], 85, spellID)
+		self:Bar(L["gainincbar"], 85, spellId)
 	end
 end
 
-function mod:Swarm(_, spellID)
+function mod:Swarm(_, spellId)
 	if self.db.profile.locust then
-		self:IfMessage(L["castwarn"], "Attention", spellID)
-		self:Bar(L["castwarn"], 3, spellID)
+		self:IfMessage(L["castwarn"], "Attention", spellId)
+		self:Bar(L["castwarn"], 3, spellId)
 	end
 end
 

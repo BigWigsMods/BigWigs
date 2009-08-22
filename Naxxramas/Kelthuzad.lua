@@ -441,18 +441,18 @@ function mod:FrostBlast(player, spellId)
 	end
 end
 
-function mod:Detonate(player, spellID)
+function mod:Detonate(player, spellId)
 	if self.db.profile.detonate then
 		if player == pName then
-			self:LocalMessage(L["detonate_you"], "Personal", spellID, "Alert")
+			self:LocalMessage(L["detonate_you"], "Personal", spellId, "Alert")
 			self:WideMessage(L["detonate_other"]:format(player))
 		else
-			self:TargetMessage(L["detonate_other"], player, "Attention", spellID)
+			self:TargetMessage(L["detonate_other"], player, "Attention", spellId)
 			self:Whisper(player, L["detonate_you"])
 		end
 		self:Icon(player, "icon")
-		self:Bar(L["detonate_other"]:format(player), 5, spellID)
-		self:Bar(L["detonate_possible_bar"], 20, spellID)
+		self:Bar(L["detonate_other"]:format(player), 5, spellId)
+		self:Bar(L["detonate_possible_bar"], 20, spellId)
 		self:DelayedMessage(15, L["detonate_warning"], "Attention")
 	end
 end

@@ -288,15 +288,15 @@ function mod:Breath(_, spellId)
 	end
 end
 
-function mod:Drain(_, spellID)
+function mod:Drain(_, spellId)
 	if self.db.profile.lifedrain then
-		self:IfMessage(L["lifedrain_message"], "Urgent", spellID)
-		self:Bar(L["lifedrain_bar"], 23, spellID)
+		self:IfMessage(L["lifedrain_message"], "Urgent", spellId)
+		self:Bar(L["lifedrain_bar"], 23, spellId)
 		self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
 	end
 end
 
-function mod:Icebolt(player, spellID)
+function mod:Icebolt(player, spellId)
 	if not self.db.profile.icebolt then return end
 	if player == pName then
 		self:WideMessage(format(L["icebolt_other"], player))
@@ -306,7 +306,7 @@ function mod:Icebolt(player, spellID)
 			BigWigs:Print(L["ping_message"])
 		end
 	else
-		self:TargetMessage(L["icebolt_other"], player, "Attention", spellID)
+		self:TargetMessage(L["icebolt_other"], player, "Attention", spellId)
 	end
 	self:Icon(player, "icon")
 end

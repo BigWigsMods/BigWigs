@@ -250,27 +250,27 @@ function mod:Aura()
 	end
 end
 
-function mod:Deathbloom(_, spellID)
+function mod:Deathbloom(_, spellId)
 	if self.db.profile.deathbloom then
-		self:IfMessage(L["deathbloom"], "Important", spellID)
-		self:Bar(L["deathbloom"], 30, spellID)
+		self:IfMessage(L["deathbloom"], "Important", spellId)
+		self:Bar(L["deathbloom"], 30, spellId)
 		self:DelayedMessage(15, L["deathbloom_warning"], "Attention")
 	end
 end
 
-function mod:Doom(_, spellID)
+function mod:Doom(_, spellId)
 	if not self.db.profile.doom then return end
 
-	self:IfMessage(L["doomwarn"]:format(doomCount, doomTime), "Urgent", spellID)
+	self:IfMessage(L["doomwarn"]:format(doomCount, doomTime), "Urgent", spellId)
 	doomCount = doomCount + 1
-	self:Bar(L["doombar"]:format(doomCount), doomTime, spellID)
+	self:Bar(L["doombar"]:format(doomCount), doomTime, spellId)
 	self:DelayedMessage(doomTime - 5, L["doomwarn5sec"]:format(doomCount), "Urgent")
 end
 
 function mod:Spore()
 	if not self.db.profile.spore then return end
 
-	--spellID is a question mark, so we use our own: 38755
+	--spellId is a question mark, so we use our own: 38755
 	self:IfMessage(L["sporewarn"]:format(sporeCount), "Important", 38755)
 	sporeCount = sporeCount + 1
 	self:Bar(L["sporebar"]:format(sporeCount), sporeTime, 38755)

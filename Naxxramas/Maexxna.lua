@@ -236,9 +236,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function mod:Enrage(_, spellID)
+function mod:Enrage(_, spellId)
 	if self.db.profile.enrage then
-		self:IfMessage(L["enragewarn"], "Attention", spellID, "Alarm")
+		self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
 	end
 end
 

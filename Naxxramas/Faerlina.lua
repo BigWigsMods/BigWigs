@@ -216,13 +216,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Silence(unit, spellID)
+function mod:Silence(unit, spellId)
 	if not UnitIsUnit(unit, boss) then return end
 	if not enraged then
 		-- preemptive, 30s silence
 		if self.db.profile.silence then
-			self:IfMessage(L["silencewarn"], "Positive", spellID)
-			self:Bar(L["silencebar"], 30, spellID)
+			self:IfMessage(L["silencewarn"], "Positive", spellId)
+			self:Bar(L["silencebar"], 30, spellId)
 			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
 		end
 	else
@@ -233,7 +233,7 @@ function mod:Silence(unit, spellID)
 			self:Bar(enrageName, 60, 28798)
 		end
 		if self.db.profile.silence then
-			self:Bar(L["silencebar"], 30, spellID)
+			self:Bar(L["silencebar"], 30, spellId)
 			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
  		end
 		enraged = nil
@@ -246,10 +246,10 @@ function mod:Rain(player)
 	end
 end
 
-function mod:Enrage(unit, spellID, _, _, spellName)
+function mod:Enrage(unit, spellId, _, _, spellName)
 	if not UnitIsUnit(unit, boss) then return end
 	if self.db.profile.enrage then
-		self:IfMessage(L["enragewarn"], "Urgent", spellID)
+		self:IfMessage(L["enragewarn"], "Urgent", spellId)
 	end
 	self:TriggerEvent("BigWigs_StopBar", self, enrageName)
 	if enrageMessageId then
