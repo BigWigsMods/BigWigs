@@ -5,6 +5,7 @@
 local bboss = LibStub("LibBabble-Boss-3.0")
 local bzone = LibStub("LibBabble-Zone-3.0")
 
+local GetSpellInfo = GetSpellInfo
 local BZ = bzone:GetUnstrictLookupTable()
 local BB = bboss:GetUnstrictLookupTable()
 local BBR = bboss:GetReverseLookupTable()
@@ -487,9 +488,13 @@ do
 
 		if module:IsBossModule() then
 			self:ToggleModuleActive(module, false)
-			for i,v in ipairs(module.toggleoptions) do
-				if type(v) == "string" or (type(v) == "number" and v > 0) then
+			for i,v in next, module.toggleoptions do
+				local t = type(v)
+				if t == "string"  then
 					opts[v] = true
+				elseif t == "number" and v > 0 then
+					local n = GetSpellInfo(v)
+					opts[n] = true
 				end
 			end
 			self:RegisterDefaults(name, "profile", opts)
@@ -544,7 +549,7 @@ do
 					},
 				}
 				local customBossOptionOrder = -100
-				for i, v in ipairs(module.toggleoptions) do
+				for i, v in next, module.toggleoptions do
 					local x = i + 100
 					local t = type(v)
 					if t == "number" and v < 0 then
@@ -556,7 +561,7 @@ do
 					elseif t == "number" and v > 0 then
 						local spellName = GetSpellInfo(v)
 						if not spellName then error(("Invalid option %d in module %s."):format(v, name)) end
-						cons.args[v] = {
+						cons.args[spellName] = {
 							type = "toggle",
 							order = x,
 							name = spellName,
