@@ -203,47 +203,47 @@ end
 -- Event Handlers
 --
 
-function mod:DarkTouch(_, spellID)
+function mod:DarkTouch(_, spellId)
 	if db.touch then
 		if player == pName then
-			self:LocalMessage(L["touch_of_dark_on_you"], "Personal", spellID, "Alarm")
+			self:LocalMessage(L["touch_of_dark_on_you"], "Personal", spellId, "Alarm")
 			self:WideMessage(L["touch_of_dark_on_other"]:format(player))
 		else
-			self:TargetMessage(L["touch_of_dark_on_other"], player, "Attention", spellID)
+			self:TargetMessage(L["touch_of_dark_on_other"], player, "Attention", spellId)
 			self:Whisper(player, L["touch_of_dark_on_you"])
 		end	
 	end
 end
 
-function mod:LightTouch(_, spellID)
+function mod:LightTouch(_, spellId)
 	if db.touch then
 		if player == pName then
-			self:LocalMessage(L["touch_of_light_on_you"], "Personal", spellID, "Alarm")
+			self:LocalMessage(L["touch_of_light_on_you"], "Personal", spellId, "Alarm")
 			self:WideMessage(L["touch_of_light_on_other"]:format(player))
 		else
-			self:TargetMessage(L["touch_of_light_on_other"], player, "Attention", spellID)
+			self:TargetMessage(L["touch_of_light_on_other"], player, "Attention", spellId)
 			self:Whisper(player, L["touch_of_light_on_you"])
 		end	
 	end
 end
 
-function mod:DarkShield(_, spellID)
+function mod:DarkShield(_, spellId)
 	if db.shield then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		self:IfMessage(L["shield_darkness"], "Attention", spellID)
+		self:IfMessage(L["shield_darkness"], "Attention", spellId)
 		local d = UnitDebuff("player", essenceDark)
 		if not d then return end
-		self:LocalMessage(L["shield_darkness"], "Important", spellID, "Alert")
+		self:LocalMessage(L["shield_darkness"], "Important", spellId, "Alert")
 	end
 end
 
-function mod:LightShield(_, spellID)
+function mod:LightShield(_, spellId)
 	if db.shield then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		self:IfMessage(L["shield_light"], "Attention", spellID)
+		self:IfMessage(L["shield_light"], "Attention", spellId)
 		local d = UnitDebuff("player", essenceLight)
 		if not d then return end
-		self:LocalMessage(L["shield_light"], "Important", spellID, "Alert")
+		self:LocalMessage(L["shield_light"], "Important", spellId, "Alert")
 	end
 end
 

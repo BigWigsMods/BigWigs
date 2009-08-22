@@ -25,7 +25,6 @@ mod.proximitySilent = true
 --
 local db = nil
 local pName = UnitName("player")
-local impale = GetSpellInfo(67477)
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
 
@@ -276,8 +275,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:Impale(player, spellId)
-	local _, _, icon, stack = UnitDebuff(player, impale)
+function mod:Impale(player, spellId, _, _, spellName)
+	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(L["impale_message"], player, "Urgent", icon, "Info", stack)
 	end

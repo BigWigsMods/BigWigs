@@ -163,58 +163,58 @@ end
 -- Event Handlers
 --
 
-function mod:IncinerateFlesh(player, spellID)
+function mod:IncinerateFlesh(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["incinerate_you"], "Personal", spellID, "Info")
+		self:LocalMessage(L["incinerate_you"], "Personal", spellId, "Info")
 		self:WideMessage(L["incinerate_other"]:format(player))
 	else
-		self:TargetMessage(L["incinerate_other"], player, "Important", spellID)
+		self:TargetMessage(L["incinerate_other"], player, "Important", spellId)
 		self:Whisper(player, L["incinerate_you"])
 	end
-	self:Bar(L["incinerate_other"]:format(player), 12, spellID)
-	self:Bar(L["incinerate_bar"], 20, spellID)
+	self:Bar(L["incinerate_other"]:format(player), 12, spellId)
+	self:Bar(L["incinerate_bar"], 20, spellId)
 end
 
-function mod:IncinerateFleshRemoved(player, spellID)
+function mod:IncinerateFleshRemoved(player, spellId)
 	self:TargetMessage(L["incinerate_safe"], player, "Positive", 17) -- Power Word: Shield icon.
 	self:TriggerEvent("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
-function mod:LegionFlame(player, spellID)
+function mod:LegionFlame(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["legionflame_you"], "Personal", spellID, "Alert")
+		self:LocalMessage(L["legionflame_you"], "Personal", spellId, "Alert")
 		self:WideMessage(L["legionflame_other"]:format(player))
 	else
-		self:TargetMessage(L["legionflame_other"], player, "Important", spellID)
+		self:TargetMessage(L["legionflame_other"], player, "Important", spellId)
 		self:Whisper(player, L["legionflame_you"])
 	end
-	self:Bar(L["legionflame_other"]:format(player), 8, spellID)
-	self:Bar(L["legionflame_bar"], 30, spellID)
+	self:Bar(L["legionflame_other"]:format(player), 8, spellId)
+	self:Bar(L["legionflame_bar"], 30, spellId)
 	if db.icon then
 		self:Icon(player, "icon")
 	end
 end
 
-function mod:RemoveLegionFlameIcon(player, spellID)
+function mod:RemoveLegionFlameIcon(player, spellId)
 	if db.icon then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 
-function mod:NetherPower(unit, spellID, _, _, spellName)
+function mod:NetherPower(unit, spellId, _, _, spellName)
 	if unit == boss then
-		self:IfMessage(spellName, "Attention", spellID)
-		self:Bar(L["netherpower_bar"], 44, spellID)
+		self:IfMessage(spellName, "Attention", spellId)
+		self:Bar(L["netherpower_bar"], 44, spellId)
 	end
 end
 
-function mod:NetherPortal(_, spellID, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellID, "Alarm")
-	self:Bar(L["netherportal_bar"], 120, spellID)
+function mod:NetherPortal(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
+	self:Bar(L["netherportal_bar"], 120, spellId)
 end
 
-function mod:InfernalEruption(_, spellID, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellID, "Alarm")
+function mod:InfernalEruption(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
