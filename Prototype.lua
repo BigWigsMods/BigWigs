@@ -182,7 +182,7 @@ function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source
 		else
 			local f = self[m[spellId] or m["*"]]
 			if f then
-				if type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
+				if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
 					f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 				end
 			else
