@@ -9,7 +9,7 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
-mod.toggleOptions = {"nova", "overcharge", "icon", "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 mod.consoleCmd = "Emalon"
@@ -18,7 +18,6 @@ mod.consoleCmd = "Emalon"
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local started = nil
 local UnitGUID = _G.UnitGUID
 local GetNumRaidMembers = _G.GetNumRaidMembers
@@ -32,29 +31,19 @@ local guid = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	nova = "Lightning Nova",
-	nova_desc = "Warn when Emalon cast a Lightning Nova.",
-	nova_message = "Casting Lightning Nova!",
-	nova_next = "~Cooldown Lightning Nova",
+	nova_next = "~Nova Cooldown",
 
-	overcharge = "Overcharge",
-	overcharge_desc = "Warn when Emalon overcharges a minion.",
 	overcharge_message = "A minion is overcharged!",
 	overcharge_bar = "Explosion",
-	overcharge_next = "~Next Overcharge",
+	overcharge_next = "~Overcharge Cooldown",
 
 	icon = "Overcharge Icon",
 	icon_desc = "Place a skull on the mob with Overcharge.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	nova = "번개 회오리",
-	nova_desc = "에말론의 번개 회오리 시전을 알립니다.",
-	nova_message = "번개 회오리 시전!",
 	nova_next = "~번개 대기시간",
 
-	overcharge = "과충전",
-	overcharge_desc = "에말론이 하수인에게 과충전 사용을 알립니다.",
 	overcharge_message = "하수인 과충전!",
 	overcharge_bar = "폭발",
 	overcharge_next = "~다음 과충전",
@@ -64,13 +53,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	nova = "Nova de foudre",
-	nova_desc = "Prévient quand Emalon incante une Nova de foudre.",
-	nova_message = "Nova de foudre en incantation !",
 	nova_next = "~Recharge Nova de foudre",
 
-	overcharge = "Surcharger",
-	overcharge_desc = "Prévient quand Emalon surcharge un séide.",
 	overcharge_message = "Un séide est surchargé !",
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Prochaine Surcharge",
@@ -80,13 +64,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	nova = "Blitzschlagnova",
-	nova_desc = "Warnung und Timer für Blitzschlagnova.",
-	nova_message = "Blitzschlagnova!",
 	nova_next = "~Blitzschlagnova",
 
-	overcharge = "Überladen",
-	overcharge_desc = "Warnt, wann und wenn Emalon einen Sturmdiener überläd.",
 	overcharge_message = "Sturmdiener überladen!",
 	overcharge_bar = "Explosion",
 	overcharge_next = "~Überladen",
@@ -96,13 +75,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	nova = "Вспышка молнии",
-	nova_desc = "Предупреждать, когда эмалон применяет Вспышку молнии.",
-	nova_message = "Вспышка молнии!",
 	nova_next = "~Перезарядка Вспышки молнии",
 
-	overcharge = "Перегрузка",
-	overcharge_desc = "Предупреждать когда Эмалон применяет Перегрузку на Служителя бури.",
 	overcharge_message = "Служитель бури перегружен!",
 	overcharge_bar = "Взрыв Служителя бури",
 	overcharge_next = "~Следующая Перегрузка",
@@ -112,13 +86,8 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	nova = "闪电新星",
-	nova_desc = "当艾玛尔隆施放闪电新星时发出警报。",
-	nova_message = "正在施放 闪电新星！",
 	nova_next = "<闪电新星 冷却>",
 
-	overcharge = "超载",
-	overcharge_desc = "当艾玛尔隆超载minion时发出警报。",
 	overcharge_message = "minion - 超载！",
 	overcharge_bar = "<爆炸>",
 	overcharge_next = "<下一超载>",
@@ -128,13 +97,8 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	nova = "閃電新星",
-	nova_desc = "當艾瑪隆施放閃電新星時發出警報。",
-	nova_message = "正在施放 閃電新星！",
 	nova_next = "<閃電新星 冷卻>",
 
-	overcharge = "超載",
-	overcharge_desc = "當艾瑪隆超載暴雨爪牙時發出警報。",
 	overcharge_message = " 暴雨爪牙 - 超載！",
 	overcharge_bar = "<爆炸>",
 	overcharge_next = "<下一超載>",
@@ -159,27 +123,22 @@ function mod:OnEnable()
 
 	started = nil
 	guid = nil
-	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:Nova(_, spellID)
-	if db.nova then
-		self:IfMessage(L["nova_message"], "Attention", spellID)
-		self:Bar(L["nova"], 5, spellID)
-		self:Bar(L["nova_next"], 25, spellID)
-	end
+function mod:Nova(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Attention", spellId)
+	self:Bar(spellName, 5, spellId)
+	self:Bar(L["nova_next"], 25, spellId)
 end
 
-function mod:Overcharge(_, spellID)
-	if db.overcharge then
-		self:IfMessage(L["overcharge_message"], "Positive", spellID)
-		self:Bar(L["overcharge_bar"], 20, spellID)
-		self:Bar(L["overcharge_next"], 45, spellID)
-	end
+function mod:Overcharge(_, spellId, _, _, spellName)
+	self:IfMessage(L["overcharge_message"], "Positive", spellId)
+	self:Bar(L["overcharge_bar"], 20, spellId)
+	self:Bar(L["overcharge_next"], 45, spellId)
 end
 
 local function scanTarget()
@@ -206,7 +165,7 @@ end
 
 function mod:OverchargeIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
-	if not db.icon then return end
+	if not self.db.profile.icon then return end
 	guid = select(9, ...)
 	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", scanTarget, 0.1)
 end
@@ -218,10 +177,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if db.overcharge then
+		if self.db.profile.overcharge then
 			self:Bar(L["overcharge_next"], 45, 64218)
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Enrage(360, true)
 		end
 	end
