@@ -197,12 +197,12 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		spawnTime = GetRaidDifficulty() == 1 and 40 or 30
-		--if db.flame then
+		if self:GetOption(62680) then
 			self:Bar(L["flame_bar"], 21, 62680)
-		--end
-		--if db.construct then
+		end
+		if self:GetOption(62488) then
 			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")
-		--end
+		end
 	end
 end
 

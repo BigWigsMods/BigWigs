@@ -210,10 +210,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
-		if db.defender then
-			self:Bar(L["defender"], 60, 64455)
+		if self:GetOption(64455) then
+			self:Bar(L["defender_message"]:format(count), 60, 64455)
 		end
-		if db.fear then
+		if self:GetOption(64386) then
 			self:Bar(L["fear_bar"], 32, 64386)
 			self:DelayedMessage(32, L["fear_warning"], "Attention")
 		end

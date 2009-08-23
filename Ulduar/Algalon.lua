@@ -193,12 +193,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		blackholes = 0
 		phase = 1
 		self:Bar(L["phase_bar"]:format(phase), 8, "INV_Gizmo_01")
-		if db.bigbang then
+		if self:GetOption(64443) then
 			local sn = GetSpellInfo(64443)
 			self:Bar(sn, 98, 64443)
 			self:DelayedMessage(93, L["bigbang_soon"], "Attention")
 		end
-		if db.smash then
+		if self:GetOption(62301) then
 			local sn = GetSpellInfo(62301)
 			self:Bar(sn, 33, 64597)
 		end

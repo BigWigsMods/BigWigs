@@ -10,7 +10,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", "sanity", -1, "guardian", "mindcontrol", -1, "tentacle" , "malady", "link", "squeeze", "portal", "weakened", "madness", -1, "roar", "empower", "empowericon", "gaze", "icon", "berserk", "bosskill"}
+mod.toggleoptions = {"phase", 63050, 63120, "icon", -1, 62979, -1, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, -1, 64189, 64465, "empowericon", 64163, "berserk", "bosskill"}
 mod.consoleCmd = "Yogg"
 
 ------------------------------
@@ -19,9 +19,8 @@ mod.consoleCmd = "Yogg"
 
 local db = nil
 local squeezeName = GetSpellInfo(64126)
-local linkedName = GetSpellInfo(63802)
-local sanity = GetSpellInfo(63050)
-local count = 1
+local guardianCount = 1
+local crusherCount = 1
 local pName = UnitName("player")
 local UnitGUID = _G.UnitGUID
 local GetNumRaidMembers = _G.GetNumRaidMembers
@@ -53,8 +52,6 @@ L:RegisterTranslations("enUS", function() return {
 	portal_message = "Portals open!",
 	portal_bar = "Next portals",
 
-	sanity = "Sanity",
-	sanity_desc = "Warn when your Sanity stack drops below 40.",
 	sanity_message = "You're going insane!",
 
 	weakened = "Stunned",
@@ -62,56 +59,31 @@ L:RegisterTranslations("enUS", function() return {
 	weakened_message = "%s is stunned!",
 	weakened_trigger = "The illusion shatters and a path to the central chamber opens!",
 
-	madness = "Induce Madness",
-	madness_desc = "Show timer for Induce Madness.",
 	madness_warning = "Madness in 5sec!",
-
-	malady = "Malady of the Mind",
-	malady_desc = "Warn when a player has Malady of the Mind.",
 	malady_message = "Malady: %s",
 
 	tentacle = "Crusher Tentacle",
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
 	tentacle_message = "Crusher %d!",
 
-	squeeze = squeezeName,
-	squeeze_desc = "Warn which player is squeezed.",
 	squeeze_message = squeezeName .. ": %s",
-
-	link = linkedName,
-	link_desc = "Warn when you get linked with someone.",
 	link_warning = "You are linked!",
 
-	gaze = "Lunatic Gaze",
-	gaze_desc = "Warn when Yogg-Saron gains Lunatic Gaze.",
 	gaze_bar = "~Gaze Cooldown",
-	gaze_cast_bar = "Casting Lunatic Gaze",
-
-	empower = "Empowering Shadows",
-	empower_desc = "Warn for Empowering Shadows.",
-	empower_message = "Empowering Shadows!",
 	empower_bar = "~Empower Cooldown",
 
-	mindcontrol = "Mind Control",
-	mindcontrol_desc = "Warn who is Mind Controlled.",
-	mindcontrol_message = "Mind Control: %s",
-
-	guardian = "Guardian spawn", --phase 1
-	guardian_desc = "Warn when a Guardian of Yogg-Saron spawns.",
+	insane_message = "Insane: %s",
 	guardian_message = "Guardian %d!",
 
 	empowericon = "Empower Icon",
 	empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows.",
 	empowericon_message = "Empower Faded!",
 
-	roar = "Deafening Roar",
-	roar_desc = "Warns when Deafening Roar is casting.",
-	roar_message = "Deafening Roar!",
 	roar_warning = "Roar in 5sec!",
 	roar_bar = "Next Roar",
 
 	icon = "Place Icon",
-	icon_desc = "Place a Raid Icon on the player with Malady of the Mind or Mind Control. (requires promoted or higher)",
+	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -133,8 +105,6 @@ L:RegisterTranslations("ruRU", function() return {
 	portal_message = "Порталы открыты!",
 	portal_bar = "Следующий портал",
 
-	sanity = "Здравомыслие",
-	sanity_desc = "Сообщать, когда сумма здравомыслия опуститься ниже 40.",
 	sanity_message = "Вы теряете рассудок!",
 
 	weakened = "Оглушение",
@@ -142,51 +112,29 @@ L:RegisterTranslations("ruRU", function() return {
 	weakened_message = "%s оглушен!",
 	weakened_trigger = "Иллюзия разрушена и путь в центральную комнату открыт!",
 
-	madness = "Доведение до помешательства",
-	madness_desc = "Показывать таймер доведения до помешательства.",
 	madness_warning = "Помешательство через 5сек!",
-
-	malady = "Душевная болезнь",
-	malady_desc = "Сообщать, когда игрок получает душевную болезнь.",
 	malady_message = "Болезнь у: |3-1(%s)",
 
 	tentacle = "Тяжелое щупальце",
 	tentacle_desc = "Сообщать о появлении тяжелого щупальца.",
 	tentacle_message = "Щупальце %d!",
 
-	squeeze = squeezeName,
-	squeeze_desc = "Сообщать об игроке, который подвергся выдавливанию.",
 	squeeze_message = squeezeName .. ": %s",
-
-	link = linkedName,
-	link_desc = "Сообщать, когда вы получаете схожее мышление с кем либо.",
 	link_warning = "У вас схожее мышление!",
 
-	gaze = "Взгляд безумца",
-	gaze_desc = "Сообщать, когда Йогг-Сарон получает взгляд безумца.",
 	gaze_bar = "~Взгляд безумца",
-	gaze_cast_bar = "Применение взгляда безумца",
-
-	empower = "Сгущение тьмы",
-	empower_desc = "Сообщать о сгущение тьмы.",
-	empower_message = "Сгущение тьмы!",
 	empower_bar = "~Сгущение тьмы",
 
 	mindcontrol = "Господство над разумом",
 	mindcontrol_desc = "Сообщать о том, кто находиться под господством над разумом.",
-	mindcontrol_message = "Под контролем: %s",
+	insane_message = "Под контролем: %s",
 
-	guardian = "Появление стража", --phase 1
-	guardian_desc = "Сообщать о появлении стражей Йогг-Сарона.",
 	guardian_message = "Страж %d!",
 
 	empowericon = "Иконка сгущения тьмы",
 	empowericon_desc = "Помечать черепом Бессмертного стража со сгущением тьмы.",
 	empowericon_message = "Сгущение тьмы закончилось!",
 
-	--roar = "Deafening Roar",
-	--roar_desc = "Warns when Deafening Roar is casting.",
-	--roar_message = "Deafening Roar!",
 	--roar_warning = "Roar in 5sec!",
 	--roar_bar = "Next Roar",
 
@@ -213,8 +161,6 @@ L:RegisterTranslations("koKR", function() return {
 	portal_message = "차원문 열림!",
 	portal_bar = "다음 차원문",
 
-	sanity = "이성",
-	sanity_desc = "이성 중첩이 40이하면 알립니다.",
 	sanity_message = "당신의 이성 위험!",
 
 	weakened = "기절",
@@ -222,51 +168,29 @@ L:RegisterTranslations("koKR", function() return {
 	weakened_message = "%s 기절!",
 	weakened_trigger = "환상이 부서지며, 중앙에 있는 방으로 가는 길이 열립니다!",
 
-	madness = "광기 유발",
-	madness_desc = "광기 유발의 타이머를 표시합니다.",
 	madness_warning = "5초 후 광기 유발!",
-
-	malady = "병든 정신",
-	malady_desc = "병든 정신에 걸린 플레이어를 알립니다.",
 	malady_message = "병든 정신: %s",
 
 	tentacle = "촉수 소환",
 	tentacle_desc = "촉수 소환을 알립니다.",
 	tentacle_message ="분쇄의 촉수(%d)",
 
-	squeeze = squeezeName,
-	squeeze_desc = "압착에 붙잡힌 플레이어를 알립니다.",
 	squeeze_message = squeezeName .. ": %s",
-
-	link = linkedName,
-	link_desc = "두뇌의 고리에 연결된 플레이어를 알립니다.",
 	link_warning = "당신은 두뇌의 고리!",
 
-	gaze = "광기의 시선",
-	gaze_desc = "요그사론의 광기의 시선 획득을 알립니다.",
 	gaze_bar = "~시선 대기시간",
-	gaze_cast_bar = "광기의 시선 시전",
-
-	empower = "암흑 강화",
-	empower_desc = "암흑 강화를 알립니다.",
-	empower_message = "암흑 강화!",
 	empower_bar = "~강화 대기시간",
 
 	mindcontrol = "정신 지배",
 	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
-	mindcontrol_message = "정신 지배: %s",
 
-	guardian = "수호자 소환", --phase 1
-	guardian_desc = "요그사론의 수호자 소환을 알립니다.",
+	insane_message = "정신 지배: %s",
 	guardian_message = "수호자 소환 %d!",
 
 	empowericon = "암흑 강화 아이콘",
 	empowericon_desc = "암흑 강화에 걸린 수호병에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",
 	empowericon_message = "암흑 강화 사라짐!",
 
-	roar = "귀청이 터질듯한 포효",
-	roar_desc = "귀청이 터질듯한 포효의 시전을 알립니다.",
-	roar_message = "귀청이 터질듯한 포효!",
 	roar_warning = "5초 후 포효!",
 	roar_bar = "다음 포효",
 
@@ -293,8 +217,6 @@ L:RegisterTranslations("frFR", function() return {
 	portal_message = "Portails ouverts !",
 	portal_bar = "Prochains portails",
 
-	sanity = "Santé mentale",
-	sanity_desc = "Prévient quand votre cumul de Santé mentale descend en dessous de 40.",
 	sanity_message = "Vous allez devenir fou !",
 
 	weakened = "Étourdi",
@@ -302,51 +224,26 @@ L:RegisterTranslations("frFR", function() return {
 	weakened_message = "%s est étourdi !",
 	weakened_trigger = "L'illusion se brise et un chemin s'ouvre vers la salle centrale !",
 
-	madness = "Susciter la folie",
-	madness_desc = "Affiche le délai avant la fin de l'incantation de Susciter la folie.",
 	madness_warning = "Susciter la folie dans 5 sec. !",
-
-	malady = "Mal de la raison",
-	malady_desc = "Prévient quand un joueur subit les effets d'un Mal de la raison.",
 	malady_message = "Mal : %s",
 
 	tentacle = "Tentacule écraseur",
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
 	tentacle_message = "Écraseur %d !",
 
-	squeeze = squeezeName,
-	squeeze_desc = "Prévient quand un joueur subit les effets d'un Ecrasement.",
 	squeeze_message = squeezeName .. " : %s",
-
-	link = linkedName,
-	link_desc = "Indique quels joueurs sont liées.",
 	link_warning = "Votre cerveau est lié !",
 
-	gaze = "Regard lunatique",
-	gaze_desc = "Prévient quand Yogg-Saron incante un Regard lunatique.",
 	gaze_bar = "~Recharge Regard",
-	gaze_cast_bar = "Regard en incantation",
-
-	empower = "Renforcement des ombres",
-	empower_desc = "Prévient de l'arrivée des Renforcements des ombres.",
-	empower_message = "Renforcement des ombres !",
 	empower_bar = "~Recharge Renforcement",
 
-	mindcontrol = "Emprise",
-	mindcontrol_desc = "Prévient quand un joueur subit les effets d'une Emprise.",
-	mindcontrol_message = "Emprise : %s",
-
-	guardian = "Apparition des gardiens", --phase 1
-	guardian_desc = "Prévient quand un Gardien de Yogg-Saron apparaît.",
+	insane_message = "Emprise : %s",
 	guardian_message = "Gardien %d !",
 
 	empowericon = "Renforcement - Icône",
 	empowericon_desc = "Place un crâne sur le Gardien immortel ayant Renforcement des ombres.",
 	empowericon_message = "Renforcement terminé !",
 
-	roar = "Rugissement assourdissant",
-	roar_desc = "Prévient quand un Rugissement assourdissant est incanté.",
-	roar_message = "Rugissement assourdissant !",
 	roar_warning = "Rugissement dans 5 sec. !",
 	roar_bar = "Prochain Rugissement",
 
@@ -373,8 +270,6 @@ L:RegisterTranslations("deDE", function() return {
 	portal_message = "Portale offen!",
 	portal_bar = "Nächsten Portale",
 
-	sanity = "Geistige Gesundheit",
-	sanity_desc = "Warnt, wenn deine Geistige Gesundheit unter 40 Prozent fällt.",
 	sanity_message = "DU wirst verrückt!",
 	
 	weakened = "Geschwächt",
@@ -382,51 +277,26 @@ L:RegisterTranslations("deDE", function() return {
 	weakened_message = "%s ist geschwächt!",
 	weakened_trigger = "Die Illusion fällt in sich zusammen und der Weg in den zentralen Raum wird frei!",
 
-	madness = "Wahnsinn hervorrufen",
-	madness_desc = "Warnung und Timer für Wahnsinn hervorrufen.",
 	madness_warning = "Wahnsinn in 5 sek!",
-
-	malady = "Geisteskrankheit",
-	malady_desc = "Warnung und Timer für Geisteskrankheit.",
 	malady_message = "Geisteskrank: %s!",
 
 	tentacle = "Schmettertentakel",
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
 	tentacle_message = "Schmettertentakel %d!",
 
-	squeeze = squeezeName,
-	squeeze_desc = "Warnt, welcher Spieler von Quetschen betroffen ist.",
 	squeeze_message = squeezeName .. ": %s!",
-
-	link = linkedName,
-	link_desc = "Warnt, welche Spieler gehirnverbunden sind.",
 	link_warning = "DU bist verbunden!",
 
-	gaze = "Wahnsinniger Blick",
-	gaze_desc = "Warnung und Timer für Wahnsinniger Blick.",
 	gaze_bar = "~Blick",
-	gaze_cast_bar = "Wirkt Blick",
-
-	empower = "Machtvolle Schatten",
-	empower_desc = "Warnung und Timer für Machtvolle Schatten.",
-	empower_message = "Machtvolle Schatten!",
 	empower_bar = "~Machtvolle Schatten",
 
-	mindcontrol = "Gedanken beherrschen",
-	mindcontrol_desc = "Warnt, wer mit Gedanken beherrschen übernommen wurde.",
-	mindcontrol_message = "Gedankenkontrolle: %s!",
-
-	guardian = "Wächter beschwören", --phase 1
-	guardian_desc = "Warnt, wenn ein Wächter von Yogg-Saron beschwört wird.",
+	insane_message = "Gedankenkontrolle: %s!",
 	guardian_message = "Wächter %d!",
 
 	empowericon = "Schatten-Symbol",
 	empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher).",
 	empowericon_message = "Schatten verblasst!",
 
-	roar = "Ohrenbetäubendes Gebrüll",
-	roar_desc = "Warnt, wenn Ohrenbetäubendes Gebrüll gewirkt wird.",
-	roar_message = "Ohrenbetäubendes Gebrüll!",
 	roar_warning = "Gebrüll in 5 sek!",
 	roar_bar = "Nächstes Gebrüll",
 
@@ -453,8 +323,6 @@ L:RegisterTranslations("zhCN", function() return {
 	portal_message = "开启传送门！",
 	portal_bar = "<下一传送门>",
 
-	sanity = "理智",
-	sanity_desc = "当你的理智堆叠下降到40以下时发出警报。",
 	sanity_message = ">你< 即将疯狂！",
 
 	weakened = "昏迷",
@@ -462,51 +330,26 @@ L:RegisterTranslations("zhCN", function() return {
 	weakened_message = "昏迷：>%s<！",
 --	weakened_trigger = "The Illusion shatters and a path to the central chamber opens!",
 
-	madness = "疯狂诱导",
-	madness_desc = "显示疯狂诱导计时器。",
 	madness_warning = "5秒后，疯狂诱导！",
-
-	malady = "心灵疾病",
-	malady_desc = "当玩家中了心灵疾病时发出警报。",
 	malady_message = "心灵疾病：>%s<！",
 
 	tentacle = "粉碎触须",
 	tentacle_desc = "当粉碎触须出现时发出警报。",
 	tentacle_message = "粉碎触须：>%d<！",
 
-	squeeze = squeezeName,
-	squeeze_desc = "当玩家中了挤压时发出警报。",
 	squeeze_message = squeezeName .. "：>%s<！",
-
-	link = linkedName,
-	link_desc = "当你被心智链接时发出警报。",
 	link_warning = ">你< 心智链接！",
 
-	gaze = "疯乱凝视",
-	gaze_desc = "当尤格-萨隆获得疯乱凝视时发出警报。",
 	gaze_bar = "<疯乱凝视 冷却>",
-	gaze_cast_bar = "<正在施放：疯乱凝视>",
-
-	empower = "暗影信标",
-	empower_desc = "当暗影信标时发出警报。",
-	empower_message = "暗影信标！",
 	empower_bar = "<暗影信标 冷却>",
 
-	mindcontrol = "统御意志",
-	mindcontrol_desc = "当玩家中了统御意志时发出警报。",
-	mindcontrol_message = "统御意志：>%s<！",
-
-	guardian = "召唤卫士出现", --phase 1
-	guardian_desc = "当尤格-萨隆召唤卫士出现时发出警报。",
+	insane_message = "统御意志：>%s<！",
 	guardian_message = "召唤卫士：>%d<！",
 
 	empowericon = "暗影信标标记",
 	empowericon_desc = "为中了暗影信标的不朽守护者打上骷髅标记。（需要权限）.",
 	empowericon_message = "暗影信标 消退！",
 
-	roar = "震耳咆哮",
-	roar_desc = "当正在施放震耳咆哮时发出警报。",
-	roar_message = "震耳咆哮！",
 	roar_warning = "5秒后，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
 
@@ -532,8 +375,6 @@ L:RegisterTranslations("zhTW", function() return {
 	portal_message = "開啟傳送門！",
 	portal_bar = "<下一傳送門>",
 
-	sanity = "理智",
-	sanity_desc = "當你的理智堆疊下降到40以下時發出警報。",
 	sanity_message = ">你< 即將瘋狂！！",
 
 	weakened = "昏迷",
@@ -541,51 +382,26 @@ L:RegisterTranslations("zhTW", function() return {
 	weakened_message = "昏迷：>%s<！",
 	weakened_trigger = "幻影粉碎，然後中央房間的道路就打開了!",
 
-	madness = "瘋狂誘陷",
-	madness_desc = "顯示瘋狂誘陷計時條。",
 	madness_warning = "5秒後，瘋狂誘陷！",
-
-	malady = "心靈缺陷",
-	malady_desc = "當玩家中了心靈缺陷時發出警報。",
 	malady_message = "心靈缺陷：>%s<！",
 
 	tentacle = "粉碎觸手",
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
 	tentacle_message = "粉碎觸手：>%d<！",
 
-	squeeze = squeezeName,
-	squeeze_desc = "當玩家中了壓榨時發出警報。",
 	squeeze_message = squeezeName .. "：>%s<！",
-
-	link = linkedName,
-	link_desc = "當你被腦波連結時發出警報。",
 	link_warning = ">你< 腦波連結！",
 
-	gaze = "癡狂凝視",
-	gaze_desc = "當尤格薩倫獲得癡狂凝視時發出警報。",
 	gaze_bar = "<癡狂凝視 冷卻>",
-	gaze_cast_bar = "<正在施放：癡狂凝視>",
-
-	empower = "暗影信標",
-	empower_desc = "當暗影信標時發出警報。",
-	empower_message = "暗影信標！",
 	empower_bar = "<暗影信標 冷卻>",
 
-	mindcontrol = "支配心靈",
-	mindcontrol_desc = "當玩家中了支配心靈時發出警報。",
-	mindcontrol_message = "支配心靈：>%s<！",
-
-	guardian = "召喚守護者出現", --phase 1
-	guardian_desc = "當尤格薩倫守護者出現時發出警報。",
+	insane_message = "支配心靈：>%s<！",
 	guardian_message = "尤格薩倫守護者：>%d<！ ",
 
 	empowericon = "暗影信標標記",
 	empowericon_desc = "為中了暗影信標的不朽守護者打上骷髏標記。（需要權限）",
 	empowericon_message = "暗影信標 消失！",
 
-	roar = "震耳咆哮",
-	roar_desc = "當正在施放震耳咆哮時發出警報。",
-	roar_message = "震耳咆哮！",
 	roar_warning = "5秒後，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
 
@@ -612,8 +428,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CastGaze", 64163)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Malady", 63830, 63881)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveMalady", 63830, 63881)
-	-- 63042 is the add MC during p1, 63120 is the MC when you go insane in p2/3.
-	self:AddCombatListener("SPELL_AURA_APPLIED", "MControl", 63042, 63120)
+	-- 63120 is the MC when you go insane in p2/3.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Insane", 63120)
 	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
 	self:AddCombatListener("SPELL_SUMMON", "Guardian", 62979)
@@ -641,14 +457,14 @@ end
 
 do
 	local warned = {}
-	function mod:SanityIncrease(player, spellId)
-		if not db.sanity or not warned[player] then return end
-		local _, _, _, stack = UnitDebuff(player, sanity)
+	function mod:SanityIncrease(player, spellId, _, _, spellName)
+		if not warned[player] then return end
+		local _, _, _, stack = UnitDebuff(player, spellName)
 		if stack and stack > 70 then warned[player] = nil end
 	end
-	function mod:SanityDecrease(player, spellId)
-		if not db.sanity or warned[player] then return end
-		local _, _, _, stack = UnitDebuff(player, sanity)
+	function mod:SanityDecrease(player, spellId, _, _, spellName)
+		if warned[player] then return end
+		local _, _, _, stack = UnitDebuff(player, spellName)
 		if not stack then return end
 		if player == pName then
 			if stack > 40 then return end
@@ -662,91 +478,70 @@ do
 end
 
 function mod:Guardian(_, spellId)
-	if db.guardian then
-		self:IfMessage(L["guardian_message"]:format(count), "Positive", spellId)
-		count = count + 1
-	end
+	self:IfMessage(L["guardian_message"]:format(guardianCount), "Positive", spellId)
+	guardianCount = guardianCount + 1
 end
 
-function mod:MControl(player, spellId)
-	if db.mindcontrol then
-		self:TargetMessage(L["mindcontrol_message"], player, "Attention", spellId)
-		self:Icon(player, "icon")
-	end
+function mod:Insane(player, spellId)
+	self:TargetMessage(L["insane_message"], player, "Attention", spellId)
 end
 
-function mod:Tentacle(_, spellId, source)
+function mod:Tentacle(_, spellId, source, _, spellName)
 	-- Crusher Tentacle (33966) 50 sec
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
 	if source == L["Crusher Tentacle"] and db.tentacle then
-		self:IfMessage(L["tentacle_message"]:format(count), "Important", 64139)
-		count = count + 1
-		self:Bar(L["tentacle_message"]:format(count), 50, 64139)
+		self:IfMessage(L["tentacle_message"]:format(crusherCount), "Important", 64139)
+		crusherCount = crusherCount + 1
+		self:Bar(L["tentacle_message"]:format(crusherCount), 55, 64139)
 	end
 end
 
-function mod:Roar(_, spellId)
-	if db.roar then
-		self:IfMessage(L["roar_message"], "Attention", spellId)
-		self:Bar(L["roar_bar"], 60, spellId)
-		self:DelayedMessage(55, L["roar_warning"], "Attention")
-	end
+function mod:Roar(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Attention", spellId)
+	self:Bar(L["roar_bar"], 60, spellId)
+	self:DelayedMessage(55, L["roar_warning"], "Attention")
 end
 
-function mod:Malady(player, spellId)
-	if db.malady then
-		self:Icon(player, "icon")
-	end
+function mod:Malady(player)
+	self:Icon(player, "icon")
 end
 
-function mod:RemoveMalady(player, spellId)
-	if db.malady then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-	end
+function mod:RemoveMalady(player)
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
 function mod:Squeeze(player, spellId)
-	if db.squeeze then
-		self:TargetMessage(L["squeeze_message"], player, "Positive", spellId)
-	end
+	self:TargetMessage(L["squeeze_message"], player, "Positive", spellId)
 end
 
 function mod:Linked(player, spellId)
-	if db.link and player == pName then
+	if player == pName then
 		self:LocalMessage(L["link_warning"], "Personal", spellId, "Alarm")
 	end
 end
 
-function mod:Gaze(_, spellId)
-	if db.gaze then
-		self:Bar(L["gaze_bar"], 9, spellId)
-	end
+function mod:Gaze(_, spellId, _, _, spellName)
+	self:Bar(L["gaze_bar"], 9, spellId)
 end
 
-function mod:CastGaze(_, spellId)
-	if db.gaze then
-		self:Bar(L["gaze_cast_bar"], 4, spellId)
-	end
+function mod:CastGaze(_, spellId, _, _, spellName)
+	self:Bar(spellName, 4, spellId)
 end
 
-function mod:Madness()
-	if db.madness then
-		self:Bar(L["madness"], 60, 64059)
-		self:ScheduleEvent("MadnessWarning", "BigWigs_Message", 55, L["madness_warning"], "Urgent")
-	end
+function mod:Madness(_, spellId, _, _, spellName)
+	self:Bar(spellName, 60, 64059)
+	self:DelayedMessage(55, L["madness_warning"], "Urgent")
 end
 
-function mod:Empower()
-	if db.empower then
-		self:IfMessage(L["empower_message"], "Attention", 64465)
-		self:Bar(L["empower_bar"], 46, 64465)
-	end
+function mod:Empower(_, spellId)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(L["empower_bar"], 46, spellId)
 end
 
-function mod:RemoveEmpower(_, spellId)
+function mod:RemoveEmpower()
 	if db.empowericon then
-		self:IfMessage(L["empowericon_message"], "Attention", 64465)
+		self:IfMessage(L["empowericon_message"], "Positive", 64465)
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
@@ -792,7 +587,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
-		count = 1
+		guardianCount = 1
 		if db.phase then
 			self:IfMessage(L["engage_warning"], "Attention")
 		end
@@ -801,7 +596,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
-		count = 1
+		crusherCount = 1
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 		end
@@ -811,14 +606,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
 		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["tentacle_message"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["portal_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["madness"])
+		self:TriggerEvent("BigWigs_StopBars", self)
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
 		end
-		if db.empower then
-			self:Bar(L["empower"], 46, 64486)
+		if self:GetOption(64465) then
+			self:Bar(L["empower_bar"], 46, 64486)
 		end
 	end
 end
