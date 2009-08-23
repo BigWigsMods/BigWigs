@@ -10,7 +10,7 @@ mod.zonename = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
-mod.toggleOptions = {"tsunami", "breath", -1, "drakes", "twilight", "berserk", "bosskill"}
+mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
 mod.consoleCmd = "Sartharion"
 
 ------------------------------
@@ -37,11 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	tsunami_cooldown = "Wave Cooldown",
 	tsunami_trigger = "The lava surrounding %s churns!",
 
-	breath = "Flame Breath",
-	breath_desc = "Warn for Flame Breath casting.",
-	breath_warning = "Breath in ~5sec!",
-	breath_message = "Breath!",
-	breath_cooldown = "Breath Cooldown",
+	breath_cooldown = "~Breath Cooldown",
 
 	drakes = "Drake Adds",
 	drakes_desc = "Warn when each drake add will join the fight.",
@@ -66,10 +62,6 @@ L:RegisterTranslations("koKR", function() return {
 	tsunami_cooldown = "용암 파도 대기시간",
 	tsunami_trigger = "%s|1을;를; 둘러싼 용암이 끓어오릅니다!",
 
-	breath = "화염 숨결",
-	breath_desc = "화염 숨결 시전을 알립니다.",
-	breath_warning = "약 5초 후 화염 숨결!",
-	breath_message = "화염 숨결!",
 	breath_cooldown = "화염 숨결 대기시간",
 
 	drakes = "비룡 추가",
@@ -93,12 +85,8 @@ L:RegisterTranslations("zhCN", function() return {
 	tsunami_warning = "约5秒，烈焰之啸！",
 	tsunami_message = "烈焰之啸！",
 	tsunami_cooldown = "烈焰之啸冷却！",
-	tsunami_trigger = "The lava surrounding %s churns!",	--check
+	tsunami_trigger = "The lava surrounding %s churns!", --check
 
-	breath = "烈焰吐息",
-	breath_desc = "当正在施放烈焰吐息时发出警报。",
-	breath_warning = "约5秒，烈焰吐息！",
-	breath_message = "烈焰吐息！",
 	breath_cooldown = "烈焰吐息冷却！",
 
 	drakes = "幼龙增援",
@@ -124,10 +112,6 @@ L:RegisterTranslations("zhTW", function() return {
 	tsunami_cooldown = "炎嘯冷卻！",
 	tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!",
 
-	breath = "火息術",
-	breath_desc = "當正在施放火息術時發出警報。",
-	breath_warning = "約5秒，火息術！",
-	breath_message = "火息術！",
 	breath_cooldown = "火息術冷卻！",
 
 	drakes = "飛龍增援",
@@ -153,10 +137,6 @@ L:RegisterTranslations("frFR", function() return {
 	tsunami_cooldown = "Recharge Vague",
 	tsunami_trigger = "La lave qui entoure %s bouillonne !",
 
-	breath = "Souffle de flammes",
-	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
-	breath_warning = "Souffle dans ~5 sec. !",
-	breath_message = "Souffle !",
 	breath_cooldown = "Recharge Souffle",
 
 	drakes = "Arrivée des drakes",
@@ -182,10 +162,6 @@ L:RegisterTranslations("ruRU", function() return {
 	tsunami_cooldown = "Перезарядка цунами",
 	tsunami_trigger = "Лава вокруг |3-1(%s) начинает бурлить!",
 
-	breath = "Огненное дыхание",
-	breath_desc = "Предупреждать о применении огненного дыхания.",
-	breath_warning = "Огненное дыхание через ~5сек!",
-	breath_message = "Огненное дыхание!",
 	breath_cooldown = "Перезарядка дыхания",
 
 	drakes = "Драконы",
@@ -211,10 +187,6 @@ L:RegisterTranslations("deDE", function() return {
 	tsunami_cooldown = "~Flammentsunami",
 	tsunami_trigger = "Die Lava um %s brodelt!",
 
-	breath = "Flammenatem",
-	breath_desc = "Warnungen und Timer für Flammenatem.",
-	breath_warning = "Flammenatem in ~5 sek!",
-	breath_message = "Flammenatem!",
 	breath_cooldown = "~Flammenatem",
 
 	drakes = "Drachen",
@@ -251,31 +223,29 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:DrakeCheck(_, spellID)
+function mod:DrakeCheck(_, spellId)
 	-- Tenebron (61248) called in roughly 15s after engage
 	-- Shadron (58105) called in roughly 60s after engage
 	-- Vesperon (61251) called in roughly 105s after engage
 	-- Each drake takes around 12 seconds to land
 	if not db.drakes then return end
-	if spellID == 58105 and not shadronStarted then
+	if spellId == 58105 and not shadronStarted then
 		self:Bar(shadron, 80, 58105)
 		self:DelayedMessage(75, fmt(L["drakes_incomingsoon"], shadron), "Attention")
 		shadronStarted = true
-	elseif spellID == 61248 and not tenebronStarted then
+	elseif spellId == 61248 and not tenebronStarted then
 		self:Bar(tenebron, 30, 61248)
 		self:DelayedMessage(25, fmt(L["drakes_incomingsoon"], tenebron), "Attention")
 		tenebronStarted = true
-	elseif spellID == 61251 and not vesperonStarted then
+	elseif spellId == 61251 and not vesperonStarted then
 		self:Bar(vesperon, 120, 61251)
 		self:DelayedMessage(115, fmt(L["drakes_incomingsoon"], vesperon), "Attention")
 		vesperonStarted = true
 	end
 end
 
-function mod:Breath(_, spellID)
-	if db.breath then
-		self:Bar(L["breath_cooldown"], 12, 58956)
-	end
+function mod:Breath(_, spellId)
+	self:Bar(L["breath_cooldown"], 12, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)

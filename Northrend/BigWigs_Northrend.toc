@@ -15,7 +15,7 @@
 ## Notes-zhCN: Big Wigs 诺森德模块
 ## Notes-zhTW: Big Wigs 北裂境模組
 ## Author: Funkydude, Rabbit
-## X-Credits: 7destiny, Timewasted
+## X-Credits: 7destiny, Timewasted, durcyn
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -31,3 +31,4 @@ Archavon.lua
 Malygos.lua
 Sartharion.lua
 Emalon.lua
+

@@ -9,7 +9,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleOptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", "static", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
 mod.consoleCmd = "Malygos"
 
 ------------------------------
@@ -55,10 +55,6 @@ L:RegisterTranslations("enUS", function() return {
 	surge_you = "Surge of Power on YOU!",
 	surge_trigger = "%s fixes his eyes on you!",
 
-	static = "Static Field",
-	static_desc = "Warn when you're in a Static Field.",
-	static_message = "in a Static Field!",
-
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase2_warning = "Phase 2 soon!",
@@ -75,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 	sparks_desc = "마력의 불꽃 소환을 알립니다.",
 	sparks_message = "마력의 불꽃 소환!",
 	sparks_warning = "약 5초 후 마력의 불꽃!",
-	
+
 	spark = "마력의 불꽃 버프",
 	spark_desc = "말리고스의 마력의 불꽃 버프 획득을 알립니다.",
 	spark_message = "말리고스 마력의 불꽃 획득!",
@@ -95,10 +91,6 @@ L:RegisterTranslations("koKR", function() return {
 	surge_desc = "3단계에서 말리고스가 당신에게 마력의 쇄도를 사용시 알립니다.",
 	surge_you = "당신에게 마력의 쇄도!",
 	surge_trigger = "%s|1이;가; 당신을 주시합니다!",
-	
-	static = "전자기장",
-	static_desc = "자신이 전자기장의 안속일때 알립니다.",
-	static_message = "전자기장에 들어옴!",
 
 	phase = "단계",
 	phase_desc = "단계 변화를 알립니다.",
@@ -137,10 +129,6 @@ L:RegisterTranslations("frFR", function() return {
 	surge_you = "Vague de puissance sur VOUS !",
 	surge_trigger = "%s fixe le regard sur vous !",
 
-	static = "Champ statique",
-	static_desc = "Prévient quand vous vous trouvez dans un Champ statique.",
-	static_message = "Dans un champ statique !",
-
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_warning = "Phase 2 imminente !",
@@ -177,10 +165,6 @@ L:RegisterTranslations("zhCN", function() return {
 	surge_desc = "当玩家中了能量涌动时发出警报。",
 	surge_you = ">你< 能量涌动！",
 	surge_trigger = "%s fixes his eyes on you!", -- yell required
-
-	static = "静电力场",
-	static_desc = "当你在静电力场时发出警报。",
-	static_message = ">你< 静电力场！",
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段时发出警报。",
@@ -219,10 +203,6 @@ L:RegisterTranslations("zhTW", function() return {
 	surge_you = ">你< 力量奔騰！",
 	surge_trigger = "%s將他的目光鎖在你身上!",
 
-	static = "靜電力場",
-	static_desc = "當你在靜電力場時發出警報。",
-	static_message = ">你< 靜電力場！",
-
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
 	phase2_warning = "即將 第二階段！",
@@ -239,7 +219,7 @@ L:RegisterTranslations("ruRU", function() return {
 	sparks_desc = "Предупреждать о появлениях Искры мощи.",
 	sparks_message = "Появилась Искра мощи!",
 	sparks_warning = "Искра мощи через ~5сек!",
-	
+
 	spark = "Бафф - Яркая искра",
 	spark_desc = "Оповещать о пулучении Малигосом баффа Яркой искры.",
 	spark_message = "Малигос получил Яркую искру!",
@@ -249,7 +229,7 @@ L:RegisterTranslations("ruRU", function() return {
 	vortex_message = "Воронка!",
 	vortex_warning = "Воронка через ~5сек!",
 	vortex_next = "Перезарядка воронки",
-	
+
 	breath = "Глубокое дыхание",
 	breath_desc = "Оповещать кокда Малигос использует Deep Breath во 2ой фазе.",
 	breath_message = "Глубокое дыхание!",
@@ -259,10 +239,6 @@ L:RegisterTranslations("ruRU", function() return {
 	surge_desc = "Предупреждать кто получает Прилив мощи.",
 	surge_you = "На ВАС Прилив мощи!",
 	surge_trigger = "%s уставился на вас!",
-	
-	static = "Статическое поле",
-	static_desc = "Предупреждать, когда вы находитесь в статическом поле.",
-	static_message = "в Статическом поле!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
@@ -284,7 +260,7 @@ L:RegisterTranslations("deDE", function() return {
 	spark = "Energiefunken Buff",
 	spark_desc = "Warnt, wenn Malygos den Energiefunken Buff bekommt.",
 	spark_message = "Malygos bekommt Energiefunke!",
-	
+
 	vortex = "Vortex",
 	vortex_desc = "Warnungen und Timer für Vortex in Phase 1.",
 	vortex_message = "Vortex!",
@@ -301,10 +277,6 @@ L:RegisterTranslations("deDE", function() return {
 	surge_you = "Kraftsog auf DIR!",
 	surge_trigger = "Die Augen von %s sind auf Euch fixiert!",
 
-	static = "Statisches Feld",
-	static_desc = "Warnt, wenn du in einem statischen Feld bist.",
-	static_message = "Statisches Feld!",
-	
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase2_warning = "Phase 2 bald!",
@@ -344,22 +316,22 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Spark(target, spellID)
+function mod:Spark(target, spellId)
 	if target == boss and phase == 1 and db.spark then
-		self:IfMessage(L["spark_message"], "Important", spellID)
+		self:IfMessage(L["spark_message"], "Important", spellId)
 	end
 end
 
-function mod:Static(target, spellID)
-	if target == pName and db.static then
-		self:LocalMessage(L["static_message"], "Urgent", spellID)
+function mod:Static(target, spellId, _, _, spellName)
+	if target == pName then
+		self:LocalMessage(spellName, "Urgent", spellId)
 	end
 end
 
-function mod:Vortex(_, spellID)
+function mod:Vortex(_, spellId)
 	if db.vortex then
 		self:Bar(L["vortex"], 10, 56105)
-		self:IfMessage(L["vortex_message"], "Attention", spellID)
+		self:IfMessage(L["vortex_message"], "Attention", spellId)
 		self:Bar(L["vortex_next"], 59, 56105)
 		self:DelayedMessage(54, L["vortex_warning"], "Attention")
 		if db.sparks then
@@ -385,7 +357,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	elseif phase == 2 then
 		if db.breath then
 			-- 43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-			-- Correct SpellId for 'breath" in phase 2 is 56505 
+			-- Correct spellId for 'breath" in phase 2 is 56505
 			self:Message(L["breath_message"], "Important", 43810, "Alert")
 			self:Bar(L["breath"], 59, 43810)
 			self:DelayedMessage(54, L["breath_warning"], "Attention")
@@ -422,7 +394,7 @@ function mod:UNIT_HEALTH(msg)
 			self:Message(L["phase2_warning"], "Attention")
 		end
 	end
-end	
+end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then

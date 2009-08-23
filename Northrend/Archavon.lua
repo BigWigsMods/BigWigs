@@ -9,17 +9,15 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 31125
-mod.toggleOptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
+mod.toggleOptions = {58663, "charge", 58678, 58965, -1, "icon", "berserk", "bosskill"}
 mod.consoleCmd = "Archavon"
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local started = nil
 local pName = UnitName("player")
-local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -28,22 +26,16 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	stomp = "Stomp",
-	stomp_desc = "Stomp warnings and timers.",
 	stomp_message = "Stomp - Charge Inc!",
 	stomp_warning = "Possible Stomp in ~5sec!",
 	stomp_bar = "~Stomp Cooldown",
 
-	cloud = "Choking Cloud on You",
-	cloud_desc = "Warn when you are in a Choking Cloud.",
 	cloud_message = "Choking Cloud on YOU!",
 
 	charge = "Charge",
 	charge_desc = "Warn about Charge on players.",
 	charge_message = "Charge on %s",
 
-	shards = "Rock Shards",
-	shards_desc = "Warn who Archavon casts Rock Shards on.",
 	shards_message = "Rock Shards on %s!",
 
 	icon = "Raid Icon",
@@ -51,22 +43,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	stomp = "발 구르기",
-	stomp_desc = "발구르기 타이머와 사용을 알립니다.",
 	stomp_message = "발 구르기 - 곧 돌진!",
 	stomp_warning = "약 5초 후 발구르기 가능!",
 	stomp_bar = "~발 구르기 대기시간",
 
-	cloud = "자신의 숨막히는 구름",
-	cloud_desc = "자신이 숨막히는 구름에 걸렸을 때 알립니다.",
 	cloud_message = "당신은 숨막히는 구름!",
 
 	charge = "돌진",
 	charge_desc = "돌진의 대상인 플레이어를 알립니다.",
 	charge_message = "돌진: %s",
 
-	shards = "바위 조각",
-	shards_desc = "아카본의 바위 조각 시전이 어떤 플레이어 방향인지 알립니다.",
 	shards_message = "%s에게 바위 조각!",
 
 	icon = "전술 표시",
@@ -74,22 +60,16 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	stomp = "Piétinement",
-	stomp_desc = "Prévient de l'arrivée des Piétinements.",
 	stomp_message = "Piétinement - Empaler imminent !",
 	stomp_warning = "Piétinement probable dans ~5 sec. !",
 	stomp_bar = "~Recharge Piétinement",
 
-	cloud = "Nuage asphyxiant sur vous",
-	cloud_desc = "Prévient quand vous vous trouvez dans un Nuage asphyxiant.",
 	cloud_message = "Nuage asphyxiant sur VOUS !",
 
 	charge = "Empaler",
 	charge_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
 	charge_message = "Empaler : %s",
 
-	shards = "Eclats de pierre",
-	shards_desc = "Prévient quand un joueur subit les effets d'Eclats de pierre.",
 	shards_message = "Eclats de pierre : %s",
 
 	icon = "Icône",
@@ -97,22 +77,16 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	stomp = "践踏",
-	stomp_desc = "当施放践踏时发出警报及显示计时条。",
 	stomp_message = "践踏 - 即将 冲锋！",
 	stomp_warning = "约5秒后，可能践踏！",
 	stomp_bar = "<践踏 冷却>",
 
-	cloud = "自身窒息云雾",
-	cloud_desc = "当你中了窒息云雾时发出警报。",
 	cloud_message = ">你< 窒息云雾！",
 
 	charge = "冲锋",
 	charge_desc = "当玩家中了冲锋时发出警报。",
 	charge_message = "冲锋：>%s<！",
 
-	shards = "岩石碎片",
-	shards_desc = "当阿尔卡冯施放岩石碎片时发出警报。",
 	shards_message = "岩石碎片：>%s<！",
 
 	icon = "团队标记",
@@ -120,22 +94,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	stomp = "踐踏",
-	stomp_desc = "當施放踐踏時發出警報及顯示計時條。",
 	stomp_message = "踐踏 - 即將 衝鋒！",
 	stomp_warning = "約5秒後，可能踐踏！",
 	stomp_bar = "<踐踏 冷卻>",
 
-	cloud = "自身窒息之雲",
-	cloud_desc = "當你中了窒息之雲時發出警報。",
 	cloud_message = ">你< 窒息之雲！",
 
 	charge = "衝鋒",
 	charge_desc = "當玩家中了衝鋒時發出警報。",
 	charge_message = "衝鋒：>%s<！",
 
-	shards = "岩石裂片",
-	shards_desc = "當亞夏梵施放岩石裂片時發出警報。",
 	shards_message = "岩石裂片：>%s<！",
 
 	icon = "團隊標記",
@@ -143,22 +111,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	stomp = "Топот",
-	stomp_desc = "Предупреждения топота и таймеры.",
 	stomp_message = "Топот - близится Рывок!",
 	stomp_warning = "Топот через ~5сек!",
 	stomp_bar = "~Перезарядка топота",
 
-	cloud = "Удушающее облако на вас",
-	cloud_desc = "Предупреждать если вы поподаете в Удушающее облако.",
 	cloud_message = "ВЫ в Удушающем облаке!",
 
 	charge = "Рывок",
 	charge_desc = "Предупреждать о Рывках.",
 	charge_message = "Рывок в |3-1(%s)",
 
-	shards = "Каменные осколки",
-	shards_desc = "Предупреждать о применении Каменных осколков.",
 	shards_message = "Каменные осколки: %s!",
 
 	icon = "Отмечать иконкой",
@@ -166,22 +128,16 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	stomp = "Stampfen",
-	stomp_desc = "Warnungen und Timer für Stampfen.",
 	stomp_message = "Stampfen - Ansturm bald!",
 	stomp_warning = "Mögliches Stampfen in ~5 sek!",
 	stomp_bar = "~Stampfen",
 
-	cloud = "Erstickende Wolke",
-	cloud_desc = "Warnt, wenn du in der Erstickenden Wolke stehst.",
 	cloud_message = "Erstickende Wolke auf DIR!",
 
 	charge = "Ansturm",
 	charge_desc = "Warnt, wenn ein Spieler angestürmt wird.",
 	charge_message = "Ansturm: %s!",
 
-	shards = "Felssplitter",
-	shards_desc = "Warnt, wenn auf einen Spieler Felssplitter gewirkt wird.",
 	shards_message = "Felssplitter: %s!",
 
 	icon = "Schlachtzugs-Symbol",
@@ -205,24 +161,21 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	started = nil
-	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:Stomp()
-	if db.stomp then
-		self:IfMessage(L["stomp_message"], "Attention", 60880)
-		self:Bar(L["stomp_bar"], 47, 60880)
-		self:DelayedMessage(42, L["stomp_warning"], "Attention")
-	end
+function mod:Stomp(_, spellId)
+	self:IfMessage(L["stomp_message"], "Attention", spellId)
+	self:Bar(L["stomp_bar"], 47, spellId)
+	self:DelayedMessage(42, L["stomp_warning"], "Attention")
 end
 
-function mod:Cloud(player)
-	if player == pName and db.cloud then
-		self:LocalMessage(L["cloud_message"], "Personal", 61672, "Alarm")
+function mod:Cloud(player, spellId)
+	if player == pName then
+		self:LocalMessage(L["cloud_message"], "Personal", spellId, "Alarm")
 	end
 end
 
@@ -235,8 +188,8 @@ local function ScanTarget()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
-				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
+			if UnitName(("%s%d%s"):format("raid", i, "target")) == boss then
+				target = UnitName(("%s%d%s"):format("raid", i, "targettarget"))
 				break
 			end
 		end
@@ -250,14 +203,12 @@ local function ScanTarget()
 end
 
 function mod:Shards()
-	if db.shards then
-		self:ScheduleEvent("BWShardsToTScan", ScanTarget, 0.2)
-		self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, self)
-	end
+	self:ScheduleEvent("BWShardsToTScan", ScanTarget, 0.2)
+	self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, self)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
-	if db.charge and unit == boss then
+	if self.db.profile.charge and unit == boss then
 		-- 11578, looks like a charge :)
 		self:TargetMessage(L["charge_message"], player, "Attention", 11578)
 	end
@@ -269,11 +220,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if db.stomp then
+		if self:GetOption(58663) then
 			self:Bar(L["stomp_bar"], 47, 60880)
 			self:DelayedMessage(42, L["stomp_warning"], "Attention")
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Enrage(300, true)
 		end
 	end

@@ -9,19 +9,14 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
-mod.toggleOptions = {"fists", "cinder", "berserk", "bosskill"}
+mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
 mod.consoleCmd = "Koralon"
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local started = nil
-local UnitGUID = _G.UnitGUID
-local GetNumRaidMembers = _G.GetNumRaidMembers
-local fmt = _G.string.format
-local guid = nil
 
 ----------------------------
 --      Localization      --
@@ -30,67 +25,6 @@ local guid = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	fists = "Meteor Fists",
-	fists_desc = "Warn when Koralon casts Meteor Fists.",
-	fists_message = "Meteor Fists Active!",
-
-	cinder = "Cinder",
-	cinder_desc = "Warn when Koralon casts Flaming Cinder.",
-	cinder_message = "Flaming Cinder!",
-} end )
-
-L:RegisterTranslations("deDE", function() return {
-	fists = "Meteorfäuste",
-	fists_desc = "Warnt wenn Koralon Meteorfäuste wirkt.",
-	fists_message = "Meteorfäuste Aktiv!",
-
-	cinder = "Zunder",
-	cinder_desc = "Warnt wenn Koralon Flammender Zunder wirkt.",
-	cinder_message = "Flammender Zunder!",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	fists = "Poings météoriques",
-	fists_desc = "Prévient quand Koralon incante des Poings météoriques.",
-	fists_message = "Poings météoriques actifs !",
-
-	cinder = "Braise enflammée",
-	cinder_desc = "Prévient quand Koralan incante une Braise enflammée.",
-	cinder_message = "Braise enflammée !",
-} end )
-
-L:RegisterTranslations("koKR", function() return {
-	fists = "유성 주먹",
-	fists_desc = "코랄론의 유성 주먹 시전을 알립니다.",
-	fists_message = "유성 주먹!",
-
-	cinder = "잿더미",
-	cinder_desc = "코랄론의 불타는 잿더미 시전을 알립니다.",
-	cinder_message = "불타는 잿더미!",
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
---[[
-	fists = "Meteor Fists",
-	fists_desc = "当Koralon施放Meteor Fists时发出警报。",
-	fists_message = "Meteor Fists！",
-
-	cinder = "Cinder",
-	cinder_desc = "当Koralon施放Flaming Cinder时发出警报。",
-	cinder_message = "Flaming Cinder！",
-]]
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
---[[
-	fists = "隕石之拳",
-	fists_desc = "當寇拉隆施放隕石之拳時發出警報。",
-	fists_message = "隕石之拳！",
-
-	cinder = "燃焰餘燼",
-	cinder_desc = "當寇拉隆施放燃焰餘燼時發出警報。",
-	cinder_message = "燃焰餘燼！",
-]]
 } end )
 
 ------------------------------
@@ -107,26 +41,20 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	started = nil
-	guid = nil
-	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:Fists(_, spellID)
-	if db.fists then
-		self:IfMessage(L["fists_message"], "Attention", spellID)
-		self:Bar(L["fists"], 15, spellID)
-	end
+function mod:Fists(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Attention", spellId)
+	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Cinder(_, spellID)
-	if db.cinder then
-		self:IfMessage(L["cinder_message"], "Attention", spellID)
-		self:Bar(L["cinder_bar"], 20, spellID)
-	end
+function mod:Cinder(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Attention", spellId)
+	self:Bar(spellName, 20, spellId)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -135,7 +63,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Enrage(360, true)
 		end
 	end
