@@ -15,10 +15,7 @@ mod.consoleCmd = "Leviathan"
 --      Are you local?      --
 ------------------------------
 
-local db = nil
-local started = nil
 local pName = UnitName("player")
-local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -131,7 +128,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 ------------------------------
@@ -160,7 +156,7 @@ function mod:Shutdown(unit, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
-	if unit == boss and db.pursue and message:find(L["pursue_trigger"]) then
+	if unit == boss and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
 		if player == pName then
 			self:LocalMessage(L["pursue_you"], "Personal", 62374, "Alarm")
 			self:WideMessage(L["pursue_other"]:format(player))
