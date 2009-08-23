@@ -408,7 +408,11 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
 
-mod.enabletrigger = {boss, sara, brain}
+-- We need to add the player name to block those extremely stupid sanity loss
+-- warnings blizz puts in the emote frame. The source for those messages USED
+-- TO BE the boss, but Blizzard CHANGED IT to the player himself, for some
+-- insanely crappy, unknown, stupid reason.
+mod.enabletrigger = {boss, sara, brain, pName}
 
 ------------------------------
 --      Initialization      --

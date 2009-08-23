@@ -7,7 +7,6 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 local behemoth = BB["Jormungar Behemoth"]
 mod.zonename = BZ["Ulduar"]
-mod.enabletrigger = {behemoth, boss}
 mod.guid = 32865	--Sif(33196)
 mod.toggleOptions = {"phase", "p2berserk", "hardmode", -1, 62042, 62331, 62017, 62338, 62526, 62279, 62130, -1, "icon", "proximity", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
@@ -31,6 +30,8 @@ local pName = UnitName("player")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
+	["Runic Colossus"] = true, -- For the runic barrier emote.
+
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",
@@ -280,6 +281,8 @@ L:RegisterTranslations("ruRU", function() return {
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, который попал под воздействие Взрыва рун. (необходимо быть лидером группы или рейда)",
 } end )
+
+mod.enabletrigger = {behemoth, boss, L["Runic Colossus"]}
 
 ------------------------------
 --      Initialization      --
