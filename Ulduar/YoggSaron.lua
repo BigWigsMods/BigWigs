@@ -534,7 +534,7 @@ function mod:Madness(_, spellId, _, _, spellName)
 	self:DelayedMessage(55, L["madness_warning"], "Urgent")
 end
 
-function mod:Empower(_, spellId)
+function mod:Empower(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 	self:Bar(L["empower_bar"], 46, spellId)
 end
