@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15990
-mod.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
+mod.toggleOptions = { "frostblast", "fissure", "mc", -1, "detonate", "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.consoleCmd = "Kelthuzad"
 

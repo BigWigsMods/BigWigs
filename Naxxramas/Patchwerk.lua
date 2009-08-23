@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16028
-mod.toggleoptions = {"enrage", "berserk", "bosskill"}
+mod.toggleOptions = {"enrage", "berserk", "bosskill"}
 mod.consoleCmd = "Patchwerk"
 
 ----------------------------

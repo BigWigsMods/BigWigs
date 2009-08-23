@@ -7,7 +7,7 @@ local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.guid = 33271
-mod.toggleoptions = {"vaporstack", "vapor", "animus", -1, 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "berserk", "bosskill"}
+mod.toggleOptions = {"vaporstack", "vapor", "animus", -1, 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "berserk", "bosskill"}
 mod.consoleCmd = "Vezax"
 
 ------------------------------

@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15989
-mod.toggleoptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
 mod.consoleCmd = "Sapphiron"
 
 ------------------------------

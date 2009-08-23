@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = { boss }
 mod.guid = 16060
-mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
+mod.toggleOptions = { "room", -1, "add", "adddeath", "bosskill" }
 mod.consoleCmd = "Gothik"
 
 ----------------------------

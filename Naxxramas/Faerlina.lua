@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15953
-mod.toggleoptions = {"silence", "rain", "enrage", "bosskill"}
+mod.toggleOptions = {"silence", "rain", "enrage", "bosskill"}
 mod.consoleCmd = "Faerlina"
 
 ------------------------------

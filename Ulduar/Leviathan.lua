@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33113
-mod.toggleoptions = {"flame", "pursue", "shutdown", "bosskill"}
+mod.toggleOptions = {"flame", "pursue", "shutdown", "bosskill"}
 mod.consoleCmd = "Leviathan"
 
 ------------------------------

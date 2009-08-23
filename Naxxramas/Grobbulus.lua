@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15931
-mod.toggleoptions = {"inject", "icon", "cloud", "berserk", "bosskill"}
+mod.toggleOptions = {"inject", "icon", "cloud", "berserk", "bosskill"}
 mod.consoleCmd = "Grobbulus"
 
 ------------------------------

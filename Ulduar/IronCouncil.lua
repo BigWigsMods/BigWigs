@@ -11,7 +11,7 @@ local brundir = BB["Stormcaller Brundir"]
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleoptions = {61869, 63483, 61887, -1, 61903, 64637, -1, 62274, 61974, 62269, 62273, -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {61869, 63483, 61887, -1, 61903, 64637, -1, 62274, 61974, 62269, 62273, -1, "proximity", "icon", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Council"
 

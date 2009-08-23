@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16011
-mod.toggleoptions = {"aura", "deathbloom", "doom", "spore", "bosskill"}
+mod.toggleOptions = {"aura", "deathbloom", "doom", "spore", "bosskill"}
 mod.consoleCmd = "Loatheb"
 
 ------------------------------

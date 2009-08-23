@@ -9,7 +9,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", "static", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", "static", "berserk", "bosskill"}
 mod.consoleCmd = "Malygos"
 
 ------------------------------

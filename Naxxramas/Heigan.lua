@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15936
-mod.toggleoptions = {"engage", "teleport", "bosskill"}
+mod.toggleOptions = {"engage", "teleport", "bosskill"}
 mod.consoleCmd = "Heigan"
 
 ----------------------------

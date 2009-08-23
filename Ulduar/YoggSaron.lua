@@ -10,7 +10,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleoptions = {"phase", 63050, 63120, "icon", -1, 62979, -1, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, -1, 64189, 64465, "empowericon", 64163, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", 63050, 63120, "icon", -1, 62979, -1, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, -1, 64189, 64465, "empowericon", 64163, "berserk", "bosskill"}
 mod.consoleCmd = "Yogg"
 
 ------------------------------

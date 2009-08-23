@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleoptions = {64193, "gravitybombicon", 63849, -1, 63024, 63018, 62776, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {64193, "gravitybombicon", 63849, -1, 63024, 63018, 62776, "proximity", "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "XT"
 

@@ -11,7 +11,7 @@ mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.wipemobs = understudy
 mod.guid = 16061
-mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
+mod.toggleOptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
 mod.consoleCmd = "Razuvious"
 
 ------------------------------

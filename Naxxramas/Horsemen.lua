@@ -13,7 +13,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
 mod.guid = 16065
-mod.toggleoptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
+mod.toggleOptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
 mod.consoleCmd = "Horsemen"
 
 ------------------------------

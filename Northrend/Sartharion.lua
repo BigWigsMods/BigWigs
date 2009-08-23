@@ -10,7 +10,7 @@ mod.zonename = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
-mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "twilight", "berserk", "bosskill"}
+mod.toggleOptions = {"tsunami", "breath", -1, "drakes", "twilight", "berserk", "bosskill"}
 mod.consoleCmd = "Sartharion"
 
 ------------------------------

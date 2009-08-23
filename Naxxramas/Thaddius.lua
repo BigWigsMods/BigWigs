@@ -11,7 +11,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, feugen, stalagg}
 mod.guid = 15928
-mod.toggleoptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
 mod.consoleCmd = "Thaddius"
 
 ------------------------------

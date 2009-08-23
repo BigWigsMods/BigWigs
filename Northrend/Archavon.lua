@@ -9,7 +9,7 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 31125
-mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
+mod.toggleOptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "berserk", "bosskill"}
 mod.consoleCmd = "Archavon"
 
 ------------------------------

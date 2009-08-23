@@ -7,7 +7,7 @@ if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34564
-mod.toggleoptions = {"bosskill", "burrow", "pursue", "phase"}
+mod.toggleOptions = {"bosskill", "burrow", "pursue", "phase"}
 mod.consoleCmd = "Anubarak"
 
 --------------------------------------------------------------------------------

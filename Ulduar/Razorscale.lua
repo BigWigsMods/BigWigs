@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 -- mod.enabletrigger set below the localizations
 mod.guid = 33186
-mod.toggleoptions = {"phase", -1, 64021, 64704, "harpoon", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", -1, 64021, 64704, "harpoon", "berserk", "bosskill"}
 mod.consoleCmd = "Razorscale"
 
 ------------------------------

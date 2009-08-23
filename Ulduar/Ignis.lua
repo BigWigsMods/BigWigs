@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33118
-mod.toggleoptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
+mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
 mod.consoleCmd = "Ignis"
 
 ------------------------------

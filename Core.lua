@@ -491,8 +491,8 @@ do
 			self:ToggleModuleActive(module, false)
 		end
 
-		if module.toggleoptions then
-			for i,v in next, module.toggleoptions do
+		if module.toggleOptions then
+			for i,v in next, module.toggleOptions do
 				local t = type(v)
 				if t == "string"  then
 					opts[v] = true
@@ -510,10 +510,10 @@ do
 		end
 
 		-- Set up AceConsole.
-		if module.toggleoptions then
+		if module.toggleOptions then
 			local cons = module.consoleOptions
 			local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
-			if module.toggleoptions then
+			if module.toggleOptions then
 				cons = {
 					type = "group",
 					name = name,
@@ -553,7 +553,7 @@ do
 					},
 				}
 				local customBossOptionOrder = -100
-				for i, v in next, module.toggleoptions do
+				for i, v in next, module.toggleOptions do
 					local x = i + 100
 					local t = type(v)
 					if t == "number" and v < 0 then

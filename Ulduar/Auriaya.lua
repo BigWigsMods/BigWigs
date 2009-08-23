@@ -9,7 +9,7 @@ mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33515
 --Feral Defender = 34035
-mod.toggleoptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskill"}
+mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskill"}
 mod.consoleCmd = "Auriaya"
 
 ------------------------------

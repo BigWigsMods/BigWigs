@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15954
-mod.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
+mod.toggleOptions = {"blink", "teleport", "curse", "wave", "bosskill"}
 mod.consoleCmd = "Noth"
 
 ------------------------------

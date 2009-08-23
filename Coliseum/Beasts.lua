@@ -16,7 +16,7 @@ mod.enabletrigger = gormok
 --mod.guid = 34796 -- Gormok
 --mod.guid = 34799--Dreadscale, 35144 = Acidmaw
 mod.guid = 34797 -- Icehowl
-mod.toggleoptions = {67647, 67477, 67472, -1, 67641, "spew", 67618, 66869, 68335, "proximity", -1, 67654, "charge", 66758, 66759, "bosskill"}
+mod.toggleOptions = {67647, 67477, 67472, -1, 67641, "spew", 67618, 66869, 68335, "proximity", -1, 67654, "charge", 66758, 66759, "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 mod.consoleCmd = "Beasts"

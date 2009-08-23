@@ -12,7 +12,7 @@ mod.enabletrigger = { edyis, fjola }
 mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
-mod.toggleoptions = {"vortex", "shield", "berserk", "touch", "bosskill"}
+mod.toggleOptions = {"vortex", "shield", "berserk", "touch", "bosskill"}
 mod.consoleCmd = "Twins"
 
 --------------------------------------------------------------------------------

@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34780
-mod.toggleoptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
+mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
 mod.consoleCmd = "Jaraxxus"
 
 --------------------------------------------------------------------------------

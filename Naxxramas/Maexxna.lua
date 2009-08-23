@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15952
-mod.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
+mod.toggleOptions = {"spray", "cocoon", "enrage", "bosskill"}
 mod.consoleCmd = "Maexxna"
 
 ------------------------------

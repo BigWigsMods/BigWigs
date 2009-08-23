@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32930
-mod.toggleoptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
+mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
 mod.consoleCmd = "Kologarn"
 
 ------------------------------

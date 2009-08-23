@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15932
-mod.toggleoptions = {"frenzy", "decimate", "berserk", "bosskill"}
+mod.toggleOptions = {"frenzy", "decimate", "berserk", "bosskill"}
 mod.consoleCmd = "Gluth"
 
 ------------------------------

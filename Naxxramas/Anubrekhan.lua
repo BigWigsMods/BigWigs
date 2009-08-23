@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15956
-mod.toggleoptions = {"locust", "bosskill"}
+mod.toggleOptions = {"locust", "bosskill"}
 mod.consoleCmd = "Anubrekhan"
 
 ------------------------------
