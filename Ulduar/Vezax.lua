@@ -359,14 +359,14 @@ local function scanTarget()
 	end
 	if target then
 		if target == pName then
-			if db.crash then
+			if mod:GetOption(62660) then
 				mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
 				mod:WideMessage(L["crash_other"]:format(target))
 			end
 			if db.crashsay then
 				SendChatMessage(L["crash_say"], "SAY")
 			end
-		elseif db.crash then
+		elseif mod:GetOption(62660) then
 			mod:TargetMessage(L["crash_other"], target, "Positive", 62660)
 			mod:Whisper(target, L["crash_you"])
 		end
