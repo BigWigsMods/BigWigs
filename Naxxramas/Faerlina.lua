@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15953
-mod.toggleOptions = {"silence", "rain", "enrage", "bosskill"}
+mod.toggleOptions = {28732, 28794, "enrage", "bosskill"}
 mod.consoleCmd = "Faerlina"
 
 ------------------------------
@@ -27,9 +27,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	silence = "Silence",
-	silence_desc = "Warn for silence",
-
 	starttrigger1 = "Kneel before me, worm!",
 	starttrigger2 = "Slay them in the master's name!",
 	starttrigger3 = "You cannot hide from me!",
@@ -45,15 +42,10 @@ L:RegisterTranslations("enUS", function() return {
 	silencewarn5sec = "Silence ends in 5 sec",
 	silencebar = "Silence",
 
-	rain = "Rain of Fire on You",
-	rain_desc = "Warn when you are in a Rain of Fire.",
-	rain_message = "Rain of Fire on YOU!",
+	rain_message = "Fire on YOU!",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	silence = "Безмолвие",
-	silence_desc = "Предупреждать о безмолвии",
-
 	starttrigger1 = "Склонитесь передо мной, черви!",  
 	starttrigger2 = "Убейте их во имя господина!",  
 	starttrigger3 = "Вам не скрыться от меня!",  
@@ -69,15 +61,10 @@ L:RegisterTranslations("ruRU", function() return {
 	silencewarn5sec = "Безмолвие закончится через 5 секунд",
 	silencebar = "Безмолвие",
 
-	rain = "Огненный ливень на Вас!",
-	rain_desc = "Предупреждать об Огненном ливне.",
 	rain_message = "Огненный ливень на ВАС!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	silence = "Stille",
-	silence_desc = "Warnungen und Timer für Stille.",
-
 	starttrigger1 = "Kniet nieder, Wurm!",
 	starttrigger2 = "Tötet sie im Namen des Meisters!",
 	starttrigger3 = "Ihr könnt euch nicht vor mir verstecken!",
@@ -93,15 +80,10 @@ L:RegisterTranslations("deDE", function() return {
 	silencewarn5sec = "Stille endet in 5 sek!",
 	silencebar = "Stille",
 
-	rain = "Feuerregen",
-	rain_desc = "Warnt, wenn du in einem Feuerregen stehst.",
 	rain_message = "Feuerregen auf DIR!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	silence = "침묵",
-	silence_desc = "침묵을 알립니다.",
-
 	starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!",
 	starttrigger2 = "주인님의 이름으로 처단하라!",
 	starttrigger3 = "나에게서 도망칠 수는 없다!",
@@ -117,15 +99,10 @@ L:RegisterTranslations("koKR", function() return {
 	silencewarn5sec = "5초 후 침묵 종료!",
 	silencebar = "침묵",
 
-	rain = "자신의 불의 비",
-	rain_desc = "자신이 불의 비에 걸렸을 때 알립니다.",
 	rain_message = "당신은 불의 비!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	silence = "沉默",
-	silence_desc = "当施放沉默时发出警报。",
-
 	starttrigger1 = "跪下求饶吧，懦夫！",
 	starttrigger2 = "以主人之名，杀了他们！",
 	starttrigger3 = "休想从我面前逃掉！",
@@ -141,15 +118,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	silencebar = "<沉默>",
 
-	rain = "自身火焰之雨",
-	rain_desc = "当你中了火焰之雨时发出自身警报。",
 	rain_message = ">你< 火焰之雨！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	silence = "沉默",
-	silence_desc = "當施放沉默時發出警報。",
-
 	starttrigger1 = "跪下求饒吧，懦夫!",
 	starttrigger2 = "以主人之名，殺了他們!",
 	starttrigger3 = "休想從我面前逃掉!",
@@ -165,15 +137,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	silencebar = "<沉默>",
 
-	rain = "自身火焰之雨",
-	rain_desc = "當你中了火焰之雨時發出自身警報。",
 	rain_message = ">你< 火焰之雨！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	silence = "Silence",
-	silence_desc = "Prévient de l'arrivée des silences.",
-
 	starttrigger1 = "À genoux, vermisseau !",
 	starttrigger2 = "Tuez-les au nom du maître !",
 	starttrigger3 = "Vous ne pouvez pas m'échapper !",
@@ -189,8 +156,6 @@ L:RegisterTranslations("frFR", function() return {
 	silencewarn5sec = "Fin du silence dans 5 sec.",
 	silencebar = "Silence",
 
-	rain = "Pluie de feu sur vous",
-	rain_desc = "Prévient quand vous vous trouvez sous une Pluie de feu.",
 	rain_message = "Pluie de feu sur VOUS !",
 } end )
 
@@ -219,11 +184,9 @@ function mod:Silence(unit, spellId)
 	if not UnitIsUnit(unit, boss) then return end
 	if not enraged then
 		-- preemptive, 30s silence
-		if self.db.profile.silence then
-			self:IfMessage(L["silencewarn"], "Positive", spellId)
-			self:Bar(L["silencebar"], 30, spellId)
-			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
-		end
+		self:IfMessage(L["silencewarn"], "Positive", spellId)
+		self:Bar(L["silencebar"], 30, spellId)
+		self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
 	else
 		-- Reactive enrage removed
 		if self.db.profile.enrage then
@@ -231,16 +194,14 @@ function mod:Silence(unit, spellId)
 			enrageMessageId = self:DelayedMessage(45, L["enragewarn2"], "Important")
 			self:Bar(enrageName, 60, 28798)
 		end
-		if self.db.profile.silence then
-			self:Bar(L["silencebar"], 30, spellId)
-			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
- 		end
+		self:Bar(L["silencebar"], 30, spellId)
+		self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
 		enraged = nil
 	end
 end
 
 function mod:Rain(player)
-	if player == pName and self.db.profile.rain then
+	if player == pName then
 		self:LocalMessage(L["rain_message"], "Personal", 54099, "Alarm")
 	end
 end

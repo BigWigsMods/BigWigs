@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15990
-mod.toggleOptions = { "frostblast", "fissure", "mc", -1, "detonate", "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
+mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.consoleCmd = "Kelthuzad"
 
@@ -44,24 +44,14 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_trigger = "Master, I require aid!",
 	phase3_warning = "Phase 3, Guardians in ~15 sec!",
 
-	mc = "Mind Control",
-	mc_desc = "Tells you who has been Mind Control and when the next Mind Control is coming.",
 	mc_message = "Mind Control: %s",
 	mc_warning = "Mind controls soon!",
 	mc_nextbar = "~Mind Controls",
 
-	fissure = "Shadow Fissure",
-	fissure_desc = "Alerts about incoming Shadow Fizzures.",
-	fissure_warning = "Shadow Fissure!",
-
-	frostblast = "Frost Blast",
-	frostblast_desc = "Alerts when people get Frost Blasted.",
 	frostblast_bar = "Possible Frost Blast",
 	frostblast_message = "%s: Frost Blast",
 	frostblast_soon_message = "Possible Frost Blast in ~5 sec!",
 
-	detonate = "Detonate Mana",
-	detonate_desc = "Warns about Detonate Mana soon.",
 	detonate_you = "Detonate Mana on YOU!",
 	detonate_other = "Detonate - %s",
 	detonate_possible_bar = "Possible Detonate",
@@ -95,24 +85,14 @@ L:RegisterTranslations("ruRU", function() return {
 	phase3_trigger = "Господин, мне нужна помощь!",
 	phase3_warning = "Фаза 3, защитники через ~15 секунд!",
 
-	mc = "Контроль Разума",
-	mc_desc = "Предупреждать когда Кел'Тузад начинает контролировать чей то разум.",
 	mc_message = "Контроль над |3-4(%s)",
 	mc_warning = "Скоро контроль разума!",
 	mc_nextbar = "~Контроль Разума",
 
-	fissure = "Расщелина тьмы",
-	fissure_desc = "Сообщать, когда появляется расщелина тьмы.",
-	fissure_warning = "Расщелина тьмы!",
-
-	frostblast = "Опасность ледяного взрыва",
-	frostblast_desc = "Сообщать, когда ледяной взрыв добирается до игроков.",
 	frostblast_bar = "Возможен ледяной взрыв",
 	frostblast_message = "%s в Глыбе!",
 	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
 
-	detonate = "Опасность взрыва маны",
-	detonate_desc = "Сообщать о взрыве маны.",
 	detonate_you = "Взрыв маны на Вас!",
 	detonate_other = "Взрыв маны на 3-5(%s)",
 	detonate_possible_bar = "Возможен взрыв маны",
@@ -146,24 +126,14 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "주인님, 도와주소서!",
 	phase3_warning = "3 단계, 약 15초 이내 수호자 등장!",
 
-	mc = "정신 지배",
-	mc_desc = "정신 지배에 걸린 플레이어와 다음 정신 지배에 대해 알립니다.",
 	mc_message = "정신 지배: %s",
 	mc_warning = "정신 지배 대기시간 종료 - 곧 사용!",
 	mc_nextbar = "~정배 대기 시간",
 
-	fissure = "어둠의 균열",
-	fissure_desc = "어둠의 균열 시전을 알립니다.",
-	fissure_warning = "어둠의 균열!",
-
-	frostblast = "냉기 작렬",
-	frostblast_desc = "냉기 작렬을 알립니다.",
 	frostblast_bar = "냉기 작렬 가능",
 	frostblast_message = "냉기 작렬: %s",
 	frostblast_soon_message = "약 5초 이내 냉기 작렬 가능!",
 
-	detonate = "마나 폭발",
-	detonate_desc = "마나 폭발을 알립니다.",
 	detonate_you = "당신은 마나 폭발!",
 	detonate_other = "마나 폭발 - %s",
 	detonate_possible_bar = "폭발 가능",
@@ -197,24 +167,14 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_trigger = "Meister, ich benötige Beistand.",
 	phase3_warning = "Phase 3, Wächter in ~15 sek!",
 
-	mc = "Gedankenkontrolle",
-	mc_desc = "Warnungen und Timer für Gedankenkontrolle.",
 	mc_message = "Gedankenkontrolle: %s",
 	mc_warning = "Gedankenkontrolle bald!",
 	mc_nextbar = "~Gedankenkontrolle",
 
-	fissure = "Schattenspalt",
-	fissure_desc = "Warnt, wenn Schattenspalt gewirkt wird.",
-	fissure_warning = "Schattenspalt!",
-
-	frostblast = "Frostschlag",
-	frostblast_desc = "Warnungen und Timer für Frostschlag.",
 	frostblast_bar = "~Frostschlag",
 	frostblast_message = "Frostschlag: %s",
 	frostblast_soon_message = "Frostschlag in ~5 sek!",
 
-	detonate = "Detonierendes Mana",
-	detonate_desc = "Warnungen und Timer für Detonierendes Mana.",
 	detonate_you = "Detonierendes Mana auf DIR!",
 	detonate_other = "Detonierendes Mana: %s",
 	detonate_possible_bar = "~Detonierendes Mana",
@@ -248,24 +208,14 @@ L:RegisterTranslations("zhCN", function() return {
 	phase3_trigger = "主人，我需要帮助！",
 	phase3_warning = "第三阶段 - 约15秒后，寒冰皇冠卫士出现！",
 
-	mc = "克尔苏加德锁链",
-	mc_desc = "当玩家中了克尔苏加德锁链时发出警报。",
 	mc_message = "克尔苏加德锁链：>%s<！",
 	mc_warning = "即将 克尔苏加德锁链！",
 	mc_nextbar = "<下一克尔苏加德锁链>",
 
-	fissure = "暗影裂隙",
-	fissure_desc = "当施放暗影裂隙时发出警报。",
-	fissure_warning = "暗影裂隙！",
-
-	frostblast = "冰霜冲击",
-	frostblast_desc = "当玩家中了冰霜冲击时发出警报。",
 	frostblast_bar = "<可能 冰霜冲击>",
 	frostblast_message = "冰霜冲击：>%s<！",
 	frostblast_soon_message = "约5秒后，可能冰霜冲击！",
 
-	detonate = "自爆法力",
-	detonate_desc = "当玩家中了自爆法力时发出警报。",
 	detonate_you = ">你< 自爆法力！",
 	detonate_other = "自爆法力：>%s<！",
 	detonate_possible_bar = "<可能 自爆法力>",
@@ -300,24 +250,14 @@ L:RegisterTranslations("zhTW", function() return {
 	phase3_trigger = "主人，我需要幫助!",
 	phase3_warning = "第三階段開始， 約15秒後，寒冰皇冠守衛者出現！",
 
-	mc = "科爾蘇加德之鍊",
-	mc_desc = "當玩家中了科爾蘇加德之鍊時發出警報。",
 	mc_message = "科爾蘇加德之鍊：>%s<！",
 	mc_warning = "即將 科爾蘇加德之鍊！",
 	mc_nextbar = "<下一科爾蘇加德之鍊>",
 
-	fissure = "暗影裂縫",
-	fissure_desc = "當施放暗影裂縫時發出警報。",
-	fissure_warning = "暗影裂縫！",
-
-	frostblast = "冰霜衝擊",
-	frostblast_desc = "當玩家中了冰霜衝擊時發出警報。",
 	frostblast_bar = "<可能 冰霜衝擊>",
 	frostblast_message = "冰霜衝擊：>%s<！",
 	frostblast_soon_message = "約5秒後，可能冰霜衝擊！",
 
-	detonate = "爆裂法力",
-	detonate_desc = "當玩家中了爆裂法力時發出警報。",
 	detonate_you = ">你< 爆裂法力！",
 	detonate_other = "爆裂法力：>%s<！",
 	detonate_possible_bar = "<可能 爆裂法力>",
@@ -351,24 +291,14 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_trigger = "Maître, j'ai besoin d'aide !",
 	phase3_warning = "Phase 3, gardiens dans ~15 sec. !",
 
-	mc = "Contrôle mental",
-	mc_desc = "Prévient qui subit les effets du Contrôle mentale et quand aura lieu le prochain.",
 	mc_message = "Contrôle mental : %s",
 	mc_warning = "Contrôles mentaux imminents !",
 	mc_nextbar = "~Contrôles mentaux",
 
-	fissure = "Fissure d'ombre",
-	fissure_desc = "Prévient de l'arrivée des Fissures d'ombre.",
-	fissure_warning = "Fissure d'ombre !",
-
-	frostblast = "Trait de givre",
-	frostblast_desc = "Prévient quand des joueurs subissent les effets du Trait de givre.",
 	frostblast_bar = "Trait de givre probable",
 	frostblast_message = "Trait de givre : %s",
 	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
 
-	detonate = "Faire détoner mana",
-	detonate_desc = "Prévient quand un joueur subit les effets de Faire détoner mana.",
 	detonate_you = "Faire détoner mana sur VOUS !",
 	detonate_other = "Détoner mana : %s",
 	detonate_possible_bar = "~Prochain Détoner",
@@ -421,10 +351,8 @@ function mod:ZONE_CHANGED_INDOORS(msg)
 	BigWigs:EnableModule(boss)
 end
 
-function mod:Fizzure()
-	if self.db.profile.fissure then
-		self:IfMessage(L["fissure_warning"], "Important", 27810)
-	end
+function mod:Fizzure(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
 end
 
 local function fbWarn(spellId)
@@ -434,40 +362,34 @@ local function fbWarn(spellId)
 end
 
 function mod:FrostBlast(player, spellId)
-	if self.db.profile.frostblast then
-		fbTargets[#fbTargets + 1] = player
-		self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId)
-	end
+	fbTargets[#fbTargets + 1] = player
+	self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId)
 end
 
 function mod:Detonate(player, spellId)
-	if self.db.profile.detonate then
-		if player == pName then
-			self:LocalMessage(L["detonate_you"], "Personal", spellId, "Alert")
-			self:WideMessage(L["detonate_other"]:format(player))
-		else
-			self:TargetMessage(L["detonate_other"], player, "Attention", spellId)
-			self:Whisper(player, L["detonate_you"])
-		end
-		self:Icon(player, "icon")
-		self:Bar(L["detonate_other"]:format(player), 5, spellId)
-		self:Bar(L["detonate_possible_bar"], 20, spellId)
-		self:DelayedMessage(15, L["detonate_warning"], "Attention")
+	if player == pName then
+		self:LocalMessage(L["detonate_you"], "Personal", spellId, "Alert")
+		self:WideMessage(L["detonate_other"]:format(player))
+	else
+		self:TargetMessage(L["detonate_other"], player, "Attention", spellId)
+		self:Whisper(player, L["detonate_you"])
 	end
+	self:Icon(player, "icon")
+	self:Bar(L["detonate_other"]:format(player), 5, spellId)
+	self:Bar(L["detonate_possible_bar"], 20, spellId)
+	self:DelayedMessage(15, L["detonate_warning"], "Attention")
 end
 
-local function mcWarn(spellId)
+local function mcWarn(spellId, spellName)
 	mod:TargetMessage(L["mc_message"], mcTargets, "Important", spellId, "Alert")
-	mod:Bar(L["mc"], 21, 28410)
+	mod:Bar(spellName, 20, 28410)
 	mod:DelayedMessage(68, L["mc_warning"], "Urgent")
 	mod:Bar(L["mc_nextbar"], 68, spellId)
 end
 
-function mod:MC(player, spellId)
-	if self.db.profile.mc then
-		mcTargets[#mcTargets + 1] = player
-		self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId)
-	end
+function mod:MC(player, spellId, _, _, spellName)
+	mcTargets[#mcTargets + 1] = player
+	self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId, spellName)
 end
 
 function mod:UNIT_HEALTH(msg)

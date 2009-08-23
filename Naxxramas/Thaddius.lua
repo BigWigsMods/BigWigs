@@ -11,7 +11,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, feugen, stalagg}
 mod.guid = 15928
-mod.toggleOptions = {"polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
 mod.consoleCmd = "Thaddius"
 
 ------------------------------
@@ -31,12 +31,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	phase = "Phase",
 	phase_desc = "Warn for Phase transitions",
-
-	polarity = "Polarity Shift",
-	polarity_desc = "Warn for polarity shifts",
-
-	power = "Power Surge",
-	power_desc = "Warn for Stalagg's power surge",
 
 	throw = "Throw",
 	throw_desc = "Warn about tank platform swaps.",
@@ -61,7 +55,6 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Phase 2, Berserk in 6 minutes!",
 
 	surge_message = "Power Surge on Stalagg!",
-	surge_bar = "Power Surge",
 
 	throw_bar = "Throw",
 	throw_warning = "Throw in ~5 sec!",
@@ -70,12 +63,6 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Сообщать о фазах боя",
-
-	polarity = "Сдвиг полярности",
-	polarity_desc = "Предупреждать о сдвиге полярности",
-
-	power = "Волна силы",
-	power_desc = "Предупреждать о волне силы",
 
 	throw = "Бросока",
 	throw_desc = "Предупреждать о смене танков на платформах.",
@@ -100,7 +87,6 @@ L:RegisterTranslations("ruRU", function() return {
 	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
 
 	surge_message = "Волна силы на Сталагге!",
-	surge_bar = "Волна силы",
 
 	throw_bar = "Бросок",
 	throw_warning = "Бросок через 5 секунд!",
@@ -109,12 +95,6 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계 변경",
 	phase_desc = "단계 변경을 알립니다.",
-
-	polarity = "극성 변환",
-	polarity_desc = "극성 변환에 대하여 알립니다.",
-
-	power = "마력의 쇄도",
-	power_desc = "스탈라그의 마력의 쇄도를 알립니다.",
 
 	throw = "던지기",
 	throw_desc = "탱커 위치 교체를 알립니다.",
@@ -139,7 +119,6 @@ L:RegisterTranslations("koKR", function() return {
 	polarity_first_negative = "당신은 마이너스!",
 
 	surge_message = "스탈라그 마력의 쇄도!",
-	surge_bar = "마력의 쇄도",
 	
 	throw_bar = "던지기",
 	throw_warning = "약 5초 후 던지기!",
@@ -148,12 +127,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
-
-	polarity = "Polaritätsveränderung",
-	polarity_desc = "Warnt bei Polaritätsveränderung.",
-
-	power = "Kraftsog", -- aka "Energieschub", Blizzard's inconsistence
-	power_desc = "Warnungen und Timer für Kraftsog von Stalagg.",
 
 	throw = "Magnetische Anziehung",
 	throw_desc = "Warnt, wenn die Tanks die Plattform wechseln.",
@@ -178,7 +151,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_message = "Thaddius Phase 2, Berserker in 6 min",
 	
 	surge_message = "Kraftsog auf Stalagg!",
-	surge_bar = "Kraftsog",
 	
 	throw_bar = "Magnetische Anziehung",
 	throw_warning = "Magnetische Anziehung in ~5 sek!",
@@ -187,12 +159,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
-
-	polarity = "极性转化",
-	polarity_desc = "当施放极性转化时发出警报。",
-
-	power = "力量振荡",
-	power_desc = "当施放力量振荡时发出警报。",
 
 	throw = "投掷",
 	throw_desc = "当 MT 被投掷到对面平台时发出警报。",
@@ -217,7 +183,6 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_message = "第二阶段 - 6分钟后激怒！",
 
 	surge_message = "力量振荡！",
-	surge_bar = "<力量振荡>",
 
 	throw_bar = "<投掷>",
 	throw_warning = "约5秒后，投掷！",
@@ -226,12 +191,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
-
-	polarity = "兩極移形",
-	polarity_desc = "當施放兩極移形時發出警報。",
-
-	power = "力量澎湃",
-	power_desc = "當施放力量澎湃時發出警報。",
 
 	throw = "投擲",
 	throw_desc = "當主坦克被投擲到對面平台時發出警報。",
@@ -256,7 +215,6 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_message = "第二階段 - 6分鍾後狂怒！",
 
 	surge_message = "力量澎湃！加大對坦克的治療！",
-	surge_bar = "<力量澎湃>",
 
 	throw_bar = "<投擲>",
 	throw_warning = "約5秒後，投擲！",
@@ -265,12 +223,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
-
-	polarity = "Changement de polarité",
-	polarity_desc = "Prévient quand un Changement de polarité est incanté.",
-
-	power = "Vague de puissance",
-	power_desc = "Prévient quand Stalagg utilise sa Vague de puissance.",
 
 	throw = "Lancer",
 	throw_desc = "Prévient quand les tanks sont lancés d'une plate-forme à l'autre.",
@@ -295,7 +247,6 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_message = "Phase 2, Berserk dans 6 min. !",
 
 	surge_message = "Vague de puissance sur Stalagg !",
-	surge_bar = "Vague de puissance",
 
 	throw_bar = "Lancer",
 	throw_warning = "Lancer dans ~5 sec. !",
@@ -323,11 +274,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:StalaggPower()
-	if self.db.profile.power then
-		self:IfMessage(L["surge_message"], "Important", 28134)
-		self:Bar(L["surge_bar"], 10, 28134)
-	end
+function mod:StalaggPower(_, spellId, _, _, spellName)
+	self:IfMessage(L["surge_message"], "Important", spellId)
+	self:Bar(spellName, 10, spellId)
 end
 
 function mod:UNIT_AURA(unit)
@@ -351,7 +300,7 @@ function mod:UNIT_AURA(unit)
 		end
 	end
 	if newCharge then
-		if self.db.profile.polarity then
+		if self:GetOption(28089) then
 			if not lastCharge then
 				self:LocalMessage(newCharge == "Interface\\Icons\\Spell_ChargePositive" and
 					L["polarity_first_positive"] or L["polarity_first_negative"],
@@ -373,7 +322,7 @@ end
 function mod:Shift()
 	shiftTime = GetTime()
 	self:RegisterEvent("UNIT_AURA")
-	if self.db.profile.polarity then
+	if self:GetOption(28089) then
 		self:IfMessage(L["polarity_message"], "Important", 28089)
 	end
 end
@@ -388,7 +337,7 @@ local function throw()
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.polarity and msg:find(L["polarity_trigger"]) then
+	if self:GetOption(28089) and msg:find(L["polarity_trigger"]) then
 		self:DelayedMessage(25, L["polarity_warning"], "Important")
 		self:Bar(L["polarity_bar"], 28, "Spell_Nature_Lightning")
 	elseif msg == L["trigger_phase1_1"] or msg == L["trigger_phase1_2"] then

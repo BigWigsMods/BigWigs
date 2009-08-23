@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15954
-mod.toggleOptions = {"blink", "teleport", "curse", "wave", "bosskill"}
+mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
 mod.consoleCmd = "Noth"
 
 ------------------------------
@@ -48,8 +48,6 @@ L:RegisterTranslations("enUS", function() return {
 	backwarn = "He's back in the room for %d sec!",
 	backwarn2 = "10 sec until he's back in the room!",
 
-	curse = "Curse",
-	curse_desc = "Warn when Noth casts Curse of the Plaguebringer.",
 	curseexplosion = "Curse explosion!",
 	cursewarn = "Curse! next in ~55 sec",
 	curse10secwarn = "Curse in ~10 sec",
@@ -85,8 +83,6 @@ L:RegisterTranslations("ruRU", function() return {
 	backwarn = "Он вернулся в комнату на %d секунд!",
 	backwarn2 = "10 секунд до возвращения в комнату!",
 
-	curse = "Проклятие Чумного",
-	curse_desc = "Сообщать когда Нот накладывает проклятие.",
 	curseexplosion = "Проклятый взрыв!",
 	cursewarn = "Проклятие через ~55 секунд",
 	curse10secwarn = "Проклятие через ~10 секунд",
@@ -122,8 +118,6 @@ L:RegisterTranslations("deDE", function() return {
 	backwarn = "Noth zurück im Raum für %d sek!",
 	backwarn2 = "Rückteleport in 10 sek!",
 
-	curse = "Fluch",
-	curse_desc = "Warnungen und Timer für Fluch des Seuchenfürsten.",
 	curseexplosion = "Fluch Explosion!",
 	cursewarn = "Fluch! Nächster in ~55 sek.",
 	curse10secwarn = "Fluch in ~10 sek!",
@@ -160,8 +154,6 @@ L:RegisterTranslations("koKR", function() return {
 	backwarn = "방으로 복귀! %d 초간 최대한 공격!",
 	backwarn2 = "10초 후 방으로 복귀!",
 
-	curse = "저주",
-	curse_desc = "저주를 알립니다.",
 	curseexplosion = "역병술사의 저주!",
 	cursewarn = "저주! 다음 저주 약 55초 이내",
 	curse10secwarn = "약 10초 이내 저주",
@@ -197,8 +189,6 @@ L:RegisterTranslations("zhCN", function() return {
 	backwarn = "诺斯回到房间 - %d秒後，传送！",
 	backwarn2 = "10秒後诺斯回到房间！",
 
-	curse = "瘟疫使者的诅咒",
-	curse_desc = "当施放瘟疫使者的诅咒时发出警报。",
 	curseexplosion = "瘟疫使者的诅咒！",
 	cursewarn = "约55秒後，瘟疫使者的诅咒！",
 	curse10secwarn = "约10秒後，瘟疫使者的诅咒！",
@@ -234,8 +224,6 @@ L:RegisterTranslations("zhTW", function() return {
 	backwarn = "諾斯回到房間 - %d秒後，傳送！",
 	backwarn2 = "10秒後諾斯回到房間！",
 
-	curse = "瘟疫使者詛咒",
-	curse_desc = "當施放瘟疫者詛咒時發出警報。",
 	curseexplosion = "瘟疫使者詛咒！",
 	cursewarn = "約55秒後，瘟疫使者詛咒！",
 	curse10secwarn = "約10秒後，瘟疫使者詛咒！",
@@ -271,8 +259,6 @@ L:RegisterTranslations("frFR", function() return {
 	backwarn = "De retour dans la salle pendant %d sec. !",
 	backwarn2 = "10 sec. avant son retour dans la salle !",
 
-	curse = "Malédictions",
-	curse_desc = "Prévient quand Noth incante ses Malédictions du Porte-peste.",
 	curseexplosion = "Explosion des malé. !",
 	cursewarn = "Malédictions ! Prochaines dans ~55 sec.",
 	curse10secwarn = "Malédictions dans ~10 sec.",
@@ -304,21 +290,17 @@ end
 ------------------------------
 
 function mod:Curse(_, spellId)
-	if self.db.profile.curse then
-		self:IfMessage(L["cursewarn"], "Important", spellId, "Alarm")
-		self:ScheduleEvent("bwnothcurse", "BigWigs_Message", cursetime - 10, L["curse10secwarn"], "Urgent")
-		self:Bar(L["cursebar"], cursetime, spellId)
-		self:Bar(L["curseexplosion"], 10, spellId)
-	end
+	self:IfMessage(L["cursewarn"], "Important", spellId, "Alarm")
+	self:ScheduleEvent("bwnothcurse", "BigWigs_Message", cursetime - 10, L["curse10secwarn"], "Urgent")
+	self:Bar(L["cursebar"], cursetime, spellId)
+	self:Bar(L["curseexplosion"], 10, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["blinktrigger"] then
-		if self.db.profile.blink then
-			self:IfMessage(L["blinkwarn"], "Important", 29208)
-			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 34, L["blinkwarn2"], "Attention")
-			self:Bar(L["blinkbar"], 39, 29208)
-		end
+	if msg == L["blinktrigger"] and self.db.profile.blink then
+		self:IfMessage(L["blinkwarn"], "Important", 29208)
+		self:ScheduleEvent("bwnothblink", "BigWigs_Message", 34, L["blinkwarn2"], "Attention")
+		self:Bar(L["blinkbar"], 39, 29208)
 	end
 end
 
@@ -335,11 +317,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(timeroom - 10, L["teleportwarn2"], "Urgent")
 			self:Bar(L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
 		end
-		if GetRaidDifficulty() == 2 then
-			if self.db.profile.blink then
-				self:DelayedMessage(25, L["blinkwarn2"], "Attention")
-				self:Bar(L["blinkbar"], 30, 29208)
-			end
+		if GetRaidDifficulty() == 2 and self.db.profile.blink then
+			self:DelayedMessage(25, L["blinkwarn2"], "Attention")
+			self:Bar(L["blinkbar"], 30, 29208)
 		end
 		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, timeroom, self)
 	end

@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15952
-mod.toggleOptions = {"spray", "cocoon", "enrage", "bosskill"}
+mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 mod.consoleCmd = "Maexxna"
 
 ------------------------------
@@ -25,13 +25,7 @@ local enrageannounced = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	spray = "Web Spray",
-	spray_desc = "Warn for webspray and spiders",
-
-	cocoon = "Cocoon",
-	cocoon_desc = "Warn for Cocooned players",
-
-	cocoonwarn = "%s Cocooned!",
+	cocoonwarn = "%s wrapped!",
 
 	webspraywarn30sec = "Cocoons in 10 sec",
 	webspraywarn20sec = "Cocoons! Spiders in 10 sec!",
@@ -47,12 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	spray = "Летящая паутина",
-	spray_desc = "Предупреждать о паутине и пауках",
-
-	cocoon = "Кокон",
-	cocoon_desc = "Предупреждать о коконах",
-
 	cocoonwarn = "%s в коконе!",
 
 	webspraywarn30sec = "Паутина через 10 секунд",
@@ -69,12 +57,6 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	spray = "Gespinstschauer", -- aka "Netz versprühen", Blizzard's inconsistence
-	spray_desc = "Warnungen und Timer für Gespinstschauer und Spinnen.",
-
-	cocoon = "Fangnetz", -- aka "Gespinsthülle", Blizzard's inconsistence
-	cocoon_desc = "Warnt, wenn ein Spieler von Fangnetz betroffen ist.",
-
 	cocoonwarn = "Fangnetz: %s!",
 
 	webspraywarn30sec = "Fangnetz in 10 sek!",
@@ -91,12 +73,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	spray = "거미줄 뿌리기",
-	spray_desc = "거미줄 뿌리기와 거미 소환을 알립니다.",
-
-	cocoon = "거미줄 감싸기",
-	cocoon_desc = "거미줄 감싸기에 걸린 플레이어를 알립니다.",
-
 	cocoonwarn = "거미줄 감싸기: %s!",
 
 	webspraywarn30sec = "10초 이내 거미줄 감싸기",
@@ -113,12 +89,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	spray = "蛛网喷射",
-	spray_desc = "当施放蛛网喷射及小蜘蛛出现时发出警报。",
-
-	cocoon = "蛛网裹体",
-	cocoon_desc = "当玩家中了蛛网裹体时发出警报。",
-
 	cocoonwarn = ">%s< 蛛网裹体！",
 
 	webspraywarn30sec = "10秒后，蛛网裹体！",
@@ -135,12 +105,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	spray = "撒網",
-	spray_desc = "當施放撒網及小蜘蛛出現時發出警報。",
-
-	cocoon = "纏繞之網",
-	cocoon_desc = "玩家中了纏繞之網時發出警報。",
-
 	cocoonwarn = ">%s< 纏繞之網！",
 
 	webspraywarn30sec = "10秒後，纏繞之網！",
@@ -157,12 +121,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	spray = "Jet de rets",
-	spray_desc = "Prévient de l'arrivée des Jet de rets et des araignées.",
-
-	cocoon = "Entoilage",
-	cocoon_desc = "Prévient quand un joueur subit les effets de l'Entoilage.",
-
 	cocoonwarn = "Entoilage : %s",
 
 	webspraywarn30sec = "Entoilage dans 10 sec.",
@@ -206,22 +164,18 @@ local function cocoonWarn()
 end
 
 function mod:Cocoon(player)
-	if self.db.profile.cocoon then
-		inCocoon[#inCocoon + 1] = player
-		self:ScheduleEvent("Cocoons", cocoonWarn, 0.3)
-	end
+	inCocoon[#inCocoon + 1] = player
+	self:ScheduleEvent("Cocoons", cocoonWarn, 0.3)
 end
 
 function mod:Spray()
-	if self.db.profile.spray then
-		self:IfMessage(L["webspraywarn"], "Important", 54125)
-		self:DelayedMessage(10, L["webspraywarn30sec"], "Attention")
-		self:DelayedMessage(20, L["webspraywarn20sec"], "Attention")
-		self:DelayedMessage(30, L["webspraywarn10sec"], "Attention")
-		self:DelayedMessage(35, L["webspraywarn5sec"], "Attention")
-		self:Bar(L["webspraybar"], 40, 54125)
-	end
-	if self.db.profile.cocoon then
+	self:IfMessage(L["webspraywarn"], "Important", 54125)
+	self:DelayedMessage(10, L["webspraywarn30sec"], "Attention")
+	self:DelayedMessage(20, L["webspraywarn20sec"], "Attention")
+	self:DelayedMessage(30, L["webspraywarn10sec"], "Attention")
+	self:DelayedMessage(35, L["webspraywarn5sec"], "Attention")
+	self:Bar(L["webspraybar"], 40, 54125)
+	if self:GetOption(28622) then
 		self:Bar(L["cocoonbar"], 20, 745)
 	end
 	self:Bar(L["spiderbar"], 30, 17332)
@@ -236,16 +190,16 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:Enrage(_, spellId)
-	if self.db.profile.enrage then
-		self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
-	end
+	self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
 function mod:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 30 and health <= 33 and not enrageannounced then
-			if self.db.profile.enrage then self:Message(L["enragesoonwarn"], "Important") end
+			if self:GetOption(54123) then
+				self:Message(L["enragesoonwarn"], "Important")
+			end
 			enrageannounced = true
 		elseif health > 40 and enrageannounced then
 			enrageannounced = nil

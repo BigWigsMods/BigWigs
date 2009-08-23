@@ -13,7 +13,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
 mod.guid = 16065
-mod.toggleOptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
+mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
 mod.consoleCmd = "Horsemen"
 
 ------------------------------
@@ -36,21 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 	markwarn1 = "Mark %d!",
 	markwarn2 = "Mark %d in 5 sec",
 
-	void = "Void Zone",
-	void_desc = "Warn when Lady Blaumeux casts a Void Zone.",
-	voidwarn = "Void Zone Incoming",
-	voidbar = "Next Void Zone",
-
-	meteor = "Meteor",
-	meteor_desc = "Warn when Thane casts a Meteor.",
-	meteorwarn = "Meteor!",
-	meteorbar = "Meteor",
-
-	wrath = "Holy Wrath",
-	wrath_desc = "Warn when Zeliek casts Holy Wrath.",
-	wrathwarn = "Holy Wrath!",
-	wrathbar = "Holy Wrath",
-
 	dies = "#%d Killed",
 
 	startwarn = "The Four Horsemen Engaged! Mark in ~17 sec",
@@ -62,21 +47,6 @@ L:RegisterTranslations("ruRU", function() return {
 	markbar = "Знак %d",
 	markwarn1 = "Знак %d!",
 	markwarn2 = "Знак %d через 5 секунд",
-
-	void = "Портал Бездны",
-	void_desc = "Предупреждать когда Леди Бломе создаёт портал Бездны.",
-	voidwarn = "Появление портал Бездны!",
-	voidbar = "Следующий портал",
-
-	meteor = "Метеор",
-	meteor_desc = "Сообщать когда Тан Кортазз применяет метеор.",
-	meteorwarn = "Метеор!",
-	meteorbar = "Метеор",
-
-	wrath = "Гнев небес",
-	wrath_desc = "Сообщать когда Сэр Зелиек применяет гнев небес.",
-	wrathwarn = "Гнев небес!",
-	wrathbar = "Гнев небес",
 
 	dies = "#%d убит",
 
@@ -90,21 +60,6 @@ L:RegisterTranslations("koKR", function() return {
 	markwarn1 = "징표(%d)!",
 	markwarn2 = "5초 후 징표(%d)",
 
-	void = "공허의 지대",
-	void_desc = "여군주 블라미우스의 공허의 지대 시전을 알립니다.",
-	voidwarn = "공허의 지대 생성!",
-	voidbar = "다음 공허의 지대",
-
-	meteor = "유성",
-	meteor_desc = "영주 코스아즈의 유성 시전을 알립니다.",
-	meteorwarn = "유성!",
-	meteorbar = "유성",
-
-	wrath = "성스러운 격노",
-	wrath_desc = "젤리에크 경의 신성한 격노 시전을 알립니다.",
-	wrathwarn = "신의 격노!",
-	wrathbar = "신의 격노",
-
 	dies = "기사 #%d 처치",
 
 	startwarn = "4인의 기병대 전투 시작! 약 17초 이내 징표",
@@ -116,21 +71,6 @@ L:RegisterTranslations("deDE", function() return {
 	markbar = "Mal (%d)",
 	markwarn1 = "Mal (%d)!",
 	markwarn2 = "Mal (%d) in 5 sek!",
-
-	void = "Zone der Leere",
-	void_desc = "Warnungen und Timer für Zone der Leere von Lady Blaumeux.",
-	voidwarn = "Zone der Leere!",
-	voidbar = "Zone der Leere",
-
-	meteor = "Meteor",
-	meteor_desc = "Warnungen und Timer für Meteor von Than Korth'azz.",
-	meteorwarn = "Meteor!",
-	meteorbar = "Meteor",
-
-	wrath = "Heiliger Zorn",
-	wrath_desc = "Warnungen und Timer für Heiliger Zorn von Sir Zeliek.",
-	wrathwarn = "Heiliger Zorn!",
-	wrathbar = "Heiliger Zorn",
 
 	dies = "#%d getötet",
 
@@ -144,21 +84,6 @@ L:RegisterTranslations("zhCN", function() return {
 	markwarn1 = "印记%d！",
 	markwarn2 = "5秒后，印记%d！",
 
-	void = "虚空领域",
-	void_desc = "当女公爵布劳缪克丝施放虚空领域时发出警报。",
-	voidwarn = "5秒后，虚空领域！",
-	voidbar = "<虚空领域>",
-
-	meteor = "流星",
-	meteor_desc = "当库尔塔兹领主施放流星时发出警报。",
-	meteorwarn = "流星！",
-	meteorbar = "<流星>",
-
-	wrath = "神圣愤怒",
-	wrath_desc = "当瑟里耶克爵士施放神圣愤怒时发出警报。",
-	wrathwarn = "神圣愤怒！",
-	wrathbar = "<神圣愤怒>",
-
 	dies = "#%d死亡！",
 
 	startwarn = "四骑士已激活 - 约17秒后，印记！",
@@ -171,21 +96,6 @@ L:RegisterTranslations("zhTW", function() return {
 	markwarn1 = "印記%d！",
 	markwarn2 = "5秒後，印記%d！",
 
-	void = "虛無區域",
-	void_desc = "當布洛莫斯女士施放虛無區域時警報。",
-	voidwarn = "5秒後，虛無區域！",
-	voidbar = "<虛無區域>",
-
-	meteor = "隕石術",
-	meteor_desc = "當寇斯艾茲族長施放隕石術時發出警報。",
-	meteorwarn = "隕石術！",
-	meteorbar = "<隕石術>",
-
-	wrath = "神聖憤怒",
-	wrath_desc = "當札里克爵士施放神聖憤怒時發出警報。",
-	wrathwarn = "神聖憤怒",
-	wrathbar = "神聖憤怒",
-
 	dies = "#%d死亡！",
 
 	startwarn = "四騎士已進入戰鬥 - 約17秒後，印記！",
@@ -197,21 +107,6 @@ L:RegisterTranslations("frFR", function() return {
 	markbar = "Marque %d",
 	markwarn1 = "Marque %d !",
 	markwarn2 = "Marque %d dans 5 sec.",
-
-	void = "Zone de vide",
-	void_desc = "Prévient quand Dame Blaumeux incante une Zone de vide.",
-	voidwarn = "Arrivée d'une Zone de vide",
-	voidbar = "Prochaine Zone de vide",
-
-	meteor = "Météore",
-	meteor_desc = "Prévient quand le Thane Korth'azz incante un Météore.",
-	meteorwarn = "Météore !",
-	meteorbar = "Recharge Météore",
-
-	wrath = "Colère divine",
-	wrath_desc = "Prévient quand Sire Zeliek incante une Colère divine.",
-	wrathwarn = "Colère divine !",
-	wrathbar = "Recharge Colère divine",
 
 	dies = "#%d éliminé(e)",
 
@@ -243,25 +138,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:VoidZone(_, spellId)
-	if self.db.profile.void then
-		self:IfMessage(L["voidwarn"], "Important", spellId)
-		self:Bar(L["voidbar"], 12, spellId)
-	end
+function mod:VoidZone(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(spellName, 12, spellId)
 end
 
-function mod:Meteor(_, spellId)
-	if self.db.profile.meteor then
-		self:IfMessage(L["meteorwarn"], "Important", spellId)
-		self:Bar(L["meteorbar"], 12, spellId)
-	end
+function mod:Meteor(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(spellName, 12, spellId)
 end
 
-function mod:Wrath(_, spellId)
-	if self.db.profile.wrath then
-		self:IfMessage(L["wrathwarn"], "Important", spellId)
-		self:Bar(L["wrathbar"], 12, spellId)
-	end
+function mod:Wrath(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Important", spellId)
+	self:Bar(spellName, 12, spellId)
 end
 
 local last = 0

@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15989
-mod.toggleOptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
 mod.consoleCmd = "Sapphiron"
 
 ------------------------------
@@ -25,8 +25,6 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	deepbreath = "Ice Bomb",
-	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 	airphase_trigger = "Sapphiron lifts off into the air!",
 	deepbreath_incoming_message = "Ice Bomb casting in ~14sec!",
 	deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!",
@@ -35,16 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 	deepbreath_warning = "Ice Bomb Incoming!",
 	deepbreath_bar = "Ice Bomb Lands!",
 
-	lifedrain = "Life Drain",
-	lifedrain_desc = "Warns about the Life Drain curse.",
 	lifedrain_message = "Life Drain! Next in ~24sec!",
 	lifedrain_warn1 = "Life Drain in ~5sec!",
 	lifedrain_bar = "~Possible Life Drain",
 
-	icebolt = "Icebolt",
-	icebolt_desc = "Yell when you are an Icebolt.",
 	icebolt_other = "Block: %s",
-	icebolt_yell = "I'm a Block!",
+	icebolt_say = "I'm a Block!",
 
 	ping = "Ping",
 	ping_desc = "Ping your current location if you are afflicted by Icebolt.",
@@ -55,8 +49,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	deepbreath = "Ледяная бомба",
-	deepbreath_desc = "Предупреждать о ледяной бомбе Сапфирона",
 	airphase_trigger = "%s взмывает в воздух!",
 	deepbreath_incoming_message = "Ледяная бомба через 23 секунды!",
 	deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!",
@@ -65,16 +57,12 @@ L:RegisterTranslations("ruRU", function() return {
 	deepbreath_warning = "Появляется ледяная бомба!",
 	deepbreath_bar = "Приземляется ледяная бомба!",
 
-	lifedrain = "Похищение жизни",
-	lifedrain_desc = "Предупреждать о похищении жизни",
 	lifedrain_message = "Похищение жизни! Следующее через 24 секунды!",
 	lifedrain_warn1 = "Похищение жизни через 5 секунд!",
 	lifedrain_bar = "~Возможное похищение жизни",
 
-	icebolt = "Морозная стрела",
-	icebolt_desc = "Предупреждать о морозной стреле на Вас.",
 	icebolt_other = "%s в Глыбе!",
-	icebolt_yell = "Я в глыбе!",
+	icebolt_say = "Я в глыбе!",
 
 	ping = "Мояк по мини-карте",
 	ping_desc = "Отмечать ваше текущеее положение маяком по мини-карте, если вы находитесь в глыбе после морозной стрелы.",
@@ -85,8 +73,6 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	deepbreath = "얼음 폭탄",
-	deepbreath_desc = "사피론 의 얼음 폭탄 시전을 알립니다.",
 	airphase_trigger = "사피론이 공중으로 떠오릅니다!",
 	deepbreath_incoming_message = "약 14초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_soon_message = "약 5초 이내 얼음 폭탄 시전!",
@@ -95,16 +81,12 @@ L:RegisterTranslations("koKR", function() return {
 	deepbreath_warning = "잠시 후 얼음 폭탄!",
 	deepbreath_bar = "얼음 폭탄 떨어짐!",
 
-	lifedrain = "생명력 흡수",
-	lifedrain_desc = "생명력 흡수 저주를 알립니다.",
 	lifedrain_message = "생명력 흡수! 다음은 약 24초 이내!",
 	lifedrain_warn1 = "약 5초 이내 생명력 흡수!",
 	lifedrain_bar = "~생명력 흡수 가능",
 
-	icebolt = "얼음 화살",
-	icebolt_desc = "얼음 화살에 얼렸을때 외침으로 알립니다.",
 	icebolt_other = "방패: %s",
-	icebolt_yell = "저 방패에요!",
+	icebolt_say = "저 방패에요!",
 
 	ping = "미니맵 표시",
 	ping_desc = "자신이 얼음 화살에 걸렸을 때 현재 위치를 미니맵에 표시합니다.",
@@ -115,8 +97,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	deepbreath = "Frostatem",
-	deepbreath_desc = "Warnungen und Timer für Frostatem.",
 	airphase_trigger = "Saphiron erhebt sich in die Lüfte!", -- No %s in deDE, we need the translated name!
 	deepbreath_incoming_message = "Frostatem in ~23 sek!",
 	deepbreath_incoming_soon_message = "Frostatem in ~5 sek!",
@@ -125,16 +105,12 @@ L:RegisterTranslations("deDE", function() return {
 	deepbreath_warning = "Frostatem kommt!",
 	deepbreath_bar = "Frostatem landet!",
 
-	lifedrain = "Lebensentzug", -- aka "Lebenssauger", Blizzard's inconsistence
-	lifedrain_desc = "Warnungen und Timer für den Lebensentzug Fluch.",
 	lifedrain_message = "Lebensentzug! Nächster in ~24 sek!",
 	lifedrain_warn1 = "Lebensentzug in ~5 sek!",
 	lifedrain_bar = "~Lebensentzug",
 
-	icebolt = "Eisblitz",
-	icebolt_desc = "Schreit, wenn du von Eisblitz betroffen bist.",
 	icebolt_other = "Eisblock: %s",
-	icebolt_yell = "Ich bin ein Eisblock!",
+	icebolt_say = "Ich bin ein Eisblock!",
 
 	ping = "Ping",
 	ping_desc = "Die derzeitige Position pingen, wenn du von Eisblitz betroffen bist.",
@@ -145,8 +121,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	deepbreath = "冰霜吐息",
-	deepbreath_desc = "当施放冰霜吐息时发出警报。",
 	--airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "约14秒后，冰霜吐息！",
 	deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！",
@@ -155,16 +129,12 @@ L:RegisterTranslations("zhCN", function() return {
 	deepbreath_warning = "即将 冰霜吐息！",
 	deepbreath_bar = "<冰霜吐息 落地>",
 
-	lifedrain = "生命吸取",
-	lifedrain_desc = "当施放生命吸取时候发出警报。",
 	lifedrain_message = "约24秒后，生命吸取！",
 	lifedrain_warn1 = "5秒后，生命吸取！",
 	lifedrain_bar = "<生命吸取>",
 
-	icebolt = "寒冰屏障",
-	icebolt_desc = "当玩家中了寒冰屏障时发出大喊警报。",
 	icebolt_other = "寒冰屏障：>%s<！",
-	icebolt_yell = "我是寒冰屏障！快躲到我后面！",
+	icebolt_say = "我是寒冰屏障！快躲到我后面！",
 
 	ping = "点击",
 	ping_desc = "当你中了寒冰屏障时点击当前所在位置。",
@@ -175,8 +145,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	deepbreath = "冰息術",
-	deepbreath_desc = "當施放冰息術時發出警報。",
 	airphase_trigger = "%s離地升空了!",
 	deepbreath_incoming_message = "約14秒後，冰息術！",
 	deepbreath_incoming_soon_message = "約5秒後，冰息術！",
@@ -185,16 +153,12 @@ L:RegisterTranslations("zhTW", function() return {
 	deepbreath_warning = "即將 冰息術！",
 	deepbreath_bar = "<冰息術 落地>",
 
-	lifedrain = "生命吸取",
-	lifedrain_desc = "當施放生命吸取時發出警報。",
 	lifedrain_message = "約24秒後，生命吸取！",
 	lifedrain_warn1 = "5秒後，生命吸取！",
 	lifedrain_bar = "<生命吸取>",
 
-	icebolt = "寒冰凍體",
-	icebolt_desc = "當玩家中了寒冰凍體時發出大喊警報。",
 	icebolt_other = "寒冰凍體：>%s<！",
-	icebolt_yell = "我是寒冰凍體！快躲到我後面！",
+	icebolt_say = "我是寒冰凍體！快躲到我後面！",
 
 	ping = "點擊",
 	ping_desc = "當你中了寒冰凍體時點擊當前所在位置。",
@@ -205,8 +169,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	deepbreath = "Bombe de glace",
-	deepbreath_desc = "Prévient quand Saphiron commence à lancer sa Bombe de glace.",
 	airphase_trigger = "Saphiron s'envole !",
 	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~14 sec. !",
 	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
@@ -215,16 +177,12 @@ L:RegisterTranslations("frFR", function() return {
 	deepbreath_warning = "Arrivée d'une Bombe de glace !",
 	deepbreath_bar = "Impact Bombe de glace ",
 
-	lifedrain = "Drain de vie",
-	lifedrain_desc = "Prévient quand des joueurs subissent les effets des Drains de vie.",
 	lifedrain_message = "Drains de vie ! Prochain dans ~24 sec. !",
 	lifedrain_warn1 = "Drains de vie dans 5 sec. !",
 	lifedrain_bar = "Prochains Drains de vie",
 
-	icebolt = "Eclair de glace",
-	icebolt_desc = "Fait crier à votre personnage qu'il est un bloc de glace quand c'est le cas.",
 	icebolt_other = "Bloc : %s",
-	icebolt_yell = "Je suis un bloc !",
+	icebolt_say = "Je suis un bloc !",
 
 	ping = "Ping",
 	ping_desc = "Pinge votre position actuelle si vous subissez les effets de l'Eclair de glace.",
@@ -264,42 +222,37 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["airphase_trigger"] then
 		self:CancelScheduledEvent("Lifedrain")
 		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
-		if self.db.profile.deepbreath then
+		if self:GetOption(28524) then
 			--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
 			self:IfMessage(L["deepbreath_incoming_message"], "Attention")
 			self:Bar(L["deepbreath_incoming_bar"], 14, 43810)
 			self:DelayedMessage(9, L["deepbreath_incoming_soon_message"], "Attention")
 		end
 	elseif msg == L["deepbreath_trigger"] then
-		if self.db.profile.deepbreath then
+		if self:GetOption(28524) then
 			self:IfMessage(L["deepbreath_warning"], "Attention")
 			self:Bar(L["deepbreath_bar"], 10, 29318)
 		end
 	end
 end
 
-function mod:Breath(_, spellId)
-	if self.db.profile.deepbreath then
-		breath = breath + 1
-		if breath == 2 then
-			self:IfMessage(L["deepbreath"], "Important", spellId)
-		end
+function mod:Breath(_, spellId, _, _, spellName)
+	breath = breath + 1
+	if breath == 2 then
+		self:IfMessage(spellName, "Important", spellId)
 	end
 end
 
 function mod:Drain(_, spellId)
-	if self.db.profile.lifedrain then
-		self:IfMessage(L["lifedrain_message"], "Urgent", spellId)
-		self:Bar(L["lifedrain_bar"], 23, spellId)
-		self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
-	end
+	self:IfMessage(L["lifedrain_message"], "Urgent", spellId)
+	self:Bar(L["lifedrain_bar"], 23, spellId)
+	self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
 end
 
 function mod:Icebolt(player, spellId)
-	if not self.db.profile.icebolt then return end
 	if player == pName then
 		self:WideMessage(format(L["icebolt_other"], player))
-		SendChatMessage(L["icebolt_yell"], "YELL")
+		SendChatMessage(L["icebolt_say"], "SAY")
 		if UnitIsUnit(player, "player") and self.db.profile.ping then
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])
