@@ -55,7 +55,7 @@ L:RegisterTranslations("koKR", function() return {
 	legionflame_you = "당신은 불꽃 군단!",
 	legionflame_other = "불꽃 군단: %s!",
 	legionflame_bar = "~불꽃 군단 대기시간",
-	
+
 	icon = "전술 표시",
 	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage = "Engagement",
 	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !",
-	engage_trigger1 = "Banished to the Nether",
+	--engage_trigger1 = "Banished to the Nether",
 
 	incinerate_you = "Incinérer la chair sur VOUS !",
 	incinerate_other = "Incinérer la chair : %s",
@@ -136,7 +136,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	engage = "Начало битвы",
-	
+
 	engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!",
 	engage_trigger1 = "Отправляйся в Пустоту!",
 
@@ -237,7 +237,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 --if you wipe then you never get "engage_trigger1" message again, but always "engage_trigger" message before boss start attack. 
 --Correct me if i'm wrong
 	if msg:find(L["engage_trigger1"]) then
-		self:Bar(L["engage"], 11, "INV_Gizmo_01")	
+		self:Bar(L["engage"], 11, "INV_Gizmo_01")
 		--[[if db.netherportal then
 			self:Bar(L["netherportal_bar"], 30, 68404) -- engage+19
 		end

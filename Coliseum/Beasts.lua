@@ -117,7 +117,6 @@ L:RegisterTranslations("frFR", function() return {
 	-- Icehowl
 	butt_message = "Coup de tête féroce : %s",
 	butt_bar = "~Recharge Coup de tête",
-
 	charge = "Charge furieuse",
 	charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse.",
 	charge_trigger = "lâche un rugissement assourdissant !$",
