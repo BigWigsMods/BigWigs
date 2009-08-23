@@ -489,6 +489,9 @@ do
 
 		if module:IsBossModule() then
 			self:ToggleModuleActive(module, false)
+		end
+
+		if module.toggleoptions then
 			for i,v in next, module.toggleoptions do
 				local t = type(v)
 				if t == "string"  then
@@ -507,7 +510,7 @@ do
 		end
 
 		-- Set up AceConsole.
-		if module:IsBossModule() then
+		if module.toggleoptions then
 			local cons = module.consoleOptions
 			local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 			if module.toggleoptions then
@@ -599,7 +602,7 @@ do
 
 			if cons then
 				if module.external then
-					options.args.extras.args[module.consoleCmd] = cons
+					options.args.extras.args[module.consoleCmd or module.name] = cons
 				else
 					local zone = nil
 					if module.otherMenu then
@@ -616,7 +619,7 @@ do
 							disabled = "~IsActive",
 						}
 					end
-					options.args[zone].args[module.consoleCmd] = cons
+					options.args[zone].args[module.consoleCmd or module.name] = cons
 				end
 			end
 		elseif module.consoleOptions then
