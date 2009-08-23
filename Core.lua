@@ -14,8 +14,13 @@ local BBR = bboss:GetReverseLookupTable()
 _G.BZ = bzone:GetLookupTable()
 _G.BB = bboss:GetLookupTable()
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
+local AL = AceLibrary("AceLocale-2.2")
+local L = AL:new("BigWigs")
 local icon = LibStub("LibDBIcon-1.0", true)
+
+--[[local ac = LibStub("AceConfig-3.0")
+local acd = LibStub("AceConfigDialog-3.0")
+local acr = LibStub("AceConfigRegistry-3.0")]]
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -326,6 +331,29 @@ local BigWigs = BigWigs
 
 BigWigs:SetModuleMixins("AceEvent-2.0")
 
+--[[local acOptions = {
+	type = "group",
+	args = {
+		description = {
+			type = "description",
+			name = "Big Wigs will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.",
+			order = 1,
+			fontSize = "medium",
+		},
+	},
+}
+local zoneOptionsTemplate = {
+	type = "group",
+	args = {
+		zoneDesc = {
+			type = "description",
+			name = "This zone is crowded with encounters for your enjoyment!",
+			order = 101,
+			fontSize = "medium",
+		},
+	},
+}]]
+
 local options = {
 	type = "group",
 	handler = BigWigs,
@@ -398,6 +426,9 @@ function BigWigs:OnInitialize()
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("enrage", L["enrage"], L["enrage_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
+	
+	--ac:RegisterOptionsTable("BigWigs", acOptions)
+	--acd:AddToBlizOptions("BigWigs", "Big Wigs")
 end
 
 function BigWigs:OnEnable(first)
@@ -512,7 +543,6 @@ do
 		-- Set up AceConsole.
 		if module.toggleOptions then
 			local cons = module.consoleOptions
-			local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 			if module.toggleOptions then
 				cons = {
 					type = "group",
@@ -572,13 +602,19 @@ do
 							desc = L["Toggles whether or not the boss module should warn about %s."]:format(spellName),
 						}
 					elseif t == "string" then
+						-- AceLocale-2.2 has no exposed way to check if a registry entry exists - FAIL!
+						local alEntry = "BigWigs"..name
+						local ML = nil
+						if AL.registry[alEntry] then
+							ML = AL:new(alEntry)
+						end
 						local optName, optDesc, optOrder
 						if customBossOptions[v] then
 							optName = customBossOptions[v][1]
 							optDesc = customBossOptions[v][2]
 							optOrder = customBossOptionOrder
 							customBossOptionOrder = customBossOptionOrder + 1
-						else
+						elseif ML then
 							optName = ML:HasTranslation(v) and ML[v]
 							local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
 							optDesc = ML:HasTranslation(descKey) and ML[descKey] or v
@@ -591,7 +627,7 @@ do
 								name = optName,
 								desc = optDesc,
 							}
-							if optOrder > 0 and ML:HasTranslation(v.."_validate") then
+							if ML and optOrder > 0 and ML:HasTranslation(v.."_validate") then
 								cons.args[v].type = "text"
 								cons.args[v].validate = ML[v.."_validate"]
 							end
@@ -610,6 +646,17 @@ do
 					else
 						zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
 					end
+					
+					-- 3.0
+					--[[local acName = "BigWigs-" .. zone
+					local tbl = acr:GetOptionsTable(acName)
+					if not tbl then
+						ac:RegisterOptionsTable("BigWigs-" .. zone, zoneOptionsTemplate)
+						acd:AddToBlizOptions("BigWigs-" .. zone, "Big Wigs: " .. zone)
+						tbl = acr:GetOptionsTable(acName)
+					end]]
+					
+					-- 2.0
 					if not options.args[zone] then
 						options.args[zone] = {
 							type = "group",
