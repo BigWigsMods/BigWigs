@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33113
-mod.toggleOptions = {"flame", "pursue", "shutdown", "bosskill"}
+mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
 mod.consoleCmd = "Leviathan"
 
 ------------------------------
@@ -30,33 +30,18 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "^Hostile entities detected.",
 	engage_message = "%s Engaged!",
 
-	--pyrite = "Pyrite stack",
-	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
-	--pyrite_bar = "Pyrite stack",
-
-	flame = "Flame Vents",
-	flame_desc = "Warn when Flame Leviathan casts a Flame Vents.",
-	flame_message = "Flame Vents!",
-
 	pursue = "Pursuit",
 	pursue_desc = "Warn when Flame Leviathan pursues a player.",
 	pursue_trigger = "^%%s pursues",
 	pursue_other = "Leviathan pursues %s!",
 	pursue_you = "Leviathan pursues YOU!",
 
-	shutdown = "Systems Shutdown",
-	shutdown_desc = "Warn when the systems shut down.",
 	shutdown_message = "Systems down!",
-	--overload_trigger = "%s's curcuits overloaded.",
-} end )
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "^적대적인 존재 감지.",
 	engage_message = "%s 전투 시작!",
-
-	flame = "화염 분출",
-	flame_desc = "거대 화염전차으 화염 분출 시전을 알립니다.",
-	flame_message = "화염 분출!",
 
 	pursue = "추격",
 	pursue_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
@@ -64,18 +49,12 @@ L:RegisterTranslations("koKR", function() return {
 	pursue_other = "%s 추격!",
 	pursue_you = "당신을 추격!",
 
-	shutdown = "시스템 작동 정지",
-	shutdown_desc = "거대 화염전차의 시스템 작동 정지를 알립니다.",
 	shutdown_message = "시스템 작동 정지!",
-} end )
+} end)
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "^Entités hostiles détectées.",
 	engage_message = "%s engagé !",
-
-	flame = "Décharges de flammes",
-	flame_desc = "Prévient quand le Léviathan des flammes incante des Décharges de flammes.",
-	flame_message = "Décharges de flammes !",
 
 	pursue = "Poursuite",
 	pursue_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
@@ -83,18 +62,12 @@ L:RegisterTranslations("frFR", function() return {
 	pursue_other = "Poursuivi(e) : %s",
 	pursue_you = "Léviathan des flammes VOUS poursuit !",
 
-	shutdown = "Extinction des systèmes",
-	shutdown_desc = "Prévient quand le Léviathan des flammes éteint ses systèmes.",
 	shutdown_message = "Extinction des systèmes !",
-} end )
+} end)
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Feindeinheiten erkannt",
 	engage_message = "%s angegriffen!",
-
-	flame = "Flammendüsen",
-	flame_desc = "Warnung und Timer für Flammendüsen.",
-	flame_message = "Flammendüsen!",
 
 	pursue = "Verfolgung",
 	pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt.",
@@ -102,22 +75,12 @@ L:RegisterTranslations("deDE", function() return {
 	pursue_other = "%s wird verfolgt!",
 	pursue_you = "DU wirst verfolgt!",
 
-	shutdown = "Systemabschaltung",
-	shutdown_desc = "Warnung für Systemabschaltung.",
 	shutdown_message = "Systemabschaltung!",
-} end )
+} end)
 
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger = "^Hostile entities detected.",
 	engage_message = "%s已激怒！",
-
-	--pyrite = "Pyrite stack",
-	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
-	--pyrite_bar = "Pyrite stack",
-
-	flame = "烈焰外洩",
-	flame_desc = "当烈焰巨兽施放烈焰外洩时发出警报。",
-	flame_message = "烈焰外洩！",
 
 	pursue = "追踪",
 	pursue_desc = "当烈焰巨兽追踪玩家时发出警报。",
@@ -125,22 +88,12 @@ L:RegisterTranslations("zhCN", function() return {
 	pursue_other = "烈焰巨兽追踪：>%s<！",
 	pursue_you = ">你< 烈焰巨兽追踪！",
 
-	shutdown = "系统关闭",
-	shutdown_desc = "当烈焰巨兽系统关闭时发出警报。",
 	shutdown_message = "系统关闭！",
-} end )
+} end)
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "發現敵意實體。啟動威脅評估協定。首要目標接近中。30秒後將再度評估。",
 	engage_message = "%s已狂怒！",
-
-	--pyrite = "Pyrite stack",
-	--pyrite_desc = "Show a bar for your own pyrite stack, if you're driving a demolisher.",
-	--pyrite_bar = "Pyrite stack",
-
-	flame = "烈焰外洩",
-	flame_desc = "當烈焰戰輪施放烈焰外洩時發出警報。",
-	flame_message = "烈焰外洩！",
 
 	pursue = "獵殺",
 	pursue_desc = "當烈焰戰輪獵殺玩家時發出警報。",
@@ -148,18 +101,12 @@ L:RegisterTranslations("zhTW", function() return {
 	pursue_other = "烈焰戰輪獵殺：>%s<！",
 	pursue_you = ">你< 烈焰戰輪獵殺！",
 
-	shutdown = "系統關閉",
-	shutdown_desc = "當烈焰戰輪系統關閉時發出警報。",
 	shutdown_message = "系統關閉！",
-} end )
+} end)
 
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "^Обнаружены противники.",
 	engage_message = "%s вступает в бой!",
-
-	flame = "Огненная струя",
-	flame_desc = "Сообщать когда Огненный Левиафан применяет огненную струю.",
-	flame_message = "Огненная струя!",
 
 	pursue = "Погоня",
 	pursue_desc = "Сообщать когда Огненный Левиафан преследует игрока.",
@@ -167,10 +114,8 @@ L:RegisterTranslations("ruRU", function() return {
 	pursue_other = "Левиафан преследует |3-3(%s)!",
 	pursue_you = "Левиафан преследует ВАС!",
 
-	shutdown = "Отключение системы",
-	shutdown_desc = "Сообщать когда Огненный Левиафан отключает системы",
 	shutdown_message = "Отключение системы!",
-} end )
+} end)
 
 ------------------------------
 --      Initialization      --
@@ -179,7 +124,8 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
-	--self:AddCombatListener("SPELL_AURA_APPLIED", "Pyrite", 62489)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Pyrite", 68605)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Pyrite", 68605)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -191,28 +137,26 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
---[[
-function mod:Pyrite(player, spellId)
-	if player ~= pName then return end
-	self:Bar(L["pyrite_bar"], 10, spellId)
-end]]
 
-function mod:Flame()
-	if db.flame then
-		self:IfMessage(L["flame_message"], "Urgent", 62396)
-		self:Bar(L["flame"], 10, 62396)
+function mod:Pyrite(_, spellId, _, _, spellName, _, sFlags)
+	if bit.band(sFlags, COMBATLOG_OBJECT_AFFILIATION_MINE or 0x1) ~= 0 then
+		self:Bar(spellName, 10, spellId)
 	end
 end
 
-function mod:FlameFailed()
-	self:TriggerEvent("BigWigs_StopBar", self, L["flame"])
+function mod:Flame(_, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Urgent", spellId)
+	self:Bar(spellName, 10, spellId)
 end
 
-function mod:Shutdown()
-	if db.shutdown then
-		self:IfMessage(L["shutdown_message"], "Positive", 62475, "Long")
-		self:Bar(L["shutdown"], 20, 62475)
-	end
+function mod:FlameFailed(_, _, _, _, spellName)
+	self:TriggerEvent("BigWigs_StopBar", self, spellName)
+end
+
+function mod:Shutdown(unit, spellId, _, _, spellName)
+	if unit ~= boss then return end
+	self:IfMessage(L["shutdown_message"], "Positive", spellId, "Long")
+	self:Bar(spellName, 20, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
