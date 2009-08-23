@@ -251,7 +251,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		lastCold = nil
 		if self:GetOption(61968) then
-			self:Bar(L["flash_bar"], 35, 61968)
+			local name = GetSpellInfo(61968)
+			self:Bar(name, 35, 61968)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 180, 6673)
