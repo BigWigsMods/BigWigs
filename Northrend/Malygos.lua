@@ -9,7 +9,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleOptions = {"phase", -1, "sparks", "spark", "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
 mod.consoleCmd = "Malygos"
 
 ------------------------------
@@ -30,14 +30,12 @@ local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
-	sparks = "Power Spark",
+	sparks = "Spark Spawns",
 	sparks_desc = "Warns on Power Spark spawns.",
 	sparks_message = "Power Spark spawns!",
 	sparks_warning = "Power Spark in ~5sec!",
 
-	spark = "Power Spark Buff",
-	spark_desc = "Warns when Malygos gains the Power Spark buff.",
-	spark_message = "Malygos gains Power Spark!",
+	sparkbuff_message = "Malygos gains Power Spark!",
 
 	vortex = "Vortex",
 	vortex_desc = "Warn for Vortex in phase 1.",
@@ -72,9 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 	sparks_message = "마력의 불꽃 소환!",
 	sparks_warning = "약 5초 후 마력의 불꽃!",
 
-	spark = "마력의 불꽃 버프",
-	spark_desc = "말리고스의 마력의 불꽃 버프 획득을 알립니다.",
-	spark_message = "말리고스 마력의 불꽃 획득!",
+	sparkbuff_message = "말리고스 마력의 불꽃 획득!",
 
 	vortex = "회오리",
 	vortex_desc = "1단계에서 회오리를 알립니다.",
@@ -109,9 +105,7 @@ L:RegisterTranslations("frFR", function() return {
 	sparks_message = "Etincelle de puissance apparue !",
 	sparks_warning = "Etincelle de puissance dans ~5 sec. !",
 
-	spark = "Etincelle de puissance - Buff",
-	spark_desc = "Prévient quand Malygos gagne l'amélioration d'une Etincelle de puissance.",
-	spark_message = "Malygos gagne Etincelle de puissance !",
+	sparkbuff_message = "Malygos gagne Etincelle de puissance !",
 
 	vortex = "Vortex",
 	vortex_desc = "Prévient de l'arrivée des Vortex.",
@@ -146,9 +140,7 @@ L:RegisterTranslations("zhCN", function() return {
 	sparks_message = "出现 能量火花！",
 	sparks_warning = "约5秒后，能量火花！",
 
-	spark = "能量火花增益",
-	spark_desc = "当玛里苟斯获得能量火花增益时发出警报。",
-	spark_message = "玛里苟斯获得：>能量火花<！",
+	sparkbuff_message = "玛里苟斯获得：>能量火花<！",
 
 	vortex = "漩涡",
 	vortex_desc = "当施放漩涡时发出警报及显示计时条。",
@@ -183,9 +175,7 @@ L:RegisterTranslations("zhTW", function() return {
 	sparks_message = "出現 力量火花！",
 	sparks_warning = "約5秒後，力量火花！",
 
-	spark = "力量火花增益",
-	spark_desc = "當瑪里苟斯獲得力量火花增益時發出警報。",
-	spark_message = "瑪里苟斯獲得：>力量火花<！",
+	sparkbuff_message = "瑪里苟斯獲得：>力量火花<！",
 
 	vortex = "漩渦",
 	vortex_desc = "當施放漩渦時發出警報及顯示計時條。",
@@ -220,9 +210,7 @@ L:RegisterTranslations("ruRU", function() return {
 	sparks_message = "Появилась Искра мощи!",
 	sparks_warning = "Искра мощи через ~5сек!",
 
-	spark = "Бафф - Яркая искра",
-	spark_desc = "Оповещать о пулучении Малигосом баффа Яркой искры.",
-	spark_message = "Малигос получил Яркую искру!",
+	sparkbuff_message = "Малигос получил Яркую искру!",
 
 	vortex = "Воронка",
 	vortex_desc = "Предупреждать о воронках и отображать полосу.",
@@ -257,9 +245,7 @@ L:RegisterTranslations("deDE", function() return {
 	sparks_message = "Energiefunke!",
 	sparks_warning = "Energiefunke in ~5 sek!",
 
-	spark = "Energiefunken Buff",
-	spark_desc = "Warnt, wenn Malygos den Energiefunken Buff bekommt.",
-	spark_message = "Malygos bekommt Energiefunke!",
+	sparkbuff_message = "Malygos bekommt Energiefunke!",
 
 	vortex = "Vortex",
 	vortex_desc = "Warnungen und Timer für Vortex in Phase 1.",
@@ -316,9 +302,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Spark(target, spellId)
-	if target == boss and phase == 1 and db.spark then
-		self:IfMessage(L["spark_message"], "Important", spellId)
+function mod:Spark(player, spellId)
+	if player == boss and phase == 1 then
+		self:IfMessage(L["sparkbuff_message"], "Important", spellId)
 	end
 end
 
