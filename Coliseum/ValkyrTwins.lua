@@ -127,7 +127,6 @@ L:RegisterTranslations("deDE", function() return {
 	
 } end)
 L:RegisterTranslations("zhCN", function() return {
--[[
 --	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
 
 	vortex_or_shield_cd = "<Vortex/Shield 冷却>",
@@ -150,7 +149,6 @@ L:RegisterTranslations("zhCN", function() return {
 	touch_of_light_on_other = "Touch of Light：>%s<！",
 	touch_of_dark_on_you = ">你< Touch of Darkness！",
 	touch_of_dark_on_other = "Touch of Darkness：>%s<！",
--]]
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",	

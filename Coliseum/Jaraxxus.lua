@@ -100,6 +100,23 @@ L:RegisterTranslations("deDE", function() return {
 	netherportal_bar = "~Netherportal",
 	netherpower_bar = "~Macht des Nether",
 } end)
+L:RegisterTranslations("zhCN", function() return {
+--	engage_trigger = "text",
+
+	incinerate_you = ">你< Incinerate Flesh！",
+	incinerate_other = "Incinerate Flesh：>%s<！",
+	incinerate_bar = "<Incinerate Flash 冷却>",
+
+	legionflame_you = ">你< Legion Flame！",
+	legionflame_other = "Legion Flame：>%s<！",
+	legionflame_bar = "<Legion Flame 冷却>",
+
+	icon = "团队标记",
+	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",
+
+	netherportal_bar = "<Nether Portal 冷却>",
+	netherpower_bar = "<Nether Power 冷却>",
+} end)
 L:RegisterTranslations("zhTW", function() return {
 --	engage_trigger = "text",
 

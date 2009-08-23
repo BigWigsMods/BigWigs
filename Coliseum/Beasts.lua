@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 	jormungars_trigger = "마음을 굳게 하게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!",
 	icehowl_trigger = "소개하는 순간 공기마저 얼어붙게 하는 얼음울음이 다음 상대일세! 죽거나 죽이거나, 선택하게 용사들이여!",
 	boss_incoming = "%s 곧 등장",
-	
+
 	-- Gormok
 	impale_message = "꿰뚫기 x%2$d: %1$s",
 	stomp_warning = "5초 후 발구르기!",
@@ -130,7 +130,7 @@ L:RegisterTranslations("deDE", function() return {
 	jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!",
 	icehowl_trigger = "Mit der Ankündigung unseres nächsten Kämpfers gefriert die Luft selbst: Eisheuler! Tötet oder werdet getötet, Champions!",
 	boss_incoming = "%s kommt",-- should we really translate that??
-	
+
 	-- Gormok
 	impale_message = "%2$dx Pfählen auf %1$s",
 	stomp_warning = "Stampfen in 5 sek!",
@@ -156,12 +156,43 @@ L:RegisterTranslations("deDE", function() return {
 	charge_you = "Wütender Ansturm auf DIR!",
 	charge_warning = "Ansturm bald!",
 } end)
+L:RegisterTranslations("zhCN", function() return {
+	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
+	--jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
+	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
+	boss_incoming = "即将%s！",
+
+	-- Gormok
+	impale_message = "%2$dx Impale：>%1$s<！",
+	stomp_warning = "5秒后，Staggering Stomp！",
+	stomp_bar = "<下一Staggering Stomp>",
+	firebomb_message = ">你< Fire Bomb！",
+
+	-- Jormungars
+	spew = "Acidic/Molten Spew",
+	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
+	toxin_you = ">你< Paralytic Toxin！",
+	toxin_other = "Paralytic Toxin：>%s<！",
+	burn_you = ">你< Burning Bile！",
+	burn_other = "Burning Bile：>%s<！",
+
+	-- Icehowl
+	butt_message = "Ferocious Butt：>%s<！",
+	butt_bar = "<Ferocious Butt 冷却>",
+
+	charge = "野性冲锋",
+	charge_desc = "当玩家中了野性冲锋时发出警报。",
+--	charge_trigger = "^%%s",	--check
+	charge_other = "野性冲锋：>%s<！",
+	charge_you = ">你< 野性冲锋！",
+	charge_warning = "即将 践踏！",
+} end)
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!",
 	jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢魘吧，英雄們，快就定位!",
 	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
 	boss_incoming = "即將%s！",
-	
+
 	-- Gormok
 	impale_message = "%2$dx 刺穿：>%1$s<！",
 	stomp_warning = "5秒後，驚恐踐踏！",

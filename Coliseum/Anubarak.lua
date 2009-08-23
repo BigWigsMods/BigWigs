@@ -99,7 +99,6 @@ L:RegisterTranslations("deDE", function() return {
 	pursue_other = "Verfolgt: %s",
 } end)
 L:RegisterTranslations("zhCN", function() return {
--[[
 	engage = "激活",
 --	engage_trigger = "This place will serve as your tomb!",
 
@@ -117,7 +116,6 @@ L:RegisterTranslations("zhCN", function() return {
 	pursue_desc = "当玩家被阿努巴拉克追击时发出警报。",
 	pursue_message = ">你< 追击！",
 	pursue_other = "追击：>%s<！",
--]]
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage = "開戰",

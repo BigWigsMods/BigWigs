@@ -186,7 +186,7 @@ L:RegisterTranslations("zhCN", function() return {
 	p2berserk = "第二阶段 - 狂暴",
 	p2berserk_desc = "当首领在第二阶段狂暴时发出警报。",
 
-	hardmode = "困难模式计时器",
+	hardmode = "困难模式",
 	hardmode_desc = "显示困难模式计时器。",
 	hardmode_warning = "困难模式结束！",
 
@@ -222,7 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 	p2berserk = "第二階段 - 狂暴",
 	p2berserk_desc = "當首領在第二階段狂暴時發出警報。",
 
-	hardmode = "困難模式計時器",
+	hardmode = "困難模式",
 	hardmode_desc = "顯示困難模式計時器。",
 	hardmode_warning = "困難模式結束！",
 

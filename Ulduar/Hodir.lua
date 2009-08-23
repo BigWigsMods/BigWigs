@@ -131,7 +131,7 @@ L:RegisterTranslations("zhCN", function() return {
 	flash_warning = "急速冻结！",
 	flash_soon = "5秒后，急速冻结！",
 
-	hardmode = "困难模式计时器",
+	hardmode = "困难模式",
 	hardmode_desc = "显示困难模式计时器。",
 
 	cloud_you = ">你< 风暴雷云！",
@@ -154,7 +154,7 @@ L:RegisterTranslations("zhTW", function() return {
 	flash_warning = "閃霜！",
 	flash_soon = "5秒後，閃霜！",
 
-	hardmode = "困難模式計時器",
+	hardmode = "困難模式",
 	hardmode_desc = "顯示困難模式計時器。",
 
 	cloud_you = ">你< 風暴雷雲！",
