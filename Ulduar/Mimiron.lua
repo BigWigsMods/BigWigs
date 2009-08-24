@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode_desc = "Show timer for hard mode.",
 	hardmode_trigger = "^Now, why would you go and do something like that?",
 	hardmode_message = "Hard mode activated!",
-	hardmode_warning = "Hard mode ends",
+	hardmode_warning = "BOOM!",
 
 	plasma_warning = "Casting Plasma Blast!",
 	plasma_soon = "Plasma soon!",
@@ -58,9 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 	magnetic_message = "ACU Rooted!",
 	loot_message = "%s looted a core!",
 
-	flames_soon = "Flame Suppressant soon!",
-	flames_bar = "Next Suppressant",
-	flames_warning = "Suppressant Incoming!",
+	suppressant_warning = "Suppressant incoming!",
 
 	fbomb_soon = "Possible Frost Bomb soon!",
 	fbomb_bar = "Next Frost Bomb",
@@ -101,9 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	magnetic_message = "공중 지휘기! 극딜!",
 	loot_message = "%s - 증폭기 획득!",
 
-	flames_soon = "잠시후 화염 억제!",
-	flames_bar = "다음 화염 억제",
-	flames_warning = "곧 화염 억제!",
+	suppressant_warning = "곧 화염 억제!",
 
 	fbomb_soon = "잠시후 서리 폭탄 가능!",
 	fbomb_bar = "다음 서리 폭탄",
@@ -144,9 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 	magnetic_message = "UCA au sol !",
 	loot_message = "%s a ramassé un noyau !",
 
-	flames_soon = "Coupe-flamme imminent !",
-	flames_bar = "Prochain Coupe-flamme",
-	flames_warning = "Arrivée d'un Coupe-flamme !",
+	suppressant_warning = "Arrivée d'un Coupe-flamme !",
 
 	fbomb_soon = "Bombe de givre imminente !",
 	fbomb_bar = "Prochaine Bombe de givre",
@@ -187,9 +181,7 @@ L:RegisterTranslations("deDE", function() return {
 	magnetic_message = "Einheit am Boden!",
 	loot_message = "%s hat Kern!",
 
-	flames_soon = "Löschschaum bald!",
-	flames_bar = "~Löschschaum",
-	flames_warning = "Löschschaum kommt!",
+	suppressant_warning = "Löschschaum kommt!",
 
 	fbomb_soon = "Frostbombe bald!",
 	fbomb_bar = "~Frostbombe",
@@ -230,9 +222,7 @@ L:RegisterTranslations("zhCN", function() return {
 	magnetic_message = "空中指挥单位 已降落！",
 	loot_message = ">%s< 拾取了磁核！",
 
-	flames_soon = "可能即将 烈焰遏制！",
-	flames_bar = "<下一烈焰遏制>",
-	flames_warning = "即将 烈焰遏制！",
+	suppressant_warning = "即将 烈焰遏制！",
 
 	fbomb_soon = "可能即将 冰霜炸弹！",
 	fbomb_bar = "<下一冰霜炸弹>",
@@ -273,9 +263,7 @@ L:RegisterTranslations("zhTW", function() return {
 	magnetic_message = "空中指揮裝置 已降落！",
 	loot_message = ">%s< 拾取了磁能之核！",
 
-	flames_soon = "可能即將 熾焰抑制劑！",
-	flames_bar = "<下一熾焰抑制劑>",
-	flames_warning = "即將 熾焰抑制劑！",
+	suppressant_warning = "即將 熾焰抑制劑！",
 
 	fbomb_soon = "可能即將 冰霜炸彈！",
 	fbomb_bar = "<下一冰霜炸彈>",
@@ -316,9 +304,7 @@ L:RegisterTranslations("ruRU", function() return {
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
 	loot_message = "Ядро у |3-1(%s)!",
 
-	flames_soon = "Скоро Подавитель пламени!",
-	flames_bar = "Следующий Подавитель",
-	flames_warning = "Подавитель пламени!",
+	suppressant_warning = "Подавитель пламени!",
 
 	fbomb_soon = "Скоро Ледяная бомба!",
 	fbomb_bar = "Следущая Ледяная бомба",
@@ -334,7 +320,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Plasma", 62997, 64529)
-	self:AddCombatListener("SPELL_CAST_START", "Flames", 64570)
+	self:AddCombatListener("SPELL_CAST_START", "Suppressant", 64570)
 	self:AddCombatListener("SPELL_CAST_START", "FBomb", 64623)
 	self:AddCombatListener("SPELL_CAST_START", "Shock", 63631)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spinning", 63414)
@@ -363,11 +349,9 @@ function mod:Bomb(_, spellId, _, _, spellName)
 	self:IfMessage(L["bomb_message"], "Important", 63811, "Alert")
 end
 
-function mod:Flames(_, spellId, _, _, spellName)
-	self:IfMessage(L["flames_warning"], "Important", spellId)
+function mod:Suppressant(_, spellId, _, _, spellName)
+	self:IfMessage(L["suppressant_warning"], "Important", spellId)
 	self:Bar(spellName, 3, spellId)
-	self:Bar(L["flames_bar"], 80, spellId)
-	self:ScheduleEvent("flamesWarning", "BigWigs_Message", 78, L["flames_soon"], "Attention")
 end
 
 function mod:FBomb(_, spellId, _, _, spellName)
@@ -381,7 +365,7 @@ function mod:Plasma(_, spellId, _, _, spellName)
 	self:IfMessage(L["plasma_warning"], "Important", spellId)
 	self:Bar(L["plasma_warning"], 3, spellId)
 	self:Bar(L["plasma_bar"], 30, spellId)
-	self:ScheduleEvent("PlasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
+	self:ScheduleEvent("plasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
 end
 
 function mod:Shock(_, spellId, _, _, spellName)
@@ -430,14 +414,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
-		if self:GetOption(64570) then
-			self:Bar(L["flames_bar"], 70, 64570)
-			self:DelayedMessage(68, L["flames_soon"], "Attention")
-		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 600, 64582)
 			self:IfMessage(L["hardmode_message"], "Attention", 64582)
-			self:DelayedMessage(600, L["hardmode_warning"], "Attention")
+			self:DelayedMessage(600, L["hardmode_warning"], "Important")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
@@ -447,8 +427,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
-		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBars", self)
+		self:CancelScheduledEvent("plasmaWarning")
+		self:TriggerEvent("BigWigs_StopBar", L["plasma_bar"])
+		self:TriggerEvent("BigWigs_StopBar", L["shock_next"])
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
@@ -458,15 +439,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg:find(L["phase3_trigger"]) then
+		self:CancelScheduledEvent("fbombWarning")
 		phase = 3
-		self:TriggerEvent("BigWigs_StopBars", self)
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
-		self:TriggerEvent("BigWigs_StopBars", self)
 		if db.phase then
 			self:IfMessage(L["phase4_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
