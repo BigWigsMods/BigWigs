@@ -23,6 +23,8 @@ local chargeCount = 1
 local fmt = string.format
 local pName = UnitName("player")
 
+local hardModeMessageID = "" -- AceEvent flips out if not passed a string for :CancelScheduledEvent
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -41,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_message = "Phase 3 - %s Engaged!",
 
 	p2berserk = "Phase 2 - Berserk",
-	p2berserk_desc = "Warn when the boss goes Berserk in Phase 2.",
+	p2berserk_desc = "Warn when the boss goes Berserk in phase 2.",
 
 	hardmode = "Hard mode",
 	hardmode_desc = "Show timer for hard mode.",
@@ -383,11 +385,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
-			self:DelayedMessage(173, L["hardmode_warning"], "Attention")
+			hardModeMessageID = self:DelayedMessage(173, L["hardmode_warning"], "Attention")
 		end
 	elseif msg == L["phase3_trigger"] then
-		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBars", self)
+		self:CancelScheduledEvent(hardModeMessageID)
+		self:TriggerEvent("BigWigs_StopBar", L["hardmode"])
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
 		end
