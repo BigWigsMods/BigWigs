@@ -276,3 +276,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+

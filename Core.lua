@@ -529,6 +529,7 @@ do
 					opts[v] = true
 				elseif t == "number" and v > 0 then
 					local n = GetSpellInfo(v)
+					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
 					opts[n] = true
 				end
 			end

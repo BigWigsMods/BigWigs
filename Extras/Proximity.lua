@@ -405,24 +405,35 @@ plugin.consoleOptions = {
 					desc = L["Locks the display in place, preventing moving and resizing."],
 					order = 1,
 				},
-				title = {
-					type = "toggle",
-					name = L["Title"],
-					desc = L["Shows or hides the title."],
-					order = 2,
-				},
-				background = {
-					type = "toggle",
-					name = L["Background"],
-					desc = L["Shows or hides the background."],
-					order = 3,
-				},
 				close = {
 					type = "execute",
 					name = L["Close"],
 					desc = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."],
 					func = "CloseProximity",
 					order = 4,
+				},
+				spacer = {
+					type = "header",
+					name = " ",
+					order = 50,
+				},
+				showTitle = {
+					type = "toggle",
+					name = L["Title"],
+					desc = L["Shows or hides the title."],
+					order = 2,
+				},
+				showBackground = {
+					type = "toggle",
+					name = L["Background"],
+					desc = L["Shows or hides the background."],
+					order = 3,
+				},
+				showSound = {
+				
+				},
+				showClose = {
+				
 				},
 			},
 		},
