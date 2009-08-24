@@ -94,6 +94,11 @@ L:RegisterTranslations("enUS", function() return {
 	["Shows or hides the background."] = true,
 	["Toggle sound"] = true,
 	["Toggle whether or not the proximity window should beep when you're too close to another player."] = true,
+	["Sound button"] = true,
+	["Shows or hides the sound button."] = true,
+	["Close button"] = true,
+	["Shows or hides the close button."] = true,
+	["Show/hide"] = true,
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -312,18 +317,26 @@ L:RegisterTranslations("ruRU", function() return {
 
 local function updateSoundButton()
 	if not anchor then return end
-	anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
+	if active and active.proximitySilent then
+		anchor.sound:SetNormalTexture(mute)
+	else
+		anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
+	end
 end
 local function toggleSound()
 	plugin.db.profile.sound = not plugin.db.profile.sound
 	updateSoundButton()
 end
 
+local function isLocked() return plugin.db.profile.lock end
+
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
-	title = true,
-	background = true,
+	showTitle = true,
+	showBackground = true,
+	showSound = true,
+	showClose = true,
 	lock = nil,
 	width = 100,
 	height = 80,
@@ -410,30 +423,45 @@ plugin.consoleOptions = {
 					name = L["Close"],
 					desc = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."],
 					func = "CloseProximity",
-					order = 4,
+					order = 2,
 				},
 				spacer = {
 					type = "header",
 					name = " ",
 					order = 50,
 				},
+				header = {
+					type = "header",
+					name = L["Show/hide"],
+					order = 51,
+				},
 				showTitle = {
 					type = "toggle",
 					name = L["Title"],
 					desc = L["Shows or hides the title."],
-					order = 2,
+					order = 52,
+					disabled = isLocked,
 				},
 				showBackground = {
 					type = "toggle",
 					name = L["Background"],
 					desc = L["Shows or hides the background."],
-					order = 3,
+					order = 53,
+					disabled = isLocked,
 				},
 				showSound = {
-				
+					type = "toggle",
+					name = L["Sound button"],
+					desc = L["Shows or hides the sound button."],
+					order = 54,
+					disabled = isLocked,
 				},
 				showClose = {
-				
+					type = "toggle",
+					name = L["Close button"],
+					desc = L["Shows or hides the close button."],
+					order = 55,
+					disabled = isLocked,
 				},
 			},
 		},
@@ -512,17 +540,11 @@ end
 function plugin:OpenProximity()
 	if self.db.profile.disabled then return end
 	if active and (not active.proximityCheck or not active.db.profile.proximity) then return end
-	self:SetupFrames()
+	if not anchor then self:SetupFrames()
+	else updateSoundButton() end
 
 	wipe(tooClose)
 	anchor.text:SetText(L["|cff777777Nobody|r"])
-
-	if active and active.proximitySilent then
-		anchor.sound:Hide()
-	else
-		anchor.sound:Show()
-	end
-
 	anchor.header:SetText(active and active.proximityHeader or L["Close Players"])
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
@@ -607,8 +629,6 @@ function lockDisplay()
 	anchor:SetScript("OnDragStop", nil)
 	anchor:SetScript("OnMouseDown", nil)
 	anchor.drag:Hide()
-	anchor.close:Hide()
-	anchor.sound:Hide()
 	locked = true
 end
 function unlockDisplay()
@@ -622,12 +642,6 @@ function unlockDisplay()
 	anchor:SetScript("OnDragStop", onDragStop)
 	anchor:SetScript("OnMouseDown", displayOnMouseDown)
 	anchor.drag:Show()
-	anchor.close:Show()
-	if not active or not active.proximitySilent then
-		anchor.sound:Show()
-	else
-		anchor.sound:Hide()
-	end
 	locked = nil
 end
 
@@ -730,17 +744,27 @@ end
 
 function plugin:RestyleWindow()
 	if not anchor then return end
-	if self.db.profile.title then
+	updateSoundButton()
+	if self.db.profile.showTitle then
 		anchor.header:Show()
 	else
 		anchor.header:Hide()
 	end
-	if self.db.profile.background then
+	if self.db.profile.showBackground then
 		anchor.background:Show()
 	else
 		anchor.background:Hide()
 	end
-	updateSoundButton()
+	if self.db.profile.showSound then
+		anchor.sound:Show()
+	else
+		anchor.sound:Hide()
+	end
+	if self.db.profile.showClose then
+		anchor.close:Show()
+	else
+		anchor.close:Hide()
+	end
 	if self.db.profile.lock then
 		locked = nil
 		lockDisplay()
