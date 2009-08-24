@@ -65,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	sparks = "마력의 불꽃",
+	sparks = "불꽃 소환",
 	sparks_desc = "마력의 불꽃 소환을 알립니다.",
 	sparks_message = "마력의 불꽃 소환!",
 	sparks_warning = "약 5초 후 마력의 불꽃!",

@@ -46,7 +46,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	overcharge_message = "하수인 과충전!",
 	overcharge_bar = "폭발",
-	overcharge_next = "~다음 과충전",
+	overcharge_next = "~과충전 대기시간",
 
 	icon = "과충전 아이콘",
 	icon_desc = "과충전에 걸린 하수인에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)",

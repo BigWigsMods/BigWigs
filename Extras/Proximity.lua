@@ -163,6 +163,11 @@ L:RegisterTranslations("koKR", function() return {
 	["Shows or hides the background."] = "배경을 표시하거나 숨깁니다.",
 	["Toggle sound"] = "소리 전환",
 	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "접근 창에 다른 플에이어와 가까이 있을 경에 알리는 경고음을 켜거나 끌수있게 합니다.",
+	["Sound button"] = "소리 버튼",
+	["Shows or hides the sound button."] = "소리 버튼을 표시하거나 숨깁니다.",
+	["Close button"] = "닫기 버튼",
+	["Shows or hides the close button."] = "닫기 버튼을 표시하거나 숨깁니다.",
+	["Show/hide"] = "표시/숨김",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
