@@ -27,6 +27,8 @@ local GetNumRaidMembers = _G.GetNumRaidMembers
 local fmt = _G.string.format
 local guid = nil
 
+local madnessWarningID = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -535,7 +537,7 @@ end
 
 function mod:Madness(_, spellId, _, _, spellName)
 	self:Bar(spellName, 60, 64059)
-	self:DelayedMessage(55, L["madness_warning"], "Urgent")
+	madnessWarningID = self:DelayedMessage(55, L["madness_warning"], "Urgent")
 end
 
 function mod:Empower(_, spellId, _, _, spellName)
@@ -609,8 +611,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
-		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBars", self)
+		self:CancelScheduledEvent(madnessWarningID)
+
+		local madness = GetSpellInfo(64059)
+		self:TriggerEvent("BigWigs_StopBar", madness)
+		self:TriggerEvent("BigWigs_StopBar", L["tentacle_message"]:format(crusherCount))
+		self:TriggerEvent("BigWigs_StopBar", L["portal_bar"])
+
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
 		end
