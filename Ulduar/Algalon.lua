@@ -74,7 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 	engage_warning = "Phase 1",
 	phase2_warning = "Phase 2 bald!",
 	phase_bar = "Phase %d",
-	engage_trigger = "^Euer Handeln ist unlogisch.",-- needs check
+	engage_trigger = "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet. Das Pantheon wird die Nachricht des Beobachters erhalten, ungeachtet des Ausgangs.",
 
 	punch_message = "%dx Phasenschlag: %s!",
 	smash_message = "Kosmischer Schlag kommt!",

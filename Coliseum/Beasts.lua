@@ -128,26 +128,25 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!",
 	jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!",
 	icehowl_trigger = "Mit der Ankündigung unseres nächsten Kämpfers gefriert die Luft selbst: Eisheuler! Tötet oder werdet getötet, Champions!",
-	boss_incoming = "%s kommt",-- should we really translate that??
+	boss_incoming = "%s kommt",
 
 	-- Gormok
-	impale_message = "%2$dx Pfählen auf %1$s",
+	impale_message = "%2$dx Pfählen: %1$s!",
 	stomp_warning = "Stampfen in 5 sek!",
-	stomp_bar = "Stampfen",
+	stomp_bar = "~Stampfen",
 	firebomb_message = "Feuerbombe auf DIR!",
 
 	-- Jormungars
 	spew = "Ätzender/Geschmolzener Auswurf",
 	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
 	toxin_you = "Paralysierendes Toxin auf DIR!",
-	toxin_other = "Paralysierendes Toxin: %s",
+	toxin_other = "Paralysierendes Toxin: %s!",
 	burn_you = "Brennende Galle auf DIR!",
-	burn_other = "Brennende Galle: %s",
+	burn_other = "Brennende Galle: %s!",
 
 	-- Icehowl
 	butt_message = "Heftiger Kopfstoß: %s!",
 	butt_bar = "~Kopfstoß",
-
 	charge = "Wütender Ansturm",
 	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
 	charge_trigger = "^%%s",	--check

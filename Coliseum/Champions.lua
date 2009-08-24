@@ -48,6 +48,16 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren...",
 	--defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
+	
+	["Wyvern Sting on %s!"] = "Stich des Flügeldrachen: %s!",
+	["Blind on %s!"] = "Blenden: %s!",
+	["%s is sheeped!"] = "Verwandlung: %s!",
+	["Shield on %s!"] = "Schild: %s!",
+	["Bladestorming!"] = "Klingensturm!",
+	["Hunter pet up!"] = "Jäger Pet da!",
+	["Felhunter up!"] = "Teufelsjäger da!",
+	["Heroism on champions!"] = "Heldentum auf Champions!",
+	["Bloodlust on champions!"] = "Kampfrausch auf Champions!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 --	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",

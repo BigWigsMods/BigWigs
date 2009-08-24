@@ -81,9 +81,10 @@ L:RegisterTranslations("frFR", function() return {
 	pursue_other = "Pursuivi(e) : %s",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	engage = "Angegriffen",
 	engage_trigger = "^Dieser Ort wird Euch als Grab dienen!",
 
-	phase = "Phase",
+	phase = "Phasen",
 	phase_desc = "Warnt vor Phasenwechsel.",
 	phase_message = "Phase 2!",
 
@@ -91,12 +92,12 @@ L:RegisterTranslations("deDE", function() return {
 	burrow_desc = "Zeige einen Timer für Anub'arak's Eingraben.",
 	burrow_emote = "^Erhebt Euch, Diener",
 	burrow_message = "Eingraben",
-	burrow_cooldown = "Nächstes Eingraben",
+	burrow_cooldown = "~Eingraben",
 
 	pursue = "Verfolgen",
 	pursue_desc = "Zeigt, wen Anub'arak verfolgt.",
-	pursue_message = "Verfolgt DICH!",
-	pursue_other = "Verfolgt: %s",
+	pursue_message = "DU wirst verfolgt!",
+	pursue_other = "%s wird verfolgt!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	engage = "激活",

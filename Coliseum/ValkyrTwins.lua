@@ -121,9 +121,9 @@ L:RegisterTranslations("deDE", function() return {
 	touch = "Berührung der Nacht/Licht",
 	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
 	touch_of_light_on_you = "Berührung des Lichts auf DIR!",
-	touch_of_light_on_other = "Berührung des Lichts: %s",
+	touch_of_light_on_other = "Berührung des Lichts: %s!",
 	touch_of_dark_on_you = "Berührung der Nacht auf DIR!",
-	touch_of_dark_on_other = "Berührung der Nacht: %s",
+	touch_of_dark_on_other = "Berührung der Nacht: %s!",
 	
 } end)
 L:RegisterTranslations("zhCN", function() return {

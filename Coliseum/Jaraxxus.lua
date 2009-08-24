@@ -83,19 +83,21 @@ L:RegisterTranslations("frFR", function() return {
 	netherpower_bar = "~Recharge Puissance",
 } end)
 L:RegisterTranslations("deDE", function() return {
+	engage = "Angegriffen",
 	engage_trigger = "^Ihr steht vor Jaraxxus",
+	--engage_trigger1 = "Banished to the Nether", --need!
 
 	incinerate_you = "Fleisch einäschern auf DIR!",
-	incinerate_other = "Fleisch einäschern: %s",
+	incinerate_other = "Fleisch einäschern: %s!",
 	incinerate_bar = "~Fleisch einäschern",
 	incinerate_safe = "%s ist sicher!",
 
 	legionflame_you = "Legionsflamme auf DIR!",
-	legionflame_other = "Legionsflamme auf: %s!",
+	legionflame_other = "Legionsflamme: %s!",
 	legionflame_bar = "~Legionsflamme",
 
 	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme. (benötigt Assistent oder höher).",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benötigt Assistent oder höher).",
 
 	netherportal_bar = "~Netherportal",
 	netherpower_bar = "~Macht des Nether",
