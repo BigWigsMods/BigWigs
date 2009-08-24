@@ -68,6 +68,18 @@ L:RegisterTranslations("zhTW", function() return {
 	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
 } end)
 L:RegisterTranslations("ruRU", function() return {
+	enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду.",
+	defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом.",
+	
+	["Wyvern Sting on %s!"] = "Укус виверны на %s!",
+	["Blind on %s!"] = "%s - ослеплён!",
+	["%s is sheeped!"] = "%s в овце!",
+	["Shield on %s!"] = "Щит на %s",
+	["Bladestorming!"] = "Вихрь клинков!",
+	["Hunter pet up!"] = "Охотник воскресил питомца!",
+	["Felhunter up!"] = "Чернокнижник воскресил питомца!",
+	["Heroism on champions!"] = "Героизм на чемпионах!",
+	["Bloodlust on champions!"] = "Жажда крови на чемпионах!",
 } end)
 
 mod.enabletrigger = function() return L["enable_trigger"] end
