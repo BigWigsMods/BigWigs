@@ -48,7 +48,7 @@ local notUsingBW = {}
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionChecker")
 L:RegisterTranslations("enUS", function() return {
 	["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss.",
-	["out_of_date"] = "Players that might be running and old version: %s.",
+	["out_of_date"] = "Players that might be running an old version: %s.",
 	["not_using"] = "Players that might not be using Big Wigs: %s.",
 } end )
 
