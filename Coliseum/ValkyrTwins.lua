@@ -182,12 +182,12 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 67206, 67208)
-	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 67182, 67184)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 67257, 67258)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 67260, 67261) 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkTouch", 67283) 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67298) 
+	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 67206, 67207, 67208)
+	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 67182, 67183, 67184)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 67256, 67257, 67258)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 67259, 67260, 67261)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkTouch", 67281, 67282, 67283)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67296, 67297, 67298) 
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
