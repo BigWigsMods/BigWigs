@@ -53,7 +53,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	nova_next = "~Recharge Nova de foudre",
+	nova_next = "~Recharge Nova",
 
 	overcharge_message = "Un séide est surchargé !",
 	overcharge_bar = "Explosion",

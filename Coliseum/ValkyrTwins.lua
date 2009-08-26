@@ -68,7 +68,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
 
-	vortex_or_shield_cd = "Recharge Vortex/Bouclier",
+	vortex_or_shield_cd = "Prochain Vortex ou Bouclier",
 
 	vortex = "Vortex",
 	vortex_desc = "Prévient quand les jumelles commencent à incanter des Vortex.",
@@ -78,22 +78,22 @@ L:RegisterTranslations("frFR", function() return {
 
 	touch = "Toucher des ténèbres/de lumière",
 	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
-	touch_of_light_on_you = "Toucher de lumière sur VOUS !",
-	touch_of_light_on_other = "Toucher de lumière sur %s",
-	touch_of_dark_on_you = "Toucher des ténèbres sur VOUS !",
-	touch_of_dark_on_other = "Toucher des ténèbres sur %s",
+	touch_of_light_on_you = "Lumière sur VOUS !",
+	touch_of_light_on_other = "Lumière sur %s",
+	touch_of_dark_on_you = "Ténèbres sur VOUS !",
+	touch_of_dark_on_other = "Ténèbres sur %s",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",	
-	
+
 	vortex_or_shield_cd = "~Vortex/Schild",
-	
+
 	vortex = "Vortex",
 	vortex_desc = "Warnt, wenn die Zwillinge anfangen Vortex zu wirken.",
-	
+
 	shield = "Schild der Nacht/Licht",
 	shield_desc = "Warnt bei Schild der Nacht/Licht.",
-	
+
 	touch = "Berührung der Nacht/Licht",
 	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
 	touch_of_light_on_you = "Berührung des Lichts auf DIR!",

@@ -33,7 +33,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 L:RegisterTranslations("frFR", function() return {
 	enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes...", -- à vérifier
-	defeat_trigger = "Une victoire tragique et dépourvue de sens. La perte subie aujourd'hui nous affaiblira tous. Car qui d'autre que le roi-liche pourrait bénéficier d'une telle folie ? De grands guerriers ont perdus la vie. Et pour quoi ? La vraie menace plane à l'horizon - le roi-liche nous attend tous dans la mort.", -- à vérifier
+	defeat_trigger = "Une victoire tragique et dépourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait bénéficier d'une telle folie ? De grands guerriers ont perdu la vie. Et pour quoi ? La vraie menace plane à l'horizon : le roi-liche nous attend, tous, dans la mort.",
 
 	["Wyvern Sting on %s!"] = "Piqûre de wyverne sur %s !",
 	["Blind on %s!"] = "Cécité sur %s !",

@@ -201,6 +201,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Shows or hides the background."] = "Affiche ou non l'arrière-plan.",
 	["Toggle sound"] = "Son",
 	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Fait ou non bipper la fenêtre de proximité quand vous êtes trop près d'un autre joueur.",
+	["Sound button"] = "Bouton du son",
+	["Shows or hides the sound button."] = "Affiche ou non le bouton du son.",
+	["Close button"] = "Bouton de fermeture",
+	["Shows or hides the close button."] = "Affiche ou non le bouton de fermeture.",
+	["Show/hide"] = "Afficher/masquer",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
