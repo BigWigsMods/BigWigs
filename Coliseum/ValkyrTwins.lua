@@ -3,12 +3,12 @@
 --
 
 local boss = BB["The Twin Val'kyr"]
-local edyis = BB["Edyis Darkbane"]
+local eydis = BB["Eydis Darkbane"]
 local fjola = BB["Fjola Lightbane"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
-mod.enabletrigger = { edyis, fjola }
+mod.enabletrigger = { eydis, fjola }
 mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
@@ -146,10 +146,10 @@ L:RegisterTranslations("ruRU", function() return {
 --
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 67206, 67207, 67208)
-	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 67182, 67183, 67184)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 67256, 67257, 67258)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 67259, 67260, 67261)
+	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
+	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkTouch", 67281, 67282, 67283)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67296, 67297, 67298) 
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
@@ -228,7 +228,7 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg, sender)
-	if msg == L["engage_trigger1"] and sender == edyis then
+	if msg == L["engage_trigger1"] and sender == eydis then
 		if db.shield or db.vortex then
 			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		end
