@@ -30,6 +30,7 @@ local hardModeMessageID = "" -- AceEvent flips out if not passed a string for :C
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local CL = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 L:RegisterTranslations("enUS", function() return {
 	["Runic Colossus"] = true, -- For the runic barrier emote.
@@ -40,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
 	phase2_message = "Phase 2 - Berserk in 5min!",
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
-	phase3_message = "Phase 3 - %s Engaged!",
+	phase3_message = "Phase 3 - %s engaged!",
 
 	hardmode = "Hard mode",
 	hardmode_desc = "Show timer for hard mode.",
@@ -366,7 +367,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
 		if db.berserk then
-			self:Enrage(300, true, true)
+			self:Bar(CL["berserk"], 300, 20484)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
@@ -375,6 +376,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase3_trigger"] then
 		self:CancelScheduledEvent(hardModeMessageID)
 		self:TriggerEvent("BigWigs_StopBar", L["hardmode"])
+		self:TriggerEvent("BigWigs_StopBar", CL["berserk"])
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
 		end
