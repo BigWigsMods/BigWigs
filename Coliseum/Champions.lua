@@ -15,7 +15,7 @@ mod.consoleCmd = "Champions"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
-	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
+	defeat_trigger = "A shallow and tragic victory.",
 
 	["Wyvern Sting on %s!"] = true,
 	["Blind on %s!"] = true,
@@ -143,8 +143,8 @@ function mod:Bloodlust(player, spellId)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["defeat_trigger"] then
-		self:Sync("BossDeath " .. self:ToString())
+	if msg:find(L["defeat_trigger"]) then
+		self:Sync("MultiDeath " .. self:ToString())
 	end
 end
 
