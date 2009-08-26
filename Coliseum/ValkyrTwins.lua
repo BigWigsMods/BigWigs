@@ -245,7 +245,7 @@ function mod:LightShield(_, spellId)
 end
 
 function mod:LightVortex(_, spellId)
-	if vortex then
+	if db.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceDark)
 		if not d then return end
@@ -254,7 +254,7 @@ function mod:LightVortex(_, spellId)
 end
 
 function mod:DarkVortex(_, spellId)
-	if vortex then
+	if db.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceLight)
 		if not d then return end
