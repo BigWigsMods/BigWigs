@@ -12,7 +12,7 @@ local acidmaw = BB["Acidmaw"]
 local dreadscale = BB["Dreadscale"]
 
 mod.zonename = BZ["Trial of the Crusader"]
-mod.enabletrigger = gormok
+mod.enabletrigger = {gormok, icehowl, acidmaw, dreadscale}
 --mod.guid = 34796 -- Gormok
 --mod.guid = 34799--Dreadscale, 35144 = Acidmaw
 mod.guid = 34797 -- Icehowl
