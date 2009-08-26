@@ -62,7 +62,6 @@ L:RegisterTranslations("enUS", function() return {
 	charge_trigger = "^%%s",	--check
 	charge_other = "Furious Charge: %s!",
 	charge_you = "Furious Charge YOU!",
-	charge_warning = "Trample soon",
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!",
@@ -92,7 +91,6 @@ L:RegisterTranslations("koKR", function() return {
 	charge_trigger = "([^%s]+)|1을;를; 노려보며 큰 소리로 울부짖습니다.$",
 	charge_other = "사나운 돌진: %s!",
 	charge_you = "당신에게 사나운 돌진!",
-	charge_warning = "곧 밟아 뭉개기",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !",
@@ -122,7 +120,6 @@ L:RegisterTranslations("frFR", function() return {
 	charge_trigger = "lâche un rugissement assourdissant !$",
 	charge_other = "Charge furieuse : %s",
 	charge_you = "Charge furieuse sur VOUS !",
-	charge_warning = "Piétiner imminent",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!",
@@ -152,7 +149,6 @@ L:RegisterTranslations("deDE", function() return {
 	charge_trigger = "^%%s",	--check
 	charge_other = "Wütender Ansturm: %s!",
 	charge_you = "Wütender Ansturm auf DIR!",
-	charge_warning = "Ansturm bald!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
@@ -183,7 +179,6 @@ L:RegisterTranslations("zhCN", function() return {
 --	charge_trigger = "^%%s",	--check
 	charge_other = "野性冲锋：>%s<！",
 	charge_you = ">你< 野性冲锋！",
-	charge_warning = "即将 践踏！",
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!",
@@ -214,7 +209,6 @@ L:RegisterTranslations("zhTW", function() return {
 --	charge_trigger = "^%%s",	--check
 	charge_other = "狂烈衝鋒：>%s<！",
 	charge_you = ">你< 狂烈衝鋒！",
-	charge_warning = "即將 踐踏！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!",
@@ -246,7 +240,6 @@ L:RegisterTranslations("ruRU", function() return {
 	charge_trigger = "^%%s",	--check
 	charge_other = "Furious Charge: %s!",
 	charge_you = "Furious Charge на ВАС!",
-	charge_warning = "Скоро Могучее сокрушение",
 } end)
 
 --------------------------------------------------------------------------------
@@ -412,7 +405,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
 			self:TargetMessage(L["charge_other"], player, "Attention", 52311)
 		end
 		self:Bar(L["charge_other"]:format(player), 7, 62374)
-		self:DelayedMessage(4, L["charge_warning"], "Attention")
 	end
 end
 
