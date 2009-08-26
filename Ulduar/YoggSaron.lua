@@ -127,18 +127,12 @@ L:RegisterTranslations("ruRU", function() return {
 	gaze_bar = "~Взгляд безумца",
 	empower_bar = "~Сгущение тьмы",
 
-	mindcontrol = "Господство над разумом",
-	mindcontrol_desc = "Сообщать о том, кто находиться под господством над разумом.",
-	insane_message = "Под контролем: %s",
-
-	guardian_message = "Страж %d!",
-
 	empowericon = "Иконка сгущения тьмы",
 	empowericon_desc = "Помечать черепом Бессмертного стража со сгущением тьмы.",
 	empowericon_message = "Сгущение тьмы закончилось!",
 
-	--roar_warning = "Roar in 5sec!",
-	--roar_bar = "Next Roar",
+	roar_warning = "Крик через 5 сек!",
+	roar_bar = "Следущий крик",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока с душевной болезнью или находящегося под контролем разума (необходимо обладать промоутом).",
