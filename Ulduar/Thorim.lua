@@ -8,7 +8,7 @@ if not mod then return end
 local behemoth = BB["Jormungar Behemoth"]
 mod.zonename = BZ["Ulduar"]
 mod.guid = 32865	--Sif(33196)
-mod.toggleOptions = {"phase", "p2berserk", "hardmode", -1, 62042, 62331, 62017, 62338, 62526, 62279, 62130, -1, "icon", "proximity", "bosskill"}
+mod.toggleOptions = {"phase", "hardmode", -1, 62042, 62331, 62017, 62338, 62526, 62279, 62130, -1, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 mod.consoleCmd = "Thorim"
@@ -38,12 +38,9 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",
 	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "Phase 2 - Berserk in 6min 15sec!",
+	phase2_message = "Phase 2 - Berserk in 5min!",
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s Engaged!",
-
-	p2berserk = "Phase 2 - Berserk",
-	p2berserk_desc = "Warn when the boss goes Berserk in phase 2.",
 
 	hardmode = "Hard mode",
 	hardmode_desc = "Show timer for hard mode.",
@@ -74,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase_desc = "단계 변화를 알립니다.",
 	phase1_message = "1 단계 시작",
 	phase2_trigger = "침입자라니! 감히 내 취미 생활을 방해하는 놈들은 쓴맛을 단단히... 잠깐... 너는...",
-	phase2_message = "2 단계 - 6분 15초 후 광폭화!",
+	--phase2_message = "2 단계 - 6분 15초 후 광폭화!",
 	phase3_trigger = "건방진 젖먹이 같으니... 감히 여기까지 기어올라와 내게 도전해? 내 손으로 쓸어버리겠다!",
 	phase3_message = "3 단계 - %s 전투시작!",
 
@@ -110,7 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Début de la phase 1",
 	phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement allez pay -  Attendez, vous -",
-	phase2_message = "Phase 2 - Berserk dans 6 min. 15 sec. !",
+	phase2_message = "Phase 2 - Berserk dans 5 min. !",
 	phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !",
 	phase3_message = "Phase 3 - %s engagé !",
 
@@ -146,12 +143,9 @@ L:RegisterTranslations("deDE", function() return {
 	phase_desc = "Warnt bei Phasenwechsel.",
 	phase1_message = "Phase 1",
 	phase2_trigger = " Eindringlinge! Ihr Sterblichen, die Ihr es wagt, Euch in mein Vergnügen einzumischen, werdet... Wartet... Ihr...", -- space in the beginning!
-	phase2_message = "Phase 2 - Berserker in ~6 min!",
+	phase2_message = "Phase 2 - Berserker in 5 min!",
 	phase3_trigger = "Ihr unverschämtes Geschmeiß! Ihr wagt es, mich in meinem Refugium herauszufordern? Ich werde Euch eigenhändig zerschmettern!",
 	phase3_message = "Phase 3 - %s angegriffen!",
-
-	p2berserk = "Phase 2 - Berserker",
-	p2berserk_desc = "Warnt, wenn der Boss in Phase 2 zum Berserker wird.",
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
@@ -182,12 +176,9 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "当进入不同阶段发出警报。",
 	phase1_message = "第一阶段！",
 --	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "第二阶段 - 6分15秒后，狂暴！",
+	--phase2_message = "第二阶段 - 6分15秒后，狂暴！",
 --	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三阶段 - %s已激怒！",
-
-	p2berserk = "第二阶段 - 狂暴",
-	p2berserk_desc = "当首领在第二阶段狂暴时发出警报。",
 
 	hardmode = "困难模式",
 	hardmode_desc = "显示困难模式计时器。",
@@ -218,12 +209,9 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_desc = "當進入不同階段發出警報。",
 	phase1_message = "第一階段！",
 	phase2_trigger = "擅闖者!像你們這種膽敢干涉我好事的凡人將付出…等等--你……",
-	phase2_message = "第二階段 - 6分15秒後，狂暴！",
+	--phase2_message = "第二階段 - 6分15秒後，狂暴！",
 	phase3_trigger = "無禮的小輩，你竟敢在我的王座之上挑戰我?我會親手碾碎你們!",
 	phase3_message = "第三階段 - %s已狂怒！",
-
-	p2berserk = "第二階段 - 狂暴",
-	p2berserk_desc = "當首領在第二階段狂暴時發出警報。",
 
 	hardmode = "困難模式",
 	hardmode_desc = "顯示困難模式計時器。",
@@ -254,12 +242,9 @@ L:RegisterTranslations("ruRU", function() return {
 	phase_desc = "Сообщать о смене фаз.",
 	phase1_message = "Начало 1-ой фазы",
 	phase2_trigger = "Незваные гости! Вы заплатите за то, что посмели вмешаться... Погодите, вы...",
-	phase2_message = "2ая фаза - Исступление через 6мин 15сек!",
+	--phase2_message = "2ая фаза - Исступление через 6мин 15сек!",
 	phase3_trigger = "Бесстыжие выскочки, вы решили бросить вызов мне лично? Я сокрушу вас всех!",
 	phase3_message = "3-яя фаза - %s вступает в бой!",
-
-	p2berserk = "2ая фаза - Исступление",
-	p2berserk_desc = "Сообщает когда босс входит в Исступление на 2ой фазе.",
 
 	hardmode = "Таймеры сложного режима",
 	hardmode_desc = "Отображения таймера для сложного режима.",
@@ -380,8 +365,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.phase then
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
-		if db.p2berserk then
-			self:Enrage(375, true, true)
+		if db.berserk then
+			self:Enrage(300, true, true)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
@@ -392,6 +377,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", L["hardmode"])
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
+		end
+		if db.berserk then
+			self:Enrage(300, true, true)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then
