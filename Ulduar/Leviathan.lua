@@ -121,9 +121,12 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Pyrite", 68605)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Pyrite", 68605)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
+	self:AddCombatListener("SPELL_AURA_REFRESH", "Pyrite", 68605)
+
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
