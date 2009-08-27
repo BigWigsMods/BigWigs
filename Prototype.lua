@@ -453,14 +453,6 @@ do
 		local text = not locale and key or locale[keys[key]]:format(...)
 		self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
 	end
-
-	-- XXX Proposed API, subject to change.
-	-- Outputs a raid warning message only, no local message.
-	function BigWigs.modulePrototype:WideMessage(key, locale, ...)
-		if locale and not self.db.profile[key] then return end
-		local text = not locale and key or locale[keys[key]]:format(...)
-		self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
-	end
 end
 
 function BigWigs.modulePrototype:Message(...)
