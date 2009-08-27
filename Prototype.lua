@@ -437,6 +437,9 @@ do
 			if player == pName then
 				text = commonWords["you"]
 			else
+				--change colors and remove sound when warning about effects on other players
+				if color == "Personal" then color = "Important" end
+				sound = nil
 				text = coloredNames[player]
 			end
 		end
@@ -495,6 +498,7 @@ end
 -- XXX 3rd argument is a proposed API change, and is subject to change/removal.
 function BigWigs.modulePrototype:Whisper(player, text, key)
 	if key and not self.db.profile[key] then return end
+	if player == pName then return end
 	self:TriggerEvent("BigWigs_SendTell", player, text)
 end
 
