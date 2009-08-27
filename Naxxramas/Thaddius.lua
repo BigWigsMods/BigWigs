@@ -67,11 +67,11 @@ L:RegisterTranslations("ruRU", function() return {
 	throw = "Бросока",
 	throw_desc = "Предупреждать о смене танков на платформах.",
 
-	trigger_phase1_1 = "Сталагг сокрушить вас!",  
-	trigger_phase1_2 = "Я скормлю вас господину!",  
-	trigger_phase2_1 = "Я сожру... ваши... кости...",  
-	trigger_phase2_2 = "Растерзаю!!!",  
-	trigger_phase2_3 = "Убью...",  
+	trigger_phase1_1 = "Сталагг сокрушить вас!",
+	trigger_phase1_2 = "Я скормлю вас господину!",
+	trigger_phase2_1 = "Я сожру... ваши... кости...",
+	trigger_phase2_2 = "Растерзаю!!!",
+	trigger_phase2_3 = "Убью...",
 
 	polarity_trigger = "Познайте же боль...",
 	polarity_message = "Таддиус сдвигает полярность!",
@@ -79,10 +79,10 @@ L:RegisterTranslations("ruRU", function() return {
 	polarity_bar = "Сдвиг полярности",
 	polarity_changed = "Полярность сменилась!",
 	polarity_nochange = "Полярность НЕ сменилась!",
-	
+
 	polarity_first_positive = "Вы (+) ПОЛОЖИТЕЛЬНЫЙ!",
 	polarity_first_negative = "Вы (-) ОТРИЦАТЕЛЬНЫЙ!",
-	
+
 	phase1_message = "Таддиус фаза 1",
 	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
 
@@ -111,15 +111,15 @@ L:RegisterTranslations("koKR", function() return {
 	polarity_bar = "극성 변환",
 	polarity_changed = "극성 변경됨!",
 	polarity_nochange = "같은 극성!",
-		
+
 	phase1_message = "타디우스 1 단계",
 	phase2_message = "타디우스 2 단계, 6분 후 격노!",
-	
+
 	polarity_first_positive = "당신은 플러스!",
 	polarity_first_negative = "당신은 마이너스!",
 
 	surge_message = "스탈라그 마력의 쇄도!",
-	
+
 	throw_bar = "던지기",
 	throw_warning = "약 5초 후 던지기!",
 } end)
@@ -143,15 +143,15 @@ L:RegisterTranslations("deDE", function() return {
 	polarity_bar = "Polaritätsveränderung",
 	polarity_changed = "Polarität geändert!",
 	polarity_nochange = "Selbe Polarität!",
-	
+
 	polarity_first_positive = "Du bist POSITIV!",
 	polarity_first_negative = "Du bist NEGATIV!",
-	
+
 	phase1_message = "Phase 1",
 	phase2_message = "Thaddius Phase 2, Berserker in 6 min",
-	
+
 	surge_message = "Kraftsog auf Stalagg!",
-	
+
 	throw_bar = "Magnetische Anziehung",
 	throw_warning = "Magnetische Anziehung in ~5 sek!",
 } end)

@@ -1,4 +1,4 @@
-﻿## Interface: 30200
+## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Title-ruRU: Big Wigs [|cffeda55fПлагины|r]
@@ -34,3 +34,4 @@ Sound.lua
 RaidWarn.lua
 BossBlock.lua
 RaidIcon.lua
+

@@ -34,9 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	charge = "Charge",
 	charge_desc = "Warn about Charge on players.",
-	charge_message = "Charge on %s",
-
-	shards_message = "Rock Shards on %s!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Rock Shards. (requires promoted or higher)",
@@ -51,9 +48,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	charge = "돌진",
 	charge_desc = "돌진의 대상인 플레이어를 알립니다.",
-	charge_message = "돌진: %s",
-
-	shards_message = "%s에게 바위 조각!",
 
 	icon = "전술 표시",
 	icon_desc = "바위 조각 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -68,9 +62,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	charge = "Empaler",
 	charge_desc = "Prévient quand un joueur subit les effets d'un Empaler.",
-	charge_message = "Empaler : %s",
-
-	shards_message = "Eclats de pierre : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être assistant ou mieux).",
@@ -85,9 +76,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	charge = "冲锋",
 	charge_desc = "当玩家中了冲锋时发出警报。",
-	charge_message = "冲锋：>%s<！",
-
-	shards_message = "岩石碎片：>%s<！",
 
 	icon = "团队标记",
 	icon_desc = "为中了岩石碎片的玩家打上团队标记。（需要权限）",
@@ -102,9 +90,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	charge = "衝鋒",
 	charge_desc = "當玩家中了衝鋒時發出警報。",
-	charge_message = "衝鋒：>%s<！",
-
-	shards_message = "岩石裂片：>%s<！",
 
 	icon = "團隊標記",
 	icon_desc = "為中了岩石裂片的玩家打上團隊標記。（需要權限）",
@@ -119,9 +104,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	charge = "Рывок",
 	charge_desc = "Предупреждать о Рывках.",
-	charge_message = "Рывок в |3-1(%s)",
-
-	shards_message = "Каменные осколки: %s!",
 
 	icon = "Отмечать иконкой",
 	icon_desc = "Отмечать рейдовой иконой игрока, на которого нацелены каменные осколки. (необходимо быть лидером группы или рейда)",
@@ -136,9 +118,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	charge = "Ansturm",
 	charge_desc = "Warnt, wenn ein Spieler angestürmt wird.",
-	charge_message = "Ansturm: %s!",
-
-	shards_message = "Felssplitter: %s!",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Felssplitter gewirkt wird (benötigt Assistent oder höher).",
@@ -179,7 +158,7 @@ function mod:Cloud(player, spellId)
 	end
 end
 
-local function ScanTarget()
+local function ScanTarget(spellId, spellName)
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
@@ -195,22 +174,22 @@ local function ScanTarget()
 		end
 	end
 	if target then
-		mod:TargetMessage(L["shards_message"], target, "Important", 58678)
+		mod:TargetMessage(spellName, target, "Important", spellId)
 		if mod.db.profile.icon then
 			mod:Icon(target)
 		end
 	end
 end
 
-function mod:Shards()
-	self:ScheduleEvent("BWShardsToTScan", ScanTarget, 0.2)
+function mod:Shards(_, spellId, _, _, spellName)
+	self:ScheduleEvent("BWShardsToTScan", ScanTarget, 0.2, spellId, spellName)
 	self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, self)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 	if self.db.profile.charge and unit == boss then
 		-- 11578, looks like a charge :)
-		self:TargetMessage(L["charge_message"], player, "Attention", 11578)
+		self:TargetMessage(L["charge"], player, "Attention", 11578)
 	end
 end
 

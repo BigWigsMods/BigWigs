@@ -112,8 +112,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		enrageTime = GetRaidDifficulty() == 1 and 480 or 420
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self:GetOption(54426) then
 			self:Message(L["startwarn"], "Attention")

@@ -62,9 +62,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	starttrigger1 = "Смерть чужакам!",  
+	starttrigger1 = "Смерть чужакам!",
 	starttrigger2 = "Слава господину!",
-	starttrigger3 = "Прощайся с жизнью!", 
+	starttrigger3 = "Прощайся с жизнью!",
 	startwarn = "Нот Чумной вступает в бой! 90 секунд до телепорта",
 
 	blink = "Опасность скачка",
@@ -90,7 +90,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	wave = "Волны",
 	wave_desc = "Сообщать о волнах",
-	addtrigger = "Встаньте, мои воины! Встаньте и сражайтесь вновь!", 
+	addtrigger = "Встаньте, мои воины! Встаньте и сражайтесь вновь!",
 	wave1bar = "1-я волна",
 	wave2bar = "2-я волна",
 	wave2_message = "2-я волна через 10 сек",
@@ -337,7 +337,7 @@ function mod:teleportToBalcony()
 	self:TriggerEvent("BigWigs_StopBar", self, L["blinkbar"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["cursebar"])
 
-	if self.db.profile.teleport then 
+	if self.db.profile.teleport then
 		self:Message(L["teleportwarn"], "Important")
 		self:Bar(L["backbar"], timebalcony, "Spell_Magic_LesserInvisibilty")
 		self:ScheduleEvent("bwnothback", "BigWigs_Message", timebalcony - 10, L["backwarn2"], "Urgent")
