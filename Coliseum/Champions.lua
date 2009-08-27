@@ -29,7 +29,17 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 L:RegisterTranslations("koKR", function() return {
 	enable_trigger = "다음 전투는 은빛 십자군에서 가장 쌘 기사들을 상대해야 하네! 그들을 이겨야만 자신의 가치를 인정받을걸세...",	--check
-	defeat_trigger = "상처뿐인 승리로군. 오늘 받은 손해로 우리 전력은 약해졌네. 이런 어리석은 짓으로 리치 왕 말고 또 누가 이득을 보겠나? 위대한 용사들이 목숨을 잃었네. 무엇을 위해서였나? 진짜 위협은 저 앞에 있네. 리치 왕이 우리 모두를 죽음 안에서 기다린다네.",
+	defeat_trigger = "상처뿐인 승리로군.",
+	
+	["Wyvern Sting on %s!"] = "비룡 쐐기: %s!",
+	["Blind on %s!"] = "실명: %s!",
+	["%s is sheeped!"] = "양변: %s!",
+	["Shield on %s!"] = "기사무적: %s!",
+	["Bladestorming!"] = "칼날폭풍!",
+	["Hunter pet up!"] = "냥꾼 야수 소환!",
+	["Felhunter up!"] = "지옥사냥개 소환!",
+	["Heroism on champions!"] = "용사 영웅심!",
+	["Bloodlust on champions!"] = "용사 피의 욕망!",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…",

@@ -85,7 +85,7 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_trigger = "^아니, 대체 왜 그런 짓을 한 게지?",
 	hardmode_message = "도전 모드 활성화!",
-	hardmode_warning = "도전 모드 종료",
+	hardmode_warning = "폭발!",
 
 	plasma_warning = "플라스마 폭발 시전!",
 	plasma_soon = "곧 플라스마!",

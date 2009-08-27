@@ -158,7 +158,7 @@ L:RegisterTranslations("koKR", function() return {
 	portal_bar = "다음 차원문",
 
 	sanity_message = "당신의 이성 위험!",
-
+	
 	weakened = "기절",
 	weakened_desc = "기절 상태를 알립니다.",
 	weakened_message = "%s 기절!",
@@ -176,9 +176,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	gaze_bar = "~시선 대기시간",
 	empower_bar = "~강화 대기시간",
-
-	mindcontrol = "정신 지배",
-	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
 
 	insane_message = "정신 지배: %s",
 	guardian_message = "수호자 소환 %d!",
