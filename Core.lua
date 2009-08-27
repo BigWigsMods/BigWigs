@@ -508,24 +508,48 @@ do
 		end
 	end
 
+	local getSpellDescription
+	do
+		local scanner = CreateFrame("GameTooltip")
+		scanner:SetOwner(WorldFrame, "ANCHOR_NONE")
+		local lcache, rcache = {}, {}
+		for i = 1, 4 do
+			lcache[i], rcache[i] = scanner:CreateFontString(), scanner:CreateFontString()
+			lcache[i]:SetFontObject(GameFontNormal); rcache[i]:SetFontObject(GameFontNormal)
+			scanner:AddFontStrings(lcache[i], rcache[i])
+		end
+		local scannerCache = {}
+		function getSpellDescription(spellId)
+			scanner:ClearLines()
+			scanner:SetHyperlink("spell:"..spellId)
+			for k in pairs(scannerCache) do scannerCache[k] = nil end
+			for i = scanner:NumLines(), 1, -1  do
+				local desc = lcache[i] and lcache[i]:GetText()
+				if desc then return desc end
+			end
+		end
+	end
+
 	local function fillBossOptions(module)
 		local config = {
 			type = "group",
 			name = module.name,
+			desc = L["Options for %s (r%d)."]:format(module.name, module.revision),
 			get = function(info) return module.db.profile[info[#info]] end,
 			set = function(info, v) module.db.profile[info[#info]] = v end,
 			args = {},
 		}
+		local order = 1
 		for i, v in next, module.toggleOptions do
-			local x = i + 10
 			local t = type(v)
 			if t == "number" and v < 0 then
 				config.args["separator" .. i] = {
 					type = "description",
-					order = x,
+					order = order,
 					name = " ",
 					width = "full",
 				}
+				order = order + 1
 			elseif t == "number" and v > 0 then
 				local spellName = GetSpellInfo(v)
 				if not spellName then error(("Invalid option %d in module %s."):format(v, module.name)) end
@@ -533,9 +557,21 @@ do
 					type = "toggle",
 					name = spellName,
 					desc = L["Toggles whether or not the boss module should warn about %s."]:format(spellName),
-					order = x,
+					order = order,
 					width = "full",
 				}
+				order = order + 1
+				local desc = getSpellDescription(v)
+				if desc and #desc > 10 then
+					config.args[spellName .. "_description"] = {
+						type = "description",
+						name = desc,
+						order = order,
+						width = "full",
+						fontSize = "small",
+					}
+					order = order + 1
+				end
 			elseif t == "string" then
 				-- AceLocale-2.2 has no exposed way to check if a registry entry exists - FAIL!
 				local alEntry = "BigWigs"..module.name
@@ -555,11 +591,12 @@ do
 				if optName then
 					config.args[v] = {
 						type = "toggle",
-						order = x,
+						order = order,
 						name = optName,
 						desc = optDesc,
 						width = "full",
 					}
+					order = order + 1
 				end
 			end
 		end
@@ -570,8 +607,7 @@ do
 	local function populateZoneOptions(uiType, library, zone)
 		zoneOptions[zone] = zoneOptions[zone] or {
 			type = "group",
-			name = zone,
-			childGroups = "select",
+			childGroups = "tree",
 			args = {},
 		}
 		for i, module in next, zoneModules[zone] do
