@@ -18,7 +18,6 @@ mod.consoleCmd = "Yogg"
 ------------------------------
 
 local db = nil
-local squeezeName = GetSpellInfo(64126)
 local guardianCount = 1
 local crusherCount = 1
 local pName = UnitName("player")
@@ -68,7 +67,6 @@ L:RegisterTranslations("enUS", function() return {
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
 	tentacle_message = "Crusher %d!",
 
-	squeeze_message = squeezeName .. ": %s",
 	link_warning = "You are linked!",
 
 	gaze_bar = "~Gaze Cooldown",
@@ -121,7 +119,6 @@ L:RegisterTranslations("ruRU", function() return {
 	tentacle_desc = "Сообщать о появлении тяжелого щупальца.",
 	tentacle_message = "Щупальце %d!",
 
-	squeeze_message = squeezeName .. ": %s",
 	link_warning = "У вас схожее мышление!",
 
 	gaze_bar = "~Взгляд безумца",
@@ -158,7 +155,7 @@ L:RegisterTranslations("koKR", function() return {
 	portal_bar = "다음 차원문",
 
 	sanity_message = "당신의 이성 위험!",
-	
+
 	weakened = "기절",
 	weakened_desc = "기절 상태를 알립니다.",
 	weakened_message = "%s 기절!",
@@ -171,7 +168,6 @@ L:RegisterTranslations("koKR", function() return {
 	tentacle_desc = "촉수 소환을 알립니다.",
 	tentacle_message ="분쇄의 촉수(%d)",
 
-	squeeze_message = squeezeName .. ": %s",
 	link_warning = "당신은 두뇌의 고리!",
 
 	gaze_bar = "~시선 대기시간",
@@ -224,7 +220,6 @@ L:RegisterTranslations("frFR", function() return {
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
 	tentacle_message = "Écraseur %d !",
 
-	squeeze_message = squeezeName .. " : %s",
 	link_warning = "Votre cerveau est lié !",
 
 	gaze_bar = "~Recharge Regard",
@@ -264,7 +259,7 @@ L:RegisterTranslations("deDE", function() return {
 	portal_bar = "Nächsten Portale",
 
 	sanity_message = "DU wirst verrückt!",
-	
+
 	weakened = "Geschwächt",
 	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
 	weakened_message = "%s ist geschwächt!",
@@ -277,7 +272,6 @@ L:RegisterTranslations("deDE", function() return {
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
 	tentacle_message = "Schmettertentakel %d!",
 
-	squeeze_message = squeezeName .. ": %s!",
 	link_warning = "DU bist verbunden!",
 
 	gaze_bar = "~Blick",
@@ -330,7 +324,6 @@ L:RegisterTranslations("zhCN", function() return {
 	tentacle_desc = "当粉碎触须出现时发出警报。",
 	tentacle_message = "粉碎触须：>%d<！",
 
-	squeeze_message = squeezeName .. "：>%s<！",
 	link_warning = ">你< 心智链接！",
 
 	gaze_bar = "<疯乱凝视 冷却>",
@@ -382,7 +375,6 @@ L:RegisterTranslations("zhTW", function() return {
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
 	tentacle_message = "粉碎觸手：>%d<！",
 
-	squeeze_message = squeezeName .. "：>%s<！",
 	link_warning = ">你< 腦波連結！",
 
 	gaze_bar = "<癡狂凝視 冷卻>",
@@ -449,7 +441,7 @@ end
 ------------------------------
 
 function mod:Fervor(player, spellId)
-	self:Whisper(player, "DEBUFF, watch out!")
+	self:Whisper(player, "DEBUFF, watch out!", true)
 end
 
 do
@@ -468,7 +460,7 @@ do
 			self:IfMessage(L["sanity_message"], "Personal", spellId)
 			warned[player] = true
 		elseif stack < 31 then
-			self:Whisper(player, L["sanity_message"])
+			self:Whisper(player, L["sanity_message"], true)
 			warned[player] = true
 		end
 	end
@@ -508,8 +500,8 @@ function mod:RemoveMalady(player)
 	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
-function mod:Squeeze(player, spellId)
-	self:TargetMessage(L["squeeze_message"], player, "Positive", spellId)
+function mod:Squeeze(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Positive", spellId)
 end
 
 function mod:Linked(player, spellId)

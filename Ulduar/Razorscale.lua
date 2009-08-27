@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -317,7 +317,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	-- for 10man, has a different yell, and different timing <.<
 	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
 	-- just a bar for the next harpoon
-	elseif msg == L["air_trigger2"] then 
+	elseif msg == L["air_trigger2"] then
 		p2 = nil
 		count = 0
 		if db.harpoon then

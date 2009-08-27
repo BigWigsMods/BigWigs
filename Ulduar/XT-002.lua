@@ -34,13 +34,11 @@ L:RegisterTranslations("enUS", function() return {
 	exposed_warning = "Exposed soon",
 	exposed_message = "Heart exposed!",
 
-	gravitybomb_you = "Gravity on YOU!",
 	gravitybomb_other = "Gravity on %s!",
 
 	gravitybombicon = "Gravity Bomb Icon",
 	gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)",
 
-	lightbomb_you = "Light on YOU!",
 	lightbomb_other = "Light on %s!",
 
 	tantrum_bar = "~Tantrum Cooldown",
@@ -53,13 +51,11 @@ L:RegisterTranslations("koKR", function() return {
 	exposed_warning = "잠시 후 심장 노출!",
 	exposed_message = "심장 노출 - 로봇들 추가!",
 
-	gravitybomb_you = "당신은 중력 폭탄!",
 	gravitybomb_other = "중력 폭탄: %s!",
 
 	gravitybombicon = "중력 폭탄 아이콘",
 	gravitybombicon_desc = "중력 폭탄에 걸린 플레이어를 네모 전술로 지정합니다. (승급자 이상 권한 필요)",
 
-	lightbomb_you = "당신은 빛의 폭탄!",
 	lightbomb_other = "빛의 폭탄: %s!",
 
 	tantrum_bar = "~땅울림 대기시간",
@@ -72,13 +68,11 @@ L:RegisterTranslations("frFR", function() return {
 	exposed_warning = "Cœur exposé imminent",
 	exposed_message = "Cœur exposé !",
 
-	gravitybomb_you = "Bombe à gravité sur VOUS !",
 	gravitybomb_other = "Gravité : %s",
 
 	gravitybombicon = "Bombe à gravité - Icône",
 	gravitybombicon_desc = "Place une icône de raid bleue sur le dernier joueur affecté par une Bombe à gravité (nécessite d'être assistant ou mieux).",
 
-	lightbomb_you = "Lumière incendiaire sur VOUS !",
 	lightbomb_other = "Lumière : %s",
 
 	tantrum_bar = "~Recharge Colère",
@@ -91,13 +85,11 @@ L:RegisterTranslations("deDE", function() return {
 	exposed_warning = "Freigelegtes Herz bald!",
 	exposed_message = "Herz freigelegt!",
 
-	gravitybomb_you = "Gravitationsbombe auf DIR!",
 	gravitybomb_other = "Gravitationsbombe: %s!",
-	
+
 	gravitybombicon = "Gravitationsbombe: Symbol",
 	gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher).",
 
-	lightbomb_you = "Lichtbombe auf DIR!",
 	lightbomb_other = "Lichtbombe: %s!",
 
 	tantrum_bar = "~Betäubender Koller",
@@ -110,13 +102,11 @@ L:RegisterTranslations("zhCN", function() return {
 	exposed_warning = "即将 暴露心脏！",
 	exposed_message = "暴露心脏！",
 
-	gravitybomb_you = ">你< 重力炸弹！",
 	gravitybomb_other = "重力炸弹：>%s<！",
 
 	gravitybombicon = "重力炸弹标记",
 	gravitybombicon_desc = "为中了重力炸弹的玩家打上蓝色方框标记。（需要权限）",
 
-	lightbomb_you = ">你< 灼热之光！",
 	lightbomb_other = "灼热之光：>%s<！",
 
 	tantrum_bar = "<发脾气 冷却>",
@@ -129,13 +119,11 @@ L:RegisterTranslations("zhTW", function() return {
 	exposed_warning = "即將 機心外露！",
 	exposed_message = "機心外露！",
 
-	gravitybomb_you = ">你< 重力彈！",
 	gravitybomb_other = "重力彈：>%s<！",
 
 	gravitybombicon = "重力彈標記",
 	gravitybombicon_desc = "為中了重力彈的玩家打上藍色方框標記。（需要權限）",
 
-	lightbomb_you = ">你< 灼熱之光！",
 	lightbomb_other = "灼熱之光：>%s<！",
 
 	tantrum_bar = "<躁怒 冷卻>",
@@ -148,13 +136,11 @@ L:RegisterTranslations("ruRU", function() return {
 	exposed_warning = "Скоро сердце станет уязвимо!",
 	exposed_message = "Сердце уязвимо!",
 
-	gravitybomb_you = "Бомба на ВАС!",
 	gravitybomb_other = "Бомба на |3-5(%s)!",
-	
+
 	gravitybombicon = "Иконка гравитационной бомбы",
 	gravitybombicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока с бомбой (необходимо обладать промоутом).",
 
-	lightbomb_you = "Взрыв на ВАС!",
 	lightbomb_other = "Взрыв на |3-5(%s)!",
 
 	tantrum_bar = "~Раскаты ярости",
@@ -204,14 +190,12 @@ function mod:Tantrum(_, spellId, _, _, spellName)
 	end
 end
 
-function mod:GravityBomb(player, spellId)
+function mod:GravityBomb(player, spellId, _, _, spellName)
 	if player == pName then
-		self:LocalMessage(L["gravitybomb_you"], "Personal", spellId, "Alert")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	else
-		self:TargetMessage(L["gravitybomb_other"], player, "Attention", spellId)
-		self:Whisper(player, L["gravitybomb_you"])
 	end
+	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(player, spellName)
 	self:Bar(L["gravitybomb_other"]:format(player), 9, spellId)
 	if db.gravitybombicon then
 		SetRaidTarget(player, 6)
@@ -222,12 +206,10 @@ end
 
 function mod:LightBomb(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["lightbomb_you"], "Personal", spellId, "Alert")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	else
-		self:TargetMessage(L["lightbomb_other"], player, "Attention", spellId)
-		self:Whisper(player, L["lightbomb_you"])
 	end
+	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(player, spellName)
 	self:Bar(L["lightbomb_other"]:format(player), 9, spellId)
 	self:Icon(player, "icon")
 end

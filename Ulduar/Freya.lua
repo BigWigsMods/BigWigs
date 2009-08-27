@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -48,11 +48,8 @@ L:RegisterTranslations("enUS", function() return {
 	elementals_message = "Elementals!",
 	tree_message = "Tree is up!",
 
-	fury_you = "Fury on YOU!",
+	fury_message = "Fury",
 	fury_other = "Fury: %s",
-
-	sunbeam_you = "Sunbeam on YOU!",
-	sunbeam_other = "Sunbeam: %s",
 
 	tremor_warning = "Ground Tremor soon!",
 	tremor_bar = "~Next Ground Tremor",
@@ -85,11 +82,8 @@ L:RegisterTranslations("koKR", function() return {
 	elementals_message = "정령 3 소환",
 	tree_message = "이오나의 선물 소환",
 
-	fury_you = "당신은 자연의 격노!",
+	fury_message = "Fury",
 	fury_other = "자연의 격노: %s!",
-
-	sunbeam_you = "당신에게 태양 광선!",
-	sunbeam_other = "태양 광선: %s",
 
 	tremor_warning = "곧 지진!",
 	tremor_bar = "~다음 지진",
@@ -122,11 +116,8 @@ L:RegisterTranslations("frFR", function() return {
 	elementals_message = "Élémentaires !",
 	tree_message = "Un arbre pousse !",
 
-	fury_you = "Fureur de la nature sur VOUS !",
+	fury_message = "Fury",
 	fury_other = "Fureur : %s",
-
-	sunbeam_you = "Rayon de soleil sur VOUS !",
-	sunbeam_other = "Rayon : %s",
 
 	tremor_warning = "Tremblement de terre imminent !",
 	tremor_bar = "~Prochain Tremblement",
@@ -159,11 +150,8 @@ L:RegisterTranslations("deDE", function() return {
 	elementals_message = "Elementare!",
 	tree_message = "Eonars Geschenk!",
 
-	fury_you = "Furor auf DIR!",
+	fury_message = "Fury",
 	fury_other = "Furor: %s!",
-
-	sunbeam_you = "Sonnenstrahl auf DIR!",
-	sunbeam_other = "Sonnenstrahl: %s!",
 
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",
@@ -196,11 +184,8 @@ L:RegisterTranslations("zhCN", function() return {
 	elementals_message = "古代水之精魂！",
 	tree_message = "Eonar's Gift出现！",
 
-	fury_you = ">你< 自然之怒！",
+	fury_message = "Fury",
 	fury_other = "自然之怒：>%s<！",
-
-	sunbeam_you = ">你< 阳光！",
-	sunbeam_other = "阳光：>%s<！",
 
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
@@ -233,11 +218,8 @@ L:RegisterTranslations("zhTW", function() return {
 	elementals_message = "上古水之靈！",
 	tree_message = "伊歐娜的贈禮 出現！",
 
-	fury_you = ">你< 自然烈怒！",
+	fury_message = "Fury",
 	fury_other = "自然烈怒：>%s<！",
-
-	sunbeam_you = ">你< 太陽光束！",
-	sunbeam_other = "太陽光束：>%s<！",
 
 	tremor_warning = "即將 地面震顫！",
 	tremor_bar = "<下一地面震顫>",
@@ -270,11 +252,8 @@ L:RegisterTranslations("ruRU", function() return {
 	elementals_message = "Элементали!",
 	tree_message = "Появление Дара Эонара!",
 
-	fury_you = "Гнев на ВАС!",
+	fury_message = "Fury",
 	fury_other = "Гнев на: |3-5(%s)",
-
-	sunbeam_you = "Луч солнца на ВАС!",
-	sunbeam_other = "Луч солнца на |3-5(%s)",
 
 	tremor_warning = "Скоро Дрожание земли!",
 	tremor_bar = "~Дрожание земли",
@@ -295,7 +274,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)     -- Elder Brightleaf
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
-	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark 
+	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
@@ -370,29 +349,23 @@ local function scanTarget()
 		end
 	end
 	if target then
-		if target == pName then
-			mod:LocalMessage(L["sunbeam_you"], "Attention", 62872)
-		else
-			mod:TargetMessage(L["sunbeam_other"], target, "Attention", 62872)
-			mod:Whisper(target, L["sunbeam_you"])
-		end
+		mod:TargetMessage(spellName, target, "Attention", spellId)
+		mod:Whisper(target, spellName)
 		mod:Icon(target, "icon")
 		mod:CancelScheduledEvent("BWsunbeamToTScan")
 	end
 end
 
-function mod:Sunbeam()
-	self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1)
+function mod:Sunbeam(_, spellId, _, _, spellName)
+	self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1, spellId, spellName)
 end
 
 function mod:Fury(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["fury_you"], "Personal", spellId, "Alert")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	else
-		self:TargetMessage(L["fury_other"], player, "Attention", spellId)
-		self:Whisper(player, L["fury_you"])
 	end
+	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(player, L["fury_message"])
 	self:Bar(L["fury_other"]:format(player), 10, spellId)
 	self:Icon(player, "icon")
 end

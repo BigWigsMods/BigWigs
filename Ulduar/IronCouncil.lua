@@ -41,10 +41,10 @@ L:RegisterTranslations("enUS", function() return {
 	death_message = "Rune of Death on YOU!",
 	summoning_message = "Elementals Incoming!",
 
-	tendrils_other = "%s is being chased!",
-	tendrils_you = "YOU are being chased!",
 
-	overwhelm_you = "You have Overwhelming Power!",
+	chased_other = "%s is being chased!",
+	chased_you = "YOU are being chased!",
+
 	overwhelm_other = "Overwhelming Power: %s",
 
 	shield_message = "Rune shield!",
@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	council_dies = "%s dead",
 } end )
- 
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 것 같으냐, 침입자들아!",
 	engage_trigger2 = "남김없이 쓸어버려야 속이 시원하겠군.",
@@ -64,10 +64,9 @@ L:RegisterTranslations("koKR", function() return {
 	death_message = "당신은 죽음의 룬!",
 	summoning_message = "소환의 룬 - 곧 정령 등장!",
 
-	tendrils_other = "%s 추적 중!",
-	tendrils_you = "당신을 추적 중!",
+	chased_other = "%s 추적 중!",
+	chased_you = "당신을 추적 중!",
 
-	overwhelm_you = "당신은 압도적인 힘!",
 	overwhelm_other = "압도적인 힘: %s",
 
 	shield_message = "룬의 보호막!",
@@ -87,10 +86,9 @@ L:RegisterTranslations("frFR", function() return {
 	death_message = "Rune de mort sur VOUS !",
 	summoning_message = "Arrivée des élémentaires !",
 
-	tendrils_other = "%s est poursuivi(e) !",
-	tendrils_you = "VOUS êtes poursuivi(e) !",
+	chased_other = "%s est poursuivi(e) !",
+	chased_you = "VOUS êtes poursuivi(e) !",
 
-	overwhelm_you = "Puissance accablante sur VOUS !",
 	overwhelm_other = "P. accablante : %s",
 
 	shield_message = "Bouclier des runes !",
@@ -110,10 +108,9 @@ L:RegisterTranslations("deDE", function() return {
 	death_message = "Todesrune auf DIR!",
 	summoning_message = "Elementare!",
 
-	tendrils_other = "%s wird verfolgt!",
-	tendrils_you = "DU wirst verfolgt!",
+	chased_other = "%s wird verfolgt!",
+	chased_you = "DU wirst verfolgt!",
 
-	overwhelm_you = "Überwältigende Kraft auf DIR!",
 	overwhelm_other = "Überwältigende Kraft: %s!",
 
 	shield_message = "Runenschild!",
@@ -133,10 +130,9 @@ L:RegisterTranslations("zhCN", function() return {
 	death_message = ">你< 死亡符文！",
 	summoning_message = "闪电元素即将出现！",
 
-	tendrils_other = "闪电之藤：>%s<！",
-	tendrils_you = ">你< 闪电之藤！",
+	chased_other = "闪电之藤：>%s<！",
+	chased_you = ">你< 闪电之藤！",
 
-	overwhelm_you = ">你< 压倒能量！",
 	overwhelm_other = "压倒能量：>%s<！",
 
 	shield_message = "符文之盾！",
@@ -156,10 +152,9 @@ L:RegisterTranslations("zhTW", function() return {
 	death_message = ">你< 死亡符文！",
 	summoning_message = "閃電元素即將出現！",
 
-	tendrils_other = "閃電觸鬚：>%s<！",
-	tendrils_you = ">你< 閃電觸鬚！",
+	chased_other = "閃電觸鬚：>%s<！",
+	chased_you = ">你< 閃電觸鬚！",
 
-	overwhelm_you = ">你< 極限威能！",
 	overwhelm_other = "極限威能：>%s<！",
 
 	shield_message = "符文護盾！",
@@ -179,10 +174,9 @@ L:RegisterTranslations("ruRU", function() return {
 	death_message = "На ВАС Руна СМЕРТИ!",
 	summoning_message = "Руна призыва - приход Элементалей!",
 
-	tendrils_other = "Преследует |3-3(%s)!",
-	tendrils_you = "ВАС преследуют!",
+	chased_other = "Преследует |3-3(%s)!",
+	chased_you = "ВАС преследуют!",
 
-	overwhelm_you = "На ВАС Переполняющая энергия!",
 	overwhelm_other = "Переполняющая энергия на |3-5(%s)",
 
 	shield_message = "Применён Рунический щит!",
@@ -226,14 +220,12 @@ function mod:Punch(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Urgent", spellId)
 end
 
-function mod:Overwhelm(player, spellId)
+function mod:Overwhelm(player, spellId, _, _, spellName)
 	if player == pName then
-		self:LocalMessage(L["overwhelm_you"], "Personal", spellId, "Alert")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	else
-		self:TargetMessage(L["overwhelm_other"], player, "Attention", spellId)
-		self:Whisper(player, L["overwhelm_you"])
 	end
+	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(player, spellName)
 	self:Bar(L["overwhelm_other"]:format(player), overwhelmTime, spellId)
 	self:Icon(player, "icon")
 end
@@ -297,10 +289,10 @@ local function targetCheck()
 	if target ~= previous then
 		if target then
 			if target == pName then
-				mod:LocalMessage(L["tendrils_you"], "Personal", nil, "Alarm")
+				mod:LocalMessage(L["chased_you"], "Personal", nil, "Alarm")
 			else
-				mod:TargetMessage(L["tendrils_other"], target, "Attention")
-				mod:Whisper(player, L["tendrils_you"])
+				mod:IfMessage(L["chased_other"]:format(target), "Attention")
+				mod:Whisper(player, L["chased_you"])
 			end
 			mod:Icon(target, "icon")
 			previous = target

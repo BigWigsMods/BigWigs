@@ -35,7 +35,6 @@ L:RegisterTranslations("enUS", function() return {
 	cold_desc = "Warn when you have 2 or more stacks of Biting Cold.",
 	cold_message = "Biting Cold x%d!",
 
-	flash_message = "Frozen: %s!",
 	flash_warning = "Freeze!",
 	flash_soon = "Freeze in 5sec!",
 
@@ -58,7 +57,6 @@ L:RegisterTranslations("koKR", function() return {
 	cold_desc = "매서운 추위 2중첩이상을 알립니다.",
 	cold_message = "매서운 추위 x%d - 이동!",
 
-	flash_message = "순간 빙결: %s!",
 	flash_warning = "순간 빙결 시전!",
 	flash_soon = "5초 후 순간 빙결",
 
@@ -81,7 +79,6 @@ L:RegisterTranslations("frFR", function() return {
 	cold_desc = "Prévient quand Froid mordant s'est empilé 2 fois sur votre personnage.",
 	cold_message = "Froid mordant x%d !",
 
-	flash_message = "Gelé(s) : %s",
 	flash_warning = "Gel instantané en incantation !",
 	flash_soon = "Gel instantané dans 5 sec. !",
 
@@ -104,7 +101,6 @@ L:RegisterTranslations("deDE", function() return {
 	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
 	cold_message = "Beißende Kälte x%d!",
 
-	flash_message = "Blitzeis: %s!",
 	flash_warning = "Blitzeis!",
 	flash_soon = "Blitzeis in 5 sek!",
 
@@ -127,7 +123,6 @@ L:RegisterTranslations("zhCN", function() return {
 	cold_desc = "当你受到2层刺骨之寒效果时发出警报。",
 	cold_message = "刺骨之寒（%d层） - 移动！",
 
-	flash_message = "急速冻结：>%s<！",
 	flash_warning = "急速冻结！",
 	flash_soon = "5秒后，急速冻结！",
 
@@ -150,7 +145,6 @@ L:RegisterTranslations("zhTW", function() return {
 	cold_desc = "當你受到2層刺骨之寒效果時發出警報。",
 	cold_message = "刺骨之寒（%d層） - 移動！",
 
-	flash_message = "閃霜：>%s<！",
 	flash_warning = "閃霜！",
 	flash_soon = "5秒後，閃霜！",
 
@@ -173,7 +167,6 @@ L:RegisterTranslations("ruRU", function() return {
 	cold_desc = "Сообщать когда на вас наложено 2 эффекта Трескучего мороза",
 	cold_message = "Трескучий мороз x%d!",
 
-	flash_message = "Заморожены: %s!",
 	flash_warning = "Применение мгновенной заморозки!",
 	flash_soon = "Заморозка через 5сек!",
 
@@ -212,13 +205,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Cloud(player, spellId)
-	if player == pName then
-		self:LocalMessage(L["cloud_you"], "Positive", spellId, "Info")
-	else
-		self:TargetMessage(L["cloud_other"], player, "Positive", spellId)
-		self:Whisper(player, L["cloud_you"])
-	end
+function mod:Cloud(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Positive", spellId, "Info")
+	self:Whisper(player, spellName)
 	self:Bar(L["cloud_other"]:format(player), 30, spellId)
 	self:Icon(player, "icon")
 end
@@ -230,14 +219,14 @@ function mod:FlashCast(_, spellId, _, _, spellName)
 	self:DelayedMessage(30, L["flash_soon"], "Attention")
 end
 
-local function flashWarn()
-	mod:TargetMessage(L["flash_message"], flashFreezed, "Urgent", 61969, "Alert")
+local function flashWarn(spellId, spellName)
+	mod:TargetMessage(spellName, flashFreezed, "Urgent", spellId, "Alert")
 end
 
-function mod:Flash(player)
+function mod:Flash(player, spellId, _, _, spellName)
 	if UnitInRaid(player) then
 		flashFreezed[#flashFreezed + 1] = player
-		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5)
+		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5, spellId, spellName)
 	end
 end
 

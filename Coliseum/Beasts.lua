@@ -1,4 +1,4 @@
-﻿--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -49,8 +49,6 @@ L:RegisterTranslations("enUS", function() return {
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
 	spew_desc = "Warn for Acidic/Molten Spew.",
-	toxin_you = "Paralytic Toxin on you!",
-	toxin_other = "Paralytic Toxin: %s",
 	burn_you = "Burning Bile on you!",
 	burn_other = "Burning Bile: %s",
 
@@ -78,8 +76,6 @@ L:RegisterTranslations("koKR", function() return {
 	-- Jormungars
 	spew = "산성/용암 내뿜기",
 	spew_desc = "산성/용암 내뿜기를 알립니다.",
-	toxin_you = "당신은 마비 독!",
-	toxin_other = "마비 독: %s",
 	burn_you = "당신은 불타는 담즙!",
 	burn_other = "불타는 담즙: %s",
 
@@ -107,8 +103,6 @@ L:RegisterTranslations("frFR", function() return {
 	-- Jormungars
 	spew = "Crachement acide/de lave",
 	spew_desc = "Prévient de l'arrivée des Crachements acides/de lave.",
-	toxin_you = "Toxine paralysante sur VOUS !",
-	toxin_other = "Toxine paralysante : %s",
 	burn_you = "Bile brûlante sur VOUS !",
 	burn_other = "Bile brûlante : %s",
 
@@ -136,8 +130,6 @@ L:RegisterTranslations("deDE", function() return {
 	-- Jormungars
 	spew = "Ätzender/Geschmolzener Auswurf",
 	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
-	toxin_you = "Paralysierendes Toxin auf DIR!",
-	toxin_other = "Paralysierendes Toxin: %s!",
 	burn_you = "Brennende Galle auf DIR!",
 	burn_other = "Brennende Galle: %s!",
 
@@ -165,8 +157,6 @@ L:RegisterTranslations("zhCN", function() return {
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
 	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
-	toxin_you = ">你< Paralytic Toxin！",
-	toxin_other = "Paralytic Toxin：>%s<！",
 	burn_you = ">你< Burning Bile！",
 	burn_other = "Burning Bile：>%s<！",
 
@@ -195,8 +185,6 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Jormungars
 	spew = "酸液/熔火噴灑",
 	spew_desc = "當施放酸液/熔火噴灑時發出警報。",
-	toxin_you = ">你< 痲痺劇毒！",
-	toxin_other = "痲痺劇毒：>%s<！",
 	burn_you = ">你< 燃燒膽汁！",
 	burn_other = "燃燒膽汁：>%s<！",
 
@@ -225,8 +213,6 @@ L:RegisterTranslations("ruRU", function() return {
 	-- Jormungars
 	spew = "Кислотная/Жгучая рвота",
 	spew_desc = "Сообщать о Кислотной/Жгучей рвоте.",
-	toxin_you = "Паралитический Токсин на ВАС!",
-	toxin_other = "Паралитический Токсин: %s",
 	burn_you = "Горящая желчь на ВАС!",
 	burn_other = "Горящая желчь: %s",
 
@@ -342,28 +328,28 @@ function mod:Acidic(_, spellId, _, _, spellName)
 	end
 end
 
-local function toxinWarn()
-	mod:TargetMessage(L["toxin_other"], toxin, "Urgent", 64292, "Alert")
+local function toxinWarn(spellId, spellName)
+	mod:TargetMessage(spellName, toxin, "Urgent", spellId, "Alert")
 end
 
-function mod:Toxin(player, spellId)
+function mod:Toxin(player, spellId, _, _, spellName)
 	toxin[#toxin + 1] = player
-	self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2)
+	self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId, spellName)
 	if player == pName then
-		mod:LocalMessage(L["toxin_you"], "Personal", spellId, "Info")
+		self:TargetMessage(spellName, player, "Personal", spellId, "Info")
 	end
 end
 
-local function burnWarn()
-	mod:TargetMessage(L["burn_other"], burn, "Urgent", 64292, "Alert")
+local function burnWarn(spellId, spellName)
+	mod:TargetMessage(spellName, burn, "Urgent", spellId, "Alert")
 end
 
-function mod:Burn(player, spellId)
+function mod:Burn(player, spellId, _, _, spellName)
 	burn[#burn + 1] = player
-	self:ScheduleEvent("BWburnWarn", burnWarn, 0.2)
+	self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId, spellName)
 	if player == pName then
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-		mod:LocalMessage(L["burn_you"], "Important", spellId, "Info")
+		self:TargetMessage(spellName, player, "Important", spellId, "Info")
 	end
 end
 

@@ -1,4 +1,4 @@
-﻿--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 local boss = BB["Faction Champions"]
@@ -17,9 +17,6 @@ L:RegisterTranslations("enUS", function() return {
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 	defeat_trigger = "A shallow and tragic victory.",
 
-	["Wyvern Sting on %s!"] = true,
-	["Blind on %s!"] = true,
-	["%s is sheeped!"] = true,
 	["Shield on %s!"] = true,
 	["Bladestorming!"] = true,
 	["Hunter pet up!"] = true,
@@ -30,10 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	enable_trigger = "다음 전투는 은빛 십자군에서 가장 쌘 기사들을 상대해야 하네! 그들을 이겨야만 자신의 가치를 인정받을걸세...",	--check
 	defeat_trigger = "상처뿐인 승리로군.",
-	
-	["Wyvern Sting on %s!"] = "비룡 쐐기: %s!",
-	["Blind on %s!"] = "실명: %s!",
-	["%s is sheeped!"] = "양변: %s!",
+
 	["Shield on %s!"] = "기사무적: %s!",
 	["Bladestorming!"] = "칼날폭풍!",
 	["Hunter pet up!"] = "냥꾼 야수 소환!",
@@ -45,9 +39,6 @@ L:RegisterTranslations("frFR", function() return {
 	enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…",
 	defeat_trigger = "Une victoire tragique et dépourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait bénéficier d'une telle folie ? De grands guerriers ont perdu la vie. Et pour quoi ? La vraie menace plane à l'horizon : le roi-liche nous attend, tous, dans la mort.",
 
-	["Wyvern Sting on %s!"] = "Piqûre de wyverne sur %s !",
-	["Blind on %s!"] = "Cécité sur %s !",
-	["%s is sheeped!"] = "%s est métamorphosé !",
 	["Shield on %s!"] = "Bouclier sur %s !",
 	["Bladestorming!"] = "Tempête de lames !",
 	["Hunter pet up!"] = "Familier du chasseur revenu !",
@@ -58,10 +49,7 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren...",
 	--defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
-	
-	["Wyvern Sting on %s!"] = "Stich des Flügeldrachen: %s!",
-	["Blind on %s!"] = "Blenden: %s!",
-	["%s is sheeped!"] = "Verwandlung: %s!",
+
 	["Shield on %s!"] = "Schild: %s!",
 	["Bladestorming!"] = "Klingensturm!",
 	["Hunter pet up!"] = "Jäger Pet da!",
@@ -80,10 +68,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду.",
 	defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом.",
-	
-	["Wyvern Sting on %s!"] = "Укус виверны на %s!",
-	["Blind on %s!"] = "%s - ослеплён!",
-	["%s is sheeped!"] = "%s в овце!",
+
 	["Shield on %s!"] = "Щит на %s",
 	["Bladestorming!"] = "Вихрь клинков!",
 	["Hunter pet up!"] = "Охотник воскресил питомца!",
@@ -116,16 +101,16 @@ end
 -- Event Handlers
 --
 
-function mod:Wyvern(player, spellId)
-	self:TargetMessage(L["Wyvern Sting on %s!"], player, "Attention", spellId)
+function mod:Wyvern(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Attention", spellId)
 end
 
-function mod:Blind(player, spellId)
-	self:TargetMessage(L["Blind on %s!"], player, "Attention", spellId)
+function mod:Blind(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Attention", spellId)
 end
 
-function mod:Polymorph(player, spellId)
-	self:TargetMessage(L["%s is sheeped!"], player, "Attention", spellId)
+function mod:Polymorph(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Attention", spellId)
 end
 
 function mod:DivineShield(player, spellId)

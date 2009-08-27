@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -52,8 +52,6 @@ L:RegisterTranslations("enUS", function() return {
 	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 	vaporstack_message = "Vapors x%d!",
 
-	crash_you = "Crash on YOU!",
-	crash_other = "Crash on %s",
 	crash_say = "Crash on Me!",
 
 	crashsay = "Crash Say",
@@ -61,7 +59,7 @@ L:RegisterTranslations("enUS", function() return {
 	crashicon = "Crash Icon",
 	crashicon_desc = "Place a Blue Square icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
-	mark_message_you = "Mark on YOU!",
+	mark_message = "Mark",
 	mark_message_other = "Mark on %s!",
 
 	icon = "Mark Icon",
@@ -90,9 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 	vaporstack_desc = "사로나이트 증기 5중첩이상을 알립니다.",
 	vaporstack_message = "증기 x%d 중첩!",
 
-	crash_you = "당신은 어둠 붕괴!",
-	crash_other = "어둠 붕괴: %s",
-
 	crashsay = "붕괴 일반 대화",
 	crashsay_desc = "어둠의 붕괴 대상시 일반 대화로 알립니다.",
 	crash_say = "저 어둠 붕괴요!",
@@ -100,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	crashicon = "붕괴 아이콘",
 	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 파란 네모 표시를 지정합니다. (승급자 이상 권한 필요)",
 
-	mark_message_you = "당신은 얼굴 없는 자의 징표!",
+	mark_message = "Mark",
 	mark_message_other = "얼굴 없는 자의 징표: %s",
 
 	icon = "징표 아이콘",
@@ -129,8 +124,6 @@ L:RegisterTranslations("frFR", function() return {
 	vaporstack_desc = "Prévient quand vous avez 5 cumuls ou plus de Vapeurs de saronite.",
 	vaporstack_message = "Vapeurs de saronite x%d !",
 
-	crash_you = "Déferlante d'ombre sur VOUS !",
-	crash_other = "Déferlante : %s",
 	crash_say = "Déferlante d'ombre sur moi !",
 
 	crashsay = "Déferlante - Dire",
@@ -139,7 +132,7 @@ L:RegisterTranslations("frFR", function() return {
 	crashicon = "Déferlante - Icône",
 	crashicon_desc = "Place une icône de raid (carré bleu) sur le dernier joueur ciblé par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
 
-	mark_message_you = "Marque du Sans-visage sur VOUS !",
+	mark_message = "Mark",
 	mark_message_other = "Marque : %s",
 
 	icon = "Marque - Icône",
@@ -168,17 +161,15 @@ L:RegisterTranslations("deDE", function() return {
 	vaporstack_desc = "Warnt, wenn du 5 oder mehr Stapel der Saronitdämpfe hast.",
 	vaporstack_message = "Saronitdämpfe x%d!",
 
-	crash_you = "Schattengeschoss auf DIR!",
-	crash_other = "Schattengeschoss: %s!",
 	crash_say = "Schattengeschoss auf MIR!",
 
 	crashsay = "Schattengeschoss Sagen",
 	crashsay_desc = "Warnt im Sagen Chat, wenn du das Ziel eines Schattengeschosses bist.",
-	
+
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
 	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 
-	mark_message_you = "Mal auf DIR!",
+	mark_message = "Mark",
 	mark_message_other = "Mal: %s!",
 
 	icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol",
@@ -209,17 +200,15 @@ L:RegisterTranslations("zhCN", function() return {
 	vaporstack_desc = "当玩家中了5层或更多萨隆邪铁蒸汽时发出警报。",
 	vaporstack_message = "萨隆邪铁蒸汽：>x%d<！",
 
-	crash_you = ">你< 暗影冲撞！",
-	crash_other = "暗影冲撞：>%s<！",
 	crash_say = ">我< 暗影冲撞！",
-	
+
 	crashsay = "自身暗影冲撞",
 	crashsay_desc = "当你中了暗影冲撞时发出说话警报。",
 
 	crashicon = "暗影冲撞标记",
 	crashicon_desc = "为中了暗影冲撞的队员打上蓝色方框团队标记。（需要权限）",
 
-	mark_message_you = ">你< 无面者的印记！",
+	mark_message = "Mark",
 	mark_message_other = "无面者的印记：>%s<！",
 
 	icon = "团队标记",
@@ -250,17 +239,15 @@ L:RegisterTranslations("zhTW", function() return {
 	vaporstack_desc = "當玩家中了5層或更多薩倫煙霧時發出警報。",
 	vaporstack_message = "薩倫煙霧：>x%d<！",
 
-	crash_you = ">你< 暗影暴擊！",
-	crash_other = "暗影暴擊：>%s<！",
 	crash_say = ">我< 暗影暴擊！",
-	
+
 	crashsay = "自身暗影暴擊",
 	crashsay_desc = "當你中了暗影暴擊時發出說話警報。",
 
 	crashicon = "暗影暴擊標記",
 	crashicon_desc = "為中了暗影暴擊的隊員打上藍色方框團隊標記。（需要權限）",
 
-	mark_message_you = ">你< 無面者印記！",
+	mark_message = "Mark",
 	mark_message_other = "無面者印記：>%s<！",
 
 	icon = "團隊標記",
@@ -289,17 +276,15 @@ L:RegisterTranslations("ruRU", function() return {
 	vaporstack_desc = "Сообщать, когда у вас уже 5 стаков саронитового испарения.",
 	vaporstack_message = "Испарения x%d!",
 
-	crash_you = "Темное сокрушение на ВАС!",
-	crash_other = "Сокрушение на %s",
 	crash_say = "Сокрушение на мне!",
-	
+
 	crashsay = "Сказать о оокрушении",
 	crashsay_desc = "Сказать, когда вы являетесь целью Темного сокрушения.",
 
 	crashicon = "Иконка сокрушения",
 	crashicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока, на которого наложено темное сокрушение (необходимо обладать промоутом).",
 
-	mark_message_you = "На ВАС Метка Безликого!",
+	mark_message = "Mark",
 	mark_message_other = "Метка на: %s!",
 
 	icon = "Иконка метки",
@@ -342,7 +327,7 @@ function mod:UNIT_AURA(unit)
 	end
 end
 
-local function scanTarget()
+local function scanTarget(spellId, spellName)
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
@@ -358,16 +343,12 @@ local function scanTarget()
 		end
 	end
 	if target then
-		if target == pName then
-			if mod:GetOption(62660) then
-				mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
-			end
-			if db.crashsay then
-				SendChatMessage(L["crash_say"], "SAY")
-			end
-		elseif mod:GetOption(62660) then
-			mod:TargetMessage(L["crash_other"], target, "Positive", 62660)
-			mod:Whisper(target, L["crash_you"])
+		if target == pName and db.crashsay then
+			SendChatMessage(L["crash_say"], "SAY")
+		end
+		if mod:GetOption(spellId) then
+			mod:TargetMessage(spellName, target, "Personal", spellId, "Alert")
+			mod:Whisper(target, spellName)
 		end
 		if db.crashicon then
 			SetRaidTarget(target, 6)
@@ -377,18 +358,14 @@ local function scanTarget()
 end
 
 function mod:Mark(player, spellId)
-	if player == pName then
-		self:LocalMessage(L["mark_message_you"], "Personal", spellId, "Alert")
-	else
-		self:TargetMessage(L["mark_message_other"], player, "Important", spellId)
-		self:Whisper(player, L["mark_message_you"])
-	end
+	self:TargetMessage(L["mark_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(player, L["mark_message"])
 	self:Bar(L["mark_message_other"]:format(player), 10, spellId)
 	self:Icon(player, "icon")
 end
 
-function mod:Target(player, spellId)
-	self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1)
+function mod:Target(player, spellId, _, _, spellName)
+	self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1, spellId, spellName)
 end
 
 function mod:Flame(_, spellId, _, _, spellName)

@@ -48,7 +48,6 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode_warning = "Hard mode expires",
 
 	hammer_message = "Hammer on %s",
-	impale_message = "Impale on %s",
 	shock_message = "You're getting shocked!",
 	barrier_message = "Barrier up!",
 
@@ -84,7 +83,6 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_warning = "도전 모드 종료",
 
 	hammer_message = "폭풍망치: %s",
-	impale_message = "꿰뚫기: %s",
 	shock_message = "당신은 번개 충격! 이동!",
 	barrier_message = "거인 - 룬문자 방벽!",
 
@@ -120,7 +118,6 @@ L:RegisterTranslations("frFR", function() return {
 	hardmode_warning = "Délai du mode difficile dépassé",
 
 	hammer_message = "Marteau-tempête : %s",
-	impale_message = "Empaler : %s",
 	shock_message = "Horion de foudre sur VOUS !",
 	barrier_message = "Barrière runique actif !",
 
@@ -153,7 +150,6 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_warning = "Hard Mode beendet!",
 
 	hammer_message = "Sturmhammer: %s!",
-	impale_message = "Durchbohren: %s!",
 	shock_message = "DU wirst geschockt!",
 	barrier_message = "Runenbarriere oben!",
 
@@ -186,7 +182,6 @@ L:RegisterTranslations("zhCN", function() return {
 	hardmode_warning = "困难模式结束！",
 
 	hammer_message = "风暴之锤：>%s<！",
-	impale_message = "穿刺：>%s<！",
 	shock_message = ">你< 闪电震击！移动！",
 	barrier_message = "符文巨像 - 符文屏障！",
 
@@ -219,7 +214,6 @@ L:RegisterTranslations("zhTW", function() return {
 	hardmode_warning = "困難模式結束！",
 
 	hammer_message = "風暴之錘：>%s<！",
-	impale_message = "刺穿：>%s<！",
 	shock_message = ">你< 閃電震擊！移動！",
 	barrier_message = "符文巨像 - 符刻屏障！",
 
@@ -252,7 +246,6 @@ L:RegisterTranslations("ruRU", function() return {
 	hardmode_warning = "Завершение сложного режима",
 
 	hammer_message = "Молот брошен в |3-3(%s)",
-	impale_message = "%s проколот! Лечите!", 
 	shock_message = "На вас Поражение громом! Шевелитесь!",
 	barrier_message = "Колосс под Рунической преградой!",
 
@@ -346,15 +339,15 @@ function mod:Shock(player, spellId)
 	end
 end
 
-function mod:Impale(player, spellId)
-	self:TargetMessage(L["impale_message"], player, "Important", spellId)
+function mod:Impale(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Important", spellId)
 end
 
-function mod:Detonation(player, spellId)
+function mod:Detonation(player, spellId, _, _, spellName)
 	if player == pName then
 		SendChatMessage(L["detonation_say"], "SAY")
 	else
-		self:TargetMessage(L["detonation_message"], player, "Important", spellId)
+		self:TargetMessage(spellName, player, "Important", spellId)
 	end
 	self:Bar(L["detonation_message"]:format(player), 4, spellId)
 	self:Icon(player, "icon")
@@ -392,8 +385,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		chargeCount = 1
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if db.phase then
 			self:IfMessage(L["phase1_message"], "Attention")
