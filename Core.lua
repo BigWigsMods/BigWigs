@@ -566,17 +566,20 @@ do
 		return config
 	end
 	
+	local zoneOptions = {}
 	local function populateZoneOptions(uiType, library, zone)
-		local options = {
+		zoneOptions[zone] = zoneOptions[zone] or {
 			type = "group",
 			name = zone,
 			childGroups = "select",
 			args = {},
 		}
 		for i, module in next, zoneModules[zone] do
-			options.args[module.name] = fillBossOptions(module)
+			if not zoneOptions[zone].args[module.name] then
+				zoneOptions[zone].args[module.name] = fillBossOptions(module)
+			end
 		end
-		return options
+		return zoneOptions[zone]
 	end
 
 	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
