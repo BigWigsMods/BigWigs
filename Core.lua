@@ -18,9 +18,8 @@ local AL = AceLibrary("AceLocale-2.2")
 local L = AL:new("BigWigs")
 local icon = LibStub("LibDBIcon-1.0", true)
 
---[[local ac = LibStub("AceConfig-3.0")
+local ac = LibStub("AceConfig-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
-local acr = LibStub("AceConfigRegistry-3.0")]]
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -331,54 +330,54 @@ local BigWigs = BigWigs
 
 BigWigs:SetModuleMixins("AceEvent-2.0")
 
---[[local acOptions = {
+local acOptions = {
 	type = "group",
+	name = "Big Wigs",
 	args = {
-		description = {
+		heading = {
 			type = "description",
-			name = "Big Wigs will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.",
-			order = 1,
+			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\nLets try to put the most common toggle options right here in the root. Below are some examples, but others could include things like showing anchors, toggling the proximity monitor and toggling sounds, for example.\n\nClicking the LDB plugin should pop open the interface options, expand our toplevel category and select the relevant zone and boss module that is currently active, just like we used to do with Waterfall.",
 			fontSize = "medium",
+			order = 1,
+			width = "full",
+		},
+		enable = {
+			type = "toggle",
+			name = "Enable",
+			desc = "NOOP Mooses don't appreciate being prodded with long pointy sticks.",
+			order = 2,
+			get = function() return true end,
+			set = function() end,
+			width = "full",
+		},
+		whispers = {
+			type = "toggle",
+			name = "Whisper warnings",
+			desc = "NOOP Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
+			order = 3,
+			get = function() return true end,
+			set = function() end,
+			width = "full",
+		},
+		note = {
+			type = "description",
+			name = "This looks horrible, here's what I want:\n\n1. spacer between heading and options.\n2. The description for each checkbox should be in smaller text below the checkbox, indented to be parallel vertically with the checkbox label. This text should also be smaller than the label and probably in the same color as the header.",
+			fontSize = "medium",
+			order = 4,
+			width = "full",
 		},
 	},
 }
-local zoneOptionsTemplate = {
-	type = "group",
-	args = {
-		zoneDesc = {
-			type = "description",
-			name = "This zone is crowded with encounters for your enjoyment!",
-			order = 101,
-			fontSize = "medium",
-		},
-	},
-}]]
 
 local options = {
 	type = "group",
 	handler = BigWigs,
 	args = {
-		bosses = {
-			type = "header",
-			name = L["Bosses"],
-			order = 1,
-		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 200,
-		},
-		options = {
-			type = "header",
-			name = L["Options"],
-			order = 201,
-		},
 		extras = {
 			type = "group",
 			name = L["Extras"],
 			desc = L["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."],
 			args = {},
-			disabled = "~IsActive",
 			order = 203,
 		},
 		advanced = {
@@ -386,7 +385,6 @@ local options = {
 			name = L["Advanced"],
 			desc = L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"],
 			args = {},
-			disabled = "~IsActive",
 			order = 203,
 		},
 		minimap = {
@@ -426,9 +424,9 @@ function BigWigs:OnInitialize()
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("enrage", L["enrage"], L["enrage_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
-	
-	--ac:RegisterOptionsTable("BigWigs", acOptions)
-	--acd:AddToBlizOptions("BigWigs", "Big Wigs")
+
+	ac:RegisterOptionsTable("BigWigs", acOptions)
+	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 end
 
 function BigWigs:OnEnable(first)
@@ -489,6 +487,7 @@ do
 		order = 50,
 		name = " ",
 	}
+	local zoneModules = {}
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
@@ -507,6 +506,77 @@ do
 			m.revision = r
 			return m
 		end
+	end
+
+	local function fillBossOptions(module)
+		local config = {
+			type = "group",
+			name = module.name,
+			get = function(info) return module.db.profile[info[#info]] end,
+			set = function(info, v) module.db.profile[info[#info]] = v end,
+			args = {},
+		}
+		for i, v in next, module.toggleOptions do
+			local x = i + 10
+			local t = type(v)
+			if t == "number" and v < 0 then
+				config.args["separator" .. i] = {
+					type = "description",
+					order = x,
+					name = " ",
+					width = "full",
+				}
+			elseif t == "number" and v > 0 then
+				local spellName = GetSpellInfo(v)
+				if not spellName then error(("Invalid option %d in module %s."):format(v, module.name)) end
+				config.args[spellName] = {
+					type = "toggle",
+					name = spellName,
+					desc = L["Toggles whether or not the boss module should warn about %s."]:format(spellName),
+					order = x,
+					width = "full",
+				}
+			elseif t == "string" then
+				-- AceLocale-2.2 has no exposed way to check if a registry entry exists - FAIL!
+				local alEntry = "BigWigs"..module.name
+				local ML = nil
+				if AL.registry[alEntry] then
+					ML = AL:new(alEntry)
+				end
+				local optName, optDesc, optOrder
+				if customBossOptions[v] then
+					optName = customBossOptions[v][1]
+					optDesc = customBossOptions[v][2]
+				elseif ML then
+					optName = ML:HasTranslation(v) and ML[v]
+					local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
+					optDesc = ML:HasTranslation(descKey) and ML[descKey] or v
+				end
+				if optName then
+					config.args[v] = {
+						type = "toggle",
+						order = x,
+						name = optName,
+						desc = optDesc,
+						width = "full",
+					}
+				end
+			end
+		end
+		return config
+	end
+	
+	local function populateZoneOptions(uiType, library, zone)
+		local options = {
+			type = "group",
+			name = zone,
+			childGroups = "select",
+			args = {},
+		}
+		for i, module in next, zoneModules[zone] do
+			options.args[module.name] = fillBossOptions(module)
+		end
+		return options
 	end
 
 	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
@@ -541,134 +611,20 @@ do
 			module.db = self:AcquireDBNamespace(name)
 		end
 
-		-- Set up AceConsole.
 		if module.toggleOptions then
-			local cons = module.consoleOptions
-			if module.toggleOptions then
-				cons = {
-					type = "group",
-					name = name,
-					desc = L["Options for %s (r%d)."]:format(name, rev),
-					pass = true,
-					get = function(key)
-						if key == "active" then
-							return self:IsModuleActive(module)
-						else
-							return module.db.profile[key]
-						end
-					end,
-					set = function(key, value)
-						if key == "active" then
-							self:ToggleModuleActive(module)
-						else
-							module.db.profile[key] = value
-
-							-- Invoke any custom boss option function handlers.
-							if customBossOptions[key] and type(customBossOptions[key][3]) == "function" then
-								customBossOptions[key][3](module)
-							end
-						end
-					end,
-					args = {
-						active = active,
-						reboot = {
-							type = "execute",
-							name = L["Reboot"],
-							order = 2,
-							desc = L["Reboot this module."],
-							func = "BigWigs_RebootModule",
-							passValue = module,
-							disabled = "~IsModuleActive",
-						},
-						headerSpacer = headerSpacer,
-					},
-				}
-				local customBossOptionOrder = -100
-				for i, v in next, module.toggleOptions do
-					local x = i + 100
-					local t = type(v)
-					if t == "number" and v < 0 then
-						cons.args[i] = {
-							type = "header",
-							order = x,
-							name = " ",
-						}
-					elseif t == "number" and v > 0 then
-						local spellName = GetSpellInfo(v)
-						if not spellName then error(("Invalid option %d in module %s."):format(v, name)) end
-						cons.args[spellName] = {
-							type = "toggle",
-							order = x,
-							name = spellName,
-							desc = L["Toggles whether or not the boss module should warn about %s."]:format(spellName),
-						}
-					elseif t == "string" then
-						-- AceLocale-2.2 has no exposed way to check if a registry entry exists - FAIL!
-						local alEntry = "BigWigs"..name
-						local ML = nil
-						if AL.registry[alEntry] then
-							ML = AL:new(alEntry)
-						end
-						local optName, optDesc, optOrder
-						if customBossOptions[v] then
-							optName = customBossOptions[v][1]
-							optDesc = customBossOptions[v][2]
-							optOrder = customBossOptionOrder
-							customBossOptionOrder = customBossOptionOrder + 1
-						elseif ML then
-							optName = ML:HasTranslation(v) and ML[v]
-							local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-							optDesc = ML:HasTranslation(descKey) and ML[descKey] or v
-							optOrder = x
-						end
-						if optName then
-							cons.args[v] = {
-								type = "toggle",
-								order = optOrder,
-								name = optName,
-								desc = optDesc,
-							}
-							if ML and optOrder > 0 and ML:HasTranslation(v.."_validate") then
-								cons.args[v].type = "text"
-								cons.args[v].validate = ML[v.."_validate"]
-							end
-						end
-					end
-				end
+			local zone = nil
+			if module.otherMenu then
+				zone = BZ[module.otherMenu]
+			else
+				zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
 			end
-
-			if cons then
-				if module.external then
-					options.args.extras.args[module.consoleCmd or module.name] = cons
-				else
-					local zone = nil
-					if module.otherMenu then
-						zone = BZ[module.otherMenu]
-					else
-						zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-					end
-					
-					-- 3.0
-					--[[local acName = "BigWigs-" .. zone
-					local tbl = acr:GetOptionsTable(acName)
-					if not tbl then
-						ac:RegisterOptionsTable("BigWigs-" .. zone, zoneOptionsTemplate)
-						acd:AddToBlizOptions("BigWigs-" .. zone, "Big Wigs: " .. zone)
-						tbl = acr:GetOptionsTable(acName)
-					end]]
-					
-					-- 2.0
-					if not options.args[zone] then
-						options.args[zone] = {
-							type = "group",
-							name = zone,
-							desc = L["Options for bosses in %s."]:format(zone),
-							args = {},
-							disabled = "~IsActive",
-						}
-					end
-					options.args[zone].args[module.consoleCmd or module.name] = cons
+			if zone then
+				if not zoneModules[zone] then
+					ac:RegisterOptionsTable(zone, populateZoneOptions)
+					acd:AddToBlizOptions(zone, zone, "Big Wigs")
+					zoneModules[zone] = {}
 				end
+				tinsert(zoneModules[zone], module)
 			end
 		elseif module.consoleOptions then
 			if module.external then
