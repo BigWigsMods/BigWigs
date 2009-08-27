@@ -11,8 +11,8 @@ if not plugin then return end
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossBlock")
 local db = nil
-local fnd = _G.string.find
-local type = _G.type
+local fnd = string.find
+local type = type
 
 L:RegisterTranslations("enUS", function() return {
 	["BossBlock"] = true,
@@ -30,19 +30,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Raid warning messages"] = true,
 	["Suppress raid warning messages from the raid message window."] = true,
 
-	["Raid say"] = true,
-	["Suppress RaidSay popup messages."] = true,
-
 	["Whispers"] = true,
 	["Suppress whispered messages."] = true,
 
 	["Suppressing Chatframe"] = true,
 	["Suppressing RaidWarningFrame"] = true,
-	["Suppressing CT_RAMessageFrame"] = true,
 	["Suppressing RaidBossEmoteFrame"] = true,
-
-	["Suppressed"] = true,
-	["Shown"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -61,19 +54,12 @@ L:RegisterTranslations("koKR", function() return {
 	["Raid warning messages"] = "공격대 경보 메세지",
 	["Suppress raid warning messages from the raid message window."] = "공격대 메제지창(화면 중앙)으로 부터 BigWigs의 공격대 경보 메세지를 차단합니다.",
 
-	["Raid say"] = "Raid say",
-	["Suppress RaidSay popup messages."] = "RaidSay 팝업 메세지를 차단합니다.",
-
 	["Whispers"] = "귓속말",
 	["Suppress whispered messages."] = "BigWigs의 귓속말 메세지를 차단합니다.",
 
 	["Suppressing Chatframe"] = "대화창 차단",
 	["Suppressing RaidWarningFrame"] = "공격대경보창 차단",
-	["Suppressing CT_RAMessageFrame"] = "CT_RAMessage창 차단",
 	["Suppressing RaidBossEmoteFrame"] = "RaidBossEmote창 차단",
-
-	["Suppressed"] = "차단됨",
-	["Shown"] = "표시함",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -92,19 +78,12 @@ L:RegisterTranslations("zhCN", function() return {
 	["Raid warning messages"] = "团队警报信息",
 	["Suppress raid warning messages from the raid message window."] = "阻止团队信息窗口下的团队警报信息。",
 
-	["Raid say"] = "RS 信息",
-	["Suppress RaidSay popup messages."] = "阻止 RS 弹出的信息。",
-
 	["Whispers"] = "密语",
 	["Suppress whispered messages."] = "阻止密语信息。",
 
 	["Suppressing Chatframe"] = "正在阻止来自于聊天框中的信息",
 	["Suppressing RaidWarningFrame"] = "正在阻止来自于团队通告的信息",
-	["Suppressing CT_RAMessageFrame"] = "正在阻止来自于 CT_RA 的 RS 信息",
 	["Suppressing RaidBossEmoteFrame"] = "正在阻止来自于团队首领表情的信息",
-
-	["Suppressed"] = "阻止",
-	["Shown"] = "显示",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -123,19 +102,12 @@ L:RegisterTranslations("zhTW", function() return {
 	["Raid warning messages"] = "阻擋團隊警告",
 	["Suppress raid warning messages from the raid message window."] = "阻擋團隊警告中的訊息",
 
-	["Raid say"] = "阻擋團隊助手訊息",
-	["Suppress RaidSay popup messages."] = "阻擋團隊助手 (CTRA) 的 RS 訊息",
-
 	["Whispers"] = "阻擋密語",
 	["Suppress whispered messages."] = "阻擋密語中的訊息",
 
 	["Suppressing Chatframe"] = "正在阻擋聊天訊息",
 	["Suppressing RaidWarningFrame"] = "正在阻擋團隊警告訊息 (RW)",
-	["Suppressing CT_RAMessageFrame"] = "正在阻擋團隊助手訊息 (RS)",
 	["Suppressing RaidBossEmoteFrame"] = "正在阻擋首領表情訊息",
-
-	["Suppressed"] = "阻擋",
-	["Shown"] = "顯示",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -154,19 +126,12 @@ L:RegisterTranslations("deDE", function() return {
 	["Raid warning messages"] = "Schlachtzugswarnung",
 	["Suppress raid warning messages from the raid message window."] = "Unterdrückt aufpoppende Nachrichten im Schlachtzugsnachrichtenfenster, die an den Schlachtzugswarnungschat gesendet werden.",
 
-	["Raid say"] = "RaidSay",
-	["Suppress RaidSay popup messages."] = "Unterdrückt CTRA RaidSay Popup-Nachrichten.",
-
 	["Whispers"] = "Flüstern",
 	["Suppress whispered messages."] = "Unterdrückt geflüsterte Nachrichten.",
 
 	["Suppressing Chatframe"] = "Unterdrückt den Chatframe.",
 	["Suppressing RaidWarningFrame"] = "Unterdrückt den RaidWarningFrame.",
-	["Suppressing CT_RAMessageFrame"] = "Unterdrückt den CT_RAMessageFrame.",
 	["Suppressing RaidBossEmoteFrame"] = "Unterdrückt den RaidBossEmoteFrame.",
-
-	["Suppressed"] = "Unterdrückt",
-	["Shown"] = "Angezeigt",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -185,19 +150,12 @@ L:RegisterTranslations("frFR", function() return {
 	["Raid warning messages"] = "Messages de l'Avertissement raid",
 	["Suppress raid warning messages from the raid message window."] = "Supprime les messages de l'Avertissement raid affichés dans son propre cadre.",
 
-	["Raid say"] = "RaidSay",
-	["Suppress RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de CTRA.",
-
 	["Whispers"] = "Chuchotements",
 	["Suppress whispered messages."] = "Supprime les messages chuchotés.",
 
 	["Suppressing Chatframe"] = "Suppression du ChatFrame",
 	["Suppressing RaidWarningFrame"] = "Suppression du RaidWarningFrame",
-	["Suppressing CT_RAMessageFrame"] = "Suppression du CT_RAMessageFrame",
 	["Suppressing RaidBossEmoteFrame"] = "Suppression du RaidBossEmoteFrame",
-
-	["Suppressed"] = "Supprimé",
-	["Shown"] = "Affiché",
 } end)
 
 L:RegisterTranslations("esES", function() return {
@@ -216,19 +174,12 @@ L:RegisterTranslations("esES", function() return {
 	["Raid warning messages"] = "Mensajes de aviso de banda",
 	["Suppress raid warning messages from the raid message window."] = "Oculta los mensajes de aviso de banda en la ventana de mensajes de banda.",
 
-	["Raid say"] = "Decir en banda",
-	["Suppress RaidSay popup messages."] = "Oculta los mensajes de Decir en banda.",
-
 	["Whispers"] = "Susurros",
 	["Suppress whispered messages."] = "Oculta los mensajes susurrados.",
 
 	["Suppressing Chatframe"] = "Ocultando Ventana de chat",
 	["Suppressing RaidWarningFrame"] = "Ocultando Ventana de Aviso de Banda",
-	["Suppressing CT_RAMessageFrame"] = "Ocultando Ventana de CTRA",
 	["Suppressing RaidBossEmoteFrame"] = "Ocultando Ventana de emociones de Jefe",
-
-	["Suppressed"] = "Suprimido",
-	["Shown"] = "Mostrado",
 } end)
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
@@ -247,19 +198,12 @@ L:RegisterTranslations("ruRU", function() return {
 	["Raid warning messages"] = "Сообщения рейд объявлений",
 	["Suppress raid warning messages from the raid message window."] = "Подавляет сообщения рейд объявлений в окне сообщений рейда",
 
-	["Raid say"] = "Сказать в рейде",
-	["Suppress RaidSay popup messages."] = "Подавляет сообщения сказанные в рейде.",
-
 	["Whispers"] = "Личные",
 	["Suppress whispered messages."] = "Подавляет личные сообщения.",
 
 	["Suppressing Chatframe"] = "Подавление окна чата",
 	["Suppressing RaidWarningFrame"] = "Подавление объевлений рейда",
-	["Suppressing CT_RAMessageFrame"] = "Подавление CT_RA сообщений",
 	["Suppressing RaidBossEmoteFrame"] = "Подавление рейд эмоций",
-
-	["Suppressed"] = "Подавлять",
-	["Shown"] = "Показывать",
 } end)
 
 ------------------------------
@@ -272,7 +216,6 @@ local raidchans = {
 	CHAT_MSG_RAID_WARNING = "rwchat",
 	CHAT_MSG_RAID_LEADER = "chat",
 }
-local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
 
 --------------------------------------------------------------------------------
 -- Options
@@ -280,7 +223,6 @@ local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00
 
 plugin.defaultDB = {
 	chat = true,
-	rs = true,
 	rw = true,
 	rwchat = true,
 	tell = true,
@@ -300,38 +242,26 @@ plugin.advancedOptions = {
 			type = "toggle",
 			name = L["Raid chat"],
 			desc = L["Suppress messages sent to raid chat."],
-			map = map,
-		},
-		rs = {
-			type = "toggle",
-			name = L["Raid say"],
-			desc = L["Suppress RaidSay popup messages."],
-			map = map,
-			hidden = function() return not CT_RAMessageFrame end,
 		},
 		rw = {
 			type = "toggle",
 			name = L["Raid warning messages"],
 			desc = L["Suppress raid warning messages from the raid message window."],
-			map = map,
 		},
 		rwchat = {
 			type = "toggle",
 			name = L["Raid warning chat messages"],
 			desc = L["Suppress raid warning messages from the chat window."],
-			map = map,
 		},
 		tell = {
 			type = "toggle",
 			name = L["Whispers"],
 			desc = L["Suppress whispered messages."],
-			map = map,
 		},
 		boss = {
 			type = "toggle",
 			name = L["Boss emotes"],
 			desc = L["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."],
-			map = map,
 		}
 	},
 }
@@ -354,11 +284,6 @@ end
 
 function plugin:OnEnable()
 	self:Hook("RaidNotice_AddMessage", "RWAddMessage", true)
-
-	if CT_RAMessageFrame then
-		self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage", true)
-	end
-
 	self:RegisterEvent("Ace2_AddonEnabled", "BossModEnableDisable")
 	self:RegisterEvent("Ace2_AddonDisabled", "BossModEnableDisable")
 end
@@ -392,14 +317,6 @@ do
 			self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
 		end
 	end
-end
-
-function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
-	if self:IsSpam(text) and db.rs then
-		--BigWigs:Debug(L["Suppressing CT_RAMessageFrame"], text)
-		return
-	end
-	self.hooks[obj].AddMessage(obj, text, r, g, b, a, t)
 end
 
 function plugin:IsSpam(text)
