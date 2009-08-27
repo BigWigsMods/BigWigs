@@ -579,6 +579,7 @@ do
 				zoneOptions[zone].args[module.name] = fillBossOptions(module)
 			end
 		end
+		wipe(zoneModules[zone])
 		return zoneOptions[zone]
 	end
 
