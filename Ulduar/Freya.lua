@@ -372,7 +372,6 @@ local function scanTarget()
 	if target then
 		if target == pName then
 			mod:LocalMessage(L["sunbeam_you"], "Attention", 62872)
-			mod:WideMessage(L["sunbeam_other"]:format(target))
 		else
 			mod:TargetMessage(L["sunbeam_other"], target, "Attention", 62872)
 			mod:Whisper(target, L["sunbeam_you"])
@@ -389,7 +388,6 @@ end
 function mod:Fury(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["fury_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["fury_other"]:format(player))
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	else
 		self:TargetMessage(L["fury_other"], player, "Attention", spellId)

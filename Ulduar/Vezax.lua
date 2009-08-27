@@ -361,7 +361,6 @@ local function scanTarget()
 		if target == pName then
 			if mod:GetOption(62660) then
 				mod:LocalMessage(L["crash_you"], "Personal", 62660, "Alert")
-				mod:WideMessage(L["crash_other"]:format(target))
 			end
 			if db.crashsay then
 				SendChatMessage(L["crash_say"], "SAY")
@@ -380,7 +379,6 @@ end
 function mod:Mark(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["mark_message_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["mark_message_other"]:format(player))
 	else
 		self:TargetMessage(L["mark_message_other"], player, "Important", spellId)
 		self:Whisper(player, L["mark_message_you"])

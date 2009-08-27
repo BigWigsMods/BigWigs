@@ -215,7 +215,6 @@ end
 function mod:Cloud(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["cloud_you"], "Positive", spellId, "Info")
-		self:WideMessage(L["cloud_other"]:format(player))
 	else
 		self:TargetMessage(L["cloud_other"], player, "Positive", spellId)
 		self:Whisper(player, L["cloud_you"])

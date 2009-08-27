@@ -352,7 +352,6 @@ end
 
 function mod:Detonation(player, spellId)
 	if player == pName then
-		self:WideMessage(L["detonation_message"]:format(player))
 		SendChatMessage(L["detonation_say"], "SAY")
 	else
 		self:TargetMessage(L["detonation_message"], player, "Important", spellId)

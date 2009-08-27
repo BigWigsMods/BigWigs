@@ -251,7 +251,6 @@ end
 
 function mod:Icebolt(player, spellId)
 	if player == pName then
-		self:WideMessage(format(L["icebolt_other"], player))
 		SendChatMessage(L["icebolt_say"], "SAY")
 		if UnitIsUnit(player, "player") and self.db.profile.ping then
 			Minimap:PingLocation()

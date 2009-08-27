@@ -184,7 +184,6 @@ end
 function mod:IncinerateFlesh(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["incinerate_you"], "Personal", spellId, "Info")
-		self:WideMessage(L["incinerate_other"]:format(player))
 	else
 		self:TargetMessage(L["incinerate_other"], player, "Important", spellId)
 		self:Whisper(player, L["incinerate_you"])
@@ -201,7 +200,6 @@ end
 function mod:LegionFlame(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["legionflame_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["legionflame_other"]:format(player))
 	else
 		self:TargetMessage(L["legionflame_other"], player, "Important", spellId)
 		self:Whisper(player, L["legionflame_you"])

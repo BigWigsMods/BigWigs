@@ -400,7 +400,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
 	if unit == icehowl and db.charge and message:find(L["charge_trigger"]) then
 		if player == pName then
 			self:LocalMessage(L["charge_you"], "Personal", 52311, "Alarm")
-			self:WideMessage(L["charge_other"]:format(player))
 		else
 			self:TargetMessage(L["charge_other"], player, "Attention", 52311)
 		end

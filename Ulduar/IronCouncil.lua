@@ -229,7 +229,6 @@ end
 function mod:Overwhelm(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["overwhelm_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["overwhelm_other"]:format(player))
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	else
 		self:TargetMessage(L["overwhelm_other"], player, "Attention", spellId)
@@ -299,7 +298,6 @@ local function targetCheck()
 		if target then
 			if target == pName then
 				mod:LocalMessage(L["tendrils_you"], "Personal", nil, "Alarm")
-				mod:WideMessage(L["tendrils_other"]:format(target))
 			else
 				mod:TargetMessage(L["tendrils_other"], target, "Attention")
 				mod:Whisper(player, L["tendrils_you"])

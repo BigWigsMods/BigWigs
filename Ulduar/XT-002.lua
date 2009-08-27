@@ -207,7 +207,6 @@ end
 function mod:GravityBomb(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["gravitybomb_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["gravitybomb_other"]:format(player))
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	else
 		self:TargetMessage(L["gravitybomb_other"], player, "Attention", spellId)
@@ -224,7 +223,6 @@ end
 function mod:LightBomb(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["lightbomb_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["lightbomb_other"]:format(player))
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	else
 		self:TargetMessage(L["lightbomb_other"], player, "Attention", spellId)

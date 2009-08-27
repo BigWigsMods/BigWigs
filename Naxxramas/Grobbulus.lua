@@ -102,7 +102,6 @@ end
 function mod:Inject(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["bomb_message_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["bomb_message_other"]:format(player))
 	else
 		self:TargetMessage(L["bomb_message_other"], player, "Important", spellId)
 		self:Whisper(player, L["bomb_message_you"])

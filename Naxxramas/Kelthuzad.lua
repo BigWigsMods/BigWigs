@@ -369,7 +369,6 @@ end
 function mod:Detonate(player, spellId)
 	if player == pName then
 		self:LocalMessage(L["detonate_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["detonate_other"]:format(player))
 	else
 		self:TargetMessage(L["detonate_other"], player, "Attention", spellId)
 		self:Whisper(player, L["detonate_you"])

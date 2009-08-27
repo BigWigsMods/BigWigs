@@ -186,7 +186,6 @@ end
 function mod:Swarm(player, spell)
 	if player == pName then
 		mod:LocalMessage(L["swarm_you"], "Attention", spell)
-		mod:WideMessage(L["swarm_other"]:format(player))
 	else
 		mod:TargetMessage(L["swarm_other"], player, "Attention", spell)
 	end

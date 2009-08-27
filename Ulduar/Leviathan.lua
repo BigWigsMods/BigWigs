@@ -162,7 +162,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
 	if unit == boss and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
 		if player == pName then
 			self:LocalMessage(L["pursue_you"], "Personal", 62374, "Alarm")
-			self:WideMessage(L["pursue_other"]:format(player))
 		else
 			self:TargetMessage(L["pursue_other"], player, "Attention", 62374)
 		end

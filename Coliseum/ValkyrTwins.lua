@@ -167,7 +167,6 @@ function mod:DarkTouch(_, spellId)
 	if not db.touch then return end
 	if player == pName then
 		self:LocalMessage(L["touch_of_dark_on_you"], "Personal", spellId, "Info")
-		self:WideMessage(L["touch_of_dark_on_other"]:format(player))
 	else
 		self:TargetMessage(L["touch_of_dark_on_other"], player, "Attention", spellId)
 		self:Whisper(player, L["touch_of_dark_on_you"])
@@ -178,7 +177,6 @@ function mod:LightTouch(_, spellId)
 	if not db.touch then return end
 	if player == pName then
 		self:LocalMessage(L["touch_of_light_on_you"], "Personal", spellId, "Info")
-		self:WideMessage(L["touch_of_light_on_other"]:format(player))
 	else
 		self:TargetMessage(L["touch_of_light_on_other"], player, "Attention", spellId)
 		self:Whisper(player, L["touch_of_light_on_you"])
