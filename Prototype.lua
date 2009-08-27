@@ -11,13 +11,13 @@ local UnitName = UnitName
 local count = 1
 local GetSpellInfo = GetSpellInfo
 local fmt = string.format
+local pName = UnitName("player")
 
 -- Provide some common translations here, so we don't have to replicate it in
 -- every freaking module.
 local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 commonWords:RegisterTranslations("enUS", function() return {
-	you = "You",
-	are = "are",
+	you = "YOU",
 
 	enrage_start = "%s Engaged - Enrage in %d min",
 	enrage_end = "%s Enraged",
@@ -33,8 +33,7 @@ commonWords:RegisterTranslations("enUS", function() return {
 } end)
 
 commonWords:RegisterTranslations("deDE", function() return {
-	you = "Ihr",
-	are = "seid",
+	you = "IHR",
 
 	enrage_start = "%s angegriffen - Wutanfall in %d min",
 	enrage_end = "%s bekommt Wutanfall!",
@@ -51,7 +50,6 @@ commonWords:RegisterTranslations("deDE", function() return {
 
 commonWords:RegisterTranslations("koKR", function() return {
 	you = "당신은",
-	are = " ",
 
 	enrage_start = "%s 전투 개시 - %d분 후 격노",
 	enrage_end = "%s 격노",
@@ -68,7 +66,6 @@ commonWords:RegisterTranslations("koKR", function() return {
 
 commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
-	are = "到",
 
 	enrage_start = "%s激活 - %d分后激怒！",
 	enrage_end = "%s已激怒！",
@@ -85,7 +82,6 @@ commonWords:RegisterTranslations("zhCN", function() return {
 
 commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
-	are = "到了",
 
 	enrage_start = "%s開戰 - %d分後狂怒！",
 	enrage_end = "%s已狂怒！",
@@ -101,8 +97,7 @@ commonWords:RegisterTranslations("zhTW", function() return {
 } end )
 
 commonWords:RegisterTranslations("frFR", function() return {
-	you = "Vous",
-	are = "subissez",
+	you = "VOUS",
 
 	enrage_start = "%s engagé - Enrager dans %d min.",
 	enrage_end = "%s enragé",
@@ -119,7 +114,6 @@ commonWords:RegisterTranslations("frFR", function() return {
 
 commonWords:RegisterTranslations("esES", function() return {
 	you = "Tú",
-	are = "estás",
 
 	enrage_start = "%s Iniciado - Enfurecimiento en %d min",
 	enrage_end = "%s Enfurecido",
@@ -136,7 +130,6 @@ commonWords:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 commonWords:RegisterTranslations("ruRU", function() return {
 	you = "Вы",
-	are = "",
 
 	enrage_start = "%s вступил в бой - Исступление через %d мин",
 	enrage_end = "%s вошел в состояние Исступления",
@@ -441,7 +434,11 @@ do
 			text = table.concat(player, ", ")
 			wipe(player)
 		else
-			text = coloredNames[player]
+			if player == pName then
+				text = commonWords["you"]
+			else
+				text = coloredNames[player]
+			end
 		end
 		self:TriggerEvent("BigWigs_Message", formatString:format(text, ...), color, nil, sound, nil, icon)
 	end
