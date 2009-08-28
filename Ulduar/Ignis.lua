@@ -165,7 +165,7 @@ do
 	end
 end
 
-function mod:SlagPot(player, spellId_, _, spellName)
+function mod:SlagPot(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Important", spellId)
 	self:Bar(L["slagpot_message"]:format(player), 10, spellId)
 end
