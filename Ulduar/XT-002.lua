@@ -204,7 +204,7 @@ function mod:GravityBomb(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:LightBomb(player, spellId)
+function mod:LightBomb(player, spellId, _, _, spellName)
 	if player == pName then
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
