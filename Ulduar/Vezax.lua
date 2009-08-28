@@ -169,8 +169,8 @@ L:RegisterTranslations("deDE", function() return {
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
 	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 
-	mark_message = "Mark",
-	mark_message_other = "Mal: %s!",
+	mark_message = "Mal",
+	mark_message_other = "Mal: %s",
 
 	icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher).",

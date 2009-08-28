@@ -85,12 +85,12 @@ L:RegisterTranslations("deDE", function() return {
 	exposed_warning = "Freigelegtes Herz bald!",
 	exposed_message = "Herz freigelegt!",
 
-	gravitybomb_other = "Gravitationsbombe: %s!",
+	gravitybomb_other = "Gravitationsbombe: %s",
 
 	gravitybombicon = "Gravitationsbombe: Symbol",
 	gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher).",
 
-	lightbomb_other = "Lichtbombe: %s!",
+	lightbomb_other = "Lichtbombe: %s",
 
 	tantrum_bar = "~Betäubender Koller",
 

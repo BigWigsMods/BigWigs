@@ -108,7 +108,7 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_desc = "Timer für den Hard Mode.",
 
 	cloud_you = "Sturmwolke auf DIR!",
-	cloud_other = "Sturmwolke: %s!",
+	cloud_other = "Sturmwolke: %s",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",

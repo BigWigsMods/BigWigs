@@ -150,8 +150,8 @@ L:RegisterTranslations("deDE", function() return {
 	elementals_message = "Elementare!",
 	tree_message = "Eonars Geschenk!",
 
-	fury_message = "Fury",
-	fury_other = "Furor: %s!",
+	fury_message = "Furor",
+	fury_other = "Furor: %s",
 
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",

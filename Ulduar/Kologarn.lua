@@ -119,7 +119,7 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeam = "Fokussierter Augenstrahl",
 	eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist.",
 	eyebeam_trigger = "%s fokussiert seinen Blick auf Euch!",
-	eyebeam_message = "Augenstrahl: %s!",
+	eyebeam_message = "Augenstrahl: %s",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
 	eyebeam_say = "Augenstrahl auf MIR!",

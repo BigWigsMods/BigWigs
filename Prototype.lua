@@ -34,8 +34,8 @@ commonWords:RegisterTranslations("enUS", function() return {
 } end)
 
 commonWords:RegisterTranslations("deDE", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
+	you = "%s auf DIR!",
+	other = "%1$s auf %2$s!",
 
 	enrage_start = "%s angegriffen - Wutanfall in %d min",
 	enrage_end = "%s bekommt Wutanfall!",

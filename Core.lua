@@ -124,12 +124,13 @@ L:RegisterTranslations("deDE", function() return {
 	["Advanced"] = "Erweitert",
 	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Diese Optionen musst du nicht unbedingt verändern, aber du kannst es natürlich, wenn du willst!",
 
+	["Toggles whether or not the boss module should warn about %s."] = "Wähle aus, ob das Bossmodul vor %s warnen soll oder nicht.",
 	bosskill = "Boss besiegt",
-	bosskill_desc = "Meldet, wenn ein Boss besiegt wurde.",
+	bosskill_desc = "Warnt, wenn ein Boss besiegt wurde.",
 	enrage = "Wutanfall",
-	enrage_desc = "Meldet, wenn ein Boss einen Wutanfall bekommt.",
+	enrage_desc = "Warnt, wenn ein Boss einen Wutanfall bekommt.",
 	berserk = "Berserker",
-	berserk_desc = "Meldet, wenn ein Boss zum Berserker wird.",
+	berserk_desc = "Warnt, wenn ein Boss zum Berserker wird.",
 
 	["Load"] = "Laden",
 	["Load All"] = "Alle laden",
