@@ -95,7 +95,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
 
-	vortex_or_shield_cd = "<Vortex/Shield 冷却>",
+	vortex_or_shield_cd = "<下一Vortex/Shield>",
 
 	vortex = "Vortex",
 	vortex_desc = "当双子开始施放Vortexes时发出警报。",
@@ -111,7 +111,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",
 
-	vortex_or_shield_cd = "<漩渦/盾 冷卻>",
+	vortex_or_shield_cd = "<下一漩渦/盾>",
 
 	vortex = "漩渦",
 	vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。",
@@ -121,8 +121,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	touch = "黑暗/光明之觸",
 	touch_desc = "當玩家中了黑暗/光明之觸時發出警報。",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_message = "光明之觸！",
+	touch_of_dark_message = "黑暗之觸！",
 } end)
 
 --------------------------------------------------------------------------------

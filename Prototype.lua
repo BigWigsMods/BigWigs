@@ -68,8 +68,8 @@ commonWords:RegisterTranslations("koKR", function() return {
 } end )
 
 commonWords:RegisterTranslations("zhCN", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
+	you = ">你< %s！",
+	other = "%1$s：>%2$s<！",
 
 	enrage_start = "%s激活 - %d分后激怒！",
 	enrage_end = "%s已激怒！",
@@ -85,8 +85,8 @@ commonWords:RegisterTranslations("zhCN", function() return {
 } end )
 
 commonWords:RegisterTranslations("zhTW", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
+	you = ">你< %s！",
+	other = "%1$s：>%2$s<！",
 
 	enrage_start = "%s開戰 - %d分後狂怒！",
 	enrage_end = "%s已狂怒！",

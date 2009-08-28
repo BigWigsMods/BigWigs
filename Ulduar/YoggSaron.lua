@@ -339,6 +339,7 @@ L:RegisterTranslations("zhCN", function() return {
 	roar_warning = "5秒后，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
 
+	icon = "团队标记",
 	icon_desc = "为中了心灵疾病的队员打上团队标记。（需要权限）",
 } end )
 
@@ -390,6 +391,7 @@ L:RegisterTranslations("zhTW", function() return {
 	roar_warning = "5秒後，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
 
+	icon = "團隊標記",
 	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
 

@@ -34,12 +34,13 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Local"] = "本地",
 	["%s: Timer [%s] finished."] = "%s：计时条[%s]到时间。",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条（|cffff0000%q|r）或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm. 例如 5, 1:20 or 2m.",
+	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条（|cffff0000%q|r）或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm。例如 5, 1:20 或 2m。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
 	["Local"] = "區域",
 	["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。",
+	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "無效記時條（|cffff0000%q|r）或 |cffd9d919%s|r 上的記時條文字錯誤，<time> 輸入一個數字單位默認為秒，可以為 M:S 或者 Mm。例如5, 1:20 或 2m。",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

@@ -60,10 +60,24 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 --	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
+
+	["Shield on %s!"] = "圣盾术：>%s<！",
+	["Bladestorming!"] = "剑刃风暴！",
+	["Hunter pet up!"] = "召唤宠物！",
+	["Felhunter up!"] = "召唤地狱猎犬！",
+	["Heroism on champions!"] = "英勇！",
+	["Bloodlust on champions!"] = "嗜血！",
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
+
+	["Shield on %s!"] = "聖盾術：>%s<！",
+	["Bladestorming!"] = "劍刃風暴！",
+	["Hunter pet up!"] = "呼喚寵物！",
+	["Felhunter up!"] = "召喚惡魔獵犬！",
+	["Heroism on champions!"] = "英勇氣概！",
+	["Bloodlust on champions!"] = "嗜血術！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду.",

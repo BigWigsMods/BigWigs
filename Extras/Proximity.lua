@@ -110,6 +110,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Play sound on proximity."] = "近距离时声效提示。",
 	["Disabled"] = "禁用",
 	["Disable the proximity display for all modules that use it."] = "禁止所有首领模块使用近距离。",
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "近距离将在下次显示。要完全禁用此功能，需要关闭此功能选项。",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "近距离显示已被锁定，需要移动或其他选项，右击 Big Wigs 图标，附加功能 -> 近距离 -> 显示可以切换锁定选项。",
 
 	proximity = "近距离显示",
@@ -118,6 +119,7 @@ L:RegisterTranslations("zhCN", function() return {
 	font = "Fonts\\ZYKai_T.TTF",
 
 	["Close"] = "关闭",
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "关闭近距离显示。\n\n要完全禁用此任一功能，需进入相对应首领模块选项关闭“近距离”功能。",
 	["Test"] = "测试",
 	["Perform a Proximity test."] = "距离报警测试。",
 	["Display"] = "显示",
@@ -130,6 +132,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["Shows or hides the background."] = "显示或隐藏背景。",
 	["Toggle sound"] = "切换声效",
 	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "当近距离窗口有其他过近玩家时切换任一或关闭声效。",
+	["Sound button"] = "音效按钮",
+	["Shows or hides the sound button."] = "显示或隐藏音效按钮。",
+	["Close button"] = "关闭按钮",
+	["Shows or hides the close button."] = "显示或隐藏关闭按钮。",
+	["Show/hide"] = "显示/隐藏",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -250,6 +257,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Play sound on proximity."] = "接近時發出音效。",
 	["Disabled"] = "禁用",
 	["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用。",
+	["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "鄰近顯示將在下次顯示。要完全禁用此功能，需要關閉此功能選項。",
 	["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "鄰近顯示視窗已經鎖定,你需要右鍵點擊BigWigs圖示,移到附加功能 -> 鄰近顯示 -> 切換鎖定選項如果你想要移動視窗或是透過其他設定.",
 
 	proximity = "鄰近顯示",
@@ -258,6 +266,7 @@ L:RegisterTranslations("zhTW", function() return {
 	font = "Fonts\\bHEI01B.TTF",
 
 	["Close"] = "關閉",
+	["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "關閉鄰近顯示顯示。\n\n要完全禁用此任一功能，需進入相對應首領模組選項關閉“鄰近顯示”功能。",
 	["Test"] = "測試",
 	["Perform a Proximity test."] = "進行鄰近顯示測試。",
 	["Display"] = "顯示",
@@ -270,6 +279,11 @@ L:RegisterTranslations("zhTW", function() return {
 	["Shows or hides the background."] = "顯示或隱藏背景。",
 	["Toggle sound"] = "切換聲效",
 	["Toggle whether or not the proximity window should beep when you're too close to another player."] = "當鄰近顯示視窗有其他過近玩家時切換任一或關閉聲效。",
+	["Sound button"] = "音效按鈕",
+	["Shows or hides the sound button."] = "顯示或隱藏音效按鈕。",
+	["Close button"] = "關閉按鈕",
+	["Shows or hides the close button."] = "顯示或隱藏關閉按鈕。",
+	["Show/hide"] = "顯示/隱藏",
 } end)
 
 L:RegisterTranslations("esES", function() return {

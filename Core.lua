@@ -196,6 +196,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Advanced"] = "高级",
 	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "并不需要去修改这些选项，但如果想进行调整我们欢迎这样做！",
 
+	["Toggles whether or not the boss module should warn about %s."] = "打开或关闭%s的首领模块报警。",
 	bosskill = "首领死亡",
 	bosskill_desc = "首领被击杀时显示提示信息。",
 	enrage = "激怒",
@@ -232,6 +233,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Advanced"] = "進階",
 	["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "並不需要去修改這些選項，但如果想進行調整我們歡迎這樣做！",
 
+	["Toggles whether or not the boss module should warn about %s."] = "打開或關閉%s的首領模組報警。",
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
 	enrage = "狂怒",

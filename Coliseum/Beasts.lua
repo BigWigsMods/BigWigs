@@ -163,7 +163,6 @@ L:RegisterTranslations("zhCN", function() return {
 	-- Icehowl
 	butt_message = "Ferocious Butt：>%s<！",
 	butt_bar = "<Ferocious Butt 冷却>",
-
 	charge = "野性冲锋",
 	charge_desc = "当玩家中了野性冲锋时发出警报。",
 --	charge_trigger = "^%%s",	--check
@@ -191,7 +190,6 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Icehowl
 	butt_message = "兇猛頭擊：>%s<！",
 	butt_bar = "<兇猛頭擊 冷卻>",
-
 	charge = "狂烈衝鋒",
 	charge_desc = "當玩家中了狂烈衝鋒時發出警報。",
 --	charge_trigger = "^%%s",	--check

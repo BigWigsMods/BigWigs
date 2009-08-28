@@ -93,38 +93,42 @@ L:RegisterTranslations("deDE", function() return {
 	netherpower_bar = "~Macht des Nether",
 } end)
 L:RegisterTranslations("zhCN", function() return {
---	engage_trigger = "text",
+	engage = "激活",
+	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
+	engage_trigger1 = "Banished to the Nether",
 
 	incinerate_message = "Incinerate",
 	incinerate_other = "Incinerate Flesh：>%s<！",
-	incinerate_bar = "<Incinerate Flash 冷却>",
+	incinerate_bar = "<下一Incinerate Flash>",
 
 	legionflame_message = "Flame",
 	legionflame_other = "Legion Flame：>%s<！",
-	legionflame_bar = "<Legion Flame 冷却>",
+	legionflame_bar = "<下一Legion Flame>",
 
 	icon = "团队标记",
 	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",
 
-	netherportal_bar = "<Nether Portal 冷却>",
-	netherpower_bar = "<Nether Power 冷却>",
+	netherportal_bar = "<下一Nether Portal>",
+	netherpower_bar = "<下一Nether Power>",
 } end)
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger = "text",
+	engage = "進入戰斗",
+	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
+	engage_trigger1 = "Banished to the Nether",
 
-	incinerate_message = "Incinerate",
+	incinerate_message = "焚化血肉",
 	incinerate_other = "焚化血肉：>%s<！",
-	incinerate_bar = "<焚化血肉 冷卻>",
+	incinerate_bar = "<下一焚化血肉>",
 
-	legionflame_message = "Flame",
+	legionflame_message = "聚合烈焰",
 	legionflame_other = "聚合烈焰：>%s<！",
-	legionflame_bar = "<聚合烈焰 冷卻>",
+	legionflame_bar = "<下一聚合烈焰>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",
 
-	netherportal_bar = "<虛空傳送門 冷卻>",
-	netherpower_bar = "<虛空傳送門（能量） 冷卻>",
+	netherportal_bar = "<下一虛空傳送門>",
+	netherpower_bar = "<下一虛空傳送門（能量）>",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	engage = "Начало битвы",
