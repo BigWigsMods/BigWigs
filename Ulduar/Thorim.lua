@@ -47,17 +47,14 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode_desc = "Show timer for hard mode.",
 	hardmode_warning = "Hard mode expires",
 
-	hammer_message = "Hammer on %s",
 	shock_message = "You're getting shocked!",
 	barrier_message = "Barrier up!",
 
-	detonation_message = "Bomb on %s!",
 	detonation_say = "I'm a bomb!",
 
 	charge_message = "Charged x%d!",
 	charge_bar = "Charge %d",
 
-	strike_message= "Unbalancing Strike: %s",
 	strike_bar = "Unbalancing Strike CD",
 
 	end_trigger = "Stay your arms! I yield!",
@@ -79,17 +76,14 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_warning = "도전 모드 종료",
 
-	hammer_message = "폭풍망치: %s",
 	shock_message = "당신은 번개 충격! 이동!",
 	barrier_message = "거인 - 룬문자 방벽!",
 
-	detonation_message = "룬 폭발: %s",
 	detonation_say = "저 푹탄이에요! 피하세요!",
 
 	charge_message = "충전 (%d)!",
 	charge_bar = "충전 (%d)",
 
-	strike_message= "혼란의 일격: %s",
 	strike_bar = "혼란의 일격 대기시간",
 
 	end_trigger = "무기를 거둬라! 내가 졌다!",
@@ -113,17 +107,14 @@ L:RegisterTranslations("frFR", function() return {
 	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse).",
 	hardmode_warning = "Délai du mode difficile dépassé",
 
-	hammer_message = "Marteau-tempête : %s",
 	shock_message = "Horion de foudre sur VOUS !",
 	barrier_message = "Barrière runique actif !",
 
-	detonation_message = "Détonation : %s",
 	detonation_say = "Je suis une bombe !",
 
 	charge_message = "Charge de foudre x%d !",
 	charge_bar = "Charge %d",
 
-	strike_message = "Frappe : %s",
 	strike_bar = "Recharge Frappe",
 
 	end_trigger = "Retenez vos coups ! Je me rends !",
@@ -145,17 +136,14 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_warning = "Hard Mode beendet!",
 
-	hammer_message = "Sturmhammer: %s!",
 	shock_message = "DU wirst geschockt!",
 	barrier_message = "Runenbarriere oben!",
 
-	detonation_message = "Bombe: %s!",
 	detonation_say = "Ich bin die Bombe!",
 
 	charge_message = "Blitzladung x%d!",
 	charge_bar = "Blitzladung %d",
 
-	strike_message= "Schlag: %s!",
 	strike_bar = "~Schlag",
 
 	end_trigger = "Senkt Eure Waffen! Ich ergebe mich!",
@@ -177,17 +165,14 @@ L:RegisterTranslations("zhCN", function() return {
 	hardmode_desc = "显示困难模式计时器。",
 	hardmode_warning = "困难模式结束！",
 
-	hammer_message = "风暴之锤：>%s<！",
 	shock_message = ">你< 闪电震击！移动！",
 	barrier_message = "符文巨像 - 符文屏障！",
 
-	detonation_message = "符文爆裂：>%s<！",
 	detonation_say = "我是炸弹！",
 
 	charge_message = "闪电充能：>%d<！",
 	charge_bar = "<闪电充能：%d>",
 
-	strike_message= "重压打击：>%s<！",
 	strike_bar = "<重压打击 冷却>",
 
 --	end_trigger = "Stay your arms! I yield!",
@@ -209,17 +194,14 @@ L:RegisterTranslations("zhTW", function() return {
 	hardmode_desc = "顯示困難模式計時器。",
 	hardmode_warning = "困難模式結束！",
 
-	hammer_message = "風暴之錘：>%s<！",
 	shock_message = ">你< 閃電震擊！移動！",
 	barrier_message = "符文巨像 - 符刻屏障！",
 
-	detonation_message = "引爆符文：>%s<！",
 	detonation_say = "我是炸彈！",
 
 	charge_message = "閃電能量：>%d<！",
 	charge_bar = "<閃電能量：%d>",
 
-	strike_message= "失衡打擊：>%s<！",
 	strike_bar = "<失衡打擊 冷卻>",
 
 	end_trigger = "住手!我認輸了!",
@@ -241,17 +223,13 @@ L:RegisterTranslations("ruRU", function() return {
 	hardmode_desc = "Отображения таймера для сложного режима.",
 	hardmode_warning = "Завершение сложного режима",
 
-	hammer_message = "Молот брошен в |3-3(%s)",
 	shock_message = "На вас Поражение громом! Шевелитесь!",
 	barrier_message = "Колосс под Рунической преградой!",
 
-	detonation_message = "Бомба у: |3-1(%s)",
 	detonation_say = "Я БОМБА!",
 
 	charge_message = "Разряд: x%d",
 	charge_bar = "Разряд %d",
-
-	strike_message= "Удар по: |3-2(%s)",
 
 	end_trigger = "Придержите мечи! Я сдаюсь.",
 
@@ -305,14 +283,14 @@ function mod:Charge(_, spellId)
 end
 
 function mod:Hammer(player, spellId, _, _, spellName)
-	self:TargetMessage(L["hammer_message"], player, "Urgent", spellId)
+	self:TargetMessage(spellName, player, "Urgent", spellId)
 	self:Bar(spellName, 16, spellId)
 	self:Icon(player, "icon")
 end
 
 function mod:Strike(player, spellId)
-	self:TargetMessage(L["strike_message"], player, "Attention", spellId)
-	self:Bar(L["strike_message"]:format(player), 15, spellId)
+	self:TargetMessage(spellName, player, "Attention", spellId)
+	self:Bar(spellName..": "..player, 15, spellId)
 end
 
 function mod:StrikeCooldown(player, spellId)
@@ -345,7 +323,7 @@ function mod:Detonation(player, spellId, _, _, spellName)
 	else
 		self:TargetMessage(spellName, player, "Important", spellId)
 	end
-	self:Bar(L["detonation_message"]:format(player), 4, spellId)
+	self:Bar(spellName..": "..player, 4, spellId)
 	self:Icon(player, "icon")
 end
 
