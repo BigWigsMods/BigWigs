@@ -292,7 +292,7 @@ end
 
 function mod:Root(player, spellId, _, _, spellName)
 	root[#root + 1] = player
-	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId)
+	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId, spellName)
 end
 
 do
