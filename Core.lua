@@ -554,7 +554,7 @@ do
 				}
 				order = order + 1
 			elseif t == "number" and v > 0 then
-				local spellName = GetSpellInfo(v)
+				local spellName, _, icon = GetSpellInfo(v)
 				if not spellName then error(("Invalid option %d in module %s."):format(v, module.name)) end
 				config.args[spellName] = {
 					type = "toggle",
@@ -570,6 +570,9 @@ do
 						type = "description",
 						name = desc,
 						order = order,
+						image = icon,
+						imageWidth = 16,
+						imageHeight = 16,
 						width = "full",
 						fontSize = "small",
 					}

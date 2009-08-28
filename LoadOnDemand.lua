@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -73,27 +73,6 @@ local function hide(zone)
 end
 
 local function addCoreMenu(zone)
-	local opt = BigWigs.cmdtable.args
-	if not opt[zone] then
-		opt[zone] = {
-			type = "group",
-			name = zone,
-			desc = LC["Options for bosses in %s."]:format(zone),
-			args = {},
-			disabled = "~IsActive",
-		}
-	end
-	if not opt[zone].args[LC["Load"]] then
-		opt[zone].args[LC["Load"]] = {
-			type = "execute",
-			name = LC["Load All"],
-			desc = LC["Load all %s modules."]:format(zone),
-			order = 1,
-			passValue = zone,
-			func = loadZone,
-			hidden = hide,
-		}
-	end
 end
 
 local function registerEnableZone(zone, groupsize)
@@ -169,6 +148,8 @@ function BigWigsLoD:OnInitialize()
 end
 
 function BigWigsLoD:OnEnable()
+	print("You're running an ALPHA RELEASE of Big Wigs. NOTHING you see here is final, and you are NOT allowed to file bug reports about ANYTHING. If you have any comments on the ongoing development of the next major release, which includes a conversion to Ace3, then you can join us on IRC.")
+
 	self:RegisterEvent("BigWigs_CoreEnabled")
 
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
