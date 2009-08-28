@@ -53,7 +53,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	tremor_warning = "Ground Tremor soon!",
 	tremor_bar = "~Next Ground Tremor",
-	root_message = "Root: %s",
 	energy_message = "Unstable Energy on YOU!",
 
 	icon = "Place Icon",
@@ -87,7 +86,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	tremor_warning = "곧 지진!",
 	tremor_bar = "~다음 지진",
-	root_message = "무쇠 뿌리: %s",
 	energy_message = "당신은 불안정한 힘!",
 
 	icon = "전술 표시",
@@ -121,7 +119,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	tremor_warning = "Tremblement de terre imminent !",
 	tremor_bar = "~Prochain Tremblement",
-	root_message = "Racines : %s",
 	energy_message = "Energie instable sur VOUS !",
 
 	icon = "Icône",
@@ -155,7 +152,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",
-	root_message = "Wurzeln: %s!",
 	energy_message = "Instabile Energie auf DIR!",
 
 	icon = "Schlachtzugs-Symbol",
@@ -189,7 +185,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
-	root_message = "钢铁根须：>%s<！",
 	energy_message = ">你<不稳定的能量！",
 
 	icon = "位置标记",
@@ -223,7 +218,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	tremor_warning = "即將 地面震顫！",
 	tremor_bar = "<下一地面震顫>",
-	root_message = "鐵之根鬚：>%s<！",
 	energy_message = ">你< 不穩定的能量！",
 
 	icon = "位置標記",
@@ -257,7 +251,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	tremor_warning = "Скоро Дрожание земли!",
 	tremor_bar = "~Дрожание земли",
-	root_message = "В корнях: %s",
 	energy_message = "Нестабильная энергия на ВАС!",
 
 	icon = "Помечать иконкой",
@@ -293,11 +286,11 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function rootWarn(spellId)
-	mod:TargetMessage(L["root_message"], root, "Attention", spellId, "Info")
+local function rootWarn(spellId, spellName)
+	mod:TargetMessage(spellName, root, "Attention", spellId, "Info")
 end
 
-function mod:Root(player, spellId)
+function mod:Root(player, spellId, _, _, spellName)
 	root[#root + 1] = player
 	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId)
 end
@@ -333,7 +326,7 @@ do
 	end
 end
 
-local function scanTarget()
+local function scanTarget(spellId, spellName)
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
