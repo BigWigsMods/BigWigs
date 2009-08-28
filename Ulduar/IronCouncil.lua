@@ -222,7 +222,7 @@ end
 
 function mod:Overwhelm(player, spellId, _, _, spellName)
 	if player == pName then
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -232,9 +232,9 @@ end
 
 function mod:OverRemove(player)
 	if player == pName then
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
-	self:SendMessage("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
+	self:TriggerEvent("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
 end
 
 function mod:Shield(unit, spellId)
@@ -304,7 +304,7 @@ end
 
 local function tendrilsRemove()
 	mod:CancelScheduledEvent("BWTendrilsToTScan")
-	mod:SendMessage("BigWigs_RemoveRaidIcon")
+	mod:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
 function mod:Tendrils(_, spellId, _, _, spellName)

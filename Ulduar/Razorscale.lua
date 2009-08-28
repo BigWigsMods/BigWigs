@@ -273,7 +273,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["phase2_trigger"] and db.phase then
 		phase = 2
-		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 		self:IfMessage(L["phase2_message"], "Attention")
 	elseif msg == L["breath_trigger"] and self:GetOption(64021) then
 		self:IfMessage(L["breath_message"], "Attention", 64021)
@@ -309,7 +309,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			started = true
 			phase = 1
 		else
-			self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
+			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 			if db.phase then
 				self:IfMessage(L["air_message"], "Attention", nil, "Info")
 			end
@@ -323,7 +323,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.harpoon then
 			self:Bar(L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
 		end
-		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
 		--self:IfMessage(L["air_message"], "Attention", nil, "Info")
 	end
 end

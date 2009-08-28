@@ -136,7 +136,7 @@ function mod:Flame(_, spellId, _, _, spellName)
 end
 
 function mod:FlameFailed(_, _, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, spellName)
+	self:TriggerEvent("BigWigs_StopBar", self, spellName)
 end
 
 function mod:Shutdown(unit, spellId, _, _, spellName)

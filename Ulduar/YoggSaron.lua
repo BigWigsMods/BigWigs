@@ -499,7 +499,7 @@ function mod:Malady(player)
 end
 
 function mod:RemoveMalady(player)
-	self:SendMessage("BigWigs_RemoveRaidIcon")
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
 function mod:Squeeze(player, spellId, _, _, spellName)
@@ -533,7 +533,7 @@ end
 function mod:RemoveEmpower()
 	if db.empowericon then
 		self:IfMessage(L["empowericon_message"], "Positive", 64465)
-		self:SendMessage("BigWigs_RemoveRaidIcon")
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 
@@ -599,9 +599,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelScheduledEvent(madnessWarningID)
 
 		local madness = GetSpellInfo(64059)
-		self:SendMessage("BigWigs_StopBar", madness)
-		self:SendMessage("BigWigs_StopBar", L["tentacle_message"]:format(crusherCount))
-		self:SendMessage("BigWigs_StopBar", L["portal_bar"])
+		self:TriggerEvent("BigWigs_StopBar", madness)
+		self:TriggerEvent("BigWigs_StopBar", L["tentacle_message"]:format(crusherCount))
+		self:TriggerEvent("BigWigs_StopBar", L["portal_bar"])
 
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
