@@ -609,7 +609,7 @@ do
 	local function populateZoneOptions(uiType, library, zone)
 		zoneOptions[zone] = zoneOptions[zone] or {
 			type = "group",
-			childGroups = "tree",
+			childGroups = "select",
 			args = {},
 		}
 		for i, module in next, zoneModules[zone] do
