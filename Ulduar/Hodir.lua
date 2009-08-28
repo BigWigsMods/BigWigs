@@ -41,9 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 	hardmode = "Hard mode",
 	hardmode_desc = "Show timer for hard mode.",
 
-	cloud_you = "Cloud on you!",
-	cloud_other = "Cloud on %s!",
-
 	icon = "Place icon",
 	icon_desc = "Place a raid icon on players who get targetted with the Storm Clouds.",
 
@@ -62,9 +59,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
-
-	cloud_you = "당신은 폭풍 구름",
-	cloud_other = "%s: 폭풍 구름 획득",
 
 	icon = "전술 표시",
 	icon_desc = "폭풍 구름을 획득한 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -85,9 +79,6 @@ L:RegisterTranslations("frFR", function() return {
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 min pour le mode difficile (délai avant qu'Hodir ne détruise sa cache rare).",
 
-	cloud_you = "Nuage d'orage sur VOUS !",
-	cloud_other = "Nuage : %s",
-
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Nuage d'orage (nécessite d'être assistant ou mieux).",
 
@@ -106,9 +97,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	hardmode = "Hard Mode",
 	hardmode_desc = "Timer für den Hard Mode.",
-
-	cloud_you = "Sturmwolke auf DIR!",
-	cloud_other = "Sturmwolke: %s",
 
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",
@@ -129,9 +117,6 @@ L:RegisterTranslations("zhCN", function() return {
 	hardmode = "困难模式",
 	hardmode_desc = "显示困难模式计时器。",
 
-	cloud_you = ">你< 风暴雷云！",
-	cloud_other = "风暴雷云：>%s<！",
-
 	icon = "团队标记",
 	icon_desc = "为中了风暴雷云的队员打上团队标记。（需要权限）",
 
@@ -151,9 +136,6 @@ L:RegisterTranslations("zhTW", function() return {
 	hardmode = "困難模式",
 	hardmode_desc = "顯示困難模式計時器。",
 
-	cloud_you = ">你< 風暴雷雲！",
-	cloud_other = "風暴雷雲：>%s<！",
-
 	icon = "團隊標記",
 	icon_desc = "為中了風暴雷雲的隊員打上團隊標記。（需要權限）",
 
@@ -172,9 +154,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	hardmode = "Сложный режим",
 	hardmode_desc = "Отображать таймер сложного режима.",
-
-	cloud_you = "Грозовая туча на ВАС",
-	cloud_other = "%s под Грозовой тучей!",
 
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелена Грозовая туча.",
@@ -208,7 +187,7 @@ end
 function mod:Cloud(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Positive", spellId, "Info")
 	self:Whisper(player, spellName)
-	self:Bar(L["cloud_other"]:format(player), 30, spellId)
+	self:Bar(spellName..": "..player, 30, spellId)
 	self:Icon(player, "icon")
 end
 
