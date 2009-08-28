@@ -53,13 +53,10 @@ L:RegisterTranslations("enUS", function() return {
 	burn_other = "Burning Bile: %s",
 
 	-- Icehowl
-	butt_message = "Ferocious Butt: %s!",
 	butt_bar = "~Butt Cooldown",
 	charge = "Furious Charge",
 	charge_desc = "Warn about Furious Charge on players.",
 	charge_trigger = "^%%s",	--check
-	charge_other = "Furious Charge: %s!",
-	charge_you = "Furious Charge YOU!",
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!",
@@ -80,13 +77,10 @@ L:RegisterTranslations("koKR", function() return {
 	burn_other = "불타는 담즙: %s",
 
 	-- Icehowl
-	butt_message = "흉포한 박치기: %s!",
 	butt_bar = "~박치기 대기시간",
 	charge = "사나운 돌진",
 	charge_desc = "사나운 돌진의 대상 플레이어를 알립니다.",
 	charge_trigger = "([^%s]+)|1을;를; 노려보며 큰 소리로 울부짖습니다.$",
-	charge_other = "사나운 돌진: %s!",
-	charge_you = "당신에게 사나운 돌진!",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !",
@@ -107,13 +101,10 @@ L:RegisterTranslations("frFR", function() return {
 	burn_other = "Bile brûlante : %s",
 
 	-- Icehowl
-	butt_message = "Coup de tête féroce : %s",
 	butt_bar = "~Recharge Coup de tête",
 	charge = "Charge furieuse",
 	charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse.",
 	charge_trigger = "lâche un rugissement assourdissant !$",
-	charge_other = "Charge furieuse : %s",
-	charge_you = "Charge furieuse sur VOUS !",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!",
@@ -134,13 +125,10 @@ L:RegisterTranslations("deDE", function() return {
 	burn_other = "Brennende Galle: %s!",
 
 	-- Icehowl
-	butt_message = "Heftiger Kopfstoß: %s!",
 	butt_bar = "~Kopfstoß",
 	charge = "Wütender Ansturm",
 	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
 	charge_trigger = "^%%s",	--check
-	charge_other = "Wütender Ansturm: %s!",
-	charge_you = "Wütender Ansturm auf DIR!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
@@ -161,13 +149,10 @@ L:RegisterTranslations("zhCN", function() return {
 	burn_other = "Burning Bile：>%s<！",
 
 	-- Icehowl
-	butt_message = "Ferocious Butt：>%s<！",
 	butt_bar = "<Ferocious Butt 冷却>",
 	charge = "野性冲锋",
 	charge_desc = "当玩家中了野性冲锋时发出警报。",
 --	charge_trigger = "^%%s",	--check
-	charge_other = "野性冲锋：>%s<！",
-	charge_you = ">你< 野性冲锋！",
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!",
@@ -188,13 +173,10 @@ L:RegisterTranslations("zhTW", function() return {
 	burn_other = "燃燒膽汁：>%s<！",
 
 	-- Icehowl
-	butt_message = "兇猛頭擊：>%s<！",
 	butt_bar = "<兇猛頭擊 冷卻>",
 	charge = "狂烈衝鋒",
 	charge_desc = "當玩家中了狂烈衝鋒時發出警報。",
 --	charge_trigger = "^%%s",	--check
-	charge_other = "狂烈衝鋒：>%s<！",
-	charge_you = ">你< 狂烈衝鋒！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!",
@@ -215,15 +197,12 @@ L:RegisterTranslations("ruRU", function() return {
 	burn_other = "Горящая желчь: %s",
 
 	-- Icehowl
-	butt_message = "Свирепое бодание на |3-5(%s)!",
 	butt_bar = "~Свирепое бодание",
 
 	--Furious Charge - судя по транскриптору нет русского перевода :(
 	charge = "Furious Charge",
 	charge_desc = "Сообщать о Furious Charge.",
 	charge_trigger = "^%%s",	--check
-	charge_other = "Furious Charge: %s!",
-	charge_you = "Furious Charge на ВАС!",
 } end)
 
 --------------------------------------------------------------------------------
@@ -375,19 +354,16 @@ function mod:Daze(_, spellId, _, _, spellName)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Butt(player, spellId)
-	self:TargetMessage(L["butt_message"], player, "Attention", spellId)
+function mod:Butt(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Attention", spellId)
 	self:Bar(L["butt_bar"], 12, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
 	if unit == icehowl and db.charge and message:find(L["charge_trigger"]) then
-		if player == pName then
-			self:LocalMessage(L["charge_you"], "Personal", 52311, "Alarm")
-		else
-			self:TargetMessage(L["charge_other"], player, "Attention", 52311)
-		end
-		self:Bar(L["charge_other"]:format(player), 7, 62374)
+		local spellName = GetSpellInfo(52311)
+		self:TargetMessage(spellName, player, "Personal", 52311, "Alarm")
+		self:Bar(spellName..": "..player, 7, 52311)
 	end
 end
 
