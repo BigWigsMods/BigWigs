@@ -412,7 +412,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["hardmode_message"], "Attention", 64582)
 			self:DelayedMessage(600, L["hardmode_warning"], "Important")
 		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		if db.berserk then
@@ -421,8 +421,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelScheduledEvent("plasmaWarning")
-		self:TriggerEvent("BigWigs_StopBar", L["plasma_bar"])
-		self:TriggerEvent("BigWigs_StopBar", L["shock_next"])
+		self:SendMessage("BigWigs_StopBar", L["plasma_bar"])
+		self:SendMessage("BigWigs_StopBar", L["shock_next"])
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
@@ -430,7 +430,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self:GetOption(64623) and ishardmode then
 			self:Bar(L["fbomb_bar"], 45, 64623)
 		end
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	elseif msg:find(L["phase3_trigger"]) then
 		self:CancelScheduledEvent("fbombWarning")
 		phase = 3

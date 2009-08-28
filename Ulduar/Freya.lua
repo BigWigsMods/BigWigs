@@ -362,7 +362,7 @@ end
 
 function mod:Fury(player, spellId)
 	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["fury_message"])
@@ -371,15 +371,15 @@ function mod:Fury(player, spellId)
 end
 
 function mod:FuryRemove(player)
-	self:TriggerEvent("BigWigs_StopBar", self, L["fury_other"]:format(player))
+	self:SendMessage("BigWigs_StopBar", self, L["fury_other"]:format(player))
 	if player == pName then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 
 function mod:AttunedRemove()
 	phase = 2
-	self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["wave_bar"])
 	if db.phase then
 		self:IfMessage(L["phase2_message"], "Important")
 	end

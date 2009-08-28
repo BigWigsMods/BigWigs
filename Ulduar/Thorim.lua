@@ -359,7 +359,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
 		if db.berserk then
-			self:Bar(CL["berserk"], 300, 20484)
+			self:Bar(CL["berserk"], 375, 20484)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")

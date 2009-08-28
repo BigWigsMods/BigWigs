@@ -192,7 +192,7 @@ end
 
 function mod:GravityBomb(player, spellId, _, _, spellName)
 	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -206,7 +206,7 @@ end
 
 function mod:LightBomb(player, spellId)
 	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -216,7 +216,7 @@ end
 
 function mod:BombRemoved(player)
 	if player == pName then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 
