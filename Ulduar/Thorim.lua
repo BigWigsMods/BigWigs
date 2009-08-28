@@ -75,9 +75,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "건방진 젖먹이 같으니... 감히 여기까지 기어올라와 내게 도전해? 내 손으로 쓸어버리겠다!",
 	phase3_message = "3 단계 - %s 전투시작!",
 
-	p2berserk = "2 단계 - 광폭화",
-	p2berserk_desc = "1 단계의 보스 광폭화를 알립니다.",
-
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_warning = "도전 모드 종료",
@@ -102,6 +99,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	["Runic Colossus"] = "Colosse runique", -- For the runic barrier emote.
+
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Début de la phase 1",
@@ -109,9 +108,6 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_message = "Phase 2 - Berserk dans 5 min. !",
 	phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !",
 	phase3_message = "Phase 3 - %s engagé !",
-
-	p2berserk = "Phase 2 - Berserk",
-	p2berserk_desc = "Prévient quand le boss devient fou furieux en phase 2.",
 
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse).",

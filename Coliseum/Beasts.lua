@@ -92,7 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !",
 	jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !",
 	icehowl_trigger = "L'air se gèle à l'entrée de notre prochain combattant, Glace-hurlante ! Tuez ou soyez tués, champions !",
-	boss_incoming = "Arrivée |2 %s",
+	boss_incoming = "Arrivée de %s",
 
 	-- Gormok
 	impale_message = "%2$dx Empaler sur %1$s",

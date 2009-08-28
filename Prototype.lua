@@ -102,8 +102,8 @@ commonWords:RegisterTranslations("zhTW", function() return {
 } end )
 
 commonWords:RegisterTranslations("frFR", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
+	you = "%s sur VOUS",
+	other = "%1$s sur %2$s",
 
 	enrage_start = "%s engagé - Enrager dans %d min.",
 	enrage_end = "%s enragé",

@@ -212,7 +212,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Shows or hides the sound button."] = "Affiche ou non le bouton du son.",
 	["Close button"] = "Bouton de fermeture",
 	["Shows or hides the close button."] = "Affiche ou non le bouton de fermeture.",
-	["Show/hide"] = "Afficher/masquer",
+	["Show/hide"] = "Afficher/cacher",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

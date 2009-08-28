@@ -277,8 +277,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",
 
 	["Spawns a new test warning."] = "Fait apparaître un nouvel avertissement de test.",
-	["Hide"] = "Masquer",
-	["Hides the anchors."] = "Masque l'ancre.",
+	["Hide"] = "Cacher",
+	["Hides the anchors."] = "Cache l'ancre.",
 
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
