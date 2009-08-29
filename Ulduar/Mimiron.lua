@@ -10,7 +10,7 @@ mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Comma
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
 mod.toggleOptions = {"phase", "hardmode", -1, 62997, 64623, 64570, 63631, 63274, 64444, 63811, "proximity", "berserk", "bosskill"}
-mod.proximityCheck = "bandage"
+mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.consoleCmd = "Mimiron"
 
 ------------------------------
