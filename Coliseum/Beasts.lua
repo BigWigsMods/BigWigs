@@ -60,9 +60,10 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!",
-	jormungars_trigger = "마음을 굳게 하게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!",
-	icehowl_trigger = "소개하는 순간 공기마저 얼어붙게 하는 얼음울음이 다음 상대일세! 죽거나 죽이거나, 선택하게 용사들이여!",
-	boss_incoming = "%s 곧 등장",
+	jormungars_trigger = "마음을 단단히 먹게. 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!",
+	icehowl_trigger = "다음은, 소개하는 순간 공기마저 얼어붙게 하는 얼음울음일세! 죽이지 않으면 죽을 걸세, 용사들이여!",
+	boss_incoming = "%s 가 곧 등장합니다!",	
+	
 
 	-- Gormok
 	impale_message = "꿰뚫기 x%2$d: %1$s",
@@ -83,97 +84,97 @@ L:RegisterTranslations("koKR", function() return {
 	charge_trigger = "([^%s]+)|1을;를; 노려보며 큰 소리로 울부짖습니다.$",
 } end)
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !",
-	jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !",
-	icehowl_trigger = "L'air se gèle à l'entrée de notre prochain combattant, Glace-hurlante ! Tuez ou soyez tués, champions !",
-	boss_incoming = "Arrivée de %s",
+	engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyes, Gormok l'Empaleur?!",
+	jormungars_trigger = "Appretez-vous, heros, car voici que les terreurs jumelles, Gueule-d'acide et Ecaille-d'effroi, penetrent dans l'arene?!",
+	icehowl_trigger = "L'air se gele a l'entree de notre prochain combattant, Glace-hurlante?! Tuez ou soyez tues, champions?!",
+	boss_incoming = "Arrivee de %s",
 
 	-- Gormok
 	impale_message = "%2$dx Empaler sur %1$s",
-	stomp_warning = "Piétinement dans 5 sec. !",
-	stomp_bar = "Piétinement",
-	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
+	stomp_warning = "Pietinement dans 5 sec.?!",
+	stomp_bar = "Pietinement",
+	firebomb_message = "Bombe incendiaire en dessous de VOUS?!",
 
 	-- Jormungars
 	spew = "Crachement acide/de lave",
-	spew_desc = "Prévient de l'arrivée des Crachements acides/de lave.",
-	burn_you = "Bile brûlante sur VOUS !",
-	burn_other = "Bile brûlante : %s",
+	spew_desc = "Previent de l'arrivee des Crachements acides/de lave.",
+	burn_you = "Bile brulante sur VOUS?!",
+	burn_other = "Bile brulante?: %s",
 
 	-- Icehowl
-	butt_bar = "~Recharge Coup de tête",
+	butt_bar = "~Recharge Coup de tete",
 	charge = "Charge furieuse",
-	charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse.",
-	charge_trigger = "lâche un rugissement assourdissant !$",
+	charge_desc = "Previent quand un joueur subit les effets d'une Charge furieuse.",
+	charge_trigger = "lache un rugissement assourdissant?!$",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!",
-	jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!",
-	icehowl_trigger = "Mit der Ankündigung unseres nächsten Kämpfers gefriert die Luft selbst: Eisheuler! Tötet oder werdet getötet, Champions!",
+	engage_trigger = "Er kommt aus den tiefsten, dunkelsten Hohlen der Sturmgipfel - Gormok der Pfahler! Voran, Helden!",
+	jormungars_trigger = "Stahlt Euch, Helden, denn die Zwillingsschrecken Atzschlund und Schreckensmaul erscheinen in der Arena!",
+	icehowl_trigger = "Mit der Ankundigung unseres nachsten Kampfers gefriert die Luft selbst: Eisheuler! Totet oder werdet getotet, Champions!",
 	boss_incoming = "%s kommt",
 
 	-- Gormok
-	impale_message = "%2$dx Pfählen: %1$s!",
+	impale_message = "%2$dx Pfahlen: %1$s!",
 	stomp_warning = "Stampfen in 5 sek!",
 	stomp_bar = "~Stampfen",
 	firebomb_message = "Feuerbombe auf DIR!",
 
 	-- Jormungars
-	spew = "Ätzender/Geschmolzener Auswurf",
-	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
+	spew = "Atzender/Geschmolzener Auswurf",
+	spew_desc = "Warnt vor Atzender/Geschmolzener Auswurf.",
 	burn_you = "Brennende Galle auf DIR!",
 	burn_other = "Brennende Galle: %s!",
 
 	-- Icehowl
 	butt_bar = "~Kopfstoß",
-	charge = "Wütender Ansturm",
-	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
+	charge = "Wutender Ansturm",
+	charge_desc = "Warnt vor Wutender Ansturm auf Spielern.",
 	charge_trigger = "^%%s",	--check
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
 	--jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!",
 	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
-	boss_incoming = "即将%s！",
+	boss_incoming = "??%s！",
 
 	-- Gormok
 	impale_message = "%2$dx Impale：>%1$s<！",
 	stomp_warning = "5秒后，Staggering Stomp！",
 	stomp_bar = "<下一Staggering Stomp>",
-	firebomb_message = ">你< Fire Bomb！",
+	firebomb_message = ">?< Fire Bomb！",
 
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
-	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
-	burn_you = ">你< Burning Bile！",
+	spew_desc = "?施放Acidic/Molten Spew??出警?。",
+	burn_you = ">?< Burning Bile！",
 	burn_other = "Burning Bile：>%s<！",
 
 	-- Icehowl
 	butt_bar = "<Ferocious Butt 冷却>",
-	charge = "野性冲锋",
-	charge_desc = "当玩家中了野性冲锋时发出警报。",
+	charge = "野性??",
+	charge_desc = "?玩家中了野性????出警?。",
 --	charge_trigger = "^%%s",	--check
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!",
-	jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢魘吧，英雄們，快就定位!",
+	engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰??，英雄們!",
+	jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢??，英雄們，快就定位!",
 	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
-	boss_incoming = "即將%s！",
+	boss_incoming = "?將%s！",
 
 	-- Gormok
 	impale_message = "%2$dx 刺穿：>%1$s<！",
 	stomp_warning = "5秒後，驚恐踐踏！",
 	stomp_bar = "<下一驚恐踐踏>",
-	firebomb_message = ">你< 燃燒彈！",
+	firebomb_message = ">?< 燃燒彈！",
 
 	-- Jormungars
 	spew = "酸液/熔火噴灑",
 	spew_desc = "當施放酸液/熔火噴灑時發出警報。",
-	burn_you = ">你< 燃燒膽汁！",
+	burn_you = ">?< 燃燒膽汁！",
 	burn_other = "燃燒膽汁：>%s<！",
 
 	-- Icehowl
-	butt_bar = "<兇猛頭擊 冷卻>",
+	butt_bar = "<兇猛頭擊 冷?>",
 	charge = "狂烈衝鋒",
 	charge_desc = "當玩家中了狂烈衝鋒時發出警報。",
 --	charge_trigger = "^%%s",	--check

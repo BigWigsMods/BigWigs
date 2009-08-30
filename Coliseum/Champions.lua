@@ -36,24 +36,24 @@ L:RegisterTranslations("koKR", function() return {
 	["Bloodlust on champions!"] = "용사 피의 욕망!",
 } end)
 L:RegisterTranslations("frFR", function() return {
-	enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…",
-	defeat_trigger = "Une victoire tragique et dépourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait bénéficier d'une telle folie ? De grands guerriers ont perdu la vie. Et pour quoi ? La vraie menace plane à l'horizon : le roi-liche nous attend, tous, dans la mort.",
+	enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent?! Ce n'est qu'apres les avoir vaincus que vous serez declares dignes…",
+	defeat_trigger = "Une victoire tragique et depourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait beneficier d'une telle folie?? De grands guerriers ont perdu la vie. Et pour quoi?? La vraie menace plane a l'horizon?: le roi-liche nous attend, tous, dans la mort.",
 
-	["Shield on %s!"] = "Bouclier sur %s !",
-	["Bladestorming!"] = "Tempête de lames !",
-	["Hunter pet up!"] = "Familier du chasseur revenu !",
-	["Felhunter up!"] = "Chasseur corrompu réinvoqué !",
-	["Heroism on champions!"] = "Héroïsme sur les champions !",
-	["Bloodlust on champions!"] = "Furie sanguinaire sur les champions !",
+	["Shield on %s!"] = "Bouclier sur %s?!",
+	["Bladestorming!"] = "Tempete de lames?!",
+	["Hunter pet up!"] = "Familier du chasseur revenu?!",
+	["Felhunter up!"] = "Chasseur corrompu reinvoque?!",
+	["Heroism on champions!"] = "Heroisme sur les champions?!",
+	["Bloodlust on champions!"] = "Furie sanguinaire sur les champions?!",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren...",
+	enable_trigger = "Der nachste Kampf wird gegen die starksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren...",
 	--defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
 
 	["Shield on %s!"] = "Schild: %s!",
 	["Bladestorming!"] = "Klingensturm!",
-	["Hunter pet up!"] = "Jäger Pet da!",
-	["Felhunter up!"] = "Teufelsjäger da!",
+	["Hunter pet up!"] = "Jager Pet da!",
+	["Felhunter up!"] = "Teufelsjager da!",
 	["Heroism on champions!"] = "Heldentum auf Champions!",
 	["Bloodlust on champions!"] = "Kampfrausch auf Champions!",
 } end)
@@ -61,10 +61,10 @@ L:RegisterTranslations("zhCN", function() return {
 --	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 --	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
 
-	["Shield on %s!"] = "圣盾术：>%s<！",
-	["Bladestorming!"] = "剑刃风暴！",
-	["Hunter pet up!"] = "召唤宠物！",
-	["Felhunter up!"] = "召唤地狱猎犬！",
+	["Shield on %s!"] = "?盾?：>%s<！",
+	["Bladestorming!"] = "?刃?暴！",
+	["Hunter pet up!"] = "召??物！",
+	["Felhunter up!"] = "召?地??犬！",
 	["Heroism on champions!"] = "英勇！",
 	["Bloodlust on champions!"] = "嗜血！",
 } end)
@@ -76,12 +76,12 @@ L:RegisterTranslations("zhTW", function() return {
 	["Bladestorming!"] = "劍刃風暴！",
 	["Hunter pet up!"] = "呼喚寵物！",
 	["Felhunter up!"] = "召喚惡魔獵犬！",
-	["Heroism on champions!"] = "英勇氣概！",
+	["Heroism on champions!"] = "英勇氣?！",
 	["Bloodlust on champions!"] = "嗜血術！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду.",
-	defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом.",
+	defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди ? нас ждет битва с  Королем-личом.",
 
 	["Shield on %s!"] = "Щит на %s",
 	["Bladestorming!"] = "Вихрь клинков!",
