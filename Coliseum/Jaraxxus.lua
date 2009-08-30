@@ -37,43 +37,38 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
-	engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!",
-	engage_trigger1 = "황천으로 사라져라!",
+	engage_trigger = "불타는 군단의 에레다르 군주 자라서스 님이 상대해주마!",
+	engage_trigger1 = "황천으로",	--check
 
 	incinerate_message = "Incinerate",
 	incinerate_other = "살점 소각: %s",
 	incinerate_bar = "~살점 소각 대기시간",
 
-	legionflame_message = "군단 불꽃",
-	legionflame_other = "군단 불꽃 : %s!",
-	legionflame_bar = "~군단 불꽃 대기시간",
-	
-	-- legionflame = "군단 불꽃",
-	-- legionflame_desc = "군단 불꽃 을 알립니다.",	
-	-- legionflame_you = "당신은 군단 불꽃!",
-	-- defact_trigger="월프래드 피즐뱅을 잃은 일은 안 됐지만, 흑마법으로 장난치는 자들에겐 교훈이 되었을 걸세. 아, 자네는 승리를 거뒀으니 다음 도전을 해야겟지."
+	legionflame_message = "Flame",
+	legionflame_other = "불꽃 군단: %s!",
+	legionflame_bar = "~불꽃 군단 대기시간",
 
 	icon = "전술 표시",
-	icon_desc = "군단 불꽃 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	netherportal_bar = "~황천 차원문 대기시간",
 	netherpower_bar = "~황천의 힘 대기시간",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage = "Engagement",
-	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Eredar de la Legion ardente?!",
+	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !",
 	--engage_trigger1 = "Banished to the Nether",
 
 	incinerate_message = "Incinerate",
-	incinerate_other = "Incinerer la chair?: %s",
-	incinerate_bar = "~Recharge Incinerer",
+	incinerate_other = "Incinérer la chair : %s",
+	incinerate_bar = "~Recharge Incinérer",
 
 	legionflame_message = "Flame",
-	legionflame_other = "Flamme de la Legion?: %s",
+	legionflame_other = "Flamme de la Légion : %s",
 	legionflame_bar = "~Recharge Flamme",
 
-	icon = "Icone",
-	icon_desc = "Place une icone de raid sur le dernier joueur affecte par une Flamme de la Legion (necessite d'etre assistant ou mieux).",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Flamme de la Légion (nécessite d'être assistant ou mieux).",
 
 	netherportal_bar = "~Recharge Portail",
 	netherpower_bar = "~Recharge Puissance",
@@ -84,15 +79,15 @@ L:RegisterTranslations("deDE", function() return {
 	--engage_trigger1 = "Banished to the Nether", --need!
 
 	incinerate_message = "Incinerate",
-	incinerate_other = "Fleisch einaschern: %s!",
-	incinerate_bar = "~Fleisch einaschern",
+	incinerate_other = "Fleisch einäschern: %s!",
+	incinerate_bar = "~Fleisch einäschern",
 
 	legionflame_message = "Flame",
 	legionflame_other = "Legionsflamme: %s!",
 	legionflame_bar = "~Legionsflamme",
 
 	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benotigt Assistent oder hoher).",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benötigt Assistent oder höher).",
 
 	netherportal_bar = "~Netherportal",
 	netherpower_bar = "~Macht des Nether",
@@ -110,8 +105,8 @@ L:RegisterTranslations("zhCN", function() return {
 	legionflame_other = "Legion Flame：>%s<！",
 	legionflame_bar = "<下一Legion Flame>",
 
-	icon = "????",
-	icon_desc = "?中了Legion Flame的??打上????。（需要?限）",
+	icon = "团队标记",
+	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",
 
 	netherportal_bar = "<下一Nether Portal>",
 	netherpower_bar = "<下一Nether Power>",
@@ -130,7 +125,7 @@ L:RegisterTranslations("zhTW", function() return {
 	legionflame_bar = "<下一聚合烈焰>",
 
 	icon = "團隊標記",
-	icon_desc = "?中了聚合烈焰的隊員打上團隊標記。（需要權限）",
+	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",
 
 	netherportal_bar = "<下一虛空傳送門>",
 	netherpower_bar = "<下一虛空傳送門（能量）>",
