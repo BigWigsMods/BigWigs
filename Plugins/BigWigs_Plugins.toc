@@ -25,6 +25,8 @@
 
 ## Dependencies: BigWigs
 
+locales.xml
+
 Comm.lua
 Colors.lua
 TargetMonitor.lua
