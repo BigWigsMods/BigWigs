@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 <!--@debug@-->
+<!-- Include file="Extras\locales.xml"/ -->
 <Script file="Plugins\Comm.lua"/>
 <Script file="Plugins\Colors.lua"/>
 <Script file="Plugins\TargetMonitor.lua"/>
@@ -11,6 +12,7 @@
 <Script file="Plugins\BossBlock.lua"/>
 <Script file="Plugins\RaidIcon.lua"/>
 
+<Include file="Extras\locales.xml"/>
 <Script file="Extras\CustomBar.lua"/>
 <Script file="Extras\Proximity.lua"/>
 <Script file="Extras\Version.lua"/>

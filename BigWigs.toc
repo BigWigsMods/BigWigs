@@ -1,6 +1,6 @@
 ## Interface: 30200
 
-## Title: Big Wigs |cff7fff7f -Ace2-|r
+## Title: Big Wigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Notes-deDE: Modulare und einfache Boss Encounter Warnungen.
 ## Notes-ruRU: Модульный, облегчённый, босс мод. Оповещает и выводит таймеры способностей/действий боссов.
@@ -22,6 +22,8 @@
 ## SavedVariables: BigWigsDB
 
 embeds.xml
+
+locales.xml
 
 LoadOnDemand.lua
 Core.lua

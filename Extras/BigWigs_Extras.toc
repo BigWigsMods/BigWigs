@@ -25,6 +25,8 @@
 ## Dependencies: BigWigs
 ## OptionalDeps: BigWigs_Plugins
 
+locales.xml
+
 CustomBar.lua
 Proximity.lua
 Version.lua

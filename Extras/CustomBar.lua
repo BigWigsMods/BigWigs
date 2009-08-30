@@ -13,58 +13,7 @@ mod.external = true
 local times = nil
 local fmt = string.format
 
-----------------------------
---      Localization      --
-----------------------------
-
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
-
-L:RegisterTranslations("enUS", function() return {
-	["Local"] = true,
-	["%s: Timer [%s] finished."] = true,
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true,
-} end)
-
-L:RegisterTranslations("koKR", function() return {
-	["Local"] = "로컬",
-	["Starts a custom bar with the given parameters."] = "입력한 매개변수로 사용자 바를 시작합니다.",
-	["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다.",
-} end)
-
-L:RegisterTranslations("zhCN", function() return {
-	["Local"] = "本地",
-	["%s: Timer [%s] finished."] = "%s：计时条[%s]到时间。",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条（|cffff0000%q|r）或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm。例如 5, 1:20 或 2m。",
-} end)
-
-L:RegisterTranslations("zhTW", function() return {
-	["Local"] = "區域",
-	["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "無效記時條（|cffff0000%q|r）或 |cffd9d919%s|r 上的記時條文字錯誤，<time> 輸入一個數字單位默認為秒，可以為 M:S 或者 Mm。例如5, 1:20 或 2m。",
-} end)
-
-L:RegisterTranslations("deDE", function() return {
-	["Local"] = "Lokal",
-	["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet.",
-} end)
-
-L:RegisterTranslations("frFR", function() return {
-	["Local"] = "Local",
-	["%s: Timer [%s] finished."] = "%s : Délai [%s] terminé.",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée invalide (|cffff0000%q|r) ou texte de barre manquant dans une barre personnalisée lancée par |cffd9d919%s|r. <durée> peut être soit un nombre en secondes, soit au format M:S, ou encore au format Mm. Par exemple : 5, 1:20 ou 2m.",
-} end)
-
-L:RegisterTranslations("esES", function() return {
-	["%s: Timer [%s] finished."] = "%s: Temporizador [%s] finalizado",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo inv\195\161lido (|cffff0000%q|r) o texto de barra ausente en una barra personal iniciada por |cffd9d919%s|r. <tiempo> puede ser un n\195\186mero en segundos, una pareja M:S, o Mm. Por ejemplo 5, 1:20 or 2m.",
-} end)
-
--- Translated by wow.playhard.ru translators
-L:RegisterTranslations("ruRU", function() return {
-	["Local"] = "Локальный",
-	["%s: Timer [%s] finished."] = "%s: Таймер [%s] готовый.",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, М:С парный, или Мм. К примеру 5, 1:20 или 2м.",
-} end)
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Extras")
 
 ------------------------------
 --      Initialization      --

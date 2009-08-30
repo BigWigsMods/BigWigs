@@ -41,52 +41,8 @@ local bigwigsUsers = {
 }
 local notUsingBW = {}
 
---------------------------------------------------------------------------------
--- Localization
---
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionChecker")
-L:RegisterTranslations("enUS", function() return {
-	["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss.",
-	["out_of_date"] = "Players that might be running an old version: %s.",
-	["not_using"] = "Players that might not be using Big Wigs: %s.",
-} end )
-
-L:RegisterTranslations("koKR", function() return {
-	["should_upgrade"] = "Big Wigs가 구버전입니다. 보스와 전투를 시작하기전에 업데이트를 권장합니다.",
-	["out_of_date"] = "구버전을 사용중인 플레이어: %s.",
-	["not_using"] = "Big Wigs 미사용중인 그룹 멤버: %s.",
-} end )
-
-L:RegisterTranslations("deDE", function() return {
-	["should_upgrade"] = "Dies scheint eine ältere Version von Big Wigs zu sein. Es wird ein Update empfohlen, bevor du einen Kampf mit einem Boss beginnst.",
-	["out_of_date"] = "Die folgenden Spieler scheinen eine ältere Version zu haben: %s.",
-	["not_using"] = "Gruppenmitglieder, die nicht Big Wigs benutzen: %s.",
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
-	["should_upgrade"] = "这似乎是一个旧版本的 Big Wigs。建议您在与首领战斗之前升级。",
-	["out_of_date"] = "以下玩家似乎使用旧版本：%s。",
-	["not_using"] = "玩家没有使用 Big Wigs：%s。",
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
-	["should_upgrade"] = "這似乎是一個舊版本的 Big Wigs。建議您在與首領戰鬥之前升級。",
-	["out_of_date"] = "以下玩家似乎使用舊版本：%s。",
-	["not_using"] = "玩家沒有使用 Big Wigs：%s。",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	["should_upgrade"] = "Il semblerait que vous utilisez une ancienne version de Big Wigs. Il est recommandé de vous mettre à jour avant d'engager un boss.",
-	["out_of_date"] = "Les joueurs suivants semblent utiliser une ancienne version : %s.",
-	["not_using"] = "Membres n'utilisant pas Big Wigs : %s.",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	["should_upgrade"] = "У вас вероятно старая версия Big Wigs. Мы рекомендуем вам обновить её перед началом боя с боссом.",
-	["out_of_date"] = "Игроки, которые используют старую версию: %s.",
-	["not_using"] = "Участники группы не использующие Big Wigs: %s.",
-} end )
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Extras")
 
 --------------------------------------------------------------------------------
 -- Local utility functions

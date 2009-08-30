@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
+local LC = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 local BZ = nil
 local grouped = nil
 

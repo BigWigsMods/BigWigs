@@ -2,7 +2,7 @@
 --      Module Prototype      --
 --------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 local BBR = LibStub("LibBabble-Boss-3.0"):GetReverseLookupTable()
 
 local UnitExists = UnitExists
@@ -12,145 +12,6 @@ local count = 1
 local GetSpellInfo = GetSpellInfo
 local fmt = string.format
 local pName = UnitName("player")
-
--- Provide some common translations here, so we don't have to replicate it in
--- every freaking module.
-local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-commonWords:RegisterTranslations("enUS", function() return {
-	you = "%s on YOU",
-	other = "%s on %s",
-
-	enrage_start = "%s Engaged - Enrage in %d min",
-	enrage_end = "%s Enraged",
-	enrage_min = "Enrage in %d min",
-	enrage_sec = "Enrage in %d sec",
-	enrage = "Enrage",
-
-	berserk_start = "%s Engaged - Berserk in %d min",
-	berserk_end = "%s goes Berserk",
-	berserk_min = "Berserk in %d min",
-	berserk_sec = "Berserk in %d sec",
-	berserk = "Berserk",
-} end)
-
-commonWords:RegisterTranslations("deDE", function() return {
-	you = "%s auf DIR!",
-	other = "%1$s auf %2$s!",
-
-	enrage_start = "%s angegriffen - Wutanfall in %d min",
-	enrage_end = "%s bekommt Wutanfall!",
-	enrage_min = "Wutanfall in %d min",
-	enrage_sec = "Wutanfall in %d sek!",
-	enrage = "Wutanfall",
-
-	berserk_start = "%s angegriffen - Berserker in %d min",
-	berserk_end = "%s wird zum Berserker!",
-	berserk_min = "Berserker in %d min",
-	berserk_sec = "Berserker in %d sek!",
-	berserk = "Berserker",
-} end )
-
-commonWords:RegisterTranslations("koKR", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
-
-	enrage_start = "%s 전투 개시 - %d분 후 격노",
-	enrage_end = "%s 격노",
-	enrage_min = "%d분 후 격노",
-	enrage_sec = "%d초 후 격노",
-	enrage = "격노",
-
-	berserk_start = "%s 전투 개시 - %d분 후 광폭화",
-	berserk_end = "%s 광폭화",
-	berserk_min = "%d분 후 광폭화",
-	berserk_sec = "%d초 후 광폭화",
-	berserk = "광폭화",
-} end )
-
-commonWords:RegisterTranslations("zhCN", function() return {
-	you = ">你< %s！",
-	other = "%1$s：>%2$s<！",
-
-	enrage_start = "%s激活 - %d分后激怒！",
-	enrage_end = "%s已激怒！",
-	enrage_min = "%d分后激怒！",
-	enrage_sec = "%d秒后激怒！",
-	enrage = "激怒",
-
-	berserk_start = "%s激活 - 将在%d分后狂暴！",
-	berserk_end = "%s已狂暴！",
-	berserk_min = "%d分后狂暴！",
-	berserk_sec = "%d秒后狂暴！",
-	berserk = "狂暴",
-} end )
-
-commonWords:RegisterTranslations("zhTW", function() return {
-	you = ">你< %s！",
-	other = "%1$s：>%2$s<！",
-
-	enrage_start = "%s開戰 - %d分後狂怒！",
-	enrage_end = "%s已狂怒！",
-	enrage_min = "%d分後狂怒！",
-	enrage_sec = "%d秒後狂怒！",
-	enrage = "狂怒",
-
-	berserk_start = "%s開戰 - %d分後狂暴！",
-	berserk_end = "%s已狂暴！",
-	berserk_min = "%d分後狂暴！",
-	berserk_sec = "%d秒後狂暴！",
-	berserk = "狂暴",
-} end )
-
-commonWords:RegisterTranslations("frFR", function() return {
-	you = "%s sur VOUS",
-	other = "%1$s sur %2$s",
-
-	enrage_start = "%s engagé - Enrager dans %d min.",
-	enrage_end = "%s enragé",
-	enrage_min = "Enrager dans %d min.",
-	enrage_sec = "Enrager dans %d sec.",
-	enrage = "Enrager",
-
-	berserk_start = "%s engagé - Berserk dans %d min.",
-	berserk_end = "%s devient fou furieux",
-	berserk_min = "Berserk dans %d min.",
-	berserk_sec = "Berserk dans %d sec.",
-	berserk = "Berserk",
-} end )
-
-commonWords:RegisterTranslations("esES", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
-
-	enrage_start = "%s Iniciado - Enfurecimiento en %d min",
-	enrage_end = "%s Enfurecido",
-	enrage_min = "Enfurecimiento en %d min",
-	enrage_sec = "Enfurecimiento en %d seg",
-	enrage = "Enfurecer",
-
-	berserk_start = "%s Iniciado - Rabia en %d min",
-	berserk_end = "%s entra en Rabia",
-	berserk_min = "Rabia en %d min",
-	berserk_sec = "Rabia en %d seg",
-	berserk = "Rabia",
-} end)
--- Translated by wow.playhard.ru translators
-commonWords:RegisterTranslations("ruRU", function() return {
-	you = "%s on YOU",
-	other = "%1$s on %2$s",
-
-	enrage_start = "%s вступил в бой - Исступление через %d мин",
-	enrage_end = "%s вошел в состояние Исступления",
-	enrage_min = "Исступление через %d мин",
-	enrage_sec = "Исступление через %d сек",
-	enrage = "Исступление",
-
-	berserk_start = "%s вступил в бой - Берсерк через %d мин",
-	berserk_end = "%s вошел в состояние Берсерка",
-	berserk_min = "Берсерк через %d мин",
-	berserk_sec = "Берсерк через %d сек",
-	berserk = "Берсерк",
-} end)
 
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
@@ -439,14 +300,14 @@ do
 	function BigWigs.modulePrototype:TargetMessage(spellName, player, color, icon, sound, ...)
 		local text = nil
 		if type(player) == "table" then
-			text = fmt(commonWords["other"], spellName, table.concat(player, ", "))
+			text = fmt(L["other"], spellName, table.concat(player, ", "))
 			wipe(player)
 		else
 			if player == pName then
 				if ... then
 					text = fmt(spellName, coloredNames[player], ...)
 				else
-					text = fmt(commonWords["you"], spellName)
+					text = fmt(L["you"], spellName)
 				end
 			else
 				--change colors and remove sound when warning about effects on other players
@@ -455,7 +316,7 @@ do
 				if ... then
 					text = fmt(spellName, coloredNames[player], ...)
 				else
-					text = fmt(commonWords["other"], spellName, coloredNames[player])
+					text = fmt(L["other"], spellName, coloredNames[player])
 				end
 			end
 		end
@@ -514,7 +375,7 @@ end
 -- XXX 3rd argument is a proposed API change, and is subject to change/removal.
 function BigWigs.modulePrototype:Whisper(player, spellName, noName)
 	if player == pName then return end
-	self:TriggerEvent("BigWigs_SendTell", player, noName and spellName or fmt(commonWords["you"], spellName))
+	self:TriggerEvent("BigWigs_SendTell", player, noName and spellName or fmt(L["you"], spellName))
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
@@ -529,18 +390,18 @@ end
 
 do
 	local berserk = {
-		start = commonWords["berserk_start"],
-		min = commonWords["berserk_min"],
-		sec = commonWords["berserk_sec"],
-		stop = commonWords["berserk_end"],
+		start = L["berserk_start"],
+		min = L["berserk_min"],
+		sec = L["berserk_sec"],
+		stop = L["berserk_end"],
 		bar = GetSpellInfo(43),
 		icon = 20484,
 	}
 	local enrage = {
-		start = commonWords["enrage_start"],
-		min = commonWords["enrage_min"],
-		sec = commonWords["enrage_sec"],
-		stop = commonWords["enrage_end"],
+		start = L["enrage_start"],
+		min = L["enrage_min"],
+		sec = L["enrage_sec"],
+		stop = L["enrage_end"],
 		bar = GetSpellInfo(12880),
 		icon = 12880,
 	}
