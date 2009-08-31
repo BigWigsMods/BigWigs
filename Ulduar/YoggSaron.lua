@@ -467,7 +467,7 @@ function mod:Guardian(_, spellId)
 	guardianCount = guardianCount + 1
 end
 
-function mod:Insane(player, spellId)
+function mod:Insane(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Attention", spellId)
 end
 
