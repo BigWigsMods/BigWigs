@@ -48,7 +48,7 @@ L["Menu options."] = "目录选项。"
 	
 -- Prototype.lua common words
 L.you = ">你< %s！"
-L.other = "%1$s：>%2$s<！"
+L.other = "%s：>%s<！"
 
 L.enrage_start = "%s激活 - %d分后激怒！"
 L.enrage_end = "%s已激怒！"

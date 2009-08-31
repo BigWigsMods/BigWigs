@@ -49,7 +49,7 @@ L["Menu options."] = "Menü-Optionen"
 	
 -- Prototype.lua common words
 L.you = "%s auf DIR!"
-L.other = "%1$s auf %2$s!"
+L.other = "%s auf %s!"
 
 L.enrage_start = "%s angegriffen - Wutanfall in %d min"
 L.enrage_end = "%s bekommt Wutanfall!"

@@ -47,7 +47,7 @@ L["Menu options."] = "選單設置。"
 
 -- Prototype.lua common words
 L.you = ">你< %s！"
-L.other = "%1$s：>%2$s<！"
+L.other = "%s：>%s<！"
 
 L.enrage_start = "%s開戰 - %d分後狂怒！"
 L.enrage_end = "%s已狂怒！"
