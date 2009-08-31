@@ -47,10 +47,10 @@ L["Menu options."] = "Меню опций."
 
 
 -- Prototype.lua common words
-L.you = "%s on YOU"
-L.other = "%1$s on %2$s"
+L.you = "%s на ВАС"
+L.other = "%1$s на %2$s"
 
-L.phase = "Phase %d"
+L.phase = "Фаза %d"
 
 L.enrage_start = "%s вступил в бой - Исступление через %d мин"
 L.enrage_end = "%s вошел в состояние Исступления"
