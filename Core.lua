@@ -253,6 +253,15 @@ do
 		local order = 1
 		for i, v in next, module.toggleOptions do
 			local t = type(v)
+			if module.optionHeaders and module.optionHeaders[v] then
+				config.args[v .. "_header"] = {
+					type = "header",
+					name = module.optionHeaders[v],
+					order = order,
+					width = "full",
+				}
+				order = order + 1
+			end
 			if t == "number" and v < 0 then
 				config.args["separator" .. i] = {
 					type = "description",
