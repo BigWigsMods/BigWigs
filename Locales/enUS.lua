@@ -46,6 +46,8 @@ L["Menu options."] = true
 L.you = "%s on YOU"
 L.other = "%s on %s"
 
+L.phase = "Phase %d"
+
 L.enrage_start = "%s Engaged - Enrage in %d min"
 L.enrage_end = "%s Enraged"
 L.enrage_min = "Enrage in %d min"

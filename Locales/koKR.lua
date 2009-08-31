@@ -50,6 +50,8 @@ L["Menu options."] = "메뉴 설정."
 L.you = "%s on YOU"
 L.other = "%1$s on %2$s"
 
+L.phase = "Phase %d"
+
 L.enrage_start = "%s 전투 개시 - %d분 후 격노"
 L.enrage_end = "%s 격노"
 L.enrage_min = "%d분 후 격노"

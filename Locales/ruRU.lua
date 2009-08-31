@@ -50,6 +50,8 @@ L["Menu options."] = "Меню опций."
 L.you = "%s on YOU"
 L.other = "%1$s on %2$s"
 
+L.phase = "Phase %d"
+
 L.enrage_start = "%s вступил в бой - Исступление через %d мин"
 L.enrage_end = "%s вошел в состояние Исступления"
 L.enrage_min = "Исступление через %d мин"

@@ -49,6 +49,8 @@ L["Menu options."] = "選單設置。"
 L.you = ">你< %s！"
 L.other = "%s：>%s<！"
 
+L.phase = "Phase %d"
+
 L.enrage_start = "%s開戰 - %d分後狂怒！"
 L.enrage_end = "%s已狂怒！"
 L.enrage_min = "%d分後狂怒！"

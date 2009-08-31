@@ -45,10 +45,12 @@ L["Active boss modules:"] = "激活首领模块："
 L["All running modules have been reset."] = "所有运行中的模块都已重置。"
 L["Menu"] = "目录"
 L["Menu options."] = "目录选项。"
-	
+
 -- Prototype.lua common words
 L.you = ">你< %s！"
 L.other = "%s：>%s<！"
+
+L.phase = "Phase %d"
 
 L.enrage_start = "%s激活 - %d分后激怒！"
 L.enrage_end = "%s已激怒！"
