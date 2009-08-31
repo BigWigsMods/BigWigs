@@ -72,7 +72,6 @@ L:RegisterTranslations("enUS", function() return {
 	gaze_bar = "~Gaze Cooldown",
 	empower_bar = "~Empower Cooldown",
 
-	insane_message = "Insane: %s",
 	guardian_message = "Guardian %d!",
 
 	empowericon = "Empower Icon",
@@ -173,7 +172,6 @@ L:RegisterTranslations("koKR", function() return {
 	gaze_bar = "~시선 대기시간",
 	empower_bar = "~강화 대기시간",
 
-	insane_message = "정신 지배: %s",
 	guardian_message = "수호자 소환 %d!",
 
 	empowericon = "암흑 강화 아이콘",
@@ -225,7 +223,6 @@ L:RegisterTranslations("frFR", function() return {
 	gaze_bar = "~Recharge Regard",
 	empower_bar = "~Recharge Renforcement",
 
-	insane_message = "Emprise : %s",
 	guardian_message = "Gardien %d !",
 
 	empowericon = "Renforcement - Icône",
@@ -277,7 +274,6 @@ L:RegisterTranslations("deDE", function() return {
 	gaze_bar = "~Blick",
 	empower_bar = "~Machtvolle Schatten",
 
-	insane_message = "Gedankenkontrolle: %s!",
 	guardian_message = "Wächter %d!",
 
 	empowericon = "Schatten-Symbol",
@@ -329,7 +325,6 @@ L:RegisterTranslations("zhCN", function() return {
 	gaze_bar = "<疯乱凝视 冷却>",
 	empower_bar = "<暗影信标 冷却>",
 
-	insane_message = "统御意志：>%s<！",
 	guardian_message = "召唤卫士：>%d<！",
 
 	empowericon = "暗影信标标记",
@@ -381,7 +376,6 @@ L:RegisterTranslations("zhTW", function() return {
 	gaze_bar = "<癡狂凝視 冷卻>",
 	empower_bar = "<暗影信標 冷卻>",
 
-	insane_message = "支配心靈：>%s<！",
 	guardian_message = "尤格薩倫守護者：>%d<！ ",
 
 	empowericon = "暗影信標標記",
@@ -474,7 +468,7 @@ function mod:Guardian(_, spellId)
 end
 
 function mod:Insane(player, spellId)
-	self:TargetMessage(L["insane_message"], player, "Attention", spellId)
+	self:TargetMessage(spellName, player, "Attention", spellId)
 end
 
 function mod:Tentacle(_, spellId, source, _, spellName)
