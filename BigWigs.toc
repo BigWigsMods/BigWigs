@@ -26,9 +26,9 @@ embeds.xml
 locales.xml
 
 LoadOnDemand.lua
-Core.lua
-Prototype.lua
-Options.lua
+Core\Core.lua
+Core\Prototype.lua
+Config\Options.lua
 
 modules.xml
 
