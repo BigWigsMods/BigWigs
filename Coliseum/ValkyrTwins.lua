@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여.",	--check
+	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라.",	--check
 
 	vortex_or_shield_cd = "소용돌이/방패 대기시간",
 
@@ -61,23 +61,23 @@ L:RegisterTranslations("koKR", function() return {
 	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
+	engage_trigger1 = "Au nom de notre tenebreux maitre. Pour le roi-liche. Vous. Allez. Mourir.",
 
 	vortex_or_shield_cd = "Prochain Vortex ou Bouclier",
 
 	vortex = "Vortex",
-	vortex_desc = "Prévient quand les jumelles commencent à incanter des Vortex.",
+	vortex_desc = "Previent quand les jumelles commencent a incanter des Vortex.",
 
-	shield = "Bouclier des ténèbres/des lumières",
-	shield_desc = "Prévient de l'arrivée des Boucliers des ténèbres/des lumières.",
+	shield = "Bouclier des tenebres/des lumieres",
+	shield_desc = "Previent de l'arrivee des Boucliers des tenebres/des lumieres.",
 
-	touch = "Toucher des ténèbres/de lumière",
-	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
+	touch = "Toucher des tenebres/de lumiere",
+	touch_desc = "Previent quand un joueur subit les effets d'un Toucher des tenebres ou de lumiere.",
 	touch_of_light_message = "Light",
 	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",
+	engage_trigger1 = "Im Namen unseres dunklen Meisters. Fur den Lichkonig. Ihr. Werdet. Sterben.",
 
 	vortex_or_shield_cd = "~Vortex/Schild",
 
@@ -87,8 +87,8 @@ L:RegisterTranslations("deDE", function() return {
 	shield = "Schild der Nacht/Licht",
 	shield_desc = "Warnt bei Schild der Nacht/Licht.",
 
-	touch = "Berührung der Nacht/Licht",
-	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
+	touch = "Beruhrung der Nacht/Licht",
+	touch_desc = "Warnt bei Beruhrung der Nacht/Licht.",
 	touch_of_light_message = "Light",
 	touch_of_dark_message = "Darkness",
 } end)
@@ -98,23 +98,23 @@ L:RegisterTranslations("zhCN", function() return {
 	vortex_or_shield_cd = "<下一Vortex/Shield>",
 
 	vortex = "Vortex",
-	vortex_desc = "当双子开始施放Vortexes时发出警报。",
+	vortex_desc = "??子?始施放Vortexes??出警?。",
 
 	shield = "Shield of Darkness/Light",
-	shield_desc = "当施放Shield of Darkness/Light时发出警报。",
+	shield_desc = "?施放Shield of Darkness/Light??出警?。",
 
 	touch = "Touch of Darkness/Light",
-	touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。",
+	touch_desc = "?玩家中了Touch of Darkness/Light??出警?。",
 	touch_of_light_message = "Light",
 	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",
+	engage_trigger1 = "以我們的黑暗君王之名。?了巫妖王。??得?死。",
 
-	vortex_or_shield_cd = "<下一漩渦/盾>",
+	vortex_or_shield_cd = "<下一?渦/盾>",
 
-	vortex = "漩渦",
-	vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。",
+	vortex = "?渦",
+	vortex_desc = "當華爾琪雙子開始施放?渦時發出警報。",
 
 	shield = "黑暗/光明之盾",
 	shield_desc = "當施放黑暗/光明之盾時發出警報。",
