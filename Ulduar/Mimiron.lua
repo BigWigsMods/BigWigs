@@ -5,11 +5,17 @@
 local boss = BB["Mimiron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
-mod.toggleOptions = {"phase", "hardmode", -1, 62997, 64623, 64570, 63631, 63274, 64444, 63811, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "hardmode", "proximity", "berserk", "bosskill"}
+mod.optionHeaders = {
+	[62997] = CL.normal,
+	[64623] = CL.hard,
+	phase = CL.general,
+}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.consoleCmd = "Mimiron"
 

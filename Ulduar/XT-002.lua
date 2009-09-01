@@ -5,10 +5,16 @@
 local boss = BB["XT-002 Deconstructor"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
-mod.toggleOptions = {64193, "gravitybombicon", 63849, -1, 63024, 63018, 62776, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
+mod.optionHeaders = {
+	[63024] = CL.normal,
+	[64193] = CL.hard,
+	proximity = CL.general,
+}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "XT"
 
@@ -38,6 +44,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	gravitybombicon = "Gravity Bomb Icon",
 	gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)",
+
+	lighticon = "Searing Light Icon",
+	lighticon_desc = "Place a Skull icon on the player with Searing Light. (requires promoted or higher)",
 
 	lightbomb_other = "Light on %s!",
 
@@ -199,8 +208,6 @@ function mod:GravityBomb(player, spellId, _, _, spellName)
 	self:Bar(L["gravitybomb_other"]:format(player), 9, spellId)
 	if db.gravitybombicon then
 		SetRaidTarget(player, 6)
-	else
-		self:Icon(player, "icon")
 	end
 end
 
@@ -211,7 +218,7 @@ function mod:LightBomb(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
 	self:Bar(L["lightbomb_other"]:format(player), 9, spellId)
-	self:Icon(player, "icon")
+	self:Icon(player, "lighticon")
 end
 
 function mod:BombRemoved(player)

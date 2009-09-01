@@ -5,13 +5,21 @@
 local boss = BB["The Iron Council"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 local breaker = BB["Steelbreaker"]
 local molgeim = BB["Runemaster Molgeim"]
 local brundir = BB["Stormcaller Brundir"]
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {breaker, molgeim, brundir, boss}
 mod.guid = 32867
-mod.toggleOptions = {61869, 63483, 61887, -1, 61903, 64637, -1, 62274, 61974, 62269, 62273, -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {61869, 63483, 61887, 61903, 64637, 62274, 61974, 62269, 62273, "proximity", "icon", "berserk", "bosskill"}
+mod.optionHeaders = {
+	[61869] = brundir,
+	[61903] = breaker,
+	[62274] = brundir,
+	proximity = CL.general,
+	
+}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Council"
 

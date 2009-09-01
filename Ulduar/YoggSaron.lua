@@ -7,10 +7,18 @@ local boss = BB["Yogg-Saron"]
 local brain = BB["Brain of Yogg-Saron"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleOptions = {"phase", 63050, 63120, "icon", -1, 62979, -1, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, -1, 64189, 64465, "empowericon", 64163, "berserk", "bosskill"}
+mod.toggleOptions = {62979, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, 64465, "empowericon", 64163, 64189, "phase", 63050, 63120, "berserk", "bosskill"}
+mod.optionHeaders = {
+	[62979] = CL.phase:format(1),
+	tentacle = CL.phase:format(2),
+	[64465] = CL.phase:format(3),
+	[64189] = CL.hard,
+	phase = CL.general,
+}
 mod.consoleCmd = "Yogg"
 
 ------------------------------
@@ -80,9 +88,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	roar_warning = "Roar in 5sec!",
 	roar_bar = "Next Roar",
-
-	icon = "Place Icon",
-	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -129,9 +134,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	roar_warning = "Крик через 5 сек!",
 	roar_bar = "Следущий крик",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока с душевной болезнью или находящегося под контролем разума (необходимо обладать промоутом).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -180,9 +182,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	roar_warning = "5초 후 포효!",
 	roar_bar = "다음 포효",
-
-	icon = "전술 표시",
-	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -231,9 +230,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	roar_warning = "Rugissement dans 5 sec. !",
 	roar_bar = "Prochain Rugissement",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -282,9 +278,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	roar_warning = "Gebrüll in 5 sek!",
 	roar_bar = "Nächstes Gebrüll",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -333,9 +326,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	roar_warning = "5秒后，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
-
-	icon = "团队标记",
-	icon_desc = "为中了心灵疾病的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -384,9 +374,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	roar_warning = "5秒後，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
-
-	icon = "團隊標記",
-	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
 
 -- We need to add the player name to block those extremely stupid sanity loss
@@ -489,7 +476,7 @@ function mod:Roar(_, spellId, _, _, spellName)
 end
 
 function mod:Malady(player)
-	self:Icon(player, "icon")
+	self:Icon(player)
 end
 
 function mod:RemoveMalady(player)

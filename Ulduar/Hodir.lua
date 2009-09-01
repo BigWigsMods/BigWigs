@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
-mod.toggleOptions = {"hardmode", -1, "cold", 65123, 61968, 62478, "berserk", "icon", "bosskill"}
+mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "berserk", "icon", "bosskill"}
 mod.consoleCmd = "Hodir"
 
 ------------------------------

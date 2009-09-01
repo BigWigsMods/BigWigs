@@ -254,9 +254,15 @@ do
 		for i, v in next, module.toggleOptions do
 			local t = type(v)
 			if module.optionHeaders and module.optionHeaders[v] then
+				local n
+				if type(module.optionHeaders[v]) == "number" then
+					n = GetSpellInfo(module.optionHeaders[v])
+				else
+					n = module.optionHeaders[v]
+				end
 				config.args[v .. "_header"] = {
 					type = "header",
-					name = module.optionHeaders[v],
+					name = n,
 					order = order,
 					width = "full",
 				}

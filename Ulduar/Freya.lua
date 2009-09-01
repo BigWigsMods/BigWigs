@@ -5,10 +5,16 @@
 local boss = BB["Freya"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleOptions = {"phase", -1, "wave", 62589, 62623, -1, 62861, 62437, 62865, -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "wave", 62589, 62623, 62861, 62437, 62865, "proximity", "icon", "berserk", "bosskill"}
+mod.optionHeaders = {
+	phase = CL.normal,
+	[62861] = CL.hard,
+	proximity = CL.general,
+}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Freya"
 

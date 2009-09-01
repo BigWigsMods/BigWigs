@@ -5,9 +5,10 @@
 local boss = BB["General Vezax"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 mod.zonename = BZ["Ulduar"]
 mod.guid = 33271
-mod.toggleOptions = {"vaporstack", "vapor", "animus", -1, 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "berserk", "bosskill"}
+mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}
 mod.consoleCmd = "Vezax"
 
 ------------------------------
@@ -292,6 +293,15 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 mod.enabletrigger = {boss, L["Vezax Bunny"]}
+
+mod.optionHeaders = {
+	vapor = L.vapor,
+	[62660] = 62660,
+	[63276] = 63276,
+	[62661] = CL.normal,
+	animus = CL.hard,
+	berserk = CL.general,
+}
 
 ------------------------------
 --      Initialization      --

@@ -5,10 +5,17 @@
 local boss = BB["Thorim"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
 local behemoth = BB["Jormungar Behemoth"]
 mod.zonename = BZ["Ulduar"]
 mod.guid = 32865	--Sif(33196)
-mod.toggleOptions = {"phase", "hardmode", -1, 62042, 62331, 62017, 62338, 62526, 62279, 62130, -1, "icon", "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, 62279, 62130, "hardmode", "phase", "icon", "proximity", "berserk", "bosskill"}
+mod.optionHeaders = {
+	[62042] = CL.phase:format(2),
+	[62279] = CL.phase:format(3),
+	hardmode = CL.hard,
+	phase = CL.general,
+}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 mod.consoleCmd = "Thorim"
@@ -43,8 +50,8 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s engaged!",
 
-	hardmode = "Hard mode",
-	hardmode_desc = "Show timer for hard mode.",
+	hardmode = "Hard mode timer",
+	hardmode_desc = "Show timer for when you have to reach Thorim in order to enter hard mode in phase 3.",
 	hardmode_warning = "Hard mode expires",
 
 	shock_message = "You're getting shocked!",

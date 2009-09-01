@@ -47,6 +47,9 @@ L.you = "%s on YOU"
 L.other = "%s on %s"
 
 L.phase = "Phase %d"
+L.normal = "Normal mode"
+L.hard = "Hard mode"
+L.general = "General" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.enrage_start = "%s Engaged - Enrage in %d min"
 L.enrage_end = "%s Enraged"
