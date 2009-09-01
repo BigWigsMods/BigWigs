@@ -96,9 +96,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	gravitybomb_other = "Gravitationsbombe: %s",
 
-	gravitybombicon = "Gravitationsbombe: Symbol",
+	gravitybombicon = "Gravitationsbombe: Schlachtzugs-Symbol",
 	gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher).",
 
+	lighticon = "Sengendes Licht: Schlachtzugs-Symbol",
+	lighticon_desc = "Platziert einen Totenkopf auf Spielern, die von Sengendes Licht betroffen sind (benötigt Assistent oder höher).",
+	
 	lightbomb_other = "Lichtbombe: %s",
 
 	tantrum_bar = "~Betäubender Koller",

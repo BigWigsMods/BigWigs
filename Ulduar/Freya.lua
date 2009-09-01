@@ -139,7 +139,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
-	phase2_message = "Phase 2!",
+	phase2_message = "Phase 2",
 
 	wave = "Wellen",
 	wave_desc = "Warnt vor den Wellen.",

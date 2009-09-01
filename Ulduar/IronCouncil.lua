@@ -119,7 +119,7 @@ L:RegisterTranslations("deDE", function() return {
 	chased_other = "%s wird verfolgt!",
 	chased_you = "DU wirst verfolgt!",
 
-	overwhelm_other = "Überwältigende Kraft: %s!",
+	overwhelm_other = "Überwältigende Kraft: %s",
 
 	shield_message = "Runenschild!",
 

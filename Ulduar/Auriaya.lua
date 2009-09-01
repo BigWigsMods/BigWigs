@@ -77,7 +77,7 @@ L:RegisterTranslations("deDE", function() return {
 	fear_message = "Furcht!",
 	fear_bar = "~Furcht",
 
-	swarm_message = "Swarm",
+	swarm_message = "Wächterschwarm",
 	swarm_bar = "~Wächterschwarm",
 
 	defender = "Wilder Verteidiger",

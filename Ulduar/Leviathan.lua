@@ -60,7 +60,7 @@ L:RegisterTranslations("deDE", function() return {
 	pursue = "Verfolgen",
 	pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt.",
 	pursue_trigger = "^%%s verfolgt",
-	pursue_other = "%s wird verfolgt",
+	pursue_other = "Verfolgen: %s",
 
 	shutdown_message = "Systemabschaltung!",
 } end)

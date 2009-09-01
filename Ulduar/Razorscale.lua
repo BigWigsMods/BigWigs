@@ -154,7 +154,7 @@ L:RegisterTranslations("deDE", function() return {
 	air_trigger2 = "Feuer einstellen! Lasst uns diese Geschütze reparieren!",
 	air_message = "Hebt ab!",
 	phase2_trigger = "%s dauerhaft an den Boden gebunden!",
-	phase2_message = "Phase 2!",
+	phase2_message = "Phase 2",
 	phase2_warning = "Phase 2 bald!",
 	stun_bar = "Betäubt",
 

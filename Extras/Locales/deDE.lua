@@ -7,6 +7,7 @@ if not L then return end
 
 L["Local"] = "Lokal"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Ungültige Zeit (|cffff0000%q|r) oder fehlender Leistentext in eigener Leiste, gestartet von |cffd9d919%s|r. <Zeit> kann entweder eine Zahl in Sekunden, eine M:S Kombination oder Mm sein. Beispiele: 5, 1:20 or 2m."
 
 -- Version.lua
 
@@ -46,3 +47,8 @@ L["Background"] = "Hintergrund"
 L["Shows or hides the background."] = "Zeigt oder versteckt den Hintergrund der Anzeige."
 L["Toggle sound"] = "Sound an/aus"
 L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Schaltet den Sound ein oder aus, der gespielt wird, wenn du zu nahe an einem anderen Spieler stehst."
+--L["Sound button"] = true
+--L["Shows or hides the sound button."] = true
+--L["Close button"] = true
+--L["Shows or hides the close button."] = true
+--L["Show/hide"] = true

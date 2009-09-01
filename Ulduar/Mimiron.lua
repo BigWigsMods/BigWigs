@@ -170,7 +170,7 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_trigger = "^Warum habt Ihr das denn jetzt gemacht?",
 	hardmode_message = "Hard Mode aktiviert!",
-	hardmode_warning = "Hard Mode beendet!",
+	hardmode_warning = "BOOM!",
 
 	plasma_warning = "Wirkt Plasmaeruption!",
 	plasma_soon = "Plasmaeruption bald!",

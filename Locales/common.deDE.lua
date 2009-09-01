@@ -7,6 +7,9 @@ L.you = "%s auf DIR!"
 L.other = "%s: %s!"
 
 L.phase = "Phase %d"
+L.normal = "Normal Mode"
+L.hard = "Hard Mode"
+L.general = "Allgemein" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.enrage_start = "%s angegriffen - Wutanfall in %d min"
 L.enrage_end = "%s bekommt Wutanfall!"

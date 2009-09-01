@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 	scorch_message = "Versengen auf DIR!",
 	scorch_soon = "Versengen in ~5 sek!",
 	scorch_bar = "Nächstes Versengen",
-	slagpot_message = "Schlackentopf: %s!",
+	slagpot_message = "Schlackentopf: %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

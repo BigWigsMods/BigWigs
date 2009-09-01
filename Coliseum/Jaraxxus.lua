@@ -78,12 +78,12 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Ihr steht vor Jaraxxus",
 	--engage_trigger1 = "Banished to the Nether", --need!
 
-	incinerate_message = "Incinerate",
-	incinerate_other = "Fleisch einäschern: %s!",
-	incinerate_bar = "~Fleisch einäschern",
+	incinerate_message = "Einäschern",
+	incinerate_other = "Einäschern: %s",
+	incinerate_bar = "~Einäschern",
 
-	legionflame_message = "Flame",
-	legionflame_other = "Legionsflamme: %s!",
+	legionflame_message = "Legionsflamme",
+	legionflame_other = "Legionsflamme: %s",
 	legionflame_bar = "~Legionsflamme",
 
 	icon = "Schlachtzugs-Symbol",

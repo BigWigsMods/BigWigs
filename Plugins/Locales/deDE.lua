@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Plugins", "deDE")
 if not L then return end
 
 -- Bars2.lua
+
 L["Bars"] = "Leisten"
 L["Normal Bars"] = "Normale Leisten"
 L["Emphasized Bars"] = "Hervorgehobene Leisten"
@@ -61,7 +62,6 @@ L["Number of colors"] = "Anzahl der Farben"
 L["Background"] = "Hintergrund"
 L["Text"] = "Text"
 L["Reset"] = "Zurücksetzen"
-
 
 L["Bar"] = "Balken"
 L["Change the normal bar color."] = "Ändert die normale Farbe der Anzeigebalken."
