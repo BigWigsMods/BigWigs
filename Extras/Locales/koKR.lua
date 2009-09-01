@@ -6,14 +6,14 @@ if not L then return end
 -- Custombars.lua
 
 L["Local"] = "로컬"
-L["Starts a custom bar with the given parameters."] = "입력한 매개변수로 사용자 바를 시작합니다."
 L["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다."
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
 
 -- Version.lua
-
 L["should_upgrade"] = "Big Wigs가 구버전입니다. 보스와 전투를 시작하기전에 업데이트를 권장합니다."
 L["out_of_date"] = "구버전을 사용중인 플레이어: %s."
 L["not_using"] = "Big Wigs 미사용중인 그룹 멤버: %s."
+
 
 -- Proximity.lua
 

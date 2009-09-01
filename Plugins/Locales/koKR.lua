@@ -47,10 +47,13 @@ L["Font"] = "글꼴"
 L["Set the font for the timer bars."] = "타이머 바의 글꼴을 설정합니다."
 
 -- Colors.lua
+
 L["Colors"] = "색상"
 
 L["Messages"] = "메세지"
 L["Bars"] = "바"
+L["Short"] = "짧은"
+L["Long"] = "긴"
 L["Short bars"] = "짧은바"
 L["Long bars"] = "긴바"
 L["Color "] = "색상 "
@@ -82,6 +85,7 @@ L["Core"] = "코어"
 L["color_upgrade"] = "마지막 버전에서부터 새적용 사항을 작동되게 메세지와 바에 대한 색상값이 초기화 되었습니다. 만약 이것을 다시 조절하고 싶다면, Big Wigs 아이콘에 마우스 우-클릭하고 플러그인 -> 색상으로 이동하여 설정하세요."
 
 -- Messages.lua
+
 L["Messages"] = "메세지"
 L["Options for message display."] = "메세지 표시에 대한 설정입니다."
 
@@ -120,10 +124,13 @@ L["Spawns a new test warning."] = "새 테스트 경고를 표시합니다."
 L["Hide"] = "숨김"
 L["Hides the anchors."] = "앵커를 숨깁니다."
 
+
 -- RaidIcon.lua
 
 L["Raid Icons"] = "공격대 아이콘"
 L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다."
+
+L["RaidIcon"] = "공격대 아이콘"
 
 L["Place"] = "지정"
 L["Place Raid Icons"] = "공격대 아이콘 지정"
@@ -156,6 +163,12 @@ L["raidwarning_desc"] = "BigWigs가 보스 메세지를 출력할 곳을 설정�
 
 L["Sounds"] = "효과음"
 L["Options for sounds."] = "효과음에 대한 설정입니다."
+
+L["Alarm"] = "경보"
+L["Info"] = "정보"
+L["Alert"] = "알림"
+L["Long"] = "장음"
+L["Victory"] = "승리"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다.\n\n미리듣기는 CTRL-클릭하세요."
 L["Use sounds"] = "효과음 사용"

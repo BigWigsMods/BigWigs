@@ -6,7 +6,6 @@ if not L then return end
 
 L["%s has been defeated"] = "%s 물리침"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s 물리침"    -- "<bosses> have been defeated"
-
 L["Bosses"] = "보스"
 L["Options for bosses in %s."] = "%s에 보스들을 위한 옵션입니다." -- "Options for bosses in <zone>"
 L["Options for %s (r%d)."] = "%s에 대한 옵션입니다 (r%d)."     -- "Options for <boss> (<revision>)"
@@ -24,6 +23,7 @@ L["Toggle show/hide of the minimap icon."] = "미니맵 아이콘을 표시/숨�
 L["Advanced"] = "고급"
 L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "경보, 아이콘, 차단에 대한 고급 설정입니다. 정말로 필요하지 않은 이상 건들지 않는 것이 좋습니다."
 
+L["Toggles whether or not the boss module should warn about %s."] = true
 L.bosskill = "보스 사망"
 L.bosskill_desc = "보스를 물리쳤을 때 알림니다."
 L.enrage = "격노"
@@ -36,7 +36,6 @@ L["Load All"] = "모두 불러오기"
 L["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
-
 
 -- Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r"

@@ -3,10 +3,13 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Common", "koKR")
 if not L then return end
 
 -- Prototype.lua common words
-L.you = "%s on YOU"
-L.other = "%1$s on %2$s"
+L.you = "당신은 %s"
+L.other = "%1$: %2$"
 
-L.phase = "Phase %d"
+L.phase = "%d 단계"
+L.normal = "일반 모드"
+L.hard = "도전 모드"
+L.general = "일반" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.enrage_start = "%s 전투 개시 - %d분 후 격노"
 L.enrage_end = "%s 격노"
