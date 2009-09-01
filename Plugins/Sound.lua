@@ -37,36 +37,20 @@ plugin.defaultDB = {
 		Victory = "BigWigs: Victory",
 	},
 }
-plugin.consoleCmd = L["Sounds"]
-plugin.consoleOptions = {
+
+plugin.pluginOptions = {
 	type = "group",
 	name = L["Sounds"],
 	desc = L["Options for sounds."],
 	args = {
-		spacer1 = {
-			type = "header",
-			name = " ",
-			order = 200,
-		},
 		default = {
 			type = "toggle",
 			name = L["Default only"],
 			desc = L["Use only the default sound."],
-			get = function() return plugin.db.profile.defaultonly end,
-			set = function(v) plugin.db.profile.defaultonly = v end,
-			order = 201,
-			disabled = function() return not BigWigs:IsModuleActive(plugin) end,
-		},
-		toggle = {
-			type = "toggle",
-			name = L["Sounds"],
-			desc = L["Toggle all sounds on or off."],
-			get = function() return plugin.db.profile.sound end,
-			set = function(v)
-				plugin.db.profile.sound = v
-				BigWigs:ToggleModuleActive(plugin, v)
-			end,
-			order = 202,
+			get = function(info) return plugin.db.profile.defaultonly end,
+			set = function(info, v) plugin.db.profile.defaultonly = v end,
+			order = 1,
+			width = "full",
 		},
 	}
 }
@@ -75,9 +59,7 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-local function ShouldDisable()
-	return not BigWigs:IsModuleActive(plugin) or plugin.db.profile.defaultonly
-end
+local function shouldDisable() return plugin.db.profile.defaultonly end
 
 function plugin:OnRegister()
 	db = self.db.profile
@@ -90,29 +72,34 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.mp3")
 
-	local function get(sound)
-		return db.media[sound]
+	-- this needs to be updated on the SM3 callback
+	local list = media:List(mType)
+
+	local function get(info)
+		return db.media[info[#info]]
 	end
 
-	local function set(sound, value)
+	local function set(info, value)
+		local sound = info[#info]
 		if IsControlKeyDown() then
-			PlaySoundFile(media:Fetch(mType, value))
+			PlaySoundFile(media:Fetch(mType, list[value]))
 		else
-			db.media[sound] = value
+			db.media[sound] = list[value]
 		end
 	end
 
 	for k in pairs(sounds) do
 		local n = L[k] or k
-		self.consoleOptions.args[k] = {
-			type = "text",
+		self.pluginOptions.args[k] = {
+			type = "select",
 			name = n,
 			desc = L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."]:format(n),
-			passValue = k,
+			order = 2,
 			get = get,
 			set = set,
-			disabled = ShouldDisable,
-			validate = media:List(mType),
+			disabled = shouldDisable,
+			values = list,
+			width = "full",
 		}
 	end
 end

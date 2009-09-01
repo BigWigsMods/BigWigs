@@ -28,19 +28,21 @@ plugin.defaultDB = {
 	barEmphasized = { 1, 0, 0, 1 },
 }
 
-local function get(key)
-	if not key or key == "reset" then return end -- Work around AceConsole-2.0 problem.
+local function get(info)
+	local key = info[#info]
+	if key == "reset" then return end
 	return unpack(plugin.db.profile[key])
 end
-local function set(key, r, g, b, a) plugin.db.profile[key] = {r, g, b, a} end
+local function set(info, r, g, b, a)
+	local key = info[#info]
+	plugin.db.profile[key] = {r, g, b, a}
+end
 
-plugin.consoleCmd = L["Colors"]
-plugin.consoleOptions = {
+plugin.pluginOptions = {
 	type = "group",
 	name = L["Colors"],
 	desc = L["Colors of messages and bars."],
 	handler = plugin,
-	pass = true,
 	get = get,
 	set = set,
 	args = {
@@ -91,7 +93,6 @@ plugin.consoleOptions = {
 			desc = fmt(L["Change the color for %q messages."], L["Core"]),
 			order = 8,
 		},
-		spacer1 = { type = "header", name = " ", order = 9, },
 		bars = {
 			type = "header",
 			name = L["Bars"],
@@ -124,13 +125,19 @@ plugin.consoleOptions = {
 			desc = L["Change the bar text color."],
 			order = 14,
 		},
-		spacer2 = { type = "header", name = " ", order = 15, },
+		separator = {
+			type = "description",
+			name = " ",
+			order = 15,
+			width = "full",
+		},
 		reset = {
 			type = "execute",
 			name = L["Reset"],
 			desc = L["Resets all colors to defaults."],
 			func = "ResetDB",
 			order = 16,
+			width = "full",
 		},
 	},
 }

@@ -5,11 +5,7 @@
 local dew = AceLibrary("Dewdrop-2.0")
 local BigWigs = BigWigs
 
-local hint = nil
-local _G = getfenv(0)
-
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
-
 
 ----------------------------
 --      FuBar Plugin      --
@@ -30,10 +26,9 @@ local icon = LibStub("LibDBIcon-1.0", true)
 -----------------------------
 
 function BigWigsOptions:OnInitialize()
-	hint = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."]
 	if icon then
-		_G.BigWigsDB.minimap = _G.BigWigsDB.minimap or {}
-		icon:Register("BigWigs", ldb, _G.BigWigsDB.minimap)
+		BigWigsDB.minimap = BigWigsDB.minimap or {}
+		icon:Register("BigWigs", ldb, BigWigsDB.minimap)
 	end
 end
 
@@ -125,5 +120,6 @@ function ldb.OnTooltipShow(tt)
 	for i, v in ipairs(tooltipFunctions) do
 		v(tt)
 	end
-	tt:AddLine(hint, 0.2, 1, 0.2, 1)
+	tt:AddLine(L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."], 0.2, 1, 0.2, 1)
 end
+

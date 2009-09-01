@@ -41,6 +41,12 @@ local BigWigs = BigWigs
 
 BigWigs:SetModuleMixins("AceEvent-2.0")
 
+local pluginOptions = {
+	type = "group",
+	childGroups = "tab",
+	args = {},
+}
+
 local acOptions = {
 	type = "group",
 	name = "Big Wigs",
@@ -55,7 +61,7 @@ local acOptions = {
 		enable = {
 			type = "toggle",
 			name = "Enable",
-			desc = "NOOP Mooses don't appreciate being prodded with long pointy sticks.",
+			desc = "Mooses don't appreciate being prodded with long pointy sticks.",
 			order = 2,
 			get = function() return true end,
 			set = function() end,
@@ -64,7 +70,7 @@ local acOptions = {
 		minimap = {
 			type = "toggle",
 			name = "Minimap icon",
-			desc = "NOOP Show or hide the Big Wigs minimap icon.",
+			desc = "Show or hide the Big Wigs minimap icon.",
 			order = 3,
 			get = function() return true end,
 			set = function() end,
@@ -79,7 +85,7 @@ local acOptions = {
 		whispers = {
 			type = "toggle",
 			name = "Whisper warnings",
-			desc = "NOOP Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
+			desc = "Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
 			order = 11,
 			get = function() return true end,
 			set = function() end,
@@ -88,11 +94,33 @@ local acOptions = {
 		raidicons = {
 			type = "toggle",
 			name = "Raid icons",
-			desc = "NOOP Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
+			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
 			order = 12,
 			get = function() return true end,
 			set = function() end,
 			width = "full",
+		},
+		sound = {
+			type = "toggle",
+			name = "Sound",
+			desc = "Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
+			order = 13,
+			get = function() return true end,
+			set = function() end,
+			width = "full",
+		},
+		separator2 = {
+			type = "description",
+			name = " ",
+			order = 20,
+			width = "full",
+		},
+		configure = {
+			type = "execute",
+			name = "Configure ...",
+			desc = "Closes the interface options window and lets you configure displays like the bar and message displays.",
+			order = 21,
+			--width = "full",
 		},
 	},
 }
@@ -155,6 +183,8 @@ function BigWigs:OnInitialize()
 
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
+	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
+	acd:AddToBlizOptions("Big Wigs: Plugins", "Customize ...", "Big Wigs")
 end
 
 function BigWigs:OnEnable(first)
@@ -406,18 +436,8 @@ do
 				end
 				tinsert(zoneModules[zone], module)
 			end
-		elseif module.consoleOptions then
-			if module.external then
-				options.args.extras.args[module.consoleCmd or name] = module.consoleOptions
-			else
-				options.args[module.consoleCmd or name] = module.consoleOptions
-				options.args[module.consoleCmd or name].order = 202
-			end
 		elseif module.pluginOptions then
-			options.args[module.consoleCmd or name] = module.pluginOptions
-			options.args[module.consoleCmd or name].order = 202
-		elseif module.advancedOptions then
-			options.args.advanced.args[module.consoleCmd or name] = module.advancedOptions
+			pluginOptions.args[name] = module.pluginOptions
 		end
 
 		if type(module.OnRegister) == "function" then
