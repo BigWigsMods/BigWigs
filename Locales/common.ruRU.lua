@@ -4,7 +4,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "%s на ВАС"
-L.other = "%1$s на %2$s"
+L.other = "%s: %s"
 
 L.phase = "Фаза %d"
 

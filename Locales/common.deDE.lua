@@ -4,7 +4,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "%s auf DIR!"
-L.other = "%s auf %s!"
+L.other = "%s: %s!"
 
 L.phase = "Phase %d"
 
