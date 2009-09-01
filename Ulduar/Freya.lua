@@ -9,11 +9,11 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleOptions = {"phase", "wave", 62589, 62623, 62861, 62437, 62865, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "wave", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
 mod.optionHeaders = {
 	phase = CL.normal,
 	[62861] = CL.hard,
-	proximity = CL.general,
+	berserk = CL.general,
 }
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Freya"
