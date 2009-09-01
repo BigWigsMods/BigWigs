@@ -18,6 +18,7 @@ local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
+local empUpdate = nil -- emphasize updater frame
 
 --------------------------------------------------------------------------------
 -- Options
@@ -206,6 +207,11 @@ local function rearrangeBars(anchor)
 			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT")
 			lastDownBar = bar
 		end
+	end
+	if #tmp > 0 then
+		empUpdate:Show()
+	else
+		empUpdate:Hide()
 	end
 end
 
@@ -415,9 +421,10 @@ function plugin:Ace2_AddonDisabled(module) stop(module) end
 function plugin:BigWigs_StopBar(module, text) stop(module, text) end
 
 do
-	local f = CreateFrame("Frame")
+	empUpdate = CreateFrame("Frame")
+	empUpdate:Hide()
 	local total = 0
-	f:SetScript("OnUpdate", function(self, elapsed)
+	empUpdate:SetScript("OnUpdate", function(self, elapsed)
 		if not db.emphasize then return end
 		local dirty = nil
 		for k in pairs(normalAnchor.bars) do
