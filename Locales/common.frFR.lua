@@ -1,12 +1,13 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Common", "frFR")
-
 if not L then return end
-
 -- Prototype.lua common words
 L.you = "%s sur VOUS"
 L.other = "%s sur %s"
 
 L.phase = "Phase %d"
+L.normal = "Mode normal"
+L.hard = "Mode difficile"
+L.general = "Général" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.enrage_start = "%s engagé - Enrager dans %d min."
 L.enrage_end = "%s enragé"

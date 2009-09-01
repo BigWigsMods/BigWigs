@@ -1,8 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Plugins", "frFR")
-
 if not L then return end
-
 -- Bars2.lua
+
 L["Bars"] = "Barres"
 L["Normal Bars"] = "Barres normales"
 L["Emphasized Bars"] = "Barres en évidence"
@@ -83,7 +82,6 @@ L["Bosskill"] = "Défaite"
 L["Core"] = "Noyau"
 
 L["color_upgrade"] = "Les valeurs de couleur pour vos messages & barres ont été réinitialisées afin de faciliter la mise à jour à partir de la dernière version. Si vous voulez les modifier à nouveau, faites un clic droit sur Big Wigs et allez dans Plugins -> Couleurs."
-
 
 -- Messages.lua
 

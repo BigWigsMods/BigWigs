@@ -56,19 +56,19 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage = "Engagement",
-	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Eredar de la Legion ardente?!",
+	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !",
 	--engage_trigger1 = "Banished to the Nether",
 
-	incinerate_message = "Incinerate",
-	incinerate_other = "Incinerer la chair?: %s",
-	incinerate_bar = "~Recharge Incinerer",
+	incinerate_message = "Incinérer",
+	incinerate_other = "Incinérer la chair : %s",
+	incinerate_bar = "~Recharge Incinérer",
 
-	legionflame_message = "Flame",
-	legionflame_other = "Flamme de la Legion?: %s",
+	legionflame_message = "Flamme",
+	legionflame_other = "Flamme de la Légion : %s",
 	legionflame_bar = "~Recharge Flamme",
 
-	icon = "Icone",
-	icon_desc = "Place une icone de raid sur le dernier joueur affecte par une Flamme de la Legion (necessite d'etre assistant ou mieux).",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Flamme de la Légion (nécessite d'être assistant ou mieux).",
 
 	netherportal_bar = "~Recharge Portail",
 	netherpower_bar = "~Recharge Puissance",
@@ -79,15 +79,15 @@ L:RegisterTranslations("deDE", function() return {
 	--engage_trigger1 = "Banished to the Nether", --need!
 
 	incinerate_message = "Incinerate",
-	incinerate_other = "Fleisch einaschern: %s!",
-	incinerate_bar = "~Fleisch einaschern",
+	incinerate_other = "Fleisch einäschern: %s!",
+	incinerate_bar = "~Fleisch einäschern",
 
 	legionflame_message = "Flame",
 	legionflame_other = "Legionsflamme: %s!",
 	legionflame_bar = "~Legionsflamme",
 
 	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benotigt Assistent oder hoher).",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benötigt Assistent oder höher).",
 
 	netherportal_bar = "~Netherportal",
 	netherpower_bar = "~Macht des Nether",
@@ -105,8 +105,8 @@ L:RegisterTranslations("zhCN", function() return {
 	legionflame_other = "Legion Flame：>%s<！",
 	legionflame_bar = "<下一Legion Flame>",
 
-	icon = "????",
-	icon_desc = "?中了Legion Flame的??打上????。（需要?限）",
+	icon = "团队标记",
+	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",
 
 	netherportal_bar = "<下一Nether Portal>",
 	netherpower_bar = "<下一Nether Power>",
@@ -125,7 +125,7 @@ L:RegisterTranslations("zhTW", function() return {
 	legionflame_bar = "<下一聚合烈焰>",
 
 	icon = "團隊標記",
-	icon_desc = "?中了聚合烈焰的隊員打上團隊標記。（需要權限）",
+	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",
 
 	netherportal_bar = "<下一虛空傳送門>",
 	netherpower_bar = "<下一虛空傳送門（能量）>",

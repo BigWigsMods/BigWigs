@@ -1,8 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Extras", "frFR")
-
 if not L then return end
-
-
 -- Custombars.lua
 
 L["Local"] = "Local"
@@ -10,10 +7,10 @@ L["%s: Timer [%s] finished."] = "%s : Délai [%s] terminé."
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée invalide (|cffff0000%q|r) ou texte de barre manquant dans une barre personnalisée lancée par |cffd9d919%s|r. <durée> peut être soit un nombre en secondes, soit au format M:S, ou encore au format Mm. Par exemple : 5, 1:20 ou 2m."
 
 -- Version.lua
-
 L["should_upgrade"] = "Il semblerait que vous utilisez une ancienne version de Big Wigs. Il est recommandé de vous mettre à jour avant d'engager un boss."
 L["out_of_date"] = "Les joueurs suivants semblent utiliser une ancienne version : %s."
 L["not_using"] = "Membres n'utilisant pas Big Wigs : %s."
+
 
 -- Proximity.lua
 

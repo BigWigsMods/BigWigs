@@ -1,12 +1,8 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "frFR")
-
 if not L then return end
-
 -- Core.lua
 L["%s has been defeated"] = "%s a été vaincu(e)"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s ont été vaincu(e)s"    -- "<bosses> have been defeated"
-
--- AceConsole strings
 L["Bosses"] = "Boss"
 L["Options for bosses in %s."] = "Options concernant les boss |2 %s." -- "Options for bosses in <zone>"
 L["Options for %s (r%d)."] = "Options concernant %s (r%d)."     -- "Options for <boss> (<revision>)"

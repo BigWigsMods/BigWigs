@@ -127,4 +127,3 @@ function ldb.OnTooltipShow(tt)
 	end
 	tt:AddLine(hint, 0.2, 1, 0.2, 1)
 end
-
