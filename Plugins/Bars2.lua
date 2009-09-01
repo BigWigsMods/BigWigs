@@ -383,6 +383,7 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_StopBar")
 	self:RegisterEvent("BigWigs_StopBars", "Ace2_AddonDisabled")
 	self:RegisterEvent("Ace2_AddonDisabled")
+	self:RegisterEvent("BigWigs_TemporaryConfig", "ShowAnchors")
 	colors = BigWigs:GetModule("Colors")
 end
 

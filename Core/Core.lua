@@ -129,8 +129,20 @@ local acOptions = {
 			type = "execute",
 			name = "Configure ...",
 			desc = "Closes the interface options window and lets you configure displays like the bar and message displays.",
+			func = function()
+				-- This won't hide the game menu if you opened options from there.
+				-- We don't care yet, this is temporary.
+				InterfaceOptionsFrame:Hide()
+
+				-- Enable all disabled modules that are not boss modules.
+				for name, module in BigWigs:IterateModules() do
+					if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
+						BigWigs:ToggleModuleActive(module, true)
+					end
+				end
+				BigWigs:TriggerEvent("BigWigs_TemporaryConfig")
+			end,
 			order = 21,
-			--width = "full",
 		},
 	},
 }

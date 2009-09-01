@@ -243,6 +243,14 @@ end
 
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
+	self:RegisterEvent("BigWigs_TemporaryConfig", function()
+		if not anchor then createAnchor() end
+		if anchor:IsShown() then
+			anchor:Hide()
+		else
+			anchor:Show()
+		end
+	end)
 
 	if BigWigs:HasModule("Colors") then
 		colorModule = BigWigs:GetModule("Colors")
