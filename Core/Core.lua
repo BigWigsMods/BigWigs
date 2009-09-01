@@ -58,11 +58,37 @@ local acOptions = {
 			order = 1,
 			width = "full",
 		},
+		configure = {
+			type = "execute",
+			name = "Configure ...",
+			desc = "Closes the interface options window and lets you configure displays for things like bars and messages.",
+			func = function()
+				-- This won't hide the game menu if you opened options from there.
+				-- We don't care yet, this is temporary.
+				InterfaceOptionsFrame:Hide()
+
+				-- Enable all disabled modules that are not boss modules.
+				for name, module in BigWigs:IterateModules() do
+					if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
+						BigWigs:ToggleModuleActive(module, true)
+					end
+				end
+				BigWigs:TriggerEvent("BigWigs_TemporaryConfig")
+			end,
+			order = 10,
+			width = "full",
+		},
+		separator = {
+			type = "description",
+			name = " ",
+			order = 20,
+			width = "full",
+		},
 		enable = {
 			type = "toggle",
 			name = "Enable |cffff0000(!)|r",
 			desc = "Mooses don't appreciate being prodded with long pointy sticks.",
-			order = 2,
+			order = 21,
 			get = function() return true end,
 			set = function() end,
 			width = "full",
@@ -71,7 +97,7 @@ local acOptions = {
 			type = "toggle",
 			name = L["Minimap icon"],
 			desc = L["Toggle show/hide of the minimap icon."],
-			order = 3,
+			order = 22,
 			get = function() return not BigWigsDB.minimap.hide end,
 			set = function() end,
 			set = function(info, v)
@@ -86,17 +112,17 @@ local acOptions = {
 			hidden = function() return not icon end,
 			width = "full",
 		},
-		separator = {
+		separator2 = {
 			type = "description",
 			name = " ",
-			order = 10,
+			order = 30,
 			width = "full",
 		},
 		whispers = {
 			type = "toggle",
 			name = "Whisper warnings |cffff0000(!)|r",
 			desc = "Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
-			order = 11,
+			order = 31,
 			get = function() return true end,
 			set = function() end,
 			width = "full",
@@ -105,7 +131,7 @@ local acOptions = {
 			type = "toggle",
 			name = "Raid icons |cffff0000(!)|r",
 			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
-			order = 12,
+			order = 32,
 			get = function() return true end,
 			set = function() end,
 			width = "full",
@@ -114,35 +140,10 @@ local acOptions = {
 			type = "toggle",
 			name = "Sound |cffff0000(!)|r",
 			desc = "Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
-			order = 13,
+			order = 33,
 			get = function() return true end,
 			set = function() end,
 			width = "full",
-		},
-		separator2 = {
-			type = "description",
-			name = " ",
-			order = 20,
-			width = "full",
-		},
-		configure = {
-			type = "execute",
-			name = "Configure ...",
-			desc = "Closes the interface options window and lets you configure displays like the bar and message displays.",
-			func = function()
-				-- This won't hide the game menu if you opened options from there.
-				-- We don't care yet, this is temporary.
-				InterfaceOptionsFrame:Hide()
-
-				-- Enable all disabled modules that are not boss modules.
-				for name, module in BigWigs:IterateModules() do
-					if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
-						BigWigs:ToggleModuleActive(module, true)
-					end
-				end
-				BigWigs:TriggerEvent("BigWigs_TemporaryConfig")
-			end,
-			order = 21,
 		},
 	},
 }
@@ -297,28 +298,19 @@ do
 			elseif t == "number" and v > 0 then
 				local spellName, _, icon = GetSpellInfo(v)
 				if not spellName then error(("Invalid option %d in module %s."):format(v, module.name)) end
+				local desc = getSpellDescription(v)
 				config.args[spellName] = {
 					type = "toggle",
 					name = spellName,
-					desc = L["Toggles whether or not the boss module should warn about %s."]:format(spellName),
+					desc = desc,
 					order = order,
 					width = "full",
+					--[[image = icon,
+					imageWidth = 16,
+					imageHeight = 16,]]
+					descStyle = "inline",
 				}
 				order = order + 1
-				local desc = getSpellDescription(v)
-				if desc and #desc > 10 then
-					config.args[spellName .. "_description"] = {
-						type = "description",
-						name = desc,
-						order = order,
-						image = icon,
-						imageWidth = 16,
-						imageHeight = 16,
-						width = "full",
-						fontSize = "small",
-					}
-					order = order + 1
-				end
 			elseif t == "string" then
 				local alEntry = "BigWigs"..module.name
 				local ML, ML2 = nil, nil
