@@ -53,14 +53,14 @@ local acOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that none of these options work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n",
+			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that some (!) of these options do not work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n",
 			fontSize = "medium",
 			order = 1,
 			width = "full",
 		},
 		enable = {
 			type = "toggle",
-			name = "Enable",
+			name = "Enable |cffff0000(!)|r",
 			desc = "Mooses don't appreciate being prodded with long pointy sticks.",
 			order = 2,
 			get = function() return true end,
@@ -94,7 +94,7 @@ local acOptions = {
 		},
 		whispers = {
 			type = "toggle",
-			name = "Whisper warnings",
+			name = "Whisper warnings |cffff0000(!)|r",
 			desc = "Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
 			order = 11,
 			get = function() return true end,
@@ -103,7 +103,7 @@ local acOptions = {
 		},
 		raidicons = {
 			type = "toggle",
-			name = "Raid icons",
+			name = "Raid icons |cffff0000(!)|r",
 			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
 			order = 12,
 			get = function() return true end,
@@ -112,7 +112,7 @@ local acOptions = {
 		},
 		sound = {
 			type = "toggle",
-			name = "Sound",
+			name = "Sound |cffff0000(!)|r",
 			desc = "Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
 			order = 13,
 			get = function() return true end,
