@@ -69,11 +69,21 @@ local acOptions = {
 		},
 		minimap = {
 			type = "toggle",
-			name = "Minimap icon",
-			desc = "Show or hide the Big Wigs minimap icon.",
+			name = L["Minimap icon"],
+			desc = L["Toggle show/hide of the minimap icon."],
 			order = 3,
-			get = function() return true end,
+			get = function() return not BigWigsDB.minimap.hide end,
 			set = function() end,
+			set = function(info, v)
+				if v then
+					BigWigsDB.minimap.hide = nil
+					icon:Show("BigWigs")
+				else
+					BigWigsDB.minimap.hide = true
+					icon:Hide("BigWigs")
+				end
+			end,
+			hidden = function() return not icon end,
 			width = "full",
 		},
 		separator = {
@@ -124,46 +134,6 @@ local acOptions = {
 		},
 	},
 }
-
-local options = {
-	type = "group",
-	handler = BigWigs,
-	args = {
-		extras = {
-			type = "group",
-			name = L["Extras"],
-			desc = L["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."],
-			args = {},
-			order = 203,
-		},
-		advanced = {
-			type = "group",
-			name = L["Advanced"],
-			desc = L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"],
-			args = {},
-			order = 203,
-		},
-		minimap = {
-			type = "toggle",
-			name = L["Minimap icon"],
-			desc = L["Toggle show/hide of the minimap icon."],
-			get = function() return not _G.BigWigsDB.minimap.hide end,
-			set = function(v)
-				if v then
-					_G.BigWigsDB.minimap.hide = nil
-					icon:Show("BigWigs")
-				else
-					_G.BigWigsDB.minimap.hide = true
-					icon:Hide("BigWigs")
-				end
-			end,
-			order = 205,
-			hidden = function() return not icon end,
-		},
-	},
-}
-
-BigWigs.cmdtable = options
 
 ------------------------------
 --      Initialization      --

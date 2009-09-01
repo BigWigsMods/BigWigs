@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local dew = AceLibrary("Dewdrop-2.0")
+--local dew = AceLibrary("Dewdrop-2.0")
 local BigWigs = BigWigs
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
@@ -30,6 +30,18 @@ function BigWigsOptions:OnInitialize()
 		BigWigsDB.minimap = BigWigsDB.minimap or {}
 		icon:Register("BigWigs", ldb, BigWigsDB.minimap)
 	end
+end
+
+local function openOptions()
+	-- Make sure we're expanded so that users can easily see the keybindings
+	-- submenu. My own experience is that people have no idea that there
+	-- even IS a plus sign next to the addons listed in the sidepane there.
+	for i, button in ipairs(InterfaceOptionsFrameAddOns.buttons) do
+		if button.element and button.element.name == "Big Wigs" and button.element.collapsed then
+			OptionsListButtonToggle_OnClick(button.toggle)
+		end
+	end
+	InterfaceOptionsFrame_OpenToCategory("Big Wigs")
 end
 
 --------------------------------------------------------------------------------
@@ -68,15 +80,16 @@ end
 -----------------------------
 --      FuBar Methods      --
 -----------------------------
-
+--[[
 local function menu()
 	--Don't create a new function every time we open the menu.
 	dew:FeedAceOptionsTable(BigWigs.cmdtable)
-end
+end]]
 
 function ldb.OnClick(self, button)
 	if button == "RightButton" then
-		dew:Open(self, "children", menu)
+		--dew:Open(self, "children", menu)
+		openOptions()
 	else
 		if BigWigs:IsActive() then
 			if IsAltKeyDown() then
