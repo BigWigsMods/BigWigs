@@ -23,6 +23,7 @@ L["Toggle show/hide of the minimap icon."] = "Показать/скрыть ик
 L["Advanced"] = "Расширенные настройки"
 L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Вам не нужно трогать данную опцию, но если вы хотите подстроить, тогда вперёд!"
 
+L["Toggles whether or not the boss module should warn about %s."] = "Включение/отключение вывода оповещений об %s."
 L.bosskill = "Смерть босса"
 L.bosskill_desc = "Объявлять о смерти босса."
 L.enrage = "Исступление"

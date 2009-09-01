@@ -7,6 +7,9 @@ L.you = "%s на ВАС"
 L.other = "%s: %s"
 
 L.phase = "Фаза %d"
+L.normal = "Обычный режим"
+L.hard = "Сложний режим"
+L.general = "Общий" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.enrage_start = "%s вступил в бой - Исступление через %d мин"
 L.enrage_end = "%s вошел в состояние Исступления"

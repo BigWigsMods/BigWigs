@@ -6,7 +6,7 @@ if not L then return end
 -- Custombars.lua
 
 L["Local"] = "Локальный"
-L["%s: Timer [%s] finished."] = "%s: Таймер [%s] готовый."
+L["%s: Timer [%s] finished."] = "%s: Таймер [%s] готов."
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, М:С парный, или Мм. К примеру 5, 1:20 или 2м."
 
 -- Version.lua
@@ -47,4 +47,8 @@ L["Background"] = "Фон"
 L["Shows or hides the background."] = "Показать или скрыть фон."
 L["Toggle sound"] = "Вкл/Выкл звук"
 L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Включить/выключить звуковое оповещение окна близости, когда вы находитесь слишком близко к другому игроку."
-
+L["Sound button"] = "Кнопка звука"
+L["Shows or hides the sound button."] = "Показывать или скрывать кнопку звука."
+L["Close button"] = "Кнопка закрытия"
+L["Shows or hides the close button."] = "Показывать или скрывать кнопку закрытия."
+L["Show/hide"] = "Показ/скрыть"
