@@ -47,7 +47,7 @@ local acOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\nLets try to put the most common toggle options right here in the root. Below are some examples, but others could include things like showing anchors, toggling the proximity monitor and toggling sounds, for example.\n\nClicking the LDB plugin should pop open the interface options, expand our toplevel category and select the relevant zone and boss module that is currently active, just like we used to do with Waterfall.",
+			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that none of these options work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n",
 			fontSize = "medium",
 			order = 1,
 			width = "full",
@@ -61,20 +61,37 @@ local acOptions = {
 			set = function() end,
 			width = "full",
 		},
-		whispers = {
+		minimap = {
 			type = "toggle",
-			name = "Whisper warnings",
-			desc = "NOOP Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
+			name = "Minimap icon",
+			desc = "NOOP Show or hide the Big Wigs minimap icon.",
 			order = 3,
 			get = function() return true end,
 			set = function() end,
 			width = "full",
 		},
-		note = {
+		separator = {
 			type = "description",
-			name = "This looks horrible, here's what I want:\n\n1. spacer between heading and options.\n2. The description for each checkbox should be in smaller text below the checkbox, indented to be parallel vertically with the checkbox label. This text should also be smaller than the label and probably in the same color as the header.",
-			fontSize = "medium",
-			order = 4,
+			name = " ",
+			order = 10,
+			width = "full",
+		},
+		whispers = {
+			type = "toggle",
+			name = "Whisper warnings",
+			desc = "NOOP Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
+			order = 11,
+			get = function() return true end,
+			set = function() end,
+			width = "full",
+		},
+		raidicons = {
+			type = "toggle",
+			name = "Raid icons",
+			desc = "NOOP Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
+			order = 12,
+			get = function() return true end,
+			set = function() end,
 			width = "full",
 		},
 	},
@@ -187,17 +204,6 @@ end
 
 do
 	local opts = {}
-	local active = {
-		type = "toggle",
-		name = L["Active"],
-		order = 1,
-		desc = L["Activate or deactivate this module."],
-	}
-	local headerSpacer = {
-		type = "header",
-		order = 50,
-		name = " ",
-	}
 	local zoneModules = {}
 
 	-- A wrapper for :NewModule to present users with more information in the

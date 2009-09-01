@@ -148,8 +148,6 @@ function BigWigsLoD:OnInitialize()
 end
 
 function BigWigsLoD:OnEnable()
-	print("You're running an ALPHA RELEASE of Big Wigs. NOTHING you see here is final, and you are NOT allowed to file bug reports about ANYTHING. If you have any comments on the ongoing development of the next major release, which includes a conversion to Ace3, then you can join us on IRC.")
-
 	self:RegisterEvent("BigWigs_CoreEnabled")
 
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
