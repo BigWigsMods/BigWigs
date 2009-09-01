@@ -5,7 +5,7 @@
 local boss = BB["The Iron Council"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 local breaker = BB["Steelbreaker"]
 local molgeim = BB["Runemaster Molgeim"]
 local brundir = BB["Stormcaller Brundir"]

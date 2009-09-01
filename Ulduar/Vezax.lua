@@ -5,7 +5,7 @@
 local boss = BB["General Vezax"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zonename = BZ["Ulduar"]
 mod.guid = 33271
 mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}

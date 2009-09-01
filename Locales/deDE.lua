@@ -47,21 +47,4 @@ L["All running modules have been reset."] = "Alle laufenden Module wurden zurüc
 L["Menu"] = "Menü"
 L["Menu options."] = "Menü-Optionen"
 
--- Prototype.lua common words
-L.you = "%s auf DIR!"
-L.other = "%s auf %s!"
-
-L.phase = "Phase %d"
-
-L.enrage_start = "%s angegriffen - Wutanfall in %d min"
-L.enrage_end = "%s bekommt Wutanfall!"
-L.enrage_min = "Wutanfall in %d min"
-L.enrage_sec = "Wutanfall in %d sek!"
-L.enrage = "Wutanfall"
-
-L.berserk_start = "%s angegriffen - Berserker in %d min"
-L.berserk_end = "%s wird zum Berserker!"
-L.berserk_min = "Berserker in %d min"
-L.berserk_sec = "Berserker in %d sek!"
-L.berserk = "Berserker"
 

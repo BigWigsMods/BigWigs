@@ -5,7 +5,7 @@
 local boss = BB["Thorim"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 local behemoth = BB["Jormungar Behemoth"]
 mod.zonename = BZ["Ulduar"]
 mod.guid = 32865	--Sif(33196)

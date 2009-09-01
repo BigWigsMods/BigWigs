@@ -2,7 +2,7 @@
 --      Module Prototype      --
 --------------------------------
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 local BBR = LibStub("LibBabble-Boss-3.0"):GetReverseLookupTable()
 
 local UnitExists = UnitExists

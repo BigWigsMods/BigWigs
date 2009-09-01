@@ -5,7 +5,7 @@
 local boss = BB["XT-002 Deconstructor"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293

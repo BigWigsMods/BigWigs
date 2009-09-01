@@ -45,20 +45,3 @@ L["Active boss modules:"] = "사용중인 보스 모듈:"
 L["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다."
 L["Menu"] = "메뉴"
 L["Menu options."] = "메뉴 설정."
-
--- Prototype.lua common words
-L.you = "%s on YOU"
-L.other = "%1$s on %2$s"
-
-L.phase = "Phase %d"
-
-L.enrage_start = "%s 전투 개시 - %d분 후 격노"
-L.enrage_end = "%s 격노"
-L.enrage_min = "%d분 후 격노"
-L.enrage_sec = "%d초 후 격노"
-L.enrage = "격노"
-
-L.berserk_start = "%s 전투 개시 - %d분 후 광폭화"
-L.berserk_end = "%s 광폭화"
-L.berserk_min = "%d분 후 광폭화"
-L.berserk = "광폭화"
