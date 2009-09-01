@@ -5,7 +5,6 @@ if not L then return end
 -- Core.lua
 L["%s has been defeated"] = "%s被擊敗了！"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s被擊敗了！"    -- "<bosses> have been defeated"
-
 L["Bosses"] = "首領模組"
 L["Options for bosses in %s."] = "%s首領模組選項。" -- "Options for bosses in <zone>"
 L["Options for %s (r%d)."] = "%s模組選項版本（r%d）。"     -- "Options for <boss> (<revision>)"

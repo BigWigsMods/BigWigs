@@ -3,7 +3,6 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "zhCN")
 if not L then return end
 
 -- Core.lua
-
 L["%s has been defeated"] = "%s被击败了！"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s被击败了！"    -- "<bosses> have been defeated"
 L["Bosses"] = "首领模块"
@@ -37,7 +36,6 @@ L["Load all %s modules."] = "加载所有%s模块。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已经存在首领模块，但存在（版本 |cffffff00%d|r）模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您的插件文件夹中。建议您删除所有 Big Wigs 文件夹并重新全新安装。"
 
-
 -- Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00首领模块运行中|r"
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "你可以|cffeda55f点击|r图标重置所有运行中的模块；\n或者|cffeda55fAlt-点击|r可以禁用所有首领模块；\n或者 |cffeda55fCtrl-Alt-点击|r 可以禁用 Big Wigs 所有功能。"
@@ -45,4 +43,5 @@ L["Active boss modules:"] = "激活首领模块："
 L["All running modules have been reset."] = "所有运行中的模块都已重置。"
 L["Menu"] = "目录"
 L["Menu options."] = "目录选项。"
+
 

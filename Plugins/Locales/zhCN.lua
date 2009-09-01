@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Plugins", "zhCN")
 if not L then return end
 
 -- Bars2.lua
+
 L["Bars"] = "计时条"
 L["Normal Bars"] = "一般计时条"
 L["Emphasized Bars"] = "醒目计时条"
@@ -20,16 +21,16 @@ L["Close"] = "关闭"
 L["Emphasize"] = "醒目"
 L["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "醒目计时条是当接近（小于10秒）。如果计时条开始时间小于15秒则会立刻醒目显示。"
 L["Enable"] = "启用"
-L["Enables emphasizing bars."] = "启用醒目计时条"
+L["Enables emphasizing bars."] = "启用醒目计时条。"
 L["Move"] = "移动"
 L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "移动醒目计时条到醒目锚点。如果此选项关闭，醒目计时条将只改变缩放与颜色以及可能开始闪烁。"
 L["Set the scale for emphasized bars."] = "设置醒目计时条缩放。"
 L["Reset position"] = "重置位置"
 L["Reset the anchor positions, moving them to their default positions."] = "重置锚点位置，移动它们到默认位置。"
 L["Test"] = "测试"
-L["Creates a new test bar."] = "新建测试计时条"
+L["Creates a new test bar."] = "新建测试计时条。"
 L["Hide"] = "隐藏"
-L["Hides the anchors."] = "隐藏锚点"
+L["Hides the anchors."] = "隐藏锚点。"
 L["Flash"] = "闪烁"
 L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "醒目计时条背景闪烁，方便你留意它。"
 L["Regular bars"] = "常规计时条"
@@ -47,6 +48,7 @@ L["Font"] = "字体"
 L["Set the font for the timer bars."] = "设置计时条字体。"
 
 -- Colors.lua
+
 L["Colors"] = "颜色"
 
 L["Messages"] = "信息提示"
@@ -70,7 +72,7 @@ L["Colors of messages and bars."] = "设置信息文字与计时条的颜色。"
 L["Change the color for %q messages."] = "改变%q信息的颜色。"
 L["Change the %s color."] = "改变%s颜色。"
 L["Change the bar background color."] = "改变计时条背景颜色。"
-L["Change the bar text color."] = "改变计时条文本显示颜色"
+L["Change the bar text color."] = "改变计时条文本颜色。"
 L["Resets all colors to defaults."] = "重置所有颜色为默认。"
 
 L["Important"] = "重要"
@@ -84,6 +86,7 @@ L["Core"] = "核心"
 L["color_upgrade"] = "信息与计时条颜色值已被重置以便升级到最新版本。如果想再次调整，右击 Big Wigs 图标选择插件 -> 颜色。"
 
 -- Messages.lua
+
 L["Messages"] = "信息"
 L["Options for message display."] = "信息显示选项。"
 
@@ -122,6 +125,7 @@ L["Spawns a new test warning."] = "生成一个新的报警测试。"
 L["Hide"] = "隐藏"
 L["Hides the anchors."] = "隐藏锚点。"
 
+
 -- RaidIcon.lua
 
 L["Raid Icons"] = "团队标记"
@@ -138,6 +142,7 @@ L["Set Icon"] = "设置标记"
 L["Set which icon to place on players."] = "设置玩家身上团队标记。"
 
 L["Use the %q icon when automatically placing raid icons for boss abilities."] = "使用%q标记首领的需要注意的技能目标。"
+
 L["Star"] = "星形"
 L["Circle"] = "圆形"
 L["Diamond"] = "棱形"

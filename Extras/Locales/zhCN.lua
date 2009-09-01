@@ -52,3 +52,4 @@ L["Shows or hides the sound button."] = "显示或隐藏音效按钮。"
 L["Close button"] = "关闭按钮"
 L["Shows or hides the close button."] = "显示或隐藏关闭按钮。"
 L["Show/hide"] = "显示/隐藏"
+

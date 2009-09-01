@@ -6,7 +6,10 @@ if not L then return end
 L.you = ">你< %s！"
 L.other = "%s：>%s<！"
 
-L.phase = "Phase %d"
+L.phase = "阶段%d"
+L.normal = "普通模式"
+L.hard = "困难模式"
+L.general = "通用" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.enrage_start = "%s激活 - %d分后激怒！"
 L.enrage_end = "%s已激怒！"
