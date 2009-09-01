@@ -84,40 +84,6 @@ local acOptions = {
 			order = 20,
 			width = "full",
 		},
-		enable = {
-			type = "toggle",
-			name = "Enable |cffff0000(!)|r",
-			desc = "Mooses don't appreciate being prodded with long pointy sticks.",
-			order = 21,
-			get = function() return true end,
-			set = function() end,
-			width = "full",
-		},
-		minimap = {
-			type = "toggle",
-			name = L["Minimap icon"],
-			desc = L["Toggle show/hide of the minimap icon."],
-			order = 22,
-			get = function() return not BigWigsDB.minimap.hide end,
-			set = function() end,
-			set = function(info, v)
-				if v then
-					BigWigsDB.minimap.hide = nil
-					icon:Show("BigWigs")
-				else
-					BigWigsDB.minimap.hide = true
-					icon:Hide("BigWigs")
-				end
-			end,
-			hidden = function() return not icon end,
-			width = "full",
-		},
-		separator2 = {
-			type = "description",
-			name = " ",
-			order = 30,
-			width = "full",
-		},
 		whispers = {
 			type = "toggle",
 			name = "Whisper warnings |cffff0000(!)|r",
@@ -143,6 +109,37 @@ local acOptions = {
 			order = 33,
 			get = function() return true end,
 			set = function() end,
+			width = "full",
+		},
+		separator2 = {
+			type = "description",
+			name = " ",
+			order = 40,
+			width = "full",
+		},
+		minimap = {
+			type = "toggle",
+			name = L["Minimap icon"],
+			desc = L["Toggle show/hide of the minimap icon."],
+			order = 41,
+			get = function() return not BigWigsDB.minimap.hide end,
+			set = function() end,
+			set = function(info, v)
+				if v then
+					BigWigsDB.minimap.hide = nil
+					icon:Show("BigWigs")
+				else
+					BigWigsDB.minimap.hide = true
+					icon:Hide("BigWigs")
+				end
+			end,
+			hidden = function() return not icon end,
+			width = "full",
+		},
+		footer = {
+			type = "description",
+			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on #wowace. [Ammo] and Rabbit can service all your needs.|r",
+			order = 42,
 			width = "full",
 		},
 	},
