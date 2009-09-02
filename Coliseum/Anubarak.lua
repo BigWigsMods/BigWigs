@@ -7,7 +7,7 @@ if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34564
-mod.toggleOptions = {66118, 67574, "burrow", "bosskill"}
+mod.toggleOptions = {66118, 67574, "burrow", "berserk", "bosskill"}
 mod.consoleCmd = "Anubarak"
 
 --------------------------------------------------------------------------------
@@ -113,6 +113,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.burrow then
 			self:IfMessage(L["engage_message"], "Attention", 65919)
 			self:Bar(L["burrow_cooldown"], 80, 65919)
+		end
+		if db.berserk then
+			self:Enrage(600, true, true)
 		end
 	end
 end
