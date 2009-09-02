@@ -81,6 +81,15 @@ L:RegisterTranslations("zhTW", function() return {
 	burrow_cooldown = "下一鑽地",
 } end)
 L:RegisterTranslations("ruRU", function() return {
+	engage_message = "Ануб'арак вступил в бой, зарывание в землю через 80сек!",
+	engage_trigger = "Это место станет вашей могилой!",
+
+	--unburrow_trigger = "emerges from the ground",
+	burrow = "Червоточина",
+	burrow_desc = "Отображать таймер способности Ануб'арака зарывается в землю",
+	burrow_cooldown = "Следующее зарывание",
+
+	chase = "Преследование",
 } end)
 
 --------------------------------------------------------------------------------

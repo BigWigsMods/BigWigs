@@ -136,11 +136,11 @@ L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!",
 	engage_trigger1 = "Отправляйся в Пустоту!",
 
-	incinerate_message = "Incinerate",
+	incinerate_message = "Испепеление",
 	incinerate_other = "Испепеление плоти на |3-5(%s)",
 	incinerate_bar = "~Следующее Испепеление",
 
-	legionflame_message = "Flame",
+	legionflame_message = "Пламя",
 	legionflame_other = "Пламя Легиона на |3-5(%s)!",
 	legionflame_bar = "~Следующее Пламя",
 

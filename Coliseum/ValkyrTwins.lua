@@ -124,6 +124,22 @@ L:RegisterTranslations("zhTW", function() return {
 	touch_of_light_message = "光明之觸！",
 	touch_of_dark_message = "黑暗之觸！",
 } end)
+L:RegisterTranslations("ruRU", function() return {
+	--engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
+
+	vortex_or_shield_cd = "Воронка или Щит",
+
+	vortex = "Воронка",
+	vortex_desc = "Сообщать когда близнецы начинают применять воронку.",
+
+	shield = "Щит Тьмы/Света",
+	shield_desc = "Сообщать о Щите Тьмы/Света.",
+
+	touch = "Касание тьмы/Света",
+	touch_desc = "Сообщать о Касании тьмы/Света",
+	touch_of_light_message = "Свет",
+	touch_of_dark_message = "Тьма",
+} end)
 
 --------------------------------------------------------------------------------
 -- Initialization
