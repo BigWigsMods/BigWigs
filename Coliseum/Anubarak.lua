@@ -41,33 +41,37 @@ L:RegisterTranslations("koKR", function() return {
 	burrow_cooldown = "다음 소멸",
 } end)
 L:RegisterTranslations("frFR", function() return {
-	engage = "Engagement",
+	engage_message = "Anub'arak engagé, Fouir dans 80 sec. !",
 	engage_trigger = "Ce terreau sera votre tombeau !", -- à vérifier
 
+	--unburrow_trigger = "%s emerges from the ground!",
 	burrow = "Fouir",
 	burrow_desc = "Affiche un délai de la technique Fouir d'Anub'Arak.",
 	burrow_cooldown = "Prochain Fouir",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	engage = "Angegriffen",
+	--engage_message = "Anub'arak engaged, burrow in 80sec!",
 	engage_trigger = "^Dieser Ort wird Euch als Grab dienen!",
 
+	--unburrow_trigger = "%s emerges from the ground!",
 	burrow = "Verbergen",
 	burrow_desc = "Zeige einen Timer für Anub'arak's Eingraben.",
 	burrow_cooldown = "~Eingraben",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-	engage = "激活",
+	--engage_message = "Anub'arak engaged, burrow in 80sec!",
 --	engage_trigger = "This place will serve as your tomb!",
 
+	--unburrow_trigger = "%s emerges from the ground!",
 	burrow = "钻地",
 	burrow_desc = "当阿努巴拉克钻地时显示计时条。",
 	burrow_cooldown = "下一钻地",
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	engage = "開戰",
+	--engage_message = "Anub'arak engaged, burrow in 80sec!",
 	engage_trigger = "這裡將會是你們的墳墓!",
 
+	--unburrow_trigger = "%s emerges from the ground!",
 	burrow = "鑽地",
 	burrow_desc = "當阿努巴拉克鑽地時顯示計時條。",
 	burrow_cooldown = "下一鑽地",

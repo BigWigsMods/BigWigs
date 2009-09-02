@@ -97,7 +97,7 @@ L:RegisterTranslations("frFR", function() return {
 	-- Gormok
 	impale_message = "%2$dx Empaler sur %1$s",
 	stomp_warning = "Piétinement dans 5 sec. !",
-	stomp_bar = "Piétinement",
+	stomp_bar = "Prochain Piétinement",
 	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
 
 	-- Jormungars

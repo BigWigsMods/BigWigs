@@ -20,7 +20,7 @@ L["Toggle show/hide of the minimap icon."] = "Affiche ou non l'icône sur la min
 L["Advanced"] = "Avancés"
 L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Vous n'avez normalement pas besoin de toucher à ces options, mais si vous voulez les peaufinez, n'hésitez pas !"
 
-L["Toggles whether or not the boss module should warn about %s."] = "Permet ou non au module de boss de vous prévenir à propos |2 %s."
+L["Toggles whether or not the boss module should warn about %s."] = "Autorise ou non le module de boss d'afficher des barres temporelles et/ou des alertes concernant %s."
 L.bosskill = "Défaite du boss"
 L.bosskill_desc = "Prévient quand le boss est vaincu."
 L.enrage = "Enrager"

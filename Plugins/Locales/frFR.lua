@@ -59,7 +59,7 @@ L["Color "] = "Couleur "
 L["Number of colors"] = "Nombre de couleurs"
 L["Background"] = "Arrière-plan"
 L["Text"] = "Texte"
-L["Reset"] = "RÀZ"
+L["Reset"] = "Réinitialiser"
 
 L["Bar"] = "Barre"
 L["Change the normal bar color."] = "Change la couleur des barres normales."
