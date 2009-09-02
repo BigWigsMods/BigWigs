@@ -126,6 +126,9 @@ L:RegisterTranslations("deDE", function() return {
 	spew = "Ätzender/Geschmolzener Auswurf",
 	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
 
+	burn_spell = "Galle",
+	toxin_spell = "Toxin",
+	
 	-- Icehowl
 	butt_bar = "~Kopfstoß",
 	charge = "Wütender Ansturm",

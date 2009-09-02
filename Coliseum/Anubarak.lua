@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	chase = "Pursue",
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage = "전투 시작",
+	engage_message = "전투 시작",
 	engage_trigger = "여기가 네 무덤이 되리라!",	--check
 
 	burrow = "소멸",
@@ -50,13 +50,15 @@ L:RegisterTranslations("frFR", function() return {
 	burrow_cooldown = "Prochain Fouir",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	--engage_message = "Anub'arak engaged, burrow in 80sec!",
-	engage_trigger = "^Dieser Ort wird Euch als Grab dienen!",
+	engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!",
+	engage_trigger = "^Dieser Ort wird Euch als Grab dienen!", --check!
 
-	--unburrow_trigger = "%s emerges from the ground!",
-	burrow = "Verbergen",
+	--unburrow_trigger = "%s emerges from the ground!", --check!
+	burrow = "Eingraben",
 	burrow_desc = "Zeige einen Timer für Anub'arak's Eingraben.",
 	burrow_cooldown = "~Eingraben",
+	
+	chase = "Verfolgen",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	--engage_message = "Anub'arak engaged, burrow in 80sec!",
