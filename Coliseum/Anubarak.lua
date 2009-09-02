@@ -7,7 +7,7 @@ if not mod then return end
 mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34564
-mod.toggleOptions = {66118, 67574, "burrow", "berserk", "bosskill"}
+mod.toggleOptions = {66118, 67574, "icon", "burrow", "berserk", "bosskill"}
 mod.consoleCmd = "Anubarak"
 
 --------------------------------------------------------------------------------
@@ -31,6 +31,9 @@ L:RegisterTranslations("enUS", function() return {
 	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",	
 	burrow_cooldown = "Next Burrow",	
 	burrow_soon = "Burrow soon",
+
+	icon = "Place icon",
+	icon_desc = "Place a raid target icon on the person targetted by Anub'arak during his burrow phase. (requires promoted or higher)",
 
 	chase = "Pursue",
 } end)
@@ -118,6 +121,7 @@ end
 function mod:Pursue(player, spellId)
 	self:TargetMessage(L["chase"], player, "Personal", spellId)
 	self:Whisper(player, L["chase"])
+	self:Icon(player, "icon")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
