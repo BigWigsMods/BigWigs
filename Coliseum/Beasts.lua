@@ -18,9 +18,9 @@ mod.enabletrigger = {gormok, icehowl, acidmaw, dreadscale}
 --mod.guid = 34796 -- Gormok
 --mod.guid = 34799--Dreadscale, 35144 = Acidmaw
 mod.guid = 34797 -- Icehowl
-mod.toggleOptions = {67647, 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "bosskill"}
+mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "bosskill"}
 mod.optionHeaders = {
-	[67647] = gormok,
+	snobold = gormok,
 	[67641] = jormungars,
 	[67654] = icehowl,
 	bosskill = CL.general,
@@ -38,6 +38,7 @@ local db = nil
 local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
+local snobolled = GetSpellInfo(66406)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -51,10 +52,11 @@ L:RegisterTranslations("enUS", function() return {
 	boss_incoming = "%s incoming",
 
 	-- Gormok
+	snobold = "Snobold",
+	snobold_desc = "Warn who gets a Snobold on their heads.",
+	snobold_message = "Add on %s!",
 	impale_message = "%2$dx Impale on %1$s",
-	stomp_warning = "Stomp in 5sec!",
-	stomp_bar = "Next Stomp",
-	firebomb_message = "Fire Bomb on you!",
+	firebomb_message = "Fire on YOU!",
 
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
@@ -77,8 +79,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	-- Gormok
 	impale_message = "꿰뚫기 x%2$d: %1$s",
-	stomp_warning = "5초 후 발구르기!",
-	stomp_bar = "~다음 발구르기",
 	firebomb_message = "당신은 불 폭탄!",
 
 	-- Jormungars
@@ -99,8 +99,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	-- Gormok
 	impale_message = "%2$dx Empaler sur %1$s",
-	stomp_warning = "Piétinement dans 5 sec. !",
-	stomp_bar = "Prochain Piétinement",
 	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
 
 	-- Jormungars
@@ -121,8 +119,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	-- Gormok
 	impale_message = "%2$dx Pfählen: %1$s!",
-	stomp_warning = "Stampfen in 5 sek!",
-	stomp_bar = "~Stampfen",
 	firebomb_message = "Feuerbombe auf DIR!",
 
 	-- Jormungars
@@ -146,8 +142,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	-- Gormok
 	impale_message = "%2$dx Impale：>%1$s<！",
-	stomp_warning = "5秒后，Staggering Stomp！",
-	stomp_bar = "<下一Staggering Stomp>",
 	firebomb_message = ">你< Fire Bomb！",
 
 	-- Jormungars
@@ -168,8 +162,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	-- Gormok
 	impale_message = "%2$dx 刺穿：>%1$s<！",
-	stomp_warning = "5秒後，驚恐踐踏！",
-	stomp_bar = "<下一驚恐踐踏>",
 	firebomb_message = ">你< 燃燒彈！",
 
 	-- Jormungars
@@ -190,8 +182,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	-- Gormok
 	impale_message = "%2$dx Прокалывания на %1$s",
-	stomp_warning = "Топот через 5 сек!",
-	stomp_bar = "Следующий топот",
 	firebomb_message = "Огненная бомба на ВАС!",
 
 	-- Jormungars
@@ -215,8 +205,9 @@ function mod:OnEnable()
 	-- Gormok
 	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
-	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 67648, 66330, 67649)
+	--self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 67648, 66330, 67649)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_AURA")
 
 	-- Jormungars
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642, 67643)
@@ -244,6 +235,14 @@ end
 --------------------------------------------------------------------------------
 -- Gormok the Impaler
 --
+
+function mod:UNIT_AURA(unit)
+	local name, _, icon = UnitDebuff(unit, snobolled)
+	if name then
+		local n = UnitName(unit)
+		self:IfMessage(L["snobold_message"]:format(n), "Attention", icon)
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -275,12 +274,6 @@ function mod:Impale(player, spellId, _, _, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(L["impale_message"], player, "Urgent", icon, "Info", stack)
 	end
-end
-
-function mod:Stomp(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId, "Long")
-	self:Bar(L["stomp_bar"], 21, spellId)
-	self:DelayedMessage(16, L["stomp_warning"], "Attention")
 end
 
 do
