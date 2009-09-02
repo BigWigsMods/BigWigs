@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_message = "Anub'arak engaged, burrow in 80sec!",
 	engage_trigger = "This place will serve as your tomb!",
 
-	unburrow_trigger = "%s emerges from the ground!",
+	unburrow_trigger = "emerges from the ground",
 	burrow = "Burrow",
 	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
 	burrow_cooldown = "Next Burrow",
