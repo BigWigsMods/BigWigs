@@ -163,13 +163,13 @@ end
 -- Event Handlers
 --
 
-function mod:DarkTouch(_, spellId)
+function mod:DarkTouch(player, spellId)
 	if not db.touch then return end
 	self:TargetMessage(L["touch_of_dark_message"], player, "Personal", spellId, "Info")
 	self:Whisper(player, L["touch_of_dark_message"])
 end
 
-function mod:LightTouch(_, spellId)
+function mod:LightTouch(player, spellId)
 	if not db.touch then return end
 	self:TargetMessage(L["touch_of_light_message"], player, "Personal", spellId, "Info")
 	self:Whisper(player, L["touch_of_light_message"])
