@@ -38,6 +38,7 @@ local db = nil
 local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
+local snobolledWarned = {}
 local snobolled = GetSpellInfo(66406)
 
 --------------------------------------------------------------------------------
@@ -230,6 +231,7 @@ function mod:OnEnable()
 
 	db = self.db.profile
 	difficulty = GetRaidDifficulty()
+	wipe(snobolledWarned)
 end
 
 --------------------------------------------------------------------------------
@@ -238,9 +240,12 @@ end
 
 function mod:UNIT_AURA(unit)
 	local name, _, icon = UnitDebuff(unit, snobolled)
-	if name then
-		local n = UnitName(unit)
+	local n = UnitName(unit)
+	if snobolledWarned[n] and not name then
+		snobolledWarned[n] = nil
+	elseif name and not snobolledWarned[n] then
 		self:IfMessage(L["snobold_message"]:format(n), "Attention", icon)
+		snobolledWarned[n] = true
 	end
 end
 
