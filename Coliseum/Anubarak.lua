@@ -28,8 +28,8 @@ L:RegisterTranslations("enUS", function() return {
 	unburrow_trigger = "emerges from the ground",
 	burrow_trigger = "burrows into the ground",
 	burrow = "Burrow",
-	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",	
-	burrow_cooldown = "Next Burrow",	
+	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
+	burrow_cooldown = "Next Burrow",
 	burrow_soon = "Burrow soon",
 
 	icon = "Place icon",
@@ -47,13 +47,19 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage_message = "Anub'arak engagé, Fouir dans 80 sec. !",
-	engage_trigger = "Ce terreau sera votre tombeau !", -- à vérifier
+	engage_trigger = "Ce terreau sera votre tombeau !",
 
-	unburrow_trigger = "surgit de la terre !$",
+	unburrow_trigger = "surgit de la terre",
+	burrow_trigger = "s'enfonce dans le sol",
 	burrow = "Fouir",
 	burrow_desc = "Affiche un délai de la technique Fouir d'Anub'Arak.",
 	burrow_cooldown = "Prochain Fouir",
-	chase = "Pursuivi",
+	burrow_soon = "Fouir imminent",
+
+	icon = "Icône",
+	icon_desc = "Place une icône sur le dernier joueur poursuivi par Anub'arak lors de sa phase sous terre (nécessite d'être assistant ou mieux).",
+
+	chase = "Poursuivi",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!",
