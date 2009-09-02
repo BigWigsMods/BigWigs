@@ -56,8 +56,9 @@ L:RegisterTranslations("enUS", function() return {
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
 	spew_desc = "Warn for Acidic/Molten Spew.",
-	burn_you = "Burning Bile on you!",
-	burn_other = "Burning Bile: %s",
+	
+	burn_spell = "Burn",
+	toxin_spell = "Toxin",
 
 	-- Icehowl
 	butt_bar = "~Butt Cooldown",
@@ -80,8 +81,6 @@ L:RegisterTranslations("koKR", function() return {
 	-- Jormungars
 	spew = "산성/용암 내뿜기",
 	spew_desc = "산성/용암 내뿜기를 알립니다.",
-	burn_you = "당신은 불타는 담즙!",
-	burn_other = "불타는 담즙: %s",
 
 	-- Icehowl
 	butt_bar = "~박치기 대기시간",
@@ -104,8 +103,6 @@ L:RegisterTranslations("frFR", function() return {
 	-- Jormungars
 	spew = "Crachement acide/de lave",
 	spew_desc = "Prévient de l'arrivée des Crachements acides/de lave.",
-	burn_you = "Bile brûlante sur VOUS !",
-	burn_other = "Bile brûlante : %s",
 
 	-- Icehowl
 	butt_bar = "~Recharge Coup de tête",
@@ -128,8 +125,6 @@ L:RegisterTranslations("deDE", function() return {
 	-- Jormungars
 	spew = "Ätzender/Geschmolzener Auswurf",
 	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
-	burn_you = "Brennende Galle auf DIR!",
-	burn_other = "Brennende Galle: %s!",
 
 	-- Icehowl
 	butt_bar = "~Kopfstoß",
@@ -152,8 +147,6 @@ L:RegisterTranslations("zhCN", function() return {
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
 	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
-	burn_you = ">你< Burning Bile！",
-	burn_other = "Burning Bile：>%s<！",
 
 	-- Icehowl
 	butt_bar = "<Ferocious Butt 冷却>",
@@ -176,8 +169,6 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Jormungars
 	spew = "酸液/熔火噴灑",
 	spew_desc = "當施放酸液/熔火噴灑時發出警報。",
-	burn_you = ">你< 燃燒膽汁！",
-	burn_other = "燃燒膽汁：>%s<！",
 
 	-- Icehowl
 	butt_bar = "<兇猛頭擊 冷卻>",
@@ -200,8 +191,6 @@ L:RegisterTranslations("ruRU", function() return {
 	-- Jormungars
 	spew = "Кислотная/Жгучая рвота",
 	spew_desc = "Сообщать о Кислотной/Жгучей рвоте.",
-	burn_you = "Горящая желчь на ВАС!",
-	burn_other = "Горящая желчь: %s",
 
 	-- Icehowl
 	butt_bar = "~Свирепое бодание",
@@ -312,32 +301,50 @@ function mod:Acidic(_, spellId, _, _, spellName)
 	end
 end
 
-local function toxinWarn(spellId, spellName)
-	mod:TargetMessage(spellName, toxin, "Urgent", spellId, "Alert")
-end
-
-function mod:Toxin(player, spellId, _, _, spellName)
-	toxin[#toxin + 1] = player
-	self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId, spellName)
-	if player == pName then
-		self:TargetMessage(spellName, player, "Personal", spellId, "Info")
+do
+	local dontWarn = nil
+	
+	local function toxinWarn(spellId)
+		if not dontWarn then
+			mod:TargetMessage(L["toxin_spell"], toxin, "Urgent", spellId)
+		else
+			dontWarn = nil
+			wipe(toxin)
+		end
+	end
+	function mod:Toxin(player, spellId)
+		toxin[#toxin + 1] = player
+		self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId)
+		if player == pName then
+			dontWarn = true
+			self:TargetMessage(L["toxin_spell"], player, "Personal", spellId, "Info")
+		end
 	end
 end
 
-local function burnWarn(spellId, spellName)
-	mod:TargetMessage(spellName, burn, "Urgent", spellId, "Alert")
-end
+do
+	local dontWarn = nil
 
-function mod:Burn(player, spellId, _, _, spellName)
-	burn[#burn + 1] = player
-	self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId, spellName)
-	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-		self:TargetMessage(spellName, player, "Important", spellId, "Info")
+	local function burnWarn(spellId)
+		if not dontWarn then
+			mod:TargetMessage(L["burn_spell"], burn, "Urgent", spellId)
+		else
+			dontWarn = nil
+			wipe(burn)
+		end
+	end
+	function mod:Burn(player, spellId)
+		burn[#burn + 1] = player
+		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
+		if player == pName then
+			dontWarn = true
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+			self:TargetMessage(L["burn_spell"], player, "Important", spellId, "Info")
+		end
 	end
 end
 
-function mod:BurnRemoved(player, spellId)
+function mod:BurnRemoved(player)
 	if player == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
