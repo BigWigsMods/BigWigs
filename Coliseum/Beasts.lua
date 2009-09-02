@@ -67,7 +67,7 @@ L:RegisterTranslations("enUS", function() return {
 	butt_bar = "~Butt Cooldown",
 	charge = "Furious Charge",
 	charge_desc = "Warn about Furious Charge on players.",
-	charge_trigger = "^%%s",	--check
+	charge_trigger = "glares at",	--check
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!",
@@ -136,7 +136,7 @@ L:RegisterTranslations("deDE", function() return {
 	butt_bar = "~Kopfstoß",
 	charge = "Wütender Ansturm",
 	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
-	charge_trigger = "^%%s",	--check
+	--charge_trigger = "^%%s",	--check
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
@@ -204,7 +204,7 @@ L:RegisterTranslations("ruRU", function() return {
 	--Furious Charge - судя по транскриптору нет русского перевода :(
 	charge = "Furious Charge",
 	charge_desc = "Сообщать о Furious Charge.",
-	charge_trigger = "^%%s",	--check
+	--charge_trigger = "^%%s",	--check
 } end)
 
 --------------------------------------------------------------------------------
@@ -214,24 +214,23 @@ L:RegisterTranslations("ruRU", function() return {
 function mod:OnEnable()
 	-- Gormok
 	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331)
-	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 66330)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478)
+	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 67648, 66330)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	-- Jormungars
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641)
-	--self:AddCombatListener("SPELL_DAMAGE", "Slime", 67638)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642)
 	self:AddCombatListener("SPELL_CAST_START", "Acidic", 66818)
 	self:AddCombatListener("SPELL_CAST_START", "Molten", 66821)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 66823)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 67619, 66823)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 68335)
 
 	-- Icehowl
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 66759)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 66759, 67658)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Daze", 66758)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Butt", 67654, 66770)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Butt", 67654, 67655, 66770)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	-- Common
