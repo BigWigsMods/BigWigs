@@ -63,6 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 	spew = "Acidic/Molten Spew",
 	spew_desc = "Warn for Acidic/Molten Spew.",
 	
+	slime_message = "Slime on YOU!",
 	burn_spell = "Burn",
 	toxin_spell = "Toxin",
 
@@ -212,6 +213,7 @@ function mod:OnEnable()
 
 	-- Jormungars
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642, 67643)
+	self:AddCombatListener("SPELL_DAMAGE", "Slime", 67640)
 	self:AddCombatListener("SPELL_CAST_START", "Acidic", 66818)
 	self:AddCombatListener("SPELL_CAST_START", "Molten", 66821)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 67619, 67620, 66823)
@@ -365,6 +367,18 @@ end
 
 function mod:Enraged(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId, "Long")
+end
+
+do
+	local last = nil
+	function mod:Slime(player, spellId)
+		if player == pName then
+			if not last or (t > last + 4) then
+				self:LocalMessage(L["slime_message"], "Personal", spellId, last and nil or "Alarm")
+				last = t
+			end
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
