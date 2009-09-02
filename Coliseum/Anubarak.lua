@@ -99,6 +99,7 @@ end
 
 function mod:Pursue(player, spellId)
 	self:TargetMessage(L["chase"], player, "Personal", spellId)
+	self:Whisper(player, L["chase"])
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
