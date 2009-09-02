@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
 	burrow_cooldown = "Next Burrow",
 
-	chase = "Chasing",
+	chase = "Pursue",
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
