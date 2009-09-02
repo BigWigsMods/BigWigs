@@ -53,15 +53,15 @@ local acOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that some (!) of these options do not work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n"],
+			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that some (!) of these options do not work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n",
 			fontSize = "medium",
 			order = 1,
 			width = "full",
 		},
 		configure = {
 			type = "execute",
-			name = L["Configure ..."],
-			desc = L["Closes the interface options window and lets you configure displays for things like bars and messages."],
+			name = "Configure ...",
+			desc = "Closes the interface options window and lets you configure displays for things like bars and messages.",
 			func = function()
 				-- This won't hide the game menu if you opened options from there.
 				-- We don't care yet, this is temporary.
@@ -86,8 +86,8 @@ local acOptions = {
 		},
 		whispers = {
 			type = "toggle",
-			name = L["Whisper warnings |cffff0000(!)|r"],
-			desc = L["Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such."],
+			name = "Whisper warnings |cffff0000(!)|r",
+			desc = "Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
 			order = 31,
 			get = function() return true end,
 			set = function() end,
@@ -95,8 +95,8 @@ local acOptions = {
 		},
 		raidicons = {
 			type = "toggle",
-			name = L["Raid icons |cffff0000(!)|r"],
-			desc = L["Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons."],
+			name = "Raid icons |cffff0000(!)|r",
+			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
 			order = 32,
 			get = function() return true end,
 			set = function() end,
@@ -104,8 +104,8 @@ local acOptions = {
 		},
 		sound = {
 			type = "toggle",
-			name = L["Sound |cffff0000(!)|r"],
-			desc = L["Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen."],
+			name = "Sound |cffff0000(!)|r",
+			desc = "Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
 			order = 33,
 			get = function() return true end,
 			set = function() end,
@@ -138,7 +138,7 @@ local acOptions = {
 		},
 		footer = {
 			type = "description",
-			name = L["\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on #wowace. [Ammo] and Rabbit can service all your needs.|r"],
+			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on #wowace. [Ammo] and Rabbit can service all your needs.|r",
 			order = 42,
 			width = "full",
 		},
@@ -164,7 +164,7 @@ function BigWigs:OnInitialize()
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
-	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
+	acd:AddToBlizOptions("Big Wigs: Plugins", "Customize ...", "Big Wigs")
 end
 
 function BigWigs:OnEnable(first)
