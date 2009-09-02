@@ -44,10 +44,12 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Anub'arak engagé, Fouir dans 80 sec. !",
 	engage_trigger = "Ce terreau sera votre tombeau !", -- à vérifier
 
-	--unburrow_trigger = "%s emerges from the ground!",
+	unburrow_trigger = "%s surgit de la terre !$",
 	burrow = "Fouir",
 	burrow_desc = "Affiche un délai de la technique Fouir d'Anub'Arak.",
 	burrow_cooldown = "Prochain Fouir",
+
+	chase = "Pursuivi",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!",
