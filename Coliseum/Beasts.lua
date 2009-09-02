@@ -213,16 +213,16 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	-- Gormok
-	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478)
-	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 67648, 66330)
+	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
+	self:AddCombatListener("SPELL_CAST_START", "Stomp", 67647, 67648, 66330, 67649)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	-- Jormungars
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642, 67643)
 	self:AddCombatListener("SPELL_CAST_START", "Acidic", 66818)
 	self:AddCombatListener("SPELL_CAST_START", "Molten", 66821)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 67619, 66823)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Toxin", 67618, 67619, 67620, 66823)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 68335)
