@@ -26,9 +26,11 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "This place will serve as your tomb!",
 
 	unburrow_trigger = "emerges from the ground",
+	burrow_trigger = "burrows into the ground",
 	burrow = "Burrow",
-	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
-	burrow_cooldown = "Next Burrow",
+	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",	
+	burrow_cooldown = "Next Burrow",	
+	burrow_soon = "Burrow soon",
 
 	chase = "Pursue",
 } end)
@@ -44,11 +46,10 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Anub'arak engagé, Fouir dans 80 sec. !",
 	engage_trigger = "Ce terreau sera votre tombeau !", -- à vérifier
 
-	unburrow_trigger = "%s surgit de la terre !$",
+	unburrow_trigger = "surgit de la terre !$",
 	burrow = "Fouir",
 	burrow_desc = "Affiche un délai de la technique Fouir d'Anub'Arak.",
 	burrow_cooldown = "Prochain Fouir",
-
 	chase = "Pursuivi",
 } end)
 L:RegisterTranslations("deDE", function() return {
@@ -134,6 +135,10 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if db.burrow and msg:find(L["unburrow_trigger"]) then
 		self:Bar(L["burrow_cooldown"], 80, 65919)
+		self:DelayedMessage(70, L["burrow_soon"], "Attention")
+	end
+	if db.burrow and msg:find(L["burrow_trigger"]) then
+		self:Bar(L["burrow"], 65, 65919)
 	end
 end
 
