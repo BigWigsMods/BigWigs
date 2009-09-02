@@ -123,7 +123,6 @@ local acOptions = {
 			desc = L["Toggle show/hide of the minimap icon."],
 			order = 41,
 			get = function() return not BigWigsDB.minimap.hide end,
-			set = function() end,
 			set = function(info, v)
 				if v then
 					BigWigsDB.minimap.hide = nil

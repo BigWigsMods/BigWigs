@@ -11,6 +11,7 @@ local gormok = BB["Gormok the Impaler"]
 local icehowl = BB["Icehowl"]
 local acidmaw = BB["Acidmaw"]
 local dreadscale = BB["Dreadscale"]
+local jormungars = BB["Jormungars"]
 
 mod.zonename = BZ["Trial of the Crusader"]
 mod.enabletrigger = {gormok, icehowl, acidmaw, dreadscale}
@@ -20,7 +21,7 @@ mod.guid = 34797 -- Icehowl
 mod.toggleOptions = {67647, 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "bosskill"}
 mod.optionHeaders = {
 	[67647] = gormok,
-	[67641] = BB["Jormungars"],
+	[67641] = jormungars,
 	[67654] = icehowl,
 	bosskill = CL.general,
 }
@@ -31,6 +32,8 @@ mod.consoleCmd = "Beasts"
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local difficulty = nil
 local db = nil
 local pName = UnitName("player")
 local burn = mod:NewTargetList()
@@ -234,7 +237,9 @@ function mod:OnEnable()
 	-- Common
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	db = self.db.profile
+	difficulty = GetRaidDifficulty()
 end
 
 --------------------------------------------------------------------------------
@@ -244,17 +249,25 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		self:TriggerEvent("BigWigs_HideProximity", self)
-		if db.berserk then
+		if difficulty > 2 then
+			self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
+		elseif db.berserk then
 			self:Enrage(900, true, true)
 		end
 	elseif msg == L["jormungars_trigger"] then
 		local m = L["boss_incoming"]:format(BB["Jormungars"])
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 15, "INV_Misc_MonsterScales_18")
+		if difficulty > 2 then
+			self:Bar(L["boss_incoming"]:format(icehowl), 195, "INV_Misc_MonsterHorn_07")
+		end
 	elseif msg == L["icehowl_trigger"] then
 		local m = L["boss_incoming"]:format(icehowl)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
+		if difficulty > 2 then
+			self:Bar(CL.berserk, 190)
+		end
 	end
 end
 
