@@ -90,7 +90,7 @@ function plugin:BigWigs_SetRaidIcon(player, icon)
 	if not player then return end
 	if not GetRaidTargetIndex(player) then
 		local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
-		if not index then index = 8 end
+		if not index then return end
 		SetIcon(player, index)
 		lastplayer[icon or 1] = player
 	end
