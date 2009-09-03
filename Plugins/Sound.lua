@@ -11,6 +11,7 @@ if not plugin then return end
 
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
+local soundList = nil
 local db = nil
 
 local sounds = {
@@ -42,6 +43,21 @@ plugin.pluginOptions = {
 	type = "group",
 	name = L["Sounds"],
 	desc = L["Options for sounds."],
+	get = function(info)
+		for i, v in next, soundList do
+			if v == db.media[info[#info]] then
+				return i
+			end
+		end
+	end,
+	set = function(info, value)
+		local sound = info[#info]
+		if IsControlKeyDown() then
+			PlaySoundFile(media:Fetch(mType, soundList[value]))
+		else
+			db.media[sound] = soundList[value]
+		end
+	end,
 	args = {
 		default = {
 			type = "toggle",
@@ -60,6 +76,10 @@ plugin.pluginOptions = {
 ------------------------------
 
 local function shouldDisable() return plugin.db.profile.defaultonly end
+local function updateList(mediaType)
+	if mediaType ~= mType then return end
+	soundList = media:List(mType)
+end
 
 function plugin:OnRegister()
 	db = self.db.profile
@@ -72,21 +92,8 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.mp3")
 
-	-- this needs to be updated on the SM3 callback
-	local list = media:List(mType)
-
-	local function get(info)
-		return db.media[info[#info]]
-	end
-
-	local function set(info, value)
-		local sound = info[#info]
-		if IsControlKeyDown() then
-			PlaySoundFile(media:Fetch(mType, list[value]))
-		else
-			db.media[sound] = list[value]
-		end
-	end
+	media.RegisterCallback(self, "LibSharedMedia_Registered", updateList)
+	soundList = media:List(mType)
 
 	for k in pairs(sounds) do
 		local n = L[k] or k
@@ -95,21 +102,14 @@ function plugin:OnRegister()
 			name = n,
 			desc = L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."]:format(n),
 			order = 2,
-			get = get,
-			set = set,
 			disabled = shouldDisable,
-			values = list,
+			values = soundList,
 			width = "full",
 		}
 	end
 end
 
 function plugin:OnEnable()
-	if not db.sound then
-		BigWigs:ToggleModuleActive(self, false)
-		return
-	end
-
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_Sound")
 end
