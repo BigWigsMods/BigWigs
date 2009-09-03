@@ -18,7 +18,7 @@ local pName = UnitName("player")
 local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 commonWords:RegisterTranslations("enUS", function() return {
 	you = "%s on YOU",
-	are = "%s: %s",
+	other = "%s: %s",
 
 	enrage_start = "%s Engaged - Enrage in %d min",
 	enrage_end = "%s Enraged",
@@ -35,7 +35,7 @@ commonWords:RegisterTranslations("enUS", function() return {
 
 commonWords:RegisterTranslations("deDE", function() return {
 	you = "%s auf DIR!",
-	are = "%s: %s",
+	other = "%s: %s",
 
 	enrage_start = "%s angegriffen - Wutanfall in %d min",
 	enrage_end = "%s bekommt Wutanfall!",
@@ -52,7 +52,7 @@ commonWords:RegisterTranslations("deDE", function() return {
 
 commonWords:RegisterTranslations("koKR", function() return {
 	you = "당신은 %s",
-	are = "%s: %s",
+	other = "%s: %s",
 
 	enrage_start = "%s 전투 개시 - %d분 후 격노",
 	enrage_end = "%s 격노",
@@ -69,7 +69,7 @@ commonWords:RegisterTranslations("koKR", function() return {
 
 commonWords:RegisterTranslations("zhCN", function() return {
 	you = ">你< %s！",
-	are = "%s：>%s<！",
+	other = "%s：>%s<！",
 
 	enrage_start = "%s激活 - %d分后激怒！",
 	enrage_end = "%s已激怒！",
@@ -86,7 +86,7 @@ commonWords:RegisterTranslations("zhCN", function() return {
 
 commonWords:RegisterTranslations("zhTW", function() return {
 	you = ">你< %s！",
-	are = "%s：>%s<！",
+	other = "%s：>%s<！",
 
 	enrage_start = "%s開戰 - %d分後狂怒！",
 	enrage_end = "%s已狂怒！",
@@ -103,7 +103,7 @@ commonWords:RegisterTranslations("zhTW", function() return {
 
 commonWords:RegisterTranslations("frFR", function() return {
 	you = "%s sur VOUS",
-	are = "%s : %s",
+	other = "%s : %s",
 
 	enrage_start = "%s engagé - Enrager dans %d min.",
 	enrage_end = "%s enragé",
@@ -120,7 +120,7 @@ commonWords:RegisterTranslations("frFR", function() return {
 
 commonWords:RegisterTranslations("esES", function() return {
 	you = "%s on YOU",
-	are = "%s: %s",
+	other = "%s: %s",
 
 	enrage_start = "%s Iniciado - Enfurecimiento en %d min",
 	enrage_end = "%s Enfurecido",
@@ -137,7 +137,7 @@ commonWords:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 commonWords:RegisterTranslations("ruRU", function() return {
 	you = "%s на ВАС",
-	are = "%s: %s",
+	other = "%s: %s",
 
 	enrage_start = "%s вступил в бой - Исступление через %d мин",
 	enrage_end = "%s вошел в состояние Исступления",
