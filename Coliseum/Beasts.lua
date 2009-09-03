@@ -407,6 +407,7 @@ do
 	local last = nil
 	function mod:Slime(player, spellId)
 		if player == pName then
+			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(L["slime_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
