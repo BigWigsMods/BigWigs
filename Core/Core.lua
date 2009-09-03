@@ -137,7 +137,7 @@ local acOptions = {
 		},
 		footer = {
 			type = "description",
-			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on #wowace. [Ammo] and Rabbit can service all your needs.|r",
+			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on #wowace. [Ammo] and vhaarr can service all your needs.|r",
 			order = 42,
 			width = "full",
 		},

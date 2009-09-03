@@ -33,9 +33,6 @@ function BigWigsOptions:OnInitialize()
 end
 
 local function openOptions()
-	-- Make sure we're expanded so that users can easily see the keybindings
-	-- submenu. My own experience is that people have no idea that there
-	-- even IS a plus sign next to the addons listed in the sidepane there.
 	for i, button in ipairs(InterfaceOptionsFrameAddOns.buttons) do
 		if button.element and button.element.name == "Big Wigs" and button.element.collapsed then
 			OptionsListButtonToggle_OnClick(button.toggle)
