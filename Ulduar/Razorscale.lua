@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -9,7 +9,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 -- mod.enabletrigger set below the localizations
 mod.guid = 33186
-mod.toggleOptions = {"phase", -1, 64021, 64704, "harpoon", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
 mod.consoleCmd = "Razorscale"
 
 ------------------------------
@@ -154,7 +154,7 @@ L:RegisterTranslations("deDE", function() return {
 	air_trigger2 = "Feuer einstellen! Lasst uns diese Geschütze reparieren!",
 	air_message = "Hebt ab!",
 	phase2_trigger = "%s dauerhaft an den Boden gebunden!",
-	phase2_message = "Phase 2!",
+	phase2_message = "Phase 2",
 	phase2_warning = "Phase 2 bald!",
 	stun_bar = "Betäubt",
 
@@ -317,7 +317,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	-- for 10man, has a different yell, and different timing <.<
 	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
 	-- just a bar for the next harpoon
-	elseif msg == L["air_trigger2"] then 
+	elseif msg == L["air_trigger2"] then
 		p2 = nil
 		count = 0
 		if db.harpoon then

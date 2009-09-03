@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -37,8 +37,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	starttrigger1 = "Посмотрим, какие вы на вкус!", 
-	starttrigger2 = "Бегите, бегите! Я люблю горячую кровь!",  
+	starttrigger1 = "Посмотрим, какие вы на вкус!",
+	starttrigger2 = "Бегите, бегите! Я люблю горячую кровь!",
 	starttrigger3 = "Вам отсюда не выбраться.",  --check this
 	engagewarn = "Ануб'Рекан вступает в бой! Первая волна жуков через ~%d секунд",
 

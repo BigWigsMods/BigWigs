@@ -24,7 +24,7 @@ local pName = UnitName("player")
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	bomb_message_you = "You are Injected!",
+	bomb_message = "Injection",
 	bomb_message_other = "%s is Injected!",
 
 	icon = "Place Icon",
@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	bomb_message_you = "Вам сделали укол! Бегите от рейда!!",
+	bomb_message = "Injection",
 	bomb_message_other = "|3-2(%s) сделали укол! Бегите от него!",
 
 	icon = "Помечать иконкой",
@@ -40,7 +40,7 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	bomb_message_you = "DU bist verseucht!",
+	bomb_message = "Injection",
 	bomb_message_other = "%s ist verseucht!",
 
 	icon = "Schlachtzugs-Symbol",
@@ -48,7 +48,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	bomb_message_you = "당신은 돌연변이 유발!",
+	bomb_message = "Injection",
 	bomb_message_other = "돌연변이 유발: %s!",
 
 	icon = "전술 표시",
@@ -56,7 +56,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	bomb_message_you = ">你< 变异注射！",
+	bomb_message = "Injection",
 	bomb_message_other = "变异注射：>%s<！",
 
 	icon = "团队标记",
@@ -64,7 +64,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	bomb_message_you = ">你< 突變注射！",
+	bomb_message = "Injection",
 	bomb_message_other = "突變注射：>%s<！",
 
 	icon = "團隊標記",
@@ -72,7 +72,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	bomb_message_you = "Injection mutante sur VOUS !",
+	bomb_message = "Injection",
 	bomb_message_other = "Injection mutante : %s",
 
 	icon = "Icône",
@@ -100,13 +100,8 @@ end
 ------------------------------
 
 function mod:Inject(player, spellId)
-	if player == pName then
-		self:LocalMessage(L["bomb_message_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["bomb_message_other"]:format(player))
-	else
-		self:TargetMessage(L["bomb_message_other"], player, "Important", spellId)
-		self:Whisper(player, L["bomb_message_you"])
-	end
+	self:TargetMessage(L["bomb_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(player, L["bomb_message"])
 	self:Bar(L["bomb_message_other"]:format(player), 10, spellId)
 	self:Icon(player, "icon")
 end

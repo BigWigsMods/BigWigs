@@ -1,4 +1,4 @@
-﻿--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -12,12 +12,6 @@ mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
 mod.consoleCmd = "Jaraxxus"
 
 --------------------------------------------------------------------------------
--- Locals
---
-local db
-local pName = UnitName("player")
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -27,12 +21,11 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
 	engage_trigger1 = "Banished to the Nether",
 
-	incinerate_you = "Incinerate on YOU!",
+	incinerate_message = "Incinerate",
 	incinerate_other = "Incinerate on %s",
 	incinerate_bar = "~Next Incinerate",
-	incinerate_safe = "%s is safe!",
 
-	legionflame_you = "Flame on YOU!",
+	legionflame_message = "Flame",
 	legionflame_other = "Flame on %s!",
 	legionflame_bar = "~Next Flame",
 
@@ -44,17 +37,16 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage = "전투 시작",
-	engage_trigger = "불타는 군단의 에레다르 군주 자라서스 님이 상대해주마!",
-	engage_trigger1 = "황천으로",	--check
+	engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!",
+	engage_trigger1 = "황천으로 사라져라!",
 
-	incinerate_you = "당신은 살점 소각!",
+	incinerate_message = "Incinerate",
 	incinerate_other = "살점 소각: %s",
 	incinerate_bar = "~살점 소각 대기시간",
-	incinerate_safe = "%s 안전함!",
 
-	legionflame_you = "당신은 불꽃 군단!",
-	legionflame_other = "불꽃 군단: %s!",
-	legionflame_bar = "~불꽃 군단 대기시간",
+	legionflame_message = "Flame",
+	legionflame_other = "군단 불꽃 : %s!",
+	legionflame_bar = "~군단 불꽃 대기시간",
 
 	icon = "전술 표시",
 	icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -67,12 +59,11 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !",
 	--engage_trigger1 = "Banished to the Nether",
 
-	incinerate_you = "Incinérer la chair sur VOUS !",
+	incinerate_message = "Incinérer",
 	incinerate_other = "Incinérer la chair : %s",
 	incinerate_bar = "~Recharge Incinérer",
-	incinerate_safe = "%s est sauf !",
 
-	legionflame_you = "Flamme de la Légion sur VOUS !",
+	legionflame_message = "Flamme",
 	legionflame_other = "Flamme de la Légion : %s",
 	legionflame_bar = "~Recharge Flamme",
 
@@ -87,13 +78,12 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Ihr steht vor Jaraxxus",
 	--engage_trigger1 = "Banished to the Nether", --need!
 
-	incinerate_you = "Fleisch einäschern auf DIR!",
-	incinerate_other = "Fleisch einäschern: %s!",
-	incinerate_bar = "~Fleisch einäschern",
-	incinerate_safe = "%s ist sicher!",
+	incinerate_message = "Einäschern",
+	incinerate_other = "Einäschern: %s",
+	incinerate_bar = "~Einäschern",
 
-	legionflame_you = "Legionsflamme auf DIR!",
-	legionflame_other = "Legionsflamme: %s!",
+	legionflame_message = "Legionsflamme",
+	legionflame_other = "Legionsflamme: %s",
 	legionflame_bar = "~Legionsflamme",
 
 	icon = "Schlachtzugs-Symbol",
@@ -103,38 +93,42 @@ L:RegisterTranslations("deDE", function() return {
 	netherpower_bar = "~Macht des Nether",
 } end)
 L:RegisterTranslations("zhCN", function() return {
---	engage_trigger = "text",
+	engage = "激活",
+	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
+	engage_trigger1 = "Banished to the Nether",
 
-	incinerate_you = ">你< Incinerate Flesh！",
+	incinerate_message = "Incinerate",
 	incinerate_other = "Incinerate Flesh：>%s<！",
-	incinerate_bar = "<Incinerate Flash 冷却>",
+	incinerate_bar = "<下一Incinerate Flash>",
 
-	legionflame_you = ">你< Legion Flame！",
+	legionflame_message = "Flame",
 	legionflame_other = "Legion Flame：>%s<！",
-	legionflame_bar = "<Legion Flame 冷却>",
+	legionflame_bar = "<下一Legion Flame>",
 
 	icon = "团队标记",
 	icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）",
 
-	netherportal_bar = "<Nether Portal 冷却>",
-	netherpower_bar = "<Nether Power 冷却>",
+	netherportal_bar = "<下一Nether Portal>",
+	netherpower_bar = "<下一Nether Power>",
 } end)
 L:RegisterTranslations("zhTW", function() return {
---	engage_trigger = "text",
+	engage = "進入戰斗",
+	engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!",
+	engage_trigger1 = "Banished to the Nether",
 
-	incinerate_you = ">你< 焚化血肉！",
+	incinerate_message = "焚化血肉",
 	incinerate_other = "焚化血肉：>%s<！",
-	incinerate_bar = "<焚化血肉 冷卻>",
+	incinerate_bar = "<下一焚化血肉>",
 
-	legionflame_you = ">你< 聚合烈焰！",
+	legionflame_message = "聚合烈焰",
 	legionflame_other = "聚合烈焰：>%s<！",
-	legionflame_bar = "<聚合烈焰 冷卻>",
+	legionflame_bar = "<下一聚合烈焰>",
 
 	icon = "團隊標記",
 	icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）",
 
-	netherportal_bar = "<虛空傳送門 冷卻>",
-	netherpower_bar = "<虛空傳送門（能量） 冷卻>",
+	netherportal_bar = "<下一虛空傳送門>",
+	netherpower_bar = "<下一虛空傳送門（能量）>",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	engage = "Начало битвы",
@@ -142,12 +136,11 @@ L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!",
 	engage_trigger1 = "Отправляйся в Пустоту!",
 
-	incinerate_you = "Испепеление плоти на ВАС!",
+	incinerate_message = "Испепеление",
 	incinerate_other = "Испепеление плоти на |3-5(%s)",
 	incinerate_bar = "~Следующее Испепеление",
-	incinerate_safe = "%s спасен!",
 
-	legionflame_you = "Пламя Легиона на ВАС!",
+	legionflame_message = "Пламя",
 	legionflame_other = "Пламя Легиона на |3-5(%s)!",
 	legionflame_bar = "~Следующее Пламя",
 
@@ -174,7 +167,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 --------------------------------------------------------------------------------
@@ -182,39 +174,26 @@ end
 --
 
 function mod:IncinerateFlesh(player, spellId)
-	if player == pName then
-		self:LocalMessage(L["incinerate_you"], "Personal", spellId, "Info")
-		self:WideMessage(L["incinerate_other"]:format(player))
-	else
-		self:TargetMessage(L["incinerate_other"], player, "Important", spellId)
-		self:Whisper(player, L["incinerate_you"])
-	end
+	self:TargetMessage(L["incinerate_message"], player, "Personal", spellId, "Info")
+	self:Whisper(player, L["incinerate_message"])
 	self:Bar(L["incinerate_other"]:format(player), 12, spellId)
 	self:Bar(L["incinerate_bar"], 20, spellId)
 end
 
 function mod:IncinerateFleshRemoved(player, spellId)
-	self:TargetMessage(L["incinerate_safe"], player, "Positive", 17) -- Power Word: Shield icon.
 	self:TriggerEvent("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
 function mod:LegionFlame(player, spellId)
-	if player == pName then
-		self:LocalMessage(L["legionflame_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["legionflame_other"]:format(player))
-	else
-		self:TargetMessage(L["legionflame_other"], player, "Important", spellId)
-		self:Whisper(player, L["legionflame_you"])
-	end
+	self:TargetMessage(L["legionflame_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(player, L["legionflame_message"])
 	self:Bar(L["legionflame_other"]:format(player), 8, spellId)
 	self:Bar(L["legionflame_bar"], 30, spellId)
-	if db.icon then
-		self:Icon(player, "icon")
-	end
+	self:Icon(player, "icon")
 end
 
 function mod:RemoveLegionFlameIcon(player, spellId)
-	if db.icon then
+	if self.db.profile.icon then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
@@ -236,23 +215,23 @@ function mod:InfernalEruption(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
---if you wipe then you never get "engage_trigger1" message again, but always "engage_trigger" message before boss start attack. 
+--if you wipe then you never get "engage_trigger1" message again, but always "engage_trigger" message before boss start attack.
 --Correct me if i'm wrong
 	if msg:find(L["engage_trigger1"]) then
 		self:Bar(L["engage"], 11, "INV_Gizmo_01")
-		--[[if db.netherportal then
+		--[[if self.db.profile.netherportal then
 			self:Bar(L["netherportal_bar"], 30, 68404) -- engage+19
 		end
-		if db.infernaleruption then
+		if self.db.profile.infernaleruption then
 			self:Bar(L["infernaleruption"], 90, 66258) -- engage+79
 		end]]
 	end
 	if msg:find(L["engage_trigger"]) then
-		if db.netherportal then
-			self:Bar(L["netherportal_bar"], 20, 68404) 
+		if self.db.profile.netherportal then
+			self:Bar(L["netherportal_bar"], 20, 68404)
 		end
-		if db.infernaleruption then
-			self:Bar(L["infernaleruption"], 80, 66258) 
+		if self.db.profile.infernaleruption then
+			self:Bar(L["infernaleruption"], 80, 66258)
 		end
 	end
 end

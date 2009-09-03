@@ -18,8 +18,6 @@ mod.consoleCmd = "Kelthuzad"
 
 local fbTargets = mod:NewTargetList()
 local mcTargets = mod:NewTargetList()
-local fmt = string.format
-local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -49,10 +47,8 @@ L:RegisterTranslations("enUS", function() return {
 	mc_nextbar = "~Mind Controls",
 
 	frostblast_bar = "Possible Frost Blast",
-	frostblast_message = "%s: Frost Blast",
 	frostblast_soon_message = "Possible Frost Blast in ~5 sec!",
 
-	detonate_you = "Detonate Mana on YOU!",
 	detonate_other = "Detonate - %s",
 	detonate_possible_bar = "Possible Detonate",
 	detonate_warning = "Next Detonate in 5 sec!",
@@ -69,16 +65,16 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада",
-					 
-	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел'Тузада!", 
-	start_warning = "Бой с Кел'Тузадом начинается! ~3 мин 30 сек до выхода босса!", 
+
+	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел'Тузада!",
+	start_warning = "Бой с Кел'Тузадом начинается! ~3 мин 30 сек до выхода босса!",
 	start_bar = "Фаза 2",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать когда босс входит в новую фазу.",
-	phase2_trigger1 = "Молите о пощаде!",  
-	phase2_trigger2 = "Кричите! Кричите изо всех сил!", 
-	phase2_trigger3 = 	"Вы уже мертвы!",  
+	phase2_trigger1 = "Молите о пощаде!",
+	phase2_trigger2 = "Кричите! Кричите изо всех сил!",
+	phase2_trigger3 = 	"Вы уже мертвы!",
 	phase2_warning = "Фаза 2, Кел'Тузад просыпается!",
 	phase2_bar = "Кел'Тузад активен!",
 	phase3_soon_warning = "Скоро Фаза 3!",
@@ -90,10 +86,8 @@ L:RegisterTranslations("ruRU", function() return {
 	mc_nextbar = "~Контроль Разума",
 
 	frostblast_bar = "Возможен ледяной взрыв",
-	frostblast_message = "%s в Глыбе!",
 	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
 
-	detonate_you = "Взрыв маны на Вас!",
 	detonate_other = "Взрыв маны на 3-5(%s)",
 	detonate_possible_bar = "Возможен взрыв маны",
 	detonate_warning = "Следующий взрыв маны через 5 секунд!",
@@ -131,10 +125,8 @@ L:RegisterTranslations("koKR", function() return {
 	mc_nextbar = "~정배 대기 시간",
 
 	frostblast_bar = "냉기 작렬 가능",
-	frostblast_message = "냉기 작렬: %s",
 	frostblast_soon_message = "약 5초 이내 냉기 작렬 가능!",
 
-	detonate_you = "당신은 마나 폭발!",
 	detonate_other = "마나 폭발 - %s",
 	detonate_possible_bar = "폭발 가능",
 	detonate_warning = "약 5초 이내 마나 폭발 가능!",
@@ -172,10 +164,8 @@ L:RegisterTranslations("deDE", function() return {
 	mc_nextbar = "~Gedankenkontrolle",
 
 	frostblast_bar = "~Frostschlag",
-	frostblast_message = "Frostschlag: %s",
 	frostblast_soon_message = "Frostschlag in ~5 sek!",
 
-	detonate_you = "Detonierendes Mana auf DIR!",
 	detonate_other = "Detonierendes Mana: %s",
 	detonate_possible_bar = "~Detonierendes Mana",
 	detonate_warning = "Detonierendes Mana in 5 sek!",
@@ -213,10 +203,8 @@ L:RegisterTranslations("zhCN", function() return {
 	mc_nextbar = "<下一克尔苏加德锁链>",
 
 	frostblast_bar = "<可能 冰霜冲击>",
-	frostblast_message = "冰霜冲击：>%s<！",
 	frostblast_soon_message = "约5秒后，可能冰霜冲击！",
 
-	detonate_you = ">你< 自爆法力！",
 	detonate_other = "自爆法力：>%s<！",
 	detonate_possible_bar = "<可能 自爆法力>",
 	detonate_warning = "约5秒后，自爆法力！",
@@ -255,10 +243,8 @@ L:RegisterTranslations("zhTW", function() return {
 	mc_nextbar = "<下一科爾蘇加德之鍊>",
 
 	frostblast_bar = "<可能 冰霜衝擊>",
-	frostblast_message = "冰霜衝擊：>%s<！",
 	frostblast_soon_message = "約5秒後，可能冰霜衝擊！",
 
-	detonate_you = ">你< 爆裂法力！",
 	detonate_other = "爆裂法力：>%s<！",
 	detonate_possible_bar = "<可能 爆裂法力>",
 	detonate_warning = "約5秒後，爆裂法力！",
@@ -296,10 +282,8 @@ L:RegisterTranslations("frFR", function() return {
 	mc_nextbar = "~Contrôles mentaux",
 
 	frostblast_bar = "Trait de givre probable",
-	frostblast_message = "Trait de givre : %s",
 	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
 
-	detonate_you = "Faire détoner mana sur VOUS !",
 	detonate_other = "Détoner mana : %s",
 	detonate_possible_bar = "~Prochain Détoner",
 	detonate_warning = "Prochain Faire détoner mana dans 5 sec. !",
@@ -333,9 +317,9 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonate", 27819)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 28410)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self.warnedAboutPhase3Soon = nil
-	
+
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -355,25 +339,20 @@ function mod:Fizzure(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 end
 
-local function fbWarn(spellId)
-	mod:TargetMessage(L["frostblast_message"], fbTargets, "Important", spellId, "Alert")
+local function fbWarn(spellId, spellName)
+	mod:TargetMessage(spellName, fbTargets, "Important", spellId, "Alert")
 	mod:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
 	mod:Bar(L["frostblast_bar"], 37, spellId)
 end
 
-function mod:FrostBlast(player, spellId)
+function mod:FrostBlast(player, spellId, _, _, spellName)
 	fbTargets[#fbTargets + 1] = player
-	self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId)
+	self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId, spellName)
 end
 
-function mod:Detonate(player, spellId)
-	if player == pName then
-		self:LocalMessage(L["detonate_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["detonate_other"]:format(player))
-	else
-		self:TargetMessage(L["detonate_other"], player, "Attention", spellId)
-		self:Whisper(player, L["detonate_you"])
-	end
+function mod:Detonate(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(player, spellName)
 	self:Icon(player, "icon")
 	self:Bar(L["detonate_other"]:format(player), 5, spellId)
 	self:Bar(L["detonate_possible_bar"], 20, spellId)
@@ -381,15 +360,15 @@ function mod:Detonate(player, spellId)
 end
 
 local function mcWarn(spellId, spellName)
-	mod:TargetMessage(L["mc_message"], mcTargets, "Important", spellId, "Alert")
+	mod:TargetMessage(spellName, mcTargets, "Important", spellId, "Alert")
 	mod:Bar(spellName, 20, 28410)
 	mod:DelayedMessage(68, L["mc_warning"], "Urgent")
 	mod:Bar(L["mc_nextbar"], 68, spellId)
 end
 
-function mod:MC(player, spellId, _, _, spellName)
+function mod:MC(player, spellId)
 	mcTargets[#mcTargets + 1] = player
-	self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId, spellName)
+	self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId, GetSpellInfo(605)) --605 = Mind Control
 end
 
 function mod:UNIT_HEALTH(msg)

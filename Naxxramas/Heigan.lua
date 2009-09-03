@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -42,9 +42,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	starttrigger = "Теперь вы принадлежите мне!",  
-	starttrigger2 = "Пришло ваше время...",  
-	starttrigger3 = "Я вижу вас...", 
+	starttrigger = "Теперь вы принадлежите мне!",
+	starttrigger2 = "Пришло ваше время...",
+	starttrigger3 = "Я вижу вас...",
 
 	engage = "Вступление в бой",
 	engage_desc = "Предупреждать, когда Хейган вступает в бой.",
@@ -52,7 +52,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	teleport = "Телепорт",
 	teleport_desc = "Предупреждать о телепорте.",
-	teleport_trigger = "Вам конец.",  
+	teleport_trigger = "Вам конец.",
 	teleport_1min_message = "Телепорт через 1 минуту",
 	teleport_30sec_message = "Телепорт через 30 секунд",
 	teleport_10sec_message = "Телепорт через 10 секунд!",
@@ -95,11 +95,11 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger = "Ihr gehört mir...",
 	starttrigger2 = "Ihr seid.... als nächstes dran.",
 	starttrigger3 = "Ihr entgeht mir nicht...",
-	
+
 	engage = "Angriff",
 	engage_desc = "Warnt, wenn Heigan angegriffen wird.",
 	engage_message = "Heigan der Unreine angegriffen! Teleport in 90 sek!",
-	
+
 	teleport = "Teleport",
 	teleport_desc = "Warnungen und Timer für Teleport.",
 	teleport_trigger = "Euer Ende naht.",
@@ -124,7 +124,7 @@ L:RegisterTranslations("zhCN", function() return {
 	engage = "激活",
 	engage_desc = "当激活时发出警报。",
 	engage_message = "希尔盖已激活 - 90秒后，传送！",
-	
+
 	teleport = "传送",
 	teleport_desc = "当传送时发出警报。",
 	teleport_1min_message = "1分钟后传送",

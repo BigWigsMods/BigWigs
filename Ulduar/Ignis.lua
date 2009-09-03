@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 	scorch_message = "Versengen auf DIR!",
 	scorch_soon = "Versengen in ~5 sek!",
 	scorch_bar = "Nächstes Versengen",
-	slagpot_message = "Schlackentopf: %s!",
+	slagpot_message = "Schlackentopf: %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -165,8 +165,8 @@ do
 	end
 end
 
-function mod:SlagPot(player, spellId)
-	self:TargetMessage(L["slagpot_message"], player, "Important", spellId)
+function mod:SlagPot(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, player, "Important", spellId)
 	self:Bar(L["slagpot_message"]:format(player), 10, spellId)
 end
 

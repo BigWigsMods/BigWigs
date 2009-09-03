@@ -11,13 +11,14 @@ local UnitName = UnitName
 local count = 1
 local GetSpellInfo = GetSpellInfo
 local fmt = string.format
+local pName = UnitName("player")
 
 -- Provide some common translations here, so we don't have to replicate it in
 -- every freaking module.
 local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 commonWords:RegisterTranslations("enUS", function() return {
-	you = "You",
-	are = "are",
+	you = "%s on YOU",
+	are = "%s: %s",
 
 	enrage_start = "%s Engaged - Enrage in %d min",
 	enrage_end = "%s Enraged",
@@ -33,8 +34,8 @@ commonWords:RegisterTranslations("enUS", function() return {
 } end)
 
 commonWords:RegisterTranslations("deDE", function() return {
-	you = "Ihr",
-	are = "seid",
+	you = "%s auf DIR!",
+	are = "%s: %s",
 
 	enrage_start = "%s angegriffen - Wutanfall in %d min",
 	enrage_end = "%s bekommt Wutanfall!",
@@ -50,8 +51,8 @@ commonWords:RegisterTranslations("deDE", function() return {
 } end )
 
 commonWords:RegisterTranslations("koKR", function() return {
-	you = "당신은",
-	are = " ",
+	you = "당신은 %s",
+	are = "%s: %s",
 
 	enrage_start = "%s 전투 개시 - %d분 후 격노",
 	enrage_end = "%s 격노",
@@ -67,8 +68,8 @@ commonWords:RegisterTranslations("koKR", function() return {
 } end )
 
 commonWords:RegisterTranslations("zhCN", function() return {
-	you = "你",
-	are = "到",
+	you = ">你< %s！",
+	are = "%s：>%s<！",
 
 	enrage_start = "%s激活 - %d分后激怒！",
 	enrage_end = "%s已激怒！",
@@ -84,8 +85,8 @@ commonWords:RegisterTranslations("zhCN", function() return {
 } end )
 
 commonWords:RegisterTranslations("zhTW", function() return {
-	you = "你",
-	are = "到了",
+	you = ">你< %s！",
+	are = "%s：>%s<！",
 
 	enrage_start = "%s開戰 - %d分後狂怒！",
 	enrage_end = "%s已狂怒！",
@@ -101,8 +102,8 @@ commonWords:RegisterTranslations("zhTW", function() return {
 } end )
 
 commonWords:RegisterTranslations("frFR", function() return {
-	you = "Vous",
-	are = "subissez",
+	you = "%s sur VOUS",
+	are = "%s : %s",
 
 	enrage_start = "%s engagé - Enrager dans %d min.",
 	enrage_end = "%s enragé",
@@ -118,8 +119,8 @@ commonWords:RegisterTranslations("frFR", function() return {
 } end )
 
 commonWords:RegisterTranslations("esES", function() return {
-	you = "Tú",
-	are = "estás",
+	you = "%s on YOU",
+	are = "%s: %s",
 
 	enrage_start = "%s Iniciado - Enfurecimiento en %d min",
 	enrage_end = "%s Enfurecido",
@@ -135,8 +136,8 @@ commonWords:RegisterTranslations("esES", function() return {
 } end)
 -- Translated by wow.playhard.ru translators
 commonWords:RegisterTranslations("ruRU", function() return {
-	you = "Вы",
-	are = "",
+	you = "%s на ВАС",
+	are = "%s: %s",
 
 	enrage_start = "%s вступил в бой - Исступление через %d мин",
 	enrage_end = "%s вошел в состояние Исступления",
@@ -435,15 +436,30 @@ do
 		return setmetatable({}, mt)
 	end
 
-	function BigWigs.modulePrototype:TargetMessage(formatString, player, color, icon, sound, ...)
+	function BigWigs.modulePrototype:TargetMessage(spellName, player, color, icon, sound, ...)
 		local text = nil
 		if type(player) == "table" then
-			text = table.concat(player, ", ")
+			text = fmt(commonWords["other"], spellName, table.concat(player, ", "))
 			wipe(player)
 		else
-			text = coloredNames[player]
+			if player == pName then
+				if ... then
+					text = fmt(spellName, coloredNames[player], ...)
+				else
+					text = fmt(commonWords["you"], spellName)
+				end
+			else
+				--change colors and remove sound when warning about effects on other players
+				if color == "Personal" then color = "Important" end
+				sound = nil
+				if ... then
+					text = fmt(spellName, coloredNames[player], ...)
+				else
+					text = fmt(commonWords["other"], spellName, coloredNames[player])
+				end
+			end
 		end
-		self:TriggerEvent("BigWigs_Message", formatString:format(text, ...), color, nil, sound, nil, icon)
+		self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
 
 	-- XXX Proposed API, subject to change.
@@ -504,9 +520,9 @@ function BigWigs.modulePrototype:Sync(...)
 end
 
 -- XXX 3rd argument is a proposed API change, and is subject to change/removal.
-function BigWigs.modulePrototype:Whisper(player, text, key)
-	if key and not self.db.profile[key] then return end
-	self:TriggerEvent("BigWigs_SendTell", player, text)
+function BigWigs.modulePrototype:Whisper(player, spellName, noName)
+	if player == pName then return end
+	self:TriggerEvent("BigWigs_SendTell", player, noName and spellName or fmt(commonWords["you"], spellName))
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.

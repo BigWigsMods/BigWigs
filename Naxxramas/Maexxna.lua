@@ -25,8 +25,6 @@ local enrageannounced = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	cocoonwarn = "%s wrapped!",
-
 	webspraywarn30sec = "Cocoons in 10 sec",
 	webspraywarn20sec = "Cocoons! Spiders in 10 sec!",
 	webspraywarn10sec = "Spiders! Spray in 10 sec!",
@@ -41,8 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	cocoonwarn = "%s в коконе!",
-
 	webspraywarn30sec = "Паутина через 10 секунд",
 	webspraywarn20sec = "Паутина! 10 секунд до появления пауков!",
 	webspraywarn10sec = "Пауки! 10 секунд до паутины!",
@@ -57,8 +53,6 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cocoonwarn = "Fangnetz: %s!",
-
 	webspraywarn30sec = "Fangnetz in 10 sek!",
 	webspraywarn20sec = "Fangnetz! Spinnen in 10 sek!",
 	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 sek!",
@@ -73,8 +67,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	cocoonwarn = "거미줄 감싸기: %s!",
-
 	webspraywarn30sec = "10초 이내 거미줄 감싸기",
 	webspraywarn20sec = "거미줄 감싸기. 10초 후 거미 소환!",
 	webspraywarn10sec = "거미 소환. 10초 후 거미줄 뿌리기!",
@@ -89,8 +81,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	cocoonwarn = ">%s< 蛛网裹体！",
-
 	webspraywarn30sec = "10秒后，蛛网裹体！",
 	webspraywarn20sec = "蛛网裹体！10秒后小蜘蛛出现！",
 	webspraywarn10sec = "小蜘蛛出现！10秒后蛛网喷射！",
@@ -105,8 +95,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cocoonwarn = ">%s< 纏繞之網！",
-
 	webspraywarn30sec = "10秒後，纏繞之網！",
 	webspraywarn20sec = "纏繞之網！10秒後小蜘蛛出現！",
 	webspraywarn10sec = "小蜘蛛出現！10秒後撒網！",
@@ -121,8 +109,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	cocoonwarn = "Entoilage : %s",
-
 	webspraywarn30sec = "Entoilage dans 10 sec.",
 	webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !",
 	webspraywarn10sec = "Araignées ! 10 sec. avant le Jet de rets !",
@@ -160,7 +146,7 @@ end
 ------------------------------
 
 local function cocoonWarn()
-	mod:TargetMessage(L["cocoonwarn"], inCocoon, "Important", 745, "Alert")
+	mod:TargetMessage(L["cocoonbar"], inCocoon, "Important", 745, "Alert")
 end
 
 function mod:Cocoon(player)

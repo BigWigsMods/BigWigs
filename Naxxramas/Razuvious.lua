@@ -29,8 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	shout_warning = "Disrupting Shout in 5sec!",
 	shout_next = "Shout Cooldown",
 
-	knife_message = "%s: Jagged Knife",
-
 	taunt_warning = "Taunt ready in 5sec!",
 	shieldwall_warning = "Barrier gone in 5sec!",
 } end )
@@ -38,8 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	shout_warning = "Unterbrechender Schrei in 5 sek!",
 	shout_next = "~Unterbrechender Schrei",
-
-	knife_message = "Gezacktes Messer: %s",
 
 	taunt_warning = "Spott bereit in 5 sek!",
 	shieldwall_warning = "Knochenbarriere weg in 5 sek!",
@@ -49,8 +45,6 @@ L:RegisterTranslations("koKR", function() return {
 	shout_warning = "5초 후 분열의 외침!",
 	shout_next = "분열 대기시간",
 
-	knife_message = "뾰족한 나이프: %s",
-
 	taunt_warning = "5초 후 도발 종료!",
 	shieldwall_warning = "5초 후 방패의 벽 종료!",
 } end )
@@ -58,8 +52,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	shout_warning = "5秒后，瓦解怒吼！",
 	shout_next = "瓦解怒吼冷却！",
-
-	knife_message = "裂纹小刀：>%s<！",
 
 	taunt_warning = "5秒后，可以嘲讽！",
 	shieldwall_warning = "5秒后，可以白骨屏障！",
@@ -69,8 +61,6 @@ L:RegisterTranslations("zhTW", function() return {
 	shout_warning = "5秒後，混亂怒吼！",
 	shout_next = "混亂怒吼冷卻！",
 
-	knife_message = "鋸齒刀：>%s<！",
-
 	taunt_warning = "5秒後，可以嘲諷！",
 	shieldwall_warning = "5秒後，可以骸骨屏障！",
 } end )
@@ -79,8 +69,6 @@ L:RegisterTranslations("frFR", function() return {
 	shout_warning = "Cri perturbant dans 5 sec. !",
 	shout_next = "Recharge Cri",
 
-	knife_message = "Couteau dentelé : %s",
-
 	taunt_warning = "Provocation prête dans 5 sec. !",
 	shieldwall_warning = "Barrière d'os terminée dans 5 sec. !",
 } end )
@@ -88,8 +76,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	shout_warning = "Разрушительный крик через 5сек!",
 	shout_next = "~перезарядка крика",
-
-	knife_message = "Нож в |3-5(%s)! Лечите!",
 
 	taunt_warning = "Провокация закончится через 5сек!",
 	shieldwall_warning = "Преграда из костей закончится через 5сек!",
@@ -105,9 +91,9 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	started = nil
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
@@ -136,8 +122,8 @@ function mod:Taunt(_, spellId, _, _, spellName)
 	self:DelayedMessage(15, L["shieldwall_warning"], "Attention")
 end
 
-function mod:Knife(unit, spellId)
-	self:TargetMessage(L["knife_message"], unit, "Important", spellId)
+function mod:Knife(player, spellId, _, _, spellName)
+	self:TargetMessage(spellName, unit, "Important", spellId)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)

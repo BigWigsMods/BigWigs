@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -8,7 +8,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleOptions = {"phase", -1, "wave", 62589, 62623, -1, 62861, 62437, 62865, -1, "proximity", "icon", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "wave", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
 mod.proximityCheck = "bandage"
 mod.consoleCmd = "Freya"
 
@@ -48,15 +48,11 @@ L:RegisterTranslations("enUS", function() return {
 	elementals_message = "Elementals!",
 	tree_message = "Tree is up!",
 
-	fury_you = "Fury on YOU!",
+	fury_message = "Fury",
 	fury_other = "Fury: %s",
-
-	sunbeam_you = "Sunbeam on YOU!",
-	sunbeam_other = "Sunbeam: %s",
 
 	tremor_warning = "Ground Tremor soon!",
 	tremor_bar = "~Next Ground Tremor",
-	root_message = "Root: %s",
 	energy_message = "Unstable Energy on YOU!",
 
 	icon = "Place Icon",
@@ -85,15 +81,11 @@ L:RegisterTranslations("koKR", function() return {
 	elementals_message = "정령 3 소환",
 	tree_message = "이오나의 선물 소환",
 
-	fury_you = "당신은 자연의 격노!",
+	fury_message = "Fury",
 	fury_other = "자연의 격노: %s!",
-
-	sunbeam_you = "당신에게 태양 광선!",
-	sunbeam_other = "태양 광선: %s",
 
 	tremor_warning = "곧 지진!",
 	tremor_bar = "~다음 지진",
-	root_message = "무쇠 뿌리: %s",
 	energy_message = "당신은 불안정한 힘!",
 
 	icon = "전술 표시",
@@ -122,15 +114,11 @@ L:RegisterTranslations("frFR", function() return {
 	elementals_message = "Élémentaires !",
 	tree_message = "Un arbre pousse !",
 
-	fury_you = "Fureur de la nature sur VOUS !",
+	fury_message = "Fury",
 	fury_other = "Fureur : %s",
-
-	sunbeam_you = "Rayon de soleil sur VOUS !",
-	sunbeam_other = "Rayon : %s",
 
 	tremor_warning = "Tremblement de terre imminent !",
 	tremor_bar = "~Prochain Tremblement",
-	root_message = "Racines : %s",
 	energy_message = "Energie instable sur VOUS !",
 
 	icon = "Icône",
@@ -145,7 +133,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	phase = "Phasen",
 	phase_desc = "Warnt bei Phasenwechsel.",
-	phase2_message = "Phase 2!",
+	phase2_message = "Phase 2",
 
 	wave = "Wellen",
 	wave_desc = "Warnt vor den Wellen.",
@@ -159,15 +147,11 @@ L:RegisterTranslations("deDE", function() return {
 	elementals_message = "Elementare!",
 	tree_message = "Eonars Geschenk!",
 
-	fury_you = "Furor auf DIR!",
-	fury_other = "Furor: %s!",
-
-	sunbeam_you = "Sonnenstrahl auf DIR!",
-	sunbeam_other = "Sonnenstrahl: %s!",
+	fury_message = "Furor",
+	fury_other = "Furor: %s",
 
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",
-	root_message = "Wurzeln: %s!",
 	energy_message = "Instabile Energie auf DIR!",
 
 	icon = "Schlachtzugs-Symbol",
@@ -196,15 +180,11 @@ L:RegisterTranslations("zhCN", function() return {
 	elementals_message = "古代水之精魂！",
 	tree_message = "Eonar's Gift出现！",
 
-	fury_you = ">你< 自然之怒！",
+	fury_message = "Fury",
 	fury_other = "自然之怒：>%s<！",
-
-	sunbeam_you = ">你< 阳光！",
-	sunbeam_other = "阳光：>%s<！",
 
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
-	root_message = "钢铁根须：>%s<！",
 	energy_message = ">你<不稳定的能量！",
 
 	icon = "位置标记",
@@ -233,15 +213,11 @@ L:RegisterTranslations("zhTW", function() return {
 	elementals_message = "上古水之靈！",
 	tree_message = "伊歐娜的贈禮 出現！",
 
-	fury_you = ">你< 自然烈怒！",
+	fury_message = "Fury",
 	fury_other = "自然烈怒：>%s<！",
-
-	sunbeam_you = ">你< 太陽光束！",
-	sunbeam_other = "太陽光束：>%s<！",
 
 	tremor_warning = "即將 地面震顫！",
 	tremor_bar = "<下一地面震顫>",
-	root_message = "鐵之根鬚：>%s<！",
 	energy_message = ">你< 不穩定的能量！",
 
 	icon = "位置標記",
@@ -270,15 +246,11 @@ L:RegisterTranslations("ruRU", function() return {
 	elementals_message = "Элементали!",
 	tree_message = "Появление Дара Эонара!",
 
-	fury_you = "Гнев на ВАС!",
+	fury_message = "Fury",
 	fury_other = "Гнев на: |3-5(%s)",
-
-	sunbeam_you = "Луч солнца на ВАС!",
-	sunbeam_other = "Луч солнца на |3-5(%s)",
 
 	tremor_warning = "Скоро Дрожание земли!",
 	tremor_bar = "~Дрожание земли",
-	root_message = "В корнях: %s",
 	energy_message = "Нестабильная энергия на ВАС!",
 
 	icon = "Помечать иконкой",
@@ -295,7 +267,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)     -- Elder Brightleaf
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
-	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark 
+	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
@@ -314,13 +286,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function rootWarn(spellId)
-	mod:TargetMessage(L["root_message"], root, "Attention", spellId, "Info")
+local function rootWarn(spellId, spellName)
+	mod:TargetMessage(spellName, root, "Attention", spellId, "Info")
 end
 
-function mod:Root(player, spellId)
+function mod:Root(player, spellId, _, _, spellName)
 	root[#root + 1] = player
-	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId)
+	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId, spellName)
 end
 
 do
@@ -354,7 +326,7 @@ do
 	end
 end
 
-local function scanTarget()
+local function scanTarget(spellId, spellName)
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
@@ -370,31 +342,23 @@ local function scanTarget()
 		end
 	end
 	if target then
-		if target == pName then
-			mod:LocalMessage(L["sunbeam_you"], "Attention", 62872)
-			mod:WideMessage(L["sunbeam_other"]:format(target))
-		else
-			mod:TargetMessage(L["sunbeam_other"], target, "Attention", 62872)
-			mod:Whisper(target, L["sunbeam_you"])
-		end
+		mod:TargetMessage(spellName, target, "Attention", spellId)
+		mod:Whisper(target, spellName)
 		mod:Icon(target, "icon")
 		mod:CancelScheduledEvent("BWsunbeamToTScan")
 	end
 end
 
-function mod:Sunbeam()
-	self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1)
+function mod:Sunbeam(_, spellId, _, _, spellName)
+	self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1, spellId, spellName)
 end
 
 function mod:Fury(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["fury_you"], "Personal", spellId, "Alert")
-		self:WideMessage(L["fury_other"]:format(player))
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	else
-		self:TargetMessage(L["fury_other"], player, "Attention", spellId)
-		self:Whisper(player, L["fury_you"])
 	end
+	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(player, L["fury_message"])
 	self:Bar(L["fury_other"]:format(player), 10, spellId)
 	self:Icon(player, "icon")
 end
