@@ -1,0 +1,65 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+<!--@debug@-->
+<Script file="Plugins\Comm.lua"/>
+<Script file="Plugins\Colors.lua"/>
+<Script file="Plugins\TargetMonitor.lua"/>
+<Script file="Plugins\Bars2.lua"/>
+<Script file="Plugins\Messages.lua"/>
+<Script file="Plugins\Sound.lua"/>
+<Script file="Plugins\RaidWarn.lua"/>
+<Script file="Plugins\BossBlock.lua"/>
+<Script file="Plugins\RaidIcon.lua"/>
+
+<Script file="Extras\CustomBar.lua"/>
+<Script file="Extras\Proximity.lua"/>
+<Script file="Extras\Version.lua"/>
+<Script file="Extras\Test.lua"/>
+<Script file="Extras\Flash.lua"/>
+
+<Script file="Naxxramas\Anubrekhan.lua"/>
+<Script file="Naxxramas\Faerlina.lua"/>
+<Script file="Naxxramas\Gluth.lua"/>
+<Script file="Naxxramas\Gothik.lua"/>
+<Script file="Naxxramas\Grobbulus.lua"/>
+<Script file="Naxxramas\Heigan.lua"/>
+<Script file="Naxxramas\Horsemen.lua"/>
+<Script file="Naxxramas\Kelthuzad.lua"/>
+<Script file="Naxxramas\Loatheb.lua"/>
+<Script file="Naxxramas\Maexxna.lua"/>
+<Script file="Naxxramas\Noth.lua"/>
+<Script file="Naxxramas\Patchwerk.lua"/>
+<Script file="Naxxramas\Razuvious.lua"/>
+<Script file="Naxxramas\Sapphiron.lua"/>
+<Script file="Naxxramas\Thaddius.lua"/>
+
+<Script file="Northrend\Archavon.lua"/>
+<Script file="Northrend\Malygos.lua"/>
+<Script file="Northrend\Sartharion.lua"/>
+<Script file="Northrend\Emalon.lua"/>
+
+<Script file="Ulduar\Freya.lua"/>
+<Script file="Ulduar\Hodir.lua"/>
+<Script file="Ulduar\Ignis.lua"/>
+<Script file="Ulduar\IronCouncil.lua"/>
+<Script file="Ulduar\Leviathan.lua"/>
+<Script file="Ulduar\Thorim.lua"/>
+<Script file="Ulduar\Mimiron.lua"/>
+<Script file="Ulduar\Vezax.lua"/>
+<Script file="Ulduar\Kologarn.lua"/>
+<Script file="Ulduar\XT-002.lua"/>
+<Script file="Ulduar\Razorscale.lua"/>
+<Script file="Ulduar\Auriaya.lua"/>
+<Script file="Ulduar\Algalon.lua"/>
+<Script file="Ulduar\YoggSaron.lua"/>
+
+<Script file="Coliseum\Beta.lua"/>
+<Script file="Coliseum\Beasts.lua"/>
+<Script file="Coliseum\Jaraxxus.lua"/>
+<Script file="Coliseum\Champions.lua"/>
+<Script file="Coliseum\ValkyrTwins.lua"/>
+<Script file="Coliseum\Anubarak.lua"/>
+
+<!--@end-debug@-->
+</Ui>
+

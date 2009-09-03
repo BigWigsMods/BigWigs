@@ -1,0 +1,34 @@
+## Interface: 30200
+
+## Title: Big Wigs [|cffeda55fNorthrend|r]
+## Title-deDE: Big Wigs [|cffeda55fNordend|r]
+## Title-koKR: Big Wigs [|cffeda55f노스렌드|r]
+## Title-ruRU: Big Wigs [|cffeda55fНордскол|r]
+## Title-frFR: Big Wigs [|cffeda55fNorfendre|r]
+## Title-zhCN: Big Wigs [|cffeda55f诺森德|r]
+## Title-zhTW: Big Wigs [|cffeda55f北裂境|r]
+## Notes: Big Wigs Northrend Modules
+## Notes-deDE: Big Wigs Nordend Module
+## Notes-ruRU: Модуль Big Wigs Нордскола
+## Notes-koKR: Big Wigs 노스렌드 경고
+## Notes-frFR: Modules Big Wigs concernant le Norfendre.
+## Notes-zhCN: Big Wigs 诺森德模块
+## Notes-zhTW: Big Wigs 北裂境模組
+## Author: Funkydude, Rabbit
+## X-Credits: 7destiny, Timewasted, durcyn
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowwiki.com/BigWigs
+## X-Category: Raid
+
+## X-BigWigs-Menu: Northrend
+## X-BigWigs-LoadInZone: The Eye of Eternity, Vault of Archavon, The Obsidian Sanctum
+
+## Dependencies: BigWigs
+
+Archavon.lua
+Malygos.lua
+Sartharion.lua
+Emalon.lua
+

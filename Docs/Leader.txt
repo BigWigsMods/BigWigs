@@ -1,0 +1,49 @@
+$Id$
+
+This document is intended for raid leaders.
+
+
+    How to set up Big Wigs for boss announcements
+
+The most important plugins for a raid warner (you) are the RaidWarn and
+BossBlock plugins.
+
+Navigate to the RaidWarner plugin in the menu and make
+sure you have the "Broadcast" and "Whisper" options checked.
+
+Next, go to the BossBlock plugin and uncheck "Suppress RaidWarn Chat". This
+makes sure you can see what boss announcements you are sending to the raid
+warning channel for people who do not run Big Wigs. People running Big Wigs will
+automatically block any bossmod messages sent to this channel since they will
+get the same messages colorcoded in their in-game UI/HUD anyway.
+
+In some fights, Big Wigs sends whispers (tells) to your raid members when they
+are affected by some things like "bombs". If you do not want to see these
+whispers as you send them, you can turn off "Show whispers" in the RaidWarn
+menu.
+
+    How to trigger custom bars for your raid
+
+Big Wigs comes prepacked with a means of starting your own custom bars in the
+CustomBar extra plugin. You can access it with /bwcb or through the Extras menu.
+Lets say you want to start a timer for a small break of 10 minutes, all you do
+is /bwcb 600 Break! and it will start a 10 minute timer for everyone with Big
+Wigs in your raid, and will give a message/raidwarn notification when the timer
+has expired.
+
+
+    How to check what version other people have
+
+Using the VersionQuery plugin, you can query the raid for what version of
+BigWigs your members have. This is queried on a per-zone basis, so for example
+querying for "Molten Core" will make everyone respond with the highest revision
+of any bossmod they have that is registered with that zone. You can also query
+for core revision with the BigWigs command.
+
+If you do not specify any zone, the zone you're currently in will be queried
+for.
+
+Remember that people do not always have to have the latest revision for things
+to work, please do not abuse the version query as most people do not enjoy
+upgrading things every day.
+
