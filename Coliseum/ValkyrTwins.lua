@@ -57,8 +57,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	touch = "어둠/빛의 손길",
 	touch_desc = "어둠/빛의 손길을 알립니다.",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_message = "빛의 손길",
+	touch_of_dark_message = "어둠의 손길",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",

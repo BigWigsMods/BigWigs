@@ -23,7 +23,7 @@ L["Toggle show/hide of the minimap icon."] = "미니맵 아이콘을 표시/숨�
 L["Advanced"] = "고급"
 L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "경보, 아이콘, 차단에 대한 고급 설정입니다. 정말로 필요하지 않은 이상 건들지 않는 것이 좋습니다."
 
-L["Toggles whether or not the boss module should warn about %s."] = true
+L["Toggles whether or not the boss module should warn about %s."] = "여부와 상관없이 %s에 대한 보스 모듈을 경고합니다."
 L.bosskill = "보스 사망"
 L.bosskill_desc = "보스를 물리쳤을 때 알림니다."
 L.enrage = "격노"

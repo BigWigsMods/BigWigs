@@ -80,12 +80,19 @@ L:RegisterTranslations("koKR", function() return {
 	boss_incoming = "%s 곧 등장",
 
 	-- Gormok
+	snobold = "스노볼트",
+	snobold_desc = "스노볼트가 누구의 머리위에 있는지를 알립니다.",
+	snobold_message = "스노볼트: %s!",
 	impale_message = "꿰뚫기 x%2$d: %1$s",
 	firebomb_message = "당신은 불 폭탄!",
 
 	-- Jormungars
 	spew = "산성/용암 내뿜기",
 	spew_desc = "산성/용암 내뿜기를 알립니다.",
+	
+	slime_message = "당신은 진흙 웅덩이!",
+	burn_spell = "불타는 담즙",
+	toxin_spell = "마비 독",
 
 	-- Icehowl
 	butt_bar = "~박치기 대기시간",
