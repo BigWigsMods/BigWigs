@@ -63,12 +63,17 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!",
-	engage_trigger = "^Dieser Ort wird Euch als Grab dienen!", --check!
+	engage_trigger = "Dieser Ort wird Euch als Grab dienen!",
 
-	--unburrow_trigger = "%s emerges from the ground!", --check!
+	unburrow_trigger = "%s entsteigt dem Boden!",
+	burrow_trigger = "%s gräbt sich in den Boden!",
 	burrow = "Eingraben",
-	burrow_desc = "Zeige einen Timer für Anub'arak's Eingraben.",
+	burrow_desc = "Zeigt einen Timer für Anub'arak's Eingraben.",
 	burrow_cooldown = "~Eingraben",
+	burrow_soon = "Eingraben bald!",
+	
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Anub'arak verfolgt werden (benötigt Assistent oder höher).",
 	
 	chase = "Verfolgen",
 } end)

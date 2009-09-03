@@ -127,6 +127,9 @@ L:RegisterTranslations("deDE", function() return {
 	boss_incoming = "%s kommt",
 
 	-- Gormok
+	snobold = "Schneebold",
+	snobold_desc = "Warnt davor, wer einen Schneebold auf seinem Kopf hat.",
+	snobold_message = "Schneebold: %s!",
 	impale_message = "%2$dx Pfählen: %1$s!",
 	firebomb_message = "Feuerbombe auf DIR!",
 
@@ -134,6 +137,7 @@ L:RegisterTranslations("deDE", function() return {
 	spew = "Ätzender/Geschmolzener Auswurf",
 	spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf.",
 
+	slime_message = "Schleimpfütze auf DIR!",
 	burn_spell = "Galle",
 	toxin_spell = "Toxin",
 
@@ -141,7 +145,7 @@ L:RegisterTranslations("deDE", function() return {
 	butt_bar = "~Kopfstoß",
 	charge = "Wütender Ansturm",
 	charge_desc = "Warnt vor Wütender Ansturm auf Spielern.",
-	--charge_trigger = "^%%s",	--check
+	charge_trigger = "^zornig an und lässt einen gewaltigen Schrei ertönen!",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!",
