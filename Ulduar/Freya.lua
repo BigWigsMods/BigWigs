@@ -60,6 +60,8 @@ L:RegisterTranslations("enUS", function() return {
 	tremor_warning = "Ground Tremor soon!",
 	tremor_bar = "~Next Ground Tremor",
 	energy_message = "Unstable Energy on YOU!",
+	sunbeam_message = "Sun beams up!",
+	sunbeam_bar = "~Next Sun Beams",
 
 	icon = "Place Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam and Nature's Fury. (requires promoted or higher)",
@@ -271,7 +273,8 @@ L:RegisterTranslations("ruRU", function() return {
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergyCooldown", 62865, 62451)     -- Elder Brightleaf
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)       -- Elder Brightleaf
+	self:AddCombatListener("UNIT_DIED", "Deaths")                                    -- Elder Brightleaf
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
 	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark
 	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
@@ -384,19 +387,34 @@ function mod:AttunedRemove()
 	end
 end
 
-local last = 0
-function mod:Energy(player)
-	local time = GetTime()
-	if (time - last) > 5 then
-		last = time
+do
+	local last = nil
+	function mod:Energy(player)
 		if player == pName then
-			self:LocalMessage(L["energy_message"], "Personal",  62451, "Alarm")
+			local t = GetTime()
+			if not last or (t > last + 4) then
+				self:LocalMessage(L["energy_message"], "Personal",  62451, "Alarm")
+				last = t
+			end
 		end
 	end
 end
 
-function mod:EnergyCooldown(_, spellId, _, _, spellName)
-	self:Bar(spellName, 25, spellId)
+do
+	local sunBeamName = nil
+	local last = nil
+	function mod:EnergySpawns(unit, spellId, _, _, spellName)
+		local t = GetTime()
+		if not last or (t > last + 10) then
+			sunBeamName = unit
+			self:IfMessage(L["sunbeam_message"], "Important", spellId)
+			last = t
+		end
+	end
+	function mod:Deaths(name)
+		if not sunBeamName or name ~= sunBeamName then return end
+		self:Bar(L["sunbeam_bar"], 35, 62865)
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
