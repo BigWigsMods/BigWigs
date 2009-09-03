@@ -143,6 +143,9 @@ L:RegisterTranslations("zhCN", function() return {
 	boss_incoming = "即将%s！",
 
 	-- Gormok
+	snobold = "Snobold",
+	snobold_desc = "当玩家头上出现Snobold时发出警报。",
+	snobold_message = "Snobold：>%s<！",
 	impale_message = "%2$dx Impale：>%1$s<！",
 	firebomb_message = ">你< Fire Bomb！",
 
@@ -150,19 +153,27 @@ L:RegisterTranslations("zhCN", function() return {
 	spew = "Acidic/Molten Spew",
 	spew_desc = "当施放Acidic/Molten Spew时发出警报。",
 
+	slime_message = ">你< Slime pool！",
+	burn_spell = "Burning Bile",
+	toxin_spell = "Paralytic Toxin",
+
 	-- Icehowl
 	butt_bar = "<Ferocious Butt 冷却>",
 	charge = "野性冲锋",
 	charge_desc = "当玩家中了野性冲锋时发出警报。",
+
 --	charge_trigger = "^%%s",	--check
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!",
 	jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢魘吧，英雄們，快就定位!",
-	--icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!",
+	icehowl_trigger = "下一場參賽者的出場連空氣都會為之凝結:冰嚎!戰個你死我活吧，勇士們! ",
 	boss_incoming = "即將%s！",
 
 	-- Gormok
+	snobold = "極地狗頭人奴僕",
+	snobold_desc = "當玩家頭上出現極地狗頭人奴僕時發出警報。",
+	snobold_message = "極地狗頭人奴僕：>%s<！",
 	impale_message = "%2$dx 刺穿：>%1$s<！",
 	firebomb_message = ">你< 燃燒彈！",
 
@@ -170,10 +181,15 @@ L:RegisterTranslations("zhTW", function() return {
 	spew = "酸液/熔火噴灑",
 	spew_desc = "當施放酸液/熔火噴灑時發出警報。",
 
+	slime_message = ">你< 泥漿池！",
+	burn_spell = "燃燒膽汁",
+	toxin_spell = "痲痺劇毒",
+
 	-- Icehowl
 	butt_bar = "<兇猛頭擊 冷卻>",
 	charge = "狂烈衝鋒",
 	charge_desc = "當玩家中了狂烈衝鋒時發出警報。",
+
 --	charge_trigger = "^%%s",	--check
 } end)
 L:RegisterTranslations("ruRU", function() return {

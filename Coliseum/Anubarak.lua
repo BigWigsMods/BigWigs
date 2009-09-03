@@ -73,22 +73,36 @@ L:RegisterTranslations("deDE", function() return {
 	chase = "Verfolgen",
 } end)
 L:RegisterTranslations("zhCN", function() return {
-	--engage_message = "Anub'arak engaged, burrow in 80sec!",
+	engage_message = "阿努巴拉克已激活，80秒后，钻地！",
 --	engage_trigger = "This place will serve as your tomb!",
 
-	--unburrow_trigger = "%s emerges from the ground!",
+--	unburrow_trigger = "%s emerges from the ground!",
+--	burrow_trigger = "burrows into the ground",
 	burrow = "钻地",
 	burrow_desc = "当阿努巴拉克钻地时显示计时条。",
 	burrow_cooldown = "下一钻地",
+	burrow_soon = "即将 钻地！",
+
+	icon = "团队标记",
+	icon_desc = "为中了阿努巴拉克钻地追击的队员打上团队标记。（需要权限）",
+
+	chase = "追击",
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	--engage_message = "Anub'arak engaged, burrow in 80sec!",
+	engage_message = "阿努巴拉克進入戰斗，80秒後，鑽地！",
 	engage_trigger = "這裡將會是你們的墳墓!",
 
-	--unburrow_trigger = "%s emerges from the ground!",
+--	unburrow_trigger = "%s emerges from the ground!",
+--	burrow_trigger = "burrows into the ground",
 	burrow = "鑽地",
 	burrow_desc = "當阿努巴拉克鑽地時顯示計時條。",
 	burrow_cooldown = "下一鑽地",
+	burrow_soon = "即將 鑽地！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了阿努巴拉克鑽地追擊的隊員打上團隊標記。（需要權限）",
+
+	chase = "追擊",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	engage_message = "Ануб'арак вступил в бой, зарывание в землю через 80сек!",
