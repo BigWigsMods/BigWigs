@@ -39,10 +39,10 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_message = "전투 시작",
-	engage_trigger = "여기가 네 무덤이 되리라!",	--check
+	engage_trigger = "여기가 네 무덤이 되리라!",
 	
 	unburrow_trigger = "땅속에서 모습을 드러냅니다!",
-	burrow_trigger = "땅속으로",	--check
+	burrow_trigger = "땅속으로 숨어버립니다!",
 	burrow = "소멸",
 	burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다.",
 	burrow_cooldown = "다음 소멸",
