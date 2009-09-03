@@ -38,7 +38,7 @@ plugin.defaultDB = {
 local function get(info)
 	local key = info[#info]
 	if not plugin.db.profile[key] then return 9
-	else return plugin.db.profile[info[#info]] end
+	else return plugin.db.profile[key] end
 end
 local function set(info, index)
 	plugin.db.profile[info[#info]] = index > 8 and nil or index
@@ -60,7 +60,7 @@ plugin.pluginOptions = {
 		},
 		icon = {
 			type = "select",
-			name = "First",
+			name = "Primary",
 			desc = "The first raid target icon that a encounter script should use.",
 			order = 2,
 			values = icons,
@@ -68,7 +68,7 @@ plugin.pluginOptions = {
 		},
 		secondIcon = {
 			type = "select",
-			name = "Second",
+			name = "Secondary",
 			desc = "The second raid target icon that a encounter script should use.",
 			order = 3,
 			values = icons,
