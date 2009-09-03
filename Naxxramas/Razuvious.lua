@@ -123,7 +123,7 @@ function mod:Taunt(_, spellId, _, _, spellName)
 end
 
 function mod:Knife(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, unit, "Important", spellId)
+	self:TargetMessage(spellName, player, "Important", spellId)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
