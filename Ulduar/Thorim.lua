@@ -31,7 +31,6 @@ local hardModeMessageID = "" -- AceEvent flips out if not passed a string for :C
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local CL = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 L:RegisterTranslations("enUS", function() return {
 	["Runic Colossus"] = true, -- For the runic barrier emote.
@@ -289,7 +288,7 @@ function mod:Hammer(player, spellId, _, _, spellName)
 	self:Icon(player, "icon")
 end
 
-function mod:Strike(player, spellId)
+function mod:Strike(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Attention", spellId)
 	self:Bar(spellName..": "..player, 15, spellId)
 end
