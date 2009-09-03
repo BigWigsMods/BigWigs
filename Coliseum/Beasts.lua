@@ -62,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 	-- Jormungars
 	spew = "Acidic/Molten Spew",
 	spew_desc = "Warn for Acidic/Molten Spew.",
-	
+
 	slime_message = "Slime on YOU!",
 	burn_spell = "Burn",
 	toxin_spell = "Toxin",
@@ -100,12 +100,19 @@ L:RegisterTranslations("frFR", function() return {
 	boss_incoming = "Arrivée de %s",
 
 	-- Gormok
+	snobold = "Frigbold",
+	snobold_desc = "Prévient quand un joueur a un frigbold sur sa tête.",
+	snobold_message = "Frigbold sur %s !",
 	impale_message = "%2$dx Empaler sur %1$s",
 	firebomb_message = "Bombe incendiaire en dessous de VOUS !",
 
 	-- Jormungars
 	spew = "Crachement acide/de lave",
 	spew_desc = "Prévient de l'arrivée des Crachements acides/de lave.",
+
+	slime_message = "Bave sur VOUS !",
+	burn_spell = "Bile",
+	toxin_spell = "Toxine",
 
 	-- Icehowl
 	butt_bar = "~Recharge Coup de tête",
@@ -129,7 +136,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	burn_spell = "Galle",
 	toxin_spell = "Toxin",
-	
+
 	-- Icehowl
 	butt_bar = "~Kopfstoß",
 	charge = "Wütender Ansturm",
