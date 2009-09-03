@@ -31,4 +31,5 @@ Archavon.lua
 Malygos.lua
 Sartharion.lua
 Emalon.lua
+Koralon.lua
 

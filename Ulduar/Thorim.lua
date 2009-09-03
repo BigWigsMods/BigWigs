@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",
 	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "Phase 2 - Berserk in 5min!",
+	phase2_message = "Phase 2!",
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s engaged!",
 
