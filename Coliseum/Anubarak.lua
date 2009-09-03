@@ -164,7 +164,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["burrow_cooldown"], 80, 65919)
 		end
 		if db.berserk then
-			self:Enrage(600, true, true)
+			self:Enrage(570, true, true)
 		end
 	end
 end
