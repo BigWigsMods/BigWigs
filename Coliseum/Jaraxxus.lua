@@ -40,11 +40,11 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!",
 	engage_trigger1 = "황천으로 사라져라!",
 
-	incinerate_message = "Incinerate",
+	incinerate_message = "살점 소각",
 	incinerate_other = "살점 소각: %s",
 	incinerate_bar = "~살점 소각 대기시간",
 
-	legionflame_message = "Flame",
+	legionflame_message = "군단 불꽃",
 	legionflame_other = "군단 불꽃 : %s!",
 	legionflame_bar = "~군단 불꽃 대기시간",
 

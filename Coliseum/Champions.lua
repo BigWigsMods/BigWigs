@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Bloodlust on champions!"] = true,
 } end)
 L:RegisterTranslations("koKR", function() return {
-	enable_trigger = "다음 전투는 은빛 십자군에서 가장 쌘 기사들을 상대해야 하네! 그들을 이겨야만 자신의 가치를 인정받을걸세...",	--check
+	enable_trigger = "다음 전투는 은빛십자군에서 가장 센 기사들을 상대해야 하네... 그들을 이겨야만 자신의 가치를 인정받을 걸세.",
 	defeat_trigger = "상처뿐인 승리로군.",
 
 	["Shield on %s!"] = "기사무적: %s!",

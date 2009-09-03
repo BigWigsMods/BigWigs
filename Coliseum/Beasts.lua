@@ -74,12 +74,19 @@ L:RegisterTranslations("koKR", function() return {
 	boss_incoming = "%s 곧 등장",
 
 	-- Gormok
+	snobold = "스노볼트",
+	snobold_desc = "스노볼트가 누구의 머리위에 있는지를 알립니다.",
+	snobold_message = "스노볼트: %s!",
 	impale_message = "꿰뚫기 x%2$d: %1$s",
 	firebomb_message = "당신은 불 폭탄!",
 
 	-- Jormungars
 	spew = "산성/용암 내뿜기",
 	spew_desc = "산성/용암 내뿜기를 알립니다.",
+	
+	slime_message = "당신은 진흙 웅덩이!",
+	burn_spell = "불타는 담즙",
+	toxin_spell = "마비 독",
 
 	-- Icehowl
 	butt_bar = "~박치기 대기시간",
@@ -292,7 +299,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
 		if difficulty > 2 then
-			self:Bar(CL.berserk, 190)
+			self:Bar(CL["berserk"], 190)
 		end
 	end
 end
@@ -394,6 +401,7 @@ do
 	local last = nil
 	function mod:Slime(player, spellId)
 		if player == pName then
+			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(L["slime_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
