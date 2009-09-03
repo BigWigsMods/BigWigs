@@ -9,7 +9,7 @@ if not plugin then return end
 --      Are you local?      --
 ------------------------------
 
-local lastplayer = nil
+local lastplayer = {}
 local fmt = string.format
 local SetIcon = SetRaidTarget
 
@@ -74,7 +74,6 @@ plugin.pluginOptions = {
 			values = icons,
 			width = "full",
 		},
-
 	},
 }
 
@@ -87,17 +86,19 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_RemoveRaidIcon")
 end
 
-function plugin:BigWigs_SetRaidIcon(player)
+function plugin:BigWigs_SetRaidIcon(player, icon)
 	if not player then return end
 	if not GetRaidTargetIndex(player) then
-		SetIcon(player, self.db.profile.icon or 8)
-		lastplayer = player
+		local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
+		if not index then index = 8 end
+		SetIcon(player, index)
+		lastplayer[icon or 1] = player
 	end
 end
 
-function plugin:BigWigs_RemoveRaidIcon()
-	if not lastplayer then return end
-	SetIcon(lastplayer, 0)
-	lastplayer = nil
+function plugin:BigWigs_RemoveRaidIcon(icon)
+	if not lastplayer[icon or 1] then return end
+	SetIcon(lastplayer[icon or 1], 0)
+	lastplayer[icon or 1] = nil
 end
 
