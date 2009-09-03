@@ -53,18 +53,18 @@ L:RegisterTranslations("enUS", function() return {
 	vaporstack_desc = "Warn when you have 5 or more stacks of Saronite Vapors.",
 	vaporstack_message = "Vapors x%d!",
 
-	crash_say = "Crash on Me!",
+	crash_say = "Crash on me!",
 
 	crashsay = "Crash Say",
 	crashsay_desc = "Say when you are the target of Shadow Crash.",
 	crashicon = "Crash Icon",
-	crashicon_desc = "Place a Blue Square icon on the player targetted by Shadow Crash. (requires promoted or higher)",
+	crashicon_desc = "Place a secondary icon on the player targetted by Shadow Crash. (requires promoted or higher)",
 
 	mark_message = "Mark",
 	mark_message_other = "Mark on %s!",
 
 	icon = "Mark Icon",
-	icon_desc = "Place a raid target icon on the player targetted by Mark of the Faceless. (requires promoted or higher)",
+	icon_desc = "Place a primary icon on the player targetted by Mark of the Faceless. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -360,9 +360,7 @@ local function scanTarget(spellId, spellName)
 			mod:TargetMessage(spellName, target, "Personal", spellId, "Alert")
 			mod:Whisper(target, spellName)
 		end
-		if db.crashicon then
-			SetRaidTarget(target, 6)
-		end
+		self:SecondaryIcon(target, "crashicon")
 		mod:CancelScheduledEvent("BWCrashToTScan")
 	end
 end
@@ -371,7 +369,7 @@ function mod:Mark(player, spellId)
 	self:TargetMessage(L["mark_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["mark_message"])
 	self:Bar(L["mark_message_other"]:format(player), 10, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:Target(player, spellId, _, _, spellName)

@@ -379,6 +379,18 @@ function BigWigs.modulePrototype:Whisper(player, spellName, noName)
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
+function BigWigs.modulePrototype:PrimaryIcon(player, key)
+	if key and not self.db.profile[key] then return end
+	self:TriggerEvent("BigWigs_SetRaidIcon", player, 1)
+end
+
+-- XXX 2nd argument is a proposed API change, and is subject to change/removal.
+function BigWigs.modulePrototype:SecondaryIcon(player, key)
+	if key and not self.db.profile[key] then return end
+	self:TriggerEvent("BigWigs_SetRaidIcon", player, 2)
+end
+
+-- XXX 2nd argument is a proposed API change, and is subject to change/removal.
 function BigWigs.modulePrototype:Icon(player, key)
 	if key and not self.db.profile[key] then return end
 	self:TriggerEvent("BigWigs_SetRaidIcon", player)
