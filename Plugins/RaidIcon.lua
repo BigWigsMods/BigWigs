@@ -10,108 +10,71 @@ if not plugin then return end
 ------------------------------
 
 local lastplayer = nil
-
 local fmt = string.format
 local SetIcon = SetRaidTarget
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
+local icons = {
+	L["Star"],
+	L["Circle"],
+	L["Diamond"],
+	L["Triangle"],
+	L["Moon"],
+	L["Square"],
+	L["Cross"],
+	L["Skull"],
+	"|cffff0000Disable|r",
+}
 
 --------------------------------------------------------------------------------
 -- Options
 --
 
 plugin.defaultDB = {
-	place = true,
 	icon = 8,
+	secondIcon = 7,
 }
 
-local function get(key)
-	return plugin.db.profile.icon == key
+local function get(info)
+	local key = info[#info]
+	if not plugin.db.profile[key] then return 9
+	else return plugin.db.profile[info[#info]] end
 end
-local function set(key, val)
-	plugin.db.profile.icon = key
-end
-local function disabled()
-	return not plugin.db.profile.place
+local function set(info, index)
+	plugin.db.profile[info[#info]] = index > 8 and nil or index
 end
 
 plugin.pluginOptions = {
 	type = "group",
 	name = L["Raid Icons"],
 	desc = L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."],
+	get = get,
+	set = set,
 	args = {
-		Star = {
-			type = "toggle",
-			name = L["Star"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Star"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 101,
+		description = {
+			type = "description",
+			name = "Some boss fights might include elements such as bomb-type abilities targetted on a specific player, one player being chased, or a specific player might be of special interest at some point during the encounter. Here you can configure which raid icons Big Wigs should use to mark these players. A Big Wigs encounter script can use up to 2 raid icons at the same time.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same boss, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r",
+			order = 1,
+			width = "full",
+			fontSize = "medium",
 		},
-		Circle = {
-			type = "toggle",
-			name = L["Circle"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Circle"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 102,
+		icon = {
+			type = "select",
+			name = "First",
+			desc = "The first raid target icon that a encounter script should use.",
+			order = 2,
+			values = icons,
+			width = "full",
 		},
-		Diamond = {
-			type = "toggle",
-			name = L["Diamond"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Diamond"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 103,
+		secondIcon = {
+			type = "select",
+			name = "Second",
+			desc = "The second raid target icon that a encounter script should use.",
+			order = 3,
+			values = icons,
+			width = "full",
 		},
-		Triangle = {
-			type = "toggle",
-			name = L["Triangle"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Triangle"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 104,
-		},
-		Moon = {
-			type = "toggle",
-			name = L["Moon"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Moon"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 105,
-		},
-		Square = {
-			type = "toggle",
-			name = L["Square"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Square"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 106,
-		},
-		Cross = {
-			type = "toggle",
-			name = L["Cross"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Cross"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 107,
-		},
-		Skull = {
-			type = "toggle",
-			name = L["Skull"],
-			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Skull"]),
-			get = get,
-			set = set,
-			disabled = disabled,
-			order = 108,
-		},
+
 	},
 }
 
@@ -122,14 +85,10 @@ plugin.pluginOptions = {
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_SetRaidIcon")
 	self:RegisterEvent("BigWigs_RemoveRaidIcon")
-
-	if type(self.db.profile.icon) ~= "number" then
-		self.db.profile.icon = 8
-	end
 end
 
 function plugin:BigWigs_SetRaidIcon(player)
-	if not player or not self.db.profile.place then return end
+	if not player then return end
 	if not GetRaidTargetIndex(player) then
 		SetIcon(player, self.db.profile.icon or 8)
 		lastplayer = player
@@ -137,7 +96,7 @@ function plugin:BigWigs_SetRaidIcon(player)
 end
 
 function plugin:BigWigs_RemoveRaidIcon()
-	if not lastplayer or not self.db.profile.place then return end
+	if not lastplayer then return end
 	SetIcon(lastplayer, 0)
 	lastplayer = nil
 end
