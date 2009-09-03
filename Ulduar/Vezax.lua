@@ -360,7 +360,7 @@ local function scanTarget(spellId, spellName)
 			mod:TargetMessage(spellName, target, "Personal", spellId, "Alert")
 			mod:Whisper(target, spellName)
 		end
-		self:SecondaryIcon(target, "crashicon")
+		mod:SecondaryIcon(target, "crashicon")
 		mod:CancelScheduledEvent("BWCrashToTScan")
 	end
 end
