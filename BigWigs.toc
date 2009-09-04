@@ -17,7 +17,7 @@
 ## X-Category: Raid
 ## X-License: See license.txt
 
-## OptionalDeps: Ace3, Ace2, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0
+## OptionalDeps: Ace3, Ace2, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0, DewdropLib
 
 ## SavedVariables: BigWigsDB
 
