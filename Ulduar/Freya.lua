@@ -354,8 +354,7 @@ local function scanTarget(spellId, spellName)
 	end
 	if target then
 		mod:TargetMessage(spellName, target, "Attention", spellId)
-		mod:Whisper(target, spellName)
-		mod:Icon(target, "icon")
+		mod:SecondaryIcon(target, "icon")
 		mod:CancelScheduledEvent("BWsunbeamToTScan")
 	end
 end
@@ -371,7 +370,7 @@ function mod:Fury(player, spellId)
 	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["fury_message"])
 	self:Bar(L["fury_other"]:format(player), 10, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:FuryRemove(player)

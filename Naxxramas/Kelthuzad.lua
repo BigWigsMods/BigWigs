@@ -359,7 +359,8 @@ function mod:Detonate(player, spellId, _, _, spellName)
 	self:DelayedMessage(15, L["detonate_warning"], "Attention")
 end
 
-local function mcWarn(spellId, spellName)
+local function mcWarn(spellId)
+	local spellName = GetSpellInfo(605) -- Mind Control
 	mod:TargetMessage(spellName, mcTargets, "Important", spellId, "Alert")
 	mod:Bar(spellName, 20, 28410)
 	mod:DelayedMessage(68, L["mc_warning"], "Urgent")
@@ -368,7 +369,7 @@ end
 
 function mod:MC(player, spellId)
 	mcTargets[#mcTargets + 1] = player
-	self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId, GetSpellInfo(605)) --605 = Mind Control
+	self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId)
 end
 
 function mod:UNIT_HEALTH(msg)

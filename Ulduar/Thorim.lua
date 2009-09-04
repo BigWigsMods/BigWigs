@@ -43,9 +43,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
-	phase1_message = "Entering Phase 1",
+	phase1_message = "Phase 1",
 	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "Phase 2!",
+	phase2_message = "Phase 2, berserk in 6:15!",
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s engaged!",
 
@@ -291,7 +291,7 @@ end
 function mod:Hammer(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Urgent", spellId)
 	self:Bar(spellName, 16, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:Strike(player, spellId, _, _, spellName)
@@ -330,7 +330,7 @@ function mod:Detonation(player, spellId, _, _, spellName)
 		self:TargetMessage(spellName, player, "Important", spellId)
 	end
 	self:Bar(spellName..": "..player, 4, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -351,9 +351,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", CL["berserk"])
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
-		end
-		if db.berserk then
-			self:Enrage(300, true, true)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then
