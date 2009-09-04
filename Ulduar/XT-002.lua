@@ -51,9 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 	lightbomb_other = "Light on %s!",
 
 	tantrum_bar = "~Tantrum Cooldown",
-
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on players with Bomb. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -68,9 +65,6 @@ L:RegisterTranslations("koKR", function() return {
 	lightbomb_other = "빛의 폭탄: %s!",
 
 	tantrum_bar = "~땅울림 대기시간",
-
-	icon = "전술 표시",
-	icon_desc = "폭탄에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -85,9 +79,6 @@ L:RegisterTranslations("frFR", function() return {
 	lightbomb_other = "Lumière : %s",
 
 	tantrum_bar = "~Recharge Colère",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une bombe (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -105,9 +96,6 @@ L:RegisterTranslations("deDE", function() return {
 	lightbomb_other = "Lichtbombe: %s",
 
 	tantrum_bar = "~Betäubender Koller",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von einer Bombe getroffen werden (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -122,9 +110,6 @@ L:RegisterTranslations("zhCN", function() return {
 	lightbomb_other = "灼热之光：>%s<！",
 
 	tantrum_bar = "<发脾气 冷却>",
-
-	icon = "团队标记",
-	icon_desc = "为中了炸弹的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -139,9 +124,6 @@ L:RegisterTranslations("zhTW", function() return {
 	lightbomb_other = "灼熱之光：>%s<！",
 
 	tantrum_bar = "<躁怒 冷卻>",
-
-	icon = "團隊標記",
-	icon_desc = "為中了炸彈的隊員打上團隊標記。（需要權限）",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -156,9 +138,6 @@ L:RegisterTranslations("ruRU", function() return {
 	lightbomb_other = "Взрыв на |3-5(%s)!",
 
 	tantrum_bar = "~Раскаты ярости",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока с бомбой (необходимо обладать промоутом).",
 } end )
 
 ------------------------------
@@ -170,7 +149,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193, 65737)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "GravityBomb", 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightBomb", 63018, 65121)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "BombRemoved", 63018, 63024, 64234, 65121)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "GravityRemoved", 63024, 64234)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "LightRemoved", 63018, 65121)
 	self:AddCombatListener("SPELL_CAST_START", "Tantrum", 62776)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -209,9 +189,7 @@ function mod:GravityBomb(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
 	self:Bar(L["gravitybomb_other"]:format(player), 9, spellId)
-	if db.gravitybombicon then
-		SetRaidTarget(player, 6)
-	end
+	self:SecondaryIcon(player, "gravitybombicon")
 end
 
 function mod:LightBomb(player, spellId, _, _, spellName)
@@ -221,13 +199,21 @@ function mod:LightBomb(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
 	self:Bar(L["lightbomb_other"]:format(player), 9, spellId)
-	self:Icon(player, "lighticon")
+	self:PrimaryIcon(player, "lighticon")
+end
+
+function mod:GravityRemoved(player)
+	if player == pName then
+		self:TriggerEvent("BigWigs_HideProximity", self)
+	end
+	self:SecondaryIcon(false)
 end
 
 function mod:BombRemoved(player)
 	if player == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
+	self:PrimaryIcon(false)
 end
 
 function mod:UNIT_HEALTH(msg)

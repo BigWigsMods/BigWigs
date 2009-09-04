@@ -103,7 +103,7 @@ function mod:Inject(player, spellId)
 	self:TargetMessage(L["bomb_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["bomb_message"])
 	self:Bar(L["bomb_message_other"]:format(player), 10, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:Cloud(_, spellId, _, _, spellName)

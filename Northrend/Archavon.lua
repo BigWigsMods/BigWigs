@@ -158,7 +158,7 @@ function mod:Cloud(player, spellId)
 	end
 end
 
-local function ScanTarget(spellId, spellName)
+local function scanTarget(spellId, spellName)
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
@@ -175,15 +175,13 @@ local function ScanTarget(spellId, spellName)
 	end
 	if target then
 		mod:TargetMessage(spellName, target, "Important", spellId)
-		if mod.db.profile.icon then
-			mod:Icon(target)
-		end
+		mod:PrimaryIcon(target, "icon")
 	end
 end
 
 function mod:Shards(_, spellId, _, _, spellName)
-	self:ScheduleEvent("BWShardsToTScan", ScanTarget, 0.2, spellId, spellName)
-	self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, self)
+	self:ScheduleEvent("BWShardsToTScan", scanTarget, 0.2, spellId, spellName)
+	self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, 1)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)

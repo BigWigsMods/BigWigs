@@ -381,13 +381,21 @@ end
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
 function BigWigs.modulePrototype:PrimaryIcon(player, key)
 	if key and not self.db.profile[key] then return end
-	self:TriggerEvent("BigWigs_SetRaidIcon", player, 1)
+	if not player then
+		self:TriggerEvent("BigWigs_RemoveRaidIcon", 1)
+	else
+		self:TriggerEvent("BigWigs_SetRaidIcon", player, 1)
+	end
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
 function BigWigs.modulePrototype:SecondaryIcon(player, key)
 	if key and not self.db.profile[key] then return end
-	self:TriggerEvent("BigWigs_SetRaidIcon", player, 2)
+	if not player then
+		self:TriggerEvent("BigWigs_RemoveRaidIcon", 2)
+	else
+		self:TriggerEvent("BigWigs_SetRaidIcon", player, 2)
+	end
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.

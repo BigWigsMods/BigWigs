@@ -452,7 +452,8 @@ function BigWigs:BigWigs_RecvSync(sync, module, sender)
 				mod:Message(L["%s have been defeated"]:format(module), "Bosskill", nil, "Victory")
 			end
 		end
-		mod:TriggerEvent("BigWigs_RemoveRaidIcon")
+		mod:PrimaryIcon(false)
+		mod:SecondaryIcon(false)
 		self:ToggleModuleActive(mod, false)
 	end
 end

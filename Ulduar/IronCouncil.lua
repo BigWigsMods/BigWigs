@@ -235,7 +235,7 @@ function mod:Overwhelm(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
 	self:Bar(L["overwhelm_other"]:format(player), overwhelmTime, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:OverRemove(player)
@@ -302,7 +302,7 @@ local function targetCheck()
 				mod:IfMessage(L["chased_other"]:format(target), "Attention")
 				mod:Whisper(player, L["chased_you"])
 			end
-			mod:Icon(target, "icon")
+			mod:PrimaryIcon(target, "icon")
 			previous = target
 		else
 			previous = nil
@@ -312,7 +312,7 @@ end
 
 local function tendrilsRemove()
 	mod:CancelScheduledEvent("BWTendrilsToTScan")
-	mod:TriggerEvent("BigWigs_RemoveRaidIcon")
+	mod:PrimaryIcon(false, "icon")
 end
 
 function mod:Tendrils(_, spellId, _, _, spellName)

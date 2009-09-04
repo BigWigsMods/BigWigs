@@ -189,13 +189,11 @@ function mod:LegionFlame(player, spellId)
 	self:Whisper(player, L["legionflame_message"])
 	self:Bar(L["legionflame_other"]:format(player), 8, spellId)
 	self:Bar(L["legionflame_bar"], 30, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
-function mod:RemoveLegionFlameIcon(player, spellId)
-	if self.db.profile.icon then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-	end
+function mod:RemoveLegionFlameIcon()
+	self:PrimaryIcon(false, "icon")
 end
 
 function mod:NetherPower(unit, spellId, _, _, spellName)

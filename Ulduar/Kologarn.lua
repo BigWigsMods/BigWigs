@@ -287,8 +287,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
 		self:Bar(L["eyebeam_bar"], 20, 63976)
-		self:Icon(rest, "icon")
-		self:ScheduleEvent("BWRemoveEyeIcon", "BigWigs_RemoveRaidIcon", 11, self)
+		self:PrimaryIcon(rest, "icon")
+		self:ScheduleEvent("BWRemoveEyeIcon", "BigWigs_RemoveRaidIcon", 11, 1)
 	end
 end
 

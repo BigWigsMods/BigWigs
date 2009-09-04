@@ -252,11 +252,11 @@ function mod:Icebolt(player, spellId, _, _, spellName)
 	else
 		self:TargetMessage(spellName, player, "Attention", spellId)
 	end
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:RemoveIcon()
-	self:TriggerEvent("BigWigs_RemoveRaidIcon")
+	self:PrimaryIcon(false, "icon")
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)

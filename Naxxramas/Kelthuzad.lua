@@ -353,7 +353,7 @@ end
 function mod:Detonate(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 	self:Bar(L["detonate_other"]:format(player), 5, spellId)
 	self:Bar(L["detonate_possible_bar"], 20, spellId)
 	self:DelayedMessage(15, L["detonate_warning"], "Attention")

@@ -188,7 +188,7 @@ function mod:Cloud(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Positive", spellId, "Info")
 	self:Whisper(player, spellName)
 	self:Bar(spellName..": "..player, 30, spellId)
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:FlashCast(_, spellId, _, _, spellName)

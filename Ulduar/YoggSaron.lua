@@ -476,11 +476,11 @@ function mod:Roar(_, spellId, _, _, spellName)
 end
 
 function mod:Malady(player)
-	self:Icon(player)
+	self:PrimaryIcon(player)
 end
 
 function mod:RemoveMalady(player)
-	self:TriggerEvent("BigWigs_RemoveRaidIcon")
+	self:PrimaryIcon(false)
 end
 
 function mod:Squeeze(player, spellId, _, _, spellName)

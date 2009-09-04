@@ -154,7 +154,7 @@ end
 function mod:Pursue(player, spellId)
 	self:TargetMessage(L["chase"], player, "Personal", spellId)
 	self:Whisper(player, L["chase"])
-	self:Icon(player, "icon")
+	self:PrimaryIcon(player, "icon")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
