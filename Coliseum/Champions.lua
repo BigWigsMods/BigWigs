@@ -70,7 +70,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
-	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
+	defeat_trigger = "膚淺而悲痛的勝利。今天痛失的生命反而令我們更加的頹弱。除了巫妖王之外，誰還能從中獲利?偉大的戰士失去了寶貴生命。為了什麼?真正的威脅就在前方 - 巫妖王在死亡的領域中等著我們。",
 
 	["Shield on %s!"] = "聖盾術：>%s<！",
 	["Bladestorming!"] = "劍刃風暴！",
