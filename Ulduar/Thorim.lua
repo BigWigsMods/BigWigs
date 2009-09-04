@@ -5,11 +5,10 @@
 local boss = BB["Thorim"]
 local mod = BigWigs:New(boss, "$Revision$")
 if not mod then return end
-local CL = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local behemoth = BB["Jormungar Behemoth"]
 mod.zonename = BZ["Ulduar"]
 mod.guid = 32865	--Sif(33196)
-mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "hardmode", -1, 62042, 62331, 62017, 62338, 62526, 62279, 62130, -1, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 mod.consoleCmd = "Thorim"
@@ -31,6 +30,7 @@ local hardModeMessageID = "" -- AceEvent flips out if not passed a string for :C
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local CL = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 L:RegisterTranslations("enUS", function() return {
 	["Runic Colossus"] = true, -- For the runic barrier emote.
@@ -43,18 +43,22 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s engaged!",
 
-	hardmode = "Hard mode timer",
-	hardmode_desc = "Show timer for when you have to reach Thorim in order to enter hard mode in phase 3.",
+	hardmode = "Hard mode",
+	hardmode_desc = "Show timer for hard mode.",
 	hardmode_warning = "Hard mode expires",
 
+	hammer_message = "Hammer on %s",
+	impale_message = "Impale on %s",
 	shock_message = "You're getting shocked!",
 	barrier_message = "Barrier up!",
 
+	detonation_message = "Bomb on %s!",
 	detonation_say = "I'm a bomb!",
 
 	charge_message = "Charged x%d!",
 	charge_bar = "Charge %d",
 
+	strike_message= "Unbalancing Strike: %s",
 	strike_bar = "Unbalancing Strike CD",
 
 	end_trigger = "Stay your arms! I yield!",
@@ -72,18 +76,25 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "건방진 젖먹이 같으니... 감히 여기까지 기어올라와 내게 도전해? 내 손으로 쓸어버리겠다!",
 	phase3_message = "3 단계 - %s 전투시작!",
 
+	p2berserk = "2 단계 - 광폭화",
+	p2berserk_desc = "1 단계의 보스 광폭화를 알립니다.",
+
 	hardmode = "도전 모드 시간",
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_warning = "도전 모드 종료",
 
+	hammer_message = "폭풍망치: %s",
+	impale_message = "꿰뚫기: %s",
 	shock_message = "당신은 번개 충격! 이동!",
 	barrier_message = "거인 - 룬문자 방벽!",
 
+	detonation_message = "룬 폭발: %s",
 	detonation_say = "저 푹탄이에요! 피하세요!",
 
 	charge_message = "충전 (%d)!",
 	charge_bar = "충전 (%d)",
 
+	strike_message= "혼란의 일격: %s",
 	strike_bar = "혼란의 일격 대기시간",
 
 	end_trigger = "무기를 거둬라! 내가 졌다!",
@@ -93,8 +104,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["Runic Colossus"] = "Colosse runique", -- For the runic barrier emote.
-
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Début de la phase 1",
@@ -103,18 +112,25 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !",
 	phase3_message = "Phase 3 - %s engagé !",
 
+	p2berserk = "Phase 2 - Berserk",
+	p2berserk_desc = "Prévient quand le boss devient fou furieux en phase 2.",
+
 	hardmode = "Délai du mode difficile",
 	hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse).",
 	hardmode_warning = "Délai du mode difficile dépassé",
 
+	hammer_message = "Marteau-tempête : %s",
+	impale_message = "Empaler : %s",
 	shock_message = "Horion de foudre sur VOUS !",
 	barrier_message = "Barrière runique actif !",
 
+	detonation_message = "Détonation : %s",
 	detonation_say = "Je suis une bombe !",
 
 	charge_message = "Charge de foudre x%d !",
 	charge_bar = "Charge %d",
 
+	strike_message = "Frappe : %s",
 	strike_bar = "Recharge Frappe",
 
 	end_trigger = "Retenez vos coups ! Je me rends !",
@@ -136,14 +152,18 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_warning = "Hard Mode beendet!",
 
+	hammer_message = "Sturmhammer: %s!",
+	impale_message = "Durchbohren: %s!",
 	shock_message = "DU wirst geschockt!",
 	barrier_message = "Runenbarriere oben!",
 
+	detonation_message = "Bombe: %s!",
 	detonation_say = "Ich bin die Bombe!",
 
 	charge_message = "Blitzladung x%d!",
 	charge_bar = "Blitzladung %d",
 
+	strike_message= "Schlag: %s!",
 	strike_bar = "~Schlag",
 
 	end_trigger = "Senkt Eure Waffen! Ich ergebe mich!",
@@ -157,7 +177,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "当进入不同阶段发出警报。",
 	phase1_message = "第一阶段！",
 --	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "第二阶段 - 5分钟后，狂暴！",
+	--phase2_message = "第二阶段 - 6分15秒后，狂暴！",
 --	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "第三阶段 - %s已激怒！",
 
@@ -165,14 +185,18 @@ L:RegisterTranslations("zhCN", function() return {
 	hardmode_desc = "显示困难模式计时器。",
 	hardmode_warning = "困难模式结束！",
 
+	hammer_message = "风暴之锤：>%s<！",
+	impale_message = "穿刺：>%s<！",
 	shock_message = ">你< 闪电震击！移动！",
 	barrier_message = "符文巨像 - 符文屏障！",
 
+	detonation_message = "符文爆裂：>%s<！",
 	detonation_say = "我是炸弹！",
 
 	charge_message = "闪电充能：>%d<！",
 	charge_bar = "<闪电充能：%d>",
 
+	strike_message= "重压打击：>%s<！",
 	strike_bar = "<重压打击 冷却>",
 
 --	end_trigger = "Stay your arms! I yield!",
@@ -186,7 +210,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_desc = "當進入不同階段發出警報。",
 	phase1_message = "第一階段！",
 	phase2_trigger = "擅闖者!像你們這種膽敢干涉我好事的凡人將付出…等等--你……",
-	phase2_message = "第二階段 - 5分鐘後，狂暴！",
+	--phase2_message = "第二階段 - 6分15秒後，狂暴！",
 	phase3_trigger = "無禮的小輩，你竟敢在我的王座之上挑戰我?我會親手碾碎你們!",
 	phase3_message = "第三階段 - %s已狂怒！",
 
@@ -194,14 +218,18 @@ L:RegisterTranslations("zhTW", function() return {
 	hardmode_desc = "顯示困難模式計時器。",
 	hardmode_warning = "困難模式結束！",
 
+	hammer_message = "風暴之錘：>%s<！",
+	impale_message = "刺穿：>%s<！",
 	shock_message = ">你< 閃電震擊！移動！",
 	barrier_message = "符文巨像 - 符刻屏障！",
 
+	detonation_message = "引爆符文：>%s<！",
 	detonation_say = "我是炸彈！",
 
 	charge_message = "閃電能量：>%d<！",
 	charge_bar = "<閃電能量：%d>",
 
+	strike_message= "失衡打擊：>%s<！",
 	strike_bar = "<失衡打擊 冷卻>",
 
 	end_trigger = "住手!我認輸了!",
@@ -223,13 +251,18 @@ L:RegisterTranslations("ruRU", function() return {
 	hardmode_desc = "Отображения таймера для сложного режима.",
 	hardmode_warning = "Завершение сложного режима",
 
+	hammer_message = "Молот брошен в |3-3(%s)",
+	impale_message = "%s проколот! Лечите!", 
 	shock_message = "На вас Поражение громом! Шевелитесь!",
 	barrier_message = "Колосс под Рунической преградой!",
 
+	detonation_message = "Бомба у: |3-1(%s)",
 	detonation_say = "Я БОМБА!",
 
 	charge_message = "Разряд: x%d",
 	charge_bar = "Разряд %d",
+
+	strike_message= "Удар по: |3-2(%s)",
 
 	end_trigger = "Придержите мечи! Я сдаюсь.",
 
@@ -283,14 +316,14 @@ function mod:Charge(_, spellId)
 end
 
 function mod:Hammer(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Urgent", spellId)
+	self:TargetMessage(L["hammer_message"], player, "Urgent", spellId)
 	self:Bar(spellName, 16, spellId)
 	self:Icon(player, "icon")
 end
 
-function mod:Strike(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
-	self:Bar(spellName..": "..player, 15, spellId)
+function mod:Strike(player, spellId)
+	self:TargetMessage(L["strike_message"], player, "Attention", spellId)
+	self:Bar(L["strike_message"]:format(player), 15, spellId)
 end
 
 function mod:StrikeCooldown(player, spellId)
@@ -313,17 +346,18 @@ function mod:Shock(player, spellId)
 	end
 end
 
-function mod:Impale(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Important", spellId)
+function mod:Impale(player, spellId)
+	self:TargetMessage(L["impale_message"], player, "Important", spellId)
 end
 
-function mod:Detonation(player, spellId, _, _, spellName)
+function mod:Detonation(player, spellId)
 	if player == pName then
+		self:WideMessage(L["detonation_message"]:format(player))
 		SendChatMessage(L["detonation_say"], "SAY")
 	else
-		self:TargetMessage(spellName, player, "Important", spellId)
+		self:TargetMessage(L["detonation_message"], player, "Important", spellId)
 	end
-	self:Bar(spellName..": "..player, 4, spellId)
+	self:Bar(L["detonation_message"]:format(player), 4, spellId)
 	self:Icon(player, "icon")
 end
 
@@ -333,7 +367,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
 		if db.berserk then
-			self:Bar(CL["berserk"], 375, 20484)
+			self:Bar(CL["berserk"], 300, 20484)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
@@ -359,8 +393,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		chargeCount = 1
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
 		if db.phase then
 			self:IfMessage(L["phase1_message"], "Attention")

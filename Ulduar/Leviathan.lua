@@ -1,4 +1,4 @@
-----------------------------------
+﻿----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -10,6 +10,12 @@ mod.enabletrigger = boss
 mod.guid = 33113
 mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
 mod.consoleCmd = "Leviathan"
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -25,6 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 	pursue_desc = "Warn when Flame Leviathan pursues a player.",
 	pursue_trigger = "^%%s pursues",
 	pursue_other = "Leviathan pursues %s!",
+	pursue_you = "Leviathan pursues YOU!",
 
 	shutdown_message = "Systems down!",
 } end)
@@ -37,6 +44,7 @@ L:RegisterTranslations("koKR", function() return {
 	pursue_desc = "플레이어에게 거대 화염전차의 추적을 알립니다.",
 	pursue_trigger = "([^%s]+)|1을;를; 쫓습니다.$",
 	pursue_other = "%s 추격!",
+	pursue_you = "당신을 추격!",
 
 	shutdown_message = "시스템 작동 정지!",
 } end)
@@ -49,6 +57,7 @@ L:RegisterTranslations("frFR", function() return {
 	pursue_desc = "Prévient quand le Léviathan des flammes poursuit un joueur.",
 	pursue_trigger = "^%%s poursuit",
 	pursue_other = "Poursuivi(e) : %s",
+	pursue_you = "Léviathan des flammes VOUS poursuit !",
 
 	shutdown_message = "Extinction des systèmes !",
 } end)
@@ -57,10 +66,11 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Feindeinheiten erkannt",
 	engage_message = "%s angegriffen!",
 
-	pursue = "Verfolgen",
+	pursue = "Verfolgung",
 	pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt.",
 	pursue_trigger = "^%%s verfolgt",
-	pursue_other = "Verfolgen: %s",
+	pursue_other = "%s wird verfolgt!",
+	pursue_you = "DU wirst verfolgt!",
 
 	shutdown_message = "Systemabschaltung!",
 } end)
@@ -73,6 +83,7 @@ L:RegisterTranslations("zhCN", function() return {
 	pursue_desc = "当烈焰巨兽追踪玩家时发出警报。",
 --	pursue_trigger = "^%%s被追踪",
 	pursue_other = "烈焰巨兽追踪：>%s<！",
+	pursue_you = ">你< 烈焰巨兽追踪！",
 
 	shutdown_message = "系统关闭！",
 } end)
@@ -85,6 +96,7 @@ L:RegisterTranslations("zhTW", function() return {
 	pursue_desc = "當烈焰戰輪獵殺玩家時發出警報。",
 	pursue_trigger = "^%%s緊追",
 	pursue_other = "烈焰戰輪獵殺：>%s<！",
+	pursue_you = ">你< 烈焰戰輪獵殺！",
 
 	shutdown_message = "系統關閉！",
 } end)
@@ -97,6 +109,7 @@ L:RegisterTranslations("ruRU", function() return {
 	pursue_desc = "Сообщать когда Огненный Левиафан преследует игрока.",
 	pursue_trigger = "^%%s наводится на",
 	pursue_other = "Левиафан преследует |3-3(%s)!",
+	pursue_you = "Левиафан преследует ВАС!",
 
 	shutdown_message = "Отключение системы!",
 } end)
@@ -147,7 +160,12 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
 	if unit == boss and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
-		self:TargetMessage(L["pursue"], player, "Personal", 62374, "Alarm")
+		if player == pName then
+			self:LocalMessage(L["pursue_you"], "Personal", 62374, "Alarm")
+			self:WideMessage(L["pursue_other"]:format(player))
+		else
+			self:TargetMessage(L["pursue_other"], player, "Attention", 62374)
+		end
 		self:Bar(L["pursue_other"]:format(player), 30, 62374)
 	end
 end

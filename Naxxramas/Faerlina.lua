@@ -46,10 +46,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	starttrigger1 = "Склонитесь передо мной, черви!",
-	starttrigger2 = "Убейте их во имя господина!",
-	starttrigger3 = "Вам не скрыться от меня!",
-	starttrigger4 = "Бегите, пока еще можете!",
+	starttrigger1 = "Склонитесь передо мной, черви!",  
+	starttrigger2 = "Убейте их во имя господина!",  
+	starttrigger3 = "Вам не скрыться от меня!",  
+	starttrigger4 = "Бегите, пока еще можете!",  
 
 	startwarn = "Великая вдова Фарлина вступает в бой, 60 секунд до бешенства!",
 	enragewarn15sec = "15 секунд до Бешенства!",
@@ -75,7 +75,7 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Raserei!",
 	enragewarn2 = "Raserei bald!",
 	enrageremovewarn = "Raserei vorbei! Nächste in ~60 sek!",
-
+	
 	silencewarn = "Stille! Raserei verzögert!",
 	silencewarn5sec = "Stille endet in 5 sek!",
 	silencebar = "Stille",

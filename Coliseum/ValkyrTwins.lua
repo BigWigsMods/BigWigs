@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -12,7 +12,7 @@ mod.enabletrigger = { eydis, fjola }
 mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
-mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
+mod.toggleOptions = {"vortex", "shield", "berserk", "touch", "bosskill"}
 mod.consoleCmd = "Twins"
 
 --------------------------------------------------------------------------------
@@ -20,6 +20,7 @@ mod.consoleCmd = "Twins"
 --
 
 local db = nil
+local pName = UnitName("player")
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
 
@@ -29,7 +30,7 @@ local essenceDark = GetSpellInfo(67176)
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
-	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
+	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
 
 	vortex_or_shield_cd = "Next Vortex or Shield",
 
@@ -41,11 +42,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	touch = "Touch of Darkness/Light",
 	touch_desc = "Warn for Touch of Darkness/Light",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_on_you = "Light on YOU",
+	touch_of_light_on_other = "Light on %s",
+	touch_of_dark_on_you = "Darkness on YOU",
+	touch_of_dark_on_other = "Darkness on %s",
 } end)
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라.",
+	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여.",	--check
 
 	vortex_or_shield_cd = "소용돌이/방패 대기시간",
 
@@ -57,8 +60,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	touch = "어둠/빛의 손길",
 	touch_desc = "어둠/빛의 손길을 알립니다.",
-	touch_of_light_message = "빛의 손길",
-	touch_of_dark_message = "어둠의 손길",
+	touch_of_light_on_you = "당신은 빛의 손길!",
+	touch_of_light_on_other = "빛의 손길: %s",
+	touch_of_dark_on_you = "당신은 어둠의 손길!",
+	touch_of_dark_on_other = "어둠의 손길: %s",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
@@ -73,11 +78,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	touch = "Toucher des ténèbres/de lumière",
 	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_on_you = "Lumière sur VOUS !",
+	touch_of_light_on_other = "Lumière sur %s",
+	touch_of_dark_on_you = "Ténèbres sur VOUS !",
+	touch_of_dark_on_other = "Ténèbres sur %s",
 } end)
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",
+	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",	
 
 	vortex_or_shield_cd = "~Vortex/Schild",
 
@@ -89,13 +96,16 @@ L:RegisterTranslations("deDE", function() return {
 
 	touch = "Berührung der Nacht/Licht",
 	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_on_you = "Berührung des Lichts auf DIR!",
+	touch_of_light_on_other = "Berührung des Lichts: %s!",
+	touch_of_dark_on_you = "Berührung der Nacht auf DIR!",
+	touch_of_dark_on_other = "Berührung der Nacht: %s!",
+	
 } end)
 L:RegisterTranslations("zhCN", function() return {
---	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
+--	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",	
 
-	vortex_or_shield_cd = "<下一Vortex/Shield>",
+	vortex_or_shield_cd = "<Vortex/Shield 冷却>",
 
 	vortex = "Vortex",
 	vortex_desc = "当双子开始施放Vortexes时发出警报。",
@@ -105,13 +115,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	touch = "Touch of Darkness/Light",
 	touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_on_you = ">你< Touch of Light！",
+	touch_of_light_on_other = "Touch of Light：>%s<！",
+	touch_of_dark_on_you = ">你< Touch of Darkness！",
+	touch_of_dark_on_other = "Touch of Darkness：>%s<！",
 } end)
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",
+	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",	
 
-	vortex_or_shield_cd = "<下一漩渦/盾>",
+	vortex_or_shield_cd = "<漩渦/盾 冷卻>",
 
 	vortex = "漩渦",
 	vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。",
@@ -121,24 +133,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	touch = "黑暗/光明之觸",
 	touch_desc = "當玩家中了黑暗/光明之觸時發出警報。",
-	touch_of_light_message = "光明之觸！",
-	touch_of_dark_message = "黑暗之觸！",
+	touch_of_light_on_you = ">你< 光明之觸！",
+	touch_of_light_on_other = "光明之觸：>%s<！",
+	touch_of_dark_on_you = ">你< 黑暗之觸！",
+	touch_of_dark_on_other = "黑暗之觸：>%s<！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
-	--engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
-
-	vortex_or_shield_cd = "Воронка или Щит",
-
-	vortex = "Воронка",
-	vortex_desc = "Сообщать когда близнецы начинают применять воронку.",
-
-	shield = "Щит Тьмы/Света",
-	shield_desc = "Сообщать о Щите Тьмы/Света.",
-
-	touch = "Касание тьмы/Света",
-	touch_desc = "Сообщать о Касании тьмы/Света",
-	touch_of_light_message = "Свет",
-	touch_of_dark_message = "Тьма",
 } end)
 
 --------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkTouch", 67281, 67282, 67283)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67296, 67297, 67298)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67296, 67297, 67298) 
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -163,16 +163,26 @@ end
 -- Event Handlers
 --
 
-function mod:DarkTouch(player, spellId)
+function mod:DarkTouch(_, spellId)
 	if not db.touch then return end
-	self:TargetMessage(L["touch_of_dark_message"], player, "Personal", spellId, "Info")
-	self:Whisper(player, L["touch_of_dark_message"])
+	if player == pName then
+		self:LocalMessage(L["touch_of_dark_on_you"], "Personal", spellId, "Info")
+		self:WideMessage(L["touch_of_dark_on_other"]:format(player))
+	else
+		self:TargetMessage(L["touch_of_dark_on_other"], player, "Attention", spellId)
+		self:Whisper(player, L["touch_of_dark_on_you"])
+	end
 end
 
-function mod:LightTouch(player, spellId)
+function mod:LightTouch(_, spellId)
 	if not db.touch then return end
-	self:TargetMessage(L["touch_of_light_message"], player, "Personal", spellId, "Info")
-	self:Whisper(player, L["touch_of_light_message"])
+	if player == pName then
+		self:LocalMessage(L["touch_of_light_on_you"], "Personal", spellId, "Info")
+		self:WideMessage(L["touch_of_light_on_other"]:format(player))
+	else
+		self:TargetMessage(L["touch_of_light_on_other"], player, "Attention", spellId)
+		self:Whisper(player, L["touch_of_light_on_you"])
+	end
 end
 
 function mod:DarkShield(_, spellId, _, _, spellName)
@@ -180,7 +190,7 @@ function mod:DarkShield(_, spellId, _, _, spellName)
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceDark)
 		if d then
-			self:IfMessage(spellName, "Important", spellId, "Alert")
+			self:LocalMessage(spellName, "Important", spellId, "Alert")
 		else
 			self:IfMessage(spellName, "Urgent", spellId)
 		end
@@ -192,7 +202,7 @@ function mod:LightShield(_, spellId, _, _, spellName)
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceLight)
 		if d then
-			self:IfMessage(spellName, "Important", spellId, "Alert")
+			self:LocalMessage(spellName, "Important", spellId, "Alert")
 		else
 			self:IfMessage(spellName, "Urgent", spellId)
 		end

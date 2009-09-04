@@ -37,6 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	lifedrain_warn1 = "Life Drain in ~5sec!",
 	lifedrain_bar = "~Possible Life Drain",
 
+	icebolt_other = "Block: %s",
 	icebolt_say = "I'm a Block!",
 
 	ping = "Ping",
@@ -60,6 +61,7 @@ L:RegisterTranslations("ruRU", function() return {
 	lifedrain_warn1 = "Похищение жизни через 5 секунд!",
 	lifedrain_bar = "~Возможное похищение жизни",
 
+	icebolt_other = "%s в Глыбе!",
 	icebolt_say = "Я в глыбе!",
 
 	ping = "Мояк по мини-карте",
@@ -83,6 +85,7 @@ L:RegisterTranslations("koKR", function() return {
 	lifedrain_warn1 = "약 5초 이내 생명력 흡수!",
 	lifedrain_bar = "~생명력 흡수 가능",
 
+	icebolt_other = "방패: %s",
 	icebolt_say = "저 방패에요!",
 
 	ping = "미니맵 표시",
@@ -106,6 +109,7 @@ L:RegisterTranslations("deDE", function() return {
 	lifedrain_warn1 = "Lebensentzug in ~5 sek!",
 	lifedrain_bar = "~Lebensentzug",
 
+	icebolt_other = "Eisblock: %s",
 	icebolt_say = "Ich bin ein Eisblock!",
 
 	ping = "Ping",
@@ -129,6 +133,7 @@ L:RegisterTranslations("zhCN", function() return {
 	lifedrain_warn1 = "5秒后，生命吸取！",
 	lifedrain_bar = "<生命吸取>",
 
+	icebolt_other = "寒冰屏障：>%s<！",
 	icebolt_say = "我是寒冰屏障！快躲到我后面！",
 
 	ping = "点击",
@@ -152,6 +157,7 @@ L:RegisterTranslations("zhTW", function() return {
 	lifedrain_warn1 = "5秒後，生命吸取！",
 	lifedrain_bar = "<生命吸取>",
 
+	icebolt_other = "寒冰凍體：>%s<！",
 	icebolt_say = "我是寒冰凍體！快躲到我後面！",
 
 	ping = "點擊",
@@ -175,6 +181,7 @@ L:RegisterTranslations("frFR", function() return {
 	lifedrain_warn1 = "Drains de vie dans 5 sec. !",
 	lifedrain_bar = "Prochains Drains de vie",
 
+	icebolt_other = "Bloc : %s",
 	icebolt_say = "Je suis un bloc !",
 
 	ping = "Ping",
@@ -242,15 +249,16 @@ function mod:Drain(_, spellId)
 	self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
 end
 
-function mod:Icebolt(player, spellId, _, _, spellName)
+function mod:Icebolt(player, spellId)
 	if player == pName then
+		self:WideMessage(format(L["icebolt_other"], player))
 		SendChatMessage(L["icebolt_say"], "SAY")
-		if self.db.profile.ping then
+		if UnitIsUnit(player, "player") and self.db.profile.ping then
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])
 		end
 	else
-		self:TargetMessage(spellName, player, "Attention", spellId)
+		self:TargetMessage(L["icebolt_other"], player, "Attention", spellId)
 	end
 	self:Icon(player, "icon")
 end

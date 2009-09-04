@@ -10,7 +10,7 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
-mod.toggleOptions = {62979, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, 64465, "empowericon", 64163, 64189, "phase", 63050, 63120, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", 63050, 63120, "icon", -1, 62979, -1, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, -1, 64189, 64465, "empowericon", 64163, "berserk", "bosskill"}
 mod.consoleCmd = "Yogg"
 
 ------------------------------
@@ -18,6 +18,7 @@ mod.consoleCmd = "Yogg"
 ------------------------------
 
 local db = nil
+local squeezeName = GetSpellInfo(64126)
 local guardianCount = 1
 local crusherCount = 1
 local pName = UnitName("player")
@@ -67,11 +68,13 @@ L:RegisterTranslations("enUS", function() return {
 	tentacle_desc = "Warn for Crusher Tentacle spawn.",
 	tentacle_message = "Crusher %d!",
 
+	squeeze_message = squeezeName .. ": %s",
 	link_warning = "You are linked!",
 
 	gaze_bar = "~Gaze Cooldown",
 	empower_bar = "~Empower Cooldown",
 
+	insane_message = "Insane: %s",
 	guardian_message = "Guardian %d!",
 
 	empowericon = "Empower Icon",
@@ -80,6 +83,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	roar_warning = "Roar in 5sec!",
 	roar_bar = "Next Roar",
+
+	icon = "Place Icon",
+	icon_desc = "Place a Raid Icon on the player with Malady of the Mind. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -115,6 +121,7 @@ L:RegisterTranslations("ruRU", function() return {
 	tentacle_desc = "Сообщать о появлении тяжелого щупальца.",
 	tentacle_message = "Щупальце %d!",
 
+	squeeze_message = squeezeName .. ": %s",
 	link_warning = "У вас схожее мышление!",
 
 	gaze_bar = "~Взгляд безумца",
@@ -126,6 +133,9 @@ L:RegisterTranslations("ruRU", function() return {
 
 	roar_warning = "Крик через 5 сек!",
 	roar_bar = "Следущий крик",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока с душевной болезнью или находящегося под контролем разума (необходимо обладать промоутом).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -161,11 +171,16 @@ L:RegisterTranslations("koKR", function() return {
 	tentacle_desc = "촉수 소환을 알립니다.",
 	tentacle_message ="분쇄의 촉수(%d)",
 
+	squeeze_message = squeezeName .. ": %s",
 	link_warning = "당신은 두뇌의 고리!",
 
 	gaze_bar = "~시선 대기시간",
 	empower_bar = "~강화 대기시간",
 
+	mindcontrol = "정신 지배",
+	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
+
+	insane_message = "정신 지배: %s",
 	guardian_message = "수호자 소환 %d!",
 
 	empowericon = "암흑 강화 아이콘",
@@ -174,6 +189,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	roar_warning = "5초 후 포효!",
 	roar_bar = "다음 포효",
+
+	icon = "전술 표시",
+	icon_desc = "병든 정신에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -209,11 +227,13 @@ L:RegisterTranslations("frFR", function() return {
 	tentacle_desc = "Prévient quand un Tentacule écraseur apparaît.",
 	tentacle_message = "Écraseur %d !",
 
+	squeeze_message = squeezeName .. " : %s",
 	link_warning = "Votre cerveau est lié !",
 
 	gaze_bar = "~Recharge Regard",
 	empower_bar = "~Recharge Renforcement",
 
+	insane_message = "Emprise : %s",
 	guardian_message = "Gardien %d !",
 
 	empowericon = "Renforcement - Icône",
@@ -222,6 +242,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	roar_warning = "Rugissement dans 5 sec. !",
 	roar_bar = "Prochain Rugissement",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Mal de la raison (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -244,7 +267,7 @@ L:RegisterTranslations("deDE", function() return {
 	portal_bar = "Nächsten Portale",
 
 	sanity_message = "DU wirst verrückt!",
-
+	
 	weakened = "Geschwächt",
 	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
 	weakened_message = "%s ist geschwächt!",
@@ -257,11 +280,13 @@ L:RegisterTranslations("deDE", function() return {
 	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
 	tentacle_message = "Schmettertentakel %d!",
 
+	squeeze_message = squeezeName .. ": %s!",
 	link_warning = "DU bist verbunden!",
 
 	gaze_bar = "~Blick",
 	empower_bar = "~Machtvolle Schatten",
 
+	insane_message = "Gedankenkontrolle: %s!",
 	guardian_message = "Wächter %d!",
 
 	empowericon = "Schatten-Symbol",
@@ -270,6 +295,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	roar_warning = "Gebrüll in 5 sek!",
 	roar_bar = "Nächstes Gebrüll",
+
+	icon = "Schlachtzugs-Symbol",
+	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Geisteskrankheit oder Gedanken beherrschen betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -305,11 +333,13 @@ L:RegisterTranslations("zhCN", function() return {
 	tentacle_desc = "当粉碎触须出现时发出警报。",
 	tentacle_message = "粉碎触须：>%d<！",
 
+	squeeze_message = squeezeName .. "：>%s<！",
 	link_warning = ">你< 心智链接！",
 
 	gaze_bar = "<疯乱凝视 冷却>",
 	empower_bar = "<暗影信标 冷却>",
 
+	insane_message = "统御意志：>%s<！",
 	guardian_message = "召唤卫士：>%d<！",
 
 	empowericon = "暗影信标标记",
@@ -318,6 +348,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	roar_warning = "5秒后，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
+
+	icon_desc = "为中了心灵疾病的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -353,11 +385,13 @@ L:RegisterTranslations("zhTW", function() return {
 	tentacle_desc = "當粉碎觸手出現時發出警報。",
 	tentacle_message = "粉碎觸手：>%d<！",
 
+	squeeze_message = squeezeName .. "：>%s<！",
 	link_warning = ">你< 腦波連結！",
 
 	gaze_bar = "<癡狂凝視 冷卻>",
 	empower_bar = "<暗影信標 冷卻>",
 
+	insane_message = "支配心靈：>%s<！",
 	guardian_message = "尤格薩倫守護者：>%d<！ ",
 
 	empowericon = "暗影信標標記",
@@ -366,6 +400,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	roar_warning = "5秒後，震耳咆哮！",
 	roar_bar = "<下一震耳咆哮>",
+
+	icon_desc = "為中了心靈缺陷的隊員打上團隊標記。（需要權限）",
 } end )
 
 -- We need to add the player name to block those extremely stupid sanity loss
@@ -416,7 +452,7 @@ end
 ------------------------------
 
 function mod:Fervor(player, spellId)
-	self:Whisper(player, "DEBUFF, watch out!", true)
+	self:Whisper(player, "DEBUFF, watch out!")
 end
 
 do
@@ -435,7 +471,7 @@ do
 			self:IfMessage(L["sanity_message"], "Personal", spellId)
 			warned[player] = true
 		elseif stack < 31 then
-			self:Whisper(player, L["sanity_message"], true)
+			self:Whisper(player, L["sanity_message"])
 			warned[player] = true
 		end
 	end
@@ -446,8 +482,8 @@ function mod:Guardian(_, spellId)
 	guardianCount = guardianCount + 1
 end
 
-function mod:Insane(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+function mod:Insane(player, spellId)
+	self:TargetMessage(L["insane_message"], player, "Attention", spellId)
 end
 
 function mod:Tentacle(_, spellId, source, _, spellName)
@@ -468,15 +504,15 @@ function mod:Roar(_, spellId, _, _, spellName)
 end
 
 function mod:Malady(player)
-	self:Icon(player)
+	self:Icon(player, "icon")
 end
 
 function mod:RemoveMalady(player)
 	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
-function mod:Squeeze(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Positive", spellId)
+function mod:Squeeze(player, spellId)
+	self:TargetMessage(L["squeeze_message"], player, "Positive", spellId)
 end
 
 function mod:Linked(player, spellId)

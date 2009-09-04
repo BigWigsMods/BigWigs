@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
 local boss = BB["Faction Champions"]
@@ -17,6 +17,9 @@ L:RegisterTranslations("enUS", function() return {
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 	defeat_trigger = "A shallow and tragic victory.",
 
+	["Wyvern Sting on %s!"] = true,
+	["Blind on %s!"] = true,
+	["%s is sheeped!"] = true,
 	["Shield on %s!"] = true,
 	["Bladestorming!"] = true,
 	["Hunter pet up!"] = true,
@@ -25,20 +28,16 @@ L:RegisterTranslations("enUS", function() return {
 	["Bloodlust on champions!"] = true,
 } end)
 L:RegisterTranslations("koKR", function() return {
-	enable_trigger = "다음 전투는 은빛십자군에서 가장 센 기사들을 상대해야 하네... 그들을 이겨야만 자신의 가치를 인정받을 걸세.",
-	defeat_trigger = "상처뿐인 승리로군.",
-
-	["Shield on %s!"] = "기사무적: %s!",
-	["Bladestorming!"] = "칼날폭풍!",
-	["Hunter pet up!"] = "냥꾼 야수 소환!",
-	["Felhunter up!"] = "지옥사냥개 소환!",
-	["Heroism on champions!"] = "용사 영웅심!",
-	["Bloodlust on champions!"] = "용사 피의 욕망!",
+	enable_trigger = "다음 전투는 은빛 십자군에서 가장 쌘 기사들을 상대해야 하네! 그들을 이겨야만 자신의 가치를 인정받을걸세...",	--check
+	defeat_trigger = "상처뿐인 승리로군. 오늘 받은 손해로 우리 전력은 약해졌네. 이런 어리석은 짓으로 리치 왕 말고 또 누가 이득을 보겠나? 위대한 용사들이 목숨을 잃었네. 무엇을 위해서였나? 진짜 위협은 저 앞에 있네. 리치 왕이 우리 모두를 죽음 안에서 기다린다네.",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…",
 	defeat_trigger = "Une victoire tragique et dépourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait bénéficier d'une telle folie ? De grands guerriers ont perdu la vie. Et pour quoi ? La vraie menace plane à l'horizon : le roi-liche nous attend, tous, dans la mort.",
 
+	["Wyvern Sting on %s!"] = "Piqûre de wyverne sur %s !",
+	["Blind on %s!"] = "Cécité sur %s !",
+	["%s is sheeped!"] = "%s est métamorphosé !",
 	["Shield on %s!"] = "Bouclier sur %s !",
 	["Bladestorming!"] = "Tempête de lames !",
 	["Hunter pet up!"] = "Familier du chasseur revenu !",
@@ -49,7 +48,10 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren...",
 	--defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
-
+	
+	["Wyvern Sting on %s!"] = "Stich des Flügeldrachen: %s!",
+	["Blind on %s!"] = "Blenden: %s!",
+	["%s is sheeped!"] = "Verwandlung: %s!",
 	["Shield on %s!"] = "Schild: %s!",
 	["Bladestorming!"] = "Klingensturm!",
 	["Hunter pet up!"] = "Jäger Pet da!",
@@ -60,29 +62,18 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 --	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 --	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
-
-	["Shield on %s!"] = "圣盾术：>%s<！",
-	["Bladestorming!"] = "剑刃风暴！",
-	["Hunter pet up!"] = "召唤宠物！",
-	["Felhunter up!"] = "召唤地狱猎犬！",
-	["Heroism on champions!"] = "英勇！",
-	["Bloodlust on champions!"] = "嗜血！",
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy...",
 	defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death.",
-
-	["Shield on %s!"] = "聖盾術：>%s<！",
-	["Bladestorming!"] = "劍刃風暴！",
-	["Hunter pet up!"] = "呼喚寵物！",
-	["Felhunter up!"] = "召喚惡魔獵犬！",
-	["Heroism on champions!"] = "英勇氣概！",
-	["Bloodlust on champions!"] = "嗜血術！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду.",
 	defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом.",
-
+	
+	["Wyvern Sting on %s!"] = "Укус виверны на %s!",
+	["Blind on %s!"] = "%s - ослеплён!",
+	["%s is sheeped!"] = "%s в овце!",
 	["Shield on %s!"] = "Щит на %s",
 	["Bladestorming!"] = "Вихрь клинков!",
 	["Hunter pet up!"] = "Охотник воскресил питомца!",
@@ -115,16 +106,16 @@ end
 -- Event Handlers
 --
 
-function mod:Wyvern(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+function mod:Wyvern(player, spellId)
+	self:TargetMessage(L["Wyvern Sting on %s!"], player, "Attention", spellId)
 end
 
-function mod:Blind(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+function mod:Blind(player, spellId)
+	self:TargetMessage(L["Blind on %s!"], player, "Attention", spellId)
 end
 
-function mod:Polymorph(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+function mod:Polymorph(player, spellId)
+	self:TargetMessage(L["%s is sheeped!"], player, "Attention", spellId)
 end
 
 function mod:DivineShield(player, spellId)

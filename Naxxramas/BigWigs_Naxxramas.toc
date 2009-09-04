@@ -1,4 +1,4 @@
-## Interface: 30200
+﻿## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fNaxxramas|r]
 ## Notes: Big Wigs Naxxramas Modules
@@ -39,4 +39,3 @@ Loatheb.lua
 Horsemen.lua
 Sapphiron.lua
 Kelthuzad.lua
-

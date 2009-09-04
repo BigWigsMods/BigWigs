@@ -34,6 +34,8 @@ L:RegisterTranslations("enUS", function() return {
 	left_wipe_bar = "Respawn Left Arm",
 	right_wipe_bar = "Respawn Right Arm",
 
+	grip_message = "Stone Grip: %s",
+
 	shockwave = "Shockwave",
 	shockwave_desc = "Warn when the next Shockwave is coming.",
 	shockwave_trigger = "Oblivion!",
@@ -59,6 +61,8 @@ L:RegisterTranslations("koKR", function() return {
 	right_dies = "오른팔 죽음",
 	left_wipe_bar = "왼팔 재생성",
 	right_wipe_bar = "오른팔 재생성",
+
+	grip_message = "바위 손아귀: %s",
 
 	shockwave = "충격파",
 	shockwave_desc = "다음 충격파에 대하여 알립니다.",
@@ -86,6 +90,8 @@ L:RegisterTranslations("frFR", function() return {
 	left_wipe_bar = "Repousse bras gauche",
 	right_wipe_bar = "Repousse bras droit",
 
+	grip_message = "Poigne de pierre : %s",
+
 	shockwave = "Onde de choc",
 	shockwave_desc = "Prévient quand la prochaine Onde de choc arrive.",
 	shockwave_trigger = "OUBLI !",
@@ -112,6 +118,8 @@ L:RegisterTranslations("deDE", function() return {
 	left_wipe_bar = "Neuer linker Arm",
 	right_wipe_bar = "Neuer rechter Arm",
 
+	grip_message = "Griff: %s!",
+
 	shockwave = "Schockwelle",
 	shockwave_desc = "Timer für die Schockwelle.",
 	shockwave_trigger = "AUSLÖSCHUNG!",
@@ -119,7 +127,7 @@ L:RegisterTranslations("deDE", function() return {
 	eyebeam = "Fokussierter Augenstrahl",
 	eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist.",
 	eyebeam_trigger = "%s fokussiert seinen Blick auf Euch!",
-	eyebeam_message = "Augenstrahl: %s",
+	eyebeam_message = "Augenstrahl: %s!",
 	eyebeam_bar = "~Augenstrahl",
 	eyebeam_you = "Augenstrahl auf DIR!",
 	eyebeam_say = "Augenstrahl auf MIR!",
@@ -137,6 +145,8 @@ L:RegisterTranslations("zhCN", function() return {
 	right_dies = "右臂死亡！",
 	left_wipe_bar = "<左臂重生>",
 	right_wipe_bar = "<右臂重生>",
+
+	grip_message = "岩石之握：>%s<！",
 
 	shockwave = "震荡波",
 	shockwave_desc = "当震荡波到来前发出警报。",
@@ -164,6 +174,8 @@ L:RegisterTranslations("zhTW", function() return {
 	left_wipe_bar = "<左臂重生>",
 	right_wipe_bar = "<右臂重生>",
 
+	grip_message = "堅石之握：>%s<！",
+
 	shockwave = "震攝波",
 	shockwave_desc = "當震攝波到來前發出警報。",
 	shockwave_trigger = "滅亡吧!",
@@ -189,6 +201,8 @@ L:RegisterTranslations("ruRU", function() return {
 	right_dies = "Правая рука уничтожена",
 	left_wipe_bar = "Восcтaновление левой руки",
 	right_wipe_bar = "Восcтaновление правой руки",
+
+	grip_message = "Хватка: %s",
 
 	shockwave = "Ударная волна",
 	shockwave_desc = "Сообщает о грядущей Ударной волне.",
@@ -237,14 +251,14 @@ function mod:Armor(player, spellId, _, _, spellName)
 	end
 end
 
-local function gripWarn(spellId, spellName)
-	mod:TargetMessage(spellName, grip, "Attention", spellId, "Alert")
+local function gripWarn()
+	mod:TargetMessage(L["grip_message"], grip, "Attention", 64292, "Alert")
 end
 
 function mod:Grip(player, spellId, _, _, spellName)
 	grip[#grip + 1] = player
-	self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2, spellId, spellName)
-	self:Bar(spellName, 10, spellId)
+	self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2)
+	mod:Bar(spellName, 10, 64292)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg)
@@ -280,11 +294,11 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
 		end
 	elseif sync == "EyeBeamWarn" and rest and db.eyebeam then
-		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
+		self:TargetMessage(L["eyebeam_message"], rest, "Positive", 63976, "Info")
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
 		self:Bar(L["eyebeam_bar"], 20, 63976)
 		self:Icon(rest, "icon")

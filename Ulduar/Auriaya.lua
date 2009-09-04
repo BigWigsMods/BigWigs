@@ -18,6 +18,7 @@ mod.consoleCmd = "Auriaya"
 
 local db = nil
 local started = nil
+local pName = UnitName("player")
 local count = 9
 local fmt = string.format
 
@@ -32,7 +33,8 @@ L:RegisterTranslations("enUS", function() return {
 	fear_message = "Casting Fear!",
 	fear_bar = "~Fear",
 
-	swarm_message = "Swarm",
+	swarm_other = "Swarm on %s!",
+	swarm_you = "Swarm on YOU!",
 	swarm_bar = "~Swarm",
 
 	defender = "Feral Defender",
@@ -47,7 +49,8 @@ L:RegisterTranslations("koKR", function() return {
 	fear_message = "공포 시전!",
 	fear_bar = "~공포 대기시간",
 
-	swarm_message = "Swarm",
+	swarm_other = "무리 수호자: %s!",
+	swarm_you = "당신은 무리 수호자!",
 	swarm_bar = "~무리 대기시간",
 
 	defender = "수호 야수",
@@ -62,7 +65,8 @@ L:RegisterTranslations("frFR", function() return {
 	fear_message = "Hurlement terrifiant en incantation !",
 	fear_bar = "~H. terrifiant",
 
-	swarm_message = "Swarm",
+	swarm_other = "Essaim : %s",
+	swarm_you = "Essaim gardien sur VOUS !",
 	swarm_bar = "~Essaim",
 
 	defender = "Défenseur farouche",
@@ -77,7 +81,8 @@ L:RegisterTranslations("deDE", function() return {
 	fear_message = "Furcht!",
 	fear_bar = "~Furcht",
 
-	swarm_message = "Wächterschwarm",
+	swarm_other = "Wächterschwarm: %s!",
+	swarm_you = "Wächterschwarm auf DIR!",
 	swarm_bar = "~Wächterschwarm",
 
 	defender = "Wilder Verteidiger",
@@ -92,7 +97,8 @@ L:RegisterTranslations("zhCN", function() return {
 	fear_message = "正在施放 惊骇尖啸！",
 	fear_bar = "<惊骇尖啸 冷却>",
 
-	swarm_message = "Swarm",
+	swarm_other = "守护虫群：>%s<！",
+	swarm_you = ">你< 守护虫群！",
 	swarm_bar = "<守护虫群 冷却>",
 
 	defender = "野性防御者",
@@ -107,7 +113,8 @@ L:RegisterTranslations("zhTW", function() return {
 	fear_message = "正在施放 恐嚇尖嘯！",
 	fear_bar = "<恐嚇尖嘯 冷卻>",
 
-	swarm_message = "Swarm",
+	swarm_other = "守護貓群：>%s<！",
+	swarm_you = ">你< 守護貓群！",
 	swarm_bar = "<守護貓群 冷卻>",
 
 	defender = "野性防衛者",
@@ -122,7 +129,8 @@ L:RegisterTranslations("ruRU", function() return {
 	fear_message = "Применение страха!",
 	fear_bar = "~страх",
 
-	swarm_message = "Swarm",
+	swarm_other = "Страж выбрал |3-3(%s)!",
+	swarm_you = "Страж выбрал ВАС!",
 	swarm_bar = "~стража",
 
 	defender = "Дикий защитник",
@@ -175,9 +183,14 @@ function mod:DefenderKill(_, spellId)
 	end
 end
 
-function mod:Swarm(player, spellId)
-	self:TargetMessage(L["swarm_message"], player, "Attention", spellId)
-	self:Bar(L["swarm_bar"], 37, spell)
+function mod:Swarm(player, spell)
+	if player == pName then
+		mod:LocalMessage(L["swarm_you"], "Attention", spell)
+		mod:WideMessage(L["swarm_other"]:format(player))
+	else
+		mod:TargetMessage(L["swarm_other"], player, "Attention", spell)
+	end
+	mod:Bar(L["swarm_bar"], 37, spell)
 end
 
 function mod:Fear(_, spellId)

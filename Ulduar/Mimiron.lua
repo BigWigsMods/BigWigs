@@ -8,9 +8,9 @@ if not mod then return end
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
 mod.guid = 33350
---  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
-mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "hardmode", "proximity", "berserk", "bosskill"}
-mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+--  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670), 
+mod.toggleOptions = {"phase", "hardmode", -1, 62997, 64623, 64570, 63631, 63274, 64444, 63811, "proximity", "berserk", "bosskill"}
+mod.proximityCheck = "bandage"
 mod.consoleCmd = "Mimiron"
 
 ------------------------------
@@ -56,6 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	laser_bar = "Barrage",
 
 	magnetic_message = "ACU Rooted!",
+	loot_message = "%s looted a core!",
 
 	suppressant_warning = "Suppressant incoming!",
 
@@ -84,7 +85,7 @@ L:RegisterTranslations("koKR", function() return {
 	hardmode_desc = "도전 모드의 시간을 표시합니다.",
 	hardmode_trigger = "^아니, 대체 왜 그런 짓을 한 게지?",
 	hardmode_message = "도전 모드 활성화!",
-	hardmode_warning = "폭발!",
+	hardmode_warning = "도전 모드 종료",
 
 	plasma_warning = "플라스마 폭발 시전!",
 	plasma_soon = "곧 플라스마!",
@@ -96,6 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	laser_bar = "레이저 탄막",
 
 	magnetic_message = "공중 지휘기! 극딜!",
+	loot_message = "%s - 증폭기 획득!",
 
 	suppressant_warning = "곧 화염 억제!",
 
@@ -136,6 +138,7 @@ L:RegisterTranslations("frFR", function() return {
 	laser_bar = "Barrage",
 
 	magnetic_message = "UCA au sol !",
+	loot_message = "%s a ramassé un noyau !",
 
 	suppressant_warning = "Arrivée d'un Coupe-flamme !",
 
@@ -164,7 +167,7 @@ L:RegisterTranslations("deDE", function() return {
 	hardmode_desc = "Timer für den Hard Mode.",
 	hardmode_trigger = "^Warum habt Ihr das denn jetzt gemacht?",
 	hardmode_message = "Hard Mode aktiviert!",
-	hardmode_warning = "BOOM!",
+	hardmode_warning = "Hard Mode beendet!",
 
 	plasma_warning = "Wirkt Plasmaeruption!",
 	plasma_soon = "Plasmaeruption bald!",
@@ -176,6 +179,7 @@ L:RegisterTranslations("deDE", function() return {
 	laser_bar = "Lasersalve",
 
 	magnetic_message = "Einheit am Boden!",
+	loot_message = "%s hat Kern!",
 
 	suppressant_warning = "Löschschaum kommt!",
 
@@ -216,6 +220,7 @@ L:RegisterTranslations("zhCN", function() return {
 	laser_bar = "<P3Wx2激光弹幕>",
 
 	magnetic_message = "空中指挥单位 已降落！",
+	loot_message = ">%s< 拾取了磁核！",
 
 	suppressant_warning = "即将 烈焰遏制！",
 
@@ -256,6 +261,7 @@ L:RegisterTranslations("zhTW", function() return {
 	laser_bar = "<P3Wx2雷射彈幕>",
 
 	magnetic_message = "空中指揮裝置 已降落！",
+	loot_message = ">%s< 拾取了磁能之核！",
 
 	suppressant_warning = "即將 熾焰抑制劑！",
 
@@ -296,6 +302,7 @@ L:RegisterTranslations("ruRU", function() return {
 	laser_bar = "Обстрел",
 
 	magnetic_message = "Магнитное ядро! БОМБИТЕ!",
+	loot_message = "Ядро у |3-1(%s)!",
 
 	suppressant_warning = "Подавитель пламени!",
 
@@ -482,7 +489,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MimiLoot" and rest and self:GetOption(64444) then
-		self:TargetMessage(GetSpellInfo(64444), rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
+		self:TargetMessage(L["loot_message"], rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
 	elseif sync == "MimiBarrage" and self:GetOption(63274) then
 		self:IfMessage(L["laser_bar"], "Important", 63274)
 		self:Bar(L["laser_bar"], 60, 63274)
