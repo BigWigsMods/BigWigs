@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn for phase changes.",
 	phase1_message = "Entering Phase 1",
 	phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you...",
-	phase2_message = "Phase 2 - Berserk in 5min!",
+	phase2_message = "Phase 2 - Berserk in 6:15!",
 	phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!",
 	phase3_message = "Phase 3 - %s engaged!",
 
@@ -367,7 +367,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
 		if db.berserk then
-			self:Bar(CL["berserk"], 300, 20484)
+			self:Bar(CL["berserk"], 375, 20484)
 		end
 		if db.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
@@ -379,9 +379,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", CL["berserk"])
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
-		end
-		if db.berserk then
-			self:Enrage(300, true, true)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then
