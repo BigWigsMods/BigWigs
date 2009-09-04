@@ -221,12 +221,14 @@ L:RegisterTranslations("zhTW", function() return {
 	elementals_message = "上古水之靈！",
 	tree_message = "伊歐娜的贈禮 出現！",
 
-	fury_message = "Fury",
+	fury_message = "自然烈怒",
 	fury_other = "自然烈怒：>%s<！",
 
 	tremor_warning = "即將 地面震顫！",
 	tremor_bar = "<下一地面震顫>",
 	energy_message = ">你< 不穩定的能量！",
+	sunbeam_message = "即將 太陽光束！",
+	sunbeam_bar = "<下一太陽光束>",
 
 	icon = "位置標記",
 	icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）",
