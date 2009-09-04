@@ -103,9 +103,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
-	phase1_message = "Début de la phase 1",
+	phase1_message = "Phase 1",
 	phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement allez pay -  Attendez, vous -",
-	phase2_message = "Phase 2 - Berserk dans 5 min. !",
+	phase2_message = "Phase 2 - Berserk dans 6 min. 15 sec. !",
 	phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !",
 	phase3_message = "Phase 3 - %s engagé !",
 
@@ -116,7 +116,7 @@ L:RegisterTranslations("frFR", function() return {
 	shock_message = "Horion de foudre sur VOUS !",
 	barrier_message = "Barrière runique actif !",
 
-	detonation_say = "Je suis une bombe !",
+	detonation_say = "Détonation runique sur moi !",
 
 	charge_message = "Charge de foudre x%d !",
 	charge_bar = "Charge %d",

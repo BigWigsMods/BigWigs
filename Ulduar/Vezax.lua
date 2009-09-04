@@ -129,15 +129,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	crashsay = "Déferlante - Dire",
 	crashsay_desc = "Fait dire à votre personnage qu'il est ciblé par une Déferlante d'ombre quand c'est le cas.",
-
 	crashicon = "Déferlante - Icône",
-	crashicon_desc = "Place une icône de raid (carré bleu) sur le dernier joueur ciblé par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
+	crashicon_desc = "Place une icône de raid secondaire sur le dernier joueur ciblé par une Déferlante d'ombre (nécessite d'être assistant ou mieux).",
 
-	mark_message = "Mark",
+	mark_message = "Marque",
 	mark_message_other = "Marque : %s",
 
 	icon = "Marque - Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
+	icon_desc = "Place une icône de raid primaire sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

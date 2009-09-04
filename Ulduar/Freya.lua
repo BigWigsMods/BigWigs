@@ -128,6 +128,8 @@ L:RegisterTranslations("frFR", function() return {
 	tremor_warning = "Tremblement de terre imminent !",
 	tremor_bar = "~Prochain Tremblement",
 	energy_message = "Energie instable sur VOUS !",
+	sunbeam_message = "Rayons de soleil actif !",
+	sunbeam_bar = "~Prochains Rayons de soleil",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux).",

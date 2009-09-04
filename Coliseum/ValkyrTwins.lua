@@ -73,8 +73,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	touch = "Toucher des ténèbres/de lumière",
 	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
+	touch_of_light_message = "Lumière",
+	touch_of_dark_message = "Ténèbres",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",
