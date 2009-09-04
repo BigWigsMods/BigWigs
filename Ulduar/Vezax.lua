@@ -167,13 +167,13 @@ L:RegisterTranslations("deDE", function() return {
 	crashsay_desc = "Warnt im Sagen Chat, wenn du das Ziel eines Schattengeschosses bist.",
 
 	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
-	crashicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+	crashicon_desc = "Platziert das zweite Schlachtzugs-Symbol auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
 
 	mark_message = "Mal",
 	mark_message_other = "Mal: %s",
 
 	icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher).",
+	icon_desc = "Platziert das erste Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

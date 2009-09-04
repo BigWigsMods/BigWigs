@@ -163,7 +163,9 @@ L:RegisterTranslations("deDE", function() return {
 	tremor_warning = "Bebende Erde bald!",
 	tremor_bar = "~Bebende Erde",
 	energy_message = "Instabile Energie auf DIR!",
-
+	sunbeam_message = "Sonnenstrahl!",
+	sunbeam_bar = "~Sonnenstrahl",
+	
 	icon = "Schlachtzugs-Symbol",
 	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
 
