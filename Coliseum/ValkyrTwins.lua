@@ -41,8 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	touch = "Touch of Darkness/Light",
 	touch_desc = "Warn for Touch of Darkness/Light",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라.",
@@ -57,8 +55,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	touch = "어둠/빛의 손길",
 	touch_desc = "어둠/빛의 손길을 알립니다.",
-	touch_of_light_message = "빛의 손길",
-	touch_of_dark_message = "어둠의 손길",
 } end)
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
@@ -73,8 +69,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	touch = "Toucher des ténèbres/de lumière",
 	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
-	touch_of_light_message = "Lumière",
-	touch_of_dark_message = "Ténèbres",
 } end)
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",
@@ -89,8 +83,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	touch = "Berührung der Nacht/Licht",
 	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("zhCN", function() return {
 --	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
@@ -105,8 +97,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	touch = "Touch of Darkness/Light",
 	touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。",
-	touch_of_light_message = "Light",
-	touch_of_dark_message = "Darkness",
 } end)
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",
@@ -121,8 +111,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	touch = "黑暗/光明之觸",
 	touch_desc = "當玩家中了黑暗/光明之觸時發出警報。",
-	touch_of_light_message = "光明之觸！",
-	touch_of_dark_message = "黑暗之觸！",
 } end)
 L:RegisterTranslations("ruRU", function() return {
 	--engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
@@ -137,8 +125,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	touch = "Касание тьмы/Света",
 	touch_desc = "Сообщать о Касании тьмы/Света",
-	touch_of_light_message = "Свет",
-	touch_of_dark_message = "Тьма",
 } end)
 
 --------------------------------------------------------------------------------
@@ -150,8 +136,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkTouch", 67281, 67282, 67283)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "LightTouch", 67296, 67297, 67298)
+	-- First 3 are dark, last 3 are light.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Touch", 67281, 67282, 67283, 67296, 67297, 67298)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -163,16 +149,10 @@ end
 -- Event Handlers
 --
 
-function mod:DarkTouch(player, spellId)
+function mod:Touch(player, spellId, _, _, spellName)
 	if not db.touch then return end
-	self:TargetMessage(L["touch_of_dark_message"], player, "Personal", spellId, "Info")
-	self:Whisper(player, L["touch_of_dark_message"])
-end
-
-function mod:LightTouch(player, spellId)
-	if not db.touch then return end
-	self:TargetMessage(L["touch_of_light_message"], player, "Personal", spellId, "Info")
-	self:Whisper(player, L["touch_of_light_message"])
+	self:TargetMessage(spellName, player, "Personal", spellId, "Info")
+	self:Whisper(player, spellName)
 end
 
 function mod:DarkShield(_, spellId, _, _, spellName)
