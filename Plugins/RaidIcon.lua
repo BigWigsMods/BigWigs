@@ -46,7 +46,7 @@ end
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L["Raid Icons"],
+	name = "Icons",
 	desc = L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."],
 	get = get,
 	set = set,
