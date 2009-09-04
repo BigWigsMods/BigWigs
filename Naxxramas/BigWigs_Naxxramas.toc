@@ -24,19 +24,4 @@
 
 ## Dependencies: BigWigs
 
-Anubrekhan.lua
-Gluth.lua
-Razuvious.lua
-Noth.lua
-Faerlina.lua
-Maexxna.lua
-Patchwerk.lua
-Grobbulus.lua
-Thaddius.lua
-Heigan.lua
-Gothik.lua
-Loatheb.lua
-Horsemen.lua
-Sapphiron.lua
-Kelthuzad.lua
-
+modules.xml

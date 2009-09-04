@@ -77,15 +77,9 @@ end
 -----------------------------
 --      FuBar Methods      --
 -----------------------------
---[[
-local function menu()
-	--Don't create a new function every time we open the menu.
-	dew:FeedAceOptionsTable(BigWigs.cmdtable)
-end]]
 
 function ldb.OnClick(self, button)
 	if button == "RightButton" then
-		--dew:Open(self, "children", menu)
 		openOptions()
 	else
 		if BigWigs:IsActive() then

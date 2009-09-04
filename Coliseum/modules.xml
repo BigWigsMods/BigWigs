@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+<!--@debug@-->
+
+<Script file="Beasts.lua"/>
+<Script file="Jaraxxus.lua"/>
+<Script file="Champions.lua"/>
+<Script file="ValkyrTwins.lua"/>
+<Script file="Anubarak.lua"/>
+
+<!--@end-debug@-->
+</Ui>
+

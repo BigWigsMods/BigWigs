@@ -23,18 +23,4 @@
 
 ## Dependencies: BigWigs
 
-Freya.lua
-Hodir.lua
-IronCouncil.lua
-Leviathan.lua
-Thorim.lua
-Ignis.lua
-Mimiron.lua
-Vezax.lua
-Kologarn.lua
-XT-002.lua
-Razorscale.lua
-Auriaya.lua
-Algalon.lua
-YoggSaron.lua
-
+modules.xml

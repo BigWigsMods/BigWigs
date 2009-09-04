@@ -27,13 +27,4 @@
 
 locales.xml
 
-Comm.lua
-Colors.lua
-TargetMonitor.lua
-Bars2.lua
-Messages.lua
-Sound.lua
-RaidWarn.lua
-BossBlock.lua
-RaidIcon.lua
-
+modules.xml

@@ -27,9 +27,4 @@
 
 ## Dependencies: BigWigs
 
-Archavon.lua
-Malygos.lua
-Sartharion.lua
-Emalon.lua
-Koralon.lua
-
+modules.xml

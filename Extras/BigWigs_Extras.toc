@@ -27,9 +27,4 @@
 
 locales.xml
 
-CustomBar.lua
-Proximity.lua
-Version.lua
-Test.lua
-Flash.lua
-
+modules.xml
