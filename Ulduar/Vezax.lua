@@ -94,13 +94,13 @@ L:RegisterTranslations("koKR", function() return {
 	crash_say = "저 어둠 붕괴요!",
 
 	crashicon = "붕괴 아이콘",
-	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 파란 네모 표시를 지정합니다. (승급자 이상 권한 필요)",
+	crashicon_desc = "어둠 붕괴의 대상 플레이어에게 두번째 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
-	mark_message = "Mark",
+	mark_message = "징표",
 	mark_message_other = "얼굴 없는 자의 징표: %s",
 
 	icon = "징표 아이콘",
-	icon_desc = "얼굴 없는 자의 징표의 대상 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "얼굴 없는 자의 징표의 대상 플레이어에게 기본 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
