@@ -163,7 +163,7 @@ end
 -- Event Handlers
 --
 
-function mod:DarkTouch(_, spellId)
+function mod:DarkTouch(player, spellId)
 	if not db.touch then return end
 	if player == pName then
 		self:LocalMessage(L["touch_of_dark_on_you"], "Personal", spellId, "Info")
@@ -174,7 +174,7 @@ function mod:DarkTouch(_, spellId)
 	end
 end
 
-function mod:LightTouch(_, spellId)
+function mod:LightTouch(player, spellId)
 	if not db.touch then return end
 	if player == pName then
 		self:LocalMessage(L["touch_of_light_on_you"], "Personal", spellId, "Info")
