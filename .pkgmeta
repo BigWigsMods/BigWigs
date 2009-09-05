@@ -2,10 +2,13 @@ package-as: BigWigs
 
 externals:
     Libs/AceLibrary: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLibrary
-    Libs/AceLocale-2.2: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLocale-2.2
     Libs/AceLocale-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
     Libs/AceGUI-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceGUI-3.0
     Libs/AceConfig-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConfig-3.0
+    Libs/AceAddon-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceAddon-3.0
+    Libs/AceEvent-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceEvent-3.0
+    Libs/AceTimer-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceTimer-3.0
+    Libs/AceDB-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceDB-3.0
     Libs/CallbackHandler-1.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/CallbackHandler-1.0
     Libs/Dewdrop-2.0: svn://svn.wowace.com/wow/dewdroplib/mainline/trunk/Dewdrop-2.0
     Libs/LibSharedMedia-3.0: svn://svn.wowace.com/wow/libsharedmedia-3-0/mainline/trunk/LibSharedMedia-3.0

@@ -15,7 +15,6 @@ local BB, BZ
 local GetSpellInfo = GetSpellInfo
 
 local AL = LibStub("AceLocale-3.0")
-local AL2 = AceLibrary("AceLocale-2.2") -- used for backwards compat
 local L = AL:GetLocale("BigWigs")
 local icon = LibStub("LibDBIcon-1.0", true)
 
