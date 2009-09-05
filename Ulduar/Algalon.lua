@@ -84,7 +84,7 @@ end
 function mod:PunchCount(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack >= 4 then
-		self:IfMessage(L["punch_message"]:format(stack, player), "Urgent", icon)
+		self:IfMessage(L["punch_message"]:format(stack, player), "Urgent", icon, "Alert")
 	end
 end
 

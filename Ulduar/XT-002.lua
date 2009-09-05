@@ -124,7 +124,7 @@ function mod:GravityRemoved(player)
 	self:SecondaryIcon(false)
 end
 
-function mod:BombRemoved(player)
+function mod:LightRemoved(player)
 	if player == pName then
 		self:SendMessage("BigWigs_HideProximity", self)
 	end
