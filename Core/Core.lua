@@ -542,6 +542,10 @@ function addon:EnableBossModule(moduleName, noSync)
 end
 
 function addon:BigWigs_RebootModule(message, module)
+	if type(module) == "string" then
+		module = self:GetBossModule(module, true)
+	end
+	if not module then return end
 	module:Disable()
 	module:Enable()
 end
