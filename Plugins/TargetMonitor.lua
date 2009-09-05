@@ -19,8 +19,8 @@ local monitoring = nil
 function plugin:OnPluginEnable()
 	monitoring = nil
 	for name, module in BigWigs:IterateBossModules() do
-		if module.zonename and module.enabletrigger then
-			self:RegisterZone(module.zonename)
+		if module.zoneName and module.enabletrigger then
+			self:RegisterZone(module.zoneName)
 			self:RegisterMob(module)
 		end
 	end
@@ -92,15 +92,19 @@ end
 
 local function targetCheck(unit)
 	local n = UnitName(unit)
+	local id = UnitGUID(unit)
+	
 	if not n or not enablemobs[n] or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	plugin:TriggerEvent("BigWigs_TargetSeen", n, unit, enablemobs[n].name)
+	if id then id = tonumber(id:sub(-12,-7),16) end
+	
+	plugin:SendMessage("BigWigs_TargetSeen", n, id, unit, enablemobs[n].name)
 end
 
 function plugin:CHAT_MSG_MONSTER_YELL(msg, source)
 	for func, mod in pairs(enableyells) do
 		local yell = func()
 		if yell == msg then
-			self:TriggerEvent("BigWigs_TargetSeen", source, "player", mod.name)
+			self:SendMessage("BigWigs_TargetSeen", source, "player", mod.name)
 		end
 	end
 end

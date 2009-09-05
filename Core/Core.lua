@@ -553,7 +553,7 @@ function addon:BigWigs_RecvSync(message, sync, module, sender)
 	end
 end
 
-function addon:BigWigs_TargetSeen(message, mobname, unit, moduleName)
+function addon:BigWigs_TargetSeen(message, mobname, mobguid, unit, moduleName)
 	local m = self:GetBossModule(moduleName)
 	if not m or m:IsEnabled() then return end
 	if not m.VerifyEnable or m:VerifyEnable(unit) then
