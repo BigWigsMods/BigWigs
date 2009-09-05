@@ -89,7 +89,7 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_message = "阿努巴拉克已激活，80秒后，钻地！",
 --	engage_trigger = "This place will serve as your tomb!",
 
---	unburrow_trigger = "%s emerges from the ground!",
+--	unburrow_trigger = "emerges from the ground",
 --	burrow_trigger = "burrows into the ground",
 	burrow = "钻地",
 	burrow_desc = "当阿努巴拉克钻地时显示计时条。",
@@ -105,7 +105,7 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_message = "阿努巴拉克進入戰斗，80秒後，鑽地！",
 	engage_trigger = "這裡將會是你們的墳墓!",
 
---	unburrow_trigger = "%s emerges from the ground!",
+--	unburrow_trigger = "emerges from the ground",
 --	burrow_trigger = "burrows into the ground",
 	burrow = "鑽地",
 	burrow_desc = "當阿努巴拉克鑽地時顯示計時條。",

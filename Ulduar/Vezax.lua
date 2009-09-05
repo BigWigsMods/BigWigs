@@ -216,7 +216,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
---	["Vezax Bunny"] = true, -- For emote catching.
+	["Vezax Bunny"] = "Vezax Bunny", -- For emote catching.
 
 	engage_trigger = "你的毀滅將會預告一個嶄新苦難時代的來臨!",
 

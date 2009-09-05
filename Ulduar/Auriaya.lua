@@ -92,7 +92,7 @@ L:RegisterTranslations("zhCN", function() return {
 	fear_message = "正在施放 惊骇尖啸！",
 	fear_bar = "<惊骇尖啸 冷却>",
 
-	swarm_message = "Swarm",
+	swarm_message = "守护虫群",
 	swarm_bar = "<守护虫群 冷却>",
 
 	defender = "野性防御者",
@@ -107,7 +107,7 @@ L:RegisterTranslations("zhTW", function() return {
 	fear_message = "正在施放 恐嚇尖嘯！",
 	fear_bar = "<恐嚇尖嘯 冷卻>",
 
-	swarm_message = "Swarm",
+	swarm_message = "守護貓群",
 	swarm_bar = "<守護貓群 冷卻>",
 
 	defender = "野性防衛者",

@@ -194,18 +194,23 @@ L:RegisterTranslations("zhCN", function() return {
 --	conservator_trigger = "Eonar, your servant requires aid!",
 --	detonate_trigger = "The swarm of the elements shall overtake you!",
 --	elementals_trigger = "Children, assist me!",
---	tree_trigger = "A Lifebinder's Gift begins to grow!",
+--	tree_trigger = "A |cFF00FFFFLifebinder's Gift|r begins to grow!",
 	conservator_message = "Conservator!",
 	detonate_message = "Detonating lashers!",
 	elementals_message = "古代水之精魂！",
-	tree_message = "Eonar's Gift出现！",
 
-	fury_message = "Fury",
+	tree = "艾欧娜尔的礼物",
+	tree_desc = "当弗蕾亚召唤艾欧娜尔的礼物时发出警报。",	
+	tree_message = "艾欧娜尔的礼物 出现！",
+
+	fury_message = "自然之怒",
 	fury_other = "自然之怒：>%s<！",
 
 	tremor_warning = "即将 大地震颤！",
 	tremor_bar = "<下一大地震颤>",
 	energy_message = ">你<不稳定的能量！",
+	sunbeam_message = "即将 阳光！",
+	sunbeam_bar = "<下一阳光>",
 
 	icon = "位置标记",
 	icon_desc = "为中了阳光的队员打上团队标记。（需要权限）",
@@ -231,6 +236,9 @@ L:RegisterTranslations("zhTW", function() return {
 	conservator_message = "古樹護存者！",
 	detonate_message = "引爆鞭笞者！",
 	elementals_message = "上古水之靈！",
+
+	tree = "伊歐娜的贈禮",
+	tree_desc = "當芙蕾雅召喚伊歐娜的贈禮時發出警報。",	
 	tree_message = "伊歐娜的贈禮 出現！",
 
 	fury_message = "自然烈怒",
