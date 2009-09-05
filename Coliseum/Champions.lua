@@ -25,7 +25,7 @@ if L then
 	L["Bloodlust on champions!"] = true
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Faction Champions")
-module.locale = L
+mod.locale = L
 mod.enabletrigger = function() return L["enable_trigger"] end
 
 --------------------------------------------------------------------------------

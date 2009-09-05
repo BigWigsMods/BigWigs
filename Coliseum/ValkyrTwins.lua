@@ -43,7 +43,7 @@ if L then
 	L.touch_desc = "Warn for Touch of Darkness/Light"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Twin Val'kyr")
-module.locale = L
+mod.locale = L
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -278,8 +278,8 @@ do
 	local function fillBossOptions(module)
 		local config = {
 			type = "group",
-			name = module.name,
-			desc = L["Options for %s (r%d)."]:format(module.name, module.revision),
+			name = module.displayName,
+			desc = L["Options for %s (r%d)."]:format(module.displayName, module.revision),
 			get = function(info) return module.db.profile[info[#info]] end,
 			set = function(info, v) module.db.profile[info[#info]] = v end,
 			args = {},
@@ -393,6 +393,18 @@ do
 			end
 			if module.otherMenu then
 				module.otherMenu = BZ[module.otherMenu]
+			end
+			if module.displayName and BB[module.displayName] then
+				module.displayName = BB[module.displayName]
+			end
+			if module.optionHeaders then
+				for k, v in pairs(module.optionHeaders) do
+					if type(v) == "string" then
+						if BB[v] then
+							module.optionHeaders[k] = BB[v]
+						end
+					end
+				end
 			end
 		end
 		if not module.displayName then -- fix up a pretty display name

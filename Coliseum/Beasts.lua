@@ -2,27 +2,32 @@
 -- Module Declaration
 --
 
-local boss = BB["The Beasts of Northrend"]
+local boss = "The Beasts of Northrend"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-local gormok = BB["Gormok the Impaler"]
-local icehowl = BB["Icehowl"]
-local acidmaw = BB["Acidmaw"]
-local dreadscale = BB["Dreadscale"]
-local jormungars = BB["Jormungars"]
+local gormok
+local icehowl
+local acidmaw
+local dreadscale
+local jormungars
 
-mod.zoneName = BZ["Trial of the Crusader"]
-mod.enabletrigger = {gormok, icehowl, acidmaw, dreadscale}
---mod.guid = 34796 -- Gormok
---mod.guid = 34799--Dreadscale, 35144 = Acidmaw
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
+mod.bossName = { "Gormok the Impaler", "Icehowl", "Acidmaw", "Dreadscale", "Jormungars" }
+mod.displayName = boss
+mod.zoneName = "Trial of the Crusader"
+mod.enabletrigger = {
+	34796, -- Gormok
+	34799, -- Dreadscale
+	35144, -- Acidmaw
+	34797, -- Icehowl
+}
 mod.guid = 34797 -- Icehowl
 mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "bosskill"}
 mod.optionHeaders = {
-	snobold = gormok,
-	[67641] = jormungars,
-	[67654] = icehowl,
+	snobold = "Gormok the Impaler",
+	[67641] = "Jormungars",
+	[67654] = "Icehowl",
 	bosskill = CL.general,
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
@@ -74,11 +79,19 @@ if L then
 	L.charge_trigger = "glares at"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Northrend Beasts")
-module.locale = L
+mod.locale = L
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:OnRegister()
+	gormok = self.bossName[1]
+	icehowl = self.bossName[2]
+	acidmaw = self.bossName[3]
+	dreadscale = self.bossName[4]
+	jormungars = self.bossName[5]
+end
 
 function mod:OnBossEnable()
 	-- Gormok
@@ -117,7 +130,7 @@ end
 -- Gormok the Impaler
 --
 
-function mod:UNIT_AURA(unit)
+function mod:UNIT_AURA(event, unit)
 	local name, _, icon = UnitDebuff(unit, snobolled)
 	local n = UnitName(unit)
 	if snobolledWarned[n] and not name then
@@ -128,16 +141,16 @@ function mod:UNIT_AURA(unit)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 		if difficulty > 2 then
 			self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
 		elseif db.berserk then
 			self:Enrage(900, true, true)
 		end
 	elseif msg == L["jormungars_trigger"] then
-		local m = L["boss_incoming"]:format(BB["Jormungars"])
+		local m = L["boss_incoming"]:format(jormungars)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 15, "INV_Misc_MonsterScales_18")
 		if difficulty > 2 then
@@ -153,7 +166,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:Impale(player, spellId, _, _, spellName)
+function mod:Impale(event, player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(L["impale_message"], player, "Urgent", icon, "Info", stack)
@@ -162,7 +175,7 @@ end
 
 do
 	local last = nil
-	function mod:FireBomb(player, spellId)
+	function mod:FireBomb(event, player, spellId)
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
@@ -177,17 +190,17 @@ end
 -- Jormungars
 --
 
-function mod:SlimeCast(_, spellId, _, _, spellName)
+function mod:SlimeCast(event, _, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Attention", spellId)
 end
 
-function mod:Molten(_, spellId, _, _, spellName)
+function mod:Molten(event, _, spellId, _, _, spellName)
 	if db.spew then
 		self:IfMessage(spellName, "Attention", spellId)
 	end
 end
 
-function mod:Acidic(_, spellId, _, _, spellName)
+function mod:Acidic(event, _, spellId, _, _, spellName)
 	if db.spew then
 		self:IfMessage(spellName, "Attention", spellId)
 	end
@@ -204,7 +217,7 @@ do
 			wipe(toxin)
 		end
 	end
-	function mod:Toxin(player, spellId)
+	function mod:Toxin(event, player, spellId)
 		toxin[#toxin + 1] = player
 		self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId)
 		if player == pName then
@@ -225,7 +238,7 @@ do
 			wipe(burn)
 		end
 	end
-	function mod:Burn(player, spellId)
+	function mod:Burn(event, player, spellId)
 		burn[#burn + 1] = player
 		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
 		if player == pName then
@@ -236,19 +249,19 @@ do
 	end
 end
 
-function mod:BurnRemoved(player)
+function mod:BurnRemoved(event, player)
 	if player == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 
-function mod:Enraged(_, spellId, _, _, spellName)
+function mod:Enraged(event, _, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId, "Long")
 end
 
 do
 	local last = nil
-	function mod:Slime(player, spellId)
+	function mod:Slime(event, player, spellId)
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
@@ -263,22 +276,22 @@ end
 -- Icehowl
 --
 
-function mod:Rage(_, spellId, _, _, spellName)
+function mod:Rage(event, _, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Daze(_, spellId, _, _, spellName)
+function mod:Daze(event, _, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Positive", spellId)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Butt(player, spellId, _, _, spellName)
+function mod:Butt(event, player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Attention", spellId)
 	self:Bar(L["butt_bar"], 12, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	if unit == icehowl and db.charge and message:find(L["charge_trigger"]) then
 		local spellName = GetSpellInfo(52311)
 		self:TargetMessage(spellName, player, "Personal", 52311, "Alarm")

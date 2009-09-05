@@ -27,7 +27,7 @@ if L then
 end
 
 L = LibStub("AceLocale-3.0"):GetLocale("BigWigsKoralon the Flame Watcher")
-module.locale = L
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

@@ -62,7 +62,7 @@ if L then
 	L.phase3_message = "Phase 3!"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
-module.locale = L
+mod.locale = L
 
 ------------------------------
 --      Initialization      --
