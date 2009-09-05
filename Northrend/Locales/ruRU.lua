@@ -63,7 +63,7 @@ if L then
 	L.phase3_message = "3 Фаза!"
 end
 
-L = Libstub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "ruRU")
 if L then
 	L.tsunami = "Огненное цунами"
 	L.tsunami_desc = "Предупреждать о взбалтывании лавы и отображать полосу."

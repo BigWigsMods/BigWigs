@@ -63,7 +63,7 @@ if L then
 	L.phase3_message = "3 단계!"
 end
 
-L = Libstub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "koKR")
 if L then
 	L.engage_trigger = "내 임무는 알을 보호하는 것. 알에 손대지 못하게 모두 불태워 주마."
 	

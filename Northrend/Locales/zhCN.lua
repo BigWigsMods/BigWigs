@@ -63,7 +63,7 @@ if L then
 	L.phase3_message = "第三阶段！"
 end
 
-L = Libstub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "zhCN")
 if L then
 	L.tsunami = "烈焰之啸"
 	L.tsunami_desc = "当熔岩搅动时显示计时条。"

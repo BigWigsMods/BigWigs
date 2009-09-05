@@ -63,7 +63,7 @@ if L then
 	L.phase3_message = "Phase 3!"
 end
 
-L = Libstub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "deDE")
 if L then
 	L.engage_trigger = "Meine Aufgabe ist es, über diese Eier zu wachen. Kommt ihnen zu nahe und von euch bleibt nur ein Häuflein Asche."
 
