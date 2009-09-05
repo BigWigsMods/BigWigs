@@ -1,4 +1,4 @@
-﻿--------------------------------
+--------------------------------
 --      Module Prototype      --
 --------------------------------
 
@@ -302,6 +302,7 @@ do
 		if type(player) == "table" then
 			text = fmt(L["other"], spellName, table.concat(player, ", "))
 			wipe(player)
+			self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 		else
 			if player == pName then
 				if ... then
@@ -309,6 +310,8 @@ do
 				else
 					text = fmt(L["you"], spellName)
 				end
+				self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
+				self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
 			else
 				--change colors and remove sound when warning about effects on other players
 				if color == "Personal" then color = "Important" end
@@ -318,9 +321,9 @@ do
 				else
 					text = fmt(L["other"], spellName, coloredNames[player])
 				end
+				self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 			end
 		end
-		self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
 
 	-- XXX Proposed API, subject to change.
@@ -329,6 +332,14 @@ do
 		if locale and not self.db.profile[key] then return end
 		local text = not locale and key or locale[keys[key]]:format(...)
 		self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
+	end
+
+	-- XXX Proposed API, subject to change.
+	-- Outputs a raid warning message only, no local message.
+	function BigWigs.modulePrototype:WideMessage(key, locale, ...)
+		if locale and not self.db.profile[key] then return end
+		local text = not locale and key or locale[keys[key]]:format(...)
+		self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
 	end
 end
 
