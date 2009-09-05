@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15952
 mod.guid = 15952
 mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
-mod.consoleCmd = "Maexxna"
 
 ------------------------------
 --      Are you local?      --

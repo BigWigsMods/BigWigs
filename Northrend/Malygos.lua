@@ -11,7 +11,6 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = 28859
 mod.guid = 28859
 mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
-mod.consoleCmd = "Malygos"
 
 ------------------------------
 --      Are you local?      --

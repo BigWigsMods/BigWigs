@@ -16,7 +16,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = { 15928, 15929, 15930 }
 mod.guid = 15928
 mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
-mod.consoleCmd = "Thaddius"
 
 ------------------------------
 --      Are you local?      --

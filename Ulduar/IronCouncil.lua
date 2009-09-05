@@ -26,7 +26,6 @@ mod.optionHeaders = {
 	
 }
 mod.proximityCheck = "bandage"
-mod.consoleCmd = "Council"
 
 ------------------------------
 --      Are you local?      --

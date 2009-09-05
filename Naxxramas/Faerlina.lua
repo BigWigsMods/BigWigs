@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15953
 mod.guid = 15953
 mod.toggleOptions = {28732, 28794, "enrage", "bosskill"}
-mod.consoleCmd = "Faerlina"
 
 ------------------------------
 --      Are you local?      --

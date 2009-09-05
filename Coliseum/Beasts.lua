@@ -28,7 +28,6 @@ mod.optionHeaders = {
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
-mod.consoleCmd = "Beasts"
 
 --------------------------------------------------------------------------------
 -- Locals

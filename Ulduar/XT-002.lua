@@ -17,7 +17,6 @@ mod.optionHeaders = {
 	proximity = CL.general,
 }
 mod.proximityCheck = "bandage"
-mod.consoleCmd = "XT"
 
 ------------------------------
 --      Are you local?      --

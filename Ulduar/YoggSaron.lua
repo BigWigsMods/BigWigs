@@ -19,7 +19,6 @@ mod.optionHeaders = {
 	[64189] = CL.hard,
 	phase = CL.general,
 }
-mod.consoleCmd = "Yogg"
 
 ------------------------------
 --      Are you local?      --

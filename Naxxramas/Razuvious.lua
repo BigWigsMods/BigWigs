@@ -12,7 +12,6 @@ mod.enabletrigger = 16061
 mod.wipemobs = "Death Knight Understudy"
 mod.guid = 16061
 mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill"}
-mod.consoleCmd = "Razuvious"
 
 ------------------------------
 --      Are you local?      --

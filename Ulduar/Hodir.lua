@@ -10,7 +10,6 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = 32845
 mod.guid = 32845
 mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "berserk", "icon", "bosskill"}
-mod.consoleCmd = "Hodir"
 
 ------------------------------
 --      Are you local?      --

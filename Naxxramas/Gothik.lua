@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 16060
 mod.guid = 16060
 mod.toggleOptions = { "room", -1, "add", "adddeath", "bosskill" }
-mod.consoleCmd = "Gothik"
 
 ----------------------------
 --      Localization      --

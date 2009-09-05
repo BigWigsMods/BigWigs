@@ -13,7 +13,6 @@ mod.guid = 33993
 mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
-mod.consoleCmd = "Emalon"
 
 ------------------------------
 --      Are you local?      --

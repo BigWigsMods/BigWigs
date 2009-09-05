@@ -9,7 +9,6 @@ mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = 34564
 mod.guid = 34564
 mod.toggleOptions = {66118, 67574, "icon", "burrow", "berserk", "bosskill"}
-mod.consoleCmd = "Anubarak"
 
 --------------------------------------------------------------------------------
 -- Locals

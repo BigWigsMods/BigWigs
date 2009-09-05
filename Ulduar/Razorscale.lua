@@ -17,7 +17,6 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = {33185, 33210, 33233}
 mod.guid = 33186
 mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
-mod.consoleCmd = "Razorscale"
 
 ------------------------------
 --      Are you local?      --

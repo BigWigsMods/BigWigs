@@ -10,7 +10,6 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = 33113
 mod.guid = 33113
 mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
-mod.consoleCmd = "Leviathan"
 
 ----------------------------
 --      Localization      --

@@ -17,7 +17,6 @@ mod.optionHeaders = {
 	berserk = CL.general,
 }
 mod.proximityCheck = "bandage"
-mod.consoleCmd = "Freya"
 
 ------------------------------
 --      Are you local?      --

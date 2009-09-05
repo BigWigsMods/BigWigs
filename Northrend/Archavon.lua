@@ -10,7 +10,6 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = 31125
 mod.guid = 31125
 mod.toggleOptions = {58663, "charge", 58678, 58965, -1, "icon", "berserk", "bosskill"}
-mod.consoleCmd = "Archavon"
 
 ------------------------------
 --      Are you local?      --

@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15936
 mod.guid = 15936
 mod.toggleOptions = {"engage", "teleport", "bosskill"}
-mod.consoleCmd = "Heigan"
 
 ----------------------------
 --      Localization      --

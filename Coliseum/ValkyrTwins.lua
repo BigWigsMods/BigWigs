@@ -14,7 +14,6 @@ mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
 mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
-mod.consoleCmd = "Twins"
 
 --------------------------------------------------------------------------------
 -- Locals

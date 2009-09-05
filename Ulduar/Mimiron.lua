@@ -19,7 +19,6 @@ mod.optionHeaders = {
 	phase = CL.general,
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
-mod.consoleCmd = "Mimiron"
 
 ------------------------------
 --      Are you local?      --

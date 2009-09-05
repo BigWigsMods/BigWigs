@@ -10,7 +10,6 @@ mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = 34780
 mod.guid = 34780
 mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
-mod.consoleCmd = "Jaraxxus"
 
 --------------------------------------------------------------------------------
 -- Localization

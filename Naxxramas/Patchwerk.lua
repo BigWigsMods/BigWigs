@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 16028
 mod.guid = 16028
 mod.toggleOptions = {"enrage", "berserk", "bosskill"}
-mod.consoleCmd = "Patchwerk"
 
 ----------------------------
 --      Localization      --

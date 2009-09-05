@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15989
 mod.guid = 15989
 mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
-mod.consoleCmd = "Sapphiron"
 
 ------------------------------
 --      Are you local?      --

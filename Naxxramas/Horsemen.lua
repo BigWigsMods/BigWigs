@@ -16,7 +16,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = { 16064, 30549, 16065, 16063 } 
 mod.guid = 16065
 mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
-mod.consoleCmd = "Horsemen"
 
 ------------------------------
 --      Are you local?      --

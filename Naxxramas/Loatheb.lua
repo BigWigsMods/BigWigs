@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 16011
 mod.guid = 16011
 mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
-mod.consoleCmd = "Loatheb"
 
 ------------------------------
 --      Are you local?      --

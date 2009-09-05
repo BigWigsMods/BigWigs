@@ -11,7 +11,6 @@ mod.enabletrigger = 33515
 mod.guid = 33515
 --Feral Defender = 34035
 mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskill"}
-mod.consoleCmd = "Auriaya"
 
 ------------------------------
 --      Are you local?      --

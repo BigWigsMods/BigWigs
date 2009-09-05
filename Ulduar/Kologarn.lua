@@ -10,7 +10,6 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = 32930
 mod.guid = 32930
 mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
-mod.consoleCmd = "Kologarn"
 
 ------------------------------
 --      Are you local?      --

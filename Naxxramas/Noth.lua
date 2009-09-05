@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15954
 mod.guid = 15954
 mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
-mod.consoleCmd = "Noth"
 
 ------------------------------
 --      Are you local?      --

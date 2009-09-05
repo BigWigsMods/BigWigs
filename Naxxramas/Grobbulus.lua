@@ -10,7 +10,6 @@ mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15931
 mod.guid = 15931
 mod.toggleOptions = {28169, "icon", 28240, "berserk", "bosskill"}
-mod.consoleCmd = "Grobbulus"
 
 ------------------------------
 --      Are you local?      --

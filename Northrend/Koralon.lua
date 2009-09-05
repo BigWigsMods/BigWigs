@@ -11,7 +11,6 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = 35013
 mod.guid = 35013
 mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
-mod.consoleCmd = "Koralon"
 
 ------------------------------
 --      Are you local?      --

@@ -19,7 +19,6 @@ mod.otherMenu = "Northrend"
 mod.enabletrigger = { 28860, 30449, 30451, 30452 }
 mod.guid = 28860
 mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
-mod.consoleCmd = "Sartharion"
 
 ------------------------------
 --      Are you local?      --

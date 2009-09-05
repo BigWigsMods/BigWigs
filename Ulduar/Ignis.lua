@@ -10,7 +10,6 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = 33118
 mod.guid = 33118
 mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
-mod.consoleCmd = "Ignis"
 
 ------------------------------
 --      Are you local?      --
