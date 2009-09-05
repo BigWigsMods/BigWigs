@@ -161,7 +161,7 @@ local function populateScanTable(mod)
 	mod.scanTable = {}
 
 	local x = mod.enabletrigger
-	if type(x) == "string" then
+	if type(x) == "string" or type(x) == "number" then
 		mod.scanTable[x] = true
 	elseif type(x) == "table" then
 		for i, v in ipairs(x) do
@@ -170,7 +170,7 @@ local function populateScanTable(mod)
 	end
 
 	local a = mod.wipemobs
-	if type(a) == "string" then
+	if type(a) == "string" or type(a) == "number" then
 		mod.scanTable[a] = true
 	elseif type(a) == "table" then
 		for i, v in ipairs(a) do
