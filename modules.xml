@@ -15,9 +15,12 @@
 <Include file="Coliseum\locales.xml"/>
 <Include file="Coliseum\modules.xml"/>
 
+<Include file="Ulduar\locales.xml"/>
+<Include file="Ulduar\modules.xml"/>
+
 <!--
 <Include file="Naxxramas\modules.xml"/>
-<Include file="Ulduar\modules.xml"/>
+
 -->
 </Ui>
 

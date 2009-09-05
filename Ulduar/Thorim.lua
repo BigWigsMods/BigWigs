@@ -2,12 +2,20 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Thorim"]
+local boss = "Thorim"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-local behemoth = BB["Jormungar Behemoth"]
-mod.zoneName = BZ["Ulduar"]
+local behemoth -- set in onregister
+mod.displayName = boss
+-- mod.bossName set after localization
+mod.zoneName = "Ulduar"
+--[[
+	32865 = thorim
+	32882 = behemoth
+	32872 = runic colossus
+--]]
+mod.enabletrigger = { 32865, 32882, 32872 }
 mod.guid = 32865	--Sif(33196)
 mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
 mod.optionHeaders = {
@@ -70,7 +78,8 @@ end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Thorim")
 mod.locale = L
 
-mod.enabletrigger = {behemoth, boss, L["Runic Colossus"]}
+mod.bossName = { boss, "Jormungar Behemoth", L["Runic Colossus"] }
+
 
 ------------------------------
 --      Initialization      --
@@ -91,7 +100,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 	db = self.db.profile
 	started = nil
 end
@@ -160,7 +169,7 @@ function mod:Detonation(player, spellId, _, _, spellName)
 	self:PrimaryIcon(player, "icon")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["phase2_trigger"] then
 		if db.phase then
 			self:IfMessage(L["phase2_message"], "Attention")
@@ -174,18 +183,18 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif msg == L["phase3_trigger"] then
 		self:CancelScheduledEvent(hardModeMessageID)
-		self:TriggerEvent("BigWigs_StopBar", L["hardmode"])
-		self:TriggerEvent("BigWigs_StopBar", CL["berserk"])
+		self:SendMessage("BigWigs_StopBar", L["hardmode"])
+		self:SendMessage("BigWigs_StopBar", CL["berserk"])
 		if db.phase then
-			self:IfMessage(L["phase3_message"]:format(boss), "Attention")
+			self:IfMessage(L["phase3_message"]:format(mod.bossName[1]), "Attention")
 		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		chargeCount = 1
@@ -195,7 +204,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.phase then
 			self:IfMessage(L["phase1_message"], "Attention")
 		end
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 

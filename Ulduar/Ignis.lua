@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Ignis the Furnace Master"]
+local boss = "Ignis the Furnace Master"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 33118
 mod.guid = 33118
 mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
 mod.consoleCmd = "Ignis"
@@ -116,7 +117,7 @@ do
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
 		spawnTime = GetRaidDifficulty() == 1 and 40 or 30
 		if self:GetOption(62680) then

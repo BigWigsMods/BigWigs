@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Kologarn"]
+local boss = "Kologarn"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 32930
 mod.guid = 32930
 mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
 mod.consoleCmd = "Kologarn"
@@ -66,7 +67,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 	self:Throttle(2, "EyeBeamWarn")
 	db = self.db.profile
 end
@@ -92,7 +93,7 @@ function mod:Grip(player, spellId, _, _, spellName)
 	self:Bar(spellName, 10, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg)
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg)
 	if db.eyebeam and msg == L["eyebeam_trigger"] then
 		self:LocalMessage(L["eyebeam_you"], "Personal", 63976, "Long")
 		if db.eyebeamsay then
@@ -115,19 +116,17 @@ function mod:Deaths(_, guid)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["shockwave_trigger"] and db.shockwave then
 		self:IfMessage(L["shockwave"], "Attention", 63982)
 		self:Bar(L["shockwave"], 21, 63982)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 	elseif sync == "EyeBeamWarn" and rest and db.eyebeam then
 		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)

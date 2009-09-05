@@ -1,14 +1,14 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local sara = BB["Sara"]
-local boss = BB["Yogg-Saron"]
-local brain = BB["Brain of Yogg-Saron"]
+local boss = "Yogg-Saron"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zoneName = BZ["Ulduar"]
+-- mod.bossName set after locals
+mod.displayName = "Yogg-Saron"
+mod.zoneName = "Ulduar"
+mod.enabletrigger = { 33288, 33134, 33890 }
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
 mod.toggleOptions = {62979, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, 64465, "empowericon", 64163, 64189, "phase", 63050, 63120, "berserk", "bosskill"}
@@ -96,11 +96,15 @@ mod.locale = L
 -- warnings blizz puts in the emote frame. The source for those messages USED
 -- TO BE the boss, but Blizzard CHANGED IT to the player himself, for some
 -- insanely crappy, unknown, stupid reason.
-mod.enabletrigger = {boss, sara, brain, pName}
+mod.bossName = { "Yogg-Saron", "Brain of Yogg-Saron", "Sara", pName } 
+
 
 ------------------------------
 --      Initialization      --
 ------------------------------
+function mod:OnRegister()
+	boss = mod.bossName[1]
+end
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Roar", 64189)
@@ -263,7 +267,7 @@ function mod:EmpowerIcon(...)
 	self:ScheduleRepeatingEvent("BWGetEmpowerTarget", scanTarget, 0.1)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["portal_trigger"] and db.portal then
 		self:IfMessage(L["portal_message"], "Positive", 35717)
 		self:Bar(L["portal_bar"], 90, 35717)
@@ -272,7 +276,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
 		guardianCount = 1

@@ -2,12 +2,19 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Razorscale"]
-local commander = BB["Expedition Commander"]
+local boss = "Razorscale"
+
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Ulduar"]
--- mod.enabletrigger set below the localizations
+mod.displayName = "Razorscale"
+-- mod.bossName set below localization
+mod.zoneName = "Ulduar"
+--[[
+	33233 = Razorscale Controller
+	33210 = Expidition Commander
+	33185 = Razorscale
+--]]
+mod.enabletrigger = {33185, 33210, 33233}
 mod.guid = 33186
 mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
 mod.consoleCmd = "Razorscale"
@@ -68,7 +75,11 @@ mod.locale = L
 --      Initialization      --
 ------------------------------
 
-mod.enabletrigger = {commander, boss, L["Razorscale Controller"]}
+mod.bossName = { boss, "Expedition Commander", L["Razorscale Controller"]}
+
+function mod:OnRegister()
+	boss = mod.bossName[1]
+end
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
@@ -94,9 +105,9 @@ function mod:Flame(player)
 	end
 end
 
-function mod:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(event, msg)
 	if not db.phase then return end
-	if UnitName(msg) == boss then
+	if UnitName(msg) == razorscale then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 55 and not p2 then
 			self:IfMessage(L["phase2_warning"], "Positive")
@@ -107,10 +118,10 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["phase2_trigger"] and db.phase then
 		phase = 2
-		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
 		self:IfMessage(L["phase2_message"], "Attention")
 	elseif msg == L["breath_trigger"] and self:GetOption(64021) then
 		self:IfMessage(L["breath_message"], "Attention", 64021)
@@ -146,7 +157,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			started = true
 			phase = 1
 		else
-			self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
+			self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
 			if db.phase then
 				self:IfMessage(L["air_message"], "Attention", nil, "Info")
 			end
@@ -160,7 +171,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.harpoon then
 			self:Bar(L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
 		end
-		self:TriggerEvent("BigWigs_StopBar", self, L["stun_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
 		--self:IfMessage(L["air_message"], "Attention", nil, "Info")
 	end
 end

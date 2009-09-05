@@ -2,12 +2,13 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Freya"]
+local boss = "Freya"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 32906
 mod.guid = 32906
 mod.toggleOptions = {"phase", "wave", "tree", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
 mod.optionHeaders = {
@@ -143,14 +144,14 @@ end
 
 local function scanTarget(spellId, spellName)
 	local target
-	if UnitName("target") == boss then
+	if UnitName("target") == mod.bossName then
 		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
+	elseif UnitName("focus") == mod.bossName then
 		target = UnitName("focustarget")
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == mod.bossName then
 				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end
@@ -169,7 +170,7 @@ end
 
 function mod:Fury(player, spellId)
 	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["fury_message"])
@@ -178,15 +179,15 @@ function mod:Fury(player, spellId)
 end
 
 function mod:FuryRemove(player)
-	self:TriggerEvent("BigWigs_StopBar", self, L["fury_other"]:format(player))
+	self:SendMessage("BigWigs_StopBar", self, L["fury_other"]:format(player))
 	if player == pName then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 
 function mod:AttunedRemove()
 	phase = 2
-	self:TriggerEvent("BigWigs_StopBar", self, L["wave_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["wave_bar"])
 	if db.phase then
 		self:IfMessage(L["phase2_message"], "Important")
 	end

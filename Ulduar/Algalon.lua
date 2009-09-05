@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Algalon the Observer"]
+local boss = "Algalon the Observer"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 32871
 mod.guid = 32871
 mod.toggleOptions = {"phase", 64412, 62301, 64122, 64443, "berserk", "bosskill"}
 mod.consoleCmd = "Algalon"
@@ -63,9 +64,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(event, msg)
 	if not db.phase then return end
-	if UnitName(msg) == boss then
+	if UnitName(msg) == self.bossName then
 		local hp = UnitHealth(msg)
 		if hp <= 20 and not p2 then
 			self:IfMessage(L["phase2_warning"], "Positive")
@@ -105,7 +106,7 @@ function mod:BigBang(_, spellId, _, _, spellName)
 	self:DelayedMessage(85, L["bigbang_soon"], "Attention")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		blackholes = 0
 		phase = 1

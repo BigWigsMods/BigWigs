@@ -2,11 +2,14 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["General Vezax"]
+local boss = "General Vezax"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zoneName = BZ["Ulduar"]
+-- mod.bossName set after locale
+mod.displayName = boss
+mod.enabletrigger = 33271
+mod.zoneName = "Ulduar"
 mod.guid = 33271
 mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}
 mod.consoleCmd = "Vezax"
@@ -68,7 +71,7 @@ end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
 mod.locale = L
 
-mod.enabletrigger = {boss, L["Vezax Bunny"]}
+mod.bossName = {boss, L["Vezax Bunny"]}
 
 mod.optionHeaders = {
 	vapor = L.vapor,
@@ -82,6 +85,10 @@ mod.optionHeaders = {
 ------------------------------
 --      Initialization      --
 ------------------------------
+
+function mod:OnRegister()
+	boss = mod.bossName[1]
+end
 
 function mod:OnBossEnable()
 	db = self.db.profile
@@ -102,7 +109,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:UNIT_AURA(unit)
+function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", vapor)
 	if stack and stack ~= lastVapor then
@@ -167,7 +174,7 @@ function mod:SurgeGain(_, spellId, _, _, spellName)
 	self:Bar(spellName, 10, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["vapor_trigger"] and db.vapor then
 		self:IfMessage(L["vapor_message"]:format(vaporCount), "Positive", 63323)
 		vaporCount = vaporCount + 1
@@ -179,7 +186,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		lastVapor = nil
 		vaporCount = 1

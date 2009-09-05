@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Auriaya"]
+local boss = "Auriaya"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 33515
 mod.guid = 33515
 --Feral Defender = 34035
 mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskill"}
@@ -61,7 +62,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -101,13 +102,11 @@ function mod:Sentinel(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		count = 9
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then 
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED") 
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self:GetOption(64455) then
 			self:Bar(L["defender_message"]:format(count), 60, 64455)
 		end

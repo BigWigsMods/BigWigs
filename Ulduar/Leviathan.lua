@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Flame Leviathan"]
+local boss = "Flame Leviathan"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 33113
 mod.guid = 33113
 mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
 mod.consoleCmd = "Leviathan"
@@ -69,21 +70,21 @@ function mod:FlameFailed(_, _, _, _, spellName)
 end
 
 function mod:Shutdown(unit, spellId, _, _, spellName)
-	if unit ~= boss then return end
+	if unit ~= mod.bossName then return end
 	self:IfMessage(L["shutdown_message"], "Positive", spellId, "Long")
 	self:Bar(spellName, 20, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(message, unit, _, _, player)
-	if unit == boss and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
+	if unit == mod.bossName and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
 		self:TargetMessage(L["pursue"], player, "Personal", 62374, "Alarm")
 		self:Bar(L["pursue_other"]:format(player), 30, 62374)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
-		self:IfMessage(L["engage_message"]:format(boss), "Attention")
+		self:IfMessage(L["engage_message"]:format(mod.bossName), "Attention")
 	end
 end
 

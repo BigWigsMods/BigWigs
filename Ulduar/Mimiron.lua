@@ -2,12 +2,14 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Mimiron"]
+local boss = "Mimiron"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = {boss, BB["Leviathan Mk II"], BB["VX-001"], BB["Aerial Command Unit"]}
+mod.displayName = "Mimiron"
+mod.bossName = { boss, "Leviathan Mk II", "VX-001", "Aerial Command Unit" }
+mod.zoneName = "Ulduar"
+mod.enabletrigger = { 33350, 33432, 33651, 33670 }
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
 mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "hardmode", "proximity", "berserk", "bosskill"}
@@ -90,7 +92,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_LOOT")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:Throttle(2, "MimiLoot")
 	self:Throttle(10, "MimiBarrage")
@@ -170,7 +172,7 @@ local function start()
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
@@ -179,7 +181,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:IfMessage(L["hardmode_message"], "Attention", 64582)
 			self:DelayedMessage(600, L["hardmode_warning"], "Important")
 		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		if db.berserk then
@@ -188,8 +190,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelScheduledEvent("plasmaWarning")
-		self:TriggerEvent("BigWigs_StopBar", L["plasma_bar"])
-		self:TriggerEvent("BigWigs_StopBar", L["shock_next"])
+		self:SendMessage("BigWigs_StopBar", L["plasma_bar"])
+		self:SendMessage("BigWigs_StopBar", L["shock_next"])
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
@@ -197,7 +199,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self:GetOption(64623) and ishardmode then
 			self:Bar(L["fbomb_bar"], 45, 64623)
 		end
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	elseif msg:find(L["phase3_trigger"]) then
 		self:CancelScheduledEvent("fbombWarning")
 		phase = 3
@@ -225,7 +227,7 @@ end
 do
 	local lootItem = '^' .. LOOT_ITEM:gsub("%%s", "(.-)") .. '$'
 	local lootItemSelf = '^' .. LOOT_ITEM_SELF:gsub("%%s", "(.*)") .. '$'
-	function mod:CHAT_MSG_LOOT(msg)
+	function mod:CHAT_MSG_LOOT(event, msg)
 		local player, item = select(3, msg:find(lootItem))
 		if not player then
 			item = select(3, msg:find(lootItemSelf))
@@ -247,7 +249,7 @@ do
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if sync == "MimiLoot" and rest and self:GetOption(64444) then
 		self:TargetMessage(GetSpellInfo(64444), rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
 	elseif sync == "MimiBarrage" and self:GetOption(63274) then

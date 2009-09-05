@@ -2,12 +2,13 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["XT-002 Deconstructor"]
+local boss = "XT-002 Deconstructor"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Ulduar"
+mod.enabletrigger = 33293
 mod.guid = 33293
 mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
@@ -70,7 +71,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 	db = self.db.profile
 	started = nil
 end
@@ -98,7 +99,7 @@ end
 
 function mod:GravityBomb(player, spellId, _, _, spellName)
 	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -108,7 +109,7 @@ end
 
 function mod:LightBomb(player, spellId, _, _, spellName)
 	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:SendMessage("BigWigs_ShowProximity", self)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -118,20 +119,20 @@ end
 
 function mod:GravityRemoved(player)
 	if player == pName then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 	self:SecondaryIcon(false)
 end
 
 function mod:BombRemoved(player)
 	if player == pName then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 	self:PrimaryIcon(false)
 end
 
-function mod:UNIT_HEALTH(msg)
-	if phase == 1 and UnitName(msg) == boss and self:GetOption(63849) then
+function mod:UNIT_HEALTH(event, msg)
+	if phase == 1 and UnitName(msg) == mod.bossName and self:GetOption(63849) then
 		local health = UnitHealth(msg)
 		if not exposed1 and health > 86 and health <= 88 then
 			exposed1 = true
@@ -146,7 +147,7 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		phase = 1
@@ -156,9 +157,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.berserk then
 			self:Enrage(600, true)
 		end
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 	end
 end
 

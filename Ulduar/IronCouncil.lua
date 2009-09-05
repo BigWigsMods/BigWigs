@@ -2,15 +2,20 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["The Iron Council"]
+local boss = "The Iron Council"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-local breaker = BB["Steelbreaker"]
-local molgeim = BB["Runemaster Molgeim"]
-local brundir = BB["Stormcaller Brundir"]
-mod.zoneName = BZ["Ulduar"]
-mod.enabletrigger = {breaker, molgeim, brundir, boss}
+local breaker, molgeim, brundir
+mod.displayName = boss
+mod.bossName = {"Steelbreaker", "Runemaster Molgeim", "Stormcaller Brundir", "The Iron Council"}
+mod.zoneName = "Ulduar"
+--[[
+steelbreaker = 32867
+molgeim = 32927
+brundir = 32857
+--]]
+mod.enabletrigger = { 32867, 32927, 32857 }
 mod.guid = 32867
 mod.toggleOptions = {61869, 63483, 61887, 61903, 64637, "proximity", 62274, 61974, 62269, 62273, "icon", "berserk", "bosskill"}
 mod.optionHeaders = {
@@ -66,6 +71,10 @@ mod.locale = L
 ------------------------------
 --      Initialization      --
 ------------------------------
+
+function mod:OnRegister()
+	breaker, molgeim, brundir = mod.bossName[1], mod.bossName[2], mod.bossName[3]
+end
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
@@ -203,7 +212,7 @@ function mod:Deaths(unit, guid)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"]) then
 		previous = nil
 		deaths = 0
