@@ -328,21 +328,11 @@ do
 				}
 				order = order + 1
 			elseif t == "string" then
-				local alEntry = "BigWigs"..module.name
-				local ML, ML2 = nil, nil
-				if AL2.registry[alEntry] then
-					ML2 = AL2:new(alEntry)
-				elseif AL:GetLocale(alEntry, true) then
-					ML = AL:GetLocale(alEntry)
-				end
+				local ML = module.locale
 				local optName, optDesc, optOrder
 				if customBossOptions[v] then
 					optName = customBossOptions[v][1]
 					optDesc = customBossOptions[v][2]
-				elseif ML2 then
-					optName = ML2:HasTranslation(v) and ML2[v]
-					local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-					optDesc = ML2:HasTranslation(descKey) and ML2[descKey] or v
 				elseif ML then
 					optName = ML[v]
 					local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.

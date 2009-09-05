@@ -50,6 +50,7 @@ if L then
 	L.twilight_message = "%s add up!"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+module.locale = L
 
 ------------------------------
 --      Initialization      --

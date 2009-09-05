@@ -41,6 +41,7 @@ if L then
 end
 
 L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+module.locale = L
 
 ------------------------------
 --      Initialization      --

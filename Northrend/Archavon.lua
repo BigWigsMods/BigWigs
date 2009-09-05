@@ -38,6 +38,7 @@ if L then
 end
 
 L = LibStub("AceLocale-3.0"):GetLocale("BigWigsArchavon the Stone Watcher")
+module.locale = L
 
 ------------------------------
 --      Initialization      --

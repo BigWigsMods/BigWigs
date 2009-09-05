@@ -74,6 +74,7 @@ if L then
 	L.charge_trigger = "glares at"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Northrend Beasts")
+module.locale = L
 
 --------------------------------------------------------------------------------
 -- Initialization

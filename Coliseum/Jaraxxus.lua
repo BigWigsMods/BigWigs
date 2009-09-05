@@ -36,6 +36,7 @@ if L then
 	L.netherpower_bar = "~Next Nether Power"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
+module.locale = L
 
 --------------------------------------------------------------------------------
 -- Initialization

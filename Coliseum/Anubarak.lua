@@ -38,6 +38,7 @@ if L then
 	L.chase = "Pursue"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anub'arak")
+module.locale = L
 
 --------------------------------------------------------------------------------
 -- Initialization
