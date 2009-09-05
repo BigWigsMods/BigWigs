@@ -28,7 +28,7 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	self:Hook("RaidNotice_AddMessage", "RWAddMessage", true)
+	self:RawHook("RaidNotice_AddMessage", "RWAddMessage", true)
 	self:RegisterMessage("BigWigs_OnBossEnable", "BossModEnableDisable")
 	self:RegisterMessage("BigWigs_OnBossDisable", "BossModEnableDisable")
 end
