@@ -21,7 +21,7 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-LoadWithCore: 1
+## X-BigWigs-LoadOn-CoreEnabled: 1
 
 ## Dependencies: BigWigs
 

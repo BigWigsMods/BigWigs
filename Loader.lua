@@ -139,6 +139,7 @@ function loader:OnInitialize()
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then -- this pack wants to be loaded when we enable the core
+				print("OnCoreEnabled", name)
 				table.insert(loadOnCoreEnabled, name)
 			end
 			if LOCALE ~= "enUS" then -- only do something with foreign stuff if we really need to, yay no BabbleBoss and Zone for english users!
@@ -147,6 +148,7 @@ function loader:OnInitialize()
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
 			if meta then
+				print("OnCoreLoaded", name)
 				table.insert(loadOnCoreLoaded, name)
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadIn-Zone")
