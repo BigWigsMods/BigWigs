@@ -1,6 +1,6 @@
 ## Interface: 30200
 
-## Title: Big Wigs [|cffccccccForeign Language|r]
+## Title: Big Wigs [|cffeda55fForeign Language|r]
 
 ## Notes: Non English Language Pack for BigWigs
 
