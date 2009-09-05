@@ -32,6 +32,7 @@ function boss:OnDisable()
 	if type(self.OnBossDisable) == "function" then
 		self:OnBossDisable()
 	end
+	self:CancelAllScheduledEvents()
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
 
@@ -361,6 +362,14 @@ function boss:CancelScheduledEvent( id )
 	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
 	self:CancelTimer( scheduledTimers[self][id].atid )
 	clearTimer(self, id)
+end
+
+function boss:CancelAllScheduledEvents()
+	if scheduledTimers[self] then
+		for id, v in scheduledTimers[self] do
+			self:CancelScheduledEvent(id)
+		end
+	end
 end
 
 function boss:ScheduleEvent( id, func, delay, ...)
