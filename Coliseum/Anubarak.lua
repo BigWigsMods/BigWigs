@@ -20,119 +20,24 @@ local db
 -- Localization
 --
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	engage_message = "Anub'arak engaged, burrow in 80sec!",
-	engage_trigger = "This place will serve as your tomb!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "enUS", true)
+if L then
+	L.engage_message = "Anub'arak engaged, burrow in 80sec!"
+	L.engage_trigger = "This place will serve as your tomb!"
 
-	unburrow_trigger = "emerges from the ground",
-	burrow_trigger = "burrows into the ground",
-	burrow = "Burrow",
-	burrow_desc = "Show a timer for Anub'Arak's Burrow ability",
-	burrow_cooldown = "Next Burrow",
-	burrow_soon = "Burrow soon",
+	L.unburrow_trigger = "emerges from the ground"
+	L.burrow_trigger = "burrows into the ground"
+	L.burrow = "Burrow"
+	L.burrow_desc = "Show a timer for Anub'Arak's Burrow ability"
+	L.burrow_cooldown = "Next Burrow"
+	L.burrow_soon = "Burrow soon"
 
-	icon = "Place icon",
-	icon_desc = "Place a raid target icon on the person targetted by Anub'arak during his burrow phase. (requires promoted or higher)",
+	L.icon = "Place icon"
+	L.icon_desc = "Place a raid target icon on the person targetted by Anub'arak during his burrow phase. (requires promoted or higher)"
 
-	chase = "Pursue",
-} end)
-L:RegisterTranslations("koKR", function() return {
-	engage_message = "전투 시작",
-	engage_trigger = "여기가 네 무덤이 되리라!",
-	
-	unburrow_trigger = "땅속에서 모습을 드러냅니다!",
-	burrow_trigger = "땅속으로 숨어버립니다!",
-	burrow = "소멸",
-	burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다.",
-	burrow_cooldown = "다음 소멸",
-	burrow_soon = "곧 소멸",
-	
-	icon = "전술 표시",
-	icon_desc = "소멸 단계에 추격 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
-
-	chase = "추격",
-} end)
-L:RegisterTranslations("frFR", function() return {
-	engage_message = "Anub'arak engagé, Fouir dans 80 sec. !",
-	engage_trigger = "Ce terreau sera votre tombeau !",
-
-	unburrow_trigger = "surgit de la terre",
-	burrow_trigger = "s'enfonce dans le sol",
-	burrow = "Fouir",
-	burrow_desc = "Affiche un délai de la technique Fouir d'Anub'Arak.",
-	burrow_cooldown = "Prochain Fouir",
-	burrow_soon = "Fouir imminent",
-
-	icon = "Icône",
-	icon_desc = "Place une icône sur le dernier joueur poursuivi par Anub'arak lors de sa phase sous terre (nécessite d'être assistant ou mieux).",
-
-	chase = "Poursuivi",
-} end)
-L:RegisterTranslations("deDE", function() return {
-	engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!",
-	engage_trigger = "Dieser Ort wird Euch als Grab dienen!",
-
-	unburrow_trigger = "%s entsteigt dem Boden!",
-	burrow_trigger = "%s gräbt sich in den Boden!",
-	burrow = "Eingraben",
-	burrow_desc = "Zeigt einen Timer für Anub'arak's Eingraben.",
-	burrow_cooldown = "~Eingraben",
-	burrow_soon = "Eingraben bald!",
-	
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Anub'arak verfolgt werden (benötigt Assistent oder höher).",
-	
-	chase = "Verfolgen",
-} end)
-L:RegisterTranslations("zhCN", function() return {
-	engage_message = "阿努巴拉克已激活，80秒后，钻地！",
---	engage_trigger = "This place will serve as your tomb!",
-
---	unburrow_trigger = "emerges from the ground",
---	burrow_trigger = "burrows into the ground",
-	burrow = "钻地",
-	burrow_desc = "当阿努巴拉克钻地时显示计时条。",
-	burrow_cooldown = "下一钻地",
-	burrow_soon = "即将 钻地！",
-
-	icon = "团队标记",
-	icon_desc = "为中了阿努巴拉克钻地追击的队员打上团队标记。（需要权限）",
-
-	chase = "追击",
-} end)
-L:RegisterTranslations("zhTW", function() return {
-	engage_message = "阿努巴拉克進入戰斗，80秒後，鑽地！",
-	engage_trigger = "這裡將會是你們的墳墓!",
-
---	unburrow_trigger = "emerges from the ground",
---	burrow_trigger = "burrows into the ground",
-	burrow = "鑽地",
-	burrow_desc = "當阿努巴拉克鑽地時顯示計時條。",
-	burrow_cooldown = "下一鑽地",
-	burrow_soon = "即將 鑽地！",
-
-	icon = "團隊標記",
-	icon_desc = "為中了阿努巴拉克鑽地追擊的隊員打上團隊標記。（需要權限）",
-
-	chase = "追擊",
-} end)
-L:RegisterTranslations("ruRU", function() return {
-	engage_message = "Ануб'арак вступил в бой, зарывание в землю через 80сек!",
-	engage_trigger = "Это место станет вашей могилой!",
-
-	unburrow_trigger = "вылезает на поверхность!",
-	burrow_trigger = "зарывается в землю!",
-	burrow = "Червоточина",
-	burrow_desc = "Отображать таймер способности Ануб'арака зарывается в землю",
-	burrow_cooldown = "Следующее зарывание",
-	burrow_soon = "Скоро зарывание",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока которого приследуют шипы Ануб'арака в фазе когда он под землёй. (необходимо быть лидером группы или рейда)",
-	
-	chase = "Шипы",
-} end)
+	L.chase = "Pursue"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anub'arak")
 
 --------------------------------------------------------------------------------
 -- Initialization

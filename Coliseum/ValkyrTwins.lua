@@ -27,105 +27,22 @@ local essenceDark = GetSpellInfo(67176)
 -- Localization
 --
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "enUS", true)
+if L then
+	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
-	vortex_or_shield_cd = "Next Vortex or Shield",
+	L.vortex_or_shield_cd = "Next Vortex or Shield"
 
-	vortex = "Vortex",
-	vortex_desc = "Warn when the twins start casting vortexes.",
+	L.vortex = "Vortex"
+	L.vortex_desc = "Warn when the twins start casting vortexes."
 
-	shield = "Shield of Darkness/Light",
-	shield_desc = "Warn for Shield of Darkness/Light.",
+	L.shield = "Shield of Darkness/Light"
+	L.shield_desc = "Warn for Shield of Darkness/Light."
 
-	touch = "Touch of Darkness/Light",
-	touch_desc = "Warn for Touch of Darkness/Light",
-} end)
-L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라.",
-
-	vortex_or_shield_cd = "소용돌이/방패 대기시간",
-
-	vortex = "소용돌이",
-	vortex_desc = "쌍둥이의 소용돌이 시전을 알립니다.",
-
-	shield = "어둠/빛의 방패",
-	shield_desc = "어둠/빛의 방패를 알립니다.",
-
-	touch = "어둠/빛의 손길",
-	touch_desc = "어둠/빛의 손길을 알립니다.",
-} end)
-L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
-
-	vortex_or_shield_cd = "Prochain Vortex ou Bouclier",
-
-	vortex = "Vortex",
-	vortex_desc = "Prévient quand les jumelles commencent à incanter des Vortex.",
-
-	shield = "Bouclier des ténèbres/des lumières",
-	shield_desc = "Prévient de l'arrivée des Boucliers des ténèbres/des lumières.",
-
-	touch = "Toucher des ténèbres/de lumière",
-	touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière.",
-} end)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben.",
-
-	vortex_or_shield_cd = "~Vortex/Schild",
-
-	vortex = "Vortex",
-	vortex_desc = "Warnt, wenn die Zwillinge anfangen Vortex zu wirken.",
-
-	shield = "Schild der Nacht/Licht",
-	shield_desc = "Warnt bei Schild der Nacht/Licht.",
-
-	touch = "Berührung der Nacht/Licht",
-	touch_desc = "Warnt bei Berührung der Nacht/Licht.",
-} end)
-L:RegisterTranslations("zhCN", function() return {
---	engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
-
-	vortex_or_shield_cd = "<下一Vortex/Shield>",
-
-	vortex = "Vortex",
-	vortex_desc = "当双子开始施放Vortexes时发出警报。",
-
-	shield = "Shield of Darkness/Light",
-	shield_desc = "当施放Shield of Darkness/Light时发出警报。",
-
-	touch = "Touch of Darkness/Light",
-	touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。",
-} end)
-L:RegisterTranslations("zhTW", function() return {
-	engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。",
-
-	vortex_or_shield_cd = "<下一漩渦/盾>",
-
-	vortex = "漩渦",
-	vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。",
-
-	shield = "黑暗/光明之盾",
-	shield_desc = "當施放黑暗/光明之盾時發出警報。",
-
-	touch = "黑暗/光明之觸",
-	touch_desc = "當玩家中了黑暗/光明之觸時發出警報。",
-} end)
-L:RegisterTranslations("ruRU", function() return {
-	--engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die.",
-
-	vortex_or_shield_cd = "Воронка или Щит",
-
-	vortex = "Воронка",
-	vortex_desc = "Сообщать когда близнецы начинают применять воронку.",
-
-	shield = "Щит Тьмы/Света",
-	shield_desc = "Сообщать о Щите Тьмы/Света.",
-
-	touch = "Касание тьмы/Света",
-	touch_desc = "Сообщать о Касании тьмы/Света",
-} end)
+	L.touch = "Touch of Darkness/Light"
+	L.touch_desc = "Warn for Touch of Darkness/Light"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Twin Val'kyr")
 
 --------------------------------------------------------------------------------
 -- Initialization
