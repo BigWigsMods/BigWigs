@@ -330,17 +330,46 @@ function boss:Message(...)
 	self:SendMessage("BigWigs_Message", ...)
 end
 
--- FIXME: this delay trick is ugly
-local delayedmsgs = {}
-function boss:sendDelayedMessage( msg )
-	if delayedmsgs[msg] then
-		self:SendMessage( unpack(msg) )
-		wipe(delayedmsgs[msg])
-	end
+local scheduledTimers = {}
+local function clearTimer( self, id )
+	-- FIXME: leaky?
+	wipe( scheduledTimers[self][id].args )
+	wipe( scheduledTimers[self][id] )
+	scheduledTimers[self][id] = nil
 end
-function boss:DelayedMessage(delay, text, color, localm, sound, broadcastonly, icon )
-	delayedmsgs[text] = { "BigWigs_Message", text, color, localm, sound, broadcastonly, icon }
-	return self:ScheduleTimer("sendDelayedMessage", delay, text )
+
+function boss:ProcessScheduledTimer( id )
+	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
+	local t = scheduledTimers[self][id]
+	if type(t.func) == "string" then
+		self[t.func]( self, unpack(t.args) )
+	elseif type(t.func) == "function" then
+		t.func( unpack(t.args) )
+	end
+	clearTimer(self, id)
+end
+
+function boss:CancelScheduledEvent( id )
+	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
+	self:CancelTimer( scheduledTimers[self][id].atid )
+	clearTimer(self, id)
+end
+
+function boss:ScheduleEvent( id, delay, func, ...)
+	if not scheduledTimers[self] then
+		scheduledTimers[self] = {}
+	end
+	if scheduledTimers[self][id] then
+		-- cancel the old one
+		self:CancelScheduledEvent( id )
+	end
+	scheduledTimers[self][id].func = func
+	scheduledTimers[self][id].args = { ... }
+	scheduledTimers[self][id].atid = self:ScheduleTimer( "ProcessScheduledTimer", delay, id )
+end
+
+function boss:DelayedMessage(delay, text, ...) 
+	return self:ScheduleEvent(text, delay, "SendMessage", "BigWigs_Message", text, ...)
 end
 
 do
