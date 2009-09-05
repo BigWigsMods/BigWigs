@@ -6,7 +6,7 @@ local boss = "The Twin Val'kyr"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local eydis, fjola
-mod.displayName = "The Twin Val'kyr"
+mod.displayName = boss
 mod.bossName = {"Eydis Darkbane", "Fjola Lightbane"}
 mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = { 34496, 34407 }
