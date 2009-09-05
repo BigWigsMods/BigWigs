@@ -6,11 +6,7 @@ local boss = "The Beasts of Northrend"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 
-local gormok
-local icehowl
-local acidmaw
-local dreadscale
-local jormungars
+local gormok, icehowl, acidmaw, dreadscale, jormungars
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.bossName = { "Gormok the Impaler", "Icehowl", "Acidmaw", "Dreadscale", "Jormungars" }
