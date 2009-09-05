@@ -220,7 +220,6 @@ do
 			print(L["already_registered"]:format(module, oldM.revision, r))
 		else
 			local m = self.bossCore:NewModule(module, ...)
-			m.moduleName = module
 			m.revision = r
 			return m
 		end
