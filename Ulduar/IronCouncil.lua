@@ -38,6 +38,7 @@ local deaths = 0
 local overwhelmTime = 35
 local pName = UnitName("player")
 local fmt = string.format
+local tendrilscanner = nil
 
 ----------------------------
 --      Localization      --
@@ -188,14 +189,14 @@ local function targetCheck()
 end
 
 local function tendrilsRemove()
-	mod:CancelScheduledEvent("BWTendrilsToTScan")
+	mod:CancelTimer(tendrilscanner)
 	mod:PrimaryIcon(false, "icon")
 end
 
 function mod:Tendrils(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Attention", spellId)
 	self:Bar(spellName, 25, spellId)
-	self:ScheduleRepeatingEvent("BWTendrilsToTScan", targetCheck, 0.2)
+	tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
 	self:ScheduleEvent("TargetCancel", tendrilsRemove, 25)
 end
 

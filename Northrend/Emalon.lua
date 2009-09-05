@@ -24,6 +24,7 @@ local UnitGUID = _G.UnitGUID
 local GetNumRaidMembers = _G.GetNumRaidMembers
 local fmt = _G.string.format
 local guid = nil
+local overchargerepeater = nil -- overcharge repeating timer
 
 ------------------------------
 --      English Locale      --
@@ -96,7 +97,7 @@ local function scanTarget()
 	end
 	if target then
 		SetRaidTarget(target, 8)
-		mod:CancelScheduledEvent("BWGetOverchargeTarget")
+		mod:CancelTimer( overchargerepeater )
 	end
 end
 
@@ -104,7 +105,7 @@ function mod:OverchargeIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not self.db.profile.icon then return end
 	guid = select(9, ...)
-	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", scanTarget, 0.1)
+	overchargerepeater = self:ScheduleRepatingTimer(scanTarget, 0.1)
 end
 
 function mod:BigWigs_RecvSync(event, sync, rest, nick)

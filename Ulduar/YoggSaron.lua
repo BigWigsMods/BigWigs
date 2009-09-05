@@ -35,6 +35,7 @@ local fmt = _G.string.format
 local guid = nil
 
 local madnessWarningID = nil
+local empowerscanner = nil
 
 ----------------------------
 --      Localization      --
@@ -256,7 +257,7 @@ local function scanTarget()
 	end
 	if target then
 		SetRaidTarget(target, 8)
-		mod:CancelScheduledEvent("BWGetEmpowerTarget")
+		mod:CancelTimer(empowerscanner)
 	end
 end
 
@@ -264,7 +265,7 @@ function mod:EmpowerIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not db.empowericon then return end
 	guid = select(9, ...)
-	self:ScheduleRepeatingEvent("BWGetEmpowerTarget", scanTarget, 0.1)
+	empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.1)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
