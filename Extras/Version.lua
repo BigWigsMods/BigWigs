@@ -142,9 +142,9 @@ local function newGroup()
 	updateBWUsers()
 end
 
-function plugin:OnEnable()
+function plugin:OnPluginEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
-	self:RegisterMessage("BigWigs_ModuleRegistered", scanModules)
+	self:RegisterMessage("BigWigs_BossModuleRegistered", scanModules)
 	self:RegisterMessage("BigWigs_JoinedGroup", newGroup)
 	self:RegisterMessage("BigWigs_LeftGroup", updateBWUsers)
 	newGroup()
