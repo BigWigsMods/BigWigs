@@ -50,7 +50,7 @@ function plugin:CHAT_MSG_ADDON(event, prefix, message, type, sender)
 	end
 end
 
-function plugin:BigWigs_SendSync(msg)
+function plugin:BigWigs_SendSync(event, msg)
 	local sync, rest = select(3, msg:find("(%S+)%s*(.*)$"))
 	if not sync then return end
 
@@ -62,7 +62,7 @@ function plugin:BigWigs_SendSync(msg)
 	end
 end
 
-function plugin:BigWigs_ThrottleSync(msg, ...)
+function plugin:BigWigs_ThrottleSync(event, msg, ...)
 	if type(msg) == "number" then
 		for i = 1, select("#", ...) do
 			throt[(select(i, ...))] = msg
