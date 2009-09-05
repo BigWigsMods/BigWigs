@@ -377,7 +377,7 @@ end
 
 function boss:CancelAllScheduledEvents()
 	if scheduledTimers[self] then
-		for id, v in scheduledTimers[self] do
+		for id, v in pairs(scheduledTimers[self]) do
 			self:CancelScheduledEvent(id)
 		end
 	end
