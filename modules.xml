@@ -9,6 +9,7 @@
 <Include file="Extras\locales.xml"/>
 <Include file="Extras\modules.xml"/>
 
+<Include file="Northrend\locales.xml"/>
 <Include file="Northrend\modules.xml"/>
 <!--
 <Include file="Naxxramas\modules.xml"/>
