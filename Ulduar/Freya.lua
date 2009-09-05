@@ -90,6 +90,9 @@ L:RegisterTranslations("koKR", function() return {
 	conservator_message = "수호자 소환",
 	detonate_message = "폭발 덩굴손 소환",
 	elementals_message = "정령 3 소환",
+	
+	tree = "이오나의 선물",
+	tree_desc = "프레이야의 이오나의 선물 소환을 알립니다.",
 	tree_message = "이오나의 선물 소환",
 
 	fury_message = "격노",
