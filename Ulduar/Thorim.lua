@@ -68,6 +68,7 @@ if L then
 	L.icon_desc = "Place a Raid Icon on the player with Runic Detonation or Stormhammer. (requires promoted or higher)"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Thorim")
+mod.locale = L
 
 mod.enabletrigger = {behemoth, boss, L["Runic Colossus"]}
 

@@ -39,6 +39,7 @@ if L then
 	L.bigbang_soon = "Big Bang soon!"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Algalon")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

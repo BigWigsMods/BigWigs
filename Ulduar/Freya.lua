@@ -71,6 +71,7 @@ if L then
 	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Freya")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

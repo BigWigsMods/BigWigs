@@ -72,6 +72,7 @@ if L then
 	L.end_trigger = "^It would appear that I've made a slight miscalculation."
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Mimiron")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

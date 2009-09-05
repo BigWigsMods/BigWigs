@@ -51,6 +51,7 @@ if L then
 	L.armor_message = "%2$dx Crunch on %1$s"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kologarn")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

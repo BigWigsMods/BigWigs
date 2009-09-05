@@ -41,6 +41,7 @@ if L then
 	L.sonic_bar = "~Sonic"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Auriaya")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

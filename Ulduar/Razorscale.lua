@@ -62,6 +62,7 @@ if L then
 	L.harpoon_nextbar = "Harpoon %d"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Razorscale")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

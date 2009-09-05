@@ -28,6 +28,7 @@ if L then
 	L.shutdown_message = "Systems down!"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Flame Leviathan")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

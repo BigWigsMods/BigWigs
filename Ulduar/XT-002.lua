@@ -52,6 +52,7 @@ if L then
 	L.tantrum_bar = "~Tantrum Cooldown"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: XT-002")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

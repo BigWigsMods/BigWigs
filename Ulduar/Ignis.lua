@@ -37,6 +37,7 @@ if L then
 	L.slagpot_message = "Slag Pot: %s"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Ignis")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --

@@ -90,6 +90,8 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Yogg-Saron")
 
+mod.locale = L
+
 -- We need to add the player name to block those extremely stupid sanity loss
 -- warnings blizz puts in the emote frame. The source for those messages USED
 -- TO BE the boss, but Blizzard CHANGED IT to the player himself, for some

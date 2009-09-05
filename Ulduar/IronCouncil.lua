@@ -61,6 +61,7 @@ if L then
 	L.council_dies = "%s dead"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Iron Council")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --
