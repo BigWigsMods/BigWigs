@@ -59,11 +59,11 @@ end
 -- Event Handlers
 --
 
-function mod:Swarm(event, player, spellId, _, _, spellName)
+function mod:Swarm(player, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 end
 
-function mod:Pursue(event, player, spellId)
+function mod:Pursue(player, spellId)
 	self:TargetMessage(L["chase"], player, "Personal", spellId)
 	self:Whisper(player, L["chase"])
 	self:PrimaryIcon(player, "icon")
