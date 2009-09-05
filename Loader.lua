@@ -293,7 +293,7 @@ end
 function loader:LoadCore()
 	if BigWigs or LibStub("AceAddon-3.0"):GetAddon("BigWigs", true) then return true end -- return true, so if self:LoadCore() checks work properly
 	-- time to load the core
-	local core = "BigWigs3_Core"
+	local core = "BigWigs_Core"
 	-- Verify that the addon isn't disabled
 	local enabled = select(4, GetAddOnInfo(core))
 	if not enabled then 
