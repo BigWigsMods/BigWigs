@@ -18,14 +18,15 @@ mod.consoleCmd = "Koralon"
 
 local started = nil
 
-----------------------------
---      Localization      --
-----------------------------
+------------------------------
+--      English Locale      --
+------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsKoralon the Flame Watcher", "enUS", true)
+if L then
+end
 
-L:RegisterTranslations("enUS", function() return {
-} end )
+L = LibStub("AceLocale-3.0"):GetLocale("BigWigsKoralon the Flame Watcher")
 
 ------------------------------
 --      Initialization      --

@@ -22,7 +22,46 @@ local db = nil
 local started = nil
 local phase = nil
 local fmt = string.format
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+
+------------------------------
+--      English Locale      --
+------------------------------
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "enUS", true)
+if L then
+	L.sparks = "Spark Spawns"
+	L.sparks_desc = "Warns on Power Spark spawns."
+	L.sparks_message = "Power Spark spawns!"
+	L.sparks_warning = "Power Spark in ~5sec!"
+
+	L.sparkbuff_message = "Malygos gains Power Spark!"
+	
+	L.vortex = "Vortex"
+	L.vortex_desc = "Warn for Vortex in phase 1."
+	L.vortex_message = "Vortex!"
+	L.vortex_warning = "Possible Vortex in ~5sec!"
+	L.vortex_next = "Vortex Cooldown"
+	
+	L.breath = "Deep Breath"
+	L.breath_desc = "Warn when Malygos is using Deep Breath in phase 2."
+	L.breath_message = "Deep Breath!"
+	L.breath_warning = "Deep Breath in ~5sec!"
+
+	L.surge = "Surge of Power"
+	L.surge_desc = "Warn when Malygos uses Surge of Power on you in phase 3."
+	L.surge_you = "Surge of Power on YOU!"
+	L.surge_trigger = "%s fixes his eyes on you!"
+
+	L.phase = "Phases"
+	L.phase_desc = "Warn for phase changes."
+	L.phase2_warning = "Phase 2 soon!"
+	L.phase2_trigger = "I had hoped to end your lives quickly"
+	L.phase2_message = "Phase 2 - Nexus Lord & Scion of Eternity!"
+	L.phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic"
+	L.phase3_warning = "Phase 3 soon!"
+	L.phase3_trigger = "Now your benefactors make their"
+	L.phase3_message = "Phase 3!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
 
 ------------------------------
 --      Initialization      --

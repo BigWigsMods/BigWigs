@@ -23,7 +23,24 @@ local UnitGUID = _G.UnitGUID
 local GetNumRaidMembers = _G.GetNumRaidMembers
 local fmt = _G.string.format
 local guid = nil
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+
+------------------------------
+--      English Locale      --
+------------------------------
+
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "enUS", true)
+if L then
+	L.nova_next = "~Nova Cooldown"
+
+	L.overcharge_message = "A minion is overcharged!"
+	L.overcharge_bar = "Explosion"
+	L.overcharge_next = "~Overcharge Cooldown"
+
+	L.icon = "Overcharge Icon"
+	L.icon_desc = "Place a skull on the mob with Overcharge."
+end
+
+L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
 
 ------------------------------
 --      Initialization      --
