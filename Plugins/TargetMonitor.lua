@@ -44,7 +44,8 @@ function plugin:RegisterMob(mod)
 	elseif type(mob) == "string" or type(mob) == "number" then enablemobs[mob] = mod
 	else for i,m in next, mob do enablemobs[m] = mod end end
 end
-function plugin:UnregisterMob(mob)
+function plugin:UnregisterMob(mod)
+	local mob = mod.enabletrigger
 	if type(mob) == "function" then enableyells[mob] = nil
 	elseif type(mob) == "string" or type(mob) == "number" then enablemobs[mob] = nil
 	else for i,m in next, mob do enablemobs[m] = nil end end
@@ -56,7 +57,7 @@ end
 
 function plugin:BigWigs_OnBossEnable(event, mod)
 	if mod and mod.enabletrigger then
-		self:UnregisterMob(mod.enabletrigger)
+		self:UnregisterMob(mod)
 	end
 end
 
