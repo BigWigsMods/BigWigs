@@ -94,10 +94,12 @@ local function targetCheck(unit)
 	local n = UnitName(unit)
 	local id = UnitGUID(unit)
 
+	if (not n and not id) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	if id then id = tonumber(id:sub(-12,-7),16) end
-	if ( (not n or not enablemobs[n]) and (not id or not enablemobs[id]) ) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	
-	plugin:SendMessage("BigWigs_TargetSeen", n, id, unit, enablemobs[n].moduleName, enablemobs[n])
+
+	if (n and enablemobs[n]) or (id and enablemobs[id]) then
+		plugin:SendMessage("BigWigs_TargetSeen", n, id, unit, enablemobs[n].moduleName, enablemobs[n])
+	end
 end
 
 function plugin:CHAT_MSG_MONSTER_YELL(event, msg, source)
