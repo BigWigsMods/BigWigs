@@ -2,21 +2,21 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "koKR")
 if L then
 	L.engage_message = "전투 시작"
 	L.engage_trigger = "여기가 네 무덤이 되리라!"
-	
+
 	L.unburrow_trigger = "땅속에서 모습을 드러냅니다!"
 	L.burrow_trigger = "땅속으로 숨어버립니다!"
 	L.burrow = "소멸"
 	L.burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다."
 	L.burrow_cooldown = "다음 소멸"
 	L.burrow_soon = "곧 소멸"
-	
+
 	L.icon = "전술 표시"
 	L.icon_desc = "소멸 단계에 추격 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 
 	L.chase = "추격"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "koKR")
 if L then
 	L.engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!"
 	L.jormungars_trigger = "마음을 굳게 하게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
@@ -33,7 +33,7 @@ if L then
 	-- Jormungars
 	L.spew = "산성/용암 내뿜기"
 	L.spew_desc = "산성/용암 내뿜기를 알립니다."
-	
+
 	L.slime_message = "당신은 진흙 웅덩이!"
 	L.burn_spell = "불타는 담즙"
 	L.toxin_spell = "마비 독"
@@ -45,7 +45,7 @@ if L then
 	L.charge_trigger = "([^%s]+)|1을;를; 노려보며 큰 소리로 울부짖습니다.$"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "koKR")
 if L then
 	L.enable_trigger = "다음 전투는 은빛십자군에서 가장 센 기사들을 상대해야 하네... 그들을 이겨야만 자신의 가치를 인정받을 걸세."
 	L.defeat_trigger = "상처뿐인 승리로군."
@@ -58,7 +58,7 @@ if L then
 	L["Bloodlust on champions!"] = "용사 피의 욕망!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "koKR")
 if L then
 	L.engage = "전투 시작"
 	L.engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!"
@@ -79,7 +79,7 @@ if L then
 	L.netherpower_bar = "~황천의 힘 대기시간"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "koKR")
 if L then
 	L.engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라."
 
@@ -94,3 +94,4 @@ if L then
 	L.touch = "어둠/빛의 손길"
 	L.touch_desc = "어둠/빛의 손길을 알립니다."
 end
+

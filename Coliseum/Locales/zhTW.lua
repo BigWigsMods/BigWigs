@@ -16,7 +16,7 @@ if L then
 	L.chase = "追擊"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhTW")
 if L then
 	L.engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!"
 	L.jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢魘吧，英雄們，快就定位!"
@@ -46,7 +46,7 @@ if L then
 --	L.charge_trigger = "^%%s"	--check
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhTW")
 if L then
 	L.enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy..."
 	L.defeat_trigger = "膚淺而悲痛的勝利。今天痛失的生命反而令我們更加的頹弱。除了巫妖王之外，誰還能從中獲利?偉大的戰士失去了寶貴生命。為了什麼?真正的威脅就在前方 - 巫妖王在死亡的領域中等著我們。"
@@ -59,7 +59,7 @@ if L then
 	L["Bloodlust on champions!"] = "嗜血術！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhTW")
 if L then
 	L.engage = "進入戰斗"
 	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
@@ -80,7 +80,7 @@ if L then
 	L.netherpower_bar = "<下一虛空傳送門（能量）>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "zhTW")
 if L then
 	L.engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。"
 
@@ -95,3 +95,4 @@ if L then
 	L.touch = "黑暗/光明之觸"
 	L.touch_desc = "當玩家中了黑暗/光明之觸時發出警報。"
 end
+

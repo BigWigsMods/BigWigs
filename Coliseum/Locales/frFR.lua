@@ -2,7 +2,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "frFR")
 if L then
 	L.engage_message = "Anub'arak engagé, Fouir dans 80 sec. !"
 	L.engage_trigger = "Ce terreau sera votre tombeau !"
-	
+
 	L.unburrow_trigger = "surgit de la terre"
 	L.burrow_trigger = "s'enfonce dans le sol"
 	L.burrow = "Fouir"
@@ -16,7 +16,7 @@ if L then
 	L.chase = "Poursuivi"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "frFR")
 if L then
 	L.engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !"
 	L.jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !"
@@ -45,7 +45,7 @@ if L then
 	L.charge_trigger = "lâche un rugissement assourdissant !$"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "frFR")
 if L then
 	L.enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…"
 	L.defeat_trigger = "Une victoire tragique et dépourvue de sens."
@@ -58,7 +58,7 @@ if L then
 	L["Bloodlust on champions!"] = "Furie sanguinaire sur les champions !"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "frFR")
 if L then
 	L.engage = "Engagement"
 	L.engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !"
@@ -79,7 +79,7 @@ if L then
 	L.netherpower_bar = "~Recharge Puissance"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "frFR")
 if L then
 	L.engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir."
 
@@ -94,3 +94,4 @@ if L then
 	L.touch = "Toucher des ténèbres/de lumière"
 	L.touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière."
 end
+

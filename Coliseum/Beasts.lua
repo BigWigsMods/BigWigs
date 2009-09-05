@@ -204,7 +204,7 @@ end
 
 do
 	local dontWarn = nil
-	
+
 	local function toxinWarn(spellId)
 		if not dontWarn then
 			mod:TargetMessage(L["toxin_spell"], toxin, "Urgent", spellId)

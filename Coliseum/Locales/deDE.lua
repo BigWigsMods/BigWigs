@@ -9,10 +9,10 @@ if L then
 	L.burrow_desc = "Zeigt einen Timer für Anub'arak's Eingraben."
 	L.burrow_cooldown = "~Eingraben"
 	L.burrow_soon = "Eingraben bald!"
-	
+
 	L.icon = "Schlachtzugs-Symbol"
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Anub'arak verfolgt werden (benötigt Assistent oder höher)."
-	
+
 	L.chase = "Verfolgen"
 end
 
@@ -45,7 +45,7 @@ if L then
 	L.charge_trigger = "^zornig an und lässt einen gewaltigen Schrei ertönen!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "deDE")
 if L then
 	L.enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren..."
 	-- L.defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
@@ -58,7 +58,7 @@ if L then
 	L["Bloodlust on champions!"] = "Kampfrausch auf Champions!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "deDE")
 if L then
 	L.engage = "Angegriffen"
 	L.engage_trigger = "^Ihr steht vor Jaraxxus"
@@ -79,7 +79,7 @@ if L then
 	L.netherpower_bar = "~Macht des Nether"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "deDE")
 if L then
 	L.engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben."
 
@@ -90,7 +90,8 @@ if L then
 
 	L.shield = "Schild der Nacht/Licht"
 	L.shield_desc = "Warnt bei Schild der Nacht/Licht."
-	
+
 	L.touch = "Berührung der Nacht/Licht"
 	L.touch_desc = "Warnt bei Berührung der Nacht/Licht."
 end
+

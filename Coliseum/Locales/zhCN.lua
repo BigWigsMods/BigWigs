@@ -16,7 +16,7 @@ if L then
 	L.chase = "追击"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhCN")
 if L then
 	--L.engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!"
 	--L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
@@ -46,7 +46,7 @@ if L then
 --	L.charge_trigger = "^%%s"	--check
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhCN")
 if L then
 --	L.enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy..."
 --	L.defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
@@ -59,7 +59,7 @@ if L then
 	L["Bloodlust on champions!"] = "嗜血！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhCN")
 if L then
 	L.engage = "激活"
 	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
@@ -80,7 +80,7 @@ if L then
 	L.netherpower_bar = "<下一Nether Power>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "zhCN")
 if L then
 --	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
@@ -95,3 +95,4 @@ if L then
 	L.touch = "Touch of Darkness/Light"
 	L.touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。"
 end
+

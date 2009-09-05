@@ -12,11 +12,11 @@ if L then
 
 	L.icon = "Помечать иконкой"
 	L.icon_desc = "Помечать рейдовой иконкой игрока которого приследуют шипы Ануб'арака в фазе когда он под землёй. (необходимо быть лидером группы или рейда)"
-	
+
 	L.chase = "Шипы"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "ruRU")
 if L then
 	L.engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!"
 	L.jormungars_trigger = "Приготовьтесь к схватке с близнецами-чудовищами, Кислотной Утробой и Жуткой Чешуей!"
@@ -40,7 +40,7 @@ if L then
 	--L.charge_trigger = "^%%s"	--check
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "ruRU")
 if L then
 	L.enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду."
 	L.defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом."
@@ -53,7 +53,7 @@ if L then
 	L["Bloodlust on champions!"] = "Жажда крови на чемпионах!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "ruRU")
 if L then
 	L.engage = "Начало битвы"
 
@@ -75,7 +75,7 @@ if L then
 	L.netherpower_bar = "~Следующая Сила Пустоты"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
 if L then
 	--L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
@@ -90,3 +90,4 @@ if L then
 	L.touch = "Касание тьмы/Света"
 	L.touch_desc = "Сообщать о Касании тьмы/Света"
 end
+
