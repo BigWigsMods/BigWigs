@@ -194,7 +194,7 @@ function mod:Enrage(unit, spellId, _, _, spellName)
 	if self.db.profile.enrage then
 		self:IfMessage(L["enragewarn"], "Urgent", spellId)
 	end
-	self:TriggerEvent("BigWigs_StopBar", self, enrageName)
+	self:SendMessage("BigWigs_StopBar", self, enrageName)
 	if enrageMessageId then
 		self:CancelScheduledEvent(enrageMessageId)
 	end

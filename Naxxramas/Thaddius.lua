@@ -319,7 +319,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		throw()
 	elseif msg:find(L["trigger_phase2_1"]) or msg:find(L["trigger_phase2_2"]) or msg:find(L["trigger_phase2_3"]) then
 		self:CancelAllScheduledEvents()
-		self:TriggerEvent("BigWigs_StopBar", self, L["throw_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["throw_bar"])
 		if self.db.profile.phase then
 			self:Message(L["phase2_message"], "Important")
 		end

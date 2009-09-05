@@ -338,9 +338,9 @@ local function waveWarn(message, color)
 		mod:Message(L["wave"]:format(wave, message), color)
 	end
 	if wave == 23 then
-		mod:TriggerEvent("BigWigs_StopBar", mod, L["trabar"]:format(numTrainer - 1))
-		mod:TriggerEvent("BigWigs_StopBar", mod, L["dkbar"]:format(numDK - 1))
-		mod:TriggerEvent("BigWigs_StopBar", mod, L["riderbar"]:format(numRider - 1))
+		mod:SendMessage("BigWigs_StopBar", mod, L["trabar"]:format(numTrainer - 1))
+		mod:SendMessage("BigWigs_StopBar", mod, L["dkbar"]:format(numDK - 1))
+		mod:SendMessage("BigWigs_StopBar", mod, L["riderbar"]:format(numRider - 1))
 		mod:CancelAllScheduledEvents()
 	end
 end

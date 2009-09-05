@@ -301,8 +301,8 @@ function mod:teleportToBalcony()
 
 	self:CancelScheduledEvent("bwnothblink")
 	self:CancelScheduledEvent("bwnothcurse")
-	self:TriggerEvent("BigWigs_StopBar", self, L["blinkbar"])
-	self:TriggerEvent("BigWigs_StopBar", self, L["cursebar"])
+	self:SendMessage("BigWigs_StopBar", self, L["blinkbar"])
+	self:SendMessage("BigWigs_StopBar", self, L["cursebar"])
 
 	if self.db.profile.teleport then
 		self:Message(L["teleportwarn"], "Important")

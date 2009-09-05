@@ -193,7 +193,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["airphase_trigger"] then
 		self:CancelScheduledEvent("Lifedrain")
-		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
 		if self:GetOption(28524) then
 			--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
 			self:IfMessage(L["deepbreath_incoming_message"], "Attention")
