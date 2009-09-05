@@ -346,12 +346,14 @@ local function clearTimer( self, id )
 end
 
 local inprocess = {}
+inprocess.args = {}
 function boss:ProcessScheduledTimer( id )
 	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
 	local t = scheduledTimers[self][id]
 	-- copy and clear incase we reschedule the same id from within the func
 	inprocess.func = t.func
 	inprocess.atid = t.atid
+	wipe(inprocess.args)
 	for k, v in pairs(t.args) do
 		inprocess.args[k] = v
 	end
