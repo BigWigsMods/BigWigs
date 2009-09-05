@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-<!--@debug@-->
+
 <Script file="Comm.lua"/>
 <Script file="Colors.lua"/>
 <Script file="TargetMonitor.lua"/>
@@ -10,6 +10,6 @@
 <Script file="RaidWarn.lua"/>
 <Script file="BossBlock.lua"/>
 <Script file="RaidIcon.lua"/>
-<!--@end-debug@-->
+
 </Ui>
 

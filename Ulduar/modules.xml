@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-<!--@debug@-->
+
 <Script file="Freya.lua"/>
 <Script file="Hodir.lua"/>
 <Script file="Ignis.lua"/>
@@ -16,6 +16,5 @@
 <Script file="Algalon.lua"/>
 <Script file="YoggSaron.lua"/>
 
-<!--@end-debug@-->
 </Ui>
 
