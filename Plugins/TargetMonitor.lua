@@ -28,7 +28,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ModulePackLoaded", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
-	self:RegisterMessage("BigWigs_ModuleRegistered")
+	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossEnable")
 	self:ZoneChanged()
@@ -66,8 +66,7 @@ function plugin:BigWigs_OnBossDisable(event, mod)
 	end
 end
 
-function plugin:BigWigs_ModuleRegistered(m)
-	local mod = BigWigs:GetModule(m)
+function plugin:BigWigs_BossModuleRegistered(event, modname, mod)
 	if mod and mod.enabletrigger then
 		self:RegisterZone(mod.zoneName)
 		self:RegisterMob(mod)
@@ -100,7 +99,7 @@ local function targetCheck(unit)
 	plugin:SendMessage("BigWigs_TargetSeen", n, id, unit, enablemobs[n].name)
 end
 
-function plugin:CHAT_MSG_MONSTER_YELL(msg, source)
+function plugin:CHAT_MSG_MONSTER_YELL(event, msg, source)
 	for func, mod in pairs(enableyells) do
 		local yell = func()
 		if yell == msg then
