@@ -2,13 +2,14 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Koralon the Flame Watcher"]
+local boss = "Koralon the Flame Watcher"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Vault of Archavon"]
+mod.bossName = boss
+mod.zoneName = "Vault of Archavon"
 mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
-mod.guid = 33993
+mod.enabletrigger = 35013
+mod.guid = 35013
 mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
 mod.consoleCmd = "Koralon"
 
@@ -40,7 +41,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 
 	started = nil
 end
@@ -59,7 +60,7 @@ function mod:Cinder(_, spellId, _, _, spellName)
 	self:Bar(spellName, 20, spellId)
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then

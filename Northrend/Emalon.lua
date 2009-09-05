@@ -2,12 +2,13 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Emalon the Storm Watcher"]
+local boss = "Emalon the Storm Watcher"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Vault of Archavon"]
+mod.bossName = boss
+mod.zoneName = "Vault of Archavon"
 mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
+mod.enabletrigger = 33993
 mod.guid = 33993
 mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
@@ -55,7 +56,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 
 	started = nil
 	guid = nil
@@ -106,7 +107,7 @@ function mod:OverchargeIcon(...)
 	self:ScheduleRepeatingEvent("BWGetOverchargeTarget", scanTarget, 0.1)
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		self:TriggerEvent("BigWigs_ShowProximity", self)

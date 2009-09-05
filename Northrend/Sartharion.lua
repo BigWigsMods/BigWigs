@@ -2,13 +2,21 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Sartharion"]
-local shadron, tenebron, vesperon = BB["Shadron"], BB["Tenebron"], BB["Vesperon"]
+local boss = "Sartharion"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["The Obsidian Sanctum"]
+local shadron, tenebron, vesperon
+mod.bossName = { boss, "Shadron", "Tenebron", "Vesperon" }
+mod.displayName = boss
+mod.zoneName = "The Obsidian Sanctum"
 mod.otherMenu = "Northrend"
-mod.enabletrigger = {boss, shadron, tenebron, vesperon}
+--[[
+	28860 = sartharion
+	30452 = tenebron
+	30451 = shadron
+	30449 = vesperon
+--]]
+mod.enabletrigger = { 28860, 30449, 30451, 30452 } 
 mod.guid = 28860
 mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
 mod.consoleCmd = "Sartharion"
@@ -24,7 +32,7 @@ local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 ------------------------------
 --      English Locale      --
 ------------------------------
-L = Libstub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "enUS", true)
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "enUS", true)
 if L then
 	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
 
@@ -56,6 +64,11 @@ mod.locale = L
 --      Initialization      --
 ------------------------------
 
+function mod:OnRegister()
+	shadron, tenebron, vesperon = mod.bossName[2], mod.bossName[3], mod.bossName[4]
+	db = self.db.profile
+end
+
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
 	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
@@ -65,7 +78,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	db = self.db.profile
 	shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 end
 
@@ -98,7 +110,7 @@ function mod:Breath(_, spellId)
 	self:Bar(L["breath_cooldown"], 12, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
 	if msg == L["tsunami_trigger"] and db.tsunami then
 		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
 		self:Bar(L["tsunami_cooldown"], 30, 57491)
@@ -115,7 +127,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, mob)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
 		if db.tsunami then
 			self:Bar(L["tsunami_cooldown"], 30, 57491)

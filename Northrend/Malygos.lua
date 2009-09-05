@@ -2,12 +2,13 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Malygos"]
+local boss = "Malygos"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["The Eye of Eternity"]
+mod.bossName = "Malygos"
+mod.zoneName = "The Eye of Eternity"
 mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
+mod.enabletrigger = 28859
 mod.guid = 28859
 mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
 mod.consoleCmd = "Malygos"
@@ -81,7 +82,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 
 	started = nil
 	db = self.db.profile
@@ -93,7 +94,7 @@ end
 ------------------------------
 
 function mod:Spark(player, spellId)
-	if player == boss and phase == 1 then
+	if player == self.bossName and phase == 1 then
 		self:IfMessage(L["sparkbuff_message"], "Important", spellId)
 	end
 end
@@ -117,13 +118,13 @@ function mod:Vortex(_, spellId)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(msg, mob)
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg, mob)
 	if phase == 3 and db.surge and msg == L["surge_trigger"] then
 		self:LocalMessage(L["surge_you"], "Personal", 60936, "Alarm") -- 60936 for phase 3, not 56505
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if phase == 1 then
 		if db.sparks then
 			self:Message(L["sparks_message"], "Important", 56152, "Alert")
@@ -141,7 +142,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelAllScheduledEvents()
@@ -162,9 +163,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(event, msg)
 	if phase ~= 1 or not db.phase then return end
-	if UnitName(msg) == boss then
+	if UnitName(msg) == self.bossName then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 54 then
 			self:Message(L["phase2_warning"], "Attention")
@@ -172,7 +173,7 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		phase = 1
