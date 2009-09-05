@@ -288,7 +288,7 @@ if L then
 	L.shieldwall_warning = "Преграда из костей закончится через 5сек!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "enUS")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о фазах боя"

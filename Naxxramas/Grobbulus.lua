@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -32,46 +32,6 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Grobbulus")
 mod.locale = L
-
-L:RegisterTranslations("deDE", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "%s ist verseucht!",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Mutagene Injektion gewirkt wird (benötigt Assistent oder höher).",
-} end )
-
-L:RegisterTranslations("koKR", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "돌연변이 유발: %s!",
-
-	icon = "전술 표시",
-	icon_desc = "돌연변이 유발 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "变异注射：>%s<！",
-
-	icon = "团队标记",
-	icon_desc = "为中了变异注射的玩家打上团队标记。（需要权限）",
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "突變注射：>%s<！",
-
-	icon = "團隊標記",
-	icon_desc = "為中了突變注射的玩家打上團隊標記。（需要權限）",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "Injection mutante : %s",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être assistant ou mieux).",
-} end )
 
 ------------------------------
 --      Initialization      --

@@ -1,4 +1,4 @@
-﻿----------------------------------
+----------------------------------
 --      Module Declaration      --
 ----------------------------------
 
@@ -23,36 +23,6 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Patchwerk")
 mod.locale = L
-
-L:RegisterTranslations("deDE", function() return {
-	enragewarn = "5% - Raserei!",
-	starttrigger1 = "Flickwerk spielen möchte!",
-	starttrigger2 = "Kel’Thuzad macht Flickwerk zu seinem Abgesandten von Krieg!", -- Yes, that's really a ´ instead of a '
-} end )
-
-L:RegisterTranslations("koKR", function() return {
-	enragewarn = "5% - 광기!",
-	starttrigger1 = "패치워크랑 놀아줘!",
-	starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다.",
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
-	enragewarn = "5% - 狂乱！",
-	starttrigger1 = "帕奇维克要跟你玩！",
-	starttrigger2 = "帕奇维克是克尔苏加德的战神！",
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
-	enragewarn = "5 % - 狂亂！",
-	starttrigger1 = "縫補者要跟你玩!",
-	starttrigger2 = "科爾蘇加德讓縫補者成為戰爭的化身!",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	enragewarn = "5% - Frénésie !",
-	starttrigger1 = "R'cousu veut jouer !",
-	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
-} end )
 
 ------------------------------
 --      Initialization      --
