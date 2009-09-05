@@ -38,7 +38,7 @@ local chargeCount = 1
 local fmt = string.format
 local pName = UnitName("player")
 
-local hardModeMessageID = "" -- AceEvent flips out if not passed a string for :CancelScheduledEvent
+local hardModeMessageID 
 
 ----------------------------
 --      Localization      --

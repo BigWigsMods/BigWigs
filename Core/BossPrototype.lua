@@ -374,6 +374,7 @@ function boss:ScheduleEvent( id, func, delay, ...)
 	scheduledTimers[self][id].func = func
 	scheduledTimers[self][id].args = { ... }
 	scheduledTimers[self][id].atid = self:ScheduleTimer( "ProcessScheduledTimer", delay, id )
+	return id
 end
 
 function boss:DelayedMessage(delay, text, ...) 
