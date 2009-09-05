@@ -123,7 +123,7 @@ local acOptions = {
 		},
 		footer = {
 			type = "description",
-			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on #wowace. [Ammo] and vhaarr can service all your needs.|r",
+			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r",
 			order = 42,
 			width = "full",
 		},
@@ -385,24 +385,6 @@ do
 		if type(rev) ~= "number" then
 			error(("%q does not have a valid revision field."):format(name))
 		end
-
-		
-		if module.toggleOptions then
-			for i,v in next, module.toggleOptions do
-				local t = type(v)
-				if t == "string"  then
-					opts[v] = true
-				elseif t == "number" and v > 0 then
-					local n = GetSpellInfo(v)
-					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
-					opts[n] = true
-				end
-			end
-			module.db = self.db:RegisterNamespace(name, { profile = opts })
-			for i in ipairs(opts) do opts[i] = nil end
-		elseif type(module.defaultDB) == "table" then
-			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )
-		end
 		
 		-- Translate the bossmodule if appropriate
 		if LOCALE ~= "enUS" and BB and BZ then
@@ -431,25 +413,28 @@ do
 				module.displayName = module.bossName
 			end
 		end
-		if module.toggleOptions then
-			local zone = nil
-			if module.otherMenu then
-				zone = module.otherMenu
-			else
-				zone = type(module.zoneName) == "table" and module.zoneName[1] or module.zoneName
+
+		for i,v in next, module.toggleOptions do
+			local t = type(v)
+			if t == "string"  then
+				opts[v] = true
+			elseif t == "number" and v > 0 then
+				local n = GetSpellInfo(v)
+				if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
+				opts[n] = true
 			end
-			if zone then
-				if not zoneModules[zone] then
-					ac:RegisterOptionsTable(zone, populateZoneOptions)
-					acd:AddToBlizOptions(zone, zone, "Big Wigs")
-					zoneModules[zone] = {}
-				end
-				tinsert(zoneModules[zone], module)
-			end
-		elseif module.pluginOptions then
-			pluginOptions.args[name] = module.pluginOptions
 		end
-	
+		module.db = self.db:RegisterNamespace(name, { profile = opts })
+		for i in next, opts do opts[i] = nil end
+
+		local zone = module.otherMenu or module.zoneName
+		if not zoneModules[zone] then
+			ac:RegisterOptionsTable(zone, populateZoneOptions)
+			acd:AddToBlizOptions(zone, zone, "Big Wigs")
+			zoneModules[zone] = {}
+		end
+		tinsert(zoneModules[zone], module)
+
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
