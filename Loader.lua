@@ -49,14 +49,14 @@ local grouped = nil
 local BZ -- BabbleZone-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 
-local loadOnCoreEnabled = {} -- BigWigs3 modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
-local loadInZone = {} -- BigWigs3 modulepack that should load on a specific zone
-local loadOnCoreLoaded = {} -- BigWigs3 modulepacks that should load when the core is loaded
-local loadForeign = {} -- BigWigs3 foreign language packs
+local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
+local loadInZone = {} -- BigWigs modulepack that should load on a specific zone
+local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
+local loadForeign = {} -- BigWigs foreign language packs
 
-local menus = {} -- contains the main menus for BigWigs3, once the core is loaded they will get injected
+local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 
-local enableZones = {} -- contains the zones in which BigWigs3 will enable
+local enableZones = {} -- contains the zones in which BigWigs will enable
 
 local LOCALE = GetLocale()
 if LOCALE == "enGB" then
@@ -143,7 +143,7 @@ function loader:OnInitialize()
 			end
 			if LOCALE ~= "enUS" then -- only do something with foreign stuff if we really need to, yay no BabbleBoss and Zone for english users!
 				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Foreign")
-				if meta then LoadAddOn(name) end -- imediately load that stuff, this WILL trigger another ADDON_LOADED, which is NO issue when BigWigs3 is fully packed or unpacked.
+				if meta then LoadAddOn(name) end -- imediately load that stuff, this WILL trigger another ADDON_LOADED, which is NO issue when BigWigs is fully packed or unpacked.
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
 			if meta then
@@ -214,11 +214,11 @@ function loader:ZoneChanged()
 	-- load party content in raid, but don't load raid content in a party...
 	if (enableZones[z1] and enableZones[z1] <= grouped) or (enableZones[z2] and enableZones[z2] <= grouped) then
 		if self:LoadCore() then
-			if BigWigs3:IsEnabled() and (loadInZone[z1] or loadInZone[z2]) then
+			if BigWigs:IsEnabled() and (loadInZone[z1] or loadInZone[z2]) then
 				loadZone(z1)
 				loadZone(z2)
 			else
-				BigWigs3:Enable()
+				BigWigs:Enable()
 			end
 		end
 	end	
@@ -272,8 +272,6 @@ end
 
 
 function loader:BigWigs_CoreLoaded()
-	BigWigs3 = LibStub("AceAddon-3.0"):GetAddon("BigWigs")
-
 	for k, v in pairs(loadOnCoreLoaded) do
 		if not IsAddOnLoaded(v) then LoadAddOn(v) end
 		loadOnCoreLoaded[k] = nil
