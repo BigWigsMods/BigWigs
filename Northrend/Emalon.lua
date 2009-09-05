@@ -110,10 +110,8 @@ end
 function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:SendMessage("BigWigs_ShowProximity", self)
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self:GetOption(64218) then
 			self:Bar(L["overcharge_next"], 45, 64218)
 		end

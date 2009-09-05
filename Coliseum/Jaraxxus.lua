@@ -69,7 +69,7 @@ function mod:IncinerateFlesh(player, spellId)
 end
 
 function mod:IncinerateFleshRemoved(player, spellId)
-	self:TriggerEvent("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
+	self:SendMessage("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
 function mod:LegionFlame(player, spellId)

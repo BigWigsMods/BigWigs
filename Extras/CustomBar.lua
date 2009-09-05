@@ -108,7 +108,7 @@ local function BWCB(input)
 	local t = GetTime()
 	if not times[input] or (times[input] and (times[input] + 2) < t) then
 		times[input] = t
-		mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..input)
+		mod:SendMessage("BigWigs_SendSync", "BWCustomBar "..input)
 	end
 end
 
