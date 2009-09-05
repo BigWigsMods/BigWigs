@@ -303,7 +303,7 @@ local function throw()
 		mod:Bar(L["throw_bar"], 20, "Ability_Druid_Maul")
 		mod:DelayedMessage(15, L["throw_warning"], "Urgent")
 	end
-	mod:ScheduleEvent(throw, 21)
+	mod:ScheduleEvent("thadthrow", throw, 21)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

@@ -338,13 +338,21 @@ local function clearTimer( self, id )
 	scheduledTimers[self][id] = nil
 end
 
+local inprocess = {}
 function boss:ProcessScheduledTimer( id )
 	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
 	local t = scheduledTimers[self][id]
-	if type(t.func) == "string" then
-		self[t.func]( self, unpack(t.args) )
-	elseif type(t.func) == "function" then
-		t.func( unpack(t.args) )
+	-- copy and clear incase we reschedule the same id from within the func
+	inprocess.func = t.func
+	inprocess.atid = t.atid
+	for k, v in pairs(t.args) do
+		inprocess.args[k] = v
+	end
+	clearTimer(self, id)
+	if type(inprocess.func) == "string" then
+		self[inprocess.func]( self, unpack(inprocess.args) )
+	elseif type(inprocess.func) == "function" then
+		inprocess.func( unpack(inprocess.args) )
 	end
 	clearTimer(self, id)
 end
@@ -355,7 +363,7 @@ function boss:CancelScheduledEvent( id )
 	clearTimer(self, id)
 end
 
-function boss:ScheduleEvent( id, delay, func, ...)
+function boss:ScheduleEvent( id, func, delay, ...)
 	if not scheduledTimers[self] then
 		scheduledTimers[self] = {}
 	end
@@ -369,7 +377,7 @@ function boss:ScheduleEvent( id, delay, func, ...)
 end
 
 function boss:DelayedMessage(delay, text, ...) 
-	return self:ScheduleEvent(text, delay, "SendMessage", "BigWigs_Message", text, ...)
+	return self:ScheduleEvent(text, "SendMessage", delay, "BigWigs_Message", text, ...)
 end
 
 do
