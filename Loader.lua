@@ -429,3 +429,10 @@ function loader:RemoveInterfaceOptions()
 		end
 	end
 end
+
+local icon = LibStub("LibDBIcon-1.0", true)
+if icon then
+	if not BigWigs3IconDB then BigWigs3IconDB = {} end
+	icon:Register("BigWigs", ldb, BigWigs3IconDB)
+end
+

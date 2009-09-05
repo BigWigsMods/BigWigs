@@ -107,13 +107,13 @@ local acOptions = {
 			name = L["Minimap icon"],
 			desc = L["Toggle show/hide of the minimap icon."],
 			order = 41,
-			get = function() return not BigWigs.db.profile.minimap.hide end,
+			get = function() return not BigWigs3IconDB.hide end,
 			set = function(info, v)
 				if v then
-					BigWigs.db.profile.minimap.hide = nil
+					BigWigs3IconDB.hide = nil
 					icon:Show("BigWigs")
 				else
-					BigWigs.db.profile.minimap.hide = true
+					BigWigs3IconDB.hide = true
 					icon:Hide("BigWigs")
 				end
 			end,
@@ -137,7 +137,7 @@ function addon:OnInitialize()
 	local defaults = {
 		profile = {}
 	}
-	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, "Default")
+	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"

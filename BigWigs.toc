@@ -20,9 +20,9 @@
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: true
 
-## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0, DewdropLib, LibCompress
+## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0, DewdropLib
 
-## SavedVariables: BigWigs3DB
+## SavedVariables: BigWigs3DB, BigWigs3IconDB
 
 embeds.xml
 
