@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:New("Custom Bars", "$Revision$")
+local mod = BigWigs:NewPlugin("Custom Bars", "$Revision$")
 if not mod then return end
 mod.external = true
 
@@ -19,19 +19,19 @@ local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Extras")
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnPluginEnable()
 	self.enabled = true
 	times = {}
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 0)
+	self:RegisterMessage("BigWigs_RecvSync")
+	self:SendMessage("BigWigs_ThrottleSync", "BWCustomBar", 0)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
 
 	if UnitInRaid("player") then
@@ -70,6 +70,16 @@ local function parseTime(input)
 	end
 end
 
+local timers = {}
+local messages = {}
+
+function mod:SendCustomMessage( msg )
+	if messages[msg] then
+		self:SendMessage(unpack(messages[msg]))
+		wipe(messages[msg])
+	end
+end
+
 function mod:StartBar(bar, nick, localOnly)
 	local time, barText = select(3, bar:find("(%S+) (.*)"))
 	local seconds = parseTime(time)
@@ -80,11 +90,16 @@ function mod:StartBar(bar, nick, localOnly)
 
 	if not nick then nick = L["Local"] end
 	if seconds == 0 then
-		self:CancelScheduledEvent("bwcb"..nick..barText)
-		self:TriggerEvent("BigWigs_StopBar", self, nick..": "..barText)
+		if timers["bwcb"..nick..barText] then
+			self:CancelTimer( timers["bwcb"..nick..barText], true ) -- silent cancel
+			timers["bwcb"..nick..barText] = nil
+			wipe(messages["bwcb"..nick..barText])
+		end
+		self:SendMessage("BigWigs_StopBar", self, nick..": "..barText)
 	else
-		self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, fmt(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly)
-		self:TriggerEvent("BigWigs_StartBar", self, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+		messages["bwcb"..nick..barText] = { "BigWigs_Message", fmt(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly }
+		timers["bwcb"..nick..barText] = self:ScheduleTimer("SendCustomMessage", seconds, "bwcb"..nick..barText )
+		self:SendMessage("BigWigs_StartBar", self, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 	end
 end
 

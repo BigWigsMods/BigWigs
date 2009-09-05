@@ -1,9 +1,11 @@
---------------------------------
+﻿--------------------------------
 --      Module Prototype      --
 --------------------------------
+local boss = {} -- our prototype
+-- add this to BigWigs
+BigWigs.bossCore:SetDefaultModulePrototype(boss)
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-local BBR = LibStub("LibBabble-Boss-3.0"):GetReverseLookupTable()
 
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
@@ -13,13 +15,28 @@ local GetSpellInfo = GetSpellInfo
 local fmt = string.format
 local pName = UnitName("player")
 
-function BigWigs.modulePrototype:OnInitialize()
+function boss:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
 	-- anyway.
-	BigWigs:RegisterModule(self)
+	BigWigs:RegisterBossModule(self)
 end
 
-function BigWigs.modulePrototype:GetOption(spellId)
+function boss:OnEnable()
+	if type(self.OnBossEnable) == "function" then
+		self:OnBossEnable()
+	end
+	self:SendMessage("BigWigs_OnBossEnable", self)
+end
+
+function boss:OnDisable()
+	if type(self.OnBossDisable) == "function" then
+		self:OnBossDisable()
+	end
+	self:SendMessage("BigWigs_OnBossDisable", self)
+end
+
+
+function boss:GetOption(spellId)
 	return self.db.profile[(GetSpellInfo(spellId))]
 end
 
@@ -36,7 +53,7 @@ local function transmitSync(self, token, arguments, ...)
 end
 
 local modMissingFunction = "BigWigs Module Error: Module %q got the event %q (%d), but it doesn't know how to handle it."
-function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 	local m = self.combatLogEventMap and self.combatLogEventMap[event]
 	if m and (m[spellId] or m["*"]) then
 		if event == "UNIT_DIED" then
@@ -63,7 +80,7 @@ function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source
 end
 
 -- XXX Proposed API, subject to change.
-function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
+function boss:AddCombatListener(event, func, ...)
 	if not event or not func then
 		error(("Missing an argument to %q:AddCombatListener."):format(self:ToString()))
 	end
@@ -80,14 +97,12 @@ function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
 	else
 		self.combatLogEventMap[event]["*"] = func
 	end
-	if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	end
+	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
 local spellIds = {}
 -- XXX Proposed API, subject to change.
-function BigWigs.modulePrototype:AddSyncListener(event, ...)
+function boss:AddSyncListener(event, ...)
 	if not self.syncEventMap then self.syncEventMap = {} end
 	if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
 	local token = nil
@@ -122,27 +137,10 @@ function BigWigs.modulePrototype:AddSyncListener(event, ...)
 			end
 		end
 	end
-	if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-	end
+	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
-function BigWigs.modulePrototype:IsBossModule()
-	return self.zonename and self.enabletrigger and true
-end
---[[
-function BigWigs.modulePrototype:GenericBossDeath(msg, multi)
-	local b = self:ToString()
-	if msg == b then
-		if multi then
-			self:Sync("MultiBossDeath " .. b)
-		else
-			self:Sync("BossDeath " .. b)
-		end
-	end
-end
-]]
-function BigWigs.modulePrototype:BossDeath(_, guid, multi)
+function boss:BossDeath(_, guid, multi)
 	local b = self:ToString()
 	if type(guid) == "string" then
 		guid = tonumber((guid):sub(-12,-7),16)
@@ -180,7 +178,7 @@ local function populateScanTable(mod)
 	end
 end
 
-function BigWigs.modulePrototype:Scan()
+function boss:Scan()
 	if not self.scanTable then populateScanTable(self) end
 
 	if UnitExists("target") and UnitAffectingCombat("target") and self.scanTable[UnitName("target")] then
@@ -210,48 +208,44 @@ function BigWigs.modulePrototype:Scan()
 	end
 end
 
-function BigWigs.modulePrototype:GetEngageSync()
+function boss:GetEngageSync()
 	return "BossEngaged"
 end
 
 -- Really not much of a validation, but at least it validates that the sync is
 -- remotely related to the module :P
-function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
+function boss:ValidateEngageSync(sync, rest)
 	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
 	if sync ~= self:GetEngageSync() then return false end
 	if not self.scanTable then populateScanTable(self) end
 	for mob in pairs(self.scanTable) do
-		local translated = BBR[mob] or mob
-		if translated == rest or mob == rest then return true end
+		if mob == rest then return true end
 	end
-
-	local boss = BBR[rest] or rest
-	return boss == self:ToString() or rest == self:ToString()
+	return rest == self:ToString()
 end
 
-function BigWigs.modulePrototype:CheckForEngage()
+function boss:CheckForEngage()
 	local go = self:Scan()
 	if go then
-		local mod = self:ToString()
-		local moduleName = BBR[mod] or mod
+		local moduleName = self:ToString()
 		self:Sync(self:GetEngageSync().." "..moduleName)
 	elseif UnitAffectingCombat("player") then
-		self:ScheduleEvent(self.CheckForEngage, .5, self)
+		self:ScheduleTimer(self.CheckForEngage, .5, self)
 	end
 end
 
-function BigWigs.modulePrototype:CheckForWipe()
+function boss:CheckForWipe()
 	if not UnitIsFeignDeath("player") then
 		local go = self:Scan()
 		if not go then
-			self:TriggerEvent("BigWigs_RemoveRaidIcon")
-			self:TriggerEvent("BigWigs_RebootModule", self)
+			self:SendMessage("BigWigs_RemoveRaidIcon")
+			self:SendMessage("BigWigs_RebootModule", self)
 			return
 		end
 	end
 
 	if not UnitAffectingCombat("player") then
-		self:ScheduleEvent(self.CheckForWipe, 2, self)
+		self:ScheduleTimer(self.CheckForWipe, 2, self)
 	end
 end
 
@@ -265,10 +259,10 @@ do
 	})
 	-- XXX Proposed API, subject to change/remove.
 	-- Outputs a normal message including a raid warning if possible.
-	function BigWigs.modulePrototype:IfMessage(key, color, icon, sound, locale, ...)
+	function boss:IfMessage(key, color, icon, sound, locale, ...)
 		if locale and not self.db.profile[key] then return end
 		local text = not locale and key or locale[keys[key]]:format(...)
-		self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
+		self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
 
 	local hexColors = {}
@@ -293,16 +287,15 @@ do
 			rawset(self, key, coloredNames[value])
 		end
 	}
-	function BigWigs.modulePrototype:NewTargetList()
+	function boss:NewTargetList()
 		return setmetatable({}, mt)
 	end
 
-	function BigWigs.modulePrototype:TargetMessage(spellName, player, color, icon, sound, ...)
+	function boss:TargetMessage(spellName, player, color, icon, sound, ...)
 		local text = nil
 		if type(player) == "table" then
 			text = fmt(L["other"], spellName, table.concat(player, ", "))
 			wipe(player)
-			self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 		else
 			if player == pName then
 				if ... then
@@ -310,8 +303,6 @@ do
 				else
 					text = fmt(L["you"], spellName)
 				end
-				self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
-				self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
 			else
 				--change colors and remove sound when warning about effects on other players
 				if color == "Personal" then color = "Important" end
@@ -321,38 +312,35 @@ do
 				else
 					text = fmt(L["other"], spellName, coloredNames[player])
 				end
-				self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 			end
 		end
+		self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
 
 	-- XXX Proposed API, subject to change.
 	-- Outputs a local message only, no raid warning.
-	function BigWigs.modulePrototype:LocalMessage(key, color, icon, sound, locale, ...)
+	function boss:LocalMessage(key, color, icon, sound, locale, ...)
 		if locale and not self.db.profile[key] then return end
 		local text = not locale and key or locale[keys[key]]:format(...)
-		self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
-	end
-
-	-- XXX Proposed API, subject to change.
-	-- Outputs a raid warning message only, no local message.
-	function BigWigs.modulePrototype:WideMessage(key, locale, ...)
-		if locale and not self.db.profile[key] then return end
-		local text = not locale and key or locale[keys[key]]:format(...)
-		self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
+		self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
 	end
 end
 
-function BigWigs.modulePrototype:Message(...)
-	self:TriggerEvent("BigWigs_Message", ...)
+function boss:Message(...)
+	self:SendMessage("BigWigs_Message", ...)
 end
 
-function BigWigs.modulePrototype:DelayedMessage(delay, ...)
-	if count == 100 then count = 1 end
-	local id = fmt("%s%d", "BigWigs-DelayedMessage-", count)
-	count = count + 1
-	self:ScheduleEvent(id, "BigWigs_Message", delay, ...)
-	return id
+-- FIXME: this delay trick is ugly
+local delayedmsgs = {}
+function boss:sendDelayedMessage( msg )
+	if delayedmsgs[msg] then
+		self:SendMessage( unpack(msg) )
+		wipe(delayedmsgs[msg])
+	end
+end
+function boss:DelayedMessage(delay, text, color, localm, sound, broadcastonly, icon )
+	delayedmsgs[text] = { "BigWigs_Message", text, color, localm, sound, broadcastonly, icon }
+	return self:ScheduleTimer("sendDelayedMessage", delay, text )
 end
 
 do
@@ -367,56 +355,56 @@ do
 		end
 	})
 
-	function BigWigs.modulePrototype:Bar(text, length, icon, ...)
-		self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], ...)
+	function boss:Bar(text, length, icon, ...)
+		self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], ...)
 	end
 
 	-- XXX Proposed API, subject to change.
-	function BigWigs.modulePrototype:IfBar(key, length, icon, color, locale, ...)
+	function boss:IfBar(key, length, icon, color, locale, ...)
 		if not self.db.profile[key] then return end
 		local text = locale[key .. "_bar"]:format(...)
-		self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], color)
+		self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], color)
 	end
 end
 
-function BigWigs.modulePrototype:Sync(...)
-	self:TriggerEvent("BigWigs_SendSync", strjoin(" ", ...))
+function boss:Sync(...)
+	self:SendMessage("BigWigs_SendSync", strjoin(" ", ...))
 end
 
 -- XXX 3rd argument is a proposed API change, and is subject to change/removal.
-function BigWigs.modulePrototype:Whisper(player, spellName, noName)
+function boss:Whisper(player, spellName, noName)
 	if player == pName then return end
-	self:TriggerEvent("BigWigs_SendTell", player, noName and spellName or fmt(L["you"], spellName))
+	self:SendMessage("BigWigs_SendTell", player, noName and spellName or fmt(L["you"], spellName))
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function BigWigs.modulePrototype:PrimaryIcon(player, key)
+function boss:PrimaryIcon(player, key)
 	if key and not self.db.profile[key] then return end
 	if not player then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon", 1)
+		self:SendMessage("BigWigs_RemoveRaidIcon", 1)
 	else
-		self:TriggerEvent("BigWigs_SetRaidIcon", player, 1)
+		self:SendMessage("BigWigs_SetRaidIcon", player, 1)
 	end
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function BigWigs.modulePrototype:SecondaryIcon(player, key)
+function boss:SecondaryIcon(player, key)
 	if key and not self.db.profile[key] then return end
 	if not player then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon", 2)
+		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
 	else
-		self:TriggerEvent("BigWigs_SetRaidIcon", player, 2)
+		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
 	end
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function BigWigs.modulePrototype:Icon(player, key)
+function boss:Icon(player, key)
 	if key and not self.db.profile[key] then return end
-	self:TriggerEvent("BigWigs_SetRaidIcon", player)
+	self:SendMessage("BigWigs_SetRaidIcon", player)
 end
 
-function BigWigs.modulePrototype:Throttle(seconds, ...)
-	self:TriggerEvent("BigWigs_ThrottleSync", seconds, ...)
+function boss:Throttle(seconds, ...)
+	self:SendMessage("BigWigs_ThrottleSync", seconds, ...)
 end
 
 do
@@ -436,7 +424,7 @@ do
 		bar = GetSpellInfo(12880),
 		icon = 12880,
 	}
-	function BigWigs.modulePrototype:Enrage(seconds, isBerserk, noEngageMessage)
+	function boss:Enrage(seconds, isBerserk, noEngageMessage)
 		local w = isBerserk and berserk or enrage
 		local boss = self:ToString()
 

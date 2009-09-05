@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("Raid Icons", "$Revision$")
+local plugin = BigWigs:NewPlugin("Raid Icons", "$Revision$")
 if not plugin then return end
 
 ------------------------------
@@ -81,12 +81,12 @@ plugin.pluginOptions = {
 --      Initialization      --
 ------------------------------
 
-function plugin:OnEnable()
-	self:RegisterEvent("BigWigs_SetRaidIcon")
-	self:RegisterEvent("BigWigs_RemoveRaidIcon")
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_SetRaidIcon")
+	self:RegisterMessage("BigWigs_RemoveRaidIcon")
 end
 
-function plugin:BigWigs_SetRaidIcon(player, icon)
+function plugin:BigWigs_SetRaidIcon(message, player, icon)
 	if not player then return end
 	if not GetRaidTargetIndex(player) then
 		local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
@@ -96,7 +96,7 @@ function plugin:BigWigs_SetRaidIcon(player, icon)
 	end
 end
 
-function plugin:BigWigs_RemoveRaidIcon(icon)
+function plugin:BigWigs_RemoveRaidIcon(message, icon)
 	if not lastplayer[icon or 1] then return end
 	SetIcon(lastplayer[icon or 1], 0)
 	lastplayer[icon or 1] = nil

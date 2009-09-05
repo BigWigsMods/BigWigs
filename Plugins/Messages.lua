@@ -2,12 +2,8 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("Messages", "$Revision$")
+local plugin = BigWigs:NewPlugin("Messages", "$Revision$", "LibSink-2.0")
 if not plugin then return end
-
-local sink = LibStub("LibSink-2.0")
-sink:Embed(plugin)
-sink = nil
 
 ------------------------------
 --      Are you local?      --
@@ -90,7 +86,7 @@ local function createAnchor()
 	test.tooltipText = L["Spawns a new test warning."]
 	test:SetScript("OnEnter", onControlEnter)
 	test:SetScript("OnLeave", onControlLeave)
-	test:SetScript("OnClick", function() plugin:TriggerEvent("BigWigs_Test") end)
+	test:SetScript("OnClick", function() plugin:SendMessage("BigWigs_Test") end)
 	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
 	local close = CreateFrame("Button", nil, anchor)
 	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
@@ -241,9 +237,9 @@ function plugin:OnRegister()
 	self.consoleOptions.args.output.order = 100
 end
 
-function plugin:OnEnable()
-	self:RegisterEvent("BigWigs_Message")
-	self:RegisterEvent("BigWigs_TemporaryConfig", function()
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_Message")
+	self:RegisterMessage("BigWigs_TemporaryConfig", function()
 		if not anchor then createAnchor() end
 		if anchor:IsShown() then
 			anchor:Hide()
@@ -252,14 +248,10 @@ function plugin:OnEnable()
 		end
 	end)
 
-	if BigWigs:HasModule("Colors") then
-		colorModule = BigWigs:GetModule("Colors")
-	else
-		colorModule = nil
-	end
+	colorModule = BigWigs:GetPlugin("Colors", true)
 end
 
-function plugin:OnDisable() if anchor then anchor:Hide() end end
+function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
 
 --------------------------------------------------------------------------------
 -- Message frame
@@ -357,7 +349,7 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	FadingFrame_Show(slot)
 end
 
-function plugin:BigWigs_Message(text, color, _, sound, broadcastonly, icon)
+function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
@@ -379,7 +371,9 @@ function plugin:BigWigs_Message(text, color, _, sound, broadcastonly, icon)
 
 	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	if db.chat then
-		BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
+		-- FIXME: fix bigwigs customprint, or a special print function in this module
+		BigWigs:Print( text )
+		-- BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
 	end
 end
 

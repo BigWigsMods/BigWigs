@@ -12,23 +12,23 @@
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Pettigrow (frFR), Gamefaq (deDE), Kyopaxa (esES), Daemona, wolftankk@cwdg (zhCN), Tekkub Stoutwrithe (BigWigs 1) & More
-## Version: 2.0
+## Version: 3.0
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 ## X-License: See license.txt
 
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: true
+
 ## OptionalDeps: Ace3, Ace2, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0, DewdropLib
 
-## SavedVariables: BigWigsDB
+## SavedVariables: BigWigs3DB
 
 embeds.xml
 
 locales.xml
 
-LoadOnDemand.lua
-Core\Core.lua
-Core\Prototype.lua
-Config\Options.lua
+Loader.lua
 
 modules.xml
 

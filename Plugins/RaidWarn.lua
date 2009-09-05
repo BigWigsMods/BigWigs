@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("RaidWarning", "$Revision$")
+local plugin = BigWigs:NewPlugin("RaidWarning", "$Revision$")
 if not plugin then return end
 
 ------------------------------
@@ -45,12 +45,12 @@ function plugin:OnRegister()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 end
 
-function plugin:OnEnable()
-	self:RegisterEvent("BigWigs_SendTell")
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_SendTell")
 	sentWhispers = wipe(sentWhispers)
 end
 
-function plugin:BigWigs_SendTell(player, msg)
+function plugin:BigWigs_SendTell(event, player, msg)
 	if not self.db.profile.whisper or not player or not msg then return end
 	if not UnitIsPlayer(player) then return end
 	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end

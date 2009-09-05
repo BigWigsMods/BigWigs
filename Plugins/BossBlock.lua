@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("BossBlock", "$Revision$", "AceHook-2.1")
+local plugin = BigWigs:NewPlugin("BossBlock", "$Revision$", "AceHook-3.0")
 if not plugin then return end
 
 ----------------------------
@@ -27,16 +27,16 @@ function plugin:OnRegister()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
 end
 
-function plugin:OnEnable()
+function plugin:OnPluginEnable()
 	self:Hook("RaidNotice_AddMessage", "RWAddMessage", true)
-	self:RegisterEvent("Ace2_AddonEnabled", "BossModEnableDisable")
-	self:RegisterEvent("Ace2_AddonDisabled", "BossModEnableDisable")
+	self:RegisterMessage("BigWigs_OnBossEnable", "BossModEnableDisable")
+	self:RegisterMessage("BigWigs_OnBossDisable", "BossModEnableDisable")
 end
 
 do
 	local bossmobs = {}
 
-	function plugin:BossModEnableDisable(mod)
+	function plugin:BossModEnableDisable(message, mod)
 		local t = mod and mod.enabletrigger and type(mod.enabletrigger) or nil
 		if not t then return end
 		if t == "table" then

@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:New("Flash", "$Revision$")
+local mod = BigWigs:NewPlugin("Flash", "$Revision$")
 if not mod then return end
 
 --------------------------------------------------------------------------------
@@ -29,8 +29,8 @@ mod.external = true
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
-	self:RegisterEvent("BigWigs_Message")
+function mod:OnPluginEnable()
+	self:RegisterMessage("BigWigs_Message")
 end
 
 ------------------------------
@@ -72,7 +72,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_Message(msg, color)
+function mod:BigWigs_Message(event, msg, color)
 	if color and color == "Personal" then
 		if not flasher then --frame creation
 			flasher = CreateFrame("Frame", "BWFlash", UIParent)

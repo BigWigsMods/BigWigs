@@ -2,7 +2,7 @@
 -- Addon Declaration
 --
 
-local plugin = BigWigs:New("Version Checker", "$Revision$")
+local plugin = BigWigs:NewPlugin("Version Checker", "$Revision$")
 if not plugin then return end
 plugin.external = true
 
@@ -66,9 +66,9 @@ end
 local function scanModules()
 	if shouldUpdate then return end
 	local lastHighestRevision = highestRevision
-	for name, module in BigWigs:IterateModules() do
+	for name, module in BigWigs:IterateBossModules() do
 		local rev = module.revision
-		if rev and module:IsBossModule() then
+		if rev then
 			if not highestRevision or rev > revisions[highestRevision] then
 				highestRevision = name
 			end
@@ -91,9 +91,9 @@ end
 --
 
 function plugin:OnRegister()
-	if BigWigsOptions and BigWigsOptions.RegisterTooltipInfo then
+	if BigWigsLoader and BigWigsLoader.RegisterTooltipInfo then
 		local ood = {}
-		BigWigsOptions:RegisterTooltipInfo(function(tt)
+		BigWigsLoader:RegisterTooltipInfo(function(tt)
 			local addedInfo = nil
 			if shouldUpdate then
 				addedInfo = true
@@ -144,9 +144,9 @@ end
 
 function plugin:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
-	self:RegisterBucketEvent("BigWigs_ModuleRegistered", 2, scanModules)
-	self:RegisterEvent("BigWigs_JoinedGroup", newGroup)
-	self:RegisterEvent("BigWigs_LeftGroup", updateBWUsers)
+	self:RegisterMessage("BigWigs_ModuleRegistered", scanModules)
+	self:RegisterMessage("BigWigs_JoinedGroup", newGroup)
+	self:RegisterMessage("BigWigs_LeftGroup", updateBWUsers)
 	newGroup()
 end
 
@@ -165,7 +165,7 @@ local bwPrefixes = {
 	BigWigs = true, -- Comm module
 }
 
-function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
+function plugin:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if sender == playername then return end
 	if not bwPrefixes[prefix] then return end
 	if not bigwigsUsers[sender] then

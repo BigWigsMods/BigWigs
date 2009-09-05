@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("Colors", "$Revision$")
+local plugin = BigWigs:NewPlugin("Colors", "$Revision$")
 if not plugin then return end
 
 local fmt = string.format
@@ -142,7 +142,7 @@ plugin.pluginOptions = {
 	},
 }
 
-function plugin:OnEnable()
+function plugin:OnPluginEnable()
 	if not self.db.profile.upgraded then
 		self:ResetDB()
 		self.db.profile.upgraded = 1

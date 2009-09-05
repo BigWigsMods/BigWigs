@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:New("Bars 2", "$Revision$")
+local plugin = BigWigs:NewPlugin("Bars 2", "$Revision$")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
@@ -314,7 +314,7 @@ local function createAnchor(frameName, title)
 	test.tooltipText = L["Creates a new test bar."]
 	test:SetScript("OnEnter", onControlEnter)
 	test:SetScript("OnLeave", onControlLeave)
-	test:SetScript("OnClick", function() plugin:TriggerEvent("BigWigs_Test") end)
+	test:SetScript("OnClick", function() plugin:SendMessage("BigWigs_Test") end)
 	test:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\test")
 	local close = CreateFrame("Button", nil, display)
 	close:SetPoint("BOTTOMLEFT", test, "BOTTOMRIGHT", 4, 0)
@@ -363,7 +363,6 @@ end
 --------------------------------------------------------------------------------
 -- Initialization
 --
-
 function plugin:OnRegister()
 	media:Register(mType, "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
 	media:Register(mType, "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
@@ -377,14 +376,15 @@ function plugin:OnRegister()
 	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
 end
 
-function plugin:OnEnable()
+function plugin:OnPluginEnable()
 	if not media:Fetch(mType, db.texture, true) then db.texture = "BantoBar" end
-	self:RegisterEvent("BigWigs_StartBar")
-	self:RegisterEvent("BigWigs_StopBar")
-	self:RegisterEvent("BigWigs_StopBars", "Ace2_AddonDisabled")
-	self:RegisterEvent("Ace2_AddonDisabled")
-	self:RegisterEvent("BigWigs_TemporaryConfig", "ShowAnchors")
-	colors = BigWigs:GetModule("Colors")
+	self:RegisterMessage("BigWigs_StartBar")
+	self:RegisterMessage("BigWigs_StopBar")
+	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_TemporaryConfig", "ShowAnchors")
+	colors = BigWigs:GetPlugin("Colors")
 end
 
 --------------------------------------------------------------------------------
@@ -418,8 +418,8 @@ local function stop(module, text)
 	if d then rearrangeBars(emphasizeAnchor) end
 end
 
-function plugin:Ace2_AddonDisabled(module) stop(module) end
-function plugin:BigWigs_StopBar(module, text) stop(module, text) end
+function plugin:BigWigs_OnBossDisable(message, module) stop(module) end
+function plugin:BigWigs_StopBar(message, module, text) stop(module, text) end
 
 do
 	empUpdate = CreateFrame("Frame")
@@ -441,7 +441,7 @@ do
 	end)
 end
 
-function plugin:BigWigs_StartBar(module, text, time, icon)
+function plugin:BigWigs_StartBar(message, module, text, time, icon)
 	stop(module, text)
 	local bar = candy:New(media:Fetch(mType, db.texture), 200, 14)
 	normalAnchor.bars[bar] = true

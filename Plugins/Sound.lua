@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:New("Sounds", "$Revision$")
+local plugin = BigWigs:NewPlugin("Sounds", "$Revision$")
 if not plugin then return end
 
 ------------------------------
@@ -109,9 +109,9 @@ function plugin:OnRegister()
 	end
 end
 
-function plugin:OnEnable()
-	self:RegisterEvent("BigWigs_Message")
-	self:RegisterEvent("BigWigs_Sound")
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_Message")
+	self:RegisterMessage("BigWigs_Sound")
 end
 
 local function play(sound)
@@ -125,12 +125,12 @@ local function play(sound)
 	PlaySound("RaidWarning")
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
+function plugin:BigWigs_Message(event, text, color, noraidsay, sound, broadcastonly)
 	if not text or sound == false or broadcastonly or not db.sound then return end
 	play(sound)
 end
 
-function plugin:BigWigs_Sound(sound)
+function plugin:BigWigs_Sound(event, sound)
 	if not db.sound or sound == false then return end
 	play(sound)
 end

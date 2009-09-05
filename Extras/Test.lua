@@ -1,4 +1,4 @@
-local plugin = BigWigs:New("Test", "$Revision$")
+local plugin = BigWigs:NewPlugin("Test", "$Revision$")
 if not plugin then return end
 plugin.external = true
 local spells = nil
@@ -6,8 +6,17 @@ local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bos
 local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
 local messageFormat = "%s: %s"
 
-function plugin:OnEnable()
-	self:RegisterEvent("BigWigs_Test")
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_Test")
+end
+
+local tests = {}
+
+function plugin:SendTestMessage( message )
+	if tests[message] then
+		self:SendMessage( unpack(tests[message]) )
+		wipe(tests[message])
+	end
 end
 
 function plugin:BigWigs_Test()
@@ -27,7 +36,9 @@ function plugin:BigWigs_Test()
 	local time = math.random(11, 45)
 	local color = colors[math.random(1, #colors)]
 	local sound = sounds[math.random(1, #sounds)]
-	self:TriggerEvent("BigWigs_StartBar", self, name, time, icon)
-	self:DelayedMessage(time, messageFormat:format(color, name), color, true, sound, nil, icon)
+	self:SendMessage("BigWigs_StartBar", self, name, time, icon)
+	-- FIXME: ScheduleTimer only allows for one argument
+	tests[messageFormat:format(color, name)] = { "BigWigs_Message", messageFormat:format(color, name), color, true, sound, nil, icon }
+	self:ScheduleTimer("SendTestMessage", time, messageFormat:format(color, name) )
 end
 

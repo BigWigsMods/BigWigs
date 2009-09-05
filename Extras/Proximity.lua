@@ -2,7 +2,7 @@
 --      Module Declaration
 -----------------------------------------------------------------------
 
-local plugin = BigWigs:New("Proximity", "$Revision$")
+local plugin = BigWigs:NewPlugin("Proximity", "$Revision$")
 if not plugin then return end
 
 -----------------------------------------------------------------------
@@ -236,13 +236,14 @@ function plugin:OnRegister()
 	end
 end
 
-function plugin:OnEnable()
-	self:RegisterEvent("Ace2_AddonDisabled")
-	self:RegisterEvent("BigWigs_ShowProximity")
-	self:RegisterEvent("BigWigs_HideProximity")
+function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_ShowProximity")
+	self:RegisterMessage("BigWigs_HideProximity")
 end
 
-function plugin:OnDisable()
+function plugin:OnPluginDisable()
 	self:CloseProximity()
 end
 
@@ -250,13 +251,13 @@ end
 --      Event Handlers
 -----------------------------------------------------------------------
 
-function plugin:BigWigs_ShowProximity(module)
+function plugin:BigWigs_ShowProximity(event, module)
 	if active then error("The proximity window is already running for another module.") end
 	active = module
 	self:OpenProximity()
 end
 
-function plugin:BigWigs_HideProximity(module)
+function plugin:BigWigs_HideProximity(event, module)
 	active = nil
 	self:CloseProximity()
 end
@@ -271,7 +272,7 @@ OnOptionToggled = function(module)
 	end
 end
 
-function plugin:Ace2_AddonDisabled(module)
+function plugin:BigWigs_OnBossDisable(event, module)
 	if active and active == module then
 		self:BigWigs_HideProximity(active)
 	end

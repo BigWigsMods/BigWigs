@@ -1,0 +1,14 @@
+## Interface: 30200
+
+## Title: Big Wigs [|cffccccccForeign Language|r]
+
+## Notes: Non English Language Pack for BigWigs
+
+## LoadOnDemand: 1
+
+## Dependencies: BigWigs
+
+## X-BigWigs-LoadOn-Foreign: true
+
+libs.xml
+

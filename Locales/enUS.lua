@@ -34,7 +34,7 @@ L["Load all %s modules."] = true
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%d|r) already exists as a boss module in Big Wigs, but something is trying to register it again (at revision |cffffff00%d|r). This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 
--- Options.lua
+-- Loader / Options.lua
 L["|cff00ff00Module running|r"] = true
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = true
 L["Active boss modules:"] = true
@@ -42,4 +42,6 @@ L["All running modules have been reset."] = true
 L["Menu"] = true
 L["Menu options."] = true
 
-
+L["Big Wigs is currently disabled."] = true
+L["|cffeda55fClick|r to enable."] = true
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = true

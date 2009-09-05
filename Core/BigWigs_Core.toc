@@ -1,0 +1,12 @@
+## Interface: 30200
+
+## Title: Big Wigs [|cffeda55fCore|r]
+## Notes: Big Wigs Core
+## Author: Ammo, Rabbit, Funkydude
+## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
+
+## LoadOnDemand: 1
+
+## Dependencies: BigWigs
+
+modules.xml

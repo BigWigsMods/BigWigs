@@ -2,7 +2,7 @@
 --      Addon Declaration      --
 ---------------------------------
 
-local plugin = BigWigs:New("Target Monitor", "$Revision$")
+local plugin = BigWigs:NewPlugin("Target Monitor", "$Revision$")
 if not plugin then return end
 
 ------------------------------
@@ -16,21 +16,21 @@ local monitoring = nil
 --      Initialization      --
 ------------------------------
 
-function plugin:OnEnable()
+function plugin:OnPluginEnable()
 	monitoring = nil
-	for name, module in BigWigs:IterateModules() do
+	for name, module in BigWigs:IterateBossModules() do
 		if module.zonename and module.enabletrigger then
 			self:RegisterZone(module.zonename)
 			self:RegisterMob(module)
 		end
 	end
 
-	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZoneChanged")
+	self:RegisterMessage("BigWigs_ModulePackLoaded", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
-	self:RegisterEvent("BigWigs_ModuleRegistered")
-	self:RegisterEvent("Ace2_AddonDisabled")
-	self:RegisterEvent("Ace2_AddonEnabled")
+	self:RegisterMessage("BigWigs_ModuleRegistered")
+	self:RegisterMessage("BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossEnable")
 	self:ZoneChanged()
 end
 
@@ -54,13 +54,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function plugin:Ace2_AddonEnabled(mod)
+function plugin:BigWigs_OnBossEnable(event, mod)
 	if mod and mod.enabletrigger then
 		self:UnregisterMob(mod.enabletrigger)
 	end
 end
 
-function plugin:Ace2_AddonDisabled(mod)
+function plugin:BigWigs_OnBossDisable(event, mod)
 	if mod and mod.enabletrigger then
 		self:RegisterMob(mod)
 	end

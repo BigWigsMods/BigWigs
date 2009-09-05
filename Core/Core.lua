@@ -1,18 +1,18 @@
-------------------------------
---      Are you local?      --
-------------------------------
+BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
+local addon = BigWigs
 
-local bboss = LibStub("LibBabble-Boss-3.0")
-local bzone = LibStub("LibBabble-Zone-3.0")
+addon:SetEnabledState(false) -- we're disabled by default
+addon:SetDefaultModuleState(false) -- our modules too
+
+
+-- locale stuff for BZ or BB conditionals
+local LOCALE = GetLocale()
+if LOCALE == "enGB" then
+	LOCALE = "enUS"
+end
+local BB, BZ
 
 local GetSpellInfo = GetSpellInfo
-local BZ = bzone:GetUnstrictLookupTable()
-local BB = bboss:GetUnstrictLookupTable()
-local BBR = bboss:GetReverseLookupTable()
-
--- Set two globals to make it easier on the boss modules.
-_G.BZ = bzone:GetLookupTable()
-_G.BB = bboss:GetLookupTable()
 
 local AL = LibStub("AceLocale-3.0")
 local AL2 = AceLibrary("AceLocale-2.2") -- used for backwards compat
@@ -25,21 +25,8 @@ local acd = LibStub("AceConfigDialog-3.0")
 local customBossOptions = {}
 local pName = UnitName("player")
 
----------------------------------
---      Addon Declaration      --
----------------------------------
-
-BigWigs = AceLibrary("AceAddon-2.0"):new(
-	"AceEvent-2.0",
-	"AceModuleCore-2.0",
-	"AceConsole-2.0",
-	"AceDB-2.0"
-)
 
 BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
-local BigWigs = BigWigs
-
-BigWigs:SetModuleMixins("AceEvent-2.0")
 
 local pluginOptions = {
 	type = "group",
@@ -68,12 +55,11 @@ local acOptions = {
 				InterfaceOptionsFrame:Hide()
 
 				-- Enable all disabled modules that are not boss modules.
-				for name, module in BigWigs:IterateModules() do
-					if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
-						BigWigs:ToggleModuleActive(module, true)
-					end
+				BigWigs.pluginCore:Enable()
+				for name, module in BigWigs:IteratePlugins() do
+					module:Enable()
 				end
-				BigWigs:TriggerEvent("BigWigs_TemporaryConfig")
+				BigWigs:SendMessage("BigWigs_TemporaryConfig")
 			end,
 			order = 10,
 			width = "full",
@@ -148,59 +134,66 @@ local acOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigs:OnInitialize()
-	self:RegisterDB("BigWigsDB")
-
-	self:RegisterChatCommand("/bw", "/BigWigs", options, "BIGWIGS")
+function addon:OnInitialize()
+	local defaults = {
+		profile = {}
+	}
+	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, "Default")
 
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
+	
+	-- once OnInitialize is fired, we have BZ and BB available if we're not in english locale
+	if LOCALE ~= "enUS" then
+		BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
+		BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable()
+	end
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("enrage", L["enrage"], L["enrage_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 
+	BigWigsLoader:RemoveInterfaceOptions()
+	
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", "Customize ...", "Big Wigs")
+	
+	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to 
+	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
+	self:SendMessage("BigWigs_CoreLoaded")
 end
 
-function BigWigs:OnEnable(first)
-	-- We only really enable ourselves if we are told to do so by BigWigsLoD.
-	if not first then
-		-- this will trigger the LoadWithCore to load
-		self:TriggerEvent("BigWigs_CoreEnabled")
-
-		-- Enable all disabled modules that are not boss modules.
-		for name, module in self:IterateModules() do
-			if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
-				self:ToggleModuleActive(module, true)
-			end
-		end
-
-		self:RegisterEvent("BigWigs_TargetSeen")
-		self:RegisterEvent("BigWigs_RebootModule")
-		self:RegisterEvent("BigWigs_RecvSync")
-	else
-		self:ToggleActive(false)
-	end
+function addon:OnEnable()
+	self:SendMessage("BigWigs_CoreEnabled")
+	
+	-- enable modules that require enabling
+	-- the cores etc are set to disabled by default, and require manual enabling
+	self.pluginCore:Enable() 
+	self.bossCore:Enable() 
+	
+	self:RegisterMessage("BigWigs_TargetSeen")
+	self:RegisterMessage("BigWigs_RebootModule")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
-function BigWigs:OnDisable()
-	-- Disable all modules
-	for name, module in self:IterateModules() do
-		self:ToggleModuleActive(module, false)
-	end
+function addon:OnDisable()
+	self:SendMessage("BigWigs_CoreDisabled")
+	-- these require manual disabling
+	self.pluginCore:Disable()
+	self.bossCore:Disable()
+end
 
-	self:TriggerEvent("BigWigs_CoreDisabled")
+function addon:Print(...)
+	print("|cff33ff99BigWigs|r:", ...)
 end
 
 -------------------------------
 --      API                  --
 -------------------------------
 
-function BigWigs:RegisterBossOption(key, name, desc, func)
+function addon:RegisterBossOption(key, name, desc, func)
 	if customBossOptions[key] then
 		error("The custom boss option %q has already been registered."):format(key)
 	end
@@ -217,22 +210,49 @@ do
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
-	function BigWigs:New(module, revision, ...)
+	function addon:NewBoss(module, revision, ...)
 		local r = nil
 		if type(revision) == "string" then r = tonumber(revision:sub(12, -3))
 		else r = revision end
 		if type(r) ~= "number" then
 			error(("Trying to register module %q without a valid revision."):format(module))
 		end
-		if self.modules[module] then
-			local oldM = self:GetModule(module)
+		if self:GetBossModule(module, true) then
+			local oldM = self:GetBossModule(module)
 			print(L["already_registered"]:format(module, oldM.revision, r))
 		else
-			local m = self:NewModule(module, ...)
+			local m = self.bossCore:NewModule(module, ...)
 			m.revision = r
 			return m
 		end
 	end
+
+	function addon:New(module, revision, ...)
+		error(("Module %q, using deprecated :New() API. Notify the author for an update."):format(module))
+	end
+	
+	function addon:NewPlugin(module, revision, ...)
+		local r = nil
+		if type(revision) == "string" then r = tonumber(revision:sub(12, -3))
+		else r = revision end
+		if type(r) ~= "number" then
+			error(("Trying to register module %q without a valid revision."):format(module))
+		end
+		if self:GetPlugin(module, true) then
+			local oldM = self:GetPlugin(module)
+			print(L["already_registered"]:format(module, oldM.revision, r))
+		else
+			local m = self.pluginCore:NewModule(module, ...)
+			m.revision = r
+			return m
+		end
+	end
+	
+	function addon:IterateBossModules() return self.bossCore:IterateModules() end
+	function addon:GetBossModule(...) return self.bossCore:GetModule(...) end
+	
+	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
+	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
 	local getSpellDescription
 	do
@@ -359,19 +379,14 @@ do
 		return zoneOptions[zone]
 	end
 
-	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
-	-- module has not been set when it's triggered.
-	function BigWigs:RegisterModule(module)
+	function addon:RegisterBossModule(module)
 		local name = module.name
 		local rev = module.revision
 		if type(rev) ~= "number" then
 			error(("%q does not have a valid revision field."):format(name))
 		end
 
-		if module:IsBossModule() then
-			self:ToggleModuleActive(module, false)
-		end
-
+		
 		if module.toggleOptions then
 			for i,v in next, module.toggleOptions do
 				local t = type(v)
@@ -383,20 +398,45 @@ do
 					opts[n] = true
 				end
 			end
-			self:RegisterDefaults(name, "profile", opts)
+			module.db = self.db:RegisterNamespace(name, opts)
 			for i in ipairs(opts) do opts[i] = nil end
-			module.db = self:AcquireDBNamespace(name)
 		elseif type(module.defaultDB) == "table" then
-			self:RegisterDefaults(name, "profile", module.defaultDB)
-			module.db = self:AcquireDBNamespace(name)
+			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )
 		end
-
+		
+		-- Translate the bossmodule if appropriate
+		if LOCALE ~= "enUS" and BB and BZ then
+			if type(module.bossName) == "table" then
+				for k, boss in pairs(module.bossName) do
+					module.bossName[k] = BB[boss] or boss
+				end
+			else
+				module.bossName = BB[module.bossName] or module.bossName
+			end
+			if type(module.zoneName) == "table" then
+				for k, zone in pairs(module.zoneName) do
+					module.zoneName[k] = BZ[zone] or zone
+				end
+			else
+				module.zoneName = BZ[module.zoneName] or module.zoneName
+			end
+			if module.otherMenu then
+				module.otherMenu = BZ[module.otherMenu]
+			end
+		end
+		if not module.displayName then -- fix up a pretty display name
+			if type(module.bossName) == "table" then
+				module.displayName = table.concat(module.bossName, ", ")
+			else
+				module.displayName = module.bossName
+			end
+		end
 		if module.toggleOptions then
 			local zone = nil
 			if module.otherMenu then
-				zone = BZ[module.otherMenu]
+				zone = module.otherMenu
 			else
-				zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+				zone = type(module.zoneName) == "table" and module.zoneName[1] or module.zoneName
 			end
 			if zone then
 				if not zoneModules[zone] then
@@ -409,62 +449,161 @@ do
 		elseif module.pluginOptions then
 			pluginOptions.args[name] = module.pluginOptions
 		end
-
+	
+		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
 		end
-
-		self:TriggerEvent("BigWigs_ModuleRegistered", name)
+		self:SendMessage("BigWigs_BossModuleRegistered", name, module)
 	end
+	
+	-- FIXME: this is a straight copy of RegisterBossModule just to get this working quick
+	function addon:RegisterPlugin(module)
+		local name = module.name
+		local rev = module.revision
+		if type(rev) ~= "number" then
+			error(("%q does not have a valid revision field."):format(name))
+		end
+		
+		if module.toggleOptions then
+			for i,v in next, module.toggleOptions do
+				local t = type(v)
+				if t == "string"  then
+					opts[v] = true
+				elseif t == "number" and v > 0 then
+					local n = GetSpellInfo(v)
+					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
+					opts[n] = true
+				end
+			end
+			module.db = self.db:RegisterNamespace(name, opts)
+			for i in ipairs(opts) do opts[i] = nil end
+		elseif type(module.defaultDB) == "table" then
+			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )
+		end
+		
+		-- Translate the bossmodule if appropriate
+		if LOCALE ~= "enUS" and BB and BZ then
+			if type(module.bossName) == "table" then
+				for k, boss in pairs(module.bossName) do
+					module.bossName[k] = BB[boss] or boss
+				end
+			else
+				module.bossName = BB[module.bossName] or module.bossName
+			end
+			if type(module.zoneName) == "table" then
+				for k, zone in pairs(module.zoneName) do
+					module.zoneName[k] = BZ[zone] or zone
+				end
+			else
+				module.zoneName = BZ[module.zoneName] or module.zoneName
+			end
+			if module.otherMenu then
+				module.otherMenu = BZ[module.otherMenu]
+			end
+		end
+		if not module.displayName then -- fix up a pretty display name
+			if type(module.bossName) == "table" then
+				module.displayName = table.concat(module.bossName, ", ")
+			else
+				module.displayName = module.bossName
+			end
+		end
+		if module.toggleOptions then
+			local zone = nil
+			if module.otherMenu then
+				zone = module.otherMenu
+			else
+				zone = type(module.zoneName) == "table" and module.zoneName[1] or module.zoneName
+			end
+			if zone then
+				if not zoneModules[zone] then
+					ac:RegisterOptionsTable(zone, populateZoneOptions)
+					acd:AddToBlizOptions(zone, zone, "Big Wigs")
+					zoneModules[zone] = {}
+				end
+				tinsert(zoneModules[zone], module)
+			end
+		elseif module.pluginOptions then
+			pluginOptions.args[name] = module.pluginOptions
+		end
+	
+		-- Call the module's OnRegister (which is our OnInitialize replacement)
+		if type(module.OnRegister) == "function" then
+			module:OnRegister()
+		end
+		self:SendMessage("BigWigs_PluginRegistered", name, module)
+	end
+	
 end
 
-function BigWigs:EnableModule(moduleName, noSync)
-	local m = self:GetModule(moduleName)
-	if m and m:IsBossModule() and not self:IsModuleActive(m) then
-		self:ToggleModuleActive(m, true)
+function addon:EnableBossModule(moduleName, noSync)
+	local m = self:GetBossModule(moduleName, true)
+	if m and not m:IsEnabled() then
+		m:Enable()
 		if not noSync then
-			local token = m.synctoken or BBR[moduleName] or nil
+			local token = moduleName or nil
 			if not token then return end
 			m:Sync(m.external and "EnableExternal" or "EnableModule", token)
 		end
 	end
 end
 
-function BigWigs:BigWigs_RebootModule(module)
-	self:ToggleModuleActive(module, false)
-	self:ToggleModuleActive(module, true)
+function addon:BigWigs_RebootModule(message, module)
+	local mod = self:GetBossModule(module)
+	mod:Disable()
+	mod:Enable()
 end
 
-function BigWigs:BigWigs_RecvSync(sync, module, sender)
+function addon:BigWigs_RecvSync(message, sync, module, sender)
 	if not module then return end
 	if sync == "EnableModule" or sync == "EnableExternal" then
 		if sender == pName then return end
-		local name = BB[module] or module
-		if self:HasModule(name) then
-			self:EnableModule(name, true)
+		if self:GetBossModule(module, true) then
+			self:EnableBossModule(module, true)
 		end
-	elseif (sync == "Death" or sync == "MultiDeath") and self:HasModule(module) and self:IsModuleActive(module) then
-		local mod = self:GetModule(module)
-		if mod.db.profile.bosskill then
-			if sync == "Death" then
-				mod:Message(L["%s has been defeated"]:format(module), "Bosskill", nil, "Victory")
-			else
-				mod:Message(L["%s have been defeated"]:format(module), "Bosskill", nil, "Victory")
+	elseif (sync == "Death" or sync == "MultiDeath") then
+		local mod = self:GetBossModule(module, true)
+		if mod and mod:IsEnabled() then
+			if mod.db.profile.bosskill then
+				if sync == "Death" then
+					mod:Message(L["%s has been defeated"]:format(module), "Bosskill", nil, "Victory")
+				else
+					mod:Message(L["%s have been defeated"]:format(module), "Bosskill", nil, "Victory")
+				end
 			end
+			mod:PrimaryIcon(false)
+			mod:SecondaryIcon(false)
+			mod:Disable()
 		end
-		mod:PrimaryIcon(false)
-		mod:SecondaryIcon(false)
-		self:ToggleModuleActive(mod, false)
 	end
 end
 
-function BigWigs:BigWigs_TargetSeen(mobname, unit, moduleName)
-	local m = self:GetModule(moduleName)
-	if not m then return end
-	if self:IsModuleActive(m) then return end
+function addon:BigWigs_TargetSeen(message, mobname, unit, moduleName)
+	local m = self:GetBossModule(moduleName)
+	if not m or m:IsEnabled() then return end
 	if not m.VerifyEnable or m:VerifyEnable(unit) then
-		self:EnableModule(moduleName)
+		self:EnableBossModule(m)
 	end
 end
 
+---- Module Cores ----
+
+-- This is the Boss Module Core for BigWigs3
+local bossCore = BigWigs:NewModule("Bosses")
+BigWigs.bossCore = bossCore
+bossCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
+bossCore:SetDefaultModuleState(false)
+
+function bossCore:OnDisable()
+	for name, mod in self:IterateModules() do
+		mod:Disable()
+	end
+end
+
+-- Plugin Core for BigWigs3
+local pluginCore = BigWigs:NewModule("Plugins")
+
+BigWigs.pluginCore = pluginCore
+pluginCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
 

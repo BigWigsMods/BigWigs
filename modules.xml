@@ -1,16 +1,19 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
+<Include file="Core\modules.xml"/>
+
 <Include file="Plugins\locales.xml"/>
 <Include file="Plugins\modules.xml"/>
 
 <Include file="Extras\locales.xml"/>
 <Include file="Extras\modules.xml"/>
 
-<Include file="Naxxramas\modules.xml"/>
+<!--
 <Include file="Northrend\modules.xml"/>
+<Include file="Naxxramas\modules.xml"/>
 <Include file="Ulduar\modules.xml"/>
 <Include file="Coliseum\modules.xml"/>
-
+-->
 </Ui>
 
