@@ -217,6 +217,19 @@ plugin.consoleOptions = {
 		},
 	}
 }
+----
+-- proximity repeater frame
+----
+local repeater = CreateFrame("Frame", nil, UIParent)
+repeater:Hide()
+repeater.elapsed = 0
+repeater:SetScript("OnUpdate", function( self, elapsed ) 
+	self.elapsed = self.elapsed + elapsed
+	if repeater.elapsed >= .5 then
+		repeater.elapsed = 0
+		plugin:UpdateProximity()
+	end
+end )
 
 -----------------------------------------------------------------------
 --      Initialization
@@ -284,7 +297,7 @@ end
 
 function plugin:CloseProximity()
 	if anchor then anchor:Hide() end
-	self:CancelScheduledEvent("bwproximityupdate")
+	repeater:Hide()
 	dew:Close()
 end
 
@@ -298,9 +311,7 @@ function plugin:OpenProximity()
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 	anchor.header:SetText(active and active.proximityHeader or L["Close Players"])
 	anchor:Show()
-	if not self:IsEventScheduled("bwproximityupdate") then
-		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .5, self)
-	end
+	repeater:Show()
 end
 
 function plugin:TestProximity()
@@ -338,7 +349,7 @@ function plugin:UpdateProximity()
 		local t = time()
 		if t > lastplayed + 1 then
 			lastplayed = t
-			self:TriggerEvent("BigWigs_Sound", "Alarm")
+			self:SendMessage("BigWigs_Sound", "Alarm")
 		end
 	end
 end
