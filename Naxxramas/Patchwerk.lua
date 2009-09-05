@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Patchwerk"]
+local boss = "Patchwerk"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = "Patchwerk"
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 16028
 mod.guid = 16028
 mod.toggleOptions = {"enrage", "berserk", "bosskill"}
 mod.consoleCmd = "Patchwerk"
@@ -46,7 +47,7 @@ function mod:Enraged(_, spellId)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if self.db.profile.berserk and (msg == L["starttrigger1"] or msg == L["starttrigger2"]) then
 		self:Enrage(360, true)
 	end

@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Gothik the Harvester"]
+local boss = "Gothik the Harvester"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = { boss }
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 16060
 mod.guid = 16060
 mod.toggleOptions = { "room", -1, "add", "adddeath", "bosskill" }
 mod.consoleCmd = "Gothik"
@@ -15,7 +16,7 @@ mod.consoleCmd = "Gothik"
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "enUS", true)
 if L then
 	L.room = "Room Arrival Warnings"
 	L.room_desc = "Warn for Gothik's arrival"
@@ -61,7 +62,7 @@ if L then
 
 	L.inroombartext = "In Room"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Gothik")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Gothik the Harvester")
 mod.locale = L
 
 ------------------------------
@@ -136,7 +137,7 @@ local function newRider()
 	numRider = numRider + 1
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
 		if self.db.profile.room then
 			self:Message(L["startwarn"], "Important")

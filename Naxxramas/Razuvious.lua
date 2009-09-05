@@ -2,14 +2,14 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Instructor Razuvious"]
-local understudy = BB["Death Knight Understudy"]
+local boss = "Instructor Razuvious"
 
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
-mod.wipemobs = understudy
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 16061
+mod.wipemobs = "Death Knight Understudy"
 mod.guid = 16061
 mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill"}
 mod.consoleCmd = "Razuvious"
@@ -24,7 +24,7 @@ local started = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "enUS", true)
 if L then
 	L.shout_warning = "Disrupting Shout in 5sec!"
 	L.shout_next = "Shout Cooldown"
@@ -32,7 +32,7 @@ if L then
 	L.taunt_warning = "Taunt ready in 5sec!"
 	L.shieldwall_warning = "Barrier gone in 5sec!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Razuvious")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Instructor Razuvious")
 mod.locale = L
 
 ------------------------------
@@ -83,9 +83,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self:GetOption(29107) then
 			self:Shout()
 		end

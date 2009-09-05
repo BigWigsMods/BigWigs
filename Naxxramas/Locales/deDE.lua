@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "deDE")
 if L then
 	L.starttrigger1 = "Nur einmal kosten..."
 	L.starttrigger2 = "Rennt! Das bringt das Blut in Wallung!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "Heuschreckenschwarm!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "deDE")
 if L then
 	L.starttrigger1 = "Kniet nieder, Wurm!"
 	L.starttrigger2 = "Tötet sie im Namen des Meisters!"
@@ -42,7 +42,7 @@ if L then
 	L.decimatebartext = "~Dezimieren"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "deDE")
 if L then
 	L.room = "Ankunft"
 	L.room_desc = "Warnungen und Timer für die Ankunft von Gothik im Raum."
@@ -98,7 +98,7 @@ if L then
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Mutagene Injektion gewirkt wird (benötigt Assistent oder höher)."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "deDE")
 if L then
 	L.starttrigger = "Ihr gehört mir..."
 	L.starttrigger2 = "Ihr seid.... als nächstes dran."
@@ -124,7 +124,7 @@ if L then
 	L.back_bar = "Zurück im Raum"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "deDE")
 if L then
 	L.mark = "Male"
 	L.mark_desc = "Warnungen und Timer für die Male."
@@ -137,7 +137,7 @@ if L then
 	L.startwarn = "Die Vier Reiter angegriffen! Male in ~17 sek."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "deDE")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemach"
 
@@ -197,7 +197,7 @@ if L then
 	L.sporebar = "Spore (%d)"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "deDE")
 if L then
 	L.starttrigger1 = "Sterbt, Eindringling!"
 	L.starttrigger2 = "Ehre unserem Meister!"
@@ -279,7 +279,7 @@ if L then
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Eisblitz gewirkt wird (benötigt Assistent oder höher)."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "deDE")
 if L then
 	L.shout_warning = "Unterbrechender Schrei in 5 sek!"
 	L.shout_next = "~Unterbrechender Schrei"

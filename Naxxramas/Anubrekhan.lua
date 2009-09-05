@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Anub'Rekhan"]
+local boss = "Anub'Rekhan"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15956
 mod.guid = 15956
 mod.toggleOptions = {28785, "bosskill"}
 mod.consoleCmd = "Anubrekhan"
@@ -21,7 +22,7 @@ local locustTime = 90
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "enUS", true)
 if L then
 	L.starttrigger1 = "Just a little taste..."
 	L.starttrigger2 = "Yes, run! It makes the blood pump faster!"
@@ -35,7 +36,7 @@ if L then
 
 	L.castwarn = "Incoming Locust Swarm!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anubrekhan")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anub'Rekhan")
 mod.locale = L
 
 ------------------------------
@@ -68,7 +69,7 @@ function mod:Swarm(_, spellId)
 	self:Bar(L["castwarn"], 3, spellId)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if self:GetOption(28785) and (msg:find(L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"]) then
 		locustTime = GetRaidDifficulty() == 1 and 102 or 90
 		self:Message(L["engagewarn"]:format(locustTime), "Urgent")

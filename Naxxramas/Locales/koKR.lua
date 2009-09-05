@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "koKR")
 if L then
 	L.starttrigger1 = "어디 맛 좀 볼까..."
 	L.starttrigger2 = "그래, 도망쳐! 더 신선한 피가 솟구칠 테니!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "메뚜기 떼 소환!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "koKR")
 if L then
 	L.starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!"
 	L.starttrigger2 = "주인님의 이름으로 처단하라!"
@@ -42,7 +42,7 @@ if L then
 	L.decimatebartext = "좀비 척살"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "koKR")
 if L then
 	L.room = "고딕 등장 알림"
 	L.room_desc = "고딕 등장을 알립니다."
@@ -98,7 +98,7 @@ if L then
 	L.icon_desc = "돌연변이 유발 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "koKR")
 if L then
 	L.starttrigger = "이제 넌 내 것이다."
 	L.starttrigger2 = "다음은... 너다."
@@ -124,7 +124,7 @@ if L then
 	L.back_bar = "단상으로 이동!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "koKR")
 if L then
 	L.mark = "징표"
 	L.mark_desc = "징표를 알립니다."
@@ -137,7 +137,7 @@ if L then
 	L.startwarn = "4인의 기병대 전투 시작! 약 17초 이내 징표"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "koKR")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방"
 
@@ -197,7 +197,7 @@ if L then
 	L.sporebar = "포자 소환! %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "koKR")
 if L then
 	L.starttrigger1 = "죽어라, 침입자들아!"
 	L.starttrigger2 = "주인님께 영광을!"
@@ -278,7 +278,7 @@ if L then
 	L.icon = "전술 표시"
 	L.icon_desc = "얼음 화살 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "koKR")
 if L then
 	L.shout_warning = "5초 후 분열의 외침!"
 	L.shout_next = "분열 대기시간"

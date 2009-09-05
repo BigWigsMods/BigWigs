@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Kel'Thuzad"]
+local boss = "Kel'Thuzad"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.zoneName = "Naxxramas"
+mod.bossName = boss
+mod.enabletrigger = 15990
 mod.guid = 15990
 mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
@@ -23,7 +24,7 @@ local mcTargets = mod:NewTargetList()
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "enUS", true)
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber"
 
@@ -62,7 +63,7 @@ if L then
 	L.icon = "Raid Icon"
 	L.icon_desc = "Place a raid icon on people with Detonate Mana."
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kelthuzad")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kel'Thuzad")
 mod.locale = L
 
 ------------------------------
@@ -96,10 +97,10 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ZONE_CHANGED_INDOORS(msg)
-	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or BigWigs:IsModuleActive(boss) then return end
+function mod:ZONE_CHANGED_INDOORS(event, msg)
+	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self:IsEnabled() then return end
 	-- Activate the Kel'Thuzad mod!
-	BigWigs:EnableModule(boss)
+	BigWigs:EnableBossModule(boss)
 end
 
 function mod:Fizzure(_, spellId, _, _, spellName)
@@ -142,7 +143,7 @@ end
 function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.phase then return end
 
-	if UnitName(msg) == boss then
+	if UnitName(msg) == mod.bossName then
 		local health = UnitHealth(msg)
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
 			self:Message(L["phase3_soon_warning"], "Attention")

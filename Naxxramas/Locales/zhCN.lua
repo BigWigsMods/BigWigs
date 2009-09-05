@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "zhCN")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "zhCN")
 if L then
 	L.starttrigger1 = "一些小点心……"
 	L.starttrigger2 = "对，跑吧！那样伤口出血就更多了！"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "虫群风暴！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "zhCN")
 if L then
 	L.starttrigger1 = "跪下求饶吧，懦夫！"
 	L.starttrigger2 = "以主人之名，杀了他们！"
@@ -42,7 +42,7 @@ if L then
 	L.decimatebartext = "<残杀>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "zhCN")
 if L then
 	L.room = "进入房间"
 	L.room_desc = "当收割者戈提克进入房间时发出警报。"
@@ -98,7 +98,7 @@ if L then
 	L.icon_desc = "为中了变异注射的玩家打上团队标记。（需要权限）"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "zhCN")
 if L then
 	L.starttrigger = "你是我的了。"
 	L.starttrigger2 = "你……就是下一个。"
@@ -124,7 +124,7 @@ if L then
 	L.back_bar = "<出现>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "zhCN")
 if L then
 	L.mark = "印记"
 	L.mark_desc = "当施放印记时发出警报。"
@@ -137,7 +137,7 @@ if L then
 	L.startwarn = "四骑士已激活 - 约17秒后，印记！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "zhCN")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅"
 
@@ -197,7 +197,7 @@ if L then
 	L.sporebar = "<孢子：%d>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "zhCN")
 if L then
 	L.starttrigger1 = "死吧，入侵者！"
 	L.starttrigger2 = "荣耀归于我主！"
@@ -279,7 +279,7 @@ if L then
 	L.icon_desc = "为中了寒冰屏障的玩家打上团队标记。（需要权限）"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "zhCN")
 if L then
 	L.shout_warning = "5秒后，瓦解怒吼！"
 	L.shout_next = "瓦解怒吼冷却！"

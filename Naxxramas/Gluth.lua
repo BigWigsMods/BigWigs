@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Gluth"]
+local boss = "Gluth"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15932
 mod.guid = 15932
 mod.toggleOptions = {28371, 54426, "berserk", "bosskill"}
 mod.consoleCmd = "Gluth"
@@ -45,7 +46,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 	started = nil
 end
 
@@ -68,13 +69,11 @@ function mod:Decimate(_, spellId, _, _, spellName)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		enrageTime = GetRaidDifficulty() == 1 and 480 or 420
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self:GetOption(54426) then
 			self:Message(L["startwarn"], "Attention")
 			self:Bar(L["decimatebartext"], 105, 54426)

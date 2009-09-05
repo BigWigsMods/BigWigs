@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Maexxna"]
+local boss = "Maexxna"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15952
 mod.guid = 15952
 mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 mod.consoleCmd = "Maexxna"
@@ -56,7 +57,7 @@ function mod:OnBossEnable()
 
 	wipe(inCocoon)
 	started = nil
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -85,10 +86,10 @@ function mod:Spray()
 	self:Bar(L["spiderbar"], 30, 17332)
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		self:Spray()
 	end
 end
@@ -97,7 +98,7 @@ function mod:Enrage(_, spellId)
 	self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
-function mod:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(event, msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 30 and health <= 33 and not enrageannounced then

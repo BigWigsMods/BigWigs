@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Grobbulus"]
+local boss = "Grobbulus"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15931
 mod.guid = 15931
 mod.toggleOptions = {28169, "icon", 28240, "berserk", "bosskill"}
 mod.consoleCmd = "Grobbulus"
@@ -46,7 +47,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -65,12 +66,10 @@ function mod:Cloud(_, spellId, _, _, spellName)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self.db.profile.berserk then
 			self:Enrage(540, true)
 		end

@@ -1,17 +1,19 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local thane = BB["Thane Korth'azz"]
-local rivendare = BB["Baron Rivendare"]
-local zeliek = BB["Sir Zeliek"]
-local blaumeux = BB["Lady Blaumeux"]
-local boss = BB["The Four Horsemen"]
-
+local boss = "The Four Horsemen"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
+mod.bossName = { "Thane Korth'azz", "Baron Rivendare", "Sir Zeliek", "Lady Blaumeux", boss }
+mod.displayName = boss
+mod.zoneName = "Naxxramas"
+--[[
+	16064 - thane
+	30549 - baron
+	16065 - blaumeux
+	16063 - zeliek
+--]]
+mod.enabletrigger = { 16064, 30549, 16065, 16063 } 
 mod.guid = 16065
 mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
 mod.consoleCmd = "Horsemen"
@@ -28,7 +30,7 @@ local marks = 1
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "enUS", true)
 if L then
 	L.mark = "Mark"
 	L.mark_desc = "Warn for marks."
@@ -40,7 +42,7 @@ if L then
 
 	L.startwarn = "The Four Horsemen Engaged! Mark in ~17 sec"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Horsemen")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: The Four Horsemen")
 mod.locale = L
 
 ------------------------------
@@ -61,7 +63,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -102,9 +104,7 @@ function mod:BigWigs_RecvSync(sync, rest)
 		marks = 1
 		deaths = 0
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self.db.profile.mark then
 			self:Message(L["startwarn"], "Attention")
 			self:Bar(L["markbar"]:format(marks), 17, 28835)

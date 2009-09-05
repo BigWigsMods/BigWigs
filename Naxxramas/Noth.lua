@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Noth the Plaguebringer"]
+local boss = "Noth the Plaguebringer"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15954
 mod.guid = 15954
 mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
 mod.consoleCmd = "Noth"
@@ -25,7 +26,7 @@ local wave2time = 41
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "enUS", true)
 if L then
 	L.starttrigger1 = "Die, trespasser!"
 	L.starttrigger2 = "Glory to the master!"
@@ -60,7 +61,7 @@ if L then
 	L.wave2bar = "Wave 2"
 	L.wave2_message = "Wave 2 in 10 sec"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Noth")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Noth the Plaguebringer")
 mod.locale = L
 
 ------------------------------
@@ -87,7 +88,7 @@ function mod:Curse(_, spellId)
 	self:Bar(L["curseexplosion"], 10, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["blinktrigger"] and self.db.profile.blink then
 		self:IfMessage(L["blinkwarn"], "Important", 29208)
 		self:ScheduleEvent("bwnothblink", "BigWigs_Message", 34, L["blinkwarn2"], "Attention")
@@ -95,7 +96,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 		timeroom = 90
 		timebalcony = 70

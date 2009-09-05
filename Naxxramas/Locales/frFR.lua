@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "frFR")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "frFR")
 if L then
 	L.starttrigger1 = "Rien qu'une petite bouchée…"
 	L.starttrigger2 = "Oui, courez ! Faites circuler le sang !"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "Arrivée d'une Nuée de sauterelles !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "frFR")
 if L then
 	L.starttrigger1 = "À genoux, vermisseau !"
 	L.starttrigger2 = "Tuez-les au nom du maître !"
@@ -42,7 +42,7 @@ if L then
 	L.decimatebartext = "~Prochain Décimer"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "frFR")
 if L then
 	L.room = "Arrivée dans la salle"
 	L.room_desc = "Prévient quand Gothik arrive dans la salle."
@@ -98,7 +98,7 @@ if L then
 	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être assistant ou mieux)."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "frFR")
 if L then
 	L.starttrigger = "Vous êtes à moi, maintenant."
 	L.starttrigger2 = "Tu es… le suivant."
@@ -124,7 +124,7 @@ if L then
 	L.back_bar = "Retour sur le sol !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "frFR")
 if L then
 	L.mark = "Marque"
 	L.mark_desc = "Prévient de l'arrivée des marques."
@@ -137,7 +137,7 @@ if L then
 	L.startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec. !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "frFR")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Appartements de Kel'Thuzad"
 
@@ -197,7 +197,7 @@ if L then
 	L.sporebar = "Invocation de spore %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "frFR")
 if L then
 	L.starttrigger1 = "Mourez, intrus !"
 	L.starttrigger2 = "Gloire au maître !"
@@ -279,7 +279,7 @@ if L then
 	L.icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être assistant ou mieux)."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "frFR")
 if L then
 	L.shout_warning = "Cri perturbant dans 5 sec. !"
 	L.shout_next = "Recharge Cri"

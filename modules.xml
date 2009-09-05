@@ -18,10 +18,8 @@
 <Include file="Ulduar\locales.xml"/>
 <Include file="Ulduar\modules.xml"/>
 
-<!--
 <Include file="Naxxramas\locales.xml"/>
 <Include file="Naxxramas\modules.xml"/>
--->
 
 </Ui>
 

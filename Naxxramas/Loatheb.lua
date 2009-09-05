@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Loatheb"]
+local boss = "Loatheb"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 16011
 mod.guid = 16011
 mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
 mod.consoleCmd = "Loatheb"
@@ -66,7 +67,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -103,16 +104,14 @@ local function swapTime()
 	doomTime = 15
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		doomTime = 30
 		sporeCount = 1
 		doomCount = 1
 		sporeTime = GetRaidDifficulty() == 1 and 36 or 16
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self:GetOption(29204) then
 			self:Bar(L["doomtimerbar"], 300, 29204)
 			self:DelayedMessage(240, L["doomtimerwarn"]:format(60), "Attention")

@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Heigan the Unclean"]
+local boss = "Heigan the Unclean"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15936
 mod.guid = 15936
 mod.toggleOptions = {"engage", "teleport", "bosskill"}
 mod.consoleCmd = "Heigan"
@@ -15,7 +16,7 @@ mod.consoleCmd = "Heigan"
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "enUS", true)
 if L then
 	L.starttrigger = "You are mine now."
 	L.starttrigger2 = "You... are next."
@@ -40,7 +41,7 @@ if L then
 	L.teleport_bar = "Teleport!"
 	L.back_bar = "Back on the floor!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Heigan")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Heigan the Unclean")
 mod.locale = L
 
 ------------------------------
@@ -57,7 +58,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
 		if self.db.profile.engage then
 			self:Message(L["engage_message"], "Important")

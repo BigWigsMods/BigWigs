@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Grand Widow Faerlina"]
+local boss = "Grand Widow Faerlina"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15953
 mod.guid = 15953
 mod.toggleOptions = {28732, 28794, "enrage", "bosskill"}
 mod.consoleCmd = "Faerlina"
@@ -25,7 +26,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "enUS", true)
 if L then
 	L.starttrigger1 = "Kneel before me, worm!"
 	L.starttrigger2 = "Slay them in the master's name!"
@@ -44,7 +45,7 @@ if L then
 
 	L.rain_message = "Fire on YOU!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Faerlina")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Grand Widow Faerlina")
 mod.locale = L
 
 ------------------------------
@@ -106,7 +107,7 @@ function mod:Enrage(unit, spellId, _, _, spellName)
 	enraged = true
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if not started and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
 		self:Message(L["startwarn"], "Urgent")
 		if self.db.profile.enrage then

@@ -1,15 +1,19 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = BB["Thaddius"]
-local feugen = BB["Feugen"]
-local stalagg = BB["Stalagg"]
-
+local boss = "Thaddius"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = {boss, feugen, stalagg}
+mod.displayName = boss
+mod.bossName = { boss, "Feugen", "Stalagg" }
+mod.zoneName = "Naxxramas"
+--[[
+	15928 - thaddius 
+	15929 - stalagg
+	15930 - feugen
+	
+--]]
+mod.enabletrigger = { 15928, 15929, 15930 }
 mod.guid = 15928
 mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
 mod.consoleCmd = "Thaddius"
@@ -89,7 +93,7 @@ function mod:StalaggPower(_, spellId, _, _, spellName)
 	self:Bar(spellName, 10, spellId)
 end
 
-function mod:UNIT_AURA(unit)
+function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	if not shiftTime or (GetTime() - shiftTime) < 3 then return end
 
@@ -146,7 +150,7 @@ local function throw()
 	mod:ScheduleEvent("thadthrow", throw, 21)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if self:GetOption(28089) and msg:find(L["polarity_trigger"]) then
 		self:DelayedMessage(25, L["polarity_warning"], "Important")
 		self:Bar(L["polarity_bar"], 28, "Spell_Nature_Lightning")

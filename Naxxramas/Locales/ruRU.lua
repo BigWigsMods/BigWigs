@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "ruRU")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "ruRU")
 if L then
 	L.starttrigger1 = "Посмотрим какие вы на вкус!"
 	L.starttrigger2 = "Бегите бегите! Я люблю горячую кровь!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "Появляются жуки-трупоеды!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "ruRU")
 if L then
 	L.starttrigger1 = "Склонитесь передо мной черви!"
 	L.starttrigger2 = "Убейте их во имя господина!"
@@ -42,7 +42,7 @@ if L then
 	L.decimatebartext = "Истребление"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "ruRU")
 if L then
 	L.room = "Прибытие Готика"
 	L.room_desc = "Сообщать о прибытии Готика"
@@ -98,7 +98,7 @@ if L then
 	L.icon_desc = "Помечать рейдовой иконкой игрока которому был сделан укол (необходимо быть лидером группы или рейда)."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "ruRU")
 if L then
 	L.starttrigger = "Теперь вы принадлежите мне!"
 	L.starttrigger2 = "Пришло ваше время..."
@@ -124,7 +124,7 @@ if L then
 	L.back_bar = "Возвращение!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "ruRU")
 if L then
 	L.mark = "Знак"
 	L.mark_desc = "Предупреждать о знаках."
@@ -137,7 +137,7 @@ if L then
 	L.startwarn = "Четверо всадников вступили в бой! Знак через ~17 секунд"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "ruRU")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада"
 
@@ -197,7 +197,7 @@ if L then
 	L.sporebar = "Призвана спора %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "ruRU")
 if L then
 	L.starttrigger1 = "Смерть чужакам!"
 	L.starttrigger2 = "Слава господину!"
@@ -279,7 +279,7 @@ if L then
 	L.icon_desc = "Отмечать рейдовой иконой игрока попавшего в глыбу после морозной стрелы (необходимо быть лидером группы или рейда)"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "ruRU")
 if L then
 	L.shout_warning = "Разрушительный крик через 5сек!"
 	L.shout_next = "~перезарядка крика"

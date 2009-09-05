@@ -2,11 +2,12 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Sapphiron"]
+local boss = "Sapphiron"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Naxxramas"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Naxxramas"
+mod.enabletrigger = 15989
 mod.guid = 15989
 mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
 mod.consoleCmd = "Sapphiron"
@@ -65,7 +66,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 
 	started = nil
 	breath = 1
@@ -75,7 +76,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["airphase_trigger"] then
 		self:CancelScheduledEvent("Lifedrain")
 		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
@@ -123,7 +124,7 @@ function mod:RemoveIcon()
 	self:PrimaryIcon(false, "icon")
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
