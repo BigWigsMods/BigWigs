@@ -1,370 +1,368 @@
-if true then return end
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "deDE")
+if L then
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt vor Phasenwechsel."
+	L.engage_warning = "Phase 1"
+	L.phase2_warning = "Phase 2 bald!"
+	L.phase_bar = "Phase %d"
+	L.engage_trigger = "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet. Das Pantheon wird die Nachricht des Beobachters erhalten, ungeachtet des Ausgangs."
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	phase = "Phasen",
-	phase_desc = "Warnt vor Phasenwechsel.",
-	engage_warning = "Phase 1",
-	phase2_warning = "Phase 2 bald!",
-	phase_bar = "Phase %d",
-	engage_trigger = "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet. Das Pantheon wird die Nachricht des Beobachters erhalten, ungeachtet des Ausgangs.",
+	L.punch_message = "%dx Phasenschlag: %s!"
+	L.smash_message = "Kosmischer Schlag kommt!"
+	L.blackhole_message = "Schwarzes Loch %dx!"
+	L.bigbang_soon = "Großer Knall bald!"
+end
 
-	punch_message = "%dx Phasenschlag: %s!",
-	smash_message = "Kosmischer Schlag kommt!",
-	blackhole_message = "Schwarzes Loch %dx!",
-	bigbang_soon = "Großer Knall bald!",
-} end )
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "deDE")
+if L then
+	L.fear_warning = "Furcht bald!"
+	L.fear_message = "Furcht!"
+	L.fear_bar = "~Furcht"
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	fear_warning = "Furcht bald!",
-	fear_message = "Furcht!",
-	fear_bar = "~Furcht",
+	L.swarm_message = "Wächterschwarm"
+	L.swarm_bar = "~Wächterschwarm"
 
-	swarm_message = "Wächterschwarm",
-	swarm_bar = "~Wächterschwarm",
+	L.defender = "Wilder Verteidiger"
+	L.defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat."
+	L.defender_message = "Verteidiger da %d/9!"
 
-	defender = "Wilder Verteidiger",
-	defender_desc = "Warnt, wieviele Leben der Wilder Verteidiger noch hat.",
-	defender_message = "Verteidiger da %d/9!",
+	L.sonic_bar = "~Überschallkreischen"
+end
 
-	sonic_bar = "~Überschallkreischen",
-} end )
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "deDE")
+if L then
+	L.engage_trigger1 = "Das Konservatorium muss verteidigt werden!"
+	L.engage_trigger2 = "Ihr Ältesten, gewährt mir Eure Macht!"
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "Das Konservatorium muss verteidigt werden!",
-	engage_trigger2 = "Ihr Ältesten, gewährt mir Eure Macht!",
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt bei Phasenwechsel."
+	L.phase2_message = "Phase 2"
 
-	phase = "Phasen",
-	phase_desc = "Warnt bei Phasenwechsel.",
-	phase2_message = "Phase 2",
+	L.wave = "Wellen"
+	L.wave_desc = "Warnt vor den Wellen."
+	L.wave_bar = "Nächste Welle"
+	L.conservator_trigger = "Eonar, Eure Dienerin braucht Hilfe!"
+	L.detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!"
+	L.elementals_trigger = "Helft mir, Kinder!"
+	L.tree_trigger = "Ein |cFF00FFFFGeschenk der Lebensbinderin|r fängt an zu wachsen!"
+	L.conservator_message = "Konservator!"
+	L.detonate_message = "Explosionspeitscher!"
+	L.elementals_message = "Elementare!"
+	L.tree_message = "Eonars Geschenk!"
 
-	wave = "Wellen",
-	wave_desc = "Warnt vor den Wellen.",
-	wave_bar = "Nächste Welle",
-	conservator_trigger = "Eonar, Eure Dienerin braucht Hilfe!",
-	detonate_trigger = "Der Schwarm der Elemente soll über Euch kommen!",
-	elementals_trigger = "Helft mir, Kinder!",
-	tree_trigger = "Ein |cFF00FFFFGeschenk der Lebensbinderin|r fängt an zu wachsen!",
-	conservator_message = "Konservator!",
-	detonate_message = "Explosionspeitscher!",
-	elementals_message = "Elementare!",
-	tree_message = "Eonars Geschenk!",
+	L.fury_message = "Furor"
+	L.fury_other = "Furor: %s"
 
-	fury_message = "Furor",
-	fury_other = "Furor: %s",
-
-	tremor_warning = "Bebende Erde bald!",
-	tremor_bar = "~Bebende Erde",
-	energy_message = "Instabile Energie auf DIR!",
-	sunbeam_message = "Sonnenstrahl!",
-	sunbeam_bar = "~Sonnenstrahl",
+	L.tremor_warning = "Bebende Erde bald!"
+	L.tremor_bar = "~Bebende Erde"
+	L.energy_message = "Instabile Energie auf DIR!"
+	L.sunbeam_message = "Sonnenstrahl!"
+	L.sunbeam_bar = "~Sonnenstrahl"
 	
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher).",
+	L.icon = "Schlachtzugs-Symbol"
+	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher)."
 
-	end_trigger = "Seine Macht über mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden.",
-} end )
+	L.end_trigger = "Seine Macht über mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "deDE")
+if L then
+	L.engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!"
 
-	cold = "Beißende Kälte",
-	cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast.",
-	cold_message = "Beißende Kälte x%d!",
+	L.cold = "Beißende Kälte"
+	L.cold_desc = "Warnt, wenn du zwei Stapel von Beißende Kälte hast."
+	L.cold_message = "Beißende Kälte x%d!"
 
-	flash_warning = "Blitzeis!",
-	flash_soon = "Blitzeis in 5 sek!",
+	L.flash_warning = "Blitzeis!"
+	L.flash_soon = "Blitzeis in 5 sek!"
 
-	hardmode = "Hard Mode",
-	hardmode_desc = "Timer für den Hard Mode.",
+	L.hardmode = "Hard Mode"
+	L.hardmode_desc = "Timer für den Hard Mode."
 
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher).",
+	L.icon = "Schlachtzugs-Symbol"
+	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher)."
 
-	end_trigger = "Ich... bin von ihm befreit... endlich.",
-} end )
+	L.end_trigger = "Ich... bin von ihm befreit... endlich."
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "deDE")
+if L then
+	L.engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!"
 
-	construct_message = "Konstrukt aktiviert!",
-	construct_bar = "Nächstes Konstrukt",
-	brittle_message = "Konstrukt ist spröde!",
-	flame_bar = "~Flammenstrahlen",
-	scorch_message = "Versengen auf DIR!",
-	scorch_soon = "Versengen in ~5 sek!",
-	scorch_bar = "Nächstes Versengen",
-	slagpot_message = "Schlackentopf: %s",
-} end )
+	L.construct_message = "Konstrukt aktiviert!"
+	L.construct_bar = "Nächstes Konstrukt"
+	L.brittle_message = "Konstrukt ist spröde!"
+	L.flame_bar = "~Flammenstrahlen"
+	L.scorch_message = "Versengen auf DIR!"
+	L.scorch_soon = "Versengen in ~5 sek!"
+	L.scorch_bar = "Nächstes Versengen"
+	L.slagpot_message = "Schlackentopf: %s"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!",
-	engage_trigger2 = "Nur vollständige Dezimierung wird mich zufriedenstellen.",
-	engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, so seid Ihr doch nichts weiter als Sterbliche.",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "deDE")
+if L then
+	L.engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!"
+	L.engage_trigger2 = "Nur vollständige Dezimierung wird mich zufriedenstellen."
+	L.engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, so seid Ihr doch nichts weiter als Sterbliche."
 
-	overload_message = "Überladen in 6 sek!",
-	death_message = "Todesrune auf DIR!",
-	summoning_message = "Elementare!",
+	L.overload_message = "Überladen in 6 sek!"
+	L.death_message = "Todesrune auf DIR!"
+	L.summoning_message = "Elementare!"
 
-	chased_other = "%s wird verfolgt!",
-	chased_you = "DU wirst verfolgt!",
+	L.chased_other = "%s wird verfolgt!"
+	L.chased_you = "DU wirst verfolgt!"
 
-	overwhelm_other = "Überwältigende Kraft: %s",
+	L.overwhelm_other = "Überwältigende Kraft: %s"
 
-	shield_message = "Runenschild!",
+	L.shield_message = "Runenschild!"
 
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die während der Blitzrankenphase verfolgt werden oder von Überwältigende Kraft betroffen sind (benötigt Assistent oder höher).",
+	L.icon = "Schlachtzugs-Symbol"
+	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die während der Blitzrankenphase verfolgt werden oder von Überwältigende Kraft betroffen sind (benötigt Assistent oder höher)."
 
-	council_dies = "%s getötet!",
-} end )
+	L.council_dies = "%s getötet!"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	arm = "Arm stirbt",
-	arm_desc = "Warnung und Timer für das Sterben des linken & rechten Arms.",
-	left_dies = "Linker Arm stirbt!",
-	right_dies = "Rechter Arm stirbt!",
-	left_wipe_bar = "Neuer linker Arm",
-	right_wipe_bar = "Neuer rechter Arm",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "deDE")
+if L then
+	L.arm = "Arm stirbt"
+	L.arm_desc = "Warnung und Timer für das Sterben des linken & rechten Arms."
+	L.left_dies = "Linker Arm stirbt!"
+	L.right_dies = "Rechter Arm stirbt!"
+	L.left_wipe_bar = "Neuer linker Arm"
+	L.right_wipe_bar = "Neuer rechter Arm"
 
-	shockwave = "Schockwelle",
-	shockwave_desc = "Timer für die Schockwelle.",
-	shockwave_trigger = "AUSLÖSCHUNG!",
+	L.shockwave = "Schockwelle"
+	L.shockwave_desc = "Timer für die Schockwelle."
+	L.shockwave_trigger = "AUSLÖSCHUNG!"
 
-	eyebeam = "Fokussierter Augenstrahl",
-	eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist.",
-	eyebeam_trigger = "%s fokussiert seinen Blick auf Euch!",
-	eyebeam_message = "Augenstrahl: %s",
-	eyebeam_bar = "~Augenstrahl",
-	eyebeam_you = "Augenstrahl auf DIR!",
-	eyebeam_say = "Augenstrahl auf MIR!",
+	L.eyebeam = "Fokussierter Augenstrahl"
+	L.eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist."
+	L.eyebeam_trigger = "%s fokussiert seinen Blick auf Euch!"
+	L.eyebeam_message = "Augenstrahl: %s"
+	L.eyebeam_bar = "~Augenstrahl"
+	L.eyebeam_you = "Augenstrahl auf DIR!"
+	L.eyebeam_say = "Augenstrahl auf MIR!"
 
-	eyebeamsay = "Augenstrahl /sagen",
-	eyebeamsay_desc = "Verkündet, wenn du das Ziel des Augenstrahls bist.",
+	L.eyebeamsay = "Augenstrahl /sagen"
+	L.eyebeamsay_desc = "Verkündet, wenn du das Ziel des Augenstrahls bist."
 
-	armor_message = "%2$dx Rüstung zermalmen: %1$s!",
-} end )
+	L.armor_message = "%2$dx Rüstung zermalmen: %1$s!"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "^Feindeinheiten erkannt",
-	engage_message = "%s angegriffen!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "deDE")
+if L then
+	L.engage_trigger = "^Feindeinheiten erkannt"
+	L.engage_message = "%s angegriffen!"
 
-	pursue = "Verfolgen",
-	pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt.",
-	pursue_trigger = "^%%s verfolgt",
-	pursue_other = "Verfolgen: %s",
+	L.pursue = "Verfolgen"
+	L.pursue_desc = "Warnt, wenn der Flammenleviathan einen Spieler verfolgt."
+	L.pursue_trigger = "^%%s verfolgt"
+	L.pursue_other = "Verfolgen: %s"
 
-	shutdown_message = "Systemabschaltung!",
-} end)
+	L.shutdown_message = "Systemabschaltung!"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	phase = "Phasen",
-	phase_desc = "Warnt bei Phasenwechsel.",
-	engage_warning = "Phase 1",
-	engage_trigger = "^Wir haben nicht viel Zeit, Freunde!",
-	phase2_warning = "Phase 2",
-	phase2_trigger = "WUNDERBAR! Das sind Ergebnisse nach meinem Geschmack! Integrität der Hülle bei 98,9 Prozent! So gut wie keine Dellen! Und weiter geht's.",
-	phase3_warning = "Phase 3",
-	phase3_trigger = "^Danke Euch, Freunde! Eure Anstrengungen haben fantastische Daten geliefert!",
-	phase4_warning = "Phase 4",
-	phase4_trigger = "Vorversuchsphase abgeschlossen. Jetzt kommt der eigentliche Test!",
-	phase_bar = "Phase %d",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "deDE")
+if L then
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt bei Phasenwechsel."
+	L.engage_warning = "Phase 1"
+	L.engage_trigger = "^Wir haben nicht viel Zeit, Freunde!"
+	L.phase2_warning = "Phase 2"
+	L.phase2_trigger = "WUNDERBAR! Das sind Ergebnisse nach meinem Geschmack! Integrität der Hülle bei 98,9 Prozent! So gut wie keine Dellen! Und weiter geht's."
+	L.phase3_warning = "Phase 3"
+	L.phase3_trigger = "^Danke Euch, Freunde! Eure Anstrengungen haben fantastische Daten geliefert!"
+	L.phase4_warning = "Phase 4"
+	L.phase4_trigger = "Vorversuchsphase abgeschlossen. Jetzt kommt der eigentliche Test!"
+	L.phase_bar = "Phase %d"
 
-	hardmode = "Hard Mode",
-	hardmode_desc = "Timer für den Hard Mode.",
-	hardmode_trigger = "^Warum habt Ihr das denn jetzt gemacht?",
-	hardmode_message = "Hard Mode aktiviert!",
-	hardmode_warning = "BOOM!",
+	L.hardmode = "Hard Mode"
+	L.hardmode_desc = "Timer für den Hard Mode."
+	L.hardmode_trigger = "^Warum habt Ihr das denn jetzt gemacht?"
+	L.hardmode_message = "Hard Mode aktiviert!"
+	L.hardmode_warning = "BOOM!"
 
-	plasma_warning = "Wirkt Plasmaeruption!",
-	plasma_soon = "Plasmaeruption bald!",
-	plasma_bar = "Plasmaeruption",
+	L.plasma_warning = "Wirkt Plasmaeruption!"
+	L.plasma_soon = "Plasmaeruption bald!"
+	L.plasma_bar = "Plasmaeruption"
 
-	shock_next = "~Schockschlag",
+	L.shock_next = "~Schockschlag"
 
-	laser_soon = "Lasersalve!",
-	laser_bar = "Lasersalve",
+	L.laser_soon = "Lasersalve!"
+	L.laser_bar = "Lasersalve"
 
-	magnetic_message = "Einheit am Boden!",
+	L.magnetic_message = "Einheit am Boden!"
 
-	suppressant_warning = "Löschschaum kommt!",
+	L.suppressant_warning = "Löschschaum kommt!"
 
-	fbomb_soon = "Frostbombe bald!",
-	fbomb_bar = "~Frostbombe",
+	L.fbomb_soon = "Frostbombe bald!"
+	L.fbomb_bar = "~Frostbombe"
 
-	bomb_message = "Bombenbot!",
+	L.bomb_message = "Bombenbot!"
 
-	end_trigger = "^Es scheint, als wäre mir",
-} end )
+	L.end_trigger = "^Es scheint, als wäre mir"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	["Razorscale Controller"] = "Klingenschuppe Controller",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "deDE")
+if L then
+	L["Razorscale Controller"] = "Klingenschuppe Controller"
 
-	phase = "Phasen",
-	phase_desc = "Warnt bei Phasenwechsel.",
-	ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!",
-	ground_message = "Angekettet!",
-	air_trigger = "Gebt uns einen Moment, damit wir uns auf den Bau der Geschütze vorbereiten können.",
-	air_trigger2 = "Feuer einstellen! Lasst uns diese Geschütze reparieren!",
-	air_message = "Hebt ab!",
-	phase2_trigger = "%s dauerhaft an den Boden gebunden!",
-	phase2_message = "Phase 2",
-	phase2_warning = "Phase 2 bald!",
-	stun_bar = "Betäubt",
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt bei Phasenwechsel."
+	L.ground_trigger = "Beeilt Euch! Sie wird nicht lange am Boden bleiben!"
+	L.ground_message = "Angekettet!"
+	L.air_trigger = "Gebt uns einen Moment, damit wir uns auf den Bau der Geschütze vorbereiten können."
+	L.air_trigger2 = "Feuer einstellen! Lasst uns diese Geschütze reparieren!"
+	L.air_message = "Hebt ab!"
+	L.phase2_trigger = "%s dauerhaft an den Boden gebunden!"
+	L.phase2_message = "Phase 2"
+	L.phase2_warning = "Phase 2 bald!"
+	L.stun_bar = "Betäubt"
 
-	breath_trigger = "%s holt tief Luft...",
-	breath_message = "Flammenatem!",
-	breath_bar = "~Flammenatem",
+	L.breath_trigger = "%s holt tief Luft..."
+	L.breath_message = "Flammenatem!"
+	L.breath_bar = "~Flammenatem"
 
-	flame_message = "Verschlingende Flamme auf DIR!",
+	L.flame_message = "Verschlingende Flamme auf DIR!"
 
-	harpoon = "Harpunengeschütze",
-	harpoon_desc = "Warnungen und Timer für die Harpunengeschütze.",
-	harpoon_message = "Harpunengeschütz %d bereit!",
-	harpoon_trigger = "Harpunengeschütz ist einsatzbereit!",
-	harpoon_nextbar = "Geschütz %d",
-} end )
+	L.harpoon = "Harpunengeschütze"
+	L.harpoon_desc = "Warnungen und Timer für die Harpunengeschütze."
+	L.harpoon_message = "Harpunengeschütz %d bereit!"
+	L.harpoon_trigger = "Harpunengeschütz ist einsatzbereit!"
+	L.harpoon_nextbar = "Geschütz %d"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	phase = "Phasen",
-	phase_desc = "Warnt bei Phasenwechsel.",
-	phase1_message = "Phase 1",
-	phase2_trigger = " Eindringlinge! Ihr Sterblichen, die Ihr es wagt, Euch in mein Vergnügen einzumischen, werdet... Wartet... Ihr...", -- space in the beginning!
-	phase2_message = "Phase 2 - Berserker in 6:15 min!",
-	phase3_trigger = "Ihr unverschämtes Geschmeiß! Ihr wagt es, mich in meinem Refugium herauszufordern? Ich werde Euch eigenhändig zerschmettern!",
-	phase3_message = "Phase 3 - %s angegriffen!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "deDE")
+if L then
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt bei Phasenwechsel."
+	L.phase1_message = "Phase 1"
+	L.phase2_trigger = " Eindringlinge! Ihr Sterblichen, die Ihr es wagt, Euch in mein Vergnügen einzumischen, werdet... Wartet... Ihr..." -- space in the beginning!
+	L.phase2_message = "Phase 2 - Berserker in 6:15 min!"
+	L.phase3_trigger = "Ihr unverschämtes Geschmeiß! Ihr wagt es, mich in meinem Refugium herauszufordern? Ich werde Euch eigenhändig zerschmettern!"
+	L.phase3_message = "Phase 3 - %s angegriffen!"
 
-	hardmode = "Hard Mode",
-	hardmode_desc = "Timer für den Hard Mode.",
-	hardmode_warning = "Hard Mode beendet!",
+	L.hardmode = "Hard Mode"
+	L.hardmode_desc = "Timer für den Hard Mode."
+	L.hardmode_warning = "Hard Mode beendet!"
 
-	shock_message = "DU wirst geschockt!",
-	barrier_message = "Runenbarriere oben!",
+	L.shock_message = "DU wirst geschockt!"
+	L.barrier_message = "Runenbarriere oben!"
 
-	detonation_say = "Ich bin die Bombe!",
+	L.detonation_say = "Ich bin die Bombe!"
 
-	charge_message = "Blitzladung x%d!",
-	charge_bar = "Blitzladung %d",
+	L.charge_message = "Blitzladung x%d!"
+	L.charge_bar = "Blitzladung %d"
 
-	strike_bar = "~Schlag",
+	L.strike_bar = "~Schlag"
 
-	end_trigger = "Senkt Eure Waffen! Ich ergebe mich!",
+	L.end_trigger = "Senkt Eure Waffen! Ich ergebe mich!"
 
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Runendetonation und Sturmhammer betroffen sind (benötigt Assistent oder höher).",
-} end )
+	L.icon = "Schlachtzugs-Symbol"
+	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Runendetonation und Sturmhammer betroffen sind (benötigt Assistent oder höher)."
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Eure Vernichtung wird ein neues Zeitalter des Leids einläuten!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "deDE")
+if L then
+	L.engage_trigger = "Eure Vernichtung wird ein neues Zeitalter des Leids einläuten!"
 
-	surge_message = "Sog %d!",
-	surge_cast = "Wirkt Sog %d",
-	surge_bar = "Sog %d",
+	L.surge_message = "Sog %d!"
+	L.surge_cast = "Wirkt Sog %d"
+	L.surge_bar = "Sog %d"
 
-	animus = "Saronitanimus",
-	animus_desc = "Warnt, wenn ein Saronitanimus auftaucht.",
-	animus_trigger = "Die Saronitdämpfe sammeln sich, wirbeln heftig herum und verschmelzen zu einer monströsen Form!",
-	animus_message = "Saronitanimus kommt!",
+	L.animus = "Saronitanimus"
+	L.animus_desc = "Warnt, wenn ein Saronitanimus auftaucht."
+	L.animus_trigger = "Die Saronitdämpfe sammeln sich, wirbeln heftig herum und verschmelzen zu einer monströsen Form!"
+	L.animus_message = "Saronitanimus kommt!"
 
-	vapor = "Saronitdämpfe",
-	vapor_desc = "Warnung und Timer für das Auftauchen von Saronitdämpfen.",
-	vapor_message = "Saronitdämpfe %d!",
-	vapor_bar = "Saronitdämpfe %d/6",
-	vapor_trigger = "Eine Wolke Saronitdämpfe bildet sich in der Nähe!",
+	L.vapor = "Saronitdämpfe"
+	L.vapor_desc = "Warnung und Timer für das Auftauchen von Saronitdämpfen."
+	L.vapor_message = "Saronitdämpfe %d!"
+	L.vapor_bar = "Saronitdämpfe %d/6"
+	L.vapor_trigger = "Eine Wolke Saronitdämpfe bildet sich in der Nähe!"
 
-	vaporstack = "Saronitdämpfe Stapel",
-	vaporstack_desc = "Warnt, wenn du 5 oder mehr Stapel der Saronitdämpfe hast.",
-	vaporstack_message = "Saronitdämpfe x%d!",
+	L.vaporstack = "Saronitdämpfe Stapel"
+	L.vaporstack_desc = "Warnt, wenn du 5 oder mehr Stapel der Saronitdämpfe hast."
+	L.vaporstack_message = "Saronitdämpfe x%d!"
 
-	crash_say = "Schattengeschoss auf MIR!",
+	L.crash_say = "Schattengeschoss auf MIR!"
 
-	crashsay = "Schattengeschoss Sagen",
-	crashsay_desc = "Warnt im Sagen Chat, wenn du das Ziel eines Schattengeschosses bist.",
+	L.crashsay = "Schattengeschoss Sagen"
+	L.crashsay_desc = "Warnt im Sagen Chat, wenn du das Ziel eines Schattengeschosses bist."
 
-	crashicon = "Schattengeschoss: Schlachtzugs-Symbol",
-	crashicon_desc = "Platziert das zweite Schlachtzugs-Symbol auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher).",
+	L.crashicon = "Schattengeschoss: Schlachtzugs-Symbol"
+	L.crashicon_desc = "Platziert das zweite Schlachtzugs-Symbol auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher)."
 
-	mark_message = "Mal",
-	mark_message_other = "Mal: %s",
+	L.mark_message = "Mal"
+	L.mark_message_other = "Mal: %s"
 
-	icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol",
-	icon_desc = "Platziert das erste Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher).",
-} end )
+	L.icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol"
+	L.icon_desc = "Platziert das erste Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher)."
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	exposed_warning = "Freigelegtes Herz bald!",
-	exposed_message = "Herz freigelegt!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "deDE")
+if L then
+	L.exposed_warning = "Freigelegtes Herz bald!"
+	L.exposed_message = "Herz freigelegt!"
 
-	gravitybomb_other = "Gravitationsbombe: %s",
+	L.gravitybomb_other = "Gravitationsbombe: %s"
 
-	gravitybombicon = "Gravitationsbombe: Schlachtzugs-Symbol",
-	gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher).",
+	L.gravitybombicon = "Gravitationsbombe: Schlachtzugs-Symbol"
+	L.gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher)."
 
-	lighticon = "Sengendes Licht: Schlachtzugs-Symbol",
-	lighticon_desc = "Platziert einen Totenkopf auf Spielern, die von Sengendes Licht betroffen sind (benötigt Assistent oder höher).",
+	L.lighticon = "Sengendes Licht: Schlachtzugs-Symbol"
+	L.lighticon_desc = "Platziert einen Totenkopf auf Spielern, die von Sengendes Licht betroffen sind (benötigt Assistent oder höher)."
 	
-	lightbomb_other = "Lichtbombe: %s",
+	L.lightbomb_other = "Lichtbombe: %s"
 
-	tantrum_bar = "~Betäubender Koller",
-} end )
+	L.tantrum_bar = "~Betäubender Koller"
+end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "enUS", true)
-L:RegisterTranslations("deDE", function() return {
-	["Crusher Tentacle"] = "Schmettertentakel",
-	["The Observation Ring"] = "Der Beobachtungsring",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "deDE")
+if L then
+	L["Crusher Tentacle"] = "Schmettertentakel"
+	L["The Observation Ring"] = "Der Beobachtungsring"
 
-	phase = "Phasen",
-	phase_desc = "Warnt bei Phasenwechsel.",
-	engage_warning = "Phase 1",
-	engage_trigger = "^Bald ist die Zeit",
-	phase2_warning = "Phase 2",
-	phase2_trigger = "^Ich bin der strahlende Traum",
-	phase3_warning = "Phase 3",
-	phase3_trigger = "^Erblickt das wahre Antlitz des Todes",
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt bei Phasenwechsel."
+	L.engage_warning = "Phase 1"
+	L.engage_trigger = "^Bald ist die Zeit"
+	L.phase2_warning = "Phase 2"
+	L.phase2_trigger = "^Ich bin der strahlende Traum"
+	L.phase3_warning = "Phase 3"
+	L.phase3_trigger = "^Erblickt das wahre Antlitz des Todes"
 
-	portal = "Portale",
-	portal_desc = "Warnt, wenn Portale erscheinen.",
-	portal_trigger = "Portale öffnen sich im Geist von %s!",
-	portal_message = "Portale offen!",
-	portal_bar = "Nächsten Portale",
+	L.portal = "Portale"
+	L.portal_desc = "Warnt, wenn Portale erscheinen."
+	L.portal_trigger = "Portale öffnen sich im Geist von %s!"
+	L.portal_message = "Portale offen!"
+	L.portal_bar = "Nächsten Portale"
 
-	sanity_message = "DU wirst verrückt!",
+	L.sanity_message = "DU wirst verrückt!"
 
-	weakened = "Geschwächt",
-	weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist.",
-	weakened_message = "%s ist geschwächt!",
-	weakened_trigger = "Die Illusion fällt in sich zusammen und der Weg in den zentralen Raum wird frei!",
+	L.weakened = "Geschwächt"
+	L.weakened_desc = "Warnt, wenn Yogg-Saron geschwächt ist."
+	L.weakened_message = "%s ist geschwächt!"
+	L.weakened_trigger = "Die Illusion fällt in sich zusammen und der Weg in den zentralen Raum wird frei!"
 
-	madness_warning = "Wahnsinn in 5 sek!",
-	malady_message = "Geisteskrank: %s!",
+	L.madness_warning = "Wahnsinn in 5 sek!"
+	L.malady_message = "Geisteskrank: %s!"
 
-	tentacle = "Schmettertentakel",
-	tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel.",
-	tentacle_message = "Schmettertentakel %d!",
+	L.tentacle = "Schmettertentakel"
+	L.tentacle_desc = "Warnung und Timer für das Auftauchen der Schmettertentakel."
+	L.tentacle_message = "Schmettertentakel %d!"
 
-	link_warning = "DU bist verbunden!",
+	L.link_warning = "DU bist verbunden!"
 
-	gaze_bar = "~Blick",
-	empower_bar = "~Machtvolle Schatten",
+	L.gaze_bar = "~Blick"
+	L.empower_bar = "~Machtvolle Schatten"
 
-	guardian_message = "Wächter %d!",
+	L.guardian_message = "Wächter %d!"
 
-	empowericon = "Schatten-Symbol",
-	empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher).",
-	empowericon_message = "Schatten verblasst!",
+	L.empowericon = "Schatten-Symbol"
+	L.empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher)."
+	L.empowericon_message = "Schatten verblasst!"
 
-	roar_warning = "Gebrüll in 5 sek!",
-	roar_bar = "Nächstes Gebrüll",
-} end )
+	L.roar_warning = "Gebrüll in 5 sek!"
+	L.roar_bar = "Nächstes Gebrüll"
+end
