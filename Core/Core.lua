@@ -220,6 +220,7 @@ do
 			print(L["already_registered"]:format(module, oldM.revision, r))
 		else
 			local m = self.bossCore:NewModule(module, ...)
+			m.moduleName = module
 			m.revision = r
 			return m
 		end
@@ -311,7 +312,7 @@ do
 				order = order + 1
 			elseif t == "number" and v > 0 then
 				local spellName, _, icon = GetSpellInfo(v)
-				if not spellName then error(("Invalid option %d in module %s."):format(v, module.name)) end
+				if not spellName then error(("Invalid option %d in module %s."):format(v, module.displayName)) end
 				local desc = getSpellDescription(v)
 				config.args[spellName] = {
 					type = "toggle",
@@ -572,11 +573,10 @@ function addon:BigWigs_RecvSync(message, sync, module, sender)
 	end
 end
 
-function addon:BigWigs_TargetSeen(message, mobname, mobguid, unit, moduleName)
-	local m = self:GetBossModule(moduleName)
+function addon:BigWigs_TargetSeen(message, mobname, mobguid, unit, moduleName, m)
 	if not m or m:IsEnabled() then return end
 	if not m.VerifyEnable or m:VerifyEnable(unit) then
-		self:EnableBossModule(m)
+		self:EnableBossModule(moduleName)
 	end
 end
 
