@@ -16,7 +16,7 @@ mod.otherMenu = "Northrend"
 	30451 = shadron
 	30449 = vesperon
 --]]
-mod.enabletrigger = { 28860, 30449, 30451, 30452 } 
+mod.enabletrigger = { 28860, 30449, 30451, 30452 }
 mod.guid = 28860
 mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
 mod.consoleCmd = "Sartharion"
@@ -32,7 +32,7 @@ local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 ------------------------------
 --      English Locale      --
 ------------------------------
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "enUS", true)
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "enUS", true)
 if L then
 	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
 
@@ -48,7 +48,7 @@ if L then
 	L.drakes = "Drake Adds"
 	L.drakes_desc = "Warn when each drake add will join the fight."
 	L.drakes_incomingsoon = "%s landing in ~5sec!"
-	
+
 	L.twilight = "Twilight Events"
 	L.twilight_desc = "Warn what happens in the Twilight."
 	L.twilight_trigger_tenebron = "Tenebron begins to hatch eggs in the Twilight!"
@@ -57,7 +57,7 @@ if L then
 	L.twilight_message_tenebron = "Eggs hatching"
 	L.twilight_message = "%s add up!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sartharion")
 mod.locale = L
 
 ------------------------------

@@ -1,4 +1,5 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsArchavon the Stone Watcher", "koKR")
+
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "koKR")
 if L then
 	L.stomp_message = "발 구르기 - 곧 돌진!"
 	L.stomp_warning = "약 5초 후 발구르기 가능!"
@@ -14,7 +15,7 @@ if L then
 end
 
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "koKR")
 if L then
 	L.nova_next = "~번개 대기시간"
 
@@ -27,7 +28,7 @@ if L then
 end
 
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "koKR")
 if L then
 	L.sparks = "불꽃 소환"
 	L.sparks_desc = "마력의 불꽃 소환을 알립니다."
@@ -63,10 +64,10 @@ if L then
 	L.phase3_message = "3 단계!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "koKR")
 if L then
 	L.engage_trigger = "내 임무는 알을 보호하는 것. 알에 손대지 못하게 모두 불태워 주마."
-	
+
 	L.tsunami = "용암 파도"
 	L.tsunami_desc = "용암파도에 바와 알림입니다."
 	L.tsunami_warning = "약 5초 후 용암 파도!"
@@ -88,3 +89,4 @@ if L then
 	L.twilight_message_tenebron = "알 부화중"
 	L.twilight_message = "%s 신도 추가!"
 end
+

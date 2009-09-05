@@ -23,22 +23,21 @@ local pName = UnitName("player")
 --      English Locale      --
 ------------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsArchavon the Stone Watcher", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "enUS", true)
 if L then
 	L.stomp_message = "Stomp - Charge Inc!"
 	L.stomp_warning = "Possible Stomp in ~5sec!"
 	L.stomp_bar = "~Stomp Cooldown"
-	
+
 	L.cloud_message = "Choking Cloud on YOU!"
-	
+
 	L.charge = "Charge"
 	L.charge_desc = "Warn about Charge on players."
 
 	L.icon = "Raid Icon"
 	L.icon_desc = "Place a Raid Target Icon on the player targetted by Rock Shards. (requires promoted or higher)"
 end
-
-L = LibStub("AceLocale-3.0"):GetLocale("BigWigsArchavon the Stone Watcher")
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Archavon the Stone Watcher")
 mod.locale = L
 
 ------------------------------

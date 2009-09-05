@@ -27,7 +27,7 @@ local fmt = string.format
 ------------------------------
 --      English Locale      --
 ------------------------------
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "enUS", true)
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "enUS", true)
 if L then
 	L.sparks = "Spark Spawns"
 	L.sparks_desc = "Warns on Power Spark spawns."
@@ -35,13 +35,13 @@ if L then
 	L.sparks_warning = "Power Spark in ~5sec!"
 
 	L.sparkbuff_message = "Malygos gains Power Spark!"
-	
+
 	L.vortex = "Vortex"
 	L.vortex_desc = "Warn for Vortex in phase 1."
 	L.vortex_message = "Vortex!"
 	L.vortex_warning = "Possible Vortex in ~5sec!"
 	L.vortex_next = "Vortex Cooldown"
-	
+
 	L.breath = "Deep Breath"
 	L.breath_desc = "Warn when Malygos is using Deep Breath in phase 2."
 	L.breath_message = "Deep Breath!"
@@ -62,7 +62,7 @@ if L then
 	L.phase3_trigger = "Now your benefactors make their"
 	L.phase3_message = "Phase 3!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Malygos")
 mod.locale = L
 
 ------------------------------

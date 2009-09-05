@@ -1,4 +1,5 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsArchavon the Stone Watcher", "zhCN")
+
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "zhCN")
 if L then
 	L.stomp_message = "践踏 - 即将 冲锋！"
 	L.stomp_warning = "约5秒后，可能践踏！"
@@ -13,8 +14,7 @@ if L then
 	L.icon_desc = "为中了岩石碎片的玩家打上团队标记。（需要权限）"
 end
 
-
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "zhCN")
 if L then
 	L.nova_next = "<闪电新星 冷却>"
 
@@ -27,7 +27,7 @@ if L then
 end
 
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "zhCN")
 if L then
 	L.sparks = "能量火花"
 	L.sparks_desc = "当能量火花出现时发出警报。"
@@ -35,7 +35,7 @@ if L then
 	L.sparks_warning = "约5秒后，能量火花！"
 
 	L.sparkbuff_message = "玛里苟斯获得：>能量火花<！"
-	
+
 	L.vortex = "漩涡"
 	L.vortex_desc = "当施放漩涡时发出警报及显示计时条。"
 	L.vortex_message = "漩涡！"
@@ -63,7 +63,7 @@ if L then
 	L.phase3_message = "第三阶段！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "zhCN")
 if L then
 	L.tsunami = "烈焰之啸"
 	L.tsunami_desc = "当熔岩搅动时显示计时条。"
@@ -86,3 +86,4 @@ if L then
 	L.twilight_message_tenebron = "正在孵卵！"
 	L.twilight_message = "%s到来！"
 end
+

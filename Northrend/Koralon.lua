@@ -20,17 +20,6 @@ mod.consoleCmd = "Koralon"
 local started = nil
 
 ------------------------------
---      English Locale      --
-------------------------------
-
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsKoralon the Flame Watcher", "enUS", true)
-if L then
-end
-
-L = LibStub("AceLocale-3.0"):GetLocale("BigWigsKoralon the Flame Watcher")
-mod.locale = L
-
-------------------------------
 --      Initialization      --
 ------------------------------
 

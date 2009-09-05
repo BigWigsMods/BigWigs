@@ -1,4 +1,5 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsArchavon the Stone Watcher", "zhTW")
+
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "zhTW")
 if L then
 	L.stomp_message = "踐踏 - 即將 衝鋒！"
 	L.stomp_warning = "約5秒後，可能踐踏！"
@@ -13,8 +14,7 @@ if L then
 	L.icon_desc = "為中了岩石裂片的玩家打上團隊標記。（需要權限）"
 end
 
-
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "zhTW")
 if L then
 	L.nova_next = "<閃電新星 冷卻>"
 
@@ -26,8 +26,7 @@ if L then
 	L.icon_desc = "為中了超載的怪物打上團隊標記。（需要權限）"
 end
 
-
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "zhTW")
 if L then
 	L.sparks = "力量火花"
 	L.sparks_desc = "當力量火花出現時發出警報。"
@@ -63,7 +62,7 @@ if L then
 	L.phase3_message = "第三階段！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "zhTW")
 if L then
 	L.engage_trigger = "我的職責就是要看守這些龍蛋。在他們受到任何傷害之前，我將會看著你陷入火焰之中!"
 
@@ -73,13 +72,13 @@ if L then
 	L.tsunami_message = "炎嘯！"
 	L.tsunami_cooldown = "炎嘯冷卻！"
 	L.tsunami_trigger = "圍繞著%s的熔岩開始劇烈地翻騰!"
-	
+
 	L.breath_cooldown = "火息術冷卻！"
 
 	L.drakes = "飛龍增援"
 	L.drakes_desc = "當每只飛龍增援加入戰鬥時發出警報。"
 	L.drakes_incomingsoon = "約5秒後。%s即將到來！"
-	
+
 	L.twilight = "暮光召喚"
 	L.twilight_desc = "當暮光召喚時發出警報。"
 	L.twilight_trigger_tenebron = "坦納伯朗在暮光中孵化龍蛋!"
@@ -88,3 +87,4 @@ if L then
 	L.twilight_message_tenebron = "正在孵卵！"
 	L.twilight_message = "%s到來！"
 end
+

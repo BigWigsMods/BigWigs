@@ -1,4 +1,5 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsArchavon the Stone Watcher", "frFR")
+
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "frFR")
 if L then
 	L.stomp_message = "Piétinement - Empaler imminent !"
 	L.stomp_warning = "Piétinement probable dans ~5 sec. !"
@@ -13,8 +14,7 @@ if L then
 	L.icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être assistant ou mieux)."
 end
 
-
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "frFR")
 if L then
 	L.nova_next = "~Recharge Nova"
 
@@ -26,8 +26,7 @@ if L then
 	L.icon_desc = "Place un crâne sur le séide surchargé."
 end
 
-
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "frFR")
 if L then
 	L.sparks = "Etincelle de puissance"
 	L.sparks_desc = "Prévient quand une Etincelle de puissance apparait."
@@ -63,7 +62,7 @@ if L then
 	L.phase3_message = "Phase 3 !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "frFR")
 if L then
 	L.engage_trigger = "Ces oeufs sont sous ma responsabilité. Je vous ferai brûler avant de vous laisser y toucher !"
 
@@ -88,3 +87,4 @@ if L then
 	L.twilight_message_tenebron = "Éclosion des œufs"
 	L.twilight_message = "Disciple |2 %s actif !"
 end
+

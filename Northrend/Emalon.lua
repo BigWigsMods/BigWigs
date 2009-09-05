@@ -30,7 +30,7 @@ local overchargerepeater = nil -- overcharge repeating timer
 --      English Locale      --
 ------------------------------
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "enUS", true)
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "enUS", true)
 if L then
 	L.nova_next = "~Nova Cooldown"
 
@@ -41,8 +41,7 @@ if L then
 	L.icon = "Overcharge Icon"
 	L.icon_desc = "Place a skull on the mob with Overcharge."
 end
-
-L = LibStub("AceLocale-3.0"):GetLocale("BigWigs"..boss)
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Emalon the Storm Watcher")
 mod.locale = L
 
 ------------------------------

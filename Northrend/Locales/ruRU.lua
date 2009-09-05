@@ -1,4 +1,5 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigsArchavon the Stone Watcher", "ruRU")
+
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "ruRU")
 if L then
 	L.stomp_message = "Топот - близится Рывок!"
 	L.stomp_warning = "Топот через ~5сек!"
@@ -14,7 +15,7 @@ if L then
 end
 
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsEmalon the Storm Watcher", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "ruRU")
 if L then
 	L.nova_next = "~Перезарядка Вспышки молнии"
 
@@ -27,7 +28,7 @@ if L then
 end
 
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsMalygos", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "ruRU")
 if L then
 	L.sparks = "Искра мощи"
 	L.sparks_desc = "Предупреждать о появлениях Искры мощи."
@@ -63,7 +64,7 @@ if L then
 	L.phase3_message = "3 Фаза!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigsSartharion", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "ruRU")
 if L then
 	L.tsunami = "Огненное цунами"
 	L.tsunami_desc = "Предупреждать о взбалтывании лавы и отображать полосу."
@@ -86,3 +87,4 @@ if L then
 	L.twilight_message_tenebron = "Вылупление яиц"
 	L.twilight_message = "Появился Ученик |3-1(%s)!"
 end
+
