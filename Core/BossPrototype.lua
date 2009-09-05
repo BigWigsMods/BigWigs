@@ -142,7 +142,7 @@ function boss:AddSyncListener(event, ...)
 end
 
 function boss:BossDeath(_, guid, multi)
-	local b = self:ToString()
+	local b = self.name
 	if type(guid) == "string" then
 		guid = tonumber((guid):sub(-12,-7),16)
 	end
@@ -229,14 +229,13 @@ function boss:ValidateEngageSync(sync, rest)
 	for mob in pairs(self.scanTable) do
 		if mob == rest then return true end
 	end
-	return rest == self:ToString()
+	return rest == self.name
 end
 
 function boss:CheckForEngage()
 	local go = self:Scan()
 	if go then
-		local moduleName = self:ToString()
-		self:Sync(self:GetEngageSync().." "..moduleName)
+		self:Sync(self:GetEngageSync().." "..self.name)
 	elseif UnitAffectingCombat("player") then
 		self:ScheduleTimer(self.CheckForEngage, .5, self)
 	end
