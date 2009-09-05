@@ -182,11 +182,14 @@ end
 function boss:Scan()
 	if not self.scanTable then populateScanTable(self) end
 
-	if UnitExists("target") and UnitAffectingCombat("target") and self.scanTable[UnitName("target")] then
+	local id = UnitGUID("target")
+	if id then id = tonumber(id:sub(-12,-7),16) end
+	if UnitExists("target") and UnitAffectingCombat("target") and ( self.scanTable[UnitName("target")] or (id and self.scanTable[id]) ) then
 		return "target"
 	end
-
-	if UnitExists("focus") and UnitAffectingCombat("focus") and self.scanTable[UnitName("focus")] then
+	id = UnitGUID("focus")
+	if id then id = tonumber(id:sub(-12,-7),16) end
+	if UnitExists("focus") and UnitAffectingCombat("focus") and ( self.scanTable[UnitName("focus")] or (id and self.scanTable[id]) ) then
 		return "focus"
 	end
 
@@ -195,14 +198,18 @@ function boss:Scan()
 		num = GetNumPartyMembers()
 		for i = 1, num do
 			local partyUnit = fmt("%s%d%s", "party", i, "target")
-			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
+			id = UnitGUID(partyUnit)
+			if id then id = tonumber(id:sub(-12,-7),16) end
+			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and ( self.scanTable[UnitName(partyUnit)] or (id and self.scanTable[id]) ) then
 				return partyUnit
 			end
 		end
 	else
 		for i = 1, num do
 			local raidUnit = fmt("%s%d%s", "raid", i, "target")
-			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
+			id = UnitGUID(raidUnit)
+			if id then id = tonumber(id:sub(-12,-7),16) end
+			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and ( self.scanTable[UnitName(raidUnit)] or (id and self.scanTable[id]) ) then
 				return raidUnit
 			end
 		end
