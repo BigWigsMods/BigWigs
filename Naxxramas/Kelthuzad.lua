@@ -23,84 +23,47 @@ local mcTargets = mod:NewTargetList()
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kelthuzad", "enUS", true)
+if L then
+	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber"
 
-	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
-	start_warning = "Kel'Thuzad encounter started! ~3min 30sec till he is active!",
-	start_bar = "Phase 2",
+	L.start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!"
+	L.start_warning = "Kel'Thuzad encounter started! ~3min 30sec till he is active!"
+	L.start_bar = "Phase 2"
 
-	phase = "Phase",
-	phase_desc = "Warn for phases.",
-	phase2_trigger1 = "Pray for mercy!",
-	phase2_trigger2 = "Scream your dying breath!",
-	phase2_trigger3 = "The end is upon you!",
-	phase2_warning = "Phase 2, Kel'Thuzad incoming!",
-	phase2_bar = "Kel'Thuzad Active!",
-	phase3_soon_warning = "Phase 3 soon!",
-	phase3_trigger = "Master, I require aid!",
-	phase3_warning = "Phase 3, Guardians in ~15 sec!",
+	L.phase = "Phase"
+	L.phase_desc = "Warn for phases."
+	L.phase2_trigger1 = "Pray for mercy!"
+	L.phase2_trigger2 = "Scream your dying breath!"
+	L.phase2_trigger3 = "The end is upon you!"
+	L.phase2_warning = "Phase 2, Kel'Thuzad incoming!"
+	L.phase2_bar = "Kel'Thuzad Active!"
+	L.phase3_soon_warning = "Phase 3 soon!"
+	L.phase3_trigger = "Master, I require aid!"
+	L.phase3_warning = "Phase 3, Guardians in ~15 sec!"
 
-	mc_message = "Mind Control: %s",
-	mc_warning = "Mind controls soon!",
-	mc_nextbar = "~Mind Controls",
+	L.mc_message = "Mind Control: %s"
+	L.mc_warning = "Mind controls soon!"
+	L.mc_nextbar = "~Mind Controls"
 
-	frostblast_bar = "Possible Frost Blast",
-	frostblast_soon_message = "Possible Frost Blast in ~5 sec!",
+	L.frostblast_bar = "Possible Frost Blast"
+	L.frostblast_soon_message = "Possible Frost Blast in ~5 sec!"
 
-	detonate_other = "Detonate - %s",
-	detonate_possible_bar = "Possible Detonate",
-	detonate_warning = "Next Detonate in 5 sec!",
+	L.detonate_other = "Detonate - %s"
+	L.detonate_possible_bar = "Possible Detonate"
+	L.detonate_warning = "Next Detonate in 5 sec!"
 
-	guardians = "Guardian Spawns",
-	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
-	guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!",
-	guardians_warning = "Guardians incoming in ~10sec!",
-	guardians_bar = "Guardians incoming!",
+	L.guardians = "Guardian Spawns"
+	L.guardians_desc = "Warn for incoming Icecrown Guardians in phase 3."
+	L.guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!"
+	L.guardians_warning = "Guardians incoming in ~10sec!"
+	L.guardians_bar = "Guardians incoming!"
 
-	icon = "Raid Icon",
-	icon_desc = "Place a raid icon on people with Detonate Mana.",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада",
-
-	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел'Тузада!",
-	start_warning = "Бой с Кел'Тузадом начинается! ~3 мин 30 сек до выхода босса!",
-	start_bar = "Фаза 2",
-
-	phase = "Фазы",
-	phase_desc = "Предупреждать когда босс входит в новую фазу.",
-	phase2_trigger1 = "Молите о пощаде!",
-	phase2_trigger2 = "Кричите! Кричите изо всех сил!",
-	phase2_trigger3 = 	"Вы уже мертвы!",
-	phase2_warning = "Фаза 2, Кел'Тузад просыпается!",
-	phase2_bar = "Кел'Тузад активен!",
-	phase3_soon_warning = "Скоро Фаза 3!",
-	phase3_trigger = "Господин, мне нужна помощь!",
-	phase3_warning = "Фаза 3, защитники через ~15 секунд!",
-
-	mc_message = "Контроль над |3-4(%s)",
-	mc_warning = "Скоро контроль разума!",
-	mc_nextbar = "~Контроль Разума",
-
-	frostblast_bar = "Возможен ледяной взрыв",
-	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
-
-	detonate_other = "Взрыв маны на 3-5(%s)",
-	detonate_possible_bar = "Возможен взрыв маны",
-	detonate_warning = "Следующий взрыв маны через 5 секунд!",
-
-	guardians = "Появление стражей",
-	guardians_desc = "Сообщать о появлении стражей ледяной короны в третьей фазе.",
-	guardians_trigger = "Хорошо. Воины ледяных пустошей, восстаньте! Повелеваю вам сражаться, убивать и умирать во имя своего повелителя! Не щадить никого!",
-	guardians_warning = "Стражи появятся через 15 секунд!",
-	guardians_bar = "Появляются стражи!",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока, на которого наложен эффект взрыва маны (необходимо быть лидером группы или рейда).",
-} end )
+	L.icon = "Raid Icon"
+	L.icon_desc = "Place a raid icon on people with Detonate Mana."
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kelthuzad")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",

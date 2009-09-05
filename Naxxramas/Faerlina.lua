@@ -25,44 +25,27 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	starttrigger1 = "Kneel before me, worm!",
-	starttrigger2 = "Slay them in the master's name!",
-	starttrigger3 = "You cannot hide from me!",
-	starttrigger4 = "Run while you still can!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faerlina", "enUS", true)
+if L then
+	L.starttrigger1 = "Kneel before me, worm!"
+	L.starttrigger2 = "Slay them in the master's name!"
+	L.starttrigger3 = "You cannot hide from me!"
+	L.starttrigger4 = "Run while you still can!"
 
-	startwarn = "Faerlina engaged, 60 sec to frenzy!",
-	enragewarn15sec = "15 sec to frenzy!",
-	enragewarn = "Frenzied!",
-	enragewarn2 = "Frenzied Soon!",
-	enrageremovewarn = "Frenzy removed! ~60 sec until next!",
+	L.startwarn = "Faerlina engaged, 60 sec to frenzy!"
+	L.enragewarn15sec = "15 sec to frenzy!"
+	L.enragewarn = "Frenzied!"
+	L.enragewarn2 = "Frenzied Soon!"
+	L.enrageremovewarn = "Frenzy removed! ~60 sec until next!"
 
-	silencewarn = "Silenced!",
-	silencewarn5sec = "Silence ends in 5 sec",
-	silencebar = "Silence",
+	L.silencewarn = "Silenced!"
+	L.silencewarn5sec = "Silence ends in 5 sec"
+	L.silencebar = "Silence"
 
-	rain_message = "Fire on YOU!",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	starttrigger1 = "Склонитесь передо мной, черви!",
-	starttrigger2 = "Убейте их во имя господина!",
-	starttrigger3 = "Вам не скрыться от меня!",
-	starttrigger4 = "Бегите, пока еще можете!",
-
-	startwarn = "Великая вдова Фарлина вступает в бой, 60 секунд до бешенства!",
-	enragewarn15sec = "15 секунд до Бешенства!",
-	enragewarn = "Бешенство!",
-	enragewarn2 = "Скоро бешенство!",
-	enrageremovewarn = "Бешенство снято! ~60 секунд до следующего!",
-
-	silencewarn = "Безмолвие! Задержка ярости!",
-	silencewarn5sec = "Безмолвие закончится через 5 секунд",
-	silencebar = "Безмолвие",
-
-	rain_message = "Огненный ливень на ВАС!",
-} end )
+	L.rain_message = "Fire on YOU!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Faerlina")
+mod.locale = L
 
 L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Kniet nieder, Wurm!",

@@ -15,98 +15,54 @@ mod.consoleCmd = "Gothik"
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	room = "Room Arrival Warnings",
-	room_desc = "Warn for Gothik's arrival",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik", "enUS", true)
+if L then
+	L.room = "Room Arrival Warnings"
+	L.room_desc = "Warn for Gothik's arrival"
 
-	add = "Add Warnings",
-	add_desc = "Warn for adds",
+	L.add = "Add Warnings"
+	L.add_desc = "Warn for adds"
 
-	adddeath = "Add Death Alert",
-	adddeath_desc = "Alerts when an add dies.",
+	L.adddeath = "Add Death Alert"
+	L.adddeath_desc = "Alerts when an add dies."
 
-	starttrigger1 = "Foolishly you have sought your own demise.",
-	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
-	startwarn = "Gothik the Harvester engaged! 4:30 till he's in the room.",
+	L.starttrigger1 = "Foolishly you have sought your own demise."
+	L.starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun"
+	L.startwarn = "Gothik the Harvester engaged! 4:30 till he's in the room."
 
-	rider = "Unrelenting Rider",
-	spectral_rider = "Spectral Rider",
-	deathknight = "Unrelenting Deathknight",
-	spectral_deathknight = "Spektral Deathknight",
-	trainee = "Unrelenting Trainee",
-	spectral_trainee = "Spectral Trainee",
+	L.rider = "Unrelenting Rider"
+	L.spectral_rider = "Spectral Rider"
+	L.deathknight = "Unrelenting Deathknight"
+	L.spectral_deathknight = "Spektral Deathknight"
+	L.trainee = "Unrelenting Trainee"
+	L.spectral_trainee = "Spectral Trainee"
 
-	riderdiewarn = "Rider dead!",
-	dkdiewarn = "Death Knight dead!",
+	L.riderdiewarn = "Rider dead!"
+	L.dkdiewarn = "Death Knight dead!"
 
-	warn1 = "In room in 3 min",
-	warn2 = "In room in 90 sec",
-	warn3 = "In room in 60 sec",
-	warn4 = "In room in 30 sec",
-	warn5 = "Gothik Incoming in 10 sec",
+	L.warn1 = "In room in 3 min"
+	L.warn2 = "In room in 90 sec"
+	L.warn3 = "In room in 60 sec"
+	L.warn4 = "In room in 30 sec"
+	L.warn5 = "Gothik Incoming in 10 sec"
 
-	wave = "%d/23: %s",
+	L.wave = "%d/23: %s"
 
-	trawarn = "Trainees in 3 sec",
-	dkwarn = "Deathknights in 3 sec",
-	riderwarn = "Rider in 3 sec",
+	L.trawarn = "Trainees in 3 sec"
+	L.dkwarn = "Deathknights in 3 sec"
+	L.riderwarn = "Rider in 3 sec"
 
-	trabar = "Trainee - %d",
-	dkbar = "Deathknight - %d",
-	riderbar = "Rider - %d",
+	L.trabar = "Trainee - %d"
+	L.dkbar = "Deathknight - %d"
+	L.riderbar = "Rider - %d"
 
-	inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
-	inroomwarn = "He's in the room!",
+	L.inroomtrigger = "I have waited long enough. Now you face the harvester of souls."
+	L.inroomwarn = "He's in the room!"
 
-	inroombartext = "In Room",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	room = "Прибытие Готика",
-	room_desc = "Сообщать о прибытии Готика",
-
-	add = "Появление помощников",
-	add_desc = "Сообщать о появлении помощников",
-
-	adddeath = "Оповещать смерть помощников",
-	adddeath_desc = "Сообщать о смерти помощников.",
-
-	starttrigger1 = "Глупо было искать свою смерть.",
-	starttrigger2 = "Я очень долго ждал. Положите свою душу в мой комбайн и будем вам дерево с золотыми монетами.",  --check this
-	startwarn = "Готик вступает в бой! 4:30 до входа в комнату.",
-
-	rider = "Неодолимый всадник",
-	spectral_rider = "Призрачный всадник",
-	deathknight = "Безжалостный Рыцарь Смерти",
-	spectral_deathknight = "Призрачный рыцарь Смерти",
-	trainee = "Жестокий новобранец",
-	spectral_trainee = "Призрачный ученик",
-
-	riderdiewarn = "Всадник мёртв!",
-	dkdiewarn = "Рыцарь смерти мёртв!",
-
-	warn1 = "В комнате через 3 минуты",
-	warn2 = "В комнате через 90 секунд",
-	warn3 = "В комнате через 60 секунд",
-	warn4 = "В комнате через 30 секунд",
-	warn5 = "Готик появится через 10 секунд",
-
-	wave = "%d/23: %s",
-
-	trawarn = "Ученик через 3 секунды",
-	dkwarn = "Рыцарь Смерти через 3 секунды",
-	riderwarn = "Всадник через 3 секунды",
-
-	trabar = "Ученик - %d",
-	dkbar = "Рыцарь Смерти - %d",
-	riderbar = "Всадник - %d",
-
-	inroomtrigger = "Я ждал слишком долго. Сейчас вы предстанете пред ликом Жнеца душ.",
-	inroomwarn = "Он в комнате!!",
-
-	inroombartext = "В комнате",
-} end )
+	L.inroombartext = "In Room"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Gothik")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	room = "고딕 등장 알림",

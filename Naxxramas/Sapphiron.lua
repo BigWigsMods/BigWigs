@@ -23,52 +23,31 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	airphase_trigger = "Sapphiron lifts off into the air!",
-	deepbreath_incoming_message = "Ice Bomb casting in ~14sec!",
-	deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!",
-	deepbreath_incoming_bar = "Ice Bomb Cast",
-	deepbreath_trigger = "%s takes a deep breath.",
-	deepbreath_warning = "Ice Bomb Incoming!",
-	deepbreath_bar = "Ice Bomb Lands!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sapphiron", "enUS", true)
+if L then
+	L.airphase_trigger = "Sapphiron lifts off into the air!"
+	L.deepbreath_incoming_message = "Ice Bomb casting in ~14sec!"
+	L.deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!"
+	L.deepbreath_incoming_bar = "Ice Bomb Cast"
+	L.deepbreath_trigger = "%s takes a deep breath."
+	L.deepbreath_warning = "Ice Bomb Incoming!"
+	L.deepbreath_bar = "Ice Bomb Lands!"
 
-	lifedrain_message = "Life Drain! Next in ~24sec!",
-	lifedrain_warn1 = "Life Drain in ~5sec!",
-	lifedrain_bar = "~Possible Life Drain",
+	L.lifedrain_message = "Life Drain! Next in ~24sec!"
+	L.lifedrain_warn1 = "Life Drain in ~5sec!"
+	L.lifedrain_bar = "~Possible Life Drain"
 
-	icebolt_say = "I'm a Block!",
+	L.icebolt_say = "I'm a Block!"
 
-	ping = "Ping",
-	ping_desc = "Ping your current location if you are afflicted by Icebolt.",
-	ping_message = "Block - Pinging your location!",
+	L.ping = "Ping"
+	L.ping_desc = "Ping your current location if you are afflicted by Icebolt."
+	L.ping_message = "Block - Pinging your location!"
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	airphase_trigger = "%s взмывает в воздух!",
-	deepbreath_incoming_message = "Ледяная бомба через 23 секунды!",
-	deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!",
-	deepbreath_incoming_bar = "Каст ледяной бомбы",
-	deepbreath_trigger = "%s глубоко вздыхает.",  
-	deepbreath_warning = "Появляется ледяная бомба!",
-	deepbreath_bar = "Приземляется ледяная бомба!",
-
-	lifedrain_message = "Похищение жизни! Следующее через 24 секунды!",
-	lifedrain_warn1 = "Похищение жизни через 5 секунд!",
-	lifedrain_bar = "~Возможное похищение жизни",
-
-	icebolt_say = "Я в глыбе!",
-
-	ping = "Мояк по мини-карте",
-	ping_desc = "Отмечать ваше текущеее положение маяком по мини-карте, если вы находитесь в глыбе после морозной стрелы.",
-	ping_message = "Глыба - отмечаю положение!",
-
-	icon = "Отмечать иконкой",
-	icon_desc = "Отмечать рейдовой иконой игрока, попавшего в глыбу после морозной стрелы (необходимо быть лидером группы или рейда)",
-} end )
+	L.icon = "Raid Icon"
+	L.icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sapphiron")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	airphase_trigger = "사피론이 공중으로 떠오릅니다!",

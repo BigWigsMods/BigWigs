@@ -25,76 +25,43 @@ local wave2time = 41
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	starttrigger1 = "Die, trespasser!",
-	starttrigger2 = "Glory to the master!",
-	starttrigger3 = "Your life is forfeit!",
-	startwarn = "Noth the Plaguebringer engaged! 90 sec till teleport",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth", "enUS", true)
+if L then
+	L.starttrigger1 = "Die, trespasser!"
+	L.starttrigger2 = "Glory to the master!"
+	L.starttrigger3 = "Your life is forfeit!"
+	L.startwarn = "Noth the Plaguebringer engaged! 90 sec till teleport"
 
-	blink = "Blink",
-	blink_desc = "Warnings when Noth blinks.",
-	blinktrigger = "%s blinks away!",
-	blinkwarn = "Blink!",
-	blinkwarn2 = "Blink in ~5 sec!",
-	blinkbar = "Blink",
+	L.blink = "Blink"
+	L.blink_desc = "Warnings when Noth blinks."
+	L.blinktrigger = "%s blinks away!"
+	L.blinkwarn = "Blink!"
+	L.blinkwarn2 = "Blink in ~5 sec!"
+	L.blinkbar = "Blink"
 
-	teleport = "Teleport",
-	teleport_desc = "Warnings and bars for teleport.",
-	teleportbar = "Teleport!",
-	backbar = "Back in room!",
-	teleportwarn = "Teleport! He's on the balcony!",
-	teleportwarn2 = "Teleport in 10 sec!",
-	backwarn = "He's back in the room for %d sec!",
-	backwarn2 = "10 sec until he's back in the room!",
+	L.teleport = "Teleport"
+	L.teleport_desc = "Warnings and bars for teleport."
+	L.teleportbar = "Teleport!"
+	L.backbar = "Back in room!"
+	L.teleportwarn = "Teleport! He's on the balcony!"
+	L.teleportwarn2 = "Teleport in 10 sec!"
+	L.backwarn = "He's back in the room for %d sec!"
+	L.backwarn2 = "10 sec until he's back in the room!"
 
-	curseexplosion = "Curse explosion!",
-	cursewarn = "Curse! next in ~55 sec",
-	curse10secwarn = "Curse in ~10 sec",
-	cursebar = "Next Curse",
+	L.curseexplosion = "Curse explosion!"
+	L.cursewarn = "Curse! next in ~55 sec"
+	L.curse10secwarn = "Curse in ~10 sec"
+	L.cursebar = "Next Curse"
 
-	wave = "Waves",
-	wave_desc = "Alerts for the different waves.",
-	addtrigger = "Rise, my soldiers! Rise and fight once more!",
-	wave1bar = "Wave 1",
-	wave2bar = "Wave 2",
-	wave2_message = "Wave 2 in 10 sec",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	starttrigger1 = "Смерть чужакам!",
-	starttrigger2 = "Слава господину!",
-	starttrigger3 = "Прощайся с жизнью!",
-	startwarn = "Нот Чумной вступает в бой! 90 секунд до телепорта",
-
-	blink = "Опасность скачка",
-	blink_desc = "Предупреждать, когда Нот использует скачок",
-	blinktrigger = "%s перескакивает на другое место!",
-	blinkwarn = "Скачок!",
-	blinkwarn2 = "Скачок через 5 секунд!",
-	blinkbar = "Скачок",
-
-    teleport = "Телепорт",
-	teleport_desc = "Предупреждать о телепорте.",
-	teleportbar = "Телепорт!",
-	backbar = "Назад в Команту!",
-	teleportwarn = "Телепорт! Он на балконе!",
-	teleportwarn2 = "Телепорт через 10 секунд!",
-	backwarn = "Он вернулся в комнату на %d секунд!",
-	backwarn2 = "10 секунд до возвращения в комнату!",
-
-	curseexplosion = "Проклятый взрыв!",
-	cursewarn = "Проклятие через ~55 секунд",
-	curse10secwarn = "Проклятие через ~10 секунд",
-	cursebar = "Следующее проклятие",
-
-	wave = "Волны",
-	wave_desc = "Сообщать о волнах",
-	addtrigger = "Встаньте, мои воины! Встаньте и сражайтесь вновь!",
-	wave1bar = "1-я волна",
-	wave2bar = "2-я волна",
-	wave2_message = "2-я волна через 10 сек",
-} end )
+	L.wave = "Waves"
+	L.wave_desc = "Alerts for the different waves."
+	L.addtrigger = "Rise, my soldiers! Rise and fight once more!"
+	L.wave1bar = "Wave 1"
+	L.wave2bar = "Wave 2"
+	L.wave2_message = "Wave 2 in 10 sec"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Noth")
+mod.locale = L
 
 L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Sterbt, Eindringling!",

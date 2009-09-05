@@ -15,56 +15,33 @@ mod.consoleCmd = "Heigan"
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	starttrigger = "You are mine now.",
-	starttrigger2 = "You... are next.",
-	starttrigger3 = "I see you...",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan", "enUS", true)
+if L then
+	L.starttrigger = "You are mine now."
+	L.starttrigger2 = "You... are next."
+	L.starttrigger3 = "I see you..."
 
-	engage = "Engage",
-	engage_desc = "Warn when Heigan is engaged.",
-	engage_message = "Heigan the Unclean engaged! 90 sec to teleport!",
+	L.engage = "Engage"
+	L.engage_desc = "Warn when Heigan is engaged."
+	L.engage_message = "Heigan the Unclean engaged! 90 sec to teleport!"
 
-	teleport = "Teleport",
-	teleport_desc = "Warn for Teleports.",
-	teleport_trigger = "The end is upon you.",
-	teleport_1min_message = "Teleport in 1 min",
-	teleport_30sec_message = "Teleport in 30 sec",
-	teleport_10sec_message = "Teleport in 10 sec!",
-	on_platform_message = "Teleport! On platform for 45 sec!",
+	L.teleport = "Teleport"
+	L.teleport_desc = "Warn for Teleports."
+	L.teleport_trigger = "The end is upon you."
+	L.teleport_1min_message = "Teleport in 1 min"
+	L.teleport_30sec_message = "Teleport in 30 sec"
+	L.teleport_10sec_message = "Teleport in 10 sec!"
+	L.on_platform_message = "Teleport! On platform for 45 sec!"
 
-	to_floor_30sec_message = "Back in 30 sec",
-	to_floor_10sec_message = "Back in 10 sec!",
-	on_floor_message = "Back on the floor! 90 sec to next teleport!",
+	L.to_floor_30sec_message = "Back in 30 sec"
+	L.to_floor_10sec_message = "Back in 10 sec!"
+	L.on_floor_message = "Back on the floor! 90 sec to next teleport!"
 
-	teleport_bar = "Teleport!",
-	back_bar = "Back on the floor!",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	starttrigger = "Теперь вы принадлежите мне!",
-	starttrigger2 = "Пришло ваше время...",
-	starttrigger3 = "Я вижу вас...",
-
-	engage = "Вступление в бой",
-	engage_desc = "Предупреждать, когда Хейган вступает в бой.",
-	engage_message = "Хейган вступает в бой! 90 секунд до телепорта!",
-
-	teleport = "Телепорт",
-	teleport_desc = "Предупреждать о телепорте.",
-	teleport_trigger = "Вам конец.",
-	teleport_1min_message = "Телепорт через 1 минуту",
-	teleport_30sec_message = "Телепорт через 30 секунд",
-	teleport_10sec_message = "Телепорт через 10 секунд!",
-	on_platform_message = "Телепорт! 45 секунд на платформе!",
-
-	to_floor_30sec_message = "Возвращение через 30 секунд",
-	to_floor_10sec_message = "Возвращение через 10 секунд!",
-	on_floor_message = "Возвращается! 90 секунд до следующего телепорта!",
-
-	teleport_bar = "Телепорт!",
-	back_bar = "Возвращение!",
-} end )
+	L.teleport_bar = "Teleport!"
+	L.back_bar = "Back on the floor!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Heigan")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	starttrigger = "이제 넌 내 것이다.",

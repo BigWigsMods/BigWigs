@@ -22,20 +22,15 @@ local enrageTime = 420
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	startwarn = "Gluth engaged, ~105 sec to decimate!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gluth", "enUS", true)
+if L then
+	L.startwarn = "Gluth engaged, ~105 sec to decimate!"
 
-	decimatesoonwarn = "Decimate Soon!",
-	decimatebartext = "~Decimate Zombies",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	startwarn = "Глут вступает в бой! ~105 cекунд до появления зомби!",
-
-	decimatesoonwarn = "Скоро истребление!",
-	decimatebartext = "Истребление",
-} end )
+	L.decimatesoonwarn = "Decimate Soon!"
+	L.decimatebartext = "~Decimate Zombies"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Gluth")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!",

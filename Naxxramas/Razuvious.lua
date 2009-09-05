@@ -11,7 +11,7 @@ mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.wipemobs = understudy
 mod.guid = 16061
-mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill",}
+mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill"}
 mod.consoleCmd = "Razuvious"
 
 ------------------------------
@@ -24,14 +24,16 @@ local started = nil
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	shout_warning = "Disrupting Shout in 5sec!",
-	shout_next = "Shout Cooldown",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razuvious", "enUS", true)
+if L then
+	L.shout_warning = "Disrupting Shout in 5sec!"
+	L.shout_next = "Shout Cooldown"
 
-	taunt_warning = "Taunt ready in 5sec!",
-	shieldwall_warning = "Barrier gone in 5sec!",
-} end )
+	L.taunt_warning = "Taunt ready in 5sec!"
+	L.shieldwall_warning = "Barrier gone in 5sec!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Razuvious")
+mod.locale = L
 
 L:RegisterTranslations("deDE", function() return {
 	shout_warning = "Unterbrechender Schrei in 5 sek!",
@@ -71,14 +73,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	taunt_warning = "Provocation prête dans 5 sec. !",
 	shieldwall_warning = "Barrière d'os terminée dans 5 sec. !",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	shout_warning = "Разрушительный крик через 5сек!",
-	shout_next = "~перезарядка крика",
-
-	taunt_warning = "Провокация закончится через 5сек!",
-	shieldwall_warning = "Преграда из костей закончится через 5сек!",
 } end )
 
 ------------------------------

@@ -15,12 +15,14 @@ mod.consoleCmd = "Patchwerk"
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	enragewarn = "5% - Enrage!",
-	starttrigger1 = "Patchwerk want to play!",
-	starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!",
-} end )
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Patchwerk", "enUS", true)
+if L then
+	L.enragewarn = "5% - Enrage!"
+	L.starttrigger1 = "Patchwerk want to play!"
+	L.starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Patchwerk")
+mod.locale = L
 
 L:RegisterTranslations("deDE", function() return {
 	enragewarn = "5% - Raserei!",
@@ -50,12 +52,6 @@ L:RegisterTranslations("frFR", function() return {
 	enragewarn = "5% - Frénésie !",
 	starttrigger1 = "R'cousu veut jouer !",
 	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	enragewarn = "5% - Бешенство!",
-	starttrigger1 = "Лоскутик хочет поиграть!",  --corrected 12.13.2008
-	starttrigger2 = "Кел'Тузад объявил Лоскутика воплощением войны!", --corrected 12.13.2008
 } end )
 
 ------------------------------

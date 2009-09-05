@@ -23,34 +23,22 @@ local enrageannounced = nil
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	webspraywarn30sec = "Cocoons in 10 sec",
-	webspraywarn20sec = "Cocoons! Spiders in 10 sec!",
-	webspraywarn10sec = "Spiders! Spray in 10 sec!",
-	webspraywarn5sec = "WEB SPRAY in 5 seconds!",
-	webspraywarn = "Web Spray! 40 sec until next!",
-	enragewarn = "Enrage - SQUISH SQUISH SQUISH!",
-	enragesoonwarn = "Enrage Soon - Bugsquatters out!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Maexxna", "enUS", true)
+if L then
+	L.webspraywarn30sec = "Cocoons in 10 sec"
+	L.webspraywarn20sec = "Cocoons! Spiders in 10 sec!"
+	L.webspraywarn10sec = "Spiders! Spray in 10 sec!"
+	L.webspraywarn5sec = "WEB SPRAY in 5 seconds!"
+	L.webspraywarn = "Web Spray! 40 sec until next!"
+	L.enragewarn = "Enrage - SQUISH SQUISH SQUISH!"
+	L.enragesoonwarn = "Enrage Soon - Bugsquatters out!"
 
-	webspraybar = "Web Spray",
-	cocoonbar = "Cocoons",
-	spiderbar = "Spiders",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	webspraywarn30sec = "Паутина через 10 секунд",
-	webspraywarn20sec = "Паутина! 10 секунд до появления пауков!",
-	webspraywarn10sec = "Пауки! 10 секунд до паутины!",
-	webspraywarn5sec = "Паутина через 5 секунд!",
-	webspraywarn = "Паутина! 40 секунд до следующей!",
-	enragewarn = "Бешенство - ХЛЮП ХЛЮП ХЛЮП!",
-	enragesoonwarn = "Скоро бешенство",
-
-	webspraybar = "Летящая паутина",
-	cocoonbar = "Коконы",
-	spiderbar = "Пауки",
-} end )
+	L.webspraybar = "Web Spray"
+	L.cocoonbar = "Cocoons"
+	L.spiderbar = "Spiders"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Maexxna")
+mod.locale = L
 
 L:RegisterTranslations("deDE", function() return {
 	webspraywarn30sec = "Fangnetz in 10 sek!",

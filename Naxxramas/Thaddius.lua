@@ -27,70 +27,40 @@ local shiftTime = nil
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	phase = "Phase",
-	phase_desc = "Warn for Phase transitions",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "enUS", true)
+if L then
+	L.phase = "Phase"
+	L.phase_desc = "Warn for Phase transitions"
 
-	throw = "Throw",
-	throw_desc = "Warn about tank platform swaps.",
+	L.throw = "Throw"
+	L.throw_desc = "Warn about tank platform swaps."
 
-	trigger_phase1_1 = "Stalagg crush you!",
-	trigger_phase1_2 = "Feed you to master!",
-	trigger_phase2_1 = "Eat... your... bones...",
-	trigger_phase2_2 = "Break... you!!",
-	trigger_phase2_3 = "Kill...",
+	L.trigger_phase1_1 = "Stalagg crush you!"
+	L.trigger_phase1_2 = "Feed you to master!"
+	L.trigger_phase2_1 = "Eat... your... bones..."
+	L.trigger_phase2_2 = "Break... you!!"
+	L.trigger_phase2_3 = "Kill..."
 
-	polarity_trigger = "Now you feel pain...",
-	polarity_message = "Polarity Shift incoming!",
-	polarity_warning = "3 sec to Polarity Shift!",
-	polarity_bar = "Polarity Shift",
-	polarity_changed = "Polarity changed!",
-	polarity_nochange = "Same polarity!",
+	L.polarity_trigger = "Now you feel pain..."
+	L.polarity_message = "Polarity Shift incoming!"
+	L.polarity_warning = "3 sec to Polarity Shift!"
+	L.polarity_bar = "Polarity Shift"
+	L.polarity_changed = "Polarity changed!"
+	L.polarity_nochange = "Same polarity!"
 
-	polarity_first_positive = "You're POSITIVE!",
-	polarity_first_negative = "You're NEGATIVE!",
+	L.polarity_first_positive = "You're POSITIVE!"
+	L.polarity_first_negative = "You're NEGATIVE!"
 
-	phase1_message = "Phase 1",
-	phase2_message = "Phase 2, Berserk in 6 minutes!",
+	L.phase1_message = "Phase 1"
+	L.phase2_message = "Phase 2, Berserk in 6 minutes!"
 
-	surge_message = "Power Surge on Stalagg!",
+	L.surge_message = "Power Surge on Stalagg!"
 
-	throw_bar = "Throw",
-	throw_warning = "Throw in ~5 sec!",
-} end)
-
-L:RegisterTranslations("ruRU", function() return {
-	phase = "Фазы",
-	phase_desc = "Сообщать о фазах боя",
-
-	throw = "Бросока",
-	throw_desc = "Предупреждать о смене танков на платформах.",
-
-	trigger_phase1_1 = "Сталагг сокрушить вас!",
-	trigger_phase1_2 = "Я скормлю вас господину!",
-	trigger_phase2_1 = "Я сожру... ваши... кости...",
-	trigger_phase2_2 = "Растерзаю!!!",
-	trigger_phase2_3 = "Убью...",
-
-	polarity_trigger = "Познайте же боль...",
-	polarity_message = "Таддиус сдвигает полярность!",
-	polarity_warning = "3 секунды до сдвига полярности!",
-	polarity_bar = "Сдвиг полярности",
-	polarity_changed = "Полярность сменилась!",
-	polarity_nochange = "Полярность НЕ сменилась!",
-
-	polarity_first_positive = "Вы (+) ПОЛОЖИТЕЛЬНЫЙ!",
-	polarity_first_negative = "Вы (-) ОТРИЦАТЕЛЬНЫЙ!",
-
-	phase1_message = "Таддиус фаза 1",
-	phase2_message = "Таддиус фаза 2, Берсерк через 6 минут!",
-
-	surge_message = "Волна силы на Сталагге!",
-
-	throw_bar = "Бросок",
-	throw_warning = "Бросок через 5 секунд!",
-} end)
+	L.throw_bar = "Throw"
+	L.throw_warning = "Throw in ~5 sec!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Thaddius")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계 변경",

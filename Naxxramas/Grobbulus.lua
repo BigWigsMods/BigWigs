@@ -22,22 +22,16 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "%s is Injected!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "enUS", true)
+if L then
+	L.bomb_message = "Injection"
+	L.bomb_message_other = "%s is Injected!"
 
-	icon = "Place Icon",
-	icon_desc = "Place a raid icon on an Injected person. (Requires promoted or higher)",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	bomb_message = "Injection",
-	bomb_message_other = "|3-2(%s) сделали укол! Бегите от него!",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока, которому был сделан укол (необходимо быть лидером группы или рейда).",
-} end )
+	L.icon = "Place Icon"
+	L.icon_desc = "Place a raid icon on an Injected person. (Requires promoted or higher)"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Grobbulus")
+mod.locale = L
 
 L:RegisterTranslations("deDE", function() return {
 	bomb_message = "Injection",

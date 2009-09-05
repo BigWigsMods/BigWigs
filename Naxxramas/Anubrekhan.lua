@@ -21,34 +21,24 @@ local locustTime = 90
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	starttrigger1 = "Just a little taste...",
-	starttrigger2 = "Yes, run! It makes the blood pump faster!",
-	starttrigger3 = "There is no way out.",
-	engagewarn = "Anub'Rekhan engaged! Locust Swarm in ~%d sec",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anubrekhan", "enUS", true)
+if L then
+	L.starttrigger1 = "Just a little taste..."
+	L.starttrigger2 = "Yes, run! It makes the blood pump faster!"
+	L.starttrigger3 = "There is no way out."
+	L.engagewarn = "Anub'Rekhan engaged! Locust Swarm in ~%d sec"
 
-	gainendwarn = "Locust Swarm ended!",
-	gainnextwarn = "Next Locust Swarm in ~85 sec",
-	gainwarn10sec = "~10 sec until Locust Swarm",
-	gainincbar = "~Next Locust Swarm",
+	L.gainendwarn = "Locust Swarm ended!"
+	L.gainnextwarn = "Next Locust Swarm in ~85 sec"
+	L.gainwarn10sec = "~10 sec until Locust Swarm"
+	L.gainincbar = "~Next Locust Swarm"
 
-	castwarn = "Incoming Locust Swarm!",
-} end )
+	L.castwarn = "Incoming Locust Swarm!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anubrekhan")
+mod.locale = L
 
-L:RegisterTranslations("ruRU", function() return {
-	starttrigger1 = "Посмотрим, какие вы на вкус!",
-	starttrigger2 = "Бегите, бегите! Я люблю горячую кровь!",
-	starttrigger3 = "Вам отсюда не выбраться.",  --check this
-	engagewarn = "Ануб'Рекан вступает в бой! Первая волна жуков через ~%d секунд",
 
-	gainendwarn = "Жуки-трупоеды исчезают!",
-	gainnextwarn = "Следующая волна жуков-трупоедов через ~85 секунд",
-	gainwarn10sec = "~10 до жуков-трупоедов",
-	gainincbar = "Следующая волна жуков-трупоедов",
-
-	castwarn = "Появляются жуки-трупоеды!",
-} end )
 
 L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Nur einmal kosten...",

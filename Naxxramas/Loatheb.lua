@@ -25,44 +25,27 @@ local sporeTime = 16
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "enUS", true)
+if L then
+	L.startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!"
 
-	aura_message = "Necrotic Aura - Duration 17 sec!",
-	aura_warning = "Aura gone in 3 sec!",
+	L.aura_message = "Necrotic Aura - Duration 17 sec!"
+	L.aura_warning = "Aura gone in 3 sec!"
 
-	deathbloom_warning = "Bloom in 5 sec!",
+	L.deathbloom_warning = "Bloom in 5 sec!"
 
-	doombar = "Inevitable Doom %d",
-	doomwarn = "Doom %d! %d sec to next!",
-	doomwarn5sec = "Doom %d in 5 sec!",
-	doomtimerbar = "Doom every 15sec",
-	doomtimerwarn = "Doom timer changes in %s sec!",
-	doomtimerwarnnow = "Doom now happens every 15 sec!",
+	L.doombar = "Inevitable Doom %d"
+	L.doomwarn = "Doom %d! %d sec to next!"
+	L.doomwarn5sec = "Doom %d in 5 sec!"
+	L.doomtimerbar = "Doom every 15sec"
+	L.doomtimerwarn = "Doom timer changes in %s sec!"
+	L.doomtimerwarnnow = "Doom now happens every 15 sec!"
 
-	sporewarn = "Spore %d!",
-	sporebar = "Summon Spore %d",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	startwarn = "Лотхиб вступает в бой, 2 минуты до неотвратимого рока!",
-
-	aura_message = "Мертвенная аура - продолжительность 17 сек!",
-	aura_warning = "Мертвенная аура спадает через 3 сек!",
-
-	deathbloom_warning = "Бутон смерти через 5 сек!",
-
-	doombar = "Неотвратимый рок %d",
-	doomwarn = "Неотвратимый рок %d! %d секунд до следующего!",
-	doomwarn5sec = "Неотвратимый рок %d через 5 секунд!",
-	doomtimerbar = "Рок каждые 15 секунд",
-	doomtimerwarn = "Рок теперь каждые %s секунд!",
-	doomtimerwarnnow = "Рок теперь накладывается каждые 15 секунд!",
-
-	sporewarn = "Появляется %d спора",
-	sporebar = "Призвана спора %d",
-} end )
+	L.sporewarn = "Spore %d!"
+	L.sporebar = "Summon Spore %d"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Loatheb")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!",

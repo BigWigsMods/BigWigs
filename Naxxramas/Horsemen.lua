@@ -28,30 +28,20 @@ local marks = 1
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-L:RegisterTranslations("enUS", function() return {
-	mark = "Mark",
-	mark_desc = "Warn for marks.",
-	markbar = "Mark %d",
-	markwarn1 = "Mark %d!",
-	markwarn2 = "Mark %d in 5 sec",
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Horsemen", "enUS", true)
+if L then
+	L.mark = "Mark"
+	L.mark_desc = "Warn for marks."
+	L.markbar = "Mark %d"
+	L.markwarn1 = "Mark %d!"
+	L.markwarn2 = "Mark %d in 5 sec"
 
-	dies = "#%d Killed",
+	L.dies = "#%d Killed"
 
-	startwarn = "The Four Horsemen Engaged! Mark in ~17 sec",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	mark = "Знак",
-	mark_desc = "Предупреждать о знаках.",
-	markbar = "Знак %d",
-	markwarn1 = "Знак %d!",
-	markwarn2 = "Знак %d через 5 секунд",
-
-	dies = "#%d убит",
-
-	startwarn = "Четверо всадников вступили в бой! Знак через ~17 секунд",
-} end )
+	L.startwarn = "The Four Horsemen Engaged! Mark in ~17 sec"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Horsemen")
+mod.locale = L
 
 L:RegisterTranslations("koKR", function() return {
 	mark = "징표",
