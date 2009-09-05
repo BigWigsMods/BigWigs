@@ -9,7 +9,7 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zonename = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32906
-mod.toggleOptions = {"phase", "wave", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "wave", "tree", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
 mod.optionHeaders = {
 	phase = CL.normal,
 	[62861] = CL.hard,
@@ -52,6 +52,9 @@ L:RegisterTranslations("enUS", function() return {
 	conservator_message = "Conservator!",
 	detonate_message = "Detonating lashers!",
 	elementals_message = "Elementals!",
+	
+	tree = "Eonar's Gift",
+	tree_desc = "Alert when Freya spawns a Eonar's Gift.",
 	tree_message = "Tree is up!",
 
 	fury_message = "Fury",
@@ -425,7 +428,7 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["tree_trigger"] and db.wave then
+	if msg == L["tree_trigger"] and db.tree then
 		self:IfMessage(L["tree_message"], "Urgent", 5420, "Alarm")
 	end
 end
