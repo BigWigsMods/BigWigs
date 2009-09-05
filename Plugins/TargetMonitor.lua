@@ -41,12 +41,12 @@ end
 function plugin:RegisterMob(mod)
 	local mob = mod.enabletrigger
 	if type(mob) == "function" then enableyells[mob] = mod
-	elseif type(mob) == "string" then enablemobs[mob] = mod
+	elseif type(mob) == "string" or type(mob) == "number" then enablemobs[mob] = mod
 	else for i,m in next, mob do enablemobs[m] = mod end end
 end
 function plugin:UnregisterMob(mob)
 	if type(mob) == "function" then enableyells[mob] = nil
-	elseif type(mob) == "string" then enablemobs[mob] = nil
+	elseif type(mob) == "string" or type(mob) == "number" then enablemobs[mob] = nil
 	else for i,m in next, mob do enablemobs[m] = nil end end
 end
 
