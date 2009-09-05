@@ -1,10 +1,11 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-local boss = BB["Faction Champions"]
+local boss = "Faction Champions"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Trial of the Crusader"]
+mod.bossName = boss
+mod.zoneName = "Trial of the Crusader"
 mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 mod.consoleCmd = "Champions"
 
@@ -86,7 +87,7 @@ function mod:Bloodlust(player, spellId)
 	self:IfMessage(L["Bloodlust on champions!"], "Important", spellId)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["defeat_trigger"]) then
 		self:Sync("MultiDeath " .. self:ToString())
 	end

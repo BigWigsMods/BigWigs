@@ -2,11 +2,12 @@
 -- Module Declaration
 --
 
-local boss = BB["Lord Jaraxxus"]
+local boss = "Lord Jaraxxus"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Trial of the Crusader"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Trial of the Crusader"
+mod.enabletrigger = 34780
 mod.guid = 34780
 mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
 mod.consoleCmd = "Jaraxxus"
@@ -99,7 +100,7 @@ function mod:InfernalEruption(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 --if you wipe then you never get "engage_trigger1" message again, but always "engage_trigger" message before boss start attack.
 --Correct me if i'm wrong
 	if msg:find(L["engage_trigger1"]) then

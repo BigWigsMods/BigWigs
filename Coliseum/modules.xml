@@ -2,12 +2,10 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Beasts.lua"/>
-<!--
 <Script file="Jaraxxus.lua"/>
 <Script file="Champions.lua"/>
 <Script file="ValkyrTwins.lua"/>
 <Script file="Anubarak.lua"/>
--->
 
 </Ui>
 

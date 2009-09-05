@@ -1,11 +1,12 @@
 ﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
-local boss = BB["Anub'arak"]
+local boss = "Anub'arak"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Trial of the Crusader"]
-mod.enabletrigger = boss
+mod.bossName = boss
+mod.zoneName = "Trial of the Crusader"
+mod.enabletrigger = 34564
 mod.guid = 34564
 mod.toggleOptions = {66118, 67574, "icon", "burrow", "berserk", "bosskill"}
 mod.consoleCmd = "Anubarak"
@@ -45,30 +46,30 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
+	db = self.db.profile
 	self:AddCombatListener("SPELL_CAST_START", "Swarm", 66118)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Pursue", 67574)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	db = self.db.profile
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Swarm(player, spellId, _, _, spellName)
+function mod:Swarm(event, player, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 end
 
-function mod:Pursue(player, spellId)
+function mod:Pursue(event, player, spellId)
 	self:TargetMessage(L["chase"], player, "Personal", spellId)
 	self:Whisper(player, L["chase"])
 	self:PrimaryIcon(player, "icon")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		if db.burrow then
 			self:IfMessage(L["engage_message"], "Attention", 65919)
@@ -80,7 +81,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if db.burrow and msg:find(L["unburrow_trigger"]) then
 		self:Bar(L["burrow_cooldown"], 80, 65919)
 		self:DelayedMessage(70, L["burrow_soon"], "Attention")

@@ -2,13 +2,14 @@
 -- Module Declaration
 --
 
-local boss = BB["The Twin Val'kyr"]
-local eydis = BB["Eydis Darkbane"]
-local fjola = BB["Fjola Lightbane"]
+local boss = "The Twin Val'kyr"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zoneName = BZ["Trial of the Crusader"]
-mod.enabletrigger = { eydis, fjola }
+local eydis, fjola
+mod.displayName = "The Twin Val'kyr"
+mod.bossName = {"Eydis Darkbane", "Fjola Lightbane"}
+mod.zoneName = "Trial of the Crusader"
+mod.enabletrigger = { 34496, 34407 }
 mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
@@ -48,6 +49,11 @@ mod.locale = L
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:OnRegister()
+	eydis = mod.bossName[1]
+	fjola = mod.bossName[2]
+end
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
@@ -121,7 +127,7 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg, sender)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg, sender)
 	if msg == L["engage_trigger1"] and sender == eydis then
 		if db.shield or db.vortex then
 			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
