@@ -239,7 +239,7 @@ do
 		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
 		if player == pName then
 			dontWarn = true
-			self:TriggerEvent("BigWigs_ShowProximity", self)
+			self:SendMessage("BigWigs_ShowProximity", self)
 			self:TargetMessage(L["burn_spell"], player, "Important", spellId, "Info")
 		end
 	end
@@ -247,7 +247,7 @@ end
 
 function mod:BurnRemoved(player)
 	if player == pName then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 
