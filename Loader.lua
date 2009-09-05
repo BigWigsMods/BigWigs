@@ -149,7 +149,7 @@ function loader:OnInitialize()
 			if meta then
 				table.insert(loadOnCoreLoaded, name)
 			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadIn-Zone")
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
 			if meta then
 				table.insert(zoneAddon, name)
 			end
@@ -161,7 +161,7 @@ function loader:OnInitialize()
 	end
 	-- From this point onward BZ and BB should be available for non-english locales
 	for k, name in pairs(zoneAddon) do
-		meta = GetAddOnMetadata(name, "X-BigWigs-LoadIn-Zone")
+		meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
 		local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
 		if menu then
 			if BZ then menu = BZ[menu] or menu end

@@ -19,7 +19,7 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-LoadInZone: Ulduar
+## X-BigWigs-LoadOn-Zone: Ulduar
 
 ## Dependencies: BigWigs
 

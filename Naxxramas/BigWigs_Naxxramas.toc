@@ -20,7 +20,7 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-LoadInZone: Naxxramas
+## X-BigWigs-LoadOn-Zone: Naxxramas
 
 ## Dependencies: BigWigs
 

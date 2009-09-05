@@ -21,7 +21,7 @@
 ## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
 
-## X-BigWigs-LoadInZone: Trial of the Crusader
+## X-BigWigs-LoadOn-Zone: Trial of the Crusader
 
 ## Dependencies: BigWigs
 
