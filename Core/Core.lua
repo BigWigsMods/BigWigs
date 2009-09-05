@@ -204,7 +204,6 @@ end
 -------------------------------
 
 do
-	local opts = {}
 	local zoneModules = {}
 
 	-- A wrapper for :NewModule to present users with more information in the
@@ -415,6 +414,7 @@ do
 			end
 		end
 
+		local opts = {}
 		for i,v in next, module.toggleOptions do
 			local t = type(v)
 			if t == "string"  then
@@ -426,7 +426,6 @@ do
 			end
 		end
 		module.db = self.db:RegisterNamespace(name, { profile = opts })
-		for i in next, opts do opts[i] = nil end
 
 		local zone = module.otherMenu or module.zoneName
 		if not zoneModules[zone] then
@@ -452,6 +451,7 @@ do
 		end
 		
 		if module.toggleOptions then
+			local opts = {}
 			for i,v in next, module.toggleOptions do
 				local t = type(v)
 				if t == "string"  then
@@ -462,8 +462,7 @@ do
 					opts[n] = true
 				end
 			end
-			module.db = self.db:RegisterNamespace(name, opts)
-			for i in ipairs(opts) do opts[i] = nil end
+			module.db = self.db:RegisterNamespace(name, {profile = opts})
 		elseif type(module.defaultDB) == "table" then
 			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )
 		end
