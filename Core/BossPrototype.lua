@@ -385,6 +385,8 @@ function boss:ScheduleEvent( id, func, delay, ...)
 	if scheduledTimers[self][id] then
 		-- cancel the old one
 		self:CancelScheduledEvent( id )
+	else
+		scheduledTimers[self][id] = {}
 	end
 	scheduledTimers[self][id].func = func
 	scheduledTimers[self][id].args = { ... }
