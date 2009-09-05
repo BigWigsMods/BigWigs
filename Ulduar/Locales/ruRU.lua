@@ -1,3 +1,4 @@
+
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "ruRU")
 if L then
 	L.phase = "Фазы"
@@ -13,7 +14,7 @@ if L then
 	L.bigbang_soon = "Скоро Суровый удар!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "ruRU")
 if L then
 	L.fear_warning = "Скоро Ужасающий вопль!"
 	L.fear_message = "Применение страха!"
@@ -29,7 +30,7 @@ if L then
 	L.sonic_bar = "~перезарядка визга"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "ruRU")
 if L then
 	L.engage_trigger1 = "Нужно защитить Оранжерею!"
 	L.engage_trigger2 = "Древни, дайте мне силы!"
@@ -39,7 +40,7 @@ if L then
 	L.phase2_message = "2ая фаза!"
 
 	L.wave = "Волны"
-	
+
 	L.wave_desc = "Предупреждать о волнах."
 	L.wave_bar = "Следующая волна"
 	L.conservator_trigger = "Эонар, твоей прислужнице нужна помощь!"
@@ -64,7 +65,7 @@ if L then
 	L.end_trigger = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "ruRU")
 if L then
 	L.engage_trigger = "Вы будете наказаны за это вторжение!"
 
@@ -84,7 +85,7 @@ if L then
 	L.end_trigger = "Наконец-то я... свободен от его оков…"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "ruRU")
 if L then
 	L.engage_trigger = "Дерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!"
 
@@ -98,7 +99,7 @@ if L then
 	L.slagpot_message = "Захвачен в ковш: %s"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "ruRU")
 if L then
 	L.engage_trigger1 = "Чужаки! Вам не одолеть Железное Собрание!"
 	L.engage_trigger2 = "Я буду спокоен, лишь когда окончательно истреблю вас."
@@ -121,7 +122,7 @@ if L then
 	L.council_dies = "%s умер"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "ruRU")
 if L then
 	L.arm = "Уничтожение рук"
 	L.arm_desc = "Сообщать о смерти левой и правой руки."
@@ -148,7 +149,7 @@ if L then
 	L.armor_message = "%2$dx Хруста на |3-5(%1$s)"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "ruRU")
 if L then
 	L.engage_trigger = "^Обнаружены противники."
 	L.engage_message = "%s вступает в бой!"
@@ -161,7 +162,7 @@ if L then
 	L.shutdown_message = "Отключение системы!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
@@ -202,7 +203,7 @@ if L then
 	L.end_trigger = "^Очевидно, я совершил небольшую ошибку в расчетах."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать когда Острокрылая меняет фазы."
@@ -229,7 +230,7 @@ if L then
 	L.harpoon_nextbar = "Гарпун (%d)"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
@@ -257,7 +258,7 @@ if L then
 	L.icon_desc = "Помечать рейдовой иконкой игрока, который попал под воздействие Взрыва рун. (необходимо быть лидером группы или рейда)"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "ruRU")
 if L then
 	L.engage_trigger = "Ваша смерть возвестит новую эру страданий!"
 
@@ -295,7 +296,7 @@ if L then
 	L.icon_desc = "Помечать рейдовой иконкой игрока, на который попал под воздействие метки безликого (необходимо обладать промоутом)"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "ruRU")
 if L then
 	L.exposed_warning = "Скоро сердце станет уязвимо!"
 	L.exposed_message = "Сердце уязвимо!"
@@ -310,7 +311,7 @@ if L then
 	L.tantrum_bar = "~Раскаты ярости"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "ruRU")
 if L then
 	L["Crusher Tentacle"] = "Тяжелое щупальце"
 	L["The Observation Ring"] = "Круг Наблюдения"
@@ -356,3 +357,4 @@ if L then
 	L.roar_warning = "Крик через 5 сек!"
 	L.roar_bar = "Следущий крик"
 end
+

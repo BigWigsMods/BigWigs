@@ -1,3 +1,4 @@
+
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "zhTW")
 if L then
 	L.phase = "階段"
@@ -13,7 +14,7 @@ if L then
 	L.bigbang_soon = "即將 大爆炸！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "zhTW")
 if L then
 	L.fear_warning = "即將 恐嚇尖嘯！"
 	L.fear_message = "正在施放 恐嚇尖嘯！"
@@ -29,7 +30,7 @@ if L then
 	L.sonic_bar = "<音速尖嘯>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "zhTW")
 if L then
 	L.engage_trigger1 = "必須守護大溫室!"
 	L.engage_trigger2 = "長者們，賦予我你們的力量!"
@@ -50,7 +51,7 @@ if L then
 	L.elementals_message = "上古水之靈！"
 
 	L.tree = "伊歐娜的贈禮"
-	L.tree_desc = "當芙蕾雅召喚伊歐娜的贈禮時發出警報。"	
+	L.tree_desc = "當芙蕾雅召喚伊歐娜的贈禮時發出警報。"
 	L.tree_message = "伊歐娜的贈禮 出現！"
 
 	L.fury_message = "自然烈怒"
@@ -68,7 +69,7 @@ if L then
 	L.end_trigger = "他對我的操控已然退散。我已再次恢復神智了。感激不盡，英雄們。"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "zhTW")
 if L then
 	L.engage_trigger = "你將為擅闖付出代價!"
 
@@ -88,7 +89,7 @@ if L then
 	L.end_trigger = "我…我終於從他的掌控中…解脫了。"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "zhTW")
 if L then
 	L.engage_trigger = "傲慢的小傢伙!你們的鮮血將會用來淬鍊重奪世界的武器!"
 
@@ -102,7 +103,7 @@ if L then
 	L.slagpot_message = "熔渣之盆：>%s<！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "zhTW")
 if L then
 	L.engage_trigger1 = "你們別妄想擊潰鐵之集會，入侵者!"
 	L.engage_trigger2 = "只有全面屠殺才能滿足我。"
@@ -125,7 +126,7 @@ if L then
 	L.council_dies = "%s被擊敗了！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "zhTW")
 if L then
 	L.arm = "手臂死亡"
 	L.arm_desc = "當左右手臂死亡時發出警報。"
@@ -152,7 +153,7 @@ if L then
 	L.armor_message = "粉碎護甲%2$d層：>%1$s<！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "zhTW")
 if L then
 	L.engage_trigger = "發現敵意實體。啟動威脅評估協定。首要目標接近中。30秒後將再度評估。"
 	L.engage_message = "%s已狂怒！"
@@ -165,7 +166,7 @@ if L then
 	L.shutdown_message = "系統關閉！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "zhTW")
 if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段發出警報。"
@@ -206,7 +207,7 @@ if L then
 	L.end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "zhTW")
 if L then
 	L["Razorscale Controller"] = "銳鱗控制器"
 
@@ -235,7 +236,7 @@ if L then
 	L.harpoon_nextbar = "<魚叉炮塔：%d>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "zhTW")
 if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段發出警報。"
@@ -265,7 +266,7 @@ if L then
 	L.icon_desc = "為中了引爆符文的隊員打上團隊標記。（需要權限）"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhTW")
 if L then
 	L["Vezax Bunny"] = "Vezax Bunny" -- For emote catching.
 
@@ -305,7 +306,7 @@ if L then
 	L.icon_desc = "為中了暗影暴擊的隊員打上團隊標記。（需要權限）"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "zhTW")
 if L then
 	L.exposed_warning = "即將 機心外露！"
 	L.exposed_message = "機心外露！"
@@ -320,7 +321,7 @@ if L then
 	L.tantrum_bar = "<躁怒 冷卻>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "zhTW")
 if L then
 	L["Crusher Tentacle"] = "粉碎觸手"
 	L["The Observation Ring"] = "觀察之環"
@@ -368,3 +369,4 @@ if L then
 	L.roar_warning = "5秒後，震耳咆哮！"
 	L.roar_bar = "<下一震耳咆哮>"
 end
+

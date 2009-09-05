@@ -1,3 +1,4 @@
+
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "frFR")
 if L then
 	L.phase = "Phases"
@@ -13,7 +14,7 @@ if L then
 	L.bigbang_soon = "Big Bang imminent !"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "frFR")
 if L then
 	L.fear_warning = "Hurlement terrifiant imminent !"
 	L.fear_message = "Hurlement terrifiant en incantation !"
@@ -29,7 +30,7 @@ if L then
 	L.sonic_bar = "~H. sonore"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "frFR")
 if L then
 	L.engage_trigger1 = "Le jardin doit être protégé !"
 	L.engage_trigger2 = "Anciens, donnez-moi votre force !"
@@ -65,7 +66,7 @@ if L then
 	L.end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "frFR")
 if L then
 	L.engage_trigger = "Vous allez souffrir pour cette intrusion !"
 
@@ -85,7 +86,7 @@ if L then
 	L.end_trigger = "Je suis... libéré de son emprise... enfin."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "frFR")
 if L then
 	L.engage_trigger = "Chiots insolents ! Les lames qui serviront à reconquérir ce monde seront trempées dans votre sang !"
 
@@ -99,7 +100,7 @@ if L then
 	L.slagpot_message = "Marmite : %s"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "frFR")
 if L then
 	L.engage_trigger1 = "Vous ne vaincrez pas si facilement l'assemblée du Fer, envahisseurs !"
 	L.engage_trigger2 = "Seule votre extermination complète me conviendra."
@@ -122,7 +123,7 @@ if L then
 	L.council_dies = "%s éliminé"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "frFR")
 if L then
 	L.arm = "Destruction des bras"
 	L.arm_desc = "Prévient quand le bras gauche et/ou droit est détruit."
@@ -149,7 +150,7 @@ if L then
 	L.armor_message = "%2$dx broyages d'armure sur %1$s"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "frFR")
 if L then
 	L.engage_trigger = "^Entités hostiles détectées."
 	L.engage_message = "%s engagé !"
@@ -162,7 +163,7 @@ if L then
 	L.shutdown_message = "Extinction des systèmes !"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la recontre entre dans une nouvelle phase."
@@ -203,7 +204,7 @@ if L then
 	L.end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "frFR")
 if L then
 	L["Razorscale Controller"] = "Contrôleur de Tranchécaille"
 
@@ -232,7 +233,7 @@ if L then
 	L.harpoon_nextbar = "Tourelle %d"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "frFR")
 if L then
 	L["Runic Colossus"] = "Colosse runique" -- For the runic barrier emote.
 
@@ -264,7 +265,7 @@ if L then
 	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Détonation runique (nécessite d'être assistant ou mieux)."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "frFR")
 if L then
 	L.engage_trigger = "^Votre destruction annoncera un nouvel âge de souffrance !"
 
@@ -301,7 +302,7 @@ if L then
 	L.icon_desc = "Place une icône de raid primaire sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux)."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "frFR")
 if L then
 	L.exposed_warning = "Cœur exposé imminent"
 	L.exposed_message = "Cœur exposé !"
@@ -316,7 +317,7 @@ if L then
 	L.tantrum_bar = "~Recharge Colère"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "frFR")
 if L then
 	L["Crusher Tentacle"] = "Tentacule écraseur"
 	L["The Observation Ring"] = "le cercle d'observation"
@@ -364,3 +365,4 @@ if L then
 	L.roar_warning = "Rugissement dans 5 sec. !"
 	L.roar_bar = "Prochain Rugissement"
 end
+

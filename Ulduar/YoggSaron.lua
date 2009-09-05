@@ -96,7 +96,7 @@ mod.locale = L
 -- warnings blizz puts in the emote frame. The source for those messages USED
 -- TO BE the boss, but Blizzard CHANGED IT to the player himself, for some
 -- insanely crappy, unknown, stupid reason.
-mod.bossName = { "Yogg-Saron", "Brain of Yogg-Saron", "Sara", pName } 
+mod.bossName = { "Yogg-Saron", "Brain of Yogg-Saron", "Sara", pName }
 
 
 ------------------------------

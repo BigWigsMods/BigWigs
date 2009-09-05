@@ -1,3 +1,4 @@
+
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "zhCN")
 if L then
 	L.phase = "阶段"
@@ -13,7 +14,7 @@ if L then
 	L.bigbang_soon = "即将 大爆炸！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "zhCN")
 if L then
 	L.fear_warning = "即将 惊骇尖啸！"
 	L.fear_message = "正在施放 惊骇尖啸！"
@@ -29,7 +30,7 @@ if L then
 	L.sonic_bar = "<音速尖啸>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "zhCN")
 if L then
 --	L.engage_trigger1 = "The Conservatory must be protected!"
 --	L.engage_trigger2 = "Elders grant me your strength!"
@@ -50,7 +51,7 @@ if L then
 	L.elementals_message = "古代水之精魂！"
 
 	L.tree = "艾欧娜尔的礼物"
-	L.tree_desc = "当弗蕾亚召唤艾欧娜尔的礼物时发出警报。"	
+	L.tree_desc = "当弗蕾亚召唤艾欧娜尔的礼物时发出警报。"
 	L.tree_message = "艾欧娜尔的礼物 出现！"
 
 	L.fury_message = "自然之怒"
@@ -68,7 +69,7 @@ if L then
 --	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "zhCN")
 if L then
 --	L.engage_trigger = "You will suffer for this trespass!"
 
@@ -88,7 +89,7 @@ if L then
 --	L.end_trigger = "I...I am released from his grasp! At...last!"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "zhCN")
 if L then
 --	L.engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!"
 
@@ -102,7 +103,7 @@ if L then
 	L.slagpot_message = "熔渣炉：>%s<！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "zhCN")
 if L then
 --	L.engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!"
 --	L.engage_trigger2 = "Nothing short of total decimation will suffice!"
@@ -125,7 +126,7 @@ if L then
 	L.council_dies = "%s被击败了！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "zhCN")
 if L then
 	L.arm = "手臂死亡"
 	L.arm_desc = "当左右手臂死亡时发出警报。"
@@ -152,7 +153,7 @@ if L then
 	L.armor_message = "粉碎护甲%2$d层：>%1$s<！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "zhCN")
 if L then
 --	L.engage_trigger = "^Hostile entities detected."
 	L.engage_message = "%s已激怒！"
@@ -165,7 +166,7 @@ if L then
 	L.shutdown_message = "系统关闭！"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
@@ -206,7 +207,7 @@ if L then
 --	L.end_trigger = "^It would appear that I've made a slight miscalculation."
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "zhCN")
 if L then
 --	L["Razorscale Controller"] = true,
 
@@ -235,7 +236,7 @@ if L then
 	L.harpoon_nextbar = "<魚叉炮台：%d>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
@@ -265,7 +266,7 @@ if L then
 	L.icon_desc = "为中了符文爆炸的队员打上团队标记。（需要权限）"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhCN")
 if L then
 --	L.["Vezax Bunny"] = true, -- For emote catching.
 
@@ -305,7 +306,7 @@ if L then
 	L.icon_desc = "为中了暗影冲撞的队员打上团队标记。（需要权限）"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "zhCN")
 if L then
 	L.exposed_warning = "即将 暴露心脏！"
 	L.exposed_message = "暴露心脏！"
@@ -320,7 +321,7 @@ if L then
 	L.tantrum_bar = "<发脾气 冷却>"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "zhCN")
 if L then
 	L["Crusher Tentacle"] = "重压触须"
 --	L["The Observation Ring"] = true,
@@ -368,3 +369,4 @@ if L then
 	L.roar_warning = "5秒后，震耳咆哮！"
 	L.roar_bar = "<下一震耳咆哮>"
 end
+

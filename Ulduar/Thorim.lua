@@ -37,7 +37,7 @@ local chargeCount = 1
 local fmt = string.format
 local pName = UnitName("player")
 
-local hardModeMessageID 
+local hardModeMessageID
 
 ----------------------------
 --      Localization      --

@@ -23,7 +23,7 @@ mod.optionHeaders = {
 	[61903] = breaker,
 	[62274] = brundir,
 	proximity = CL.general,
-	
+
 }
 mod.proximityCheck = "bandage"
 

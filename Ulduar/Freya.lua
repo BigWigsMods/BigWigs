@@ -51,7 +51,7 @@ if L then
 	L.conservator_message = "Conservator!"
 	L.detonate_message = "Detonating lashers!"
 	L.elementals_message = "Elementals!"
-	
+
 	L.tree = "Eonar's Gift"
 	L.tree_desc = "Alert when Freya spawns a Eonar's Gift."
 	L.tree_message = "Tree is up!"
