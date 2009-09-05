@@ -162,7 +162,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	end
 end
 
-function mod:Impale(event, player, spellId, _, _, spellName)
+function mod:Impale(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(L["impale_message"], player, "Urgent", icon, "Info", stack)
@@ -171,7 +171,7 @@ end
 
 do
 	local last = nil
-	function mod:FireBomb(event, player, spellId)
+	function mod:FireBomb(player, spellId)
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
@@ -186,17 +186,17 @@ end
 -- Jormungars
 --
 
-function mod:SlimeCast(event, _, spellId, _, _, spellName)
+function mod:SlimeCast(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Attention", spellId)
 end
 
-function mod:Molten(event, _, spellId, _, _, spellName)
+function mod:Molten(_, spellId, _, _, spellName)
 	if db.spew then
 		self:IfMessage(spellName, "Attention", spellId)
 	end
 end
 
-function mod:Acidic(event, _, spellId, _, _, spellName)
+function mod:Acidic(_, spellId, _, _, spellName)
 	if db.spew then
 		self:IfMessage(spellName, "Attention", spellId)
 	end
@@ -213,7 +213,7 @@ do
 			wipe(toxin)
 		end
 	end
-	function mod:Toxin(event, player, spellId)
+	function mod:Toxin(player, spellId)
 		toxin[#toxin + 1] = player
 		self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId)
 		if player == pName then
@@ -234,7 +234,7 @@ do
 			wipe(burn)
 		end
 	end
-	function mod:Burn(event, player, spellId)
+	function mod:Burn(player, spellId)
 		burn[#burn + 1] = player
 		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
 		if player == pName then
@@ -245,19 +245,19 @@ do
 	end
 end
 
-function mod:BurnRemoved(event, player)
+function mod:BurnRemoved(player)
 	if player == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 
-function mod:Enraged(event, _, spellId, _, _, spellName)
+function mod:Enraged(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId, "Long")
 end
 
 do
 	local last = nil
-	function mod:Slime(event, player, spellId)
+	function mod:Slime(player, spellId)
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
@@ -272,17 +272,17 @@ end
 -- Icehowl
 --
 
-function mod:Rage(event, _, spellId, _, _, spellName)
+function mod:Rage(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Daze(event, _, spellId, _, _, spellName)
+function mod:Daze(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Positive", spellId)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Butt(event, player, spellId, _, _, spellName)
+function mod:Butt(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Attention", spellId)
 	self:Bar(L["butt_bar"], 12, spellId)
 end
