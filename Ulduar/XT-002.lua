@@ -34,111 +34,24 @@ local exposed3 = nil
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "enUS", true)
+if L then
+	L.exposed_warning = "Exposed soon"
+	L.exposed_message = "Heart exposed!"
 
-L:RegisterTranslations("enUS", function() return {
-	exposed_warning = "Exposed soon",
-	exposed_message = "Heart exposed!",
+	L.gravitybomb_other = "Gravity on %s!"
 
-	gravitybomb_other = "Gravity on %s!",
+	L.gravitybombicon = "Gravity Bomb Icon"
+	L.gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)"
 
-	gravitybombicon = "Gravity Bomb Icon",
-	gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)",
+	L.lighticon = "Searing Light Icon"
+	L.lighticon_desc = "Place a Skull icon on the player with Searing Light. (requires promoted or higher)"
 
-	lighticon = "Searing Light Icon",
-	lighticon_desc = "Place a Skull icon on the player with Searing Light. (requires promoted or higher)",
+	L.lightbomb_other = "Light on %s!"
 
-	lightbomb_other = "Light on %s!",
-
-	tantrum_bar = "~Tantrum Cooldown",
-} end )
-
-L:RegisterTranslations("koKR", function() return {
-	exposed_warning = "잠시 후 심장 노출!",
-	exposed_message = "심장 노출 - 로봇들 추가!",
-
-	gravitybomb_other = "중력 폭탄: %s!",
-
-	gravitybombicon = "중력 폭탄 아이콘",
-	gravitybombicon_desc = "중력 폭탄에 걸린 플레이어를 네모 전술로 지정합니다. (승급자 이상 권한 필요)",
-
-	lightbomb_other = "빛의 폭탄: %s!",
-
-	tantrum_bar = "~땅울림 대기시간",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	exposed_warning = "Cœur exposé imminent",
-	exposed_message = "Cœur exposé !",
-
-	gravitybomb_other = "Gravité : %s",
-
-	gravitybombicon = "Bombe à gravité - Icône",
-	gravitybombicon_desc = "Place une icône de raid bleue sur le dernier joueur affecté par une Bombe à gravité (nécessite d'être assistant ou mieux).",
-
-	lightbomb_other = "Lumière : %s",
-
-	tantrum_bar = "~Recharge Colère",
-} end )
-
-L:RegisterTranslations("deDE", function() return {
-	exposed_warning = "Freigelegtes Herz bald!",
-	exposed_message = "Herz freigelegt!",
-
-	gravitybomb_other = "Gravitationsbombe: %s",
-
-	gravitybombicon = "Gravitationsbombe: Schlachtzugs-Symbol",
-	gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher).",
-
-	lighticon = "Sengendes Licht: Schlachtzugs-Symbol",
-	lighticon_desc = "Platziert einen Totenkopf auf Spielern, die von Sengendes Licht betroffen sind (benötigt Assistent oder höher).",
-	
-	lightbomb_other = "Lichtbombe: %s",
-
-	tantrum_bar = "~Betäubender Koller",
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
-	exposed_warning = "即将 暴露心脏！",
-	exposed_message = "暴露心脏！",
-
-	gravitybomb_other = "重力炸弹：>%s<！",
-
-	gravitybombicon = "重力炸弹标记",
-	gravitybombicon_desc = "为中了重力炸弹的玩家打上蓝色方框标记。（需要权限）",
-
-	lightbomb_other = "灼热之光：>%s<！",
-
-	tantrum_bar = "<发脾气 冷却>",
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
-	exposed_warning = "即將 機心外露！",
-	exposed_message = "機心外露！",
-
-	gravitybomb_other = "重力彈：>%s<！",
-
-	gravitybombicon = "重力彈標記",
-	gravitybombicon_desc = "為中了重力彈的玩家打上藍色方框標記。（需要權限）",
-
-	lightbomb_other = "灼熱之光：>%s<！",
-
-	tantrum_bar = "<躁怒 冷卻>",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	exposed_warning = "Скоро сердце станет уязвимо!",
-	exposed_message = "Сердце уязвимо!",
-
-	gravitybomb_other = "Бомба на |3-5(%s)!",
-
-	gravitybombicon = "Иконка гравитационной бомбы",
-	gravitybombicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока с бомбой (необходимо обладать промоутом).",
-
-	lightbomb_other = "Взрыв на |3-5(%s)!",
-
-	tantrum_bar = "~Раскаты ярости",
-} end )
+	L.tantrum_bar = "~Tantrum Cooldown"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: XT-002")
 
 ------------------------------
 --      Initialization      --

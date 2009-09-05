@@ -38,162 +38,29 @@ local fmt = string.format
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "enUS", true)
+if L then
+	L.engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!"
+	L.engage_trigger2 = "Nothing short of total decimation will suffice."
+	L.engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you are still only mortal."
 
-L:RegisterTranslations("enUS", function() return {
-	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
-	engage_trigger2 = "Nothing short of total decimation will suffice.",
-	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you are still only mortal.",
+	L.overload_message = "Overload in 6sec!"
+	L.death_message = "Rune of Death on YOU!"
+	L.summoning_message = "Elementals Incoming!"
 
-	overload_message = "Overload in 6sec!",
-	death_message = "Rune of Death on YOU!",
-	summoning_message = "Elementals Incoming!",
+	L.chased_other = "%s is being chased!"
+	L.chased_you = "YOU are being chased!"
 
+	L.overwhelm_other = "Overwhelming Power: %s"
 
-	chased_other = "%s is being chased!",
-	chased_you = "YOU are being chased!",
+	L.shield_message = "Rune shield!"
 
-	overwhelm_other = "Overwhelming Power: %s",
+	L.icon = "Raid Target Icon"
+	L.icon_desc = "Place a Raid Target Icon on the player targeted by Lightning Tendrils or Overwhelming Power (requires promoted or higher)."
 
-	shield_message = "Rune shield!",
-
-	icon = "Raid Target Icon",
-	icon_desc = "Place a Raid Target Icon on the player targeted by Lightning Tendrils or Overwhelming Power (requires promoted or higher).",
-
-	council_dies = "%s dead",
-} end )
-
-L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 것 같으냐, 침입자들아!",
-	engage_trigger2 = "남김없이 쓸어버려야 속이 시원하겠군.",
-	engage_trigger3 = "세상에서 가장 큰 모기건 세상에서 가장 위대한 영웅이건, 너흰 어차피 필멸의 존재야.",
-
-	overload_message = "6초 후 과부하!",
-	death_message = "당신은 죽음의 룬!",
-	summoning_message = "소환의 룬 - 곧 정령 등장!",
-
-	chased_other = "%s 추적 중!",
-	chased_you = "당신을 추적 중!",
-
-	overwhelm_other = "압도적인 힘: %s",
-
-	shield_message = "룬의 보호막!",
-
-	icon = "전술 표시",
-	icon_desc = "추적 중인 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
-
-	council_dies = "%s 죽음",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "Vous ne vaincrez pas si facilement l'assemblée du Fer, envahisseurs !",
-	engage_trigger2 = "Seule votre extermination complète me conviendra.",
-	engage_trigger3 = "Que vous soyez les plus grandes punaises ou les plus grands héros de ce monde, vous n'êtes jamais que des mortels.",
-
-	overload_message = "Surcharge dans 6 sec. !",
-	death_message = "Rune de mort sur VOUS !",
-	summoning_message = "Arrivée des élémentaires !",
-
-	chased_other = "%s est poursuivi(e) !",
-	chased_you = "VOUS êtes poursuivi(e) !",
-
-	overwhelm_other = "P. accablante : %s",
-
-	shield_message = "Bouclier des runes !",
-
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Puissance accablante ou ciblé par un Eclair tourbillonnant (nécessite d'être assistant ou mieux).",
-
-	council_dies = "%s éliminé",
-} end )
-
-L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!",
-	engage_trigger2 = "Nur vollständige Dezimierung wird mich zufriedenstellen.",
-	engage_trigger3 = "Selbst wenn Ihr die größten Helden der Welt seid, so seid Ihr doch nichts weiter als Sterbliche.",
-
-	overload_message = "Überladen in 6 sek!",
-	death_message = "Todesrune auf DIR!",
-	summoning_message = "Elementare!",
-
-	chased_other = "%s wird verfolgt!",
-	chased_you = "DU wirst verfolgt!",
-
-	overwhelm_other = "Überwältigende Kraft: %s",
-
-	shield_message = "Runenschild!",
-
-	icon = "Schlachtzugs-Symbol",
-	icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die während der Blitzrankenphase verfolgt werden oder von Überwältigende Kraft betroffen sind (benötigt Assistent oder höher).",
-
-	council_dies = "%s getötet!",
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
---	engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!",
---	engage_trigger2 = "Nothing short of total decimation will suffice!",
---	engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!",
-
-	overload_message = "6秒后，过载！",
-	death_message = ">你< 死亡符文！",
-	summoning_message = "闪电元素即将出现！",
-
-	chased_other = "闪电之藤：>%s<！",
-	chased_you = ">你< 闪电之藤！",
-
-	overwhelm_other = "压倒能量：>%s<！",
-
-	shield_message = "符文之盾！",
-
-	icon = "团队标记",
-	icon_desc = "为中了闪电之藤的队员打上团队标记。（需要权限）",
-
-	council_dies = "%s被击败了！",
-} end )
-
-L:RegisterTranslations("zhTW", function() return {
-	engage_trigger1 = "你們別妄想擊潰鐵之集會，入侵者!",
-	engage_trigger2 = "只有全面屠殺才能滿足我。",
-	engage_trigger3 = "不管你是世界第一流的小卒，或是首屈一指的英雄人物，充其量也不過是個凡人罷了。",
-
-	overload_message = "6秒後，超載！",
-	death_message = ">你< 死亡符文！",
-	summoning_message = "閃電元素即將出現！",
-
-	chased_other = "閃電觸鬚：>%s<！",
-	chased_you = ">你< 閃電觸鬚！",
-
-	overwhelm_other = "極限威能：>%s<！",
-
-	shield_message = "符文護盾！",
-
-	icon = "團隊標記",
-	icon_desc = "為中了閃電觸鬚的隊員打上團隊標記。（需要權限）",
-
-	council_dies = "%s被擊敗了！",
-} end )
-
-L:RegisterTranslations("ruRU", function() return {
-	engage_trigger1 = "Чужаки! Вам не одолеть Железное Собрание!",
-	engage_trigger2 = "Я буду спокоен, лишь когда окончательно истреблю вас.",
-	engage_trigger3 = "Кто бы вы ни были - жалкие бродяги или великие герои... Вы всего лишь смертные!",
-
-	overload_message = "Взрыв через 6сек!",
-	death_message = "На ВАС Руна СМЕРТИ!",
-	summoning_message = "Руна призыва - приход Элементалей!",
-
-	chased_other = "Преследует |3-3(%s)!",
-	chased_you = "ВАС преследуют!",
-
-	overwhelm_other = "Переполняющая энергия на |3-5(%s)",
-
-	shield_message = "Применён Рунический щит!",
-
-	icon = "Помечать иконкой",
-	icon_desc = "Помечать рейдовой иконкой игрока, которого преследует Светящиеся придатки или Переполняющая энергия (необходимо быть лидером группы или рейда).",
-
-	council_dies = "%s умер",
-} end )
+	L.council_dies = "%s dead"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Iron Council")
 
 ------------------------------
 --      Initialization      --
