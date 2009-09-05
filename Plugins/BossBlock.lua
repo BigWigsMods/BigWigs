@@ -37,14 +37,14 @@ do
 	local bossmobs = {}
 
 	function plugin:BossModEnableDisable(message, mod)
-		local t = mod and mod.enabletrigger and type(mod.enabletrigger) or nil
+		local t = mod and mod.bossName and type(mod.bossName) or nil
 		if not t then return end
 		if t == "table" then
-			for i, v in ipairs(mod.enabletrigger) do
+			for i, v in ipairs(mod.bossName) do
 				bossmobs[v] = not bossmobs[v] and true or nil
 			end
 		elseif t == "string" then
-			bossmobs[mod.enabletrigger] = not bossmobs[mod.enabletrigger] and true or nil
+			bossmobs[mod.bossName] = not bossmobs[mod.bossName] and true or nil
 		end
 	end
 
