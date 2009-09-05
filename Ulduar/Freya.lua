@@ -217,19 +217,19 @@ do
 			last = t
 		end
 	end
-	function mod:Deaths(name)
+	function mod:Deaths(event, name)
 		if not sunBeamName or name ~= sunBeamName then return end
 		self:Bar(L["sunbeam_bar"], 35, 62865)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["tree_trigger"] and db.tree then
 		self:IfMessage(L["tree_message"], "Urgent", 5420, "Alarm")
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		phase = 1
 		if db.berserk then

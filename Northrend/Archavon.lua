@@ -101,7 +101,7 @@ function mod:Shards(_, spellId, _, _, spellName)
 	self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, 1)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
 	if self.db.profile.charge and unit == boss then
 		-- 11578, looks like a charge :)
 		self:TargetMessage(L["charge"], player, "Attention", 11578)
