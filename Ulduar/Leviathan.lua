@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Flame Leviathan"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33113
 mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
@@ -105,7 +105,7 @@ L:RegisterTranslations("ruRU", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)

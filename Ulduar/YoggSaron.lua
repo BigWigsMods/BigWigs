@@ -5,10 +5,10 @@
 local sara = BB["Sara"]
 local boss = BB["Yogg-Saron"]
 local brain = BB["Brain of Yogg-Saron"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 --Sara = 33134, Yogg brain = 33890
 mod.guid = 33288 --Yogg
 mod.toggleOptions = {62979, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, 64465, "empowericon", 64163, 64189, "phase", 63050, 63120, "berserk", "bosskill"}
@@ -386,7 +386,7 @@ mod.enabletrigger = {boss, sara, brain, pName}
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Roar", 64189)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Empower", 64465)

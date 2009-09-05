@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Koralon the Flame Watcher"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Vault of Archavon"]
+mod.zoneName = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fists", 66725, 66808)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Cinder", 67332, 66684)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

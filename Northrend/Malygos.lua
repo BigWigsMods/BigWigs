@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Malygos"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["The Eye of Eternity"]
+mod.zoneName = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
@@ -278,7 +278,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Static", 57429)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Spark", 56152)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Vortex", 56105)

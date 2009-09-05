@@ -3,10 +3,10 @@
 ----------------------------------
 
 local boss = BB["General Vezax"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.guid = 33271
 mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}
 mod.consoleCmd = "Vezax"
@@ -306,7 +306,7 @@ mod.optionHeaders = {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	db = self.db.profile
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)

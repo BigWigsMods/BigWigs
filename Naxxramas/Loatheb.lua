@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Loatheb"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16011
 mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
@@ -163,7 +163,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Aura", 55593)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Deathbloom", 29865, 55053)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Doom", 29204, 55052)

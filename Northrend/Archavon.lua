@@ -2,12 +2,11 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = BB["Archavon the Stone Watcher"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Vault of Archavon"]
+mod.zoneName = "Vault of Archavon"
 mod.otherMenu = "Northrend"
-mod.enabletrigger = boss
+--mod.enabletrigger = "Archavon the Stone Watcher"
 mod.guid = 31125
 mod.toggleOptions = {58663, "charge", 58678, 58965, -1, "icon", "berserk", "bosskill"}
 mod.consoleCmd = "Archavon"
@@ -23,7 +22,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs: Archavon")
 
 L:RegisterTranslations("enUS", function() return {
 	stomp_message = "Stomp - Charge Inc!",
@@ -127,7 +126,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Stomp", 58663, 60880)
 	self:AddCombatListener("SPELL_CAST_START", "Shards", 58678)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 58965, 61672)

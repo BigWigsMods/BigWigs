@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Grand Widow Faerlina"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15953
 mod.toggleOptions = {28732, 28794, "enrage", "bosskill"}
@@ -163,7 +163,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Rain", 28794, 54099)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 28798, 54100) --Norm/Heroic

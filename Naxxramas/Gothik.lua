@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Gothik the Harvester"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = { boss }
 mod.guid = 16060
 mod.toggleOptions = { "room", -1, "add", "adddeath", "bosskill" }
@@ -351,7 +351,7 @@ local wave = 0
 local timeTrainer, timeDK, timeRider = 27, 77, 137
 local numTrainer, numDK, numRider = nil, nil, nil
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	wave = 0
 	timeTrainer = 27
 	timeDK = 77

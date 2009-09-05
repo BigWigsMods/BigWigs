@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Patchwerk"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16028
 mod.toggleOptions = {"enrage", "berserk", "bosskill"}
@@ -62,7 +62,7 @@ L:RegisterTranslations("ruRU", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 28131)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 

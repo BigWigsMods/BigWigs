@@ -3,10 +3,10 @@
 ----------------------------------
 
 local boss = BB["XT-002 Deconstructor"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33293
 mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
@@ -144,7 +144,7 @@ L:RegisterTranslations("ruRU", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exposed", 63849)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Heartbreak", 64193, 65737)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "GravityBomb", 63024, 64234)

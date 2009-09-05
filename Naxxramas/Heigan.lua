@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Heigan the Unclean"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15936
 mod.toggleOptions = {"engage", "teleport", "bosskill"}
@@ -195,7 +195,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Grobbulus"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15931
 mod.toggleOptions = {28169, "icon", 28240, "berserk", "bosskill"}
@@ -83,7 +83,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Inject", 28169)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Cloud", 28240)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

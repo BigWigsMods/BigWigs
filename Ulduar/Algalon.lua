@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Algalon the Observer"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32871
 mod.toggleOptions = {"phase", 64412, 62301, 64122, 64443, "berserk", "bosskill"}
@@ -128,7 +128,7 @@ L:RegisterTranslations("ruRU", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)

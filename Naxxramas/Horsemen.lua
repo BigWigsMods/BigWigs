@@ -8,9 +8,9 @@ local zeliek = BB["Sir Zeliek"]
 local blaumeux = BB["Lady Blaumeux"]
 local boss = BB["The Four Horsemen"]
 
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
 mod.guid = 16065
 mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
@@ -117,7 +117,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
 	self:AddCombatListener("SPELL_CAST_START", "Meteor", 28884, 57467)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)

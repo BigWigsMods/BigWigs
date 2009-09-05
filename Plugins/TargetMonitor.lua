@@ -69,7 +69,7 @@ end
 function plugin:BigWigs_ModuleRegistered(m)
 	local mod = BigWigs:GetModule(m)
 	if mod and mod.enabletrigger then
-		self:RegisterZone(mod.zonename)
+		self:RegisterZone(mod.zoneName)
 		self:RegisterMob(mod)
 	end
 end

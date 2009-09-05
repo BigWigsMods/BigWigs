@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Hodir"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 32845
 mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "berserk", "icon", "bosskill"}
@@ -165,7 +165,7 @@ L:RegisterTranslations("ruRU", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)

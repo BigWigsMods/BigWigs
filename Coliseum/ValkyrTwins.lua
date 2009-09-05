@@ -5,9 +5,9 @@
 local boss = BB["The Twin Val'kyr"]
 local eydis = BB["Eydis Darkbane"]
 local fjola = BB["Fjola Lightbane"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Trial of the Crusader"]
+mod.zoneName = BZ["Trial of the Crusader"]
 mod.enabletrigger = { eydis, fjola }
 mod.guid = 34496
 --34496 Darkbane
@@ -131,7 +131,7 @@ L:RegisterTranslations("ruRU", function() return {
 -- Initialization
 --
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
 	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
@@ -183,8 +183,11 @@ function mod:LightVortex(_, spellId, _, _, spellName)
 	if db.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceDark)
-		if not d then return end
-		self:IfMessage(spellName, "Personal", spellId, "Alarm")
+		if d then
+			self:IfMessage(spellName, "Positive", spellId)
+		else
+			self:IfMessage(spellName, "Personal", spellId, "Alarm")
+		end
 	end
 end
 
@@ -192,8 +195,11 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 	if db.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceLight)
-		if not d then return end
-		self:IfMessage(spellName, "Personal", spellId, "Alarm")
+		if d then
+			self:IfMessage(spellName, "Positive", spellId)
+		else
+			self:IfMessage(spellName, "Personal", spellId, "Alarm")
+		end
 	end
 end
 

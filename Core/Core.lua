@@ -108,13 +108,13 @@ local acOptions = {
 			name = L["Minimap icon"],
 			desc = L["Toggle show/hide of the minimap icon."],
 			order = 41,
-			get = function() return not BigWigsDB.minimap.hide end,
+			get = function() return not BigWigs.db.profile.minimap.hide end,
 			set = function(info, v)
 				if v then
-					BigWigsDB.minimap.hide = nil
+					BigWigs.db.profile.minimap.hide = nil
 					icon:Show("BigWigs")
 				else
-					BigWigsDB.minimap.hide = true
+					BigWigs.db.profile.minimap.hide = true
 					icon:Hide("BigWigs")
 				end
 			end,
@@ -398,7 +398,7 @@ do
 					opts[n] = true
 				end
 			end
-			module.db = self.db:RegisterNamespace(name, opts)
+			module.db = self.db:RegisterNamespace(name, { profile = opts })
 			for i in ipairs(opts) do opts[i] = nil end
 		elseif type(module.defaultDB) == "table" then
 			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )

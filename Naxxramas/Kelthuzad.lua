@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Kel'Thuzad"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15990
 mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
@@ -307,11 +307,11 @@ function mod:OnRegister()
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 end
 
-function mod:OnDisable()
+function mod:OnBossDisable()
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 end
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fizzure", 27810)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrostBlast", 27808)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonate", 27819)

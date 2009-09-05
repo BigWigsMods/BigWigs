@@ -2,9 +2,9 @@
 -- Module Declaration
 --
 local boss = BB["Faction Champions"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Trial of the Crusader"]
+mod.zoneName = BZ["Trial of the Crusader"]
 mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 mod.consoleCmd = "Champions"
 
@@ -97,7 +97,7 @@ mod.enabletrigger = function() return L["enable_trigger"] end
 -- Initialization
 --
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Blind", 65960)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Polymorph", 65801)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Wyvern", 65877)

@@ -6,6 +6,7 @@
 <Script file="Version.lua"/>
 <Script file="Test.lua"/>
 <Script file="Flash.lua"/>
+<!--Script file="Tips.lua"/-->
 
 </Ui>
 

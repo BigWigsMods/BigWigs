@@ -3,7 +3,7 @@
 --
 
 local boss = BB["The Beasts of Northrend"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
@@ -13,7 +13,7 @@ local acidmaw = BB["Acidmaw"]
 local dreadscale = BB["Dreadscale"]
 local jormungars = BB["Jormungars"]
 
-mod.zonename = BZ["Trial of the Crusader"]
+mod.zoneName = BZ["Trial of the Crusader"]
 mod.enabletrigger = {gormok, icehowl, acidmaw, dreadscale}
 --mod.guid = 34796 -- Gormok
 --mod.guid = 34799--Dreadscale, 35144 = Acidmaw
@@ -237,7 +237,7 @@ L:RegisterTranslations("ruRU", function() return {
 -- Initialization
 --
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	-- Gormok
 	self:AddCombatListener("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)

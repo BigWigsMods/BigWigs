@@ -4,9 +4,9 @@
 
 local boss = BB["Razorscale"]
 local commander = BB["Expedition Commander"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 -- mod.enabletrigger set below the localizations
 mod.guid = 33186
 mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
@@ -233,7 +233,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 mod.enabletrigger = {commander, boss, L["Razorscale Controller"]}
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 

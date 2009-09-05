@@ -5,9 +5,9 @@
 local boss = BB["Instructor Razuvious"]
 local understudy = BB["Death Knight Understudy"]
 
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.wipemobs = understudy
 mod.guid = 16061
@@ -85,7 +85,7 @@ L:RegisterTranslations("ruRU", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shout", 29107, 55543)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Taunt", 29060)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)

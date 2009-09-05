@@ -4,9 +4,9 @@
 
 local boss = BB["Sartharion"]
 local shadron, tenebron, vesperon = BB["Shadron"], BB["Tenebron"], BB["Vesperon"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["The Obsidian Sanctum"]
+mod.zoneName = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = {boss, shadron, tenebron, vesperon}
 mod.guid = 28860
@@ -206,7 +206,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
 	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

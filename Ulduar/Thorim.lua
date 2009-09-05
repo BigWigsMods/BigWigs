@@ -3,11 +3,11 @@
 ----------------------------------
 
 local boss = BB["Thorim"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 local behemoth = BB["Jormungar Behemoth"]
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.guid = 32865	--Sif(33196)
 mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
 mod.optionHeaders = {
@@ -249,7 +249,7 @@ mod.enabletrigger = {behemoth, boss, L["Runic Colossus"]}
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Hammer", 62042)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Charge", 62279)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "StrikeCooldown", 62130)

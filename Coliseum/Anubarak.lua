@@ -2,9 +2,9 @@
 -- Module Declaration
 --
 local boss = BB["Anub'arak"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Trial of the Crusader"]
+mod.zoneName = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34564
 mod.toggleOptions = {66118, 67574, "icon", "burrow", "berserk", "bosskill"}
@@ -138,7 +138,7 @@ L:RegisterTranslations("ruRU", function() return {
 -- Initialization
 --
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Swarm", 66118)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Pursue", 67574)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

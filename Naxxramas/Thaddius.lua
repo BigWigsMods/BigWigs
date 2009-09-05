@@ -6,9 +6,9 @@ local boss = BB["Thaddius"]
 local feugen = BB["Feugen"]
 local stalagg = BB["Stalagg"]
 
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = {boss, feugen, stalagg}
 mod.guid = 15928
 mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
@@ -256,7 +256,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

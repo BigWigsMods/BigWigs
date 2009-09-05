@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Noth the Plaguebringer"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15954
 mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
@@ -276,7 +276,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 

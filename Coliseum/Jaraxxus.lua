@@ -3,9 +3,9 @@
 --
 
 local boss = BB["Lord Jaraxxus"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Trial of the Crusader"]
+mod.zoneName = BZ["Trial of the Crusader"]
 mod.enabletrigger = boss
 mod.guid = 34780
 mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
@@ -155,7 +155,7 @@ L:RegisterTranslations("ruRU", function() return {
 -- Initialization
 --
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051, 66237)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125, 66197)

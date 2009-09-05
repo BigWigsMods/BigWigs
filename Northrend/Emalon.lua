@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Emalon the Storm Watcher"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Vault of Archavon"]
+mod.zoneName = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 33993
@@ -111,7 +111,7 @@ L:RegisterTranslations("zhTW", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216, 65279)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218)
 	self:AddCombatListener("SPELL_HEAL", "OverchargeIcon", 64218)

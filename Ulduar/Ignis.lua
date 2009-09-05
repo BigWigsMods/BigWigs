@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Ignis the Furnace Master"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Ulduar"]
+mod.zoneName = BZ["Ulduar"]
 mod.enabletrigger = boss
 mod.guid = 33118
 mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
@@ -121,7 +121,7 @@ L:RegisterTranslations("zhTW", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Construct", 62488)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ScorchCast", 62546, 63474)
 	self:AddCombatListener("SPELL_CAST_START", "Jets", 62680, 63472)

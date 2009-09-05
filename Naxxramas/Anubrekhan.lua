@@ -3,9 +3,9 @@
 ----------------------------------
 
 local boss = BB["Anub'Rekhan"]
-local mod = BigWigs:New(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.zonename = BZ["Naxxramas"]
+mod.zoneName = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15956
 mod.toggleOptions = {28785, "bosskill"}
@@ -124,7 +124,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Initialization      --
 ------------------------------
 
-function mod:OnEnable()
+function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "GainSwarm", 28785, 54021)
 	self:AddCombatListener("SPELL_CAST_START", "Swarm", 28785, 54021)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
