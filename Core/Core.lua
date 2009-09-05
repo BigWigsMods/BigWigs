@@ -542,10 +542,8 @@ function addon:EnableBossModule(moduleName, noSync)
 end
 
 function addon:BigWigs_RebootModule(message, module)
-	local mod = self:GetBossModule(module, true)
-	if not mod then return end
-	mod:Disable()
-	mod:Enable()
+	module:Disable()
+	module:Enable()
 end
 
 function addon:BigWigs_RecvSync(message, sync, module, sender)
