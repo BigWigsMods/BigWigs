@@ -9,7 +9,7 @@ mod.bossName = boss
 mod.zoneName = "Ulduar"
 mod.enabletrigger = 32845
 mod.guid = 32845
-mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "berserk", "icon", "bosskill"}
+mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -112,7 +112,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["hardmode"], 180, 6673)
 		end
 		if db.berserk then
-			self:Enrage(480, true)
+			self:Berserk(480)
 		end
 	elseif msg == L["end_trigger"] then
 		self:BossDeath(nil, self.guid)

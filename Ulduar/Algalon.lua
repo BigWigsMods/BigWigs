@@ -120,7 +120,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:Bar(sn, 33, 64597)
 		end
 		if db.berserk then
-			self:Enrage(360, true, true)
+			self:Berserk(360)
 		end
 	end
 end

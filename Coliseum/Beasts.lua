@@ -19,12 +19,12 @@ mod.enabletrigger = {
 	34797, -- Icehowl
 }
 mod.guid = 34797 -- Icehowl
-mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "bosskill"}
+mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "berserk", "bosskill"}
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	[67641] = "Jormungars",
 	[67654] = "Icehowl",
-	bosskill = CL.general,
+	berserk = CL.general,
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
@@ -142,7 +142,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		if difficulty > 2 then
 			self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
 		elseif db.berserk then
-			self:Enrage(900, true, true)
+			self:Berserk(900)
 		end
 	elseif msg == L["jormungars_trigger"] then
 		local m = L["boss_incoming"]:format(jormungars)
@@ -155,8 +155,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		local m = L["boss_incoming"]:format(icehowl)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
-		if difficulty > 2 then
-			self:Bar(CL.berserk, 190)
+		if difficulty > 2 and db.berserk then
+			self:Berserk(190, true)
 		end
 	end
 end

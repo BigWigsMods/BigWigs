@@ -30,8 +30,8 @@ if L then
 	L.webspraywarn10sec = "Spiders! Spray in 10 sec!"
 	L.webspraywarn5sec = "WEB SPRAY in 5 seconds!"
 	L.webspraywarn = "Web Spray! 40 sec until next!"
-	L.enragewarn = "Enrage - SQUISH SQUISH SQUISH!"
-	L.enragesoonwarn = "Enrage Soon - Bugsquatters out!"
+	L.enragewarn = "Frenzy - SQUISH SQUISH SQUISH!"
+	L.enragesoonwarn = "Frenzy Soon - Bugsquatters out!"
 
 	L.webspraybar = "Web Spray"
 	L.cocoonbar = "Cocoons"
@@ -46,7 +46,7 @@ mod.locale = L
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cocoon", 28622)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 54123, 54124) --Norm/Heroic
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 54123, 54124) --Norm/Heroic
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spray", 29484, 54125)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -93,7 +93,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	end
 end
 
-function mod:Enrage(_, spellId)
+function mod:Frenzy(_, spellId)
 	self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
 end
 

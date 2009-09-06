@@ -114,7 +114,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 			self:DelayedMessage(32, L["fear_warning"], "Attention")
 		end
 		if db.berserk then
-			self:Enrage(600, true)
+			self:Berserk(600)
 		end
 	end
 end

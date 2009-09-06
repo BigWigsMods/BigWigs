@@ -12,7 +12,7 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = { 33350, 33432, 33651, 33670 }
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
-mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "hardmode", "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[62997] = CL.normal,
 	[64623] = CL.hard,
@@ -46,11 +46,7 @@ if L then
 	L.phase4_trigger = "^Preliminary testing phase complete"
 	L.phase_bar = "Phase %d"
 
-	L.hardmode = "Hard mode timer"
-	L.hardmode_desc = "Show timer for hard mode."
 	L.hardmode_trigger = "^Now, why would you go and do something like that?"
-	L.hardmode_message = "Hard mode activated!"
-	L.hardmode_warning = "BOOM!"
 
 	L.plasma_warning = "Casting Plasma Blast!"
 	L.plasma_soon = "Plasma soon!"
@@ -175,16 +171,14 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
-		if db.hardmode then
-			self:Bar(L["hardmode"], 600, 64582)
-			self:IfMessage(L["hardmode_message"], "Attention", 64582)
-			self:DelayedMessage(600, L["hardmode_warning"], "Important")
+		if db.berserk then
+			self:Berserk(600)
 		end
 		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		if db.berserk then
-			self:Enrage(900, true, true)
+			self:Berserk(900)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2

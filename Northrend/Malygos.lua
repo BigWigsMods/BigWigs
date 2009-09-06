@@ -188,7 +188,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 20, L["sparks_warning"], "Attention")
 		end
 		if db.berserk then
-			self:Enrage(600, true)
+			self:Berserk(600)
 		end
 	end
 end

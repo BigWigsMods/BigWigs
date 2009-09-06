@@ -133,7 +133,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:DelayedMessage(25, L["tsunami_warning"], "Attention")
 		end
 		if db.berserk then
-			self:Enrage(900, true)
+			self:Berserk(900)
 		end
 	end
 end

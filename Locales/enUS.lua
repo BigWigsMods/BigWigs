@@ -23,10 +23,8 @@ L["You shouldn't really need to touch these options, but if you want to tweak th
 L["Toggles whether or not the boss module should warn about %s."] = true
 L.bosskill = "Boss death"
 L.bosskill_desc = "Announce when the boss has been defeated."
-L.enrage = "Enrage"
-L.enrage_desc = "Warn when the boss enters an enraged state."
 L.berserk = "Berserk"
-L.berserk_desc = "Warn when the boss goes Berserk."
+L.berserk_desc = "Show a timer bar for and timed warnings for when the boss will go berserk."
 
 L["Load"] = true
 L["Load All"] = true

@@ -151,7 +151,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if not started then
 			if db.berserk then
-				self:Enrage(900, true)
+				self:Berserk(900)
 			end
 			started = true
 			phase = 1

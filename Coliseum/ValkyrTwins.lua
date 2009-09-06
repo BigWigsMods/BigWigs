@@ -132,7 +132,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, sender)
 			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		end
 		if db.berserk then
-			self:Enrage(540, true)
+			self:Berserk(540)
 		end
 	end
 end

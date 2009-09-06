@@ -79,7 +79,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.berserk then
-			self:Enrage(enrageTime, true, true)
+			self:Berserk(enrageTime)
 		end
 	end
 end

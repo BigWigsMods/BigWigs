@@ -70,7 +70,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		started = true
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self.db.profile.berserk then
-			self:Enrage(540, true)
+			self:Berserk(540)
 		end
 	end
 end

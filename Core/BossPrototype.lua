@@ -398,44 +398,28 @@ function boss:Throttle(seconds, ...)
 	self:SendMessage("BigWigs_ThrottleSync", seconds, ...)
 end
 
-do
-	local berserk = {
-		start = L["berserk_start"],
-		min = L["berserk_min"],
-		sec = L["berserk_sec"],
-		stop = L["berserk_end"],
-		bar = GetSpellInfo(43),
-		icon = 20484,
-	}
-	local enrage = {
-		start = L["enrage_start"],
-		min = L["enrage_min"],
-		sec = L["enrage_sec"],
-		stop = L["enrage_end"],
-		bar = GetSpellInfo(12880),
-		icon = 12880,
-	}
-	function boss:Enrage(seconds, isBerserk, noEngageMessage)
-		local w = isBerserk and berserk or enrage
-		local boss = self.displayName
-
-		if not noEngageMessage then
-			-- Engage warning with minutes to enrage
-			self:Message(fmt(w.start, boss, seconds / 60), "Attention")
-		end
-
-		-- Half-way to enrage warning.
-		local half = seconds / 2
-		local m = half % 60
-		local halfMin = (half - m) / 60
-		self:DelayedMessage(half + m, fmt(w.min, halfMin), "Positive")
-
-		self:DelayedMessage(seconds - 60, fmt(w.min, 1), "Positive")
-		self:DelayedMessage(seconds - 30, fmt(w.sec, 30), "Positive")
-		self:DelayedMessage(seconds - 10, fmt(w.sec, 10), "Urgent")
-		self:DelayedMessage(seconds - 5, fmt(w.sec, 5), "Urgent")
-		self:DelayedMessage(seconds, fmt(w.stop, boss), "Attention", nil, "Alarm")
-		self:Bar(w.bar, seconds, w.icon)
+function boss:Berserk(seconds, noEngageMessage)
+	local boss = self.displayName
+	if not noEngageMessage then
+		-- Engage warning with minutes to enrage
+		self:Message(fmt(L["berserk_start"], boss, seconds / 60), "Attention")
 	end
+
+	-- Half-way to enrage warning.
+	local half = seconds / 2
+	local m = half % 60
+	local halfMin = (half - m) / 60
+	self:DelayedMessage(half + m, fmt(L["berserk_min"], halfMin), "Positive")
+
+	self:DelayedMessage(seconds - 60, L["berserk_min"]:format(1), "Positive")
+	self:DelayedMessage(seconds - 30, L["berserk_sec"]:format(30), "Urgent")
+	self:DelayedMessage(seconds - 10, L["berserk_sec"]:format(10), "Urgent")
+	self:DelayedMessage(seconds - 5, L["berserk_sec"]:format(5), "Important")
+	self:DelayedMessage(seconds, L["berserk_end"]:format(boss), "Important", nil, "Alarm")
+
+	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
+	-- Brutallus is da bomb.
+	local berserk, _, icon = GetSpellInfo(26662)
+	self:Bar(berserk, seconds, icon)
 end
 

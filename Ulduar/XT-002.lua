@@ -154,7 +154,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		exposed2 = nil
 		exposed3 = nil
 		if db.berserk then
-			self:Enrage(600, true)
+			self:Berserk(600)
 		end
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 	end

@@ -232,7 +232,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		phase = 1
 		if db.berserk then
-			self:Enrage(600, true)
+			self:Berserk(600)
 		end
 		if db.wave then
 			--35594, looks like a wave :)

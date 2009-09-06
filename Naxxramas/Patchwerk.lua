@@ -9,7 +9,7 @@ mod.bossName = "Patchwerk"
 mod.zoneName = "Naxxramas"
 mod.enabletrigger = 16028
 mod.guid = 16028
-mod.toggleOptions = {"enrage", "berserk", "bosskill"}
+mod.toggleOptions = {28131, "berserk", "bosskill"}
 
 ----------------------------
 --      Localization      --
@@ -17,7 +17,7 @@ mod.toggleOptions = {"enrage", "berserk", "bosskill"}
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Patchwerk", "enUS", true)
 if L then
-	L.enragewarn = "5% - Enrage!"
+	L.enragewarn = "5% - Frezied!"
 	L.starttrigger1 = "Patchwerk want to play!"
 	L.starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!"
 end
@@ -29,7 +29,7 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 28131)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 28131)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -40,15 +40,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Enraged(_, spellId)
-	if self.db.profile.enrage then
-		self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
-	end
+function mod:Frenzy(_, spellId)
+	self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if self.db.profile.berserk and (msg == L["starttrigger1"] or msg == L["starttrigger2"]) then
-		self:Enrage(360, true)
+		self:Berserk(360)
 	end
 end
 

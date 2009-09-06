@@ -115,7 +115,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 			self:Bar(L["overcharge_next"], 45, 64218)
 		end
 		if self.db.profile.berserk then
-			self:Enrage(360, true)
+			self:Berserk(360)
 		end
 	end
 end

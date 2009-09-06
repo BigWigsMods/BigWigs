@@ -167,7 +167,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:Message(L["phase2_message"], "Important")
 		end
 		if self.db.profile.berserk then
-			self:Enrage(360, true, true)
+			self:Berserk(360, true)
 		end
 	end
 end

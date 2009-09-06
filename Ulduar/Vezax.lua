@@ -191,7 +191,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		vaporCount = 1
 		surgeCount = 1
 		if db.berserk then
-			self:Enrage(600, true, true)
+			self:Berserk(600)
 		end
 		if db.surge then
 			self:Bar(L["surge_bar"]:format(surgeCount), 60, 62662)

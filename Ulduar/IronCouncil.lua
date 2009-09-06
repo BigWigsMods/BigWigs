@@ -218,7 +218,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		deaths = 0
 		overwhelmTime = GetRaidDifficulty() == 1 and 60 or 35
 		if db.berserk then
-			self:Enrage(900, true)
+			self:Berserk(900)
 		end
 	end
 end
