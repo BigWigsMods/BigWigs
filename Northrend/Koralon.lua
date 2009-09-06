@@ -16,7 +16,19 @@ mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
 --      Are you local?      --
 ------------------------------
 
+local pName = UnitName("player")
 local started = nil
+
+------------------------------
+--      English Locale      --
+------------------------------
+
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "enUS", true)
+if L then
+	L.cinder_message = "Flame on YOU!"
+end
+L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Koralon the Flame Watcher")
+mod.locale = L
 
 ------------------------------
 --      Initialization      --
@@ -24,7 +36,7 @@ local started = nil
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fists", 66725, 66808)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Cinder", 67332, 66684)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Cinder", 67332, 66684)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -43,9 +55,9 @@ function mod:Fists(_, spellId, _, _, spellName)
 	self:Bar(spellName, 15, spellId)
 end
 
-function mod:Cinder(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(spellName, 20, spellId)
+function mod:Cinder(player, spellId)
+	if player ~= pName then return end
+	self:LocalMessage(L["cinder_message"], "Personal", spellId, "Alarm")
 end
 
 function mod:BigWigs_RecvSync(event, sync, rest, nick)
