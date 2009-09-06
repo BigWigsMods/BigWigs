@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Extras", "deDE")
+﻿local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Extras", "deDE")
 
 if not L then return end
 
@@ -47,8 +47,8 @@ L["Background"] = "Hintergrund"
 L["Shows or hides the background."] = "Zeigt oder versteckt den Hintergrund der Anzeige."
 L["Toggle sound"] = "Sound an/aus"
 L["Toggle whether or not the proximity window should beep when you're too close to another player."] = "Schaltet den Sound ein oder aus, der gespielt wird, wenn du zu nahe an einem anderen Spieler stehst."
---L["Sound button"] = true
---L["Shows or hides the sound button."] = true
---L["Close button"] = true
---L["Shows or hides the close button."] = true
---L["Show/hide"] = true
+L["Sound button"] = "Soundtaste"
+L["Shows or hides the sound button."] = "Zeigt oder Versteckt die Soundtaste."
+L["Close button"] = "Schließentaste"
+L["Shows or hides the close button."] = "Zeigt oder Versteckt die Schließentaste."
+L["Show/hide"] = "Zeige/Verstecke"
