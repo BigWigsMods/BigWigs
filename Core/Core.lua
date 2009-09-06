@@ -593,29 +593,24 @@ function addon:EnableBossModule(moduleName, noSync)
 end
 
 function addon:BigWigs_RebootModule(message, module)
-	if type(module) == "string" then
-		module = self:GetBossModule(module, true)
-	end
 	if not module then return end
 	module:Disable()
 	module:Enable()
 end
 
-function addon:BigWigs_RecvSync(message, sync, module, sender)
-	if not module then return end
+function addon:BigWigs_RecvSync(message, sync, moduleName, sender)
+	if not moduleName then return end
 	if sync == "EnableModule" or sync == "EnableExternal" then
 		if sender == pName then return end
-		if self:GetBossModule(module, true) then
-			self:EnableBossModule(module, true)
-		end
+		self:EnableBossModule(moduleName, true)
 	elseif (sync == "Death" or sync == "MultiDeath") then
-		local mod = self:GetBossModule(module, true)
+		local mod = self:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			if mod.db.profile.bosskill then
 				if sync == "Death" then
-					mod:Message(L["%s has been defeated"]:format(module), "Bosskill", nil, "Victory")
+					mod:Message(L["%s has been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
 				else
-					mod:Message(L["%s have been defeated"]:format(module), "Bosskill", nil, "Victory")
+					mod:Message(L["%s have been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
 				end
 			end
 			mod:PrimaryIcon(false)
@@ -625,10 +620,10 @@ function addon:BigWigs_RecvSync(message, sync, module, sender)
 	end
 end
 
-function addon:BigWigs_TargetSeen(message, mobname, mobguid, unit, moduleName, m)
-	if not m or m:IsEnabled() then return end
-	if not m.VerifyEnable or m:VerifyEnable(unit) then
-		self:EnableBossModule(moduleName)
+function addon:BigWigs_TargetSeen(message, module)
+	if not module or module:IsEnabled() then return end
+	if not module.VerifyEnable or module:VerifyEnable(unit) then
+		self:EnableBossModule(module:GetName())
 	end
 end
 
