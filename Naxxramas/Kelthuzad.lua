@@ -149,7 +149,7 @@ do
 	end
 end
 
-function mod:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(event, msg)
 	if not self.db.profile.phase then return end
 
 	if UnitName(msg) == mod.bossName then
@@ -163,7 +163,7 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:Message(L["start_warning"], "Attention")
 		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")

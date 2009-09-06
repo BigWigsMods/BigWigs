@@ -101,7 +101,7 @@ function mod:Frozen(_, spellId, _, _, spellName)
 	self:Bar(spellName, 20, spellId)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
 		lastCold = nil
 		if self:GetOption(61968) then
@@ -119,7 +119,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:UNIT_AURA(unit)
+function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", cold)
 	if stack and stack ~= lastCold then

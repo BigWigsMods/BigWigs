@@ -98,7 +98,7 @@ function mod:Mark()
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest)
+function mod:BigWigs_RecvSync(event, sync, rest)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		marks = 1
 		deaths = 0

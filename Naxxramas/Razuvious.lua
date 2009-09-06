@@ -78,7 +78,7 @@ function mod:Knife(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Important", spellId)
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
