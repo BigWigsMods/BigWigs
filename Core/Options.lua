@@ -1,4 +1,4 @@
-﻿-- Very empty atm
+-- Very empty atm
 
 BigWigsOptions = {}
 
