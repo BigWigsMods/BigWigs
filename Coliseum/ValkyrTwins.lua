@@ -105,7 +105,7 @@ end
 function mod:LightVortex(_, spellId, _, _, spellName)
 	if db.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		local d = UnitDebuff("player", essenceDark)
+		local d = UnitDebuff("player", essenceLight)
 		if d then
 			self:IfMessage(spellName, "Positive", spellId)
 		else
@@ -117,7 +117,7 @@ end
 function mod:DarkVortex(_, spellId, _, _, spellName)
 	if db.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		local d = UnitDebuff("player", essenceLight)
+		local d = UnitDebuff("player", essenceDark)
 		if d then
 			self:IfMessage(spellName, "Positive", spellId)
 		else
