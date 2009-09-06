@@ -68,7 +68,7 @@ end
 --
 
 function mod:ColdDebuff(player, spellId, _, _, spellName)
-	if player ~= pName and not phase2 then return end
+	if player ~= pName or not phase2 then return end
 	self:LocalMessage(spellName, "Personal", spellId, "Alarm")
 end
 
