@@ -172,19 +172,19 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		start()
 		ishardmode = true
 		if db.berserk then
-			self:Berserk(600)
+			self:Berserk(600, true)
 		end
 		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		if db.berserk then
-			self:Berserk(900)
+			self:Berserk(900, true)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelScheduledEvent("plasmaWarning")
-		self:SendMessage("BigWigs_StopBar", L["plasma_bar"])
-		self:SendMessage("BigWigs_StopBar", L["shock_next"])
+		self:SendMessage("BigWigs_StopBar", self, L["plasma_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["shock_next"])
 		if db.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")

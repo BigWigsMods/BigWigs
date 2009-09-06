@@ -392,7 +392,7 @@ function boss:Berserk(seconds, noEngageMessage)
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.
-	local berserk, _, icon = GetSpellInfo(26662)
-	self:Bar(berserk, seconds, icon)
+	local berserk = GetSpellInfo(26662)
+	self:Bar(berserk, seconds, 26662)
 end
 
