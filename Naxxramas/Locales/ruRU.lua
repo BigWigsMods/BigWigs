@@ -22,6 +22,7 @@ if L then
 	L.starttrigger4 = "Бегите пока еще можете!"
 
 	L.startwarn = "Великая вдова Фарлина вступает в бой 60 секунд до бешенства!"
+	
 	L.enragewarn15sec = "15 секунд до Бешенства!"
 	L.enragewarn = "Бешенство!"
 	L.enragewarn2 = "Скоро бешенство!"
@@ -91,8 +92,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "ruRU")
 if L then
-	L.bomb_message = "Injection"
-	L.bomb_message_other = "|3-2(%s) сделали укол! Бегите от него!"
+	L.bomb_message = "Укол"
+	L.bomb_message_other = "|3-2(%s) сделали укол!"
 
 	L.icon = "Помечать иконкой"
 	L.icon_desc = "Помечать рейдовой иконкой игрока которому был сделан укол (необходимо быть лидером группы или рейда)."
@@ -179,7 +180,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "ruRU")
 if L then
-	L.startwarn = "Лотхиб вступает в бой 2 минуты до неотвратимого рока!"
+	L.startwarn = "Лотхиб вступает в бой, 2 минуты до неотвратимого рока!"
 
 	L.aura_message = "Мертвенная аура - продолжительность 17 сек!"
 	L.aura_warning = "Мертвенная аура спадает через 3 сек!"

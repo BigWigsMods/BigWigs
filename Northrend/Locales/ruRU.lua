@@ -66,6 +66,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "ruRU")
 if L then
+	--L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
+
 	L.tsunami = "Огненное цунами"
 	L.tsunami_desc = "Предупреждать о взбалтывании лавы и отображать полосу."
 	L.tsunami_warning = "Огненное цунами через ~5сек!"

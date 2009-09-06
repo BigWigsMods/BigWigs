@@ -20,7 +20,7 @@ if L then
 	L.fear_message = "Применение страха!"
 	L.fear_bar = "~страх"
 
-	L.swarm_message = "Swarm"
+	L.swarm_message = "Cтража"
 	L.swarm_bar = "~стража"
 
 	L.defender = "Дикий защитник"
@@ -36,12 +36,11 @@ if L then
 	L.engage_trigger2 = "Древни, дайте мне силы!"
 
 	L.phase = "Фазы"
-	L.phase_desc = "Предупреждать о смене фаз."
+	L.phase_desc = "Сообщать о смене фаз."
 	L.phase2_message = "2ая фаза!"
 
 	L.wave = "Волны"
-
-	L.wave_desc = "Предупреждать о волнах."
+	L.wave_desc = "Сообщать о волнах."
 	L.wave_bar = "Следующая волна"
 	L.conservator_trigger = "Эонар, твоей прислужнице нужна помощь!"
 	L.detonate_trigger = "Вас захлестнет сила стихий!"
@@ -50,14 +49,19 @@ if L then
 	L.conservator_message = "Древний опекун!"
 	L.detonate_message = "Взрывные плеточники!"
 	L.elementals_message = "Элементали!"
+	
+	L.tree = "Дар Эонара"
+	L.tree_desc = "Сообщать когда Фрейа призывает Дар Эонара."
 	L.tree_message = "Появление Дара Эонара!"
 
-	L.fury_message = "Fury"
+	L.fury_message = "Гнев"
 	L.fury_other = "Гнев на: |3-5(%s)"
 
 	L.tremor_warning = "Скоро Дрожание земли!"
 	L.tremor_bar = "~Дрожание земли"
 	L.energy_message = "Нестабильная энергия на ВАС!"
+	L.sunbeam_message = "Луч солнца!"
+	L.sunbeam_bar = "~следующий Луч солнца"
 
 	L.icon = "Помечать иконкой"
 	L.icon_desc = "Помечать рейдовой иконкой игрока, на которого нацелен Луч солнца. (необходимо быть лидером группы или рейда)"
@@ -176,11 +180,7 @@ if L then
 	L.phase4_trigger = "^Фаза предварительной проверки завершена."
 	L.phase_bar = "%d фаза"
 
-	L.hardmode = "Таймеры сложного режима"
-	L.hardmode_desc = "Отображения таймера для сложного режима."
 	L.hardmode_trigger = "^Так, зачем вы это сделали?"
-	L.hardmode_message = "Сложный режим активирован!"
-	L.hardmode_warning = "Завершение сложного режима"
 
 	L.plasma_warning = "Применяется Взрыв плазмы!"
 	L.plasma_soon = "Скоро Взрыв плазмы!"
@@ -232,11 +232,13 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "ruRU")
 if L then
+	L["Runic Colossus"] = "Рунический колосс" -- For the runic barrier emote.
+
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
 	L.phase1_message = "Начало 1-ой фазы"
 	L.phase2_trigger = "Незваные гости! Вы заплатите за то, что посмели вмешаться... Погодите, вы..."
-	--L.phase2_message = "2ая фаза - Исступление через 6мин 15сек!"
+	L.phase2_message = "2ая фаза - Исступление через 6мин 15сек!"
 	L.phase3_trigger = "Бесстыжие выскочки, вы решили бросить вызов мне лично? Я сокрушу вас всех!"
 	L.phase3_message = "3-яя фаза - %s вступает в бой!"
 
@@ -251,6 +253,8 @@ if L then
 
 	L.charge_message = "Разряд: x%d"
 	L.charge_bar = "Разряд %d"
+	
+	L.strike_bar = "~Дисбалансирующий удар"
 
 	L.end_trigger = "Придержите мечи! Я сдаюсь."
 
@@ -285,7 +289,6 @@ if L then
 
 	L.crashsay = "Сказать о оокрушении"
 	L.crashsay_desc = "Сказать, когда вы являетесь целью Темного сокрушения."
-
 	L.crashicon = "Иконка сокрушения"
 	L.crashicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока, на которого наложено темное сокрушение (необходимо обладать промоутом)."
 
@@ -304,7 +307,10 @@ if L then
 	L.gravitybomb_other = "Бомба на |3-5(%s)!"
 
 	L.gravitybombicon = "Иконка гравитационной бомбы"
-	L.gravitybombicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока с бомбой (необходимо обладать промоутом)."
+	L.gravitybombicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока с гравитационной бомбой (необходимо обладать промоутом)."
+	
+	L.lighticon = "Иконка опаляющего света"
+	L.lighticon_desc = "Помечать рейдовой иконкой (черепом) игрока с опаляющим светом (необходимо обладать промоутом)"
 
 	L.lightbomb_other = "Взрыв на |3-5(%s)!"
 
@@ -349,6 +355,8 @@ if L then
 
 	L.gaze_bar = "~Взгляд безумца"
 	L.empower_bar = "~Сгущение тьмы"
+	
+	L.guardian_message = "Страж %d!"
 
 	L.empowericon = "Иконка сгущения тьмы"
 	L.empowericon_desc = "Помечать черепом Бессмертного стража со сгущением тьмы."

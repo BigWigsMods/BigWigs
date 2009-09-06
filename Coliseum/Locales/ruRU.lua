@@ -9,11 +9,15 @@ if L then
 	L.burrow_desc = "Отображать таймер способности Ануб'арака зарывается в землю"
 	L.burrow_cooldown = "Следующее зарывание"
 	L.burrow_soon = "Скоро зарывание"
+	
+	L.nerubian_burrower = "Нерубский землеглот"
+	
+	L.pcold_bar = "~Пронизывающий холод"
 
 	L.icon = "Помечать иконкой"
 	L.icon_desc = "Помечать рейдовой иконкой игрока которого приследуют шипы Ануб'арака в фазе когда он под землёй. (необходимо быть лидером группы или рейда)"
 
-	L.chase = "Шипы"
+	L.chase = "Преследование"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "ruRU")
@@ -24,19 +28,26 @@ if L then
 	L.boss_incoming = "На подходе %s"
 
 	-- Gormok
+	L.snobold = "Снобольд"
+	L.snobold_desc = "Сообщить кто получил Снобольд на свою голову."
+	L.snobold_message = "Снобольд на |3-5(%s)!"
 	L.impale_message = "%2$dx Прокалывания на %1$s"
 	L.firebomb_message = "Огненная бомба на ВАС!"
 
 	-- Jormungars
 	L.spew = "Кислотная/Жгучая рвота"
 	L.spew_desc = "Сообщать о Кислотной/Жгучей рвоте."
+	
+	L.slime_message = "Вы в Луже жижи!"
+	L.burn_spell = "Горящая желчь"
+	L.toxin_spell = "Токсин"
 
 	-- Icehowl
 	L.butt_bar = "~Свирепое бодание"
 
 	--Furious Charge - судя по транскриптору нет русского перевода :(
-	L.charge = "Furious Charge"
-	L.charge_desc = "Сообщать о Furious Charge."
+	L.charge = "Яростный рывок"
+	L.charge_desc = "Сообщать о яростном рывке."
 	--L.charge_trigger = "^%%s"	--check
 end
 
@@ -56,7 +67,6 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "ruRU")
 if L then
 	L.engage = "Начало битвы"
-
 	L.engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!"
 	L.engage_trigger1 = "Отправляйся в Пустоту!"
 

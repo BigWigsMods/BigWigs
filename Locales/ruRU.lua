@@ -40,11 +40,15 @@ L.already_registered = "|cffff0000Внимание:|r |cff00ff00%s|r (|cffffff00
 
 -- Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00Модуль запущен|r"
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55fЩёлкните|r, чтобы сбросить все запущенные модули. |cffeda55fAlt+Левый Клик|r - чтобы отключить их. |cffeda55fCtrl-Alt+Левый клик|r - чтобы отключить Big Wigs полностью."
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55fЩёлкните|r, чтобы сбросить все запущенные модули. |cffeda55fAlt+Левый Клик|r - чтобы отключить их."
 L["Active boss modules:"] = "Активные модули боссов:"
 L["All running modules have been reset."] = "Все запущенные модули сброшены."
 L["Menu"] = "Меню"
 L["Menu options."] = "Меню опций."
+
+L["Big Wigs is currently disabled."] = "В данный момент Big Wigs отключен."
+L["|cffeda55fClick|r to enable."] = "|cffeda55fЩёлкните|r чтобы включить."
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fЩёлкните|r, чтобы сбросить все запущенные модули. |cffeda55fAlt-Клик|r - чтобы отключить их. |cffeda55fCtrl-Alt-Клик|r - чтобы отключить Big Wigs полностью."
 
 
 
