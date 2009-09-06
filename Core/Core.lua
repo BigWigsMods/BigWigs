@@ -226,9 +226,9 @@ do
 	local function createPluginFrame()
 		if frame then return end
 		frame = AceGUI:Create("Window")
-		frame:SetWidth(240)
-		frame:SetHeight(348)
-		frame:SetPoint("CENTER", UIParent, "CENTER")
+		frame:SetWidth(320)
+		frame:SetHeight(600)
+		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle("Configure")
 
 		local group = AceGUI:Create("ScrollFrame")
