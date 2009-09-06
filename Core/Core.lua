@@ -229,10 +229,10 @@ do
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
 	function addon:NewBoss(module, revision, ...)
-		new(self.bossCore, module, revision, ...)
+		return new(self.bossCore, module, revision, ...)
 	end
 	function addon:NewPlugin(module, revision, ...)
-		new(self.pluginCore, module, revision, ...)
+		return new(self.pluginCore, module, revision, ...)
 	end
 	
 	function addon:IterateBossModules() return self.bossCore:IterateModules() end
