@@ -41,19 +41,7 @@ function boss:GetOption(spellId)
 	return self.db.profile[(GetSpellInfo(spellId))]
 end
 
-local function transmitSync(self, token, arguments, ...)
-	if not arguments then
-		self:Sync(token)
-	else
-		local argString = ""
-		for i = 1, #arguments do
-			argString = " " .. tostring((select(arguments[i], ...)))
-		end
-		self:Sync(token .. argString)
-	end
-end
-
-local modMissingFunction = "BigWigs Module Error: Module %q got the event %q (%d), but it doesn't know how to handle it."
+local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
 function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 	local m = self.combatLogEventMap and self.combatLogEventMap[event]
 	if m and (m[spellId] or m["*"]) then
@@ -66,15 +54,7 @@ function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, source, sFlags, dGUID,
 					f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 				end
 			else
-				print(modMissingFunction:format(self.displayName, event, spellId))
-			end
-		end
-	end
-	local s = self.syncEventMap and self.syncEventMap[event]
-	if s then
-		for token, data in pairs(s) do
-			if data.spellIds[spellId] then
-				transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+				error(modMissingFunction:format(self.displayName, event, spellId))
 			end
 		end
 	end
@@ -97,46 +77,6 @@ function boss:AddCombatListener(event, func, ...)
 		end
 	else
 		self.combatLogEventMap[event]["*"] = func
-	end
-	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-end
-
-local spellIds = {}
--- XXX Proposed API, subject to change.
-function boss:AddSyncListener(event, ...)
-	if not self.syncEventMap then self.syncEventMap = {} end
-	if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
-	local token = nil
-	-- clean out old ids
-	wipe(spellIds)
-	local c = select("#", ...)
-	for i = 1, c do
-		local arg = select(i, ...)
-		if type(arg) == "string" then
-			token = arg
-			if not self.syncEventMap[event][token] then self.syncEventMap[event][token] = {} end
-			if self.syncEventMap[event][token].spellIds then
-				wipe(self.syncEventMap[event][token].spellIds)
-			else
-				self.syncEventMap[event][token].spellIds = {}
-			end
-			for k, v in pairs(spellIds) do
-				self.syncEventMap[event][token].spellIds[k] = spellIds[k]
-			end
-			if c > i then
-				if self.syncEventMap[event][token].argumentList then
-					wipe(self.syncEventMap[event][token].argumentList)
-				else
-					self.syncEventMap[event][token].argumentList = {}
-				end
-			end
-		else
-			if not token then
-				spellIds[arg] = true
-			else
-				table.insert(self.syncEventMap[event][token].argumentList, arg)
-			end
-		end
 	end
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
@@ -179,7 +119,7 @@ local function populateScanTable(mod)
 	end
 end
 
-function boss:Scan()
+local function scan(self)
 	if not self.scanTable then populateScanTable(self) end
 
 	local id = UnitGUID("target")
@@ -216,26 +156,17 @@ function boss:Scan()
 	end
 end
 
-function boss:GetEngageSync()
-	return "BossEngaged"
-end
-
--- Really not much of a validation, but at least it validates that the sync is
--- remotely related to the module :P
+function boss:GetEngageSync() return "BossEngaged" end
 function boss:ValidateEngageSync(sync, rest)
-	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
-	if sync ~= self:GetEngageSync() then return false end
-	if not self.scanTable then populateScanTable(self) end
-	for mob in pairs(self.scanTable) do
-		if mob == rest then return true end
-	end
+	if type(sync) ~= "string" or type(rest) ~= "string" then return end
+	if sync ~= self:GetEngageSync() then return end
 	return rest == self.name
 end
 
 function boss:CheckForEngage()
-	local go = self:Scan()
+	local go = scan(self)
 	if go then
-		self:Sync(self:GetEngageSync().." "..self.name)
+		self:Sync(self:GetEngageSync(), self.name)
 	elseif UnitAffectingCombat("player") then
 		self:ScheduleTimer(self.CheckForEngage, .5, self)
 	end
@@ -243,7 +174,7 @@ end
 
 function boss:CheckForWipe()
 	if not UnitIsFeignDeath("player") then
-		local go = self:Scan()
+		local go = scan(self)
 		if not go then
 			self:SendMessage("BigWigs_RemoveRaidIcon")
 			self:SendMessage("BigWigs_RebootModule", self)
