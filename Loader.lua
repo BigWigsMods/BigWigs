@@ -393,7 +393,7 @@ end
 
 local function slashfunction(text)
 	if loader:LoadCore() then
-		BigWigs:HandleSlashCommand(text)
+		BigWigsOptions:Open()
 	end
 end
 
