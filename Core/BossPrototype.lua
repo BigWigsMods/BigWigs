@@ -258,6 +258,9 @@ local function processScheduledTimer(id)
 		for i, v in next, t.args do tinsert(args, v) end
 	end
 	if type(f) == "string" then
+		if not m[f] then
+			error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(m:GetName(), f))
+		end
 		m[f](m, unpack(args))
 	else
 		f(unpack(args))
