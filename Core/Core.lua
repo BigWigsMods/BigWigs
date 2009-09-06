@@ -123,7 +123,7 @@ local acOptions = {
 		},
 		footer = {
 			type = "description",
-			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r",
+			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.\n\n" .. BIGWIGS_RELEASE_STRING .. "|r",
 			order = 42,
 			width = "full",
 		},

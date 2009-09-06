@@ -34,6 +34,51 @@ The loader will load/enable the core when certain conditions are met
 
 --]]
 
+do
+	-- XXX localize these? We'll see.
+	local L_RELEASE = "You are running an official release of Big Wigs 3.0 (revision %d)"
+	local L_ALPHA = "You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"
+	local L_SOURCE = "You are running a source checkout of Big Wigs 3.0 directly from the repository."
+
+	-- START: MAGIC WOWACE VOODOO VERSION STUFF
+	local ALPHA = "ALPHA"
+	local RELEASE = "RELEASE"
+	local releaseType = nil
+	local releaseRevision = nil
+	local releaseString = nil
+	--@alpha@
+	-- Basically the following code will only be present in alpha versions
+	releaseType = ALPHA
+	--@end-alpha@
+	-- The following lines are NOT present in alpha versions, only in beta/release.
+	-- Since we don't make beta releases, that means only release.
+	releaseType = RELEASE
+
+	-- This will (in ZIPs), be replaced by the highest revision number in the source tree.
+	releaseRevision = "@project-revision@"
+	releaseRevision = tonumber(releaseRevision)
+
+	-- If the releaseRevision ends up NOT being a number, it means we're running a SVN copy.
+	-- In which case, we also have to set the releaseType to ALPHA manually.
+	if type(releaseRevision) ~= "number" then
+		releaseRevision = -1
+		releaseType = ALPHA
+	end
+
+	-- Then build the release string, which we can add to the interface option panel.
+	if releaseRevision == -1 then
+		releaseString = L_SOURCE
+	elseif releaseType == RELEASE then
+		releaseString = L_RELEASE:format(releaseRevision)
+	elseif releaseType == ALPHA then
+		releaseString = L_ALPHA:format(releaseRevision)
+	end
+	_G.BIGWIGS_RELEASE_TYPE = releaseType
+	_G.BIGWIGS_RELEASE_REVISION = releaseRevision
+	_G.BIGWIGS_RELEASE_STRING = releaseString
+	-- END:   MAGIC WOWACE VOODOO VERSION STUFF
+end
+
 BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 local loader = BigWigsLoader
 
