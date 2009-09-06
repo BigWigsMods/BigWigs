@@ -111,7 +111,7 @@ function plugin:CHAT_MSG_MONSTER_YELL(event, msg, source)
 	for func, mod in pairs(enableyells) do
 		local yell = func()
 		if yell == msg then
-			self:SendMessage("BigWigs_TargetSeen", source, 0, "player", mod.moduleName, mod)
+			self:SendMessage("BigWigs_TargetSeen", mod)
 		end
 	end
 end
