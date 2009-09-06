@@ -34,6 +34,10 @@ The loader will load/enable the core when certain conditions are met
 
 --]]
 
+local pName = UnitName("player")
+local ALPHA = "ALPHA"
+local RELEASE = "RELEASE"
+
 do
 	-- XXX localize these? We'll see.
 	local L_RELEASE = "You are running an official release of Big Wigs 3.0 (revision %d)"
@@ -41,8 +45,6 @@ do
 	local L_SOURCE = "You are running a source checkout of Big Wigs 3.0 directly from the repository."
 
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
-	local ALPHA = "ALPHA"
-	local RELEASE = "RELEASE"
 	local releaseType = RELEASE
 	local releaseRevision = nil
 	local releaseString = nil
@@ -103,6 +105,14 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 local LOCALE = GetLocale()
 if LOCALE == "enGB" then
 	LOCALE = "enUS"
+end
+
+local L_OLD_VERSION = "There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
+if LOCALE == "deDE" then
+	-- L_OLD_VERSION = ...
+elseif LOCALE == "frFR" then
+	-- L_OLD_VERSION = ...
+--elseif etc...
 end
 
 local function loadZone(zone)
@@ -232,6 +242,8 @@ function loader:OnEnable()
 	self:RegisterEvent("RAID_ROSTER_UPDATE", "CheckRoster")
 	self:RegisterEvent("PARTY_MEMBERS_CHANGED", "CheckRoster")
 	
+	self:RegisterEvent("CHAT_MSG_ADDON")
+	
 	self:RegisterMessage("BigWigs_JoinedGroup", "ZoneChanged")
 	self:RegisterMessage("BigWigs_LeftGroup")
 	self:RegisterMessage("BigWigs_CoreEnabled")
@@ -239,6 +251,27 @@ function loader:OnEnable()
 	
 	self:CheckRoster()
 	self:ZoneChanged()
+end
+
+function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
+	if prefix == "BWVQ3" then
+		if BIGWIGS_RELEASE_TYPE == ALPHA then return end
+		SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, distribution)
+	elseif prefix == "BWOOD3" then
+		if not tonumber(message) then return end
+		if tonumber(message) > BIGWIGS_RELEASE_REVISION then
+			-- We're running an old version.
+			-- No point in listening any more.
+			self:UnregisterEvent("CHAT_MSG_ADDON")
+			print(L_OLD_VERSION)
+		end
+	elseif prefix == "BWVR3" and sender ~= pName then
+		if not tonumber(message) then return end
+		if BIGWIGS_RELEASE_REVISION > tonumber(message) then
+			-- The sender is running an old version.
+			SendAddonMessage("BWOOD3", BIGWIGS_RELEASE_REVISION, "WHISPER", sender)
+		end
+	end
 end
 
 function loader:Print(...)
