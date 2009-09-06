@@ -82,74 +82,36 @@ function boss:AddCombatListener(event, func, ...)
 end
 
 function boss:BossDeath(_, guid, multi)
-	local b = self.moduleName
 	if type(guid) == "string" then
 		guid = tonumber((guid):sub(-12,-7),16)
 	end
 
 	if guid == self.guid then
 		if multi then
-			self:Sync("MultiDeath " .. b)
+			self:Sync("MultiDeath " .. self.moduleName)
 		else
-			self:Sync("Death " .. b)
-		end
-	end
-end
-
-local function populateScanTable(mod)
-	if type(mod.scanTable) == "table" then return end
-	mod.scanTable = {}
-
-	local x = mod.enabletrigger
-	if type(x) == "string" or type(x) == "number" then
-		mod.scanTable[x] = true
-	elseif type(x) == "table" then
-		for i, v in ipairs(x) do
-			mod.scanTable[v] = true
-		end
-	end
-
-	local a = mod.wipemobs
-	if type(a) == "string" or type(a) == "number" then
-		mod.scanTable[a] = true
-	elseif type(a) == "table" then
-		for i, v in ipairs(a) do
-			mod.scanTable[v] = true
+			self:Sync("Death " .. self.moduleName)
 		end
 	end
 end
 
 local function scan(self)
-	if not self.scanTable then populateScanTable(self) end
-
-	local id = UnitGUID("target")
-	if id then id = tonumber(id:sub(-12,-7),16) end
-	if UnitExists("target") and UnitAffectingCombat("target") and ( self.scanTable[UnitName("target")] or (id and self.scanTable[id]) ) then
-		return "target"
-	end
-	id = UnitGUID("focus")
-	if id then id = tonumber(id:sub(-12,-7),16) end
-	if UnitExists("focus") and UnitAffectingCombat("focus") and ( self.scanTable[UnitName("focus")] or (id and self.scanTable[id]) ) then
-		return "focus"
-	end
-
+	if UnitExists("target") and UnitAffectingCombat("target") then return "target" end
+	if UnitExists("focus") and UnitAffectingCombat("focus") then return "focus" end
+	if UnitExists("mouseover") and UnitAffectingCombat("mouseover") then return "mouseover" end
 	local num = GetNumRaidMembers()
 	if num == 0 then
 		num = GetNumPartyMembers()
 		for i = 1, num do
-			local partyUnit = fmt("%s%d%s", "party", i, "target")
-			id = UnitGUID(partyUnit)
-			if id then id = tonumber(id:sub(-12,-7),16) end
-			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and ( self.scanTable[UnitName(partyUnit)] or (id and self.scanTable[id]) ) then
+			local partyUnit = fmt("%s%d", "party", i)
+			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) then
 				return partyUnit
 			end
 		end
 	else
 		for i = 1, num do
-			local raidUnit = fmt("%s%d%s", "raid", i, "target")
-			id = UnitGUID(raidUnit)
-			if id then id = tonumber(id:sub(-12,-7),16) end
-			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and ( self.scanTable[UnitName(raidUnit)] or (id and self.scanTable[id]) ) then
+			local raidUnit = fmt("%s%d", "raid", i)
+			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) then
 				return raidUnit
 			end
 		end

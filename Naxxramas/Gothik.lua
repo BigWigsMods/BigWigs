@@ -68,11 +68,6 @@ mod.locale = L
 --      Initialization      --
 ------------------------------
 
-mod.wipemobs = {
-	L["rider"], L["deathknight"], L["trainee"],
-	L["spectral_rider"], L["spectral_deathknight"], L["spectral_trainee"]
-}
-
 local wave = 0
 local timeTrainer, timeDK, timeRider = 27, 77, 137
 local numTrainer, numDK, numRider = nil, nil, nil
