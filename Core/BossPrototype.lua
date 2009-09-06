@@ -239,7 +239,10 @@ end
 
 local scheduledTimers = {}
 local function clearTimer(id)
-	wipe(scheduledTimers[id].args)
+	if not id or not scheduledTimers[id] then return end
+	if scheduledTimers[id].args then
+		wipe(scheduledTimers[id].args)
+	end
 	wipe(scheduledTimers[id])
 end
 
@@ -251,7 +254,9 @@ local function processScheduledTimer(id)
 	local id = t.atid
 	local m = t.module
 	wipe(args)
-	for i, v in next, t.args do tinsert(args, v) end
+	if t.args then
+		for i, v in next, t.args do tinsert(args, v) end
+	end
 	if type(f) == "string" then
 		m[f](m, unpack(args))
 	else
@@ -286,7 +291,7 @@ function boss:ScheduleEvent(id, func, delay, ...)
 		for i = 1, select("#", ...) do
 			tinsert(scheduledTimers[id].args, (select(i, ...)))
 		end
-	else
+	elseif select("#", ...) > 0 then
 		scheduledTimers[id].args = { ... }
 	end
 	scheduledTimers[id].atid = self:ScheduleTimer(processScheduledTimer, delay, id)
