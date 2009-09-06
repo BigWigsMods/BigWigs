@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
+<!--@debug@-->
 <Include file="Core\modules.xml"/>
 
 <Include file="Plugins\locales.xml"/>
@@ -20,6 +20,6 @@
 
 <Include file="Naxxramas\locales.xml"/>
 <Include file="Naxxramas\modules.xml"/>
-
+<!--@end-debug@-->
 </Ui>
 
