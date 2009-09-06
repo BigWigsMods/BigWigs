@@ -245,13 +245,65 @@ end
 
 function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
 
+local function onControlEnter(widget, event, value)
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
+	GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
+	GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
+	GameTooltip:Show()
+end
+local function onControlLeave() GameTooltip:Hide() end
+
+-- XXX We need a new SinkLib that doesn't give out options but only access to functions
+-- XXX we can use to generate options with.
+-- Or, we can use AceConfig and insert an option table into the container, I guess.
+-- Actually, just leaving the options as they are in a table and using aceconfig to
+-- generate the whole thing means less code in the modules but more processing
+-- in acegui, I guess. Also we might not get it looking "just right".
+
+local function checkboxCallback(widget, event, value)
+	local key = widget:GetUserData("key")
+	plugin.db.profile[key] = value and true or false
+end
+
 function plugin:GetPluginConfig()
-	local test = AceGUI:Create("Button")
-	test:SetText("Test")
-	test:SetCallback("OnClick", onTestClick)
-	test:SetFullWidth(true)
+	local chat = AceGUI:Create("CheckBox")
+	chat:SetLabel(L["Chat frame"])
+	chat:SetValue(self.db.profile.chat and true or false)
+	chat:SetCallback("OnEnter", onControlEnter)
+	chat:SetCallback("OnLeave", onControlLeave)
+	chat:SetCallback("OnValueChanged", checkboxCallback)
+	chat:SetUserData("key", "chat")
+	chat:SetUserData("tooltip", L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."])
 	
-	return test
+	local colors = AceGUI:Create("CheckBox")
+	colors:SetLabel(L["Use colors"])
+	colors:SetValue(self.db.profile.usecolors and true or false)
+	colors:SetCallback("OnEnter", onControlEnter)
+	colors:SetCallback("OnLeave", onControlLeave)
+	colors:SetCallback("OnValueChanged", checkboxCallback)
+	colors:SetUserData("key", "usecolors")
+	colors:SetUserData("tooltip", L["Toggles white only messages ignoring coloring."])
+
+	local classColors = AceGUI:Create("CheckBox")
+	classColors:SetLabel(L["Class colors"])
+	classColors:SetValue(self.db.profile.classcolor and true or false)
+	classColors:SetCallback("OnEnter", onControlEnter)
+	classColors:SetCallback("OnLeave", onControlLeave)
+	classColors:SetCallback("OnValueChanged", checkboxCallback)
+	classColors:SetUserData("key", "classcolor")
+	classColors:SetUserData("tooltip", L["Colors player names in messages by their class."])
+	
+	local icons = AceGUI:Create("CheckBox")
+	icons:SetLabel(L["Use icons"])
+	icons:SetValue(self.db.profile.useicons and true or false)
+	icons:SetCallback("OnEnter", onControlEnter)
+	icons:SetCallback("OnLeave", onControlLeave)
+	icons:SetCallback("OnValueChanged", checkboxCallback)
+	icons:SetUserData("key", "useicons")
+	icons:SetUserData("tooltip", L["Show icons next to messages, only works for Raid Warning."])
+
+	return chat, colors, classColors, icons
 end
 
 --------------------------------------------------------------------------------

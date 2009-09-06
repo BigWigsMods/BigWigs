@@ -252,16 +252,17 @@ do
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle("Configure")
 
-		local group = AceGUI:Create("ScrollFrame")
-		group:SetLayout("Flow")
-		group:SetFullWidth(true)
-
 		local test = AceGUI:Create("Button")
 		test:SetText("Test")
 		test:SetCallback("OnClick", onTestClick)
 		test:SetFullWidth(true)
+		
+		local reset = AceGUI:Create("Button")
+		reset:SetText("Reset positions")
+		reset:SetCallback("OnClick", onResetClick)
+		reset:SetFullWidth(true)
 
-		group:AddChild(test)
+		frame:AddChildren(test, reset)
 		for name, module in BigWigs:IteratePlugins() do
 			if module.GetPluginConfig then
 				table.insert(plugins, {
@@ -276,8 +277,7 @@ do
 		tabs:SelectTab(plugins[1].value)
 		tabs:SetFullWidth(true)
 		tabs:SetFullHeight(true)
-		group:AddChild(tabs)
-		frame:AddChild(group)
+		frame:AddChild(tabs)
 	end
 	function addon:ShowPluginConfig()
 		createPluginFrame()
