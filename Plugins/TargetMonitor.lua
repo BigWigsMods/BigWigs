@@ -99,11 +99,11 @@ local function targetCheck(unit)
 	if not n and not id then return end
 
 	id = tonumber(id:sub(-12,-7),16)
-
+	
 	if n and enablemobs[n] then
-		plugin:SendMessage("BigWigs_TargetSeen", enablemobs[n])
+		plugin:SendMessage("BigWigs_TargetSeen", unit, enablemobs[n])
 	elseif id and enablemobs[id] then
-		plugin:SendMessage("BigWigs_TargetSeen", enablemobs[id])
+		plugin:SendMessage("BigWigs_TargetSeen", unit, enablemobs[id])
 	end
 end
 
