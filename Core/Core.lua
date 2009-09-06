@@ -40,7 +40,7 @@ local acOptions = {
 		return BigWigs.db.profile[info[#info]]
 	end,
 	set = function(info, value)
-		BigWigs.db.profile[info[#info]] = val
+		BigWigs.db.profile[info[#info]] = value
 	end,
 	args = {
 		heading = {
