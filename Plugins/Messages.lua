@@ -22,6 +22,8 @@ local messageFrame = nil
 local anchor = nil
 local floor = math.floor
 
+local AceGUI = LibStub("AceGUI-3.0")
+
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 
 --------------------------------------------------------------------------------
@@ -252,6 +254,15 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
+
+function plugin:GetPluginConfig()
+	local test = AceGUI:Create("Button")
+	test:SetText("Test")
+	test:SetCallback("OnClick", onTestClick)
+	test:SetFullWidth(true)
+	
+	return test
+end
 
 --------------------------------------------------------------------------------
 -- Message frame

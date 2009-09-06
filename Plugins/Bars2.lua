@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Bars 2", "$Revision$")
+local plugin = BigWigs:NewPlugin("Bars", "$Revision$")
 if not plugin then return end
 
 --------------------------------------------------------------------------------
@@ -388,6 +388,10 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_TemporaryConfig", "ShowAnchors")
 	colors = BigWigs:GetPlugin("Colors")
+end
+
+function plugin:GetPluginConfig()
+
 end
 
 --------------------------------------------------------------------------------

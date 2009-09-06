@@ -20,6 +20,7 @@ local icon = LibStub("LibDBIcon-1.0", true)
 
 local ac = LibStub("AceConfig-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
+local AceGUI = LibStub("AceGUI-3.0")
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -64,7 +65,7 @@ local acOptions = {
 				for name, module in BigWigs:IteratePlugins() do
 					module:Enable()
 				end
-				BigWigs:SendMessage("BigWigs_TemporaryConfig")
+				BigWigs:ShowPluginConfig()
 			end,
 			order = 10,
 			width = "full",
@@ -157,7 +158,7 @@ function addon:OnInitialize()
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 
 	BigWigsLoader:RemoveInterfaceOptions()
-	
+
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
@@ -201,6 +202,64 @@ function addon:RegisterBossOption(key, name, desc, func)
 		error("The custom boss option %q has already been registered."):format(key)
 	end
 	customBossOptions[key] = { name, desc, func }
+end
+
+-------------------------------------------------------------------------------
+-- Plugin options
+--
+
+do
+	local frame = nil
+	local plugins = {}
+	local function selectTab(widget, callback, tab)
+		local plugin = BigWigs:GetPlugin(tab)
+		if not plugin then return end
+		widget:PauseLayout()
+		widget:ReleaseChildren()
+		widget:AddChildren(plugin:GetPluginConfig())
+		widget:ResumeLayout()
+		frame:DoLayout()
+	end
+	local function createPluginFrame()
+		if frame then return end
+		frame = AceGUI:Create("Window")
+		frame:SetWidth(240)
+		frame:SetHeight(348)
+		frame:SetPoint("CENTER", UIParent, "CENTER")
+		frame:SetTitle("Configure")
+
+		local group = AceGUI:Create("ScrollFrame")
+		group:SetLayout("Flow")
+		group:SetFullWidth(true)
+
+		local test = AceGUI:Create("Button")
+		test:SetText("Test")
+		test:SetCallback("OnClick", onTestClick)
+		test:SetFullWidth(true)
+
+		group:AddChild(test)
+		for name, module in BigWigs:IteratePlugins() do
+			if module.GetPluginConfig then
+				table.insert(plugins, {
+					value = name,
+					text = name,
+				})
+			end
+		end
+		local tabs = AceGUI:Create("TabGroup")
+		tabs:SetTabs(plugins)
+		tabs:SetCallback("OnGroupSelected", selectTab)
+		tabs:SelectTab(plugins[1].value)
+		tabs:SetFullWidth(true)
+		tabs:SetFullHeight(true)
+		group:AddChild(tabs)
+		frame:AddChild(group)
+	end
+	function addon:ShowPluginConfig()
+		createPluginFrame()
+		frame:Show()
+		BigWigs:SendMessage("BigWigs_TemporaryConfig")
+	end
 end
 
 -------------------------------
