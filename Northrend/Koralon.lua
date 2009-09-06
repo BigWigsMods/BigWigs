@@ -17,7 +17,6 @@ mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
 ------------------------------
 
 local pName = UnitName("player")
-local started = nil
 
 ------------------------------
 --      English Locale      --
@@ -38,12 +37,6 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fists", 66725, 66808)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cinder", 67332, 66684)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterMessage("BigWigs_RecvSync")
-
-	started = nil
 end
 
 ------------------------------
@@ -58,17 +51,5 @@ end
 function mod:Cinder(player, spellId)
 	if player ~= pName then return end
 	self:LocalMessage(L["cinder_message"], "Personal", spellId, "Alarm")
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if self.db.profile.berserk then
-			self:Enrage(360, true)
-		end
-	end
 end
 
