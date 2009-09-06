@@ -372,11 +372,14 @@ function plugin:OnRegister()
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 	
 	db = self.db.profile
-	normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
-	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
 end
 
 function plugin:OnPluginEnable()
+	if not normalAnchor then
+		normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
+		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
+	end
+	
 	if not media:Fetch(mType, db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StopBar")
