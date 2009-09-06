@@ -245,14 +245,12 @@ end
 
 local args = {}
 local function processScheduledTimer(id)
-	if not scheduledTimers[id] then return end
-	wipe(args)
-
 	local t = scheduledTimers[id]
 	-- copy and clear incase we reschedule the same id from within the func
 	local f = t.func
 	local id = t.atid
 	local m = t.module
+	wipe(args)
 	for i, v in next, t.args do tinsert(args, v) end
 	if type(f) == "string" then
 		m[f](m, unpack(args))
@@ -285,7 +283,7 @@ function boss:ScheduleEvent(id, func, delay, ...)
 	scheduledTimers[id].func = func
 	scheduledTimers[id].module = self
 	scheduledTimers[id].args = { ... }
-	scheduledTimers[id].atid = self:ScheduleTimer("ProcessScheduledTimer", delay, id)
+	scheduledTimers[id].atid = self:ScheduleTimer(processScheduledTimer, delay, id)
 	return id
 end
 
