@@ -300,9 +300,9 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:CancelScheduledEvent(madnessWarningID)
 
 		local madness = GetSpellInfo(64059)
-		self:SendMessage("BigWigs_StopBar", madness)
-		self:SendMessage("BigWigs_StopBar", L["tentacle_message"]:format(crusherCount))
-		self:SendMessage("BigWigs_StopBar", L["portal_bar"])
+		self:SendMessage("BigWigs_StopBar", self, madness)
+		self:SendMessage("BigWigs_StopBar", self, L["tentacle_message"]:format(crusherCount))
+		self:SendMessage("BigWigs_StopBar", self, L["portal_bar"])
 
 		if db.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")

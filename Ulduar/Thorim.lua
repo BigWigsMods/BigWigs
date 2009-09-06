@@ -182,8 +182,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		end
 	elseif msg == L["phase3_trigger"] then
 		self:CancelScheduledEvent(hardModeMessageID)
-		self:SendMessage("BigWigs_StopBar", L["hardmode"])
-		self:SendMessage("BigWigs_StopBar", CL["berserk"])
+		self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
+		self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
 		if db.phase then
 			self:IfMessage(L["phase3_message"]:format(mod.bossName[1]), "Attention")
 		end
