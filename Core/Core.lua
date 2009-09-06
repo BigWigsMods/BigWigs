@@ -220,6 +220,9 @@ do
 		widget:ResumeLayout()
 		frame:DoLayout()
 	end
+	local function onTestClick()
+		BigWigs:SendMessage("BigWigs_Test")
+	end
 	local function createPluginFrame()
 		if frame then return end
 		frame = AceGUI:Create("Window")
