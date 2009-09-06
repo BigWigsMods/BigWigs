@@ -10,6 +10,10 @@ if L then
 	L.burrow_cooldown = "~Eingraben"
 	L.burrow_soon = "Eingraben bald!"
 
+	L.nerubian_burrower = "Nerubischer Gräber"
+
+	L.pcold_bar = "~Durchdringende Kälte"
+
 	L.icon = "Schlachtzugs-Symbol"
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Anub'arak verfolgt werden (benötigt Assistent oder höher)."
 
