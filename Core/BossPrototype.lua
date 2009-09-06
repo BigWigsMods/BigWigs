@@ -233,64 +233,63 @@ function boss:Message(...)
 	self:SendMessage("BigWigs_Message", ...)
 end
 
+-------------------------------------------------------------------------------
+-- Ace2 ScheduleEvent Layer
+--
+
 local scheduledTimers = {}
-local function clearTimer( self, id )
-	-- FIXME: leaky?
-	wipe( scheduledTimers[self][id].args )
-	wipe( scheduledTimers[self][id] )
-	scheduledTimers[self][id] = nil
+local function clearTimer(id)
+	wipe(scheduledTimers[id].args)
+	wipe(scheduledTimers[id])
 end
 
-local inprocess = {}
-inprocess.args = {}
-function boss:ProcessScheduledTimer( id )
-	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
-	local t = scheduledTimers[self][id]
+local args = {}
+local function processScheduledTimer(id)
+	if not scheduledTimers[id] then return end
+	wipe(args)
+
+	local t = scheduledTimers[id]
 	-- copy and clear incase we reschedule the same id from within the func
-	inprocess.func = t.func
-	inprocess.atid = t.atid
-	wipe(inprocess.args)
-	for k, v in pairs(t.args) do
-		inprocess.args[k] = v
+	local f = t.func
+	local id = t.atid
+	local m = t.module
+	for i, v in next, t.args do tinsert(args, v) end
+	if type(f) == "string" then
+		m[f](m, unpack(args))
+	else
+		f(unpack(args))
 	end
-	clearTimer(self, id)
-	if type(inprocess.func) == "string" then
-		self[inprocess.func]( self, unpack(inprocess.args) )
-	elseif type(inprocess.func) == "function" then
-		inprocess.func( unpack(inprocess.args) )
-	end
-	clearTimer(self, id)
+	clearTimer(id)
 end
 
-function boss:CancelScheduledEvent( id )
-	if not scheduledTimers[self] or not scheduledTimers[self][id] then return end
-	self:CancelTimer( scheduledTimers[self][id].atid )
-	clearTimer(self, id)
+function boss:CancelScheduledEvent(id)
+	if not scheduledTimers[id] then return end
+	self:CancelTimer(scheduledTimers[id].atid, true)
+	clearTimer(id)
 end
 
 function boss:CancelAllScheduledEvents()
-	if scheduledTimers[self] then
-		for id, v in pairs(scheduledTimers[self]) do
+	for id, args in pairs(scheduledTimers) do
+		if args.module == self then
 			self:CancelScheduledEvent(id)
 		end
 	end
 end
 
-function boss:ScheduleEvent( id, func, delay, ...)
-	if not scheduledTimers[self] then
-		scheduledTimers[self] = {}
-	end
-	if scheduledTimers[self][id] then
-		-- cancel the old one
-		self:CancelScheduledEvent( id )
+function boss:ScheduleEvent(id, func, delay, ...)
+	if scheduledTimers[id] then
+		self:CancelScheduledEvent(id)
 	else
-		scheduledTimers[self][id] = {}
+		scheduledTimers[id] = {}
 	end
-	scheduledTimers[self][id].func = func
-	scheduledTimers[self][id].args = { ... }
-	scheduledTimers[self][id].atid = self:ScheduleTimer( "ProcessScheduledTimer", delay, id )
+	scheduledTimers[id].func = func
+	scheduledTimers[id].module = self
+	scheduledTimers[id].args = { ... }
+	scheduledTimers[id].atid = self:ScheduleTimer("ProcessScheduledTimer", delay, id)
 	return id
 end
+
+-------------------------------------------------------------------------------
 
 function boss:DelayedMessage(delay, text, ...) 
 	return self:ScheduleEvent(text, "SendMessage", delay, "BigWigs_Message", text, ...)
