@@ -136,7 +136,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["ground_trigger"] then
 		if db.phase then
 			self:IfMessage(L["ground_message"], "Attention", nil, "Long")
