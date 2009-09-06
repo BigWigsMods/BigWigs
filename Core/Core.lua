@@ -377,13 +377,6 @@ do
 			else
 				module.bossName = BB[module.bossName] or module.bossName
 			end
-			if type(module.wipemobs) == "table" then
-				for k, boss in pairs(module.wipemobs) do
-					module.wipemobs[k] = BB[boss] or boss
-				end
-			elseif type(module.wipemobs) == "string" then
-				module.wipemobs = BB[module.wipemobs] or module.wipemobs
-			end
 			if type(module.zoneName) == "table" then
 				for k, zone in pairs(module.zoneName) do
 					module.zoneName[k] = BZ[zone] or zone
