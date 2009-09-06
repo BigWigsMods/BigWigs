@@ -107,6 +107,8 @@ if LOCALE == "enGB" then
 	LOCALE = "enUS"
 end
 
+-- XXX Not sure if this should be here or in Extras\Version, we need to flesh out how to work this version check thing.
+-- XXX If it remains here it'll be added to the BigWigs locale files in the end.
 local L_OLD_VERSION = "There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
 if LOCALE == "deDE" then
 	-- L_OLD_VERSION = ...
@@ -253,6 +255,14 @@ function loader:OnEnable()
 	self:ZoneChanged()
 end
 
+--[[
+-- XXX We need to discuss and resolve the whole version checking thing before "first" release.
+-- Basically many people want the ability to see if anyone in their raid is not running BW
+-- at all. Personally I say this is too nazi, but it's very often requested and moaned about.
+-- The code below won't really let you do that.
+--
+-- So we have to decide on a message protocol for everything and what we should allow and not.
+--]]
 function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix == "BWVQ3" then
 		if BIGWIGS_RELEASE_TYPE == ALPHA then return end

@@ -48,7 +48,7 @@ local acOptions = {
 			type = "description",
 			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that some (!) of these options do not work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n",
 			fontSize = "medium",
-			order = 1,
+			order = 10,
 			width = "full",
 		},
 		configure = {
@@ -67,7 +67,7 @@ local acOptions = {
 				end
 				BigWigs:ShowPluginConfig()
 			end,
-			order = 10,
+			order = 11,
 			width = "full",
 		},
 		separator = {
@@ -76,28 +76,41 @@ local acOptions = {
 			order = 20,
 			width = "full",
 		},
-		whisper = {
+		sound = {
 			type = "toggle",
-			name = "Whisper warnings |cffff0000(!)|r",
-			desc = "Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
-			order = 31,
+			name = "Sound |cffff0000(!)|r",
+			desc = "Messages might come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
+			order = 21,
+			width = "full",
+		},
+		separator2 = {
+			type = "description",
+			name = " ",
+			order = 30,
 			width = "full",
 		},
 		raidicon = {
 			type = "toggle",
 			name = "Raid icons |cffff0000(!)|r",
-			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
+			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
+			order = 31,
+			width = "full",
+		},
+		whisper = {
+			type = "toggle",
+			name = "Whisper warnings |cffff0000(!)|r",
+			desc = "Send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
 			order = 32,
 			width = "full",
 		},
-		sound = {
+		broadcast = {
 			type = "toggle",
-			name = "Sound |cffff0000(!)|r",
-			desc = "Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
+			name = "Broadcast |cffff0000(!)|r",
+			desc = "Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are the group leader, NOT if you are promoted!|r",
 			order = 33,
 			width = "full",
 		},
-		separator2 = {
+		separator3 = {
 			type = "description",
 			name = " ",
 			order = 40,
@@ -121,11 +134,18 @@ local acOptions = {
 			hidden = function() return not icon end,
 			width = "full",
 		},
+		separator4 = {
+			type = "description",
+			name = " ",
+			order = 50,
+			width = "full",
+		},
 		footer = {
 			type = "description",
-			name = "\n\n\n|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.\n\n" .. BIGWIGS_RELEASE_STRING .. "|r",
-			order = 42,
+			name = "|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r\n|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r",
+			order = 51,
 			width = "full",
+			fontSize = "medium",
 		},
 	},
 }
@@ -141,6 +161,7 @@ function addon:OnInitialize()
 			raidicon = true,
 			whisper = false,
 			raidwarning = false,
+			broadcast = false,
 		}
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
