@@ -584,7 +584,7 @@ function addon:EnableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
 		if not noSync then
-			m:Sync("EnableModule", module:GetName())
+			module:Sync("EnableModule", module:GetName())
 		end
 	end
 end
@@ -624,7 +624,7 @@ end
 function addon:BigWigs_TargetSeen(message, unit, module)
 	if not module or module:IsEnabled() then return end
 	if not module.VerifyEnable or module:VerifyEnable(unit) then
-		self:EnableBossModule(module:GetName())
+		self:EnableBossModule(module)
 	end
 end
 
