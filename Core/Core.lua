@@ -36,6 +36,12 @@ local pluginOptions = {
 local acOptions = {
 	type = "group",
 	name = "Big Wigs",
+	get = function(info)
+		return BigWigs.db.profile[info[#info]]
+	end,
+	set = function(info, value)
+		BigWigs.db.profile[info[#info]] = val
+	end,
 	args = {
 		heading = {
 			type = "description",
@@ -69,22 +75,18 @@ local acOptions = {
 			order = 20,
 			width = "full",
 		},
-		whispers = {
+		whisper = {
 			type = "toggle",
 			name = "Whisper warnings |cffff0000(!)|r",
 			desc = "Toggles whether you will send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.",
 			order = 31,
-			get = function() return true end,
-			set = function() end,
 			width = "full",
 		},
-		raidicons = {
+		raidicon = {
 			type = "toggle",
 			name = "Raid icons |cffff0000(!)|r",
 			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone. Note that you need to be promoted to assistant or be the raid leader in order to set these raid icons.",
 			order = 32,
-			get = function() return true end,
-			set = function() end,
 			width = "full",
 		},
 		sound = {
@@ -92,8 +94,6 @@ local acOptions = {
 			name = "Sound |cffff0000(!)|r",
 			desc = "Some boss messages come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
 			order = 33,
-			get = function() return true end,
-			set = function() end,
 			width = "full",
 		},
 		separator2 = {
@@ -135,7 +135,12 @@ local acOptions = {
 
 function addon:OnInitialize()
 	local defaults = {
-		profile = {}
+		profile = {
+			sound = true,
+			raidicon = true,
+			whisper = false,
+			raidwarning = false,
+		}
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 

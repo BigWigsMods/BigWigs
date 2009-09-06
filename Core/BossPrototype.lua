@@ -82,7 +82,7 @@ function boss:AddCombatListener(event, func, ...)
 end
 
 function boss:BossDeath(_, guid, multi)
-	local b = self.moduelName
+	local b = self.moduleName
 	if type(guid) == "string" then
 		guid = tonumber((guid):sub(-12,-7),16)
 	end
