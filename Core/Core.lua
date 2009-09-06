@@ -203,46 +203,36 @@ end
 -------------------------------
 
 do
+	function addon:New(module, revision, ...)
+		error(("Module %q, using deprecated :New() API. Notify the author for an update."):format(module))
+	end
+
 	local zoneModules = {}
+
+	local function new(core, module, revision, ...)
+		local r = nil
+		if type(revision) == "string" then r = tonumber(revision:sub(12, -3))
+		else r = revision end
+		if type(r) ~= "number" then
+			error(("Trying to register module %q without a valid revision."):format(module))
+		end
+		if core:GetModule(module, true) then
+			local oldM = core:GetModule(module)
+			print(L["already_registered"]:format(module, oldM.revision, r))
+		else
+			local m = core:NewModule(module, ...)
+			m.revision = r
+			return m
+		end
+	end
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
 	function addon:NewBoss(module, revision, ...)
-		local r = nil
-		if type(revision) == "string" then r = tonumber(revision:sub(12, -3))
-		else r = revision end
-		if type(r) ~= "number" then
-			error(("Trying to register module %q without a valid revision."):format(module))
-		end
-		if self:GetBossModule(module, true) then
-			local oldM = self:GetBossModule(module)
-			print(L["already_registered"]:format(module, oldM.revision, r))
-		else
-			local m = self.bossCore:NewModule(module, ...)
-			m.revision = r
-			return m
-		end
+		new(self.bossCore, module, revision, ...)
 	end
-
-	function addon:New(module, revision, ...)
-		error(("Module %q, using deprecated :New() API. Notify the author for an update."):format(module))
-	end
-	
 	function addon:NewPlugin(module, revision, ...)
-		local r = nil
-		if type(revision) == "string" then r = tonumber(revision:sub(12, -3))
-		else r = revision end
-		if type(r) ~= "number" then
-			error(("Trying to register module %q without a valid revision."):format(module))
-		end
-		if self:GetPlugin(module, true) then
-			local oldM = self:GetPlugin(module)
-			print(L["already_registered"]:format(module, oldM.revision, r))
-		else
-			local m = self.pluginCore:NewModule(module, ...)
-			m.revision = r
-			return m
-		end
+		new(self.pluginCore, module, revision, ...)
 	end
 	
 	function addon:IterateBossModules() return self.bossCore:IterateModules() end
@@ -421,6 +411,9 @@ do
 		end
 
 		local opts = {}
+		if not module.toggleOptions then
+			error(("Module %q doesn't have a toggleOptions field."):format(name))
+		end
 		for i,v in next, module.toggleOptions do
 			local t = type(v)
 			if t == "string"  then
@@ -447,8 +440,7 @@ do
 		end
 		self:SendMessage("BigWigs_BossModuleRegistered", name, module)
 	end
-	
-	-- FIXME: this is a straight copy of RegisterBossModule just to get this working quick
+
 	function addon:RegisterPlugin(module)
 		local name = module.name
 		local rev = module.revision
