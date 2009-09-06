@@ -580,14 +580,11 @@ do
 	
 end
 
-function addon:EnableBossModule(moduleName, noSync)
-	local m = self:GetBossModule(moduleName, true)
-	if m and not m:IsEnabled() then
-		m:Enable()
+function addon:EnableBossModule(module, noSync)
+	if not module:IsEnabled() then
+		module:Enable()
 		if not noSync then
-			local token = moduleName or nil
-			if not token then return end
-			m:Sync(m.external and "EnableExternal" or "EnableModule", token)
+			m:Sync("EnableModule", module:GetName())
 		end
 	end
 end
@@ -598,11 +595,15 @@ function addon:BigWigs_RebootModule(message, module)
 	module:Enable()
 end
 
+-- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
+-- actual module object. ALL other APIs should take module objects as arguments.
 function addon:BigWigs_RecvSync(message, sync, moduleName, sender)
 	if not moduleName then return end
-	if sync == "EnableModule" or sync == "EnableExternal" then
+	if sync == "EnableModule" then
 		if sender == pName then return end
-		self:EnableBossModule(moduleName, true)
+		local module = self:GetBossModule(moduleName, true)
+		if not module then return end
+		self:EnableBossModule(module, true)
 	elseif (sync == "Death" or sync == "MultiDeath") then
 		local mod = self:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
