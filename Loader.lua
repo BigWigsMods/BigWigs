@@ -43,16 +43,13 @@ do
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
 	local ALPHA = "ALPHA"
 	local RELEASE = "RELEASE"
-	local releaseType = nil
+	local releaseType = RELEASE
 	local releaseRevision = nil
 	local releaseString = nil
 	--@alpha@
-	-- Basically the following code will only be present in alpha versions
+	-- The following code will only be present in alpha ZIPs.
 	releaseType = ALPHA
 	--@end-alpha@
-	-- The following lines are NOT present in alpha versions, only in beta/release.
-	-- Since we don't make beta releases, that means only release.
-	releaseType = RELEASE
 
 	-- This will (in ZIPs), be replaced by the highest revision number in the source tree.
 	releaseRevision = "@project-revision@"
