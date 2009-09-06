@@ -503,74 +503,12 @@ do
 
 	function addon:RegisterPlugin(module)
 		local name = module.name
-		local rev = module.revision
-		if type(rev) ~= "number" then
-			error(("%q does not have a valid revision field."):format(name))
-		end
-		
-		if module.toggleOptions then
-			local opts = {}
-			for i,v in next, module.toggleOptions do
-				local t = type(v)
-				if t == "string"  then
-					opts[v] = true
-				elseif t == "number" and v > 0 then
-					local n = GetSpellInfo(v)
-					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
-					opts[n] = true
-				end
-			end
-			module.db = self.db:RegisterNamespace(name, {profile = opts})
-		elseif type(module.defaultDB) == "table" then
+		if type(module.defaultDB) == "table" then
 			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )
 		end
-		
-		-- Translate the bossmodule if appropriate
-		if LOCALE ~= "enUS" and BB and BZ then
-			if type(module.bossName) == "table" then
-				for k, boss in pairs(module.bossName) do
-					module.bossName[k] = BB[boss] or boss
-				end
-			else
-				module.bossName = BB[module.bossName] or module.bossName
-			end
-			if type(module.zoneName) == "table" then
-				for k, zone in pairs(module.zoneName) do
-					module.zoneName[k] = BZ[zone] or zone
-				end
-			else
-				module.zoneName = BZ[module.zoneName] or module.zoneName
-			end
-			if module.otherMenu then
-				module.otherMenu = BZ[module.otherMenu]
-			end
-		end
-		if not module.displayName then -- fix up a pretty display name
-			if type(module.bossName) == "table" then
-				module.displayName = table.concat(module.bossName, ", ")
-			else
-				module.displayName = module.bossName
-			end
-		end
-		if module.toggleOptions then
-			local zone = nil
-			if module.otherMenu then
-				zone = module.otherMenu
-			else
-				zone = type(module.zoneName) == "table" and module.zoneName[1] or module.zoneName
-			end
-			if zone then
-				if not zoneModules[zone] then
-					ac:RegisterOptionsTable(zone, populateZoneOptions)
-					acd:AddToBlizOptions(zone, zone, "Big Wigs")
-					zoneModules[zone] = {}
-				end
-				tinsert(zoneModules[zone], module)
-			end
-		elseif module.pluginOptions then
+		if module.pluginOptions then
 			pluginOptions.args[name] = module.pluginOptions
 		end
-	
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
