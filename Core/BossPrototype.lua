@@ -82,7 +82,7 @@ function boss:AddCombatListener(event, func, ...)
 end
 
 function boss:BossDeath(_, guid, multi)
-	local b = self.name
+	local b = self.moduelName
 	if type(guid) == "string" then
 		guid = tonumber((guid):sub(-12,-7),16)
 	end
@@ -160,13 +160,13 @@ function boss:GetEngageSync() return "BossEngaged" end
 function boss:ValidateEngageSync(sync, rest)
 	if type(sync) ~= "string" or type(rest) ~= "string" then return end
 	if sync ~= self:GetEngageSync() then return end
-	return rest == self.name
+	return rest == self.moduleName
 end
 
 function boss:CheckForEngage()
 	local go = scan(self)
 	if go then
-		self:Sync(self:GetEngageSync(), self.name)
+		self:Sync(self:GetEngageSync(), self.moduleName)
 	elseif UnitAffectingCombat("player") then
 		self:ScheduleTimer(self.CheckForEngage, .5, self)
 	end
