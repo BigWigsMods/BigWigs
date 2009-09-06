@@ -159,7 +159,6 @@ local function scanTarget(spellId, spellName)
 	if target then
 		mod:TargetMessage(spellName, target, "Attention", spellId)
 		mod:SecondaryIcon(target, "icon")
-		mod:CancelScheduledEvent("BWsunbeamToTScan")
 	end
 end
 

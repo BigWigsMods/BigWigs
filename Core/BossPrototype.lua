@@ -282,7 +282,13 @@ function boss:ScheduleEvent(id, func, delay, ...)
 	end
 	scheduledTimers[id].func = func
 	scheduledTimers[id].module = self
-	scheduledTimers[id].args = { ... }
+	if scheduledTimers[id].args then
+		for i = 1, select("#", ...) do
+			tinsert(scheduledTimers[id].args, (select(i, ...)))
+		end
+	else
+		scheduledTimers[id].args = { ... }
+	end
 	scheduledTimers[id].atid = self:ScheduleTimer(processScheduledTimer, delay, id)
 	return id
 end

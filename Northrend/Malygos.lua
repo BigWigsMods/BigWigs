@@ -144,7 +144,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["phase2_trigger"]) then
 		phase = 2
-		self:CancelAllScheduledEvents()
+		self:CancelScheduledEvent(L["vortex_warning"])
+		self:CancelScheduledEvent(L["sparks_warning"])
 		self:SendMessage("BigWigs_StopBar", self, L["sparks"])
 		self:SendMessage("BigWigs_StopBar", self, L["vortex_next"])
 		self:Message(L["phase2_message"], "Attention")
@@ -153,7 +154,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:DelayedMessage(87, L["breath_warning"], "Attention")
 		end
 	elseif msg:find(L["phase2_end_trigger"]) then
-		self:CancelAllScheduledEvents()
+		self:CancelScheduledEvent(L["breath_warning"])
 		self:SendMessage("BigWigs_StopBar", self, L["breath"])
 		self:Message(L["phase3_warning"], "Attention")
 	elseif msg:find(L["phase3_trigger"]) then
@@ -181,11 +182,11 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		end
 		if db.vortex then
 			self:Bar(L["vortex_next"], 29, 56105)
-			self:ScheduleEvent("VortexWarn", "BigWigs_Message", 24, L["vortex_warning"], "Attention")
+			self:DelayedMessage(24, L["vortex_warning"], "Attention")
 		end
 		if db.sparks then
 			self:Bar(L["sparks"], 25, 56152)
-			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 20, L["sparks_warning"], "Attention")
+			self:DelayedMessage(20, L["sparks_warning"], "Attention")
 		end
 		if db.berserk then
 			self:Berserk(600)

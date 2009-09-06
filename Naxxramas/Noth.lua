@@ -82,7 +82,7 @@ end
 
 function mod:Curse(_, spellId)
 	self:IfMessage(L["cursewarn"], "Important", spellId, "Alarm")
-	self:ScheduleEvent("bwnothcurse", "BigWigs_Message", cursetime - 10, L["curse10secwarn"], "Urgent")
+	self:DelayedMessage(cursetime - 10, L["curse10secwarn"], "Urgent")
 	self:Bar(L["cursebar"], cursetime, spellId)
 	self:Bar(L["curseexplosion"], 10, spellId)
 end
@@ -90,7 +90,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["blinktrigger"] and self.db.profile.blink then
 		self:IfMessage(L["blinkwarn"], "Important", 29208)
-		self:ScheduleEvent("bwnothblink", "BigWigs_Message", 34, L["blinkwarn2"], "Attention")
+		self:DelayedMessage(34, L["blinkwarn2"], "Attention")
 		self:Bar(L["blinkbar"], 39, 29208)
 	end
 end
@@ -112,37 +112,35 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:DelayedMessage(25, L["blinkwarn2"], "Attention")
 			self:Bar(L["blinkbar"], 30, 29208)
 		end
-		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, timeroom, self)
+		self:ScheduleEvent("bwnothtobalcony", "TeleportToBalcony", timeroom)
 	end
 end
 
-function mod:teleportToBalcony()
+function mod:TeleportToBalcony()
 	if timeroom == 90 then
 		timeroom = 110
 	elseif timeroom == 110 then
 		timeroom = 180
 	end
 
-	self:CancelScheduledEvent("bwnothblink")
-	self:CancelScheduledEvent("bwnothcurse")
 	self:SendMessage("BigWigs_StopBar", self, L["blinkbar"])
 	self:SendMessage("BigWigs_StopBar", self, L["cursebar"])
 
 	if self.db.profile.teleport then
 		self:Message(L["teleportwarn"], "Important")
 		self:Bar(L["backbar"], timebalcony, "Spell_Magic_LesserInvisibilty")
-		self:ScheduleEvent("bwnothback", "BigWigs_Message", timebalcony - 10, L["backwarn2"], "Urgent")
+		self:DelayedMessage(timebalcony - 10, L["backwarn2"], "Urgent")
 	end
 	if self.db.profile.wave then
 		self:Bar(L["wave1bar"], wave1time, "Spell_ChargePositive")
 		self:Bar(L["wave2bar"], wave2time, "Spell_ChargePositive")
-		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", wave2time - 10, L["wave2_message"], "Urgent")
+		self:DelayedMessage(wave2time - 10, L["wave2_message"], "Urgent")
 	end
-	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, timebalcony, self)
+	self:ScheduleEvent("bwnothtoroom", "TeleportToRoom", timebalcony)
 	wave2time = wave2time + 15
 end
 
-function mod:teleportToRoom()
+function mod:TeleportToRoom()
 	if timebalcony == 70 then
 		timebalcony = 95
 	elseif timebalcony == 95 then
@@ -152,8 +150,8 @@ function mod:teleportToRoom()
 	if self.db.profile.teleport then
 		self:Message(L["backwarn"]:format(timeroom), "Important")
 		self:Bar(L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
-		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", timeroom - 10, L["teleportwarn2"], "Urgent")
+		self:DelayedMessage(timeroom - 10, L["teleportwarn2"], "Urgent")
 	end
-	self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, timeroom, self)
+	self:ScheduleEvent("bwnothtobalcony", "TeleportToBalcony", timeroom)
 end
 

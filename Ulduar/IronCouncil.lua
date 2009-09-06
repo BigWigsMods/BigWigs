@@ -90,6 +90,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869, 63481) -- Brundir
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
+	self:AddCombatListener("SPELL_AURA_REMOVED", "TendrilsRemoved", 61887, 63486) -- Brundir +2
 
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -187,16 +188,15 @@ local function targetCheck()
 	end
 end
 
-local function tendrilsRemove()
-	mod:CancelTimer(tendrilscanner)
-	mod:PrimaryIcon(false, "icon")
+function mod:TendrilsRemoved()
+	self:CancelTimer(tendrilscanner)
+	self:PrimaryIcon(false, "icon")
 end
 
 function mod:Tendrils(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Attention", spellId)
 	self:Bar(spellName, 25, spellId)
 	tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
-	self:ScheduleEvent("TargetCancel", tendrilsRemove, 25)
 end
 
 function mod:Deaths(unit, guid)

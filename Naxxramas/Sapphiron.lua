@@ -77,7 +77,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["airphase_trigger"] then
-		self:CancelScheduledEvent("Lifedrain")
+		self:CancelScheduledEvent(L["lifedrain_warn1"])
 		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
 		if self:GetOption(28524) then
 			--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
@@ -103,7 +103,7 @@ end
 function mod:Drain(_, spellId)
 	self:IfMessage(L["lifedrain_message"], "Urgent", spellId)
 	self:Bar(L["lifedrain_bar"], 23, spellId)
-	self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
+	self:DelayedMessage(18, L["lifedrain_warn1"], "Important")
 end
 
 function mod:Icebolt(player, spellId, _, _, spellName)

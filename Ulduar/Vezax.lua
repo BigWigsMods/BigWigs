@@ -143,7 +143,6 @@ local function scanTarget(spellId, spellName)
 			mod:Whisper(target, spellName)
 		end
 		mod:SecondaryIcon(target, "crashicon")
-		mod:CancelScheduledEvent("BWCrashToTScan")
 	end
 end
 

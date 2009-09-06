@@ -57,6 +57,15 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local function backToRoom()
+	if mod.db.profile.teleport then
+		mod:Message(L["on_floor_message"], "Attention")
+		mod:DelayedMessage(60, L["teleport_30sec_message"], "Urgent")
+		mod:DelayedMessage(80, L["teleport_10sec_message"], "Important")
+		mod:Bar(L["teleport_bar"], 90, "Spell_Arcane_Blink")
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
 		if self.db.profile.engage then
@@ -69,7 +78,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:DelayedMessage(80, L["teleport_10sec_message"], "Important")
 		end
 	elseif msg:find(L["teleport_trigger"]) then
-		self:ScheduleEvent("BWBackToRoom", self.BackToRoom, 45, self)
+		self:ScheduleEvent("BWBackToRoom", backToRoom, 45)
 
 		if self.db.profile.teleport then
 			self:Message(L["on_platform_message"], "Attention")
@@ -77,15 +86,6 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:DelayedMessage(35, L["to_floor_10sec_message"], "Important")
 			self:Bar(L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
 		end
-	end
-end
-
-function mod:BackToRoom()
-	if self.db.profile.teleport then
-		self:Message(L["on_floor_message"], "Attention")
-		self:DelayedMessage(60, L["teleport_30sec_message"], "Urgent")
-		self:DelayedMessage(80, L["teleport_10sec_message"], "Important")
-		self:Bar(L["teleport_bar"], 90, "Spell_Arcane_Blink")
 	end
 end
 

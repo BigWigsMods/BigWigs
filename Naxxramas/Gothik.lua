@@ -112,22 +112,22 @@ end
 
 local function newTrainee()
 	mod:Bar(L["trabar"]:format(numTrainer), timeTrainer, "Ability_Seal")
-	mod:ScheduleEvent(L["trabar"]:format(numTrainer), waveWarn, timeTrainer - 3, L["trawarn"], "Attention")
-	mod:ScheduleEvent(L["trabar"]:format(numTrainer), newTrainee, timeTrainer)
+	mod:ScheduleEvent("traineeWave", waveWarn, timeTrainer - 3, L["trawarn"], "Attention")
+	mod:ScheduleEvent("nextTrainee", newTrainee, timeTrainer)
 	numTrainer = numTrainer + 1
 end
 
 local function newDeathknight()
 	mod:Bar(L["dkbar"]:format(numDK), timeDK, "INV_Boots_Plate_08")
-	mod:ScheduleEvent(L["dkbar"]:format(numDK), waveWarn, timeDK - 3, L["dkwarn"], "Urgent")
-	mod:ScheduleEvent(L["dkbar"]:format(numDK), newDeathknight, timeDK)
+	mod:ScheduleEvent("dkWave", waveWarn, timeDK - 3, L["dkwarn"], "Urgent")
+	mod:ScheduleEvent("nextDk", newDeathknight, timeDK)
 	numDK = numDK + 1
 end
 
 local function newRider()
 	mod:Bar(L["riderbar"]:format(numRider), timeRider, "Spell_Shadow_DeathPact")
-	mod:ScheduleEvent(L["riderbar"]:format(numRider), waveWarn, timeRider - 3, L["riderwarn"], "Important")
-	mod:ScheduleEvent(L["riderbar"]:format(numRider), newRider, timeRider)
+	mod:ScheduleEvent("riderWave", waveWarn, timeRider - 3, L["riderwarn"], "Important")
+	mod:ScheduleEvent("nextRider", newRider, timeRider)
 	numRider = numRider + 1
 end
 

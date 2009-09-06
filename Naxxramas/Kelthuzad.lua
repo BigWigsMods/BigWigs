@@ -106,15 +106,21 @@ function mod:Fizzure(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 end
 
-local function fbWarn(spellId, spellName)
-	mod:TargetMessage(spellName, fbTargets, "Important", spellId, "Alert")
-	mod:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
-	mod:Bar(L["frostblast_bar"], 37, spellId)
-end
+do
+	local spell = nil
+	local name = nil
+	local function fbWarn()
+		mod:TargetMessage(name, fbTargets, "Important", spell, "Alert")
+		mod:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
+		mod:Bar(L["frostblast_bar"], 37, spell)
+	end
 
-function mod:FrostBlast(player, spellId, _, _, spellName)
-	fbTargets[#fbTargets + 1] = player
-	self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4, spellId, spellName)
+	function mod:FrostBlast(player, spellId, _, _, spellName)
+		spell = spellId
+		name = spellName
+		fbTargets[#fbTargets + 1] = player
+		self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4)
+	end
 end
 
 function mod:Detonate(player, spellId, _, _, spellName)
@@ -126,17 +132,21 @@ function mod:Detonate(player, spellId, _, _, spellName)
 	self:DelayedMessage(15, L["detonate_warning"], "Attention")
 end
 
-local function mcWarn(spellId)
-	local spellName = GetSpellInfo(605) -- Mind Control
-	mod:TargetMessage(spellName, mcTargets, "Important", spellId, "Alert")
-	mod:Bar(spellName, 20, 28410)
-	mod:DelayedMessage(68, L["mc_warning"], "Urgent")
-	mod:Bar(L["mc_nextbar"], 68, spellId)
-end
+do
+	local spell = nil
+	local function mcWarn()
+		local spellName = GetSpellInfo(605) -- Mind Control
+		mod:TargetMessage(spellName, mcTargets, "Important", spell, "Alert")
+		mod:Bar(spellName, 20, 28410)
+		mod:DelayedMessage(68, L["mc_warning"], "Urgent")
+		mod:Bar(L["mc_nextbar"], 68, spell)
+	end
 
-function mod:MC(player, spellId)
-	mcTargets[#mcTargets + 1] = player
-	self:ScheduleEvent("BWMCWarn", mcWarn, 0.5, spellId)
+	function mod:MC(player, spellId)
+		spell = spellId
+		mcTargets[#mcTargets + 1] = player
+		self:ScheduleEvent("BWMCWarn", mcWarn, 0.5)
+	end
 end
 
 function mod:UNIT_HEALTH(msg)
