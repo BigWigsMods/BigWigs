@@ -131,7 +131,7 @@ function mod:UNIT_AURA(event, unit)
 	if snobolledWarned[n] and not name then
 		snobolledWarned[n] = nil
 	elseif name and not snobolledWarned[n] then
-		self:IfMessage(L["snobold_message"]:format(n), "Attention", icon)
+		self:TargetMessage(L["snobold_message"], n, "Attention", icon)
 		snobolledWarned[n] = true
 	end
 end
