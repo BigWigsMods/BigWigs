@@ -84,7 +84,7 @@ function mod:RemoveLegionFlameIcon()
 end
 
 function mod:NetherPower(unit, spellId, _, _, spellName)
-	if unit == boss then
+	if unit == mod.bossName then
 		self:IfMessage(spellName, "Attention", spellId)
 		self:Bar(L["netherpower_bar"], 44, spellId)
 	end

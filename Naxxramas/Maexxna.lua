@@ -98,7 +98,7 @@ function mod:Frenzy(_, spellId)
 end
 
 function mod:UNIT_HEALTH(event, msg)
-	if UnitName(msg) == boss then
+	if UnitName(msg) == mod.bossName then
 		local health = UnitHealth(msg)
 		if health > 30 and health <= 33 and not enrageannounced then
 			if self:GetOption(54123) then

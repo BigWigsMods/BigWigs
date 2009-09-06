@@ -121,14 +121,14 @@ end
 
 local function scanTarget(spellId, spellName)
 	local target
-	if UnitName("target") == boss then
+	if UnitName("target") == mod.bossName then
 		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
+	elseif UnitName("focus") == mod.bossName then
 		target = UnitName("focustarget")
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == mod.bossName then
 				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end

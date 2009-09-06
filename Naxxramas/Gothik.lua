@@ -92,7 +92,7 @@ function mod:Deaths(unit)
 		self:Message(L["riderdiewarn"], "Important")
 	elseif self.db.profile.adddeath and unit == L["deathknight"] then
 		self:Message(L["dkdiewarn"], "Important")
-	elseif unit == boss then
+	elseif unit == mod.bossName then
 		self:BossDeath(nil, self.guid)
 	end
 end

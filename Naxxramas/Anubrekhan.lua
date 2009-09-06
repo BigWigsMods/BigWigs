@@ -55,7 +55,7 @@ end
 ------------------------------
 
 function mod:GainSwarm(unit, spellId, _, _, spellName)
-	if unit == boss then
+	if unit == mod.bossName then
 		self:DelayedMessage(20, L["gainendwarn"], "Important")
 		self:Bar(spellName, 20, spellId)
 		self:DelayedMessage(75, L["gainwarn10sec"], "Important")
