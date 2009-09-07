@@ -65,7 +65,7 @@ local acOptions = {
 				for name, module in BigWigs:IteratePlugins() do
 					module:Enable()
 				end
-				BigWigs:ShowPluginConfig()
+				BigWigs:SendMessage("BigWigs_StartConfigureMode")
 			end,
 			order = 11,
 			width = "full",
@@ -197,7 +197,10 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_TargetSeen")
 	self:RegisterMessage("BigWigs_RebootModule")
 	self:RegisterMessage("BigWigs_RecvSync")
+
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
+	self:RegisterMessage("BigWigs_StartConfigureMode")
+	self:RegisterMessage("BigWigs_StopConfigureMode")
 
 	self:SendMessage("BigWigs_CoreEnabled")
 
@@ -264,6 +267,9 @@ do
 		frame:SetHeight(600)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle("Configure")
+		frame:SetCallback("OnClose", function()
+			addon:SendMessage("BigWigs_StopConfigureMode")
+		end)
 
 		local test = AceGUI:Create("Button")
 		test:SetText("Test")
@@ -294,16 +300,28 @@ do
 	function addon:BigWigs_SetConfigureTarget(event, module)
 		selectTab(module)
 	end
-	function addon:ShowPluginConfig()
+
+	function addon:InConfigureMode() return configMode end
+
+	function addon:BigWigs_StartConfigureMode(event)
 		createPluginFrame()
 		frame:Show()
-		BigWigs:SendMessage("BigWigs_TemporaryConfig")
-		for name, module in BigWigs:IteratePlugins() do
-			if module.GetPluginConfig then
-				addon:SendMessage("BigWigs_SetConfigureTarget", module)
-				break
+		local current = tabs:GetUserData("current")
+		if not current then
+			for name, module in self:IteratePlugins() do
+				if module.GetPluginConfig then
+					current = module
+					break
+				end
 			end
+		else
+			current = self:GetPlugin(current)
 		end
+		self:SendMessage("BigWigs_SetConfigureTarget", current)
+	end
+
+	function addon:BigWigs_StopConfigureMode()
+		frame:Hide()
 	end
 end
 

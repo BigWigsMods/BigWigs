@@ -81,7 +81,9 @@ local function createAnchor()
 	close.tooltipText = L["Hides the anchors."]
 	close:SetScript("OnEnter", onControlEnter)
 	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function() anchor:Hide() end)
+	close:SetScript("OnClick", function()
+		plugin:SendMessage("BigWigs_StopConfigureMode")
+	end)
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	anchor:SetScript("OnDragStart", onDragStart)
 	anchor:SetScript("OnDragStop", onDragStop)
@@ -130,13 +132,12 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
-	self:RegisterMessage("BigWigs_TemporaryConfig", function()
+	self:RegisterMessage("BigWigs_StartConfigureMode", function()
 		if not anchor then createAnchor() end
-		if anchor:IsShown() then
-			anchor:Hide()
-		else
-			anchor:Show()
-		end
+		anchor:Show()
+	end)
+	self:RegisterMessage("BigWigs_StopConfigureMode", function()
+		anchor:Hide()
 	end)
 
 	colorModule = BigWigs:GetPlugin("Colors", true)
@@ -145,6 +146,7 @@ end
 function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
+	if not anchor then createAnchor() end
 	if module == self then
 		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else

@@ -131,7 +131,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_ShowProximity")
 	self:RegisterMessage("BigWigs_HideProximity")
-	self:RegisterMessage("BigWigs_TemporaryConfig", "TestProximity")
+	self:RegisterMessage("BigWigs_StartConfigureMode", "TestProximity")
+	self:RegisterMessage("BigWigs_StopConfigureMode", "CloseProximity")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 end
 
@@ -144,6 +145,7 @@ end
 --
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
+	if not anchor then self:SetupFrames() end
 	if module == self then
 		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
@@ -348,6 +350,11 @@ local function onResize(self, width, height)
 	plugin.db.profile.height = height
 end
 
+local function setConfigureTarget(self, button)
+	if button ~= "LeftButton" then return end
+	plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+end
+
 local locked = nil
 function lockDisplay()
 	if locked then return end
@@ -358,6 +365,7 @@ function lockDisplay()
 	anchor:SetScript("OnSizeChanged", nil)
 	anchor:SetScript("OnDragStart", nil)
 	anchor:SetScript("OnDragStop", nil)
+	anchor:SetScript("OnMouseUp", nil)
 	anchor.drag:Hide()
 	locked = true
 end
@@ -370,6 +378,7 @@ function unlockDisplay()
 	anchor:SetScript("OnSizeChanged", onResize)
 	anchor:SetScript("OnDragStart", onDragStart)
 	anchor:SetScript("OnDragStop", onDragStop)
+	anchor:SetScript("OnMouseUp", setConfigureTarget)
 	anchor.drag:Show()
 	locked = nil
 end

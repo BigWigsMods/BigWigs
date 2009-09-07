@@ -174,7 +174,9 @@ local function createAnchor(frameName, title)
 	close.tooltipText = L["Hides the anchors."]
 	close:SetScript("OnEnter", onControlEnter)
 	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function() plugin:ShowAnchors() end)
+	close:SetScript("OnClick", function()
+		plugin:SendMessage("BigWigs_StopConfigureMode")
+	end)
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	display:SetScript("OnSizeChanged", onResize)
 	display:SetScript("OnDragStart", onDragStart)
@@ -189,13 +191,13 @@ local function createAnchor(frameName, title)
 end
 
 function plugin:ShowAnchors()
-	if normalAnchor:IsShown() then
-		normalAnchor:Hide()
-		emphasizeAnchor:Hide()
-	else
-		normalAnchor:Show()
-		emphasizeAnchor:Show()
-	end
+	normalAnchor:Show()
+	emphasizeAnchor:Show()
+end
+
+function plugin:HideAnchors()
+	normalAnchor:Hide()
+	emphasizeAnchor:Hide()
 end
 
 function plugin:ResetAnchors()
@@ -239,12 +241,17 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_TemporaryConfig", "ShowAnchors")
+	self:RegisterMessage("BigWigs_StartConfigureMode", "ShowAnchors")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
+	self:RegisterMessage("BigWigs_StopConfigureMode", "HideAnchors")
 	colors = BigWigs:GetPlugin("Colors")
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
+	if not normalAnchor then
+		normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
+		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
+	end
 	if module == self then
 		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
