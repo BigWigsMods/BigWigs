@@ -83,7 +83,7 @@ L["Positive"] = "Positiv"
 L["Bosskill"] = "Boss besiegt"
 L["Core"] = "Kern"
 
-L["color_upgrade"] = "Deine Farben Einstellungen für Nachrichten und Balken wurden zurückgesetzt um Probleme beim Aktualisieren von der letzten version zu vermeiden. Wenn du sie wieder ändern möchtest, rechtsklick auf Big Wigs und geh zu Plugins -> Farben."
+L["color_upgrade"] = "Deine Farben für Nachrichten und Balken wurden zurückgesetzt, um Probleme mit der Aktualisierung des Addons zu vermeiden. Wenn du sie ändern möchtest, rechtsklicke auf das BigWigs-Symbol und gehe zu Plugins -> Farben."
 
 -- Messages.lua
 

@@ -90,7 +90,7 @@ if L then
 	L.vortex_or_shield_cd = "~Vortex/Schild"
 
 	L.vortex = "Vortex"
-	L.vortex_desc = "Warnt, wenn die Zwillinge anfangen Vortex zu wirken."
+	L.vortex_desc = "Warnt, wenn die Zwillinge anfangen, Vortex zu wirken."
 
 	L.shield = "Schild der Nacht/Licht"
 	L.shield_desc = "Warnt bei Schild der Nacht/Licht."

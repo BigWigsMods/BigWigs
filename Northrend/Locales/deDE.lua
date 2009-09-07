@@ -14,7 +14,6 @@ if L then
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Felssplitter gewirkt wird (benötigt Assistent oder höher)."
 end
 
-
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "deDE")
 if L then
 	L.nova_next = "~Blitzschlagnova"
@@ -24,9 +23,13 @@ if L then
 	L.overcharge_next = "~Überladen"
 
 	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol (Totenkopf) auf dem Sturmdiener, der von Überladen betroffen ist (benötigt Assistent oder höher)."
+	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf dem Sturmdiener, der von Überladen betroffen ist (benötigt Assistent oder höher)."
 end
 
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "deDE")
+if L then
+	L.cinder_message = "Flamme auf DIR!"
+end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "deDE")
 if L then
@@ -57,11 +60,11 @@ if L then
 	L.phase_desc = "Warnt bei Phasenwechsel."
 	L.phase2_warning = "Phase 2 bald!"
 	L.phase2_trigger = "Ich hatte gehofft, eure Leben schnell zu beenden, doch ihr zeigt euch... hartnäckiger als erwartet. Nichtsdestotrotz sind eure Bemühungen vergebens. Ihr törichten, leichtfertigen Sterblichen tragt die Schuld an diesem Krieg. Ich tue, was ich tun muss, und wenn das eure Auslöschung bedeutet... dann SOLL ES SO SEIN!"
-	L.phase2_message = "Phase 2, Nexuslords & Saat der Ewigkeit!"
+	L.phase2_message = "Phase 2, Nexuslords & Saat der Ewigkeit"
 	L.phase2_end_trigger = "GENUG! Wenn ihr die Magie Azeroths zurückhaben wollt, dann sollt ihr sie bekommen!"
 	L.phase3_warning = "Phase 3 bald!"
 	L.phase3_trigger = "Eure Wohltäter sind eingetroffen, doch sie kommen zu spät! Die hier gespeicherten Energien reichen aus, die Welt zehnmal zu zerstören. Was, denkt ihr, werden sie mit euch machen?"
-	L.phase3_message = "Phase 3!"
+	L.phase3_message = "Phase 3"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "deDE")
