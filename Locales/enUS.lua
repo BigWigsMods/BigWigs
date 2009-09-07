@@ -43,3 +43,4 @@ L["Menu options."] = true
 L["Big Wigs is currently disabled."] = true
 L["|cffeda55fClick|r to enable."] = true
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = true
+L["All running modules have been disabled."] = true
