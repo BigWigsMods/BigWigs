@@ -95,26 +95,25 @@ function boss:BossDeath(_, guid, multi)
 	end
 end
 
+local findTargetByGUID
+do
+	local t = {"target", "focus", "mouseover"}
+	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
+	for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
+	function findTargetByGUID(id)
+		for i, unit in next, t do
+			if UnitExists(unit) and not UnitIsPlayer(unit) then
+				local unitId = tonumber((UnitGUID(unit)):sub(-12,-7), 16)
+				if unitId == id then return unit end
+			end
+		end
+	end
+end
+
 local function scan(self)
-	if UnitExists("target") and UnitAffectingCombat("target") then return "target" end
-	if UnitExists("focus") and UnitAffectingCombat("focus") then return "focus" end
-	if UnitExists("mouseover") and UnitAffectingCombat("mouseover") then return "mouseover" end
-	local num = GetNumRaidMembers()
-	if num == 0 then
-		num = GetNumPartyMembers()
-		for i = 1, num do
-			local partyUnit = fmt("%s%d", "party", i)
-			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) then
-				return partyUnit
-			end
-		end
-	else
-		for i = 1, num do
-			local raidUnit = fmt("%s%d", "raid", i)
-			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) then
-				return raidUnit
-			end
-		end
+	for i, id in next, self.enabletrigger do
+		local unit = findTargetByGUID(id)
+		if unit and UnitAffectingCombat(unit) then return true end
 	end
 end
 
