@@ -66,6 +66,7 @@ local acOptions = {
 					module:Enable()
 				end
 				BigWigs:SendMessage("BigWigs_StartConfigureMode")
+				BigWigs:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 			end,
 			order = 11,
 			width = "full",
@@ -240,26 +241,22 @@ do
 	local frame = nil
 	local plugins = {}
 	local tabs = nil
-	
-	local function selectTab(plugin)
-		local current = tabs:GetUserData("current")
-		if current and current == plugin:GetName() then return end
-		tabs:SetUserData("current", plugin:GetName())
+	local configMode = nil
+
+	local function widgetSelect(widget, callback, tab)
+		if widget:GetUserData("tab") == tab then return end
+		local plugin = BigWigs:GetPlugin(tab)
+		if not plugin then return end
+		widget:SetUserData("tab", tab)
 		tabs:PauseLayout()
 		tabs:ReleaseChildren()
 		tabs:AddChildren(plugin:GetPluginConfig())
 		tabs:ResumeLayout()
 		frame:DoLayout()
-	end
-	local function widgetSelect(widget, callback, tab)
-		local plugin = BigWigs:GetPlugin(tab)
-		if not plugin then return end
-		selectTab(plugin)
 		addon:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end
-	local function onTestClick()
-		BigWigs:SendMessage("BigWigs_Test")
-	end
+	local function onTestClick() BigWigs:SendMessage("BigWigs_Test") end
+	local function onResetClick() BigWigs:SendMessage("BigWigs_ResetPositions") end
 	local function createPluginFrame()
 		if frame then return end
 		frame = AceGUI:Create("Window")
@@ -293,34 +290,24 @@ do
 		tabs = AceGUI:Create("TabGroup")
 		tabs:SetTabs(plugins)
 		tabs:SetCallback("OnGroupSelected", widgetSelect)
+		tabs:SetUserData("tab", "")
 		tabs:SetFullWidth(true)
 		tabs:SetFullHeight(true)
 		frame:AddChild(tabs)
 	end
 	function addon:BigWigs_SetConfigureTarget(event, module)
-		selectTab(module)
+		tabs:SelectTab(module:GetName())
 	end
 
 	function addon:InConfigureMode() return configMode end
-
 	function addon:BigWigs_StartConfigureMode(event)
+		configMode = true
 		createPluginFrame()
 		frame:Show()
-		local current = tabs:GetUserData("current")
-		if not current then
-			for name, module in self:IteratePlugins() do
-				if module.GetPluginConfig then
-					current = module
-					break
-				end
-			end
-		else
-			current = self:GetPlugin(current)
-		end
-		self:SendMessage("BigWigs_SetConfigureTarget", current)
 	end
 
 	function addon:BigWigs_StopConfigureMode()
+		configMode = nil
 		frame:Hide()
 	end
 end

@@ -41,8 +41,6 @@ plugin.defaultDB = {
 	BigWigsEmphasizeAnchor_width = 300,
 }
 
-local function getOption(key) return plugin.db.profile[key] end
-local function setOption(key, value) plugin.db.profile[key] = value end
 local function shouldDisableEmphasizeOption() return not plugin.db.profile.emphasize end
 
 --------------------------------------------------------------------------------
@@ -166,18 +164,6 @@ local function createAnchor(frameName, title)
 	tex:SetHeight(16)
 	tex:SetBlendMode("ADD")
 	tex:SetPoint("CENTER", drag)
-	local close = CreateFrame("Button", nil, display)
-	close:SetPoint("BOTTOMLEFT", display, "BOTTOMLEFT", 3, 3)
-	close:SetHeight(14)
-	close:SetWidth(14)
-	close.tooltipHeader = L["Hide"]
-	close.tooltipText = L["Hides the anchors."]
-	close:SetScript("OnEnter", onControlEnter)
-	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function()
-		plugin:SendMessage("BigWigs_StopConfigureMode")
-	end)
-	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	display:SetScript("OnSizeChanged", onResize)
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
@@ -190,29 +176,37 @@ local function createAnchor(frameName, title)
 	return display
 end
 
-function plugin:ShowAnchors()
+local function createAnchors()
+	if not normalAnchor then
+		normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
+		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
+	end
+end
+
+local function showAnchors()
+	if not normalAnchor then createAnchors() end
 	normalAnchor:Show()
 	emphasizeAnchor:Show()
 end
 
-function plugin:HideAnchors()
+local function hideAnchors()
 	normalAnchor:Hide()
 	emphasizeAnchor:Hide()
 end
 
-function plugin:ResetAnchors()
+local function resetAnchors()
 	normalAnchor:ClearAllPoints()
 	normalAnchor:SetPoint(unpack(defaultPositions[normalAnchor:GetName()]))
 	db[normalAnchor.x] = nil
 	db[normalAnchor.y] = nil
 	db[normalAnchor.w] = nil
-	normalAnchor:SetWidth(self.defaultDB[normalAnchor.w])
+	normalAnchor:SetWidth(plugin.defaultDB[normalAnchor.w])
 	emphasizeAnchor:ClearAllPoints()
 	emphasizeAnchor:SetPoint(unpack(defaultPositions[emphasizeAnchor:GetName()]))
 	db[emphasizeAnchor.x] = nil
 	db[emphasizeAnchor.y] = nil
 	db[emphasizeAnchor.w] = nil
-	emphasizeAnchor:SetWidth(self.defaultDB[emphasizeAnchor.w])
+	emphasizeAnchor:SetWidth(plugin.defaultDB[emphasizeAnchor.w])
 end
 
 --------------------------------------------------------------------------------
@@ -230,28 +224,20 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	if not normalAnchor then
-		normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
-		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
-	end
-	
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StopBar")
 	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_StartConfigureMode", "ShowAnchors")
+	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
-	self:RegisterMessage("BigWigs_StopConfigureMode", "HideAnchors")
+	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	colors = BigWigs:GetPlugin("Colors")
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
-	if not normalAnchor then
-		normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
-		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
-	end
 	if module == self then
 		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
@@ -373,7 +359,7 @@ do
 			enable:SetLabel(L["Enable"])
 			enable:SetUserData("key", "emphasize")
 			enable:SetCallback("OnValueChanged", checkboxCallback)
-			enable:SetRelativeWidth(0.5)
+			enable:SetFullWidth(true)
 		
 			local flash = AceGUI:Create("CheckBox")
 			flash:SetValue(db.emphasizeFlash)
@@ -383,7 +369,7 @@ do
 			flash:SetUserData("tooltip", L["Flashes the background of emphasized bars, which could make it easier for you to spot them."])
 			flash:SetCallback("OnEnter", onControlEnter)
 			flash:SetCallback("OnLeave", onControlLeave)
-			flash:SetRelativeWidth(0.5)
+			flash:SetFullWidth(true)
 		
 			local move = AceGUI:Create("CheckBox")
 			move:SetValue(db.emphasizeMove)
@@ -393,7 +379,7 @@ do
 			move:SetUserData("tooltip", L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."])
 			move:SetCallback("OnEnter", onControlEnter)
 			move:SetCallback("OnLeave", onControlLeave)
-			move:SetRelativeWidth(0.5)
+			move:SetFullWidth(true)
 
 			local growup = AceGUI:Create("CheckBox")
 			growup:SetValue(db.emphasizeGrowup)
@@ -403,7 +389,7 @@ do
 			growup:SetUserData("tooltip", L["Toggle bars grow upwards/downwards from anchor."])
 			growup:SetCallback("OnEnter", onControlEnter)
 			growup:SetCallback("OnLeave", onControlLeave)
-			growup:SetRelativeWidth(0.5)
+			growup:SetFullWidth(true)
 
 			local scale = AceGUI:Create("Slider")
 			scale:SetValue(db.emphasizeScale)
@@ -475,6 +461,7 @@ do
 end
 
 function plugin:BigWigs_StartBar(message, module, text, time, icon)
+	if not normalAnchor then createAnchors() end
 	stop(module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
 	normalAnchor.bars[bar] = true

@@ -73,18 +73,6 @@ local function createAnchor()
 	header:SetAllPoints(anchor)
 	header:SetJustifyH("CENTER")
 	header:SetJustifyV("MIDDLE")
-	local close = CreateFrame("Button", nil, anchor)
-	close:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT", 3, 3)
-	close:SetHeight(14)
-	close:SetWidth(14)
-	close.tooltipHeader = L["Hide"]
-	close.tooltipText = L["Hides the anchors."]
-	close:SetScript("OnEnter", onControlEnter)
-	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function()
-		plugin:SendMessage("BigWigs_StopConfigureMode")
-	end)
-	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	anchor:SetScript("OnDragStart", onDragStart)
 	anchor:SetScript("OnDragStop", onDragStop)
 	anchor:SetScript("OnMouseUp", function(self, button)
@@ -96,10 +84,8 @@ local function createAnchor()
 end
 
 local function resetAnchor()
-	if anchor then
-		anchor:ClearAllPoints()
-		anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
-	end
+	anchor:ClearAllPoints()
+	anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
 	plugin.db.profile.posx = nil
 	plugin.db.profile.posy = nil
 end
@@ -125,11 +111,11 @@ plugin.defaultDB = {
 
 function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
-
 	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
 end
 
 function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_StartConfigureMode", function()
@@ -143,10 +129,7 @@ function plugin:OnPluginEnable()
 	colorModule = BigWigs:GetPlugin("Colors", true)
 end
 
-function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
-
 function plugin:BigWigs_SetConfigureTarget(event, module)
-	if not anchor then createAnchor() end
 	if module == self then
 		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
