@@ -77,12 +77,6 @@ local function updateSoundButton()
 		anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
 	end
 end
-local function toggleSound()
-	plugin.db.profile.sound = not plugin.db.profile.sound
-	updateSoundButton()
-end
-
-local function isLocked() return plugin.db.profile.lock end
 
 plugin.defaultDB = {
 	posx = nil,
@@ -100,55 +94,6 @@ plugin.defaultDB = {
 }
 plugin.external = true
 
-plugin.consoleCmd = L["Proximity"]
-plugin.consoleOptions = {
-	type = "group",
-	name = L["Proximity"],
-	desc = L["Options for the Proximity Display."],
-	handler = plugin,
-	pass = true,
-	get = function(key)
-		return plugin.db.profile[key]
-	end,
-	set = function(key, value)
-		plugin.db.profile[key] = value
-		if key == "disabled" then
-			if value then
-				plugin:CloseProximity()
-			else
-				plugin:OpenProximity()
-			end
-		elseif key == "sound" then
-			updateSoundButton()
-		end
-	end,
-	args = {
-		test = {
-			type = "execute",
-			name = L["Test"],
-			desc = L["Perform a Proximity test."],
-			func = "TestProximity",
-			order = 99,
-		},
-		sound = {
-			type = "toggle",
-			name = L["Sound"],
-			desc = L["Play sound on proximity."],
-			order = 100,
-		},
-		disabled = {
-			type = "toggle",
-			name = L["Disabled"],
-			desc = L["Disable the proximity display for all modules that use it."],
-			order = 101,
-		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 102,
-		},
-	}
-}
 ----
 -- proximity repeater frame
 ----
@@ -215,6 +160,16 @@ do
 	end
 
 	function plugin:GetPluginConfig()
+		local disable = AceGUI:Create("CheckBox")
+		disable:SetValue(db.disabled)
+		disable:SetLabel(L["Disabled"])
+		disable:SetCallback("OnEnter", onControlEnter)
+		disable:SetCallback("OnLeave", onControlLeave)
+		disable:SetCallback("OnValueChanged", checkboxCallback)
+		disable:SetUserData("tooltip", L["Disable the proximity display for all modules that use it."])
+		disable:SetUserData("key", "disabled")
+		disable:SetFullWidth(true)
+	
 		local lock = AceGUI:Create("CheckBox")
 		lock:SetValue(db.lock)
 		lock:SetLabel(L["Lock"])
@@ -272,7 +227,7 @@ do
 
 			showHide:AddChildren(title, background, sound, close)
 		end
-		return lock, showHide
+		return disable, lock, showHide
 	end
 end
 
@@ -314,7 +269,6 @@ end
 function plugin:CloseProximity()
 	if anchor then anchor:Hide() end
 	repeater:Hide()
-	dew:Close()
 end
 
 function plugin:OpenProximity()
@@ -374,10 +328,6 @@ end
 --    Create the Anchor     --
 ------------------------------
 
-local function showConfig()
-	dew:FeedAceOptionsTable(plugin.consoleOptions.args.display)
-end
-
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
@@ -388,11 +338,6 @@ local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing()
 local function onResize(self, width, height)
 	plugin.db.profile.width = width
 	plugin.db.profile.height = height
-end
-local function displayOnMouseDown(self, button)
-	if button == "RightButton" then
-		dew:Open(self, "children", showConfig)
-	end
 end
 
 local locked = nil
@@ -405,7 +350,6 @@ function lockDisplay()
 	anchor:SetScript("OnSizeChanged", nil)
 	anchor:SetScript("OnDragStart", nil)
 	anchor:SetScript("OnDragStop", nil)
-	anchor:SetScript("OnMouseDown", nil)
 	anchor.drag:Hide()
 	locked = true
 end
@@ -418,7 +362,6 @@ function unlockDisplay()
 	anchor:SetScript("OnSizeChanged", onResize)
 	anchor:SetScript("OnDragStart", onDragStart)
 	anchor:SetScript("OnDragStop", onDragStop)
-	anchor:SetScript("OnMouseDown", displayOnMouseDown)
 	anchor.drag:Show()
 	locked = nil
 end
