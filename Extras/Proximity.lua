@@ -11,8 +11,12 @@ if not plugin then return end
 
 local dew = AceLibrary("Dewdrop-2.0")
 
+local AceGUI = LibStub("AceGUI-3.0")
+
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
+
+local db = nil
 
 local lockWarned = nil
 local active = nil -- The module we're currently tracking proximity for.
@@ -143,78 +147,6 @@ plugin.consoleOptions = {
 			name = " ",
 			order = 102,
 		},
-		display = {
-			type = "group",
-			name = L["Display"],
-			desc = L["Options for the Proximity display window."],
-			order = 103,
-			pass = true,
-			handler = plugin,
-			set = function(key, value)
-				plugin.db.profile[key] = value
-				if key == "lock" and value and not lockWarned then
-					BigWigs:Print(L["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."])
-					lockWarned = true
-				end
-				plugin:RestyleWindow()
-			end,
-			get = function(key)
-				return plugin.db.profile[key]
-			end,
-			args = {
-				lock = {
-					type = "toggle",
-					name = L["Lock"],
-					desc = L["Locks the display in place, preventing moving and resizing."],
-					order = 1,
-				},
-				close = {
-					type = "execute",
-					name = L["Close"],
-					desc = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."],
-					func = "CloseProximity",
-					order = 2,
-				},
-				spacer = {
-					type = "header",
-					name = " ",
-					order = 50,
-				},
-				header = {
-					type = "header",
-					name = L["Show/hide"],
-					order = 51,
-				},
-				showTitle = {
-					type = "toggle",
-					name = L["Title"],
-					desc = L["Shows or hides the title."],
-					order = 52,
-					disabled = isLocked,
-				},
-				showBackground = {
-					type = "toggle",
-					name = L["Background"],
-					desc = L["Shows or hides the background."],
-					order = 53,
-					disabled = isLocked,
-				},
-				showSound = {
-					type = "toggle",
-					name = L["Sound button"],
-					desc = L["Shows or hides the sound button."],
-					order = 54,
-					disabled = isLocked,
-				},
-				showClose = {
-					type = "toggle",
-					name = L["Close button"],
-					desc = L["Shows or hides the close button."],
-					order = 55,
-					disabled = isLocked,
-				},
-			},
-		},
 	}
 }
 ----
@@ -247,6 +179,8 @@ function plugin:OnRegister()
 		CUSTOM_CLASS_COLORS:RegisterCallback(update)
 		update()
 	end
+	
+	db = self.db.profile
 end
 
 function plugin:OnPluginEnable()
@@ -258,6 +192,86 @@ end
 
 function plugin:OnPluginDisable()
 	self:CloseProximity()
+end
+
+-------------------------------------------------------------------------------
+-- Options
+--
+do
+	local function onControlEnter(widget, event, value)
+		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
+		GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
+		GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
+		GameTooltip:Show()
+	end
+	local function onControlLeave() GameTooltip:Hide() end
+
+	local function checkboxCallback(widget, event, value)
+		local key = widget:GetUserData("key")
+		plugin.db.profile[key] = value and true or false
+	end
+
+	function plugin:GetPluginConfig()
+		local lock = AceGUI:Create("CheckBox")
+		lock:SetValue(db.lock)
+		lock:SetLabel(L["Lock"])
+		lock:SetCallback("OnEnter", onControlEnter)
+		lock:SetCallback("OnLeave", onControlLeave)
+		lock:SetCallback("OnValueChanged", checkboxCallback)
+		lock:SetUserData("tooltip", L["Locks the display in place, preventing moving and resizing."])
+		lock:SetUserData("key", "lock")
+		lock:SetFullWidth(true)
+
+		local showHide = AceGUI:Create("InlineGroup")
+		showHide:SetTitle(L["Show/hide"])
+		showHide:SetFullWidth(true)
+
+		do
+			local title = AceGUI:Create("CheckBox")
+			title:SetValue(db.showTitle)
+			title:SetLabel(L["Title"])
+			title:SetCallback("OnEnter", onControlEnter)
+			title:SetCallback("OnLeave", onControlLeave)
+			title:SetCallback("OnValueChanged", checkboxCallback)
+			title:SetUserData("tooltip", L["Shows or hides the title."])
+			title:SetUserData("key", "showTitle")
+			title:SetRelativeWidth(0.5)
+
+			local background = AceGUI:Create("CheckBox")
+			background:SetValue(db.showBackground)
+			background:SetLabel(L["Background"])
+			background:SetCallback("OnEnter", onControlEnter)
+			background:SetCallback("OnLeave", onControlLeave)
+			background:SetCallback("OnValueChanged", checkboxCallback)
+			background:SetUserData("tooltip", L["Shows or hides the background."])
+			background:SetUserData("key", "showBackground")
+			background:SetRelativeWidth(0.5)
+
+			local sound = AceGUI:Create("CheckBox")
+			sound:SetValue(db.showSound)
+			sound:SetLabel(L["Sound button"])
+			sound:SetCallback("OnEnter", onControlEnter)
+			sound:SetCallback("OnLeave", onControlLeave)
+			sound:SetCallback("OnValueChanged", checkboxCallback)
+			sound:SetUserData("tooltip", L["Shows or hides the sound button."])
+			sound:SetUserData("key", "showSound")
+			sound:SetRelativeWidth(0.5)
+
+			local close = AceGUI:Create("CheckBox")
+			close:SetValue(db.showClose)
+			close:SetLabel(L["Close button"])
+			close:SetCallback("OnEnter", onControlEnter)
+			close:SetCallback("OnLeave", onControlLeave)
+			close:SetCallback("OnValueChanged", checkboxCallback)
+			close:SetUserData("tooltip", L["Shows or hides the close button."])
+			close:SetUserData("key", "showClose")
+			close:SetRelativeWidth(0.5)
+
+			showHide:AddChildren(title, background, sound, close)
+		end
+		return lock, showHide
+	end
 end
 
 -----------------------------------------------------------------------
