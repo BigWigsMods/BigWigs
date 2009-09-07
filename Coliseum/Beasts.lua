@@ -55,7 +55,7 @@ if L then
 	-- Gormok
 	L.snobold = "Snobold"
 	L.snobold_desc = "Warn who gets a Snobold on their heads."
-	L.snobold_message = "Add on %s!"
+	L.snobold_message = "Add"
 	L.impale_message = "%2$dx Impale on %1$s"
 	L.firebomb_message = "Fire on YOU!"
 
