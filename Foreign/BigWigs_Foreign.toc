@@ -8,7 +8,5 @@
 
 ## Dependencies: BigWigs
 
-## X-BigWigs-LoadOn-Foreign: true
-
 libs.xml
 
