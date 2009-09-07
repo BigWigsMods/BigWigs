@@ -22,13 +22,14 @@ if L then
 	L.starttrigger4 = "逃啊!有本事就逃啊!"
 
 	L.startwarn = "大寡婦費琳娜已進入戰鬥 - 60秒後，狂怒！"
+
 	L.enragewarn15sec = "15秒後，狂怒！"
 	L.enragewarn = "狂怒！"
 	L.enragewarn2 = "即將 狂怒！"
 	L.enrageremovewarn = "狂怒已移除 - 約60秒後，狂怒！"
+
 	L.silencewarn = "沉默！延緩了狂怒！"
 	L.silencewarn5sec = "5秒後沉默結束！"
-
 	L.silencebar = "<沉默>"
 
 	L.rain_message = ">你< 火焰之雨！"
@@ -91,7 +92,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "zhTW")
 if L then
-	L.bomb_message = "Injection"
+	L.bomb_message = "突變注射"
 	L.bomb_message_other = "突變注射：>%s<！"
 
 	L.icon = "團隊標記"
@@ -110,10 +111,10 @@ if L then
 
 	L.teleport = "傳送"
 	L.teleport_desc = "當傳送時發出警報。"
+	L.teleport_trigger = "你的生命正走向終結。"
 	L.teleport_1min_message = "1分鐘後傳送"
 	L.teleport_30sec_message = "30秒後傳送"
 	L.teleport_10sec_message = "10秒後傳送！"
-	L.teleport_trigger = "你的生命正走向終結。"
 	L.on_platform_message = "傳送！ - 45秒後海根出現！"
 
 	L.to_floor_30sec_message = "30 秒後返回"

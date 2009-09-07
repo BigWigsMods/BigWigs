@@ -3,12 +3,16 @@ if L then
 	L.engage_message = "阿努巴拉克進入戰斗，80秒後，鑽地！"
 	L.engage_trigger = "這裡將會是你們的墳墓!"
 
---	L.unburrow_trigger = "emerges from the ground"
---	L.burrow_trigger = "burrows into the ground"
+	L.unburrow_trigger = "從地底鑽出"
+	L.burrow_trigger = "鑽進地裡"
 	L.burrow = "鑽地"
 	L.burrow_desc = "當阿努巴拉克鑽地時顯示計時條。"
 	L.burrow_cooldown = "下一鑽地"
 	L.burrow_soon = "即將 鑽地！"
+
+	L.nerubian_burrower = "奈幽掘洞者"
+
+	L.pcold_bar = "<下一透骨之寒>"
 
 	L.icon = "團隊標記"
 	L.icon_desc = "為中了阿努巴拉克鑽地追擊的隊員打上團隊標記。（需要權限）"
@@ -42,7 +46,6 @@ if L then
 	L.butt_bar = "<兇猛頭擊 冷卻>"
 	L.charge = "狂烈衝鋒"
 	L.charge_desc = "當玩家中了狂烈衝鋒時發出警報。"
-
 --	L.charge_trigger = "^%%s"	--check
 end
 
@@ -62,8 +65,8 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhTW")
 if L then
 	L.engage = "進入戰斗"
-	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
-	L.engage_trigger1 = "Banished to the Nether"
+	L.engage_trigger = "你面對的是賈拉克瑟斯，燃燒軍團的埃雷達爾領主!"
+	L.engage_trigger1 = "放逐到虛空吧!"
 
 	L.incinerate_message = "焚化血肉"
 	L.incinerate_other = "焚化血肉：>%s<！"

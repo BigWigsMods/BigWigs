@@ -295,11 +295,10 @@ if L then
 
 	L.crashsay = "自身暗影暴擊"
 	L.crashsay_desc = "當你中了暗影暴擊時發出說話警報。"
-
 	L.crashicon = "暗影暴擊標記"
 	L.crashicon_desc = "為中了暗影暴擊的隊員打上藍色方框團隊標記。（需要權限）"
 
-	L.mark_message = "Mark"
+	L.mark_message = "無面者印記"
 	L.mark_message_other = "無面者印記：>%s<！"
 
 	L.icon = "團隊標記"

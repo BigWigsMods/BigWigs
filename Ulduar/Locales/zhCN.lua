@@ -268,7 +268,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhCN")
 if L then
---	L.["Vezax Bunny"] = true, -- For emote catching.
+--	L.["Vezax Bunny"] = true -- For emote catching.
 
 --	L.engage_trigger = "^Your destruction will herald a new age of suffering!"
 
@@ -295,11 +295,10 @@ if L then
 
 	L.crashsay = "自身暗影冲撞"
 	L.crashsay_desc = "当你中了暗影冲撞时发出说话警报。"
-
 	L.crashicon = "暗影冲撞标记"
 	L.crashicon_desc = "为中了暗影冲撞的队员打上蓝色方框团队标记。（需要权限）"
 
-	L.mark_message = "Mark"
+	L.mark_message = "无面者的印记"
 	L.mark_message_other = "无面者的印记：>%s<！"
 
 	L.icon = "团队标记"

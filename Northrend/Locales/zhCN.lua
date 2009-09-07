@@ -18,14 +18,13 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "zh
 if L then
 	L.nova_next = "<闪电新星 冷却>"
 
-	L.overcharge_message = "minion - 超载！"
+	L.overcharge_message = "风暴爪牙 - 能量超载！"
 	L.overcharge_bar = "<爆炸>"
-	L.overcharge_next = "<下一超载>"
+	L.overcharge_next = "<下一能量超载>"
 
-	L.icon = "超载标记"
-	L.icon_desc = "为中了超载的怪物打上团队标记。（需要权限）"
+	L.icon = "能量超标记"
+	L.icon_desc = "为中了能量超的怪物打上团队标记。（需要权限）"
 end
-
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "zhCN")
 if L then
@@ -65,6 +64,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "zhCN")
 if L then
+--	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
+
 	L.tsunami = "烈焰之啸"
 	L.tsunami_desc = "当熔岩搅动时显示计时条。"
 	L.tsunami_warning = "约5秒，烈焰之啸！"

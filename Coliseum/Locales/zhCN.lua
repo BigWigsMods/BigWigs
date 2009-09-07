@@ -10,6 +10,10 @@ if L then
 	L.burrow_cooldown = "下一钻地"
 	L.burrow_soon = "即将 钻地！"
 
+	L.nerubian_burrower = "Nerubian Burrower"
+
+	L.pcold_bar = "<下一Penetrating Cold>"
+
 	L.icon = "团队标记"
 	L.icon_desc = "为中了阿努巴拉克钻地追击的队员打上团队标记。（需要权限）"
 
@@ -42,7 +46,6 @@ if L then
 	L.butt_bar = "<Ferocious Butt 冷却>"
 	L.charge = "野性冲锋"
 	L.charge_desc = "当玩家中了野性冲锋时发出警报。"
-
 --	L.charge_trigger = "^%%s"	--check
 end
 

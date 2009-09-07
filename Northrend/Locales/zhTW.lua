@@ -18,7 +18,7 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "zh
 if L then
 	L.nova_next = "<閃電新星 冷卻>"
 
-	L.overcharge_message = " 暴雨爪牙 - 超載！"
+	L.overcharge_message = "暴雨爪牙 - 超載！"
 	L.overcharge_bar = "<爆炸>"
 	L.overcharge_next = "<下一超載>"
 

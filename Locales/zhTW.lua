@@ -44,4 +44,6 @@ L["All running modules have been reset."] = "所有運行中的模組都已重�
 L["Menu"] = "選單"
 L["Menu options."] = "選單設置。"
 
-
+L["Big Wigs is currently disabled."] = "Big Wigs 已被禁用。"
+L["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r啟用。"
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r重置所有啟用的模組。|cffeda55fAlt-點擊|r禁用。|cffeda55fCtrl-Alt-點擊|r完全禁用 Big Wigs。"

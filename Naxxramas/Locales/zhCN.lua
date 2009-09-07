@@ -22,13 +22,14 @@ if L then
 	L.starttrigger4 = "逃啊！有本事就逃啊！"
 
 	L.startwarn = "黑女巫法琳娜已激活 - 60秒后，激怒！"
+
 	L.enragewarn15sec = "15秒后，激怒！"
 	L.enragewarn = "激怒！"
 	L.enragewarn2 = "即将 激怒！"
 	L.enrageremovewarn = "激怒已移除 - 约60后，激怒！"
+
 	L.silencewarn = "沉默！延缓了激怒！"
 	L.silencewarn5sec = "5秒后沉默结束！"
-
 	L.silencebar = "<沉默>"
 
 	L.rain_message = ">你< 火焰之雨！"
@@ -91,7 +92,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "zhCN")
 if L then
-	L.bomb_message = "Injection"
+	L.bomb_message = "变异注射"
 	L.bomb_message_other = "变异注射：>%s<！"
 
 	L.icon = "团队标记"
@@ -110,10 +111,10 @@ if L then
 
 	L.teleport = "传送"
 	L.teleport_desc = "当传送时发出警报。"
+	L.teleport_trigger = "你的生命正走向终结。"
 	L.teleport_1min_message = "1分钟后传送"
 	L.teleport_30sec_message = "30秒后传送"
 	L.teleport_10sec_message = "10秒后传送！"
-	L.teleport_trigger = "你的生命正走向终结。"
 	L.on_platform_message = "传送！45秒后希尔盖出现！"
 
 	L.to_floor_30sec_message = "30秒后返回"
@@ -257,7 +258,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sapphiron", "zhCN")
 if L then
-	--L.airphase_trigger = "%s lifts off into the air!"
+	--L.airphase_trigger = "Sapphiron lifts off into the air!"
 	L.deepbreath_incoming_message = "约14秒后，冰霜吐息！"
 	L.deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！"
 	L.deepbreath_incoming_bar = "<施放 冰霜吐息>"
