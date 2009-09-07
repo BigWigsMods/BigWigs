@@ -111,7 +111,6 @@ plugin.defaultDB = {
 	useicons = true,
 	classcolor = true,
 }
-plugin.consoleCmd = L["Messages"]
 
 ------------------------------
 --      Initialization      --
@@ -121,9 +120,6 @@ function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
 
 	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
-
---[[	self.consoleOptions.args.output = self:GetSinkAce2OptionsDataTable().output
-	self.consoleOptions.args.output.order = 100]]
 end
 
 function plugin:OnPluginEnable()

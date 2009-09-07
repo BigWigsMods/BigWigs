@@ -167,7 +167,7 @@ do
 		disable:SetUserData("tooltip", L["Disable the proximity display for all modules that use it."])
 		disable:SetUserData("key", "disabled")
 		disable:SetFullWidth(true)
-	
+
 		local lock = AceGUI:Create("CheckBox")
 		lock:SetValue(db.lock)
 		lock:SetLabel(L["Lock"])

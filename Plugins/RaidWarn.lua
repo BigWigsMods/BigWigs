@@ -19,21 +19,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 plugin.defaultDB = {
 	whisper = true,
 }
-plugin.consoleCmd = L["RaidWarning"]
-plugin.advancedOptions = {
-	type = "group",
-	name = L["RaidWarning"],
-	desc = L["raidwarning_desc"],
-	args = {
-		whisper = {
-			type = "toggle",
-			name = L["Whisper"],
-			desc = L["Toggle whispering warnings to players."],
-			get = function() return plugin.db.profile.whisper end,
-			set = function(v) plugin.db.profile.whisper = v end,
-		},
-	},
-}
 
 ------------------------------
 --      Initialization      --
