@@ -29,13 +29,10 @@ plugin.defaultDB = {
 }
 
 local function get(info)
-	local key = info[#info]
-	if key == "reset" then return end
-	return unpack(plugin.db.profile[key])
+	return unpack(plugin.db.profile[info[#info]])
 end
 local function set(info, r, g, b, a)
-	local key = info[#info]
-	plugin.db.profile[key] = {r, g, b, a}
+	plugin.db.profile[info[#info]] = {r, g, b, a}
 end
 
 plugin.pluginOptions = {
@@ -47,89 +44,100 @@ plugin.pluginOptions = {
 	set = set,
 	args = {
 		messages = {
-			type = "header",
+			type = "group",
 			name = L["Messages"],
+			inline = true,
 			order = 1,
-		},
-		Important = {
-			name = L["Important"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Important"]),
-			order = 2,
-		},
-		Personal = {
-			name = L["Personal"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Personal"]),
-			order = 3,
-		},
-		Urgent = {
-			name = L["Urgent"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Urgent"]),
-			order = 4,
-		},
-		Attention = {
-			name = L["Attention"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Attention"]),
-			order = 5,
-		},
-		Positive = {
-			name = L["Positive"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Positive"]),
-			order = 6,
-		},
-		Bosskill = {
-			name = L["Bosskill"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Bosskill"]),
-			order = 7,
-		},
-		Core = {
-			name = L["Core"],
-			type = "color",
-			desc = fmt(L["Change the color for %q messages."], L["Core"]),
-			order = 8,
+			args = {
+				Important = {
+					name = L["Important"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Important"]),
+					order = 2,
+					width = "half",
+				},
+				Personal = {
+					name = L["Personal"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Personal"]),
+					order = 3,
+					width = "half",
+				},
+				Urgent = {
+					name = L["Urgent"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Urgent"]),
+					order = 4,
+					width = "half",
+				},
+				Attention = {
+					name = L["Attention"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Attention"]),
+					order = 5,
+					width = "half",
+				},
+				Positive = {
+					name = L["Positive"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Positive"]),
+					order = 6,
+					width = "half",
+				},
+				Bosskill = {
+					name = L["Bosskill"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Bosskill"]),
+					order = 7,
+					width = "half",
+				},
+				Core = {
+					name = L["Core"],
+					type = "color",
+					desc = fmt(L["Change the color for %q messages."], L["Core"]),
+					order = 8,
+					width = "half",
+				},
+			},
 		},
 		bars = {
-			type = "header",
+			type = "group",
 			name = L["Bars"],
+			inline = true,
 			order = 10,
-		},
-		barColor = {
-			name = L["Bar"],
-			type = "color",
-			desc = L["Change the normal bar color."],
-			hasAlpha = true,
-			order = 11,
-		},
-		barEmphasized = {
-			name = L["Emphasized bar"],
-			type = "color",
-			desc = L["Change the emphasized bar color."],
-			hasAlpha = true,
-			order = 11,
-		},
-		barBackground = {
-			name = L["Background"],
-			type = "color",
-			desc = L["Change the bar background color."],
-			hasAlpha = true,
-			order = 13,
-		},
-		barText = {
-			name = L["Text"],
-			type = "color",
-			desc = L["Change the bar text color."],
-			order = 14,
-		},
-		separator = {
-			type = "description",
-			name = " ",
-			order = 15,
-			width = "full",
+			args = {
+				barColor = {
+					name = L["Bar"],
+					type = "color",
+					desc = L["Change the normal bar color."],
+					hasAlpha = true,
+					order = 11,
+					width = "half",
+				},
+				barEmphasized = {
+					name = L["Emphasized bar"],
+					type = "color",
+					desc = L["Change the emphasized bar color."],
+					hasAlpha = true,
+					order = 11,
+					width = "half",
+				},
+				barBackground = {
+					name = L["Background"],
+					type = "color",
+					desc = L["Change the bar background color."],
+					hasAlpha = true,
+					order = 13,
+					width = "half",
+				},
+				barText = {
+					name = L["Text"],
+					type = "color",
+					desc = L["Change the bar text color."],
+					order = 14,
+					width = "half",
+				},
+			},
 		},
 		reset = {
 			type = "execute",

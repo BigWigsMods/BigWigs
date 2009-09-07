@@ -62,11 +62,12 @@ plugin.pluginOptions = {
 		default = {
 			type = "toggle",
 			name = L["Default only"],
-			desc = L["Use only the default sound."],
+			desc = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert.",
 			get = function(info) return plugin.db.profile.defaultonly end,
 			set = function(info, v) plugin.db.profile.defaultonly = v end,
 			order = 1,
 			width = "full",
+			descStyle = "inline",
 		},
 	}
 }
