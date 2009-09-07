@@ -188,6 +188,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_ShowProximity")
 	self:RegisterMessage("BigWigs_HideProximity")
+	self:RegisterMessage("BigWigs_TemporaryConfig", "TestProximity")
 end
 
 function plugin:OnPluginDisable()
@@ -210,6 +211,7 @@ do
 	local function checkboxCallback(widget, event, value)
 		local key = widget:GetUserData("key")
 		plugin.db.profile[key] = value and true or false
+		plugin:RestyleWindow()
 	end
 
 	function plugin:GetPluginConfig()
