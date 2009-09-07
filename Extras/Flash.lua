@@ -63,7 +63,7 @@ local function shakeOnUpdate(frame, elapsed)
 		y = math.random(-SHAKE_Y,SHAKE_Y)
 	end
 	WorldFrame:ClearAllPoints()
-	for i, v in ipairs(originalPoints) do
+	for i, v in next, originalPoints do
 		WorldFrame:SetPoint(v[1], v[2], v[3], v[4] + x, v[5] + y)
 	end
 end

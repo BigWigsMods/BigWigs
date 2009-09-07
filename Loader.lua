@@ -119,7 +119,7 @@ end
 local function loadZone(zone)
 	if loadInZone[zone] then
 		local addonsLoaded = {}
-		for i, v in ipairs(loadInZone[zone]) do
+		for i, v in next, loadInZone[zone] do
 			if not IsAddOnLoaded(v) then
 				LoadAddOn(v)
 				loader:SendMessage("BigWigs_ModulePackLoaded", v)
@@ -134,9 +134,9 @@ local function loadZone(zone)
 		-- Remove all already loaded addons from the loadInZone table so that
 		-- the "Load all" options for the zone menus that are affected by these
 		-- addons are hidden.
-		for i, addon in ipairs(addonsLoaded) do
+		for i, addon in next, addonsLoaded do
 			for k in pairs(loadInZone) do
-				for j, z in ipairs(loadInZone[k]) do
+				for j, z in next, loadInZone[k] do
 					if z == addon or IsAddOnLoaded(z) then
 						loadInZone[k][j] = nil
 					end
@@ -285,7 +285,7 @@ end
 
 local tooltipFunctions = {}
 function loader:RegisterTooltipInfo(func)
-	for i, v in ipairs(tooltipFunctions) do
+	for i, v in next, tooltipFunctions do
 		if v == func then
 			error(("The function %q has already been registered."):format(func))
 		end
@@ -488,7 +488,7 @@ function ldb.OnTooltipShow(tt)
 		tt:AddLine(L["Big Wigs is currently disabled."])
 		h = L["|cffeda55fClick|r to enable."]
 	end
-	for i, v in ipairs(tooltipFunctions) do
+	for i, v in next, tooltipFunctions do
 		v(tt)
 	end
 	tt:AddLine(h, 0.2, 1, 0.2, 1)
@@ -513,7 +513,7 @@ frame.name = "Big Wigs"
 frame:Hide()
 
 frame:SetScript("OnShow", function(frame)
-	for k, f in ipairs(INTERFACEOPTIONS_ADDONCATEGORIES) do
+	for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
 		if f == frame then
 			tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
 			break
@@ -529,7 +529,7 @@ end
 InterfaceOptions_AddCategory(frame)
 
 function loader:RemoveInterfaceOptions()
-	for k, f in ipairs(INTERFACEOPTIONS_ADDONCATEGORIES) do
+	for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
 		if f == frame then
 			tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
 			break

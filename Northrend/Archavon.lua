@@ -75,20 +75,9 @@ function mod:Cloud(player, spellId)
 end
 
 local function scanTarget(spellId, spellName)
-	local target
-	if UnitName("target") == boss then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName(("%s%d%s"):format("raid", i, "target")) == boss then
-				target = UnitName(("%s%d%s"):format("raid", i, "targettarget"))
-				break
-			end
-		end
-	end
+	local bossId = mod:GetUnitIdByName(mod.bossName)
+	if not bossId then return end
+	local target = UnitName(bossId .. "target")
 	if target then
 		mod:TargetMessage(spellName, target, "Important", spellId)
 		mod:PrimaryIcon(target, "icon")
@@ -101,7 +90,7 @@ function mod:Shards(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
-	if self.db.profile.charge and unit == boss then
+	if self.db.profile.charge and unit == self.bossName then
 		-- 11578, looks like a charge :)
 		self:TargetMessage(L["charge"], player, "Attention", 11578)
 	end

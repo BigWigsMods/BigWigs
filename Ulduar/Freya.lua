@@ -142,20 +142,9 @@ do
 end
 
 local function scanTarget(spellId, spellName)
-	local target
-	if UnitName("target") == mod.bossName then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == mod.bossName then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == mod.bossName then
-				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-				break
-			end
-		end
-	end
+	local bossId = mod:GetUnitIdByName(mod.bossName)
+	if not bossId then return end
+	local target = UnitName(bossId .. "target")
 	if target then
 		mod:TargetMessage(spellName, target, "Attention", spellId)
 		mod:SecondaryIcon(target, "icon")

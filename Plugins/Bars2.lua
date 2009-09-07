@@ -60,7 +60,7 @@ local function rearrangeBars(anchor)
 	local lastDownBar, lastUpBar = nil, nil
 	local up = nil
 	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
-	for i, bar in ipairs(tmp) do
+	for i, bar in next, tmp do
 		bar:ClearAllPoints()
 		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
 			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")

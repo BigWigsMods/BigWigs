@@ -3,7 +3,7 @@
 BigWigsOptions = {}
 
 function BigWigsOptions:Open()
-	for i, button in ipairs(InterfaceOptionsFrameAddOns.buttons) do
+	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
 		if button.element and button.element.name == "Big Wigs" and button.element.collapsed then
 			OptionsListButtonToggle_OnClick(button.toggle)
 		end

@@ -120,20 +120,9 @@ function mod:UNIT_AURA(event, unit)
 end
 
 local function scanTarget(spellId, spellName)
-	local target
-	if UnitName("target") == boss then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
-				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-				break
-			end
-		end
-	end
+	local bossId = mod:GetUnitIdByName(boss)
+	if not bossId then return end
+	local target = UnitName(bossId .. "target")
 	if target then
 		if target == pName and db.crashsay then
 			SendChatMessage(L["crash_say"], "SAY")

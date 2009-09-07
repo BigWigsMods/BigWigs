@@ -158,20 +158,9 @@ function mod:Whirl(_, spellId, _, _, spellName)
 end
 
 local function targetCheck()
-	local target
-	if UnitName("target") == brundir then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == brundir then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == brundir then
-				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-				break
-			end
-		end
-	end
+	local bossId = mod:GetUnitIdByName(brundir)
+	if not bossId then return end
+	local target = UnitName(bossId .. "target")
 	if target ~= previous then
 		if target then
 			if target == pName then

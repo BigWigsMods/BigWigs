@@ -40,7 +40,7 @@ do
 		local t = mod and mod.bossName and type(mod.bossName) or nil
 		if not t then return end
 		if t == "table" then
-			for i, v in ipairs(mod.bossName) do
+			for i, v in next, mod.bossName do
 				bossmobs[v] = not bossmobs[v] and true or nil
 			end
 		elseif t == "string" then

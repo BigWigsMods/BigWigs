@@ -78,31 +78,16 @@ function mod:Overcharge(_, spellId, _, _, spellName)
 end
 
 local function scanTarget()
-	local target
-	if UnitGUID("target") == guid then
-		target = "target"
-	elseif UnitGUID("focus") == guid then
-		target = "focus"
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local unitid = fmt("%s%d%s", "raid", i, "target")
-			if UnitGUID(unitid) == guid then
-				target = unitid
-				break
-			end
-		end
-	end
-	if target then
-		SetRaidTarget(target, 8)
-		mod:CancelTimer( overchargerepeater )
-	end
+	local unitId = mod:GetUnitIdByGUID(guid)
+	if not unitId then return end
+	SetRaidTarget(unitId, 8)
+	mod:CancelTimer(overchargerepeater)
 end
 
 function mod:OverchargeIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not self.db.profile.icon then return end
-	guid = select(9, ...)
+	guid = tonumber(((select(9, ...))):sub(-12,-7), 16)
 	overchargerepeater = self:ScheduleRepatingTimer(scanTarget, 0.1)
 end
 
