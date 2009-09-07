@@ -394,17 +394,20 @@ function loader:LoadCore()
 end
 
 function loader:LoadForeign()
-	if LOCALE == "enUS" or ( BZ and BB ) then return true end
-	local core = "BigWigs_Foreign"
-	local enabled = select(4, GetAddOnInfo(core))
-	if not enabled then 
-		self:Print("Error loading " .. core .. " ("..core.." is not enabled)")
-		return
+	if LOCALE == "enUS" or ( BB and BZ ) then return true end
+	if not LibStub("LibBabble-Boss-3.0", true) or not LibStub("LibBabble-Zone-3.0", true) then
+		local core = "BigWigs_Foreign"
+		local enabled = select(4, GetAddOnInfo(core))
+		if not enabled then 
+			self:Print("Error loading " .. core .. " ("..core.." is not enabled)")
+			return
+		end
+		local succ, err = LoadAddOn(core)
+		if not succ then
+			self:Print("Error loading " .. core .. " (" .. tostring(err) .. ")")
+		end
 	end
-	local succ, err = LoadAddOn(core)
-	if not succ then
-		self:Print("Error loading " .. core .. " (" .. tostring(err) .. ")")
-	end
+	-- check again and error if you can't find
 	if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
 		self:Print("Error retrieving LibBabble-Zone-3.0 and LibBabble-Boss-3.0, please reinstall BigWigs")
 	else

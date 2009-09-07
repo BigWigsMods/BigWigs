@@ -169,6 +169,11 @@ function addon:OnInitialize()
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
 
+	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then
+		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
+		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
+	end
+	
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 
