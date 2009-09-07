@@ -14,7 +14,6 @@ if L then
 	L.icon_desc = "바위 조각 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
-
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "koKR")
 if L then
 	L.nova_next = "~번개 대기시간"
@@ -27,6 +26,10 @@ if L then
 	L.icon_desc = "과충전에 걸린 하수인에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "koKR")
+if L then
+	L.cinder_message = "당신은 잿더미!"
+end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "koKR")
 if L then

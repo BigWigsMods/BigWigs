@@ -276,7 +276,8 @@ if L then
 	L.ping_message = "방패 - 현재 위치 미니맵에 표시 중!"
 
 	L.icon = "전술 표시"
-	L.icon_desc = "얼음 화살 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"end
+	L.icon_desc = "얼음 화살 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
+end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "koKR")
 if L then

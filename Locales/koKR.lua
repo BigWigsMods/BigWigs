@@ -3,7 +3,6 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "koKR")
 if not L then return end
 
 -- Core.lua
-
 L["%s has been defeated"] = "%s 물리침"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s 물리침"    -- "<bosses> have been defeated"
 L["Bosses"] = "보스"
@@ -26,8 +25,6 @@ L["You shouldn't really need to touch these options, but if you want to tweak th
 L["Toggles whether or not the boss module should warn about %s."] = "여부와 상관없이 %s에 대한 보스 모듈을 경고합니다."
 L.bosskill = "보스 사망"
 L.bosskill_desc = "보스를 물리쳤을 때 알림니다."
-L.enrage = "격노"
-L.enrage_desc = "보스가 격노 상태로 변경 시 경고합니다."
 L.berserk = "광폭화"
 L.berserk_desc = "보스가 언제 광폭화가 되는지 경고합니다."
 
@@ -37,10 +34,14 @@ L["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
 
--- Options.lua
+-- Loader / Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r"
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
 L["Active boss modules:"] = "사용중인 보스 모듈:"
 L["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다."
 L["Menu"] = "메뉴"
 L["Menu options."] = "메뉴 설정."
+
+L["Big Wigs is currently disabled."] = "현재 Big Wigs가 비활성화 상태입니다."
+L["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r 활성화."
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r 모든 모듈 초기화. |cffeda55fAlt-클릭|r 모두 비활성화. |cffeda55fCtrl-Alt-클릭|r Big Wigs을 완전히 비활성화."

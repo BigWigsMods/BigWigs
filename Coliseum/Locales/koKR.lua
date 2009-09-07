@@ -9,6 +9,10 @@ if L then
 	L.burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다."
 	L.burrow_cooldown = "다음 소멸"
 	L.burrow_soon = "곧 소멸"
+	
+	L.nerubian_burrower = "네루비안 땅무지"
+	
+	L.pcold_bar = "~다음 냉기 관통"
 
 	L.icon = "전술 표시"
 	L.icon_desc = "소멸 단계에 추격 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
