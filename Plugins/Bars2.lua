@@ -144,6 +144,7 @@ local function createAnchor(frameName, title)
 	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
 	bg:SetTexture(0, 0, 0, 0.3)
+	display.background = bg
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
 	header:SetText(title)
@@ -178,6 +179,10 @@ local function createAnchor(frameName, title)
 	display:SetScript("OnSizeChanged", onResize)
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
+	display:SetScript("OnMouseUp", function(self, button)
+		if button ~= "LeftButton" then return end
+		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+	end)
 	display.bars = {}
 	display:Hide()
 	return display
@@ -235,7 +240,18 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_TemporaryConfig", "ShowAnchors")
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	colors = BigWigs:GetPlugin("Colors")
+end
+
+function plugin:BigWigs_SetConfigureTarget(event, module)
+	if module == self then
+		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+	else
+		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+	end
 end
 
 do

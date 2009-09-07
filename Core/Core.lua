@@ -197,6 +197,7 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_TargetSeen")
 	self:RegisterMessage("BigWigs_RebootModule")
 	self:RegisterMessage("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
 
 	self:SendMessage("BigWigs_CoreEnabled")
 
@@ -235,14 +236,23 @@ end
 do
 	local frame = nil
 	local plugins = {}
-	local function selectTab(widget, callback, tab)
+	local tabs = nil
+	
+	local function selectTab(plugin)
+		local current = tabs:GetUserData("current")
+		if current and current == plugin:GetName() then return end
+		tabs:SetUserData("current", plugin:GetName())
+		tabs:PauseLayout()
+		tabs:ReleaseChildren()
+		tabs:AddChildren(plugin:GetPluginConfig())
+		tabs:ResumeLayout()
+		frame:DoLayout()
+	end
+	local function widgetSelect(widget, callback, tab)
 		local plugin = BigWigs:GetPlugin(tab)
 		if not plugin then return end
-		widget:PauseLayout()
-		widget:ReleaseChildren()
-		widget:AddChildren(plugin:GetPluginConfig())
-		widget:ResumeLayout()
-		frame:DoLayout()
+		selectTab(plugin)
+		addon:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end
 	local function onTestClick()
 		BigWigs:SendMessage("BigWigs_Test")
@@ -274,18 +284,26 @@ do
 				})
 			end
 		end
-		local tabs = AceGUI:Create("TabGroup")
+		tabs = AceGUI:Create("TabGroup")
 		tabs:SetTabs(plugins)
-		tabs:SetCallback("OnGroupSelected", selectTab)
-		tabs:SelectTab(plugins[1].value)
+		tabs:SetCallback("OnGroupSelected", widgetSelect)
 		tabs:SetFullWidth(true)
 		tabs:SetFullHeight(true)
 		frame:AddChild(tabs)
+	end
+	function addon:BigWigs_SetConfigureTarget(event, module)
+		selectTab(module)
 	end
 	function addon:ShowPluginConfig()
 		createPluginFrame()
 		frame:Show()
 		BigWigs:SendMessage("BigWigs_TemporaryConfig")
+		for name, module in BigWigs:IteratePlugins() do
+			if module.GetPluginConfig then
+				addon:SendMessage("BigWigs_SetConfigureTarget", module)
+				break
+			end
+		end
 	end
 end
 

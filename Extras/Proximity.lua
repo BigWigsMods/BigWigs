@@ -132,6 +132,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowProximity")
 	self:RegisterMessage("BigWigs_HideProximity")
 	self:RegisterMessage("BigWigs_TemporaryConfig", "TestProximity")
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
 end
 
 function plugin:OnPluginDisable()
@@ -141,6 +142,15 @@ end
 -------------------------------------------------------------------------------
 -- Options
 --
+
+function plugin:BigWigs_SetConfigureTarget(event, module)
+	if module == self then
+		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+	else
+		anchor.background:SetTexture(0, 0, 0, 0.3)
+	end
+end
+
 do
 	local function onControlEnter(widget, event, value)
 		GameTooltip:ClearLines()

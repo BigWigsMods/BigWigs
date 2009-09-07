@@ -65,7 +65,8 @@ local function createAnchor()
 	local bg = anchor:CreateTexture(nil, "PARENT")
 	bg:SetAllPoints(anchor)
 	bg:SetBlendMode("BLEND")
-	bg:SetTexture(0, 0, 0, 0.3)
+	bg:SetTexture(0.2, 1, 0.2, 0.3)
+	anchor.background = bg
 	local header = anchor:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
 	header:SetText(L["Messages"])
@@ -84,6 +85,10 @@ local function createAnchor()
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	anchor:SetScript("OnDragStart", onDragStart)
 	anchor:SetScript("OnDragStop", onDragStop)
+	anchor:SetScript("OnMouseUp", function(self, button)
+		if button ~= "LeftButton" then return end
+		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+	end)
 	anchor:Hide()
 	createMsgFrame()
 end
@@ -123,6 +128,7 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_TemporaryConfig", function()
 		if not anchor then createAnchor() end
@@ -137,6 +143,14 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
+
+function plugin:BigWigs_SetConfigureTarget(event, module)
+	if module == self then
+		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+	else
+		anchor.background:SetTexture(0, 0, 0, 0.3)
+	end
+end
 
 do
 	local function onControlEnter(widget, event, value)
