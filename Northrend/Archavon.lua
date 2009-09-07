@@ -110,9 +110,7 @@ end
 function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self:GetOption(58663) then
 			self:Bar(L["stomp_bar"], 47, 60880)
 			self:DelayedMessage(42, L["stomp_warning"], "Attention")

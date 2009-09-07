@@ -177,9 +177,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		phase = 1
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if db.vortex then
 			self:Bar(L["vortex_next"], 29, 56105)
 			self:DelayedMessage(24, L["vortex_warning"], "Attention")
