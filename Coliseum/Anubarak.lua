@@ -33,14 +33,14 @@ if L then
 	L.burrow_desc = "Show a timer for Anub'Arak's Burrow ability"
 	L.burrow_cooldown = "Next Burrow"
 	L.burrow_soon = "Burrow soon"
-	
+
 	L.nerubian_burrower = "Nerubian Burrower"
-	
+
 	L.pcold_bar = "~Next Penetrating Cold"
 
 	L.icon = "Place icon"
 	L.icon_desc = "Place a raid target icon on the person targetted by Anub'arak during his burrow phase. (requires promoted or higher)"
-	
+
 	L.chase = "Pursue"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anub'arak")
@@ -74,7 +74,7 @@ end
 
 function mod:ColdCooldown(_, spellId)
 	if not phase2 then return end
-	self:Bar(L["pcold_bar"], 15, spellId)		
+	self:Bar(L["pcold_bar"], 15, spellId)
 end
 
 function mod:Swarm(player, spellId, _, _, spellName)
@@ -98,7 +98,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:IfMessage(L["engage_message"], "Attention", 65919)
 			self:Bar(L["burrow_cooldown"], 80, 65919)
 			self:Bar(L["nerubian_burrower"], 10, 66333)
-			self:ScheduleEvent("BWnextwave", nextwave, 10)	
+			self:ScheduleEvent("BWnextwave", nextwave, 10)
 		end
 		if db.berserk then
 			self:Berserk(570)

@@ -10,7 +10,7 @@ if L then
 
 	L.punch_message = "%2$dx Coups de poing phasiques sur %1$s"
 	L.smash_message = "Arrivée d'un Choc cosmique !"
-	L.blackhole_message = "Trou noir %dx apparu"
+	L.blackhole_message = "Trou noir %d !"
 	L.bigbang_soon = "Big Bang imminent !"
 end
 
@@ -20,7 +20,7 @@ if L then
 	L.fear_message = "Hurlement terrifiant en incantation !"
 	L.fear_bar = "~H. terrifiant"
 
-	L.swarm_message = "Swarm"
+	L.swarm_message = "Essaim gardien"
 	L.swarm_bar = "~Essaim"
 
 	L.defender = "Défenseur farouche"
@@ -49,9 +49,12 @@ if L then
 	L.conservator_message = "Ancien conservateur !"
 	L.detonate_message = "Flagellants explosifs !"
 	L.elementals_message = "Élémentaires !"
+
+	L.tree = "Cadeau d'Eonar"
+	L.tree_desc = "Prévient quand Freya fait apparaître un Cadeau d'Eonar."
 	L.tree_message = "Un arbre pousse !"
 
-	L.fury_message = "Fury"
+	L.fury_message = "Fureur de la nature"
 	L.fury_other = "Fureur : %s"
 
 	L.tremor_warning = "Tremblement de terre imminent !"
@@ -177,11 +180,7 @@ if L then
 	L.phase4_trigger = "^Fin de la phase d'essais préliminaires"
 	L.phase_bar = "Phase %d"
 
-	L.hardmode = "Autodestruction"
-	L.hardmode_desc = "Affiche une barre de 10 minutes pour le mode difficile (mécanisme d'autodestruction activé)."
 	L.hardmode_trigger = "^Mais, pourquoi"
-	L.hardmode_message = "Autodestruction activée !"
-	L.hardmode_warning = "Autodestruction !"
 
 	L.plasma_warning = "Plasma en incantation !"
 	L.plasma_soon = "Explosion de plasma imminente !"

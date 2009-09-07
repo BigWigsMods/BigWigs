@@ -10,6 +10,10 @@ if L then
 	L.burrow_cooldown = "Prochain Fouir"
 	L.burrow_soon = "Fouir imminent"
 
+	L.nerubian_burrower = "Fouisseur nérubien"
+
+	L.pcold_bar = "~Prochain Froid pénétrant"
+
 	L.icon = "Icône"
 	L.icon_desc = "Place une icône sur le dernier joueur poursuivi par Anub'arak lors de sa phase sous terre (nécessite d'être assistant ou mieux)."
 
@@ -64,19 +68,19 @@ if L then
 	L.engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !"
 	--L.engage_trigger1 = "Banished to the Nether"
 
-	L.incinerate_message = "Incinérer"
-	L.incinerate_other = "Incinérer la chair : %s"
-	L.incinerate_bar = "~Recharge Incinérer"
+	L.incinerate_message = "Incinérer la chair"
+	L.incinerate_other = "Incinérer : %s"
+	L.incinerate_bar = "~Prochain Incinérer"
 
-	L.legionflame_message = "Flamme"
-	L.legionflame_other = "Flamme de la Légion : %s"
-	L.legionflame_bar = "~Recharge Flamme"
+	L.legionflame_message = "Flamme de la Légion"
+	L.legionflame_other = "Flamme : %s"
+	L.legionflame_bar = "~Prochaine Flamme"
 
 	L.icon = "Icône"
 	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Flamme de la Légion (nécessite d'être assistant ou mieux)."
 
-	L.netherportal_bar = "~Recharge Portail"
-	L.netherpower_bar = "~Recharge Puissance"
+	L.netherportal_bar = "~Prochain Portail"
+	L.netherpower_bar = "~Prochaine Puissance"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "frFR")

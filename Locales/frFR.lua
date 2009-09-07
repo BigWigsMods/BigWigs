@@ -23,8 +23,6 @@ L["You shouldn't really need to touch these options, but if you want to tweak th
 L["Toggles whether or not the boss module should warn about %s."] = "Autorise ou non le module de boss d'afficher des barres temporelles et/ou des alertes concernant %s."
 L.bosskill = "Défaite du boss"
 L.bosskill_desc = "Prévient quand le boss est vaincu."
-L.enrage = "Enrager"
-L.enrage_desc = "Prévient quand le boss devient enragé."
 L.berserk = "Berserk"
 L.berserk_desc = "Prévient quand le boss devient fou furieux."
 
@@ -34,10 +32,14 @@ L["Load all %s modules."] = "Charge tous les modules |2 %s."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%d|r) existe déjà en tant que module de boss dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau (à la révision |cffffff00%d|r). Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 
--- Options.lua
+-- Loader / Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00Module actif|r"
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55fClic gauche|r pour redémarrer les modules actifs. |cffeda55fAlt-Clic gauche|r pour les désactiver. |cffeda55fCtrl-Alt-Clic gauche|r pour désactiver complètement Big Wigs."
 L["Active boss modules:"] = "Modules de boss actifs :"
 L["All running modules have been reset."] = "Tous les modules actifs ont été réinitialisés."
 L["Menu"] = "Menu"
 L["Menu options."] = "Options du menu."
+
+L["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé."
+L["|cffeda55fClick|r to enable."] = "|cffeda55fCliquez|r pour l'activer."
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fCliquez|r pour réinitialiser tous les modules actifs. |cffeda55fAlt-clic gauche|r pour les désactiver. |cffeda55fCtrl-Alt-clic gauche|r pour désactiver complètement BigWigs."
