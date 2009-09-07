@@ -9,8 +9,6 @@ if not plugin then return end
 --      Are you local?      --
 ------------------------------
 
-local dew = AceLibrary("Dewdrop-2.0")
-
 local minHeight = 20
 local maxHeight = 30
 local scaleUpTime = 0.2
@@ -47,12 +45,6 @@ local function onControlEnter(self)
 end
 local function onControlLeave() GameTooltip:Hide() end
 
-local function menu() dew:FeedAceOptionsTable(plugin.consoleOptions) end
-local function displayOnMouseDown(self, button)
-	if button == "RightButton" then
-		dew:Open(self, "children", menu)
-	end
-end
 local createMsgFrame
 local function createAnchor()
 	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
@@ -92,7 +84,6 @@ local function createAnchor()
 	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
 	anchor:SetScript("OnDragStart", onDragStart)
 	anchor:SetScript("OnDragStop", onDragStop)
-	anchor:SetScript("OnMouseDown", displayOnMouseDown)
 	anchor:Hide()
 	createMsgFrame()
 end
@@ -122,100 +113,6 @@ plugin.defaultDB = {
 }
 plugin.consoleCmd = L["Messages"]
 
-local function bwAnchorDisabled()
-	return plugin.db.profile.sink20OutputSink ~= "BigWigs"
-end
-
-plugin.consoleOptions = {
-	type = "group",
-	name = L["Messages"],
-	desc = L["Options for message display."],
-	handler = plugin,
-	pass = true,
-	get = function(key)
-		if key == "anchor" then
-			return anchor and anchor:IsShown()
-		else
-			return plugin.db.profile[key]
-		end
-	end,
-	set = function(key, val)
-		if key == "anchor" then
-			if not anchor then createAnchor() end
-			if val then
-				anchor:Show()
-			else
-				anchor:Hide()
-			end
-		else
-			plugin.db.profile[key] = val
-		end
-	end,
-	args = {
-		anchor = {
-			type = "toggle",
-			name = L["Show anchor"],
-			desc = L["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."],
-			disabled = bwAnchorDisabled,
-			order = 1,
-		},
-		reset = {
-			type = "execute",
-			name = L["Reset position"],
-			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = resetAnchor,
-			disabled = bwAnchorDisabled,
-			order = 2,
-		},
-		scale = {
-			type = "range",
-			name = L["Scale"],
-			desc = L["Set the message frame scale."],
-			min = 0.2,
-			max = 5.0,
-			step = 0.1,
-			disabled = bwAnchorDisabled,
-			order = 3,
-		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 4,
-		},
-		generalHeader = {
-			type = "header",
-			name = L["Output Settings"],
-			order = 10,
-		},
-		chat = {
-			type = "toggle",
-			name = L["Chat frame"],
-			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
-			order = 101,
-		},
-		usecolors = {
-			type = "toggle",
-			name = L["Use colors"],
-			desc = L["Toggles white only messages ignoring coloring."],
-			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
-			order = 102,
-			disabled = function() return not colorModule end,
-		},
-		classcolor = {
-			type = "toggle",
-			name = L["Class colors"],
-			desc = L["Colors player names in messages by their class."],
-			order = 103,
-		},
-		useicons = {
-			type = "toggle",
-			name = L["Use icons"],
-			desc = L["Show icons next to messages, only works for Raid Warning."],
-			order = 104,
-		},
-	},
-}
-
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -225,8 +122,8 @@ function plugin:OnRegister()
 
 	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
 
-	self.consoleOptions.args.output = self:GetSinkAce2OptionsDataTable().output
-	self.consoleOptions.args.output.order = 100
+--[[	self.consoleOptions.args.output = self:GetSinkAce2OptionsDataTable().output
+	self.consoleOptions.args.output.order = 100]]
 end
 
 function plugin:OnPluginEnable()
@@ -245,65 +142,67 @@ end
 
 function plugin:OnPluginDisable() if anchor then anchor:Hide() end end
 
-local function onControlEnter(widget, event, value)
-	GameTooltip:ClearLines()
-	GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
-	GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
-	GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
-	GameTooltip:Show()
-end
-local function onControlLeave() GameTooltip:Hide() end
+do
+	local function onControlEnter(widget, event, value)
+		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
+		GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
+		GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
+		GameTooltip:Show()
+	end
+	local function onControlLeave() GameTooltip:Hide() end
 
--- XXX We need a new SinkLib that doesn't give out options but only access to functions
--- XXX we can use to generate options with.
--- Or, we can use AceConfig and insert an option table into the container, I guess.
--- Actually, just leaving the options as they are in a table and using aceconfig to
--- generate the whole thing means less code in the modules but more processing
--- in acegui, I guess. Also we might not get it looking "just right".
+	-- XXX We need a new SinkLib that doesn't give out options but only access to functions
+	-- XXX we can use to generate options with.
+	-- Or, we can use AceConfig and insert an option table into the container, I guess.
+	-- Actually, just leaving the options as they are in a table and using aceconfig to
+	-- generate the whole thing means less code in the modules but more processing
+	-- in acegui, I guess. Also we might not get it looking "just right".
 
-local function checkboxCallback(widget, event, value)
-	local key = widget:GetUserData("key")
-	plugin.db.profile[key] = value and true or false
-end
+	local function checkboxCallback(widget, event, value)
+		local key = widget:GetUserData("key")
+		plugin.db.profile[key] = value and true or false
+	end
 
-function plugin:GetPluginConfig()
-	local chat = AceGUI:Create("CheckBox")
-	chat:SetLabel(L["Chat frame"])
-	chat:SetValue(self.db.profile.chat and true or false)
-	chat:SetCallback("OnEnter", onControlEnter)
-	chat:SetCallback("OnLeave", onControlLeave)
-	chat:SetCallback("OnValueChanged", checkboxCallback)
-	chat:SetUserData("key", "chat")
-	chat:SetUserData("tooltip", L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."])
+	function plugin:GetPluginConfig()
+		local chat = AceGUI:Create("CheckBox")
+		chat:SetLabel(L["Chat frame"])
+		chat:SetValue(self.db.profile.chat and true or false)
+		chat:SetCallback("OnEnter", onControlEnter)
+		chat:SetCallback("OnLeave", onControlLeave)
+		chat:SetCallback("OnValueChanged", checkboxCallback)
+		chat:SetUserData("key", "chat")
+		chat:SetUserData("tooltip", L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."])
 	
-	local colors = AceGUI:Create("CheckBox")
-	colors:SetLabel(L["Use colors"])
-	colors:SetValue(self.db.profile.usecolors and true or false)
-	colors:SetCallback("OnEnter", onControlEnter)
-	colors:SetCallback("OnLeave", onControlLeave)
-	colors:SetCallback("OnValueChanged", checkboxCallback)
-	colors:SetUserData("key", "usecolors")
-	colors:SetUserData("tooltip", L["Toggles white only messages ignoring coloring."])
+		local colors = AceGUI:Create("CheckBox")
+		colors:SetLabel(L["Use colors"])
+		colors:SetValue(self.db.profile.usecolors and true or false)
+		colors:SetCallback("OnEnter", onControlEnter)
+		colors:SetCallback("OnLeave", onControlLeave)
+		colors:SetCallback("OnValueChanged", checkboxCallback)
+		colors:SetUserData("key", "usecolors")
+		colors:SetUserData("tooltip", L["Toggles white only messages ignoring coloring."])
 
-	local classColors = AceGUI:Create("CheckBox")
-	classColors:SetLabel(L["Class colors"])
-	classColors:SetValue(self.db.profile.classcolor and true or false)
-	classColors:SetCallback("OnEnter", onControlEnter)
-	classColors:SetCallback("OnLeave", onControlLeave)
-	classColors:SetCallback("OnValueChanged", checkboxCallback)
-	classColors:SetUserData("key", "classcolor")
-	classColors:SetUserData("tooltip", L["Colors player names in messages by their class."])
+		local classColors = AceGUI:Create("CheckBox")
+		classColors:SetLabel(L["Class colors"])
+		classColors:SetValue(self.db.profile.classcolor and true or false)
+		classColors:SetCallback("OnEnter", onControlEnter)
+		classColors:SetCallback("OnLeave", onControlLeave)
+		classColors:SetCallback("OnValueChanged", checkboxCallback)
+		classColors:SetUserData("key", "classcolor")
+		classColors:SetUserData("tooltip", L["Colors player names in messages by their class."])
 	
-	local icons = AceGUI:Create("CheckBox")
-	icons:SetLabel(L["Use icons"])
-	icons:SetValue(self.db.profile.useicons and true or false)
-	icons:SetCallback("OnEnter", onControlEnter)
-	icons:SetCallback("OnLeave", onControlLeave)
-	icons:SetCallback("OnValueChanged", checkboxCallback)
-	icons:SetUserData("key", "useicons")
-	icons:SetUserData("tooltip", L["Show icons next to messages, only works for Raid Warning."])
+		local icons = AceGUI:Create("CheckBox")
+		icons:SetLabel(L["Use icons"])
+		icons:SetValue(self.db.profile.useicons and true or false)
+		icons:SetCallback("OnEnter", onControlEnter)
+		icons:SetCallback("OnLeave", onControlLeave)
+		icons:SetCallback("OnValueChanged", checkboxCallback)
+		icons:SetUserData("key", "useicons")
+		icons:SetUserData("tooltip", L["Show icons next to messages, only works for Raid Warning."])
 
-	return chat, colors, classColors, icons
+		return chat, colors, classColors, icons
+	end
 end
 
 --------------------------------------------------------------------------------

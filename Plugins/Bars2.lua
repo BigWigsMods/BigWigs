@@ -14,10 +14,8 @@ local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 local AceGUI = LibStub("AceGUI-3.0")
 
 local colors = nil
-local dew = AceLibrary("Dewdrop-2.0")
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
-local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
@@ -122,13 +120,6 @@ local function onControlEnter(self)
 end
 local function onControlLeave() GameTooltip:Hide() end
 
-local function menu() dew:FeedAceOptionsTable(plugin.consoleOptions) end
-local function displayOnMouseDown(self, button)
-	if button == "RightButton" then
-		dew:Open(self, "children", menu)
-	end
-end
-
 local function createAnchor(frameName, title)
 	local display = CreateFrame("Frame", frameName, UIParent)
 	local wKey, xKey, yKey = frameName .. "_width", frameName .. "_x", frameName .. "_y"
@@ -187,7 +178,6 @@ local function createAnchor(frameName, title)
 	display:SetScript("OnSizeChanged", onResize)
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
-	display:SetScript("OnMouseDown", displayOnMouseDown)
 	display.bars = {}
 	display:Hide()
 	return display
@@ -222,11 +212,11 @@ end
 -- Initialization
 --
 function plugin:OnRegister()
-	media:Register(mType, "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
-	media:Register(mType, "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
-	media:Register(mType, "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
-	media:Register(mType, "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
-	media:Register(mType, "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
+	media:Register("statusbar", "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
+	media:Register("statusbar", "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
+	media:Register("statusbar", "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
+	media:Register("statusbar", "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
+	media:Register("statusbar", "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 	
 	db = self.db.profile
@@ -238,7 +228,7 @@ function plugin:OnPluginEnable()
 		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
 	end
 	
-	if not media:Fetch(mType, db.texture, true) then db.texture = "BantoBar" end
+	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StopBar")
 	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
@@ -249,8 +239,21 @@ function plugin:OnPluginEnable()
 end
 
 do
-	function plugin:GetPluginConfig()
+	local function onControlEnter(widget, event, value)
+		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
+		GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
+		GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
+		GameTooltip:Show()
+	end
+	local function onControlLeave() GameTooltip:Hide() end
 
+	local function checkboxCallback(widget, event, value)
+		local key = widget:GetUserData("key")
+		plugin.db.profile[key] = value and true or false
+	end
+
+	function plugin:GetPluginConfig()
 		local tex = AceGUI:Create("Dropdown")
 		do
 			local list = media:List("statusbar")
@@ -284,7 +287,7 @@ do
 			font:SetCallback("OnValueChanged", fontChanged)
 			font:SetFullWidth(true)
 		end
-	
+
 		local align = AceGUI:Create("Dropdown")
 		align:SetList({ ["LEFT"] = L["Left"], ["CENTER"] = L["Center"], ["RIGHT"] = L["Right"] })
 		align:SetValue(db.align)
@@ -296,14 +299,20 @@ do
 		icon:SetValue(db.icon)
 		icon:SetLabel(L["Icon"])
 		icon:SetUserData("key", "icon")
-		icon:SetCallback("OnValueChanged", toggleChanged)
+		icon:SetCallback("OnValueChanged", checkboxCallback)
+		icon:SetUserData("tooltip", L["Shows or hides the bar icons."])
+		icon:SetCallback("OnEnter", onControlEnter)
+		icon:SetCallback("OnLeave", onControlLeave)
 		icon:SetRelativeWidth(0.5)
 	
 		local duration = AceGUI:Create("CheckBox")
 		duration:SetValue(db.time)
 		duration:SetLabel(L["Time"])
 		duration:SetUserData("key", "time")
-		duration:SetCallback("OnValueChanged", toggleChanged)
+		duration:SetCallback("OnValueChanged", checkboxCallback)
+		duration:SetUserData("tooltip", L["Whether to show or hide the time left on the bars."])
+		duration:SetCallback("OnEnter", onControlEnter)
+		duration:SetCallback("OnLeave", onControlLeave)
 		duration:SetRelativeWidth(0.5)
 
 		local normal = AceGUI:Create("InlineGroup")
@@ -315,7 +324,10 @@ do
 			growup:SetValue(db.growup)
 			growup:SetLabel(L["Grow upwards"])
 			growup:SetUserData("key", "growup")
-			growup:SetCallback("OnValueChanged", toggleChanged)
+			growup:SetCallback("OnValueChanged", checkboxCallback)
+			growup:SetUserData("tooltip", L["Toggle bars grow upwards/downwards from anchor."])
+			growup:SetCallback("OnEnter", onControlEnter)
+			growup:SetCallback("OnLeave", onControlLeave)
 			growup:SetRelativeWidth(0.5)
 		
 			local scale = AceGUI:Create("Slider")
@@ -337,28 +349,37 @@ do
 			enable:SetValue(db.emphasize)
 			enable:SetLabel(L["Enable"])
 			enable:SetUserData("key", "emphasize")
-			enable:SetCallback("OnValueChanged", toggleChanged)
+			enable:SetCallback("OnValueChanged", checkboxCallback)
 			enable:SetRelativeWidth(0.5)
 		
 			local flash = AceGUI:Create("CheckBox")
 			flash:SetValue(db.emphasizeFlash)
 			flash:SetLabel(L["Flash"])
 			flash:SetUserData("key", "emphasizeFlash")
-			flash:SetCallback("OnValueChanged", toggleChanged)
+			flash:SetCallback("OnValueChanged", checkboxCallback)
+			flash:SetUserData("tooltip", L["Flashes the background of emphasized bars, which could make it easier for you to spot them."])
+			flash:SetCallback("OnEnter", onControlEnter)
+			flash:SetCallback("OnLeave", onControlLeave)
 			flash:SetRelativeWidth(0.5)
 		
 			local move = AceGUI:Create("CheckBox")
 			move:SetValue(db.emphasizeMove)
 			move:SetLabel(L["Move"])
 			move:SetUserData("key", "emphasizeMove")
-			move:SetCallback("OnValueChanged", toggleChanged)
+			move:SetCallback("OnValueChanged", checkboxCallback)
+			move:SetUserData("tooltip", L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."])
+			move:SetCallback("OnEnter", onControlEnter)
+			move:SetCallback("OnLeave", onControlLeave)
 			move:SetRelativeWidth(0.5)
 
 			local growup = AceGUI:Create("CheckBox")
 			growup:SetValue(db.emphasizeGrowup)
 			growup:SetLabel(L["Grow upwards"])
 			growup:SetUserData("key", "emphasizeGrowup")
-			growup:SetCallback("OnValueChanged", toggleChanged)
+			growup:SetCallback("OnValueChanged", checkboxCallback)
+			growup:SetUserData("tooltip", L["Toggle bars grow upwards/downwards from anchor."])
+			growup:SetCallback("OnEnter", onControlEnter)
+			growup:SetCallback("OnLeave", onControlLeave)
 			growup:SetRelativeWidth(0.5)
 
 			local scale = AceGUI:Create("Slider")
@@ -432,7 +453,7 @@ end
 
 function plugin:BigWigs_StartBar(message, module, text, time, icon)
 	stop(module, text)
-	local bar = candy:New(media:Fetch(mType, db.texture), 200, 14)
+	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
 	bar.candyBarBackground:SetVertexColor(colorBackground())
 	bar:Set("bigwigs:module", module)
