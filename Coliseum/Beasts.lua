@@ -156,7 +156,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
 		if difficulty > 2 and db.berserk then
-			self:Berserk(190, true)
+			self:Berserk(190, true, icehowl)
 		end
 	end
 end

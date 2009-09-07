@@ -379,8 +379,8 @@ function boss:Throttle(seconds, ...)
 	self:SendMessage("BigWigs_ThrottleSync", seconds, ...)
 end
 
-function boss:Berserk(seconds, noEngageMessage)
-	local boss = self.displayName
+function boss:Berserk(seconds, noEngageMessage, customBoss)
+	local boss = customBoss or self.displayName
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
 		self:Message(fmt(L["berserk_start"], boss, seconds / 60), "Attention")

@@ -522,29 +522,28 @@ do
 			end
 		end
 
-		local opts = {}
-		if not module.toggleOptions then
-			error(("Module %q doesn't have a toggleOptions field."):format(name))
-		end
-		for i,v in next, module.toggleOptions do
-			local t = type(v)
-			if t == "string"  then
-				opts[v] = true
-			elseif t == "number" and v > 0 then
-				local n = GetSpellInfo(v)
-				if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
-				opts[n] = true
+		if module.toggleOptions then
+			local opts = {}
+			for i,v in next, module.toggleOptions do
+				local t = type(v)
+				if t == "string"  then
+					opts[v] = true
+				elseif t == "number" and v > 0 then
+					local n = GetSpellInfo(v)
+					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
+					opts[n] = true
+				end
 			end
-		end
-		module.db = self.db:RegisterNamespace(name, { profile = opts })
+			module.db = self.db:RegisterNamespace(name, { profile = opts })
 
-		local zone = module.otherMenu or module.zoneName
-		if not zoneModules[zone] then
-			ac:RegisterOptionsTable(zone, populateZoneOptions)
-			acd:AddToBlizOptions(zone, zone, "Big Wigs")
-			zoneModules[zone] = {}
+			local zone = module.otherMenu or module.zoneName
+			if not zoneModules[zone] then
+				ac:RegisterOptionsTable(zone, populateZoneOptions)
+				acd:AddToBlizOptions(zone, zone, "Big Wigs")
+				zoneModules[zone] = {}
+			end
+			tinsert(zoneModules[zone], module)
 		end
-		tinsert(zoneModules[zone], module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
