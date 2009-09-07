@@ -9,8 +9,6 @@ if not plugin then return end
 --      Are you local?
 -----------------------------------------------------------------------
 
-local dew = AceLibrary("Dewdrop-2.0")
-
 local AceGUI = LibStub("AceGUI-3.0")
 
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
