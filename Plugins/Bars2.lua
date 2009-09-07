@@ -11,6 +11,8 @@ if not plugin then return end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 
+local AceGUI = LibStub("AceGUI-3.0")
+
 local colors = nil
 local dew = AceLibrary("Dewdrop-2.0")
 local candy = LibStub("LibCandyBar-3.0")
@@ -44,140 +46,6 @@ plugin.defaultDB = {
 local function getOption(key) return plugin.db.profile[key] end
 local function setOption(key, value) plugin.db.profile[key] = value end
 local function shouldDisableEmphasizeOption() return not plugin.db.profile.emphasize end
-plugin.consoleOptions = {
-	type = "group",
-	name = L["Bars"],
-	desc = L["Options for the timer bars."],
-	handler = plugin,
-	pass = true,
-	get = getOption,
-	set = setOption,
-	args = {
-		anchor = {
-			type = "execute",
-			name = L["Toggle anchors"],
-			desc = L["Show or hide the bar anchors for both normal and emphasized bars."],
-			order = 1,
-			func = "ShowAnchors",
-		},
-		reset = {
-			type = "execute",
-			name = L["Reset position"],
-			desc = L["Reset the anchor positions, moving them to their default positions."],
-			order = 2,
-			func = "ResetAnchors",
-		},
-		font = {
-			type = "text",
-			name = L["Font"],
-			desc = L["Set the font for the timer bars."],
-			validate = media:List("font"),
-			order = 3,
-		},
-		texture = {
-			type = "text",
-			name = L["Texture"],
-			desc = L["Set the texture for the timer bars."],
-			validate = media:List(mType),
-			order = 4,
-		},
-		align = {
-			type = "text",
-			name = L["Align"],
-			desc = L["How to align the bar labels."],
-			validate = {
-				LEFT = L["Left"],
-				CENTER = L["Center"],
-				RIGHT = L["Right"],
-			},
-			order = 5,
-		},
-		time = {
-			type = "toggle",
-			name = L["Time"],
-			desc = L["Whether to show or hide the time left on the bars."],
-			order = 6,
-		},
-		icon = {
-			type = "toggle",
-			name = L["Icon"],
-			desc = L["Shows or hides the bar icons."],
-			order = 7,
-		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 50,
-		},
-		normal_header = {
-			type = "header",
-			name = L["Regular bars"],
-			order = 99,
-		},
-		growup = {
-			type = "toggle",
-			name = L["Grow upwards"],
-			desc = L["Toggle bars grow upwards/downwards from anchor."],
-			order = 100,
-		},
-		scale = {
-			type = "range",
-			name = L["Scale"],
-			desc = L["Set the bar scale."],
-			min = 0.2,
-			max = 2.0,
-			step = 0.1,
-			order = 103,
-		},
-		spacer2 = {
-			type = "header",
-			name = " ",
-			order = 200,
-		},
-		emp_header = {
-			type = "header",
-			name = L["Emphasized bars"],
-			order = 299,
-		},
-		emphasize = {
-			type = "toggle",
-			name = L["Enable"],
-			desc = L["Enables emphasizing bars."],
-			order = 300,
-		},
-		emphasizeFlash = {
-			type = "toggle",
-			name = L["Flash"],
-			desc = L["Flashes the background of emphasized bars, which could make it easier for you to spot them."],
-			order = 301,
-			disabled = shouldDisableEmphasizeOption,
-		},
-		emphasizeMove = {
-			type = "toggle",
-			name = L["Move"],
-			desc = L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."],
-			order = 302,
-			disabled = shouldDisableEmphasizeOption,
-		},
-		emphasizeGrowup = {
-			type = "toggle",
-			name = L["Grow upwards"],
-			desc = L["Toggle bars grow upwards/downwards from anchor."],
-			order = 303,
-			disabled = shouldDisableEmphasizeOption,
-		},
-		emphasizeScale = {
-			type = "range",
-			name = L["Scale"],
-			desc = L["Set the scale for emphasized bars."],
-			min = 0.2,
-			max = 2.0,
-			step = 0.1,
-			disabled = shouldDisableEmphasizeOption,
-			order = 304,
-		},
-	},
-}
 
 --------------------------------------------------------------------------------
 -- Bar arrangement
@@ -380,8 +248,132 @@ function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
 end
 
-function plugin:GetPluginConfig()
+do
+	function plugin:GetPluginConfig()
 
+		local tex = AceGUI:Create("Dropdown")
+		do
+			local list = media:List("statusbar")
+			local selected = nil
+			for k, v in pairs(list) do
+				if v == db.texture then
+					selected = k
+					break
+				end
+			end
+			tex:SetList(list)
+			tex:SetValue(selected)
+			tex:SetLabel(L["Texture"])
+			tex:SetCallback("OnValueChanged", textureChanged)
+			tex:SetFullWidth(true)
+		end
+	
+		local font = AceGUI:Create("Dropdown")
+		do
+			local list = media:List("font")
+			local selected = nil
+			for k, v in pairs(list) do
+				if v == db.font then
+					selected = k
+					break
+				end
+			end
+			font:SetList(list)
+			font:SetValue(selected)
+			font:SetLabel(L["Font"])
+			font:SetCallback("OnValueChanged", fontChanged)
+			font:SetFullWidth(true)
+		end
+	
+		local align = AceGUI:Create("Dropdown")
+		align:SetList({ ["LEFT"] = L["Left"], ["CENTER"] = L["Center"], ["RIGHT"] = L["Right"] })
+		align:SetValue(db.align)
+		align:SetLabel(L["Align"])
+		align:SetCallback("OnValueChanged", alignChanged)
+		align:SetFullWidth(true)
+
+		local icon = AceGUI:Create("CheckBox")
+		icon:SetValue(db.icon)
+		icon:SetLabel(L["Icon"])
+		icon:SetUserData("key", "icon")
+		icon:SetCallback("OnValueChanged", toggleChanged)
+		icon:SetRelativeWidth(0.5)
+	
+		local duration = AceGUI:Create("CheckBox")
+		duration:SetValue(db.time)
+		duration:SetLabel(L["Time"])
+		duration:SetUserData("key", "time")
+		duration:SetCallback("OnValueChanged", toggleChanged)
+		duration:SetRelativeWidth(0.5)
+
+		local normal = AceGUI:Create("InlineGroup")
+		normal:SetTitle(L["Regular bars"])
+		normal:SetFullWidth(true)
+		
+		do
+			local growup = AceGUI:Create("CheckBox")
+			growup:SetValue(db.growup)
+			growup:SetLabel(L["Grow upwards"])
+			growup:SetUserData("key", "growup")
+			growup:SetCallback("OnValueChanged", toggleChanged)
+			growup:SetRelativeWidth(0.5)
+		
+			local scale = AceGUI:Create("Slider")
+			scale:SetValue(db.scale)
+			scale:SetSliderValues(0.2, 2.0, 0.1)
+			scale:SetLabel(L["Scale"])
+			scale:SetUserData("key", "scale")
+			scale:SetCallback("OnValueChanged", scaleChanged)
+			scale:SetFullWidth(true)
+			normal:AddChildren(growup, scale)
+		end
+
+		local emphasize = AceGUI:Create("InlineGroup")
+		emphasize:SetTitle(L["Emphasized bars"])
+		emphasize:SetFullWidth(true)
+		
+		do
+			local enable = AceGUI:Create("CheckBox")
+			enable:SetValue(db.emphasize)
+			enable:SetLabel(L["Enable"])
+			enable:SetUserData("key", "emphasize")
+			enable:SetCallback("OnValueChanged", toggleChanged)
+			enable:SetRelativeWidth(0.5)
+		
+			local flash = AceGUI:Create("CheckBox")
+			flash:SetValue(db.emphasizeFlash)
+			flash:SetLabel(L["Flash"])
+			flash:SetUserData("key", "emphasizeFlash")
+			flash:SetCallback("OnValueChanged", toggleChanged)
+			flash:SetRelativeWidth(0.5)
+		
+			local move = AceGUI:Create("CheckBox")
+			move:SetValue(db.emphasizeMove)
+			move:SetLabel(L["Move"])
+			move:SetUserData("key", "emphasizeMove")
+			move:SetCallback("OnValueChanged", toggleChanged)
+			move:SetRelativeWidth(0.5)
+
+			local growup = AceGUI:Create("CheckBox")
+			growup:SetValue(db.emphasizeGrowup)
+			growup:SetLabel(L["Grow upwards"])
+			growup:SetUserData("key", "emphasizeGrowup")
+			growup:SetCallback("OnValueChanged", toggleChanged)
+			growup:SetRelativeWidth(0.5)
+
+			local scale = AceGUI:Create("Slider")
+			scale:SetValue(db.emphasizeScale)
+			scale:SetSliderValues(0.2, 2.0, 0.1)
+			scale:SetLabel(L["Scale"])
+			scale:SetUserData("key", "emphasizeScale")
+			scale:SetCallback("OnValueChanged", scaleChanged)
+			scale:SetFullWidth(true)
+		
+			emphasize:AddChildren(enable, flash, move, growup, scale)
+		end
+		
+		return tex, font, align, icon, duration, normal, emphasize
+	end
 end
 
 --------------------------------------------------------------------------------

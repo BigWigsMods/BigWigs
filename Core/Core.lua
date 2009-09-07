@@ -190,20 +190,20 @@ function addon:OnInitialize()
 end
 
 function addon:OnEnable()
-	if LOCALE ~= "enUS" and ( not BZ and not BB ) then
+	if LOCALE ~= "enUS" and (not BZ or not BB) then
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
-	self:SendMessage("BigWigs_CoreEnabled")
-	
-	-- enable modules that require enabling
-	-- the cores etc are set to disabled by default, and require manual enabling
-	self.pluginCore:Enable() 
-	self.bossCore:Enable() 
-	
 	self:RegisterMessage("BigWigs_TargetSeen")
 	self:RegisterMessage("BigWigs_RebootModule")
 	self:RegisterMessage("BigWigs_RecvSync")
+
+	self:SendMessage("BigWigs_CoreEnabled")
+
+	-- enable modules that require enabling
+	-- the cores etc are set to disabled by default, and require manual enabling
+	self.pluginCore:Enable() 
+	self.bossCore:Enable() 	
 end
 
 function addon:OnDisable()
