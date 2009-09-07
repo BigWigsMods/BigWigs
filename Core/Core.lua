@@ -169,12 +169,6 @@ function addon:OnInitialize()
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
 
-	-- once OnInitialize is fired, we have BZ and BB available if we're not in english locale
-	if LOCALE ~= "enUS" then
-		BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
-		BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable()
-	end
-
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 
@@ -191,6 +185,10 @@ function addon:OnInitialize()
 end
 
 function addon:OnEnable()
+	if LOCALE ~= "enUS" and ( not BZ and not BB ) then
+		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
+		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
+	end
 	self:SendMessage("BigWigs_CoreEnabled")
 	
 	-- enable modules that require enabling

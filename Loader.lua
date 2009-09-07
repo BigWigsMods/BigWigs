@@ -408,8 +408,8 @@ function loader:LoadForeign()
 	if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
 		self:Print("Error retrieving LibBabble-Zone-3.0 and LibBabble-Boss-3.0, please reinstall BigWigs")
 	else
-		BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
-		BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable()
+		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
+		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
 end
 
