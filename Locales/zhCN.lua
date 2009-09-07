@@ -36,7 +36,7 @@ L["Load all %s modules."] = "加载所有%s模块。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已经存在首领模块，但存在（版本 |cffffff00%d|r）模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您的插件文件夹中。建议您删除所有 Big Wigs 文件夹并重新全新安装。"
 
--- Options.lua
+-- Loader / Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00首领模块运行中|r"
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "你可以|cffeda55f点击|r图标重置所有运行中的模块；\n或者|cffeda55fAlt-点击|r可以禁用所有首领模块；\n或者 |cffeda55fCtrl-Alt-点击|r 可以禁用 Big Wigs 所有功能。"
 L["Active boss modules:"] = "激活首领模块："
@@ -46,4 +46,5 @@ L["Menu options."] = "目录选项。"
 
 L["Big Wigs is currently disabled."] = "Big Wigs 已被禁用。"
 L["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r启用。"
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r重置所有运行中模块。|cffeda55fAlt-点击|r禁用。|cffeda55fCtrl-Alt-点击|r完全禁用 Big Wigs。"
+L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r重置所有运行中的模块。|cffeda55fAlt-点击|r禁用所有首领模块。|cffeda55fCtrl-Alt-点击|r禁用 Big Wigs 所有功能。"
+L["All running modules have been disabled."] = "所有运行中的模块都已禁用。"
