@@ -264,7 +264,7 @@ do
 		frame:SetHeight(600)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle("Configure")
-		frame:SetCallback("OnClose", function()
+		frame:SetCallback("OnClose", function(widget, callback)
 			addon:SendMessage("BigWigs_StopConfigureMode")
 		end)
 
@@ -288,6 +288,7 @@ do
 			end
 		end
 		tabs = AceGUI:Create("TabGroup")
+		tabs:SetLayout("Flow")
 		tabs:SetTabs(plugins)
 		tabs:SetCallback("OnGroupSelected", widgetSelect)
 		tabs:SetUserData("tab", "")
@@ -309,6 +310,10 @@ do
 	function addon:BigWigs_StopConfigureMode()
 		configMode = nil
 		frame:Hide()
+		frame:ReleaseChildren()
+		frame:Release()
+		frame = nil
+		wipe(plugins)
 	end
 end
 

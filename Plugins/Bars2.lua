@@ -297,6 +297,37 @@ do
 			font:SetFullWidth(true)
 		end
 
+		--[[
+		XXX OH MY GOD these radio buttons look REALLY bad! :D
+		XXX we'll use a dropdown for now
+		
+		local align = AceGUI:Create("InlineGroup")
+		align:SetTitle(L["Align"])
+		align:SetFullWidth(true)
+		align:SetLayout("Flow")
+		
+		do
+			local left = AceGUI:Create("CheckBox")
+			left:SetValue(false)
+			left:SetType("radio")
+			left:SetLabel(L["Left"])
+			left:SetRelativeWidth(0.3)
+
+			local center = AceGUI:Create("CheckBox")
+			center:SetValue(false)
+			center:SetType("radio")
+			center:SetLabel(L["Center"])
+			center:SetRelativeWidth(0.3)
+
+			local right = AceGUI:Create("CheckBox")
+			right:SetValue(false)
+			right:SetType("radio")
+			right:SetLabel(L["Right"])
+			right:SetRelativeWidth(0.3)
+
+			align:AddChildren(left, center, right)
+		end]]
+
 		local align = AceGUI:Create("Dropdown")
 		align:SetList({ ["LEFT"] = L["Left"], ["CENTER"] = L["Center"], ["RIGHT"] = L["Right"] })
 		align:SetValue(db.align)
@@ -312,8 +343,8 @@ do
 		icon:SetUserData("tooltip", L["Shows or hides the bar icons."])
 		icon:SetCallback("OnEnter", onControlEnter)
 		icon:SetCallback("OnLeave", onControlLeave)
-		icon:SetRelativeWidth(0.5)
-	
+		icon:SetFullWidth(true)
+
 		local duration = AceGUI:Create("CheckBox")
 		duration:SetValue(db.time)
 		duration:SetLabel(L["Time"])
@@ -322,12 +353,12 @@ do
 		duration:SetUserData("tooltip", L["Whether to show or hide the time left on the bars."])
 		duration:SetCallback("OnEnter", onControlEnter)
 		duration:SetCallback("OnLeave", onControlLeave)
-		duration:SetRelativeWidth(0.5)
+		duration:SetFullWidth(true)
 
 		local normal = AceGUI:Create("InlineGroup")
 		normal:SetTitle(L["Regular bars"])
 		normal:SetFullWidth(true)
-		
+
 		do
 			local growup = AceGUI:Create("CheckBox")
 			growup:SetValue(db.growup)
@@ -360,7 +391,7 @@ do
 			enable:SetUserData("key", "emphasize")
 			enable:SetCallback("OnValueChanged", checkboxCallback)
 			enable:SetFullWidth(true)
-		
+
 			local flash = AceGUI:Create("CheckBox")
 			flash:SetValue(db.emphasizeFlash)
 			flash:SetLabel(L["Flash"])
@@ -370,7 +401,7 @@ do
 			flash:SetCallback("OnEnter", onControlEnter)
 			flash:SetCallback("OnLeave", onControlLeave)
 			flash:SetFullWidth(true)
-		
+
 			local move = AceGUI:Create("CheckBox")
 			move:SetValue(db.emphasizeMove)
 			move:SetLabel(L["Move"])
