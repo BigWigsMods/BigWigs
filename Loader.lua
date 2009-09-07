@@ -96,7 +96,6 @@ local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign langua
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadInZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
-local loadForeign = {} -- BigWigs foreign language packs
 
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 
@@ -195,10 +194,6 @@ function loader:OnInitialize()
 			if meta then -- this pack wants to be loaded when we enable the core
 				table.insert(loadOnCoreEnabled, name)
 			end
-			if LOCALE ~= "enUS" then -- only do something with foreign stuff if we really need to, yay no BabbleBoss and Zone for english users!
-				meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Foreign")
-				if meta then LoadAddOn(name) end -- imediately load that stuff, this WILL trigger another ADDON_LOADED, which is NO issue when BigWigs is fully packed or unpacked.
-			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
 			if meta then
 				table.insert(loadOnCoreLoaded, name)
@@ -209,23 +204,6 @@ function loader:OnInitialize()
 			end
 		end
 	end
-	if LOCALE ~= "enUS" then
-		BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
-		BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable()
-	end
-	-- From this point onward BZ and BB should be available for non-english locales
-	for k, name in pairs(zoneAddon) do
-		meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
-		local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
-		if menu then
-			if BZ then menu = BZ[menu] or menu end
-			if not loadInZone[menu] then loadInZone[menu] = {} end
-			menus[menu] = true
-		end
-		local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
-		iterateZones(name, menu, partyContent, strsplit(",", meta))
-	end
-	zoneAddon = nil -- garbage collect
 	
 	-- register for these messages OnInit so we receive these messages when the core and modules oninitialize fires
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
@@ -239,6 +217,23 @@ function loader:OnInitialize()
 end
 
 function loader:OnEnable()
+	self:LoadForeign()
+	-- From this point onward BZ and BB should be available for non-english locales
+	if zoneAddon then
+		for k, name in pairs(zoneAddon) do
+			meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
+			local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
+			if menu then
+				if BZ then menu = BZ[menu] or menu end
+				if not loadInZone[menu] then loadInZone[menu] = {} end
+				menus[menu] = true
+			end
+			local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
+			iterateZones(name, menu, partyContent, strsplit(",", meta))
+		end
+		zoneAddon = nil -- garbage collect
+	end
+
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 	self:RegisterEvent("RAID_ROSTER_UPDATE", "CheckRoster")
@@ -396,6 +391,26 @@ function loader:LoadCore()
 		return false, err
 	end
 	return true
+end
+
+function loader:LoadForeign()
+	if LOCALE == "enUS" or ( BZ and BB ) then return true end
+	local core = "BigWigs_Foreign"
+	local enabled = select(4, GetAddOnInfo(core))
+	if not enabled then 
+		self:Print("Error loading " .. core .. " ("..core.." is not enabled)")
+		return
+	end
+	local succ, err = LoadAddOn(core)
+	if not succ then
+		self:Print("Error loading " .. core .. " (" .. tostring(err) .. ")")
+	end
+	if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
+		self:Print("Error retrieving LibBabble-Zone-3.0 and LibBabble-Boss-3.0, please reinstall BigWigs")
+	else
+		BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
+		BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable()
+	end
 end
 
 ldb = LibStub("LibDataBroker-1.1"):GetDataObjectByName("BigWigs")
