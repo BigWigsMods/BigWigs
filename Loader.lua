@@ -183,10 +183,10 @@ local function iterateZones(addon, override, partyContent, ...)
 		end
 	end
 end
-
+local zoneAddon = {}
 function loader:OnInitialize()
 	local numAddons = GetNumAddOns()
-	local zoneAddon = {}
+	
 	for i = 1, numAddons do
 		local name, _, _, enabled = GetAddOnInfo(i)
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
