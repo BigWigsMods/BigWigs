@@ -41,7 +41,7 @@ plugin.defaultDB = {
 	BigWigsEmphasizeAnchor_width = 300,
 }
 
-local function shouldDisableEmphasizeOption() return not plugin.db.profile.emphasize end
+local function shouldDisableEmphasizeOption() return not db.emphasize end
 
 --------------------------------------------------------------------------------
 -- Bar arrangement
@@ -257,9 +257,14 @@ do
 	end
 	local function onControlLeave() GameTooltip:Hide() end
 
-	local function checkboxCallback(widget, event, value)
+	local function standardCallback(widget, event, value)
 		local key = widget:GetUserData("key")
-		plugin.db.profile[key] = value and true or false
+		db[key] = value
+	end
+	
+	local function dropdownCallback(widget, event, value)
+		local list = media:List(widget:GetUserData("type"))
+		db[widget:GetUserData("key")] = list[value]
 	end
 
 	function plugin:GetPluginConfig()
@@ -276,7 +281,9 @@ do
 			tex:SetList(list)
 			tex:SetValue(selected)
 			tex:SetLabel(L["Texture"])
-			tex:SetCallback("OnValueChanged", textureChanged)
+			tex:SetUserData("type", "statusbar")
+			tex:SetUserData("key", "texture")
+			tex:SetCallback("OnValueChanged", dropdownCallback)
 			tex:SetFullWidth(true)
 		end
 	
@@ -293,7 +300,9 @@ do
 			font:SetList(list)
 			font:SetValue(selected)
 			font:SetLabel(L["Font"])
-			font:SetCallback("OnValueChanged", fontChanged)
+			font:SetUserData("type", "font")
+			font:SetUserData("key", "font")
+			font:SetCallback("OnValueChanged", dropdownCallback)
 			font:SetFullWidth(true)
 		end
 
@@ -332,14 +341,15 @@ do
 		align:SetList({ ["LEFT"] = L["Left"], ["CENTER"] = L["Center"], ["RIGHT"] = L["Right"] })
 		align:SetValue(db.align)
 		align:SetLabel(L["Align"])
-		align:SetCallback("OnValueChanged", alignChanged)
+		align:SetUserData("key", "align")
+		align:SetCallback("OnValueChanged", standardCallback)
 		align:SetFullWidth(true)
 
 		local icon = AceGUI:Create("CheckBox")
 		icon:SetValue(db.icon)
 		icon:SetLabel(L["Icon"])
 		icon:SetUserData("key", "icon")
-		icon:SetCallback("OnValueChanged", checkboxCallback)
+		icon:SetCallback("OnValueChanged", standardCallback)
 		icon:SetUserData("tooltip", L["Shows or hides the bar icons."])
 		icon:SetCallback("OnEnter", onControlEnter)
 		icon:SetCallback("OnLeave", onControlLeave)
@@ -349,7 +359,7 @@ do
 		duration:SetValue(db.time)
 		duration:SetLabel(L["Time"])
 		duration:SetUserData("key", "time")
-		duration:SetCallback("OnValueChanged", checkboxCallback)
+		duration:SetCallback("OnValueChanged", standardCallback)
 		duration:SetUserData("tooltip", L["Whether to show or hide the time left on the bars."])
 		duration:SetCallback("OnEnter", onControlEnter)
 		duration:SetCallback("OnLeave", onControlLeave)
@@ -364,7 +374,7 @@ do
 			growup:SetValue(db.growup)
 			growup:SetLabel(L["Grow upwards"])
 			growup:SetUserData("key", "growup")
-			growup:SetCallback("OnValueChanged", checkboxCallback)
+			growup:SetCallback("OnValueChanged", standardCallback)
 			growup:SetUserData("tooltip", L["Toggle bars grow upwards/downwards from anchor."])
 			growup:SetCallback("OnEnter", onControlEnter)
 			growup:SetCallback("OnLeave", onControlLeave)
@@ -375,7 +385,7 @@ do
 			scale:SetSliderValues(0.2, 2.0, 0.1)
 			scale:SetLabel(L["Scale"])
 			scale:SetUserData("key", "scale")
-			scale:SetCallback("OnValueChanged", scaleChanged)
+			scale:SetCallback("OnValueChanged", standardCallback)
 			scale:SetFullWidth(true)
 			normal:AddChildren(growup, scale)
 		end
@@ -389,14 +399,14 @@ do
 			enable:SetValue(db.emphasize)
 			enable:SetLabel(L["Enable"])
 			enable:SetUserData("key", "emphasize")
-			enable:SetCallback("OnValueChanged", checkboxCallback)
+			enable:SetCallback("OnValueChanged", standardCallback)
 			enable:SetFullWidth(true)
 
 			local flash = AceGUI:Create("CheckBox")
 			flash:SetValue(db.emphasizeFlash)
 			flash:SetLabel(L["Flash"])
 			flash:SetUserData("key", "emphasizeFlash")
-			flash:SetCallback("OnValueChanged", checkboxCallback)
+			flash:SetCallback("OnValueChanged", standardCallback)
 			flash:SetUserData("tooltip", L["Flashes the background of emphasized bars, which could make it easier for you to spot them."])
 			flash:SetCallback("OnEnter", onControlEnter)
 			flash:SetCallback("OnLeave", onControlLeave)
@@ -406,7 +416,7 @@ do
 			move:SetValue(db.emphasizeMove)
 			move:SetLabel(L["Move"])
 			move:SetUserData("key", "emphasizeMove")
-			move:SetCallback("OnValueChanged", checkboxCallback)
+			move:SetCallback("OnValueChanged", standardCallback)
 			move:SetUserData("tooltip", L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."])
 			move:SetCallback("OnEnter", onControlEnter)
 			move:SetCallback("OnLeave", onControlLeave)
@@ -416,7 +426,7 @@ do
 			growup:SetValue(db.emphasizeGrowup)
 			growup:SetLabel(L["Grow upwards"])
 			growup:SetUserData("key", "emphasizeGrowup")
-			growup:SetCallback("OnValueChanged", checkboxCallback)
+			growup:SetCallback("OnValueChanged", standardCallback)
 			growup:SetUserData("tooltip", L["Toggle bars grow upwards/downwards from anchor."])
 			growup:SetCallback("OnEnter", onControlEnter)
 			growup:SetCallback("OnLeave", onControlLeave)
@@ -427,7 +437,7 @@ do
 			scale:SetSliderValues(0.2, 2.0, 0.1)
 			scale:SetLabel(L["Scale"])
 			scale:SetUserData("key", "emphasizeScale")
-			scale:SetCallback("OnValueChanged", scaleChanged)
+			scale:SetCallback("OnValueChanged", standardCallback)
 			scale:SetFullWidth(true)
 		
 			emphasize:AddChildren(enable, flash, move, growup, scale)
