@@ -26,7 +26,7 @@ local fmt = string.format
 ------------------------------
 --      English Locale      --
 ------------------------------
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "enUS", true)
 if L then
 	L.sparks = "Spark Spawns"
 	L.sparks_desc = "Warns on Power Spark spawns."

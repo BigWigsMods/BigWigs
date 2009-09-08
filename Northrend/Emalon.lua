@@ -29,7 +29,7 @@ local overchargerepeater = nil -- overcharge repeating timer
 --      English Locale      --
 ------------------------------
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "enUS", true)
 if L then
 	L.nova_next = "~Nova Cooldown"
 

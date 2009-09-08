@@ -31,7 +31,7 @@ local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 ------------------------------
 --      English Locale      --
 ------------------------------
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "enUS", true)
 if L then
 	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
 
