@@ -121,9 +121,14 @@ end
 function boss:GetUnitIdByName(mob) return findTargetByName(mob) end
 function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
 local function scan(self)
-	for i, id in next, self.enabletrigger do
-		local unit = findTargetByGUID(id)
+	if type(self.enabletrigger) == "number" then
+		local unit = findTargetByGUID(self.enabletrigger)
 		if unit and UnitAffectingCombat(unit) then return true end
+	elseif type(self.enabletrigger) == "table" then
+		for i, id in next, self.enabletrigger do
+			local unit = findTargetByGUID(id)
+			if unit and UnitAffectingCombat(unit) then return true end
+		end
 	end
 end
 
