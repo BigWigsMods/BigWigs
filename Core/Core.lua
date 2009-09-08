@@ -19,6 +19,7 @@ local L = AL:GetLocale("BigWigs")
 local icon = LibStub("LibDBIcon-1.0", true)
 
 local ac = LibStub("AceConfig-3.0")
+local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
@@ -459,12 +460,33 @@ do
 	end
 	
 	local zoneOptions = {}
+	local flagforloadbutton = {}
+
+	local function loadZone(k, v)
+		local zone = k.arg
+		BigWigsLoader:LoadZone(zone)
+		zoneOptions[zone].args.load = nil
+		flagforloadbutton[zone] = nil
+		acr:NotifyChange(zone)
+	end
+
 	local function populateZoneOptions(uiType, library, zone)
 		zoneOptions[zone] = zoneOptions[zone] or {
 			type = "group",
 			childGroups = "select",
 			args = {},
 		}
+		if flagforloadbutton[zone] then
+			-- add us a load button
+			zoneOptions[zone].args.load = {
+				name = L["Load"],
+				desc = L["Load all %s modules."]:format(zone),
+				order = 1,
+				type = "execute",
+				func = loadZone,
+				arg = zone
+			}
+		end
 		for i, module in next, zoneModules[zone] do
 			if not zoneOptions[zone].args[module.name] then
 				zoneOptions[zone].args[module.name] = fillBossOptions(module)
@@ -474,6 +496,18 @@ do
 		return zoneOptions[zone]
 	end
 
+	-- called from the loader
+	function addon:SetZoneMenus(zones)
+		for zone, v in pairs(zones) do
+			if not zoneModules[zone] then
+				ac:RegisterOptionsTable(zone, populateZoneOptions)
+				acd:AddToBlizOptions(zone, zone, "Big Wigs")
+				zoneModules[zone] = {}
+			end
+			flagforloadbutton[zone] = true
+		end
+	end
+	
 	function addon:RegisterBossModule(module)
 		local name = module.name
 		local rev = module.revision

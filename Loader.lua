@@ -117,6 +117,7 @@ elseif LOCALE == "frFR" then
 end
 
 local function loadZone(zone)
+	if not zone then return end
 	if loadInZone[zone] then
 		local addonsLoaded = {}
 		for i, v in next, loadInZone[zone] do
@@ -293,6 +294,9 @@ function loader:RegisterTooltipInfo(func)
 	table.insert(tooltipFunctions, func)
 end
 
+function loader:LoadZone(zone)
+	loadZone(zone)
+end
 
 function loader:ZoneChanged()
 	if not grouped then return end
@@ -362,9 +366,8 @@ function loader:BigWigs_CoreLoaded()
 		if not IsAddOnLoaded(v) then LoadAddOn(v) end
 		loadOnCoreLoaded[k] = nil
 	end
-	
 	-- FIXME: do sometihng with this?
-	-- BigWigs:SetZoneMenus(menus)
+	BigWigs:SetZoneMenus(menus)
 end
 
 function loader:BigWigs_LeftGroup()
@@ -519,8 +522,10 @@ frame:SetScript("OnShow", function(frame)
 			break
 		end
 	end
-	loader:LoadCore()
-	BigWigsOptions:Open()
+	if loader:LoadCore() then
+		BigWigs:Enable()
+		BigWigsOptions:Open()
+	end
 end)
 
 if AddonLoader and AddonLoader.RemoveInterfaceOptions then
