@@ -61,10 +61,9 @@ local acOptions = {
 				-- We don't care yet, this is temporary.
 				InterfaceOptionsFrame:Hide()
 
-				-- Enable all disabled modules that are not boss modules.
-				BigWigs.pluginCore:Enable()
-				for name, module in BigWigs:IteratePlugins() do
-					module:Enable()
+				if not BigWigs:IsEnabled() then
+					print("This is weird, we're accessing the options but BigWigs is not enabled.")
+					return
 				end
 				BigWigs:SendMessage("BigWigs_StartConfigureMode")
 				BigWigs:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
@@ -605,6 +604,8 @@ end
 function addon:EnableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
+		-- XXX DEBUG
+		module:SendMessage("BigWigs_Message", fmt("Enabled: %q", module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end

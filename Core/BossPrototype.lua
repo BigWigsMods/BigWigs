@@ -25,7 +25,6 @@ function boss:OnEnable()
 	if type(self.OnBossEnable) == "function" then
 		self:OnBossEnable()
 	end
-	self:SendMessage("BigWigs_Message", fmt("Enabled: %q", self.displayName), "Core")
 	self:SendMessage("BigWigs_OnBossEnable", self)
 end
 
