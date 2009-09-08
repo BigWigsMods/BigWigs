@@ -472,6 +472,7 @@ local function stopBars(bars, module, text)
 end
 
 local function stop(module, text)
+	if not normalAnchor then return end
 	local d = stopBars(normalAnchor.bars, module, text)
 	if d then rearrangeBars(normalAnchor) end
 	d = stopBars(emphasizeAnchor.bars, module, text)
