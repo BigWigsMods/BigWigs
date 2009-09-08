@@ -27,6 +27,11 @@ local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
 local root = mod:NewTargetList()
+-- XXXLOLHAXBOOBS to prevent us from enabling again after she dies.
+-- I never have enough time after she does the yell to do any testing for which Unit* APIs will
+-- allow us to properly disable the VerifyEnable check after she does the yell.
+-- Perhaps I'll make a script for it next time we go to Ulduar (which might never happen again).
+local sheIsDead = nil
 
 ----------------------------
 --      Localization      --
@@ -94,6 +99,7 @@ function mod:OnBossEnable()
 end
 
 function mod:VerifyEnable(unit)
+	if sheIsDead then return false end
 	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
@@ -236,6 +242,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:IfMessage(L["elementals_message"], "Positive", 35594)
 		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["end_trigger"] then
+		-- Never enable again this session!
+		sheIsDead = true
 		self:BossDeath(nil, self.guid)
 	end
 end
