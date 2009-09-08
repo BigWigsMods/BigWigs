@@ -131,7 +131,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
 		self:Bar(L["eyebeam_bar"], 20, 63976)
 		self:PrimaryIcon(rest, "icon")
-		self:ScheduleEvent("BWRemoveEyeIcon", "BigWigs_RemoveRaidIcon", 11, 1)
+		self:ScheduleEvent("BWRemoveEyeIcon", "SendMessage", 11, "BigWigs_RemoveRaidIcon", 1)
 	end
 end
 

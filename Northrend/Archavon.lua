@@ -86,7 +86,7 @@ end
 
 function mod:Shards(_, spellId, _, _, spellName)
 	self:ScheduleEvent("BWShardsToTScan", scanTarget, 0.2, spellId, spellName)
-	self:ScheduleEvent("BWRemoveAKIcon", "BigWigs_RemoveRaidIcon", 4, 1)
+	self:ScheduleEvent("BWRemoveAKIcon", "SendMessage", 4, "BigWigs_RemoveRaidIcon", 1)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
