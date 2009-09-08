@@ -115,14 +115,14 @@ function mod:FBomb(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 	self:Bar(spellName, 2, spellId)
 	self:Bar(L["fbomb_bar"], 30, spellId)
-	self:ScheduleEvent("fbombWarning", "BigWigs_Message", 28, L["fbomb_soon"], "Attention")
+	self:ScheduleEvent("fbombWarning", "SendMessage", 28, "BigWigs_Message", L["fbomb_soon"], "Attention")
 end
 
 function mod:Plasma(_, spellId, _, _, spellName)
 	self:IfMessage(L["plasma_warning"], "Important", spellId)
 	self:Bar(L["plasma_warning"], 3, spellId)
 	self:Bar(L["plasma_bar"], 30, spellId)
-	self:ScheduleEvent("plasmaWarning", "BigWigs_Message", 27, L["plasma_soon"], "Attention")
+	self:ScheduleEvent("plasmaWarning", "SendMessage", 27, "BigWigs_Message", L["plasma_soon"], "Attention")
 end
 
 function mod:Shock(_, spellId, _, _, spellName)
