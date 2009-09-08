@@ -204,7 +204,6 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
 	self:SendMessage("BigWigs_CoreEnabled")
-
 	-- enable modules that require enabling
 	-- the cores etc are set to disabled by default, and require manual enabling
 	self.pluginCore:Enable() 
@@ -636,4 +635,10 @@ local pluginCore = BigWigs:NewModule("Plugins")
 
 BigWigs.pluginCore = pluginCore
 pluginCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
+pluginCore:SetDefaultModuleState(false)
+function pluginCore:OnEnable()
+	for name, mod in self:IterateModules() do
+		mod:Enable()
+	end
+end
 
