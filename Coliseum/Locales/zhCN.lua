@@ -29,8 +29,8 @@ if L then
 
 	-- Gormok
 	L.snobold = "Snobold"
-	L.snobold_desc = "当玩家头上出现Snobold时发出警报。"
-	L.snobold_message = "Snobold：>%s<！"
+	L.snobold_desc = "当出现Snobold时发出警报。"
+	L.snobold_message = "Snobold！"
 	L.impale_message = "%2$dx Impale：>%1$s<！"
 	L.firebomb_message = ">你< Fire Bomb！"
 
@@ -65,12 +65,13 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhCN")
 if L then
 	L.engage = "激活"
-	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
-	L.engage_trigger1 = "Banished to the Nether"
+--	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
+--	L.engage_trigger1 = "Banished to the Nether"
 
 	L.incinerate_message = "Incinerate"
 	L.incinerate_other = "Incinerate Flesh：>%s<！"
 	L.incinerate_bar = "<下一Incinerate Flash>"
+	L.incinerate_safe = "安全：>%s<！"
 
 	L.legionflame_message = "Flame"
 	L.legionflame_other = "Legion Flame：>%s<！"

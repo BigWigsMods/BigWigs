@@ -29,8 +29,8 @@ if L then
 
 	-- Gormok
 	L.snobold = "極地狗頭人奴僕"
-	L.snobold_desc = "當玩家頭上出現極地狗頭人奴僕時發出警報。"
-	L.snobold_message = "極地狗頭人奴僕：>%s<！"
+	L.snobold_desc = "當出現極地狗頭人奴僕時發出警報。"
+	L.snobold_message = "極地狗頭人奴僕！"
 	L.impale_message = "%2$dx 刺穿：>%1$s<！"
 	L.firebomb_message = ">你< 燃燒彈！"
 
@@ -71,6 +71,7 @@ if L then
 	L.incinerate_message = "焚化血肉"
 	L.incinerate_other = "焚化血肉：>%s<！"
 	L.incinerate_bar = "<下一焚化血肉>"
+	L.incinerate_safe = "安全：>%s<！"
 
 	L.legionflame_message = "聚合烈焰"
 	L.legionflame_other = "聚合烈焰：>%s<！"
