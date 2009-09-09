@@ -1,9 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-local mod = BigWigs:NewBoss("The Iron Council", "$Revision$")
+local mod = BigWigs:NewBoss("The Iron Council", "Ulduar")
 if not mod then return end
-mod.zoneName = "Ulduar"
 -- steelbreaker = 32867, molgeim = 32927, brundir = 32857
 mod.enabletrigger = { 32867, 32927, 32857 }
 mod.guid = 32867

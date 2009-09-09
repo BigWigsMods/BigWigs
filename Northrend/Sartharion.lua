@@ -2,10 +2,9 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewBoss("Sartharion", "$Revision$")
+local mod = BigWigs:NewBoss("Sartharion", "The Obsidian Sanctum")
 if not mod then return end
 local shadron, tenebron, vesperon
-mod.zoneName = "The Obsidian Sanctum"
 mod.otherMenu = "Northrend"
 --[[
 	28860 = sartharion

@@ -2,9 +2,8 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("The Beasts of Northrend", "$Revision$")
+local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
-mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = {
 	34796, -- Gormok
 	34799, -- Dreadscale

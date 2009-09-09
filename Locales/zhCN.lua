@@ -34,7 +34,7 @@ L["Load"] = "加载"
 L["Load All"] = "加载所有"
 L["Load all %s modules."] = "加载所有%s模块。"
 
-L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已经存在首领模块，但存在（版本 |cffffff00%d|r）模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您的插件文件夹中。建议您删除所有 Big Wigs 文件夹并重新全新安装。"
+-- L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已经存在首领模块，但存在（版本 |cffffff00%d|r）模块仍试图重新注册。可能由于更新失败的原因，通常表示您有两份模块拷贝在您的插件文件夹中。建议您删除所有 Big Wigs 文件夹并重新全新安装。"
 
 -- Loader / Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00首领模块运行中|r"

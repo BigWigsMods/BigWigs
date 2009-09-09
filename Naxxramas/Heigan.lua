@@ -2,9 +2,8 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewBoss("Heigan the Unclean", "$Revision$")
+local mod = BigWigs:NewBoss("Heigan the Unclean", "Naxxramas")
 if not mod then return end
-mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15936
 mod.guid = 15936
 mod.toggleOptions = {"engage", "teleport", "bosskill"}

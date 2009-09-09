@@ -2,7 +2,7 @@
 --      Addon Declaration      --
 ---------------------------------
 
-local plugin = BigWigs:NewPlugin("Target Monitor", "$Revision$")
+local plugin = BigWigs:NewPlugin("Target Monitor")
 if not plugin then return end
 
 ------------------------------

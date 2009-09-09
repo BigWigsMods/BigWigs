@@ -332,30 +332,24 @@ do
 
 	local zoneModules = {}
 
-	local function new(core, module, revision, ...)
-		local r = nil
-		if type(revision) == "string" then r = tonumber(revision:sub(12, -3))
-		else r = revision end
-		if type(r) ~= "number" then
-			error(("Trying to register module %q without a valid revision."):format(module))
-		end
+	local function new(core, module, zone, ...)
 		if core:GetModule(module, true) then
 			local oldM = core:GetModule(module)
-			print(L["already_registered"]:format(module, oldM.revision, r))
+			print(L["already_registered"]:format(module, core.moduleName))
 		else
 			local m = core:NewModule(module, ...)
-			m.revision = r
+			if zone then m.zoneName = zone end
 			return m
 		end
 	end
 
 	-- A wrapper for :NewModule to present users with more information in the
 	-- case where a module with the same name has already been registered.
-	function addon:NewBoss(module, revision, ...)
-		return new(self.bossCore, module, revision, ...)
+	function addon:NewBoss(module, zone, ...)
+		return new(self.bossCore, module, zone, ...)
 	end
-	function addon:NewPlugin(module, revision, ...)
-		return new(self.pluginCore, module, revision, ...)
+	function addon:NewPlugin(module, ...)
+		return new(self.pluginCore, module, nil, ...)
 	end
 	
 	function addon:IterateBossModules() return self.bossCore:IterateModules() end

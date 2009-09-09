@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewPlugin("Messages", "$Revision$", "LibSink-2.0")
+local plugin = BigWigs:NewPlugin("Messages", "LibSink-2.0")
 if not plugin then return end
 
 ------------------------------

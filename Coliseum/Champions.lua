@@ -2,9 +2,8 @@
 -- Module Declaration
 --
 local boss = "Faction Champions"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss(boss, "Trial of the Crusader")
 if not mod then return end
-mod.zoneName = "Trial of the Crusader"
 mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 
 --------------------------------------------------------------------------------

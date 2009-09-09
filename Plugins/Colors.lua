@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewPlugin("Colors", "$Revision$")
+local plugin = BigWigs:NewPlugin("Colors")
 if not plugin then return end
 
 local fmt = string.format

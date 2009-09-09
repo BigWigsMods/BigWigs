@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewPlugin("BossBlock", "$Revision$", "AceHook-3.0")
+local plugin = BigWigs:NewPlugin("BossBlock", "AceHook-3.0")
 if not plugin then return end
 
 ----------------------------

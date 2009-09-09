@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewPlugin("Flash", "$Revision$")
+local mod = BigWigs:NewPlugin("Flash")
 if not mod then return end
 
 --------------------------------------------------------------------------------

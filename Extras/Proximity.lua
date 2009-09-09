@@ -2,7 +2,7 @@
 --      Module Declaration
 -----------------------------------------------------------------------
 
-local plugin = BigWigs:NewPlugin("Proximity", "$Revision$")
+local plugin = BigWigs:NewPlugin("Proximity")
 if not plugin then return end
 
 -----------------------------------------------------------------------

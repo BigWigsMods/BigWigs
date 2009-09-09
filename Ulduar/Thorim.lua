@@ -1,9 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-local mod = BigWigs:NewBoss("Thorim", "$Revision$")
+local mod = BigWigs:NewBoss("Thorim", "Ulduar")
 if not mod then return end
-mod.zoneName = "Ulduar"
 -- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
 mod.enabletrigger = { 32865, 32882, 32872 }
 mod.guid = 32865

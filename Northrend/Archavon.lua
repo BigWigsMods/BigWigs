@@ -2,9 +2,8 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "$Revision$")
+local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "Vault of Archavon")
 if not mod then return end
-mod.zoneName = "Vault of Archavon"
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 31125
 mod.guid = 31125

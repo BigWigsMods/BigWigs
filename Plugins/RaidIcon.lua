@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewPlugin("Raid Icons", "$Revision$")
+local plugin = BigWigs:NewPlugin("Raid Icons")
 if not plugin then return end
 
 ------------------------------

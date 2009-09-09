@@ -2,9 +2,8 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewBoss("Razorscale", "$Revision$")
+local mod = BigWigs:NewBoss("Razorscale", "Ulduar")
 if not mod then return end
-mod.zoneName = "Ulduar"
 --[[
 	33233 = Razorscale Controller
 	33210 = Expidition Commander

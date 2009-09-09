@@ -1,4 +1,4 @@
-local plugin = BigWigs:NewPlugin("Test", "$Revision$")
+local plugin = BigWigs:NewPlugin("Test")
 if not plugin then return end
 plugin.external = true
 local spells = nil

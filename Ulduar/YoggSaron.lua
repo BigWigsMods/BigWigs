@@ -1,9 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-local mod = BigWigs:NewBoss("Yogg-Saron", "$Revision$")
+local mod = BigWigs:NewBoss("Yogg-Saron", "Ulduar")
 if not mod then return end
-mod.zoneName = "Ulduar"
 --Sara = 33134, Yogg brain = 33890
 mod.enabletrigger = { 33288, 33134, 33890 }
 mod.guid = 33288 --Yogg

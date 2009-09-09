@@ -2,10 +2,9 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("The Twin Val'kyr", "$Revision$")
+local mod = BigWigs:NewBoss("The Twin Val'kyr", "Trial of the Crusader")
 if not mod then return end
 mod.bossName = {"Eydis Darkbane", "Fjola Lightbane"}
-mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = { 34496, 34497 }
 mod.guid = 34496
 --34496 Darkbane

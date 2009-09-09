@@ -2,9 +2,8 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Lord Jaraxxus", "$Revision$")
+local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = 34780
 mod.guid = 34780
 mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}

@@ -1,9 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-local mod = BigWigs:NewBoss("Auriaya", "$Revision$")
+local mod = BigWigs:NewBoss("Auriaya", "Ulduar")
 if not mod then return end
-mod.zoneName = "Ulduar"
 mod.enabletrigger = 33515
 mod.guid = 33515
 --Feral Defender = 34035

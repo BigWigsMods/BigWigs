@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewPlugin("Custom Bars", "$Revision$")
+local mod = BigWigs:NewPlugin("Custom Bars")
 if not mod then return end
 mod.external = true
 

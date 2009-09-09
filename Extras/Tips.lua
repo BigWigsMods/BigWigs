@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewBoss("Tip of the Raid", "$Revision$")
+local mod = BigWigs:NewBoss("Tip of the Raid")
 if not mod then return end
 mod.external = true
 

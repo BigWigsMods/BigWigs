@@ -1,9 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-local mod = BigWigs:NewBoss("The Four Horsemen", "$Revision$")
+local mod = BigWigs:NewBoss("The Four Horsemen", "Naxxramas")
 if not mod then return end
-mod.zoneName = "Naxxramas"
 --[[
 	16064 - thane
 	30549 - baron

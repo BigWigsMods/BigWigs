@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewPlugin("Sounds", "$Revision$")
+local plugin = BigWigs:NewPlugin("Sounds")
 if not plugin then return end
 
 ------------------------------
