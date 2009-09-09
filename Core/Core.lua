@@ -339,6 +339,7 @@ do
 			print(L["already_registered"]:format(module, oldM.revision, r))
 		else
 			local m = core:NewModule(module, ...)
+			m.displayName = module
 			m.revision = r
 			return m
 		end
