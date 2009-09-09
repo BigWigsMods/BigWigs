@@ -30,7 +30,8 @@ if L then
 	L.icon = "Place Icon"
 	L.icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)"
 
-	L.netherportal_bar = "~Next Portal"
+	L.infernal_bar = "Volcano spawns"
+	L.netherportal_bar = "Portal spawns"
 	L.netherpower_bar = "~Next Nether Power"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
@@ -96,6 +97,7 @@ end
 
 function mod:InfernalEruption(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
+	self:Bar(L["infernal_bar"], 120, spellId)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
@@ -103,19 +105,12 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 --Correct me if i'm wrong
 	if msg:find(L["engage_trigger1"]) then
 		self:Bar(L["engage"], 11, "INV_Gizmo_01")
-		--[[if self.db.profile.netherportal then
-			self:Bar(L["netherportal_bar"], 30, 68404) -- engage+19
-		end
-		if self.db.profile.infernaleruption then
-			self:Bar(L["infernaleruption"], 90, 66258) -- engage+79
-		end]]
-	end
-	if msg:find(L["engage_trigger"]) then
-		if self.db.profile.netherportal then
+	elseif msg:find(L["engage_trigger"]) then
+		if self:GetOption(68404) then
 			self:Bar(L["netherportal_bar"], 20, 68404)
 		end
-		if self.db.profile.infernaleruption then
-			self:Bar(L["infernaleruption"], 80, 66258)
+		if self:GetOption(66258) then
+			self:Bar(L["infernal_bar"], 80, 66258)
 		end
 	end
 end

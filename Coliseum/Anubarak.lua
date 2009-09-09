@@ -102,7 +102,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:ScheduleEvent("BWnextwave", nextwave, 10)
 		end
 		if self.db.profile.berserk then
-			self:Berserk(570)
+			self:Berserk(570, true)
 		end
 	end
 end
