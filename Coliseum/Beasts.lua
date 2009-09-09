@@ -290,7 +290,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	if unit == icehowl and db.charge and message:find(L["charge_trigger"]) then
 		local spellName = GetSpellInfo(52311)
 		self:TargetMessage(spellName, player, "Personal", 52311, "Alarm")
-		self:Bar(spellName..": "..player, 7.5, 52311)
+		self:Bar(spellName, 7.5, 52311)
 	end
 end
 

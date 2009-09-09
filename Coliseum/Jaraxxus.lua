@@ -24,6 +24,7 @@ if L then
 	L.incinerate_message = "Incinerate"
 	L.incinerate_other = "Incinerate on %s"
 	L.incinerate_bar = "~Next Incinerate"
+	L.incinerate_safe = "%s is safe, yay :)"
 
 	L.legionflame_message = "Flame"
 	L.legionflame_other = "Flame on %s!"
@@ -68,6 +69,7 @@ function mod:IncinerateFlesh(player, spellId)
 end
 
 function mod:IncinerateFleshRemoved(player, spellId)
+	self:IfMessage(L["incinerate_safe"]:format(player), "Positive", 17) -- Power Word: Shield icon.
 	self:SendMessage("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
