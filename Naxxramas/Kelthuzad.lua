@@ -96,7 +96,7 @@ end
 function mod:ZONE_CHANGED_INDOORS(event, msg)
 	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self:IsEnabled() then return end
 	-- Activate the Kel'Thuzad mod!
-	BigWigs:EnableBossModule(self)
+	self:Enable()
 end
 
 function mod:Fizzure(_, spellId, _, _, spellName)

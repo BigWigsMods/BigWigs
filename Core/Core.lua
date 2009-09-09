@@ -151,6 +151,60 @@ local acOptions = {
 	},
 }
 
+-------------------------------------------------------------------------------
+-- Events
+--
+
+local function enableBossModule(module, noSync)
+	if not module:IsEnabled() then
+		module:Enable()
+		-- XXX DEBUG
+		module:SendMessage("BigWigs_Message", string.format("Enabled: %q", module.displayName), "Core")
+		if not noSync then
+			module:Sync("EnableModule", module:GetName())
+		end
+	end
+end
+
+local function rebootModule(message, module)
+	if not module then return end
+	module:Disable()
+	module:Enable()
+end
+
+-- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
+-- actual module object. ALL other APIs should take module objects as arguments.
+local function recvSync(message, sync, moduleName, sender)
+	if not moduleName then return end
+	if sync == "EnableModule" then
+		if sender == pName then return end
+		local module = BigWigs:GetBossModule(moduleName, true)
+		if not module then return end
+		enableBossModule(module, true)
+	elseif (sync == "Death" or sync == "MultiDeath") then
+		local mod = BigWigs:GetBossModule(moduleName, true)
+		if mod and mod:IsEnabled() then
+			if mod.db.profile.bosskill then
+				if sync == "Death" then
+					mod:Message(L["%s has been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
+				else
+					mod:Message(L["%s have been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
+				end
+			end
+			mod:PrimaryIcon(false)
+			mod:SecondaryIcon(false)
+			mod:Disable()
+		end
+	end
+end
+
+local function targetSeen(message, unit, module)
+	if not module or module:IsEnabled() then return end
+	if not module.VerifyEnable or module:VerifyEnable(unit) then
+		enableBossModule(module)
+	end
+end
+
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -188,6 +242,7 @@ function addon:OnInitialize()
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to 
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
 	self:SendMessage("BigWigs_CoreLoaded")
+	self.OnInitialize = nil
 end
 
 function addon:OnEnable()
@@ -195,9 +250,9 @@ function addon:OnEnable()
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
-	self:RegisterMessage("BigWigs_TargetSeen")
-	self:RegisterMessage("BigWigs_RebootModule")
-	self:RegisterMessage("BigWigs_RecvSync")
+	self:RegisterMessage("BigWigs_TargetSeen", targetSeen)
+	self:RegisterMessage("BigWigs_RebootModule", rebootModule)
+	self:RegisterMessage("BigWigs_RecvSync", recvSync)
 
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
@@ -326,7 +381,7 @@ end
 -------------------------------
 
 do
-	function addon:New(module, revision, ...)
+	function addon:New(module)
 		error(("Module %q, using deprecated :New() API. Notify the author for an update."):format(module))
 	end
 
@@ -384,7 +439,7 @@ do
 		local config = {
 			type = "group",
 			name = module.displayName,
-			desc = L["Options for %s (r%d)."]:format(module.displayName, module.revision),
+			desc = ("Options for %s."):format(module.displayName),
 			get = function(info) return module.db.profile[info[#info]] end,
 			set = function(info, v) module.db.profile[info[#info]] = v end,
 			args = {},
@@ -508,22 +563,11 @@ do
 	
 	function addon:RegisterBossModule(module)
 		local name = module.name
-		local rev = module.revision
-		if type(rev) ~= "number" then
-			error(("%q does not have a valid revision field."):format(name))
-		end
-		
 		if not module.displayName then module.displayName = module.moduleName end
 		
 		-- Translate the bossmodule if appropriate
 		if LOCALE ~= "enUS" and BB and BZ then
-			if type(module.zoneName) == "table" then
-				for k, zone in pairs(module.zoneName) do
-					module.zoneName[k] = BZ[zone] or zone
-				end
-			else
-				module.zoneName = BZ[module.zoneName] or module.zoneName
-			end
+			module.zoneName = BZ[module.zoneName] or module.zoneName
 			if module.otherMenu then
 				module.otherMenu = BZ[module.otherMenu]
 			end
@@ -593,56 +637,6 @@ do
 		self:SendMessage("BigWigs_PluginRegistered", name, module)
 	end
 	
-end
-
-function addon:EnableBossModule(module, noSync)
-	if not module:IsEnabled() then
-		module:Enable()
-		-- XXX DEBUG
-		module:SendMessage("BigWigs_Message", string.format("Enabled: %q", module.displayName), "Core")
-		if not noSync then
-			module:Sync("EnableModule", module:GetName())
-		end
-	end
-end
-
-function addon:BigWigs_RebootModule(message, module)
-	if not module then return end
-	module:Disable()
-	module:Enable()
-end
-
--- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
--- actual module object. ALL other APIs should take module objects as arguments.
-function addon:BigWigs_RecvSync(message, sync, moduleName, sender)
-	if not moduleName then return end
-	if sync == "EnableModule" then
-		if sender == pName then return end
-		local module = self:GetBossModule(moduleName, true)
-		if not module then return end
-		self:EnableBossModule(module, true)
-	elseif (sync == "Death" or sync == "MultiDeath") then
-		local mod = self:GetBossModule(moduleName, true)
-		if mod and mod:IsEnabled() then
-			if mod.db.profile.bosskill then
-				if sync == "Death" then
-					mod:Message(L["%s has been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
-				else
-					mod:Message(L["%s have been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
-				end
-			end
-			mod:PrimaryIcon(false)
-			mod:SecondaryIcon(false)
-			mod:Disable()
-		end
-	end
-end
-
-function addon:BigWigs_TargetSeen(message, unit, module)
-	if not module or module:IsEnabled() then return end
-	if not module.VerifyEnable or module:VerifyEnable(unit) then
-		self:EnableBossModule(module)
-	end
 end
 
 ---- Module Cores ----

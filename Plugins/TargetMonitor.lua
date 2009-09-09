@@ -19,10 +19,8 @@ local monitoring = nil
 function plugin:OnPluginEnable()
 	monitoring = nil
 	for name, module in BigWigs:IterateBossModules() do
-		if module.zoneName and module.enabletrigger then
-			self:RegisterZone(module.zoneName)
-			self:RegisterMob(module)
-		end
+		self:RegisterZone(module.zoneName)
+		self:RegisterMob(module)
 	end
 
 	self:RegisterMessage("BigWigs_ModulePackLoaded", "ZoneChanged")
@@ -34,10 +32,7 @@ function plugin:OnPluginEnable()
 	self:ZoneChanged()
 end
 
-function plugin:RegisterZone(zone)
-	if type(zone) == "string" then enablezones[zone] = true
-	else for i,z in next, zone do enablezones[z] = true end end
-end
+function plugin:RegisterZone(zone) enablezones[zone] = true end
 function plugin:RegisterMob(mod)
 	local mob = mod.enabletrigger
 	if type(mob) == "function" then enableyells[mob] = mod

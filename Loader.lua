@@ -153,17 +153,11 @@ local function loadZone(zone)
 end
 
 local function registerEnableZone(zone, groupsize)
-	if type(zone) == "string" then
-		if BZ then zone = BZ[zone] or zone end
-		-- only update enablezones if content is of lower level than before.
-		-- if someone adds a party module to a zone that is already in the table as a raid, set the level of that zone to party
-		if not enableZones[zone] or (enableZones[zone] and enableZones[zone] > groupsize) then
-			enableZones[zone] = tonumber(groupsize) -- needs to be a number.
-		end
-	elseif type(zone) == "table" then
-		for _,z in pairs(zone) do
-			registerEnableZone(z, groupsize)
-		end
+	if BZ then zone = BZ[zone] or zone end
+	-- only update enablezones if content is of lower level than before.
+	-- if someone adds a party module to a zone that is already in the table as a raid, set the level of that zone to party
+	if not enableZones[zone] or (enableZones[zone] and enableZones[zone] > groupsize) then
+		enableZones[zone] = tonumber(groupsize) -- needs to be a number.
 	end
 end
 
@@ -335,9 +329,7 @@ function loader:CheckRoster()
 end
 
 function loader:BigWigs_BossModuleRegistered(message, name, module)
-	if module and module.zoneName then
-		registerEnableZone(module.zoneName, module.partyContent and BWPARTY or BWRAID)
-	end	
+	registerEnableZone(module.zoneName, module.partyContent and BWPARTY or BWRAID)
 end
 
 function loader:BigWigs_CoreEnabled()

@@ -10,7 +10,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
-local count = 1
 local GetSpellInfo = GetSpellInfo
 local fmt = string.format
 local pName = UnitName("player")
