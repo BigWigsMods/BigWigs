@@ -444,7 +444,7 @@ function ldb.OnClick(self, button)
 			else
 				for name, module in bw3:IterateBossModules() do
 					if module:IsEnabled() then
-						bw3:BigWigs_RebootModule(nil, module)
+						self:SendMessage("BigWigs_RebootModule", module)
 					end
 				end
 				bw3:Print(L["All running modules have been reset."])
