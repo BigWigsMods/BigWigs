@@ -519,8 +519,6 @@ do
 	local function loadZone(k, v)
 		local zone = k.arg
 		BigWigsLoader:LoadZone(zone)
-		zoneOptions[zone].args.load = nil
-		flagforloadbutton[zone] = nil
 		acr:NotifyChange(zone)
 	end
 
@@ -530,17 +528,16 @@ do
 			childGroups = "select",
 			args = {},
 		}
-		if flagforloadbutton[zone] then
-			-- add us a load button
-			zoneOptions[zone].args.load = {
-				name = L["Load"],
-				desc = L["Load all %s modules."]:format(zone),
-				order = 1,
-				type = "execute",
-				func = loadZone,
-				arg = zone
-			}
-		end
+		-- add us a load button
+		zoneOptions[zone].args.load = {
+			name = L["Load"],
+			desc = L["Load all %s modules."]:format(zone),
+			order = 1,
+			type = "execute",
+			func = loadZone,
+			disabled = function() return not BigWigsLoader:HasZone(zone) end,
+			arg = zone
+		}
 		for i, module in next, zoneModules[zone] do
 			if not zoneOptions[zone].args[module.name] then
 				zoneOptions[zone].args[module.name] = fillBossOptions(module)
@@ -558,7 +555,6 @@ do
 				acd:AddToBlizOptions(zone, zone, "Big Wigs")
 				zoneModules[zone] = {}
 			end
-			flagforloadbutton[zone] = true
 		end
 	end
 	

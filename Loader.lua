@@ -288,6 +288,12 @@ function loader:RegisterTooltipInfo(func)
 	table.insert(tooltipFunctions, func)
 end
 
+function loader:HasZone(zone)
+	if not zone then return false end
+	if loadInZone[zone] then return true end
+	return false
+end
+
 function loader:LoadZone(zone)
 	loadZone(zone)
 end
