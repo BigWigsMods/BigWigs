@@ -125,7 +125,7 @@ function mod:UNIT_AURA(event, unit)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["engage_trigger"] then
+	if msg:find(L["engage_trigger"]) then
 		self:SendMessage("BigWigs_HideProximity", self)
 		if difficulty > 2 then
 			self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
@@ -137,12 +137,12 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 15, "INV_Misc_MonsterScales_18")
 		if difficulty > 2 then
-			self:Bar(L["boss_incoming"]:format(icehowl), 195, "INV_Misc_MonsterHorn_07")
+			self:Bar(L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
 		end
 	elseif msg == L["icehowl_trigger"] then
 		local m = L["boss_incoming"]:format(icehowl)
 		self:IfMessage(m, "Positive")
-		self:Bar(m, 15, "INV_Misc_MonsterHorn_07")
+		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
 		if difficulty > 2 and self.db.profile.berserk then
 			self:Berserk(220, true, icehowl)
 		end
