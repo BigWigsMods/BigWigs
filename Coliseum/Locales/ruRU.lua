@@ -30,7 +30,7 @@ if L then
 	-- Gormok
 	L.snobold = "Снобольд"
 	L.snobold_desc = "Сообщить кто получил Снобольд на свою голову."
-	L.snobold_message = "Снобольд на |3-5(%s)!"
+	L.snobold_message = "Снобольд на:"
 	L.impale_message = "%2$dx Прокалывания на %1$s"
 	L.firebomb_message = "Огненная бомба на ВАС!"
 
@@ -48,7 +48,7 @@ if L then
 	--Furious Charge - судя по транскриптору нет русского перевода :(
 	L.charge = "Яростный рывок"
 	L.charge_desc = "Сообщать о яростном рывке."
-	--L.charge_trigger = "^%%s"	--check
+	L.charge_trigger = "глядит на"	--check
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "ruRU")
@@ -88,7 +88,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
 if L then
-	--L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
+	L.engage_trigger1 = "Во имя темного повелителя. Во имя Короля-Лича. Вы. Умрите."
 
 	L.vortex_or_shield_cd = "Воронка или Щит"
 
