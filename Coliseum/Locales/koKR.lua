@@ -71,6 +71,7 @@ if L then
 	L.incinerate_message = "살점 소각"
 	L.incinerate_other = "살점 소각: %s"
 	L.incinerate_bar = "~살점 소각 대기시간"
+	L.incinerate_safe = "%s 안전함 :)"
 
 	L.legionflame_message = "군단 불꽃"
 	L.legionflame_other = "군단 불꽃 : %s!"
