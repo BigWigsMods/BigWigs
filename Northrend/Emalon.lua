@@ -75,13 +75,14 @@ local function scanTarget()
 	if not unitId then return end
 	SetRaidTarget(unitId, 8)
 	mod:CancelTimer(overchargerepeater)
+	overchargerepeater = nil
 end
 
-function mod:OverchargeIcon(...)
-	if not IsRaidLeader() and not IsRaidOfficer() then return end
+function mod:OverchargeIcon(_, _, _, _, _, _, _, _, dGuid)
+	if overchargerepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 	if not self.db.profile.icon then return end
-	guid = tonumber(((select(9, ...))):sub(-12,-7), 16)
-	overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.1)
+	guid = dGuid
+	overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
 end
 
 function mod:BigWigs_RecvSync(event, sync, rest, nick)

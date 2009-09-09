@@ -94,7 +94,7 @@ function boss:BossDeath(_, guid, multi)
 	end
 end
 
-local findTargetByGUID--[[, findTargetByName]]
+local findTargetByGUID
 do
 	local t = {"target", "focus", "mouseover"}
 	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
@@ -102,21 +102,13 @@ do
 	function findTargetByGUID(id)
 		for i, unit in next, t do
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
-				local unitId = tonumber((UnitGUID(unit)):sub(-12,-7), 16)
+				local unitId = type(id) == "string" and UnitGUID(unit) or tonumber((UnitGUID(unit)):sub(-12, -7), 16)
 				if unitId == id then return unit end
 			end
 		end
 	end
-	--[[function findTargetByName(name)
-		for i, unit in next, t do
-			if UnitExists(unit) and UnitName(unit) == name then
-				return unit
-			end
-		end
-	end]]
 end
 
---function boss:GetUnitIdByName(mob) return findTargetByName(mob) end
 function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
 local function scan(self)
 	if type(self.enabletrigger) == "number" then

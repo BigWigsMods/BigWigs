@@ -105,7 +105,7 @@ function mod:OverRemove(player)
 end
 
 function mod:Shield(_, spellId, _, _, _, _, _, _, dGuid)
-	local target = tonumber((dGuid):sub(-12,-7),16)
+	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target and target == 32927 then
 		self:IfMessage(L["shield_message"], "Attention", spellId)
 	end
@@ -161,6 +161,7 @@ end
 
 function mod:TendrilsRemoved()
 	self:CancelTimer(tendrilscanner)
+	tendrilscanner = nil
 	self:PrimaryIcon(false, "icon")
 end
 

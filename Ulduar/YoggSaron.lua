@@ -230,13 +230,14 @@ local function scanTarget()
 	if not unitId then return end
 	SetRaidTarget(unitId, 8)
 	mod:CancelTimer(empowerscanner)
+	empowerscanner = nil
 end
 
-function mod:EmpowerIcon(...)
-	if not IsRaidLeader() and not IsRaidOfficer() then return end
+function mod:EmpowerIcon(_, _, _, _, _, _, _, _, dGuid)
+	if empowerscanner or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 	if not self.db.profile.empowericon then return end
-	guid = tonumber(((select(9, ...))):sub(-12,-7), 16)
-	empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.1)
+	guid = dGuid
+	empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.3)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, unit)

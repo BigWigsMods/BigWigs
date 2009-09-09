@@ -84,7 +84,7 @@ function mod:RemoveLegionFlameIcon()
 end
 
 function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, dGuid)
-	local target = tonumber((dGuid):sub(-12,-7),16)
+	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 34780 then
 		self:IfMessage(spellName, "Attention", spellId)
 		self:Bar(L["netherpower_bar"], 44, spellId)

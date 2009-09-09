@@ -65,7 +65,7 @@ function mod:FlameFailed(_, _, _, _, spellName)
 end
 
 function mod:Shutdown(unit, spellId, _, _, spellName, _, _, _, dGuid)
-	local target = tonumber((dGuid):sub(-12,-7),16)
+	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target ~= 33113 then return end
 	self:IfMessage(L["shutdown_message"], "Positive", spellId, "Long")
 	self:Bar(spellName, 20, spellId)

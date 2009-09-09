@@ -86,7 +86,7 @@ end
 
 function mod:Spark(unit, spellId, _, _, _, _, _, _, dGuid)
 	if phase ~= 1 then return end
-	local target = tonumber((dGuid):sub(-12,-7),16)
+	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 28859 then
 		self:IfMessage(L["sparkbuff_message"], "Important", spellId)
 	end
