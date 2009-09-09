@@ -81,7 +81,7 @@ function mod:OverchargeIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
 	if not self.db.profile.icon then return end
 	guid = tonumber(((select(9, ...))):sub(-12,-7), 16)
-	overchargerepeater = self:ScheduleRepatingTimer(scanTarget, 0.1)
+	overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.1)
 end
 
 function mod:BigWigs_RecvSync(event, sync, rest, nick)
