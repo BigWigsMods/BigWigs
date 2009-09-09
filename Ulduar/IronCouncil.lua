@@ -17,7 +17,7 @@ mod.optionHeaders = {
 	[61869] = "Stormcaller Brundir",
 	[61903] = "Steelbreaker",
 	[62274] = "Runemaster Molgeim",
-	proximity = CL.general,
+	icon = CL.general,
 }
 mod.proximityCheck = "bandage"
 
