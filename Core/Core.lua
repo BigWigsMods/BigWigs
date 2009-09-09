@@ -339,7 +339,6 @@ do
 			print(L["already_registered"]:format(module, oldM.revision, r))
 		else
 			local m = core:NewModule(module, ...)
-			m.displayName = module
 			m.revision = r
 			return m
 		end
@@ -520,6 +519,8 @@ do
 			error(("%q does not have a valid revision field."):format(name))
 		end
 		
+		if not module.displayName then module.displayName = module.moduleName end
+		
 		-- Translate the bossmodule if appropriate
 		if LOCALE ~= "enUS" and BB and BZ then
 			if type(module.zoneName) == "table" then
@@ -544,9 +545,6 @@ do
 					end
 				end
 			end
-		end
-		if not module.displayName then -- fix up a pretty display name
-			module.displayName = BB and BB[name] or name
 		end
 
 		if module.toggleOptions then
