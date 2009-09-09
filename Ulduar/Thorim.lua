@@ -3,16 +3,13 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Thorim", "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zoneName = "Ulduar"
---[[
-	32865 = thorim
-	32882 = behemoth
-	32872 = runic colossus
---]]
+-- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
 mod.enabletrigger = { 32865, 32882, 32872 }
-mod.guid = 32865	--Sif(33196)
+mod.guid = 32865
 mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
+
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	[62042] = CL.phase:format(2),
 	[62279] = CL.phase:format(3),

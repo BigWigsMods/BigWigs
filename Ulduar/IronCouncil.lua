@@ -3,16 +3,12 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("The Iron Council", "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zoneName = "Ulduar"
---[[
-steelbreaker = 32867
-molgeim = 32927
-brundir = 32857
---]]
+-- steelbreaker = 32867, molgeim = 32927, brundir = 32857
 mod.enabletrigger = { 32867, 32927, 32857 }
 mod.guid = 32867
 mod.toggleOptions = {61869, 63483, 61887, 61903, 64637, "proximity", 62274, 61974, 62269, 62273, "icon", "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	[61869] = "Stormcaller Brundir",
 	[61903] = "Steelbreaker",

@@ -4,8 +4,6 @@
 
 local mod = BigWigs:NewBoss("The Beasts of Northrend", "$Revision$")
 if not mod then return end
-
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = {
 	34796, -- Gormok
@@ -15,6 +13,7 @@ mod.enabletrigger = {
 }
 mod.guid = 34797 -- Icehowl
 mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	[67641] = "Jormungars",

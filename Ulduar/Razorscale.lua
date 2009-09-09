@@ -4,7 +4,6 @@
 
 local mod = BigWigs:NewBoss("Razorscale", "$Revision$")
 if not mod then return end
-mod.displayName = "Razorscale"
 mod.zoneName = "Ulduar"
 --[[
 	33233 = Razorscale Controller

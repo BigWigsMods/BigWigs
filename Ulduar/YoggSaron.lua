@@ -3,14 +3,12 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Yogg-Saron", "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
--- mod.bossName set after locals
-mod.displayName = "Yogg-Saron"
 mod.zoneName = "Ulduar"
-mod.enabletrigger = { 33288, 33134, 33890 }
 --Sara = 33134, Yogg brain = 33890
+mod.enabletrigger = { 33288, 33134, 33890 }
 mod.guid = 33288 --Yogg
 mod.toggleOptions = {62979, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, 64465, "empowericon", 64163, 64189, "phase", 63050, 63120, "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	[62979] = CL.phase:format(1),
 	tentacle = CL.phase:format(2),
@@ -26,9 +24,6 @@ mod.optionHeaders = {
 local guardianCount = 1
 local crusherCount = 1
 local pName = UnitName("player")
-local UnitGUID = _G.UnitGUID
-local GetNumRaidMembers = _G.GetNumRaidMembers
-local fmt = _G.string.format
 local guid = nil
 
 local madnessWarningID = nil

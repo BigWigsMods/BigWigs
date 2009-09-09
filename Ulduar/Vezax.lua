@@ -4,7 +4,6 @@
 
 local mod = BigWigs:NewBoss("General Vezax", "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.enabletrigger = 33271
 mod.zoneName = "Ulduar"
 mod.guid = 33271
@@ -67,6 +66,7 @@ mod.locale = L
 
 mod.blockEmotes = L["Vezax Bunny"]
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	vapor = L.vapor,
 	[62660] = 62660,

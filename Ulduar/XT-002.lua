@@ -3,11 +3,11 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("XT-002 Deconstructor", "$Revision$")
 if not mod then return end
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.zoneName = "Ulduar"
 mod.enabletrigger = 33293
 mod.guid = 33293
 mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	[63024] = CL.normal,
 	[64193] = CL.hard,
