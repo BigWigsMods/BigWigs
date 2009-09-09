@@ -100,9 +100,11 @@ do
 	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
 	for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
 	function findTargetByGUID(id)
+		local idType = type(id)
 		for i, unit in next, t do
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
-				local unitId = type(id) == "string" and UnitGUID(unit) or tonumber((UnitGUID(unit)):sub(-12, -7), 16)
+				local unitId = UnitGUID(unit)
+				if idType == "number" then unitId = tonumber(unitId:sub(-12, -7), 16) end
 				if unitId == id then return unit end
 			end
 		end
