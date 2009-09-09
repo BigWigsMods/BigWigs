@@ -89,7 +89,13 @@ function mod:Flash(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:Frozen(_, spellId, _, _, spellName)
+function mod:Frozen(_, spellId, _, _, spellName, _, _, _, dGuid)
+	local target = tonumber((dGuid):sub(-12,-7),16)
+	if target == 32845 then
+		print("YAY IT WORKED MOJOS!")
+	else
+		print("Mojos, it didn't work, give vhaarr this string/number: " .. tostring(target))
+	end
 	self:IfMessage(spellName, "Important", spellId)
 	self:Bar(spellName, 20, spellId)
 end
