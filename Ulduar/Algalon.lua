@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Algalon the Observer", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 32871
-mod.guid = 32871
 mod.toggleOptions = {"phase", 64412, 62301, 64122, 64443, "berserk", "bosskill"}
 
 ------------------------------
@@ -46,7 +45,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
 	self:AddCombatListener("SPELL_CAST_START","BigBang", 64443, 64584)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 32871)
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 

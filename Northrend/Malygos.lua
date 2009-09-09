@@ -5,7 +5,6 @@ local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 28859
-mod.guid = 28859
 mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
 
 ------------------------------
@@ -65,7 +64,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Static", 57429)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Spark", 56152)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Vortex", 56105)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 28859)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

@@ -186,11 +186,7 @@ local function recvSync(message, sync, moduleName, sender)
 		local mod = BigWigs:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			if mod.db.profile.bosskill then
-				if sync == "Death" then
-					mod:Message(L["%s has been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
-				else
-					mod:Message(L["%s have been defeated"]:format(moduleName), "Bosskill", nil, "Victory")
-				end
+				mod:Message(L["%s has been defeated"]:format(mod.displayName), "Bosskill", nil, "Victory")
 			end
 			mod:PrimaryIcon(false)
 			mod:SecondaryIcon(false)

@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Ignis the Furnace Master", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 33118
-mod.guid = 33118
 mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
 
 ------------------------------
@@ -45,7 +44,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Scorch", 62548, 63475)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33118)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 

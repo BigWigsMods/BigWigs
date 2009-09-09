@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
 mod.enabletrigger = 34564
-mod.guid = 34564
 mod.toggleOptions = {66118, 67574, "icon", "burrow", 68510, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -53,7 +52,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Pursue", 67574)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 34564)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

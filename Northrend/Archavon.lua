@@ -6,7 +6,6 @@ local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 31125
-mod.guid = 31125
 mod.toggleOptions = {58663, "charge", 58678, 58965, -1, "icon", "berserk", "bosskill"}
 
 ------------------------------
@@ -45,7 +44,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Stomp", 58663, 60880)
 	self:AddCombatListener("SPELL_CAST_START", "Shards", 58678)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 58965, 61672)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 31125)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 

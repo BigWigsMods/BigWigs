@@ -15,7 +15,7 @@ local playerName = UnitName("player")
 local coreSyncs = {
 	BossEngaged = 5,
 	Death = 5,
-	MultiDeath = 5,
+	-- MultiDeath = 5,
 }
 
 ------------------------------

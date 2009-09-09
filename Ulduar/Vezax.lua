@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("General Vezax", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 33271
-mod.guid = 33271
 mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}
 
 ------------------------------
@@ -82,7 +81,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33271)
 
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

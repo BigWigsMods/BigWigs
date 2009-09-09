@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Kel'Thuzad", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15990
-mod.guid = 15990
 mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
@@ -80,7 +79,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FrostBlast", 27808)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonate", 27819)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 28410)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15990)
 
 	self.warnedAboutPhase3Soon = nil
 

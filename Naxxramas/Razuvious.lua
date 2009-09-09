@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Instructor Razuvious", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 16061
-mod.guid = 16061
 mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill"}
 
 ------------------------------
@@ -38,7 +37,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Taunt", 29060)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 16061)
 
 	started = nil
 

@@ -4,10 +4,8 @@
 
 local mod = BigWigs:NewBoss("The Twin Val'kyr", "Trial of the Crusader")
 if not mod then return end
+-- 34496 Darkbane, 34497 Lightbane
 mod.enabletrigger = { 34496, 34497 }
-mod.guid = 34496
---34496 Darkbane
---34497 Lightbane
 mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -51,7 +49,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
 	-- First 3 are dark, last 3 are light.
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Touch", 67281, 67282, 67283, 67296, 67297, 67298)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 34496, 34497)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

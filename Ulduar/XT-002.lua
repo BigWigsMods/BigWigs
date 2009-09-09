@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("XT-002 Deconstructor", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 33293
-mod.guid = 33293
 mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[63024] = "normal",
@@ -60,7 +59,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED", "GravityRemoved", 63024, 64234)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "LightRemoved", 63018, 65121)
 	self:AddCombatListener("SPELL_CAST_START", "Tantrum", 62776)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33293)
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

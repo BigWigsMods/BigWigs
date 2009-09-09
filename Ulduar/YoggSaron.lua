@@ -5,7 +5,6 @@ local mod = BigWigs:NewBoss("Yogg-Saron", "Ulduar")
 if not mod then return end
 --Sara = 33134, Yogg brain = 33890
 mod.enabletrigger = { 33288, 33134, 33890 }
-mod.guid = 33288 --Yogg
 mod.toggleOptions = {62979, "tentacle" , 63830, 63802, 64125, "portal", "weakened", 64059, 64465, "empowericon", 64163, 64189, "phase", 63050, 63120, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
@@ -113,7 +112,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
 	self:AddCombatListener("SPELL_SUMMON", "Guardian", 62979)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33288)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

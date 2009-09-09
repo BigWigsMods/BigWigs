@@ -9,7 +9,6 @@ if not mod then return end
 	15930 - feugen
 --]]
 mod.enabletrigger = { 15928, 15929, 15930 }
-mod.guid = 15928
 mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
 
 ------------------------------
@@ -67,7 +66,7 @@ mod.locale = L
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15928)
 
 	deaths = 0
 	stage1warn = nil

@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Gothik the Harvester", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 16060
-mod.guid = 16060
 mod.toggleOptions = { "room", -1, "add", "adddeath", "bosskill" }
 
 ----------------------------
@@ -74,7 +73,9 @@ function mod:OnBossEnable()
 	timeDK = 77
 	timeRider = 137
 
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddDeathListener("DKDead", 16125)
+	self:AddDeathListener("RiderDead", 16126)
+	self:AddDeathListener("Win", 16060)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
@@ -83,17 +84,14 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Deaths(unit, guid)
-	if self.db.profile.adddeath and unit == L["rider"] then
-		self:Message(L["riderdiewarn"], "Important")
-	elseif self.db.profile.adddeath and unit == L["deathknight"] then
-		self:Message(L["dkdiewarn"], "Important")
-	else
-		local target = tonumber((guid):sub(-12,-7),16)
-		if target == 16060 then
-			self:BossDeath(nil, 16060)
-		end
-	end
+function mod:DKDead()
+	if not self.db.profile.adddeath then return end
+	self:Message(L["dkdiewarn"], "Important")
+end
+
+function mod:RiderDead()
+	if not self.db.profile.adddeath then return end
+	self:Message(L["riderdiewarn"], "Important")
 end
 
 local function waveWarn(message, color)

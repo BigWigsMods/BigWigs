@@ -5,7 +5,6 @@ local mod = BigWigs:NewBoss("Emalon the Storm Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 33993
-mod.guid = 33993
 mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
@@ -44,7 +43,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216, 65279)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218)
 	self:AddCombatListener("SPELL_HEAL", "OverchargeIcon", 64218)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33993)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Noth the Plaguebringer", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15954
-mod.guid = 15954
 mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
 
 ------------------------------
@@ -66,7 +65,7 @@ mod.locale = L
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15954)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

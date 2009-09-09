@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Grobbulus", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15931
-mod.guid = 15931
 mod.toggleOptions = {28169, "icon", 28240, "berserk", "bosskill"}
 
 ------------------------------
@@ -36,7 +35,7 @@ mod.locale = L
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Inject", 28169)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Cloud", 28240)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15931)
 
 	started = nil
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

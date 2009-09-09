@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Heigan the Unclean", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15936
-mod.guid = 15936
 mod.toggleOptions = {"engage", "teleport", "bosskill"}
 
 ----------------------------
@@ -47,7 +46,7 @@ mod.locale = L
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15936)
 end
 
 ------------------------------

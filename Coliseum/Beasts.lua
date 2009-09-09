@@ -10,7 +10,6 @@ mod.enabletrigger = {
 	35144, -- Acidmaw
 	34797, -- Icehowl
 }
-mod.guid = 34797 -- Icehowl
 mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "berserk", "bosskill"}
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
@@ -100,9 +99,9 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Daze", 66758)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Butt", 67654, 67655, 66770)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:AddDeathListener("Win", 34797)
 
 	-- Common
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	difficulty = GetRaidDifficulty()

@@ -40,13 +40,20 @@ function boss:GetOption(spellId)
 	return self.db.profile[(GetSpellInfo(spellId))]
 end
 
+function boss:Win()
+	self:Sync("Death", self.moduleName)
+end
+
 local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
-function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
-	local m = self.combatLogEventMap and self.combatLogEventMap[event]
-	if m and (m[spellId] or m["*"]) then
-		if event == "UNIT_DIED" then
-			self[m["*"]](self, player, dGUID)
-		else
+function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+	if event == "UNIT_DIED" then
+		local numericId = tonumber(dGUID:sub(-12, -7), 16)
+		local d = self.deathMap and self.deathMap[numericId]
+		if not d then return end
+		self[d](self, numericId, dGUID, player, dFlags, sGUID, source, sFlags)
+	else
+		local m = self.combatLogEventMap and self.combatLogEventMap[event]
+		if m and (m[spellId] or m["*"]) then
 			local f = self[m[spellId] or m["*"]]
 			if f then
 				if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
@@ -80,18 +87,19 @@ function boss:AddCombatListener(event, func, ...)
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
-function boss:BossDeath(_, guid, multi)
-	if type(guid) == "string" then
-		guid = tonumber((guid):sub(-12,-7),16)
+-- XXX Proposed API, subject to change.
+function boss:AddDeathListener(func, ...)
+	if not func then
+		error(("Missing required argument to %q:AddDeathListener."):format(self.displayName))
 	end
-
-	if guid == self.guid then
-		if multi then
-			self:Sync("MultiDeath " .. self.moduleName)
-		else
-			self:Sync("Death " .. self.moduleName)
-		end
+	if not self[func] then
+		error(("%s tried to register a death listener with the method %q, but it doesn't exist in the module."):format(self.displayName, func))
 	end
+	if not self.deathMap then self.deathMap = {} end
+	for i = 1, select("#", ...) do
+		self.deathMap[(select(i, ...))] = func
+	end
+	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 end
 
 local findTargetByGUID

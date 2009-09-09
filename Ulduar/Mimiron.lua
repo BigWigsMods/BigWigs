@@ -4,9 +4,8 @@
 
 local mod = BigWigs:NewBoss("Mimiron", "Ulduar")
 if not mod then return end
-mod.enabletrigger = { 33350, 33432, 33651, 33670 }
-mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
+mod.enabletrigger = { 33350, 33432, 33651, 33670 }
 mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[62997] = "normal",
@@ -206,7 +205,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:Bar(L["shock_next"], 48, 63631)
 		end
 	elseif msg:find(L["end_trigger"]) then
-		self:BossDeath(nil, self.guid)
+		self:Win()
 	end
 end
 

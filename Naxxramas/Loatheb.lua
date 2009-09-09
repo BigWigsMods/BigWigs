@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Loatheb", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 16011
-mod.guid = 16011
 mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
 
 ------------------------------
@@ -52,7 +51,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Deathbloom", 29865, 55053)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Doom", 29204, 55052)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spore", 29234)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 16011)
 
 	doomTime = 30
 	sporeCount = 1

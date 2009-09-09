@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Sapphiron", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15989
-mod.guid = 15989
 mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
 
 ------------------------------
@@ -55,7 +54,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15989)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 

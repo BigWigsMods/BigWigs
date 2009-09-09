@@ -5,7 +5,6 @@ local mod = BigWigs:NewBoss("The Iron Council", "Ulduar")
 if not mod then return end
 -- steelbreaker = 32867, molgeim = 32927, brundir = 32857
 mod.enabletrigger = { 32867, 32927, 32857 }
-mod.guid = 32867
 mod.toggleOptions = {61869, 63483, 61887, 61903, 64637, "proximity", 62274, 61974, 62269, 62273, "icon", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[61869] = "Stormcaller Brundir",
@@ -74,7 +73,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
 	self:AddCombatListener("SPELL_AURA_REMOVED", "TendrilsRemoved", 61887, 63486) -- Brundir +2
 
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddDeathListener("Deaths", 32867, 32927, 32857)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
@@ -171,16 +170,12 @@ function mod:Tendrils(_, spellId, _, _, spellName)
 	tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
 end
 
-function mod:Deaths(unit, guid)
-	guid = tonumber((guid):sub(-12,-7),16)
-	if guid == self.guid or guid == 32927 or guid == 32857 then
-		deaths = deaths + 1
-		if deaths < 3 then
-			self:IfMessage(L["council_dies"]:format(unit), "Positive")
-		end
-	end
-	if deaths == 3 then
-		self:BossDeath(nil, self.guid)
+function mod:Deaths(_, _, unitName)
+	deaths = deaths + 1
+	if deaths < 3 then
+		self:IfMessage(L["council_dies"]:format(unitName), "Positive")
+	else
+		self:Win()
 	end
 end
 

@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Patchwerk", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 16028
-mod.guid = 16028
 mod.toggleOptions = {28131, "berserk", "bosskill"}
 
 ----------------------------
@@ -26,7 +25,7 @@ mod.locale = L
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 28131)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 16028)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

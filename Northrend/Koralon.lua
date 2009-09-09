@@ -5,7 +5,6 @@ local mod = BigWigs:NewBoss("Koralon the Flame Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 35013
-mod.guid = 35013
 mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
 
 ------------------------------
@@ -32,7 +31,7 @@ mod.locale = L
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fists", 66725, 66808)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cinder", 67332, 66684)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 35013)
 end
 
 ------------------------------

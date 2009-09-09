@@ -13,7 +13,6 @@ mod.otherMenu = "Northrend"
 	30449 = vesperon
 --]]
 mod.enabletrigger = { 28860, 30449, 30451, 30452 }
-mod.guid = 28860
 mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
 
 ------------------------------
@@ -67,7 +66,7 @@ end
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
 	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 28860)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

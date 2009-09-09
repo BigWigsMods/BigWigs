@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Flame Leviathan", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 33113
-mod.guid = 33113
 mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
 
 ----------------------------
@@ -39,7 +38,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Pyrite", 68605)
 	self:AddCombatListener("SPELL_AURA_REFRESH", "Pyrite", 68605)
 
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33113)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

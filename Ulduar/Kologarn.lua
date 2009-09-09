@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Kologarn", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 32930
-mod.guid = 32930
 mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
 
 ------------------------------
@@ -57,6 +56,8 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
+	self:AddDeathListener("Deaths", 32933, 32934, 32930)
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -96,16 +97,15 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg)
 	end
 end
 
-function mod:Deaths(_, guid)
-	guid = tonumber((guid):sub(-12,-7),16)
+function mod:Deaths(guid)
 	if guid == 32933 then
 		self:IfMessage(L["left_dies"], "Attention")
-		self:Bar(L["left_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
+		self:Bar(L["left_wipe_bar"], 50, 2062)
 	elseif guid == 32934 then
 		self:IfMessage(L["right_dies"], "Attention")
-		self:Bar(L["right_wipe_bar"], 50, 2062) --2062, looks like a Arms :)
-	elseif guid == self.guid then
-		self:BossDeath(nil, guid)
+		self:Bar(L["right_wipe_bar"], 50, 2062)
+	else
+		self:Win()
 	end
 end
 

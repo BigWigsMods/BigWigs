@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Hodir", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 32845
-mod.guid = 32845
 mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk", "bosskill"}
 
 ------------------------------
@@ -108,7 +107,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:Berserk(480)
 		end
 	elseif msg == L["end_trigger"] then
-		self:BossDeath(nil, self.guid)
+		self:Win()
 	end
 end
 

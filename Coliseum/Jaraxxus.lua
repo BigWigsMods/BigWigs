@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
 mod.enabletrigger = 34780
-mod.guid = 34780
 mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -49,7 +48,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108, 66228)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 34780)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

@@ -10,7 +10,6 @@ if not mod then return end
 	33185 = Razorscale
 --]]
 mod.enabletrigger = {33185, 33210, 33233}
-mod.guid = 33186
 mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
 
 ------------------------------
@@ -72,7 +71,7 @@ mod.blockEmotes = { "Expedition Commander", L["Razorscale Controller"] }
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 33186)
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

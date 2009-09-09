@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Freya", "Ulduar")
 if not mod then return end
 mod.enabletrigger = 32906
-mod.guid = 32906
 mod.toggleOptions = {"phase", "wave", "tree", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
 mod.optionHeaders = {
 	phase = "normal",
@@ -227,7 +226,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	elseif msg == L["end_trigger"] then
 		-- Never enable again this session!
 		sheIsDead = true
-		self:BossDeath(nil, self.guid)
+		self:Win()
 	elseif self.db.profile.wave then
 		if msg == L["conservator_trigger"] then
 			self:IfMessage(L["conservator_message"], "Positive", 35594)

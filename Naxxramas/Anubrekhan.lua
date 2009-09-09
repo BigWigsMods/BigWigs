@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Anub'Rekhan", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15956
-mod.guid = 15956
 mod.toggleOptions = {28785, "bosskill"}
 
 ------------------------------
@@ -41,7 +40,7 @@ mod.locale = L
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "GainSwarm", 28785, 54021)
 	self:AddCombatListener("SPELL_CAST_START", "Swarm", 28785, 54021)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15956)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end

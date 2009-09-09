@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Maexxna", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15952
-mod.guid = 15952
 mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 
 ------------------------------
@@ -44,7 +43,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cocoon", 28622)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 54123, 54124) --Norm/Heroic
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spray", 29484, 54125)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15952)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

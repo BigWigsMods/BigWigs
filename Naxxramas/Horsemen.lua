@@ -3,14 +3,8 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("The Four Horsemen", "Naxxramas")
 if not mod then return end
---[[
-	16064 - thane
-	30549 - baron
-	16065 - blaumeux
-	16063 - zeliek
---]]
-mod.enabletrigger = { 16064, 30549, 16065, 16063 } 
-mod.guid = 16065
+-- 16063 - zeliek, 16064 - thane, 16065 - blaumeux, 30549 - baron
+mod.enabletrigger = { 16063, 16064, 16065, 30549 } 
 mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
 
 ------------------------------
@@ -49,7 +43,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Meteor", 28884, 57467)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Rivendare, Mark of Zeliek
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddDeathListener("Deaths", 16063, 16064, 16065, 30549)
 
 	marks = 1
 	deaths = 0
@@ -64,6 +58,15 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Deaths()
+	deaths = deaths + 1
+	if deaths < 4 then
+		self:IfMessage(L["dies"]:format(deaths), "Positive")
+	else
+		self:Win()
+	end
+end
 
 function mod:VoidZone(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
@@ -105,19 +108,6 @@ function mod:BigWigs_RecvSync(event, sync, rest)
 			self:Bar(L["markbar"]:format(marks), 17, 28835)
 			self:DelayedMessage(12, L["markwarn2"]:format(marks), "Urgent")
 		end
-	end
-end
-
-function mod:Deaths(_, guid)
-	guid = tonumber((guid):sub(-12,-7),16)
-	if guid == self.guid or guid == 30549 or guid == 16063 or guid == 16064 then
-		deaths = deaths + 1
-		if deaths < 4 then
-			self:IfMessage(L["dies"]:format(deaths), "Positive")
-		end
-	end
-	if deaths == 4 then
-		self:BossDeath(nil, self.guid, true)
 	end
 end
 

@@ -4,7 +4,6 @@
 local mod = BigWigs:NewBoss("Grand Widow Faerlina", "Naxxramas")
 if not mod then return end
 mod.enabletrigger = 15953
-mod.guid = 15953
 mod.toggleOptions = {28732, 28794, 28798, "bosskill"}
 
 ------------------------------
@@ -52,7 +51,7 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Rain", 28794, 54099)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 28798, 54100) --Norm/Heroic
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddDeathListener("Win", 15953)
 
 	started = nil
 	frenzyMessageId = nil

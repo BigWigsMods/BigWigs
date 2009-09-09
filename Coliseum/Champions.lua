@@ -1,8 +1,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-local boss = "Faction Champions"
-local mod = BigWigs:NewBoss(boss, "Trial of the Crusader")
+local mod = BigWigs:NewBoss("Faction Champions", "Trial of the Crusader")
 if not mod then return end
 mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 
@@ -86,7 +85,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["defeat_trigger"]) then
-		self:Sync("MultiDeath " .. boss)
+		self:Win()
 	end
 end
 
