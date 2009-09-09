@@ -64,22 +64,23 @@ function mod:FlameFailed(_, _, _, _, spellName)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
 end
 
-function mod:Shutdown(unit, spellId, _, _, spellName)
-	if unit ~= mod.displayName then return end
+function mod:Shutdown(unit, spellId, _, _, spellName, _, _, _, dGuid)
+	local target = tonumber((dGuid):sub(-12,-7),16)
+	if target ~= 33113 then return end
 	self:IfMessage(L["shutdown_message"], "Positive", spellId, "Long")
 	self:Bar(spellName, 20, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if unit == mod.displayName and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
+	if self.db.profile.pursue and message:find(L["pursue_trigger"]) then
 		self:TargetMessage(L["pursue"], player, "Personal", 62374, "Alarm")
 		self:Bar(L["pursue_other"]:format(player), 30, 62374)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg:find(L["engage_trigger"]) then
-		self:IfMessage(L["engage_message"]:format(self.displayName), "Attention")
+		self:IfMessage(L["engage_message"]:format(unit), "Attention")
 	end
 end
 

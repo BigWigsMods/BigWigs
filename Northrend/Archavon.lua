@@ -88,8 +88,9 @@ function mod:Shards(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
+	-- XXX can we get the actual emote here, and not just assume that every time
+	-- the boss emotes, he does a charge? heh.
 	if self.db.profile.charge and unit == self.displayName then
-		-- 11578, looks like a charge :)
 		self:TargetMessage(L["charge"], player, "Attention", 11578)
 	end
 end
@@ -107,3 +108,4 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		end
 	end
 end
+

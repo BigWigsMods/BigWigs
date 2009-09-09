@@ -83,13 +83,16 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Deaths(unit)
+function mod:Deaths(unit, guid)
 	if self.db.profile.adddeath and unit == L["rider"] then
 		self:Message(L["riderdiewarn"], "Important")
 	elseif self.db.profile.adddeath and unit == L["deathknight"] then
 		self:Message(L["dkdiewarn"], "Important")
-	elseif unit == mod.displayName then
-		self:BossDeath(nil, self.guid)
+	else
+		local target = tonumber((guid):sub(-12,-7),16)
+		if target == 16060 then
+			self:BossDeath(nil, 16060)
+		end
 	end
 end
 

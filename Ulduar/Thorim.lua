@@ -152,7 +152,7 @@ function mod:Detonation(player, spellId, _, _, spellName)
 	self:PrimaryIcon(player, "icon")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg == L["phase2_trigger"] then
 		if self.db.profile.phase then
 			self:IfMessage(L["phase2_message"], "Attention")
@@ -169,7 +169,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 		self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
 		if self.db.profile.phase then
-			self:IfMessage(L["phase3_message"]:format(mod.displayName), "Attention")
+			self:IfMessage(L["phase3_message"]:format(unit), "Attention")
 		end
 		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then

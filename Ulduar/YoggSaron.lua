@@ -239,12 +239,12 @@ function mod:EmpowerIcon(...)
 	empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.1)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, unit)
 	if msg == L["portal_trigger"] and self.db.profile.portal then
 		self:IfMessage(L["portal_message"], "Positive", 35717)
 		self:Bar(L["portal_bar"], 90, 35717)
 	elseif msg == L["weakened_trigger"] and self.db.profile.weakened then
-		self:IfMessage(L["weakened_message"]:format(self.displayName), "Positive", 50661) --50661, looks like a weakened :)
+		self:IfMessage(L["weakened_message"]:format(unit), "Positive", 50661)
 	end
 end
 

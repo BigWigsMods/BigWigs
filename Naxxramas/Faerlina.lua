@@ -65,8 +65,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Silence(unit, spellId)
-	if not UnitIsUnit(unit, self.displayName) then return end
+function mod:Silence(unit, spellId, _, _, spellName, _, _, _, dGuid)
+	local target = tonumber((dGuid):sub(-12,-7),16)
+	if target ~= 15953 then return end
 	if not frenzied then
 		-- preemptive, 30s silence
 		self:IfMessage(L["silencewarn"], "Positive", spellId)
@@ -91,8 +92,9 @@ function mod:Rain(player)
 	end
 end
 
-function mod:Frenzy(unit, spellId, _, _, spellName)
-	if not UnitIsUnit(unit, self.displayName) then return end
+function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGuid)
+	local target = tonumber((dGuid):sub(-12,-7),16)
+	if target ~= 15953 then return end
 	self:IfMessage(L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
 	if frenzyMessageId then
