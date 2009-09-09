@@ -73,6 +73,7 @@ if L then
 	L.incinerate_message = "Испепеление"
 	L.incinerate_other = "Испепеление плоти на |3-5(%s)"
 	L.incinerate_bar = "~Следующее Испепеление"
+	L.incinerate_safe = "%s в безопасности"
 
 	L.legionflame_message = "Пламя"
 	L.legionflame_other = "Пламя Легиона на |3-5(%s)!"

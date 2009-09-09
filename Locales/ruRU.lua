@@ -35,7 +35,7 @@ L["Load"] = "Загрузить"
 L["Load All"] = "Загрузить все"
 L["Load all %s modules."] = "Загрузить все модули %s."
 
--- L.already_registered = "|cffff0000Внимание:|r |cff00ff00%s|r (|cffffff00%d|r) уже существует как модуль босса Big Wigs,но чтото снова пытается его зарегистрировать (ревизия |cffffff00%d|r). Это обычно означает, что у вас две копии этого модуля в папке модификации, возможно из-за ошибки обновления программой обновления модификаций. Мы рекомендуем вам удалить все папки Big Wigs , а затем установить его заново с нуля."
+-- L.already_registered = "|cffff0000Внимание:|r |cff00ff00%s|r (|cffffff00%d|r) уже существует как модуль Big Wigs,но чтото снова пытается его зарегистрировать (ревизия |cffffff00%d|r). Это обычно означает, что у вас две копии этого модуля в папке модификации, возможно из-за ошибки обновления программой обновления модификаций. Мы рекомендуем вам удалить все папки Big Wigs , а затем установить его заново с нуля."
 
 
 -- Options.lua
@@ -49,6 +49,6 @@ L["Menu options."] = "Меню опций."
 L["Big Wigs is currently disabled."] = "В данный момент Big Wigs отключен."
 L["|cffeda55fClick|r to enable."] = "|cffeda55fЩёлкните|r чтобы включить."
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fЩёлкните|r, чтобы сбросить все запущенные модули. |cffeda55fAlt-Клик|r - чтобы отключить их. |cffeda55fCtrl-Alt-Клик|r - чтобы отключить Big Wigs полностью."
-
+L["All running modules have been disabled."] = "Все запущенные модули были отключены."
 
 
