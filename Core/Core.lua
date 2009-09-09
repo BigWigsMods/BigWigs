@@ -30,6 +30,7 @@ local pName = UnitName("player")
 BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 
 local pluginOptions = {
+	name = "Customize ...",
 	type = "group",
 	childGroups = "tab",
 	args = {},
