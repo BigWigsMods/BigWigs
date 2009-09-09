@@ -1,6 +1,6 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "zhTW")
 if L then
-	L.engage_message = "阿努巴拉克進入戰斗，80秒後，鑽地！"
+	L.engage_message = "阿努巴拉克進入戰鬥，80秒後，鑽地！"
 	L.engage_trigger = "這裡將會是你們的墳墓!"
 
 	L.unburrow_trigger = "從地底鑽出"
