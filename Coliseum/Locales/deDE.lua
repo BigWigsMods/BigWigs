@@ -71,6 +71,7 @@ if L then
 	L.incinerate_message = "Einäschern"
 	L.incinerate_other = "Einäschern: %s"
 	L.incinerate_bar = "~Einäschern"
+	L.incinerate_safe = "%s ist sicher!"
 
 	L.legionflame_message = "Legionsflamme"
 	L.legionflame_other = "Legionsflamme: %s"
