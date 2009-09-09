@@ -16,9 +16,6 @@ mod.proximitySilent = true
 ------------------------------
 
 local started = nil
-local UnitGUID = _G.UnitGUID
-local GetNumRaidMembers = _G.GetNumRaidMembers
-local fmt = _G.string.format
 local guid = nil
 local overchargerepeater = nil -- overcharge repeating timer
 

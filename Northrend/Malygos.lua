@@ -13,7 +13,6 @@ mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "
 --      Are you local?      --
 ------------------------------
 
-local UnitName = UnitName
 local pName = UnitName("player")
 local started = nil
 local phase = nil
