@@ -1,14 +1,9 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Thorim"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Thorim", "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-local behemoth -- set in onregister
-mod.displayName = boss
--- mod.bossName set after localization
 mod.zoneName = "Ulduar"
 --[[
 	32865 = thorim
@@ -74,9 +69,6 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Thorim")
 mod.locale = L
-
-mod.bossName = { boss, "Jormungar Behemoth", L["Runic Colossus"] }
-
 
 ------------------------------
 --      Initialization      --

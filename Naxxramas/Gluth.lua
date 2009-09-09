@@ -1,11 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Gluth"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Gluth", "$Revision$")
 if not mod then return end
-mod.bossName = boss
 mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15932
 mod.guid = 15932

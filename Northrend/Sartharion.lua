@@ -2,12 +2,9 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = "Sartharion"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Sartharion", "$Revision$")
 if not mod then return end
 local shadron, tenebron, vesperon
-mod.bossName = { boss, "Shadron", "Tenebron", "Vesperon" }
-mod.displayName = boss
 mod.zoneName = "The Obsidian Sanctum"
 mod.otherMenu = "Northrend"
 --[[
@@ -25,6 +22,7 @@ mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bos
 ------------------------------
 
 local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
+local shadron, tenebron, vesperon = nil, nil, nil
 
 ------------------------------
 --      English Locale      --
@@ -62,7 +60,9 @@ mod.locale = L
 ------------------------------
 
 function mod:OnRegister()
-	shadron, tenebron, vesperon = mod.bossName[2], mod.bossName[3], mod.bossName[4]
+	shadron = BigWigs:GetLocalBossName("Shadron")
+	tenebron = BigWigs:GetLocalBossName("Tenebron")
+	vesperon = BigWigs:GetLocalBossName("Vesperon")
 end
 
 function mod:OnBossEnable()

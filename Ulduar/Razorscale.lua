@@ -2,12 +2,9 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = "Razorscale"
-
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Razorscale", "$Revision$")
 if not mod then return end
 mod.displayName = "Razorscale"
--- mod.bossName set below localization
 mod.zoneName = "Ulduar"
 --[[
 	33233 = Razorscale Controller
@@ -69,15 +66,11 @@ end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Razorscale")
 mod.locale = L
 
+mod.blockEmotes = { "Expedition Commander", L["Razorscale Controller"] }
+
 ------------------------------
 --      Initialization      --
 ------------------------------
-
-mod.bossName = { boss, "Expedition Commander", L["Razorscale Controller"]}
-
-function mod:OnRegister()
-	boss = mod.bossName[1]
-end
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
@@ -105,7 +98,7 @@ end
 
 function mod:UNIT_HEALTH(event, msg)
 	if not self.db.profile.phase then return end
-	if UnitName(msg) == razorscale then
+	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 55 and not p2 then
 			self:IfMessage(L["phase2_warning"], "Positive")

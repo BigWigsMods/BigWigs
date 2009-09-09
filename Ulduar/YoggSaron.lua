@@ -1,8 +1,7 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-local boss = "Yogg-Saron"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Yogg-Saron", "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 -- mod.bossName set after locals
@@ -95,16 +94,12 @@ mod.locale = L
 -- warnings blizz puts in the emote frame. The source for those messages USED
 -- TO BE the boss, but Blizzard CHANGED IT to the player himself, for some
 -- insanely crappy, unknown, stupid reason.
-mod.bossName = { "Yogg-Saron", "Brain of Yogg-Saron", "Sara", pName }
+mod.blockEmotes = { "Brain of Yogg-Saron", "Sara", pName }
 
 
 ------------------------------
 --      Initialization      --
 ------------------------------
-function mod:OnRegister()
-	boss = mod.bossName[1]
-end
-
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Roar", 64189)
 	self:AddCombatListener("SPELL_CAST_START", "Madness", 64059)
@@ -255,7 +250,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		self:IfMessage(L["portal_message"], "Positive", 35717)
 		self:Bar(L["portal_bar"], 90, 35717)
 	elseif msg == L["weakened_trigger"] and self.db.profile.weakened then
-		self:IfMessage(L["weakened_message"]:format(boss), "Positive", 50661) --50661, looks like a weakened :)
+		self:IfMessage(L["weakened_message"]:format(self.displayName), "Positive", 50661) --50661, looks like a weakened :)
 	end
 end
 

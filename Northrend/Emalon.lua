@@ -1,11 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Emalon the Storm Watcher"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Emalon the Storm Watcher", "$Revision$")
 if not mod then return end
-mod.bossName = boss
 mod.zoneName = "Vault of Archavon"
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 33993

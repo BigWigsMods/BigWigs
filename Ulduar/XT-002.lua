@@ -1,12 +1,9 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "XT-002 Deconstructor"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("XT-002 Deconstructor", "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.bossName = boss
 mod.zoneName = "Ulduar"
 mod.enabletrigger = 33293
 mod.guid = 33293

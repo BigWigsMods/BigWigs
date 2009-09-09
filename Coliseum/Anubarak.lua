@@ -1,10 +1,9 @@
 ﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
-local boss = "Anub'arak"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+
+local mod = BigWigs:NewBoss("Anub'arak", "$Revision$")
 if not mod then return end
-mod.bossName = boss
 mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = 34564
 mod.guid = 34564

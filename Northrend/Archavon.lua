@@ -4,7 +4,6 @@
 
 local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "$Revision$")
 if not mod then return end
-mod.bossName = "Archavon the Stone Watcher"
 mod.zoneName = "Vault of Archavon"
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 31125

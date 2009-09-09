@@ -2,12 +2,9 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = "General Vezax"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("General Vezax", "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
--- mod.bossName set after locale
-mod.displayName = boss
 mod.enabletrigger = 33271
 mod.zoneName = "Ulduar"
 mod.guid = 33271
@@ -68,7 +65,7 @@ end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
 mod.locale = L
 
-mod.bossName = {boss, L["Vezax Bunny"]}
+mod.blockEmotes = L["Vezax Bunny"]
 
 mod.optionHeaders = {
 	vapor = L.vapor,
@@ -82,11 +79,6 @@ mod.optionHeaders = {
 ------------------------------
 --      Initialization      --
 ------------------------------
-
-function mod:OnRegister()
-	boss = mod.bossName[1]
-end
-
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
@@ -117,7 +109,7 @@ function mod:UNIT_AURA(event, unit)
 end
 
 local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByName(boss)
+	local bossId = mod:GetUnitIdByName(mod.displayName)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then

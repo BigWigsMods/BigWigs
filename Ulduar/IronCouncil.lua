@@ -1,14 +1,9 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "The Iron Council"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("The Iron Council", "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-local breaker, molgeim, brundir
-mod.displayName = boss
-mod.bossName = {"Steelbreaker", "Runemaster Molgeim", "Stormcaller Brundir", "The Iron Council"}
 mod.zoneName = "Ulduar"
 --[[
 steelbreaker = 32867
@@ -19,11 +14,10 @@ mod.enabletrigger = { 32867, 32927, 32857 }
 mod.guid = 32867
 mod.toggleOptions = {61869, 63483, 61887, 61903, 64637, "proximity", 62274, 61974, 62269, 62273, "icon", "berserk", "bosskill"}
 mod.optionHeaders = {
-	[61869] = brundir,
-	[61903] = breaker,
-	[62274] = brundir,
+	[61869] = "Stormcaller Brundir",
+	[61903] = "Steelbreaker",
+	[62274] = "Runemaster Molgeim",
 	proximity = CL.general,
-
 }
 mod.proximityCheck = "bandage"
 
@@ -36,6 +30,7 @@ local deaths = 0
 local overwhelmTime = 35
 local pName = UnitName("player")
 local tendrilscanner = nil
+local brundir, molgeim = nil, nil
 
 ----------------------------
 --      Localization      --
@@ -71,7 +66,8 @@ mod.locale = L
 ------------------------------
 
 function mod:OnRegister()
-	breaker, molgeim, brundir = mod.bossName[1], mod.bossName[2], mod.bossName[3]
+	brundir = BigWigs:GetLocalBossName("Stormcaller Brundir")
+	molgeim = BigWigs:GetLocalBossName("Runemaster Molgeim")
 end
 
 function mod:OnBossEnable()

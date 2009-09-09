@@ -1,11 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Grand Widow Faerlina"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Grand Widow Faerlina", "$Revision$")
 if not mod then return end
-mod.bossName = boss
 mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15953
 mod.guid = 15953
@@ -70,7 +67,7 @@ end
 ------------------------------
 
 function mod:Silence(unit, spellId)
-	if not UnitIsUnit(unit, boss) then return end
+	if not UnitIsUnit(unit, self.displayName) then return end
 	if not frenzied then
 		-- preemptive, 30s silence
 		self:IfMessage(L["silencewarn"], "Positive", spellId)
@@ -96,7 +93,7 @@ function mod:Rain(player)
 end
 
 function mod:Frenzy(unit, spellId, _, _, spellName)
-	if not UnitIsUnit(unit, boss) then return end
+	if not UnitIsUnit(unit, self.displayName) then return end
 	self:IfMessage(L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
 	if frenzyMessageId then

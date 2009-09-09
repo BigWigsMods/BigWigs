@@ -1,11 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Anub'Rekhan"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Anub'Rekhan", "$Revision$")
 if not mod then return end
-mod.bossName = boss
 mod.zoneName = "Naxxramas"
 mod.enabletrigger = 15956
 mod.guid = 15956
@@ -55,7 +52,7 @@ end
 ------------------------------
 
 function mod:GainSwarm(unit, spellId, _, _, spellName)
-	if unit == mod.bossName then
+	if unit == mod.displayName then
 		self:DelayedMessage(20, L["gainendwarn"], "Important")
 		self:Bar(spellName, 20, spellId)
 		self:DelayedMessage(75, L["gainwarn10sec"], "Important")

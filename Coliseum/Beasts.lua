@@ -2,15 +2,10 @@
 -- Module Declaration
 --
 
-local boss = "The Beasts of Northrend"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("The Beasts of Northrend", "$Revision$")
 if not mod then return end
 
-local gormok, icehowl, acidmaw, dreadscale, jormungars
-
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.bossName = { "Gormok the Impaler", "Icehowl", "Acidmaw", "Dreadscale", "Jormungars" }
-mod.displayName = boss
 mod.zoneName = "Trial of the Crusader"
 mod.enabletrigger = {
 	34796, -- Gormok
@@ -39,6 +34,7 @@ local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
 local snobolledWarned = {}
 local snobolled = GetSpellInfo(66406)
+local icehowl, jormungars = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -80,11 +76,8 @@ mod.locale = L
 --
 
 function mod:OnRegister()
-	gormok = self.bossName[1]
-	icehowl = self.bossName[2]
-	acidmaw = self.bossName[3]
-	dreadscale = self.bossName[4]
-	jormungars = self.bossName[5]
+	icehowl = BigWigs:GetLocalBossName("Icehowl")
+	jormungars = BigWigs:GetLocalBossName("Jormungars")
 end
 
 function mod:OnBossEnable()

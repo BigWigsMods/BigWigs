@@ -507,6 +507,11 @@ do
 		end
 	end
 	
+	function addon:GetLocalBossName(boss)
+		if LOCALE ~= "enUS" and BB and BB[boss] then return BB[boss] end
+		return boss
+	end
+	
 	function addon:RegisterBossModule(module)
 		local name = module.name
 		local rev = module.revision
@@ -516,13 +521,6 @@ do
 		
 		-- Translate the bossmodule if appropriate
 		if LOCALE ~= "enUS" and BB and BZ then
-			if type(module.bossName) == "table" then
-				for k, boss in pairs(module.bossName) do
-					module.bossName[k] = BB[boss] or boss
-				end
-			else
-				module.bossName = BB[module.bossName] or module.bossName
-			end
 			if type(module.zoneName) == "table" then
 				for k, zone in pairs(module.zoneName) do
 					module.zoneName[k] = BZ[zone] or zone
@@ -547,11 +545,7 @@ do
 			end
 		end
 		if not module.displayName then -- fix up a pretty display name
-			if type(module.bossName) == "table" then
-				module.displayName = table.concat(module.bossName, ", ")
-			else
-				module.displayName = module.bossName
-			end
+			module.displayName = BB and BB[name] or name
 		end
 
 		if module.toggleOptions then
@@ -605,7 +599,7 @@ function addon:EnableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
 		-- XXX DEBUG
-		module:SendMessage("BigWigs_Message", fmt("Enabled: %q", module.displayName), "Core")
+		module:SendMessage("BigWigs_Message", string.format("Enabled: %q", module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end

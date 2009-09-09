@@ -1,11 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Patchwerk"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Patchwerk", "$Revision$")
 if not mod then return end
-mod.bossName = "Patchwerk"
 mod.zoneName = "Naxxramas"
 mod.enabletrigger = 16028
 mod.guid = 16028

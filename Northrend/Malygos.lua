@@ -1,11 +1,8 @@
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
-
-local boss = "Malygos"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Malygos", "$Revision$")
 if not mod then return end
-mod.bossName = "Malygos"
 mod.zoneName = "The Eye of Eternity"
 mod.otherMenu = "Northrend"
 mod.enabletrigger = 28859

@@ -2,12 +2,9 @@
 --      Module Declaration      --
 ----------------------------------
 
-local boss = "Mimiron"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("Mimiron", "$Revision$")
 if not mod then return end
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-mod.displayName = "Mimiron"
-mod.bossName = { boss, "Leviathan Mk II", "VX-001", "Aerial Command Unit" }
 mod.zoneName = "Ulduar"
 mod.enabletrigger = { 33350, 33432, 33651, 33670 }
 mod.guid = 33350

@@ -2,14 +2,11 @@
 -- Module Declaration
 --
 
-local boss = "The Twin Val'kyr"
-local mod = BigWigs:NewBoss(boss, "$Revision$")
+local mod = BigWigs:NewBoss("The Twin Val'kyr", "$Revision$")
 if not mod then return end
-local eydis, fjola
-mod.displayName = boss
 mod.bossName = {"Eydis Darkbane", "Fjola Lightbane"}
 mod.zoneName = "Trial of the Crusader"
-mod.enabletrigger = { 34496, 34407 }
+mod.enabletrigger = { 34496, 34497 }
 mod.guid = 34496
 --34496 Darkbane
 --34497 Lightbane
@@ -21,6 +18,7 @@ mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
 
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
+local eydis = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -49,8 +47,7 @@ mod.locale = L
 --
 
 function mod:OnRegister()
-	eydis = mod.bossName[1]
-	fjola = mod.bossName[2]
+	eydis = BigWigs:GetLocalBossName("Eydis Darkbane")
 end
 
 function mod:OnBossEnable()

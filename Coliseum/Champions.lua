@@ -4,7 +4,6 @@
 local boss = "Faction Champions"
 local mod = BigWigs:NewBoss(boss, "$Revision$")
 if not mod then return end
-mod.bossName = boss
 mod.zoneName = "Trial of the Crusader"
 mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 
