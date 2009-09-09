@@ -74,8 +74,8 @@ mod.locale = L
 --
 
 function mod:OnRegister()
-	icehowl = BigWigs:GetLocalBossName("Icehowl")
-	jormungars = BigWigs:GetLocalBossName("Jormungars")
+	icehowl = BigWigs:Translate("Icehowl")
+	jormungars = BigWigs:Translate("Jormungars")
 end
 
 function mod:OnBossEnable()

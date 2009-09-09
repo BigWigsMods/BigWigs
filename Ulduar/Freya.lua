@@ -142,7 +142,7 @@ do
 end
 
 local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByName(mod.bossName)
+	local bossId = mod:GetUnitIdByGUID(32906)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then

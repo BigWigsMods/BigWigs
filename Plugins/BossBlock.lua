@@ -62,9 +62,9 @@ do
 		t = mod.blockEmotes and type(mod.blockEmotes) or nil
 		if not t then return end
 		if t == "table" then
-			for i, v in next, mod.blockEmotes do bossNames[BigWigs:GetLocalBossName(v)] = true end
+			for i, v in next, mod.blockEmotes do bossNames[BigWigs:Translate(v)] = true end
 		elseif t == "string" then
-			bossNames[BigWigs:GetLocalBossName(mod.blockEmotes)] = true
+			bossNames[BigWigs:Translate(mod.blockEmotes)] = true
 		end
 	end
 

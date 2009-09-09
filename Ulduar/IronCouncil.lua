@@ -25,7 +25,6 @@ local deaths = 0
 local overwhelmTime = 35
 local pName = UnitName("player")
 local tendrilscanner = nil
-local brundir, molgeim = nil, nil
 
 ----------------------------
 --      Localization      --
@@ -59,11 +58,6 @@ mod.locale = L
 ------------------------------
 --      Initialization      --
 ------------------------------
-
-function mod:OnRegister()
-	brundir = BigWigs:GetLocalBossName("Stormcaller Brundir")
-	molgeim = BigWigs:GetLocalBossName("Runemaster Molgeim")
-end
 
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
@@ -111,8 +105,9 @@ function mod:OverRemove(player)
 	self:SendMessage("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
 end
 
-function mod:Shield(unit, spellId)
-	if unit == molgeim then
+function mod:Shield(_, spellId, _, _, _, _, _, dest)
+	local target = tonumber((dest):sub(-12,-7),16)
+	if target and target == 32927 then
 		self:IfMessage(L["shield_message"], "Attention", spellId)
 	end
 end
@@ -146,7 +141,7 @@ function mod:Whirl(_, spellId, _, _, spellName)
 end
 
 local function targetCheck()
-	local bossId = mod:GetUnitIdByName(brundir)
+	local bossId = mod:GetUnitIdByGUID(32857)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target ~= previous then

@@ -107,7 +107,7 @@ function mod:UNIT_AURA(event, unit)
 end
 
 local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByName(mod.displayName)
+	local bossId = mod:GetUnitIdByGUID(33271)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then

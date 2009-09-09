@@ -60,9 +60,9 @@ mod.locale = L
 ------------------------------
 
 function mod:OnRegister()
-	shadron = BigWigs:GetLocalBossName("Shadron")
-	tenebron = BigWigs:GetLocalBossName("Tenebron")
-	vesperon = BigWigs:GetLocalBossName("Vesperon")
+	shadron = BigWigs:Translate("Shadron")
+	tenebron = BigWigs:Translate("Tenebron")
+	vesperon = BigWigs:Translate("Vesperon")
 end
 
 function mod:OnBossEnable()

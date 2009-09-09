@@ -18,7 +18,7 @@ mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
 
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
-local eydis = nil
+local started = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,10 +46,6 @@ mod.locale = L
 -- Initialization
 --
 
-function mod:OnRegister()
-	eydis = BigWigs:GetLocalBossName("Eydis Darkbane")
-end
-
 function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
 	self:AddCombatListener("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
@@ -61,6 +57,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	started = nil
 end
 
 --------------------------------------------------------------------------------
@@ -122,7 +119,8 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, sender)
-	if msg == L["engage_trigger1"] and sender == eydis then
+	if msg == L["engage_trigger1"] and not started then
+		started = true
 		if self.db.profile.shield or self.db.profile.vortex then
 			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		end

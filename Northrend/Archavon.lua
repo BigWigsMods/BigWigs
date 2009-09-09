@@ -74,7 +74,7 @@ function mod:Cloud(player, spellId)
 end
 
 local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByName(mod.bossName)
+	local bossId = mod:GetUnitIdByGUID(31125)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then

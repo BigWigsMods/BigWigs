@@ -225,6 +225,11 @@ end
 --      API                  --
 -------------------------------
 
+function addon:Translate(boss)
+	if LOCALE ~= "enUS" and BB and BB[boss] then return BB[boss] end
+	return boss
+end
+
 function addon:RegisterBossOption(key, name, desc, func)
 	if customBossOptions[key] then
 		error("The custom boss option %q has already been registered."):format(key)
@@ -505,11 +510,6 @@ do
 			end
 			flagforloadbutton[zone] = true
 		end
-	end
-	
-	function addon:GetLocalBossName(boss)
-		if LOCALE ~= "enUS" and BB and BB[boss] then return BB[boss] end
-		return boss
 	end
 	
 	function addon:RegisterBossModule(module)
