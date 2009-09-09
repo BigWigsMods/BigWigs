@@ -20,7 +20,6 @@ mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 6327
 local vaporCount = 1
 local surgeCount = 1
 local pName = UnitName("player")
-local fmt = string.format
 local lastVapor = nil
 local vapor = GetSpellInfo(63322)
 

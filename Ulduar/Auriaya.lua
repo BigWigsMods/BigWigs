@@ -18,7 +18,6 @@ mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskil
 
 local started = nil
 local count = 9
-local fmt = string.format
 
 ----------------------------
 --      Localization      --

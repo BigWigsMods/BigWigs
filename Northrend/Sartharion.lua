@@ -24,7 +24,6 @@ mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bos
 --      Are you local?      --
 ------------------------------
 
-local fmt = string.format
 local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 
 ------------------------------
@@ -90,15 +89,15 @@ function mod:DrakeCheck(_, spellId)
 	if not self.db.profile.drakes then return end
 	if spellId == 58105 and not shadronStarted then
 		self:Bar(shadron, 80, 58105)
-		self:DelayedMessage(75, fmt(L["drakes_incomingsoon"], shadron), "Attention")
+		self:DelayedMessage(75, L["drakes_incomingsoon"]:format(shadron), "Attention")
 		shadronStarted = true
 	elseif spellId == 61248 and not tenebronStarted then
 		self:Bar(tenebron, 30, 61248)
-		self:DelayedMessage(25, fmt(L["drakes_incomingsoon"], tenebron), "Attention")
+		self:DelayedMessage(25, L["drakes_incomingsoon"]:format(tenebron), "Attention")
 		tenebronStarted = true
 	elseif spellId == 61251 and not vesperonStarted then
 		self:Bar(vesperon, 120, 61251)
-		self:DelayedMessage(115, fmt(L["drakes_incomingsoon"], vesperon), "Attention")
+		self:DelayedMessage(115, L["drakes_incomingsoon"]:format(vesperon), "Attention")
 		vesperonStarted = true
 	end
 end

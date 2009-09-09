@@ -35,7 +35,6 @@ local previous = nil
 local deaths = 0
 local overwhelmTime = 35
 local pName = UnitName("player")
-local fmt = string.format
 local tendrilscanner = nil
 
 ----------------------------

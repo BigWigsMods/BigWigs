@@ -16,7 +16,6 @@ mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk",
 ------------------------------
 
 local flashFreezed = mod:NewTargetList()
-local fmt = string.format
 local lastCold = nil
 local cold = GetSpellInfo(62039)
 local pName = UnitName("player")

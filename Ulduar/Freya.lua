@@ -24,7 +24,6 @@ mod.proximityCheck = "bandage"
 
 local phase = nil
 local pName = UnitName("player")
-local fmt = string.format
 local root = mod:NewTargetList()
 -- XXXLOLHAXBOOBS to prevent us from enabling again after she dies.
 -- I never have enough time after she does the yell to do any testing for which Unit* APIs will

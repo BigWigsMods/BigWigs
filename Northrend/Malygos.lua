@@ -20,7 +20,6 @@ local UnitName = UnitName
 local pName = UnitName("player")
 local started = nil
 local phase = nil
-local fmt = string.format
 
 ------------------------------
 --      English Locale      --

@@ -33,7 +33,6 @@ mod.proximitySilent = true
 
 local started = nil
 local chargeCount = 1
-local fmt = string.format
 local pName = UnitName("player")
 
 local hardModeMessageID
