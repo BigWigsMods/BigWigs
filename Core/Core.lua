@@ -538,11 +538,18 @@ do
 			end
 			if module.optionHeaders then
 				for k, v in pairs(module.optionHeaders) do
-					if type(v) == "string" then
-						if BB[v] then
-							module.optionHeaders[k] = BB[v]
-						end
+					if type(v) == "string" and BB[v] then
+						module.optionHeaders[k] = BB[v]
 					end
+				end
+			end
+		end
+		
+		if module.optionHeaders then
+			local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
+			for k, v in pairs(module.optionHeaders) do
+				if type(v) == "string" and CL[v] then
+					module.optionHeaders[k] = CL[v]
 				end
 			end
 		end

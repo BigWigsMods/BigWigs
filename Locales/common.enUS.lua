@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Common", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Common", "enUS", true, true)
 
 -- Prototype.lua common words
 L.you = "%s on YOU"

@@ -9,11 +9,10 @@ mod.enabletrigger = { 33350, 33432, 33651, 33670 }
 mod.guid = 33350
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
 mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "proximity", "berserk", "bosskill"}
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
-	[62997] = CL.normal,
-	[64623] = CL.hard,
-	phase = CL.general,
+	[62997] = "normal",
+	[64623] = "hard",
+	phase = "general",
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 

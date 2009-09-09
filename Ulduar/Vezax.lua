@@ -65,15 +65,13 @@ L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
 mod.locale = L
 
 mod.blockEmotes = L["Vezax Bunny"]
-
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	vapor = L.vapor,
 	[62660] = 62660,
 	[63276] = 63276,
-	[62661] = CL.normal,
-	animus = CL.hard,
-	berserk = CL.general,
+	[62661] = "normal",
+	animus = "hard",
+	berserk = "general",
 }
 
 ------------------------------

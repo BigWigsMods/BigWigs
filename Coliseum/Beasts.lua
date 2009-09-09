@@ -13,12 +13,11 @@ mod.enabletrigger = {
 }
 mod.guid = 34797 -- Icehowl
 mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "berserk", "bosskill"}
-local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	[67641] = "Jormungars",
 	[67654] = "Icehowl",
-	berserk = CL.general,
+	berserk = "general",
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true

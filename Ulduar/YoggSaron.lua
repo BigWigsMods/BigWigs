@@ -13,8 +13,8 @@ mod.optionHeaders = {
 	[62979] = CL.phase:format(1),
 	tentacle = CL.phase:format(2),
 	[64465] = CL.phase:format(3),
-	[64189] = CL.hard,
-	phase = CL.general,
+	[64189] = "hard",
+	phase = "general",
 }
 
 ------------------------------

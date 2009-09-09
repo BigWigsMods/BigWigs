@@ -8,13 +8,12 @@ mod.zoneName = "Ulduar"
 mod.enabletrigger = { 32865, 32882, 32872 }
 mod.guid = 32865
 mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
-
 local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
 mod.optionHeaders = {
 	[62042] = CL.phase:format(2),
 	[62279] = CL.phase:format(3),
-	hardmode = CL.hard,
-	phase = CL.general,
+	hardmode = "hard",
+	phase = "general",
 }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
