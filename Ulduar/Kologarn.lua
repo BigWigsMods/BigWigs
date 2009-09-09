@@ -16,7 +16,6 @@ mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, 
 ------------------------------
 
 local started = nil
-local db = nil
 local grip = mod:NewTargetList()
 local pName = UnitName("player")
 
@@ -68,7 +67,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterMessage("BigWigs_RecvSync")
 	self:Throttle(2, "EyeBeamWarn")
-	db = self.db.profile
 end
 
 ------------------------------
@@ -93,9 +91,9 @@ function mod:Grip(player, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg)
-	if db.eyebeam and msg == L["eyebeam_trigger"] then
+	if self.db.profile.eyebeam and msg == L["eyebeam_trigger"] then
 		self:LocalMessage(L["eyebeam_you"], "Personal", 63976, "Long")
-		if db.eyebeamsay then
+		if self.db.profile.eyebeamsay then
 			SendChatMessage(L["eyebeam_say"], "SAY")
 		end
 		self:Sync("EyeBeamWarn", pName)
@@ -116,7 +114,7 @@ function mod:Deaths(_, guid)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["shockwave_trigger"] and db.shockwave then
+	if msg == L["shockwave_trigger"] and self.db.profile.shockwave then
 		self:IfMessage(L["shockwave"], "Attention", 63982)
 		self:Bar(L["shockwave"], 21, 63982)
 	end
@@ -126,7 +124,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-	elseif sync == "EyeBeamWarn" and rest and db.eyebeam then
+	elseif sync == "EyeBeamWarn" and rest and self.db.profile.eyebeam then
 		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
 		self:Bar(L["eyebeam_bar"], 20, 63976)

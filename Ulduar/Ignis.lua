@@ -15,7 +15,6 @@ mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local pName = UnitName("player")
 local spawnTime = 30
 
@@ -52,7 +51,6 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 ------------------------------

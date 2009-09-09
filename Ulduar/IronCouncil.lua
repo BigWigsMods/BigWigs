@@ -31,7 +31,6 @@ mod.proximityCheck = "bandage"
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local previous = nil
 local deaths = 0
 local overwhelmTime = 35
@@ -95,7 +94,6 @@ function mod:OnBossEnable()
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 ------------------------------
@@ -206,7 +204,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		previous = nil
 		deaths = 0
 		overwhelmTime = GetRaidDifficulty() == 1 and 60 or 35
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(900)
 		end
 	end

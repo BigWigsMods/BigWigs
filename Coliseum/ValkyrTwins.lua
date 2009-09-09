@@ -19,7 +19,6 @@ mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
 -- Locals
 --
 
-local db = nil
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
 
@@ -65,7 +64,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	db = self.db.profile
 end
 
 --------------------------------------------------------------------------------
@@ -73,13 +71,13 @@ end
 --
 
 function mod:Touch(player, spellId, _, _, spellName)
-	if not db.touch then return end
+	if not self.db.profile.touch then return end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Info")
 	self:Whisper(player, spellName)
 end
 
 function mod:DarkShield(_, spellId, _, _, spellName)
-	if db.shield then
+	if self.db.profile.shield then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceDark)
 		if d then
@@ -91,7 +89,7 @@ function mod:DarkShield(_, spellId, _, _, spellName)
 end
 
 function mod:LightShield(_, spellId, _, _, spellName)
-	if db.shield then
+	if self.db.profile.shield then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceLight)
 		if d then
@@ -103,7 +101,7 @@ function mod:LightShield(_, spellId, _, _, spellName)
 end
 
 function mod:LightVortex(_, spellId, _, _, spellName)
-	if db.vortex then
+	if self.db.profile.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceLight)
 		if d then
@@ -115,7 +113,7 @@ function mod:LightVortex(_, spellId, _, _, spellName)
 end
 
 function mod:DarkVortex(_, spellId, _, _, spellName)
-	if db.vortex then
+	if self.db.profile.vortex then
 		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		local d = UnitDebuff("player", essenceDark)
 		if d then
@@ -128,10 +126,10 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, sender)
 	if msg == L["engage_trigger1"] and sender == eydis then
-		if db.shield or db.vortex then
+		if self.db.profile.shield or self.db.profile.vortex then
 			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(540)
 		end
 	end

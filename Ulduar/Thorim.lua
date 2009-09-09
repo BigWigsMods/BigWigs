@@ -31,7 +31,6 @@ mod.proximitySilent = true
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local started = nil
 local chargeCount = 1
 local fmt = string.format
@@ -100,7 +99,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterMessage("BigWigs_RecvSync")
-	db = self.db.profile
 	started = nil
 end
 
@@ -170,13 +168,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["phase2_trigger"] then
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase2_message"], "Attention")
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Bar(CL["berserk"], 375, 20484)
 		end
-		if db.hardmode then
+		if self.db.profile.hardmode then
 			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
 			hardModeMessageID = self:DelayedMessage(173, L["hardmode_warning"], "Attention")
 		end
@@ -184,7 +182,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:CancelScheduledEvent(hardModeMessageID)
 		self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 		self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase3_message"]:format(mod.bossName[1]), "Attention")
 		end
 		self:SendMessage("BigWigs_ShowProximity", self)
@@ -198,7 +196,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		started = true
 		chargeCount = 1
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase1_message"], "Attention")
 		end
 		self:SendMessage("BigWigs_HideProximity", self)

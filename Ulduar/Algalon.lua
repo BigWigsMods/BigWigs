@@ -15,7 +15,6 @@ mod.toggleOptions = {"phase", 64412, 62301, 64122, 64443, "berserk", "bosskill"}
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local p2 = nil
 local phase = nil
 local blackholes = 0
@@ -56,7 +55,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 ------------------------------
@@ -64,7 +62,7 @@ end
 ------------------------------
 
 function mod:UNIT_HEALTH(event, msg)
-	if not db.phase then return end
+	if not self.db.profile.phase then return end
 	if UnitName(msg) == self.bossName then
 		local hp = UnitHealth(msg)
 		if hp <= 20 and not p2 then
@@ -119,7 +117,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			local sn = GetSpellInfo(62301)
 			self:Bar(sn, 33, 64597)
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(360)
 		end
 	end

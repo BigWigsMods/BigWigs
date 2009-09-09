@@ -24,7 +24,6 @@ mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bos
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local fmt = string.format
 local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 
@@ -65,7 +64,6 @@ mod.locale = L
 
 function mod:OnRegister()
 	shadron, tenebron, vesperon = mod.bossName[2], mod.bossName[3], mod.bossName[4]
-	db = self.db.profile
 end
 
 function mod:OnBossEnable()
@@ -89,7 +87,7 @@ function mod:DrakeCheck(_, spellId)
 	-- Shadron (58105) called in roughly 60s after engage
 	-- Vesperon (61251) called in roughly 105s after engage
 	-- Each drake takes around 12 seconds to land
-	if not db.drakes then return end
+	if not self.db.profile.drakes then return end
 	if spellId == 58105 and not shadronStarted then
 		self:Bar(shadron, 80, 58105)
 		self:DelayedMessage(75, fmt(L["drakes_incomingsoon"], shadron), "Attention")
@@ -110,11 +108,11 @@ function mod:Breath(_, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
-	if msg == L["tsunami_trigger"] and db.tsunami then
+	if msg == L["tsunami_trigger"] and self.db.profile.tsunami then
 		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
 		self:Bar(L["tsunami_cooldown"], 30, 57491)
 		self:DelayedMessage(25, L["tsunami_warning"], "Attention")
-	elseif db.twilight then
+	elseif self.db.profile.twilight then
 		if mob == tenebron and msg == L["twilight_trigger_tenebron"] then
 			self:Bar(L["twilight_message_tenebron"], 20, 23851)
 			self:Message(L["twilight_message_tenebron"], "Attention", 23851)
@@ -128,11 +126,11 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
-		if db.tsunami then
+		if self.db.profile.tsunami then
 			self:Bar(L["tsunami_cooldown"], 30, 57491)
 			self:DelayedMessage(25, L["tsunami_warning"], "Attention")
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(900)
 		end
 	end

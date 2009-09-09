@@ -15,7 +15,6 @@ mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk",
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local flashFreezed = mod:NewTargetList()
 local fmt = string.format
 local lastCold = nil
@@ -59,7 +58,6 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	db = self.db.profile
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
@@ -108,10 +106,10 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			local name = GetSpellInfo(61968)
 			self:Bar(name, 35, 61968)
 		end
-		if db.hardmode then
+		if self.db.profile.hardmode then
 			self:Bar(L["hardmode"], 180, 6673)
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(480)
 		end
 	elseif msg == L["end_trigger"] then
@@ -123,7 +121,7 @@ function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", cold)
 	if stack and stack ~= lastCold then
-		if db.cold and stack > 1 then
+		if self.db.profile.cold and stack > 1 then
 			self:LocalMessage(L["cold_message"]:format(stack), "Personal", icon)
 		end
 		lastCold = stack

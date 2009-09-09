@@ -24,7 +24,6 @@ mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local phase = nil
 local pName = UnitName("player")
 
@@ -91,7 +90,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:Throttle(2, "MimiLoot")
 	self:Throttle(10, "MimiBarrage")
-	db = self.db.profile
 end
 
 function mod:VerifyEnable(unit)
@@ -154,7 +152,7 @@ end
 local function start()
 	ishardmode = nil
 	phase = 1
-	if db.phase then
+	if mod.db.profile.phase then
 		mod:IfMessage(L["engage_warning"], "Attention")
 		mod:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
 	end
@@ -171,13 +169,13 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(600, true)
 		end
 		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(900, true)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
@@ -185,7 +183,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:CancelScheduledEvent("plasmaWarning")
 		self:SendMessage("BigWigs_StopBar", self, L["plasma_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["shock_next"])
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
 		end
@@ -196,13 +194,13 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	elseif msg:find(L["phase3_trigger"]) then
 		self:CancelScheduledEvent("fbombWarning")
 		phase = 3
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase3_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase4_warning"], "Attention")
 			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		end

@@ -14,7 +14,6 @@ mod.toggleOptions = {66118, 67574, "icon", "burrow", 68510, "berserk", "bosskill
 -- Locals
 --
 
-local db
 local pName = UnitName("player")
 local phase2 = nil
 
@@ -51,7 +50,6 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
-	db = self.db.profile
 	self:AddCombatListener("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
@@ -94,26 +92,26 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
-		if db.burrow then
+		if self.db.profile.burrow then
 			self:IfMessage(L["engage_message"], "Attention", 65919)
 			self:Bar(L["burrow_cooldown"], 80, 65919)
 			self:Bar(L["nerubian_burrower"], 10, 66333)
 			self:ScheduleEvent("BWnextwave", nextwave, 10)
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(570)
 		end
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if db.burrow and msg:find(L["unburrow_trigger"]) then
+	if self.db.profile.burrow and msg:find(L["unburrow_trigger"]) then
 		self:Bar(L["burrow_cooldown"], 80, 65919)
 		self:DelayedMessage(70, L["burrow_soon"], "Attention")
 		self:Bar(L["nerubian_burrower"], 10, 66333)
 		self:ScheduleEvent("BWnextwave", nextwave, 10)
 	end
-	if db.burrow and msg:find(L["burrow_trigger"]) then
+	if self.db.profile.burrow and msg:find(L["burrow_trigger"]) then
 		self:Bar(L["burrow"], 65, 65919)
 	end
 end

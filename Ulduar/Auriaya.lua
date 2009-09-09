@@ -16,7 +16,6 @@ mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskil
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local started = nil
 local count = 9
 local fmt = string.format
@@ -48,7 +47,6 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	db = self.db.profile
 	started = nil
 
 	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
@@ -74,14 +72,14 @@ function mod:Sonic(_, spellId, _, _, spellName)
 end
 
 function mod:Defender(_, spellId)
-	if db.defender then
+	if self.db.profile.defender then
 		self:IfMessage(L["defender_message"]:format(count), "Attention", spellId)
 	end
 end
 
 function mod:DefenderKill(_, spellId)
 	count = count - 1
-	if db.defender then
+	if self.db.profile.defender then
 		self:Bar(L["defender_message"]:format(count), 34, spellId)
 	end
 end
@@ -113,7 +111,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 			self:Bar(L["fear_bar"], 32, 64386)
 			self:DelayedMessage(32, L["fear_warning"], "Attention")
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(600)
 		end
 	end

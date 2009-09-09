@@ -24,7 +24,6 @@ mod.optionHeaders = {
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local guardianCount = 1
 local crusherCount = 1
 local pName = UnitName("player")
@@ -129,7 +128,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 	guid = nil
 end
 
@@ -182,7 +180,7 @@ function mod:Tentacle(_, spellId, source, _, spellName)
 	-- Crusher Tentacle (33966) 50 sec
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
-	if source == L["Crusher Tentacle"] and db.tentacle then
+	if source == L["Crusher Tentacle"] and self.db.profile.tentacle then
 		self:IfMessage(L["tentacle_message"]:format(crusherCount), "Important", 64139)
 		crusherCount = crusherCount + 1
 		self:Bar(L["tentacle_message"]:format(crusherCount), 55, 64139)
@@ -232,7 +230,7 @@ function mod:Empower(_, spellId, _, _, spellName)
 end
 
 function mod:RemoveEmpower()
-	if db.empowericon then
+	if self.db.profile.empowericon then
 		self:IfMessage(L["empowericon_message"], "Positive", 64465)
 		self:SendMessage("BigWigs_RemoveRaidIcon")
 	end
@@ -247,16 +245,16 @@ end
 
 function mod:EmpowerIcon(...)
 	if not IsRaidLeader() and not IsRaidOfficer() then return end
-	if not db.empowericon then return end
+	if not self.db.profile.empowericon then return end
 	guid = tonumber(((select(9, ...))):sub(-12,-7), 16)
 	empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.1)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["portal_trigger"] and db.portal then
+	if msg == L["portal_trigger"] and self.db.profile.portal then
 		self:IfMessage(L["portal_message"], "Positive", 35717)
 		self:Bar(L["portal_bar"], 90, 35717)
-	elseif msg == L["weakened_trigger"] and db.weakened then
+	elseif msg == L["weakened_trigger"] and self.db.profile.weakened then
 		self:IfMessage(L["weakened_message"]:format(boss), "Positive", 50661) --50661, looks like a weakened :)
 	end
 end
@@ -265,19 +263,19 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
 		guardianCount = 1
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["engage_warning"], "Attention")
 		end
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(900, true)
 		end
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		crusherCount = 1
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase2_warning"], "Attention")
 		end
-		if db.portal then
+		if self.db.profile.portal then
 			self:Bar(L["portal_bar"], 78, 35717)
 		end
 	elseif msg:find(L["phase3_trigger"]) then
@@ -289,7 +287,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:SendMessage("BigWigs_StopBar", self, L["tentacle_message"]:format(crusherCount))
 		self:SendMessage("BigWigs_StopBar", self, L["portal_bar"])
 
-		if db.phase then
+		if self.db.profile.phase then
 			self:IfMessage(L["phase3_warning"], "Important", nil, "Alarm")
 		end
 		if self:GetOption(64465) then

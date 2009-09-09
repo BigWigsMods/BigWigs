@@ -23,7 +23,6 @@ mod.proximityCheck = "bandage"
 ------------------------------
 
 local pName = UnitName("player")
-local db = nil
 local phase = nil
 local started = nil
 local exposed1 = nil
@@ -71,7 +70,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterMessage("BigWigs_RecvSync")
-	db = self.db.profile
 	started = nil
 end
 
@@ -153,7 +151,7 @@ function mod:BigWigs_RecvSync(event, sync, rest, nick)
 		exposed1 = nil
 		exposed2 = nil
 		exposed3 = nil
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(600)
 		end
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")

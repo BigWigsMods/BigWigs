@@ -22,7 +22,6 @@ mod.proximityCheck = "bandage"
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local phase = nil
 local pName = UnitName("player")
 local fmt = string.format
@@ -95,7 +94,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	db = self.db.profile
 end
 
 function mod:VerifyEnable(unit)
@@ -181,7 +179,7 @@ end
 function mod:AttunedRemove()
 	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["wave_bar"])
-	if db.phase then
+	if self.db.profile.phase then
 		self:IfMessage(L["phase2_message"], "Important")
 	end
 end
@@ -217,7 +215,7 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["tree_trigger"] and db.tree then
+	if msg == L["tree_trigger"] and self.db.profile.tree then
 		self:IfMessage(L["tree_message"], "Urgent", 5420, "Alarm")
 	end
 end
@@ -225,26 +223,27 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		phase = 1
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(600)
 		end
-		if db.wave then
-			--35594, looks like a wave :)
+		if self.db.profile.wave then
 			self:Bar(L["wave_bar"], 11, 35594)
 		end
-	elseif msg == L["conservator_trigger"] and db.wave then
-		self:IfMessage(L["conservator_message"], "Positive", 35594)
-		self:Bar(L["wave_bar"], 60, 35594)
-	elseif msg == L["detonate_trigger"] and db.wave then
-		self:IfMessage(L["detonate_message"], "Positive", 35594)
-		self:Bar(L["wave_bar"], 60, 35594)
-	elseif msg == L["elementals_trigger"] and db.wave then
-		self:IfMessage(L["elementals_message"], "Positive", 35594)
-		self:Bar(L["wave_bar"], 60, 35594)
 	elseif msg == L["end_trigger"] then
 		-- Never enable again this session!
 		sheIsDead = true
 		self:BossDeath(nil, self.guid)
+	elseif self.db.profile.wave then
+		if msg == L["conservator_trigger"] then
+			self:IfMessage(L["conservator_message"], "Positive", 35594)
+			self:Bar(L["wave_bar"], 60, 35594)
+		elseif msg == L["detonate_trigger"] then
+			self:IfMessage(L["detonate_message"], "Positive", 35594)
+			self:Bar(L["wave_bar"], 60, 35594)
+		elseif msg == L["elementals_trigger"] then
+			self:IfMessage(L["elementals_message"], "Positive", 35594)
+			self:Bar(L["wave_bar"], 60, 35594)
+		end
 	end
 end
 

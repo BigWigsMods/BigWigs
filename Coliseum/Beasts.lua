@@ -34,7 +34,6 @@ mod.proximitySilent = true
 --
 
 local difficulty = nil
-local db = nil
 local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
@@ -116,7 +115,6 @@ function mod:OnBossEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	db = self.db.profile
 	difficulty = GetRaidDifficulty()
 	wipe(snobolledWarned)
 end
@@ -141,7 +139,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:SendMessage("BigWigs_HideProximity", self)
 		if difficulty > 2 then
 			self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
-		elseif db.berserk then
+		elseif self.db.profile.berserk then
 			self:Berserk(900)
 		end
 	elseif msg == L["jormungars_trigger"] then
@@ -155,7 +153,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		local m = L["boss_incoming"]:format(icehowl)
 		self:IfMessage(m, "Positive")
 		self:Bar(m, 15, "INV_Misc_MonsterHorn_07")
-		if difficulty > 2 and db.berserk then
+		if difficulty > 2 and self.db.profile.berserk then
 			self:Berserk(220, true, icehowl)
 		end
 	end
@@ -190,13 +188,13 @@ function mod:SlimeCast(_, spellId, _, _, spellName)
 end
 
 function mod:Molten(_, spellId, _, _, spellName)
-	if db.spew then
+	if self.db.profile.spew then
 		self:IfMessage(spellName, "Attention", spellId)
 	end
 end
 
 function mod:Acidic(_, spellId, _, _, spellName)
-	if db.spew then
+	if self.db.profile.spew then
 		self:IfMessage(spellName, "Attention", spellId)
 	end
 end
@@ -287,7 +285,7 @@ function mod:Butt(player, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if unit == icehowl and db.charge and message:find(L["charge_trigger"]) then
+	if unit == icehowl and self.db.profile.charge and message:find(L["charge_trigger"]) then
 		local spellName = GetSpellInfo(52311)
 		self:TargetMessage(spellName, player, "Personal", 52311, "Alarm")
 		self:Bar(spellName, 7.5, 52311)

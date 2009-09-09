@@ -17,7 +17,6 @@ mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 6327
 --      Are you local?      --
 ------------------------------
 
-local db = nil
 local vaporCount = 1
 local surgeCount = 1
 local pName = UnitName("player")
@@ -90,7 +89,6 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	db = self.db.profile
 	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
 	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
@@ -112,7 +110,7 @@ function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", vapor)
 	if stack and stack ~= lastVapor then
-		if db.vaporstack and stack > 5 then
+		if self.db.profile.vaporstack and stack > 5 then
 			self:LocalMessage(L["vaporstack_message"]:format(stack), "Personal", icon)
 		end
 		lastVapor = stack
@@ -124,7 +122,7 @@ local function scanTarget(spellId, spellName)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then
-		if target == pName and db.crashsay then
+		if target == pName and mod.db.profile.crashsay then
 			SendChatMessage(L["crash_say"], "SAY")
 		end
 		if mod:GetOption(spellId) then
@@ -162,13 +160,13 @@ function mod:SurgeGain(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["vapor_trigger"] and db.vapor then
+	if msg == L["vapor_trigger"] and self.db.profile.vapor then
 		self:IfMessage(L["vapor_message"]:format(vaporCount), "Positive", 63323)
 		vaporCount = vaporCount + 1
 		if vaporCount < 7 then
 			self:Bar(L["vapor_bar"]:format(vaporCount), 30, 63323)
 		end
-	elseif msg == L["animus_trigger"] and db.animus then
+	elseif msg == L["animus_trigger"] and self.db.profile.animus then
 		self:IfMessage(L["animus_message"], "Important", 63319)
 	end
 end
@@ -178,10 +176,10 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		lastVapor = nil
 		vaporCount = 1
 		surgeCount = 1
-		if db.berserk then
+		if self.db.profile.berserk then
 			self:Berserk(600)
 		end
-		if db.surge then
+		if self.db.profile.surge then
 			self:Bar(L["surge_bar"]:format(surgeCount), 60, 62662)
 		end
 	end
