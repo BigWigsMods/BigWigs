@@ -14,6 +14,7 @@ mod.toggleOptions = {66118, 67574, "icon", "burrow", 68510, "berserk", "bosskill
 
 local pName = UnitName("player")
 local phase2 = nil
+local burrowMessage = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -76,6 +77,10 @@ end
 function mod:Swarm(player, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
 	phase2 = true
+	self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
+	self:SendMessage("BigWigs_StopBar", self, L["burrow_cooldown"])
+	self:CancelScheduledEvent("BWnextwave")
+	self:CancelScheduledEvent(burrowMessage)
 end
 
 function mod:Pursue(player, spellId)
@@ -105,7 +110,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if self.db.profile.burrow and msg:find(L["unburrow_trigger"]) then
 		self:Bar(L["burrow_cooldown"], 80, 65919)
-		self:DelayedMessage(70, L["burrow_soon"], "Attention")
+		burrowMessage = self:DelayedMessage(70, L["burrow_soon"], "Attention")
 		self:Bar(L["nerubian_burrower"], 10, 66333)
 		self:ScheduleEvent("BWnextwave", nextwave, 10)
 	end
