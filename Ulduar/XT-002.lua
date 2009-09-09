@@ -124,7 +124,7 @@ function mod:LightRemoved(player)
 end
 
 function mod:UNIT_HEALTH(event, msg)
-	if phase == 1 and UnitName(msg) == mod.bossName and self:GetOption(63849) then
+	if phase == 1 and UnitName(msg) == mod.displayName and self:GetOption(63849) then
 		local health = UnitHealth(msg)
 		if not exposed1 and health > 86 and health <= 88 then
 			exposed1 = true

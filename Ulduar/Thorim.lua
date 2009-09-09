@@ -169,7 +169,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 		self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
 		if self.db.profile.phase then
-			self:IfMessage(L["phase3_message"]:format(mod.bossName[1]), "Attention")
+			self:IfMessage(L["phase3_message"]:format(mod.displayName), "Attention")
 		end
 		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then

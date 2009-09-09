@@ -149,7 +149,7 @@ end
 function mod:UNIT_HEALTH(event, msg)
 	if not self.db.profile.phase then return end
 
-	if UnitName(msg) == mod.bossName then
+	if UnitName(msg) == mod.displayName then
 		local health = UnitHealth(msg)
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
 			self:Message(L["phase3_soon_warning"], "Attention")

@@ -45,6 +45,7 @@ do
 		local id = tonumber((UnitGUID(unit)):sub(-12, -7), 16)
 		if not id then return end
 		if bossId[id] then
+			print("Adding " .. tostring(n) .. ".")
 			bossNames[n] = true
 			bossId[id] = nil
 		end
@@ -66,6 +67,7 @@ do
 		elseif t == "string" then
 			bossNames[BigWigs:Translate(mod.blockEmotes)] = true
 		end
+		AceLibrary("AceConsole-2.0"):PrintLiteral(mod.displayName, mod.enabletrigger, mod.blockEmotes)
 	end
 
 	local rwf = _G.RaidWarningFrame

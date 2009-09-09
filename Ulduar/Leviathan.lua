@@ -65,13 +65,13 @@ function mod:FlameFailed(_, _, _, _, spellName)
 end
 
 function mod:Shutdown(unit, spellId, _, _, spellName)
-	if unit ~= mod.bossName then return end
+	if unit ~= mod.displayName then return end
 	self:IfMessage(L["shutdown_message"], "Positive", spellId, "Long")
 	self:Bar(spellName, 20, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if unit == mod.bossName and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
+	if unit == mod.displayName and self.db.profile.pursue and message:find(L["pursue_trigger"]) then
 		self:TargetMessage(L["pursue"], player, "Personal", 62374, "Alarm")
 		self:Bar(L["pursue_other"]:format(player), 30, 62374)
 	end
@@ -79,7 +79,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
-		self:IfMessage(L["engage_message"]:format(mod.bossName), "Attention")
+		self:IfMessage(L["engage_message"]:format(self.displayName), "Attention")
 	end
 end
 

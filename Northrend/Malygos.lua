@@ -85,7 +85,7 @@ end
 ------------------------------
 
 function mod:Spark(player, spellId)
-	if player == self.bossName and phase == 1 then
+	if player == self.displayName and phase == 1 then
 		self:IfMessage(L["sparkbuff_message"], "Important", spellId)
 	end
 end
@@ -157,7 +157,7 @@ end
 
 function mod:UNIT_HEALTH(event, msg)
 	if phase ~= 1 or not self.db.profile.phase then return end
-	if UnitName(msg) == self.bossName then
+	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 54 then
 			self:Message(L["phase2_warning"], "Attention")

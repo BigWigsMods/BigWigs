@@ -104,8 +104,8 @@ function mod:OverRemove(player)
 	self:SendMessage("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
 end
 
-function mod:Shield(_, spellId, _, _, _, _, _, dest)
-	local target = tonumber((dest):sub(-12,-7),16)
+function mod:Shield(_, spellId, _, _, _, _, _, _, dGuid)
+	local target = tonumber((dGuid):sub(-12,-7),16)
 	if target and target == 32927 then
 		self:IfMessage(L["shield_message"], "Attention", spellId)
 	end

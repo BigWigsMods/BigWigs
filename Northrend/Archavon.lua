@@ -88,7 +88,7 @@ function mod:Shards(_, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
-	if self.db.profile.charge and unit == self.bossName then
+	if self.db.profile.charge and unit == self.displayName then
 		-- 11578, looks like a charge :)
 		self:TargetMessage(L["charge"], player, "Attention", 11578)
 	end
