@@ -1,9 +1,9 @@
 ## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fForeign Language|r]
-
+## Title-frFR: Big Wigs [|cffeda55fPaquet linguistique|r]
 ## Notes: Non English Language Pack for BigWigs
-
+## Notes-frFR: Paquet linguistique pour BigWigs.
 ## LoadOnDemand: 1
 
 ## Dependencies: BigWigs

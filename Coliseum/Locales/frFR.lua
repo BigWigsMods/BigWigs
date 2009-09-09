@@ -30,7 +30,7 @@ if L then
 	-- Gormok
 	L.snobold = "Frigbold"
 	L.snobold_desc = "Prévient quand un joueur a un frigbold sur sa tête."
-	L.snobold_message = "Frigbold sur %s !"
+	L.snobold_message = "Frigbold"
 	L.impale_message = "%2$dx Empaler sur %1$s"
 	L.firebomb_message = "Bombe incendiaire en dessous de VOUS !"
 
@@ -71,16 +71,18 @@ if L then
 	L.incinerate_message = "Incinérer la chair"
 	L.incinerate_other = "Incinérer : %s"
 	L.incinerate_bar = "~Prochain Incinérer"
+	L.incinerate_safe = "%s est sauf !"
 
 	L.legionflame_message = "Flamme de la Légion"
 	L.legionflame_other = "Flamme : %s"
-	L.legionflame_bar = "~Prochaine Flamme"
+	L.legionflame_bar = "~Prochaine Flamme de la Légion"
 
 	L.icon = "Icône"
 	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Flamme de la Légion (nécessite d'être assistant ou mieux)."
 
-	L.netherportal_bar = "~Prochain Portail"
-	L.netherpower_bar = "~Prochaine Puissance"
+	L.infernal_bar = "Apparition d'un volcan"
+	L.netherportal_bar = "Apparition d'un portail"
+	L.netherpower_bar = "~Prochaine Puissance du Néant"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "frFR")

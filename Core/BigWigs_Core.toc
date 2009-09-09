@@ -1,7 +1,9 @@
 ## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fCore|r]
+## Title-frFR: Big Wigs [|cffeda55fNoyau|r]
 ## Notes: Big Wigs Core
+## Notes-frFR: Noyau de Big Wigs.
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
 

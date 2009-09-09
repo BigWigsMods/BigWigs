@@ -30,7 +30,7 @@ L["Load"] = "Charger"
 L["Load All"] = "Tout charger"
 L["Load all %s modules."] = "Charge tous les modules |2 %s."
 
--- L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%d|r) existe déjà en tant que module de boss dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau (à la révision |cffffff00%d|r). Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
+L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 
 -- Loader / Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00Module actif|r"
@@ -43,3 +43,4 @@ L["Menu options."] = "Options du menu."
 L["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé."
 L["|cffeda55fClick|r to enable."] = "|cffeda55fCliquez|r pour l'activer."
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fCliquez|r pour réinitialiser tous les modules actifs. |cffeda55fAlt-clic gauche|r pour les désactiver. |cffeda55fCtrl-Alt-clic gauche|r pour désactiver complètement BigWigs."
+L["All running modules have been disabled."] = "Tous les modules actifs ont été désactivés."
