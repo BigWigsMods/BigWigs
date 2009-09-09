@@ -34,7 +34,7 @@ L["Load"] = "載入"
 L["Load All"] = "載入全部"
 L["Load all %s modules."] = "載入全部%s模組。"
 
--- L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%d|r）在 Big Wigs 中已經存在首領模組，但存在（版本 |cffffff00%d|r）模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議您刪除所有 Big Wigs 檔案夾並重新安裝。"
+L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已經存在模組，但存在模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議刪除所有 Big Wigs 檔案夾並重新安裝。"
 
 -- Loader / Options.lua
 L["|cff00ff00Module running|r"] = "|cff00ff00模組運作中|r"
