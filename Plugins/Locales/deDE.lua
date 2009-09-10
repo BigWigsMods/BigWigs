@@ -47,6 +47,11 @@ L["Shows or hides the bar icons."] = "Zeigt oder versteckt die Symbole auf den L
 L["Font"] = "Schriftart"
 L["Set the font for the timer bars."] = "Legt die Schriftart des Textes auf den Leisten fest."
 
+L["Local"] = "Lokal"
+L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Ungültige Zeit (|cffff0000%q|r) oder fehlender Leistentext in eigener Leiste, gestartet von |cffd9d919%s|r. <Zeit> kann entweder eine Zahl in Sekunden, eine M:S Kombination oder Mm sein. Beispiele: 5, 1:20 or 2m."
+
+
 -- Colors.lua
 
 L["Colors"] = "Farben"

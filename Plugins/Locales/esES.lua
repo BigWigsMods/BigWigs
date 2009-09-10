@@ -4,7 +4,8 @@ if not L then return end
 
 -- Bars2.lua
 
--- no esES yet
+L["%s: Timer [%s] finished."] = "%s: Temporizador [%s] finalizado"
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo inv\195\161lido (|cffff0000%q|r) o texto de barra ausente en una barra personal iniciada por |cffd9d919%s|r. <tiempo> puede ser un n\195\186mero en segundos, una pareja M:S, o Mm. Por ejemplo 5, 1:20 or 2m."
 
 
 -- Colors.lua

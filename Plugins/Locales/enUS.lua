@@ -45,6 +45,10 @@ L["Shows or hides the bar icons."] = true
 L["Font"] = true
 L["Set the font for the timer bars."] = true
 
+L["Local"] = true
+L["%s: Timer [%s] finished."] = true
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
+
 -- Colors.lua
 
 L["Colors"] = true

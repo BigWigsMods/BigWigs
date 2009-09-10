@@ -47,6 +47,11 @@ L["Shows or hides the bar icons."] = "显示或隐藏计时条图标。"
 L["Font"] = "字体"
 L["Set the font for the timer bars."] = "设置计时条字体。"
 
+L["Local"] = "本地"
+L["%s: Timer [%s] finished."] = "%s：计时条[%s]到时间。"
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条（|cffff0000%q|r）或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm。例如 5, 1:20 或 2m。"
+
+
 -- Colors.lua
 
 L["Colors"] = "颜色"

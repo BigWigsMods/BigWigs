@@ -46,6 +46,11 @@ L["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니
 L["Font"] = "글꼴"
 L["Set the font for the timer bars."] = "타이머 바의 글꼴을 설정합니다."
 
+L["Local"] = "로컬"
+L["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다."
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
+
+
 -- Colors.lua
 
 L["Colors"] = "색상"

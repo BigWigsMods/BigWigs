@@ -1,11 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Extras", "enUS", true)
 
--- Custombars.lua
-
-L["Local"] = true
-L["%s: Timer [%s] finished."] = true
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
-
 -- Version.lua
 L["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss."
 L["out_of_date"] = "Players that might be running an old version: %s."

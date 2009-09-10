@@ -20,6 +20,12 @@ local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
 
+--- custom bar locals
+local times = nil
+local messages = nil
+local timers = nil
+
+
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -224,6 +230,12 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
+	times = times or {}
+	messages = messages or {}
+	timers = timers or {}
+
+	colors = BigWigs:GetPlugin("Colors")
+	
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StopBar")
@@ -234,7 +246,10 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
-	colors = BigWigs:GetPlugin("Colors")
+	
+	--  custom bars
+	self:RegisterMessage("BigWigs_RecvSync")
+	self:SendMessage("BigWigs_ThrottleSync", "BWCustomBar", 0)
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -558,4 +573,95 @@ function plugin:EmphasizeBar(bar)
 	bar:SetScale(db.emphasizeScale)
 	bar:Set("bigwigs:emphasized", true)
 end
+
+--------------------------------------------------------------------------------
+-- Custom Bars
+--
+
+local function parseTime(input)
+	if type(input) == "nil" then return end
+	if tonumber(input) then return tonumber(input) end
+	if type(input) == "string" then
+		input = input:trim()
+		if input:find(":") then
+			local m, s = select(3, input:find("^(%d+):(%d+)$"))
+			if not tonumber(m) or not tonumber(s) then return end
+			return (tonumber(m) * 60) + tonumber(s)
+		elseif input:find("^%d+m$") then
+			return tonumber(select(3, input:find("^(%d+)m$"))) * 60
+		end
+	end
+end
+
+local function SendCustomMessage( msg )
+	if messages[msg] then
+		plugin:SendMessage(unpack(messages[msg]))
+		wipe(messages[msg])
+	end
+end
+
+local function StartCustomBar(bar, nick, localOnly)
+	local time, barText = select(3, bar:find("(%S+) (.*)"))
+	local seconds = parseTime(time)
+	if type(seconds) ~= "number" or type(barText) ~= "string" then
+		BigWigs:Print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick or UnitName("player")))
+		return
+	end
+
+	if not nick then nick = L["Local"] end
+	if seconds == 0 then
+		if timers["bwcb"..nick..barText] then
+			plugin:CancelTimer( timers["bwcb"..nick..barText], true ) -- silent cancel
+			timers["bwcb"..nick..barText] = nil
+			wipe(messages["bwcb"..nick..barText])
+		end
+		plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
+	else
+		messages["bwcb"..nick..barText] = { "BigWigs_Message", string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly }
+		timers["bwcb"..nick..barText] = plugin:ScheduleTimer(SendCustomMessage, seconds, "bwcb"..nick..barText )
+		plugin:SendMessage("BigWigs_StartBar", plugin, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+	end
+end
+
+function plugin:BigWigs_RecvSync(event, sync, rest, nick)
+	if sync ~= "BWCustomBar" or not rest or not nick then return end
+
+	if UnitInRaid("player") then
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local name, rank = GetRaidRosterInfo(i)
+			if name == nick then
+				if rank == 0 then
+					return
+				else
+					break
+				end
+			end
+		end
+	end
+
+	StartCustomBar(rest, nick, false)
+end
+
+
+-- For easy use in macros.
+local function BWCB(input)
+	if not plugin:IsEnabled() then return end
+	local t = GetTime()
+	if not times[input] or (times[input] and (times[input] + 2) < t) then
+		times[input] = t
+		plugin:SendMessage("BigWigs_SendSync", "BWCustomBar "..input)
+	end
+end
+
+local function BWLCB(input)
+	if not plugin:IsEnabled() then return end
+	StartCustomBar(input, nil, true)
+end
+
+-- Shorthand slashcommand
+_G["SlashCmdList"]["BWCB_SHORTHAND"] = BWCB
+_G["SLASH_BWCB_SHORTHAND1"] = "/bwcb"
+_G["SlashCmdList"]["BWLCB_SHORTHAND"] = BWLCB
+_G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
 

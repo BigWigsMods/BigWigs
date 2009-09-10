@@ -2,13 +2,6 @@ local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Extras", "zhTW")
 
 if not L then return end
 
-
--- Custombars.lua
-
-L["Local"] = "區域"
-L["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。"
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "無效記時條（|cffff0000%q|r）或 |cffd9d919%s|r 上的記時條文字錯誤，<time> 輸入一個數字單位默認為秒，可以為 M:S 或者 Mm。例如5, 1:20 或 2m。"
-
 -- Version.lua
 
 L["should_upgrade"] = "這似乎是一個舊版本的 Big Wigs。建議您在與首領戰鬥之前升級。"
