@@ -10,7 +10,6 @@ mod.toggleOptions = {28371, 54426, "berserk", "bosskill"}
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local enrageTime = 420
 
 ----------------------------
@@ -39,9 +38,18 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
 
-	self:RegisterMessage("BigWigs_RecvSync")
-	started = nil
+function mod:OnEngage()
+	enrageTime = GetRaidDifficulty() == 1 and 480 or 420
+	if self:GetOption(54426) then
+		self:Message(L["startwarn"], "Attention")
+		self:Bar(L["decimatebartext"], 105, 54426)
+		self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
+	end
+	if self.db.profile.berserk then
+		self:Berserk(enrageTime)
+	end
 end
 
 ------------------------------
@@ -60,22 +68,6 @@ function mod:Decimate(_, spellId, _, _, spellName)
 		self:IfMessage(spellName, "Attention", spellId, "Alert")
 		self:Bar(L["decimatebartext"], 105, spellId)
 		self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
-	end
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		enrageTime = GetRaidDifficulty() == 1 and 480 or 420
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self:GetOption(54426) then
-			self:Message(L["startwarn"], "Attention")
-			self:Bar(L["decimatebartext"], 105, 54426)
-			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
-		end
-		if self.db.profile.berserk then
-			self:Berserk(enrageTime)
-		end
 	end
 end
 

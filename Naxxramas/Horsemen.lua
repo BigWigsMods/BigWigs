@@ -12,7 +12,6 @@ mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
 ------------------------------
 
 local deaths = 0
-local started = nil
 local marks = 1
 
 ----------------------------
@@ -45,14 +44,18 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Rivendare, Mark of Zeliek
 	self:AddDeathListener("Deaths", 16063, 16064, 16065, 30549)
 
-	marks = 1
-	deaths = 0
-	started = nil
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
 
-	self:RegisterMessage("BigWigs_RecvSync")
+function mod:OnEngage()
+	marks = 1
+	deaths = 0
+	if self.db.profile.mark then
+		self:Message(L["startwarn"], "Attention")
+		self:Bar(L["markbar"]:format(marks), 17, 28835)
+		self:DelayedMessage(12, L["markwarn2"]:format(marks), "Urgent")
+	end
 end
 
 ------------------------------
@@ -93,20 +96,6 @@ function mod:Mark()
 			marks = marks + 1
 			self:Bar(L["markbar"]:format(marks), 12, 28835)
 			self:DelayedMessage(7, L["markwarn2"]:format(marks), "Urgent")
-		end
-	end
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		marks = 1
-		deaths = 0
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self.db.profile.mark then
-			self:Message(L["startwarn"], "Attention")
-			self:Bar(L["markbar"]:format(marks), 17, 28835)
-			self:DelayedMessage(12, L["markwarn2"]:format(marks), "Urgent")
 		end
 	end
 end

@@ -10,7 +10,6 @@ mod.toggleOptions = {28169, "icon", 28240, "berserk", "bosskill"}
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local pName = UnitName("player")
 
 ----------------------------
@@ -37,11 +36,14 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Cloud", 28240)
 	self:AddDeathListener("Win", 15931)
 
-	started = nil
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
 
-	self:RegisterMessage("BigWigs_RecvSync")
+function mod:OnEngage()
+	if self.db.profile.berserk then
+		self:Berserk(540)
+	end
 end
 
 ------------------------------
@@ -58,15 +60,5 @@ end
 function mod:Cloud(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Attention", spellId)
 	self:Bar(spellName, 15, spellId)
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self.db.profile.berserk then
-			self:Berserk(540)
-		end
-	end
 end
 

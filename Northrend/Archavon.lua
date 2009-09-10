@@ -12,7 +12,6 @@ mod.toggleOptions = {58663, "charge", 58678, 58965, -1, "icon", "berserk", "boss
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local pName = UnitName("player")
 
 ------------------------------
@@ -50,9 +49,16 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterMessage("BigWigs_RecvSync")
+end
 
-	started = nil
+function mod:OnEngage()
+	if self:GetOption(58663) then
+		self:Bar(L["stomp_bar"], 47, 60880)
+		self:DelayedMessage(42, L["stomp_warning"], "Attention")
+	end
+	if self.db.profile.berserk then
+		self:Berserk(300)
+	end
 end
 
 ------------------------------
@@ -94,17 +100,4 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
 	end
 end
 
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self:GetOption(58663) then
-			self:Bar(L["stomp_bar"], 47, 60880)
-			self:DelayedMessage(42, L["stomp_warning"], "Attention")
-		end
-		if self.db.profile.berserk then
-			self:Berserk(300)
-		end
-	end
-end
 

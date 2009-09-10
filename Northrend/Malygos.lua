@@ -12,7 +12,6 @@ mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "
 ------------------------------
 
 local pName = UnitName("player")
-local started = nil
 local phase = nil
 
 ------------------------------
@@ -73,10 +72,25 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterMessage("BigWigs_RecvSync")
+end
 
-	started = nil
+function mod:OnBossDisable()
 	phase = 0
+end
+
+function mod:OnEngage()
+	phase = 1
+	if self.db.profile.vortex then
+		self:Bar(L["vortex_next"], 29, 56105)
+		self:DelayedMessage(24, L["vortex_warning"], "Attention")
+	end
+	if self.db.profile.sparks then
+		self:Bar(L["sparks"], 25, 56152)
+		self:DelayedMessage(20, L["sparks_warning"], "Attention")
+	end
+	if self.db.profile.berserk then
+		self:Berserk(600)
+	end
 end
 
 ------------------------------
@@ -162,25 +176,6 @@ function mod:UNIT_HEALTH(event, msg)
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 54 then
 			self:Message(L["phase2_warning"], "Attention")
-		end
-	end
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		phase = 1
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self.db.profile.vortex then
-			self:Bar(L["vortex_next"], 29, 56105)
-			self:DelayedMessage(24, L["vortex_warning"], "Attention")
-		end
-		if self.db.profile.sparks then
-			self:Bar(L["sparks"], 25, 56152)
-			self:DelayedMessage(20, L["sparks_warning"], "Attention")
-		end
-		if self.db.profile.berserk then
-			self:Berserk(600)
 		end
 	end
 end

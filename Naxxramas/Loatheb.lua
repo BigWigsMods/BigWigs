@@ -10,7 +10,6 @@ mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local doomTime = 30
 local sporeCount = 1
 local doomCount = 1
@@ -53,15 +52,30 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spore", 29234)
 	self:AddDeathListener("Win", 16011)
 
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
+
+local function swapTime() doomTime = 15 end
+function mod:OnEngage()
 	doomTime = 30
 	sporeCount = 1
 	doomCount = 1
-	started = nil
+	sporeTime = GetRaidDifficulty() == 1 and 36 or 16
+	if self:GetOption(29204) then
+		self:Bar(L["doomtimerbar"], 300, 29204)
+		self:DelayedMessage(240, L["doomtimerwarn"]:format(60), "Attention")
+		self:DelayedMessage(270, L["doomtimerwarn"]:format(30), "Attention")
+		self:DelayedMessage(290, L["doomtimerwarn"]:format(10), "Urgent")
+		self:DelayedMessage(295, L["doomtimerwarn"]:format(5), "Important")
+		self:DelayedMessage(300, L["doomtimerwarnnow"], "Important")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+		self:ScheduleEvent("BWLoathebDoomTimer", swapTime, 300)
 
-	self:RegisterMessage("BigWigs_RecvSync")
+		self:Message(L["startwarn"], "Attention")
+		self:Bar(L["doombar"]:format(doomCount), 120, 29204)
+		self:DelayedMessage(115, L["doomwarn5sec"]:format(doomCount), "Urgent")
+	end
 end
 
 ------------------------------
@@ -92,34 +106,5 @@ function mod:Spore()
 	self:IfMessage(L["sporewarn"]:format(sporeCount), "Important", 38755)
 	sporeCount = sporeCount + 1
 	self:Bar(L["sporebar"]:format(sporeCount), sporeTime, 38755)
-end
-
-local function swapTime()
-	doomTime = 15
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		doomTime = 30
-		sporeCount = 1
-		doomCount = 1
-		sporeTime = GetRaidDifficulty() == 1 and 36 or 16
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self:GetOption(29204) then
-			self:Bar(L["doomtimerbar"], 300, 29204)
-			self:DelayedMessage(240, L["doomtimerwarn"]:format(60), "Attention")
-			self:DelayedMessage(270, L["doomtimerwarn"]:format(30), "Attention")
-			self:DelayedMessage(290, L["doomtimerwarn"]:format(10), "Urgent")
-			self:DelayedMessage(295, L["doomtimerwarn"]:format(5), "Important")
-			self:DelayedMessage(300, L["doomtimerwarnnow"], "Important")
-
-			self:ScheduleEvent("BWLoathebDoomTimer", swapTime, 300)
-
-			self:Message(L["startwarn"], "Attention")
-			self:Bar(L["doombar"]:format(doomCount), 120, 29204)
-			self:DelayedMessage(115, L["doomwarn5sec"]:format(doomCount), "Urgent")
-		end
-	end
 end
 

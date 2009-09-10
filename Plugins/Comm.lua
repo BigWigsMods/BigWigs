@@ -15,7 +15,6 @@ local playerName = UnitName("player")
 local coreSyncs = {
 	BossEngaged = 5,
 	Death = 5,
-	-- MultiDeath = 5,
 }
 
 ------------------------------
@@ -32,11 +31,20 @@ function plugin:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterMessage("BigWigs_SendSync")
 	self:RegisterMessage("BigWigs_ThrottleSync")
+	self:RegisterMessage("BigWigs_RecvSync")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function plugin:BigWigs_RecvSync(event, sync, rest, nick)
+	if sync ~= "BossEngaged" then return end
+	local m = BigWigs:GetBossModule(rest, true)
+	if not m then error("Got a BossEngaged sync for " .. tostring(rest) .. ", but there's no such module.") end
+	m:UnregisterEvent("PLAYER_REGEN_ENABLED")
+	m:OnEngageWrapper(nick)
+end
 
 function plugin:CHAT_MSG_ADDON(event, prefix, message, type, sender)
 	if prefix ~= "BigWigs" then return end

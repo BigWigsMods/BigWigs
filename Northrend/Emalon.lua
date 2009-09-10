@@ -13,8 +13,6 @@ mod.proximitySilent = true
 --      Are you local?      --
 ------------------------------
 
-local started = nil
-local guid = nil
 local overchargerepeater = nil -- overcharge repeating timer
 
 ------------------------------
@@ -47,10 +45,16 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterMessage("BigWigs_RecvSync")
+end
 
-	started = nil
-	guid = nil
+function mod:OnEngage()
+	self:SendMessage("BigWigs_ShowProximity", self)
+	if self:GetOption(64218) then
+		self:Bar(L["overcharge_next"], 45, 64218)
+	end
+	if self.db.profile.berserk then
+		self:Berserk(360)
+	end
 end
 
 ------------------------------
@@ -69,32 +73,21 @@ function mod:Overcharge(_, spellId, _, _, spellName)
 	self:Bar(L["overcharge_next"], 45, spellId)
 end
 
-local function scanTarget()
-	local unitId = mod:GetUnitIdByGUID(guid)
-	if not unitId then return end
-	SetRaidTarget(unitId, 8)
-	mod:CancelTimer(overchargerepeater)
-	overchargerepeater = nil
-end
+do
+	local id = nil
+	local function scanTarget()
+		local unitId = mod:GetUnitIdByGUID(id)
+		if not unitId then return end
+		SetRaidTarget(unitId, 8)
+		mod:CancelTimer(overchargerepeater)
+		overchargerepeater = nil
+	end
 
-function mod:OverchargeIcon(_, _, _, _, _, _, _, _, dGuid)
-	if overchargerepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-	if not self.db.profile.icon then return end
-	guid = dGuid
-	overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:SendMessage("BigWigs_ShowProximity", self)
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self:GetOption(64218) then
-			self:Bar(L["overcharge_next"], 45, 64218)
-		end
-		if self.db.profile.berserk then
-			self:Berserk(360)
-		end
+	function mod:OverchargeIcon(_, _, _, _, _, _, _, _, dGuid)
+		if overchargerepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
+		if not self.db.profile.icon then return end
+		id = dGuid
+		overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
 	end
 end
 

@@ -1,12 +1,28 @@
-﻿--------------------------------
---      Module Prototype      --
---------------------------------
-local boss = {} -- our prototype
--- add this to BigWigs
+﻿------------------------------------------------------------------------------
+-- Prototype
+--
+
+local boss = {}
 BigWigs.bossCore:SetDefaultModulePrototype(boss)
+function boss:OnInitialize() BigWigs:RegisterBossModule(self) end
+function boss:OnEnable()
+	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
+	self:SendMessage("BigWigs_OnBossEnable", self)
+end
+function boss:OnDisable()
+	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
+	self:CancelAllScheduledEvents()
+	self:SendMessage("BigWigs_OnBossDisable", self)
+end
+function boss:GetOption(spellId)
+	return self.db.profile[(GetSpellInfo(spellId))]
+end
+
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
-
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
@@ -14,100 +30,73 @@ local GetSpellInfo = GetSpellInfo
 local fmt = string.format
 local pName = UnitName("player")
 
-function boss:OnInitialize()
-	-- Unconditionally register, this shouldn't happen from any other place
-	-- anyway.
-	BigWigs:RegisterBossModule(self)
-end
+-------------------------------------------------------------------------------
+-- Combat log related code
+--
 
-function boss:OnEnable()
-	if type(self.OnBossEnable) == "function" then
-		self:OnBossEnable()
-	end
-	self:SendMessage("BigWigs_OnBossEnable", self)
-end
+do
+	local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
+	local addCombatMissingArgument = "Missing required argument to %q:AddCombatListener."
+	local addCombatMissingFunction = "%s tried to register the combat event %q to the method %q, but it doesn't exist in the module."
+	local addDeathMissingArgument = "Missing required argument to %q:AddDeathListener."
+	local addDeathMissingFunction = "%s tried to register a death listener with the method %q, but it doesn't exist in the module."
 
-function boss:OnDisable()
-	if type(self.OnBossDisable) == "function" then
-		self:OnBossDisable()
-	end
-	self:CancelAllScheduledEvents()
-	self:SendMessage("BigWigs_OnBossDisable", self)
-end
-
-
-function boss:GetOption(spellId)
-	return self.db.profile[(GetSpellInfo(spellId))]
-end
-
-function boss:Win()
-	self:Sync("Death", self.moduleName)
-end
-
-local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
-function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
-	if event == "UNIT_DIED" then
-		local numericId = tonumber(dGUID:sub(-12, -7), 16)
-		local d = self.deathMap and self.deathMap[numericId]
-		if not d then return end
-		self[d](self, numericId, dGUID, player, dFlags, sGUID, source, sFlags)
-	else
-		local m = self.combatLogEventMap and self.combatLogEventMap[event]
-		if m and (m[spellId] or m["*"]) then
-			local f = self[m[spellId] or m["*"]]
-			if f then
-				if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
-					f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+		if event == "UNIT_DIED" then
+			local numericId = tonumber(dGUID:sub(-12, -7), 16)
+			local d = self.deathMap and self.deathMap[numericId]
+			if not d then return end
+			self[d](self, numericId, dGUID, player, dFlags, sGUID, source, sFlags)
+		else
+			local m = self.combatLogEventMap and self.combatLogEventMap[event]
+			if m and (m[spellId] or m["*"]) then
+				local f = self[m[spellId] or m["*"]]
+				if f then
+					if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
+						f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+					end
+				else
+					error(modMissingFunction:format(self.moduleName, event, spellId))
 				end
-			else
-				error(modMissingFunction:format(self.displayName, event, spellId))
 			end
 		end
 	end
-end
 
--- XXX Proposed API, subject to change.
-function boss:AddCombatListener(event, func, ...)
-	if not event or not func then
-		error(("Missing an argument to %q:AddCombatListener."):format(self.displayName))
-	end
-	if not self[func] then
-		error(("%s tried to register the combat event %q to the method %q, but it doesn't exist in the module."):format(self.displayName, event, func))
-	end
-	if not self.combatLogEventMap then self.combatLogEventMap = {} end
-	if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
-	local c = select("#", ...)
-	if c > 0 then
-		for i = 1, c do
-			self.combatLogEventMap[event][(select(i, ...))] = func
+	function boss:AddCombatListener(event, func, ...)
+		if not event or not func then error(addCombatMissingArgument:format(self.moduleName)) end
+		if not self[func] then error(addCombatMissingFunction:format(self.moduleName, event, func)) end
+		if not self.combatLogEventMap then self.combatLogEventMap = {} end
+		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
+		local c = select("#", ...)
+		if c > 0 then
+			for i = 1, c do
+				self.combatLogEventMap[event][(select(i, ...))] = func
+			end
+		else
+			self.combatLogEventMap[event]["*"] = func
 		end
-	else
-		self.combatLogEventMap[event]["*"] = func
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
-	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	function boss:AddDeathListener(func, ...)
+		if not func then error(addDeathMissingArgument:format(self.moduleName)) end
+		if not self[func] then error(addDeathMissingFunction:format(self.moduleName, func)) end
+		if not self.deathMap then self.deathMap = {} end
+		for i = 1, select("#", ...) do
+			self.deathMap[(select(i, ...))] = func
+		end
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 end
 
--- XXX Proposed API, subject to change.
-function boss:AddDeathListener(func, ...)
-	if not func then
-		error(("Missing required argument to %q:AddDeathListener."):format(self.displayName))
-	end
-	if not self[func] then
-		error(("%s tried to register a death listener with the method %q, but it doesn't exist in the module."):format(self.displayName, func))
-	end
-	if not self.deathMap then self.deathMap = {} end
-	for i = 1, select("#", ...) do
-		self.deathMap[(select(i, ...))] = func
-	end
-	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-end
+-------------------------------------------------------------------------------
+-- Engage / wipe checking + unit scanning
+--
 
-local findTargetByGUID
 do
 	local t = {"target", "focus", "mouseover"}
 	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
 	for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
-	function findTargetByGUID(id)
+	local function findTargetByGUID(id)
 		local idType = type(id)
 		for i, unit in next, t do
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
@@ -117,51 +106,127 @@ do
 			end
 		end
 	end
-end
 
-function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
-local function scan(self)
-	if type(self.enabletrigger) == "number" then
-		local unit = findTargetByGUID(self.enabletrigger)
-		if unit and UnitAffectingCombat(unit) then return true end
-	elseif type(self.enabletrigger) == "table" then
-		for i, id in next, self.enabletrigger do
-			local unit = findTargetByGUID(id)
+	function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
+	local function scan(self)
+		if type(self.enabletrigger) == "number" then
+			local unit = findTargetByGUID(self.enabletrigger)
 			if unit and UnitAffectingCombat(unit) then return true end
+		elseif type(self.enabletrigger) == "table" then
+			for i, id in next, self.enabletrigger do
+				local unit = findTargetByGUID(id)
+				if unit and UnitAffectingCombat(unit) then return true end
+			end
 		end
 	end
-end
 
-function boss:GetEngageSync() return "BossEngaged" end
-function boss:ValidateEngageSync(sync, rest)
-	if type(sync) ~= "string" or type(rest) ~= "string" then return end
-	if sync ~= self:GetEngageSync() then return end
-	return rest == self.moduleName
-end
-
-function boss:CheckForEngage()
-	local go = scan(self)
-	if go then
-		self:Sync(self:GetEngageSync(), self.moduleName)
-	elseif UnitAffectingCombat("player") then
-		self:ScheduleTimer(self.CheckForEngage, .5, self)
-	end
-end
-
-function boss:CheckForWipe()
-	if not UnitIsFeignDeath("player") then
+	function boss:CheckForEngage()
 		local go = scan(self)
-		if not go then
-			self:SendMessage("BigWigs_RemoveRaidIcon")
-			self:SendMessage("BigWigs_RebootModule", self)
-			return
+		if go then
+			self:Sync("BossEngaged", self.moduleName)
+		elseif UnitAffectingCombat("player") then
+			self:ScheduleTimer(self.CheckForEngage, .5, self)
 		end
 	end
 
-	if not UnitAffectingCombat("player") then
-		self:ScheduleTimer(self.CheckForWipe, 2, self)
+	function boss:CheckForWipe()
+		if not UnitIsFeignDeath("player") then
+			local go = scan(self)
+			if not go then
+				if self.OnWipe then self:OnWipe() end
+				self:SendMessage("BigWigs_RemoveRaidIcon")
+				self:SendMessage("BigWigs_RebootModule", self)
+				return
+			end
+		end
+
+		if not UnitAffectingCombat("player") then
+			self:ScheduleTimer(self.CheckForWipe, 2, self)
+		end
+	end
+	
+	-- XXX wrapper for debugging purposes.
+	function boss:OnEngageWrapper(nick)
+		print("Engaging " .. self.moduleName .. " based on engage sync from " .. tostring(nick) .. ".")
+		self:Engage(nick)
+	end
+
+	function boss:Win()
+		self:Sync("Death", self.moduleName)
 	end
 end
+
+-------------------------------------------------------------------------------
+-- Ace2 ScheduleEvent Layer
+--
+
+local scheduledTimers = {}
+local function clearTimer(id)
+	if not id or not scheduledTimers[id] then return end
+	if scheduledTimers[id].args then
+		wipe(scheduledTimers[id].args)
+	end
+	wipe(scheduledTimers[id])
+end
+
+local args = {}
+local function processScheduledTimer(id)
+	local t = scheduledTimers[id]
+	-- copy and clear incase we reschedule the same id from within the func
+	local f = t.func
+	local id = t.atid
+	local m = t.module
+	wipe(args)
+	if t.args then
+		for i, v in next, t.args do tinsert(args, v) end
+	end
+	if type(f) == "string" then
+		if not m[f] then
+			error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(m:GetName(), f))
+		end
+		m[f](m, unpack(args))
+	else
+		f(unpack(args))
+	end
+	clearTimer(id)
+end
+
+function boss:CancelScheduledEvent(id)
+	if not scheduledTimers[id] then return end
+	self:CancelTimer(scheduledTimers[id].atid, true)
+	clearTimer(id)
+end
+
+function boss:CancelAllScheduledEvents()
+	for id, args in pairs(scheduledTimers) do
+		if args.module == self then
+			self:CancelScheduledEvent(id)
+		end
+	end
+end
+
+function boss:ScheduleEvent(id, func, delay, ...)
+	if scheduledTimers[id] then
+		self:CancelScheduledEvent(id)
+	else
+		scheduledTimers[id] = {}
+	end
+	scheduledTimers[id].func = func
+	scheduledTimers[id].module = self
+	if scheduledTimers[id].args then
+		for i = 1, select("#", ...) do
+			tinsert(scheduledTimers[id].args, (select(i, ...)))
+		end
+	elseif select("#", ...) > 0 then
+		scheduledTimers[id].args = { ... }
+	end
+	scheduledTimers[id].atid = self:ScheduleTimer(processScheduledTimer, delay, id)
+	return id
+end
+
+-------------------------------------------------------------------------------
+-- Boss module APIs for messages, bars, icons, etc.
+--
 
 do
 	local keys = setmetatable({}, {__index =
@@ -247,76 +312,6 @@ function boss:Message(...)
 	self:SendMessage("BigWigs_Message", ...)
 end
 
--------------------------------------------------------------------------------
--- Ace2 ScheduleEvent Layer
---
-
-local scheduledTimers = {}
-local function clearTimer(id)
-	if not id or not scheduledTimers[id] then return end
-	if scheduledTimers[id].args then
-		wipe(scheduledTimers[id].args)
-	end
-	wipe(scheduledTimers[id])
-end
-
-local args = {}
-local function processScheduledTimer(id)
-	local t = scheduledTimers[id]
-	-- copy and clear incase we reschedule the same id from within the func
-	local f = t.func
-	local id = t.atid
-	local m = t.module
-	wipe(args)
-	if t.args then
-		for i, v in next, t.args do tinsert(args, v) end
-	end
-	if type(f) == "string" then
-		if not m[f] then
-			error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(m:GetName(), f))
-		end
-		m[f](m, unpack(args))
-	else
-		f(unpack(args))
-	end
-	clearTimer(id)
-end
-
-function boss:CancelScheduledEvent(id)
-	if not scheduledTimers[id] then return end
-	self:CancelTimer(scheduledTimers[id].atid, true)
-	clearTimer(id)
-end
-
-function boss:CancelAllScheduledEvents()
-	for id, args in pairs(scheduledTimers) do
-		if args.module == self then
-			self:CancelScheduledEvent(id)
-		end
-	end
-end
-
-function boss:ScheduleEvent(id, func, delay, ...)
-	if scheduledTimers[id] then
-		self:CancelScheduledEvent(id)
-	else
-		scheduledTimers[id] = {}
-	end
-	scheduledTimers[id].func = func
-	scheduledTimers[id].module = self
-	if scheduledTimers[id].args then
-		for i = 1, select("#", ...) do
-			tinsert(scheduledTimers[id].args, (select(i, ...)))
-		end
-	elseif select("#", ...) > 0 then
-		scheduledTimers[id].args = { ... }
-	end
-	scheduledTimers[id].atid = self:ScheduleTimer(processScheduledTimer, delay, id)
-	return id
-end
-
--------------------------------------------------------------------------------
-
 function boss:DelayedMessage(delay, text, ...) 
 	return self:ScheduleEvent(text, "SendMessage", delay, "BigWigs_Message", text, ...)
 end
@@ -335,13 +330,6 @@ do
 
 	function boss:Bar(text, length, icon, ...)
 		self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], ...)
-	end
-
-	-- XXX Proposed API, subject to change.
-	function boss:IfBar(key, length, icon, color, locale, ...)
-		if not self.db.profile[key] then return end
-		local text = locale[key .. "_bar"]:format(...)
-		self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], color)
 	end
 end
 
@@ -375,12 +363,6 @@ function boss:SecondaryIcon(player, key)
 	end
 end
 
--- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function boss:Icon(player, key)
-	if key and not self.db.profile[key] then return end
-	self:SendMessage("BigWigs_SetRaidIcon", player)
-end
-
 function boss:Throttle(seconds, ...)
 	self:SendMessage("BigWigs_ThrottleSync", seconds, ...)
 end
@@ -389,7 +371,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	local boss = customBoss or self.displayName
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(fmt(L["berserk_start"], boss, seconds / 60), "Attention")
+		self:IfMessage(fmt(L["berserk_start"], boss, seconds / 60), "Attention")
 	end
 
 	-- Half-way to enrage warning.

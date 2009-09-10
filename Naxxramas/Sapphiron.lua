@@ -11,7 +11,6 @@ mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosski
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local breath = 1
 local pName = UnitName("player")
 
@@ -60,11 +59,14 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
 
-	self:RegisterMessage("BigWigs_RecvSync")
-
-	started = nil
+function mod:OnEngage()
 	breath = 1
+
+	if self.db.profile.berserk then
+		self:Berserk(900)
+	end
 end
 
 ------------------------------
@@ -117,15 +119,5 @@ end
 
 function mod:RemoveIcon()
 	self:PrimaryIcon(false, "icon")
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self.db.profile.berserk then
-			self:Berserk(900)
-		end
-	end
 end
 

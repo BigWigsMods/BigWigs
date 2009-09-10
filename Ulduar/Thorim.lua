@@ -20,7 +20,6 @@ mod.proximitySilent = true
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local chargeCount = 1
 local pName = UnitName("player")
 
@@ -83,12 +82,18 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterMessage("BigWigs_RecvSync")
-	started = nil
 end
 
 function mod:VerifyEnable(unit)
 	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
+end
+
+function mod:OnEngage()
+	chargeCount = 1
+	if self.db.profile.phase then
+		self:IfMessage(L["phase1_message"], "Attention")
+	end
+	self:SendMessage("BigWigs_HideProximity", self)
 end
 
 ------------------------------
@@ -173,18 +178,6 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 		self:SendMessage("BigWigs_ShowProximity", self)
 	elseif msg == L["end_trigger"] then
 		self:Win()
-	end
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		chargeCount = 1
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self.db.profile.phase then
-			self:IfMessage(L["phase1_message"], "Attention")
-		end
-		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 

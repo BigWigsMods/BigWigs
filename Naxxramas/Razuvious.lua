@@ -7,12 +7,6 @@ if not mod then return end
 mod.enabletrigger = 16061
 mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
-
-local started = nil
-
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -39,10 +33,14 @@ function mod:OnBossEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
 	self:AddDeathListener("Win", 16061)
 
-	started = nil
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
+
+function mod:OnEngage()
+	if self:GetOption(29107) then
+		self:Shout()
+	end
 end
 
 ------------------------------
@@ -71,15 +69,5 @@ end
 
 function mod:Knife(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Important", spellId)
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self:GetOption(29107) then
-			self:Shout()
-		end
-	end
 end
 

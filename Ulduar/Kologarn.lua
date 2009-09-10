@@ -10,7 +10,6 @@ mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, 
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local grip = mod:NewTargetList()
 local pName = UnitName("player")
 
@@ -61,7 +60,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterMessage("BigWigs_RecvSync")
 	self:Throttle(2, "EyeBeamWarn")
 end
@@ -117,10 +115,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 end
 
 function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-	elseif sync == "EyeBeamWarn" and rest and self.db.profile.eyebeam then
+	if sync == "EyeBeamWarn" and rest and self.db.profile.eyebeam then
 		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
 		self:Bar(L["eyebeam_bar"], 20, 63976)

@@ -11,7 +11,6 @@ mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 ------------------------------
 
 local inCocoon = mod:NewTargetList()
-local started = nil
 local enrageannounced = nil
 
 ----------------------------
@@ -50,8 +49,10 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 
 	wipe(inCocoon)
-	started = nil
-	self:RegisterMessage("BigWigs_RecvSync")
+end
+
+function mod:OnEngage()
+	self:Spray()
 end
 
 ------------------------------
@@ -78,14 +79,6 @@ function mod:Spray()
 		self:Bar(L["cocoonbar"], 20, 745)
 	end
 	self:Bar(L["spiderbar"], 30, 17332)
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		self:Spray()
-	end
 end
 
 function mod:Frenzy(_, spellId)

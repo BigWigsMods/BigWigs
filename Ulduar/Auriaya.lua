@@ -11,7 +11,6 @@ mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskil
 --      Are you local?      --
 ------------------------------
 
-local started = nil
 local count = 9
 
 ----------------------------
@@ -41,8 +40,6 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	started = nil
-
 	self:AddCombatListener("SPELL_CAST_START", "Sonic", 64422, 64688)
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 64386)
 	self:AddCombatListener("SPELL_CAST_START", "Sentinel", 64389, 64678)
@@ -53,7 +50,20 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterMessage("BigWigs_RecvSync")
+end
+
+function mod:OnEngage()
+	count = 9
+	if self:GetOption(64455) then
+		self:Bar(L["defender_message"]:format(count), 60, 64455)
+	end
+	if self:GetOption(64386) then
+		self:Bar(L["fear_bar"], 32, 64386)
+		self:DelayedMessage(32, L["fear_warning"], "Attention")
+	end
+	if self.db.profile.berserk then
+		self:Berserk(600)
+	end
 end
 
 ------------------------------
@@ -91,23 +101,5 @@ end
 
 function mod:Sentinel(_, spellId, _, _, spellName)
 	self:IfMessage(spellName, "Important", spellId)
-end
-
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		count = 9
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		if self:GetOption(64455) then
-			self:Bar(L["defender_message"]:format(count), 60, 64455)
-		end
-		if self:GetOption(64386) then
-			self:Bar(L["fear_bar"], 32, 64386)
-			self:DelayedMessage(32, L["fear_warning"], "Attention")
-		end
-		if self.db.profile.berserk then
-			self:Berserk(600)
-		end
-	end
 end
 
