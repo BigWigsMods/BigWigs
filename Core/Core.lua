@@ -204,7 +204,7 @@ local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
 		-- XXX DEBUG
-		module:SendMessage("BigWigs_Message", string.format("Enabled: %q", module.displayName), "Core")
+		module:SendMessage("BigWigs_Message", string.format("%s enabled", module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end
@@ -256,14 +256,11 @@ function addon:OnInitialize()
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 
-	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
-	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
-
 	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
-	
+
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 
@@ -273,7 +270,7 @@ function addon:OnInitialize()
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", "Customize ...", "Big Wigs")
-	
+
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to 
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
 	self:SendMessage("BigWigs_CoreLoaded")
@@ -292,17 +289,14 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
-	
+
 	self:SendMessage("BigWigs_CoreEnabled")
-	-- enable modules that require enabling
-	-- the cores etc are set to disabled by default, and require manual enabling
-	self.pluginCore:Enable() 
-	self.bossCore:Enable() 	
+	self.pluginCore:Enable()
+	self.bossCore:Enable()
 end
 
 function addon:OnDisable()
 	self:SendMessage("BigWigs_CoreDisabled")
-	-- these require manual disabling
 	self.pluginCore:Disable()
 	self.bossCore:Disable()
 end
@@ -313,6 +307,7 @@ end
 
 -------------------------------------------------------------------------------
 -- API - if anything else is exposed on the BigWigs object, that's a mistake!
+-- Well .. except the module API, obviously.
 --
 
 function addon:Translate(boss)
@@ -441,7 +436,7 @@ do
 	function addon:NewPlugin(module, ...)
 		return new(self.pluginCore, module, nil, ...)
 	end
-	
+
 	function addon:IterateBossModules() return self.bossCore:IterateModules() end
 	function addon:GetBossModule(...) return self.bossCore:GetModule(...) end
 	
