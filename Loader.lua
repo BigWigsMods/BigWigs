@@ -116,6 +116,10 @@ elseif LOCALE == "frFR" then
 --elseif etc...
 end
 
+-- uncomment next line to debug Foreign Loading
+-- LOCALE = "Foreignese"
+loader.LOCALE = LOCALE
+
 local function loadZone(zone)
 	if not zone then return end
 	if loadInZone[zone] then

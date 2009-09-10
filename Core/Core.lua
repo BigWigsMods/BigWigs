@@ -6,10 +6,8 @@ addon:SetDefaultModuleState(false) -- our modules too
 
 
 -- locale stuff for BZ or BB conditionals
-local LOCALE = GetLocale()
-if LOCALE == "enGB" then
-	LOCALE = "enUS"
-end
+local LOCALE = BigWigsLoader.LOCALE
+
 local BB, BZ
 
 local GetSpellInfo = GetSpellInfo
