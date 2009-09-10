@@ -445,17 +445,13 @@ function ldb.OnClick(self, button)
 					bw3:Disable()
 				else
 					for name, module in bw3:IterateBossModules() do
-						if module:IsEnabled() then
-							module:Disable()
-						end
+						if module:IsEnabled() then module:Disable() end
 					end
 					bw3:Print(L["All running modules have been disabled."])
 				end
 			else
 				for name, module in bw3:IterateBossModules() do
-					if module:IsEnabled() then
-						bw3:SendMessage("BigWigs_RebootModule", module)
-					end
+					if module:IsEnabled() then module:Reboot() end
 				end
 				bw3:Print(L["All running modules have been reset."])
 			end

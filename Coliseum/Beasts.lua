@@ -278,6 +278,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 		local spellName = GetSpellInfo(52311)
 		self:TargetMessage(spellName, player, "Personal", 52311, "Alarm")
 		self:Bar(spellName, 7.5, 52311)
+		self:PrimaryIcon(player)
 	end
 end
 

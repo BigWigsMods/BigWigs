@@ -151,6 +151,52 @@ local acOptions = {
 }
 
 -------------------------------------------------------------------------------
+-- Testing
+--
+
+local bigWigsTest = nil
+do
+	local spells = nil
+	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
+	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
+	local messageFormat = "%s: %s %s"
+
+	local tests = {}
+
+	local function sendTestMessage(message)
+		if tests[message] then
+			addon:SendMessage(unpack(tests[message]))
+			wipe(tests[message])
+		end
+	end
+
+	function bigWigsTest()
+		if not spells then
+			spells = {}
+			for i = 2, MAX_SKILLLINE_TABS do
+				local _, _, offset, numSpells = GetSpellTabInfo(i)
+				if not offset then break end
+				for s = offset + 1, offset + numSpells do
+					local spell = GetSpellName(s, BOOKTYPE_SPELL)
+					tinsert(spells, spell)
+				end
+			end
+		end
+		local spell = spells[math.random(1, #spells)]
+		local name, rank, icon = GetSpellInfo(spell.."()")
+		local time = math.random(11, 45)
+		local color = colors[math.random(1, #colors)]
+		local sound = sounds[math.random(1, #sounds)]
+		self:SendMessage("BigWigs_StartBar", self, name, time, icon)
+		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
+		-- FIXME: ScheduleTimer only allows for one argument
+		tests[formatted] = { "BigWigs_Message", formatted, color, true, sound, nil, icon }
+		self:ScheduleTimer(sendTestMessage, time, formatted)
+	end
+end
+
+
+-------------------------------------------------------------------------------
 -- Events
 --
 
@@ -163,12 +209,6 @@ local function enableBossModule(module, noSync)
 			module:Sync("EnableModule", module:GetName())
 		end
 	end
-end
-
-local function rebootModule(message, module)
-	if not module then return end
-	module:Disable()
-	module:Enable()
 end
 
 -- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
@@ -200,9 +240,9 @@ local function targetSeen(message, unit, module)
 	end
 end
 
-------------------------------
---      Initialization      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Initialization
+--
 
 function addon:OnInitialize()
 	local defaults = {
@@ -246,14 +286,12 @@ function addon:OnEnable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
 	self:RegisterMessage("BigWigs_TargetSeen", targetSeen)
-	self:RegisterMessage("BigWigs_RebootModule", rebootModule)
 	self:RegisterMessage("BigWigs_RecvSync", recvSync)
+	self:RegisterMessage("BigWigs_Test", bigWigsTest)
 
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
-
-	self:RegisterMessage("BigWigs_Test")
 	
 	self:SendMessage("BigWigs_CoreEnabled")
 	-- enable modules that require enabling
@@ -273,9 +311,9 @@ function addon:Print(...)
 	print("|cff33ff99BigWigs|r:", ...)
 end
 
--------------------------------
---      API                  --
--------------------------------
+-------------------------------------------------------------------------------
+-- API - if anything else is exposed on the BigWigs object, that's a mistake!
+--
 
 function addon:Translate(boss)
 	if LOCALE ~= "enUS" and BB and BB[boss] then return BB[boss] end
@@ -373,9 +411,9 @@ do
 	end
 end
 
--------------------------------
---      Module Handling      --
--------------------------------
+-------------------------------------------------------------------------------
+-- Module handling
+--
 
 do
 	function addon:New(module)
@@ -632,65 +670,21 @@ do
 	
 end
 
---- Test 
-do
-	local spells = nil
-	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
-	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
-	local messageFormat = "%s: %s %s"
+-------------------------------------------------------------------------------
+-- Module cores
+--
 
-	local tests = {}
-
-	local function SendTestMessage( message )
-		if tests[message] then
-			addon:SendMessage( unpack(tests[message]) )
-			wipe(tests[message])
-		end
-	end
-
-	function addon:BigWigs_Test()
-		if not spells then
-			spells = {}
-			for i = 2, MAX_SKILLLINE_TABS do
-				local _, _, offset, numSpells = GetSpellTabInfo(i)
-				if not offset then break end
-				for s = offset + 1, offset + numSpells do
-					local spell = GetSpellName(s, BOOKTYPE_SPELL)
-					tinsert(spells, spell)
-				end
-			end
-		end
-		local spell = spells[math.random(1, #spells)]
-		local name, rank, icon = GetSpellInfo(spell.."()")
-		local time = math.random(11, 45)
-		local color = colors[math.random(1, #colors)]
-		local sound = sounds[math.random(1, #sounds)]
-		self:SendMessage("BigWigs_StartBar", self, name, time, icon)
-		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
-		-- FIXME: ScheduleTimer only allows for one argument
-		tests[formatted] = { "BigWigs_Message", formatted, color, true, sound, nil, icon }
-		self:ScheduleTimer(SendTestMessage, time, formatted )
-	end
-end
-
-
----- Module Cores ----
-
--- This is the Boss Module Core for BigWigs3
 local bossCore = BigWigs:NewModule("Bosses")
 BigWigs.bossCore = bossCore
 bossCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
 bossCore:SetDefaultModuleState(false)
-
 function bossCore:OnDisable()
 	for name, mod in self:IterateModules() do
 		mod:Disable()
 	end
 end
 
--- Plugin Core for BigWigs3
 local pluginCore = BigWigs:NewModule("Plugins")
-
 BigWigs.pluginCore = pluginCore
 pluginCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
 pluginCore:SetDefaultModuleState(false)

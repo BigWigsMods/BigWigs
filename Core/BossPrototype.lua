@@ -17,6 +17,10 @@ end
 function boss:GetOption(spellId)
 	return self.db.profile[(GetSpellInfo(spellId))]
 end
+function boss:Reboot()
+	self:Disable()
+	self:Enable()
+end
 
 -------------------------------------------------------------------------------
 -- Locals
@@ -106,8 +110,8 @@ do
 			end
 		end
 	end
-
 	function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
+
 	local function scan(self)
 		if type(self.enabletrigger) == "number" then
 			local unit = findTargetByGUID(self.enabletrigger)
@@ -124,23 +128,18 @@ do
 		local go = scan(self)
 		if go then
 			self:Sync("BossEngaged", self.moduleName)
-		elseif UnitAffectingCombat("player") then
+		else
 			self:ScheduleTimer(self.CheckForEngage, .5, self)
 		end
 	end
 
 	function boss:CheckForWipe()
-		if not UnitIsFeignDeath("player") then
-			local go = scan(self)
-			if not go then
-				if self.OnWipe then self:OnWipe() end
-				self:SendMessage("BigWigs_RemoveRaidIcon")
-				self:SendMessage("BigWigs_RebootModule", self)
-				return
-			end
-		end
-
-		if not UnitAffectingCombat("player") then
+		local go = scan(self)
+		if not go then
+			if self.OnWipe then self:OnWipe() end
+			self:SendMessage("BigWigs_RemoveRaidIcon")
+			self:Reboot()
+		else
 			self:ScheduleTimer(self.CheckForWipe, 2, self)
 		end
 	end
@@ -148,7 +147,7 @@ do
 	-- XXX wrapper for debugging purposes.
 	function boss:OnEngageWrapper(nick)
 		print("Engaging " .. self.moduleName .. " based on engage sync from " .. tostring(nick) .. ".")
-		self:OnEngage(nick)
+		if self.OnEngage then self:OnEngage(nick) end
 	end
 
 	function boss:Win()
