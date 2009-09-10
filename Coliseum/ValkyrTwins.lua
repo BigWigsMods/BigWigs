@@ -15,6 +15,7 @@ mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
 local started = nil
+local difficulty = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -53,6 +54,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	
+	difficulty = GetRaidDifficulty()
 	started = nil
 end
 
@@ -121,7 +124,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, sender)
 			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
 		end
 		if self.db.profile.berserk then
-			self:Berserk(540)
+			self:Berserk(difficulty > 2 and 360 or 540)
 		end
 	end
 end
