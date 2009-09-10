@@ -435,29 +435,28 @@ end
 loader.ldb = ldb
 
 function ldb.OnClick(self, button)
-	local bw3 = BigWigs or LibStub("AceAddon-3.0"):GetAddon("BigWigs", true)
-	if bw3 and bw3:IsEnabled() then
+	if BigWigs and BigWigs:IsEnabled() then
 		if button == "RightButton" then
 			BigWigsOptions:Open()
 		else
 			if IsAltKeyDown() then
 				if IsControlKeyDown() then
-					bw3:Disable()
+					BigWigs:Disable()
 				else
-					for name, module in bw3:IterateBossModules() do
+					for name, module in BigWigs:IterateBossModules() do
 						if module:IsEnabled() then module:Disable() end
 					end
-					bw3:Print(L["All running modules have been disabled."])
+					BigWigs:Print(L["All running modules have been disabled."])
 				end
 			else
-				for name, module in bw3:IterateBossModules() do
+				for name, module in BigWigs:IterateBossModules() do
 					if module:IsEnabled() then module:Reboot() end
 				end
-				bw3:Print(L["All running modules have been reset."])
+				BigWigs:Print(L["All running modules have been reset."])
 			end
 		end
-	elseif bw3 then
-		bw3:Enable()
+	elseif BigWigs then
+		BigWigs:Enable()
 		if button == "RightButton" then
 			BigWigsOptions:Open()
 		end
@@ -472,10 +471,9 @@ end
 function ldb.OnTooltipShow(tt)
 	tt:AddLine("Big Wigs")
 	local h = nil
-	local bw3 = BigWigs or LibStub("AceAddon-3.0"):GetAddon("BigWigs", true)
-	if bw3 and bw3:IsEnabled() then
+	if BigWigs and BigWigs:IsEnabled() then
 		local added = nil
-		for name, module in bw3:IterateBossModules() do
+		for name, module in BigWigs:IterateBossModules() do
 			if module:IsEnabled() then
 				if not added then
 					tt:AddLine(L["Active boss modules:"], 1, 1, 1)
