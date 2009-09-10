@@ -80,7 +80,8 @@ if L then
 	L.icon = "Schlachtzugs-Symbol"
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benötigt Assistent oder höher)."
 
-	L.netherportal_bar = "~Netherportal"
+	L.infernal_bar = "Vulkan"
+	L.netherportal_bar = "Netherportal"
 	L.netherpower_bar = "~Macht des Nether"
 end
 
