@@ -315,6 +315,9 @@ if L then
 	L.gravitybombicon = "重力炸弹标记"
 	L.gravitybombicon_desc = "为中了重力炸弹的玩家打上蓝色方框标记。（需要权限）"
 
+	L.lighticon = "灼热之光标记"
+	L.lighticon_desc = "为中了灼热之光的队员打上骷髅标记。（需要权限）"
+
 	L.lightbomb_other = "灼热之光：>%s<！"
 
 	L.tantrum_bar = "<发脾气 冷却>"
