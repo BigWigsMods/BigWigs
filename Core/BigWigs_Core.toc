@@ -2,8 +2,12 @@
 
 ## Title: Big Wigs [|cffeda55fCore|r]
 ## Title-frFR: Big Wigs [|cffeda55fNoyau|r]
+## Title-zhCN: Big Wigs [|cffeda55f核心|r]
+## Title-zhTW: Big Wigs [|cffeda55f核心|r]
 ## Notes: Big Wigs Core
-## Notes-frFR: Noyau de Big Wigs.
+## Notes-frFR: Noyau de Big Wigs
+## Notes-zhCN: Big Wigs 核心模块
+## Notes-zhTW: Big Wigs 核心模組
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
 

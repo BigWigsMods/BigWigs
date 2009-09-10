@@ -26,6 +26,11 @@ if L then
 	L.icon_desc = "為中了超載的怪物打上團隊標記。（需要權限）"
 end
 
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "zhTW")
+if L then
+	L.cinder_message = ">你< 燃焰餘燼！"
+end
+
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "zhTW")
 if L then
 	L.sparks = "力量火花"
