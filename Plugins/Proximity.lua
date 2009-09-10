@@ -61,7 +61,7 @@ local bandages = {
 }
 
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Extras")
+local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 
 --------------------------------------------------------------------------------
 -- Options
@@ -442,7 +442,7 @@ function plugin:SetupFrames()
 
 	local text = display:CreateFontString(nil, "OVERLAY")
 	text:SetFontObject(GameFontNormal)
-	text:SetFont(L["font"], 12)
+	text:SetFont(L["proximityfont"], 12)
 	text:SetText("")
 	text:SetAllPoints(display)
 	display.text = text
