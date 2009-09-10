@@ -25,7 +25,7 @@ local customBossOptions = {}
 local pName = UnitName("player")
 
 
-BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
+addon.revision = tonumber(("$Revision$"):sub(12, -3))
 
 local pluginOptions = {
 	name = "Customize ...",
@@ -38,10 +38,10 @@ local acOptions = {
 	type = "group",
 	name = "Big Wigs",
 	get = function(info)
-		return BigWigs.db.profile[info[#info]]
+		return addon.db.profile[info[#info]]
 	end,
 	set = function(info, value)
-		BigWigs.db.profile[info[#info]] = value
+		addon.db.profile[info[#info]] = value
 	end,
 	args = {
 		heading = {
@@ -60,12 +60,12 @@ local acOptions = {
 				-- We don't care yet, this is temporary.
 				InterfaceOptionsFrame:Hide()
 
-				if not BigWigs:IsEnabled() then
+				if not addon:IsEnabled() then
 					print("This is weird, we're accessing the options but BigWigs is not enabled.")
 					return
 				end
-				BigWigs:SendMessage("BigWigs_StartConfigureMode")
-				BigWigs:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
+				addon:SendMessage("BigWigs_StartConfigureMode")
+				addon:SendMessage("BigWigs_SetConfigureTarget", addon:GetPlugin("Bars"))
 			end,
 			order = 11,
 			width = "full",
@@ -217,11 +217,11 @@ local function recvSync(message, sync, moduleName, sender)
 	if not moduleName then return end
 	if sync == "EnableModule" then
 		if sender == pName then return end
-		local module = BigWigs:GetBossModule(moduleName, true)
+		local module = addon:GetBossModule(moduleName, true)
 		if not module then return end
 		enableBossModule(module, true)
 	elseif (sync == "Death" or sync == "MultiDeath") then
-		local mod = BigWigs:GetBossModule(moduleName, true)
+		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			if mod.db.profile.bosskill then
 				mod:IfMessage(L["%s has been defeated"]:format(mod.displayName), "Bosskill", nil, "Victory")
@@ -334,7 +334,7 @@ do
 
 	local function widgetSelect(widget, callback, tab)
 		if widget:GetUserData("tab") == tab then return end
-		local plugin = BigWigs:GetPlugin(tab)
+		local plugin = addon:GetPlugin(tab)
 		if not plugin then return end
 		widget:SetUserData("tab", tab)
 		tabs:PauseLayout()
@@ -344,8 +344,8 @@ do
 		frame:DoLayout()
 		addon:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end
-	local function onTestClick() BigWigs:SendMessage("BigWigs_Test") end
-	local function onResetClick() BigWigs:SendMessage("BigWigs_ResetPositions") end
+	local function onTestClick() addon:SendMessage("BigWigs_Test") end
+	local function onResetClick() addon:SendMessage("BigWigs_ResetPositions") end
 	local function createPluginFrame()
 		if frame then return end
 		frame = AceGUI:Create("Window")
@@ -368,7 +368,7 @@ do
 		reset:SetFullWidth(true)
 
 		frame:AddChildren(test, reset)
-		for name, module in BigWigs:IteratePlugins() do
+		for name, module in addon:IteratePlugins() do
 			if module.GetPluginConfig then
 				table.insert(plugins, {
 					value = name,
@@ -669,8 +669,8 @@ end
 -- Module cores
 --
 
-local bossCore = BigWigs:NewModule("Bosses")
-BigWigs.bossCore = bossCore
+local bossCore = addon:NewModule("Bosses")
+addon.bossCore = bossCore
 bossCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
 bossCore:SetDefaultModuleState(false)
 function bossCore:OnDisable()
@@ -679,8 +679,8 @@ function bossCore:OnDisable()
 	end
 end
 
-local pluginCore = BigWigs:NewModule("Plugins")
-BigWigs.pluginCore = pluginCore
+local pluginCore = addon:NewModule("Plugins")
+addon.pluginCore = pluginCore
 pluginCore:SetDefaultModuleLibraries("AceEvent-3.0", "AceTimer-3.0")
 pluginCore:SetDefaultModuleState(false)
 function pluginCore:OnEnable()
