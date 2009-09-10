@@ -1,4 +1,4 @@
-BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
+BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0", "AceTimer-3.0")
 local addon = BigWigs
 
 addon:SetEnabledState(false) -- we're disabled by default
@@ -255,6 +255,8 @@ function addon:OnEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
+	self:RegisterMessage("BigWigs_Test")
+	
 	self:SendMessage("BigWigs_CoreEnabled")
 	-- enable modules that require enabling
 	-- the cores etc are set to disabled by default, and require manual enabling
@@ -317,7 +319,7 @@ do
 		if frame then return end
 		frame = AceGUI:Create("Window")
 		frame:SetWidth(320)
-		frame:SetHeight(600)
+		frame:SetHeight(640)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle("Configure")
 		frame:SetCallback("OnClose", function(widget, callback)
@@ -631,6 +633,48 @@ do
 	end
 	
 end
+
+--- Test 
+do
+	local spells = nil
+	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
+	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
+	local messageFormat = "%s: %s %s"
+
+	local tests = {}
+
+	local function SendTestMessage( message )
+		if tests[message] then
+			addon:SendMessage( unpack(tests[message]) )
+			wipe(tests[message])
+		end
+	end
+
+	function addon:BigWigs_Test()
+		if not spells then
+			spells = {}
+			for i = 2, MAX_SKILLLINE_TABS do
+				local _, _, offset, numSpells = GetSpellTabInfo(i)
+				if not offset then break end
+				for s = offset + 1, offset + numSpells do
+					local spell = GetSpellName(s, BOOKTYPE_SPELL)
+					tinsert(spells, spell)
+				end
+			end
+		end
+		local spell = spells[math.random(1, #spells)]
+		local name, rank, icon = GetSpellInfo(spell.."()")
+		local time = math.random(11, 45)
+		local color = colors[math.random(1, #colors)]
+		local sound = sounds[math.random(1, #sounds)]
+		self:SendMessage("BigWigs_StartBar", self, name, time, icon)
+		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
+		-- FIXME: ScheduleTimer only allows for one argument
+		tests[formatted] = { "BigWigs_Message", formatted, color, true, sound, nil, icon }
+		self:ScheduleTimer(SendTestMessage, time, formatted )
+	end
+end
+
 
 ---- Module Cores ----
 
