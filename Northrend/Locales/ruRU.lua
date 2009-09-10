@@ -14,7 +14,6 @@ if L then
 	L.icon_desc = "Отмечать рейдовой иконой игрока, на которого нацелены каменные осколки. (необходимо быть лидером группы или рейда)"
 end
 
-
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "ruRU")
 if L then
 	L.nova_next = "~Перезарядка Вспышки молнии"

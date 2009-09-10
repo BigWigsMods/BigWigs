@@ -11,12 +11,6 @@ L.normal = "普通模式"
 L.hard = "困难模式"
 L.general = "通用" -- General settings, i.e. things that apply to both normal and hard mode.
 
-L.enrage_start = "%s激活 - %d分后激怒！"
-L.enrage_end = "%s已激怒！"
-L.enrage_min = "%d分后激怒！"
-L.enrage_sec = "%d秒后激怒！"
-L.enrage = "激怒"
-
 L.berserk_start = "%s激活 - 将在%d分后狂暴！"
 L.berserk_end = "%s已狂暴！"
 L.berserk_min = "%d分后狂暴！"

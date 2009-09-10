@@ -51,7 +51,6 @@ L["Local"] = "Lokal"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Ungültige Zeit (|cffff0000%q|r) oder fehlender Leistentext in eigener Leiste, gestartet von |cffd9d919%s|r. <Zeit> kann entweder eine Zahl in Sekunden, eine M:S Kombination oder Mm sein. Beispiele: 5, 1:20 or 2m."
 
-
 -- Colors.lua
 
 L["Colors"] = "Farben"
@@ -181,7 +180,6 @@ L["Use sounds"] = "Sounds verwenden"
 L["Toggle all sounds on or off."] = "Schaltet alle Sounds ein oder aus."
 L["Default only"] = "Nur Standards"
 L["Use only the default sound."] = "Verwendet nur die Standard-Sounds."
-
 
 -- Proximity.lua
 

@@ -22,6 +22,7 @@ if L then
 	L.starttrigger4 = "Flieht, solange ihr noch könnt."
 
 	L.startwarn = "Großwitwe Faerlina angegriffen! Raserei in 60 sek!"
+
 	L.enragewarn15sec = "Raserei in 15 sek!"
 	L.enragewarn = "Raserei!"
 	L.enragewarn2 = "Raserei bald!"

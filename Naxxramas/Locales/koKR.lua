@@ -22,6 +22,7 @@ if L then
 	L.starttrigger4 = "두 발이 성할 때 도망쳐라!"
 
 	L.startwarn = "귀부인 팰리나 전투 시작! 60초 후 광기!"
+
 	L.enragewarn15sec = "15초 후 광기!"
 	L.enragewarn = "광기!"
 	L.enragewarn2 = "잠시 후 광기!"

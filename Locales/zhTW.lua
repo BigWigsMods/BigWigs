@@ -25,8 +25,6 @@ L["You shouldn't really need to touch these options, but if you want to tweak th
 L["Toggles whether or not the boss module should warn about %s."] = "打開或關閉%s的首領模組報警。"
 L.bosskill = "首領死亡"
 L.bosskill_desc = "首領被擊敗時發出提示。"
-L.enrage = "狂怒"
-L.enrage_desc = "當首領狂怒時發出警報。"
 L.berserk = "狂暴"
 L.berserk_desc = "當首領狂暴時發出警報。"
 

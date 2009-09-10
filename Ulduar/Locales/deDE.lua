@@ -48,7 +48,7 @@ if L then
 	L.conservator_message = "Konservator!"
 	L.detonate_message = "Explosionspeitscher!"
 	L.elementals_message = "Elementare!"
-	
+
 	L.tree = "Eonars Geschenk"
 	L.tree_desc = "Warnt, wenn Eonars Geschenk auftaucht."
 	L.tree_message = "Eonars Geschenk!"

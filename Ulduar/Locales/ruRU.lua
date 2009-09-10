@@ -49,7 +49,7 @@ if L then
 	L.conservator_message = "Древний опекун!"
 	L.detonate_message = "Взрывные плеточники!"
 	L.elementals_message = "Элементали!"
-	
+
 	L.tree = "Дар Эонара"
 	L.tree_desc = "Сообщать когда Фрейа призывает Дар Эонара."
 	L.tree_message = "Появление Дара Эонара!"
@@ -253,7 +253,7 @@ if L then
 
 	L.charge_message = "Разряд: x%d"
 	L.charge_bar = "Разряд %d"
-	
+
 	L.strike_bar = "~Дисбалансирующий удар"
 
 	L.end_trigger = "Придержите мечи! Я сдаюсь."
@@ -308,7 +308,7 @@ if L then
 
 	L.gravitybombicon = "Иконка гравитационной бомбы"
 	L.gravitybombicon_desc = "Помечать рейдовой иконкой (синим квадратом) игрока с гравитационной бомбой (необходимо обладать промоутом)."
-	
+
 	L.lighticon = "Иконка опаляющего света"
 	L.lighticon_desc = "Помечать рейдовой иконкой (черепом) игрока с опаляющим светом (необходимо обладать промоутом)"
 
@@ -355,7 +355,7 @@ if L then
 
 	L.gaze_bar = "~Взгляд безумца"
 	L.empower_bar = "~Сгущение тьмы"
-	
+
 	L.guardian_message = "Страж %d!"
 
 	L.empowericon = "Иконка сгущения тьмы"

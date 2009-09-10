@@ -22,6 +22,7 @@ if L then
 	L.starttrigger4 = "Fuyez tant que vous le pouvez !"
 
 	L.startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Frénésie !"
+
 	L.enragewarn15sec = "15 sec. avant Frénésie !"
 	L.enragewarn = "Frénésie !"
 	L.enragewarn2 = "Frénésie imminente !"

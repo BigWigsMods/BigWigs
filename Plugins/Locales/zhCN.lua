@@ -51,7 +51,6 @@ L["Local"] = "本地"
 L["%s: Timer [%s] finished."] = "%s：计时条[%s]到时间。"
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条（|cffff0000%q|r）或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm。例如 5, 1:20 或 2m。"
 
-
 -- Colors.lua
 
 L["Colors"] = "颜色"
@@ -181,7 +180,6 @@ L["Use sounds"] = "使用声音"
 L["Toggle all sounds on or off."] = "选择声音的开或关。"
 L["Default only"] = "预设"
 L["Use only the default sound."] = "只选用预设声音。"
-
 
 -- Proximity.lua
 
