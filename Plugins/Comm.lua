@@ -42,7 +42,7 @@ function plugin:BigWigs_RecvSync(event, sync, rest, nick)
 	if sync ~= "BossEngaged" then return end
 	local m = BigWigs:GetBossModule(rest, true)
 	if not m then error("Got a BossEngaged sync for " .. tostring(rest) .. ", but there's no such module.") end
-	m:UnregisterEvent("PLAYER_REGEN_ENABLED")
+	m:UnregisterEvent("PLAYER_REGEN_DISABLED")
 	m:OnEngageWrapper(nick)
 end
 

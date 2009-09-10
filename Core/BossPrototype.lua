@@ -148,7 +148,7 @@ do
 	-- XXX wrapper for debugging purposes.
 	function boss:OnEngageWrapper(nick)
 		print("Engaging " .. self.moduleName .. " based on engage sync from " .. tostring(nick) .. ".")
-		self:Engage(nick)
+		self:OnEngage(nick)
 	end
 
 	function boss:Win()
