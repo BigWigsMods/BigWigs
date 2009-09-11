@@ -279,11 +279,12 @@ do
 			if player == pName then
 				if ... then
 					text = fmt(spellName, coloredNames[player], ...)
+					self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", text, nil, nil, nil, true)
 				else
-					text = fmt(L["you"], spellName)
+					self:SendMessage("BigWigs_Message", fmt(L["you"], spellName), color, true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", fmt(L["other"], spellName), nil, nil, nil, true)
 				end
-				self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
-				self:SendMessage("BigWigs_Message", text, nil, nil, nil, true)
 			else
 				--change colors and remove sound when warning about effects on other players
 				if color == "Personal" then color = "Important" end
