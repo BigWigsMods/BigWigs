@@ -22,7 +22,6 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Foreign: BigWigs_Foreign
-    BigWigs/Extras: BigWigs_Extras
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/Naxxramas: BigWigs_Naxxramas
     BigWigs/Northrend: BigWigs_Northrend
