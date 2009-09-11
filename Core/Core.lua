@@ -1,13 +1,10 @@
 BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0", "AceTimer-3.0")
 local addon = BigWigs
-
-addon:SetEnabledState(false) -- we're disabled by default
-addon:SetDefaultModuleState(false) -- our modules too
-
+addon:SetEnabledState(false)
+addon:SetDefaultModuleState(false)
 
 -- locale stuff for BZ or BB conditionals
 local LOCALE = BigWigsLoader.LOCALE
-
 local BB, BZ
 
 local GetSpellInfo = GetSpellInfo
@@ -15,14 +12,8 @@ local GetSpellInfo = GetSpellInfo
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("BigWigs")
 
-
-
 local customBossOptions = {}
 local pName = UnitName("player")
-
-
-addon.revision = tonumber(("$Revision$"):sub(12, -3))
-
 
 -------------------------------------------------------------------------------
 -- Testing
@@ -38,10 +29,9 @@ do
 	local tests = {}
 
 	local function sendTestMessage(message)
-		if tests[message] then
-			addon:SendMessage(unpack(tests[message]))
-			wipe(tests[message])
-		end
+		addon:SendMessage("BigWigs_Message", unpack(tests[message]))
+		wipe(tests[message])
+		tests[message] = nil
 	end
 
 	function bigWigsTest()
@@ -64,7 +54,7 @@ do
 		self:SendMessage("BigWigs_StartBar", self, name, time, icon)
 		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
 		-- FIXME: ScheduleTimer only allows for one argument
-		tests[formatted] = { "BigWigs_Message", formatted, color, true, sound, nil, icon }
+		tests[formatted] = { formatted, color, true, sound, nil, icon }
 		self:ScheduleTimer(sendTestMessage, time, formatted)
 	end
 end

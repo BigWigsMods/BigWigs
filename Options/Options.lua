@@ -12,7 +12,6 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
-
 local pluginOptions = {
 	name = "Customize ...",
 	type = "group",

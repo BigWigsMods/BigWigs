@@ -129,7 +129,7 @@ do
 		if go then
 			self:Sync("BossEngaged", self.moduleName)
 		else
-			self:ScheduleTimer(self.CheckForEngage, .5, self)
+			self:ScheduleTimer("CheckForEngage", .5)
 		end
 	end
 
@@ -140,7 +140,7 @@ do
 			self:SendMessage("BigWigs_RemoveRaidIcon")
 			self:Reboot()
 		else
-			self:ScheduleTimer(self.CheckForWipe, 2, self)
+			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
 	
