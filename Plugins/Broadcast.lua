@@ -44,7 +44,7 @@ function plugin:BigWigs_Message(msg, color, noraidsay)
 
 	local inRaid = UnitInRaid("player")
 	-- In a 5-man group, everyone can use the raid warning channel.
-	if inRaid and not IsRaidLeader() then
+	if inRaid and not IsRaidLeader() and not IsRaidOfficer() then
 		return
 	elseif GetNumPartyMembers() == 0 and not inRaid then
 		return
