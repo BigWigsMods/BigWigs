@@ -1,39 +1,3 @@
--- This whole deal is pretty much a straight copy frmo the old BigWigs2 LoadOnDemand, with some subtle changes.
--- main change is no requirement for babbleboss/zone for enUS and enGB locale
-
---[[ DOCUMENTATION
-
-Loading Order:
-
-BigWigs packed
-	Loader:OnInit
-	BW:OnInit
-	.. packed module oninits ..
-	... possible module oninits that were loaded due to CoreLoaded....
-	Loader:OnEnable
-	BW:OnEnable -- only called if needed
-
-	
-BigWigs unpacked
-	Loader:OnInit
-	Loader:OnEnable
-	.. user enters a party or enables BW3 in another way
-	BW:OnInit
-	... possible module onInits that were loaded due to CoreLoaded....
-	BW:OnEnable -- only called if needed
-	
-	
-BigWigs:OnInitialize fires BigWigs_CoreLoaded message as its last action
-
-
-Conditions:
-
-The loader will load/enable the core when certain conditions are met
-- Player enters party -> zone of player is checked -> load -> enable
-- Player is in a party -> zone of player is checked on ZONE_CHANGED -> load -> enable
-
---]]
-
 local pName = UnitName("player")
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
