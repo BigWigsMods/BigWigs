@@ -51,11 +51,11 @@ do
 		local time = math.random(11, 45)
 		local color = colors[math.random(1, #colors)]
 		local sound = sounds[math.random(1, #sounds)]
-		self:SendMessage("BigWigs_StartBar", self, name, time, icon)
+		addon:SendMessage("BigWigs_StartBar", addon, name, time, icon)
 		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
 		-- FIXME: ScheduleTimer only allows for one argument
 		tests[formatted] = { formatted, color, true, sound, nil, icon }
-		self:ScheduleTimer(sendTestMessage, time, formatted)
+		addon:ScheduleTimer(sendTestMessage, time, formatted)
 	end
 end
 

@@ -115,11 +115,11 @@ do
 	local function scan(self)
 		if type(self.enabletrigger) == "number" then
 			local unit = findTargetByGUID(self.enabletrigger)
-			if unit and UnitAffectingCombat(unit) then return true end
+			if unit and UnitAffectingCombat(unit) then return unit end
 		elseif type(self.enabletrigger) == "table" then
 			for i, id in next, self.enabletrigger do
 				local unit = findTargetByGUID(id)
-				if unit and UnitAffectingCombat(unit) then return true end
+				if unit and UnitAffectingCombat(unit) then return unit end
 			end
 		end
 	end
