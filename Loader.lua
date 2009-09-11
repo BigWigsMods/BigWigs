@@ -292,6 +292,10 @@ function loader:RegisterTooltipInfo(func)
 	table.insert(tooltipFunctions, func)
 end
 
+function loader:GetZoneMenus()
+	return menus
+end
+
 function loader:HasZone(zone)
 	if not zone then return false end
 	if loadInZone[zone] then return true end
@@ -369,7 +373,7 @@ function loader:BigWigs_CoreLoaded()
 		loadOnCoreLoaded[k] = nil
 	end
 	-- FIXME: do sometihng with this?
-	BigWigs:SetZoneMenus(menus)
+	-- BigWigs:SetZoneMenus(menus)
 end
 
 function loader:BigWigs_LeftGroup()

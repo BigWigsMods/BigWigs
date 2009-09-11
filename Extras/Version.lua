@@ -4,7 +4,6 @@
 
 local plugin = BigWigs:NewPlugin("Version Checker")
 if not plugin then return end
-plugin.external = true
 
 --------------------------------------------------------------------------------
 -- Locals
