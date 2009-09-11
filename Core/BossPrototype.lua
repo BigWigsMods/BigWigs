@@ -283,7 +283,7 @@ do
 					self:SendMessage("BigWigs_Message", text, nil, nil, nil, true)
 				else
 					self:SendMessage("BigWigs_Message", fmt(L["you"], spellName), color, true, sound, nil, icon)
-					self:SendMessage("BigWigs_Message", fmt(L["other"], spellName), nil, nil, nil, true)
+					self:SendMessage("BigWigs_Message", fmt(L["other"], spellName, coloredNames[player]), nil, nil, nil, true)
 				end
 			else
 				--change colors and remove sound when warning about effects on other players
