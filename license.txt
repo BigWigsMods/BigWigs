@@ -21,3 +21,13 @@ otherwise.
 
 Any and all questions regarding our stance and licensing should be
 directed to the #wowace IRC channel on irc.freenode.net.
+
+
+
+Contributions by Ammo are copyrighted 2006-2009 by Ammo and All Rights Reserved.
+
+Contributions from other authors do not fall under this license unless stated
+otherwise.
+
+Any and all questions regarding our stance and licensing should be
+directed to the #wowace IRC channel on irc.freenode.net.
