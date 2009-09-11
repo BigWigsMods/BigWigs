@@ -168,9 +168,9 @@ end
 local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
 		local zone = (select(i, ...)):trim()
-
 		-- register the zone for enabling.
 		registerEnableZone(zone, partyContent and BWPARTY or BWRAID)
+		if BZ then zone = BZ[zone] or zone end
 		
 		if not loadInZone[zone] then loadInZone[zone] = {} end
 		table.insert(loadInZone[zone], addon)
@@ -383,38 +383,36 @@ function loader:BigWigs_LeftGroup()
 	end
 end
 
-function loader:LoadCore()
-	if BigWigs or LibStub("AceAddon-3.0"):GetAddon("BigWigs", true) then return true end -- return true, so if self:LoadCore() checks work properly
-	-- time to load the core
-	local core = "BigWigs_Core"
+local function load(obj, name)
+	if obj then return true end
 	-- Verify that the addon isn't disabled
-	local enabled = select(4, GetAddOnInfo(core))
+	local enabled = select(4, GetAddOnInfo(name))
 	if not enabled then 
-		self:Print("Error loading " .. core .. " ("..core.." is not enabled)")
+		self:Print("Error loading " .. name .. " ("..name.." is not enabled)")
 		return
 	end
 	-- Load the addon
-	local succ, err = LoadAddOn(core)
+	local succ, err = LoadAddOn(name)
 	if not succ then
-		self:Print("Error loading " .. core .. " (" .. err .. ")")
+		self:Print("Error loading " .. name .. " (" .. err .. ")")
 		return false, err
 	end
 	return true
 end
 
+function loader:LoadCore()
+	return load(BigWigs, "BigWigs_Core")
+end
+
+function loader:LoadOptions()
+	return load(BigWigsOptions, "BigWigs_Options")
+end
+
+
 function loader:LoadForeign()
 	if LOCALE == "enUS" or ( BB and BZ ) then return true end
 	if not LibStub("LibBabble-Boss-3.0", true) or not LibStub("LibBabble-Zone-3.0", true) then
-		local core = "BigWigs_Foreign"
-		local enabled = select(4, GetAddOnInfo(core))
-		if not enabled then 
-			self:Print("Error loading " .. core .. " ("..core.." is not enabled)")
-			return
-		end
-		local succ, err = LoadAddOn(core)
-		if not succ then
-			self:Print("Error loading " .. core .. " (" .. tostring(err) .. ")")
-		end
+		load(false, "BigWigs_Foreign")
 	end
 	-- check again and error if you can't find
 	if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
@@ -440,7 +438,7 @@ loader.ldb = ldb
 
 function ldb.OnClick(self, button)
 	if BigWigs and BigWigs:IsEnabled() then
-		if button == "RightButton" then
+		if button == "RightButton" and loader:LoadOptions() then
 			BigWigsOptions:Open()
 		else
 			if IsAltKeyDown() then
@@ -462,12 +460,16 @@ function ldb.OnClick(self, button)
 	elseif BigWigs then
 		BigWigs:Enable()
 		if button == "RightButton" then
-			BigWigsOptions:Open()
+			if loader:LoadOptions() then
+				BigWigsOptions:Open()
+			end
 		end
 	elseif loader:LoadCore() then
 		BigWigs:Enable()
 		if button == "RightButton" then
-			BigWigsOptions:Open()
+			if loader:LoadOptions() then
+				BigWigsOptions:Open()
+			end
 		end
 	end
 end
@@ -498,7 +500,7 @@ function ldb.OnTooltipShow(tt)
 end
 
 local function slashfunction(text)
-	if loader:LoadCore() then
+	if loader:LoadCore() and loader:LoadOptions() then
 		BigWigsOptions:Open()
 	end
 end
@@ -524,7 +526,9 @@ frame:SetScript("OnShow", function(frame)
 	end
 	if loader:LoadCore() then
 		BigWigs:Enable()
-		BigWigsOptions:Open()
+		if loader:LoadOptions() then
+			BigWigsOptions:Open()
+		end
 	end
 end)
 

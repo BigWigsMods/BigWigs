@@ -11,7 +11,7 @@ if not plugin then return end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 
-local AceGUI = LibStub("AceGUI-3.0")
+local AceGUI = nil
 
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
@@ -283,6 +283,7 @@ do
 	end
 
 	function plugin:GetPluginConfig()
+		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
 		local tex = AceGUI:Create("Dropdown")
 		do
 			local list = media:List("statusbar")

@@ -1,0 +1,13 @@
+## Interface: 30200
+
+## Title: Big Wigs [|cffeda55fOptions|r]
+## Notes: Big Wigs Configuration Options
+## Author: Ammo, Rabbit, Funkydude
+
+## LoadOnDemand: 1
+
+## Dependencies: BigWigs
+
+libs.xml
+
+modules.xml

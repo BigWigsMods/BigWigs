@@ -23,5 +23,6 @@
 <!--@end-no-lib-strip@-->
 
 <Include file="Foreign\libs.xml"/>
+<Include file="Options\libs.xml"/>
 
 </Ui>

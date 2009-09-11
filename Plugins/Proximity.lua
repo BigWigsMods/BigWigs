@@ -9,7 +9,7 @@ if not plugin then return end
 --      Are you local?
 -----------------------------------------------------------------------
 
-local AceGUI = LibStub("AceGUI-3.0")
+local AceGUI = nil
 
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
@@ -170,6 +170,7 @@ do
 	end
 
 	function plugin:GetPluginConfig()
+		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
 		local disable = AceGUI:Create("CheckBox")
 		disable:SetValue(db.disabled)
 		disable:SetLabel(L["Disabled"])

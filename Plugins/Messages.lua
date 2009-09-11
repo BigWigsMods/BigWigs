@@ -20,7 +20,7 @@ local messageFrame = nil
 local anchor = nil
 local floor = math.floor
 
-local AceGUI = LibStub("AceGUI-3.0")
+local AceGUI
 
 local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
 
@@ -160,6 +160,7 @@ do
 	end
 
 	function plugin:GetPluginConfig()
+		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
 		local chat = AceGUI:Create("CheckBox")
 		chat:SetLabel(L["Chat frame"])
 		chat:SetValue(self.db.profile.chat and true or false)

@@ -4,6 +4,7 @@
 <Script file="Core.lua"/>
 <Script file="BossPrototype.lua"/>
 <Script file="PluginPrototype.lua"/>
+<Script file="Options.lua"/>
 
 </Ui>
 

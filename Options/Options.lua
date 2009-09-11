@@ -147,13 +147,13 @@ function options:OnInitialize()
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", "Customize ...", "Big Wigs")
 	
-	SetZoneMenus(BigWigsLoader:GetZoneMenus())
-	
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_PluginRegistered")
 end
 
 function options:OnEnable()
+	SetZoneMenus(BigWigsLoader:GetZoneMenus())
+
 	for name, module in BigWigs:IterateBossModules() do
 		self:BigWigs_BossModuleRegistered("BigWigs_BossModuleRegistered", name, module)
 	end
