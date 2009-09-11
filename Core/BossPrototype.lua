@@ -344,22 +344,28 @@ function boss:Whisper(player, spellName, noName)
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function boss:PrimaryIcon(player, key)
+function boss:PrimaryIcon(player, key, rem)
 	if key and not self.db.profile[key] then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", 1)
 	else
 		self:SendMessage("BigWigs_SetRaidIcon", player, 1)
+		if rem then
+			self:ScheduleEvent("BWRemovePrimaryIcon", "SendMessage", rem, "BigWigs_RemoveRaidIcon", 1)
+		end
 	end
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function boss:SecondaryIcon(player, key)
+function boss:SecondaryIcon(player, key, rem)
 	if key and not self.db.profile[key] then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
 	else
 		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
+		if rem then
+			self:ScheduleEvent("BWRemoveSecondaryIcon", "SendMessage", rem, "BigWigs_RemoveRaidIcon", 2)
+		end
 	end
 end
 
