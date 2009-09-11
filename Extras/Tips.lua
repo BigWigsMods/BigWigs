@@ -10,7 +10,7 @@ mod.external = true
 --   Are you local?       --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Extras")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Extras")
 
 local compress = LibStub("LibCompress")
 local AceGUI = LibStub("AceGUI-3.0")

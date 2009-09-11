@@ -10,7 +10,7 @@ if not plugin then return end
 ------------------------------
 
 local sentWhispers = {}
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 --------------------------------------------------------------------------------
 -- Options

@@ -26,7 +26,7 @@ end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName

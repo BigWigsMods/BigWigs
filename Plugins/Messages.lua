@@ -22,7 +22,7 @@ local floor = math.floor
 
 local AceGUI
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 --------------------------------------------------------------------------------
 -- Anchor

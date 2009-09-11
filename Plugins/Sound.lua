@@ -21,7 +21,7 @@ local sounds = {
 	Alarm = "BigWigs: Alarm",
 	Victory = "BigWigs: Victory",
 }
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Plugins")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 --------------------------------------------------------------------------------
 -- Options

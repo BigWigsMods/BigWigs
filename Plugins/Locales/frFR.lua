@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Plugins", "frFR")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "frFR")
 if not L then return end
 -- Bars2.lua
 

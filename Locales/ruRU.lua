@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs", "ruRU")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "ruRU")
 
 if not L then return end
 

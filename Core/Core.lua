@@ -10,7 +10,7 @@ local BB, BZ
 local GetSpellInfo = GetSpellInfo
 
 local AL = LibStub("AceLocale-3.0")
-local L = AL:GetLocale("BigWigs")
+local L = AL:GetLocale("Big Wigs")
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -238,7 +238,7 @@ do
 		end
 		
 		if module.optionHeaders then
-			local CL = LibStub("AceLocale-3.0"):GetLocale("BigWigs:Common")
+			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 			for k, v in pairs(module.optionHeaders) do
 				if type(v) == "string" and CL[v] then
 					module.optionHeaders[k] = CL[v]

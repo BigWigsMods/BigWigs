@@ -4,7 +4,7 @@ options:SetEnabledState(true)
 
 local BigWigs = BigWigs
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local ac = LibStub("AceConfig-3.0")

@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs:Extras", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Extras", "enUS", true)
 
 -- Version.lua
 L["should_upgrade"] = "This seems to be an older version of Big Wigs. It is recommended that you upgrade before entering into combat with a boss."

@@ -81,7 +81,7 @@ end
 BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 local loader = BigWigsLoader
 
-local L = LibStub("AceLocale-3.0"):GetLocale("BigWigs")
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
 local ldb
 
