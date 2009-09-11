@@ -2,7 +2,7 @@
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewPlugin("RaidWarning")
+local plugin = BigWigs:NewPlugin("Broadcast")
 if not plugin then return end
 
 ------------------------------
