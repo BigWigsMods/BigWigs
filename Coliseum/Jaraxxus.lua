@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
 mod.enabletrigger = 34780
-mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
+mod.toggleOptions = {67049, 68123, "icon", 67106, "adds", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -17,8 +17,11 @@ if L then
 	L.engage_trigger = "You face Jaraxxus, Eredar Lord of the Burning Legion!"
 	L.engage_trigger1 = "Banished to the Nether"
 
+	L.adds = "Portals and volcanos"
+	L.adds_desc = "Show a timer and warn for when Jaraxxus summons portals and volcanos."
+
 	L.incinerate_message = "Incinerate"
-	L.incinerate_other = "Incinerate on %s"
+	L.incinerate_other = "%s goes boom!"
 	L.incinerate_bar = "Next Incinerate"
 	L.incinerate_safe = "%s is safe, yay :)"
 
@@ -31,7 +34,7 @@ if L then
 
 	L.infernal_bar = "Volcano spawns"
 	L.netherportal_bar = "Portal spawns"
-	L.netherpower_bar = "Next Nether Power"
+	L.netherpower_bar = "~Next Nether Power"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
 mod.locale = L
@@ -59,10 +62,9 @@ end
 --
 
 function mod:IncinerateFlesh(player, spellId)
-	self:TargetMessage(L["incinerate_message"], player, "Personal", spellId, "Info")
+	self:TargetMessage(L["incinerate_message"], player, "Urgent", spellId, "Info")
 	self:Whisper(player, L["incinerate_message"])
 	self:Bar(L["incinerate_other"]:format(player), 12, spellId)
-	self:Bar(L["incinerate_bar"], 20, spellId)
 end
 
 function mod:IncinerateFleshRemoved(player, spellId)
@@ -74,7 +76,6 @@ function mod:LegionFlame(player, spellId)
 	self:TargetMessage(L["legionflame_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["legionflame_message"])
 	self:Bar(L["legionflame_other"]:format(player), 8, spellId)
-	self:Bar(L["legionflame_bar"], 30, spellId)
 	self:PrimaryIcon(player, "icon")
 end
 
@@ -91,26 +92,23 @@ function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, dGuid)
 end
 
 function mod:NetherPortal(_, spellId, _, _, spellName)
+	if not self.db.profile.adds then return end
 	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
-	self:Bar(L["netherportal_bar"], 120, spellId)
+	self:Bar(L["infernal_bar"], 60, 66258)
 end
 
 function mod:InfernalEruption(_, spellId, _, _, spellName)
+	if not self.db.profile.adds then return end
 	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
-	self:Bar(L["infernal_bar"], 120, spellId)
+	self:Bar(L["netherportal_bar"], 60, 68404)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
---if you wipe then you never get "engage_trigger1" message again, but always "engage_trigger" message before boss start attack.
---Correct me if i'm wrong
 	if msg:find(L["engage_trigger1"]) then
 		self:Bar(L["engage"], 11, "INV_Gizmo_01")
 	elseif msg:find(L["engage_trigger"]) then
-		if self:GetOption(68404) then
+		if self.db.profile.adds then
 			self:Bar(L["netherportal_bar"], 20, 68404)
-		end
-		if self:GetOption(66258) then
-			self:Bar(L["infernal_bar"], 80, 66258)
 		end
 	end
 end
