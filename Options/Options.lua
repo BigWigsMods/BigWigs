@@ -91,7 +91,7 @@ local acOptions = {
 		broadcast = {
 			type = "toggle",
 			name = "Broadcast |cffff0000(!)|r",
-			desc = "Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are the group leader, NOT if you are promoted!|r",
+			desc = "Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/assistant or in a 5-man party!|r",
 			order = 33,
 			width = "full",
 		},
