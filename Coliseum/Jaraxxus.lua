@@ -14,24 +14,24 @@ mod.toggleOptions = {67049, 68123, "icon", 68404, 67106, 66258, "bosskill"}
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "enUS", true)
 if L then
 	L.engage = "Engage"
-	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
+	L.engage_trigger = "You face Jaraxxus, Eredar Lord of the Burning Legion!"
 	L.engage_trigger1 = "Banished to the Nether"
 
 	L.incinerate_message = "Incinerate"
 	L.incinerate_other = "Incinerate on %s"
-	L.incinerate_bar = "~Next Incinerate"
+	L.incinerate_bar = "Next Incinerate"
 	L.incinerate_safe = "%s is safe, yay :)"
 
 	L.legionflame_message = "Flame"
 	L.legionflame_other = "Flame on %s!"
-	L.legionflame_bar = "~Next Flame"
+	L.legionflame_bar = "Next Flame"
 
 	L.icon = "Place Icon"
 	L.icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)"
 
 	L.infernal_bar = "Volcano spawns"
 	L.netherportal_bar = "Portal spawns"
-	L.netherpower_bar = "~Next Nether Power"
+	L.netherpower_bar = "Next Nether Power"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
 mod.locale = L

@@ -34,7 +34,7 @@ do
 		tests[message] = nil
 	end
 
-	function bigWigsTest()
+	function addon:Test()
 		if not spells then
 			spells = {}
 			for i = 2, MAX_SKILLLINE_TABS do
@@ -141,7 +141,6 @@ function addon:OnEnable()
 	end
 	self:RegisterMessage("BigWigs_TargetSeen", targetSeen)
 	self:RegisterMessage("BigWigs_RecvSync", recvSync)
-	self:RegisterMessage("BigWigs_Test", bigWigsTest)
 
 	self:SendMessage("BigWigs_CoreEnabled")
 	self.pluginCore:Enable()

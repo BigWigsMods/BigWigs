@@ -198,7 +198,7 @@ do
 		frame:DoLayout()
 		options:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end
-	local function onTestClick() options:SendMessage("BigWigs_Test") end
+	local function onTestClick() BigWigs:Test() end
 	local function onResetClick() options:SendMessage("BigWigs_ResetPositions") end
 	local function createPluginFrame()
 		if frame then return end
