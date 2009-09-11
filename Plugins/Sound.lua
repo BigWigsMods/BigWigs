@@ -67,7 +67,6 @@ plugin.pluginOptions = {
 			set = function(info, v) plugin.db.profile.defaultonly = v end,
 			order = 1,
 			width = "full",
-			descStyle = "inline",
 		},
 	}
 }
