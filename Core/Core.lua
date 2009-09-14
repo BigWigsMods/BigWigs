@@ -110,12 +110,12 @@ end
 -- Communication
 --
 
-local onSync, chatMsgAddon
+local chatMsgAddon
 do
 	local times = {}
 	local registered = {}
 	
-	function onSync(sync, rest, nick)
+	local function onSync(sync, rest, nick)
 		if not registered[sync] then return end
 		if sync == "BossEngaged" then
 			local m = addon:GetBossModule(rest, true)
@@ -330,7 +330,6 @@ do
 		end
 		self:SendMessage("BigWigs_PluginRegistered", name, module)
 	end
-	
 end
 
 -------------------------------------------------------------------------------

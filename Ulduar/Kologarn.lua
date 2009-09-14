@@ -32,7 +32,7 @@ if L then
 
 	L.eyebeam = "Focused Eyebeam"
 	L.eyebeam_desc = "Warn who gets Focused Eyebeam."
-	L.eyebeam_trigger = "%s focuses his eyes on you!"
+	L.eyebeam_trigger = "his eyes on you"
 	L.eyebeam_message = "Eyebeam: %s"
 	L.eyebeam_bar = "~Eyebeam"
 	L.eyebeam_you = "Eyebeam on YOU!"
@@ -85,13 +85,13 @@ function mod:Grip(player, spellId, _, _, spellName)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg)
-	if self.db.profile.eyebeam and msg == L["eyebeam_trigger"] then
+	if self.db.profile.eyebeam and msg:find(L["eyebeam_trigger"]) then
 		self:LocalMessage(L["eyebeam_you"], "Personal", 63976, "Long")
 		if self.db.profile.eyebeamsay then
 			SendChatMessage(L["eyebeam_say"], "SAY")
 		end
-		self:Sync("EyeBeamWarn", pName)
 	end
+	self:Sync("EyeBeamWarn", pName)
 end
 
 function mod:Deaths(guid)
