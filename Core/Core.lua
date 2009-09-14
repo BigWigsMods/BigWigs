@@ -113,7 +113,11 @@ end
 local chatMsgAddon
 do
 	local times = {}
-	local registered = {}
+	local registered = {
+		BossEngaged = true,
+		Death = true,
+		EnableModule = true,
+	}
 	
 	local function onSync(sync, rest, nick)
 		if not registered[sync] then return end

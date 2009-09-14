@@ -50,7 +50,7 @@ do
 			local numericId = tonumber(dGUID:sub(-12, -7), 16)
 			local d = self.deathMap and self.deathMap[numericId]
 			if not d then return end
-			self[d](self, numericId, dGUID, player, dFlags, sGUID, source, sFlags)
+			self[d](self, numericId, dGUID, player, dFlags)
 		else
 			local m = self.combatLogEventMap and self.combatLogEventMap[event]
 			if m and (m[spellId] or m["*"]) then
