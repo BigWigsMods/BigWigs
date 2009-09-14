@@ -52,7 +52,7 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "deDE")
 if L then
 	L.enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren..."
-	-- L.defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
+	L.defeat_trigger = "Ein tragischer Sieg. Wir wurden schwächer durch die heutigen Verluste. Wer außer dem Lichkönig profitiert von solchen Torheiten? Große Krieger gaben ihr Leben. Und wofür? Die wahre Bedrohung erwartet uns noch - der Lichkönig erwartet uns alle im Tod."
 
 	L["Shield on %s!"] = "Schild: %s!"
 	L["Bladestorming!"] = "Klingensturm!"
