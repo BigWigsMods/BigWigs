@@ -77,13 +77,15 @@ end
 
 -- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
 -- actual module object. ALL other APIs should take module objects as arguments.
-local function recvSync(message, sync, moduleName, sender)
+local function coreSync(sync, moduleName, sender)
 	if not moduleName then return end
 	if sync == "EnableModule" then
 		if sender == pName then return end
 		local module = addon:GetBossModule(moduleName, true)
 		if not module then return end
 		enableBossModule(module, true)
+		
+		-- MultiDeath is gone, but lets have it here for another release cycle for compat.
 	elseif (sync == "Death" or sync == "MultiDeath") then
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
@@ -101,6 +103,55 @@ local function targetSeen(message, unit, module)
 	if not module or module:IsEnabled() then return end
 	if not module.VerifyEnable or module:VerifyEnable(unit) then
 		enableBossModule(module)
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Communication
+--
+
+local onSync, chatMsgAddon
+do
+	local times = {}
+	local registered = {}
+	
+	function onSync(sync, rest, nick)
+		if not registered[sync] then return end
+		if sync == "BossEngaged" then
+			local m = addon:GetBossModule(rest, true)
+			if not m then error("Got a BossEngaged sync for " .. tostring(rest) .. ", but there's no such module.") end
+			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
+			m:OnEngageWrapper(nick)
+		elseif sync == "EnableModule" or sync == "Death" then
+			coreSync(sync, rest, nick)
+		else
+			for m in pairs(registered[sync]) do
+				m:OnSync(sync, rest, nick)
+			end
+		end
+	end
+
+	function chatMsgAddon(event, prefix, message, type, sender)
+		if prefix ~= "BigWigs" then return end
+		local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
+		if not sync then return end
+		if not times[sync] or GetTime() > (times[sync] + 2) then
+			times[sync] = GetTime()
+			onSync(sync, rest, sender)
+		end
+	end
+
+	function addon:AddSyncListener(module, sync)
+		if not registered[sync] then registered[sync] = {} end
+		registered[sync][module] = true
+	end
+	function addon:Transmit(sync, ...)
+		if not sync then return end
+		if not times[sync] or GetTime() > (times[sync] + 2) then
+			times[sync] = GetTime()
+			SendAddonMessage("BigWigs", strjoin(" ", sync, ...), "RAID")
+			onSync(sync, rest, pName)
+		end
 	end
 end
 
@@ -140,7 +191,7 @@ function addon:OnEnable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
 	self:RegisterMessage("BigWigs_TargetSeen", targetSeen)
-	self:RegisterMessage("BigWigs_RecvSync", recvSync)
+	self:RegisterEvent("CHAT_MSG_ADDON", chatMsgAddon)
 
 	self:SendMessage("BigWigs_CoreEnabled")
 	self.pluginCore:Enable()

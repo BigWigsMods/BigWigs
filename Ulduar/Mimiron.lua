@@ -80,10 +80,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_LOOT")
-	self:RegisterMessage("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:Throttle(2, "MimiLoot")
-	self:Throttle(10, "MimiBarrage")
+	self:AddSyncListener("MimiLoot")
+	self:AddSyncListener("MimiBarrage")
 end
 
 function mod:VerifyEnable(unit)
@@ -234,7 +233,7 @@ do
 	end
 end
 
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
+function mod:OnSync(sync, rest, nick)
 	if sync == "MimiLoot" and rest and self:GetOption(64444) then
 		self:TargetMessage(GetSpellInfo(64444), rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
 	elseif sync == "MimiBarrage" and self:GetOption(63274) then

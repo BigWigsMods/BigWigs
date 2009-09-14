@@ -333,9 +333,7 @@ do
 	end
 end
 
-function boss:Sync(...)
-	self:SendMessage("BigWigs_SendSync", strjoin(" ", ...))
-end
+function boss:Sync(...) BigWigs:Transmit(...) end
 
 -- XXX 3rd argument is a proposed API change, and is subject to change/removal.
 function boss:Whisper(player, spellName, noName)
@@ -363,8 +361,8 @@ function boss:SecondaryIcon(player, key)
 	end
 end
 
-function boss:Throttle(seconds, ...)
-	self:SendMessage("BigWigs_ThrottleSync", seconds, ...)
+function boss:AddSyncListener(sync)
+	BigWigs:AddSyncListener(self, sync)
 end
 
 function boss:Berserk(seconds, noEngageMessage, customBoss)

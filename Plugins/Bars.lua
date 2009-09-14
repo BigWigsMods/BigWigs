@@ -68,7 +68,8 @@ local function rearrangeBars(anchor)
 	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 	for i, bar in next, tmp do
 		bar:ClearAllPoints()
-		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+		--if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+		if up then
 			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
 			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
 			lastUpBar = bar
@@ -78,7 +79,7 @@ local function rearrangeBars(anchor)
 			lastDownBar = bar
 		end
 	end
-	if #tmp > 0 then
+	if #tmp > 0 and db.emphasize then
 		empUpdate:Show()
 	else
 		empUpdate:Hide()
@@ -248,8 +249,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	
 	--  custom bars
-	self:RegisterMessage("BigWigs_RecvSync")
-	self:SendMessage("BigWigs_ThrottleSync", "BWCustomBar", 0)
+	BigWigs:AddSyncListener(self, "BWCustomBar")
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -502,11 +502,12 @@ do
 	empUpdate = CreateFrame("Frame")
 	empUpdate:Hide()
 	local total = 0
+	local dirty = nil
 	empUpdate:SetScript("OnUpdate", function(self, elapsed)
-		if not db.emphasize then return end
-		local dirty = nil
+		if dirty then return end
 		for k in pairs(normalAnchor.bars) do
-			if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
+			if k.remaining <= 10 then
+			--if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
@@ -514,6 +515,7 @@ do
 		if dirty then
 			rearrangeBars(normalAnchor)
 			rearrangeBars(emphasizeAnchor)
+			dirty = nil
 		end
 	end)
 end
@@ -572,7 +574,7 @@ function plugin:EmphasizeBar(bar)
 	end
 	bar:SetColor(colorEmphasized())
 	bar:SetScale(db.emphasizeScale)
-	bar:Set("bigwigs:emphasized", true)
+	--bar:Set("bigwigs:emphasized", true)
 end
 
 --------------------------------------------------------------------------------
@@ -624,7 +626,7 @@ local function StartCustomBar(bar, nick, localOnly)
 	end
 end
 
-function plugin:BigWigs_RecvSync(event, sync, rest, nick)
+function plugin:OnSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick then return end
 
 	if UnitInRaid("player") then

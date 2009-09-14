@@ -60,8 +60,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterMessage("BigWigs_RecvSync")
-	self:Throttle(2, "EyeBeamWarn")
+	self:AddSyncListener("EyeBeamWarn")
 end
 
 ------------------------------
@@ -114,7 +113,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	end
 end
 
-function mod:BigWigs_RecvSync(event, sync, rest, nick)
+function mod:OnSync(sync, rest, nick)
 	if sync == "EyeBeamWarn" and rest and self.db.profile.eyebeam then
 		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
 		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
