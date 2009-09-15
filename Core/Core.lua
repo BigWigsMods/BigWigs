@@ -154,7 +154,7 @@ do
 		if not times[sync] or GetTime() > (times[sync] + 2) then
 			times[sync] = GetTime()
 			SendAddonMessage("BigWigs", strjoin(" ", sync, ...), "RAID")
-			onSync(sync, rest, pName)
+			onSync(sync, strjoin(" ", ...), pName)
 		end
 	end
 end
