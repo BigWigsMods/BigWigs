@@ -24,8 +24,8 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 28131)
-	self:AddDeathListener("Win", 16028)
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28131)
+	self:Death("Win", 16028)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

@@ -70,8 +70,8 @@ mod.blockEmotes = { "Expedition Commander", L["Razorscale Controller"] }
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_DAMAGE", "Flame", 64704, 64733)
-	self:AddDeathListener("Win", 33186)
+	self:Log("SPELL_DAMAGE", "Flame", 64704, 64733)
+	self:Death("Win", 33186)
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

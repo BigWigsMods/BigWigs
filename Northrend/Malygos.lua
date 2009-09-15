@@ -60,10 +60,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Static", 57429)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Spark", 56152)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Vortex", 56105)
-	self:AddDeathListener("Win", 28859)
+	self:Log("SPELL_AURA_APPLIED", "Static", 57429)
+	self:Log("SPELL_AURA_APPLIED", "Spark", 56152)
+	self:Log("SPELL_CAST_SUCCESS", "Vortex", 56105)
+	self:Death("Win", 28859)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

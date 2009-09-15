@@ -30,15 +30,15 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 62396)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Shutdown", 62475)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameFailed", 62396)
+	self:Log("SPELL_AURA_APPLIED", "Flame", 62396)
+	self:Log("SPELL_AURA_APPLIED", "Shutdown", 62475)
+	self:Log("SPELL_AURA_REMOVED", "FlameFailed", 62396)
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Pyrite", 68605)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Pyrite", 68605)
-	self:AddCombatListener("SPELL_AURA_REFRESH", "Pyrite", 68605)
+	self:Log("SPELL_AURA_APPLIED", "Pyrite", 68605)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Pyrite", 68605)
+	self:Log("SPELL_AURA_REFRESH", "Pyrite", 68605)
 
-	self:AddDeathListener("Win", 33113)
+	self:Death("Win", 33113)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

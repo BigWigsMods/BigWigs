@@ -48,11 +48,11 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Pursue", 67574)
-	self:AddDeathListener("Win", 34564)
+	self:Log("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)
+	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
+	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
+	self:Log("SPELL_AURA_APPLIED", "Pursue", 67574)
+	self:Death("Win", 34564)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

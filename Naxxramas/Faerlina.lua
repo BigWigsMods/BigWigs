@@ -48,10 +48,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Rain", 28794, 54099)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 28798, 54100) --Norm/Heroic
-	self:AddDeathListener("Win", 15953)
+	self:Log("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
+	self:Log("SPELL_AURA_APPLIED", "Rain", 28794, 54099)
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28798, 54100) --Norm/Heroic
+	self:Death("Win", 15953)
 
 	started = nil
 	frenzyMessageId = nil

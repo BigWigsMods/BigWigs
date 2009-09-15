@@ -38,11 +38,19 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "GainSwarm", 28785, 54021)
-	self:AddCombatListener("SPELL_CAST_START", "Swarm", 28785, 54021)
-	self:AddDeathListener("Win", 15956)
+	self:Yell("Engage", false, L["starttrigger1"], L["starttrigger2"], L["starttrigger3"])
+end
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+function mod:OnEngage()
+	if self:GetOption(28785) then
+		locustTime = GetRaidDifficulty() == 1 and 102 or 90
+		self:Message(L["engagewarn"]:format(locustTime), "Urgent")
+		self:DelayedMessage(locustTime - 10, L["gainwarn10sec"], "Important")
+		self:Bar(L["gainincbar"], locustTime, 28785)
+	end
+	self:Log("SPELL_AURA_APPLIED", "GainSwarm", 28785, 54021)
+	self:Log("SPELL_CAST_START", "Swarm", 28785, 54021)
+	self:Death("Win", 15956)
 end
 
 ------------------------------
@@ -62,14 +70,5 @@ end
 function mod:Swarm(_, spellId)
 	self:IfMessage(L["castwarn"], "Attention", spellId)
 	self:Bar(L["castwarn"], 3, spellId)
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if self:GetOption(28785) and (msg:find(L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"]) then
-		locustTime = GetRaidDifficulty() == 1 and 102 or 90
-		self:Message(L["engagewarn"]:format(locustTime), "Urgent")
-		self:DelayedMessage(locustTime - 10, L["gainwarn10sec"], "Important")
-		self:Bar(L["gainincbar"], locustTime, 28785)
-	end
 end
 

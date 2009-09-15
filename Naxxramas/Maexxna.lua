@@ -39,10 +39,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Cocoon", 28622)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Frenzy", 54123, 54124) --Norm/Heroic
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spray", 29484, 54125)
-	self:AddDeathListener("Win", 15952)
+	self:Log("SPELL_AURA_APPLIED", "Cocoon", 28622)
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 54123, 54124) --Norm/Heroic
+	self:Log("SPELL_CAST_SUCCESS", "Spray", 29484, 54125)
+	self:Death("Win", 15952)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

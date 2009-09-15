@@ -76,15 +76,15 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)       -- Elder Brightleaf
-	self:AddCombatListener("UNIT_DIED", "Deaths")                                    -- Elder Brightleaf
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
-	self:AddCombatListener("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark
-	self:AddCombatListener("SPELL_CAST_START", "Sunbeam", 62623, 62872)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
+	self:Log("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
+	self:Log("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)       -- Elder Brightleaf
+	self:Log("UNIT_DIED", "Deaths")                                    -- Elder Brightleaf
+	self:Log("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
+	self:Log("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark
+	self:Log("SPELL_CAST_START", "Sunbeam", 62623, 62872)
+	self:Log("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
+	self:Log("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
+	self:Log("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

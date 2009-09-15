@@ -38,13 +38,13 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Construct", 62488)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "ScorchCast", 62546, 63474)
-	self:AddCombatListener("SPELL_CAST_START", "Jets", 62680, 63472)
-	self:AddCombatListener("SPELL_DAMAGE", "Scorch", 62548, 63475)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Brittle", 62382)
-	self:AddDeathListener("Win", 33118)
+	self:Log("SPELL_CAST_START", "Construct", 62488)
+	self:Log("SPELL_CAST_SUCCESS", "ScorchCast", 62546, 63474)
+	self:Log("SPELL_CAST_START", "Jets", 62680, 63472)
+	self:Log("SPELL_DAMAGE", "Scorch", 62548, 63475)
+	self:Log("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
+	self:Log("SPELL_AURA_APPLIED", "Brittle", 62382)
+	self:Death("Win", 33118)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 

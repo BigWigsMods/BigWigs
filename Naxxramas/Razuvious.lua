@@ -27,11 +27,11 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shout", 29107, 55543)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Taunt", 29060)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
-	self:AddDeathListener("Win", 16061)
+	self:Log("SPELL_CAST_SUCCESS", "Shout", 29107, 55543)
+	self:Log("SPELL_CAST_SUCCESS", "Taunt", 29060)
+	self:Log("SPELL_AURA_APPLIED", "Knife", 55550)
+	self:Log("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
+	self:Death("Win", 16061)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

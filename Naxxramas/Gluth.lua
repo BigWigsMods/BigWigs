@@ -31,10 +31,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Frenzy", 28371, 54427)
-	self:AddCombatListener("SPELL_DAMAGE", "Decimate", 28375, 54426)
-	self:AddCombatListener("SPELL_MISSED", "Decimate", 28375, 54426)
-	self:AddDeathListener("Win", 15932)
+	self:Log("SPELL_CAST_SUCCESS", "Frenzy", 28371, 54427)
+	self:Log("SPELL_DAMAGE", "Decimate", 28375, 54426)
+	self:Log("SPELL_MISSED", "Decimate", 28375, 54426)
+	self:Death("Win", 15932)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

@@ -64,8 +64,8 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
-	self:AddDeathListener("Win", 15954)
+	self:Log("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
+	self:Death("Win", 15954)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

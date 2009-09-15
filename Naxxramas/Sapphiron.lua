@@ -49,11 +49,11 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
-	self:AddDeathListener("Win", 15989)
+	self:Log("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
+	self:Log("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
+	self:Log("SPELL_AURA_APPLIED", "Icebolt", 28522)
+	self:Log("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
+	self:Death("Win", 15989)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 

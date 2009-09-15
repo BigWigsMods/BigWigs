@@ -46,10 +46,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "FlashCast", 61968)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
+	self:Log("SPELL_CAST_START", "FlashCast", 61968)
+	self:Log("SPELL_AURA_APPLIED", "Flash", 61969, 61990)
+	self:Log("SPELL_AURA_APPLIED", "Frozen", 62478, 63512)
+	self:Log("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

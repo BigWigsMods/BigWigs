@@ -119,11 +119,14 @@ do
 		EnableModule = true,
 	}
 	
+	-- XXX We need to remove this error for release, since people can have boss modules that we don't have.
+	-- XXX Either custom ones or ones that are in older instances, like MC, BWL, etc.
+	local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
 	local function onSync(sync, rest, nick)
 		if not registered[sync] then return end
 		if sync == "BossEngaged" then
 			local m = addon:GetBossModule(rest, true)
-			if not m then error("Got a BossEngaged sync for " .. tostring(rest) .. ", but there's no such module.") end
+			if not m then error(bossEngagedSyncError:format(rest, nick)) end
 			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			m:OnEngageWrapper(nick)
 		elseif sync == "EnableModule" or sync == "Death" then
@@ -150,6 +153,7 @@ do
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
+		if GetRealNumRaidMembers() == 0 or GetRealNumPartyMembers() == 0 then return end
 		if not sync then return end
 		if not times[sync] or GetTime() > (times[sync] + 2) then
 			times[sync] = GetTime()

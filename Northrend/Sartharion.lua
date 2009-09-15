@@ -64,9 +64,9 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
-	self:AddCombatListener("SPELL_CAST_START", "Breath", 56908, 58956)
-	self:AddDeathListener("Win", 28860)
+	self:Log("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
+	self:Log("SPELL_CAST_START", "Breath", 56908, 58956)
+	self:Death("Win", 28860)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

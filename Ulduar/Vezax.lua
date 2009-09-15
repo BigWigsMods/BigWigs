@@ -76,12 +76,12 @@ mod.optionHeaders = {
 --      Initialization      --
 ------------------------------
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Flame", 62661)
-	self:AddCombatListener("SPELL_CAST_START", "Surge", 62662)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "SurgeGain", 62662)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 63276)
-	self:AddDeathListener("Win", 33271)
+	self:Log("SPELL_CAST_START", "Flame", 62661)
+	self:Log("SPELL_CAST_START", "Surge", 62662)
+	self:Log("SPELL_AURA_APPLIED", "SurgeGain", 62662)
+	self:Log("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
+	self:Log("SPELL_CAST_SUCCESS", "Mark", 63276)
+	self:Death("Win", 33271)
 
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

@@ -51,11 +51,11 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:Log("SPELL_AURA_APPLIED", "Grip", 64290, 64292)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Armor", 63355, 64002)
+	self:Log("UNIT_DIED", "Deaths")
 
-	self:AddDeathListener("Deaths", 32933, 32934, 32930)
+	self:Death("Deaths", 32933, 32934, 32930)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

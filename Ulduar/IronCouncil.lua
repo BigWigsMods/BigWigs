@@ -58,22 +58,22 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888) -- Steelbreaker +2
-	self:AddCombatListener("SPELL_AURA_REMOVED", "OverRemove", 64637, 61888)
+	self:Log("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
+	self:Log("SPELL_AURA_APPLIED", "Overwhelm", 64637, 61888) -- Steelbreaker +2
+	self:Log("SPELL_AURA_REMOVED", "OverRemove", 64637, 61888)
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 62274, 63489) -- Molgeim
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "RunePower", 61974) -- Molgeim
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "RuneDeathCD", 62269, 63490) -- Molgeim +1
-	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490) -- Molgeim +1
-	self:AddCombatListener("SPELL_CAST_START", "RuneSummoning", 62273) -- Molgeim +2
+	self:Log("SPELL_AURA_APPLIED", "Shield", 62274, 63489) -- Molgeim
+	self:Log("SPELL_CAST_SUCCESS", "RunePower", 61974) -- Molgeim
+	self:Log("SPELL_CAST_SUCCESS", "RuneDeathCD", 62269, 63490) -- Molgeim +1
+	self:Log("SPELL_AURA_APPLIED", "RuneDeath", 62269, 63490) -- Molgeim +1
+	self:Log("SPELL_CAST_START", "RuneSummoning", 62273) -- Molgeim +2
 
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overload", 61869, 63481) -- Brundir
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
-	self:AddCombatListener("SPELL_AURA_REMOVED", "TendrilsRemoved", 61887, 63486) -- Brundir +2
+	self:Log("SPELL_CAST_SUCCESS", "Overload", 61869, 63481) -- Brundir
+	self:Log("SPELL_CAST_SUCCESS", "Whirl", 63483, 61915) -- Brundir +1
+	self:Log("SPELL_AURA_APPLIED", "Tendrils", 61887, 63486) -- Brundir +2
+	self:Log("SPELL_AURA_REMOVED", "TendrilsRemoved", 61887, 63486) -- Brundir +2
 
-	self:AddDeathListener("Deaths", 32867, 32927, 32857)
+	self:Death("Deaths", 32867, 32927, 32857)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end

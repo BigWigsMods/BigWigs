@@ -30,15 +30,15 @@ mod.enabletrigger = function() return L["enable_trigger"] end
 --
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Blind", 65960)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Polymorph", 65801)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Wyvern", 65877)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DivineShield", 66010)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bladestorm", 65947)
-	self:AddCombatListener("SPELL_SUMMON", "Felhunter", 67514)
-	self:AddCombatListener("SPELL_SUMMON", "Cat", 67777)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Heroism", 65983)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
+	self:Log("SPELL_AURA_APPLIED", "Blind", 65960)
+	self:Log("SPELL_AURA_APPLIED", "Polymorph", 65801)
+	self:Log("SPELL_AURA_APPLIED", "Wyvern", 65877)
+	self:Log("SPELL_AURA_APPLIED", "DivineShield", 66010)
+	self:Log("SPELL_CAST_SUCCESS", "Bladestorm", 65947)
+	self:Log("SPELL_SUMMON", "Felhunter", 67514)
+	self:Log("SPELL_SUMMON", "Cat", 67777)
+	self:Log("SPELL_CAST_SUCCESS", "Heroism", 65983)
+	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end

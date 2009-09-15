@@ -75,11 +75,11 @@ function mod:OnBossDisable()
 end
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fizzure", 27810)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "FrostBlast", 27808)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Detonate", 27819)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 28410)
-	self:AddDeathListener("Win", 15990)
+	self:Log("SPELL_CAST_SUCCESS", "Fizzure", 27810)
+	self:Log("SPELL_AURA_APPLIED", "FrostBlast", 27808)
+	self:Log("SPELL_AURA_APPLIED", "Detonate", 27819)
+	self:Log("SPELL_AURA_APPLIED", "MC", 28410)
+	self:Death("Win", 15990)
 
 	self.warnedAboutPhase3Soon = nil
 

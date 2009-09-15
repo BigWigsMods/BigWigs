@@ -40,12 +40,12 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 64412)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
-	self:AddCombatListener("SPELL_CAST_START","BigBang", 64443, 64584)
-	self:AddDeathListener("Win", 32871)
+	self:Log("SPELL_CAST_SUCCESS", "Punch", 64412)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PunchCount", 64412)
+	self:Log("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
+	self:Log("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
+	self:Log("SPELL_CAST_START","BigBang", 64443, 64584)
+	self:Death("Win", 32871)
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 

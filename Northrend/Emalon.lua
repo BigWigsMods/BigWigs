@@ -38,10 +38,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Nova", 64216, 65279)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Overcharge", 64218)
-	self:AddCombatListener("SPELL_HEAL", "OverchargeIcon", 64218)
-	self:AddDeathListener("Win", 33993)
+	self:Log("SPELL_CAST_START", "Nova", 64216, 65279)
+	self:Log("SPELL_CAST_SUCCESS", "Overcharge", 64218)
+	self:Log("SPELL_HEAL", "OverchargeIcon", 64218)
+	self:Death("Win", 33993)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

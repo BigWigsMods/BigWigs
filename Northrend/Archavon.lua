@@ -40,10 +40,10 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Stomp", 58663, 60880)
-	self:AddCombatListener("SPELL_CAST_START", "Shards", 58678)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Cloud", 58965, 61672)
-	self:AddDeathListener("Win", 31125)
+	self:Log("SPELL_CAST_START", "Stomp", 58663, 60880)
+	self:Log("SPELL_CAST_START", "Shards", 58678)
+	self:Log("SPELL_AURA_APPLIED", "Cloud", 58965, 61672)
+	self:Death("Win", 31125)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 

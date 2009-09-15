@@ -38,11 +38,11 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
-	self:AddCombatListener("SPELL_CAST_START", "Meteor", 28884, 57467)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Rivendare, Mark of Zeliek
-	self:AddDeathListener("Deaths", 16063, 16064, 16065, 30549)
+	self:Log("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
+	self:Log("SPELL_CAST_START", "Meteor", 28884, 57467)
+	self:Log("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)
+	self:Log("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Rivendare, Mark of Zeliek
+	self:Death("Deaths", 16063, 16064, 16065, 30549)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

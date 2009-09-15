@@ -64,9 +64,9 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
-	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
-	self:AddDeathListener("Win", 15928)
+	self:Log("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
+	self:Log("SPELL_CAST_START", "Shift", 28089)
+	self:Death("Win", 15928)
 
 	deaths = 0
 	stage1warn = nil

@@ -46,11 +46,11 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Aura", 55593)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Deathbloom", 29865, 55053)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Doom", 29204, 55052)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spore", 29234)
-	self:AddDeathListener("Win", 16011)
+	self:Log("SPELL_CAST_SUCCESS", "Aura", 55593)
+	self:Log("SPELL_CAST_SUCCESS", "Deathbloom", 29865, 55053)
+	self:Log("SPELL_CAST_SUCCESS", "Doom", 29204, 55052)
+	self:Log("SPELL_CAST_SUCCESS", "Spore", 29234)
+	self:Death("Win", 16011)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

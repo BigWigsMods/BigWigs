@@ -73,9 +73,9 @@ function mod:OnBossEnable()
 	timeDK = 77
 	timeRider = 137
 
-	self:AddDeathListener("DKDead", 16125)
-	self:AddDeathListener("RiderDead", 16126)
-	self:AddDeathListener("Win", 16060)
+	self:Death("DKDead", 16125)
+	self:Death("RiderDead", 16126)
+	self:Death("Win", 16060)
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
