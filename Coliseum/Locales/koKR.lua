@@ -67,9 +67,12 @@ if L then
 	L.engage = "전투 시작"
 	L.engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!"
 	L.engage_trigger1 = "황천으로 사라져라!"
+	
+	L.adds = "차원문과 화산"
+	L.adds_desc = "자락서스의 차원문과 화산 소환에 대한 알림과 타이머를 표시합니다."
 
 	L.incinerate_message = "살점 소각"
-	L.incinerate_other = "살점 소각: %s"
+	L.incinerate_other = "살점 소각: %s!"
 	L.incinerate_bar = "~살점 소각 대기시간"
 	L.incinerate_safe = "%s 안전함 :)"
 
@@ -79,7 +82,8 @@ if L then
 
 	L.icon = "전술 표시"
 	L.icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
-
+	
+	L.infernal_bar = "화산 소환"
 	L.netherportal_bar = "~황천 차원문 대기시간"
 	L.netherpower_bar = "~황천의 힘 대기시간"
 end
