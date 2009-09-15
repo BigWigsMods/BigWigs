@@ -92,7 +92,7 @@ L["color_upgrade"] = "Ваши установленные цвета для со
 	
 -- Messages.lua
 L["Messages"] = "Сообщения"
-L["Options for message display."] = "Опции отображения сообщений"
+L["Options for message display."] = "Опции отображения сообщений."
 
 L["BigWigs Anchor"] = "Якорь BigWigs"
 L["Output Settings"] = "Настройки вывода"

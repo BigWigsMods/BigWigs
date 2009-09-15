@@ -44,9 +44,7 @@ if L then
 
 	-- Icehowl
 	L.butt_bar = "~Свирепое бодание"
-
-	--Furious Charge - судя по транскриптору нет русского перевода :(
-	L.charge = "Яростный рывок"
+	L.charge = "Яростный рывок" --Furious Charge - судя по транскриптору нет русского перевода :(
 	L.charge_desc = "Сообщать о яростном рывке."
 	L.charge_trigger = "глядит на"	--check
 end
@@ -69,6 +67,9 @@ if L then
 	L.engage = "Начало битвы"
 	L.engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!"
 	L.engage_trigger1 = "Отправляйся в Пустоту!"
+	
+	L.adds = "Врата и вулкан"
+	L.adds_desc = "Показывать таймер и сообщать о создании порталов и вулканов."
 
 	L.incinerate_message = "Испепеление"
 	L.incinerate_other = "Испепеление плоти на |3-5(%s)"
@@ -82,8 +83,9 @@ if L then
 	L.icon = "Помечать иконкой"
 	L.icon_desc = "Помечать иконкой игрока с Пламенем Легиона. (Необходимо быть рейд лидером или иметь промоут)"
 
-	L.netherportal_bar = "~Следующие врата"
-	L.netherpower_bar = "~Следующая Сила Пустоты"
+	L.infernal_bar = "~следующий вулкан"
+	L.netherportal_bar = "~cледующие врата"
+	L.netherpower_bar = "~cледующая Сила Пустоты"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
