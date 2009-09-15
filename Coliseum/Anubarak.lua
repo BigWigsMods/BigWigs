@@ -48,13 +48,28 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
+	self:Yell("Engage", false, L["engage_trigger"])
+end
+
+local function nextwave() mod:Bar(L["nerubian_burrower"], 45, 66333) end
+function mod:OnEngage()
 	self:Log("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)
 	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
 	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
 	self:Log("SPELL_AURA_APPLIED", "Pursue", 67574)
 	self:Death("Win", 34564)
+
+	if self.db.profile.burrow then
+		self:IfMessage(L["engage_message"], "Attention", 65919)
+		self:Bar(L["burrow_cooldown"], 80, 65919)
+		self:Bar(L["nerubian_burrower"], 10, 66333)
+		self:ScheduleEvent("BWnextwave", nextwave, 10)
+	end
+	if self.db.profile.berserk then
+		self:Berserk(570, true)
+	end
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	phase2 = nil
 end
@@ -86,24 +101,6 @@ function mod:Pursue(player, spellId)
 	self:TargetMessage(L["chase"], player, "Personal", spellId)
 	self:Whisper(player, L["chase"])
 	self:PrimaryIcon(player, "icon")
-end
-
-local function nextwave()
-	mod:Bar(L["nerubian_burrower"], 45, 66333)
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger"]) then
-		if self.db.profile.burrow then
-			self:IfMessage(L["engage_message"], "Attention", 65919)
-			self:Bar(L["burrow_cooldown"], 80, 65919)
-			self:Bar(L["nerubian_burrower"], 10, 66333)
-			self:ScheduleEvent("BWnextwave", nextwave, 10)
-		end
-		if self.db.profile.berserk then
-			self:Berserk(570, true)
-		end
-	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)

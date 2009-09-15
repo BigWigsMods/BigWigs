@@ -77,11 +77,21 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
+	difficulty = GetRaidDifficulty()
+	self:Yell("Engage", false, L["engage_trigger"])
+end
+
+function mod:OnEngage()
+	self:SendMessage("BigWigs_HideProximity", self)
+	if difficulty > 2 then
+		self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
+	elseif self.db.profile.berserk then
+		self:Berserk(900)
+	end
+
 	-- Gormok
 	self:Log("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
-	--self:Log("SPELL_CAST_START", "Stomp", 67647, 67648, 66330, 67649)
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_AURA")
 
 	-- Jormungars
@@ -93,19 +103,38 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
 	self:Log("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:Log("SPELL_AURA_APPLIED", "Enraged", 68335)
+	self:Yell("Jormungars", true, L["jormungars_trigger"])
 
 	-- Icehowl
 	self:Log("SPELL_AURA_APPLIED", "Rage", 66759, 67658)
 	self:Log("SPELL_AURA_APPLIED", "Daze", 66758)
 	self:Log("SPELL_AURA_APPLIED", "Butt", 67654, 67655, 66770)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Yell("Icehowl", true, L["icehowl_trigger"])
+
 	self:Death("Win", 34797)
 
 	-- Common
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	difficulty = GetRaidDifficulty()
 	wipe(snobolledWarned)
+end
+
+function mod:Jormungars()
+	local m = L["boss_incoming"]:format(jormungars)
+	self:IfMessage(m, "Positive")
+	self:Bar(m, 15, "INV_Misc_MonsterScales_18")
+	if difficulty > 2 then
+		self:Bar(L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
+	end
+end
+
+function mod:Icehowl()
+	local m = L["boss_incoming"]:format(icehowl)
+	self:IfMessage(m, "Positive")
+	self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
+	if difficulty > 2 and self.db.profile.berserk then
+		self:Berserk(220, true, icehowl)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -120,31 +149,6 @@ function mod:UNIT_AURA(event, unit)
 	elseif name and not snobolledWarned[n] then
 		self:TargetMessage(L["snobold_message"], n, "Attention", icon)
 		snobolledWarned[n] = true
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger"]) then
-		self:SendMessage("BigWigs_HideProximity", self)
-		if difficulty > 2 then
-			self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
-		elseif self.db.profile.berserk then
-			self:Berserk(900)
-		end
-	elseif msg == L["jormungars_trigger"] then
-		local m = L["boss_incoming"]:format(jormungars)
-		self:IfMessage(m, "Positive")
-		self:Bar(m, 15, "INV_Misc_MonsterScales_18")
-		if difficulty > 2 then
-			self:Bar(L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
-		end
-	elseif msg == L["icehowl_trigger"] then
-		local m = L["boss_incoming"]:format(icehowl)
-		self:IfMessage(m, "Positive")
-		self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
-		if difficulty > 2 and self.db.profile.berserk then
-			self:Berserk(220, true, icehowl)
-		end
 	end
 end
 

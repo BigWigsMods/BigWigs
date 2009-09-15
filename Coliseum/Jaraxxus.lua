@@ -44,6 +44,20 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
+	-- Only happens the first time we engage Jaraxxus, still 11 seconds left until he really engages.
+	self:Yell("FirstEngage", false, L["engage_trigger1"])
+	self:Yell("Engage", false, L["engage_trigger"])
+end
+
+function mod:FirstEngage()
+	self:Bar(L["engage"], 11, "INV_Gizmo_01")
+end
+
+function mod:OnEngage()
+	if self.db.profile.adds then
+		self:Bar(L["netherportal_bar"], 20, 68404)
+	end
+
 	self:Log("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)
 	self:Log("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051, 66237)
 	self:Log("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125, 66197)
@@ -52,9 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
 	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
 	self:Death("Win", 34780)
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 --------------------------------------------------------------------------------
@@ -101,15 +113,5 @@ function mod:InfernalEruption(_, spellId, _, _, spellName)
 	if not self.db.profile.adds then return end
 	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
 	self:Bar(L["netherportal_bar"], 60, 68404)
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger1"]) then
-		self:Bar(L["engage"], 11, "INV_Gizmo_01")
-	elseif msg:find(L["engage_trigger"]) then
-		if self.db.profile.adds then
-			self:Bar(L["netherportal_bar"], 20, 68404)
-		end
-	end
 end
 

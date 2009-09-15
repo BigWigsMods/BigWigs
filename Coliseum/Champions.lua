@@ -40,7 +40,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Heroism", 65983)
 	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Win", false, L["defeat_trigger"])
 end
 
 --------------------------------------------------------------------------------
@@ -81,11 +81,5 @@ end
 
 function mod:Bloodlust(player, spellId)
 	self:IfMessage(L["Bloodlust on champions!"], "Important", spellId)
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["defeat_trigger"]) then
-		self:Win()
-	end
 end
 

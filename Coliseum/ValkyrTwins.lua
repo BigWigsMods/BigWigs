@@ -44,6 +44,21 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
+	self:Yell("Engage", true, L["engage_trigger1"])
+	difficulty = GetRaidDifficulty()
+	started = nil
+end
+
+function mod:OnEngage()
+	if started then return end
+	started = true
+	if self.db.profile.shield or self.db.profile.vortex then
+		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
+	end
+	if self.db.profile.berserk then
+		self:Berserk(difficulty > 2 and 360 or 540)
+	end
+
 	self:Log("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
 	self:Log("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
 	self:Log("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
@@ -51,12 +66,7 @@ function mod:OnBossEnable()
 	-- First 3 are dark, last 3 are light.
 	self:Log("SPELL_AURA_APPLIED", "Touch", 67281, 67282, 67283, 67296, 67297, 67298)
 	self:Death("Win", 34496, 34497)
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	
-	difficulty = GetRaidDifficulty()
-	started = nil
 end
 
 --------------------------------------------------------------------------------
@@ -113,18 +123,6 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 			self:IfMessage(spellName, "Positive", spellId)
 		else
 			self:IfMessage(spellName, "Personal", spellId, "Alarm")
-		end
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, sender)
-	if msg == L["engage_trigger1"] and not started then
-		started = true
-		if self.db.profile.shield or self.db.profile.vortex then
-			self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		end
-		if self.db.profile.berserk then
-			self:Berserk(difficulty > 2 and 360 or 540)
 		end
 	end
 end

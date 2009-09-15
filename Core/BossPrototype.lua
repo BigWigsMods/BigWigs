@@ -164,14 +164,13 @@ do
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
-	
-	-- XXX wrapper for debugging purposes.
-	function boss:OnEngageWrapper(nick)
-		print("Engaging " .. self.moduleName .. " based on engage sync from " .. tostring(nick) .. ".")
-		if self.OnEngage then self:OnEngage(nick) end
+
+	function boss:Engage()
+		if self.OnEngage then self:OnEngage() end
 	end
 
 	function boss:Win()
+		if self.OnWin then self:OnWin() end
 		self:Sync("Death", self.moduleName)
 	end
 end

@@ -128,7 +128,9 @@ do
 			local m = addon:GetBossModule(rest, true)
 			if not m then error(bossEngagedSyncError:format(rest, nick)) end
 			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
-			m:OnEngageWrapper(nick)
+			-- XXX DEBUG
+			print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
+			m:Engage()
 		elseif sync == "EnableModule" or sync == "Death" then
 			coreSync(sync, rest, nick)
 		else
