@@ -3,6 +3,12 @@
 --
 local mod = BigWigs:NewBoss("Faction Champions", "Trial of the Crusader")
 if not mod then return end
+mod.enabletrigger = {
+	--Alliance
+	34460, 34461, 34463, 34465, 34466, 34467, 34468, 34469, 34470, 34471, 34472, 34473, 34474, 34475,
+	--Horde
+	34441, 34444, 34445, 34447, 34448, 34449, 34450, 34451, 34453, 34454, 34455, 34456, 34458, 34459, 
+}
 mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -23,7 +29,7 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Faction Champions")
 mod.locale = L
-mod.enabletrigger = function() return L["enable_trigger"] end
+--mod.enabletrigger = function() return L["enable_trigger"] end
 
 --------------------------------------------------------------------------------
 -- Initialization
