@@ -649,16 +649,16 @@ end
 
 -- For easy use in macros.
 local function BWCB(input)
-	if not plugin:IsEnabled() then return end
+	if not plugin:IsEnabled() then BigWigs:Enable() end
 	local t = GetTime()
 	if not times[input] or (times[input] and (times[input] + 2) < t) then
 		times[input] = t
-		plugin:SendMessage("BigWigs_SendSync", "BWCustomBar "..input)
+		BigWigs:Transmit("BWCustomBar", input)
 	end
 end
 
 local function BWLCB(input)
-	if not plugin:IsEnabled() then return end
+	if not plugin:IsEnabled() then BigWigs:Enable() end
 	StartCustomBar(input, nil, true)
 end
 
