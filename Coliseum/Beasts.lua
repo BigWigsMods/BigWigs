@@ -30,7 +30,7 @@ local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
 local snobolledWarned = {}
 local snobolled = GetSpellInfo(66406)
-local icehowl, jormungars = nil, nil
+local icehowl, jormungars, gormok = nil, nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -74,6 +74,7 @@ mod.locale = L
 function mod:OnRegister()
 	icehowl = BigWigs:Translate("Icehowl")
 	jormungars = BigWigs:Translate("Jormungars")
+	gormok = BigWigs:Translate("Gormok the Impaler")
 end
 
 function mod:OnBossEnable()
@@ -111,6 +112,7 @@ end
 function mod:OnEngage()
 	self:SendMessage("BigWigs_HideProximity", self)
 	if difficulty > 2 then
+		self:Bar(L["boss_incoming"]:format(gormok), 20, 67477)
 		self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
 	elseif self.db.profile.berserk then
 		self:Berserk(900)
