@@ -86,11 +86,15 @@ do
 	function boss:Yell(func, exact, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
-		local map = nil
-		if exact then map = self.exactYellMap else map = self.yellMap end
-		if not map then map = {} end
+		if exact and not self.exactYellMap then self.exactYellMap = {} end
+		if not exact and not self.yellMap then self.yellMap = {} end
 		for i = 1, select("#", ...) do
-			map[(select(i, ...))] = func
+			local y = (select(i, ...))
+			if exact then
+				self.exactYellMap[y] = func
+			else
+				self.yellMap[y] = func
+			end
 		end
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", yell, self)
 	end

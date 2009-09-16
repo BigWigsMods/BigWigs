@@ -77,18 +77,6 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	difficulty = GetRaidDifficulty()
-	self:Yell("Engage", false, L["engage_trigger"])
-end
-
-function mod:OnEngage()
-	self:SendMessage("BigWigs_HideProximity", self)
-	if difficulty > 2 then
-		self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
-	elseif self.db.profile.berserk then
-		self:Berserk(900)
-	end
-
 	-- Gormok
 	self:Log("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
@@ -112,10 +100,21 @@ function mod:OnEngage()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:Yell("Icehowl", true, L["icehowl_trigger"])
 
+	-- Common
+	self:Yell("Engage", false, L["engage_trigger"])
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 34797)
 
-	-- Common
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	difficulty = GetRaidDifficulty()
+end
+
+function mod:OnEngage()
+	self:SendMessage("BigWigs_HideProximity", self)
+	if difficulty > 2 then
+		self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
+	elseif self.db.profile.berserk then
+		self:Berserk(900)
+	end
 	wipe(snobolledWarned)
 end
 

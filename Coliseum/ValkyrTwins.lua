@@ -44,7 +44,17 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
+	self:Log("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
+	self:Log("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
+	self:Log("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
+	-- First 3 are dark, last 3 are light.
+	self:Log("SPELL_AURA_APPLIED", "Touch", 67281, 67282, 67283, 67296, 67297, 67298)
+	
 	self:Yell("Engage", true, L["engage_trigger1"])
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Death("Win", 34496, 34497)
+
 	difficulty = GetRaidDifficulty()
 	started = nil
 end
@@ -58,15 +68,6 @@ function mod:OnEngage()
 	if self.db.profile.berserk then
 		self:Berserk(difficulty > 2 and 360 or 540)
 	end
-
-	self:Log("SPELL_CAST_START", "LightVortex", 66046, 67206, 67207, 67208)
-	self:Log("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
-	self:Log("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
-	self:Log("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
-	-- First 3 are dark, last 3 are light.
-	self:Log("SPELL_AURA_APPLIED", "Touch", 67281, 67282, 67283, 67296, 67297, 67298)
-	self:Death("Win", 34496, 34497)
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 --------------------------------------------------------------------------------

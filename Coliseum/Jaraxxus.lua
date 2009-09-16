@@ -44,9 +44,19 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)
+	self:Log("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051, 66237)
+	self:Log("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125, 66197)
+	self:Log("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128, 66199)
+	self:Log("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108, 66228)
+	self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
+	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
+
 	-- Only happens the first time we engage Jaraxxus, still 11 seconds left until he really engages.
 	self:Yell("FirstEngage", false, L["engage_trigger1"])
 	self:Yell("Engage", false, L["engage_trigger"])
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Death("Win", 34780)
 end
 
 function mod:FirstEngage()
@@ -57,16 +67,6 @@ function mod:OnEngage()
 	if self.db.profile.adds then
 		self:Bar(L["netherportal_bar"], 20, 68404)
 	end
-
-	self:Log("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)
-	self:Log("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051, 66237)
-	self:Log("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125, 66197)
-	self:Log("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128, 66199)
-	self:Log("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108, 66228)
-	self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
-	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
-	self:Death("Win", 34780)
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 --------------------------------------------------------------------------------

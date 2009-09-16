@@ -48,17 +48,20 @@ mod.locale = L
 --
 
 function mod:OnBossEnable()
-	self:Yell("Engage", false, L["engage_trigger"])
-end
-
-local function nextwave() mod:Bar(L["nerubian_burrower"], 45, 66333) end
-function mod:OnEngage()
 	self:Log("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)
 	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
 	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
 	self:Log("SPELL_AURA_APPLIED", "Pursue", 67574)
-	self:Death("Win", 34564)
+	
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
+	self:Yell("Engage", false, L["engage_trigger"])
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Death("Win", 34564)
+end
+
+local function nextwave() mod:Bar(L["nerubian_burrower"], 45, 66333) end
+function mod:OnEngage()
 	if self.db.profile.burrow then
 		self:IfMessage(L["engage_message"], "Attention", 65919)
 		self:Bar(L["burrow_cooldown"], 80, 65919)
@@ -68,9 +71,6 @@ function mod:OnEngage()
 	if self.db.profile.berserk then
 		self:Berserk(570, true)
 	end
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	phase2 = nil
 end
 
