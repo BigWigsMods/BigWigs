@@ -23,9 +23,9 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "koKR")
 if L then
 	L.engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!"
-	L.jormungars_trigger = "마음을 굳게 하게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
-	L.icehowl_trigger = "소개하는 순간 공기마저 얼어붙게 하는 얼음울음이 다음 상대일세! 죽거나 죽이거나, 선택하게 용사들이여!"
-	L.boss_incoming = "%s 곧 등장"
+	L.jormungars_trigger = "마음을 단단히 먹게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
+	L.icehowl_trigger = "다음은, 소개하는 순간 공기마저 얼어붙게 하는 얼음울음일세! 죽이지 않으면 죽을 걸세, 용사들이여!"
+	L.boss_incoming = "%s 가 곧 등장"
 
 	-- Gormok
 	L.snobold = "스노볼트"
@@ -81,7 +81,7 @@ if L then
 	L.legionflame_bar = "~군단 불꽃 대기시간"
 
 	L.icon = "전술 표시"
-	L.icon_desc = "불꽃 군단 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
+	L.icon_desc = "군단 불꽃 대상이 된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 	
 	L.infernal_bar = "화산 소환"
 	L.netherportal_bar = "~황천 차원문 대기시간"
