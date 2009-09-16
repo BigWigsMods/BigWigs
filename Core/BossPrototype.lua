@@ -53,9 +53,9 @@ do
 		if self.exactYellMap and self.exactYellMap[msg] then
 			self[self.exactYellMap[msg]](self, msg, ...)
 		elseif self.yellMap then
-			for i, yell in next, self.yellMap do
+			for yell, func in pairs(self.yellMap) do
 				if msg:find(yell) then
-					self[self.yellMap[msg]](self, msg, ...)
+					self[func](self, msg, ...)
 				end
 			end
 		end
