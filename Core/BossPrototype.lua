@@ -55,7 +55,7 @@ do
 		end
 	end
 
-	local function cleu(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+	function boss:cleu(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(-12, -7), 16)
 			local d = self.deathMap and self.deathMap[numericId]
@@ -100,7 +100,7 @@ do
 		else
 			self.combatLogEventMap[event]["*"] = func
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", cleu)
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "cleu")
 	end
 	function boss:Death(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
