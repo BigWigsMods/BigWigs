@@ -251,7 +251,7 @@ if L then
 	L.shock_message = "당신은 번개 충격! 이동!"
 	L.barrier_message = "거인 - 룬문자 방벽!"
 
-	L.detonation_say = "저 푹탄이에요! 피하세요!"
+	L.detonation_say = "저 폭탄이에요! 피하세요!"
 
 	L.charge_message = "충전 (%d)!"
 	L.charge_bar = "충전 (%d)"
