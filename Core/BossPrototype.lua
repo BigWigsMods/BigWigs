@@ -12,6 +12,12 @@ end
 function boss:OnDisable()
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 	self:CancelAllScheduledEvents()
+
+	if self.combatLogEventMap then wipe(self.combatLogEventMap) end
+	if self.exactYellMap then wipe(self.exactYellMap) end
+	if self.yellMap then wipe(self.yellMap) end
+	if self.deathMap then wipe(self.deathMap) end
+
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
 function boss:GetOption(spellId)
@@ -43,7 +49,7 @@ do
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 
-	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)
+	local function yell(self, _, msg, ...)
 		if self.exactYellMap[msg] then
 			self.exactYellMap[msg](self, msg, ...)
 		else
@@ -55,22 +61,23 @@ do
 		end
 	end
 
-	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+	local function cleu(self, _, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(-12, -7), 16)
 			local d = self.deathMap and self.deathMap[numericId]
 			if not d then return end
-			self[d](self, numericId, dGUID, player, dFlags)
+			if type(d) == "function" then d(numericId, dGUID, player, dFlags)
+			else self[d](self, numericId, dGUID, player, dFlags) end
 		else
 			local m = self.combatLogEventMap and self.combatLogEventMap[event]
 			if m and (m[spellId] or m["*"]) then
-				local f = self[m[spellId] or m["*"]]
-				if f then
-					if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
-						f(self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+				if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
+					local func = m[spellId] or m["*"]
+					if type(func) == "function" then
+						func(player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+					else
+						self[func](self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 					end
-				else
-					error(modMissingFunction:format(self.moduleName, event, spellId))
 				end
 			end
 		end
@@ -78,18 +85,18 @@ do
 
 	function boss:Yell(func, exact, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
-		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
 		local map = nil
 		if exact then map = self.exactYellMap else map = self.yellMap end
 		if not map then map = {} end
 		for i = 1, select("#", ...) do
 			map[(select(i, ...))] = func
 		end
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", yell, self)
 	end
 	function boss:Log(event, func, ...)
 		if not event or not func then error(missingArgument:format(self.moduleName)) end
-		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
 		if not self.combatLogEventMap then self.combatLogEventMap = {} end
 		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
 		local c = select("#", ...)
@@ -100,16 +107,16 @@ do
 		else
 			self.combatLogEventMap[event]["*"] = func
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", cleu, self)
 	end
 	function boss:Death(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
-		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
 		if not self.deathMap then self.deathMap = {} end
 		for i = 1, select("#", ...) do
 			self.deathMap[(select(i, ...))] = func
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", cleu, self)
 	end
 end
 
