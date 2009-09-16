@@ -101,7 +101,7 @@ function mod:OnEngage()
 	self:Log("SPELL_CAST_START", "Molten", 66821)
 	self:Log("SPELL_AURA_APPLIED", "Toxin", 67618, 67619, 67620, 66823)
 	self:Log("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
-	self:Log("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
+	--self:Log("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:Log("SPELL_AURA_APPLIED", "Enraged", 68335)
 	self:Yell("Jormungars", true, L["jormungars_trigger"])
 
@@ -126,6 +126,7 @@ function mod:Jormungars()
 	if difficulty > 2 then
 		self:Bar(L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
 	end
+	self:SendMessage("BigWigs_ShowProximity", self)
 end
 
 function mod:Icehowl()
@@ -135,6 +136,7 @@ function mod:Icehowl()
 	if difficulty > 2 and self.db.profile.berserk then
 		self:Berserk(220, true, icehowl)
 	end
+	self:SendMessage("BigWigs_HideProximity", self)
 end
 
 --------------------------------------------------------------------------------
@@ -194,7 +196,6 @@ end
 
 do
 	local dontWarn = nil
-
 	local function toxinWarn(spellId)
 		if not dontWarn then
 			mod:TargetMessage(L["toxin_spell"], toxin, "Urgent", spellId)
@@ -215,7 +216,6 @@ end
 
 do
 	local dontWarn = nil
-
 	local function burnWarn(spellId)
 		if not dontWarn then
 			mod:TargetMessage(L["burn_spell"], burn, "Urgent", spellId)
@@ -229,15 +229,8 @@ do
 		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
 		if player == pName then
 			dontWarn = true
-			self:SendMessage("BigWigs_ShowProximity", self)
 			self:TargetMessage(L["burn_spell"], player, "Important", spellId, "Info")
 		end
-	end
-end
-
-function mod:BurnRemoved(player)
-	if player == pName then
-		self:SendMessage("BigWigs_HideProximity", self)
 	end
 end
 

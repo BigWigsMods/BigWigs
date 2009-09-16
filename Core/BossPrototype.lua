@@ -50,9 +50,9 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 
 	local function yell(self, _, msg, ...)
-		if self.exactYellMap[msg] then
+		if self.exactYellMap and self.exactYellMap[msg] then
 			self.exactYellMap[msg](self, msg, ...)
-		else
+		elseif self.yellMap then
 			for i, yell in next, self.yellMap do
 				if msg:find(yell) then
 					self.yellMap[msg](self, msg, ...)

@@ -122,11 +122,15 @@ do
 	-- XXX We need to remove this error for release, since people can have boss modules that we don't have.
 	-- XXX Either custom ones or ones that are in older instances, like MC, BWL, etc.
 	local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
+
 	local function onSync(sync, rest, nick)
 		if not registered[sync] then return end
 		if sync == "BossEngaged" then
 			local m = addon:GetBossModule(rest, true)
-			if not m then error(bossEngagedSyncError:format(rest, nick)) end
+			if not m then
+				print(bossEngagedSyncError:format(rest, nick))
+				return
+			end
 			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			-- XXX DEBUG
 			print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")

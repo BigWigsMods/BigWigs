@@ -50,23 +50,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function plugin:BigWigs_OnBossEnable(event, mod)
-	if mod and mod.enabletrigger then
-		self:UnregisterMob(mod)
-	end
-end
-
-function plugin:BigWigs_OnBossDisable(event, mod)
-	if mod and mod.enabletrigger then
-		self:RegisterMob(mod)
-	end
-end
+function plugin:BigWigs_OnBossEnable(event, mod) self:UnregisterMob(mod) end
+function plugin:BigWigs_OnBossDisable(event, mod) self:RegisterMob(mod) end
 
 function plugin:BigWigs_BossModuleRegistered(event, modname, mod)
-	if mod and mod.enabletrigger then
-		self:RegisterZone(mod.zoneName)
-		self:RegisterMob(mod)
-	end
+	self:RegisterZone(mod.zoneName)
+	self:RegisterMob(mod)
 end
 
 function plugin:ZoneChanged()
@@ -87,11 +76,10 @@ end
 
 local function targetCheck(unit)
 	local n = UnitName(unit)
-	local id = UnitGUID(unit)
 	if not n then return end
-
 	if UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	if not n and not id then return end
+	local id = UnitGUID(unit)
+	if not id then return end
 
 	id = tonumber(id:sub(-12,-7),16)
 	
