@@ -51,11 +51,11 @@ do
 
 	local function yell(self, _, msg, ...)
 		if self.exactYellMap and self.exactYellMap[msg] then
-			self.exactYellMap[msg](self, msg, ...)
+			self[self.exactYellMap[msg]](self, msg, ...)
 		elseif self.yellMap then
 			for i, yell in next, self.yellMap do
 				if msg:find(yell) then
-					self.yellMap[msg](self, msg, ...)
+					self[self.yellMap[msg]](self, msg, ...)
 				end
 			end
 		end
