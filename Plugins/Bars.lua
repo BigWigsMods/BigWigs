@@ -68,8 +68,7 @@ local function rearrangeBars(anchor)
 	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 	for i, bar in next, tmp do
 		bar:ClearAllPoints()
-		--if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-		if up then
+		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
 			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
 			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
 			lastUpBar = bar
@@ -79,11 +78,7 @@ local function rearrangeBars(anchor)
 			lastDownBar = bar
 		end
 	end
-	if #tmp > 0 and db.emphasize then
-		empUpdate:Show()
-	else
-		empUpdate:Hide()
-	end
+	empUpdate:Show()
 end
 
 local function barStopped(event, bar)
@@ -506,8 +501,7 @@ do
 	empUpdate:SetScript("OnUpdate", function(self, elapsed)
 		if dirty then return end
 		for k in pairs(normalAnchor.bars) do
-			if k.remaining <= 10 then
-			--if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
+			if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
@@ -516,6 +510,7 @@ do
 			rearrangeBars(normalAnchor)
 			rearrangeBars(emphasizeAnchor)
 			dirty = nil
+			self:Hide()
 		end
 	end)
 end
@@ -574,7 +569,7 @@ function plugin:EmphasizeBar(bar)
 	end
 	bar:SetColor(colorEmphasized())
 	bar:SetScale(db.emphasizeScale)
-	--bar:Set("bigwigs:emphasized", true)
+	bar:Set("bigwigs:emphasized", true)
 end
 
 --------------------------------------------------------------------------------
@@ -602,7 +597,7 @@ local function sendCustomMessage(msg)
 	messages[msg] = nil
 end
 
-local function StartCustomBar(bar, nick, localOnly)
+local function startCustomBar(bar, nick, localOnly)
 	local time, barText = select(3, bar:find("(%S+) (.*)"))
 	local seconds = parseTime(time)
 	if type(seconds) ~= "number" or type(barText) ~= "string" then
@@ -628,27 +623,23 @@ end
 
 function plugin:OnSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick then return end
-
-	if UnitInRaid("player") then
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local name, rank = GetRaidRosterInfo(i)
-			if name == nick then
-				if rank == 0 then
-					return
-				else
-					break
-				end
+	local num = GetNumRaidMembers()
+	for i = 1, num do
+		local name, rank = GetRaidRosterInfo(i)
+		if name == nick then
+			if rank == 0 then
+				return
+			else
+				break
 			end
 		end
 	end
 
-	StartCustomBar(rest, nick, false)
+	startCustomBar(rest, nick, false)
 end
 
-
--- For easy use in macros.
-local function BWCB(input)
+-- Shorthand slashcommand
+_G["SlashCmdList"]["BWCB_SHORTHAND"] = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	local t = GetTime()
 	if not times[input] or (times[input] and (times[input] + 2) < t) then
@@ -656,15 +647,10 @@ local function BWCB(input)
 		BigWigs:Transmit("BWCustomBar", input)
 	end
 end
-
-local function BWLCB(input)
-	if not plugin:IsEnabled() then BigWigs:Enable() end
-	StartCustomBar(input, nil, true)
-end
-
--- Shorthand slashcommand
-_G["SlashCmdList"]["BWCB_SHORTHAND"] = BWCB
 _G["SLASH_BWCB_SHORTHAND1"] = "/bwcb"
-_G["SlashCmdList"]["BWLCB_SHORTHAND"] = BWLCB
+_G["SlashCmdList"]["BWLCB_SHORTHAND"] = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	startCustomBar(input, nil, true)
+end
 _G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
 
