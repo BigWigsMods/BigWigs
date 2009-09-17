@@ -73,7 +73,7 @@ local acOptions = {
 		showBlizzardWarnings = {
 			type = "toggle",
 			name = "Blizzard warnings",
-			desc = "Blizzard provides their own warning messages for some abilities on some encounters. In our opinion, these messages are both way too long (covering the length of your screen), and way too descriptive and specific. We try to produce smaller, more fitting messages that do not interfere as much with the game, and that don't tell you specifically what to do, but merely what is happening.\n\n|cffff4411When this option is off, Blizzards warnings will not be shown in the middle of the screen any more, but they will still show in your chat frame.|r",
+			desc = "Blizzard provides their own warning messages for some abilities on some encounters. In our opinion, these messages are both way too long (covering the length of your screen), and way too descriptive. We try to produce smaller, more fitting messages that do not interfere as much with the game, and that don't tell you specifically what to do.\n\n|cffff4411When this option is off, Blizzards warnings will not be shown in the middle of the screen any more, but they will still show in your chat frame.|r",
 			order = 22,
 			width = "full",
 		},
