@@ -65,14 +65,14 @@ local acOptions = {
 		sound = {
 			type = "toggle",
 			name = "Sound",
-			desc = "Messages might come with different sounds. Some people find it easier to listen for these sounds after they've learned which sound goes with which message, as opposed to reading the messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r",
+			desc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r",
 			order = 21,
 			width = "full",
 		},
 		showBlizzardWarnings = {
 			type = "toggle",
 			name = "Blizzard warnings",
-			desc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the game, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r",
+			desc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r",
 			order = 22,
 			width = "full",
 		},

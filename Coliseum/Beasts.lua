@@ -96,14 +96,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
 	--self:Log("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:Log("SPELL_AURA_APPLIED", "Enraged", 68335)
-	self:Yell("Jormungars", true, L["jormungars_trigger"])
+	self:Yell("Jormungars", L["jormungars_trigger"])
 
 	-- Icehowl
 	self:Log("SPELL_AURA_APPLIED", "Rage", 66759, 67658)
 	self:Log("SPELL_AURA_APPLIED", "Daze", 66758)
 	self:Log("SPELL_AURA_APPLIED", "Butt", 67654, 67655, 66770)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:Yell("Icehowl", true, L["icehowl_trigger"])
+	self:Yell("Icehowl", L["icehowl_trigger"])
 
 	-- Common
 	self:Yell("Engage", L["engage_trigger"])

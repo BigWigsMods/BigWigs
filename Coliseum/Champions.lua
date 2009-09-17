@@ -49,7 +49,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Heroism", 65983)
 	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
 
-	self:Yell("Win", false, L["defeat_trigger"])
+	self:Yell("Win", L["defeat_trigger"])
 end
 
 --------------------------------------------------------------------------------
