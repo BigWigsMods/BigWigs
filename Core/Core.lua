@@ -265,6 +265,8 @@ function addon:OnEnable()
 	self:SendMessage("BigWigs_CoreEnabled")
 	self.pluginCore:Enable()
 	self.bossCore:Enable()
+
+	zoneChanged()
 end
 
 function addon:OnDisable()
