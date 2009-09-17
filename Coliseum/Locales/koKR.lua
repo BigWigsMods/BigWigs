@@ -25,13 +25,13 @@ if L then
 	L.engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!"
 	L.jormungars_trigger = "마음을 단단히 먹게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
 	L.icehowl_trigger = "다음은, 소개하는 순간 공기마저 얼어붙게 하는 얼음울음일세! 죽이지 않으면 죽을 걸세, 용사들이여!"
-	L.boss_incoming = "%s 가 곧 등장"
+	L.boss_incoming = "%s 곧 등장"
 
 	-- Gormok
 	L.snobold = "스노볼트"
 	L.snobold_desc = "스노볼트가 누구의 머리위에 있는지를 알립니다."
 	L.snobold_message = "스노볼트: %s!"
-	L.impale_message = "꿰뚫기 x%2$d: %1$s"
+	L.impale_message = "꿰뚫기 %2$dx : %1$s"
 	L.firebomb_message = "당신은 불 폭탄!"
 
 	-- Jormungars
