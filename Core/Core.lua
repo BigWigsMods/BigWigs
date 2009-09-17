@@ -236,7 +236,8 @@ function addon:OnInitialize()
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 
-	if LOCALE ~= "enUS" then
+	-- check for and load the babbles early if available, used for packed versions of bigwigs
+	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
@@ -251,6 +252,11 @@ function addon:OnInitialize()
 end
 
 function addon:OnEnable()
+	-- load the babbles, used for unpacked versions of bigwigs.
+	if LOCALE ~= "enUS" and (not BZ or not BB) then
+		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
+		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
+	end
 	self:RegisterEvent("CHAT_MSG_ADDON", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED", zoneChanged)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
