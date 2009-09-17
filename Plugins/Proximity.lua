@@ -61,9 +61,10 @@ local bandages = {
 local ranges = {
 	[15] = function(unit)
 		for i, v in next, bandages do
-			if GetItemCount(v) > 0 then
-				if IsItemInRange(v, n) == 1 then return true end
-				return
+			local r = IsItemInRange(v, unit)
+			if type(r) == "number" then
+				if r == 1 then return true end
+				break
 			end
 		end
 	end,

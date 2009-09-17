@@ -299,6 +299,7 @@ function addon:OnDisable()
 	self:SendMessage("BigWigs_CoreDisabled")
 	self.pluginCore:Disable()
 	self.bossCore:Disable()
+	monitoring = nil
 end
 
 function addon:Print(...)
