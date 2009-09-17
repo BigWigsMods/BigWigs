@@ -9,7 +9,7 @@ if not mod then return end
 	33210 = Expidition Commander
 	33185 = Razorscale
 --]]
-mod.enabletrigger = {33185, 33210, 33233}
+mod:RegisterEnableMob(33185, 33210, 33233)
 mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
 
 ------------------------------

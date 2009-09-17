@@ -3,7 +3,7 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Patchwerk", "Naxxramas")
 if not mod then return end
-mod.enabletrigger = 16028
+mod:RegisterEnableMob(16028)
 mod.toggleOptions = {28131, "berserk", "bosskill"}
 
 ----------------------------

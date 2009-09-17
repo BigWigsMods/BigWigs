@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
-mod.enabletrigger = 28859
+mod:RegisterEnableMob(28859)
 mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
 
 ------------------------------

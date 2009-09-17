@@ -3,7 +3,7 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Ignis the Furnace Master", "Ulduar")
 if not mod then return end
-mod.enabletrigger = 33118
+mod:RegisterEnableMob(33118)
 mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
 
 ------------------------------

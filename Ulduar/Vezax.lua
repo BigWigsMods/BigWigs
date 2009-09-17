@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("General Vezax", "Ulduar")
 if not mod then return end
-mod.enabletrigger = 33271
+mod:RegisterEnableMob(33271)
 mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}
 
 ------------------------------

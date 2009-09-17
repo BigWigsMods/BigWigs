@@ -3,7 +3,7 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("XT-002 Deconstructor", "Ulduar")
 if not mod then return end
-mod.enabletrigger = 33293
+mod:RegisterEnableMob(33293)
 mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[63024] = "normal",

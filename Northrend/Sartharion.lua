@@ -12,7 +12,7 @@ mod.otherMenu = "Northrend"
 	30451 = shadron
 	30449 = vesperon
 --]]
-mod.enabletrigger = { 28860, 30449, 30451, 30452 }
+mod:RegisterEnableMob(28860, 30449, 30451, 30452)
 mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
 
 ------------------------------

@@ -3,12 +3,8 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Thaddius", "Naxxramas")
 if not mod then return end
---[[
-	15928 - thaddius 
-	15929 - stalagg
-	15930 - feugen
---]]
-mod.enabletrigger = { 15928, 15929, 15930 }
+-- 15928 thaddius, 15929 - stalagg, 15930 - feugen
+mod:RegisterEnableMob(15928, 15929, 15930)
 mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
 
 ------------------------------

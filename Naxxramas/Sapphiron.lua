@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Sapphiron", "Naxxramas")
 if not mod then return end
-mod.enabletrigger = 15989
+mod:RegisterEnableMob(15989)
 mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
 
 ------------------------------

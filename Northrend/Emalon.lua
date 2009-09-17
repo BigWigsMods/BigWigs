@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Emalon the Storm Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
-mod.enabletrigger = 33993
+mod:RegisterEnableMob(33993)
 mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true

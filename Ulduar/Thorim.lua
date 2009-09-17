@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Thorim", "Ulduar")
 if not mod then return end
 -- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
-mod.enabletrigger = { 32865, 32882, 32872 }
+mod:RegisterEnableMob(32865, 32882, 32872)
 mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {

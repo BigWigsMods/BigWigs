@@ -3,7 +3,7 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Anub'Rekhan", "Naxxramas")
 if not mod then return end
-mod.enabletrigger = 15956
+mod:RegisterEnableMob(15956)
 mod.toggleOptions = {28785, "bosskill"}
 
 ------------------------------

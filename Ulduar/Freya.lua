@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Freya", "Ulduar")
 if not mod then return end
-mod.enabletrigger = 32906
+mod:RegisterEnableMob(32906)
 mod.toggleOptions = {"phase", "wave", "tree", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
 mod.optionHeaders = {
 	phase = "normal",

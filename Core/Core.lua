@@ -33,10 +33,21 @@ local function enableBossModule(module, noSync)
 	end
 end
 
-local function targetSeen(unit, module)
+local function shouldReallyEnable(unit, moduleName)
+	local module = addon.bossCore:GetModule(moduleName)
 	if not module or module:IsEnabled() then return end
 	if not module.VerifyEnable or module:VerifyEnable(unit) then
 		enableBossModule(module)
+	end
+end
+
+local function targetSeen(unit, targetModule)
+	if type(targetModule) == "string" then
+		shouldReallyEnable(unit, targetModule)
+	else
+		for i, module in next, targetModule do
+			shouldReallyEnable(unit, module)
+		end
 	end
 end
 
@@ -73,14 +84,29 @@ local function zoneChanged()
 	end
 end
 
-function addon:RegisterEnableMob(module, ...)
-	for i = 1, select("#", ...) do
-		enablemobs[(select(i, ...))] = module
+do
+	local function add(moduleName, tbl, entry)
+		local t = type(tbl[entry])
+		if t == "nil" then
+			tbl[entry] = moduleName
+		elseif t == "table" then
+			tinsert(tbl[entry], moduleName)
+		elseif t == "string" then
+			local tmp = tbl[entry]
+			tbl[entry] = { tmp, moduleName }
+		else
+			error("What the hell .. Unknown type in a enable trigger table.")
+		end
 	end
-end
-function addon:RegisterEnableYell(module, ...)
-	for i = 1, select("#", ...) do
-		enableyells[(select(i, ...))] = module
+	function addon:RegisterEnableMob(module, ...)
+		for i = 1, select("#", ...) do
+			add(module.moduleName, enablemobs, (select(i, ...)))
+		end
+	end
+	function addon:RegisterEnableYell(module, ...)
+		for i = 1, select("#", ...) do
+			add(module.moduleName, enableyells, (select(i, ...)))
+		end
 	end
 end
 

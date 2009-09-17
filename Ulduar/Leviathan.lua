@@ -3,7 +3,7 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Flame Leviathan", "Ulduar")
 if not mod then return end
-mod.enabletrigger = 33113
+mod:RegisterEnableMob(33113)
 mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
 
 ----------------------------

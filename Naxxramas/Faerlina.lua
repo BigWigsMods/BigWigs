@@ -3,7 +3,7 @@
 ----------------------------------
 local mod = BigWigs:NewBoss("Grand Widow Faerlina", "Naxxramas")
 if not mod then return end
-mod.enabletrigger = 15953
+mod:RegisterEnableMob(15953)
 mod.toggleOptions = {28732, 28794, 28798, "bosskill"}
 
 ------------------------------
