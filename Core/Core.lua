@@ -350,7 +350,7 @@ do
 		end
 
 		-- XXX Target monitor
-		enablezone[module.zoneName] = true
+		enablezones[module.zoneName] = true
 		
 		if module.optionHeaders then
 			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
