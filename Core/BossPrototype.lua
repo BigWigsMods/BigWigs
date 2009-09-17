@@ -364,10 +364,20 @@ end
 
 function boss:Sync(...) core:Transmit(...) end
 
--- XXX 3rd argument is a proposed API change, and is subject to change/removal.
-function boss:Whisper(player, spellName, noName)
-	if player == pName then return end
-	self:SendMessage("BigWigs_SendTell", player, noName and spellName or fmt(L["you"], spellName))
+do
+	local sentWhispers = {}
+	local function filter(self, event, msg) if sentWhispers[msg] then return true end end
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
+
+	-- XXX 3rd argument is a proposed API change, and is subject to change/removal.
+	function boss:Whisper(player, spellName, noName)
+		if not player or player == pName or not UnitIsPlayer(player) or not BigWigs.db.profile.whisper then return end
+		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
+		local msg = noName and spellName or fmt(L["you"], spellName)
+		sentWhispers[msg] = true
+		SendChatMessage(msg, "WHISPER", nil, player)
+	end
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
