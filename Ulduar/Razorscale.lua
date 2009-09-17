@@ -9,7 +9,7 @@ if not mod then return end
 	33210 = Expidition Commander
 	33185 = Razorscale
 --]]
-mod:RegisterEnableMob(33185, 33210, 33233)
+mod:RegisterEnableMob(33185, 33210)
 mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
 
 ------------------------------
@@ -29,13 +29,6 @@ local phase = nil
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "enUS", true)
 if L then
-	-- <nevcairiel> at least in german, the "Controller" isnt translated, so its "<boss> Controller"
-	-- <nevcairiel> in ruRU the whole thing isnt localized
-	-- <nevcairiel> in french they translated the whole thing, ha
-	-- XXX So translators make sure that the Razorscale Controller is actually
-	-- translated in your language before adding it to your locale below.
-	L["Razorscale Controller"] = true
-
 	L.phase = "Phases"
 	L.phase_desc = "Warn when Razorscale switches between phases."
 	L.ground_trigger = "Move quickly! She won't remain grounded for long!"
@@ -62,8 +55,6 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Razorscale")
 mod.locale = L
-
-mod.blockEmotes = { "Expedition Commander", L["Razorscale Controller"] }
 
 ------------------------------
 --      Initialization      --

@@ -62,7 +62,6 @@ end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
 mod.locale = L
 
-mod.blockEmotes = L["Vezax Bunny"]
 mod.optionHeaders = {
 	vapor = L.vapor,
 	[62660] = 62660,
