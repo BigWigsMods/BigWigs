@@ -58,6 +58,70 @@ local bandages = {
 	1251, -- Linen Bandage
 }
 
+local ranges = {
+	[15] = function(unit)
+		for i, v in next, bandages do
+			if GetItemCount(v) > 0 then
+				if IsItemInRange(v, n) == 1 then return true end
+				return
+			end
+		end
+	end,
+}
+
+do
+	local checkInteractDistance = nil
+	local _, r = UnitRace("player")
+	if r == "Tauren" then
+		checkInteractDistance = { [3] = 6, [2] = 7, [4] = 25 }
+	elseif r == "Scourge" then
+		checkInteractDistance = { [3] = 7, [2] = 8, [4] = 27 }
+	else
+		checkInteractDistance = { [3] = 8, [2] = 9, [4] = 28 }
+	end
+	for index, range in pairs(checkInteractDistance) do
+		ranges[range] = function(unit) return CheckInteractDistance(unit, index) end
+	end
+	
+	local spells = {
+		DRUID = { 5185, 467, 1126 },
+		-- HUNTER = { 34477 }, -- Misdirect is like 100y range, so forget it!
+		MAGE = { 475, 1459 },
+		PALADIN = { 635, 19740, 20473 },
+		PRIEST = { 2050, 1243 },
+		ROGUE = { 57934 },
+		SHAMAN = { 331, 526 },
+		WARRIOR = { 50720 }, -- Can't use Intervene since it has a minimum range.
+		WARLOCK = { 5697 },
+	}
+	local _, class = UnitClass("player")
+	local mySpells = spells[class]
+	if mySpells then
+		for i, spell in next, mySpells do
+			local name, _, _, _, _, _, _, minRange, range = GetSpellInfo(spell)
+			if name and range then
+				range = math.floor(range + 0.5)
+				if range == 0 then range = 5 end
+				ranges[range] = function(unit)
+					if IsSpellInRange(name, unit) == 1 then return true end
+				end
+			end
+		end
+	end
+end
+local function getClosestRangeFunction(toRange)
+	if ranges[toRange] then return ranges[toRange] end
+	local closest = 15
+	local closestDiff = math.abs(toRange - 15)
+	for range, func in pairs(ranges) do
+		local diff = math.abs(toRange - range)
+		if diff < closestDiff then
+			closest = range
+			closestDiff = diff
+		end
+	end
+	return ranges[closest]
+end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
