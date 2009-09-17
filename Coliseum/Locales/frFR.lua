@@ -22,6 +22,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "frFR")
 if L then
+	L.enable_trigger = "Vous avez entendu l'appel de la Croisade d'argent et vaillement répondu"
+
 	L.engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !"
 	L.jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !"
 	L.icehowl_trigger = "L'air se gèle à l'entrée de notre prochain combattant, Glace-hurlante ! Tuez ou soyez tués, champions !"
@@ -64,9 +66,14 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "frFR")
 if L then
+	L.enable_trigger = "Misérable gnome ! Ton arrogance te perdra !"
+
 	L.engage = "Engagement"
 	L.engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !"
 	--L.engage_trigger1 = "Banished to the Nether"
+
+	L.adds = "Portails et volcans"
+	L.adds_desc = "Affiche un minuteur et prévient quand Jaraxxus invoque des portails et des volcans."
 
 	L.incinerate_message = "Incinérer la chair"
 	L.incinerate_other = "Incinérer : %s"

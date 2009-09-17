@@ -2,6 +2,7 @@
 
 ## Title: Big Wigs [|cffeda55fOptions|r]
 ## Notes: Big Wigs Configuration Options
+## Notes-frFR: Options de configuration de Big Wigs.
 ## Author: Ammo, Rabbit, Funkydude
 
 ## LoadOnDemand: 1
