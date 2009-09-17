@@ -66,14 +66,14 @@ local acOptions = {
 		sound = {
 			type = "toggle",
 			name = "Sound",
-			desc = "Messages might come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.\n\n|cffff4411Note that even if this option is off, the default raid warning sound might still be played by incoming raid warnings from other people. That sound, however, is different from the sounds we use.|r",
+			desc = "Messages might come with different sounds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the message.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r",
 			order = 21,
 			width = "full",
 		},
 		showBlizzardWarnings = {
 			type = "toggle",
 			name = "Blizzard warnings",
-			desc = "Blizzard provides their own warning messages for some abilities on some encounters. In our opinion, these messages are both way too long (covering the length of your screen), and way too descriptive. We try to produce smaller, more fitting messages that do not interfere as much with the game, and that don't tell you specifically what to do.\n\n|cffff4411When this option is off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r",
+			desc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the game, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r",
 			order = 22,
 			width = "full",
 		},
@@ -86,14 +86,14 @@ local acOptions = {
 		raidicon = {
 			type = "toggle",
 			name = "Raid icons",
-			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
+			desc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
 			order = 31,
 			width = "full",
 		},
 		whisper = {
 			type = "toggle",
 			name = "Whisper warnings",
-			desc = "Send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
+			desc = "Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
 			order = 32,
 			width = "full",
 		},
