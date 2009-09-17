@@ -2,9 +2,15 @@
 -- Prototype
 --
 
+local core = BigWigs
+local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
+local combatLogMap = setmetatable({}, metaMap)
+local yellMap = setmetatable({}, metaMap)
+local deathMap = setmetatable({}, metaMap)
+
 local boss = {}
-BigWigs.bossCore:SetDefaultModulePrototype(boss)
-function boss:OnInitialize() BigWigs:RegisterBossModule(self) end
+core.bossCore:SetDefaultModulePrototype(boss)
+function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 	self:SendMessage("BigWigs_OnBossEnable", self)
@@ -13,9 +19,9 @@ function boss:OnDisable()
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 	self:CancelAllScheduledEvents()
 
-	if self.combatLogEventMap then wipe(self.combatLogEventMap) end
-	if self.yellMap then wipe(self.yellMap) end
-	if self.deathMap then wipe(self.deathMap) end
+	wipe(combatLogMap[self])
+	wipe(yellMap[self])
+	wipe(deathMap[self])
 
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
@@ -26,6 +32,13 @@ function boss:Reboot()
 	self:Disable()
 	self:Enable()
 end
+
+-------------------------------------------------------------------------------
+-- Enable triggers
+--
+
+function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
+function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
 
 -------------------------------------------------------------------------------
 -- Locals
@@ -49,10 +62,10 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 
 	function boss:CHAT_MSG_MONSTER_YELL(_, msg, ...)
-		if self.yellMap[msg] then
-			self[self.yellMap[msg]](self, msg, ...)
+		if yellMap[self][msg] then
+			self[yellMap[self][msg]](self, msg, ...)
 		else
-			for yell, func in pairs(self.yellMap) do
+			for yell, func in pairs(yellMap[self]) do
 				if msg:find(yell) then
 					self[func](self, msg, ...)
 				end
@@ -63,15 +76,15 @@ do
 	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(-12, -7), 16)
-			local d = self.deathMap and self.deathMap[numericId]
+			local d = deathMap[self][numericId]
 			if not d then return end
 			if type(d) == "function" then d(numericId, dGUID, player, dFlags)
 			else self[d](self, numericId, dGUID, player, dFlags) end
 		else
-			local m = self.combatLogEventMap and self.combatLogEventMap[event]
-			if m and (m[spellId] or m["*"]) then
+			local m = combatLogMap[self][event]
+			if m and m[spellId] then
 				if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
-					local func = m[spellId] or m["*"]
+					local func = m[spellId]
 					if type(func) == "function" then
 						func(player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 					else
@@ -85,33 +98,25 @@ do
 	function boss:Yell(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
 		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
-		if not self.yellMap then self.yellMap = {} end
 		for i = 1, select("#", ...) do
-			self.yellMap[(select(i, ...))] = func
+			yellMap[self][(select(i, ...))] = func
 		end
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 	function boss:Log(event, func, ...)
 		if not event or not func then error(missingArgument:format(self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
-		if not self.combatLogEventMap then self.combatLogEventMap = {} end
-		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
-		local c = select("#", ...)
-		if c > 0 then
-			for i = 1, c do
-				self.combatLogEventMap[event][(select(i, ...))] = func
-			end
-		else
-			self.combatLogEventMap[event]["*"] = func
+		if not combatLogMap[self][event] then combatLogMap[self][event] = {} end
+		for i = 1, select("#", ...) do
+			combatLogMap[self][event][(select(i, ...))] = func
 		end
 		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function boss:Death(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
-		if not self.deathMap then self.deathMap = {} end
 		for i = 1, select("#", ...) do
-			self.deathMap[(select(i, ...))] = func
+			deathMap[self][(select(i, ...))] = func
 		end
 		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
@@ -357,7 +362,7 @@ do
 	end
 end
 
-function boss:Sync(...) BigWigs:Transmit(...) end
+function boss:Sync(...) core:Transmit(...) end
 
 -- XXX 3rd argument is a proposed API change, and is subject to change/removal.
 function boss:Whisper(player, spellName, noName)
@@ -386,7 +391,7 @@ function boss:SecondaryIcon(player, key)
 end
 
 function boss:AddSyncListener(sync)
-	BigWigs:AddSyncListener(self, sync)
+	core:AddSyncListener(self, sync)
 end
 
 function boss:Berserk(seconds, noEngageMessage, customBoss)

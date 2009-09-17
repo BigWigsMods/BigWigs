@@ -2,6 +2,8 @@
 --      Addon Declaration      --
 ---------------------------------
 
+if true then return end
+
 local plugin = BigWigs:NewPlugin("Target Monitor")
 if not plugin then return end
 

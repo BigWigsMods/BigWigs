@@ -4,7 +4,6 @@
 
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
-mod.enabletrigger = 34564
 mod.toggleOptions = {66118, 67574, "icon", "burrow", 68510, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -46,6 +45,10 @@ mod.locale = L
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:OnRegister()
+	self:RegisterEnableMob(34564)
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)

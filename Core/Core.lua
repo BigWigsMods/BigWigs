@@ -16,6 +16,75 @@ local customBossOptions = {}
 local pName = UnitName("player")
 
 -------------------------------------------------------------------------------
+-- Target monitoring
+--
+
+local enablezone, enablemobs, enableyells = {}, {}, {}
+local monitoring = nil
+
+local function enableBossModule(module, noSync)
+	if not module:IsEnabled() then
+		module:Enable()
+		-- XXX DEBUG
+		module:SendMessage("BigWigs_Message", string.format("%s enabled", module.displayName), "Core")
+		if not noSync then
+			module:Sync("EnableModule", module:GetName())
+		end
+	end
+end
+
+local function targetSeen(unit, module)
+	if not module or module:IsEnabled() then return end
+	if not module.VerifyEnable or module:VerifyEnable(unit) then
+		enableBossModule(module)
+	end
+end
+
+local function targetCheck(unit)
+	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
+	local id = tonumber((UnitGUID(unit)):sub(-12, -7), 16)
+	if id and enablemobs[id] then
+		targetSeen(unit, enablemobs[id])
+	end
+end
+local function chatMsgMonsterYell(event, msg, source)
+	for yell, mod in pairs(enableyells) do
+		if yell == msg or msg:find(yell) then
+			targetSeen("player", mod)
+		end
+	end
+end
+local function updateMouseover() targetCheck("mouseover") end
+local function targetChanged() targetCheck("target") end
+
+local function zoneChanged()
+	if enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()] then
+		if not monitoring then
+			monitoring = true
+			self:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
+			self:RegisterEvent("PLAYER_TARGET_CHANGED", targetChanged)
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
+		end
+	elseif monitoring then
+		monitoring = nil
+		self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+		self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+	end
+end
+
+function addon:RegisterEnableMob(module, ...)
+	for i = 1, select("#", ...) do
+		enablemobs[(select(i, ...))] = module
+	end
+end
+function addon:RegisterEnableYell(module, ...)
+	for i = 1, select("#", ...) do
+		enableyells[(select(i, ...))] = module
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Testing
 --
 
@@ -61,19 +130,8 @@ end
 
 
 -------------------------------------------------------------------------------
--- Events
+-- Core syncs
 --
-
-local function enableBossModule(module, noSync)
-	if not module:IsEnabled() then
-		module:Enable()
-		-- XXX DEBUG
-		module:SendMessage("BigWigs_Message", string.format("%s enabled", module.displayName), "Core")
-		if not noSync then
-			module:Sync("EnableModule", module:GetName())
-		end
-	end
-end
 
 -- Since this is from addon comms, it's the only place where we allow the module NAME to be passed, instead of the
 -- actual module object. ALL other APIs should take module objects as arguments.
@@ -96,13 +154,6 @@ local function coreSync(sync, moduleName, sender)
 			mod:SecondaryIcon(false)
 			mod:Disable()
 		end
-	end
-end
-
-local function targetSeen(message, unit, module)
-	if not module or module:IsEnabled() then return end
-	if not module.VerifyEnable or module:VerifyEnable(unit) then
-		enableBossModule(module)
 	end
 end
 
@@ -204,8 +255,9 @@ function addon:OnEnable()
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
-	self:RegisterMessage("BigWigs_TargetSeen", targetSeen)
 	self:RegisterEvent("CHAT_MSG_ADDON", chatMsgAddon)
+	self:RegisterEvent("ZONE_CHANGED", zoneChanged)
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
 	self:SendMessage("BigWigs_CoreEnabled")
 	self.pluginCore:Enable()
@@ -300,6 +352,9 @@ do
 				end
 			end
 		end
+
+		-- XXX Target monitor
+		enablezone[module.zoneName] = true
 		
 		if module.optionHeaders then
 			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")

@@ -4,7 +4,6 @@
 
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod.enabletrigger = 34780
 mod.toggleOptions = {67049, 68123, "icon", 67106, "adds", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -13,6 +12,8 @@ mod.toggleOptions = {67049, 68123, "icon", 67106, "adds", "bosskill"}
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "enUS", true)
 if L then
+	L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!"
+
 	L.engage = "Engage"
 	L.engage_trigger = "You face Jaraxxus, Eredar Lord of the Burning Legion!"
 	L.engage_trigger1 = "Banished to the Nether"
@@ -42,6 +43,11 @@ mod.locale = L
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:OnRegister()
+	self:RegisterEnableMob(34780)
+	self:RegisterEnableYell(L["enable_trigger"])
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)

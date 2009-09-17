@@ -4,12 +4,6 @@
 
 local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
-mod.enabletrigger = {
-	34796, -- Gormok
-	34799, -- Dreadscale
-	35144, -- Acidmaw
-	34797, -- Icehowl
-}
 mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "berserk", "bosskill"}
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
@@ -38,6 +32,8 @@ local icehowl, jormungars, gormok = nil, nil, nil
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "enUS", true)
 if L then
+	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
+
 	L.engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!"
 	L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
 	L.icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!"
@@ -72,6 +68,14 @@ mod.locale = L
 --
 
 function mod:OnRegister()
+	self:RegisterEnableMob(
+		34796, -- Gormok
+		34799, -- Dreadscale
+		35144, -- Acidmaw
+		34797  -- Icehowl
+	)
+	self:RegisterEnableYell(L["enable_trigger"])
+
 	icehowl = BigWigs:Translate("Icehowl")
 	jormungars = BigWigs:Translate("Jormungars")
 	gormok = BigWigs:Translate("Gormok the Impaler")
