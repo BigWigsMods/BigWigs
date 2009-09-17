@@ -55,7 +55,7 @@ function mod:OnBossEnable()
 	
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	self:Yell("Engage", false, L["engage_trigger"])
+	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 34564)
 end

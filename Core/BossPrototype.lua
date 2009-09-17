@@ -49,10 +49,10 @@ do
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 
-	local function yell(self, _, msg, ...)
-		if self.exactYellMap and self.exactYellMap[msg] then
-			self[self.exactYellMap[msg]](self, msg, ...)
-		elseif self.yellMap then
+	function boss:CHAT_MSG_MONSTER_YELL(_, msg, ...)
+		if self.yellMap[msg] then
+			self[self.yellMap[msg]](self, msg, ...)
+		else
 			for yell, func in pairs(self.yellMap) do
 				if msg:find(yell) then
 					self[func](self, msg, ...)
@@ -61,7 +61,7 @@ do
 		end
 	end
 
-	local function cleu(self, _, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(-12, -7), 16)
 			local d = self.deathMap and self.deathMap[numericId]
@@ -86,17 +86,11 @@ do
 	function boss:Yell(func, exact, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
-		if exact and not self.exactYellMap then self.exactYellMap = {} end
-		if not exact and not self.yellMap then self.yellMap = {} end
+		if not self.yellMap then self.yellMap = {} end
 		for i = 1, select("#", ...) do
-			local y = (select(i, ...))
-			if exact then
-				self.exactYellMap[y] = func
-			else
-				self.yellMap[y] = func
-			end
+			self.yellMap[(select(i, ...))] = func
 		end
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL", yell, self)
+		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 	function boss:Log(event, func, ...)
 		if not event or not func then error(missingArgument:format(self.moduleName)) end
@@ -111,7 +105,7 @@ do
 		else
 			self.combatLogEventMap[event]["*"] = func
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", cleu, self)
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function boss:Death(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
@@ -120,7 +114,7 @@ do
 		for i = 1, select("#", ...) do
 			self.deathMap[(select(i, ...))] = func
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", cleu, self)
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
 

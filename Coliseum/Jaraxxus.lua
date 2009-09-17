@@ -53,8 +53,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
 
 	-- Only happens the first time we engage Jaraxxus, still 11 seconds left until he really engages.
-	self:Yell("FirstEngage", false, L["engage_trigger1"])
-	self:Yell("Engage", false, L["engage_trigger"])
+	self:Yell("FirstEngage", L["engage_trigger1"])
+	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 34780)
 end

@@ -102,7 +102,7 @@ function mod:OnBossEnable()
 	self:Yell("Icehowl", true, L["icehowl_trigger"])
 
 	-- Common
-	self:Yell("Engage", false, L["engage_trigger"])
+	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 34797)
 
