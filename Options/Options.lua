@@ -41,7 +41,7 @@ local acOptions = {
 		configure = {
 			type = "execute",
 			name = "Configure ...",
-			desc = "Closes the interface options window and lets you configure displays for things like bars and messages.",
+			desc = "Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection.",
 			func = function()
 				-- This won't hide the game menu if you opened options from there.
 				-- We don't care yet, this is temporary.
@@ -66,7 +66,7 @@ local acOptions = {
 		sound = {
 			type = "toggle",
 			name = "Sound",
-			desc = "Messages might come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
+			desc = "Messages might come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.\n\n|cffff4411Note that even if this option is off, the default raid warning sound might still be played by incoming raid warnings from other people. That sound, however, is different from the sounds we use.|r",
 			order = 21,
 			width = "full",
 		},
