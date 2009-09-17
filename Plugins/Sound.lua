@@ -12,7 +12,6 @@ if not plugin then return end
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
-local db = nil
 
 local sounds = {
 	Long = "BigWigs: Long",
@@ -44,7 +43,7 @@ plugin.pluginOptions = {
 	desc = L["Options for sounds."],
 	get = function(info)
 		for i, v in next, soundList do
-			if v == db.media[info[#info]] then
+			if v == plugin.db.profile.media[info[#info]] then
 				return i
 			end
 		end
@@ -54,7 +53,7 @@ plugin.pluginOptions = {
 		if IsControlKeyDown() then
 			PlaySoundFile(media:Fetch(mType, soundList[value]))
 		else
-			db.media[sound] = soundList[value]
+			plugin.db.profile.media[sound] = soundList[value]
 		end
 	end,
 	args = {
@@ -82,8 +81,6 @@ local function updateList(mediaType)
 end
 
 function plugin:OnRegister()
-	db = self.db.profile
-
 	media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3")
 	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3")
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3")
@@ -115,8 +112,8 @@ function plugin:OnPluginEnable()
 end
 
 local function play(sound)
-	if type(sound) == "string" and not db.defaultonly then
-		local s = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
+	if type(sound) == "string" and not plugin.db.profile.defaultonly then
+		local s = plugin.db.profile.media[sound] and media:Fetch(mType, plugin.db.profile.media[sound]) or media:Fetch(mType, sound)
 		if type(s) == "string" then
 			PlaySoundFile(s)
 			return

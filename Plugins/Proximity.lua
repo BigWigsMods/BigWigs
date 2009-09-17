@@ -14,8 +14,6 @@ local AceGUI = nil
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
-local db = nil
-
 local lockWarned = nil
 local active = nil -- The module we're currently tracking proximity for.
 local anchor = nil
@@ -122,8 +120,6 @@ function plugin:OnRegister()
 		CUSTOM_CLASS_COLORS:RegisterCallback(update)
 		update()
 	end
-	
-	db = self.db.profile
 end
 
 function plugin:OnPluginEnable()
@@ -172,7 +168,7 @@ do
 	function plugin:GetPluginConfig()
 		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
 		local disable = AceGUI:Create("CheckBox")
-		disable:SetValue(db.disabled)
+		disable:SetValue(self.db.profile.disabled)
 		disable:SetLabel(L["Disabled"])
 		disable:SetCallback("OnEnter", onControlEnter)
 		disable:SetCallback("OnLeave", onControlLeave)
@@ -182,7 +178,7 @@ do
 		disable:SetFullWidth(true)
 
 		local lock = AceGUI:Create("CheckBox")
-		lock:SetValue(db.lock)
+		lock:SetValue(self.db.profile.lock)
 		lock:SetLabel(L["Lock"])
 		lock:SetCallback("OnEnter", onControlEnter)
 		lock:SetCallback("OnLeave", onControlLeave)
@@ -197,7 +193,7 @@ do
 
 		do
 			local title = AceGUI:Create("CheckBox")
-			title:SetValue(db.showTitle)
+			title:SetValue(self.db.profile.showTitle)
 			title:SetLabel(L["Title"])
 			title:SetCallback("OnEnter", onControlEnter)
 			title:SetCallback("OnLeave", onControlLeave)
@@ -207,7 +203,7 @@ do
 			title:SetRelativeWidth(0.5)
 
 			local background = AceGUI:Create("CheckBox")
-			background:SetValue(db.showBackground)
+			background:SetValue(self.db.profile.showBackground)
 			background:SetLabel(L["Background"])
 			background:SetCallback("OnEnter", onControlEnter)
 			background:SetCallback("OnLeave", onControlLeave)
@@ -217,7 +213,7 @@ do
 			background:SetRelativeWidth(0.5)
 
 			local sound = AceGUI:Create("CheckBox")
-			sound:SetValue(db.showSound)
+			sound:SetValue(self.db.profile.showSound)
 			sound:SetLabel(L["Sound button"])
 			sound:SetCallback("OnEnter", onControlEnter)
 			sound:SetCallback("OnLeave", onControlLeave)
@@ -227,7 +223,7 @@ do
 			sound:SetRelativeWidth(0.5)
 
 			local close = AceGUI:Create("CheckBox")
-			close:SetValue(db.showClose)
+			close:SetValue(self.db.profile.showClose)
 			close:SetLabel(L["Close button"])
 			close:SetCallback("OnEnter", onControlEnter)
 			close:SetCallback("OnLeave", onControlLeave)

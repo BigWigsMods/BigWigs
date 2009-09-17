@@ -20,7 +20,7 @@ local messageFrame = nil
 local anchor = nil
 local floor = math.floor
 
-local AceGUI
+local AceGUI = nil
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
@@ -300,9 +300,8 @@ end
 function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
-	local db = self.db.profile
 	local r, g, b = 1, 1, 1 -- Default to white.
-	if db.usecolors then
+	if self.db.profile.usecolors then
 		if type(color) == "table" and color.r and color.g and color.b then
 			r, g, b = color.r, color.g, color.b
 		elseif colorModule and colorModule:HasMessageColor(color) then
@@ -310,7 +309,7 @@ function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, ico
 		end
 	end
 
-	if icon and db.useicons then
+	if icon and self.db.profile.useicons then
 		local _, _, gsiIcon = GetSpellInfo(icon)
 		icon = gsiIcon or icon
 	else
@@ -318,8 +317,8 @@ function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, ico
 	end
 
 	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
-	if db.chat then
-		-- FIXME: fix bigwigs customprint, or a special print function in this module
+	if self.db.profile.chat then
+		-- XXX FIXME: fix bigwigs customprint, or a special print function in this module
 		BigWigs:Print( text )
 		-- BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
 	end

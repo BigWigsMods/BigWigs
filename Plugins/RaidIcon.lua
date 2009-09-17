@@ -10,7 +10,6 @@ if not plugin then return end
 ------------------------------
 
 local lastplayer = {}
-local fmt = string.format
 local SetIcon = SetRaidTarget
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")

@@ -1,8 +1,7 @@
+local BigWigs = BigWigs
 BigWigsOptions = BigWigs:NewModule("Options", "AceEvent-3.0")
 local options = BigWigsOptions
 options:SetEnabledState(true)
-
-local BigWigs = BigWigs
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
@@ -28,7 +27,7 @@ local acOptions = {
 	set = function(info, value)
 		local key = info[#info]
 		BigWigs.db.profile[key] = value
-		BigWigs:SendMessage("BigWigs_CoreOptionToggled", key, value)
+		options:SendMessage("BigWigs_CoreOptionToggled", key, value)
 	end,
 	args = {
 		heading = {
@@ -66,7 +65,7 @@ local acOptions = {
 		sound = {
 			type = "toggle",
 			name = "Sound",
-			desc = "Messages might come with different sounds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the message.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r",
+			desc = "Messages might come with different sounds. Some people find it easier to listen for these sounds after they've learned which sound goes with which message, as opposed to reading the messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r",
 			order = 21,
 			width = "full",
 		},
@@ -438,5 +437,4 @@ function options:BigWigs_PluginRegistered(message, moduleName, module)
 		pluginOptions.args[module.name] = module.pluginOptions
 	end
 end
-
 
