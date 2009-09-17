@@ -22,6 +22,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "koKR")
 if L then
+	L.enable_trigger = "어서 오게, 용사들이여! 은빛십자군의 부름에 담대히 응한 모두를 환영하네! 바로 이곳, 십자군 원형경기장에서 제군들은 엄청난 도전에 마주칠 걸세. 혹독한 원형경기장에서 살아남는 자는 은빛십자군의 일원이 되어 얼음왕관 성채로 진군해 나갈 걸세."
+
 	L.engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!"
 	L.jormungars_trigger = "마음을 단단히 먹게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
 	L.icehowl_trigger = "다음은, 소개하는 순간 공기마저 얼어붙게 하는 얼음울음일세! 죽이지 않으면 죽을 걸세, 용사들이여!"
@@ -64,6 +66,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "koKR")
 if L then
+	L.enable_trigger = "보이지도 않는 노움 주제에! 그렇게 까불더니 무덤을 파는구나!"
+
 	L.engage = "전투 시작"
 	L.engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!"
 	L.engage_trigger1 = "황천으로 사라져라!"
