@@ -14,7 +14,6 @@ function boss:OnDisable()
 	self:CancelAllScheduledEvents()
 
 	if self.combatLogEventMap then wipe(self.combatLogEventMap) end
-	if self.exactYellMap then wipe(self.exactYellMap) end
 	if self.yellMap then wipe(self.yellMap) end
 	if self.deathMap then wipe(self.deathMap) end
 
@@ -83,9 +82,9 @@ do
 		end
 	end
 
-	function boss:Yell(func, exact, ...)
+	function boss:Yell(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
-		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
 		if not self.yellMap then self.yellMap = {} end
 		for i = 1, select("#", ...) do
 			self.yellMap[(select(i, ...))] = func
