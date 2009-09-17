@@ -2,10 +2,9 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Colors.lua"/>
-<Script file="TargetMonitor.lua"/>
-<Script file="Bars.lua"/>
-<Script file="Messages.lua"/>
 <Script file="Sound.lua"/>
+<Script file="Messages.lua"/>
+<Script file="Bars.lua"/>
 <Script file="Broadcast.lua"/>
 <Script file="BossBlock.lua"/>
 <Script file="RaidIcon.lua"/>
