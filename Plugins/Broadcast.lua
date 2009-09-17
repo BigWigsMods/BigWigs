@@ -18,7 +18,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 --
 
 plugin.defaultDB = {
-	whisper = true,
 	broadcast = false,
 	useraidchannel = false,
 }
@@ -60,7 +59,7 @@ function plugin:BigWigs_Message(msg, color, noraidsay)
 end
 
 function plugin:BigWigs_SendTell(event, player, msg)
-	if not self.db.profile.whisper or not player or not msg then return end
+	if not BigWigs.db.profile.whisper or not player or not msg then return end
 	if not UnitIsPlayer(player) then return end
 	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 	sentWhispers[msg] = true

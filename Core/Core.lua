@@ -232,6 +232,7 @@ function addon:OnInitialize()
 			whisper = false,
 			raidwarning = false,
 			broadcast = false,
+			showBlizzardWarnings = false,
 		}
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)

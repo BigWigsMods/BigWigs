@@ -26,12 +26,14 @@ local acOptions = {
 		return BigWigs.db.profile[info[#info]]
 	end,
 	set = function(info, value)
-		BigWigs.db.profile[info[#info]] = value
+		local key = info[#info]
+		BigWigs.db.profile[key] = value
+		BigWigs:SendMessage("BigWigs_CoreOptionToggled", key, value)
 	end,
 	args = {
 		heading = {
 			type = "description",
-			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n\n|cffff0000Note that some (!) of these options do not work at the moment. Please don't file bug reports for things concerning the Big Wigs interface right now, come talk to us on IRC instead.|r\n",
+			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n",
 			fontSize = "medium",
 			order = 10,
 			width = "full",
@@ -63,9 +65,16 @@ local acOptions = {
 		},
 		sound = {
 			type = "toggle",
-			name = "Sound |cffff0000(!)|r",
+			name = "Sound",
 			desc = "Messages might come with warning sounds of different kinds. Some people find it easier to just listen for these sounds after they've learned which sound goes with which message, instead of reading the actual message on screen.",
 			order = 21,
+			width = "full",
+		},
+		showBlizzardWarnings = {
+			type = "toggle",
+			name = "Blizzard warnings",
+			desc = "Blizzard provides their own warning messages for some abilities on some encounters. In our opinion, these messages are both way too long (covering the length of your screen), and way too descriptive and specific. We try to produce smaller, more fitting messages that do not interfere as much with the game, and that don't tell you specifically what to do, but merely what is happening.\n\n|cffff4411When this option is off, Blizzards warnings will not be shown in the middle of the screen any more, but they will still show in your chat frame.|r",
+			order = 22,
 			width = "full",
 		},
 		separator2 = {
@@ -76,24 +85,25 @@ local acOptions = {
 		},
 		raidicon = {
 			type = "toggle",
-			name = "Raid icons |cffff0000(!)|r",
+			name = "Raid icons",
 			desc = "Some boss modules use raid icons to mark players in your group that are of special interest to your raid. Things like 'bomb'-type effects and mind control are examples of this. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
 			order = 31,
 			width = "full",
 		},
 		whisper = {
 			type = "toggle",
-			name = "Whisper warnings |cffff0000(!)|r",
+			name = "Whisper warnings",
 			desc = "Send a whisper notification to fellow players about certain boss encounter abilities that affect them personally. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
 			order = 32,
 			width = "full",
 		},
 		broadcast = {
 			type = "toggle",
-			name = "Broadcast |cffff0000(!)|r",
+			name = "Broadcast |cffff0000(Not yet implemented in BW3)|r",
 			desc = "Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/assistant or in a 5-man party!|r",
 			order = 33,
 			width = "full",
+			disabled = true,
 		},
 		separator3 = {
 			type = "description",

@@ -29,7 +29,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 plugin.defaultDB = {
 	defaultonly = false,
-	sound = true,
 	media = {
 		Long = "BigWigs: Long",
 		Info = "BigWigs: Info",
@@ -127,12 +126,12 @@ local function play(sound)
 end
 
 function plugin:BigWigs_Message(event, text, color, noraidsay, sound, broadcastonly)
-	if not text or sound == false or broadcastonly or not db.sound then return end
+	if not text or sound == false or broadcastonly or not BigWigs.db.profile.sound then return end
 	play(sound)
 end
 
 function plugin:BigWigs_Sound(event, sound)
-	if not db.sound or sound == false then return end
+	if not BigWigs.db.profile.sound or sound == false then return end
 	play(sound)
 end
 

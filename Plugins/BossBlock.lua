@@ -29,57 +29,17 @@ end
 
 function plugin:OnPluginEnable()
 	self:RawHook("RaidNotice_AddMessage", "RWAddMessage", true)
-	self:RegisterMessage("BigWigs_OnBossEnable")
-	self:RegisterEvent("PLAYER_TARGET_CHANGED")
-	self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 end
 
-do
-	local bossNames = {}
-	local bossId = {}
-
-	local function checkId(unit)
-		if UnitIsPlayer(unit) then return end
-		local n = UnitName(unit)
-		if not n or bossNames[n] then return end
-		local id = tonumber((UnitGUID(unit)):sub(-12, -7), 16)
-		if not id then return end
-		if bossId[id] then
-			-- print("Adding " .. tostring(n) .. ".")
-			bossNames[n] = true
-			bossId[id] = nil
-		end
+local rwf = _G.RaidWarningFrame
+local rbe = _G.RaidBossEmoteFrame
+function plugin:RWAddMessage(frame, message, colorInfo)
+	if frame == rwf and self:IsSpam(message) then
+		return
+	elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
+		return
 	end
-	function plugin:UPDATE_MOUSEOVER_UNIT() checkId("mouseover") end
-	function plugin:PLAYER_TARGET_CHANGED() checkId("target") end
-
-	function plugin:BigWigs_OnBossEnable(message, mod)
-		local t = type(mod.enabletrigger)
-		if t == "table" then
-			for i, v in next, mod.enabletrigger do bossId[v] = true end
-		elseif t == "number" then
-			bossId[mod.enabletrigger] = true
-		end
-		t = mod.blockEmotes and type(mod.blockEmotes) or nil
-		if not t then return end
-		if t == "table" then
-			for i, v in next, mod.blockEmotes do bossNames[BigWigs:Translate(v)] = true end
-		elseif t == "string" then
-			bossNames[BigWigs:Translate(mod.blockEmotes)] = true
-		end
-		-- AceLibrary("AceConsole-2.0"):PrintLiteral(mod.displayName, mod.enabletrigger, mod.blockEmotes)
-	end
-
-	local rwf = _G.RaidWarningFrame
-	local rbe = _G.RaidBossEmoteFrame
-	function plugin:RWAddMessage(frame, message, colorInfo)
-		if frame == rwf and self:IsSpam(message) then
-			return
-		elseif frame == rbe and type(arg2) == "string" and bossNames[arg2] then
-			return
-		end
-		self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
-	end
+	self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
 end
 
 function plugin:IsSpam(text)

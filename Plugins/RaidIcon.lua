@@ -87,6 +87,7 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:BigWigs_SetRaidIcon(message, player, icon)
+	if not BigWigs.db.profile.raidicon then return end
 	if not player then return end
 	if not GetRaidTargetIndex(player) then
 		local index = (not icon or icon == 1) and self.db.profile.icon or self.db.profile.secondIcon
@@ -97,6 +98,7 @@ function plugin:BigWigs_SetRaidIcon(message, player, icon)
 end
 
 function plugin:BigWigs_RemoveRaidIcon(message, icon)
+	if not BigWigs.db.profile.raidicon then return end
 	if not lastplayer[icon or 1] then return end
 	SetIcon(lastplayer[icon or 1], 0)
 	lastplayer[icon or 1] = nil
