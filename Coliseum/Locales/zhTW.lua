@@ -22,6 +22,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhTW")
 if L then
+	L.enable_trigger = "歡迎，勇士們!你們聽從銀白十字軍的號召前來，英勇的挺身而出。"
+
 	L.engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!"
 	L.jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢魘吧，英雄們，快就定位!"
 	L.icehowl_trigger = "下一場參賽者的出場連空氣都會為之凝結:冰嚎!戰個你死我活吧，勇士們!"
@@ -64,9 +66,14 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhTW")
 if L then
+	L.enable_trigger = "卑微的地精!你的傲慢將使你喪命!"
+
 	L.engage = "進入戰斗"
 	L.engage_trigger = "你面對的是賈拉克瑟斯，燃燒軍團的埃雷達爾領主!"
 	L.engage_trigger1 = "放逐到虛空吧!"
+
+	L.adds = "虛空傳送門和煉獄火山"
+	L.adds_desc = "當賈拉克瑟斯領主召喚虛空傳送門和煉獄火山時發出警報和顯示計時條。"
 
 	L.incinerate_message = "焚化血肉"
 	L.incinerate_other = "焚化血肉：>%s<！"
@@ -80,6 +87,7 @@ if L then
 	L.icon = "團隊標記"
 	L.icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）"
 
+	L.infernal_bar = "<煉獄火山出現>"
 	L.netherportal_bar = "<下一虛空傳送門>"
 	L.netherpower_bar = "<下一虛空傳送門（能量）>"
 end

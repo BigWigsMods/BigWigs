@@ -22,9 +22,11 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhCN")
 if L then
-	--L.engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!"
-	--L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
-	--L.icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!"
+--	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
+
+--	L.engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!"
+--	L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
+--	L.icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!"
 	L.boss_incoming = "即将%s！"
 
 	-- Gormok
@@ -64,9 +66,14 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhCN")
 if L then
+--	L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!"
+
 	L.engage = "激活"
 --	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
 --	L.engage_trigger1 = "Banished to the Nether"
+
+	L.adds = "Portals和volcanos"
+	L.adds_desc = "当Jaraxxus召唤portals和volcanos时发出警报和显示计时条。"
 
 	L.incinerate_message = "Incinerate"
 	L.incinerate_other = "Incinerate Flesh：>%s<！"
@@ -80,6 +87,7 @@ if L then
 	L.icon = "团队标记"
 	L.icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）"
 
+	L.infernal_bar = "<Volcano出现>"
 	L.netherportal_bar = "<下一Nether Portal>"
 	L.netherpower_bar = "<下一Nether Power>"
 end
