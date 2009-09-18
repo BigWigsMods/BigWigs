@@ -372,10 +372,10 @@ do
 
 	-- XXX 3rd argument is a proposed API change, and is subject to change/removal.
 	function boss:Whisper(player, spellName, noName)
-		if not player or player == pName or not UnitIsPlayer(player) or not BigWigs.db.profile.whisper then return end
-		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 		local msg = noName and spellName or fmt(L["you"], spellName)
 		sentWhispers[msg] = true
+		if player == pName or not UnitIsPlayer(player) or not BigWigs.db.profile.whisper then return end
+		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 		SendChatMessage(msg, "WHISPER", nil, player)
 	end
 end
