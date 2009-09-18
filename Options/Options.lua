@@ -420,6 +420,7 @@ local registered = {}
 function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	if registered[module.name] then return end
 	registered[module.name] = true
+	if not module.toggleOptions then return end
 	local zone = module.otherMenu or module.zoneName
 	if not zone then print(module.name) end
 	if not zoneModules[zone] then
@@ -433,6 +434,7 @@ end
 function options:BigWigs_PluginRegistered(message, moduleName, module)
 	if registered[module.name] then return end
 	registered[module.name] = true
+	if not module.pluginOptions then return end
 	if module.pluginOptions then
 		pluginOptions.args[module.name] = module.pluginOptions
 	end
