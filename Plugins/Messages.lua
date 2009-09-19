@@ -105,13 +105,15 @@ plugin.defaultDB = {
 	classcolor = true,
 }
 
+plugin.pluginOptions = plugin:GetSinkAce3OptionsDataTable()
+
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
-	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
+	self:RegisterSink("BigWigs", "Big Wigs", "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user.", "Print")
 end
 
 function plugin:OnPluginEnable()
