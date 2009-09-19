@@ -102,6 +102,7 @@ do
 	end
 	
 	local spells = {
+		DEATHKNIGHT = { 61999, 49892, 49016 }, -- Raise Ally works even on players that are alive oO
 		DRUID = { 5185, 467, 1126 },
 		-- HUNTER = { 34477 }, -- Misdirect is like 100y range, so forget it!
 		MAGE = { 475, 1459 },
@@ -114,14 +115,21 @@ do
 	}
 	local _, class = UnitClass("player")
 	local mySpells = spells[class]
+	-- Gift of the Naaru
+	if r == "Draenei" then tinsert(mySpells, 28880) end
 	if mySpells then
 		for i, spell in next, mySpells do
 			local name, _, _, _, _, _, _, minRange, range = GetSpellInfo(spell)
 			if name and range then
-				range = math.floor(range + 0.5)
-				if range == 0 then range = 5 end
-				ranges[range] = function(unit)
-					if IsSpellInRange(name, unit) == 1 then return true end
+				local works = IsSpellInRange(name, "player")
+				if type(works) == "number" then
+					range = math.floor(range + 0.5)
+					if range == 0 then range = 5 end
+					if not ranges[range] then
+						ranges[range] = function(unit)
+							if IsSpellInRange(name, unit) == 1 then return true end
+						end
+					end
 				end
 			end
 		end
