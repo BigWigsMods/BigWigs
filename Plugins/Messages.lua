@@ -163,11 +163,7 @@ do
 
 	function plugin:GetPluginConfig()
 		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
-		
-		local desc = AceGUI:Create("Label")
-		desc:SetText("Note that these options are only relevant if you have selected Big Wigs as your output channel in the customize section of our interface options. This is the default setting, so if you have not tweaked anything then don't worry :)")
-		desc:SetFullWidth(true)
-		
+
 		local chat = AceGUI:Create("CheckBox")
 		chat:SetLabel(L["Chat frame"])
 		chat:SetValue(self.db.profile.chat and true or false)
@@ -204,7 +200,7 @@ do
 		icons:SetUserData("key", "useicons")
 		icons:SetUserData("tooltip", L["Show icons next to messages, only works for Raid Warning."])
 
-		return desc, chat, colors, classColors, icons
+		return chat, colors, classColors, icons
 	end
 end
 
