@@ -567,12 +567,12 @@ function plugin:Close()
 	activeProximityFunction = nil
 	if anchor then
 		anchor.header:SetText(L["Close Players"])
+		-- Just in case we were the last target of
+		-- configure mode, reset the background color.
+		anchor.background:SetTexture(0, 0, 0, 0.3)
 		anchor:Hide()
 	end
 	updater:Hide()
-	-- Just in case we were the last target of
-	-- configure mode, reset the background color.
-	anchor.background:SetTexture(0, 0, 0, 0.3)
 end
 
 function plugin:Open(range)
