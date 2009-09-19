@@ -11,8 +11,6 @@ mod.optionHeaders = {
 	[67654] = "Icehowl",
 	berserk = "general",
 }
-mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
-mod.proximitySilent = true
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -114,7 +112,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:SendMessage("BigWigs_HideProximity", self)
+	self:CloseProximity()
 	if difficulty > 2 then
 		self:Bar(L["boss_incoming"]:format(gormok), 20, 67477)
 		self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
@@ -131,7 +129,7 @@ function mod:Jormungars()
 	if difficulty > 2 then
 		self:Bar(L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
 	end
-	self:SendMessage("BigWigs_ShowProximity", self)
+	self:OpenProximity(10)
 end
 
 function mod:Icehowl()
@@ -141,7 +139,7 @@ function mod:Icehowl()
 	if difficulty > 2 and self.db.profile.berserk then
 		self:Berserk(220, true, icehowl)
 	end
-	self:SendMessage("BigWigs_HideProximity", self)
+	self:CloseProximity()
 end
 
 --------------------------------------------------------------------------------

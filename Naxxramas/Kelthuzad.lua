@@ -165,14 +165,14 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")
 		wipe(mcTargets)
 		wipe(fbTargets)
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:CloseProximity()
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
 		if self.db.profile.phase then
 			self:SendMessage("BigWigs_StopBar", self, L["start_bar"])
 			self:Message(L["phase2_warning"], "Important")
 			self:Bar(L["phase2_bar"], 15, "Spell_Shadow_Charm")
 		end
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(10)
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_warning"], "Attention")
 	elseif self.db.profile.guardians and msg == L["guardians_trigger"] then

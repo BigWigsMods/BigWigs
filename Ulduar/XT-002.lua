@@ -10,7 +10,6 @@ mod.optionHeaders = {
 	[64193] = "hard",
 	proximity = "general",
 }
-mod.proximityCheck = "bandage"
 
 ------------------------------
 --      Are you local?      --
@@ -97,7 +96,7 @@ end
 
 function mod:GravityBomb(player, spellId, _, _, spellName)
 	if player == pName then
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(10)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -107,7 +106,7 @@ end
 
 function mod:LightBomb(player, spellId, _, _, spellName)
 	if player == pName then
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(10)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -117,14 +116,14 @@ end
 
 function mod:GravityRemoved(player)
 	if player == pName then
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:CloseProximity()
 	end
 	self:SecondaryIcon(false)
 end
 
 function mod:LightRemoved(player)
 	if player == pName then
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:CloseProximity()
 	end
 	self:PrimaryIcon(false)
 end

@@ -1,24 +1,37 @@
------------------------------------------------------------------------
---      Module Declaration
------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local plugin = BigWigs:NewPlugin("Proximity")
 if not plugin then return end
 
------------------------------------------------------------------------
---      Are you local?
------------------------------------------------------------------------
+plugin.defaultDB = {
+	posx = nil,
+	posy = nil,
+	showTitle = true,
+	showBackground = true,
+	showSound = true,
+	showClose = true,
+	lock = nil,
+	width = 100,
+	height = 80,
+	sound = true,
+	disabled = nil,
+	proximity = true,
+}
+
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local AceGUI = nil
 
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
-local lockWarned = nil
-local active = nil -- The module we're currently tracking proximity for.
+local inConfigMode = nil
+local activeProximityFunction = nil
 local anchor = nil
-local lastplayed = 0 -- When we last played an alarm sound for proximity.
-local tooClose = {} -- List of players who are too close.
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
@@ -40,6 +53,10 @@ local coloredNames = setmetatable({}, {__index =
 		end
 	end
 })
+
+-------------------------------------------------------------------------------
+-- Range functions
+--
 
 local bandages = {
 	34722, -- Heavy Frostweave Bandage
@@ -111,7 +128,7 @@ do
 	end
 end
 local function getClosestRangeFunction(toRange)
-	if ranges[toRange] then return ranges[toRange] end
+	if ranges[toRange] then return ranges[toRange], toRange end
 	local closest = 15
 	local closestDiff = math.abs(toRange - 15)
 	for range, func in pairs(ranges) do
@@ -121,7 +138,7 @@ local function getClosestRangeFunction(toRange)
 			closestDiff = diff
 		end
 	end
-	return ranges[closest]
+	return ranges[closest], closest
 end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
@@ -132,46 +149,257 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 local function updateSoundButton()
 	if not anchor then return end
-	if active and active.proximitySilent then
-		anchor.sound:SetNormalTexture(mute)
+	anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
+end
+local function toggleSound()
+	plugin.db.profile.sound = not plugin.db.profil.sound
+	updateSoundButton()
+end
+
+-------------------------------------------------------------------------------
+-- Display Window
+--
+
+local function onDragStart(self) self:StartMoving() end
+local function onDragStop(self)
+	self:StopMovingOrSizing()
+	local s = self:GetEffectiveScale()
+	plugin.db.profile.posx = self:GetLeft() * s
+	plugin.db.profile.posy = self:GetTop() * s
+end
+local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
+local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing() end
+local function onResize(self, width, height)
+	plugin.db.profile.width = width
+	plugin.db.profile.height = height
+end
+
+local function setConfigureTarget(self, button)
+	if not inConfigMode or button ~= "LeftButton" then return end
+	plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+end
+
+local locked = nil
+function lockDisplay()
+	if locked then return end
+	anchor:EnableMouse(false)
+	anchor:SetMovable(false)
+	anchor:SetResizable(false)
+	anchor:RegisterForDrag()
+	anchor:SetScript("OnSizeChanged", nil)
+	anchor:SetScript("OnDragStart", nil)
+	anchor:SetScript("OnDragStop", nil)
+	anchor:SetScript("OnMouseUp", nil)
+	anchor.drag:Hide()
+	locked = true
+end
+function unlockDisplay()
+	if not locked then return end
+	anchor:EnableMouse(true)
+	anchor:SetMovable(true)
+	anchor:SetResizable(true)
+	anchor:RegisterForDrag("LeftButton")
+	anchor:SetScript("OnSizeChanged", onResize)
+	anchor:SetScript("OnDragStart", onDragStart)
+	anchor:SetScript("OnDragStop", onDragStop)
+	anchor:SetScript("OnMouseUp", setConfigureTarget)
+	anchor.drag:Show()
+	locked = nil
+end
+
+local function onControlEnter(self)
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
+	GameTooltip:AddLine(self.tooltipHeader)
+	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
+	GameTooltip:Show()
+end
+local function onControlLeave() GameTooltip:Hide() end
+
+local function breakThings()
+	anchor.sound:SetScript("OnEnter", nil)
+	anchor.sound:SetScript("OnLeave", nil)
+	anchor.sound:SetScript("OnClick", nil)
+	anchor.close:SetScript("OnEnter", nil)
+	anchor.close:SetScript("OnLeave", nil)
+	anchor.close:SetScript("OnClick", nil)
+end
+
+local function makeThingsWork()
+	anchor.sound:SetScript("OnEnter", onControlEnter)
+	anchor.sound:SetScript("OnLeave", onControlLeave)
+	anchor.sound:SetScript("OnClick", toggleSound)
+	anchor.close:SetScript("OnEnter", onControlEnter)
+	anchor.close:SetScript("OnLeave", onControlLeave)
+	anchor.close:SetScript("OnClick", onNormalClose)
+end
+
+local function onNormalClose()
+	if active then
+		BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
+	end
+	plugin:Close()
+end
+
+local function ensureDisplay()
+	if anchor then return end
+
+	local display = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+	display:SetWidth(plugin.db.profile.width)
+	display:SetHeight(plugin.db.profile.height)
+	display:SetMinResize(100, 30)
+	display:SetClampedToScreen(true)
+	local bg = display:CreateTexture(nil, "PARENT")
+	bg:SetAllPoints(display)
+	bg:SetBlendMode("BLEND")
+	bg:SetTexture(0, 0, 0, 0.3)
+	display.background = bg
+
+	local close = CreateFrame("Button", nil, display)
+	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
+	close:SetHeight(16)
+	close:SetWidth(16)
+	close.tooltipHeader = L["Close"]
+	close.tooltipText = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."]
+	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+	display.close = close
+
+	local sound = CreateFrame("Button", nil, display)
+	sound:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
+	sound:SetHeight(16)
+	sound:SetWidth(16)
+	sound.tooltipHeader = L["Toggle sound"]
+	sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
+	display.sound = sound
+
+	local header = display:CreateFontString(nil, "OVERLAY")
+	header:SetFontObject(GameFontNormal)
+	header:SetText(L["Close Players"])
+	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+	display.header = header
+
+	local text = display:CreateFontString(nil, "OVERLAY")
+	text:SetFontObject(GameFontNormal)
+	text:SetFont(L["proximityfont"], 12)
+	text:SetText("")
+	text:SetAllPoints(display)
+	display.text = text
+	display:SetScript("OnShow", function() text:SetText("|cff777777:-)|r") end)
+
+	local drag = CreateFrame("Frame", nil, display)
+	drag.frame = display
+	drag:SetFrameLevel(display:GetFrameLevel() + 10) -- place this above everything
+	drag:SetWidth(16)
+	drag:SetHeight(16)
+	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
+	drag:EnableMouse(true)
+	drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
+	drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
+	drag:SetAlpha(0.5)
+	display.drag = drag
+
+	local tex = drag:CreateTexture(nil, "BACKGROUND")
+	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
+	tex:SetWidth(16)
+	tex:SetHeight(16)
+	tex:SetBlendMode("ADD")
+	tex:SetPoint("CENTER", drag)
+
+	anchor = display
+
+	local x = plugin.db.profile.posx
+	local y = plugin.db.profile.posy
+	if x and y then
+		local s = display:GetEffectiveScale()
+		display:ClearAllPoints()
+		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
-		anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
+		display:ClearAllPoints()
+		display:SetPoint("CENTER", UIParent, "CENTER")
+	end
+	
+	plugin:RestyleWindow()
+end
+
+function plugin:RestyleWindow()
+	updateSoundButton()
+	if self.db.profile.showTitle then
+		anchor.header:Show()
+	else
+		anchor.header:Hide()
+	end
+	if self.db.profile.showBackground then
+		anchor.background:Show()
+	else
+		anchor.background:Hide()
+	end
+	if self.db.profile.showSound then
+		anchor.sound:Show()
+	else
+		anchor.sound:Hide()
+	end
+	if self.db.profile.showClose then
+		anchor.close:Show()
+	else
+		anchor.close:Hide()
+	end
+	if self.db.profile.lock then
+		locked = nil
+		lockDisplay()
+	else
+		locked = true
+		unlockDisplay()
 	end
 end
 
-plugin.defaultDB = {
-	posx = nil,
-	posy = nil,
-	showTitle = true,
-	showBackground = true,
-	showSound = true,
-	showClose = true,
-	lock = nil,
-	width = 100,
-	height = 80,
-	sound = true,
-	disabled = nil,
-	proximity = true,
-}
-plugin.external = true
+-------------------------------------------------------------------------------
+-- Proximity Updater
+--
 
-----
--- proximity repeater frame
-----
-local repeater = CreateFrame("Frame", nil, UIParent)
-repeater:Hide()
-repeater.elapsed = 0
-repeater:SetScript("OnUpdate", function( self, elapsed ) 
-	self.elapsed = self.elapsed + elapsed
-	if repeater.elapsed >= .5 then
-		repeater.elapsed = 0
-		plugin:UpdateProximity()
+local updater = nil
+do
+	local tooClose = {} -- List of players who are too close.
+	local lastplayed = 0 -- When we last played an alarm sound for proximity.
+
+	local function updateProximity()
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local n = GetRaidRosterInfo(i)
+			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n) then
+				table.insert(tooClose, coloredNames[n])
+			end
+			if #tooClose > 4 or i > 25 then break end
+		end
+
+		if #tooClose == 0 then
+			anchor.text:SetText("|cff777777:-)|r")
+		else
+			anchor.text:SetText(table.concat(tooClose, "\n"))
+			wipe(tooClose)
+			if not plugin.db.profile.sound then return end
+			local t = GetTime()
+			if t > lastplayed + 1 then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", "Alarm")
+			end
+		end
 	end
-end )
 
------------------------------------------------------------------------
+	updater = CreateFrame("Frame")
+	updater:Hide()
+	local total = 0
+	updater:SetScript("OnUpdate", function(self, elapsed)
+		total = total + elapsed
+		if total >= .5 then
+			total = 0
+			updateProximity()
+		end
+	end)
+end
+
+-------------------------------------------------------------------------------
 --      Initialization
------------------------------------------------------------------------
+--
 
 function plugin:OnRegister()
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
@@ -188,25 +416,35 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_ShowProximity")
-	self:RegisterMessage("BigWigs_HideProximity")
-	self:RegisterMessage("BigWigs_StartConfigureMode", "TestProximity")
-	self:RegisterMessage("BigWigs_StopConfigureMode", "CloseProximity")
+	self:RegisterMessage("BigWigs_HideProximity", "Close")
+	self:RegisterMessage("BigWigs_OnBossDisable")
+
+	self:RegisterMessage("BigWigs_StartConfigureMode")
+	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 end
 
 function plugin:OnPluginDisable()
-	self:CloseProximity()
+	self:Close()
 end
 
 -------------------------------------------------------------------------------
 -- Options
 --
 
+function plugin:BigWigs_StartConfigureMode()
+	inConfigMode = true
+	self:Test()
+end
+
+function plugin:BigWigs_StopConfigureMode()
+	inConfigMode = nil
+	self:Close()
+end
+
 function plugin:BigWigs_SetConfigureTarget(event, module)
-	if not anchor then self:SetupFrames() end
+	ensureDisplay()
 	if module == self then
 		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
@@ -303,289 +541,85 @@ do
 	end
 end
 
------------------------------------------------------------------------
---      Event Handlers
------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- Events
+--
 
-function plugin:BigWigs_ShowProximity(event, module)
-	if active then error("The proximity window is already running for another module.") end
-	active = module
-	self:OpenProximity()
-end
-
-function plugin:BigWigs_HideProximity(event, module)
-	active = nil
-	self:CloseProximity()
-end
-
-OnOptionToggled = function(module)
-	if active and active == module then
-		if active.db.profile.proximity then
-			plugin:OpenProximity()
-		else
-			plugin:CloseProximity()
-		end
+do
+	local opener = nil
+	function plugin:BigWigs_ShowProximity(event, module, range)
+		if type(range) ~= "number" then return end -- Just so we don't error during the convertion
+		opener = module
+		self:Open(range)
 	end
-end
 
-function plugin:BigWigs_OnBossDisable(event, module)
-	if active and active == module then
-		self:BigWigs_HideProximity(active)
+	function plugin:BigWigs_OnBossDisable(event, module)
+		if module ~= opener then return end
+		self:Close()
 	end
 end
 
 -----------------------------------------------------------------------
---      Util
+-- API
 -----------------------------------------------------------------------
 
-function plugin:CloseProximity()
-	if anchor then anchor:Hide() end
-	repeater:Hide()
+function plugin:Close()
+	activeProximityFunction = nil
+	if anchor then
+		anchor.header:SetText(L["Close Players"])
+		anchor:Hide()
+	end
+	updater:Hide()
+	-- Just in case we were the last target of
+	-- configure mode, reset the background color.
+	anchor.background:SetTexture(0, 0, 0, 0.3)
 end
 
-function plugin:OpenProximity()
-	if self.db.profile.disabled then return end
-	if active and (not active.proximityCheck or not active.db.profile.proximity) then return end
-	if not anchor then self:SetupFrames()
-	else updateSoundButton() end
-
-	wipe(tooClose)
-	anchor.text:SetText(L["|cff777777Nobody|r"])
-	anchor.header:SetText(active and active.proximityHeader or L["Close Players"])
+function plugin:Open(range)
+	if type(range) ~= "number" then error("Range needs to be a number!") end
+	-- Make sure the anchor is there
+	ensureDisplay()
+	-- Get the best range function for the given range
+	local func, actualRange = getClosestRangeFunction(range)
+	activeProximityFunction = func
+	-- Update the header to reflect the actual range we're checking
+	anchor.header:SetText(("%d yards"):format(actualRange))
+	-- Unbreak the sound+close buttons
+	makeThingsWork()
+	-- Start the show!
 	anchor:Show()
-	repeater:Show()
+	updater:Show()
 end
 
-function plugin:TestProximity()
-	if active then error("The proximity module is already running for another boss module.") end
-	self:OpenProximity()
+function plugin:Test()
+	-- Make sure the anchor is there
+	ensureDisplay()
+	-- Close ourselves in case we entered configure mode DURING a boss fight.
+	self:Close()
+	-- Break the sound+close buttons
+	breakThings()
+	anchor:Show()
 end
 
-function plugin:UpdateProximity()
-	local num = GetNumRaidMembers()
-	for i = 1, num do
-		local n = GetRaidRosterInfo(i)
-		if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
-			if not active or not active.proximityCheck or active.proximityCheck == "bandage" then
-				for i, v in next, bandages do
-					if IsItemInRange(v, n) == 1 then
-						table.insert(tooClose, coloredNames[n])
-						break
-					end
-				end
-			elseif active and type(active.proximityCheck) == "function" then
-				if active.proximityCheck(n) then
-					table.insert(tooClose, coloredNames[n])
-				end
-			end
-		end
-		if #tooClose > 4 then break end
-	end
+-------------------------------------------------------------------------------
+-- Slash command
+--
 
-	if #tooClose == 0 then
-		anchor.text:SetText(L["|cff777777Nobody|r"])
+SlashCmdList.BigWigs_Proximity = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	input = input:trim()
+	if input == "" or input == "?" or input == "ranges" then
+		print("Available ranges (in yards) for the promixity display:")
+		local t = {}
+		for range in pairs(ranges) do tinsert(t, range) end
+		print(table.concat(t, ", "))
+		print("Example: /proximity " .. tostring(t[1]))
 	else
-		anchor.text:SetText(table.concat(tooClose, "\n"))
-		wipe(tooClose)
-		if not self.db.profile.sound or (active and active.proximitySilent) then return end
-		local t = time()
-		if t > lastplayed + 1 then
-			lastplayed = t
-			self:SendMessage("BigWigs_Sound", "Alarm")
-		end
+		local range = tonumber(input)
+		if not range then return end
+		plugin:Open(range)
 	end
 end
-
-------------------------------
---    Create the Anchor     --
-------------------------------
-
-local function onDragStart(self) self:StartMoving() end
-local function onDragStop(self)
-	self:StopMovingOrSizing()
-	plugin:SavePosition()
-end
-local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
-local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing() end
-local function onResize(self, width, height)
-	plugin.db.profile.width = width
-	plugin.db.profile.height = height
-end
-
-local function setConfigureTarget(self, button)
-	if button ~= "LeftButton" then return end
-	plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-end
-
-local locked = nil
-function lockDisplay()
-	if locked then return end
-	anchor:EnableMouse(false)
-	anchor:SetMovable(false)
-	anchor:SetResizable(false)
-	anchor:RegisterForDrag()
-	anchor:SetScript("OnSizeChanged", nil)
-	anchor:SetScript("OnDragStart", nil)
-	anchor:SetScript("OnDragStop", nil)
-	anchor:SetScript("OnMouseUp", nil)
-	anchor.drag:Hide()
-	locked = true
-end
-function unlockDisplay()
-	if not locked then return end
-	anchor:EnableMouse(true)
-	anchor:SetMovable(true)
-	anchor:SetResizable(true)
-	anchor:RegisterForDrag("LeftButton")
-	anchor:SetScript("OnSizeChanged", onResize)
-	anchor:SetScript("OnDragStart", onDragStart)
-	anchor:SetScript("OnDragStop", onDragStop)
-	anchor:SetScript("OnMouseUp", setConfigureTarget)
-	anchor.drag:Show()
-	locked = nil
-end
-
-local function onControlEnter(self)
-	GameTooltip:ClearLines()
-	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
-	GameTooltip:AddLine(self.tooltipHeader)
-	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
-	GameTooltip:Show()
-end
-local function onControlLeave() GameTooltip:Hide() end
-
-function plugin:SetupFrames()
-	if anchor then return end
-
-	local display = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-	display:SetWidth(self.db.profile.width)
-	display:SetHeight(self.db.profile.height)
-	display:SetMinResize(100, 30)
-	display:SetClampedToScreen(true)
-	local bg = display:CreateTexture(nil, "PARENT")
-	bg:SetAllPoints(display)
-	bg:SetBlendMode("BLEND")
-	bg:SetTexture(0, 0, 0, 0.3)
-	display.background = bg
-
-	local close = CreateFrame("Button", nil, display)
-	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-	close:SetHeight(16)
-	close:SetWidth(16)
-	close.tooltipHeader = L["Close"]
-	close.tooltipText = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."]
-	close:SetScript("OnEnter", onControlEnter)
-	close:SetScript("OnLeave", onControlLeave)
-	close:SetScript("OnClick", function()
-		if active then
-			BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
-		end
-		plugin:CloseProximity()
-	end)
-	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
-	display.close = close
-
-	local sound = CreateFrame("Button", nil, display)
-	sound:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
-	sound:SetHeight(16)
-	sound:SetWidth(16)
-	sound.tooltipHeader = L["Toggle sound"]
-	sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
-	sound:SetScript("OnEnter", onControlEnter)
-	sound:SetScript("OnLeave", onControlLeave)
-	sound:SetScript("OnClick", toggleSound)
-	display.sound = sound
-
-	local header = display:CreateFontString(nil, "OVERLAY")
-	header:SetFontObject(GameFontNormal)
-	header:SetText(L["Close Players"])
-	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
-	display.header = header
-
-	local text = display:CreateFontString(nil, "OVERLAY")
-	text:SetFontObject(GameFontNormal)
-	text:SetFont(L["proximityfont"], 12)
-	text:SetText("")
-	text:SetAllPoints(display)
-	display.text = text
-
-	local drag = CreateFrame("Frame", nil, display)
-	drag.frame = display
-	drag:SetFrameLevel(display:GetFrameLevel() + 10) -- place this above everything
-	drag:SetWidth(16)
-	drag:SetHeight(16)
-	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
-	drag:EnableMouse(true)
-	drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
-	drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
-	drag:SetAlpha(0.5)
-	display.drag = drag
-
-	local tex = drag:CreateTexture(nil, "BACKGROUND")
-	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
-	tex:SetWidth(16)
-	tex:SetHeight(16)
-	tex:SetBlendMode("ADD")
-	tex:SetPoint("CENTER", drag)
-
-	anchor = display
-	self:RestyleWindow()
-
-	local x = self.db.profile.posx
-	local y = self.db.profile.posy
-	if x and y then
-		local s = display:GetEffectiveScale()
-		display:ClearAllPoints()
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	else
-		self:ResetAnchor()
-	end
-end
-
-function plugin:RestyleWindow()
-	if not anchor then return end
-	updateSoundButton()
-	if self.db.profile.showTitle then
-		anchor.header:Show()
-	else
-		anchor.header:Hide()
-	end
-	if self.db.profile.showBackground then
-		anchor.background:Show()
-	else
-		anchor.background:Hide()
-	end
-	if self.db.profile.showSound then
-		anchor.sound:Show()
-	else
-		anchor.sound:Hide()
-	end
-	if self.db.profile.showClose then
-		anchor.close:Show()
-	else
-		anchor.close:Hide()
-	end
-	if self.db.profile.lock then
-		locked = nil
-		lockDisplay()
-	else
-		locked = true
-		unlockDisplay()
-	end
-end
-
-function plugin:ResetAnchor()
-	if not anchor then self:SetupFrames() end
-	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER")
-	self.db.profile.posx = nil
-	self.db.profile.posy = nil
-end
-
-function plugin:SavePosition()
-	if not anchor then self:SetupFrames() end
-	local s = anchor:GetEffectiveScale()
-	self.db.profile.posx = anchor:GetLeft() * s
-	self.db.profile.posy = anchor:GetTop() * s
-end
+SLASH_BigWigs_Proximity1 = "/proximity"
+SLASH_BigWigs_Proximity2 = "/bwproximity" -- In case some other addon already has /proximity
 

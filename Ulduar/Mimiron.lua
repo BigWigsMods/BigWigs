@@ -12,7 +12,6 @@ mod.optionHeaders = {
 	[64623] = "hard",
 	phase = "general",
 }
-mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
 --      Are you local?      --
@@ -165,7 +164,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		if self.db.profile.berserk then
 			self:Berserk(600, true)
 		end
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(5)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		if self.db.profile.berserk then
@@ -183,7 +182,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		if self:GetOption(64623) and ishardmode then
 			self:Bar(L["fbomb_bar"], 45, 64623)
 		end
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:CloseProximity()
 	elseif msg:find(L["phase3_trigger"]) then
 		self:CancelScheduledEvent("fbombWarning")
 		phase = 3

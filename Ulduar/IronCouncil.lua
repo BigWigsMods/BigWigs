@@ -12,7 +12,6 @@ mod.optionHeaders = {
 	[62274] = "Runemaster Molgeim",
 	icon = "general",
 }
-mod.proximityCheck = "bandage"
 
 ------------------------------
 --      Are you local?      --
@@ -88,7 +87,7 @@ end
 
 function mod:Overwhelm(player, spellId, _, _, spellName)
 	if player == pName then
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(15)
 	end
 	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(player, spellName)
@@ -98,7 +97,7 @@ end
 
 function mod:OverRemove(player)
 	if player == pName then
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:CloseProximity()
 	end
 	self:SendMessage("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
 end

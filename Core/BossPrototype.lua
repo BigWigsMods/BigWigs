@@ -256,6 +256,15 @@ end
 -- Boss module APIs for messages, bars, icons, etc.
 --
 
+function boss:OpenProximity(range)
+	if not self.db.proximity then return end
+	self:SendMessage("BigWigs_ShowProximity", self, range)
+end
+function boss:CloseProximity()
+	if not self.db.proximity then return end
+	self:SendMessage("BigWigs_HideProximity")
+end
+
 do
 	local keys = setmetatable({}, {__index =
 		function(self, key)

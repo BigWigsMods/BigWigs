@@ -11,7 +11,6 @@ mod.optionHeaders = {
 	[62861] = "hard",
 	berserk = "general",
 }
-mod.proximityCheck = "bandage"
 
 ------------------------------
 --      Are you local?      --
@@ -155,7 +154,7 @@ end
 
 function mod:Fury(player, spellId)
 	if player == pName then
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(10)
 	end
 	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(player, L["fury_message"])
@@ -166,7 +165,7 @@ end
 function mod:FuryRemove(player)
 	self:SendMessage("BigWigs_StopBar", self, L["fury_other"]:format(player))
 	if player == pName then
-		self:SendMessage("BigWigs_HideProximity", self)
+		self:CloseProximity()
 	end
 end
 
