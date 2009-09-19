@@ -69,7 +69,7 @@ if L then
 
 	L.engage = "Angegriffen"
 	L.engage_trigger = "^Ihr steht vor Jaraxxus"
-	--L.engage_trigger1 = "Banished to the Nether" --need!
+	L.engage_trigger1 = "Verbannt in den Nether!"
 
 	L.incinerate_message = "Einäschern"
 	L.incinerate_other = "Einäschern: %s"
