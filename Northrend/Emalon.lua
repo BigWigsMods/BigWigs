@@ -6,8 +6,6 @@ if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(33993)
 mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
-mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
-mod.proximitySilent = true
 
 ------------------------------
 --      Are you local?      --
@@ -48,7 +46,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:SendMessage("BigWigs_ShowProximity", self)
+	self:OpenProximity(5)
 	if self:GetOption(64218) then
 		self:Bar(L["overcharge_next"], 45, 64218)
 	end
