@@ -93,7 +93,6 @@ function mod:OnEngage()
 	if self.db.profile.phase then
 		self:IfMessage(L["phase1_message"], "Attention")
 	end
-	self:SendMessage("BigWigs_HideProximity", self)
 end
 
 ------------------------------
@@ -175,7 +174,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 		if self.db.profile.phase then
 			self:IfMessage(L["phase3_message"]:format(unit), "Attention")
 		end
-		self:SendMessage("BigWigs_ShowProximity", self)
+		self:OpenProximity(5)
 	elseif msg == L["end_trigger"] then
 		self:Win()
 	end
