@@ -47,7 +47,7 @@ if L then
 	L.butt_bar = "~Kopfstoß"
 	L.charge = "Wütender Ansturm"
 	L.charge_desc = "Warnt vor Wütender Ansturm auf Spielern."
-	L.charge_trigger = "^zornig an und lässt einen gewaltigen Schrei ertönen!"
+	L.charge_trigger = "zornig an"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "deDE")
