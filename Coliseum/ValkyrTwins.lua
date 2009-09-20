@@ -53,7 +53,7 @@ function mod:OnBossEnable()
 	
 	self:Yell("Engage", L["engage_trigger1"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Death("Win", 34496, 34497)
+	self:Death("Win", 34496)
 
 	difficulty = GetRaidDifficulty()
 	started = nil
