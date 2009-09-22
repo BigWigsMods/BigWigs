@@ -257,11 +257,11 @@ end
 --
 
 function boss:OpenProximity(range)
-	if not self.db.proximity then return end
+	if not self.db.profile.proximity then return end
 	self:SendMessage("BigWigs_ShowProximity", self, range)
 end
 function boss:CloseProximity()
-	if not self.db.proximity then return end
+	if not self.db.profile.proximity then return end
 	self:SendMessage("BigWigs_HideProximity")
 end
 
