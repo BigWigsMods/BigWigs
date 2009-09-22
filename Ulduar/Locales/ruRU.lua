@@ -329,7 +329,7 @@ if L then
 	L.phase2_warning = "2-ая фаза"
 	L.phase2_trigger = "^Я – это сон наяву"
 	L.phase3_warning = "3-ая фаза"
-	L.phase3_trigger = "^ПАДИТЕ НИЦ ПЕРЕД БОГОМ СМЕРТИ!"
+	L.phase3_trigger = "^Взгляните в истинное лицо"
 
 	L.portal = "Портал"
 	L.portal_desc = "Сообщать о портале."
