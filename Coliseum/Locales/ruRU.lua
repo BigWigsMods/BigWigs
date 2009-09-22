@@ -90,7 +90,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
 if L then
-	L.engage_trigger1 = "Во имя темного повелителя. Во имя Короля-Лича. Вы. Умрите."
+	L.engage_trigger1 = "Во имя темного повелителя. Во имя Короля-лича. Вы. Умрете."
 
 	L.vortex_or_shield_cd = "Воронка или Щит"
 
