@@ -160,7 +160,7 @@ local function updateSoundButton()
 	anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
 end
 local function toggleSound()
-	plugin.db.profile.sound = not plugin.db.profil.sound
+	plugin.db.profile.sound = not plugin.db.profile.sound
 	updateSoundButton()
 end
 
