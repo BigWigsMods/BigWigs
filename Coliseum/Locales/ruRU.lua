@@ -22,6 +22,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "ruRU")
 if L then
+	--L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered" --need
+
 	L.engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!"
 	L.jormungars_trigger = "Приготовьтесь к схватке с близнецами-чудовищами, Кислотной Утробой и Жуткой Чешуей!"
 	L.icehowl_trigger = "В воздухе повеяло ледяным дыханием следующего бойца: на арену выходит Ледяной Рев! Сражайтесь или погибните, чемпионы!"
@@ -64,6 +66,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "ruRU")
 if L then
+	--L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!" --need
+
 	L.engage = "Начало битвы"
 	L.engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!"
 	L.engage_trigger1 = "Отправляйся в Пустоту!"

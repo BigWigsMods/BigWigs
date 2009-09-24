@@ -26,6 +26,10 @@ if L then
 	L.icon_desc = "Отмечать черепом Служителя бури с эффектом Перегрузки."
 end
 
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "ruRU")
+if L then
+	L.cinder_message = "ВЫ в ОГНЕ!"
+end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "ruRU")
 if L then
