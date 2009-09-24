@@ -3,8 +3,8 @@ if L then
 	L.engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!"
 	L.engage_trigger = "Dieser Ort wird Euch als Grab dienen!"
 
-	L.unburrow_trigger = "%s entsteigt dem Boden!"
-	L.burrow_trigger = "%s gräbt sich in den Boden!"
+	L.unburrow_trigger = "entsteigt dem Boden"
+	L.burrow_trigger = "gräbt sich in den Boden"
 	L.burrow = "Eingraben"
 	L.burrow_desc = "Zeigt einen Timer für Anub'arak's Eingraben."
 	L.burrow_cooldown = "~Eingraben"
@@ -23,6 +23,7 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "deDE")
 if L then
 	L.enable_trigger = "Willkommen, Champions! Ihr habt den Ruf des Argentumkreuzzugs vernommen und seid ihm mutig gefolgt! Diejenigen unter Euch, welche die Gefahren des Kolosseums überleben, werden den Kreuzzug bei seinem Marsch auf die Eiskronenzitadelle begleiten."
+	
 	L.engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!"
 	L.jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!"
 	L.icehowl_trigger = "Mit der Ankündigung unseres nächsten Kämpfers gefriert die Luft selbst: Eisheuler! Tötet oder werdet getötet, Champions!"
@@ -31,9 +32,9 @@ if L then
 	-- Gormok
 	L.snobold = "Schneebold"
 	L.snobold_desc = "Warnt davor, wer einen Schneebold auf seinem Kopf hat."
-	L.snobold_message = "Schneebold: %s!"
-	L.impale_message = "%2$dx Pfählen: %1$s!"
-	L.firebomb_message = "Feuerbombe auf DIR!"
+	L.snobold_message = "Schneebold"
+	L.impale_message = "%2$dx Pfählen: %1$s"
+	L.firebomb_message = "Feuer auf DIR!"
 
 	-- Jormungars
 	L.spew = "Ätzender/Geschmolzener Auswurf"
@@ -71,6 +72,9 @@ if L then
 	L.engage_trigger = "^Ihr steht vor Jaraxxus"
 	L.engage_trigger1 = "Verbannt in den Nether!"
 
+	L.adds = "Portale und Vulkane"
+	L.adds_desc = "Zeigt einen Timer und warnt vor der Beschwörung der Portale und Vulkane."
+	
 	L.incinerate_message = "Einäschern"
 	L.incinerate_other = "Einäschern: %s"
 	L.incinerate_bar = "~Einäschern"
@@ -83,8 +87,8 @@ if L then
 	L.icon = "Schlachtzugs-Symbol"
 	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benötigt Assistent oder höher)."
 
-	L.infernal_bar = "Vulkan"
-	L.netherportal_bar = "Netherportal"
+	L.infernal_bar = "Vulkan kommt"
+	L.netherportal_bar = "Netherportal kommt"
 	L.netherpower_bar = "~Macht des Nether"
 end
 
