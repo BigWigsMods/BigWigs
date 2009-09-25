@@ -282,18 +282,6 @@ do
 	end
 end
 
--- Support ConfigMode spec a'la http://www.wowwiki.com/ConfigMode   /Mikk, 20090920
-CONFIGMODE_CALLBACKS["BigWigs"] = function(action)
-	if action=="ON" then
-		if not BigWigs:IsEnabled() then
-			BigWigs:Enable()
-		end
-		options:SendMessage("BigWigs_StartConfigureMode", true)	-- true = don't display settings frame
-	elseif action=="OFF" then
-		options:SendMessage("BigWigs_StopConfigureMode")
-	end
-end
-
 local getSpellDescription
 do
 	local scanner = CreateFrame("GameTooltip")
