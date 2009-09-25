@@ -12,6 +12,7 @@ if L then
 
 	L.nerubian_burrower = "Nerubian Burrower"
 
+	L.freeze_bar = "<下一Freezing Slash>"
 	L.pcold_bar = "<下一Penetrating Cold>"
 
 	L.icon = "团队标记"

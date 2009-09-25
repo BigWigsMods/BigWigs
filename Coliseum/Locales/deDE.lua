@@ -23,7 +23,7 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "deDE")
 if L then
 	L.enable_trigger = "Willkommen, Champions! Ihr habt den Ruf des Argentumkreuzzugs vernommen und seid ihm mutig gefolgt! Diejenigen unter Euch, welche die Gefahren des Kolosseums überleben, werden den Kreuzzug bei seinem Marsch auf die Eiskronenzitadelle begleiten."
-	
+
 	L.engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!"
 	L.jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!"
 	L.icehowl_trigger = "Mit der Ankündigung unseres nächsten Kämpfers gefriert die Luft selbst: Eisheuler! Tötet oder werdet getötet, Champions!"
@@ -74,7 +74,7 @@ if L then
 
 	L.adds = "Portale und Vulkane"
 	L.adds_desc = "Zeigt einen Timer und warnt vor der Beschwörung der Portale und Vulkane."
-	
+
 	L.incinerate_message = "Einäschern"
 	L.incinerate_other = "Einäschern: %s"
 	L.incinerate_bar = "~Einäschern"

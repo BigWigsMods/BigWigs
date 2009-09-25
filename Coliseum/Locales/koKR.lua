@@ -9,9 +9,9 @@ if L then
 	L.burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다."
 	L.burrow_cooldown = "다음 소멸"
 	L.burrow_soon = "곧 소멸"
-	
+
 	L.nerubian_burrower = "네루비안 땅무지"
-	
+
 	L.pcold_bar = "~다음 냉기 관통"
 
 	L.icon = "전술 표시"
@@ -71,7 +71,7 @@ if L then
 	L.engage = "전투 시작"
 	L.engage_trigger = "불타는 군단의 에레다르 군주, 자락서스 님이 상대해주마!"
 	L.engage_trigger1 = "황천으로 사라져라!"
-	
+
 	L.adds = "차원문과 화산"
 	L.adds_desc = "자락서스의 차원문과 화산 소환에 대한 알림과 타이머를 표시합니다."
 
@@ -86,7 +86,7 @@ if L then
 
 	L.icon = "전술 표시"
 	L.icon_desc = "군단 불꽃 대상이 된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
-	
+
 	L.infernal_bar = "화산 소환"
 	L.netherportal_bar = "~황천 차원문 대기시간"
 	L.netherpower_bar = "~황천의 힘 대기시간"

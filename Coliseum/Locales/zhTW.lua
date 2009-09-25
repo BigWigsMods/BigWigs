@@ -12,6 +12,7 @@ if L then
 
 	L.nerubian_burrower = "奈幽掘洞者"
 
+	L.freeze_bar = "<下一冰凍斬>"
 	L.pcold_bar = "<下一透骨之寒>"
 
 	L.icon = "團隊標記"
