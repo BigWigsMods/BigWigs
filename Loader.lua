@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 local pName = UnitName("player")
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
+local UNKNOWN = "UNKNOWN"
 
 do
 	local L_RELEASE = L["You are running an official release of Big Wigs 3.0 (revision %d)"]
@@ -69,15 +70,7 @@ if LOCALE == "enGB" then
 	LOCALE = "enUS"
 end
 
--- XXX Not sure if this should be here or in Extras\Version, we need to flesh out how to work this version check thing.
--- XXX If it remains here it'll be added to the BigWigs locale files in the end.
-local L_OLD_VERSION = "There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."
-if LOCALE == "deDE" then
-	-- L_OLD_VERSION = ...
-elseif LOCALE == "frFR" then
-	-- L_OLD_VERSION = ...
---elseif etc...
-end
+local L_OLD_VERSION = L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."]
 
 -- uncomment next line to debug Foreign Loading
 -- LOCALE = "Foreignese"
@@ -219,25 +212,37 @@ end
 -- The code below won't really let you do that.
 --
 -- So we have to decide on a message protocol for everything and what we should allow and not.
+--
+-- Maybe need to store a versions table in the loader for when the potential version module loads it can request the already known versions.
 --]]
+local warned = nil
 function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix == "BWVQ3" then
-		if BIGWIGS_RELEASE_TYPE == ALPHA then return end
-		SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, distribution)
+		-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
+		self:SendMessage("BigWigs_Version", sender, UNKNOWN)
+		if BIGWIGS_RELEASE_TYPE == ALPHA then
+			SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, distribution)
+		else
+			SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, distribution)
+		end
 	elseif prefix == "BWOOD3" then
-		if not tonumber(message) then return end
+		if not tonumber(message) or warned then return end
 		if tonumber(message) > BIGWIGS_RELEASE_REVISION then
-			-- We're running an old version.
-			-- No point in listening any more.
-			self:UnregisterEvent("CHAT_MSG_ADDON")
+			warned = true
 			print(L_OLD_VERSION)
 		end
-	elseif prefix == "BWVR3" and sender ~= pName then
-		if not tonumber(message) then return end
-		if BIGWIGS_RELEASE_REVISION > tonumber(message) then
+	elseif prefix == "BWVR3" then
+		message = tonumber(message)
+		if not message then return end
+		self:SendMessage("BigWigs_Version", sender, RELEASE, message)
+		if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
 			-- The sender is running an old version.
 			SendAddonMessage("BWOOD3", BIGWIGS_RELEASE_REVISION, "WHISPER", sender)
 		end
+	elseif prefix == "BWVRA3" then
+		message = tonumber(message)
+		if not message then return end
+		self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 	end
 end
 
