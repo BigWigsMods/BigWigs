@@ -375,7 +375,7 @@ function boss:Sync(...) core:Transmit(...) end
 
 do
 	local sentWhispers = {}
-	local function filter(self, event, msg) if sentWhispers[msg] then return true end end
+	local function filter(self, event, msg) if sentWhispers[msg] or msg:find("^<DBM>") then return true end end
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 
