@@ -379,7 +379,6 @@ local function fillBossOptions(module)
 end
 
 local zoneOptions = {}
-local flagforloadbutton = {}
 
 local function loadZone(k, v)
 	local zone = k.arg
@@ -403,7 +402,8 @@ local function populateZoneOptions(uiType, library, zone)
 		type = "execute",
 		func = loadZone,
 		disabled = function() return not BigWigsLoader:HasZone(zone) end,
-		arg = zone
+		arg = zone,
+		width = "full"
 	}
 	for i, module in next, zoneModules[zone] do
 		if not zoneOptions[zone].args[module.name] then
