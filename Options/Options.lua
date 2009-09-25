@@ -290,11 +290,9 @@ do
 		lcache[i]:SetFontObject(GameFontNormal); rcache[i]:SetFontObject(GameFontNormal)
 		scanner:AddFontStrings(lcache[i], rcache[i])
 	end
-	local scannerCache = {}
 	function getSpellDescription(spellId)
 		scanner:ClearLines()
 		scanner:SetHyperlink("spell:"..spellId)
-		for k in pairs(scannerCache) do scannerCache[k] = nil end
 		for i = scanner:NumLines(), 1, -1  do
 			local desc = lcache[i] and lcache[i]:GetText()
 			if desc then return desc end
