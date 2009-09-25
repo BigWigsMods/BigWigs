@@ -7,6 +7,9 @@
 
 ## LoadOnDemand: 1
 
+### Flag this addon as loadable by ConfigMode controllers
+## X-ConfigMode: true
+
 ## Dependencies: BigWigs
 
 libs.xml

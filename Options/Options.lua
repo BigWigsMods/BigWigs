@@ -47,8 +47,8 @@ local acOptions = {
 				InterfaceOptionsFrame:Hide()
 
 				if not BigWigs:IsEnabled() then
-					print("This is weird, we're accessing the options but BigWigs is not enabled.")
-					return
+					-- We may be reached through the blizzard interface options these days, even if bigwigs isn't enabled, so ....
+					BigWigs:Enable()
 				end
 				options:SendMessage("BigWigs_StartConfigureMode")
 				options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
@@ -249,26 +249,43 @@ do
 		frame:AddChild(tabs)
 	end
 	function options:BigWigs_SetConfigureTarget(event, module)
-		tabs:SelectTab(module:GetName())
+		if frame then
+			tabs:SelectTab(module:GetName())
+		end
 	end
 
 	function options:InConfigureMode() return configMode end
-	function options:BigWigs_StartConfigureMode(event)
+	function options:BigWigs_StartConfigureMode(event, hideFrame)
 		configMode = true
-		createPluginFrame()
-		frame:Show()
+		if not hideFrame then
+			createPluginFrame()
+			frame:Show()
+		end
 	end
 
 	function options:BigWigs_StopConfigureMode()
 		configMode = nil
-		frame:Hide()
-		frame:ReleaseChildren()
-		frame:Release()
+		if frame then
+			frame:Hide()
+			frame:ReleaseChildren()
+			frame:Release()
+		end
 		frame = nil
 		wipe(plugins)
 	end
 end
 
+-- Support ConfigMode spec a'la http://www.wowwiki.com/ConfigMode   /Mikk, 20090920
+CONFIGMODE_CALLBACKS["BigWigs"] = function(action)
+	if action=="ON" then
+		if not BigWigs:IsEnabled() then
+			BigWigs:Enable()
+		end
+		options:SendMessage("BigWigs_StartConfigureMode", true)	-- true = don't display settings frame
+	elseif action=="OFF" then
+		options:SendMessage("BigWigs_StopConfigureMode")
+	end
+end
 
 local getSpellDescription
 do
