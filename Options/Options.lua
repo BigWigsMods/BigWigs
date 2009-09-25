@@ -98,17 +98,15 @@ local acOptions = {
 		},
 		broadcast = {
 			type = "toggle",
-			name = "Broadcast Messages",
+			name = "Broadcast",
 			desc = "Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r",
 			order = 33,
-			width = "full",
 		},
 		useraidchannel = {
 			type = "toggle",
-			name = "Use Raid Channel for Broadcasting",
-			desc = "Use the Raid Channel instead of Raid Warning for broadcasting.\n\n|cffff4411The Broadcast Messages option needs to be toggled for this to work!|r",
+			name = "Raid channel",
+			desc = "Use the Raid Channel instead of Raid Warning for broadcasting.",
 			order = 34,
-			width = "full",
 			disabled = function() return not BigWigs.db.profile.broadcast end,
 		},
 		separator3 = {
