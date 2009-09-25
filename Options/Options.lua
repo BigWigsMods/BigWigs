@@ -12,7 +12,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
 local pluginOptions = {
-	name = "Customize ...",
+	name = L["Customize ..."],
 	type = "group",
 	childGroups = "tab",
 	args = {},
@@ -32,15 +32,15 @@ local acOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = "Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n",
+			name = L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"],
 			fontSize = "medium",
 			order = 10,
 			width = "full",
 		},
 		configure = {
 			type = "execute",
-			name = "Configure ...",
-			desc = "Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection.",
+			name = L["Configure ..."],
+			desc = L["Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."],
 			func = function()
 				-- This won't hide the game menu if you opened options from there.
 				-- We don't care yet, this is temporary.
@@ -64,15 +64,15 @@ local acOptions = {
 		},
 		sound = {
 			type = "toggle",
-			name = "Sound",
-			desc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r",
+			name = L["Sound"],
+			desc = L["Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r"],
 			order = 21,
 			width = "full",
 		},
 		showBlizzardWarnings = {
 			type = "toggle",
-			name = "Blizzard warnings",
-			desc = "Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r",
+			name = L["Blizzard warnings"],
+			desc = L["Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r"],
 			order = 22,
 			width = "full",
 		},
@@ -84,28 +84,28 @@ local acOptions = {
 		},
 		raidicon = {
 			type = "toggle",
-			name = "Raid icons",
-			desc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
+			name = L["Raid icons"],
+			desc = L["Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"],
 			order = 31,
 			width = "full",
 		},
 		whisper = {
 			type = "toggle",
-			name = "Whisper warnings",
-			desc = "Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r",
+			name = L["Whisper warnings"],
+			desc = L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"],
 			order = 32,
 			width = "full",
 		},
 		broadcast = {
 			type = "toggle",
-			name = "Broadcast",
-			desc = "Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r",
+			name = L["Broadcast"],
+			desc = L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"],
 			order = 33,
 		},
 		useraidchannel = {
 			type = "toggle",
-			name = "Raid channel",
-			desc = "Use the raid channel instead of raid warning for broadcasting messages.",
+			name = L["Raid channel"],
+			desc = L["Use the raid channel instead of raid warning for broadcasting messages."],
 			order = 34,
 			disabled = function() return not BigWigs.db.profile.broadcast end,
 		},
@@ -141,7 +141,7 @@ local acOptions = {
 		},
 		footer = {
 			type = "description",
-			name = "|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r\n|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r",
+			name = L["|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r\n|cff44ff44"] .. BIGWIGS_RELEASE_STRING .. "|r",
 			order = 51,
 			width = "full",
 			fontSize = "medium",
@@ -158,7 +158,7 @@ function options:OnInitialize()
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
-	acd:AddToBlizOptions("Big Wigs: Plugins", "Customize ...", "Big Wigs")
+	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
 	
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_PluginRegistered")
@@ -220,18 +220,18 @@ do
 		frame:SetWidth(320)
 		frame:SetHeight(640)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
-		frame:SetTitle("Configure")
+		frame:SetTitle(L["Configure"])
 		frame:SetCallback("OnClose", function(widget, callback)
 			options:SendMessage("BigWigs_StopConfigureMode")
 		end)
 
 		local test = AceGUI:Create("Button")
-		test:SetText("Test")
+		test:SetText(L["Test"])
 		test:SetCallback("OnClick", onTestClick)
 		test:SetFullWidth(true)
 		
 		local reset = AceGUI:Create("Button")
-		reset:SetText("Reset positions")
+		reset:SetText(L["Reset positions"])
 		reset:SetCallback("OnClick", onResetClick)
 		reset:SetFullWidth(true)
 
@@ -305,7 +305,7 @@ local function fillBossOptions(module)
 	local config = {
 		type = "group",
 		name = module.displayName,
-		desc = ("Options for %s."):format(module.displayName),
+		desc = L["Options for %s."]:format(module.displayName),
 		get = function(info) return module.db.profile[info[#info]] end,
 		set = function(info, v) module.db.profile[info[#info]] = v end,
 		args = {},

@@ -1,12 +1,13 @@
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
+
 local pName = UnitName("player")
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
 
 do
-	-- XXX localize these? We'll see.
-	local L_RELEASE = "You are running an official release of Big Wigs 3.0 (revision %d)"
-	local L_ALPHA = "You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"
-	local L_SOURCE = "You are running a source checkout of Big Wigs 3.0 directly from the repository."
+	local L_RELEASE = L["You are running an official release of Big Wigs 3.0 (revision %d)"]
+	local L_ALPHA = L["You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"]
+	local L_SOURCE = L["You are running a source checkout of Big Wigs 3.0 directly from the repository."]
 
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
 	local releaseType = RELEASE
@@ -44,8 +45,6 @@ end
 
 BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 local loader = BigWigsLoader
-
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
 local ldb
 
