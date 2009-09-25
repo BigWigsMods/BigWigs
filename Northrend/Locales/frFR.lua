@@ -26,6 +26,11 @@ if L then
 	L.icon_desc = "Place un crâne sur le séide surchargé."
 end
 
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "frFR")
+if L then
+	L.cinder_message = "Braise enflammée sur VOUS !"
+end
+
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "frFR")
 if L then
 	L.sparks = "Etincelle de puissance"
@@ -87,4 +92,3 @@ if L then
 	L.twilight_message_tenebron = "Éclosion des œufs"
 	L.twilight_message = "Disciple |2 %s actif !"
 end
-

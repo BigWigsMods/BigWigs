@@ -192,8 +192,8 @@ L["Disable the proximity display for all modules that use it."] = "Désactive l'
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "L'affichage de proximité sera affiché la prochaine fois. Pour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
 L["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "L'affichage de proximité a été verrouillé. Vous devez faire un clic droit sur l'icône de BigWigs, puis allez dans Extras -> Proximité -> Affichage et décocher l'option Verrouiller si vous voulez le déplacer ou accédez aux autres options."
 
-L.proximity = "Proximité"
-L.proximity_desc = "Affiche la fenêtre de proximité quand approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
+L.proximity = "Affichage de proximité"
+L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
 
 L.proximityfont = "Fonts\\FRIZQT__.TTF"
 
