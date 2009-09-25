@@ -105,7 +105,7 @@ local acOptions = {
 		useraidchannel = {
 			type = "toggle",
 			name = "Raid channel",
-			desc = "Use the Raid Channel instead of Raid Warning for broadcasting.",
+			desc = "Use the raid channel instead of raid warning for broadcasting messages.",
 			order = 34,
 			disabled = function() return not BigWigs.db.profile.broadcast end,
 		},
