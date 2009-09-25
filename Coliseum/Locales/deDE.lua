@@ -12,6 +12,7 @@ if L then
 
 	L.nerubian_burrower = "Nerubischer Gräber"
 
+	L.freeze_bar = "~Gefrierender Streich"
 	L.pcold_bar = "~Durchdringende Kälte"
 
 	L.icon = "Schlachtzugs-Symbol"
