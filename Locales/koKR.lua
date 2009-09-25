@@ -68,7 +68,7 @@ L["Send a whisper notification to fellow players about certain encounter abiliti
 L["Broadcast"] = "알림"
 L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = "Big Wigs으로 부터 발생하는 모든 메세지를 공격대 경보 채널로 알립니다.\n\n|cffff4411오직 5인 파티 던전 또는 공격대장이나 승급된 사람만 가능합니다!|r"
 L["Raid channel"] = "공격대 채널"
-L["Use the raid channel instead of raid warning for broadcasting messages."] = "공격대 경보 채널 대신 알림 메세지를 대화창 채널을 사용합니다."
+L["Use the raid channel instead of raid warning for broadcasting messages."] = "공격대 경보 채널 대신 알림 메세지를 공격대 대화 채널을 사용합니다."
 L["|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r\n|cff44ff44"] = "|cffcccccc무단 수정에 대하여 좋게 생각하지 않습니다.\nirc에 freenode.net/#wowace에 접속하여, [Ammo] 그리고 vhaarr 에게 당신이 필요한 기능을 요청하세요.|r\n|cff44ff44"
 L["Configure"] = "설정"
 L["Test"] = "테스트"
