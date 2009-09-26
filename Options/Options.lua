@@ -404,6 +404,7 @@ local function populateZoneOptions(uiType, library, zone)
 	zone = strsub(zone, 11) -- strip "Big Wigs: "
 	zoneOptions[zone] = zoneOptions[zone] or {
 		type = "group",
+		name = zone,
 		childGroups = "select",
 		args = {},
 	}
