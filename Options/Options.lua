@@ -77,6 +77,12 @@ local acOptions = {
 			order = 22,
 			width = "full",
 		},
+		separator2 = {
+			type = "description",
+			name = " ",
+			order = 30,
+			width = "full",
+		},
 		raidicon = {
 			type = "toggle",
 			name = L["Raid icons"],
