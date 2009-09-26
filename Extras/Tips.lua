@@ -360,9 +360,9 @@ local function check()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
-	self:RegisterEvent("RAID_ROSTER_UPDATE", check)
-	self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
+	--self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
+	--self:RegisterEvent("RAID_ROSTER_UPDATE", check)
+	--self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
 end
 
 -------------------------------------------------------------------------------
