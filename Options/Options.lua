@@ -10,6 +10,7 @@ local ac = LibStub("AceConfig-3.0")
 local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
+local zoneframes = {}
 
 local pluginOptions = {
 	name = L["Customize ..."],
@@ -179,6 +180,17 @@ function options:Open()
 	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
 		if button.element and button.element.name == "Big Wigs" and button.element.collapsed then
 			OptionsListButtonToggle_OnClick(button.toggle)
+		end
+	end
+	local enableModule = nil
+	for name, module in BigWigs:IterateBossModules() do
+		if module:IsEnabled() then
+			local menu = module.otherMenu or module.zoneName
+			if zoneframes[menu] then 
+				acd:SelectGroup("Big Wigs: "..menu, module.name)
+				InterfaceOptionsFrame_OpenToCategory(zoneframes[menu])
+				return
+			end
 		end
 	end
 	InterfaceOptionsFrame_OpenToCategory("Big Wigs")
@@ -383,6 +395,7 @@ end
 local zoneModules = {}
 
 local function populateZoneOptions(uiType, library, zone)
+	zone = strsub(zone, 11) -- strip "Big Wigs: "
 	zoneOptions[zone] = zoneOptions[zone] or {
 		type = "group",
 		childGroups = "select",
@@ -411,8 +424,8 @@ end
 function SetZoneMenus(zones)
 	for zone, v in pairs(zones) do
 		if not zoneModules[zone] then
-			ac:RegisterOptionsTable(zone, populateZoneOptions)
-			acd:AddToBlizOptions(zone, zone, "Big Wigs")
+			ac:RegisterOptionsTable("Big Wigs: "..zone, populateZoneOptions)
+			zoneframes[zone] = acd:AddToBlizOptions("Big Wigs: "..zone, zone, "Big Wigs")
 			zoneModules[zone] = {}
 		end
 	end
@@ -426,8 +439,8 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	local zone = module.otherMenu or module.zoneName
 	if not zone then print(module.name) end
 	if not zoneModules[zone] then
-		ac:RegisterOptionsTable(zone, populateZoneOptions)
-		acd:AddToBlizOptions(zone, zone, "Big Wigs")
+		ac:RegisterOptionsTable("Big Wigs: "..zone, populateZoneOptions)
+		zoneframes[zone] = acd:AddToBlizOptions("Big Wigs: "..zone, zone, "Big Wigs")
 		zoneModules[zone] = {}
 	end
 	tinsert(zoneModules[zone], module)
