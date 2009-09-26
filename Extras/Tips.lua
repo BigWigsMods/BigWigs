@@ -28,7 +28,7 @@ plugin.pluginOptions = {
 	args = {
 		description = {
 			type = "description",
-			name = "Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/tip command|r, you might want to show them in chat frame instead!",
+			name = "Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!",
 			order = 1,
 			width = "full",
 			fontSize = "medium",
@@ -64,7 +64,7 @@ plugin.pluginOptions = {
 		manual = {
 			type = "toggle",
 			name = "Manual tips",
-			desc = "Raid leaders have the ability to show the players in the raid a manual tip with the /tip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option.",
+			desc = "Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option.",
 			order = 12,
 			width = "full",
 			disabled = disable,
@@ -171,7 +171,7 @@ local tips = {
 -- Tip window
 --
 
-local openTip = nil
+local showTip = nil
 do
 	local window, editbox, header, text, footer = nil, nil, nil, nil, nil
 	local coolButton = nil
@@ -186,6 +186,8 @@ do
 		footer:Show()
 	end
 	local function footerClicked(self)
+		local url = getURL()
+		if not url then return end
 		if not editbox then
 			editbox = CreateFrame("EditBox", nil, self, "InputBoxTemplate")
 			editbox:SetPoint("BOTTOM", self)
@@ -200,7 +202,7 @@ do
 			editbox:SetScript("OnEditFocusGained", editbox.HighlightText)
 			editbox:SetScript("OnTextChanged", textChanged)
 		end
-		editbox:SetText(getURL())
+		editbox:SetText(url)
 		editbox:Show()
 		footer:Hide()
 	end
@@ -306,7 +308,7 @@ do
 		nextButton:SetPoint("BOTTOMLEFT", 16, 16)
 		nextButton:SetWidth(16)
 		nextButton:SetHeight(16)
-		nextButton:SetScript("OnClick", function() plugin:Tip() end)
+		nextButton:SetScript("OnClick", function() plugin:RandomTip() end)
 		nextButton:SetNormalTexture("Interface\\Buttons\\UI-GroupLoot-Dice-Up")
 		nextButton:SetPushedTexture("Interface\\Buttons\\UI-GroupLoot-Dice-Down")
 		nextButton:SetHighlightTexture("Interface\\Buttons\\UI-GroupLoot-Dice-Highlight")
@@ -336,11 +338,16 @@ do
 		text:SetJustifyV("TOP")
 	end
 
-	function openTip(h, t, f)
+	function showTip(h, t, f)
 		if not window then createTipFrame() end
 		header:SetText(h)
 		text:SetText(t)
-		footer:SetText(f)
+		if f then
+			footer:SetText(f)
+			footer:Show()
+		else
+			footer:Hide()
+		end
 		coolButton:SetText(closeButtonTexts[math.random(1, #closeButtonTexts)])
 		window:Show()
 	end
@@ -355,7 +362,9 @@ local function check()
 		plugin:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		plugin:UnregisterEvent("RAID_ROSTER_UPDATE")
 		plugin:UnregisterEvent("PLAYER_ENTERING_WORLD")
-		plugin:Tip()
+		if plugin.db.profile.show and plugin.db.profile.automatic then
+			plugin:RandomTip()
+		end
 	end
 end
 
@@ -363,6 +372,25 @@ function plugin:OnPluginEnable()
 	--self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
 	--self:RegisterEvent("RAID_ROSTER_UPDATE", check)
 	--self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
+	self:RegisterEvent("CHAT_MSG_ADDON")
+end
+
+-------------------------------------------------------------------------------
+-- Events
+--
+
+function plugin:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
+	if prefix ~= "BWTIP" or not self.db.profile.manual then return end
+	for i = 1, 40 do
+		local name, rank = GetRaidRosterInfo(i)
+		if not name then break end
+		if name == sender then
+			if rank > 1 then
+				self:ShowTip(message)
+			end
+			break
+		end
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -376,12 +404,23 @@ do
 		g = 0.7,
 		b = 0.4,
 	}
-	function plugin:Tip()
-		local player, class, text, footerIndex = strsplit("#", tips[math.random(1, #tips)], 4)
+
+	function plugin:RandomTip()
+		self:ShowTip(tips[math.random(1, #tips)])
+	end
+
+	function plugin:ShowTip(tipString)
+		local player, class, text, footerInput = strsplit("#", tipString, 4)
+		if not player or not text then return end
 		local c = RAID_CLASS_COLORS[class] or DEVELOPER_COLOR
 		local header = headerFormat:format(string.format("%02x%02x%02x", c.r * 255, c.g * 255, c.b * 255), player)
-		local footer = footers[tonumber(footerIndex)]
-		openTip(header, text, footer)
+		local footer = nil
+		if tonumber(footerInput) then
+			footer = footers[tonumber(footerInput)]
+		elseif type(footerInput) == "string" and footerInput:trim():len() > 0 then
+			footer = footerInput
+		end
+		showTip(header, text, footer)
 	end
 end
 
@@ -391,16 +430,34 @@ end
 
 SlashCmdList.BigWigs_TipOfTheRaid = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	input = input:trim()
-	if input ~= "" then
-		-- XXX perhaps we want some way for a raid leader to broadcast a tip to his raid members
-		-- XXX if so, we can do that here!
-		print("I NEEDZ HELP LOL?!")
-	else
-		plugin:Tip()
-	end
+	plugin:RandomTip()
 end
 SLASH_BigWigs_TipOfTheRaid1 = "/raidtip"
 SLASH_BigWigs_TipOfTheRaid2 = "/tipoftheraid"
 SLASH_BigWigs_TipOfTheRaid3 = "/tip"
+
+local pName = UnitName("player")
+local _, pClass = UnitClass("player")
+SlashCmdList.BigWigs_SendRaidTip = function(input)
+	if not plugin:IsEnabled() then BigWigs:Enable() end
+	input = input:trim()
+	if not UnitInRaid("player") or not IsRaidLeader() or not tonumber(input) or #input < 5 then
+		print("Usage: /sendtip <index|\"Custom tip\">")
+		print("You must be the raid leader to broadcast a tip.")
+		return
+	end
+	if tonumber(input) then
+		local index = tonumber(input)
+		if tips[index] then
+			SendAddonMessage("BWTIP", tips[index], "RAID")
+		else
+			print("Tip index out of bounds, accepted indexes range from 1 to " .. #tips .. ".")
+		end
+	else
+		local guildName = IsInGuild() and (GetGuildInfo("player")) or ""
+		local tip = pName .. "#" .. pClass .. "#" .. input .. "#" .. guildName
+		SendAddonMessage("BWTIP", tip, "RAID")
+	end
+end
+SLASH_BigWigs_SendRaidTip1 = "/sendtip"
 
