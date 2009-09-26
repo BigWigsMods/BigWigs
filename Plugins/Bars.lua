@@ -389,7 +389,7 @@ do
 			growup:SetUserData("tooltip", L["Toggle bars grow upwards/downwards from anchor."])
 			growup:SetCallback("OnEnter", onControlEnter)
 			growup:SetCallback("OnLeave", onControlLeave)
-			growup:SetRelativeWidth(0.5)
+			growup:SetFullWidth(true)
 		
 			local scale = AceGUI:Create("Slider")
 			scale:SetValue(db.scale)
