@@ -3,7 +3,7 @@
 --
 local mod = BigWigs:NewBoss("Faction Champions", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 67514, 67777, 65983, 65980, "bosskill"}
+mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 65816, 67514, 67777, 65983, 65980, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -48,6 +48,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Cat", 67777)
 	self:Log("SPELL_CAST_SUCCESS", "Heroism", 65983)
 	self:Log("SPELL_CAST_SUCCESS", "Bloodlust", 65980)
+	self:Log("SPELL_AURA_APPLIED", "Hellfire", 65816, 68145, 68146, 68147)
+	self:Log("SPELL_AURA_REMOVED", "HellfireStopped", 65816, 68145, 68146, 68147)
+	self:Log("SPELL_DAMAGE", "HellfireOnYou", 65817, 68142, 68143, 68144)
 
 	self:Yell("Win", L["defeat_trigger"])
 end
@@ -55,6 +58,29 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Hellfire(player, spellId, _, _, spellName)
+	self:IfMessage(spellName, "Urgent", spellId)
+	self:Bar(spellName, 15, spellId)
+end
+
+function mod:HellfireStopped(player, spellId, _, _, spellName)
+	self:SendMessage("BigWigs_StopBar", self, spellName)
+end
+
+do
+	local last = nil
+	local pName = UnitName("player")
+	function mod:HellfireOnYou(player, spellId, _, _, spellName)
+		if player == pName and self:GetOption(65816) then
+			local t = GetTime()
+			if not last or (t > last + 4) then
+				self:TargetMessage(spellName, player, "Personal", spellId, last and nil or "Alarm")
+				last = t
+			end
+		end
+	end
+end
 
 function mod:Wyvern(player, spellId, _, _, spellName)
 	self:TargetMessage(spellName, player, "Attention", spellId)
