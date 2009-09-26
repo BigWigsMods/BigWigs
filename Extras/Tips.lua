@@ -91,46 +91,6 @@ plugin.pluginOptions = {
 -- Tips
 --
 
--- Note that many of those (but certainly not all) are quotes from other games, so if you're translating them
--- please take special care that you retain their meaning or find the actual quote from a translated version of
--- the original game to your language.
-local closeButtonTexts = {
-	"I get it!",
-	"Cool!",
-	"Yeah, right!",
-	"Whatever.",
-	"NEVER!",
-	"I need Ammo!",
-	"That's what she said.",
-	"Give me a break.",
-	"Don't push it.",
-	"SWEET!",
-	"I love roses.",
-	"Mmm, Rabbit stew ...",
-	"I knew that.",
-	"Pure genius.",
-	"Hah!",
-	"Pwnt.",
-	"Rockin'!",
-	"Why should I trust you?",
-	"A monkey knows better.",
-	"Spare me your life story.",
-	"Your princess is in another castle!",
-	"The cake is a lie.",
-	"All your base are belong to us.",
-	"I've got balls of steel.",
-	"...",
-	"We require more vespene gas.",
-	"I can't use this ... yet!",
-	"Hardly a challenge.",
-	"HADOKEN!",
-	"A three-headed monkey!",
-	"You fight like a cow!",
-	"Nuclear launch detected.",
-	"Power overwhelming.",
-	"Spank the monkey, Sam!",
-}
-
 local footers = {
 	"Premonition @ Sen'jin US - |cff9999ffwww.premoguild.com|r",
 	"|cff9999ffwww.wowace.com/projects/bigwigs|r",
@@ -318,6 +278,7 @@ do
 		coolButton:SetPoint("RIGHT", window, "RIGHT", -16, 0)
 		coolButton:SetHeight(22)
 		coolButton:SetScript("OnClick", closeWindow)
+		coolButton:SetText("Cool!")
 
 		footer = window:CreateFontString(nil, "ARTWORK", "GameFontDisable")
 		footer:SetPoint("BOTTOMLEFT", nextButton, "TOPLEFT", 0, 10)
@@ -348,7 +309,6 @@ do
 		else
 			footer:Hide()
 		end
-		coolButton:SetText(closeButtonTexts[math.random(1, #closeButtonTexts)])
 		window:Show()
 	end
 end
