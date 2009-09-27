@@ -12,7 +12,7 @@ mod.toggleOptions = {28131, "berserk", "bosskill"}
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Patchwerk", "enUS", true)
 if L then
-	L.enragewarn = "5% - Frezied!"
+	L.enragewarn = "5% - Frenzied!"
 	L.starttrigger1 = "Patchwerk want to play!"
 	L.starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!"
 end
