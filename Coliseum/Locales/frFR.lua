@@ -12,7 +12,7 @@ if L then
 
 	L.nerubian_burrower = "Fouisseur nérubien"
 
-	L.freeze_bar = "~Next Freezing Slash"
+	L.freeze_bar = "~Prochaine Entaille givrante"
 	L.pcold_bar = "~Prochain Froid pénétrant"
 
 	L.icon = "Icône"
