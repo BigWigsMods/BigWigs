@@ -5,7 +5,18 @@
 local mod = BigWigs:NewBoss("Freya", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32906)
-mod.toggleOptions = {"phase", "wave", "tree", 62589, 62623, "icon", "proximity", 62861, 62437, 62865, "berserk", "bosskill"}
+mod:Toggle("phase", "MESSAGE")
+mod:Toggle("wave", "MESSAGE", "BAR")
+mod:Toggle("tree", "MESSAGE")
+mod:Toggle(62589, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle(62623, "MESSAGE", "ICON")
+mod:Toggle("proximity")
+mod:Toggle(62861, "MESSAGE")
+mod:Toggle(62437, "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle(62865, "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+
 mod.optionHeaders = {
 	phase = "normal",
 	[62861] = "hard",
@@ -99,7 +110,7 @@ end
 ------------------------------
 
 local function rootWarn(spellId, spellName)
-	mod:TargetMessage(spellName, root, "Attention", spellId, "Info")
+	mod:TargetMessage(62861, spellName, root, "Attention", spellId, "Info")
 end
 
 function mod:Root(player, spellId, _, _, spellName)
@@ -125,15 +136,15 @@ do
 		local caster = isCaster()
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
-		self:IfMessage(spellName, color, spellId, sound)
+		self:IfMessage(62437, spellName, color, spellId, sound)
 		if phase == 1 then
-			self:Bar(spellName, 2, spellId)
-			self:Bar(L["tremor_bar"], 30, spellId)
-			self:DelayedMessage(26, L["tremor_warning"], "Attention")
+			self:Bar(62437, spellName, 2, spellId)
+			self:Bar(62437, L["tremor_bar"], 30, spellId)
+			self:DelayedMessage(62437, 26, L["tremor_warning"], "Attention")
 		elseif phase == 2 then
-			self:Bar(spellName, 2, spellId)
-			self:Bar(L["tremor_bar"], 23, spellId)
-			self:DelayedMessage(20, L["tremor_warning"], "Attention")
+			self:Bar(62437, spellName, 2, spellId)
+			self:Bar(62437, L["tremor_bar"], 23, spellId)
+			self:DelayedMessage(62437, 20, L["tremor_warning"], "Attention")
 		end
 	end
 end
@@ -143,8 +154,8 @@ local function scanTarget(spellId, spellName)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then
-		mod:TargetMessage(spellName, target, "Attention", spellId)
-		mod:SecondaryIcon(target, "icon")
+		mod:TargetMessage(62623, spellName, target, "Attention", spellId)
+		mod:SecondaryIcon(62623, target, "icon")
 	end
 end
 
@@ -156,10 +167,10 @@ function mod:Fury(player, spellId)
 	if player == pName then
 		self:OpenProximity(10)
 	end
-	self:TargetMessage(L["fury_message"], player, "Personal", spellId, "Alert")
-	self:Whisper(player, L["fury_message"])
-	self:Bar(L["fury_other"]:format(player), 10, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(62589, L["fury_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(62589, player, L["fury_message"])
+	self:Bar(62589, L["fury_other"]:format(player), 10, spellId)
+	self:PrimaryIcon(62589, player)
 end
 
 function mod:FuryRemove(player)
@@ -172,9 +183,7 @@ end
 function mod:AttunedRemove()
 	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["wave_bar"])
-	if self.db.profile.phase then
-		self:IfMessage(L["phase2_message"], "Important")
-	end
+	self:IfMessage("phase", L["phase2_message"], "Important")
 end
 
 do
@@ -183,7 +192,7 @@ do
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:LocalMessage(L["energy_message"], "Personal",  62451, "Alarm")
+				self:LocalMessage(62865, L["energy_message"], "Personal",  62451, "Alarm")
 				last = t
 			end
 		end
@@ -197,46 +206,40 @@ do
 		local t = GetTime()
 		if not last or (t > last + 10) then
 			sunBeamName = unit
-			self:IfMessage(L["sunbeam_message"], "Important", spellId)
+			self:IfMessage(62865, L["sunbeam_message"], "Important", spellId)
 			last = t
 		end
 	end
 	function mod:Deaths(event, name)
 		if not sunBeamName or name ~= sunBeamName then return end
-		self:Bar(L["sunbeam_bar"], 35, 62865)
+		self:Bar(62865, L["sunbeam_bar"], 35, 62865)
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["tree_trigger"] and self.db.profile.tree then
-		self:IfMessage(L["tree_message"], "Urgent", 5420, "Alarm")
+	if msg == L["tree_trigger"] then
+		self:IfMessage("tree", L["tree_message"], "Urgent", 5420, "Alarm")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
 		phase = 1
-		if self.db.profile.berserk then
-			self:Berserk(600)
-		end
-		if self.db.profile.wave then
-			self:Bar(L["wave_bar"], 11, 35594)
-		end
+		self:Berserk(600)
+		self:Bar("wave", L["wave_bar"], 11, 35594)
 	elseif msg == L["end_trigger"] then
 		-- Never enable again this session!
 		sheIsDead = true
 		self:Win()
-	elseif self.db.profile.wave then
-		if msg == L["conservator_trigger"] then
-			self:IfMessage(L["conservator_message"], "Positive", 35594)
-			self:Bar(L["wave_bar"], 60, 35594)
-		elseif msg == L["detonate_trigger"] then
-			self:IfMessage(L["detonate_message"], "Positive", 35594)
-			self:Bar(L["wave_bar"], 60, 35594)
-		elseif msg == L["elementals_trigger"] then
-			self:IfMessage(L["elementals_message"], "Positive", 35594)
-			self:Bar(L["wave_bar"], 60, 35594)
-		end
+	elseif msg == L["conservator_trigger"] then
+		self:IfMessage("wave", L["conservator_message"], "Positive", 35594)
+		self:Bar("wave", L["wave_bar"], 60, 35594)
+	elseif msg == L["detonate_trigger"] then
+		self:IfMessage("wave", L["detonate_message"], "Positive", 35594)
+		self:Bar("wave", L["wave_bar"], 60, 35594)
+	elseif msg == L["elementals_trigger"] then
+		self:IfMessage("wave", L["elementals_message"], "Positive", 35594)
+		self:Bar("wave", L["wave_bar"], 60, 35594)
 	end
 end
 

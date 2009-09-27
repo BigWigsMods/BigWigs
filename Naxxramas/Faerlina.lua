@@ -4,7 +4,11 @@
 local mod = BigWigs:NewBoss("Grand Widow Faerlina", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15953)
-mod.toggleOptions = {28732, 28794, 28798, "bosskill"}
+mod:Toggle(28732, "MESSAGE", "BAR")
+mod:Toggle(28794, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(28798, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
+-- mod.toggleOptions = {28732, 28794, 28798, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -69,32 +73,31 @@ function mod:Silence(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	if target ~= 15953 then return end
 	if not frenzied then
 		-- preemptive, 30s silence
-		self:IfMessage(L["silencewarn"], "Positive", spellId)
-		self:Bar(L["silencebar"], 30, spellId)
-		self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
+		self:IfMessage(28732, L["silencewarn"], "Positive", spellId)
+		self:Bar(28732, L["silencebar"], 30, spellId)
+		self:DelayedMessage(28732, 25, L["silencewarn5sec"], "Urgent")
 	else
 		-- Reactive enrage removed
-		if self.db.profile.enrage then
-			self:Message(L["enrageremovewarn"], "Positive")
-			frenzyMessageId = self:DelayedMessage(45, L["enragewarn2"], "Important")
-			self:Bar(frenzyName, 60, 28798)
-		end
-		self:Bar(L["silencebar"], 30, spellId)
-		self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
+		self:Message(28798, L["enrageremovewarn"], "Positive")
+		frenzyMessageId = self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
+		self:Bar(28798, frenzyName, 60, 28798)
+
+		self:Bar(28732, L["silencebar"], 30, spellId)
+		self:DelayedMessage(28732, 25, L["silencewarn5sec"], "Urgent")
 		frenzied = nil
 	end
 end
 
 function mod:Rain(player)
 	if player == pName then
-		self:LocalMessage(L["rain_message"], "Personal", 54099, "Alarm")
+		self:LocalMessage(28794, L["rain_message"], "Personal", 54099, "Alarm")
 	end
 end
 
 function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target ~= 15953 then return end
-	self:IfMessage(L["enragewarn"], "Urgent", spellId)
+	self:IfMessage(28798, L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
 	if frenzyMessageId then
 		self:CancelScheduledEvent(frenzyMessageId)
@@ -104,11 +107,9 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if not started and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
-		self:Message(L["startwarn"], "Urgent")
-		if self:GetOption(28798) then
-			frenzyMessageId = self:DelayedMessage(45, L["enragewarn2"], "Important")
-			self:Bar(frenzyName, 60, 28798)
-		end
+		self:Message(28798, L["startwarn"], "Urgent")
+		frenzyMessageId = self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
+		self:Bar(28798, frenzyName, 60, 28798)
 		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight
 		frenzied = nil
 	end

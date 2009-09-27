@@ -5,7 +5,15 @@
 local mod = BigWigs:NewBoss("Kel'Thuzad", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15990)
-mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
+mod:Toggle(27808, "MESSAGE", "BAR")
+mod:Toggle(27810, "MESSAGE")
+mod:Toggle(28410, "MESSAGE", "BAR")
+mod:Toggle(27819, "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE")
+mod:Toggle("guardians", "MESSAGE", "BAR")
+mod:Toggle("phase", "MESSAGE", "BAR")
+mod:Toggle("proximity")
+mod:Toggle("bosskill")
+-- mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
 mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 
 ------------------------------
@@ -99,16 +107,16 @@ function mod:ZONE_CHANGED_INDOORS(event, msg)
 end
 
 function mod:Fizzure(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
+	self:IfMessage(27810, spellName, "Important", spellId)
 end
 
 do
 	local spell = nil
 	local name = nil
 	local function fbWarn()
-		mod:TargetMessage(name, fbTargets, "Important", spell, "Alert")
-		mod:DelayedMessage(32, L["frostblast_soon_message"], "Attention")
-		mod:Bar(L["frostblast_bar"], 37, spell)
+		mod:TargetMessage(27808, name, fbTargets, "Important", spell, "Alert")
+		mod:DelayedMessage(27808, 32, L["frostblast_soon_message"], "Attention")
+		mod:Bar(27808, L["frostblast_bar"], 37, spell)
 	end
 
 	function mod:FrostBlast(player, spellId, _, _, spellName)
@@ -120,22 +128,22 @@ do
 end
 
 function mod:Detonate(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
-	self:Whisper(player, spellName)
-	self:PrimaryIcon(player, "icon")
-	self:Bar(L["detonate_other"]:format(player), 5, spellId)
-	self:Bar(L["detonate_possible_bar"], 20, spellId)
-	self:DelayedMessage(15, L["detonate_warning"], "Attention")
+	self:TargetMessage(27819, spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(27819, player, spellName)
+	self:PrimaryIcon(27819, player)
+	self:Bar(27819, L["detonate_other"]:format(player), 5, spellId)
+	self:Bar(27819, L["detonate_possible_bar"], 20, spellId)
+	self:DelayedMessage(27819, 15, L["detonate_warning"], "Attention")
 end
 
 do
 	local spell = nil
 	local function mcWarn()
 		local spellName = GetSpellInfo(605) -- Mind Control
-		mod:TargetMessage(spellName, mcTargets, "Important", spell, "Alert")
-		mod:Bar(spellName, 20, 28410)
+		mod:TargetMessage(28410, spellName, mcTargets, "Important", spell, "Alert")
+		mod:Bar(28410, spellName, 20, 28410)
 		mod:DelayedMessage(68, L["mc_warning"], "Urgent")
-		mod:Bar(L["mc_nextbar"], 68, spell)
+		mod:Bar(28410, L["mc_nextbar"], 68, spell)
 	end
 
 	function mod:MC(player, spellId)
@@ -146,12 +154,10 @@ do
 end
 
 function mod:UNIT_HEALTH(event, msg)
-	if not self.db.profile.phase then return end
-
 	if UnitName(msg) == mod.displayName then
 		local health = UnitHealth(msg)
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
-			self:Message(L["phase3_soon_warning"], "Attention")
+			self:Message("phase", L["phase3_soon_warning"], "Attention")
 			self.warnedAboutPhase3Soon = true
 		elseif health > 60 and self.warnedAboutPhase3Soon then
 			self.warnedAboutPhase3Soon = nil
@@ -160,24 +166,22 @@ function mod:UNIT_HEALTH(event, msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if self.db.profile.phase and msg == L["start_trigger"] then
-		self:Message(L["start_warning"], "Attention")
-		self:Bar(L["start_bar"], 215, "Spell_Fire_FelImmolation")
+	if msg == L["start_trigger"] then
+		self:Message("phase", L["start_warning"], "Attention")
+		self:Bar("phase", L["start_bar"], 215, "Spell_Fire_FelImmolation")
 		wipe(mcTargets)
 		wipe(fbTargets)
 		self:CloseProximity()
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
-		if self.db.profile.phase then
-			self:SendMessage("BigWigs_StopBar", self, L["start_bar"])
-			self:Message(L["phase2_warning"], "Important")
-			self:Bar(L["phase2_bar"], 15, "Spell_Shadow_Charm")
-		end
+		self:SendMessage("BigWigs_StopBar", self, L["start_bar"])
+		self:Message("phase", L["phase2_warning"], "Important")
+		self:Bar("phase", L["phase2_bar"], 15, "Spell_Shadow_Charm")
 		self:OpenProximity(10)
-	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
-		self:Message(L["phase3_warning"], "Attention")
-	elseif self.db.profile.guardians and msg == L["guardians_trigger"] then
-		self:Message(L["guardians_warning"], "Important")
-		self:Bar(L["guardians_bar"], 10, 28866)
+	elseif msg == L["phase3_trigger"] then
+		self:Message("phase", L["phase3_warning"], "Attention")
+	elseif msg == L["guardians_trigger"] then
+		self:Message("guardians", L["guardians_warning"], "Important")
+		self:Bar("guardians", L["guardians_bar"], 10, 28866)
 	end
 end
 

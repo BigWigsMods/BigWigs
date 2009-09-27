@@ -5,7 +5,15 @@ local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(28859)
-mod.toggleOptions = {"phase", -1, "sparks", 56152, "vortex", -1, "breath", -1, "surge", 57429, "berserk", "bosskill"}
+mod:Toggle("phase", "MESSAGE")
+mod:Toggle("sparks", "MESSAGE", "BAR")
+mod:Toggle(56152, "MESSAGE")
+mod:Toggle("vortex", "MESSAGE", "BAR")
+mod:Toggle("breath", "MESSAGE", "BAR")
+mod:Toggle("surge", "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(57429, "MESSAGE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -80,17 +88,11 @@ end
 
 function mod:OnEngage()
 	phase = 1
-	if self.db.profile.vortex then
-		self:Bar(L["vortex_next"], 29, 56105)
-		self:DelayedMessage(24, L["vortex_warning"], "Attention")
-	end
-	if self.db.profile.sparks then
-		self:Bar(L["sparks"], 25, 56152)
-		self:DelayedMessage(20, L["sparks_warning"], "Attention")
-	end
-	if self.db.profile.berserk then
-		self:Berserk(600)
-	end
+	self:Bar("vortex", L["vortex_next"], 29, 56105)
+	self:DelayedMessage("vortex", 24, L["vortex_warning"], "Attention")
+	self:Bar("sparks", L["sparks"], 25, 56152)
+	self:DelayedMessage("sparks", 20, L["sparks_warning"], "Attention")
+	self:Berserk(600)
 end
 
 ------------------------------
@@ -101,50 +103,43 @@ function mod:Spark(unit, spellId, _, _, _, _, _, _, dGuid)
 	if phase ~= 1 then return end
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 28859 then
-		self:IfMessage(L["sparkbuff_message"], "Important", spellId)
+		self:IfMessage(56152, L["sparkbuff_message"], "Important", spellId)
 	end
 end
 
 function mod:Static(target, spellId, _, _, spellName)
 	if target == pName then
-		self:LocalMessage(spellName, "Urgent", spellId)
+		self:LocalMessage(57429, spellName, "Urgent", spellId)
 	end
 end
 
 function mod:Vortex(_, spellId)
-	if self.db.profile.vortex then
-		self:Bar(L["vortex"], 10, 56105)
-		self:IfMessage(L["vortex_message"], "Attention", spellId)
-		self:Bar(L["vortex_next"], 59, 56105)
-		self:DelayedMessage(54, L["vortex_warning"], "Attention")
-		if self.db.profile.sparks then
-			self:Bar(L["sparks"], 17, 56152)
-			self:DelayedMessage(12, L["sparks_warning"], "Attention")
-		end
-	end
+	self:Bar("vortex", L["vortex"], 10, 56105)
+	self:IfMessage("vortex", L["vortex_message"], "Attention", spellId)
+	self:Bar("vortex", L["vortex_next"], 59, 56105)
+	self:DelayedMessage("vortex", 54, L["vortex_warning"], "Attention")
+
+	self:Bar("sparks", L["sparks"], 17, 56152)
+	self:DelayedMessage("sparks", 12, L["sparks_warning"], "Attention")
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg, mob)
-	if phase == 3 and self.db.profile.surge and msg == L["surge_trigger"] then
-		self:LocalMessage(L["surge_you"], "Personal", 60936, "Alarm") -- 60936 for phase 3, not 56505
+	if phase == 3 and msg == L["surge_trigger"] then
+		self:LocalMessage("surge", L["surge_you"], "Personal", 60936, "Alarm") -- 60936 for phase 3, not 56505
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if phase == 1 then
-		if self.db.profile.sparks then
-			self:Message(L["sparks_message"], "Important", 56152, "Alert")
-			self:Bar(L["sparks"], 30, 56152)
-			self:DelayedMessage(25, L["sparks_warning"], "Attention")
-		end
+		self:Message("sparks", L["sparks_message"], "Important", 56152, "Alert")
+		self:Bar("sparks", L["sparks"], 30, 56152)
+		self:DelayedMessage("sparks", 25, L["sparks_warning"], "Attention")
 	elseif phase == 2 then
-		if self.db.profile.breath then
-			-- 43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-			-- Correct spellId for 'breath" in phase 2 is 56505
-			self:Message(L["breath_message"], "Important", 43810, "Alert")
-			self:Bar(L["breath"], 59, 43810)
-			self:DelayedMessage(54, L["breath_warning"], "Attention")
-		end
+		-- 43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+		-- Correct spellId for 'breath" in phase 2 is 56505
+		self:Message("breath", L["breath_message"], "Important", 43810, "Alert")
+		self:Bar("breath", L["breath"], 59, 43810)
+		self:DelayedMessage("breath", 54, L["breath_warning"], "Attention")
 	end
 end
 
@@ -155,27 +150,25 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:CancelScheduledEvent(L["sparks_warning"])
 		self:SendMessage("BigWigs_StopBar", self, L["sparks"])
 		self:SendMessage("BigWigs_StopBar", self, L["vortex_next"])
-		self:Message(L["phase2_message"], "Attention")
-		if self.db.profile.breath then
-			self:Bar(L["breath"], 92, 43810)
-			self:DelayedMessage(87, L["breath_warning"], "Attention")
-		end
+		self:Message("phase", L["phase2_message"], "Attention")
+		self:Bar("breath", L["breath"], 92, 43810)
+		self:DelayedMessage("breath", 87, L["breath_warning"], "Attention")
 	elseif msg:find(L["phase2_end_trigger"]) then
 		self:CancelScheduledEvent(L["breath_warning"])
 		self:SendMessage("BigWigs_StopBar", self, L["breath"])
-		self:Message(L["phase3_warning"], "Attention")
+		self:Message("phase", L["phase3_warning"], "Attention")
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
-		self:Message(L["phase3_message"], "Attention")
+		self:Message("phase", L["phase3_message"], "Attention")
 	end
 end
 
 function mod:UNIT_HEALTH(event, msg)
-	if phase ~= 1 or not self.db.profile.phase then return end
+	if phase ~= 1 then return end
 	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 54 then
-			self:Message(L["phase2_warning"], "Attention")
+			self:Message("phase", L["phase2_warning"], "Attention")
 		end
 	end
 end

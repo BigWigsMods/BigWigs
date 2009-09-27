@@ -4,7 +4,11 @@
 local mod = BigWigs:NewBoss("Maexxna", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15952)
-mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
+mod:Toggle(29484, "MESSAGE", "BAR")
+mod:Toggle(28622, "MESSAGE", "BAR")
+mod:Toggle(54123, "MESSAGE")
+mod:Toggle("bosskill")
+-- mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -60,7 +64,7 @@ end
 ------------------------------
 
 local function cocoonWarn()
-	mod:TargetMessage(L["cocoonbar"], inCocoon, "Important", 745, "Alert")
+	mod:TargetMessage(28622, L["cocoonbar"], inCocoon, "Important", 745, "Alert")
 end
 
 function mod:Cocoon(player)
@@ -69,29 +73,27 @@ function mod:Cocoon(player)
 end
 
 function mod:Spray()
-	self:IfMessage(L["webspraywarn"], "Important", 54125)
-	self:DelayedMessage(10, L["webspraywarn30sec"], "Attention")
-	self:DelayedMessage(20, L["webspraywarn20sec"], "Attention")
-	self:DelayedMessage(30, L["webspraywarn10sec"], "Attention")
-	self:DelayedMessage(35, L["webspraywarn5sec"], "Attention")
-	self:Bar(L["webspraybar"], 40, 54125)
-	if self:GetOption(28622) then
-		self:Bar(L["cocoonbar"], 20, 745)
-	end
-	self:Bar(L["spiderbar"], 30, 17332)
+	self:IfMessage(29484, L["webspraywarn"], "Important", 54125)
+	self:DelayedMessage(29484, 10, L["webspraywarn30sec"], "Attention")
+	self:DelayedMessage(29484, 20, L["webspraywarn20sec"], "Attention")
+	self:DelayedMessage(29484, 30, L["webspraywarn10sec"], "Attention")
+	self:DelayedMessage(29484, 35, L["webspraywarn5sec"], "Attention")
+	self:Bar(29484, L["webspraybar"], 40, 54125)
+
+	self:Bar(28622, L["cocoonbar"], 20, 745)
+
+	self:Bar(29484, L["spiderbar"], 30, 17332)
 end
 
 function mod:Frenzy(_, spellId)
-	self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
+	self:IfMessage(54123, L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
 function mod:UNIT_HEALTH(event, msg)
 	if UnitName(msg) == mod.displayName then
 		local health = UnitHealth(msg)
 		if health > 30 and health <= 33 and not enrageannounced then
-			if self:GetOption(54123) then
-				self:Message(L["enragesoonwarn"], "Important")
-			end
+			self:Message(54123, L["enragesoonwarn"], "Important")
 			enrageannounced = true
 		elseif health > 40 and enrageannounced then
 			enrageannounced = nil

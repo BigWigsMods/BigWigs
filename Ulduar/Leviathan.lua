@@ -4,7 +4,12 @@
 local mod = BigWigs:NewBoss("Flame Leviathan", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33113)
-mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
+mod:Toggle("engage", "MESSAGE")
+mod:Toggle(68605, "BAR")
+mod:Toggle(62396, "MESSAGE", "BAR")
+mod:Toggle("pursue", "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle(62475, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ----------------------------
 --      Localization      --
@@ -12,6 +17,8 @@ mod.toggleOptions = {68605, 62396, "pursue", 62475, "bosskill"}
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "enUS", true)
 if L then
+	L.engage = "Engage warning"
+	L.engage_desc = "Warn when Flame Leviathan is engaged."
 	L.engage_trigger = "^Hostile entities detected."
 	L.engage_message = "%s Engaged!"
 
@@ -50,13 +57,13 @@ end
 
 function mod:Pyrite(_, spellId, _, _, spellName, _, sFlags)
 	if bit.band(sFlags, COMBATLOG_OBJECT_AFFILIATION_MINE or 0x1) ~= 0 then
-		self:Bar(spellName, 10, spellId)
+		self:Bar(68605, spellName, 10, spellId)
 	end
 end
 
 function mod:Flame(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellId)
-	self:Bar(spellName, 10, spellId)
+	self:IfMessage(62396, spellName, "Urgent", spellId)
+	self:Bar(62396, spellName, 10, spellId)
 end
 
 function mod:FlameFailed(_, _, _, _, spellName)
@@ -66,20 +73,20 @@ end
 function mod:Shutdown(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target ~= 33113 then return end
-	self:IfMessage(L["shutdown_message"], "Positive", spellId, "Long")
-	self:Bar(spellName, 20, spellId)
+	self:IfMessage(62475, L["shutdown_message"], "Positive", spellId, "Long")
+	self:Bar(62475, spellName, 20, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if self.db.profile.pursue and message:find(L["pursue_trigger"]) then
-		self:TargetMessage(L["pursue"], player, "Personal", 62374, "Alarm")
-		self:Bar(L["pursue_other"]:format(player), 30, 62374)
+	if message:find(L["pursue_trigger"]) then
+		self:TargetMessage("pursue", L["pursue"], player, "Personal", 62374, "Alarm")
+		self:Bar("pursue", L["pursue_other"]:format(player), 30, 62374)
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg:find(L["engage_trigger"]) then
-		self:IfMessage(L["engage_message"]:format(unit), "Attention")
+		self:IfMessage("engage", L["engage_message"]:format(unit), "Attention")
 	end
 end
 

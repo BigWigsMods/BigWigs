@@ -5,8 +5,19 @@
 local mod = BigWigs:NewBoss("General Vezax", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33271)
-mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662, "animus", "berserk", "bosskill"}
-
+mod:Toggle("vapor", "BAR", "MESSAGE")
+mod:Toggle("vaporstack", "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(62660, "MESSAGE", "WHISPER", "ICON", "SAY")
+mod:Toggle(63276, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle(62661, "MESSAGE")
+mod:Toggle(62662, "MESSAGE", "BAR")
+mod:Toggle("animus", "MESSAGE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+--[[
+mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662,
+ "animus", "berserk", "bosskill"}
+--]]
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -48,16 +59,9 @@ if L then
 
 	L.crash_say = "Crash on me!"
 
-	L.crashsay = "Crash Say"
-	L.crashsay_desc = "Say when you are the target of Shadow Crash."
-	L.crashicon = "Crash Icon"
-	L.crashicon_desc = "Place a secondary icon on the player targetted by Shadow Crash. (requires promoted or higher)"
-
 	L.mark_message = "Mark"
 	L.mark_message_other = "Mark on %s!"
 
-	L.icon = "Mark Icon"
-	L.icon_desc = "Place a primary icon on the player targetted by Mark of the Faceless. (requires promoted or higher)"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
 mod.locale = L
@@ -96,8 +100,8 @@ function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", vapor)
 	if stack and stack ~= lastVapor then
-		if self.db.profile.vaporstack and stack > 5 then
-			self:LocalMessage(L["vaporstack_message"]:format(stack), "Personal", icon)
+		if stack > 5 then
+			self:LocalMessage("vaporstack", L["vaporstack_message"]:format(stack), "Personal", icon)
 		end
 		lastVapor = stack
 	end
@@ -108,22 +112,20 @@ local function scanTarget(spellId, spellName)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then
-		if target == pName and mod.db.profile.crashsay then
+		if target == pName and bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
 			SendChatMessage(L["crash_say"], "SAY")
 		end
-		if mod:GetOption(spellId) then
-			mod:TargetMessage(spellName, target, "Personal", spellId, "Alert")
-			mod:Whisper(target, spellName)
-		end
-		mod:SecondaryIcon(target, "crashicon")
+		mod:TargetMessage(62660, spellName, target, "Personal", spellId, "Alert")
+		mod:Whisper(62660, target, spellName)
+		mod:SecondaryIcon(62660, target)
 	end
 end
 
 function mod:Mark(player, spellId)
-	self:TargetMessage(L["mark_message"], player, "Personal", spellId, "Alert")
-	self:Whisper(player, L["mark_message"])
-	self:Bar(L["mark_message_other"]:format(player), 10, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(63276, L["mark_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(63276, player, L["mark_message"])
+	self:Bar(63276, L["mark_message_other"]:format(player), 10, spellId)
+	self:PrimaryIcon(63276, player)
 end
 
 function mod:Target(player, spellId, _, _, spellName)
@@ -131,29 +133,29 @@ function mod:Target(player, spellId, _, _, spellName)
 end
 
 function mod:Flame(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellId)
+	self:IfMessage(62661, spellName, "Urgent", spellId)
 end
 
 function mod:Surge(_, spellId)
-	self:IfMessage(L["surge_message"]:format(surgeCount), "Important", spellId)
-	self:Bar(L["surge_cast"]:format(surgeCount), 3, spellId)
+	self:IfMessage(62662, L["surge_message"]:format(surgeCount), "Important", spellId)
+	self:Bar(62662, L["surge_cast"]:format(surgeCount), 3, spellId)
 	surgeCount = surgeCount + 1
-	self:Bar(L["surge_bar"]:format(surgeCount), 60, spellId)
+	self:Bar(62662, L["surge_bar"]:format(surgeCount), 60, spellId)
 end
 
 function mod:SurgeGain(_, spellId, _, _, spellName)
-	self:Bar(spellName, 10, spellId)
+	self:Bar(62662, spellName, 10, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["vapor_trigger"] and self.db.profile.vapor then
-		self:IfMessage(L["vapor_message"]:format(vaporCount), "Positive", 63323)
+	if msg == L["vapor_trigger"] then
+		self:IfMessage("vapor", L["vapor_message"]:format(vaporCount), "Positive", 63323)
 		vaporCount = vaporCount + 1
 		if vaporCount < 7 then
-			self:Bar(L["vapor_bar"]:format(vaporCount), 30, 63323)
+			self:Bar("vapor", L["vapor_bar"]:format(vaporCount), 30, 63323)
 		end
-	elseif msg == L["animus_trigger"] and self.db.profile.animus then
-		self:IfMessage(L["animus_message"], "Important", 63319)
+	elseif msg == L["animus_trigger"] then
+		self:IfMessage("animus", L["animus_message"], "Important", 63319)
 	end
 end
 
@@ -162,12 +164,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		lastVapor = nil
 		vaporCount = 1
 		surgeCount = 1
-		if self.db.profile.berserk then
-			self:Berserk(600)
-		end
-		if self.db.profile.surge then
-			self:Bar(L["surge_bar"]:format(surgeCount), 60, 62662)
-		end
+		self:Berserk(600)
+		self:Bar(62662, L["surge_bar"]:format(surgeCount), 60, 62662)
 	end
 end
 

@@ -4,7 +4,14 @@
 local mod = BigWigs:NewBoss("Hodir", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32845)
-mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk", "bosskill"}
+mod:Toggle("hardmode", "BAR")
+mod:Toggle("cold", "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(65123, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle(61968, "MESSAGE", "BAR")
+mod:Toggle(62478, "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+-- mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -64,21 +71,21 @@ end
 ------------------------------
 
 function mod:Cloud(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Positive", spellId, "Info")
-	self:Whisper(player, spellName)
-	self:Bar(spellName..": "..player, 30, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(65123, spellName, player, "Positive", spellId, "Info")
+	self:Whisper(65123, player, spellName)
+	self:Bar(65123, spellName..": "..player, 30, spellId)
+	self:PrimaryIcon(65123, player)
 end
 
 function mod:FlashCast(_, spellId, _, _, spellName)
-	self:IfMessage(L["flash_warning"], "Attention", spellId)
-	self:Bar(spellName, 9, spellId)
-	self:Bar(spellName, 35, spellId)
-	self:DelayedMessage(30, L["flash_soon"], "Attention")
+	self:IfMessage(61968, L["flash_warning"], "Attention", spellId)
+	self:Bar(61968, spellName, 9, spellId)
+	self:Bar(61968, spellName, 35, spellId)
+	self:DelayedMessage(61968, 30, L["flash_soon"], "Attention")
 end
 
 local function flashWarn(spellId, spellName)
-	mod:TargetMessage(spellName, flashFreezed, "Urgent", spellId, "Alert")
+	mod:TargetMessage(61968, spellName, flashFreezed, "Urgent", spellId, "Alert")
 end
 
 function mod:Flash(player, spellId, _, _, spellName)
@@ -89,23 +96,17 @@ function mod:Flash(player, spellId, _, _, spellName)
 end
 
 function mod:Frozen(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 20, spellId)
+	self:IfMessage(62478, spellName, "Important", spellId)
+	self:Bar(62478, spellName, 20, spellId)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
 		lastCold = nil
-		if self:GetOption(61968) then
-			local name = GetSpellInfo(61968)
-			self:Bar(name, 35, 61968)
-		end
-		if self.db.profile.hardmode then
-			self:Bar(L["hardmode"], 180, 6673)
-		end
-		if self.db.profile.berserk then
-			self:Berserk(480)
-		end
+		local name = GetSpellInfo(61968)
+		self:Bar(61968, name, 35, 61968)
+		self:Bar("hardmode", L["hardmode"], 180, 6673)
+		self:Berserk(480)
 	elseif msg == L["end_trigger"] then
 		self:Win()
 	end
@@ -115,8 +116,8 @@ function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", cold)
 	if stack and stack ~= lastCold then
-		if self.db.profile.cold and stack > 1 then
-			self:LocalMessage(L["cold_message"]:format(stack), "Personal", icon)
+		if stack > 1 then
+			self:LocalMessage("cold", L["cold_message"]:format(stack), "Personal", icon)
 		end
 		lastCold = stack
 	end

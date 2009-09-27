@@ -4,7 +4,12 @@
 local mod = BigWigs:NewBoss("Ignis the Furnace Master", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33118)
-mod.toggleOptions = {62488, 62382, 62680, 62546, 62717, "bosskill"}
+mod:Toggle(62488, "MESSAGE", "BAR")
+mod:Toggle(62382, "MESSAGE")
+mod:Toggle(62680, "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle(62546, "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle(62717, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -53,18 +58,18 @@ end
 ------------------------------
 
 function mod:Brittle(_, spellId)
-	self:IfMessage(L["brittle_message"], "Positive", spellId)
+	self:IfMessage(62382, L["brittle_message"], "Positive", spellId)
 end
 
 function mod:Construct()
-	self:IfMessage(L["construct_message"], "Important", "Interface\\Icons\\INV_Misc_Statue_07")
-	self:Bar(L["construct_bar"], spawnTime, "INV_Misc_Statue_07")
+	self:IfMessage(62488, L["construct_message"], "Important", "Interface\\Icons\\INV_Misc_Statue_07")
+	self:Bar(62488, L["construct_bar"], spawnTime, "INV_Misc_Statue_07")
 end
 
 function mod:ScorchCast(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(L["scorch_bar"], 25, spellId)
-	self:DelayedMessage(20, L["scorch_soon"], "Urgent", nil, nil, nil, spellId)
+	self:IfMessage(62546, spellName, "Attention", spellId)
+	self:Bar(62546, L["scorch_bar"], 25, spellId)
+	self:DelayedMessage(62546, 20, L["scorch_soon"], "Urgent", nil, nil, nil, spellId)
 end
 
 do
@@ -73,7 +78,7 @@ do
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:LocalMessage(L["scorch_message"], "Personal", spellId, last and nil or "Alarm")
+				self:LocalMessage(62546, L["scorch_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
 			end
 		end
@@ -81,8 +86,8 @@ do
 end
 
 function mod:SlagPot(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Important", spellId)
-	self:Bar(L["slagpot_message"]:format(player), 10, spellId)
+	self:TargetMessage(62717, spellName, player, "Important", spellId)
+	self:Bar(62717, L["slagpot_message"]:format(player), 10, spellId)
 end
 
 do
@@ -103,21 +108,17 @@ do
 		local caster = isCaster()
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
-		self:IfMessage(spellName, color, spellId, sound)
-		self:Bar(L["flame_bar"], 25, spellId)
-		if caster then self:Bar(spellName, 2.7, spellId) end
+		self:IfMessage(62680, spellName, color, spellId, sound)
+		self:Bar(62680, L["flame_bar"], 25, spellId)
+		if caster then self:Bar(62680, spellName, 2.7, spellId) end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
 		spawnTime = GetRaidDifficulty() == 1 and 40 or 30
-		if self:GetOption(62680) then
-			self:Bar(L["flame_bar"], 21, 62680)
-		end
-		if self:GetOption(62488) then
-			self:Bar(L["construct_bar"], 10, "INV_Misc_Statue_07")
-		end
+		self:Bar(62680, L["flame_bar"], 21, 62680)
+		self:Bar(62488, L["construct_bar"], 10, "INV_Misc_Statue_07")
 	end
 end
 

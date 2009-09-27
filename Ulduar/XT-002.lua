@@ -4,7 +4,15 @@
 local mod = BigWigs:NewBoss("XT-002 Deconstructor", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33293)
-mod.toggleOptions = {63024, "gravitybombicon", 63018, "lighticon", 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
+mod:Toggle(63024, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle(63018, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle(62776, "MESSAGE", "BAR")
+mod:Toggle(64193, "MESSAGE")
+mod:Toggle(63849, "MESSAGE", "BAR")
+mod:Toggle("proximity")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+
 mod.optionHeaders = {
 	[63024] = "normal",
 	[64193] = "hard",
@@ -31,12 +39,6 @@ if L then
 	L.exposed_message = "Heart exposed!"
 
 	L.gravitybomb_other = "Gravity on %s!"
-
-	L.gravitybombicon = "Gravity Bomb Icon"
-	L.gravitybombicon_desc = "Place a Blue Square icon on the player effected by Gravity Bomb. (requires promoted or higher)"
-
-	L.lighticon = "Searing Light Icon"
-	L.lighticon_desc = "Place a Skull icon on the player with Searing Light. (requires promoted or higher)"
 
 	L.lightbomb_other = "Light on %s!"
 
@@ -68,9 +70,7 @@ function mod:OnEngage()
 	exposed1 = nil
 	exposed2 = nil
 	exposed3 = nil
-	if self.db.profile.berserk then
-		self:Berserk(600)
-	end
+	self:Berserk(600)
 end
 
 ------------------------------
@@ -78,19 +78,19 @@ end
 ------------------------------
 
 function mod:Exposed(_, spellId, _, _, spellName)
-	self:IfMessage(L["exposed_message"], "Attention", spellId)
-	self:Bar(spellName, 30, spellId)
+	self:IfMessage(63849, L["exposed_message"], "Attention", spellId)
+	self:Bar(63849, spellName, 30, spellId)
 end
 
 function mod:Heartbreak(_, spellId, _, _, spellName)
 	phase = 2
-	self:IfMessage(spellName, "Important", spellId)
+	self:IfMessage(64193, spellName, "Important", spellId)
 end
 
 function mod:Tantrum(_, spellId, _, _, spellName)
 	if phase == 2 then
-		self:IfMessage(spellName, "Attention", spellId)
-		self:Bar(L["tantrum_bar"], 65, spellId)
+		self:IfMessage(62776, spellName, "Attention", spellId)
+		self:Bar(62776, L["tantrum_bar"], 65, spellId)
 	end
 end
 
@@ -98,48 +98,48 @@ function mod:GravityBomb(player, spellId, _, _, spellName)
 	if player == pName then
 		self:OpenProximity(10)
 	end
-	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
-	self:Whisper(player, spellName)
-	self:Bar(L["gravitybomb_other"]:format(player), 9, spellId)
-	self:SecondaryIcon(player, "gravitybombicon")
+	self:TargetMessage(63024, spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(63024, player, spellName)
+	self:Bar(63024, L["gravitybomb_other"]:format(player), 9, spellId)
+	self:SecondaryIcon(63024, player)
 end
 
 function mod:LightBomb(player, spellId, _, _, spellName)
 	if player == pName then
 		self:OpenProximity(10)
 	end
-	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
-	self:Whisper(player, spellName)
-	self:Bar(L["lightbomb_other"]:format(player), 9, spellId)
-	self:PrimaryIcon(player, "lighticon")
+	self:TargetMessage(63018, spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(63018, player, spellName)
+	self:Bar(63018, L["lightbomb_other"]:format(player), 9, spellId)
+	self:PrimaryIcon(63018, player)
 end
 
 function mod:GravityRemoved(player)
 	if player == pName then
 		self:CloseProximity()
 	end
-	self:SecondaryIcon(false)
+	self:SecondaryIcon(63024, false)
 end
 
 function mod:LightRemoved(player)
 	if player == pName then
 		self:CloseProximity()
 	end
-	self:PrimaryIcon(false)
+	self:PrimaryIcon(63018, false)
 end
 
 function mod:UNIT_HEALTH(event, msg)
-	if phase == 1 and UnitName(msg) == mod.displayName and self:GetOption(63849) then
+	if phase == 1 and UnitName(msg) == mod.displayName then
 		local health = UnitHealth(msg)
 		if not exposed1 and health > 86 and health <= 88 then
 			exposed1 = true
-			self:IfMessage(L["exposed_warning"], "Attention")
+			self:IfMessage(63849, L["exposed_warning"], "Attention")
 		elseif not exposed2 and health > 56 and health <= 58 then
 			exposed2 = true
-			self:IfMessage(L["exposed_warning"], "Attention")
+			self:IfMessage(63849, L["exposed_warning"], "Attention")
 		elseif not exposed3 and health > 26 and health <= 28 then
 			exposed3 = true
-			self:IfMessage(L["exposed_warning"], "Attention")
+			self:IfMessage(63849, L["exposed_warning"], "Attention")
 		end
 	end
 end

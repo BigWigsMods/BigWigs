@@ -4,7 +4,11 @@
 local mod = BigWigs:NewBoss("Loatheb", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16011)
-mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
+mod:Toggle(55593, "MESSAGE", "BAR")
+mod:Toggle(29865, "MESSAGE", "BAR")
+mod:Toggle(29204, "MESSAGE", "BAR")
+mod:Toggle(29234, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -62,20 +66,18 @@ function mod:OnEngage()
 	sporeCount = 1
 	doomCount = 1
 	sporeTime = GetRaidDifficulty() == 1 and 36 or 16
-	if self:GetOption(29204) then
-		self:Bar(L["doomtimerbar"], 300, 29204)
-		self:DelayedMessage(240, L["doomtimerwarn"]:format(60), "Attention")
-		self:DelayedMessage(270, L["doomtimerwarn"]:format(30), "Attention")
-		self:DelayedMessage(290, L["doomtimerwarn"]:format(10), "Urgent")
-		self:DelayedMessage(295, L["doomtimerwarn"]:format(5), "Important")
-		self:DelayedMessage(300, L["doomtimerwarnnow"], "Important")
+	self:Bar(29204, L["doomtimerbar"], 300, 29204)
+	self:DelayedMessage(29204, 240, L["doomtimerwarn"]:format(60), "Attention")
+	self:DelayedMessage(29204, 270, L["doomtimerwarn"]:format(30), "Attention")
+	self:DelayedMessage(29204, 290, L["doomtimerwarn"]:format(10), "Urgent")
+	self:DelayedMessage(29204, 295, L["doomtimerwarn"]:format(5), "Important")
+	self:DelayedMessage(29204, 300, L["doomtimerwarnnow"], "Important")
 
-		self:ScheduleEvent("BWLoathebDoomTimer", swapTime, 300)
+	self:ScheduleEvent("BWLoathebDoomTimer", swapTime, 300)
 
-		self:Message(L["startwarn"], "Attention")
-		self:Bar(L["doombar"]:format(doomCount), 120, 29204)
-		self:DelayedMessage(115, L["doomwarn5sec"]:format(doomCount), "Urgent")
-	end
+	self:Message(29204, L["startwarn"], "Attention")
+	self:Bar(29204, L["doombar"]:format(doomCount), 120, 29204)
+	self:DelayedMessage(29204, 115, L["doomwarn5sec"]:format(doomCount), "Urgent")
 end
 
 ------------------------------
@@ -83,15 +85,15 @@ end
 ------------------------------
 
 function mod:Aura(_, spellId, _, _, spellName)
-	self:IfMessage(L["aura_message"], "Important", spellId)
-	self:Bar(spellName, 17, spellId)
-	self:DelayedMessage(14, L["aura_warning"], "Attention")
+	self:IfMessage(55593, L["aura_message"], "Important", spellId)
+	self:Bar(55593, spellName, 17, spellId)
+	self:DelayedMessage(55593, 14, L["aura_warning"], "Attention")
 end
 
 function mod:Deathbloom(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 30, spellId)
-	self:DelayedMessage(15, L["deathbloom_warning"], "Attention")
+	self:IfMessage(29865, spellName, "Important", spellId)
+	self:Bar(29865, spellName, 30, spellId)
+	self:DelayedMessage(29865, 15, L["deathbloom_warning"], "Attention")
 end
 
 function mod:Doom(_, spellId)
@@ -103,8 +105,8 @@ end
 
 function mod:Spore()
 	--spellId is a question mark, so we use our own: 38755
-	self:IfMessage(L["sporewarn"]:format(sporeCount), "Important", 38755)
+	self:IfMessage(29234, L["sporewarn"]:format(sporeCount), "Important", 38755)
 	sporeCount = sporeCount + 1
-	self:Bar(L["sporebar"]:format(sporeCount), sporeTime, 38755)
+	self:Bar(29234, L["sporebar"]:format(sporeCount), sporeTime, 38755)
 end
 

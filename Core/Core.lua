@@ -173,9 +173,7 @@ local function coreSync(sync, moduleName, sender)
 	elseif (sync == "Death" or sync == "MultiDeath") then
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
-			if mod.db.profile.bosskill then
-				mod:IfMessage(L["%s has been defeated"]:format(mod.displayName), "Bosskill", nil, "Victory")
-			end
+			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Bosskill", nil, "Victory")
 			mod:PrimaryIcon(false)
 			mod:SecondaryIcon(false)
 			mod:Disable()
@@ -399,14 +397,14 @@ do
 
 		if module.toggleOptions then
 			local opts = {}
-			for i,v in next, module.toggleOptions do
+			for v,bf in next, module.toggleOptions do
 				local t = type(v)
 				if t == "string"  then
-					opts[v] = true
-				elseif t == "number" and v > 0 then
+					opts[v] = bf
+				elseif t == "number" and v > 20 then -- 20 options for backwards ass drek
 					local n = GetSpellInfo(v)
 					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
-					opts[n] = true
+					opts[n] = bf
 				end
 			end
 			module.db = self.db:RegisterNamespace(name, { profile = opts })

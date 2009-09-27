@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Core.lua"/>
+<Script file="Constants.lua"/>
 <Script file="BossPrototype.lua"/>
 <Script file="PluginPrototype.lua"/>
 

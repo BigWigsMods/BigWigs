@@ -5,12 +5,24 @@ local mod = BigWigs:NewBoss("The Iron Council", "Ulduar")
 if not mod then return end
 -- steelbreaker = 32867, molgeim = 32927, brundir = 32857
 mod:RegisterEnableMob(32867, 32927, 32857)
-mod.toggleOptions = {61869, 63483, 61887, 61903, 64637, "proximity", 62274, 61974, 62269, 62273, "icon", "berserk", "bosskill"}
+mod:Toggle(61869, "MESSAGE", "BAR")
+mod:Toggle(63483, "MESSAGE")
+mod:Toggle(61887, "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE")
+mod:Toggle(61903, "MESSAGE")
+mod:Toggle(64637, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle("proximity")
+mod:Toggle(62274, "MESSAGE")
+mod:Toggle(61974, "MESSAGE", "BAR")
+mod:Toggle(62269, "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle(62273, "MESSAGE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+
 mod.optionHeaders = {
 	[61869] = "Stormcaller Brundir",
 	[61903] = "Steelbreaker",
 	[62274] = "Runemaster Molgeim",
-	icon = "general",
+	berserk = "general",
 }
 
 ------------------------------
@@ -82,17 +94,17 @@ end
 ------------------------------
 
 function mod:Punch(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellId)
+	self:IfMessage(61903, spellName, "Urgent", spellId)
 end
 
 function mod:Overwhelm(player, spellId, _, _, spellName)
 	if player == pName then
 		self:OpenProximity(15)
 	end
-	self:TargetMessage(spellName, player, "Personal", spellId, "Alert")
-	self:Whisper(player, spellName)
-	self:Bar(L["overwhelm_other"]:format(player), overwhelmTime, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(64637, spellName, player, "Personal", spellId, "Alert")
+	self:Whisper(64637, player, spellName)
+	self:Bar(64637, L["overwhelm_other"]:format(player), overwhelmTime, spellId)
+	self:PrimaryIcon(64637, player)
 end
 
 function mod:OverRemove(player)
@@ -105,36 +117,36 @@ end
 function mod:Shield(_, spellId, _, _, _, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target and target == 32927 then
-		self:IfMessage(L["shield_message"], "Attention", spellId)
+		self:IfMessage(62274, L["shield_message"], "Attention", spellId)
 	end
 end
 
 function mod:RunePower(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Positive", spellId)
-	self:Bar(spellName, 30, spellId)
+	self:IfMessage(61974, spellName, "Positive", spellId)
+	self:Bar(61974, spellName, 30, spellId)
 end
 
 function mod:RuneDeathCD(_, spellId, _, _, spellName)
-	self:Bar(spellName, 30, spellId)
+	self:Bar(62269, spellName, 30, spellId)
 end
 
 function mod:RuneDeath(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["death_message"], "Personal", spellId, "Alarm")
+		self:LocalMessage(62269, L["death_message"], "Personal", spellId, "Alarm")
 	end
 end
 
 function mod:RuneSummoning(_, spellId)
-	self:IfMessage(L["summoning_message"], "Attention", spellId)
+	self:IfMessage(62273, L["summoning_message"], "Attention", spellId)
 end
 
 function mod:Overload(_, spellId, _, _, spellName)
-	self:IfMessage(L["overload_message"], "Attention", spellId, "Long")
-	self:Bar(spellName, 6, spellId)
+	self:IfMessage(61869, L["overload_message"], "Attention", spellId, "Long")
+	self:Bar(61869, spellName, 6, spellId)
 end
 
 function mod:Whirl(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
+	self:IfMessage(63483, spellName, "Attention", spellId)
 end
 
 local function targetCheck()
@@ -144,12 +156,12 @@ local function targetCheck()
 	if target ~= previous then
 		if target then
 			if target == pName then
-				mod:LocalMessage(L["chased_you"], "Personal", nil, "Alarm")
+				mod:LocalMessage(61887, L["chased_you"], "Personal", nil, "Alarm")
 			else
-				mod:IfMessage(L["chased_other"]:format(target), "Attention")
-				mod:Whisper(player, L["chased_you"])
+				mod:IfMessage(61887, L["chased_other"]:format(target), "Attention")
+				mod:Whisper(61887, player, L["chased_you"])
 			end
-			mod:PrimaryIcon(target, "icon")
+			mod:PrimaryIcon(61887, target)
 			previous = target
 		else
 			previous = nil
@@ -160,19 +172,19 @@ end
 function mod:TendrilsRemoved()
 	self:CancelTimer(tendrilscanner)
 	tendrilscanner = nil
-	self:PrimaryIcon(false, "icon")
+	self:PrimaryIcon(61887, false)
 end
 
 function mod:Tendrils(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(spellName, 25, spellId)
+	self:IfMessage(61887, spellName, "Attention", spellId)
+	self:Bar(61887, spellName, 25, spellId)
 	tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
 end
 
 function mod:Deaths(_, _, unitName)
 	deaths = deaths + 1
 	if deaths < 3 then
-		self:IfMessage(L["council_dies"]:format(unitName), "Positive")
+		self:IfMessage("bosskill", L["council_dies"]:format(unitName), "Positive")
 	else
 		self:Win()
 	end
@@ -183,9 +195,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		previous = nil
 		deaths = 0
 		overwhelmTime = GetRaidDifficulty() == 1 and 60 or 35
-		if self.db.profile.berserk then
-			self:Berserk(900)
-		end
+		self:Berserk(900)
 	end
 end
 

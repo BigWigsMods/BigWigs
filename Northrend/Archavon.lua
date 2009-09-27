@@ -6,7 +6,12 @@ local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(31125)
-mod.toggleOptions = {58663, "charge", 58678, 58965, -1, "icon", "berserk", "bosskill"}
+mod:Toggle(58663, "BAR", "MESSAGE")
+mod:Toggle("charge", "MESSAGE")
+mod:Toggle(58678, "MESSAGE", "ICON")
+mod:Toggle(58965, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -52,13 +57,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	if self:GetOption(58663) then
-		self:Bar(L["stomp_bar"], 47, 60880)
-		self:DelayedMessage(42, L["stomp_warning"], "Attention")
-	end
-	if self.db.profile.berserk then
-		self:Berserk(300)
-	end
+	self:Bar(58663, L["stomp_bar"], 47, 60880)
+	self:DelayedMessage(58663, 42, L["stomp_warning"], "Attention")
+	self:Berserk(300)
 end
 
 ------------------------------
@@ -66,14 +67,14 @@ end
 ------------------------------
 
 function mod:Stomp(_, spellId)
-	self:IfMessage(L["stomp_message"], "Attention", spellId)
-	self:Bar(L["stomp_bar"], 47, spellId)
-	self:DelayedMessage(42, L["stomp_warning"], "Attention")
+	self:IfMessage(58663, L["stomp_message"], "Attention", spellId)
+	self:Bar(58663, L["stomp_bar"], 47, spellId)
+	self:DelayedMessage(58663, 42, L["stomp_warning"], "Attention")
 end
 
 function mod:Cloud(player, spellId)
 	if player == pName then
-		self:LocalMessage(L["cloud_message"], "Personal", spellId, "Alarm")
+		self:LocalMessage(58965, L["cloud_message"], "Personal", spellId, "Alarm")
 	end
 end
 
@@ -82,8 +83,8 @@ local function scanTarget(spellId, spellName)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then
-		mod:TargetMessage(spellName, target, "Important", spellId)
-		mod:PrimaryIcon(target, "icon")
+		mod:TargetMessage(58965, spellName, target, "Important", spellId)
+		mod:PrimaryIcon(58965, target, "icon")
 	end
 end
 
@@ -95,8 +96,8 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
 	-- XXX can we get the actual emote here, and not just assume that every time
 	-- the boss emotes, he does a charge? heh.
-	if self.db.profile.charge and unit == self.displayName then
-		self:TargetMessage(L["charge"], player, "Attention", 11578)
+	if unit == self.displayName then
+		self:TargetMessage("charge", L["charge"], player, "Attention", 11578)
 	end
 end
 

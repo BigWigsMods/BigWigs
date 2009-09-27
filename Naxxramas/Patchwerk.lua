@@ -4,7 +4,9 @@
 local mod = BigWigs:NewBoss("Patchwerk", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16028)
-mod.toggleOptions = {28131, "berserk", "bosskill"}
+mod:Toggle(28131, "MESSAGE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ----------------------------
 --      Localization      --
@@ -36,11 +38,11 @@ end
 ------------------------------
 
 function mod:Frenzy(_, spellId)
-	self:IfMessage(L["enragewarn"], "Attention", spellId, "Alarm")
+	self:IfMessage(28131, L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if self.db.profile.berserk and (msg == L["starttrigger1"] or msg == L["starttrigger2"]) then
+	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
 		self:Berserk(360)
 	end
 end

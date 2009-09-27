@@ -5,7 +5,11 @@
 local mod = BigWigs:NewBoss("Instructor Razuvious", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16061)
-mod.toggleOptions = {29107, 55550, -1, 29061, 29060, "bosskill"}
+mod:Toggle(29107, "MESSAGE", "BAR")
+mod:Toggle(55550, "MESSAGE")
+mod:Toggle(29061, "MESSAGE", "BAR")
+mod:Toggle(29060, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ----------------------------
 --      Localization      --
@@ -38,9 +42,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	if self:GetOption(29107) then
-		self:Shout()
-	end
+	self:Shout()
 end
 
 ------------------------------
@@ -49,25 +51,25 @@ end
 
 function mod:Shout(_, spellId, _, _, spellName)
 	if spellName then
-		self:IfMessage(spellName, "Important", 55543)
+		self:IfMessage(29107, spellName, "Important", 55543)
 	end
-	self:Bar(L["shout_next"], 15, 55543)
-	self:DelayedMessage(12, L["shout_warning"], "Attention")
+	self:Bar(29107, L["shout_next"], 15, 55543)
+	self:DelayedMessage(29107, 12, L["shout_warning"], "Attention")
 end
 
 function mod:ShieldWall(_, spellId, _, _, spellName)
-	self:Message(spellName, "Positive", nil, nil, nil, spellId)
-	self:Bar(spellName, 20, spellId)
-	self:DelayedMessage(15, L["taunt_warning"], "Attention")
+	self:Message(29061, spellName, "Positive", nil, nil, nil, spellId)
+	self:Bar(29061, spellName, 20, spellId)
+	self:DelayedMessage(29061, 15, L["taunt_warning"], "Attention")
 end
 
 function mod:Taunt(_, spellId, _, _, spellName)
-	self:Message(spellName, "Positive", nil, nil, nil, spellId)
-	self:Bar(spellName, 20, spellId)
-	self:DelayedMessage(15, L["shieldwall_warning"], "Attention")
+	self:Message(29060, spellName, "Positive", nil, nil, nil, spellId)
+	self:Bar(29060, spellName, 20, spellId)
+	self:DelayedMessage(29060, 15, L["shieldwall_warning"], "Attention")
 end
 
 function mod:Knife(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Important", spellId)
+	self:TargetMessage(55550, spellName, player, "Important", spellId)
 end
 

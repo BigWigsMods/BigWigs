@@ -5,7 +5,11 @@ local mod = BigWigs:NewBoss("Emalon the Storm Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(33993)
-mod.toggleOptions = {64216, 64218, "icon", "proximity", "berserk", "bosskill"}
+mod:Toggle(64216, "MESSAGE", "BAR")
+mod:Toggle(64218, "MESSAGE", "BAR", "ICON")
+mod:Toggle("proximity")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -47,12 +51,8 @@ end
 
 function mod:OnEngage()
 	self:OpenProximity(5)
-	if self:GetOption(64218) then
-		self:Bar(L["overcharge_next"], 45, 64218)
-	end
-	if self.db.profile.berserk then
-		self:Berserk(360)
-	end
+	self:Bar(64218, L["overcharge_next"], 45, 64218)
+	self:Berserk(360)
 end
 
 ------------------------------
@@ -60,15 +60,15 @@ end
 ------------------------------
 
 function mod:Nova(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(spellName, 5, spellId)
-	self:Bar(L["nova_next"], 25, spellId)
+	self:IfMessage(64216, spellName, "Attention", spellId)
+	self:Bar(64216, spellName, 5, spellId)
+	self:Bar(64216, L["nova_next"], 25, spellId)
 end
 
 function mod:Overcharge(_, spellId, _, _, spellName)
-	self:IfMessage(L["overcharge_message"], "Positive", spellId)
-	self:Bar(L["overcharge_bar"], 20, spellId)
-	self:Bar(L["overcharge_next"], 45, spellId)
+	self:IfMessage(64218, L["overcharge_message"], "Positive", spellId)
+	self:Bar(64218, L["overcharge_bar"], 20, spellId)
+	self:Bar(64218, L["overcharge_next"], 45, spellId)
 end
 
 do
@@ -83,7 +83,7 @@ do
 
 	function mod:OverchargeIcon(_, _, _, _, _, _, _, _, dGuid)
 		if overchargerepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-		if not self.db.profile.icon then return end
+		if bit.band(self.db.profile[(GetSpellInfo(64218))], BigWigs.C.ICON) ~= C.ICON then return end
 		id = dGuid
 		overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
 	end

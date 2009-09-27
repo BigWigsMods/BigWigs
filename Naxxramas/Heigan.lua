@@ -5,7 +5,9 @@
 local mod = BigWigs:NewBoss("Heigan the Unclean", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15936)
-mod.toggleOptions = {"engage", "teleport", "bosskill"}
+mod:Toggle("engage", "MESSAGE")
+mod:Toggle("teleport", "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ----------------------------
 --      Localization      --
@@ -54,34 +56,25 @@ end
 ------------------------------
 
 local function backToRoom()
-	if mod.db.profile.teleport then
-		mod:Message(L["on_floor_message"], "Attention")
-		mod:DelayedMessage(60, L["teleport_30sec_message"], "Urgent")
-		mod:DelayedMessage(80, L["teleport_10sec_message"], "Important")
-		mod:Bar(L["teleport_bar"], 90, "Spell_Arcane_Blink")
-	end
+	mod:Message("teleport", L["on_floor_message"], "Attention")
+	mod:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
+	mod:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
+	mod:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
-		if self.db.profile.engage then
-			self:Message(L["engage_message"], "Important")
-		end
-		if self.db.profile.teleport then
-			self:Bar(L["teleport_bar"], 90, "Spell_Arcane_Blink")
-			self:DelayedMessage(30, L["teleport_1min_message"], "Attention")
-			self:DelayedMessage(60, L["teleport_30sec_message"], "Urgent")
-			self:DelayedMessage(80, L["teleport_10sec_message"], "Important")
-		end
+		self:Message("engage", L["engage_message"], "Important")
+		self:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
+		self:DelayedMessage("teleport", 30, L["teleport_1min_message"], "Attention")
+		self:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
+		self:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
 	elseif msg:find(L["teleport_trigger"]) then
 		self:ScheduleEvent("BWBackToRoom", backToRoom, 45)
-
-		if self.db.profile.teleport then
-			self:Message(L["on_platform_message"], "Attention")
-			self:DelayedMessage(15, L["to_floor_30sec_message"], "Urgent")
-			self:DelayedMessage(35, L["to_floor_10sec_message"], "Important")
-			self:Bar(L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
-		end
+		self:Message("teleport", L["on_platform_message"], "Attention")
+		self:DelayedMessage("teleport", 15, L["to_floor_30sec_message"], "Urgent")
+		self:DelayedMessage("teleport", 35, L["to_floor_10sec_message"], "Important")
+		self:Bar("teleport", L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
 	end
 end
 

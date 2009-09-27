@@ -5,7 +5,16 @@ local mod = BigWigs:NewBoss("Thorim", "Ulduar")
 if not mod then return end
 -- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
 mod:RegisterEnableMob(32865, 32882, 32872)
-mod.toggleOptions = {62042, 62331, 62017, 62338, 62526, "icon", 62279, 62130, "proximity", "hardmode", "phase", "berserk", "bosskill"}
+mod:Toggle(62042, "MESSAGE", "BAR", "ICON")
+mod:Toggle(62331, "MESSAGE")
+mod:Toggle(62017, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(62338, "MESSAGE", "BAR")
+mod:Toggle(62526, "MESSAGE", "BAR", "ICON", "SAY")
+mod:Toggle(62279, "MESSAGE", "BAR")
+mod:Toggle("proximity")
+mod:Toggle("hardmode", "BAR")
+mod:Toggle("phase", "MESSAGE")
+mod:Toggle("bosskill")
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[62042] = CL.phase:format(2),
@@ -100,20 +109,20 @@ end
 ------------------------------
 
 function mod:Barrier(_, spellId, _, _, spellName)
-	self:IfMessage(L["barrier_message"], "Urgent", spellId, "Alarm")
-	self:Bar(spellName, 20, spellId)
+	self:IfMessage(62338, L["barrier_message"], "Urgent", spellId, "Alarm")
+	self:Bar(62338, spellName, 20, spellId)
 end
 
 function mod:Charge(_, spellId)
-	self:IfMessage(L["charge_message"]:format(chargeCount), "Attention", spellId)
+	self:IfMessage(62279, L["charge_message"]:format(chargeCount), "Attention", spellId)
 	chargeCount = chargeCount + 1
-	self:Bar(L["charge_bar"]:format(chargeCount), 15, spellId)
+	self:Bar(62279, L["charge_bar"]:format(chargeCount), 15, spellId)
 end
 
 function mod:Hammer(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Urgent", spellId)
-	self:Bar(spellName, 16, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(62042, spellName, player, "Urgent", spellId)
+	self:Bar(62042, spellName, 16, spellId)
+	self:PrimaryIcon(62042, player)
 end
 
 function mod:Strike(player, spellId, _, _, spellName)
@@ -136,44 +145,36 @@ function mod:Shock(player, spellId)
 	if (time - last) > 5 then
 		last = time
 		if player == pName then
-			self:LocalMessage(L["shock_message"], "Personal", spellId, "Info")
+			self:LocalMessage(62017, L["shock_message"], "Personal", spellId, "Info")
 		end
 	end
 end
 
 function mod:Impale(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Important", spellId)
+	self:TargetMessage(62331, spellName, player, "Important", spellId)
 end
 
 function mod:Detonation(player, spellId, _, _, spellName)
-	if player == pName then
+	if player == pName and bit.band(self.db.profile[(GetSpellInfo(62526))], BigWigs.C.SAY) == BigWigs.C.SAY then
 		SendChatMessage(L["detonation_say"], "SAY")
 	else
-		self:TargetMessage(spellName, player, "Important", spellId)
+		self:TargetMessage(62526, spellName, player, "Important", spellId)
 	end
-	self:Bar(spellName..": "..player, 4, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:Bar(62526, spellName..": "..player, 4, spellId)
+	self:PrimaryIcon(62526, player)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg == L["phase2_trigger"] then
-		if self.db.profile.phase then
-			self:IfMessage(L["phase2_message"], "Attention")
-		end
-		if self.db.profile.berserk then
-			self:Bar(CL["berserk"], 375, 20484)
-		end
-		if self.db.profile.hardmode then
-			self:Bar(L["hardmode"], 173, "Ability_Warrior_Innerrage")
-			hardModeMessageID = self:DelayedMessage(173, L["hardmode_warning"], "Attention")
-		end
+		self:IfMessage("phase", L["phase2_message"], "Attention")
+		self:Bar(CL["berserk"], 375, 20484)
+		self:Bar("hardmode", L["hardmode"], 173, "Ability_Warrior_Innerrage")
+		hardModeMessageID = self:DelayedMessage("hardmode", 173, L["hardmode_warning"], "Attention")
 	elseif msg == L["phase3_trigger"] then
 		self:CancelScheduledEvent(hardModeMessageID)
 		self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 		self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
-		if self.db.profile.phase then
-			self:IfMessage(L["phase3_message"]:format(unit), "Attention")
-		end
+		self:IfMessage("phase", L["phase3_message"]:format(unit), "Attention")
 		self:OpenProximity(5)
 	elseif msg == L["end_trigger"] then
 		self:Win()

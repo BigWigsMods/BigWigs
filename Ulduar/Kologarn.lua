@@ -4,7 +4,13 @@
 local mod = BigWigs:NewBoss("Kologarn", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32930)
-mod.toggleOptions = {64290, "shockwave", "eyebeam", "eyebeamsay", "arm", 63355, "bosskill"}
+mod:Toggle(64290, "MESSAGE", "BAR")
+mod:Toggle("shockwave", "MESSAGE", "BAR")
+mod:Toggle("eyebeam", "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE", "SAY")
+mod:Toggle("arm", "MESSAGE")
+mod:Toggle(63355, "MESSAGE")
+mod:Toggle("bosskill")
+
 
 ------------------------------
 --      Are you local?      --
@@ -70,55 +76,53 @@ end
 function mod:Armor(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
-		self:TargetMessage(L["armor_message"], player, "Urgent", icon, "Info", stack)
+		self:TargetMessage(63355, L["armor_message"], player, "Urgent", icon, "Info", stack)
 	end
 end
 
 local function gripWarn(spellId, spellName)
-	mod:TargetMessage(spellName, grip, "Attention", spellId, "Alert")
+	mod:TargetMessage(64290, spellName, grip, "Attention", spellId, "Alert")
 end
 
 function mod:Grip(player, spellId, _, _, spellName)
 	grip[#grip + 1] = player
 	self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2, spellId, spellName)
-	self:Bar(spellName, 10, spellId)
+	self:Bar(64290, spellName, 10, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg)
-	if self.db.profile.eyebeam and msg:find(L["eyebeam_trigger"]) then
-		self:LocalMessage(L["eyebeam_you"], "Personal", 63976, "Long")
-		if self.db.profile.eyebeamsay then
-			SendChatMessage(L["eyebeam_say"], "SAY")
-		end
+	if msg:find(L["eyebeam_trigger"]) then
+		self:LocalMessage("eyebeam", L["eyebeam_you"], "Personal", 63976, "Long")
+		SendChatMessage("eyebeam", L["eyebeam_say"], "SAY")
 	end
 	self:Sync("EyeBeamWarn", pName)
 end
 
 function mod:Deaths(guid)
 	if guid == 32933 then
-		self:IfMessage(L["left_dies"], "Attention")
-		self:Bar(L["left_wipe_bar"], 50, 2062)
+		self:IfMessage("arm", L["left_dies"], "Attention")
+		self:Bar("arm", L["left_wipe_bar"], 50, 2062)
 	elseif guid == 32934 then
-		self:IfMessage(L["right_dies"], "Attention")
-		self:Bar(L["right_wipe_bar"], 50, 2062)
+		self:IfMessage("arm", L["right_dies"], "Attention")
+		self:Bar("arm", L["right_wipe_bar"], 50, 2062)
 	else
 		self:Win()
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["shockwave_trigger"] and self.db.profile.shockwave then
-		self:IfMessage(L["shockwave"], "Attention", 63982)
-		self:Bar(L["shockwave"], 21, 63982)
+	if msg == L["shockwave_trigger"] then
+		self:IfMessage("shockwave", L["shockwave"], "Attention", 63982)
+		self:Bar("shockwave", L["shockwave"], 21, 63982)
 	end
 end
 
 function mod:OnSync(sync, rest, nick)
-	if sync == "EyeBeamWarn" and rest and self.db.profile.eyebeam then
-		self:TargetMessage(GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
-		self:Bar(L["eyebeam_message"]:format(rest), 11, 63976)
-		self:Bar(L["eyebeam_bar"], 20, 63976)
-		self:PrimaryIcon(rest, "icon")
+	if sync == "EyeBeamWarn" and rest then
+		self:TargetMessage("eyebeam", GetSpellInfo(40620), rest, "Positive", 63976, "Info") --40620 = "Eyebeam"
+		self:Bar("eyebeam", L["eyebeam_message"]:format(rest), 11, 63976)
+		self:Bar("eyebeam", L["eyebeam_bar"], 20, 63976)
+		self:PrimaryIcon("eyebeam", rest)
 		self:ScheduleEvent("BWRemoveEyeIcon", "SendMessage", 11, "BigWigs_RemoveRaidIcon", 1)
 	end
 end

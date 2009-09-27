@@ -4,7 +4,13 @@
 
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {66012, "burrow", 67574, "icon", 68510, 66118, "berserk", "bosskill"}
+mod:Toggle(66012, "BAR")
+mod:Toggle("burrow", "BAR", "MESSAGE")
+mod:Toggle(67574, "WHISPER", "MESSAGE", "ICON", "FLASHNSHAKE")
+mod:Toggle(68510, "BAR", "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(66118, "MESSAGE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 --[[mod.optionHeaders = {
 	[66012] = "normal",
 	--[the shadow strike thing from the adds] = "hard",
@@ -75,17 +81,13 @@ function mod:OnBossEnable()
 	difficulty = GetRaidDifficulty()
 end
 
-local function nextwave() mod:Bar(L["nerubian_burrower"], 45, 66333) end
+local function nextwave() mod:Bar("burrow", L["nerubian_burrower"], 45, 66333) end
 function mod:OnEngage()
-	if self.db.profile.burrow then
-		self:IfMessage(L["engage_message"], "Attention", 65919)
-		self:Bar(L["burrow_cooldown"], 80, 65919)
-		self:Bar(L["nerubian_burrower"], 10, 66333)
-		self:ScheduleEvent("BWnextwave", nextwave, 10)
-	end
-	if self.db.profile.berserk then
-		self:Berserk(570, true)
-	end
+	self:IfMessage("burrow", L["engage_message"], "Attention", 65919)
+	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
+	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
+	self:ScheduleEvent("BWnextwave", nextwave, 10)
+	self:Berserk(570, true)
 	phase2 = nil
 end
 
@@ -94,21 +96,21 @@ end
 --
 
 function mod:FreezeCooldown(player, spellId)
-	self:Bar(L["freeze_bar"], 20, spellId)
+	self:Bar(66012, L["freeze_bar"], 20, spellId)
 end
 
 function mod:ColdDebuff(player, spellId, _, _, spellName)
 	if player ~= pName or not phase2 then return end
-	self:LocalMessage(spellName, "Personal", spellId, "Alarm")
+	self:LocalMessage(68510, spellName, "Personal", spellId, "Alarm")
 end
 
 function mod:ColdCooldown(_, spellId)
 	if not phase2 then return end
-	self:Bar(L["pcold_bar"], 15, spellId)
+	self:Bar(68510, L["pcold_bar"], 15, spellId)
 end
 
 function mod:Swarm(player, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
+	self:IfMessage(66118, spellName, "Important", spellId)
 	phase2 = true
 	self:SendMessage("BigWigs_StopBar", self, L["burrow_cooldown"])
 	self:CancelScheduledEvent(burrowMessage)
@@ -119,20 +121,19 @@ function mod:Swarm(player, spellId, _, _, spellName)
 end
 
 function mod:Pursue(player, spellId)
-	self:TargetMessage(L["chase"], player, "Personal", spellId)
-	self:Whisper(player, L["chase"])
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(67574, L["chase"], player, "Personal", spellId)
+	self:Whisper(67574, player, L["chase"])
+	self:PrimaryIcon(67574, player, "icon")
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if self.db.profile.burrow and msg:find(L["unburrow_trigger"]) then
-		self:Bar(L["burrow_cooldown"], 80, 65919)
-		burrowMessage = self:DelayedMessage(70, L["burrow_soon"], "Attention")
-		self:Bar(L["nerubian_burrower"], 6, 66333)
+	if msg:find(L["unburrow_trigger"]) then
+		self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
+		burrowMessage = self:DelayedMessage("burrow", 70, L["burrow_soon"], "Attention")
+		self:Bar("burrow", L["nerubian_burrower"], 6, 66333)
 		self:ScheduleEvent("BWnextwave", nextwave, 6)
-	end
-	if self.db.profile.burrow and msg:find(L["burrow_trigger"]) then
-		self:Bar(L["burrow"], 65, 65919)
+	elseif msg:find(L["burrow_trigger"]) then
+		self:Bar("burrow", L["burrow"], 65, 65919)
 	end
 end
 

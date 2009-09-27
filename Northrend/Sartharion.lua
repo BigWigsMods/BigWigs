@@ -13,7 +13,12 @@ mod.otherMenu = "Northrend"
 	30449 = vesperon
 --]]
 mod:RegisterEnableMob(28860, 30449, 30451, 30452)
-mod.toggleOptions = {"tsunami", 56908, -1, "drakes", "twilight", "berserk", "bosskill"}
+mod:Toggle("tsunami", "MESSAGE", "BAR")
+mod:Toggle(56908, "BAR")
+mod:Toggle("drakes", "MESSAGE", "BAR")
+mod:Toggle("twilight", "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -84,52 +89,45 @@ function mod:DrakeCheck(_, spellId)
 	-- Shadron (58105) called in roughly 60s after engage
 	-- Vesperon (61251) called in roughly 105s after engage
 	-- Each drake takes around 12 seconds to land
-	if not self.db.profile.drakes then return end
 	if spellId == 58105 and not shadronStarted then
-		self:Bar(shadron, 80, 58105)
-		self:DelayedMessage(75, L["drakes_incomingsoon"]:format(shadron), "Attention")
+		self:Bar("drakes", shadron, 80, 58105)
+		self:DelayedMessage("drakes", 75, L["drakes_incomingsoon"]:format(shadron), "Attention")
 		shadronStarted = true
 	elseif spellId == 61248 and not tenebronStarted then
-		self:Bar(tenebron, 30, 61248)
-		self:DelayedMessage(25, L["drakes_incomingsoon"]:format(tenebron), "Attention")
+		self:Bar("drakes", tenebron, 30, 61248)
+		self:DelayedMessage("drakes", 25, L["drakes_incomingsoon"]:format(tenebron), "Attention")
 		tenebronStarted = true
 	elseif spellId == 61251 and not vesperonStarted then
-		self:Bar(vesperon, 120, 61251)
-		self:DelayedMessage(115, L["drakes_incomingsoon"]:format(vesperon), "Attention")
+		self:Bar("drakes", vesperon, 120, 61251)
+		self:DelayedMessage("drakes", 115, L["drakes_incomingsoon"]:format(vesperon), "Attention")
 		vesperonStarted = true
 	end
 end
 
 function mod:Breath(_, spellId)
-	self:Bar(L["breath_cooldown"], 12, spellId)
+	self:Bar(56908, L["breath_cooldown"], 12, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
-	if msg == L["tsunami_trigger"] and self.db.profile.tsunami then
-		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
-		self:Bar(L["tsunami_cooldown"], 30, 57491)
-		self:DelayedMessage(25, L["tsunami_warning"], "Attention")
-	elseif self.db.profile.twilight then
-		if mob == tenebron and msg == L["twilight_trigger_tenebron"] then
-			self:Bar(L["twilight_message_tenebron"], 20, 23851)
-			self:Message(L["twilight_message_tenebron"], "Attention", 23851)
-		elseif mob == shadron and msg == L["twilight_trigger_shadron"] then
-			self:Message(L["twilight_message"]:format(mob), "Urgent", 59570)
-		elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
-			self:Message(L["twilight_message"]:format(mob), "Personal", 59569, "Alarm")
-		end
+	if msg == L["tsunami_trigger"] then
+		self:Message("tsuniami", L["tsunami_message"], "Important", 57491, "Alert")
+		self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
+		self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
+	elseif mob == tenebron and msg == L["twilight_trigger_tenebron"] then
+		self:Bar("twilight", L["twilight_message_tenebron"], 20, 23851)
+		self:Message("twilight", L["twilight_message_tenebron"], "Attention", 23851)
+	elseif mob == shadron and msg == L["twilight_trigger_shadron"] then
+		self:Message("twilight", L["twilight_message"]:format(mob), "Urgent", 59570)
+	elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
+		self:Message("twilight", L["twilight_message"]:format(mob), "Personal", 59569, "Alarm")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["engage_trigger"] then
-		if self.db.profile.tsunami then
-			self:Bar(L["tsunami_cooldown"], 30, 57491)
-			self:DelayedMessage(25, L["tsunami_warning"], "Attention")
-		end
-		if self.db.profile.berserk then
-			self:Berserk(900)
-		end
+		self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
+		self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
+		self:Berserk(900)
 	end
 end
 

@@ -3,6 +3,7 @@
 --
 
 local core = BigWigs
+local C = BigWigs.C
 local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
 local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
@@ -31,6 +32,26 @@ end
 function boss:Reboot()
 	self:Disable()
 	self:Enable()
+end
+
+local defaulttoggles = {
+	berserk = C.BAR + C.MESSAGE,
+	bosskill = C.MESSAGE,
+	proximity = C.PROXIMITY
+}
+function boss:Toggle(key, ...)
+	if not key then return end
+	if not self.toggleOptions then self.toggleOptions = {} end
+	if not self.toggleOrder then self.toggleOrder = {} end
+	tinsert(self.toggleOrder, key)
+	self.toggleOptions[key] = defaulttoggles[key] and defaulttoggles[key] or 0
+	for i = 1, select("#", ...) do
+		if C[select(i,...)] then
+			self.toggleOptions[key] = self.toggleOptions[key] + C[select(i,...)]
+		else
+			error(("%q tried to register '%s' as a bitflag for toggleoption '%q'"):format(self.moduleName, key, select(i,...)))
+		end
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -83,13 +104,11 @@ do
 		else
 			local m = combatLogMap[self][event]
 			if m and m[spellId] then
-				if not self.db or type(self.db.profile[spellName]) == "nil" or self.db.profile[spellName] then
-					local func = m[spellId]
-					if type(func) == "function" then
-						func(player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
-					else
-						self[func](self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
-					end
+				local func = m[spellId]
+				if type(func) == "function" then
+					func(player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+				else
+					self[func](self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
 				end
 			end
 		end
@@ -255,13 +274,17 @@ end
 -------------------------------------------------------------------------------
 -- Boss module APIs for messages, bars, icons, etc.
 --
+local function checkFlag(self, key, flag)
+	if type(key) == "number" then key = GetSpellInfo(key) end
+	return bit.band(self.db.profile[key], flag) == flag
+end
 
 function boss:OpenProximity(range)
-	if not self.db.profile.proximity then return end
+	if not checkFlag(self, "proximity", C.PROXIMITY) then return end
 	self:SendMessage("BigWigs_ShowProximity", self, range)
 end
 function boss:CloseProximity()
-	if not self.db.profile.proximity then return end
+	if not checkFlag(self, "proximity", C.PROXIMITY) then return end
 	self:SendMessage("BigWigs_HideProximity")
 end
 
@@ -276,7 +299,7 @@ do
 	-- XXX Proposed API, subject to change/remove.
 	-- Outputs a normal message including a raid warning if possible.
 	function boss:IfMessage(key, color, icon, sound, locale, ...)
-		if locale and not self.db.profile[key] then return end
+		if locale and not checkFlags(self, key, C.MESSAGE) then return end
 		local text = not locale and key or locale[keys[key]]:format(...)
 		self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
@@ -307,7 +330,8 @@ do
 		return setmetatable({}, mt)
 	end
 
-	function boss:TargetMessage(spellName, player, color, icon, sound, ...)
+	function boss:TargetMessage(key, spellName, player, color, icon, sound, ...)
+		if not checkFlag(self, key, C.MESSAGE) then return end
 		local text = nil
 		if type(player) == "table" then
 			text = fmt(L["other"], spellName, table.concat(player, ", "))
@@ -339,19 +363,24 @@ do
 
 	-- XXX Proposed API, subject to change.
 	-- Outputs a local message only, no raid warning.
-	function boss:LocalMessage(key, color, icon, sound, locale, ...)
+	function boss:LocalMessage(dbkey, key, color, icon, sound, locale, ...)
+		if not checkFlag(self, dbkey, C.MESSAGE) then return end
 		if locale and not self.db.profile[key] then return end
 		local text = not locale and key or locale[keys[key]]:format(...)
 		self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
 	end
 end
 
-function boss:Message(...)
-	self:SendMessage("BigWigs_Message", ...)
+function boss:Message(key, ...)
+	if checkFlag(self, key, C.MESSAGE) then
+		self:SendMessage("BigWigs_Message", ...)
+	end
 end
 
-function boss:DelayedMessage(delay, text, ...) 
-	return self:ScheduleEvent(text, "SendMessage", delay, "BigWigs_Message", text, ...)
+function boss:DelayedMessage(key, delay, text, ...)
+	if checkFlag(self, key, C.MESSAGE) then
+		return self:ScheduleEvent(text, "SendMessage", delay, "BigWigs_Message", text, ...)
+	end
 end
 
 do
@@ -366,8 +395,10 @@ do
 		end
 	})
 
-	function boss:Bar(text, length, icon, ...)
-		self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], ...)
+	function boss:Bar(key, text, length, icon, ...)
+		if checkFlag(self, key, C.BAR) then
+			self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], ...)
+		end
 	end
 end
 
@@ -380,7 +411,8 @@ do
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 
 	-- XXX 3rd argument is a proposed API change, and is subject to change/removal.
-	function boss:Whisper(player, spellName, noName)
+	function boss:Whisper(key, player, spellName, noName)
+		if not checkFlags(self, key, C.WHISPER) then return end
 		local msg = noName and spellName or fmt(L["you"], spellName)
 		sentWhispers[msg] = true
 		if player == pName or not UnitIsPlayer(player) or not BigWigs.db.profile.whisper then return end
@@ -390,8 +422,8 @@ do
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function boss:PrimaryIcon(player, key)
-	if key and not self.db.profile[key] then return end
+function boss:PrimaryIcon(key, player)
+	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", 1)
 	else
@@ -400,8 +432,8 @@ function boss:PrimaryIcon(player, key)
 end
 
 -- XXX 2nd argument is a proposed API change, and is subject to change/removal.
-function boss:SecondaryIcon(player, key)
-	if key and not self.db.profile[key] then return end
+function boss:SecondaryIcon(key, player)
+	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
 		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
 	else
@@ -417,24 +449,24 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	local boss = customBoss or self.displayName
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:IfMessage(fmt(L["berserk_start"], boss, seconds / 60), "Attention")
+		self:IfMessage("berserk", fmt(L["berserk_start"], boss, seconds / 60), "Attention")
 	end
 
 	-- Half-way to enrage warning.
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(half + m, fmt(L["berserk_min"], halfMin), "Positive")
+	self:DelayedMessage("berserk", half + m, fmt(L["berserk_min"], halfMin), "Positive")
 
-	self:DelayedMessage(seconds - 60, L["berserk_min"]:format(1), "Positive")
-	self:DelayedMessage(seconds - 30, L["berserk_sec"]:format(30), "Urgent")
-	self:DelayedMessage(seconds - 10, L["berserk_sec"]:format(10), "Urgent")
-	self:DelayedMessage(seconds - 5, L["berserk_sec"]:format(5), "Important")
-	self:DelayedMessage(seconds, L["berserk_end"]:format(boss), "Important", nil, "Alarm")
+	self:DelayedMessage("berserk", seconds - 60, L["berserk_min"]:format(1), "Positive")
+	self:DelayedMessage("berserk", seconds - 30, L["berserk_sec"]:format(30), "Urgent")
+	self:DelayedMessage("berserk", seconds - 10, L["berserk_sec"]:format(10), "Urgent")
+	self:DelayedMessage("berserk", seconds - 5, L["berserk_sec"]:format(5), "Important")
+	self:DelayedMessage("berserk", seconds, L["berserk_end"]:format(boss), "Important", nil, "Alarm")
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.
 	local berserk = GetSpellInfo(26662)
-	self:Bar(berserk, seconds, 26662)
+	self:Bar("berserk", berserk, seconds, 26662)
 end
 

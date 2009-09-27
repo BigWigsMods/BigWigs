@@ -4,7 +4,8 @@
 local mod = BigWigs:NewBoss("Anub'Rekhan", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15956)
-mod.toggleOptions = {28785, "bosskill"}
+mod:Toggle(28785, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -50,12 +51,10 @@ end
 function mod:OnEngage()
 	if started then return end
 	started = true
-	if self:GetOption(28785) then
-		locustTime = GetRaidDifficulty() == 1 and 102 or 90
-		self:Message(L["engagewarn"]:format(locustTime), "Urgent")
-		self:DelayedMessage(locustTime - 10, L["gainwarn10sec"], "Important")
-		self:Bar(L["gainincbar"], locustTime, 28785)
-	end
+	locustTime = GetRaidDifficulty() == 1 and 102 or 90
+	self:Message(28785, L["engagewarn"]:format(locustTime), "Urgent")
+	self:DelayedMessage(28785, locustTime - 10, L["gainwarn10sec"], "Important")
+	self:Bar(28785, L["gainincbar"], locustTime, 28785)
 end
 
 ------------------------------
@@ -65,15 +64,15 @@ end
 function mod:GainSwarm(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 15956 then
-		self:DelayedMessage(20, L["gainendwarn"], "Important")
-		self:Bar(spellName, 20, spellId)
-		self:DelayedMessage(75, L["gainwarn10sec"], "Important")
-		self:Bar(L["gainincbar"], 85, spellId)
+		self:DelayedMessage(28785, 20, L["gainendwarn"], "Important")
+		self:Bar(28785, spellName, 20, spellId)
+		self:DelayedMessage(28785, 75, L["gainwarn10sec"], "Important")
+		self:Bar(28785, L["gainincbar"], 85, spellId)
 	end
 end
 
 function mod:Swarm(_, spellId)
-	self:IfMessage(L["castwarn"], "Attention", spellId)
-	self:Bar(L["castwarn"], 3, spellId)
+	self:IfMessage(28785, L["castwarn"], "Attention", spellId)
+	self:Bar(28785, L["castwarn"], 3, spellId)
 end
 

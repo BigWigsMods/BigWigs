@@ -72,3 +72,13 @@ L["Configure"] = true
 L["Test"] = true
 L["Reset positions"] = true
 L["Options for %s."] = true
+
+L["BAR"] = "Bars"
+L["MESSAGE"] = "Messages"
+L["SOUND"] = "Sounds"
+L["ICON"] = "Icon"
+L["PROXIMITY"] = "Proximity"
+L["WHISPER"] = "Whisper"
+L["SAY"] = "Say"
+L["FLASHNSHAKE"] = "Flash'n'shake"
+L["PING"] = "Ping"

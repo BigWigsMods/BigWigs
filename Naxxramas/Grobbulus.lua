@@ -4,7 +4,10 @@
 local mod = BigWigs:NewBoss("Grobbulus", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15931)
-mod.toggleOptions = {28169, "icon", 28240, "berserk", "bosskill"}
+mod:Toggle(28169, "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE")
+mod:Toggle(28240, "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -41,9 +44,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	if self.db.profile.berserk then
-		self:Berserk(540)
-	end
+	self:Berserk(540)
 end
 
 ------------------------------
@@ -51,14 +52,14 @@ end
 ------------------------------
 
 function mod:Inject(player, spellId)
-	self:TargetMessage(L["bomb_message"], player, "Personal", spellId, "Alert")
-	self:Whisper(player, L["bomb_message"])
-	self:Bar(L["bomb_message_other"]:format(player), 10, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(28169, L["bomb_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(28169, player, L["bomb_message"])
+	self:Bar(28169, L["bomb_message_other"]:format(player), 10, spellId)
+	self:PrimaryIcon(28169, player, "icon")
 end
 
 function mod:Cloud(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(28240, spellName, "Attention", spellId)
+	self:Bar(28240, spellName, 15, spellId)
 end
 

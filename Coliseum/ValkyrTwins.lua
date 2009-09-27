@@ -6,7 +6,13 @@ local mod = BigWigs:NewBoss("The Twin Val'kyr", "Trial of the Crusader")
 if not mod then return end
 -- 34496 Darkbane, 34497 Lightbane
 mod:RegisterEnableMob(34496, 34497)
-mod.toggleOptions = {"vortex", "shield", "touch", "berserk", "bosskill"}
+mod:Toggle("vortex", "MESSAGE", "BAR")
+mod:Toggle("shield", "MESSAGE", "BAR")
+mod:Toggle("next", "BAR")
+mod:Toggle("touch", "MESSAGE", "WHISPER")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -26,7 +32,9 @@ if L then
 	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
 	L.vortex_or_shield_cd = "Next Vortex or Shield"
-
+	L.next = "Next Vortex or Shield"
+	L.next_desc = "Warn for next Vortex or Shield"
+	
 	L.vortex = "Vortex"
 	L.vortex_desc = "Warn when the twins start casting vortexes."
 
@@ -62,12 +70,8 @@ end
 function mod:OnEngage()
 	if started then return end
 	started = true
-	if self.db.profile.shield or self.db.profile.vortex then
-		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-	end
-	if self.db.profile.berserk then
-		self:Berserk(difficulty > 2 and 360 or 540)
-	end
+	self:Bar("next", L["vortex_or_shield_cd"], 45, 39089)
+	self:Berserk(difficulty > 2 and 360 or 540)
 end
 
 --------------------------------------------------------------------------------
@@ -75,56 +79,47 @@ end
 --
 
 function mod:Touch(player, spellId, _, _, spellName)
-	if not self.db.profile.touch then return end
-	self:TargetMessage(spellName, player, "Personal", spellId, "Info")
-	self:Whisper(player, spellName)
+	self:TargetMessage("touch", spellName, player, "Personal", spellId, "Info")
+	self:Whisper("touch", player, spellName)
 end
 
 function mod:DarkShield(_, spellId, _, _, spellName)
-	if self.db.profile.shield then
-		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		local d = UnitDebuff("player", essenceDark)
-		if d then
-			self:IfMessage(spellName, "Important", spellId, "Alert")
-		else
-			self:IfMessage(spellName, "Urgent", spellId)
-		end
+	self:Bar("shield", L["vortex_or_shield_cd"], 45, 39089)
+	local d = UnitDebuff("player", essenceDark)
+	if d then
+		self:IfMessage("shield", spellName, "Important", spellId, "Alert")
+	else
+		self:IfMessage("shield", spellName, "Urgent", spellId)
 	end
 end
 
 function mod:LightShield(_, spellId, _, _, spellName)
-	if self.db.profile.shield then
-		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		local d = UnitDebuff("player", essenceLight)
-		if d then
-			self:IfMessage(spellName, "Important", spellId, "Alert")
-		else
-			self:IfMessage(spellName, "Urgent", spellId)
-		end
+	self:Bar("shield", L["vortex_or_shield_cd"], 45, 39089)
+	local d = UnitDebuff("player", essenceLight)
+	if d then
+		self:IfMessage("shield", spellName, "Important", spellId, "Alert")
+	else
+		self:IfMessage("shield", spellName, "Urgent", spellId)
 	end
 end
 
 function mod:LightVortex(_, spellId, _, _, spellName)
-	if self.db.profile.vortex then
-		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		local d = UnitDebuff("player", essenceLight)
-		if d then
-			self:IfMessage(spellName, "Positive", spellId)
-		else
-			self:IfMessage(spellName, "Personal", spellId, "Alarm")
-		end
+	self:Bar("vortex", L["vortex_or_shield_cd"], 45, 39089)
+	local d = UnitDebuff("player", essenceLight)
+	if d then
+		self:IfMessage("vortex", spellName, "Positive", spellId)
+	else
+		self:IfMessage("vortex", spellName, "Personal", spellId, "Alarm")
 	end
 end
 
 function mod:DarkVortex(_, spellId, _, _, spellName)
-	if self.db.profile.vortex then
-		self:Bar(L["vortex_or_shield_cd"], 45, 39089)
-		local d = UnitDebuff("player", essenceDark)
-		if d then
-			self:IfMessage(spellName, "Positive", spellId)
-		else
-			self:IfMessage(spellName, "Personal", spellId, "Alarm")
-		end
+	self:Bar("vortex", L["vortex_or_shield_cd"], 45, 39089)
+	local d = UnitDebuff("player", essenceDark)
+	if d then
+		self:IfMessage("vortex", spellName, "Positive", spellId)
+	else
+		self:IfMessage("vortex", spellName, "Personal", spellId, "Alarm")
 	end
 end
 

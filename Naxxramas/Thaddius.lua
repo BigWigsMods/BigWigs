@@ -5,7 +5,12 @@ local mod = BigWigs:NewBoss("Thaddius", "Naxxramas")
 if not mod then return end
 -- 15928 thaddius, 15929 - stalagg, 15930 - feugen
 mod:RegisterEnableMob(15928, 15929, 15930)
-mod.toggleOptions = {28089, -1, 28134, "throw", "phase", "berserk", "bosskill"}
+mod:Toggle(28089, "MESSAGE", "BAR", "FLASHNSHAKE")
+mod:Toggle(28134, "MESSAGE", "BAR")
+mod:Toggle("throw", "MESSAGE", "BAR")
+mod:Toggle("phase", "MESSAGE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -78,8 +83,8 @@ end
 ------------------------------
 
 function mod:StalaggPower(_, spellId, _, _, spellName)
-	self:IfMessage(L["surge_message"], "Important", spellId)
-	self:Bar(spellName, 10, spellId)
+	self:IfMessage(28134, L["surge_message"], "Important", spellId)
+	self:Bar(28134, spellName, 10, spellId)
 end
 
 function mod:UNIT_AURA(event, unit)
@@ -103,17 +108,15 @@ function mod:UNIT_AURA(event, unit)
 		end
 	end
 	if newCharge then
-		if self:GetOption(28089) then
-			if not lastCharge then
-				self:LocalMessage(newCharge == "Interface\\Icons\\Spell_ChargePositive" and
-					L["polarity_first_positive"] or L["polarity_first_negative"],
-					"Personal", newCharge, "Alert")
+		if not lastCharge then
+			self:LocalMessage(28089, newCharge == "Interface\\Icons\\Spell_ChargePositive" and
+				L["polarity_first_positive"] or L["polarity_first_negative"],
+				"Personal", newCharge, "Alert")
+		else
+			if newCharge == lastCharge then
+				self:LocalMessage(28089, L["polarity_nochange"], "Positive", newCharge)
 			else
-				if newCharge == lastCharge then
-					self:LocalMessage(L["polarity_nochange"], "Positive", newCharge)
-				else
-					self:LocalMessage(L["polarity_changed"], "Personal", newCharge, "Alert")
-				end
+				self:LocalMessage(28089, L["polarity_changed"], "Personal", newCharge, "Alert")
 			end
 		end
 		lastCharge = newCharge
@@ -125,27 +128,23 @@ end
 function mod:Shift()
 	shiftTime = GetTime()
 	self:RegisterEvent("UNIT_AURA")
-	if self:GetOption(28089) then
-		self:IfMessage(L["polarity_message"], "Important", 28089)
-	end
+	self:IfMessage(28089, L["polarity_message"], "Important", 28089)
 end
 
 local function throw()
 	if shiftTime then return end
-	if mod.db.profile.throw then
-		mod:Bar(L["throw_bar"], 20, "Ability_Druid_Maul")
-		mod:DelayedMessage(15, L["throw_warning"], "Urgent")
-	end
+	mod:Bar("throw", L["throw_bar"], 20, "Ability_Druid_Maul")
+	mod:DelayedMessage("throw", 15, L["throw_warning"], "Urgent")
 	mod:ScheduleEvent("thadthrow", throw, 21)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if self:GetOption(28089) and msg:find(L["polarity_trigger"]) then
-		self:DelayedMessage(25, L["polarity_warning"], "Important")
-		self:Bar(L["polarity_bar"], 28, "Spell_Nature_Lightning")
+	if msg:find(L["polarity_trigger"]) then
+		self:DelayedMessage(28089, 25, L["polarity_warning"], "Important")
+		self:Bar(28089, L["polarity_bar"], 28, "Spell_Nature_Lightning")
 	elseif msg == L["trigger_phase1_1"] or msg == L["trigger_phase1_2"] then
-		if self.db.profile.phase and not stage1warn then
-			self:Message(L["phase1_message"], "Important")
+		if not stage1warn then
+			self:Message("phase", L["phase1_message"], "Important")
 		end
 		deaths = 0
 		stage1warn = true
@@ -153,12 +152,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	elseif msg:find(L["trigger_phase2_1"]) or msg:find(L["trigger_phase2_2"]) or msg:find(L["trigger_phase2_3"]) then
 		self:CancelAllScheduledEvents()
 		self:SendMessage("BigWigs_StopBar", self, L["throw_bar"])
-		if self.db.profile.phase then
-			self:Message(L["phase2_message"], "Important")
-		end
-		if self.db.profile.berserk then
-			self:Berserk(360, true)
-		end
+		self:Message("phase", L["phase2_message"], "Important")
+		self:Berserk(360, true)
 	end
 end
 

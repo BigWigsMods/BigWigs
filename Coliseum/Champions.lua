@@ -3,7 +3,17 @@
 --
 local mod = BigWigs:NewBoss("Faction Champions", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 65816, 67514, 67777, 65983, 65980, "bosskill"}
+mod:Toggle(65960, "MESSAGE")
+mod:Toggle(65801, "MESSAGE")
+mod:Toggle(65877, "MESSAGE")
+mod:Toggle(66010, "MESSAGE")
+mod:Toggle(65947, "MESSAGE")
+mod:Toggle(65816, "MESSAGE", "BAR")
+mod:Toggle(67514, "MESSAGE")
+mod:Toggle(67777, "MESSAGE")
+mod:Toggle(65983, "MESSAGE")
+mod:Toggle(65980, "MESSAGE")
+mod:Toggle("bosskill")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -60,8 +70,8 @@ end
 --
 
 function mod:Hellfire(player, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(65816, spellName, "Urgent", spellId)
+	self:Bar(65816, spellName, 15, spellId)
 end
 
 function mod:HellfireStopped(player, spellId, _, _, spellName)
@@ -72,10 +82,10 @@ do
 	local last = nil
 	local pName = UnitName("player")
 	function mod:HellfireOnYou(player, spellId, _, _, spellName)
-		if player == pName and self:GetOption(65816) then
+		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:TargetMessage(spellName, player, "Personal", spellId, last and nil or "Alarm")
+				self:TargetMessage(65816, spellName, player, "Personal", spellId, last and nil or "Alarm")
 				last = t
 			end
 		end
@@ -83,38 +93,38 @@ do
 end
 
 function mod:Wyvern(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+	self:TargetMessage(65877, spellName, player, "Attention", spellId)
 end
 
 function mod:Blind(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+	self:TargetMessage(65960, spellName, player, "Attention", spellId)
 end
 
 function mod:Polymorph(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
+	self:TargetMessage(65801, spellName, player, "Attention", spellId)
 end
 
 function mod:DivineShield(player, spellId)
-	self:IfMessage(L["Shield on %s!"]:format(player), "Urgent", spellId)
+	self:IfMessage(66010, L["Shield on %s!"]:format(player), "Urgent", spellId)
 end
 
 function mod:Bladestorm(player, spellId)
-	self:IfMessage(L["Bladestorming!"], "Important", spellId)
+	self:IfMessage(65947, L["Bladestorming!"], "Important", spellId)
 end
 
 function mod:Cat(player, spellId)
-	self:IfMessage(L["Hunter pet up!"], "Urgent", spellId)
+	self:IfMessage(67777, L["Hunter pet up!"], "Urgent", spellId)
 end
 
 function mod:Felhunter(player, spellId)
-	self:IfMessage(L["Felhunter up!"], "Urgent", spellId)
+	self:IfMessage(67514, L["Felhunter up!"], "Urgent", spellId)
 end
 
 function mod:Heroism(player, spellId)
-	self:IfMessage(L["Heroism on champions!"], "Important", spellId)
+	self:IfMessage(65983, L["Heroism on champions!"], "Important", spellId)
 end
 
 function mod:Bloodlust(player, spellId)
-	self:IfMessage(L["Bloodlust on champions!"], "Important", spellId)
+	self:IfMessage(65980, L["Bloodlust on champions!"], "Important", spellId)
 end
 

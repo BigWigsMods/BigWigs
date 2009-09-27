@@ -5,7 +5,13 @@ local mod = BigWigs:NewBoss("Auriaya", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33515)
 --Feral Defender = 34035
-mod.toggleOptions = {64386, 64389, 64396, 64422, "defender", "berserk", "bosskill"}
+mod:Toggle(64386, "MESSAGE", "BAR")
+mod:Toggle(64389, "MESSAGE")
+mod:Toggle(64396, "MESSAGE", "BAR")
+mod:Toggle(64422, "MESSAGE", "BAR")
+mod:Toggle("defender", "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -54,16 +60,10 @@ end
 
 function mod:OnEngage()
 	count = 9
-	if self:GetOption(64455) then
-		self:Bar(L["defender_message"]:format(count), 60, 64455)
-	end
-	if self:GetOption(64386) then
-		self:Bar(L["fear_bar"], 32, 64386)
-		self:DelayedMessage(32, L["fear_warning"], "Attention")
-	end
-	if self.db.profile.berserk then
-		self:Berserk(600)
-	end
+	self:Bar("defender", L["defender_message"]:format(count), 60, 64455)
+	self:Bar(64386, L["fear_bar"], 32, 64386)
+	self:DelayedMessage(64386, 32, L["fear_warning"], "Attention")
+	self:Berserk(600)
 end
 
 ------------------------------
@@ -71,14 +71,12 @@ end
 ------------------------------
 
 function mod:Sonic(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(L["sonic_bar"], 28, spellId)
+	self:IfMessage(64422, spellName, "Attention", spellId)
+	self:Bar(64422, L["sonic_bar"], 28, spellId)
 end
 
 function mod:Defender(_, spellId)
-	if self.db.profile.defender then
-		self:IfMessage(L["defender_message"]:format(count), "Attention", spellId)
-	end
+	self:IfMessage("defender", L["defender_message"]:format(count), "Attention", spellId)
 end
 
 function mod:DefenderKill(_, spellId)
@@ -89,17 +87,17 @@ function mod:DefenderKill(_, spellId)
 end
 
 function mod:Swarm(player, spellId)
-	self:TargetMessage(L["swarm_message"], player, "Attention", spellId)
-	self:Bar(L["swarm_bar"], 37, spell)
+	self:TargetMessage(64396, L["swarm_message"], player, "Attention", spellId)
+	self:Bar(64396, L["swarm_bar"], 37, spell)
 end
 
 function mod:Fear(_, spellId)
-	self:IfMessage(L["fear_message"], "Urgent", spellId)
-	self:Bar(L["fear_bar"], 35, spellId)
-	self:DelayedMessage(32, L["fear_warning"], "Attention")
+	self:IfMessage(64386, L["fear_message"], "Urgent", spellId)
+	self:Bar(64386, L["fear_bar"], 35, spellId)
+	self:DelayedMessage(64386, 32, L["fear_warning"], "Attention")
 end
 
 function mod:Sentinel(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
+	self:IfMessage(64389, spellName, "Important", spellId)
 end
 

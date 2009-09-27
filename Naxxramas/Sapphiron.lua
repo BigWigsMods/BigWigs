@@ -5,7 +5,12 @@
 local mod = BigWigs:NewBoss("Sapphiron", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15989)
-mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
+mod:Toggle(28542, "MESSAGE", "BAR")
+mod:Toggle(28524, "MESSAGE", "BAR")
+mod:Toggle(28522, "MESSAGE", "ICON", "SAY", "PING")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+-- mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -13,6 +18,7 @@ mod.toggleOptions = {28542, 28524, -1, 28522, "ping", "icon", "berserk", "bosski
 
 local breath = 1
 local pName = UnitName("player")
+local iceboltName = GetSpellInfo(28522)
 
 ----------------------------
 --      Localization      --
@@ -63,10 +69,7 @@ end
 
 function mod:OnEngage()
 	breath = 1
-
-	if self.db.profile.berserk then
-		self:Berserk(900)
-	end
+	self:Berserk(900)
 end
 
 ------------------------------
@@ -77,47 +80,45 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["airphase_trigger"] then
 		self:CancelScheduledEvent(L["lifedrain_warn1"])
 		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
-		if self:GetOption(28524) then
-			--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-			self:IfMessage(L["deepbreath_incoming_message"], "Attention")
-			self:Bar(L["deepbreath_incoming_bar"], 14, 43810)
-			self:DelayedMessage(9, L["deepbreath_incoming_soon_message"], "Attention")
-		end
+		--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+		self:IfMessage(28524, L["deepbreath_incoming_message"], "Attention")
+		self:Bar(28524, L["deepbreath_incoming_bar"], 14, 43810)
+		self:DelayedMessage(28524, 9, L["deepbreath_incoming_soon_message"], "Attention")
 	elseif msg == L["deepbreath_trigger"] then
-		if self:GetOption(28524) then
-			self:IfMessage(L["deepbreath_warning"], "Attention")
-			self:Bar(L["deepbreath_bar"], 10, 29318)
-		end
+		self:IfMessage(28524, L["deepbreath_warning"], "Attention")
+		self:Bar(28524, L["deepbreath_bar"], 10, 29318)
 	end
 end
 
 function mod:Breath(_, spellId, _, _, spellName)
 	breath = breath + 1
 	if breath == 2 then
-		self:IfMessage(spellName, "Important", spellId)
+		self:IfMessage(28524, spellName, "Important", spellId)
 	end
 end
 
 function mod:Drain(_, spellId)
-	self:IfMessage(L["lifedrain_message"], "Urgent", spellId)
-	self:Bar(L["lifedrain_bar"], 23, spellId)
-	self:DelayedMessage(18, L["lifedrain_warn1"], "Important")
+	self:IfMessage(28542, L["lifedrain_message"], "Urgent", spellId)
+	self:Bar(28542, L["lifedrain_bar"], 23, spellId)
+	self:DelayedMessage(28542, 18, L["lifedrain_warn1"], "Important")
 end
 
 function mod:Icebolt(player, spellId, _, _, spellName)
 	if player == pName then
-		SendChatMessage(L["icebolt_say"], "SAY")
-		if self.db.profile.ping then
+		if bit.band(self.db.profile[iceboltName], BigWigs.C.SAY) == BigWigs.C.SAY then
+			SendChatMessage(L["icebolt_say"], "SAY")
+		end
+		if bit.band(self.db.profile[iceboltName], BigWigs.C.PING) == BigWigs.C.PING then
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])
 		end
 	else
-		self:TargetMessage(spellName, player, "Attention", spellId)
+		self:TargetMessage(28522, spellName, player, "Attention", spellId)
 	end
-	self:PrimaryIcon(player, "icon")
+	self:PrimaryIcon(28522, player)
 end
 
 function mod:RemoveIcon()
-	self:PrimaryIcon(false, "icon")
+	self:PrimaryIcon(28522, false)
 end
 

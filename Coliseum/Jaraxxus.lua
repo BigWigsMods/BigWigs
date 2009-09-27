@@ -4,7 +4,11 @@
 
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {67049, 68123, "icon", 67106, "adds", "bosskill"}
+mod:Toggle(67049, "MESSAGE", "BAR", "WHISPER")
+mod:Toggle(68123, "MESSAGE", "BAR", "WHISPER", "ICON")
+mod:Toggle(67106, "MESSAGE", "BAR")
+mod:Toggle("adds", "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -70,9 +74,7 @@ function mod:FirstEngage()
 end
 
 function mod:OnEngage()
-	if self.db.profile.adds then
-		self:Bar(L["netherportal_bar"], 20, 68404)
-	end
+	self:Bar("adds", L["netherportal_bar"], 20, 68404)
 end
 
 --------------------------------------------------------------------------------
@@ -80,44 +82,42 @@ end
 --
 
 function mod:IncinerateFlesh(player, spellId)
-	self:TargetMessage(L["incinerate_message"], player, "Urgent", spellId, "Info")
-	self:Whisper(player, L["incinerate_message"])
-	self:Bar(L["incinerate_other"]:format(player), 12, spellId)
+	self:TargetMessage(67049, L["incinerate_message"], player, "Urgent", spellId, "Info")
+	self:Whisper(67049, player, L["incinerate_message"])
+	self:Bar(67049, L["incinerate_other"]:format(player), 12, spellId)
 end
 
 function mod:IncinerateFleshRemoved(player, spellId)
-	self:IfMessage(L["incinerate_safe"]:format(player), "Positive", 17) -- Power Word: Shield icon.
-	self:SendMessage("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
+	self:IfMessage(67049, L["incinerate_safe"]:format(player), "Positive", 17) -- Power Word: Shield icon.
+	self:SendMessage(67049, "BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
 function mod:LegionFlame(player, spellId)
-	self:TargetMessage(L["legionflame_message"], player, "Personal", spellId, "Alert")
-	self:Whisper(player, L["legionflame_message"])
-	self:Bar(L["legionflame_other"]:format(player), 8, spellId)
-	self:PrimaryIcon(player, "icon")
+	self:TargetMessage(68123, L["legionflame_message"], player, "Personal", spellId, "Alert")
+	self:Whisper(68123, player, L["legionflame_message"])
+	self:Bar(68123, L["legionflame_other"]:format(player), 8, spellId)
+	self:PrimaryIcon(68123, player, "icon")
 end
 
 function mod:RemoveLegionFlameIcon()
-	self:PrimaryIcon(false, "icon")
+	self:PrimaryIcon(68123, false, "icon")
 end
 
 function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 34780 then
-		self:IfMessage(spellName, "Attention", spellId)
-		self:Bar(L["netherpower_bar"], 44, spellId)
+		self:IfMessage(67106, spellName, "Attention", spellId)
+		self:Bar(67106, L["netherpower_bar"], 44, spellId)
 	end
 end
 
 function mod:NetherPortal(_, spellId, _, _, spellName)
-	if not self.db.profile.adds then return end
-	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
-	self:Bar(L["infernal_bar"], 60, 66258)
+	self:IfMessage("adds", spellName, "Urgent", spellId, "Alarm")
+	self:Bar("adds", L["infernal_bar"], 60, 66258)
 end
 
 function mod:InfernalEruption(_, spellId, _, _, spellName)
-	if not self.db.profile.adds then return end
-	self:IfMessage(spellName, "Urgent", spellId, "Alarm")
-	self:Bar(L["netherportal_bar"], 60, 68404)
+	self:IfMessage("adds", spellName, "Urgent", spellId, "Alarm")
+	self:Bar("adds", L["netherportal_bar"], 60, 68404)
 end
 

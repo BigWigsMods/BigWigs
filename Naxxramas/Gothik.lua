@@ -4,7 +4,10 @@
 local mod = BigWigs:NewBoss("Gothik the Harvester", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16060)
-mod.toggleOptions = { "room", -1, "add", "adddeath", "bosskill" }
+mod:Toggle("room", "MESSAGE", "BAR")
+mod:Toggle("add", "MESSAGE", "BAR")
+mod:Toggle("adddeath", "MESSAGE")
+mod:Toggle("bosskill")
 
 ----------------------------
 --      Localization      --
@@ -85,19 +88,17 @@ end
 ------------------------------
 
 function mod:DKDead()
-	if not self.db.profile.adddeath then return end
-	self:Message(L["dkdiewarn"], "Important")
+	self:Message("adddeath", L["dkdiewarn"], "Important")
 end
 
 function mod:RiderDead()
-	if not self.db.profile.adddeath then return end
-	self:Message(L["riderdiewarn"], "Important")
+	self:Message("adddeath", L["riderdiewarn"], "Important")
 end
 
 local function waveWarn(message, color)
 	wave = wave + 1
-	if wave < 24 and mod.db.profile.add then
-		mod:Message(L["wave"]:format(wave, message), color)
+	if wave < 24 then
+		mod:Message("add", L["wave"]:format(wave, message), color)
 	end
 	if wave == 23 then
 		mod:SendMessage("BigWigs_StopBar", mod, L["trabar"]:format(numTrainer - 1))
@@ -108,21 +109,21 @@ local function waveWarn(message, color)
 end
 
 local function newTrainee()
-	mod:Bar(L["trabar"]:format(numTrainer), timeTrainer, "Ability_Seal")
+	mod:Bar("add", L["trabar"]:format(numTrainer), timeTrainer, "Ability_Seal")
 	mod:ScheduleEvent("traineeWave", waveWarn, timeTrainer - 3, L["trawarn"], "Attention")
 	mod:ScheduleEvent("nextTrainee", newTrainee, timeTrainer)
 	numTrainer = numTrainer + 1
 end
 
 local function newDeathknight()
-	mod:Bar(L["dkbar"]:format(numDK), timeDK, "INV_Boots_Plate_08")
+	mod:Bar("add", L["dkbar"]:format(numDK), timeDK, "INV_Boots_Plate_08")
 	mod:ScheduleEvent("dkWave", waveWarn, timeDK - 3, L["dkwarn"], "Urgent")
 	mod:ScheduleEvent("nextDk", newDeathknight, timeDK)
 	numDK = numDK + 1
 end
 
 local function newRider()
-	mod:Bar(L["riderbar"]:format(numRider), timeRider, "Spell_Shadow_DeathPact")
+	mod:Bar("add", L["riderbar"]:format(numRider), timeRider, "Spell_Shadow_DeathPact")
 	mod:ScheduleEvent("riderWave", waveWarn, timeRider - 3, L["riderwarn"], "Important")
 	mod:ScheduleEvent("nextRider", newRider, timeRider)
 	numRider = numRider + 1
@@ -130,15 +131,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
-		if self.db.profile.room then
-			self:Message(L["startwarn"], "Important")
-			self:Bar(L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
-			self:DelayedMessage(90, L["warn1"], "Attention")
-			self:DelayedMessage(180, L["warn2"], "Attention")
-			self:DelayedMessage(210, L["warn3"], "Urgent")
-			self:DelayedMessage(240, L["warn4"], "Important")
-			self:DelayedMessage(260, L["warn5"], "Important")
-		end
+		self:Message("room", L["startwarn"], "Important")
+		self:Bar("room", L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
+		self:DelayedMessage("room", 90, L["warn1"], "Attention")
+		self:DelayedMessage("room", 180, L["warn2"], "Attention")
+		self:DelayedMessage("room", 210, L["warn3"], "Urgent")
+		self:DelayedMessage("room", 240, L["warn4"], "Important")
+		self:DelayedMessage("room", 260, L["warn5"], "Important")
 		numTrainer = 1
 		numDK = 1
 		numRider = 1
@@ -152,9 +151,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		timeDK = 25
 		timeRider = 30
 	elseif msg == L["inroomtrigger"] then
-		if self.db.profile.room then
-			self:Message(L["inroomwarn"], "Important")
-		end
+		self:Message("room", L["inroomwarn"], "Important")
 	end
 end
 

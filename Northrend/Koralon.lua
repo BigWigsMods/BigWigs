@@ -5,7 +5,10 @@ local mod = BigWigs:NewBoss("Koralon the Flame Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(35013)
-mod.toggleOptions = {66725, 67332, "berserk", "bosskill"}
+mod:Toggle(66725, "MESSAGE", "BAR")
+mod:Toggle(67332, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -42,12 +45,12 @@ end
 ------------------------------
 
 function mod:Fists(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(66725, spellName, "Attention", spellId)
+	self:Bar(66725, spellName, 15, spellId)
 end
 
 function mod:Cinder(player, spellId)
 	if player ~= pName then return end
-	self:LocalMessage(L["cinder_message"], "Personal", spellId, "Alarm")
+	self:LocalMessage(67332, L["cinder_message"], "Personal", spellId, "Alarm")
 end
 

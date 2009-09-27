@@ -4,7 +4,13 @@
 local mod = BigWigs:NewBoss("Algalon the Observer", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32871)
-mod.toggleOptions = {"phase", 64412, 62301, 64122, 64443, "berserk", "bosskill"}
+mod:Toggle("phase", "MESSAGE", "BAR")
+mod:Toggle(64412, "MESSAGE", "BAR")
+mod:Toggle(62301, "MESSAGE", "BAR")
+mod:Toggle(64122, "MESSAGE")
+mod:Toggle(64443, "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -57,11 +63,10 @@ end
 ------------------------------
 
 function mod:UNIT_HEALTH(event, msg)
-	if not self.db.profile.phase then return end
 	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp <= 20 and not p2 then
-			self:IfMessage(L["phase2_warning"], "Positive")
+			self:IfMessage("phase", L["phase2_warning"], "Positive")
 			p2 = true
 		elseif hp > 20 and p2 then
 			p2 = nil
@@ -70,51 +75,45 @@ function mod:UNIT_HEALTH(event, msg)
 end
 
 function mod:Punch(_, spellId, _, _, spellName)
-	self:Bar(spellName, 15, spellId)
+	self:Bar(64412, spellName, 15, spellId)
 end
 
 function mod:PunchCount(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack >= 4 then
-		self:IfMessage(L["punch_message"]:format(stack, player), "Urgent", icon, "Alert")
+		self:IfMessage(64412, L["punch_message"]:format(stack, player), "Urgent", icon, "Alert")
 	end
 end
 
 function mod:Smash(_, _, _, _, spellName)
-	self:IfMessage(L["smash_message"], "Attention", 64597, "Info")
-	self:Bar(L["smash_message"], 5, 64597)
-	self:Bar(spellName, 25, 64597)
+	self:IfMessage(62301, L["smash_message"], "Attention", 64597, "Info")
+	self:Bar(62301, L["smash_message"], 5, 64597)
+	self:Bar(62301, spellName, 25, 64597)
 end
 
 function mod:BlackHole(_, spellId)
 	blackholes = blackholes + 1
-	self:IfMessage(L["blackhole_message"]:format(blackholes), "Positive", spellId)
+	self:IfMessage(64122, L["blackhole_message"]:format(blackholes), "Positive", spellId)
 end
 
 function mod:BigBang(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", 64443, "Alarm")
-	self:Bar(spellName, 8, 64443)
-	self:Bar(spellName, 90, 64443)
-	self:DelayedMessage(85, L["bigbang_soon"], "Attention")
+	self:IfMessage(64443, spellName, "Important", 64443, "Alarm")
+	self:Bar(64443, spellName, 8, 64443)
+	self:Bar(64443, spellName, 90, 64443)
+	self:DelayedMessage(64443, 85, L["bigbang_soon"], "Attention")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		blackholes = 0
 		phase = 1
-		self:Bar(L["phase_bar"]:format(phase), 8, "INV_Gizmo_01")
-		if self:GetOption(64443) then
-			local sn = GetSpellInfo(64443)
-			self:Bar(sn, 98, 64443)
-			self:DelayedMessage(93, L["bigbang_soon"], "Attention")
-		end
-		if self:GetOption(62301) then
-			local sn = GetSpellInfo(62301)
-			self:Bar(sn, 33, 64597)
-		end
-		if self.db.profile.berserk then
-			self:Berserk(360)
-		end
+		self:Bar("phase", L["phase_bar"]:format(phase), 8, "INV_Gizmo_01")
+		local sn = GetSpellInfo(64443)
+		self:Bar(64443, sn, 98, 64443)
+		self:DelayedMessage(64443, 93, L["bigbang_soon"], "Attention")
+		local sn = GetSpellInfo(62301)
+		self:Bar(62301, sn, 33, 64597)
+		self:Berserk(360)
 	end
 end
 

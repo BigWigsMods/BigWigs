@@ -4,7 +4,10 @@
 local mod = BigWigs:NewBoss("Gluth", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15932)
-mod.toggleOptions = {28371, 54426, "berserk", "bosskill"}
+mod:Toggle(28371, "MESSAGE")
+mod:Toggle(54426, "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -42,14 +45,10 @@ end
 
 function mod:OnEngage()
 	enrageTime = GetRaidDifficulty() == 1 and 480 or 420
-	if self:GetOption(54426) then
-		self:Message(L["startwarn"], "Attention")
-		self:Bar(L["decimatebartext"], 105, 54426)
-		self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
-	end
-	if self.db.profile.berserk then
-		self:Berserk(enrageTime)
-	end
+	self:Message(54426, L["startwarn"], "Attention")
+	self:Bar(54426, L["decimatebartext"], 105, 54426)
+	self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
+	self:Berserk(enrageTime)
 end
 
 ------------------------------
@@ -57,7 +56,7 @@ end
 ------------------------------
 
 function mod:Frenzy(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
+	self:IfMessage(28371, spellName, "Important", spellId)
 end
 
 local last = 0
@@ -65,9 +64,9 @@ function mod:Decimate(_, spellId, _, _, spellName)
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
-		self:IfMessage(spellName, "Attention", spellId, "Alert")
-		self:Bar(L["decimatebartext"], 105, spellId)
-		self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
+		self:IfMessage(54426, spellName, "Attention", spellId, "Alert")
+		self:Bar(54426, L["decimatebartext"], 105, spellId)
+		self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
 	end
 end
 

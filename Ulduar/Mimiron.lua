@@ -6,7 +6,17 @@ local mod = BigWigs:NewBoss("Mimiron", "Ulduar")
 if not mod then return end
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
 mod:RegisterEnableMob(33350, 33432, 33651, 33670)
-mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "proximity", "berserk", "bosskill"}
+mod:Toggle(62997, "MESSAGE", "BAR")
+mod:Toggle(63631, "MESSAGE", "BAR")
+mod:Toggle(63274, "MESSAGE", "BAR")
+mod:Toggle(64444, "MESSAGE", "BAR")
+mod:Toggle(63811, "MESSAGE")
+mod:Toggle(64623, "MESSAGE", "BAR")
+mod:Toggle(64570, "MESSAGE", "BAR")
+mod:Toggle("phase", "MESSAGE", "BAR")
+mod:Toggle("proximity")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 mod.optionHeaders = {
 	[62997] = "normal",
 	[64623] = "hard",
@@ -93,38 +103,36 @@ end
 ------------------------------
 
 function mod:Bomb(_, spellId, _, _, spellName)
-	self:IfMessage(L["bomb_message"], "Important", 63811, "Alert")
+	self:IfMessage(63811, L["bomb_message"], "Important", 63811, "Alert")
 end
 
 function mod:Suppressant(_, spellId, _, _, spellName)
-	self:IfMessage(L["suppressant_warning"], "Important", spellId)
-	self:Bar(spellName, 3, spellId)
+	self:IfMessage(64570, L["suppressant_warning"], "Important", spellId)
+	self:Bar(64570, spellName, 3, spellId)
 end
 
 function mod:FBomb(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 2, spellId)
-	self:Bar(L["fbomb_bar"], 30, spellId)
-	self:ScheduleEvent("fbombWarning", "SendMessage", 28, "BigWigs_Message", L["fbomb_soon"], "Attention")
+	self:IfMessage(64623, spellName, "Important", spellId)
+	self:Bar(64623, spellName, 2, spellId)
+	self:Bar(64623, L["fbomb_bar"], 30, spellId)
+	self:ScheduleEvent("fbombWarning", "Message", 28, 64623, L["fbomb_soon"], "Attention")
 end
 
 function mod:Plasma(_, spellId, _, _, spellName)
-	self:IfMessage(L["plasma_warning"], "Important", spellId)
-	self:Bar(L["plasma_warning"], 3, spellId)
-	self:Bar(L["plasma_bar"], 30, spellId)
-	self:ScheduleEvent("plasmaWarning", "SendMessage", 27, "BigWigs_Message", L["plasma_soon"], "Attention")
+	self:IfMessage(62997, L["plasma_warning"], "Important", spellId)
+	self:Bar(62997, L["plasma_warning"], 3, spellId)
+	self:Bar(62997, L["plasma_bar"], 30, spellId)
+	self:ScheduleEvent("plasmaWarning", "Message", 27, 62997, L["plasma_soon"], "Attention")
 end
 
 function mod:Shock(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 3.5, spellId)
-	self:Bar(L["shock_next"], 34, spellId)
+	self:IfMessage(63631, spellName, "Important", spellId)
+	self:Bar(63631, spellName, 3.5, spellId)
+	self:Bar(63631, L["shock_next"], 34, spellId)
 end
 
 function mod:Spinning(_, spellId)
-	if self:GetOption(63274) then
-		self:IfMessage(L["laser_soon"], "Personal", spellId, "Long")
-	end
+	self:IfMessage(63274, L["laser_soon"], "Personal", spellId, "Long")
 end
 
 do
@@ -137,71 +145,54 @@ do
 end
 
 function mod:Magnetic(_, spellId, _, _, spellName)
-	self:IfMessage(L["magnetic_message"], "Important", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(64444, L["magnetic_message"], "Important", spellId)
+	self:Bar(64444, spellName, 15, spellId)
 end
 
 local function start()
 	ishardmode = nil
 	phase = 1
-	if mod.db.profile.phase then
-		mod:IfMessage(L["engage_warning"], "Attention")
-		mod:Bar(L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
-	end
-	if mod:GetOption(63631) then
-		mod:Bar(L["shock_next"], 30, 63631)
-	end
-	if mod:GetOption(62997) then
-		mod:Bar(L["plasma_bar"], 20, 62997)
-		mod:DelayedMessage(17, L["plasma_soon"], "Attention")
-	end
+	mod:IfMessage("phase", L["engage_warning"], "Attention")
+	mod:Bar("phase", L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
+
+	mod:Bar(63631, L["shock_next"], 30, 63631)
+	mod:Bar(62997, L["plasma_bar"], 20, 62997)
+	mod:DelayedMessage(62997, 17, L["plasma_soon"], "Attention")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
-		if self.db.profile.berserk then
-			self:Berserk(600, true)
-		end
+		self:Berserk(600, true)
 		self:OpenProximity(5)
 	elseif msg:find(L["engage_trigger"]) then
 		start()
-		if self.db.profile.berserk then
-			self:Berserk(900, true)
-		end
+		self:Berserk(900, true)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:CancelScheduledEvent("plasmaWarning")
 		self:SendMessage("BigWigs_StopBar", self, L["plasma_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["shock_next"])
-		if self.db.profile.phase then
-			self:IfMessage(L["phase2_warning"], "Attention")
-			self:Bar(L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
-		end
-		if self:GetOption(64623) and ishardmode then
-			self:Bar(L["fbomb_bar"], 45, 64623)
+		self:IfMessage("phase", L["phase2_warning"], "Attention")
+		self:Bar("phase", L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
+		if ishardmode then
+			self:Bar(64623, L["fbomb_bar"], 45, 64623)
 		end
 		self:CloseProximity()
 	elseif msg:find(L["phase3_trigger"]) then
 		self:CancelScheduledEvent("fbombWarning")
 		phase = 3
-		if self.db.profile.phase then
-			self:IfMessage(L["phase3_warning"], "Attention")
-			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
-		end
+		self:IfMessage("phase", L["phase3_warning"], "Attention")
+		self:Bar("phase", L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
-		if self.db.profile.phase then
-			self:IfMessage(L["phase4_warning"], "Attention")
-			self:Bar(L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
+		self:IfMessage("phase", L["phase4_warning"], "Attention")
+		self:Bar("phase", L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
+		if ishardmode then
+			self:Bar(64623, L["fbomb_bar"], 30, 64623)
 		end
-		if self:GetOption(64623) and ishardmode then
-			self:Bar(L["fbomb_bar"], 30, 64623)
-		end
-		if self:GetOption(63631) then
-			self:Bar(L["shock_next"], 48, 63631)
-		end
+		self:Bar(63631, L["shock_next"], 48, 63631)
 	elseif msg:find(L["end_trigger"]) then
 		self:Win()
 	end
@@ -233,11 +224,11 @@ do
 end
 
 function mod:OnSync(sync, rest, nick)
-	if sync == "MimiLoot" and rest and self:GetOption(64444) then
-		self:TargetMessage(GetSpellInfo(64444), rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
-	elseif sync == "MimiBarrage" and self:GetOption(63274) then
-		self:IfMessage(L["laser_bar"], "Important", 63274)
-		self:Bar(L["laser_bar"], 60, 63274)
+	if sync == "MimiLoot" and rest then
+		self:TargetMessage(64444, GetSpellInfo(64444), rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
+	elseif sync == "MimiBarrage" then
+		self:IfMessage(63274, L["laser_bar"], "Important", 63274)
+		self:Bar(63274, L["laser_bar"], 60, 63274)
 	end
 end
 

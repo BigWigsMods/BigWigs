@@ -4,7 +4,25 @@
 
 local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, "charge", 66758, 66759, "berserk", "bosskill"}
+mod:Toggle("snobold", "MESSAGE")
+mod:Toggle(67477, "MESSAGE")
+mod:Toggle(67472, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(67641, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle("spew", "MESSAGE")
+mod:Toggle(67618, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(66869, "MESSAGE")
+mod:Toggle(68335, "MESSAGE")
+mod:Toggle("proximity")
+mod:Toggle(67654, "MESSAGE", "BAR")
+mod:Toggle("charge", "MESSAGE", "BAR", "ICON", "FLASHNSHAKE")
+mod:Toggle(66758, "MESSAGE", "BAR")
+mod:Toggle(66759, "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
+--[[
+mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, 
+"charge", 66758, 66759, "berserk", "bosskill"}
+--]]
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	[67641] = "Jormungars",
@@ -152,7 +170,7 @@ function mod:UNIT_AURA(event, unit)
 	if snobolledWarned[n] and not name then
 		snobolledWarned[n] = nil
 	elseif name and not snobolledWarned[n] then
-		self:TargetMessage(L["snobold_message"], n, "Attention", icon)
+		self:TargetMessage("snobold", L["snobold_message"], n, "Attention", icon)
 		snobolledWarned[n] = true
 	end
 end
@@ -160,7 +178,7 @@ end
 function mod:Impale(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
-		self:TargetMessage(L["impale_message"], player, "Urgent", icon, "Info", stack)
+		self:TargetMessage(67477, L["impale_message"], player, "Urgent", icon, "Info", stack)
 	end
 end
 
@@ -170,7 +188,7 @@ do
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:LocalMessage(L["firebomb_message"], "Personal", spellId, last and nil or "Alarm")
+				self:LocalMessage(67472, L["firebomb_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
 			end
 		end
@@ -182,26 +200,22 @@ end
 --
 
 function mod:SlimeCast(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Attention", spellId)
+	self:IfMessage(67641, spellName, "Attention", spellId)
 end
 
 function mod:Molten(_, spellId, _, _, spellName)
-	if self.db.profile.spew then
-		self:IfMessage(spellName, "Attention", spellId)
-	end
+	self:IfMessage("spew", spellName, "Attention", spellId)
 end
 
 function mod:Acidic(_, spellId, _, _, spellName)
-	if self.db.profile.spew then
-		self:IfMessage(spellName, "Attention", spellId)
-	end
+	self:IfMessage("spew", spellName, "Attention", spellId)
 end
 
 do
 	local dontWarn = nil
 	local function toxinWarn(spellId)
 		if not dontWarn then
-			mod:TargetMessage(L["toxin_spell"], toxin, "Urgent", spellId)
+			mod:TargetMessage(67618, L["toxin_spell"], toxin, "Urgent", spellId)
 		else
 			dontWarn = nil
 			wipe(toxin)
@@ -212,7 +226,7 @@ do
 		self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId)
 		if player == pName then
 			dontWarn = true
-			self:TargetMessage(L["toxin_spell"], player, "Personal", spellId, "Info")
+			self:TargetMessage(67618, L["toxin_spell"], player, "Personal", spellId, "Info")
 		end
 	end
 end
@@ -221,7 +235,7 @@ do
 	local dontWarn = nil
 	local function burnWarn(spellId)
 		if not dontWarn then
-			mod:TargetMessage(L["burn_spell"], burn, "Urgent", spellId)
+			mod:TargetMessage(66869, L["burn_spell"], burn, "Urgent", spellId)
 		else
 			dontWarn = nil
 			wipe(burn)
@@ -232,13 +246,13 @@ do
 		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
 		if player == pName then
 			dontWarn = true
-			self:TargetMessage(L["burn_spell"], player, "Important", spellId, "Info")
+			self:TargetMessage(66869, L["burn_spell"], player, "Important", spellId, "Info")
 		end
 	end
 end
 
 function mod:Enraged(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId, "Long")
+	self:IfMessage(68335, spellName, "Important", spellId, "Long")
 end
 
 do
@@ -247,7 +261,7 @@ do
 		if player == pName then
 			local t = GetTime()
 			if not last or (t > last + 4) then
-				self:LocalMessage(L["slime_message"], "Personal", spellId, last and nil or "Alarm")
+				self:LocalMessage(67641, L["slime_message"], "Personal", spellId, last and nil or "Alarm")
 				last = t
 			end
 		end
@@ -259,26 +273,26 @@ end
 --
 
 function mod:Rage(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(66759, spellName, "Important", spellId)
+	self:Bar(66759, spellName, 15, spellId)
 end
 
 function mod:Daze(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Positive", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(66758, spellName, "Positive", spellId)
+	self:Bar(66758, spellName, 15, spellId)
 end
 
 function mod:Butt(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
-	self:Bar(L["butt_bar"], 12, spellId)
+	self:TargetMessage(67654,spellName, player, "Attention", spellId)
+	self:Bar(67654,L["butt_bar"], 12, spellId)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if unit == icehowl and self.db.profile.charge and message:find(L["charge_trigger"]) then
+	if unit == icehowl and message:find(L["charge_trigger"]) then
 		local spellName = GetSpellInfo(52311)
-		self:TargetMessage(spellName, player, "Personal", 52311, "Alarm")
-		self:Bar(spellName, 7.5, 52311)
-		self:PrimaryIcon(player)
+		self:TargetMessage("charge", spellName, player, "Personal", 52311, "Alarm")
+		self:Bar("charge", spellName, 7.5, 52311)
+		self:PrimaryIcon("charge", player)
 	end
 end
 

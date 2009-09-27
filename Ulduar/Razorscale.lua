@@ -10,7 +10,12 @@ if not mod then return end
 	33185 = Razorscale
 --]]
 mod:RegisterEnableMob(33185, 33210)
-mod.toggleOptions = {"phase", 64021, 64704, "harpoon", "berserk", "bosskill"}
+mod:Toggle("phase", "MESSAGE", "BAR")
+mod:Toggle(64021, "MESSAGE", "BAR")
+mod:Toggle(64704, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle("harpoon", "MESSAGE", "BAR")
+mod:Toggle("berserk")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -80,16 +85,15 @@ end
 
 function mod:Flame(player)
 	if player == pName then
-		self:LocalMessage(L["flame_message"], "Personal", 64733, "Alarm")
+		self:LocalMessage(64704, L["flame_message"], "Personal", 64733, "Alarm")
 	end
 end
 
 function mod:UNIT_HEALTH(event, msg)
-	if not self.db.profile.phase then return end
 	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 55 and not p2 then
-			self:IfMessage(L["phase2_warning"], "Positive")
+			self:IfMessage("phase", L["phase2_warning"], "Positive")
 			p2 = true
 		elseif hp > 70 and p2 then
 			p2 = nil
@@ -98,48 +102,40 @@ function mod:UNIT_HEALTH(event, msg)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["phase2_trigger"] and self.db.profile.phase then
+	if msg == L["phase2_trigger"] then
 		phase = 2
 		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-		self:IfMessage(L["phase2_message"], "Attention")
-	elseif msg == L["breath_trigger"] and self:GetOption(64021) then
-		self:IfMessage(L["breath_message"], "Attention", 64021)
+		self:IfMessage("phase", L["phase2_message"], "Attention")
+	elseif msg == L["breath_trigger"] then
+		self:IfMessage(64021, L["breath_message"], "Attention", 64021)
 		if phase == 2 then
-			self:Bar(L["breath_bar"], 21, 64021)
+			self:Bar(64021, L["breath_bar"], 21, 64021)
 		end
-	elseif msg == L["harpoon_trigger"] and self.db.profile.harpoon then
+	elseif msg == L["harpoon_trigger"] then
 		count = count + 1
-		self:IfMessage(L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
+		self:IfMessage("harpoon", L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
 		if count < totalHarpoons then
-			self:Bar(L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
+			self:Bar("harpoon", L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
 		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["ground_trigger"] then
-		if self.db.profile.phase then
-			self:IfMessage(L["ground_message"], "Attention", nil, "Long")
-			self:Bar(L["stun_bar"], 38, 20170) --20170, looks like a stun :p
-		end
+		self:IfMessage("phase", L["ground_message"], "Attention", nil, "Long")
+		self:Bar("phase", L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 		count = 0
 	elseif msg == L["air_trigger"] then
 		p2 = nil
 		count = 0
-		if self.db.profile.harpoon then
-			self:Bar(L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
-		end
+		self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
 		if not started then
-			if self.db.profile.berserk then
-				self:Berserk(900)
-			end
+			self:Berserk(900)
 			started = true
 			phase = 1
 		else
 			self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-			if self.db.profile.phase then
-				self:IfMessage(L["air_message"], "Attention", nil, "Info")
-			end
+			self:IfMessage("phase", L["air_message"], "Attention", nil, "Info")
 		end
 	-- for 10man, has a different yell, and different timing <.<
 	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
@@ -147,9 +143,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	elseif msg == L["air_trigger2"] then
 		p2 = nil
 		count = 0
-		if self.db.profile.harpoon then
-			self:Bar(L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
-		end
+		self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
 		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
 		--self:IfMessage(L["air_message"], "Attention", nil, "Info")
 	end

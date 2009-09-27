@@ -3,6 +3,8 @@ BigWigsOptions = BigWigs:NewModule("Options", "AceEvent-3.0")
 local options = BigWigsOptions
 options:SetEnabledState(true)
 
+local C = BigWigs.C
+
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
 local icon = LibStub("LibDBIcon-1.0", true)
@@ -312,78 +314,116 @@ do
 	end
 end
 
+local function getOptionGroup(name, desc, icon, order, bf)
+	local i= 1
+	local g = {
+		type = "group",
+		inline = true,
+		name = "",
+		order = order,
+		width = "full",
+	}
+	g.args = {
+		header = {
+			type = "description",
+			name = "|cffffdd00"..name.."|r", -- emulate the header yellow
+			fontSize = "medium",
+			order = i,
+			width = "full",
+		},
+		description = {
+			type = "description",
+			name = desc,
+			order = i+1,
+			width = "full"
+		}
+	}
+	if icon then
+		g.args.description.image = icon
+		g.args.description.imageWidth = 16
+		g.args.description.imageHeight = 16
+	end
+	i = i + 2
+	for k, b in pairs(C) do
+		if k ~= "BOSSKILL" and k ~= "BERSERK" then
+			if bit.band(bf, b) == b then
+				g.args[k] = {
+					type = "toggle",
+					name = L[k],
+					order = i,
+					arg = b
+				}
+				i = i + 1
+			end
+		end
+	end
+	return g
+end
+
 local function fillBossOptions(module)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
 	local config = {
 		type = "group",
 		name = module.displayName,
 		desc = L["Options for %s."]:format(module.displayName),
-		get = function(info) return module.db.profile[info[#info]] end,
-		set = function(info, v) module.db.profile[info[#info]] = v end,
+		get = function(info)
+			return bit.band(module.db.profile[info[#info-1]], info.arg) == info.arg
+		end,
+		set = function(info, v)
+				if v then module.db.profile[info[#info-1]] = module.db.profile[info[#info-1]] + info.arg
+				else module.db.profile[info[#info-1]] = module.db.profile[info[#info-1]] - info.arg end
+			end,
 		args = {},
 	}
 	local order = 1
-	for i, v in next, module.toggleOptions do
-		local t = type(v)
-		if module.optionHeaders and module.optionHeaders[v] then
-			local n
-			if type(module.optionHeaders[v]) == "number" then
-				n = GetSpellInfo(module.optionHeaders[v])
-			else
-				n = module.optionHeaders[v]
-			end
-			config.args[v .. "_header"] = {
-				type = "header",
-				name = n,
-				order = order,
-				width = "full",
-			}
-			order = order + 1
-		end
-		if t == "number" and v < 0 then
-			config.args["separator" .. i] = {
-				type = "description",
-				order = order,
-				name = " ",
-				width = "full",
-			}
-			order = order + 1
-		elseif t == "number" and v > 0 then
-			local spellName, _, icon = GetSpellInfo(v)
-			if not spellName then error(("Invalid option %d in module %s."):format(v, module.displayName)) end
-			local desc = getSpellDescription(v)
-			config.args[spellName] = {
-				type = "toggle",
-				name = spellName,
-				desc = desc,
-				order = order,
-				width = "full",
-				--[[image = icon,
-				imageWidth = 16,
-				imageHeight = 16,]]
-				descStyle = "inline",
-			}
-			order = order + 1
-		elseif t == "string" then
-			local ML = module.locale
-			local optName, optDesc, optOrder
-			if customBossOptions[v] then
-				optName = customBossOptions[v][1]
-				optDesc = customBossOptions[v][2]
-			elseif ML then
-				optName = ML[v]
-				local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-				optDesc = ML[descKey] or v
-			end
-			if optName then
-				config.args[v] = {
-					type = "toggle",
+	if type(module.toggleOrder) == "table" then -- prevent errors backwards
+		for i, v in next, module.toggleOrder do
+			local bf = module.toggleOptions[v]
+			local t = type(v)
+			if module.optionHeaders and module.optionHeaders[v] then
+				local n
+				if type(module.optionHeaders[v]) == "number" then
+					n = GetSpellInfo(module.optionHeaders[v])
+				else
+					n = module.optionHeaders[v]
+				end
+				config.args[v .. "_header"] = {
+					type = "header",
+					name = n,
 					order = order,
-					name = optName,
-					desc = optDesc,
 					width = "full",
 				}
 				order = order + 1
+			end
+			if t == "number" and v < 0 then
+				config.args["separator" .. order] = {
+					type = "description",
+					order = order,
+					name = " ",
+					width = "full",
+				}
+				order = order + 1
+			elseif t == "number" and v > 20 then -- 20 options for backwards assdrek
+				local spellName, _, icon = GetSpellInfo(v)
+				if not spellName then error(("Invalid option %d in module %s."):format(v, module.displayName)) end
+				local desc = getSpellDescription(v)
+				config.args[spellName] = getOptionGroup(spellName, desc, icon, order, bf)
+				order = order + 1
+			elseif t == "string" then
+				local ML = module.locale
+				local optName, optDesc, optOrder
+				if customBossOptions[v] then
+					optName = customBossOptions[v][1]
+					optDesc = customBossOptions[v][2]
+				elseif ML then
+					optName = ML[v]
+					local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
+					optDesc = ML[descKey] or v
+				end
+				if optName then
+					config.args[v] = getOptionGroup(optName, optDesc, nil, order, bf)
+					order = order + 1
+				end
 			end
 		end
 	end

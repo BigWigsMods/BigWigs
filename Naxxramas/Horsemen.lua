@@ -5,7 +5,11 @@ local mod = BigWigs:NewBoss("The Four Horsemen", "Naxxramas")
 if not mod then return end
 -- 16063 - zeliek, 16064 - thane, 16065 - blaumeux, 30549 - baron
 mod:RegisterEnableMob(16063, 16064, 16065, 30549)
-mod.toggleOptions = {"mark", -1, 28884, 28863, 28883, "bosskill"}
+mod:Toggle("mark", "MESSAGE", "BAR")
+mod:Toggle(28884, "MESSAGE", "BAR")
+mod:Toggle(28863, "MESSAGE", "BAR")
+mod:Toggle(28883, "MESSAGE", "BAR")
+mod:Toggle("bosskill")
 
 ------------------------------
 --      Are you local?      --
@@ -51,11 +55,9 @@ end
 function mod:OnEngage()
 	marks = 1
 	deaths = 0
-	if self.db.profile.mark then
-		self:Message(L["startwarn"], "Attention")
-		self:Bar(L["markbar"]:format(marks), 17, 28835)
-		self:DelayedMessage(12, L["markwarn2"]:format(marks), "Urgent")
-	end
+	self:Message("mark", L["startwarn"], "Attention")
+	self:Bar("mark", L["markbar"]:format(marks), 17, 28835)
+	self:DelayedMessage("mark", 12, L["markwarn2"]:format(marks), "Urgent")
 end
 
 ------------------------------
@@ -65,25 +67,25 @@ end
 function mod:Deaths()
 	deaths = deaths + 1
 	if deaths < 4 then
-		self:IfMessage(L["dies"]:format(deaths), "Positive")
+		self:IfMessage("bosskill", L["dies"]:format(deaths), "Positive")
 	else
 		self:Win()
 	end
 end
 
 function mod:VoidZone(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 12, spellId)
+	self:IfMessage(28863, spellName, "Important", spellId)
+	self:Bar(28863, spellName, 12, spellId)
 end
 
 function mod:Meteor(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 12, spellId)
+	self:IfMessage(28884, spellName, "Important", spellId)
+	self:Bar(28884, spellName, 12, spellId)
 end
 
 function mod:Wrath(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Important", spellId)
-	self:Bar(spellName, 12, spellId)
+	self:IfMessage(28883, spellName, "Important", spellId)
+	self:Bar(28883, spellName, 12, spellId)
 end
 
 local last = 0
@@ -91,12 +93,10 @@ function mod:Mark()
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
-		if self.db.profile.mark then
-			self:IfMessage(L["markwarn1"]:format(marks), "Important", 28835)
-			marks = marks + 1
-			self:Bar(L["markbar"]:format(marks), 12, 28835)
-			self:DelayedMessage(7, L["markwarn2"]:format(marks), "Urgent")
-		end
+		self:IfMessage("mark", L["markwarn1"]:format(marks), "Important", 28835)
+		marks = marks + 1
+		self:Bar("mark", L["markbar"]:format(marks), 12, 28835)
+		self:DelayedMessage("mark", 7, L["markwarn2"]:format(marks), "Urgent")
 	end
 end
 
