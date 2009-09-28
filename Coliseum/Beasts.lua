@@ -17,6 +17,7 @@ mod:Toggle(67654, "MESSAGE", "BAR")
 mod:Toggle("charge", "MESSAGE", "BAR", "ICON", "FLASHNSHAKE")
 mod:Toggle(66758, "MESSAGE", "BAR")
 mod:Toggle(66759, "MESSAGE", "BAR")
+mod:Toggle("bosses", "MESSAGE", "BAR")
 mod:Toggle("berserk")
 mod:Toggle("bosskill")
 --[[
@@ -27,7 +28,7 @@ mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	[67641] = "Jormungars",
 	[67654] = "Icehowl",
-	berserk = "general",
+	bosses = "general",
 }
 
 --------------------------------------------------------------------------------
@@ -75,6 +76,9 @@ if L then
 	L.charge = "Furious Charge"
 	L.charge_desc = "Warn about Furious Charge on players."
 	L.charge_trigger = "glares at"
+	
+	L.bosses = "Bosses"
+	L.bosses_desc = "Warn about bosses incoming"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Northrend Beasts")
 mod.locale = L
@@ -132,9 +136,9 @@ end
 function mod:OnEngage()
 	self:CloseProximity()
 	if difficulty > 2 then
-		self:Bar(L["boss_incoming"]:format(gormok), 20, 67477)
-		self:Bar(L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
-	elseif self.db.profile.berserk then
+		self:Bar("bosses", L["boss_incoming"]:format(gormok), 20, 67477)
+		self:Bar("bosses", L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
+	else
 		self:Berserk(900)
 	end
 	wipe(snobolledWarned)
@@ -142,19 +146,19 @@ end
 
 function mod:Jormungars()
 	local m = L["boss_incoming"]:format(jormungars)
-	self:IfMessage(m, "Positive")
+	self:IfMessage("bosses", m, "Positive")
 	self:Bar(m, 15, "INV_Misc_MonsterScales_18")
 	if difficulty > 2 then
-		self:Bar(L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
+		self:Bar("bosses", L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
 	end
 	self:OpenProximity(10)
 end
 
 function mod:Icehowl()
 	local m = L["boss_incoming"]:format(icehowl)
-	self:IfMessage(m, "Positive")
-	self:Bar(m, 10, "INV_Misc_MonsterHorn_07")
-	if difficulty > 2 and self.db.profile.berserk then
+	self:IfMessage("bosses", m, "Positive")
+	self:Bar("bosses", m, 10, "INV_Misc_MonsterHorn_07")
+	if difficulty > 2 then
 		self:Berserk(220, true, icehowl)
 	end
 	self:CloseProximity()
