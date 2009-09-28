@@ -298,9 +298,9 @@ do
 	})
 	-- XXX Proposed API, subject to change/remove.
 	-- Outputs a normal message including a raid warning if possible.
-	function boss:IfMessage(key, text, color, icon, sound, ...)
-		if locale and not checkFlag(self, key, C.MESSAGE) then return end
-		--local text = not locale and key or locale[keys[key]]:format(...)
+	function boss:IfMessage(dbkey, key, text, color, icon, sound, ...)
+		if not checkFlag(self, dbkey, C.MESSAGE) then return end
+		local text = not locale and key or locale[keys[key]]:format(...)
 		self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
 
