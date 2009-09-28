@@ -70,7 +70,7 @@ function mod:OnBossEnable()
 end
 
 function mod:FirstEngage()
-	self:Bar(L["engage"], 11, "INV_Gizmo_01")
+	self:Bar("adds", L["engage"], 11, "INV_Gizmo_01")
 end
 
 function mod:OnEngage()
