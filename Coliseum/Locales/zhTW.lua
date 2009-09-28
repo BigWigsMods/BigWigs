@@ -69,7 +69,7 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhTW")
 if L then
 	L.enable_trigger = "卑微的地精!你的傲慢將使你喪命!"
 
-	L.engage = "進入戰斗"
+	L.engage = "進入戰鬥"
 	L.engage_trigger = "你面對的是賈拉克瑟斯，燃燒軍團的埃雷達爾領主!"
 	L.engage_trigger1 = "放逐到虛空吧!"
 
