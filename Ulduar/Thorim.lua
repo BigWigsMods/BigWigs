@@ -167,7 +167,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg == L["phase2_trigger"] then
 		self:IfMessage("phase", L["phase2_message"], "Attention")
-		self:Bar(CL["berserk"], 375, 20484)
+		self:Bar("phase", CL["berserk"], 375, 20484) -- self:Berserk?
 		self:Bar("hardmode", L["hardmode"], 173, "Ability_Warrior_Innerrage")
 		hardModeMessageID = self:DelayedMessage("hardmode", 173, L["hardmode_warning"], "Attention")
 	elseif msg == L["phase3_trigger"] then
