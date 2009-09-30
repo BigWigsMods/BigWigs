@@ -1,6 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true)
 
 -- Core.lua
+L["%s enabled"] = true	-- "<boss> enabled"
 L["%s has been defeated"] = true     -- "<boss> has been defeated"
 L["%s have been defeated"] = true    -- "<bosses> have been defeated"
 L["Bosses"] = true

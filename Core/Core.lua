@@ -26,7 +26,7 @@ local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
 		-- XXX DEBUG
-		module:SendMessage("BigWigs_Message", string.format("%s enabled", module.displayName), "Core")
+		module:SendMessage("BigWigs_Message", string.format(L["%s enabled"], module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end
