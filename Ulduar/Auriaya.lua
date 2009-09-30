@@ -81,9 +81,7 @@ end
 
 function mod:DefenderKill(_, spellId)
 	count = count - 1
-	if self.db.profile.defender then
-		self:Bar(L["defender_message"]:format(count), 34, spellId)
-	end
+	self:Bar("defender", L["defender_message"]:format(count), 34, spellId)
 end
 
 function mod:Swarm(player, spellId)
