@@ -147,7 +147,7 @@ end
 function mod:Jormungars()
 	local m = L["boss_incoming"]:format(jormungars)
 	self:IfMessage("bosses", m, "Positive")
-	self:Bar(m, 15, "INV_Misc_MonsterScales_18")
+	self:Bar("bosses", m, 15, "INV_Misc_MonsterScales_18")
 	if difficulty > 2 then
 		self:Bar("bosses", L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
 	end
