@@ -92,7 +92,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "koKR")
 if L then
-	L.bomb_message = "Injection"
+	L.bomb_message = "돌연변이 유발"
 	L.bomb_message_other = "돌연변이 유발: %s!"
 
 	L.icon = "전술 표시"

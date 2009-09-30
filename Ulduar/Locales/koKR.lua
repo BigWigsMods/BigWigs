@@ -20,7 +20,7 @@ if L then
 	L.fear_message = "공포 시전!"
 	L.fear_bar = "~공포 대기시간"
 
-	L.swarm_message = "Swarm"
+	L.swarm_message = "수호자의 무리"
 	L.swarm_bar = "~무리 대기시간"
 
 	L.defender = "수호 야수"
