@@ -88,7 +88,7 @@ end
 
 function mod:Swarm(player, spellId)
 	self:TargetMessage(64396, L["swarm_message"], player, "Attention", spellId)
-	self:Bar(64396, L["swarm_bar"], 37, spell)
+	self:Bar(64396, L["swarm_bar"], 37, spellId)
 end
 
 function mod:Fear(_, spellId)
