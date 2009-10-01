@@ -7,6 +7,7 @@ mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(35013)
 mod:Toggle(66725, "MESSAGE", "BAR")
 mod:Toggle(67332, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle(66665, "MESSAGE")
 mod:Toggle("berserk")
 mod:Toggle("bosskill")
 
@@ -32,8 +33,9 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "Fists", 66725, 66808)
+	self:Log("SPELL_CAST_START", "Fists", 66725, 66808, 68160, 68161)
 	self:Log("SPELL_AURA_APPLIED", "Cinder", 67332, 66684)
+	self:Log("SPELL_CAST_START", "Breath", 66665, 67328)
 	self:Death("Win", 35013)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -54,3 +56,6 @@ function mod:Cinder(player, spellId)
 	self:LocalMessage(67332, L["cinder_message"], "Personal", spellId, "Alarm")
 end
 
+function mod:Breath(_, spellId, _, _, spellName)
+	self:IfMessage(66665, spellName, "Attention", spellId)
+end
