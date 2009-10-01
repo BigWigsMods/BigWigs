@@ -168,7 +168,7 @@ function options:OnInitialize()
 end
 
 function options:OnEnable()
-	SetZoneMenus(BigWigsLoader:GetZoneMenus())
+	--SetZoneMenus(BigWigsLoader:GetZoneMenus())
 
 	for name, module in BigWigs:IterateBossModules() do
 		self:BigWigs_BossModuleRegistered("BigWigs_BossModuleRegistered", name, module)
@@ -195,7 +195,7 @@ function options:Open()
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
 			local menu = module.otherMenu or module.zoneName
-			if zoneframes[menu] then 
+			if zoneframes[menu] then
 				acd:SelectGroup("Big Wigs: "..menu, module.name)
 				InterfaceOptionsFrame_OpenToCategory(zoneframes[menu])
 				return
@@ -297,6 +297,7 @@ end
 
 local getSpellDescription
 do
+	local cache = {}
 	local scanner = CreateFrame("GameTooltip")
 	scanner:SetOwner(WorldFrame, "ANCHOR_NONE")
 	local lcache, rcache = {}, {}
@@ -306,151 +307,92 @@ do
 		scanner:AddFontStrings(lcache[i], rcache[i])
 	end
 	function getSpellDescription(spellId)
+		if cache[spellId] then return cache[spellId] end
 		scanner:ClearLines()
 		scanner:SetHyperlink("spell:"..spellId)
 		for i = scanner:NumLines(), 1, -1  do
 			local desc = lcache[i] and lcache[i]:GetText()
-			if desc then return desc end
+			if desc then
+				cache[spellId] = desc
+				return desc
+			end
 		end
 	end
 end
 
-local function getOptionGroup(name, desc, icon, order, bf)
-	local i= 1
-	local g = {
-		type = "group",
-		inline = true,
-		name = "",
-		order = order,
-		width = "full",
-	}
-	g.args = {
-		header = {
-			type = "description",
-			name = "|cffffdd00"..name.."|r", -- emulate the header yellow
-			fontSize = "medium",
-			order = i,
-			width = "full",
-		},
-		description = {
-			type = "description",
-			name = desc,
-			order = i+1,
-			width = "full"
-		}
-	}
-	if icon then
-		g.args.description.image = icon
-		g.args.description.imageWidth = 16
-		g.args.description.imageHeight = 16
-	end
-	i = i + 2
-	for k, b in pairs(C) do
-		if bit.band(bf, b) == b then
-			g.args[k] = {
-				type = "toggle",
-				name = L[k],
-				order = i,
-				arg = b
-			}
-			i = i + 1
-		end
-	end
-	return g
-end
+local showBossOptions = nil
 
-local function fillBossOptions(module)
+local function getOptionNameAndDesc(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
-	local config = {
-		type = "group",
-		name = module.displayName,
-		desc = L["Options for %s."]:format(module.displayName),
-		get = function(info)
-			local key = info[#info-1]
-			local setting = module.db.profile[key]
-			if type(setting) ~= "number" then
-				print(("The boss encounter script for %q tried to access the option %q as a bit flag setting, but in the database it's represented as something else (%s). Please report this in #bigwigs."):format(module.displayName, key, type(module.db.profile[key])))
-				return setting
-			end
-			return bit.band(setting, info.arg) == info.arg
-		end,
-		set = function(info, v)
-				if v then module.db.profile[info[#info-1]] = module.db.profile[info[#info-1]] + info.arg
-				else module.db.profile[info[#info-1]] = module.db.profile[info[#info-1]] - info.arg end
-			end,
-		args = {},
-	}
-	local order = 1
-	if type(module.toggleOptions) == "table" then -- prevent errors backwards
-		for i, v in next, module.toggleOptions do
-			-- some code duplication from RegisterBossModule, but I don't want to store an extra table with calculated flags
-			local bf = 0
-			local t = type(v)
-			if t == "table" then
-				for i=2,#v,1 do
-					if C[v[i]] then
-						bf = bf + C[v[i]]
-					else
-						error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, v[1], v[i]))
-					end
-				end
-				v = v[1]
-				t = type(v)
-			end
-			-- mix in default toggles for keys we know this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}} while bosskill usually only has message
-			for n, b in pairs(BigWigs.C) do
-				if bit.band(BigWigs.defaultToggles[v], b) == b and bit.band(bf, b) ~= b then
-					bf = bf + b
-				end
-			end
-			if module.optionHeaders and module.optionHeaders[v] then
-				local n
-				if type(module.optionHeaders[v]) == "number" then
-					n = GetSpellInfo(module.optionHeaders[v])
-				else
-					n = module.optionHeaders[v]
-				end
-				config.args[v .. "_header"] = {
-					type = "header",
-					name = n,
-					order = order,
-					width = "full",
-				}
-				order = order + 1
-			end
-			if t == "number" and v < 0 then
-				config.args["separator" .. order] = {
-					type = "description",
-					order = order,
-					name = " ",
-					width = "full",
-				}
-				order = order + 1
-			elseif t == "number" and v > 1 then
-				local spellName, _, icon = GetSpellInfo(v)
-				if not spellName then error(("Invalid option %d in module %s."):format(v, module.displayName)) end
-				local desc = getSpellDescription(v)
-				config.args[spellName] = getOptionGroup(spellName, desc, icon, order, bf)
-				order = order + 1
-			elseif t == "string" then
-				local ML = module.locale
-				local optName, optDesc, optOrder
-				if customBossOptions[v] then
-					optName = customBossOptions[v][1]
-					optDesc = customBossOptions[v][2]
-				elseif ML then
-					optName = ML[v]
-					local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-					optDesc = ML[descKey] or v
-				end
-				if optName then
-					config.args[v] = getOptionGroup(optName, optDesc, nil, order, bf)
-					order = order + 1
-				end
-			end
+	local option = bossOption
+	local t = type(option)
+	if t == "table" then option = option[1]; t = type(option) end
+	if t == "string" then
+		if customBossOptions[option] then
+			return option, customBossOptions[option][1], customBossOptions[option][2]
+		else
+			return option, module.locale[option], module.locale[option .. "_desc"]
+		end
+	elseif t == "number" then
+		local spellName = GetSpellInfo(option)
+		if not spellName then error(("Invalid option %d in module %s."):format(option, module.displayName)) end
+		return option, spellName, getSpellDescription(option)
+	end
+end
+
+local function getAdvancedToggleOption(parent, module, bossOption)
+	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
+	local back = AceGUI:Create("Button")
+	back:SetText("Back")
+	back:SetWidth(350)
+	back:SetCallback("OnClick", function()
+		showBossOptions(parent, nil, parent:GetUserData("bossIndex"))
+	end)
+	local check = AceGUI:Create("CheckBox")
+	check:SetLabel(name)
+	check:SetValue(module.db.profile[dbKey])
+	check:SetWidth(350)
+	check:SetUserData("key", dbKey)
+	check:SetDescription(desc)
+
+	return back, check
+end
+
+local function getDefaultToggleOption(parent, module, bossOption)
+	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
+	local check = AceGUI:Create("CheckBox")
+	check:SetLabel(name)
+	check:SetValue(module.db.profile[dbKey])
+	check:SetWidth(300)
+	check:SetUserData("key", dbKey)
+	check:SetDescription(desc)
+	local customBossOptions = BigWigs:GetCustomBossOptions()
+	if customBossOptions[dbKey] then
+		return check
+	else
+		local button = AceGUI:Create("Button")
+		button:SetText("+")
+		button:SetWidth(40)
+		button:SetCallback("OnClick", function()
+			parent:ReleaseChildren()
+			parent:AddChildren(getAdvancedToggleOption(parent, module, bossOption))
+		end)
+		return check, button
+	end
+end
+
+function showBossOptions(widget, event, group)
+	widget:ReleaseChildren()
+	local modules = widget:GetUserData("list")
+	local module = BigWigs:GetBossModule(modules[group])
+	widget:SetUserData("bossIndex", group)
+	if not module.toggleOptions then
+		print("No toggle options for " .. module.displayName .. ".")
+	else
+		for i, option in next, module.toggleOptions do
+			widget:AddChildren(getDefaultToggleOption(widget, module, option))
 		end
 	end
-	return config
 end
 
 local zoneOptions = {}
@@ -463,42 +405,42 @@ end
 
 local zoneModules = {}
 
-local function populateZoneOptions(uiType, library, zone)
-	zone = strsub(zone, 11) -- strip "Big Wigs: "
-	zoneOptions[zone] = zoneOptions[zone] or {
-		type = "group",
-		name = zone,
-		childGroups = "select",
-		args = {},
-	}
-	-- add us a load button
-	zoneOptions[zone].args.load = {
-		name = L["Load"],
-		desc = L["Load all %s modules."]:format(zone),
-		order = 1,
-		type = "execute",
-		func = loadZone,
-		disabled = function() return not BigWigsLoader:HasZone(zone) end,
-		arg = zone,
-		width = "full"
-	}
-	for i, module in next, zoneModules[zone] do
-		if not zoneOptions[zone].args[module.name] then
-			zoneOptions[zone].args[module.name] = fillBossOptions(module)
-		end
-	end
-	wipe(zoneModules[zone])
-	return zoneOptions[zone]
+local function getLoadButton(zone)
+	if not BigWigsLoader:HasZone(zone) then return end
+	local button = AceGUI:Create("Button")
+	button:SetLabel(L["Load"])
+	button:SetCallback("OnClick", loadZone)
+	button:SetUserData("zone", zone)
+	button:SetFullWidth(true)
+	return button
 end
 
-function SetZoneMenus(zones)
-	for zone, v in pairs(zones) do
-		if not zoneModules[zone] then
-			ac:RegisterOptionsTable("Big Wigs: "..zone, populateZoneOptions)
-			zoneframes[zone] = acd:AddToBlizOptions("Big Wigs: "..zone, zone, "Big Wigs")
-			zoneModules[zone] = {}
-		end
+local function onZoneShow(frame)
+	local zone = frame.name
+	local dropdown = AceGUI:Create("DropdownGroup")
+	dropdown.frame:SetParent(frame)
+	dropdown.frame:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 4)
+	dropdown.frame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
+	dropdown:SetWidth(400) -- XXX wtf fullwidth doesn't work!
+	--dropdown:SetFullWidth(true)
+	--dropdown:SetFullHeight(true)
+	dropdown:SetCallback("OnGroupSelected", showBossOptions)
+	dropdown:SetLayout("Flow")
+	local list = {}
+	for i, module in next, zoneModules[zone] do
+		tinsert(list, module.displayName)
 	end
+	dropdown:SetUserData("list", list)
+	dropdown:SetGroupList(list)
+	dropdown:SetGroup(1)
+	dropdown.frame:Show()
+	frame.container = dropdown
+end
+
+local function onZoneHide(frame)
+	frame.container:ReleaseChildren()
+	frame.container:Release()
+	frame.container = nil
 end
 
 local registered = {}
@@ -509,8 +451,15 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	local zone = module.otherMenu or module.zoneName
 	if not zone then print(module.name) end
 	if not zoneModules[zone] then
-		ac:RegisterOptionsTable("Big Wigs: "..zone, populateZoneOptions)
-		zoneframes[zone] = acd:AddToBlizOptions("Big Wigs: "..zone, zone, "Big Wigs")
+		local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
+		frame.name = zone
+		frame.parent = "Big Wigs"
+		frame.addonname = "BigWigs"
+		frame:Hide()
+		frame:SetScript("OnShow", onZoneShow)
+		frame:SetScript("OnHide", onZoneHide)
+		zoneframes[zone] = frame
+		InterfaceOptions_AddCategory(frame)
 		zoneModules[zone] = {}
 	end
 	tinsert(zoneModules[zone], module)
