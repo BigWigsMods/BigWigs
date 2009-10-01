@@ -32,7 +32,7 @@ mod.locale = L
 ------------------------------
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Fists", 66725, 66808)
+	self:Log("SPELL_CAST_START", "Fists", 66725, 66808)
 	self:Log("SPELL_AURA_APPLIED", "Cinder", 67332, 66684)
 	self:Death("Win", 35013)
 
