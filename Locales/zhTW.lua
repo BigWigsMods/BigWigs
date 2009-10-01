@@ -3,6 +3,7 @@
 if not L then return end
 
 -- Core.lua
+L["%s enabled"] = "%s已啟用"
 L["%s has been defeated"] = "%s被擊敗了！"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s被擊敗了！"    -- "<bosses> have been defeated"
 L["Bosses"] = "首領模組"

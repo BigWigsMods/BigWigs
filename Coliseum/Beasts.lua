@@ -62,7 +62,7 @@ if L then
 	L.charge = "Furious Charge"
 	L.charge_desc = "Warn about Furious Charge on players."
 	L.charge_trigger = "glares at"
-	
+
 	L.bosses = "Bosses"
 	L.bosses_desc = "Warn about bosses incoming"
 end

@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "zhCN")
 if not L then return end
 
 -- Core.lua
+L["%s enabled"] = "%s已启用"
 L["%s has been defeated"] = "%s被击败了！"     -- "<boss> has been defeated"
 L["%s have been defeated"] = "%s被击败了！"    -- "<bosses> have been defeated"
 L["Bosses"] = "首领模块"

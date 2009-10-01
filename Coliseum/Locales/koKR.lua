@@ -54,7 +54,7 @@ if L then
 	L.charge = "사나운 돌진"
 	L.charge_desc = "사나운 돌진의 대상 플레이어를 알립니다."
 	L.charge_trigger = "([^%s]+)|1을;를; 노려보며 큰 소리로 울부짖습니다.$"
-	
+
 	L.bosses = "보스 등장"
 	L.bosses_desc = "보스들 등장을 알립니다."
 end

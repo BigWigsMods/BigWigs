@@ -38,18 +38,25 @@ if L then
 	L.firebomb_message = ">你< 燃燒彈！"
 
 	-- Jormungars
+	L.submerge = "隱沒"
+	L.submerge_desc = "当下一次蟲子即將隱沒時顯示計時條。"
 	L.spew = "酸液/熔火噴灑"
 	L.spew_desc = "當施放酸液/熔火噴灑時發出警報。"
-
+	L.sprays = "噴霧"
+	L.sprays_desc = "顯示下一次痲痺噴霧和燃燒噴霧計時條。"
 	L.slime_message = ">你< 泥漿池！"
 	L.burn_spell = "燃燒膽汁"
 	L.toxin_spell = "痲痺劇毒"
+	L.spray = "<下一噴霧>"
 
 	-- Icehowl
 	L.butt_bar = "<兇猛頭擊 冷卻>"
 	L.charge = "狂烈衝鋒"
 	L.charge_desc = "當玩家中了狂烈衝鋒時發出警報。"
 --	L.charge_trigger = "^%%s"	--check
+
+	L.bosses = "首領"
+	L.bosses_desc = "當首領即將到來時發出警報。"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhTW")
