@@ -5,15 +5,7 @@ local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(28859)
-mod:Toggle("phase", "MESSAGE")
-mod:Toggle("sparks", "MESSAGE", "BAR")
-mod:Toggle(56152, "MESSAGE")
-mod:Toggle("vortex", "MESSAGE", "BAR")
-mod:Toggle("breath", "MESSAGE", "BAR")
-mod:Toggle("surge", "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(57429, "MESSAGE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"phase", "sparks", 56152, "vortex", "breath", {"surge", "FLASHNSHAKE"}, 57429, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

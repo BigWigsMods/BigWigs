@@ -34,27 +34,6 @@ function boss:Reboot()
 	self:Enable()
 end
 
-local defaulttoggles = {
-	berserk = C.BAR + C.MESSAGE,
-	bosskill = C.MESSAGE,
-	proximity = C.PROXIMITY
-}
-function boss:Toggle(key, ...)
-	do return end
-	if not key then return end
-	if not self.toggleOptions then self.toggleOptions = {} end
-	if not self.toggleOrder then self.toggleOrder = {} end
-	tinsert(self.toggleOrder, key)
-	self.toggleOptions[key] = defaulttoggles[key] and defaulttoggles[key] or 0
-	for i = 1, select("#", ...) do
-		if C[select(i,...)] then
-			self.toggleOptions[key] = self.toggleOptions[key] + C[select(i,...)]
-		else
-			error(("%q tried to register '%s' as a bitflag for toggleoption '%q'"):format(self.moduleName, key, select(i,...)))
-		end
-	end
-end
-
 -------------------------------------------------------------------------------
 -- Enable triggers
 --

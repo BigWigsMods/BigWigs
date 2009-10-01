@@ -13,12 +13,7 @@ mod.otherMenu = "Northrend"
 	30449 = vesperon
 --]]
 mod:RegisterEnableMob(28860, 30449, 30451, 30452)
-mod:Toggle("tsunami", "MESSAGE", "BAR")
-mod:Toggle(56908, "BAR")
-mod:Toggle("drakes", "MESSAGE", "BAR")
-mod:Toggle("twilight", "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"tsunami", 56908, "drakes", "twilight", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

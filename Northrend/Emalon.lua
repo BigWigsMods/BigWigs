@@ -5,11 +5,7 @@ local mod = BigWigs:NewBoss("Emalon the Storm Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(33993)
-mod:Toggle(64216, "MESSAGE", "BAR")
-mod:Toggle(64218, "MESSAGE", "BAR", "ICON")
-mod:Toggle("proximity")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {64216, {64218, "ICON"}, "proximity", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

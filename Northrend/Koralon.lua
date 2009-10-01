@@ -5,11 +5,7 @@ local mod = BigWigs:NewBoss("Koralon the Flame Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(35013)
-mod:Toggle(66725, "MESSAGE", "BAR")
-mod:Toggle(67332, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(66665, "MESSAGE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {66725, {67332, "FLASHNSHAKE"}, 66665, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

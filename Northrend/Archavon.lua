@@ -6,12 +6,7 @@ local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(31125)
-mod:Toggle(58663, "BAR", "MESSAGE")
-mod:Toggle("charge", "MESSAGE")
-mod:Toggle(58678, "MESSAGE", "ICON")
-mod:Toggle(58965, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {58663, "charge", {58678, "MESSAGE", "ICON"}, {58965, "FLASHNSHAKE"}, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
