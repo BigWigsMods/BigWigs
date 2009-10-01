@@ -276,6 +276,11 @@ end
 --
 local function checkFlag(self, key, flag)
 	if type(key) == "number" then key = GetSpellInfo(key) end
+	-- XXX 
+	if type(self.db.profile[key]) ~= "number" then
+		print(("The boss encounter script for %q tried to access the option %q as a bit flag setting, but in the database it's represented as something else (%s). Please report this in #bigwigs."):format(self.displayName, key, type(self.db.profile[key])))
+		return self.db.profile[key]
+	end
 	return bit.band(self.db.profile[key], flag) == flag
 end
 
