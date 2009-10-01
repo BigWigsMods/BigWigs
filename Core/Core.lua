@@ -124,6 +124,7 @@ do
 	local tests = {}
 
 	local function sendTestMessage(message)
+		if not tests[message] then return end -- spamming test can cause double messages due to the limited amount of spells
 		addon:SendMessage("BigWigs_Message", unpack(tests[message]))
 		wipe(tests[message])
 		tests[message] = nil
