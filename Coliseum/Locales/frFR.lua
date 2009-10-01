@@ -38,18 +38,26 @@ if L then
 	L.firebomb_message = "Bombe incendiaire en dessous de VOUS !"
 
 	-- Jormungars
+	L.submerge = "Dans le sol"
+	L.submerge_desc = "Prévient quand les vers s'enfoncent dans le sol."
 	L.spew = "Crachement acide/de lave"
 	L.spew_desc = "Prévient de l'arrivée des Crachements acides/de lave."
-
+	L.spray = "Jets"
+	L.spray_desc = "Prévient de l'arrivée du prochain Jet paralysant et brûlant."
 	L.slime_message = "Bave sur VOUS !"
 	L.burn_spell = "Bile"
 	L.toxin_spell = "Toxine"
+	L.submerge = "Dans le sol"
+	L.spray = "~Prochain Jet"
 
 	-- Icehowl
 	L.butt_bar = "~Recharge Coup de tête"
 	L.charge = "Charge furieuse"
 	L.charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse."
 	L.charge_trigger = "lâche un rugissement assourdissant !$"
+
+	L.bosses = "Boss"
+	L.bosses_desc = "Prévient quand le boss suivant arrive."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "frFR")
@@ -74,7 +82,7 @@ if L then
 	--L.engage_trigger1 = "Banished to the Nether"
 
 	L.adds = "Portails et volcans"
-	L.adds_desc = "Affiche un minuteur et prévient quand Jaraxxus invoque des portails et des volcans."
+	L.adds_desc = "Prévient quand Jaraxxus invoque des portails et des volcans."
 
 	L.incinerate_message = "Incinérer la chair"
 	L.incinerate_other = "Incinérer : %s"
@@ -98,6 +106,8 @@ if L then
 	L.engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir."
 
 	L.vortex_or_shield_cd = "Prochain Vortex ou Bouclier"
+	L.next = "Prochain Vortex ou Bouclier"
+	L.next_desc = "Prévient quand le prochain Vortex ou Bouclier arrive."
 
 	L.vortex = "Vortex"
 	L.vortex_desc = "Prévient quand les jumelles commencent à incanter des Vortex."

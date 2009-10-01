@@ -1,11 +1,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "frFR")
 if not L then return end
 -- Core.lua
-L["%s has been defeated"] = "%s a été vaincu(e)"     -- "<boss> has been defeated"
-L["%s have been defeated"] = "%s ont été vaincu(e)s"    -- "<bosses> have been defeated"
+L["%s enabled"] = "%s activé" -- "<boss> enabled"
+L["%s has been defeated"] = "%s a été vaincu(e)" -- "<boss> has been defeated"
+L["%s have been defeated"] = "%s ont été vaincu(e)s" -- "<bosses> have been defeated"
 L["Bosses"] = "Boss"
 L["Options for bosses in %s."] = "Options concernant les boss |2 %s." -- "Options for bosses in <zone>"
-L["Options for %s (r%d)."] = "Options concernant %s (r%d)."     -- "Options for <boss> (<revision>)"
+L["Options for %s (r%d)."] = "Options concernant %s (r%d)." -- "Options for <boss> (<revision>)"
 L["Plugins"] = "Plugins"
 L["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Les plugins s'occupent des composants centraux de Big Wigs - comme l'affichage des messages, les barres temporelles, ainsi que d'autres composants essentiels."
 L["Extras"] = "Extras"
@@ -24,7 +25,7 @@ L["Toggles whether or not the boss module should warn about %s."] = "Autorise ou
 L.bosskill = "Défaite du boss"
 L.bosskill_desc = "Prévient quand le boss est vaincu."
 L.berserk = "Berserk"
-L.berserk_desc = "Prévient quand le boss devient fou furieux."
+L.berserk_desc = "Prévient quand le boss devient fou furieux via une barre temporelle et des messages réguliers."
 
 L["Load"] = "Charger"
 L["Load All"] = "Tout charger"
@@ -35,7 +36,7 @@ L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r)
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs 3.0 (revision %d)"] = "Vous utilisez une version FINALISÉE de BW 3.0 (r%d)."
 L["You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"] = "Vous utilisez une version ALPHA de BW 3.0 (r%d)."
-L["You are running a source checkout of Big Wigs 3.0 directly from the repository."] = "Vous utilisez une version directement tirée du dépôt de BW 3.0."
+L["You are running a source checkout of Big Wigs 3.0 directly from the repository."] = "Vous utilisez une version du dépôt de BW 3.0."
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Une nouvelle version de Big Wigs est disponible. Vous pouvez visiter curse.com, wowinterface.com, wowace.com ou utiliser le Curse Updater pour obtenir cette nouvelle version."
 
 L["|cff00ff00Module running|r"] = "|cff00ff00Module actif|r"
