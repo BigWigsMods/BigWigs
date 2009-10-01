@@ -85,7 +85,7 @@ end
 
 function mod:IncinerateFleshRemoved(player, spellId)
 	self:IfMessage(67049, L["incinerate_safe"]:format(player), "Positive", 17) -- Power Word: Shield icon.
-	self:SendMessage(67049, "BigWigs_StopBar", self, L["incinerate_other"]:format(player))
+	self:SendMessage("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
 function mod:LegionFlame(player, spellId)
