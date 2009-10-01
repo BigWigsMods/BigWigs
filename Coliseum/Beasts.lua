@@ -205,7 +205,7 @@ do
 	end
 
 	function mod:Emerge()
-		self:Bar(L["submerge"], 45, "INV_Misc_MonsterScales_18")
+		self:Bar("submerge", L["submerge"], 45, "INV_Misc_MonsterScales_18")
 		self:ScheduleEvent("Submerge", submerge, 45)
 		-- Rain of Fire icon as a generic AoE spray icon .. good enough?
 		self:Bar("sprays", L["spray"], sprayTimer, 5740)
