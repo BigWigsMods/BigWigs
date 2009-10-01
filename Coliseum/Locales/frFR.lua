@@ -42,12 +42,11 @@ if L then
 	L.submerge_desc = "Prévient quand les vers s'enfoncent dans le sol."
 	L.spew = "Crachement acide/de lave"
 	L.spew_desc = "Prévient de l'arrivée des Crachements acides/de lave."
-	L.spray = "Jets"
-	L.spray_desc = "Prévient de l'arrivée du prochain Jet paralysant et brûlant."
+	L.sprays = "Jets"
+	L.sprays_desc = "Prévient de l'arrivée du prochain Jet paralysant et brûlant."
 	L.slime_message = "Bave sur VOUS !"
 	L.burn_spell = "Bile"
 	L.toxin_spell = "Toxine"
-	L.submerge = "Dans le sol"
 	L.spray = "~Prochain Jet"
 
 	-- Icehowl

@@ -39,16 +39,14 @@ if L then
 
 	-- Jormungars
 	L.submerge = "Eingraben"
-	L.submerge_desc = "Zeige die Zeit bis zum nächsten Eingraben der Würmer."
+	L.submerge_desc = "Zeigt die Zeit bis zum nächsten Eingraben der Würmer."
 	L.spew = "Ätzender/Geschmolzener Auswurf"
 	L.spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf."
-
-	L.spray = "Sprühen"
-	L.spray_desc = "Zeige einen Timer für Paralysierendes und Brennendes Sprühen."
+	L.sprays = "Sprühen"
+	L.sprays_desc = "Zeigt Zeitleisten für Paralysierendes und Brennendes Sprühen."
 	L.slime_message = "Schleimpfütze auf DIR!"
-	L.burn_spell = "Galle"
-	L.toxin_spell = "Toxin"
-	L.submerge = "Eingraben"
+	L.burn_spell = "Brennende Galle"
+	L.toxin_spell = "Paralysierendes Toxin"
 	L.spray = "~Sprühen"
 
 	-- Icehowl
@@ -56,6 +54,9 @@ if L then
 	L.charge = "Wütender Ansturm"
 	L.charge_desc = "Warnt vor Wütender Ansturm auf Spielern."
 	L.charge_trigger = "zornig an"
+	
+	L.bosses = "Bosse"
+	L.bosses_desc = "Warnt, wann die nachfolgenden Bosse eintreffen."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "deDE")
@@ -104,9 +105,11 @@ if L then
 	L.engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben."
 
 	L.vortex_or_shield_cd = "~Vortex/Schild"
+	L.next = "Vortex/Schild"
+	L.next_desc = "Warnt vor dem nächsten Vortex/Schild."
 
 	L.vortex = "Vortex"
-	L.vortex_desc = "Warnt, wenn die Zwillinge anfangen, Vortex zu wirken."
+	L.vortex_desc = "Warnt, wenn die Zwillinge anfangen, einen Vortex zu wirken."
 
 	L.shield = "Schild der Nacht/Licht"
 	L.shield_desc = "Warnt bei Schild der Nacht/Licht."

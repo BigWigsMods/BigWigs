@@ -11,7 +11,7 @@ mod:Toggle(67472, "MESSAGE", "FLASHNSHAKE")
 mod:Toggle("submerge", "BAR")
 mod:Toggle(67641, "MESSAGE", "FLASHNSHAKE")
 mod:Toggle("spew", "MESSAGE")
-mod:Toggle("spray", "MESSAGE", "BAR")
+mod:Toggle("sprays", "MESSAGE", "BAR")
 mod:Toggle(67618, "MESSAGE", "FLASHNSHAKE")
 mod:Toggle(66869, "MESSAGE")
 mod:Toggle(68335, "MESSAGE")
@@ -72,12 +72,11 @@ if L then
 	L.submerge_desc = "Show a timer bar for the next time the worms will submerge."
 	L.spew = "Acidic/Molten Spew"
 	L.spew_desc = "Warn for Acidic/Molten Spew."
-	L.spray = "Sprays"
-	L.spray_desc = "Show timers for the next Paralytic and Burning Sprays."
+	L.sprays = "Sprays"
+	L.sprays_desc = "Show timers for the next Paralytic and Burning Sprays."
 	L.slime_message = "Slime on YOU!"
 	L.burn_spell = "Burn"
 	L.toxin_spell = "Toxin"
-	L.submerge = "Submerge"
 	L.spray = "~Next Spray"
 
 	-- Icehowl
