@@ -6,9 +6,12 @@ local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
 mod:Toggle("snobold", "MESSAGE")
 mod:Toggle(67477, "MESSAGE")
+mod:Toggle(66330, "MESSAGE", "BAR")
 mod:Toggle(67472, "MESSAGE", "FLASHNSHAKE")
+mod:Toggle("submerge", "BAR")
 mod:Toggle(67641, "MESSAGE", "FLASHNSHAKE")
 mod:Toggle("spew", "MESSAGE")
+mod:Toggle("spray", "MESSAGE", "BAR")
 mod:Toggle(67618, "MESSAGE", "FLASHNSHAKE")
 mod:Toggle(66869, "MESSAGE")
 mod:Toggle(68335, "MESSAGE")
@@ -26,7 +29,7 @@ mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335
 --]]
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
-	[67641] = "Jormungars",
+	submerge = "Jormungars",
 	[67654] = "Icehowl",
 	bosses = "general",
 }
@@ -42,6 +45,7 @@ local toxin = mod:NewTargetList()
 local snobolledWarned = {}
 local snobolled = GetSpellInfo(66406)
 local icehowl, jormungars, gormok = nil, nil, nil
+local sprayTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,12 +68,17 @@ if L then
 	L.firebomb_message = "Fire on YOU!"
 
 	-- Jormungars
+	L.submerge = "Submerge"
+	L.submerge_desc = "Show a timer bar for the next time the worms will submerge."
 	L.spew = "Acidic/Molten Spew"
 	L.spew_desc = "Warn for Acidic/Molten Spew."
-
+	L.spray = "Sprays"
+	L.spray_desc = "Show timers for the next Paralytic and Burning Sprays."
 	L.slime_message = "Slime on YOU!"
 	L.burn_spell = "Burn"
 	L.toxin_spell = "Toxin"
+	L.submerge = "Submerge"
+	L.spray = "~Next Spray"
 
 	-- Icehowl
 	L.butt_bar = "~Butt Cooldown"
@@ -105,16 +114,18 @@ function mod:OnBossEnable()
 	-- Gormok
 	self:Log("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
+	self:Log("SPELL_CAST_START", "StaggeringStomp", 66330, 67647, 67648, 67649)
 	self:RegisterEvent("UNIT_AURA")
 
 	-- Jormungars
 	self:Log("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642, 67643)
 	self:Log("SPELL_DAMAGE", "Slime", 67640)
-	self:Log("SPELL_CAST_START", "Acidic", 66818)
-	self:Log("SPELL_CAST_START", "Molten", 66821)
+	-- Acidic, Molten
+	self:Log("SPELL_CAST_START", "Spew", 66818, 66821)
+	-- First 4 are Paralytic, last 4 are Burning
+	self:Log("SPELL_CAST_START", "Spray", 67617, 67616, 67615, 66901, 67629, 67628, 67627, 66902)
 	self:Log("SPELL_AURA_APPLIED", "Toxin", 67618, 67619, 67620, 66823)
 	self:Log("SPELL_AURA_APPLIED", "Burn", 66869, 66870)
-	--self:Log("SPELL_AURA_REMOVED", "BurnRemoved", 66869, 66870)
 	self:Log("SPELL_AURA_APPLIED", "Enraged", 68335)
 	self:Yell("Jormungars", L["jormungars_trigger"])
 
@@ -152,6 +163,9 @@ function mod:Jormungars()
 		self:Bar("bosses", L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
 	end
 	self:OpenProximity(10)
+	-- The first worm to spray is Acidmaw, he has a 10 second spray timer after emerge
+	sprayTimer = 10
+	self:ScheduleEvent("Emerge", "Emerge", 15)
 end
 
 function mod:Icehowl()
@@ -186,6 +200,11 @@ function mod:Impale(player, spellId, _, _, spellName)
 	end
 end
 
+function mod:StaggeringStomp(_, spellId, _, _, spellName)
+	self:IfMessage(66330, spellName, "Important", spellId)
+	self:Bar(66330, spellName, 21, spellId)
+end
+
 do
 	local last = nil
 	function mod:FireBomb(player, spellId)
@@ -203,15 +222,31 @@ end
 -- Jormungars
 --
 
+do
+	local function submerge()
+		mod:ScheduleEvent("Emerge", "Emerge", 10)
+	end
+
+	function mod:Emerge()
+		self:Bar(L["submerge"], 45, "INV_Misc_MonsterScales_18")
+		self:ScheduleEvent("Submerge", submerge, 45)
+		-- Rain of Fire icon as a generic AoE spray icon .. good enough?
+		self:Bar("spray", L["spray"], sprayTimer, 5740)
+		sprayTimer = sprayTimer == 10 and 20 or 10
+	end
+
+	function mod:Spray(spellId, spellName)
+		self:IfMessage("spray", spellName, "Important", spellId)
+		self:Bar("spray", L["spray"], 20, 5740)
+	end
+end
+
+
 function mod:SlimeCast(_, spellId, _, _, spellName)
 	self:IfMessage(67641, spellName, "Attention", spellId)
 end
 
-function mod:Molten(_, spellId, _, _, spellName)
-	self:IfMessage("spew", spellName, "Attention", spellId)
-end
-
-function mod:Acidic(_, spellId, _, _, spellName)
+function mod:Spew(_, spellId, _, _, spellName)
 	self:IfMessage("spew", spellName, "Attention", spellId)
 end
 
