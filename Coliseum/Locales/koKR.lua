@@ -12,6 +12,7 @@ if L then
 
 	L.nerubian_burrower = "네루비안 땅무지"
 
+	L.freeze_bar = "~다음 얼음 베기"
 	L.pcold_bar = "~다음 냉기 관통"
 
 	L.icon = "전술 표시"
@@ -37,12 +38,16 @@ if L then
 	L.firebomb_message = "당신은 불 폭탄!"
 
 	-- Jormungars
+	L.submerge = "잠수"
+	L.submerge_desc = "요르문가르의 다음 잠수에 대한 타이머를 표시합니다."
 	L.spew = "산성/용암 내뿜기"
 	L.spew_desc = "산성/용암 내뿜기를 알립니다."
-
+	L.sprays = "분사"
+	L.sprays_desc = "다음 화염과 마비액 분사에 대한 타이머를 표시합니다."
 	L.slime_message = "당신은 진흙 웅덩이!"
 	L.burn_spell = "불타는 담즙"
 	L.toxin_spell = "마비 독"
+	L.spray = "~다음 분사"
 
 	-- Icehowl
 	L.butt_bar = "~박치기 대기시간"
