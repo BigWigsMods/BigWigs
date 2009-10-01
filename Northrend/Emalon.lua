@@ -83,7 +83,7 @@ do
 
 	function mod:OverchargeIcon(_, _, _, _, _, _, _, _, dGuid)
 		if overchargerepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-		if bit.band(self.db.profile[(GetSpellInfo(64218))], BigWigs.C.ICON) ~= C.ICON then return end
+		if bit.band(self.db.profile[(GetSpellInfo(64218))], BigWigs.C.ICON) ~= BigWigs.C.ICON then return end
 		id = dGuid
 		overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
 	end
