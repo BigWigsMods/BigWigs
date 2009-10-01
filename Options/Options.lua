@@ -188,6 +188,7 @@ function options:Open()
 	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
 		if button.element and button.element.name == "Big Wigs" and button.element.collapsed then
 			OptionsListButtonToggle_OnClick(button.toggle)
+			break
 		end
 	end
 	local enableModule = nil
@@ -367,7 +368,13 @@ local function fillBossOptions(module)
 		name = module.displayName,
 		desc = L["Options for %s."]:format(module.displayName),
 		get = function(info)
-			return bit.band(module.db.profile[info[#info-1]], info.arg) == info.arg
+			local key = info[#info-1]
+			local setting = module.db.profile[key]
+			if type(setting) ~= "number" then
+				print(("The boss encounter script for %q tried to access the option %q as a bit flag setting, but in the database it's represented as something else (%s). Please report this in #bigwigs."):format(module.displayName, key, type(module.db.profile[key])))
+				return setting
+			end
+			return bit.band(key, info.arg) == info.arg
 		end,
 		set = function(info, v)
 				if v then module.db.profile[info[#info-1]] = module.db.profile[info[#info-1]] + info.arg
