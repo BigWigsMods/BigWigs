@@ -5,9 +5,7 @@
 local mod = BigWigs:NewBoss("Heigan the Unclean", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15936)
-mod:Toggle("engage", "MESSAGE")
-mod:Toggle("teleport", "MESSAGE", "BAR")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"engage", "teleport", "bosskill"}
 
 ----------------------------
 --      Localization      --

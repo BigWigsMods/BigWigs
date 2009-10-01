@@ -6,17 +6,7 @@ local mod = BigWigs:NewBoss("Mimiron", "Ulduar")
 if not mod then return end
 --  Leviathan Mk II(33432), VX-001(33651), Aerial Command Unit(33670),
 mod:RegisterEnableMob(33350, 33432, 33651, 33670)
-mod:Toggle(62997, "MESSAGE", "BAR")
-mod:Toggle(63631, "MESSAGE", "BAR")
-mod:Toggle(63274, "MESSAGE", "BAR")
-mod:Toggle(64444, "MESSAGE", "BAR")
-mod:Toggle(63811, "MESSAGE")
-mod:Toggle(64623, "MESSAGE", "BAR")
-mod:Toggle(64570, "MESSAGE", "BAR")
-mod:Toggle("phase", "MESSAGE", "BAR")
-mod:Toggle("proximity")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {62997, 63631, 63274, 64444, 63811, 64623, 64570, "phase", "proximity", "berserk", "bosskill" }
 mod.optionHeaders = {
 	[62997] = "normal",
 	[64623] = "hard",

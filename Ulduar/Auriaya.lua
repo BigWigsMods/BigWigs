@@ -5,13 +5,7 @@ local mod = BigWigs:NewBoss("Auriaya", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33515)
 --Feral Defender = 34035
-mod:Toggle(64386, "MESSAGE", "BAR")
-mod:Toggle(64389, "MESSAGE")
-mod:Toggle(64396, "MESSAGE", "BAR")
-mod:Toggle(64422, "MESSAGE", "BAR")
-mod:Toggle("defender", "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = { 64386, 64389, 64396, 64422, "defender", "berserk", "bosskill" }
 
 ------------------------------
 --      Are you local?      --

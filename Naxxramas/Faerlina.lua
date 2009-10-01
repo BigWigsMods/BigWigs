@@ -4,11 +4,7 @@
 local mod = BigWigs:NewBoss("Grand Widow Faerlina", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15953)
-mod:Toggle(28732, "MESSAGE", "BAR")
-mod:Toggle(28794, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(28798, "MESSAGE", "BAR")
-mod:Toggle("bosskill")
--- mod.toggleOptions = {28732, 28794, 28798, "bosskill"}
+mod.toggleOptions = {28732, {28794, "FLASHNSHAKE"}, 28798, "bosskill"}
 
 ------------------------------
 --      Are you local?      --

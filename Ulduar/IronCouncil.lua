@@ -5,18 +5,7 @@ local mod = BigWigs:NewBoss("The Iron Council", "Ulduar")
 if not mod then return end
 -- steelbreaker = 32867, molgeim = 32927, brundir = 32857
 mod:RegisterEnableMob(32867, 32927, 32857)
-mod:Toggle(61869, "MESSAGE", "BAR")
-mod:Toggle(63483, "MESSAGE")
-mod:Toggle(61887, "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE")
-mod:Toggle(61903, "MESSAGE")
-mod:Toggle(64637, "MESSAGE", "BAR", "WHISPER", "ICON")
-mod:Toggle("proximity")
-mod:Toggle(62274, "MESSAGE")
-mod:Toggle(61974, "MESSAGE", "BAR")
-mod:Toggle(62269, "MESSAGE", "BAR", "FLASHNSHAKE")
-mod:Toggle(62273, "MESSAGE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {61869, 63483, {61887, "WHISPER", "ICON", "FLASHNSHAKE"}, 61903, {64637, "WHISPER", "ICON"}, "proximity", 62274, 61974, {62269, "FLASHNSHAKE"}, 62273, "berserk", "bosskill" }
 
 mod.optionHeaders = {
 	[61869] = "Stormcaller Brundir",

@@ -5,22 +5,7 @@ local mod = BigWigs:NewBoss("Yogg-Saron", "Ulduar")
 if not mod then return end
 --Sara = 33134, Yogg brain = 33890
 mod:RegisterEnableMob(33288, 33134, 33890)
-mod:Toggle(62979, "MESSAGE")
-mod:Toggle("tentacle", "MESSAGE", "BAR")
-mod:Toggle(63830, "ICON")
-mod:Toggle(63802, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(64125, "MESSAGE")
-mod:Toggle("portal", "MESSAGE", "BAR")
-mod:Toggle("weakened", "MESSAGE")
-mod:Toggle(64059, "MESSAGE", "BAR")
-mod:Toggle(64465, "MESSAGE", "BAR", "ICON")
-mod:Toggle(64163, "BAR")
-mod:Toggle(64189, "MESSAGE", "BAR")
-mod:Toggle("phase", "MESSAGE")
-mod:Toggle(63050, "MESSAGE", "WHISPER")
-mod:Toggle(63120, "MESSAGE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {62979, "tentacle", {63830, "ICON"}, {63802, "FLASHNSHAKE"}, 64125, "portal", "weakened", 64059, {64465, "ICON"}, 64163, 64189, "phase", {63050, "WHISPER"}, 63120, "berserk", "bosskill"}
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {

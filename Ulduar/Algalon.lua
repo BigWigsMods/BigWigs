@@ -4,13 +4,7 @@
 local mod = BigWigs:NewBoss("Algalon the Observer", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32871)
-mod:Toggle("phase", "MESSAGE", "BAR")
-mod:Toggle(64412, "MESSAGE", "BAR")
-mod:Toggle(62301, "MESSAGE", "BAR")
-mod:Toggle(64122, "MESSAGE")
-mod:Toggle(64443, "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"phase", 64412, 62301, 64122, 64443, "berserk", "bosskill" }
 
 ------------------------------
 --      Are you local?      --

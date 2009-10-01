@@ -4,11 +4,7 @@
 local mod = BigWigs:NewBoss("Maexxna", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15952)
-mod:Toggle(29484, "MESSAGE", "BAR")
-mod:Toggle(28622, "MESSAGE", "BAR")
-mod:Toggle(54123, "MESSAGE")
-mod:Toggle("bosskill")
--- mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
+mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 
 ------------------------------
 --      Are you local?      --

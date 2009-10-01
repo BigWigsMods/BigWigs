@@ -4,13 +4,7 @@
 
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
-mod:Toggle(66012, "BAR")
-mod:Toggle("burrow", "BAR", "MESSAGE")
-mod:Toggle(67574, "WHISPER", "MESSAGE", "ICON", "FLASHNSHAKE")
-mod:Toggle(68510, "BAR", "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(66118, "MESSAGE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {66012, "burrow", {67574, "WHISPER", "ICON", "FLASHNSHAKE"}, {68510, "FLASHNSHAKE"}, 66118, "berserk", "bosskill"}
 --[[mod.optionHeaders = {
 	[66012] = "normal",
 	--[the shadow strike thing from the adds] = "hard",

@@ -5,16 +5,7 @@
 local mod = BigWigs:NewBoss("Kel'Thuzad", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15990)
-mod:Toggle(27808, "MESSAGE", "BAR")
-mod:Toggle(27810, "MESSAGE")
-mod:Toggle(28410, "MESSAGE", "BAR")
-mod:Toggle(27819, "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE")
-mod:Toggle("guardians", "MESSAGE", "BAR")
-mod:Toggle("phase", "MESSAGE", "BAR")
-mod:Toggle("proximity")
-mod:Toggle("bosskill")
--- mod.toggleOptions = { 27808, 27810, 28410, -1, 27819, "icon", -1 ,"guardians", "phase", "proximity", "bosskill" }
-mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
+mod.toggleOptions = {27808, 27810, 28410, {27819, "WHISPER", "ICON", "FLASHNSHAKE"}, "guardians", "phase", "proximity", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

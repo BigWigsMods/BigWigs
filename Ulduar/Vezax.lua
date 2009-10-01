@@ -5,19 +5,8 @@
 local mod = BigWigs:NewBoss("General Vezax", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33271)
-mod:Toggle("vapor", "BAR", "MESSAGE")
-mod:Toggle("vaporstack", "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(62660, "MESSAGE", "WHISPER", "ICON", "SAY")
-mod:Toggle(63276, "MESSAGE", "BAR", "WHISPER", "ICON")
-mod:Toggle(62661, "MESSAGE")
-mod:Toggle(62662, "MESSAGE", "BAR")
-mod:Toggle("animus", "MESSAGE")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
---[[
-mod.toggleOptions = {"vapor", "vaporstack", 62660, "crashsay", "crashicon", 63276, "icon", 62661, 62662,
- "animus", "berserk", "bosskill"}
---]]
+mod.toggleOptions = {"vapor", {"vaporstack", "FLASHNSHAKE"}, {62660, "WHISPER", "ICON", "SAY"}, {63276, "WHISPER", "ICON"}, 62661, 62662, "animus", "berserk", "bosskill"}
+
 ------------------------------
 --      Are you local?      --
 ------------------------------

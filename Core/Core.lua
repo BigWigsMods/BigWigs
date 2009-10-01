@@ -9,6 +9,8 @@ local BB, BZ
 
 local GetSpellInfo = GetSpellInfo
 
+local C
+
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs")
 
@@ -363,6 +365,18 @@ do
 	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
 	function addon:RegisterBossModule(module)
+		if not C then C = self.C end
+		if not self.defaultToggles then
+			self.defaultToggles = setmetatable({
+				berserk = C.BAR + C.MESSAGE,
+				bosskill = C.MESSAGE,
+				proximity = C.PROXIMITY
+			}, {__index = function(self, key) 
+				if not rawget(self, key) then
+					return C.BAR + C.MESSAGE
+				end
+			end } )
+		end
 		local name = module.name
 		if not module.displayName then module.displayName = module.moduleName end
 		
@@ -398,11 +412,30 @@ do
 
 		if module.toggleOptions then
 			local opts = {}
-			for v,bf in next, module.toggleOptions do
+			local bf
+			for k, v in next, module.toggleOptions do
+				bf = 0
 				local t = type(v)
+				if t == "table" then
+					for i=2,#v,1 do
+						if C[v[i]] then
+							bf = bf + C[v[i]]
+						else
+							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, v[1], v[i]))
+						end
+					end
+					v = v[1]
+					t = type(v)
+				end
+				-- mix in default toggles for keys we know this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}} while bosskill usually only has message
+				for n, b in pairs(C) do
+					if bit.band(self.defaultToggles[v], b) == b and bit.band(bf, b) ~= b then
+						bf = bf + b
+					end
+				end
 				if t == "string"  then
 					opts[v] = bf
-				elseif t == "number" and v > 20 then -- 20 options for backwards ass drek
+				elseif t == "number" and v > 1 then
 					local n = GetSpellInfo(v)
 					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
 					opts[n] = bf

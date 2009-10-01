@@ -346,16 +346,14 @@ local function getOptionGroup(name, desc, icon, order, bf)
 	end
 	i = i + 2
 	for k, b in pairs(C) do
-		if k ~= "BOSSKILL" and k ~= "BERSERK" then
-			if bit.band(bf, b) == b then
-				g.args[k] = {
-					type = "toggle",
-					name = L[k],
-					order = i,
-					arg = b
-				}
-				i = i + 1
-			end
+		if bit.band(bf, b) == b then
+			g.args[k] = {
+				type = "toggle",
+				name = L[k],
+				order = i,
+				arg = b
+			}
+			i = i + 1
 		end
 	end
 	return g
@@ -383,10 +381,28 @@ local function fillBossOptions(module)
 		args = {},
 	}
 	local order = 1
-	if type(module.toggleOrder) == "table" then -- prevent errors backwards
-		for i, v in next, module.toggleOrder do
-			local bf = module.toggleOptions[v]
+	if type(module.toggleOptions) == "table" then -- prevent errors backwards
+		for i, v in next, module.toggleOptions do
+			-- some code duplication from RegisterBossModule, but I don't want to store an extra table with calculated flags
+			local bf = 0
 			local t = type(v)
+			if t == "table" then
+				for i=2,#v,1 do
+					if C[v[i]] then
+						bf = bf + C[v[i]]
+					else
+						error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, v[1], v[i]))
+					end
+				end
+				v = v[1]
+				t = type(v)
+			end
+			-- mix in default toggles for keys we know this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}} while bosskill usually only has message
+			for n, b in pairs(BigWigs.C) do
+				if bit.band(BigWigs.defaultToggles[v], b) == b and bit.band(bf, b) ~= b then
+					bf = bf + b
+				end
+			end
 			if module.optionHeaders and module.optionHeaders[v] then
 				local n
 				if type(module.optionHeaders[v]) == "number" then
@@ -410,7 +426,7 @@ local function fillBossOptions(module)
 					width = "full",
 				}
 				order = order + 1
-			elseif t == "number" and v > 20 then -- 20 options for backwards assdrek
+			elseif t == "number" and v > 1 then
 				local spellName, _, icon = GetSpellInfo(v)
 				if not spellName then error(("Invalid option %d in module %s."):format(v, module.displayName)) end
 				local desc = getSpellDescription(v)

@@ -6,13 +6,7 @@ local mod = BigWigs:NewBoss("The Twin Val'kyr", "Trial of the Crusader")
 if not mod then return end
 -- 34496 Darkbane, 34497 Lightbane
 mod:RegisterEnableMob(34496, 34497)
-mod:Toggle("vortex", "MESSAGE", "BAR")
-mod:Toggle("shield", "MESSAGE", "BAR")
-mod:Toggle("next", "BAR")
-mod:Toggle("touch", "MESSAGE", "WHISPER")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
-
+mod.toggleOptions = {"vortex", "shield", "next", {"touch", "WHISPER"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals

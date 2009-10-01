@@ -4,10 +4,7 @@
 local mod = BigWigs:NewBoss("Gothik the Harvester", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16060)
-mod:Toggle("room", "MESSAGE", "BAR")
-mod:Toggle("add", "MESSAGE", "BAR")
-mod:Toggle("adddeath", "MESSAGE")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"room", "add", "adddeath", "bosskill"}
 
 ----------------------------
 --      Localization      --

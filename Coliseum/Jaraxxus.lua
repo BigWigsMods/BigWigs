@@ -4,11 +4,7 @@
 
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod:Toggle(67049, "MESSAGE", "BAR", "WHISPER")
-mod:Toggle(68123, "MESSAGE", "BAR", "WHISPER", "ICON")
-mod:Toggle(67106, "MESSAGE", "BAR")
-mod:Toggle("adds", "MESSAGE", "BAR")
-mod:Toggle("bosskill")
+mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON"}, 67106, "adds", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization

@@ -4,12 +4,7 @@
 local mod = BigWigs:NewBoss("Flame Leviathan", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33113)
-mod:Toggle("engage", "MESSAGE")
-mod:Toggle(68605, "BAR")
-mod:Toggle(62396, "MESSAGE", "BAR")
-mod:Toggle("pursue", "MESSAGE", "BAR", "FLASHNSHAKE")
-mod:Toggle(62475, "MESSAGE", "BAR")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"engage", 68605, 62396, {"pursue", "FLASHNSHAKE"}, 62475, "bosskill"}
 
 ----------------------------
 --      Localization      --

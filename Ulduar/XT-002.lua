@@ -4,15 +4,7 @@
 local mod = BigWigs:NewBoss("XT-002 Deconstructor", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33293)
-mod:Toggle(63024, "MESSAGE", "BAR", "WHISPER", "ICON")
-mod:Toggle(63018, "MESSAGE", "BAR", "WHISPER", "ICON")
-mod:Toggle(62776, "MESSAGE", "BAR")
-mod:Toggle(64193, "MESSAGE")
-mod:Toggle(63849, "MESSAGE", "BAR")
-mod:Toggle("proximity")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
-
+mod.toggleOptions = {{63024, "WHISPER", "ICON"}, {63018, "WHISPER", "ICON"}, 62776, 64193, 63849, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[63024] = "normal",
 	[64193] = "hard",

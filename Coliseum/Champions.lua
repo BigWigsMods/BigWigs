@@ -3,17 +3,7 @@
 --
 local mod = BigWigs:NewBoss("Faction Champions", "Trial of the Crusader")
 if not mod then return end
-mod:Toggle(65960, "MESSAGE")
-mod:Toggle(65801, "MESSAGE")
-mod:Toggle(65877, "MESSAGE")
-mod:Toggle(66010, "MESSAGE")
-mod:Toggle(65947, "MESSAGE")
-mod:Toggle(65816, "MESSAGE", "BAR")
-mod:Toggle(67514, "MESSAGE")
-mod:Toggle(67777, "MESSAGE")
-mod:Toggle(65983, "MESSAGE")
-mod:Toggle(65980, "MESSAGE")
-mod:Toggle("bosskill")
+mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 65816, 67514, 67777, 65983, 65980, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization

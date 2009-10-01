@@ -5,11 +5,7 @@
 local mod = BigWigs:NewBoss("Instructor Razuvious", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16061)
-mod:Toggle(29107, "MESSAGE", "BAR")
-mod:Toggle(55550, "MESSAGE")
-mod:Toggle(29061, "MESSAGE", "BAR")
-mod:Toggle(29060, "MESSAGE", "BAR")
-mod:Toggle("bosskill")
+mod.toggleOptions = {29107, 55550, 29061, 29060, "bosskill"}
 
 ----------------------------
 --      Localization      --

@@ -10,12 +10,7 @@ if not mod then return end
 	33185 = Razorscale
 --]]
 mod:RegisterEnableMob(33185, 33210)
-mod:Toggle("phase", "MESSAGE", "BAR")
-mod:Toggle(64021, "MESSAGE", "BAR")
-mod:Toggle(64704, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle("harpoon", "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"phase", 64021, {64704, "FLASHNSHAKE"}, "harpoon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

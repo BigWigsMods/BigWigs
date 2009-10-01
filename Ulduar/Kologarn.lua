@@ -4,13 +4,7 @@
 local mod = BigWigs:NewBoss("Kologarn", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32930)
-mod:Toggle(64290, "MESSAGE", "BAR")
-mod:Toggle("shockwave", "MESSAGE", "BAR")
-mod:Toggle("eyebeam", "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE", "SAY")
-mod:Toggle("arm", "MESSAGE")
-mod:Toggle(63355, "MESSAGE")
-mod:Toggle("bosskill")
-
+mod.toggleOptions = { 64290, "shockwave", {"eyebeam", "WHISPER", "ICON", "FLASHNSHAKE", "SAY"}, "arm", 63355, "bosskill"}
 
 ------------------------------
 --      Are you local?      --

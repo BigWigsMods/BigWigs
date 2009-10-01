@@ -4,29 +4,7 @@
 
 local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
-mod:Toggle("snobold", "MESSAGE")
-mod:Toggle(67477, "MESSAGE")
-mod:Toggle(66330, "MESSAGE", "BAR")
-mod:Toggle(67472, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle("submerge", "BAR")
-mod:Toggle(67641, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle("spew", "MESSAGE")
-mod:Toggle("sprays", "MESSAGE", "BAR")
-mod:Toggle(67618, "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(66869, "MESSAGE")
-mod:Toggle(68335, "MESSAGE")
-mod:Toggle("proximity")
-mod:Toggle(67654, "MESSAGE", "BAR")
-mod:Toggle("charge", "MESSAGE", "BAR", "ICON", "FLASHNSHAKE")
-mod:Toggle(66758, "MESSAGE", "BAR")
-mod:Toggle(66759, "MESSAGE", "BAR")
-mod:Toggle("bosses", "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
---[[
-mod.toggleOptions = {"snobold", 67477, 67472, 67641, "spew", 67618, 66869, 68335, "proximity", 67654, 
-"charge", 66758, 66759, "berserk", "bosskill"}
---]]
+mod.toggleOptions = {"snobold", 67477, 66330, {67472, "FLASHNSHAKE"}, "submerge", {67641, "FLASHNSHAKE"}, "spew", "sprays", {67618, "FLASHNSHAKE"}, 66869, 68335, "proximity", 67654, {"charge", "ICON", "FLASHNSHAKE"}, 66758, 66759, "berserk", "bosskill"}
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	submerge = "Jormungars",
@@ -230,13 +208,13 @@ do
 		self:Bar(L["submerge"], 45, "INV_Misc_MonsterScales_18")
 		self:ScheduleEvent("Submerge", submerge, 45)
 		-- Rain of Fire icon as a generic AoE spray icon .. good enough?
-		self:Bar("spray", L["spray"], sprayTimer, 5740)
+		self:Bar("sprays", L["spray"], sprayTimer, 5740)
 		sprayTimer = sprayTimer == 10 and 20 or 10
 	end
 
 	function mod:Spray(spellId, spellName)
-		self:IfMessage("spray", spellName, "Important", spellId)
-		self:Bar("spray", L["spray"], 20, 5740)
+		self:IfMessage("sprays", spellName, "Important", spellId)
+		self:Bar("sprays", L["spray"], 20, 5740)
 	end
 end
 

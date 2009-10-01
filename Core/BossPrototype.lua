@@ -40,6 +40,7 @@ local defaulttoggles = {
 	proximity = C.PROXIMITY
 }
 function boss:Toggle(key, ...)
+	do return end
 	if not key then return end
 	if not self.toggleOptions then self.toggleOptions = {} end
 	if not self.toggleOrder then self.toggleOrder = {} end

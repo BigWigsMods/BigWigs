@@ -5,11 +5,7 @@
 local mod = BigWigs:NewBoss("Noth the Plaguebringer", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15954)
-mod:Toggle("blink", "MESSAGE", "BAR")
-mod:Toggle("teleport", "MESSAGE", "BAR")
-mod:Toggle(29213, "MESSAGE", "BAR")
-mod:Toggle("wave", "MESSAGE", "BAR")
-mod:Toggle("bosskill")
+mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

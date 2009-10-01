@@ -4,10 +4,7 @@
 local mod = BigWigs:NewBoss("Grobbulus", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15931)
-mod:Toggle(28169, "MESSAGE", "BAR", "WHISPER", "ICON", "FLASHNSHAKE")
-mod:Toggle(28240, "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
+mod.toggleOptions = {{28169, "WHISPER", "ICON", "FLASHNSHAKE"}, 28240, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --

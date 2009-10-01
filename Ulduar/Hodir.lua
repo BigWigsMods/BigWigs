@@ -4,14 +4,7 @@
 local mod = BigWigs:NewBoss("Hodir", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32845)
-mod:Toggle("hardmode", "BAR")
-mod:Toggle("cold", "MESSAGE", "FLASHNSHAKE")
-mod:Toggle(65123, "MESSAGE", "BAR", "WHISPER", "ICON")
-mod:Toggle(61968, "MESSAGE", "BAR")
-mod:Toggle(62478, "MESSAGE", "BAR")
-mod:Toggle("berserk")
-mod:Toggle("bosskill")
--- mod.toggleOptions = {"hardmode", "cold", 65123, 61968, 62478, "icon", "berserk", "bosskill"}
+mod.toggleOptions = {"hardmode", {"cold", "FLASHNSHAKE"}, {65123, "WHISPER", "ICON"}, 61968, 62478, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
