@@ -374,7 +374,7 @@ local function fillBossOptions(module)
 				print(("The boss encounter script for %q tried to access the option %q as a bit flag setting, but in the database it's represented as something else (%s). Please report this in #bigwigs."):format(module.displayName, key, type(module.db.profile[key])))
 				return setting
 			end
-			return bit.band(key, info.arg) == info.arg
+			return bit.band(setting, info.arg) == info.arg
 		end,
 		set = function(info, v)
 				if v then module.db.profile[info[#info-1]] = module.db.profile[info[#info-1]] + info.arg
