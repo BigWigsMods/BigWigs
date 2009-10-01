@@ -340,33 +340,30 @@ local function getOptionNameAndDesc(module, bossOption)
 	end
 end
 
-local function getAdvancedToggleOption(parent, module, bossOption)
+local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText("Back")
 	back:SetFullWidth(true)
-	-- back:SetWidth(350)
 	back:SetCallback("OnClick", function()
-		showBossOptions(parent, nil, parent:GetUserData("bossIndex"))
+		showBossOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(name)
 	check:SetValue(module.db.profile[dbKey])
 	check:SetFullWidth(true)
-	--check:SetWidth(350)
 	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
 
 	return back, check
 end
 
-local function getDefaultToggleOption(parent, module, bossOption)
+local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(name)
 	check:SetValue(module.db.profile[dbKey])
-	check:SetFullWidth(true)
-	-- check:SetWidth(300)
+	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
@@ -375,18 +372,18 @@ local function getDefaultToggleOption(parent, module, bossOption)
 	else
 		local button = AceGUI:Create("Button")
 		button:SetText("+")
-		button:SetFullWidth(true)
-		-- button:SetWidth(40)
+		button:SetRelativeWidth(0.15)
 		button:SetCallback("OnClick", function()
-			parent:ReleaseChildren()
-			parent:AddChildren(getAdvancedToggleOption(parent, module, bossOption))
+			scrollFrame:ReleaseChildren()
+			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
 		end)
 		return check, button
 	end
 end
 
 function showBossOptions(widget, event, group)
-	widget:ReleaseChildren()
+	local scrollFrame = widget:GetUserData("parent")
+	scrollFrame:ReleaseChildren()
 	local modules = widget:GetUserData("list")
 	local module = BigWigs:GetBossModule(modules[group])
 	widget:SetUserData("bossIndex", group)
@@ -394,7 +391,7 @@ function showBossOptions(widget, event, group)
 		print("No toggle options for " .. module.displayName .. ".")
 	else
 		for i, option in next, module.toggleOptions do
-			widget:AddChildren(getDefaultToggleOption(widget, module, option))
+			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
 		end
 	end
 end
@@ -425,10 +422,10 @@ local function onZoneShow(frame)
 	sframe:PauseLayout()
 	sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
 	sframe:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
+	sframe:SetLayout("Fill")
 	sframe:SetFullWidth(true)
-	sframe:SetLayout("Flow")
 	local dropdown = AceGUI:Create("DropdownGroup")
-	dropdown:SetFullWidth(true)
+	dropdown:SetLayout("Fill")
 	dropdown:SetCallback("OnGroupSelected", showBossOptions)
 	local list = {}
 	for i, module in next, zoneModules[zone] do
@@ -436,13 +433,19 @@ local function onZoneShow(frame)
 	end
 	dropdown:SetUserData("list", list)
 	dropdown:SetGroupList(list)
-	dropdown:SetGroup(1)
-	sframe:AddChildren(dropdown)
+	local scroll = AceGUI:Create("ScrollFrame")
+	scroll:SetLayout("Flow")
+	scroll:SetFullWidth(true)
+	scroll:SetFullHeight(true)
+	dropdown:AddChild(scroll)
+	sframe:AddChild(dropdown)
 	sframe.frame:SetParent(frame)
 	sframe:ResumeLayout()
 	sframe:DoLayout()
 	sframe.frame:Show()
-	frame.container = sframe
+	frame.container = scroll
+	dropdown:SetUserData("parent", scroll)
+	dropdown:SetGroup(1)
 end
 
 local function onZoneHide(frame)
