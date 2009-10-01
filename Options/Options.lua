@@ -340,10 +340,25 @@ local function getOptionNameAndDesc(module, bossOption)
 	end
 end
 
+local colors = { "Important", "Personal", "Urgent", "Attention", "Positive" }
+local function getMessageColorDropdown(module, bossOption)
+	local dropdown = AceGUI:Create("Dropdown")
+	local colorModule = BigWigs:GetPlugin("Colors")
+	local currentColors = {}
+	for i, color in next, colors do
+		local r, g, b = colorModule:MsgColor(color)
+		currentColors[color] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. color .. "|r"
+	end
+	dropdown:SetList(currentColors)
+	dropdown:SetLabel(" ")
+	dropdown:SetRelativeWidth(0.5)
+	return dropdown
+end
+
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local back = AceGUI:Create("Button")
-	back:SetText("Back")
+	back:SetText("<< Back")
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		showBossOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
@@ -355,7 +370,39 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
 
-	return back, check
+	-- XXX should only show these things if applicable, just show them all for now
+	local message = AceGUI:Create("CheckBox")
+	message:SetLabel("Messages")
+	message:SetValue(true)
+	message:SetRelativeWidth(0.5)
+	-- XXX what if a option has several messages attached to it, with different colors?
+	local messageColor = getMessageColorDropdown(module, bossOption)
+
+	local bar = AceGUI:Create("CheckBox")
+	bar:SetLabel("Bar")
+	bar:SetValue(true)
+	bar:SetRelativeWidth(0.5)
+	
+	-- XXX how do we reset to default here? perhaps we just need a "Default" option at the
+	-- bottom of the advanced options?
+	local barColor = AceGUI:Create("ColorPicker")
+	barColor:SetLabel(" ")
+	barColor:SetHasAlpha(true)
+	barColor:SetRelativeWidth(0.5)
+
+	-- XXX missing flash and shake
+	-- XXX and also custom ones like icon, say, etc
+
+	return back, check, message, messageColor, bar, barColor
+end
+
+local function buttonClicked(widget)
+	local scrollFrame = widget:GetUserData("scrollFrame")
+	local dropdown = widget:GetUserData("dropdown")
+	local module = widget:GetUserData("module")
+	local bossOption = widget:GetUserData("bossOption")
+	scrollFrame:ReleaseChildren()
+	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
@@ -371,12 +418,15 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		return check
 	else
 		local button = AceGUI:Create("Button")
-		button:SetText("+")
+		button:SetText(">>")
 		button:SetRelativeWidth(0.15)
-		button:SetCallback("OnClick", function()
-			scrollFrame:ReleaseChildren()
-			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
-		end)
+		-- XXX gah, perhaps we should just create an anonymous function per toggle, it'll
+		-- get cleaned up anyway on release
+		button:SetUserData("scrollFrame", scrollFrame)
+		button:SetUserData("dropdown", dropdown)
+		button:SetUserData("module", module)
+		button:SetUserData("bossOption", bossOption)
+		button:SetCallback("OnClick", buttonClicked)
 		return check, button
 	end
 end
