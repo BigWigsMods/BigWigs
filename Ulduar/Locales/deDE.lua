@@ -140,7 +140,7 @@ if L then
 
 	L.eyebeam = "Fokussierter Augenstrahl"
 	L.eyebeam_desc = "Warnt, wenn du von Fokussierter Augenstrahl betroffen bist."
-	L.eyebeam_trigger = "%s fokussiert seinen Blick auf Euch!"
+	L.eyebeam_trigger = "seinen Blick auf Euch!"
 	L.eyebeam_message = "Augenstrahl: %s"
 	L.eyebeam_bar = "~Augenstrahl"
 	L.eyebeam_you = "Augenstrahl auf DIR!"

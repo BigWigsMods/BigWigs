@@ -38,12 +38,18 @@ if L then
 	L.firebomb_message = "Feuer auf DIR!"
 
 	-- Jormungars
+	L.submerge = "Eingraben"
+	L.submerge_desc = "Zeige die Zeit bis zum nächsten Eingraben der Würmer."
 	L.spew = "Ätzender/Geschmolzener Auswurf"
 	L.spew_desc = "Warnt vor Ätzender/Geschmolzener Auswurf."
 
+	L.spray = "Sprühen"
+	L.spray_desc = "Zeige einen Timer für Paralysierendes und Brennendes Sprühen."
 	L.slime_message = "Schleimpfütze auf DIR!"
 	L.burn_spell = "Galle"
 	L.toxin_spell = "Toxin"
+	L.submerge = "Eingraben"
+	L.spray = "~Sprühen"
 
 	-- Icehowl
 	L.butt_bar = "~Kopfstoß"
