@@ -562,7 +562,7 @@ local function onZoneShow(frame)
 	sframe:ResumeLayout()
 	sframe:DoLayout()
 	sframe.frame:Show()
-	frame.container = scroll
+	frame.container = sframe
 	dropdown:SetUserData("parent", scroll)
 	dropdown:SetGroup(1)
 end
