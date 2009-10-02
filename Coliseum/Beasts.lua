@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {"snobold", 67477, 66330, {67472, "FLASHNSHAKE"}, "submerge", {67641, "FLASHNSHAKE"}, "spew", "sprays", {67618, "FLASHNSHAKE"}, 66869, 68335, "proximity", 67654, {"charge", "ICON", "FLASHNSHAKE"}, 66758, 66759, "berserk", "bosskill"}
+mod.toggleOptions = {"snobold", 67477, 66330, {67472, "FLASHNSHAKE"}, "submerge", {67641, "FLASHNSHAKE"}, "spew", "sprays", {67618, "FLASHNSHAKE"}, 66869, 68335, "proximity", 67654, {"charge", "ICON", "FLASHNSHAKE"}, 66758, 66759, "bosses", "berserk", "bosskill"}
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	submerge = "Jormungars",
