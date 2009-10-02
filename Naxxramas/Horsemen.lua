@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("The Four Horsemen", "Naxxramas")
 if not mod then return end
 -- 16063 - zeliek, 16064 - thane, 16065 - blaumeux, 30549 - baron
 mod:RegisterEnableMob(16063, 16064, 16065, 30549)
-mod.toggleOptions = {"mark", 28884, 28864, 28883, "bosskill"}
+mod.toggleOptions = {"mark", 28884, 28863, 28883, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
