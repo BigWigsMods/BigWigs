@@ -405,28 +405,39 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	group:SetFullWidth(true)
 	group:SetTitle("Advanced options")
 
+	
+	local dbv = module.db.profile[dbKey]
+	
 	do
-		-- XXX should only show these things if applicable, just show them all for now
-		local message = AceGUI:Create("CheckBox")
-		message:SetLabel(colorize("Messages"))
-		message:SetValue(true)
-		message:SetFullWidth(true)
-		message:SetDescription(messageDesc)
-
-		local bar = AceGUI:Create("CheckBox")
-		bar:SetLabel(colorize("Bar"))
-		bar:SetValue(true)
-		bar:SetFullWidth(true)
-		bar:SetDescription(barDesc)
-	
-		local fns = AceGUI:Create("CheckBox")
-		fns:SetLabel(colorize("Flash and shake"))
-		fns:SetValue(true)
-		fns:SetFullWidth(true)
-		fns:SetDescription(fnsDesc)
-	
+		local message, bar, fns
+		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+			-- XXX should only show these things if applicable, just show them all for now
+			message = AceGUI:Create("CheckBox")
+			message:SetLabel(colorize("Messages"))
+			message:SetValue(true)
+			message:SetFullWidth(true)
+			message:SetDescription(messageDesc)
+			group:AddChildren(message)
+		end
+		if bit.band(dbv, C.BAR) == C.BAR then
+			bar = AceGUI:Create("CheckBox")
+			bar:SetLabel(colorize("Bars"))
+			bar:SetValue(true)
+			bar:SetFullWidth(true)
+			bar:SetDescription(barDesc)
+			group:AddChildren(bar)
+		end
+		
+		if bit.band(dbv, C.FLASHNSHAKE) == C.FLASHNSHAKE then
+			fns = AceGUI:Create("CheckBox")
+			fns:SetLabel(colorize("Flash and shake"))
+			fns:SetValue(true)
+			fns:SetFullWidth(true)
+			fns:SetDescription(fnsDesc)
+			group:AddChildren(fns)
+		end
 		-- XXX missing custom ones like icon, say, etc
-		group:AddChildren(message, bar, fns)
+		-- group:AddChildren(message, bar, fns)
 	end
 
 	local emphasize = AceGUI:Create("InlineGroup")
@@ -470,8 +481,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local button = AceGUI:Create("Button")
 	button:SetText(">>")
 	button:SetRelativeWidth(0.15)
-	-- XXX gah, perhaps we should just create an anonymous function per toggle, it'll
-	-- get cleaned up anyway on release
+	-- userdata baby
 	button:SetUserData("scrollFrame", scrollFrame)
 	button:SetUserData("dropdown", dropdown)
 	button:SetUserData("module", module)
