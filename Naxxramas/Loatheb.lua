@@ -93,10 +93,10 @@ function mod:Deathbloom(_, spellId, _, _, spellName)
 end
 
 function mod:Doom(_, spellId)
-	self:IfMessage(L["doomwarn"]:format(doomCount, doomTime), "Urgent", spellId)
+	self:IfMessage(29204, L["doomwarn"]:format(doomCount, doomTime), "Urgent", spellId)
 	doomCount = doomCount + 1
-	self:Bar(L["doombar"]:format(doomCount), doomTime, spellId)
-	self:DelayedMessage(doomTime - 5, L["doomwarn5sec"]:format(doomCount), "Urgent")
+	self:Bar(29204, L["doombar"]:format(doomCount), doomTime, spellId)
+	self:DelayedMessage(29204, doomTime - 5, L["doomwarn5sec"]:format(doomCount), "Urgent")
 end
 
 function mod:Spore()
