@@ -6,6 +6,7 @@ options:SetEnabledState(true)
 local C = BigWigs.C
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
+local common = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local ac = LibStub("AceConfig-3.0")
@@ -141,6 +142,7 @@ local acOptions = {
 			name = " ",
 			order = 50,
 			width = "full",
+			hidden = function() return not icon end,
 		},
 		footer = {
 			type = "description",
@@ -450,8 +452,6 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		return check, button
 	end
 end
-
-local common = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 function showBossOptions(widget, event, group)
 	local scrollFrame = widget:GetUserData("parent")
