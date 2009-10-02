@@ -333,21 +333,22 @@ end
 
 local showBossOptions = nil
 
-local function getOptionNameAndDesc(module, bossOption)
+local function getOptionDetails(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
 	local option = bossOption
 	local t = type(option)
 	if t == "table" then option = option[1]; t = type(option) end
+	local bf = module.toggleDefaults[option]
 	if t == "string" then
 		if customBossOptions[option] then
-			return option, customBossOptions[option][1], customBossOptions[option][2]
+			return option, customBossOptions[option][1], customBossOptions[option][2], bf
 		else
-			return option, module.locale[option], module.locale[option .. "_desc"]
+			return option, module.locale[option], module.locale[option .. "_desc"], bf
 		end
 	elseif t == "number" then
 		local spellName = GetSpellInfo(option)
 		if not spellName then error(("Invalid option %d in module %s."):format(option, module.displayName)) end
-		return option, spellName, getSpellDescription(option)
+		return option, spellName, getSpellDescription(option), bf
 	end
 end
 
@@ -357,7 +358,7 @@ local fnsDesc = "Some abilities might be more important than others. If you want
 local emphasizeDesc = "Enabling this will SUPER EMPHASIZE any messages or bars associated with this encounter ability. Messages will be bigger, bars will flash and have a different color, sounds will be used to count down when the ability is imminent. Basically you will notice it."
 
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
+	local dbKey, name, desc = getOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText("<< Back")
 	back:SetFullWidth(true)
@@ -366,6 +367,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	end)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize(name))
+	check:SetTriState(true)
 	check:SetValue(module.db.profile[dbKey])
 	check:SetFullWidth(true)
 	check:SetUserData("key", dbKey)
@@ -428,29 +430,26 @@ local function buttonClicked(widget)
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
+	local dbKey, name, desc = getOptionDetails(module, bossOption)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize(name))
+	check:SetTriState(true)
 	check:SetValue(module.db.profile[dbKey])
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
-	local customBossOptions = BigWigs:GetCustomBossOptions()
-	if customBossOptions[dbKey] then
-		return check
-	else
-		local button = AceGUI:Create("Button")
-		button:SetText(">>")
-		button:SetRelativeWidth(0.15)
-		-- XXX gah, perhaps we should just create an anonymous function per toggle, it'll
-		-- get cleaned up anyway on release
-		button:SetUserData("scrollFrame", scrollFrame)
-		button:SetUserData("dropdown", dropdown)
-		button:SetUserData("module", module)
-		button:SetUserData("bossOption", bossOption)
-		button:SetCallback("OnClick", buttonClicked)
-		return check, button
-	end
+
+	local button = AceGUI:Create("Button")
+	button:SetText(">>")
+	button:SetRelativeWidth(0.15)
+	-- XXX gah, perhaps we should just create an anonymous function per toggle, it'll
+	-- get cleaned up anyway on release
+	button:SetUserData("scrollFrame", scrollFrame)
+	button:SetUserData("dropdown", dropdown)
+	button:SetUserData("module", module)
+	button:SetUserData("bossOption", bossOption)
+	button:SetCallback("OnClick", buttonClicked)
+	return check, button
 end
 
 function showBossOptions(widget, event, group)

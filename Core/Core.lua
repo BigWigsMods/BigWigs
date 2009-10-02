@@ -411,7 +411,7 @@ do
 		end
 
 		if module.toggleOptions then
-			local opts = {}
+			module.toggleDefaults = {}
 			local bf
 			for k, v in next, module.toggleOptions do
 				bf = 0
@@ -434,14 +434,14 @@ do
 					end
 				end
 				if t == "string"  then
-					opts[v] = bf
+					module.toggleDefaults[v] = bf
 				elseif t == "number" and v > 1 then
 					local n = GetSpellInfo(v)
 					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
-					opts[n] = bf
+					module.toggleDefaults[n] = bf
 				end
 			end
-			module.db = self.db:RegisterNamespace(name, { profile = opts })
+			module.db = self.db:RegisterNamespace(name, { profile = module.toggleDefaults })
 		end
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
