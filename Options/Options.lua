@@ -340,21 +340,6 @@ local function getOptionNameAndDesc(module, bossOption)
 	end
 end
 
-local colors = { "Important", "Personal", "Urgent", "Attention", "Positive" }
-local function getMessageColorDropdown(module, bossOption)
-	local dropdown = AceGUI:Create("Dropdown")
-	local colorModule = BigWigs:GetPlugin("Colors")
-	local currentColors = {}
-	for i, color in next, colors do
-		local r, g, b = colorModule:MsgColor(color)
-		currentColors[color] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. color .. "|r"
-	end
-	dropdown:SetList(currentColors)
-	dropdown:SetLabel(" ")
-	dropdown:SetRelativeWidth(0.5)
-	return dropdown
-end
-
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local back = AceGUI:Create("Button")
@@ -375,25 +360,16 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	message:SetLabel("Messages")
 	message:SetValue(true)
 	message:SetRelativeWidth(0.5)
-	-- XXX what if a option has several messages attached to it, with different colors?
-	local messageColor = getMessageColorDropdown(module, bossOption)
 
 	local bar = AceGUI:Create("CheckBox")
 	bar:SetLabel("Bar")
 	bar:SetValue(true)
 	bar:SetRelativeWidth(0.5)
-	
-	-- XXX how do we reset to default here? perhaps we just need a "Default" option at the
-	-- bottom of the advanced options?
-	local barColor = AceGUI:Create("ColorPicker")
-	barColor:SetLabel(" ")
-	barColor:SetHasAlpha(true)
-	barColor:SetRelativeWidth(0.5)
 
 	-- XXX missing flash and shake
 	-- XXX and also custom ones like icon, say, etc
 
-	return back, check, message, messageColor, bar, barColor
+	return back, check, message, bar
 end
 
 local function buttonClicked(widget)
@@ -408,7 +384,9 @@ end
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(name)
+	local r, g, b = GameFontNormal:GetTextColor()
+	local n = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. name .. "|r"
+	check:SetLabel(n)
 	check:SetValue(module.db.profile[dbKey])
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
@@ -431,6 +409,8 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	end
 end
 
+local common = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+
 function showBossOptions(widget, event, group)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
@@ -441,6 +421,19 @@ function showBossOptions(widget, event, group)
 		print("No toggle options for " .. module.displayName .. ".")
 	else
 		for i, option in next, module.toggleOptions do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if module.optionHeaders and module.optionHeaders[o] then
+				local heading = module.optionHeaders[o]
+				local text = nil
+				if type(heading) == "number" then text = GetSpellInfo(heading)
+				elseif common[heading] then text = common[heading]
+				else text = BigWigs:Translate(heading) end
+				local header = AceGUI:Create("Heading")
+				header:SetText(text)
+				header:SetFullWidth(true)
+				scrollFrame:AddChild(header)
+			end
 			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
 		end
 	end
