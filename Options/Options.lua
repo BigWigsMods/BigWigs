@@ -348,9 +348,33 @@ local function getOptionDetails(module, bossOption)
 	elseif t == "number" then
 		local spellName = GetSpellInfo(option)
 		if not spellName then error(("Invalid option %d in module %s."):format(option, module.displayName)) end
-		return option, spellName, getSpellDescription(option), bf
+		return spellName, spellName, getSpellDescription(option), bf
 	end
 end
+
+local function getMasterOption(self)
+	local key = self:GetUserData("key")
+	local module = self:GetUserData("module")
+	if module.db.profile[key] == 0 then
+		return false -- nothing go away
+	end
+	if bit.band(module.db.profile[key], module.toggleDefaults[key]) == module.toggleDefaults[key] then
+		return true -- all default baby
+	end
+	return nil -- some options set
+end
+
+local function masterOptionToggled(self, event, value)
+	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
+	local key = self:GetUserData("key")
+	local module = self:GetUserData("module")
+	if value then
+		module.db.profile[key] = module.toggleDefaults[key]
+	else
+		module.db.profile[key] = 0
+	end
+end
+
 
 local messageDesc = "Most encounter abilities come with one or more messages that Big Wigs will show on your screen. If you disable this option, none of the messages attached to this option, if any, will be displayed."
 local barDesc = "Bars are shown for some encounter abilities when appropriate. If this ability is accompanied by a bar that you want to hide, disable this option."
@@ -368,14 +392,15 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize(name))
 	check:SetTriState(true)
-	check:SetValue(module.db.profile[dbKey])
+
 	check:SetFullWidth(true)
 	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
 	check:SetUserData("module", module)
 	check:SetUserData("option", bossOption)
-	--check:SetCallback("OnValueChanged", masterOptionToggled)
-
+	check:SetCallback("OnValueChanged", masterOptionToggled)
+	check:SetValue(getMasterOption(check))
+	
 	local group = AceGUI:Create("InlineGroup")
 	group:SetFullWidth(true)
 	group:SetTitle("Advanced options")
@@ -434,11 +459,14 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize(name))
 	check:SetTriState(true)
-	check:SetValue(module.db.profile[dbKey])
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
+	check:SetUserData("module", module)
+	check:SetUserData("option", bossOption)
 	check:SetDescription(desc)
-
+	check:SetCallback("OnValueChanged", masterOptionToggled)
+	check:SetValue(getMasterOption(check))
+	
 	local button = AceGUI:Create("Button")
 	button:SetText(">>")
 	button:SetRelativeWidth(0.15)
