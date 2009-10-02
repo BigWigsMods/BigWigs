@@ -320,6 +320,15 @@ do
 	end
 end
 
+local colorize = nil
+do  -- XXX make this a metatable like the coloredNames in many addons
+	local r, g, b
+	function colorize(input)
+		if not r then r, g, b = GameFontNormal:GetTextColor() end
+		return "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. input .. "|r"
+	end
+end
+
 local showBossOptions = nil
 
 local function getOptionNameAndDesc(module, bossOption)
@@ -340,6 +349,11 @@ local function getOptionNameAndDesc(module, bossOption)
 	end
 end
 
+local messageDesc = "Most encounter abilities come with one or more messages that Big Wigs will show on your screen. If you disable this option, none of the messages attached to this option, if any, will be displayed."
+local barDesc = "Bars are shown for some encounter abilities when appropriate. If this ability is accompanied by a bar that you want to hide, disable this option."
+local fnsDesc = "Some abilities might be more important than others. If you want your screen to flash and shake when this ability is imminent or used, check this option."
+local emphasizeDesc = "Enabling this will SUPER EMPHASIZE any messages or bars associated with this encounter ability. Messages will be bigger, bars will flash and have a different color, sounds will be used to count down when the ability is imminent. Basically you will notice it."
+
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local back = AceGUI:Create("Button")
@@ -349,27 +363,57 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 		showBossOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(name)
+	check:SetLabel(colorize(name))
 	check:SetValue(module.db.profile[dbKey])
 	check:SetFullWidth(true)
 	check:SetUserData("key", dbKey)
 	check:SetDescription(desc)
+	check:SetUserData("module", module)
+	check:SetUserData("option", bossOption)
+	--check:SetCallback("OnValueChanged", masterOptionToggled)
 
-	-- XXX should only show these things if applicable, just show them all for now
-	local message = AceGUI:Create("CheckBox")
-	message:SetLabel("Messages")
-	message:SetValue(true)
-	message:SetRelativeWidth(0.5)
+	local group = AceGUI:Create("InlineGroup")
+	group:SetFullWidth(true)
+	group:SetTitle("Advanced options")
 
-	local bar = AceGUI:Create("CheckBox")
-	bar:SetLabel("Bar")
-	bar:SetValue(true)
-	bar:SetRelativeWidth(0.5)
+	do
+		-- XXX should only show these things if applicable, just show them all for now
+		local message = AceGUI:Create("CheckBox")
+		message:SetLabel(colorize("Messages"))
+		message:SetValue(true)
+		message:SetFullWidth(true)
+		message:SetDescription(messageDesc)
 
-	-- XXX missing flash and shake
-	-- XXX and also custom ones like icon, say, etc
+		local bar = AceGUI:Create("CheckBox")
+		bar:SetLabel(colorize("Bar"))
+		bar:SetValue(true)
+		bar:SetFullWidth(true)
+		bar:SetDescription(barDesc)
+	
+		local fns = AceGUI:Create("CheckBox")
+		fns:SetLabel(colorize("Flash and shake"))
+		fns:SetValue(true)
+		fns:SetFullWidth(true)
+		fns:SetDescription(fnsDesc)
+	
+		-- XXX missing custom ones like icon, say, etc
+		group:AddChildren(message, bar, fns)
+	end
 
-	return back, check, message, bar
+	local emphasize = AceGUI:Create("InlineGroup")
+	emphasize:SetFullWidth(true)
+	emphasize:SetTitle("Emphasize")
+	
+	do
+		local enable = AceGUI:Create("CheckBox")
+		enable:SetLabel(colorize("Enable"))
+		enable:SetValue(false)
+		enable:SetFullWidth(true)
+		enable:SetDescription(emphasizeDesc)
+		
+		emphasize:AddChildren(enable)
+	end
+	return back, check, group, emphasize
 end
 
 local function buttonClicked(widget)
@@ -384,9 +428,7 @@ end
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionNameAndDesc(module, bossOption)
 	local check = AceGUI:Create("CheckBox")
-	local r, g, b = GameFontNormal:GetTextColor()
-	local n = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. name .. "|r"
-	check:SetLabel(n)
+	check:SetLabel(colorize(name))
 	check:SetValue(module.db.profile[dbKey])
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
