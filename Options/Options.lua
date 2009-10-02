@@ -411,7 +411,6 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	do
 		local message, bar, fns
 		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
-			-- XXX should only show these things if applicable, just show them all for now
 			message = AceGUI:Create("CheckBox")
 			message:SetLabel(colorize("Messages"))
 			message:SetValue(true)
@@ -427,7 +426,6 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 			bar:SetDescription(barDesc)
 			group:AddChildren(bar)
 		end
-		
 		if bit.band(dbv, C.FLASHNSHAKE) == C.FLASHNSHAKE then
 			fns = AceGUI:Create("CheckBox")
 			fns:SetLabel(colorize("Flash and shake"))
@@ -437,7 +435,6 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 			group:AddChildren(fns)
 		end
 		-- XXX missing custom ones like icon, say, etc
-		-- group:AddChildren(message, bar, fns)
 	end
 
 	local emphasize = AceGUI:Create("InlineGroup")
