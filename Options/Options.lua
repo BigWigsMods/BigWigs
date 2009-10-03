@@ -13,7 +13,6 @@ local ac = LibStub("AceConfig-3.0")
 local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
-local zoneframes = {}
 
 local pluginOptions = {
 	name = L["Customize ..."],
@@ -183,18 +182,15 @@ function options:Open()
 			break
 		end
 	end
-	local enableModule = nil
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
 			local menu = module.otherMenu or module.zoneName
-			if zoneframes[menu] then
-				InterfaceOptionsFrame_OpenToCategory(zoneframes[menu])
-				-- NOTE: Don't break, but return, since we OpenToCategory("Big Wigs") below!
-				return
-			end
+			InterfaceOptionsFrame_OpenToCategory(menu)
 		end
 	end
-	InterfaceOptionsFrame_OpenToCategory("Big Wigs")
+	if not InterfaceOptionsFrame:IsShown() then
+		InterfaceOptionsFrame_OpenToCategory("Big Wigs")
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -583,7 +579,6 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 		frame:Hide()
 		frame:SetScript("OnShow", onZoneShow)
 		frame:SetScript("OnHide", onZoneHide)
-		zoneframes[zone] = frame
 		InterfaceOptions_AddCategory(frame)
 		zoneModules[zone] = {}
 	end
