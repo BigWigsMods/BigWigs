@@ -150,8 +150,8 @@ function mod:Icehowl()
 	self:IfMessage("bosses", m, "Positive")
 	self:Bar("bosses", m, 10, "INV_Misc_MonsterHorn_07")
 	self:CancelScheduledEvent("Submerge")
-	self:TriggerEvent("BigWigs_StopBar", self, L["spray"])
-	self:TriggerEvent("BigWigs_StopBar", self, L["submerge"])
+	self:SendMessage("BigWigs_StopBar", self, L["spray"])
+	self:SendMessage("BigWigs_StopBar", self, L["submerge"])
 	if difficulty > 2 then
 		self:Berserk(220, true, icehowl)
 	end
