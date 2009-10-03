@@ -149,6 +149,9 @@ function mod:Icehowl()
 	local m = L["boss_incoming"]:format(icehowl)
 	self:IfMessage("bosses", m, "Positive")
 	self:Bar("bosses", m, 10, "INV_Misc_MonsterHorn_07")
+	self:CancelScheduledEvent("Submerge")
+	self:TriggerEvent("BigWigs_StopBar", self, L["spray"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["submerge"])
 	if difficulty > 2 then
 		self:Berserk(220, true, icehowl)
 	end
@@ -212,7 +215,7 @@ do
 		sprayTimer = sprayTimer == 10 and 20 or 10
 	end
 
-	function mod:Spray(spellId, spellName)
+	function mod:Spray(_, spellId, _, _, spellName)
 		self:IfMessage("sprays", spellName, "Important", spellId)
 		self:Bar("sprays", L["spray"], 20, 5740)
 	end
