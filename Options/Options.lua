@@ -14,6 +14,8 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
+local zoneModules = {}
+
 local pluginOptions = {
 	name = L["Customize ..."],
 	type = "group",
@@ -172,6 +174,11 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_PluginRegistered")
+
+	local zones = BigWigsLoader:GetZoneMenus()
+	if zones then
+		for zone in pairs(zones) do self:NewZonePanel(zone) end
+	end
 end
 
 
@@ -480,7 +487,7 @@ end
 function showBossOptions(widget, event, group)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
-	local modules = widget:GetUserData("list")
+	local modules = zoneModules[widget:GetUserData("zone")]
 	local module = BigWigs:GetBossModule(modules[group])
 	widget:SetUserData("bossIndex", group)
 	if not module.toggleOptions then
@@ -506,26 +513,12 @@ function showBossOptions(widget, event, group)
 	end
 end
 
-local zoneOptions = {}
-local function loadZone(widget, event)
-	local zone = widget:GetUserData("zone")
-	BigWigsLoader:LoadZone(zone)
-	HideUIPanel(InterfaceOptionsFrame)
-	InterfaceOptionsFrame_OpenToCategory(zone)
-end
-local function getLoadButton(zone)
-	if not BigWigsLoader:HasZone(zone) then return end
-	local button = AceGUI:Create("Button")
-	button:SetLabel(L["Load"])
-	button:SetCallback("OnClick", loadZone)
-	button:SetUserData("zone", zone)
-	button:SetFullWidth(true)
-	return button
-end
-
-local zoneModules = {}
 local function onZoneShow(frame)
 	local zone = frame.name
+
+	-- Make sure all the bosses for this zone are loaded.
+	BigWigsLoader:LoadZone(zone)
+
 	local sframe = AceGUI:Create("SimpleGroup")
 	sframe:PauseLayout()
 	sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
@@ -535,19 +528,14 @@ local function onZoneShow(frame)
 	local dropdown = AceGUI:Create("DropdownGroup")
 	dropdown:SetLayout("Fill")
 	dropdown:SetCallback("OnGroupSelected", showBossOptions)
-	local list = {}
-	for i, module in next, zoneModules[zone] do
-		tinsert(list, module.displayName)
-	end
-	dropdown:SetUserData("list", list)
-	dropdown:SetGroupList(list)
+	table.sort(zoneModules[zone])
+	dropdown:SetUserData("zone", zone)
+	dropdown:SetGroupList(zoneModules[zone])
 	local scroll = AceGUI:Create("ScrollFrame")
 	scroll:SetLayout("Flow")
 	scroll:SetFullWidth(true)
 	scroll:SetFullHeight(true)
 	dropdown:AddChild(scroll)
-	local button = getLoadButton(zone)
-	if button then sframe:AddChild(button) end
 	sframe:AddChild(dropdown)
 	sframe.frame:SetParent(frame)
 	sframe:ResumeLayout()
@@ -564,25 +552,39 @@ local function onZoneHide(frame)
 	frame.container = nil
 end
 
+do
+	local panels = {}
+	local noop = function() end
+	function options:NewZonePanel(zone)
+		if not panels[zone] then
+			local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
+			frame.name = zone
+			frame.parent = "Big Wigs"
+			frame.addonname = "BigWigs"
+			frame.okay = noop
+			frame.cancel = noop
+			frame.default = noop
+			frame.refresh = noop
+			frame:Hide()
+			frame:SetScript("OnShow", onZoneShow)
+			frame:SetScript("OnHide", onZoneHide)
+			InterfaceOptions_AddCategory(frame)
+			panels[zone] = frame
+		end
+		return panels[zone]
+	end
+end
+
 local registered = {}
 function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	if registered[module.name] then return end
 	registered[module.name] = true
 	if not module.toggleOptions then return end
 	local zone = module.otherMenu or module.zoneName
-	if not zone then print(module.name) end
-	if not zoneModules[zone] then
-		local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
-		frame.name = zone
-		frame.parent = "Big Wigs"
-		frame.addonname = "BigWigs"
-		frame:Hide()
-		frame:SetScript("OnShow", onZoneShow)
-		frame:SetScript("OnHide", onZoneHide)
-		InterfaceOptions_AddCategory(frame)
-		zoneModules[zone] = {}
-	end
-	tinsert(zoneModules[zone], module)
+	if not zone then error(module.name .. " doesn't have any valid zone set!") end
+	self:NewZonePanel(zone)
+	if not zoneModules[zone] then zoneModules[zone] = {} end
+	tinsert(zoneModules[zone], module.displayName)
 end
 
 function options:BigWigs_PluginRegistered(message, moduleName, module)
