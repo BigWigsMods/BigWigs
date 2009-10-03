@@ -146,7 +146,7 @@ local acOptions = {
 		},
 		footer = {
 			type = "description",
-			name = L["|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r\n|cff44ff44"] .. BIGWIGS_RELEASE_STRING .. "|r",
+			name = "|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r",
 			order = 51,
 			width = "full",
 			fontSize = "medium",
