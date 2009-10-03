@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Thorim", "Ulduar")
 if not mod then return end
 -- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
 mod:RegisterEnableMob(32865, 32882, 32872)
-mod.toggleOptions = {{62042, "ICON"}, 62331, {62017, "FLASHNSHAKE"}, 62338, {62526, "ICON", "SAY"}, 62279, "proximity", "hardmode", "phase", "bosskill"}
+mod.toggleOptions = {{62042, "ICON"}, 62016, 62331, {62017, "FLASHNSHAKE"}, 62338, {62526, "ICON", "SAY"}, 62279, 62130, "proximity", "hardmode", "phase", "bosskill"}
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
@@ -118,17 +118,17 @@ function mod:Hammer(player, spellId, _, _, spellName)
 end
 
 function mod:Strike(player, spellId, _, _, spellName)
-	self:TargetMessage(spellName, player, "Attention", spellId)
-	self:Bar(spellName..": "..player, 15, spellId)
+	self:TargetMessage(62130, spellName, player, "Attention", spellId)
+	self:Bar(62130, spellName..": "..player, 15, spellId)
 end
 
 function mod:StrikeCooldown(player, spellId)
-	self:Bar(L["strike_bar"], 25, spellId)
+	self:Bar(62130, L["strike_bar"], 25, spellId)
 end
 
 function mod:Orb(_, spellId, _, _, spellName)
-	self:IfMessage(spellName, "Urgent", spellId)
-	self:Bar(spellName, 15, spellId)
+	self:IfMessage(62016, spellName, "Urgent", spellId)
+	self:Bar(62016, spellName, 15, spellId)
 end
 
 local last = 0
