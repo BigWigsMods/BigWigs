@@ -623,18 +623,7 @@ end
 
 function plugin:OnSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick then return end
-	local num = GetNumRaidMembers()
-	for i = 1, num do
-		local name, rank = GetRaidRosterInfo(i)
-		if name == nick then
-			if rank == 0 then
-				return
-			else
-				break
-			end
-		end
-	end
-
+	if not UnitIsRaidOfficer(nick) then return end
 	startCustomBar(rest, nick, false)
 end
 

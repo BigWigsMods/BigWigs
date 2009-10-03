@@ -323,12 +323,15 @@ do
 end
 
 local colorize = nil
-do  -- XXX make this a metatable like the coloredNames in many addons
+do
 	local r, g, b
-	function colorize(input)
-		if not r then r, g, b = GameFontNormal:GetTextColor() end
-		return "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. input .. "|r"
-	end
+	colorize = setmetatable({}, { __index =
+		function(self, key)
+			if not r then r, g, b = GameFontNormal:GetTextColor() end
+			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			return self[key]
+		end
+	})
 end
 
 local showBossOptions = nil
@@ -390,7 +393,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 		showBossOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(colorize(name))
+	check:SetLabel(colorize[name])
 	check:SetTriState(true)
 
 	check:SetFullWidth(true)
@@ -412,7 +415,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 		local message, bar, fns
 		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
 			message = AceGUI:Create("CheckBox")
-			message:SetLabel(colorize("Messages"))
+			message:SetLabel(colorize["Messages"])
 			message:SetValue(true)
 			message:SetFullWidth(true)
 			message:SetDescription(messageDesc)
@@ -420,7 +423,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 		end
 		if bit.band(dbv, C.BAR) == C.BAR then
 			bar = AceGUI:Create("CheckBox")
-			bar:SetLabel(colorize("Bars"))
+			bar:SetLabel(colorize["Bars"])
 			bar:SetValue(true)
 			bar:SetFullWidth(true)
 			bar:SetDescription(barDesc)
@@ -428,7 +431,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 		end
 		if bit.band(dbv, C.FLASHNSHAKE) == C.FLASHNSHAKE then
 			fns = AceGUI:Create("CheckBox")
-			fns:SetLabel(colorize("Flash and shake"))
+			fns:SetLabel(colorize["Flash and shake"])
 			fns:SetValue(true)
 			fns:SetFullWidth(true)
 			fns:SetDescription(fnsDesc)
@@ -443,7 +446,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	
 	do
 		local enable = AceGUI:Create("CheckBox")
-		enable:SetLabel(colorize("Enable"))
+		enable:SetLabel(colorize["Enable"])
 		enable:SetValue(false)
 		enable:SetFullWidth(true)
 		enable:SetDescription(emphasizeDesc)
@@ -466,7 +469,7 @@ end
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionDetails(module, bossOption)
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(colorize(name))
+	check:SetLabel(colorize[name])
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)

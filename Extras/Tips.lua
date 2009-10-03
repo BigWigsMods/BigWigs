@@ -341,16 +341,8 @@ end
 
 function plugin:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix ~= "BWTIP" or not self.db.profile.manual then return end
-	for i = 1, 40 do
-		local name, rank = GetRaidRosterInfo(i)
-		if not name then break end
-		if name == sender then
-			if rank > 1 then
-				self:ShowTip(message)
-			end
-			break
-		end
-	end
+	if not UnitIsRaidOfficer(sender) then return end
+	self:ShowTip(message)
 end
 
 -------------------------------------------------------------------------------
