@@ -68,7 +68,6 @@ L["Broadcast"] = true
 L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = true
 L["Raid channel"] = true
 L["Use the raid channel instead of raid warning for broadcasting messages."] = true
-L["|cffccccccMooses don't appreciate being prodded with long pointy sticks.\nContact us on irc.freenode.net/#wowace. [Ammo] and vhaarr can service all your needs.|r\n|cff44ff44"] = true
 L["Configure"] = true
 L["Test"] = true
 L["Reset positions"] = true
