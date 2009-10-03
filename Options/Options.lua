@@ -406,7 +406,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	group:SetTitle("Advanced options")
 
 	
-	local dbv = module.db.profile[dbKey]
+	local dbv = module.toggleDefaults[dbKey]
 	
 	do
 		local message, bar, fns
