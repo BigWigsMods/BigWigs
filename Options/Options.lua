@@ -46,14 +46,9 @@ local acOptions = {
 			name = L["Configure ..."],
 			desc = L["Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."],
 			func = function()
-				-- This won't hide the game menu if you opened options from there.
-				-- We don't care yet, this is temporary.
-				InterfaceOptionsFrame:Hide()
-
-				if not BigWigs:IsEnabled() then
-					-- We may be reached through the blizzard interface options these days, even if bigwigs isn't enabled, so ....
-					BigWigs:Enable()
-				end
+				HideUIPanel(InterfaceOptionsFrame)
+				HideUIPanel(GameMenuFrame)
+				if not BigWigs:IsEnabled() then BigWigs:Enable() end
 				options:SendMessage("BigWigs_StartConfigureMode")
 				options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 			end,
@@ -154,9 +149,6 @@ local acOptions = {
 	},
 }
 
-local SetZoneMenus = nil -- function defined later
-
-
 function options:OnInitialize()
 	BigWigsLoader:RemoveInterfaceOptions()
 
@@ -170,8 +162,6 @@ function options:OnInitialize()
 end
 
 function options:OnEnable()
-	--SetZoneMenus(BigWigsLoader:GetZoneMenus())
-
 	for name, module in BigWigs:IterateBossModules() do
 		self:BigWigs_BossModuleRegistered("BigWigs_BossModuleRegistered", name, module)
 	end
@@ -198,8 +188,8 @@ function options:Open()
 		if module:IsEnabled() then
 			local menu = module.otherMenu or module.zoneName
 			if zoneframes[menu] then
-				acd:SelectGroup("Big Wigs: "..menu, module.name)
 				InterfaceOptionsFrame_OpenToCategory(zoneframes[menu])
+				-- NOTE: Don't break, but return, since we OpenToCategory("Big Wigs") below!
 				return
 			end
 		end
@@ -521,15 +511,12 @@ function showBossOptions(widget, event, group)
 end
 
 local zoneOptions = {}
-
-local function loadZone(k, v)
-	local zone = k.arg
+local function loadZone(widget, event)
+	local zone = widget:GetUserData("zone")
 	BigWigsLoader:LoadZone(zone)
-	acr:NotifyChange(zone)
+	HideUIPanel(InterfaceOptionsFrame)
+	InterfaceOptionsFrame_OpenToCategory(zone)
 end
-
-local zoneModules = {}
-
 local function getLoadButton(zone)
 	if not BigWigsLoader:HasZone(zone) then return end
 	local button = AceGUI:Create("Button")
@@ -540,6 +527,7 @@ local function getLoadButton(zone)
 	return button
 end
 
+local zoneModules = {}
 local function onZoneShow(frame)
 	local zone = frame.name
 	local sframe = AceGUI:Create("SimpleGroup")
@@ -562,6 +550,8 @@ local function onZoneShow(frame)
 	scroll:SetFullWidth(true)
 	scroll:SetFullHeight(true)
 	dropdown:AddChild(scroll)
+	local button = getLoadButton(zone)
+	if button then sframe:AddChild(button) end
 	sframe:AddChild(dropdown)
 	sframe.frame:SetParent(frame)
 	sframe:ResumeLayout()
