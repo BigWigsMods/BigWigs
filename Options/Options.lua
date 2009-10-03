@@ -460,6 +460,7 @@ local function buttonClicked(widget)
 	local bossOption = widget:GetUserData("bossOption")
 	scrollFrame:ReleaseChildren()
 	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
+	scrollFrame:DoLayout()
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
@@ -512,6 +513,7 @@ function showBossOptions(widget, event, group)
 			end
 			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
 		end
+		scrollFrame:DoLayout()
 	end
 end
 
