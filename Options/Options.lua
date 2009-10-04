@@ -142,25 +142,25 @@ function options:OnInitialize()
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	
-	local about = self:GetPanel("About")
+	local about = self:GetPanel(L["About"])
 	about:SetScript("OnShow", function(frame)
 		local fields = {
-			"Main Developers",
-			"Maintainers",
-			"License",
-			"Website",
-			"Contact",
+			L["Main Developers"],
+			L["Maintainers"],
+			L["License"],
+			L["Website"],
+			L["Contact"],
 		}
 		local fieldData = {
 			"Ammo, Rabbit",
 			"Funkydude",
-			"See license.txt in the main Big Wigs folder.",
+			L["See license.txt in the main Big Wigs folder."],
 			"http://www.wowace.com/addons/big-wigs/",
-			"irc.freenode.net in the #wowace channel",
+			L["irc.freenode.net in the #wowace channel"],
 		}
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title:SetPoint("TOPLEFT", 16, -16)
-		title:SetText("About")
+		title:SetText(L["About"])
 
 		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
@@ -200,7 +200,7 @@ function options:OnInitialize()
 		title:SetWidth(frame:GetWidth() - 16)
 		title:SetJustifyH("LEFT")
 		title:SetJustifyV("TOP")
-		title:SetText("Thanks to the following for all their help in various fields of development")
+		title:SetText(L["Thanks to the following for all their help in various fields of development"])
 		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
 		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, -16)
@@ -467,19 +467,10 @@ local function getSlaveToggle(label, desc, key, module, flag, master)
 	return toggle
 end
 
-local messageDesc = "Most encounter abilities come with one or more messages that Big Wigs will show on your screen. If you disable this option, none of the messages attached to this option, if any, will be displayed."
-local barDesc = "Bars are shown for some encounter abilities when appropriate. If this ability is accompanied by a bar that you want to hide, disable this option."
-local fnsDesc = "Some abilities might be more important than others. If you want your screen to flash and shake when this ability is imminent or used, check this option."
-local iconDesc = "Big Wigs can mark characters affected by abilities with an icon. This makes them easier to spot."
-local whisperDesc = "Some effects are important enough that Big Wigs will send a whisper to the affected person."
-local sayDesc = "Chat bubbles are easy to spot. Big Wigs will use a say message to announce people nearby about an effect on you."
-local pingDesc = "Sometimes locations can be important, Big Wigs will ping the minimap so people know where you are."
-local emphasizeDesc = "Enabling this will SUPER EMPHASIZE any messages or bars associated with this encounter ability. Messages will be bigger, bars will flash and have a different color, sounds will be used to count down when the ability is imminent. Basically you will notice it."
-
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
-	back:SetText("<< Back")
+	back:SetText(L["<< Back"])
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		wipe(slaves) -- important, mastertoggled is called from the parent that has no slaves as well
@@ -499,51 +490,52 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	
 	local group = AceGUI:Create("InlineGroup")
 	group:SetFullWidth(true)
-	group:SetTitle("Advanced options")
+	group:SetTitle(L["Advanced options"])
 
-	
 	local dbv = module.toggleDefaults[dbKey]
-	
+
 	do
 		wipe(slaves)
 		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
-			local message = getSlaveToggle("Messages", messageDesc, dbKey, module, C.MESSAGE, check)
+			local message = getSlaveToggle(L["MESSAGE"], L["MESSAGE_desc"], dbKey, module, C.MESSAGE, check)
 			group:AddChildren(message)
 			table.insert(slaves, message)
 		end
 		if bit.band(dbv, C.BAR) == C.BAR then
-			local bar = getSlaveToggle("Bars", barDesc, dbKey, module, C.BAR, check)
+			local bar = getSlaveToggle(L["BAR"], L["BAR_desc"], dbKey, module, C.BAR, check)
 			group:AddChildren(bar)
 			table.insert(slaves, bar)
 		end
 		if bit.band(dbv, C.FLASHSHAKE) == C.FLASHSHAKE then
-			local fns = getSlaveToggle("Flash and shake", fnsDesc, dbKey, module, C.FLASHSHAKE, check)
+			local fns = getSlaveToggle(L["FLASHSHAKE"], L["FLASHSHAKE_desc"], dbKey, module, C.FLASHSHAKE, check)
 			group:AddChildren(fns)
 			table.insert(slaves, fns)
 		end
 		if bit.band(dbv, C.ICON) == C.ICON then
-			local icon = getSlaveToggle("Icon", iconDesc, dbKey, module, C.ICON, check)
+			local icon = getSlaveToggle(L["ICON"], L["ICON_desc"], dbKey, module, C.ICON, check)
 			group:AddChildren(icon)
 			table.insert(slaves, icon)
 		end
 		if bit.band(dbv, C.WHISPER) == C.WHISPER then
-			local whisper = getSlaveToggle("Whisper", whisperDesc, dbKey, module, C.WHISPER, check)
+			local whisper = getSlaveToggle(L["WHISPER"], L["WHISPER_desc"], dbKey, module, C.WHISPER, check)
 			group:AddChildren(whisper)
 			table.insert(slaves, whisper)
 		end
 		if bit.band(dbv, C.SAY) == C.SAY then
-			local say = getSlaveToggle("Say", sayDesc, dbKey, module, C.SAY, check)
+			local say = getSlaveToggle(L["SAY"], L["SAY_desc"], dbKey, module, C.SAY, check)
 			group:AddChildren(say)
 			table.insert(slaves, say)
 		end
 		if bit.band(dbv, C.PING) == C.PING then
-			local ping = getSlaveToggle("Ping", pingDesc, dbKey, module, C.PING, check)
+			local ping = getSlaveToggle(L["PING"], L["PING_desc"], dbKey, module, C.PING, check)
 			group:AddChildren(ping)
 			table.insert(slaves, ping)
 		end
-		local emp = getSlaveToggle("Emphasize", emphasizeDesc, dbKey, module, C.EMPHASIZE, check)
+--[[ XXX - Add this again when we're ready for it
+		local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
 		group:AddChildren(emp)
 		table.insert(slaves, emp)
+--]]
 	end
 	return back, check, group
 end
@@ -612,6 +604,7 @@ function showBossOptions(widget, event, group)
 	end
 end
 
+local sorted = {}
 local function onZoneShow(frame)
 	local zone = frame.name
 
@@ -642,7 +635,23 @@ local function onZoneShow(frame)
 	sframe.frame:Show()
 	frame.container = sframe
 	dropdown:SetUserData("parent", scroll)
-	dropdown:SetGroup(1)
+	local enabledModule = nil
+	for name, module in BigWigs:IterateBossModules() do
+		if module:IsEnabled() then
+			enabledModule = module.moduleName
+		end
+	end
+	if enabledModule then
+		dropdown:SetGroup(enabledModule)
+	else
+		-- select first one
+		wipe(sorted)
+		for k, v in pairs(zoneModules[zone]) do
+			table.insert(sorted, k)
+		end
+		table.sort(sorted)
+		dropdown:SetGroup(sorted[1])
+	end
 end
 
 local function onZoneHide(frame)
@@ -691,7 +700,8 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	if not zone then error(module.name .. " doesn't have any valid zone set!") end
 	self:GetZonePanel(zone)
 	if not zoneModules[zone] then zoneModules[zone] = {} end
-	tinsert(zoneModules[zone], module.displayName)
+	zoneModules[zone][module.moduleName] = module.displayName
+	-- tinsert(zoneModules[zone], module.displayName)
 end
 
 function options:BigWigs_PluginRegistered(message, moduleName, module)

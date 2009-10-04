@@ -262,7 +262,7 @@ function versionTooltipFunc(tt)
 	for k, v in pairs(versions.RELEASE) do
 		members[k] = nil
 		if v < highest then
-			tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+			tt:AddLine(L["|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r"])
 			return
 		end
 	end
@@ -283,7 +283,7 @@ function versionTooltipFunc(tt)
 		return
 	end
 
-	tt:AddLine("|cff00ff00Everyone is running an up-to-date Big Wigs.|r")
+	tt:AddLine(L["|cff00ff00Everyone is running an up-to-date Big Wigs.|r"])
 end
 
 function showVersions()

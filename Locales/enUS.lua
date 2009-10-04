@@ -51,6 +51,9 @@ L["|cffeda55fClick|r to enable."] = true
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = true
 L["All running modules have been disabled."] = true
 
+L["|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r"] = true
+L["|cff00ff00Everyone is running an up-to-date Big Wigs.|r"] = true
+
 -- Options.lua
 L["Customize ..."] = true
 L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = true
@@ -82,3 +85,24 @@ L["WHISPER"] = "Whisper"
 L["SAY"] = "Say"
 L["FLASHSHAKE"] = "Flash'n'shake"
 L["PING"] = "Ping"
+L["EMPHASIZE"] = "Emphasize"
+L["MESSAGE_desc"] = "Most encounter abilities come with one or more messages that Big Wigs will show on your screen. If you disable this option, none of the messages attached to this option, if any, will be displayed."
+L["BAR_desc"] = "Bars are shown for some encounter abilities when appropriate. If this ability is accompanied by a bar that you want to hide, disable this option."
+L["FLASHSHAKE_desc"] = "Some abilities might be more important than others. If you want your screen to flash and shake when this ability is imminent or used, check this option."
+L["ICON_desc"] = "Big Wigs can mark characters affected by abilities with an icon. This makes them easier to spot."
+L["WHISPER_desc"] = "Some effects are important enough that Big Wigs will send a whisper to the affected person."
+L["SAY_desc"] = "Chat bubbles are easy to spot. Big Wigs will use a say message to announce people nearby about an effect on you."
+L["PING_desc"] = "Sometimes locations can be important, Big Wigs will ping the minimap so people know where you are."
+L["EMPHASIZE_desc"] = "Enabling this will SUPER EMPHASIZE any messages or bars associated with this encounter ability. Messages will be bigger, bars will flash and have a different color, sounds will be used to count down when the ability is imminent. Basically you will notice it."
+L["Advanced options"] = true
+L["<< Back"] = true
+
+L["About"] = true
+L["Main Developers"] = true
+L["Maintainers"] = true
+L["License"] = true
+L["Website"] = true
+L["Contact"] = true
+L["See license.txt in the main Big Wigs folder."] = true
+L["irc.freenode.net in the #wowace channel"] = true
+L["Thanks to the following for all their help in various fields of development"] = true

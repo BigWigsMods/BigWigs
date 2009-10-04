@@ -28,7 +28,7 @@ local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
 		-- XXX DEBUG
-		module:SendMessage("BigWigs_Message", string.format(L["%s enabled"], module.displayName), "Core")
+		-- module:SendMessage("BigWigs_Message", string.format(L["%s enabled"], module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end
@@ -152,7 +152,6 @@ do
 		local sound = sounds[math.random(1, #sounds)]
 		addon:SendMessage("BigWigs_StartBar", addon, name, time, icon)
 		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
-		-- FIXME: ScheduleTimer only allows for one argument
 		tests[formatted] = { formatted, color, true, sound, nil, icon }
 		addon:ScheduleTimer(sendTestMessage, time, formatted)
 	end
@@ -200,19 +199,19 @@ do
 	
 	-- XXX We need to remove this error for release, since people can have boss modules that we don't have.
 	-- XXX Either custom ones or ones that are in older instances, like MC, BWL, etc.
-	local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
+	-- local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
 
 	local function onSync(sync, rest, nick)
 		if not registered[sync] then return end
 		if sync == "BossEngaged" then
 			local m = addon:GetBossModule(rest, true)
 			if not m then
-				print(bossEngagedSyncError:format(rest, nick))
+				-- print(bossEngagedSyncError:format(rest, nick))
 				return
 			end
 			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			-- XXX DEBUG
-			print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
+			-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
 			m:Engage()
 		elseif sync == "EnableModule" or sync == "Death" then
 			coreSync(sync, rest, nick)
