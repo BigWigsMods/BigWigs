@@ -487,6 +487,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 		end
 		local emp = getSlaveToggle("Emphasize", emphasizeDesc, dbKey, module, C.EMPHASIZE, check)
 		group:AddChildren(emp)
+		table.insert(slaves, emp)
 	end
 	return back, check, group
 end
