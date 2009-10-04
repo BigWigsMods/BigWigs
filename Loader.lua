@@ -307,7 +307,7 @@ function versionTooltipFunc(tt)
 end
 
 local function coloredNameVersion(name, version)
-	version = version and "|cffccccc"..version.."|r" or ""
+	version = version and "|cffcccccc("..version..")|r" or ""
 	return string.format("%s%s", coloredNames[name], version)
 end
 
