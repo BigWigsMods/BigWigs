@@ -167,7 +167,9 @@ function options:OnInitialize()
 		subtitle:SetWidth(frame:GetWidth() - 16)
 		subtitle:SetJustifyH("LEFT")
 		subtitle:SetJustifyV("TOP")
-		local notes = GetAddOnMetadata(frame.addonname, "Notes")
+		local noteKey = "Notes"
+		if GetAddOnMetadata("BigWigs", "Notes-" .. GetLocale()) then noteKey = "Notes-" .. GetLocale() end
+		local notes = GetAddOnMetadata("BigWigs", noteKey)
 		subtitle:SetText(notes .. " |cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
 
 		local anchor = nil
