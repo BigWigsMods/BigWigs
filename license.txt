@@ -1,33 +1,29 @@
-Contributions by Rabbit are copyrighted 2006-2009 by Rabbit and licensed under the
-terms of the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 license.
+=======================================================================
+DEFAULT LICENSE
+=======================================================================
 
-http://creativecommons.org/licenses/by-nc-sa/2.5/
+ANYONE COMMITTING TO BIGWIGS AUTOMATICALLY LICENSE THEIR WORK UNDER THE
+CC-BY-NC-SA 3.0 [1] LICENSE UNLESS A SPECIAL CLAUSE IS ADDED HERE.
+IF YOU DO NOT AGREE TO THESE TERMS OR WE DO NOT ACCEPT YOUR CUSTOM
+LICENSE, THEN YOU MAY NOT CONTRIBUTE TO BIG WIGS AT ALL.
 
-Contributions from other authors do not fall under this license unless stated
-otherwise.
+ALL QUESTIONS REGARDING OUR STANCE ON LISENCING SHOULD BE DIRECTED TO
+THE #wowace IRC CHANNEL ON irc.freenode.net.
 
-Any and all questions regarding our stance and licensing should be
-directed to the #wowace IRC channel on irc.freenode.net.
-
-
-
-Contributions by Funkydude are copyrighted 2006 by Funkydude and licensed under the
-terms of the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 license.
-
-http://creativecommons.org/licenses/by-nc-sa/2.5/
-
-Contributions from other authors do not fall under this license unless stated
-otherwise.
-
-Any and all questions regarding our stance and licensing should be
-directed to the #wowace IRC channel on irc.freenode.net.
+1: http://creativecommons.org/licenses/by-nc-sa/3.0/
 
 
+=======================================================================
+SPECIAL CLAUSES
+=======================================================================
 
-Contributions by Ammo are copyrighted 2006-2009 by Ammo and All Rights Reserved.
+FUNKYDUDE
+	Contributions by Funkydude are copyrighted 2006 by Funkydude and
+	licensed under the terms of the Creative Commons Attribution-
+	NonCommercial-ShareAlike 2.0 license.
+	http://creativecommons.org/licenses/by-nc-sa/2.0/
 
-Contributions from other authors do not fall under this license unless stated
-otherwise.
+AMMO
+	Contributions by Ammo are copyrighted 2006-2009 by Ammo and All
+	Rights Reserved.
 
-Any and all questions regarding our stance and licensing should be
-directed to the #wowace IRC channel on irc.freenode.net.
