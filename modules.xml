@@ -7,8 +7,6 @@
 <Include file="Plugins\locales.xml"/>
 <Include file="Plugins\modules.xml"/>
 
-<Script file="Extras\Tips.lua"/>
-
 <Include file="Northrend\locales.xml"/>
 <Include file="Northrend\modules.xml"/>
 

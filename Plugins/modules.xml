@@ -10,6 +10,7 @@
 <Script file="RaidIcon.lua"/>
 <Script file="Proximity.lua"/>
 <Script file="Flash.lua"/>
+<Script file="Tips.lua"/>
 
 </Ui>
 
