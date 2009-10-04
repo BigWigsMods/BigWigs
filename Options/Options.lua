@@ -579,7 +579,7 @@ function showBossOptions(widget, event, group)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
 	local modules = zoneModules[widget:GetUserData("zone")]
-	local module = BigWigs:GetBossModule(modules[group])
+	local module = BigWigs:GetBossModule(group)
 	widget:SetUserData("bossIndex", group)
 	if not module.toggleOptions then
 		print("No toggle options for " .. module.displayName .. ".")
