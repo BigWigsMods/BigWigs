@@ -485,22 +485,10 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 			group:AddChildren(ping)
 			table.insert(slaves, ping)
 		end
+		local emp = getSlaveToggle("Emphasize", emphasizeDesc, dbKey, module, C.EMPHASIZE, check)
+		group:AddChildren(emp)
 	end
-
-	local emphasize = AceGUI:Create("InlineGroup")
-	emphasize:SetFullWidth(true)
-	emphasize:SetTitle("Emphasize")
-	
-	do
-		local enable = AceGUI:Create("CheckBox")
-		enable:SetLabel(colorize["Enable"])
-		enable:SetValue(false)
-		enable:SetFullWidth(true)
-		enable:SetDescription(emphasizeDesc)
-		
-		emphasize:AddChildren(enable)
-	end
-	return back, check, group, emphasize
+	return back, check, group
 end
 
 local function buttonClicked(widget)
