@@ -55,12 +55,6 @@ L["Colors"] = true
 
 L["Messages"] = true
 L["Bars"] = true
-L["Short"] = true
-L["Long"] = true
-L["Short bars"] = true
-L["Long bars"] = true
-L["Color "] = true
-L["Number of colors"] = true
 L["Background"] = true
 L["Text"] = true
 L["Reset"] = true
@@ -72,7 +66,6 @@ L["Change the emphasized bar color."] = true
 
 L["Colors of messages and bars."] = true
 L["Change the color for %q messages."] = true
-L["Change the %s color."] = true
 L["Change the bar background color."] = true
 L["Change the bar text color."] = true
 L["Resets all colors to defaults."] = true
@@ -85,26 +78,14 @@ L["Positive"] = true
 L["Bosskill"] = true
 L["Core"] = true
 
-L["color_upgrade"] = "Your color values for messages and bars have been reset in order to smooth the upgrade from last version. If you want to tweak them again, right click on Big Wigs and go to Plugins -> Colors."
-
 -- Messages.lua
 
 L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
 
 L["Messages"] = true
-L["Options for message display."] = true
-
-L["BigWigs Anchor"] = true
-L["Output Settings"] = true
-
-L["Show anchor"] = true
-L["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = true
 
 L["Use colors"] = true
 L["Toggles white only messages ignoring coloring."] = true
-
-L["Scale"] = true
-L["Set the message frame scale."] = true
 
 L["Use icons"] = true
 L["Show icons next to messages, only works for Raid Warning."] = true
@@ -112,23 +93,8 @@ L["Show icons next to messages, only works for Raid Warning."] = true
 L["Class colors"] = true
 L["Colors player names in messages by their class."] = true
 
-L["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true
-L["White"] = true
-
-L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true
-
 L["Chat frame"] = true
-
-L["Test"] = true
-L["Close"] = true
-
-L["Reset position"] = true
-L["Reset the anchor position, moving it to the center of your screen."] = true
-
-L["Spawns a new test warning."] = true
-L["Hide"] = true
-L["Hides the anchors."] = true
-
+L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true
 
 -- RaidIcon.lua
 
@@ -179,27 +145,17 @@ L["Default only"] = true
 
 L["%d yards"] = true
 L["Proximity"] = true
-L["Close Players"] = true
-L["Options for the Proximity Display."] = true
-L["|cff777777Nobody|r"] = true
 L["Sound"] = true
-L["Play sound on proximity."] = true
 L["Disabled"] = true
 L["Disable the proximity display for all modules that use it."] = true
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = true
-L["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = true
 
 L.proximity = "Proximity display"
 L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
-
 L.proximityfont = "Fonts\\FRIZQT__.TTF"
 
 L["Close"] = true
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
-L["Test"] = true
-L["Perform a Proximity test."] = true
-L["Display"] = true
-L["Options for the Proximity display window."] = true
 L["Lock"] = true
 L["Locks the display in place, preventing moving and resizing."] = true
 L["Title"] = true

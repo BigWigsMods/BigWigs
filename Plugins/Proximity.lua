@@ -282,7 +282,7 @@ local function ensureDisplay()
 
 	local header = display:CreateFontString(nil, "OVERLAY")
 	header:SetFontObject(GameFontNormal)
-	header:SetText(L["Close Players"])
+	header:SetText(L["Proximity"])
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 	display.header = header
 
@@ -574,7 +574,7 @@ end
 function plugin:Close()
 	activeProximityFunction = nil
 	if anchor then
-		anchor.header:SetText(L["Close Players"])
+		anchor.header:SetText(L["Proximity"])
 		-- Just in case we were the last target of
 		-- configure mode, reset the background color.
 		anchor.background:SetTexture(0, 0, 0, 0.3)
