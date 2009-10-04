@@ -24,7 +24,7 @@ local SHAKE_Y = 10
 ------------------------------
 
 function mod:OnPluginEnable()
-	self:RegisterMessage("BigWigs_Message")
+	self:RegisterMessage("BigWigs_FlashShake")
 end
 
 ------------------------------
@@ -65,45 +65,45 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:BigWigs_Message(event, msg, color)
-	if color and color == "Personal" then
-		if not flasher then --frame creation
-			flasher = CreateFrame("Frame", "BWFlash", UIParent)
-			flasher:SetFrameStrata("BACKGROUND")
-			flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-			flasher:SetBackdropColor(0,0,1,0.55)
-			flasher:SetAllPoints( UIParent)
-			flasher:SetScript("OnShow", function (self)
-				self.elapsed = 0
+function mod:BigWigs_FlashShake(event, r, g, b)
+	if not r then
+		r, g, b = 0, 0, 1
+	end
+	if not flasher then --frame creation
+		flasher = CreateFrame("Frame", "BWFlash", UIParent)
+		flasher:SetFrameStrata("BACKGROUND")
+		flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
+		flasher:SetBackdropColor(r, g, b,0.55)
+		flasher:SetAllPoints( UIParent)
+		flasher:SetScript("OnShow", function (self)
+			self.elapsed = 0
+			self:SetAlpha(0)
+		end)
+		flasher:SetScript("OnUpdate", function (self, elapsed)
+			elapsed = self.elapsed + elapsed
+			if elapsed >= 0.8 then
+				self:Hide()
 				self:SetAlpha(0)
-			end)
-			flasher:SetScript("OnUpdate", function (self, elapsed)
-				elapsed = self.elapsed + elapsed
-				if elapsed >= 0.8 then
-					self:Hide()
-					self:SetAlpha(0)
-					return
-				end
-				local alpha = elapsed % 0.4
-				if elapsed > 0.2 then
-					alpha = 0.4 - alpha
-				end
-				self:SetAlpha(alpha * 5)
-				self.elapsed = elapsed
-			end)
-			flasher:Hide()
-		end
-		flasher:Show()
-
-		if not WorldFrame:IsProtected() then
-			if not shaker then
-				shaker = CreateFrame("Frame", "BWShaker", UIParent)
-				shaker:Hide()
-				shaker:SetScript("OnUpdate", shakeOnUpdate)
+				return
 			end
-			startShake()
+			local alpha = elapsed % 0.4
+			if elapsed > 0.2 then
+				alpha = 0.4 - alpha
+			end
+			self:SetAlpha(alpha * 5)
+			self.elapsed = elapsed
+		end)
+		flasher:Hide()
+	end
+	flasher:Show()
+
+	if not WorldFrame:IsProtected() then
+		if not shaker then
+			shaker = CreateFrame("Frame", "BWShaker", UIParent)
+			shaker:Hide()
+			shaker:SetScript("OnUpdate", shakeOnUpdate)
 		end
+		startShake()
 	end
 end
 

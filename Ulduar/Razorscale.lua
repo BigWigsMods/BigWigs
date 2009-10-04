@@ -10,7 +10,7 @@ if not mod then return end
 	33185 = Razorscale
 --]]
 mod:RegisterEnableMob(33185, 33210)
-mod.toggleOptions = {"phase", 64021, {64704, "FLASHNSHAKE"}, "harpoon", "berserk", "bosskill"}
+mod.toggleOptions = {"phase", 64021, {64704, "FLASHSHAKE"}, "harpoon", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -81,6 +81,7 @@ end
 function mod:Flame(player)
 	if player == pName then
 		self:LocalMessage(64704, L["flame_message"], "Personal", 64733, "Alarm")
+		self:FlashShake(64704)
 	end
 end
 

@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Grand Widow Faerlina", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15953)
-mod.toggleOptions = {28732, {28794, "FLASHNSHAKE"}, 28798, "bosskill"}
+mod.toggleOptions = {28732, {28794, "FLASHSHAKE"}, 28798, "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -87,6 +87,7 @@ end
 function mod:Rain(player)
 	if player == pName then
 		self:LocalMessage(28794, L["rain_message"], "Personal", 54099, "Alarm")
+		self:FlashShake(28794)
 	end
 end
 

@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(28859)
-mod.toggleOptions = {"phase", "sparks", 56152, "vortex", "breath", {"surge", "FLASHNSHAKE"}, 57429, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "sparks", 56152, "vortex", "breath", {"surge", "FLASHSHAKE"}, 57429, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -118,6 +118,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg, mob)
 	if phase == 3 and msg == L["surge_trigger"] then
 		self:LocalMessage("surge", L["surge_you"], "Personal", 60936, "Alarm") -- 60936 for phase 3, not 56505
+		self:FlashShake("surge")
 	end
 end
 

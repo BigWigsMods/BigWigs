@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("General Vezax", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33271)
-mod.toggleOptions = {"vapor", {"vaporstack", "FLASHNSHAKE"}, {62660, "WHISPER", "ICON", "SAY"}, {63276, "WHISPER", "ICON"}, 62661, 62662, "animus", "berserk", "bosskill"}
+mod.toggleOptions = {"vapor", {"vaporstack", "FLASHSHAKE"}, {62660, "WHISPER", "ICON", "SAY", "FLASHSHAKE"}, {63276, "WHISPER", "ICON", "FLASHSHAKE"}, 62661, 62662, "animus", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -91,6 +91,7 @@ function mod:UNIT_AURA(event, unit)
 	if stack and stack ~= lastVapor then
 		if stack > 5 then
 			self:LocalMessage("vaporstack", L["vaporstack_message"]:format(stack), "Personal", icon)
+			self:FlashShake("vaporstack")
 		end
 		lastVapor = stack
 	end
@@ -101,8 +102,11 @@ local function scanTarget(spellId, spellName)
 	if not bossId then return end
 	local target = UnitName(bossId .. "target")
 	if target then
-		if target == pName and bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
-			SendChatMessage(L["crash_say"], "SAY")
+		if target == pName then
+			self:FlashShake(62660)
+			if bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
+				SendChatMessage(L["crash_say"], "SAY")
+			end
 		end
 		mod:TargetMessage(62660, spellName, target, "Personal", spellId, "Alert")
 		mod:Whisper(62660, target, spellName)
@@ -112,6 +116,7 @@ end
 
 function mod:Mark(player, spellId)
 	self:TargetMessage(63276, L["mark_message"], player, "Personal", spellId, "Alert")
+	if pName == player then self:FlashShake(63276) end
 	self:Whisper(63276, player, L["mark_message"])
 	self:Bar(63276, L["mark_message_other"]:format(player), 10, spellId)
 	self:PrimaryIcon(63276, player)

@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Thorim", "Ulduar")
 if not mod then return end
 -- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
 mod:RegisterEnableMob(32865, 32882, 32872)
-mod.toggleOptions = {{62042, "ICON"}, 62016, 62331, {62017, "FLASHNSHAKE"}, 62338, {62526, "ICON", "SAY"}, 62279, 62130, "proximity", "hardmode", "phase", "bosskill"}
+mod.toggleOptions = {{62042, "ICON"}, 62016, 62331, {62017, "FLASHSHAKE"}, 62338, {62526, "ICON", "SAY"}, 62279, 62130, "proximity", "hardmode", "phase", "bosskill"}
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
@@ -138,6 +138,7 @@ function mod:Shock(player, spellId)
 		last = time
 		if player == pName then
 			self:LocalMessage(62017, L["shock_message"], "Personal", spellId, "Info")
+			self:FlashShake(62017)
 		end
 	end
 end

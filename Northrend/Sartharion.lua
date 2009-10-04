@@ -13,7 +13,7 @@ mod.otherMenu = "Northrend"
 	30449 = vesperon
 --]]
 mod:RegisterEnableMob(28860, 30449, 30451, 30452)
-mod.toggleOptions = {"tsunami", 56908, "drakes", "twilight", "berserk", "bosskill"}
+mod.toggleOptions = {"tsunami", 56908, "drakes", {"twilight", "FLASHSHAKE"}, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -115,6 +115,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
 		self:Message("twilight", L["twilight_message"]:format(mob), "Urgent", 59570)
 	elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
 		self:Message("twilight", L["twilight_message"]:format(mob), "Personal", 59569, "Alarm")
+		self:FlashShake("twilight")
 	end
 end
 

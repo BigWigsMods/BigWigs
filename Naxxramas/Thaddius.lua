@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Thaddius", "Naxxramas")
 if not mod then return end
 -- 15928 thaddius, 15929 - stalagg, 15930 - feugen
 mod:RegisterEnableMob(15928, 15929, 15930)
-mod.toggleOptions = {{28089, "FLASHNSHAKE"}, 28134, "throw", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{28089, "FLASHSHAKE"}, 28134, "throw", "phase", "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -107,11 +107,13 @@ function mod:UNIT_AURA(event, unit)
 			self:LocalMessage(28089, newCharge == "Interface\\Icons\\Spell_ChargePositive" and
 				L["polarity_first_positive"] or L["polarity_first_negative"],
 				"Personal", newCharge, "Alert")
+			self:FlashShake(28089)
 		else
 			if newCharge == lastCharge then
 				self:LocalMessage(28089, L["polarity_nochange"], "Positive", newCharge)
 			else
 				self:LocalMessage(28089, L["polarity_changed"], "Personal", newCharge, "Alert")
+				self:FlashShake(28089)
 			end
 		end
 		lastCharge = newCharge

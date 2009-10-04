@@ -514,8 +514,8 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 			group:AddChildren(bar)
 			table.insert(slaves, bar)
 		end
-		if bit.band(dbv, C.FLASHNSHAKE) == C.FLASHNSHAKE then
-			local fns = getSlaveToggle("Flash and shake", fnsDesc, dbKey, module, C.FLASHNSHAKE, check)
+		if bit.band(dbv, C.FLASHSHAKE) == C.FLASHSHAKE then
+			local fns = getSlaveToggle("Flash and shake", fnsDesc, dbKey, module, C.FLASHSHAKE, check)
 			group:AddChildren(fns)
 			table.insert(slaves, fns)
 		end

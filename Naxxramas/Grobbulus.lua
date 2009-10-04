@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Grobbulus", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15931)
-mod.toggleOptions = {{28169, "WHISPER", "ICON", "FLASHNSHAKE"}, 28240, "berserk", "bosskill"}
+mod.toggleOptions = {{28169, "WHISPER", "ICON", "FLASHSHAKE"}, 28240, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -50,6 +50,7 @@ end
 
 function mod:Inject(player, spellId)
 	self:TargetMessage(28169, L["bomb_message"], player, "Personal", spellId, "Alert")
+	if player == pName then self:FlashShake(28169) end
 	self:Whisper(28169, player, L["bomb_message"])
 	self:Bar(28169, L["bomb_message_other"]:format(player), 10, spellId)
 	self:PrimaryIcon(28169, player, "icon")

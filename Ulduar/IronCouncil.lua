@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("The Iron Council", "Ulduar")
 if not mod then return end
 -- steelbreaker = 32867, molgeim = 32927, brundir = 32857
 mod:RegisterEnableMob(32867, 32927, 32857)
-mod.toggleOptions = {61869, 63483, {61887, "WHISPER", "ICON", "FLASHNSHAKE"}, 61903, {64637, "WHISPER", "ICON"}, "proximity", 62274, 61974, {62269, "FLASHNSHAKE"}, 62273, "berserk", "bosskill" }
+mod.toggleOptions = {61869, 63483, {61887, "WHISPER", "ICON", "FLASHSHAKE"}, 61903, {64637, "WHISPER", "ICON", "FLASHSHAKE"}, "proximity", 62274, 61974, {62269, "FLASHSHAKE"}, 62273, "berserk", "bosskill" }
 
 mod.optionHeaders = {
 	[61869] = "Stormcaller Brundir",
@@ -89,6 +89,7 @@ end
 function mod:Overwhelm(player, spellId, _, _, spellName)
 	if player == pName then
 		self:OpenProximity(15)
+		self:FlashShake(64637)
 	end
 	self:TargetMessage(64637, spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(64637, player, spellName)
@@ -122,6 +123,7 @@ end
 function mod:RuneDeath(player, spellId)
 	if player == pName then
 		self:LocalMessage(62269, L["death_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(62269)
 	end
 end
 
@@ -146,6 +148,7 @@ local function targetCheck()
 		if target then
 			if target == pName then
 				mod:LocalMessage(61887, L["chased_you"], "Personal", nil, "Alarm")
+				mod:FlashShake(61887)
 			else
 				mod:IfMessage(61887, L["chased_other"]:format(target), "Attention")
 				mod:Whisper(61887, player, L["chased_you"])

@@ -3,7 +3,7 @@
 --
 local mod = BigWigs:NewBoss("Faction Champions", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, 65816, 67514, 67777, 65983, 65980, "bosskill"}
+mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, {65816, "FLASHSHAKE"}, 67514, 67777, 65983, 65980, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -76,6 +76,7 @@ do
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:TargetMessage(65816, spellName, player, "Personal", spellId, last and nil or "Alarm")
+				self:FlashShake(65816)
 				last = t
 			end
 		end

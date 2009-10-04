@@ -368,6 +368,12 @@ function boss:DelayedMessage(key, delay, text, ...)
 	end
 end
 
+function boss:FlashShake(key, r, g, b)
+	if checkFlag(self, key, C.FLASHSHAKE) then
+		self:SendMessage("BigWigs_FlashShake", r, g, b)
+	end
+end
+
 do
 	local icons = setmetatable({}, {__index =
 		function(self, key)

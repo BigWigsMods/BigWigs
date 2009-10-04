@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Yogg-Saron", "Ulduar")
 if not mod then return end
 --Sara = 33134, Yogg brain = 33890
 mod:RegisterEnableMob(33288, 33134, 33890)
-mod.toggleOptions = {62979, "tentacle", {63830, "ICON"}, {63802, "FLASHNSHAKE"}, 64125, "portal", "weakened", 64059, {64465, "ICON"}, 64163, 64189, "phase", {63050, "WHISPER"}, 63120, "berserk", "bosskill"}
+mod.toggleOptions = {62979, "tentacle", {63830, "ICON"}, {63802, "FLASHSHAKE"}, 64125, "portal", "weakened", 64059, {64465, "ICON"}, 64163, 64189, "phase", {63050, "WHISPER", "FLASHSHAKE"}, 63120, "berserk", "bosskill"}
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
@@ -140,6 +140,7 @@ do
 		if player == pName then
 			if stack > 40 then return end
 			self:IfMessage(63050, L["sanity_message"], "Personal", spellId)
+			self:FlashShake(63050)
 			warned[player] = true
 		elseif stack < 31 then
 			self:Whisper(63050, player, L["sanity_message"], true)
@@ -189,6 +190,7 @@ end
 function mod:Linked(player, spellId)
 	if player == pName then
 		self:LocalMessage(63802, L["link_warning"], "Personal", spellId, "Alarm")
+		self:FlashShake(63802)
 	end
 end
 

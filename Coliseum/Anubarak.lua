@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {66012, "burrow", {67574, "WHISPER", "ICON", "FLASHNSHAKE"}, {68510, "FLASHNSHAKE"}, 66118, "berserk", "bosskill"}
+mod.toggleOptions = {66012, "burrow", {67574, "WHISPER", "ICON", "FLASHSHAKE"}, {68510, "FLASHSHAKE"}, 66118, "berserk", "bosskill"}
 --[[mod.optionHeaders = {
 	[66012] = "normal",
 	--[the shadow strike thing from the adds] = "hard",
@@ -96,6 +96,7 @@ end
 function mod:ColdDebuff(player, spellId, _, _, spellName)
 	if player ~= pName or not phase2 then return end
 	self:LocalMessage(68510, spellName, "Personal", spellId, "Alarm")
+	self:FlashShake(68510)
 end
 
 function mod:ColdCooldown(_, spellId)
@@ -116,6 +117,7 @@ end
 
 function mod:Pursue(player, spellId)
 	self:TargetMessage(67574, L["chase"], player, "Personal", spellId)
+	self:FlashShake(67574)
 	self:Whisper(67574, player, L["chase"])
 	self:PrimaryIcon(67574, player, "icon")
 end

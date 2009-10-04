@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Hodir", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32845)
-mod.toggleOptions = {"hardmode", {"cold", "FLASHNSHAKE"}, {65123, "WHISPER", "ICON"}, 61968, 62478, "berserk", "bosskill"}
+mod.toggleOptions = {"hardmode", {"cold", "FLASHSHAKE"}, {65123, "WHISPER", "ICON"}, 61968, 62478, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -111,6 +111,7 @@ function mod:UNIT_AURA(event, unit)
 	if stack and stack ~= lastCold then
 		if stack > 1 then
 			self:LocalMessage("cold", L["cold_message"]:format(stack), "Personal", icon)
+			self:FlashShake("cold")
 		end
 		lastCold = stack
 	end

@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Flame Leviathan", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33113)
-mod.toggleOptions = {"engage", 68605, 62396, {"pursue", "FLASHNSHAKE"}, 62475, "bosskill"}
+mod.toggleOptions = {"engage", 68605, 62396, {"pursue", "FLASHSHAKE"}, 62475, "bosskill"}
 
 ----------------------------
 --      Localization      --
@@ -26,6 +26,8 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Flame Leviathan")
 mod.locale = L
+
+local pName = UnitName("player")
 
 ------------------------------
 --      Initialization      --
@@ -75,6 +77,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	if message:find(L["pursue_trigger"]) then
 		self:TargetMessage("pursue", L["pursue"], player, "Personal", 62374, "Alarm")
+		if player == pName then self:FlashShake("pursue") end
 		self:Bar("pursue", L["pursue_other"]:format(player), 30, 62374)
 	end
 end

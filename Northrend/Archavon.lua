@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(31125)
-mod.toggleOptions = {58663, "charge", {58678, "MESSAGE", "ICON"}, {58965, "FLASHNSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {58663, "charge", {58678, "MESSAGE", "ICON"}, {58965, "FLASHSHAKE"}, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -70,6 +70,7 @@ end
 function mod:Cloud(player, spellId)
 	if player == pName then
 		self:LocalMessage(58965, L["cloud_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(58965)
 	end
 end
 

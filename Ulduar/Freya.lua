@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Freya", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32906)
-mod.toggleOptions = {"phase", "wave", "tree", {62589, "WHISPER", "ICON"}, {62623, "ICON"}, "proximity", 62861, {62437, "FLASHNSHAKE"}, {62865, "FLASHNSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "wave", "tree", {62589, "WHISPER", "ICON", "FLASHSHAKE"}, {62623, "ICON"}, "proximity", 62861, {62437, "FLASHSHAKE"}, {62865, "FLASHSHAKE"}, "berserk", "bosskill"}
 
 mod.optionHeaders = {
 	phase = "normal",
@@ -127,6 +127,7 @@ do
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
 		self:IfMessage(62437, spellName, color, spellId, sound)
+		if caster then self:FlashShake(62437) end
 		if phase == 1 then
 			self:Bar(62437, spellName, 2, spellId)
 			self:Bar(62437, L["tremor_bar"], 30, spellId)
@@ -156,6 +157,7 @@ end
 function mod:Fury(player, spellId)
 	if player == pName then
 		self:OpenProximity(10)
+		self:FlashShake(62589)
 	end
 	self:TargetMessage(62589, L["fury_message"], player, "Personal", spellId, "Alert")
 	self:Whisper(62589, player, L["fury_message"])
@@ -183,6 +185,7 @@ do
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(62865, L["energy_message"], "Personal",  62451, "Alarm")
+				self:FlashShake(62865)
 				last = t
 			end
 		end

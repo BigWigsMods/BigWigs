@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON"}, 67106, "adds", "bosskill"}
+mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON", "FLASHSHAKE"}, 67106, "adds", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -39,6 +39,8 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
 mod.locale = L
+
+local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -90,6 +92,7 @@ end
 
 function mod:LegionFlame(player, spellId)
 	self:TargetMessage(68123, L["legionflame_message"], player, "Personal", spellId, "Alert")
+	if player == pName then self:FlashShake(68123) end
 	self:Whisper(68123, player, L["legionflame_message"])
 	self:Bar(68123, L["legionflame_other"]:format(player), 8, spellId)
 	self:PrimaryIcon(68123, player, "icon")
