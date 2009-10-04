@@ -71,7 +71,7 @@ function mod:GainSwarm(unit, spellId, _, _, spellName, _, _, _, dGuid)
 end
 
 function mod:Swarm(_, spellId)
-	self:IfMessage(28785, L["castwarn"], "Attention", spellId)
+	self:Message(28785, L["castwarn"], "Attention", spellId)
 	self:Bar(28785, L["castwarn"], 3, spellId)
 end
 

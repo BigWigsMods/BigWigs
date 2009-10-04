@@ -59,7 +59,7 @@ function mod:Pyrite(_, spellId, _, _, spellName, _, sFlags)
 end
 
 function mod:Flame(_, spellId, _, _, spellName)
-	self:IfMessage(62396, spellName, "Urgent", spellId)
+	self:Message(62396, spellName, "Urgent", spellId)
 	self:Bar(62396, spellName, 10, spellId)
 end
 
@@ -70,7 +70,7 @@ end
 function mod:Shutdown(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target ~= 33113 then return end
-	self:IfMessage(62475, L["shutdown_message"], "Positive", spellId, "Long")
+	self:Message(62475, L["shutdown_message"], "Positive", spellId, "Long")
 	self:Bar(62475, spellName, 20, spellId)
 end
 
@@ -84,7 +84,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg:find(L["engage_trigger"]) then
-		self:IfMessage("engage", L["engage_message"]:format(unit), "Attention")
+		self:Message("engage", L["engage_message"]:format(unit), "Attention")
 	end
 end
 

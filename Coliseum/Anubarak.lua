@@ -77,7 +77,7 @@ end
 
 local function nextwave() mod:Bar("burrow", L["nerubian_burrower"], 45, 66333) end
 function mod:OnEngage()
-	self:IfMessage("burrow", L["engage_message"], "Attention", 65919)
+	self:Message("burrow", L["engage_message"], "Attention", 65919)
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
 	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
 	self:ScheduleEvent("BWnextwave", nextwave, 10)
@@ -105,7 +105,7 @@ function mod:ColdCooldown(_, spellId)
 end
 
 function mod:Swarm(player, spellId, _, _, spellName)
-	self:IfMessage(66118, spellName, "Important", spellId)
+	self:Message(66118, spellName, "Important", spellId)
 	phase2 = true
 	self:SendMessage("BigWigs_StopBar", self, L["burrow_cooldown"])
 	self:CancelScheduledEvent(burrowMessage)

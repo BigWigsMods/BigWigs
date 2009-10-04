@@ -53,7 +53,7 @@ end
 ------------------------------
 
 function mod:Frenzy(_, spellId, _, _, spellName)
-	self:IfMessage(28371, spellName, "Important", spellId)
+	self:Message(28371, spellName, "Important", spellId)
 end
 
 local last = 0
@@ -61,7 +61,7 @@ function mod:Decimate(_, spellId, _, _, spellName)
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
-		self:IfMessage(54426, spellName, "Attention", spellId, "Alert")
+		self:Message(54426, spellName, "Attention", spellId, "Alert")
 		self:Bar(54426, L["decimatebartext"], 105, spellId)
 		self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
 	end

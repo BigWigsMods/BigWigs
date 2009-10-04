@@ -56,13 +56,13 @@ end
 ------------------------------
 
 function mod:Nova(_, spellId, _, _, spellName)
-	self:IfMessage(64216, spellName, "Attention", spellId)
+	self:Message(64216, spellName, "Attention", spellId)
 	self:Bar(64216, spellName, 5, spellId)
 	self:Bar(64216, L["nova_next"], 25, spellId)
 end
 
 function mod:Overcharge(_, spellId, _, _, spellName)
-	self:IfMessage(64218, L["overcharge_message"], "Positive", spellId)
+	self:Message(64218, L["overcharge_message"], "Positive", spellId)
 	self:Bar(64218, L["overcharge_bar"], 20, spellId)
 	self:Bar(64218, L["overcharge_next"], 45, spellId)
 end

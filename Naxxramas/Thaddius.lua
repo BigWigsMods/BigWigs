@@ -78,7 +78,7 @@ end
 ------------------------------
 
 function mod:StalaggPower(_, spellId, _, _, spellName)
-	self:IfMessage(28134, L["surge_message"], "Important", spellId)
+	self:Message(28134, L["surge_message"], "Important", spellId)
 	self:Bar(28134, spellName, 10, spellId)
 end
 
@@ -125,7 +125,7 @@ end
 function mod:Shift()
 	shiftTime = GetTime()
 	self:RegisterEvent("UNIT_AURA")
-	self:IfMessage(28089, L["polarity_message"], "Important", 28089)
+	self:Message(28089, L["polarity_message"], "Important", 28089)
 end
 
 local function throw()

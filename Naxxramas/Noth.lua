@@ -77,7 +77,7 @@ end
 ------------------------------
 
 function mod:Curse(_, spellId)
-	self:IfMessage(29213, L["cursewarn"], "Important", spellId, "Alarm")
+	self:Message(29213, L["cursewarn"], "Important", spellId, "Alarm")
 	self:DelayedMessage(29213, cursetime - 10, L["curse10secwarn"], "Urgent")
 	self:Bar(29213, L["cursebar"], cursetime, spellId)
 	self:Bar(29213, L["curseexplosion"], 10, spellId)
@@ -85,7 +85,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["blinktrigger"] then
-		self:IfMessage("blink", L["blinkwarn"], "Important", 29208)
+		self:Message("blink", L["blinkwarn"], "Important", 29208)
 		self:DelayedMessage("blink", 34, L["blinkwarn2"], "Attention")
 		self:Bar("blink", L["blinkbar"], 39, 29208)
 	end

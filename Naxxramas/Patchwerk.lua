@@ -36,7 +36,7 @@ end
 ------------------------------
 
 function mod:Frenzy(_, spellId)
-	self:IfMessage(28131, L["enragewarn"], "Attention", spellId, "Alarm")
+	self:Message(28131, L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)

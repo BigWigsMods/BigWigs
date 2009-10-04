@@ -65,12 +65,12 @@ end
 ------------------------------
 
 function mod:Sonic(_, spellId, _, _, spellName)
-	self:IfMessage(64422, spellName, "Attention", spellId)
+	self:Message(64422, spellName, "Attention", spellId)
 	self:Bar(64422, L["sonic_bar"], 28, spellId)
 end
 
 function mod:Defender(_, spellId)
-	self:IfMessage("defender", L["defender_message"]:format(count), "Attention", spellId)
+	self:Message("defender", L["defender_message"]:format(count), "Attention", spellId)
 end
 
 function mod:DefenderKill(_, spellId)
@@ -84,12 +84,12 @@ function mod:Swarm(player, spellId)
 end
 
 function mod:Fear(_, spellId)
-	self:IfMessage(64386, L["fear_message"], "Urgent", spellId)
+	self:Message(64386, L["fear_message"], "Urgent", spellId)
 	self:Bar(64386, L["fear_bar"], 35, spellId)
 	self:DelayedMessage(64386, 32, L["fear_warning"], "Attention")
 end
 
 function mod:Sentinel(_, spellId, _, _, spellName)
-	self:IfMessage(64389, spellName, "Important", spellId)
+	self:Message(64389, spellName, "Important", spellId)
 end
 

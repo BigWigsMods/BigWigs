@@ -83,7 +83,7 @@ end
 ------------------------------
 
 function mod:Punch(_, spellId, _, _, spellName)
-	self:IfMessage(61903, spellName, "Urgent", spellId)
+	self:Message(61903, spellName, "Urgent", spellId)
 end
 
 function mod:Overwhelm(player, spellId, _, _, spellName)
@@ -107,12 +107,12 @@ end
 function mod:Shield(_, spellId, _, _, _, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target and target == 32927 then
-		self:IfMessage(62274, L["shield_message"], "Attention", spellId)
+		self:Message(62274, L["shield_message"], "Attention", spellId)
 	end
 end
 
 function mod:RunePower(_, spellId, _, _, spellName)
-	self:IfMessage(61974, spellName, "Positive", spellId)
+	self:Message(61974, spellName, "Positive", spellId)
 	self:Bar(61974, spellName, 30, spellId)
 end
 
@@ -128,16 +128,16 @@ function mod:RuneDeath(player, spellId)
 end
 
 function mod:RuneSummoning(_, spellId)
-	self:IfMessage(62273, L["summoning_message"], "Attention", spellId)
+	self:Message(62273, L["summoning_message"], "Attention", spellId)
 end
 
 function mod:Overload(_, spellId, _, _, spellName)
-	self:IfMessage(61869, L["overload_message"], "Attention", spellId, "Long")
+	self:Message(61869, L["overload_message"], "Attention", spellId, "Long")
 	self:Bar(61869, spellName, 6, spellId)
 end
 
 function mod:Whirl(_, spellId, _, _, spellName)
-	self:IfMessage(63483, spellName, "Attention", spellId)
+	self:Message(63483, spellName, "Attention", spellId)
 end
 
 local function targetCheck()
@@ -150,7 +150,7 @@ local function targetCheck()
 				mod:LocalMessage(61887, L["chased_you"], "Personal", nil, "Alarm")
 				mod:FlashShake(61887)
 			else
-				mod:IfMessage(61887, L["chased_other"]:format(target), "Attention")
+				mod:Message(61887, L["chased_other"]:format(target), "Attention")
 				mod:Whisper(61887, player, L["chased_you"])
 			end
 			mod:PrimaryIcon(61887, target)
@@ -168,7 +168,7 @@ function mod:TendrilsRemoved()
 end
 
 function mod:Tendrils(_, spellId, _, _, spellName)
-	self:IfMessage(61887, spellName, "Attention", spellId)
+	self:Message(61887, spellName, "Attention", spellId)
 	self:Bar(61887, spellName, 25, spellId)
 	tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
 end
@@ -176,7 +176,7 @@ end
 function mod:Deaths(_, _, unitName)
 	deaths = deaths + 1
 	if deaths < 3 then
-		self:IfMessage("bosskill", L["council_dies"]:format(unitName), "Positive")
+		self:Message("bosskill", L["council_dies"]:format(unitName), "Positive")
 	else
 		self:Win()
 	end

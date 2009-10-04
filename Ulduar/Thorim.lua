@@ -92,7 +92,7 @@ end
 function mod:OnEngage()
 	chargeCount = 1
 	if self.db.profile.phase then
-		self:IfMessage(L["phase1_message"], "Attention")
+		self:Message(L["phase1_message"], "Attention")
 	end
 end
 
@@ -101,12 +101,12 @@ end
 ------------------------------
 
 function mod:Barrier(_, spellId, _, _, spellName)
-	self:IfMessage(62338, L["barrier_message"], "Urgent", spellId, "Alarm")
+	self:Message(62338, L["barrier_message"], "Urgent", spellId, "Alarm")
 	self:Bar(62338, spellName, 20, spellId)
 end
 
 function mod:Charge(_, spellId)
-	self:IfMessage(62279, L["charge_message"]:format(chargeCount), "Attention", spellId)
+	self:Message(62279, L["charge_message"]:format(chargeCount), "Attention", spellId)
 	chargeCount = chargeCount + 1
 	self:Bar(62279, L["charge_bar"]:format(chargeCount), 15, spellId)
 end
@@ -127,7 +127,7 @@ function mod:StrikeCooldown(player, spellId)
 end
 
 function mod:Orb(_, spellId, _, _, spellName)
-	self:IfMessage(62016, spellName, "Urgent", spellId)
+	self:Message(62016, spellName, "Urgent", spellId)
 	self:Bar(62016, spellName, 15, spellId)
 end
 
@@ -159,7 +159,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 	if msg == L["phase2_trigger"] then
-		self:IfMessage("phase", L["phase2_message"], "Attention")
+		self:Message("phase", L["phase2_message"], "Attention")
 		self:Bar("phase", CL["berserk"], 375, 20484) -- self:Berserk?
 		self:Bar("hardmode", L["hardmode"], 173, "Ability_Warrior_Innerrage")
 		hardModeMessageID = self:DelayedMessage("hardmode", 173, L["hardmode_warning"], "Attention")
@@ -167,7 +167,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 		self:CancelScheduledEvent(hardModeMessageID)
 		self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 		self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
-		self:IfMessage("phase", L["phase3_message"]:format(unit), "Attention")
+		self:Message("phase", L["phase3_message"]:format(unit), "Attention")
 		self:OpenProximity(5)
 	elseif msg == L["end_trigger"] then
 		self:Win()

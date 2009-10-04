@@ -60,7 +60,7 @@ end
 --
 
 function mod:Hellfire(player, spellId, _, _, spellName)
-	self:IfMessage(65816, spellName, "Urgent", spellId)
+	self:Message(65816, spellName, "Urgent", spellId)
 	self:Bar(65816, spellName, 15, spellId)
 end
 
@@ -96,26 +96,26 @@ function mod:Polymorph(player, spellId, _, _, spellName)
 end
 
 function mod:DivineShield(player, spellId)
-	self:IfMessage(66010, L["Shield on %s!"]:format(player), "Urgent", spellId)
+	self:Message(66010, L["Shield on %s!"]:format(player), "Urgent", spellId)
 end
 
 function mod:Bladestorm(player, spellId)
-	self:IfMessage(65947, L["Bladestorming!"], "Important", spellId)
+	self:Message(65947, L["Bladestorming!"], "Important", spellId)
 end
 
 function mod:Cat(player, spellId)
-	self:IfMessage(67777, L["Hunter pet up!"], "Urgent", spellId)
+	self:Message(67777, L["Hunter pet up!"], "Urgent", spellId)
 end
 
 function mod:Felhunter(player, spellId)
-	self:IfMessage(67514, L["Felhunter up!"], "Urgent", spellId)
+	self:Message(67514, L["Felhunter up!"], "Urgent", spellId)
 end
 
 function mod:Heroism(player, spellId)
-	self:IfMessage(65983, L["Heroism on champions!"], "Important", spellId)
+	self:Message(65983, L["Heroism on champions!"], "Important", spellId)
 end
 
 function mod:Bloodlust(player, spellId)
-	self:IfMessage(65980, L["Bloodlust on champions!"], "Important", spellId)
+	self:Message(65980, L["Bloodlust on champions!"], "Important", spellId)
 end
 

@@ -89,7 +89,7 @@ function mod:UNIT_HEALTH(event, msg)
 	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp > 51 and hp <= 55 and not p2 then
-			self:IfMessage("phase", L["phase2_warning"], "Positive")
+			self:Message("phase", L["phase2_warning"], "Positive")
 			p2 = true
 		elseif hp > 70 and p2 then
 			p2 = nil
@@ -101,15 +101,15 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["phase2_trigger"] then
 		phase = 2
 		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-		self:IfMessage("phase", L["phase2_message"], "Attention")
+		self:Message("phase", L["phase2_message"], "Attention")
 	elseif msg == L["breath_trigger"] then
-		self:IfMessage(64021, L["breath_message"], "Attention", 64021)
+		self:Message(64021, L["breath_message"], "Attention", 64021)
 		if phase == 2 then
 			self:Bar(64021, L["breath_bar"], 21, 64021)
 		end
 	elseif msg == L["harpoon_trigger"] then
 		count = count + 1
-		self:IfMessage("harpoon", L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
+		self:Message("harpoon", L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
 		if count < totalHarpoons then
 			self:Bar("harpoon", L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
 		end
@@ -118,7 +118,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["ground_trigger"] then
-		self:IfMessage("phase", L["ground_message"], "Attention", nil, "Long")
+		self:Message("phase", L["ground_message"], "Attention", nil, "Long")
 		self:Bar("phase", L["stun_bar"], 38, 20170) --20170, looks like a stun :p
 		count = 0
 	elseif msg == L["air_trigger"] then
@@ -131,7 +131,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			phase = 1
 		else
 			self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-			self:IfMessage("phase", L["air_message"], "Attention", nil, "Info")
+			self:Message("phase", L["air_message"], "Attention", nil, "Info")
 		end
 	-- for 10man, has a different yell, and different timing <.<
 	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
@@ -141,7 +141,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		count = 0
 		self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
 		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-		--self:IfMessage(L["air_message"], "Attention", nil, "Info")
+		--self:Message(L["air_message"], "Attention", nil, "Info")
 	end
 end
 

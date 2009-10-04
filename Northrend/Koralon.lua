@@ -43,7 +43,7 @@ end
 ------------------------------
 
 function mod:Fists(_, spellId, _, _, spellName)
-	self:IfMessage(66725, spellName, "Attention", spellId)
+	self:Message(66725, spellName, "Attention", spellId)
 	self:Bar(66725, spellName, 15, spellId)
 end
 
@@ -54,5 +54,5 @@ function mod:Cinder(player, spellId)
 end
 
 function mod:Breath(_, spellId, _, _, spellName)
-	self:IfMessage(66665, spellName, "Attention", spellId)
+	self:Message(66665, spellName, "Attention", spellId)
 end

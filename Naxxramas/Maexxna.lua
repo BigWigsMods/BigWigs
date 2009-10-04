@@ -69,7 +69,7 @@ function mod:Cocoon(player)
 end
 
 function mod:Spray()
-	self:IfMessage(29484, L["webspraywarn"], "Important", 54125)
+	self:Message(29484, L["webspraywarn"], "Important", 54125)
 	self:DelayedMessage(29484, 10, L["webspraywarn30sec"], "Attention")
 	self:DelayedMessage(29484, 20, L["webspraywarn20sec"], "Attention")
 	self:DelayedMessage(29484, 30, L["webspraywarn10sec"], "Attention")
@@ -82,7 +82,7 @@ function mod:Spray()
 end
 
 function mod:Frenzy(_, spellId)
-	self:IfMessage(54123, L["enragewarn"], "Attention", spellId, "Alarm")
+	self:Message(54123, L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
 function mod:UNIT_HEALTH(event, msg)

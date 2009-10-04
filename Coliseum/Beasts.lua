@@ -134,7 +134,7 @@ end
 
 function mod:Jormungars()
 	local m = L["boss_incoming"]:format(jormungars)
-	self:IfMessage("bosses", m, "Positive")
+	self:Message("bosses", m, "Positive")
 	self:Bar("bosses", m, 15, "INV_Misc_MonsterScales_18")
 	if difficulty > 2 then
 		self:Bar("bosses", L["boss_incoming"]:format(icehowl), 200, "INV_Misc_MonsterHorn_07")
@@ -147,7 +147,7 @@ end
 
 function mod:Icehowl()
 	local m = L["boss_incoming"]:format(icehowl)
-	self:IfMessage("bosses", m, "Positive")
+	self:Message("bosses", m, "Positive")
 	self:Bar("bosses", m, 10, "INV_Misc_MonsterHorn_07")
 	self:CancelScheduledEvent("Submerge")
 	self:SendMessage("BigWigs_StopBar", self, L["spray"])
@@ -181,7 +181,7 @@ function mod:Impale(player, spellId, _, _, spellName)
 end
 
 function mod:StaggeringStomp(_, spellId, _, _, spellName)
-	self:IfMessage(66330, spellName, "Important", spellId)
+	self:Message(66330, spellName, "Important", spellId)
 	self:Bar(66330, spellName, 21, spellId)
 end
 
@@ -217,18 +217,18 @@ do
 	end
 
 	function mod:Spray(_, spellId, _, _, spellName)
-		self:IfMessage("sprays", spellName, "Important", spellId)
+		self:Message("sprays", spellName, "Important", spellId)
 		self:Bar("sprays", L["spray"], 20, 5740)
 	end
 end
 
 
 function mod:SlimeCast(_, spellId, _, _, spellName)
-	self:IfMessage(67641, spellName, "Attention", spellId)
+	self:Message(67641, spellName, "Attention", spellId)
 end
 
 function mod:Spew(_, spellId, _, _, spellName)
-	self:IfMessage("spew", spellName, "Attention", spellId)
+	self:Message("spew", spellName, "Attention", spellId)
 end
 
 do
@@ -273,7 +273,7 @@ do
 end
 
 function mod:Enraged(_, spellId, _, _, spellName)
-	self:IfMessage(68335, spellName, "Important", spellId, "Long")
+	self:Message(68335, spellName, "Important", spellId, "Long")
 end
 
 do
@@ -295,12 +295,12 @@ end
 --
 
 function mod:Rage(_, spellId, _, _, spellName)
-	self:IfMessage(66759, spellName, "Important", spellId)
+	self:Message(66759, spellName, "Important", spellId)
 	self:Bar(66759, spellName, 15, spellId)
 end
 
 function mod:Daze(_, spellId, _, _, spellName)
-	self:IfMessage(66758, spellName, "Positive", spellId)
+	self:Message(66758, spellName, "Positive", spellId)
 	self:Bar(66758, spellName, 15, spellId)
 end
 

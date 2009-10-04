@@ -95,7 +95,7 @@ function mod:Spark(unit, spellId, _, _, _, _, _, _, dGuid)
 	if phase ~= 1 then return end
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 28859 then
-		self:IfMessage(56152, L["sparkbuff_message"], "Important", spellId)
+		self:Message(56152, L["sparkbuff_message"], "Important", spellId)
 	end
 end
 
@@ -107,7 +107,7 @@ end
 
 function mod:Vortex(_, spellId)
 	self:Bar("vortex", L["vortex"], 10, 56105)
-	self:IfMessage("vortex", L["vortex_message"], "Attention", spellId)
+	self:Message("vortex", L["vortex_message"], "Attention", spellId)
 	self:Bar("vortex", L["vortex_next"], 59, 56105)
 	self:DelayedMessage("vortex", 54, L["vortex_warning"], "Attention")
 

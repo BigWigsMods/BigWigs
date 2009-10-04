@@ -97,10 +97,10 @@ end
 
 function mod:Deaths(guid)
 	if guid == 32933 then
-		self:IfMessage("arm", L["left_dies"], "Attention")
+		self:Message("arm", L["left_dies"], "Attention")
 		self:Bar("arm", L["left_wipe_bar"], 50, 2062)
 	elseif guid == 32934 then
-		self:IfMessage("arm", L["right_dies"], "Attention")
+		self:Message("arm", L["right_dies"], "Attention")
 		self:Bar("arm", L["right_wipe_bar"], 50, 2062)
 	else
 		self:Win()
@@ -109,7 +109,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg == L["shockwave_trigger"] then
-		self:IfMessage("shockwave", L["shockwave"], "Attention", 63982)
+		self:Message("shockwave", L["shockwave"], "Attention", 63982)
 		self:Bar("shockwave", L["shockwave"], 21, 63982)
 	end
 end

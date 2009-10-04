@@ -57,7 +57,7 @@ function mod:Inject(player, spellId)
 end
 
 function mod:Cloud(_, spellId, _, _, spellName)
-	self:IfMessage(28240, spellName, "Attention", spellId)
+	self:Message(28240, spellName, "Attention", spellId)
 	self:Bar(28240, spellName, 15, spellId)
 end
 

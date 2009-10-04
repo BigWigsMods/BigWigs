@@ -86,7 +86,7 @@ function mod:IncinerateFlesh(player, spellId)
 end
 
 function mod:IncinerateFleshRemoved(player, spellId)
-	self:IfMessage(67049, L["incinerate_safe"]:format(player), "Positive", 17) -- Power Word: Shield icon.
+	self:Message(67049, L["incinerate_safe"]:format(player), "Positive", 17) -- Power Word: Shield icon.
 	self:SendMessage("BigWigs_StopBar", self, L["incinerate_other"]:format(player))
 end
 
@@ -105,18 +105,18 @@ end
 function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target == 34780 then
-		self:IfMessage(67106, spellName, "Attention", spellId)
+		self:Message(67106, spellName, "Attention", spellId)
 		self:Bar(67106, L["netherpower_bar"], 44, spellId)
 	end
 end
 
 function mod:NetherPortal(_, spellId, _, _, spellName)
-	self:IfMessage("adds", spellName, "Urgent", spellId, "Alarm")
+	self:Message("adds", spellName, "Urgent", spellId, "Alarm")
 	self:Bar("adds", L["infernal_bar"], 60, 66258)
 end
 
 function mod:InfernalEruption(_, spellId, _, _, spellName)
-	self:IfMessage("adds", spellName, "Urgent", spellId, "Alarm")
+	self:Message("adds", spellName, "Urgent", spellId, "Alarm")
 	self:Bar("adds", L["netherportal_bar"], 60, 68404)
 end
 

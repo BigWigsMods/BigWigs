@@ -139,7 +139,7 @@ do
 		if not stack then return end
 		if player == pName then
 			if stack > 40 then return end
-			self:IfMessage(63050, L["sanity_message"], "Personal", spellId)
+			self:Message(63050, L["sanity_message"], "Personal", spellId)
 			self:FlashShake(63050)
 			warned[player] = true
 		elseif stack < 31 then
@@ -150,7 +150,7 @@ do
 end
 
 function mod:Guardian(_, spellId)
-	self:IfMessage(62979, L["guardian_message"]:format(guardianCount), "Positive", spellId)
+	self:Message(62979, L["guardian_message"]:format(guardianCount), "Positive", spellId)
 	guardianCount = guardianCount + 1
 end
 
@@ -163,14 +163,14 @@ function mod:Tentacle(_, spellId, source, _, spellName)
 	-- Corruptor Tentacle (33985) 25 sec
 	-- Constrictor Tentacle (33983) 20 sec
 	if source == L["Crusher Tentacle"] then
-		self:IfMessage("tentacle", L["tentacle_message"]:format(crusherCount), "Important", 64139)
+		self:Message("tentacle", L["tentacle_message"]:format(crusherCount), "Important", 64139)
 		crusherCount = crusherCount + 1
 		self:Bar("tentacle", L["tentacle_message"]:format(crusherCount), 55, 64139)
 	end
 end
 
 function mod:Roar(_, spellId, _, _, spellName)
-	self:IfMessage(64189, spellName, "Attention", spellId)
+	self:Message(64189, spellName, "Attention", spellId)
 	self:Bar(64189, L["roar_bar"], 60, spellId)
 	self:DelayedMessage(64189, 55, L["roar_warning"], "Attention")
 end
@@ -208,12 +208,12 @@ function mod:Madness(_, spellId, _, _, spellName)
 end
 
 function mod:Empower(_, spellId, _, _, spellName)
-	self:IfMessage(64465, spellName, "Important", spellId)
+	self:Message(64465, spellName, "Important", spellId)
 	self:Bar(64465, L["empower_bar"], 46, spellId)
 end
 
 function mod:RemoveEmpower()
-	self:IfMessage(64465, L["empowericon_message"], "Positive", 64465)
+	self:Message(64465, L["empowericon_message"], "Positive", 64465)
 	self:SendMessage("BigWigs_RemoveRaidIcon")
 end
 
@@ -234,10 +234,10 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, unit)
 	if msg == L["portal_trigger"] then
-		self:IfMessage("portal", L["portal_message"], "Positive", 35717)
+		self:Message("portal", L["portal_message"], "Positive", 35717)
 		self:Bar("portal", L["portal_bar"], 90, 35717)
 	elseif msg == L["weakened_trigger"] then
-		self:IfMessage("weakened", L["weakened_message"]:format(unit), "Positive", 50661)
+		self:Message("weakened", L["weakened_message"]:format(unit), "Positive", 50661)
 	end
 end
 
@@ -245,12 +245,12 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
 		phase = 1
 		guardianCount = 1
-		self:IfMessage("phase", L["engage_warning"], "Attention")
+		self:Message("phase", L["engage_warning"], "Attention")
 		self:Berserk(900, true)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		crusherCount = 1
-		self:IfMessage("phase", L["phase2_warning"], "Attention")
+		self:Message("phase", L["phase2_warning"], "Attention")
 		self:Bar("portal", L["portal_bar"], 78, 35717)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
@@ -261,7 +261,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:SendMessage("BigWigs_StopBar", self, L["tentacle_message"]:format(crusherCount))
 		self:SendMessage("BigWigs_StopBar", self, L["portal_bar"])
 
-		self:IfMessage("phase", L["phase3_warning"], "Important", nil, "Alarm")
+		self:Message("phase", L["phase3_warning"], "Important", nil, "Alarm")
 		self:Bar(64465, L["empower_bar"], 46, 64486)
 	end
 end

@@ -53,16 +53,16 @@ end
 ------------------------------
 
 function mod:Brittle(_, spellId)
-	self:IfMessage(62382, L["brittle_message"], "Positive", spellId)
+	self:Message(62382, L["brittle_message"], "Positive", spellId)
 end
 
 function mod:Construct()
-	self:IfMessage(62488, L["construct_message"], "Important", "Interface\\Icons\\INV_Misc_Statue_07")
+	self:Message(62488, L["construct_message"], "Important", "Interface\\Icons\\INV_Misc_Statue_07")
 	self:Bar(62488, L["construct_bar"], spawnTime, "INV_Misc_Statue_07")
 end
 
 function mod:ScorchCast(_, spellId, _, _, spellName)
-	self:IfMessage(62546, spellName, "Attention", spellId)
+	self:Message(62546, spellName, "Attention", spellId)
 	self:Bar(62546, L["scorch_bar"], 25, spellId)
 	self:DelayedMessage(62546, 20, L["scorch_soon"], "Urgent", nil, nil, nil, spellId)
 end
@@ -105,7 +105,7 @@ do
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
 		if caster then self:FlashShake(62680) end
-		self:IfMessage(62680, spellName, color, spellId, sound)
+		self:Message(62680, spellName, color, spellId, sound)
 		self:Bar(62680, L["flame_bar"], 25, spellId)
 		if caster then self:Bar(62680, spellName, 2.7, spellId) end
 	end

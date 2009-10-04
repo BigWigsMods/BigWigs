@@ -76,11 +76,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		self:CancelScheduledEvent(L["lifedrain_warn1"])
 		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
 		--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-		self:IfMessage(28524, L["deepbreath_incoming_message"], "Attention")
+		self:Message(28524, L["deepbreath_incoming_message"], "Attention")
 		self:Bar(28524, L["deepbreath_incoming_bar"], 14, 43810)
 		self:DelayedMessage(28524, 9, L["deepbreath_incoming_soon_message"], "Attention")
 	elseif msg == L["deepbreath_trigger"] then
-		self:IfMessage(28524, L["deepbreath_warning"], "Attention")
+		self:Message(28524, L["deepbreath_warning"], "Attention")
 		self:Bar(28524, L["deepbreath_bar"], 10, 29318)
 	end
 end
@@ -88,12 +88,12 @@ end
 function mod:Breath(_, spellId, _, _, spellName)
 	breath = breath + 1
 	if breath == 2 then
-		self:IfMessage(28524, spellName, "Important", spellId)
+		self:Message(28524, spellName, "Important", spellId)
 	end
 end
 
 function mod:Drain(_, spellId)
-	self:IfMessage(28542, L["lifedrain_message"], "Urgent", spellId)
+	self:Message(28542, L["lifedrain_message"], "Urgent", spellId)
 	self:Bar(28542, L["lifedrain_bar"], 23, spellId)
 	self:DelayedMessage(28542, 18, L["lifedrain_warn1"], "Important")
 end

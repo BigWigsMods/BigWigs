@@ -98,7 +98,7 @@ function mod:ZONE_CHANGED_INDOORS(event, msg)
 end
 
 function mod:Fizzure(_, spellId, _, _, spellName)
-	self:IfMessage(27810, spellName, "Important", spellId)
+	self:Message(27810, spellName, "Important", spellId)
 end
 
 do

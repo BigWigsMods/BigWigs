@@ -62,7 +62,7 @@ end
 ------------------------------
 
 function mod:Stomp(_, spellId)
-	self:IfMessage(58663, L["stomp_message"], "Attention", spellId)
+	self:Message(58663, L["stomp_message"], "Attention", spellId)
 	self:Bar(58663, L["stomp_bar"], 47, spellId)
 	self:DelayedMessage(58663, 42, L["stomp_warning"], "Attention")
 end

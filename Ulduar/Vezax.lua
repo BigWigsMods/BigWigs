@@ -127,11 +127,11 @@ function mod:Target(player, spellId, _, _, spellName)
 end
 
 function mod:Flame(_, spellId, _, _, spellName)
-	self:IfMessage(62661, spellName, "Urgent", spellId)
+	self:Message(62661, spellName, "Urgent", spellId)
 end
 
 function mod:Surge(_, spellId)
-	self:IfMessage(62662, L["surge_message"]:format(surgeCount), "Important", spellId)
+	self:Message(62662, L["surge_message"]:format(surgeCount), "Important", spellId)
 	self:Bar(62662, L["surge_cast"]:format(surgeCount), 3, spellId)
 	surgeCount = surgeCount + 1
 	self:Bar(62662, L["surge_bar"]:format(surgeCount), 60, spellId)
@@ -143,13 +143,13 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["vapor_trigger"] then
-		self:IfMessage("vapor", L["vapor_message"]:format(vaporCount), "Positive", 63323)
+		self:Message("vapor", L["vapor_message"]:format(vaporCount), "Positive", 63323)
 		vaporCount = vaporCount + 1
 		if vaporCount < 7 then
 			self:Bar("vapor", L["vapor_bar"]:format(vaporCount), 30, 63323)
 		end
 	elseif msg == L["animus_trigger"] then
-		self:IfMessage("animus", L["animus_message"], "Important", 63319)
+		self:Message("animus", L["animus_message"], "Important", 63319)
 	end
 end
 

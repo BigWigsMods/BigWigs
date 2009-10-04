@@ -83,9 +83,9 @@ function mod:DarkShield(_, spellId, _, _, spellName)
 	self:Bar("shield", L["vortex_or_shield_cd"], 45, 39089)
 	local d = UnitDebuff("player", essenceDark)
 	if d then
-		self:IfMessage("shield", spellName, "Important", spellId, "Alert")
+		self:Message("shield", spellName, "Important", spellId, "Alert")
 	else
-		self:IfMessage("shield", spellName, "Urgent", spellId)
+		self:Message("shield", spellName, "Urgent", spellId)
 	end
 end
 
@@ -93,9 +93,9 @@ function mod:LightShield(_, spellId, _, _, spellName)
 	self:Bar("shield", L["vortex_or_shield_cd"], 45, 39089)
 	local d = UnitDebuff("player", essenceLight)
 	if d then
-		self:IfMessage("shield", spellName, "Important", spellId, "Alert")
+		self:Message("shield", spellName, "Important", spellId, "Alert")
 	else
-		self:IfMessage("shield", spellName, "Urgent", spellId)
+		self:Message("shield", spellName, "Urgent", spellId)
 	end
 end
 
@@ -103,9 +103,9 @@ function mod:LightVortex(_, spellId, _, _, spellName)
 	self:Bar("vortex", L["vortex_or_shield_cd"], 45, 39089)
 	local d = UnitDebuff("player", essenceLight)
 	if d then
-		self:IfMessage("vortex", spellName, "Positive", spellId)
+		self:Message("vortex", spellName, "Positive", spellId)
 	else
-		self:IfMessage("vortex", spellName, "Personal", spellId, "Alarm")
+		self:Message("vortex", spellName, "Personal", spellId, "Alarm")
 		self:FlashShake("vortex")
 	end
 end
@@ -114,9 +114,9 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 	self:Bar("vortex", L["vortex_or_shield_cd"], 45, 39089)
 	local d = UnitDebuff("player", essenceDark)
 	if d then
-		self:IfMessage("vortex", spellName, "Positive", spellId)
+		self:Message("vortex", spellName, "Positive", spellId)
 	else
-		self:IfMessage("vortex", spellName, "Personal", spellId, "Alarm")
+		self:Message("vortex", spellName, "Personal", spellId, "Alarm")
 		self:FlashShake("vortex")
 	end
 end

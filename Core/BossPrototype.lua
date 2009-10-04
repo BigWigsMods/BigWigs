@@ -281,12 +281,10 @@ do
 			return self[key]
 		end
 	})
-	-- XXX Proposed API, subject to change/remove.
-	-- Outputs a normal message including a raid warning if possible.
-	function boss:IfMessage(dbkey, key, color, icon, sound, locale, ...)
+
+	function boss:Message(dbkey, text, color, icon, sound, noraidsay, broadcastonly)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
-		local text = not locale and key or locale[keys[key]]:format(...)
-		self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
+		self:SendMessage("BigWigs_Message", text, color, noraidsay, sound, broadcastonly, icon)
 	end
 
 	local hexColors = {}
@@ -353,12 +351,6 @@ do
 		if locale and not self.db.profile[key] then return end
 		local text = not locale and key or locale[keys[key]]:format(...)
 		self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
-	end
-end
-
-function boss:Message(key, ...)
-	if checkFlag(self, key, C.MESSAGE) then
-		self:SendMessage("BigWigs_Message", ...)
 	end
 end
 
@@ -440,7 +432,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	local boss = customBoss or self.displayName
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:IfMessage("berserk", fmt(L["berserk_start"], boss, seconds / 60), "Attention")
+		self:Message("berserk", fmt(L["berserk_start"], boss, seconds / 60), "Attention")
 	end
 
 	-- Half-way to enrage warning.

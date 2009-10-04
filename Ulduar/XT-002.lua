@@ -70,18 +70,18 @@ end
 ------------------------------
 
 function mod:Exposed(_, spellId, _, _, spellName)
-	self:IfMessage(63849, L["exposed_message"], "Attention", spellId)
+	self:Message(63849, L["exposed_message"], "Attention", spellId)
 	self:Bar(63849, spellName, 30, spellId)
 end
 
 function mod:Heartbreak(_, spellId, _, _, spellName)
 	phase = 2
-	self:IfMessage(64193, spellName, "Important", spellId)
+	self:Message(64193, spellName, "Important", spellId)
 end
 
 function mod:Tantrum(_, spellId, _, _, spellName)
 	if phase == 2 then
-		self:IfMessage(62776, spellName, "Attention", spellId)
+		self:Message(62776, spellName, "Attention", spellId)
 		self:Bar(62776, L["tantrum_bar"], 65, spellId)
 	end
 end
@@ -127,13 +127,13 @@ function mod:UNIT_HEALTH(event, msg)
 		local health = UnitHealth(msg)
 		if not exposed1 and health > 86 and health <= 88 then
 			exposed1 = true
-			self:IfMessage(63849, L["exposed_warning"], "Attention")
+			self:Message(63849, L["exposed_warning"], "Attention")
 		elseif not exposed2 and health > 56 and health <= 58 then
 			exposed2 = true
-			self:IfMessage(63849, L["exposed_warning"], "Attention")
+			self:Message(63849, L["exposed_warning"], "Attention")
 		elseif not exposed3 and health > 26 and health <= 28 then
 			exposed3 = true
-			self:IfMessage(63849, L["exposed_warning"], "Attention")
+			self:Message(63849, L["exposed_warning"], "Attention")
 		end
 	end
 end

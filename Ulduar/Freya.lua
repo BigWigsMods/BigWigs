@@ -126,7 +126,7 @@ do
 		local caster = isCaster()
 		local color = caster and "Personal" or "Attention"
 		local sound = caster and "Long" or nil
-		self:IfMessage(62437, spellName, color, spellId, sound)
+		self:Message(62437, spellName, color, spellId, sound)
 		if caster then self:FlashShake(62437) end
 		if phase == 1 then
 			self:Bar(62437, spellName, 2, spellId)
@@ -175,7 +175,7 @@ end
 function mod:AttunedRemove()
 	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["wave_bar"])
-	self:IfMessage("phase", L["phase2_message"], "Important")
+	self:Message("phase", L["phase2_message"], "Important")
 end
 
 do
@@ -199,7 +199,7 @@ do
 		local t = GetTime()
 		if not last or (t > last + 10) then
 			sunBeamName = unit
-			self:IfMessage(62865, L["sunbeam_message"], "Important", spellId)
+			self:Message(62865, L["sunbeam_message"], "Important", spellId)
 			last = t
 		end
 	end
@@ -211,7 +211,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["tree_trigger"] then
-		self:IfMessage("tree", L["tree_message"], "Urgent", 5420, "Alarm")
+		self:Message("tree", L["tree_message"], "Urgent", 5420, "Alarm")
 	end
 end
 
@@ -225,13 +225,13 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		sheIsDead = true
 		self:Win()
 	elseif msg == L["conservator_trigger"] then
-		self:IfMessage("wave", L["conservator_message"], "Positive", 35594)
+		self:Message("wave", L["conservator_message"], "Positive", 35594)
 		self:Bar("wave", L["wave_bar"], 60, 35594)
 	elseif msg == L["detonate_trigger"] then
-		self:IfMessage("wave", L["detonate_message"], "Positive", 35594)
+		self:Message("wave", L["detonate_message"], "Positive", 35594)
 		self:Bar("wave", L["wave_bar"], 60, 35594)
 	elseif msg == L["elementals_trigger"] then
-		self:IfMessage("wave", L["elementals_message"], "Positive", 35594)
+		self:Message("wave", L["elementals_message"], "Positive", 35594)
 		self:Bar("wave", L["wave_bar"], 60, 35594)
 	end
 end

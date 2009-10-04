@@ -93,36 +93,36 @@ end
 ------------------------------
 
 function mod:Bomb(_, spellId, _, _, spellName)
-	self:IfMessage(63811, L["bomb_message"], "Important", 63811, "Alert")
+	self:Message(63811, L["bomb_message"], "Important", 63811, "Alert")
 end
 
 function mod:Suppressant(_, spellId, _, _, spellName)
-	self:IfMessage(64570, L["suppressant_warning"], "Important", spellId)
+	self:Message(64570, L["suppressant_warning"], "Important", spellId)
 	self:Bar(64570, spellName, 3, spellId)
 end
 
 function mod:FBomb(_, spellId, _, _, spellName)
-	self:IfMessage(64623, spellName, "Important", spellId)
+	self:Message(64623, spellName, "Important", spellId)
 	self:Bar(64623, spellName, 2, spellId)
 	self:Bar(64623, L["fbomb_bar"], 30, spellId)
 	self:ScheduleEvent("fbombWarning", "Message", 28, 64623, L["fbomb_soon"], "Attention")
 end
 
 function mod:Plasma(_, spellId, _, _, spellName)
-	self:IfMessage(62997, L["plasma_warning"], "Important", spellId)
+	self:Message(62997, L["plasma_warning"], "Important", spellId)
 	self:Bar(62997, L["plasma_warning"], 3, spellId)
 	self:Bar(62997, L["plasma_bar"], 30, spellId)
 	self:ScheduleEvent("plasmaWarning", "Message", 27, 62997, L["plasma_soon"], "Attention")
 end
 
 function mod:Shock(_, spellId, _, _, spellName)
-	self:IfMessage(63631, spellName, "Important", spellId)
+	self:Message(63631, spellName, "Important", spellId)
 	self:Bar(63631, spellName, 3.5, spellId)
 	self:Bar(63631, L["shock_next"], 34, spellId)
 end
 
 function mod:Spinning(_, spellId)
-	self:IfMessage(63274, L["laser_soon"], "Personal", spellId, "Long")
+	self:Message(63274, L["laser_soon"], "Personal", spellId, "Long")
 	self:FlashShake(63274)
 end
 
@@ -136,14 +136,14 @@ do
 end
 
 function mod:Magnetic(_, spellId, _, _, spellName)
-	self:IfMessage(64444, L["magnetic_message"], "Important", spellId)
+	self:Message(64444, L["magnetic_message"], "Important", spellId)
 	self:Bar(64444, spellName, 15, spellId)
 end
 
 local function start()
 	ishardmode = nil
 	phase = 1
-	mod:IfMessage("phase", L["engage_warning"], "Attention")
+	mod:Message("phase", L["engage_warning"], "Attention")
 	mod:Bar("phase", L["phase_bar"]:format(phase), 7, "INV_Gizmo_01")
 
 	mod:Bar(63631, L["shock_next"], 30, 63631)
@@ -165,7 +165,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:CancelScheduledEvent("plasmaWarning")
 		self:SendMessage("BigWigs_StopBar", self, L["plasma_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["shock_next"])
-		self:IfMessage("phase", L["phase2_warning"], "Attention")
+		self:Message("phase", L["phase2_warning"], "Attention")
 		self:Bar("phase", L["phase_bar"]:format(phase), 40, "INV_Gizmo_01")
 		if ishardmode then
 			self:Bar(64623, L["fbomb_bar"], 45, 64623)
@@ -174,11 +174,11 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	elseif msg:find(L["phase3_trigger"]) then
 		self:CancelScheduledEvent("fbombWarning")
 		phase = 3
-		self:IfMessage("phase", L["phase3_warning"], "Attention")
+		self:Message("phase", L["phase3_warning"], "Attention")
 		self:Bar("phase", L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 	elseif msg:find(L["phase4_trigger"]) then
 		phase = 4
-		self:IfMessage("phase", L["phase4_warning"], "Attention")
+		self:Message("phase", L["phase4_warning"], "Attention")
 		self:Bar("phase", L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
 		if ishardmode then
 			self:Bar(64623, L["fbomb_bar"], 30, 64623)
@@ -218,7 +218,7 @@ function mod:OnSync(sync, rest, nick)
 	if sync == "MimiLoot" and rest then
 		self:TargetMessage(64444, GetSpellInfo(64444), rest, "Positive", "Interface\\Icons\\INV_Gizmo_KhoriumPowerCore", "Info")
 	elseif sync == "MimiBarrage" then
-		self:IfMessage(63274, L["laser_bar"], "Important", 63274)
+		self:Message(63274, L["laser_bar"], "Important", 63274)
 		self:Bar(63274, L["laser_bar"], 60, 63274)
 	end
 end

@@ -69,7 +69,7 @@ function mod:Silence(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	if target ~= 15953 then return end
 	if not frenzied then
 		-- preemptive, 30s silence
-		self:IfMessage(28732, L["silencewarn"], "Positive", spellId)
+		self:Message(28732, L["silencewarn"], "Positive", spellId)
 		self:Bar(28732, L["silencebar"], 30, spellId)
 		self:DelayedMessage(28732, 25, L["silencewarn5sec"], "Urgent")
 	else
@@ -94,7 +94,7 @@ end
 function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGuid)
 	local target = tonumber(dGuid:sub(-12, -7), 16)
 	if target ~= 15953 then return end
-	self:IfMessage(28798, L["enragewarn"], "Urgent", spellId)
+	self:Message(28798, L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
 	if frenzyMessageId then
 		self:CancelScheduledEvent(frenzyMessageId)

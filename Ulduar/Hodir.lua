@@ -71,7 +71,7 @@ function mod:Cloud(player, spellId, _, _, spellName)
 end
 
 function mod:FlashCast(_, spellId, _, _, spellName)
-	self:IfMessage(61968, L["flash_warning"], "Attention", spellId)
+	self:Message(61968, L["flash_warning"], "Attention", spellId)
 	self:Bar(61968, spellName, 9, spellId)
 	self:Bar(61968, spellName, 35, spellId)
 	self:DelayedMessage(61968, 30, L["flash_soon"], "Attention")
@@ -89,7 +89,7 @@ function mod:Flash(player, spellId, _, _, spellName)
 end
 
 function mod:Frozen(_, spellId, _, _, spellName)
-	self:IfMessage(62478, spellName, "Important", spellId)
+	self:Message(62478, spellName, "Important", spellId)
 	self:Bar(62478, spellName, 20, spellId)
 end
 
