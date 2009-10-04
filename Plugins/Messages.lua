@@ -321,9 +321,7 @@ function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, ico
 
 	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	if self.db.profile.chat then
-		-- XXX FIXME: fix bigwigs customprint, or a special print function in this module
-		BigWigs:Print( text )
-		-- BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
+		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end
 end
 
