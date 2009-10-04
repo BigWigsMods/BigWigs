@@ -149,13 +149,6 @@ do
 	end
 	local function onControlLeave() GameTooltip:Hide() end
 
-	-- XXX We need a new SinkLib that doesn't give out options but only access to functions
-	-- XXX we can use to generate options with.
-	-- Or, we can use AceConfig and insert an option table into the container, I guess.
-	-- Actually, just leaving the options as they are in a table and using aceconfig to
-	-- generate the whole thing means less code in the modules but more processing
-	-- in acegui, I guess. Also we might not get it looking "just right".
-
 	local function checkboxCallback(widget, event, value)
 		local key = widget:GetUserData("key")
 		plugin.db.profile[key] = value and true or false
