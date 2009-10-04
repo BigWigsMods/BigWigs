@@ -78,7 +78,11 @@ local function rearrangeBars(anchor)
 			lastDownBar = bar
 		end
 	end
-	empUpdate:Show()
+	if db.emphasize then
+		empUpdate:Show()
+	else
+		empUpdate:Hide()
+	end
 end
 
 local function barStopped(event, bar)
