@@ -311,48 +311,54 @@ function showVersions()
 	local bad-- non-bw users
 	local ugly -- old version users
 	for k, v in pairs(versions.RELEASE) do
-		members[k] = nil
-		if v < highest then
-			if not good then
-				good = k.."("..v..")"
+		if members[k] then
+			members[k] = nil
+			if v < highest then
+				if not good then
+					good = k.."("..v..")"
+				else
+					good = good ..", "..k.."("..v..")"
+				end
 			else
-				good = good ..", "..k.."("..v..")"
-			end
-		else
-			if not ugly then
-				ugly = k.."("..v..")"
-			else
-				ugly = ugly ..", "..k.."("..v..")"
+				if not ugly then
+					ugly = k.."("..v..")"
+				else
+					ugly = ugly ..", "..k.."("..v..")"
+				end
 			end
 		end
 	end
 	for k, v in pairs(versions.UNKOWN) do
-		members[k] = nil
-		if not ugly then
-			ugly = k.."("..v..")"
-		else
-			ugly = ugly ..", "..k.."("..v..")"
-		end
-	end
-	for k, v in pairs(versions.ALPHA) do
-		members[k] = nil
-		if v >= highest then
-			if not good then
-				good = k.."("..v..")"
-			else
-				good = good ..", "..k.."("..v..")"
-			end
-		elseif v == -1 then
-			if not good then
-				good = k.."(svn)"
-			else
-				good = good ..", "..k.."(svn)"
-			end
-		else
+		if members[k] then
+			members[k] = nil
 			if not ugly then
 				ugly = k.."("..v..")"
 			else
 				ugly = ugly ..", "..k.."("..v..")"
+			end
+		end
+	end
+	for k, v in pairs(versions.ALPHA) do
+		if members[k] then
+			members[k] = nil
+			if v >= highest then
+				if not good then
+					good = k.."("..v..")"
+				else
+					good = good ..", "..k.."("..v..")"
+				end
+			elseif v == -1 then
+				if not good then
+					good = k.."(svn)"
+				else
+					good = good ..", "..k.."(svn)"
+				end
+			else
+				if not ugly then
+					ugly = k.."("..v..")"
+				else
+					ugly = ugly ..", "..k.."("..v..")"
+				end
 			end
 		end
 	end
