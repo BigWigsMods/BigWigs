@@ -22,6 +22,18 @@ local sounds = {
 }
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
+local colorize = nil
+do
+	local r, g, b
+	colorize = setmetatable({}, { __index =
+		function(self, key)
+			if not r then r, g, b = GameFontNormal:GetTextColor() end
+			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			return self[key]
+		end
+	})
+end
+
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -59,7 +71,7 @@ plugin.pluginOptions = {
 	args = {
 		default = {
 			type = "toggle",
-			name = L["Default only"],
+			name = colorize[L["Default only"]],
 			desc = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert.",
 			get = function(info) return plugin.db.profile.defaultonly end,
 			set = function(info, v) plugin.db.profile.defaultonly = v end,

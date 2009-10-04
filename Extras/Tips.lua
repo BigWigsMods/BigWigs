@@ -8,6 +8,18 @@ if not plugin then return end
 -- Options
 --
 
+local colorize = nil
+do
+	local r, g, b
+	colorize = setmetatable({}, { __index =
+		function(self, key)
+			if not r then r, g, b = GameFontNormal:GetTextColor() end
+			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			return self[key]
+		end
+	})
+end
+
 plugin.defaultDB = {
 	show = true,
 	automatic = true,
@@ -41,7 +53,7 @@ plugin.pluginOptions = {
 		},
 		show = {
 			type = "toggle",
-			name = "Enable",
+			name = colorize["Enable"],
 			desc = "If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful.",
 			order = 3,
 			width = "full",
@@ -55,7 +67,7 @@ plugin.pluginOptions = {
 		},
 		automatic = {
 			type = "toggle",
-			name = "Automatic tips",
+			name = colorize["Automatic tips"],
 			desc = "If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option.",
 			order = 11,
 			width = "full",
@@ -63,7 +75,7 @@ plugin.pluginOptions = {
 		},
 		manual = {
 			type = "toggle",
-			name = "Manual tips",
+			name = colorize["Manual tips"],
 			desc = "Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option.",
 			order = 12,
 			width = "full",
@@ -77,7 +89,7 @@ plugin.pluginOptions = {
 		},
 		chat = {
 			type = "toggle",
-			name = "Output to chat frame",
+			name = colorize["Output to chat frame"],
 			desc = "By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again.",
 			order = 21,
 			width = "full",
