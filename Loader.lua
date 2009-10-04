@@ -54,6 +54,9 @@ local BWRAID = 2
 local BWPARTY = 1
 local grouped = nil
 
+local showVersions
+local versionTooltipFunc
+
 local BZ -- BabbleZone-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 
@@ -169,6 +172,7 @@ function loader:OnInitialize()
 		if not BigWigs3IconDB then BigWigs3IconDB = {} end
 		icon:Register("BigWigs", ldb, BigWigs3IconDB)
 	end
+	self:RegisterTooltipInfo(versionTooltipFunc)
 end
 
 function loader:OnEnable()
@@ -196,7 +200,7 @@ function loader:OnEnable()
 	
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	
-	self:RegisterMessage("BigWigs_JoinedGroup", "ZoneChanged")
+	self:RegisterMessage("BigWigs_JoinedGroup")
 	self:RegisterMessage("BigWigs_LeftGroup")
 	self:RegisterMessage("BigWigs_CoreEnabled")
 	self:RegisterMessage("BigWigs_CoreDisabled")
@@ -209,22 +213,177 @@ end
 -- XXX We need to discuss and resolve the whole version checking thing before "first" release.
 -- Basically many people want the ability to see if anyone in their raid is not running BW
 -- at all. Personally I say this is too nazi, but it's very often requested and moaned about.
--- The code below won't really let you do that.
 --
--- So we have to decide on a message protocol for everything and what we should allow and not.
+-- The code below is preliminary.
 --
--- Maybe need to store a versions table in the loader for when the potential version module loads it can request the already known versions.
 --]]
 local warned = nil
+local delayTransmitter = CreateFrame("Frame", nil, UIParent)
+delayTransmitter:Hide()
+delayTransmitter:SetScript("OnUpdate", function(self, elapsed)
+	self.elapsed = self.elapsed + elapsed
+	if self.elapsed > 5 then
+		self:Hide()
+		if BIGWIGS_RELEASE_TYPE == ALPHA then
+			SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
+		else
+			SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
+		end
+	end
+end)
+local versions = {
+	UNKOWN = {},
+	RELEASE = {},
+	ALPHA = {},
+}
+local members = {}
+
+function versionTooltipFunc(tt)
+	local raid = GetRealNumRaidMembers()
+	local party = GetRealNumPartyMembers()
+	if raid == 0 and party == 0 then return end
+	wipe(members)
+	if raid > 0 then
+		for i = 1, raid, 1 do
+			local n = GetRaidRosterInfo(i)
+			if n then members[n] = true end
+		end
+	elseif party > 0 then
+		members[UnitName("player")] = true
+		for i = 1, 4, 1 do
+			local n = UnitName("party" .. i)
+			if n then members[n] = true end
+		end
+	end
+	local highest = 0
+	for k, v in pairs(versions.RELEASE) do
+		if v > highest then highest = v end
+	end
+	for k, v in pairs(versions.RELEASE) do
+		members[k] = nil
+		if v < highest then
+			tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+			return
+		end
+	end
+	for k, v in pairs(versions.UNKOWN) do
+		members[k] = nil
+		tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+		return
+	end
+	for k, v in pairs(versions.ALPHA) do
+		members[k] = nil
+		if v < highest and v ~= -1 then
+			tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+			return
+		end
+	end
+	for k, v in pairs(members) do
+		tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+		return
+	end
+
+	tt:AddLine("|cff00ff00Everyone is running an up-to-date Big Wigs.|r")
+end
+
+function showVersions()
+	local raid = GetRealNumRaidMembers()
+	local party = GetRealNumPartyMembers()
+	if raid == 0 and party == 0 then return end
+	wipe(members)
+	if raid > 0 then
+		for i = 1, raid, 1 do
+			local n = GetRaidRosterInfo(i)
+			if n then members[n] = true end
+		end
+	elseif party > 0 then
+		members[UnitName("player")] = true
+		for i = 1, 4, 1 do
+			local n = UnitName("party" .. i)
+			if n then members[n] = true end
+		end
+	end
+	local highest = 0
+	for k, v in pairs(versions.RELEASE) do
+		if v > highest then highest = v end
+	end
+	local good -- highest release users
+	local bad-- non-bw users
+	local ugly -- old version users
+	for k, v in pairs(versions.RELEASE) do
+		members[k] = nil
+		if v < highest then
+			if not good then
+				good = k.."("..v..")"
+			else
+				good = good ..", "..k.."("..v..")"
+			end
+		else
+			if not ugly then
+				ugly = k.."("..v..")"
+			else
+				ugly = ugly ..", "..k.."("..v..")"
+			end
+		end
+	end
+	for k, v in pairs(versions.UNKOWN) do
+		members[k] = nil
+		if not ugly then
+			ugly = k.."("..v..")"
+		else
+			ugly = ugly ..", "..k.."("..v..")"
+		end
+	end
+	for k, v in pairs(versions.ALPHA) do
+		members[k] = nil
+		if v >= highest then
+			if not good then
+				good = k.."("..v..")"
+			else
+				good = good ..", "..k.."("..v..")"
+			end
+		elseif v == -1 then
+			if not good then
+				good = k.."(svn)"
+			else
+				good = good ..", "..k.."(svn)"
+			end
+		else
+			if not ugly then
+				ugly = k.."("..v..")"
+			else
+				ugly = ugly ..", "..k.."("..v..")"
+			end
+		end
+	end
+	for k, v in pairs(members) do
+		if not bad then
+			bad = k
+		else
+			bad = bad ..", "..k
+		end
+	end
+	if good then
+		print("Up-to-date:", good)
+	end
+	if ugly then
+		print("Out-of-date:", ugly)
+	end
+	if bad then
+		print("No Big Wigs 3.0:", bad)
+	end
+end
+
+
 function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix == "BWVQ3" then
 		-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
-		self:SendMessage("BigWigs_Version", sender, UNKNOWN)
-		if BIGWIGS_RELEASE_TYPE == ALPHA then
-			SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, distribution)
-		else
-			SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, distribution)
+		if not versions.RELEASE[sender] and not versions.ALPHA[sender] then
+			versions.UNKOWN[sender] = true
 		end
+		self:SendMessage("BigWigs_Version", sender, UNKNOWN)
+		delayTransmitter.elapsed = 0
+		delayTransmitter:Show()
 	elseif prefix == "BWOOD3" then
 		if not tonumber(message) or warned then return end
 		if tonumber(message) > BIGWIGS_RELEASE_REVISION then
@@ -234,6 +393,9 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	elseif prefix == "BWVR3" then
 		message = tonumber(message)
 		if not message then return end
+		versions.RELEASE[sender] = message
+		versions.ALPHA[sender] = nil
+		versions.UNKOWN[sender] = nil
 		self:SendMessage("BigWigs_Version", sender, RELEASE, message)
 		if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
 			-- The sender is running an old version.
@@ -242,6 +404,9 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	elseif prefix == "BWVRA3" then
 		message = tonumber(message)
 		if not message then return end
+		versions.ALPHA[sender] = message
+		versions.RELEASE[sender] = nil
+		versions.UNKOWN[sender] = nil
 		self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 	end
 end
@@ -291,8 +456,8 @@ function loader:ZoneChanged()
 end
 
 function loader:CheckRoster()
-	local raid = GetNumRaidMembers()
-	local party = GetNumPartyMembers()
+	local raid = GetRealNumRaidMembers()
+	local party = GetRealNumPartyMembers()
 	if not grouped and raid > 0 then
 		grouped = BWRAID
 		self:SendMessage("BigWigs_JoinedGroup", grouped)
@@ -340,8 +505,11 @@ function loader:BigWigs_CoreLoaded()
 		if not IsAddOnLoaded(v) then LoadAddOn(v) end
 		loadOnCoreLoaded[k] = nil
 	end
-	-- FIXME: do sometihng with this?
-	-- BigWigs:SetZoneMenus(menus)
+end
+
+function loader:BigWigs_JoinedGroup()
+	self:ZoneChanged()
+	SendAddonMessage("BWVQ3", BIGWIGS_RELEASE_REVISION, "RAID")
 end
 
 function loader:BigWigs_LeftGroup()
@@ -479,6 +647,9 @@ hash_SlashCmdList['/bigwigs'] = nil
 SLASH_BIGWIGSS1 = "/bw"
 SLASH_BIGWIGSS2 = "/bigwigs"
 SlashCmdList.BIGWIGSS = slashfunction
+
+SLASH_BIGWIGSVERSION1 = "/bwv"
+SlashCmdList.BIGWIGSVERSION = showVersions
 
 -- interface options
 local frame = CreateFrame("Frame", nil, UIParent)
