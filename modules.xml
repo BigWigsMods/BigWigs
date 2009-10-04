@@ -18,6 +18,10 @@
 
 <Include file="Naxxramas\locales.xml"/>
 <Include file="Naxxramas\modules.xml"/>
+
+<Include file="OnyxiasLair\locales.xml"/>
+<Include file="OnyxiasLair\modules.xml"/>
+
 <!--@end-debug@-->
 </Ui>
 

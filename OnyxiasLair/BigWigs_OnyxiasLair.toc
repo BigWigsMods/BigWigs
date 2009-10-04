@@ -1,0 +1,18 @@
+## Interface: 30200
+
+## Title: Big Wigs [|cffeda55fOnyxia's Lair|r]
+## Notes: Big Wigs Onyxia's Lair Modules
+## Author: Ammo, Rabbit, Funkydude
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowwiki.com/BigWigs
+## X-Category: Raid
+
+## X-BigWigs-LoadOn-Zone: Onyxia's Lair
+
+## Dependencies: BigWigs
+
+locales.xml
+
+modules.xml
