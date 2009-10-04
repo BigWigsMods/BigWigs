@@ -159,47 +159,47 @@ function options:OnInitialize()
 		title:SetText("About")
 
 		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		subtitle:SetHeight(32)
 		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-		subtitle:SetPoint("RIGHT", parent, -32, 0)
-		subtitle:SetNonSpaceWrap(true)
+		subtitle:SetPoint("RIGHT", frame, -16, 0)
 		subtitle:SetJustifyH("LEFT")
 		subtitle:SetJustifyV("TOP")
 		local notes = GetAddOnMetadata(frame.addonname, "Notes")
-		subtitle:SetText(notes)
+		subtitle:SetText(notes .. "\n\n|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
 
 		local anchor = nil
 		for i, field in next, fields do
 			local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-			title:SetWidth(100)
-			if not anchor then title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT")
-			else title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -6) end
+			title:SetWidth(120)
+			if not anchor then
+				title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT", 0, -16)
+			else
+				title:SetPoint("TOP", anchor, "BOTTOM", 0, -6)
+				title:SetPoint("LEFT", subtitle)
+			end
+			title:SetNonSpaceWrap(true)
 			title:SetJustifyH("LEFT")
 			title:SetText(field)
 			local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-			detail:SetPoint("LEFT", title, "RIGHT")
-			detail:SetPoint("RIGHT", -16, 0)
+			detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
+			detail:SetWidth(frame:GetWidth() - 136)
 			detail:SetJustifyH("LEFT")
+			detail:SetJustifyV("TOP")
 			detail:SetText(fieldData[i])
 
-			anchor = title
+			anchor = detail
 		end
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -16)
+		title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
+		title:SetPoint("LEFT", subtitle)
 		title:SetJustifyH("LEFT")
+		title:SetJustifyV("TOP")
 		title:SetText("Thanks to the following for all their help in various fields of development")
 		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
 		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, -16)
 		detail:SetJustifyH("LEFT")
 		detail:SetJustifyV("TOP")
-		detail:SetNonSpaceWrap(false)
 		detail:SetText(BIGWIGS_AUTHORS)
-		
-		local version = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		version:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 32)
-		version:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 32)
-		version:SetText("|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
 
 		frame:SetScript("OnShow", nil)
 	end)
