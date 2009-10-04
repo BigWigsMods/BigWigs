@@ -4,6 +4,8 @@
 local plugin = BigWigs:NewPlugin("Tip of the Raid")
 if not plugin then return end
 
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+
 -------------------------------------------------------------------------------
 -- Options
 --
@@ -33,14 +35,14 @@ local function disable() return not plugin.db.profile.show end
 
 plugin.pluginOptions = {
 	type = "group",
-	name = "Tips",
-	desc = "Configure how the raiding tips should be displayed.",
+	name = L["Tips"],
+	desc = L["Configure how the raiding tips should be displayed."],
 	get = get,
 	set = set,
 	args = {
 		description = {
 			type = "description",
-			name = "Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!",
+			name = L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"],
 			order = 1,
 			width = "full",
 			fontSize = "medium",
@@ -53,8 +55,8 @@ plugin.pluginOptions = {
 		},
 		show = {
 			type = "toggle",
-			name = colorize["Enable"],
-			desc = "If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful.",
+			name = colorize[L["Enable"]],
+			desc = L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."],
 			order = 3,
 			width = "full",
 			descStyle = "inline",
@@ -67,16 +69,16 @@ plugin.pluginOptions = {
 		},
 		automatic = {
 			type = "toggle",
-			name = colorize["Automatic tips"],
-			desc = "If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option.",
+			name = colorize[L["Automatic tips"]],
+			desc = L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."],
 			order = 11,
 			width = "full",
 			disabled = disable,
 		},
 		manual = {
 			type = "toggle",
-			name = colorize["Manual tips"],
-			desc = "Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option.",
+			name = colorize[L["Manual tips"]],
+			desc = L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."],
 			order = 12,
 			width = "full",
 			disabled = disable,
@@ -89,8 +91,8 @@ plugin.pluginOptions = {
 		},
 		chat = {
 			type = "toggle",
-			name = colorize["Output to chat frame"],
-			desc = "By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again.",
+			name = colorize[L["Output to chat frame"]],
+			desc = L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."],
 			order = 21,
 			width = "full",
 			descStyle = "inline",
@@ -406,8 +408,8 @@ SlashCmdList.BigWigs_SendRaidTip = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	input = input:trim()
 	if not UnitInRaid("player") or not IsRaidLeader() or not tonumber(input) or #input < 5 then
-		print("Usage: /sendtip <index|\"Custom tip\">")
-		print("You must be the raid leader to broadcast a tip.")
+		print(L["Usage: /sendtip <index|\"Custom tip\">"])
+		print(L["You must be the raid leader to broadcast a tip."])
 		return
 	end
 	if tonumber(input) then
@@ -415,7 +417,7 @@ SlashCmdList.BigWigs_SendRaidTip = function(input)
 		if tips[index] then
 			SendAddonMessage("BWTIP", tips[index], "RAID")
 		else
-			print("Tip index out of bounds, accepted indexes range from 1 to " .. #tips .. ".")
+			print(L["Tip index out of bounds, accepted indexes range from 1 to %d."]:format(#tips))
 		end
 	else
 		local guildName = IsInGuild() and (GetGuildInfo("player")) or ""
