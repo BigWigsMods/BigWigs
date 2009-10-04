@@ -160,11 +160,11 @@ function options:OnInitialize()
 
 		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-		subtitle:SetPoint("RIGHT", frame, -16, 0)
+		subtitle:SetWidth(frame:GetWidth() - 16)
 		subtitle:SetJustifyH("LEFT")
 		subtitle:SetJustifyV("TOP")
 		local notes = GetAddOnMetadata(frame.addonname, "Notes")
-		subtitle:SetText(notes .. "\n\n|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
+		subtitle:SetText(notes .. " |cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
 
 		local anchor = nil
 		for i, field in next, fields do
@@ -191,6 +191,7 @@ function options:OnInitialize()
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 		title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
 		title:SetPoint("LEFT", subtitle)
+		title:SetWidth(frame:GetWidth() - 16)
 		title:SetJustifyH("LEFT")
 		title:SetJustifyV("TOP")
 		title:SetText("Thanks to the following for all their help in various fields of development")
