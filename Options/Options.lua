@@ -155,6 +155,60 @@ function options:OnInitialize()
 
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
+	
+	local about = self:GetPanel("About")
+	local fields = {"Version", "Author", "X-Category", "X-License", "X-Website"}
+	about:SetScript("OnShow", function(frame)
+		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+		title:SetPoint("TOPLEFT", 16, -16)
+		title:SetText("About")
+
+		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		subtitle:SetHeight(32)
+		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+		subtitle:SetPoint("RIGHT", parent, -32, 0)
+		subtitle:SetNonSpaceWrap(true)
+		subtitle:SetJustifyH("LEFT")
+		subtitle:SetJustifyV("TOP")
+		local notes = GetAddOnMetadata(frame.addonname, "Notes")
+		subtitle:SetText(notes)
+
+		local anchor = nil
+		for i, field in next, fields do
+			local val = GetAddOnMetadata(frame.addonname, field)
+			if val then
+				local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+				title:SetWidth(50)
+				if not anchor then title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT")
+				else title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -6) end
+				title:SetJustifyH("RIGHT")
+				title:SetText(field:gsub("X%-", ""))
+
+				local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+				detail:SetPoint("LEFT", title, "RIGHT", 4, 0)
+				detail:SetPoint("RIGHT", -16, 0)
+				detail:SetJustifyH("LEFT")
+				detail:SetText(val)
+
+				anchor = title
+			end
+		end
+		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		title:SetWidth(50)
+		title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -6)
+		title:SetJustifyH("RIGHT")
+		title:SetText("Thanks to")
+		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		detail:SetPoint("TOPLEFT", title, "RIGHT", 4, 6)
+		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, -16)
+		detail:SetJustifyH("LEFT")
+		detail:SetJustifyV("TOP")
+		detail:SetNonSpaceWrap(false)
+		detail:SetText(BIGWIGS_AUTHORS)
+
+		frame:SetScript("OnShow", nil)
+	end)
+
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
 	
@@ -177,7 +231,7 @@ function options:OnEnable()
 
 	local zones = BigWigsLoader:GetZoneMenus()
 	if zones then
-		for zone in pairs(zones) do self:NewZonePanel(zone) end
+		for zone in pairs(zones) do self:GetZonePanel(zone) end
 	end
 end
 
@@ -598,10 +652,10 @@ end
 do
 	local panels = {}
 	local noop = function() end
-	function options:NewZonePanel(zone)
-		if not panels[zone] then
+	function options:GetPanel(id)
+		if not panels[id] then
 			local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
-			frame.name = zone
+			frame.name = id
 			frame.parent = "Big Wigs"
 			frame.addonname = "BigWigs"
 			frame.okay = noop
@@ -609,12 +663,20 @@ do
 			frame.default = noop
 			frame.refresh = noop
 			frame:Hide()
-			frame:SetScript("OnShow", onZoneShow)
-			frame:SetScript("OnHide", onZoneHide)
 			InterfaceOptions_AddCategory(frame)
-			panels[zone] = frame
+			panels[id] = frame
+			return panels[id], true
 		end
-		return panels[zone]
+		return panels[id]
+	end
+	
+	function options:GetZonePanel(zone)
+		local panel, created = self:GetPanel(zone)
+		if created then
+			panel:SetScript("OnShow", onZoneShow)
+			panel:SetScript("OnHide", onZoneHide)
+		end
+		return panel
 	end
 end
 
@@ -625,7 +687,7 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	if not module.toggleOptions then return end
 	local zone = module.otherMenu or module.zoneName
 	if not zone then error(module.name .. " doesn't have any valid zone set!") end
-	self:NewZonePanel(zone)
+	self:GetZonePanel(zone)
 	if not zoneModules[zone] then zoneModules[zone] = {} end
 	tinsert(zoneModules[zone], module.displayName)
 end

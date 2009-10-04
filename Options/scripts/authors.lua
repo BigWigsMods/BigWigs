@@ -45,7 +45,7 @@ numberOfCommits.ammo = nil
 
 local uniqueAuthors = {}
 for k, v in pairs(numberOfCommits) do
-	table.insert(uniqueAuthors, k)
+	if v > 2 then table.insert(uniqueAuthors, k) end
 end
 table.sort(uniqueAuthors, function(a, b) return numberOfCommits[a] > numberOfCommits[b] end)
 
