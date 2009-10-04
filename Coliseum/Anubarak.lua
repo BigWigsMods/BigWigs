@@ -117,7 +117,7 @@ end
 
 function mod:Pursue(player, spellId)
 	self:TargetMessage(67574, L["chase"], player, "Personal", spellId)
-	self:FlashShake(67574)
+	if player == pName then self:FlashShake(67574) end
 	self:Whisper(67574, player, L["chase"])
 	self:PrimaryIcon(67574, player, "icon")
 end
