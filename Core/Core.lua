@@ -418,7 +418,7 @@ do
 				local t = type(v)
 				if t == "table" then
 					for i=2,#v,1 do
-						if C[v[i]] then
+						if C[v[i]] and v[i] ~= "EMPHASIZE" then
 							bf = bf + C[v[i]]
 						else
 							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, v[1], v[i]))
