@@ -292,7 +292,7 @@ do
 		coolButton:SetPoint("RIGHT", window, "RIGHT", -16, 0)
 		coolButton:SetHeight(22)
 		coolButton:SetScript("OnClick", closeWindow)
-		coolButton:SetText("Cool!")
+		coolButton:SetText(L["Cool!"])
 
 		footer = window:CreateFontString(nil, "ARTWORK", "GameFontDisable")
 		footer:SetPoint("BOTTOMLEFT", nextButton, "TOPLEFT", 0, 10)

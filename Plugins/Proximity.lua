@@ -591,7 +591,7 @@ function plugin:Open(range)
 	local func, actualRange = getClosestRangeFunction(range)
 	activeProximityFunction = func
 	-- Update the header to reflect the actual range we're checking
-	anchor.header:SetText(("%d yards"):format(actualRange))
+	anchor.header:SetText(L["%d yards"]:format(actualRange))
 	-- Unbreak the sound+close buttons
 	makeThingsWork()
 	-- Start the show!

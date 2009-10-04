@@ -89,6 +89,8 @@ L["color_upgrade"] = "Your color values for messages and bars have been reset in
 
 -- Messages.lua
 
+L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
+
 L["Messages"] = true
 L["Options for message display."] = true
 
@@ -130,20 +132,14 @@ L["Hides the anchors."] = true
 
 -- RaidIcon.lua
 
-L["Raid Icons"] = true
+L["Icons"] = true
 L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = true
 
-L["RaidIcon"] = true
-
-L["Place"] = true
-L["Place Raid Icons"] = true
-L["Toggle placing of Raid Icons on players."] = true
-
-L["Icon"] = true
-L["Set Icon"] = true
-L["Set which icon to place on players."] = true
-
-L["Use the %q icon when automatically placing raid icons for boss abilities."] = true
+L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
+L["Primary"] = true
+L["The first raid target icon that a encounter script should use."] = true
+L["Secondary"] = true
+L["The second raid target icon that a encounter script should use."] = true
 
 L["Star"] = true
 L["Circle"] = true
@@ -153,6 +149,7 @@ L["Moon"] = true
 L["Square"] = true
 L["Cross"] = true
 L["Skull"] = true
+L["|cffff0000Disable|r"] = true
 
 -- RaidWarn.lua
 L["RaidWarning"] = true
@@ -164,6 +161,8 @@ L["raidwarning_desc"] = "Lets you configure where BigWigs should send its boss m
 
 -- Sound.lua
 
+L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
+
 L["Sounds"] = true
 L["Options for sounds."] = true
 
@@ -174,13 +173,11 @@ L["Long"] = true
 L["Victory"] = true
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true
-L["Use sounds"] = true
-L["Toggle all sounds on or off."] = true
 L["Default only"] = true
-L["Use only the default sound."] = true
 
 -- Proximity.lua
 
+L["%d yards"] = true
 L["Proximity"] = true
 L["Close Players"] = true
 L["Options for the Proximity Display."] = true
@@ -218,6 +215,7 @@ L["Shows or hides the close button."] = true
 L["Show/hide"] = true
 
 -- Tips.lua
+L["Cool!"] = true
 L["Tips"] = true
 L["Configure how the raiding tips should be displayed."] = true
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true

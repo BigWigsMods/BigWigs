@@ -22,7 +22,7 @@ local icons = {
 	L["Square"],
 	L["Cross"],
 	L["Skull"],
-	"|cffff0000Disable|r",
+	L["|cffff0000Disable|r"],
 }
 
 --------------------------------------------------------------------------------
@@ -45,30 +45,30 @@ end
 
 plugin.pluginOptions = {
 	type = "group",
-	name = "Icons",
+	name = L["Icons"],
 	desc = L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."],
 	get = get,
 	set = set,
 	args = {
 		description = {
 			type = "description",
-			name = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r",
+			name = L.raidIconDescription,
 			order = 1,
 			width = "full",
 			fontSize = "medium",
 		},
 		icon = {
 			type = "select",
-			name = "Primary",
-			desc = "The first raid target icon that a encounter script should use.",
+			name = L["Primary"],
+			desc = L["The first raid target icon that a encounter script should use."],
 			order = 2,
 			values = icons,
 			width = "full",
 		},
 		secondIcon = {
 			type = "select",
-			name = "Secondary",
-			desc = "The second raid target icon that a encounter script should use.",
+			name = L["Secondary"],
+			desc = L["The second raid target icon that a encounter script should use."],
 			order = 3,
 			values = icons,
 			width = "full",
