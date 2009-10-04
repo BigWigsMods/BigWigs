@@ -353,7 +353,7 @@ end
 
 function boss:DelayedMessage(key, delay, text, color, icon, sound, noraidsay, broadcastonly)
 	if checkFlag(self, key, C.MESSAGE) then
-		return self:ScheduleEvent(text, "Message", delay, text, color, icon, sound, noraidsay, broadcastonly)
+		return self:ScheduleEvent(text, "Message", delay, key, text, color, icon, sound, noraidsay, broadcastonly)
 	end
 end
 
