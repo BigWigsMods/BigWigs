@@ -348,7 +348,10 @@ local function getOptionDetails(module, bossOption)
 	end
 end
 
-local function getMasterOption(self)
+local slaves = {}
+local getMasterOption, masterOptionToggled, getSlaveOption, slaveOptionToggled
+
+function getMasterOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	if module.db.profile[key] == 0 then
@@ -360,7 +363,7 @@ local function getMasterOption(self)
 	return nil -- some options set
 end
 
-local function masterOptionToggled(self, event, value)
+function masterOptionToggled(self, event, value)
 	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
@@ -369,12 +372,52 @@ local function masterOptionToggled(self, event, value)
 	else
 		module.db.profile[key] = 0
 	end
+	for k, toggle in ipairs(slaves) do
+		toggle:SetValue(getSlaveOption(toggle))
+	end
 end
 
+function getSlaveOption(self)
+	local key = self:GetUserData("key")
+	local module = self:GetUserData("module")
+	local flag = self:GetUserData("flag")
+	return bit.band(module.db.profile[key], flag) == flag
+end
+
+function slaveOptionToggled(self, event, value)
+	local key = self:GetUserData("key")
+	local module = self:GetUserData("module")
+	local flag = self:GetUserData("flag")
+	local master = self:GetUserData("master")
+	if value then
+		module.db.profile[key] = module.db.profile[key] + flag
+	else
+		module.db.profile[key] = module.db.profile[key] - flag
+	end
+	master:SetValue(getMasterOption(master))
+end
+
+local function getSlaveToggle(label, desc, key, module, flag, master)
+	local toggle = AceGUI:Create("CheckBox")
+	toggle:SetLabel(colorize[label])
+	toggle:SetFullWidth(true)
+	toggle:SetDescription(desc)
+	toggle:SetUserData("key", key)
+	toggle:SetUserData("module", module)
+	toggle:SetUserData("flag", flag)
+	toggle:SetUserData("master", master)
+	toggle:SetCallback("OnValueChanged", slaveOptionToggled)
+	toggle:SetValue(getSlaveOption(toggle))
+	return toggle
+end
 
 local messageDesc = "Most encounter abilities come with one or more messages that Big Wigs will show on your screen. If you disable this option, none of the messages attached to this option, if any, will be displayed."
 local barDesc = "Bars are shown for some encounter abilities when appropriate. If this ability is accompanied by a bar that you want to hide, disable this option."
 local fnsDesc = "Some abilities might be more important than others. If you want your screen to flash and shake when this ability is imminent or used, check this option."
+local iconDesc = "Big Wigs can mark characters affected by abilities with an icon. This makes them easier to spot."
+local whisperDesc = "Some effects are important enough that Big Wigs will send a whisper to the affected person."
+local sayDesc = "Chat bubbles are easy to spot. Big Wigs will use a say message to announce people nearby about an effect on you."
+local pingDesc = "Sometimes locations can be important, Big Wigs will ping the minimap so people know where you are."
 local emphasizeDesc = "Enabling this will SUPER EMPHASIZE any messages or bars associated with this encounter ability. Messages will be bigger, bars will flash and have a different color, sounds will be used to count down when the ability is imminent. Basically you will notice it."
 
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
@@ -383,6 +426,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	back:SetText("<< Back")
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
+		wipe(slaves) -- important, mastertoggled is called from the parent that has no slaves as well
 		showBossOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
@@ -405,32 +449,42 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	local dbv = module.toggleDefaults[dbKey]
 	
 	do
-		local message, bar, fns
+		wipe(slaves)
 		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
-			message = AceGUI:Create("CheckBox")
-			message:SetLabel(colorize["Messages"])
-			message:SetValue(true)
-			message:SetFullWidth(true)
-			message:SetDescription(messageDesc)
+			local message = getSlaveToggle("Messages", messageDesc, dbKey, module, C.MESSAGE, check)
 			group:AddChildren(message)
+			table.insert(slaves, message)
 		end
 		if bit.band(dbv, C.BAR) == C.BAR then
-			bar = AceGUI:Create("CheckBox")
-			bar:SetLabel(colorize["Bars"])
-			bar:SetValue(true)
-			bar:SetFullWidth(true)
-			bar:SetDescription(barDesc)
+			local bar = getSlaveToggle("Bars", barDesc, dbKey, module, C.BAR, check)
 			group:AddChildren(bar)
+			table.insert(slaves, bar)
 		end
 		if bit.band(dbv, C.FLASHNSHAKE) == C.FLASHNSHAKE then
-			fns = AceGUI:Create("CheckBox")
-			fns:SetLabel(colorize["Flash and shake"])
-			fns:SetValue(true)
-			fns:SetFullWidth(true)
-			fns:SetDescription(fnsDesc)
+			local fns = getSlaveToggle("Flash and shake", fnsDesc, dbKey, module, C.FLASHNSHAKE, check)
 			group:AddChildren(fns)
+			table.insert(slaves, fns)
 		end
-		-- XXX missing custom ones like icon, say, etc
+		if bit.band(dbv, C.ICON) == C.ICON then
+			local icon = getSlaveToggle("Icon", iconDesc, dbKey, module, C.ICON, check)
+			group:AddChildren(icon)
+			table.insert(slaves, icon)
+		end
+		if bit.band(dbv, C.WHISPER) == C.WHISPER then
+			local whisper = getSlaveToggle("Whisper", whisperDesc, dbKey, module, C.WHISPER, check)
+			group:AddChildren(whisper)
+			table.insert(slaves, whisper)
+		end
+		if bit.band(dbv, C.SAY) == C.SAY then
+			local say = getSlaveToggle("Say", sayDesc, dbKey, module, C.SAY, check)
+			group:AddChildren(say)
+			table.insert(slaves, say)
+		end
+		if bit.band(dbv, C.PING) == C.PING then
+			local ping = getSlaveToggle("Ping", pingDesc, dbKey, module, C.PING, check)
+			group:AddChildren(ping)
+			table.insert(slaves, ping)
+		end
 	end
 
 	local emphasize = AceGUI:Create("InlineGroup")
