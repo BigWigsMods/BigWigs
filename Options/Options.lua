@@ -133,20 +133,6 @@ local acOptions = {
 			hidden = function() return not icon end,
 			width = "full",
 		},
-		separator4 = {
-			type = "description",
-			name = " ",
-			order = 50,
-			width = "full",
-			hidden = function() return not icon end,
-		},
-		footer = {
-			type = "description",
-			name = "|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r",
-			order = 51,
-			width = "full",
-			fontSize = "medium",
-		},
 	},
 }
 
@@ -157,7 +143,16 @@ function options:OnInitialize()
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	
 	local about = self:GetPanel("About")
-	local fields = {"Version", "Author", "X-Category", "X-License", "X-Website"}
+	local fields = {
+		"Main Developers", "Maintainers", "License", "Website", "Contact"
+	}
+	local fieldData = {
+		"Ammo, Rabbit",
+		"Funkydude",
+		"See license.txt in the main Big Wigs folder.",
+		"http://www.wowace.com/addons/big-wigs/",
+		"irc.freenode.net in the #wowace channel",
+	}
 	about:SetScript("OnShow", function(frame)
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title:SetPoint("TOPLEFT", 16, -16)
@@ -175,36 +170,36 @@ function options:OnInitialize()
 
 		local anchor = nil
 		for i, field in next, fields do
-			local val = GetAddOnMetadata(frame.addonname, field)
-			if val then
-				local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-				title:SetWidth(50)
-				if not anchor then title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT")
-				else title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -6) end
-				title:SetJustifyH("RIGHT")
-				title:SetText(field:gsub("X%-", ""))
+			local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+			title:SetWidth(100)
+			if not anchor then title:SetPoint("TOPLEFT", subtitle, "BOTTOMLEFT")
+			else title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -6) end
+			title:SetJustifyH("LEFT")
+			title:SetText(field)
+			local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+			detail:SetPoint("LEFT", title, "RIGHT")
+			detail:SetPoint("RIGHT", -16, 0)
+			detail:SetJustifyH("LEFT")
+			detail:SetText(fieldData[i])
 
-				local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-				detail:SetPoint("LEFT", title, "RIGHT", 4, 0)
-				detail:SetPoint("RIGHT", -16, 0)
-				detail:SetJustifyH("LEFT")
-				detail:SetText(val)
-
-				anchor = title
-			end
+			anchor = title
 		end
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		title:SetWidth(50)
-		title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -6)
-		title:SetJustifyH("RIGHT")
-		title:SetText("Thanks to")
+		title:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, -16)
+		title:SetJustifyH("LEFT")
+		title:SetText("Thanks to the following for all their help in various fields of development")
 		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-		detail:SetPoint("TOPLEFT", title, "RIGHT", 4, 6)
+		detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
 		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, -16)
 		detail:SetJustifyH("LEFT")
 		detail:SetJustifyV("TOP")
 		detail:SetNonSpaceWrap(false)
 		detail:SetText(BIGWIGS_AUTHORS)
+		
+		local version = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		version:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, 32)
+		version:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 32)
+		version:SetText("|cff44ff44" .. BIGWIGS_RELEASE_STRING .. "|r")
 
 		frame:SetScript("OnShow", nil)
 	end)

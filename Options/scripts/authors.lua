@@ -42,6 +42,7 @@ numberOfCommits.root = nil
 -- Remove ourselves, we don't need to be listed twice!
 numberOfCommits.rabbit = nil
 numberOfCommits.ammo = nil
+numberOfCommits.funkydude = nil
 
 local uniqueAuthors = {}
 for k, v in pairs(numberOfCommits) do
