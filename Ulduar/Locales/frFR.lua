@@ -155,6 +155,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "frFR")
 if L then
+	L.engage = "Engagement"
+	L.engage_desc = "Prévient quand le Léviathan des flammes est engagé."
 	L.engage_trigger = "^Entités hostiles détectées."
 	L.engage_message = "%s engagé !"
 

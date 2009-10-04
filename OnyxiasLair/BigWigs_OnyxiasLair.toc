@@ -1,7 +1,9 @@
 ## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fOnyxia's Lair|r]
+## Title-frFR: Big Wigs [|cffeda55fRepaire d'Onyxia|r]
 ## Notes: Big Wigs Onyxia's Lair Modules
+## Notes-frFR: Modules Big Wigs concernant le Repaire d'Onyxia.
 ## Author: Ammo, Rabbit, Funkydude
 ## Version: 2.0
 ## LoadOnDemand: 1
