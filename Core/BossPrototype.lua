@@ -390,7 +390,6 @@ do
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 
-	-- XXX 3rd argument is a proposed API change, and is subject to change/removal.
 	function boss:Whisper(key, player, spellName, noName)
 		if not checkFlag(self, key, C.WHISPER) then return end
 		local msg = noName and spellName or fmt(L["you"], spellName)
@@ -401,7 +400,6 @@ do
 	end
 end
 
--- XXX 2nd argument is a proposed API change, and is subject to change/removal.
 function boss:PrimaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
@@ -411,7 +409,6 @@ function boss:PrimaryIcon(key, player)
 	end
 end
 
--- XXX 2nd argument is a proposed API change, and is subject to change/removal.
 function boss:SecondaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
