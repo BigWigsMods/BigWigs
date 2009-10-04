@@ -53,6 +53,9 @@ L["All running modules have been disabled."] = true
 
 L["|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r"] = true
 L["|cff00ff00Everyone is running an up-to-date Big Wigs.|r"] = true
+L["Up-to-date:"] = true
+L["Out-of-date:"] = true
+L["No Big Wigs 3.0:"] = true
 
 -- Options.lua
 L["Customize ..."] = true

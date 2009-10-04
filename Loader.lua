@@ -79,6 +79,26 @@ local L_OLD_VERSION = L["There is a new release of Big Wigs available. You can v
 -- LOCALE = "Foreignese"
 loader.LOCALE = LOCALE
 
+local hexColors = {}
+for k, v in pairs(RAID_CLASS_COLORS) do
+	hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+end
+
+local coloredNames = setmetatable({}, {__index =
+	function(self, key)
+		if type(key) == "nil" then return nil end
+		local class = select(2, UnitClass(key))
+		if class then
+			self[key] = hexColors[class]  .. key .. "|r"
+		else
+			self[key] = "|cffcccccc"..key.."|r"
+		end
+		return self[key]
+	end
+})
+
+
+
 local function loadZone(zone)
 	if not zone then return end
 	if loadInZone[zone] then
@@ -286,6 +306,11 @@ function versionTooltipFunc(tt)
 	tt:AddLine(L["|cff00ff00Everyone is running an up-to-date Big Wigs.|r"])
 end
 
+local function coloredNameVersion(name, version)
+	version = version and "|cffccccc"..version.."|r" or ""
+	return string.format("%s%s", coloredNames[name], version)
+end
+
 function showVersions()
 	local raid = GetRealNumRaidMembers()
 	local party = GetRealNumPartyMembers()
@@ -315,15 +340,15 @@ function showVersions()
 			members[k] = nil
 			if v < highest then
 				if not good then
-					good = k.."("..v..")"
+					good = coloredNameVersion(k, v)
 				else
-					good = good ..", "..k.."("..v..")"
+					good = good ..", "..coloredNameVersion(k, v)
 				end
 			else
 				if not ugly then
-					ugly = k.."("..v..")"
+					ugly = coloredNameVersion(k, v)
 				else
-					ugly = ugly ..", "..k.."("..v..")"
+					ugly = ugly ..", "..coloredNameVersion(k, v)
 				end
 			end
 		end
@@ -332,9 +357,9 @@ function showVersions()
 		if members[k] then
 			members[k] = nil
 			if not ugly then
-				ugly = k.."("..v..")"
+				ugly = coloredNameVersion(k, v)
 			else
-				ugly = ugly ..", "..k.."("..v..")"
+				ugly = ugly ..", "..coloredNameVersion(k, v)
 			end
 		end
 	end
@@ -343,40 +368,40 @@ function showVersions()
 			members[k] = nil
 			if v >= highest then
 				if not good then
-					good = k.."("..v..")"
+					good = coloredNameVersion(k, v)
 				else
-					good = good ..", "..k.."("..v..")"
+					good = good ..", "..coloredNameVersion(k, v)
 				end
 			elseif v == -1 then
 				if not good then
-					good = k.."(svn)"
+					good = coloredNameVersion(k, "svn")
 				else
-					good = good ..", "..k.."(svn)"
+					good = good ..", "..coloredNameVersion(k, "svn")
 				end
 			else
 				if not ugly then
-					ugly = k.."("..v..")"
+					ugly = coloredNameVersion(k, v)
 				else
-					ugly = ugly ..", "..k.."("..v..")"
+					ugly = ugly ..", "..coloredNameVersion(k, v)
 				end
 			end
 		end
 	end
 	for k, v in pairs(members) do
 		if not bad then
-			bad = k
+			bad = coloredNames[k]
 		else
-			bad = bad ..", "..k
+			bad = bad ..", "..coloredNames[k]
 		end
 	end
 	if good then
-		print("Up-to-date:", good)
+		print(L["Up-to-date:"], good)
 	end
 	if ugly then
-		print("Out-of-date:", ugly)
+		print(L["Out-of-date:"], ugly)
 	end
 	if bad then
-		print("No Big Wigs 3.0:", bad)
+		print(L["No Big Wigs 3.0:"], bad)
 	end
 end
 
