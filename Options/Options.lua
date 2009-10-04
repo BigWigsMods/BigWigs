@@ -143,17 +143,21 @@ function options:OnInitialize()
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	
 	local about = self:GetPanel("About")
-	local fields = {
-		"Main Developers", "Maintainers", "License", "Website", "Contact"
-	}
-	local fieldData = {
-		"Ammo, Rabbit",
-		"Funkydude",
-		"See license.txt in the main Big Wigs folder.",
-		"http://www.wowace.com/addons/big-wigs/",
-		"irc.freenode.net in the #wowace channel",
-	}
 	about:SetScript("OnShow", function(frame)
+		local fields = {
+			"Main Developers",
+			"Maintainers",
+			"License",
+			"Website",
+			"Contact",
+		}
+		local fieldData = {
+			"Ammo, Rabbit",
+			"Funkydude",
+			"See license.txt in the main Big Wigs folder.",
+			"http://www.wowace.com/addons/big-wigs/",
+			"irc.freenode.net in the #wowace channel",
+		}
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title:SetPoint("TOPLEFT", 16, -16)
 		title:SetText("About")

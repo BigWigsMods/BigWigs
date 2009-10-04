@@ -11,11 +11,8 @@
 ## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Author: Ammo, Rabbit, Funkydude
-## X-Credits: Pettigrow (frFR), Gamefaq (deDE), Kyopaxa (esES), Daemona, wolftankk@cwdg (zhCN), Tekkub Stoutwrithe (BigWigs 1) & More
 ## Version: 3.0
-## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
-## X-License: See license.txt
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: true
@@ -25,10 +22,7 @@
 ## SavedVariables: BigWigs3DB, BigWigs3IconDB
 
 embeds.xml
-
 locales.xml
-
 Loader.lua
-
 modules.xml
 
