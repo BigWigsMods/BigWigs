@@ -64,7 +64,7 @@ end
 function mod:ScorchCast(_, spellId, _, _, spellName)
 	self:Message(62546, spellName, "Attention", spellId)
 	self:Bar(62546, L["scorch_bar"], 25, spellId)
-	self:DelayedMessage(62546, 20, L["scorch_soon"], "Urgent", nil, nil, nil, spellId)
+	self:DelayedMessage(62546, 20, L["scorch_soon"], "Urgent", spellId)
 end
 
 do

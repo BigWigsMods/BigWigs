@@ -344,19 +344,16 @@ do
 		end
 	end
 
-	-- XXX Proposed API, subject to change.
 	-- Outputs a local message only, no raid warning.
-	function boss:LocalMessage(dbkey, key, color, icon, sound, locale, ...)
+	function boss:LocalMessage(dbkey, text, color, icon, sound)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
-		if locale and not self.db.profile[key] then return end
-		local text = not locale and key or locale[keys[key]]:format(...)
 		self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
 	end
 end
 
-function boss:DelayedMessage(key, delay, text, ...)
+function boss:DelayedMessage(key, delay, text, color, icon, sound, noraidsay, broadcastonly)
 	if checkFlag(self, key, C.MESSAGE) then
-		return self:ScheduleEvent(text, "SendMessage", delay, "BigWigs_Message", text, ...)
+		return self:ScheduleEvent(text, "Message", delay, text, color, icon, sound, noraidsay, broadcastonly)
 	end
 end
 
