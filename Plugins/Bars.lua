@@ -549,8 +549,10 @@ function plugin:BigWigs_StartBar(message, module, text, time, icon)
 	if db.emphasize and time < 15 then
 		self:EmphasizeBar(bar)
 	end
+	--[[ XXX - disable clicking on bars, once this is optional it can return, for now bars need to be clickthrough to not hinder gameplay
 	bar:EnableMouse(true)
 	bar:SetScript("OnMouseDown", barClicked)
+	--]]
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
