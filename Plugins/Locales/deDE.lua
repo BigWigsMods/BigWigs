@@ -2,41 +2,21 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
 
 if not L then return end
 
--- Bars2.lua
+-- Bars.lua
 
-L["Bars"] = "Leisten"
-L["Normal Bars"] = "Normale Leisten"
-L["Emphasized Bars"] = "Hervorgehobene Leisten"
-L["Options for the timer bars."] = "Optionen für die Timerleisten."
-L["Toggle anchors"] = "Verankerungen"
-L["Show or hide the bar anchors for both normal and emphasized bars."] = "Zeigt oder versteckt die Verankerungen für normale und hervorgehobene Leisten."
 L["Scale"] = "Skalierung"
-L["Set the bar scale."] = "Justiert die Skalierung der Leisten."
 L["Grow upwards"] = "Nach oben erweitern"
 L["Toggle bars grow upwards/downwards from anchor."] = "Legt fest, ob sich die Leisten von der Verankerung aus nach oben oder unten erweitern."
 L["Texture"] = "Textur"
-L["Set the texture for the timer bars."] = "Legt eine Textur für die Leisten fest."
-L["Test"] = "Test"
-L["Close"] = "Schließen"
 L["Emphasize"] = "Hervorheben"
-L["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Hervorgehobene Balken, die kurz vor dem Auslaufen sind (<10 Sek). Beachte, dass Leisten, die mit weniger als 15 Sekunden beginnen, automatisch hervorgehoben werden."
 L["Enable"] = "Aktiviert"
-L["Enables emphasizing bars."] = "Aktiviert die hervorgehobenen Leisten."
 L["Move"] = "Bewegen"
 L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Bewegt hervorgehobene Leisten zur Verankerung für hervorgehobene Leisten. Wenn diese Option deaktiviert ist, werden hervorgehobene Leisten nur ihre Größe und Farbe ändern und möglicherweise anfangen zu blinken."
-L["Set the scale for emphasized bars."] = "Justiert die Skalierung der hervorgehobenen Leisten."
-L["Reset position"] = "Position zurücksetzen"
-L["Reset the anchor positions, moving them to their default positions."] = "Setzt die Positionen der Verankerungen auf ihre Ausgangsstellung zurück."
-L["Test"] = "Test"
-L["Creates a new test bar."] = "Erstellt eine neue Testleiste."
-L["Hide"] = "Verstecken"
-L["Hides the anchors."] = "Versteckt die Verankerungen."
 L["Flash"] = "Blinken"
 L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Lässt den Hintergrund der hervorgehobenen Leisten blinken, um sie leichter zu erkennen."
 L["Regular bars"] = "Normale Leisten"
 L["Emphasized bars"] = "Hervorgehobene Leisten"
 L["Align"] = "Ausrichtung"
-L["How to align the bar labels."] = "Bestimmt, wie der Text auf den Leisten ausgerichtet ist."
 L["Left"] = "Links"
 L["Center"] = "Mittig"
 L["Right"] = "Rechts"
@@ -45,7 +25,6 @@ L["Whether to show or hide the time left on the bars."] = "Bestimmt, ob die verb
 L["Icon"] = "Symbol"
 L["Shows or hides the bar icons."] = "Zeigt oder versteckt die Symbole auf den Leisten."
 L["Font"] = "Schriftart"
-L["Set the font for the timer bars."] = "Legt die Schriftart des Textes auf den Leisten fest."
 
 L["Local"] = "Lokal"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."
@@ -57,12 +36,6 @@ L["Colors"] = "Farben"
 
 L["Messages"] = "Nachrichten"
 L["Bars"] = "Anzeigebalken"
-L["Short"] = "Kurz"
-L["Long"] = "Lang"
-L["Short bars"] = "Kurze Anzeigebalken"
-L["Long bars"] = "Lange Anzeigebalken"
-L["Color "] =  "Farbe "
-L["Number of colors"] = "Anzahl der Farben"
 L["Background"] = "Hintergrund"
 L["Text"] = "Text"
 L["Reset"] = "Zurücksetzen"
@@ -74,7 +47,6 @@ L["Change the emphasized bar color."] = "Ändert die Farbe der betonten Balken."
 
 L["Colors of messages and bars."] = "Farben der Nachrichten und Anzeigebalken."
 L["Change the color for %q messages."] = "Ändert die Farbe für %q Nachrichten."
-L["Change the %s color."] = "Ändert die %s Farbe."
 L["Change the bar background color."] = "Ändert die Hintergrundfarbe der Anzeigebalken."
 L["Change the bar text color."] = "Ändert die Textfarbe der Anzeigebalken."
 L["Resets all colors to defaults."] = "Setzt alle Farben auf Standard zurück."
@@ -87,24 +59,14 @@ L["Positive"] = "Positiv"
 L["Bosskill"] = "Boss besiegt"
 L["Core"] = "Kern"
 
-L["color_upgrade"] = "Deine Farben für Nachrichten und Balken wurden zurückgesetzt, um Probleme mit der Aktualisierung des Addons zu vermeiden. Wenn du sie ändern möchtest, rechtsklicke auf das BigWigs-Symbol und gehe zu Plugins -> Farben."
-
 -- Messages.lua
 
+L.sinkDescription = "Tunnelt die Ausgabe durch die Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen wieder schnell, um den Nutzer darauf aufmerksam zu machen."
+
 L["Messages"] = "Nachrichten"
-L["Options for message display."] = "Optionen für die Anzeige von Nachrichten."
-
-L["BigWigs Anchor"] = "Big Wigs Verankerung"
-L["Output Settings"] = "Ausgabeeinstellungen"
-
-L["Show anchor"] = "Verankerung anzeigen"
-L["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Die Verankerung des Nachrichtenfensters anzeigen.\n\nDie Verankerung wird nur benutzt, wenn du unter 'Ausgabe' -> 'BigWigs' auswählst."
 
 L["Use colors"] = "Farben verwenden"
 L["Toggles white only messages ignoring coloring."] = "Wählt, ob Nachrichten farbig oder weiß angezeigt werden."
-
-L["Scale"] = "Skalierung"
-L["Set the message frame scale."] = "Legt die Skalierung des Nachrichtenfensters fest."
 
 L["Use icons"] = "Symbole benutzen"
 L["Show icons next to messages, only works for Raid Warning."] = "Zeigt Symbole neben Nachrichten an."
@@ -112,40 +74,18 @@ L["Show icons next to messages, only works for Raid Warning."] = "Zeigt Symbole 
 L["Class colors"] = "Klassenfarben"
 L["Colors player names in messages by their class."] = "Färbt Spielernamen in Nachrichten nach deren Klasse ein."
 
-L["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r"
-L["White"] = "Weiß"
-
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung von 'Ausgabe'."
-
-L["Chat frame"] = "Chatfenster"
-
-L["Test"] = "Test"
-L["Close"] = "Schließen"
-
-L["Reset position"] = "Position zurücksetzen"
-L["Reset the anchor position, moving it to the center of your screen."] = "Setzt die Position der Verankerung zur Mitte deines Interfaces zurück."
-
-L["Spawns a new test warning."] = "Erzeugt eine neue Testnachricht."
-L["Hide"] = "Schließen"
-L["Hides the anchors."] = "Versteckt die Verankerung."
-
 
 -- RaidIcon.lua
 
-L["Raid Icons"] = "Schlachtzugs-Symbole"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Bestimmt, welches Symbol Big Wigs benutzen soll, wenn es Schlachzugs-Symbole auf Spielern platziert (für wichtige Boss Fähigkeiten)."
+L["Icons"] = "Symbole"
+L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Bestimmt, welches Symbol Big Wigs benutzen soll, wenn es Schlachtzugs-Symbole auf Spielern platziert (für wichtige Boss Fähigkeiten)."
 
-L["RaidIcon"] = "Schlachtzugs-Symbol"
-
-L["Place"] = "Platzierung"
-L["Place Raid Icons"] = "Schlachtzugs-Symbole platzieren"
-L["Toggle placing of Raid Icons on players."] = "Setzt Schlachtzugs-Symbole auf Spieler."
-
-L["Icon"] = "Symbol"
-L["Set Icon"] = "Symbol platzieren"
-L["Set which icon to place on players."] = "Wählt, welches Symbol auf Spieler gesetzt wird."
-
-L["Use the %q icon when automatically placing raid icons for boss abilities."] = "Benutze das %q Symbol, wenn automatisch ein Schlachtzugs-Symbol für Boss Fähigkeiten verteilt wird."
+L.raidIconDescription = "Einige Begegnungen schließen Elemente wie 'Bombe'-Fähigkeiten ein, die einen bestimmten Spieler zum Ziel haben oder ein Spieler wird verfolgt oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.\n\nFalls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.\n\n|cffff4411Beachte, dass ein manuell markierter Spieler von Big Wigs nicht ummarkiert wird.|r"
+L["Primary"] = "Erstes Symbol"
+L["The first raid target icon that a encounter script should use."] = "Das erste Schlachtzugs-Symbol, das verwendet wird."
+L["Secondary"] = "Zweites Symbol"
+L["The second raid target icon that a encounter script should use."] = "Das zweite Schlachtzugs-Symbol, das verwendet wird."
 
 L["Star"] = "Stern"
 L["Circle"] = "Kreis"
@@ -155,6 +95,7 @@ L["Moon"] = "Mond"
 L["Square"] = "Quadrat"
 L["Cross"] = "Kreuz"
 L["Skull"] = "Totenkopf"
+L["|cffff0000Disable|r"] = "|cffff0000Deaktiviert|r"
 
 -- RaidWarn.lua
 L["RaidWarning"] = "Raidwarnung"
@@ -166,6 +107,8 @@ L["raidwarning_desc"] = "Bestimmt, wie Big Wigs die Boss-Nachrichten (zusätzlic
 
 -- Sound.lua
 
+L.soundDefaultDescription = "Falls diese Option aktiviert ist, wird Big Wigs nur die Standard-Raidsounds von Blizzard für Nachrichten benutzen. Beachte, dass nicht alle Nachrichten einer Begegnung einen Sound auslösen."
+
 L["Sounds"] = "Sounds"
 L["Options for sounds."] = "Optionen für die Sounds."
 
@@ -176,23 +119,16 @@ L["Long"] = "Lang"
 L["Victory"] = "Sieg"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören."
-L["Use sounds"] = "Sounds verwenden"
-L["Toggle all sounds on or off."] = "Schaltet alle Sounds ein oder aus."
 L["Default only"] = "Nur Standards"
-L["Use only the default sound."] = "Verwendet nur die Standard-Sounds."
 
 -- Proximity.lua
 
+L["%d yards"] = "%d Meter"
 L["Proximity"] = "Nähe"
-L["Close Players"] = "Nahe Spieler"
-L["Options for the Proximity Display."] = "Optionen für die Anzeige naher Spieler."
-L["|cff777777Nobody|r"] = "|cff777777Niemand|r"
 L["Sound"] = "Sound"
-L["Play sound on proximity."] = "Spielt einen Sound ab, wenn du zu nahe an einem anderen Spieler stehst."
 L["Disabled"] = "Deaktivieren"
 L["Disable the proximity display for all modules that use it."] = "Deaktiviert die Anzeige naher Spieler für alle Module, die sie benutzen."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Die Anzeige naher Spieler wird beim nächsten Mal angezeigt werden. Um sie für diesen Boss vollständig zu deaktivieren, musst du die Option 'Nähe' im Bossmodul ausschalten."
-L["The proximity display has been locked, you need to right click the Big Wigs icon, go to Extras -> Proximity -> Display and toggle the Lock option if you want to move it or access the other options."] = "Die Anzeige naher Spieler wurde gesperrt. Falls du das Fenster wieder bewegen oder Zugang zu den anderen Optionen haben willst, musst du das Big Wigs Symbol rechts-klicken, zu Extras -> Nähe -> Anzeige gehen und die Option 'Sperren' ausschalten."
 
 L.proximity = "Nähe"
 L.proximity_desc = "Zeigt das Fenster für nahe Spieler an. Es listet alle Spieler auf, die dir zu nahe stehen."
@@ -201,10 +137,6 @@ L.proximityfont = "Fonts\\FRIZQT__.TTF"
 
 L["Close"] = "Schließen"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Schließt die Anzeige naher Spieler.\n\nFalls du die Anzeige für alle Bosse deaktivieren willst, musst du die Option 'Nähe' seperat in den jeweiligen Bossmodulen ausschalten."
-L["Test"] = "Test"
-L["Perform a Proximity test."] = "Führt einen Test der Anzeige naher Spieler durch."
-L["Display"] = "Anzeige"
-L["Options for the Proximity display window."] = "Optionen für das Fenster der Anzeige naher Spieler."
 L["Lock"] = "Sperren"
 L["Locks the display in place, preventing moving and resizing."] = "Sperrt die Anzeige und verhindert weiteres Verschieben und Anpassen der Größe."
 L["Title"] = "Titel"
@@ -218,3 +150,19 @@ L["Shows or hides the sound button."] = "Zeigt oder versteckt den Sound-Button."
 L["Close button"] = "Schließen-Button"
 L["Shows or hides the close button."] = "Zeigt oder versteckt den Schließen-Button."
 L["Show/hide"] = "Zeigen/Verstecken"
+
+-- Tips.lua
+L["Cool!"] = "Cool!"
+L["Tips"] = "Tips"
+L["Configure how the raiding tips should be displayed."] = "Bestimmt, wie die Raidtips aussehen sollen."
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Der Tip des Tages wird normalerweise angezeigt, sobald du eine Raidinstanz betrittst, nicht im Kampf bist und dein Schlachtzug mehr als 9 Spieler hat. Nur ein Tip wird pro Sitzung angezeigt.\n\nHier kannst du einstellen, wie der Tip aussehen soll: Indem ein spezielles Fenster benutzt wird (voreingestellt) oder er in den Chat geschrieben wird. Falls du mit Schlachtzugsleitern spielst, die den |cffff4411/sendtip Befehl|r überstrapazieren, wirst du die Tips wahrscheinlich im Chatfenster unterbringen wollen!"
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Falls du keine Tips sehen möchtest, kannst du sie hier ausschalten. Tips, die von deinem Schlachtzugsleiter geschickt werden, werden ebenso geblockt, sei also vorsichtig."
+L["Automatic tips"] = "Automatische Tips"
+L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Falls du wirklich keine genialen Tips von uns sehen möchtest, die von den besten PvE-Spielern er Welt beigesteuert wurden, kannst du dies hier deaktivieren."
+L["Manual tips"] = "Manuelle Tips"
+L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Schlachtzugsleiter haben die Möglichkeit, den Spielern einen manuellen Tip mit dem /sendtip Befehl anzuzeigen. Falls du einen Schlachtzugsleiter hast, der diese Dinger spammt oder du willst sie aus anderen Gründen nicht mehr sehen, kannst du sie hier deaktivieren."
+L["Output to chat frame"] = "Ausgabe ins Chatfenster"
+L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Standardmäßig werden Tips in ihrem eigenen, genialen Fenster in der Bildschirmmitte angezeigt. Falls du diese Option aktivierst, werden die Tips NUR als Text in deinem Chatfenster angezeigt und das Fenster wird dich nicht weiter stören."
+L["Usage: /sendtip <index|\"Custom tip\">"] = "Verwendung: /sendtip <index|\"Neuer Tip\">"
+L["You must be the raid leader to broadcast a tip."] = "Du musst Schlachtzugsleiter sein, um Tips zu versenden."
+L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Tip Index verboten, akzeptierte Indizes rangieren von 1 bis %d."
