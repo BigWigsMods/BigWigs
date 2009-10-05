@@ -258,9 +258,7 @@ local versions = {
 	ALPHA = {},
 }
 local members = {}
-
--- XXX Damn this needs fixing up. First, I think we should ignore parties completely. Make it raid only.
-function versionTooltipFunc(tt)
+local function getMembers()
 	local raid = GetRealNumRaidMembers()
 	local party = GetRealNumPartyMembers()
 	if raid == 0 and party == 0 then return end
@@ -277,136 +275,96 @@ function versionTooltipFunc(tt)
 			if n then members[n] = true end
 		end
 	end
+	return members
+end
+
+function versionTooltipFunc(tt)
+	local m = getMembers()
+	if not m then return end
 	local highest = 0
 	for k, v in pairs(versions.RELEASE) do
 		if v > highest then highest = v end
 	end
 	for k, v in pairs(versions.RELEASE) do
-		members[k] = nil
+		m[k] = nil
 		if v < highest then
 			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 			return
 		end
 	end
 	for k, v in pairs(versions.UNKOWN) do
-		members[k] = nil
+		m[k] = nil
 		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 		return
 	end
 	for k, v in pairs(versions.ALPHA) do
-		members[k] = nil
+		m[k] = nil
 		if v < highest and v ~= -1 then
 			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 			return
 		end
 	end
-	for k, v in pairs(members) do
+	for k, v in pairs(m) do
 		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 		return
 	end
 end
 
 local function coloredNameVersion(name, version)
-	version = version and "|cffcccccc("..version..")|r" or ""
-	return string.format("%s%s", coloredNames[name], version)
+	if version == -1 then version = "svn" end
+	return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version)
 end
 
---XXX grrr party stuff again, piss off!
+local good, bad, ugly = {}, {}, {}
 function showVersions()
-	local raid = GetRealNumRaidMembers()
-	local party = GetRealNumPartyMembers()
-	if raid == 0 and party == 0 then return end
-	wipe(members)
-	if raid > 0 then
-		for i = 1, raid, 1 do
-			local n = GetRaidRosterInfo(i)
-			if n then members[n] = true end
-		end
-	elseif party > 0 then
-		members[UnitName("player")] = true
-		for i = 1, 4, 1 do
-			local n = UnitName("party" .. i)
-			if n then members[n] = true end
-		end
-	end
+	local m = getMembers()
+	if not m then return end
+	
 	local highest = 0
 	for k, v in pairs(versions.RELEASE) do
 		if v > highest then highest = v end
 	end
 	
-	-- XXX this is insane! we should make it so that every table can be used like
-	-- XXX table.concat(ugly|bad|good, ", ") !
-	
-	local good -- highest release users
-	local bad-- non-bw users
-	local ugly -- old version users
+	wipe(good) -- highest release users
+	wipe(bad)-- non-bw users
+	wipe(ugly) -- old version users
 	for k, v in pairs(versions.RELEASE) do
-		if members[k] then
-			members[k] = nil
+		if m[k] then
+			m[k] = nil
 			if v < highest then
-				if not good then
-					good = coloredNameVersion(k, v)
-				else
-					good = good ..", "..coloredNameVersion(k, v)
-				end
+				table.insert(good, coloredNameVersion(k, v))
 			else
-				if not ugly then
-					ugly = coloredNameVersion(k, v)
-				else
-					ugly = ugly ..", "..coloredNameVersion(k, v)
-				end
+				table.insert(ugly, coloredNameVersion(k, v))
 			end
 		end
 	end
 	for k, v in pairs(versions.UNKOWN) do
-		if members[k] then
-			members[k] = nil
-			if not ugly then
-				ugly = coloredNameVersion(k, v)
-			else
-				ugly = ugly ..", "..coloredNameVersion(k, v)
-			end
+		if m[k] then
+			m[k] = nil
+			table.insert(ugly, coloredNameVersion(k,v))
 		end
 	end
 	for k, v in pairs(versions.ALPHA) do
-		if members[k] then
-			members[k] = nil
-			if v >= highest then
-				if not good then
-					good = coloredNameVersion(k, v)
-				else
-					good = good ..", "..coloredNameVersion(k, v)
-				end
-			elseif v == -1 then
-				if not good then
-					good = coloredNameVersion(k, "svn")
-				else
-					good = good ..", "..coloredNameVersion(k, "svn")
-				end
+		if m[k] then
+			m[k] = nil
+			if v >= highest or v == -1 then
+				table.insert(good, coloredNameVersion(k,v))
 			else
-				if not ugly then
-					ugly = coloredNameVersion(k, v)
-				else
-					ugly = ugly ..", "..coloredNameVersion(k, v)
-				end
+				table.insert(ugly, coloredNameVersion(k,v))
 			end
 		end
 	end
-	for k, v in pairs(members) do
-		if not bad then
-			bad = coloredNames[k]
-		else
-			bad = bad ..", "..coloredNames[k]
-		end
+	for k, v in pairs(m) do
+		table.insert(bad, coloredNames[k])
 	end
-	if good then
-		print(L["Up to date:"], good)
+	if #good > 0 then
+		print(L["Up to date:"], table.concat(good, ", "))
 	end
-	if ugly then
-		print(L["Out of date:"], ugly)
+	if #ugly > 0 then
+		print(L["Out of date:"], table.concat(ugly, ", "))
 	end
-	if bad then
-		print(L["No Big Wigs 3.0:"], bad)
+	if #bad > 0 then
+		print(L["No Big Wigs 3.0:"], table.concat(bad, ", "))
 	end
 end
 
