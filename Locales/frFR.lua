@@ -3,33 +3,11 @@ if not L then return end
 -- Core.lua
 L["%s enabled"] = "%s activé" -- "<boss> enabled"
 L["%s has been defeated"] = "%s a été vaincu(e)" -- "<boss> has been defeated"
-L["%s have been defeated"] = "%s ont été vaincu(e)s" -- "<bosses> have been defeated"
-L["Bosses"] = "Boss"
-L["Options for bosses in %s."] = "Options concernant les boss |2 %s." -- "Options for bosses in <zone>"
-L["Options for %s (r%d)."] = "Options concernant %s (r%d)." -- "Options for <boss> (<revision>)"
-L["Plugins"] = "Plugins"
-L["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Les plugins s'occupent des composants centraux de Big Wigs - comme l'affichage des messages, les barres temporelles, ainsi que d'autres composants essentiels."
-L["Extras"] = "Extras"
-L["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Les extras sont des plugins tiers et incorporés dont Big Wigs peut se passer pour fonctionner correctement."
-L["Active"] = "Actif"
-L["Activate or deactivate this module."] = "Active ou désactive ce module."
-L["Reboot"] = "Redémarrer"
-L["Reboot this module."] = "Redémarre ce module."
-L["Options"] = "Options"
-L["Minimap icon"] = "Icône de la minicarte"
-L["Toggle show/hide of the minimap icon."] = "Affiche ou non l'icône sur la minicarte."
-L["Advanced"] = "Avancés"
-L["You shouldn't really need to touch these options, but if you want to tweak them then you're welcome to do so!"] = "Vous n'avez normalement pas besoin de toucher à ces options, mais si vous voulez les peaufinez, n'hésitez pas !"
 
-L["Toggles whether or not the boss module should warn about %s."] = "Autorise ou non le module de boss d'afficher des barres temporelles et/ou des alertes concernant %s."
 L.bosskill = "Défaite du boss"
 L.bosskill_desc = "Prévient quand le boss est vaincu."
 L.berserk = "Berserk"
 L.berserk_desc = "Prévient quand le boss devient fou furieux via une barre temporelle et des messages réguliers."
-
-L["Load"] = "Charger"
-L["Load All"] = "Tout charger"
-L["Load all %s modules."] = "Charge tous les modules |2 %s."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 
@@ -39,25 +17,23 @@ L["You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"] = "Vous util
 L["You are running a source checkout of Big Wigs 3.0 directly from the repository."] = "Vous utilisez une version du dépôt de BW 3.0."
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Une nouvelle version de Big Wigs est disponible. Vous pouvez visiter curse.com, wowinterface.com, wowace.com ou utiliser le Curse Updater pour obtenir cette nouvelle version."
 
-L["|cff00ff00Module running|r"] = "|cff00ff00Module actif|r"
+-- XXX Our tooltip sucks, I want these things gone and automated!
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55fClic gauche|r pour redémarrer les modules actifs. |cffeda55fAlt-Clic gauche|r pour les désactiver. |cffeda55fCtrl-Alt-Clic gauche|r pour désactiver complètement Big Wigs."
 L["Active boss modules:"] = "Modules de boss actifs :"
 L["All running modules have been reset."] = "Tous les modules actifs ont été réinitialisés."
-L["Menu"] = "Menu"
-L["Menu options."] = "Options du menu."
-
 L["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé."
 L["|cffeda55fClick|r to enable."] = "|cffeda55fCliquez|r pour l'activer."
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fCliquez|r pour réinitialiser tous les modules actifs. |cffeda55fAlt-clic gauche|r pour les désactiver. |cffeda55fCtrl-Alt-clic gauche|r pour désactiver complètement BigWigs."
 L["All running modules have been disabled."] = "Tous les modules actifs ont été désactivés."
 
-L["|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r"] = "|cffff0000Certains joueurs de votre groupe ont\nd'anciennes versions ou n'ont pas Big Wigs.\nTapez /bwv pour plus de détails.|r"
-L["|cff00ff00Everyone is running an up-to-date Big Wigs.|r"] = "|cff00ff00Tout le monde utilise une version à jour de Big Wigs.|r"
+L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Certains joueurs de votre groupe ont d'anciennes versions ou n'ont pas Big Wigs. Tapez /bwv pour plus de détails."
 L["Up-to-date:"] = "À jour :"
 L["Out-of-date:"] = "Périmé :"
 L["No Big Wigs 3.0:"] = "BW 3.0 absent :"
 
 -- Options.lua
+-- XXX Perhaps option descriptions should be in key form, so it's
+-- XXX L.iconDesc = .. instead of L["Bla bla bla ...
 L["Customize ..."] = "Personnaliser..."
 --L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = ""
 L["Configure ..."] = "Configurer..."
@@ -74,6 +50,8 @@ L["Broadcast"] = "Diffuser"
 L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = "Diffuse les messages de Big Wigs sur le canal Avertissement raid.\n\n|cffff4411Ne fonctionne que si vous êtes chef du raid ou dans un groupe !|r"
 L["Raid channel"] = "Canal Raid"
 L["Use the raid channel instead of raid warning for broadcasting messages."] = "Utilise le canal Raid au lieu de l'Avertissement raid pour la diffusion des messages."
+L["Minimap icon"] = "Icône de la minicarte"
+L["Toggle show/hide of the minimap icon."] = "Affiche ou non l'icône de la minicarte."
 L["Configure"] = "Configuration"
 L["Test"] = "Test"
 L["Reset positions"] = "Réinitialiser les positions"
