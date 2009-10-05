@@ -2,8 +2,10 @@
 
 ## Title: Big Wigs [|cffeda55fOnyxia's Lair|r]
 ## Title-frFR: Big Wigs [|cffeda55fRepaire d'Onyxia|r]
+## Title-koKR: Big Wigs [|cffeda55f오닉시아 둥지|r]
 ## Notes: Big Wigs Onyxia's Lair Modules
 ## Notes-frFR: Modules Big Wigs concernant le Repaire d'Onyxia.
+## Notes-koKR: Big Wigs 오닉시아 둥지 경고
 ## Author: Ammo, Rabbit, Funkydude
 ## Version: 2.0
 ## LoadOnDemand: 1
