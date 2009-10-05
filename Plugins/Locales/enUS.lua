@@ -1,6 +1,8 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 
+-----------------------------------------------------------------------
 -- Bars2.lua
+--
 
 L["Scale"] = true
 L["Grow upwards"] = true
@@ -28,7 +30,9 @@ L["Local"] = true
 L["%s: Timer [%s] finished."] = true
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
 
+-----------------------------------------------------------------------
 -- Colors.lua
+--
 
 L["Colors"] = true
 
@@ -57,7 +61,9 @@ L["Positive"] = true
 L["Bosskill"] = true
 L["Core"] = true
 
+-----------------------------------------------------------------------
 -- Messages.lua
+--
 
 L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
 
@@ -75,7 +81,9 @@ L["Colors player names in messages by their class."] = true
 L["Chat frame"] = true
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true
 
+-----------------------------------------------------------------------
 -- RaidIcon.lua
+--
 
 L["Icons"] = true
 L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = true
@@ -96,15 +104,9 @@ L["Cross"] = true
 L["Skull"] = true
 L["|cffff0000Disable|r"] = true
 
--- RaidWarn.lua
-L["RaidWarning"] = true
-
-L["Whisper"] = true
-L["Toggle whispering warnings to players."] = true
-
-L["raidwarning_desc"] = "Lets you configure where BigWigs should send its boss messages in addition to the local output."
-
+-----------------------------------------------------------------------
 -- Sound.lua
+--
 
 L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
 
@@ -120,7 +122,9 @@ L["Victory"] = true
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true
 L["Default only"] = true
 
+-----------------------------------------------------------------------
 -- Proximity.lua
+--
 
 L["%d yards"] = true
 L["Proximity"] = true
@@ -149,7 +153,10 @@ L["Close button"] = true
 L["Shows or hides the close button."] = true
 L["Show/hide"] = true
 
+-----------------------------------------------------------------------
 -- Tips.lua
+--
+
 L["Cool!"] = true
 L["Tips"] = true
 L["Configure how the raiding tips should be displayed."] = true

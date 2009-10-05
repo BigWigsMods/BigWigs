@@ -259,6 +259,7 @@ local versions = {
 }
 local members = {}
 
+-- XXX Damn this needs fixing up. First, I think we should ignore parties completely. Make it raid only.
 function versionTooltipFunc(tt)
 	local raid = GetRealNumRaidMembers()
 	local party = GetRealNumPartyMembers()
@@ -310,6 +311,7 @@ local function coloredNameVersion(name, version)
 	return string.format("%s%s", coloredNames[name], version)
 end
 
+--XXX grrr party stuff again, piss off!
 function showVersions()
 	local raid = GetRealNumRaidMembers()
 	local party = GetRealNumPartyMembers()
@@ -331,6 +333,10 @@ function showVersions()
 	for k, v in pairs(versions.RELEASE) do
 		if v > highest then highest = v end
 	end
+	
+	-- XXX this is insane! we should make it so that every table can be used like
+	-- XXX table.concat(ugly|bad|good, ", ") !
+	
 	local good -- highest release users
 	local bad-- non-bw users
 	local ugly -- old version users

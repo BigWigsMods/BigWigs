@@ -1,10 +1,8 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true)
 
 -- Core.lua
-L["%s enabled"] = true	-- "<boss> enabled"
+L["%s enabled"] = true	-- "<boss> enabled"  -- XXX used ?
 L["%s has been defeated"] = true     -- "<boss> has been defeated"
-L["Minimap icon"] = true
-L["Toggle show/hide of the minimap icon."] = true
 
 L.bosskill = "Boss death"
 L.bosskill_desc = "Announce when the boss has been defeated."
@@ -19,10 +17,10 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = true
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = true
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = true
 
+ -- XXX Our tooltip sucks, I want these things gone and automated!
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = true
 L["Active boss modules:"] = true
 L["All running modules have been reset."] = true
-
 L["Big Wigs is currently disabled."] = true
 L["|cffeda55fClick|r to enable."] = true
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = true
@@ -34,6 +32,8 @@ L["Out of date:"] = true
 L["No Big Wigs 3.0:"] = true
 
 -- Options.lua
+-- XXX Perhaps option descriptions should be in key form, so it's
+-- XXX L.iconDesc = .. instead of L["Bla bla bla ...
 L["Customize ..."] = true
 L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = true
 L["Configure ..."] = true
@@ -50,10 +50,12 @@ L["Broadcast"] = true
 L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = true
 L["Raid channel"] = true
 L["Use the raid channel instead of raid warning for broadcasting messages."] = true
+L["Minimap icon"] = true
+L["Toggle show/hide of the minimap icon."] = true
 L["Configure"] = true
 L["Test"] = true
 L["Reset positions"] = true
-L["Options for %s."] = true
+L["Options for %s."] = true -- XXX used ?
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"
