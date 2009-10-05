@@ -184,8 +184,8 @@ end
 
 local function createAnchors()
 	if not normalAnchor then
-		normalAnchor = createAnchor("BigWigsAnchor", L["Normal Bars"])
-		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized Bars"])
+		normalAnchor = createAnchor("BigWigsAnchor", L["Regular bars"])
+		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized bars"])
 	end
 end
 
@@ -353,7 +353,7 @@ do
 		end]]
 
 		local align = AceGUI:Create("Dropdown")
-		align:SetList({ ["LEFT"] = L["Left"], ["CENTER"] = L["Center"], ["RIGHT"] = L["Right"] })
+		align:SetList({ LEFT = L["Left"], CENTER = L["Center"], RIGHT = L["Right"] })
 		align:SetValue(db.align)
 		align:SetLabel(L["Align"])
 		align:SetUserData("key", "align")

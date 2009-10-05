@@ -2,39 +2,19 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 
 -- Bars2.lua
 
-L["Bars"] = true
-L["Normal Bars"] = true
-L["Emphasized Bars"] = true
-L["Options for the timer bars."] = true
-L["Toggle anchors"] = true
-L["Show or hide the bar anchors for both normal and emphasized bars."] = true
 L["Scale"] = true
-L["Set the bar scale."] = true
 L["Grow upwards"] = true
 L["Toggle bars grow upwards/downwards from anchor."] = true
 L["Texture"] = true
-L["Set the texture for the timer bars."] = true
-L["Test"] = true
-L["Close"] = true
 L["Emphasize"] = true
-L["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = true
 L["Enable"] = true
-L["Enables emphasizing bars."] = true
 L["Move"] = true
 L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = true
-L["Set the scale for emphasized bars."] = true
-L["Reset position"] = true
-L["Reset the anchor positions, moving them to their default positions."] = true
-L["Test"] = true
-L["Creates a new test bar."] = true
-L["Hide"] = true
-L["Hides the anchors."] = true
 L["Flash"] = true
 L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = true
 L["Regular bars"] = true
 L["Emphasized bars"] = true
 L["Align"] = true
-L["How to align the bar labels."] = true
 L["Left"] = true
 L["Center"] = true
 L["Right"] = true
@@ -43,7 +23,6 @@ L["Whether to show or hide the time left on the bars."] = true
 L["Icon"] = true
 L["Shows or hides the bar icons."] = true
 L["Font"] = true
-L["Set the font for the timer bars."] = true
 
 L["Local"] = true
 L["%s: Timer [%s] finished."] = true
