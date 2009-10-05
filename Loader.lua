@@ -230,28 +230,6 @@ function loader:OnEnable()
 	self:ZoneChanged()
 end
 
---[[
--- XXX We need to discuss and resolve the whole version checking thing before "first" release.
--- Basically many people want the ability to see if anyone in their raid is not running BW
--- at all. Personally I say this is too nazi, but it's very often requested and moaned about.
---
--- The code below is preliminary.
---
---]]
-local warned = nil
-local delayTransmitter = CreateFrame("Frame", nil, UIParent)
-delayTransmitter:Hide()
-delayTransmitter:SetScript("OnUpdate", function(self, elapsed)
-	self.elapsed = self.elapsed + elapsed
-	if self.elapsed > 5 then
-		self:Hide()
-		if BIGWIGS_RELEASE_TYPE == ALPHA then
-			SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
-		else
-			SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
-		end
-	end
-end)
 local versions = {
 	UNKOWN = {},
 	RELEASE = {},
@@ -285,17 +263,16 @@ function versionTooltipFunc(tt)
 	for k, v in pairs(versions.RELEASE) do
 		if v > highest then highest = v end
 	end
+	for k, v in pairs(versions.UNKOWN) do
+		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
+		return
+	end
 	for k, v in pairs(versions.RELEASE) do
 		m[k] = nil
 		if v < highest then
 			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 			return
 		end
-	end
-	for k, v in pairs(versions.UNKOWN) do
-		m[k] = nil
-		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
-		return
 	end
 	for k, v in pairs(versions.ALPHA) do
 		m[k] = nil
@@ -368,6 +345,20 @@ function showVersions()
 	end
 end
 
+local warned = nil
+local delayTransmitter = CreateFrame("Frame", nil, UIParent)
+delayTransmitter:Hide()
+delayTransmitter:SetScript("OnUpdate", function(self, elapsed)
+	self.elapsed = self.elapsed + elapsed
+	if self.elapsed > 5 then
+		self:Hide()
+		if BIGWIGS_RELEASE_TYPE == ALPHA then
+			SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
+		else
+			SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
+		end
+	end
+end)
 
 function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix == "BWVQ3" then
