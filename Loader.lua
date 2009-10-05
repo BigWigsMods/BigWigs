@@ -282,28 +282,26 @@ function versionTooltipFunc(tt)
 	for k, v in pairs(versions.RELEASE) do
 		members[k] = nil
 		if v < highest then
-			tt:AddLine(L["|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r"])
+			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 			return
 		end
 	end
 	for k, v in pairs(versions.UNKOWN) do
 		members[k] = nil
-		tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 		return
 	end
 	for k, v in pairs(versions.ALPHA) do
 		members[k] = nil
 		if v < highest and v ~= -1 then
-			tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 			return
 		end
 	end
 	for k, v in pairs(members) do
-		tt:AddLine("|cffff0000There are people in your group with\nolder versions or without Big Wigs.\nYou can get more details with /bwv.|r")
+		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 		return
 	end
-
-	tt:AddLine(L["|cff00ff00Everyone is running an up-to-date Big Wigs.|r"])
 end
 
 local function coloredNameVersion(name, version)
@@ -395,10 +393,10 @@ function showVersions()
 		end
 	end
 	if good then
-		print(L["Up-to-date:"], good)
+		print(L["Up to date:"], good)
 	end
 	if ugly then
-		print(L["Out-of-date:"], ugly)
+		print(L["Out of date:"], ugly)
 	end
 	if bad then
 		print(L["No Big Wigs 3.0:"], bad)
