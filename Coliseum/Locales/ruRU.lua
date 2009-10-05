@@ -12,6 +12,7 @@ if L then
 
 	L.nerubian_burrower = "Нерубский землеглот"
 
+	L.freeze_bar = "~Замораживающий выпад"
 	L.pcold_bar = "~Пронизывающий холод"
 
 	L.icon = "Помечать иконкой"
@@ -37,18 +38,25 @@ if L then
 	L.firebomb_message = "Огненная бомба на ВАС!"
 
 	-- Jormungars
+	L.submerge = "Погружение"
+	L.submerge_desc = "Показывать таймеры Погружений."
 	L.spew = "Кислотная/Жгучая рвота"
 	L.spew_desc = "Сообщать о Кислотной/Жгучей рвоте."
-
+	L.sprays = "Брызги"
+	L.sprays_desc = "Показывать таймеры для следующих применений Парализующих и Горящих брызгов."
 	L.slime_message = "Вы в Луже жижи!"
 	L.burn_spell = "Горящая желчь"
 	L.toxin_spell = "Токсин"
+	L.spray = "~Next Spray"
 
 	-- Icehowl
 	L.butt_bar = "~Свирепое бодание"
 	L.charge = "Яростный рывок" --Furious Charge - судя по транскриптору нет русского перевода :(
 	L.charge_desc = "Сообщать о яростном рывке."
 	L.charge_trigger = "глядит на"	--check
+	
+	L.bosses = "Боссы"
+	L.bosses_desc = "Сообщать о наступлении боссов"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "ruRU")
@@ -89,7 +97,7 @@ if L then
 
 	L.infernal_bar = "~следующий вулкан"
 	L.netherportal_bar = "~cледующие врата"
-	L.netherpower_bar = "~cледующая Сила Пустоты"
+	L.netherpower_bar = "~сила пустоты"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
@@ -97,6 +105,8 @@ if L then
 	L.engage_trigger1 = "Во имя темного повелителя. Во имя Короля-лича. Вы. Умрете."
 
 	L.vortex_or_shield_cd = "Воронка или Щит"
+	L.next = "Следующая Воронка или Щит"
+	L.next_desc = "Сообщать о следующей Воронке или Щите"
 
 	L.vortex = "Воронка"
 	L.vortex_desc = "Сообщать когда близнецы начинают применять воронку."

@@ -21,7 +21,7 @@ if L then
 	L.phase3_trigger = "It seems you'll need another lesson"
 
 	L.deepbreath_message = "Огненное дыхание начинается!"
-	L.phase1_message = "%s в ярости - фаза 1!"
+	L.phase1_message = "%s вступает в бой - фаза 1!"
 	L.phase2_message = "65% - начинается фаза 2!"
 	L.phase3_message = "40% - начинается фаза 3!"
 	L.fear_message = "Страх через 1.5 сек!"
