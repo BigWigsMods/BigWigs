@@ -519,6 +519,14 @@ do
 	end)
 end
 
+local function barClicked(bar, button)
+	if button == "MiddleButton" then
+		local anchor = bar:Get("bigwigs:anchor")
+		bar:Stop()
+		rearrangeBars(anchor)
+	end
+end
+
 function plugin:BigWigs_StartBar(message, module, text, time, icon)
 	if not normalAnchor then createAnchors() end
 	stop(module, text)
@@ -541,6 +549,8 @@ function plugin:BigWigs_StartBar(message, module, text, time, icon)
 	if db.emphasize and time < 15 then
 		self:EmphasizeBar(bar)
 	end
+	bar:EnableMouse(true)
+	bar:SetScript("OnMouseDown", barClicked)
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
