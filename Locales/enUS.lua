@@ -14,9 +14,9 @@ L.berserk_desc = "Show a timer bar for and timed warnings for when the boss will
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
 
 -- Loader / Options.lua
-L["You are running an official release of Big Wigs 3.0 (revision %d)"] = true
-L["You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"] = true
-L["You are running a source checkout of Big Wigs 3.0 directly from the repository."] = true
+L["You are running an official release of Big Wigs %s (revision %d)"] = true
+L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = true
+L["You are running a source checkout of Big Wigs %s directly from the repository."] = true
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = true
 
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = true

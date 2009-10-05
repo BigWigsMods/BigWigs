@@ -6,9 +6,10 @@ local RELEASE = "RELEASE"
 local UNKNOWN = "UNKNOWN"
 
 do
-	local L_RELEASE = L["You are running an official release of Big Wigs 3.0 (revision %d)"]
-	local L_ALPHA = L["You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"]
-	local L_SOURCE = L["You are running a source checkout of Big Wigs 3.0 directly from the repository."]
+	local L_RELEASE = L["You are running an official release of Big Wigs %s (revision %d)"]
+	local L_ALPHA = L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"]
+	local L_SOURCE = L["You are running a source checkout of Big Wigs %s directly from the repository."]
+	local majorVersion = GetAddOnMetadata("BigWigs", "Version") or "3.?"
 
 	-- START: MAGIC WOWACE VOODOO VERSION STUFF
 	local releaseType = RELEASE
@@ -32,11 +33,11 @@ do
 
 	-- Then build the release string, which we can add to the interface option panel.
 	if releaseRevision == -1 then
-		releaseString = L_SOURCE
+		releaseString = L_SOURCE:format(majorVersion)
 	elseif releaseType == RELEASE then
-		releaseString = L_RELEASE:format(releaseRevision)
+		releaseString = L_RELEASE:format(majorVersion, releaseRevision)
 	elseif releaseType == ALPHA then
-		releaseString = L_ALPHA:format(releaseRevision)
+		releaseString = L_ALPHA:format(majorVersion, releaseRevision)
 	end
 	_G.BIGWIGS_RELEASE_TYPE = releaseType
 	_G.BIGWIGS_RELEASE_REVISION = releaseRevision
