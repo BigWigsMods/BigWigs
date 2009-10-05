@@ -1,7 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 
 -----------------------------------------------------------------------
--- Bars2.lua
+-- Bars.lua
 --
 
 L["Scale"] = true

@@ -2,7 +2,9 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "deDE")
 
 if not L then return end
 
+-----------------------------------------------------------------------
 -- Bars.lua
+--
 
 L["Scale"] = "Skalierung"
 L["Grow upwards"] = "Nach oben erweitern"
@@ -30,25 +32,27 @@ L["Local"] = "Lokal"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Ungültige Zeit (|cffff0000%q|r) oder fehlender Leistentext in eigener Leiste, gestartet von |cffd9d919%s|r. <Zeit> kann entweder eine Zahl in Sekunden, eine M:S Kombination oder Mm sein. Beispiele: 5, 1:20 or 2m."
 
+-----------------------------------------------------------------------
 -- Colors.lua
+--
 
 L["Colors"] = "Farben"
 
 L["Messages"] = "Nachrichten"
-L["Bars"] = "Anzeigebalken"
+L["Bars"] = "Leisten"
 L["Background"] = "Hintergrund"
 L["Text"] = "Text"
 L["Reset"] = "Zurücksetzen"
 
-L["Bar"] = "Balken"
-L["Change the normal bar color."] = "Ändert die normale Farbe der Anzeigebalken."
-L["Emphasized bar"] = "Betonte Balken"
-L["Change the emphasized bar color."] = "Ändert die Farbe der betonten Balken."
+L["Bar"] = "Leiste"
+L["Change the normal bar color."] = "Ändert die normale Farbe der Leisten."
+L["Emphasized bar"] = "Hervorgehobene Leiste"
+L["Change the emphasized bar color."] = "Ändert die Farbe der Hervorgehobene Leisten."
 
-L["Colors of messages and bars."] = "Farben der Nachrichten und Anzeigebalken."
+L["Colors of messages and bars."] = "Farben der Nachrichten und Leisten."
 L["Change the color for %q messages."] = "Ändert die Farbe für %q Nachrichten."
-L["Change the bar background color."] = "Ändert die Hintergrundfarbe der Anzeigebalken."
-L["Change the bar text color."] = "Ändert die Textfarbe der Anzeigebalken."
+L["Change the bar background color."] = "Ändert die Hintergrundfarbe der Leisten."
+L["Change the bar text color."] = "Ändert die Textfarbe der Leisten."
 L["Resets all colors to defaults."] = "Setzt alle Farben auf Standard zurück."
 
 L["Important"] = "Wichtig"
@@ -59,7 +63,9 @@ L["Positive"] = "Positiv"
 L["Bosskill"] = "Boss besiegt"
 L["Core"] = "Kern"
 
+-----------------------------------------------------------------------
 -- Messages.lua
+--
 
 L.sinkDescription = "Tunnelt die Ausgabe durch die Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen wieder schnell, um den Nutzer darauf aufmerksam zu machen."
 
@@ -76,7 +82,9 @@ L["Colors player names in messages by their class."] = "Färbt Spielernamen in N
 
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung von 'Ausgabe'."
 
+-----------------------------------------------------------------------
 -- RaidIcon.lua
+--
 
 L["Icons"] = "Symbole"
 L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Bestimmt, welches Symbol Big Wigs benutzen soll, wenn es Schlachtzugs-Symbole auf Spielern platziert (für wichtige Boss Fähigkeiten)."
@@ -97,15 +105,9 @@ L["Cross"] = "Kreuz"
 L["Skull"] = "Totenkopf"
 L["|cffff0000Disable|r"] = "|cffff0000Deaktiviert|r"
 
--- RaidWarn.lua
-L["RaidWarning"] = "Raidwarnung"
-
-L["Whisper"] = "Flüstern"
-L["Toggle whispering warnings to players."] = "Warnungen an andere Spieler flüstern."
-
-L["raidwarning_desc"] = "Bestimmt, wie Big Wigs die Boss-Nachrichten (zusätzlich zur lokalen Anzeige) an andere Spieler verschickt."
-
+-----------------------------------------------------------------------
 -- Sound.lua
+--
 
 L.soundDefaultDescription = "Falls diese Option aktiviert ist, wird Big Wigs nur die Standard-Raidsounds von Blizzard für Nachrichten benutzen. Beachte, dass nicht alle Nachrichten einer Begegnung einen Sound auslösen."
 
@@ -121,7 +123,9 @@ L["Victory"] = "Sieg"
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Legt den Sound fest, der für %q verwendet wird.\n\nStrg-Klicken, um reinzuhören."
 L["Default only"] = "Nur Standards"
 
+-----------------------------------------------------------------------
 -- Proximity.lua
+--
 
 L["%d yards"] = "%d Meter"
 L["Proximity"] = "Nähe"
@@ -151,7 +155,10 @@ L["Close button"] = "Schließen-Button"
 L["Shows or hides the close button."] = "Zeigt oder versteckt den Schließen-Button."
 L["Show/hide"] = "Zeigen/Verstecken"
 
+-----------------------------------------------------------------------
 -- Tips.lua
+--
+
 L["Cool!"] = "Cool!"
 L["Tips"] = "Tips"
 L["Configure how the raiding tips should be displayed."] = "Bestimmt, wie die Raidtips aussehen sollen."
