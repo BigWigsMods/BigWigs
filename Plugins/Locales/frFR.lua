@@ -1,7 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "frFR")
 if not L then return end
 -----------------------------------------------------------------------
--- Bars2.lua
+-- Bars.lua
 --
 
 L["Scale"] = "Échelle"
@@ -27,7 +27,7 @@ L["Shows or hides the bar icons."] = "Affiche ou non les icônes des barres."
 L["Font"] = "Police d'écriture"
 
 L["Local"] = "Local"
-L["%s: Timer [%s] finished."] = "%s : Délai [%s] terminé."
+L["%s: Timer [%s] finished."] = "%s : Minuteur [%s] terminé."
 L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée invalide (|cffff0000%q|r) ou texte de barre manquant dans une barre personnalisée lancée par |cffd9d919%s|r. <durée> peut être soit un nombre en secondes, soit au format M:S, ou encore au format Mm. Par exemple : 5, 1:20 ou 2m."
 
 -----------------------------------------------------------------------
@@ -41,6 +41,9 @@ L["Bars"] = "Barres"
 L["Background"] = "Arrière-plan"
 L["Text"] = "Texte"
 L["Reset"] = "Réinitialiser"
+
+L["Flash and shake"] = "Flash et secousse"
+L["Change the color of the flash and shake."] = "Change la couleur du flash et de la secousse."
 
 L["Bar"] = "Barre"
 L["Change the normal bar color."] = "Change la couleur des barres normales."
