@@ -378,7 +378,6 @@ do
 				end
 			end } )
 		end
-		local name = module.name
 		if not module.displayName then module.displayName = module.moduleName end
 		
 		-- Translate the bossmodule if appropriate
@@ -442,27 +441,26 @@ do
 					module.toggleDefaults[n] = bf
 				end
 			end
-			module.db = self.db:RegisterNamespace(name, { profile = module.toggleDefaults })
+			module.db = self.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
 		end
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
 		end
-		self:SendMessage("BigWigs_BossModuleRegistered", name, module)
+		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 	end
 
 	function addon:RegisterPlugin(module)
-		local name = module.name
 		if type(module.defaultDB) == "table" then
-			module.db = self.db:RegisterNamespace(name, { profile = module.defaultDB } )
+			module.db = self.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
 			module:OnRegister()
 		end
-		self:SendMessage("BigWigs_PluginRegistered", name, module)
+		self:SendMessage("BigWigs_PluginRegistered", module.moduleName, module)
 	end
 end
 
