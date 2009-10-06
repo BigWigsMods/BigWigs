@@ -44,6 +44,9 @@ L["Background"] = "Hintergrund"
 L["Text"] = "Text"
 L["Reset"] = "Zurücksetzen"
 
+L["Flash and shake"] = "Aufblitzen und Wackeln"
+L["Change the color of the flash and shake."] = "Verändert die Farbe der 'Aufblitzen und Wackeln'-Funktion."
+
 L["Bar"] = "Leiste"
 L["Change the normal bar color."] = "Ändert die normale Farbe der Leisten."
 L["Emphasized bar"] = "Hervorgehobene Leiste"
@@ -80,6 +83,7 @@ L["Show icons next to messages, only works for Raid Warning."] = "Zeigt Symbole 
 L["Class colors"] = "Klassenfarben"
 L["Colors player names in messages by their class."] = "Färbt Spielernamen in Nachrichten nach deren Klasse ein."
 
+L["Chat frame"] = "Chatfenster"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung von 'Ausgabe'."
 
 -----------------------------------------------------------------------
