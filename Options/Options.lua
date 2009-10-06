@@ -76,6 +76,13 @@ local acOptions = {
 			order = 22,
 			width = "full",
 		},
+		flashshake = {
+			type = "toggle",
+			name = L["Flash and shake"],
+			desc = L["Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash and shake the screen.\n\n|cffff4411If you are playing with the nameplates turned on the shaking function will not work due to Blizzard restrictions, the screen will only flash then.|r"],
+			order = 23,
+			width = "full",
+		},
 		separator2 = {
 			type = "description",
 			name = " ",

@@ -468,10 +468,10 @@ end
 -- Colors
 --
 
-local function colorNormal() return unpack(colors.db.profile.barColor) end
-local function colorEmphasized() return unpack(colors.db.profile.barEmphasized) end
-local function colorText() return unpack(colors.db.profile.barText) end
-local function colorBackground() return unpack(colors.db.profile.barBackground) end
+local function colorNormal() return colors:GetColor("barColor") end
+local function colorEmphasized() return colors:GetColor("barEmphasized") end
+local function colorText() return colors:GetColor("barText") end
+local function colorBackground() return colors:GetColor("barBackground") end
 
 --------------------------------------------------------------------------------
 -- Event Handlers

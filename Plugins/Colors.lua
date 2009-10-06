@@ -26,6 +26,8 @@ plugin.defaultDB = {
 	barText = { 1, 1, 1 },
 	barColor = { 0.25, 0.33, 0.68, 1 },
 	barEmphasized = { 1, 0, 0, 1 },
+	
+	flashshake = { 0, 0, 1 },
 }
 
 local function get(info)
@@ -139,6 +141,20 @@ plugin.pluginOptions = {
 				},
 			},
 		},
+		flashshake = {
+			type = "group",
+			name = L["Flash and shake"],
+			inline = true,
+			order = 12,
+			args = {
+				flashshake = {
+					name = L["Flash and shake"],
+					type = "color",
+					desc = L["Change the color of the flash and shake."],
+					order = 11,
+				},
+			},
+		},
 		reset = {
 			type = "execute",
 			name = L["Reset"],
@@ -149,14 +165,6 @@ plugin.pluginOptions = {
 		},
 	},
 }
-
-function plugin:OnPluginEnable()
-	if not self.db.profile.upgraded then
-		self:ResetDB()
-		self.db.profile.upgraded = 1
-		BigWigs:Print(L["color_upgrade"])
-	end
-end
 
 local function copyTable(to, from)
 	setmetatable(to, nil)
@@ -177,11 +185,11 @@ function plugin:ResetDB()
 	copyTable(self.db.profile, self.defaultDB)
 end
 
-function plugin:HasMessageColor(hint)
+function plugin:HasColor(hint)
 	return self.db.profile[hint] and true or nil
 end
 
-function plugin:MsgColor(hint)
+function plugin:GetColor(hint)
 	local t = self.db.profile[hint]
 	if t then
 		return unpack(t)

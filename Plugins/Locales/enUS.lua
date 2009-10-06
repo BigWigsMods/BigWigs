@@ -42,6 +42,9 @@ L["Background"] = true
 L["Text"] = true
 L["Reset"] = true
 
+L["Flash and shake"] = true
+L["Change the color of the flash and shake."] =true
+
 L["Bar"] = true
 L["Change the normal bar color."] = true
 L["Emphasized bar"] = true
