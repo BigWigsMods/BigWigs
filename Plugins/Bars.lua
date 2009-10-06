@@ -78,10 +78,12 @@ local function rearrangeBars(anchor)
 			lastDownBar = bar
 		end
 	end
-	if db.emphasize then
-		empUpdate:Show()
-	else
-		empUpdate:Hide()
+	if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
+		if #tmp > 0 and db.emphasize then
+			empUpdate:Show()
+		else
+			empUpdate:Hide()
+		end
 	end
 end
 
@@ -514,7 +516,6 @@ do
 			rearrangeBars(normalAnchor)
 			rearrangeBars(emphasizeAnchor)
 			dirty = nil
-			self:Hide()
 		end
 	end)
 end
