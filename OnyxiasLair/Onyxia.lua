@@ -6,6 +6,8 @@ if not mod then return end
 mod:RegisterEnableMob(10184)
 mod.toggleOptions = {"deepbreath", "phase1", "phase2", "phase3", "fear", "bosskill"}
 
+local boss = "Onyxia"
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -42,6 +44,9 @@ mod.locale = L
 ------------------------------
 --      Initialization      --
 ------------------------------
+function mod:OnRegister()
+	boss = BigWigs:Translate(boss)
+end
 
 function mod:OnEnable()
 	self:Log("SPELL_CAST_START", "Fear", 18431)
