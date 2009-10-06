@@ -129,7 +129,6 @@ do
 		if not tests[message] then return end -- spamming test can cause double messages due to the limited amount of spells
 		addon:SendMessage("BigWigs_Message", unpack(tests[message]))
 		if math.random(1,4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
-		addon:SendMessage("BigWigs_FlashShake")
 		wipe(tests[message])
 		tests[message] = nil
 	end
