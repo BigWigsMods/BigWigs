@@ -410,7 +410,7 @@ local _, pClass = UnitClass("player")
 SlashCmdList.BigWigs_SendRaidTip = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	input = input:trim()
-	if not UnitInRaid("player") or not IsRaidLeader() or not tonumber(input) or #input < 5 then
+	if not UnitInRaid("player") or not IsRaidLeader() or (not tonumber(input) and strlen(input) < 5 ) then
 		print(L["Usage: /sendtip <index|\"Custom tip\">"])
 		print(L["You must be the raid leader to broadcast a tip."])
 		return
