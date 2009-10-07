@@ -12,6 +12,8 @@ if L then
 
 	L.nerubian_burrower = "Fouisseur nérubien"
 
+	L.shadow_soon = "Attaque d'ombre dans ~5 sec. !"
+
 	L.freeze_bar = "~Prochaine Entaille givrante"
 	L.pcold_bar = "~Prochain Froid pénétrant"
 

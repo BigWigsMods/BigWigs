@@ -12,9 +12,9 @@ L.berserk_desc = "Prévient quand le boss devient fou furieux via une barre temp
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 
 -- Loader / Options.lua
-L["You are running an official release of Big Wigs 3.0 (revision %d)"] = "Vous utilisez une version FINALISÉE de BW 3.0 (r%d)."
-L["You are running an ALPHA RELEASE of Big Wigs 3.0 (revision %d)"] = "Vous utilisez une version ALPHA de BW 3.0 (r%d)."
-L["You are running a source checkout of Big Wigs 3.0 directly from the repository."] = "Vous utilisez une version du dépôt de BW 3.0."
+L["You are running an official release of Big Wigs %s (revision %d)"] = "Vous utilisez une version FINALISÉE de Big Wigs %s (r%d)."
+L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Vous utilisez une version ALPHA de Big Wigs %s (r%d)."
+L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Vous utilisez une version du dépôt de Big Wigs %s."
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Une nouvelle version de Big Wigs est disponible. Vous pouvez visiter curse.com, wowinterface.com, wowace.com ou utiliser le Curse Updater pour obtenir cette nouvelle version."
 
 -- XXX Our tooltip sucks, I want these things gone and automated!
@@ -27,8 +27,8 @@ L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disa
 L["All running modules have been disabled."] = "Tous les modules actifs ont été désactivés."
 
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Certains joueurs de votre groupe ont d'anciennes versions ou n'ont pas Big Wigs. Tapez /bwv pour plus de détails."
-L["Up-to-date:"] = "À jour :"
-L["Out-of-date:"] = "Périmé :"
+L["Up to date:"] = "À jour :"
+L["Out of date:"] = "Périmé :"
 L["No Big Wigs 3.0:"] = "BW 3.0 absent :"
 
 -- Options.lua
