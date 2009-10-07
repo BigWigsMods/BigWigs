@@ -91,9 +91,7 @@ end
 
 function mod:OnEngage()
 	chargeCount = 1
-	if self.db.profile.phase then
-		self:Message(L["phase1_message"], "Attention")
-	end
+	self:Message("phase", L["phase1_message"], "Attention")
 end
 
 ------------------------------
