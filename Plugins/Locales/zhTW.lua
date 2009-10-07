@@ -64,7 +64,7 @@ L["Core"] = "核心"
 
 -- Messages.lua
 
-L.sinkDescription = "從插件的路線輸出透過Big Wigs訊息顯示。這顯示支援圖示，顏色和可以在同一時間在螢幕上顯示4個訊息。新的插入訊息將再一次快速的放大和縮小來通知用戶。"
+L.sinkDescription = "透過Big Wigs訊息顯示。支援圖示，顏色和可以在同一時間在螢幕上顯示4個訊息。新的插入訊息將再一次快速的放大和縮小來通知用戶。"
 
 L["Messages"] = "訊息"
 
@@ -83,9 +83,9 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 -- RaidIcon.lua
 
 L["Icons"] = "圖示"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "為 BigWigs 配置一個團隊標記，以便為中了'炸彈'級別的玩家打上標記，以示提醒。"
+L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "為 BigWigs 設定一個團隊標記，以便為中了'炸彈'級別的玩家打上標記，以示提醒。"
 
-L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
+L.raidIconDescription = "某些遭遇可能包含元素比如炸彈類型技能指向特定玩家，玩家正被追，或是特定玩家可能有興趣在其他方面。這裡你可以自訂團隊圖示來標記這些玩家。\n\n如果一個遭遇只有一種技能，這是值得慶祝的，只有第一個圖示會被使用。在某些遭遇一種圖示將不被使用在兩種不同技能，任何特定技能在下次總是使是使用相同圖示。\n\n|cffff4411注意:如果玩家已經被手動標記，Big Wigs將不會改變他的圖示。|r"
 L["Primary"] = "主要"
 L["The first raid target icon that a encounter script should use."] = "遇到腳本應該使用的第一個團隊圖示。"
 L["Secondary"] = "次要"
@@ -114,7 +114,7 @@ L["Alert"] = "警告"
 L["Long"] = "長響"
 L["Victory"] = "勝利"
 
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使用%q聲音（Ctrl-點擊可以預覽效果）。"
+L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使用%q音效（Ctrl-點擊可以預覽效果）。"
 L["Default only"] = "僅用預設"
 
 -- Proximity.lua
@@ -148,17 +148,17 @@ L["Show/hide"] = "顯示/隱藏"
 
 -- Tips.lua
 
-L["Cool!"] = true
+L["Cool!"] = "鎮靜!"
 L["Tips"] = "提示"
 L["Configure how the raiding tips should be displayed."] = "設定如何團隊提示應該怎樣被顯示。"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = true
-L["Automatic tips"] = true
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = true
-L["Manual tips"] = true
-L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = true
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "團隊提示根據預設顯示當你在一個區域行動實例，你不能在戰鬥中，你的團隊群組有超過9個玩家。只有一個提示將顯示每一節，通常。\n\n這裡你可以調整如何顯示提示，或者使用拉皮條視窗(預設)，或是輸出到聊天框。如果你是團隊隊長過度使用|cffff4411/sendtip 命令|r，你反而可能想要他們顯示在聊天框!"
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "如果你不想要看見任何提示，你可以從這裡切換關閉。由你團隊隊長傳送的提示也會被阻擋，所以小心使用。"
+L["Automatic tips"] = "自動提示"
+L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "如果你不想要看見我們有的可怕訊息，貢獻一些世界上最好的PvE玩家，彈出你在一個區域行動實例，你可以禁用這設定。"
+L["Manual tips"] = "手動提示"
+L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "團隊隊長有能力顯示玩家在團隊中的手動提示/sendtip 命令。如果你有一個做這些垃圾事情的團隊隊長，由於其他原因你不想看見他們，你可以禁用這設定。"
 L["Output to chat frame"] = "輸出到聊天框"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = true
+L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "由預設提示將會顯示她們擁有的，可怕的視窗在你螢幕正中央。如果你切換這選項，無論如何，提示將只會以純文字顯示在你的聊天框，視窗不會再打擾你。"
 L["Usage: /sendtip <index|\"Custom tip\">"] = "用法: /sendtip <index|\"自訂提示\">"
 L["You must be the raid leader to broadcast a tip."] = "你必須是團隊隊長來廣播提示。"
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "提示索引超出範圍，接受指數範圍從1到%d。"
