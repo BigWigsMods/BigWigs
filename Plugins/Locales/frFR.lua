@@ -47,7 +47,7 @@ L["Change the color of the flash and shake."] = "Change la couleur du flash et d
 
 L["Bar"] = "Barre"
 L["Change the normal bar color."] = "Change la couleur des barres normales."
-L["Emphasized bar"] = "Barre en évidence"
+L["Emphasized bar"] = "En évidence"
 L["Change the emphasized bar color."] = "Change la couleur des barres mises en évidence."
 
 L["Colors of messages and bars."] = "Couleurs des messages et des barres."
@@ -88,7 +88,7 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 -- RaidIcon.lua
 --
 
-L["Icons"] = "Icônes"
+L["Icons"] = "Icône"
 L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Détermine l'icône que Big Wigs doit utiliser lors du placement des icônes de raid sur les joueurs affectés par les capacités des boss (ex. la bombe de Geddon)."
 
 L.raidIconDescription = "Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.\n\nSi une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.\n\n|cffff4411Notez que si un joueur a déjà été marqué manuellement, Big Wigs ne changera jamais son icône.|r"
@@ -163,14 +163,14 @@ L["Show/hide"] = "Afficher/cacher"
 L["Cool!"] = "Cool !"
 L["Tips"] = "Conseils"
 L["Configure how the raiding tips should be displayed."] = "Configure la façon dont les conseils de raid sont affichés."
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Un conseil de raid sera affiché par défaut quand vous entrez dans une instance de raid, si vous n'êtes pas en combat et si votre groupe de raid comporte plus de 9 joueurs. Seul un conseil sera affiché par session.\n\nVous pouvez ici modifier la façon dont ce conseil est affiché, soit en utilisant sa fenêtre (par défaut), soit en utilisant la fenêtre de discussion. Si vous jouez avec des chefs de raid qui abusent de la |cffff4411commande /sendtip|r, il y a de forte chance pour que vous préfériez les afficher dans la fenêtre de discussion !"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Si vous ne souhaitez voir aucun conseil, vous pouvez les désactiver ici. Les conseils envoyés par votre chef de raid seront également bloqués par ceci, soyez donc prudent."
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Un conseil de raid sera affiché par défaut quand vous entrez dans une instance de raid, si vous n'êtes pas en combat et si votre groupe de raid comporte plus de 9 joueurs. Seul un conseil sera affiché par session.\n\nVous pouvez ici modifier la façon dont ce conseil est affiché (soit via sa fenêtre (par défaut), soit via la fenêtre de discussion). Si vous jouez avec des chefs de raid qui abusent de la |cffff4411commande /sendtip|r, vous préférerez sans doute la fenêtre de discussion !"
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Si vous ne souhaitez voir aucun conseil, même ceux de votre chef de raid, décochez ceci."
 L["Automatic tips"] = "Conseils automatiques"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Si vous ne souhaitez pas voir les supers conseils que nous avons (donnés par certains des meilleurs joueurs JcE du monde) apparaître quand vous entrez dans une instance de raid, vous pouvez désactiver cette option."
 L["Manual tips"] = "Conseils manuels"
 L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Les chefs de raid ont la possiblité d'afficher aux joueurs du raid un conseil manuellement à l'aide de la commande /sendtip. Si vous avez un chef de raid qui abuse de cette fonction, ou si tout simplement vous ne souhaitez pas voir ces conseils, vous pouvez désactiver la fonction avec cette option."
 L["Output to chat frame"] = "Sortie vers la fenêtre de discussion"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Par défaut, les conseils seront affichés dans leur propre fenêtre au milieu de l'écran. Si vous cochez ceci cependant, les conseils seront UNIQUEMENT affichés dans votre fenêtre de discussion et la fenêtre ne viendra plus vous déranger."
+L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Par défaut, les conseils sont affichés dans une fenêtre au milieu de l'écran. Si vous cochez ceci, ils seront UNIQUEMENT affichés dans votre fenêtre de discussion."
 L["Usage: /sendtip <index|\"Custom tip\">"] = "Utilisation : /sendtip <index|\"Conseil perso.\">"
 L["You must be the raid leader to broadcast a tip."] = "Vous devez être le chef de raid pour diffuser un conseil."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Index des conseils hors limite. Les index acceptés vont de 1 à %d."
