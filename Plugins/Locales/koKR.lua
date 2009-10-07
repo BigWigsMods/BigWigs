@@ -161,16 +161,16 @@ L["Show/hide"] = "표시/숨김"
 
 L["Cool!"] = "쿨!"
 L["Tips"] = "도움말"
-L["Configure how the raiding tips should be displayed."] = true
+L["Configure how the raiding tips should be displayed."] = "레이드중 도움말 표시 방법에 대하여 설정합니다."
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = true
 L["Automatic tips"] = "자동 도움말"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = true
-L["Manual tips"] = true
+L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "도움말 기능을 원하지 않는다면 설정에서 비활성화하여 표시하지 않을 수 있습니다."
+L["Manual tips"] = "도움말 설명서"
 L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = true
-L["Output to chat frame"] = true
+L["Output to chat frame"] = "대화 프레임 출력"
 L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = true
-L["Usage: /sendtip <index|\"Custom tip\">"] = true
-L["You must be the raid leader to broadcast a tip."] = true
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = true
+L["Usage: /sendtip <index|\"Custom tip\">"] = "Usage: /sendtip <index|\"Custom tip\">"
+L["You must be the raid leader to broadcast a tip."] = "도움말 알림을 위해서는 공격대장이어야 합니다."
+L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "팁 색인 범위 밖으로, %d의 1 인덱스 범위를 허용합니다."
 
