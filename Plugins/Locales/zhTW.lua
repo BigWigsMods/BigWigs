@@ -28,7 +28,7 @@ L["Font"] = "字型"
 
 L["Local"] = "區域"
 L["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。"
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "無效記時條（|cffff0000%q|r）或 |cffd9d919%s|r 上的記時條文字錯誤，<time> 輸入一個數字單位默認為秒，可以為 M:S 或者 Mm。例如5, 1:20 或 2m。"
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "無效記時條（|cffff0000%q|r）或 |cffd9d919%s|r 上的記時條文字錯誤，<time> 輸入一個數字單位預設為秒，可以為 M:S 或者 Mm。例如5, 1:20 或 2m。"
 
 -- Colors.lua
 
@@ -39,6 +39,9 @@ L["Bars"] = "計時條"
 L["Background"] = "背景"
 L["Text"] = "文字"
 L["Reset"] = "重置"
+
+L["Flash and shake"] = "閃爍和震動"
+L["Change the color of the flash and shake."] = "改變閃爍和震動顏色。"
 
 L["Bar"] = "計時條"
 L["Change the normal bar color."] = "改變計時條顏色。"
@@ -61,7 +64,7 @@ L["Core"] = "核心"
 
 -- Messages.lua
 
-L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
+L.sinkDescription = "從插件的路線輸出透過Big Wigs訊息顯示。這顯示支援圖示，顏色和可以在同一時間在螢幕上顯示4個訊息。新的插入訊息將再一次快速的放大和縮小來通知用戶。"
 
 L["Messages"] = "訊息"
 
@@ -79,14 +82,14 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 
 -- RaidIcon.lua
 
-L["Raid Icons"] = "團隊圖示"
+L["Icons"] = "圖示"
 L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "為 BigWigs 配置一個團隊標記，以便為中了'炸彈'級別的玩家打上標記，以示提醒。"
 
 L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
-L["Primary"] = true
-L["The first raid target icon that a encounter script should use."] = true
-L["Secondary"] = true
-L["The second raid target icon that a encounter script should use."] = true
+L["Primary"] = "主要"
+L["The first raid target icon that a encounter script should use."] = "遇到腳本應該使用的第一個團隊圖示。"
+L["Secondary"] = "次要"
+L["The second raid target icon that a encounter script should use."] = "遇到腳本應該使用的第二個團隊圖示。"
 
 L["Star"] = "星星"
 L["Circle"] = "圓圈"
@@ -100,7 +103,7 @@ L["|cffff0000Disable|r"] = "|cffff0000禁用|r"
 
 -- Sound.lua
 
-L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
+L.soundDefaultDescription = "根據選項設定，Big Wigs將只使用內建的團隊警告音效因為訊息而來的音效警告。注意:只有一些訊息透過遇到腳本才會觸發音效警告。"
 
 L["Sounds"] = "音效"
 L["Options for sounds."] = "音效設定"
@@ -111,12 +114,12 @@ L["Alert"] = "警告"
 L["Long"] = "長響"
 L["Victory"] = "勝利"
 
-L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設置使用%q聲音（Ctrl-點擊可以預覽效果）。"
+L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "設定使用%q聲音（Ctrl-點擊可以預覽效果）。"
 L["Default only"] = "僅用預設"
 
 -- Proximity.lua
 
-L["%d yards"] = true
+L["%d yards"] = "%d碼"
 L["Proximity"] = "鄰近顯示"
 L["Sound"] = "音效"
 L["Disabled"] = "禁用"
