@@ -42,6 +42,8 @@ L["Messages"] = "메세지"
 L["Bars"] = "바"
 L["Background"] = "배경"
 L["Text"] = "글자"
+L["Flash and shake"] = "번쩍임과 진동"
+L["Change the color of the flash and shake."] = "번쩍임과 진동의 색상을 변경합니다."
 L["Reset"] = "초기화"
 
 L["Bar"] = "바"

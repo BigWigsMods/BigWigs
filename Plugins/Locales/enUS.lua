@@ -40,6 +40,8 @@ L["Messages"] = true
 L["Bars"] = true
 L["Background"] = true
 L["Text"] = true
+L["Flash and shake"] = true
+L["Change the color of the flash and shake."] = true
 L["Reset"] = true
 
 L["Flash and shake"] = true
