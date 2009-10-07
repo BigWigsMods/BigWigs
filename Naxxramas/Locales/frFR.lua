@@ -147,7 +147,7 @@ if L then
 	L.start_bar = "Phase 2"
 
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase2_trigger1 = "Faites vos prières !"
 	L.phase2_trigger2 = "Hurlez et expirez !"
 	L.phase2_trigger3 = "Votre fin est proche !"
@@ -292,7 +292,7 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "frFR")
 if L then
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 
 	L.throw = "Lancer"
 	L.throw_desc = "Prévient quand les tanks sont lancés d'une plate-forme à l'autre."

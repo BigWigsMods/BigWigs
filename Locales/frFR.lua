@@ -7,7 +7,7 @@ L["%s has been defeated"] = "%s a été vaincu(e)" -- "<boss> has been defeated"
 L.bosskill = "Défaite du boss"
 L.bosskill_desc = "Prévient quand le boss est vaincu."
 L.berserk = "Berserk"
-L.berserk_desc = "Prévient quand le boss devient fou furieux via une barre temporelle et des messages réguliers."
+L.berserk_desc = "Prévient quand le boss devient fou furieux."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
 

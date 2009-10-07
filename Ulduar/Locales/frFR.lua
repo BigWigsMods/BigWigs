@@ -2,7 +2,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "frFR")
 if L then
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.engage_warning = "Phase 1"
 	L.phase2_warning = "Arrivée de la phase 2"
 	L.phase_bar = "Phase %d"
@@ -36,7 +36,7 @@ if L then
 	L.engage_trigger2 = "Anciens, donnez-moi votre force !"
 
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la recontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase2_message = "Phase 2 !"
 
 	L.wave = "Vagues"
@@ -63,9 +63,6 @@ if L then
 	L.sunbeam_message = "Rayons de soleil actif !"
 	L.sunbeam_bar = "~Prochains Rayons de soleil"
 
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Rayon de soleil (nécessite d'être assistant ou mieux)."
-
 	L.end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."
 end
 
@@ -80,11 +77,8 @@ if L then
 	L.flash_warning = "Gel instantané en incantation !"
 	L.flash_soon = "Gel instantané dans 5 sec. !"
 
-	L.hardmode = "Délai du mode difficile"
-	L.hardmode_desc = "Affiche une barre de 3 min pour le mode difficile (délai avant qu'Hodir ne détruise sa cache rare)."
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par un Nuage d'orage (nécessite d'être assistant ou mieux)."
+	L.hardmode = "Jouons à casse-cache"
+	L.hardmode_desc = "Affiche le délai avant qu'Hodir ne détruise sa cache rare."
 
 	L.end_trigger = "Je suis... libéré de son emprise... enfin."
 end
@@ -120,9 +114,6 @@ if L then
 
 	L.shield_message = "Bouclier des runes !"
 
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Puissance accablante ou ciblé par un Eclair tourbillonnant (nécessite d'être assistant ou mieux)."
-
 	L.council_dies = "%s éliminé"
 end
 
@@ -147,9 +138,6 @@ if L then
 	L.eyebeam_you = "Rayon de l'oeil sur VOUS !"
 	L.eyebeam_say = "Rayon de l'oeil sur moi !"
 
-	L.eyebeamsay = "Rayon de l'oeil - Dire"
-	L.eyebeamsay_desc = "Fait dire à votre personnage qu'il est ciblé par le Rayon de l'oeil quand c'est le cas."
-
 	L.armor_message = "%2$dx broyages d'armure sur %1$s"
 end
 
@@ -171,7 +159,7 @@ end
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "frFR")
 if L then
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la recontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.engage_warning = "Phase 1"
 	L.engage_trigger = "^Nous n'avons pas beaucoup de temps, les amis !"
 	L.phase2_warning = "Arrivée de la phase 2"
@@ -207,10 +195,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "frFR")
 if L then
-	L["Razorscale Controller"] = "Contrôleur de Tranchécaille"
-
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.ground_trigger = "Faites vite ! Elle va pas rester au sol très longtemps !"
 	L.ground_message = "Tranchécaille enchaînée !"
 	L.air_trigger = "Laissez un instant pour préparer la construction des tourelles."
@@ -239,16 +225,16 @@ if L then
 	L["Runic Colossus"] = "Colosse runique" -- For the runic barrier emote.
 
 	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase1_message = "Phase 1"
 	L.phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement allez pay -  Attendez, vous -"
 	L.phase2_message = "Phase 2 - Berserk dans 6 min. 15 sec. !"
 	L.phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !"
 	L.phase3_message = "Phase 3 - %s engagé !"
 
-	L.hardmode = "Délai du mode difficile"
-	L.hardmode_desc = "Affiche une barre de 3 minutes pour le mode difficile (délai avant que Sif ne disparaisse)."
-	L.hardmode_warning = "Délai du mode difficile dépassé"
+	L.hardmode = "Sifonné"
+	L.hardmode_desc = "Affiche le délai avant que Sif ne disparaisse."
+	L.hardmode_warning = "Sif a disparue"
 
 	L.shock_message = "Horion de foudre sur VOUS !"
 	L.barrier_message = "Barrière runique actif !"
@@ -261,9 +247,6 @@ if L then
 	L.strike_bar = "Recharge Frappe"
 
 	L.end_trigger = "Retenez vos coups ! Je me rends !"
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Détonation runique (nécessite d'être assistant ou mieux)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "frFR")
@@ -291,16 +274,8 @@ if L then
 
 	L.crash_say = "Déferlante d'ombre sur moi !"
 
-	L.crashsay = "Déferlante - Dire"
-	L.crashsay_desc = "Fait dire à votre personnage qu'il est ciblé par une Déferlante d'ombre quand c'est le cas."
-	L.crashicon = "Déferlante - Icône"
-	L.crashicon_desc = "Place une icône de raid secondaire sur le dernier joueur ciblé par une Déferlante d'ombre (nécessite d'être assistant ou mieux)."
-
 	L.mark_message = "Marque"
 	L.mark_message_other = "Marque : %s"
-
-	L.icon = "Marque - Icône"
-	L.icon_desc = "Place une icône de raid primaire sur le dernier joueur affecté par une Marque du Sans-visage (nécessite d'être assistant ou mieux)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "frFR")
@@ -309,9 +284,6 @@ if L then
 	L.exposed_message = "Cœur exposé !"
 
 	L.gravitybomb_other = "Gravité : %s"
-
-	L.gravitybombicon = "Bombe à gravité - Icône"
-	L.gravitybombicon_desc = "Place une icône de raid bleue sur le dernier joueur affecté par une Bombe à gravité (nécessite d'être assistant ou mieux)."
 
 	L.lightbomb_other = "Lumière : %s"
 
@@ -324,7 +296,7 @@ if L then
 	L["The Observation Ring"] = "le cercle d'observation"
 
 	L.phase = "Phase"
-	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.engage_warning = "Phase 1"
 	L.engage_trigger = "^Il sera bientôt temps de"
 	L.phase2_warning = "Phase 2"
@@ -359,8 +331,6 @@ if L then
 
 	L.guardian_message = "Gardien %d !"
 
-	L.empowericon = "Renforcement - Icône"
-	L.empowericon_desc = "Place un crâne sur le Gardien immortel ayant Renforcement des ombres."
 	L.empowericon_message = "Renforcement terminé !"
 
 	L.roar_warning = "Rugissement dans 5 sec. !"
