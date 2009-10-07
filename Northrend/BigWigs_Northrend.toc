@@ -14,20 +14,14 @@
 ## Notes-frFR: Modules Big Wigs concernant le Norfendre.
 ## Notes-zhCN: Big Wigs 诺森德模块
 ## Notes-zhTW: Big Wigs 北裂境模組
-## Author: Funkydude, Rabbit
-## X-Credits: 7destiny, Timewasted, durcyn
-## Version: 3.0
+
 ## LoadOnDemand: 1
+## Dependencies: BigWigs
 
-## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
-
 ## X-BigWigs-Menu: Northrend
 ## X-BigWigs-LoadOn-Zone: The Eye of Eternity, Vault of Archavon, The Obsidian Sanctum
 
-## Dependencies: BigWigs
-
 locales.xml
-
 modules.xml
 

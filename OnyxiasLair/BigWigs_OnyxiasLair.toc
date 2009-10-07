@@ -6,17 +6,13 @@
 ## Notes: Big Wigs Onyxia's Lair Modules
 ## Notes-frFR: Modules Big Wigs concernant le Repaire d'Onyxia.
 ## Notes-koKR: Big Wigs 오닉시아 둥지 경고
-## Author: Ammo, Rabbit, Funkydude
-## Version: 3.0
+
 ## LoadOnDemand: 1
-
-## X-Website: http://www.wowwiki.com/BigWigs
-## X-Category: Raid
-
-## X-BigWigs-LoadOn-Zone: Onyxia's Lair
-
 ## Dependencies: BigWigs
 
-locales.xml
+## X-Category: Raid
+## X-BigWigs-LoadOn-Zone: Onyxia's Lair
 
+locales.xml
 modules.xml
+

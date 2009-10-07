@@ -13,19 +13,13 @@
 ## Notes-frFR: Modules Big Wigs concernant le colisée d'Argent.
 ## Notes-zhCN: Big Wigs The Argent Coliseum模块
 ## Notes-zhTW: Big Wigs 銀白大競技場模組
-## Author: Funkydude, Rabbit
-## X-Credits: durcyn, maat, 7destiny
-## Version: 3.0
+
 ## LoadOnDemand: 1
-
-## X-Website: http://www.wowwiki.com/BigWigs
-## X-Category: Raid
-
-## X-BigWigs-LoadOn-Zone: Trial of the Crusader
-
 ## Dependencies: BigWigs
 
-locales.xml
+## X-Category: Raid
+## X-BigWigs-LoadOn-Zone: Trial of the Crusader
 
+locales.xml
 modules.xml
 

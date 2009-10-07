@@ -8,11 +8,8 @@
 ## Notes-frFR: Noyau de Big Wigs.
 ## Notes-zhCN: Big Wigs 核心模块
 ## Notes-zhTW: Big Wigs 核心模組
-## Author: Ammo, Rabbit, Funkydude
-## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
 
 ## LoadOnDemand: 1
-
 ## Dependencies: BigWigs
 
 modules.xml
