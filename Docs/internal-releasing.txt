@@ -9,9 +9,10 @@ pushing a new release to wowace/curse and wowinterface.
    release.
 
 2. Check that BigWigs.toc in the root folder has the correct Version.
-   And, if not, update it.
+   And, if not, update it and commit.
 
 3. Run the lua script under Options/scripts to update the credits.
+   And don't forget to commit it!
 
 4. Scan the code for any Lua comments starting with XXX and verify that
    these do not hinder the next release.
