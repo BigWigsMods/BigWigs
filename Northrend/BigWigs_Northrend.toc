@@ -16,7 +16,7 @@
 ## Notes-zhTW: Big Wigs 北裂境模組
 ## Author: Funkydude, Rabbit
 ## X-Credits: 7destiny, Timewasted, durcyn
-## Version: 2.0
+## Version: 3.0
 ## LoadOnDemand: 1
 
 ## X-Website: http://www.wowwiki.com/BigWigs

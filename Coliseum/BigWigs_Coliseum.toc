@@ -15,7 +15,7 @@
 ## Notes-zhTW: Big Wigs 銀白大競技場模組
 ## Author: Funkydude, Rabbit
 ## X-Credits: durcyn, maat, 7destiny
-## Version: 2.0
+## Version: 3.0
 ## LoadOnDemand: 1
 
 ## X-Website: http://www.wowwiki.com/BigWigs

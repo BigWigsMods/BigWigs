@@ -14,7 +14,7 @@
 ## Notes-ruRU: Модуль Big Wigs - Наксрамас
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
-## Version: 2.0
+## Version: 3.0
 ## LoadOnDemand: 1
 
 ## X-Website: http://www.wowwiki.com/BigWigs

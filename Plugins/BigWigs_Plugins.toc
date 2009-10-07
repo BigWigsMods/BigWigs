@@ -15,7 +15,6 @@
 ## Notes-koKR: Big Wigs 플러그인
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
-## Version: 2.0
 ## LoadOnDemand: 1
 
 ## X-Website: http://www.wowwiki.com/BigWigs
