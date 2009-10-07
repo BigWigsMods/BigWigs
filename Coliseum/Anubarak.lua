@@ -80,6 +80,12 @@ function mod:OnBossEnable()
 	difficulty = GetRaidDifficulty()
 end
 
+local function nextstrike()
+	mod:Bar(66134, ssName, 30, 66134)
+	strikeMessage = mod:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
+	mod:ScheduleEvent("BWnextstrike", nextstrike, 30)
+end
+
 local function nextwave() mod:Bar("burrow", L["nerubian_burrower"], 45, 66333) end
 function mod:OnEngage()
 	self:Message("burrow", L["engage_message"], "Attention", 65919)
@@ -99,12 +105,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-local function nextstrike()
-	mod:Bar(66134, ssName, 30, 66134)
-	strikeMessage = mod:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
-	mod:ScheduleEvent("BWnextstrike", nextstrike, 30)
-end
 
 function mod:Strike(player, spellId, _, _, spellName)
 	if difficulty > 2 then
