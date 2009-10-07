@@ -25,7 +25,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "frFR")
 if L then
-	L.enable_trigger = "Vous avez entendu l'appel de la Croisade d'argent et vaillement répondu"
+	L.enable_trigger = "Vous avez entendu l'appel de la Croisade d'argent, et vaillamment répondu !"
 
 	L.engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !"
 	L.jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !"
@@ -68,8 +68,8 @@ if L then
 
 	L["Shield on %s!"] = "Bouclier sur %s !"
 	L["Bladestorming!"] = "Tempête de lames !"
-	L["Hunter pet up!"] = "Familier du chasseur revenu !"
-	L["Felhunter up!"] = "Chasseur corrompu réinvoqué !"
+	L["Hunter pet up!"] = "Familier du chasseur appelé !"
+	L["Felhunter up!"] = "Chasseur corrompu invoqué !"
 	L["Heroism on champions!"] = "Héroïsme sur les champions !"
 	L["Bloodlust on champions!"] = "Furie sanguinaire sur les champions !"
 end
