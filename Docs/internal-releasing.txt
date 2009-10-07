@@ -1,0 +1,30 @@
+-----------------------------------------------------------------------
+-- Big Wigs Release Procedure
+--[[
+
+Here's just a list of things the release manager needs to do before
+pushing a new release to wowace/curse and wowinterface.
+
+1. Check that there are no open tickets on wowace that would affect a
+   release.
+
+2. Check that BigWigs.toc in the root folder has the correct Version.
+   And, if not, update it.
+
+3. Run the lua script under Options/scripts to update the credits.
+
+4. Scan the code for any Lua comments starting with XXX and verify that
+   these do not hinder the next release.
+
+5. Start up WoW and navigate through ALL the options to verify that
+   nothing breaks instantly.
+
+6. Run the ingame Test, just spam click the button at least 20 times
+   on a character of level 40 or higher.
+
+7. Get a "go" from either Ammo or Rabbit on irc.freenode.net/#wowace.
+
+ -> Release!
+
+---------------------------------------------------------------------]]
+
