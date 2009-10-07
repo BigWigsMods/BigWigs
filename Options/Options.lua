@@ -149,7 +149,29 @@ function options:OnInitialize()
 	ac:RegisterOptionsTable("BigWigs", acOptions)
 	acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	
-	local about = self:GetPanel(L["About"])
+	local bossEntry = self:GetPanel("Big Wigs Encounters")
+	bossEntry:SetScript("OnShow", function(self)
+		-- First we need to expand ourselves if collapsed.
+		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
+			if button.element and button.element.name == "Big Wigs Encounters" then
+				if button.element.collapsed then
+					OptionsListButtonToggle_OnClick(button.toggle)
+				end
+				break
+			end
+		end
+		-- InterfaceOptionsFrameAddOns.buttons has changed here to include the zones
+		-- if we were collapsed.
+		-- So now we need to select the first zone.
+		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
+			if button.element and button.element.parent == "Big Wigs Encounters" then
+				InterfaceOptionsFrame_OpenToCategory(button.element.name)
+				break
+			end
+		end
+	end)
+	
+	local about = self:GetPanel(L["About"], "Big Wigs")
 	about:SetScript("OnShow", function(frame)
 		local fields = {
 			L["Main Developers"],
@@ -247,8 +269,10 @@ end
 
 function options:Open()
 	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-		if button.element and button.element.name == "Big Wigs" and button.element.collapsed then
-			OptionsListButtonToggle_OnClick(button.toggle)
+		if button.element and button.element.name == "Big Wigs" then
+			if button.element.collapsed then
+				OptionsListButtonToggle_OnClick(button.toggle)
+			end
 			break
 		end
 	end
@@ -670,11 +694,11 @@ end
 do
 	local panels = {}
 	local noop = function() end
-	function options:GetPanel(id)
+	function options:GetPanel(id, parent)
 		if not panels[id] then
 			local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 			frame.name = id
-			frame.parent = "Big Wigs"
+			frame.parent = parent
 			frame.addonname = "BigWigs"
 			frame.okay = noop
 			frame.cancel = noop
@@ -689,7 +713,7 @@ do
 	end
 	
 	function options:GetZonePanel(zone)
-		local panel, created = self:GetPanel(zone)
+		local panel, created = self:GetPanel(zone, "Big Wigs Encounters")
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
 			panel:SetScript("OnHide", onZoneHide)
@@ -708,7 +732,6 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	self:GetZonePanel(zone)
 	if not zoneModules[zone] then zoneModules[zone] = {} end
 	zoneModules[zone][module.moduleName] = module.displayName
-	-- tinsert(zoneModules[zone], module.displayName)
 end
 
 function options:BigWigs_PluginRegistered(message, moduleName, module)
