@@ -49,7 +49,7 @@ L["Some encounter scripts use raid icons to mark players that are of special int
 L["Whisper warnings"] = true
 L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"] = true
 L["Broadcast"] = true
-L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = true
+L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/officer or in a 5-man party!|r"] = true
 L["Raid channel"] = true
 L["Use the raid channel instead of raid warning for broadcasting messages."] = true
 L["Minimap icon"] = true
