@@ -105,6 +105,7 @@ do
 		DEATHKNIGHT = { 61999, 49892, 49016 }, -- Raise Ally works even on players that are alive oO
 		DRUID = { 5185, 467, 1126 },
 		-- HUNTER = { 34477 }, -- Misdirect is like 100y range, so forget it!
+		HUNTER = {},
 		MAGE = { 475, 1459 },
 		PALADIN = { 635, 19740, 20473 },
 		PRIEST = { 2050, 1243 },
