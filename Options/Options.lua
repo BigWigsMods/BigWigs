@@ -676,7 +676,7 @@ local function onZoneShow(frame)
 			enabledModule = module.moduleName
 		end
 	end
-	if enabledModule then
+	if enabledModule and zoneModules[zone][enabledModule] then
 		dropdown:SetGroup(enabledModule)
 	else
 		-- select first one
