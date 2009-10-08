@@ -106,7 +106,7 @@ local acOptions = {
 		broadcast = {
 			type = "toggle",
 			name = L["Broadcast"],
-			desc = L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"],
+			desc = L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/officer or in a 5-man party!|r"],
 			order = 33,
 		},
 		useraidchannel = {
@@ -147,10 +147,14 @@ function options:OnInitialize()
 	BigWigsLoader:RemoveInterfaceOptions()
 
 	ac:RegisterOptionsTable("BigWigs", acOptions)
-	acd:AddToBlizOptions("BigWigs", "Big Wigs")
+	local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
+	mainOpts:HookScript("OnShow", function()
+		BigWigs:Enable()
+	end)
 	
 	local bossEntry = self:GetPanel("Big Wigs Encounters")
 	bossEntry:SetScript("OnShow", function(self)
+		BigWigs:Enable()
 		-- First we need to expand ourselves if collapsed.
 		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
 			if button.element and button.element.name == "Big Wigs Encounters" then
