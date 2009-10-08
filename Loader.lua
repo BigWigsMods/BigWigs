@@ -288,7 +288,9 @@ function versionTooltipFunc(tt)
 end
 
 local function coloredNameVersion(name, version)
-	if version == -1 then version = "svn" end
+	if version == -1 then version = "svn" 
+	elseif version == 0 then version = "unkown"
+	end
 	return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version)
 end
 
