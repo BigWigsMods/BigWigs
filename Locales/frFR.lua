@@ -49,7 +49,7 @@ L["Some encounter scripts use raid icons to mark players that are of special int
 L["Whisper warnings"] = "Chuchoter les avertissements"
 L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"] = "Envoye des chuchotements aux joueurs affectés par certaines techniques pendant les rencontres face aux boss. Pensez aux effets du type \"bombe\" et autres.\n\n|cffff4411Ne fonctionne que si vous êtes soit le chef du groupe (de raid), soit un de ses assistants !|r"
 L["Broadcast"] = "Diffuser"
-L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = "Diffuse les messages de Big Wigs sur le canal Avertissement raid.\n\n|cffff4411Ne fonctionne que si vous êtes chef du raid ou dans un groupe !|r"
+L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/officer or in a 5-man party!|r"] = "Diffuse les messages de Big Wigs sur le canal Avertissement raid.\n\n|cffff4411Ne fonctionne que si vous êtes chef ou assistant du raid ou bien dans un groupe !|r"
 L["Raid channel"] = "Canal Raid"
 L["Use the raid channel instead of raid warning for broadcasting messages."] = "Utilise le canal Raid au lieu de l'Avertissement raid pour la diffusion des messages."
 L["Minimap icon"] = "Icône de la minicarte"
