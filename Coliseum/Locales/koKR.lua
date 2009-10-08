@@ -11,7 +11,7 @@ if L then
 	L.burrow_soon = "곧 소멸"
 
 	L.nerubian_burrower = "네루비안 땅무지"
-	
+
 	L.shadow_soon = "약 5초 후 어둠의 일격!"
 
 	L.freeze_bar = "~다음 얼음 베기"

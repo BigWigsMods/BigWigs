@@ -40,8 +40,6 @@ L["Messages"] = true
 L["Bars"] = true
 L["Background"] = true
 L["Text"] = true
-L["Flash and shake"] = true
-L["Change the color of the flash and shake."] = true
 L["Reset"] = true
 
 L["Flash and shake"] = true
@@ -176,4 +174,3 @@ L["By default the tips will be shown in their own, awesome window in the middle 
 L["Usage: /sendtip <index|\"Custom tip\">"] = true
 L["You must be the raid leader to broadcast a tip."] = true
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = true
-

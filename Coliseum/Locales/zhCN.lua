@@ -12,6 +12,8 @@ if L then
 
 	L.nerubian_burrower = "Nerubian Burrower"
 
+	L.shadow_soon = "约5秒后，Shadow Strike！"
+
 	L.freeze_bar = "<下一Freezing Slash>"
 	L.pcold_bar = "<下一Penetrating Cold>"
 
@@ -105,6 +107,8 @@ if L then
 --	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
 	L.vortex_or_shield_cd = "<下一Vortex/Shield>"
+	L.next = "下一Vortex/Shield"
+	L.next_desc = "当下一次Vortex或Shield时发出警报。"
 
 	L.vortex = "Vortex"
 	L.vortex_desc = "当双子开始施放Vortexes时发出警报。"

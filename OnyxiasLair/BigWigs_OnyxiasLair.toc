@@ -4,10 +4,14 @@
 ## Title-ruRU: Big Wigs [|cffeda55fЛогово Ониксии|r]
 ## Title-frFR: Big Wigs [|cffeda55fRepaire d'Onyxia|r]
 ## Title-koKR: Big Wigs [|cffeda55f오닉시아 둥지|r]
+## Title-zhCN: Big Wigs [|cffeda55f奥妮克希亚的巢穴|r]
+## Title-zhTW: Big Wigs [|cffeda55f奧妮克希亞的巢穴|r]
 ## Notes: Big Wigs Onyxia's Lair Modules
 ## Notes-ruRU: Модуль Big Wigs - Логово Ониксии
 ## Notes-frFR: Modules Big Wigs concernant le Repaire d'Onyxia.
 ## Notes-koKR: Big Wigs 오닉시아 둥지 경고
+## Notes-zhCN: Big Wigs 奥妮克希亚的巢穴模块
+## Notes-zhTW: Big Wigs 奧妮克希亞的巢穴模組
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

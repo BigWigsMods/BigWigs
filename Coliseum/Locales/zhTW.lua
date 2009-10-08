@@ -12,6 +12,8 @@ if L then
 
 	L.nerubian_burrower = "奈幽掘洞者"
 
+	L.shadow_soon = "約5秒後，暗影打擊！"
+
 	L.freeze_bar = "<下一冰凍斬>"
 	L.pcold_bar = "<下一透骨之寒>"
 
@@ -105,6 +107,8 @@ if L then
 	L.engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。"
 
 	L.vortex_or_shield_cd = "<下一漩渦/盾>"
+	L.next = "下一漩渦/盾"
+	L.next_desc = "當下一次漩渦或盾時發出警報。"
 
 	L.vortex = "漩渦"
 	L.vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。"
