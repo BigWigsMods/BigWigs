@@ -1,9 +1,11 @@
 ## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fOnyxia's Lair|r]
+## Title-ruRU: Big Wigs [|cffeda55fЛогово Ониксии|r]
 ## Title-frFR: Big Wigs [|cffeda55fRepaire d'Onyxia|r]
 ## Title-koKR: Big Wigs [|cffeda55f오닉시아 둥지|r]
 ## Notes: Big Wigs Onyxia's Lair Modules
+## Notes-ruRU: Модуль Big Wigs - Логово Ониксии
 ## Notes-frFR: Modules Big Wigs concernant le Repaire d'Onyxia.
 ## Notes-koKR: Big Wigs 오닉시아 둥지 경고
 

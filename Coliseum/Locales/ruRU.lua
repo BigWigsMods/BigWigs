@@ -74,7 +74,7 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "ruRU")
 if L then
-	--L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!" --need
+	L.enable_trigger = "Ничтожный гном! Тебя погубит твоя самоуверенность!"
 
 	L.engage = "Начало битвы"
 	L.engage_trigger = "Перед вами Джараксус, эредарский повелитель Пылающего Легиона!"

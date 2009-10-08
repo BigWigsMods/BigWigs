@@ -1,10 +1,12 @@
 ## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fOptions|r]
+## Title-ruRU: Big Wigs [|cffeda55fНастройки|r]
 ## Title-zhCN: Big Wigs [|cffeda55f选项|r]
 ## Title-zhTW: Big Wigs [|cffeda55f選項|r]
 ## Title-koKR: Big Wigs [|cffeda55f옵션|r]
 ## Notes: Big Wigs Configuration Options
+## Notes-ruRU: Модуль настроек Big Wigs
 ## Notes-zhCN: Big Wigs 配置选项
 ## Notes-zhTW: Big Wigs 配置選項
 ## Notes-frFR: Options de configuration de Big Wigs.

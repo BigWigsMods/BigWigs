@@ -1,11 +1,13 @@
 ## Interface: 30200
 
 ## Title: Big Wigs [|cffeda55fForeign Language|r]
+## Title-ruRU: Big Wigs [|cffeda55fИностранный язык|r]
 ## Title-frFR: Big Wigs [|cffeda55fPaquet linguistique|r]
 ## Title-zhCN: Big Wigs [|cffeda55f外语|r]
 ## Title-zhTW: Big Wigs [|cffeda55f外語|r]
 ## Title-koKR: Big Wigs [|cffeda55f외국어|r]
 ## Notes: Non English Language Pack for Big Wigs
+## Notes-ruRU: Языковый пакет для Big Wigs
 ## Notes-frFR: Paquet linguistique pour Big Wigs.
 ## Notes-zhCN: Big Wigs 非英语模块
 ## Notes-zhTW: Big Wigs 非英語模組
