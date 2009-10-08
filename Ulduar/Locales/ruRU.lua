@@ -259,9 +259,6 @@ if L then
 	L.strike_bar = "~Дисбалансирующий удар"
 
 	L.end_trigger = "Придержите мечи! Я сдаюсь."
-
-	L.icon = "Помечать иконкой"
-	L.icon_desc = "Помечать рейдовой иконкой игрока, который попал под воздействие Взрыва рун. (необходимо быть лидером группы или рейда)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "ruRU")

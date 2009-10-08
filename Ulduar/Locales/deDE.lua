@@ -260,9 +260,6 @@ if L then
 	L.strike_bar = "~Schlag"
 
 	L.end_trigger = "Senkt Eure Waffen! Ich ergebe mich!"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Runendetonation und Sturmhammer betroffen sind (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "deDE")

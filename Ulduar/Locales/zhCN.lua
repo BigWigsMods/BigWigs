@@ -261,9 +261,6 @@ if L then
 	L.strike_bar = "<重压打击 冷却>"
 
 --	L.end_trigger = "Stay your arms! I yield!"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了符文爆炸的队员打上团队标记。（需要权限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhCN")

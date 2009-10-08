@@ -261,9 +261,6 @@ if L then
 	L.strike_bar = "<失衡打擊 冷卻>"
 
 	L.end_trigger = "住手!我認輸了!"
-
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了引爆符文的隊員打上團隊標記。（需要權限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "zhTW")

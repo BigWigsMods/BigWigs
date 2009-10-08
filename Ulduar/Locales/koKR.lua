@@ -259,9 +259,6 @@ if L then
 	L.strike_bar = "혼란의 일격 대기시간"
 
 	L.end_trigger = "무기를 거둬라! 내가 졌다!"
-
-	L.icon = "전술 표시"
-	L.icon_desc = "룬 폭발 또는 폭풍망치에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "koKR")
