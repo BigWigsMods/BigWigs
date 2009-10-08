@@ -51,7 +51,7 @@ L["Some encounter scripts use raid icons to mark players that are of special int
 L["Whisper warnings"] = "귓속말 경고"
 L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"] = "일부 '폭탄'과 같은 중요한 경고에 대하여 플레이어에게 귓속말을 보냅니다.\n\n|cffff4411오직 공격대장이나 승급된 사람만이 가능합니다!|r"
 L["Broadcast"] = "알림"
-L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = "Big Wigs으로 부터 발생하는 모든 메세지를 공격대 경보 채널로 알립니다.\n\n|cffff4411오직 5인 파티 던전 또는 공격대장이나 승급된 사람만 가능합니다!|r"
+L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/officer or in a 5-man party!|r"] = "Big Wigs으로 부터 발생하는 모든 메세지를 공격대 경보 채널로 알립니다.\n\n|cffff4411오직 5인 파티 던전 또는 공격대장이나 승급된 사람 또는 길드 관리장등만 가능합니다!|r"
 L["Raid channel"] = "공격대 채널"
 L["Use the raid channel instead of raid warning for broadcasting messages."] = "공격대 경보 채널 대신 알림 메세지를 공격대 대화 채널을 사용합니다."
 L["Minimap icon"] = "미니맵 아이콘"
