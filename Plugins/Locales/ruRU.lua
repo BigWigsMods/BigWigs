@@ -42,6 +42,8 @@ L["Messages"] = "Сообщения"
 L["Bars"] = "Полосы"
 L["Background"] = "Фон"
 L["Text"] = "Текст"
+L["Flash and shake"] = "Мигание и тряска"
+L["Change the color of the flash and shake."] = "Изменение цвета мигания и тряски."
 L["Reset"] = "Сброс"
 
 L["Bar"] = "Полосы"
