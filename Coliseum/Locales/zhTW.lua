@@ -41,7 +41,7 @@ if L then
 
 	-- Jormungars
 	L.submerge = "隱沒"
-	L.submerge_desc = "当下一次蟲子即將隱沒時顯示計時條。"
+	L.submerge_desc = "當下一次蟲子即將隱沒時顯示計時條。"
 	L.spew = "酸液/熔火噴灑"
 	L.spew_desc = "當施放酸液/熔火噴灑時發出警報。"
 	L.sprays = "噴霧"
