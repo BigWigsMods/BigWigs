@@ -64,14 +64,14 @@ mod.locale = L
 --      Initialization      --
 ------------------------------
 
-function mod:OnRegister()
-	-- Big evul hack to enable the module when entering Kel'Thuzads chamber.
-	self:RegisterEvent("ZONE_CHANGED_INDOORS")
+-- Big evul hack to enable the module when entering Kel'Thuzads chamber.
+local enabler = LibStub("AceEvent-3.0"):Embed({})
+function enabler:ZONE_CHANGED_INDOORS(event, msg)
+	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or mod:IsEnabled() then return end
+	-- Activate the Kel'Thuzad mod!
+	mod:Enable()
 end
-
-function mod:OnBossDisable()
-	self:RegisterEvent("ZONE_CHANGED_INDOORS")
-end
+enabler:RegisterEvent("ZONE_CHANGED_INDOORS")
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Fizzure", 27810)
@@ -82,7 +82,6 @@ function mod:OnBossEnable()
 
 	self.warnedAboutPhase3Soon = nil
 
-	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 end
@@ -91,11 +90,6 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ZONE_CHANGED_INDOORS(event, msg)
-	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self:IsEnabled() then return end
-	-- Activate the Kel'Thuzad mod!
-	self:Enable()
-end
 
 function mod:Fizzure(_, spellId, _, _, spellName)
 	self:Message(27810, spellName, "Important", spellId)
