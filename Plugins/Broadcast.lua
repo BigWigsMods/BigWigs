@@ -20,7 +20,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 end
 
-function plugin:BigWigs_Message(msg, color, noraidsay)
+function plugin:BigWigs_Message(event, msg, color, noraidsay)
 	if not msg or noraidsay or not BigWigs.db.profile.broadcast then return end
 
 	local inRaid = UnitInRaid("player")
