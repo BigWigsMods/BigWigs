@@ -212,8 +212,10 @@ local function processScheduledTimer(id)
 			error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(m:GetName(), f))
 		end
 		m[f](m, unpack(args))
-	else
+	elseif type(f) == "function" then
 		f(unpack(args))
+	else
+		error(("Module %q tried to schedule an event with handler type %s."):format(m:GetName(), type(f)))
 	end
 	clearTimer(id)
 end
