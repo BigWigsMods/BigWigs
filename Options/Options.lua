@@ -612,6 +612,7 @@ end
 
 function showBossOptions(widget, event, group)
 	local scrollFrame = widget:GetUserData("parent")
+	scrollFrame:SetScroll(0)
 	scrollFrame:ReleaseChildren()
 	local modules = zoneModules[widget:GetUserData("zone")]
 	local module = BigWigs:GetBossModule(group)
