@@ -50,7 +50,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Fear", 18431)
-	self:Log("SPELL_CAST_START", "Breath", 17086, 18576, 18351, 18609, 18617)
+	self:Log("SPELL_CAST_START", "Breath", 17086, 18351, 18564, 18576, 18584, 18596, 18609, 18617)
 	self:Yell("Phase", L["phase1_trigger"], L["phase2_trigger"], L["phase3_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 10184)
