@@ -4,8 +4,8 @@
 
 local mod = BigWigs:NewBoss("Thorim", "Ulduar")
 if not mod then return end
--- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 33196 = Sif
-mod:RegisterEnableMob(32865, 32882, 32872)
+-- 32865 = thorim, 32882 = behemoth, 32872 = runic colossus, 32908/32907 = Captured Mercenary Captain, 32885/32883 = Captured Mercenary Soldier
+mod:RegisterEnableMob(32865, 32882, 32872, 32908, 32907, 32885, 32883)
 mod.toggleOptions = {{62042, "ICON"}, 62016, 62331, {62017, "FLASHSHAKE"}, 62338, {62526, "ICON", "SAY"}, 62279, 62130, "proximity", "hardmode", "phase", "bosskill"}
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
@@ -42,7 +42,7 @@ if L then
 	L.phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you..."
 	L.phase2_message = "Phase 2, berserk in 6:15!"
 	L.phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!"
-	L.phase3_message = "Phase 3 - %s engaged!"
+	L.phase3_message = "Phase 3 - Thorim engaged!"
 
 	L.hardmode = "Hard mode timer"
 	L.hardmode_desc = "Show timer for when you have to reach Thorim in order to enter hard mode in phase 3."
@@ -169,7 +169,7 @@ function mod:PhaseThree()
 	self:CancelScheduledEvent(hardModeMessageID)
 	self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 	self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
-	self:Message("phase", L["phase3_message"]:format(unit), "Attention")
+	self:Message("phase", L["phase3_message"], "Attention")
 	self:OpenProximity(5)
 end
 
