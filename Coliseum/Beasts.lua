@@ -107,7 +107,7 @@ function mod:OnBossEnable()
 	self:Yell("Jormungars", L["jormungars_trigger"])
 
 	-- Icehowl
-	self:Log("SPELL_AURA_APPLIED", "Rage", 66759, 67658)
+	self:Log("SPELL_AURA_APPLIED", "Rage", 66759, 67658, 67657, 67659)
 	self:Log("SPELL_AURA_APPLIED", "Daze", 66758)
 	self:Log("SPELL_AURA_APPLIED", "Butt", 67654, 67655, 66770)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")

@@ -62,9 +62,9 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "Swarm", 66118, 68646, 68647)
-	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 68510, 68509)
-	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 68510, 68509)
+	self:Log("SPELL_CAST_START", "Swarm", 66118, 67630, 68646, 68647)
+	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 66013, 67700, 68509, 68510)
+	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 66013, 67700, 68509, 68510)
 	self:Log("SPELL_AURA_APPLIED", "Pursue", 67574)
 	
 	self:Log("SPELL_CAST_START", "Strike", 66134)
