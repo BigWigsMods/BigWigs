@@ -103,7 +103,7 @@ local function scanTarget(spellId, spellName)
 	local target = UnitName(bossId .. "target")
 	if target then
 		if target == pName then
-			self:FlashShake(62660)
+			mod:FlashShake(62660)
 			if bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
 				SendChatMessage(L["crash_say"], "SAY")
 			end
