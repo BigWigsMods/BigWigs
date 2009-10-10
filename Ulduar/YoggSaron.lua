@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Yogg-Saron", "Ulduar")
 if not mod then return end
 --Sara = 33134, Yogg brain = 33890
 mod:RegisterEnableMob(33288, 33134, 33890)
-mod.toggleOptions = {62979, "tentacle", {63830, "ICON"}, {63802, "FLASHSHAKE"}, 64125, "portal", "weakened", 64059, {64465, "ICON"}, 64163, 64189, "phase", {63050, "WHISPER", "FLASHSHAKE"}, 63120, "berserk", "bosskill"}
+mod.toggleOptions = {62979, {63138, "WHISPER", "FLASHSHAKE"}, "tentacle", {63830, "ICON"}, {63802, "FLASHSHAKE"}, 64125, "portal", "weakened", 64059, {64465, "ICON"}, 64163, 64189, "phase", {63050, "WHISPER", "FLASHSHAKE"}, 63120, "berserk", "bosskill"}
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
@@ -52,6 +52,9 @@ if L then
 	L.portal_message = "Portals open!"
 	L.portal_bar = "Next portals"
 
+	L.fervor_cast_message = "Casting Fervor on %s!"
+	L.fervor_message = "Fervor on %s!"
+
 	L.sanity_message = "You're going insane!"
 
 	L.weakened = "Stunned"
@@ -87,20 +90,20 @@ mod.locale = L
 --      Initialization      --
 ------------------------------
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_START", "FervorCast", 63138)
+	self:Log("SPELL_AURA_APPLIED", "Fervor", 63138)
 	self:Log("SPELL_CAST_START", "Roar", 64189)
 	self:Log("SPELL_CAST_START", "Madness", 64059)
 	self:Log("SPELL_CAST_SUCCESS", "Empower", 64465)
 	self:Log("SPELL_AURA_APPLIED", "EmpowerIcon", 64465)
 	self:Log("SPELL_AURA_REMOVED", "RemoveEmpower", 64465)
 	self:Log("SPELL_CAST_SUCCESS", "Tentacle", 64144)
-	--self:Log("SPELL_AURA_APPLIED", "Fervor", 63138)
 	self:Log("SPELL_AURA_APPLIED", "Squeeze", 64125, 64126)
 	self:Log("SPELL_AURA_APPLIED", "Linked", 63802)
 	self:Log("SPELL_AURA_REMOVED", "Gaze", 64163)
 	self:Log("SPELL_AURA_APPLIED", "CastGaze", 64163)
 	self:Log("SPELL_AURA_APPLIED", "Malady", 63830, 63881)
 	self:Log("SPELL_AURA_REMOVED", "RemoveMalady", 63830, 63881)
-	-- 63120 is the MC when you go insane in p2/3.
 	self:Log("SPELL_AURA_APPLIED", "Insane", 63120)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "SanityDecrease", 63050)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
@@ -122,8 +125,21 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Fervor(player, spellId)
-	self:Whisper(player, "DEBUFF, watch out!", true)
+function mod:FervorCast(player, spellId, _, _, spellName)
+	local bossId = self:GetUnitIdByGUID(33134)
+	if bossId then
+		local target = UnitName(bossId .. "target")
+		if not target then return end
+		self:TargetMessage(63138, L["fervor_cast_message"], target, "Personal", spellId)
+	end
+end
+
+function mod:Fervor(player, spellId, _, _, spellName)
+	self:Bar(63138, L["fervor_message"]:format(player), 15, spellId)
+	self:Whisper(63138, player, L["fervor_message"])
+	if player == pName then
+		self:FlashShake(63138)
+	end
 end
 
 do
