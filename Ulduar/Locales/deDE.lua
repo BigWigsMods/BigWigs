@@ -243,7 +243,7 @@ if L then
 	L.phase2_trigger = " Eindringlinge! Ihr Sterblichen, die Ihr es wagt, Euch in mein Vergnügen einzumischen, werdet... Wartet... Ihr..." -- space in the beginning!
 	L.phase2_message = "Phase 2 - Berserker in 6:15 min!"
 	L.phase3_trigger = "Ihr unverschämtes Geschmeiß! Ihr wagt es, mich in meinem Refugium herauszufordern? Ich werde Euch eigenhändig zerschmettern!"
-	L.phase3_message = "Phase 3 - %s angegriffen!"
+	L.phase3_message = "Phase 3 - Thorim angegriffen!"
 
 	L.hardmode = "Hard Mode"
 	L.hardmode_desc = "Timer für den Hard Mode."
@@ -337,6 +337,9 @@ if L then
 	L.portal_trigger = "Portale öffnen sich im Geist von %s!"
 	L.portal_message = "Portale offen!"
 	L.portal_bar = "Nächsten Portale"
+
+	L.fervor_cast_message = "Wirkt Eifer auf %s!"
+	L.fervor_message = "Eifer auf %s!"
 
 	L.sanity_message = "DU wirst verrückt!"
 
