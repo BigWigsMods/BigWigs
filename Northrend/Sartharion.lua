@@ -105,7 +105,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
 	if msg == L["tsunami_trigger"] then
-		self:Message("tsuniami", L["tsunami_message"], "Important", 57491, "Alert")
+		self:Message("tsunami", L["tsunami_message"], "Important", 57491, "Alert")
 		self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
 		self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
 	elseif mob == tenebron and msg == L["twilight_trigger_tenebron"] then
