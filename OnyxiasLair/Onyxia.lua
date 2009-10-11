@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Onyxia", "Onyxia's Lair")
 if not mod then return end
 mod:RegisterEnableMob(10184)
-mod.toggleOptions = {"phase1", "phase2", "phase3", "deepbreath", "fear", "bosskill"}
+mod.toggleOptions = {"phase1", "phase2", "phase3", {"deepbreath", "FLASHSHAKE"}, "fear", "bosskill"}
 
 local boss = "Onyxia"
 
@@ -66,6 +66,7 @@ end
 
 function mod:Breath(_, spellId)
 	self:Message("deepbreath", L["deepbreath_message"], "Positive", spellId)
+	self:FlashShake("deepbreath")
 end
 
 function mod:Phase(msg)
