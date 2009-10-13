@@ -310,6 +310,9 @@ if L then
 	L.portal_message = "Portails ouverts !"
 	L.portal_bar = "Prochains portails"
 
+	L.fervor_cast_message = "Ferveur en incantation sur %s !"
+	L.fervor_message = "Ferveur sur %s !"
+
 	L.sanity_message = "Vous allez devenir fou !"
 
 	L.weakened = "Étourdi"
