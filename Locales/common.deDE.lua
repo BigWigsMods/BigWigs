@@ -7,7 +7,8 @@ L.you = "%s auf DIR!"
 L.other = "%s: %s"
 
 L.phase = "Phase %d"
-L.normal = "Normal Mode"
+L.normal = "Normaler Modus"
+L.heroic = "Heroischer Modus"
 L.hard = "Hard Mode"
 L.general = "Allgemein" -- General settings, i.e. things that apply to both normal and hard mode.
 
