@@ -16,7 +16,7 @@ if L then
 
 	L.engage = "Engage"
 	L.engage_trigger = "You face Jaraxxus, Eredar Lord of the Burning Legion!"
-	L.engage_trigger1 = "Banished to the Nether"
+	L.engage_trigger1 = "But I'm in charge here"
 
 	L.adds = "Portals and volcanos"
 	L.adds_desc = "Show a timer and warn for when Jaraxxus summons portals and volcanos."
@@ -68,7 +68,7 @@ function mod:OnBossEnable()
 end
 
 function mod:FirstEngage()
-	self:Bar("adds", L["engage"], 11, "INV_Gizmo_01")
+	self:Bar("adds", L["engage"], 12, "INV_Gizmo_01")
 end
 
 function mod:OnEngage()
