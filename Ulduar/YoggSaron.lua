@@ -136,7 +136,7 @@ end
 
 function mod:Fervor(player, spellId, _, _, spellName)
 	self:Bar(63138, L["fervor_message"]:format(player), 15, spellId)
-	self:Whisper(63138, player, L["fervor_message"])
+	self:Whisper(63138, player, spellName)
 	if player == pName then
 		self:FlashShake(63138)
 	end
