@@ -91,9 +91,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Spark(unit, spellId, _, _, _, _, _, _, dGuid)
+function mod:Spark(unit, spellId, _, _, _, _, _, _, dGUID)
 	if phase ~= 1 then return end
-	local target = tonumber(dGuid:sub(-12, -7), 16)
+	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
 	if target == 28859 then
 		self:Message(56152, L["sparkbuff_message"], "Important", spellId)
 	end

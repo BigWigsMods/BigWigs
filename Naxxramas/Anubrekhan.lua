@@ -60,8 +60,8 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:GainSwarm(unit, spellId, _, _, spellName, _, _, _, dGuid)
-	local target = tonumber(dGuid:sub(-12, -7), 16)
+function mod:GainSwarm(unit, spellId, _, _, spellName, _, _, _, dGUID)
+	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
 	if target == 15956 then
 		self:DelayedMessage(28785, 20, L["gainendwarn"], "Important")
 		self:Bar(28785, spellName, 20, spellId)

@@ -67,8 +67,8 @@ function mod:FlameFailed(_, _, _, _, spellName)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
 end
 
-function mod:Shutdown(unit, spellId, _, _, spellName, _, _, _, dGuid)
-	local target = tonumber(dGuid:sub(-12, -7), 16)
+function mod:Shutdown(unit, spellId, _, _, spellName, _, _, _, dGUID)
+	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
 	if target ~= 33113 then return end
 	self:Message(62475, L["shutdown_message"], "Positive", spellId, "Long")
 	self:Bar(62475, spellName, 20, spellId)
