@@ -21,7 +21,6 @@ local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
 local snobolledWarned = {}
-local snobolled = GetSpellInfo(66406)
 local icehowl, jormungars, gormok = nil, nil, nil
 local sprayTimer = nil
 
@@ -92,7 +91,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
 	self:Log("SPELL_CAST_START", "StaggeringStomp", 66330, 67647, 67648, 67649)
-	self:RegisterEvent("UNIT_AURA")
+	self:Log("SPELL_AURA_APPLIED", "SnoboldVassal", 66407) --Head Crack casted by Snobold Vassal on player
 
 	-- Jormungars
 	self:Log("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642, 67643)
@@ -163,14 +162,10 @@ end
 -- Gormok the Impaler
 --
 
-function mod:UNIT_AURA(event, unit)
-	local name, _, icon = UnitDebuff(unit, snobolled)
-	local n = UnitName(unit)
-	if snobolledWarned[n] and not name then
-		snobolledWarned[n] = nil
-	elseif name and not snobolledWarned[n] then
-		self:TargetMessage("snobold", L["snobold_message"], n, "Attention", icon)
-		snobolledWarned[n] = true
+function mod:SnoboldVassal(player, spellId)
+	if not snobolledWarned[player] then
+		self:TargetMessage("snobold", L["snobold_message"], player, "Attention", 66406)
+		snobolledWarned[player] = true
 	end
 end
 
