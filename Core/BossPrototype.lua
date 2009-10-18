@@ -3,7 +3,7 @@
 --
 
 local core = BigWigs
-local C = BigWigs.C
+local C = core.C
 local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
 local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
@@ -223,7 +223,7 @@ local function processScheduledTimer(id)
 end
 
 function boss:CancelScheduledEvent(id)
-	if not scheduledTimers[id] then return end
+	if not id or not scheduledTimers[id] then return end
 	self:CancelTimer(scheduledTimers[id].atid, true)
 	clearTimer(id)
 end
@@ -237,6 +237,10 @@ function boss:CancelAllScheduledEvents()
 end
 
 function boss:ScheduleEvent(id, func, delay, ...)
+	if not id or not func or not delay then error("Missing required argument to :ScheduleEvent.") end
+	if type(func) == "string" and type(self[func]) ~= "function" then
+		error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(self:GetName(), func))
+	end
 	if scheduledTimers[id] then
 		self:CancelScheduledEvent(id)
 	else
@@ -251,8 +255,9 @@ function boss:ScheduleEvent(id, func, delay, ...)
 	elseif select("#", ...) > 0 then
 		scheduledTimers[id].args = { ... }
 	end
-	scheduledTimers[id].atid = self:ScheduleTimer(processScheduledTimer, delay, id)
-	return id
+	local atid = self:ScheduleTimer(processScheduledTimer, delay, id)
+	scheduledTimers[id].atid = atid
+	return id, atid
 end
 
 -------------------------------------------------------------------------------
@@ -398,7 +403,7 @@ do
 		if not checkFlag(self, key, C.WHISPER) then return end
 		local msg = noName and spellName or fmt(L["you"], spellName)
 		sentWhispers[msg] = true
-		if player == pName or not UnitIsPlayer(player) or not BigWigs.db.profile.whisper then return end
+		if player == pName or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
 		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 		SendChatMessage(msg, "WHISPER", nil, player)
 	end
