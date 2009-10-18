@@ -77,14 +77,19 @@ function mod:FlashCast(_, spellId, _, _, spellName)
 	self:DelayedMessage(61968, 30, L["flash_soon"], "Attention")
 end
 
-local function flashWarn(spellId, spellName)
-	mod:TargetMessage(61968, spellName, flashFreezed, "Urgent", spellId, "Alert")
-end
+do
+	local id, name, handle = nil, nil, nil
+	local function flashWarn()
+		mod:TargetMessage(61968, name, flashFreezed, "Urgent", id, "Alert")
+		handle = nil
+	end
 
-function mod:Flash(player, spellId, _, _, spellName)
-	if UnitInRaid(player) then
-		flashFreezed[#flashFreezed + 1] = player
-		self:ScheduleEvent("BWFFWarn", flashWarn, 0.5, spellId, spellName)
+	function mod:Flash(player, spellId, _, _, spellName)
+		if UnitInRaid(player) then
+			flashFreezed[#flashFreezed + 1] = player
+			self:CancelTimer(handle, true)
+			self:ScheduleTimer(flashWarn, 0.3)
+		end
 	end
 end
 
