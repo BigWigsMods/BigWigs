@@ -151,7 +151,7 @@ function mod:Swarm(player, spellId, _, _, spellName)
 			self:Bar(66134, ssName, t, 66134)
 			if (t - 5) > 1 then
 				self:CancelScheduledEvent(strikeMessage)
-				strikeMessage = mod:DelayedMessage(66134, t - 5, L["shadow_soon"], "Attention")
+				strikeMessage = self:DelayedMessage(66134, t - 5, L["shadow_soon"], "Attention")
 			end
 		end
 	end
