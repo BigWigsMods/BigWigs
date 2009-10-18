@@ -7,7 +7,7 @@ if not mod then return end
 mod.toggleOptions = {66012, "burrow", {67574, "WHISPER", "ICON", "FLASHSHAKE"}, {68510, "FLASHSHAKE"}, 66118, 66134, "berserk", "bosskill"}
 mod.optionHeaders = {
 	[66012] = "normal",
-	[66134] = "hard",
+	[66134] = "heroic",
 	berserk = "general",
 }
 
