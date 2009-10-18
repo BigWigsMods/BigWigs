@@ -99,13 +99,18 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function rootWarn(spellId, spellName)
-	mod:TargetMessage(62861, spellName, root, "Attention", spellId, "Info")
-end
-
-function mod:Root(player, spellId, _, _, spellName)
-	root[#root + 1] = player
-	self:ScheduleEvent("BWrootWarn", rootWarn, 0.2, spellId, spellName)
+do
+	local id, name, handle = nil, nil, nil
+	local function rootWarn()
+		mod:TargetMessage(62861, name, root, "Attention", id, "Info")
+		handle = nil
+	end
+	function mod:Root(player, spellId, _, _, spellName)
+		root[#root + 1] = player
+		id, name = spellId, spellName
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(rootWarn, 0.2)
+	end
 end
 
 do
@@ -140,18 +145,24 @@ do
 	end
 end
 
-local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByGUID(32906)
-	if not bossId then return end
-	local target = UnitName(bossId .. "target")
-	if target then
-		mod:TargetMessage(62623, spellName, target, "Attention", spellId)
-		mod:SecondaryIcon(62623, target, "icon")
+do
+	local id, name, handle = nil, nil, nil
+	local function scanTarget()
+		local bossId = mod:GetUnitIdByGUID(32906)
+		if not bossId then return end
+		local target = UnitName(bossId .. "target")
+		if target then
+			mod:TargetMessage(62623, name, target, "Attention", id)
+			mod:SecondaryIcon(62623, target, "icon")
+		end
+		handle = nil
 	end
-end
 
-function mod:Sunbeam(_, spellId, _, _, spellName)
-	self:ScheduleEvent("BWsunbeamToTScan", scanTarget, 0.1, spellId, spellName)
+	function mod:Sunbeam(_, spellId, _, _, spellName)
+		id, name = spellId, spellName
+		self:CancelTimer(handle, true)
+		self:ScheduleTimer(scanTarget, 0.1)
+	end
 end
 
 function mod:Fury(player, spellId)

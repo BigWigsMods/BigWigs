@@ -120,7 +120,6 @@ function mod:OnSync(sync, rest, nick)
 		self:Bar("eyebeam", L["eyebeam_message"]:format(rest), 11, 63976)
 		self:Bar("eyebeam", L["eyebeam_bar"], 20, 63976)
 		self:PrimaryIcon("eyebeam", rest)
-		self:ScheduleEvent("BWRemoveEyeIcon", "SendMessage", 11, "BigWigs_RemoveRaidIcon", 1)
 	end
 end
 
