@@ -97,20 +97,30 @@ function mod:UNIT_AURA(event, unit)
 	end
 end
 
-local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByGUID(33271)
-	if not bossId then return end
-	local target = UnitName(bossId .. "target")
-	if target then
-		if target == pName then
-			mod:FlashShake(62660)
-			if bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
-				SendChatMessage(L["crash_say"], "SAY")
+do
+	local id, name, handle = nil, nil, nil
+	local function scanTarget()
+		local bossId = mod:GetUnitIdByGUID(33271)
+		if not bossId then return end
+		local target = UnitName(bossId .. "target")
+		if target then
+			if target == pName then
+				mod:FlashShake(62660)
+				if bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
+					SendChatMessage(L["crash_say"], "SAY")
+				end
 			end
+			mod:TargetMessage(62660, name, target, "Personal", id, "Alert")
+			mod:Whisper(62660, target, name)
+			mod:SecondaryIcon(62660, target)
 		end
-		mod:TargetMessage(62660, spellName, target, "Personal", spellId, "Alert")
-		mod:Whisper(62660, target, spellName)
-		mod:SecondaryIcon(62660, target)
+		handle = nil
+	end
+
+	function mod:Target(player, spellId, _, _, spellName)
+		id, name = spellId, spellName
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(scanTarget, 0.1)
 	end
 end
 
@@ -120,10 +130,6 @@ function mod:Mark(player, spellId)
 	self:Whisper(63276, player, L["mark_message"])
 	self:Bar(63276, L["mark_message_other"]:format(player), 10, spellId)
 	self:PrimaryIcon(63276, player)
-end
-
-function mod:Target(player, spellId, _, _, spellName)
-	self:ScheduleEvent("BWCrashToTScan", scanTarget, 0.1, spellId, spellName)
 end
 
 function mod:Flame(_, spellId, _, _, spellName)
