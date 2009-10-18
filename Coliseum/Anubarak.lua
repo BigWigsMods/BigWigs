@@ -151,8 +151,8 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find(L["unburrow_trigger"]) then
-		self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
-		burrowMessage = self:DelayedMessage("burrow", 70, L["burrow_soon"], "Attention")
+		self:Bar("burrow", L["burrow_cooldown"], 76, 65919)
+		burrowMessage = self:DelayedMessage("burrow", 72, L["burrow_soon"], "Attention")
 
 		self:Bar("burrow", L["nerubian_burrower"], 5, 66333)
 		self:ScheduleEvent("BWnextwave", nextwave, 5)
