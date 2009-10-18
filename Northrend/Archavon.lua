@@ -74,19 +74,24 @@ function mod:Cloud(player, spellId)
 	end
 end
 
-local function scanTarget(spellId, spellName)
-	local bossId = mod:GetUnitIdByGUID(31125)
-	if not bossId then return end
-	local target = UnitName(bossId .. "target")
-	if target then
-		mod:TargetMessage(58965, spellName, target, "Important", spellId)
-		mod:PrimaryIcon(58965, target, "icon")
+do
+	local id, name, handle = nil, nil, nil
+	local function scanTarget(spellId, spellName)
+		local bossId = mod:GetUnitIdByGUID(31125)
+		if not bossId then return end
+		local target = UnitName(bossId .. "target")
+		if target then
+			mod:TargetMessage(58965, name, target, "Important", id)
+			mod:PrimaryIcon(58965, target, "icon")
+		end
+		handle = nil
 	end
-end
 
-function mod:Shards(_, spellId, _, _, spellName)
-	self:ScheduleEvent("BWShardsToTScan", scanTarget, 0.2, spellId, spellName)
-	self:ScheduleEvent("BWRemoveAKIcon", "SendMessage", 4, "BigWigs_RemoveRaidIcon", 1)
+	function mod:Shards(_, spellId, _, _, spellName)
+		id, name = spellId, spellName
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(scanTarget, 0.2)
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
