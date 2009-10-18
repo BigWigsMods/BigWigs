@@ -91,7 +91,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
 	self:Log("SPELL_CAST_START", "StaggeringStomp", 66330, 67647, 67648, 67649)
-	self:Log("SPELL_AURA_APPLIED", "SnoboldVassal", 66407) --Head Crack casted by Snobold Vassal on player
+	self:Log("SPELL_CAST_SUCCESS", "SnoboldVassal", 66407) --Head Crack casted by Snobold Vassal on player
 
 	-- Jormungars
 	self:Log("SPELL_CAST_SUCCESS", "SlimeCast", 67641, 67642, 67643)
@@ -162,9 +162,9 @@ end
 -- Gormok the Impaler
 --
 
-function mod:SnoboldVassal(player, spellId)
+function mod:SnoboldVassal(player)
 	if not snobolledWarned[player] then
-		self:TargetMessage("snobold", L["snobold_message"], player, "Attention", 66406)
+		self:TargetMessage("snobold", L["snobold_message"], player, "Attention", 66406) --Snobolled! icon
 		snobolledWarned[player] = true
 	end
 end
