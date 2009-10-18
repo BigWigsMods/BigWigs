@@ -142,7 +142,7 @@ function mod:Jormungars()
 	self:OpenProximity(10)
 	-- The first worm to spray is Acidmaw, he has a 10 second spray timer after emerge
 	sprayTimer = 10
-	self:ScheduleEvent("Emerge", "Emerge", 15)
+	self:ScheduleTimer("Emerge", 15)
 end
 
 function mod:Icehowl()
@@ -203,12 +203,12 @@ end
 
 do
 	local function submerge()
-		mod:ScheduleEvent("Emerge", "Emerge", 10)
+		mod:ScheduleTimer("Emerge", 10)
 	end
 
 	function mod:Emerge()
 		self:Bar("submerge", L["submerge"], 45, "INV_Misc_MonsterScales_18")
-		self:ScheduleEvent("Submerge", submerge, 45)
+		self:ScheduleTimer(submerge, 45)
 		-- Rain of Fire icon as a generic AoE spray icon .. good enough?
 		self:Bar("sprays", L["spray"], sprayTimer, 5740)
 		sprayTimer = sprayTimer == 10 and 20 or 10
@@ -230,6 +230,7 @@ function mod:Spew(_, spellId, _, _, spellName)
 end
 
 do
+	local handle = nil
 	local dontWarn = nil
 	local function toxinWarn(spellId)
 		if not dontWarn then
@@ -238,10 +239,12 @@ do
 			dontWarn = nil
 			wipe(toxin)
 		end
+		handle = nil
 	end
 	function mod:Toxin(player, spellId)
 		toxin[#toxin + 1] = player
-		self:ScheduleEvent("BWtoxinWarn", toxinWarn, 0.2, spellId)
+		if handle then self:CancelTimer(handle) end
+		handle = self:ScheduleTimer(toxinWarn, 0.2, spellId)
 		if player == pName then
 			dontWarn = true
 			self:TargetMessage(67618, L["toxin_spell"], player, "Personal", spellId, "Info")
@@ -251,6 +254,7 @@ do
 end
 
 do
+	local handle = nil
 	local dontWarn = nil
 	local function burnWarn(spellId)
 		if not dontWarn then
@@ -259,10 +263,12 @@ do
 			dontWarn = nil
 			wipe(burn)
 		end
+		handle = nil
 	end
 	function mod:Burn(player, spellId)
 		burn[#burn + 1] = player
-		self:ScheduleEvent("BWburnWarn", burnWarn, 0.2, spellId)
+		if handle then self:CancelTimer(handle) end
+		handle = self:ScheduleTimer(burnWarn, 0.2, spellId)
 		if player == pName then
 			dontWarn = true
 			self:TargetMessage(66869, L["burn_spell"], player, "Important", spellId, "Info")
