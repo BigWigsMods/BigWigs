@@ -68,7 +68,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
 		self:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
 	elseif msg:find(L["teleport_trigger"]) then
-		self:ScheduleEvent("BWBackToRoom", backToRoom, 45)
+		self:ScheduleTimer(backToRoom, 45)
 		self:Message("teleport", L["on_platform_message"], "Attention")
 		self:DelayedMessage("teleport", 15, L["to_floor_30sec_message"], "Urgent")
 		self:DelayedMessage("teleport", 35, L["to_floor_10sec_message"], "Important")

@@ -69,8 +69,7 @@ function mod:OnEngage()
 	self:DelayedMessage(29204, 295, L["doomtimerwarn"]:format(5), "Important")
 	self:DelayedMessage(29204, 300, L["doomtimerwarnnow"], "Important")
 
-	self:ScheduleEvent("BWLoathebDoomTimer", swapTime, 300)
-
+	self:ScheduleTimer(swapTime, 300)
 	self:Message(29204, L["startwarn"], "Attention")
 	self:Bar(29204, L["doombar"]:format(doomCount), 120, 29204)
 	self:DelayedMessage(29204, 115, L["doomwarn5sec"]:format(doomCount), "Urgent")

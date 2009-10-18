@@ -98,17 +98,20 @@ end
 do
 	local spell = nil
 	local name = nil
+	local handle = nil
 	local function fbWarn()
 		mod:TargetMessage(27808, name, fbTargets, "Important", spell, "Alert")
 		mod:DelayedMessage(27808, 32, L["frostblast_soon_message"], "Attention")
 		mod:Bar(27808, L["frostblast_bar"], 37, spell)
+		handle = nil
 	end
 
 	function mod:FrostBlast(player, spellId, _, _, spellName)
 		spell = spellId
 		name = spellName
 		fbTargets[#fbTargets + 1] = player
-		self:ScheduleEvent("BWFrostBlastWarn", fbWarn, 0.4)
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(fbWarn, 0.4)
 	end
 end
 
@@ -124,18 +127,21 @@ end
 
 do
 	local spell = nil
+	local handle = nil
 	local function mcWarn()
 		local spellName = GetSpellInfo(605) -- Mind Control
 		mod:TargetMessage(28410, spellName, mcTargets, "Important", spell, "Alert")
 		mod:Bar(28410, spellName, 20, 28410)
 		mod:DelayedMessage(68, L["mc_warning"], "Urgent")
 		mod:Bar(28410, L["mc_nextbar"], 68, spell)
+		handle = nil
 	end
 
 	function mod:MC(player, spellId)
 		spell = spellId
 		mcTargets[#mcTargets + 1] = player
-		self:ScheduleEvent("BWMCWarn", mcWarn, 0.5)
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(mcWarn, 0.5)
 	end
 end
 

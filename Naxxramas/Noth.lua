@@ -106,7 +106,8 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:DelayedMessage("blink", 25, L["blinkwarn2"], "Attention")
 			self:Bar("blink", L["blinkbar"], 30, 29208)
 		end
-		self:ScheduleEvent("bwnothtobalcony", "TeleportToBalcony", timeroom)
+		-- XXX hopefully noth only utters one of the start triggers at engage, verify for release
+		self:ScheduleTimer("TeleportToBalcony", timeroom)
 	end
 end
 
@@ -128,7 +129,7 @@ function mod:TeleportToBalcony()
 	self:Bar("wave", L["wave2bar"], wave2time, "Spell_ChargePositive")
 	self:DelayedMessage("wave", wave2time - 10, L["wave2_message"], "Urgent")
 
-	self:ScheduleEvent("bwnothtoroom", "TeleportToRoom", timebalcony)
+	self:ScheduleTimer("TeleportToRoom", timebalcony)
 	wave2time = wave2time + 15
 end
 
@@ -142,6 +143,6 @@ function mod:TeleportToRoom()
 	self:Message("teleport", L["backwarn"]:format(timeroom), "Important")
 	self:Bar("teleport", L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
 	self:DelayedMessage("teleport", timeroom - 10, L["teleportwarn2"], "Urgent")
-	self:ScheduleEvent("bwnothtobalcony", "TeleportToBalcony", timeroom)
+	self:ScheduleTimer("TeleportToBalcony", timeroom)
 end
 

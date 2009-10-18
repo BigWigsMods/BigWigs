@@ -59,13 +59,18 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function cocoonWarn()
-	mod:TargetMessage(28622, L["cocoonbar"], inCocoon, "Important", 745, "Alert")
-end
+do
+	local handle = nil
+	local function cocoonWarn()
+		mod:TargetMessage(28622, L["cocoonbar"], inCocoon, "Important", 745, "Alert")
+		handle = nil
+	end
 
-function mod:Cocoon(player)
-	inCocoon[#inCocoon + 1] = player
-	self:ScheduleEvent("Cocoons", cocoonWarn, 0.3)
+	function mod:Cocoon(player)
+		inCocoon[#inCocoon + 1] = player
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(cocoonWarn, 0.3)
+	end
 end
 
 function mod:Spray()

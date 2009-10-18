@@ -132,7 +132,7 @@ local function throw()
 	if shiftTime then return end
 	mod:Bar("throw", L["throw_bar"], 20, "Ability_Druid_Maul")
 	mod:DelayedMessage("throw", 15, L["throw_warning"], "Urgent")
-	mod:ScheduleEvent("thadthrow", throw, 21)
+	mod:ScheduleTimer(throw, 21)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
