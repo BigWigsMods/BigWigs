@@ -80,7 +80,7 @@ if L then
 
 	L.engage = "Angegriffen"
 	L.engage_trigger = "^Ihr steht vor Jaraxxus"
-	L.engage_trigger1 = "Verbannt in den Nether!"
+	L.engage_trigger1 = "Aber ich habe hier die Kontrollehhh..."
 
 	L.adds = "Portale und Vulkane"
 	L.adds_desc = "Zeigt einen Timer und warnt vor der Beschwörung der Portale und Vulkane."
