@@ -161,7 +161,7 @@ do
 	function mod:Sunbeam(_, spellId, _, _, spellName)
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
-		self:ScheduleTimer(scanTarget, 0.1)
+		handle = self:ScheduleTimer(scanTarget, 0.1)
 	end
 end
 

@@ -74,14 +74,19 @@ function mod:Armor(player, spellId, _, _, spellName)
 	end
 end
 
-local function gripWarn(spellId, spellName)
-	mod:TargetMessage(64290, spellName, grip, "Attention", spellId, "Alert")
-end
+do
+	local id, name, handle = nil, nil, nil
+	local function gripWarn()
+		mod:TargetMessage(64290, name, grip, "Attention", id, "Alert")
+		mod:Bar(64290, name, 10, id)
+	end
 
-function mod:Grip(player, spellId, _, _, spellName)
-	grip[#grip + 1] = player
-	self:ScheduleEvent("BWgripeWarn", gripWarn, 0.2, spellId, spellName)
-	self:Bar(64290, spellName, 10, spellId)
+	function mod:Grip(player, spellId, _, _, spellName)
+		id, name = spellId, spellName
+		grip[#grip + 1] = player
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(gripWarn, 0.2)
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_WHISPER(event, msg)

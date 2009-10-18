@@ -86,9 +86,10 @@ do
 
 	function mod:Flash(player, spellId, _, _, spellName)
 		if UnitInRaid(player) then
+			id, name = spellId, spellName
 			flashFreezed[#flashFreezed + 1] = player
 			self:CancelTimer(handle, true)
-			self:ScheduleTimer(flashWarn, 0.3)
+			handle = self:ScheduleTimer(flashWarn, 0.3)
 		end
 	end
 end
