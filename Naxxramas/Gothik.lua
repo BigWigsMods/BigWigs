@@ -92,37 +92,42 @@ function mod:RiderDead()
 	self:Message("adddeath", L["riderdiewarn"], "Important")
 end
 
-local function waveWarn(message, color)
+local colors = {
+	[L["trawarn"]] = "Attention",
+	[L["dkwarn"]] = "Urgent",
+	[L["riderwarn"]] = "Important",
+}
+local function waveWarn(message)
 	wave = wave + 1
 	if wave < 24 then
-		mod:Message("add", L["wave"]:format(wave, message), color)
+		mod:Message("add", L["wave"]:format(wave, message), colors[message])
 	end
 	if wave == 23 then
 		mod:SendMessage("BigWigs_StopBar", mod, L["trabar"]:format(numTrainer - 1))
 		mod:SendMessage("BigWigs_StopBar", mod, L["dkbar"]:format(numDK - 1))
 		mod:SendMessage("BigWigs_StopBar", mod, L["riderbar"]:format(numRider - 1))
-		mod:CancelAllScheduledEvents()
+		mod:CancelAllTimers()
 	end
 end
 
 local function newTrainee()
 	mod:Bar("add", L["trabar"]:format(numTrainer), timeTrainer, "Ability_Seal")
-	mod:ScheduleEvent("traineeWave", waveWarn, timeTrainer - 3, L["trawarn"], "Attention")
-	mod:ScheduleEvent("nextTrainee", newTrainee, timeTrainer)
+	mod:ScheduleTimer(waveWarn, timeTrainer - 3, L["trawarn"])
+	mod:ScheduleTimer(newTrainee, timeTrainer)
 	numTrainer = numTrainer + 1
 end
 
 local function newDeathknight()
 	mod:Bar("add", L["dkbar"]:format(numDK), timeDK, "INV_Boots_Plate_08")
-	mod:ScheduleEvent("dkWave", waveWarn, timeDK - 3, L["dkwarn"], "Urgent")
-	mod:ScheduleEvent("nextDk", newDeathknight, timeDK)
+	mod:ScheduleTimer(waveWarn, timeDK - 3, L["dkwarn"])
+	mod:ScheduleTimer(newDeathknight, timeDK)
 	numDK = numDK + 1
 end
 
 local function newRider()
 	mod:Bar("add", L["riderbar"]:format(numRider), timeRider, "Spell_Shadow_DeathPact")
-	mod:ScheduleEvent("riderWave", waveWarn, timeRider - 3, L["riderwarn"], "Important")
-	mod:ScheduleEvent("nextRider", newRider, timeRider)
+	mod:ScheduleTimer(waveWarn, timeRider - 3, L["riderwarn"])
+	mod:ScheduleTimer(newRider, timeRider)
 	numRider = numRider + 1
 end
 
