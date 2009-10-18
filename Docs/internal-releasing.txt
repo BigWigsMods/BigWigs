@@ -16,7 +16,8 @@ pushing a new release to wowace/curse and wowinterface.
 
 4. Scan the code for any Lua comments starting with XXX and verify that
    these do not hinder the next release.
-   
+   (find . -name "*.lua" | xargs grep 'XXX' -n)
+
 5. Download the latest alpha zip (with libs) and install that in a clean
    Interface\AddOns folder without other addons.
 
