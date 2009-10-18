@@ -89,6 +89,7 @@ end
 function mod:OnBossEnable()
 	-- Gormok
 	self:Log("SPELL_DAMAGE", "FireBomb", 67472, 66317, 67475)
+	self:Log("SPELL_AURA_APPLIED", "Impale", 67477, 66331, 67478, 67479)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Impale", 67477, 66331, 67478, 67479)
 	self:Log("SPELL_CAST_START", "StaggeringStomp", 66330, 67647, 67648, 67649)
 	self:Log("SPELL_CAST_SUCCESS", "SnoboldVassal", 66407) --Head Crack casted by Snobold Vassal on player
@@ -174,6 +175,7 @@ function mod:Impale(player, spellId, _, _, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(67477, L["impale_message"], player, "Urgent", icon, "Info", stack)
 	end
+	self:Bar(67477, spellName, 10, spellId)
 end
 
 function mod:StaggeringStomp(_, spellId, _, _, spellName)
