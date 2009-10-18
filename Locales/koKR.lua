@@ -36,6 +36,7 @@ L["No Big Wigs 3.0:"] = "Big Wigs 3.0 미사용:"
 -- Options.lua
 -- XXX Perhaps option descriptions should be in key form, so it's
 -- XXX L.iconDesc = .. instead of L["Bla bla bla ...
+L["Big Wigs Encounters"] = "Big Wigs Encounters"
 L["Customize ..."] = "사용자 정의 ..."
 L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = "Big Wigs에 오신 것을 환영합니다. 보스와의 전투시 어느 정도의 여유를 드립니다. 귀하의 공격대 그룹을 위하여 새로운 보스와의 조우시 준비에 도움이 됩니다.\n"
 L["Configure ..."] = "설정 ..."

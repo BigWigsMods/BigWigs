@@ -32,6 +32,7 @@ L["Load all %s modules."] = "Cargar todos los módulos de %s."
 
 
 -- Options.lua
+L["Big Wigs Encounters"] = "Big Wigs Encounters"
 L["|cff00ff00Module running|r"] = "|cff00ff00Módulo activo|r"
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55fClic|r para reiniciar los módulos activos.|n|cffeda55fAlt+Clic|r para desactivarlos.|n|cffeda55fCtrl-Alt+Clic|r para desactivar por completo BigWigs.|n"
 L["Active boss modules:"] = "Módulos de jefe activos :"

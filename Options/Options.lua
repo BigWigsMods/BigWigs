@@ -152,12 +152,12 @@ function options:OnInitialize()
 		BigWigs:Enable()
 	end)
 	
-	local bossEntry = self:GetPanel("Big Wigs Encounters")
+	local bossEntry = self:GetPanel(L["Big Wigs Encounters"])
 	bossEntry:SetScript("OnShow", function(self)
 		BigWigs:Enable()
 		-- First we need to expand ourselves if collapsed.
 		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-			if button.element and button.element.name == "Big Wigs Encounters" then
+			if button.element and button.element.name == L["Big Wigs Encounters"] then
 				if button.element.collapsed then
 					OptionsListButtonToggle_OnClick(button.toggle)
 				end
@@ -168,7 +168,7 @@ function options:OnInitialize()
 		-- if we were collapsed.
 		-- So now we need to select the first zone.
 		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-			if button.element and button.element.parent == "Big Wigs Encounters" then
+			if button.element and button.element.parent == L["Big Wigs Encounters"] then
 				InterfaceOptionsFrame_OpenToCategory(button.element.name)
 				break
 			end
@@ -718,7 +718,7 @@ do
 	end
 	
 	function options:GetZonePanel(zone)
-		local panel, created = self:GetPanel(zone, "Big Wigs Encounters")
+		local panel, created = self:GetPanel(zone, L["Big Wigs Encounters"])
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
 			panel:SetScript("OnHide", onZoneHide)

@@ -34,6 +34,7 @@ L["No Big Wigs 3.0:"] = true
 -- Options.lua
 -- XXX Perhaps option descriptions should be in key form, so it's
 -- XXX L.iconDesc = .. instead of L["Bla bla bla ...
+L["Big Wigs Encounters"] = true
 L["Customize ..."] = true
 L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = true
 L["Configure ..."] = true
