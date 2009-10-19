@@ -204,11 +204,8 @@ do
 		end
 	end
 	
-	-- args: key, delay, text, color, icon, sound, noraidsay, broadcastonly
+	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
-		-- XXX we shouldn't check the flag here, but when the message is processed only.
-		-- XXX people can toggle options midfight.
-		if not checkFlag(self, key, C.MESSAGE) then return end
 		if scheduledMessages[text] then
 			self:CancelTimer(scheduledMessages[text][1], true)
 			wipe(scheduledMessages[text])
