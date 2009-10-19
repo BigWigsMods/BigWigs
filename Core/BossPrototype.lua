@@ -194,13 +194,13 @@ do
 	-- This should've been a local function, but if we do it this way then AceTimer passes in the correct module for us.
 	function boss:ProcessDelayedMessage(text)
 		wrapper(self, unpack(scheduledMessages[text]))
-		wipe(scheduledMessages[text])
+		scheduledMessages[text] = nil
 	end
 	
 	function boss:CancelDelayedMessage(text)
 		if scheduledMessages[text] then
 			self:CancelTimer(scheduledMessages[text][1], true)
-			wipe(scheduledMessages[text])
+			scheduledMessages[text] = nil
 		end
 	end
 	
@@ -208,10 +208,9 @@ do
 	function boss:DelayedMessage(key, delay, text, ...)
 		if scheduledMessages[text] then
 			self:CancelTimer(scheduledMessages[text][1], true)
-			wipe(scheduledMessages[text])
-		else
-			scheduledMessages[text] = {}
+			scheduledMessages[text] = nil
 		end
+		scheduledMessages[text] = {}
 		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
 		tinsert(scheduledMessages[text], id)
 		tinsert(scheduledMessages[text], key)
