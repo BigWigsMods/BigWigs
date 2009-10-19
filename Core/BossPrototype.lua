@@ -18,7 +18,6 @@ function boss:OnEnable()
 end
 function boss:OnDisable()
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
-	self:CancelAllScheduledEvents()
 
 	wipe(combatLogMap[self])
 	wipe(yellMap[self])
