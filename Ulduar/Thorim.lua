@@ -26,8 +26,6 @@ mod.proximitySilent = true
 local chargeCount = 1
 local pName = UnitName("player")
 
-local hardModeMessageID
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -162,11 +160,11 @@ function mod:PhaseTwo()
 	self:Message("phase", L["phase2_message"], "Attention")
 	self:Bar("phase", CL["berserk"], 375, 20484)
 	self:Bar("hardmode", L["hardmode"], 173, 6673)
-	hardModeMessageID = self:DelayedMessage("hardmode", 173, L["hardmode_warning"], "Attention")
+	self:DelayedMessage("hardmode", 173, L["hardmode_warning"], "Attention")
 end
 
 function mod:PhaseThree()
-	self:CancelTimer(hardModeMessageID)
+	self:CancelDelayedMessage(L["hardmode_warning"])
 	self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 	self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
 	self:Message("phase", L["phase3_message"], "Attention")

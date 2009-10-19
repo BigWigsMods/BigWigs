@@ -24,8 +24,6 @@ local guardianCount = 1
 local crusherCount = 1
 local pName = UnitName("player")
 local guid = nil
-
-local madnessWarningID = nil
 local empowerscanner = nil
 
 ----------------------------
@@ -220,7 +218,7 @@ end
 
 function mod:Madness(_, spellId, _, _, spellName)
 	self:Bar(64059, spellName, 60, 64059)
-	madnessWarningID = self:DelayedMessage(64059, 55, L["madness_warning"], "Urgent")
+	self:DelayedMessage(64059, 55, L["madness_warning"], "Urgent")
 end
 
 function mod:Empower(_, spellId, _, _, spellName)
@@ -270,7 +268,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("portal", L["portal_bar"], 78, 35717)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
-		self:CancelTimer(madnessWarningID)
+		self:CancelDelayedMessage(L["madness_warning"])
 
 		local madness = GetSpellInfo(64059)
 		self:SendMessage("BigWigs_StopBar", self, madness)
