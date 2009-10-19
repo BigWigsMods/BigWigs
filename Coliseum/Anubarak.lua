@@ -22,7 +22,6 @@ local ssName = GetSpellInfo(66134)
 local difficulty = nil
 local pName = UnitName("player")
 local phase2 = nil
-local burrowMessage = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -136,7 +135,7 @@ function mod:Swarm(player, spellId, _, _, spellName)
 	self:Message(66118, spellName, "Important", spellId)
 	phase2 = true
 	self:SendMessage("BigWigs_StopBar", self, L["burrow_cooldown"])
-	self:CancelTimer(burrowMessage)
+	self:CancelDelayedMessage(L["burrow_soon"])
 	if difficulty < 3 then -- Normal modes
 		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
 		self:CancelTimer(handle_NextWave, true)
@@ -164,7 +163,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find(L["unburrow_trigger"]) then
 		self:Bar("burrow", L["burrow_cooldown"], 76, 65919)
-		burrowMessage = self:DelayedMessage("burrow", 72, L["burrow_soon"], "Attention")
+		self:DelayedMessage("burrow", 72, L["burrow_soon"], "Attention")
 
 		self:Bar("burrow", L["nerubian_burrower"], 5, 66333)
 		handle_NextWave = self:ScheduleTimer(nextwave, 5)
