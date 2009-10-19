@@ -270,7 +270,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("portal", L["portal_bar"], 78, 35717)
 	elseif msg:find(L["phase3_trigger"]) then
 		phase = 3
-		self:CancelScheduledEvent(madnessWarningID)
+		self:CancelTimer(madnessWarningID)
 
 		local madness = GetSpellInfo(64059)
 		self:SendMessage("BigWigs_StopBar", self, madness)

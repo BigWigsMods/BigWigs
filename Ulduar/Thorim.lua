@@ -166,7 +166,7 @@ function mod:PhaseTwo()
 end
 
 function mod:PhaseThree()
-	self:CancelScheduledEvent(hardModeMessageID)
+	self:CancelTimer(hardModeMessageID)
 	self:SendMessage("BigWigs_StopBar", self, L["hardmode"])
 	self:SendMessage("BigWigs_StopBar", self, CL["berserk"])
 	self:Message("phase", L["phase3_message"], "Attention")
