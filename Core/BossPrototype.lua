@@ -196,27 +196,25 @@ do
 		wrapper(self, unpack(scheduledMessages[text]))
 		scheduledMessages[text] = nil
 	end
-	
+
 	function boss:CancelDelayedMessage(text)
 		if scheduledMessages[text] then
 			self:CancelTimer(scheduledMessages[text][1], true)
 			scheduledMessages[text] = nil
 		end
 	end
-	
+
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
-		if scheduledMessages[text] then
-			self:CancelTimer(scheduledMessages[text][1], true)
-			scheduledMessages[text] = nil
-		end
+		self:CancelDelayedMessage(text)
 		scheduledMessages[text] = {}
+
 		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
 		tinsert(scheduledMessages[text], id)
 		tinsert(scheduledMessages[text], key)
 		tinsert(scheduledMessages[text], text)
 		for i = 1, select("#", ...) do
-			tinsert(scheduledMessages[text], (select("#", i)))
+			tinsert(scheduledMessages[text], (select(i, ...)))
 		end
 		return id
 	end
