@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("The Beasts of Northrend", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {"snobold", 67477, 66330, {67472, "FLASHSHAKE"}, "submerge", {67641, "FLASHSHAKE"}, "spew", "sprays", {67618, "FLASHSHAKE"}, 66869, 68335, "proximity", 67654, {"charge", "ICON", "FLASHSHAKE"}, 66758, 66759, "bosses", "berserk", "bosskill"}
+mod.toggleOptions = {"snobold", 67477, 66330, {67472, "FLASHSHAKE"}, "submerge", {67641, "FLASHSHAKE"}, "spew", "sprays", {67618, "FLASHSHAKE"}, 66869, 68335, "proximity", 67654, {"charge", "ICON", "SAY", "FLASHSHAKE"}, 66758, 66759, "bosses", "berserk", "bosskill"}
 mod.optionHeaders = {
 	snobold = "Gormok the Impaler",
 	submerge = "Jormungars",
@@ -62,6 +62,7 @@ if L then
 	L.charge = "Furious Charge"
 	L.charge_desc = "Warn about Furious Charge on players."
 	L.charge_trigger = "glares at"
+	L.charge_say = "Charge on me!"
 
 	L.bosses = "Bosses"
 	L.bosses_desc = "Warn about bosses incoming"
@@ -318,7 +319,12 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	if unit == icehowl and message:find(L["charge_trigger"]) then
 		local spellName = GetSpellInfo(52311)
 		self:TargetMessage("charge", spellName, player, "Personal", 52311, "Alarm")
-		if player == pName then self:FlashShake("charge") end
+		if player == pName then
+			self:FlashShake("charge")
+			if bit.band(self.db.profile.charge, BigWigs.C.SAY) == BigWigs.C.SAY then
+				SendChatMessage(L["charge_say"], "SAY")
+			end
+		end
 		self:Bar("charge", spellName, 7.5, 52311)
 		self:PrimaryIcon("charge", player)
 	end
