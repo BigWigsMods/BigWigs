@@ -186,78 +186,38 @@ do
 end
 
 -------------------------------------------------------------------------------
--- Ace2 ScheduleEvent Layer
+-- Delayed message handling
 --
 
-local scheduledTimers = {}
-local function clearTimer(id)
-	if not id or not scheduledTimers[id] then return end
-	if scheduledTimers[id].args then
-		wipe(scheduledTimers[id].args)
+do
+	local scheduledMessages = {}
+	local function wrapper(module, _, ...) module:Message(...) end
+	-- This should've been a local function, but if we do it this way then AceTimer passes in the correct module for us.
+	function boss:ProcessDelayedMessage(text)
+		wrapper(self, unpack(scheduledMessages[text]))
+		wipe(scheduledMessages[text])
 	end
-	wipe(scheduledTimers[id])
-end
-
-local args = {}
-local function processScheduledTimer(id)
-	local t = scheduledTimers[id]
-	-- copy and clear incase we reschedule the same id from within the func
-	local f = t.func
-	local id = t.atid
-	local m = t.module
-	wipe(args)
-	if t.args then
-		for i, v in next, t.args do tinsert(args, v) end
-	end
-	if type(f) == "string" then
-		if not m[f] then
-			error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(m:GetName(), f))
+	
+	-- args: key, delay, text, color, icon, sound, noraidsay, broadcastonly
+	function boss:DelayedMessage(key, delay, text, ...)
+		-- XXX we shouldn't check the flag here, but when the message is processed only.
+		-- XXX people can toggle options midfight.
+		if not checkFlag(self, key, C.MESSAGE) then return end
+		if scheduledMessages[text] then
+			self:CancelTimer(scheduledMessages[text][1], true)
+			wipe(scheduledMessages[text])
+		else
+			scheduledMessages[text] = {}
 		end
-		m[f](m, unpack(args))
-	elseif type(f) == "function" then
-		f(unpack(args))
-	else
-		error(("Module %q tried to schedule an event with handler type %s."):format(m:GetName(), type(f)))
-	end
-	clearTimer(id)
-end
-
-function boss:CancelScheduledEvent(id)
-	if not id or not scheduledTimers[id] then return end
-	self:CancelTimer(scheduledTimers[id].atid, true)
-	clearTimer(id)
-end
-
-function boss:CancelAllScheduledEvents()
-	for id, args in pairs(scheduledTimers) do
-		if args.module == self then
-			self:CancelScheduledEvent(id)
-		end
-	end
-end
-
-function boss:ScheduleEvent(id, func, delay, ...)
-	if not id or not func or not delay then error("Missing required argument to :ScheduleEvent.") end
-	if type(func) == "string" and type(self[func]) ~= "function" then
-		error(("Module %q tried to schedule an event for %s, but it doesn't exist."):format(self:GetName(), func))
-	end
-	if scheduledTimers[id] then
-		self:CancelScheduledEvent(id)
-	else
-		scheduledTimers[id] = {}
-	end
-	scheduledTimers[id].func = func
-	scheduledTimers[id].module = self
-	if scheduledTimers[id].args then
+		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
+		tinsert(scheduledMessages[text], id)
+		tinsert(scheduledMessages[text], key)
+		tinsert(scheduledMessages[text], text)
 		for i = 1, select("#", ...) do
-			tinsert(scheduledTimers[id].args, (select(i, ...)))
+			tinsert(scheduledMessages[text], (select("#", i)))
 		end
-	elseif select("#", ...) > 0 then
-		scheduledTimers[id].args = { ... }
+		return id
 	end
-	local atid = self:ScheduleTimer(processScheduledTimer, delay, id)
-	scheduledTimers[id].atid = atid
-	return id, atid
 end
 
 -------------------------------------------------------------------------------
@@ -357,12 +317,6 @@ do
 	function boss:LocalMessage(dbkey, text, color, icon, sound)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
 		self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
-	end
-end
-
-function boss:DelayedMessage(key, delay, text, color, icon, sound, noraidsay, broadcastonly)
-	if checkFlag(self, key, C.MESSAGE) then
-		return self:ScheduleEvent(text, "Message", delay, key, text, color, icon, sound, noraidsay, broadcastonly)
 	end
 end
 
