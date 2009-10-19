@@ -168,6 +168,12 @@ do
 		end
 	end
 
+	-- XXX What if we die and then get battleressed?
+	-- XXX First of all, the CheckForWipe every 2 seconds would continue scanning.
+	-- XXX Secondly, if the boss module registers for PLAYER_REGEN_DISABLED, it would
+	-- XXX trigger again, and CheckForEngage (possibly) invoked, which results in
+	-- XXX a new BossEngaged sync -> :Engage -> :OnEngage on the module.
+	-- XXX Possibly a concern?
 	function boss:CheckForWipe()
 		local go = scan(self)
 		if not go then
