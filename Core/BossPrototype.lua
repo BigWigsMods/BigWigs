@@ -143,12 +143,17 @@ do
 	function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
 
 	local function scan(self)
-		if type(self.enabletrigger) == "number" then
-			local unit = findTargetByGUID(self.enabletrigger)
-			if unit and UnitAffectingCombat(unit) then return unit end
-		elseif type(self.enabletrigger) == "table" then
-			for i, id in next, self.enabletrigger do
-				local unit = findTargetByGUID(id)
+		for mobId, entry in pairs(core:GetEnableMobs()) do
+			if type(entry) == "table" then
+				for i, module in next, entry do
+					if module == self.moduleName then
+						local unit = findTargetByGUID(mobId)
+						if unit and UnitAffectingCombat(unit) then return unit end
+						break
+					end
+				end
+			elseif entry == self.moduleName then
+				local unit = findTargetByGUID(mobId)
 				if unit and UnitAffectingCombat(unit) then return unit end
 			end
 		end

@@ -111,6 +111,8 @@ do
 			add(module.moduleName, enableyells, (select(i, ...)))
 		end
 	end
+	function addon:GetEnableMobs() return enablemobs end
+	function addon:GetEnableYells() return enableyells end
 end
 
 -------------------------------------------------------------------------------
