@@ -139,15 +139,15 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["phase2_trigger"]) then
 		phase = 2
-		self:CancelScheduledEvent(L["vortex_warning"])
-		self:CancelScheduledEvent(L["sparks_warning"])
+		self:CancelDelayedMessage(L["vortex_warning"])
+		self:CancelDelayedMessage(L["sparks_warning"])
 		self:SendMessage("BigWigs_StopBar", self, L["sparks"])
 		self:SendMessage("BigWigs_StopBar", self, L["vortex_next"])
 		self:Message("phase", L["phase2_message"], "Attention")
 		self:Bar("breath", L["breath"], 92, 43810)
 		self:DelayedMessage("breath", 87, L["breath_warning"], "Attention")
 	elseif msg:find(L["phase2_end_trigger"]) then
-		self:CancelScheduledEvent(L["breath_warning"])
+		self:CancelDelayedMessage(L["breath_warning"])
 		self:SendMessage("BigWigs_StopBar", self, L["breath"])
 		self:Message("phase", L["phase3_warning"], "Attention")
 	elseif msg:find(L["phase3_trigger"]) then
