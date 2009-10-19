@@ -105,14 +105,12 @@ function mod:FBomb(_, spellId, _, _, spellName)
 	self:Message(64623, spellName, "Important", spellId)
 	self:Bar(64623, spellName, 2, spellId)
 	self:Bar(64623, L["fbomb_bar"], 30, spellId)
-	self:DelayedMessage(64623, 28, L["fbomb_soon"], "Attention")
 end
 
 function mod:Plasma(_, spellId, _, _, spellName)
 	self:Message(62997, L["plasma_warning"], "Important", spellId)
 	self:Bar(62997, L["plasma_warning"], 3, spellId)
 	self:Bar(62997, L["plasma_bar"], 30, spellId)
-	self:DelayedMessage(62997, 27, L["plasma_soon"], "Attention")
 end
 
 function mod:Shock(_, spellId, _, _, spellName)
@@ -162,7 +160,6 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(900, true)
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
-		self:CancelScheduledEvent("plasmaWarning")
 		self:SendMessage("BigWigs_StopBar", self, L["plasma_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["shock_next"])
 		self:Message("phase", L["phase2_warning"], "Attention")
@@ -172,7 +169,6 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		end
 		self:CloseProximity()
 	elseif msg:find(L["phase3_trigger"]) then
-		self:CancelScheduledEvent("fbombWarning")
 		phase = 3
 		self:Message("phase", L["phase3_warning"], "Attention")
 		self:Bar("phase", L["phase_bar"]:format(phase), 25, "INV_Gizmo_01")
