@@ -197,6 +197,13 @@ do
 		wipe(scheduledMessages[text])
 	end
 	
+	function boss:CancelDelayedMessage(text)
+		if scheduledMessages[text] then
+			self:CancelTimer(scheduledMessages[text][1], true)
+			wipe(scheduledMessages[text])
+		end
+	end
+	
 	-- args: key, delay, text, color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
 		-- XXX we shouldn't check the flag here, but when the message is processed only.
