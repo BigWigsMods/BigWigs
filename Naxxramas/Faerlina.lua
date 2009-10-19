@@ -13,7 +13,6 @@ mod.toggleOptions = {28732, {28794, "FLASHSHAKE"}, 28798, "bosskill"}
 local started = nil
 local frenzied = nil
 local frenzyName = GetSpellInfo(28798)
-local frenzyMessageId = nil
 local pName = UnitName("player")
 
 ----------------------------
@@ -54,7 +53,6 @@ function mod:OnBossEnable()
 	self:Death("Win", 15953)
 
 	started = nil
-	frenzyMessageId = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -75,7 +73,7 @@ function mod:Silence(unit, spellId, _, _, spellName, _, _, _, dGUID)
 	else
 		-- Reactive enrage removed
 		self:Message(28798, L["enrageremovewarn"], "Positive")
-		frenzyMessageId = self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
+		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
 		self:Bar(28798, frenzyName, 60, 28798)
 
 		self:Bar(28732, L["silencebar"], 30, spellId)
@@ -96,14 +94,14 @@ function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGUID)
 	if target ~= 15953 then return end
 	self:Message(28798, L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
-	self:CancelTimer(frenzyMessageId, true)
+	self:CancelDelayedMessage(L["enragewarn2"])
 	frenzied = true
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if not started and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
 		self:Message(28798, L["startwarn"], "Urgent")
-		frenzyMessageId = self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
+		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
 		self:Bar(28798, frenzyName, 60, 28798)
 		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight
 		frenzied = nil
