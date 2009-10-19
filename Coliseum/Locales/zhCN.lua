@@ -56,6 +56,7 @@ if L then
 	L.charge = "野性冲锋"
 	L.charge_desc = "当玩家中了野性冲锋时发出警报。"
 --	L.charge_trigger = "^%%s"	--check
+	L.charge_say = ">我< 野性冲锋！"
 
 	L.bosses = "首领"
 	L.bosses_desc = "当首领即将到来时发出警报。"
