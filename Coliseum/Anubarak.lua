@@ -23,7 +23,6 @@ local difficulty = nil
 local pName = UnitName("player")
 local phase2 = nil
 local burrowMessage = nil
-local strikeMessage = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,7 +84,7 @@ end
 
 local function nextstrike()
 	mod:Bar(66134, ssName, 30, 66134)
-	strikeMessage = mod:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
+	mod:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
 	handle_NextStrike = mod:ScheduleTimer(nextstrike, 30)
 end
 
@@ -97,7 +96,7 @@ function mod:OnEngage()
 	handle_NextWave = self:ScheduleTimer(nextwave, 10)
 	if self:GetOption(66134) and difficulty > 2 then
 		self:Bar(66134, ssName, 30, 66134)
-		strikeMessage = self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
+		self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
 		handle_NextStrike = self:ScheduleTimer(nextstrike, 30)
 	end
 	
@@ -112,9 +111,8 @@ end
 function mod:Strike(player, spellId, _, _, spellName)
 	if difficulty > 2 then
 		self:CancelTimer(handle_NextStrike, true)
-		self:CancelScheduledEvent(strikeMessage)
 		self:Bar(66134, spellName, 30, spellId)
-		strikeMessage = self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
+		self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
 		handle_NextStrike = self:ScheduleTimer(nextstrike, 30)
 	end
 end
@@ -138,7 +136,7 @@ function mod:Swarm(player, spellId, _, _, spellName)
 	self:Message(66118, spellName, "Important", spellId)
 	phase2 = true
 	self:SendMessage("BigWigs_StopBar", self, L["burrow_cooldown"])
-	self:CancelScheduledEvent(burrowMessage)
+	self:CancelTimer(burrowMessage)
 	if difficulty < 3 then -- Normal modes
 		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
 		self:CancelTimer(handle_NextWave, true)
@@ -150,8 +148,7 @@ function mod:Swarm(player, spellId, _, _, spellName)
 			handle_NextStrike = self:ScheduleTimer(nextstrike, t)
 			self:Bar(66134, ssName, t, 66134)
 			if (t - 5) > 1 then
-				self:CancelScheduledEvent(strikeMessage)
-				strikeMessage = self:DelayedMessage(66134, t - 5, L["shadow_soon"], "Attention")
+				self:DelayedMessage(66134, t - 5, L["shadow_soon"], "Attention")
 			end
 		end
 	end
@@ -174,7 +171,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 
 		if self:GetOption(66134) and difficulty > 2 then
 			self:Bar(66134, ssName, 35, 66134)
-			strikeMessage = self:DelayedMessage(66134, 30, L["shadow_soon"], "Attention")
+			self:DelayedMessage(66134, 30, L["shadow_soon"], "Attention")
 			handle_NextStrike = self:ScheduleTimer(nextstrike, 35)
 		end
 	elseif msg:find(L["burrow_trigger"]) then
