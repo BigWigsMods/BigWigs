@@ -14,6 +14,7 @@ mod.toggleOptions = {28542, 28524, {28522, "ICON", "SAY", "PING"}, "berserk", "b
 local breath = 1
 local pName = UnitName("player")
 local iceboltName = GetSpellInfo(28522)
+local lifeDrainWarning = nil
 
 ----------------------------
 --      Localization      --
@@ -73,7 +74,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg == L["airphase_trigger"] then
-		self:CancelScheduledEvent(L["lifedrain_warn1"])
+		self:CancelTimer(lifeDrainWarning)
 		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
 		--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
 		self:Message(28524, L["deepbreath_incoming_message"], "Attention")
@@ -95,7 +96,7 @@ end
 function mod:Drain(_, spellId)
 	self:Message(28542, L["lifedrain_message"], "Urgent", spellId)
 	self:Bar(28542, L["lifedrain_bar"], 23, spellId)
-	self:DelayedMessage(28542, 18, L["lifedrain_warn1"], "Important")
+	lifeDrainWarning = self:DelayedMessage(28542, 18, L["lifedrain_warn1"], "Important")
 end
 
 function mod:Icebolt(player, spellId, _, _, spellName)

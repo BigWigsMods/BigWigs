@@ -15,6 +15,7 @@ local deaths = 0
 local stage1warn = nil
 local lastCharge = nil
 local shiftTime = nil
+local throwHandle = nil
 
 ----------------------------
 --      Localization      --
@@ -129,10 +130,9 @@ function mod:Shift()
 end
 
 local function throw()
-	if shiftTime then return end
 	mod:Bar("throw", L["throw_bar"], 20, "Ability_Druid_Maul")
 	mod:DelayedMessage("throw", 15, L["throw_warning"], "Urgent")
-	mod:ScheduleTimer(throw, 21)
+	throwHandle = mod:ScheduleTimer(throw, 21)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
@@ -147,7 +147,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		stage1warn = true
 		throw()
 	elseif msg:find(L["trigger_phase2_1"]) or msg:find(L["trigger_phase2_2"]) or msg:find(L["trigger_phase2_3"]) then
-		self:CancelAllScheduledEvents()
+		self:CancelTimer(throwHandle, true)
 		self:SendMessage("BigWigs_StopBar", self, L["throw_bar"])
 		self:Message("phase", L["phase2_message"], "Important")
 		self:Berserk(360, true)
