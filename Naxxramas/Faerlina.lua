@@ -96,9 +96,7 @@ function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGUID)
 	if target ~= 15953 then return end
 	self:Message(28798, L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
-	if frenzyMessageId then
-		self:CancelScheduledEvent(frenzyMessageId)
-	end
+	self:CancelTimer(frenzyMessageId, true)
 	frenzied = true
 end
 
