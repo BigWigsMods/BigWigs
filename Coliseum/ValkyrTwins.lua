@@ -17,6 +17,17 @@ local essenceDark = GetSpellInfo(67176)
 local started = nil
 local difficulty = nil
 local pName = UnitName("player")
+local currentShieldStrength = nil
+local shieldStrengthMap = {
+	[67261] = 1200000,
+	[67258] = 1200000,
+	[67256] = 700000,
+	[67259] = 700000,
+	[67257] = 300000,
+	[67260] = 300000,
+	[65858] = 175000,
+	[65874] = 175000,
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +46,8 @@ if L then
 
 	L.shield = "Shield of Darkness/Light"
 	L.shield_desc = "Warn for Shield of Darkness/Light."
+	L.shield_half_message = "Shield at 50% strength!"
+	L.shield_left_message = "%d%% shield strength left"
 
 	L.touch = "Touch of Darkness/Light"
 	L.touch_desc = "Warn for Touch of Darkness/Light"
@@ -51,6 +64,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DarkVortex", 66058, 67182, 67183, 67184)
 	self:Log("SPELL_AURA_APPLIED", "DarkShield", 65874, 67256, 67257, 67258)
 	self:Log("SPELL_AURA_APPLIED", "LightShield", 65858, 67259, 67260, 67261)
+	self:Log("SPELL_CAST_START", "HealStarted", 67303, 65875, 65876, 67304, 67305, 67306, 67307, 67308)
+	self:Log("SPELL_HEAL", "Healed", 67303, 65875, 65876, 67304, 67305, 67306, 67307, 67308)
 	-- First 3 are dark, last 3 are light.
 	self:Log("SPELL_AURA_APPLIED", "Touch", 67281, 67282, 67283, 67296, 67297, 67298)
 	
@@ -73,6 +88,57 @@ end
 -- Event Handlers
 --
 
+do
+	local damageDone = nil
+	local twin = nil
+	local f = nil
+	local heals = {
+		[67303] = true,
+		[65875] = true,
+		[65876] = true,
+		[67304] = true,
+		[67305] = true,
+		[67306] = true,
+		[67307] = true,
+		[67308] = true,
+	}
+		
+	local function stop()
+		if f then f:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED") end
+		twin = nil
+		damageDone = nil
+		currentShieldStrength = nil
+	end
+	function mod:HealStarted(player, spellId, source)
+		if not f then
+			f = CreateFrame("Frame")
+			f:SetScript("OnEvent", function(_, _, _, event, _, _, _, _, player, _, _, spellName, _, eventType, amount)
+				if eventType == "ABSORB" and player == twin then
+					if event == "SPELL_PERIODIC_MISSED" or event == "SPELL_MISSED" or event == "RANGE_MISSED" then
+						damageDone = damageDone + amount
+					elseif event == "SWING_MISSED" then
+						damageDone = damageDone + spellName
+					end
+					if damageDone >= (currentShieldStrength / 2) then
+						mod:Message("shield", L["shield_half_message"], "Positive")
+						stop()
+					end
+				elseif event == "SPELL_INTERRUPT" and heals[eventType] then
+					stop()
+				end
+			end)
+		end
+		damageDone = 0
+		twin = source
+		f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
+	function mod:Healed()
+		local missing = math.ceil((currentShieldStrength / damageDone * 100) - 100)
+		self:Message("shield", L["shield_left_message"]:format(missing), "Important")
+		stop()
+	end
+end
+
 function mod:Touch(player, spellId, _, _, spellName)
 	self:TargetMessage("touch", spellName, player, "Personal", spellId, "Info")
 	if pName == player then self:FlashShake("touch") end
@@ -80,6 +146,7 @@ function mod:Touch(player, spellId, _, _, spellName)
 end
 
 function mod:DarkShield(_, spellId, _, _, spellName)
+	currentShieldStrength = shieldStrengthMap[spellId]
 	self:Bar("shield", L["vortex_or_shield_cd"], 45, 39089)
 	local d = UnitDebuff("player", essenceDark)
 	if d then
@@ -90,6 +157,7 @@ function mod:DarkShield(_, spellId, _, _, spellName)
 end
 
 function mod:LightShield(_, spellId, _, _, spellName)
+	currentShieldStrength = shieldStrengthMap[spellId]
 	self:Bar("shield", L["vortex_or_shield_cd"], 45, 39089)
 	local d = UnitDebuff("player", essenceLight)
 	if d then
