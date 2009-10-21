@@ -31,7 +31,7 @@ L["All running modules have been reset."] = "모든 실행중인 모듈을 초�
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Big Wigs가 자신보다 최근 버전이나 이전 버전인 사람들을 /BWV 를 입력하여 확인 가능합니다."
 L["Up to date:"] = "최신 버전:"
 L["Out of date:"] = "구 버전"
-L["No Big Wigs 3.0:"] = "Big Wigs 3.0 미사용:"
+L["No Big Wigs 3.x:"] = "Big Wigs 3.x 미사용:"
 
 -- Options.lua
 -- XXX Perhaps option descriptions should be in key form, so it's

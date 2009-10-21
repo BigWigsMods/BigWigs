@@ -31,7 +31,7 @@ L["All running modules have been disabled."] = "所有运行中的模块都已�
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "在你队伍里使用旧版本或没有使用 Big Wigs。你可以用 /bwv 获得详细内容。"
 L["Up to date:"] = "已更新："
 L["Out of date:"] = "过期："
-L["No Big Wigs 3.0:"] = "没有 Big Wigs 3.0："
+L["No Big Wigs 3.x:"] = "没有 Big Wigs 3.x："
 
 -- Options.lua
 -- XXX Perhaps option descriptions should be in key form, so it's

@@ -31,7 +31,7 @@ L["All running modules have been disabled."] = "Alle laufenden Module wurden bee
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Es gibt Leute in deiner Gruppe mit veralteten Versionen oder ohne Big Wigs. Mehr Details mit /bwv."
 L["Up to date:"] = "Up to date:"
 L["Out of date:"] = "Veraltet:"
-L["No Big Wigs 3.0:"] = "Kein Big Wigs 3.0:"
+L["No Big Wigs 3.x:"] = "Kein Big Wigs 3.x:"
 
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs Encounters"

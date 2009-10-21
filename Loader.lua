@@ -1,6 +1,9 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
-local pName = UnitName("player")
+-----------------------------------------------------------------------
+-- Generate our version variables
+--
+
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
 local UNKNOWN = "UNKNOWN"
@@ -48,26 +51,36 @@ end
 BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 local loader = BigWigsLoader
 
-local ldb
+-----------------------------------------------------------------------
+-- Locals
+--
 
--- locals
+local ldb
+local pName = UnitName("player")
+
+-- Grouping
 local BWRAID = 2
 local BWPARTY = 1
 local grouped = nil
 
-local showVersions
-local versionTooltipFunc
+-- Version
+local usersAlpha = {}
+local usersRelease = {}
+local usersUnknown = {}
+local highestReleaseRevision = _G.BIGWIGS_RELEASE_REVISION
 
+-- Loading
 local BZ -- BabbleZone-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
-
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadInZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
-
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
-
 local enableZones = {} -- contains the zones in which BigWigs will enable
+
+-- Forward declarations
+local showVersions
+local versionTooltipFunc
 
 local LOCALE = GetLocale()
 if LOCALE == "enGB" then
@@ -97,8 +110,6 @@ local coloredNames = setmetatable({}, {__index =
 		return self[key]
 	end
 })
-
-
 
 local function loadZone(zone)
 	if not zone then return end
@@ -230,11 +241,6 @@ function loader:OnEnable()
 	self:ZoneChanged()
 end
 
-local versions = {
-	UNKNOWN = {},
-	RELEASE = {},
-	ALPHA = {},
-}
 local members = {}
 local function getMembers()
 	local raid = GetRealNumRaidMembers()
@@ -256,34 +262,32 @@ local function getMembers()
 	return members
 end
 
+local tip = L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."]
 function versionTooltipFunc(tt)
+	if next(usersUnknown) then
+		tt:AddLine(tip, 1, 0, 0, 1)
+		return
+	end
 	local m = getMembers()
 	if not m then return end
-	local highest = 0
-	for k, v in pairs(versions.RELEASE) do
-		if v > highest then highest = v end
-	end
-	for k, v in pairs(versions.UNKNOWN) do
-		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
-		return
-	end
-	for k, v in pairs(versions.RELEASE) do
+	for k, v in pairs(usersRelease) do
 		m[k] = nil
-		if v < highest then
-			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
+		if v < highestReleaseRevision then
+			tt:AddLine(tip, 1, 0, 0, 1)
 			return
 		end
 	end
-	for k, v in pairs(versions.ALPHA) do
+	for k, v in pairs(usersAlpha) do
 		m[k] = nil
-		if v < highest and v ~= -1 then
-			tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
+		-- v == 1 means the user is using a svn checkout, and not a downloadable alpha zip
+		-- we ignore svn users
+		if v < (highestReleaseRevision - 1) and v ~= -1 then
+			tt:AddLine(tip, 1, 0, 0, 1)
 			return
 		end
 	end
-	for k, v in pairs(m) do
-		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
-		return
+	if next(m) then
+		tt:AddLine(tip, 1, 0, 0, 1)
 	end
 end
 
@@ -298,35 +302,30 @@ local good, bad, ugly = {}, {}, {}
 function showVersions()
 	local m = getMembers()
 	if not m then return end
-	
-	local highest = 0
-	for k, v in pairs(versions.RELEASE) do
-		if v > highest then highest = v end
-	end
-	
 	wipe(good) -- highest release users
-	wipe(bad)-- non-bw users
 	wipe(ugly) -- old version users
-	for k, v in pairs(versions.RELEASE) do
+	wipe(bad)  -- non-bw users
+	for k, v in pairs(usersRelease) do
 		if m[k] then
 			m[k] = nil
-			if v < highest then
-				table.insert(good, coloredNameVersion(k, v))
-			else
+			if v < highestReleaseRevision then
 				table.insert(ugly, coloredNameVersion(k, v))
+			else
+				table.insert(good, coloredNameVersion(k, v))
 			end
 		end
 	end
-	for k, v in pairs(versions.UNKNOWN) do
+	for k, v in pairs(usersUnknown) do
 		if m[k] then
 			m[k] = nil
 			table.insert(ugly, coloredNameVersion(k,v))
 		end
 	end
-	for k, v in pairs(versions.ALPHA) do
+	for k, v in pairs(usersAlpha) do
 		if m[k] then
 			m[k] = nil
-			if v >= highest or v == -1 then
+			-- release revision -1 because of tagging
+			if v >= (highestReleaseRevision - 1) or v == -1 then
 				table.insert(good, coloredNameVersion(k,v))
 			else
 				table.insert(ugly, coloredNameVersion(k,v))
@@ -343,7 +342,7 @@ function showVersions()
 		print(L["Out of date:"], table.concat(ugly, ", "))
 	end
 	if #bad > 0 then
-		print(L["No Big Wigs 3.0:"], table.concat(bad, ", "))
+		print(L["No Big Wigs 3.x:"], table.concat(bad, ", "))
 	end
 end
 
@@ -365,8 +364,8 @@ end)
 function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix == "BWVQ3" then
 		-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
-		if not versions.RELEASE[sender] and not versions.ALPHA[sender] then
-			versions.UNKNOWN[sender] = true
+		if not usersRelease[sender] and not usersAlpha[sender] then
+			usersUnknown[sender] = true
 		end
 		self:SendMessage("BigWigs_Version", sender, UNKNOWN)
 		delayTransmitter.elapsed = 0
@@ -380,9 +379,10 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	elseif prefix == "BWVR3" then
 		message = tonumber(message)
 		if not message then return end
-		versions.RELEASE[sender] = message
-		versions.ALPHA[sender] = nil
-		versions.UNKNOWN[sender] = nil
+		usersRelease[sender] = message
+		usersAlpha[sender] = nil
+		usersUnknown[sender] = nil
+		if message > highestReleaseRevision then highestReleaseRevision = message end
 		self:SendMessage("BigWigs_Version", sender, RELEASE, message)
 		if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
 			-- The sender is running an old version.
@@ -391,9 +391,9 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	elseif prefix == "BWVRA3" then
 		message = tonumber(message)
 		if not message then return end
-		versions.ALPHA[sender] = message
-		versions.RELEASE[sender] = nil
-		versions.UNKNOWN[sender] = nil
+		usersAlpha[sender] = message
+		usersRelease[sender] = nil
+		usersUnknown[sender] = nil
 		self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 	end
 end
@@ -500,6 +500,9 @@ function loader:BigWigs_JoinedGroup()
 end
 
 function loader:BigWigs_LeftGroup()
+	wipe(usersRelease)
+	wipe(usersAlpha)
+	wipe(usersUnknown)
 	-- BigWigs might not have loaded yet, fringe case, but better prevent errors
 	if BigWigs then
 		BigWigs:Disable()

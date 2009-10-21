@@ -29,7 +29,7 @@ L["All running modules have been disabled."] = "Tous les modules actifs ont ét�
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Certains joueurs de votre groupe ont d'anciennes versions ou n'ont pas Big Wigs. Tapez /bwv pour plus de détails."
 L["Up to date:"] = "À jour :"
 L["Out of date:"] = "Périmé :"
-L["No Big Wigs 3.0:"] = "BW 3.0 absent :"
+L["No Big Wigs 3.x:"] = "BW 3.x absent :"
 
 -- Options.lua
 -- XXX Perhaps option descriptions should be in key form, so it's
