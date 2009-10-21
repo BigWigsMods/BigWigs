@@ -116,6 +116,8 @@ if L then
 
 	L.shield = "Shield of Darkness/Light"
 	L.shield_desc = "当施放Shield of Darkness/Light时发出警报。"
+	L.shield_half_message = "Shield： >50%<剩余！"
+	L.shield_left_message = "%d%% Shield血量剩余！"
 
 	L.touch = "Touch of Darkness/Light"
 	L.touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。"

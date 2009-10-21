@@ -52,7 +52,7 @@ L["Some encounter scripts use raid icons to mark players that are of special int
 L["Whisper warnings"] = "密語警報"
 L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"] = "發送給其它隊員的首領戰鬥技能密語警報功能，例如類似“炸彈”類的技能。\n\n|cffff4411只有團隊領袖或被提升為助理時才可以這麼做！|r"
 L["Broadcast"] = "廣播"
-L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411In raids this only applies if you're promoted, but in parties it will work regardless.|r"] = "Big Wigs 廣播所有訊息到團隊警報頻道。\n\n|cffff4411只有團隊領袖及助理或在5人小隊時才可以這麼做！|r"
+L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411In raids this only applies if you're promoted, but in parties it will work regardless.|r"] = "Big Wigs 廣播所有訊息到團隊警報頻道。\n\n|cffff4411在團隊時只有獲得權限時才可用，小隊時不受限制。|r"
 L["Raid channel"] = "團隊頻道"
 L["Use the raid channel instead of raid warning for broadcasting messages."] = "使用團隊頻道而不是團隊警報廣播訊息。"
 L["Minimap icon"] = "小地圖圖示"
