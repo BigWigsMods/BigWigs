@@ -106,7 +106,7 @@ local acOptions = {
 		broadcast = {
 			type = "toggle",
 			name = L["Broadcast"],
-			desc = L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/officer or in a 5-man party!|r"],
+			desc = L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411In raids this only applies if you're promoted, but in parties it will work regardless.|r"],
 			order = 33,
 		},
 		useraidchannel = {
@@ -265,9 +265,17 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_PluginRegistered")
 
 	local zones = BigWigsLoader:GetZoneMenus()
+	local tmp = {}
 	if zones then
-		for zone in pairs(zones) do self:GetZonePanel(zone) end
+		for zone in pairs(zones) do tinsert(tmp, zone) end
+		table.sort(tmp)
+		for i, zone in next, tmp do self:GetZonePanel(zone) end
+		wipe(tmp)
 	end
+	for zone in pairs(zoneModules) do tinsert(tmp, zone) end
+	table.sort(tmp)
+	for i, zone in next, tmp do self:GetZonePanel(zone) end
+	wipe(tmp)
 end
 
 
@@ -734,7 +742,6 @@ function options:BigWigs_BossModuleRegistered(message, moduleName, module)
 	if not module.toggleOptions then return end
 	local zone = module.otherMenu or module.zoneName
 	if not zone then error(module.name .. " doesn't have any valid zone set!") end
-	self:GetZonePanel(zone)
 	if not zoneModules[zone] then zoneModules[zone] = {} end
 	zoneModules[zone][module.moduleName] = module.displayName
 end
