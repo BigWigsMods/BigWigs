@@ -114,6 +114,8 @@ if L then
 
 	L.shield = "어둠/빛의 방패"
 	L.shield_desc = "어둠/빛의 방패를 알립니다."
+	L.shield_half_message = "방패 강도 50%!"
+	L.shield_left_message = "방패: %d%%"
 
 	L.touch = "어둠/빛의 손길"
 	L.touch_desc = "어둠/빛의 손길을 알립니다."
