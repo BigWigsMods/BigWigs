@@ -197,7 +197,7 @@ function options:OnInitialize()
 
 		local subtitle = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		subtitle:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
-		subtitle:SetWidth(frame:GetWidth() - 16)
+		subtitle:SetWidth(frame:GetWidth() - 24)
 		subtitle:SetJustifyH("LEFT")
 		subtitle:SetJustifyV("TOP")
 		local noteKey = "Notes"
@@ -220,7 +220,7 @@ function options:OnInitialize()
 			title:SetText(field)
 			local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 			detail:SetPoint("TOPLEFT", title, "TOPRIGHT")
-			detail:SetWidth(frame:GetWidth() - 136)
+			detail:SetWidth(frame:GetWidth() - 144)
 			detail:SetJustifyH("LEFT")
 			detail:SetJustifyV("TOP")
 			detail:SetText(fieldData[i])
@@ -230,13 +230,13 @@ function options:OnInitialize()
 		local title = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 		title:SetPoint("TOP", anchor, "BOTTOM", 0, -16)
 		title:SetPoint("LEFT", subtitle)
-		title:SetWidth(frame:GetWidth() - 16)
+		title:SetWidth(frame:GetWidth() - 24)
 		title:SetJustifyH("LEFT")
 		title:SetJustifyV("TOP")
 		title:SetText(L["Thanks to the following for all their help in various fields of development"])
 		local detail = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 		detail:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -4)
-		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -16, -16)
+		detail:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -24, -24)
 		detail:SetJustifyH("LEFT")
 		detail:SetJustifyV("TOP")
 		detail:SetText(BIGWIGS_AUTHORS)
@@ -469,7 +469,7 @@ function masterOptionToggled(self, event, value)
 	else
 		module.db.profile[key] = 0
 	end
-	for k, toggle in ipairs(slaves) do
+	for k, toggle in next, slaves do
 		toggle:SetValue(getSlaveOption(toggle))
 	end
 end
