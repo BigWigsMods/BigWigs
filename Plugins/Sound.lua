@@ -62,11 +62,8 @@ plugin.pluginOptions = {
 	end,
 	set = function(info, value)
 		local sound = info[#info]
-		if IsControlKeyDown() then
-			PlaySoundFile(media:Fetch(mType, soundList[value]))
-		else
-			plugin.db.profile.media[sound] = soundList[value]
-		end
+		PlaySoundFile(media:Fetch(mType, soundList[value]))
+		plugin.db.profile.media[sound] = soundList[value]
 	end,
 	args = {
 		default = {
@@ -109,7 +106,6 @@ function plugin:OnRegister()
 		self.pluginOptions.args[k] = {
 			type = "select",
 			name = n,
-			desc = L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."]:format(n),
 			order = 2,
 			disabled = shouldDisable,
 			values = soundList,
