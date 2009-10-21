@@ -266,16 +266,14 @@ function options:OnEnable()
 
 	local zones = BigWigsLoader:GetZoneMenus()
 	local tmp = {}
-	if zones then
-		for zone in pairs(zones) do tinsert(tmp, zone) end
-		table.sort(tmp)
-		for i, zone in next, tmp do self:GetZonePanel(zone) end
-		wipe(tmp)
-	end
-	for zone in pairs(zoneModules) do tinsert(tmp, zone) end
-	table.sort(tmp)
-	for i, zone in next, tmp do self:GetZonePanel(zone) end
-	wipe(tmp)
+	local sorted = {}
+	for zone in pairs(zones) do tmp[zone] = true end
+	for zone in pairs(zoneModules) do tmp[zone] = true end
+	for zone in pairs(tmp) do tinsert(sorted, zone) end
+	table.sort(sorted)
+	for i, zone in next, sorted do self:GetZonePanel(zone) end
+	tmp = nil
+	sorted = nil
 end
 
 
