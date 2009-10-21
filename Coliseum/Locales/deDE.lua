@@ -116,6 +116,8 @@ if L then
 
 	L.shield = "Schild der Nacht/Licht"
 	L.shield_desc = "Warnt bei Schild der Nacht/Licht."
+	L.shield_half_message = "Schild bei 50% !"
+	L.shield_left_message = " Schild: noch %d%%"
 
 	L.touch = "Berührung der Nacht/Licht"
 	L.touch_desc = "Warnt bei Berührung der Nacht/Licht."
