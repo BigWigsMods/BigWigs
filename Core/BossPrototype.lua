@@ -178,7 +178,6 @@ do
 		local go = scan(self)
 		if not go then
 			if self.OnWipe then self:OnWipe() end
-			self:SendMessage("BigWigs_RemoveRaidIcon")
 			self:Reboot()
 		else
 			self:ScheduleTimer("CheckForWipe", 2)
