@@ -231,7 +231,7 @@ function loader:OnEnable()
 end
 
 local versions = {
-	UNKOWN = {},
+	UNKNOWN = {},
 	RELEASE = {},
 	ALPHA = {},
 }
@@ -263,7 +263,7 @@ function versionTooltipFunc(tt)
 	for k, v in pairs(versions.RELEASE) do
 		if v > highest then highest = v end
 	end
-	for k, v in pairs(versions.UNKOWN) do
+	for k, v in pairs(versions.UNKNOWN) do
 		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
 		return
 	end
@@ -317,7 +317,7 @@ function showVersions()
 			end
 		end
 	end
-	for k, v in pairs(versions.UNKOWN) do
+	for k, v in pairs(versions.UNKNOWN) do
 		if m[k] then
 			m[k] = nil
 			table.insert(ugly, coloredNameVersion(k,v))
@@ -366,7 +366,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	if prefix == "BWVQ3" then
 		-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
 		if not versions.RELEASE[sender] and not versions.ALPHA[sender] then
-			versions.UNKOWN[sender] = true
+			versions.UNKNOWN[sender] = true
 		end
 		self:SendMessage("BigWigs_Version", sender, UNKNOWN)
 		delayTransmitter.elapsed = 0
@@ -382,7 +382,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		if not message then return end
 		versions.RELEASE[sender] = message
 		versions.ALPHA[sender] = nil
-		versions.UNKOWN[sender] = nil
+		versions.UNKNOWN[sender] = nil
 		self:SendMessage("BigWigs_Version", sender, RELEASE, message)
 		if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
 			-- The sender is running an old version.
@@ -393,7 +393,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		if not message then return end
 		versions.ALPHA[sender] = message
 		versions.RELEASE[sender] = nil
-		versions.UNKOWN[sender] = nil
+		versions.UNKNOWN[sender] = nil
 		self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 	end
 end
