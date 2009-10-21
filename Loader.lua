@@ -193,7 +193,7 @@ local function load(obj, name)
 	local succ, err = LoadAddOn(name)
 	if not succ then
 		print("Error loading " .. name .. " (" .. err .. ")")
-		return false, err
+		return
 	end
 	return true
 end
@@ -495,39 +495,29 @@ else
 end
 
 function ldb.OnClick(self, button)
-	if BigWigs and BigWigs:IsEnabled() then
-		if button == "RightButton" and load(BigWigsOptions, "BigWigs_Options") then
-			BigWigsOptions:Open()
-		else
-			if IsAltKeyDown() then
-				if IsControlKeyDown() then
-					BigWigs:Disable()
-				else
-					for name, module in BigWigs:IterateBossModules() do
-						if module:IsEnabled() then module:Disable() end
-					end
-					BigWigs:Print(L["All running modules have been disabled."])
-				end
+	load(BigWigs, "BigWigs_Core")
+	if not BigWigs then return end
+	BigWigs:Enable()
+
+	if button == "RightButton" then
+		load(BigWigsOptions, "BigWigs_Options")
+		if not BigWigsOptions then return end
+		BigWigsOptions:Open()
+	else
+		if IsAltKeyDown() then
+			if IsControlKeyDown() then
+				BigWigs:Disable()
 			else
 				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then module:Reboot() end
+					if module:IsEnabled() then module:Disable() end
 				end
-				BigWigs:Print(L["All running modules have been reset."])
+				BigWigs:Print(L["All running modules have been disabled."])
 			end
-		end
-	elseif BigWigs then
-		BigWigs:Enable()
-		if button == "RightButton" then
-			if load(BigWigsOptions, "BigWigs_Options") then
-				BigWigsOptions:Open()
+		else
+			for name, module in BigWigs:IterateBossModules() do
+				if module:IsEnabled() then module:Reboot() end
 			end
-		end
-	elseif load(BigWigs, "BigWigs_Core") then
-		BigWigs:Enable()
-		if button == "RightButton" then
-			if load(BigWigsOptions, "BigWigs_Options") then
-				BigWigsOptions:Open()
-			end
+			BigWigs:Print(L["All running modules have been reset."])
 		end
 	end
 end
