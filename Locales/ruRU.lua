@@ -52,7 +52,7 @@ L["Some encounter scripts use raid icons to mark players that are of special int
 L["Whisper warnings"] = "Оповещения шопотом"
 L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"] = "Отправлять коллегам уведомления шепотом об определённых способностях, которые их затрагивают.\n\n|cffff4411Применимо только когда вы Лидер группы/рейда!|r"
 L["Broadcast"] = "Вывод сообщений"
-L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader or in a 5-man party!|r"] = "Выводить все сообщения Big Wigs, в канал объявлений рейду.\n\n|cffff4411Применимо только когда вы Лидер рейда или в группе 5-чел!|r"
+L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411In raids this only applies if you're promoted, but in parties it will work regardless.|r"] = "Выводить все сообщения Big Wigs, в канал объявлений рейду.\n\n|cffff4411Применимо только когда вы Лидер рейда или в группе 5-чел!|r"
 L["Raid channel"] = "Канал рейда"
 L["Use the raid channel instead of raid warning for broadcasting messages."] = "Для передачи сообщений, использовать канал рейда вместо объявлений рейду."
 L["Minimap icon"] = "Иконка у мини карты"

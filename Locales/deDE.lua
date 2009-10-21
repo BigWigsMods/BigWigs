@@ -50,7 +50,7 @@ L["Some encounter scripts use raid icons to mark players that are of special int
 L["Whisper warnings"] = "Warnungen flüstern"
 L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"] = "Sendet geflüsterte Nachrichten über bestimmte Fähigkeiten einer Begegnung an Mitspieler, die diese betreffen. Denke an sowas wie 'Bomben'-Effekte usw.\n\n|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter oder Assistent bist.|r"
 L["Broadcast"] = "Nachrichten senden"
-L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411Only applies if you are raid leader/officer or in a 5-man party!|r"] = "Sendet alle Nachrichten von Big Wigs an den Schlachtzugswarnungschat.\n\n|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter/Assistent oder in einer 5-Mann Gruppe bist.|r"
+L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411In raids this only applies if you're promoted, but in parties it will work regardless.|r"] = "Sendet alle Nachrichten von Big Wigs an den Schlachtzugswarnungschat.\n\n|cffff4411Trifft nur zu, sofern du Schlachtzugsleiter/Assistent oder in einer 5-Mann Gruppe bist.|r"
 L["Raid channel"] = "Schlachtzugschat"
 L["Use the raid channel instead of raid warning for broadcasting messages."] = "Benutzt zum Senden von Nachrichten den Schlachtzugschat anstatt den Schlachtzugswarnungschat."
 L["Minimap icon"] = "Minimap Symbol"
