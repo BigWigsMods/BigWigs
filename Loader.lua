@@ -63,7 +63,7 @@ loader.LOCALE = LOCALE
 -- Locals
 --
 
-local ldb
+local ldb = nil
 local pName = UnitName("player")
 
 local tooltipFunctions = {}
@@ -78,6 +78,7 @@ local usersAlpha = {}
 local usersRelease = {}
 local usersUnknown = {}
 local highestReleaseRevision = _G.BIGWIGS_RELEASE_REVISION
+local warnedOutOfDate = nil
 
 -- Loading
 local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
@@ -265,7 +266,7 @@ function loader:OnInitialize()
 	self:RegisterMessage("BigWigs_CoreLoaded")
 
 	local icon = LibStub("LibDBIcon-1.0", true)
-	if icon then
+	if icon and ldb then
 		if not BigWigs3IconDB then BigWigs3IconDB = {} end
 		icon:Register("BigWigs", ldb, BigWigs3IconDB)
 	end
@@ -322,55 +323,56 @@ end
 -- Events
 --
 
-local warned = nil
-local delayTransmitter = CreateFrame("Frame", nil, UIParent)
-delayTransmitter:Hide()
-delayTransmitter:SetScript("OnUpdate", function(self, elapsed)
-	self.elapsed = self.elapsed + elapsed
-	if self.elapsed > 5 then
-		self:Hide()
-		if BIGWIGS_RELEASE_TYPE == ALPHA then
-			SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
-		else
-			SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
+do
+	local delayTransmitter = CreateFrame("Frame")
+	delayTransmitter:Hide()
+	delayTransmitter:SetScript("OnUpdate", function(self, elapsed)
+		self.elapsed = self.elapsed + elapsed
+		if self.elapsed > 5 then
+			self:Hide()
+			if BIGWIGS_RELEASE_TYPE == ALPHA then
+				SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
+			else
+				SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
+			end
 		end
-	end
-end)
+	end)
 
-function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
-	if prefix == "BWVQ3" then
-		-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
-		if not usersRelease[sender] and not usersAlpha[sender] then
-			usersUnknown[sender] = true
+	function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
+		if prefix == "BWVQ3" then
+			-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
+			if not usersRelease[sender] and not usersAlpha[sender] then
+				usersUnknown[sender] = true
+			end
+			--self:SendMessage("BigWigs_Version", sender, UNKNOWN)
+			delayTransmitter.elapsed = 0
+			delayTransmitter:Show()
+		elseif prefix == "BWOOD3" then
+			if not tonumber(message) or warnedOutOfDate then return end
+			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
+				warnedOutOfDate = true
+				print(L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+			end
+		elseif prefix == "BWVR3" then
+			message = tonumber(message)
+			if not message then return end
+			usersRelease[sender] = message
+			usersAlpha[sender] = nil
+			usersUnknown[sender] = nil
+			if message > highestReleaseRevision then highestReleaseRevision = message end
+			--self:SendMessage("BigWigs_Version", sender, RELEASE, message)
+			if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
+				-- The sender is running an old version.
+				SendAddonMessage("BWOOD3", BIGWIGS_RELEASE_REVISION, "WHISPER", sender)
+			end
+		elseif prefix == "BWVRA3" then
+			message = tonumber(message)
+			if not message then return end
+			usersAlpha[sender] = message
+			usersRelease[sender] = nil
+			usersUnknown[sender] = nil
+			--self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 		end
-		--self:SendMessage("BigWigs_Version", sender, UNKNOWN)
-		delayTransmitter.elapsed = 0
-		delayTransmitter:Show()
-	elseif prefix == "BWOOD3" then
-		if not tonumber(message) or warned then return end
-		if tonumber(message) > BIGWIGS_RELEASE_REVISION then
-			warned = true
-			print(L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
-		end
-	elseif prefix == "BWVR3" then
-		message = tonumber(message)
-		if not message then return end
-		usersRelease[sender] = message
-		usersAlpha[sender] = nil
-		usersUnknown[sender] = nil
-		if message > highestReleaseRevision then highestReleaseRevision = message end
-		--self:SendMessage("BigWigs_Version", sender, RELEASE, message)
-		if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
-			-- The sender is running an old version.
-			SendAddonMessage("BWOOD3", BIGWIGS_RELEASE_REVISION, "WHISPER", sender)
-		end
-	elseif prefix == "BWVRA3" then
-		message = tonumber(message)
-		if not message then return end
-		usersAlpha[sender] = message
-		usersRelease[sender] = nil
-		usersUnknown[sender] = nil
-		--self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 	end
 end
 
@@ -482,69 +484,66 @@ end
 -- LDB Plugin
 --
 
-ldb = LibStub("LibDataBroker-1.1"):GetDataObjectByName("BigWigs")
-
-if not ldb then
-	ldb = LibStub("LibDataBroker-1.1"):NewDataObject("BigWigs", {
+local ldb11 = LibStub("LibDataBroker-1.1", true)
+if ldb11 then
+	ldb = ldb11:NewDataObject("BigWigs", {
 		type = "launcher",
 		label = "Big Wigs",
 		icon = "Interface\\AddOns\\BigWigs\\Icons\\core-disabled",
 	})
-else
-	ldb.label = "Big Wigs"
-end
 
-function ldb.OnClick(self, button)
-	load(BigWigs, "BigWigs_Core")
-	if not BigWigs then return end
-	BigWigs:Enable()
+	function ldb.OnClick(self, button)
+		load(BigWigs, "BigWigs_Core")
+		if not BigWigs then return end
+		BigWigs:Enable()
 
-	if button == "RightButton" then
-		load(BigWigsOptions, "BigWigs_Options")
-		if not BigWigsOptions then return end
-		BigWigsOptions:Open()
-	else
-		if IsAltKeyDown() then
-			if IsControlKeyDown() then
-				BigWigs:Disable()
+		if button == "RightButton" then
+			load(BigWigsOptions, "BigWigs_Options")
+			if not BigWigsOptions then return end
+			BigWigsOptions:Open()
+		else
+			if IsAltKeyDown() then
+				if IsControlKeyDown() then
+					BigWigs:Disable()
+				else
+					for name, module in BigWigs:IterateBossModules() do
+						if module:IsEnabled() then module:Disable() end
+					end
+					BigWigs:Print(L["All running modules have been disabled."])
+				end
 			else
 				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then module:Disable() end
+					if module:IsEnabled() then module:Reboot() end
 				end
-				BigWigs:Print(L["All running modules have been disabled."])
+				BigWigs:Print(L["All running modules have been reset."])
 			end
-		else
-			for name, module in BigWigs:IterateBossModules() do
-				if module:IsEnabled() then module:Reboot() end
-			end
-			BigWigs:Print(L["All running modules have been reset."])
 		end
 	end
-end
 
-function ldb.OnTooltipShow(tt)
-	tt:AddLine("Big Wigs")
-	local h = nil
-	if BigWigs and BigWigs:IsEnabled() then
-		local added = nil
-		for name, module in BigWigs:IterateBossModules() do
-			if module:IsEnabled() then
-				if not added then
-					tt:AddLine(L["Active boss modules:"], 1, 1, 1)
-					added = true
+	function ldb.OnTooltipShow(tt)
+		tt:AddLine("Big Wigs")
+		local h = nil
+		if BigWigs and BigWigs:IsEnabled() then
+			local added = nil
+			for name, module in BigWigs:IterateBossModules() do
+				if module:IsEnabled() then
+					if not added then
+						tt:AddLine(L["Active boss modules:"], 1, 1, 1)
+						added = true
+					end
+					tt:AddLine(module.displayName)
 				end
-				tt:AddLine(module.displayName)
 			end
+			h = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
+		else
+			tt:AddLine(L["Big Wigs is currently disabled."])
+			h = L["|cffeda55fClick|r to enable."]
 		end
-		h = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
-	else
-		tt:AddLine(L["Big Wigs is currently disabled."])
-		h = L["|cffeda55fClick|r to enable."]
+		for i, v in next, tooltipFunctions do
+			v(tt)
+		end
+		tt:AddLine(h, 0.2, 1, 0.2, 1)
 	end
-	for i, v in next, tooltipFunctions do
-		v(tt)
-	end
-	tt:AddLine(h, 0.2, 1, 0.2, 1)
 end
 
 -----------------------------------------------------------------------
