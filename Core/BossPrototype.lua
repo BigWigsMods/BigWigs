@@ -359,7 +359,7 @@ function boss:Sync(...) core:Transmit(...) end
 
 do
 	local sentWhispers = {}
-	local function filter(self, event, msg) if sentWhispers[msg] or msg:find("^<DBM>") then return true end end
+	local function filter(self, event, msg) if sentWhispers[msg] or msg:find("^<BW>") or msg:find("^<DBM>") then return true end end
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 
@@ -369,7 +369,7 @@ do
 		sentWhispers[msg] = true
 		if player == pName or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
 		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
-		SendChatMessage(msg, "WHISPER", nil, player)
+		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
 	end
 end
 
