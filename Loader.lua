@@ -181,6 +181,31 @@ local function iterateZones(addon, override, partyContent, ...)
 	end
 end
 
+local function load(obj, name)
+	if obj then return true end
+	-- Verify that the addon isn't disabled
+	local enabled = select(4, GetAddOnInfo(name))
+	if not enabled then 
+		print("Error loading " .. name .. " ("..name.." is not enabled)")
+		return
+	end
+	-- Load the addon
+	local succ, err = LoadAddOn(name)
+	if not succ then
+		print("Error loading " .. name .. " (" .. err .. ")")
+		return false, err
+	end
+	return true
+end
+
+local function loadAddons(tbl)
+	if not tbl then return end
+	for i, addon in next, tbl do
+		if not IsAddOnLoaded(addon) then LoadAddOn(addon) end
+	end
+	tbl = nil
+end
+
 -----------------------------------------------------------------------
 -- Version listing functions
 --
@@ -213,13 +238,11 @@ local function versionTooltipFunc(tt)
 end
 
 function loader:OnInitialize()
-	local numAddons = GetNumAddOns()
-	
-	for i = 1, numAddons do
+	for i = 1, GetNumAddOns() do
 		local name, _, _, enabled = GetAddOnInfo(i)
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
-			if meta then -- this pack wants to be loaded when we enable the core
+			if meta then
 				tinsert(loadOnCoreEnabled, name)
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
@@ -246,11 +269,22 @@ function loader:OnInitialize()
 end
 
 function loader:OnEnable()
-	self:LoadForeign()
-	-- From this point onward BZ and BB should be available for non-english locales
+	if LOCALE ~= "enUS" and (not BZ or not BB) then
+		if not LibStub("LibBabble-Boss-3.0", true) or not LibStub("LibBabble-Zone-3.0", true) then
+			load(false, "BigWigs_Foreign")
+		end
+		-- check again and error if you can't find
+		if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
+			print("Error retrieving LibBabble-Zone-3.0 and LibBabble-Boss-3.0, please reinstall Big Wigs.")
+		else
+			BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
+			BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
+		end
+	end
+	
 	if loadOnZoneAddons then
+		-- From this point onward BZ and BB should be available for non-english locales
 		for i, name in next, loadOnZoneAddons do
-			local meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
 			local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
 			if menu then
 				if BZ then menu = BZ[menu] or menu end
@@ -258,9 +292,10 @@ function loader:OnEnable()
 				menus[menu] = true
 			end
 			local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
+			local meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
 			iterateZones(name, menu, partyContent, strsplit(",", meta))
 		end
-		loadOnZoneAddons = nil -- garbage collect
+		loadOnZoneAddons = nil
 	end
 
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
@@ -331,10 +366,6 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	end
 end
 
-function loader:Print(...)
-	print("|cff33ff99BigWigsLoader|r:", ...)
-end
-
 function loader:RegisterTooltipInfo(func)
 	for i, v in next, tooltipFunctions do
 		if v == func then
@@ -402,14 +433,12 @@ function loader:BigWigs_CoreEnabled()
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 	end
-	
-	for k, v in pairs(loadOnCoreEnabled) do
-		if not IsAddOnLoaded(v) then LoadAddOn(v) end
-		loadOnCoreEnabled[k] = nil
-	end
+
+	loadAddons(loadOnCoreEnabled)
+
 	-- core is enabled, unconditionally load the zones
 	loadZone(GetRealZoneText())
-	loadZone(GetZoneText())	
+	loadZone(GetZoneText())
 end
 
 function loader:BigWigs_CoreDisabled()
@@ -418,12 +447,8 @@ function loader:BigWigs_CoreDisabled()
 	end
 end
 
-
 function loader:BigWigs_CoreLoaded()
-	for k, v in pairs(loadOnCoreLoaded) do
-		if not IsAddOnLoaded(v) then LoadAddOn(v) end
-		loadOnCoreLoaded[k] = nil
-	end
+	loadAddons(loadOnCoreLoaded)
 end
 
 function loader:BigWigs_JoinedGroup()
@@ -441,45 +466,8 @@ function loader:BigWigs_LeftGroup()
 	end
 end
 
-local function load(obj, name)
-	if obj then return true end
-	-- Verify that the addon isn't disabled
-	local enabled = select(4, GetAddOnInfo(name))
-	if not enabled then 
-		self:Print("Error loading " .. name .. " ("..name.." is not enabled)")
-		return
-	end
-	-- Load the addon
-	local succ, err = LoadAddOn(name)
-	if not succ then
-		self:Print("Error loading " .. name .. " (" .. err .. ")")
-		return false, err
-	end
-	return true
-end
-
-function loader:LoadCore()
-	return load(BigWigs, "BigWigs_Core")
-end
-
-function loader:LoadOptions()
-	return load(BigWigsOptions, "BigWigs_Options")
-end
-
-
-function loader:LoadForeign()
-	if LOCALE == "enUS" or ( BB and BZ ) then return true end
-	if not LibStub("LibBabble-Boss-3.0", true) or not LibStub("LibBabble-Zone-3.0", true) then
-		load(false, "BigWigs_Foreign")
-	end
-	-- check again and error if you can't find
-	if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
-		self:Print("Error retrieving LibBabble-Zone-3.0 and LibBabble-Boss-3.0, please reinstall BigWigs")
-	else
-		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
-		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
-	end
-end
+function loader:LoadCore() return load(BigWigs, "BigWigs_Core") end
+function loader:LoadOptions() return load(BigWigsOptions, "BigWigs_Options") end
 
 ldb = LibStub("LibDataBroker-1.1"):GetDataObjectByName("BigWigs")
 
@@ -492,7 +480,6 @@ if not ldb then
 else
 	ldb.label = "Big Wigs"
 end
-loader.ldb = ldb
 
 function ldb.OnClick(self, button)
 	if BigWigs and BigWigs:IsEnabled() then
@@ -565,9 +552,9 @@ end
 
 hash_SlashCmdList['/bw'] = nil
 hash_SlashCmdList['/bigwigs'] = nil
-SLASH_BIGWIGSS1 = "/bw"
-SLASH_BIGWIGSS2 = "/bigwigs"
-SlashCmdList.BIGWIGSS = slashfunction
+SLASH_BIGWIGS1 = "/bw"
+SLASH_BIGWIGS2 = "/bigwigs"
+SlashCmdList.BIGWIGS = slashfunction
 
 do
 	local hexColors = nil
