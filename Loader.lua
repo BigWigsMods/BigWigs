@@ -80,7 +80,7 @@ local usersUnknown = {}
 local highestReleaseRevision = _G.BIGWIGS_RELEASE_REVISION
 
 -- Loading
-local zoneAddon = {} -- XXX someone explain the name of this variable?
+local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
 local BZ -- BabbleZone-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
@@ -228,7 +228,7 @@ function loader:OnInitialize()
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
 			if meta then
-				tinsert(zoneAddon, name)
+				tinsert(loadOnZoneAddons, name)
 			end
 		end
 	end
@@ -248,8 +248,8 @@ end
 function loader:OnEnable()
 	self:LoadForeign()
 	-- From this point onward BZ and BB should be available for non-english locales
-	if zoneAddon then
-		for i, name in next, zoneAddon do
+	if loadOnZoneAddons then
+		for i, name in next, loadOnZoneAddons do
 			local meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
 			local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
 			if menu then
@@ -260,7 +260,7 @@ function loader:OnEnable()
 			local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
 			iterateZones(name, menu, partyContent, strsplit(",", meta))
 		end
-		zoneAddon = nil -- garbage collect
+		loadOnZoneAddons = nil -- garbage collect
 	end
 
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
