@@ -289,9 +289,9 @@ end
 
 local function coloredNameVersion(name, version)
 	if version == -1 then version = "svn" 
-	elseif version == 0 then version = "unkown"
+	elseif version == 0 then version = "unknown"
 	end
-	return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version)
+	return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version or "unknown")
 end
 
 local good, bad, ugly = {}, {}, {}
