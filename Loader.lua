@@ -357,9 +357,9 @@ do
 			usersUnknown[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
 			--self:SendMessage("BigWigs_Version", sender, RELEASE, message)
-			if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
+			if sender ~= pName and highestReleaseRevision > message then
 				-- The sender is running an old version.
-				SendAddonMessage("BWOOD3", BIGWIGS_RELEASE_REVISION, "WHISPER", sender)
+				SendAddonMessage("BWOOD3", highestReleaseRevision, "WHISPER", sender)
 			end
 		elseif prefix == "BWVRA3" then
 			message = tonumber(message)
