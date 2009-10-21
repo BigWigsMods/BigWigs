@@ -120,7 +120,7 @@ local function loadZone(zone)
 				LoadAddOn(v)
 				loader:SendMessage("BigWigs_ModulePackLoaded", v)
 			end
-			table.insert(addonsLoaded, v)
+			tinsert(addonsLoaded, v)
 			loadInZone[zone][i] = nil
 		end
 		if #loadInZone[zone] == 0 then
@@ -164,10 +164,10 @@ local function iterateZones(addon, override, partyContent, ...)
 		if BZ then zone = BZ[zone] or zone end
 		
 		if not loadInZone[zone] then loadInZone[zone] = {} end
-		table.insert(loadInZone[zone], addon)
+		tinsert(loadInZone[zone], addon)
 
 		if override then
-			table.insert(loadInZone[override], addon)
+			tinsert(loadInZone[override], addon)
 		else
 			menus[zone] = true
 		end
@@ -182,15 +182,15 @@ function loader:OnInitialize()
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then -- this pack wants to be loaded when we enable the core
-				table.insert(loadOnCoreEnabled, name)
+				tinsert(loadOnCoreEnabled, name)
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
 			if meta then
-				table.insert(loadOnCoreLoaded, name)
+				tinsert(loadOnCoreLoaded, name)
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
 			if meta then
-				table.insert(zoneAddon, name)
+				tinsert(zoneAddon, name)
 			end
 		end
 	end
@@ -292,9 +292,7 @@ function versionTooltipFunc(tt)
 end
 
 local function coloredNameVersion(name, version)
-	if version == -1 then version = "svn" 
-	elseif version == 0 then version = "unknown"
-	end
+	if version == -1 then version = "svn" end
 	return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version or "unknown")
 end
 
@@ -309,16 +307,16 @@ function showVersions()
 		if m[k] then
 			m[k] = nil
 			if v < highestReleaseRevision then
-				table.insert(ugly, coloredNameVersion(k, v))
+				tinsert(ugly, coloredNameVersion(k, v))
 			else
-				table.insert(good, coloredNameVersion(k, v))
+				tinsert(good, coloredNameVersion(k, v))
 			end
 		end
 	end
-	for k, v in pairs(usersUnknown) do
+	for k in pairs(usersUnknown) do
 		if m[k] then
 			m[k] = nil
-			table.insert(ugly, coloredNameVersion(k,v))
+			tinsert(ugly, coloredNames[k])
 		end
 	end
 	for k, v in pairs(usersAlpha) do
@@ -326,14 +324,14 @@ function showVersions()
 			m[k] = nil
 			-- release revision -1 because of tagging
 			if v >= (highestReleaseRevision - 1) or v == -1 then
-				table.insert(good, coloredNameVersion(k,v))
+				tinsert(good, coloredNameVersion(k, v))
 			else
-				table.insert(ugly, coloredNameVersion(k,v))
+				tinsert(ugly, coloredNameVersion(k, v))
 			end
 		end
 	end
-	for k, v in pairs(m) do
-		table.insert(bad, coloredNames[k])
+	for k in pairs(m) do
+		tinsert(bad, coloredNames[k])
 	end
 	if #good > 0 then
 		print(L["Up to date:"], table.concat(good, ", "))
@@ -367,7 +365,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		if not usersRelease[sender] and not usersAlpha[sender] then
 			usersUnknown[sender] = true
 		end
-		self:SendMessage("BigWigs_Version", sender, UNKNOWN)
+		--self:SendMessage("BigWigs_Version", sender, UNKNOWN)
 		delayTransmitter.elapsed = 0
 		delayTransmitter:Show()
 	elseif prefix == "BWOOD3" then
@@ -383,7 +381,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		usersAlpha[sender] = nil
 		usersUnknown[sender] = nil
 		if message > highestReleaseRevision then highestReleaseRevision = message end
-		self:SendMessage("BigWigs_Version", sender, RELEASE, message)
+		--self:SendMessage("BigWigs_Version", sender, RELEASE, message)
 		if sender ~= pName and BIGWIGS_RELEASE_REVISION > message then
 			-- The sender is running an old version.
 			SendAddonMessage("BWOOD3", BIGWIGS_RELEASE_REVISION, "WHISPER", sender)
@@ -394,7 +392,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		usersAlpha[sender] = message
 		usersRelease[sender] = nil
 		usersUnknown[sender] = nil
-		self:SendMessage("BigWigs_Version", sender, ALPHA, message)
+		--self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 	end
 end
 
@@ -409,7 +407,7 @@ function loader:RegisterTooltipInfo(func)
 			error(("The function %q has already been registered."):format(func))
 		end
 	end
-	table.insert(tooltipFunctions, func)
+	tinsert(tooltipFunctions, func)
 end
 
 function loader:GetZoneMenus()
