@@ -51,12 +51,22 @@ end
 BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 local loader = BigWigsLoader
 
+local LOCALE = GetLocale()
+if LOCALE == "enGB" then
+	LOCALE = "enUS"
+end
+-- uncomment next line to debug Foreign Loading
+-- LOCALE = "Foreignese"
+loader.LOCALE = LOCALE
+
 -----------------------------------------------------------------------
 -- Locals
 --
 
 local ldb
 local pName = UnitName("player")
+
+local tooltipFunctions = {}
 
 -- Grouping
 local BWRAID = 2
@@ -70,75 +80,72 @@ local usersUnknown = {}
 local highestReleaseRevision = _G.BIGWIGS_RELEASE_REVISION
 
 -- Loading
+local zoneAddon = {} -- XXX someone explain the name of this variable?
 local BZ -- BabbleZone-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
-local loadInZone = {} -- BigWigs modulepack that should load on a specific zone
+local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
+-- XXX shouldn't really be named "menus", it's actually panels in interface options now
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 
--- Forward declarations
-local showVersions
-local versionTooltipFunc
+-----------------------------------------------------------------------
+-- Utility
+--
 
-local LOCALE = GetLocale()
-if LOCALE == "enGB" then
-	LOCALE = "enUS"
-end
-
-local L_OLD_VERSION = L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."]
-
--- uncomment next line to debug Foreign Loading
--- LOCALE = "Foreignese"
-loader.LOCALE = LOCALE
-
-local hexColors = {}
-for k, v in pairs(RAID_CLASS_COLORS) do
-	hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
-end
-
-local coloredNames = setmetatable({}, {__index =
-	function(self, key)
-		if type(key) == "nil" then return nil end
-		local class = select(2, UnitClass(key))
-		if class then
-			self[key] = hexColors[class]  .. key .. "|r"
-		else
-			self[key] = "|cffcccccc"..key.."|r"
+local getGroupMembers = nil
+do
+	local members = {}
+	function getGroupMembers()
+		local raid = GetRealNumRaidMembers()
+		local party = GetRealNumPartyMembers()
+		if raid == 0 and party == 0 then return end
+		wipe(members)
+		if raid > 0 then
+			for i = 1, raid do
+				local n = GetRaidRosterInfo(i)
+				if n then members[#members + 1] = n end
+			end
+		elseif party > 0 then
+			members[#members + 1] = UnitName("player")
+			for i = 1, 4, 1 do
+				local n = UnitName("party" .. i)
+				if n then members[#members + 1] = n end
+			end
 		end
-		return self[key]
+		return members
 	end
-})
+end
 
 local function loadZone(zone)
 	if not zone then return end
-	if loadInZone[zone] then
+	if loadOnZone[zone] then
 		local addonsLoaded = {}
-		for i, v in next, loadInZone[zone] do
+		for i, v in next, loadOnZone[zone] do
 			if not IsAddOnLoaded(v) then
 				LoadAddOn(v)
 				loader:SendMessage("BigWigs_ModulePackLoaded", v)
 			end
 			tinsert(addonsLoaded, v)
-			loadInZone[zone][i] = nil
+			loadOnZone[zone][i] = nil
 		end
-		if #loadInZone[zone] == 0 then
-			loadInZone[zone] = nil
+		if #loadOnZone[zone] == 0 then
+			loadOnZone[zone] = nil
 		end
 
-		-- Remove all already loaded addons from the loadInZone table so that
+		-- Remove all already loaded addons from the loadOnZone table so that
 		-- the "Load all" options for the zone menus that are affected by these
 		-- addons are hidden.
 		for i, addon in next, addonsLoaded do
-			for k in pairs(loadInZone) do
-				for j, z in next, loadInZone[k] do
+			for k in pairs(loadOnZone) do
+				for j, z in next, loadOnZone[k] do
 					if z == addon or IsAddOnLoaded(z) then
-						loadInZone[k][j] = nil
+						loadOnZone[k][j] = nil
 					end
 				end
-				if #loadInZone[k] == 0 then
-					loadInZone[k] = nil
+				if #loadOnZone[k] == 0 then
+					loadOnZone[k] = nil
 				end
 			end
 			addonsLoaded[i] = nil
@@ -163,17 +170,48 @@ local function iterateZones(addon, override, partyContent, ...)
 		registerEnableZone(zone, partyContent and BWPARTY or BWRAID)
 		if BZ then zone = BZ[zone] or zone end
 		
-		if not loadInZone[zone] then loadInZone[zone] = {} end
-		tinsert(loadInZone[zone], addon)
+		if not loadOnZone[zone] then loadOnZone[zone] = {} end
+		tinsert(loadOnZone[zone], addon)
 
 		if override then
-			tinsert(loadInZone[override], addon)
+			tinsert(loadOnZone[override], addon)
 		else
 			menus[zone] = true
 		end
 	end
 end
-local zoneAddon = {}
+
+-----------------------------------------------------------------------
+-- Version listing functions
+--
+
+local function versionTooltipFunc(tt)
+	local m = getGroupMembers()
+	if not m then return end
+	local add = nil
+	for i, player in next, m do
+		if usersRelease[player] then
+			if usersRelease[player] < highestReleaseRevision then
+				add = true
+				break
+			end
+		elseif usersAlpha[player] then
+			-- version == -1 means the user is using a svn checkout, and not a downloadable alpha zip
+			-- we ignore svn users
+			if usersAlpha[player] < (highestReleaseRevision - 1) and usersAlpha[player] ~= -1 then
+				add = true
+				break
+			end
+		else
+			add = true
+			break
+		end
+	end
+	if add then
+		tt:AddLine(L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."], 1, 0, 0, 1)
+	end
+end
+
 function loader:OnInitialize()
 	local numAddons = GetNumAddOns()
 	
@@ -211,12 +249,12 @@ function loader:OnEnable()
 	self:LoadForeign()
 	-- From this point onward BZ and BB should be available for non-english locales
 	if zoneAddon then
-		for k, name in pairs(zoneAddon) do
-			meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
+		for i, name in next, zoneAddon do
+			local meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
 			local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
 			if menu then
 				if BZ then menu = BZ[menu] or menu end
-				if not loadInZone[menu] then loadInZone[menu] = {} end
+				if not loadOnZone[menu] then loadOnZone[menu] = {} end
 				menus[menu] = true
 			end
 			local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
@@ -239,109 +277,6 @@ function loader:OnEnable()
 	
 	self:CheckRoster()
 	self:ZoneChanged()
-end
-
-local members = {}
-local function getMembers()
-	local raid = GetRealNumRaidMembers()
-	local party = GetRealNumPartyMembers()
-	if raid == 0 and party == 0 then return end
-	wipe(members)
-	if raid > 0 then
-		for i = 1, raid, 1 do
-			local n = GetRaidRosterInfo(i)
-			if n then members[n] = true end
-		end
-	elseif party > 0 then
-		members[UnitName("player")] = true
-		for i = 1, 4, 1 do
-			local n = UnitName("party" .. i)
-			if n then members[n] = true end
-		end
-	end
-	return members
-end
-
-local tip = L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."]
-function versionTooltipFunc(tt)
-	if next(usersUnknown) then
-		tt:AddLine(tip, 1, 0, 0, 1)
-		return
-	end
-	local m = getMembers()
-	if not m then return end
-	for k, v in pairs(usersRelease) do
-		m[k] = nil
-		if v < highestReleaseRevision then
-			tt:AddLine(tip, 1, 0, 0, 1)
-			return
-		end
-	end
-	for k, v in pairs(usersAlpha) do
-		m[k] = nil
-		-- v == 1 means the user is using a svn checkout, and not a downloadable alpha zip
-		-- we ignore svn users
-		if v < (highestReleaseRevision - 1) and v ~= -1 then
-			tt:AddLine(tip, 1, 0, 0, 1)
-			return
-		end
-	end
-	if next(m) then
-		tt:AddLine(tip, 1, 0, 0, 1)
-	end
-end
-
-local function coloredNameVersion(name, version)
-	if version == -1 then version = "svn" end
-	return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version or "unknown")
-end
-
-local good, bad, ugly = {}, {}, {}
-function showVersions()
-	local m = getMembers()
-	if not m then return end
-	wipe(good) -- highest release users
-	wipe(ugly) -- old version users
-	wipe(bad)  -- non-bw users
-	for k, v in pairs(usersRelease) do
-		if m[k] then
-			m[k] = nil
-			if v < highestReleaseRevision then
-				tinsert(ugly, coloredNameVersion(k, v))
-			else
-				tinsert(good, coloredNameVersion(k, v))
-			end
-		end
-	end
-	for k in pairs(usersUnknown) do
-		if m[k] then
-			m[k] = nil
-			tinsert(ugly, coloredNames[k])
-		end
-	end
-	for k, v in pairs(usersAlpha) do
-		if m[k] then
-			m[k] = nil
-			-- release revision -1 because of tagging
-			if v >= (highestReleaseRevision - 1) or v == -1 then
-				tinsert(good, coloredNameVersion(k, v))
-			else
-				tinsert(ugly, coloredNameVersion(k, v))
-			end
-		end
-	end
-	for k in pairs(m) do
-		tinsert(bad, coloredNames[k])
-	end
-	if #good > 0 then
-		print(L["Up to date:"], table.concat(good, ", "))
-	end
-	if #ugly > 0 then
-		print(L["Out of date:"], table.concat(ugly, ", "))
-	end
-	if #bad > 0 then
-		print(L["No Big Wigs 3.x:"], table.concat(bad, ", "))
-	end
 end
 
 local warned = nil
@@ -372,7 +307,7 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		if not tonumber(message) or warned then return end
 		if tonumber(message) > BIGWIGS_RELEASE_REVISION then
 			warned = true
-			print(L_OLD_VERSION)
+			print(L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
 		end
 	elseif prefix == "BWVR3" then
 		message = tonumber(message)
@@ -400,7 +335,6 @@ function loader:Print(...)
 	print("|cff33ff99BigWigsLoader|r:", ...)
 end
 
-local tooltipFunctions = {}
 function loader:RegisterTooltipInfo(func)
 	for i, v in next, tooltipFunctions do
 		if v == func then
@@ -416,7 +350,7 @@ end
 
 function loader:HasZone(zone)
 	if not zone then return false end
-	if loadInZone[zone] then return true end
+	if loadOnZone[zone] then return true end
 	return false
 end
 
@@ -430,7 +364,7 @@ function loader:ZoneChanged()
 	-- load party content in raid, but don't load raid content in a party...
 	if (enableZones[z1] and enableZones[z1] <= grouped) or (enableZones[z2] and enableZones[z2] <= grouped) then
 		if self:LoadCore() then
-			if BigWigs:IsEnabled() and (loadInZone[z1] or loadInZone[z2]) then
+			if BigWigs:IsEnabled() and (loadOnZone[z1] or loadOnZone[z2]) then
 				loadZone(z1)
 				loadZone(z2)
 			else
@@ -629,15 +563,71 @@ local function slashfunction(text)
 	end
 end
 
-
 hash_SlashCmdList['/bw'] = nil
 hash_SlashCmdList['/bigwigs'] = nil
 SLASH_BIGWIGSS1 = "/bw"
 SLASH_BIGWIGSS2 = "/bigwigs"
 SlashCmdList.BIGWIGSS = slashfunction
 
-SLASH_BIGWIGSVERSION1 = "/bwv"
-SlashCmdList.BIGWIGSVERSION = showVersions
+do
+	local hexColors = nil
+	local coloredNames = setmetatable({}, {__index =
+		function(self, key)
+			if type(key) == "nil" then return nil end
+			local class = select(2, UnitClass(key))
+			if class then
+				self[key] = hexColors[class]  .. key .. "|r"
+			else
+				self[key] = "|cffcccccc"..key.."|r"
+			end
+			return self[key]
+		end
+	})
+	local function coloredNameVersion(name, version)
+		if version == -1 then version = "svn" end
+		return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version or "unknown")
+	end
+	local function showVersions()
+		local m = getGroupMembers()
+		if not m then return end
+		if not hexColors then
+			hexColors = {}
+			for k, v in pairs(RAID_CLASS_COLORS) do
+				hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+			end
+		end
+		local good = {} -- highest release users
+		local ugly = {} -- old version users
+		local bad  = {} -- non-bw users
+		for i, player in next, m do
+			if usersRelease[player] then
+				if usersRelease[player] < highestReleaseRevision then
+					tinsert(ugly, coloredNameVersion(player, usersRelease[player]))
+				else
+					tinsert(good, coloredNameVersion(player, usersRelease[player]))
+				end
+			elseif usersUnknown[player] then
+				tinsert(ugly, coloredNames[k])
+			elseif usersAlpha[player] then
+				-- release revision -1 because of tagging
+				if usersAlpha[player] >= (highestReleaseRevision - 1) or usersAlpha[player] == -1 then
+					tinsert(good, coloredNameVersion(player, usersAlpha[player]))
+				else
+					tinsert(ugly, coloredNameVersion(player, usersAlpha[player]))
+				end
+			else
+				tinsert(bad, coloredNames[player])
+			end
+		end
+		if #good > 0 then print(L["Up to date:"], table.concat(good, ", ")) end
+		if #ugly > 0 then print(L["Out of date:"], table.concat(ugly, ", ")) end
+		if #bad > 0 then print(L["No Big Wigs 3.x:"], table.concat(bad, ", ")) end
+		good, bad, ugly = nil, nil, nil
+	end
+
+	SLASH_BIGWIGSVERSION1 = "/bwv"
+	SlashCmdList.BIGWIGSVERSION = showVersions
+end
 
 -- interface options
 local frame = CreateFrame("Frame", nil, UIParent)
