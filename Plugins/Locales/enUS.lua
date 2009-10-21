@@ -160,6 +160,7 @@ L["Show/hide"] = true
 -- Tips.lua
 --
 
+L["|cff%s%s|r says:"] = true
 L["Cool!"] = true
 L["Tips"] = true
 L["Configure how the raiding tips should be displayed."] = true

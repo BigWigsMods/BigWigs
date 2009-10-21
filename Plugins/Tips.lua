@@ -110,20 +110,8 @@ plugin.pluginOptions = {
 local footers = {
 	"Premonition @ Sen'jin US - |cff9999ffwww.premoguild.com|r",
 	"|cff9999ffwww.wowace.com/projects/bigwigs|r",
+	"Ensidia @ Tarren Mill EU – |cff9999ffwww.ensidia.com|r",
 }
-
---[[
-DEATHKNIGHT
-DRUID
-HUNTER
-MAGE
-PALADIN
-PRIEST
-ROGUE
-SHAMAN
-WARLOCK
-WARRIOR
-]]
 
 ------------[[
 -- READ ME:
@@ -132,7 +120,6 @@ WARRIOR
 -- Locally you can do whatever you want, of course. Or in a branch.
 -------------------------------------------------------------------------------------]]
 
--- XXX need to try some zlib compression when we have all the tips, perhaps it'll save us some bytes
 local tips = {
 	"Rabbit##Turn off warnings and bars for encounter events that you do not care about. That way you won't be spammed, and you can concentrate more on what matters.#2",
 	"Rabbit##Remember which sound goes with which message during an encounter. Then, next time, you won't even have to look at the messages.#2",
@@ -190,8 +177,8 @@ do
 
 	local function createTipFrame()
 		window = CreateFrame("Frame", nil, UIParent)
-		window:SetWidth(240)
-		window:SetHeight(175)
+		window:SetWidth(260)
+		window:SetHeight(220)
 		window:SetPoint("CENTER")
 		window:SetMovable(true)
 		window:EnableMouse(true)
@@ -330,6 +317,8 @@ do
 	end
 end
 
+-- /script BigWigs:GetPlugin("Tip of the Raid"):RandomTip()
+
 -------------------------------------------------------------------------------
 -- Plugin init
 --
@@ -367,13 +356,12 @@ end
 --
 
 do
-	local headerFormat = "|cff%s%s|r says:"
+	local headerFormat = L["|cff%s%s|r says:"]
 	local DEVELOPER_COLOR = { -- XXX Find a better color, this one looks crap!
 		r = 0.4,
 		g = 0.7,
 		b = 0.4,
 	}
-
 	function plugin:RandomTip()
 		self:ShowTip(tips[math.random(1, #tips)])
 	end
@@ -403,7 +391,6 @@ SlashCmdList.BigWigs_TipOfTheRaid = function(input)
 end
 SLASH_BigWigs_TipOfTheRaid1 = "/raidtip"
 SLASH_BigWigs_TipOfTheRaid2 = "/tipoftheraid"
-SLASH_BigWigs_TipOfTheRaid3 = "/tip"
 
 local pName = UnitName("player")
 local _, pClass = UnitClass("player")
