@@ -237,6 +237,10 @@ local function versionTooltipFunc(tt)
 	end
 end
 
+-----------------------------------------------------------------------
+-- Loader initialization
+--
+
 function loader:OnInitialize()
 	for i = 1, GetNumAddOns() do
 		local name, _, _, enabled = GetAddOnInfo(i)
@@ -314,6 +318,10 @@ function loader:OnEnable()
 	self:ZoneChanged()
 end
 
+-----------------------------------------------------------------------
+-- Events
+--
+
 local warned = nil
 local delayTransmitter = CreateFrame("Frame", nil, UIParent)
 delayTransmitter:Hide()
@@ -366,35 +374,12 @@ function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 	end
 end
 
-function loader:RegisterTooltipInfo(func)
-	for i, v in next, tooltipFunctions do
-		if v == func then
-			error(("The function %q has already been registered."):format(func))
-		end
-	end
-	tinsert(tooltipFunctions, func)
-end
-
-function loader:GetZoneMenus()
-	return menus
-end
-
-function loader:HasZone(zone)
-	if not zone then return false end
-	if loadOnZone[zone] then return true end
-	return false
-end
-
-function loader:LoadZone(zone)
-	loadZone(zone)
-end
-
 function loader:ZoneChanged()
 	if not grouped then return end
 	local z1, z2 = GetRealZoneText(), GetZoneText()
 	-- load party content in raid, but don't load raid content in a party...
 	if (enableZones[z1] and enableZones[z1] <= grouped) or (enableZones[z2] and enableZones[z2] <= grouped) then
-		if self:LoadCore() then
+		if load(BigWigs, "BigWigs_Core") then
 			if BigWigs:IsEnabled() and (loadOnZone[z1] or loadOnZone[z2]) then
 				loadZone(z1)
 				loadZone(z2)
@@ -466,8 +451,36 @@ function loader:BigWigs_LeftGroup()
 	end
 end
 
-function loader:LoadCore() return load(BigWigs, "BigWigs_Core") end
-function loader:LoadOptions() return load(BigWigsOptions, "BigWigs_Options") end
+-----------------------------------------------------------------------
+-- API
+--
+
+function loader:RegisterTooltipInfo(func)
+	for i, v in next, tooltipFunctions do
+		if v == func then
+			error(("The function %q has already been registered."):format(func))
+		end
+	end
+	tinsert(tooltipFunctions, func)
+end
+
+function loader:GetZoneMenus()
+	return menus
+end
+
+function loader:HasZone(zone)
+	if not zone then return false end
+	if loadOnZone[zone] then return true end
+	return false
+end
+
+function loader:LoadZone(zone)
+	loadZone(zone)
+end
+
+-----------------------------------------------------------------------
+-- LDB Plugin
+--
 
 ldb = LibStub("LibDataBroker-1.1"):GetDataObjectByName("BigWigs")
 
@@ -483,7 +496,7 @@ end
 
 function ldb.OnClick(self, button)
 	if BigWigs and BigWigs:IsEnabled() then
-		if button == "RightButton" and loader:LoadOptions() then
+		if button == "RightButton" and load(BigWigsOptions, "BigWigs_Options") then
 			BigWigsOptions:Open()
 		else
 			if IsAltKeyDown() then
@@ -505,14 +518,14 @@ function ldb.OnClick(self, button)
 	elseif BigWigs then
 		BigWigs:Enable()
 		if button == "RightButton" then
-			if loader:LoadOptions() then
+			if load(BigWigsOptions, "BigWigs_Options") then
 				BigWigsOptions:Open()
 			end
 		end
-	elseif loader:LoadCore() then
+	elseif load(BigWigs, "BigWigs_Core") then
 		BigWigs:Enable()
 		if button == "RightButton" then
-			if loader:LoadOptions() then
+			if load(BigWigsOptions, "BigWigs_Options") then
 				BigWigsOptions:Open()
 			end
 		end
@@ -544,8 +557,12 @@ function ldb.OnTooltipShow(tt)
 	tt:AddLine(h, 0.2, 1, 0.2, 1)
 end
 
+-----------------------------------------------------------------------
+-- Slash commands
+--
+
 local function slashfunction(text)
-	if loader:LoadCore() and loader:LoadOptions() then
+	if load(BigWigs, "BigWigs_Core") and load(BigWigsOptions, "BigWigs_Options") then
 		BigWigsOptions:Open()
 	end
 end
@@ -616,36 +633,39 @@ do
 	SlashCmdList.BIGWIGSVERSION = showVersions
 end
 
--- interface options
-local frame = CreateFrame("Frame", nil, UIParent)
-frame.name = "Big Wigs"
-frame:Hide()
-
-frame:SetScript("OnShow", function(frame)
-	for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
-		if f == frame then
-			tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
-			break
+-----------------------------------------------------------------------
+-- Interface options
+--
+do
+	local frame = CreateFrame("Frame", nil, UIParent)
+	frame.name = "Big Wigs"
+	frame:Hide()
+	frame:SetScript("OnShow", function(frame)
+		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
+			if f == frame then
+				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
+				break
+			end
 		end
-	end
-	if loader:LoadCore() then
-		BigWigs:Enable()
-		if loader:LoadOptions() then
-			BigWigsOptions:Open()
+		if load(BigWigs, "BigWigs_Core") then
+			BigWigs:Enable()
+			if load(BigWigsOptions, "BigWigs_Options") then
+				BigWigsOptions:Open()
+			end
 		end
+	end)
+
+	if AddonLoader and AddonLoader.RemoveInterfaceOptions then
+		AddonLoader:RemoveInterfaceOptions("Big Wigs")
 	end
-end)
+	InterfaceOptions_AddCategory(frame)
 
-if AddonLoader and AddonLoader.RemoveInterfaceOptions then
-	AddonLoader:RemoveInterfaceOptions("Big Wigs")
-end
-InterfaceOptions_AddCategory(frame)
-
-function loader:RemoveInterfaceOptions()
-	for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
-		if f == frame then
-			tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
-			break
+	function loader:RemoveInterfaceOptions()
+		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
+			if f == frame then
+				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
+				break
+			end
 		end
 	end
 end
