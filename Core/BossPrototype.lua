@@ -2,6 +2,10 @@
 -- Prototype
 --
 
+local debug = nil -- Set to true to get (very spammy) debug messages.
+local dbgStr = "[DBG:%s] %s"
+local function dbg(self, msg) print(dbgStr:format(self.displayName, msg)) end
+
 local core = BigWigs
 local C = core.C
 local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
@@ -13,10 +17,12 @@ local boss = {}
 core.bossCore:SetDefaultModulePrototype(boss)
 function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
+	if debug then dbg(self, "OnEnable()") end
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 	self:SendMessage("BigWigs_OnBossEnable", self)
 end
 function boss:OnDisable()
+	if debug then dbg(self, "OnDisable()") end
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 	wipe(combatLogMap[self])
@@ -29,6 +35,7 @@ function boss:GetOption(spellId)
 	return self.db.profile[(GetSpellInfo(spellId))]
 end
 function boss:Reboot()
+	if debug then dbg(self, ":Reboot()") end
 	self:Disable()
 	self:Enable()
 end
@@ -142,28 +149,66 @@ do
 	end
 	function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
 
-	local function scan(self)
-		for mobId, entry in pairs(core:GetEnableMobs()) do
-			if type(entry) == "table" then
-				for i, module in next, entry do
-					if module == self.moduleName then
-						local unit = findTargetByGUID(mobId)
-						if unit and UnitAffectingCombat(unit) then return unit end
-						break
+	local scan = nil
+	if debug then
+		function scan(self)
+			local mobs = {}
+			local found = nil
+			for mobId, entry in pairs(core:GetEnableMobs()) do
+				if type(entry) == "table" then
+					for i, module in next, entry do
+						if module == self.moduleName then
+							local unit = findTargetByGUID(mobId)
+							if unit and UnitAffectingCombat(unit) then
+								tinsert(mobs, tostring(mobId) .. ":" .. unit)
+								found = true
+							else
+								tinsert(mobs, tostring(mobId) .. ":no target")
+								mobs[mobId] = "no target"
+							end
+						end
+					end
+				elseif entry == self.moduleName then
+					local unit = findTargetByGUID(mobId)
+					if unit and UnitAffectingCombat(unit) then
+						tinsert(mobs, tostring(mobId) .. ":" .. unit)
+						found = true
+					else
+						tinsert(mobs, tostring(mobId) .. ":no target")
 					end
 				end
-			elseif entry == self.moduleName then
-				local unit = findTargetByGUID(mobId)
-				if unit and UnitAffectingCombat(unit) then return unit end
+			end
+			dbg(self, "scan data: " .. table.concat(mobs, ","))
+			mobs = nil
+			return found
+		end
+	else
+		function scan(self)
+			for mobId, entry in pairs(core:GetEnableMobs()) do
+				if type(entry) == "table" then
+					for i, module in next, entry do
+						if module == self.moduleName then
+							local unit = findTargetByGUID(mobId)
+							if unit and UnitAffectingCombat(unit) then return unit end
+							break
+						end
+					end
+				elseif entry == self.moduleName then
+					local unit = findTargetByGUID(mobId)
+					if unit and UnitAffectingCombat(unit) then return unit end
+				end
 			end
 		end
 	end
 
 	function boss:CheckForEngage()
+		if debug then dbg(self, ":CheckForEngage initiated.") end
 		local go = scan(self)
 		if go then
+			if debug then dbg(self, "Engage scan found active boss entities, transmitting engage sync.") end
 			self:Sync("BossEngaged", self.moduleName)
 		else
+			if debug then dbg(self, "Engage scan did NOT find any active boss entities. Re-scheduling another engage check in 0.5 seconds.") end
 			self:ScheduleTimer("CheckForEngage", .5)
 		end
 	end
@@ -175,20 +220,25 @@ do
 	-- XXX a new BossEngaged sync -> :Engage -> :OnEngage on the module.
 	-- XXX Possibly a concern?
 	function boss:CheckForWipe()
+		if debug then dbg(self, ":CheckForWipe initiated.") end
 		local go = scan(self)
 		if not go then
+			if debug then dbg(self, "Wipe scan found no active boss entities, rebooting module.") end
 			if self.OnWipe then self:OnWipe() end
 			self:Reboot()
 		else
+			if debug then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. ":" .. tostring(UnitName(go)) .. "). Re-scheduling another wipe check in 2 seconds.") end
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
 
 	function boss:Engage()
+		if debug then dbg(self, ":Engage") end
 		if self.OnEngage then self:OnEngage() end
 	end
 
 	function boss:Win()
+		if debug then dbg(self, ":Win") end
 		if self.OnWin then self:OnWin() end
 		self:Sync("Death", self.moduleName)
 	end
