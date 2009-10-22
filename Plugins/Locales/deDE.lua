@@ -163,6 +163,7 @@ L["Show/hide"] = "Zeigen/Verstecken"
 -- Tips.lua
 --
 
+L["|cff%s%s|r says:"] = "|cff%s%s|r sagt:"
 L["Cool!"] = "Cool!"
 L["Tips"] = "Tips"
 L["Configure how the raiding tips should be displayed."] = "Bestimmt, wie die Raidtips aussehen sollen."
