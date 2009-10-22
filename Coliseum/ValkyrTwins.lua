@@ -121,7 +121,7 @@ do
 					elseif event == "SWING_MISSED" then
 						damageDone = damageDone + spellName
 					end
-					if not halfWarning and damageDone >= (currentShieldStrength / 2) then
+					if currentShieldStrength and not halfWarning and damageDone >= (currentShieldStrength / 2) then
 						mod:Message("shield", L["shield_half_message"], "Positive")
 						halfWarning = true
 					end
@@ -135,6 +135,7 @@ do
 		f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function mod:Healed()
+		if not currentShieldStrength then return end
 		local missing = math.ceil((currentShieldStrength / damageDone * 100) - 100)
 		self:Message("shield", L["shield_left_message"]:format(missing), "Important")
 		stop()
