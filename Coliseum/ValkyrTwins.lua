@@ -90,6 +90,7 @@ end
 
 do
 	local damageDone = nil
+	local halfWarning = nil
 	local twin = nil
 	local f = nil
 	local heals = {
@@ -108,6 +109,7 @@ do
 		twin = nil
 		damageDone = nil
 		currentShieldStrength = nil
+		halfWarning = nil
 	end
 	function mod:HealStarted(player, spellId, source)
 		if not f then
@@ -119,9 +121,9 @@ do
 					elseif event == "SWING_MISSED" then
 						damageDone = damageDone + spellName
 					end
-					if damageDone >= (currentShieldStrength / 2) then
+					if not halfWarning and damageDone >= (currentShieldStrength / 2) then
 						mod:Message("shield", L["shield_half_message"], "Positive")
-						stop()
+						halfWarning = true
 					end
 				elseif event == "SPELL_INTERRUPT" and heals[eventType] then
 					stop()
