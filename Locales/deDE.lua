@@ -36,6 +36,7 @@ L["No Big Wigs 3.x:"] = "Kein Big Wigs 3.x:"
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs Encounters"
 L["Customize ..."] = "Anpassen ..."
+L["Profiles"] = "Profile"
 L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = "Willkommen bei Big Wigs, dort, wo die Boss Encounter rumschwirren. Bitte legen Sie Ihren Sicherheitsgurt an, stellen Sie die Rückenlehne gerade und genießen Sie den Flug. Wir werden Ihnen und Ihrer Raidgruppe bei der Begegnung mit Bossen zur Hand gehen und sie Ihnen als 7-Gänge-Menü zubereiten.\n"
 L["Configure ..."] = "Einstellungen ..."
 L["Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."] = "Schließt das Interface-Fenster und lässt dich die Anzeigen für z.B. Leisten und Nachrichten einstellen.\n\nWenn du mehr Dinge hinter den Kulissen anpassen willst, kannst du Big Wigs im Menü links aufmachen und 'Anpassen ...' wählen."
