@@ -36,6 +36,7 @@ L["No Big Wigs 3.x:"] = "BW 3.x absent :"
 -- XXX L.iconDesc = .. instead of L["Bla bla bla ...
 L["Big Wigs Encounters"] = "Rencontres Big Wigs"
 L["Customize ..."] = "Personnaliser..."
+L["Profiles"] = "Profils"
 --L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = ""
 L["Configure ..."] = "Configurer..."
 L["Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."] = "Ferme la fenêtre des options de l'interface et vous permet de configurer l'affichage des barres et des messages.\n\nSi vous voulez personnaliser plus en profondeur le reste de Big Wigs, étendez l'arbre de configuration sur la gauche et cliquez sur \"Personnaliser...\"."

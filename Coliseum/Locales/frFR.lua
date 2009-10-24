@@ -56,6 +56,7 @@ if L then
 	L.charge = "Charge furieuse"
 	L.charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse."
 	L.charge_trigger = "lâche un rugissement assourdissant !$"
+	L.charge_say = "Charge sur moi !"
 
 	L.bosses = "Boss"
 	L.bosses_desc = "Prévient quand le boss suivant arrive."
@@ -115,6 +116,8 @@ if L then
 
 	L.shield = "Bouclier des ténèbres/des lumières"
 	L.shield_desc = "Prévient de l'arrivée des Boucliers des ténèbres/des lumières."
+	L.shield_half_message = "Bouclier à 50% !"
+	L.shield_left_message = "%d%% du bouclier restant"
 
 	L.touch = "Toucher des ténèbres/de lumière"
 	L.touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière."
