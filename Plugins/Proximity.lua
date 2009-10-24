@@ -406,6 +406,35 @@ do
 	end)
 end
 
+local function updateProfile()
+	if not anchor then return end
+	
+	anchor:SetWidth(plugin.db.profile.width)
+	anchor:SetHeight(plugin.db.profile.height)
+	
+	local x = plugin.db.profile.posx
+	local y = plugin.db.profile.posy
+	if x and y then
+		local s = anchor:GetEffectiveScale()
+		anchor:ClearAllPoints()
+		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	else
+		anchor:ClearAllPoints()
+		anchor:SetPoint("CENTER", UIParent, "CENTER")
+	end
+end
+
+local function resetAnchor()
+	anchor:ClearAllPoints()
+	anchor:SetPoint("CENTER", UIParent, "CENTER")
+	anchor:SetWidth(plugin.defaultDB.width)
+	anchor:SetHeight(plugin.defaultDB.height)
+	plugin.db.profile.posx = nil
+	plugin.db.profile.posy = nil
+	plugin.db.profile.width = nil
+	plugin.db.profile.height = nil
+end
+
 -------------------------------------------------------------------------------
 --      Initialization
 --
@@ -422,6 +451,7 @@ function plugin:OnRegister()
 		CUSTOM_CLASS_COLORS:RegisterCallback(update)
 		update()
 	end
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
 
 function plugin:OnPluginEnable()
@@ -432,6 +462,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 end
 
 function plugin:OnPluginDisable()

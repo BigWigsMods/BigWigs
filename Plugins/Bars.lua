@@ -217,6 +217,27 @@ local function resetAnchors()
 	emphasizeAnchor:SetWidth(plugin.defaultDB[emphasizeAnchor.w])
 end
 
+local function updateAnchor(anchor)
+	local frameName = anchor:GetName()
+	local wKey, xKey, yKey = frameName .. "_width", frameName .. "_x", frameName .. "_y"
+	anchor.w, anchor.x, anchor.y = wKey, xKey, yKey
+	if db[xKey] and db[yKey] then
+		local s = anchor:GetEffectiveScale()
+		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[xKey] / s, db[yKey] / s)
+	else
+		anchor:SetPoint(unpack(defaultPositions[frameName]))
+	end
+	anchor:SetWidth(db[wKey] or 200)
+end
+
+local function updateProfile()
+	db = plugin.db.profile
+	if normalAnchor then
+		updateAnchor(normalAnchor)
+		updateAnchor(emphasizeAnchor)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -229,6 +250,7 @@ function plugin:OnRegister()
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 	
 	db = self.db.profile
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
 
 function plugin:OnPluginEnable()
@@ -248,6 +270,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	
 	--  custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")

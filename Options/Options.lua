@@ -143,6 +143,14 @@ local acOptions = {
 	},
 }
 
+local profileOptions
+local function getProfileOptions()
+	if not profileOptions then
+		profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+	end
+	return profileOptions
+end
+
 function options:OnInitialize()
 	BigWigsLoader:RemoveInterfaceOptions()
 
@@ -246,6 +254,9 @@ function options:OnInitialize()
 
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
+	
+	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
+	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
 	
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_PluginRegistered")

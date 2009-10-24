@@ -107,6 +107,18 @@ plugin.defaultDB = {
 
 plugin.pluginOptions = plugin:GetSinkAce3OptionsDataTable()
 
+local function updateProfile()
+	if not anchor then return end
+	local x = plugin.db.profile.posx
+	local y = plugin.db.profile.posy
+	local s = anchor:GetEffectiveScale()
+	if not x or not y then
+		anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
+	else
+		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	end
+end
+
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -114,6 +126,7 @@ plugin.pluginOptions = plugin:GetSinkAce3OptionsDataTable()
 function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
 	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
 
 function plugin:OnPluginEnable()
@@ -129,6 +142,7 @@ function plugin:OnPluginEnable()
 	end)
 
 	colorModule = BigWigs:GetPlugin("Colors", true)
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)

@@ -36,6 +36,7 @@ L["No Big Wigs 3.x:"] = true
 -- XXX L.iconDesc = .. instead of L["Bla bla bla ...
 L["Big Wigs Encounters"] = true
 L["Customize ..."] = true
+L["Profiles"] = true
 L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"] = true
 L["Configure ..."] = true
 L["Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."] = true

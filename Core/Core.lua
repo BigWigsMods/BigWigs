@@ -267,7 +267,13 @@ function addon:OnInitialize()
 		}
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
-
+	local function profileUpdate()
+		addon:SendMessage("BigWigs_ProfileUpdate")
+	end
+	self.db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
+	self.db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
+	self.db.RegisterCallback(self, "OnProfileReset", profileUpdate)
+	
 	-- check for and load the babbles early if available, used for packed versions of bigwigs
 	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
