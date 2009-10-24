@@ -76,11 +76,18 @@ local acOptions = {
 			order = 22,
 			width = "full",
 		},
+		showBossmodChat = {
+			type = "toggle",
+			name = L["Show bossmod chat messages"],
+			desc = L["Big Wigs and other bossmod addons have the option to broadcast messages to the group over chat. By default these messages are blocked from being shown in your chatframe and on screen. You can turn on these messages using this option.\n\n|cffff4411Turning this option on can result in lots of duplicate message spam and is not recommended.|r"],
+			order = 23,
+			width = "full",
+		},
 		flashshake = {
 			type = "toggle",
 			name = L["Flash and shake"],
 			desc = L["Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash and shake the screen.\n\n|cffff4411If you are playing with the nameplates turned on the shaking function will not work due to Blizzard restrictions, the screen will only flash then.|r"],
-			order = 23,
+			order = 24,
 			width = "full",
 		},
 		separator2 = {
