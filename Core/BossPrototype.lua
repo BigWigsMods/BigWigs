@@ -227,7 +227,7 @@ do
 			if self.OnWipe then self:OnWipe() end
 			self:Reboot()
 		else
-			if debug then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. ":" .. tostring(UnitName(go)) .. "). Re-scheduling another wipe check in 2 seconds.") end
+			if debug then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. "). Re-scheduling another wipe check in 2 seconds.") end
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end

@@ -37,7 +37,7 @@ local acOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = L["Welcome to Big Wigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group.\n"],
+			name = L.introduction,
 			fontSize = "medium",
 			order = 10,
 			width = "full",
@@ -45,7 +45,7 @@ local acOptions = {
 		configure = {
 			type = "execute",
 			name = L["Configure ..."],
-			desc = L["Closes the interface options window and lets you configure displays for things like bars and messages.\n\nIf you want to customize more behind-the-scenes things, you can expand Big Wigs in the left tree and find the 'Customize ...' subsection."],
+			desc = L.configureDesc,
 			func = function()
 				HideUIPanel(InterfaceOptionsFrame)
 				HideUIPanel(GameMenuFrame)
@@ -65,29 +65,22 @@ local acOptions = {
 		sound = {
 			type = "toggle",
 			name = L["Sound"],
-			desc = L["Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages.\n\n|cffff4411Even when off, the default raid warning sound might be played by incoming raid warnings from other players. That sound, however, is different from the sounds we use.|r"],
+			desc = L.soundDesc,
 			order = 21,
-			width = "full",
-		},
-		showBlizzardWarnings = {
-			type = "toggle",
-			name = L["Blizzard warnings"],
-			desc = L["Blizzard provides their own messages for some abilities on some encounters. In our opinion, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and that don't tell you specifically what to do.\n\n|cffff4411When off, Blizzards warnings will not be shown in the middle of the screen, but they will still show in your chat frame.|r"],
-			order = 22,
-			width = "full",
-		},
-		showBossmodChat = {
-			type = "toggle",
-			name = L["Show bossmod chat messages"],
-			desc = L["Big Wigs and other bossmod addons have the option to broadcast messages to the group over chat. By default these messages are blocked from being shown in your chatframe and on screen. You can turn on these messages using this option.\n\n|cffff4411Turning this option on can result in lots of duplicate message spam and is not recommended.|r"],
-			order = 23,
 			width = "full",
 		},
 		flashshake = {
 			type = "toggle",
 			name = L["Flash and shake"],
-			desc = L["Certain abilities are important enough to need your full attention. When these abilities affect you Big Wigs can flash and shake the screen.\n\n|cffff4411If you are playing with the nameplates turned on the shaking function will not work due to Blizzard restrictions, the screen will only flash then.|r"],
-			order = 24,
+			desc = L.fnsDesc,
+			order = 22,
+			width = "full",
+		},
+		raidicon = {
+			type = "toggle",
+			name = L["Raid icons"],
+			desc = L.raidiconDesc,
+			order = 23,
 			width = "full",
 		},
 		separator2 = {
@@ -96,31 +89,38 @@ local acOptions = {
 			order = 30,
 			width = "full",
 		},
-		raidicon = {
+		showBlizzardWarnings = {
 			type = "toggle",
-			name = L["Raid icons"],
-			desc = L["Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"],
+			name = L["Show Blizzard warnings"],
+			desc = L.blizzardDesc,
 			order = 31,
+			width = "full",
+		},
+		showBossmodChat = {
+			type = "toggle",
+			name = L["Show addon warnings"],
+			desc = L.addonwarningDesc,
+			order = 32,
 			width = "full",
 		},
 		whisper = {
 			type = "toggle",
 			name = L["Whisper warnings"],
-			desc = L["Send a whisper notification to fellow players about certain encounter abilities that affect them. Think 'bomb'-type effects and such.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"],
-			order = 32,
+			desc = L.whisperDesc,
+			order = 33,
 			width = "full",
 		},
 		broadcast = {
 			type = "toggle",
 			name = L["Broadcast"],
-			desc = L["Broadcast all messages from Big Wigs to the raid warning channel.\n\n|cffff4411In raids this only applies if you're promoted, but in parties it will work regardless.|r"],
-			order = 33,
+			desc = L.broadcastDesc,
+			order = 34,
 		},
 		useraidchannel = {
 			type = "toggle",
 			name = L["Raid channel"],
 			desc = L["Use the raid channel instead of raid warning for broadcasting messages."],
-			order = 34,
+			order = 35,
 			disabled = function() return not BigWigs.db.profile.broadcast end,
 		},
 		separator3 = {

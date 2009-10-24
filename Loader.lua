@@ -336,11 +336,9 @@ do
 
 	function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
 		if prefix == "BWVQ3" then
-			-- send the unknown message, this person might have already sent their own version but the possible Version module can sort that out
 			if not usersRelease[sender] and not usersAlpha[sender] then
 				usersUnknown[sender] = true
 			end
-			--self:SendMessage("BigWigs_Version", sender, UNKNOWN)
 			delayTransmitter.elapsed = 0
 			delayTransmitter:Show()
 		elseif prefix == "BWOOD3" then
@@ -356,9 +354,7 @@ do
 			usersAlpha[sender] = nil
 			usersUnknown[sender] = nil
 			if message > highestReleaseRevision then highestReleaseRevision = message end
-			--self:SendMessage("BigWigs_Version", sender, RELEASE, message)
 			if sender ~= pName and highestReleaseRevision > message then
-				-- The sender is running an old version.
 				SendAddonMessage("BWOOD3", highestReleaseRevision, "WHISPER", sender)
 			end
 		elseif prefix == "BWVRA3" then
@@ -367,7 +363,6 @@ do
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			usersUnknown[sender] = nil
-			--self:SendMessage("BigWigs_Version", sender, ALPHA, message)
 		end
 	end
 end
