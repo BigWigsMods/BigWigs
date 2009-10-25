@@ -694,6 +694,7 @@ local function onZoneShow(frame)
 		group:SetUserData("zone", zone)
 		group:SetGroupList(zoneModules[zone])
 	else
+		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
 		group = AceGUI:Create("SimpleGroup")
 		group:SetLayout("Fill")
 		group:SetUserData("module", frame.module)
