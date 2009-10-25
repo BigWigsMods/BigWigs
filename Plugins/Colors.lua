@@ -166,23 +166,8 @@ plugin.pluginOptions = {
 	},
 }
 
-local function copyTable(to, from)
-	setmetatable(to, nil)
-	for k,v in pairs(from) do
-		if type(k) == "table" then
-			k = copyTable({}, k)
-		end
-		if type(v) == "table" then
-			v = copyTable({}, v)
-		end
-		to[k] = v
-	end
-	setmetatable(to, from)
-	return to
-end
-
 function plugin:ResetDB()
-	copyTable(self.db.profile, self.defaultDB)
+	self.db:ResetProfile()
 end
 
 function plugin:HasColor(hint)
