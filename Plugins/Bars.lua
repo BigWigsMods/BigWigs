@@ -346,10 +346,6 @@ do
 			font:SetFullWidth(true)
 		end
 
-		--[[
-		XXX OH MY GOD these radio buttons look REALLY bad! :D
-		XXX we'll use a dropdown for now
-		
 		local align = AceGUI:Create("InlineGroup")
 		align:SetTitle(L["Align"])
 		align:SetFullWidth(true)
@@ -357,33 +353,39 @@ do
 		
 		do
 			local left = AceGUI:Create("CheckBox")
-			left:SetValue(false)
+			local center = AceGUI:Create("CheckBox")
+			local right = AceGUI:Create("CheckBox")
+			
+			local function set(widget, event, value)
+				db.align = widget:GetUserData("value")
+				left:SetValue(db.align == "LEFT")
+				center:SetValue(db.align == "CENTER")
+				right:SetValue(db.align == "RIGHT")
+			end
+			
+			left:SetValue(db.align == "LEFT")
+			left:SetUserData("value", "LEFT")
 			left:SetType("radio")
 			left:SetLabel(L["Left"])
-			left:SetRelativeWidth(0.3)
+			left:SetCallback("OnValueChanged", set)
+			left:SetRelativeWidth(0.33)
 
-			local center = AceGUI:Create("CheckBox")
-			center:SetValue(false)
+			center:SetValue(db.align == "CENTER")
+			center:SetUserData("value", "CENTER")
 			center:SetType("radio")
 			center:SetLabel(L["Center"])
-			center:SetRelativeWidth(0.3)
+			center:SetCallback("OnValueChanged", set)
+			center:SetRelativeWidth(0.33)
 
-			local right = AceGUI:Create("CheckBox")
-			right:SetValue(false)
+			right:SetValue(db.align == "RIGHT")
+			right:SetUserData("value", "RIGHT")
 			right:SetType("radio")
 			right:SetLabel(L["Right"])
-			right:SetRelativeWidth(0.3)
+			right:SetCallback("OnValueChanged", set)
+			right:SetRelativeWidth(0.33)
 
 			align:AddChildren(left, center, right)
-		end]]
-
-		local align = AceGUI:Create("Dropdown")
-		align:SetList({ LEFT = L["Left"], CENTER = L["Center"], RIGHT = L["Right"] })
-		align:SetValue(db.align)
-		align:SetLabel(L["Align"])
-		align:SetUserData("key", "align")
-		align:SetCallback("OnValueChanged", standardCallback)
-		align:SetFullWidth(true)
+		end
 
 		local icon = AceGUI:Create("CheckBox")
 		icon:SetValue(db.icon)
