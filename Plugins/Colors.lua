@@ -14,36 +14,74 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 --
 
 plugin.defaultDB = {
-	Important = { 1, 0.2, 0.2 }, -- Red
-	Personal = { 0.2, 0.4, 1 }, -- Blue
-	Urgent = { 1, 0.5, 0.1 }, -- Orange
-	Attention = { 1, 1, 0.1 }, -- Yellow
-	Positive = { 0.2, 1, 0.2 }, -- Green
-	Bosskill = { 0.2, 1, 0.2 }, -- Green
-	Core = { 0.2, 1, 1 }, -- Cyan
+	Important = { ["*"] = { 1, 0.2, 0.2 } }, -- Red
+	Personal = { ["*"] = { 0.2, 0.4, 1 } }, -- Blue
+	Urgent = { ["*"] = { 1, 0.5, 0.1 } }, -- Orange
+	Attention = { ["*"] = { 1, 1, 0.1 } }, -- Yellow
+	Positive = { ["*"] = { 0.2, 1, 0.2 } }, -- Green
+	Bosskill = { ["*"] = { 0.2, 1, 0.2 } }, -- Green
+	Core = { ["*"] = { 0.2, 1, 1 } }, -- Cyan
 
-	barBackground = { 0.5, 0.5, 0.5, 0.3 },
-	barText = { 1, 1, 1 },
-	barColor = { 0.25, 0.33, 0.68, 1 },
-	barEmphasized = { 1, 0, 0, 1 },
+	barBackground = { ["*"] = { 0.5, 0.5, 0.5, 0.3 } },
+	barText = { ["*"] = { 1, 1, 1 } },
+	barColor = { ["*"] = { 0.25, 0.33, 0.68, 1 } },
+	barEmphasized = { ["*"] = { 1, 0, 0, 1 } },
 	
-	flashshake = { 0, 0, 1 },
+	flashshake = { ["*"] = { 0, 0, 1 } },
 }
+local defaultColorKey = plugin.name.."_Default" 
+
+local function copyTable(to, from)
+	setmetatable(to, nil)
+	for k,v in pairs(from) do
+		if type(k) == "table" then
+			k = copyTable({}, k)
+		end
+		if type(v) == "table" then
+			v = copyTable({}, v)
+		end
+		to[k] = v
+	end
+	setmetatable(to, from)
+	return to
+end
+
+local function compareTable(a, b)
+	for k, v in pairs(a) do
+		if not b[k] or b[k] ~= v then return false end
+	end
+	for k, v in pairs(b) do
+		if not a[k] or a[k] ~= v then return false end
+	end
+	return true
+end
 
 local function get(info)
-	return unpack(plugin.db.profile[info[#info]])
-end
-local function set(info, r, g, b, a)
-	plugin.db.profile[info[#info]] = {r, g, b, a}
+	return plugin:GetColor(info[#info], info.arg)
 end
 
-plugin.pluginOptions = {
+local function set(info, r, g, b, a)
+	plugin.db.profile[info[#info]][info.arg] = {r, g, b, a}
+end
+
+local function reset(info)
+	for k, v in pairs(plugin.db.profile) do
+		plugin.db.profile[k][info.arg] = nil
+	end
+end
+
+local function resetAll()
+	plugin.db:ResetProfile()
+end
+
+local colorOptions = {
 	type = "group",
 	name = L["Colors"],
 	desc = L["Colors of messages and bars."],
 	handler = plugin,
 	get = get,
 	set = set,
+	inline = true,
 	args = {
 		messages = {
 			type = "group",
@@ -158,28 +196,54 @@ plugin.pluginOptions = {
 		reset = {
 			type = "execute",
 			name = L["Reset"],
-			desc = L["Resets all colors to defaults."],
-			func = "ResetDB",
+			desc = L["Resets the above colors to defaults."],
+			func = reset,
 			order = 16,
 			width = "full",
 		},
 	},
 }
 
-function plugin:ResetDB()
-	self.db:ResetProfile()
-end
-
-function plugin:HasColor(hint)
-	return self.db.profile[hint] and true or nil
-end
-
-function plugin:GetColor(hint)
-	local t = self.db.profile[hint]
-	if t then
-		return unpack(t)
-	else
-		return 1, 1, 1
+local function addKey(t, key)
+	if t.type and ( t.type == "color" or t.type == "execute" ) then
+		t.arg = key
+	elseif t.args then
+		for k, v in pairs(t.args) do
+			t.args[k] = addKey(v, key)
+		end
 	end
+	return t
+end
+
+function plugin:GetColorOptions(key)
+	return addKey(colorOptions, key)
+end
+
+-- the pluginOptions are a slightly altered copy of the defaults
+plugin.pluginOptions = copyTable({}, plugin:GetColorOptions(defaultColorKey))
+plugin.pluginOptions.inline = nil
+plugin.pluginOptions.args.reset.width = "half"
+plugin.pluginOptions.args.resetAll = {
+	type = "execute",
+	name = L["Reset all"],
+	desc = L["Resets all colors for all modules to defaults."],
+	func = resetAll,
+	order = 17,
+	width = "half",
+}
+
+function plugin:HasColor(hint, key)
+	if not self.db.profile[hint] then return end
+	local t = self.db.profile[hint][key or defaultColorKey] -- no key passed -> return our default
+	return not compareTable(t, self.defaultDB[hint]["*"])
+end
+
+function plugin:GetColor(hint, key)
+	if not self.db.profile[hint] then return 1, 1, 1 end
+	local t = self.db.profile[hint][key or defaultColorKey] -- no key passed -> return our default
+	if compareTable(t, self.defaultDB[hint]["*"]) then -- unchanged profile entry, go with the defaultColors
+		t = self.db.profile[hint][defaultColorKey]
+	end
+	return unpack(t)
 end
 

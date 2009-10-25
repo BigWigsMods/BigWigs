@@ -54,7 +54,9 @@ L["Colors of messages and bars."] = true
 L["Change the color for %q messages."] = true
 L["Change the bar background color."] = true
 L["Change the bar text color."] = true
-L["Resets all colors to defaults."] = true
+L["Resets the above colors to defaults."] = true
+L["Reset all"] = true
+L["Resets all colors for all modules to defaults."] = true
 
 L["Important"] = true
 L["Personal"] = true

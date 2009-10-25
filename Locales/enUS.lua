@@ -56,6 +56,7 @@ L["Configure"] = true
 L["Test"] = true
 L["Reset positions"] = true
 L["Options for %s."] = true -- XXX used ?
+L["Colors"] = true
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"

@@ -14,6 +14,8 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
+local colorModule 
+
 local zoneModules = {}
 
 local pluginOptions = {
@@ -264,6 +266,9 @@ function options:OnInitialize()
 	
 	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
+	
+	colorModule = BigWigs:GetPlugin("Colors")
+	ac:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:GetColorOptions("dummy"))
 end
 
 function options:OnEnable()
@@ -524,6 +529,82 @@ local function getSlaveToggle(label, desc, key, module, flag, master)
 	return toggle
 end
 
+local function advancedToggles(dbKey, module, check)
+	local dbv = module.toggleDefaults[dbKey]
+
+	do
+		wipe(slaves)
+		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+			local message = getSlaveToggle(L["MESSAGE"], L["MESSAGE_desc"], dbKey, module, C.MESSAGE, check)
+			table.insert(slaves, message)
+		end
+		if bit.band(dbv, C.BAR) == C.BAR then
+			local bar = getSlaveToggle(L["BAR"], L["BAR_desc"], dbKey, module, C.BAR, check)
+			table.insert(slaves, bar)
+		end
+		if bit.band(dbv, C.FLASHSHAKE) == C.FLASHSHAKE then
+			local fns = getSlaveToggle(L["FLASHSHAKE"], L["FLASHSHAKE_desc"], dbKey, module, C.FLASHSHAKE, check)
+			table.insert(slaves, fns)
+		end
+		if bit.band(dbv, C.ICON) == C.ICON then
+			local icon = getSlaveToggle(L["ICON"], L["ICON_desc"], dbKey, module, C.ICON, check)
+			table.insert(slaves, icon)
+		end
+		if bit.band(dbv, C.WHISPER) == C.WHISPER then
+			local whisper = getSlaveToggle(L["WHISPER"], L["WHISPER_desc"], dbKey, module, C.WHISPER, check)
+			table.insert(slaves, whisper)
+		end
+		if bit.band(dbv, C.SAY) == C.SAY then
+			local say = getSlaveToggle(L["SAY"], L["SAY_desc"], dbKey, module, C.SAY, check)
+			table.insert(slaves, say)
+		end
+		if bit.band(dbv, C.PING) == C.PING then
+			local ping = getSlaveToggle(L["PING"], L["PING_desc"], dbKey, module, C.PING, check)
+			table.insert(slaves, ping)
+		end
+--[[ XXX - Add this again when we're ready for it
+		local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
+		-- group:AddChildren(emp)
+		table.insert(slaves, emp)
+--]]
+	end
+	return unpack(slaves)
+end
+
+local function advancedTabSelect(widget, callback, tab)
+	if widget:GetUserData("tab") == tab then return end
+	widget:SetUserData("tab", tab)
+	widget:PauseLayout()
+	widget:ReleaseChildren()
+	local module = widget:GetUserData("module")
+	local key = widget:GetUserData("key")
+	local master = widget:GetUserData("master")
+	if tab == "options" then
+		widget:AddChildren(advancedToggles(key, module, master))
+	elseif tab == "colors" then
+		-- XXX I want to use a SimpleGroup because that looks best, but InlineGroup sizes properly and SimpleGroup doesn't?!
+		local group = AceGUI:Create("InlineGroup")
+		group:SetFullWidth(true)
+		widget:AddChildren(group)
+		colorModule:GetColorOptions(module.name .. "_" .. key)
+		acd:Open("Big Wigs: Colors Override", group)
+	end
+	widget:ResumeLayout()
+	widget:GetUserData("scrollFrame"):DoLayout()
+	widget:DoLayout()
+end
+
+local advancedTabs = {
+	{
+		text = L["Advanced options"],
+		value = "options",
+	},
+	{
+		text = L["Colors"],
+		value = "colors",
+	},
+}
+
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc = getOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
@@ -545,56 +626,20 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
 	
-	local group = AceGUI:Create("InlineGroup")
-	group:SetFullWidth(true)
-	group:SetTitle(L["Advanced options"])
+	local tabs = AceGUI:Create("TabGroup")
+	tabs:SetLayout("Flow")
+	tabs:SetTabs(advancedTabs)
+	tabs:SetFullWidth(true)
+	-- tabs:SetFullHeight(true)
+	tabs:SetCallback("OnGroupSelected", advancedTabSelect)
+	tabs:SetUserData("tab", "")
+	tabs:SetUserData("key", dbKey)
+	tabs:SetUserData("module", module)
+	tabs:SetUserData("master", check)
+	tabs:SetUserData("scrollFrame", scrollFrame)
+	tabs:SelectTab("options")
 
-	local dbv = module.toggleDefaults[dbKey]
-
-	do
-		wipe(slaves)
-		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
-			local message = getSlaveToggle(L["MESSAGE"], L["MESSAGE_desc"], dbKey, module, C.MESSAGE, check)
-			group:AddChildren(message)
-			table.insert(slaves, message)
-		end
-		if bit.band(dbv, C.BAR) == C.BAR then
-			local bar = getSlaveToggle(L["BAR"], L["BAR_desc"], dbKey, module, C.BAR, check)
-			group:AddChildren(bar)
-			table.insert(slaves, bar)
-		end
-		if bit.band(dbv, C.FLASHSHAKE) == C.FLASHSHAKE then
-			local fns = getSlaveToggle(L["FLASHSHAKE"], L["FLASHSHAKE_desc"], dbKey, module, C.FLASHSHAKE, check)
-			group:AddChildren(fns)
-			table.insert(slaves, fns)
-		end
-		if bit.band(dbv, C.ICON) == C.ICON then
-			local icon = getSlaveToggle(L["ICON"], L["ICON_desc"], dbKey, module, C.ICON, check)
-			group:AddChildren(icon)
-			table.insert(slaves, icon)
-		end
-		if bit.band(dbv, C.WHISPER) == C.WHISPER then
-			local whisper = getSlaveToggle(L["WHISPER"], L["WHISPER_desc"], dbKey, module, C.WHISPER, check)
-			group:AddChildren(whisper)
-			table.insert(slaves, whisper)
-		end
-		if bit.band(dbv, C.SAY) == C.SAY then
-			local say = getSlaveToggle(L["SAY"], L["SAY_desc"], dbKey, module, C.SAY, check)
-			group:AddChildren(say)
-			table.insert(slaves, say)
-		end
-		if bit.band(dbv, C.PING) == C.PING then
-			local ping = getSlaveToggle(L["PING"], L["PING_desc"], dbKey, module, C.PING, check)
-			group:AddChildren(ping)
-			table.insert(slaves, ping)
-		end
---[[ XXX - Add this again when we're ready for it
-		local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
-		group:AddChildren(emp)
-		table.insert(slaves, emp)
---]]
-	end
-	return back, check, group
+	return back, check, tabs
 end
 
 local function buttonClicked(widget)
