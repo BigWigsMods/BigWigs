@@ -56,7 +56,9 @@ L["Colors of messages and bars."] = "Цвета сообщений и полос
 L["Change the color for %q messages."] = "Изменить цвет %q сообщений."
 L["Change the bar background color."] = "Изменить цвет фона полосы."
 L["Change the bar text color."] = "Изменить цвет текста полосы."
-L["Resets all colors to defaults."] = "Сброс всех цветов на стандартные значения."
+L["Resets the above colors to defaults."] = "Сброс цветов наже на стандартные значения."
+L["Reset all"] = "Сбросить все"
+L["Resets all colors for all modules to defaults."] = "Сброс всех цветов, для всех модулей, на стандартные значения."
 
 L["Important"] = "Важные"
 L["Personal"] = "Личные"
