@@ -21,3 +21,5 @@ function plugin:OnDisable()
 	self:SendMessage("BigWigs_OnPluginDisable", self)
 end
 
+function plugin:IsBossModule() return end
+

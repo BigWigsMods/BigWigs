@@ -15,6 +15,7 @@ local deathMap = setmetatable({}, metaMap)
 
 local boss = {}
 core.bossCore:SetDefaultModulePrototype(boss)
+function boss:IsBossModule() return true end
 function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
 	if debug then dbg(self, "OnEnable()") end

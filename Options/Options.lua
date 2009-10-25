@@ -264,23 +264,21 @@ function options:OnInitialize()
 	
 	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
-	
-	self:RegisterMessage("BigWigs_BossModuleRegistered")
-	self:RegisterMessage("BigWigs_PluginRegistered")
 end
 
 function options:OnEnable()
 	for name, module in BigWigs:IterateBossModules() do
-		self:BigWigs_BossModuleRegistered("BigWigs_BossModuleRegistered", name, module)
+		self:Register("BigWigs_BossModuleRegistered", name, module)
 	end
 	for name, module in BigWigs:IteratePlugins() do
-		self:BigWigs_PluginRegistered("BigWigs_PluginRegistered", name, module)
+		self:Register("BigWigs_PluginRegistered", name, module)
 	end
+	self:RegisterMessage("BigWigs_BossModuleRegistered", "Register")
+	self:RegisterMessage("BigWigs_PluginRegistered", "Register")
+	
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
-	self:RegisterMessage("BigWigs_BossModuleRegistered")
-	self:RegisterMessage("BigWigs_PluginRegistered")
 
 	local zones = BigWigsLoader:GetZoneMenus()
 	local tmp = {}
@@ -442,7 +440,7 @@ do
 	})
 end
 
-local showBossOptions = nil
+local showToggleOptions = nil
 
 local function getOptionDetails(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
@@ -533,7 +531,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		wipe(slaves) -- important, mastertoggled is called from the parent that has no slaves as well
-		showBossOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
+		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize[name])
@@ -634,33 +632,36 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	return check, button
 end
 
-function showBossOptions(widget, event, group)
+local function populateToggleOptions(widget, module)
 	local scrollFrame = widget:GetUserData("parent")
-	scrollFrame:SetScroll(0)
 	scrollFrame:ReleaseChildren()
-	local modules = zoneModules[widget:GetUserData("zone")]
-	local module = BigWigs:GetBossModule(group)
-	widget:SetUserData("bossIndex", group)
-	if not module.toggleOptions then
-		print("No toggle options for " .. module.displayName .. ".")
-	else
-		for i, option in next, module.toggleOptions do
-			local o = option
-			if type(o) == "table" then o = option[1] end
-			if module.optionHeaders and module.optionHeaders[o] then
-				local heading = module.optionHeaders[o]
-				local text = nil
-				if type(heading) == "number" then text = GetSpellInfo(heading)
-				elseif common[heading] then text = common[heading]
-				else text = BigWigs:Translate(heading) end
-				local header = AceGUI:Create("Heading")
-				header:SetText(text)
-				header:SetFullWidth(true)
-				scrollFrame:AddChild(header)
-			end
-			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
+	for i, option in next, module.toggleOptions do
+		local o = option
+		if type(o) == "table" then o = option[1] end
+		if module.optionHeaders and module.optionHeaders[o] then
+			local heading = module.optionHeaders[o]
+			local text = nil
+			if type(heading) == "number" then text = GetSpellInfo(heading)
+			elseif common[heading] then text = common[heading]
+			else text = BigWigs:Translate(heading) end
+			local header = AceGUI:Create("Heading")
+			header:SetText(text)
+			header:SetFullWidth(true)
+			scrollFrame:AddChild(header)
 		end
-		scrollFrame:DoLayout()
+		scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
+	end
+	scrollFrame:DoLayout()
+end
+
+function showToggleOptions(widget, event, group)
+	if widget:GetUserData("zone") then
+		local modules = zoneModules[widget:GetUserData("zone")]
+		local module = BigWigs:GetBossModule(group)
+		widget:SetUserData("bossIndex", group)
+		populateToggleOptions(widget, module)
+	else
+		populateToggleOptions(widget, widget:GetUserData("module"))
 	end
 end
 
@@ -677,40 +678,55 @@ local function onZoneShow(frame)
 	sframe:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
 	sframe:SetLayout("Fill")
 	sframe:SetFullWidth(true)
-	local dropdown = AceGUI:Create("DropdownGroup")
-	dropdown:SetLayout("Fill")
-	dropdown:SetCallback("OnGroupSelected", showBossOptions)
-	table.sort(zoneModules[zone])
-	dropdown:SetUserData("zone", zone)
-	dropdown:SetGroupList(zoneModules[zone])
+
 	local scroll = AceGUI:Create("ScrollFrame")
 	scroll:SetLayout("Flow")
 	scroll:SetFullWidth(true)
 	scroll:SetFullHeight(true)
-	dropdown:AddChild(scroll)
-	sframe:AddChild(dropdown)
+	
+	local hasZones = zone and zoneModules[zone] and true or nil
+	local group = nil
+	if hasZones then
+		group = AceGUI:Create("DropdownGroup")
+		group:SetLayout("Fill")
+		group:SetCallback("OnGroupSelected", showToggleOptions)
+		table.sort(zoneModules[zone])
+		group:SetUserData("zone", zone)
+		group:SetGroupList(zoneModules[zone])
+	else
+		group = AceGUI:Create("SimpleGroup")
+		group:SetLayout("Fill")
+		group:SetUserData("module", frame.module)
+	end
+	group:AddChild(scroll)
+	sframe:AddChild(group)
+	group:SetUserData("parent", scroll)
 	sframe.frame:SetParent(frame)
 	sframe:ResumeLayout()
 	sframe:DoLayout()
 	sframe.frame:Show()
 	frame.container = sframe
-	dropdown:SetUserData("parent", scroll)
-	local enabledModule = nil
-	for name, module in BigWigs:IterateBossModules() do
-		if module:IsEnabled() then
-			enabledModule = module.moduleName
+
+	if hasZones then
+		local enabledModule = nil
+		for name, module in BigWigs:IterateBossModules() do
+			if module:IsEnabled() then
+				enabledModule = module.moduleName
+			end
 		end
-	end
-	if enabledModule and zoneModules[zone][enabledModule] then
-		dropdown:SetGroup(enabledModule)
+		if enabledModule and zoneModules[zone][enabledModule] then
+			group:SetGroup(enabledModule)
+		else
+			-- select first one
+			wipe(sorted)
+			for k, v in pairs(zoneModules[zone]) do
+				table.insert(sorted, k)
+			end
+			table.sort(sorted)
+			group:SetGroup(sorted[1])
+		end
 	else
-		-- select first one
-		wipe(sorted)
-		for k, v in pairs(zoneModules[zone]) do
-			table.insert(sorted, k)
-		end
-		table.sort(sorted)
-		dropdown:SetGroup(sorted[1])
+		populateToggleOptions(group, frame.module)
 	end
 end
 
@@ -751,23 +767,30 @@ do
 	end
 end
 
-local registered = {}
-function options:BigWigs_BossModuleRegistered(message, moduleName, module)
-	if registered[module.name] then return end
-	registered[module.name] = true
-	if not module.toggleOptions then return end
-	local zone = module.otherMenu or module.zoneName
-	if not zone then error(module.name .. " doesn't have any valid zone set!") end
-	if not zoneModules[zone] then zoneModules[zone] = {} end
-	zoneModules[zone][module.moduleName] = module.displayName
-end
-
-function options:BigWigs_PluginRegistered(message, moduleName, module)
-	if registered[module.name] then return end
-	registered[module.name] = true
-	if not module.pluginOptions then return end
-	if module.pluginOptions then
-		pluginOptions.args[module.name] = module.pluginOptions
+do
+	local registered = {}
+	function options:Register(message, moduleName, module)
+		if registered[module.name] then return end
+		registered[module.name] = true
+		if module.toggleOptions then
+			if module:IsBossModule() then
+				local zone = module.otherMenu or module.zoneName
+				if not zone then error(module.name .. " doesn't have any valid zone set!") end
+				if not zoneModules[zone] then zoneModules[zone] = {} end
+				zoneModules[zone][module.moduleName] = module.displayName
+			else
+				local panel, created = self:GetPanel(moduleName, "Big Wigs")
+				if created then
+					panel:SetScript("OnShow", onZoneShow)
+					panel:SetScript("OnHide", onZoneHide)
+					panel.module = module
+				end
+			end
+		end
+		if module.pluginOptions then
+			pluginOptions.args[module.name] = module.pluginOptions
+		end
 	end
 end
+
 

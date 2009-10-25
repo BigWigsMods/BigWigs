@@ -374,10 +374,10 @@ do
 	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
 	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
-	function addon:RegisterBossModule(module)
-		if not C then C = self.C end
-		if not self.defaultToggles then
-			self.defaultToggles = setmetatable({
+	local function register(module)
+		if not C then C = addon.C end
+		if not addon.defaultToggles then
+			addon.defaultToggles = setmetatable({
 				berserk = C.BAR + C.MESSAGE,
 				bosskill = C.MESSAGE,
 				proximity = C.PROXIMITY
@@ -385,40 +385,21 @@ do
 				if not rawget(self, key) then
 					return C.BAR + C.MESSAGE
 				end
-			end } )
+			end })
 		end
-		if not module.displayName then module.displayName = module.moduleName end
-		
-		-- Translate the bossmodule if appropriate
-		if LOCALE ~= "enUS" and BB and BZ then
-			module.zoneName = BZ[module.zoneName] or module.zoneName
-			if module.otherMenu then
-				module.otherMenu = BZ[module.otherMenu]
-			end
-			if module.displayName and BB[module.displayName] then
-				module.displayName = BB[module.displayName]
-			end
-			if module.optionHeaders then
-				for k, v in pairs(module.optionHeaders) do
-					if type(v) == "string" and BB[v] then
+	
+		if module.optionHeaders then
+			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+			for k, v in pairs(module.optionHeaders) do
+				if type(v) == "string" then
+					if CL[v] then
+						module.optionHeaders[k] = CL[v]
+					elseif LOCALE ~= "enUS" and BB and BZ then
 						module.optionHeaders[k] = BB[v]
 					end
 				end
 			end
 		end
-
-		-- XXX Target monitor
-		enablezones[module.zoneName] = true
-		
-		if module.optionHeaders then
-			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-			for k, v in pairs(module.optionHeaders) do
-				if type(v) == "string" and CL[v] then
-					module.optionHeaders[k] = CL[v]
-				end
-			end
-		end
-
 		if module.toggleOptions then
 			module.toggleDefaults = {}
 			local bf
@@ -438,7 +419,7 @@ do
 				end
 				-- mix in default toggles for keys we know this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}} while bosskill usually only has message
 				for n, b in pairs(C) do
-					if bit.band(self.defaultToggles[v], b) == b and bit.band(bf, b) ~= b then
+					if bit.band(addon.defaultToggles[v], b) == b and bit.band(bf, b) ~= b then
 						bf = bf + b
 					end
 				end
@@ -450,8 +431,24 @@ do
 					module.toggleDefaults[n] = bf
 				end
 			end
-			module.db = self.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
+			module.db = addon.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
 		end
+	end
+
+	function addon:RegisterBossModule(module)
+		if not module.displayName then module.displayName = module.moduleName end
+		if LOCALE ~= "enUS" and BB and BZ then
+			module.zoneName = BZ[module.zoneName] or module.zoneName
+			if module.otherMenu then
+				module.otherMenu = BZ[module.otherMenu]
+			end
+			if module.displayName and BB[module.displayName] then
+				module.displayName = BB[module.displayName]
+			end
+		end
+		enablezones[module.zoneName] = true
+		
+		register(module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
@@ -464,6 +461,8 @@ do
 		if type(module.defaultDB) == "table" then
 			module.db = self.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end
+		
+		register(module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
