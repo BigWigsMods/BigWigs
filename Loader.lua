@@ -525,15 +525,11 @@ if ldb11 then
 					tt:AddLine(module.displayName)
 				end
 			end
-			h = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
-		else
-			tt:AddLine(L["Big Wigs is currently disabled."])
-			h = L["|cffeda55fClick|r to enable."]
 		end
 		for i, v in next, tooltipFunctions do
 			v(tt)
 		end
-		tt:AddLine(h, 0.2, 1, 0.2, 1)
+		tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
 	end
 end
 

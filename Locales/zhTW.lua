@@ -19,12 +19,9 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使�
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 為從源直接檢出的。"
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "有新的 Big Wigs 正式版可用。你可以訪問 Curse.com，wowinterface.com，wowace.com 或使用 Curse 更新器來更新到新的正式版。"
 
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt-點擊|r可以禁用所有首領模組。"
+L.tooltipHint = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt-點擊|r可以禁用所有首領模組。"
 L["Active boss modules:"] = "啟動首領模組："
 L["All running modules have been reset."] = "所有運行中的模組都已重置。"
-L["Big Wigs is currently disabled."] = "Big Wigs 已被禁用。"
-L["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r啟用。"
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r重置所有運行中的模組。|cffeda55fAlt-點擊|r關閉所有首領模組。|cffeda55fCtrl-Alt-點擊|r禁用 Big Wigs 所有功能。"
 L["All running modules have been disabled."] = "所有運行中的模組都已禁用。"
 
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "在你隊伍里使用舊版本或沒有使用 Big Wigs。你可以用 /bwv 獲得詳細內容。"

@@ -19,13 +19,9 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Bei dir l�
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Bei dir l채uft ein Source Code Checkout von Big Wigs %s direkt aus dem Repository."
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Eine neue Version von Big Wigs ist verf체gbar. Du kannst curse.com, wowinterface.com, wowace.com besuchen oder den Curse Client benutzen, um den Release zu bekommen."
 
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55fKlicken|r, um alle laufenden Module zur체ckzusetzen. |cffeda55fAlt+Klick|r, um alle laufenden Module zu beenden. |cffeda55fStrg-Alt+Klick|r, um Big Wigs komplett zu deaktivieren."
+L.tooltipHint = "|cffeda55fKlicken|r, um alle laufenden Module zur체ckzusetzen. |cffeda55fAlt+Klick|r, um alle laufenden Module zu beenden."
 L["Active boss modules:"] = "Aktive Boss Module:"
 L["All running modules have been reset."] = "Alle laufenden Module wurden zur체ckgesetzt."
-
-L["Big Wigs is currently disabled."] = "Big Wigs ist momentan deaktiviert."
-L["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r, um Big Wigs zu aktivieren."
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur체ckzusetzen. |cffeda55fAlt-Klicken|r, um alle laufenden Module zu beenden. |cffeda55fStrg-Alt-Klicken|r, um Big Wigs komplett zu deaktivieren."
 L["All running modules have been disabled."] = "Alle laufenden Module wurden beendet."
 
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Es gibt Leute in deiner Gruppe mit veralteten Versionen oder ohne Big Wigs. Mehr Details mit /bwv."

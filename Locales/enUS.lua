@@ -17,13 +17,9 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = true
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = true
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = true
 
- -- XXX Our tooltip sucks, I want these things gone and automated!
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = true
+L.tooltipHint = "|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fRight-Click|r to access options."
 L["Active boss modules:"] = true
 L["All running modules have been reset."] = true
-L["Big Wigs is currently disabled."] = true
-L["|cffeda55fClick|r to enable."] = true
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = true
 L["All running modules have been disabled."] = true
 
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = true

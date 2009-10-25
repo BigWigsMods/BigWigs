@@ -19,12 +19,9 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Big Wigs %
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "저장소에서 Big Wigs %s 을 직접 소스를 체크 아웃을 실행하고 있습니다."
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Big Wigs을 사용할 수있는 새로운 릴리스는 curse.com, wowinterface.com, wowace.com 또는 Curse Updater를 통하여 새로운 릴리스 버전을 찾아 사용할수 있습니다."
 
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
+L.tooltipHint = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
 L["Active boss modules:"] = "사용중인 보스 모듈:"
 L["All running modules have been reset."] = "활성화된 모든 모듈이 초기화 되었습니다."
-L["Big Wigs is currently disabled."] = "현재 Big Wigs가 비활성화 상태입니다."
-L["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r 활성화."
-L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r 모든 모듈 초기화. |cffeda55fAlt-클릭|r 모두 비활성화. |cffeda55fCtrl-Alt-클릭|r Big Wigs을 완전히 비활성화."
 L["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다."
 
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Big Wigs가 자신보다 최근 버전이나 이전 버전인 사람들을 /BWV 를 입력하여 확인 가능합니다."
