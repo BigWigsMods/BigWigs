@@ -19,7 +19,6 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Big Wigs %
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "저장소에서 Big Wigs %s 을 직접 소스를 체크 아웃을 실행하고 있습니다."
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Big Wigs을 사용할 수있는 새로운 릴리스는 curse.com, wowinterface.com, wowace.com 또는 Curse Updater를 통하여 새로운 릴리스 버전을 찾아 사용할수 있습니다."
 
--- XXX Our tooltip sucks, I want these things gone and automated!
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
 L["Active boss modules:"] = "사용중인 보스 모듈:"
 L["All running modules have been reset."] = "활성화된 모든 모듈이 초기화 되었습니다."
@@ -34,8 +33,6 @@ L["Out of date:"] = "구 버전"
 L["No Big Wigs 3.x:"] = "Big Wigs 3.x 미사용:"
 
 -- Options.lua
--- XXX Perhaps option descriptions should be in key form, so it's
--- XXX L.iconDesc = .. instead of L["Bla bla bla ...
 L["Big Wigs Encounters"] = "Big Wigs 교전 모듈"
 L["Customize ..."] = "사용자 정의 ..."
 L.introduction = "Big Wigs에 오신 것을 환영합니다. 보스와의 전투시 어느 정도의 여유를 드립니다. 귀하의 공격대 그룹을 위하여 새로운 보스와의 조우시 준비에 도움이 됩니다.\n"

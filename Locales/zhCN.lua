@@ -19,7 +19,6 @@ L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使�
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 为从源直接检出的。"
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "有新的 Big Wigs 正式版可用。你可以访问 Curse.com，wowinterface.com，wowace.com 或使用 Curse 更新器来更新到新的正式版。"
 
- -- XXX Our tooltip sucks, I want these things gone and automated!
 L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt-点击|r可以禁用所有首领模块。"
 L["Active boss modules:"] = "激活首领模块："
 L["All running modules have been reset."] = "所有运行中的模块都已重置。"
@@ -34,8 +33,6 @@ L["Out of date:"] = "过期："
 L["No Big Wigs 3.x:"] = "没有 Big Wigs 3.x："
 
 -- Options.lua
--- XXX Perhaps option descriptions should be in key form, so it's
--- XXX L.iconDesc = .. instead of L["Bla bla bla ...
 L["Big Wigs Encounters"] = "Big Wigs 战斗"
 L["Customize ..."] = "自定义…"
 L.introduction = "欢迎使用 Big Wigs 戏弄各个首领。请系好安全带，吃吃花生并享受这次旅行。它不会吃了你的孩子，但会协助你的团队与新的首领进行战斗就如同享受饕餮大餐一样。"
