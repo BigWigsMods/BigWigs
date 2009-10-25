@@ -19,14 +19,11 @@ do
 	--@end-alpha@
 
 	-- This will (in ZIPs), be replaced by the highest revision number in the source tree.
-	releaseRevision = "@project-revision@"
-	releaseRevision = tonumber(releaseRevision)
+	releaseRevision = tonumber("@project-revision@")
 
 	-- If the releaseRevision ends up NOT being a number, it means we're running a SVN copy.
-	-- In which case, we also have to set the releaseType to ALPHA manually.
 	if type(releaseRevision) ~= "number" then
 		releaseRevision = -1
-		releaseType = ALPHA
 	end
 
 	-- Then build the release string, which we can add to the interface option panel.
