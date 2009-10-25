@@ -11,6 +11,8 @@ if L then
 	L.burrow_soon = "Скоро зарывание"
 
 	L.nerubian_burrower = "Нерубский землеглот"
+	
+	L.shadow_soon = "Теневой удар через ~5сек!"
 
 	L.freeze_bar = "~Замораживающий выпад"
 	L.pcold_bar = "~Пронизывающий холод"
@@ -47,13 +49,14 @@ if L then
 	L.slime_message = "Вы в Луже жижи!"
 	L.burn_spell = "Горящая желчь"
 	L.toxin_spell = "Токсин"
-	L.spray = "~Next Spray"
+	L.spray = "~Брызги"
 
 	-- Icehowl
 	L.butt_bar = "~Свирепое бодание"
 	L.charge = "Яростный рывок" --Furious Charge - судя по транскриптору нет русского перевода :(
 	L.charge_desc = "Сообщать о яростном рывке."
 	L.charge_trigger = "глядит на"	--check
+	L.charge_say = "Бежит на меня!"
 	
 	L.bosses = "Боссы"
 	L.bosses_desc = "Сообщать о наступлении боссов"
@@ -95,8 +98,8 @@ if L then
 	L.icon = "Помечать иконкой"
 	L.icon_desc = "Помечать иконкой игрока с Пламенем Легиона. (Необходимо быть рейд лидером или иметь промоут)"
 
-	L.infernal_bar = "~следующий вулкан"
-	L.netherportal_bar = "~cледующие врата"
+	L.infernal_bar = "~появление вулкана"
+	L.netherportal_bar = "~появление врат"
 	L.netherpower_bar = "~сила пустоты"
 end
 
@@ -113,6 +116,8 @@ if L then
 
 	L.shield = "Щит Тьмы/Света"
 	L.shield_desc = "Сообщать о Щите Тьмы/Света."
+	L.shield_half_message = "Эффективность щита 50%!"
+	L.shield_left_message = "%d%% щит утратил эффективность"
 
 	L.touch = "Касание тьмы/Света"
 	L.touch_desc = "Сообщать о Касании тьмы/Света"

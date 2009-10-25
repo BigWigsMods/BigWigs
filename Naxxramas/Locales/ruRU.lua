@@ -40,7 +40,7 @@ if L then
 	L.startwarn = "Глут вступает в бой! ~105 cекунд до появления зомби!"
 
 	L.decimatesoonwarn = "Скоро истребление!"
-	L.decimatebartext = "Истребление"
+	L.decimatebartext = "~Истребление зомби"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "ruRU")

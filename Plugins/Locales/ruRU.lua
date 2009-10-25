@@ -42,9 +42,10 @@ L["Messages"] = "Сообщения"
 L["Bars"] = "Полосы"
 L["Background"] = "Фон"
 L["Text"] = "Текст"
+L["Reset"] = "Сброс"
+
 L["Flash and shake"] = "Мигание и тряска"
 L["Change the color of the flash and shake."] = "Изменение цвета мигания и тряски."
-L["Reset"] = "Сброс"
 
 L["Bar"] = "Полосы"
 L["Change the normal bar color."] = "Изменение цвета обычных полос."
@@ -161,6 +162,7 @@ L["Show/hide"] = "Показ/скрыть"
 -- Tips.lua
 --
 
+L["|cff%s%s|r says:"] = "|cff%s%s|r говорит:"
 L["Cool!"] = "Cool!"
 L["Tips"] = "Советы"
 L["Configure how the raiding tips should be displayed."] = "Настройка отображения рейдовых советов."

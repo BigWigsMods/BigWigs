@@ -18,16 +18,16 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "ruRU")
 if L then
 	L.fear_warning = "Скоро Ужасающий вопль!"
 	L.fear_message = "Применение страха!"
-	L.fear_bar = "~страх"
+	L.fear_bar = "~Страх"
 
 	L.swarm_message = "Cтража"
-	L.swarm_bar = "~стража"
+	L.swarm_bar = "~Стража"
 
 	L.defender = "Дикий защитник"
 	L.defender_desc = "Сообщать о жизни Дикого защитника."
 	L.defender_message = "Защитник (%d/9)!"
 
-	L.sonic_bar = "~перезарядка визга"
+	L.sonic_bar = "~Визг"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "ruRU")
@@ -145,7 +145,7 @@ if L then
 	L.eyebeam_message = "Взгляд: %s"
 	L.eyebeam_bar = "~Взгляд"
 	L.eyebeam_you = "Взгляд на ВАС!"
-	L.eyebeam_say = "Взгяд на мне!"
+	L.eyebeam_say = "Взгяд на МНЕ!"
 
 	L.eyebeamsay = "Сказать о взгяде"
 	L.eyebeamsay_desc = "Сказать когда вы цель взгляда."
@@ -198,7 +198,7 @@ if L then
 	L.suppressant_warning = "Подавитель пламени!"
 
 	L.fbomb_soon = "Скоро Ледяная бомба!"
-	L.fbomb_bar = "Следущая Ледяная бомба"
+	L.fbomb_bar = "~Ледяная бомба"
 
 	L.bomb_message = "Появился Бомбот!"
 
@@ -335,6 +335,9 @@ if L then
 	L.portal_trigger = "В сознание |3-1(%s) открываются порталы!"
 	L.portal_message = "Порталы открыты!"
 	L.portal_bar = "Следующий портал"
+	
+	L.fervor_cast_message = "Применяется Рвение на |3-5(%s)!"
+	L.fervor_message = "Рвение на |3-5(%s)!"
 
 	L.sanity_message = "Вы теряете рассудок!"
 

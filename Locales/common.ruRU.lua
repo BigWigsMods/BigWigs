@@ -8,6 +8,7 @@ L.other = "%s: %s"
 
 L.phase = "Фаза %d"
 L.normal = "Обычный режим"
+L.heroic = "Героич. режим"
 L.hard = "Сложний режим"
 L.general = "Общий" -- General settings, i.e. things that apply to both normal and hard mode.
 
