@@ -591,6 +591,7 @@ local function advancedTabSelect(widget, callback, tab)
 	if tab == "options" then
 		widget:AddChildren(advancedToggles(key, module, master))
 	elseif tab == "colors" then
+		wipe(slaves)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChildren(group)
