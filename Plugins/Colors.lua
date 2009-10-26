@@ -5,8 +5,6 @@
 local plugin = BigWigs:NewPlugin("Colors")
 if not plugin then return end
 
-local fmt = string.format
-
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 --------------------------------------------------------------------------------
@@ -56,14 +54,8 @@ local function compareTable(a, b)
 	return true
 end
 
-local function get(info)
-	return plugin:GetColor(info[#info], info.arg)
-end
-
-local function set(info, r, g, b, a)
-	plugin.db.profile[info[#info]][info.arg] = {r, g, b, a}
-end
-
+local function get(info) return plugin:GetColor(info[#info], info.arg) end
+local function set(info, r, g, b, a) plugin.db.profile[info[#info]][info.arg] = {r, g, b, a} end
 local function reset(info)
 	for k, v in pairs(plugin.db.profile) do
 		plugin.db.profile[k][info.arg] = nil
@@ -77,7 +69,6 @@ end
 local colorOptions = {
 	type = "group",
 	name = L["Colors"],
-	desc = L["Colors of messages and bars."],
 	handler = plugin,
 	get = get,
 	set = set,
@@ -92,50 +83,31 @@ local colorOptions = {
 				Important = {
 					name = L["Important"],
 					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Important"]),
 					order = 2,
 					width = "half",
 				},
 				Personal = {
 					name = L["Personal"],
 					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Personal"]),
 					order = 3,
 					width = "half",
 				},
 				Urgent = {
 					name = L["Urgent"],
 					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Urgent"]),
 					order = 4,
 					width = "half",
 				},
 				Attention = {
 					name = L["Attention"],
 					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Attention"]),
 					order = 5,
 					width = "half",
 				},
 				Positive = {
 					name = L["Positive"],
 					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Positive"]),
 					order = 6,
-					width = "half",
-				},
-				Bosskill = {
-					name = L["Bosskill"],
-					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Bosskill"]),
-					order = 7,
-					width = "half",
-				},
-				Core = {
-					name = L["Core"],
-					type = "color",
-					desc = fmt(L["Change the color for %q messages."], L["Core"]),
-					order = 8,
 					width = "half",
 				},
 			},
@@ -147,17 +119,15 @@ local colorOptions = {
 			order = 10,
 			args = {
 				barColor = {
-					name = L["Bar"],
+					name = L["Normal"],
 					type = "color",
-					desc = L["Change the normal bar color."],
 					hasAlpha = true,
 					order = 11,
 					width = "half",
 				},
 				barEmphasized = {
-					name = L["Emphasized bar"],
+					name = L["Emphasized"],
 					type = "color",
-					desc = L["Change the emphasized bar color."],
 					hasAlpha = true,
 					order = 11,
 					width = "half",
@@ -165,7 +135,6 @@ local colorOptions = {
 				barBackground = {
 					name = L["Background"],
 					type = "color",
-					desc = L["Change the bar background color."],
 					hasAlpha = true,
 					order = 13,
 					width = "half",
@@ -173,7 +142,6 @@ local colorOptions = {
 				barText = {
 					name = L["Text"],
 					type = "color",
-					desc = L["Change the bar text color."],
 					order = 14,
 					width = "half",
 				},
@@ -188,7 +156,6 @@ local colorOptions = {
 				flashshake = {
 					name = L["Flash and shake"],
 					type = "color",
-					desc = L["Change the color of the flash and shake."],
 					order = 11,
 				},
 			},
@@ -196,7 +163,7 @@ local colorOptions = {
 		reset = {
 			type = "execute",
 			name = L["Reset"],
-			desc = L["Resets the above colors to defaults."],
+			desc = L["Resets the above colors to their defaults."],
 			func = reset,
 			order = 16,
 			width = "full",
@@ -226,7 +193,7 @@ plugin.pluginOptions.args.reset.width = "half"
 plugin.pluginOptions.args.resetAll = {
 	type = "execute",
 	name = L["Reset all"],
-	desc = L["Resets all colors for all modules to defaults."],
+	desc = L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."],
 	func = resetAll,
 	order = 17,
 	width = "half",

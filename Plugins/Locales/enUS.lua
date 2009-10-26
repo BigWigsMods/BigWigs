@@ -40,31 +40,20 @@ L["Messages"] = true
 L["Bars"] = true
 L["Background"] = true
 L["Text"] = true
-L["Reset"] = true
-
 L["Flash and shake"] = true
-L["Change the color of the flash and shake."] = true
+L["Normal"] = true
+L["Emphasized"] = true
 
-L["Bar"] = true
-L["Change the normal bar color."] = true
-L["Emphasized bar"] = true
-L["Change the emphasized bar color."] = true
-
-L["Colors of messages and bars."] = true
-L["Change the color for %q messages."] = true
-L["Change the bar background color."] = true
-L["Change the bar text color."] = true
-L["Resets the above colors to defaults."] = true
+L["Reset"] = true
+L["Resets the above colors to their defaults."] = true
 L["Reset all"] = true
-L["Resets all colors for all modules to defaults."] = true
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = true
 
 L["Important"] = true
 L["Personal"] = true
 L["Urgent"] = true
 L["Attention"] = true
 L["Positive"] = true
-L["Bosskill"] = true
-L["Core"] = true
 
 -----------------------------------------------------------------------
 -- Messages.lua
