@@ -122,7 +122,7 @@ end
 
 function mod:ColdDebuff(player, spellId, _, _, spellName)
 	if player ~= pName or not phase2 then return end
-	self:LocalMessage(68510, spellName, "Personal", spellId, "Alarm")
+	self:LocalMessage(68510, spellName, "Personal", spellId)
 	self:FlashShake(68510)
 end
 
@@ -132,7 +132,7 @@ function mod:ColdCooldown(_, spellId)
 end
 
 function mod:Swarm(player, spellId, _, _, spellName)
-	self:Message(66118, spellName, "Important", spellId)
+	self:Message(66118, spellName, "Important", spellId, "Long")
 	phase2 = true
 	self:SendMessage("BigWigs_StopBar", self, L["burrow_cooldown"])
 	self:CancelDelayedMessage(L["burrow_soon"])
@@ -154,7 +154,7 @@ function mod:Swarm(player, spellId, _, _, spellName)
 end
 
 function mod:Pursue(player, spellId)
-	self:TargetMessage(67574, L["chase"], player, "Personal", spellId)
+	self:TargetMessage(67574, L["chase"], player, "Personal", spellId, "Alert")
 	if player == pName then self:FlashShake(67574) end
 	self:Whisper(67574, player, L["chase"])
 	self:PrimaryIcon(67574, player, "icon")

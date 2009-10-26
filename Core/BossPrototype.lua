@@ -345,15 +345,14 @@ do
 
 	function boss:TargetMessage(key, spellName, player, color, icon, sound, ...)
 		if not checkFlag(self, key, C.MESSAGE) then return end
-		local text = nil
 		if type(player) == "table" then
-			text = fmt(L["other"], spellName, table.concat(player, ", "))
+			local text = fmt(L["other"], spellName, table.concat(player, ", "))
 			wipe(player)
 			self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
 		else
 			if player == pName then
 				if ... then
-					text = fmt(spellName, coloredNames[player], ...)
+					local text = fmt(spellName, coloredNames[player], ...)
 					self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
 					self:SendMessage("BigWigs_Message", text, nil, nil, nil, true)
 				else
@@ -361,15 +360,15 @@ do
 					self:SendMessage("BigWigs_Message", fmt(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
-				--change colors and remove sound when warning about effects on other players
+				-- Change color and remove sound when warning about effects on other players
 				if color == "Personal" then color = "Important" end
-				sound = nil
+				local text = nil
 				if ... then
 					text = fmt(spellName, coloredNames[player], ...)
 				else
 					text = fmt(L["other"], spellName, coloredNames[player])
 				end
-				self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
+				self:SendMessage("BigWigs_Message", text, color, nil, nil, nil, icon)
 			end
 		end
 	end
