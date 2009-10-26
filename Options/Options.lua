@@ -587,11 +587,11 @@ local function advancedTabSelect(widget, callback, tab)
 	local module = widget:GetUserData("module")
 	local key = widget:GetUserData("key")
 	local master = widget:GetUserData("master")
+
 	if tab == "options" then
 		widget:AddChildren(advancedToggles(key, module, master))
 	elseif tab == "colors" then
-		-- XXX I want to use a SimpleGroup because that looks best, but InlineGroup sizes properly and SimpleGroup doesn't?!
-		local group = AceGUI:Create("InlineGroup")
+		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChildren(group)
 		colorModule:GetColorOptions(module.name .. "_" .. key,  module.toggleDefaults[key])
@@ -600,6 +600,7 @@ local function advancedTabSelect(widget, callback, tab)
 	widget:ResumeLayout()
 	widget:GetUserData("scrollFrame"):DoLayout()
 	widget:DoLayout()
+
 end
 
 local advancedTabs = {
@@ -638,7 +639,6 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	tabs:SetLayout("Flow")
 	tabs:SetTabs(advancedTabs)
 	tabs:SetFullWidth(true)
-	-- tabs:SetFullHeight(true)
 	tabs:SetCallback("OnGroupSelected", advancedTabSelect)
 	tabs:SetUserData("tab", "")
 	tabs:SetUserData("key", dbKey)
@@ -741,7 +741,7 @@ local function onZoneShow(frame)
 	local group = nil
 	if hasZones then
 		group = AceGUI:Create("DropdownGroup")
-		group:SetLayout("Fill")
+		group:SetLayout("Flow")
 		group:SetCallback("OnGroupSelected", showToggleOptions)
 		table.sort(zoneModules[zone])
 		group:SetUserData("zone", zone)
