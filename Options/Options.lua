@@ -337,7 +337,8 @@ do
 		tabs:ReleaseChildren()
 		tabs:AddChildren(plugin:GetPluginConfig())
 		tabs:ResumeLayout()
-		frame:DoLayout()
+		local scroll = widget:GetUserData("scroll")
+		scroll:DoLayout()
 		options:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end
 	local function onTestClick() BigWigs:Test() end
@@ -352,11 +353,11 @@ do
 		frame:SetCallback("OnClose", function(widget, callback)
 			options:SendMessage("BigWigs_StopConfigureMode")
 		end)
-		
+		frame:SetLayout("Fill")
+
 		local scroll = AceGUI:Create("ScrollFrame")
-		scroll:SetLayout("List")
+		scroll:SetLayout("Flow")
 		scroll:SetFullWidth(true)
-		scroll:SetFullHeight(true)
 
 		local test = AceGUI:Create("Button")
 		test:SetText(L["Test"])
@@ -382,8 +383,8 @@ do
 		tabs:SetTabs(plugins)
 		tabs:SetCallback("OnGroupSelected", widgetSelect)
 		tabs:SetUserData("tab", "")
+		tabs:SetUserData("scroll", scroll)
 		tabs:SetFullWidth(true)
-		tabs:SetFullHeight(true)
 		scroll:AddChild(tabs)
 		frame:AddChild(scroll)
 	end
@@ -399,14 +400,15 @@ do
 		if not hideFrame then
 			createPluginFrame()
 			frame:Show()
+			frame:DoLayout()
 		end
 	end
 
 	function options:BigWigs_StopConfigureMode()
 		configMode = nil
 		if frame then
-			frame:Hide()
 			frame:ReleaseChildren()
+			frame:Hide()
 			frame:Release()
 		end
 		frame = nil
