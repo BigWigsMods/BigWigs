@@ -268,7 +268,7 @@ function options:OnInitialize()
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
 	
 	colorModule = BigWigs:GetPlugin("Colors")
-	ac:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:GetColorOptions("dummy"))
+	ac:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"))
 end
 
 function options:OnEnable()
@@ -594,7 +594,7 @@ local function advancedTabSelect(widget, callback, tab)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChildren(group)
-		colorModule:GetColorOptions(module.name .. "_" .. key,  module.toggleDefaults[key])
+		colorModule:SetColorOptions(module.name, key,  module.toggleDefaults[key])
 		acd:Open("Big Wigs: Colors Override", group)
 	end
 	widget:ResumeLayout()
