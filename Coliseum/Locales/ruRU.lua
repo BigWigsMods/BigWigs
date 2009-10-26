@@ -11,7 +11,7 @@ if L then
 	L.burrow_soon = "Скоро зарывание"
 
 	L.nerubian_burrower = "Нерубский землеглот"
-	
+
 	L.shadow_soon = "Теневой удар через ~5сек!"
 
 	L.freeze_bar = "~Замораживающий выпад"
@@ -57,7 +57,7 @@ if L then
 	L.charge_desc = "Сообщать о яростном рывке."
 	L.charge_trigger = "глядит на"	--check
 	L.charge_say = "Бежит на меня!"
-	
+
 	L.bosses = "Боссы"
 	L.bosses_desc = "Сообщать о наступлении боссов"
 end

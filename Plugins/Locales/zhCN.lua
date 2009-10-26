@@ -38,33 +38,24 @@ L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by 
 
 L["Colors"] = "颜色"
 
-L["Messages"] = "信息提示"
+L["Messages"] = "信息"
 L["Bars"] = "计时条"
 L["Background"] = "背景"
 L["Text"] = "文本"
-L["Reset"] = "重置"
-
 L["Flash and shake"] = "闪屏和震动"
-L["Change the color of the flash and shake."] = "更改闪屏和震动颜色。"
+L["Normal"] = "标准"
+L["Emphasized"] = "醒目"
 
-L["Bar"] = "计时条"
-L["Change the normal bar color."] = "改变一般计时条颜色。"
-L["Emphasized bar"] = "醒目计时条"
-L["Change the emphasized bar color."] = "改变醒目计时条颜色。"
-
-L["Colors of messages and bars."] = "信息文字与计时条的颜色。"
-L["Change the color for %q messages."] = "改变%q信息的颜色。"
-L["Change the bar background color."] = "改变计时条背景颜色。"
-L["Change the bar text color."] = "改变计时条文本颜色。"
-L["Resets all colors to defaults."] = "重置所有颜色为默认。"
+L["Reset"] = "重置"
+L["Resets the above colors to their defaults."] = "重置以上颜色为默认。"
+L["Reset all"] = "重置所有"
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "如果为首领战斗自定义了颜色设置，这个按钮将重置替换“所有”颜色为默认。"
 
 L["Important"] = "重要"
 L["Personal"] = "个人"
 L["Urgent"] = "紧急"
 L["Attention"] = "注意"
 L["Positive"] = "醒目"
-L["Bosskill"] = "首领击杀"
-L["Core"] = "核心"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -91,7 +82,6 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 --
 
 L["Icons"] = "图标"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "为 BigWigs 配置一个团队标记，以便为中了'炸弹'级别的玩家打上标记，以示提醒。"
 
 L.raidIconDescription = "可能遇到包含例如炸弹类型的技能指向特定的玩家，玩家被追，或是特定玩家可能有兴趣在其他方面。这里可以自定义团队标记来标记这些玩家。\n\n如果只遇到一种技能，很好，只有第一个图标会被使用。在某些战斗中一个图标不会使用在两个不同的技能上，任何特定技能在下次总是使用相同图标。\n\n|cffff4411注意：如果玩家已经被手动标记，Big Wigs 将不会改变他的图标。|r"
 L["Primary"] = "主要"
@@ -116,7 +106,6 @@ L["|cffff0000Disable|r"] = "|cffff0000禁用|r"
 L.soundDefaultDescription = "根据这些选项设置，Big Wigs 将只使用暴雪默认团队信息警报音效。注意：只有一些信息通过遇到脚本时才会出发音效警报。"
 
 L["Sounds"] = "音效"
-L["Options for sounds."] = "音效选项。"
 
 L["Alarm"] = "警报"
 L["Info"] = "信息"
@@ -162,9 +151,9 @@ L["Show/hide"] = "显示/隐藏"
 -- Tips.lua
 --
 
+L["|cff%s%s|r says:"] = "|cff%s%s|r说："
 L["Cool!"] = "冷静！"
 L["Tips"] = "提示"
-L["Configure how the raiding tips should be displayed."] = "配置团队提示显示方式。"
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "团队提示根据默认显示当你处于团队副本，不能在战斗中以及你的团队超过9个玩家。通常一个提示只会在进程中显示一次。\n\n这里可以调整提示显示，或者使用我们的漂亮窗口（默认），或是输出到聊天。如果团长过度使用 |cffff4411/sendtip command|r，反而会想在聊天窗口显示它们！"
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "如果不想看到任何提示，可以从这里切换关闭它们。团长发送的提示也会被屏蔽，小心使用。"
 L["Automatic tips"] = "自动提示"
