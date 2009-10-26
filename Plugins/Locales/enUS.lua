@@ -80,7 +80,6 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 --
 
 L["Icons"] = true
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = true
 
 L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
 L["Primary"] = true
@@ -105,7 +104,6 @@ L["|cffff0000Disable|r"] = true
 L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
 
 L["Sounds"] = true
-L["Options for sounds."] = true
 
 L["Alarm"] = true
 L["Info"] = true
@@ -154,7 +152,6 @@ L["Show/hide"] = true
 L["|cff%s%s|r says:"] = true
 L["Cool!"] = true
 L["Tips"] = true
-L["Configure how the raiding tips should be displayed."] = true
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = true
 L["Automatic tips"] = true
