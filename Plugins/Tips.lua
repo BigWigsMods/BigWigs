@@ -36,7 +36,6 @@ local function disable() return not plugin.db.profile.show end
 plugin.pluginOptions = {
 	type = "group",
 	name = L["Tips"],
-	desc = L["Configure how the raiding tips should be displayed."],
 	get = get,
 	set = set,
 	args = {
@@ -128,7 +127,7 @@ local tips = {
 	"Rabbit##/bwlcb 20m Oven warm, put in pizza!#2",
 	"Rabbit##You can open the proximity monitor manually with /proximity <range>. Can be useful on new fights or if you use a special strategy for a encounter.#2",
 	"Rabbit##If your raid leader is spamming you with tips, you can make them output to the chat frame or turn them off completely. Just visit the 'Customize ...' section under the Big Wigs interface options!#2",
-	--"Rabbit##Sometimes you'll want to remove a bar from the screen while in combat, so you can focus more on some other ability. Clicking your middle mouse button over a bar will stop it -- but next time the ability is used, it will reappear.#2",
+	"Rabbit##Sometimes you'll want to remove a bar from the screen while in combat, so you can focus more on some other ability. Clicking your middle mouse button over a bar will stop it -- but next time the ability is used, it will reappear.#2",
 }
 
 -------------------------------------------------------------------------------

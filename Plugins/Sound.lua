@@ -52,7 +52,6 @@ plugin.defaultDB = {
 plugin.pluginOptions = {
 	type = "group",
 	name = L["Sounds"],
-	desc = L["Options for sounds."],
 	get = function(info)
 		for i, v in next, soundList do
 			if v == plugin.db.profile.media[info[#info]] then
