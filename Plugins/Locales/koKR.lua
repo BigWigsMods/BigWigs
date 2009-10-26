@@ -43,27 +43,19 @@ L["Bars"] = "바"
 L["Background"] = "배경"
 L["Text"] = "글자"
 L["Flash and shake"] = "번쩍임과 진동"
-L["Change the color of the flash and shake."] = "번쩍임과 진동의 색상을 변경합니다."
+L["Normal"] = "일반"
+L["Emphasized"] = "강조"
+
 L["Reset"] = "초기화"
-
-L["Bar"] = "바"
-L["Change the normal bar color."] = "일반 바 색상을 변경합니다."
-L["Emphasized bar"] = "강조 바"
-L["Change the emphasized bar color."] = "강조 바 색상을 변경합니다."
-
-L["Colors of messages and bars."] = "메세지와 바의 색상입니다."
-L["Change the color for %q messages."] = "%q 메세지의 색상을 변경합니다."
-L["Change the bar background color."] = "바 배경 색상을 변경합니다."
-L["Change the bar text color."] = "바 글꼴 색상을 변경합니다."
-L["Resets all colors to defaults."] = "모두 기본 색상으로 초기화 합니다."
+L["Resets the above colors to defaults."] = "위의 색상을 모두 기본으로 초기화 합니다."
+L["Reset all"] = "모두 초기화"
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "보스 교전 모듈의 사용자가 지정한 색상이 있다면, 이 버튼으로 인해 모든 색상이 초기화되며 다시 설정이 가능합니다."
 
 L["Important"] = "중요"
 L["Personal"] = "개인"
 L["Urgent"] = "긴급"
 L["Attention"] = "주의"
 L["Positive"] = "제안"
-L["Bosskill"] = "보스사망"
-L["Core"] = "코어"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -90,7 +82,6 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 --
 
 L["Icons"] = "아이콘"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다."
 
 L.raidIconDescription = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다. 중요 '폭탄'-유형 기술이 2개일 경우 1개의 기술에 첫번째, 그나머지 기술에 대해서는 두번째 아이콘을 지정하여 사용합니다.\n\n|cffff4411주의: 만약에 플레이어가 이미 수동으로 전술 지정이 되어있다면 Big Wigs 에서는 그것을 변경하지 않습니다.|r"
 L["Primary"] = "첫번째 아이콘"
@@ -115,7 +106,6 @@ L["|cffff0000Disable|r"] = "|cffff0000비활성화|r"
 L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
 
 L["Sounds"] = "효과음"
-L["Options for sounds."] = "효과음에 대한 설정입니다."
 
 L["Alarm"] = "경보"
 L["Info"] = "정보"
