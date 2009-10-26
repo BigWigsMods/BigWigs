@@ -122,7 +122,7 @@ end
 local bigWigsTest = nil
 do
 	local spells = nil
-	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Bosskill", "Core"}
+	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive"}
 	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
 	local messageFormat = "%s: %s %s"
 
@@ -179,7 +179,7 @@ local function coreSync(sync, moduleName, sender)
 	elseif (sync == "Death" or sync == "MultiDeath") then
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
-			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Bosskill", nil, "Victory")
+			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Positive", nil, "Victory")
 			mod:PrimaryIcon(false)
 			mod:SecondaryIcon(false)
 			mod:Disable()
