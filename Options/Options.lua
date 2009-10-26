@@ -346,12 +346,17 @@ do
 		if frame then return end
 		frame = AceGUI:Create("Window")
 		frame:SetWidth(320)
-		frame:SetHeight(640)
+		frame:SetHeight(515)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle(L["Configure"])
 		frame:SetCallback("OnClose", function(widget, callback)
 			options:SendMessage("BigWigs_StopConfigureMode")
 		end)
+		
+		local scroll = AceGUI:Create("ScrollFrame")
+		scroll:SetLayout("List")
+		scroll:SetFullWidth(true)
+		scroll:SetFullHeight(true)
 
 		local test = AceGUI:Create("Button")
 		test:SetText(L["Test"])
@@ -363,7 +368,7 @@ do
 		reset:SetCallback("OnClick", onResetClick)
 		reset:SetFullWidth(true)
 
-		frame:AddChildren(test, reset)
+		scroll:AddChildren(test, reset)
 		for name, module in BigWigs:IteratePlugins() do
 			if module.GetPluginConfig then
 				table.insert(plugins, {
@@ -379,7 +384,8 @@ do
 		tabs:SetUserData("tab", "")
 		tabs:SetFullWidth(true)
 		tabs:SetFullHeight(true)
-		frame:AddChild(tabs)
+		scroll:AddChild(tabs)
+		frame:AddChild(scroll)
 	end
 	function options:BigWigs_SetConfigureTarget(event, module)
 		if frame then
