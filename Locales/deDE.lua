@@ -58,6 +58,7 @@ L["Configure"] = "Einstellungen"
 L["Test"] = "Testen"
 L["Reset positions"] = "Positionen zurücksetzen"
 L["Options for %s."] = "Optionen für %s."
+L["Colors"] = "Farben"
 
 L["BAR"] = "Leisten"
 L["MESSAGE"] = "Nachrichten"

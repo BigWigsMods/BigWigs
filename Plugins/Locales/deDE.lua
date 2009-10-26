@@ -42,29 +42,20 @@ L["Messages"] = "Nachrichten"
 L["Bars"] = "Leisten"
 L["Background"] = "Hintergrund"
 L["Text"] = "Text"
-L["Reset"] = "Zurücksetzen"
-
 L["Flash and shake"] = "Aufblitzen und Wackeln"
-L["Change the color of the flash and shake."] = "Verändert die Farbe der 'Aufblitzen und Wackeln'-Funktion."
+L["Normal"] = "Normal"
+L["Emphasized"] = "Hervorgehoben"
 
-L["Bar"] = "Leiste"
-L["Change the normal bar color."] = "Ändert die normale Farbe der Leisten."
-L["Emphasized bar"] = "Hervorgehobene Leiste"
-L["Change the emphasized bar color."] = "Ändert die Farbe der Hervorgehobene Leisten."
-
-L["Colors of messages and bars."] = "Farben der Nachrichten und Leisten."
-L["Change the color for %q messages."] = "Ändert die Farbe für %q Nachrichten."
-L["Change the bar background color."] = "Ändert die Hintergrundfarbe der Leisten."
-L["Change the bar text color."] = "Ändert die Textfarbe der Leisten."
-L["Resets all colors to defaults."] = "Setzt alle Farben auf Standard zurück."
+L["Reset"] = "Zurücksetzen"
+L["Resets the above colors to their defaults."] = "Setzt die obenstehenden Farben auf ihre Ausgangswerte zurück."
+L["Reset all"] = "Alle zurücksetzen"
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Falls du veränderte Farbeinstellungen für Bosse benutzt, wird dieser Button ALLE zurücksetzen, so dass erneut die hier festgelegten Farben verwendet werden."
 
 L["Important"] = "Wichtig"
 L["Personal"] = "Persönlich"
 L["Urgent"] = "Dringend"
 L["Attention"] = "Achtung"
 L["Positive"] = "Positiv"
-L["Bosskill"] = "Boss besiegt"
-L["Core"] = "Kern"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -91,7 +82,6 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 --
 
 L["Icons"] = "Symbole"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Bestimmt, welches Symbol Big Wigs benutzen soll, wenn es Schlachtzugs-Symbole auf Spielern platziert (für wichtige Boss Fähigkeiten)."
 
 L.raidIconDescription = "Einige Begegnungen schließen Elemente wie 'Bombe'-Fähigkeiten ein, die einen bestimmten Spieler zum Ziel haben oder ein Spieler wird verfolgt oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.\n\nFalls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.\n\n|cffff4411Beachte, dass ein manuell markierter Spieler von Big Wigs nicht ummarkiert wird.|r"
 L["Primary"] = "Erstes Symbol"
@@ -115,8 +105,7 @@ L["|cffff0000Disable|r"] = "|cffff0000Deaktiviert|r"
 
 L.soundDefaultDescription = "Falls diese Option aktiviert ist, wird Big Wigs nur die Standard-Raidsounds von Blizzard für Nachrichten benutzen. Beachte, dass nicht alle Nachrichten einer Begegnung einen Sound auslösen."
 
-L["Sounds"] = "Sounds"
-L["Options for sounds."] = "Optionen für die Sounds."
+L["Sounds"] = "Sounds" 
 
 L["Alarm"] = "Alarm"
 L["Info"] = "Info"
