@@ -312,8 +312,12 @@ function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, ico
 
 	local r, g, b = 1, 1, 1 -- Default to white.
 	if self.db.profile.usecolors then
-		if type(color) == "table" and color.r and color.g and color.b then
-			r, g, b = color.r, color.g, color.b
+		if type(color) == "table" then
+			if color.r and color.g and color.b then
+				r, g, b = color.r, color.g, color.b
+			else
+				r, g, b = unpack(color)
+			end
 		elseif colorModule and colorModule:HasColor(color) then
 			r, g, b = colorModule:GetColor(color)
 		end

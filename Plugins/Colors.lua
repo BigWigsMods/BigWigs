@@ -233,8 +233,9 @@ function plugin:HasColor(hint, name, key)
 	return not compareTable(t, self.defaultDB[hint]["*"]["*"])
 end
 
-function plugin:GetColor(hint, name, key)
-	if not self.db.profile[hint] then return 1, 1, 1 end
+local white = { 1, 1, 1 }
+function plugin:GetColorTable(hint, name, key)
+	if not self.db.profile[hint] then return white end
 	if not name then
 		name = plugin.name
 		key = defaultKey
@@ -243,6 +244,10 @@ function plugin:GetColor(hint, name, key)
 	if compareTable(t, self.defaultDB[hint]["*"]["*"]) then -- unchanged profile entry, go with the defaultColors
 		t = self.db.profile[hint][plugin.name][defaultKey]
 	end
-	return unpack(t)
+	return t
+end
+
+function plugin:GetColor(hint, name, key)
+	return unpack(self:GetColorTable(hint, name, key))
 end
 

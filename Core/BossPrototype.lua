@@ -13,6 +13,8 @@ local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
 local deathMap = setmetatable({}, metaMap)
 
+local colorModule
+
 local boss = {}
 core.bossCore:SetDefaultModulePrototype(boss)
 function boss:IsBossModule() return true end
@@ -303,6 +305,18 @@ function boss:CloseProximity()
 	self:SendMessage("BigWigs_HideProximity")
 end
 
+local function getColor(self, key, color)
+	if not color or type(color) ~= "string" then return color end
+	if type(key) == "number" then key = GetSpellInfo(key) end
+	if not colorModule then
+		colorModule = BigWigs:GetPlugin("Colors", true)
+	end
+	if colorModule then
+		color = colorModule:GetColorTable(color, self.name, key)
+	end
+	return color
+end
+
 do
 	local keys = setmetatable({}, {__index =
 		function(self, key)
@@ -314,7 +328,7 @@ do
 
 	function boss:Message(dbkey, text, color, icon, sound, noraidsay, broadcastonly)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
-		self:SendMessage("BigWigs_Message", text, color, noraidsay, sound, broadcastonly, icon)
+		self:SendMessage("BigWigs_Message", text, getColor(self, dbkey, color), noraidsay, sound, broadcastonly, icon)
 	end
 
 	local hexColors = {}
@@ -348,15 +362,15 @@ do
 		if type(player) == "table" then
 			local text = fmt(L["other"], spellName, table.concat(player, ", "))
 			wipe(player)
-			self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
+			self:SendMessage("BigWigs_Message", text, getColor(self, key, color), nil, sound, nil, icon)
 		else
 			if player == pName then
 				if ... then
 					local text = fmt(spellName, coloredNames[player], ...)
-					self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", text, getColor(self, key, color), true, sound, nil, icon)
 					self:SendMessage("BigWigs_Message", text, nil, nil, nil, true)
 				else
-					self:SendMessage("BigWigs_Message", fmt(L["you"], spellName), color, true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", fmt(L["you"], spellName), getColor(self, key, color), true, sound, nil, icon)
 					self:SendMessage("BigWigs_Message", fmt(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
@@ -368,7 +382,7 @@ do
 				else
 					text = fmt(L["other"], spellName, coloredNames[player])
 				end
-				self:SendMessage("BigWigs_Message", text, color, nil, nil, nil, icon)
+				self:SendMessage("BigWigs_Message", text, getColor(self, key, color), nil, nil, nil, icon)
 			end
 		end
 	end
@@ -376,12 +390,15 @@ do
 	-- Outputs a local message only, no raid warning.
 	function boss:LocalMessage(dbkey, text, color, icon, sound)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
-		self:SendMessage("BigWigs_Message", text, color, true, sound, nil, icon)
+		self:SendMessage("BigWigs_Message", text, getColor(self, key, color), true, sound, nil, icon)
 	end
 end
 
 function boss:FlashShake(key, r, g, b)
 	if checkFlag(self, key, C.FLASHSHAKE) then
+		if not r then 
+			r, g, b = unpack(getColor(self, key, "flashshake"))
+		end
 		self:SendMessage("BigWigs_FlashShake", r, g, b)
 	end
 end
@@ -397,10 +414,14 @@ do
 			return value
 		end
 	})
-
-	function boss:Bar(key, text, length, icon, ...)
+	
+	function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], ...)
+			if not barColor then barColor = getColor(self, key, "barColor") end
+			if not barEmphasized then barEmphasized = getColor(self, key, "barEmphasized") end
+			if not barText then barText = getColor(self, key, "barText") end
+			if not barBackground then barBackground = getColor(self, key, "barBackground") end
+			self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], barColor, barEmphasized, barText, barBackground, ...)
 		end
 	end
 end

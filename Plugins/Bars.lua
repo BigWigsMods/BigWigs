@@ -493,11 +493,24 @@ end
 -- Colors
 --
 
-local function colorNormal() return colors:GetColor("barColor") end
-local function colorEmphasized() return colors:GetColor("barEmphasized") end
-local function colorText() return colors:GetColor("barText") end
-local function colorBackground() return colors:GetColor("barBackground") end
-
+local function colorNormal(color)
+	if color then return unpack(color) end
+	return colors:GetColor("barColor")
+end
+local function colorEmphasized(color)
+	if color then return unpack(color) end
+	return colors:GetColor("barEmphasized") 
+end
+local function colorText(color)
+	if color then return unpack(color) end
+	return colors:GetColor("barText") 
+end
+ 
+local function colorBackground(color)
+	if color then return unpack(color) end
+	return colors:GetColor("barBackground") 
+end
+ 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -553,16 +566,17 @@ local function barClicked(bar, button)
 	end
 end
 
-function plugin:BigWigs_StartBar(message, module, text, time, icon)
+function plugin:BigWigs_StartBar(message, module, text, time, icon, barColor, barEmphasized, barText, barBackground)
 	if not normalAnchor then createAnchors() end
 	stop(module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
-	bar.candyBarBackground:SetVertexColor(colorBackground())
+	bar.candyBarBackground:SetVertexColor(colorBackground(barBackground))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
-	bar:SetColor(colorNormal())
-	bar.candyBarLabel:SetTextColor(colorText())
+	bar:Set("bigwigs:empColor", barEmphasized)
+	bar:SetColor(colorNormal(barColor))
+	bar.candyBarLabel:SetTextColor(colorText(barText))
 	bar.candyBarLabel:SetJustifyH(db.align)
 	bar.candyBarLabel:SetFont(media:Fetch("font", db.font), 10)
 	bar.candyBarDuration:SetFont(media:Fetch("font", db.font), 10)
@@ -609,7 +623,7 @@ function plugin:EmphasizeBar(bar)
 	if db.emphasizeFlash then
 		bar:AddUpdateFunction(flash)
 	end
-	bar:SetColor(colorEmphasized())
+	bar:SetColor(colorEmphasized(bar:Get("bigwigs:empColor")))
 	bar:SetScale(db.emphasizeScale)
 	bar:Set("bigwigs:emphasized", true)
 end
