@@ -594,7 +594,7 @@ local function advancedTabSelect(widget, callback, tab)
 		local group = AceGUI:Create("InlineGroup")
 		group:SetFullWidth(true)
 		widget:AddChildren(group)
-		colorModule:GetColorOptions(module.name .. "_" .. key)
+		colorModule:GetColorOptions(module.name .. "_" .. key,  module.toggleDefaults[key])
 		acd:Open("Big Wigs: Colors Override", group)
 	end
 	widget:ResumeLayout()

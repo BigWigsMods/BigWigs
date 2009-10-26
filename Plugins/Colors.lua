@@ -182,8 +182,24 @@ local function addKey(t, key)
 	return t
 end
 
-function plugin:GetColorOptions(key)
-	return addKey(colorOptions, key)
+local C = BigWigs.C
+function plugin:GetColorOptions(key, flags)
+	local t = addKey(colorOptions, key)
+	t.args.messages.hidden = nil
+	t.args.bars.hidden = nil
+	t.args.flashshake.hidden = nil
+	if flags then
+		if bit.band(flags, C.MESSAGE) ~= C.MESSAGE then
+			t.args.messages.hidden = true
+		end
+		if bit.band(flags, C.BAR) ~= C.BAR then
+			t.args.bars.hidden = true
+		end
+		if bit.band(flags, C.FLASHSHAKE) ~= C.FLASHSHAKE then
+			t.args.flashshake.hidden = true
+		end
+	end
+	return t
 end
 
 -- the pluginOptions are a slightly altered copy of the defaults
