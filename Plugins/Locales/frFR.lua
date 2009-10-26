@@ -40,29 +40,20 @@ L["Messages"] = "Messages"
 L["Bars"] = "Barres"
 L["Background"] = "Arrière-plan"
 L["Text"] = "Texte"
-L["Reset"] = "Réinitialiser"
-
 L["Flash and shake"] = "Flash et secousse"
-L["Change the color of the flash and shake."] = "Change la couleur du flash et de la secousse."
+L["Normal"] = "Normal"
+L["Emphasized"] = "En évidence"
 
-L["Bar"] = "Barre"
-L["Change the normal bar color."] = "Change la couleur des barres normales."
-L["Emphasized bar"] = "En évidence"
-L["Change the emphasized bar color."] = "Change la couleur des barres mises en évidence."
-
-L["Colors of messages and bars."] = "Couleurs des messages et des barres."
-L["Change the color for %q messages."] = "Change la couleur des messages %q."
-L["Change the bar background color."] = "Change la couleur de l'arrière-plan."
-L["Change the bar text color."] = "Change la couleur du texte des barres."
-L["Resets all colors to defaults."] = "Réinitialise tous les paramètres à leurs valeurs par défaut."
+L["Reset"] = "Réinit."
+L["Resets the above colors to their defaults."] = "Réinitialise les couleurs ci-dessus à leurs valeurs par défaut."
+L["Reset all"] = "Tt réinit."
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Si vous avez des couleurs personnalisées dans les paramètres des rencontres de boss, ce bouton les réinitialisera TOUTES et les couleurs définies ici seront utilisées à la place."
 
 L["Important"] = "Important"
 L["Personal"] = "Personnel"
 L["Urgent"] = "Urgent"
 L["Attention"] = "Attention"
 L["Positive"] = "Positif"
-L["Bosskill"] = "Défaite"
-L["Core"] = "Noyau"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -89,7 +80,6 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 --
 
 L["Icons"] = "Icône"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Détermine l'icône que Big Wigs doit utiliser lors du placement des icônes de raid sur les joueurs affectés par les capacités des boss (ex. la bombe de Geddon)."
 
 L.raidIconDescription = "Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.\n\nSi une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.\n\n|cffff4411Notez que si un joueur a déjà été marqué manuellement, Big Wigs ne changera jamais son icône.|r"
 L["Primary"] = "Primaire"
@@ -114,7 +104,6 @@ L["|cffff0000Disable|r"] = "|cffff0000Désactiver|r"
 L.soundDefaultDescription = "Si ceci est coché, Big Wigs utilisera uniquement le son de l'Avertissement raid de Blizzard pour les messages accompagnés d'un son. Notez que seuls certains messages des scripts de rencontre déclencheront une alerte sonore."
 
 L["Sounds"] = "Sons"
-L["Options for sounds."] = "Options concernant les sons."
 
 L["Alarm"] = "Alarme"
 L["Info"] = "Info"
