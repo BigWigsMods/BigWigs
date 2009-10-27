@@ -42,31 +42,20 @@ L["Messages"] = "Сообщения"
 L["Bars"] = "Полосы"
 L["Background"] = "Фон"
 L["Text"] = "Текст"
-L["Reset"] = "Сброс"
-
 L["Flash and shake"] = "Мигание и тряска"
-L["Change the color of the flash and shake."] = "Изменение цвета мигания и тряски."
+L["Normal"] = "Обычные"
+L["Emphasized"] = "Увеличенные"
 
-L["Bar"] = "Полосы"
-L["Change the normal bar color."] = "Изменение цвета обычных полос."
-L["Emphasized bar"] = "Увеличенные полосы"
-L["Change the emphasized bar color."] = "Изменение цвета увеличенных полос."
-
-L["Colors of messages and bars."] = "Цвета сообщений и полос."
-L["Change the color for %q messages."] = "Изменить цвет %q сообщений."
-L["Change the bar background color."] = "Изменить цвет фона полосы."
-L["Change the bar text color."] = "Изменить цвет текста полосы."
-L["Resets the above colors to defaults."] = "Сброс цветов наже на стандартные значения."
+L["Reset"] = "Сброс"
+L["Resets the above colors to their defaults."] = "Сброс цветов наже на стандартные значения."
 L["Reset all"] = "Сбросить все"
-L["Resets all colors for all modules to defaults."] = "Сброс всех цветов, для всех модулей, на стандартные значения."
+L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "Если вы настроили цвета для каких-либо событий боя с боссом, эта кнопка сбросит ВСЕ эти настройки."
 
 L["Important"] = "Важные"
 L["Personal"] = "Личные"
 L["Urgent"] = "Экстренные"
 L["Attention"] = "Внимание"
 L["Positive"] = "Позитивные"
-L["Bosskill"] = "Убийство Босса"
-L["Core"] = "Ядро"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -93,7 +82,6 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 --
 
 L["Icons"] = "Иконки"
-L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Настройка иконки Big Wigsа, какая должна быть поставлена на игрока при выполненных важных способностей боссов, к примеру 'бомба'."
 
 L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
 L["Primary"] = "Основная"
@@ -118,7 +106,6 @@ L["|cffff0000Disable|r"] = "|cffff0000Disable|r"
 L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
 
 L["Sounds"] = "Звуки"
-L["Options for sounds."] = "Опции звуков."
 
 L["Alarm"] = "Тревога"
 L["Info"] = "Информация"
@@ -167,7 +154,6 @@ L["Show/hide"] = "Показ/скрыть"
 L["|cff%s%s|r says:"] = "|cff%s%s|r говорит:"
 L["Cool!"] = "Cool!"
 L["Tips"] = "Советы"
-L["Configure how the raiding tips should be displayed."] = "Настройка отображения рейдовых советов."
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Советы рейда будет показыны по умолчанию, когда вы входите в рейдовую зону, когда вы вне боя, и ваша рейд группа состоит более чем из 9 игроков. За сессию будет показан всего один совет.\n\nЗдесь вы можете настроить способ отображения советов, либо с помощью всплываючего окна (по умолчанию), или выводить их в чате. Если ваш рейд лидером, злоупотребляет командой |cffff4411/sendtip command|r, вы можете выводить их в окно чата!"
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Если вы не хотите видеть какие-либо советы, здесь вы можете отключить их. Советы присланные вашым лидером рейда также будет заблокирован, так что будьте осторожны."
 L["Automatic tips"] = "Авто-советы"
