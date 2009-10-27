@@ -44,6 +44,7 @@ local function copyTable(to, from)
 end
 
 local function compareTable(a, b)
+	if type(a) ~= "table" or type(b) ~= "table" then return false end
 	for k, v in pairs(a) do
 		if not b[k] or b[k] ~= v then return false end
 	end
