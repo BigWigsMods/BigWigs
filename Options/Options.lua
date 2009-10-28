@@ -14,6 +14,18 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
+local colorize = nil
+do
+	local r, g, b
+	colorize = setmetatable({}, { __index =
+		function(self, key)
+			if not r then r, g, b = GameFontNormal:GetTextColor() end
+			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			return self[key]
+		end
+	})
+end
+
 local colorModule 
 
 local zoneModules = {}
@@ -23,6 +35,53 @@ local pluginOptions = {
 	type = "group",
 	childGroups = "tab",
 	args = {},
+}
+
+local superEmphasizeOptions = {
+	name = "Super Emphasize",
+	type = "group",
+	args = {
+		heading = {
+			type = "description",
+			name = "Super Emphasize lets you really boost up the impact of any set of messages or bars related to the boss option where you toggle it on. In this panel you can configure what exactly should happen when you toggle on the Super Emphasize option in the advanced section for a particular boss encounter script option.\n\n|cffff4411Note that no boss options have this toggled on by default.|r\n",
+			order = 10,
+			width = "full",
+			fontSize = "medium",
+		},
+		messages = {
+			type = "group",
+			name = "Messages",
+			inline = true,
+			order = 20,
+			args = {
+				upper = {
+					type = "toggle",
+					name = colorize["UPPER CASE"],
+					desc = "Turns all messages related to a Super Emphasized option into UPPER CASE.",
+					order = 10,
+					width = "full",
+					descStyle = "inline",
+				}
+				
+			},
+		},
+		bars = {
+			type = "group",
+			name = "Bars",
+			inline = true,
+			order = 30,
+			args = {
+				countdown = {
+					type = "toggle",
+					name = colorize["Vocal count down"],
+					desc = "If the bar in question is longer than 5 seconds, a vocal count down will be added for the last 5 seconds. Imagine someone counting down 5... 4... 3... 2... 1...",
+					order = 10,
+					width = "full",
+					descStyle = "inline",
+				},
+			},
+		},
+	}
 }
 
 local acOptions = {
@@ -160,6 +219,16 @@ local function getProfileOptions()
 	return profileOptions
 end
 
+local function findPanel(name, parent)
+	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
+		if button.element then
+			if name and button.element.name == name then return button
+			elseif parent and button.element.parent == parent then return button
+			end
+		end
+	end
+end
+
 function options:OnInitialize()
 	BigWigsLoader:RemoveInterfaceOptions()
 
@@ -167,29 +236,21 @@ function options:OnInitialize()
 	local mainOpts = acd:AddToBlizOptions("BigWigs", "Big Wigs")
 	mainOpts:HookScript("OnShow", function()
 		BigWigs:Enable()
+		local p = findPanel("Big Wigs")
+		if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
 	end)
 	
 	local bossEntry = self:GetPanel(L["Big Wigs Encounters"])
 	bossEntry:SetScript("OnShow", function(self)
 		BigWigs:Enable()
 		-- First we need to expand ourselves if collapsed.
-		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-			if button.element and button.element.name == L["Big Wigs Encounters"] then
-				if button.element.collapsed then
-					OptionsListButtonToggle_OnClick(button.toggle)
-				end
-				break
-			end
-		end
+		local p = findPanel(L["Big Wigs Encounters"])
+		if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
 		-- InterfaceOptionsFrameAddOns.buttons has changed here to include the zones
 		-- if we were collapsed.
 		-- So now we need to select the first zone.
-		for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-			if button.element and button.element.parent == L["Big Wigs Encounters"] then
-				InterfaceOptionsFrame_OpenToCategory(button.element.name)
-				break
-			end
-		end
+		p = findPanel(nil, L["Big Wigs Encounters"])
+		if p then InterfaceOptionsFrame_OpenToCategory(p.element.name) end
 	end)
 	
 	local about = self:GetPanel(L["About"], "Big Wigs")
@@ -264,6 +325,9 @@ function options:OnInitialize()
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
 	
+	ac:RegisterOptionsTable("Big Wigs: Super Emphasize", superEmphasizeOptions)
+	acd:AddToBlizOptions("Big Wigs: Super Emphasize", "Super Emphasize", "Big Wigs")
+	
 	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
 	
@@ -299,14 +363,6 @@ end
 
 
 function options:Open()
-	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
-		if button.element and button.element.name == "Big Wigs" then
-			if button.element.collapsed then
-				OptionsListButtonToggle_OnClick(button.toggle)
-			end
-			break
-		end
-	end
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
 			local menu = module.otherMenu or module.zoneName
