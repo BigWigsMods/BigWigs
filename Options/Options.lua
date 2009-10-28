@@ -40,17 +40,23 @@ local pluginOptions = {
 local superEmphasizeOptions = {
 	name = "Super Emphasize",
 	type = "group",
+	get = function(info)
+		return BigWigs.db.profile.superEmphasize[info[#info]]
+	end,
+	set = function(info, value)
+		BigWigs.db.profile.superEmphasize[info[#info]] = value
+	end,
 	args = {
 		heading = {
 			type = "description",
-			name = "Boosts related messages or bars of a specific boss encounter ability.\n\nIn this panel you can configure what exactly should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n",
+			name = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n",
 			order = 10,
 			width = "full",
 			fontSize = "medium",
 		},
 		upper = {
 			type = "toggle",
-			name = colorize["UPPER CASE"],
+			name = colorize["UPPERCASE"],
 			desc = "Uppercases all messages related to a super emphasized option.",
 			order = 10,
 			width = "full",
@@ -58,16 +64,16 @@ local superEmphasizeOptions = {
 		},
 		size = {
 			type = "toggle",
-			name = colorize["Increase size"],
-			desc = "Makes super emphasized messages and bars 50% larger.",
+			name = colorize["Double size"],
+			desc = "Doubles the size of super emphasized bars and messages.",
 			order = 11,
 			width = "full",
 			descStyle = "inline",
 		},
 		countdown = {
 			type = "toggle",
-			name = colorize["Vocal countdown"],
-			desc = "If a related timer is longer than 5 seconds, a vocal countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\"",
+			name = colorize["Countdown"],
+			desc = "If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen.",
 			order = 12,
 			width = "full",
 			descStyle = "inline",
@@ -75,7 +81,7 @@ local superEmphasizeOptions = {
 		flash = {
 			type = "toggle",
 			name = colorize["Flash"],
-			desc = "Will flash the screen red during the last 3 seconds of any related timer.",
+			desc = "Flashes the screen red during the last 3 seconds of any related timer.",
 			order = 13,
 			width = "full",
 			descStyle = "inline",

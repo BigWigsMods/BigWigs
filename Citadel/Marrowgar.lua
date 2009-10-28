@@ -35,7 +35,7 @@ mod.locale = L
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062)
 	self:Log("SPELL_AURA_APPLIED", "Whirlwind", 69076)
-	self:Log("SPELL_AURA_REMOVED", "Whirlwind_CD", 69076)
+	self:Log("SPELL_AURA_REMOVED", "WhirlwindCD", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
 
 	self:Death("Win", 36612)
@@ -88,7 +88,7 @@ function mod:Whirlwind(_, spellId, _, _, spellName)
 	self:Bar(69076, spellName, 30, 69076)
 end
 
-function mod:Whirlwind_CD(_, spellId, _, _, spellName)
+function mod:WhirlwindCD(_, spellId, _, _, spellName)
 	self:Bar(69076, L["whirlwind_cd"], 60, 69076)
 end
 
