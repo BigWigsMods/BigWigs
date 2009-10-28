@@ -6,5 +6,6 @@
 <Script file="Precious.lua"/>
 <Script file="Stinky.lua"/>
 <Script file="Festergut.lua"/>
+<Script file="Deathwhisper.lua"/>
 <!-- @end-debug@ -->
 </Ui>
