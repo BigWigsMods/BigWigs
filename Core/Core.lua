@@ -264,12 +264,6 @@ function addon:OnInitialize()
 			raidwarning = false,
 			broadcast = false,
 			showBlizzardWarnings = false,
-			superEmphasize = {
-				upper = true,
-				size = true,
-				countdown = true,
-				flash = false,
-			},
 		}
 	}
 	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)

@@ -14,18 +14,6 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
-local colorize = nil
-do
-	local r, g, b
-	colorize = setmetatable({}, { __index =
-		function(self, key)
-			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
-			return self[key]
-		end
-	})
-end
-
 local colorModule 
 
 local zoneModules = {}
@@ -35,58 +23,6 @@ local pluginOptions = {
 	type = "group",
 	childGroups = "tab",
 	args = {},
-}
-
-local superEmphasizeOptions = {
-	name = "Super Emphasize",
-	type = "group",
-	get = function(info)
-		return BigWigs.db.profile.superEmphasize[info[#info]]
-	end,
-	set = function(info, value)
-		BigWigs.db.profile.superEmphasize[info[#info]] = value
-	end,
-	args = {
-		heading = {
-			type = "description",
-			name = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n",
-			order = 10,
-			width = "full",
-			fontSize = "medium",
-		},
-		upper = {
-			type = "toggle",
-			name = colorize["UPPERCASE"],
-			desc = "Uppercases all messages related to a super emphasized option.",
-			order = 10,
-			width = "full",
-			descStyle = "inline",
-		},
-		size = {
-			type = "toggle",
-			name = colorize["Double size"],
-			desc = "Doubles the size of super emphasized bars and messages.",
-			order = 11,
-			width = "full",
-			descStyle = "inline",
-		},
-		countdown = {
-			type = "toggle",
-			name = colorize["Countdown"],
-			desc = "If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen.",
-			order = 12,
-			width = "full",
-			descStyle = "inline",
-		},
-		flash = {
-			type = "toggle",
-			name = colorize["Flash"],
-			desc = "Flashes the screen red during the last 3 seconds of any related timer.",
-			order = 13,
-			width = "full",
-			descStyle = "inline",
-		},
-	}
 }
 
 local acOptions = {
@@ -329,9 +265,6 @@ function options:OnInitialize()
 
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
-	
-	ac:RegisterOptionsTable("Big Wigs: Super Emphasize", superEmphasizeOptions)
-	acd:AddToBlizOptions("Big Wigs: Super Emphasize", "Super Emphasize", "Big Wigs")
 	
 	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
