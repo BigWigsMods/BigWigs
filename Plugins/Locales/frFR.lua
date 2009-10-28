@@ -79,7 +79,7 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 -- RaidIcon.lua
 --
 
-L["Icons"] = "Icône"
+L["Icons"] = "Icônes"
 
 L.raidIconDescription = "Certaines rencontres peuvent comporter des éléments tels que les techniques de type 'bombe' qui affectent un joueur spécifique, un joueur poursuivi ou bien encore un joueur spécifique important pour d'autres raisons. Vous pouvez personnaliser ici les icônes de raid qui seront utilisées pour marquer ces joueurs.\n\nSi une rencontre ne comporte qu'une technique qui requiert de marquer quelqu'un, seule l'icône primaire sera utilisée. Une icône ne sera jamais utilisée pour deux techniques différentes de la même rencontre, et chaque technique utilisera toujours la même icône la prochaine fois qu'elle se produira.\n\n|cffff4411Notez que si un joueur a déjà été marqué manuellement, Big Wigs ne changera jamais son icône.|r"
 L["Primary"] = "Primaire"
@@ -149,17 +149,32 @@ L["Show/hide"] = "Afficher/cacher"
 -- Tips.lua
 --
 
+L["|cff%s%s|r says:"] = "|cff%s%s|r dit :"
 L["Cool!"] = "Cool !"
-L["Tips"] = "Conseils"
-L["Configure how the raiding tips should be displayed."] = "Configure la façon dont les conseils de raid sont affichés."
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Un conseil de raid sera affiché par défaut quand vous entrez dans une instance de raid, si vous n'êtes pas en combat et si votre groupe de raid comporte plus de 9 joueurs. Un seul conseil sera affiché par session.\n\nVous pouvez ici modifier la façon dont ce conseil est affiché (soit via sa fenêtre (par défaut), soit via la fenêtre de discussion). Si vous jouez avec des chefs de raid qui abusent de la |cffff4411commande /sendtip|r, vous préférerez sans doute la fenêtre de discussion !"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Si vous ne souhaitez voir aucun conseil, même ceux de votre chef de raid, décochez ceci."
-L["Automatic tips"] = "Conseils automatiques"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Si vous ne souhaitez pas voir les supers conseils que nous avons (donnés par certains des meilleurs joueurs JcE du monde) apparaître quand vous entrez dans une instance de raid, vous pouvez désactiver cette option."
-L["Manual tips"] = "Conseils manuels"
-L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Les chefs de raid ont la possiblité d'afficher aux joueurs du raid un conseil manuellement à l'aide de la commande /sendtip. Si vous avez un chef de raid qui abuse de cette fonction, ou si tout simplement vous ne souhaitez pas voir ces conseils, vous pouvez désactiver la fonction avec cette option."
+L["Tips"] = "Astuces"
+L["Tip of the Raid"] = "Astuce de raid"
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Une astuce de raid sera affichée par défaut quand vous entrez dans une instance de raid, si vous n'êtes pas en combat et si votre groupe de raid comporte plus de 9 joueurs. Une seule astuce sera affichée par session.\n\nVous pouvez ici modifier la façon dont cette astuce est affichée (soit via sa fenêtre (par défaut), soit via la fenêtre de discussion). Si vous jouez avec des chefs de raid qui abusent de la |cffff4411commande /sendtip|r, vous préférerez sans doute la fenêtre de discussion !"
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Si vous ne souhaitez voir aucune astuce, même celles de votre chef de raid, décochez ceci."
+L["Automatic tips"] = "Astuces automatiques"
+L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Si vous ne souhaitez pas voir les supers astuces que nous avons (données par certains des meilleurs joueurs JcE du monde) apparaître quand vous entrez dans une instance de raid, vous pouvez désactiver cette option."
+L["Manual tips"] = "Astuces manuels"
+L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Les chefs de raid ont la possiblité d'afficher aux joueurs du raid une astuce manuellement à l'aide de la commande /sendtip. Si vous avez un chef de raid qui abuse de cette fonction, ou si tout simplement vous ne souhaitez pas voir ces astuces, vous pouvez désactiver la fonction avec cette option."
 L["Output to chat frame"] = "Sortie vers la fenêtre de discussion"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Par défaut, les conseils sont affichés dans une fenêtre au milieu de l'écran. Si vous cochez ceci, ils seront UNIQUEMENT affichés dans votre fenêtre de discussion."
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Utilisation : /sendtip <index|\"Conseil perso.\">"
-L["You must be the raid leader to broadcast a tip."] = "Vous devez être le chef de raid pour diffuser un conseil."
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Index des conseils hors limite. Les index acceptés vont de 1 à %d."
+L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Par défaut, les astuces sont affichées dans une fenêtre au milieu de l'écran. Si vous cochez ceci, elles seront UNIQUEMENT affichées dans votre fenêtre de discussion."
+L["Usage: /sendtip <index|\"Custom tip\">"] = "Utilisation : /sendtip <index|\"Astuce perso.\">"
+L["You must be the raid leader to broadcast a tip."] = "Vous devez être le chef de raid pour diffuser une astuce."
+L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Index des astuces hors limite. Les index acceptés vont de 1 à %d."
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
+L["UPPERCASE"] = "MAJUSCULE"
+L["Uppercases all messages related to a super emphasized option."] = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."
+L["Double size"] = "Taille double"
+L["Doubles the size of super emphasized bars and messages."] = "Double la taille des barres et messages relatifs à une option à mettre fortement en évidence."
+L["Countdown"] = "Compte à rebours"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Si un minuteur relatif à une option à mettre fortement en évidence est plus long que 5 secondes, un compte à rebours visuel et vocal sera ajouté pour les 5 dernières secondes. Imaginez quelqu'un décompter \"5... 4... 3... 2... 1... COUNTDOWN!\" et de gros chiffres au milieu de votre écran."
+L["Flash"] = "Flash"
+L["Flashes the screen red during the last 3 seconds of any related timer."] = "Fait flasher l'écran en rouge pendant les 3 dernières secondes de tout minuteur relatif à une option à mettre fortement en évidence."
