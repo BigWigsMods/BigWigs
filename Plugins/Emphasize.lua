@@ -27,7 +27,7 @@ plugin.defaultDB = {
 }
 
 local options = {
-	name = "Super Emphasize",
+	name = L["Super Emphasize"],
 	type = "group",
 	get = function(info) return plugin.db.profile[info[#info]] end,
 	set = function(info, value) plugin.db.profile[info[#info]] = value end,

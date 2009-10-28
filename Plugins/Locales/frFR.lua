@@ -169,6 +169,7 @@ L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Index des 
 -- Emphasize.lua
 --
 
+L["Super Emphasize"] = "Super mise en évidence"
 L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
 L["UPPERCASE"] = "MAJUSCULE"
 L["Uppercases all messages related to a super emphasized option."] = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."

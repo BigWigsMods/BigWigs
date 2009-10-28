@@ -81,7 +81,7 @@ if L then
 
 	L.engage = "Engagement"
 	L.engage_trigger = "Devant vous se tient Jaraxxus, seigneur Érédar de la Légion ardente !"
-	--L.engage_trigger1 = "Banished to the Nether"
+	L.engage_trigger1 = "Mais ! C'est moi qui commande, ici"
 
 	L.adds = "Portails et volcans"
 	L.adds_desc = "Prévient quand Jaraxxus invoque des portails et des volcans."
