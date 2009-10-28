@@ -1,0 +1,16 @@
+﻿## Interface: 30300
+
+## Title: Big Wigs [|cffeda55fIcecrown Citadel|r]
+
+## Title-deDE: Big Wigs [|cffeda55fEiskronenzitadelle|r]
+## Notes: Big Wigs Modules for Icecrown Citadel
+## Author: Samirâ,Yoshimo
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-Zone: Icecrown Citadel
+
+locales.xml
+modules.xml
