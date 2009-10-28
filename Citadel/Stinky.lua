@@ -8,16 +8,17 @@ mod:RegisterEnableMob(36626)
 mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill" }
  --71123--Dezimieren
  --71127 -- Mortal wound
+				
 					
-					
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
+
 local pName = UnitName("player")
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Stinky", "enUS", true)
 if L then
@@ -48,19 +49,19 @@ function mod:OnEngage()
 	--self:Bar("decimate", spellName, 45, 71123)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event handlers
+--
 
 function mod:Wound(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(71127, L["wound_message"], player, "Urgent", icon, "Info", stack)
 	end
-
 end
 
 function mod:Decimate(player, spellId, _, _, spellName)
 	self:Message(71123, spellName, "Attention", 65919)
-	self:Bar(71123, L["decimate_cd"], 33,71123)
+	self:Bar(71123, L["decimate_cd"], 33, 71123)
 end
+

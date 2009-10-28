@@ -5,17 +5,18 @@
 local mod = BigWigs:NewBoss("Lord Marrowgar", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36612)
-mod.toggleOptions = {69076, 69057,{69146, "FLASHSHAKE"}, "bosskill" }
+mod.toggleOptions = {69076, 69057, {69146, "FLASHSHAKE"}, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
+
 local pName = UnitName("player")
 local impale = mod:NewTargetList()
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Lord Marrowgar", "enUS", true)
 if L then
@@ -28,6 +29,7 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Lord Marrowgar")
 mod.locale = L
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -48,18 +50,19 @@ function mod:OnEngage()
     self:Bar("whirlwind", spellName, 45, 69076)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event handlers
+--
 
 do
     local handle = nil
-    local impaled = nil
-    local function impaleWarn(spellId, spellName)
-        if not impaled then
-            mod:TargetMessage(69057, spellName, impale, "Urgent", spellId)
+    local warned = nil
+    local id, name = nil, nil
+    local function impaleWarn()
+        if not warned then
+            mod:TargetMessage(69057, name, impale, "Urgent", id)
         else
-            impaled = nil
+            warned = nil
             wipe(impale)
         end
         handle = nil
@@ -67,9 +70,10 @@ do
     function mod:Impale(_, spellId, player, _, spellName)
         impale[#impale + 1] = player
         if handle then self:CancelTimer(handle) end
-        handle = self:ScheduleTimer(impaleWarn, 0.1, spellId, spellName)--has been 0.2 before
+        id, name = spellId, spellName
+        handle = self:ScheduleTimer(impaleWarn, 0.1) -- has been 0.2 before
         if player == pName then
-            impaled = true
+            warned = true
             self:TargetMessage(69057, spellName, player, "Important", spellId, "Info")
         end
     end
@@ -83,10 +87,10 @@ function mod:Coldflame(player, spellId)
 end
 
 function mod:Whirlwind(_, spellId, _, _, spellName)
-    PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
     self:Bar(69076, spellName, 30, 69076)
 end
 
 function mod:Whirlwind_CD(_, spellId, _, _, spellName)
     self:Bar(69076, L["whirlwind_cd"], 60, 69076)
 end
+
