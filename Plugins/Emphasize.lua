@@ -4,6 +4,9 @@ if not plugin then return end
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
+local temporaryEmphasizes = {}
+local emphasizeFlag = nil
+
 local colorize = nil
 do
 	local r, g, b
@@ -31,39 +34,39 @@ local options = {
 	args = {
 		heading = {
 			type = "description",
-			name = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n",
+			name = L.superEmphasizeDesc,
 			order = 10,
 			width = "full",
 			fontSize = "medium",
 		},
 		upper = {
 			type = "toggle",
-			name = colorize["UPPERCASE"],
-			desc = "Uppercases all messages related to a super emphasized option.",
+			name = colorize[L["UPPERCASE"]],
+			desc = L["Uppercases all messages related to a super emphasized option."],
 			order = 10,
 			width = "full",
 			descStyle = "inline",
 		},
 		size = {
 			type = "toggle",
-			name = colorize["Double size"],
-			desc = "Doubles the size of super emphasized bars and messages.",
+			name = colorize[L["Double size"]],
+			desc = L["Doubles the size of super emphasized bars and messages."],
 			order = 11,
 			width = "full",
 			descStyle = "inline",
 		},
 		countdown = {
 			type = "toggle",
-			name = colorize["Countdown"],
-			desc = "If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen.",
+			name = colorize[L["Countdown"]],
+			desc = L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."],
 			order = 12,
 			width = "full",
 			descStyle = "inline",
 		},
 		flash = {
 			type = "toggle",
-			name = colorize["Flash"],
-			desc = "Flashes the screen red during the last 3 seconds of any related timer.",
+			name = colorize[L["Flash"]],
+			desc = L["Flashes the screen red during the last 3 seconds of any related timer."],
 			order = 13,
 			width = "full",
 			descStyle = "inline",
@@ -74,5 +77,15 @@ local options = {
 function plugin:OnRegister()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("Big Wigs: Super Emphasize", options)
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Big Wigs: Super Emphasize", "Super Emphasize", "Big Wigs")
+end
+
+function plugin:OnPluginEnable()
+	emphasizeFlag = BigWigs.C.EMPHASIZE
+end
+
+function plugin:IsSuperEmphasized(module, option)
+	if type(key) == "number" then key = GetSpellInfo(key) end
+	if temporaryEmphasizes[key] then return true end
+	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
 end
 

@@ -164,3 +164,18 @@ L["By default the tips will be shown in their own, awesome window in the middle 
 L["Usage: /sendtip <index|\"Custom tip\">"] = true
 L["You must be the raid leader to broadcast a tip."] = true
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = true
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
+L["UPPERCASE"] = true
+L["Uppercases all messages related to a super emphasized option."] = true
+L["Double size"] = true
+L["Doubles the size of super emphasized bars and messages."] = true
+L["Countdown"] = true
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
+L["Flash"] = true
+L["Flashes the screen red during the last 3 seconds of any related timer."] = true
+
