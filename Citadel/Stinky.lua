@@ -5,16 +5,9 @@
 local mod = BigWigs:NewBoss("Stinky", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill" }
+mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill"}
  --71123--Dezimieren
  --71127 -- Mortal wound
-				
-					
---------------------------------------------------------------------------------
--- Locals
---
-
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization

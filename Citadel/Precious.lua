@@ -14,7 +14,6 @@ mod.toggleOptions =  {"zombies", 71123, {71127, "FLASHSHAKE"}, 71159, "bosskill"
 -- Locals
 --
 
-local pName = UnitName("player")
 local summoned = nil
 
 --------------------------------------------------------------------------------

@@ -58,10 +58,10 @@ do
 	local id, name = nil, nil
 	local function impaleWarn()
 		if not warned then
-		    mod:TargetMessage(69057, name, impale, "Urgent", id)
+			mod:TargetMessage(69057, name, impale, "Urgent", id)
 		else
-		    warned = nil
-		    wipe(impale)
+			warned = nil
+			wipe(impale)
 		end
 		handle = nil
 	end
@@ -71,8 +71,8 @@ do
 		id, name = spellId, spellName
 		handle = self:ScheduleTimer(impaleWarn, 0.1) -- has been 0.2 before
 		if player == pName then
-		    warned = true
-		    self:TargetMessage(69057, spellName, player, "Important", spellId, "Info")
+			warned = true
+			self:TargetMessage(69057, spellName, player, "Important", spellId, "Info")
 		end
 	end
 end
