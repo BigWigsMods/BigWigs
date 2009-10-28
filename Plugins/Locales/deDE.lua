@@ -155,7 +155,7 @@ L["Show/hide"] = "Zeigen/Verstecken"
 L["|cff%s%s|r says:"] = "|cff%s%s|r sagt:"
 L["Cool!"] = "Cool!"
 L["Tips"] = "Tips"
-L["Configure how the raiding tips should be displayed."] = "Bestimmt, wie die Raidtips aussehen sollen."
+L["Tip of the Raid"] = "Tip des Tages"
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Der Tip des Tages wird normalerweise angezeigt, sobald du eine Raidinstanz betrittst, nicht im Kampf bist und dein Schlachtzug mehr als 9 Spieler hat. Nur ein Tip wird pro Sitzung angezeigt.\n\nHier kannst du einstellen, wie der Tip aussehen soll: Indem ein spezielles Fenster benutzt wird (voreingestellt) oder er in den Chat geschrieben wird. Falls du mit Schlachtzugsleitern spielst, die den |cffff4411/sendtip Befehl|r überstrapazieren, wirst du die Tips wahrscheinlich im Chatfenster unterbringen wollen!"
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Falls du keine Tips sehen möchtest, kannst du sie hier ausschalten. Tips, die von deinem Schlachtzugsleiter geschickt werden, werden ebenso geblockt, sei also vorsichtig."
 L["Automatic tips"] = "Automatische Tips"
@@ -167,3 +167,18 @@ L["By default the tips will be shown in their own, awesome window in the middle 
 L["Usage: /sendtip <index|\"Custom tip\">"] = "Verwendung: /sendtip <index|\"Neuer Tip\">"
 L["You must be the raid leader to broadcast a tip."] = "Du musst Schlachtzugsleiter sein, um Tips zu versenden."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Tip Index verboten, akzeptierte Indizes rangieren von 1 bis %d."
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L["Super Emphasize"] = "Stark hervorheben"
+L.superEmphasizeDesc = "Verstärkt zugehörige Nachrichten oder Leisten einer bestimmten Begegnung.\n\nHier kannst du genau bestimmen, was passieren soll, wenn du in den erweiterten Optionen einer Bossfähigkeit 'Stark hervorheben' aktivierst.\n\n|cffff4411Beachte, dass 'Stark hervorheben' standardmäßig für alle Fähigkeiten deaktiviert ist.|r\n"
+L["UPPERCASE"] = "GROßBUCHSTABEN"
+L["Uppercases all messages related to a super emphasized option."] = "Schreibt alle Nachrichten groß, die die zugehörige 'Stark hervorheben'-Option aktiviert haben."
+L["Double size"] = "Doppelte Größe"
+L["Doubles the size of super emphasized bars and messages."] = "Verdoppelt die Größe von sehr stark hervorgehobenen Leisten und Nachrichten."
+L["Countdown"] = "Countdown"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Falls ein zugehöriger Timer länger als 5 Sekunden dauert, wird ein visueller und auditiver Countdown die letzten 5 Sekunden begleiten. Stell dir vor, jemand würde \"5... 4... 3... 2... 1... COUNTDOWN!\" herunterzählen und große Nummern in die Mitte des Bildschirm setzen."
+L["Flash"] = "Aufblitzen"
+L["Flashes the screen red during the last 3 seconds of any related timer."] = "Lässt den Bildschirm während der letzten 3 Sekunden eines zugehörigen Timers rot aufblitzen."

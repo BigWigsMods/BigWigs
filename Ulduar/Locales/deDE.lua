@@ -10,6 +10,7 @@ if L then
 	L.punch_message = "%dx Phasenschlag: %s!"
 	L.smash_message = "Kosmischer Schlag kommt!"
 	L.blackhole_message = "Schwarzes Loch %dx!"
+	L.bigbang_bar = "Nächster Großer Knall"
 	L.bigbang_soon = "Großer Knall bald!"
 end
 

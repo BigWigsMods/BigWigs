@@ -7,5 +7,6 @@
 <Script file="Stinky.lua"/>
 <Script file="Festergut.lua"/>
 <Script file="Deathwhisper.lua"/>
+<Script file="Rotface.lua"/>
 <!-- @end-debug@ -->
 </Ui>

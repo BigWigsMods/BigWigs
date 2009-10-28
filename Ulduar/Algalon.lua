@@ -30,6 +30,7 @@ if L then
 	L.punch_message = "%dx Phase Punch on %s"
 	L.smash_message = "Incoming Cosmic Smash!"
 	L.blackhole_message = "Black Hole %d!"
+	L.bigbang_bar = "Next Big Bang"
 	L.bigbang_soon = "Big Bang soon!"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Algalon")
@@ -93,7 +94,7 @@ end
 function mod:BigBang(_, spellId, _, _, spellName)
 	self:Message(64443, spellName, "Important", 64443, "Alarm")
 	self:Bar(64443, spellName, 8, 64443)
-	self:Bar(64443, spellName, 90, 64443)
+	self:Bar(64443, L["bigbang_bar"], 90, 64443)
 	self:DelayedMessage(64443, 85, L["bigbang_soon"], "Attention")
 end
 
