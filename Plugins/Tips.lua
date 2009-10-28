@@ -33,7 +33,7 @@ local function get(info) return plugin.db.profile[info[#info]] end
 local function set(info, value) plugin.db.profile[info[#info]] = value end
 local function disable() return not plugin.db.profile.show end
 
-plugin.pluginOptions = {
+local options = {
 	type = "group",
 	name = L["Tips"],
 	get = get,
@@ -331,6 +331,11 @@ local function check()
 			plugin:RandomTip()
 		end
 	end
+end
+
+function plugin:OnRegister()
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("Big Wigs: Tips", options)
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Big Wigs: Tips", L["Tip of the Raid"], "Big Wigs")
 end
 
 function plugin:OnPluginEnable()

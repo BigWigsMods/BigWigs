@@ -152,6 +152,7 @@ L["Show/hide"] = true
 L["|cff%s%s|r says:"] = true
 L["Cool!"] = true
 L["Tips"] = true
+L["Tip of the Raid"] = true
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = true
 L["Automatic tips"] = true
