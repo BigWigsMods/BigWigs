@@ -427,7 +427,7 @@ do
 					module.toggleDefaults[v] = bf
 				elseif t == "number" and v > 1 then
 					local n = GetSpellInfo(v)
-					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, name)) end
+					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 					module.toggleDefaults[n] = bf
 				end
 			end
