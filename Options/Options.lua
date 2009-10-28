@@ -43,43 +43,42 @@ local superEmphasizeOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = "Super Emphasize lets you really boost up the impact of any set of messages or bars related to the boss option where you toggle it on. In this panel you can configure what exactly should happen when you toggle on the Super Emphasize option in the advanced section for a particular boss encounter script option.\n\n|cffff4411Note that no boss options have this toggled on by default.|r\n",
+			name = "Super Emphasize lets you really boost up the impact of any set of messages or bars related to the boss option where you toggle it on. In this panel you can configure what exactly should happen when you toggle on the Super Emphasize option in the advanced section for a particular boss encounter script option.\n\n|cffff4411Note that no boss options have this toggled on by default. AND IT IS NOT IMPLEMENTED YET (YOU ARE RUNNING AN ALPHA BUILD :P)|r\n",
 			order = 10,
 			width = "full",
 			fontSize = "medium",
 		},
-		messages = {
-			type = "group",
-			name = "Messages",
-			inline = true,
-			order = 20,
-			args = {
-				upper = {
-					type = "toggle",
-					name = colorize["UPPER CASE"],
-					desc = "Turns all messages related to a Super Emphasized option into UPPER CASE.",
-					order = 10,
-					width = "full",
-					descStyle = "inline",
-				}
-				
-			},
+		upper = {
+			type = "toggle",
+			name = colorize["UPPER CASE"],
+			desc = "Turns all messages related to a Super Emphasized option into UPPER CASE.",
+			order = 10,
+			width = "full",
+			descStyle = "inline",
 		},
-		bars = {
-			type = "group",
-			name = "Bars",
-			inline = true,
-			order = 30,
-			args = {
-				countdown = {
-					type = "toggle",
-					name = colorize["Vocal count down"],
-					desc = "If the bar in question is longer than 5 seconds, a vocal count down will be added for the last 5 seconds. Imagine someone counting down 5... 4... 3... 2... 1...",
-					order = 10,
-					width = "full",
-					descStyle = "inline",
-				},
-			},
+		size = {
+			type = "toggle",
+			name = colorize["Increase size"],
+			desc = "Makes super emphasized messages and bars 50% larger.",
+			order = 11,
+			width = "full",
+			descStyle = "inline",
+		},
+		countdown = {
+			type = "toggle",
+			name = colorize["Vocal count down"],
+			desc = "If a related timer is longer than 5 seconds, a vocal count down will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\"",
+			order = 12,
+			width = "full",
+			descStyle = "inline",
+		},
+		flash = {
+			type = "toggle",
+			name = colorize["Flash"],
+			desc = "Will flash the screen red during the last 3 seconds of any related timer.",
+			order = 13,
+			width = "full",
+			descStyle = "inline",
 		},
 	}
 }
