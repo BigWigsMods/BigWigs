@@ -22,6 +22,9 @@
 <Include file="OnyxiasLair\locales.xml"/>
 <Include file="OnyxiasLair\modules.xml"/>
 
+<Include file="Citadel\locales.xml"/>
+<Include file="Citadel\modules.xml"/>
+
 <!--@end-debug@-->
 </Ui>
 
