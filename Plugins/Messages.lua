@@ -307,7 +307,7 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	FadingFrame_Show(slot)
 end
 
-function plugin:BigWigs_Message(event, text, color, _, sound, broadcastonly, icon)
+function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.

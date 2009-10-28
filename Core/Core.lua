@@ -28,7 +28,7 @@ local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
 		-- XXX DEBUG
-		-- module:SendMessage("BigWigs_Message", string.format(L["%s enabled"], module.displayName), "Core")
+		-- module:SendMessage("BigWigs_Message", module, "bosskill", "string.format(L["%s enabled"], module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end
@@ -130,7 +130,7 @@ do
 
 	local function sendTestMessage(message)
 		if not tests[message] then return end -- spamming test can cause double messages due to the limited amount of spells
-		addon:SendMessage("BigWigs_Message", unpack(tests[message]))
+		addon:SendMessage("BigWigs_Message", nil, nil, unpack(tests[message]))
 		if math.random(1,4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
 		wipe(tests[message])
 		tests[message] = nil
@@ -153,7 +153,7 @@ do
 		local time = math.random(11, 45)
 		local color = colors[math.random(1, #colors)]
 		local sound = sounds[math.random(1, #sounds)]
-		addon:SendMessage("BigWigs_StartBar", addon, name, time, icon)
+		addon:SendMessage("BigWigs_StartBar", addon, nil, name, time, icon)
 		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
 		tests[formatted] = { formatted, color, true, sound, nil, icon }
 		addon:ScheduleTimer(sendTestMessage, time, formatted)

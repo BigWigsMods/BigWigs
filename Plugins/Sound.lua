@@ -129,7 +129,7 @@ local function play(sound)
 	PlaySound("RaidWarning")
 end
 
-function plugin:BigWigs_Message(event, text, color, noraidsay, sound, broadcastonly)
+function plugin:BigWigs_Message(event, module, key, text, color, noraidsay, sound, broadcastonly)
 	if not text or sound == false or broadcastonly or not BigWigs.db.profile.sound then return end
 	play(sound)
 end

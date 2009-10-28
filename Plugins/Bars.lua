@@ -566,7 +566,7 @@ local function barClicked(bar, button)
 	end
 end
 
-function plugin:BigWigs_StartBar(message, module, text, time, icon, barColor, barEmphasized, barText, barBackground)
+function plugin:BigWigs_StartBar(message, module, key, text, time, icon, barColor, barEmphasized, barText, barBackground)
 	if not normalAnchor then createAnchors() end
 	stop(module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
@@ -673,7 +673,7 @@ local function startCustomBar(bar, nick, localOnly)
 	else
 		messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly }
 		timers[id] = plugin:ScheduleTimer(sendCustomMessage, seconds, id)
-		plugin:SendMessage("BigWigs_StartBar", plugin, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+		plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 	end
 end
 

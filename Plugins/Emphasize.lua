@@ -76,14 +76,14 @@ local options = {
 
 function plugin:OnRegister()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("Big Wigs: Super Emphasize", options)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Big Wigs: Super Emphasize", "Super Emphasize", "Big Wigs")
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Big Wigs: Super Emphasize", L["Super Emphasize"], "Big Wigs")
 end
 
 function plugin:OnPluginEnable()
 	emphasizeFlag = BigWigs.C.EMPHASIZE
 end
 
-function plugin:IsSuperEmphasized(module, option)
+function plugin:IsSuperEmphasized(module, key)
 	if type(key) == "number" then key = GetSpellInfo(key) end
 	if temporaryEmphasizes[key] then return true end
 	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag

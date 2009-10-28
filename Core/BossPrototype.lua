@@ -367,11 +367,11 @@ do
 			if player == pName then
 				if ... then
 					local text = fmt(spellName, coloredNames[player], ...)
-					self:SendMessage("BigWigs_Message", text, getColor(self, key, color), true, sound, nil, icon)
-					self:SendMessage("BigWigs_Message", text, nil, nil, nil, true)
+					self:SendMessage("BigWigs_Message", self, key, text, getColor(self, key, color), true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", self, key, text, nil, nil, nil, true)
 				else
-					self:SendMessage("BigWigs_Message", fmt(L["you"], spellName), getColor(self, key, color), true, sound, nil, icon)
-					self:SendMessage("BigWigs_Message", fmt(L["other"], spellName, player), nil, nil, nil, true)
+					self:SendMessage("BigWigs_Message", self, key, fmt(L["you"], spellName), getColor(self, key, color), true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", self, key, fmt(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
 				-- Change color and remove sound when warning about effects on other players
@@ -382,7 +382,7 @@ do
 				else
 					text = fmt(L["other"], spellName, coloredNames[player])
 				end
-				self:SendMessage("BigWigs_Message", text, getColor(self, key, color), nil, nil, nil, icon)
+				self:SendMessage("BigWigs_Message", self, key, text, getColor(self, key, color), nil, nil, nil, icon)
 			end
 		end
 	end
@@ -390,7 +390,7 @@ do
 	-- Outputs a local message only, no raid warning.
 	function boss:LocalMessage(dbkey, text, color, icon, sound)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
-		self:SendMessage("BigWigs_Message", text, getColor(self, key, color), true, sound, nil, icon)
+		self:SendMessage("BigWigs_Message", self, dbkey, text, getColor(self, key, color), true, sound, nil, icon)
 	end
 end
 
@@ -421,7 +421,7 @@ do
 			if not barEmphasized then barEmphasized = getColor(self, key, "barEmphasized") end
 			if not barText then barText = getColor(self, key, "barText") end
 			if not barBackground then barBackground = getColor(self, key, "barBackground") end
-			self:SendMessage("BigWigs_StartBar", self, text, length, icons[icon], barColor, barEmphasized, barText, barBackground, ...)
+			self:SendMessage("BigWigs_StartBar", self, key, text, length, icons[icon], barColor, barEmphasized, barText, barBackground, ...)
 		end
 	end
 end
