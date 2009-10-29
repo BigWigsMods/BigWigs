@@ -325,8 +325,8 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 			else
 				r, g, b = unpack(color)
 			end
-		elseif colorModule and colorModule:HasColor(color) then
-			r, g, b = colorModule:GetColor(color)
+		elseif colorModule then
+			r, g, b = colorModule:GetColor(color, module, key)
 		end
 	end
 

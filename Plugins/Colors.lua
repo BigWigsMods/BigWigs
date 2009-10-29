@@ -224,22 +224,16 @@ plugin.pluginOptions.args.resetAll = {
 	--width = "half",
 }
 
-function plugin:HasColor(hint, name, key)
-	if not self.db.profile[hint] then return end
-	if not name then
-		name = plugin.name
-		key = defaultKey
-	end
-	local t = self.db.profile[hint][name][key]
-	return not compareTable(t, self.defaultDB[hint]["*"]["*"])
-end
-
 local white = { 1, 1, 1 }
-function plugin:GetColorTable(hint, name, key)
+function plugin:GetColorTable(hint, module, key)
 	if not self.db.profile[hint] then return white end
-	if not name then
+	if type(key) == "number" then key = GetSpellInfo(key) end
+	local name
+	if not module or not key then
 		name = plugin.name
 		key = defaultKey
+	else
+		name = module.name
 	end
 	local t = self.db.profile[hint][name][key] -- no key passed -> return our default
 	if compareTable(t, self.defaultDB[hint]["*"]["*"]) then -- unchanged profile entry, go with the defaultColors
@@ -248,7 +242,7 @@ function plugin:GetColorTable(hint, name, key)
 	return t
 end
 
-function plugin:GetColor(hint, name, key)
-	return unpack(self:GetColorTable(hint, name, key))
+function plugin:GetColor(hint, module, key)
+	return unpack(self:GetColorTable(hint, module, key))
 end
 

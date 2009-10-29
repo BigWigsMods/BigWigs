@@ -69,9 +69,9 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-function mod:BigWigs_FlashShake(event, r, g, b)
+function mod:BigWigs_FlashShake(event, module, key)
 	if not BigWigs.db.profile.flashshake then return end
-	if not r then r, g, b = colors:GetColor("flashshake") end
+	local r, g, b = colors:GetColor("flashshake", module, key)
 	if not flasher then --frame creation
 		flasher = CreateFrame("Frame", "BWFlash", UIParent)
 		flasher:SetFrameStrata("BACKGROUND")
