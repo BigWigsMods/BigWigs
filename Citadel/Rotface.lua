@@ -6,7 +6,7 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{71224, "ICON", "WHISPER"}, "flood", "bosskill"}
+mod.toggleOptions = {{71224, "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
 
 local boss = "Rotface"
 
@@ -19,9 +19,6 @@ if L then
 	L.infection = "Mutated Infection"
 	L.infection_desc = "Warn for Mutated Infection"
 	L.infection_message = "Mutated Infection on %s!"
-
-	L.flood = "Ooze Flood"
-	L.flood_desc = "Warn when Putricide floods a new area"
 
 	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
 	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
@@ -63,10 +60,10 @@ end
 
 
 function mod:Flood()
-	self:Bar("flood", L["flood"], 20, 71588)
-	self:Message("flood", L["flood_warning"], "Attention")
+	self:Bar(71588, L["flood"], 20, 71588)
+	self:Message(71588, L["flood_warning"], "Attention")
 end
 
 function mod:SlimeSpray(_, _, _, _, _, _, _, spellName)
-	self:Message("flood", spellName, "Attention", 69508)
+	self:Message(69508, spellName, "Attention", 69508)
 end
