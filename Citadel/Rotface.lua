@@ -1,7 +1,8 @@
 ﻿if not QueryQuestsCompleted then return end
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
@@ -9,9 +10,10 @@ mod.toggleOptions = {{"infection", "ICON"}, "flood", "bosskill"}
 
 local boss = "Rotface"
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
+
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Rotface", "enUS", true)
 if L then
 	L.infection = "Mutated Infection"
@@ -29,9 +31,10 @@ end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Rotface")
 mod.locale = L
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
 function mod:OnRegister()
 	boss = BigWigs:Translate(boss)
 end
@@ -47,9 +50,9 @@ function mod:OnBossEnable()
 	self:Death("Win", 36627)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Infection(player, spellId)
 	self:TargetMessage("infection", L["infection_message"], player, "Personal", spellId)
