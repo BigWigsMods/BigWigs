@@ -6,7 +6,7 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{"infection", "ICON"}, 69508, "flood", "bosskill"}
+mod.toggleOptions = {{71224, "ICON", "WHISPER"}, "flood", "bosskill"}
 
 local boss = "Rotface"
 
@@ -55,11 +55,12 @@ end
 --
 
 function mod:Infection(player, spellId)
-	self:TargetMessage("infection", L["infection_message"], player, "Personal", spellId)
-	self:Whisper("infection", player, L["infection"])
-	self:Bar("infection", L["infection"]:format(player), 12, spellId)
-	self:PrimaryIcon(71224, player, "icon")
+    self:TargetMessage(71224, L["infection_message"], player, "Personal", spellId)
+    self:Whisper(71224, player, L["infection"])
+    self:Bar(71224, L["infection"]:format(player), 12, spellId)
+    self:PrimaryIcon(71224, player, "icon")
 end
+
 
 function mod:Flood()
 	self:Bar(71588, L["flood"], 20, 71588)
