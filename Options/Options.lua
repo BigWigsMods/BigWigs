@@ -540,7 +540,7 @@ local function advancedToggles(dbKey, module, check)
 	wipe(slaves)
 	for i, key in ipairs(listToggles) do
 		local flag = C[key]
-		if flag ~= C.EMPHASIZE and bit.band(dbv, flag) == flag then
+		if bit.band(dbv, flag) == flag then
 			tinsert(slaves, getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check))
 		end
 	end
