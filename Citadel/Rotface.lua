@@ -44,7 +44,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlimeSpray", 69508) --Needed?
 
 	-- Common
-	self:Yell("Flood", L["flood_trigger_generic"])
+	self:Yell("Flood", L["flood_trigger1"],  L["flood_trigger2"]) 
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 36627)
