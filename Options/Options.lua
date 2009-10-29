@@ -695,7 +695,13 @@ local function onZoneShow(frame)
 
 	-- Make sure all the bosses for this zone are loaded.
 	BigWigsLoader:LoadZone(zone)
-
+	
+	local hasZones = zone and zoneModules[zone] and true or nil
+	
+	if not hasZones and not frame.module then -- this zone has no modules, nor is the panel related to a module
+		return
+	end
+	
 	local sframe = AceGUI:Create("SimpleGroup")
 	sframe:PauseLayout()
 	sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
@@ -708,7 +714,6 @@ local function onZoneShow(frame)
 	scroll:SetFullWidth(true)
 	scroll:SetFullHeight(true)
 	
-	local hasZones = zone and zoneModules[zone] and true or nil
 	local group = nil
 	if hasZones then
 		group = AceGUI:Create("DropdownGroup")
