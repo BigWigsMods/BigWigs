@@ -47,7 +47,7 @@ L["Normal"] = "일반"
 L["Emphasized"] = "강조"
 
 L["Reset"] = "초기화"
-L["Resets the above colors to defaults."] = "위의 색상을 모두 기본으로 초기화 합니다."
+L["Resets the above colors to their defaults."] = "위의 색상을 모두 기본으로 초기화 합니다."
 L["Reset all"] = "모두 초기화"
 L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."] = "보스 교전 모듈의 사용자가 지정한 색상이 있다면, 이 버튼으로 인해 모든 색상이 초기화되며 다시 설정이 가능합니다."
 
@@ -151,9 +151,10 @@ L["Show/hide"] = "표시/숨김"
 -- Tips.lua
 --
 
+L["|cff%s%s|r says:"] = "|cff%s%s|r 대화:"
 L["Cool!"] = "쿨!"
 L["Tips"] = "도움말"
-L["Configure how the raiding tips should be displayed."] = "레이드중 도움말 표시 방법에 대하여 설정합니다."
+L["Tip of the Raid"] = "공격대 도움말"
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = true
 L["Automatic tips"] = "자동 도움말"
@@ -165,4 +166,19 @@ L["By default the tips will be shown in their own, awesome window in the middle 
 L["Usage: /sendtip <index|\"Custom tip\">"] = "Usage: /sendtip <index|\"Custom tip\">"
 L["You must be the raid leader to broadcast a tip."] = "도움말 알림을 위해서는 공격대장이어야 합니다."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "팁 색인 범위 밖으로, %d의 1 인덱스 범위를 허용합니다."
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L["Super Emphasize"] = "특수 강조바"
+L.superEmphasizeDesc = "특정 보스가 사용하는 스킬과 관련한 메세지와 바를 특징있게 나타냅니다.\n\n여기에서 보스가 사용하는 기술에 대하여 특수 강조 옵션을 구성합니다.\n\n|cffff4411체크를 해제하면 슈퍼 강조의 모든 능력은 기본적으로 해제됩니다.|r\n"
+L["UPPERCASE"] = "대문자"
+L["Uppercases all messages related to a super emphasized option."] = "특수 강조의 모든 관련된 메세지를 대문자로 표시합니다."
+L["Double size"] = "2중 크기"
+L["Doubles the size of super emphasized bars and messages."] = "특수 강보 바와 메세지의 2중 크기입니다."
+L["Countdown"] = "카운트다운"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "관련 타이머에 5 초 동안 카운트다운을 추가합니다. \"5... 4... 3... 2... 1... 카운트다운!\" 화면의 중앙에 큰 숫자를 표시합니다."
+L["Flash"] = "번쩍임"
+L["Flashes the screen red during the last 3 seconds of any related timer."] = "관련된 모든 타이머의 마지막 3 초 동안 화면에 빨간색으로 뻔쩍입니다."
 
