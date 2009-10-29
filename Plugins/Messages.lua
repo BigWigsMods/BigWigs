@@ -9,12 +9,13 @@ if not plugin then return end
 --      Are you local?      --
 ------------------------------
 
-local minHeight = 20
-local maxHeight = 30
+local minHeight = select(2, GameFontNormalHuge:GetFont())
+local maxHeight = minHeight + 10
 local scaleUpTime = 0.2
 local scaleDownTime = 0.4
 local labels = {}
 
+local seModule = nil
 local colorModule = nil
 local messageFrame = nil
 local anchor = nil
@@ -141,7 +142,9 @@ function plugin:OnPluginEnable()
 		anchor:Hide()
 	end)
 
+	seModule = BigWigs:GetPlugin("Super Emphasize", true)
 	colorModule = BigWigs:GetPlugin("Colors", true)
+
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
 
@@ -233,13 +236,15 @@ local function onUpdate(self, elapsed)
 	for i, v in next, labels do
 		if v:IsShown() then
 			if v.scrollTime then
+				local min = v.minHeight or minHeight
+				local max = min + 10
 				v.scrollTime = v.scrollTime + elapsed
 				if v.scrollTime <= scaleUpTime then
-					v:SetTextHeight(floor(minHeight + ((maxHeight - minHeight) * v.scrollTime / scaleUpTime)))
+					v:SetTextHeight(floor(min + ((max - min) * v.scrollTime / scaleUpTime)))
 				elseif v.scrollTime <= scaleDownTime then
-					v:SetTextHeight(floor(maxHeight - ((maxHeight - minHeight) * (v.scrollTime - scaleUpTime) / (scaleDownTime - scaleUpTime))))
+					v:SetTextHeight(floor(max - ((max - min) * (v.scrollTime - scaleUpTime) / (scaleDownTime - scaleUpTime))))
 				else
-					v:SetTextHeight(minHeight)
+					v:SetTextHeight(min)
 					v.scrollTime = nil
 				end
 			end
@@ -274,12 +279,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
+local hugeFont, hugeSize = GameFontNormalHuge:GetFont()
+function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	if not anchor then createAnchor() end
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
 	messageFrame:Show()
-	if icon then text = "|T"..icon..":20:20:-5|t"..text end
 	
 	-- move 4 -> 1
 	local old = labels[4]
@@ -300,10 +305,12 @@ function plugin:Print(addon, text, r, g, b, _, _, _, _, _, icon)
 	-- new message at 1
 	local slot = labels[1]
 
+	slot:SetFont(font or hugeFont, size or hugeSize)
+	slot.minHeight = select(2, slot:GetFont())
+	if icon then text = "|T"..icon..":" .. slot.minHeight .. ":" .. slot.minHeight .. ":-5|t"..text end
 	slot:SetText(text)
 	slot:SetTextColor(r, g, b, 1)
 	slot.scrollTime = 0
-	slot:SetTextHeight(minHeight)
 	FadingFrame_Show(slot)
 end
 
@@ -329,8 +336,18 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 	else
 		icon = nil
 	end
+	
+	local size = nil
+	if seModule and module and key and seModule:IsSuperEmphasized(module, key) then
+		if seModule.db.profile.upper then
+			text = text:upper()
+		end
+		if seModule.db.profile.size then
+			size = hugeSize * 1.5
+		end
+	end
 
-	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
+	self:Pour(text, r, g, b, nil, size, nil, nil, nil, icon)
 	if self.db.profile.chat then
 		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end

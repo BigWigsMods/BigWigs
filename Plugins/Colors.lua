@@ -214,14 +214,14 @@ local defaultKey = "default"
 -- the pluginOptions are a slightly altered copy of the defaults
 plugin.pluginOptions = copyTable({}, plugin:SetColorOptions(plugin.name, defaultKey))
 plugin.pluginOptions.inline = nil
-plugin.pluginOptions.args.reset.width = "half"
+plugin.pluginOptions.args.reset.width = nil --"half"
 plugin.pluginOptions.args.resetAll = {
 	type = "execute",
 	name = L["Reset all"],
 	desc = L["If you've customized colors for any boss encounter settings, this button will reset ALL of them so the colors defined here will be used instead."],
 	func = resetAll,
 	order = 17,
-	width = "half",
+	--width = "half",
 }
 
 function plugin:HasColor(hint, name, key)

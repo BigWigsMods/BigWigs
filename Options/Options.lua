@@ -564,11 +564,9 @@ local function advancedToggles(dbKey, module, check)
 			local ping = getSlaveToggle(L["PING"], L["PING_desc"], dbKey, module, C.PING, check)
 			table.insert(slaves, ping)
 		end
---[[ XXX - Add this again when we're ready for it
+
 		local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
-		-- group:AddChildren(emp)
 		table.insert(slaves, emp)
---]]
 	end
 	return unpack(slaves)
 end
@@ -595,7 +593,6 @@ local function advancedTabSelect(widget, callback, tab)
 	widget:ResumeLayout()
 	widget:GetUserData("scrollFrame"):DoLayout()
 	widget:DoLayout()
-
 end
 
 local advancedTabs = {
