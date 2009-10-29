@@ -533,41 +533,16 @@ end
 
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
-
-	do
-		wipe(slaves)
-		if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
-			local message = getSlaveToggle(L["MESSAGE"], L["MESSAGE_desc"], dbKey, module, C.MESSAGE, check)
-			table.insert(slaves, message)
+	wipe(slaves)
+	for key, flag in pairs(C) do
+		if flag ~= C.EMPHASIZE and bit.band(dbv, flag) == flag then
+			tinsert(slaves, getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check))
 		end
-		if bit.band(dbv, C.BAR) == C.BAR then
-			local bar = getSlaveToggle(L["BAR"], L["BAR_desc"], dbKey, module, C.BAR, check)
-			table.insert(slaves, bar)
-		end
-		if bit.band(dbv, C.FLASHSHAKE) == C.FLASHSHAKE then
-			local fns = getSlaveToggle(L["FLASHSHAKE"], L["FLASHSHAKE_desc"], dbKey, module, C.FLASHSHAKE, check)
-			table.insert(slaves, fns)
-		end
-		if bit.band(dbv, C.ICON) == C.ICON then
-			local icon = getSlaveToggle(L["ICON"], L["ICON_desc"], dbKey, module, C.ICON, check)
-			table.insert(slaves, icon)
-		end
-		if bit.band(dbv, C.WHISPER) == C.WHISPER then
-			local whisper = getSlaveToggle(L["WHISPER"], L["WHISPER_desc"], dbKey, module, C.WHISPER, check)
-			table.insert(slaves, whisper)
-		end
-		if bit.band(dbv, C.SAY) == C.SAY then
-			local say = getSlaveToggle(L["SAY"], L["SAY_desc"], dbKey, module, C.SAY, check)
-			table.insert(slaves, say)
-		end
-		if bit.band(dbv, C.PING) == C.PING then
-			local ping = getSlaveToggle(L["PING"], L["PING_desc"], dbKey, module, C.PING, check)
-			table.insert(slaves, ping)
-		end
-
-		local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
-		table.insert(slaves, emp)
 	end
+
+	local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
+	table.insert(slaves, emp)
+
 	return unpack(slaves)
 end
 
