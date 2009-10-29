@@ -232,6 +232,8 @@ function plugin:GetColorTable(hint, module, key)
 	if not module or not key then
 		name = plugin.name
 		key = defaultKey
+	elseif type(module) == "string" then
+		name = module
 	else
 		name = module.name
 	end
