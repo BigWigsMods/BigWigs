@@ -390,7 +390,7 @@ do
 	-- Outputs a local message only, no raid warning.
 	function boss:LocalMessage(dbkey, text, color, icon, sound)
 		if not checkFlag(self, dbkey, C.MESSAGE) then return end
-		self:SendMessage("BigWigs_Message", self, dbkey, text, getColor(self, key, color), true, sound, nil, icon)
+		self:SendMessage("BigWigs_Message", self, dbkey, text, getColor(self, dbkey, color), true, sound, nil, icon)
 	end
 end
 
