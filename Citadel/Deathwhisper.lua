@@ -1,3 +1,4 @@
+if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module declaration
 --
