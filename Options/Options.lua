@@ -839,6 +839,13 @@ do
 		if module.pluginOptions then
 			pluginOptions.args[module.name] = module.pluginOptions
 		end
+		if module.subPanelOptions then
+			local key = module.subPanelOptions.key
+			local name = module.subPanelOptions.name
+			local options = module.subPanelOptions.options
+			ac:RegisterOptionsTable(key, options)
+			acd:AddToBlizOptions(key, name, "Big Wigs")
+		end
 	end
 end
 

@@ -33,71 +33,75 @@ local function get(info) return plugin.db.profile[info[#info]] end
 local function set(info, value) plugin.db.profile[info[#info]] = value end
 local function disable() return not plugin.db.profile.show end
 
-local options = {
-	type = "group",
-	name = L["Tips"],
-	get = get,
-	set = set,
-	args = {
-		description = {
-			type = "description",
-			name = L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"],
-			order = 1,
-			width = "full",
-			fontSize = "medium",
-		},
-		header = {
-			type = "description",
-			name = " ",
-			order = 2,
-			width = "full",
-		},
-		show = {
-			type = "toggle",
-			name = colorize[L["Enable"]],
-			desc = L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."],
-			order = 3,
-			width = "full",
-			descStyle = "inline",
-		},
-		separator = {
-			type = "description",
-			name = " ",
-			order = 10,
-			width = "full",
-		},
-		automatic = {
-			type = "toggle",
-			name = colorize[L["Automatic tips"]],
-			desc = L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."],
-			order = 11,
-			width = "full",
-			-- XXX Disabled for this release!
-			get = function() return false end,
-			disabled = true,
-		},
-		manual = {
-			type = "toggle",
-			name = colorize[L["Manual tips"]],
-			desc = L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."],
-			order = 12,
-			width = "full",
-			disabled = disable,
-		},
-		separator2 = {
-			type = "description",
-			name = " ",
-			order = 20,
-			width = "full",
-		},
-		chat = {
-			type = "toggle",
-			name = colorize[L["Output to chat frame"]],
-			desc = L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."],
-			order = 21,
-			width = "full",
-			descStyle = "inline",
-			disabled = disable,
+plugin.subPanelOptions = {
+	key = "Big Wigs: Tips",
+	name = L["Tip of the Raid"],
+	options = {
+		type = "group",
+		name = L["Tips"],
+		get = get,
+		set = set,
+		args = {
+			description = {
+				type = "description",
+				name = L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"],
+				order = 1,
+				width = "full",
+				fontSize = "medium",
+			},
+			header = {
+				type = "description",
+				name = " ",
+				order = 2,
+				width = "full",
+			},
+			show = {
+				type = "toggle",
+				name = colorize[L["Enable"]],
+				desc = L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."],
+				order = 3,
+				width = "full",
+				descStyle = "inline",
+			},
+			separator = {
+				type = "description",
+				name = " ",
+				order = 10,
+				width = "full",
+			},
+			automatic = {
+				type = "toggle",
+				name = colorize[L["Automatic tips"]],
+				desc = L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."],
+				order = 11,
+				width = "full",
+				-- XXX Disabled for this release!
+				get = function() return false end,
+				disabled = true,
+			},
+			manual = {
+				type = "toggle",
+				name = colorize[L["Manual tips"]],
+				desc = L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."],
+				order = 12,
+				width = "full",
+				disabled = disable,
+			},
+			separator2 = {
+				type = "description",
+				name = " ",
+				order = 20,
+				width = "full",
+			},
+			chat = {
+				type = "toggle",
+				name = colorize[L["Output to chat frame"]],
+				desc = L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."],
+				order = 21,
+				width = "full",
+				descStyle = "inline",
+				disabled = disable,
+			},
 		},
 	},
 }
@@ -331,11 +335,6 @@ local function check()
 			plugin:RandomTip()
 		end
 	end
-end
-
-function plugin:OnRegister()
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("Big Wigs: Tips", options)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Big Wigs: Tips", L["Tip of the Raid"], "Big Wigs")
 end
 
 function plugin:OnPluginEnable()

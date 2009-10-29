@@ -26,58 +26,57 @@ plugin.defaultDB = {
 	flash = false,
 }
 
-local options = {
+plugin.subPanelOptions = {
+	key = "Big Wigs: Super Emphasize",
 	name = L["Super Emphasize"],
-	type = "group",
-	get = function(info) return plugin.db.profile[info[#info]] end,
-	set = function(info, value) plugin.db.profile[info[#info]] = value end,
-	args = {
-		heading = {
-			type = "description",
-			name = L.superEmphasizeDesc,
-			order = 10,
-			width = "full",
-			fontSize = "medium",
+	options = {
+		name = L["Super Emphasize"],
+		type = "group",
+		get = function(info) return plugin.db.profile[info[#info]] end,
+		set = function(info, value) plugin.db.profile[info[#info]] = value end,
+		args = {
+			heading = {
+				type = "description",
+				name = L.superEmphasizeDesc,
+				order = 10,
+				width = "full",
+				fontSize = "medium",
+			},
+			upper = {
+				type = "toggle",
+				name = colorize[L["UPPERCASE"]],
+				desc = L["Uppercases all messages related to a super emphasized option."],
+				order = 10,
+				width = "full",
+				descStyle = "inline",
+			},
+			size = {
+				type = "toggle",
+				name = colorize[L["Double size"]],
+				desc = L["Doubles the size of super emphasized bars and messages."],
+				order = 11,
+				width = "full",
+				descStyle = "inline",
+			},
+			countdown = {
+				type = "toggle",
+				name = colorize[L["Countdown"]],
+				desc = L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."],
+				order = 12,
+				width = "full",
+				descStyle = "inline",
+			},
+			flash = {
+				type = "toggle",
+				name = colorize[L["Flash"]],
+				desc = L["Flashes the screen red during the last 3 seconds of any related timer."],
+				order = 13,
+				width = "full",
+				descStyle = "inline",
+			},
 		},
-		upper = {
-			type = "toggle",
-			name = colorize[L["UPPERCASE"]],
-			desc = L["Uppercases all messages related to a super emphasized option."],
-			order = 10,
-			width = "full",
-			descStyle = "inline",
-		},
-		size = {
-			type = "toggle",
-			name = colorize[L["Double size"]],
-			desc = L["Doubles the size of super emphasized bars and messages."],
-			order = 11,
-			width = "full",
-			descStyle = "inline",
-		},
-		countdown = {
-			type = "toggle",
-			name = colorize[L["Countdown"]],
-			desc = L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."],
-			order = 12,
-			width = "full",
-			descStyle = "inline",
-		},
-		flash = {
-			type = "toggle",
-			name = colorize[L["Flash"]],
-			desc = L["Flashes the screen red during the last 3 seconds of any related timer."],
-			order = 13,
-			width = "full",
-			descStyle = "inline",
-		},
-	}
+	},
 }
-
-function plugin:OnRegister()
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("Big Wigs: Super Emphasize", options)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Big Wigs: Super Emphasize", L["Super Emphasize"], "Big Wigs")
-end
 
 function plugin:OnPluginEnable()
 	emphasizeFlag = BigWigs.C.EMPHASIZE
