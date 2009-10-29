@@ -6,7 +6,7 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{"infection", "ICON"}, "flood", "bosskill"}
+mod.toggleOptions = {{"infection", "ICON"}, 69508, "flood", "bosskill"}
 
 local boss = "Rotface"
 
@@ -22,9 +22,9 @@ if L then
 
 	L.flood = "Ooze Flood"
 	L.flood_desc = "Warn when Putricide floods a new area"
-	L.flood_trigger_generic = "news, everyone"
-	--trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
-	--trigger2 = "Great news, everyone! The slime is flowing again!"
+
+	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
+	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
 	L.flood_warning = "A new area is being flooded soon!"
 
 end
@@ -41,7 +41,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224)
-	self:Log("SPELL_CAST_START", "Slime Spray", 69508) --Needed?
+	self:Log("SPELL_CAST_START", "SlimeSpray", 69508) --Needed?
 
 	-- Common
 	self:Yell("Flood", L["flood_trigger_generic"])
@@ -62,6 +62,15 @@ function mod:Infection(player, spellId)
 end
 
 function mod:Flood()
+	if msg:find(L["flood_trigger1"]) then
 		self:Bar(71588, L["flood"], 20, 71588)
 		self:Message("flood", L["flood_warning"], "Attention")
+	elseif msg:find(L["flood_trigger2"]) then
+		self:Bar(71588, L["flood"], 20, 71588)
+		self:Message("flood", L["flood_warning"], "Attention")
+	end
+end
+
+function mod:SlimeSpray(_, _, _, _, _, _, _, spellName)
+	self:Message(69508, spellName, "Attention", 69508)
 end
