@@ -63,10 +63,10 @@ end
 
 
 function mod:Flood()
-	self:Bar(71588, L["flood"], 20, 71588)
+	self:Bar("flood", L["flood"], 20, 71588)
 	self:Message("flood", L["flood_warning"], "Attention")
 end
 
 function mod:SlimeSpray(_, _, _, _, _, _, _, spellName)
-	self:Message(69508, spellName, "Attention", 69508)
+	self:Message("flood", spellName, "Attention", 69508)
 end
