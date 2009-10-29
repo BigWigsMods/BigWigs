@@ -62,13 +62,8 @@ function mod:Infection(player, spellId)
 end
 
 function mod:Flood()
-	if msg:find(L["flood_trigger1"]) then
-		self:Bar(71588, L["flood"], 20, 71588)
-		self:Message("flood", L["flood_warning"], "Attention")
-	elseif msg:find(L["flood_trigger2"]) then
-		self:Bar(71588, L["flood"], 20, 71588)
-		self:Message("flood", L["flood_warning"], "Attention")
-	end
+	self:Bar(71588, L["flood"], 20, 71588)
+	self:Message("flood", L["flood_warning"], "Attention")
 end
 
 function mod:SlimeSpray(_, _, _, _, _, _, _, spellName)
