@@ -3,6 +3,18 @@ BigWigsOptions = BigWigs:NewModule("Options", "AceEvent-3.0")
 local options = BigWigsOptions
 options:SetEnabledState(true)
 
+local colorize = nil
+do
+	local r, g, b
+	colorize = setmetatable({}, { __index =
+		function(self, key)
+			if not r then r, g, b = GameFontNormal:GetTextColor() end
+			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			return self[key]
+		end
+	})
+end
+
 local C = BigWigs.C
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
@@ -16,6 +28,8 @@ local AceGUI = LibStub("AceGUI-3.0")
 
 local colorModule 
 
+local showToggleOptions = nil
+local advancedOptions = {}
 local zoneModules = {}
 
 local pluginOptions = {
@@ -435,20 +449,6 @@ do
 	end
 end
 
-local colorize = nil
-do
-	local r, g, b
-	colorize = setmetatable({}, { __index =
-		function(self, key)
-			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
-			return self[key]
-		end
-	})
-end
-
-local showToggleOptions = nil
-
 local function getOptionDetails(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
 	local option = bossOption
@@ -468,10 +468,7 @@ local function getOptionDetails(module, bossOption)
 	end
 end
 
-local slaves = {}
-local getMasterOption, masterOptionToggled, getSlaveOption, slaveOptionToggled
-
-function getMasterOption(self)
+local function getMasterOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	if module.db.profile[key] == 0 then
@@ -483,7 +480,14 @@ function getMasterOption(self)
 	return nil -- some options set
 end
 
-function masterOptionToggled(self, event, value)
+local function getSlaveOption(self)
+	local key = self:GetUserData("key")
+	local module = self:GetUserData("module")
+	local flag = self:GetUserData("flag")
+	return bit.band(module.db.profile[key], flag) == flag
+end
+
+local function masterOptionToggled(self, event, value)
 	if value == nil then self:SetValue(false) end -- toggling the master toggles all (we just pretend to be a tristate)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
@@ -492,19 +496,12 @@ function masterOptionToggled(self, event, value)
 	else
 		module.db.profile[key] = 0
 	end
-	for k, toggle in next, slaves do
+	for k, toggle in next, advancedOptions do
 		toggle:SetValue(getSlaveOption(toggle))
 	end
 end
 
-function getSlaveOption(self)
-	local key = self:GetUserData("key")
-	local module = self:GetUserData("module")
-	local flag = self:GetUserData("flag")
-	return bit.band(module.db.profile[key], flag) == flag
-end
-
-function slaveOptionToggled(self, event, value)
+local function slaveOptionToggled(self, event, value)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	local flag = self:GetUserData("flag")
@@ -537,17 +534,17 @@ local listToggles = {
 
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
-	wipe(slaves)
-	for i, key in ipairs(listToggles) do
+	wipe(advancedOptions)
+	for i, key in next, listToggles do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
-			tinsert(slaves, getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check))
+			tinsert(advancedOptions, getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check))
 		end
 	end
 
-	table.insert(slaves, getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check))
+	tinsert(advancedOptions, getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check))
 
-	return unpack(slaves)
+	return unpack(advancedOptions)
 end
 
 local function advancedTabSelect(widget, callback, tab)
@@ -562,10 +559,10 @@ local function advancedTabSelect(widget, callback, tab)
 	if tab == "options" then
 		widget:AddChildren(advancedToggles(key, module, master))
 	elseif tab == "colors" then
-		wipe(slaves)
+		wipe(advancedOptions)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
-		widget:AddChildren(group)
+		widget:AddChild(group)
 		colorModule:SetColorOptions(module.name, key,  module.toggleDefaults[key])
 		acd:Open("Big Wigs: Colors Override", group)
 	end
@@ -591,7 +588,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	back:SetText(L["<< Back"])
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
-		wipe(slaves) -- important, mastertoggled is called from the parent that has no slaves as well
+		wipe(advancedOptions) -- important, mastertoggled is called from the parent that has no slaves as well
 		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
 	local check = AceGUI:Create("CheckBox")
@@ -689,74 +686,77 @@ function showToggleOptions(widget, event, group)
 	end
 end
 
-local sorted = {}
-local function onZoneShow(frame)
-	local zone = frame.name
+local onZoneShow
+do
+	local sorted = {}
+	function onZoneShow(frame)
+		local zone = frame.name
 
-	-- Make sure all the bosses for this zone are loaded.
-	BigWigsLoader:LoadZone(zone)
+		-- Make sure all the bosses for this zone are loaded.
+		BigWigsLoader:LoadZone(zone)
 	
-	local hasZones = zone and zoneModules[zone] and true or nil
+		local hasZones = zone and zoneModules[zone] and true or nil
 	
-	if not hasZones and not frame.module then -- this zone has no modules, nor is the panel related to a module
-		return
-	end
-	
-	local sframe = AceGUI:Create("SimpleGroup")
-	sframe:PauseLayout()
-	sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
-	sframe:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
-	sframe:SetLayout("Fill")
-	sframe:SetFullWidth(true)
-
-	local scroll = AceGUI:Create("ScrollFrame")
-	scroll:SetLayout("Flow")
-	scroll:SetFullWidth(true)
-	scroll:SetFullHeight(true)
-	
-	local group = nil
-	if hasZones then
-		group = AceGUI:Create("DropdownGroup")
-		group:SetLayout("Flow")
-		group:SetCallback("OnGroupSelected", showToggleOptions)
-		table.sort(zoneModules[zone])
-		group:SetUserData("zone", zone)
-		group:SetGroupList(zoneModules[zone])
-	else
-		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
-		group = AceGUI:Create("SimpleGroup")
-		group:SetLayout("Fill")
-		group:SetUserData("module", frame.module)
-	end
-	group:AddChild(scroll)
-	sframe:AddChild(group)
-	group:SetUserData("parent", scroll)
-	sframe.frame:SetParent(frame)
-	sframe:ResumeLayout()
-	sframe:DoLayout()
-	sframe.frame:Show()
-	frame.container = sframe
-
-	if hasZones then
-		local enabledModule = nil
-		for name, module in BigWigs:IterateBossModules() do
-			if module:IsEnabled() then
-				enabledModule = module.moduleName
-			end
+		if not hasZones and not frame.module then -- this zone has no modules, nor is the panel related to a module
+			return
 		end
-		if enabledModule and zoneModules[zone][enabledModule] then
-			group:SetGroup(enabledModule)
+	
+		local sframe = AceGUI:Create("SimpleGroup")
+		sframe:PauseLayout()
+		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
+		sframe:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
+		sframe:SetLayout("Fill")
+		sframe:SetFullWidth(true)
+
+		local scroll = AceGUI:Create("ScrollFrame")
+		scroll:SetLayout("Flow")
+		scroll:SetFullWidth(true)
+		scroll:SetFullHeight(true)
+	
+		local group = nil
+		if hasZones then
+			group = AceGUI:Create("DropdownGroup")
+			group:SetLayout("Flow")
+			group:SetCallback("OnGroupSelected", showToggleOptions)
+			table.sort(zoneModules[zone])
+			group:SetUserData("zone", zone)
+			group:SetGroupList(zoneModules[zone])
 		else
-			-- select first one
-			wipe(sorted)
-			for k, v in pairs(zoneModules[zone]) do
-				table.insert(sorted, k)
-			end
-			table.sort(sorted)
-			group:SetGroup(sorted[1])
+			sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
+			group = AceGUI:Create("SimpleGroup")
+			group:SetLayout("Fill")
+			group:SetUserData("module", frame.module)
 		end
-	else
-		populateToggleOptions(group, frame.module)
+		group:AddChild(scroll)
+		sframe:AddChild(group)
+		group:SetUserData("parent", scroll)
+		sframe.frame:SetParent(frame)
+		sframe:ResumeLayout()
+		sframe:DoLayout()
+		sframe.frame:Show()
+		frame.container = sframe
+
+		if hasZones then
+			local enabledModule = nil
+			for name, module in BigWigs:IterateBossModules() do
+				if module:IsEnabled() then
+					enabledModule = module.moduleName
+				end
+			end
+			if enabledModule and zoneModules[zone][enabledModule] then
+				group:SetGroup(enabledModule)
+			else
+				-- select first one
+				wipe(sorted)
+				for k, v in pairs(zoneModules[zone]) do
+					table.insert(sorted, k)
+				end
+				table.sort(sorted)
+				group:SetGroup(sorted[1])
+			end
+		else
+			populateToggleOptions(group, frame.module)
+		end
 	end
 end
 
