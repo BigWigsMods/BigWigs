@@ -531,17 +531,21 @@ local function getSlaveToggle(label, desc, key, module, flag, master)
 	return toggle
 end
 
+local listToggles = {
+	"MESSAGE", "BAR", "FLASHSHAKE", "ICON", "WHISPER", "SAY", "PING"
+}
+
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
 	wipe(slaves)
-	for key, flag in pairs(C) do
+	for i, key in ipairs(listToggles) do
+		local flag = C[key]
 		if flag ~= C.EMPHASIZE and bit.band(dbv, flag) == flag then
 			tinsert(slaves, getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check))
 		end
 	end
 
-	local emp = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
-	table.insert(slaves, emp)
+	table.insert(slaves, getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check))
 
 	return unpack(slaves)
 end
