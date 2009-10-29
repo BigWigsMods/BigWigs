@@ -1,12 +1,11 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-<!-- @debug@-->
 <Script file="Marrowgar.lua"/>
 <Script file="Precious.lua"/>
 <Script file="Stinky.lua"/>
 <Script file="Festergut.lua"/>
 <Script file="Deathwhisper.lua"/>
 <Script file="Rotface.lua"/>
-<!-- @end-debug@ -->
+
 </Ui>

@@ -12,5 +12,7 @@
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-Zone: Icecrown Citadel
 
+#@debug@
 locales.xml
 modules.xml
+#@end-debug@
