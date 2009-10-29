@@ -761,9 +761,11 @@ local function onZoneShow(frame)
 end
 
 local function onZoneHide(frame)
-	frame.container:ReleaseChildren()
-	frame.container:Release()
-	frame.container = nil
+	if frame.container then
+		frame.container:ReleaseChildren()
+		frame.container:Release()
+		frame.container = nil
+	end
 end
 
 do
