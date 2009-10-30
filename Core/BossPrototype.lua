@@ -269,6 +269,7 @@ do
 
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
+		if type(delay) ~= "number" then error("The delay needs to be a number.") end
 		self:CancelDelayedMessage(text)
 		scheduledMessages[text] = {}
 
@@ -305,31 +306,18 @@ function boss:CloseProximity()
 	self:SendMessage("BigWigs_HideProximity")
 end
 
-local function getColor(self, key, color)
-	if not color or type(color) ~= "string" then return color end
-	if type(key) == "number" then key = GetSpellInfo(key) end
-	if not colorModule then
-		colorModule = BigWigs:GetPlugin("Colors", true)
-	end
-	if colorModule then
-		color = colorModule:GetColorTable(color, self, key)
-	end
-	return color
+function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
+	if not checkFlag(self, key, C.MESSAGE) then return end
+	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icon)
+end
+
+-- Outputs a local message only, no raid warning.
+function boss:LocalMessage(key, text, color, icon, sound)
+	if not checkFlag(self, key, C.MESSAGE) then return end
+	self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon)
 end
 
 do
-	local keys = setmetatable({}, {__index =
-		function(self, key)
-			if not key then return end
-			self[key] = key .. "_message"
-			return self[key]
-		end
-	})
-
-	function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
-		if not checkFlag(self, key, C.MESSAGE) then return end
-		self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icon)
-	end
 
 	local hexColors = {}
 	for k, v in pairs(RAID_CLASS_COLORS) do
@@ -385,12 +373,6 @@ do
 				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icon)
 			end
 		end
-	end
-
-	-- Outputs a local message only, no raid warning.
-	function boss:LocalMessage(key, text, color, icon, sound)
-		if not checkFlag(self, key, C.MESSAGE) then return end
-		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon)
 	end
 end
 
