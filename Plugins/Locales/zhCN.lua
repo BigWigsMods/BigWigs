@@ -166,3 +166,19 @@ L["By default the tips will be shown in their own, awesome window in the middle 
 L["Usage: /sendtip <index|\"Custom tip\">"] = "用法：/sendtip <index|\"自定义提示\">"
 L["You must be the raid leader to broadcast a tip."] = "你必须是团长才能广播提示。"
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "提示索引超出范围，接受索引范围从1到%d。"
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L["Super Emphasize"] = "超级醒目"
+L.superEmphasizeDesc = "相关信息或特定首领战斗技能计时条增强。\n\n在这里设置当开启超级醒目位于首领战斗技能高级选项时所应该发生的事件。\n\n|cffff4411注意：超级醒目功能默认情况下所有技能关闭。|r\n"
+L["UPPERCASE"] = "大写"
+L["Uppercases all messages related to a super emphasized option."] = "所有超级醒目选项相关信息大写。"
+L["Double size"] = "双倍尺寸"
+L["Doubles the size of super emphasized bars and messages."] = "超级醒目计时条和信息双倍尺寸。"
+L["Countdown"] = "冷却"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "如果相关的计时器的长度超过5秒，一个声音与视觉将增加倒计时的最后5秒。想象某个倒计时\"5... 4... 3... 2... 1... 冷却！\"和大个数字位于屏幕中间。"
+L["Flash"] = "闪烁"
+L["Flashes the screen red during the last 3 seconds of any related timer."] = "当任一相关计时器最后3秒时屏幕红色闪烁。"
+
