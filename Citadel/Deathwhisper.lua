@@ -5,7 +5,6 @@ if not QueryQuestsCompleted then return end
 
 local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
-
 mod:RegisterEnableMob(36855)
 mod.toggleOptions = {"bosskill"}
 

@@ -5,7 +5,6 @@ if not QueryQuestsCompleted then return end
 
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
-
 mod:RegisterEnableMob(36626)
 mod.toggleOptions = {"berserk", "bosskill"}
 

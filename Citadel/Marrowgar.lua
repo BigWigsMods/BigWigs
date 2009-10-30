@@ -46,7 +46,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar("whirlwind", spellName, 45, 69076)
+	self:Bar(69076, spellName, 45, 69076)
 end
 
 --------------------------------------------------------------------------------

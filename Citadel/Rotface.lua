@@ -16,14 +16,11 @@ local boss = "Rotface"
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Rotface", "enUS", true)
 if L then
-	L.infection = "Mutated Infection"
-	L.infection_desc = "Warn for Mutated Infection"
-	L.infection_message = "Mutated Infection on %s!"
+	L.infection_bar = "Infection on %s!"
 
 	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
 	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
 	L.flood_warning = "A new area is being flooded soon!"
-
 end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Rotface")
 mod.locale = L
@@ -51,19 +48,18 @@ end
 -- Event Handlers
 --
 
-function mod:Infection(player, spellId)
-    self:TargetMessage(71224, L["infection_message"], player, "Personal", spellId)
-    self:Whisper(71224, player, L["infection"])
-    self:Bar(71224, L["infection"]:format(player), 12, spellId)
+function mod:Infection(player, spellId, _, _, spellName)
+    self:TargetMessage(71224, spellName, player, "Personal", spellId)
+    self:Whisper(71224, player, spellName)
+    self:Bar(71224, L["infection_bar"]:format(player), 12, spellId)
     self:PrimaryIcon(71224, player, "icon")
 end
 
-
 function mod:Flood()
-	self:Bar(71588, (GetSpellInfo(71588)), 20, 71588)
-	self:Message(71588, L["flood_warning"], "Attention")
+	self:Bar(71588, (GetSpellInfo(71588)), 20, 71588) --Possibly fix this per self:Log("event")?
+	self:Message(71588, L["flood_warning"], "Attention", 71588)
 end
 
-function mod:SlimeSpray(_, _, _, _, _, _, _, spellName)
-	self:Message(69508, spellName, "Attention", 69508)
+function mod:SlimeSpray(_, spellId, _, _, spellName)
+	self:Message(69508, spellName, "Attention", spellId)
 end

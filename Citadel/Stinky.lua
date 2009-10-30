@@ -7,8 +7,8 @@ local mod = BigWigs:NewBoss("Stinky", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
 mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill"}
- --71123--Dezimieren
- --71127 -- Mortal wound
+ --71123: Decimate
+ --71127: Mortal wound
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -55,7 +55,7 @@ function mod:Wound(player, spellId, _, _, spellName)
 end
 
 function mod:Decimate(player, spellId, _, _, spellName)
-	self:Message(71123, spellName, "Attention", 65919)
-	self:Bar(71123, L["decimate_cd"], 33, 71123)
+	self:Message(71123, spellName, "Attention", spellId)
+	self:Bar(71123, L["decimate_cd"], 33, spellId)
 end
 
