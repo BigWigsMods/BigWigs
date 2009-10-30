@@ -60,7 +60,7 @@ end
 
 
 function mod:Flood()
-	self:Bar(71588, L["flood"], 20, 71588)
+	self:Bar(71588, (GetSpellInfo(71588)), 20, 71588)
 	self:Message(71588, L["flood_warning"], "Attention")
 end
 
