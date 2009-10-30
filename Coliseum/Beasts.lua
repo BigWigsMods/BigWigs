@@ -16,7 +16,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local difficulty = nil
+local difficulty = GetRaidDifficulty()
 local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
@@ -120,11 +120,10 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 34797)
-
-	difficulty = GetRaidDifficulty()
 end
 
 function mod:OnEngage()
+	difficulty = GetRaidDifficulty()
 	self:CloseProximity()
 	if difficulty > 2 then
 		self:Bar("bosses", L["boss_incoming"]:format(gormok), 20, 67477)

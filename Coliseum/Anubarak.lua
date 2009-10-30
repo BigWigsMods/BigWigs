@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
 mod.toggleOptions = {66012, "burrow", {67574, "WHISPER", "ICON", "FLASHSHAKE"}, {68510, "FLASHSHAKE"}, 66118, 66134, "berserk", "bosskill"}
+mod:RegisterEnableMob(34564)
 mod.optionHeaders = {
 	[66012] = "normal",
 	[66134] = "heroic",
@@ -19,9 +20,10 @@ local handle_NextWave = nil
 local handle_NextStrike = nil
 
 local ssName = GetSpellInfo(66134)
-local difficulty = nil
+local difficulty = GetRaidDifficulty()
 local pName = UnitName("player")
 local phase2 = nil
+local firstBurrow = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,27 +60,21 @@ mod.locale = L
 -- Initialization
 --
 
-function mod:OnRegister()
-	self:RegisterEnableMob(34564)
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Swarm", 66118, 67630, 68646, 68647)
 	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 66013, 67700, 68509, 68510)
 	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 66013, 67700, 68509, 68510)
 	self:Log("SPELL_AURA_APPLIED", "Pursue", 67574)
-	
+
 	self:Log("SPELL_CAST_START", "Strike", 66134)
 	self:Log("SPELL_CAST_SUCCESS", "FreezeCooldown", 66012)
 	self:Log("SPELL_MISSED", "FreezeCooldown", 66012)
-	
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 34564)
-	
-	difficulty = GetRaidDifficulty()
 end
 
 local function nextstrike()
@@ -89,6 +85,7 @@ end
 
 local function nextwave() mod:Bar("burrow", L["nerubian_burrower"], 45, 66333) end
 function mod:OnEngage()
+	difficulty = GetRaidDifficulty()
 	self:Message("burrow", L["engage_message"], "Attention", 65919)
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
 	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
@@ -96,11 +93,14 @@ function mod:OnEngage()
 	if self:GetOption(66134) and difficulty > 2 then
 		self:Bar(66134, ssName, 30, 66134)
 		self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
-		handle_NextStrike = self:ScheduleTimer(nextstrike, 30)
+		if difficulty ~= 3 then --Don't strike in 10man more than once before the first burrow
+			handle_NextStrike = self:ScheduleTimer(nextstrike, 30)
+		end
 	end
-	
+
 	self:Berserk(570, true)
 	phase2 = nil
+	firstBurrow = nil
 end
 
 --------------------------------------------------------------------------------
@@ -108,6 +108,7 @@ end
 --
 
 function mod:Strike(player, spellId, _, _, spellName)
+	if difficulty == 3 and not firstBurrow then return end --Don't strike in 10man more than once before the first burrow
 	if difficulty > 2 then
 		self:CancelTimer(handle_NextStrike, true)
 		self:Bar(66134, spellName, 30, spellId)
@@ -175,6 +176,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		end
 	elseif msg:find(L["burrow_trigger"]) then
 		self:Bar("burrow", L["burrow"], 65, 65919)
+		firstBurrow = true
 	end
 end
 
