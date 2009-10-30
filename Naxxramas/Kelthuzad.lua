@@ -132,7 +132,7 @@ do
 		local spellName = GetSpellInfo(605) -- Mind Control
 		mod:TargetMessage(28410, spellName, mcTargets, "Important", spell, "Alert")
 		mod:Bar(28410, spellName, 20, 28410)
-		mod:DelayedMessage(68, L["mc_warning"], "Urgent")
+		mod:DelayedMessage(28410, 68, L["mc_warning"], "Urgent")
 		mod:Bar(28410, L["mc_nextbar"], 68, spell)
 		handle = nil
 	end
