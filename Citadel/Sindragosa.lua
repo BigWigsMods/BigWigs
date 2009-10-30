@@ -49,3 +49,9 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:FrostBeacon()
+end
+
+function mod:BlisteringCold()
+end
