@@ -269,7 +269,7 @@ do
 
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
-		if type(delay) ~= "number" then error("The delay needs to be a number.") end
+		if type(delay) ~= "number" then error(string.format("The delay needs to be a number, now (%q) for module '%q'", delay, module.name)) end
 		self:CancelDelayedMessage(text)
 		scheduledMessages[text] = {}
 
