@@ -350,7 +350,7 @@ do
 		if type(player) == "table" then
 			local text = fmt(L["other"], spellName, table.concat(player, ", "))
 			wipe(player)
-			self:SendMessage("BigWigs_Message", text, color, nil, sound, nil, icon)
+			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icon)
 		else
 			if player == pName then
 				if ... then
