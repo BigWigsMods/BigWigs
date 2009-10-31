@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Anub'arak", "Trial of the Crusader")
 if not mod then return end
 mod.toggleOptions = {66012, "burrow", {67574, "WHISPER", "ICON", "FLASHSHAKE"}, {68510, "FLASHSHAKE"}, 66118, 66134, "berserk", "bosskill"}
-mod:RegisterEnableMob(34564)
+mod:RegisterEnableMob(34564, 34607, 34605)
 mod.optionHeaders = {
 	[66012] = "normal",
 	[66134] = "heroic",
