@@ -134,7 +134,7 @@ end
 --
 
 do
-	local t = {"target", "focus", "mouseover"}
+	local t = {"target", "targettarget", "focus", "focustarget", "mouseover", "mouseovertarget"}
 	-- XXX 3.3
 	if QueryQuestsCompleted then for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end end
 	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
