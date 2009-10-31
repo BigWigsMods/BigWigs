@@ -90,7 +90,7 @@ end
 
 function mod:BlisteringCold( _, _, _, _, _, _, _, spellName)
 	self:Message(70123, spellName, "Attention")
-	self:Bar("detonation", L["boom"], 6, 70123)
+	self:Bar(70123, L["boom"], 6, 70123)
 end
 
 function mod:AirPhase()
