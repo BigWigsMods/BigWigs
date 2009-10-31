@@ -20,21 +20,20 @@ mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "bosskill"}
 local pName = UnitName("player")
 local beacon = mod:NewTargetList()
 --------------------------------------------------------------------------------
--- Locals
+-- Locale
 --
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sindragosa", "enUS", true)
 if L then
-
-L.airphase_trigger = "Your incursion ends here! None shall survive!"
-L.airphase = "Airphase"
-L.airphase_message = "Airphase"
-L.airphase_desc = "Warns about Sindragosas lift-off"
-L.boom = "Explosion!"
-
+	L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	L.airphase = "Airphase"
+	L.airphase_message = "Airphase"
+	L.airphase_desc = "Warns about Sindragosas lift-off"
+	L.boom = "Explosion!"
 end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sindragosa")
 mod.locale = L
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -111,3 +110,4 @@ function mod:AirPhase()
 	self:LocalMessage("airphase", "Boss4: "..hp4)
 	self:LocalMessage("airphase", "Sind: "..sind)
 end
+

@@ -23,13 +23,12 @@ local pName = UnitName("player")
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Lady Deathwhisper", "enUS", true)
 if L then
-
-L.DnD_aura_message = "Death and Decay on YOU!"
-L.Phase2 = "Phase 2"
-
+	L.dnd_message = "Death and Decay on YOU!"
+	L.Phase2 = "Phase 2"
 end
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Lady Deathwhisper")
 mod.locale = L
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -46,48 +45,3 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
-
-function mod:OnEngage()
-	self:Berserk(600, true)
-end
-
-
---------------------------------------------------------------------------------
--- Event handlers
---
-
-function mod:DnD_aura(player, spellId)
-	if player == pName then
-		self:LocalMessage(69146, L["DnD-aura_message"], "Personal", spellId, "Alarm")
-	end
-end
-
-function mod:Manabarrier(_, spellId, _, _, spellName)
-	self:Message(70482, L["Phase 2"], "Positive", spellId)
-end
-
-
-do
-	local handle = nil
-	local warned = nil
-	local id, name = nil, nil
-	local function MindWarn()
-		if not warned then
-			mod:TargetMessage(71289, name, Mind, "Urgent", id)
-		else
-			warned = nil
-			wipe(Mind)
-		end
-		handle = nil
-	end
-	function mod:DominateMind(player, spellId, _, _, spellName)
-		Mind[#Mind + 1] = player
-		if handle then self:CancelTimer(handle) end
-		id, name = spellId, spellName
-		handle = self:ScheduleTimer(MindWarn, 0.1)
-		if player == pName then
-			warned = true
-			self:TargetMessage(71289, spellName, player, "Important", spellId, "Info")
-		end
-	end
-end

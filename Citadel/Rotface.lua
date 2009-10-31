@@ -49,10 +49,10 @@ end
 --
 
 function mod:Infection(player, spellId, _, _, spellName)
-    self:TargetMessage(71224, spellName, player, "Personal", spellId)
-    self:Whisper(71224, player, spellName)
-    self:Bar(71224, L["infection_bar"]:format(player), 12, spellId)
-    self:PrimaryIcon(71224, player, "icon")
+	self:TargetMessage(71224, spellName, player, "Personal", spellId)
+	self:Whisper(71224, player, spellName)
+	self:Bar(71224, L["infection_bar"]:format(player), 12, spellId)
+	self:PrimaryIcon(71224, player, "icon")
 end
 
 function mod:Flood()
@@ -63,3 +63,4 @@ end
 function mod:SlimeSpray(_, spellId, _, _, spellName)
 	self:Message(69508, spellName, "Attention", spellId)
 end
+
