@@ -17,6 +17,7 @@ mod.optionHeaders = {
 --      Are you local?      --
 ------------------------------
 
+local ishardmode = nil
 local phase = nil
 local pName = UnitName("player")
 

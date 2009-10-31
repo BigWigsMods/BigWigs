@@ -257,17 +257,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["engage_trigger"]) then
-		phase = 1
 		guardianCount = 1
 		self:Message("phase", L["engage_warning"], "Attention")
 		self:Berserk(900, true)
 	elseif msg:find(L["phase2_trigger"]) then
-		phase = 2
 		crusherCount = 1
 		self:Message("phase", L["phase2_warning"], "Attention")
 		self:Bar("portal", L["portal_bar"], 78, 35717)
 	elseif msg:find(L["phase3_trigger"]) then
-		phase = 3
 		self:CancelDelayedMessage(L["madness_warning"])
 
 		local madness = GetSpellInfo(64059)

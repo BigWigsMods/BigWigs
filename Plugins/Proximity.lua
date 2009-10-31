@@ -189,7 +189,7 @@ local function setConfigureTarget(self, button)
 end
 
 local locked = nil
-function lockDisplay()
+local function lockDisplay()
 	if locked then return end
 	anchor:EnableMouse(false)
 	anchor:SetMovable(false)
@@ -202,7 +202,7 @@ function lockDisplay()
 	anchor.drag:Hide()
 	locked = true
 end
-function unlockDisplay()
+local function unlockDisplay()
 	if not locked then return end
 	anchor:EnableMouse(true)
 	anchor:SetMovable(true)
