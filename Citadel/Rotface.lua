@@ -1,4 +1,4 @@
-﻿if not QueryQuestsCompleted then return end
+if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -7,8 +7,6 @@ local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
 mod.toggleOptions = {{71224, "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
-
-local boss = "Rotface"
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -28,10 +26,6 @@ mod.locale = L
 --------------------------------------------------------------------------------
 -- Initialization
 --
-
-function mod:OnRegister()
-	boss = BigWigs:Translate(boss)
-end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224)

@@ -46,7 +46,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
-
 function mod:OnEngage()
 	self:Berserk(600, true)
 end

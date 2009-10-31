@@ -38,10 +38,6 @@ mod.locale = L
 -- Initialization
 --
 
-function mod:OnRegister()
-	boss = BigWigs:Translate(boss)
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
 	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117) --(70123, 71047, 71048, 71049) are the Spell itself
@@ -97,17 +93,10 @@ function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Attention")
 	self:Bar("airphase", L["airphase_message"], 110)
 
-	--Sample Code for checking if air phase based on health
-	local hp1 = UnitHealth("boss1")
-	local hp2 = UnitHealth("boss2")
-	local hp3 = UnitHealth("boss3")
-	local hp4 = UnitHealth("boss4")
-	local sind = UnitHealth("Sindragosa")
-
-	self:LocalMessage("airphase", "Boss1: "..hp1)
-	self:LocalMessage("airphase", "Boss2: "..hp2)
-	self:LocalMessage("airphase", "Boss3: "..hp3)
-	self:LocalMessage("airphase", "Boss4: "..hp4)
-	self:LocalMessage("airphase", "Sind: "..sind)
+	local bossId = self:GetUnitIdByGUID(36853)
+	if not bossId then return end
+	local min, max = UnitHealth(bossId), UnitHealthMax(bossId)
+	local hpPercent = math.floor(min / max * 100 + 0.5) .. "%"
+	print("Sindragosa took off at " .. hpPercent .. " hitpoints, please notify the developers in #bigwigs on freenode if possible.")
 end
 
