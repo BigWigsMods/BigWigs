@@ -5,7 +5,7 @@ if not QueryQuestsCompleted then return end
 
 local mod = BigWigs:NewBoss("Valithria Dreamwalker", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886)
+mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886, 37950, 37985) 
 mod.toggleOptions = {71730, 71733, 71741, "portal", "bosskill"}
 --68168 lay waste (buff)
 -- 71733 Acid Burst
