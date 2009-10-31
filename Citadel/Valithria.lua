@@ -39,10 +39,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ManaVoid", 71741)
 	self:Log("SPELL_CAST_SUCCESS", "LayWaste", 71730)
 	self:Log("SPELL_CAST_START", "AcidBurst", 71733)
+	self:Log("SPELL_CAST_SUCCESS", "Win", 71189)--Dreamwalker Rage , used if you heal her to 100%
 	
 	self:Yell("Nightmareportal", L["nightmareportal_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Death("Win", 36789)
+
 end
 
 --------------------------------------------------------------------------------
