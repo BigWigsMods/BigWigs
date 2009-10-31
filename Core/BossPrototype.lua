@@ -13,8 +13,6 @@ local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
 local deathMap = setmetatable({}, metaMap)
 
-local colorModule
-
 local boss = {}
 core.bossCore:SetDefaultModulePrototype(boss)
 function boss:IsBossModule() return true end
@@ -137,6 +135,8 @@ end
 
 do
 	local t = {"target", "focus", "mouseover"}
+	-- XXX 3.3
+	if QueryQuestsCompleted then for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end end
 	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
 	for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
 	local function findTargetByGUID(id)
@@ -318,7 +318,6 @@ function boss:LocalMessage(key, text, color, icon, sound)
 end
 
 do
-
 	local hexColors = {}
 	for k, v in pairs(RAID_CLASS_COLORS) do
 		hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
