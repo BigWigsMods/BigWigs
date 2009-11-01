@@ -180,8 +180,6 @@ local function coreSync(sync, moduleName, sender)
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Positive", nil, "Victory")
-			mod:PrimaryIcon(false)
-			mod:SecondaryIcon(false)
 			mod:Disable()
 		end
 	end
