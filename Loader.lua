@@ -584,7 +584,7 @@ do
 					tinsert(good, coloredNameVersion(player, usersRelease[player]))
 				end
 			elseif usersUnknown[player] then
-				tinsert(ugly, coloredNames[k])
+				tinsert(ugly, coloredNames[player])
 			elseif usersAlpha[player] then
 				-- release revision -1 because of tagging
 				if usersAlpha[player] >= (highestReleaseRevision - 1) or usersAlpha[player] == -1 then
