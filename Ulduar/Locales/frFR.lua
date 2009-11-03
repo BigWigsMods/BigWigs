@@ -6,7 +6,7 @@ if L then
 	L.engage_warning = "Phase 1"
 	L.phase2_warning = "Arrivée de la phase 2"
 	L.phase_bar = "Phase %d"
-	L.engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le panthéon recevra le message de l'Observateur quelque soit l'issue." -- à vérifier
+	L.engage_trigger = "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le Panthéon recevra le message de l'Observateur quelle que soit l'issue."
 
 	L.punch_message = "%2$dx Coups de poing phasiques sur %1$s"
 	L.smash_message = "Arrivée d'un Choc cosmique !"

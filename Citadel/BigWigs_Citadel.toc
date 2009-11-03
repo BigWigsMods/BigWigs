@@ -1,9 +1,10 @@
-﻿## Interface: 30300
+## Interface: 30300
 
 ## Title: Big Wigs [|cffeda55fIcecrown Citadel|r]
-
+## Title-frFR: Big Wigs [|cffeda55fCitadelle de la Couronne de glace|r]
 ## Title-deDE: Big Wigs [|cffeda55fEiskronenzitadelle|r]
 ## Notes: Big Wigs Modules for Icecrown Citadel
+## Notes-frFR: Modules Big Wigs concernant la citadelle de la Couronne de glace.
 ## Author: Samirâ,Yoshimo
 
 ## LoadOnDemand: 1
