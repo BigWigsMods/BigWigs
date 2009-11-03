@@ -1,20 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 
 local plugin = BigWigs:NewPlugin("BossBlock", "AceHook-3.0")
 if not plugin then return end
 
-----------------------------
---      Localization      --
-----------------------------
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local fnd = string.find
 local type = type
 
-------------------------------
---      Event Handlers      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
+
 
 local function filter(self, event, msg)
 	if plugin:IsSpam(msg) then return true end

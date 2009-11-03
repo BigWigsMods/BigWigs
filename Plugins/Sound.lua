@@ -1,13 +1,13 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local plugin = BigWigs:NewPlugin("Sounds")
 if not plugin then return end
 
-------------------------------
---      Are you local?      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
@@ -78,9 +78,9 @@ plugin.pluginOptions = {
 	}
 }
 
-------------------------------
---      Initialization      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Initialization
+--
 
 local function shouldDisable() return plugin.db.profile.defaultonly end
 local function updateList(mediaType)
@@ -128,6 +128,10 @@ local function play(sound)
 	end
 	PlaySound("RaidWarning")
 end
+
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function plugin:BigWigs_Message(event, module, key, text, color, noraidsay, sound, broadcastonly)
 	if not text or sound == false or broadcastonly or not BigWigs.db.profile.sound then return end

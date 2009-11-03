@@ -1,13 +1,14 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 
 local plugin = BigWigs:NewPlugin("Messages", "LibSink-2.0")
 if not plugin then return end
 
-------------------------------
---      Are you local?      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local minHeight = select(2, GameFontNormalHuge:GetFont())
 local maxHeight = minHeight + 10
@@ -120,9 +121,9 @@ local function updateProfile()
 	end
 end
 
-------------------------------
---      Initialization      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Initialization
+--
 
 function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
@@ -275,9 +276,9 @@ function createMsgFrame()
 	end
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 local hugeFont, hugeSize = GameFontNormalHuge:GetFont()
 function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)

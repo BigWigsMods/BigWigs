@@ -22,18 +22,18 @@ local SHAKE_Y = 10
 -- color module
 local colors = nil
 
-------------------------------
---      Initialization      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
 	self:RegisterMessage("BigWigs_FlashShake")
 end
 
-------------------------------
---      Shaking             --
-------------------------------
+-------------------------------------------------------------------------------
+-- Shaking
+--
 
 local originalPoints = nil
 local function startShake()
@@ -66,9 +66,10 @@ local function shakeOnUpdate(frame, elapsed)
 	end
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
+
 function mod:BigWigs_FlashShake(event, module, key)
 	if not BigWigs.db.profile.flashshake then return end
 	local r, g, b = colors:GetColor("flashshake", module, key)

@@ -1,24 +1,31 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 
 local plugin = BigWigs:NewPlugin("Broadcast")
 if not plugin then return end
 
-------------------------------
---      Are you local?      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Locals
+--
+
 
 local output = "*** %s ***"
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
-------------------------------
---      Initialization      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Initialization
+--
+
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 end
+
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 	if not msg or nobroadcast or not BigWigs.db.profile.broadcast then return end

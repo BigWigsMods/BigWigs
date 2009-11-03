@@ -1,13 +1,13 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local plugin = BigWigs:NewPlugin("Raid Icons")
 if not plugin then return end
 
-------------------------------
---      Are you local?      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local lastplayer = {}
 
@@ -74,9 +74,9 @@ plugin.pluginOptions = {
 	},
 }
 
-------------------------------
---      Initialization      --
-------------------------------
+-------------------------------------------------------------------------------
+-- Initialization
+--
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetRaidIcon")
@@ -94,6 +94,10 @@ function plugin:BigWigs_OnBossDisable()
 		lastplayer[2] = nil
 	end	
 end
+
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function plugin:BigWigs_SetRaidIcon(message, player, icon)
 	if not BigWigs.db.profile.raidicon then return end

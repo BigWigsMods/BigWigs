@@ -661,7 +661,10 @@ function plugin:OnSync(sync, rest, nick)
 	startCustomBar(rest, nick, false)
 end
 
--- Shorthand slashcommand
+-------------------------------------------------------------------------------
+-- Slashcommand
+--
+
 _G["SlashCmdList"]["BWCB_SHORTHAND"] = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	local t = GetTime()

@@ -1,6 +1,10 @@
 -- XXX The tip window needs a "Show tips next raid" checkbox that can be toggled off,
 -- XXX but I don't know where to put it without making the window look overcrowded and crappy ><
 
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local plugin = BigWigs:NewPlugin("Tip of the Raid")
 if not plugin then return end
 

@@ -1,6 +1,13 @@
+-------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local plugin = BigWigs:NewPlugin("Super Emphasize")
 if not plugin then return end
+
+-------------------------------------------------------------------------------
+-- Locals
+--
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
@@ -18,6 +25,10 @@ do
 		end
 	})
 end
+
+-------------------------------------------------------------------------------
+-- Options
+--
 
 plugin.defaultDB = {
 	upper = true,
@@ -77,6 +88,10 @@ plugin.subPanelOptions = {
 		},
 	},
 }
+
+-------------------------------------------------------------------------------
+-- Initialization
+--
 
 function plugin:OnPluginEnable()
 	emphasizeFlag = BigWigs.C.EMPHASIZE
