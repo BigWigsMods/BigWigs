@@ -101,6 +101,9 @@ if L then
 	L.infernal_bar = "Vulkan kommt"
 	L.netherportal_bar = "Netherportal kommt"
 	L.netherpower_bar = "~Macht des Nether"
+	
+	L.kiss_message = "Kuss auf DIR!"
+	L.kiss_interrupted = "Unterbrochen!"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "deDE")

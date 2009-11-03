@@ -4,7 +4,12 @@
 
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON", "FLASHSHAKE"}, 67106, "adds", "bosskill"}
+mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON", "FLASHSHAKE"}, 67106, "adds", {67905, "FLASHSHAKE"}, "bosskill"}
+mod.optionHeaders = {
+	[67049] = "normal",
+	[67905] = "heroic",
+	bosskill = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -36,6 +41,9 @@ if L then
 	L.infernal_bar = "Volcano spawns"
 	L.netherportal_bar = "Portal spawns"
 	L.netherpower_bar = "~Next Nether Power"
+	
+	L.kiss_message = "Kiss on YOU!"
+	L.kiss_interrupted = "Interrupted!"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
 mod.locale = L
@@ -59,6 +67,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108, 66228)
 	self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
 	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
+	self:Log("SPELL_AURA_APPLIED", "MistressKiss", 67905, 67906, 67907, 66334) -- debuff before getting interrupted
+	self:Log("SPELL_AURA_REMOVED", "MistressKissRemoved", 67905, 67906, 67907, 66334)
+	self:Log("SPELL_AURA_APPLIED", "MistressKissInterrupted", 66335, 66359, 67073, 67074, 67075, 67908, 67909, 67910) -- debuff after getting interrupted
 
 	-- Only happens the first time we engage Jaraxxus, still 11 seconds left until he really engages.
 	self:Yell("FirstEngage", L["engage_trigger1"])
@@ -120,3 +131,19 @@ function mod:InfernalEruption(_, spellId, _, _, spellName)
 	self:Bar("adds", L["netherportal_bar"], 60, 68404)
 end
 
+function mod:MistressKiss(player, spellId)
+	if player ~= pName then return end
+	self:LocalMessage(67905, L["kiss_message"], "Personal", spellId)
+	self:Bar(67905, L["kiss_message"], 15, spellId)
+	self:FlashShake(67905)
+end
+
+function mod:MistressKissRemoved(player, spellId)
+	if player ~= pName then return end
+	self:SendMessage("BigWigs_StopBar", self, L["kiss_message"])
+end
+
+function mod:MistressKissInterrupted(player, spellId)
+	if player ~= pName then return end
+	self:LocalMessage(67905, L["kiss_interrupted"], "Personal", spellId)
+end
