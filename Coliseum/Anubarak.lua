@@ -60,13 +60,33 @@ mod.locale = L
 -- Initialization
 --
 
+-- Fucking Shadow Strike!
+-- 1. On engage, start a 30.5 second shadow strike timer if difficulty > 2.
+-- 2. When the 30.5 second timer is over, restart it.
+-- 3. When an add casts shadow strike, cancel all timers and restart at 30.5 seconds.
+-- 4. When Anub'arak emerges from a burrow, start the timers after 5.5 seconds, so
+--    the time from emerge -> Shadow Strike is 5.5 + 30.5 seconds = 36 seconds.
+
+local function unscheduleStrike()
+	mod:CancelDelayedMessage(L["shadow_soon"])
+	mod:CancelTimer(handle_NextStrike, true)
+	mod:SendMessage("BigWigs_StopBar", mod, ssName)
+end
+
+local function scheduleStrike()
+	unscheduleStrike()
+	mod:Bar(66134, ssName, 30.5, 66134)
+	mod:DelayedMessage(66134, 25.5, L["shadow_soon"], "Attention")
+	handle_NextStrike = mod:ScheduleTimer(scheduleStrike, 30.5)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Swarm", 66118, 67630, 68646, 68647)
 	self:Log("SPELL_CAST_SUCCESS", "ColdCooldown", 66013, 67700, 68509, 68510)
 	self:Log("SPELL_AURA_APPLIED", "ColdDebuff", 66013, 67700, 68509, 68510)
 	self:Log("SPELL_AURA_APPLIED", "Pursue", 67574)
 
-	self:Log("SPELL_CAST_START", "Strike", 66134)
+	self:Log("SPELL_CAST_START", scheduleStrike, 66134)
 	self:Log("SPELL_CAST_SUCCESS", "FreezeCooldown", 66012)
 	self:Log("SPELL_MISSED", "FreezeCooldown", 66012)
 
@@ -77,25 +97,20 @@ function mod:OnBossEnable()
 	self:Death("Win", 34564)
 end
 
-local function nextstrike()
-	mod:Bar(66134, ssName, 30, 66134)
-	mod:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
-	handle_NextStrike = mod:ScheduleTimer(nextstrike, 30)
+local function nextwave()
+	mod:Bar("burrow", L["nerubian_burrower"], 45, 66333)
 end
 
-local function nextwave() mod:Bar("burrow", L["nerubian_burrower"], 45, 66333) end
 function mod:OnEngage()
 	difficulty = GetRaidDifficulty()
 	self:Message("burrow", L["engage_message"], "Attention", 65919)
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
 	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
+
 	handle_NextWave = self:ScheduleTimer(nextwave, 10)
+
 	if self:GetOption(66134) and difficulty > 2 then
-		self:Bar(66134, ssName, 30, 66134)
-		self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
-		if difficulty ~= 3 then --Don't strike in 10man more than once before the first burrow
-			handle_NextStrike = self:ScheduleTimer(nextstrike, 30)
-		end
+		scheduleStrike()
 	end
 
 	self:Berserk(570, true)
@@ -106,16 +121,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:Strike(player, spellId, _, _, spellName)
-	if difficulty == 3 and not firstBurrow then return end --Don't strike in 10man more than once before the first burrow
-	if difficulty > 2 then
-		self:CancelTimer(handle_NextStrike, true)
-		self:Bar(66134, spellName, 30, spellId)
-		self:DelayedMessage(66134, 25, L["shadow_soon"], "Attention")
-		handle_NextStrike = self:ScheduleTimer(nextstrike, 30)
-	end
-end
 
 function mod:FreezeCooldown(player, spellId)
 	self:Bar(66012, L["freeze_bar"], 20, spellId)
@@ -140,17 +145,6 @@ function mod:Swarm(player, spellId, _, _, spellName)
 	if difficulty < 3 then -- Normal modes
 		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
 		self:CancelTimer(handle_NextWave, true)
-	elseif handle_NextStrike then -- heroic
-		local t = self:TimeLeft(handle_NextStrike)
-		if t then
-			t = t + 1.5
-			self:CancelTimer(handle_NextStrike, true)
-			handle_NextStrike = self:ScheduleTimer(nextstrike, t)
-			self:Bar(66134, ssName, t, 66134)
-			if (t - 5) > 1 then
-				self:DelayedMessage(66134, t - 5, L["shadow_soon"], "Attention")
-			end
-		end
 	end
 end
 
@@ -170,9 +164,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		handle_NextWave = self:ScheduleTimer(nextwave, 5)
 
 		if self:GetOption(66134) and difficulty > 2 then
-			self:Bar(66134, ssName, 35, 66134)
-			self:DelayedMessage(66134, 30, L["shadow_soon"], "Attention")
-			handle_NextStrike = self:ScheduleTimer(nextstrike, 35)
+			unscheduleStrike()
+			handle_NextStrike = self:ScheduleTimer(scheduleStrike, 5.5)
 		end
 	elseif msg:find(L["burrow_trigger"]) then
 		self:Bar("burrow", L["burrow"], 65, 65919)
