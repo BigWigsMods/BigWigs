@@ -20,14 +20,14 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 end
 
-function plugin:BigWigs_Message(event, module, key, msg, color, noraidsay)
-	if not msg or noraidsay or not BigWigs.db.profile.broadcast then return end
+function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
+	if not msg or nobroadcast or not BigWigs.db.profile.broadcast then return end
 
-	local inRaid = UnitInRaid("player")
-	-- In a 5-man group, everyone can use the raid warning channel.
-	if inRaid and not IsRaidLeader() and not IsRaidOfficer() then
+	-- only allowed to broadcast if we're in a party or raidleader/assistant
+	local inRaid = GetRealNumRaidMembers() > 0
+	if not inRaid and GetRealNumPartyMembers() == 0 then
 		return
-	elseif GetNumPartyMembers() == 0 and not inRaid then
+	elseif inRaid and not IsRaidLeader() and not IsRaidOfficer() then
 		return
 	end
 
