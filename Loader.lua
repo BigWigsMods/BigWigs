@@ -112,42 +112,6 @@ do
 	end
 end
 
-local function loadZone(zone)
-	if not zone then return end
-	if loadOnZone[zone] then
-		local addonsLoaded = {}
-		for i, v in next, loadOnZone[zone] do
-			if not IsAddOnLoaded(v) then
-				LoadAddOn(v)
-				loader:SendMessage("BigWigs_ModulePackLoaded", v)
-			end
-			tinsert(addonsLoaded, v)
-			loadOnZone[zone][i] = nil
-		end
-		if #loadOnZone[zone] == 0 then
-			loadOnZone[zone] = nil
-		end
-
-		-- Remove all already loaded addons from the loadOnZone table so that
-		-- the "Load all" options for the zone menus that are affected by these
-		-- addons are hidden.
-		for i, addon in next, addonsLoaded do
-			for k in pairs(loadOnZone) do
-				for j, z in next, loadOnZone[k] do
-					if z == addon or IsAddOnLoaded(z) then
-						loadOnZone[k][j] = nil
-					end
-				end
-				if #loadOnZone[k] == 0 then
-					loadOnZone[k] = nil
-				end
-			end
-			addonsLoaded[i] = nil
-		end
-		addonsLoaded = nil
-	end
-end
-
 local function registerEnableZone(zone, groupsize)
 	if BZ then zone = BZ[zone] or zone end
 	-- only update enablezones if content is of lower level than before.
@@ -195,9 +159,16 @@ end
 local function loadAddons(tbl)
 	if not tbl then return end
 	for i, addon in next, tbl do
-		if not IsAddOnLoaded(addon) then LoadAddOn(addon) end
+		if not IsAddOnLoaded(addon) and load(nil, addon) then
+			loader:SendMessage("BigWigs_ModulePackLoaded", addon)
+		end
 	end
 	tbl = nil
+end
+
+local function loadZone(zone)
+	if not zone then return end
+	loadAddons(loadOnZone[zone])
 end
 
 -----------------------------------------------------------------------
@@ -456,12 +427,6 @@ end
 
 function loader:GetZoneMenus()
 	return menus
-end
-
-function loader:HasZone(zone)
-	if not zone then return false end
-	if loadOnZone[zone] then return true end
-	return false
 end
 
 function loader:LoadZone(zone)
