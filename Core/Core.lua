@@ -238,7 +238,7 @@ do
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
-		if GetRealNumRaidMembers() == 0 or GetRealNumPartyMembers() == 0 then return end
+		if GetRealNumRaidMembers() == 0 and GetRealNumPartyMembers() == 0 then return end
 		if not sync then return end
 		if not times[sync] or GetTime() > (times[sync] + 2) then
 			times[sync] = GetTime()
