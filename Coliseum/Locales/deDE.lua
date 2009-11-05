@@ -17,9 +17,6 @@ if L then
 	L.freeze_bar = "~Gefrierender Streich"
 	L.pcold_bar = "~Durchdringende Kälte"
 
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Anub'arak verfolgt werden (benötigt Assistent oder höher)."
-
 	L.chase = "Verfolgen"
 end
 
@@ -94,9 +91,6 @@ if L then
 	L.legionflame_message = "Legionsflamme"
 	L.legionflame_other = "Legionsflamme: %s"
 	L.legionflame_bar = "~Legionsflamme"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern mit Legionsflamme (benötigt Assistent oder höher)."
 
 	L.infernal_bar = "Vulkan kommt"
 	L.netherportal_bar = "Netherportal kommt"

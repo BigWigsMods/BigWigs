@@ -94,9 +94,6 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "ruRU")
 if L then
 	L.bomb_message = "Укол"
 	L.bomb_message_other = "|3-2(%s) сделали укол!"
-
-	L.icon = "Помечать иконкой"
-	L.icon_desc = "Помечать рейдовой иконкой игрока которому был сделан укол (необходимо быть лидером группы или рейда)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "ruRU")
@@ -173,9 +170,6 @@ if L then
 	L.guardians_trigger = "Хорошо. Воины ледяных пустошей восстаньте! Повелеваю вам сражаться убивать и умирать во имя своего повелителя! Не щадить никого!"
 	L.guardians_warning = "Стражи появятся через 15 секунд!"
 	L.guardians_bar = "Появляются стражи!"
-
-	L.icon = "Помечать иконкой"
-	L.icon_desc = "Помечать рейдовой иконкой игрока на которого наложен эффект взрыва маны (необходимо быть лидером группы или рейда)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "ruRU")
@@ -275,9 +269,6 @@ if L then
 	L.ping = "Мояк по мини-карте"
 	L.ping_desc = "Отмечать ваше текущеее положение маяком по мини-карте если вы находитесь в глыбе после морозной стрелы."
 	L.ping_message = "Глыба - отмечаю положение!"
-
-	L.icon = "Отмечать иконкой"
-	L.icon_desc = "Отмечать рейдовой иконой игрока попавшего в глыбу после морозной стрелы (необходимо быть лидером группы или рейда)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "ruRU")

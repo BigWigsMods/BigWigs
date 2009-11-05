@@ -17,9 +17,6 @@ if L then
 	L.freeze_bar = "~Prochaine Entaille givrante"
 	L.pcold_bar = "~Prochain Froid pénétrant"
 
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône sur le dernier joueur poursuivi par Anub'arak lors de sa phase sous terre (nécessite d'être assistant ou mieux)."
-
 	L.chase = "Poursuivi"
 end
 
@@ -94,9 +91,6 @@ if L then
 	L.legionflame_message = "Flamme de la Légion"
 	L.legionflame_other = "Flamme : %s"
 	L.legionflame_bar = "~Prochaine Flamme de la Légion"
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par une Flamme de la Légion (nécessite d'être assistant ou mieux)."
 
 	L.infernal_bar = "Apparition d'un volcan"
 	L.netherportal_bar = "Apparition d'un portail"

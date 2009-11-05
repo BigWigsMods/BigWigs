@@ -33,9 +33,6 @@ if L then
 	L.hardmode = "Hard mode"
 	L.hardmode_desc = "Show timer for hard mode."
 
-	L.icon = "Place icon"
-	L.icon_desc = "Place a raid icon on players who get targetted with the Storm Clouds."
-
 	L.end_trigger = "I... I am released from his grasp... at last."
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Hodir")

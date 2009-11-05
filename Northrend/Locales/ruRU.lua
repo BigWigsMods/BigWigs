@@ -9,9 +9,6 @@ if L then
 
 	L.charge = "Рывок"
 	L.charge_desc = "Предупреждать о Рывках."
-
-	L.icon = "Отмечать иконкой"
-	L.icon_desc = "Отмечать рейдовой иконой игрока, на которого нацелены каменные осколки. (необходимо быть лидером группы или рейда)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "ruRU")
@@ -21,9 +18,6 @@ if L then
 	L.overcharge_message = "Служитель бури перегружен!"
 	L.overcharge_bar = "Взрыв Служителя бури"
 	L.overcharge_next = "~Следующая Перегрузка"
-
-	L.icon = "Иконка Перегрузки"
-	L.icon_desc = "Отмечать черепом Служителя бури с эффектом Перегрузки."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "ruRU")

@@ -17,9 +17,6 @@ if L then
 	L.freeze_bar = "~다음 얼음 베기"
 	L.pcold_bar = "~다음 냉기 관통"
 
-	L.icon = "전술 표시"
-	L.icon_desc = "소멸 단계에 추격 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
-
 	L.chase = "추격"
 end
 
@@ -94,9 +91,6 @@ if L then
 	L.legionflame_message = "군단 불꽃"
 	L.legionflame_other = "군단 불꽃 : %s!"
 	L.legionflame_bar = "~군단 불꽃 대기시간"
-
-	L.icon = "전술 표시"
-	L.icon_desc = "군단 불꽃 대상이 된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 
 	L.infernal_bar = "화산 소환"
 	L.netherportal_bar = "~황천 차원문 대기시간"

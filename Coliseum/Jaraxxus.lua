@@ -11,6 +11,12 @@ mod.optionHeaders = {
 	bosskill = "general",
 }
 
+-------------------------------------------------------------------------------
+-- Locals
+--
+
+local pName = UnitName("player")
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -35,9 +41,6 @@ if L then
 	L.legionflame_other = "Flame on %s!"
 	L.legionflame_bar = "Next Flame"
 
-	L.icon = "Place Icon"
-	L.icon_desc = "Place a Raid Icon on the player with Legion Flame. (requires promoted or higher)"
-
 	L.infernal_bar = "Volcano spawns"
 	L.netherportal_bar = "Portal spawns"
 	L.netherpower_bar = "~Next Nether Power"
@@ -47,8 +50,6 @@ if L then
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
 mod.locale = L
-
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -63,7 +64,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IncinerateFlesh", 67049, 67050, 67051, 66237)
 	self:Log("SPELL_AURA_REMOVED", "IncinerateFleshRemoved", 67049, 67050, 67051, 66237)
 	self:Log("SPELL_AURA_APPLIED", "LegionFlame", 68123, 68124, 68125, 66197)
-	self:Log("SPELL_AURA_REMOVED", "RemoveLegionFlameIcon", 68126, 68127, 68128, 66199)
 	self:Log("SPELL_AURA_APPLIED", "NetherPower", 67106, 67107, 67108, 66228)
 	self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 68404, 68405, 68406, 67898, 67899, 67900, 66269)
 	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
@@ -106,11 +106,7 @@ function mod:LegionFlame(player, spellId)
 	if player == pName then self:FlashShake(68123) end
 	self:Whisper(68123, player, L["legionflame_message"])
 	self:Bar(68123, L["legionflame_other"]:format(player), 8, spellId)
-	self:PrimaryIcon(68123, player, "icon")
-end
-
-function mod:RemoveLegionFlameIcon()
-	self:PrimaryIcon(68123, false, "icon")
+	self:PrimaryIcon(68123, player)
 end
 
 function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, dGUID)
@@ -147,3 +143,4 @@ function mod:MistressKissInterrupted(player, spellId)
 	if player ~= pName then return end
 	self:LocalMessage(67905, L["kiss_interrupted"], "Personal", spellId)
 end
+

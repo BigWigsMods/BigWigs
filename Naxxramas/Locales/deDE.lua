@@ -94,9 +94,6 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "deDE")
 if L then
 	L.bomb_message = "Injection"
 	L.bomb_message_other = "%s ist verseucht!"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Mutagene Injektion gewirkt wird (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "deDE")
@@ -173,9 +170,6 @@ if L then
 	L.guardians_trigger = "Wohlan, Krieger der Eisigen Weiten, erhebt euch! Ich befehle euch für euren Meister zu kämpfen, zu töten und zu sterben! Keiner darf überleben!"
 	L.guardians_warning = "Wächter in ~10 sek!"
 	L.guardians_bar = "Wächter kommen"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Detonierendes Mana gewirkt wird (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "deDE")
@@ -275,9 +269,6 @@ if L then
 	L.ping = "Ping"
 	L.ping_desc = "Die derzeitige Position pingen, wenn du von Eisblitz betroffen bist."
 	L.ping_message = "Eisblock - Pinge deine Position!"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Eisblitz gewirkt wird (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "deDE")

@@ -94,9 +94,6 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "zhCN")
 if L then
 	L.bomb_message = "变异注射"
 	L.bomb_message_other = "变异注射：>%s<！"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了变异注射的玩家打上团队标记。（需要权限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "zhCN")
@@ -173,9 +170,6 @@ if L then
 	L.guardians_trigger = "很好，冰荒废土的战士们，起来吧！我命令你们为主人而战斗，杀戮，直到死亡！一个活口都不要留！"
 	L.guardians_warning = "约10秒后，寒冰皇冠卫士出现！"
 	L.guardians_bar = "<寒冰皇冠卫士出现>"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了自爆法力的玩家打上团队标记。（需要权限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "zhCN")
@@ -275,9 +269,6 @@ if L then
 	L.ping = "点击"
 	L.ping_desc = "当你中了寒冰屏障时点击当前所在位置。"
 	L.ping_message = "寒冰屏障 - 点击你的位置！"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了寒冰屏障的玩家打上团队标记。（需要权限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "zhCN")

@@ -38,9 +38,6 @@ if L then
 	L.ping = "Ping"
 	L.ping_desc = "Ping your current location if you are afflicted by Icebolt."
 	L.ping_message = "Block - Pinging your location!"
-
-	L.icon = "Raid Icon"
-	L.icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sapphiron")
 mod.locale = L
@@ -53,7 +50,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
 	self:Log("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
 	self:Log("SPELL_AURA_APPLIED", "Icebolt", 28522)
-	self:Log("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
 	self:Death("Win", 15989)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -111,9 +107,5 @@ function mod:Icebolt(player, spellId, _, _, spellName)
 		self:TargetMessage(28522, spellName, player, "Attention", spellId)
 	end
 	self:PrimaryIcon(28522, player)
-end
-
-function mod:RemoveIcon()
-	self:PrimaryIcon(28522, false)
 end
 

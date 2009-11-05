@@ -28,9 +28,6 @@ if L then
 
 	L.charge = "Charge"
 	L.charge_desc = "Warn about Charge on players."
-
-	L.icon = "Raid Icon"
-	L.icon_desc = "Place a Raid Target Icon on the player targetted by Rock Shards. (requires promoted or higher)"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Archavon the Stone Watcher")
 mod.locale = L
@@ -82,7 +79,7 @@ do
 		local target = UnitName(bossId .. "target")
 		if target then
 			mod:TargetMessage(58965, name, target, "Important", id)
-			mod:PrimaryIcon(58965, target, "icon")
+			mod:PrimaryIcon(58965, target)
 		end
 		handle = nil
 	end

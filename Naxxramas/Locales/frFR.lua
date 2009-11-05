@@ -94,9 +94,6 @@ L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "frFR")
 if L then
 	L.bomb_message = "Injection"
 	L.bomb_message_other = "Injection mutante : %s"
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être assistant ou mieux)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "frFR")
@@ -173,9 +170,6 @@ if L then
 	L.guardians_trigger = "Très bien. Guerriers des terres gelées, relevez-vous ! Je vous ordonne de combattre, de tuer et de mourir pour votre maître ! N'épargnez personne !"
 	L.guardians_warning = "Arrivée des gardiens dans ~10 sec. !"
 	L.guardians_bar = "Arrivée des gardiens !"
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur affecté par Faire détoner mana (nécessite d'être assistant ou mieux)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "frFR")
@@ -275,9 +269,6 @@ if L then
 	L.ping = "Ping"
 	L.ping_desc = "Pinge votre position actuelle si vous subissez les effets de l'Eclair de glace."
 	L.ping_message = "Bloc - Indication de votre position aux autres !"
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être assistant ou mieux)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "frFR")

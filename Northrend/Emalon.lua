@@ -24,9 +24,6 @@ if L then
 	L.overcharge_message = "A minion is overcharged!"
 	L.overcharge_bar = "Explosion"
 	L.overcharge_next = "~Overcharge Cooldown"
-
-	L.icon = "Overcharge Icon"
-	L.icon_desc = "Place a skull on the mob with Overcharge."
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Emalon the Storm Watcher")
 mod.locale = L

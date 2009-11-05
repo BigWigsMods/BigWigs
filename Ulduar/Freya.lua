@@ -63,9 +63,6 @@ if L then
 	L.sunbeam_message = "Sun beams up!"
 	L.sunbeam_bar = "~Next Sun Beams"
 
-	L.icon = "Place Icon"
-	L.icon_desc = "Place a Raid Target Icon on the player targetted by Sunbeam and Nature's Fury. (requires promoted or higher)"
-
 	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Freya")
@@ -153,7 +150,7 @@ do
 		local target = UnitName(bossId .. "target")
 		if target then
 			mod:TargetMessage(62623, name, target, "Attention", id)
-			mod:SecondaryIcon(62623, target, "icon")
+			mod:SecondaryIcon(62623, target)
 		end
 		handle = nil
 	end

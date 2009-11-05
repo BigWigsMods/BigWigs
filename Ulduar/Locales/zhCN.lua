@@ -63,9 +63,6 @@ if L then
 	L.sunbeam_message = "即将 阳光！"
 	L.sunbeam_bar = "<下一阳光>"
 
-	L.icon = "位置标记"
-	L.icon_desc = "为中了阳光的队员打上团队标记。（需要权限）"
-
 --	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
 end
 
@@ -82,9 +79,6 @@ if L then
 
 	L.hardmode = "困难模式"
 	L.hardmode_desc = "显示困难模式计时器。"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了风暴雷云的队员打上团队标记。（需要权限）"
 
 --	L.end_trigger = "I...I am released from his grasp! At...last!"
 end
@@ -119,9 +113,6 @@ if L then
 	L.overwhelm_other = "压倒能量：>%s<！"
 
 	L.shield_message = "符文之盾！"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了闪电之藤的队员打上团队标记。（需要权限）"
 
 	L.council_dies = "%s被击败了！"
 end
@@ -290,16 +281,8 @@ if L then
 
 	L.crash_say = ">我< 暗影冲撞！"
 
-	L.crashsay = "自身暗影冲撞"
-	L.crashsay_desc = "当你中了暗影冲撞时发出说话警报。"
-	L.crashicon = "暗影冲撞标记"
-	L.crashicon_desc = "为中了暗影冲撞的队员打上蓝色方框团队标记。（需要权限）"
-
 	L.mark_message = "无面者的印记"
 	L.mark_message_other = "无面者的印记：>%s<！"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了暗影冲撞的队员打上团队标记。（需要权限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "zhCN")
@@ -308,12 +291,6 @@ if L then
 	L.exposed_message = "暴露心脏！"
 
 	L.gravitybomb_other = "重力炸弹：>%s<！"
-
-	L.gravitybombicon = "重力炸弹标记"
-	L.gravitybombicon_desc = "为中了重力炸弹的玩家打上蓝色方框标记。（需要权限）"
-
-	L.lighticon = "灼热之光标记"
-	L.lighticon_desc = "为中了灼热之光的队员打上骷髅标记。（需要权限）"
 
 	L.lightbomb_other = "灼热之光：>%s<！"
 
@@ -361,8 +338,6 @@ if L then
 
 	L.guardian_message = "召唤卫士：>%d<！"
 
-	L.empowericon = "暗影信标标记"
-	L.empowericon_desc = "为中了暗影信标的不朽守护者打上骷髅标记。（需要权限）."
 	L.empowericon_message = "暗影信标 消退！"
 
 	L.roar_warning = "5秒后，震耳咆哮！"

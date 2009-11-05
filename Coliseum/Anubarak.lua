@@ -19,11 +19,11 @@ mod.optionHeaders = {
 local handle_NextWave = nil
 local handle_NextStrike = nil
 
+local isBurrowed = nil
 local ssName = GetSpellInfo(66134)
 local difficulty = GetRaidDifficulty()
 local pName = UnitName("player")
 local phase2 = nil
-local firstBurrow = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,19 +37,17 @@ if L then
 	L.unburrow_trigger = "emerges from the ground"
 	L.burrow_trigger = "burrows into the ground"
 	L.burrow = "Burrow"
-	L.burrow_desc = "Show a timer for Anub'Arak's Burrow ability"
+	L.burrow_desc = "Shows timers for emerges and submerges, and also add spawn timers."
 	L.burrow_cooldown = "Next Burrow"
 	L.burrow_soon = "Burrow soon"
 
-	L.nerubian_burrower = "Nerubian Burrower"
+	L.nerubian_message = "Adds incoming!"
+	L.nerubian_burrower = "More adds"
 
 	L.shadow_soon = "Shadow Strike in ~5sec!"
 
 	L.freeze_bar = "~Next Freezing Slash"
 	L.pcold_bar = "~Next Penetrating Cold"
-
-	L.icon = "Place icon"
-	L.icon_desc = "Place a raid target icon on the person targetted by Anub'arak during his burrow phase. (requires promoted or higher)"
 
 	L.chase = "Pursue"
 end
@@ -98,15 +96,19 @@ function mod:OnBossEnable()
 end
 
 local function nextwave()
+	if isBurrowed then return end
+	mod:Message("burrow", L["nerubian_message"], "Urgent", 66333)
 	mod:Bar("burrow", L["nerubian_burrower"], 45, 66333)
+	handle_NextWave = mod:ScheduleTimer(nextwave, 45)
 end
 
 function mod:OnEngage()
+	isBurrowed = nil
 	difficulty = GetRaidDifficulty()
 	self:Message("burrow", L["engage_message"], "Attention", 65919)
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
-	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
 
+	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
 	handle_NextWave = self:ScheduleTimer(nextwave, 10)
 
 	if self:GetOption(66134) and difficulty > 2 then
@@ -115,7 +117,6 @@ function mod:OnEngage()
 
 	self:Berserk(570, true)
 	phase2 = nil
-	firstBurrow = nil
 end
 
 --------------------------------------------------------------------------------
@@ -157,6 +158,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find(L["unburrow_trigger"]) then
+		isBurrowed = nil
 		self:Bar("burrow", L["burrow_cooldown"], 76, 65919)
 		self:DelayedMessage("burrow", 72, L["burrow_soon"], "Attention")
 
@@ -168,8 +170,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 			handle_NextStrike = self:ScheduleTimer(scheduleStrike, 5.5)
 		end
 	elseif msg:find(L["burrow_trigger"]) then
+		isBurrowed = true
+		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
+		self:CancelTimer(handle_NextWave, true)
+
 		self:Bar("burrow", L["burrow"], 65, 65919)
-		firstBurrow = true
 	end
 end
 

@@ -45,9 +45,6 @@ if L then
 
 	L.shield_message = "Rune shield!"
 
-	L.icon = "Raid Target Icon"
-	L.icon_desc = "Place a Raid Target Icon on the player targeted by Lightning Tendrils or Overwhelming Power (requires promoted or higher)."
-
 	L.council_dies = "%s dead"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Iron Council")

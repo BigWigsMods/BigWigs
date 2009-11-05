@@ -17,9 +17,6 @@ if L then
 	L.freeze_bar = "<下一Freezing Slash>"
 	L.pcold_bar = "<下一Penetrating Cold>"
 
-	L.icon = "团队标记"
-	L.icon_desc = "为中了阿努巴拉克钻地追击的队员打上团队标记。（需要权限）"
-
 	L.chase = "追击"
 end
 
@@ -94,9 +91,6 @@ if L then
 	L.legionflame_message = "Flame"
 	L.legionflame_other = "Legion Flame：>%s<！"
 	L.legionflame_bar = "<下一Legion Flame>"
-
-	L.icon = "团队标记"
-	L.icon_desc = "为中了Legion Flame的队员打上团队标记。（需要权限）"
 
 	L.infernal_bar = "<Volcano出现>"
 	L.netherportal_bar = "<下一Nether Portal>"

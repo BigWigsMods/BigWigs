@@ -17,9 +17,6 @@ if L then
 	L.freeze_bar = "<下一冰凍斬>"
 	L.pcold_bar = "<下一透骨之寒>"
 
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了阿努巴拉克鑽地追擊的隊員打上團隊標記。（需要權限）"
-
 	L.chase = "追擊"
 end
 
@@ -94,9 +91,6 @@ if L then
 	L.legionflame_message = "聚合烈焰"
 	L.legionflame_other = "聚合烈焰：>%s<！"
 	L.legionflame_bar = "<下一聚合烈焰>"
-
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了聚合烈焰的隊員打上團隊標記。（需要權限）"
 
 	L.infernal_bar = "<煉獄火山出現>"
 	L.netherportal_bar = "<下一虛空傳送門>"

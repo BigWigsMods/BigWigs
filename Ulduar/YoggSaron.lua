@@ -74,8 +74,6 @@ if L then
 
 	L.guardian_message = "Guardian %d!"
 
-	L.empowericon = "Empower Icon"
-	L.empowericon_desc = "Place a skull on the Immortal Guardian with Empowering Shadows."
 	L.empowericon_message = "Empower Faded!"
 
 	L.roar_warning = "Roar in 5sec!"

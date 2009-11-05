@@ -53,9 +53,6 @@ if L then
 	L.guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!"
 	L.guardians_warning = "Guardians incoming in ~10sec!"
 	L.guardians_bar = "Guardians incoming!"
-
-	L.icon = "Raid Icon"
-	L.icon_desc = "Place a raid icon on people with Detonate Mana."
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kel'Thuzad")
 mod.locale = L

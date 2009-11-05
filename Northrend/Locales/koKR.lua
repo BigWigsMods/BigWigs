@@ -9,9 +9,6 @@ if L then
 
 	L.charge = "돌진"
 	L.charge_desc = "돌진의 대상인 플레이어를 알립니다."
-
-	L.icon = "전술 표시"
-	L.icon_desc = "바위 조각 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "koKR")
@@ -21,9 +18,6 @@ if L then
 	L.overcharge_message = "하수인 과충전!"
 	L.overcharge_bar = "폭발"
 	L.overcharge_next = "~과충전 대기시간"
-
-	L.icon = "과충전 아이콘"
-	L.icon_desc = "과충전에 걸린 하수인에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "koKR")

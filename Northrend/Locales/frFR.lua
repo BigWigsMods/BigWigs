@@ -9,9 +9,6 @@ if L then
 
 	L.charge = "Empaler"
 	L.charge_desc = "Prévient quand un joueur subit les effets d'un Empaler."
-
-	L.icon = "Icône"
-	L.icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être assistant ou mieux)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "frFR")
@@ -21,9 +18,6 @@ if L then
 	L.overcharge_message = "Un séide est surchargé !"
 	L.overcharge_bar = "Explosion"
 	L.overcharge_next = "~Prochaine Surcharge"
-
-	L.icon = "Surcharger - Icône"
-	L.icon_desc = "Place un crâne sur le séide surchargé."
 end
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "frFR")

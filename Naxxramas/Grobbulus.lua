@@ -20,9 +20,6 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "enUS", true
 if L then
 	L.bomb_message = "Injection"
 	L.bomb_message_other = "%s is Injected!"
-
-	L.icon = "Place Icon"
-	L.icon_desc = "Place a raid icon on an Injected person. (Requires promoted or higher)"
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Grobbulus")
 mod.locale = L
@@ -53,7 +50,7 @@ function mod:Inject(player, spellId)
 	if player == pName then self:FlashShake(28169) end
 	self:Whisper(28169, player, L["bomb_message"])
 	self:Bar(28169, L["bomb_message_other"]:format(player), 10, spellId)
-	self:PrimaryIcon(28169, player, "icon")
+	self:PrimaryIcon(28169, player)
 end
 
 function mod:Cloud(_, spellId, _, _, spellName)

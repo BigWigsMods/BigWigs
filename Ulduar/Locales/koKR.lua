@@ -63,9 +63,6 @@ if L then
 	L.sunbeam_message = "태양 광선!"
 	L.sunbeam_bar = "~다음 태양 광선"
 
-	L.icon = "전술 표시"
-	L.icon_desc = "태양 광선과 자연의 격노의 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
-
 	L.end_trigger = "내게서 그의 지배력이 걷혔다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다."
 end
 
@@ -82,9 +79,6 @@ if L then
 
 	L.hardmode = "도전 모드 시간"
 	L.hardmode_desc = "도전 모드의 시간을 표시합니다."
-
-	L.icon = "전술 표시"
-	L.icon_desc = "폭풍 구름을 획득한 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 
 	L.end_trigger = "드디어... 드디어 그의 손아귀를... 벗어나는구나."
 end
@@ -119,9 +113,6 @@ if L then
 	L.overwhelm_other = "압도적인 힘: %s"
 
 	L.shield_message = "룬의 보호막!"
-
-	L.icon = "전술 표시"
-	L.icon_desc = "추적 중인 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 
 	L.council_dies = "%s 죽음"
 end
@@ -288,14 +279,8 @@ if L then
 	L.crashsay_desc = "어둠의 붕괴 대상시 일반 대화로 알립니다."
 	L.crash_say = "저 어둠 붕괴요!"
 
-	L.crashicon = "붕괴 아이콘"
-	L.crashicon_desc = "어둠 붕괴의 대상 플레이어에게 두번째 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
-
 	L.mark_message = "징표"
 	L.mark_message_other = "얼굴 없는 자의 징표: %s"
-
-	L.icon = "징표 아이콘"
-	L.icon_desc = "얼굴 없는 자의 징표의 대상 플레이어에게 기본 전술 표시를 지정합니다. (승급자 이상 권한 필요)"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "koKR")
@@ -304,9 +289,6 @@ if L then
 	L.exposed_message = "심장 노출 - 로봇들 추가!"
 
 	L.gravitybomb_other = "중력 폭탄: %s!"
-
-	L.gravitybombicon = "중력 폭탄 아이콘"
-	L.gravitybombicon_desc = "중력 폭탄에 걸린 플레이어를 네모 전술로 지정합니다. (승급자 이상 권한 필요)"
 
 	L.lightbomb_other = "빛의 폭탄: %s!"
 
@@ -354,8 +336,6 @@ if L then
 
 	L.guardian_message = "수호자 소환 %d!"
 
-	L.empowericon = "암흑 강화 아이콘"
-	L.empowericon_desc = "암흑 강화에 걸린 수호병에게 해골 표시를 지정합니다. (승급자 이상 권한 필요)"
 	L.empowericon_message = "암흑 강화 사라짐!"
 
 	L.roar_warning = "5초 후 포효!"

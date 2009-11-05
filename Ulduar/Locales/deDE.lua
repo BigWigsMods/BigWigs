@@ -63,9 +63,6 @@ if L then
 	L.sunbeam_message = "Sonnenstrahl!"
 	L.sunbeam_bar = "~Sonnenstrahl"
 
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sonnenstrahl und Furor der Natur betroffen sind (benötigt Assistent oder höher)."
-
 	L.end_trigger = "Seine Macht über mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."
 end
 
@@ -82,9 +79,6 @@ if L then
 
 	L.hardmode = "Hard Mode"
 	L.hardmode_desc = "Timer für den Hard Mode."
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die von Sturmwolke betroffen sind (benötigt Assistent oder höher)."
 
 	L.end_trigger = "Ich... bin von ihm befreit... endlich."
 end
@@ -119,9 +113,6 @@ if L then
 	L.overwhelm_other = "Überwältigende Kraft: %s"
 
 	L.shield_message = "Runenschild!"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, die während der Blitzrankenphase verfolgt werden oder von Überwältigende Kraft betroffen sind (benötigt Assistent oder höher)."
 
 	L.council_dies = "%s getötet!"
 end
@@ -290,17 +281,8 @@ if L then
 
 	L.crash_say = "Schattengeschoss auf MIR!"
 
-	L.crashsay = "Schattengeschoss Sagen"
-	L.crashsay_desc = "Warnt im Sagen Chat, wenn du das Ziel eines Schattengeschosses bist."
-
-	L.crashicon = "Schattengeschoss: Schlachtzugs-Symbol"
-	L.crashicon_desc = "Platziert das zweite Schlachtzugs-Symbol auf Spielern, die von Schattengeschoss betroffen sind (benötigt Assistent oder höher)."
-
 	L.mark_message = "Mal"
 	L.mark_message_other = "Mal: %s"
-
-	L.icon = "Mal der Gesichtslosen: Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert das erste Schlachtzugs-Symbol auf Spielern, die von Mal der Gesichtslosen betroffen sind (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "deDE")
@@ -309,12 +291,6 @@ if L then
 	L.exposed_message = "Herz freigelegt!"
 
 	L.gravitybomb_other = "Gravitationsbombe: %s"
-
-	L.gravitybombicon = "Gravitationsbombe: Schlachtzugs-Symbol"
-	L.gravitybombicon_desc = "Platziert ein blaues Quadrat auf Spielern, die von Gravitationsbombe getroffen werden (benötigt Assistent oder höher)."
-
-	L.lighticon = "Sengendes Licht: Schlachtzugs-Symbol"
-	L.lighticon_desc = "Platziert einen Totenkopf auf Spielern, die von Sengendes Licht betroffen sind (benötigt Assistent oder höher)."
 
 	L.lightbomb_other = "Lichtbombe: %s"
 
@@ -365,8 +341,6 @@ if L then
 
 	L.guardian_message = "Wächter %d!"
 
-	L.empowericon = "Schatten-Symbol"
-	L.empowericon_desc = "Platziert einen Totenkopf über der Unvergänglichen Wache, die von Machtvolle Schatten betroffen ist (benötigt Assistent oder höher)."
 	L.empowericon_message = "Schatten verblasst!"
 
 	L.roar_warning = "Gebrüll in 5 sek!"

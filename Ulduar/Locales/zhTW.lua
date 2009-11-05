@@ -63,9 +63,6 @@ if L then
 	L.sunbeam_message = "即將 太陽光束！"
 	L.sunbeam_bar = "<下一太陽光束>"
 
-	L.icon = "位置標記"
-	L.icon_desc = "為中了太陽光束的隊員打上團隊標記。（需要權限）"
-
 	L.end_trigger = "他對我的操控已然退散。我已再次恢復神智了。感激不盡，英雄們。"
 end
 
@@ -82,9 +79,6 @@ if L then
 
 	L.hardmode = "困難模式"
 	L.hardmode_desc = "顯示困難模式計時器。"
-
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了風暴雷雲的隊員打上團隊標記。（需要權限）"
 
 	L.end_trigger = "我…我終於從他的掌控中…解脫了。"
 end
@@ -119,9 +113,6 @@ if L then
 	L.overwhelm_other = "極限威能：>%s<！"
 
 	L.shield_message = "符文護盾！"
-
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了閃電觸鬚的隊員打上團隊標記。（需要權限）"
 
 	L.council_dies = "%s被擊敗了！"
 end
@@ -290,16 +281,8 @@ if L then
 
 	L.crash_say = ">我< 暗影暴擊！"
 
-	L.crashsay = "自身暗影暴擊"
-	L.crashsay_desc = "當你中了暗影暴擊時發出說話警報。"
-	L.crashicon = "暗影暴擊標記"
-	L.crashicon_desc = "為中了暗影暴擊的隊員打上藍色方框團隊標記。（需要權限）"
-
 	L.mark_message = "無面者印記"
 	L.mark_message_other = "無面者印記：>%s<！"
-
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了暗影暴擊的隊員打上團隊標記。（需要權限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "zhTW")
@@ -308,12 +291,6 @@ if L then
 	L.exposed_message = "機心外露！"
 
 	L.gravitybomb_other = "重力彈：>%s<！"
-
-	L.gravitybombicon = "重力彈標記"
-	L.gravitybombicon_desc = "為中了重力彈的玩家打上藍色方框標記。（需要權限）"
-
-	L.lighticon = "灼熱之光標記"
-	L.lighticon_desc = "為中了灼熱之光的隊員打上骷髏標記。（需要權限）"
 
 	L.lightbomb_other = "灼熱之光：>%s<！"
 
@@ -361,8 +338,6 @@ if L then
 
 	L.guardian_message = "尤格薩倫守護者：>%d<！ "
 
-	L.empowericon = "暗影信標標記"
-	L.empowericon_desc = "為中了暗影信標的不朽守護者打上骷髏標記。（需要權限）"
 	L.empowericon_message = "暗影信標 消失！"
 
 	L.roar_warning = "5秒後，震耳咆哮！"

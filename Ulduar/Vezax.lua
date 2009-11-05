@@ -50,7 +50,6 @@ if L then
 
 	L.mark_message = "Mark"
 	L.mark_message_other = "Mark on %s!"
-
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
 mod.locale = L

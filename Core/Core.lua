@@ -340,6 +340,10 @@ end
 --
 
 do
+	-- either you get me the hell out of these woods, or you'll know how my
+	-- mother felt after drinking my chocolate milkshake
+	-- did she make it for you?
+	-- you're a dead man.
 	function addon:New(module)
 		error(("%q tried to use the deprecated :New() API. Please notify the author that he needs to update it for Big Wigs 3."):format(module))
 	end

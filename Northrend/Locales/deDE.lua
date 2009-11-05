@@ -9,9 +9,6 @@ if L then
 
 	L.charge = "Ansturm"
 	L.charge_desc = "Warnt, wenn ein Spieler angestürmt wird."
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf Spielern, auf die Felssplitter gewirkt wird (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "deDE")
@@ -21,9 +18,6 @@ if L then
 	L.overcharge_message = "Sturmdiener überladen!"
 	L.overcharge_bar = "Explosion"
 	L.overcharge_next = "~Überladen"
-
-	L.icon = "Schlachtzugs-Symbol"
-	L.icon_desc = "Platziert ein Schlachtzugs-Symbol auf dem Sturmdiener, der von Überladen betroffen ist (benötigt Assistent oder höher)."
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "deDE")

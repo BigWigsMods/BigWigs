@@ -9,9 +9,6 @@ if L then
 
 	L.charge = "衝鋒"
 	L.charge_desc = "當玩家中了衝鋒時發出警報。"
-
-	L.icon = "團隊標記"
-	L.icon_desc = "為中了岩石裂片的玩家打上團隊標記。（需要權限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "zhTW")
@@ -21,9 +18,6 @@ if L then
 	L.overcharge_message = "暴雨爪牙 - 超載！"
 	L.overcharge_bar = "<爆炸>"
 	L.overcharge_next = "<下一超載>"
-
-	L.icon = "超載標記"
-	L.icon_desc = "為中了超載的怪物打上團隊標記。（需要權限）"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "zhTW")
