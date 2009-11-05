@@ -1,4 +1,4 @@
-BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0", "AceTimer-3.0")
+BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
 local addon = BigWigs
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
@@ -9,10 +9,8 @@ local BB, BZ
 
 local GetSpellInfo = GetSpellInfo
 
-local C
-
-local AL = LibStub("AceLocale-3.0")
-local L = AL:GetLocale("Big Wigs")
+local C -- = BigWigs.C, set from Constants.lua
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -119,21 +117,25 @@ end
 -- Testing
 --
 
-local bigWigsTest = nil
 do
+	local callbackRegistered = nil
 	local spells = nil
+	local messages = {}
 	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive"}
 	local sounds = {"Long", "Info", "Alert", "Alarm", "Victory", false, false, false, false, false, false}
 	local messageFormat = "%s: %s %s"
 
-	local tests = {}
-
-	local function sendTestMessage(message)
-		if not tests[message] then return end -- spamming test can cause double messages due to the limited amount of spells
-		addon:SendMessage("BigWigs_Message", nil, nil, unpack(tests[message]))
-		if math.random(1,4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
-		wipe(tests[message])
-		tests[message] = nil
+	local function barStopped(event, bar)
+		local a = bar:Get("bigwigs:anchor")
+		local key = bar.candyBarLabel:GetText()
+		if a and messages[key] then
+			local color = colors[math.random(1, #colors)]
+			local sound = sounds[math.random(1, #sounds)]
+			local formatted = messageFormat:format(color, key, sound and "("..sound..")" or "")
+			addon:SendMessage("BigWigs_Message", nil, nil, formatted, color, true, sound, nil, messages[key])
+			if math.random(1, 4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
+			messages[key] = nil
+		end
 	end
 
 	function addon:Test()
@@ -144,19 +146,29 @@ do
 				if not offset then break end
 				for s = offset + 1, offset + numSpells do
 					local spell = GetSpellName(s, BOOKTYPE_SPELL)
-					tinsert(spells, spell)
+					spells[#spells + 1] = spell
 				end
 			end
 		end
+		if not callbackRegistered then
+			LibStub("LibCandyBar-3.0").RegisterCallback(self, "LibCandyBar_Stop", barStopped)
+			callbackRegistered = true
+		end
 		local spell = spells[math.random(1, #spells)]
+		if messages[spell] then -- Don't run the same spell twice
+			spell = nil
+			for i = 1, #spells do
+				if not messages[spells[i]] then
+					spell = spells[i]
+					break
+				end
+			end
+		end
+		if not spell then return end
 		local name, rank, icon = GetSpellInfo(spell.."()")
 		local time = math.random(11, 45)
-		local color = colors[math.random(1, #colors)]
-		local sound = sounds[math.random(1, #sounds)]
 		addon:SendMessage("BigWigs_StartBar", addon, nil, name, time, icon)
-		local formatted = messageFormat:format(color, name, sound and "("..sound..")" or "")
-		tests[formatted] = { formatted, color, true, sound, nil, icon }
-		addon:ScheduleTimer(sendTestMessage, time, formatted)
+		messages[spell] = icon
 	end
 end
 
