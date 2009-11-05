@@ -5,11 +5,12 @@
 local mod = BigWigs:NewBoss("Razorscale", "Ulduar")
 if not mod then return end
 --[[
-	33233 = Razorscale Controller
+	33287 = Expedition Engineer
+	33816 = Expedition Defender
 	33210 = Expidition Commander
-	33185 = Razorscale
+	33186 = Razorscale
 --]]
-mod:RegisterEnableMob(33185, 33210)
+mod:RegisterEnableMob(33186, 33210, 33816, 33287)
 mod.toggleOptions = {"phase", 64021, {64704, "FLASHSHAKE"}, "harpoon", "berserk", "bosskill"}
 
 ------------------------------
