@@ -25,7 +25,6 @@ local times = nil
 local messages = nil
 local timers = nil
 
-
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -248,7 +247,7 @@ function plugin:OnRegister()
 	media:Register("statusbar", "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
 	media:Register("statusbar", "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
-	
+
 	db = self.db.profile
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 end
@@ -259,7 +258,7 @@ function plugin:OnPluginEnable()
 	timers = timers or {}
 
 	colors = BigWigs:GetPlugin("Colors")
-	
+
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StopBar")
@@ -271,7 +270,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	
+
 	--  custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
 end
@@ -300,7 +299,7 @@ do
 		local key = widget:GetUserData("key")
 		db[key] = value
 	end
-	
+
 	local function dropdownCallback(widget, event, value)
 		local list = media:List(widget:GetUserData("type"))
 		db[widget:GetUserData("key")] = list[value]
@@ -326,7 +325,7 @@ do
 			tex:SetCallback("OnValueChanged", dropdownCallback)
 			tex:SetFullWidth(true)
 		end
-	
+
 		local font = AceGUI:Create("Dropdown")
 		do
 			local list = media:List("font")
@@ -350,19 +349,19 @@ do
 		align:SetTitle(L["Align"])
 		align:SetFullWidth(true)
 		align:SetLayout("Flow")
-		
+
 		do
 			local left = AceGUI:Create("CheckBox")
 			local center = AceGUI:Create("CheckBox")
 			local right = AceGUI:Create("CheckBox")
-			
+
 			local function set(widget, event, value)
 				db.align = widget:GetUserData("value")
 				left:SetValue(db.align == "LEFT")
 				center:SetValue(db.align == "CENTER")
 				right:SetValue(db.align == "RIGHT")
 			end
-			
+
 			left:SetValue(db.align == "LEFT")
 			left:SetUserData("value", "LEFT")
 			left:SetType("radio")
@@ -421,7 +420,7 @@ do
 			growup:SetCallback("OnEnter", onControlEnter)
 			growup:SetCallback("OnLeave", onControlLeave)
 			growup:SetFullWidth(true)
-		
+
 			local scale = AceGUI:Create("Slider")
 			scale:SetValue(db.scale)
 			scale:SetSliderValues(0.2, 2.0, 0.1)
@@ -435,7 +434,7 @@ do
 		local emphasize = AceGUI:Create("InlineGroup")
 		emphasize:SetTitle(L["Emphasized bars"])
 		emphasize:SetFullWidth(true)
-		
+
 		do
 			local enable = AceGUI:Create("CheckBox")
 			enable:SetValue(db.emphasize)
@@ -481,10 +480,10 @@ do
 			scale:SetUserData("key", "emphasizeScale")
 			scale:SetCallback("OnValueChanged", standardCallback)
 			scale:SetFullWidth(true)
-		
+
 			emphasize:AddChildren(enable, flash, move, growup, scale)
 		end
-		
+
 		return tex, font, align, icon, duration, normal, emphasize
 	end
 end
@@ -619,14 +618,14 @@ local function parseTime(input)
 			local m, s = select(3, input:find("^(%d+):(%d+)$"))
 			if not tonumber(m) or not tonumber(s) then return end
 			return (tonumber(m) * 60) + tonumber(s)
-		elseif input:find("^%d+m$") then
-			return tonumber(select(3, input:find("^(%d+)m$"))) * 60
+		elseif input:find("^%d+mi?n?$") then
+			return tonumber(select(3, input:find("^(%d+)mi?n?$"))) * 60
 		end
 	end
 end
 
 local function sendCustomMessage(msg)
-	plugin:SendMessage("BigWigs_Message", unpack(messages[msg]))
+	plugin:SendMessage("BigWigs_Message", nil, nil, unpack(messages[msg]))
 	wipe(messages[msg])
 	messages[msg] = nil
 end
@@ -679,4 +678,3 @@ _G["SlashCmdList"]["BWLCB_SHORTHAND"] = function(input)
 	startCustomBar(input, nil, true)
 end
 _G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
-

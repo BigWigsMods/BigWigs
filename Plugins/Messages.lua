@@ -183,7 +183,7 @@ do
 		chat:SetCallback("OnValueChanged", checkboxCallback)
 		chat:SetUserData("key", "chat")
 		chat:SetUserData("tooltip", L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."])
-	
+
 		local colors = AceGUI:Create("CheckBox")
 		colors:SetLabel(L["Use colors"])
 		colors:SetValue(self.db.profile.usecolors and true or false)
@@ -201,7 +201,7 @@ do
 		classColors:SetCallback("OnValueChanged", checkboxCallback)
 		classColors:SetUserData("key", "classcolor")
 		classColors:SetUserData("tooltip", L["Colors player names in messages by their class."])
-	
+
 		local icons = AceGUI:Create("CheckBox")
 		icons:SetLabel(L["Use icons"])
 		icons:SetValue(self.db.profile.useicons and true or false)
@@ -286,14 +286,14 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
 	messageFrame:Show()
-	
+
 	-- move 4 -> 1
 	local old = labels[4]
 	labels[4] = labels[3]
 	labels[3] = labels[2]
 	labels[2] = labels[1]
 	labels[1] = old
-	
+
 	-- reposition
 	for i = 1, 4 do
 		labels[i]:ClearAllPoints()
@@ -337,7 +337,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 	else
 		icon = nil
 	end
-	
+
 	local size = nil
 	if seModule and module and key and seModule:IsSuperEmphasized(module, key) then
 		if seModule.db.profile.upper then
@@ -353,4 +353,3 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end
 end
-

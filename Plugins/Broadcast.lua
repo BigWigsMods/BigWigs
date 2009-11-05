@@ -2,7 +2,6 @@
 -- Module Declaration
 --
 
-
 local plugin = BigWigs:NewPlugin("Broadcast")
 if not plugin then return end
 
@@ -10,14 +9,12 @@ if not plugin then return end
 -- Locals
 --
 
-
 local output = "*** %s ***"
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 -------------------------------------------------------------------------------
 -- Initialization
 --
-
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
@@ -46,4 +43,3 @@ function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 		SendChatMessage(o, "RAID_WARNING")
 	end
 end
-

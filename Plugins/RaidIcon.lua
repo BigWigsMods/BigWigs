@@ -92,7 +92,7 @@ function plugin:BigWigs_OnBossDisable()
 	if lastplayer[2] then
 		SetRaidTarget(lastplayer[2], 0)
 		lastplayer[2] = nil
-	end	
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -116,4 +116,3 @@ function plugin:BigWigs_RemoveRaidIcon(message, icon)
 	SetRaidTarget(lastplayer[icon or 1], 0)
 	lastplayer[icon or 1] = nil
 end
-

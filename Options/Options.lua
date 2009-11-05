@@ -26,7 +26,7 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 
-local colorModule 
+local colorModule
 
 local showToggleOptions = nil
 local advancedOptions = {}
@@ -194,7 +194,7 @@ function options:OnInitialize()
 		local p = findPanel("Big Wigs")
 		if p and p.element.collapsed then OptionsListButtonToggle_OnClick(p.toggle) end
 	end)
-	
+
 	local bossEntry = self:GetPanel(L["Big Wigs Encounters"])
 	bossEntry:SetScript("OnShow", function(self)
 		BigWigs:Enable()
@@ -207,7 +207,7 @@ function options:OnInitialize()
 		p = findPanel(nil, L["Big Wigs Encounters"])
 		if p then InterfaceOptionsFrame_OpenToCategory(p.element.name) end
 	end)
-	
+
 	local about = self:GetPanel(L["About"], "Big Wigs")
 	about:SetScript("OnShow", function(frame)
 		local fields = {
@@ -279,10 +279,10 @@ function options:OnInitialize()
 
 	ac:RegisterOptionsTable("Big Wigs: Plugins", pluginOptions)
 	acd:AddToBlizOptions("Big Wigs: Plugins", L["Customize ..."], "Big Wigs")
-	
+
 	ac:RegisterOptionsTable("Big Wigs: Profiles", getProfileOptions)
 	acd:AddToBlizOptions("Big Wigs: Profiles", L["Profiles"], "Big Wigs")
-	
+
 	colorModule = BigWigs:GetPlugin("Colors")
 	ac:RegisterOptionsTable("Big Wigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"))
 end
@@ -296,7 +296,7 @@ function options:OnEnable()
 	end
 	self:RegisterMessage("BigWigs_BossModuleRegistered", "Register")
 	self:RegisterMessage("BigWigs_PluginRegistered", "Register")
-	
+
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
@@ -371,7 +371,7 @@ do
 		test:SetText(L["Test"])
 		test:SetCallback("OnClick", onTestClick)
 		test:SetFullWidth(true)
-		
+
 		local reset = AceGUI:Create("Button")
 		reset:SetText(L["Reset positions"])
 		reset:SetCallback("OnClick", onResetClick)
@@ -602,7 +602,7 @@ local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption
 	check:SetUserData("option", bossOption)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
-	
+
 	local tabs = AceGUI:Create("TabGroup")
 	tabs:SetLayout("Flow")
 	tabs:SetTabs(advancedTabs)
@@ -640,7 +640,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetDescription(desc)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
-	
+
 	local button = AceGUI:Create("Button")
 	button:SetText(">>")
 	button:SetRelativeWidth(0.15)
@@ -694,13 +694,13 @@ do
 
 		-- Make sure all the bosses for this zone are loaded.
 		BigWigsLoader:LoadZone(zone)
-	
+
 		local hasZones = zone and zoneModules[zone] and true or nil
-	
+
 		if not hasZones and not frame.module then -- this zone has no modules, nor is the panel related to a module
 			return
 		end
-	
+
 		local sframe = AceGUI:Create("SimpleGroup")
 		sframe:PauseLayout()
 		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
@@ -712,7 +712,7 @@ do
 		scroll:SetLayout("Flow")
 		scroll:SetFullWidth(true)
 		scroll:SetFullHeight(true)
-	
+
 		local group = nil
 		if hasZones then
 			group = AceGUI:Create("DropdownGroup")
@@ -788,7 +788,7 @@ do
 		end
 		return panels[id]
 	end
-	
+
 	function options:GetZonePanel(zone)
 		local panel, created = self:GetPanel(zone, L["Big Wigs Encounters"])
 		if created then
@@ -831,5 +831,3 @@ do
 		end
 	end
 end
-
-

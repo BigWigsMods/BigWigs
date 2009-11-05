@@ -100,7 +100,7 @@ do
 	for index, range in pairs(checkInteractDistance) do
 		ranges[range] = function(unit) return CheckInteractDistance(unit, index) end
 	end
-	
+
 	local spells = {
 		DEATHKNIGHT = { 61999, 49892, 49016 }, -- Raise Ally works even on players that are alive oO
 		DRUID = { 5185, 467, 1126 },
@@ -326,7 +326,7 @@ local function ensureDisplay()
 		display:ClearAllPoints()
 		display:SetPoint("CENTER", UIParent, "CENTER")
 	end
-	
+
 	plugin:RestyleWindow()
 end
 
@@ -408,10 +408,10 @@ end
 
 local function updateProfile()
 	if not anchor then return end
-	
+
 	anchor:SetWidth(plugin.db.profile.width)
 	anchor:SetHeight(plugin.db.profile.height)
-	
+
 	local x = plugin.db.profile.posx
 	local y = plugin.db.profile.posy
 	if x and y then
@@ -663,4 +663,3 @@ SlashCmdList.BigWigs_Proximity = function(input)
 end
 SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/bwproximity" -- In case some other addon already has /proximity
-

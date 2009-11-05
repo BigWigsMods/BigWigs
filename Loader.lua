@@ -127,7 +127,7 @@ local function iterateZones(addon, override, partyContent, ...)
 		-- register the zone for enabling.
 		registerEnableZone(zone, partyContent and BWPARTY or BWRAID)
 		if BZ then zone = BZ[zone] or zone end
-		
+
 		if not loadOnZone[zone] then loadOnZone[zone] = {} end
 		tinsert(loadOnZone[zone], addon)
 
@@ -143,7 +143,7 @@ local function load(obj, name)
 	if obj then return true end
 	-- Verify that the addon isn't disabled
 	local enabled = select(4, GetAddOnInfo(name))
-	if not enabled then 
+	if not enabled then
 		print("Error loading " .. name .. " ("..name.." is not enabled)")
 		return
 	end
@@ -224,7 +224,7 @@ function loader:OnInitialize()
 			end
 		end
 	end
-	
+
 	-- register for these messages OnInit so we receive these messages when the core and modules oninitialize fires
 	self:RegisterMessage("BigWigs_BossModuleRegistered")
 	self:RegisterMessage("BigWigs_CoreLoaded")
@@ -250,7 +250,7 @@ function loader:OnEnable()
 			BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 		end
 	end
-	
+
 	if loadOnZoneAddons then
 		-- From this point onward BZ and BB should be available for non-english locales
 		for i, name in next, loadOnZoneAddons do
@@ -271,14 +271,14 @@ function loader:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 	self:RegisterEvent("RAID_ROSTER_UPDATE", "CheckRoster")
 	self:RegisterEvent("PARTY_MEMBERS_CHANGED", "CheckRoster")
-	
+
 	self:RegisterEvent("CHAT_MSG_ADDON")
-	
+
 	self:RegisterMessage("BigWigs_JoinedGroup")
 	self:RegisterMessage("BigWigs_LeftGroup")
 	self:RegisterMessage("BigWigs_CoreEnabled")
 	self:RegisterMessage("BigWigs_CoreDisabled")
-	
+
 	self:CheckRoster()
 	self:ZoneChanged()
 end
@@ -348,7 +348,7 @@ function loader:ZoneChanged()
 				BigWigs:Enable()
 			end
 		end
-	end	
+	end
 end
 
 function loader:CheckRoster()
@@ -607,4 +607,3 @@ do
 		end
 	end
 end
-

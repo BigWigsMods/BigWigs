@@ -289,7 +289,7 @@ end
 --
 local function checkFlag(self, key, flag)
 	if type(key) == "number" then key = GetSpellInfo(key) end
-	-- XXX 
+	-- XXX
 	if type(self.db.profile[key]) ~= "number" then
 		print(("The boss encounter script for %q tried to access the option %q as a bit flag setting, but in the database it's represented as something else (%s). Please report this in #bigwigs."):format(self.displayName, key, type(self.db.profile[key])))
 		return self.db.profile[key]
@@ -334,7 +334,7 @@ do
 			return self[key]
 		end
 	})
-	
+
 	local mt = {
 		__newindex = function(self, key, value)
 			rawset(self, key, coloredNames[value])
@@ -392,7 +392,7 @@ do
 			return value
 		end
 	})
-	
+
 	function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
 		if checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, text, length, icons[icon], ...)
@@ -464,4 +464,3 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	local berserk = GetSpellInfo(26662)
 	self:Bar("berserk", berserk, seconds, 26662)
 end
-

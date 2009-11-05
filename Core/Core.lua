@@ -174,9 +174,7 @@ local function coreSync(sync, moduleName, sender)
 		local module = addon:GetBossModule(moduleName, true)
 		if not module then return end
 		enableBossModule(module, true)
-		
-		-- MultiDeath is gone, but lets have it here for another release cycle for compat.
-	elseif (sync == "Death" or sync == "MultiDeath") then
+	elseif sync == "Death" then
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Positive", nil, "Victory")
@@ -197,7 +195,7 @@ do
 		Death = true,
 		EnableModule = true,
 	}
-	
+
 	-- XXX We need to remove this error for release, since people can have boss modules that we don't have.
 	-- XXX Either custom ones or ones that are in older instances, like MC, BWL, etc.
 	-- local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
@@ -271,7 +269,7 @@ function addon:OnInitialize()
 	self.db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
 	self.db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
 	self.db.RegisterCallback(self, "OnProfileReset", profileUpdate)
-	
+
 	-- check for and load the babbles early if available, used for packed versions of bigwigs
 	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
@@ -281,7 +279,7 @@ function addon:OnInitialize()
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 
-	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to 
+	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
 	self:SendMessage("BigWigs_CoreLoaded")
 	self.OnInitialize = nil
@@ -368,7 +366,7 @@ do
 
 	function addon:IterateBossModules() return self.bossCore:IterateModules() end
 	function addon:GetBossModule(...) return self.bossCore:GetModule(...) end
-	
+
 	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
 	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
@@ -379,13 +377,13 @@ do
 				berserk = C.BAR + C.MESSAGE,
 				bosskill = C.MESSAGE,
 				proximity = C.PROXIMITY
-			}, {__index = function(self, key) 
+			}, {__index = function(self, key)
 				if not rawget(self, key) then
 					return C.BAR + C.MESSAGE
 				end
 			end })
 		end
-	
+
 		if module.optionHeaders then
 			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 			for k, v in pairs(module.optionHeaders) do
@@ -445,7 +443,7 @@ do
 			end
 		end
 		enablezones[module.zoneName] = true
-		
+
 		register(module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
@@ -459,7 +457,7 @@ do
 		if type(module.defaultDB) == "table" then
 			module.db = self.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end
-		
+
 		register(module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
@@ -493,4 +491,3 @@ function pluginCore:OnEnable()
 		mod:Enable()
 	end
 end
-

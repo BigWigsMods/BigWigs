@@ -102,4 +102,3 @@ function plugin:IsSuperEmphasized(module, key)
 	if temporaryEmphasizes[key] then return true end
 	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
 end
-

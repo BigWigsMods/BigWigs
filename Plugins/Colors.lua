@@ -24,7 +24,7 @@ plugin.defaultDB = {
 	barText = { ["*"] = { ["*"] = { 1, 1, 1 } } },
 	barColor = { ["*"] = { ["*"] = { 0.25, 0.33, 0.68, 1 } } },
 	barEmphasized = { ["*"] = { ["*"] = { 1, 0, 0, 1 } } },
-	
+
 	flashshake = { ["*"] = { ["*"] = { 0, 0, 1 } } },
 }
 
@@ -247,4 +247,3 @@ end
 function plugin:GetColor(hint, module, key)
 	return unpack(self:GetColorTable(hint, module, key))
 end
-

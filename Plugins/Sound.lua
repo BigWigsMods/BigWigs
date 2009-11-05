@@ -142,4 +142,3 @@ function plugin:BigWigs_Sound(event, sound)
 	if not BigWigs.db.profile.sound or sound == false then return end
 	play(sound)
 end
-

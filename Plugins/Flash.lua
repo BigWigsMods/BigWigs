@@ -110,4 +110,3 @@ function mod:BigWigs_FlashShake(event, module, key)
 		startShake()
 	end
 end
-

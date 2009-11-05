@@ -423,4 +423,3 @@ SlashCmdList.BigWigs_SendRaidTip = function(input)
 	end
 end
 SLASH_BigWigs_SendRaidTip1 = "/sendtip"
-
