@@ -306,7 +306,7 @@ function options:OnEnable()
 	local sorted = {}
 	for zone in pairs(zones) do tmp[zone] = true end
 	for zone in pairs(zoneModules) do tmp[zone] = true end
-	for zone in pairs(tmp) do tinsert(sorted, zone) end
+	for zone in pairs(tmp) do sorted[#sorted + 1] = zone end
 	table.sort(sorted)
 	for i, zone in next, sorted do self:GetZonePanel(zone) end
 	tmp = nil
@@ -380,10 +380,10 @@ do
 		scroll:AddChildren(test, reset)
 		for name, module in BigWigs:IteratePlugins() do
 			if module.GetPluginConfig then
-				table.insert(plugins, {
+				plugins[#plugins + 1] = {
 					value = name,
 					text = name,
-				})
+				}
 			end
 		end
 		tabs = AceGUI:Create("TabGroup")
@@ -538,11 +538,10 @@ local function advancedToggles(dbKey, module, check)
 	for i, key in next, listToggles do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
-			tinsert(advancedOptions, getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check))
+			advancedOptions[#advancedOptions + 1] = getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check)
 		end
 	end
-
-	tinsert(advancedOptions, getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check))
+	advancedOptions[#advancedOptions + 1] = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)
 
 	return unpack(advancedOptions)
 end
@@ -749,7 +748,7 @@ do
 				-- select first one
 				wipe(sorted)
 				for k, v in pairs(zoneModules[zone]) do
-					table.insert(sorted, k)
+					sorted[#sorted + 1] = k
 				end
 				table.sort(sorted)
 				group:SetGroup(sorted[1])

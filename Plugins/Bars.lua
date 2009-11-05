@@ -59,7 +59,7 @@ local tmp = {}
 local function rearrangeBars(anchor)
 	wipe(tmp)
 	for bar in pairs(anchor.bars) do
-		table.insert(tmp, bar)
+		tmp[#tmp + 1] = bar
 	end
 	table.sort(tmp, barSorter)
 	local lastDownBar, lastUpBar = nil, nil

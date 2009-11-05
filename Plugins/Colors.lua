@@ -190,8 +190,8 @@ local C = BigWigs.C
 local keyTable = {}
 function plugin:SetColorOptions(name, key, flags)
 	wipe(keyTable)
-	table.insert(keyTable, name)
-	table.insert(keyTable, key)
+	keyTable[1] = name
+	keyTable[2] = key
 	local t = addKey(colorOptions, keyTable)
 	t.args.messages.hidden = nil
 	t.args.bars.hidden = nil

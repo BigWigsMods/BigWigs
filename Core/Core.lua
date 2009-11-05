@@ -91,7 +91,7 @@ do
 		if t == "nil" then
 			tbl[entry] = moduleName
 		elseif t == "table" then
-			tinsert(tbl[entry], moduleName)
+			tbl[entry][#tbl[entry] + 1] = moduleName
 		elseif t == "string" then
 			local tmp = tbl[entry]
 			tbl[entry] = { tmp, moduleName }
@@ -274,13 +274,14 @@ function addon:OnInitialize()
 			showBlizzardWarnings = false,
 		}
 	}
-	self.db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
+	local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 	local function profileUpdate()
 		addon:SendMessage("BigWigs_ProfileUpdate")
 	end
-	self.db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
-	self.db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
-	self.db.RegisterCallback(self, "OnProfileReset", profileUpdate)
+	db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
+	db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
+	db.RegisterCallback(self, "OnProfileReset", profileUpdate)
+	self.db = db
 
 	-- check for and load the babbles early if available, used for packed versions of bigwigs
 	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then

@@ -375,7 +375,7 @@ do
 		for i = 1, num do
 			local n = GetRaidRosterInfo(i)
 			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n) then
-				table.insert(tooClose, coloredNames[n])
+				tooClose[#tooClose + 1] = coloredNames[n]
 			end
 			if #tooClose > 4 or i > 25 then break end
 		end
@@ -652,7 +652,7 @@ SlashCmdList.BigWigs_Proximity = function(input)
 	if input == "" or input == "?" or input == "ranges" then
 		print("Available ranges (in yards) for the promixity display:")
 		local t = {}
-		for range in pairs(ranges) do tinsert(t, range) end
+		for range in pairs(ranges) do t[#t + 1] = range end
 		print(table.concat(t, ", "))
 		print("Example: /proximity " .. tostring(t[1]))
 	else

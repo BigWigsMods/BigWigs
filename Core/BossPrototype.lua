@@ -163,10 +163,10 @@ do
 						if module == self.moduleName then
 							local unit = findTargetByGUID(mobId)
 							if unit and UnitAffectingCombat(unit) then
-								tinsert(mobs, tostring(mobId) .. ":" .. unit)
+								mobs[#mobs + 1] = tostring(mobId) .. ":" .. unit
 								found = true
 							else
-								tinsert(mobs, tostring(mobId) .. ":no target")
+								mobs[#mobs + 1] = tostring(mobId) .. ":no target"
 								mobs[mobId] = "no target"
 							end
 						end
@@ -174,10 +174,10 @@ do
 				elseif entry == self.moduleName then
 					local unit = findTargetByGUID(mobId)
 					if unit and UnitAffectingCombat(unit) then
-						tinsert(mobs, tostring(mobId) .. ":" .. unit)
+						mobs[#mobs + 1] = tostring(mobId) .. ":" .. unit
 						found = true
 					else
-						tinsert(mobs, tostring(mobId) .. ":no target")
+						mobs[#mobs + 1] = tostring(mobId) .. ":no target"
 					end
 				end
 			end
@@ -271,12 +271,9 @@ do
 	function boss:DelayedMessage(key, delay, text, ...)
 		if type(delay) ~= "number" then error(string.format("The delay needs to be a number, now (%q) for module '%q'", delay, module.name)) end
 		self:CancelDelayedMessage(text)
-		scheduledMessages[text] = {}
 
 		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
-		tinsert(scheduledMessages[text], id)
-		tinsert(scheduledMessages[text], key)
-		tinsert(scheduledMessages[text], text)
+		scheduledMessages[text] = {id, key, text}
 		for i = 1, select("#", ...) do
 			tinsert(scheduledMessages[text], (select(i, ...)))
 		end

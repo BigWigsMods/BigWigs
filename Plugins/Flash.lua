@@ -42,7 +42,7 @@ local function startShake()
 		if not originalPoints then
 			originalPoints = {}
 			for i = 1, WorldFrame:GetNumPoints() do
-				table.insert(originalPoints, {WorldFrame:GetPoint(i)})
+				originalPoints[i] = {WorldFrame:GetPoint(i)}
 			end
 		end
 		shaking = SHAKE_DURATION -- don't think we want to make this a setting.

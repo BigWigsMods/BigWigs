@@ -129,10 +129,10 @@ local function iterateZones(addon, override, partyContent, ...)
 		if BZ then zone = BZ[zone] or zone end
 
 		if not loadOnZone[zone] then loadOnZone[zone] = {} end
-		tinsert(loadOnZone[zone], addon)
+		loadOnZone[zone][#loadOnZone[zone] + 1] = addon
 
 		if override then
-			tinsert(loadOnZone[override], addon)
+			loadOnZone[override][#loadOnZone[override] + 1] = addon
 		else
 			menus[zone] = true
 		end
@@ -212,15 +212,15 @@ function loader:OnInitialize()
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
-				tinsert(loadOnCoreEnabled, name)
+				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = name
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreLoaded")
 			if meta then
-				tinsert(loadOnCoreLoaded, name)
+				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
 			if meta then
-				tinsert(loadOnZoneAddons, name)
+				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
 			end
 		end
 	end
@@ -544,21 +544,21 @@ do
 		for i, player in next, m do
 			if usersRelease[player] then
 				if usersRelease[player] < highestReleaseRevision then
-					tinsert(ugly, coloredNameVersion(player, usersRelease[player]))
+					ugly[#ugly + 1] = coloredNameVersion(player, usersRelease[player])
 				else
-					tinsert(good, coloredNameVersion(player, usersRelease[player]))
+					good[#good + 1] = coloredNameVersion(player, usersRelease[player])
 				end
 			elseif usersUnknown[player] then
-				tinsert(ugly, coloredNames[player])
+				ugly[#ugly + 1] = coloredNames[player]
 			elseif usersAlpha[player] then
 				-- release revision -1 because of tagging
 				if usersAlpha[player] >= (highestReleaseRevision - 1) or usersAlpha[player] == -1 then
-					tinsert(good, coloredNameVersion(player, usersAlpha[player]))
+					good[#good + 1] = coloredNameVersion(player, usersAlpha[player])
 				else
-					tinsert(ugly, coloredNameVersion(player, usersAlpha[player]))
+					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player])
 				end
 			else
-				tinsert(bad, coloredNames[player])
+				bad[#bad + 1] = coloredNames[player]
 			end
 		end
 		if #good > 0 then print(L["Up to date:"], table.concat(good, ", ")) end

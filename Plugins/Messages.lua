@@ -10,8 +10,6 @@ if not plugin then return end
 -- Locals
 --
 
-local minHeight = select(2, GameFontNormalHuge:GetFont())
-local maxHeight = minHeight + 10
 local scaleUpTime = 0.2
 local scaleDownTime = 0.4
 local labels = {}
@@ -221,7 +219,6 @@ end
 
 local function newFontString(i)
 	local fs = messageFrame:CreateFontString(nil, "ARTWORK")
-	fs:SetFontObject(GameFontNormalHuge)
 	fs:SetWidth(800)
 	fs:SetHeight(0)
 	fs.lastUsed = 0
@@ -237,7 +234,7 @@ local function onUpdate(self, elapsed)
 	for i, v in next, labels do
 		if v:IsShown() then
 			if v.scrollTime then
-				local min = v.minHeight or minHeight
+				local min = v.minHeight
 				local max = min + 10
 				v.scrollTime = v.scrollTime + elapsed
 				if v.scrollTime <= scaleUpTime then
@@ -267,7 +264,7 @@ function createMsgFrame()
 	messageFrame:SetScript("OnUpdate", onUpdate)
 	for i = 1, 4 do
 		local fs = newFontString(i)
-		table.insert(labels, fs)
+		labels[i] = fs
 		if i == 1 then
 			fs:SetPoint("TOP")
 		else
@@ -280,7 +277,6 @@ end
 -- Event Handlers
 --
 
-local hugeFont, hugeSize = GameFontNormalHuge:GetFont()
 function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	if not anchor then createAnchor() end
 	if not messageFrame then createMsgFrame() end
@@ -306,7 +302,7 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	-- new message at 1
 	local slot = labels[1]
 
-	slot:SetFont(font or hugeFont, size or hugeSize)
+	slot:SetFontObject(font or GameFontNormalHuge)
 	slot.minHeight = select(2, slot:GetFont())
 	if icon then text = "|T"..icon..":" .. slot.minHeight .. ":" .. slot.minHeight .. ":-5|t"..text end
 	slot:SetText(text)
@@ -338,17 +334,17 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		icon = nil
 	end
 
-	local size = nil
+	local font = nil
 	if seModule and module and key and seModule:IsSuperEmphasized(module, key) then
 		if seModule.db.profile.upper then
 			text = text:upper()
 		end
 		if seModule.db.profile.size then
-			size = hugeSize * 1.5
+			font = BossEmoteNormalHuge
 		end
 	end
 
-	self:Pour(text, r, g, b, nil, size, nil, nil, nil, icon)
+	self:Pour(text, r, g, b, font, nil, nil, nil, nil, icon)
 	if self.db.profile.chat then
 		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end
