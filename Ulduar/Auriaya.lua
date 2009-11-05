@@ -19,6 +19,8 @@ local count = 9
 
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "enUS", true)
 if L then
+	L.engage_trigger = "Some things are better left alone!"
+
 	L.fear_warning = "Fear soon!"
 	L.fear_message = "Casting Fear!"
 	L.fear_bar = "~Fear"
@@ -49,7 +51,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 33515)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Yell("Engage", L["engage_trigger"])
 end
 
 function mod:OnEngage()

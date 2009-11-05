@@ -16,6 +16,8 @@ end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "deDE")
 if L then
+	L.engage_trigger = "Some things are better left alone!"
+
 	L.fear_warning = "Furcht bald!"
 	L.fear_message = "Furcht!"
 	L.fear_bar = "~Furcht"
