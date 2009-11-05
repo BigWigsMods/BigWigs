@@ -10,7 +10,8 @@ if L then
 	L.burrow_cooldown = "Prochain Fouir"
 	L.burrow_soon = "Fouir imminent"
 
-	L.nerubian_burrower = "Fouisseur nérubien"
+	L.nerubian_message = "Arrivée de fouisseurs !"
+	L.nerubian_burrower = "Plus de fouisseurs"
 
 	L.shadow_soon = "Attaque d'ombre dans ~5 sec. !"
 
@@ -53,7 +54,7 @@ if L then
 	L.charge = "Charge furieuse"
 	L.charge_desc = "Prévient quand un joueur subit les effets d'une Charge furieuse."
 	L.charge_trigger = "lâche un rugissement assourdissant !$"
-	L.charge_say = "Charge sur moi !"
+	L.charge_say = "Charge furieuse sur moi !"
 
 	L.bosses = "Boss"
 	L.bosses_desc = "Prévient quand le boss suivant arrive."
@@ -85,16 +86,19 @@ if L then
 
 	L.incinerate_message = "Incinérer la chair"
 	L.incinerate_other = "Incinérer : %s"
-	L.incinerate_bar = "~Prochain Incinérer"
+	L.incinerate_bar = "Prochain Incinérer"
 	L.incinerate_safe = "%s est sauf !"
 
 	L.legionflame_message = "Flamme de la Légion"
 	L.legionflame_other = "Flamme : %s"
-	L.legionflame_bar = "~Prochaine Flamme de la Légion"
+	L.legionflame_bar = "Prochaine Flamme"
 
 	L.infernal_bar = "Apparition d'un volcan"
 	L.netherportal_bar = "Apparition d'un portail"
-	L.netherpower_bar = "~Prochaine Puissance du Néant"
+	L.netherpower_bar = "~Prochaine Puissance"
+
+	L.kiss_message = "Baiser de la Maîtresse sur VOUS !"
+	L.kiss_interrupted = "Interrompu !"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "frFR")

@@ -44,7 +44,7 @@ if L then
 	L.infernal_bar = "Volcano spawns"
 	L.netherportal_bar = "Portal spawns"
 	L.netherpower_bar = "~Next Nether Power"
-	
+
 	L.kiss_message = "Kiss on YOU!"
 	L.kiss_interrupted = "Interrupted!"
 end
