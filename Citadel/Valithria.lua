@@ -43,17 +43,17 @@ end
 -- Event Handlers
 --
 
-function mod:LayWaste( _, _, _, _, _, _, _, spellName)
-	self:Message(71730, spellName, "Attention")
-	self:Bar(71730, spellName, 12, 71730)
+function mod:LayWaste(_, spellId, _, _, spellName)
+	self:Message(71730, spellName, "Attention", spellId)
+	self:Bar(71730, spellName, 12, spellId)
 end
 
 function mod:Portal()
 	self:Message("portal", L["portal_message"], "Important")
 end
 
-function mod:AcidBurst( _, _, _, _, _, _, _, spellName)
-	self:Message(71733, spellName, "Attention")
-	self:Bar(71733, spellName, 20, 71733)
+function mod:AcidBurst(_, spellId, _, _, spellName)
+	self:Message(71733, spellName, "Attention", spellId)
+	self:Bar(71733, spellName, 20, spellId)
 end
 

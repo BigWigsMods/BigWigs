@@ -6,7 +6,7 @@ if not QueryQuestsCompleted then return end
 local mod = BigWigs:NewBoss("Precious", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37212)
-mod.toggleOptions =  {"zombies", 71123, {71127, "FLASHSHAKE"}, 71159, "bosskill"}
+mod.toggleOptions = {"zombies", 71123, {71127, "FLASHSHAKE"}, "bosskill"}
  --71123: Decimate
  --71127: Mortal wound
  --71159: Zombies
@@ -24,11 +24,13 @@ local summoned = nil
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Precious", "enUS", true)
 if L then
 	L.zombies = GetSpellInfo(71159)
-	L.zombies_desc = "Summons 11 Plague Zombie to assist the caster."
+	L.zombies_desc = "Summons 11 Plague Zombies to assist the caster."
+	L.zombies_message = "Zombies summoned!"
+	L.zombies_cd = "~Next Zombies" -- 20sek cd (11 Zombies)
+	
 	L.wound_message = "%2$dx Mortal Wound on %1$s"
-	L.decimate_cd = "~Next Decimate" --33sec cd
-	L.zombies = "Zombies summoned"
-	L.zombie_cd = "~Next Zombies" --20sek cd (11Zombies)
+	
+	L.decimate_cd = "~Next Decimate" -- 33 sec cd
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Precious")
 mod.locale = L
@@ -63,7 +65,7 @@ function mod:Wound(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:Decimate(player, spellId, _, _, spellName)
+function mod:Decimate(_, spellId, _, _, spellName)
 	self:Message(71123, spellName, "Attention", spellId)
 	self:Bar(71123, L["decimate_cd"], 33, spellId)
 end
@@ -73,9 +75,8 @@ do
 	function mod:Zombies() 
 		if summoned then return end
 		summoned = true
-		self:Message("zombies", L["zombies"], "Important")
-		self:Bar("zombies", L["zombie_cd"], 20, 71159)
+		self:Message("zombies", L["zombies_message"], "Important", 71159)
+		self:Bar("zombies", L["zombies_cd"], 20, 71159)
 		self:ScheduleTimer(resetZombies, 3)
 	end
 end
-

@@ -6,11 +6,12 @@ if L then
 	L.unburrow_trigger = "entsteigt dem Boden"
 	L.burrow_trigger = "gräbt sich in den Boden"
 	L.burrow = "Eingraben"
-	L.burrow_desc = "Zeigt einen Timer für Anub'arak's Eingraben."
+	L.burrow_desc = "Zeigt Timer für Anub'araks Ein- und Ausgraben sowie für das Erscheinen der Nerubischen Gräber."
 	L.burrow_cooldown = "~Eingraben"
 	L.burrow_soon = "Eingraben bald!"
 
-	L.nerubian_burrower = "Nerubischer Gräber"
+	L.nerubian_message = "Adds kommen!"
+	L.nerubian_burrower = "Weitere Adds"
 
 	L.shadow_soon = "Schattenhieb in ~5 sek!"
 

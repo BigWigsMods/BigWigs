@@ -86,10 +86,9 @@ function mod:Coldflame(player, spellId)
 end
 
 function mod:Whirlwind(_, spellId, _, _, spellName)
-	self:Bar(69076, spellName, 30, 69076)
+	self:Bar(69076, spellName, 30, spellId)
 end
 
-function mod:WhirlwindCD(_, spellId, _, _, spellName)
-	self:Bar(69076, L["whirlwind_cd"], 60, 69076)
+function mod:WhirlwindCD(_, spellId)
+	self:Bar(69076, L["whirlwind_cd"], 60, spellId)
 end
-

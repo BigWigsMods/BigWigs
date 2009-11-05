@@ -7,8 +7,8 @@ local mod = BigWigs:NewBoss("Stinky", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
 mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill"}
- --71123: Decimate
- --71127: Mortal wound
+-- 71123: Decimate
+-- 71127: Mortal wound
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -17,7 +17,7 @@ mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill"}
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Stinky", "enUS", true)
 if L then
 	L.wound_message = "%2$dx Mortal Wound on %1$s"
-	L.decimate_cd = "~Next Decimate" --33sec cd
+	L.decimate_cd = "~Next Decimate" -- 33sec cd
 end
 L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Stinky")
 mod.locale = L
@@ -52,7 +52,7 @@ function mod:Wound(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:Decimate(player, spellId, _, _, spellName)
+function mod:Decimate(_, spellId, _, _, spellName)
 	self:Message(71123, spellName, "Attention", spellId)
 	self:Bar(71123, L["decimate_cd"], 33, spellId)
 end

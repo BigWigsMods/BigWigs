@@ -6,11 +6,11 @@ if not QueryQuestsCompleted then return end
 local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36855)
-mod.toggleOptions = {71289, 71001, "berserk", "bosskill"}
+mod.toggleOptions = {71289, 70482, 71001, "berserk", "bosskill"}
 
---71289 Dominate Mind
---71001 Death&Decay
---70842 --mana barrier
+-- 71289 Dominate Mind
+-- 71001 Death & Decay
+-- 70842 Mana barrier
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -57,12 +57,12 @@ end
 
 function mod:DeathAndDecay(player, spellId)
 	if player == pName then
-		self:LocalMessage(69146, L["dnd_message"], "Personal", spellId, "Alarm")
+		self:LocalMessage(71001, L["dnd_message"], "Personal", spellId, "Alarm")
 	end
 end
 
 function mod:Manabarrier(_, spellId, _, _, spellName)
-	self:Message(70482, L.phase2_message, "Positive", spellId)
+	self:Message(70482, L["phase2_message"], "Positive", spellId)
 end
 
 do
@@ -89,4 +89,3 @@ do
 		end
 	end
 end
-

@@ -8,8 +8,8 @@ if not mod then return end
 mod:RegisterEnableMob(36853)
 mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "bosskill"}
 -- 69846 = Frost Bomb (Fires a missile towards a random target. When this missile lands, it deals 5655 to 6345 Shadow damage to all enemies within 10 yards of that location.)
--- 70117 Icy Grip, pulls players to the middle, 1sec after that she starts blistering cold
--- 70126= Frost Beacon (mark for 70157 frost tomb)
+-- 70117 = Icy Grip, pulls players to the middle, 1sec after that she starts blistering cold
+-- 70126 = Frost Beacon (mark for 70157 frost tomb)
 -- 71056 = Frostbreath (Frost damage to enemies in a 60 yard cone in front of the caster. In addition, the targets' attack speed and chance to dodge are decreased by 50% for 6 sec.)
 -- 71047 = Blistering Cold/ 5 sec cast /Deals 60.000 Frost damage to enemies within 25 yards.
 
@@ -40,7 +40,7 @@ mod.locale = L
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
-	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117) --(70123, 71047, 71048, 71049) are the Spell itself
+	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117) -- (70123, 71047, 71048, 71049) are the Spell itself
 	self:Log("SPELL_SUMMON", "FrostBomb", 69846)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -51,6 +51,7 @@ end
 function mod:OnEngage()
 	self:Bar("airphase", L["airphase_message"], 50)
 end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -80,13 +81,13 @@ do
 	end
 end
 
-function mod:FrostBomb( _, _, _, _, spellName)
-	self:Message(69846, spellName, "Attention")
+function mod:FrostBomb( _, spellId, _, _, spellName)
+	self:Message(69846, spellName, "Attention", spellId)
 end
 
-function mod:BlisteringCold( _, _, _, _, _, _, _, spellName)
-	self:Message(70123, spellName, "Attention")
-	self:Bar(70123, L["boom"], 6, 70123)
+function mod:BlisteringCold(_, spellId, _, _, spellName)
+	self:Message(70123, spellName, "Attention", spellId)
+	self:Bar(70123, L["boom"], 6, spellId)
 end
 
 function mod:AirPhase()
@@ -99,4 +100,3 @@ function mod:AirPhase()
 	local hpPercent = math.floor(min / max * 100 + 0.5) .. "%"
 	print("Sindragosa took off at " .. hpPercent .. " hitpoints, please notify the developers in #bigwigs on freenode if possible.")
 end
-
