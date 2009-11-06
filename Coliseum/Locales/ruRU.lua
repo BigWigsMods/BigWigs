@@ -23,7 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "ruRU")
 if L then
-	--L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered" --need
+	L.enable_trigger = "Вы услышали призыв Серебряного Авангарда и без колебаний откликнулись" 
 
 	L.engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!"
 	L.jormungars_trigger = "Приготовьтесь к схватке с близнецами-чудовищами, Кислотной Утробой и Жуткой Чешуей!"
