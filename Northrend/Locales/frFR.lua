@@ -32,6 +32,8 @@ if L then
 	L.sparks_message = "Etincelle de puissance apparue !"
 	L.sparks_warning = "Etincelle de puissance dans ~5 sec. !"
 
+	L.sparkbuff = "Etincelle de puissance sur Malygos"
+	L.sparkbuff_desc = "Prévient quand Malygos récupère une Etincelle de puissance."
 	L.sparkbuff_message = "Malygos gagne Etincelle de puissance !"
 
 	L.vortex = "Vortex"
