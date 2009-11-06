@@ -56,7 +56,7 @@ function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local L = AL:GetLocale("Big Wigs: Common")
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
