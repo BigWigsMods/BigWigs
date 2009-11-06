@@ -6,7 +6,7 @@ if not QueryQuestsCompleted then return end
 local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36855)
-mod.toggleOptions = {71289, 70482, 71001, "berserk", "bosskill"}
+mod.toggleOptions = {71289, 70842, 71001, "berserk", "bosskill"}
 
 -- 71289 Dominate Mind
 -- 71001 Death & Decay
@@ -25,7 +25,7 @@ local mindControlled = mod:NewTargetList()
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.dnd_message = "Death and Decay on YOU!"
-	L.phase2_message = "Phase 2"
+	L.phase2_message = "Mana barrier gone - Phase 2!"
 end
 L = mod:GetLocale()
 
@@ -34,10 +34,9 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-
 	--self:Log("SPELL_CAST_SUCCESS", "DnD_cast", 71001) --timer+cd?
-	self:Log("SPELL_AURA_APPLIED", "DeathAndDecay", 71001)
-	self:Log("SPELL_AURA_REMOVED", "Manabarrier", 70482)
+	self:Log("SPELL_AURA_APPLIED", "DND", 71001)
+	self:Log("SPELL_AURA_REMOVED", "Barrier", 70842)
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
 	self:Death("Win", 36855)
 
@@ -54,14 +53,14 @@ end
 -- Event handlers
 --
 
-function mod:DeathAndDecay(player, spellId)
+function mod:DND(player, spellId)
 	if player == pName then
 		self:LocalMessage(71001, L["dnd_message"], "Personal", spellId, "Alarm")
 	end
 end
 
-function mod:Manabarrier(_, spellId, _, _, spellName)
-	self:Message(70482, L["phase2_message"], "Positive", spellId)
+function mod:Barrier(_, spellId, _, _, spellName)
+	self:Message(70842, L["phase2_message"], "Positive", spellId)
 end
 
 do
