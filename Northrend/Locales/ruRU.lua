@@ -32,6 +32,8 @@ if L then
 	L.sparks_message = "Появилась Искра мощи!"
 	L.sparks_warning = "Искра мощи через ~5сек!"
 
+	L.sparkbuff = "Яркая искра на Малигосе"
+	L.sparkbuff_desc = "Предупреждать когда Малигос получает Яркую искру."
 	L.sparkbuff_message = "Малигос получил Яркую искру!"
 
 	L.vortex = "Воронка"

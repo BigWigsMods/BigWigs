@@ -10,7 +10,8 @@ if L then
 
 	L.punch_message = "%dx фазовых удара на |3-5(%s)"
 	L.smash_message = "Наступление Кары небесной!"
-	L.blackhole_message = "Появление черной дыры %dx"
+	L.blackhole_message = "Появление черной дыры %d"
+	L.bigbang_bar = "~Суровый удар"
 	L.bigbang_soon = "Скоро Суровый удар!"
 end
 

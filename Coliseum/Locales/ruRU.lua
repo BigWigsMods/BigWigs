@@ -10,7 +10,8 @@ if L then
 	L.burrow_cooldown = "Следующее зарывание"
 	L.burrow_soon = "Скоро зарывание"
 
-	L.nerubian_burrower = "Нерубский землеглот"
+	L.nerubian_message = "Жуки наступают!"
+	L.nerubian_burrower = "Ещё жуки"
 
 	L.shadow_soon = "Теневой удар через ~5сек!"
 
@@ -95,6 +96,9 @@ if L then
 	L.infernal_bar = "~появление вулкана"
 	L.netherportal_bar = "~появление врат"
 	L.netherpower_bar = "~сила пустоты"
+	
+	L.kiss_message = "Поцелуй на ВАС!"
+	L.kiss_interrupted = "Прерывание!"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "ruRU")
