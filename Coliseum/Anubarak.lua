@@ -94,11 +94,11 @@ function mod:OnBossEnable()
 	self:Death("Win", 34564)
 end
 
-local function nextwave()
+local function scheduleWave()
 	if isBurrowed then return end
 	mod:Message("burrow", L["nerubian_message"], "Urgent", 66333)
 	mod:Bar("burrow", L["nerubian_burrower"], 45, 66333)
-	handle_NextWave = mod:ScheduleTimer(nextwave, 45)
+	handle_NextWave = mod:ScheduleTimer(scheduleWave, 45)
 end
 
 function mod:OnEngage()
@@ -108,7 +108,7 @@ function mod:OnEngage()
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
 
 	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
-	handle_NextWave = self:ScheduleTimer(nextwave, 10)
+	handle_NextWave = self:ScheduleTimer(scheduleWave, 10)
 
 	if self:GetOption(66134) and difficulty > 2 then
 		scheduleStrike()
@@ -162,7 +162,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		self:DelayedMessage("burrow", 72, L["burrow_soon"], "Attention")
 
 		self:Bar("burrow", L["nerubian_burrower"], 5, 66333)
-		handle_NextWave = self:ScheduleTimer(nextwave, 5)
+		handle_NextWave = self:ScheduleTimer(scheduleWave, 5)
 
 		if self:GetOption(66134) and difficulty > 2 then
 			unscheduleStrike()
@@ -170,6 +170,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		end
 	elseif msg:find(L["burrow_trigger"]) then
 		isBurrowed = true
+		unscheduleStrike()
 		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
 		self:CancelTimer(handle_NextWave, true)
 

@@ -253,7 +253,7 @@ end
 function loader:OnEnable()
 	if LOCALE ~= "enUS" and (not BZ or not BB) then
 		if not LibStub("LibBabble-Boss-3.0", true) or not LibStub("LibBabble-Zone-3.0", true) then
-			load(false, "BigWigs_Foreign")
+			load(nil, "BigWigs_Foreign")
 		end
 		-- check again and error if you can't find
 		if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
