@@ -4,7 +4,7 @@
 local mod = BigWigs:NewBoss("Onyxia", "Onyxia's Lair")
 if not mod then return end
 mod:RegisterEnableMob(10184)
-mod.toggleOptions = {"phase1", "phase2", "phase3", {"deepbreath", "FLASHSHAKE"}, "fear", "bosskill"}
+mod.toggleOptions = {"phase", {17086, "FLASHSHAKE"}, 18431, "bosskill"}
 
 local boss = "Onyxia"
 
@@ -13,30 +13,19 @@ local boss = "Onyxia"
 ----------------------------
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.phase1 = "Phase 1 alert"
-	L.phase1_desc = "Warn for Phase 1"
-
-	L.phase2 = "Phase 2 alert"
-	L.phase2_desc = "Warn for Phase 2"
-
-	L.phase3 = "Phase 3 alert"
-	L.phase3_desc = "Warn for Phase 3"
-
-	L.deepbreath = "Deep Breath alert"
-	L.deepbreath_desc = "Warn when Onyxia begins to cast Deep Breath"
-	L.deepbreath_message = "Deep Breath incoming!"
-
-	L.fear = "Fear"
-	L.fear_desc = "Warn for Bellowing Roar in phase 3"
-	L.fear_message = "Fear in 1.5 sec!"
+	L.phase = "Phases"
+	L.phase_desc = "Warn for phase changes."
+	L.phase1_message = "Phase 1!"
+	L.phase2_message = "65% - Phase 2 Incoming!"
+	L.phase3_message = "40% - Phase 3 Incoming!"
 
 	L.phase1_trigger = "How fortuitous"
 	L.phase2_trigger = "from above"
 	L.phase3_trigger = "It seems you'll need another lesson"
 
-	L.phase1_message = "%s Engaged - Phase 1!"
-	L.phase2_message = "65% - Phase 2 Incoming!"
-	L.phase3_message = "40% - Phase 3 Incoming!"
+	L.deepbreath_message = "Deep Breath incoming!"
+
+	L.fear_message = "Fear in 1.5 sec!"
 end
 L = mod:GetLocale()
 
@@ -59,21 +48,21 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Fear()
-	self:Message("fear", L["fear_message"], "Attention", 18431)
+function mod:Fear(_, spellId)
+	self:Message(18431, L["fear_message"], "Attention", spellId)
 end
 
 function mod:Breath(_, spellId)
-	self:Message("deepbreath", L["deepbreath_message"], "Positive", spellId)
-	self:FlashShake("deepbreath")
+	self:Message(17086, L["deepbreath_message"], "Positive", spellId)
+	self:FlashShake(17086)
 end
 
 function mod:Phase(msg)
 	if msg:find(L["phase1_trigger"]) then
-		self:Message("phase1", L["phase1_message"]:format(boss), "Urgent")
+		self:Message("phase", L["phase1_message"]:format(boss), "Urgent")
 	elseif msg:find(L["phase2_trigger"]) then
-		self:Message("phase2", L["phase2_message"], "Urgent")
+		self:Message("phase", L["phase2_message"], "Urgent")
 	elseif msg:find(L["phase3_trigger"]) then
-		self:Message("phase3", L["phase3_message"], "Urgent")
+		self:Message("phase", L["phase3_message"], "Urgent")
 	end
 end

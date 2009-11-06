@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(28859)
-mod.toggleOptions = {"phase", "sparks", 56152, "vortex", "breath", {"surge", "FLASHSHAKE"}, 57429, "berserk", "bosskill"}
+mod.toggleOptions = {"phase", "sparks", "sparkbuff", "vortex", "breath", {"surge", "FLASHSHAKE"}, 57429, "berserk", "bosskill"}
 
 ------------------------------
 --      Are you local?      --
@@ -24,6 +24,8 @@ if L then
 	L.sparks_message = "Power Spark spawns!"
 	L.sparks_warning = "Power Spark in ~5sec!"
 
+	L.sparkbuff = "Power Spark on Malygos"
+	L.sparkbuff_desc = "Warns when Malygos gets a Power Spark."
 	L.sparkbuff_message = "Malygos gains Power Spark!"
 
 	L.vortex = "Vortex"
@@ -94,7 +96,7 @@ function mod:Spark(unit, spellId, _, _, _, _, _, _, dGUID)
 	if phase ~= 1 then return end
 	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
 	if target == 28859 then
-		self:Message(56152, L["sparkbuff_message"], "Important", spellId)
+		self:Message("sparkbuff", L["sparkbuff_message"], "Important", spellId)
 	end
 end
 

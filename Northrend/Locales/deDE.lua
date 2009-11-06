@@ -32,6 +32,8 @@ if L then
 	L.sparks_message = "Energiefunke!"
 	L.sparks_warning = "Energiefunke in ~5 sek!"
 
+	L.sparkbuff = "Energiefunke auf Malygos"
+	L.sparkbuff_desc = "Warnt, sobald ein Energiefunke Malygos erreicht hat."
 	L.sparkbuff_message = "Malygos bekommt Energiefunke!"
 
 	L.vortex = "Vortex"

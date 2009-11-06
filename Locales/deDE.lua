@@ -7,9 +7,9 @@ L["%s enabled"] = "%s aktiviert"	-- "<boss> enabled"
 L["%s has been defeated"] = "%s wurde besiegt!"     -- "<boss> has been defeated"
 
 L.bosskill = "Boss besiegt"
-L.bosskill_desc = "Warnt, wenn ein Boss besiegt wurde."
+L.bosskill_desc = "Warnt, wenn der Boss besiegt wurde."
 L.berserk = "Berserker"
-L.berserk_desc = "Warnt, wenn ein Boss zum Berserker wird."
+L.berserk_desc = "Warnt, wenn der Boss zum Berserker wird."
 
 L.already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%s|r) existiert bereits als Modul in Big Wigs, aber irgend etwas versucht es erneut anzumelden. Dies bedeutet normalerweise, dass du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in deinem Addon-Ordner hast. Es wird empfohlen, jegliche Big Wigs Ordner zu löschen und dann von Grund auf neu zu installieren."
 

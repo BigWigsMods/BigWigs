@@ -1,23 +1,30 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Hodir", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(32845)
-mod.toggleOptions = {"hardmode", {"cold", "FLASHSHAKE"}, {65123, "WHISPER", "ICON"}, 61968, 62478, "berserk", "bosskill"}
+mod.toggleOptions = {{"cold", "FLASHSHAKE"}, {65123, "WHISPER", "ICON"}, 61968, 62478, "hardmode", "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+mod.optionHeaders = {
+	cold = "normal",
+	hardmode = "hard",
+	berserk = "general",
+}
+
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local flashFreezed = mod:NewTargetList()
 local lastCold = nil
 local cold = GetSpellInfo(62039)
 local pName = UnitName("player")
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -37,9 +44,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FlashCast", 61968)
@@ -55,9 +62,9 @@ function mod:VerifyEnable(unit)
 	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Cloud(player, spellId, _, _, spellName)
 	self:TargetMessage(65123, spellName, player, "Positive", spellId, "Info")
