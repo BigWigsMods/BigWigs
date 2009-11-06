@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "frFR")
+local L = BigWigs:NewBossLocale("Anub'arak", "frFR")
 if L then
 	L.engage_message = "Anub'arak engagé, Fouir dans 80 sec. !"
 	L.engage_trigger = "Ce terreau sera votre tombeau !"
@@ -21,7 +21,7 @@ if L then
 	L.chase = "Poursuivi"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "frFR")
+L = BigWigs:NewBossLocale("The Beasts of Northrend", "frFR")
 if L then
 	L.enable_trigger = "Vous avez entendu l'appel de la Croisade d'argent, et vaillamment répondu !"
 
@@ -60,7 +60,7 @@ if L then
 	L.bosses_desc = "Prévient quand le boss suivant arrive."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "frFR")
+L = BigWigs:NewBossLocale("Faction Champions", "frFR")
 if L then
 	L.enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…"
 	L.defeat_trigger = "Une victoire tragique et dépourvue de sens."

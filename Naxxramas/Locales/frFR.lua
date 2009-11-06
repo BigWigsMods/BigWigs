@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "frFR")
+local L = BigWigs:NewBossLocale("Anub'Rekhan", "frFR")
 if L then
 	L.starttrigger1 = "Rien qu'une petite bouchée…"
 	L.starttrigger2 = "Oui, courez ! Faites circuler le sang !"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "Arrivée d'une Nuée de sauterelles !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "frFR")
+L = BigWigs:NewBossLocale("Grand Widow Faerlina", "frFR")
 if L then
 	L.starttrigger1 = "À genoux, vermisseau !"
 	L.starttrigger2 = "Tuez-les au nom du maître !"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = "Pluie de feu sur VOUS !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "frFR")
+L = BigWigs:NewBossLocale("Gluth", "frFR")
 if L then
 	L.startwarn = "Gluth engagé ! ~105 sec. avant Décimer !"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "~Prochain Décimer"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "frFR")
+L = BigWigs:NewBossLocale("Gothik the Harvester", "frFR")
 if L then
 	L.room = "Arrivée dans la salle"
 	L.room_desc = "Prévient quand Gothik arrive dans la salle."

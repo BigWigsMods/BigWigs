@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Onyxia", "ruRU")
+local L = BigWigs:NewBossLocale("Onyxia", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."

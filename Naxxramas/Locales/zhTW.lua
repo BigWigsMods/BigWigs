@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "zhTW")
+local L = BigWigs:NewBossLocale("Anub'Rekhan", "zhTW")
 if L then
 	L.starttrigger1 = "一些小點心……"
 	L.starttrigger2 = "對，跑吧!那樣傷口出血就更多了!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "蝗蟲風暴！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "zhTW")
+L = BigWigs:NewBossLocale("Grand Widow Faerlina", "zhTW")
 if L then
 	L.starttrigger1 = "跪下求饒吧，懦夫!"
 	L.starttrigger2 = "以主人之名，殺了他們!"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = ">你< 火焰之雨！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "zhTW")
+L = BigWigs:NewBossLocale("Gluth", "zhTW")
 if L then
 	L.startwarn = "古魯斯已進入戰鬥 - 105秒後，殘殺！"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "<殘殺>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "zhTW")
+L = BigWigs:NewBossLocale("Gothik the Harvester", "zhTW")
 if L then
 	L.room = "進入房間警報"
 	L.room_desc = "當『收割者』高希進入房間時發出警報。"

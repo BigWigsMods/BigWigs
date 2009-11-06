@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "zhCN")
+local L = BigWigs:NewBossLocale("Anub'arak", "zhCN")
 if L then
 	L.engage_message = "阿努巴拉克已激活，80秒后，钻地！"
 --	L.engage_trigger = "This place will serve as your tomb!"
@@ -20,7 +20,7 @@ if L then
 	L.chase = "追击"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "zhCN")
+L = BigWigs:NewBossLocale("The Beasts of Northrend", "zhCN")
 if L then
 --	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
 
@@ -59,7 +59,7 @@ if L then
 	L.bosses_desc = "当首领即将到来时发出警报。"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "zhCN")
+L = BigWigs:NewBossLocale("Faction Champions", "zhCN")
 if L then
 --	L.enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy..."
 --	L.defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."

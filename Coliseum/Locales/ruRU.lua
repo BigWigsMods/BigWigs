@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "ruRU")
+local L = BigWigs:NewBossLocale("Anub'arak", "ruRU")
 if L then
 	L.engage_message = "Ануб'арак вступил в бой, зарывание в землю через 80сек!"
 	L.engage_trigger = "Это место станет вашей могилой!"
@@ -21,7 +21,7 @@ if L then
 	L.chase = "Преследование"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "ruRU")
+L = BigWigs:NewBossLocale("The Beasts of Northrend", "ruRU")
 if L then
 	--L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered" --need
 

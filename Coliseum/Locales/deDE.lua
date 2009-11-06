@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "deDE")
+local L = BigWigs:NewBossLocale("Anub'arak", "deDE")
 if L then
 	L.engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!"
 	L.engage_trigger = "Dieser Ort wird Euch als Grab dienen!"
@@ -21,7 +21,7 @@ if L then
 	L.chase = "Verfolgen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "deDE")
+L = BigWigs:NewBossLocale("The Beasts of Northrend", "deDE")
 if L then
 	L.enable_trigger = "Ihr habt den Ruf des Argentumkreuzzugs vernommen und seid ihm mutig gefolgt"
 
@@ -60,7 +60,7 @@ if L then
 	L.bosses_desc = "Warnt, wann die nachfolgenden Bosse eintreffen."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "deDE")
+L = BigWigs:NewBossLocale("Faction Champions", "deDE")
 if L then
 	L.enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren..."
 	L.defeat_trigger = "Ein tragischer Sieg. Wir wurden schwächer durch die heutigen Verluste. Wer außer dem Lichkönig profitiert von solchen Torheiten? Große Krieger gaben ihr Leben. Und wofür? Die wahre Bedrohung erwartet uns noch - der Lichkönig erwartet uns alle im Tod."
@@ -73,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "Kampfrausch auf Champions!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "deDE")
+L = BigWigs:NewBossLocale("Jaraxxus", "deDE")
 if L then
 	L.enable_trigger = "Unbedeutender Gnom! Deine Arroganz wird dir zum Verhängnis!"
 
@@ -101,7 +101,7 @@ if L then
 	L.kiss_interrupted = "Unterbrochen!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "deDE")
+L = BigWigs:NewBossLocale("The Twin Val'kyr", "deDE")
 if L then
 	L.engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben."
 

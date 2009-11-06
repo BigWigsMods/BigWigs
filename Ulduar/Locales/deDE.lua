@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Algalon", "deDE")
+local L = BigWigs:NewBossLocale("Algalon", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
@@ -14,7 +14,7 @@ if L then
 	L.bigbang_soon = "Großer Knall bald!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Auriaya", "deDE")
+L = BigWigs:NewBossLocale("Auriaya", "deDE")
 if L then
 	L.engage_trigger = "In manche Dinge mischt man sich besser nicht ein!"
 
@@ -32,7 +32,7 @@ if L then
 	L.sonic_bar = "~Überschallkreischen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Freya", "deDE")
+L = BigWigs:NewBossLocale("Freya", "deDE")
 if L then
 	L.engage_trigger1 = "Das Konservatorium muss verteidigt werden!"
 	L.engage_trigger2 = "Ihr Ältesten, gewährt mir Eure Macht!"

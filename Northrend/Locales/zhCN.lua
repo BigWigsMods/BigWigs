@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "zhCN")
+local L = BigWigs:NewBossLocale("Archavon the Stone Watcher", "zhCN")
 if L then
 	L.stomp_message = "践踏 - 即将 冲锋！"
 	L.stomp_warning = "约5秒后，可能践踏！"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "当玩家中了冲锋时发出警报。"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "zhCN")
+L = BigWigs:NewBossLocale("Emalon the Storm Watcher", "zhCN")
 if L then
 	L.nova_next = "<闪电新星 冷却>"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "<下一能量超载>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "zhCN")
+L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "zhCN")
 if L then
 	L.cinder_message = ">你< Flaming Cinder！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "zhCN")
+L = BigWigs:NewBossLocale("Malygos", "zhCN")
 if L then
 	L.sparks = "能量火花"
 	L.sparks_desc = "当能量火花出现时发出警报。"

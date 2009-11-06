@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "ruRU")
+local L = BigWigs:NewBossLocale("Archavon the Stone Watcher", "ruRU")
 if L then
 	L.stomp_message = "Топот - близится Рывок!"
 	L.stomp_warning = "Топот через ~5сек!"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "Предупреждать о Рывках."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "ruRU")
+L = BigWigs:NewBossLocale("Emalon the Storm Watcher", "ruRU")
 if L then
 	L.nova_next = "~Перезарядка Вспышки молнии"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "~Следующая Перегрузка"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "ruRU")
+L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "ruRU")
 if L then
 	L.cinder_message = "ВЫ в ОГНЕ!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "ruRU")
+L = BigWigs:NewBossLocale("Malygos", "ruRU")
 if L then
 	L.sparks = "Искра мощи"
 	L.sparks_desc = "Предупреждать о появлениях Искры мощи."

@@ -10,7 +10,8 @@ local BB, BZ
 local GetSpellInfo = GetSpellInfo
 
 local C -- = BigWigs.C, set from Constants.lua
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
+local AL = LibStub("AceLocale-3.0")
+local L = AL:GetLocale("Big Wigs")
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -347,6 +348,7 @@ function addon:GetCustomBossOptions()
 	return customBossOptions
 end
 
+function addon:NewBossLocale(name, locale, default) return AL:NewLocale(string.format("%s_%s", self.bossCore.name, name), locale, default) end
 
 -------------------------------------------------------------------------------
 -- Module handling

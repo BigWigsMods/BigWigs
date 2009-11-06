@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "deDE")
+local L = BigWigs:NewBossLocale("Anub'Rekhan", "deDE")
 if L then
 	L.starttrigger1 = "Nur einmal kosten..."
 	L.starttrigger2 = "Rennt! Das bringt das Blut in Wallung!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "Heuschreckenschwarm!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "deDE")
+L = BigWigs:NewBossLocale("Grand Widow Faerlina", "deDE")
 if L then
 	L.starttrigger1 = "Kniet nieder, Wurm!"
 	L.starttrigger2 = "Tötet sie im Namen des Meisters!"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = "Feuerregen auf DIR!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "deDE")
+L = BigWigs:NewBossLocale("Gluth", "deDE")
 if L then
 	L.startwarn = "Gluth angegriffen! ~105 sek bis Dezimieren!"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "~Dezimieren"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "deDE")
+L = BigWigs:NewBossLocale("Gothik the Harvester", "deDE")
 if L then
 	L.room = "Ankunft"
 	L.room_desc = "Warnungen und Timer für die Ankunft von Gothik im Raum."
@@ -90,13 +90,13 @@ if L then
 	L.inroombartext = "Gothik im Raum"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grobbulus", "deDE")
+L = BigWigs:NewBossLocale("Grobbulus", "deDE")
 if L then
 	L.bomb_message = "Injection"
 	L.bomb_message_other = "%s ist verseucht!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Heigan the Unclean", "deDE")
+L = BigWigs:NewBossLocale("Heigan the Unclean", "deDE")
 if L then
 	L.starttrigger = "Ihr gehört mir..."
 	L.starttrigger2 = "Ihr seid.... als nächstes dran."
@@ -122,7 +122,7 @@ if L then
 	L.back_bar = "Zurück im Raum"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Four Horsemen", "deDE")
+L = BigWigs:NewBossLocale("The Four Horsemen", "deDE")
 if L then
 	L.mark = "Male"
 	L.mark_desc = "Warnungen und Timer für die Male."
@@ -135,7 +135,7 @@ if L then
 	L.startwarn = "Die Vier Reiter angegriffen! Male in ~17 sek."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kel'Thuzad", "deDE")
+L = BigWigs:NewBossLocale("Kel'Thuzad", "deDE")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemach"
 
@@ -172,7 +172,7 @@ if L then
 	L.guardians_bar = "Wächter kommen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Loatheb", "deDE")
+L = BigWigs:NewBossLocale("Loatheb", "deDE")
 if L then
 	L.startwarn = "Loatheb angegriffen! 2min bis Unausweichliches Schicksal!"
 
@@ -192,7 +192,7 @@ if L then
 	L.sporebar = "Spore (%d)"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Noth the Plaguebringer", "deDE")
+L = BigWigs:NewBossLocale("Noth the Plaguebringer", "deDE")
 if L then
 	L.starttrigger1 = "Sterbt, Eindringling!"
 	L.starttrigger2 = "Ehre unserem Meister!"
@@ -228,14 +228,14 @@ if L then
 	L.wave2_message = "Welle 2 in 10 sek!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Patchwerk", "deDE")
+L = BigWigs:NewBossLocale("Patchwerk", "deDE")
 if L then
 	L.enragewarn = "5% - Raserei!"
 	L.starttrigger1 = "Flickwerk spielen möchte!"
 	L.starttrigger2 = "Kel’Thuzad macht Flickwerk zu seinem Abgesandten von Krieg!" -- Yes, that's really a ´ instead of a '
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Maexxna", "deDE")
+L = BigWigs:NewBossLocale("Maexxna", "deDE")
 if L then
 	L.webspraywarn30sec = "Fangnetz in 10 sek!"
 	L.webspraywarn20sec = "Fangnetz! Spinnen in 10 sek!"
@@ -250,7 +250,7 @@ if L then
 	L.spiderbar = "Spinnen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sapphiron", "deDE")
+L = BigWigs:NewBossLocale("Sapphiron", "deDE")
 if L then
 	L.airphase_trigger = "Saphiron erhebt sich in die Lüfte!" -- No %s in deDE, we need the translated name!
 	L.deepbreath_incoming_message = "Frostatem in ~23 sek!"
@@ -271,7 +271,7 @@ if L then
 	L.ping_message = "Eisblock - Pinge deine Position!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Instructor Razuvious", "deDE")
+L = BigWigs:NewBossLocale("Instructor Razuvious", "deDE")
 if L then
 	L.shout_warning = "Unterbrechender Schrei in 5 sek!"
 	L.shout_next = "~Unterbrechender Schrei"
@@ -280,7 +280,7 @@ if L then
 	L.shieldwall_warning = "Knochenbarriere weg in 5 sek!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thaddius", "deDE")
+L = BigWigs:NewBossLocale("Thaddius", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt bei Phasenwechsel."

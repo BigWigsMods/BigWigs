@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Onyxia", "zhTW")
+local L = BigWigs:NewBossLocale("Onyxia", "zhTW")
 if L then
 	L.deepbreath = "深呼吸警報"
 	L.deepbreath_desc = "當奧妮克希亞開始施放深呼吸時發出警報。"

@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "frFR")
+local L = BigWigs:NewBossLocale("Archavon the Stone Watcher", "frFR")
 if L then
 	L.stomp_message = "Piétinement - Empaler imminent !"
 	L.stomp_warning = "Piétinement probable dans ~5 sec. !"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "Prévient quand un joueur subit les effets d'un Empaler."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "frFR")
+L = BigWigs:NewBossLocale("Emalon the Storm Watcher", "frFR")
 if L then
 	L.nova_next = "~Recharge Nova"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "~Prochaine Surcharge"
 end
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "frFR")
+local L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "frFR")
 if L then
 	L.cinder_message = "Braise enflammée sur VOUS !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "frFR")
+L = BigWigs:NewBossLocale("Malygos", "frFR")
 if L then
 	L.sparks = "Etincelle de puissance"
 	L.sparks_desc = "Prévient quand une Etincelle de puissance apparait."

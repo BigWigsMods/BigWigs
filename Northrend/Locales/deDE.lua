@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "deDE")
+local L = BigWigs:NewBossLocale("Archavon the Stone Watcher", "deDE")
 if L then
 	L.stomp_message = "Stampfen - Ansturm bald!"
 	L.stomp_warning = "Mögliches Stampfen in ~5 sek!"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "Warnt, wenn ein Spieler angestürmt wird."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "deDE")
+L = BigWigs:NewBossLocale("Emalon the Storm Watcher", "deDE")
 if L then
 	L.nova_next = "~Blitzschlagnova"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "~Überladen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "deDE")
+L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "deDE")
 if L then
 	L.cinder_message = "Flamme auf DIR!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "deDE")
+L = BigWigs:NewBossLocale("Malygos", "deDE")
 if L then
 	L.sparks = "Energiefunke"
 	L.sparks_desc = "Warnungen und Timer für das Erscheinen von Energiefunken."

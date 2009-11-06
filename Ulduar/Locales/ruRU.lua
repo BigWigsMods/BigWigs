@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Algalon", "ruRU")
+local L = BigWigs:NewBossLocale("Algalon", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
@@ -15,7 +15,7 @@ if L then
 	L.bigbang_soon = "Скоро Суровый удар!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Auriaya", "ruRU")
+L = BigWigs:NewBossLocale("Auriaya", "ruRU")
 if L then
 	L.engage_trigger = "Some things are better left alone!"
 

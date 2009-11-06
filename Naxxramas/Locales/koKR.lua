@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "koKR")
+local L = BigWigs:NewBossLocale("Anub'Rekhan", "koKR")
 if L then
 	L.starttrigger1 = "어디 맛 좀 볼까..."
 	L.starttrigger2 = "그래, 도망쳐! 더 신선한 피가 솟구칠 테니!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "메뚜기 떼 소환!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "koKR")
+L = BigWigs:NewBossLocale("Grand Widow Faerlina", "koKR")
 if L then
 	L.starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!"
 	L.starttrigger2 = "주인님의 이름으로 처단하라!"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = "당신은 불의 비!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "koKR")
+L = BigWigs:NewBossLocale("Gluth", "koKR")
 if L then
 	L.startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "좀비 척살"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "koKR")
+L = BigWigs:NewBossLocale("Gothik the Harvester", "koKR")
 if L then
 	L.room = "고딕 등장 알림"
 	L.room_desc = "고딕 등장을 알립니다."

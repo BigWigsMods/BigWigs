@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Onyxia", "koKR")
+local L = BigWigs:NewBossLocale("Onyxia", "koKR")
 if L then
 	L.deepbreath = "깊은 숨결"
 	L.deepbreath_desc = "2단계에서 오닉시아가 사용하는 깊은 숨결을 알립니다."

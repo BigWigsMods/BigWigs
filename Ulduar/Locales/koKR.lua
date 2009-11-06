@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Algalon", "koKR")
+local L = BigWigs:NewBossLocale("Algalon", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변경을 알립니다."
@@ -14,7 +14,7 @@ if L then
 	L.bigbang_soon = "곧 대폭발!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Auriaya", "koKR")
+L = BigWigs:NewBossLocale("Auriaya", "koKR")
 if L then
 	L.engage_trigger = "Some things are better left alone!"
 
@@ -32,7 +32,7 @@ if L then
 	L.sonic_bar = "~음파 대기시간"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Freya", "koKR")
+L = BigWigs:NewBossLocale("Freya", "koKR")
 if L then
 	L.engage_trigger1 = "어떻게 해서든 정원을 수호해야 한다!"
 	L.engage_trigger2 = "장로여, 내게 힘을 나눠다오!"

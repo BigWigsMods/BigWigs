@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "koKR")
+local L = BigWigs:NewBossLocale("Archavon the Stone Watcher", "koKR")
 if L then
 	L.stomp_message = "발 구르기 - 곧 돌진!"
 	L.stomp_warning = "약 5초 후 발구르기 가능!"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "돌진의 대상인 플레이어를 알립니다."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "koKR")
+L = BigWigs:NewBossLocale("Emalon the Storm Watcher", "koKR")
 if L then
 	L.nova_next = "~번개 대기시간"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "~과충전 대기시간"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "koKR")
+L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "koKR")
 if L then
 	L.cinder_message = "당신은 잿더미!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "koKR")
+L = BigWigs:NewBossLocale("Malygos", "koKR")
 if L then
 	L.sparks = "불꽃 소환"
 	L.sparks_desc = "마력의 불꽃 소환을 알립니다."

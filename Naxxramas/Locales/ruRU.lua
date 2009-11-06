@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "ruRU")
+local L = BigWigs:NewBossLocale("Anub'Rekhan", "ruRU")
 if L then
 	L.starttrigger1 = "Посмотрим какие вы на вкус!"
 	L.starttrigger2 = "Бегите бегите! Я люблю горячую кровь!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "Появляются жуки-трупоеды!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "ruRU")
+L = BigWigs:NewBossLocale("Grand Widow Faerlina", "ruRU")
 if L then
 	L.starttrigger1 = "Склонитесь передо мной черви!"
 	L.starttrigger2 = "Убейте их во имя господина!"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = "Огненный ливень на ВАС!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "ruRU")
+L = BigWigs:NewBossLocale("Gluth", "ruRU")
 if L then
 	L.startwarn = "Глут вступает в бой! ~105 cекунд до появления зомби!"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "~Истребление зомби"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "ruRU")
+L = BigWigs:NewBossLocale("Gothik the Harvester", "ruRU")
 if L then
 	L.room = "Прибытие Готика"
 	L.room_desc = "Сообщать о прибытии Готика"
