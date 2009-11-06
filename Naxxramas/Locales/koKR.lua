@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "koKR")
 if L then
 	L.starttrigger1 = "어디 맛 좀 볼까..."
 	L.starttrigger2 = "그래, 도망쳐! 더 신선한 피가 솟구칠 테니!"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "메뚜기 떼 소환!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "koKR")
 if L then
 	L.starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!"
 	L.starttrigger2 = "주인님의 이름으로 처단하라!"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = "당신은 불의 비!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gluth", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "koKR")
 if L then
 	L.startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "좀비 척살"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "koKR")
 if L then
 	L.room = "고딕 등장 알림"
 	L.room_desc = "고딕 등장을 알립니다."
@@ -90,13 +90,13 @@ if L then
 	L.inroombartext = "고딕 등장"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grobbulus", "koKR")
 if L then
 	L.bomb_message = "돌연변이 유발"
 	L.bomb_message_other = "돌연변이 유발: %s!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Heigan the Unclean", "koKR")
 if L then
 	L.starttrigger = "이제 넌 내 것이다."
 	L.starttrigger2 = "다음은... 너다."
@@ -122,7 +122,7 @@ if L then
 	L.back_bar = "단상으로 이동!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Four Horsemen", "koKR")
 if L then
 	L.mark = "징표"
 	L.mark_desc = "징표를 알립니다."
@@ -135,7 +135,7 @@ if L then
 	L.startwarn = "4인의 기병대 전투 시작! 약 17초 이내 징표"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kel'Thuzad", "koKR")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방"
 
@@ -172,7 +172,7 @@ if L then
 	L.guardians_bar = "수호자 등장!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Loatheb", "koKR")
 if L then
 	L.startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!"
 
@@ -192,7 +192,7 @@ if L then
 	L.sporebar = "포자 소환! %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Noth the Plaguebringer", "koKR")
 if L then
 	L.starttrigger1 = "죽어라, 침입자들아!"
 	L.starttrigger2 = "주인님께 영광을!"
@@ -228,14 +228,14 @@ if L then
 	L.wave2_message = "10초 이내 웨이브 2"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Patchwerk", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Patchwerk", "koKR")
 if L then
 	L.enragewarn = "5% - 광기!"
 	L.starttrigger1 = "패치워크랑 놀아줘!"
 	L.starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Maexxna", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Maexxna", "koKR")
 if L then
 	L.webspraywarn30sec = "10초 이내 거미줄 감싸기"
 	L.webspraywarn20sec = "거미줄 감싸기. 10초 후 거미 소환!"
@@ -250,7 +250,7 @@ if L then
 	L.spiderbar = "거미 소환"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sapphiron", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sapphiron", "koKR")
 if L then
 	L.airphase_trigger = "사피론이 공중으로 떠오릅니다!"
 	L.deepbreath_incoming_message = "약 14초 이내 얼음 폭탄 시전!"
@@ -271,7 +271,7 @@ if L then
 	L.ping_message = "방패 - 현재 위치 미니맵에 표시 중!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Instructor Razuvious", "koKR")
 if L then
 	L.shout_warning = "5초 후 분열의 외침!"
 	L.shout_next = "분열 대기시간"
@@ -280,7 +280,7 @@ if L then
 	L.shieldwall_warning = "5초 후 방패의 벽 종료!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thaddius", "koKR")
 if L then
 	L.phase = "단계 변경"
 	L.phase_desc = "단계 변경을 알립니다."
@@ -312,4 +312,3 @@ if L then
 	L.throw_bar = "던지기"
 	L.throw_warning = "약 5초 후 던지기!"
 end
-

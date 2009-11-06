@@ -17,7 +17,7 @@ local count = 9
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Some things are better left alone!"
 
@@ -34,8 +34,7 @@ if L then
 
 	L.sonic_bar = "~Sonic"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Auriaya")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -94,4 +93,3 @@ end
 function mod:Sentinel(_, spellId, _, _, spellName)
 	self:Message(64389, spellName, "Important", spellId)
 end
-

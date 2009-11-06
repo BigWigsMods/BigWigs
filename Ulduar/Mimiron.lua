@@ -25,7 +25,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
@@ -61,8 +61,7 @@ if L then
 
 	L.end_trigger = "^It would appear that I've made a slight miscalculation."
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Mimiron")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -219,4 +218,3 @@ function mod:OnSync(sync, rest, nick)
 		self:Bar(63274, L["laser_bar"], 60, 63274)
 	end
 end
-

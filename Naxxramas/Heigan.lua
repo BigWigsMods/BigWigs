@@ -11,7 +11,7 @@ mod.toggleOptions = {"engage", "teleport", "bosskill"}
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.starttrigger = "You are mine now."
 	L.starttrigger2 = "You... are next."
@@ -36,8 +36,7 @@ if L then
 	L.teleport_bar = "Teleport!"
 	L.back_bar = "Back on the floor!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Heigan the Unclean")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -75,4 +74,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("teleport", L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
 	end
 end
-

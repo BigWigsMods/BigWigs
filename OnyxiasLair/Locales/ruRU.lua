@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Onyxia", "ruRU")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Onyxia", "ruRU")
 if L then
 	L.phase1 = "1-ая фаза"
 	L.phase1_desc = "Сообщать о начале первой фазе."
@@ -9,7 +9,7 @@ if L then
 
 	L.phase3 = "3-ья фаза"
 	L.phase3_desc = "Сообщать о начале третьей фазе."
-	
+
 	L.deepbreath = "Огненное дыхание"
 	L.deepbreath_desc = "Сообщать об огненном дыхании Ониксии."
 	L.deepbreath_message = "Огненное дыхание!"
@@ -26,4 +26,3 @@ if L then
 	L.phase2_message = "Фаза 2 - Ониксия взлетает!"
 	L.phase3_message = "Фаза 3 - Ониксия приземляется!"
 end
-

@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "koKR")
 if L then
 	L.engage_message = "전투 시작"
 	L.engage_trigger = "여기가 네 무덤이 되리라!"
@@ -20,7 +20,7 @@ if L then
 	L.chase = "추격"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "koKR")
 if L then
 	L.enable_trigger = "어서 오게, 용사들이여! 은빛십자군의 부름에 담대히 응한 모두를 환영하네! 바로 이곳, 십자군 원형경기장에서 제군들은 엄청난 도전에 마주칠 걸세. 혹독한 원형경기장에서 살아남는 자는 은빛십자군의 일원이 되어 얼음왕관 성채로 진군해 나갈 걸세."
 
@@ -59,7 +59,7 @@ if L then
 	L.bosses_desc = "보스들 등장을 알립니다."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "koKR")
 if L then
 	L.enable_trigger = "다음 전투는 은빛십자군에서 가장 센 기사들을 상대해야 하네... 그들을 이겨야만 자신의 가치를 인정받을 걸세."
 	L.defeat_trigger = "상처뿐인 승리로군."
@@ -72,7 +72,7 @@ if L then
 	L["Bloodlust on champions!"] = "용사 피의 욕망!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "koKR")
 if L then
 	L.enable_trigger = "보이지도 않는 노움 주제에! 그렇게 까불더니 무덤을 파는구나!"
 
@@ -97,7 +97,7 @@ if L then
 	L.netherpower_bar = "~황천의 힘 대기시간"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "koKR")
 if L then
 	L.engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라."
 
@@ -114,4 +114,3 @@ if L then
 	L.touch = "어둠/빛의 손길"
 	L.touch_desc = "어둠/빛의 손길을 알립니다."
 end
-

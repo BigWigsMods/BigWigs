@@ -19,7 +19,7 @@ local sporeTime = 16
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!"
 
@@ -38,8 +38,7 @@ if L then
 	L.sporewarn = "Spore %d!"
 	L.sporebar = "Summon Spore %d"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Loatheb")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -104,4 +103,3 @@ function mod:Spore()
 	sporeCount = sporeCount + 1
 	self:Bar(29234, L["sporebar"]:format(sporeCount), sporeTime, 38755)
 end
-

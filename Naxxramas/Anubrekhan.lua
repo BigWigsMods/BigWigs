@@ -17,7 +17,7 @@ local started = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.starttrigger1 = "Just a little taste..."
 	L.starttrigger2 = "Yes, run! It makes the blood pump faster!"
@@ -31,8 +31,7 @@ if L then
 
 	L.castwarn = "Incoming Locust Swarm!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anub'Rekhan")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -74,4 +73,3 @@ function mod:Swarm(_, spellId)
 	self:Message(28785, L["castwarn"], "Attention", spellId)
 	self:Bar(28785, L["castwarn"], 3, spellId)
 end
-

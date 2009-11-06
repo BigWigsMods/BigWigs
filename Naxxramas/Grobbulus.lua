@@ -16,13 +16,12 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.bomb_message = "Injection"
 	L.bomb_message_other = "%s is Injected!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Grobbulus")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -57,4 +56,3 @@ function mod:Cloud(_, spellId, _, _, spellName)
 	self:Message(28240, spellName, "Attention", spellId)
 	self:Bar(28240, spellName, 15, spellId)
 end
-

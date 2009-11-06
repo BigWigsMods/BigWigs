@@ -10,7 +10,7 @@ mod.toggleOptions = {"room", "add", "adddeath", "bosskill"}
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.room = "Room Arrival Warnings"
 	L.room_desc = "Warn for Gothik's arrival"
@@ -56,8 +56,7 @@ if L then
 
 	L.inroombartext = "In Room"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Gothik the Harvester")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -156,4 +155,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Message("room", L["inroomwarn"], "Important")
 	end
 end
-

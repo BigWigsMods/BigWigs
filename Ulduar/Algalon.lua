@@ -18,7 +18,7 @@ local blackholes = 0
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
@@ -33,8 +33,7 @@ if L then
 	L.bigbang_bar = "Next Big Bang"
 	L.bigbang_soon = "Big Bang soon!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Algalon")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -111,4 +110,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(360)
 	end
 end
-

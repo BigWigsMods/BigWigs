@@ -25,7 +25,7 @@ local shadron, tenebron, vesperon = nil, nil, nil
 ------------------------------
 --      English Locale      --
 ------------------------------
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
 
@@ -50,8 +50,7 @@ if L then
 	L.twilight_message_tenebron = "Eggs hatching"
 	L.twilight_message = "%s add up!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sartharion")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -126,4 +125,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(900)
 	end
 end
-

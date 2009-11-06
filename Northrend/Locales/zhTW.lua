@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "zhTW")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "zhTW")
 if L then
 	L.stomp_message = "踐踏 - 即將 衝鋒！"
 	L.stomp_warning = "約5秒後，可能踐踏！"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "當玩家中了衝鋒時發出警報。"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "zhTW")
 if L then
 	L.nova_next = "<閃電新星 冷卻>"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "<下一超載>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "zhTW")
 if L then
 	L.cinder_message = ">你< 燃焰餘燼！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "zhTW")
 if L then
 	L.sparks = "力量火花"
 	L.sparks_desc = "當力量火花出現時發出警報。"
@@ -61,7 +61,7 @@ if L then
 	L.phase3_message = "第三階段！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sartharion", "zhTW")
 if L then
 	L.engage_trigger = "我的職責就是要看守這些龍蛋。在他們受到任何傷害之前，我將會看著你陷入火焰之中!"
 
@@ -86,4 +86,3 @@ if L then
 	L.twilight_message_tenebron = "正在孵卵！"
 	L.twilight_message = "%s到來！"
 end
-

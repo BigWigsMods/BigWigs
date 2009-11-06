@@ -30,7 +30,7 @@ local handle_Jormungars = nil
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
 
@@ -68,8 +68,7 @@ if L then
 	L.bosses = "Bosses"
 	L.bosses_desc = "Warn about bosses incoming"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Northrend Beasts")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -333,4 +332,3 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 		self:PrimaryIcon("charge", player)
 	end
 end
-

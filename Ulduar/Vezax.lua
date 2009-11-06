@@ -21,7 +21,7 @@ local vapor = GetSpellInfo(63322)
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L["Vezax Bunny"] = true -- For emote catching.
 
@@ -51,8 +51,7 @@ if L then
 	L.mark_message = "Mark"
 	L.mark_message_other = "Mark on %s!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: General Vezax")
-mod.locale = L
+L = mod:GetLocale()
 
 mod.optionHeaders = {
 	vapor = L.vapor,
@@ -167,4 +166,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar(62662, L["surge_bar"]:format(surgeCount), 60, 62662)
 	end
 end
-

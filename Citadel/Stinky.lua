@@ -14,13 +14,12 @@ mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill"}
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Stinky", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.wound_message = "%2$dx Mortal Wound on %1$s"
 	L.decimate_cd = "~Next Decimate" -- 33sec cd
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Stinky")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -56,4 +55,3 @@ function mod:Decimate(_, spellId, _, _, spellName)
 	self:Message(71123, spellName, "Attention", spellId)
 	self:Bar(71123, L["decimate_cd"], 33, spellId)
 end
-

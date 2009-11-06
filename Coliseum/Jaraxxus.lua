@@ -21,7 +21,7 @@ local pName = UnitName("player")
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!"
 
@@ -48,8 +48,7 @@ if L then
 	L.kiss_message = "Kiss on YOU!"
 	L.kiss_interrupted = "Interrupted!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Jaraxxus")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -143,4 +142,3 @@ function mod:MistressKissInterrupted(player, spellId)
 	if player ~= pName then return end
 	self:LocalMessage(67905, L["kiss_interrupted"], "Personal", spellId)
 end
-

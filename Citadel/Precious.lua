@@ -21,19 +21,18 @@ local summoned = nil
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Precious", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.zombies = GetSpellInfo(71159)
 	L.zombies_desc = "Summons 11 Plague Zombies to assist the caster."
 	L.zombies_message = "Zombies summoned!"
 	L.zombies_cd = "~Next Zombies" -- 20sek cd (11 Zombies)
-	
+
 	L.wound_message = "%2$dx Mortal Wound on %1$s"
-	
+
 	L.decimate_cd = "~Next Decimate" -- 33 sec cd
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Precious")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -72,7 +71,7 @@ end
 
 do
 	local function resetZombies() summoned = nil end
-	function mod:Zombies() 
+	function mod:Zombies()
 		if summoned then return end
 		summoned = true
 		self:Message("zombies", L["zombies_message"], "Important", 71159)

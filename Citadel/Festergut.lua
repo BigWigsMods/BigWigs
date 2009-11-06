@@ -12,12 +12,11 @@ mod.toggleOptions = {"berserk", "bosskill"}
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Festergut", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Festergut")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -33,4 +32,3 @@ end
 function mod:OnEngage()
 	self:Berserk(300, true)
 end
-

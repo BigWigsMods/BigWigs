@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "zhCN")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "zhCN")
 if L then
 	L.engage_message = "阿努巴拉克已激活，80秒后，钻地！"
 --	L.engage_trigger = "This place will serve as your tomb!"
@@ -20,7 +20,7 @@ if L then
 	L.chase = "追击"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "zhCN")
 if L then
 --	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
 
@@ -59,7 +59,7 @@ if L then
 	L.bosses_desc = "当首领即将到来时发出警报。"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "zhCN")
 if L then
 --	L.enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy..."
 --	L.defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
@@ -72,7 +72,7 @@ if L then
 	L["Bloodlust on champions!"] = "嗜血！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "zhCN")
 if L then
 --	L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!"
 
@@ -97,7 +97,7 @@ if L then
 	L.netherpower_bar = "<下一Nether Power>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "zhCN")
 if L then
 --	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
@@ -116,4 +116,3 @@ if L then
 	L.touch = "Touch of Darkness/Light"
 	L.touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。"
 end
-

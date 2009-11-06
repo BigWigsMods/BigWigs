@@ -18,7 +18,7 @@ local mcTargets = mod:NewTargetList()
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber"
 
@@ -54,8 +54,7 @@ if L then
 	L.guardians_warning = "Guardians incoming in ~10sec!"
 	L.guardians_bar = "Guardians incoming!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kel'Thuzad")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -173,4 +172,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("guardians", L["guardians_bar"], 10, 28866)
 	end
 end
-

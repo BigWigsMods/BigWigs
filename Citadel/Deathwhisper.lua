@@ -22,13 +22,12 @@ local mindControlled = mod:NewTargetList()
 --  Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Lady Deathwhisper", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.dnd_message = "Death and Decay on YOU!"
 	L.phase2_message = "Phase 2"
 end
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Lady Deathwhisper")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

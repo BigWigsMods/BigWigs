@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "frFR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "frFR")
 if L then
 	L.engage_message = "Anub'arak engagé, Fouir dans 80 sec. !"
 	L.engage_trigger = "Ce terreau sera votre tombeau !"
@@ -21,7 +21,7 @@ if L then
 	L.chase = "Poursuivi"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "frFR")
 if L then
 	L.enable_trigger = "Vous avez entendu l'appel de la Croisade d'argent, et vaillamment répondu !"
 
@@ -60,7 +60,7 @@ if L then
 	L.bosses_desc = "Prévient quand le boss suivant arrive."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "frFR")
 if L then
 	L.enable_trigger = "La prochaine bataille sera contre les chevaliers les plus puissants de la Croisade d'argent ! Ce n'est qu'après les avoir vaincus que vous serez déclarés dignes…"
 	L.defeat_trigger = "Une victoire tragique et dépourvue de sens."
@@ -73,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "Furie sanguinaire sur les champions !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "frFR")
 if L then
 	L.enable_trigger = "Misérable gnome ! Ton arrogance te perdra !"
 
@@ -101,7 +101,7 @@ if L then
 	L.kiss_interrupted = "Interrompu !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "frFR")
 if L then
 	L.engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir."
 
@@ -120,4 +120,3 @@ if L then
 	L.touch = "Toucher des ténèbres/de lumière"
 	L.touch_desc = "Prévient quand un joueur subit les effets d'un Toucher des ténèbres ou de lumière."
 end
-

@@ -17,7 +17,7 @@ local overchargerepeater = nil -- overcharge repeating timer
 --      English Locale      --
 ------------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.nova_next = "~Nova Cooldown"
 
@@ -25,8 +25,7 @@ if L then
 	L.overcharge_bar = "Explosion"
 	L.overcharge_next = "~Overcharge Cooldown"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Emalon the Storm Watcher")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -81,4 +80,3 @@ do
 		overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
 	end
 end
-

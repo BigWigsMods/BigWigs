@@ -21,7 +21,7 @@ local throwHandle = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phase"
 	L.phase_desc = "Warn for Phase transitions"
@@ -53,8 +53,7 @@ if L then
 	L.throw_bar = "Throw"
 	L.throw_warning = "Throw in ~5 sec!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Thaddius")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -153,4 +152,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(360, true)
 	end
 end
-

@@ -23,7 +23,7 @@ local beacon = mod:NewTargetList()
 -- Locale
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sindragosa", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase = "Airphase"
@@ -31,8 +31,7 @@ if L then
 	L.airphase_desc = "Warns about Sindragosas lift-off"
 	L.boom = "Explosion!"
 end
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sindragosa")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

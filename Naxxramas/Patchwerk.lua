@@ -10,14 +10,13 @@ mod.toggleOptions = {28131, "berserk", "bosskill"}
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Patchwerk", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.enragewarn = "5% - Frenzied!"
 	L.starttrigger1 = "Patchwerk want to play!"
 	L.starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Patchwerk")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -44,4 +43,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(360)
 	end
 end
-

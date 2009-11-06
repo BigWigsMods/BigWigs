@@ -30,7 +30,7 @@ local sheIsDead = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger1 = "The Conservatory must be protected!"
 	L.engage_trigger2 = "Elders grant me your strength!"
@@ -65,8 +65,7 @@ if L then
 
 	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Freya")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -243,4 +242,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("wave", L["wave_bar"], 60, 35594)
 	end
 end
-

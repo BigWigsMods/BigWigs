@@ -19,7 +19,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "You will suffer for this trespass!"
 
@@ -35,8 +35,7 @@ if L then
 
 	L.end_trigger = "I... I am released from his grasp... at last."
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Hodir")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -119,4 +118,3 @@ function mod:UNIT_AURA(event, unit)
 		lastCold = stack
 	end
 end
-

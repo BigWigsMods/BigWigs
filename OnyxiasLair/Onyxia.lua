@@ -11,7 +11,7 @@ local boss = "Onyxia"
 ----------------------------
 --      Localization      --
 ----------------------------
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Onyxia", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase1 = "Phase 1 alert"
 	L.phase1_desc = "Warn for Phase 1"
@@ -29,7 +29,7 @@ if L then
 	L.fear = "Fear"
 	L.fear_desc = "Warn for Bellowing Roar in phase 3"
 	L.fear_message = "Fear in 1.5 sec!"
-	
+
 	L.phase1_trigger = "How fortuitous"
 	L.phase2_trigger = "from above"
 	L.phase3_trigger = "It seems you'll need another lesson"
@@ -38,8 +38,7 @@ if L then
 	L.phase2_message = "65% - Phase 2 Incoming!"
 	L.phase3_message = "40% - Phase 3 Incoming!"
 end
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Onyxia")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --

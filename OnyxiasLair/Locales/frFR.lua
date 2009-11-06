@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Onyxia", "frFR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Onyxia", "frFR")
 if L then
 	L.deepbreath = "Grande inspiration"
 	L.deepbreath_desc = "Prévient quand Onyxia prend une grande inspiration."

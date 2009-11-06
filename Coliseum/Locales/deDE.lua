@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "deDE")
 if L then
 	L.engage_message = "Anub'arak angegriffen, Eingraben in 80 sek!"
 	L.engage_trigger = "Dieser Ort wird Euch als Grab dienen!"
@@ -21,7 +21,7 @@ if L then
 	L.chase = "Verfolgen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "deDE")
 if L then
 	L.enable_trigger = "Ihr habt den Ruf des Argentumkreuzzugs vernommen und seid ihm mutig gefolgt"
 
@@ -60,7 +60,7 @@ if L then
 	L.bosses_desc = "Warnt, wann die nachfolgenden Bosse eintreffen."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "deDE")
 if L then
 	L.enable_trigger = "Der nächste Kampf wird gegen die stärksten Ritter des Argentumkreuzzugs ausgefochten! Nur der Sieg wird Euren..."
 	L.defeat_trigger = "Ein tragischer Sieg. Wir wurden schwächer durch die heutigen Verluste. Wer außer dem Lichkönig profitiert von solchen Torheiten? Große Krieger gaben ihr Leben. Und wofür? Die wahre Bedrohung erwartet uns noch - der Lichkönig erwartet uns alle im Tod."
@@ -73,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "Kampfrausch auf Champions!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "deDE")
 if L then
 	L.enable_trigger = "Unbedeutender Gnom! Deine Arroganz wird dir zum Verhängnis!"
 
@@ -96,12 +96,12 @@ if L then
 	L.infernal_bar = "Vulkan kommt"
 	L.netherportal_bar = "Netherportal kommt"
 	L.netherpower_bar = "~Macht des Nether"
-	
+
 	L.kiss_message = "Kuss auf DIR!"
 	L.kiss_interrupted = "Unterbrochen!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "deDE")
 if L then
 	L.engage_trigger1 = "Im Namen unseres dunklen Meisters. Für den Lichkönig. Ihr. Werdet. Sterben."
 
@@ -120,4 +120,3 @@ if L then
 	L.touch = "Berührung der Nacht/Licht"
 	L.touch_desc = "Warnt bei Berührung der Nacht/Licht."
 end
-

@@ -30,7 +30,7 @@ local pName = UnitName("player")
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L["Runic Colossus"] = true -- For the runic barrier emote.
 
@@ -58,8 +58,7 @@ if L then
 
 	L.end_trigger = "Stay your arms! I yield!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Thorim")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -170,4 +169,3 @@ function mod:PhaseThree()
 	self:Message("phase", L["phase3_message"], "Attention")
 	self:OpenProximity(5)
 end
-

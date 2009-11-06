@@ -12,7 +12,7 @@ mod.toggleOptions = {{71224, "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
 -- Locals
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Rotface", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.infection_bar = "Infection on %s!"
 
@@ -20,8 +20,7 @@ if L then
 	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
 	L.flood_warning = "A new area is being flooded soon!"
 end
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Rotface")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -32,7 +31,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SlimeSpray", 69508) --Needed?
 
 	-- Common
-	self:Yell("Flood", L["flood_trigger1"],  L["flood_trigger2"]) 
+	self:Yell("Flood", L["flood_trigger1"],  L["flood_trigger2"])
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 36627)
@@ -57,4 +56,3 @@ end
 function mod:SlimeSpray(_, spellId, _, _, spellName)
 	self:Message(69508, spellName, "Attention", spellId)
 end
-

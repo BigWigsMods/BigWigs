@@ -19,7 +19,7 @@ local iceboltName = GetSpellInfo(28522)
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sapphiron", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.airphase_trigger = "Sapphiron lifts off into the air!"
 	L.deepbreath_incoming_message = "Ice Bomb casting in ~14sec!"
@@ -39,8 +39,7 @@ if L then
 	L.ping_desc = "Ping your current location if you are afflicted by Icebolt."
 	L.ping_message = "Block - Pinging your location!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Sapphiron")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -108,4 +107,3 @@ function mod:Icebolt(player, spellId, _, _, spellName)
 	end
 	self:PrimaryIcon(28522, player)
 end
-

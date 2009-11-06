@@ -28,7 +28,7 @@ local phase = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warn when Razorscale switches between phases."
@@ -54,8 +54,7 @@ if L then
 	L.harpoon_trigger = "Harpoon Turret is ready for use!"
 	L.harpoon_nextbar = "Harpoon %d"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Razorscale")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -144,4 +143,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		--self:Message(L["air_message"], "Attention", nil, "Info")
 	end
 end
-

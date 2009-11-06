@@ -11,7 +11,7 @@ mod.toggleOptions = {29107, 55550, 29061, 29060, "bosskill"}
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.shout_warning = "Disrupting Shout in 5sec!"
 	L.shout_next = "Shout Cooldown"
@@ -19,8 +19,7 @@ if L then
 	L.taunt_warning = "Taunt ready in 5sec!"
 	L.shieldwall_warning = "Barrier gone in 5sec!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Instructor Razuvious")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -68,4 +67,3 @@ end
 function mod:Knife(player, spellId, _, _, spellName)
 	self:TargetMessage(55550, spellName, player, "Important", spellId)
 end
-

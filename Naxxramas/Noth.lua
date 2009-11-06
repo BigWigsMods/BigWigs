@@ -21,7 +21,7 @@ local wave2time = 41
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.starttrigger1 = "Die, trespasser!"
 	L.starttrigger2 = "Glory to the master!"
@@ -56,8 +56,7 @@ if L then
 	L.wave2bar = "Wave 2"
 	L.wave2_message = "Wave 2 in 10 sec"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Noth the Plaguebringer")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -145,4 +144,3 @@ function mod:TeleportToRoom()
 	self:DelayedMessage("teleport", timeroom - 10, L["teleportwarn2"], "Urgent")
 	self:ScheduleTimer("TeleportToBalcony", timeroom)
 end
-

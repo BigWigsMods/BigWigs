@@ -28,7 +28,7 @@ local tendrilscanner = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!"
 	L.engage_trigger2 = "Nothing short of total decimation will suffice."
@@ -47,8 +47,7 @@ if L then
 
 	L.council_dies = "%s dead"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Iron Council")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -187,4 +186,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(900)
 	end
 end
-

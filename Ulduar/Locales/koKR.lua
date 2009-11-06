@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "koKR")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Algalon", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변경을 알립니다."
@@ -14,7 +14,7 @@ if L then
 	L.bigbang_soon = "곧 대폭발!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Auriaya", "koKR")
 if L then
 	L.engage_trigger = "Some things are better left alone!"
 
@@ -32,7 +32,7 @@ if L then
 	L.sonic_bar = "~음파 대기시간"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Freya", "koKR")
 if L then
 	L.engage_trigger1 = "어떻게 해서든 정원을 수호해야 한다!"
 	L.engage_trigger2 = "장로여, 내게 힘을 나눠다오!"
@@ -68,7 +68,7 @@ if L then
 	L.end_trigger = "내게서 그의 지배력이 걷혔다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Hodir", "koKR")
 if L then
 	L.engage_trigger = "침입자는 쓴맛을 보게 될 게다!"
 
@@ -85,7 +85,7 @@ if L then
 	L.end_trigger = "드디어... 드디어 그의 손아귀를... 벗어나는구나."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Ignis the Furnace Master", "koKR")
 if L then
 	L.engage_trigger = "건방진 젖먹이들이! 세상을 되찾는 데 쓸 무기를 네놈들의 피로 담금질하겠다!"	--check
 
@@ -99,7 +99,7 @@ if L then
 	L.slagpot_message = "용암재 단지: %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Iron Council", "koKR")
 if L then
 	L.engage_trigger1 = "무쇠 평의회가 그리 쉽게 무너질 것 같으냐, 침입자들아!"
 	L.engage_trigger2 = "남김없이 쓸어버려야 속이 시원하겠군."
@@ -119,7 +119,7 @@ if L then
 	L.council_dies = "%s 죽음"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kologarn", "koKR")
 if L then
 	L.arm = "팔 죽음"
 	L.arm_desc = "왼팔 & 오른팔의 죽음을 알립니다."
@@ -146,7 +146,7 @@ if L then
 	L.armor_message = "방어구 씹기 x%2$d: %1$s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Flame Leviathan", "koKR")
 if L then
 	L.engage_trigger = "^적대적인 존재 감지."
 	L.engage_message = "%s 전투 시작!"
@@ -159,7 +159,7 @@ if L then
 	L.shutdown_message = "시스템 작동 정지!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Mimiron", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
@@ -200,7 +200,7 @@ if L then
 	L.end_trigger = "^내가 계산을 좀 잘못한 것 같군"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Razorscale", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "칼날비늘의 단계 변경을 알립니다."
@@ -227,7 +227,7 @@ if L then
 	L.harpoon_nextbar = "다음 작살 (%d)"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thorim", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
@@ -254,7 +254,7 @@ if L then
 	L.end_trigger = "무기를 거둬라! 내가 졌다!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_General Vezax", "koKR")
 if L then
 	L.engage_trigger = "^너희의 파멸은 새로운 고통의 시대를 열 것이다!"
 
@@ -285,7 +285,7 @@ if L then
 	L.mark_message_other = "얼굴 없는 자의 징표: %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_XT-002 Deconstructor", "koKR")
 if L then
 	L.exposed_warning = "잠시 후 심장 노출!"
 	L.exposed_message = "심장 노출 - 로봇들 추가!"
@@ -297,7 +297,7 @@ if L then
 	L.tantrum_bar = "~땅울림 대기시간"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Yogg-Saron", "koKR")
 if L then
 	L["Crusher Tentacle"] = "분쇄의 촉수"
 	L["The Observation Ring"] = "관찰 지구"
@@ -343,4 +343,3 @@ if L then
 	L.roar_warning = "5초 후 포효!"
 	L.roar_bar = "다음 포효"
 end
-

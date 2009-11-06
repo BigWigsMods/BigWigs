@@ -33,7 +33,7 @@ local shieldStrengthMap = {
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
@@ -52,8 +52,7 @@ if L then
 	L.touch = "Touch of Darkness/Light"
 	L.touch_desc = "Warn for Touch of Darkness/Light"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Twin Val'kyr")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -191,4 +190,3 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 		self:FlashShake("vortex")
 	end
 end
-

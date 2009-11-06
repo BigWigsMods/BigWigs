@@ -10,7 +10,7 @@ mod.toggleOptions = {"engage", 68605, 62396, {"pursue", "FLASHSHAKE"}, 62475, "b
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage = "Engage warning"
 	L.engage_desc = "Warn when Flame Leviathan is engaged."
@@ -24,8 +24,7 @@ if L then
 
 	L.shutdown_message = "Systems down!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Flame Leviathan")
-mod.locale = L
+L = mod:GetLocale()
 
 local pName = UnitName("player")
 
@@ -87,4 +86,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
 		self:Message("engage", L["engage_message"]:format(unit), "Attention")
 	end
 end
-

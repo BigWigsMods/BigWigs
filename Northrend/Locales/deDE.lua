@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Archavon the Stone Watcher", "deDE")
 if L then
 	L.stomp_message = "Stampfen - Ansturm bald!"
 	L.stomp_warning = "Mögliches Stampfen in ~5 sek!"
@@ -11,7 +11,7 @@ if L then
 	L.charge_desc = "Warnt, wenn ein Spieler angestürmt wird."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Emalon the Storm Watcher", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Emalon the Storm Watcher", "deDE")
 if L then
 	L.nova_next = "~Blitzschlagnova"
 
@@ -20,12 +20,12 @@ if L then
 	L.overcharge_next = "~Überladen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Koralon the Flame Watcher", "deDE")
 if L then
 	L.cinder_message = "Flamme auf DIR!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Malygos", "deDE")
 if L then
 	L.sparks = "Energiefunke"
 	L.sparks_desc = "Warnungen und Timer für das Erscheinen von Energiefunken."
@@ -61,7 +61,7 @@ if L then
 	L.phase3_message = "Phase 3"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sartharion", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sartharion", "deDE")
 if L then
 	L.engage_trigger = "Meine Aufgabe ist es, über diese Eier zu wachen. Kommt ihnen zu nahe und von euch bleibt nur ein Häuflein Asche."
 
@@ -86,4 +86,3 @@ if L then
 	L.twilight_message_tenebron = "Eier schlüpfen"
 	L.twilight_message = "%s kommt dazu!"
 end
-

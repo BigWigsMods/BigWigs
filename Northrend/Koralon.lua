@@ -17,12 +17,11 @@ local pName = UnitName("player")
 --      English Locale      --
 ------------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Koralon the Flame Watcher", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.cinder_message = "Flame on YOU!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Koralon the Flame Watcher")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --

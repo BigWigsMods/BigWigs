@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "zhTW")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "zhTW")
 if L then
 	L.engage_message = "阿努巴拉克進入戰鬥，80秒後，鑽地！"
 	L.engage_trigger = "這裡將會是你們的墳墓!"
@@ -20,7 +20,7 @@ if L then
 	L.chase = "追擊"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "zhTW")
 if L then
 	L.enable_trigger = "歡迎，勇士們!你們聽從銀白十字軍的號召前來，英勇的挺身而出。"
 
@@ -59,7 +59,7 @@ if L then
 	L.bosses_desc = "當首領即將到來時發出警報。"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "zhTW")
 if L then
 	L.enable_trigger = "接著進入競技場的是，不論在戰場或聯賽場地都身經百戰的聖騎士，身為銀白十字軍的大勇士"
 	L.defeat_trigger = "膚淺而悲痛的勝利。今天痛失的生命反而令我們更加的頹弱。除了巫妖王之外，誰還能從中獲利?偉大的戰士失去了寶貴生命。為了什麼?真正的威脅就在前方 - 巫妖王在死亡的領域中等著我們。"
@@ -72,7 +72,7 @@ if L then
 	L["Bloodlust on champions!"] = "嗜血術！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "zhTW")
 if L then
 	L.enable_trigger = "卑微的地精!你的傲慢將使你喪命!"
 
@@ -97,7 +97,7 @@ if L then
 	L.netherpower_bar = "<下一虛空傳送門（能量）>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "zhTW")
 if L then
 	L.engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。"
 
@@ -116,4 +116,3 @@ if L then
 	L.touch = "黑暗/光明之觸"
 	L.touch_desc = "當玩家中了黑暗/光明之觸時發出警報。"
 end
-

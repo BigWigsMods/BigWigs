@@ -17,7 +17,7 @@ local phase = nil
 ------------------------------
 --      English Locale      --
 ------------------------------
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Malygos", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.sparks = "Spark Spawns"
 	L.sparks_desc = "Warns on Power Spark spawns."
@@ -52,8 +52,7 @@ if L then
 	L.phase3_trigger = "Now your benefactors make their"
 	L.phase3_message = "Phase 3!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Malygos")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -165,4 +164,3 @@ function mod:UNIT_HEALTH(event, msg)
 		end
 	end
 end
-

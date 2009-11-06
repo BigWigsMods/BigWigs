@@ -19,15 +19,14 @@ local impale = mod:NewTargetList()
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Lord Marrowgar", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.impale_cd = "~Next impale"
 	L.whirlwind_cd = "~Next whirlwind"
 
 	L.coldflame_message = "Coldflame on YOU!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Lord Marrowgar")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

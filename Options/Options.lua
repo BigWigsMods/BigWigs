@@ -459,7 +459,8 @@ local function getOptionDetails(module, bossOption)
 		if customBossOptions[option] then
 			return option, customBossOptions[option][1], customBossOptions[option][2], bf
 		else
-			return option, module.locale[option], module.locale[option .. "_desc"], bf
+			local L = module:GetLocale()
+			return option, L[option], L[option .. "_desc"], bf
 		end
 	elseif t == "number" then
 		local spellName = GetSpellInfo(option)

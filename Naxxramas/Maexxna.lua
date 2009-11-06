@@ -17,7 +17,7 @@ local enrageannounced = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Maexxna", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.webspraywarn30sec = "Cocoons in 10 sec"
 	L.webspraywarn20sec = "Cocoons! Spiders in 10 sec!"
@@ -31,8 +31,7 @@ if L then
 	L.cocoonbar = "Cocoons"
 	L.spiderbar = "Spiders"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Maexxna")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -101,4 +100,3 @@ function mod:UNIT_HEALTH(event, msg)
 		end
 	end
 end
-

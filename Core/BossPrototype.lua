@@ -6,6 +6,7 @@ local debug = nil -- Set to true to get (very spammy) debug messages.
 local dbgStr = "[DBG:%s] %s"
 local function dbg(self, msg) print(dbgStr:format(self.displayName, msg)) end
 
+local AL = LibStub("AceLocale-3.0")
 local core = BigWigs
 local C = core.C
 local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
@@ -40,6 +41,9 @@ function boss:Reboot()
 	self:Disable()
 	self:Enable()
 end
+
+function boss:NewLocale(locale, default) return AL:NewLocale(self.name, locale, default) end
+function boss:GetLocale() return AL:GetLocale(self.name) end
 
 -------------------------------------------------------------------------------
 -- Enable triggers

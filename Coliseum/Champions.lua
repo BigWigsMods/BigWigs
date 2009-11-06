@@ -9,7 +9,7 @@ mod.toggleOptions = {65960, 65801, 65877, 66010, 65947, {65816, "FLASHSHAKE"}, 6
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy..."
 	L.defeat_trigger = "A shallow and tragic victory."
@@ -21,8 +21,7 @@ if L then
 	L["Heroism on champions!"] = true
 	L["Bloodlust on champions!"] = true
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Faction Champions")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -118,4 +117,3 @@ end
 function mod:Bloodlust(player, spellId)
 	self:Message(65980, L["Bloodlust on champions!"], "Important", spellId)
 end
-

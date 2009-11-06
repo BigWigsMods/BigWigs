@@ -16,15 +16,14 @@ local enrageTime = 420
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gluth", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.startwarn = "Gluth engaged, ~105 sec to decimate!"
 
 	L.decimatesoonwarn = "Decimate Soon!"
 	L.decimatebartext = "~Decimate Zombies"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Gluth")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -66,4 +65,3 @@ function mod:Decimate(_, spellId, _, _, spellName)
 		self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
 	end
 end
-

@@ -29,7 +29,7 @@ local phase2 = nil
 -- Localization
 --
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_message = "Anub'arak engaged, burrow in 80sec!"
 	L.engage_trigger = "This place will serve as your tomb!"
@@ -51,8 +51,7 @@ if L then
 
 	L.chase = "Pursue"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Anub'arak")
-mod.locale = L
+L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -177,4 +176,3 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		self:Bar("burrow", L["burrow"], 65, 65919)
 	end
 end
-

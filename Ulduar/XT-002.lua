@@ -25,7 +25,7 @@ local exposed3 = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.exposed_warning = "Exposed soon"
 	L.exposed_message = "Heart exposed!"
@@ -36,8 +36,7 @@ if L then
 
 	L.tantrum_bar = "~Tantrum Cooldown"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: XT-002")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -137,4 +136,3 @@ function mod:UNIT_HEALTH(event, msg)
 		end
 	end
 end
-

@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'arak", "ruRU")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "ruRU")
 if L then
 	L.engage_message = "Ануб'арак вступил в бой, зарывание в землю через 80сек!"
 	L.engage_trigger = "Это место станет вашей могилой!"
@@ -20,7 +20,7 @@ if L then
 	L.chase = "Преследование"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Northrend Beasts", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Beasts of Northrend", "ruRU")
 if L then
 	--L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered" --need
 
@@ -59,7 +59,7 @@ if L then
 	L.bosses_desc = "Сообщать о появлении следующего босса."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Faction Champions", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "ruRU")
 if L then
 	L.enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду."
 	L.defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом."
@@ -72,7 +72,7 @@ if L then
 	L["Bloodlust on champions!"] = "Жажда крови на чемпионах!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Jaraxxus", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "ruRU")
 if L then
 	L.enable_trigger = "Ничтожный гном! Тебя погубит твоя самоуверенность!"
 
@@ -97,7 +97,7 @@ if L then
 	L.netherpower_bar = "~сила пустоты"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Twin Val'kyr", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "ruRU")
 if L then
 	L.engage_trigger1 = "Во имя темного повелителя. Во имя Короля-лича. Вы. Умрете."
 
@@ -116,4 +116,3 @@ if L then
 	L.touch = "Касание тьмы/света"
 	L.touch_desc = "Сообщать о касании тьмы/света"
 end
-

@@ -17,7 +17,7 @@ local spawnTime = 30
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!"
 
@@ -30,8 +30,7 @@ if L then
 	L.scorch_bar = "Next Scorch"
 	L.slagpot_message = "Slag Pot: %s"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Ignis")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -118,4 +117,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar(62488, L["construct_bar"], 10, "INV_Misc_Statue_07")
 	end
 end
-

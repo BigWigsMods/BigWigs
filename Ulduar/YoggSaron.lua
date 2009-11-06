@@ -30,7 +30,7 @@ local empowerscanner = nil
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L["Crusher Tentacle"] = true
 	L["The Observation Ring"] = true
@@ -79,8 +79,7 @@ if L then
 	L.roar_warning = "Roar in 5sec!"
 	L.roar_bar = "Next Roar"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Yogg-Saron")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -274,4 +273,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar(64465, L["empower_bar"], 46, 64486)
 	end
 end
-

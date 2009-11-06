@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Algalon", "deDE")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Algalon", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
@@ -14,7 +14,7 @@ if L then
 	L.bigbang_soon = "Großer Knall bald!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Auriaya", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Auriaya", "deDE")
 if L then
 	L.engage_trigger = "Some things are better left alone!"
 
@@ -32,7 +32,7 @@ if L then
 	L.sonic_bar = "~Überschallkreischen"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Freya", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Freya", "deDE")
 if L then
 	L.engage_trigger1 = "Das Konservatorium muss verteidigt werden!"
 	L.engage_trigger2 = "Ihr Ältesten, gewährt mir Eure Macht!"
@@ -68,7 +68,7 @@ if L then
 	L.end_trigger = "Seine Macht über mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Hodir", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Hodir", "deDE")
 if L then
 	L.engage_trigger = "Für Euer Eindringen werdet Ihr bezahlen!"
 
@@ -85,7 +85,7 @@ if L then
 	L.end_trigger = "Ich... bin von ihm befreit... endlich."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Ignis", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Ignis the Furnace Master", "deDE")
 if L then
 	L.engage_trigger = "Ihr anmaßenden Wichte! Euer Blut wird die Waffen härten, mit denen diese Welt erobert wird!"
 
@@ -99,7 +99,7 @@ if L then
 	L.slagpot_message = "Schlackentopf: %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Iron Council", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Iron Council", "deDE")
 if L then
 	L.engage_trigger1 = "So leicht werdet Ihr die Versammlung des Eisens nicht bezwingen, Eindringlinge!"
 	L.engage_trigger2 = "Nur vollständige Dezimierung wird mich zufriedenstellen."
@@ -119,7 +119,7 @@ if L then
 	L.council_dies = "%s getötet!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kologarn", "deDE")
 if L then
 	L.arm = "Arm stirbt"
 	L.arm_desc = "Warnung und Timer für das Sterben des linken & rechten Arms."
@@ -146,7 +146,7 @@ if L then
 	L.armor_message = "%2$dx Rüstung zermalmen: %1$s!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Flame Leviathan", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Flame Leviathan", "deDE")
 if L then
 	L.engage = "Angegriffen"
 	L.engage_desc = "Warnt, wenn der Flammenleviathan angegriffen wurde."
@@ -161,7 +161,7 @@ if L then
 	L.shutdown_message = "Systemabschaltung!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Mimiron", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Mimiron", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt bei Phasenwechsel."
@@ -202,7 +202,7 @@ if L then
 	L.end_trigger = "^Es scheint, als wäre mir"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Razorscale", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Razorscale", "deDE")
 if L then
 	L["Razorscale Controller"] = "Klingenschuppe Controller"
 
@@ -231,7 +231,7 @@ if L then
 	L.harpoon_nextbar = "Geschütz %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thorim", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thorim", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt bei Phasenwechsel."
@@ -258,7 +258,7 @@ if L then
 	L.end_trigger = "Senkt Eure Waffen! Ich ergebe mich!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: General Vezax", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_General Vezax", "deDE")
 if L then
 	L.engage_trigger = "Eure Vernichtung wird ein neues Zeitalter des Leids einläuten!"
 
@@ -287,7 +287,7 @@ if L then
 	L.mark_message_other = "Mal: %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: XT-002", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_XT-002 Deconstructor", "deDE")
 if L then
 	L.exposed_warning = "Freigelegtes Herz bald!"
 	L.exposed_message = "Herz freigelegt!"
@@ -299,7 +299,7 @@ if L then
 	L.tantrum_bar = "~Betäubender Koller"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Yogg-Saron", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Yogg-Saron", "deDE")
 if L then
 	L["Crusher Tentacle"] = "Schmettertentakel"
 	L["The Observation Ring"] = "Der Beobachtungsring"
@@ -348,4 +348,3 @@ if L then
 	L.roar_warning = "Gebrüll in 5 sek!"
 	L.roar_bar = "Nächstes Gebrüll"
 end
-

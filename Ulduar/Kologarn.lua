@@ -17,7 +17,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kologarn", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.arm = "Arm dies"
 	L.arm_desc = "Warn for Left & Right Arm dies."
@@ -43,8 +43,7 @@ if L then
 
 	L.armor_message = "%2$dx Crunch on %1$s"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Kologarn")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -127,4 +126,3 @@ function mod:OnSync(sync, rest, nick)
 		self:PrimaryIcon("eyebeam", rest)
 	end
 end
-

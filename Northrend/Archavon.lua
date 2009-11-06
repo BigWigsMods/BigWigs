@@ -18,7 +18,7 @@ local pName = UnitName("player")
 --      English Locale      --
 ------------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Archavon the Stone Watcher", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.stomp_message = "Stomp - Charge Inc!"
 	L.stomp_warning = "Possible Stomp in ~5sec!"
@@ -29,8 +29,7 @@ if L then
 	L.charge = "Charge"
 	L.charge_desc = "Warn about Charge on players."
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Archavon the Stone Watcher")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -98,5 +97,3 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
 		self:TargetMessage("charge", L["charge"], player, "Attention", 11578)
 	end
 end
-
-

@@ -18,7 +18,7 @@ local marks = 1
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.mark = "Mark"
 	L.mark_desc = "Warn for marks."
@@ -30,8 +30,7 @@ if L then
 
 	L.startwarn = "The Four Horsemen Engaged! Mark in ~17 sec"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: The Four Horsemen")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -95,4 +94,3 @@ function mod:Mark()
 		self:DelayedMessage("mark", 7, L["markwarn2"]:format(marks), "Urgent")
 	end
 end
-

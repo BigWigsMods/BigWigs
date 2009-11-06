@@ -1,5 +1,5 @@
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Anub'Rekhan", "zhCN")
+local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'Rekhan", "zhCN")
 if L then
 	L.starttrigger1 = "一些小点心……"
 	L.starttrigger2 = "对，跑吧！那样伤口出血就更多了！"
@@ -14,7 +14,7 @@ if L then
 	L.castwarn = "虫群风暴！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grand Widow Faerlina", "zhCN")
 if L then
 	L.starttrigger1 = "跪下求饶吧，懦夫！"
 	L.starttrigger2 = "以主人之名，杀了他们！"
@@ -35,7 +35,7 @@ if L then
 	L.rain_message = ">你< 火焰之雨！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gluth", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gluth", "zhCN")
 if L then
 	L.startwarn = "格拉斯已激活 - 约105秒后，残杀！"
 
@@ -43,7 +43,7 @@ if L then
 	L.decimatebartext = "<残杀>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Gothik the Harvester", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Gothik the Harvester", "zhCN")
 if L then
 	L.room = "进入房间"
 	L.room_desc = "当收割者戈提克进入房间时发出警报。"
@@ -90,13 +90,13 @@ if L then
 	L.inroombartext = "<进入房间>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grobbulus", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grobbulus", "zhCN")
 if L then
 	L.bomb_message = "变异注射"
 	L.bomb_message_other = "变异注射：>%s<！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Heigan the Unclean", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Heigan the Unclean", "zhCN")
 if L then
 	L.starttrigger = "你是我的了。"
 	L.starttrigger2 = "你……就是下一个。"
@@ -122,7 +122,7 @@ if L then
 	L.back_bar = "<出现>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: The Four Horsemen", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Four Horsemen", "zhCN")
 if L then
 	L.mark = "印记"
 	L.mark_desc = "当施放印记时发出警报。"
@@ -135,7 +135,7 @@ if L then
 	L.startwarn = "四骑士已激活 - 约17秒后，印记！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Kel'Thuzad", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kel'Thuzad", "zhCN")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅"
 
@@ -172,7 +172,7 @@ if L then
 	L.guardians_bar = "<寒冰皇冠卫士出现>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Loatheb", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Loatheb", "zhCN")
 if L then
 	L.startwarn = "洛欧塞布已激活 - 2分钟后，必然的厄运！"
 
@@ -192,7 +192,7 @@ if L then
 	L.sporebar = "<孢子：%d>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Noth the Plaguebringer", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Noth the Plaguebringer", "zhCN")
 if L then
 	L.starttrigger1 = "死吧，入侵者！"
 	L.starttrigger2 = "荣耀归于我主！"
@@ -228,14 +228,14 @@ if L then
 	L.wave2_message = "10秒後，第二波！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Patchwerk", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Patchwerk", "zhCN")
 if L then
 	L.enragewarn = "5% - 狂乱！"
 	L.starttrigger1 = "帕奇维克要跟你玩！"
 	L.starttrigger2 = "帕奇维克是克尔苏加德的战神！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Maexxna", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Maexxna", "zhCN")
 if L then
 	L.webspraywarn30sec = "10秒后，蛛网裹体！"
 	L.webspraywarn20sec = "蛛网裹体！10秒后小蜘蛛出现！"
@@ -250,7 +250,7 @@ if L then
 	L.spiderbar = "<出现 小蜘蛛>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Sapphiron", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sapphiron", "zhCN")
 if L then
 	--L.airphase_trigger = "Sapphiron lifts off into the air!"
 	L.deepbreath_incoming_message = "约14秒后，冰霜吐息！"
@@ -271,7 +271,7 @@ if L then
 	L.ping_message = "寒冰屏障 - 点击你的位置！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Instructor Razuvious", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Instructor Razuvious", "zhCN")
 if L then
 	L.shout_warning = "5秒后，瓦解怒吼！"
 	L.shout_next = "瓦解怒吼冷却！"
@@ -280,7 +280,7 @@ if L then
 	L.shieldwall_warning = "5秒后，可以白骨屏障！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Thaddius", "zhCN")
+L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thaddius", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
@@ -312,4 +312,3 @@ if L then
 	L.throw_bar = "<投掷>"
 	L.throw_warning = "约5秒后，投掷！"
 end
-

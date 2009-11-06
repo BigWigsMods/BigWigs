@@ -19,7 +19,7 @@ local pName = UnitName("player")
 --      Localization      --
 ----------------------------
 
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Grand Widow Faerlina", "enUS", true)
+local L = mod:NewLocale("enUS", true)
 if L then
 	L.starttrigger1 = "Kneel before me, worm!"
 	L.starttrigger2 = "Slay them in the master's name!"
@@ -39,8 +39,7 @@ if L then
 
 	L.rain_message = "Fire on YOU!"
 end
-L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Grand Widow Faerlina")
-mod.locale = L
+L = mod:GetLocale()
 
 ------------------------------
 --      Initialization      --
@@ -107,5 +106,3 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		frenzied = nil
 	end
 end
-
-
