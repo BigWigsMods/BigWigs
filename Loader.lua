@@ -171,6 +171,19 @@ local function loadZone(zone)
 	loadAddons(loadOnZone[zone])
 end
 
+local function loadAndEnableCore()
+	load(BigWigs, "BigWigs_Core")
+	if not BigWigs then return end
+	BigWigs:Enable()
+end
+
+local function loadCoreAndOpenOptions()
+	loadAndEnableCore()
+	load(BigWigsOptions, "BigWigs_Options")
+	if not BigWigsOptions then return end
+	BigWigsOptions:Open()
+end
+
 -----------------------------------------------------------------------
 -- Version listing functions
 --
@@ -446,15 +459,10 @@ if ldb11 then
 	})
 
 	function ldb.OnClick(self, button)
-		load(BigWigs, "BigWigs_Core")
-		if not BigWigs then return end
-		BigWigs:Enable()
-
 		if button == "RightButton" then
-			load(BigWigsOptions, "BigWigs_Options")
-			if not BigWigsOptions then return end
-			BigWigsOptions:Open()
+			loadCoreAndOpenOptions()
 		else
+			loadAndEnableCore()
 			if IsAltKeyDown() then
 				if IsControlKeyDown() then
 					BigWigs:Disable()
@@ -499,17 +507,11 @@ end
 -- Slash commands
 --
 
-local function slashfunction(text)
-	if load(BigWigs, "BigWigs_Core") and load(BigWigsOptions, "BigWigs_Options") then
-		BigWigsOptions:Open()
-	end
-end
-
-hash_SlashCmdList['/bw'] = nil
-hash_SlashCmdList['/bigwigs'] = nil
-SLASH_BIGWIGS1 = "/bw"
-SLASH_BIGWIGS2 = "/bigwigs"
-SlashCmdList.BIGWIGS = slashfunction
+hash_SlashCmdList["/bw"] = nil
+hash_SlashCmdList["/bigwigs"] = nil
+SLASH_BigWigs1 = "/bw"
+SLASH_BigWigs2 = "/bigwigs"
+SlashCmdList.BigWigs = loadCoreAndOpenOptions
 
 do
 	local hexColors = nil
@@ -578,32 +580,22 @@ do
 	local frame = CreateFrame("Frame", nil, UIParent)
 	frame.name = "Big Wigs"
 	frame:Hide()
-	frame:SetScript("OnShow", function(frame)
+	local function removeFrame()
 		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
 			if f == frame then
 				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
 				break
 			end
 		end
-		if load(BigWigs, "BigWigs_Core") then
-			BigWigs:Enable()
-			if load(BigWigsOptions, "BigWigs_Options") then
-				BigWigsOptions:Open()
-			end
-		end
+	end
+	frame:SetScript("OnShow", function()
+		removeFrame()
+		loadCoreAndOpenOptions()
 	end)
 
 	if AddonLoader and AddonLoader.RemoveInterfaceOptions then
 		AddonLoader:RemoveInterfaceOptions("Big Wigs")
 	end
 	InterfaceOptions_AddCategory(frame)
-
-	function loader:RemoveInterfaceOptions()
-		for k, f in next, INTERFACEOPTIONS_ADDONCATEGORIES do
-			if f == frame then
-				tremove(INTERFACEOPTIONS_ADDONCATEGORIES, k)
-				break
-			end
-		end
-	end
+	loader.RemoveInterfaceOptions = removeFrame
 end
