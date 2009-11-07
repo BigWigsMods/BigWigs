@@ -9,6 +9,18 @@ if not plugin then return end
 -- Locals
 --
 
+local colorize = nil
+do
+	local r, g, b
+	colorize = setmetatable({}, { __index =
+		function(self, key)
+			if not r then r, g, b = GameFontNormal:GetTextColor() end
+			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			return self[key]
+		end
+	})
+end
+
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 local AceGUI = nil
@@ -37,6 +49,7 @@ plugin.defaultDB = {
 	time = true,
 	align = "LEFT",
 	icon = true,
+	interceptMouse = nil,
 	emphasize = true,
 	emphasizeFlash = true,
 	emphasizeMove = true,
@@ -44,9 +57,106 @@ plugin.defaultDB = {
 	emphasizeGrowup = nil,
 	BigWigsAnchor_width = 200,
 	BigWigsEmphasizeAnchor_width = 300,
+	leftClick = {},
+	rightClick = {},
+	middleClick = {},
 }
 
-local function shouldDisableEmphasizeOption() return not db.emphasize end
+local clickOptions = {
+	emphasize = {
+		type = "toggle",
+		name = colorize["Super Emphasize"],
+		desc = "Temporarily Super Emphasizes the bar and any messages associated with it for the duration.",
+		descStyle = "inline",
+		order = 1,
+	},
+	report = {
+		type = "toggle",
+		name = colorize["Report"],
+		desc = "Reports the current bars status to the active group chat, either battleground, raid, party or guild, as appropriate.",
+		descStyle = "inline",
+		order = 2,
+	},
+	remove = {
+		type = "toggle",
+		name = colorize["Remove"],
+		desc = "Removes the bar and all associated messages from displaying.",
+		descStyle = "inline",
+		order = 3,
+	},
+	removeOther = {
+		type = "toggle",
+		name = colorize["Remove other bars"],
+		desc = "Temporarily removes all other bars (except this one) and associated messages.",
+		descStyle = "inline",
+		order = 4,
+	},
+	disable = {
+		type = "toggle",
+		name = colorize["Disable"],
+		desc = "Disables the boss encounter ability option that spawned this bar.",
+		descStyle = "inline",
+		order = 5,
+	},
+}
+
+local function shouldDisable() return not plugin.db.profile.interceptMouse end
+
+plugin.subPanelOptions = {
+	key = "Big Wigs: Clickable Bars",
+	name = "Clickable Bars",
+	options = {
+		name = "Clickable Bars",
+		type = "group",
+		childGroups = "tab",
+		args = {
+			heading = {
+				type = "description",
+				name = "Big Wigs bars are click-through by default. This means you can target objects in the game that are behind the bars, for example, or you can target AoE spells while your mouse is over them, you can jiggle your camera, and so on. |cffff4411If you enable clickable bars, this will no longer work|r. The bars will intercept any mouse clicks you perform on them.\n",
+				order = 1,
+				width = "full",
+				fontSize = "medium",
+			},
+			interceptMouse = {
+				type = "toggle",
+				name = colorize["Enable"],
+				desc = "Enables bars to recieve mouse clicks. Note that this makes it impossible to click through bars to target anything or perform any actions other than the ones specified below.",
+				order = 2,
+				width = "full",
+				descStyle = "inline",
+				get = function() return plugin.db.profile.interceptMouse end,
+				set = function(_, value) plugin.db.profile.interceptMouse = value end,
+			},
+			left = {
+				type = "group",
+				name = "Left-click",
+				order = 3,
+				args = clickOptions,
+				disabled = shouldDisable,
+				get = function(info) return plugin.db.profile.leftClick[info[#info]] end,
+				set = function(info, value) plugin.db.profile.leftClick[info[#info]] = value end,
+			},
+			middle = {
+				type = "group",
+				name = "Middle-click",
+				order = 4,
+				args = clickOptions,
+				disabled = shouldDisable,
+				get = function(info) return plugin.db.profile.middleClick[info[#info]] end,
+				set = function(info, value) plugin.db.profile.middleClick[info[#info]] = value end,
+			},
+			right = {
+				type = "group",
+				name = "Right-click",
+				order = 5,
+				args = clickOptions,
+				disabled = shouldDisable,
+				get = function(info) return plugin.db.profile.rightClick[info[#info]] end,
+				set = function(info, value) plugin.db.profile.rightClick[info[#info]] = value end,
+			},
+		},
+	},
+}
 
 --------------------------------------------------------------------------------
 -- Bar arrangement
@@ -678,3 +788,9 @@ _G["SlashCmdList"]["BWLCB_SHORTHAND"] = function(input)
 	startCustomBar(input, nil, true)
 end
 _G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
+
+-------------------------------------------------------------------------------
+-- Interactive bars
+--
+
+

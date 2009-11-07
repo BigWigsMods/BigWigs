@@ -179,4 +179,3 @@ L["Countdown"] = true
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
 L["Flash"] = true
 L["Flashes the screen red during the last 3 seconds of any related timer."] = true
-
