@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Anub'arak", "koKR")
+local L = BigWigs:NewBossLocale("Anub'arak", "koKR")
 if L then
 	L.engage_message = "전투 시작"
 	L.engage_trigger = "여기가 네 무덤이 되리라!"
@@ -73,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "용사 피의 욕망!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "koKR")
+L = BigWigs:NewBossLocale("Lord Jaraxxus", "koKR")
 if L then
 	L.enable_trigger = "보이지도 않는 노움 주제에! 그렇게 까불더니 무덤을 파는구나!"
 
@@ -101,11 +101,13 @@ if L then
 	L.kiss_interrupted = "차단함!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "koKR")
+L = BigWigs:NewBossLocale("The Twin Val'kyr", "koKR")
 if L then
 	L.engage_trigger1 = "어둠의 주인님을 받들어. 리치 왕을 위하여. 너희에게. 죽음을. 안기리라."
 
 	L.vortex_or_shield_cd = "소용돌이/방패 대기시간"
+	L.next = "다음 소용돌이 또는 방패"
+	L.next_desc = "다음 소용돌이 또는 방패에 대해 알립니다."
 
 	L.vortex = "소용돌이"
 	L.vortex_desc = "쌍둥이의 소용돌이 시전을 알립니다."
