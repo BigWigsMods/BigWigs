@@ -16,7 +16,7 @@ end
 
 L = BigWigs:NewBossLocale("Auriaya", "koKR")
 if L then
-	L.engage_trigger = "Some things are better left alone!"
+	L.engage_trigger = "내버려두는 편이 나았을 텐데!"
 
 	L.fear_warning = "곧 공포!"
 	L.fear_message = "공포 시전!"

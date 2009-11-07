@@ -32,6 +32,8 @@ if L then
 	L.sparks_message = "마력의 불꽃 소환!"
 	L.sparks_warning = "약 5초 후 마력의 불꽃!"
 
+	L.sparkbuff = "말리고스의 마력의 불꽃"
+	L.sparkbuff_desc = "말리고스의 마력의 불꽃 획득을 알립니다."
 	L.sparkbuff_message = "말리고스 마력의 불꽃 획득!"
 
 	L.vortex = "회오리"

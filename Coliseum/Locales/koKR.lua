@@ -6,11 +6,12 @@ if L then
 	L.unburrow_trigger = "땅속에서 모습을 드러냅니다!"
 	L.burrow_trigger = "땅속으로 숨어버립니다!"
 	L.burrow = "소멸"
-	L.burrow_desc = "아눕아락의 소멸 기술에 대하여 타이머등으로 알립니다."
+	L.burrow_desc = "아눕아락의 등장과 소멸, 소환 되어 추가되는 벌레들을 알립니다."
 	L.burrow_cooldown = "다음 소멸"
 	L.burrow_soon = "곧 소멸"
 
-	L.nerubian_burrower = "네루비안 땅무지"
+	L.nerubian_message = "곧 땅무지 추가!"
+	L.nerubian_burrower = "기타 추가"
 
 	L.shadow_soon = "약 5초 후 어둠의 일격!"
 
@@ -95,6 +96,9 @@ if L then
 	L.infernal_bar = "화산 소환"
 	L.netherportal_bar = "~황천 차원문 대기시간"
 	L.netherpower_bar = "~황천의 힘 대기시간"
+	
+	L.kiss_message = "당신에게 키스!"
+	L.kiss_interrupted = "차단함!"
 end
 
 L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "koKR")
