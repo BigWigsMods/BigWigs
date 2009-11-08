@@ -49,7 +49,6 @@ plugin.defaultDB = {
 	time = true,
 	align = "LEFT",
 	icon = true,
-	interceptMouse = nil,
 	emphasize = true,
 	emphasizeFlash = true,
 	emphasizeMove = true,
@@ -57,9 +56,16 @@ plugin.defaultDB = {
 	emphasizeGrowup = nil,
 	BigWigsAnchor_width = 200,
 	BigWigsEmphasizeAnchor_width = 300,
-	leftClick = {},
-	rightClick = {},
-	middleClick = {},
+	interceptMouse = nil,
+	leftClick = {
+		emphasize = true,
+	},
+	middleClick = {
+		remove = true,
+	},
+	rightClick = {
+		menu = true,
+	},
 }
 
 local clickOptions = {
@@ -73,7 +79,7 @@ local clickOptions = {
 	report = {
 		type = "toggle",
 		name = colorize["Report"],
-		desc = "Reports the current bars status to the active group chat, either battleground, raid, party or guild, as appropriate.",
+		desc = "Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate.",
 		descStyle = "inline",
 		order = 2,
 	},
@@ -86,7 +92,7 @@ local clickOptions = {
 	},
 	removeOther = {
 		type = "toggle",
-		name = colorize["Remove other bars"],
+		name = colorize["Remove other"],
 		desc = "Temporarily removes all other bars (except this one) and associated messages.",
 		descStyle = "inline",
 		order = 4,
@@ -97,6 +103,13 @@ local clickOptions = {
 		desc = "Disables the boss encounter ability option that spawned this bar.",
 		descStyle = "inline",
 		order = 5,
+	},
+	menu = {
+		type = "toggle",
+		name = colorize["Menu"],
+		desc = "Opens a menu on the bar with entries like the options here.",
+		descStyle = "inline",
+		order = 6,
 	},
 }
 
@@ -112,7 +125,7 @@ plugin.subPanelOptions = {
 		args = {
 			heading = {
 				type = "description",
-				name = "Big Wigs bars are click-through by default. This means you can target objects in the game that are behind the bars, for example, or you can target AoE spells while your mouse is over them, you can jiggle your camera, and so on. |cffff4411If you enable clickable bars, this will no longer work|r. The bars will intercept any mouse clicks you perform on them.\n",
+				name = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work|r. The bars will intercept any mouse clicks you perform on them.\n",
 				order = 1,
 				width = "full",
 				fontSize = "medium",
@@ -120,17 +133,23 @@ plugin.subPanelOptions = {
 			interceptMouse = {
 				type = "toggle",
 				name = colorize["Enable"],
-				desc = "Enables bars to recieve mouse clicks. Note that this makes it impossible to click through bars to target anything or perform any actions other than the ones specified below.",
+				desc = "Enables bars to receive mouse clicks. Note that this makes it impossible to click through bars to target anything or perform any actions other than the ones specified below.",
 				order = 2,
 				width = "full",
-				descStyle = "inline",
 				get = function() return plugin.db.profile.interceptMouse end,
 				set = function(_, value) plugin.db.profile.interceptMouse = value end,
+			},
+			helpText = {
+				type = "description",
+				name = "The actions below are not mutually exclusive. One click can be set up to trigger any number of combinations. Some obvious combinations are Report+Emphasize, Report+Remove other, Emphasize+Remove other and Remove+Disable. But that's entirely up to you!",
+				order = 3,
+				width = "full",
+				fontSize = "medium",
 			},
 			left = {
 				type = "group",
 				name = "Left-click",
-				order = 3,
+				order = 10,
 				args = clickOptions,
 				disabled = shouldDisable,
 				get = function(info) return plugin.db.profile.leftClick[info[#info]] end,
@@ -139,7 +158,7 @@ plugin.subPanelOptions = {
 			middle = {
 				type = "group",
 				name = "Middle-click",
-				order = 4,
+				order = 11,
 				args = clickOptions,
 				disabled = shouldDisable,
 				get = function(info) return plugin.db.profile.middleClick[info[#info]] end,
@@ -148,7 +167,7 @@ plugin.subPanelOptions = {
 			right = {
 				type = "group",
 				name = "Right-click",
-				order = 5,
+				order = 12,
 				args = clickOptions,
 				disabled = shouldDisable,
 				get = function(info) return plugin.db.profile.rightClick[info[#info]] end,
