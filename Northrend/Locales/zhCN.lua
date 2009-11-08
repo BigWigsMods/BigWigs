@@ -32,7 +32,9 @@ if L then
 	L.sparks_message = "出现 能量火花！"
 	L.sparks_warning = "约5秒后，能量火花！"
 
-	L.sparkbuff_message = "玛里苟斯获得：>能量火花<！"
+	L.sparkbuff = "玛里苟斯获得能量火花"
+	L.sparkbuff_desc = "当玛里苟斯获得能量火花时发出警报。"
+	L.sparkbuff_message = "玛里苟斯：>能量火花<！"
 
 	L.vortex = "漩涡"
 	L.vortex_desc = "当施放漩涡时发出警报及显示计时条。"
@@ -61,7 +63,7 @@ if L then
 	L.phase3_message = "第三阶段！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sartharion", "zhCN")
+L = BigWigs:NewBossLocale("Sartharion", "zhCN")
 if L then
 --	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
 

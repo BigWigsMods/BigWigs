@@ -32,7 +32,7 @@ if L then
 	L.sonic_bar = "<音速尖啸>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Freya", "zhCN")
+L = BigWigs:NewBossLocale("Freya", "zhCN")
 if L then
 --	L.engage_trigger1 = "The Conservatory must be protected!"
 --	L.engage_trigger2 = "Elders grant me your strength!"
@@ -68,7 +68,7 @@ if L then
 --	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Hodir", "zhCN")
+L = BigWigs:NewBossLocale("Hodir", "zhCN")
 if L then
 --	L.engage_trigger = "You will suffer for this trespass!"
 
@@ -85,7 +85,7 @@ if L then
 --	L.end_trigger = "I...I am released from his grasp! At...last!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Ignis the Furnace Master", "zhCN")
+L = BigWigs:NewBossLocale("Ignis the Furnace Master", "zhCN")
 if L then
 --	L.engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!"
 
@@ -99,7 +99,7 @@ if L then
 	L.slagpot_message = "熔渣炉：>%s<！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Iron Council", "zhCN")
+L = BigWigs:NewBossLocale("The Iron Council", "zhCN")
 if L then
 --	L.engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!"
 --	L.engage_trigger2 = "Nothing short of total decimation will suffice!"
@@ -119,7 +119,7 @@ if L then
 	L.council_dies = "%s被击败了！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kologarn", "zhCN")
+L = BigWigs:NewBossLocale("Kologarn", "zhCN")
 if L then
 	L.arm = "手臂死亡"
 	L.arm_desc = "当左右手臂死亡时发出警报。"
@@ -146,7 +146,7 @@ if L then
 	L.armor_message = "粉碎护甲%2$d层：>%1$s<！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Flame Leviathan", "zhCN")
+L = BigWigs:NewBossLocale("Flame Leviathan", "zhCN")
 if L then
 --	L.engage_trigger = "^Hostile entities detected."
 	L.engage_message = "%s已激怒！"
@@ -159,7 +159,7 @@ if L then
 	L.shutdown_message = "系统关闭！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Mimiron", "zhCN")
+L = BigWigs:NewBossLocale("Mimiron", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
@@ -200,7 +200,7 @@ if L then
 --	L.end_trigger = "^It would appear that I've made a slight miscalculation."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Razorscale", "zhCN")
+L = BigWigs:NewBossLocale("Razorscale", "zhCN")
 if L then
 --	L["Razorscale Controller"] = true,
 
@@ -229,7 +229,7 @@ if L then
 	L.harpoon_nextbar = "<魚叉炮台：%d>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thorim", "zhCN")
+L = BigWigs:NewBossLocale("Thorim", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
@@ -256,7 +256,7 @@ if L then
 --	L.end_trigger = "Stay your arms! I yield!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_General Vezax", "zhCN")
+L = BigWigs:NewBossLocale("General Vezax", "zhCN")
 if L then
 --	L.["Vezax Bunny"] = true -- For emote catching.
 
@@ -287,7 +287,7 @@ if L then
 	L.mark_message_other = "无面者的印记：>%s<！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_XT-002 Deconstructor", "zhCN")
+L = BigWigs:NewBossLocale("XT-002 Deconstructor", "zhCN")
 if L then
 	L.exposed_warning = "即将 暴露心脏！"
 	L.exposed_message = "暴露心脏！"
@@ -299,7 +299,7 @@ if L then
 	L.tantrum_bar = "<发脾气 冷却>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Yogg-Saron", "zhCN")
+L = BigWigs:NewBossLocale("Yogg-Saron", "zhCN")
 if L then
 	L["Crusher Tentacle"] = "重压触须"
 --	L["The Observation Ring"] = true,

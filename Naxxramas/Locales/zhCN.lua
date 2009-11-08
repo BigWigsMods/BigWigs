@@ -90,13 +90,13 @@ if L then
 	L.inroombartext = "<进入房间>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grobbulus", "zhCN")
+L = BigWigs:NewBossLocale("Grobbulus", "zhCN")
 if L then
 	L.bomb_message = "变异注射"
 	L.bomb_message_other = "变异注射：>%s<！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Heigan the Unclean", "zhCN")
+L = BigWigs:NewBossLocale("Heigan the Unclean", "zhCN")
 if L then
 	L.starttrigger = "你是我的了。"
 	L.starttrigger2 = "你……就是下一个。"
@@ -122,7 +122,7 @@ if L then
 	L.back_bar = "<出现>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Four Horsemen", "zhCN")
+L = BigWigs:NewBossLocale("The Four Horsemen", "zhCN")
 if L then
 	L.mark = "印记"
 	L.mark_desc = "当施放印记时发出警报。"
@@ -135,7 +135,7 @@ if L then
 	L.startwarn = "四骑士已激活 - 约17秒后，印记！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kel'Thuzad", "zhCN")
+L = BigWigs:NewBossLocale("Kel'Thuzad", "zhCN")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅"
 
@@ -172,7 +172,7 @@ if L then
 	L.guardians_bar = "<寒冰皇冠卫士出现>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Loatheb", "zhCN")
+L = BigWigs:NewBossLocale("Loatheb", "zhCN")
 if L then
 	L.startwarn = "洛欧塞布已激活 - 2分钟后，必然的厄运！"
 
@@ -192,7 +192,7 @@ if L then
 	L.sporebar = "<孢子：%d>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Noth the Plaguebringer", "zhCN")
+L = BigWigs:NewBossLocale("Noth the Plaguebringer", "zhCN")
 if L then
 	L.starttrigger1 = "死吧，入侵者！"
 	L.starttrigger2 = "荣耀归于我主！"
@@ -201,7 +201,7 @@ if L then
 
 	L.blink = "闪现术"
 	L.blink_desc = "当施放闪现术时发出警报。"
-	--L.blinktrigger = "%s blinks away!"
+--	L.blinktrigger = "%s blinks away!"
 	L.blinkwarn = "闪现术！停止攻击！"
 	L.blinkwarn2 = "约5秒後，闪现术！"
 	L.blinkbar = "<闪现术>"
@@ -228,14 +228,14 @@ if L then
 	L.wave2_message = "10秒後，第二波！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Patchwerk", "zhCN")
+L = BigWigs:NewBossLocale("Patchwerk", "zhCN")
 if L then
 	L.enragewarn = "5% - 狂乱！"
 	L.starttrigger1 = "帕奇维克要跟你玩！"
 	L.starttrigger2 = "帕奇维克是克尔苏加德的战神！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Maexxna", "zhCN")
+L = BigWigs:NewBossLocale("Maexxna", "zhCN")
 if L then
 	L.webspraywarn30sec = "10秒后，蛛网裹体！"
 	L.webspraywarn20sec = "蛛网裹体！10秒后小蜘蛛出现！"
@@ -250,9 +250,9 @@ if L then
 	L.spiderbar = "<出现 小蜘蛛>"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sapphiron", "zhCN")
+L = BigWigs:NewBossLocale("Sapphiron", "zhCN")
 if L then
-	--L.airphase_trigger = "Sapphiron lifts off into the air!"
+--	L.airphase_trigger = "Sapphiron lifts off into the air!"
 	L.deepbreath_incoming_message = "约14秒后，冰霜吐息！"
 	L.deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！"
 	L.deepbreath_incoming_bar = "<施放 冰霜吐息>"
@@ -271,7 +271,7 @@ if L then
 	L.ping_message = "寒冰屏障 - 点击你的位置！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Instructor Razuvious", "zhCN")
+L = BigWigs:NewBossLocale("Instructor Razuvious", "zhCN")
 if L then
 	L.shout_warning = "5秒后，瓦解怒吼！"
 	L.shout_next = "瓦解怒吼冷却！"
@@ -280,7 +280,7 @@ if L then
 	L.shieldwall_warning = "5秒后，可以白骨屏障！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thaddius", "zhCN")
+L = BigWigs:NewBossLocale("Thaddius", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"

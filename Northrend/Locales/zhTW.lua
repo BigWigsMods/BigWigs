@@ -32,7 +32,9 @@ if L then
 	L.sparks_message = "出現 力量火花！"
 	L.sparks_warning = "約5秒後，力量火花！"
 
-	L.sparkbuff_message = "瑪里苟斯獲得：>力量火花<！"
+	L.sparkbuff = "瑪里苟斯獲得力量火花"
+	L.sparkbuff_desc = "當瑪里苟斯獲得力量火花時發出警報。"
+	L.sparkbuff_message = "瑪里苟斯：>力量火花<！"
 
 	L.vortex = "漩渦"
 	L.vortex_desc = "當施放漩渦時發出警報及顯示計時條。"
@@ -61,7 +63,7 @@ if L then
 	L.phase3_message = "第三階段！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sartharion", "zhTW")
+L = BigWigs:NewBossLocale("Sartharion", "zhTW")
 if L then
 	L.engage_trigger = "我的職責就是要看守這些龍蛋。在他們受到任何傷害之前，我將會看著你陷入火焰之中!"
 

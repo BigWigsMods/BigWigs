@@ -96,7 +96,7 @@ if L then
 	L.infernal_bar = "화산 소환"
 	L.netherportal_bar = "~황천 차원문 대기시간"
 	L.netherpower_bar = "~황천의 힘 대기시간"
-	
+
 	L.kiss_message = "당신에게 키스!"
 	L.kiss_interrupted = "차단함!"
 end

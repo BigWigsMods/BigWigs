@@ -10,7 +10,8 @@ if L then
 	L.burrow_cooldown = "下一鑽地"
 	L.burrow_soon = "即將 鑽地！"
 
-	L.nerubian_burrower = "奈幽掘洞者"
+	L.nerubian_message = "即將 增援！"
+	L.nerubian_burrower = "更多增援！"
 
 	L.shadow_soon = "約5秒後，暗影打擊！"
 
@@ -72,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "嗜血術！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "zhTW")
+L = BigWigs:NewBossLocale("Lord Jaraxxus", "zhTW")
 if L then
 	L.enable_trigger = "卑微的地精!你的傲慢將使你喪命!"
 
@@ -95,9 +96,12 @@ if L then
 	L.infernal_bar = "<煉獄火山出現>"
 	L.netherportal_bar = "<下一虛空傳送門>"
 	L.netherpower_bar = "<下一虛空傳送門（能量）>"
+
+	L.kiss_message = ">你< 仕女之吻！"
+	L.kiss_interrupted = "中斷！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "zhTW")
+L = BigWigs:NewBossLocale("The Twin Val'kyr", "zhTW")
 if L then
 	L.engage_trigger1 = "以我們的黑暗君王之名。為了巫妖王。你‧得‧死。"
 

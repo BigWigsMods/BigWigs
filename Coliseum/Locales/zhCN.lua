@@ -10,7 +10,8 @@ if L then
 	L.burrow_cooldown = "下一钻地"
 	L.burrow_soon = "即将 钻地！"
 
-	L.nerubian_burrower = "Nerubian Burrower"
+	L.nerubian_message = "即将 增援！"
+	L.nerubian_burrower = "更多增援！"
 
 	L.shadow_soon = "约5秒后，Shadow Strike！"
 
@@ -72,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "嗜血！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "zhCN")
+L = BigWigs:NewBossLocale("Lord Jaraxxus", "zhCN")
 if L then
 --	L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!"
 
@@ -95,9 +96,12 @@ if L then
 	L.infernal_bar = "<Volcano出现>"
 	L.netherportal_bar = "<下一Nether Portal>"
 	L.netherpower_bar = "<下一Nether Power>"
+
+	L.kiss_message = ">你< Mistress' Kiss！"
+	L.kiss_interrupted = "打断！"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "zhCN")
+L = BigWigs:NewBossLocale("The Twin Val'kyr", "zhCN")
 if L then
 --	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
 
