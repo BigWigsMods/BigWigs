@@ -390,7 +390,7 @@ end
 
 function loader:BigWigs_CoreEnabled()
 	if ldb then
-		ldb.icon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
+		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
 	end
 
 	loadAddons(loadOnCoreEnabled)
@@ -402,7 +402,7 @@ end
 
 function loader:BigWigs_CoreDisabled()
 	if ldb then
-		ldb.icon = "Interface\\AddOns\\BigWigs\\Icons\\core-disabled"
+		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
 	end
 end
 
@@ -455,7 +455,7 @@ if ldb11 then
 	ldb = ldb11:NewDataObject("BigWigs", {
 		type = "launcher",
 		label = "Big Wigs",
-		icon = "Interface\\AddOns\\BigWigs\\Icons\\core-disabled",
+		icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled",
 	})
 
 	function ldb.OnClick(self, button)
