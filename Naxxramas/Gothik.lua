@@ -1,14 +1,15 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("Gothik the Harvester", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16060)
 mod.toggleOptions = {"room", "add", "adddeath", "bosskill"}
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -58,9 +59,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 local wave = 0
 local timeTrainer, timeDK, timeRider = 27, 77, 137
@@ -79,9 +80,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:DKDead()
 	self:Message("adddeath", L["dkdiewarn"], "Important")

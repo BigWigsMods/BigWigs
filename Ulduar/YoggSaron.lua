@@ -1,6 +1,7 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Yogg-Saron", "Ulduar")
 if not mod then return end
 --Sara = 33134, Yogg brain = 33890
@@ -16,9 +17,9 @@ mod.optionHeaders = {
 	phase = "general",
 }
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local guardianCount = 1
 local crusherCount = 1
@@ -26,9 +27,9 @@ local pName = UnitName("player")
 local guid = nil
 local empowerscanner = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -81,9 +82,10 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FervorCast", 63138)
 	self:Log("SPELL_AURA_APPLIED", "Fervor", 63138)
@@ -116,9 +118,9 @@ function mod:VerifyEnable()
 	return true
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:FervorCast(player, spellId, _, _, spellName)
 	local bossId = self:GetUnitIdByGUID(33134)

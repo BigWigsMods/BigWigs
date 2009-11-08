@@ -1,6 +1,6 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local mod = BigWigs:NewBoss("Archavon the Stone Watcher", "Vault of Archavon")
 if not mod then return end
@@ -8,15 +8,15 @@ mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(31125)
 mod.toggleOptions = {58663, "charge", {58678, "MESSAGE", "ICON"}, {58965, "FLASHSHAKE"}, "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local pName = UnitName("player")
 
-------------------------------
---      English Locale      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -31,9 +31,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Stomp", 58663, 60880)
@@ -53,9 +53,9 @@ function mod:OnEngage()
 	self:Berserk(300)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Stomp(_, spellId)
 	self:Message(58663, L["stomp_message"], "Attention", spellId)

@@ -1,20 +1,21 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("Gluth", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15932)
 mod.toggleOptions = {28371, 54426, "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local enrageTime = 420
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -25,9 +26,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Frenzy", 28371, 54427)
@@ -47,9 +48,9 @@ function mod:OnEngage()
 	self:Berserk(enrageTime)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Frenzy(_, spellId, _, _, spellName)
 	self:Message(28371, spellName, "Important", spellId)

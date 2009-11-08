@@ -1,21 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("Maexxna", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15952)
 mod.toggleOptions = {29484, 28622, 54123, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local inCocoon = mod:NewTargetList()
 local enrageannounced = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -33,9 +34,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Cocoon", 28622)
@@ -54,9 +55,9 @@ function mod:OnEngage()
 	self:Spray()
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 do
 	local handle = nil

@@ -1,6 +1,6 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local mod = BigWigs:NewBoss("Freya", "Ulduar")
 if not mod then return end
@@ -13,9 +13,9 @@ mod.optionHeaders = {
 	berserk = "general",
 }
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local phase = nil
 local pName = UnitName("player")
@@ -26,9 +26,9 @@ local root = mod:NewTargetList()
 -- Perhaps I'll make a script for it next time we go to Ulduar (which might never happen again).
 local sheIsDead = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -67,9 +67,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
@@ -91,9 +91,9 @@ function mod:VerifyEnable(unit)
 	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 do
 	local id, name, handle = nil, nil, nil

@@ -1,21 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("Anub'Rekhan", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15956)
 mod.toggleOptions = {28785, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local locustTime = 90
 local started = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -33,9 +34,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GainSwarm", 28785, 54021)
@@ -55,9 +56,9 @@ function mod:OnEngage()
 	self:Bar(28785, L["gainincbar"], locustTime, 28785)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:GainSwarm(unit, spellId, _, _, spellName, _, _, _, dGUID)
 	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)

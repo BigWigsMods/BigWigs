@@ -1,6 +1,7 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("XT-002 Deconstructor", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33293)
@@ -11,9 +12,9 @@ mod.optionHeaders = {
 	proximity = "general",
 }
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local pName = UnitName("player")
 local phase = nil
@@ -21,9 +22,9 @@ local exposed1 = nil
 local exposed2 = nil
 local exposed3 = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -38,9 +39,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Exposed", 63849)
@@ -64,9 +65,9 @@ function mod:OnEngage()
 	self:Berserk(600)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Exposed(_, spellId, _, _, spellName)
 	self:Message(63849, L["exposed_message"], "Attention", spellId)

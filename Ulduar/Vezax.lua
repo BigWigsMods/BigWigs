@@ -1,15 +1,15 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local mod = BigWigs:NewBoss("General Vezax", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33271)
 mod.toggleOptions = {"vapor", {"vaporstack", "FLASHSHAKE"}, {62660, "WHISPER", "ICON", "SAY", "FLASHSHAKE"}, {63276, "WHISPER", "ICON", "FLASHSHAKE"}, 62661, 62662, "animus", "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local vaporCount = 1
 local surgeCount = 1
@@ -17,9 +17,9 @@ local pName = UnitName("player")
 local lastVapor = nil
 local vapor = GetSpellInfo(63322)
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -62,9 +62,10 @@ mod.optionHeaders = {
 	berserk = "general",
 }
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Flame", 62661)
 	self:Log("SPELL_CAST_START", "Surge", 62662)
@@ -79,9 +80,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end

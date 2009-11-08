@@ -1,15 +1,15 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
 
 local mod = BigWigs:NewBoss("Instructor Razuvious", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16061)
 mod.toggleOptions = {29107, 55550, 29061, 29060, "bosskill"}
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -21,9 +21,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Shout", 29107, 55543)
@@ -40,9 +40,9 @@ function mod:OnEngage()
 	self:Shout()
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Shout(_, spellId, _, _, spellName)
 	if spellName then

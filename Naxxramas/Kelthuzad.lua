@@ -1,22 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
 
 local mod = BigWigs:NewBoss("Kel'Thuzad", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15990)
 mod.toggleOptions = {27808, 27810, 28410, {27819, "WHISPER", "ICON", "FLASHSHAKE"}, "guardians", "phase", "proximity", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local fbTargets = mod:NewTargetList()
 local mcTargets = mod:NewTargetList()
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -56,9 +56,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 -- Big evul hack to enable the module when entering Kel'Thuzads chamber.
 local enabler = LibStub("AceEvent-3.0"):Embed({})
@@ -82,10 +82,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
-
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Fizzure(_, spellId, _, _, spellName)
 	self:Message(27810, spellName, "Important", spellId)

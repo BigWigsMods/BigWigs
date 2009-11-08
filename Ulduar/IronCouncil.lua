@@ -1,6 +1,7 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("The Iron Council", "Ulduar")
 if not mod then return end
 -- steelbreaker = 32867, molgeim = 32927, brundir = 32857
@@ -14,9 +15,9 @@ mod.optionHeaders = {
 	berserk = "general",
 }
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local previous = nil
 local deaths = 0
@@ -24,9 +25,9 @@ local overwhelmTime = 35
 local pName = UnitName("player")
 local tendrilscanner = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -49,9 +50,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Punch", 61903, 63493) -- Steelbreaker
@@ -74,9 +75,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Punch(_, spellId, _, _, spellName)
 	self:Message(61903, spellName, "Urgent", spellId)

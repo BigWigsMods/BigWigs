@@ -1,6 +1,6 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local mod = BigWigs:NewBoss("Razorscale", "Ulduar")
 if not mod then return end
@@ -13,9 +13,9 @@ if not mod then return end
 mod:RegisterEnableMob(33186, 33210, 33816, 33287)
 mod.toggleOptions = {"phase", 64021, {64704, "FLASHSHAKE"}, "harpoon", "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local p2 = nil
 local pName = UnitName("player")
@@ -24,9 +24,9 @@ local count = 0
 local totalHarpoons = 4
 local phase = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -56,9 +56,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "Flame", 64704, 64733)
@@ -73,9 +73,9 @@ function mod:OnBossEnable()
 	started = nil
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Flame(player)
 	if player == pName then

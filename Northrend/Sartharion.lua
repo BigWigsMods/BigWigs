@@ -1,6 +1,6 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local mod = BigWigs:NewBoss("Sartharion", "The Obsidian Sanctum")
 if not mod then return end
@@ -15,16 +15,17 @@ mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(28860, 30449, 30451, 30452)
 mod.toggleOptions = {"tsunami", 56908, "drakes", {"twilight", "FLASHSHAKE"}, "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 local shadron, tenebron, vesperon = nil, nil, nil
 
-------------------------------
---      English Locale      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
+
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
@@ -52,9 +53,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnRegister()
 	shadron = BigWigs:Translate("Shadron")
@@ -74,9 +75,9 @@ function mod:OnBossEnable()
 	shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:DrakeCheck(_, spellId)
 	-- Tenebron (61248) called in roughly 15s after engage

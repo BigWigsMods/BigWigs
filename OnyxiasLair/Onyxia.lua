@@ -1,6 +1,7 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
+
 local mod = BigWigs:NewBoss("Onyxia", "Onyxia's Lair")
 if not mod then return end
 mod:RegisterEnableMob(10184)
@@ -8,9 +9,10 @@ mod.toggleOptions = {"phase", {17086, "FLASHSHAKE"}, 18431, "bosskill"}
 
 local boss = "Onyxia"
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
+
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
@@ -29,9 +31,10 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
 function mod:OnRegister()
 	boss = BigWigs:Translate(boss)
 end
@@ -44,9 +47,9 @@ function mod:OnBossEnable()
 	self:Death("Win", 10184)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Fear(_, spellId)
 	self:Message(18431, L["fear_message"], "Attention", spellId)

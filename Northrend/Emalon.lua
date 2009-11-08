@@ -1,21 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Emalon the Storm Watcher", "Vault of Archavon")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(33993)
 mod.toggleOptions = {64216, {64218, "ICON"}, "proximity", "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local overchargerepeater = nil -- overcharge repeating timer
 
-------------------------------
---      English Locale      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -27,9 +28,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Nova", 64216, 65279)
@@ -47,9 +48,9 @@ function mod:OnEngage()
 	self:Berserk(360)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Nova(_, spellId, _, _, spellName)
 	self:Message(64216, spellName, "Attention", spellId)

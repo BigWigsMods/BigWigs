@@ -1,22 +1,24 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Malygos", "The Eye of Eternity")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(28859)
 mod.toggleOptions = {"phase", "sparks", "sparkbuff", "vortex", "breath", {"surge", "FLASHSHAKE"}, 57429, "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local pName = UnitName("player")
 local phase = nil
 
-------------------------------
---      English Locale      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
+
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.sparks = "Spark Spawns"
@@ -56,9 +58,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Static", 57429)
@@ -88,9 +90,9 @@ function mod:OnEngage()
 	self:Berserk(600)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Spark(unit, spellId, _, _, _, _, _, _, dGUID)
 	if phase ~= 1 then return end

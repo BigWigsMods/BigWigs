@@ -1,6 +1,6 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local mod = BigWigs:NewBoss("Mimiron", "Ulduar")
 if not mod then return end
@@ -13,17 +13,17 @@ mod.optionHeaders = {
 	phase = "general",
 }
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local ishardmode = nil
 local phase = nil
 local pName = UnitName("player")
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -63,9 +63,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Plasma", 62997, 64529)
@@ -88,9 +88,9 @@ function mod:VerifyEnable(unit)
 	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Bomb(_, spellId, _, _, spellName)
 	self:Message(63811, L["bomb_message"], "Important", 63811, "Alert")

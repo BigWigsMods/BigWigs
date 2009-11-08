@@ -1,15 +1,15 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
 
 local mod = BigWigs:NewBoss("Noth the Plaguebringer", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15954)
 mod.toggleOptions = {"blink", "teleport", 29213, "wave", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local timeroom = 90
 local timebalcony = 70
@@ -17,9 +17,9 @@ local cursetime = 55
 local wave1time = 10
 local wave2time = 41
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -58,9 +58,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
@@ -71,9 +71,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Curse(_, spellId)
 	self:Message(29213, L["cursewarn"], "Important", spellId, "Alarm")

@@ -1,22 +1,23 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("The Four Horsemen", "Naxxramas")
 if not mod then return end
 -- 16063 - zeliek, 16064 - thane, 16065 - blaumeux, 30549 - baron
 mod:RegisterEnableMob(16063, 16064, 16065, 30549)
 mod.toggleOptions = {"mark", 28884, 28863, 28883, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local deaths = 0
 local marks = 1
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -32,9 +33,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
@@ -55,9 +56,9 @@ function mod:OnEngage()
 	self:DelayedMessage("mark", 12, L["markwarn2"]:format(marks), "Urgent")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Deaths()
 	deaths = deaths + 1

@@ -1,15 +1,15 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
 
 local mod = BigWigs:NewBoss("Heigan the Unclean", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(15936)
 mod.toggleOptions = {"engage", "teleport", "bosskill"}
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -38,9 +38,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -48,9 +48,9 @@ function mod:OnBossEnable()
 	self:Death("Win", 15936)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 local function backToRoom()
 	mod:Message("teleport", L["on_floor_message"], "Attention")

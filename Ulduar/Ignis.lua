@@ -1,21 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Ignis the Furnace Master", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33118)
 mod.toggleOptions = { 62488, 62382, 62680, {62546, "FLASHSHAKE"}, {62717, "FLASHSHAKE"}, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local pName = UnitName("player")
 local spawnTime = 30
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -32,9 +33,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Construct", 62488)
@@ -47,9 +48,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Brittle(_, spellId)
 	self:Message(62382, L["brittle_message"], "Positive", spellId)

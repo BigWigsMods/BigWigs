@@ -1,23 +1,24 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("Loatheb", "Naxxramas")
 if not mod then return end
 mod:RegisterEnableMob(16011)
 mod.toggleOptions = {55593, 29865, 29204, 29234, "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local doomTime = 30
 local sporeCount = 1
 local doomCount = 1
 local sporeTime = 16
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -40,9 +41,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Aura", 55593)
@@ -74,9 +75,9 @@ function mod:OnEngage()
 	self:DelayedMessage(29204, 115, L["doomwarn5sec"]:format(doomCount), "Urgent")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Aura(_, spellId, _, _, spellName)
 	self:Message(55593, L["aura_message"], "Important", spellId)

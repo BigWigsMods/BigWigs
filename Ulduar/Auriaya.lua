@@ -1,21 +1,22 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
+
 local mod = BigWigs:NewBoss("Auriaya", "Ulduar")
 if not mod then return end
 mod:RegisterEnableMob(33515)
 --Feral Defender = 34035
 mod.toggleOptions = { 64386, 64389, 64396, 64422, "defender", "berserk", "bosskill" }
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local count = 9
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -37,9 +38,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Sonic", 64422, 64688)
@@ -62,9 +63,9 @@ function mod:OnEngage()
 	self:Berserk(600)
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:Sonic(_, spellId, _, _, spellName)
 	self:Message(64422, spellName, "Attention", spellId)

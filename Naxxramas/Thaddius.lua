@@ -1,15 +1,16 @@
-----------------------------------
---      Module Declaration      --
-----------------------------------
+--------------------------------------------------------------------------------
+-- Module declaration
+--
+
 local mod = BigWigs:NewBoss("Thaddius", "Naxxramas")
 if not mod then return end
 -- 15928 thaddius, 15929 - stalagg, 15930 - feugen
 mod:RegisterEnableMob(15928, 15929, 15930)
 mod.toggleOptions = {{28089, "FLASHSHAKE"}, 28134, "throw", "phase", "berserk", "bosskill"}
 
-------------------------------
---      Are you local?      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local deaths = 0
 local stage1warn = nil
@@ -17,9 +18,9 @@ local lastCharge = nil
 local shiftTime = nil
 local throwHandle = nil
 
-----------------------------
---      Localization      --
-----------------------------
+--------------------------------------------------------------------------------
+-- Localization
+--
 
 local L = mod:NewLocale("enUS", true)
 if L then
@@ -55,9 +56,9 @@ if L then
 end
 L = mod:GetLocale()
 
-------------------------------
---      Initialization      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Initialization
+--
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "StalaggPower", 28134, 54529)
@@ -73,9 +74,9 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
 
 function mod:StalaggPower(_, spellId, _, _, spellName)
 	self:Message(28134, L["surge_message"], "Important", spellId)
