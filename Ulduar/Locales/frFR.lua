@@ -32,7 +32,7 @@ if L then
 	L.sonic_bar = "~H. sonore"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Freya", "frFR")
+L = BigWigs:NewBossLocale("Freya", "frFR")
 if L then
 	L.engage_trigger1 = "Le jardin doit être protégé !"
 	L.engage_trigger2 = "Anciens, donnez-moi votre force !"
@@ -68,7 +68,7 @@ if L then
 	L.end_trigger = "Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Hodir", "frFR")
+L = BigWigs:NewBossLocale("Hodir", "frFR")
 if L then
 	L.engage_trigger = "Vous allez souffrir pour cette intrusion !"
 
@@ -85,7 +85,7 @@ if L then
 	L.end_trigger = "Je suis... libéré de son emprise... enfin."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Ignis the Furnace Master", "frFR")
+L = BigWigs:NewBossLocale("Ignis the Furnace Master", "frFR")
 if L then
 	L.engage_trigger = "Chiots insolents ! Les lames qui serviront à reconquérir ce monde seront trempées dans votre sang !"
 
@@ -99,7 +99,7 @@ if L then
 	L.slagpot_message = "Marmite : %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Iron Council", "frFR")
+L = BigWigs:NewBossLocale("The Iron Council", "frFR")
 if L then
 	L.engage_trigger1 = "Vous ne vaincrez pas si facilement l'assemblée du Fer, envahisseurs !"
 	L.engage_trigger2 = "Seule votre extermination complète me conviendra."
@@ -119,7 +119,7 @@ if L then
 	L.council_dies = "%s éliminé"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kologarn", "frFR")
+L = BigWigs:NewBossLocale("Kologarn", "frFR")
 if L then
 	L.arm = "Destruction des bras"
 	L.arm_desc = "Prévient quand le bras gauche et/ou droit est détruit."
@@ -143,7 +143,7 @@ if L then
 	L.armor_message = "%2$dx broyages d'armure sur %1$s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Flame Leviathan", "frFR")
+L = BigWigs:NewBossLocale("Flame Leviathan", "frFR")
 if L then
 	L.engage = "Engagement"
 	L.engage_desc = "Prévient quand le Léviathan des flammes est engagé."
@@ -158,7 +158,7 @@ if L then
 	L.shutdown_message = "Extinction des systèmes !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Mimiron", "frFR")
+L = BigWigs:NewBossLocale("Mimiron", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
@@ -195,7 +195,7 @@ if L then
 	L.end_trigger = "^Il semblerait que j'aie pu faire une minime erreur de calcul."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Razorscale", "frFR")
+L = BigWigs:NewBossLocale("Razorscale", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
@@ -222,7 +222,7 @@ if L then
 	L.harpoon_nextbar = "Tourelle %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thorim", "frFR")
+L = BigWigs:NewBossLocale("Thorim", "frFR")
 if L then
 	L["Runic Colossus"] = "Colosse runique" -- For the runic barrier emote.
 
@@ -251,7 +251,7 @@ if L then
 	L.end_trigger = "Retenez vos coups ! Je me rends !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_General Vezax", "frFR")
+L = BigWigs:NewBossLocale("General Vezax", "frFR")
 if L then
 	L.engage_trigger = "^Votre destruction annoncera un nouvel âge de souffrance !"
 
@@ -280,7 +280,7 @@ if L then
 	L.mark_message_other = "Marque : %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_XT-002 Deconstructor", "frFR")
+L = BigWigs:NewBossLocale("XT-002 Deconstructor", "frFR")
 if L then
 	L.exposed_warning = "Cœur exposé imminent"
 	L.exposed_message = "Cœur exposé !"
@@ -292,7 +292,7 @@ if L then
 	L.tantrum_bar = "~Recharge Colère"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Yogg-Saron", "frFR")
+L = BigWigs:NewBossLocale("Yogg-Saron", "frFR")
 if L then
 	L["Crusher Tentacle"] = "Tentacule écraseur"
 	L["The Observation Ring"] = "le cercle d'observation"

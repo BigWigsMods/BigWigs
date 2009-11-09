@@ -63,7 +63,7 @@ if L then
 	L.phase3_message = "Phase 3 !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sartharion", "frFR")
+L = BigWigs:NewBossLocale("Sartharion", "frFR")
 if L then
 	L.engage_trigger = "Ces oeufs sont sous ma responsabilité. Je vous ferai brûler avant de vous laisser y toucher !"
 

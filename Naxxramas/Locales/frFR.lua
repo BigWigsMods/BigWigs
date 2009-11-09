@@ -90,13 +90,13 @@ if L then
 	L.inroombartext = "Dans la salle"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grobbulus", "frFR")
+L = BigWigs:NewBossLocale("Grobbulus", "frFR")
 if L then
 	L.bomb_message = "Injection"
 	L.bomb_message_other = "Injection mutante : %s"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Heigan the Unclean", "frFR")
+L = BigWigs:NewBossLocale("Heigan the Unclean", "frFR")
 if L then
 	L.starttrigger = "Vous êtes à moi, maintenant."
 	L.starttrigger2 = "Tu es… le suivant."
@@ -122,7 +122,7 @@ if L then
 	L.back_bar = "Retour sur le sol !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Four Horsemen", "frFR")
+L = BigWigs:NewBossLocale("The Four Horsemen", "frFR")
 if L then
 	L.mark = "Marque"
 	L.mark_desc = "Prévient de l'arrivée des marques."
@@ -135,7 +135,7 @@ if L then
 	L.startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec. !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kel'Thuzad", "frFR")
+L = BigWigs:NewBossLocale("Kel'Thuzad", "frFR")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Appartements de Kel'Thuzad"
 
@@ -172,7 +172,7 @@ if L then
 	L.guardians_bar = "Arrivée des gardiens !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Loatheb", "frFR")
+L = BigWigs:NewBossLocale("Loatheb", "frFR")
 if L then
 	L.startwarn = "Horreb engagé ! 2 min. avant la 1ère Malédiction inévitable !"
 
@@ -192,7 +192,7 @@ if L then
 	L.sporebar = "Invocation de spore %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Noth the Plaguebringer", "frFR")
+L = BigWigs:NewBossLocale("Noth the Plaguebringer", "frFR")
 if L then
 	L.starttrigger1 = "Mourez, intrus !"
 	L.starttrigger2 = "Gloire au maître !"
@@ -228,14 +228,14 @@ if L then
 	L.wave2_message = "2ème vague dans 10 sec."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Patchwerk", "frFR")
+L = BigWigs:NewBossLocale("Patchwerk", "frFR")
 if L then
 	L.enragewarn = "5% - Frénésie !"
 	L.starttrigger1 = "R'cousu veut jouer !"
 	L.starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Maexxna", "frFR")
+L = BigWigs:NewBossLocale("Maexxna", "frFR")
 if L then
 	L.webspraywarn30sec = "Entoilage dans 10 sec."
 	L.webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !"
@@ -250,7 +250,7 @@ if L then
 	L.spiderbar = "Araignées"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sapphiron", "frFR")
+L = BigWigs:NewBossLocale("Sapphiron", "frFR")
 if L then
 	L.airphase_trigger = "Saphiron s'envole !"
 	L.deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~14 sec. !"
@@ -271,7 +271,7 @@ if L then
 	L.ping_message = "Bloc - Indication de votre position aux autres !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Instructor Razuvious", "frFR")
+L = BigWigs:NewBossLocale("Instructor Razuvious", "frFR")
 if L then
 	L.shout_warning = "Cri perturbant dans 5 sec. !"
 	L.shout_next = "Recharge Cri"
@@ -280,7 +280,7 @@ if L then
 	L.shieldwall_warning = "Barrière d'os terminée dans 5 sec. !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thaddius", "frFR")
+L = BigWigs:NewBossLocale("Thaddius", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."

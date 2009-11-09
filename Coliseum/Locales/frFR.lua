@@ -73,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "Furie sanguinaire sur les champions !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "frFR")
+L = BigWigs:NewBossLocale("Jaraxxus", "frFR")
 if L then
 	L.enable_trigger = "Misérable gnome ! Ton arrogance te perdra !"
 
@@ -101,7 +101,7 @@ if L then
 	L.kiss_interrupted = "Interrompu !"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "frFR")
+L = BigWigs:NewBossLocale("The Twin Val'kyr", "frFR")
 if L then
 	L.engage_trigger1 = "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir."
 
