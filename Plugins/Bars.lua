@@ -139,13 +139,6 @@ plugin.subPanelOptions = {
 				get = function() return plugin.db.profile.interceptMouse end,
 				set = function(_, value) plugin.db.profile.interceptMouse = value end,
 			},
-			helpText = {
-				type = "description",
-				name = "The actions below are not mutually exclusive. One click can be set up to trigger any number of combinations. Some obvious combinations are Report+Emphasize, Report+Remove other, Emphasize+Remove other and Remove+Disable. But that's entirely up to you!",
-				order = 3,
-				width = "full",
-				fontSize = "medium",
-			},
 			left = {
 				type = "group",
 				name = "Left-click",

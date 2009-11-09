@@ -268,19 +268,17 @@ do
 		if scheduledMessages[text] then
 			self:CancelTimer(scheduledMessages[text][1], true)
 			scheduledMessages[text] = nil
+			return true
 		end
 	end
 
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
-		if type(delay) ~= "number" then error(string.format("The delay needs to be a number, now (%q) for module '%q'", delay, module.name)) end
+		if type(delay) ~= "number" then error(string.format("Module %s tried to schedule a delayed message with delay as type %q, but it must be a number.", module.name, type(delay))) end
 		self:CancelDelayedMessage(text)
 
 		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
-		scheduledMessages[text] = {id, key, text}
-		for i = 1, select("#", ...) do
-			tinsert(scheduledMessages[text], (select(i, ...)))
-		end
+		scheduledMessages[text] = {id, key, text, ...}
 		return id
 	end
 end
