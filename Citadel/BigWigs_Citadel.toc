@@ -5,10 +5,14 @@
 ## Title-deDE: Big Wigs [|cffeda55fEiskronenzitadelle|r]
 ## Title-ruRU: Big Wigs [|cffeda55fЦитадель Ледяной Короны|r]
 ## Title-koKR: Big Wigs [|cffeda55f얼음왕관 성채|r]
+## Title-zhCN: Big Wigs [|cffeda55f冰冠堡垒|r]
+## Title-zhTW: Big Wigs [|cffeda55f冰冠城塞|r]
 ## Notes: Big Wigs Modules for Icecrown Citadel
 ## Notes-ruRU: Модуль Big Wigs - Цитадель Ледяной Короны
 ## Notes-frFR: Modules Big Wigs concernant la citadelle de la Couronne de glace.
 ## Notes-koKR: Big Wigs 얼음왕관 성채 경고
+## Notes-zhCN: Big Wigs 冰冠堡垒模块
+## Notes-zhTW: Big Wigs 冰冠城塞模組
 ## Author: Samirâ,Yoshimo
 
 ## LoadOnDemand: 1
