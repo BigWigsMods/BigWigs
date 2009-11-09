@@ -11,6 +11,7 @@ if L then
 	L.punch_message = "相位拳擊%2$d層： >%1$s<！"
 	L.smash_message = "即將 宇宙潰擊！"
 	L.blackhole_message = "黑洞爆炸：>%dx< 出現！"
+	L.bigbang_bar = "<下一大爆炸>"
 	L.bigbang_soon = "即將 大爆炸！"
 end
 

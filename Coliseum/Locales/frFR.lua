@@ -73,7 +73,7 @@ if L then
 	L["Bloodlust on champions!"] = "Furie sanguinaire sur les champions !"
 end
 
-L = BigWigs:NewBossLocale("Jaraxxus", "frFR")
+L = BigWigs:NewBossLocale("Lord Jaraxxus", "frFR")
 if L then
 	L.enable_trigger = "Misérable gnome ! Ton arrogance te perdra !"
 
