@@ -11,7 +11,7 @@ if L then
 	L.burrow_soon = "곧 소멸"
 
 	L.nerubian_message = "곧 땅무지 추가!"
-	L.nerubian_burrower = "기타 추가"
+	L.nerubian_burrower = "벌레 추가"
 
 	L.shadow_soon = "약 5초 후 어둠의 일격!"
 
@@ -115,7 +115,7 @@ if L then
 	L.shield = "어둠/빛의 방패"
 	L.shield_desc = "어둠/빛의 방패를 알립니다."
 	L.shield_half_message = "방패 강도 50%!"
-	L.shield_left_message = "방패: %d%%"
+	L.shield_left_message = "%d%% 강도 남음"
 
 	L.touch = "어둠/빛의 손길"
 	L.touch_desc = "어둠/빛의 손길을 알립니다."

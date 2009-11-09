@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Algalon", "koKR")
+local L = BigWigs:NewBossLocale("Algalon the Observer", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변경을 알립니다."
@@ -11,6 +11,7 @@ if L then
 	L.punch_message = "위상의 주먹 %dx: %s"
 	L.smash_message = "곧 우주의 강타!"
 	L.blackhole_message = "검은 구멍 폭발 %dx 소환"
+	L.bigbang_bar = "다음 대폭발"
 	L.bigbang_soon = "곧 대폭발!"
 end
 
