@@ -92,7 +92,7 @@ end
 
 L = BigWigs:NewBossLocale("Grobbulus", "deDE")
 if L then
-	L.bomb_message = "Injection"
+	L.bomb_message = "Injektion"
 	L.bomb_message_other = "%s ist verseucht!"
 end
 
@@ -174,7 +174,7 @@ end
 
 L = BigWigs:NewBossLocale("Loatheb", "deDE")
 if L then
-	L.startwarn = "Loatheb angegriffen! 2min bis Unausweichliches Schicksal!"
+	L.startwarn = "Loatheb angegriffen! 2 min bis Unausweichliches Schicksal!"
 
 	L.aura_message = "Nekrotische Aura - Dauer 17 sek!"
 	L.aura_warning = "Nekrotische Aura schwindet in 3 sek!"
