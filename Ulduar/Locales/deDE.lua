@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Algalon", "deDE")
+local L = BigWigs:NewBossLocale("Algalon the Observer", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."

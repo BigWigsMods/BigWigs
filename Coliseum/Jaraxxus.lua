@@ -68,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "InfernalEruption", 66258, 67901, 67902, 67903)
 	self:Log("SPELL_AURA_APPLIED", "MistressKiss", 67905, 67906, 67907, 66334) -- debuff before getting interrupted
 	self:Log("SPELL_AURA_REMOVED", "MistressKissRemoved", 67905, 67906, 67907, 66334)
-	self:Log("SPELL_AURA_APPLIED", "MistressKissInterrupted", 66335, 66359, 67073, 67074, 67075, 67908, 67909, 67910) -- debuff after getting interrupted
+	self:Log("SPELL_INTERRUPT", "MistressKissInterrupted", 66335, 66359, 67073, 67074, 67075, 67908, 67909, 67910) -- debuff after getting interrupted
 
 	-- Only happens the first time we engage Jaraxxus, still 11 seconds left until he really engages.
 	self:Yell("FirstEngage", L["engage_trigger1"])
