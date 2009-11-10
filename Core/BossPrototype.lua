@@ -463,3 +463,4 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	local berserk = GetSpellInfo(26662)
 	self:Bar("berserk", berserk, seconds, 26662)
 end
+

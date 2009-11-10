@@ -113,18 +113,18 @@ do
 	function mod:HealStarted(player, spellId, source)
 		if not f then
 			f = CreateFrame("Frame")
-			f:SetScript("OnEvent", function(_, _, _, event, _, _, _, _, player, _, _, spellName, _, eventType, amount)
-				if eventType == "ABSORB" and player == twin then
-					if event == "SPELL_PERIODIC_MISSED" or event == "SPELL_MISSED" or event == "RANGE_MISSED" then
-						damageDone = damageDone + amount
-					elseif event == "SWING_MISSED" then
-						damageDone = damageDone + spellName
+			f:SetScript("OnEvent", function(_, _, _, event, _, _, _, _, dName, _, _, swingDamage, _, healId, damage)
+				if dName == twin then
+					if event == "SWING_MISSED" then -- SWING_MISSED probably happens more often than the others, so catch it first
+						damageDone = damageDone + swingDamage
+					elseif event == "SPELL_PERIODIC_MISSED" or event == "SPELL_MISSED" or event == "RANGE_MISSED" then
+						damageDone = damageDone + damage
 					end
 					if currentShieldStrength and not halfWarning and damageDone >= (currentShieldStrength / 2) then
 						mod:Message("shield", L["shield_half_message"], "Positive")
 						halfWarning = true
 					end
-				elseif event == "SPELL_INTERRUPT" and heals[eventType] then
+				elseif event == "SPELL_INTERRUPT" and heals[healId] then
 					stop()
 				end
 			end)
