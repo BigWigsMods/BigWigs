@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Lord Jaraxxus", "Trial of the Crusader")
 if not mod then return end
-mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON", "FLASHSHAKE"}, 67106, "adds", {67905, "FLASHSHAKE"}, "bosskill"}
+mod.toggleOptions = {{67049, "WHISPER"}, {68123, "WHISPER", "ICON", "FLASHSHAKE"}, 67106, "adds", {67905, "FLASHSHAKE"}, "berserk", "bosskill"}
 mod.optionHeaders = {
 	[67049] = "normal",
 	[67905] = "heroic",
@@ -83,6 +83,10 @@ end
 
 function mod:OnEngage()
 	self:Bar("adds", L["netherportal_bar"], 20, 68404)
+	difficulty = GetRaidDifficulty()
+	if difficulty > 2 then
+		self:Berserk(600)
+	end
 end
 
 --------------------------------------------------------------------------------
