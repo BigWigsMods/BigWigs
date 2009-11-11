@@ -114,7 +114,7 @@ do
 		if not f then
 			f = CreateFrame("Frame")
 			f:SetScript("OnEvent", function(_, _, _, event, _, _, _, _, dName, _, _, swingDamage, _, healId, damage)
-				if dName == twin then
+				if healId == "ABSORB" and dName == twin then
 					if event == "SWING_MISSED" then -- SWING_MISSED probably happens more often than the others, so catch it first
 						damageDone = damageDone + swingDamage
 					elseif event == "SPELL_PERIODIC_MISSED" or event == "SPELL_MISSED" or event == "RANGE_MISSED" then
