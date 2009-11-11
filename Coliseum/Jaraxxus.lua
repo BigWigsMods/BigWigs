@@ -83,8 +83,7 @@ end
 
 function mod:OnEngage()
 	self:Bar("adds", L["netherportal_bar"], 20, 68404)
-	difficulty = GetRaidDifficulty()
-	if difficulty > 2 then
+	if GetRaidDifficulty() > 2 then
 		self:Berserk(600)
 	end
 end
