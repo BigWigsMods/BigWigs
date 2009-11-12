@@ -26,6 +26,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local AceGUI = nil
 
 local colors = nil
+local superemp = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
 local db = nil
@@ -380,6 +381,7 @@ function plugin:OnPluginEnable()
 	timers = timers or {}
 
 	colors = BigWigs:GetPlugin("Colors")
+	superemp = BigWigs:GetPlugin("Super Emphasize")
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
@@ -665,6 +667,14 @@ local function barClicked(bar, button)
 	end
 end
 
+local function countdown(bar)
+	if bar.remaining <= bar:Get("bigwigs:count") then
+		local count = bar:Get("bigwigs:count")
+		bar:Set("bigwigs:count", count - 1)
+		PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3")
+	end
+end
+
 function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if not normalAnchor then createAnchors() end
 	stop(module, text)
@@ -692,6 +702,12 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	bar:EnableMouse(true)
 	bar:SetScript("OnMouseDown", barClicked)
 	--]]
+	
+	if superemp:IsSuperEmphasized(module,key) and superemp.db.profile.countdown then
+		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
+		bar:AddUpdateFunction( countdown )
+	end
+	
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
