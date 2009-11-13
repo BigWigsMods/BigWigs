@@ -5,16 +5,16 @@ end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhTW")
 if L then
-	L.dnd_message = ">你< Death and Decay！"
+	L.dnd_message = ">你< 死亡凋零！"
 	L.phase2_message = "第二階段 - Mana barrier gone！"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")
 if L then
-	L.impale_cd = "<下一impale>"
+	L.impale_cd = "<下一刺穿>"
 	L.whirlwind_cd = "<下一旋風斬>"
 
-	L.coldflame_message = ">你< Coldflame！"
+	L.coldflame_message = ">你< 冷焰！"
 end
 
 L = BigWigs:NewBossLocale("Precious", "zhTW")
