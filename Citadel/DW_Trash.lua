@@ -14,6 +14,7 @@ mod.toggleOptions = {{69483, "WHISPER", "ICON", "FLASHSHAKE"}, "proximity"}
 --
 
 local pName = UnitName("player")
+
 --------------------------------------------------------------------------------
 --  Localization
 --

@@ -98,7 +98,9 @@ function plugin:OnPluginEnable()
 end
 
 function plugin:IsSuperEmphasized(module, key)
+	if not module or not key then return end
 	if type(key) == "number" then key = GetSpellInfo(key) end
 	if temporaryEmphasizes[key] then return true end
 	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
 end
+

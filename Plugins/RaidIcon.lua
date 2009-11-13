@@ -116,3 +116,4 @@ function plugin:BigWigs_RemoveRaidIcon(message, icon)
 	SetRaidTarget(lastplayer[icon or 1], 0)
 	lastplayer[icon or 1] = nil
 end
+

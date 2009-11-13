@@ -703,9 +703,9 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	bar:SetScript("OnMouseDown", barClicked)
 	--]]
 	
-	if superemp:IsSuperEmphasized(module,key) and superemp.db.profile.countdown then
+	if superemp:IsSuperEmphasized(module, key) and superemp.db.profile.countdown then
 		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
-		bar:AddUpdateFunction( countdown )
+		bar:AddUpdateFunction(countdown)
 	end
 	
 	bar:Start()
