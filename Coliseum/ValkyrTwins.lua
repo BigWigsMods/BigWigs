@@ -80,7 +80,7 @@ function mod:OnEngage()
 	if started then return end
 	started = true
 	self:Bar("next", L["vortex_or_shield_cd"], 45, 39089)
-	self:Berserk(difficulty > 2 and 360 or 540)
+	self:Berserk(difficulty > 2 and 360 or 480)
 end
 
 --------------------------------------------------------------------------------
@@ -135,7 +135,7 @@ do
 	end
 	function mod:Healed()
 		if not currentShieldStrength then return end
-		local missing = math.ceil((currentShieldStrength / damageDone * 100) - 100)
+		local missing = math.ceil(100 - (100 * damageDone / currentShieldStrength))
 		self:Message("shield", L["shield_left_message"]:format(missing), "Important")
 		stop()
 	end
