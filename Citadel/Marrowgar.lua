@@ -23,6 +23,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.impale_cd = "~Next impale"
 	L.whirlwind_cd = "~Next whirlwind"
+	L.ww_start = "Whirlwind starts"
+	L.ww_end = "Whirwind ends"
 
 	L.coldflame_message = "Coldflame on YOU!"
 end
@@ -33,7 +35,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_SUMMON", "Impale", 69062)
+	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
 	self:Log("SPELL_AURA_APPLIED", "Whirlwind", 69076)
 	self:Log("SPELL_AURA_REMOVED", "WhirlwindCD", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
@@ -85,9 +87,12 @@ function mod:Coldflame(player, spellId)
 end
 
 function mod:Whirlwind(_, spellId, _, _, spellName)
-	self:Bar(69076, spellName, 30, spellId)
+	self:LocalMessage(spellId, L["ww_start"] , "Personal", "Alarm")---XXXX DEBUG ONLY!
+	self:Bar(69076, spellName, 40, spellId)
 end
 
 function mod:WhirlwindCD(_, spellId)
+	self:LocalMessage(spellId, L["ww_end"] , "Personal", "Alarm")---XXXX DEBUG ONLY!
 	self:Bar(69076, L["whirlwind_cd"], 60, spellId)
 end
+
