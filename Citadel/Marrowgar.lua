@@ -93,6 +93,6 @@ end
 
 function mod:WhirlwindCD(_, spellId)
 	self:LocalMessage(spellId, L["ww_end"] , "Personal", "Alarm")---XXXX DEBUG ONLY!
-	self:Bar(69076, L["whirlwind_cd"], 60, spellId)
+	self:Bar(69076, L["whirlwind_cd"], 49, spellId)
 end
 
