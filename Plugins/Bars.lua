@@ -763,6 +763,7 @@ local function parseTime(input)
 end
 
 local function sendCustomMessage(msg)
+	if not messages[msg] then return end
 	plugin:SendMessage("BigWigs_Message", nil, nil, unpack(messages[msg]))
 	wipe(messages[msg])
 	messages[msg] = nil
