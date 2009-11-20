@@ -3,7 +3,7 @@ if not QueryQuestsCompleted then return end
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Professor", "Icecrown Citadel")
+local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
 mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, "bosskill"}
