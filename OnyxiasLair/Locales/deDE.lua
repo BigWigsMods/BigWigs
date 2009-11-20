@@ -3,7 +3,6 @@ local L = BigWigs:NewBossLocale("Onyxia", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt, wenn ein Phasenwechsel bevorsteht."
-	L.phase1_message = "%s angegriffen - Phase 1!"
 	L.phase2_message = "Phase 2 - Onyxia hebt ab!"
 	L.phase3_message = "Phase 3 - Onyxia landet!"
 
@@ -12,6 +11,5 @@ if L then
 	L.phase3_trigger = "Mir scheint, dass Ihr noch eine Lektion braucht"
 
 	L.deepbreath_message = "Tiefer Atem!"
-
-	L.fear_message = "Furcht in 1.5 sek!"
+	L.fear_message = "Furcht!"
 end
