@@ -5,7 +5,7 @@ if not QueryQuestsCompleted then return end
 
 local mod = BigWigs:NewBoss("Precious", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(37212)
+mod:RegisterEnableMob(37217)
 mod.toggleOptions = {"zombies", 71123, {71127, "FLASHSHAKE"}, "bosskill"}
  --71123: Decimate
  --71127: Mortal wound
