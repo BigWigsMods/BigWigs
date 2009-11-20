@@ -12,4 +12,6 @@
 <Script file="Valithria.lua"/>
 <Script file="Putricide.lua"/>
 <Script file="Lanathel.lua"/>
+<Script file="Blood_Princes.lua"/>
+<Script file="Saurfang.lua"/>
 </Ui>
