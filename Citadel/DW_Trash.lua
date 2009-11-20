@@ -14,7 +14,7 @@ mod.toggleOptions = {{69483, "WHISPER", "ICON", "FLASHSHAKE"}, "proximity"}
 --
 
 local pName = UnitName("player")
-
+local deaths = 0
 --------------------------------------------------------------------------------
 --  Localization
 --
