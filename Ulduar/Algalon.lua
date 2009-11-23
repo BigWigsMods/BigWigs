@@ -33,6 +33,8 @@ if L then
 	L.blackhole_message = "Black Hole %d!"
 	L.bigbang_bar = "Next Big Bang"
 	L.bigbang_soon = "Big Bang soon!"
+	
+	L.end_trigger = "I have seen worlds bathed in the Makers' flames."
 end
 L = mod:GetLocale()
 
@@ -46,7 +48,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Smash", 62301, 64598)
 	self:Log("SPELL_CAST_SUCCESS", "BlackHole", 64122, 65108)
 	self:Log("SPELL_CAST_START","BigBang", 64443, 64584)
-	self:Death("Win", 32871)
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -113,5 +114,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		local sn = GetSpellInfo(62301)
 		self:Bar(62301, sn, 33+offset, 64597)
 		self:Berserk(360+offset)
+	elseif msg:find(L["end_trigger"]) then
+		self:Win()
 	end
 end

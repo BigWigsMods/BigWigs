@@ -13,6 +13,8 @@ if L then
 	L.blackhole_message = "검은 구멍 폭발 %dx 소환"
 	L.bigbang_bar = "다음 대폭발"
 	L.bigbang_soon = "곧 대폭발!"
+	
+	L.end_trigger = "나는 창조주의 불길이 씻어내린 세상을 보았다."
 end
 
 L = BigWigs:NewBossLocale("Auriaya", "koKR")
