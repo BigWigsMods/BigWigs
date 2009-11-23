@@ -4,6 +4,11 @@ if L then
 	L.Phase2 = "마나 보호막 사라짐 - 2 단계"
 end
 
+local L = BigWigs:NewBossLocale("Lady Deathwhisper's Trash", "koKR")
+if L then
+	L.reckoning = "어둠의 응보"
+end
+
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
 if L then
 	L.impale_cd = "~다음 뼈의 쐐기"

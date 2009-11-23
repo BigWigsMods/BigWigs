@@ -22,7 +22,7 @@ L["There is a new release of Big Wigs available. You can visit curse.com, wowint
 L.tooltipHint = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
 L["Active boss modules:"] = "사용중인 보스 모듈:"
 L["All running modules have been reset."] = "활성화된 모든 모듈이 초기화 되었습니다."
-L["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다."
+L["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다."
 
 L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Big Wigs가 자신보다 최근 버전이나 이전 버전인 사람들을 /BWV 를 입력하여 확인 가능합니다."
 L["Up to date:"] = "최신 버전:"
