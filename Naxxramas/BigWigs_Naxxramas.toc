@@ -6,7 +6,7 @@
 ## Title-koKR: Big Wigs [|cffeda55f낙스라마스|r]
 ## Title-ruRU: Big Wigs [|cffeda55fНаксрамас|r]
 ## Notes: Big Wigs Naxxramas Modules
-## Notes-deDE: Big Wigs Naxxramas Module
+## Notes-deDE: Big Wigs Module für Naxxramas.
 ## Notes-zhCN: Big Wigs 纳克萨玛斯模块
 ## Notes-zhTW: Big Wigs 納克薩瑪斯模組
 ## Notes-frFR: Modules Big Wigs concernant Naxxramas.

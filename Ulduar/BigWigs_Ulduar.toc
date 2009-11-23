@@ -6,6 +6,7 @@
 ## Title-zhCN: Big Wigs [|cffeda55f奥杜尔|r]
 ## Title-zhTW: Big Wigs [|cffeda55f奧杜亞|r]
 ## Notes: Big Wigs Ulduar Modules
+## Notes-deDE: Big Wigs Module für Ulduar.
 ## Notes-ruRU: Модуль Big Wigs - Ульдуар
 ## Notes-koKR: Big Wigs 울두아르 경고
 ## Notes-zhCN: Big Wigs 奥杜尔模块
