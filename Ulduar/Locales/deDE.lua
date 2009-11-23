@@ -12,6 +12,8 @@ if L then
 	L.blackhole_message = "Schwarzes Loch %dx!"
 	L.bigbang_bar = "Nächster Großer Knall"
 	L.bigbang_soon = "Großer Knall bald!"
+	
+	L.end_trigger = "Ich sah Welten umhüllt von den Flammen der Schöpfer"
 end
 
 L = BigWigs:NewBossLocale("Auriaya", "deDE")
