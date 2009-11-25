@@ -12,6 +12,8 @@ if L then
 	L.smash_message = "Arrivée d'un Choc cosmique !"
 	L.blackhole_message = "Trou noir %d !"
 	L.bigbang_soon = "Big Bang imminent !"
+
+	L.end_trigger = "J'ai vu des mondes baigner dans les flammes" -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Auriaya", "frFR")

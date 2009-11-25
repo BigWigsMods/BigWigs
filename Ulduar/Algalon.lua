@@ -33,7 +33,7 @@ if L then
 	L.blackhole_message = "Black Hole %d!"
 	L.bigbang_bar = "Next Big Bang"
 	L.bigbang_soon = "Big Bang soon!"
-	
+
 	L.end_trigger = "I have seen worlds bathed in the Makers' flames."
 end
 L = mod:GetLocale()
