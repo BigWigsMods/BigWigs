@@ -106,6 +106,7 @@ function mod:OnEngage()
 	difficulty = GetRaidDifficulty()
 	self:Message("burrow", L["engage_message"], "Attention", 65919)
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
+	self:DelayedMessage("burrow", 65, L["burrow_soon"], "Attention")
 
 	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
 	handle_NextWave = self:ScheduleTimer(scheduleWave, 10)
@@ -159,7 +160,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	if msg:find(L["unburrow_trigger"]) then
 		isBurrowed = nil
 		self:Bar("burrow", L["burrow_cooldown"], 76, 65919)
-		self:DelayedMessage("burrow", 72, L["burrow_soon"], "Attention")
+		self:DelayedMessage("burrow", 61, L["burrow_soon"], "Attention")
 
 		self:Bar("burrow", L["nerubian_burrower"], 5, 66333)
 		handle_NextWave = self:ScheduleTimer(scheduleWave, 5)
@@ -171,9 +172,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	elseif msg:find(L["burrow_trigger"]) then
 		isBurrowed = true
 		unscheduleStrike()
+		self:SendMessage("BigWigs_StopBar", self, L["freeze_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
 		self:CancelTimer(handle_NextWave, true)
 
 		self:Bar("burrow", L["burrow"], 65, 65919)
 	end
 end
+
