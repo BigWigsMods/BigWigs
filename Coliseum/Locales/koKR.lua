@@ -11,7 +11,7 @@ if L then
 	L.burrow_soon = "곧 소멸"
 
 	L.nerubian_message = "곧 땅무지 추가!"
-	L.nerubian_burrower = "벌레 추가"
+	L.nerubian_burrower = "땅무지 추가"
 
 	L.shadow_soon = "약 5초 후 어둠의 일격!"
 
@@ -28,7 +28,7 @@ if L then
 	L.engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!"
 	L.jormungars_trigger = "마음을 단단히 먹게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
 	L.icehowl_trigger = "다음은, 소개하는 순간 공기마저 얼어붙게 하는 얼음울음일세! 죽이지 않으면 죽을 걸세, 용사들이여!"
-	L.boss_incoming = "%s 곧 등장"
+	L.boss_incoming = "곧 %s 등장"
 
 	-- Gormok
 	L.snobold = "스노볼트"
