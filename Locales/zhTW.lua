@@ -30,7 +30,7 @@ L["Out of date:"] = "過期："
 L["No Big Wigs 3.x:"] = "沒有 Big Wigs 3.x："
 
 -- Options.lua
-L["Big Wigs Encounters"] = "Big Wigs 戰斗"
+L["Big Wigs Encounters"] = "Big Wigs 戰鬥"
 L["Customize ..."] = "自定義…"
 L["Profiles"] = "記錄檔"
 L.introduction = "歡迎使用 Big Wigs 戲弄各個首領。請係好安全帶，吃吃花生並享受這次旅行。它不會吃了你的孩子，但會協助你的團隊與新的首領進行戰鬥就如同享受饕餮大餐一樣。"
