@@ -56,8 +56,8 @@ local L = BigWigs:NewBossLocale("Rotface", "frFR")
 if L then
 	L.infection_bar = "Infection mutée : %s"
 
-	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!" -- à traduire
-	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!" -- à traduire
+	L.flood_trigger1 = "Grande nouvelle, mes amis ! J'ai réparé le distributeur de poison !" -- à vérifier
+	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flot !" -- à vérifier
 	L.flood_warning = "Une nouvelle zone va bientôt être inondée !"
 end
 
@@ -70,7 +70,7 @@ end
 
 local L = BigWigs:NewBossLocale("Sindragosa", "frFR")
 if L then
-	L.airphase_trigger = "Your incursion ends here! None shall survive!" -- à traduire
+	L.airphase_trigger = "Votre incursion s'arrête ici" -- à vérifier
 	L.airphase = "Phase aérienne"
 	L.airphase_message = "Phase aérienne"
 	L.airphase_desc = "Prévient quand Sindragosas décolle."
@@ -89,5 +89,5 @@ if L then
 	L.portal = "Portail du Cauchemar"
 	L.portal_desc = "Prévient quand Valithria ouvre un portail."
 	L.portal_message = "Portail actif !"
-	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..." -- à traduire
+	L.portal_trigger = "J'ai ouvert un portail vers le Rêve" -- à vérifier
 end
