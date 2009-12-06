@@ -42,7 +42,7 @@ L["Messages"] = "Nachrichten"
 L["Bars"] = "Leisten"
 L["Background"] = "Hintergrund"
 L["Text"] = "Text"
-L["Flash and shake"] = "Aufblitzen und Wackeln"
+L["Flash and shake"] = "Flash'n'shake"
 L["Normal"] = "Normal"
 L["Emphasized"] = "Hervorgehoben"
 
