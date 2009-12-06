@@ -703,7 +703,7 @@ do
 
 		local sframe = AceGUI:Create("SimpleGroup")
 		sframe:PauseLayout()
-		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, 8)
+		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
 		sframe:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
 		sframe:SetLayout("Fill")
 		sframe:SetFullWidth(true)
@@ -716,13 +716,13 @@ do
 		local group = nil
 		if hasZones then
 			group = AceGUI:Create("DropdownGroup")
+			group:SetTitle(L["Select Boss"])
 			group:SetLayout("Flow")
 			group:SetCallback("OnGroupSelected", showToggleOptions)
 			table.sort(zoneModules[zone])
 			group:SetUserData("zone", zone)
 			group:SetGroupList(zoneModules[zone])
 		else
-			sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
 			group = AceGUI:Create("SimpleGroup")
 			group:SetLayout("Fill")
 			group:SetUserData("module", frame.module)

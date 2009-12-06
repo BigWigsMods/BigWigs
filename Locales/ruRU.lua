@@ -59,6 +59,7 @@ L["Test"] = "Тест"
 L["Reset positions"] = "Сброс позиции"
 L["Options for %s."] = "Опции для %s."
 L["Colors"] = "Цвета"
+--L["Select Boss"] = true
 
 L["BAR"] = "Полосы"
 L["MESSAGE"] = "Сообщения"

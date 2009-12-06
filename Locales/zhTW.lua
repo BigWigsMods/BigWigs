@@ -59,6 +59,7 @@ L["Test"] = "測試"
 L["Reset positions"] = "重置位置"
 L["Options for %s."] = "%s選項。"
 L["Colors"] = "顏色"
+--L["Select Boss"] = true
 
 L["BAR"] = "計時條"
 L["MESSAGE"] = "訊息"
