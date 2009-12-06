@@ -716,7 +716,7 @@ do
 		local group = nil
 		if hasZones then
 			group = AceGUI:Create("DropdownGroup")
-			group:SetTitle(L["Select Boss"])
+			group:SetTitle(L["Select encounter"])
 			group:SetLayout("Flow")
 			group:SetCallback("OnGroupSelected", showToggleOptions)
 			table.sort(zoneModules[zone])

@@ -57,7 +57,7 @@ L["Test"] = true
 L["Reset positions"] = true
 L["Options for %s."] = true -- XXX used ?
 L["Colors"] = true
-L["Select Boss"] = true
+L["Select encounter"] = true
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"

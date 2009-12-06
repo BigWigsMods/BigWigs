@@ -57,7 +57,7 @@ L["Test"] = "Test"
 L["Reset positions"] = "Réinitialiser les positions"
 L["Options for %s."] = "Options concernant %s."
 L["Colors"] = "Couleurs"
---L["Select Boss"] = true
+--L["Select encounter"] = true
 
 L["BAR"] = "Barres"
 L["MESSAGE"] = "Messages"
