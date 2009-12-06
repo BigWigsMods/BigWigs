@@ -354,6 +354,7 @@ do
 	local function createPluginFrame()
 		if frame then return end
 		frame = AceGUI:Create("Window")
+		frame:EnableResize(nil)
 		frame:SetWidth(320)
 		frame:SetHeight(515)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
