@@ -38,7 +38,7 @@ L["Colors"] = "Couleurs"
 
 L["Messages"] = "Messages"
 L["Bars"] = "Barres"
-L["Background"] = "Arrière-plan"
+L["Background"] = "Fond"
 L["Text"] = "Texte"
 L["Flash and shake"] = "Flash et secousse"
 L["Normal"] = "Normal"
