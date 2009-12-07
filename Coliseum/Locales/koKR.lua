@@ -33,7 +33,7 @@ if L then
 	-- Gormok
 	L.snobold = "스노볼트"
 	L.snobold_desc = "스노볼트가 누구의 머리위에 있는지를 알립니다."
-	L.snobold_message = "스노볼트: "
+	L.snobold_message = "스노볼트 추가"
 	L.impale_message = "꿰뚫기 %2$dx : %1$s"
 	L.firebomb_message = "당신은 불 폭탄!"
 
