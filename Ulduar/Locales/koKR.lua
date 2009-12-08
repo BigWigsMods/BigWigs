@@ -319,6 +319,9 @@ if L then
 	L.portal_trigger = "%s의 마음속으로 가는 차원문이 열립니다!"
 	L.portal_message = "차원문 열림!"
 	L.portal_bar = "다음 차원문"
+	
+	L.fervor_cast_message = "%s 에게 사라의 열정 시전!"
+	L.fervor_message = "사라의 열정: %s!"
 
 	L.sanity_message = "당신의 이성 위험!"
 

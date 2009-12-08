@@ -38,15 +38,15 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "koKR")
 if L then
-	L.blight_message = "가스 팽창 : %s!"
-	L.violation_message = "수액괴물 : %s!"
+	L.blight_message = "가스 팽창: %s!"
+	L.violation_message = "수액괴물: %s!"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
 if L then
 	L.infection_bar = "돌연변이 전염병: %s!"
 
-	L.flood_trigger1 = "좋은 소식이에요, 여러분! I've fixed the 독성 수액 pipes!"	--check
+	L.flood_trigger1 = "좋은 소식이에요, 여러분!"	--check( I've fixed the 독성 수액 pipes!)
 	L.flood_trigger2 = "끝내주는 소식이에요, 여러분! 수액이 다시 나오는군요!"	--check
 	L.flood_warning = "곧 새로운 지역에 수액 홍수!"
 end
