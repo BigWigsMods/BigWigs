@@ -1,4 +1,4 @@
-## Interface: 30200
+## Interface: 30300
 
 ## Title: Big Wigs [|cffeda55fNaxxramas|r]
 ## Title-zhCN: Big Wigs [|cffeda55f纳克萨玛斯|r]

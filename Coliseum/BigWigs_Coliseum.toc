@@ -1,4 +1,4 @@
-## Interface: 30200
+## Interface: 30300
 
 ## Title: Big Wigs [|cffeda55fThe Argent Coliseum|r]
 ## Title-ruRU: Big Wigs [|cffeda55fКолизей Серебряного Авангарда|r]

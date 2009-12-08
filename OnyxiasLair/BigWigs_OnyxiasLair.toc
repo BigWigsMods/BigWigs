@@ -1,4 +1,4 @@
-## Interface: 30200
+## Interface: 30300
 
 ## Title: Big Wigs [|cffeda55fOnyxia's Lair|r]
 ## Title-deDE: Big Wigs [|cffeda55fOnyxias Hort|r]
