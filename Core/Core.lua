@@ -208,8 +208,6 @@ do
 		EnableModule = true,
 	}
 
-	-- XXX We need to remove this error for release, since people can have boss modules that we don't have.
-	-- XXX Either custom ones or ones that are in older instances, like MC, BWL, etc.
 	-- local bossEngagedSyncError = "Got a BossEngaged sync for %q from %s, but there's no such module."
 
 	local function onSync(sync, rest, nick)
