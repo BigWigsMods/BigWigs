@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "zhCN")
 if not L then return end
 
 -- Core.lua
-L["%s enabled"] = "%s已启用"
+L["%s enabled"] = "%s已启用"	-- "<boss> enabled"  -- XXX used ?
 L["%s has been defeated"] = "%s被击败了！"     -- "<boss> has been defeated"
 
 L.bosskill = "首领死亡"
@@ -59,7 +59,7 @@ L["Test"] = "测试"
 L["Reset positions"] = "重置位置"
 L["Options for %s."] = "%s选项。"
 L["Colors"] = "颜色"
---L["Select encounter"] = true
+L["Select encounter"] = "选择战斗"
 
 L["BAR"] = "计时条"
 L["MESSAGE"] = "信息"

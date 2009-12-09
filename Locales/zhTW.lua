@@ -3,7 +3,7 @@
 if not L then return end
 
 -- Core.lua
-L["%s enabled"] = "%s已啟用"
+L["%s enabled"] = "%s已啟用"	-- "<boss> enabled"  -- XXX used ?
 L["%s has been defeated"] = "%s被擊敗了！"     -- "<boss> has been defeated"
 
 L.bosskill = "首領死亡"
@@ -59,7 +59,7 @@ L["Test"] = "測試"
 L["Reset positions"] = "重置位置"
 L["Options for %s."] = "%s選項。"
 L["Colors"] = "顏色"
---L["Select encounter"] = true
+L["Select encounter"] = "選擇戰斗"
 
 L["BAR"] = "計時條"
 L["MESSAGE"] = "訊息"
