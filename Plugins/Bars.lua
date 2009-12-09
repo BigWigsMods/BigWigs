@@ -114,7 +114,7 @@ local clickOptions = {
 	},
 }
 
-local function shouldDisable() return not plugin.db.profile.interceptMouse end
+local function shouldDisable() return true end --not plugin.db.profile.interceptMouse end
 
 plugin.subPanelOptions = {
 	key = "Big Wigs: Clickable Bars",
