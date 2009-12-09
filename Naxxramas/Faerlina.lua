@@ -63,7 +63,7 @@ end
 --
 
 function mod:Silence(unit, spellId, _, _, spellName, _, _, _, dGUID)
-	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
+	local target = tonumber(dGUID:sub(-12, -7), 16)
 	if target ~= 15953 then return end
 	if not frenzied then
 		-- preemptive, 30s silence
@@ -90,7 +90,7 @@ function mod:Rain(player)
 end
 
 function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGUID)
-	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
+	local target = tonumber(dGUID:sub(-12, -7), 16)
 	if target ~= 15953 then return end
 	self:Message(28798, L["enragewarn"], "Urgent", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)

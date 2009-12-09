@@ -54,8 +54,7 @@ end
 
 local function targetCheck(unit)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	--XXX 3.3 COMPAT REMOVE ME
-	local id = QueryQuestsCompleted and tonumber((UnitGUID(unit)):sub(-12, -9), 16) or tonumber((UnitGUID(unit)):sub(-12, -7), 16)
+	local id = tonumber((UnitGUID(unit)):sub(-12, -7), 16)
 	if id and enablemobs[id] then
 		targetSeen(unit, enablemobs[id])
 	end

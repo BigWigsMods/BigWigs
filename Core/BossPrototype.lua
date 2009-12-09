@@ -87,8 +87,7 @@ do
 
 	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 		if event == "UNIT_DIED" then
-			--XXX 3.3 COMPAT REMOVE ME
-			local numericId = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
+			local numericId = tonumber(dGUID:sub(-12, -7), 16)
 			local d = deathMap[self][numericId]
 			if not d then return end
 			if type(d) == "function" then d(numericId, dGUID, player, dFlags)
@@ -139,8 +138,7 @@ end
 
 do
 	local t = {"target", "targettarget", "focus", "focustarget", "mouseover", "mouseovertarget"}
-	-- XXX 3.3
-	if QueryQuestsCompleted then for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end end
+	for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end
 	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
 	for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
 	local function findTargetByGUID(id)
@@ -148,8 +146,7 @@ do
 		for i, unit in next, t do
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
 				local unitId = UnitGUID(unit)
-				--XXX 3.3 COMPAT REMOVE ME
-				if idType == "number" then unitId = QueryQuestsCompleted and tonumber(unitId:sub(-12, -9), 16) or tonumber(unitId:sub(-12, -7), 16) end
+				if idType == "number" then unitId = tonumber(unitId:sub(-12, -7), 16) end
 				if unitId == id then return unit end
 			end
 		end

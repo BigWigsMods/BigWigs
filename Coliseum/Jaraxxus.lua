@@ -112,7 +112,7 @@ function mod:LegionFlame(player, spellId)
 end
 
 function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, dGUID)
-	local target = QueryQuestsCompleted and tonumber(dGUID:sub(-12, -9), 16) or tonumber(dGUID:sub(-12, -7), 16)
+	local target = tonumber(dGUID:sub(-12, -7), 16)
 	if target == 34780 then
 		self:Message(67106, spellName, "Attention", spellId)
 		self:Bar(67106, L["netherpower_bar"], 44, spellId)
