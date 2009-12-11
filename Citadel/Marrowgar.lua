@@ -36,7 +36,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
-	self:Log("SPELL_CAST_SUCESS", "Whirlwind", 69076)
+	self:Log("SPELL_CAST_SUCCESS", "Whirlwind", 69076)
 	self:Log("SPELL_AURA_REMOVED", "WhirlwindCD", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
 
