@@ -5,8 +5,8 @@ end
 
 local L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")
 if L then
-	L.DnD_aura_message = "당신은 죽음과 부패!"
-	L.Phase2 = "마나 방벽 사라짐 - 2 단계"
+	L.dnd_message = "당신은 죽음과 부패!"
+	L.phase2_message = "마나 방벽 사라짐 - 2 단계"
 end
 
 local L = BigWigs:NewBossLocale("Lady Deathwhisper's Trash", "koKR")
