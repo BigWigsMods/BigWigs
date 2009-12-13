@@ -36,7 +36,8 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
-	self:Log("SPELL_CAST_SUCCESS", "Whirlwind", 69076)
+	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826)
+	self:Log("SPELL_AURA_APPLIED", "Whirlwind", 69076)
 	self:Log("SPELL_AURA_REMOVED", "WhirlwindCD", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
 
@@ -47,7 +48,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(69076, spellName, 45, 69076)
+	self:Bar(69076, L["whirlwind_cd"], 45, 69076)
 end
 
 --------------------------------------------------------------------------------
@@ -77,6 +78,10 @@ do
 			self:TargetMessage(69057, spellName, player, "Important", spellId, "Info")
 		end
 	end
+end
+
+function mod:ImpaleCD(_, spellId, _, _, spellName)
+	self:Bar(69057, L["impale_cd"], 18, spellId)
 end
 
 function mod:Coldflame(player, spellId)

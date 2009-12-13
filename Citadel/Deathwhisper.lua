@@ -6,7 +6,7 @@ if not QueryQuestsCompleted then return end
 local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36855)
-mod.toggleOptions = {71289, 70842, 71001, "berserk", "bosskill"}
+mod.toggleOptions = {71289, 70842, {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
 
 -- 71289 Dominate Mind
 -- 71001 Death & Decay
@@ -56,6 +56,7 @@ end
 function mod:DND(player, spellId)
 	if player == pName then
 		self:LocalMessage(71001, L["dnd_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(71001)
 	end
 end
 
