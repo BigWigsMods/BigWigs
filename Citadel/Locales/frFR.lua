@@ -5,6 +5,8 @@ end
 
 local L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
 if L then
+	--L.engage_trigger = "Quelle est cette perturbation ? Vous osez profaner cette terre sacrée ? Elle deviendra votre sépulture !"
+
 	L.dnd_message = "Mort et décomposition sur VOUS !"
 	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
 end
@@ -26,10 +28,12 @@ end
 
 local L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
 if L then
+	--L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
+
 	L.impale_cd = "~Prochain Empaler"
 	L.whirlwind_cd = "~Prochain Tourbillon d'os"
-	--L.ww_start = "Début du Tourbillon d'os"
-	--L.ww_end = "Fin du Tourbillon d'os"
+	L.ww_start = "Début du Tourbillon d'os"
+	L.ww_end = "Fin du Tourbillon d'os"
 
 	L.coldflame_message = "Flamme froide sur VOUS !"
 end
@@ -63,6 +67,8 @@ end
 
 local L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
 if L then
+	--L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
+
 	L.adds_message = "Bêtes de sang invoquées"
 	L.adds = "Bêtes de sang"
 	L.adds_desc = "Prévient quand des Bêtes de sang sont invoquées."
