@@ -1,4 +1,3 @@
-
 local L = BigWigs:NewBossLocale("Lord Marrowgar", "ruRU")
 if L then
 	L.impale_cd = "~Прокалывание"
@@ -9,30 +8,25 @@ if L then
 	L.coldflame_message = "На ВАС - Холодное пламя!"
 end
 
-local L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")
+L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")
 if L then
 	L.dnd_message = "На ВАС - Смерть и разложение!"
 	L.phase2_message = "Пропал Барьер маны - 2-ая фаза!"
 end
 
-local L = BigWigs:NewBossLocale("Lady Deathwhisper's Trash", "ruRU")
-if L then
-	L.reckoning = "Мрачный итог"
-end
-
-local L = BigWigs:NewBossLocale("Deathbringer Saurfang", "ruRU")
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "ruRU")
 if L then
 	L.adds_message = "Призваны кровавые чудовища"
 	L.adds = "Кровавые чудовища"
 	L.adds_desc = "Сообщать о призыве кровавых чудовищ"
 end
 
-local L = BigWigs:NewBossLocale("Festergut", "ruRU")
+L = BigWigs:NewBossLocale("Festergut", "ruRU")
 if L then
 	
 end
 
-local L = BigWigs:NewBossLocale("Rotface", "ruRU")
+L = BigWigs:NewBossLocale("Rotface", "ruRU")
 if L then
 	L.infection_bar = "Инфекция на |3-5(%s)!"
 
@@ -41,23 +35,23 @@ if L then
 	L.flood_warning = "A new area is being flooded soon!"
 end
 
-local L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
+L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
 if L then
 	L.blight_message = "Газовое вздутие на |3-5(%s)!"
 	L.violation_message = "Выделения слизнюка на |3-5(%s)!"
 end
 
-local L = BigWigs:NewBossLocale("Blood Princes", "ruRU")
+L = BigWigs:NewBossLocale("Blood Princes", "ruRU")
 if L then
 	L.switch_message = "Vulnerability switch"
 end
 
-local L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
 if L then
 	
 end
 
-local L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")
+L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")
 if L then
 	L.manavoid_message = "На ВАС - Магическая воронка!"
 	L.portal = "Портал к кошмарам"
@@ -66,7 +60,7 @@ if L then
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 end
 
-local L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
+L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
 if L then
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase = "Воздушная фаза"
@@ -75,13 +69,13 @@ if L then
 	L.boom = "Взрыв!"
 end
 
-local L = BigWigs:NewBossLocale("Stinky", "ruRU")
+L = BigWigs:NewBossLocale("Stinky", "ruRU")
 if L then
 	L.wound_message = "%2$dx смертельных ран у: %1$s"
 	L.decimate_cd = "~истребление" -- 33sec cd
 end
 
-local L = BigWigs:NewBossLocale("Precious", "ruRU")
+L = BigWigs:NewBossLocale("Precious", "ruRU")
 if L then
 	L.zombies = GetSpellInfo(71159)
 	L.zombies_desc = "Заклинатель призывает на помощь 11 чумных зомби."

@@ -4,7 +4,8 @@
 
 local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(36855)
+--Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
+mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
 mod.toggleOptions = {"adds", {71289, "ICON"}, 70842, {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------

@@ -3,30 +3,25 @@ if L then
 	L.switch_message = "Changement de vulnérabilité"
 end
 
-local L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
+L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
 if L then
-	--L.engage_trigger = "Quelle est cette perturbation ? Vous osez profaner cette terre sacrée ? Elle deviendra votre sépulture !"
+	L.engage_trigger = "Quelle est cette perturbation ?"
 
 	L.dnd_message = "Mort et décomposition sur VOUS !"
 	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
 end
 
-local L = BigWigs:NewBossLocale("Lady Deathwhisper's Trash", "frFR")
-if L then
-	L.reckoning = "Sombre rétribution"
-end
-
-local L = BigWigs:NewBossLocale("Festergut", "frFR")
+L = BigWigs:NewBossLocale("Festergut", "frFR")
 if L then
 
 end
 
-local L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
 if L then
 
 end
 
-local L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
+L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
 if L then
 	--L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
 
@@ -38,7 +33,7 @@ if L then
 	L.coldflame_message = "Flamme froide sur VOUS !"
 end
 
-local L = BigWigs:NewBossLocale("Precious", "frFR")
+L = BigWigs:NewBossLocale("Precious", "frFR")
 if L then
 	L.zombies = GetSpellInfo(71159)
 	L.zombies_desc = "Invoque 11 zombies pestiférés pour aider le lanceur."
@@ -50,13 +45,13 @@ if L then
 	L.decimate_cd = "~Prochain Décimer"
 end
 
-local L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
+L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
 if L then
 	L.blight_message = "Ballonnement gazeux : %s"
 	L.violation_message = "Adhésif de limon volatil : %s"
 end
 
-local L = BigWigs:NewBossLocale("Rotface", "frFR")
+L = BigWigs:NewBossLocale("Rotface", "frFR")
 if L then
 	L.infection_bar = "Infection mutée : %s"
 
@@ -65,7 +60,7 @@ if L then
 	L.flood_warning = "Une nouvelle zone va bientôt être inondée !"
 end
 
-local L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
 if L then
 	--L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
 
@@ -74,7 +69,7 @@ if L then
 	L.adds_desc = "Prévient quand des Bêtes de sang sont invoquées."
 end
 
-local L = BigWigs:NewBossLocale("Sindragosa", "frFR")
+L = BigWigs:NewBossLocale("Sindragosa", "frFR")
 if L then
 	L.airphase_trigger = "Votre incursion s'arrête ici" -- à vérifier
 	L.airphase = "Phase aérienne"
@@ -83,13 +78,13 @@ if L then
 	L.boom = "Explosion !"
 end
 
-local L = BigWigs:NewBossLocale("Stinky", "frFR")
+L = BigWigs:NewBossLocale("Stinky", "frFR")
 if L then
 	L.wound_message = "%2$dx Blessure mortelle sur %1$s"
 	L.decimate_cd = "~Prochain Décimer"
 end
 
-local L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
+L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
 if L then
 	L.manavoid_message = "Vide de mana sur VOUS !"
 	L.portal = "Portail du Cauchemar"

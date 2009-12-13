@@ -3,7 +3,7 @@ if L then
 	L.switch_message = "虛弱转换！"
 end
 
-local L = BigWigs:NewBossLocale("Festergut", "zhCN")
+L = BigWigs:NewBossLocale("Festergut", "zhCN")
 if L then
 
 end

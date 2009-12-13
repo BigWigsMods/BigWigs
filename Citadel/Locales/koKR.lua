@@ -3,15 +3,10 @@ if L then
 	L.switch_message = "취약점 변경"
 end
 
-local L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")
+L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")
 if L then
 	L.dnd_message = "당신은 죽음과 부패!"
 	L.phase2_message = "마나 방벽 사라짐 - 2 단계"
-end
-
-local L = BigWigs:NewBossLocale("Lady Deathwhisper's Trash", "koKR")
-if L then
-	L.reckoning = "어둠의 징벌"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
