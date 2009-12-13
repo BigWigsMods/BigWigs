@@ -103,7 +103,7 @@ L["|cffff0000Disable|r"] = "|cffff0000Disable|r"
 -- Sound.lua
 --
 
-L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
+L.soundDefaultDescription = "При выборе данной опции Big Wigs будет использовать только стандартные звуки объявления рейду для тех сообщений которые будут сопровождаться звуковым сигналом. Помните, что только некоторые сообщения из скриптов сражений соппровождаются звуковым сигналом."
 
 L["Sounds"] = "Звуки"
 
@@ -166,3 +166,18 @@ L["By default the tips will be shown in their own, awesome window in the middle 
 L["Usage: /sendtip <index|\"Custom tip\">"] = "Используйте: /sendtip <index|\"свот совет\">"
 L["You must be the raid leader to broadcast a tip."] = "Вы должны быть лидером рейды для передачи советов."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Индекс совета выходит за пределы поля, допустимый деапазон индекса от 1 до %d."
+
+-----------------------------------------------------------------------
+-- Emphasize.lua
+--
+
+L["Super Emphasize"] = "Супер увеличение"
+L.superEmphasizeDesc = "Увеличивает полосы и сообщения, относящиеся к определенным способностям босса.\n\nЗдесь вы можете настроить, что должно произойти, когда вы включаете супер увеличение в расширенном разделе способностей босса.\n\n|cffff4411Отметим, что супер увеличение отключено по умолчанию для всех способностей.|r\n"
+L["UPPERCASE"] = "ЗАГЛАВНЫЙ"
+L["Uppercases all messages related to a super emphasized option."] = "Отобаржать все сообщения в верхнем регистре, связанные с настройками супер увеличения."
+L["Double size"] = "Двойно размер"
+L["Doubles the size of super emphasized bars and messages."] = "Удвоит размер супер увеличенных полос и сообщений."
+L["Countdown"] = "Отсчет времени"
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Если соответствующий таймер больше, чем 5 секунд, звуковой и визуальный отсчет времени будет добавлен в течение последних 5 секунд."
+L["Flash"] = "Мигание"
+L["Flashes the screen red during the last 3 seconds of any related timer."] = "Вспышки экрана красным в течение последних 3 секунды любого связанного таймера."
