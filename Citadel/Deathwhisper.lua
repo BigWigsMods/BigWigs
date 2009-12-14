@@ -39,10 +39,11 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
+local handle_Adds = nil
 local function adds()
 	mod:DelayedMessage("adds", 55, L["adds_warning"], "Attention")
 	mod:Bar("adds", L["adds_bar"], 60, 65919)
-	mod:ScheduleTimer(adds, 60)
+	handle_Adds = mod:ScheduleTimer(adds, 60)
 end
 
 function mod:OnEngage()
@@ -50,7 +51,7 @@ function mod:OnEngage()
 
 	self:DelayedMessage("adds", 62, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 67, 65919)
-	self:ScheduleTimer(adds, 67)
+	handle_Adds = self:ScheduleTimer(adds, 67)
 end
 
 
@@ -66,6 +67,9 @@ function mod:DnD(player, spellId)
 end
 
 function mod:Barrier(_, spellId)
+	self:CancelDelayedMessage(L["adds_warning"])
+	self:CancelTimer(handle_Adds, true)
+	self:SendMessage("BigWigs_StopBar", self, L["adds_bar"])
 	self:Message(70842, L["phase2_message"], "Positive", spellId, "Info")
 end
 
