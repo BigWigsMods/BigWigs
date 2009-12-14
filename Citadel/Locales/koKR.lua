@@ -7,6 +7,12 @@ L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")
 if L then
 	L.dnd_message = "당신은 죽음과 부패!"
 	L.phase2_message = "마나 방벽 사라짐 - 2 단계"
+	L.engage_trigger = "What is this disturbance?"
+
+	L.adds = "몹 추가"
+	L.adds_desc = "추가 소환 몹에 대한 타이머를 표시합니다."
+	L.adds_bar = "다음 추가"
+	L.adds_warning = "5초 후 몹 추가!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
@@ -48,9 +54,17 @@ end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "koKR")
 if L then
-	L.adds_message = "피의 괴물 소환"
 	L.adds = "피의 괴물 소환"
 	L.adds_desc = "피의 괴물 소환을 알립니다."
+	L.adds_warning = "5초 후 피의 괴물 소환!"
+	L.adds_message = "피의 괴물 소환!"
+	L.adds_bar = "다음 피의 괴물"
+	
+	L.rune_bar = "다음 피의 룬"
+	
+	L.nova_bar = "다음 피의 소용돌이"
+	
+	L.mark = "징표"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
