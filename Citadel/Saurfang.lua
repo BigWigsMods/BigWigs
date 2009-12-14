@@ -26,7 +26,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCESS", "Adds", 72173, 72356, 72357, 72358)
+	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172, 72173, 72356, 72357, 72358)
 	--self:Log("SPELL_SUMMON", "Adds", 72173)
 	self:Death("Win", 37813)
 
@@ -39,5 +39,5 @@ end
 --
 
 function mod:Adds()
-	self:Message("Adds", L["adds_message"], "Attention")
+	self:Message("adds", L["adds_message"], "Attention")
 end
