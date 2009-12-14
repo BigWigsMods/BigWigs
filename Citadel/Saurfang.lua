@@ -12,7 +12,6 @@ mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FL
 --
 
 local bbTargets = mod:NewTargetList()
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -25,11 +24,11 @@ if L then
 	L.adds_warning = "Blood Beasts in 5 sec!"
 	L.adds_message = "Blood Beasts!"
 	L.adds_bar = "Next Blood Beasts"
-	
+
 	L.rune_bar = "Next Rune of Blood"
-	
+
 	L.nova_bar = "Next Blood Nova"
-	
+
 	L.mark = "Mark"
 end
 L = mod:GetLocale()
@@ -73,15 +72,17 @@ function mod:RuneofBlood(player, spellId, _, _, spellName)
 end
 
 do
-	local handle = nil
+	local scheduled = nil
 	local function boilingWarn(spellId, spellName)
 		mod:TargetMessage(72385, spellName, bbTargets, "Urgent", spellId, "Alert")
-		handle = nil
+		scheduled = nil
 	end
 	function mod:BoilingBlood(player, spellId, _, _, spellName)
 		bbTargets[#bbTargets + 1] = player
-		if handle then self:CancelTimer(handle) end
-		handle = self:ScheduleTimer(boilingWarn, 0.3, spellId)
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(boilingWarn, 0.3, spellId, spellName)
+		end
 	end
 end
 
@@ -94,7 +95,7 @@ function mod:Mark(player, spellId, _, _, spellName)
 	self:TargetMessage(72293, L["mark"], player, "Urgent", spellId, "Alert")
 	self:Whisper(72293, player, spellName)
 	self:PrimaryIcon(72293, player)
-	if player == pName then self:FlashShake(72293) end
+	if UnitIsUnit(player, "player") then self:FlashShake(72293) end
 end
 
 function mod:Frenzy(_, spellId, _, _, spellName)
