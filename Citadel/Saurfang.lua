@@ -12,6 +12,7 @@ mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FL
 --
 
 local bbTargets = mod:NewTargetList()
+local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
