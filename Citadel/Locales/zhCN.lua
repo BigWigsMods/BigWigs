@@ -36,7 +36,7 @@ if L then
 	L.decimate_cd = "<下一Decimate>" -- 33 sec cd
 end
 
-L = BigWigs:NewBossLocale("Professor Putricide", "zhTW")
+L = BigWigs:NewBossLocale("Professor Putricide", "zhCN")
 if L then
 	L.blight_message = "Blight：>%s<！"
 	L.violation_message = "Violation：>%s<！"
@@ -51,11 +51,19 @@ if L then
 	L.flood_warning = "A new area is being flooded soon!"
 end
 
-L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhTW")
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhCN")
 if L then
-	L.adds_message = "召唤增援！"
-	L.adds = "增援！"
-	L.adds_desc = "当召唤增援时发出警报。"
+	L.adds = "Blood Beasts"
+	L.adds_desc = "当召唤Blood Beasts时发出警报和显示计时条。"
+	L.adds_warning = "5秒后，Blood Beasts！"
+	L.adds_message = "Blood Beasts！"
+	L.adds_bar = "<下一Blood Beasts>"
+
+	L.rune_bar = "<下一Rune of Blood>"
+
+	L.nova_bar = "<下一Blood Nova>"
+
+	L.mark = "Mark of the Fallen Champion"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhCN")
@@ -63,7 +71,7 @@ if L then
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase = "空中阶段"
 	L.airphase_message = "空中阶段！"
-	L.airphase_desc = "当Sindragosas起飞时发出警报。"
+	L.airphase_desc = "当辛达苟萨起飞时发出警报。"
 	L.boom = "Explosion！"
 end
 

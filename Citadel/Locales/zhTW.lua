@@ -53,9 +53,17 @@ end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhTW")
 if L then
-	L.adds_message = "召喚增援！"
-	L.adds = "增援！"
-	L.adds_desc = "當召喚增援時發出警報。"
+	L.adds = "血獸"
+	L.adds_desc = "當召喚血獸時發出警報和顯示計時條。"
+	L.adds_warning = "5秒後，血獸！"
+	L.adds_message = "召喚血獸！"
+	L.adds_bar = "<下一血獸>"
+
+	L.rune_bar = "<下一血魄符文>"
+
+	L.nova_bar = "<下一血魄新星>"
+
+	L.mark = "墮落勇士印記"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
