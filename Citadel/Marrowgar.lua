@@ -1,4 +1,3 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -56,26 +55,16 @@ end
 --
 
 do
-	local handle = nil
-	local warned = nil
-	local id, name = nil, nil
-	local function impaleWarn()
-		if not warned then
-			mod:TargetMessage(69057, name, impale, "Urgent", id)
-		else
-			warned = nil
-			wipe(impale)
-		end
-		handle = nil
+	local scheduled = nil
+	local function impaleWarn(spellId, spellName)
+		mod:TargetMessage(69057, spellName, impale, "Urgent", spellId)
+		scheduled = nil
 	end
 	function mod:Impale(_, spellId, player, _, spellName)
 		impale[#impale + 1] = player
-		if handle then self:CancelTimer(handle) end
-		id, name = spellId, spellName
-		handle = self:ScheduleTimer(impaleWarn, 0.1) -- has been 0.2 before
-		if player == pName then
-			warned = true
-			self:TargetMessage(69057, spellName, player, "Important", spellId, "Info")
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(impaleWarn, 0.3, spellId, spellName)
 		end
 	end
 end
