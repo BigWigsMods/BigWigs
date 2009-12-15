@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Algalon", "zhCN")
+local L = BigWigs:NewBossLocale("Algalon the Observer", "zhCN")
 if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段时发出警报。"
