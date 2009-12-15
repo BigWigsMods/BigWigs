@@ -30,6 +30,8 @@ if L then
 	L.nova_bar = "Next Blood Nova"
 
 	L.mark = "Mark"
+
+	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
 end
 L = mod:GetLocale()
 
@@ -47,11 +49,11 @@ function mod:OnBossEnable()
 	self:Death("Win", 37813)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Yell("Engage", L["engage_trigger"])
 end
 
 function mod:OnEngage()
-	self:Berserk(480, true)
+	self:Berserk(480)
 	self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 40, 72172)
 	self:OpenProximity(10)
@@ -61,10 +63,15 @@ end
 -- Event Handlers
 --
 
+local t = 0
 function mod:Adds(_, spellId)
-	self:Message("adds", L["adds_message"], "Attention", spellId, "Alarm")
-	self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
-	self:Bar("adds", L["adds_bar"], 40, spellId)
+	local time = GetTime()
+	if (time - t) > 2 then
+		t = time
+		self:Message("adds", L["adds_message"], "Attention", spellId, "Alarm")
+		self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
+		self:Bar("adds", L["adds_bar"], 40, spellId)
+	end
 end
 
 function mod:RuneofBlood(player, spellId, _, _, spellName)
