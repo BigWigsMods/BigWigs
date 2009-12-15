@@ -12,6 +12,12 @@ L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhCN")
 if L then
 	L.dnd_message = ">你< 死亡凋零！"
 	L.phase2_message = "第二阶段 - Mana barrier gone！"
+	L.engage_trigger = "What is this disturbance?"
+
+	L.adds = "增援"
+	L.adds_desc = "当召唤增援时显示计时条。"
+	L.adds_bar = "<下一增援>"
+	L.adds_warning = "5秒后，新的增援！"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhCN")
