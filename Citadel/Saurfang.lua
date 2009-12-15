@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37813)
-mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -54,6 +54,7 @@ function mod:OnEngage()
 	self:Berserk(480, true)
 	self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 40, 72172)
+	self:OpenProximity(10)
 end
 
 --------------------------------------------------------------------------------
