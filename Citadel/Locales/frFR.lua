@@ -66,8 +66,6 @@ end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
 if L then
-	--L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
-
 	L.adds = "Bêtes de sang"
 	L.adds_desc = "Affiche un minuteur et des messages indiquant quand des Bêtes de sang apparaissent."
 	L.adds_warning = "Bêtes de sang dans 5 sec. !"
@@ -79,6 +77,8 @@ if L then
 	L.nova_bar = "Prochaine Nova de sang"
 
 	L.mark = "Marque"
+
+	L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
