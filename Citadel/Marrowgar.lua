@@ -12,7 +12,7 @@ mod.toggleOptions = {69076, 69057, {69146, "FLASHSHAKE"}, "bosskill"}
 --
 
 local pName = UnitName("player")
-local impale = mod:NewTargetList()
+local impaleTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -56,15 +56,16 @@ end
 
 do
 	local scheduled = nil
-	local function impaleWarn(spellId, spellName)
-		mod:TargetMessage(69057, spellName, impale, "Urgent", spellId)
+	local impaleName = GetSpellInfo(69062)
+	local function impaleWarn(spellId)
+		mod:TargetMessage(69057, impaleName, impaleTargets, "Urgent", spellId)
 		scheduled = nil
 	end
-	function mod:Impale(_, spellId, player, _, spellName)
-		impale[#impale + 1] = player
+	function mod:Impale(_, spellId, player)
+		impaleTargets[#impaleTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(impaleWarn, 0.3, spellId, spellName)
+			self:ScheduleTimer(impaleWarn, 0.3, spellId)
 		end
 	end
 end

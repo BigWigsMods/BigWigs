@@ -74,15 +74,16 @@ end
 
 do
 	local scheduled = nil
-	local function boilingWarn(spellId, spellName)
-		mod:TargetMessage(72385, spellName, bbTargets, "Urgent", spellId, "Alert")
+	local boilBlood = GetSpellInfo(72385)
+	local function boilingWarn(spellId)
+		mod:TargetMessage(72385, boilBlood, bbTargets, "Urgent", spellId, "Alert")
 		scheduled = nil
 	end
-	function mod:BoilingBlood(player, spellId, _, _, spellName)
+	function mod:BoilingBlood(player, spellId)
 		bbTargets[#bbTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(boilingWarn, 0.3, spellId, spellName)
+			self:ScheduleTimer(boilingWarn, 0.3, spellId)
 		end
 	end
 end
