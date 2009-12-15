@@ -42,7 +42,7 @@ end
 local handle_Adds = nil
 local function adds()
 	mod:DelayedMessage("adds", 55, L["adds_warning"], "Attention")
-	mod:Bar("adds", L["adds_bar"], 60, 65919)
+	mod:Bar("adds", L["adds_bar"], 60, 70768)
 	handle_Adds = mod:ScheduleTimer(adds, 60)
 end
 
@@ -50,7 +50,7 @@ function mod:OnEngage()
 	self:Berserk(600, true)
 
 	self:DelayedMessage("adds", 62, L["adds_warning"], "Attention")
-	self:Bar("adds", L["adds_bar"], 67, 65919)
+	self:Bar("adds", L["adds_bar"], 67, 70768)
 	handle_Adds = self:ScheduleTimer(adds, 67)
 end
 

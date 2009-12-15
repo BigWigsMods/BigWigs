@@ -20,7 +20,6 @@ local count = 9
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	-- XXX NEXT RELEASE: make sure this is translated to the major locales
 	L.engage_trigger = "Some things are better left alone!"
 
 	L.fear_warning = "Fear soon!"
