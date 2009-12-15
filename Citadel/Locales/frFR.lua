@@ -5,10 +5,14 @@ end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
 if L then
-	L.engage_trigger = "Quelle est cette perturbation ?"
-
 	L.dnd_message = "Mort et décomposition sur VOUS !"
 	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
+	L.engage_trigger = "Quelle est cette perturbation ?"
+
+	L.adds = "Membres du culte"
+	L.adds_desc = "Affiche des minuteurs concernant l'apparition des membres du culte."
+	L.adds_bar = "Prochains membres du culte"
+	L.adds_warning = "Prochains membres du culte dans 5 sec. !"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
@@ -64,9 +68,17 @@ L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
 if L then
 	--L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
 
-	L.adds_message = "Bêtes de sang invoquées"
 	L.adds = "Bêtes de sang"
-	L.adds_desc = "Prévient quand des Bêtes de sang sont invoquées."
+	L.adds_desc = "Affiche un minuteur et des messages indiquant quand des Bêtes de sang apparaissent."
+	L.adds_warning = "Bêtes de sang dans 5 sec. !"
+	L.adds_message = "Bêtes de sang !"
+	L.adds_bar = "Prochaines Bêtes de sang"
+
+	L.rune_bar = "Prochaine Rune sanglante"
+
+	L.nova_bar = "Prochaine Nova de sang"
+
+	L.mark = "Marque"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
