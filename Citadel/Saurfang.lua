@@ -53,10 +53,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:OpenProximity(12)
+	self:OpenProximity(11)
 	self:Berserk(480)
-	self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
-	self:Bar("adds", L["adds_bar"], 40, 72172)
+	self:DelayedMessage("adds", 32, L["adds_warning"], "Attention")
+	self:Bar("adds", L["adds_bar"], 37, 72172)
 	self:Bar(72378, L["nova_bar"], 20, 72378)
 end
 
