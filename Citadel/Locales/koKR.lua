@@ -54,8 +54,8 @@ end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "koKR")
 if L then
-	L.adds = "피의 괴물 소환"
-	L.adds_desc = "피의 괴물 소환을 알립니다."
+	L.adds = "피의 괴물"
+	L.adds_desc = "피의 괴물 소환 메시지와 타이머를 표시합니다."
 	L.adds_warning = "5초 후 피의 괴물 소환!"
 	L.adds_message = "피의 괴물 소환!"
 	L.adds_bar = "다음 피의 괴물"
@@ -65,6 +65,8 @@ if L then
 	L.nova_bar = "다음 피의 소용돌이"
 	
 	L.mark = "징표"
+
+	L.engage_trigger = "리치왕의 힘으로!"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
