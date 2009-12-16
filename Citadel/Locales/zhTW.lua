@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Blood Princes", "zhTW")
 if L then
-	L.switch_message = "虛弱转换！"
+	L.switch_message = "虛弱轉換！"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
@@ -12,7 +12,7 @@ L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhTW")
 if L then
 	L.dnd_message = ">你< 死亡凋零！"
 	L.phase2_message = "第二階段 - 失去法力屏障！"
-	L.engage_trigger = "這騷動是怎麼回事?"
+	L.engage_trigger = "這騷動是怎麼回事?你竟敢擅闖聖地?這裡將是你的最終之地!"
 
 	L.adds = "增援"
 	L.adds_desc = "當召喚增援時顯示計時條。"
@@ -23,8 +23,8 @@ end
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")
 if L then
 	L.impale_cd = "<下一刺穿>"
-	L.whirlwind_cd = "<下一旋風斬>"
-	L.ww_start = "開始旋風斬！"
+	L.whirlwind_cd = "<下一骸骨風暴>"
+	L.ww_start = "開始骸骨風暴！"
 	L.ww_end = "旋風斬結束！"
 
 	L.coldflame_message = ">你< 冷焰！"
@@ -52,7 +52,7 @@ L = BigWigs:NewBossLocale("Rotface", "zhTW")
 if L then
 	L.infection_bar = "突變感染：>%s<！"
 
-	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
+	L.flood_trigger1 = "大夥聽著，好消息!我修好了劇毒軟泥管!"
 	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
 	L.flood_warning = "A new area is being flooded soon!"
 end
@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
 if L then
-	L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	L.airphase_trigger = "你們的入侵將在此終止!誰也別想存活!"
 	L.airphase = "空中階段"
 	L.airphase_message = "空中階段！"
 	L.airphase_desc = "當辛德拉苟莎起飛時發出警報。"
