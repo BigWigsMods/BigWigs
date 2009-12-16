@@ -382,7 +382,7 @@ function plugin:OnPluginEnable()
 	timers = timers or {}
 
 	colors = BigWigs:GetPlugin("Colors")
-	--superemp = BigWigs:GetPlugin("Super Emphasize") --XXX remove
+	superemp = BigWigs:GetPlugin("Super Emphasize", true)
 
 	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
 	self:RegisterMessage("BigWigs_StartBar")
@@ -703,13 +703,10 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	bar:EnableMouse(true)
 	bar:SetScript("OnMouseDown", barClicked)
 	--]]
-	--[[
-	--XXX remove
-	if superemp:IsSuperEmphasized(module, key) and superemp.db.profile.countdown then
+	if superemp and superemp:IsSuperEmphasized(module, key) and superemp.db.profile.countdown then
 		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
 		bar:AddUpdateFunction(countdown)
 	end
-	]]
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
