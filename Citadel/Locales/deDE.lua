@@ -57,12 +57,14 @@ if L then
 	L.adds_warning = "Blutbestien in 5 sek!"
 	L.adds_message = "Blutbestien!"
 	L.adds_bar = "~Blutbestien"
-	
+
 	L.rune_bar = "~Rune"
-	
+
 	L.nova_bar = "~Nova"
-	
+
 	L.mark = "Mal"
+
+	L.engage_trigger = "BEI DER MACHT DES LICHKÖNIGS!"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "deDE")

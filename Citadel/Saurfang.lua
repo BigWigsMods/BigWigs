@@ -50,13 +50,14 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
+	
+	self:OpenProximity(12)
 end
 
 function mod:OnEngage()
 	self:Berserk(480)
 	self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 40, 72172)
-	self:OpenProximity(10)
 end
 
 --------------------------------------------------------------------------------
