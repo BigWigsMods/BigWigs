@@ -25,9 +25,9 @@ if L then
 	L.adds_message = "Blood Beasts!"
 	L.adds_bar = "Next Blood Beasts"
 
-	L.rune_bar = "Next Rune of Blood"
+	L.rune_bar = "~Next Rune"
 
-	L.nova_bar = "Next Blood Nova"
+	L.nova_bar = "~Next Nova"
 
 	L.mark = "Mark"
 
@@ -58,6 +58,7 @@ function mod:OnEngage()
 	self:Berserk(480)
 	self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 40, 72172)
+	self:Bar(72378, L["nova_bar"], 20, 72378)
 end
 
 --------------------------------------------------------------------------------
@@ -98,7 +99,7 @@ end
 
 function mod:BloodNova(_, spellId, _, _, spellName)
 	self:Message(72378, spellName, "Attention", spellId, "Info")
-	self:Bar(72378, L["nova_bar"], 20, spellId)
+	self:Bar(72378, L["nova_bar"], 18, spellId)
 end
 
 function mod:Mark(player, spellId, _, _, spellName)
