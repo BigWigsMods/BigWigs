@@ -78,7 +78,7 @@ if L then
 	L.airphase = "空中階段"
 	L.airphase_message = "空中階段！"
 	L.airphase_desc = "當辛德拉苟莎起飛時發出警報。"
-	L.boom = "極凍之寒！"
+	L.boom = "極凍之寒！ - 快跑開"
 end
 
 L = BigWigs:NewBossLocale("Stinky", "zhTW")
