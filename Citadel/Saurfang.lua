@@ -4,7 +4,8 @@
 
 local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(37813)
+--Saurfang, Muradin, Marine
+mod:RegisterEnableMob(37813, 37200, 37830)
 mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -12,6 +13,7 @@ mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FL
 --
 
 local bbTargets = mod:NewTargetList()
+local killed = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +34,8 @@ if L then
 	L.mark = "Mark"
 
 	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
+	L.warmup_alliance = "Let's get a move on then! Move ou..."
+	L.warmup_horde = "Fake Yell - Need real trigger"
 end
 L = mod:GetLocale()
 
@@ -46,10 +50,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BloodNova", 72378, 72379, 72380, 72438, 72439, 72440, 73058)
 	self:Log("SPELL_AURA_APPLIED", "Mark", 72293)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 72737)
-	self:Death("Win", 37813)
+	self:Death("Deaths", 37813)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Warmup", L["warmup_alliance"], L["warmup_horde"])
 end
 
 function mod:OnEngage()
@@ -58,6 +63,15 @@ function mod:OnEngage()
 	self:DelayedMessage("adds", 32, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 37, 72172)
 	self:Bar(72378, L["nova_bar"], 20, 72378)
+end
+
+function mod:Warmup()
+	self:OpenProximity(11)
+	self:Bar("adds", self.displayName, 48, "achievement_boss_saurfang")
+end
+
+function mod:VerifyEnable()
+	if not killed then return true end
 end
 
 --------------------------------------------------------------------------------
@@ -110,5 +124,10 @@ end
 
 function mod:Frenzy(_, spellId, _, _, spellName)
 	self:Message(72737, spellName, "Attention", spellId, "Long")
+end
+
+function mod:Deaths()
+	killed = true
+	self:Win()
 end
 
