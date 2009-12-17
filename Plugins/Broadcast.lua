@@ -29,7 +29,7 @@ function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 
 	-- only allowed to broadcast if we're in a party or raidleader/assistant
 	local inRaid = GetRealNumRaidMembers() > 0
-	if not inRaid then --and GetRealNumPartyMembers() == 0 then --party RW nerfed, might be a bug.
+	if not inRaid and GetRealNumPartyMembers() == 0 then
 		return
 	elseif inRaid and not IsRaidLeader() and not IsRaidOfficer() then
 		return
@@ -37,7 +37,7 @@ function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 
 	local clean = msg:gsub("(|c%x%x%x%x%x%x%x%x)", ""):gsub("(|r)", "")
 	local o = output:format(clean)
-	if BigWigs.db.profile.useraidchannel then
+	if BigWigs.db.profile.useraidchannel or not inRaid then
 		SendChatMessage(o, inRaid and "RAID" or "PARTY")
 	else
 		SendChatMessage(o, "RAID_WARNING")
