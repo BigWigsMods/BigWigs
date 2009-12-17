@@ -23,9 +23,9 @@ end
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhCN")
 if L then
 	L.impale_cd = "<下一穿刺>"
-	L.whirlwind_cd = "<下一旋风斩>"
-	L.ww_start = "开始旋风斩！"
-	L.ww_end = "旋风斩结束！"
+
+	L.bonestorm_cd = "<下一旋风斩>"
+	--L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = ">你< Coldflame！"
 end

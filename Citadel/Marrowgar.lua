@@ -11,7 +11,6 @@ mod.toggleOptions = {69076, 69057, {69146, "FLASHSHAKE"}, "bosskill"}
 -- Locals
 --
 
-local pName = UnitName("player")
 local impaleTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -20,10 +19,10 @@ local impaleTargets = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.impale_cd = "~Next impale"
-	L.whirlwind_cd = "~Next whirlwind"
-	L.ww_start = "Whirlwind starts"
-	L.ww_end = "Whirwind ends"
+	L.impale_cd = "~Next Impale"
+
+	L.bonestorm_cd = "~Next Bonestorm"
+	L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = "Coldflame on YOU!"
 end
@@ -36,8 +35,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
 	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826)
-	self:Log("SPELL_AURA_APPLIED", "Whirlwind", 69076)
-	self:Log("SPELL_AURA_REMOVED", "WhirlwindCD", 69076)
+	self:Log("SPELL_AURA_APPLIED", "Bonestorm", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
 
 	self:Death("Win", 36612)
@@ -47,7 +45,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(69076, L["whirlwind_cd"], 45, 69076)
+	self:Bar(69076, L["bonestorm_cd"], 45, 69076)
+	self:DelayedMessage(69076, 40, L["bonestorm_warning"], "Attention")
 end
 
 --------------------------------------------------------------------------------
@@ -75,19 +74,15 @@ function mod:ImpaleCD(_, spellId, _, _, spellName)
 end
 
 function mod:Coldflame(player, spellId)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(69146, L["coldflame_message"], "Personal", spellId, "Alarm")
 		self:FlashShake(69146)
 	end
 end
 
-function mod:Whirlwind(_, spellId, _, _, spellName)
-	self:LocalMessage(spellId, L["ww_start"] , "Personal", "Alarm")---XXXX DEBUG ONLY!
-	self:Bar(69076, spellName, 22, spellId)
-	self:Bar(69076, L["whirlwind_cd"], 90, spellId)
+function mod:Bonestorm(_, spellId, _, _, spellName)
+	self:Bar(69076, spellName, 20, spellId)
+	self:Bar(69076, L["bonestorm_cd"], 90, spellId)
+	self:DelayedMessage(69076, 85, L["bonestorm_warning"], "Attention")
+	self:SendMessage("BigWigs_StopBar", self, L["impale_cd"])
 end
-
-function mod:WhirlwindCD(_, spellId)
-	self:LocalMessage(spellId, L["ww_end"] , "Personal", "Alarm")---XXXX DEBUG ONLY!
-end
-

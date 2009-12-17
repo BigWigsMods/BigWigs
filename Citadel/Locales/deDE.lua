@@ -7,7 +7,7 @@ L = BigWigs:NewBossLocale("Lady Deathwhisper", "deDE")
 if L then
 	L.dnd_message = "Tod und Verfall auf DIR!"
 	L.phase2_message = "Manabarriere weg - Phase 2!"
-	--L.engage_trigger = "What is this disturbance?"
+	L.engage_trigger = "Was soll die Störung? Ihr wagt es, heiligen Boden zu betreten? Dies wird der Ort Eurer letzten Ruhe sein!"
 
 	L.adds = "Adds"
 	L.adds_desc = "Zeigt Timer und Nachrichten für das Auftauchen der Adds."
@@ -28,9 +28,9 @@ end
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
 if L then
 	L.impale_cd = "~Aufspießen"
-	L.whirlwind_cd = "~Knochensturm"
-	L.ww_start = "Knochensturm startet!"
-	L.ww_end = "Knochensturm endet!"
+
+	L.bonestorm_cd = "~Knochensturm"
+	L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = "Eisflamme auf DIR!"
 end

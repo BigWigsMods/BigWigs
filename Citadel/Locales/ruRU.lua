@@ -1,9 +1,9 @@
 local L = BigWigs:NewBossLocale("Lord Marrowgar", "ruRU")
 if L then
 	L.impale_cd = "~Прокалывание"
-	L.whirlwind_cd = "~Вихрь костей"
-	L.ww_start = "Начало Вихря костей"
-	L.ww_end = "Конец Вихря костей"
+
+	L.bonestorm_cd = "~Вихрь костей"
+	--L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = "На ВАС - Холодное пламя!"
 end

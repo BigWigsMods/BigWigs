@@ -30,9 +30,9 @@ if L then
 	--L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
 
 	L.impale_cd = "~Prochain Empaler"
-	L.whirlwind_cd = "~Prochain Tourbillon d'os"
-	L.ww_start = "Début du Tourbillon d'os"
-	L.ww_end = "Fin du Tourbillon d'os"
+
+	L.bonestorm_cd = "~Prochain Tourbillon d'os"
+	--L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = "Flamme froide sur VOUS !"
 end

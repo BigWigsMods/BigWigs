@@ -18,9 +18,9 @@ end
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
 if L then
 	L.impale_cd = "~다음 꿰뚫기"
-	L.whirlwind_cd = "~다음 소용돌이"
-	L.ww_start = "소용돌이 시작"
-	L.ww_end = "소용돌이 종료"
+	
+	L.bonestorm_cd = "~다음 소용돌이"
+	--L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = "당신은 냉기화염!"
 end
