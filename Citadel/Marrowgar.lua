@@ -86,3 +86,4 @@ function mod:Bonestorm(_, spellId, _, _, spellName)
 	self:DelayedMessage(69076, 85, L["bonestorm_warning"], "Attention")
 	self:SendMessage("BigWigs_StopBar", self, L["impale_cd"])
 end
+

@@ -21,17 +21,13 @@ end
 -- Event handlers
 --
 
-local function closeProx()
-	mod:CloseProximity()
-end
-
 function mod:Reckoning(player, spellId, _, _, spellName)
 	self:TargetMessage(69483, spellName, player, "Personal", spellId, "Alert")
 	self:Bar(69483, spellName, 8, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(69483)
 		self:OpenProximity(15)
-		self:ScheduleTimer(closeProx, 9)
+		self:ScheduleTimer(self.CloseProximity, 9, self)
 	end
 	self:Whisper(69483, player, spellName)
 	self:PrimaryIcon(69483, player, "icon")
