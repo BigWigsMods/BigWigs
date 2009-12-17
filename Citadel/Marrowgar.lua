@@ -25,6 +25,8 @@ if L then
 	L.bonestorm_warning = "Bonestorm in 5 sec!"
 
 	L.coldflame_message = "Coldflame on YOU!"
+
+	L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
 end
 L = mod:GetLocale()
 
@@ -41,7 +43,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 36612)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Yell("Engage", L["engage_trigger"])
 end
 
 function mod:OnEngage()

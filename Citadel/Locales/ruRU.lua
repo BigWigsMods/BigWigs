@@ -23,7 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "ruRU")
 if L then
-	
+
 end
 
 L = BigWigs:NewBossLocale("Rotface", "ruRU")
@@ -48,7 +48,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
 if L then
-	
+
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")

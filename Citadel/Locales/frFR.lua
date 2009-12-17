@@ -27,7 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
 if L then
-	--L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
+	L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
 
 	L.impale_cd = "~Prochain Empaler"
 
