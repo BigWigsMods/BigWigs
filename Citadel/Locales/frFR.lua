@@ -31,8 +31,8 @@ if L then
 
 	L.impale_cd = "~Prochain Empaler"
 
-	L.bonestorm_cd = "~Prochain Tourbillon d'os"
-	--L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_cd = "~Prochaine Tempête d'os"
+	L.bonestorm_warning = "Tempête d'os dans 5 sec. !"
 
 	L.coldflame_message = "Flamme froide sur VOUS !"
 end
