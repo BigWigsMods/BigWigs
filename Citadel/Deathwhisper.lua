@@ -30,7 +30,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "DnD", 71001)
+	self:Log("SPELL_AURA_APPLIED", "DnD", 71001, 72108, 72109, 72110)
 	self:Log("SPELL_AURA_REMOVED", "Barrier", 70842)
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
 	self:Death("Win", 36855)
