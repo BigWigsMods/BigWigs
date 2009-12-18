@@ -19,10 +19,12 @@ L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
 if L then
 	L.impale_cd = "~다음 꿰뚫기"
 
-	L.bonestorm_cd = "~다음 소용돌이"
-	--L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_cd = "~다음 뼈 폭풍"
+	L.bonestorm_warning = "5초 후 뼈 폭풍!"
 
 	L.coldflame_message = "당신은 냉기화염!"
+	
+	L.engage_trigger = "스컬지가 죽음과 파괴의 무리가 되어 이 세상을 쓸어버리리라!"
 end
 
 L = BigWigs:NewBossLocale("Precious", "koKR")
@@ -67,6 +69,8 @@ if L then
 	L.mark = "징표 %d"
 
 	L.engage_trigger = "리치왕의 힘으로!"
+	L.warmup_alliance = "Let's get a move on then! Move ou..."	--check
+	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."	--check
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
