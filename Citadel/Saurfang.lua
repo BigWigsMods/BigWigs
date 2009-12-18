@@ -4,8 +4,8 @@
 
 local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
---Saurfang, Muradin, Marine
-mod:RegisterEnableMob(37813, 37200, 37830)
+--Saurfang, Muradin, Marine, Overlord Saurfang, ???
+mod:RegisterEnableMob(37813, 37200, 37830) --???, ???
 mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ if L then
 
 	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
 	L.warmup_alliance = "Let's get a move on then! Move ou..."
-	L.warmup_horde = "Fake Yell - Need real trigger"
+	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
 end
 L = mod:GetLocale()
 
@@ -67,9 +67,13 @@ function mod:OnEngage()
 	count = 1
 end
 
-function mod:Warmup()
+function mod:Warmup(msg)
 	self:OpenProximity(11)
-	self:Bar("adds", self.displayName, 48, "achievement_boss_saurfang")
+	if msg == L["warmup_alliance"] then
+		self:Bar("adds", self.displayName, 48, "achievement_boss_saurfang")
+	else
+		self:Bar("adds", self.displayName, 99, "achievement_boss_saurfang")
+	end
 end
 
 function mod:VerifyEnable()
