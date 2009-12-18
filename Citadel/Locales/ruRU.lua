@@ -3,22 +3,42 @@ if L then
 	L.impale_cd = "~Прокалывание"
 
 	L.bonestorm_cd = "~Вихрь костей"
-	--L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_warning = "Вихрь костей через 5 сек!"
 
 	L.coldflame_message = "На ВАС - Холодное пламя!"
+	
+	--L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")
 if L then
 	L.dnd_message = "На ВАС - Смерть и разложение!"
 	L.phase2_message = "Пропал Барьер маны - 2-ая фаза!"
+	L.engage_trigger = "Как вы смеете ступать в эти священные покои? Это место станет вашей могилой!"
+
+	L.adds = "Вестники Смерти"
+	L.adds_desc = "Таймеры появления Вестников Смерти."
+	L.adds_bar = "~новые вестники смерти"
+	L.adds_warning = "Новые Вестники Смерти через 5 сек!"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "ruRU")
 if L then
-	L.adds_message = "Призваны кровавые чудовища"
 	L.adds = "Кровавые чудовища"
 	L.adds_desc = "Сообщать о призыве кровавых чудовищ"
+	L.adds_warning = "Кровавые чудовища через 5 сек!"
+	L.adds_message = "Призваны кровавые чудовища"
+	L.adds_bar = "~Кровавые чудовища"
+
+	L.rune_bar = "~следующая Руна"
+
+	L.nova_bar = "~следующее Кольцо"
+
+	L.mark = "Метка %d"
+
+	--L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
+	--L.warmup_alliance = "Let's get a move on then! Move ou..."
+	--L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "ruRU")
@@ -30,8 +50,8 @@ L = BigWigs:NewBossLocale("Rotface", "ruRU")
 if L then
 	L.infection_bar = "Инфекция на |3-5(%s)!"
 
-	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
-	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
+	--L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
+	--L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
 	L.flood_warning = "A new area is being flooded soon!"
 end
 
@@ -62,7 +82,7 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
 if L then
-	L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	--L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase = "Воздушная фаза"
 	L.airphase_message = "Воздушная фаза"
 	L.airphase_desc = "Сообщать когда Синдрагоса отрывается от земли"
