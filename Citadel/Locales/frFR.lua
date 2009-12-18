@@ -79,6 +79,8 @@ if L then
 	L.mark = "Marque %d"
 
 	L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
+	L.warmup_alliance = "Let's get a move on then! Move ou..." -- à traduire
+	L.warmup_horde = "Kor'krons, en route ! Champions, surveillez bien vos arrières. Le Fléau a été -" -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
