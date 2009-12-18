@@ -69,7 +69,7 @@ if L then
 
 	L.nova_bar = "<下一血魄新星>"
 
-	L.mark = "墮落勇士印記"
+	L.mark = "墮落勇士印記 %d"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")

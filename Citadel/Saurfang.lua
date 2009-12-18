@@ -14,6 +14,7 @@ mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FL
 
 local bbTargets = mod:NewTargetList()
 local killed = nil
+local count = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,7 +32,7 @@ if L then
 
 	L.nova_bar = "~Next Nova"
 
-	L.mark = "Mark"
+	L.mark = "Mark %d"
 
 	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
 	L.warmup_alliance = "Let's get a move on then! Move ou..."
@@ -63,6 +64,7 @@ function mod:OnEngage()
 	self:DelayedMessage("adds", 32, L["adds_warning"], "Attention")
 	self:Bar("adds", L["adds_bar"], 37, 72172)
 	self:Bar(72378, L["nova_bar"], 20, 72378)
+	count = 1
 end
 
 function mod:Warmup()
@@ -116,7 +118,8 @@ function mod:BloodNova(_, spellId, _, _, spellName)
 end
 
 function mod:Mark(player, spellId, _, _, spellName)
-	self:TargetMessage(72293, L["mark"], player, "Urgent", spellId, "Alert")
+	self:TargetMessage(72293, L["mark"]:format(count), player, "Urgent", spellId, "Alert")
+	count = count + 1
 	self:Whisper(72293, player, spellName)
 	self:PrimaryIcon(72293, player)
 	if UnitIsUnit(player, "player") then self:FlashShake(72293) end

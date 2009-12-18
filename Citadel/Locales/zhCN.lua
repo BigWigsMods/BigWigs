@@ -69,7 +69,7 @@ if L then
 
 	L.nova_bar = "<下一Blood Nova>"
 
-	L.mark = "Mark of the Fallen Champion"
+	L.mark = "Mark of the Fallen Champion %d"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhCN")

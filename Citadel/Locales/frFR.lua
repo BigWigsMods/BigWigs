@@ -76,7 +76,7 @@ if L then
 
 	L.nova_bar = "Prochaine Nova de sang"
 
-	L.mark = "Marque"
+	L.mark = "Marque %d"
 
 	L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
 end

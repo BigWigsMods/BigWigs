@@ -62,7 +62,7 @@ if L then
 
 	L.nova_bar = "~Nova"
 
-	L.mark = "Mal"
+	L.mark = "Mal %d"
 
 	L.engage_trigger = "BEI DER MACHT DES LICHKÖNIGS!"
 end
