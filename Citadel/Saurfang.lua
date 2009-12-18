@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(37813, 37200, 37830, 37187, 37920, 37029, 36957) -- Deathbringer Saurfang, Muradin, Marine, Overlord Saurfang, Kor'kron Reaver x3
+mod:RegisterEnableMob(37813, 37200, 37830, 37187, 37920) -- Deathbringer Saurfang, Muradin, Marine, Overlord Saurfang, Kor'kron Reaver
 mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------

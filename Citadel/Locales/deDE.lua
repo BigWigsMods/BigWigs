@@ -30,7 +30,7 @@ if L then
 	L.impale_cd = "~Aufspießen"
 
 	L.bonestorm_cd = "~Knochensturm"
-	L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_warning = "Knochensturm in 5 sek!"
 
 	L.coldflame_message = "Eisflamme auf DIR!"
 end
