@@ -69,8 +69,8 @@ if L then
 	L.mark = "징표 %d"
 
 	L.engage_trigger = "리치왕의 힘으로!"
-	L.warmup_alliance = "Let's get a move on then! Move ou..."	--check
-	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."	--check
+	L.warmup_alliance = "그러면 이동하자! 이동..."	--check
+	L.warmup_horde = "코르크론, 출발하라! 용사들이여"	--check(, 뒤를 조심하게. 스컬지는...)
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
