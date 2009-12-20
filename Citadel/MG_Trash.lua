@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Deathbound Ward", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37007)
-mod.toggleOptions = {71022}
+mod.toggleOptions = {{71022, "FLASHSHAKE"}}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -20,9 +20,10 @@ end
 -- Event handlers
 --
 
-function mod:Shout(player, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Personal", spellId, "Alert")
-	self:Bar(spellId, spellName, 3, spellId)
+function mod:Shout(_, spellId, _, _, spellName)
+	self:Message(71022, spellName, "Personal", spellId, "Alert")
+	self:Bar(71022, spellName, 3, spellId)
+	self:FlashShake(71022)
 end
 
 function mod:Deaths()
