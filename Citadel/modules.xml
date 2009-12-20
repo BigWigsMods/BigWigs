@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Marrowgar.lua"/>
+<Script file="MG_Trash.lua"/>
 <Script file="Precious.lua"/>
 <Script file="Stinky.lua"/>
 <Script file="Festergut.lua"/>
