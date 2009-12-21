@@ -17,8 +17,6 @@ if L then
 
 	L.touch_message = "%2$dx Berührung: %1$s"
 	L.touch_bar = "~Berührung"
-
-	L.summon_message = "Rachsüchtiger Schatten!"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "deDE")

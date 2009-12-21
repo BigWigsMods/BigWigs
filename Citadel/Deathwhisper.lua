@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 --Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
 mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
-mod.toggleOptions = {"adds", {71289, "ICON"}, 70842, {71001, "FLASHSHAKE"}, 71204, 71426, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", {71289, "ICON"}, 70842, {71001, "FLASHSHAKE"}, 71204, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -26,8 +26,6 @@ if L then
 
 	L.touch_message = "%2$dx Touch on %1$s"
 	L.touch_bar = "Next Touch"
-
-	L.summon_message = "Vengeful Shade!"
 end
 L = mod:GetLocale()
 
@@ -41,7 +39,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
 	self:Log("SPELL_AURA_APPLIED", "Touch", 71204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Touch", 71204)
-	self:Log("SPELL_SUMMON", "Summon", 71426)
 	self:Death("Win", 36855)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -93,8 +90,4 @@ function mod:Touch(player, spellId, _, _, spellName)
 		self:TargetMessage(71204, L["touch_message"], player, "Urgent", icon, "Info", stack)
 	end
 	self:Bar(71204, L["touch_bar"], 7, spellId)
-end
-
-function mod:Summon(_, spellId)
-	self:Message(71426, L["summon_message"], "Important", spellId, "Alarm")
 end
