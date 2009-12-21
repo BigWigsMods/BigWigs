@@ -5,14 +5,18 @@ end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
 if L then
-	L.dnd_message = "Mort et décomposition sur VOUS !"
-	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
 	L.engage_trigger = "Quelle est cette perturbation ?"
+	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
+
+	L.dnd_message = "Mort et décomposition sur VOUS !"
 
 	L.adds = "Membres du culte"
 	L.adds_desc = "Affiche des minuteurs concernant l'apparition des membres du culte."
 	L.adds_bar = "Prochains membres du culte"
 	L.adds_warning = "Prochains membres du culte dans 5 sec. !"
+
+	L.touch_message = "%2$dx Toucher sur %1$s"
+	L.touch_bar = "Prochain Toucher"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
@@ -80,7 +84,7 @@ if L then
 
 	L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
 	L.warmup_alliance = "Let's get a move on then! Move ou..." -- à traduire
-	L.warmup_horde = "Kor'krons, en route ! Champions, surveillez bien vos arrières. Le Fléau a été -" -- à vérifier
+	L.warmup_horde = "Kor'krons, en route ! Champions, surveillez bien vos arrières. Le Fléau a été -"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
