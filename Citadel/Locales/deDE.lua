@@ -5,14 +5,20 @@ end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "deDE")
 if L then
-	L.dnd_message = "Tod und Verfall auf DIR!"
-	L.phase2_message = "Manabarriere weg - Phase 2!"
 	L.engage_trigger = "Was soll die Störung? Ihr wagt es, heiligen Boden zu betreten? Dies wird der Ort Eurer letzten Ruhe sein!"
+	L.phase2_message = "Manabarriere weg - Phase 2!"
+
+	L.dnd_message = "Tod und Verfall auf DIR!"
 
 	L.adds = "Adds"
 	L.adds_desc = "Zeigt Timer und Nachrichten für das Auftauchen der Adds."
 	L.adds_bar = "~Adds"
 	L.adds_warning = "Adds in 5 sek!"
+
+	L.touch_message = "%2$dx Berührung: %1$s"
+	L.touch_bar = "~Berührung"
+
+	L.summon_message = "Rachsüchtiger Schatten!"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "deDE")
