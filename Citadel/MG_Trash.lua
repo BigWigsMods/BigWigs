@@ -27,6 +27,7 @@ function mod:Shout(_, spellId, _, _, spellName)
 end
 
 function mod:Deaths()
+	--Disable when OOC, since being in combat with several is possible
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "Disable")
 end
 
