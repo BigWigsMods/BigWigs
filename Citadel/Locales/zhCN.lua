@@ -24,10 +24,12 @@ L = BigWigs:NewBossLocale("Lord Marrowgar", "zhCN")
 if L then
 	L.impale_cd = "<下一穿刺>"
 
-	L.bonestorm_cd = "<下一旋风斩>"
-	--L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_cd = "<下一Bone Storm>"
+	L.bonestorm_warning = "5秒后，Bone Storm！"
 
 	L.coldflame_message = ">你< Coldflame！"
+
+	L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
 end
 
 L = BigWigs:NewBossLocale("Precious", "zhCN")
@@ -69,7 +71,11 @@ if L then
 
 	L.nova_bar = "<下一Blood Nova>"
 
-	L.mark = "Mark of the Fallen Champion %d"
+	L.mark = "Mark of the Fallen Champion：>%d<！"
+
+	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
+	L.warmup_alliance = "Let's get a move on then! Move ou..."
+	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhCN")
@@ -83,7 +89,7 @@ end
 
 L = BigWigs:NewBossLocale("Stinky", "zhCN")
 if L then
-	L.wound_message = " Mortal Wound%2$dx：>%1$s<！"
+	L.wound_message = "Mortal Wound%2$dx：>%1$s<！"
 	L.decimate_cd = "<下一Decimate>" -- 33sec cd
 end
 

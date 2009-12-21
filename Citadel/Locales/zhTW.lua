@@ -25,9 +25,11 @@ if L then
 	L.impale_cd = "<下一刺穿>"
 
 	L.bonestorm_cd = "<下一骸骨風暴>"
-	--L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_warning = "5秒後，骸骨風暴！"
 
 	L.coldflame_message = ">你< 冷焰！"
+
+	L.engage_trigger = "天譴軍團會化身為死亡與毀滅，席捲整個世界。"
 end
 
 L = BigWigs:NewBossLocale("Precious", "zhTW")
@@ -69,7 +71,11 @@ if L then
 
 	L.nova_bar = "<下一血魄新星>"
 
-	L.mark = "墮落勇士印記 %d"
+	L.mark = "墮落勇士印記：>%d<！"
+
+	L.engage_trigger = "以巫妖王之力!"
+	L.warmup_alliance = "Let's get a move on then! Move ou..."
+	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
@@ -78,7 +84,7 @@ if L then
 	L.airphase = "空中階段"
 	L.airphase_message = "空中階段！"
 	L.airphase_desc = "當辛德拉苟莎起飛時發出警報。"
-	L.boom = "極凍之寒！ - 快跑開"
+	L.boom = "極凍之寒！"
 end
 
 L = BigWigs:NewBossLocale("Stinky", "zhTW")
