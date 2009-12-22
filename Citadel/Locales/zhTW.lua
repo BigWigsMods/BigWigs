@@ -10,14 +10,18 @@ end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhTW")
 if L then
-	L.dnd_message = ">你< 死亡凋零！"
+	L.engage_trigger = "這騷動是怎麼回事?"
 	L.phase2_message = "第二階段 - 失去法力屏障！"
-	L.engage_trigger = "這騷動是怎麼回事?你竟敢擅闖聖地?這裡將是你的最終之地!"
+
+	L.dnd_message = ">你< 死亡凋零！"
 
 	L.adds = "增援"
 	L.adds_desc = "當召喚增援時顯示計時條。"
 	L.adds_bar = "<下一增援>"
 	L.adds_warning = "5秒後，新的增援！"
+
+	L.touch_message = "無脅之觸%2$dx：>%1$s<！"
+	L.touch_bar = "<下一無脅之觸>"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")

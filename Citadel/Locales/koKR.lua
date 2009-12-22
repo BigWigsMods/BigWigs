@@ -7,14 +7,14 @@ L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")
 if L then
 	L.engage_trigger = "이게 무슨 소란이지?"
 	L.phase2_message = "마나 방벽 사라짐 - 2 단계"
-	
+
 	L.dnd_message = "당신은 죽음과 부패!"
-	
+
 	L.adds = "몹 추가"
 	L.adds_desc = "추가 소환 몹에 대한 타이머를 표시합니다."
 	L.adds_bar = "다음 추가"
 	L.adds_warning = "5초 후 몹 추가!"
-	
+
 	L.touch_message = "손길 %2$dx : %1$s"
 	L.touch_bar = "다음 손길"
 end
