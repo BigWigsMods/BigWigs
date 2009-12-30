@@ -57,6 +57,8 @@ end
 
 do
 	local scheduled = nil
+	local _, achievName = GetAchievementInfo(4534)
+	achievName = (achievName):gsub("%(.*%)", "")
 	local function impaleWarn(spellName)
 		mod:TargetMessage(69057, spellName, impaleTargets, "Urgent", 69062)
 		scheduled = nil
@@ -66,7 +68,6 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(impaleWarn, 0.3, spellName)
-			local _, achievName = GetAchievementInfo(4534)
 			self:Bar(69057, achievName, 8, "achievement_boss_lordmarrowgar")
 		end
 	end
