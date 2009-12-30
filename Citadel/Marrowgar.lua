@@ -58,6 +58,7 @@ end
 do
 	local scheduled = nil
 	local _, achievName = GetAchievementInfo(4534)
+	--Remove the (25/10 player) text from name
 	achievName = (achievName):gsub("%(.*%)", "")
 	local function impaleWarn(spellName)
 		mod:TargetMessage(69057, spellName, impaleTargets, "Urgent", 69062)
