@@ -5,17 +5,17 @@ end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
 if L then
-	--L.mage = "Mage"
-	--L.mage_desc = "Warn when a mage spawns to freeze your guns."
-	--L.mage_message = "Mage Spawned!"
-	--L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
-	--L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+	L.mage = "마법사"
+	L.mage_desc = "마법사 소환과 대포가 얼었을때 알립니다."
+	L.mage_message = "마법사 소환!"
+	L.mage_trigger_alliance = "선채가 공격받고 있다"
+	L.mage_trigger_horde = "선채가 공격받고 있다"
 
-	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
-	--L.enable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+	L.enable_trigger_alliance = "속도를 올려라! 제군들"
+	L.enable_trigger_horde = "호드의 아들딸이여, 일어나라! 오늘 우리는 증오하던 적과 전투를 벌이리라! 록타르 오가르!"
 
-	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
-	--L.disable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+	L.disable_trigger_alliance = "악당놈들"
+	L.disable_trigger_horde = "얼라이언스는 기가 꺾였다. 리치 왕을 향해 전진하라!"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")
