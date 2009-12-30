@@ -225,6 +225,13 @@ local function onControlEnter(self)
 end
 local function onControlLeave() GameTooltip:Hide() end
 
+local function onNormalClose()
+	if active then
+		BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
+	end
+	plugin:Close()
+end
+
 local function breakThings()
 	anchor.sound:SetScript("OnEnter", nil)
 	anchor.sound:SetScript("OnLeave", nil)
@@ -241,13 +248,6 @@ local function makeThingsWork()
 	anchor.close:SetScript("OnEnter", onControlEnter)
 	anchor.close:SetScript("OnLeave", onControlLeave)
 	anchor.close:SetScript("OnClick", onNormalClose)
-end
-
-local function onNormalClose()
-	if active then
-		BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
-	end
-	plugin:Close()
 end
 
 local function ensureDisplay()
