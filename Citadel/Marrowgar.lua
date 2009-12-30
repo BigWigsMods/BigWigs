@@ -66,6 +66,8 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(impaleWarn, 0.3, spellName)
+			local _, achievName = GetAchievementInfo(4534)
+			self:Bar(69057, achievName, 8, "achievement_boss_lordmarrowgar")
 		end
 	end
 end
