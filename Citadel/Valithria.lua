@@ -1,4 +1,3 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -11,11 +10,6 @@ mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "portal", "berserk", "bosskil
 -- 71733 Acid Burst
 --  71741 Manavoid
 
---------------------------------------------------------------------------------
--- Locals
---
-
-local pName = UnitName("player")
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -61,8 +55,9 @@ function mod:Portal()
 end
 
 function mod:ManaVoid(player, spellId)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(71741, L["manavoid_message"], "Personal", spellId, "Alarm")
 		self:FlashShake(71741)
 	end
 end
+

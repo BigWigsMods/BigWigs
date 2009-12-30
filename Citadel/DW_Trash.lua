@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Deathspeaker High Priest", "Icecrown Citadel")
@@ -18,7 +18,7 @@ function mod:OnBossEnable()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:Reckoning(player, spellId, _, _, spellName)
@@ -33,11 +33,13 @@ function mod:Reckoning(player, spellId, _, _, spellName)
 	self:PrimaryIcon(69483, player, "icon")
 end
 
-local deaths = 0
-function mod:Deaths()
-	deaths = deaths + 1
-	if deaths == 2 then 
-		self:Disable()
+do
+	local deaths = 0
+	function mod:Deaths()
+		deaths = deaths + 1
+		if deaths == 2 then 
+			self:Disable()
+		end
 	end
 end
 

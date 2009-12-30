@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
@@ -62,7 +62,7 @@ end
 
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:DnD(player, spellId)
@@ -91,3 +91,4 @@ function mod:Touch(player, spellId, _, _, spellName)
 	end
 	self:Bar(71204, L["touch_bar"], 7, spellId)
 end
+

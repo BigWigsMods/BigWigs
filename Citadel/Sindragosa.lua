@@ -1,4 +1,3 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -17,10 +16,10 @@ mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "bosskill"}
 -- Locals
 --
 
-local pName = UnitName("player")
 local beacon = mod:NewTargetList()
+
 --------------------------------------------------------------------------------
--- Locale
+-- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
@@ -56,26 +55,16 @@ end
 --
 
 do
-	local handle = nil
-	local warned = nil
-	local id, name = nil, nil
-	local function BeaconWarn()
-		if not warned then
-			mod:TargetMessage(70126, name, beacon, "Urgent", id)
-		else
-			warned = nil
-			wipe(beacon)
-		end
-		handle = nil
+	local scheduled = nil
+	local function BeaconWarn(spellName)
+		mod:TargetMessage(70126, spellName, beacon, "Urgent", 70126)
+		scheduled = nil
 	end
 	function mod:FrostBeacon(player, spellId, _, _, spellName)
 		beacon[#beacon + 1] = player
-		if handle then self:CancelTimer(handle) end
-		id, name = spellId, spellName
-		handle = self:ScheduleTimer(BeaconWarn, 0.1)
-		if player == pName then
-			warned = true
-			self:TargetMessage(70126, spellName, player, "Important", spellId, "Info")
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(BeaconWarn, 0.3, spellName)
 		end
 	end
 end
@@ -99,3 +88,4 @@ function mod:AirPhase()
 	local hpPercent = math.floor(min / max * 100 + 0.5) .. "%"
 	print("Sindragosa took off at " .. hpPercent .. " hitpoints, please notify the developers in #bigwigs on freenode if possible.")
 end
+

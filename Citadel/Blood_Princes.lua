@@ -1,11 +1,12 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 local mod = BigWigs:NewBoss("Blood Princes", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(37970, 37972, 37973)-- PTR 3.3 ICC: Bloodelf Council: Prince Valanar: 37970, Prince Keleseth: 37972, -- Prince Taldaram: 37973
+--Prince Valanar, Prince Keleseth, Prince Taldaram
+mod:RegisterEnableMob(37970, 37972, 37973)
 mod.toggleOptions = {71079, "bosskill"}
+
 --------------------------------------------------------------------------------
 --  Localization
 --
@@ -27,7 +28,7 @@ function mod:OnBossEnable()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:Switch()
@@ -41,3 +42,4 @@ function mod:Deaths()
 		self:Win()
 	end
 end
+

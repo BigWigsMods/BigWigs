@@ -1,22 +1,20 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Blood-Queen Lana'thel", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37955)
-mod.toggleOptions = {71340, "berserk", "bosskill"}
+mod.toggleOptions = {{71340, "FLASHSHAKE"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local pName = UnitName("player")
-local pact = mod:NewTargetList()
+local pactTargets = mod:NewTargetList()
+
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
--- Locale
+-- Localization
 --
 
 local L = mod:NewLocale("enUS", true)
@@ -41,31 +39,26 @@ end
 function mod:OnEngage()
 	self:Berserk(360, true)
 end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
 do
-	local handle = nil
-	local warned = nil
-	local id, name = nil, nil
-	local function PactWarn()
-		if not warned then
-			mod:TargetMessage(71340, name, pact, "Urgent", id)
-		else
-			warned = nil
-			wipe(pact)
-		end
-		handle = nil
+	local scheduled = nil
+	local function PactWarn(spellName)
+		mod:TargetMessage(71340, spellName, pactTargets, "Urgent", 71340)
+		scheduled = nil
 	end
 	function mod:PactApplied(player, spellId, _, _, spellName)
-		pact[#pact + 1] = player
-		if handle then self:CancelTimer(handle) end
-		id, name = spellId, spellName
-		handle = self:ScheduleTimer(PactWarn, 0.1)
-		if player == pName then
-			warned = true
-			self:TargetMessage(71340, spellName, player, "Important", spellId, "Info")
+		pactTargets[#pactTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(PactWarn, 0.3, spellName)
+		end
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(71340)
 		end
 	end
 end
+

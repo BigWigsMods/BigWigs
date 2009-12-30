@@ -1,10 +1,11 @@
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(37813, 37200, 37830, 37187, 37920) -- Deathbringer Saurfang, Muradin, Marine, Overlord Saurfang, Kor'kron Reaver
+-- Deathbringer Saurfang, Muradin, Marine, Overlord Saurfang, Kor'kron Reaver
+mod:RegisterEnableMob(37813, 37200, 37830, 37187, 37920)
 mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -83,14 +84,16 @@ end
 -- Event Handlers
 --
 
-local t = 0
-function mod:Adds(_, spellId)
-	local time = GetTime()
-	if (time - t) > 2 then
-		t = time
-		self:Message("adds", L["adds_message"], "Attention", spellId, "Alarm")
-		self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
-		self:Bar("adds", L["adds_bar"], 40, spellId)
+do
+	local t = 0
+	function mod:Adds(_, spellId)
+		local time = GetTime()
+		if (time - t) > 2 then
+			t = time
+			self:Message("adds", L["adds_message"], "Attention", spellId, "Alarm")
+			self:DelayedMessage("adds", 35, L["adds_warning"], "Attention")
+			self:Bar("adds", L["adds_bar"], 40, spellId)
+		end
 	end
 end
 
@@ -101,16 +104,15 @@ end
 
 do
 	local scheduled = nil
-	local boilBlood = GetSpellInfo(72385)
-	local function boilingWarn(spellId)
-		mod:TargetMessage(72385, boilBlood, bbTargets, "Urgent", spellId, "Alert")
+	local function boilingWarn(spellName)
+		mod:TargetMessage(72385, spellName, bbTargets, "Urgent", 72385, "Alert")
 		scheduled = nil
 	end
-	function mod:BoilingBlood(player, spellId)
+	function mod:BoilingBlood(player, spellId, _, _, spellName)
 		bbTargets[#bbTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(boilingWarn, 0.3, spellId)
+			self:ScheduleTimer(boilingWarn, 0.3, spellName)
 		end
 	end
 end

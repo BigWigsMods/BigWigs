@@ -1,4 +1,3 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -56,3 +55,4 @@ end
 function mod:SlimeSpray(_, spellId, _, _, spellName)
 	self:Message(69508, spellName, "Attention", spellId)
 end
+

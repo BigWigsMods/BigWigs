@@ -1,4 +1,3 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -41,7 +40,7 @@ function mod:OnEngage()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:Wound(player, spellId, _, _, spellName)
@@ -55,3 +54,4 @@ function mod:Decimate(_, spellId, _, _, spellName)
 	self:Message(71123, spellName, "Attention", spellId)
 	self:Bar(71123, L["decimate_cd"], 33, spellId)
 end
+

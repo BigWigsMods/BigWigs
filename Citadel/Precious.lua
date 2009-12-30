@@ -1,6 +1,5 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Precious", "Icecrown Citadel")
@@ -10,12 +9,6 @@ mod.toggleOptions = {"zombies", 71123, {71127, "FLASHSHAKE"}, "bosskill"}
  --71123: Decimate
  --71127: Mortal wound
  --71159: Zombies
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local summoned = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,7 +47,7 @@ function mod:OnEngage()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:Wound(player, spellId, _, _, spellName)
@@ -70,12 +63,14 @@ function mod:Decimate(_, spellId, _, _, spellName)
 end
 
 do
-	local function resetZombies() summoned = nil end
+	local t = 0
 	function mod:Zombies()
-		if summoned then return end
-		summoned = true
-		self:Message("zombies", L["zombies_message"], "Important", 71159)
-		self:Bar("zombies", L["zombies_cd"], 20, 71159)
-		self:ScheduleTimer(resetZombies, 3)
+		local time = GetTime()
+		if (time - t) > 3 then
+			t = time
+			self:Message("zombies", L["zombies_message"], "Important", 71159)
+			self:Bar("zombies", L["zombies_cd"], 20, 71159)
+		end
 	end
 end
+

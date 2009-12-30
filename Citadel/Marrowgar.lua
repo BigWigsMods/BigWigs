@@ -52,21 +52,20 @@ function mod:OnEngage()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 do
 	local scheduled = nil
-	local impaleName = GetSpellInfo(69062)
-	local function impaleWarn(spellId)
-		mod:TargetMessage(69057, impaleName, impaleTargets, "Urgent", spellId)
+	local function impaleWarn(spellName)
+		mod:TargetMessage(69057, spellName, impaleTargets, "Urgent", 69062)
 		scheduled = nil
 	end
-	function mod:Impale(_, spellId, player)
+	function mod:Impale(_, spellId, player, _, spellName)
 		impaleTargets[#impaleTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(impaleWarn, 0.3, spellId)
+			self:ScheduleTimer(impaleWarn, 0.3, spellName)
 		end
 	end
 end

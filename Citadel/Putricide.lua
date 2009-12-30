@@ -1,6 +1,5 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
@@ -31,7 +30,7 @@ function mod:OnBossEnable()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:Blight(player, spellId)

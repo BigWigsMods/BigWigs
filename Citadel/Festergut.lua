@@ -1,6 +1,5 @@
-if not QueryQuestsCompleted then return end
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
@@ -32,3 +31,8 @@ end
 function mod:OnEngage()
 	self:Berserk(300, true)
 end
+
+--------------------------------------------------------------------------------
+-- Event Handlers
+--
+

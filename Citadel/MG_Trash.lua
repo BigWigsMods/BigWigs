@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
--- Module declaration
+-- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Deathbound Ward", "Icecrown Citadel")
@@ -17,7 +17,7 @@ function mod:OnBossEnable()
 end
 
 --------------------------------------------------------------------------------
--- Event handlers
+-- Event Handlers
 --
 
 function mod:Shout(_, spellId, _, _, spellName)
