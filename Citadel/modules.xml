@@ -15,4 +15,5 @@
 <Script file="Lanathel.lua"/>
 <Script file="Blood_Princes.lua"/>
 <Script file="Saurfang.lua"/>
+<Script file="Gunship.lua"/>
 </Ui>

@@ -6,22 +6,37 @@ if L then
 	L.bonestorm_warning = "Вихрь костей через 5 сек!"
 
 	L.coldflame_message = "На ВАС - Холодное пламя!"
-	
+
 	--L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
+end
+
+L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "ruRU")
+if L then
+	--L.mage = "Mage"
+	--L.mage_desc = "Warn when a mage spawns to freeze your guns."
+	--L.mage_message = "Mage Spawned!"
+	--L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
+	--L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+
+	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
+	--L.enable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+
+	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
+	--L.disable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")
 if L then
 	L.engage_trigger = "Как вы смеете ступать в эти священные покои? Это место станет вашей могилой!"
 	L.phase2_message = "Пропал Барьер маны - 2-ая фаза!"
-	
+
 	L.dnd_message = "На ВАС - Смерть и разложение!"
-	
+
 	L.adds = "Вестники Смерти"
 	L.adds_desc = "Таймеры появления Вестников Смерти."
 	L.adds_bar = "~новые вестники смерти"
 	L.adds_warning = "Новые Вестники Смерти через 5 сек!"
-	
+
 	L.touch_message = "%2$dx Прикосновений у: %1$s"
 	L.touch_bar = "~Прикосновение"
 end

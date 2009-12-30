@@ -3,6 +3,21 @@ if L then
 	L.switch_message = "Changement de vulnérabilité"
 end
 
+L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
+if L then
+	--L.mage = "Mage"
+	--L.mage_desc = "Warn when a mage spawns to freeze your guns."
+	--L.mage_message = "Mage Spawned!"
+	--L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
+	--L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+
+	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
+	--L.enable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+
+	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
+	--L.disable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+end
+
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
 if L then
 	L.engage_trigger = "Quelle est cette perturbation ?"
