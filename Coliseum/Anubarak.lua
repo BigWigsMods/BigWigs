@@ -22,6 +22,7 @@ local handle_NextStrike = nil
 local isBurrowed = nil
 local ssName = GetSpellInfo(66134)
 local difficulty = GetRaidDifficulty()
+local coldTargets = mod:NewTargetList()
 local pName = UnitName("player")
 local phase2 = nil
 
@@ -125,6 +126,25 @@ end
 
 function mod:FreezeCooldown(player, spellId)
 	self:Bar(66012, L["freeze_bar"], 20, spellId)
+end
+
+do
+	local scheduled = nil
+	local function coldWarn(spellName)
+		mod:TargetMessage(68510, spellName, coldTargets, "Urgent", 68510)
+		scheduled = nil
+	end
+	function mod:ColdDebuff(player, spellId, _, _, spellName)
+		if not phase2 then return end
+		coldTargets[#coldTargets + 1] = player
+		if not scheduled then
+			self:ScheduleTimer(coldWarn, 0.2, spellName)
+			scheduled = true
+		end
+		if player == pName then
+			self:FlashShake(68510)
+		end
+	end
 end
 
 function mod:ColdDebuff(player, spellId, _, _, spellName)
