@@ -83,10 +83,15 @@ function mod:Coldflame(player, spellId)
 	end
 end
 
+local function afterTheStorm()
+	mod:Bar(69076, L["bonestorm_cd"], 70, 69076)
+	mod:DelayedMessage(69076, 65, L["bonestorm_warning"], "Attention")
+	mod:Bar(69057, L["impale_cd"], 18, 69057)
+end
+
 function mod:Bonestorm(_, spellId, _, _, spellName)
 	self:Bar(69076, spellName, 20, spellId)
-	self:Bar(69076, L["bonestorm_cd"], 90, spellId)
-	self:DelayedMessage(69076, 85, L["bonestorm_warning"], "Attention")
 	self:SendMessage("BigWigs_StopBar", self, L["impale_cd"])
+	self:ScheduleTimer(afterTheStorm, 20)
 end
 
