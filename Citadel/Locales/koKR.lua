@@ -9,12 +9,12 @@ if L then
 	L.mage_desc = "마법사 소환과 대포가 얼었을때 알립니다."
 	L.mage_message = "마법사 소환!"
 	L.mage_trigger_alliance = "선채가 공격받고 있다"
-	L.mage_trigger_horde = "선채가 공격받고 있다"
+	L.mage_trigger_horde = "선체가 공격받고 있다. 전투마법사를 불러 저 대포를 막아 버려라!"
 
-	L.enable_trigger_alliance = "속도를 올려라! 제군들"
+	L.enable_trigger_alliance = "속도를 올려라! 제군들, 굳 운명과 마주할 것이다!"
 	L.enable_trigger_horde = "호드의 아들딸이여, 일어나라! 오늘 우리는 증오하던 적과 전투를 벌이리라! 록타르 오가르!"
 
-	L.disable_trigger_alliance = "악당놈들"
+	L.disable_trigger_alliance = "악당 놈들, 분명히 경고했다! 형제자매여, 전진!"
 	L.disable_trigger_horde = "얼라이언스는 기가 꺾였다. 리치 왕을 향해 전진하라!"
 end
 
