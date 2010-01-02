@@ -8,13 +8,13 @@ if L then
 	L.mage = "Mage"
 	L.mage_desc = "Prévient quand un mage apparaît pour congeler vos canons."
 	L.mage_message = "Mage apparu !"
-	--L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
+	L.mage_trigger_alliance = "La coque est endommagée, qu'un mage de bataille aille faire taire leurs canons !"
 	L.mage_trigger_horde = "La coque déguste sévère, qu'un sorcier aille me faire taire ces canons !"
 
-	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
+	L.enable_trigger_alliance = "Faites chauffer les moteurs ! On a rencart avec le destin, les gars !"
 	L.enable_trigger_horde = "Levez-vous, fils et filles de la Horde ! Aujourd’hui, nous affrontons le plus haï de nos ennemis ! LOK’TAR OGAR !"
 
-	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
+	L.disable_trigger_alliance = "Vous direz pas que j'vous avais pas prévenus, canailles ! Mes frères et sœurs, en avant !"
 	L.disable_trigger_horde = "L'Alliance baisse pavillon. Sus au roi-liche !"
 end
 
@@ -98,7 +98,7 @@ if L then
 	L.mark = "Marque %d"
 
 	L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"
-	L.warmup_alliance = "Let's get a move on then! Move ou..." -- à traduire
+	L.warmup_alliance = "Bon allez, on se bouge ! En route -"
 	L.warmup_horde = "Kor'krons, en route ! Champions, surveillez bien vos arrières. Le Fléau a été -"
 end
 
