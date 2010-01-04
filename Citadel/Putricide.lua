@@ -8,6 +8,12 @@ mod:RegisterEnableMob(36678)
 mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, "bosskill"}
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local doprint = 0
+
+--------------------------------------------------------------------------------
 --  Localization
 --
 
@@ -27,6 +33,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Violation", 70447)
 
 	self:Death("Win", 36678)
+
+	if doprint < 2 then
+		doprint = doprint + 1
+		print("|cFF33FF99BigWigs_Putricide|r: Mod is alpha, timers may be wrong.")
+	end
 end
 
 --------------------------------------------------------------------------------

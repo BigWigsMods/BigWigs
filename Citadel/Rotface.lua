@@ -11,6 +11,12 @@ mod.toggleOptions = {{71224, "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
 -- Locals
 --
 
+local doprint = 0
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.infection_bar = "Infection on %s!"
@@ -34,6 +40,11 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 36627)
+
+	if doprint < 2 then
+		doprint = doprint + 1
+		print("|cFF33FF99BigWigs_Rotface|r: Mod is alpha, timers may be wrong.")
+	end
 end
 
 --------------------------------------------------------------------------------
