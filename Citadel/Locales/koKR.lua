@@ -3,6 +3,11 @@ if L then
 	L.switch_message = "취약점 변경"
 end
 
+L = BigWigs:NewBossLocale("Festergut", "koKR")
+if L then
+	L.spore_bar = "~다음 가스 포자"
+end
+
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
 if L then
 	L.mage = "마법사"

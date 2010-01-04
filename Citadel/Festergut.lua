@@ -20,7 +20,7 @@ local doprint = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.spore_bar = "~Next Gas Spores"
 end
 L = mod:GetLocale()
 
@@ -44,7 +44,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(300, true)
-	self:Bar(69279, "~Next Gas Spores", 20, 69279)
+	self:Bar(69279, L["spore_bar"], 20, 69279)
 	self:OpenProximity(9)
 end
 
@@ -59,7 +59,7 @@ do
 		scheduled = nil
 	end
 	local function sporeNext(spellName)
-		mod:Bar(69279, "~Next Gas Spores", 16, 69279)
+		mod:Bar(69279, L["spore_bar"], 16, 69279)
 	end
 	function mod:Spores(player, spellId, _, _, spellName)
 		sporeTargets[#sporeTargets + 1] = player
