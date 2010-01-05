@@ -17,7 +17,7 @@ if L then
 	L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
 
 	L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
-	L.enable_trigger_horde = "Rise up, sons and daughters of the Horde! Today we battle a hated enemy of the Horde! LOK'TAR OGAR!"
+	L.enable_trigger_horde = "Rise up, sons and daughters of the Horde! Today we battle a hated enemy! LOK'TAR OGAR!"
 
 	L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
 	L.disable_trigger_horde = "The Alliance falter. Onward to the Lich King!"
