@@ -3,24 +3,24 @@ if L then
 	L.switch_message = "虛弱轉換！"
 end
 
-L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhTW")
-if L then
-	--L.mage = "Mage"
-	--L.mage_desc = "Warn when a mage spawns to freeze your guns."
-	--L.mage_message = "Mage Spawned!"
-	--L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
-	--L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
-
-	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
-	--L.enable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
-
-	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
-	--L.disable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
-end
-
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
 if L then
+	L.spore_bar = "<下一氣體孢子>"
+end
 
+L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhTW")
+if L then
+	L.mage = "法師"
+	L.mage_desc = "當法師出現冰凍砲艇火砲時發出警報。"
+	L.mage_message = "法師 出現！"
+	L.mage_trigger_alliance = "船體受到傷害，找個戰鬥法師來，搞定那些火砲!"
+	L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+
+	L.enable_trigger_alliance = "發動引擎!小夥子們，我們即將面對命運啦!"
+	L.enable_trigger_horde = "Rise up, sons and daughters of the Horde! Today we battle a hated enemy of the Horde! LOK'TAR OGAR!"
+
+	L.disable_trigger_alliance = "別說我沒警告過你，無賴!兄弟姊妹們，向前衝!"
+	L.disable_trigger_horde = "The Alliance falter. Onward to the Lich King!"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhTW")
