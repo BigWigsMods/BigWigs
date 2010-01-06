@@ -43,8 +43,8 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
-	self:Log("SPELL_CAST_START", "Blight", 71219)
-	self:Log("SPELL_AURA_APPLIED", "VileGas", 71218)
+	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)
+	self:Log("SPELL_AURA_APPLIED", "VileGas", 71218, 72272, 72273, 73019, 73020)
 	self:Log("SPELL_AURA_APPLIED", "Bloat", 72551, 72219)
 	self:Death("Win", 36626)
 
