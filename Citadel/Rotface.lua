@@ -11,8 +11,6 @@ mod.toggleOptions = {{71224, "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
 -- Locals
 --
 
-local doprint = 0
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -23,13 +21,15 @@ if L then
 
 	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
 	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
-	L.flood_warning = "A new area is being flooded soon!"
+	L.flood_warning = "New flood soon!"
 end
 L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+-- XXX add the big ooze explosion with sound warning
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224)
@@ -40,11 +40,6 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 36627)
-
-	if doprint < 2 then
-		doprint = doprint + 1
-		print("|cFF33FF99BigWigs_Rotface|r: Mod is alpha, timers may be wrong.")
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -64,6 +59,6 @@ function mod:Flood()
 end
 
 function mod:SlimeSpray(_, spellId, _, _, spellName)
-	self:Message(69508, spellName, "Attention", spellId)
+	self:Message(69508, spellName, "Urgent", spellId)
 end
 

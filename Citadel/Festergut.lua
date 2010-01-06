@@ -12,7 +12,6 @@ mod.toggleOptions = {69279, 69165, 71219, 72551, {71218, "WHISPER", "ICON", "FLA
 --
 
 local sporeTargets = mod:NewTargetList()
-local doprint = 0
 local count = 1
 
 --------------------------------------------------------------------------------
@@ -31,8 +30,6 @@ if L then
 	L.bloat_message = "%2$dx Gastric Bloat on %1$s"
 	L.bloat_bar = "~Next Bloat"
 
-	L.vilegas_other = "Vile Gas on %s!"
-
 	L.spore_bar = "~Next Gas Spores"
 end
 L = mod:GetLocale()
@@ -44,7 +41,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
 	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)
-	self:Log("SPELL_AURA_APPLIED", "VileGas", 71218, 72272, 72273, 73019, 73020)
+	self:Log("SPELL_CAST_SUCCESS", "VileGas", 71218, 72272, 72273, 73019, 73020)
 	self:Log("SPELL_AURA_APPLIED", "Bloat", 72551, 72219)
 	self:Death("Win", 36626)
 
@@ -52,11 +49,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:Log("SPELL_AURA_APPLIED", "Spores", 69279)
-
-	if doprint < 2 then
-		doprint = doprint + 1
-		print("|cFF33FF99BigWigs_Festergut|r: Mod is alpha, timers may be wrong.")
-	end
 end
 
 function mod:OnEngage()
@@ -93,7 +85,7 @@ do
 end
 
 function mod:InhaleCD(_, spellId, _, _, spellName)
-	self:Message(69165, L["inhale_message"]:format(count), "Important", spellId)
+	self:Message(69165, L["inhale_message"]:format(count), "Attention", spellId)
 	count = count + 1
 	self:DelayedMessage(69165, 28.5, L["inhale_warning"]:format(count), "Attention")
 	if count == 4 then
@@ -119,10 +111,7 @@ function mod:Bloat(player, spellId, _, _, spellName)
 end
 
 function mod:VileGas(player, spellId, _, _, spellName)
-	self:TargetMessage(71218, spellName, player, "Personal", spellId, "Alert")
-	self:Whisper(71218, player, spellName)
-	self:Bar(71218, L["vilegas_other"]:format(player), 6, spellId)
-	self:PrimaryIcon(71218, player)
-	if UnitIsUnit(player, "player") then self:FlashShake(71218) end
+	self:Message(71218, spellName, "Urgent", spellId)
+	self:Bar(71218, spellName, 6, spellId)
 end
 

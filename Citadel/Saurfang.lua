@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
 -- Deathbringer Saurfang, Muradin, Marine, Overlord Saurfang, Kor'kron Reaver
 mod:RegisterEnableMob(37813, 37200, 37830, 37187, 37920)
-mod.toggleOptions = {"adds", 72408, 72385, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 72408, 72378, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -47,7 +47,6 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172, 72173, 72356, 72357, 72358)
 	self:Log("SPELL_AURA_APPLIED", "RuneofBlood", 72408, 72409, 72410, 72447, 72448, 72449)
-	self:Log("SPELL_AURA_APPLIED", "BoilingBlood", 72385, 72441, 72442, 72443)
 	self:Log("SPELL_CAST_START", "BloodNova", 72378, 72379, 72380, 72438, 72439, 72440, 73058)
 	self:Log("SPELL_AURA_APPLIED", "Mark", 72293)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 72737)
@@ -100,21 +99,6 @@ end
 function mod:RuneofBlood(player, spellId, _, _, spellName)
 	self:TargetMessage(72408, spellName, player, "Important", spellId, "Info")
 	self:Bar(72408, L["rune_bar"], 20, spellId)
-end
-
-do
-	local scheduled = nil
-	local function boilingWarn(spellName)
-		mod:TargetMessage(72385, spellName, bbTargets, "Urgent", 72385, "Alert")
-		scheduled = nil
-	end
-	function mod:BoilingBlood(player, spellId, _, _, spellName)
-		bbTargets[#bbTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(boilingWarn, 0.3, spellName)
-		end
-	end
 end
 
 function mod:BloodNova(_, spellId, _, _, spellName)
