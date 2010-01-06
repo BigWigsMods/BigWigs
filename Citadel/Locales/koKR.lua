@@ -5,6 +5,18 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
 if L then
+	L.inhale_warning = "약 5초 후 들이마시기(%d)!"
+	L.inhale_message = "들이마시기 %d"
+	L.inhale_bar = "~다음 들이마시기 %d"
+	
+	L.blight_warning = "약 5초 후 파멸의 역병!"
+	L.blight_bar = "~다음 파멸 역병"
+	
+	L.bloat_message = "위 팽창 %2$dx : %1$s"
+	L.bloat_bar = "~다음 위 팽창"
+	
+	L.vilegas_other = "치명적인 가스: %s!"
+	
 	L.spore_bar = "~다음 가스 포자"
 end
 
