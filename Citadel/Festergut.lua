@@ -123,6 +123,6 @@ function mod:VileGas(player, spellId, _, _, spellName)
 	self:Whisper(71218, player, spellName)
 	self:Bar(71218, L["vilegas_other"]:format(player), 6, spellId)
 	self:PrimaryIcon(71218, player)
-	if UnitIsUnit(player, "player") then self:FlashShake(72293) end
+	if UnitIsUnit(player, "player") then self:FlashShake(71218) end
 end
 
