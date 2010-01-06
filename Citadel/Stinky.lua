@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Stinky", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(36626)
+mod:RegisterEnableMob(37025)
 mod.toggleOptions =  {71123, {71127, "FLASHSHAKE"}, "bosskill"}
 -- 71123: Decimate
 -- 71127: Mortal wound
@@ -30,7 +30,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_SUCCESS", "Decimate", 71123)
 
-	self:Death("Win", 36626)
+	self:Death("Win", 37025)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
