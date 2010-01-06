@@ -90,8 +90,8 @@ L = BigWigs:NewBossLocale("Rotface", "frFR")
 if L then
 	L.infection_bar = "Infection mutée : %s"
 
-	L.flood_trigger1 = "Grande nouvelle, mes amis ! J'ai réparé le distributeur de poison !" -- à vérifier
-	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flot !" -- à vérifier
+	L.flood_trigger1 = "Grande nouvelle, mes amis ! J'ai réparé le distributeur de poison !"
+	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flots !"
 	L.flood_warning = "Une nouvelle zone va bientôt être inondée !"
 end
 
