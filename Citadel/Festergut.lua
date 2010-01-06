@@ -38,6 +38,12 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+-- XXX validate timers for the pungent blight, gas spores and gastric bloats
+-- XXX get the gas spore timers more understandable, 3 bars in succession now, is that necessary?
+-- XXX validate sounds and colors for all messages to make sense
+-- XXX validate spell IDs in triggers, especially vile gas
+-- XXX engage+wipe combat triggers needed?
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
 	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)

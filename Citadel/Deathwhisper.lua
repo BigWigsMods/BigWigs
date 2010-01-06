@@ -45,6 +45,10 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
+-- XXX fix the add delayed message, it's broken usage of the API.
+-- XXX validate colors and sounds
+-- XXX warn when a reanimated one spawns
+
 local handle_Adds = nil
 local function adds()
 	mod:DelayedMessage("adds", 55, L["adds_warning"], "Attention")

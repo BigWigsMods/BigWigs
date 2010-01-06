@@ -44,6 +44,11 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+-- XXX validate colors and sounds
+-- XXX validate add timer on engage
+-- XXX prevent double engage message
+-- XXX make frenzy the enrage timer perhaps, so we get messages for it automatically
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172, 72173, 72356, 72357, 72358)
 	self:Log("SPELL_AURA_APPLIED", "RuneofBlood", 72408, 72409, 72410, 72447, 72448, 72449)

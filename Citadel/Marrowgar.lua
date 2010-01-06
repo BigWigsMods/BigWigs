@@ -34,6 +34,8 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+-- XXX verify bone storm cooldown on 10man
+
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
 	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826)

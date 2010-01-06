@@ -30,6 +30,9 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+-- XXX horde version working?
+-- XXX module needed at all?
+
 function mod:OnRegister()
 	self:RegisterEnableYell(L["enable_trigger_alliance"], L["enable_trigger_horde"])
 end

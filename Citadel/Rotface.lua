@@ -30,6 +30,8 @@ L = mod:GetLocale()
 --
 
 -- XXX add the big ooze explosion with sound warning
+-- XXX validate sounds and colors
+-- XXX P_R_E needed for wipe check?
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224)
