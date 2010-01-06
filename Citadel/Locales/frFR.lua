@@ -36,7 +36,19 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
 if L then
+	L.inhale_warning = "Inhalation de chancre %d dans ~5 sec. !"
+	L.inhale_message = "Inhalation de chancre %d"
+	L.inhale_bar = "~Prochaine Inhalation (%d)"
 
+	L.blight_warning = "Chancre âcre dans ~5 sec. !"
+	L.blight_bar = "~Prochain Chancre âcre"
+
+	L.bloat_message = "%2$dx Ballonnement gastrique sur %1$s"
+	L.bloat_bar = "~Prochain Ballonnement"
+
+	L.vilegas_other = "Gaz abominable : %s"
+
+	L.spore_bar = "~Prochaines Spores gazeuses"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")

@@ -24,15 +24,15 @@ if L then
 	L.inhale_warning = "Inhale Blight %d in ~5sec!"
 	L.inhale_message = "Inhale Blight %d"
 	L.inhale_bar = "~Next Inhale %d"
-	
+
 	L.blight_warning = "Pungent Blight in ~5sec!"
 	L.blight_bar = "~Next Blight"
-	
+
 	L.bloat_message = "%2$dx Gastric Bloat on %1$s"
 	L.bloat_bar = "~Next Bloat"
-	
+
 	L.vilegas_other = "Vile Gas on %s!"
-	
+
 	L.spore_bar = "~Next Gas Spores"
 end
 L = mod:GetLocale()
