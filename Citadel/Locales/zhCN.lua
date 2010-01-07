@@ -74,6 +74,8 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "zhCN")
 if L then
+	L.engage_trigger = "Good news, everyone!"
+
 	L.blight_message = "Blight：>%s<！"
 	L.violation_message = "Violation：>%s<！"
 end
