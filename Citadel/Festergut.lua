@@ -39,8 +39,6 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX validate timers for the pungent blight, gas spores and gastric bloats
--- XXX validate sounds and colors for all messages to make sense
 -- XXX validate spell IDs in triggers, especially vile gas
 
 function mod:OnBossEnable()
@@ -60,7 +58,7 @@ function mod:OnEngage()
 	count = 1
 	self:Berserk(300, true)
 	self:Bar(69279, L["spore_bar"], 20, 69279)
-	self:Bar(69165, L["inhale_bar"], 33.5, 69165)
+	self:Bar(69165, L["inhale_bar"]:format(count), 33.5, 69165)
 	self:OpenProximity(9)
 end
 
@@ -74,7 +72,7 @@ do
 		mod:TargetMessage(69279, spellName, sporeTargets, "Urgent", 69279, "Alert")
 		scheduled = nil
 	end
-	local function sporeNext(spellName)
+	local function sporeNext()
 		mod:Bar(69279, L["spore_bar"], 28, 69279)
 	end
 	function mod:Spores(player, spellId, _, _, spellName)
@@ -82,7 +80,7 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(sporeWarn, 0.2, spellName)
-			self:ScheduleTimer(sporeNext, 12, spellName)
+			self:ScheduleTimer(sporeNext, 12)
 			local explodeName = GetSpellInfo(67729) --"Explode"
 			self:Bar(69279, explodeName, 12, spellId)
 		end
@@ -93,29 +91,28 @@ function mod:InhaleCD(_, spellId, _, _, spellName)
 	self:Message(69165, L["inhale_message"]:format(count), "Attention", spellId)
 	count = count + 1
 	if count == 4 then
-		count = 1
-		self:Bar(69165, L["inhale_bar"]:format(count+1), 68, spellId)
+		self:Bar(71219, L["blight_bar"], 33.5, 71219)
 	else
-		self:Bar(69165, L["inhale_bar"]:format(count+1), 33.5, spellId)
+		self:Bar(69165, L["inhale_bar"]:format(count), 33.5, spellId)
 	end
 end
 
 function mod:Blight(_, spellId, _, _, spellName)
-	self:Message(71219, spellName, "Important", spellId)
-	self:DelayedMessage(71219, 133, L["blight_warning"], "Attention")
-	self:Bar(71219, L["blight_bar"], 138, spellId)
+	count = 1
+	self:Message(71219, spellName, "Attention", spellId)
+	self:Bar(69165, L["inhale_bar"]:format(count), 33.5, 69165)
 end
 
 function mod:Bloat(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 5 then
-		self:TargetMessage(72551, L["bloat_message"], player, "Urgent", icon, "Info", stack)
+		self:TargetMessage(72551, L["bloat_message"], player, "Positive", icon, nil, stack)
 	end
-	self:Bar(72551, L["bloat_bar"], 9, spellId)
+	self:Bar(72551, L["bloat_bar"], 10, spellId)
 end
 
 function mod:VileGas(player, spellId, _, _, spellName)
-	self:Message(71218, spellName, "Urgent", spellId)
+	self:Message(71218, spellName, "Important", spellId)
 	self:Bar(71218, spellName, 6, spellId)
 end
 
