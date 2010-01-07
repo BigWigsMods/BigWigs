@@ -42,6 +42,7 @@ if L then
 	L.violation_message = "Green ooze"
 
 	L.plague_message = "%2$dx plague on %1$s"
+	L.plague_bar = "Next plague"
 
 	L.phase2_warning = "Phase 2 soon!"
 	L.phase3_warning = "Phase 3 soon!"
@@ -55,12 +56,12 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455)
-	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447)
+	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672)
+	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
-	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295)
+	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 72615, 72296)
 
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -86,6 +87,7 @@ function mod:Plague(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(72451, L["plague_message"], player, "Urgent", icon, "Info", stack)
+		self:Bar(72451, L["plague_bar"], 10, 72451)
 	end
 end
 
@@ -139,7 +141,7 @@ function mod:StunnedByGreenOoze(player, spellId)
 end
 
 function mod:Experiment(_, spellId, _, _, spellName)
-	self:Message(71966, spellName, "Important", spellId, "Alert")
+	self:Message(70351, spellName, "Important", spellId, "Alert")
 	self:Bar(70351, L["experiment_bar"], 38, 70351)
 end
 

@@ -5,7 +5,7 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
 if L then
-	L.engage_trigger = "놀자?"
+	L.engage_trigger = "노는... 거야?"
 
 	L.inhale_message = "들이마시기 %d"
 	L.inhale_bar = "~다음 들이마시기 %d"
@@ -75,10 +75,28 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "koKR")
 if L then
+	L.phase = "단계"
+	L.phase_desc = "단계 변화를 알립니다."
+	L.phase2_trigger = "흠, 아무 느낌도 없군요. 엥?! 이건 어디서 온 거지요?"
+	L.phase3_trigger = "이 맛은... 체리군요! 오! 이런 실례!"
+	
 	L.engage_trigger = "좋은 소식이에요, 여러분!"
+	
+	L.ball_message = "통통 끈적이!"
+	L.ball_bar = "다음 끈적이"
 
-	L.blight_message = "가스 팽창: %s!"
-	L.violation_message = "수액괴물: %s!"
+	L.experiment_bar = "다음 추가"
+	L.add_message = "곧 수액 추가!"
+	L.blight_message = "붉은 수액"
+	L.violation_message = "녹색 수액"
+
+	L.plague_message = "돌연변이 역병 %2$dx : %1$s"
+	L.plague_bar = "다음 역병"
+
+	L.phase2_warning = "곧 2 단계!"
+	L.phase3_warning = "곧 3 단계!"
+	
+	L.gasbomb_bar = "다음 노란 가스탄"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
