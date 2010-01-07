@@ -20,6 +20,8 @@ local count = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "Fun time?"
+
 	L.inhale_warning = "Inhale Blight %d in ~5sec!"
 	L.inhale_message = "Inhale Blight %d"
 	L.inhale_bar = "~Next Inhale %d"
@@ -39,10 +41,8 @@ L = mod:GetLocale()
 --
 
 -- XXX validate timers for the pungent blight, gas spores and gastric bloats
--- XXX get the gas spore timers more understandable, 3 bars in succession now, is that necessary?
 -- XXX validate sounds and colors for all messages to make sense
 -- XXX validate spell IDs in triggers, especially vile gas
--- XXX engage+wipe combat triggers needed?
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
@@ -52,7 +52,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 36626)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Yell("Engage", L["engage_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "Spores", 69279)
 end
@@ -85,7 +85,8 @@ do
 			scheduled = true
 			self:ScheduleTimer(sporeWarn, 0.2, spellName)
 			self:ScheduleTimer(sporeNext, 12, spellName)
-			self:Bar(69279, spellName, 12, spellId)
+			local explodeName = GetSpellInfo(67729) --"Explode"
+			self:Bar(69279, explodeName, 12, spellId)
 		end
 	end
 end
@@ -110,7 +111,7 @@ end
 
 function mod:Bloat(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
-	if stack and stack > 6 then
+	if stack and stack > 5 then
 		self:TargetMessage(72551, L["bloat_message"], player, "Urgent", icon, "Info", stack)
 	end
 	self:Bar(72551, L["bloat_bar"], 9, spellId)
