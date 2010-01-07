@@ -29,6 +29,7 @@ if L then
 	L.mage = "마법사"
 	L.mage_desc = "마법사 소환과 대포가 얼었을때 알립니다."
 	L.mage_message = "마법사 소환!"
+	L.mage_bar = "다음 마법사"
 
 	L.enable_trigger_alliance = "속도를 올려라! 제군들, 곧 운명과 마주할 것이다!"
 	L.enable_trigger_horde = "호드의 아들딸이여, 일어나라! 오늘 우리는 증오하던 적과 전투를 벌이리라! 록타르 오가르!"
