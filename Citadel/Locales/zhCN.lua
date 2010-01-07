@@ -5,6 +5,16 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "zhCN")
 if L then
+	L.inhale_warning = "约5秒后，Inhale Blight：>%d<！"
+	L.inhale_message = "Inhale Blight：>%d<！"
+	L.inhale_bar = "<下一Inhale Blight：%d>"
+
+	L.blight_warning = "约5秒后，Pungent Blight！"
+	L.blight_bar = "<下一Pungent Blight>"
+
+	L.bloat_message = "Gastric Bloat%2$dx：>%1$s<！"
+	L.bloat_bar = "<下一Gastric Bloat>"
+
 	L.spore_bar = "<下一Gas Spore>"
 end
 
