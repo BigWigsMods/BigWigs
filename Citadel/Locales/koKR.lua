@@ -5,7 +5,7 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
 if L then
-	L.engage_trigger = "Fun time?"
+	L.engage_trigger = "놀자?"
 
 	L.inhale_message = "들이마시기 %d"
 	L.inhale_bar = "~다음 들이마시기 %d"
@@ -26,6 +26,7 @@ if L then
 	L.adds_trigger_alliance = "약탈자, 하사관, 공격하라!"
 	L.adds_trigger_horde = "해병, 하사관, 공격하라!"
 	L.adds_message = "차원문!"
+	L.adds_bar = "다음 차원문"
 
 	L.mage = "마법사"
 	L.mage_desc = "마법사 소환과 대포가 얼었을때 알립니다."

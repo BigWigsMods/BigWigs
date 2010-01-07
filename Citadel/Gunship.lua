@@ -17,6 +17,7 @@ if L then
 	L.adds_trigger_alliance = "Reavers, Sergeants, attack!"
 	L.adds_trigger_horde = "Marines, Sergeants, attack!"
 	L.adds_message = "Portals!"
+	L.adds_bar = "Next Portals"
 
 	L.mage = "Mage"
 	L.mage_desc = "Warn when a mage spawns to freeze the gunship cannons."
@@ -51,7 +52,8 @@ end
 --
 
 function mod:AddsPortal()
-	self:Bar("adds", L["adds_message"], 60, 53142) --Portal: Dalaran icon
+	self:Message("adds", L["adds_message"], "Positive", 53142, "Info")
+	self:Bar("adds", L["adds_bar"], 60, 53142) --Portal: Dalaran icon
 end
 
 function mod:Frozen(_, spellId)
