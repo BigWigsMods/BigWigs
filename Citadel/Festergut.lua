@@ -22,7 +22,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Fun time?"
 
-	L.inhale_warning = "Inhale Blight %d in ~5sec!"
 	L.inhale_message = "Inhale Blight %d"
 	L.inhale_bar = "~Next Inhale %d"
 
@@ -61,7 +60,6 @@ function mod:OnEngage()
 	count = 1
 	self:Berserk(300, true)
 	self:Bar(69279, L["spore_bar"], 20, 69279)
-	self:DelayedMessage(69165, 28.5, L["inhale_warning"], "Attention")
 	self:Bar(69165, L["inhale_bar"], 33.5, 69165)
 	self:OpenProximity(9)
 end
@@ -77,7 +75,7 @@ do
 		scheduled = nil
 	end
 	local function sporeNext(spellName)
-		mod:Bar(69279, L["spore_bar"], 16, 69279)
+		mod:Bar(69279, L["spore_bar"], 28, 69279)
 	end
 	function mod:Spores(player, spellId, _, _, spellName)
 		sporeTargets[#sporeTargets + 1] = player
@@ -94,7 +92,6 @@ end
 function mod:InhaleCD(_, spellId, _, _, spellName)
 	self:Message(69165, L["inhale_message"]:format(count), "Attention", spellId)
 	count = count + 1
-	self:DelayedMessage(69165, 28.5, L["inhale_warning"]:format(count), "Attention")
 	if count == 4 then
 		count = 1
 		self:Bar(69165, L["inhale_bar"]:format(count+1), 68, spellId)

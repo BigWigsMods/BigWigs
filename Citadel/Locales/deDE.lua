@@ -27,7 +27,8 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "deDE")
 if L then
-	L.inhale_warning = "Seuche einatmen %d in ~5 sek!"
+	L.engage_trigger = "Fun time?"
+
 	L.inhale_message = "Seuche einatmen %d"
 	L.inhale_bar = "~Seuche einatmen %d"
 

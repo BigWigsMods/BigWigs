@@ -5,7 +5,8 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
 if L then
-	L.inhale_warning = "약 5초 후 들이마시기(%d)!"
+	L.engage_trigger = "Fun time?"
+
 	L.inhale_message = "들이마시기 %d"
 	L.inhale_bar = "~다음 들이마시기 %d"
 

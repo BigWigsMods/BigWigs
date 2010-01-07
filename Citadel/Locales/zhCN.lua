@@ -5,7 +5,8 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "zhCN")
 if L then
-	L.inhale_warning = "约5秒后，Inhale Blight：>%d<！"
+	L.engage_trigger = "Fun time?"
+
 	L.inhale_message = "Inhale Blight：>%d<！"
 	L.inhale_bar = "<下一Inhale Blight：%d>"
 
