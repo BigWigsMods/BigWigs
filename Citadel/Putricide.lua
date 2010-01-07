@@ -5,7 +5,14 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 72451, 71255, 72295, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 71255, 72295, 72451, "phase", "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+mod.optionHeaders = {
+	[70447] = CL.phase:format(1),
+	[71255] = CL.phase:format(2),
+	[72451] = CL.phase:format(3),
+	phase = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -17,7 +24,6 @@ local p2, p3 = nil, nil
 --  Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
