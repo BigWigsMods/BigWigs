@@ -52,7 +52,7 @@ end
 --
 
 function mod:AddsPortal()
-	self:Message("adds", L["adds_message"], "Positive", 53142, "Info")
+	self:Message("adds", L["adds_message"], "Attention", 53142)
 	self:Bar("adds", L["adds_bar"], 60, 53142) --Portal: Dalaran icon
 end
 
