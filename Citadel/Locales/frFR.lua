@@ -5,9 +5,17 @@ end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
 if L then
+	L.adds = "Portails"
+	L.adds_desc = "Prévient de l'arrivée des ennemis sur votre propre bateau."
+	L.adds_trigger_alliance = "Saccageurs, sergents, à l'attaque !"
+	L.adds_trigger_horde = "Soldats, sergents, à l'attaque !"
+	L.adds_message = "Portails !"
+	L.adds_bar = "Prochains portails"
+
 	L.mage = "Mage"
 	L.mage_desc = "Prévient quand un mage apparaît pour congeler vos canons."
 	L.mage_message = "Mage apparu !"
+	L.mage_bar = "Prochain mage"
 
 	L.enable_trigger_alliance = "Faites chauffer les moteurs ! On a rencart avec le destin, les gars !"
 	L.enable_trigger_horde = "Levez-vous, fils et filles de la Horde ! Aujourd’hui, nous affrontons le plus haï de nos ennemis ! LOK’TAR OGAR !"
@@ -34,7 +42,7 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
 if L then
-	L.engage_trigger = "Fun time?"
+	L.engage_trigger = "On joue ?"
 
 	L.inhale_message = "Inhalation de chancre %d"
 	L.inhale_bar = "~Prochaine Inhalation (%d)"
@@ -44,8 +52,6 @@ if L then
 
 	L.bloat_message = "%2$dx Ballonnement gastrique sur %1$s"
 	L.bloat_bar = "~Prochain Ballonnement"
-
-	L.vilegas_other = "Gaz abominable : %s"
 
 	L.spore_bar = "~Prochaines Spores gazeuses"
 end
@@ -74,7 +80,7 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
 if L then
-	L.engage_trigger = "Good news, everyone!"
+	L.engage_trigger = "Grande nouvelle, mes amis !" -- à vérifier
 
 	L.blight_message = "Ballonnement gazeux : %s"
 	L.violation_message = "Adhésif de limon volatil : %s"
@@ -86,7 +92,7 @@ if L then
 
 	L.flood_trigger1 = "Grande nouvelle, mes amis ! J'ai réparé le distributeur de poison !"
 	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flots !"
-	L.flood_warning = "Une nouvelle zone va bientôt être inondée !"
+	L.flood_warning = "Prochaine inondation imminente !"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
