@@ -68,16 +68,9 @@ if L then
 	L.coldflame_message = "Flamme froide sur VOUS !"
 end
 
-L = BigWigs:NewBossLocale("Precious", "frFR")
+L = BigWigs:NewBossLocale("Putricide Dogs", "frFR")
 if L then
-	L.zombies = GetSpellInfo(71159)
-	L.zombies_desc = "Invoque 11 zombies pestiférés pour aider le lanceur."
-	L.zombies_message = "Zombies invoqués !"
-	L.zombies_cd = "~Prochains zombies"
-
 	L.wound_message = "%2$dx Blessure mortelle sur %1$s"
-
-	L.decimate_cd = "~Prochain Décimer"
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
@@ -123,12 +116,6 @@ if L then
 	L.boom = "Explosion !"
 end
 
-L = BigWigs:NewBossLocale("Stinky", "frFR")
-if L then
-	L.wound_message = "%2$dx Blessure mortelle sur %1$s"
-	L.decimate_cd = "~Prochain Décimer"
-end
-
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
 if L then
 	L.manavoid_message = "Vide de mana sur VOUS !"
@@ -137,3 +124,4 @@ if L then
 	L.portal_message = "Portail actif !"
 	L.portal_trigger = "J'ai ouvert un portail vers le Rêve" -- à vérifier
 end
+

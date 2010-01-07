@@ -51,16 +51,9 @@ if L then
 	L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
 end
 
-L = BigWigs:NewBossLocale("Precious", "zhCN")
+L = BigWigs:NewBossLocale("Putricide Dogs", "zhCN")
 if L then
-	L.zombies = GetSpellInfo(71159)
-	L.zombies_desc = "召唤11个Plague Zombies协助施法者。"
-	L.zombies_message = "召唤Zombies！"
-	L.zombies_cd = "<下一Zombies>" -- 20sek cd (11 Zombies)
-
 	L.wound_message = " Mortal Wound%2$dx：>%1$s<！"
-
-	L.decimate_cd = "<下一Decimate>" -- 33 sec cd
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "zhCN")
@@ -106,12 +99,6 @@ if L then
 	L.boom = "Explosion！"
 end
 
-L = BigWigs:NewBossLocale("Stinky", "zhCN")
-if L then
-	L.wound_message = "Mortal Wound%2$dx：>%1$s<！"
-	L.decimate_cd = "<下一Decimate>" -- 33sec cd
-end
-
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhCN")
 if L then
 	L.manavoid_message = ">你< Mana Void！"
@@ -120,3 +107,4 @@ if L then
 	L.portal_message = "打开Portal！"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 end
+

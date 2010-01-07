@@ -108,21 +108,8 @@ if L then
 	L.boom = "Взрыв!"
 end
 
-L = BigWigs:NewBossLocale("Stinky", "ruRU")
+L = BigWigs:NewBossLocale("Putricide Dogs", "ruRU")
 if L then
 	L.wound_message = "%2$dx смертельных ран у: %1$s"
-	L.decimate_cd = "~истребление" -- 33sec cd
-end
-
-L = BigWigs:NewBossLocale("Precious", "ruRU")
-if L then
-	L.zombies = GetSpellInfo(71159)
-	L.zombies_desc = "Заклинатель призывает на помощь 11 чумных зомби."
-	L.zombies_message = "Зомби призваны!"
-	L.zombies_cd = "~чумные зомби" -- 20sek cd (11 Zombies)
-
-	L.wound_message = "%2$dx смертельных ран у: %1$s"
-
-	L.decimate_cd = "~истребление" -- 33 sec cd
 end
 

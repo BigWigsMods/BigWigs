@@ -54,11 +54,6 @@ if L then
 	L.coldflame_message = "Eisflamme auf DIR!"
 end
 
-L = BigWigs:NewBossLocale("Precious", "deDE")
-if L then
-
-end
-
 L = BigWigs:NewBossLocale("Professor Putricide", "deDE")
 if L then
 
@@ -93,7 +88,7 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("Stinky", "deDE")
+L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
 if L then
 
 end

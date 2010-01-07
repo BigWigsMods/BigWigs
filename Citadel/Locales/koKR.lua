@@ -8,13 +8,13 @@ if L then
 	L.inhale_warning = "약 5초 후 들이마시기(%d)!"
 	L.inhale_message = "들이마시기 %d"
 	L.inhale_bar = "~다음 들이마시기 %d"
-	
+
 	L.blight_warning = "약 5초 후 파멸의 역병!"
 	L.blight_bar = "~다음 파멸 역병"
-	
+
 	L.bloat_message = "위 팽창 %2$dx : %1$s"
 	L.bloat_bar = "~다음 위 팽창"
-	
+
 	L.spore_bar = "~다음 가스 포자"
 end
 
@@ -61,7 +61,7 @@ if L then
 	L.engage_trigger = "스컬지가 죽음과 파괴의 무리가 되어 이 세상을 쓸어버리리라!"
 end
 
-L = BigWigs:NewBossLocale("Precious", "koKR")
+L = BigWigs:NewBossLocale("Putricide Dogs", "koKR")
 if L then
 	L.wound_message = "죽음의 상처 %2$dx : %1$s"
 end
@@ -117,3 +117,4 @@ if L then
 	L.portal_message = "차원문 생성!"
 	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그안에 있다..."	--check
 end
+

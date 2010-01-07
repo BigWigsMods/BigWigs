@@ -51,16 +51,9 @@ if L then
 	L.engage_trigger = "天譴軍團會化身為死亡與毀滅，席捲整個世界。"
 end
 
-L = BigWigs:NewBossLocale("Precious", "zhTW")
+L = BigWigs:NewBossLocale("Putricide Dogs", "zhTW")
 if L then
-	L.zombies = GetSpellInfo(71159)
-	L.zombies_desc = "召喚11個瘟疫殭屍協助施法者。"
-	L.zombies_message = "召喚 瘟疫殭屍！"
-	L.zombies_cd = "<下一瘟疫殭屍>" -- 20sek cd (11 Zombies)
-
 	L.wound_message = "致死重傷%2$dx：>%1$s<！"
-
-	L.decimate_cd = "<下一虐殺>" -- 33 sec cd
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "zhTW")
@@ -106,12 +99,6 @@ if L then
 	L.boom = "極凍之寒！"
 end
 
-L = BigWigs:NewBossLocale("Stinky", "zhTW")
-if L then
-	L.wound_message = "致死重傷%2$dx：>%1$s<！"
-	L.decimate_cd = "<下一虐殺>" -- 33sec cd
-end
-
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
 if L then
 	L.manavoid_message = ">你< 潰法力場！"
@@ -120,3 +107,4 @@ if L then
 	L.portal_message = "打開夢魘之門！"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 end
+
