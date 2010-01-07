@@ -5,14 +5,13 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 72451, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 72451, 71255, 72295, "phase", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local p2, p3 = nil, nil
-local phase = nil
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -28,6 +27,10 @@ if L then
 
 	L.engage_trigger = "Good news, everyone!"
 
+	L.ball_message = "Bouncing goo ball!"
+	L.ball_bar = "Next bouncing goo ball"
+
+	L.experiment_bar = "Next add"
 	L.add_message = "Ooze add incoming!"
 	L.blight_message = "Red ooze"
 	L.violation_message = "Green ooze"
@@ -37,9 +40,7 @@ if L then
 	L.phase2_warning = "Phase 2 soon!"
 	L.phase3_warning = "Phase 3 soon!"
 	
-	L.gasbomb_bar = "Next Gas Bomb"
-	
-	L.goo_bar = "~Next Goo"
+	L.gasbomb_bar = "More yellow gas bombs!"
 end
 L = mod:GetLocale()
 
@@ -53,22 +54,22 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
-	self:Log("SPELL_CAST_SUCCESS", "Goo", 72295)
+	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295)
 
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:Death("RedOozeDeath", 37562)
 	self:Death("Win", 36678)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Phase2", L["phase2_trigger"])
+	self:Yell("Phase3", L["phase3_trigger"])
 end
 
 function mod:OnEngage()
 	self:Berserk(600)
 	p2, p3 = nil, nil
-	local phase = nil
 end
 
 --------------------------------------------------------------------------------
@@ -80,6 +81,18 @@ function mod:Plague(player, spellId, _, _, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(72451, L["plague_message"], player, "Urgent", icon, "Info", stack)
 	end
+end
+
+function mod:Phase2()
+	self:Bar(70351, L["experiment_bar"], 25, 70351)
+	self:Bar(71255, L["gasbomb_bar"], 20, 71255)
+	self:Bar(72295, L["goo_bar"], 9, 72295)
+end
+
+function mod:Phase3()
+	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
+	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
+	self:Bar(72295, L["goo_bar"], 9, 72295)
 end
 
 function mod:UNIT_HEALTH(event, msg)
@@ -120,7 +133,7 @@ function mod:StunnedByGreenOoze(player, spellId)
 end
 
 function mod:Experiment(_, spellId, _, _, spellName)
-	self:Message(71966, spellName, "Important", spellId)
+	self:Message(71966, spellName, "Important", spellId, "Alert")
 	self:Bar(70351, L["experiment_bar"], 38, 70351)
 end
 
@@ -129,21 +142,8 @@ function mod:GasBomb(_, spellId, _, _, spellName)
 	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
 end
 
-function mod:Goo(_, spellId, _, _, spellName)
-	self:Message(72295, spellName, "Urgent", spellId)
-	self:Bar(72295, L["goo_bar"], 25, 72295)
+function mod:BouncingGooBall(_, spellId)
+	self:Message(72295, L["ball_message"], "Urgent", spellId)
+	self:Bar(72295, L["ball_bar"], 25, spellId)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["phase2_trigger"]) then
-		phase = 2
-		self:Bar(70351, L["experiment_bar"], 25, 70351)
-		self:Bar(71255, L["gasbomb_bar"], 20, 71255)
-		self:Bar(72295, L["goo_bar"], 9, 72295)
-	elseif msg:find(L["phase3_trigger"]) then
-		phase = 3
-		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
-		self:Bar(71255, L["gasbomb_bar"], 35, 71255)
-		self:Bar(72295, L["goo_bar"], 9, 72295)
-	end
-end
