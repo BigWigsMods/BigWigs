@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{71224, "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
+mod.toggleOptions = {69839, {71224, "FLASHSHAKE", "ICON", "WHISPER"}, 71588, 69508, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,13 +29,13 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX add the big ooze explosion with sound warning
 -- XXX validate sounds and colors
 -- XXX P_R_E needed for wipe check?
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224)
 	self:Log("SPELL_CAST_START", "SlimeSpray", 69508) --Needed?
+	self:Log("SPELL_CAST_START", "Explode", 69839, 73029, 73030)
 
 	-- Common
 	self:Yell("Flood", L["flood_trigger1"],  L["flood_trigger2"])
@@ -53,6 +53,7 @@ function mod:Infection(player, spellId, _, _, spellName)
 	self:Whisper(71224, player, spellName)
 	self:Bar(71224, L["infection_bar"]:format(player), 12, spellId)
 	self:PrimaryIcon(71224, player, "icon")
+	if UnitIsUnit(player, "player") then self:FlashShake(71224) end
 end
 
 function mod:Flood()
@@ -61,6 +62,11 @@ function mod:Flood()
 end
 
 function mod:SlimeSpray(_, spellId, _, _, spellName)
-	self:Message(69508, spellName, "Urgent", spellId)
+	self:Message(69508, spellName, "Important", spellId)
+end
+
+function mod:Explode(_, spellId, _, _, spellName)
+	self:Message(69839, spellName, "Urgent", spellId, "Alert")
+	self:Bar(69839, spellName, 7, spellId)
 end
 

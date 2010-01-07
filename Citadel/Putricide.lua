@@ -69,3 +69,4 @@ end
 function mod:Experiment(_, spellId, _, _, spellName)
 	self:Message(71966, spellName, "Important", spellId)
 end
+
