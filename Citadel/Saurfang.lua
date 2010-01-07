@@ -30,8 +30,6 @@ if L then
 
 	L.rune_bar = "~Next Rune"
 
-	L.nova_bar = "~Next Nova"
-
 	L.mark = "Mark %d"
 
 	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"

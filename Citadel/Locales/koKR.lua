@@ -95,8 +95,6 @@ if L then
 
 	L.rune_bar = "다음 피의 룬"
 
-	L.nova_bar = "다음 피의 소용돌이"
-
 	L.mark = "징표 %d"
 
 	L.engage_trigger = "리치왕의 힘으로!"

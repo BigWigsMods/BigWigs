@@ -89,8 +89,6 @@ if L then
 
 	L.rune_bar = "<下一Rune of Blood>"
 
-	L.nova_bar = "<下一Blood Nova>"
-
 	L.mark = "Mark of the Fallen Champion：>%d<！"
 
 	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"

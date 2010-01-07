@@ -49,8 +49,6 @@ if L then
 
 	L.rune_bar = "~следующая Руна"
 
-	L.nova_bar = "~следующее Кольцо"
-
 	L.mark = "Метка %d"
 
 	--L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"

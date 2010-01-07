@@ -3,11 +3,55 @@ if L then
 
 end
 
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
+if L then
+
+end
+
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "deDE")
+if L then
+	L.adds = "Blutbestien"
+	L.adds_desc = "Zeigt Timer und Nachrichten für das Auftauchen der Blutbestien."
+	L.adds_warning = "Blutbestien in 5 sek!"
+	L.adds_message = "Blutbestien!"
+	L.adds_bar = "~Blutbestien"
+
+	L.rune_bar = "~Rune"
+
+	L.mark = "Mal %d"
+
+	L.engage_trigger = "BEI DER MACHT DES LICHKÖNIGS!"
+	--L.warmup_alliance = "Let's get a move on then! Move ou..."
+	L.warmup_horde = "Kor'kron, Aufbruch! Champions, gebt Acht. Die Geißel ist..."
+end
+
+L = BigWigs:NewBossLocale("Festergut", "deDE")
+if L then
+	L.inhale_warning = "Seuche einatmen %d in ~5 sek!"
+	L.inhale_message = "Seuche einatmen %d"
+	L.inhale_bar = "~Seuche einatmen %d"
+
+	L.blight_warning = "Stechende Seuche in ~5 sek!"
+	L.blight_bar = "~Stechende Seuche"
+
+	L.bloat_message = "%2$dx Magenblähung: %1$s"
+	L.bloat_bar = "~Magenblähung"
+
+	L.spore_bar = "~Gassporen"
+end
+
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
 if L then
+	L.adds = "Portal"
+	L.adds_desc = "Warnt vor den Portalen."
+	--L.adds_trigger_alliance = "Reavers, Sergeants, attack!"
+	L.adds_trigger_horde = "Soldaten! Zum Angriff!"
+	L.adds_message = "Portal!"
+
 	L.mage = "Magier"
-	L.mage_desc = "Warnt, wenn ein Magier erscheint um die Kanonen einzufrieren."
+	L.mage_desc = "Warnt, wenn ein Magier erscheint, um die Kanonen einzufrieren."
 	L.mage_message = "Magier gespawnt!"
+	L.mage_bar = "Nächster Magier"
 
 	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
 	L.enable_trigger_horde = "Erhebt Euch, Söhne und Töchter der Horde! Wir ziehen gegen einen verhassten Feind in die Schlacht! LOK'TAR OGAR!"
@@ -32,16 +76,6 @@ if L then
 	L.touch_bar = "~Berührung"
 end
 
-L = BigWigs:NewBossLocale("Festergut", "deDE")
-if L then
-
-end
-
-L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
-if L then
-
-end
-
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
 if L then
 	L.impale_cd = "~Aufspießen"
@@ -50,6 +84,8 @@ if L then
 	L.bonestorm_warning = "Knochensturm in 5 sek!"
 
 	L.coldflame_message = "Eisflamme auf DIR!"
+	
+	L.engage_trigger = "Die Geißel wird über diese Welt kommen wie ein Schwarm aus Tod und Zerstörung!"
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "deDE")
@@ -57,36 +93,21 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("Rotface", "deDE")
+L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
 if L then
-
+	L.wound_message = "%2$dx Tödliche Wunde: %1$s"
 end
 
-L = BigWigs:NewBossLocale("Deathbringer Saurfang", "deDE")
+L = BigWigs:NewBossLocale("Rotface", "deDE")
 if L then
-	L.adds = "Blutbestien"
-	L.adds_desc = "Zeigt Timer und Nachrichten für das Auftauchen der Blutbestien."
-	L.adds_warning = "Blutbestien in 5 sek!"
-	L.adds_message = "Blutbestien!"
-	L.adds_bar = "~Blutbestien"
+	L.infection_bar = "Infektion auf %s!"
 
-	L.rune_bar = "~Rune"
-
-	L.nova_bar = "~Nova"
-
-	L.mark = "Mal %d"
-
-	L.engage_trigger = "BEI DER MACHT DES LICHKÖNIGS!"
-	--L.warmup_alliance = "Let's get a move on then! Move ou..."
-	L.warmup_horde = "Kor'kron, Aufbruch! Champions, gebt Acht. Die Geißel ist..."
+	L.flood_trigger1 = "Gute Nachricht, Freunde! Die Giftschleim-Rohre sind repariert!"
+	L.flood_trigger2 = "Gute Nachricht, Freunde! Der Schleim fließt wieder!"
+	L.flood_warning = "Schleimflut bald!"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "deDE")
-if L then
-
-end
-
-L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
 if L then
 
 end

@@ -96,8 +96,6 @@ if L then
 
 	L.rune_bar = "Prochaine Rune sanglante"
 
-	L.nova_bar = "Prochaine Nova de sang"
-
 	L.mark = "Marque %d"
 
 	L.engage_trigger = "PAR LA PUISSANCE DU ROI-LICHE !"

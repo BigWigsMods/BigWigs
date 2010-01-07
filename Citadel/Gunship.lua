@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Icecrown Gunship Battle", "Icecrown Citadel")
 if not mod then return end
-mod.toggleOptions = {"mage", "bosskill"}
+mod.toggleOptions = {"adds", "mage", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -55,7 +55,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L["adds_trigger_alliance"], L["adds_trigger_horde"]) then
-		self:Bar("adds", L["adds"], 60, 53142)
+		self:Bar("adds", L["adds_message"], 60, 53142)
 	end
 end
 
