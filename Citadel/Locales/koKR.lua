@@ -25,7 +25,7 @@ if L then
 	L.adds_desc = "차원문에 대해 알립니다."
 	L.adds_trigger_alliance = "약탈자, 하사관, 공격하라!"
 	L.adds_trigger_horde = "해병, 하사관, 공격하라!"
-	L.adds_message = "차원문!"
+	L.adds_message = "차원문 소환!"
 	L.adds_bar = "다음 차원문"
 
 	L.mage = "마법사"
@@ -75,7 +75,7 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "koKR")
 if L then
-	L.engage_trigger = "Good news, everyone!"
+	L.engage_trigger = "좋은 소식이에요, 여러분!"
 
 	L.blight_message = "가스 팽창: %s!"
 	L.violation_message = "수액괴물: %s!"
@@ -85,9 +85,9 @@ L = BigWigs:NewBossLocale("Rotface", "koKR")
 if L then
 	L.infection_bar = "돌연변이 전염병: %s!"
 
-	L.flood_trigger1 = "좋은 소식이에요, 여러분!"	--check( I've fixed the 독성 수액 pipes!)
-	L.flood_trigger2 = "끝내주는 소식이에요, 여러분! 수액이 다시 나오는군요!"	--check
-	L.flood_warning = "곧 수액 홍수!"
+	L.flood_trigger1 = "좋은 소식이에요, 여러분! 독성 수액 배출관을 고쳤어요!"
+	L.flood_trigger2 = "끝내 주는 소식이에요, 여러분! 수액이 다시 나오는군요!"
+	L.flood_warning = "새 지역에 수액 홍수!"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "koKR")
