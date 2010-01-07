@@ -92,13 +92,13 @@ end
 function mod:Phase2()
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
 	self:Bar(71255, L["gasbomb_bar"], 20, 71255)
-	self:Bar(72295, L["goo_bar"], 9, 72295)
+	self:Bar(72295, L["ball_bar"], 9, 72295)
 end
 
 function mod:Phase3()
 	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
-	self:Bar(72295, L["goo_bar"], 9, 72295)
+	self:Bar(72295, L["ball_bar"], 9, 72295)
 end
 
 function mod:UNIT_HEALTH(event, msg)
