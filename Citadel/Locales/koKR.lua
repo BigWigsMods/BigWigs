@@ -20,6 +20,12 @@ end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
 if L then
+	L.adds = "차원문"
+	L.adds_desc = "차원문에 대해 알립니다."
+	L.adds_trigger_alliance = "약탈자, 하사관, 공격하라!"
+	L.adds_trigger_horde = "해병, 하사관, 공격하라!"
+	L.adds_message = "차원문!"
+
 	L.mage = "마법사"
 	L.mage_desc = "마법사 소환과 대포가 얼었을때 알립니다."
 	L.mage_message = "마법사 소환!"
