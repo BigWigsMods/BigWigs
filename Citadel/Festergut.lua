@@ -107,8 +107,8 @@ function mod:Bloat(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 5 then
 		self:TargetMessage(72551, L["bloat_message"], player, "Positive", icon, nil, stack)
+		self:Bar(72551, L["bloat_bar"], 10, spellId)
 	end
-	self:Bar(72551, L["bloat_bar"], 10, spellId)
 end
 
 function mod:VileGas(player, spellId, _, _, spellName)
