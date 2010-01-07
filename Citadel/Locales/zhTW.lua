@@ -20,9 +20,16 @@ end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhTW")
 if L then
+	L.adds = "傳送門"
+	L.adds_desc = "傳送門警報。"
+	L.adds_trigger_alliance = "劫奪者，士官們，攻擊!"
+	L.adds_trigger_horde = "Marines, Sergeants, attack!"
+	L.adds_message = "傳送門！"
+
 	L.mage = "法師"
 	L.mage_desc = "當法師出現冰凍砲艇火砲時發出警報。"
 	L.mage_message = "法師 出現！"
+	L.mage_bar = "<下一法師>"
 
 	L.enable_trigger_alliance = "發動引擎!小夥子們，我們即將面對命運啦!"
 	L.enable_trigger_horde = "起來吧，部落的子女!今天我們要和最可恨的敵人作戰!為了部落!"
