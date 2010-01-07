@@ -46,7 +46,6 @@ function mod:OnBossEnable()
 end
 
 -- XXX fix the add delayed message, it's broken usage of the API.
--- XXX validate colors and sounds
 -- XXX warn when a reanimated one spawns
 
 local handle_Adds = nil
@@ -91,7 +90,7 @@ end
 function mod:Touch(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
-		self:TargetMessage(71204, L["touch_message"], player, "Urgent", icon, "Info", stack)
+		self:TargetMessage(71204, L["touch_message"], player, "Urgent", icon, nil, stack)
 	end
 	self:Bar(71204, L["touch_bar"], 7, spellId)
 end

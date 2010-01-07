@@ -42,10 +42,9 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX validate colors and sounds
 -- XXX validate add timer on engage
--- XXX prevent double engage message
 -- XXX make frenzy the enrage timer perhaps, so we get messages for it automatically
+-- XXX ^- need separate warnings for separate abilities?
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172, 72173, 72356, 72357, 72358)
@@ -106,7 +105,7 @@ do
 		local time = GetTime()
 		if (time - t) > 2 then
 			t = time
-			self:Message("adds", L["adds_message"], "Attention", spellId, "Alarm")
+			self:Message("adds", L["adds_message"], "Positive", spellId, "Alarm")
 			self:DelayedMessage("adds", 35, L["adds_warning"], "Urgent")
 			self:Bar("adds", L["adds_bar"], 40, spellId)
 		end
@@ -114,7 +113,7 @@ do
 end
 
 function mod:RuneofBlood(player, spellId, _, _, spellName)
-	self:TargetMessage(72408, spellName, player, "Important", spellId, "Info")
+	self:TargetMessage(72408, spellName, player, "Attention", spellId)
 	self:Bar(72408, L["rune_bar"], 20, spellId)
 end
 

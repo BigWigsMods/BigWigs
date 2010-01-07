@@ -63,7 +63,7 @@ do
 	--Remove the (25/10 player) text from name
 	achievName = (achievName):gsub("%(.*%)", "")
 	local function impaleWarn(spellName)
-		mod:TargetMessage(69057, spellName, impaleTargets, "Urgent", 69062)
+		mod:TargetMessage(69057, spellName, impaleTargets, "Urgent", 69062, "Alert")
 		scheduled = nil
 	end
 	function mod:Impale(_, spellId, player, _, spellName)

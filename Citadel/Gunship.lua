@@ -35,15 +35,12 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX Calculate add respawn timer
--- XXX Calculate mage respawn timer
-
 function mod:OnRegister()
 	self:RegisterEnableYell(L["enable_trigger_alliance"], L["enable_trigger_horde"])
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("AddsPortal", L["adds_trigger_alliance"], L["adds_trigger_horde"])
 	self:Yell("Win", L["disable_trigger_alliance"], L["disable_trigger_horde"])
 	self:Log("SPELL_CAST_SUCCESS", "Frozen", 69705)
 	self:Log("SPELL_AURA_REMOVED", "FrozenCD", 69705)
@@ -53,10 +50,8 @@ end
 -- Event Handlers
 --
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["adds_trigger_alliance"], L["adds_trigger_horde"]) then
-		self:Bar("adds", L["adds_message"], 60, 53142)
-	end
+function mod:AddsPortal()
+	self:Bar("adds", L["adds_message"], 60, 53142) --Portal: Dalaran icon
 end
 
 function mod:Frozen(_, spellId)
