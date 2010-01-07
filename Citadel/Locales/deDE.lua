@@ -8,8 +8,6 @@ if L then
 	L.mage = "Magier"
 	L.mage_desc = "Warnt, wenn ein Magier erscheint um die Kanonen einzufrieren."
 	L.mage_message = "Magier gespawnt!"
-	--L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
-	L.mage_trigger_horde = "Die Außenhaut ist beschädigt! Holt einen Zauberer, der die Kanonen ausschaltet!"
 
 	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
 	L.enable_trigger_horde = "Erhebt Euch, Söhne und Töchter der Horde! Wir ziehen gegen einen verhassten Feind in die Schlacht! LOK'TAR OGAR!"

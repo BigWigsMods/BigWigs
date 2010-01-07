@@ -15,8 +15,6 @@ if L then
 	L.mage = "Mage"
 	L.mage_desc = "Warn when a mage spawns to freeze the gunship cannons."
 	L.mage_message = "Mage Spawned!"
-	L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
-	L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
 
 	L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
 	L.enable_trigger_horde = "Rise up, sons and daughters of the Horde! Today we battle a hated enemy! LOK'TAR OGAR!"
@@ -30,23 +28,23 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX horde version working?
--- XXX module needed at all?
+-- XXX Calculate add respawn timer
+-- XXX Calculate mage respawn timer
 
 function mod:OnRegister()
 	self:RegisterEnableYell(L["enable_trigger_alliance"], L["enable_trigger_horde"])
 end
 
 function mod:OnBossEnable()
-	self:Yell("Mages", L["mage_trigger_alliance"], L["mage_trigger_horde"])
 	self:Yell("Win", L["disable_trigger_alliance"], L["disable_trigger_horde"])
+	self:Log("SPELL_CAST_SUCCESS", "Frozen", 69705)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Mages()
-	self:Message("mage", L["mage_message"], "Positive", 69705, "Info")
+function mod:Frozen(_, spellId)
+	self:Message("mage", L["mage_message"], "Positive", spellId, "Info")
 end
 

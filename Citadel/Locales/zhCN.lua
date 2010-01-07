@@ -13,8 +13,6 @@ if L then
 	L.mage = "法师"
 	L.mage_desc = "当法师出现冰冻炮舰火炮时发出警报。"
 	L.mage_message = "法师 出现！"
-	L.mage_trigger_alliance = "We're taking hull damage, get a battle-mage out here to shut down those cannons!"
-	L.mage_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
 
 	L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
 	L.enable_trigger_horde = "Rise up, sons and daughters of the Horde! Today we battle a hated enemy! LOK'TAR OGAR!"

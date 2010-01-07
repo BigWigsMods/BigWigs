@@ -8,8 +8,6 @@ if L then
 	L.mage = "Mage"
 	L.mage_desc = "Prévient quand un mage apparaît pour congeler vos canons."
 	L.mage_message = "Mage apparu !"
-	L.mage_trigger_alliance = "La coque est endommagée, qu'un mage de bataille aille faire taire leurs canons !"
-	L.mage_trigger_horde = "La coque déguste sévère, qu'un sorcier aille me faire taire ces canons !"
 
 	L.enable_trigger_alliance = "Faites chauffer les moteurs ! On a rencart avec le destin, les gars !"
 	L.enable_trigger_horde = "Levez-vous, fils et filles de la Horde ! Aujourd’hui, nous affrontons le plus haï de nos ennemis ! LOK’TAR OGAR !"

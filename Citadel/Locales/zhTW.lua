@@ -13,8 +13,6 @@ if L then
 	L.mage = "法師"
 	L.mage_desc = "當法師出現冰凍砲艇火砲時發出警報。"
 	L.mage_message = "法師 出現！"
-	L.mage_trigger_alliance = "船體受到傷害，找個戰鬥法師來，搞定那些火砲!"
-	L.mage_trigger_horde = "船體受到傷害，找個戰鬥法師來，搞定那些火砲!" --check
 
 	L.enable_trigger_alliance = "發動引擎!小夥子們，我們即將面對命運啦!"
 	L.enable_trigger_horde = "起來吧，部落的子女!今天我們要和最可恨的敵人作戰!為了部落!"
