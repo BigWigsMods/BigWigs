@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 72451, "phase", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,6 +29,8 @@ if L then
 	L.blight_message = "Red ooze"
 	L.violation_message = "Green ooze"
 
+	L.plague_message = "%2$dx plague on %1$s"
+
 	L.phase2_warning = "Phase 2 soon!"
 	L.phase3_warning = "Phase 3 soon!"
 end
@@ -42,6 +44,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451)
 
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -60,6 +63,13 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Plague(player, spellId, _, _, spellName)
+	local _, _, icon, stack = UnitDebuff(player, spellName)
+	if stack and stack > 1 then
+		self:TargetMessage(72451, L["plague_message"], player, "Urgent", icon, "Info", stack)
+	end
+end
 
 function mod:UNIT_HEALTH(event, msg)
 	if p2 and p3 then
