@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions = {69279, 69165, 71219, 72551, {71218, "WHISPER", "ICON", "FLASHSHAKE"},"proximity", "berserk", "bosskill"}
+mod.toggleOptions = {69279, 69165, 71219, 72551, 71218, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals

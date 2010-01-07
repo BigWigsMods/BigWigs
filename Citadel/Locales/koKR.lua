@@ -15,8 +15,6 @@ if L then
 	L.bloat_message = "위 팽창 %2$dx : %1$s"
 	L.bloat_bar = "~다음 위 팽창"
 	
-	L.vilegas_other = "치명적인 가스: %s!"
-	
 	L.spore_bar = "~다음 가스 포자"
 end
 
@@ -65,14 +63,7 @@ end
 
 L = BigWigs:NewBossLocale("Precious", "koKR")
 if L then
-	L.zombies = GetSpellInfo(71159)
-	L.zombies_desc = "11마리의 역병 걸린 좀비 깨우기 시전을 알립니다."
-	L.zombies_message = "좀비 소환!"
-	L.zombies_cd = "~다음 좀비" -- 20sek cd (11 Zombies)
-
 	L.wound_message = "죽음의 상처 %2$dx : %1$s"
-
-	L.decimate_cd = "~다음 척살" -- 33 sec cd
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "koKR")
@@ -87,7 +78,7 @@ if L then
 
 	L.flood_trigger1 = "좋은 소식이에요, 여러분!"	--check( I've fixed the 독성 수액 pipes!)
 	L.flood_trigger2 = "끝내주는 소식이에요, 여러분! 수액이 다시 나오는군요!"	--check
-	L.flood_warning = "곧 새로운 지역에 수액 홍수!"
+	L.flood_warning = "곧 수액 홍수!"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "koKR")
@@ -116,12 +107,6 @@ if L then
 	L.airphase_message = "비행 단계"
 	L.airphase_desc = "신드라고사의 착지 & 비행에 대한 단계를 알립니다."
 	L.boom = "폭발!"
-end
-
-L = BigWigs:NewBossLocale("Stinky", "koKR")
-if L then
-	L.wound_message = "죽음의 상처 %2$dx : %1$s"
-	L.decimate_cd = "~다음 척살" --33sec cd
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
