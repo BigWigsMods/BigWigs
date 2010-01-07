@@ -95,7 +95,7 @@ end
 function mod:StunnedByGreenOoze(player, spellId)
 	self:TargetMessage(70447, L["violation_message"], player, "Personal", spellId)
 	self:Whisper(70447, player, L["violation_message"])
-	self:SecondaryIcon(70447, player)
+	self:PrimaryIcon(70447, player)
 end
 
 function mod:Experiment(_, spellId)
