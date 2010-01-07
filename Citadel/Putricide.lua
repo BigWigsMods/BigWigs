@@ -12,6 +12,7 @@ mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 719
 --
 
 local p2, p3 = nil, nil
+local phase = nil
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -22,6 +23,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
+	L.phase2_trigger = "Hmm. I don't feel a thing. Whaa...? Where'd those come from?"
+	L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!"
 
 	L.engage_trigger = "Good news, everyone!"
 
@@ -33,6 +36,10 @@ if L then
 
 	L.phase2_warning = "Phase 2 soon!"
 	L.phase3_warning = "Phase 3 soon!"
+	
+	L.gasbomb_bar = "Next Gas Bomb"
+	
+	L.goo_bar = "~Next Goo"
 end
 L = mod:GetLocale()
 
@@ -45,8 +52,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451)
+	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
+	self:Log("SPELL_CAST_SUCCESS", "Goo", 72295)
 
 	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:Death("RedOozeDeath", 37562)
 	self:Death("Win", 36678)
@@ -58,6 +68,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600)
 	p2, p3 = nil, nil
+	local phase = nil
 end
 
 --------------------------------------------------------------------------------
@@ -108,7 +119,31 @@ function mod:StunnedByGreenOoze(player, spellId)
 	self:PrimaryIcon(70447, player)
 end
 
-function mod:Experiment(_, spellId)
-	self:Message(71966, L["add_message"], "Attention", spellId)
+function mod:Experiment(_, spellId, _, _, spellName)
+	self:Message(71966, spellName, "Important", spellId)
+	self:Bar(70351, L["experiment_bar"], 38, 70351)
 end
 
+function mod:GasBomb(_, spellId, _, _, spellName)
+	self:Message(71255, spellName, "Attention", spellId)
+	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
+end
+
+function mod:Goo(_, spellId, _, _, spellName)
+	self:Message(72295, spellName, "Urgent", spellId)
+	self:Bar(72295, L["goo_bar"], 25, 72295)
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+	if msg:find(L["phase2_trigger"]) then
+		phase = 2
+		self:Bar(70351, L["experiment_bar"], 25, 70351)
+		self:Bar(71255, L["gasbomb_bar"], 20, 71255)
+		self:Bar(72295, L["goo_bar"], 9, 72295)
+	elseif msg:find(L["phase3_trigger"]) then
+		phase = 3
+		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
+		self:Bar(71255, L["gasbomb_bar"], 35, 71255)
+		self:Bar(72295, L["goo_bar"], 9, 72295)
+	end
+end
