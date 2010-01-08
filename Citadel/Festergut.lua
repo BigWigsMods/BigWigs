@@ -13,6 +13,8 @@ mod.toggleOptions = {69279, 69165, 71219, 72551, 71218, "proximity", "berserk", 
 
 local sporeTargets = mod:NewTargetList()
 local count = 1
+local max = nil
+local current = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -42,6 +44,9 @@ L = mod:GetLocale()
 -- XXX validate spell IDs in triggers, especially vile gas
 
 function mod:OnBossEnable()
+	local d = GetInstanceDifficulty()
+	max = (d == 1 or d == 3) and 2 or 3
+
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
 	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)
 	self:Log("SPELL_CAST_SUCCESS", "VileGas", 71218, 72272, 72273, 73019, 73020, 69240)
@@ -52,6 +57,7 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "Spores", 69279)
+	self:Log("SPELL_AURA_REMOVED", "Removed", 69279)
 end
 
 function mod:OnEngage()
@@ -84,7 +90,14 @@ do
 			local explodeName = GetSpellInfo(67729) --"Explode"
 			self:Bar(69279, explodeName, 12, spellId)
 		end
+		current = current + 1
+		SetRaidTarget(player, current)
+		if current == max then current = 0 end
 	end
+end
+
+function mod:Removed(player)
+	SetRaidTarget(player, 0)
 end
 
 function mod:InhaleCD(_, spellId, _, _, spellName)
