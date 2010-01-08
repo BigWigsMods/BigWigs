@@ -45,7 +45,9 @@ if L then
 	L.plague_bar = "Next plague"
 
 	L.phase2_warning = "Phase 2 soon!"
+	L.phase2_message = "Phase 2!"
 	L.phase3_warning = "Phase 3 soon!"
+	L.phase3_message = "Phase 3!"
 
 	L.gasbomb_bar = "More yellow gas bombs!"
 end
@@ -77,6 +79,7 @@ end
 function mod:OnEngage()
 	self:Berserk(600)
 	p2, p3 = nil, nil
+	self:Bar(70351, L["experiment_bar"], 25, 70351)
 end
 
 --------------------------------------------------------------------------------
@@ -92,12 +95,14 @@ function mod:Plague(player, spellId, _, _, spellName)
 end
 
 function mod:Phase2()
+	self:Message("phase", L["phase2_message"], "Attention")
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
 	self:Bar(71255, L["gasbomb_bar"], 20, 71255)
 	self:Bar(72295, L["ball_bar"], 9, 72295)
 end
 
 function mod:Phase3()
+	self:Message("phase", L["phase3_message"], "Attention")
 	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
 	self:Bar(72295, L["ball_bar"], 9, 72295)

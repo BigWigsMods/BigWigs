@@ -94,7 +94,9 @@ if L then
 	L.plague_bar = "다음 역병"
 
 	L.phase2_warning = "곧 2 단계!"
+	L.phase2_message = "2 단계!"
 	L.phase3_warning = "곧 3 단계!"
+	L.phase3_message = "3 단계!"
 
 	L.gasbomb_bar = "다음 노란 가스탄"
 end
