@@ -19,16 +19,16 @@ local count = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.engage_trigger = "WEE HEHEHE!!!"
-	
+	L.engage_trigger = "WEEEEEE!"
+
 	L.infection_bar = "Infection on %s!"
 
 	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
 	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
 	L.flood_warning = "New flood soon!"
-	
+
 	L.Ooze_message = "Unstable Ooze %dx"
-	
+
 	L.spray_bar = "Next Spray"
 end
 L = mod:GetLocale()

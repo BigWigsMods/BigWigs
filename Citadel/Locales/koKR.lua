@@ -79,9 +79,9 @@ if L then
 	L.phase_desc = "단계 변화를 알립니다."
 	L.phase2_trigger = "흠, 아무 느낌도 없군요. 엥?! 이건 어디서 온 거지요?"
 	L.phase3_trigger = "이 맛은... 체리군요! 오! 이런 실례!"
-	
+
 	L.engage_trigger = "좋은 소식이에요, 여러분!"
-	
+
 	L.ball_message = "통통 끈적이!"
 	L.ball_bar = "다음 끈적이"
 
@@ -95,22 +95,22 @@ if L then
 
 	L.phase2_warning = "곧 2 단계!"
 	L.phase3_warning = "곧 3 단계!"
-	
+
 	L.gasbomb_bar = "다음 노란 가스탄"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
 if L then
 	L.engage_trigger = "우와아아아아아!"
-	
+
 	L.infection_bar = "돌연변이 전염병: %s!"
 
 	L.flood_trigger1 = "좋은 소식이에요, 여러분! 독성 수액 배출관을 고쳤어요!"
 	L.flood_trigger2 = "끝내 주는 소식이에요, 여러분! 수액이 다시 나오는군요!"
 	L.flood_warning = "새 지역에 수액 홍수!"
-	
+
 	L.Ooze_message = "불안정한 수액괴물 %dx"
-	
+
 	L.spray_bar = "다음 독액 뿌리기"
 end
 

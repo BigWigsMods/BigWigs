@@ -46,7 +46,7 @@ if L then
 
 	L.phase2_warning = "Phase 2 soon!"
 	L.phase3_warning = "Phase 3 soon!"
-	
+
 	L.gasbomb_bar = "More yellow gas bombs!"
 end
 L = mod:GetLocale()

@@ -85,7 +85,7 @@ if L then
 	L.bonestorm_warning = "Knochensturm in 5 sek!"
 
 	L.coldflame_message = "Eisflamme auf DIR!"
-	
+
 	L.engage_trigger = "Die Geißel wird über diese Welt kommen wie ein Schwarm aus Tod und Zerstörung!"
 end
 
