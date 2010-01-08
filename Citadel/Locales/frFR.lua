@@ -80,19 +80,43 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
 if L then
+	L.phase = "Phases"
+	L.phase_desc = "Prévient quand la rencontre change de phase."
+	L.phase2_trigger = "Hmm. I don't feel a thing. Whaa...? Where'd those come from?"
+	L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!"
+
 	L.engage_trigger = "Grande nouvelle, mes amis !" -- à vérifier
 
-	L.blight_message = "Ballonnement gazeux : %s"
-	L.violation_message = "Adhésif de limon volatil : %s"
+	L.ball_message = "Boule malléable de Gelée verte !"
+	L.ball_bar = "Prochaine boule de Gelée"
+
+	L.experiment_bar = "Prochaine expérience"
+	L.add_message = "Arrivée d'une expérience instable !"
+	L.blight_message = "Nuage de gaz"
+	L.violation_message = "Limon volatil"
+
+	L.plague_message = "%2$dx Peste sur %1$s"
+	L.plague_bar = "Prochaine Peste"
+
+	L.phase2_warning = "Phase 2 imminente !"
+	L.phase3_warning = "Phase 3 imminente !"
+
+	L.gasbomb_bar = "D'autres Bombes de gaz !"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "frFR")
 if L then
-	L.infection_bar = "Infection mutée : %s"
+	L.engage_trigger = "Wiiiiiiiiiii !"
+
+	L.infection_bar = "Infection : %s"
 
 	L.flood_trigger1 = "Grande nouvelle, mes amis ! J'ai réparé le distributeur de poison !"
 	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flots !"
 	L.flood_warning = "Prochaine inondation imminente !"
+
+	L.Ooze_message = "Limon instable %dx"
+
+	L.spray_bar = "Prochaine Projection"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
