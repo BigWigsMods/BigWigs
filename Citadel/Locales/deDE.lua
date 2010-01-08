@@ -27,7 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "deDE")
 if L then
-	L.engage_trigger = "Fun time?"
+	L.engage_trigger = "Zeit für Spaß?"
 
 	L.inhale_message = "Seuche einatmen %d"
 	L.inhale_bar = "~Seuche einatmen %d"
@@ -45,7 +45,7 @@ L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
 if L then
 	L.adds = "Portal"
 	L.adds_desc = "Warnt vor den Portalen."
-	--L.adds_trigger_alliance = "Reavers, Sergeants, attack!"
+	L.adds_trigger_alliance = "Häscher, Unteroffiziere, Angriff!"
 	L.adds_trigger_horde = "Soldaten! Zum Angriff!"
 	L.adds_message = "Portal!"
 
@@ -54,10 +54,10 @@ if L then
 	L.mage_message = "Magier gespawnt!"
 	L.mage_bar = "Nächster Magier"
 
-	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
+	L.enable_trigger_alliance = "Alle Maschinen auf Volldampf! Unser Schicksal erwartet uns!"
 	L.enable_trigger_horde = "Erhebt Euch, Söhne und Töchter der Horde! Wir ziehen gegen einen verhassten Feind in die Schlacht! LOK'TAR OGAR!"
 
-	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
+	L.disable_trigger_alliance = "Sagt nicht, ich hätte Euch nicht gewarnt, Ihr Schurken! Vorwärts, Brüder und Schwestern!"
 	L.disable_trigger_horde = "Die Allianz wankt. Vorwärts zum Lichkönig!"
 end
 
