@@ -12,7 +12,6 @@ mod.toggleOptions = {69279, 69165, 71219, 72551, 71218, "proximity", "berserk", 
 --
 
 local sporeTargets = mod:NewTargetList()
-local vileTargets = mod:NewTargetList()
 local count = 1
 
 --------------------------------------------------------------------------------
@@ -45,7 +44,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
 	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)
-	self:Log("SPELL_AURA_APPLIED", "VileGas", 71218, 72272, 72273, 73019, 73020, 69240)
+	self:Log("SPELL_CAST_SUCCESS", "VileGas", 71218, 72272, 72273, 73019, 73020, 69240)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Bloat", 72551, 72219)
 	self:Death("Win", 36626)
 
@@ -112,18 +111,7 @@ function mod:Bloat(player, spellId, _, _, spellName)
 	end
 end
 
-do
-	local scheduled = nil
-	local function vileWarn(spellName)
-		mod:TargetMessage(71218, spellName, vileTargets, "Important", 71218)
-		scheduled = nil
-	end
-	function mod:VileGas(player, spellId, _, _, spellName)
-		vileTargets[#vileTargets + 1] = player
-		if not scheduled then
-			self:ScheduleTimer(vileWarn, 0.2, spellName)
-			scheduled = true
-		end
-	end
+function mod:VileGas(_, spellId, _, _, spellName)
+	self:Message(71218, spellName, "Important", spellId)
 end
 
