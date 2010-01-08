@@ -7,20 +7,28 @@ if L then
 
 	L.coldflame_message = "На ВАС - Холодное пламя!"
 
-	--L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
+	L.engage_trigger = "Плеть накроет этот мир волной смерти и разрушения!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "ruRU")
 if L then
-	--L.mage = "Mage"
-	--L.mage_desc = "Warn when a mage spawns to freeze your guns."
-	--L.mage_message = "Mage Spawned!"
 
-	--L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
-	--L.enable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+	L.adds = "Порталы"
+	L.adds_desc = "Предупреждает о порталах."
+	L.adds_trigger_alliance = "Разрушители, сержанты, в атаку!"
+	L.adds_trigger_horde = "Пехота, сержанты, в бой!"
+	L.adds_message = "Порталы!"
+	L.adds_bar = "Следующие Порталы"
 
-	--L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
-	--L.disable_trigger_horde = "Need Horde Yell Here - Fake Placeholder"
+	L.mage = "Маг"
+	L.mage_desc = "Предупредит когда появится маг и заморозит пушки."
+	L.mage_message = "Маг появился!"
+
+	L.enable_trigger_alliance = "Запускайте двигатели! Летим навстречу судьбе!"
+	L.enable_trigger_horde = "Воспряньте, сыны и дочери Орды! Сегодня мы будем биться со смертельным врагом! ЛОК'ТАР ОГАР!"
+
+	L.disable_trigger_alliance = "Ну не говорите теперь что я не предупреждал! Летим дальше, братья и сестры!"
+	L.disable_trigger_horde = "Альянс повержен. Вперед к Королю-Личу!"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")
@@ -51,31 +59,71 @@ if L then
 
 	L.mark = "Метка %d"
 
-	--L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
-	--L.warmup_alliance = "Let's get a move on then! Move ou..."
-	--L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
+	L.engage_trigger = "ВО ИМЯ КОРОЛЯ-ЛИЧА!"
+	L.warmup_alliance = "Тогда выдвигаемся! Быст..."
+	L.warmup_horde = "Кор'крон, выдвигайтесь! Герои будьте начеку. Плеть только что..."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "ruRU")
 if L then
 
+	L.engage_trigger = "Повеселимся?"
+
+	L.inhale_message = "Вдыхание гнилостных испарений %d"
+	L.inhale_bar = "~Следующее вдыхание %d"
+
+	L.blight_warning = "Едкая гниль через ~5сек!"
+	L.blight_bar = "~Следущая Гниль"
+
+	L.bloat_message = "%2$dx Газовое вздутие on %1$s"
+	L.bloat_bar = "~Следущее Вздутие"
+
+	L.spore_bar = "~Следующие Газообразные споры"
+
 end
 
 L = BigWigs:NewBossLocale("Rotface", "ruRU")
 if L then
+
+	L.engage_trigger = "УУИИИИИИ!"
+
 	L.infection_bar = "Инфекция на |3-5(%s)!"
 
-	--L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
-	--L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
-	L.flood_warning = "A new area is being flooded soon!"
+	L.flood_trigger1 = "Отличные новости, народ! Я починил трубы для подачи ядовитой слизи!"
+	L.flood_trigger2 = "Отличные новости, народ! Слизь снова потекла!"
+	L.flood_warning = "Скоро затопит новое место!"
+
+	L.Ooze_message = "Нестабильный слизняк %dx"
+
+	L.spray_bar = "Следующие брызги"
+
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
 if L then
+
+	L.phase = "Фазы"
+	L.phase_desc = "Предупреждает о смене фаз."
+	L.phase2_trigger = "Хмм. Что-то я ничего не чувствую. Чтоо...? Это еще откуда?"
+	L.phase3_trigger = "На вкус как... вишенка! Ой! Извините!"
+
 	L.engage_trigger = "Отличные новости, народ!"
 
-	L.blight_message = "Газовое вздутие на |3-5(%s)!"
-	L.violation_message = "Выделения слизнюка на |3-5(%s)!"
+	--L.ball_message = "Бросок газовой бомбы!"
+	--L.ball_bar = "Следующий бросок газовой бомбы"
+
+	L.experiment_bar = "Следующий слизнюк"
+	L.add_message = "Скоро появится слизнюк!"
+	L.blight_message = "Газовое облако"
+	L.violation_message = "Зеленый слизнюк"
+
+	L.plague_message = "%2$dx чума на %1$s"
+	L.plague_bar = "Следующая чума"
+
+	L.phase2_warning = "Скоро 2-я фаза!"
+	L.phase3_warning = "Скоро 3-я фаза!"
+
+	--L.gasbomb_bar = "More yellow gas bombs!"
 end
 
 L = BigWigs:NewBossLocale("Blood Princes", "ruRU")
@@ -94,7 +142,7 @@ if L then
 	L.portal = "Портал к кошмарам"
 	L.portal_desc = "Сообщать когда Валитрия открывает портал."
 	L.portal_message = "Портал!"
-	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
+	L.portal_trigger = "Я открыла портал в Изумрудный Сон. Там в найдете спасение, герои..."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
