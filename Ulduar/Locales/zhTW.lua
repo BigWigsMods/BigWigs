@@ -17,7 +17,7 @@ end
 
 L = BigWigs:NewBossLocale("Auriaya", "zhTW")
 if L then
-	L.engage_trigger = "Some things are better left alone!"
+	L.engage_trigger = "有些事情不該公諸於世!"
 
 	L.fear_warning = "即將 恐嚇尖嘯！"
 	L.fear_message = "正在施放 恐嚇尖嘯！"

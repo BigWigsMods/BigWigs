@@ -5,7 +5,7 @@ end
 
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
 if L then
-	L.engage_trigger = "Fun time?"
+	L.engage_trigger = "玩耍時間?"
 
 	L.inhale_message = "吸入荒疫：>%d<！"
 	L.inhale_bar = "<下一吸入荒疫：%d>"
@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "zhTW")
 if L then
-	L.engage_trigger = "Good news, everyone!"
+	L.engage_trigger = "大夥聽著，好消息!"
 
 	L.blight_message = "毒氣膨脹：>%s<！"
 	L.violation_message = "暴躁軟泥怪黏著：>%s<！"
@@ -85,7 +85,7 @@ if L then
 	L.infection_bar = "突變感染：>%s<！"
 
 	L.flood_trigger1 = "大夥聽著，好消息!我修好了劇毒軟泥管!"
-	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
+	L.flood_trigger2 = "大夥聽著，超級好消息!軟泥又開始流動了!"
 	L.flood_warning = "A new area is being flooded soon!"
 end
 
