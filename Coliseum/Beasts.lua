@@ -124,8 +124,8 @@ end
 function mod:OnEngage()
 	difficulty = GetRaidDifficulty()
 	self:CloseProximity()
+	self:Bar("bosses", L["boss_incoming"]:format(gormok), 20, 67477)
 	if difficulty > 2 then
-		self:Bar("bosses", L["boss_incoming"]:format(gormok), 20, 67477)
 		self:Bar("bosses", L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
 	else
 		self:Berserk(900)
