@@ -88,10 +88,7 @@ if L then
 	L.engage_trigger = "УУИИИИИИ!"
 
 	L.infection_bar = "Инфекция на |3-5(%s)!"
-
-	L.flood_trigger1 = "Отличные новости, народ! Я починил трубы для подачи ядовитой слизи!"
-	L.flood_trigger2 = "Отличные новости, народ! Слизь снова потекла!"
-	L.flood_warning = "Скоро затопит новое место!"
+	L.infection_message = "Infection"
 
 	L.ooze_message = "Нестабильный слизняк %dx"
 

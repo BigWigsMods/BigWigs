@@ -127,10 +127,7 @@ if L then
 	--L.engage_trigger = "WEEEEEE!"
 
 	L.infection_bar = "Infektion auf %s!"
-
-	L.flood_trigger1 = "Gute Nachricht, Freunde! Die Giftschleim-Rohre sind repariert!"
-	L.flood_trigger2 = "Gute Nachricht, Freunde! Der Schleim fließt wieder!"
-	L.flood_warning = "Schleimflut bald!"
+	L.infection_message = "Infection"
 
 	L.ooze_message = "Brühschlammer %dx"
 

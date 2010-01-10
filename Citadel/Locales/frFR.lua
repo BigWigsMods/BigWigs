@@ -109,10 +109,7 @@ if L then
 	L.engage_trigger = "Wiiiiiiiiiii !"
 
 	L.infection_bar = "Infection : %s"
-
-	L.flood_trigger1 = "Grande nouvelle, mes amis ! J'ai réparé le distributeur de poison !"
-	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flots !"
-	L.flood_warning = "Prochaine inondation imminente !"
+	L.infection_message = "Infection"
 
 	L.ooze_message = "Limon instable %dx"
 

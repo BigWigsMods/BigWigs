@@ -83,10 +83,7 @@ end
 L = BigWigs:NewBossLocale("Rotface", "zhCN")
 if L then
 	L.infection_bar = "Infection：>%s<！"
-
-	L.flood_trigger1 = "Good news, everyone! I've fixed the poison slime pipes!"
-	L.flood_trigger2 = "Great news, everyone! The slime is flowing again!"
-	L.flood_warning = "A new area is being flooded soon!"
+	L.infection_message = "Infection"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhCN")

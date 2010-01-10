@@ -106,10 +106,7 @@ if L then
 	L.engage_trigger = "우와아아아아아!"
 
 	L.infection_bar = "돌연변이 전염병: %s!"
-
-	L.flood_trigger1 = "좋은 소식이에요, 여러분! 독성 수액 배출관을 고쳤어요!"
-	L.flood_trigger2 = "끝내 주는 소식이에요, 여러분! 수액이 다시 나오는군요!"
-	L.flood_warning = "새 지역에 수액 홍수!"
+	L.infection_message = "Infection"
 
 	L.ooze_message = "불안정한 수액괴물 %dx"
 
