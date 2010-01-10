@@ -85,7 +85,7 @@ if L then
 	L.ball_message = "통통 끈적이!"
 	L.ball_bar = "다음 끈적이"
 
-	L.experiment_bar = "다음 추가"
+	L.experiment_bar = "다음 수액 추가"
 	L.add_message = "곧 수액 추가!"
 	L.blight_message = "붉은 수액"
 	L.violation_message = "녹색 수액"
@@ -129,8 +129,8 @@ if L then
 	L.mark = "징표 %d"
 
 	L.engage_trigger = "리치왕의 힘으로!"
-	L.warmup_alliance = "그러면 이동하자! 이동..."	--check
-	L.warmup_horde = "코르크론, 출발하라! 용사들이여"	--check(, 뒤를 조심하게. 스컬지는...)
+	L.warmup_alliance = "그러면 이동하자! 이동..."
+	L.warmup_horde = "코르크론, 출발하라! 용사들이여, 뒤를 조심하게. 스컬지는..."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")

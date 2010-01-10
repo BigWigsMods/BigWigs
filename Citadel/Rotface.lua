@@ -82,6 +82,7 @@ function mod:SlimeSpray(_, spellId, _, _, spellName)
 end
 
 function mod:Explode(_, spellId, _, _, spellName)
+	count = 1
 	self:Message(69839, spellName, "Urgent", spellId, "Alert")
 	self:Bar(69839, spellName, 7, spellId)
 end
