@@ -132,7 +132,7 @@ if L then
 	L.flood_trigger2 = "Gute Nachricht, Freunde! Der Schleim fließt wieder!"
 	L.flood_warning = "Schleimflut bald!"
 
-	L.Ooze_message = "Brühschlammer %dx"
+	L.ooze_message = "Brühschlammer %dx"
 
 	L.spray_bar = "~Schleimsprühen"
 end

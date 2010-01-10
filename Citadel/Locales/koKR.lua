@@ -111,7 +111,7 @@ if L then
 	L.flood_trigger2 = "끝내 주는 소식이에요, 여러분! 수액이 다시 나오는군요!"
 	L.flood_warning = "새 지역에 수액 홍수!"
 
-	L.Ooze_message = "불안정한 수액괴물 %dx"
+	L.ooze_message = "불안정한 수액괴물 %dx"
 
 	L.spray_bar = "다음 독액 뿌리기"
 end

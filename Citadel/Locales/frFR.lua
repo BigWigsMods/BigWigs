@@ -114,7 +114,7 @@ if L then
 	L.flood_trigger2 = "Merveilleuse nouvelle, mes amis ! La gelée coule à flots !"
 	L.flood_warning = "Prochaine inondation imminente !"
 
-	L.Ooze_message = "Limon instable %dx"
+	L.ooze_message = "Limon instable %dx"
 
 	L.spray_bar = "Prochaine Projection"
 end

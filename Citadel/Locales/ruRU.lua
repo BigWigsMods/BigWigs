@@ -93,7 +93,7 @@ if L then
 	L.flood_trigger2 = "Отличные новости, народ! Слизь снова потекла!"
 	L.flood_warning = "Скоро затопит новое место!"
 
-	L.Ooze_message = "Нестабильный слизняк %dx"
+	L.ooze_message = "Нестабильный слизняк %dx"
 
 	L.spray_bar = "Следующие брызги"
 
