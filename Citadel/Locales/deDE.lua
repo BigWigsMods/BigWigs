@@ -124,10 +124,10 @@ end
 
 L = BigWigs:NewBossLocale("Rotface", "deDE")
 if L then
-	--L.engage_trigger = "WEEEEEE!"
+	L.engage_trigger = "WIIIIII!"
 
-	L.infection_bar = "Infektion auf %s!"
-	L.infection_message = "Infection"
+	L.infection_bar = "Infektion: %s"
+	L.infection_message = "Infektion"
 
 	L.ooze_message = "Brühschlammer %dx"
 

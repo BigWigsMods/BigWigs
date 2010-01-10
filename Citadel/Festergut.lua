@@ -111,7 +111,13 @@ function mod:Bloat(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:VileGas(_, spellId, _, _, spellName)
-	self:Message(71218, spellName, "Important", spellId)
+do
+	local t = 0
+	function mod:VileGas(_, spellId, _, _, spellName)
+		local time = GetTime()
+		if (time - t) > 2 then
+			t = time
+			self:Message(71218, spellName, "Important", spellId)
+		end
+	end
 end
-
