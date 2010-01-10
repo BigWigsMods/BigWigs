@@ -23,7 +23,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Wound", 71127)
-	self:Death("Disable", 37212, 37025)
+	self:Death("Disable", 37217, 37025)
 end
 
 --------------------------------------------------------------------------------
