@@ -85,12 +85,12 @@ function mod:Explode(_, spellId)
 	count = 1
 	local explodeName = GetSpellInfo(67729) --"Explode"
 	self:Bar(69839, explodeName, 4, spellId)
-	self:ScheduleTimer(explodeWarn, 3.5, explodeName)
+	self:ScheduleTimer(explodeWarn, 3, explodeName)
 end
 
 function mod:Ooze(_, spellId)
 	count = count + 1
 	if count > 4 then return end
-	self:Message(69558, L["Ooze_message"]:format(count), "Attention", spellId)
+	self:Message(69558, L["ooze_message"]:format(count), "Attention", spellId)
 end
 
