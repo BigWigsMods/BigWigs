@@ -16,7 +16,7 @@ if L then
 	L.adds_message = "Blutbestien!"
 	L.adds_bar = "~Blutbestien"
 
-	L.rune_bar = "~Rune"
+	L.rune_bar = "~Nächste Rune"
 
 	L.mark = "Mal %d"
 
@@ -48,6 +48,7 @@ if L then
 	L.adds_trigger_alliance = "Häscher, Unteroffiziere, Angriff!"
 	L.adds_trigger_horde = "Soldaten! Zum Angriff!"
 	L.adds_message = "Portal!"
+	L.adds_bar = "Nächstes Portal"
 
 	L.mage = "Magier"
 	L.mage_desc = "Warnt, wenn ein Magier erscheint, um die Kanonen einzufrieren."
@@ -70,11 +71,11 @@ if L then
 
 	L.adds = "Adds"
 	L.adds_desc = "Zeigt Timer und Nachrichten für das Auftauchen der Adds."
-	L.adds_bar = "~Adds"
+	L.adds_bar = "Nächsten Adds"
 	L.adds_warning = "Adds in 5 sek!"
 
 	L.touch_message = "%2$dx Berührung: %1$s"
-	L.touch_bar = "~Berührung"
+	L.touch_bar = "~Nächste Berührung"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
@@ -91,7 +92,29 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "deDE")
 if L then
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt vor Phasenwechsel."
+	--L.phase2_trigger = "Hmm. I don't feel a thing. Whaa...? Where'd those come from?"
+	--L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!"
 
+	--L.engage_trigger = "Good news, everyone!"
+
+	L.ball_message = "Formbarer Schleim!"
+	L.ball_bar = "Nächster Formbarer Schleim"
+
+	L.experiment_bar = "Nächstes Add"
+	L.blight_message = "Rotes Add"
+	L.violation_message = "Grünes Add"
+
+	L.plague_message = "%2$dx Seuche: %1$s"
+	L.plague_bar = "Nächste Seuche"
+
+	L.phase2_warning = "Phase 2 bald!"
+	L.phase2_message = "Phase 2!"
+	L.phase3_warning = "Phase 3 bald!"
+	L.phase3_message = "Phase 3!"
+
+	L.gasbomb_bar = "Weitere Gasbomben"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
@@ -101,11 +124,17 @@ end
 
 L = BigWigs:NewBossLocale("Rotface", "deDE")
 if L then
+	--L.engage_trigger = "WEEEEEE!"
+
 	L.infection_bar = "Infektion auf %s!"
 
 	L.flood_trigger1 = "Gute Nachricht, Freunde! Die Giftschleim-Rohre sind repariert!"
 	L.flood_trigger2 = "Gute Nachricht, Freunde! Der Schleim fließt wieder!"
 	L.flood_warning = "Schleimflut bald!"
+
+	L.Ooze_message = "Brühschlammer %dx"
+
+	L.spray_bar = "~Schleimsprühen"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "deDE")

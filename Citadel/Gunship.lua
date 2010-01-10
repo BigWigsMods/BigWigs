@@ -4,7 +4,8 @@
 
 local mod = BigWigs:NewBoss("Icecrown Gunship Battle", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(36939, 36948)
+-- Muradin, Saurfang, Zafod Boombox
+mod:RegisterEnableMob(36939, 36948, 37184)
 mod.toggleOptions = {"adds", "mage", "bosskill"}
 
 --------------------------------------------------------------------------------

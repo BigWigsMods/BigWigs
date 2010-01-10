@@ -37,7 +37,6 @@ if L then
 	L.ball_bar = "Next bouncing goo ball"
 
 	L.experiment_bar = "Next add"
-	L.add_message = "Ooze add incoming!"
 	L.blight_message = "Red ooze"
 	L.violation_message = "Green ooze"
 
@@ -90,7 +89,7 @@ function mod:Plague(player, spellId, _, _, spellName)
 	local _, _, icon, stack = UnitDebuff(player, spellName)
 	if stack and stack > 1 then
 		self:TargetMessage(72451, L["plague_message"], player, "Urgent", icon, "Info", stack)
-		self:Bar(72451, L["plague_bar"], 10, 72451)
+		self:Bar(72451, L["plague_bar"], 10, spellId)
 	end
 end
 
@@ -147,12 +146,12 @@ end
 
 function mod:Experiment(_, spellId, _, _, spellName)
 	self:Message(70351, spellName, "Important", spellId, "Alert")
-	self:Bar(70351, L["experiment_bar"], 38, 70351)
+	self:Bar(70351, L["experiment_bar"], 38, spellId)
 end
 
 function mod:GasBomb(_, spellId, _, _, spellName)
 	self:Message(71255, spellName, "Attention", spellId)
-	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
+	self:Bar(71255, L["gasbomb_bar"], 35, spellId)
 end
 
 function mod:BouncingGooBall(_, spellId)
