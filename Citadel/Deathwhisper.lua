@@ -87,9 +87,9 @@ function mod:DominateMind(player, spellId, _, _, spellName)
 	self:PrimaryIcon(71289, player, "icon")
 end
 
-function mod:Touch(player, spellId, _, _, spellName, stack)
+function mod:Touch(player, spellId, _, _, _, stack)
 	if stack and stack > 1 then
-		self:TargetMessage(71204, L["touch_message"], player, "Urgent", icon, nil, stack)
+		self:TargetMessage(71204, L["touch_message"], player, "Urgent", spellId, nil, stack)
 	end
 	self:Bar(71204, L["touch_bar"], 7, spellId)
 end
