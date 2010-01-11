@@ -115,7 +115,7 @@ if L then
 
 	L.ooze = "Fusion de limons"
 	L.ooze_desc = "Prévient quand un limon fusionne avec un autre."
-	L.Ooze_message = "Limon instable %dx"
+	L.ooze_message = "Limon instable %dx"
 
 	L.spray_bar = "Prochaine Projection"
 end
