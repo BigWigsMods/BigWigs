@@ -158,7 +158,7 @@ end
 do
 	local id, name, handle = nil, nil, nil
 	local function scanTarget()
-		local bossId = mod:GetUnitIdByGUID(32906)
+		local bossId = mod:GetUnitIdByGUID(36678)
 		if not bossId then return end
 		local target = UnitName(bossId .. "target")
 		if target then
@@ -168,7 +168,7 @@ do
 					SendChatMessage(L["ball_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72295, L["ball_message"], player, "Attention", spellId)
+			mod:TargetMessage(72295, L["ball_message"], player, "Attention", id)
 			mod:SecondaryIcon(72295, target)
 		end
 		handle = nil
