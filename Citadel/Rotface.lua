@@ -42,7 +42,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	count = 1
 	self:Bar(69508, L["spray_bar"], 25, 69508)
 end
 
