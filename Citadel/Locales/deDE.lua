@@ -99,8 +99,8 @@ if L then
 
 	--L.engage_trigger = "Good news, everyone!"
 
-	L.ball_message = "Formbarer Schleim!"
 	L.ball_bar = "Nächster Formbarer Schleim"
+	L.ball_say = "Formbarer Schleim auf MIR!"
 
 	L.experiment_bar = "Nächstes Add"
 	L.blight_message = "Rotes Add"
