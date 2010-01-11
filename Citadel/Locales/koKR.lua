@@ -86,7 +86,6 @@ if L then
 	L.ball_bar = "다음 끈적이"
 
 	L.experiment_bar = "다음 수액 추가"
-	L.add_message = "곧 수액 추가!"
 	L.blight_message = "붉은 수액"
 	L.violation_message = "녹색 수액"
 
@@ -106,10 +105,10 @@ if L then
 	L.engage_trigger = "우와아아아아아!"
 
 	L.infection_bar = "돌연변이 전염병: %s!"
-	L.infection_message = "Infection"
+	L.infection_message = "돌연변이 전염병"
 
-	L.ooze = "Ooze Merge"
-	L.ooze_desc = "Warn when an ooze merges."
+	L.ooze = "불안정한 수액괴물"
+	L.ooze_desc = "불안정한 수액괴물을 알립니다."
 	L.ooze_message = "불안정한 수액괴물 %dx"
 
 	L.spray_bar = "다음 독액 뿌리기"
