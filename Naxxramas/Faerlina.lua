@@ -62,9 +62,8 @@ end
 -- Event Handlers
 --
 
-function mod:Silence(unit, spellId, _, _, spellName, _, _, _, dGUID)
-	local target = tonumber(dGUID:sub(-12, -7), 16)
-	if target ~= 15953 then return end
+function mod:Silence(unit, spellId)
+	if unit ~= self.displayName then return end
 	if not frenzied then
 		-- preemptive, 30s silence
 		self:Message(28732, L["silencewarn"], "Positive", spellId)

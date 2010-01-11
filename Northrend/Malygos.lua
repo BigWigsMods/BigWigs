@@ -94,10 +94,8 @@ end
 -- Event Handlers
 --
 
-function mod:Spark(unit, spellId, _, _, _, _, _, _, dGUID)
-	if phase ~= 1 then return end
-	local target = tonumber(dGUID:sub(-12, -7), 16)
-	if target == 28859 then
+function mod:Spark(unit, spellId)
+	if unit == self.displayName then
 		self:Message("sparkbuff", L["sparkbuff_message"], "Important", spellId)
 	end
 end

@@ -60,9 +60,8 @@ end
 -- Event Handlers
 --
 
-function mod:GainSwarm(unit, spellId, _, _, spellName, _, _, _, dGUID)
-	local target = tonumber(dGUID:sub(-12, -7), 16)
-	if target == 15956 then
+function mod:GainSwarm(unit, spellId, _, _, spellName)
+	if unit == self.displayName then
 		self:DelayedMessage(28785, 20, L["gainendwarn"], "Important")
 		self:Bar(28785, spellName, 20, spellId)
 		self:DelayedMessage(28785, 75, L["gainwarn10sec"], "Important")
