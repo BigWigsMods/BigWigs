@@ -82,10 +82,10 @@ L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
-	L.phase2_trigger = "Hmm. I don't feel a thing. Whaa...? Where'd those come from?"
-	L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!"
+	L.phase2_trigger = "Mmm, je ne sens plus rien. Woah ?! Mais ça vient d'où, tout ça ?"
+	L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!" -- à traduire
 
-	L.engage_trigger = "Grande nouvelle, mes amis !" -- à vérifier
+	L.engage_trigger = "Grande nouvelle, mes amis ! Je crois que j'ai mis au point une peste qui va détruire toute vie sur Azeroth !"
 
 	L.ball_message = "Boule malléable de Gelée verte !"
 	L.ball_bar = "Prochaine boule de Gelée"
@@ -99,7 +99,9 @@ if L then
 	L.plague_bar = "Prochaine Peste"
 
 	L.phase2_warning = "Phase 2 imminente !"
+	L.phase2_message = "Phase 2 !"
 	L.phase3_warning = "Phase 3 imminente !"
+	L.phase3_message = "Phase 3 !"
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"
 end
@@ -111,9 +113,9 @@ if L then
 	L.infection_bar = "Infection : %s"
 	L.infection_message = "Infection"
 
-	L.ooze = "Ooze Merge"
-	L.ooze_desc = "Warn when an ooze merges."
-	L.ooze_message = "Limon instable %dx"
+	L.ooze = "Fusion de limons"
+	L.ooze_desc = "Prévient quand un limon fusionne avec un autre."
+	L.Ooze_message = "Limon instable %dx"
 
 	L.spray_bar = "Prochaine Projection"
 end
