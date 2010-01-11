@@ -88,10 +88,10 @@ if L then
 	L.engage_trigger = "УУИИИИИИ!"
 
 	L.infection_bar = "Инфекция на |3-5(%s)!"
-	L.infection_message = "Infection"
+	L.infection_message = "Инфекция"
 
-	L.ooze = "Ooze Merge"
-	L.ooze_desc = "Warn when an ooze merges."
+	L.ooze = "Сливание слизнюков"
+	L.ooze_desc = "Предупреждает когда слизнюки сливаются."
 	L.ooze_message = "Нестабильный слизняк %dx"
 
 	L.spray_bar = "Следующие брызги"
