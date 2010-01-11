@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 71255, 72295, 72451, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
@@ -19,6 +19,7 @@ mod.optionHeaders = {
 --
 
 local p2, p3 = nil, nil
+local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -33,8 +34,9 @@ if L then
 
 	L.engage_trigger = "Good news, everyone!"
 
-	L.ball_message = "Bouncing goo ball!"
+	L.ball_message = "bouncing goo ball on %s!"
 	L.ball_bar = "Next bouncing goo ball"
+	L.ball_say = "Bouncing goo ball on me!"
 
 	L.experiment_bar = "Next add"
 	L.blight_message = "Red ooze"
@@ -153,8 +155,30 @@ function mod:GasBomb(_, spellId, _, _, spellName)
 	self:Bar(71255, L["gasbomb_bar"], 35, spellId)
 end
 
-function mod:BouncingGooBall(_, spellId)
-	self:Message(72295, L["ball_message"], "Urgent", spellId)
-	self:Bar(72295, L["ball_bar"], 25, spellId)
+do
+	local id, name, handle = nil, nil, nil
+	local function scanTarget()
+		local bossId = mod:GetUnitIdByGUID(32906)
+		if not bossId then return end
+		local target = UnitName(bossId .. "target")
+		if target then
+			if target == pName then
+				mod:FlashShake(72295)
+				if bit.band(mod.db.profile[(GetSpellInfo(72295))], BigWigs.C.SAY) == BigWigs.C.SAY then
+					SendChatMessage(L["ball_say"], "SAY")
+				end
+			end
+			mod:TargetMessage(72295, L["ball_message"], player, "Attention", spellId)
+			mod:SecondaryIcon(72295, target)
+		end
+		handle = nil
+	end
+
+	function mod:BouncingGooBall(_, spellId, _, _, spellName)
+		id, name = spellId, spellName
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(scanTarget, 0.1)
+		self:Bar(72295, L["ball_bar"], 25, spellId)
+	end
 end
 
