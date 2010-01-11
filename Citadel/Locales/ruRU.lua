@@ -108,8 +108,8 @@ if L then
 
 	L.engage_trigger = "Отличные новости, народ!"
 
-	--L.ball_message = "Бросок газовой бомбы!"
-	--L.ball_bar = "Следующий бросок газовой бомбы"
+	L.ball_bar = "Следующий бросок вязкой гадости"
+	L.ball_say = "Бросок вязкой гадости на МНЕ!"
 
 	L.experiment_bar = "Следующий слизнюк"
 	L.add_message = "Скоро появится слизнюк!"
@@ -122,7 +122,7 @@ if L then
 	L.phase2_warning = "Скоро 2-я фаза!"
 	L.phase3_warning = "Скоро 3-я фаза!"
 
-	--L.gasbomb_bar = "More yellow gas bombs!"
+	L.gasbomb_bar = "Следующие желтые газовые бомбы!"
 end
 
 L = BigWigs:NewBossLocale("Blood Princes", "ruRU")
