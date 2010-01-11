@@ -18,12 +18,10 @@ SPECIAL CLAUSES
 =======================================================================
 
 FUNKYDUDE
-	Contributions by Funkydude are copyrighted 2006 by Funkydude and
-	licensed under the terms of the Creative Commons Attribution-
-	NonCommercial-ShareAlike 2.0 license.
-	http://creativecommons.org/licenses/by-nc-sa/2.0/
+	Contributions by Funkydude are copyrighted 2005-2010 by Funkydude and All
+	Rights Reserved.
 
 AMMO
-	Contributions by Ammo are copyrighted 2006-2009 by Ammo and All
+	Contributions by Ammo are copyrighted 2005-2010 by Ammo and All
 	Rights Reserved.
 
