@@ -129,8 +129,8 @@ if L then
 	L.infection_bar = "Infektion: %s"
 	L.infection_message = "Infektion"
 
-	L.ooze = "Ooze Merge"
-	L.ooze_desc = "Warn when an ooze merges."
+	L.ooze = "Brühschlammer verschmelzen"
+	L.ooze_desc = "Warnt, wenn Brühschlammer miteinander verschmelzen."
 	L.ooze_message = "Brühschlammer %dx"
 
 	L.spray_bar = "~Schleimsprühen"
