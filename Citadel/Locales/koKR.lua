@@ -82,7 +82,6 @@ if L then
 
 	L.engage_trigger = "좋은 소식이에요, 여러분!"
 
-	L.ball_message = "통통 끈적이 : %s!"
 	L.ball_bar = "다음 끈적이"
 	L.ball_say = "나에게 통통 끈적이!"
 

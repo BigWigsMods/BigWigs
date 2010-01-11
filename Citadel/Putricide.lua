@@ -34,7 +34,6 @@ if L then
 
 	L.engage_trigger = "Good news, everyone!"
 
-	L.ball_message = "bouncing goo ball on %s!"
 	L.ball_bar = "Next bouncing goo ball"
 	L.ball_say = "Bouncing goo ball on me!"
 
@@ -168,7 +167,7 @@ do
 					SendChatMessage(L["ball_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72295, L["ball_message"], player, "Attention", id)
+			mod:TargetMessage(72295, name, target, "Attention", id)
 			mod:SecondaryIcon(72295, target)
 		end
 		handle = nil
