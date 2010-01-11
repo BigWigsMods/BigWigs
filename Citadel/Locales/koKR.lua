@@ -108,6 +108,8 @@ if L then
 	L.infection_bar = "돌연변이 전염병: %s!"
 	L.infection_message = "Infection"
 
+	L.ooze = "Ooze Merge"
+	L.ooze_desc = "Warn when an ooze merges."
 	L.ooze_message = "불안정한 수액괴물 %dx"
 
 	L.spray_bar = "다음 독액 뿌리기"

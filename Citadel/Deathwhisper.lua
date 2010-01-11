@@ -87,8 +87,7 @@ function mod:DominateMind(player, spellId, _, _, spellName)
 	self:PrimaryIcon(71289, player, "icon")
 end
 
-function mod:Touch(player, spellId, _, _, spellName)
-	local _, _, icon, stack = UnitDebuff(player, spellName)
+function mod:Touch(player, spellId, _, _, spellName, stack)
 	if stack and stack > 1 then
 		self:TargetMessage(71204, L["touch_message"], player, "Urgent", icon, nil, stack)
 	end

@@ -111,6 +111,8 @@ if L then
 	L.infection_bar = "Infection : %s"
 	L.infection_message = "Infection"
 
+	L.ooze = "Ooze Merge"
+	L.ooze_desc = "Warn when an ooze merges."
 	L.ooze_message = "Limon instable %dx"
 
 	L.spray_bar = "Prochaine Projection"

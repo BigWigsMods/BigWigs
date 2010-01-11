@@ -5,13 +5,7 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508, 69558, "bosskill"}
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local count = 1
+mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508, "ooze", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,6 +18,8 @@ if L then
 	L.infection_bar = "Infection on %s!"
 	L.infection_message = "Infection"
 
+	L.ooze = "Ooze Merge"
+	L.ooze_desc = "Warn when an ooze merges."
 	L.ooze_message = "Ooze %dx"
 
 	L.spray_bar = "Next Spray"
@@ -66,21 +62,24 @@ function mod:SlimeSpray(_, spellId, _, _, spellName)
 	self:Bar(69508, L["spray_bar"], 21, 69508)
 end
 
-local function explodeWarn(explodeName)
-	mod:FlashShake(69839)
-	mod:Message(69839, explodeName, "Urgent", 69839, "Alert")
+do
+	--The cast is sometimes pushed back
+	local handle = nil
+	local function explodeWarn(explodeName)
+		handle = nil
+		mod:FlashShake(69839)
+		mod:Message(69839, explodeName, "Urgent", 69839, "Alert")
+	end
+	function mod:Explode(_, spellId)
+		local explodeName = GetSpellInfo(67729) --"Explode"
+		self:Bar(69839, explodeName, 4, spellId)
+		if handle then self:CancelTimer(handle, true) end
+		handle = self:ScheduleTimer(explodeWarn, 4, explodeName)
+	end
 end
 
-function mod:Explode(_, spellId)
-	count = 1
-	local explodeName = GetSpellInfo(67729) --"Explode"
-	self:Bar(69839, explodeName, 4, spellId)
-	self:ScheduleTimer(explodeWarn, 4, explodeName)
-end
-
-function mod:Ooze(_, spellId)
-	count = count + 1
-	if count > 4 then return end
-	self:Message(69558, L["ooze_message"]:format(count), "Attention", spellId)
+function mod:Ooze(_, spellId, _, _, _, stack)
+	if stack > 4 then return end
+	self:Message("ooze", L["ooze_message"]:format(stack), "Attention", spellId)
 end
 

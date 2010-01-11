@@ -85,7 +85,7 @@ do
 		end
 	end
 
-	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
+	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId, buffStack)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(-12, -7), 16)
 			local d = deathMap[self][numericId]
@@ -97,9 +97,9 @@ do
 			if m and m[spellId] then
 				local func = m[spellId]
 				if type(func) == "function" then
-					func(player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+					func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID)
 				else
-					self[func](self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags, dGUID)
+					self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID)
 				end
 			end
 		end

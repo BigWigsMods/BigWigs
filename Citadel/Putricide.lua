@@ -85,9 +85,8 @@ end
 -- Event Handlers
 --
 
-function mod:Plague(player, spellId, _, _, spellName)
-	local _, _, icon, stack = UnitDebuff(player, spellName)
-	if stack and stack > 1 then
+function mod:Plague(player, spellId, _, _, spellName, stack)
+	if stack > 1 then
 		self:TargetMessage(72451, L["plague_message"], player, "Urgent", icon, "Info", stack)
 		self:Bar(72451, L["plague_bar"], 10, spellId)
 	end

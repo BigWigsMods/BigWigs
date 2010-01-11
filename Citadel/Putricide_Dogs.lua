@@ -30,9 +30,8 @@ end
 -- Event Handlers
 --
 
-function mod:Wound(player, spellId, _, _, spellName)
-	local _, _, icon, stack = UnitDebuff(player, spellName)
-	if stack and stack > 5 then
+function mod:Wound(player, spellId, _, _, spellName, stack)
+	if stack > 5 then
 		self:TargetMessage(71127, L["wound_message"], player, "Important", icon, nil, stack)
 	end
 end

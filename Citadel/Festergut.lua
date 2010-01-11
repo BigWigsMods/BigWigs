@@ -103,9 +103,8 @@ function mod:Blight(_, spellId, _, _, spellName)
 	self:Bar(69165, L["inhale_bar"]:format(count), 33.5, 69165)
 end
 
-function mod:Bloat(player, spellId, _, _, spellName)
-	local _, _, icon, stack = UnitDebuff(player, spellName)
-	if stack and stack > 5 then
+function mod:Bloat(player, spellId, _, _, spellName, stack)
+	if stack > 5 then
 		self:TargetMessage(72551, L["bloat_message"], player, "Positive", icon, nil, stack)
 		self:Bar(72551, L["bloat_bar"], 10, spellId)
 	end
@@ -121,3 +120,4 @@ do
 		end
 	end
 end
+
