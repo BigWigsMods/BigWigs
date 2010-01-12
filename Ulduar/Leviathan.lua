@@ -52,7 +52,7 @@ end
 -- Event Handlers
 --
 
-function mod:Pyrite(_, spellId, _, _, spellName, _, sFlags)
+function mod:Pyrite(_, spellId, _, _, spellName, _, _, sFlags)
 	if bit.band(sFlags, COMBATLOG_OBJECT_AFFILIATION_MINE or 0x1) ~= 0 then
 		self:Bar(68605, spellName, 10, spellId)
 	end
