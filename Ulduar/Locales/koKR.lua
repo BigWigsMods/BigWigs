@@ -238,7 +238,7 @@ if L then
 	L.phase2_trigger = "침입자라니! 감히 내 취미 생활을 방해하는 놈들은 쓴맛을 단단히... 잠깐... 너는..."
 	L.phase2_message = "2 단계 - 6분 15초 후 광폭화!"
 	L.phase3_trigger = "건방진 젖먹이 같으니... 감히 여기까지 기어올라와 내게 도전해? 내 손으로 쓸어버리겠다!"
-	L.phase3_message = "3 단계 - %s 전투시작!"
+	L.phase3_message = "3 단계 - 토림 전투시작!"
 
 	L.hardmode = "도전 모드 시간"
 	L.hardmode_desc = "도전 모드의 시간을 표시합니다."
