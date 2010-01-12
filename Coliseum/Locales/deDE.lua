@@ -24,6 +24,7 @@ end
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "deDE")
 if L then
 	L.enable_trigger = "Ihr habt den Ruf des Argentumkreuzzugs vernommen und seid ihm mutig gefolgt"
+	L.wipe_trigger = "Tragic..."
 
 	L.engage_trigger = "Er kommt aus den tiefsten, dunkelsten Höhlen der Sturmgipfel - Gormok der Pfähler! Voran, Helden!"
 	L.jormungars_trigger = "Stählt Euch, Helden, denn die Zwillingsschrecken Ätzschlund und Schreckensmaul erscheinen in der Arena!"

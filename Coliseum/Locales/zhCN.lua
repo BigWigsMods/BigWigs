@@ -24,6 +24,7 @@ end
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "zhCN")
 if L then
 --	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
+	L.wipe_trigger = "Tragic..."
 
 --	L.engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!"
 --	L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"

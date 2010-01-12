@@ -24,6 +24,7 @@ end
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "zhTW")
 if L then
 	L.enable_trigger = "歡迎，勇士們!你們聽從銀白十字軍的號召前來，英勇的挺身而出。"
+	L.wipe_trigger = "Tragic..."
 
 	L.engage_trigger = "來自風暴群山最深邃，最黑暗的洞穴。歡迎『穿刺者』戈莫克!戰鬥吧，英雄們!"
 	L.jormungars_trigger = "準備面對酸喉和懼鱗的雙重夢魘吧，英雄們，快就定位!"
