@@ -67,10 +67,9 @@ end
 -- Event Handlers
 --
 
-function mod:Armor(player, spellId, _, _, spellName)
-	local _, _, icon, stack = UnitDebuff(player, spellName)
-	if stack and stack > 1 then
-		self:TargetMessage(63355, L["armor_message"], player, "Urgent", icon, "Info", stack)
+function mod:Armor(player, spellId, _, _, _, stack)
+	if stack > 1 then
+		self:TargetMessage(63355, L["armor_message"], player, "Urgent", spellId, "Info", stack)
 	end
 end
 

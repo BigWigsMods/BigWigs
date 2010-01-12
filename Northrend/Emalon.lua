@@ -9,12 +9,6 @@ mod:RegisterEnableMob(33993)
 mod.toggleOptions = {64216, {64218, "ICON"}, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local overchargerepeater = nil -- overcharge repeating timer
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -65,19 +59,20 @@ function mod:Overcharge(_, spellId, _, _, spellName)
 end
 
 do
-	local id = nil
-	local function scanTarget()
-		local unitId = mod:GetUnitIdByGUID(id)
+	local overchargerepeater = nil
+	local function scanTarget(dGuid)
+		local unitId = mod:GetUnitIdByGUID(dGuid)
 		if not unitId then return end
 		SetRaidTarget(unitId, 8)
 		mod:CancelTimer(overchargerepeater)
 		overchargerepeater = nil
 	end
 
-	function mod:OverchargeIcon(_, _, _, _, _, _, _, _, dGuid)
+	function mod:OverchargeIcon(...)
 		if overchargerepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 		if bit.band(self.db.profile[(GetSpellInfo(64218))], BigWigs.C.ICON) ~= BigWigs.C.ICON then return end
-		id = dGuid
-		overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2)
+		local dGuid = select(10, ...)
+		overchargerepeater = self:ScheduleRepeatingTimer(scanTarget, 0.2, dGuid)
 	end
 end
+

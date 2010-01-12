@@ -111,9 +111,8 @@ function mod:LegionFlame(player, spellId)
 	self:PrimaryIcon(68123, player)
 end
 
-function mod:NetherPower(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
-	local target = tonumber(dGUID:sub(-12, -7), 16)
-	if target == 34780 then
+function mod:NetherPower(unit, spellId, _, _, spellName)
+	if unit == self.displayName then
 		self:Message(67106, spellName, "Attention", spellId)
 		self:Bar(67106, L["netherpower_bar"], 44, spellId)
 	end

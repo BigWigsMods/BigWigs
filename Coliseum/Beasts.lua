@@ -175,10 +175,9 @@ function mod:UNIT_AURA(event, unit)
 	end
 end
 
-function mod:Impale(player, spellId, _, _, spellName)
-	local _, _, icon, stack = UnitDebuff(player, spellName)
+function mod:Impale(player, spellId, _, _, spellName, stack)
 	if stack and stack > 1 then
-		self:TargetMessage(67477, L["impale_message"], player, "Urgent", icon, "Info", stack)
+		self:TargetMessage(67477, L["impale_message"], player, "Urgent", spellId, "Info", stack)
 	end
 	self:Bar(67477, spellName, 10, spellId)
 end

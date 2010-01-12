@@ -24,8 +24,6 @@ mod.optionHeaders = {
 local guardianCount = 1
 local crusherCount = 1
 local pName = UnitName("player")
-local guid = nil
-local empowerscanner = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -141,15 +139,12 @@ end
 
 do
 	local warned = {}
-	function mod:SanityIncrease(player, spellId, _, _, spellName)
+	function mod:SanityIncrease(player, _, _, _, _, stack)
 		if not warned[player] then return end
-		local _, _, _, stack = UnitDebuff(player, spellName)
-		if stack and stack > 70 then warned[player] = nil end
+		if stack > 70 then warned[player] = nil end
 	end
-	function mod:SanityDecrease(player, spellId, _, _, spellName)
+	function mod:SanityDecrease(player, spellId, _, _, _, stack)
 		if warned[player] then return end
-		local _, _, _, stack = UnitDebuff(player, spellName)
-		if not stack then return end
 		if player == pName then
 			if stack > 40 then return end
 			self:Message(63050, L["sanity_message"], "Personal", spellId)
@@ -230,19 +225,21 @@ function mod:RemoveEmpower()
 	self:SendMessage("BigWigs_RemoveRaidIcon")
 end
 
-local function scanTarget()
-	local unitId = mod:GetUnitIdByGUID(guid)
-	if not unitId then return end
-	SetRaidTarget(unitId, 8)
-	mod:CancelTimer(empowerscanner)
-	empowerscanner = nil
-end
-
-function mod:EmpowerIcon(_, _, _, _, _, _, _, _, dGuid)
-	if empowerscanner or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-	if bit.band(self.db.profile[(GetSpellInfo(64465))], BigWigs.C.ICON) ~= BigWigs.C.ICON then return end
-	guid = dGuid
-	empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.3)
+do
+	local empowerscanner = nil
+	local function scanTarget(dGuid)
+		local unitId = mod:GetUnitIdByGUID(dGuid)
+		if not unitId then return end
+		SetRaidTarget(unitId, 8)
+		mod:CancelTimer(empowerscanner)
+		empowerscanner = nil
+	end
+	function mod:EmpowerIcon(...)
+		if empowerscanner or (not IsRaidLeader() and not IsRaidOfficer()) then return end
+		if bit.band(self.db.profile[(GetSpellInfo(64465))], BigWigs.C.ICON) ~= BigWigs.C.ICON then return end
+		local dGuid = select(10, ...)
+		empowerscanner = self:ScheduleRepeatingTimer(scanTarget, 0.3, dGuid)
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, unit)
