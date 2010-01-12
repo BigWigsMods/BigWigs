@@ -13,7 +13,7 @@ if L then
 	L.blackhole_message = "검은 구멍 폭발 %dx 소환"
 	L.bigbang_bar = "다음 대폭발"
 	L.bigbang_soon = "곧 대폭발!"
-	
+
 	L.end_trigger = "나는 창조주의 불길이 씻어내린 세상을 보았다."
 end
 
@@ -319,7 +319,7 @@ if L then
 	L.portal_trigger = "%s의 마음속으로 가는 차원문이 열립니다!"
 	L.portal_message = "차원문 열림!"
 	L.portal_bar = "다음 차원문"
-	
+
 	L.fervor_cast_message = "%s 에게 사라의 열정 시전!"
 	L.fervor_message = "사라의 열정: %s!"
 

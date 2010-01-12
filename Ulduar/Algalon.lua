@@ -28,7 +28,7 @@ if L then
 	L.phase_bar = "Phase %d"
 	L.engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome."
 
-	L.punch_message = "%dx Phase Punch on %s"
+	L.punch_message = "%2$dx Phase Punch on %1$s"
 	L.smash_message = "Incoming Cosmic Smash!"
 	L.blackhole_message = "Black Hole %d!"
 	L.bigbang_bar = "Next Big Bang"
