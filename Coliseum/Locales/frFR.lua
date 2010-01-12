@@ -24,7 +24,7 @@ end
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "frFR")
 if L then
 	L.enable_trigger = "Vous avez entendu l'appel de la Croisade d'argent, et vaillamment répondu !"
-	L.wipe_trigger = "Tragic..."
+	L.wipe_trigger = "Tragique…"
 
 	L.engage_trigger = "Arrivant tout droit des plus noires et profondes cavernes des pics Foudroyés, Gormok l'Empaleur !"
 	L.jormungars_trigger = "Apprêtez-vous, héros, car voici que les terreurs jumelles, Gueule-d'acide et Écaille-d'effroi, pénètrent dans l'arène !"

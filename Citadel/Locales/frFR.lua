@@ -83,15 +83,14 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase2_trigger = "Mmm, je ne sens plus rien. Woah ?! Mais ça vient d'où, tout ça ?"
-	L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!" -- à traduire
+	L.phase3_trigger = "Au bon goût de… Cerise ! Oups ! Pardon !" -- à vérifier
 
 	L.engage_trigger = "Grande nouvelle, mes amis ! Je crois que j'ai mis au point une peste qui va détruire toute vie sur Azeroth !"
 
-	L.ball_message = "Boule malléable de Gelée verte !"
 	L.ball_bar = "Prochaine boule de Gelée"
+	L.ball_say = "Boule malléable de Gelée verte sur moi !"
 
 	L.experiment_bar = "Prochaine expérience"
-	L.add_message = "Arrivée d'une expérience instable !"
 	L.blight_message = "Nuage de gaz"
 	L.violation_message = "Limon volatil"
 
