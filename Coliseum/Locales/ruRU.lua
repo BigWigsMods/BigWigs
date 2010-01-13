@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Anub'arak", "ruRU")
+﻿local L = BigWigs:NewBossLocale("Anub'arak", "ruRU")
 if L then
 	L.engage_message = "Ануб'арак вступил в бой, зарывание в землю через 80сек!"
 	L.engage_trigger = "Это место станет вашей могилой!"
@@ -24,7 +24,7 @@ end
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "ruRU")
 if L then
 	L.enable_trigger = "Вы услышали призыв Серебряного Авангарда и без колебаний откликнулись"
-	L.wipe_trigger = "Tragic..."
+	L.wipe_trigger = "Трагично..."
 
 	L.engage_trigger = "Из самых глубоких и темных пещер Грозовой Гряды был призван Гормок Пронзающий Бивень! В бой, герои!"
 	L.jormungars_trigger = "Приготовьтесь к схватке с близнецами-чудовищами, Кислотной Утробой и Жуткой Чешуей!"
