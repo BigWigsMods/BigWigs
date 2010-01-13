@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
@@ -20,6 +20,7 @@ mod.optionHeaders = {
 
 local p2, p3 = nil, nil
 local pName = UnitName("player")
+local gooTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -167,16 +168,16 @@ do
 					SendChatMessage(L["ball_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72295, name, target, "Attention", id)
-			mod:SecondaryIcon(72295, target)
+			mod:TargetMessage(72295, name, gooTargets, "Attention", id)
 		end
-		handle = nil
 	end
 
-	function mod:BouncingGooBall(_, spellId, _, _, spellName)
+	function mod:BouncingGooBall(player, spellId, _, _, spellName)
+		gooTargets[#gooTargets + 1] = player
 		id, name = spellId, spellName
-		self:CancelTimer(handle, true)
-		handle = self:ScheduleTimer(scanTarget, 0.1)
+		if not handle then
+			handle = self:ScheduleTimer(scanTarget, 0.2)
+		end
 		self:Bar(72295, L["ball_bar"], 25, spellId)
 	end
 end
