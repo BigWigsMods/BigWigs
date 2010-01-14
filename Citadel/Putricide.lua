@@ -34,7 +34,7 @@ if L then
 	L.engage_trigger = "I think I've perfected a plague"
 
 	L.ball_bar = "Next bouncing goo ball"
-	L.ball_say = "Goo ball at my feet!"
+	L.ball_say = "Goo ball incoming!"
 
 	L.experiment_message = "Ooze add incoming!"
 	L.experiment_bar = "Next ooze"
@@ -45,7 +45,7 @@ if L then
 	L.plague_bar = "Next plague"
 
 	L.gasbomb_bar = "More yellow gas bombs"
-	L.gasbomb_message = "Gas bombs!"
+	L.gasbomb_message = "Yellow bombs!"
 end
 L = mod:GetLocale()
 
@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 72615, 72296)
 	self:Log("SPELL_AURA_APPLIED", "TearGas", 71615)
