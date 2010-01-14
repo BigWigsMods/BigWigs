@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
@@ -175,6 +175,7 @@ do
 				end
 			end
 			mod:TargetMessage(72295, spellName, target, "Attention", 72295)
+			mod:SecondaryIcon(72295, target)
 		end
 	end
 	function mod:BouncingGooBall(_, spellId, _, _, spellName)
