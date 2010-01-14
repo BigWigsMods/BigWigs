@@ -83,30 +83,27 @@ end
 
 do
 	local t = 0
-	local function phase2()
-		mod:Message("phase", CL.phase:format(2), "Positive")
-		mod:Bar(70351, L["experiment_bar"], 25, 70351)
-		mod:Bar(71255, L["gasbomb_bar"], 20, 71255)
-		mod:Bar(72295, L["ball_bar"], 9, 72295)
-	end
-	local function phase3()
-		mod:Message("phase", CL.phase:format(3), "Positive")
-		mod:SendMessage("BigWigs_StopBar", mod, L["experiment_bar"])
-		mod:Bar(71255, L["gasbomb_bar"], 35, 71255)
-		mod:Bar(72295, L["ball_bar"], 9, 72295)
+	local function nextPhase()
+		if not first then
+			mod:Message("phase", CL.phase:format(2), "Positive")
+			mod:Bar(70351, L["experiment_bar"], 25, 70351)
+			mod:Bar(71255, L["gasbomb_bar"], 20, 71255)
+			mod:Bar(72295, L["ball_bar"], 9, 72295)
+			first = true
+		else
+			mod:Message("phase", CL.phase:format(3), "Positive")
+			mod:SendMessage("BigWigs_StopBar", mod, L["experiment_bar"])
+			mod:Bar(71255, L["gasbomb_bar"], 35, 71255)
+			mod:Bar(72295, L["ball_bar"], 9, 72295)
+			first = nil
+		end
 	end
 	function mod:TearGas(_, spellId, _, _, spellName)
 		local time = GetTime()
-		if (time - t) > 8 then
+		if (time - t) > 30 then
 			t = time
 			self:Bar("phase", spellName, 18, spellId)
-			if not first then
-				self:ScheduleTimer(phase2, 18)
-				first = true
-			else
-				self:ScheduleTimer(phase3, 18)
-				first = nil
-			end
+			self:ScheduleTimer(nextPhase, 18)
 		end
 	end
 end
