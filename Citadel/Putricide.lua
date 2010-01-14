@@ -38,6 +38,7 @@ if L then
 	L.ball_bar = "Next bouncing goo ball"
 	L.ball_say = "Bouncing goo ball on me!"
 
+	L.add_message = "Ooze add incoming!"
 	L.experiment_bar = "Next add"
 	L.blight_message = "Red ooze"
 	L.violation_message = "Green ooze"
@@ -50,7 +51,8 @@ if L then
 	L.phase3_warning = "Phase 3 soon!"
 	L.phase3_message = "Phase 3!"
 
-	L.gasbomb_bar = "More yellow gas bombs!"
+	L.gasbomb_bar = "More yellow gas bombs"
+	L.gasbomb_message = "Gas bombs!"
 end
 L = mod:GetLocale()
 
@@ -95,14 +97,14 @@ function mod:Plague(player, spellId, _, _, _, stack)
 end
 
 function mod:Phase2()
-	self:Message("phase", L["phase2_message"], "Attention")
+	self:Message("phase", L["phase2_message"], "Positive")
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
 	self:Bar(71255, L["gasbomb_bar"], 20, 71255)
 	self:Bar(72295, L["ball_bar"], 9, 72295)
 end
 
 function mod:Phase3()
-	self:Message("phase", L["phase3_message"], "Attention")
+	self:Message("phase", L["phase3_message"], "Positive")
 	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
 	self:Bar(72295, L["ball_bar"], 9, 72295)
@@ -146,16 +148,17 @@ function mod:StunnedByGreenOoze(player, spellId)
 end
 
 function mod:Experiment(_, spellId, _, _, spellName)
-	self:Message(70351, spellName, "Important", spellId, "Alert")
+	self:Message(70351, L["add_message"], "Important", spellId, "Alert")
 	self:Bar(70351, L["experiment_bar"], 38, spellId)
 end
 
 function mod:GasBomb(_, spellId, _, _, spellName)
-	self:Message(71255, spellName, "Attention", spellId)
+	self:Message(71255, L["gasbomb_message"], "Attention", spellId)
 	self:Bar(71255, L["gasbomb_bar"], 35, spellId)
 end
 
 do
+	-- XXX dude, wtf?
 	local id, name, handle = nil, nil, nil
 	local function scanTarget()
 		local bossId = mod:GetUnitIdByGUID(36678)
