@@ -23,15 +23,15 @@ if L then
 	L.engage_trigger = "Fun time?"
 
 	L.inhale_message = "Inhale Blight %d"
-	L.inhale_bar = "~Next Inhale %d"
+	L.inhale_bar = "Inhale %d"
 
 	L.blight_warning = "Pungent Blight in ~5sec!"
-	L.blight_bar = "~Next Blight"
+	L.blight_bar = "Next Blight"
 
 	L.bloat_message = "%2$dx Gastric Bloat on %1$s"
-	L.bloat_bar = "~Next Bloat"
+	L.bloat_bar = "~Gastric Bloat"
 
-	L.spore_bar = "~Next Gas Spores"
+	L.spore_bar = "~Gas Spores"
 end
 L = mod:GetLocale()
 
