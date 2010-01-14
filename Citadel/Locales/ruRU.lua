@@ -15,7 +15,7 @@ if L then
 
 	L.adds = "Порталы"
 	L.adds_desc = "Предупреждает о порталах."
-	L.adds_trigger_alliance = "Разрушители, сержанты, в атаку!"
+	L.adds_trigger_alliance = "Разрушители, сержанты, в бой!"
 	L.adds_trigger_horde = "Пехота, сержанты, в бой!"
 	L.adds_message = "Порталы!"
 	L.adds_bar = "Следующие Порталы"
