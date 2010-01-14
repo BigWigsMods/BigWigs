@@ -32,6 +32,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224)
+	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 69674, 71224)
 	self:Log("SPELL_CAST_START", "SlimeSpray", 69508)
 	self:Log("SPELL_CAST_START", "Explode", 69839, 73029, 73030)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Ooze", 69558)
@@ -54,6 +55,10 @@ function mod:Infection(player, spellId)
 	self:Bar(71224, L["infection_bar"]:format(player), 12, spellId)
 	self:PrimaryIcon(71224, player, "icon")
 	if UnitIsUnit(player, "player") then self:FlashShake(71224) end
+end
+
+function mod:InfectionRemoved(player)
+	self:SendMessage("BigWigs_StopBar", self, L["infection_bar"]:format(player))
 end
 
 function mod:SlimeSpray(_, spellId, _, _, spellName)
