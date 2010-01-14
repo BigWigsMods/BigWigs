@@ -94,8 +94,7 @@ L = BigWigs:NewBossLocale("Professor Putricide", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
-	--L.phase2_trigger = "Hmm. I don't feel a thing. Whaa...? Where'd those come from?"
-	--L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!"
+	L.phase_warning = "Phase %d bald!"
 
 	--L.engage_trigger = "Good news, everyone!"
 
@@ -108,11 +107,6 @@ if L then
 
 	L.plague_message = "%2$dx Seuche: %1$s"
 	L.plague_bar = "Nächste Seuche"
-
-	L.phase2_warning = "Phase 2 bald!"
-	L.phase2_message = "Phase 2!"
-	L.phase3_warning = "Phase 3 bald!"
-	L.phase3_message = "Phase 3!"
 
 	L.gasbomb_bar = "Weitere Gasbomben"
 end

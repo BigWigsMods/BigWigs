@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36678)
-mod.toggleOptions = {{70447, "ICON", "WHISPER"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER"}, 71966, 71255, {72295, "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
@@ -18,8 +18,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local p2, p3 = nil, nil
-local pName = UnitName("player")
+local p2, p3, first = nil, nil, nil
 local gooTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -30,10 +29,9 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
-	L.phase2_trigger = "Hmm. I don't feel a thing. Whaa...? Where'd those come from?"
-	L.phase3_trigger = "Tastes like... Cherry! Oh! Excuse me!"
+	L.phase_warning = "Phase %d soon!"
 
-	L.engage_trigger = "Good news, everyone!"
+	L.engage_trigger = "I think I've perfected a plague"
 
 	L.ball_bar = "Next bouncing goo ball"
 	L.ball_say = "Bouncing goo ball on me!"
@@ -45,11 +43,6 @@ if L then
 
 	L.plague_message = "%2$dx plague on %1$s"
 	L.plague_bar = "Next plague"
-
-	L.phase2_warning = "Phase 2 soon!"
-	L.phase2_message = "Phase 2!"
-	L.phase3_warning = "Phase 3 soon!"
-	L.phase3_message = "Phase 3!"
 
 	L.gasbomb_bar = "More yellow gas bombs"
 	L.gasbomb_message = "Gas bombs!"
@@ -67,6 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 72615, 72296)
+	self:Log("SPELL_AURA_APPLIED", "TearGas", 71615)
 
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -75,13 +69,11 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
-	self:Yell("Phase2", L["phase2_trigger"])
-	self:Yell("Phase3", L["phase3_trigger"])
 end
 
 function mod:OnEngage()
 	self:Berserk(600)
-	p2, p3 = nil, nil
+	p2, p3, first = nil, nil, nil
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
 end
 
@@ -89,25 +81,41 @@ end
 -- Event Handlers
 --
 
+do
+	local t = 0
+	local function phase2()
+		mod:Message("phase", CL.phase:format(2), "Positive")
+		mod:Bar(70351, L["experiment_bar"], 25, 70351)
+		mod:Bar(71255, L["gasbomb_bar"], 20, 71255)
+		mod:Bar(72295, L["ball_bar"], 9, 72295)
+	end
+	local function phase3()
+		mod:Message("phase", CL.phase:format(3), "Positive")
+		mod:SendMessage("BigWigs_StopBar", mod, L["experiment_bar"])
+		mod:Bar(71255, L["gasbomb_bar"], 35, 71255)
+		mod:Bar(72295, L["ball_bar"], 9, 72295)
+	end
+	function mod:TearGas(_, spellId, _, _, spellName)
+		local time = GetTime()
+		if (time - t) > 8 then
+			t = time
+			self:Bar("phase", spellName, 18, spellId)
+			if not first then
+				self:ScheduleTimer(phase2, 18)
+				first = true
+			else
+				self:ScheduleTimer(phase3, 18)
+				first = nil
+			end
+		end
+	end
+end
+
 function mod:Plague(player, spellId, _, _, _, stack)
 	if stack > 1 then
 		self:TargetMessage(72451, L["plague_message"], player, "Urgent", spellId, "Info", stack)
 		self:Bar(72451, L["plague_bar"], 10, spellId)
 	end
-end
-
-function mod:Phase2()
-	self:Message("phase", L["phase2_message"], "Positive")
-	self:Bar(70351, L["experiment_bar"], 25, 70351)
-	self:Bar(71255, L["gasbomb_bar"], 20, 71255)
-	self:Bar(72295, L["ball_bar"], 9, 72295)
-end
-
-function mod:Phase3()
-	self:Message("phase", L["phase3_message"], "Positive")
-	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
-	self:Bar(71255, L["gasbomb_bar"], 35, 71255)
-	self:Bar(72295, L["ball_bar"], 9, 72295)
 end
 
 function mod:UNIT_HEALTH(event, msg)
@@ -118,10 +126,10 @@ function mod:UNIT_HEALTH(event, msg)
 	if UnitName(msg) == self.displayName then
 		local hp = UnitHealth(msg)
 		if hp <= 83 and not p2 then
-			self:Message("phase", L["phase2_warning"], "Positive")
+			self:Message("phase", L["phase_warning"]:format(2), "Positive")
 			p2 = true
 		elseif hp <= 37 and not p3 then
-			self:Message("phase", L["phase3_warning"], "Positive")
+			self:Message("phase", L["phase_warning"]:format(3), "Positive")
 			p3 = true
 		end
 	end
@@ -143,7 +151,6 @@ end
 
 function mod:StunnedByGreenOoze(player, spellId)
 	self:TargetMessage(70447, L["violation_message"], player, "Personal", spellId)
-	self:Whisper(70447, player, L["violation_message"])
 	self:PrimaryIcon(70447, player)
 end
 
@@ -165,7 +172,7 @@ do
 		if not bossId then return end
 		local target = UnitName(bossId .. "target")
 		if target then
-			if target == pName then
+			if UnitIsUnit(target, "player") then
 				mod:FlashShake(72295)
 				if bit.band(mod.db.profile[(GetSpellInfo(72295))], BigWigs.C.SAY) == BigWigs.C.SAY then
 					SendChatMessage(L["ball_say"], "SAY")
@@ -174,7 +181,6 @@ do
 			mod:TargetMessage(72295, name, gooTargets, "Attention", id)
 		end
 	end
-
 	function mod:BouncingGooBall(player, spellId, _, _, spellName)
 		gooTargets[#gooTargets + 1] = player
 		id, name = spellId, spellName

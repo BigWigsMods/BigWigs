@@ -100,11 +100,9 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
 if L then
-
 	L.phase = "Фазы"
 	L.phase_desc = "Предупреждает о смене фаз."
-	L.phase2_trigger = "Хмм. Что-то я ничего не чувствую. Чтоо...? Это еще откуда?"
-	L.phase3_trigger = "На вкус как... вишенка! Ой! Извините!"
+	L.phase_warning = "Скоро %d-я фаза!"
 
 	L.engage_trigger = "Отличные новости, народ!"
 
@@ -118,9 +116,6 @@ if L then
 
 	L.plague_message = "%2$dx чума на %1$s"
 	L.plague_bar = "Следующая чума"
-
-	L.phase2_warning = "Скоро 2-я фаза!"
-	L.phase3_warning = "Скоро 3-я фаза!"
 
 	L.gasbomb_bar = "Следующие желтые газовые бомбы!"
 end

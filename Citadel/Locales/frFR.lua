@@ -82,8 +82,7 @@ L = BigWigs:NewBossLocale("Professor Putricide", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
-	L.phase2_trigger = "Mmm, je ne sens plus rien. Woah ?! Mais ça vient d'où, tout ça ?"
-	L.phase3_trigger = "Au bon goût de… Cerise ! Oups ! Pardon !" -- à vérifier
+	L.phase_warning = "Phase %d imminente !"
 
 	L.engage_trigger = "Grande nouvelle, mes amis ! Je crois que j'ai mis au point une peste qui va détruire toute vie sur Azeroth !"
 
@@ -96,11 +95,6 @@ if L then
 
 	L.plague_message = "%2$dx Peste sur %1$s"
 	L.plague_bar = "Prochaine Peste"
-
-	L.phase2_warning = "Phase 2 imminente !"
-	L.phase2_message = "Phase 2 !"
-	L.phase3_warning = "Phase 3 imminente !"
-	L.phase3_message = "Phase 3 !"
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"
 end
