@@ -29,11 +29,11 @@ L = BigWigs:NewBossLocale("Festergut", "deDE")
 if L then
 	L.engage_trigger = "Zeit für Spaß?"
 
-	L.inhale_message = "Seuche einatmen %d"
-	L.inhale_bar = "~Seuche einatmen %d"
+	L.inhale_message = "Einatmen %d"
+	L.inhale_bar = "Einatmen %d"
 
 	L.blight_warning = "Stechende Seuche in ~5 sek!"
-	L.blight_bar = "~Stechende Seuche"
+	L.blight_bar = "Nächste Seuche"
 
 	L.bloat_message = "%2$dx Magenblähung: %1$s"
 	L.bloat_bar = "~Magenblähung"
@@ -96,19 +96,21 @@ if L then
 	L.phase_desc = "Warnt vor Phasenwechsel."
 	L.phase_warning = "Phase %d bald!"
 
-	--L.engage_trigger = "Good news, everyone!"
+	L.engage_trigger = "Ich habe eine Seuche perfektioniert"
 
-	L.ball_bar = "Nächster Formbarer Schleim"
-	L.ball_say = "Formbarer Schleim auf MIR!"
+	L.ball_bar = "~Springender Schleim"
+	L.ball_say = "Springender Schleim auf MIR!"
 
-	L.experiment_bar = "Nächstes Add"
-	L.blight_message = "Rotes Add"
-	L.violation_message = "Grünes Add"
+	L.experiment_message = "Schleim kommt!"
+	L.experiment_bar = "Nächster Schleim"
+	L.blight_message = "Roter Schleim"
+	L.violation_message = "Grüner Schleim"
 
 	L.plague_message = "%2$dx Seuche: %1$s"
 	L.plague_bar = "Nächste Seuche"
 
 	L.gasbomb_bar = "Weitere Gasbomben"
+	L.gasbomb_message = "Gasbomben!"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
