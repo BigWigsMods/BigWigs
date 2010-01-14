@@ -34,7 +34,7 @@ if L then
 	L.engage_trigger = "I think I've perfected a plague"
 
 	L.ball_bar = "Next bouncing goo ball"
-	L.ball_say = "Bouncing goo ball on me!"
+	L.ball_say = "Goo ball at my feet!"
 
 	L.experiment_message = "Ooze add incoming!"
 	L.experiment_bar = "Next ooze"
@@ -82,8 +82,9 @@ end
 --
 
 do
-	local t = 0
+	local stop = nil
 	local function nextPhase()
+		stop = nil
 		if not first then
 			mod:Message("phase", CL.phase:format(2), "Positive")
 			mod:Bar(70351, L["experiment_bar"], 25, 70351)
@@ -99,12 +100,10 @@ do
 		end
 	end
 	function mod:TearGas(_, spellId, _, _, spellName)
-		local time = GetTime()
-		if (time - t) > 30 then
-			t = time
-			self:Bar("phase", spellName, 18, spellId)
-			self:ScheduleTimer(nextPhase, 18)
-		end
+		if stop then return end
+		stop = true
+		self:Bar("phase", spellName, 18, spellId)
+		self:ScheduleTimer(nextPhase, 18)
 	end
 end
 
@@ -162,9 +161,9 @@ function mod:GasBomb(_, spellId)
 end
 
 do
-	-- XXX dude, wtf?
-	local id, name, handle = nil, nil, nil
-	local function scanTarget()
+	local scheduled = nil
+	local function scanTarget(spellName)
+		scheduled = nil
 		local bossId = mod:GetUnitIdByGUID(36678)
 		if not bossId then return end
 		local target = UnitName(bossId .. "target")
@@ -175,16 +174,14 @@ do
 					SendChatMessage(L["ball_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72295, name, gooTargets, "Attention", id)
+			mod:TargetMessage(72295, spellName, target, "Attention", 72295)
 		end
 	end
-	function mod:BouncingGooBall(player, spellId, _, _, spellName)
-		gooTargets[#gooTargets + 1] = player
-		id, name = spellId, spellName
-		if not handle then
-			handle = self:ScheduleTimer(scanTarget, 0.2)
+	function mod:BouncingGooBall(_, spellId, _, _, spellName)
+		if not scheduled then
+			self:ScheduleTimer(scanTarget, 0.2, spellName)
+			self:Bar(72295, L["ball_bar"], 25, spellId)
 		end
-		self:Bar(72295, L["ball_bar"], 25, spellId)
 	end
 end
 
