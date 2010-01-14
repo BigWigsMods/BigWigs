@@ -36,8 +36,8 @@ if L then
 	L.ball_bar = "Next bouncing goo ball"
 	L.ball_say = "Bouncing goo ball on me!"
 
-	L.add_message = "Ooze add incoming!"
-	L.experiment_bar = "Next add"
+	L.experiment_message = "Ooze add incoming!"
+	L.experiment_bar = "Next ooze"
 	L.blight_message = "Red ooze"
 	L.violation_message = "Green ooze"
 
@@ -118,17 +118,17 @@ function mod:Plague(player, spellId, _, _, _, stack)
 	end
 end
 
-function mod:UNIT_HEALTH(event, msg)
+function mod:UNIT_HEALTH(_, unit)
 	if p2 and p3 then
 		self:UnregisterEvent("UNIT_HEALTH")
 		return
 	end
-	if UnitName(msg) == self.displayName then
-		local hp = UnitHealth(msg)
-		if hp <= 83 and not p2 then
+	if UnitName(unit) == self.displayName then
+		local hp = UnitHealth(unit) / UnitHealthMax(unit)
+		if hp <= 0.83 and not p2 then
 			self:Message("phase", L["phase_warning"]:format(2), "Positive")
 			p2 = true
-		elseif hp <= 37 and not p3 then
+		elseif hp <= 0.37 and not p3 then
 			self:Message("phase", L["phase_warning"]:format(3), "Positive")
 			p3 = true
 		end
@@ -154,12 +154,12 @@ function mod:StunnedByGreenOoze(player, spellId)
 	self:PrimaryIcon(70447, player)
 end
 
-function mod:Experiment(_, spellId, _, _, spellName)
-	self:Message(70351, L["add_message"], "Important", spellId, "Alert")
+function mod:Experiment(_, spellId)
+	self:Message(70351, L["experiment_message"], "Important", spellId, "Alert")
 	self:Bar(70351, L["experiment_bar"], 38, spellId)
 end
 
-function mod:GasBomb(_, spellId, _, _, spellName)
+function mod:GasBomb(_, spellId)
 	self:Message(71255, L["gasbomb_message"], "Attention", spellId)
 	self:Bar(71255, L["gasbomb_bar"], 35, spellId)
 end
