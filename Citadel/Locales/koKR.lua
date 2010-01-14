@@ -8,10 +8,10 @@ if L then
 	L.engage_trigger = "노는... 거야?"
 
 	L.inhale_message = "들이마시기 %d"
-	L.inhale_bar = "~다음 들이마시기 %d"
+	L.inhale_bar = "들이마시기 %d"
 
 	L.blight_warning = "약 5초 후 파멸의 역병!"
-	L.blight_bar = "~다음 파멸 역병"
+	L.blight_bar = "다음 파멸 역병"
 
 	L.bloat_message = "위 팽창 %2$dx : %1$s"
 	L.bloat_bar = "~다음 위 팽창"
@@ -84,6 +84,7 @@ if L then
 	L.ball_bar = "다음 끈적이"
 	L.ball_say = "나에게 통통 끈적이!"
 
+	L.experiment_message = "곧 수액 추가!"
 	L.experiment_bar = "다음 수액 추가"
 	L.blight_message = "붉은 수액"
 	L.violation_message = "녹색 수액"
@@ -92,6 +93,7 @@ if L then
 	L.plague_bar = "다음 역병"
 
 	L.gasbomb_bar = "다음 노란 가스탄"
+	L.gasbomb_message = "숨막히는 가스탄!"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
