@@ -90,9 +90,9 @@ if L then
 	L.incinerate_bar = "<下一焚化血肉>"
 	L.incinerate_safe = "安全：>%s<！"
 
-	L.legionflame_message = "聚合烈焰"
-	L.legionflame_other = "聚合烈焰：>%s<！"
-	L.legionflame_bar = "<下一聚合烈焰>"
+	L.legionflame_message = "軍團烈焰"
+	L.legionflame_other = "軍團烈焰：>%s<！"
+	L.legionflame_bar = "<下一軍團烈焰>"
 
 	L.infernal_bar = "<煉獄火山出現>"
 	L.netherportal_bar = "<下一虛空傳送門>"

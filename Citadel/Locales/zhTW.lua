@@ -100,7 +100,7 @@ if L then
 
 	L.engage_trigger = "以巫妖王之力!"
 	L.warmup_alliance = "Let's get a move on then! Move ou..."
-	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
+	L.warmup_horde = "柯爾克隆，前進!勇士們，要當心，天譴軍團已經……"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
