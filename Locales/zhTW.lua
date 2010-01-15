@@ -16,7 +16,7 @@ L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 為官方正式版（修訂號%d）"
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 為“α測試版”（修訂號%d）"
-L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 為從源直接檢出的。"
+L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 為從庫直接檢出的。"
 L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "有新的 Big Wigs 正式版可用。你可以訪問 Curse.com，wowinterface.com，wowace.com 或使用 Curse 更新器來更新到新的正式版。"
 
 L.tooltipHint = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt-點擊|r可以禁用所有首領模組。"
@@ -24,7 +24,7 @@ L["Active boss modules:"] = "啟動首領模組："
 L["All running modules have been reset."] = "所有運行中的模組都已重置。"
 L["All running modules have been disabled."] = "所有運行中的模組都已禁用。"
 
-L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "在你隊伍里使用舊版本或沒有使用 Big Wigs。你可以用 /bwv 獲得詳細內容。"
+L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "在你隊伍裡使用舊版本或沒有使用 Big Wigs。你可以用 /bwv 獲得詳細內容。"
 L["Up to date:"] = "已更新："
 L["Out of date:"] = "過期："
 L["No Big Wigs 3.x:"] = "沒有 Big Wigs 3.x："
@@ -39,7 +39,7 @@ L.configureDesc = "關閉插件選項視窗並配置顯示項，如計時條、�
 L["Sound"] = "音效"
 L.soundDesc = "訊息出現時伴隨著音效。有些人更容易在聽到何種音效後發現何種警報，而不是閱讀的實際訊息。\n\n|cffff4411即使被關閉，預設的團隊警報音效可能會隨其它玩家的團隊警報出現，那些聲音與這裡用的不同。|r"
 L["Show Blizzard warnings"] = "暴雪警報"
-L.blizzardDesc = "暴雪提供了他們自己的警報訊息。我們認為，這些訊息太長和復雜。我們試著簡化這些消息而不打擾遊戲的樂趣，並不需要你做什麼。\n\n|cffff4411當關閉時，暴雪警報將不會再螢幕中間顯示，但是仍將顯示在聊天框體內。|r"
+L.blizzardDesc = "暴雪提供了他們自己的警報訊息。我們認為，這些訊息太長和複雜。我們試著簡化這些消息而不打擾遊戲的樂趣，並不需要你做什麼。\n\n|cffff4411當關閉時，暴雪警報將不會在螢幕中間顯示，但是仍將顯示在聊天框體內。|r"
 L["Show addon warnings"] = true
 L.addonwarningDesc = "Big Wigs 與其它首領戰鬥插件可以使用團隊警報頻道廣播訊息。這些訊息通常包含三星號（***），Big Wigs 以此查找和判斷是否屏蔽此訊息。\n\n|cffff4411開啟此選項將造成大量的垃圾訊息所以並不推薦。|r"
 L["Flash and shake"] = "閃爍/震動"
@@ -83,7 +83,7 @@ L["Advanced options"] = "進階選項"
 L["<< Back"] = "<< 返回"
 
 L["About"] = "關於"
-L["Main Developers"] = "主要開發"
+L["Main Developers"] = "主要開發者"
 L["Maintainers"] = "維護"
 L["License"] = "許可"
 L["Website"] = "網站"
