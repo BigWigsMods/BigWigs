@@ -24,7 +24,7 @@ end
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "koKR")
 if L then
 	L.enable_trigger = "어서 오게, 용사들이여! 은빛십자군의 부름에 담대히 응한 모두를 환영하네! 바로 이곳, 십자군 원형경기장에서 제군들은 엄청난 도전에 마주칠 걸세. 혹독한 원형경기장에서 살아남는 자는 은빛십자군의 일원이 되어 얼음왕관 성채로 진군해 나갈 걸세."
-	L.wipe_trigger = "비극"	--check
+	L.wipe_trigger = "비극이야..."
 
 	L.engage_trigger = "폭풍우 봉우리의 가장 깊고 어두운 동굴에서 온, 꿰뚫는 자 고르목일세! 영웅들이여, 전투에 임하게!"
 	L.jormungars_trigger = "마음을 단단히 먹게, 영웅들이여. 두 배의 공포, 산성아귀와 공포비늘이 투기장으로 들어온다네!"
