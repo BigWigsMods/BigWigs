@@ -21,7 +21,7 @@ if L then
 	L.mark = "Mal %d"
 
 	L.engage_trigger = "BEI DER MACHT DES LICHKÖNIGS!"
-	--L.warmup_alliance = "Let's get a move on then! Move ou..."
+	L.warmup_alliance = "Dann beeilen wir uns! Brechen wir au..."
 	L.warmup_horde = "Kor'kron, Aufbruch! Champions, gebt Acht. Die Geißel ist..."
 end
 
