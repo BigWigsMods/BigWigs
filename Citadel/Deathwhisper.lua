@@ -6,7 +6,13 @@ local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 --Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
 mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
-mod.toggleOptions = {"adds", {71289, "ICON"}, 70842, {71001, "FLASHSHAKE"}, 71204, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 70842, 71204, {71289, "ICON"}, {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+mod.optionHeaders = {
+	adds = CL.phase:format(1),
+	[71204] = CL.phase:format(2),
+	[71289] = "general",
+}
 
 --------------------------------------------------------------------------------
 --  Localization
