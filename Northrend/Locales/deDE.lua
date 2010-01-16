@@ -23,6 +23,9 @@ end
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "deDE")
 if L then
 	L.cinder_message = "Flamme auf DIR!"
+
+	L.breath_bar = "Atem %d"
+	L.breath_message = "Atem %d bald!"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "deDE")
@@ -87,4 +90,14 @@ if L then
 	L.twilight_trigger_shadron = "Ein Shadronjünger erscheint im Zwielicht!"
 	L.twilight_message_tenebron = "Eier schlüpfen"
 	L.twilight_message = "%s kommt dazu!"
+end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "deDE")
+if L then
+	L.whiteout_bar = "Schneesturm %d"
+	L.whiteout_message = "Schneesturm %d bald!"
+
+	L.frostbite_message = "%2$dx Erfrierung: %1$s"
+
+	L.freeze_message = "Eingefroren"
 end
