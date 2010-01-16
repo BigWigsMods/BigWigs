@@ -12,7 +12,7 @@ mod.toggleOptions = {66725, {67332, "FLASHSHAKE"}, 66665, "bosskill"}
 -- Locals
 --
 
-local pName = UnitName("player")
+local count = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,6 +21,9 @@ local pName = UnitName("player")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.cinder_message = "Flame on YOU!"
+
+	L.breath_bar = "Breath %d"
+	L.breath_message = "Breath %d soon!"
 end
 L = mod:GetLocale()
 
@@ -48,11 +51,15 @@ function mod:Fists(_, spellId, _, _, spellName)
 end
 
 function mod:Cinder(player, spellId)
-	if player ~= pName then return end
-	self:LocalMessage(67332, L["cinder_message"], "Personal", spellId, "Alarm")
-	self:FlashShake(67332)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(67332, L["cinder_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(67332)
+	end
 end
 
 function mod:Breath(_, spellId, _, _, spellName)
-	self:Message(66665, spellName, "Attention", spellId)
+	self:Message(66665, spellName, "Positive", spellId)
+	count = count + 1
+	self:Bar(66665, L["breath_bar"]:format(count), 45, spellId)
+	self:DelayedMessage(66665, 40, L["breath_message"]:format(count), "Attention")
 end

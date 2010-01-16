@@ -9,12 +9,6 @@ mod:RegisterEnableMob(31125)
 mod.toggleOptions = {58663, "charge", {58678, "MESSAGE", "ICON"}, {58965, "FLASHSHAKE"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local pName = UnitName("player")
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -58,13 +52,13 @@ end
 --
 
 function mod:Stomp(_, spellId)
-	self:Message(58663, L["stomp_message"], "Attention", spellId)
+	self:Message(58663, L["stomp_message"], "Positive", spellId)
 	self:Bar(58663, L["stomp_bar"], 47, spellId)
 	self:DelayedMessage(58663, 42, L["stomp_warning"], "Attention")
 end
 
 function mod:Cloud(player, spellId)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(58965, L["cloud_message"], "Personal", spellId, "Alarm")
 		self:FlashShake(58965)
 	end
