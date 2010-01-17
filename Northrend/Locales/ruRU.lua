@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Archavon the Stone Watcher", "ruRU")
 if L then
 	L.stomp_message = "Топот - близится Рывок!"
@@ -23,6 +23,19 @@ end
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "ruRU")
 if L then
 	L.cinder_message = "ВЫ в ОГНЕ!"
+
+	L.breath_bar = "Дыхание %d"
+	L.breath_message = "Скоро дыхание %d!"
+end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "ruRU")
+if L then
+	L.whiteout_bar = "Пурга %d"
+	L.whiteout_message = "Скоро пурга %d!"
+
+	L.frostbite_message = "%2$dx Обморожение на %1$s"
+
+	L.freeze_message = "Заморозка"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "ruRU")
