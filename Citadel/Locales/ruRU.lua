@@ -109,15 +109,16 @@ if L then
 	L.ball_bar = "Следующий бросок вязкой гадости"
 	L.ball_say = "Бросок вязкой гадости на МНЕ!"
 
+	L.experiment_message = "Скоро появится слизнюк!"
 	L.experiment_bar = "Следующий слизнюк"
-	L.add_message = "Скоро появится слизнюк!"
 	L.blight_message = "Газовое облако"
 	L.violation_message = "Зеленый слизнюк"
 
 	L.plague_message = "%2$dx чума на %1$s"
 	L.plague_bar = "Следующая чума"
 
-	L.gasbomb_bar = "Следующие желтые газовые бомбы!"
+	L.gasbomb_bar = "Следующие желтые газовые бомбы"
+	L.gasbomb_message = "Желтые бомбы!"
 end
 
 L = BigWigs:NewBossLocale("Blood Princes", "ruRU")
