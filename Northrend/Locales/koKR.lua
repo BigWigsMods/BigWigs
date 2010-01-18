@@ -88,3 +88,13 @@ if L then
 	L.twilight_message_tenebron = "알 부화중"
 	L.twilight_message = "%s 신도 추가!"
 end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "koKR")
+if L then
+	L.whiteout_bar = "시아상실 %d"
+	L.whiteout_message = "곧 시아상실 %d !"
+
+	L.frostbite_message = "동상 %2$dx : %1$s"
+
+	L.freeze_message = "땅얼리기"
+end
