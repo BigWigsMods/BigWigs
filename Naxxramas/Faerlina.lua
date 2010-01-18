@@ -4,7 +4,8 @@
 
 local mod = BigWigs:NewBoss("Grand Widow Faerlina", "Naxxramas")
 if not mod then return end
-mod:RegisterEnableMob(15953)
+--Faerlina, Worshipper, Follower
+mod:RegisterEnableMob(15953, 16506, 16505)
 mod.toggleOptions = {28732, {28794, "FLASHSHAKE"}, 28798, "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -13,8 +14,6 @@ mod.toggleOptions = {28732, {28794, "FLASHSHAKE"}, 28798, "bosskill"}
 
 local started = nil
 local frenzied = nil
-local frenzyName = GetSpellInfo(28798)
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -49,13 +48,24 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
 	self:Log("SPELL_AURA_APPLIED", "Rain", 28794, 54099)
-	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28798, 54100) --Norm/Heroic
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28798, 54100)
 	self:Death("Win", 15953)
 
 	started = nil
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"], L["starttrigger3"], L["starttrigger4"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+end
+
+function mod:OnEngage()
+	if not started then
+		self:Message(28798, L["startwarn"], "Urgent")
+		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
+		local frenzyName = GetSpellInfo(28798)
+		self:Bar(28798, frenzyName, 60, 28798)
+		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight
+		frenzied = nil
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -73,6 +83,7 @@ function mod:Silence(unit, spellId)
 		-- Reactive enrage removed
 		self:Message(28798, L["enrageremovewarn"], "Positive")
 		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
+		local frenzyName = GetSpellInfo(28798)
 		self:Bar(28798, frenzyName, 60, 28798)
 
 		self:Bar(28732, L["silencebar"], 30, spellId)
@@ -82,7 +93,7 @@ function mod:Silence(unit, spellId)
 end
 
 function mod:Rain(player)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(28794, L["rain_message"], "Personal", 54099, "Alarm")
 		self:FlashShake(28794)
 	end
@@ -97,12 +108,3 @@ function mod:Frenzy(unit, spellId, _, _, spellName)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if not started and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
-		self:Message(28798, L["startwarn"], "Urgent")
-		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
-		self:Bar(28798, frenzyName, 60, 28798)
-		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight
-		frenzied = nil
-	end
-end
