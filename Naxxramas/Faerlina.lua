@@ -88,13 +88,13 @@ function mod:Rain(player)
 	end
 end
 
-function mod:Frenzy(unit, spellId, _, _, spellName, _, _, _, dGUID)
-	local target = tonumber(dGUID:sub(-12, -7), 16)
-	if target ~= 15953 then return end
-	self:Message(28798, L["enragewarn"], "Urgent", spellId)
-	self:SendMessage("BigWigs_StopBar", self, spellName)
-	self:CancelDelayedMessage(L["enragewarn2"])
-	frenzied = true
+function mod:Frenzy(unit, spellId, _, _, spellName)
+	if unit == self.displayName then
+		self:Message(28798, L["enragewarn"], "Urgent", spellId)
+		self:SendMessage("BigWigs_StopBar", self, spellName)
+		self:CancelDelayedMessage(L["enragewarn2"])
+		frenzied = true
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
