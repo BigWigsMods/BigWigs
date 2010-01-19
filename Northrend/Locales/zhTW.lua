@@ -23,6 +23,19 @@ end
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "zhTW")
 if L then
 	L.cinder_message = ">你< 燃焰餘燼！"
+
+	L.breath_bar = "燃燒之息 %d"
+	L.breath_message = "即將 燃燒之息 %d!"
+end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "ruRU")
+if L then
+	L.whiteout_bar = "寒霜厲雪 %d"
+	L.whiteout_message = "即將 寒霜厲雪 %d!"
+
+	L.frostbite_message = "%2$dx 寒霜之咬 on %1$s"
+
+	L.freeze_message = "冰凍術"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "zhTW")
