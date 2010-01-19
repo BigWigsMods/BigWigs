@@ -98,8 +98,8 @@ if L then
 
 	L.engage_trigger = "Ich habe eine Seuche perfektioniert"
 
-	L.ball_bar = "~Springender Schleim"
-	L.ball_say = "Springender Schleim auf MIR!"
+	L.ball_bar = "Nächsten Flummis"
+	L.ball_say = "Flummi auf MIR!"
 
 	L.experiment_message = "Schleim kommt!"
 	L.experiment_bar = "Nächster Schleim"
