@@ -37,7 +37,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(360, true)
+	self:Berserk(330, true)
 end
 
 --------------------------------------------------------------------------------
