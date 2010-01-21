@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Princes", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE", "ICON"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "bosskill"}
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -13,8 +13,8 @@ mod.toggleOptions = {{72040, "FLASHSHAKE", "ICON"}, {70981, "ICON"}, 72039, {720
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.switch_message = "Blood Switch"
-	L.switch_bar = "~Next Blood Switch"
+	L.switch_message = "Target swap!"
+	L.switch_bar = "~Next target swap"
 
 	L.infernoflames = "Inferno Flames"
 	L.infernoflames_message = "Fireball"
@@ -66,8 +66,8 @@ function mod:Switch(unit, spellId, _, _, spellName)
 		local bossNum = ("boss%d"):format(i)
 		local name = UnitName(bossNum)
 		if name and name == unit and bit.band(self.db.profile[spellName], BigWigs.C.ICON) == BigWigs.C.ICON then
-			SetRaidTarget(bossNum, 8)
-			return
+			SetRaidTarget(bossNum, 8) -- XXX 8 isn't guaranteed to be the primaryicon, need to fetch that from somewhere
+			break
 		end
 	end
 end
@@ -104,7 +104,6 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
 	if msg:find(L["infernoflames"]) then
-		self:SecondaryIcon(72040, player)
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(72040)
 		end
