@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Blood-Queen Lana'thel", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37955)
-mod.toggleOptions = {{71340, "FLASHSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {{71340, "FLASHSHAKE"}, 71265, {70877, "WHISPER"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -19,7 +19,8 @@ local pactTargets = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.shadow_message = "Shadows"
+	L.feed_message = "You need some Tru:Blood soon!"
 end
 L = mod:GetLocale()
 
@@ -28,8 +29,9 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-
-	self:Log("SPELL_AURA_APPLIED", "PactApplied", 71340)
+	self:Log("SPELL_AURA_APPLIED", "Pact", 71340)
+	self:Log("SPELL_AURA_APPLIED", "Shadows", 71265)
+	self:Log("SPELL_AURA_APPLIED", "Feed", 70877)
 	self:Death("Win", 37955)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -50,7 +52,7 @@ do
 		mod:TargetMessage(71340, spellName, pactTargets, "Urgent", 71340)
 		scheduled = nil
 	end
-	function mod:PactApplied(player, spellId, _, _, spellName)
+	function mod:Pact(player, spellId, _, _, spellName)
 		pactTargets[#pactTargets + 1] = player
 		if not scheduled then
 			scheduled = true
@@ -61,4 +63,17 @@ do
 		end
 	end
 end
+
+function mod:Shadows(player, spellId)
+	self:TargetMessage(71265, L["shadow_message"], player, "Attention", spellId)
+end
+
+function mod:Feed(player, spellId)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(70877, L["feed_message"], "Urgent", spellId, "Alert")
+	else
+		self:Whisper(70877, player, L["feed_message"], true)
+	end
+end
+
 

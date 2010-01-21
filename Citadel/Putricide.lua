@@ -154,12 +154,12 @@ function mod:StunnedByGreenOoze(player, spellId)
 end
 
 function mod:Experiment(_, spellId)
-	self:Message(70351, L["experiment_message"], "Important", spellId, "Alert")
+	self:Message(70351, L["experiment_message"], "Attention", spellId, "Alert")
 	self:Bar(70351, L["experiment_bar"], 38, spellId)
 end
 
 function mod:GasBomb(_, spellId)
-	self:Message(71255, L["gasbomb_message"], "Attention", spellId)
+	self:Message(71255, L["gasbomb_message"], "Urgent", spellId)
 	self:Bar(71255, L["gasbomb_bar"], 35, spellId)
 end
 
@@ -183,6 +183,7 @@ do
 	end
 	function mod:BouncingGooBall(_, spellId, _, _, spellName)
 		if not scheduled then
+			scheduled = true
 			self:ScheduleTimer(scanTarget, 0.2, spellName)
 			self:Bar(72295, L["ball_bar"], 25, spellId)
 		end
