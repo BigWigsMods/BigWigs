@@ -32,7 +32,8 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Pact", 71340)
 	self:Log("SPELL_AURA_APPLIED", "Shadows", 71265)
-	self:Log("SPELL_AURA_APPLIED", "Feed", 70877)
+	-- XXX 71474 verified as 25man, is 70877 10man or what is it?
+	self:Log("SPELL_AURA_APPLIED", "Feed", 70877, 71474)
 	self:Death("Win", 37955)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
