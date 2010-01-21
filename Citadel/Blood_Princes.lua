@@ -8,6 +8,12 @@ mod:RegisterEnableMob(37970, 37972, 37973)
 mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local engaged = nil
+
+--------------------------------------------------------------------------------
 --  Localization
 --
 
@@ -38,18 +44,19 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:Death("Deaths", 37970, 37972, 37973)
+	engaged = nil
 end
 
 function mod:OnEngage()
 	self:Bar(70981, L["switch_bar"], 45, 70981)
 	self:Berserk(600)
+	engaged = true
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	if engaged then return end
 	if self:GetUnitIdByGUID(37970) or self:GetUnitIdByGUID(37972) or self:GetUnitIdByGUID(37973) then
 		self:Engage()
-	else
-		self:Reboot()
 	end
 end
 
