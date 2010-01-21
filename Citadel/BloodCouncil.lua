@@ -26,7 +26,7 @@ if L then
 	L.infernoflames_message = "Fireball"
 
 	L.empowered_shock_message = "Casting Shock!"
-	L.regular_shock_message = "Shock zone on %s!"
+	L.regular_shock_message = "Shock zone"
 	L.shock_say = "Shock zone on me!"
 end
 L = mod:GetLocale()
