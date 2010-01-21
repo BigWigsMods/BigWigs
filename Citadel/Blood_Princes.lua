@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Princes", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, 71079, "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE", "ICON"}, {70981, "ICON"}, "bosskill"}
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -13,7 +13,8 @@ mod.toggleOptions = {{72040, "FLASHSHAKE"}, 71079, "bosskill"}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.switch_message = "Vulnerability switch"
+	L.switch_message = "Blood Switch"
+	L.switch_bar = "~Next Blood Switch"
 
 	L.infernoflames = "Inferno Flames"
 	L.infernoflames_message = "Inferno Flames following YOU"
@@ -25,7 +26,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Switch", 71079, 71082, 71075)
+	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:Death("Deaths", 37970, 37972, 37973)
@@ -35,13 +36,22 @@ end
 -- Event Handlers
 --
 
-function mod:Switch()
-	self:Message("Switch", L["switch_message"], "Attention")
-	self:Bar("Switch", L["switch_message"], 40)
+function mod:Switch(unit, spellId, _, _, spellName)
+	self:Message(70981, L["switch_message"], "Attention", spellId)
+	self:Bar(70981, L["switch_bar"], 45, spellId)
+	for i = 1, 4 do
+		local bossNum = ("boss%d"):format(i)
+		local name = UnitName(bossNum)
+		if name and name == unit and bit.band(self.db.profile[spellName], BigWigs.C.ICON) == BigWigs.C.ICON then
+			SetRaidTarget(bossNum, 8)
+			return
+		end
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
 	if msg:find(L["infernoflames"]) then
+		self:SecondaryIcon(72040, player)
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(72040)
 			self:LocalMessage(72040, L["infernoflames_message"], "Personal", 72040, "Alarm")
