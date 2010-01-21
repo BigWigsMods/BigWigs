@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Prince Council", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -74,11 +74,11 @@ end
 function mod:Switch(unit, spellId, _, _, spellName)
 	self:Message(70981, L["switch_message"], "Positive", spellId, "Info")
 	self:Bar(70981, L["switch_bar"], 45, spellId)
-	for i = 1, 4 do
+	for i = 1, 3 do
 		local bossNum = ("boss%d"):format(i)
 		local name = UnitName(bossNum)
 		if name and name == unit and bit.band(self.db.profile[spellName], BigWigs.C.ICON) == BigWigs.C.ICON then
-			SetRaidTarget(bossNum, 8) -- XXX 8 isn't guaranteed to be the primaryicon, need to fetch that from somewhere
+			SetRaidTarget(bossNum, 8) --Skull
 			break
 		end
 	end
@@ -86,6 +86,8 @@ end
 
 function mod:EmpoweredShock(_, spellId)
 	self:Message(72039, L["empowered_shock_message"], "Important", spellId, "Alert")
+	self:OpenProximity(15)
+	self:ScheduleTimer(self.CloseProximity, 5, self)
 end
 
 do
