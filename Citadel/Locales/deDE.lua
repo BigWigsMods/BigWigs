@@ -1,11 +1,24 @@
-local L = BigWigs:NewBossLocale("Blood Princes", "deDE")
+local L = BigWigs:NewBossLocale("Blood Prince Council", "deDE")
 if L then
+	L.switch_message = "Zielwechsel!"
+	L.switch_bar = "~Nächster Zielwechsel"
 
+	L.infernoflames = "Feuerball"
+	L.infernoflames_message = "Feuerball"
+
+	L.empowered_shock_message = "Wirkt Schock!"
+	L.regular_shock_message = "Schockzone auf %s!"
+	L.shock_say = "Schockzone auf mir!"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
 if L then
-
+	L.shadow_message = "Schatten"
+	L.feed_message = "Fütterungszeit bald!"
+	L.pact_message = "Pakt"
+	L.phase_message = "Luftphase bald!"
+	L.phase1_bar = "Zurück am Boden"
+	L.phase2_bar = "Luftphase"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "deDE")
