@@ -11,7 +11,7 @@ mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY
 -- Locals
 --
 
-local engaged = nil
+local count = 0
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -42,22 +42,28 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "Reboot")
 
 	self:Death("Deaths", 37970, 37972, 37973)
-	engaged = nil
-end
-
-function mod:OnEngage()
-	self:Bar(70981, L["switch_bar"], 45, 70981)
-	self:Berserk(600)
-	engaged = true
+	count = 0
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	if engaged then return end
-	if self:GetUnitIdByGUID(37970) or self:GetUnitIdByGUID(37972) or self:GetUnitIdByGUID(37973) then
-		self:Engage()
+	--Need some sensible event args please Blizz
+	count = count + 1
+	if count == 3 then --3 bosses engaged
+		count = 0
+		local guid = UnitGUID("boss1")
+		if guid then
+			guid = tonumber(guid:sub(-12, -7), 16)
+			if guid == 37970 or guid == 37972 or guid == 37973 then
+				self:Engage()
+				self:Bar(70981, L["switch_bar"], 45, 70981)
+				self:Berserk(600)
+			end
+		else
+			self:Reboot()
+		end
 	end
 end
 
@@ -83,28 +89,30 @@ function mod:EmpoweredShock(_, spellId)
 end
 
 do
-	local id, name, handle = nil, nil, nil
+	local scheduled = nil
 	local function scanTarget()
+		scheduled = nil
 		local bossId = mod:GetUnitIdByGUID(37970)
 		if not bossId then return end
 		local target = UnitName(bossId .. "target")
 		if target then
 			if UnitIsUnit("player", target) then
 				mod:FlashShake(72037)
-				if bit.band(mod.db.profile[name], BigWigs.C.SAY) == BigWigs.C.SAY then
+				if bit.band(mod.db.profile[GetSpellInfo(72037)], BigWigs.C.SAY) == BigWigs.C.SAY then
 					SendChatMessage(L["shock_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", id)
+			mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
 			mod:Whisper(72037, target, L["regular_shock_message"])
 		end
 		handle = nil
 	end
 
-	function mod:RegularShock(player, spellId, _, _, spellName)
-		id, name = spellId, spellName
-		self:CancelTimer(handle, true)
-		handle = self:ScheduleTimer(scanTarget, 0.1)
+	function mod:RegularShock()
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(scanTarget, 0.1)
+		end
 	end
 end
 
