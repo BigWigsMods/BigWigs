@@ -29,7 +29,25 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:Death("Deaths", 37970, 37972, 37973)
+end
+
+do
+	local c = 0
+	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+		c = c + 1
+		if c == 3 then
+			c = 0
+			if UnitName("boss1") then
+				self:Engage()
+				self:Bar(70981, L["switch_bar"], 45, spellId)
+				--Enrage ?
+			else
+				self:Reboot()
+			end
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
