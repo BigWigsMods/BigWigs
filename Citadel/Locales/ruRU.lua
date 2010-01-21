@@ -121,9 +121,17 @@ if L then
 	L.gasbomb_message = "Желтые бомбы!"
 end
 
-L = BigWigs:NewBossLocale("Blood Princes", "ruRU")
+L = BigWigs:NewBossLocale("Blood Prince Council", "ruRU")
 if L then
-	L.switch_message = "Vulnerability switch"
+	L.switch_message = "Смена цели!"
+	L.switch_bar = "~Следующая смена цели"
+
+	L.infernoflames = "Пламя преисподней"
+	L.infernoflames_message = "Пламя"
+
+	L.empowered_shock_message = "Могучий вихрь!"
+	L.regular_shock_message = "Вихрь на %s!"
+	L.shock_say = "Вихрь на мне!"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
