@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Blood-Queen Lana'thel", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37955)
-mod.toggleOptions = {{71340, "FLASHSHAKE"}, 71265, {70877, "WHISPER"}, "berserk", "bosskill"}
+mod.toggleOptions = {{71340, "FLASHSHAKE"}, 71265, {70877, "WHISPER"}, 71772, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -22,6 +22,9 @@ if L then
 	L.shadow_message = "Shadows"
 	L.feed_message = "Time to feed soon!"
 	L.pact_message = "Pact"
+	L.phase_message = "Air phase incoming!"
+	L.phase1_bar = "Back on floor"
+	L.phase2_bar = "Air phase"
 end
 L = mod:GetLocale()
 
@@ -34,6 +37,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Shadows", 71265)
 	-- XXX 71474 verified as 25man, is 70877 10man or what is it?
 	self:Log("SPELL_AURA_APPLIED", "Feed", 70877, 71474)
+	self:Log("SPELL_CAST_SUCCESS", "AirPhase", 73070)
 	self:Death("Win", 37955)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -42,6 +46,8 @@ end
 
 function mod:OnEngage()
 	self:Berserk(330, true)
+	self:OpenProximity(6)
+	self:Bar(71772, L["phase2_bar"], 142, 71772)
 end
 
 --------------------------------------------------------------------------------
@@ -77,4 +83,9 @@ function mod:Feed(player, spellId)
 	end
 end
 
+function mod:AirPhase(player, spellId)
+	self:Message(71772, L["phase_message"], "Important", spellId, "Alarm")
+	self:Bar(71772, L["phase1_bar"], 11, spellId)
+	self:Bar(71772, L["phase2_bar"], 153, 71772)
+end
 
