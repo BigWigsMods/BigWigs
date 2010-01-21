@@ -65,7 +65,7 @@ end
 --
 
 function mod:Switch(unit, spellId, _, _, spellName)
-	self:Message(70981, L["switch_message"], "Positive", spellId)
+	self:Message(70981, L["switch_message"], "Positive", spellId, "Info")
 	self:Bar(70981, L["switch_bar"], 45, spellId)
 	for i = 1, 4 do
 		local bossNum = ("boss%d"):format(i)
@@ -94,7 +94,7 @@ do
 					SendChatMessage(L["shock_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72037, L["regular_shock_message"], target, "Personal", id, "Alert")
+			mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", id)
 			mod:Whisper(72037, target, L["regular_shock_message"])
 		end
 		handle = nil
