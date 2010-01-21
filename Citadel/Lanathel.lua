@@ -20,8 +20,11 @@ local pactTargets = mod:NewTargetList()
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.shadow_message = "Shadows"
+
 	L.feed_message = "Time to feed soon!"
+
 	L.pact_message = "Pact"
+
 	L.phase_message = "Air phase incoming!"
 	L.phase1_bar = "Back on floor"
 	L.phase2_bar = "Air phase"
