@@ -20,7 +20,8 @@ local pactTargets = mod:NewTargetList()
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.shadow_message = "Shadows"
-	L.feed_message = "You need some Tru:Blood soon!"
+	L.feed_message = "Time to feed soon!"
+	L.pact_message = "Pact"
 end
 L = mod:GetLocale()
 
@@ -47,20 +48,18 @@ end
 --
 
 do
-	local scheduled = nil
-	local function PactWarn(spellName)
-		mod:TargetMessage(71340, spellName, pactTargets, "Urgent", 71340)
-		scheduled = nil
+	local handle = nil
+	local function pact()
+		mod:TargetMessage(71340, L["pact_message"], pactTargets, "Important", 71340)
+		handle = nil
 	end
-	function mod:Pact(player, spellId, _, _, spellName)
-		pactTargets[#pactTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(PactWarn, 0.3, spellName)
-		end
+	function mod:Pact(player)
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(71340)
 		end
+		pactTargets[#pactTargets + 1] = player
+		self:CancelTimer(handle, true)
+		handle = self:ScheduleTimer(pact, 0.2)
 	end
 end
 
@@ -71,6 +70,7 @@ end
 function mod:Feed(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(70877, L["feed_message"], "Urgent", spellId, "Alert")
+		self:Bar(70877, L["feed_message"], 15, spellId)
 	else
 		self:Whisper(70877, player, L["feed_message"], true)
 	end
