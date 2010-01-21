@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Princes", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -32,26 +32,24 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952)
 	self:Log("SPELL_CAST_START", "EmpoweredShock", 72039)
 	self:Log("SPELL_CAST_START", "RegularShock", 72037)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	self:Death("Deaths", 37970, 37972, 37973)
 end
 
-do
-	local c = 0
-	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-		c = c + 1
-		if c == 3 then
-			c = 0
-			if UnitName("boss1") then
-				self:Engage()
-				self:Bar(70981, L["switch_bar"], 45, spellId)
-				--Enrage ?
-			else
-				self:Reboot()
-			end
-		end
+function mod:OnEngage()
+	self:Bar(70981, L["switch_bar"], 45, 70981)
+	self:Berserk(600)
+end
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	if self:GetUnitIdByGUID(37970) or self:GetUnitIdByGUID(37972) or self:GetUnitIdByGUID(37973) then
+		self:Engage()
+	else
+		self:Reboot()
 	end
 end
 
