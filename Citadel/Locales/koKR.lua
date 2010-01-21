@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Blood Princes", "koKR")
+local L = BigWigs:NewBossLocale("Blood Prince Council", "koKR")
 if L then
 	L.switch_message = "취약점 변경"
 end

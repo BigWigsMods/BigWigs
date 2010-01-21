@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Blood Princes", "zhTW")
+local L = BigWigs:NewBossLocale("Blood Prince Council", "zhTW")
 if L then
 	L.switch_message = "虛弱轉換！"
 end
