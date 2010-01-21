@@ -136,7 +136,12 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
 if L then
-
+	L.shadow_message = "Тени"
+	L.feed_message = "Скоро пора кормиться!"
+	L.pact_message = "Пакт"
+	L.phase_message = "Скоро воздушная фаза!"
+	L.phase1_bar = "Возврат на землю"
+	L.phase2_bar = "Воздушная фаза"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")
