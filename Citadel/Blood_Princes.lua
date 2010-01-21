@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Princes", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE", "ICON"}, {70981, "ICON"}, "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE", "ICON"}, {70981, "ICON"}, 72039, "bosskill"}
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -18,6 +18,8 @@ if L then
 
 	L.infernoflames = "Inferno Flames"
 	L.infernoflames_message = "Inferno Flames following YOU"
+
+	L.shock_message = "Casting Shock!"
 end
 L = mod:GetLocale()
 
@@ -27,6 +29,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952)
+	self:Log("SPELL_CAST_START", "Shock", 72039, 73037) --73037 for 25man?
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -65,6 +68,10 @@ function mod:Switch(unit, spellId, _, _, spellName)
 			return
 		end
 	end
+end
+
+function mod:Shock(_, spellId)
+	self:Message(72039, L["shock_message"], "Positive", spellId, "Alert")
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
