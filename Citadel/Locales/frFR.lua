@@ -1,6 +1,14 @@
-local L = BigWigs:NewBossLocale("Blood Princes", "frFR")
+local L = BigWigs:NewBossLocale("Blood Prince Council", "frFR")
 if L then
-	L.switch_message = "Changement de vulnérabilité"
+	L.switch_message = "Changement de cible !"
+	L.switch_bar = "~Prochain chgt de cible"
+
+	L.infernoflames = "Les flammes infernales"
+	L.infernoflames_message = "Boule de flammes"
+
+	L.empowered_shock_message = "Vortex de choc surpuissant en incantation !"
+	L.regular_shock_message = "Vortex de choc : %s"
+	L.shock_say = "Vortex de choc sur moi !"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
@@ -58,7 +66,12 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
 if L then
-
+	L.shadow_message = "Ombres"
+	L.feed_message = "Besoin de se nourrir imminent !"
+	L.pact_message = "Pacte"
+	L.phase_message = "Arrivée d'une phase aérienne !"
+	L.phase1_bar = "Retour sur le sol"
+	L.phase2_bar = "Phase aérienne"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
@@ -93,7 +106,7 @@ if L then
 	L.blight_message = "Nuage de gaz"
 	L.violation_message = "Limon volatil"
 
-	L.plague_message = "%2$dx Peste sur %1$s"
+	L.plague_message = "%2$dx Peste mutée sur %1$s"
 	L.plague_bar = "Prochaine Peste"
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"

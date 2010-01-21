@@ -88,3 +88,13 @@ if L then
 	L.twilight_message_tenebron = "Éclosion des œufs"
 	L.twilight_message = "Disciple |2 %s actif !"
 end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "frFR")
+if L then
+	L.whiteout_bar = "Blanc aveuglant %d"
+	L.whiteout_message = "Blanc aveuglant %d imminent !"
+
+	L.frostbite_message = "%2$dx Morsure de givre sur %1$s"
+
+	L.freeze_message = "Sol givrant"
+end
