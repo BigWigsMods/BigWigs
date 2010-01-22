@@ -48,7 +48,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(330, true)
+	self:Berserk(320, true)
 	self:OpenProximity(6)
 	self:Bar(71772, L["phase2_bar"], 142, 71772)
 end
