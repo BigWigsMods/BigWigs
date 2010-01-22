@@ -1,6 +1,14 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "koKR")
 if L then
-	L.switch_message = "취약점 변경"
+	L.switch_message = "대상 변경!"
+	L.switch_bar = "~다음 대상 변경"
+
+	L.infernoflames = "강력한 불꽃"
+	L.infernoflames_message = "불꽃 구슬"
+
+	L.empowered_shock_message = "충격의 소용돌이 시전!"
+	L.regular_shock_message = "충격 지역"
+	L.shock_say = "나에게 충격!"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
@@ -143,5 +151,18 @@ if L then
 	L.portal_desc = "악몽의 차원문을 알립니다."
 	L.portal_message = "차원문 생성!"
 	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그안에 있다..."	--check
+end
+
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
+if L then
+	L.shadow_message = "모여드는 어둠"
+
+	L.feed_message = "피의 갈증"
+
+	L.pact_message = "암흑사도의 계약"
+
+	L.phase_message = "곧 공중 단계!"
+	L.phase1_bar = "착지"
+	L.phase2_bar = "공중 단계"
 end
 
