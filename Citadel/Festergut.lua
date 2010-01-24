@@ -100,6 +100,7 @@ end
 function mod:Blight(_, spellId, _, _, spellName)
 	count = 1
 	self:Message(71219, spellName, "Attention", spellId)
+	self:DelayedMessage(69165, 28.5, L["blight_warning"], "Attention")
 	self:Bar(69165, L["inhale_bar"]:format(count), 33.5, 69165)
 end
 
