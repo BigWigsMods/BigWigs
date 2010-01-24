@@ -3,8 +3,8 @@ if L then
 	L.switch_message = "대상 변경!"
 	L.switch_bar = "~다음 대상 변경"
 
-	L.infernoflames = "강력한 불꽃"
-	L.infernoflames_message = "불꽃 구슬"
+	L.infernoflames = "지옥의 화염"
+	L.infernoflames_message = "화염 구슬"
 
 	L.empowered_shock_message = "충격의 소용돌이 시전!"
 	L.regular_shock_message = "충격 지역"
