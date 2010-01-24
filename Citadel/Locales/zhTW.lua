@@ -83,7 +83,7 @@ end
 L = BigWigs:NewBossLocale("Rotface", "zhTW")
 if L then
 	L.infection_bar = "突變感染：>%s<！"
-	L.infection_message = "Infection"
+	L.infection_message = "突變感染"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhTW")
