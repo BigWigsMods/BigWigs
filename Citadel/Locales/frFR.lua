@@ -7,7 +7,7 @@ if L then
 	L.infernoflames_message = "Boule de flammes"
 
 	L.empowered_shock_message = "Vortex de choc surpuissant en incantation !"
-	L.regular_shock_message = "Vortex de choc : %s"
+	L.regular_shock_message = "Vortex de choc"
 	L.shock_say = "Vortex de choc sur moi !"
 end
 
