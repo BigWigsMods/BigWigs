@@ -13,6 +13,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
 if L then
+	L.shadow = "Schatten"
 	L.shadow_message = "Schatten"
 
 	L.feed_message = "Blutdurst stillen!"

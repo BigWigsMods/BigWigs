@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Blood-Queen Lana'thel", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(37955)
-mod.toggleOptions = {{71340, "FLASHSHAKE"}, {71265, "FLASHSHAKE"}, {70877, "WHISPER"}, 71772, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {{71340, "FLASHSHAKE"}, {71265, "FLASHSHAKE"}, {70877, "WHISPER"}, 71772, 71623, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -38,9 +38,10 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Pact", 71340)
-	-- XXX 71474 verified as 25man, is 70877 10man or what is it?
 	self:Log("SPELL_AURA_APPLIED", "Feed", 70877, 71474)
 	self:Log("SPELL_CAST_SUCCESS", "AirPhase", 73070)
+	-- 71623. 72264 are 10 man (and so on)
+	self:Log("SPELL_AURA_APPLIED", "Slash", 71623, 71624, 71625, 71626, 72264, 72265, 72266, 72267)
 	self:Death("Win", 37955)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -98,3 +99,6 @@ function mod:AirPhase(player, spellId)
 	self:Bar(71772, L["phase2_bar"], 153, 71772)
 end
 
+function mod:Slash(player, spellId, _, _, spellName)
+	self:TargetMessage(71623, spellName, player, "Attention", spellId)
+end
