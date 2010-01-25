@@ -19,6 +19,7 @@ local pactTargets = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.shadow = "Shadows"
 	L.shadow_message = "Shadows"
 
 	L.feed_message = "Time to feed soon!"
@@ -37,12 +38,12 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Pact", 71340)
-	self:Log("SPELL_AURA_APPLIED", "Shadows", 71265)
 	-- XXX 71474 verified as 25man, is 70877 10man or what is it?
 	self:Log("SPELL_AURA_APPLIED", "Feed", 70877, 71474)
 	self:Log("SPELL_CAST_SUCCESS", "AirPhase", 73070)
 	self:Death("Win", 37955)
 
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
@@ -73,11 +74,13 @@ do
 	end
 end
 
-function mod:Shadows(player, spellId)
-	if UnitIsUnit(player, "player") then
-		self:FlashShake(71265)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
+	if msg:find(L["shadow"]) then
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(71265)
+		end
+		self:TargetMessage(71265, L["shadow_message"], player, "Attention", 71265)
 	end
-	self:TargetMessage(71265, L["shadow_message"], player, "Attention", spellId)
 end
 
 function mod:Feed(player, spellId)

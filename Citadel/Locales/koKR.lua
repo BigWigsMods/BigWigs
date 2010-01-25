@@ -155,6 +155,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
 if L then
+	L.shadow = "어둠이 쌓이더니"
 	L.shadow_message = "모여드는 어둠"
 
 	L.feed_message = "피의 갈증"
