@@ -15,10 +15,12 @@ L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
 if L then
 	L.shadow = "Schatten"
 	L.shadow_message = "Schatten"
+	L.shadow_bar = "Nächster Schatten"
 
 	L.feed_message = "Blutdurst stillen!"
 
 	L.pact_message = "Pakt"
+	L.pact_bar = "Nächster Pakt"
 
 	L.phase_message = "Flugphase kommt!"
 	L.phase1_bar = "Zurück am Boden"
