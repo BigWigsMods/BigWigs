@@ -12,6 +12,13 @@ mod.toggleOptions = {{71340, "FLASHSHAKE"}, {71265, "FLASHSHAKE"}, {70877, "WHIS
 --
 
 local pactTargets = mod:NewTargetList()
+local airPhaseTimers = {
+	{124, 120}, -- 10man Normal
+	{137, 100}, -- 25man Normal
+	{124, 120}, -- 10man Heroic
+	{137, 100}, -- 25man Heroic
+}
+local currentDifficulty = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -50,9 +57,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	currentDifficulty = GetInstanceDifficulty()
 	self:Berserk(320, true)
 	self:OpenProximity(6)
-	self:Bar(71772, L["phase2_bar"], 142, 71772)
+	self:Bar(71772, L["phase2_bar"], airPhaseTimers[currentDifficulty][1], 71772)
 end
 
 --------------------------------------------------------------------------------
@@ -96,9 +104,10 @@ end
 function mod:AirPhase(player, spellId)
 	self:Message(71772, L["phase_message"], "Important", spellId, "Alarm")
 	self:Bar(71772, L["phase1_bar"], 11, spellId)
-	self:Bar(71772, L["phase2_bar"], 153, 71772)
+	self:Bar(71772, L["phase2_bar"], airPhaseTimers[currentDifficulty][2], 71772)
 end
 
 function mod:Slash(player, spellId, _, _, spellName)
 	self:TargetMessage(71623, spellName, player, "Attention", spellId)
 end
+
