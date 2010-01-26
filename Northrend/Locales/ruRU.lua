@@ -76,7 +76,7 @@ if L then
 	L.phase3_message = "3 Фаза!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sartharion", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Sartharion", "ruRU")
 if L then
 	--L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
 
@@ -100,4 +100,14 @@ if L then
 	L.twilight_trigger_shadron = "Ученик Шадрона появляется в Зоне сумерек!"
 	L.twilight_message_tenebron = "Вылупление яиц"
 	L.twilight_message = "Появился Ученик |3-1(%s)!"
+end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "ruRU")
+if L then
+	L.whiteout_bar = "Пурга %d"
+	L.whiteout_message = "Скоро Пурга %d!"
+
+	L.frostbite_message = "%2$dx Обморожение у %1$s"
+
+	L.freeze_message = "Мерзлый грунт"
 end

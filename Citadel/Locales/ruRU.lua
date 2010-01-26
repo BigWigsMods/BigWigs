@@ -10,9 +10,71 @@ if L then
 	L.engage_trigger = "Плеть накроет этот мир волной смерти и разрушения!"
 end
 
+L = BigWigs:NewBossLocale("Blood Prince Council", "ruRU")
+if L then
+	L.switch_message = "Смена цели!"
+	L.switch_bar = "~Следующая смена цели"
+
+	L.infernoflames = "Пламя преисподней"
+	L.infernoflames_message = "Пламя"
+
+	L.empowered_shock_message = "Могучий вихрь!"
+	L.regular_shock_message = "Вихрь на %s!"
+	L.shock_say = "Вихрь на мне!"
+end
+
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
+if L then
+	L.shadow = "Тени"
+	L.shadow_message = "Тени"
+	L.shadow_bar = "~тени"
+	
+	L.feed_message = "Скоро пора кормиться!"
+	
+	L.pact_message = "Пакт Омраченных"
+	L.pact_bar = "~пакт омраченных"
+	
+	L.phase_message = "Скоро воздушная фаза!"
+	L.phase1_bar = "Возврат на землю"
+	L.phase2_bar = "Воздушная фаза"
+end
+
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "ruRU")
+if L then
+	L.adds = "Кровавые чудовища"
+	L.adds_desc = "Сообщать о призыве кровавых чудовищ"
+	L.adds_warning = "Кровавые чудовища через 5 сек!"
+	L.adds_message = "Призваны кровавые чудовища"
+	L.adds_bar = "~Кровавые чудовища"
+
+	L.rune_bar = "~следующая Руна"
+
+	L.mark = "Метка %d"
+
+	L.engage_trigger = "ВО ИМЯ КОРОЛЯ-ЛИЧА!"
+	L.warmup_alliance = "Тогда выдвигаемся! Быст..."
+	L.warmup_horde = "Кор'крон, выдвигайтесь! Герои будьте начеку. Плеть только что..."
+end
+
+L = BigWigs:NewBossLocale("Festergut", "ruRU")
+if L then
+	L.engage_trigger = "Повеселимся?"
+
+	L.inhale_message = "Вдыхание гнилостных испарений %d"
+	L.inhale_bar = "~Следующее вдыхание %d"
+
+	L.blight_warning = "Едкая гниль через ~5сек!"
+	L.blight_bar = "~Следущая Гниль"
+
+	L.bloat_message = "%2$dx Газовое вздутие on %1$s"
+	L.bloat_bar = "~Следущее Вздутие"
+
+	L.spore_bar = "~Следующие Газообразные споры"
+
+end
+
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "ruRU")
 if L then
-
 	L.adds = "Порталы"
 	L.adds_desc = "Предупреждает о порталах."
 	L.adds_trigger_alliance = "Разрушители, сержанты, в бой!"
@@ -23,6 +85,7 @@ if L then
 	L.mage = "Маг"
 	L.mage_desc = "Предупредит когда появится маг и заморозит пушки."
 	L.mage_message = "Маг появился!"
+	L.mage_bar = "~следующий маг"
 
 	L.enable_trigger_alliance = "Запускайте двигатели! Летим навстречу судьбе!"
 	L.enable_trigger_horde = "Воспряньте, сыны и дочери Орды! Сегодня мы будем биться со смертельным врагом! ЛОК'ТАР ОГАР!"
@@ -45,57 +108,6 @@ if L then
 
 	L.touch_message = "%2$dx Прикосновений у: %1$s"
 	L.touch_bar = "~Прикосновение"
-end
-
-L = BigWigs:NewBossLocale("Deathbringer Saurfang", "ruRU")
-if L then
-	L.adds = "Кровавые чудовища"
-	L.adds_desc = "Сообщать о призыве кровавых чудовищ"
-	L.adds_warning = "Кровавые чудовища через 5 сек!"
-	L.adds_message = "Призваны кровавые чудовища"
-	L.adds_bar = "~Кровавые чудовища"
-
-	L.rune_bar = "~следующая Руна"
-
-	L.mark = "Метка %d"
-
-	L.engage_trigger = "ВО ИМЯ КОРОЛЯ-ЛИЧА!"
-	L.warmup_alliance = "Тогда выдвигаемся! Быст..."
-	L.warmup_horde = "Кор'крон, выдвигайтесь! Герои будьте начеку. Плеть только что..."
-end
-
-L = BigWigs:NewBossLocale("Festergut", "ruRU")
-if L then
-
-	L.engage_trigger = "Повеселимся?"
-
-	L.inhale_message = "Вдыхание гнилостных испарений %d"
-	L.inhale_bar = "~Следующее вдыхание %d"
-
-	L.blight_warning = "Едкая гниль через ~5сек!"
-	L.blight_bar = "~Следущая Гниль"
-
-	L.bloat_message = "%2$dx Газовое вздутие on %1$s"
-	L.bloat_bar = "~Следущее Вздутие"
-
-	L.spore_bar = "~Следующие Газообразные споры"
-
-end
-
-L = BigWigs:NewBossLocale("Rotface", "ruRU")
-if L then
-
-	L.engage_trigger = "УУИИИИИИ!"
-
-	L.infection_bar = "Инфекция на |3-5(%s)!"
-	L.infection_message = "Инфекция"
-
-	L.ooze = "Сливание слизнюков"
-	L.ooze_desc = "Предупреждает когда слизнюки сливаются."
-	L.ooze_message = "Нестабильный слизняк %dx"
-
-	L.spray_bar = "Следующие брызги"
-
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
@@ -121,28 +133,25 @@ if L then
 	L.gasbomb_message = "Желтые бомбы!"
 end
 
-L = BigWigs:NewBossLocale("Blood Prince Council", "ruRU")
+L = BigWigs:NewBossLocale("Putricide Dogs", "ruRU")
 if L then
-	L.switch_message = "Смена цели!"
-	L.switch_bar = "~Следующая смена цели"
-
-	L.infernoflames = "Пламя преисподней"
-	L.infernoflames_message = "Пламя"
-
-	L.empowered_shock_message = "Могучий вихрь!"
-	L.regular_shock_message = "Вихрь на %s!"
-	L.shock_say = "Вихрь на мне!"
+	L.wound_message = "%2$dx смертельных ран у: %1$s"
 end
 
-L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
+L = BigWigs:NewBossLocale("Rotface", "ruRU")
 if L then
-	L.shadow = "Тени"
-	L.shadow_message = "Тени"
-	L.feed_message = "Скоро пора кормиться!"
-	L.pact_message = "Пакт"
-	L.phase_message = "Скоро воздушная фаза!"
-	L.phase1_bar = "Возврат на землю"
-	L.phase2_bar = "Воздушная фаза"
+
+	L.engage_trigger = "УУИИИИИИ!"
+
+	L.infection_bar = "Инфекция на |3-5(%s)!"
+	L.infection_message = "Инфекция"
+
+	L.ooze = "Сливание слизнюков"
+	L.ooze_desc = "Предупреждает когда слизнюки сливаются."
+	L.ooze_message = "Нестабильный слизняк %dx"
+
+	L.spray_bar = "Следующие брызги"
+
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")
@@ -162,9 +171,3 @@ if L then
 	L.airphase_desc = "Сообщать когда Синдрагоса отрывается от земли"
 	L.boom = "Взрыв!"
 end
-
-L = BigWigs:NewBossLocale("Putricide Dogs", "ruRU")
-if L then
-	L.wound_message = "%2$dx смертельных ран у: %1$s"
-end
-

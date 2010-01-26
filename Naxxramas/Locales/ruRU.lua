@@ -90,13 +90,13 @@ if L then
 	L.inroombartext = "В комнате"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Grobbulus", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Grobbulus", "ruRU")
 if L then
 	L.bomb_message = "Укол"
 	L.bomb_message_other = "|3-2(%s) сделали укол!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Heigan the Unclean", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Heigan the Unclean", "ruRU")
 if L then
 	L.starttrigger = "Теперь вы принадлежите мне!"
 	L.starttrigger2 = "Пришло ваше время..."
@@ -122,7 +122,7 @@ if L then
 	L.back_bar = "Возвращение!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Four Horsemen", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("The Four Horsemen", "ruRU")
 if L then
 	L.mark = "Знак"
 	L.mark_desc = "Предупреждать о знаках."
@@ -135,7 +135,7 @@ if L then
 	L.startwarn = "Четверо всадников вступили в бой! Знак через ~17 секунд"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Kel'Thuzad", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Kel'Thuzad", "ruRU")
 if L then
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада"
 
@@ -172,7 +172,7 @@ if L then
 	L.guardians_bar = "Появляются стражи!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Loatheb", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Loatheb", "ruRU")
 if L then
 	L.startwarn = "Лотхиб вступает в бой, 2 минуты до неотвратимого рока!"
 
@@ -192,7 +192,7 @@ if L then
 	L.sporebar = "Призвана спора %d"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Noth the Plaguebringer", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Noth the Plaguebringer", "ruRU")
 if L then
 	L.starttrigger1 = "Смерть чужакам!"
 	L.starttrigger2 = "Слава господину!"
@@ -228,7 +228,7 @@ if L then
 	L.wave2_message = "2-я волна через 10 сек"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Patchwerk", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Patchwerk", "ruRU")
 if L then
 	L.enragewarn = "5% - Бешенство!"
 	L.starttrigger1 = "Лоскутик хочет поиграть!"
@@ -250,7 +250,7 @@ if L then
 	L.spiderbar = "Пауки"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Sapphiron", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Sapphiron", "ruRU")
 if L then
 	L.airphase_trigger = "%s взмывает в воздух!"
 	L.deepbreath_incoming_message = "Ледяная бомба через 23 секунды!"
@@ -271,7 +271,7 @@ if L then
 	L.ping_message = "Глыба - отмечаю положение!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Instructor Razuvious", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Instructor Razuvious", "ruRU")
 if L then
 	L.shout_warning = "Разрушительный крик через 5сек!"
 	L.shout_next = "~перезарядка крика"
@@ -280,7 +280,7 @@ if L then
 	L.shieldwall_warning = "Преграда из костей закончится через 5сек!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Thaddius", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Thaddius", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о фазах боя"

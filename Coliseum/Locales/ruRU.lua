@@ -61,7 +61,7 @@ if L then
 	L.bosses_desc = "Сообщать о появлении следующего босса."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Faction Champions", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Faction Champions", "ruRU")
 if L then
 	L.enable_trigger = "В следующем бою вы встретитесь с могучими рыцарями Серебряного Авангарда! Лишь победив их, вы заслужите достойную награду."
 	L.defeat_trigger = "Пустая и горькая победа. После сегодняшних потерь мы стали слабее как целое. Кто еще, кроме Короля-лича, выиграет от подобной глупости? Пали великие воины. И ради чего? Истинная опасность еще впереди – нас ждет битва с  Королем-личом."
@@ -74,7 +74,7 @@ if L then
 	L["Bloodlust on champions!"] = "Жажда крови на чемпионах!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_Jaraxxus", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("Lord Jaraxxus", "ruRU")
 if L then
 	L.enable_trigger = "Ничтожный гном! Тебя погубит твоя самоуверенность!"
 
@@ -86,9 +86,9 @@ if L then
 	L.adds_desc = "Показывать таймер и сообщать о создании порталов и вулканов."
 
 	L.incinerate_message = "Испепеление"
-	L.incinerate_other = "Испепеление плоти на |3-5(%s)"
+	L.incinerate_other = "Испепеление плоти на |3-5(%s)! Хил!"
 	L.incinerate_bar = "~Следующее испепеление"
-	L.incinerate_safe = "%s в безопасности"
+	L.incinerate_safe = "%s в безопасности!"
 
 	L.legionflame_message = "Пламя"
 	L.legionflame_other = "Пламя Легиона на |3-5(%s)!"
@@ -102,7 +102,7 @@ if L then
 	L.kiss_interrupted = "Прерывание!"
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("BigWigs_Bosses_The Twin Val'kyr", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("The Twin Val'kyr", "ruRU")
 if L then
 	L.engage_trigger1 = "Во имя темного повелителя. Во имя Короля-лича. Вы. Умрете."
 
