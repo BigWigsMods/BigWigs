@@ -28,10 +28,12 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.shadow = "Shadows"
 	L.shadow_message = "Shadows"
+	L.shadow_bar = "Next Shadows"
 
 	L.feed_message = "Time to feed soon!"
 
 	L.pact_message = "Pact"
+	L.pact_bar = "Next Pact"
 
 	L.phase_message = "Air phase incoming!"
 	L.phase1_bar = "Back on floor"
@@ -61,6 +63,8 @@ function mod:OnEngage()
 	self:Berserk(320, true)
 	self:OpenProximity(6)
 	self:Bar(71772, L["phase2_bar"], airPhaseTimers[currentDifficulty][1], 71772)
+	self:Bar(71340, L["pact_bar"], 16, 71340)
+	self:Bar(71265, L["shadow_bar"], 30, 71265)
 end
 
 --------------------------------------------------------------------------------
@@ -71,6 +75,7 @@ do
 	local handle = nil
 	local function pact()
 		mod:TargetMessage(71340, L["pact_message"], pactTargets, "Important", 71340)
+		mod:Bar(71340, L["pact_bar"], 30, 71340)
 		handle = nil
 	end
 	function mod:Pact(player)
@@ -89,6 +94,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
 			self:FlashShake(71265)
 		end
 		self:TargetMessage(71265, L["shadow_message"], player, "Attention", 71265)
+		self:Bar(71265, L["shadow_bar"], 30, 71265)
 	end
 end
 

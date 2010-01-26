@@ -157,13 +157,14 @@ L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
 if L then
 	L.shadow = "어둠이 쌓이더니"
 	L.shadow_message = "모여드는 어둠"
+	L.shadow_bar = "다음 어둠"
 
 	L.feed_message = "피의 갈증"
 
 	L.pact_message = "암흑사도의 계약"
+	L.pact_bar = "다음 계약"
 
 	L.phase_message = "곧 공중 단계!"
 	L.phase1_bar = "착지"
 	L.phase2_bar = "공중 단계"
 end
-
