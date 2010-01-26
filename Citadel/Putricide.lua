@@ -4,7 +4,8 @@
 
 local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(36678)
+--Putricide, Gas Cloud (Red Ooze), Volatile Ooze (Green Ooze)
+mod:RegisterEnableMob(36678, 37562, 37697)
 mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
@@ -18,7 +19,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local p2, p3, first = nil, nil, nil
+local p2, p3, first, barText = nil, nil, nil, "test"
 local gooTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -93,7 +94,6 @@ do
 			first = true
 		else
 			mod:Message("phase", CL.phase:format(3), "Positive")
-			mod:SendMessage("BigWigs_StopBar", mod, L["experiment_bar"])
 			mod:Bar(71255, L["gasbomb_bar"], 35, 71255)
 			mod:Bar(72295, L["ball_bar"], 9, 72295)
 			first = nil
@@ -103,6 +103,8 @@ do
 		if stop then return end
 		stop = true
 		self:Bar("phase", spellName, 18, spellId)
+		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
+		self:SendMessage("BigWigs_StopBar", self, barText)
 		self:ScheduleTimer(nextPhase, 18)
 	end
 end
@@ -131,21 +133,21 @@ function mod:UNIT_HEALTH(_, unit)
 	end
 end
 
-do
-	local barText = nil
-	function mod:ChasedByRedOoze(player, spellId)
-		self:TargetMessage(72455, L["blight_message"], player, "Personal", spellId)
-		self:Whisper(72455, player, L["blight_message"])
-		self:PrimaryIcon(72455, player)
-		if UnitIsUnit(player, "player") then
-			self:FlashShake(72455)
-		end
-		barText = CL.other:format(L["blight_message"], player)
-		self:Bar(72455, barText, 20, spellId)
+
+function mod:ChasedByRedOoze(player, spellId)
+	self:SendMessage("BigWigs_StopBar", self, barText)
+	self:TargetMessage(72455, L["blight_message"], player, "Personal", spellId)
+	self:Whisper(72455, player, L["blight_message"])
+	self:PrimaryIcon(72455, player)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(72455)
 	end
-	function mod:RedOozeDeath()
-		self:SendMessage("BigWigs_StopBar", self, barText)
-	end
+	barText = CL.other:format(L["blight_message"], player)
+	self:Bar(72455, barText, 20, spellId)
+end
+
+function mod:RedOozeDeath()
+	self:SendMessage("BigWigs_StopBar", self, barText)
 end
 
 function mod:StunnedByGreenOoze(player, spellId)
