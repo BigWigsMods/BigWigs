@@ -61,7 +61,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 72615, 72296)
-	self:Log("SPELL_AURA_APPLIED", "TearGas", 71615)
+	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
+	self:Log("SPELL_AURA_REMOVED", "TearGasOver", 71615)
 
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -86,26 +87,29 @@ do
 	local stop = nil
 	local function nextPhase()
 		stop = nil
-		if not first then
-			mod:Message("phase", CL.phase:format(2), "Positive")
-			mod:Bar(70351, L["experiment_bar"], 25, 70351)
-			mod:Bar(71255, L["gasbomb_bar"], 20, 71255)
-			mod:Bar(72295, L["ball_bar"], 9, 72295)
-			first = true
-		else
-			mod:Message("phase", CL.phase:format(3), "Positive")
-			mod:Bar(71255, L["gasbomb_bar"], 35, 71255)
-			mod:Bar(72295, L["ball_bar"], 9, 72295)
-			first = nil
-		end
 	end
-	function mod:TearGas(_, spellId, _, _, spellName)
+	function mod:TearGasStart(_, spellId, _, _, spellName)
 		if stop then return end
 		stop = true
 		self:Bar("phase", spellName, 18, spellId)
 		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 		self:SendMessage("BigWigs_StopBar", self, barText)
-		self:ScheduleTimer(nextPhase, 18)
+		self:ScheduleTimer(nextPhase, 3)
+	end
+	function mod:TearGasOver()
+		if stop then return end
+		stop = true
+		self:ScheduleTimer(nextPhase, 3)
+		self:Bar(71255, L["gasbomb_bar"], 15, 71255)
+		self:Bar(72295, L["ball_bar"], 6, 72295)
+		if not first then
+			self:Message("phase", CL.phase:format(2), "Positive")
+			self:Bar(70351, L["experiment_bar"], 25, 70351)
+			first = true
+		else
+			self:Message("phase", CL.phase:format(3), "Positive")
+			first = nil
+		end
 	end
 end
 
