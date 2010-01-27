@@ -393,6 +393,11 @@ end
 -------------------------------------------------------------------------------
 -- Plugin init
 --
+local neverShowTip = nil
+if select(2, IsInInstance()) == "raid" then
+	-- We logged in to a raid, let's never show the tip automatically this session.
+	neverShowTip = true
+end
 
 local function check()
 	if not InCombatLockdown() and GetNumRaidMembers() > 9 and select(2, IsInInstance()) == "raid" then
@@ -406,9 +411,11 @@ local function check()
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
-	self:RegisterEvent("RAID_ROSTER_UPDATE", check)
-	self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
+	if not neverShowTip then
+		self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
+		self:RegisterEvent("RAID_ROSTER_UPDATE", check)
+		self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
+	end
 	self:RegisterEvent("CHAT_MSG_ADDON")
 end
 
