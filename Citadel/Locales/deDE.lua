@@ -7,7 +7,7 @@ if L then
 	L.infernoflames_message = "Feuerball"
 
 	L.empowered_shock_message = "Schockvortex kommt!"
-	L.regular_shock_message = "Schockzone: %s!"
+	L.regular_shock_message = "Schockzone"
 	L.shock_say = "Schockzone auf MIR!"
 end
 
