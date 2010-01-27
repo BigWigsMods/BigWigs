@@ -27,12 +27,12 @@ L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
 if L then
 	L.shadow = "Тени"
 	L.shadow_message = "Тени"
-	L.shadow_bar = "~тени"
+	L.shadow_bar = "~Тени"
 	
 	L.feed_message = "Скоро пора кормиться!"
 	
 	L.pact_message = "Пакт Омраченных"
-	L.pact_bar = "~пакт омраченных"
+	L.pact_bar = "~Пакт Омраченных"
 	
 	L.phase_message = "Скоро воздушная фаза!"
 	L.phase1_bar = "Возврат на землю"
@@ -47,7 +47,7 @@ if L then
 	L.adds_message = "Призваны кровавые чудовища"
 	L.adds_bar = "~Кровавые чудовища"
 
-	L.rune_bar = "~следующая Руна"
+	L.rune_bar = "~Следующая Руна"
 
 	L.mark = "Метка %d"
 
@@ -85,7 +85,7 @@ if L then
 	L.mage = "Маг"
 	L.mage_desc = "Предупредит когда появится маг и заморозит пушки."
 	L.mage_message = "Маг появился!"
-	L.mage_bar = "~следующий маг"
+	L.mage_bar = "~Следующий маг"
 
 	L.enable_trigger_alliance = "Запускайте двигатели! Летим навстречу судьбе!"
 	L.enable_trigger_horde = "Воспряньте, сыны и дочери Орды! Сегодня мы будем биться со смертельным врагом! ЛОК'ТАР ОГАР!"
@@ -103,7 +103,7 @@ if L then
 
 	L.adds = "Вестники Смерти"
 	L.adds_desc = "Таймеры появления Вестников Смерти."
-	L.adds_bar = "~новые вестники смерти"
+	L.adds_bar = "~Новые Вестники Смерти"
 	L.adds_warning = "Новые Вестники Смерти через 5 сек!"
 
 	L.touch_message = "%2$dx Прикосновений у: %1$s"
@@ -148,7 +148,7 @@ if L then
 
 	L.ooze = "Сливание слизнюков"
 	L.ooze_desc = "Предупреждает когда слизнюки сливаются."
-	L.ooze_message = "Нестабильный слизняк %dx"
+	L.ooze_message = "Нестабильный слизнюк %dx"
 
 	L.spray_bar = "Следующие брызги"
 
