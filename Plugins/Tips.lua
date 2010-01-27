@@ -79,8 +79,6 @@ plugin.subPanelOptions = {
 				desc = L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."],
 				order = 11,
 				width = "full",
-				-- XXX Disabled for this release!
-				get = function() return false end,
 				disabled = true,
 			},
 			manual = {
@@ -128,6 +126,72 @@ local footers = {
 -------------------------------------------------------------------------------------]]
 
 local tips = {
+	"Calebv#HUNTER#Everyone likes beer, but you need to know your limit. You might have fun while you are intoxicated, but your fellow raiders might just not enjoy dragging a drunken bastard through an instance.#3",
+	"Calebv#HUNTER#Use Macros/Addons oriented for your class/role, be familiar with the addons you use to get the best performance. But on the other hand don't only rely on addons, sometimes they can bug, especially when a new major content patch comes.#3",
+	"Calebv#HUNTER#If you see someone who is about to take unnecessary damage, ie: void zone, aggroing adds, don't hesitate to call out his name. Especially if the person tends to be slow to react.#3",
+	"Mek#SHAMAN#Not everyone in your raid will be of the same standard. However if some players are significantly worse and drag your raid down then it will demotivate your best players. This is something you want to avoid at all costs.#3",
+	"Mek#SHAMAN#Surviving is the most important thing when you are raiding, especially on new content. You can't DPS when you are face down on the floor so focus on staying alive and not the DPS meter.#3",
+	"Mek#SHAMAN#Always organise your raid groups in a similar structure whenever you raid. This means that your healers will become instinctively familiar where certain parts of the raid usually sit in their frame.#3",
+	"Mek#SHAMAN#Try to avoid having only one player for one raid spot. If a player becomes too comfortable in their spot and takes it for granted, they will naturally slack. Players who know they must compete for their raid spot will always play better.#3",
+	"Buzzkill#WARLOCK#When you're nearing the enrage timer on a boss, don't panic, keep calm and stick to your assigned duties.#3",
+	"Buzzkill#WARLOCK#There is nothing more important in the raid than staying alive, do not sacrifice survivability and risk a wipe for higher numbers on the meters.#3",
+	"Buzzkill#WARLOCK#When trying a new boss, always try every ability and trick your class has to offer. You never know what might work and help you to a faster kill.#3",
+	"Buzzkill#WARLOCK#If you think you can do something better than the assigned person, do it. Anyone can press the rotation, only few can stay calm when important stuff has to be done.#3",
+	"Buzzkill#WARLOCK#If you have an idea about how to solve a problem in an encounter, speak out no matter how ridiculous it sounds, sometimes the craziest strategies are the best.#3",
+	"Buzzkill#WARLOCK#When you think someone is playing badly, speak out and try to get him replaced, bad players will not only lower results, but also morale of the whole raid.#3",
+	"Buzzkill#WARLOCK#Don't be afraid to use unorthodox approaches just because the majority doesn't think it's viable. If you're sure in what you're doing, results will come. (but may vary:))#3",
+	"Buzzkill#WARLOCK#Synergy in the group is the first and most important step towards a successfull raid setup. Make sure everyone gets every buff they realistically can.#3",
+	"Buzzkill#WARLOCK#Avoid bringing a \"lesser\" player just because he plays an overpowered class in a given fight. A better skilled player might offer much more than just pure numbers.#3",
+	"Buzzkill#WARLOCK#Always compete with your fellow raiders, healthy competition will help all of your performances and improve the raid as a whole.#3",
+	"Buzzkill#WARLOCK#Swap special duties in encounters between classmates, everyone should be versed in everything, you never know what you'll have to do in the next fight.#3",
+	"Buzzkill#WARLOCK#Assign items to people that deserve it the most and will benefit from it the most during progress. Fair distribution might seem nice, but it doesn't always favor important players in the raid.#3",
+	"Buzzkill#WARLOCK#Don't be afraid to dish out criticism when someone makes a mistake, but be ready to accept it yourself.#3",
+	"Buzzkill#WARLOCK#Familiarise yourself with everyones duties in the raid, you never know when you'll have to jump in and help on someones assigment.#3",
+	"Buzzkill#WARLOCK#Be informed about every aspect, mechanic and a debuff of a fight, there is nothing more important than knowing what you're up against at all times.#3",
+	"Buzzkill#WARLOCK#Scroll out your camera to max range via macro and be observant of things happening around you. Anticipating something might not only vastly improve your performance, but can also save your life.#3",
+	"Munken#HUNTER#Remember this is just a game. Dont forget your family and friends. Keep in touch!#3",
+	"Eoy#PRIEST#Don't give up. Many world firsts have happened very late in the night after several hours of wiping to stupid things.#3",
+	"Hams#WARLOCK#When you wipe the raid don't start a 10 minutes excuse about how you fucked up, but admit the mistake and shut up.#3",
+	"Siiri#DEATHKNIGHT#Don't be afraid to speak up on ventrilo, but keep it relevant during a boss fight. Swearing or making grunts when you die will just make people nervous, and make a salvageable kill much less likely.#3",
+	"Implied#SHAMAN#We are what we do repeatedly, practice makes perfect. Excellence, therefore, is not an act; but a habit.#3",
+
+	"Cheesycraft#MAGE#Think about all the abilities and talents available to your class before beginning a fight. A player can often gain a tremendous advantage in a given fight through the use of less commonly though of abilities and talents.#1",
+	"Cheesycraft#MAGE#You gotta pay the cost to be the boss. Gold should never be a limiting factor in improving your character's abilities!#1",
+	"Cheesycraft#MAGE#While defensive talents and abilities may not seem useful, you are only productive for as long as you live. Survival is critical!#1",
+	"Cheesycraft#MAGE#We all love purples, but always keep the group's best interest in mind. Sometimes it's better to let someone else get that bigger upgrade.#1",
+	"Cheesycraft#MAGE#Strive to improve. Being the best in your guild is great, but there is always room for improvement!#1",
+	"Zaroua#PALADIN#It's better to get yelled that for announcing that you need to go AFK than to get yelled at for wiping the raid by going AFK without telling anyone.#1",
+	"Vallkor#HUNTER#It's good to ask questions if you are unsure about something, unless it was answered minutes before you asked.#1",
+	"Vallkor#HUNTER#Making sure your combat log is readily accessible and easy to browse is crucial in figuring out \"what went wrong?\".#1",
+	"Nessala#ROGUE#Don't wait until the ready check to Eat, Buff, Eat, Buff and then Eat again.#1",
+	"Nessala#ROGUE#Don't stand next to an RP'ing mob if you have less than 25k armor, you never know who he is going to take that first swing at.#1",
+	"Nessala#ROGUE#Unless it is using the wrong rank of a spell 2+ months into the expansion... then it is deny > deny > DV.#1",
+	"Shift#SHAMAN#Don't stand in fire or fire-like things.#1",
+	"Xav#WARRIOR#Standing next to the tank when he or she is tanking mobs is not a good idea. Most mobs have cleaves or frontal breath-like attacks that will quickly kill your character.#1",
+	"Devium#DEATHKNIGHT#Whenever you die, take some time to look through your combat log and figure out why you died. This makes you able to change your play for next time.#1",
+	"Devium#DEATHKNIGHT#The first time you encounter something, try all of your abilities out. Snares, stuns, silences, crowd controls, you never know which obscure ability could make a difference.#1",
+	"Psamtik#MAGE#Avoid going berserk when the error of one of your fellow raiders causes the raid to wipe, particularly if you are not absolutely certain that you will never make the same mistake.#1",
+	"Psamtik#MAGE#\"Ought\" implies \"can\" - it is irrational to expect more out of a player than experience and/or gear permits.#1",
+	"Psamtik#MAGE#Treat farm content with respect, or you are most likely going to be in for a long, stultifying night.#1",
+	"Psamtik#MAGE#It's just a game, of course, but that's no excuse for mediocrity.#1",
+	"Siiz#MAGE#Play for your guild, not yourself.#1",
+	"Advent#DEATHKNIGHT#Even if your Pokemon is a flying type vs an electric type you can still win using Dig.#1",
+	"Descretoria#DEATHKNIGHT#Everyone messes up sometimes! It's better to own up to your mistakes and move on than to try hiding them for any reason.#1",
+	"Descretoria#DEATHKNIGHT#After a wipe don't try to lay blame or point fingers, just focus on what you can do both individually and as a group to prevent a wipe in the future.#1",
+	"Pinch#ROGUE#If you're going to stand in the fire, make sure you ask your healers if they are comfortable with it first!#1",
+	"Trajer#PALADIN#Knowing how other people die helps in the general understanding of most roles of classes on different fights.#1",
+	"Kyridel#HUNTER#Raidframes aren't just for healers! Knowing what's happening to your raid is important for everyone.#1",
+	"Kyridel#HUNTER#Consistency is key! With 25 people in a raid, each one dodging void zones 9 times out of 10 usually isn't good enough.#1",
+	"Darthn#DRUID#Don't worry about your gear when applying to a guild, experience goes a long way.#1",
+	"Darthn#DRUID#When dpsing as a druid, there is no set rotation. Just monitor your debuffs and savage roar timers.#1",
+	"Darthn#DRUID#Mods are helpful for the game but you should be able to play without them in case a patch breaks them all.#1",
+	"Darthn#DRUID#A clean UI makes seeing void zones/flame patches/cosmic smashes much easier to see.#1",
+	"Darthn#DRUID#You should have all your \"Oh sh*t\" buttons keybound for optimal response time.#1",
+	"Darthn#DRUID#Mages die from pushing 2 too much.#1",
+	"Darthn#DRUID#Threat meters should be a part of every dps class' UI.#1",
+	"Darthn#DRUID#You shouldn't be quick to blow off a timmy in game, we were all once timmies and they may become the next main tank in your guild.#1",
+	"Darthn#DRUID#If you have over 450 days played, you should go outside... the sun doesn't hurt much contrary to what someone in game has told you!#1",
+
 	"Rabbit##Turn off warnings and bars for encounter events that you do not care about. That way you won't be spammed, and you can concentrate more on what matters.#2",
 	"Rabbit##Remember which sound goes with which message during an encounter. Then, next time, you won't even have to look at the messages.#2",
 	"Rabbit##Move the bars around. At least get the non-emphasized ones out of the way - they are mostly useless.#2",
@@ -342,9 +406,9 @@ local function check()
 end
 
 function plugin:OnPluginEnable()
-	--self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
-	--self:RegisterEvent("RAID_ROSTER_UPDATE", check)
-	--self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
+	self:RegisterEvent("RAID_ROSTER_UPDATE", check)
+	self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
 	self:RegisterEvent("CHAT_MSG_ADDON")
 end
 
@@ -423,3 +487,4 @@ SlashCmdList.BigWigs_SendRaidTip = function(input)
 	end
 end
 SLASH_BigWigs_SendRaidTip1 = "/sendtip"
+

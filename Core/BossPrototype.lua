@@ -238,7 +238,7 @@ do
 
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
-		if self.OnEngage then self:OnEngage() end
+		if self.OnEngage then self:OnEngage(GetInstanceDifficulty()) end
 	end
 
 	function boss:Win()
