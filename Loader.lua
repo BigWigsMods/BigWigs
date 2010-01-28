@@ -1,5 +1,9 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
+-- XXX Awful, awful hack to prevent the TotR from showing right after login in a
+-- XXX LoD setup.
+_G.BIGWIGS_LOADER_TIME = GetTime()
+
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
