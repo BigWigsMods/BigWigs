@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions = {69279, 69165, 71219, 72551, 71218, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {{69279, "FLASHSHAKE"}, 69165, 71219, 72551, 71218, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -77,6 +77,9 @@ do
 	end
 	function mod:Spores(player, spellId, _, _, spellName)
 		sporeTargets[#sporeTargets + 1] = player
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(69279)
+		end
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(sporeWarn, 0.2, spellName)
