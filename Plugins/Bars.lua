@@ -38,6 +38,8 @@ local times = nil
 local messages = nil
 local timers = nil
 
+local clickHandlers = {}
+
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -58,13 +60,13 @@ plugin.defaultDB = {
 	BigWigsAnchor_width = 200,
 	BigWigsEmphasizeAnchor_width = 300,
 	interceptMouse = nil,
-	leftClick = {
+	LeftButton = {
 		emphasize = true,
 	},
-	middleClick = {
+	MiddleButton = {
 		remove = true,
 	},
-	rightClick = {
+	RightButton = {
 		menu = true,
 	},
 }
@@ -126,7 +128,7 @@ plugin.subPanelOptions = {
 		args = {
 			heading = {
 				type = "description",
-				name = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work|r. The bars will intercept any mouse clicks you perform on them.\n",
+				name = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n",
 				order = 1,
 				width = "full",
 				fontSize = "medium",
@@ -137,7 +139,6 @@ plugin.subPanelOptions = {
 				desc = "Enables bars to receive mouse clicks. Note that this makes it impossible to click through bars to target anything or perform any actions other than the ones specified below.",
 				order = 2,
 				width = "full",
-				disabled = function() return true end, --XXX remove
 				get = function() return plugin.db.profile.interceptMouse end,
 				set = function(_, value) plugin.db.profile.interceptMouse = value end,
 			},
@@ -147,8 +148,8 @@ plugin.subPanelOptions = {
 				order = 10,
 				args = clickOptions,
 				disabled = shouldDisable,
-				get = function(info) return plugin.db.profile.leftClick[info[#info]] end,
-				set = function(info, value) plugin.db.profile.leftClick[info[#info]] = value end,
+				get = function(info) return plugin.db.profile.LeftButton[info[#info]] end,
+				set = function(info, value) plugin.db.profile.LeftButton[info[#info]] = value end,
 			},
 			middle = {
 				type = "group",
@@ -156,8 +157,8 @@ plugin.subPanelOptions = {
 				order = 11,
 				args = clickOptions,
 				disabled = shouldDisable,
-				get = function(info) return plugin.db.profile.middleClick[info[#info]] end,
-				set = function(info, value) plugin.db.profile.middleClick[info[#info]] = value end,
+				get = function(info) return plugin.db.profile.MiddleButton[info[#info]] end,
+				set = function(info, value) plugin.db.profile.MiddleButton[info[#info]] = value end,
 			},
 			right = {
 				type = "group",
@@ -165,8 +166,8 @@ plugin.subPanelOptions = {
 				order = 12,
 				args = clickOptions,
 				disabled = shouldDisable,
-				get = function(info) return plugin.db.profile.rightClick[info[#info]] end,
-				set = function(info, value) plugin.db.profile.rightClick[info[#info]] = value end,
+				get = function(info) return plugin.db.profile.RightButton[info[#info]] end,
+				set = function(info, value) plugin.db.profile.RightButton[info[#info]] = value end,
 			},
 		},
 	},
@@ -660,11 +661,63 @@ do
 	end)
 end
 
+-- Super Emphasize the clicked bar
+clickHandlers.emphasize = function(bar)
+	print("Super Emphasizing bars by clicking on them is not implemented yet.")
+end
+
+-- Report the bar status to the active group type (raid, party, solo)
+clickHandlers.report = function(bar)
+	local channel = "SAY"
+	if UnitInRaid("player") then
+		channel = "RAID"
+	elseif GetNumPartyMembers() > 1 then
+		channel = "PARTY"
+	end
+	local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), SecondsToTime(bar.remaining))
+	SendChatMessage(text, channel)
+end
+
+-- Removes the clicked bar
+clickHandlers.remove = function(bar)
+	local anchor = bar:Get("bigwigs:anchor")
+	bar:Stop()
+	rearrangeBars(anchor)
+end
+
+-- Removes all bars EXCEPT the clicked one
+clickHandlers.removeOther = function(bar)
+	if normalAnchor then
+		for k in pairs(normalAnchor.bars) do
+			if k ~= bar then
+				k:Stop()
+			end
+		end
+		rearrangeBars(normalAnchor)
+	end
+	if emphasizeAnchor then
+		for k in pairs(emphasizeAnchor.bars) do
+			if k ~= bar then
+				k:Stop()
+			end
+		end
+		rearrangeBars(emphasizeAnchor)
+	end
+end
+
+-- Disables the option that launched this bar
+clickHandlers.disable = function(bar)
+	print("lol disable")
+end
+
+-- Opens a menu with the above actions
+clickHandlers.menu = function(bar)
+	print("The bar menu is not implemented yet. Note that when it will be, it will not include any actions except the ones described in the clickable bars panel anyway.")
+end
+
 local function barClicked(bar, button)
-	if button == "MiddleButton" then
-		local anchor = bar:Get("bigwigs:anchor")
-		bar:Stop()
-		rearrangeBars(anchor)
+	for action, enabled in pairs(plugin.db.profile[button]) do
+		if enabled then clickHandlers[action](bar) end
 	end
 end
 
@@ -685,6 +738,7 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
 	bar:Set("bigwigs:empColor", colors:GetColorTable("barEmphasized", module, key))
+	bar:Set("bigwigs:option", key)
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar.candyBarLabel:SetTextColor(colors:GetColor("barText", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
@@ -699,10 +753,10 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if db.emphasize and time < 15 then
 		self:EmphasizeBar(bar)
 	end
-	--[[ XXX - disable clicking on bars, once this is optional it can return, for now bars need to be clickthrough to not hinder gameplay
-	bar:EnableMouse(true)
-	bar:SetScript("OnMouseDown", barClicked)
-	--]]
+	if db.interceptMouse then
+		bar:EnableMouse(true)
+		bar:SetScript("OnMouseDown", barClicked)
+	end
 	if superemp and superemp:IsSuperEmphasized(module, key) and superemp.db.profile.countdown then
 		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
 		bar:AddUpdateFunction(countdown)
@@ -820,5 +874,3 @@ _G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
 -------------------------------------------------------------------------------
 -- Interactive bars
 --
-
-
