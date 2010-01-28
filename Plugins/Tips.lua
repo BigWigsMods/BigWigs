@@ -394,18 +394,20 @@ end
 -- Plugin init
 --
 
-local standalone = (select(1, ...)) == "BigWigs" and nil or true
 local neverShowTip = nil
--- This doesn't work when we LoD, since the plugins aren't loaded until we zone in anyway.
-if not standalone and select(2, IsInInstance()) == "raid" then
-	-- We logged in to a raid, let's never show the tip automatically this session.
-	neverShowTip = true
-elseif standalone and (GetTime() - _G.BIGWIGS_LOADER_TIME) < 10 then
-	-- Jesus christ this is hacky.
-	-- So, if we are loaded now and it's less than 10 seconds since Loader.lua
-	-- fired up, we won't show a tip this session.
-	-- No idea if 10 seconds is enough either anyway.
-	neverShowTip = true
+if select(2, IsInInstance()) == "raid" then
+	local standalone = (select(1, ...)) == "BigWigs" and nil or true
+	-- This doesn't work when we LoD, since the plugins aren't loaded until we zone in anyway.
+	if not standalone then
+		-- We logged in to a raid, let's never show the tip automatically this session.
+		neverShowTip = true
+	elseif standalone and (GetTime() - _G.BIGWIGS_LOADER_TIME) < 10 then
+		-- Jesus christ this is hacky.
+		-- So, if we are loaded now and it's less than 10 seconds since Loader.lua
+		-- fired up, we won't show a tip this session.
+		-- No idea if 10 seconds is enough either anyway.
+		neverShowTip = true
+	end
 end
 
 local function check()
