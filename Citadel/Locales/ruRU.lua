@@ -19,7 +19,7 @@ if L then
 	L.infernoflames_message = "Пламя"
 
 	L.empowered_shock_message = "Могучий вихрь!"
-	L.regular_shock_message = "Вихрь на %s!"
+	L.regular_shock_message = "Вихрь на "
 	L.shock_say = "Вихрь на мне!"
 end
 
