@@ -79,7 +79,6 @@ plugin.subPanelOptions = {
 				desc = L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."],
 				order = 11,
 				width = "full",
-				disabled = true,
 			},
 			manual = {
 				type = "toggle",
