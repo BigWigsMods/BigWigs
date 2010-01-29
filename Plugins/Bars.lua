@@ -667,15 +667,37 @@ clickHandlers.emphasize = function(bar)
 end
 
 -- Report the bar status to the active group type (raid, party, solo)
-clickHandlers.report = function(bar)
-	local channel = "SAY"
-	if UnitInRaid("player") then
-		channel = "RAID"
-	elseif GetNumPartyMembers() > 1 then
-		channel = "PARTY"
+do
+	local tformat1 = "%d:%02d"
+	local tformat2 = "%1.1f"
+	local tformat3 = "%.0f"
+	local function timeDetails(t)
+		if t >= 3600 then -- > 1 hour
+			local h = floor(t/3600)
+			local m = t - (h*3600)
+			return tformat1:format(h, m)
+		elseif t >= 60 then -- 1 minute to 1 hour
+			local m = floor(t/60)
+			local s = t - (m*60)
+			return tformat1:format(m, s)
+		elseif t < 10 then -- 0 to 10 seconds
+			return tformat2:format(t)
+		else -- 10 seconds to one minute
+			return tformat3:format(floor(t + .5))
+		end
 	end
-	local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), SecondsToTime(bar.remaining))
-	SendChatMessage(text, channel)
+	clickHandlers.report = function(bar)
+		local channel = "SAY"
+		if UnitInBattleground("player") then
+			channel = "BATTLEGROUND"
+		elseif UnitInRaid("player") then
+			channel = "RAID"
+		elseif GetNumPartyMembers() > 1 then
+			channel = "PARTY"
+		end
+		local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), timeDetails(bar.remaining))
+		SendChatMessage(text, channel)
+	end
 end
 
 -- Removes the clicked bar
@@ -707,7 +729,10 @@ end
 
 -- Disables the option that launched this bar
 clickHandlers.disable = function(bar)
-	print("lol disable")
+	local m = bar:Get("bigwigs:module")
+	if m and m.db and m.db.profile and bar:Get("bigwigs:option") then
+		m.db.profile[bar:Get("bigwigs:option")] = false
+	end
 end
 
 -- Opens a menu with the above actions
