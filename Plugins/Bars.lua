@@ -663,7 +663,9 @@ end
 
 -- Super Emphasize the clicked bar
 clickHandlers.emphasize = function(bar)
-	print("Super Emphasizing bars by clicking on them is not implemented yet.")
+	if superemp then
+		superemp:Emphasize(bar:Get("bigwigs:module"), bar:Get("bigwigs:option"))
+	end
 end
 
 -- Report the bar status to the active group type (raid, party, solo)

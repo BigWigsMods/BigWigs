@@ -104,3 +104,7 @@ function plugin:IsSuperEmphasized(module, key)
 	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
 end
 
+function plugin:Emphasize(module, key)
+
+end
+
