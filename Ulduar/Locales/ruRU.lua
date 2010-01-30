@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Algalon the Observer", "ruRU")
 if L then
 	L.phase = "Фазы"
@@ -236,7 +236,7 @@ if L then
 	L.phase2_trigger = "Незваные гости! Вы заплатите за то, что посмели вмешаться... Погодите, вы..."
 	L.phase2_message = "2ая фаза - Исступление через 6мин 15сек!"
 	L.phase3_trigger = "Бесстыжие выскочки, вы решили бросить вызов мне лично? Я сокрушу вас всех!"
-	L.phase3_message = "3-яя фаза - %s вступает в бой!"
+	L.phase3_message = "3-я фаза - Торим вступает в бой!"
 
 	L.hardmode = "Таймеры сложного режима"
 	L.hardmode_desc = "Отображения таймера для сложного режима."
