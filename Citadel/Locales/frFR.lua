@@ -66,7 +66,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
 if L then
-	L.engage_trigger = "You have made an... unwise... decision."
+	L.engage_trigger = "Ce n'est pas une décision... très sage." -- à vérifier
 
 	L.shadow = "Les ombres"
 	L.shadow_message = "Ombres"
@@ -110,6 +110,7 @@ if L then
 	L.ball_bar = "Prochaine boule de Gelée"
 	L.ball_say = "Boule malléable de Gelée verte sur moi !"
 
+	L.experiment_message = "Arrivée d'une nouvelle expérience !" 
 	L.experiment_bar = "Prochaine expérience"
 	L.blight_message = "Nuage de gaz"
 	L.violation_message = "Limon volatil"
@@ -118,6 +119,7 @@ if L then
 	L.plague_bar = "Prochaine Peste"
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"
+	L.gasbomb_message = "Bombes de gaz !"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "frFR")
