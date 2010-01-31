@@ -14,7 +14,6 @@
 ## Notes-koKR: Big Wigs 얼음왕관 성채 경고
 ## Notes-zhCN: Big Wigs 冰冠堡垒模块
 ## Notes-zhTW: Big Wigs 冰冠城塞模組
-## Author: Samirâ,Yoshimo
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

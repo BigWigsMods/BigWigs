@@ -26,6 +26,8 @@ local currentDifficulty = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "You have made an... unwise... decision."
+
 	L.shadow = "Shadows"
 	L.shadow_message = "Shadows"
 	L.shadow_bar = "Next Shadows"
@@ -55,7 +57,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Yell("Engage", L["engage_trigger"])
 end
 
 function mod:OnEngage()

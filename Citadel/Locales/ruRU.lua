@@ -25,15 +25,17 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
 if L then
+	L.engage_trigger = "You have made an... unwise... decision."
+
 	L.shadow = "Тени"
 	L.shadow_message = "Тени"
 	L.shadow_bar = "~Тени"
-	
+
 	L.feed_message = "Скоро пора кормиться!"
-	
+
 	L.pact_message = "Пакт Омраченных"
 	L.pact_bar = "~Пакт Омраченных"
-	
+
 	L.phase_message = "Скоро воздушная фаза!"
 	L.phase1_bar = "Возврат на землю"
 	L.phase2_bar = "Воздушная фаза"

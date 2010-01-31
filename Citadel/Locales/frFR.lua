@@ -66,6 +66,8 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
 if L then
+	L.engage_trigger = "You have made an... unwise... decision."
+
 	L.shadow = "Les ombres"
 	L.shadow_message = "Ombres"
 	L.shadow_bar = "Prochaines ombres"
