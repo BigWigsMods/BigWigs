@@ -28,16 +28,6 @@ if L then
 	L.breath_message = "即將 燃燒之息 %d!"
 end
 
-L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "ruRU")
-if L then
-	L.whiteout_bar = "寒霜厲雪 %d"
-	L.whiteout_message = "即將 寒霜厲雪 %d!"
-
-	L.frostbite_message = "%2$dx 霜寒刺骨 on %1$s"
-
-	L.freeze_message = "冰凍術"
-end
-
 L = BigWigs:NewBossLocale("Malygos", "zhTW")
 if L then
 	L.sparks = "力量火花"
@@ -100,4 +90,14 @@ if L then
 	L.twilight_trigger_shadron = "一個夏德朗信徒從暮光中出現!"
 	L.twilight_message_tenebron = "正在孵卵！"
 	L.twilight_message = "%s到來！"
+end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "zhTW")
+if L then
+	L.whiteout_bar = "寒霜厲雪：>%d<！"
+	L.whiteout_message = "即將寒霜厲雪：>%d<！"
+
+	L.frostbite_message = "%2$dx霜寒刺骨：>%1$s<！"
+
+	L.freeze_message = "冰凍之地"
 end

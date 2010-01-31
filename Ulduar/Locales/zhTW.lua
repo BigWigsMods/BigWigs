@@ -13,6 +13,8 @@ if L then
 	L.blackhole_message = "黑洞爆炸：>%dx< 出現！"
 	L.bigbang_bar = "<下一大爆炸>"
 	L.bigbang_soon = "即將 大爆炸！"
+
+	L.end_trigger = "我曾經看過塵世沉浸在造物者的烈焰之中"
 end
 
 L = BigWigs:NewBossLocale("Auriaya", "zhTW")
@@ -238,7 +240,7 @@ if L then
 	L.phase2_trigger = "擅闖者!像你們這種膽敢干涉我好事的凡人將付出…等等--你……"
 	L.phase2_message = "第二階段 - 6分15秒後，狂暴！"
 	L.phase3_trigger = "無禮的小輩，你竟敢在我的王座之上挑戰我?我會親手碾碎你們!"
-	L.phase3_message = "第三階段 - %s已狂怒！"
+	L.phase3_message = "第三階段 - 索林姆已狂怒！"
 
 	L.hardmode = "困難模式"
 	L.hardmode_desc = "顯示困難模式計時器。"
@@ -319,6 +321,9 @@ if L then
 	L.portal_trigger = "傳送門開啟進入%s的心靈!"
 	L.portal_message = "開啟傳送門！"
 	L.portal_bar = "<下一傳送門>"
+
+	L.fervor_cast_message = "正在施放 薩拉的熱誠：>%s<！"
+	L.fervor_message = "薩拉的熱誠：>%s<！"
 
 	L.sanity_message = ">你< 即將瘋狂！！"
 

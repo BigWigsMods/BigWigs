@@ -83,7 +83,7 @@ L["Advanced options"] = "高级选项"
 L["<< Back"] = "<< 返回"
 
 L["About"] = "关于"
-L["Main Developers"] = "主要开发"
+L["Main Developers"] = "主要开发者"
 L["Maintainers"] = "维护"
 L["License"] = "许可"
 L["Website"] = "网站"

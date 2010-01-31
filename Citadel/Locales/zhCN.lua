@@ -1,6 +1,14 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "zhCN")
 if L then
-	L.switch_message = "虛弱转换！"
+	L.switch_message = "虛弱轉換！"
+	L.switch_bar = "<下一虛弱轉換>"
+
+	L.infernoflames = "地獄火"
+	L.infernoflames_message = "火球術"
+
+	L.empowered_shock_message = "正在施放 強力震擊漩渦！"
+	L.regular_shock_message = "震擊漩渦區域！"
+	L.shock_say = ">我< 震擊漩渦！"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhCN")
@@ -26,6 +34,7 @@ if L then
 	L.adds_trigger_alliance = "Reavers, Sergeants, attack!"
 	L.adds_trigger_horde = "Marines, Sergeants, attack!"
 	L.adds_message = "传送门！"
+	L.adds_bar = "<下一传送门>"
 
 	L.mage = "法师"
 	L.mage_desc = "当法师出现冰冻炮舰火炮时发出警报。"
@@ -74,16 +83,39 @@ end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "zhCN")
 if L then
-	L.engage_trigger = "Good news, everyone!"
+	L.phase = "階段"
+	L.phase_desc = "當進入不同階段發出警報。"
+	L.phase_warning = "即將 第%d階段！"
 
-	L.blight_message = "Blight：>%s<！"
-	L.violation_message = "Violation：>%s<！"
+	L.engage_trigger = "大夥聽著，好消息!"
+
+	L.ball_bar = "<下一延展黏液>"
+	L.ball_say = "即將 延展黏液！"
+
+	L.experiment_message = "即將 增援！"
+	L.experiment_bar = "<下一增援>"
+	L.blight_message = "毒氣膨脹"
+	L.violation_message = "暴躁軟泥怪"
+
+	L.plague_message = "%2$dx突變瘟疫：>%1$s<！"
+	L.plague_bar = "<下一突變瘟疫>"
+
+	L.gasbomb_bar = "<多個窒息毒氣彈>"
+	L.gasbomb_message = "窒息毒氣彈！"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "zhCN")
 if L then
-	L.infection_bar = "Infection：>%s<！"
-	L.infection_message = "Infection"
+	L.engage_trigger = "不不不不不!"
+
+	L.infection_bar = "<突變感染：%s>"
+	L.infection_message = "突變感染"
+
+	L.ooze = "軟泥融合"
+	L.ooze_desc = "當軟泥融合時發出警報！"
+	L.ooze_message = "不穩定的軟泥：>%dx<！"
+
+	L.spray_bar = "<下一泥漿噴霧>"
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhCN")
@@ -121,3 +153,18 @@ if L then
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 end
 
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhCN")
+if L then
+	L.shadow = "群聚暗影"
+	L.shadow_message = "群聚暗影！"
+	L.shadow_bar = "<下一群聚暗影>"
+
+	L.feed_message = "即將 狂亂嗜血！"
+
+	L.pact_message = "暗殞契印"
+	L.pact_bar = "<下一暗殞契印>"
+
+	L.phase_message = "即將 空中階段！"
+	L.phase1_bar = "<地面階段>"
+	L.phase2_bar = "<空中階段>"
+end

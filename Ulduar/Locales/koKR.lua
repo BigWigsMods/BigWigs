@@ -280,8 +280,6 @@ if L then
 	L.vaporstack_desc = "사로나이트 증기 5중첩이상을 알립니다."
 	L.vaporstack_message = "증기 x%d 중첩!"
 
-	L.crashsay = "붕괴 일반 대화"
-	L.crashsay_desc = "어둠의 붕괴 대상시 일반 대화로 알립니다."
 	L.crash_say = "저 어둠 붕괴요!"
 
 	L.mark_message = "징표"
