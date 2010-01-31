@@ -3,7 +3,7 @@ if L then
 	L.switch_message = "Ziel wechseln!"
 	L.switch_bar = "~Ziel wechseln"
 
-	L.infernoflames = "Machtvolle Flamme"
+	L.infernoflames = "Infernoflammen"
 	L.infernoflames_message = "Feuerball"
 
 	L.empowered_shock_message = "Schockvortex kommt!"
@@ -13,7 +13,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
 if L then
-	L.engage_trigger = "You have made an... unwise... decision."
+	L.engage_trigger = "Ihr habt... unklug... gewählt."
 
 	L.shadow = "Schatten"
 	L.shadow_message = "Schatten"

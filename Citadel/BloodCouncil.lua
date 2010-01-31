@@ -123,7 +123,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(72040)
 		end
-		self:TargetMessage(72040, L["infernoflames_message"], player, "Urgent", 72040)
+		self:TargetMessage(72040, L["infernoflames_message"], player, "Urgent", 72040, "Long")
 	end
 end
 
