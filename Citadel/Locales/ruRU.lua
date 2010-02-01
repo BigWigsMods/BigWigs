@@ -25,7 +25,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
 if L then
-	L.engage_trigger = "You have made an... unwise... decision."
+	L.engage_trigger = "Это было... неразумное... решение."
 
 	L.shadow = "Тени"
 	L.shadow_message = "Тени"
