@@ -27,6 +27,8 @@ if L then
 	L.frostbite_message = "%2$dx Frostbite on %1$s"
 
 	L.freeze_message = "Freeze"
+	
+	L.orb_bar = "Next Orb"
 end
 L = mod:GetLocale()
 
@@ -48,6 +50,11 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
+function mod:OnEngage()
+	self:Bar(72091, L["orb_bar"], 15, 72091)
+	self:Bar(72034, L["whiteout_bar"]:format(count), 30, spellId)
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -61,6 +68,7 @@ end
 
 function mod:Orbs(_, spellId, _, _, spellName)
 	self:Message(72091, spellName, "Important", spellId)
+	self:Bar(72091, L["orb_bar"], 30, spellId)
 end
 
 function mod:Frostbite(player, spellId, _, _, _, stack)

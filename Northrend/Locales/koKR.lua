@@ -97,4 +97,6 @@ if L then
 	L.frostbite_message = "동상 %2$dx : %1$s"
 
 	L.freeze_message = "땅얼리기"
+	
+	L.orb_bar = "다음 구슬"
 end
