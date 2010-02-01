@@ -100,4 +100,6 @@ if L then
 	L.frostbite_message = "%2$dx Erfrierung: %1$s"
 
 	L.freeze_message = "Eingefroren"
+
+	L.orb_bar = "Nächste Kugel"
 end

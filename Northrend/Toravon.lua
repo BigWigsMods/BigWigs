@@ -36,8 +36,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX: Based on PTR data and a guide, needs testing!
--- XXX: Module is missing a initial whiteout / orbs timer.
+-- XXX: Based on PTR data and a guide, timers need verification.
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Whiteout", 72034, 72096)
@@ -52,7 +51,7 @@ end
 
 function mod:OnEngage()
 	self:Bar(72091, L["orb_bar"], 15, 72091)
-	self:Bar(72034, L["whiteout_bar"]:format(count), 30, spellId)
+	self:Bar(72034, L["whiteout_bar"]:format(count), 30, 72034)
 end
 
 --------------------------------------------------------------------------------
