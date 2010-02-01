@@ -91,30 +91,28 @@ function mod:EmpoweredShock(_, spellId)
 end
 
 do
-	local scheduled = nil
 	local function scanTarget()
-		scheduled = nil
-		local bossId = mod:GetUnitIdByGUID(37970)
-		if not bossId then return end
-		local target = UnitName(bossId .. "target")
-		if target then
-			if UnitIsUnit("player", target) then
-				mod:FlashShake(72037)
-				if bit.band(mod.db.profile[GetSpellInfo(72037)], BigWigs.C.SAY) == BigWigs.C.SAY then
-					SendChatMessage(L["shock_say"], "SAY")
+		for i = 1, 3 do
+			local bossNum = ("boss%d"):format(i)
+			local guid = tonumber((UnitGUID(bossNum)):sub(-12, -7), 16)
+			if guid == 37970 then
+				local target = UnitName(bossNum.."target")
+				if target then
+					if UnitIsUnit("player", target) then
+						mod:FlashShake(72037)
+						if bit.band(mod.db.profile[GetSpellInfo(72037)], BigWigs.C.SAY) == BigWigs.C.SAY then
+							SendChatMessage(L["shock_say"], "SAY")
+						end
+					end
+					mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
+					mod:Whisper(72037, target, L["regular_shock_message"])
 				end
+				break
 			end
-			mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
-			mod:Whisper(72037, target, L["regular_shock_message"])
 		end
-		handle = nil
 	end
-
 	function mod:RegularShock()
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(scanTarget, 0.1)
-		end
+		self:ScheduleTimer(scanTarget, 0.2)
 	end
 end
 
