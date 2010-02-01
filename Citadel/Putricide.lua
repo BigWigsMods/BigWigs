@@ -99,7 +99,7 @@ do
 	function mod:TearGasOver()
 		if stop then return end
 		stop = true
-		self:ScheduleTimer(nextPhase, 3)
+		self:ScheduleTimer(nextPhase, 13)
 		self:Bar(71255, L["gasbomb_bar"], 15, 71255)
 		self:Bar(72295, L["ball_bar"], 6, 72295)
 		if not first then
