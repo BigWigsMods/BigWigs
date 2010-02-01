@@ -155,7 +155,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
 if L then
-	L.engage_trigger = "You have made an... unwise... decision."
+	L.engage_trigger = "정말... 현명하지 못한... 결정을 했군."
 
 	L.shadow = "어둠이 쌓이더니"
 	L.shadow_message = "모여드는 어둠"
