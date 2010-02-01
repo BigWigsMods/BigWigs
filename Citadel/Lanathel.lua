@@ -60,11 +60,11 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-function mod:OnEngage()
-	currentDifficulty = GetInstanceDifficulty()
+function mod:OnEngage(diff)
+	currentDifficulty = diff
 	self:Berserk(320, true)
 	self:OpenProximity(6)
-	self:Bar(71772, L["phase2_bar"], airPhaseTimers[currentDifficulty][1], 71772)
+	self:Bar(71772, L["phase2_bar"], airPhaseTimers[diff][1], 71772)
 	self:Bar(71340, L["pact_bar"], 16, 71340)
 	self:Bar(71265, L["shadow_bar"], 30, 71265)
 end
@@ -74,19 +74,21 @@ end
 --
 
 do
-	local handle = nil
+	local scheduled = nil
 	local function pact()
 		mod:TargetMessage(71340, L["pact_message"], pactTargets, "Important", 71340)
 		mod:Bar(71340, L["pact_bar"], 30, 71340)
-		handle = nil
+		scheduled = nil
 	end
 	function mod:Pact(player)
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(71340)
 		end
 		pactTargets[#pactTargets + 1] = player
-		self:CancelTimer(handle, true)
-		handle = self:ScheduleTimer(pact, 0.2)
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(pact, 0.3)
+		end
 	end
 end
 
@@ -111,7 +113,7 @@ end
 
 function mod:AirPhase(player, spellId)
 	self:Message(71772, L["phase_message"], "Important", spellId, "Alarm")
-	self:Bar(71772, L["phase1_bar"], 11, spellId)
+	self:Bar(71772, L["phase1_bar"], 12, spellId)
 	self:Bar(71772, L["phase2_bar"], airPhaseTimers[currentDifficulty][2], 71772)
 end
 
