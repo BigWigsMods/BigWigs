@@ -40,7 +40,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Whiteout", 72034, 72096)
-	self:Log("SPELL_CAST_START", "Orbs", 72091)
+	self:Log("SPELL_CAST_START", "Orbs", 72091, 72095)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Frostbite", 72004, 72098, 72121)
 	self:Log("SPELL_AURA_APPLIED", "Freeze", 72090, 72104)
 	self:Death("Win", 38433)
