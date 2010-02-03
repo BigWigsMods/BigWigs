@@ -10,8 +10,8 @@ if L then
 	L.regular_shock_message = "충격 지역"
 	L.shock_say = "나에게 충격!"
 
-	L.skullprince = "Skull on active prince"
-	L.skullprince_desc = "Place a skull on the active blood prince with health."
+	L.skullprince = "활성화된 왕자 해골"
+	L.skullprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
