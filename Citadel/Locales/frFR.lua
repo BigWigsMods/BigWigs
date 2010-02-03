@@ -3,8 +3,8 @@ if L then
 	L.switch_message = "Nouvelle cible : %s"
 	L.switch_bar = "~Prochain chgt de cible"
 
-	L.infernoflames = "Les flammes infernales"
-	L.infernoflames_message = "Boule de flammes"
+	L.infernoflames = "L'Embrasement surpuissant"
+	L.infernoflames_message = "Embrasement"
 
 	L.empowered_shock_message = "Vortex de choc surpuissant en incantation !"
 	L.regular_shock_message = "Vortex de choc"
@@ -50,8 +50,8 @@ if L then
 	L.touch_message = "%2$dx Toucher sur %1$s"
 	L.touch_bar = "Prochain Toucher"
 
-	L.deformed_yell = "I release you from the curse of flesh!"
-	L.deformed_fanatic = "Deformed Fanatic!"
+	L.deformed_yell = "Loyal partisan, je te libère de la malédiction de la chair !"
+	L.deformed_fanatic = "Fanatique déformé !"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
@@ -168,12 +168,18 @@ if L then
 	L.boom = "Explosion !"
 end
 
+--[[L = BigWigs:NewBossLocale("The Lich King", "frFR")
+if L then
+
+end--]]
+
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
 if L then
+	--L.engage_trigger = "Héros, venez-moi en aide. Je… Je ne pourrai plus les retenir longtemps. Vous devez soigner mes blessures !"
 	L.manavoid_message = "Vide de mana sur VOUS !"
 	L.portal = "Portail du Cauchemar"
 	L.portal_desc = "Prévient quand Valithria ouvre un portail."
 	L.portal_message = "Portail actif !"
-	L.portal_trigger = "J'ai ouvert un portail vers le Rêve" -- à vérifier
+	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
 end
 
