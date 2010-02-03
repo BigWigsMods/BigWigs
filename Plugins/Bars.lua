@@ -71,6 +71,7 @@ plugin.defaultDB = {
 	},
 }
 
+-- XXX Clickable bar strings need to be finalized and localized before release
 local clickOptions = {
 	emphasize = {
 		type = "toggle",
@@ -662,6 +663,7 @@ do
 end
 
 -- Super Emphasize the clicked bar
+-- XXX the superemp click action is not actually implemented (needs coding in the emphasize plugin)
 clickHandlers.emphasize = function(bar)
 	if superemp then
 		superemp:Emphasize(bar:Get("bigwigs:module"), bar:Get("bigwigs:option"))
@@ -738,6 +740,7 @@ clickHandlers.disable = function(bar)
 end
 
 -- Opens a menu with the above actions
+-- XXX menu click action is not working yet, either implement or remove from options before release.
 clickHandlers.menu = function(bar)
 	print("The bar menu is not implemented yet. Note that when it will be, it will not include any actions except the ones described in the clickable bars panel anyway.")
 end
