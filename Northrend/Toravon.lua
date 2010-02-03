@@ -27,7 +27,7 @@ if L then
 	L.frostbite_message = "%2$dx Frostbite on %1$s"
 
 	L.freeze_message = "Freeze"
-	
+
 	L.orb_bar = "Next Orb"
 end
 L = mod:GetLocale()

@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "frFR")
 if L then
-	L.switch_message = "Changement de cible: %s"
+	L.switch_message = "Nouvelle cible : %s"
 	L.switch_bar = "~Prochain chgt de cible"
 
 	L.infernoflames = "Les flammes infernales"
@@ -10,8 +10,8 @@ if L then
 	L.regular_shock_message = "Vortex de choc"
 	L.shock_say = "Vortex de choc sur moi !"
 
-	L.skullprince = "Skull on active prince"
-	L.skullprince_desc = "Place a skull on the active blood prince with health."
+	L.skullprince = "Crâne sur le prince actif"
+	L.skullprince_desc = "Place une icône de crâne sur le prince de sang actuellement surpuissant."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
@@ -73,7 +73,7 @@ if L then
 
 	L.shadow = "Les ombres"
 	L.shadow_message = "Ombres"
-	L.shadow_bar = "Prochaines ombres"
+	L.shadow_bar = "Prochaines Ombres"
 
 	L.feed_message = "Besoin de se nourrir imminent !"
 

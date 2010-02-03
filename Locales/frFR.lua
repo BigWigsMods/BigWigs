@@ -10,8 +10,8 @@ L.berserk = "Berserk"
 L.berserk_desc = "Prévient quand le boss devient fou furieux."
 
 L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r) existe déjà en tant que module dans Big Wigs, mais quelque chose essaye de l'enregistrer à nouveau. Cela signifie souvent que vous avez deux copies de ce module dans votre répertoire AddOns suite à une mauvaise mise à jour d'un gestionnaire d'addons. Il est recommandé de supprimer tous les répertoires de Big Wigs et de le réinstaller complètement."
-L.logcheck_one = "|cffff0000WARNING!|r Your combat log appears to be broken. This is a Blizzard bug, and prevents all addons that depend on the combat log - like Big Wigs and Recount - from working."
-L.logcheck_two = "|cff33ff99FIX:|r If you need the combat log or addons that depend on it, you need to relog your character."
+L.logcheck_one = "|cffff0000ATTENTION !|r Votre journal de combat semble mal fonctionner. Il s'agit d'un bogue de Blizzard qui empêche tous les addons dépendant du journal de combat - comme Big Wigs et Recount - de fonctionner."
+L.logcheck_two = "|cff33ff99RÉPARATION :|r si vous avez besoin du journal de combat ou des addons qui en dépendent, il vous faut vous reconnecter."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Vous utilisez une version FINALISÉE de Big Wigs %s (r%d)."

@@ -97,4 +97,6 @@ if L then
 	L.frostbite_message = "%2$dx Morsure de givre sur %1$s"
 
 	L.freeze_message = "Sol givrant"
+
+	L.orb_bar = "Prochain Orbe"
 end
