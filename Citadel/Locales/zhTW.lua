@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "zhTW")
 if L then
-	L.switch_message = "虛弱轉換！"
+	L.switch_message = "虛弱轉換: %s"
 	L.switch_bar = "<下一虛弱轉換>"
 
 	L.infernoflames = "地獄火"
@@ -9,6 +9,9 @@ if L then
 	L.empowered_shock_message = "正在施放 強力震擊漩渦！"
 	L.regular_shock_message = "震擊漩渦區域！"
 	L.shock_say = ">我< 震擊漩渦！"
+
+	L.skullprince = "Skull on active prince"
+	L.skullprince_desc = "Place a skull on the active blood prince with health."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhTW")

@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Lord Marrowgar", "ruRU")
+local L = BigWigs:NewBossLocale("Lord Marrowgar", "ruRU")
 if L then
 	L.impale_cd = "~Прокалывание"
 
@@ -12,7 +12,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood Prince Council", "ruRU")
 if L then
-	L.switch_message = "Смена цели!"
+	L.switch_message = "Смена цели: %s"
 	L.switch_bar = "~Следующая смена цели"
 
 	L.infernoflames = "Пламя преисподней"
@@ -21,6 +21,9 @@ if L then
 	L.empowered_shock_message = "Могучий вихрь!"
 	L.regular_shock_message = "Вихрь на "
 	L.shock_say = "Вихрь на мне!"
+
+	L.skullprince = "Skull on active prince"
+	L.skullprince_desc = "Place a skull on the active blood prince with health."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")

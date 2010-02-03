@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Prince Council", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, {70981, "ICON"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "proximity", "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, 70981, "skullprince", 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -19,8 +19,8 @@ local count = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.switch_message = "Target swap!"
-	L.switch_bar = "~Next target swap"
+	L.switch_message = "Health swap: %s"
+	L.switch_bar = "~Next health swap"
 
 	L.infernoflames = "Inferno Flames"
 	L.infernoflames_message = "Fireball"
@@ -28,6 +28,9 @@ if L then
 	L.empowered_shock_message = "Casting Shock!"
 	L.regular_shock_message = "Shock zone"
 	L.shock_say = "Shock zone on me!"
+
+	L.skullprince = "Skull on active prince"
+	L.skullprince_desc = "Place a skull on the active blood prince with health."
 end
 L = mod:GetLocale()
 
@@ -72,12 +75,12 @@ end
 --
 
 function mod:Switch(unit, spellId, _, _, spellName)
-	self:Message(70981, L["switch_message"], "Positive", spellId, "Info")
+	self:Message(70981, L["switch_message"]:format(unit), "Positive", spellId, "Info")
 	self:Bar(70981, L["switch_bar"], 45, spellId)
 	for i = 1, 3 do
 		local bossNum = ("boss%d"):format(i)
 		local name = UnitName(bossNum)
-		if name and name == unit and bit.band(self.db.profile[spellName], BigWigs.C.ICON) == BigWigs.C.ICON then
+		if name and name == unit and self.db.profile.skullprince then
 			SetRaidTarget(bossNum, 8) --Skull
 			break
 		end

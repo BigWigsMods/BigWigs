@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "deDE")
 if L then
-	L.switch_message = "Ziel wechseln!"
+	L.switch_message = "Ziel wechseln: %s"
 	L.switch_bar = "~Ziel wechseln"
 
 	L.infernoflames = "Infernoflammen"
@@ -9,6 +9,9 @@ if L then
 	L.empowered_shock_message = "Schockvortex kommt!"
 	L.regular_shock_message = "Schockzone"
 	L.shock_say = "Schockzone auf MIR!"
+
+	L.skullprince = "Skull on active prince"
+	L.skullprince_desc = "Place a skull on the active blood prince with health."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")

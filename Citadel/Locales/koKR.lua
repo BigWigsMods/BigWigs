@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "koKR")
 if L then
-	L.switch_message = "대상 변경!"
+	L.switch_message = "대상 변경: %s"
 	L.switch_bar = "~다음 대상 변경"
 
 	L.infernoflames = "지옥의 화염"
@@ -9,6 +9,9 @@ if L then
 	L.empowered_shock_message = "충격의 소용돌이 시전!"
 	L.regular_shock_message = "충격 지역"
 	L.shock_say = "나에게 충격!"
+
+	L.skullprince = "Skull on active prince"
+	L.skullprince_desc = "Place a skull on the active blood prince with health."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")
