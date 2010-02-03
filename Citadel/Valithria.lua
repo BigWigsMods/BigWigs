@@ -29,7 +29,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "ManaVoid", 71741, 71743)
+	self:Log("SPELL_AURA_APPLIED", "ManaVoid", 71741, 71743)
 	self:Log("SPELL_CAST_SUCCESS", "LayWaste", 71730)
 	self:Log("SPELL_CAST_START", "Win", 71189)
 
