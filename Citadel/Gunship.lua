@@ -48,7 +48,7 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["enable_trigger_alliance"], L["enable_trigger_horde"])
 	self:Yell("AddsPortal", L["adds_trigger_alliance"], L["adds_trigger_horde"])
 	self:Yell("Defeated", L["disable_trigger_alliance"], L["disable_trigger_horde"])
-	self:Log("SPELL_CAST_SUCCESS", "Frozen", 69705)
+	self:Log("SPELL_CAST_START", "Frozen", 69705)
 	self:Log("SPELL_AURA_REMOVED", "FrozenCD", 69705)
 end
 
