@@ -5,7 +5,13 @@ local mod = BigWigs:NewBoss("Blood Prince Council", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, 70981, "skullprince", 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, "berserk", "proximity", "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, 70981, "skullprince", "berserk", "proximity", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+mod.optionHeaders = {
+	[72040] = "Taldaram",
+	[72039] = "Valanar",
+	[70981] = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals

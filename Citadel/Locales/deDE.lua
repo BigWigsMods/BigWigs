@@ -10,8 +10,8 @@ if L then
 	L.regular_shock_message = "Schockzone"
 	L.shock_say = "Schockzone auf MIR!"
 
-	L.skullprince = "Skull on active prince"
-	L.skullprince_desc = "Place a skull on the active blood prince with health."
+	L.skullprince = "Totenkopf auf aktivem Prinz"
+	L.skullprince_desc = "Plaziert den Totenkopf auf dem aktiven Blutprinzen."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")

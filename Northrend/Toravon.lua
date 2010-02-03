@@ -36,8 +36,6 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX: Based on PTR data and a guide, timers need verification.
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Whiteout", 72034, 72096)
 	self:Log("SPELL_CAST_START", "Orbs", 72091, 72095)
