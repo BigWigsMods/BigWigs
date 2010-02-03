@@ -9,6 +9,7 @@
 <Script file="Festergut.lua"/>
 <Script file="Gunship.lua"/>
 <Script file="Lanathel.lua"/>
+<Script file="LichKing.lua"/>
 <Script file="Marrowgar.lua"/>
 <Script file="Putricide.lua"/>
 <Script file="Rotface.lua"/>
