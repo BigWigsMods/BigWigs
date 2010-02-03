@@ -65,7 +65,7 @@ do
 	local logChecker = CreateFrame("Frame")
 	logChecker:Hide()
 	logChecker:SetScript("OnUpdate", function(frame)
-		if GetTime() - t > 5 then
+		if GetTime() - t > 10 then
 			print(L["logcheck_one"])
 			print(L["logcheck_two"])
 			frame:Hide()
