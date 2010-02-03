@@ -49,6 +49,9 @@ if L then
 
 	L.touch_message = "%2$dx Toucher sur %1$s"
 	L.touch_bar = "Prochain Toucher"
+
+	L.deformed_yell = "I release you from the curse of flesh!"
+	L.deformed_fanatic = "Deformed Fanatic!"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")

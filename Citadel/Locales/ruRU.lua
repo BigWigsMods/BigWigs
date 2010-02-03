@@ -113,6 +113,9 @@ if L then
 
 	L.touch_message = "%2$dx Прикосновений у: %1$s"
 	L.touch_bar = "~Прикосновение"
+
+	L.deformed_yell = "I release you from the curse of flesh!"
+	L.deformed_fanatic = "Deformed Fanatic!"
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")

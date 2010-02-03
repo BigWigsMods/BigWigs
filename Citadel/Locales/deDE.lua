@@ -100,6 +100,9 @@ if L then
 
 	L.touch_message = "%2$dx Berührung: %1$s"
 	L.touch_bar = "~Nächste Berührung"
+
+	L.deformed_yell = "I release you from the curse of flesh!"
+	L.deformed_fanatic = "Deformed Fanatic!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")

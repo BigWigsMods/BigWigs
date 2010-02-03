@@ -65,6 +65,9 @@ if L then
 
 	L.touch_message = "손길 %2$dx : %1$s"
 	L.touch_bar = "다음 손길"
+
+	L.deformed_yell = "I release you from the curse of flesh!"
+	L.deformed_fanatic = "Deformed Fanatic!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")

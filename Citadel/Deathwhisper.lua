@@ -32,6 +32,9 @@ if L then
 
 	L.touch_message = "%2$dx Touch on %1$s"
 	L.touch_bar = "Next Touch"
+
+	L.deformed_yell = "I release you from the curse of flesh!"
+	L.deformed_fanatic = "Deformed Fanatic!"
 end
 L = mod:GetLocale()
 
@@ -49,10 +52,8 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Deformed", L["deformed_yell"])
 end
-
--- XXX fix the add delayed message, it's broken usage of the API.
--- XXX warn when a reanimated one spawns
 
 local handle_Adds = nil
 local function adds()
@@ -98,5 +99,9 @@ function mod:Touch(player, spellId, _, _, _, stack)
 		self:TargetMessage(71204, L["touch_message"], player, "Urgent", spellId, nil, stack)
 	end
 	self:Bar(71204, L["touch_bar"], 7, spellId)
+end
+
+function mod:Deformed()
+
 end
 
