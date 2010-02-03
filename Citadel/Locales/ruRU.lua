@@ -169,6 +169,8 @@ if L then
 	L.portal_desc = "Сообщать когда Валитрия открывает портал."
 	L.portal_message = "Портал!"
 	L.portal_trigger = "Я открыла портал в Изумрудный Сон. Там в найдете спасение, герои..."
+
+	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")

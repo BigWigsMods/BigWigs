@@ -157,6 +157,8 @@ if L then
 	L.portal_desc = "악몽의 차원문을 알립니다."
 	L.portal_message = "차원문 생성!"
 	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그안에 있다..."	--check
+
+	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")

@@ -157,6 +157,8 @@ if L then
 	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
 	L.portal_message = "打開夢魘之門！"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
+
+	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")

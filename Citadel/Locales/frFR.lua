@@ -181,5 +181,7 @@ if L then
 	L.portal_desc = "Prévient quand Valithria ouvre un portail."
 	L.portal_message = "Portail actif !"
 	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
+
+	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
 end
 

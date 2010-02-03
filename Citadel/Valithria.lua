@@ -6,9 +6,6 @@ local mod = BigWigs:NewBoss("Valithria Dreamwalker", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886, 37950, 37985)
 mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "portal", "berserk", "bosskill"}
---68168 lay waste (buff)
--- 71733 Acid Burst
---  71741 Manavoid
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,6 +18,8 @@ if L then
 	L.portal_desc = "Warns when Valithria opens a Portal."
 	L.portal_message = "Portal up!"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
+
+	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
 end
 L = mod:GetLocale()
 
@@ -30,15 +29,24 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ManaVoid", 71741, 71743)
-	self:Log("SPELL_CAST_SUCCESS", "LayWaste", 71730)
+	self:Log("SPELL_CAST_SUCCESS", "LayWaste", 71730, 69325) --??, 10man
 	self:Log("SPELL_CAST_START", "Win", 71189)
 
 	self:Yell("Portal", L["portal_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Yell("Engage", L["engage_trigger"])
+end
+
+local function adds()
+	--XXX more testing
+	mod:Bar(71730, "~Suppresser", 58, nil)
+	mod:ScheduleTimer(adds, 58)
 end
 
 function mod:OnEngage()
-	self:Berserk(420, true)
+	--self:Berserk(420, true)
+	self:Bar(71730, "~Suppresser", 29, nil)
+	self:ScheduleTimer(adds, 29)
 end
 
 --------------------------------------------------------------------------------
