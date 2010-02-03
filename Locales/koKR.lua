@@ -12,6 +12,8 @@ L.berserk = "광폭화"
 L.berserk_desc = "보스가 언제 광폭화가 되는지 경고합니다."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
+L.logcheck_one = "|cffff0000WARNING!|r Your combat log appears to be broken. This is a Blizzard bug, and prevents all addons that depend on the combat log - like Big Wigs and Recount - from working."
+L.logcheck_two = "|cff33ff99FIX:|r If you need the combat log or addons that depend on it, you need to relog your character."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 공식 릴리스가 실행중입니다."

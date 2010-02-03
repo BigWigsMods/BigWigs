@@ -12,6 +12,8 @@ L.berserk = "Берсерк"
 L.berserk_desc = "Предупреждать, когда босс входит в состояние берсерк."
 
 -- L.already_registered = "|cffff0000Внимание:|r |cff00ff00%s|r (|cffffff00%d|r) уже существует как модуль Big Wigs,но чтото снова пытается его зарегистрировать (ревизия |cffffff00%d|r). Это обычно означает, что у вас две копии этого модуля в папке модификации, возможно из-за ошибки обновления программой обновления модификаций. Мы рекомендуем вам удалить все папки Big Wigs , а затем установить его заново с нуля."
+L.logcheck_one = "|cffff0000WARNING!|r Your combat log appears to be broken. This is a Blizzard bug, and prevents all addons that depend on the combat log - like Big Wigs and Recount - from working."
+L.logcheck_two = "|cff33ff99FIX:|r If you need the combat log or addons that depend on it, you need to relog your character."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Вы используете официальный выпуск Big Wigs %s (ревизии %d)"

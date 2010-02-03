@@ -57,6 +57,34 @@ end
 loader.LOCALE = LOCALE
 
 -----------------------------------------------------------------------
+-- Combat log status check
+--
+
+do
+	local t = 0
+	local logChecker = CreateFrame("Frame")
+	logChecker:Hide()
+	logChecker:SetScript("OnUpdate", function(frame)
+		if GetTime() - t > 5 then
+			print(L["logcheck_one"])
+			print(L["logcheck_two"])
+			frame:Hide()
+		end
+	end)
+	logChecker:RegisterEvent("PLAYER_REGEN_DISABLED")
+	logChecker:SetScript("OnEvent", function(frame, event)
+		if event == "PLAYER_REGEN_DISABLED" then
+			frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			t = GetTime()
+			frame:Show()
+		else
+			frame:Hide()
+			frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		end
+	end)
+end
+
+-----------------------------------------------------------------------
 -- Locals
 --
 
