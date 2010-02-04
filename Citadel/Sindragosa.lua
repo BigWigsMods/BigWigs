@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "phase2", "bosskill"}
+mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "phase2", {69762, "FLASHSHAKE"}, "bosskill"}
 -- 69846 = Frost Bomb (Fires a missile towards a random target. When this missile lands, it deals 5655 to 6345 Shadow damage to all enemies within 10 yards of that location.)
 -- 70117 = Icy Grip, pulls players to the middle, 1sec after that she starts blistering cold
 -- 70126 = Frost Beacon (mark for 70157 frost tomb)
@@ -31,11 +31,14 @@ if L then
 	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
 	L.phase2_message = "Phase 2!"
 	
-	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase = "Airphase"
-	L.airphase_message = "Airphase"
 	L.airphase_desc = "Warns about Sindragosas lift-off"
+	L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	L.airphase_message = "Airphase"
+	
 	L.boom = "Explosion!"
+	
+	L.unchained_message = "Unchained magic on YOU!"
 end
 L = mod:GetLocale()
 
@@ -44,6 +47,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
 	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117) -- (70123, 71047, 71048, 71049) are the Spell itself
 	self:Log("SPELL_SUMMON", "FrostBomb", 69846)
@@ -101,5 +105,12 @@ end
 function mod:Phase2()
 	self:SendMessage("BigWigs_StopBar", self, L["airphase_message"])
 	self:Message("phase", L["phase2_message"], "Positive")
+end
+
+function mod:Unchained(player, spellId)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(69762)
+	end
 end
 
