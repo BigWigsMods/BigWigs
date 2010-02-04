@@ -75,9 +75,10 @@ do
 	logChecker:RegisterEvent("PLAYER_REGEN_DISABLED")
 	logChecker:SetScript("OnEvent", function(frame, event)
 		if event == "PLAYER_REGEN_DISABLED" then
+			if not coreEnabled then return end
 			frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			t = GetTime()
-			if coreEnabled then frame:Show() end
+			frame:Show()
 		else
 			frame:Hide()
 			frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
