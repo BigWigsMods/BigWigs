@@ -23,6 +23,9 @@ end
 local L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "frFR")
 if L then
 	L.cinder_message = "Braise enflammée sur VOUS !"
+
+	L.breath_bar = "Souffle %d"
+	L.breath_message = "Souffle %d imminent !"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "frFR")

@@ -161,11 +161,25 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
 if L then
+	L.engage_trigger = "Il est stupide d'être venus ici" -- à vérifier
+
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Prévient quand la rencontre passe en phase 2."
+	L.phase2_trigger = "Sentez maintenant le pouvoir infini de mon maître" -- à vérifier
+	L.phase2_message = "Phase 2 !"
+
 	L.airphase_trigger = "Votre incursion s'arrête ici" -- à vérifier
 	L.airphase = "Phase aérienne"
 	L.airphase_message = "Phase aérienne"
 	L.airphase_desc = "Prévient quand Sindragosas décolle."
+
 	L.boom = "Explosion !"
+
+	L.unchained_message = "Magie débridée sur VOUS !"
+
+	L.chilled = "Transi jusqu'aux os"
+	L.chilled_desc = "Prévient quand vous avez 4 cumuls ou plus de Transi jusqu'aux os."
+	L.chilled_message = "Transi jusqu'aux os x%d !"
 end
 
 --[[L = BigWigs:NewBossLocale("The Lich King", "frFR")
@@ -175,12 +189,17 @@ end--]]
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
 if L then
-	L.manavoid_message = "Vide de mana sur VOUS !"
-	L.portal = "Portail du Cauchemar"
-	L.portal_desc = "Prévient quand Valithria ouvre un portail."
-	L.portal_message = "Portail actif !"
-	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
-
 	L.engage_trigger = "Des intrus se sont introduits dans le sanctuaire. Hâtez-vous d'achever le dragon vert ! Ne gardez que les os et les tendons, pour la réanimation !"
-end
 
+	L.portal = "Portails du Cauchemar"
+	L.portal_desc = "Prévient quand Valithria ouvre des portails."
+	L.portal_message = "Portails actifs !"
+	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
+	L.portal_bar = "Prochains portails"
+
+	L.manavoid_message = "Vide de mana sur VOUS !"
+
+	L.suppresser = "Apparition de Suppresseurs"
+	L.suppresser_dec = "Prévient quand une meute de Suppresseurs apparaît."
+	L.suppresser_message = "~Suppresseurs"
+end

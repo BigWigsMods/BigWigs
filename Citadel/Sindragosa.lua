@@ -27,21 +27,21 @@ local chilled = GetSpellInfo(70106)
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "You are fools to have come to this place."
-	
+
 	L.phase2 = "Phases 2"
 	L.phase2_desc = "Warn for phase 2 changes."
 	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
 	L.phase2_message = "Phase 2!"
-	
+
 	L.airphase = "Airphase"
 	L.airphase_desc = "Warns about Sindragosas lift-off"
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase_message = "Airphase"
-	
+
 	L.boom = "Explosion!"
-	
+
 	L.unchained_message = "Unchained magic on YOU!"
-	
+
 	L.chilled = "Chilled to the Bone"
 	L.chilled_desc = "Warn when you have 4 or more stacks of Chilled to the Bone."
 	L.chilled_message = "Chilled to the Bone x%d!"
