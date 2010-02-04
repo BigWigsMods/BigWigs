@@ -28,7 +28,7 @@ if L then
 	L.switch_message = "Health swap: %s"
 	L.switch_bar = "~Next health swap"
 
-	L.infernoflames = "Inferno Flames"
+	L.infernoflames = "Empowered Flames"
 	L.infernoflames_message = "Fireball"
 
 	L.empowered_shock_message = "Casting Shock!"
@@ -103,7 +103,9 @@ do
 	local function scanTarget()
 		for i = 1, 3 do
 			local bossNum = ("boss%d"):format(i)
-			local guid = tonumber((UnitGUID(bossNum)):sub(-12, -7), 16)
+			local guid = UnitGUID(bossNum)
+			if not guid then return end
+			guid = tonumber((guid):sub(-12, -7), 16)
 			if guid == 37970 then
 				local target = UnitName(bossNum.."target")
 				if target then
