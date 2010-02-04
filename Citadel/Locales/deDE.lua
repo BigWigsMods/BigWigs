@@ -101,8 +101,8 @@ if L then
 	L.touch_message = "%2$dx Berührung: %1$s"
 	L.touch_bar = "~Nächste Berührung"
 
-	L.deformed_yell = "I release you from the curse of flesh!"
-	L.deformed_fanatic = "Deformed Fanatic!"
+	L.deformed_yell = "Ich erlöse Euch vom Fluch des Fleisches!"
+	L.deformed_fanatic = "Deformierter Fanatiker!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
@@ -166,5 +166,12 @@ end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
 if L then
+	L.engage_trigger = "Eindringlinge im Inneren Sanktum! Beschleunigt die Vernichtung des grünen Drachen!"
 
+	L.portal = "Alptraumportale"
+	L.portal_desc = "Warnt, wenn Valithria Alptraumportale öffnet."
+	L.portal_message = "Portale!"
+	L.portal_trigger = "Ich habe ein Portal in den Traum geöffnet. Darin liegt Eure Erlösung, Helden..."
+
+	L.manavoid_message = "Manaleere auf DIR!"
 end

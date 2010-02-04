@@ -13,13 +13,14 @@ mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "portal", "berserk", "bosskil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.manavoid_message = "Mana Void on YOU!"
-	L.portal = "Nightmare Portal"
-	L.portal_desc = "Warns when Valithria opens a Portal."
-	L.portal_message = "Portal up!"
+	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+
+	L.portal = "Nightmare Portals"
+	L.portal_desc = "Warns when Valithria opens portals."
+	L.portal_message = "Portals up!"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 
-	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+	L.manavoid_message = "Mana Void on YOU!"
 end
 L = mod:GetLocale()
 
