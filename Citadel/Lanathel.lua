@@ -14,9 +14,9 @@ mod.toggleOptions = {{71340, "FLASHSHAKE"}, {71265, "FLASHSHAKE"}, {70877, "WHIS
 local pactTargets = mod:NewTargetList()
 local airPhaseTimers = {
 	{124, 120}, -- 10man Normal
-	{137, 100}, -- 25man Normal
+	{127, 100}, -- 25man Normal
 	{124, 120}, -- 10man Heroic
-	{137, 100}, -- 25man Heroic
+	{127, 100}, -- 25man Heroic
 }
 local currentDifficulty = nil
 
