@@ -60,6 +60,7 @@ loader.LOCALE = LOCALE
 -- Combat log status check
 --
 
+local coreEnabled = false
 do
 	local t = 0
 	local logChecker = CreateFrame("Frame")
@@ -76,7 +77,7 @@ do
 		if event == "PLAYER_REGEN_DISABLED" then
 			frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 			t = GetTime()
-			frame:Show()
+			if coreEnabled then frame:Show() end
 		else
 			frame:Hide()
 			frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -421,6 +422,7 @@ function loader:BigWigs_BossModuleRegistered(message, name, module)
 end
 
 function loader:BigWigs_CoreEnabled()
+	coreEnabled = true
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
 	end
@@ -433,6 +435,7 @@ function loader:BigWigs_CoreEnabled()
 end
 
 function loader:BigWigs_CoreDisabled()
+	coreEnabled = false
 	if ldb then
 		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
 	end
