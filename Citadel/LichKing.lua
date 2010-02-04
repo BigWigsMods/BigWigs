@@ -25,8 +25,8 @@ if L then
 	L.defile_bar = "Defile"
 	L.necroticplague_bar = "Necrotic Plague"
 	L.valkyr_bar = "Next Val'kyr wave"
-	L.harvestsoul_bar = "Harvest Soul"
 	L.valkyr_message = "Val'kyr"
+	L.harvestsoul_message = "Harvest Soul"
 	L.remorselesswinter_message = "Remorseless Winter Casting"
 	L.quake_message = "Quake Casting"
 	L.vilespirits_bar = "Vile Spirits"
@@ -48,7 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RemorselessWinter", 74270)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 
-	self:Death("Win", 29983)
+	self:Death("Win", 36597)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
@@ -80,8 +80,8 @@ function mod:Valkyr(_, spellId)
 end
 
 function mod:HarvestSoul(player, spellId)
-	self:Bar(68980, L["valkyr_bar"], 75, spellId)
-	self:TargetMessage(68980, L["valkyr_message"], player, "Attention", 68980)
+	self:Bar(68980, L["harvestsoul_message"], 75, spellId)
+	self:TargetMessage(68980, L["harvestsoul_message"], player, "Attention", 68980)
 end
 
 function mod:RemorselessWinter(_, spellId)
