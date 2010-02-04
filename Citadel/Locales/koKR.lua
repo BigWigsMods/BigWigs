@@ -162,7 +162,7 @@ if L then
 	
 	L.manavoid_message = "당신은 마나 공허!"
 	
-	L.suppresser_message = "~억제"
+	L.suppressor_message = "~억제"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
