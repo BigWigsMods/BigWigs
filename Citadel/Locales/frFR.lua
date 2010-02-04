@@ -175,13 +175,12 @@ end--]]
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
 if L then
-	--L.engage_trigger = "Héros, venez-moi en aide. Je… Je ne pourrai plus les retenir longtemps. Vous devez soigner mes blessures !"
 	L.manavoid_message = "Vide de mana sur VOUS !"
 	L.portal = "Portail du Cauchemar"
 	L.portal_desc = "Prévient quand Valithria ouvre un portail."
 	L.portal_message = "Portail actif !"
 	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
 
-	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+	L.engage_trigger = "Des intrus se sont introduits dans le sanctuaire. Hâtez-vous d'achever le dragon vert ! Ne gardez que les os et les tendons, pour la réanimation !"
 end
 
