@@ -66,8 +66,8 @@ if L then
 	L.touch_message = "손길 %2$dx : %1$s"
 	L.touch_bar = "다음 손길"
 
-	L.deformed_yell = "I release you from the curse of flesh!"
-	L.deformed_fanatic = "Deformed Fanatic!"
+	L.deformed_yell = "신실한 자들이여, 유신의 구속에서 해방하노라!"
+	L.deformed_fanatic = "광신자 변형"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
@@ -152,13 +152,17 @@ end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
 if L then
-	L.manavoid_message = "당신은 마나 공허!"
+	L.engage_trigger = "영웅들이여"	--check
+	
 	L.portal = "악몽의 차원문"
 	L.portal_desc = "악몽의 차원문을 알립니다."
 	L.portal_message = "차원문 생성!"
-	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그안에 있다..."	--check
-
-	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다"	--check
+	L.portal_bar = "다음 차원문"
+	
+	L.manavoid_message = "당신은 마나 공허!"
+	
+	L.suppresser_message = "~억제"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")

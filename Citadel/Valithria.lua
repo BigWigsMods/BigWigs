@@ -19,8 +19,11 @@ if L then
 	L.portal_desc = "Warns when Valithria opens portals."
 	L.portal_message = "Portals up!"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
-
+	L.portal_bar = "Next Portal"
+	
 	L.manavoid_message = "Mana Void on YOU!"
+	
+	L.suppresser_message = "~Suppresser"
 end
 L = mod:GetLocale()
 
@@ -30,7 +33,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ManaVoid", 71741, 71743)
-	self:Log("SPELL_CAST_SUCCESS", "LayWaste", 71730, 69325) --??, 10man
+	self:Log("SPELL_AURA_APPLIED", "LayWaste", 71730, 69325) --??, 10man
 	self:Log("SPELL_CAST_START", "Win", 71189)
 
 	self:Yell("Portal", L["portal_trigger"])
@@ -40,13 +43,14 @@ end
 
 local function adds()
 	--XXX more testing
-	mod:Bar(71730, "~Suppresser", 58, nil)
+	mod:Bar(70588, L["suppresser_message"], 58, nil)
 	mod:ScheduleTimer(adds, 58)
 end
 
 function mod:OnEngage()
 	--self:Berserk(420, true)
-	self:Bar(71730, "~Suppresser", 29, nil)
+	self:Bar(70588, L["suppresser_message"], 29, nil)
+	self:Bar(72482, L["portal_bar"], 46, 72482)
 	self:ScheduleTimer(adds, 29)
 end
 
@@ -61,6 +65,7 @@ end
 
 function mod:Portal()
 	self:Message("portal", L["portal_message"], "Important")
+	self:Bar(72482, L["portal_bar"], 46, 72482)
 end
 
 function mod:ManaVoid(player, spellId)
