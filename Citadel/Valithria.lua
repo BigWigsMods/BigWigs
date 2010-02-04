@@ -24,7 +24,7 @@ if L then
 	L.manavoid_message = "Mana Void on YOU!"
 
 	L.suppressor = "Suppressors spawn"
-	L.suppressor_dec = "Warns when a pack of Suppressors spawn."
+	L.suppressor_desc = "Warns when a pack of Suppressors spawn."
 	L.suppressor_message = "~Suppressors"
 end
 L = mod:GetLocale()
