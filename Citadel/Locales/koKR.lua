@@ -143,11 +143,21 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
 if L then
-	L.airphase_trigger = "여기가 끝이다! 아무도 살아남지 못하리라!"
+	L.engage_trigger = "여기까지 오다니"	--check
+	
+	L.phase2 = "2 단계"
+	L.phase2_desc = "2 단계 변화를 알립니다.."
+	L.phase2_trigger = "자, 주인님의 무한한"	--check
+	L.phase2_message = "2 단계!"
+	
 	L.airphase = "비행 단계"
-	L.airphase_message = "비행 단계"
 	L.airphase_desc = "신드라고사의 착지 & 비행에 대한 단계를 알립니다."
+	L.airphase_trigger = "여기가 끝이다! 아무도 살아남지 못하리라!"
+	L.airphase_message = "비행 단계"
+	
 	L.boom = "폭발!"
+	
+	L.unchained_message = "당신은 해방된 마법!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
