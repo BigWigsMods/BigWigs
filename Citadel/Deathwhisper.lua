@@ -102,6 +102,6 @@ function mod:Touch(player, spellId, _, _, _, stack)
 end
 
 function mod:Deformed()
-
+	self:Message("adds", L["deformed_fanatic"], "Urgent", 70674)
 end
 
