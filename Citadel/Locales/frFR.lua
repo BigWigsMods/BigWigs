@@ -161,14 +161,14 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
 if L then
-	L.engage_trigger = "Il est stupide d'être venus ici" -- à vérifier
+	L.engage_trigger = "Il est stupide d'être venus ici" -- à compléter
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Prévient quand la rencontre passe en phase 2."
-	L.phase2_trigger = "Sentez maintenant le pouvoir infini de mon maître" -- à vérifier
+	L.phase2_trigger = "Sentez maintenant le pouvoir infini de mon maître" -- à compléter
 	L.phase2_message = "Phase 2 !"
 
-	L.airphase_trigger = "Votre incursion s'arrête ici" -- à vérifier
+	L.airphase_trigger = "Votre incursion s'arrête ici" -- à compléter
 	L.airphase = "Phase aérienne"
 	L.airphase_message = "Phase aérienne"
 	L.airphase_desc = "Prévient quand Sindragosas décolle."
@@ -182,10 +182,22 @@ if L then
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 end
 
---[[L = BigWigs:NewBossLocale("The Lich King", "frFR")
+L = BigWigs:NewBossLocale("The Lich King", "frFR")
 if L then
+	L.warmup_trigger = "Voici donc qu'arrive la fameuse" -- à compléter
+	L.engage_trigger = "Tout est dit." -- à compléter
+	L.engage_bar = "Le roi-liche"
 
-end--]]
+	L.defile_bar = "Profanation"
+	L.necroticplague_bar = "Peste nécrotique"
+	L.valkyr_bar = "Prochaine vague de val'kyrs"
+	L.harvestsoul_bar = "Moisson d'âmes"
+	L.valkyr_message = "Val'kyr"
+	L.remorselesswinter_message = "Hiver impitoyable en incantation"
+	L.quake_message = "Secousse en incantation"
+	L.vilespirits_bar = "Esprits vils"
+	L.defile_say = "Profanation sur moi !"
+end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
 if L then
@@ -200,6 +212,6 @@ if L then
 	L.manavoid_message = "Vide de mana sur VOUS !"
 
 	L.suppresser = "Apparition de Suppresseurs"
-	L.suppresser_dec = "Prévient quand une meute de Suppresseurs apparaît."
+	L.suppresser_desc = "Prévient quand une meute de Suppresseurs apparaît."
 	L.suppresser_message = "~Suppresseurs"
 end
