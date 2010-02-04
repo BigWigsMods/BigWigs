@@ -175,7 +175,7 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
 if L then
-	--L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	L.airphase_trigger = "Здесь ваше вторжение и окончится! Никто не уцелеет."
 	L.airphase = "Воздушная фаза"
 	L.airphase_message = "Воздушная фаза"
 	L.airphase_desc = "Сообщать когда Синдрагоса отрывается от земли"
