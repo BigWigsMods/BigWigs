@@ -56,10 +56,8 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-function mod:Warmup(msg)
-	if msg == L["warmup_trigger"] then
-		self:Bar(69037, self.displayName, 47, "achievement_boss_lichking")
-	end
+function mod:Warmup()
+	self:Bar(69037, self.displayName, 47, "achievement_boss_lichking")
 end
 
 function mod:OnEngage()
