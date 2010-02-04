@@ -143,11 +143,21 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
 if L then
-	L.airphase_trigger = "你們的入侵將在此終止!誰也別想存活!"
+	L.engage_trigger = "You are fools to have come to this place."
+	
+	L.phase2 = "第二階段"
+	L.phase2_desc = "當進入第二階段時發出警報。"
+	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
+	L.phase2_message = "第二階段！"
+	
 	L.airphase = "空中階段"
-	L.airphase_message = "空中階段！"
 	L.airphase_desc = "當辛德拉苟莎起飛時發出警報。"
+	L.airphase_trigger = "你們的入侵將在此終止!誰也別想存活!"
+	L.airphase_message = "空中階段！"
+	
 	L.boom = "極凍之寒！"
+	
+	L.unchained_message = ">你<中了無束魔法！"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
