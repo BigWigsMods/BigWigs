@@ -36,7 +36,8 @@ if L then
 	L.airphase = "Airphase"
 	L.airphase_desc = "Warns about Sindragosas lift-off"
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
-	L.airphase_message = "Airphase"
+	L.airphase_message = "Airphase inc!"
+	L.airphase_bar = "Airphase"
 
 	L.boom = "Explosion!"
 
@@ -68,7 +69,7 @@ end
 
 function mod:OnEngage()
 	lastChilled = nil
-	self:Bar("airphase", L["airphase_message"], 50)
+	self:Bar("airphase", L["airphase_bar"], 50)
 end
 
 --------------------------------------------------------------------------------
@@ -101,7 +102,7 @@ end
 
 function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Attention")
-	self:Bar("airphase", L["airphase_message"], 110)
+	self:Bar("airphase", L["airphase_bar"], 110)
 
 	local bossId = self:GetUnitIdByGUID(36853)
 	if not bossId then return end
@@ -111,8 +112,8 @@ function mod:AirPhase()
 end
 
 function mod:Phase2()
-	self:SendMessage("BigWigs_StopBar", self, L["airphase_message"])
-	self:Message("phase", L["phase2_message"], "Positive")
+	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"])
+	self:Message("phase2", L["phase2_message"], "Positive")
 end
 
 function mod:Unchained(player, spellId)

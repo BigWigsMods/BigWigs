@@ -161,7 +161,26 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "deDE")
 if L then
+	L.engage_trigger = "Ihr seid Narren, euch hierher zu wagen. Der eisige Wind Nordends wird eure Seelen verschlingen!"
 
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Warnt, wenn Phase 2 beginnt."
+	--L.phase2_trigger = "Now, feel my master's limitless power and despair!"
+	L.phase2_message = "Phase 2!"
+
+	L.airphase = "Flugphase"
+	L.airphase_desc = "Warnt, wenn Sindragosa abhebt."
+	L.airphase_trigger = "Euer Vormarsch endet hier! Keiner wird überleben!"
+	L.airphase_message = "Flugphase kommt!"
+	L.airphase_bar = "Flugphase"
+
+	L.boom = "Explosion!"
+
+	L.unchained_message = "Entfesselte Magie auf DIR"
+
+	L.chilled = "Durchgefroren"
+	L.chilled_desc = "Warnt, wenn du 4 oder mehr Stapel von 'Durchgefroren' auf Dir hast."
+	L.chilled_message = "%dx Durchgefroren!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
