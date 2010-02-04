@@ -172,6 +172,11 @@ if L then
 	L.portal_desc = "Warnt, wenn Valithria Alptraumportale öffnet."
 	L.portal_message = "Portale!"
 	L.portal_trigger = "Ich habe ein Portal in den Traum geöffnet. Darin liegt Eure Erlösung, Helden..."
+	L.portal_bar = "Nächsten Portale"
 
 	L.manavoid_message = "Manaleere auf DIR!"
+
+	L.suppresser = "Unterdrücker erscheinen"
+	L.suppresser_dec = "Warnt, wenn eine Gruppe Unterdrücker erscheint."
+	L.suppresser_message = "~Unterdrücker"
 end
