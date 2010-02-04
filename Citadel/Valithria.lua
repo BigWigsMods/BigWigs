@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Valithria Dreamwalker", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886, 37950, 37985)
-mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppressor", "portal", "berserk", "bosskill"}
+mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "portal", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,9 +23,9 @@ if L then
 
 	L.manavoid_message = "Mana Void on YOU!"
 
-	L.suppressor = "Suppressors spawn"
-	L.suppressor_desc = "Warns when a pack of Suppressors spawn."
-	L.suppressor_message = "~Suppressors"
+	L.suppresser = "Suppressers spawn"
+	L.suppresser_desc = "Warns when a pack of Suppressers spawn."
+	L.suppresser_message = "~Suppressers"
 end
 L = mod:GetLocale()
 
@@ -46,13 +46,13 @@ end
 
 local function adds()
 	--XXX more testing
-	mod:Bar("suppressor", L["suppressor_message"], 58, 70588)
+	mod:Bar("suppresser", L["suppresser_message"], 58, 70588)
 	mod:ScheduleTimer(adds, 58)
 end
 
 function mod:OnEngage()
 	--self:Berserk(420, true)
-	self:Bar("suppressor", L["suppressor_message"], 29, 70588)
+	self:Bar("suppresser", L["suppresser_message"], 29, 70588)
 	self:Bar("portal", L["portal_bar"], 46, 72482)
 	self:ScheduleTimer(adds, 29)
 end

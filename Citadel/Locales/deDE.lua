@@ -176,7 +176,7 @@ if L then
 
 	L.manavoid_message = "Manaleere auf DIR!"
 
-	L.suppressor = "Unterdrücker erscheinen"
-	L.suppressor_desc = "Warnt, wenn eine Gruppe Unterdrücker erscheint."
-	L.suppressor_message = "~Unterdrücker"
+	L.suppresser = "Unterdrücker erscheinen"
+	L.suppresser_desc = "Warnt, wenn eine Gruppe Unterdrücker erscheint."
+	L.suppresser_message = "~Unterdrücker"
 end
