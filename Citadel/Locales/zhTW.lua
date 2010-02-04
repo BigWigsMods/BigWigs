@@ -66,7 +66,7 @@ if L then
 	L.touch_message = "無脅之觸%2$dx：>%1$s<！"
 	L.touch_bar = "<下一無脅之觸>"
 
-	L.deformed_yell = "I release you from the curse of flesh!"
+	L.deformed_yell = "讓我將你們從血肉詛咒中釋放!"
 	L.deformed_fanatic = "Deformed Fanatic!"
 end
 
@@ -163,7 +163,7 @@ end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
 if L then
-	L.engage_trigger = "You have made an... unwise... decision."
+	L.engage_trigger = "你做了一個…不明智的…選擇。"
 
 	L.shadow = "群聚暗影"
 	L.shadow_message = "群聚暗影！"
