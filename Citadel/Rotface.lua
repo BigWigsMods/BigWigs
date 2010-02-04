@@ -62,7 +62,7 @@ function mod:InfectionRemoved(player)
 end
 
 function mod:SlimeSpray(_, spellId, _, _, spellName)
-	self:Message(69508, spellName, "Important", spellId)
+	self:Message(69508, spellName, "Important", spellId, "Alarm")
 	self:Bar(69508, L["spray_bar"], 21, 69508)
 end
 
