@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "bosskill"}
+mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "phase2", "bosskill"}
 -- 69846 = Frost Bomb (Fires a missile towards a random target. When this missile lands, it deals 5655 to 6345 Shadow damage to all enemies within 10 yards of that location.)
 -- 70117 = Icy Grip, pulls players to the middle, 1sec after that she starts blistering cold
 -- 70126 = Frost Beacon (mark for 70157 frost tomb)
@@ -24,6 +24,13 @@ local beacon = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "You are fools to have come to this place."
+	
+	L.phase2 = "Phases 2"
+	L.phase2_desc = "Warn for phase 2 changes."
+	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
+	L.phase2_message = "Phase 2!"
+	
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase = "Airphase"
 	L.airphase_message = "Airphase"
@@ -42,7 +49,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "FrostBomb", 69846)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Yell("Engage", L["engage_trigger"])
 	self:Yell("AirPhase", L["airphase_trigger"])
+	self:Yell("Phase2", L["phase2_trigger"])
 	self:Death("Win", 36853)
 end
 
@@ -87,5 +96,10 @@ function mod:AirPhase()
 	local min, max = UnitHealth(bossId), UnitHealthMax(bossId)
 	local hpPercent = math.floor(min / max * 100 + 0.5) .. "%"
 	print("Sindragosa took off at " .. hpPercent .. " hitpoints, please notify the developers in #bigwigs on freenode if possible.")
+end
+
+function mod:Phase2()
+	self:SendMessage("BigWigs_StopBar", self, L["airphase_message"])
+	self:Message("phase", L["phase2_message"], "Positive")
 end
 
