@@ -158,6 +158,10 @@ if L then
 	L.boom = "폭발!"
 	
 	L.unchained_message = "당신은 해방된 마법!"
+	
+	L.chilled = "사무치는 한기"
+	L.chilled_desc = "사무치는 한기 4중첩이상을 알립니다."
+	L.chilled_message = "사무치는 한기 x%d!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
