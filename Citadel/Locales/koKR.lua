@@ -198,3 +198,20 @@ if L then
 	L.phase1_bar = "착지"
 	L.phase2_bar = "공중 단계"
 end
+
+L = BigWigs:NewBossLocale("The Lich King", "koKR")
+if L then
+	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"	--check
+	L.engage_trigger = "두고 보자"	--check
+	L.engage_bar = "등장!"
+
+	L.defile_bar = "파멸"
+	L.necroticplague_bar = "괴저 역병"
+	L.valkyr_bar = "다음 발키르 웨이브"
+	L.valkyr_message = "발키르"
+	L.harvestsoul_message = "영혼 착취"
+	L.remorselesswinter_message = "냉혹한 겨울 시전"
+	L.quake_message = "지진 시전"
+	L.vilespirits_bar = "사악한 영혼"
+	L.defile_say = "나에게 파멸!"
+end

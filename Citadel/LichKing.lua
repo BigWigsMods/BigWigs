@@ -19,6 +19,7 @@ local phase = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
 	L.engage_trigger = "So be it. Champions. attack!"
 	L.engage_bar = "Incoming!"
 
@@ -51,7 +52,14 @@ function mod:OnBossEnable()
 	self:Death("Win", 36597)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Yell("Warmup", L["warmup_trigger"])
 	self:Yell("Engage", L["engage_trigger"])
+end
+
+function mod:Warmup(msg)
+	if msg == L["warmup_trigger"] then
+		self:Bar(69037, self.displayName, 47, "achievement_boss_lichking")
+	end
 end
 
 function mod:OnEngage()
