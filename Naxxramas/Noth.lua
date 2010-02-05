@@ -67,8 +67,25 @@ function mod:OnBossEnable()
 	self:Death("Win", 15954)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"], L["starttrigger3"])
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+end
+
+function mod:OnEngage()
+	timeroom = 90
+	timebalcony = 70
+	cursetime = 55
+	wave1time = 10
+	wave2time = 41
+
+	self:Message("teleport", L["startwarn"], "Important")
+	self:DelayedMessage("teleport", timeroom - 10, L["teleportwarn2"], "Urgent")
+	self:Bar("teleport", L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
+	if GetRaidDifficulty() == 2 then
+		self:DelayedMessage("blink", 25, L["blinkwarn2"], "Attention")
+		self:Bar("blink", L["blinkbar"], 30, 29208)
+	end
+	self:ScheduleTimer("TeleportToBalcony", timeroom)
 end
 
 --------------------------------------------------------------------------------
@@ -87,26 +104,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 		self:Message("blink", L["blinkwarn"], "Important", 29208)
 		self:DelayedMessage("blink", 34, L["blinkwarn2"], "Attention")
 		self:Bar("blink", L["blinkbar"], 39, 29208)
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
-		timeroom = 90
-		timebalcony = 70
-		cursetime = 55
-		wave1time = 10
-		wave2time = 41
-
-		self:Message("teleport", L["startwarn"], "Important")
-		self:DelayedMessage("teleport", timeroom - 10, L["teleportwarn2"], "Urgent")
-		self:Bar("teleport", L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
-		if GetRaidDifficulty() == 2 then
-			self:DelayedMessage("blink", 25, L["blinkwarn2"], "Attention")
-			self:Bar("blink", L["blinkbar"], 30, 29208)
-		end
-		-- XXX hopefully noth only utters one of the start triggers at engage, verify for release
-		self:ScheduleTimer("TeleportToBalcony", timeroom)
 	end
 end
 

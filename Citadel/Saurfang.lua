@@ -43,8 +43,6 @@ L = mod:GetLocale()
 --
 
 -- XXX validate add timer on engage
--- XXX make frenzy the enrage timer perhaps, so we get messages for it automatically
--- XXX ^- need separate warnings for separate abilities?
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172, 72173, 72356, 72357, 72358)
