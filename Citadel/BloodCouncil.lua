@@ -35,7 +35,7 @@ if L then
 	L.shock_say = "Shock zone on me!"
 
 	L.skullprince = "Skull on active prince"
-	L.skullprince_desc = "Place a skull on the active blood prince with health."
+	L.skullprince_desc = "Place a skull on the active blood prince with health (requires promoted or leader)."
 end
 L = mod:GetLocale()
 

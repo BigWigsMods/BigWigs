@@ -27,6 +27,9 @@ if L then
 	L.bloat_bar = "<下一Gastric Bloat>"
 
 	L.spore_bar = "<下一Gas Spore>"
+
+	L.sporeicon = "Icon on Spore targets"
+	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhCN")

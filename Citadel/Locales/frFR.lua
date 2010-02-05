@@ -66,6 +66,9 @@ if L then
 	L.bloat_bar = "~Prochain Ballonnement"
 
 	L.spore_bar = "~Prochaines Spores gazeuses"
+
+	L.sporeicon = "Icon on Spore targets"
+	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
