@@ -100,7 +100,6 @@ if L then
 	L.touch_message = "%2$dx Berührung: %1$s"
 	L.touch_bar = "~Nächste Berührung"
 
-	L.deformed_yell = "Ich erlöse Euch vom Fluch des Fleisches!"
 	L.deformed_fanatic = "Deformierter Fanatiker!"
 end
 

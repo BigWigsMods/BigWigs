@@ -33,7 +33,6 @@ if L then
 	L.touch_message = "%2$dx Touch on %1$s"
 	L.touch_bar = "Next Touch"
 
-	L.deformed_yell = "I release you from the curse of flesh!"
 	L.deformed_fanatic = "Deformed Fanatic!"
 end
 L = mod:GetLocale()
@@ -48,11 +47,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
 	self:Log("SPELL_AURA_APPLIED", "Touch", 71204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Touch", 71204)
+	self:Log("SPELL_CAST_START", "Deformed", 70900)
 	self:Death("Win", 36855)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
-	self:Yell("Deformed", L["deformed_yell"])
 end
 
 local handle_Adds = nil
@@ -102,6 +101,6 @@ function mod:Touch(player, spellId, _, _, _, stack)
 end
 
 function mod:Deformed()
-	self:Message("adds", L["deformed_fanatic"], "Urgent", 70674)
+	self:Message("adds", L["deformed_fanatic"], "Urgent", 70900)
 end
 

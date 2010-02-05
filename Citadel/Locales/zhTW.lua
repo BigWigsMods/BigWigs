@@ -65,7 +65,6 @@ if L then
 	L.touch_message = "無脅之觸%2$dx：>%1$s<！"
 	L.touch_bar = "<下一無脅之觸>"
 
-	L.deformed_yell = "讓我將你們從血肉詛咒中釋放!"
 	L.deformed_fanatic = "Deformed Fanatic!"
 end
 

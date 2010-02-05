@@ -65,7 +65,6 @@ if L then
 	L.touch_message = "Touch of Insignificance%2$dx：>%1$s<！"
 	L.touch_bar = "<下一Touch of Insignificance>"
 
-	L.deformed_yell = "I release you from the curse of flesh!"
 	L.deformed_fanatic = "Deformed Fanatic!"
 end
 

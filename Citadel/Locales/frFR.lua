@@ -49,7 +49,6 @@ if L then
 	L.touch_message = "%2$dx Toucher sur %1$s"
 	L.touch_bar = "Prochain Toucher"
 
-	L.deformed_yell = "Loyal partisan, je te libère de la malédiction de la chair !"
 	L.deformed_fanatic = "Fanatique déformé !"
 end
 

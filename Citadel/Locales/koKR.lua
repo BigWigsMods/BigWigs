@@ -65,7 +65,6 @@ if L then
 	L.touch_message = "손길 %2$dx : %1$s"
 	L.touch_bar = "다음 손길"
 
-	L.deformed_yell = "신실한 자들이여, 유신의 구속에서 해방하노라!"
 	L.deformed_fanatic = "광신자 변형"
 end
 
