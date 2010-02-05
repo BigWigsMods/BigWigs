@@ -158,7 +158,7 @@ if L then
 	
 	L.boom = "極凍之寒！"
 	
-	L.unchained_message = ">你<中了無束魔法！"
+	L.unchained_message = ">你< 中了無束魔法！"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")

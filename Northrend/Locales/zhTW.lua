@@ -101,5 +101,5 @@ if L then
 
 	L.freeze_message = "冰凍之地"
 
-	L.orb_bar = "下一<冰凍寶珠>"
+	L.orb_bar = "<下一冰凍寶珠>"
 end
