@@ -203,8 +203,8 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "koKR")
 if L then
-	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"	--check
-	L.engage_trigger = "두고 보자"	--check
+	L.warmup_trigger = "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가?"
+	L.engage_trigger = "두고보자. 용사들이여, 공격하라!"
 	L.engage_bar = "등장!"
 
 	L.defile_bar = "파멸"
