@@ -25,22 +25,22 @@ if L then
 
 	L.necroticplague_message = "Necrotic Plague"
 	L.necroticplague_bar = "Necrotic Plague"
-	
+
 	L.valkyr_bar = "Next Val'kyr"
 	L.valkyr_message = "Val'kyr"
 	L.vilespirits_bar = "Vile Spirits"
-	
+
 	L.harvestsoul_message = "Harvest Soul"
-	
+
 	L.remorselesswinter_message = "Remorseless Winter Casting"
 	L.quake_message = "Quake Casting"
-	
+
 	L.defile_say = "Defile on ME!"
 	L.defile_message = "Defile on YOU!"
 	L.defile_bar = "Next Defile"
-	
+
 	L.infest_bar = "~Next Infest"
-	
+
 	L.reaper_message = "Soul Reaper"
 	L.reaper_bar = "~Next Reaper"
 end
@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
 	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
-	
+
 	self:Death("Win", 36597)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -98,7 +98,7 @@ end
 
 function mod:NecroticPlague(player, spellId)
 	self:TargetMessage(73912, L["necroticplague_message"], player, "Personal", spellId, "Alert")
-	if pName == player then self:FlashShake(73912) end
+	if UnitIsUnit(player, "player") then self:FlashShake(73912) end
 	self:Whisper(73912, player, L["necroticplague_message"])
 	self:Bar(73912, L["necroticplague_bar"], 30, spellId)
 	self:SecondaryIcon(73912, player)
@@ -113,7 +113,7 @@ function mod:DefileRun(player, spellId)
 	local time = GetTime()
 	if (time - last) > 2 then
 		last = time
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			self:LocalMessage(72743, L["defile_message"], "Personal", spellId, "Info")
 			self:FlashShake(72743)
 		end
@@ -143,7 +143,7 @@ function mod:Quake(_, spellId)
 	self:LocalMessage(72262, L["quake_message"], "Urgent", spellId, "Alert")
 	self:Bar(72743, L["defile_bar"], 30, 72743)
 	self:Bar(70541, L["infest_bar"], 13, 70541)
-	if phase == 2 then 
+	if phase == 2 then
 		self:Bar(69037, L["valkyr_bar"], 20, 69037)
 	elseif phase == 4 then
 		self:Bar(70498, L["vilespirits_bar"], 20, 70498)
