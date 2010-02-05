@@ -57,18 +57,18 @@ if L then
 	L.engage_trigger = "On joue ?"
 
 	L.inhale_message = "Inhalation de chancre %d"
-	L.inhale_bar = "~Prochaine Inhalation (%d)"
+	L.inhale_bar = "Inhalation %d"
 
 	L.blight_warning = "Chancre âcre dans ~5 sec. !"
-	L.blight_bar = "~Prochain Chancre âcre"
+	L.blight_bar = "Prochain Chancre"
 
 	L.bloat_message = "%2$dx Ballonnement gastrique sur %1$s"
-	L.bloat_bar = "~Prochain Ballonnement"
+	L.bloat_bar = "~Ballonnement gastrique"
 
-	L.spore_bar = "~Prochaines Spores gazeuses"
+	L.spore_bar = "~Spores gazeuses"
 
-	L.sporeicon = "Icon on Spore targets"
-	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
+	L.sporeicon = "Icônes sur les cibles des spores"
+	L.sporeicon_desc = "Place un crâne, une croix et un carré sur les joueurs ayant une spore (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
@@ -91,14 +91,14 @@ end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
 if L then
-	L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
-
 	L.impale_cd = "~Prochain Empaler"
 
 	L.bonestorm_cd = "~Prochaine Tempête d'os"
 	L.bonestorm_warning = "Tempête d'os dans 5 sec. !"
 
 	L.coldflame_message = "Flamme froide sur VOUS !"
+
+	L.engage_trigger = "Le Fléau va déferler sur ce monde dans un torrent de mort et de destruction !"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "frFR")
@@ -115,7 +115,7 @@ if L then
 	L.engage_trigger = "Grande nouvelle, mes amis ! Je crois que j'ai mis au point une peste qui va détruire toute vie sur Azeroth !"
 
 	L.ball_bar = "Prochaine boule de Gelée"
-	L.ball_say = "Boule malléable de Gelée verte sur moi !"
+	L.ball_say = "Boule de Gelée sur moi !"
 
 	L.experiment_message = "Arrivée d'une nouvelle expérience !"
 	L.experiment_bar = "Prochaine expérience"
@@ -138,7 +138,7 @@ if L then
 
 	L.ooze = "Fusion de limons"
 	L.ooze_desc = "Prévient quand un limon fusionne avec un autre."
-	L.ooze_message = "Limon instable %dx"
+	L.ooze_message = "Limon %dx"
 
 	L.spray_bar = "Prochaine Projection"
 end
@@ -151,7 +151,7 @@ if L then
 	L.adds_message = "Bêtes de sang !"
 	L.adds_bar = "Prochaines Bêtes de sang"
 
-	L.rune_bar = "Prochaine Rune sanglante"
+	L.rune_bar = "~Prochaine Rune"
 
 	L.mark = "Marque %d"
 
@@ -165,22 +165,22 @@ if L then
 	L.engage_trigger = "Il est stupide d'être venus ici" -- à compléter
 
 	L.phase2 = "Phase 2"
-	L.phase2_desc = "Prévient quand la rencontre passe en phase 2."
+	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 à 35%."
 	L.phase2_trigger = "Sentez maintenant le pouvoir infini de mon maître" -- à compléter
 	L.phase2_message = "Phase 2 !"
 
-	L.airphase_trigger = "Votre incursion s'arrête ici" -- à compléter
 	L.airphase = "Phase aérienne"
-	L.airphase_message = "Phase aérienne"
 	L.airphase_desc = "Prévient quand Sindragosas décolle."
+	L.airphase_trigger = "Votre incursion s'arrête ici" -- à compléter
+	L.airphase_message = "Phase aérienne"
+	L.airphase_bar = "Prochaine phase aérienne"
 
-	L.boom = "Explosion !"
+	L.boom_message = "Explosion !"
+	L.boom_bar = "Explosion"
 
-	L.unchained_message = "Magie débridée sur VOUS !"
-
-	L.chilled = "Transi jusqu'aux os"
-	L.chilled_desc = "Prévient quand vous avez 4 cumuls ou plus de Transi jusqu'aux os."
+	L.unchained_message = "Magie débridée x%d !"
 	L.chilled_message = "Transi jusqu'aux os x%d !"
+	L.buffet_message = "Rafale mystique x%d !"
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "frFR")
@@ -192,8 +192,8 @@ if L then
 	L.defile_bar = "Profanation"
 	L.necroticplague_bar = "Peste nécrotique"
 	L.valkyr_bar = "Prochaine vague de val'kyrs"
-	L.harvestsoul_bar = "Moisson d'âmes"
 	L.valkyr_message = "Val'kyr"
+	L.harvestsoul_bar = "Moisson d'âmes"
 	L.remorselesswinter_message = "Hiver impitoyable en incantation"
 	L.quake_message = "Secousse en incantation"
 	L.vilespirits_bar = "Esprits vils"
