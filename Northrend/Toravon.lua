@@ -48,6 +48,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	count = 1
 	self:Bar(72091, L["orb_bar"], 15, 72091)
 	self:Bar(72034, L["whiteout_bar"]:format(count), 30, 72034)
 end
