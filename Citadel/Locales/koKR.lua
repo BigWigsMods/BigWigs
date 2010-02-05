@@ -207,13 +207,24 @@ if L then
 	L.engage_trigger = "두고보자. 용사들이여, 공격하라!"
 	L.engage_bar = "등장!"
 
-	L.defile_bar = "파멸"
+	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"
-	L.valkyr_bar = "다음 발키르 웨이브"
+	
+	L.valkyr_bar = "다음 발키르"
 	L.valkyr_message = "발키르"
+	L.vilespirits_bar = "사악한 영혼"
+	
 	L.harvestsoul_message = "영혼 착취"
+	
 	L.remorselesswinter_message = "냉혹한 겨울 시전"
 	L.quake_message = "지진 시전"
-	L.vilespirits_bar = "사악한 영혼"
+	
 	L.defile_say = "나에게 파멸!"
+	L.defile_message = "당신은 파멸!"
+	L.defile_bar = "다음 파멸"
+	
+	L.infest_bar = "다음 몰아치기"
+	
+	L.reaper_message = "영혼 쐐기"
+	L.reaper_bar = "~다음 쐐기"
 end
