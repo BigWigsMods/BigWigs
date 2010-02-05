@@ -5,12 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {71047, {70126, "FLASHSHAKE"}, 71056, "airphase", "phase2", {69762, "FLASHSHAKE"}, {70106, "FLASHSHAKE"}, "bosskill"}
--- 69846 = Frost Bomb (Fires a missile towards a random target. When this missile lands, it deals 5655 to 6345 Shadow damage to all enemies within 10 yards of that location.)
--- 70117 = Icy Grip, pulls players to the middle, 1sec after that she starts blistering cold
--- 70126 = Frost Beacon (mark for 70157 frost tomb)
--- 71056 = Frostbreath (Frost damage to enemies in a 60 yard cone in front of the caster. In addition, the targets' attack speed and chance to dodge are decreased by 50% for 6 sec.)
--- 71047 = Blistering Cold/ 5 sec cast /Deals 60.000 Frost damage to enemies within 25 yards.
+mod.toggleOptions = {{70126, "FLASHSHAKE"}, 71047, 71056, {69762, "FLASHSHAKE"}, {70106, "FLASHSHAKE"}, "airphase", "phase2", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -54,7 +49,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
-	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117) -- (70123, 71047, 71048, 71049) are the Spell itself
+	-- 70123, 71047, 71048, 71049 are Blistering Cold, 70117 is Frost Grip
+	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117)
 	self:Log("SPELL_CAST_START", "Breath", 69649, 71056, 71057, 71058)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

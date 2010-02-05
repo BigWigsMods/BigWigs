@@ -63,8 +63,8 @@ end
 function mod:OnEngage()
 	print("Note that none of the timers in this bossfight have been verified by the Big Wigs team, so things might be a little off at this point. Nevertheless enjoy the fight!")
 	self:OpenProximity(10)
-	self:Bar(72743, L["necroticplague_bar"], 30, spellId)
-	self:Bar(69037, L["engage_bar"], 4)
+	self:Bar(72743, L["necroticplague_bar"], 30, 72743)
+	self:Bar(69037, L["engage_bar"], 4, 69037)
 	phase = 1
 end
 
@@ -87,7 +87,7 @@ end
 
 function mod:HarvestSoul(player, spellId)
 	self:Bar(68980, L["harvestsoul_message"], 75, spellId)
-	self:TargetMessage(68980, L["harvestsoul_message"], player, "Attention", 68980)
+	self:TargetMessage(68980, L["harvestsoul_message"], player, "Attention", spellId)
 end
 
 function mod:RemorselessWinter(_, spellId)
