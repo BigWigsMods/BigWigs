@@ -9,7 +9,7 @@ if L then
 	L.regular_shock_message = "震擊漩渦區域！"
 	L.shock_say = ">我< 震擊漩渦！"
 
-	L.skullprince = "Skull on active prince"
+	L.skullprince = "設置標記在強力的親王身上"
 	L.skullprince_desc = "Place a skull on the active blood prince with health."
 end
 
@@ -144,7 +144,7 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
 if L then
-	L.engage_trigger = "你們真是夠蠢了才會來到此地。"
+	L.engage_trigger = "你們真是夠蠢了才會來到此地。北裂境的冰冷寒風將吞噬你們的靈魂!"
 	
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當進入第二階段時發出警報。"
@@ -155,21 +155,31 @@ if L then
 	L.airphase_desc = "當辛德拉苟莎起飛時發出警報。"
 	L.airphase_trigger = "你們的入侵將在此終止!誰也別想存活!"
 	L.airphase_message = "空中階段！"
+	L.airphase_bar = "下一 空中階段"
 	
-	L.boom = "極凍之寒！"
+	L.boom_message = "極凍之寒！"
+	L.boom_bar = "極凍之寒"
 	
-	L.unchained_message = ">你< 中了無束魔法！"
+	L.unchained_message = "無束魔法 x%d！"
+	L.chilled_message = "沁骨之寒 x%d!"
+	L.buffet_message = "秘能連擊 x%d!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
 if L then
-	L.manavoid_message = ">你< 潰法力場！"
+	L.engage_trigger = "入侵者已經突破了內部聖所。加快摧毀綠龍的速度!只要留下骨頭和肌腱來復活!"
+
 	L.portal = "夢魘之門！"
 	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
 	L.portal_message = "打開夢魘之門！"
-	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
+	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
+	L.portal_bar = "下一 夢魘之門"
 
-	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+	L.manavoid_message = "Mana Void on YOU!"
+
+	L.suppresser = "Suppressers spawn"
+	L.suppresser_desc = "Warns when a pack of Suppressers spawn."
+	L.suppresser_message = "~Suppressers"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
@@ -188,4 +198,21 @@ if L then
 	L.phase_message = "即將 空中階段！"
 	L.phase1_bar = "<地面階段>"
 	L.phase2_bar = "<空中階段>"
+end
+
+local L = mod:NewLocale("zhTW", true)
+if L then
+	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
+	L.engage_trigger = "So be it. Champions. attack!"
+	L.engage_bar = "Incoming!"
+
+	L.defile_bar = "Defile"
+	L.necroticplague_bar = "Necrotic Plague"
+	L.valkyr_bar = "Next Val'kyr wave"
+	L.valkyr_message = "Val'kyr"
+	L.harvestsoul_message = "Harvest Soul"
+	L.remorselesswinter_message = "Remorseless Winter Casting"
+	L.quake_message = "Quake Casting"
+	L.vilespirits_bar = "Vile Spirits"
+	L.defile_say = "Defile on ME!"
 end
