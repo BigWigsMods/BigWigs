@@ -175,9 +175,24 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
 if L then
-	L.airphase_trigger = "Здесь ваше вторжение и окончится! Никто не уцелеет."
+	L.engage_trigger = "Глупцы, зачем вы сюда явились!"
+
+	L.phase2 = "Фаза 2"
+	L.phase2_desc = "Сообщать, когда Синдрагоса перейдет во вторую фазу на 35% жизней."
+	L.phase2_trigger = "А теперь почувствуйте всю мощь господина и погрузитесь в отчаяние!"
+	L.phase2_message = "Фаза 2!"
+
 	L.airphase = "Воздушная фаза"
-	L.airphase_message = "Воздушная фаза"
-	L.airphase_desc = "Сообщать когда Синдрагоса отрывается от земли"
-	L.boom = "Взрыв!"
+	L.airphase_desc = "Сообщать когда Синдрагоса отрывается от земли."
+	L.airphase_trigger = "Здесь ваше вторжение и окончится! Никто не уцелеет."
+	L.airphase_message = "Воздушная фаза!"
+	L.airphase_bar = "Следующая воздушная фаза."
+
+	L.boom_message = "Взрыв!"
+	L.boom_bar = "Взрыв"
+
+	L.unchained_message = "Освобожденная магия на ВАС!"
+	L.instability_message = "Неустойчивость x%d!"
+	L.chilled_message = "Обжигающий холод x%d!"
+	L.buffet_message = "Таинственная энергия x%d!"
 end
