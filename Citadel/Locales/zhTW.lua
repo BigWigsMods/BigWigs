@@ -175,11 +175,11 @@ if L then
 	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
 	L.portal_bar = "下一 夢魘之門"
 
-	L.manavoid_message = "Mana Void on YOU!"
+	L.manavoid_message = ">你< 中了潰法力場！"
 
 	L.suppresser = "Suppressers spawn"
 	L.suppresser_desc = "Warns when a pack of Suppressers spawn."
-	L.suppresser_message = "~Suppressers"
+	L.suppresser_message = "抑制者 即將到來"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
@@ -200,19 +200,19 @@ if L then
 	L.phase2_bar = "<空中階段>"
 end
 
-local L = mod:NewLocale("zhTW", true)
+L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
 	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
 	L.engage_trigger = "So be it. Champions. attack!"
 	L.engage_bar = "Incoming!"
 
-	L.defile_bar = "Defile"
-	L.necroticplague_bar = "Necrotic Plague"
+	L.defile_bar = "汙染"
+	L.necroticplague_bar = "亡域瘟疫"
 	L.valkyr_bar = "Next Val'kyr wave"
 	L.valkyr_message = "Val'kyr"
 	L.harvestsoul_message = "Harvest Soul"
-	L.remorselesswinter_message = "Remorseless Winter Casting"
+	L.remorselesswinter_message = "正在施放 冷酷凜冬"
 	L.quake_message = "Quake Casting"
 	L.vilespirits_bar = "Vile Spirits"
-	L.defile_say = "Defile on ME!"
+	L.defile_say = ">你< 中了汙染！"
 end
