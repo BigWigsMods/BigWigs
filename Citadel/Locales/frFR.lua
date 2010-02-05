@@ -178,6 +178,7 @@ if L then
 	L.boom_message = "Explosion !"
 	L.boom_bar = "Explosion"
 
+	L.unchained_message = "Magie débridée sur VOUS !"
 	L.unchained_message = "Magie débridée x%d !"
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 	L.buffet_message = "Rafale mystique x%d !"
@@ -189,15 +190,26 @@ if L then
 	L.engage_trigger = "Tout est dit." -- à compléter
 	L.engage_bar = "Le roi-liche"
 
-	L.defile_bar = "Profanation"
+	L.necroticplague_message = "Peste nécrotique"
 	L.necroticplague_bar = "Peste nécrotique"
-	L.valkyr_bar = "Prochaine vague de val'kyrs"
+
+	L.valkyr_bar = "Prochaine val'kyrs"
 	L.valkyr_message = "Val'kyr"
+	L.vilespirits_bar = "Esprits vils"
+
 	L.harvestsoul_bar = "Moisson d'âmes"
+
 	L.remorselesswinter_message = "Hiver impitoyable en incantation"
 	L.quake_message = "Secousse en incantation"
-	L.vilespirits_bar = "Esprits vils"
+
 	L.defile_say = "Profanation sur moi !"
+	L.defile_message = "Profanation sur VOUS !"
+	L.defile_bar = "Prochaine Profanation"
+
+	L.infest_bar = "~Prochain Infester"
+
+	L.reaper_message = "Faucheur d'âme"
+	L.reaper_bar = "~Prochain Faucheur"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
