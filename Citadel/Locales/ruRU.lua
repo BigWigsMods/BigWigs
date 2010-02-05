@@ -75,8 +75,8 @@ if L then
 
 	L.spore_bar = "~Следующие Газообразные споры"
 
-	L.sporeicon = "Icon on Spore targets"
-	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
+	L.sporeicon = "Иконки на целях Спор"
+	L.sporeicon_desc = "Пометить черепом, крестом и квадратом игроков с Газообразными спорами."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "ruRU")
@@ -115,7 +115,7 @@ if L then
 	L.touch_message = "%2$dx Прикосновений у: %1$s"
 	L.touch_bar = "~Прикосновение"
 
-	L.deformed_fanatic = "Deformed Fanatic!"
+	L.deformed_fanatic = "Кособокий фанатик!"
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
