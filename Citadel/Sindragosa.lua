@@ -5,13 +5,13 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {{70126, "FLASHSHAKE"}, 71047, 71056, {69762, "FLASHSHAKE"}, {70106, "FLASHSHAKE"}, "airphase", "phase2", "bosskill"}
+mod.toggleOptions = {69762, 70106, 71047, {70126, "FLASHSHAKE"}, "airphase", "phase2", 70127, "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local beacon = mod:NewTargetList()
+local beaconTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,23 +21,23 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "You are fools to have come to this place."
 
-	L.phase2 = "Phases 2"
-	L.phase2_desc = "Warn for phase 2 changes."
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Warn when Sindragosa goes into phase 2, at 35%."
 	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
 	L.phase2_message = "Phase 2!"
 
-	L.airphase = "Airphase"
-	L.airphase_desc = "Warns about Sindragosas lift-off"
+	L.airphase = "Air phase"
+	L.airphase_desc = "Warn when Sindragosa will lift off."
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
-	L.airphase_message = "Airphase inc!"
-	L.airphase_bar = "Next Airphase"
+	L.airphase_message = "Air phase!"
+	L.airphase_bar = "Next air phase"
 
-	L.boom_message = "Explosion inc!"
-	L.boom_bar = "Explosion!"
+	L.boom_message = "Explosion!"
+	L.boom_bar = "Explosion"
 
-	L.unchained_message = "Unchained magic on YOU!"
-
-	L.chilled_message = "Chilled to the Bone x%d!"
+	L.unchained_message = "Unchained x%d!"
+	L.chilled_message = "Chilled x%d!"
+	L.buffet_message = "Magic x%d!"
 end
 L = mod:GetLocale()
 
@@ -46,12 +46,16 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Unchained", 69762)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127)
+
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
-	-- 70123, 71047, 71048, 71049 are Blistering Cold, 70117 is Frost Grip
-	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117)
-	self:Log("SPELL_CAST_START", "Breath", 69649, 71056, 71057, 71058)
+	self:Log("SPELL_AURA_APPLIED", "Tombed", 70157)
+
+	-- 70123, 71047, 71048, 71049 is the actual blistering cold
+	self:Log("SPELL_CAST_SUCCESS", "Grip", 70117)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
@@ -68,40 +72,40 @@ end
 -- Event Handlers
 --
 
+function mod:Tombed(player)
+	if UnitIsUnit(player, "player") then
+		self:CloseProximity()
+	end
+end
+
 do
 	local scheduled = nil
-	local function BeaconWarn(spellName)
-		mod:TargetMessage(70126, spellName, beacon, "Urgent", 70126)
+	local function baconWarn(spellName)
+		mod:TargetMessage(70126, spellName, beaconTargets, "Urgent", 70126)
 		mod:Bar(70126, spellName, 7, 70126)
 		scheduled = nil
 	end
 	function mod:FrostBeacon(player, spellId, _, _, spellName)
-		beacon[#beacon + 1] = player
+		beaconTargets[#beaconTargets + 1] = player
 		if UnitIsUnit(player, "player") then
+			self:OpenProximity(10)
 			self:FlashShake(70126)
 		end
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(BeaconWarn, 0.3, spellName)
+			self:ScheduleTimer(baconWarn, 0.2, spellName)
 		end
 	end
 end
 
-function mod:BlisteringCold()
-	self:Message(71047, L["boom_message"], "Attention", 71047)
+function mod:Grip()
+	self:Message(71047, L["boom_message"], "Important", 71047, "Alarm")
 	self:Bar(71047, L["boom_bar"], 5, 71047)
 end
 
 function mod:AirPhase()
-	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"]) -- Is this necessary?
-	self:Message("airphase", L["airphase_message"], "Attention")
+	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
-
-	local bossId = self:GetUnitIdByGUID(36853)
-	if not bossId then return end
-	local min, max = UnitHealth(bossId), UnitHealthMax(bossId)
-	local hpPercent = math.floor(min / max * 100 + 0.5) .. "%"
-	print("Sindragosa took off at " .. hpPercent .. " hitpoints, please notify the developers in #bigwigs on freenode if possible.")
 end
 
 function mod:Phase2()
@@ -109,22 +113,21 @@ function mod:Phase2()
 	self:Message("phase2", L["phase2_message"], "Positive", nil, "Long")
 end
 
-function mod:Unchained(player, spellId)
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alarm")
-		self:FlashShake(69762)
+function mod:Buffet(player, spellId, _, _, _, stack)
+	if stack > 5 and UnitIsUnit(player, "player") then
+		self:LocalMessage(70127, L["buffet_message"]:format(stack), "Personal", spellId, "Info")
+	end
+end
+
+function mod:Unchained(player, spellId, _, _, _, stack)
+	if stack > 5 and UnitIsUnit(player, "player") then
+		self:LocalMessage(69762, L["unchained_message"]:format(stack), "Personal", spellId)
 	end
 end
 
 function mod:Chilled(player, spellId, _, _, _, stack)
-	if UnitIsUnit(player, "player") then
-		if stack and stack > 3 then
-			self:LocalMessage(70106, L["chilled_message"]:format(stack), "Personal", spellId, "Alarm")
-			self:FlashShake(70106)
-		end
+	if stack > 5 and UnitIsUnit(player, "player") then
+		self:LocalMessage(70106, L["chilled_message"]:format(stack), "Personal", spellId)
 	end
 end
 
-function mod:Breath(_, spellId, _, _, spellName)
-	self:Message(71056, spellName, "Important", spellId)
-end
