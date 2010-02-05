@@ -28,8 +28,8 @@ if L then
 
 	L.spore_bar = "~다음 가스 포자"
 
-	L.sporeicon = "Icon on Spore targets"
-	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
+	L.sporeicon = "가스 포자 대상 전술"
+	L.sporeicon_desc = "가스 포자 대상에게 해골, 가위 & 네모 전술을 지정합니다. (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
@@ -154,15 +154,15 @@ if L then
 	L.airphase = "비행 단계"
 	L.airphase_desc = "신드라고사의 착지 & 비행에 대한 단계를 알립니다."
 	L.airphase_trigger = "여기가 끝이다! 아무도 살아남지 못하리라!"
-	L.airphase_message = "비행 단계"
+	L.airphase_message = "비행 단계!"
+	L.airphase_bar = "비행 단계"
 	
-	L.boom = "폭발!"
+	L.boom_message = "폭발!"
+	L.boom_bar = "폭발"
 	
-	L.unchained_message = "당신은 해방된 마법!"
-	
-	L.chilled = "사무치는 한기"
-	L.chilled_desc = "사무치는 한기 4중첩이상을 알립니다."
+	L.unchained_message = "해방된 마법 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
+	L.buffet_message = "신비한 강타 x%d!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
