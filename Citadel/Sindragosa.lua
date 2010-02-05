@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {69762, 70106, 71047, {70126, "FLASHSHAKE"}, "airphase", "phase2", 70127, "proximity", "bosskill"}
+mod.toggleOptions = {69762, 70106, 71047, {70126, "FLASHSHAKE"}, "airphase", "phase2", 70127, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -65,6 +65,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 50, 23684)
 end
 
