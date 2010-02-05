@@ -144,7 +144,7 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
 if L then
-	L.engage_trigger = "You are fools to have come to this place."
+	L.engage_trigger = "你們真是夠蠢了才會來到此地。"
 	
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當進入第二階段時發出警報。"
