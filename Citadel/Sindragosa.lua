@@ -50,7 +50,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127)
 
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
 	self:Log("SPELL_AURA_APPLIED", "Tombed", 70157)
 

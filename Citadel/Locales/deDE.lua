@@ -3,14 +3,14 @@ if L then
 	L.switch_message = "Ziel wechseln: %s"
 	L.switch_bar = "~Ziel wechseln"
 
-	L.empowered_flames = "Infernoflammen"
+	L.empowered_flames = "Infernoflammen" -- needs verification after 3.2.2 hit, trigger might have changed.
 
 	L.empowered_shock_message = "Schockvortex kommt!"
 	L.regular_shock_message = "Schockzone"
 	L.shock_say = "Schockzone auf MIR!"
 
 	L.skullprince = "Totenkopf auf aktivem Prinz"
-	L.skullprince_desc = "Plaziert den Totenkopf auf dem aktiven Blutprinzen."
+	L.skullprince_desc = "Plaziert den Totenkopf auf dem aktiven Blutprinzen (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
@@ -63,8 +63,8 @@ if L then
 
 	L.spore_bar = "~Gassporen"
 
-	L.sporeicon = "Icon on Spore targets"
-	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
+	L.sporeicon = "Symbole auf Spielern mit Sporen"
+	L.sporeicon_desc = "Plaziert den Totenkopf, das Kreuz und das Quadrat auf Spielern mit Sporen (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
@@ -165,7 +165,7 @@ if L then
 	L.engage_trigger = "Ihr seid Narren, euch hierher zu wagen. Der eisige Wind Nordends wird eure Seelen verschlingen!"
 
 	L.phase2 = "Phase 2"
-	L.phase2_desc = "Warnt, wenn Phase 2 beginnt."
+	L.phase2_desc = "Warnt, wenn Phase 2 bei 35% beginnt."
 	--L.phase2_trigger = "Now, feel my master's limitless power and despair!"
 	L.phase2_message = "Phase 2!"
 
@@ -175,12 +175,12 @@ if L then
 	L.airphase_message = "Flugphase kommt!"
 	L.airphase_bar = "Nächste Flugphase"
 
-	L.boom_message = "Explosion kommt!"
-	L.boom_bar = "Explosion!"
+	L.boom_message = "Explosion!"
+	L.boom_bar = "Explosion"
 
-	L.unchained_message = "Entfesselte Magie auf DIR"
-
+	L.unchained_message = "%dx Entfesselte Magie!"
 	L.chilled_message = "%dx Durchgefroren!"
+	L.buffet_message = "%dx Puffer!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
