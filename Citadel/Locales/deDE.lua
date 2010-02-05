@@ -172,14 +172,13 @@ if L then
 	L.airphase_desc = "Warnt, wenn Sindragosa abhebt."
 	L.airphase_trigger = "Euer Vormarsch endet hier! Keiner wird überleben!"
 	L.airphase_message = "Flugphase kommt!"
-	L.airphase_bar = "Flugphase"
+	L.airphase_bar = "Nächste Flugphase"
 
-	L.boom = "Explosion!"
+	L.boom_message = "Explosion kommt!"
+	L.boom_bar = "Explosion!"
 
 	L.unchained_message = "Entfesselte Magie auf DIR"
 
-	L.chilled = "Durchgefroren"
-	L.chilled_desc = "Warnt, wenn du 4 oder mehr Stapel von 'Durchgefroren' auf Dir hast."
 	L.chilled_message = "%dx Durchgefroren!"
 end
 

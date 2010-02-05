@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "phase2", {69762, "FLASHSHAKE"}, {"chilled", "FLASHSHAKE"}, "bosskill"}
+mod.toggleOptions = {71047, {70126, "FLASHSHAKE"}, 71056, "airphase", "phase2", {69762, "FLASHSHAKE"}, {70106, "FLASHSHAKE"}, "bosskill"}
 -- 69846 = Frost Bomb (Fires a missile towards a random target. When this missile lands, it deals 5655 to 6345 Shadow damage to all enemies within 10 yards of that location.)
 -- 70117 = Icy Grip, pulls players to the middle, 1sec after that she starts blistering cold
 -- 70126 = Frost Beacon (mark for 70157 frost tomb)
@@ -17,8 +17,6 @@ mod.toggleOptions = {69846, 71047, 71056, 70126, "airphase", "phase2", {69762, "
 --
 
 local beacon = mod:NewTargetList()
-local lastChilled = nil
-local chilled = GetSpellInfo(70106)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,14 +35,13 @@ if L then
 	L.airphase_desc = "Warns about Sindragosas lift-off"
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase_message = "Airphase inc!"
-	L.airphase_bar = "Airphase"
+	L.airphase_bar = "Next Airphase"
 
-	L.boom = "Explosion!"
+	L.boom_message = "Explosion inc!"
+	L.boom_bar = "Explosion!"
 
 	L.unchained_message = "Unchained magic on YOU!"
 
-	L.chilled = "Chilled to the Bone"
-	L.chilled_desc = "Warn when you have 4 or more stacks of Chilled to the Bone."
 	L.chilled_message = "Chilled to the Bone x%d!"
 end
 L = mod:GetLocale()
@@ -55,11 +52,11 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
 	self:Log("SPELL_CAST_SUCCESS", "BlisteringCold", 70117) -- (70123, 71047, 71048, 71049) are the Spell itself
-	self:Log("SPELL_SUMMON", "FrostBomb", 69846)
+	self:Log("SPELL_CAST_START", "Breath", 69649, 71056, 71057, 71058)
 
-	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 	self:Yell("AirPhase", L["airphase_trigger"])
@@ -68,8 +65,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	lastChilled = nil
-	self:Bar("airphase", L["airphase_bar"], 50)
+	self:Bar("airphase", L["airphase_bar"], 50, 23684)
 end
 
 --------------------------------------------------------------------------------
@@ -80,10 +76,14 @@ do
 	local scheduled = nil
 	local function BeaconWarn(spellName)
 		mod:TargetMessage(70126, spellName, beacon, "Urgent", 70126)
+		mod:Bar(70126, spellName, 7, 70126)
 		scheduled = nil
 	end
 	function mod:FrostBeacon(player, spellId, _, _, spellName)
 		beacon[#beacon + 1] = player
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(70126)
+		end
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(BeaconWarn, 0.3, spellName)
@@ -91,18 +91,15 @@ do
 	end
 end
 
-function mod:FrostBomb( _, spellId, _, _, spellName)
-	self:Message(69846, spellName, "Attention", spellId)
-end
-
-function mod:BlisteringCold(_, spellId, _, _, spellName)
-	self:Message(70123, spellName, "Attention", spellId)
-	self:Bar(70123, L["boom"], 6, spellId)
+function mod:BlisteringCold()
+	self:Message(71047, L["boom_message"], "Attention", 71047)
+	self:Bar(71047, L["boom_bar"], 5, 71047)
 end
 
 function mod:AirPhase()
+	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"]) -- Is this necessary?
 	self:Message("airphase", L["airphase_message"], "Attention")
-	self:Bar("airphase", L["airphase_bar"], 110)
+	self:Bar("airphase", L["airphase_bar"], 110, 23684)
 
 	local bossId = self:GetUnitIdByGUID(36853)
 	if not bossId then return end
@@ -113,7 +110,7 @@ end
 
 function mod:Phase2()
 	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"])
-	self:Message("phase2", L["phase2_message"], "Positive")
+	self:Message("phase2", L["phase2_message"], "Positive", nil, "Long")
 end
 
 function mod:Unchained(player, spellId)
@@ -123,14 +120,15 @@ function mod:Unchained(player, spellId)
 	end
 end
 
-function mod:UNIT_AURA(event, unit)
-	if unit and unit ~= "player" then return end
-	local _, _, icon, stack = UnitDebuff("player", chilled)
-	if stack and stack ~= lastChilled then
-		if stack > 3 then
-			self:LocalMessage("chilled", L["chilled_message"]:format(stack), "Personal", icon)
-			self:FlashShake("chilled")
+function mod:Chilled(player, spellId, _, _, _, stack)
+	if UnitIsUnit(player, "player") then
+		if stack and stack > 3 then
+			self:LocalMessage(70106, L["chilled_message"]:format(stack), "Personal", spellId, "Alarm")
+			self:FlashShake(70106)
 		end
-		lastChilled = stack
 	end
+end
+
+function mod:Breath(_, spellId, _, _, spellName)
+	self:Message(71056, spellName, "Important", spellId)
 end
