@@ -28,8 +28,7 @@ if L then
 	L.switch_message = "Health swap: %s"
 	L.switch_bar = "~Next health swap"
 
-	L.infernoflames = "Empowered Flames"
-	L.infernoflames_message = "Fireball"
+	L.empowered_flames = "Empowered Flames"
 
 	L.empowered_shock_message = "Casting Shock!"
 	L.regular_shock_message = "Shock zone"
@@ -69,6 +68,8 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 				self:Engage()
 				self:Bar(70981, L["switch_bar"], 45, 70981)
 				self:Berserk(600)
+			else
+				self:Disable()
 			end
 		else
 			self:Reboot()
@@ -128,11 +129,11 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
-	if msg:find(L["infernoflames"]) then
+	if msg:find(L["empowered_flames"]) then
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(72040)
 		end
-		self:TargetMessage(72040, L["infernoflames_message"], player, "Urgent", 72040, "Long")
+		self:TargetMessage(72040, L["empowered_flames"], player, "Urgent", 72040, "Long")
 	end
 end
 

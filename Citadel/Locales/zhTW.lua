@@ -3,8 +3,7 @@ if L then
 	L.switch_message = "虛弱轉換: %s"
 	L.switch_bar = "<下一虛弱轉換>"
 
-	L.infernoflames = "地獄火"
-	L.infernoflames_message = "火球術"
+	L.empowered_flames = "地獄火"
 
 	L.empowered_shock_message = "正在施放 強力震擊漩渦！"
 	L.regular_shock_message = "震擊漩渦區域！"

@@ -15,8 +15,7 @@ if L then
 	L.switch_message = "Смена цели: %s"
 	L.switch_bar = "~Следующая смена цели"
 
-	L.infernoflames = "Жаркое пламя"
-	L.infernoflames_message = "Пламя"
+	L.empowered_flames = "Жаркое пламя"
 
 	L.empowered_shock_message = "Могучий вихрь!"
 	L.regular_shock_message = "Вихрь на "

@@ -3,8 +3,7 @@ if L then
 	L.switch_message = "Nouvelle cible : %s"
 	L.switch_bar = "~Prochain chgt de cible"
 
-	L.infernoflames = "L'Embrasement surpuissant"
-	L.infernoflames_message = "Embrasement"
+	L.empowered_flames = "L'Embrasement surpuissant"
 
 	L.empowered_shock_message = "Vortex de choc surpuissant en incantation !"
 	L.regular_shock_message = "Vortex de choc"

@@ -3,8 +3,7 @@ if L then
 	L.switch_message = "Ziel wechseln: %s"
 	L.switch_bar = "~Ziel wechseln"
 
-	L.infernoflames = "Infernoflammen"
-	L.infernoflames_message = "Feuerball"
+	L.empowered_flames = "Infernoflammen"
 
 	L.empowered_shock_message = "Schockvortex kommt!"
 	L.regular_shock_message = "Schockzone"
