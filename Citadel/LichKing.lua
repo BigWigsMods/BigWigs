@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {70541, 69409, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, "proximity", "bosskill"}
+mod.toggleOptions = {70541, 69409, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -26,9 +26,13 @@ if L then
 	L.necroticplague_message = "Necrotic Plague"
 	L.necroticplague_bar = "Necrotic Plague"
 
+	L.ragingspirit_message = "Raging Spirit"
+	L.ragingspirit_bar = "Raging Spirit"
+
 	L.valkyr_bar = "Next Val'kyr"
 	L.valkyr_message = "Val'kyr"
-	L.vilespirits_bar = "Vile Spirits"
+
+	L.vilespirits_bar = "~Vile Spirits"
 
 	L.harvestsoul_message = "Harvest Soul"
 
@@ -54,7 +58,9 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
 	self:Log("SPELL_CAST_START", "DefileCast", 72762)
+    self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 73912)
+    self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_SUCCESS", "Reaper", 69409, 73797, 73798, 73799)
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980)
@@ -78,7 +84,7 @@ function mod:OnEngage()
 	print("Note that none of the timers in this bossfight have been verified by the Big Wigs team, so things might be a little off at this point. Nevertheless enjoy the fight!")
 	self:OpenProximity(10)
 	self:Bar(72743, L["necroticplague_bar"], 36, 73912)
-	self:Bar(69037, L["engage_bar"], 4, 69037)
+	self:Bar(69037, L["engage_bar"], 5, 69037)
 	phase = 1
 end
 
@@ -89,6 +95,11 @@ end
 function mod:Infest(_, spellId, _, _, spellName)
 	self:Message(70541, spellName, "Urgent", spellId)
 	self:Bar(70541, L["infest_bar"], 22, spellId)
+end
+
+function mod:VileSpirits(_, spellId, _, _, spellName)
+	self:Message(70498, spellName, "Urgent", spellId)
+	self:Bar(70498, L["vilespirits_bar"], 30.5, spellId)
 end
 
 function mod:Reaper(player, spellId)
@@ -102,6 +113,14 @@ function mod:NecroticPlague(player, spellId)
 	self:Whisper(73912, player, L["necroticplague_message"])
 	self:Bar(73912, L["necroticplague_bar"], 30, spellId)
 	self:SecondaryIcon(73912, player)
+end
+
+function mod:RagingSpirit(player, spellId)
+	self:TargetMessage(69200, L["ragingspirit_message"], player, "Personal", spellId, "Alert")
+	if UnitIsUnit(player, "player") then self:FlashShake(69200) end
+	self:Whisper(69200, player, L["ragingspirit_message"])
+	self:Bar(69200, L["ragingspirit_bar"], 23, spellId)
+	self:PrimaryIcon(69200, player)
 end
 
 function mod:NPRemove(player, spellId)
@@ -136,17 +155,19 @@ function mod:RemorselessWinter(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["infest_bar"])
 	self:LocalMessage(74270, L["remorselesswinter_message"], "Urgent", spellId, "Alert")
 	self:Bar(72262, L["quake_message"], 60, 72262)
+    self:Bar(69200, L["ragingspirit_bar"], 15, spellId)
 end
 
 function mod:Quake(_, spellId)
 	phase = phase + 1
+    self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
 	self:LocalMessage(72262, L["quake_message"], "Urgent", spellId, "Alert")
 	self:Bar(72743, L["defile_bar"], 30, 72743)
 	self:Bar(70541, L["infest_bar"], 13, 70541)
 	if phase == 2 then
-		self:Bar(69037, L["valkyr_bar"], 20, 69037)
+		self:Bar(69037, L["valkyr_bar"], 24, 69037)
 	elseif phase == 4 then
-		self:Bar(70498, L["vilespirits_bar"], 20, 70498)
+		self:Bar(70498, L["vilespirits_bar"], 21, 70498)
 	end
 end
 
