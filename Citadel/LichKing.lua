@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {70541, 69409, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, "proximity", "bosskill"}
+mod.toggleOptions = {70541, 69409, 72143, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -68,6 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
 	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
+	self:Log("SPELL_AURA_APPLIED", "Enrage", 72143, 72146, 72147, 72148)
 
 	self:Death("Win", 36597)
 
@@ -113,6 +114,10 @@ function mod:NecroticPlague(player, spellId)
 	self:Whisper(73912, player, L["necroticplague_message"])
 	self:Bar(73912, L["necroticplague_bar"], 30, spellId)
 	self:SecondaryIcon(73912, player)
+end
+
+function mod:Enrage(_, spellId, _, _, spellName)
+	self:Message(72143, spellName, "Attention", spellId)
 end
 
 function mod:RagingSpirit(player, spellId)
