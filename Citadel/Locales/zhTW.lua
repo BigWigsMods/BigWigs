@@ -161,6 +161,7 @@ if L then
 	L.boom_bar = "極凍之寒"
 	
 	L.unchained_message = "無束魔法 x%d！"
+	L.instability_message = "不穩定 x%d!"
 	L.chilled_message = "沁骨之寒 x%d!"
 	L.buffet_message = "秘能連擊 x%d!"
 end
@@ -204,15 +205,30 @@ L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
 	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
 	L.engage_trigger = "So be it. Champions. attack!"
-	L.engage_bar = "Incoming!"
+	L.engage_bar = "進入戰鬥！"
 
-	L.defile_bar = "汙染"
+	L.necroticplague_message = "亡域瘟疫"
 	L.necroticplague_bar = "亡域瘟疫"
-	L.valkyr_bar = "Next Val'kyr wave"
+
+	L.ragingspirit_message = "Raging Spirit"
+	L.ragingspirit_bar = "Raging Spirit"
+
+	L.valkyr_bar = "Next Val'kyr"
 	L.valkyr_message = "Val'kyr"
-	L.harvestsoul_message = "Harvest Soul"
+
+	L.vilespirits_bar = "邪惡靈魂 即將到來"
+
+	L.harvestsoul_message = "靈魂割取"
+
 	L.remorselesswinter_message = "正在施放 冷酷凜冬"
-	L.quake_message = "Quake Casting"
-	L.vilespirits_bar = "Vile Spirits"
-	L.defile_say = ">你< 中了汙染！"
+	L.quake_message = "正在施放 地震"
+
+	L.defile_say = ">我< 中了汙染！"
+	L.defile_message = ">你< 中了汙染！"
+	L.defile_bar = "下一 汙染"
+
+	L.infest_bar = "寄生 即將到來"
+
+	L.reaper_message = "靈魂收割者"
+	L.reaper_bar = "靈魂收割者 即將到來"
 end
