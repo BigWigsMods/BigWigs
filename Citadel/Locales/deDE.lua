@@ -178,7 +178,8 @@ if L then
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
 
-	L.unchained_message = "%dx Entfesselte Magie!"
+	L.unchained_message = "Entfesselte Magie auf DIR!"
+	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
 end
