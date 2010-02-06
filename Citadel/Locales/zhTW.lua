@@ -213,8 +213,8 @@ if L then
 	L.ragingspirit_message = "Raging Spirit"
 	L.ragingspirit_bar = "Raging Spirit"
 
-	L.valkyr_bar = "Next Val'kyr"
-	L.valkyr_message = "Val'kyr"
+	L.valkyr_bar = "下一 華爾琪"
+	L.valkyr_message = "華爾琪"
 
 	L.vilespirits_bar = "邪惡靈魂 即將到來"
 
