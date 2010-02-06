@@ -3,7 +3,7 @@ if L then
 	L.switch_message = "Ziel wechseln: %s"
 	L.switch_bar = "~Ziel wechseln"
 
-	L.empowered_flames = "Infernoflammen" -- needs verification after 3.2.2 hit, trigger might have changed.
+	L.empowered_flames = "Machtvolle Flammen"
 
 	L.empowered_shock_message = "Schockvortex kommt!"
 	L.regular_shock_message = "Schockzone"
