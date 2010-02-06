@@ -208,9 +208,12 @@ if L then
 	L.necroticplague_message = "Мертвящая чума"
 	L.necroticplague_bar = "Мертвящая чума"
 
+	L.ragingspirit_message = "Разъярённый дух"
+	L.ragingspirit_bar = "Разъярённый дух"
+
 	L.valkyr_bar = "Следующая Валь'кира"
 	L.valkyr_message = "Валь'кира"
-	L.vilespirits_bar = "Разъярённые духи"
+	L.vilespirits_bar = "Зловещие духи"
 
 	L.harvestsoul_message = "Жнец Душ"
 
