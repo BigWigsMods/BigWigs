@@ -210,8 +210,12 @@ if L then
 	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"
 	
+	L.ragingspirit_message = "분노의 영혼"
+	L.ragingspirit_bar = "~분노의 영혼"
+	
 	L.valkyr_bar = "다음 발키르"
 	L.valkyr_message = "발키르"
+	
 	L.vilespirits_bar = "사악한 영혼"
 	
 	L.harvestsoul_message = "영혼 착취"
