@@ -170,7 +170,7 @@ function mod:Quake(_, spellId)
 	self:Bar(72743, L["defile_bar"], 30, 72743)
 	self:Bar(70541, L["infest_bar"], 13, 70541)
 	if phase == 2 then
-		self:Bar(69037, L["valkyr_bar"], 24, 69037)
+		self:Bar(69037, L["valkyr_bar"], 24, 71844)
 	elseif phase == 4 then
 		self:Bar(70498, L["vilespirits_bar"], 21, 70498)
 	end
@@ -199,7 +199,7 @@ do
 	function mod:DefileCast(player, spellId, _, _, spellName)
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
-		self:Bar(72743, L["defile_bar"], 36, 72743)
+		self:Bar(72743, L["defile_bar"], 33, 72743)
 		handle = self:ScheduleTimer(scanTarget, 0.1)
 	end
 end
