@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {70541, 69409, 72143, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, "proximity", "bosskill"}
+mod.toggleOptions = {70541, 69409, 72143, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -46,6 +46,8 @@ if L then
 
 	L.reaper_message = "Soul Reaper"
 	L.reaper_bar = "~Next Reaper"
+
+    L.last_phase_bar = "Last Phase"
 end
 L = mod:GetLocale()
 
@@ -68,6 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
 	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 72143, 72146, 72147, 72148)
+    self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
 	self:Death("Win", 36597)
 
@@ -90,6 +93,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:FuryofFrostmourne()
+    self:Bar(72350, L["last_phase_bar"], 160, 72350)
+end
 
 function mod:Infest(_, spellId, _, _, spellName)
 	self:Message(70541, spellName, "Urgent", spellId)
