@@ -205,7 +205,7 @@ L = BigWigs:NewBossLocale("The Lich King", "koKR")
 if L then
 	L.warmup_trigger = "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가?"
 	L.engage_trigger = "두고보자. 용사들이여, 공격하라!"
-	L.engage_bar = "등장!"
+	L.engage_bar = "시작!"
 
 	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"
@@ -216,7 +216,7 @@ if L then
 	L.valkyr_bar = "다음 발키르"
 	L.valkyr_message = "발키르"
 	
-	L.vilespirits_bar = "사악한 영혼"
+	L.vilespirits_bar = "~다음 새우들"
 	
 	L.harvestsoul_message = "영혼 착취"
 	
@@ -227,7 +227,7 @@ if L then
 	L.defile_message = "당신은 파멸!"
 	L.defile_bar = "다음 파멸"
 	
-	L.infest_bar = "다음 몰아치기"
+	L.infest_bar = "~다음 몰아치기"
 	
 	L.reaper_message = "영혼 쐐기"
 	L.reaper_bar = "~다음 쐐기"
