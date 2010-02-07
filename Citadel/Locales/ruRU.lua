@@ -200,8 +200,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "ruRU")
 if L then
 	L.warmup_trigger = "Неужели прибыли наконец хваленые силы Света?"
-	L.engage_trigger = "Да будет так. Герои, в атаку!"
-	L.engage_bar = "Наступление!"
+	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring." --update
 
 	L.defile_bar = "Осквернение"
 
@@ -223,9 +222,9 @@ if L then
 	L.defile_say = "Осквернение на МНЕ!"
 	L.defile_message = "Осквернение на ТЕБЕ!"
 	L.defile_bar = "Следующее Осквернение"
-	
+
 	L.infest_bar = "~Следующее Заражение"
-	
+
 	L.reaper_message = "Жнец Душ"
 	L.reaper_bar = "~Следующий Жнец"
 end

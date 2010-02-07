@@ -187,8 +187,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "frFR")
 if L then
 	L.warmup_trigger = "Voici donc qu'arrive la fameuse" -- à compléter
-	L.engage_trigger = "Tout est dit." -- à compléter
-	L.engage_bar = "Le roi-liche"
+	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring." -- update to last yell
 
 	L.necroticplague_message = "Peste nécrotique"
 	L.necroticplague_bar = "Peste nécrotique"

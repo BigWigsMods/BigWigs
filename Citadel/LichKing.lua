@@ -20,8 +20,7 @@ local phase = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
-	L.engage_trigger = "So be it. Champions. attack!"
-	L.engage_bar = "Incoming!"
+	L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.necroticplague_message = "Necrotic Plague"
 	L.necroticplague_bar = "Necrotic Plague"
@@ -78,14 +77,13 @@ function mod:OnBossEnable()
 end
 
 function mod:Warmup()
-	self:Bar(69037, self.displayName, 47, "achievement_boss_lichking")
+	self:Bar(72143, self.displayName, 53, "achievement_boss_lichking")
 end
 
 function mod:OnEngage()
 	print("Note that none of the timers in this bossfight have been verified by the Big Wigs team, so things might be a little off at this point. Nevertheless enjoy the fight!")
 	self:OpenProximity(10)
-	self:Bar(72743, L["necroticplague_bar"], 36, 73912)
-	self:Bar(69037, L["engage_bar"], 5, 69037)
+	self:Bar(72743, L["necroticplague_bar"], 31, 73912)
 	phase = 1
 end
 

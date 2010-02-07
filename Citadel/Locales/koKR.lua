@@ -145,21 +145,21 @@ end
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
 if L then
 	L.engage_trigger = "여기까지 오다니 너무나 어리석구나."
-	
+
 	L.phase2 = "2 단계"
 	L.phase2_desc = "2 단계 변화를 알립니다.."
 	L.phase2_trigger = "자, 주인님의 무한한 힘을 느끼고 절망에 빠져보아라!"
 	L.phase2_message = "2 단계!"
-	
+
 	L.airphase = "비행 단계"
 	L.airphase_desc = "신드라고사의 착지 & 비행에 대한 단계를 알립니다."
 	L.airphase_trigger = "여기가 끝이다! 아무도 살아남지 못하리라!"
 	L.airphase_message = "비행 단계!"
 	L.airphase_bar = "비행 단계"
-	
+
 	L.boom_message = "폭발!"
 	L.boom_bar = "폭발"
-	
+
 	L.unchained_message = "당신은 해방된 마법!"
 	L.instability_message = "불안정 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
@@ -169,15 +169,15 @@ end
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
 if L then
 	L.engage_trigger = "영웅들이여, 나를 도와다오. 더는... 더는 저들을 붙들어 둘 수 없다. 이 상처를 치유해다오!"
-	
+
 	L.portal = "악몽의 차원문"
 	L.portal_desc = "악몽의 차원문을 알립니다."
 	L.portal_message = "차원문 생성!"
 	L.portal_trigger = "에에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
 	L.portal_bar = "다음 차원문"
-	
+
 	L.manavoid_message = "당신은 마나 공허!"
-	
+
 	L.suppresser = "억제자 소환"
 	L.suppresser_desc = "억제자 소환을 알립니다."
 	L.suppresser_message = "~억제자"
@@ -204,31 +204,30 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "koKR")
 if L then
 	L.warmup_trigger = "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가?"
-	L.engage_trigger = "두고보자. 용사들이여, 공격하라!"
-	L.engage_bar = "시작!"
+	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring." --update
 
 	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"
-	
+
 	L.ragingspirit_message = "분노의 영혼"
 	L.ragingspirit_bar = "~분노의 영혼"
-	
+
 	L.valkyr_bar = "다음 발키르"
 	L.valkyr_message = "발키르"
-	
+
 	L.vilespirits_bar = "~다음 새우들"
-	
+
 	L.harvestsoul_message = "영혼 착취"
-	
+
 	L.remorselesswinter_message = "냉혹한 겨울 시전"
 	L.quake_message = "지진 시전"
-	
+
 	L.defile_say = "나에게 파멸!"
 	L.defile_message = "당신은 파멸!"
 	L.defile_bar = "다음 파멸"
-	
+
 	L.infest_bar = "~다음 몰아치기"
-	
+
 	L.reaper_message = "영혼 쐐기"
 	L.reaper_bar = "~다음 쐐기"
 end

@@ -204,8 +204,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
 	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
-	L.engage_trigger = "So be it. Champions. attack!"
-	L.engage_bar = "進入戰鬥！"
+	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.necroticplague_message = "亡域瘟疫"
 	L.necroticplague_bar = "亡域瘟疫"
