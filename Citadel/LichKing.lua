@@ -105,7 +105,7 @@ end
 
 function mod:Reaper(player, spellId)
 	self:TargetMessage(69409, L["reaper_message"], player, "Personal", spellId, "Alert")
-	self:Bar(69409, L["reaper_bar"], 30, spellId)
+	self:Bar(69409, L["reaper_bar"], 40, spellId)
 end
 
 function mod:NecroticPlague(player, spellId)
@@ -199,7 +199,7 @@ do
 	function mod:DefileCast(player, spellId, _, _, spellName)
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
-		self:Bar(72743, L["defile_bar"], 30, 72743)
+		self:Bar(72743, L["defile_bar"], 36, 72743)
 		handle = self:ScheduleTimer(scanTarget, 0.1)
 	end
 end
