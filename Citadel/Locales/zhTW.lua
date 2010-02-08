@@ -147,7 +147,7 @@ if L then
 	L.engage_trigger = "你們真是夠蠢了才會來到此地。北裂境的冰冷寒風將吞噬你們的靈魂!"
 	
 	L.phase2 = "第二階段"
-	L.phase2_desc = "當進入第二階段時發出警報。"
+	L.phase2_desc = "當進入第二階段時發出警報。(35%)"
 	L.phase2_trigger = "現在，絕望地感受我主無限的力量吧!"
 	L.phase2_message = "第二階段！"
 	

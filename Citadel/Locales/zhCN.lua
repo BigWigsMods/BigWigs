@@ -144,11 +144,26 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "zhCN")
 if L then
-	L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	L.engage_trigger = "You are fools to have come to this place."
+	
+	L.phase2 = "第二阶段"
+	L.phase2_desc = "Warn when Sindragosa goes into phase 2, at 35%."
+	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
+	L.phase2_message = "第二阶段！"
+	
 	L.airphase = "空中阶段"
-	L.airphase_message = "空中阶段！"
 	L.airphase_desc = "当辛达苟萨起飞时发出警报。"
-	L.boom = "Explosion！"
+	L.airphase_trigger = "Your incursion ends here! None shall survive!"
+	L.airphase_message = "空中阶段！"
+	L.airphase_bar = "下一 空中阶段"
+	
+	L.boom_message = "Explosion!"
+	L.boom_bar = "Explosion"
+	
+	L.unchained_message = "Unchained magic on YOU!"
+	L.instability_message = "Unstable x%d!"
+	L.chilled_message = "Chilled x%d!"
+	L.buffet_message = "Magic x%d!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhCN")
