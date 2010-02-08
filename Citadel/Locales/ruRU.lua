@@ -200,7 +200,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "ruRU")
 if L then
 	L.warmup_trigger = "Неужели прибыли наконец хваленые силы Света?"
-	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring." --update
+	L.engage_trigger = "Я оставлю тебя в живых, чтобы ты увидел финал."
 
 	L.defile_bar = "Осквернение"
 
@@ -212,6 +212,7 @@ if L then
 
 	L.valkyr_bar = "Следующая Валь'кира"
 	L.valkyr_message = "Валь'кира"
+
 	L.vilespirits_bar = "Зловещие духи"
 
 	L.harvestsoul_message = "Жнец Душ"
@@ -227,5 +228,7 @@ if L then
 
 	L.reaper_message = "Жнец Душ"
 	L.reaper_bar = "~Следующий Жнец"
+
+	L.last_phase_bar = "Последняя фаза"
 end
 
