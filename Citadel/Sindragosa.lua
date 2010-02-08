@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {{69762, "FLASHSHAKE"}, 69766, 70106, 71047, {70126, "FLASHSHAKE"}, "airphase", "phase2", 70127, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {69766, 70106, 71047, {70126, "FLASHSHAKE"}, "airphase", "phase2", 70127, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -36,7 +36,7 @@ if L then
 	L.boom_bar = "Explosion"
 
 	L.unchained_message = "Unchained magic on YOU!"
-	L.instability_message = "Instability x%d!"
+	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
 	L.buffet_message = "Magic x%d!"
 end
@@ -47,7 +47,6 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Instability", 69766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127)
@@ -122,21 +121,14 @@ function mod:Buffet(player, spellId, _, _, _, stack)
 end
 
 function mod:Instability(player, spellId, _, _, _, stack)
-	if stack > 5 and UnitIsUnit(player, "player") then
+	if stack > 4 and UnitIsUnit(player, "player") then
 		self:LocalMessage(69766, L["instability_message"]:format(stack), "Personal", spellId)
 	end
 end
 
 function mod:Chilled(player, spellId, _, _, _, stack)
-	if stack > 5 and UnitIsUnit(player, "player") then
+	if stack > 4 and UnitIsUnit(player, "player") then
 		self:LocalMessage(70106, L["chilled_message"]:format(stack), "Personal", spellId)
-	end
-end
-
-function mod:Unchained(player, spellId)
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alarm")
-		self:FlashShake(69762)
 	end
 end
 
