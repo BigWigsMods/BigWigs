@@ -204,7 +204,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "koKR")
 if L then
 	L.warmup_trigger = "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가?"
-	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring." --update
+	L.engage_trigger = "폴드링" --check
 
 	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"
@@ -230,4 +230,6 @@ if L then
 
 	L.reaper_message = "영혼 쐐기"
 	L.reaper_bar = "~다음 쐐기"
+	
+	L.last_phase_bar = "마지막 단계"
 end
