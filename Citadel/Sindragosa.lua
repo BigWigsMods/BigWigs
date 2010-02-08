@@ -116,8 +116,8 @@ function mod:Phase2()
 end
 
 function mod:Buffet(player, spellId, _, _, _, stack)
-	if stack > 5 and UnitIsUnit(player, "player") then
-		self:LocalMessage(70127, L["buffet_message"]:format(stack), "Personal", spellId, "Info")
+	if stack > 5 and (stack % 2 == 0) and UnitIsUnit(player, "player") then
+		self:LocalMessage(70127, L["buffet_message"]:format(stack), "Attention", spellId, "Info")
 	end
 end
 
