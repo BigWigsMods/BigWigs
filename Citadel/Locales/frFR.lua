@@ -187,14 +187,18 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "frFR")
 if L then
 	L.warmup_trigger = "Voici donc qu'arrive la fameuse" -- à compléter
-	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring." -- update to last yell
+	L.engage_trigger = "Je vais te laisser en vie" -- à compléter
 
 	L.necroticplague_message = "Peste nécrotique"
 	L.necroticplague_bar = "Peste nécrotique"
 
+	L.ragingspirit_message = "Esprit déchaîné"
+	L.ragingspirit_bar = "Esprit déchaîné"
+
 	L.valkyr_bar = "Prochaine val'kyrs"
 	L.valkyr_message = "Val'kyr"
-	L.vilespirits_bar = "Esprits vils"
+
+	L.vilespirits_bar = "~Esprits vils"
 
 	L.harvestsoul_bar = "Moisson d'âmes"
 
@@ -209,6 +213,8 @@ if L then
 
 	L.reaper_message = "Faucheur d'âme"
 	L.reaper_bar = "~Prochain Faucheur"
+
+	L.last_phase_bar = "Dernière phase"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")

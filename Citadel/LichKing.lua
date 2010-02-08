@@ -47,7 +47,7 @@ if L then
 	L.reaper_message = "Soul Reaper"
 	L.reaper_bar = "~Next Reaper"
 
-    L.last_phase_bar = "Last Phase"
+	L.last_phase_bar = "Last Phase"
 end
 L = mod:GetLocale()
 
