@@ -148,7 +148,7 @@ if L then
 	
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當進入第二階段時發出警報。"
-	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
+	L.phase2_trigger = "現在，絕望地感受我主無限的力量吧!"
 	L.phase2_message = "第二階段！"
 	
 	L.airphase = "空中階段"
@@ -203,7 +203,7 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
-	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
+	L.warmup_trigger = "聖光所謂的正義終於來了嗎?我是否該把雙之哀傷放下,祈求你的寬恕呢,弗丁?"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.necroticplague_message = "亡域瘟疫"
@@ -230,4 +230,6 @@ if L then
 
 	L.reaper_message = "靈魂收割者"
 	L.reaper_bar = "靈魂收割者 即將到來"
+
+	L.last_phase_bar = "最終階段"
 end
