@@ -59,9 +59,9 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
 	self:Log("SPELL_CAST_START", "DefileCast", 72762)
-    self:Log("SPELL_CAST_START", "VileSpirits", 70498)
+	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 73912)
-    self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
+	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_SUCCESS", "Reaper", 69409, 73797, 73798, 73799)
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980)
@@ -70,7 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
 	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 72143, 72146, 72147, 72148)
-    self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
+	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
 	self:Death("Win", 36597)
 
@@ -95,7 +95,7 @@ end
 --
 
 function mod:FuryofFrostmourne()
-    self:Bar(72350, L["last_phase_bar"], 160, 72350)
+	self:Bar(72350, L["last_phase_bar"], 160, 72350)
 end
 
 function mod:Infest(_, spellId, _, _, spellName)
@@ -165,12 +165,12 @@ function mod:RemorselessWinter(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["infest_bar"])
 	self:LocalMessage(74270, L["remorselesswinter_message"], "Urgent", spellId, "Alert")
 	self:Bar(72262, L["quake_message"], 60, 72262)
-    self:Bar(69200, L["ragingspirit_bar"], 15, spellId)
+	self:Bar(69200, L["ragingspirit_bar"], 15, spellId)
 end
 
 function mod:Quake(_, spellId)
 	phase = phase + 1
-    self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
 	self:LocalMessage(72262, L["quake_message"], "Urgent", spellId, "Alert")
 	self:Bar(72743, L["defile_bar"], 30, 72743)
 	self:Bar(70541, L["infest_bar"], 13, 70541)

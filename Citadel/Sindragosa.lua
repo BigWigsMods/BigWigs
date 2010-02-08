@@ -35,7 +35,6 @@ if L then
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
 
-	L.unchained_message = "Unchained magic on YOU!"
 	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
 	L.buffet_message = "Magic x%d!"

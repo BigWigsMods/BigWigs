@@ -126,13 +126,13 @@ if L then
 
 	L.engage_trigger = "Ich habe eine Seuche perfektioniert"
 
-	L.ball_bar = "Nächsten Flummis"
-	L.ball_say = "Flummi auf MIR!"
+	L.ball_bar = "Nächster Glibber"
+	L.ball_say = "Glibber auf MIR!"
 
-	L.experiment_message = "Schleim kommt!"
-	L.experiment_bar = "Nächster Schleim"
-	L.blight_message = "Roter Schleim"
-	L.violation_message = "Grüner Schleim"
+	L.experiment_message = "Schlamm kommt!"
+	L.experiment_bar = "Nächster Schlamm"
+	L.blight_message = "Roter Schlamm"
+	L.violation_message = "Grüner Schlamm"
 
 	L.plague_message = "%2$dx Seuche: %1$s"
 	L.plague_bar = "Nächste Seuche"
@@ -178,10 +178,42 @@ if L then
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
 
-	L.unchained_message = "Entfesselte Magie auf DIR!"
 	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
+end
+
+L = BigWigs:NewBossLocale("The Lich King", "deDE")
+if L then
+	--L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
+	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
+
+	L.necroticplague_message = "Nekrotische Seuche"
+	L.necroticplague_bar = "Nekrotische Seuche"
+
+	L.ragingspirit_message = "Tobender Geist"
+	L.ragingspirit_bar = "Tobender Geist"
+
+	L.valkyr_bar = "Nächste Val'kyr"
+	L.valkyr_message = "Val'kyr!"
+
+	--L.vilespirits_bar = "~Abscheuliche Geister" ???
+
+	--L.harvestsoul_message = "Seele ernten" ???
+
+	L.remorselesswinter_message = "Unbarmherziger Winter kommt!"
+	L.quake_message = "Beben kommt"
+
+	--L.defile_say = "Besudeln auf MIR!" ???
+	--L.defile_message = "Besudeln auf DIR!" ???
+	--L.defile_bar = "Nächstes Besudeln"
+
+	L.infest_bar = "~Befallen"
+
+	L.reaper_message = "Seelenernter"
+	L.reaper_bar = "~Seelenernter"
+
+	L.last_phase_bar = "Letzte Phase"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
