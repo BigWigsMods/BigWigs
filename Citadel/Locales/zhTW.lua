@@ -178,8 +178,8 @@ if L then
 
 	L.manavoid_message = ">你< 中了潰法力場！"
 
-	L.suppresser = "Suppressers spawn"
-	L.suppresser_desc = "Warns when a pack of Suppressers spawn."
+	L.suppresser = "抑制者 出現"
+	L.suppresser_desc = "當一群抑制者出現時發出警報。"
 	L.suppresser_message = "抑制者 即將到來"
 end
 
