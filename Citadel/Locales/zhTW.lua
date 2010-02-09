@@ -1,16 +1,16 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "zhTW")
 if L then
-	L.switch_message = "虛弱轉換: %s"
-	L.switch_bar = "<下一虛弱轉換>"
+	L.switch_message = "生命轉換：>%s<！"
+	L.switch_bar = "<下一生命轉換>"
 
-	L.empowered_flames = "地獄火"
+	L.empowered_flames = "製造強力烈焰"
 
 	L.empowered_shock_message = "正在施放 強力震擊漩渦！"
-	L.regular_shock_message = "震擊漩渦區域！"
-	L.shock_say = ">我< 震擊漩渦！"
+	L.regular_shock_message = "強力震擊漩渦區域！"
+	L.shock_say = ">我< 強力震擊漩渦區域！"
 
-	L.skullprince = "設置標記在強力的親王身上"
-	L.skullprince_desc = "Place a skull on the active blood prince with health."
+	L.skullprince = "骷髏標記激活的王子"
+	L.skullprince_desc = "為激活的鮮血王子打上團隊骷髏標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
@@ -28,8 +28,8 @@ if L then
 
 	L.spore_bar = "<下一氣體孢子>"
 
-	L.sporeicon = "Icon on Spore targets"
-	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
+	L.sporeicon = "標記孢子目標"
+	L.sporeicon_desc = "為中了氣體孢子的玩家打上團隊骷髏、獅子、方塊標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhTW")
@@ -145,42 +145,42 @@ end
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
 if L then
 	L.engage_trigger = "你們真是夠蠢了才會來到此地。北裂境的冰冷寒風將吞噬你們的靈魂!"
-	
+
 	L.phase2 = "第二階段"
-	L.phase2_desc = "當進入第二階段時發出警報。(35%)"
+	L.phase2_desc = "當進入第二階段發出警報。（35%）"
 	L.phase2_trigger = "現在，絕望地感受我主無限的力量吧!"
 	L.phase2_message = "第二階段！"
-	
+
 	L.airphase = "空中階段"
 	L.airphase_desc = "當辛德拉苟莎起飛時發出警報。"
 	L.airphase_trigger = "你們的入侵將在此終止!誰也別想存活!"
 	L.airphase_message = "空中階段！"
-	L.airphase_bar = "下一 空中階段"
-	
+	L.airphase_bar = "<下一空中階段>"
+
 	L.boom_message = "極凍之寒！"
-	L.boom_bar = "極凍之寒"
-	
-	L.unchained_message = "無束魔法 x%d！"
-	L.instability_message = "不穩定 x%d!"
-	L.chilled_message = "沁骨之寒 x%d!"
-	L.buffet_message = "秘能連擊 x%d!"
+	L.boom_bar = "<極凍之寒>"
+
+	L.unchained_message = ">你< 無束魔法！"
+	L.instability_message = "不穩定 x%d！"
+	L.chilled_message = "沁骨之寒 x%d！"
+	L.buffet_message = "秘能連擊 x%d！"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
 if L then
 	L.engage_trigger = "入侵者已經突破了內部聖所。加快摧毀綠龍的速度!只要留下骨頭和肌腱來復活!"
 
-	L.portal = "夢魘之門！"
+	L.portal = "夢魘之門"
 	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
 	L.portal_message = "打開夢魘之門！"
 	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
-	L.portal_bar = "下一 夢魘之門"
+	L.portal_bar = "<下一夢魘之門>"
 
-	L.manavoid_message = ">你< 中了潰法力場！"
+	L.manavoid_message = ">你< 潰法力場！"
 
-	L.suppresser = "抑制者 出現"
+	L.suppresser = "抑制者出現"
 	L.suppresser_desc = "當一群抑制者出現時發出警報。"
-	L.suppresser_message = "抑制者 即將到來"
+	L.suppresser_message = "即將出現 抑制者！"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
@@ -207,29 +207,29 @@ if L then
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.necroticplague_message = "亡域瘟疫"
-	L.necroticplague_bar = "亡域瘟疫"
+	L.necroticplague_bar = "<亡域瘟疫>"
 
-	L.ragingspirit_message = "Raging Spirit"
-	L.ragingspirit_bar = "Raging Spirit"
+	L.ragingspirit_message = "狂怒的鬼魂"
+	L.ragingspirit_bar = "<狂怒的鬼魂>"
 
-	L.valkyr_bar = "下一 華爾琪"
-	L.valkyr_message = "華爾琪"
+	L.valkyr_bar = "<下一華爾琪>"
+	L.valkyr_message = "華爾琪！"
 
-	L.vilespirits_bar = "邪惡靈魂 即將到來"
+	L.vilespirits_bar = "<邪惡靈魂>"
 
-	L.harvestsoul_message = "靈魂割取"
+	L.harvestsoul_message = "靈魂割取！"
 
-	L.remorselesswinter_message = "正在施放 冷酷凜冬"
-	L.quake_message = "正在施放 地震"
+	L.remorselesswinter_message = "正在施放 冷酷凜冬！"
+	L.quake_message = "正在施放 地震！"
 
 	L.defile_say = ">我< 中了汙染！"
-	L.defile_message = ">你< 中了汙染！"
-	L.defile_bar = "下一 汙染"
+	L.defile_message = "汙染：>你<！"
+	L.defile_bar = "<下一汙染>"
 
-	L.infest_bar = "寄生 即將到來"
+	L.infest_bar = "<下一寄生>"
 
 	L.reaper_message = "靈魂收割者"
-	L.reaper_bar = "靈魂收割者 即將到來"
+	L.reaper_bar = "<下一靈魂收割者>"
 
-	L.last_phase_bar = "最終階段"
+	L.last_phase_bar = "<最終階段>"
 end

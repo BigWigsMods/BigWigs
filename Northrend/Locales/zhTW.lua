@@ -99,7 +99,7 @@ if L then
 
 	L.frostbite_message = "%2$dx霜寒刺骨：>%1$s<！"
 
-	L.freeze_message = "冰凍之地"
+	L.freeze_message = "冰凍之地！"
 
 	L.orb_bar = "<下一冰凍寶珠>"
 end

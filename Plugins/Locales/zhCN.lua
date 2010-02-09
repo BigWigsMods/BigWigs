@@ -160,11 +160,11 @@ L["If you don't want to see any tips, ever, you can toggle them off here. Tips s
 L["Automatic tips"] = "自动提示"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "如果不想看到美妙的提示，成为世界上最好的 PvE 玩家，团队副本时弹出窗口，你可以禁用这些选项。"
 L["Manual tips"] = "手动提示"
-L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "团长可以使用手动提示 /sendtip 命令显示给在团队中的玩家。如果有做这些恶心事的团长或其他理由不想看到它们，可以禁用这些选项。"
+L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "团长可以使用手动提示 /sendtip 命令显示给在团队中的玩家。如果有做这些恶心事的团长或其他理由不想看到它们，可以禁用这些选项。"
 L["Output to chat frame"] = "输出到聊天框体"
 L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "默认的提示将会单独显示一个美妙的窗口于屏幕中间。如果关闭这些，这些提示“只会”以纯文本的形式显示在聊天窗口且提示窗口将不会再打扰你。"
 L["Usage: /sendtip <index|\"Custom tip\">"] = "用法：/sendtip <index|\"自定义提示\">"
-L["You must be the raid leader to broadcast a tip."] = "你必须是团长才能广播提示。"
+L["You must be an officer in the raid to broadcast a tip."] = "你必须是团长才能广播提示。"
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "提示索引超出范围，接受索引范围从1到%d。"
 
 -----------------------------------------------------------------------
@@ -181,4 +181,3 @@ L["Countdown"] = "冷却"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "如果相关的计时器的长度超过5秒，一个声音与视觉将增加倒计时的最后5秒。想象某个倒计时\"5... 4... 3... 2... 1... 冷却！\"和大个数字位于屏幕中间。"
 L["Flash"] = "闪烁"
 L["Flashes the screen red during the last 3 seconds of any related timer."] = "当任一相关计时器最后3秒时屏幕红色闪烁。"
-
