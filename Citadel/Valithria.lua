@@ -5,7 +5,14 @@
 local mod = BigWigs:NewBoss("Valithria Dreamwalker", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886, 37950, 37985)
-mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "portal", "berserk", "bosskill"}
+mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "portal", "bosskill"}
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local blazingTimers = {60, 51.5, 53.5, 41, 41}
+local blazingCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +33,9 @@ if L then
 	L.suppresser = "Suppressers spawn"
 	L.suppresser_desc = "Warns when a pack of Suppressers spawn."
 	L.suppresser_message = "~Suppressers"
+
+	L.blazing = "Blazing Skeleton"
+	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
 end
 L = mod:GetLocale()
 
@@ -50,11 +60,22 @@ local function adds()
 	mod:ScheduleTimer(adds, 58)
 end
 
+local function blazing()
+	--XXX more testing
+	--XXX same on 10man?
+	if not blazingTimers[blazingCount] then return end
+	mod:Bar("blazing", L["blazing"], blazingTimers[blazingCount], 71730)
+	mod:ScheduleTimer(blazing, blazingTimers[blazingCount])
+	blazingCount = blazingCount + 1
+end
+
 function mod:OnEngage()
-	--self:Berserk(420, true)
 	self:Bar("suppresser", L["suppresser_message"], 29, 70588)
 	self:Bar("portal", L["portal_bar"], 46, 72482)
 	self:ScheduleTimer(adds, 29)
+	self:ScheduleTimer(blazing, 50)
+	self:Bar("blazing", L["blazing"], 50, 71730)
+	blazingCount = 1
 end
 
 --------------------------------------------------------------------------------

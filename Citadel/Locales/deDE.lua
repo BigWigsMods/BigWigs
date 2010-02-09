@@ -231,4 +231,7 @@ if L then
 	L.suppresser = "Unterdrücker erscheinen"
 	L.suppresser_desc = "Warnt, wenn eine Gruppe Unterdrücker erscheint."
 	L.suppresser_message = "~Unterdrücker"
+
+	L.blazing = "Blazing Skeleton"
+	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
 end

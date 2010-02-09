@@ -181,6 +181,9 @@ if L then
 	L.suppresser = "抑制者出現"
 	L.suppresser_desc = "當一群抑制者出現時發出警報。"
 	L.suppresser_message = "即將出現 抑制者！"
+
+	L.blazing = "Blazing Skeleton"
+	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")

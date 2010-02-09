@@ -145,21 +145,21 @@ end
 L = BigWigs:NewBossLocale("Sindragosa", "zhCN")
 if L then
 	L.engage_trigger = "You are fools to have come to this place."
-	
+
 	L.phase2 = "第二阶段"
 	L.phase2_desc = "Warn when Sindragosa goes into phase 2, at 35%."
 	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
 	L.phase2_message = "第二阶段！"
-	
+
 	L.airphase = "空中阶段"
 	L.airphase_desc = "当辛达苟萨起飞时发出警报。"
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase_message = "空中阶段！"
 	L.airphase_bar = "下一 空中阶段"
-	
+
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
-	
+
 	L.unchained_message = "Unchained magic on YOU!"
 	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
@@ -175,6 +175,9 @@ if L then
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 
 	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+
+	L.blazing = "Blazing Skeleton"
+	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhCN")

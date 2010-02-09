@@ -171,6 +171,9 @@ if L then
 	L.portal_trigger = "Я открыла портал в Изумрудный Сон. Там вы найдете спасение, герои..."
 
 	L.engage_trigger = "Чужаки ворвались во внутренние покои. Уничтожьте зеленого дракона!"
+
+	L.blazing = "Blazing Skeleton"
+	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")

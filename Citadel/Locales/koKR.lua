@@ -181,6 +181,9 @@ if L then
 	L.suppresser = "억제자 소환"
 	L.suppresser_desc = "억제자 소환을 알립니다."
 	L.suppresser_message = "~억제자"
+
+	L.blazing = "Blazing Skeleton"
+	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
@@ -230,6 +233,6 @@ if L then
 
 	L.reaper_message = "영혼 쐐기"
 	L.reaper_bar = "~다음 쐐기"
-	
+
 	L.last_phase_bar = "마지막 단계"
 end
