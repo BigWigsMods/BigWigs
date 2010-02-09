@@ -113,7 +113,7 @@ plugin.subPanelOptions = {
 
 local footers = {
 	"Premonition @ Sen'jin US\n|cff9999ffwww.premoguild.com|r",
-	"|cff9999ffwww.wowace.com/projects/bigwigs|r",
+	"Big Wigs Developer\n|cff9999ffwowace.com/projects/big-wigs|r",
 	"Ensidia @ Tarren Mill EU\n|cff9999ffwww.ensidia.com|r",
 }
 
@@ -195,6 +195,7 @@ local tips = {
 	"Rabbit##If your raid leader is spamming you with tips, you can make them output to the chat frame or turn them off completely. Just visit the 'Customize ...' section under the Big Wigs interface options!#2",
 	"Rabbit##Sometimes you'll want to remove a bar from the screen while in combat, so you can focus more on some other ability. You can configure the click-actions of bars in the Big Wigs interface options.#2",
 	"Rabbit##Flash and Shake is a great way to really make you act fast on something. But not if it happens for 5 different abilities in a fight! Remember to adjust your Big Wigs per-boss settings.#2",
+	"Rabbit##Boss mods are only useful if you take the time to adjust the per-boss settings to suit your needs. I really can't stress this enough.#2",
 }
 
 -------------------------------------------------------------------------------

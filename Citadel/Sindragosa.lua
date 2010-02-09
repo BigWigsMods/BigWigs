@@ -135,7 +135,7 @@ end
 
 function mod:Unchained(player, spellId)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alarm")
+		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alert")
 		self:FlashShake(69762)
 	end
 end
