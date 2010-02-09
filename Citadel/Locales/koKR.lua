@@ -207,7 +207,10 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "koKR")
 if L then
 	L.warmup_trigger = "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가?"
-	L.engage_trigger = "폴드링" --check
+	L.engage_trigger = "폴드링, 너는 살려서 최후를 지켜보게 하겠다."
+	
+	L.horror_bar = "~다음 휘청 괴물"
+	L.horror_message = "휘청거리는 괴물"
 
 	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"

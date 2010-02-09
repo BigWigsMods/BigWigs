@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {70541, 69409, 72143, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, "proximity", "bosskill"}
+mod.toggleOptions = {70541, 70372, 69409, 72143, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, "proximity", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -22,6 +22,9 @@ if L then
 	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
 	L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
+	L.horror_bar = "~Next Horror"
+	L.horror_message = "Shambling Horror"
+	
 	L.necroticplague_message = "Necrotic Plague"
 	L.necroticplague_bar = "Necrotic Plague"
 
@@ -64,6 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_SUCCESS", "Reaper", 69409, 73797, 73798, 73799)
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
+	self:Log("SPELL_SUMMON", "Horror", 70372)
 	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980)
 	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 74270)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
@@ -94,6 +98,11 @@ end
 -- Event Handlers
 --
 
+function mod:Horror(_, spellId)
+	self:Message(70372, L["horror_message"], "Attention", 70372)
+	self:Bar(70372, L["horror_bar"], 60, 70372)
+end
+
 function mod:FuryofFrostmourne()
 	self:Bar(72350, L["last_phase_bar"], 160, 72350)
 end
@@ -110,7 +119,7 @@ end
 
 function mod:Reaper(player, spellId)
 	self:TargetMessage(69409, L["reaper_message"], player, "Personal", spellId, "Alert")
-	self:Bar(69409, L["reaper_bar"], 40, spellId)
+	self:Bar(69409, L["reaper_bar"], 30, spellId)
 end
 
 function mod:NecroticPlague(player, spellId)
