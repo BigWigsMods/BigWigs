@@ -48,7 +48,7 @@ plugin.subPanelOptions = {
 		args = {
 			description = {
 				type = "description",
-				name = L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"],
+				name = L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"],
 				order = 1,
 				width = "full",
 				fontSize = "medium",
@@ -62,7 +62,7 @@ plugin.subPanelOptions = {
 			show = {
 				type = "toggle",
 				name = colorize[L["Enable"]],
-				desc = L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."],
+				desc = L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."],
 				order = 3,
 				width = "full",
 				descStyle = "inline",
@@ -79,11 +79,12 @@ plugin.subPanelOptions = {
 				desc = L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."],
 				order = 11,
 				width = "full",
+				disabled = disable,
 			},
 			manual = {
 				type = "toggle",
 				name = colorize[L["Manual tips"]],
-				desc = L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."],
+				desc = L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."],
 				order = 12,
 				width = "full",
 				disabled = disable,
@@ -125,7 +126,7 @@ local footers = {
 -------------------------------------------------------------------------------------]]
 
 local tips = {
-	"Calebv#HUNTER#Everyone likes beer, but you need to know your limit. You might have fun while you are intoxicated, but your fellow raiders might just not enjoy dragging a drunken bastard through an instance.#3",
+	"Calebv#HUNTER#Everyone likes beer, but you need to know your limit. You might have fun while you are intoxicated, but your fellow raiders might not enjoy dragging a drunken slacker through an instance.#3",
 	"Calebv#HUNTER#Use Macros/Addons oriented for your class/role, be familiar with the addons you use to get the best performance. But on the other hand don't only rely on addons, sometimes they can bug, especially when a new major content patch comes.#3",
 	"Calebv#HUNTER#If you see someone who is about to take unnecessary damage, ie: void zone, aggroing adds, don't hesitate to call out his name. Especially if the person tends to be slow to react.#3",
 	"Mek#SHAMAN#Not everyone in your raid will be of the same standard. However if some players are significantly worse and drag your raid down then it will demotivate your best players. This is something you want to avoid at all costs.#3",
@@ -150,11 +151,11 @@ local tips = {
 	"Buzzkill#WARLOCK#Scroll out your camera to max range via macro and be observant of things happening around you. Anticipating something might not only vastly improve your performance, but can also save your life.#3",
 	"Munken#HUNTER#Remember this is just a game. Dont forget your family and friends. Keep in touch!#3",
 	"Eoy#PRIEST#Don't give up. Many first kills have happened very late in the night after several hours of wiping to stupid things.#3",
-	"Hams#WARLOCK#When you wipe the raid don't start a 10 minutes excuse about how you fucked up, but admit the mistake and shut up.#3",
+	"Hams#WARLOCK#When you wipe the raid don't start a 10 minute excuse about how you made a mistake, but admit the mistake and shut up.#3",
 	"Siiri#DEATHKNIGHT#Don't be afraid to speak up on ventrilo, but keep it relevant during a boss fight. Swearing or making grunts when you die will just make people nervous, and make a salvageable kill much less likely.#3",
 	"Implied#SHAMAN#We are what we do repeatedly, practice makes perfect. Excellence, therefore, is not an act; but a habit.#3",
 
-	"Cheesycraft#MAGE#Think about all the abilities and talents available to your class before beginning a fight. A player can often gain a tremendous advantage in a given fight through the use of less commonly though of abilities and talents.#1",
+	"Cheesycraft#MAGE#Think about all the abilities and talents available to your class before a fight. A player can often gain a tremendous advantage through the use of less commonly thought of abilities and talents.#1",
 	"Cheesycraft#MAGE#You gotta pay the cost to be the boss. Gold should never be a limiting factor in improving your character!#1",
 	"Cheesycraft#MAGE#While defensive talents and abilities may not seem useful, you are only productive for as long as you live. Survival is critical!#1",
 	"Cheesycraft#MAGE#We all love purples, but always keep the groups best interest in mind. Sometimes it's better to let someone else get that bigger upgrade.#1",
@@ -192,10 +193,10 @@ local tips = {
 	"Rabbit##/bwcb 15m Raid break!#2",
 	"Rabbit##/bwlcb 20m Oven warm, put in pizza!#2",
 	"Rabbit##You can open the proximity monitor manually with /proximity <range>. Can be useful on new fights or if you use a special strategy for a encounter.#2",
-	"Rabbit##If your raid leader is spamming you with tips, you can make them output to the chat frame or turn them off completely. Just visit the 'Customize ...' section under the Big Wigs interface options!#2",
+	"Rabbit##If a raid officer is spamming you with tip windows, you can make them output to the chat frame or turn them off completely. Just visit the 'Customize ...' section under the Big Wigs interface options!#2",
 	"Rabbit##Sometimes you'll want to remove a bar from the screen while in combat, so you can focus more on some other ability. You can configure the click-actions of bars in the Big Wigs interface options.#2",
 	"Rabbit##Flash and Shake is a great way to really make you act fast on something. But not if it happens for 5 different abilities in a fight! Remember to adjust your Big Wigs per-boss settings.#2",
-	"Rabbit##Boss mods are only useful if you take the time to adjust the per-boss settings to suit your needs. I really can't stress this enough.#2",
+	"Rabbit##Boss mods are only useful if you take the time to adjust the per-boss settings to suit your needs. I really can't stress this enough. Right-click the Big Wigs LDB plugin while buffing up for a boss fight and look through the options.#2",
 }
 
 -------------------------------------------------------------------------------
@@ -447,8 +448,8 @@ do
 		g = 0.7,
 		b = 0.4,
 	}
-	function plugin:RandomTip()
-		self:ShowTip(tips[math.random(1, #tips)])
+	function plugin:RandomTip(input)
+		self:ShowTip(tips[input or math.random(1, #tips)])
 	end
 
 	function plugin:ShowTip(tipString)
@@ -480,13 +481,13 @@ SLASH_BigWigs_TipOfTheRaid2 = "/tipoftheraid"
 local pName = UnitName("player")
 local _, pClass = UnitClass("player")
 SlashCmdList.BigWigs_SendRaidTip = function(input)
-	if not plugin:IsEnabled() then BigWigs:Enable() end
 	input = input:trim()
-	if not UnitInRaid("player") or not IsRaidLeader() or (not tonumber(input) and #input < 10) then
+	if not UnitInRaid("player") or not IsRaidOfficer() or (not tonumber(input) and #input < 10) then
 		print(L["Usage: /sendtip <index|\"Custom tip\">"])
-		print(L["You must be the raid leader to broadcast a tip."])
+		print(L["You must be an officer in the raid to broadcast a tip."])
 		return
 	end
+	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if tonumber(input) then
 		local index = tonumber(input)
 		if tips[index] then
