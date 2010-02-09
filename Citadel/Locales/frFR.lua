@@ -233,6 +233,6 @@ if L then
 	L.suppresser_desc = "Prévient quand une meute de Suppresseurs apparaît."
 	L.suppresser_message = "~Suppresseurs"
 
-	L.blazing = "Blazing Skeleton"
-	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
+	L.blazing = "Squelette flamboyant"
+	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le comme un repère."
 end
