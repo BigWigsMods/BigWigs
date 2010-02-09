@@ -3,7 +3,7 @@ if L then
 	L.switch_message = "대상 변경: %s"
 	L.switch_bar = "~다음 대상 변경"
 
-	L.empowered_flames = "지옥의 화염"
+	L.empowered_flames = "강력한 불꽃"
 
 	L.empowered_shock_message = "충격의 소용돌이 시전!"
 	L.regular_shock_message = "충격 지역"
