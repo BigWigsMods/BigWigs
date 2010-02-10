@@ -172,7 +172,7 @@ if L then
 
 	L.portal = "악몽의 차원문"
 	L.portal_desc = "악몽의 차원문을 알립니다."
-	L.portal_message = "차원문 생성 %d!"
+	L.portal_message = "차원문 %d 생성!"
 	L.portal_trigger = "에에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
 	L.portal_bar = "다음 차원문 %d"
 
@@ -216,10 +216,8 @@ if L then
 	L.horror_bar = "~다음 휘청 괴물"
 	L.horror_message = "휘청거리는 괴물"
 
-	L.necroticplague_message = "괴저 역병"
 	L.necroticplague_bar = "괴저 역병"
 
-	L.ragingspirit_message = "분노의 영혼"
 	L.ragingspirit_bar = "~분노의 영혼"
 
 	L.valkyr_bar = "다음 발키르"
@@ -227,10 +225,11 @@ if L then
 
 	L.vilespirits_bar = "~다음 새우들"
 
-	L.harvestsoul_message = "영혼 착취"
+	L.harvestsoul_bar = "영혼 착취"
 
 	L.remorselesswinter_message = "냉혹한 겨울 시전"
 	L.quake_message = "지진 시전"
+	L.quake_bar = "지진"
 
 	L.defile_say = "나에게 파멸!"
 	L.defile_message = "당신은 파멸!"
@@ -238,7 +237,6 @@ if L then
 
 	L.infest_bar = "~다음 몰아치기"
 
-	L.reaper_message = "영혼 쐐기"
 	L.reaper_bar = "~다음 쐐기"
 
 	L.last_phase_bar = "마지막 단계"

@@ -120,6 +120,9 @@ function mod:Horror(_, spellId)
 end
 
 function mod:FuryofFrostmourne()
+	self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["vilespirits_bar"])
 	self:Bar(72350, L["last_phase_bar"], 160, 72350)
 end
 
@@ -202,6 +205,9 @@ function mod:RemorselessWinter(_, spellId)
 	phase = phase + 1
 	self:SendMessage("BigWigs_StopBar", self, L["necroticplague_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["infest_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["valkyr_bar"])
 	self:LocalMessage(74270, L["remorselesswinter_message"], "Urgent", spellId, "Alert")
 	self:Bar(72262, L["quake_bar"], 60, 72262)
 	self:Bar(69200, L["ragingspirit_bar"], 15, spellId)
