@@ -18,7 +18,6 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local difficulty = GetRaidDifficulty()
 local handle_Adds = nil
 
 --------------------------------------------------------------------------------
@@ -65,27 +64,18 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-local function adds()
-	if difficulty > 2 then
-		mod:DelayedMessage("adds", 40, L["adds_warning"], "Attention")
-		mod:Bar("adds", L["adds_bar"], 45, 70768)
-		handle_Adds = mod:ScheduleTimer(adds, 45)
-	else
-		mod:DelayedMessage("adds", 55, L["adds_warning"], "Attention")
-		mod:Bar("adds", L["adds_bar"], 60, 70768)
-		handle_Adds = mod:ScheduleTimer(adds, 60)
-	end
+local function adds(time)
+	mod:DelayedMessage("adds", time-5, L["adds_warning"], "Attention")
+	mod:Bar("adds", L["adds_bar"], time, 70768)
+	handle_Adds = mod:ScheduleTimer(adds, time, time)
 end
 
 function mod:OnEngage(diff)
-	difficulty = diff
 	self:Berserk(600, true)
-
-	local time = 67
-	if diff > 2 then time = 52 end
-	self:DelayedMessage("adds", time-5, L["adds_warning"], "Attention")
-	self:Bar("adds", L["adds_bar"], time, 70768)
-	handle_Adds = self:ScheduleTimer(adds, time)
+	local time = 60
+	if diff > 2 then time = 45 end
+	self:Bar("adds", L["adds_bar"], 7, 70768)
+	handle_Adds = self:ScheduleTimer(adds, 7, time)
 end
 
 --------------------------------------------------------------------------------
@@ -100,7 +90,7 @@ function mod:DnD(player, spellId)
 end
 
 function mod:Barrier(_, spellId)
-	if difficulty < 3 then
+	if GetRaidDifficulty() < 3 then
 		self:CancelTimer(handle_Adds, true)
 		self:SendMessage("BigWigs_StopBar", self, L["adds_bar"])
 		self:CancelDelayedMessage(L["adds_warning"])
