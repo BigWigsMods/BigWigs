@@ -147,7 +147,7 @@ if L then
 	L.engage_trigger = "여기까지 오다니 너무나 어리석구나."
 
 	L.phase2 = "2 단계"
-	L.phase2_desc = "2 단계 변화를 알립니다.."
+	L.phase2_desc = "2 단계 변화를 알립니다."
 	L.phase2_trigger = "자, 주인님의 무한한 힘을 느끼고 절망에 빠져보아라!"
 	L.phase2_message = "2 단계!"
 
@@ -182,8 +182,8 @@ if L then
 	L.suppresser_desc = "억제자 소환을 알립니다."
 	L.suppresser_message = "~억제자"
 
-	L.blazing = "Blazing Skeleton"
-	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
+	L.blazing = "타오르는 해골"
+	L.blazing_desc = "타오르는 해골의 |cffff0000추정|r되는 재생성 타이머 입니다. 이 타이머는 도적에게만 효용있게 만들어져 있습니다."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")

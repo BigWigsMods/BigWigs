@@ -5,7 +5,16 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {70541, 70372, 69409, 72143, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 69037, 68980, 70498, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {74270, "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, "proximity", "bosskill"}
+mod.toggleOptions = {{73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70541, 70372, 72143, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, 68980, 70498, 72350, "proximity", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+mod.optionHeaders = {
+	[73912] = CL.phase:format(1),
+	[74270] = CL.phase:format(2),
+	[72262] = CL.phase:format(3),
+	[68980] = CL.phase:format(5),
+	[72350] = CL.phase:format(6),
+	proximity = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals
