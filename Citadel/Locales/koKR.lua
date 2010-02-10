@@ -69,6 +69,8 @@ if L then
 	L.touch_bar = "다음 손길"
 
 	L.deformed_fanatic = "광신자 변형"
+	
+	L.Spirit_message = "영혼 소환!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")

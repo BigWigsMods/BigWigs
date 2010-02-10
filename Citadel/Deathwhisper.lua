@@ -34,6 +34,8 @@ if L then
 	L.touch_bar = "Next Touch"
 
 	L.deformed_fanatic = "Deformed Fanatic!"
+	
+	L.Spirit_message = "Summon Spirit!"
 end
 L = mod:GetLocale()
 
@@ -48,6 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Touch", 71204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Touch", 71204)
 	self:Log("SPELL_CAST_START", "Deformed", 70900)
+	self:Log("SPELL_SUMMON", "Spirit", 71426)
 	self:Death("Win", 36855)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -104,3 +107,13 @@ function mod:Deformed()
 	self:Message("adds", L["deformed_fanatic"], "Urgent", 70900)
 end
 
+do
+	local t = 0
+	function mod:Spirit(_, spellId)
+		local time = GetTime()
+		if (time - t) > 2 then
+			t = time
+			self:Message(71426, L["Spirit_message"], "Attention", spellId)
+		end
+	end
+end
