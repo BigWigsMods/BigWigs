@@ -182,12 +182,12 @@ if L then
 	L.suppresser_desc = "當一群抑制者出現時發出警報。"
 	L.suppresser_message = "即將出現 抑制者！"
 
-	L.blazing = "Blazing Skeleton"
-	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
-	L.blazing_warning = "Blazing Skeleton Soon!"
+	L.blazing = "熾熱骷髏"
+	L.blazing_desc = "熾熱骷髏|cffff0000监视|r出現計時條。此計時條可能不準確，只做參考。"
+	L.blazing_warning = "即將 熾熱骷髏！"
 
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.skull = "骷髏標記熾熱骷髏"
+	L.skull_desc = "為出現的熾熱骷髏打上團隊骷髏標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
