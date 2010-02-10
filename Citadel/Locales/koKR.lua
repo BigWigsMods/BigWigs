@@ -29,7 +29,7 @@ if L then
 	L.spore_bar = "~다음 가스 포자"
 
 	L.sporeicon = "가스 포자 대상 전술"
-	L.sporeicon_desc = "가스 포자 대상에게 해골, 가위 & 네모 전술을 지정합니다. (승급된 사람만 가능)."
+	L.sporeicon_desc = "가스 포자 대상에게 해골, 가위 & 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
@@ -164,6 +164,9 @@ if L then
 	L.instability_message = "불안정 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
 	L.buffet_message = "신비한 강타 x%d!"
+	
+	L.baconicon = "봉화 대상 전술"
+	L.baconicon_desc = "봉화 대상에게 해골, 가위 & 네모 & 달 & 세모전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
@@ -187,7 +190,7 @@ if L then
 	L.blazing_warning = "곧 타오르는 해골!"
 
 	L.skull = "타오르는 해골에 해골 전술"
-	L.skull_desc = "소환된 타오르는 해골에게 해골 전술을 지정합니다. (승급된 사람만 가능)."
+	L.skull_desc = "소환된 타오르는 해골에게 해골 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")

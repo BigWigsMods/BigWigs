@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {"airphase", "phase2", 70127, {69762, "FLASHSHAKE"}, 69766, 70106, 71047, {70126, "FLASHSHAKE"}, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {"airphase", "phase2", 70127, {69762, "FLASHSHAKE"}, 69766, 70106, 71047, {70126, "FLASHSHAKE"}, "baconicon", "proximity", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	airphase = CL.phase:format(1),
@@ -45,6 +45,9 @@ if L then
 	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
 	L.buffet_message = "Magic x%d!"
+	
+	L.baconicon = "Icon on Bacon targets"
+	L.baconicon_desc = "Set a Skull, Cross & Square & Moon & Triangle on the players with a Bacon (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -59,6 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127)
 
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
+	self:Log("SPELL_AURA_REMOVED", "BeaconRemoved", 70126)
 	self:Log("SPELL_AURA_APPLIED", "Tombed", 70157)
 
 	-- 70123, 71047, 71048, 71049 is the actual blistering cold
@@ -88,13 +92,19 @@ end
 
 do
 	local scheduled = nil
+	local num = 8
 	local function baconWarn(spellName)
 		mod:TargetMessage(70126, spellName, beaconTargets, "Urgent", 70126)
 		mod:Bar(70126, spellName, 7, 70126)
 		scheduled = nil
+		num = 8
 	end
 	function mod:FrostBeacon(player, spellId, _, _, spellName)
 		beaconTargets[#beaconTargets + 1] = player
+		if self.db.profile.baconicon then
+			SetRaidTarget(player, num)
+			num = num - 1
+		end
 		if UnitIsUnit(player, "player") then
 			self:OpenProximity(10)
 			self:FlashShake(70126)
@@ -103,6 +113,12 @@ do
 			scheduled = true
 			self:ScheduleTimer(baconWarn, 0.2, spellName)
 		end
+	end
+end
+
+function mod:BeaconRemoved(player)
+	if self.db.profile.baconicon then
+		SetRaidTarget(player, 0)
 	end
 end
 
