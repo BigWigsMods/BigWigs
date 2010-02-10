@@ -69,10 +69,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Grip", 70117)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Warmup", L["engage_trigger"])
 	self:Yell("AirPhase", L["airphase_trigger"])
 	self:Yell("Phase2", L["phase2_trigger"])
 	self:Death("Win", 36853)
+end
+
+function mod:Warmup()
+	self:Bar("berserk", self.displayName, 10, "achievement_boss_sindragosa")
+	self:ScheduleTimer(self.Engage, 10, self)
 end
 
 function mod:OnEngage()
