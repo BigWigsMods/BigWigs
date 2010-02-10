@@ -209,12 +209,11 @@ if L then
 	L.warmup_trigger = "Неужели прибыли наконец хваленые силы Света?"
 	L.engage_trigger = "Я оставлю тебя в живых, чтобы ты увидел финал."
 
-	L.defile_bar = "Осквернение"
+	L.horror_bar = "~Следующий Ужас"
+	L.horror_message = "Шаркающий ужас"
 
-	L.necroticplague_message = "Мертвящая чума"
 	L.necroticplague_bar = "Мертвящая чума"
 
-	L.ragingspirit_message = "Разъярённый дух"
 	L.ragingspirit_bar = "Разъярённый дух"
 
 	L.valkyr_bar = "Следующая Валь'кира"
@@ -224,8 +223,9 @@ if L then
 
 	L.harvestsoul_message = "Жнец Душ"
 
-	L.remorselesswinter_message = "Беспощадность зимы"
+	L.remorselesswinter_message = "Беспощадность зимы!"
 	L.quake_message = "Встряска"
+	L.quake_bar = "Встряска!"
 
 	L.defile_say = "Осквернение на МНЕ!"
 	L.defile_message = "Осквернение на ТЕБЕ!"
@@ -233,7 +233,6 @@ if L then
 
 	L.infest_bar = "~Следующее Заражение"
 
-	L.reaper_message = "Жнец Душ"
 	L.reaper_bar = "~Следующий Жнец"
 
 	L.last_phase_bar = "Последняя фаза"
