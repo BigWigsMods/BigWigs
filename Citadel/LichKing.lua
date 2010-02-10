@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {{73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70541, 70372, 72143, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, 68980, 70498, 72350, "proximity", "bosskill"}
+mod.toggleOptions = {{73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70541, 70372, 72143, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, 72350, "proximity", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[73912] = CL.phase:format(1),
@@ -78,6 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980)
+	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980)
 	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 74270)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
@@ -175,6 +176,13 @@ end
 function mod:HarvestSoul(player, spellId)
 	self:Bar(68980, L["harvestsoul_message"], 75, spellId)
 	self:TargetMessage(68980, L["harvestsoul_message"], player, "Attention", spellId)
+	if UnitIsUnit(player, "player") then self:FlashShake(68980) end
+	self:Whisper(68980, player, L["harvestsoul_message"])
+	self:SecondaryIcon(68980, player)
+end
+
+function mod:HSRemove(player, spellId)
+	self:SecondaryIcon(68980, false)
 end
 
 function mod:RemorselessWinter(_, spellId)
