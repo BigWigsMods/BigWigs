@@ -181,7 +181,7 @@ do
 	local t = 0
 	function mod:Valkyr(_, spellId)
 		local time = GetTime()
-		if (time - t) > 2 then
+		if (time - t) > 3 then
 			t = time
 			self:Message(69037, L["valkyr_message"], "Attention", 71844)
 			self:Bar(69037, L["valkyr_bar"], 48, 71844)
@@ -204,6 +204,7 @@ end
 function mod:RemorselessWinter(_, spellId)
 	phase = phase + 1
 	self:SendMessage("BigWigs_StopBar", self, L["necroticplague_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["horror_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["infest_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
