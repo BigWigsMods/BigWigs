@@ -69,8 +69,8 @@ if L then
 	L.touch_bar = "다음 손길"
 
 	L.deformed_fanatic = "광신자 변형"
-	
-	L.Spirit_message = "영혼 소환!"
+
+	L.spirit_message = "영혼 소환!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
@@ -166,7 +166,7 @@ if L then
 	L.instability_message = "불안정 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
 	L.buffet_message = "신비한 강타 x%d!"
-	
+
 	L.baconicon = "봉화 대상 전술"
 	L.baconicon_desc = "봉화 대상에게 해골, 가위 & 네모 & 달 & 세모전술을 지정합니다 (승급된 사람만 가능)."
 end

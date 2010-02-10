@@ -104,6 +104,8 @@ if L then
 	L.touch_bar = "~Nächste Berührung"
 
 	L.deformed_fanatic = "Deformierter Fanatiker!"
+
+	L.spirit_message = "Summon Spirit!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
@@ -193,7 +195,7 @@ if L then
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.horror_bar = "~Torkelnder Schrecken"
-	L.horror_message = "Torkelnder Schrecken!"	
+	L.horror_message = "Torkelnder Schrecken!"
 
 	L.necroticplague_bar = "Nekrotische Seuche"
 

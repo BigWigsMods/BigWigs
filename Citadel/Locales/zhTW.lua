@@ -69,6 +69,8 @@ if L then
 	L.touch_bar = "<下一無脅之觸>"
 
 	L.deformed_fanatic = "Deformed Fanatic!"
+
+	L.spirit_message = "Summon Spirit!"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")

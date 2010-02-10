@@ -30,7 +30,7 @@ if L then
 
 	L.deformed_fanatic = "Fanatique déformé !"
 
-	L.Spirit_message = "Esprit vengeur invoqué !"
+	L.spirit_message = "Esprit vengeur invoqué !"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
