@@ -223,9 +223,9 @@ if L then
 
 	L.portal = "Portails du Cauchemar"
 	L.portal_desc = "Prévient quand Valithria ouvre des portails."
-	L.portal_message = "Portails actifs !"
+	L.portal_message = "Portails actifs %d!"
 	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
-	L.portal_bar = "Prochains portails"
+	L.portal_bar = "Prochains portails %d"
 
 	L.manavoid_message = "Vide de mana sur VOUS !"
 

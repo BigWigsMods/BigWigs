@@ -155,7 +155,7 @@ if L then
 
 	L.ooze = "Brühschlammer verschmelzen"
 	L.ooze_desc = "Warnt, wenn Brühschlammer miteinander verschmelzen."
-	L.ooze_message = "Brühschlammer %dx"
+	L.ooze_message = "%dx Brühschlammer!"
 
 	L.spray_bar = "~Schleimsprühen"
 end
@@ -178,6 +178,7 @@ if L then
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
 
+	L.unchained_message = "Entfesselte Magie auf DIR!"
 	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
@@ -222,9 +223,9 @@ if L then
 
 	L.portal = "Alptraumportale"
 	L.portal_desc = "Warnt, wenn Valithria Alptraumportale öffnet."
-	L.portal_message = "Portale!"
+	L.portal_message = "Portale %d!"
 	L.portal_trigger = "Ich habe ein Portal in den Traum geöffnet. Darin liegt Eure Erlösung, Helden..."
-	L.portal_bar = "Nächsten Portale"
+	L.portal_bar = "Nächsten Portale %d"
 
 	L.manavoid_message = "Manaleere auf DIR!"
 
@@ -232,11 +233,11 @@ if L then
 	L.suppresser_desc = "Warnt, wenn eine Gruppe Unterdrücker erscheint."
 	L.suppresser_message = "~Unterdrücker"
 
-	L.blazing = "Blazing Skeleton"
-	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
-	L.blazing_warning = "Blazing Skeleton Soon!"
+	L.blazing = "Loderndes Skelett"
+	L.blazing_desc = "|cffff0000Geschätzter|r Timer für die Lodernden Skelette. Dieser Timer ist wahrscheinlich ungenau, nur als Schätzung verwenden."
+	L.blazing_warning = "Loderndes Skelett bald!"
 
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.skull = "Totenkopf auf Loderndem Skelett"
+	L.skull_desc = "Plaziert den Totenkopf auf Lodernden Skeletten (benötigt Assistent oder höher)."
 end
 

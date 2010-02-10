@@ -5,7 +5,13 @@
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36853)
-mod.toggleOptions = {{69762, "FLASHSHAKE"}, 69766, 70106, 71047, {70126, "FLASHSHAKE"}, "airphase", "phase2", 70127, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {"airphase", "phase2", 70127, {69762, "FLASHSHAKE"}, 69766, 70106, 71047, {70126, "FLASHSHAKE"}, "proximity", "berserk", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+mod.optionHeaders = {
+	airphase = CL.phase:format(1),
+	phase2 = CL.phase:format(2),
+	[69762] = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -12,7 +12,7 @@ mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "sku
 --
 
 local blazingTimers = {60, 51.5, 53.5, 41, 41}
-local blazingCount, blazingRepeater = 1, nil
+local blazingCount, blazingRepeater, portalCount = 1, nil, 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,9 +24,9 @@ if L then
 
 	L.portal = "Nightmare Portals"
 	L.portal_desc = "Warns when Valithria opens portals."
-	L.portal_message = "Portals up!"
+	L.portal_message = "Portals %d up!"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
-	L.portal_bar = "Next Portal"
+	L.portal_bar = "Next Portals %d"
 
 	L.manavoid_message = "Mana Void on YOU!"
 
@@ -75,8 +75,9 @@ do
 		blazingCount = blazingCount + 1
 	end
 	function mod:OnEngage()
+		portalCount = 1
 		self:Bar("suppresser", L["suppresser_message"], 29, 70588)
-		self:Bar("portal", L["portal_bar"], 46, 72482)
+		self:Bar("portal", L["portal_bar"]:format(portalCount), 46, 72482)
 		self:ScheduleTimer(suppresserSpawn, 29)
 		self:ScheduleTimer(blazingSpawn, 50)
 		self:Bar("blazing", L["blazing"], 50, 71730)
@@ -99,8 +100,9 @@ function mod:LayWasteRemoved(_, _, _, _, spellName)
 end
 
 function mod:Portal()
-	self:Message("portal", L["portal_message"], "Important")
-	self:Bar("portal", L["portal_bar"], 46, 72482)
+	self:Message("portal", L["portal_message"]:format(portalCount), "Important")
+	portalCount = portalCount + 1
+	self:Bar("portal", L["portal_bar"]:format(portalCount), 46, 72482)
 end
 
 do
