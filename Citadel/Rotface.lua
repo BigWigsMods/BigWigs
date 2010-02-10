@@ -43,7 +43,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(69508, L["spray_bar"], 25, 69508)
+	self:Bar(69508, L["spray_bar"], 19, 69508)
 end
 
 --------------------------------------------------------------------------------
