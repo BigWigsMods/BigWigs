@@ -82,7 +82,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600)
-	self:Bar("airphase", L["airphase_bar"], 50, 23684)
+	self:Bar("airphase", L["airphase_bar"], 40, 23684)
 end
 
 --------------------------------------------------------------------------------
