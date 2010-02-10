@@ -70,8 +70,8 @@ function mod:OnBossEnable()
 	-- Phase 1
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
-	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 73912)
-	self:Log("SPELL_DISPEL", "NPRemove", 70337, 70338, 73785, 73912)
+	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
+	self:Log("SPELL_DISPEL", "NPRemove", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 
 	-- Phase 2
@@ -80,8 +80,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 
 	-- Phase 3
-	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325)
-	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980)
+	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325, 74326, 74327)
+	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980, 74325, 74326, 74327)
 	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 
 	-- Transition phases
@@ -184,7 +184,7 @@ do
 		if (time - t) > 3 then
 			t = time
 			self:Message(69037, L["valkyr_message"], "Attention", 71844)
-			self:Bar(69037, L["valkyr_bar"], 48, 71844)
+			self:Bar(69037, L["valkyr_bar"], 47, 71844)
 		end
 	end
 end
@@ -251,7 +251,7 @@ do
 	function mod:DefileCast(player, spellId, _, _, spellName)
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
-		self:Bar(72762, L["defile_bar"], 33, 72762)
+		self:Bar(72762, L["defile_bar"], 32, 72762)
 		handle = self:ScheduleTimer(scanTarget, 0.1)
 	end
 end
