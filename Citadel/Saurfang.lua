@@ -15,7 +15,6 @@ mod.toggleOptions = {"adds", 72408, 72385, {72293, "WHISPER", "ICON", "FLASHSHAK
 local bbTargets = mod:NewTargetList()
 local killed = nil
 local count = 1
-local difficulty = GetRaidDifficulty()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,10 +57,9 @@ function mod:OnBossEnable()
 	self:Yell("Warmup", L["warmup_alliance"], L["warmup_horde"])
 end
 
-function mod:OnEngage()
-	difficulty = GetRaidDifficulty()
+function mod:OnEngage(diff)
 	self:OpenProximity(11)
-	if difficulty > 2 then
+	if diff > 2 then
 		self:Berserk(360)
 	else
 		self:Berserk(480)

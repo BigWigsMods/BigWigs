@@ -53,8 +53,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar("adds", L["adds_bar"], 70, 53142)
-	self:Bar("mage", L["mage_bar"], 100, 69705)
+	self:Bar("adds", L["adds_bar"], 60, 53142)
+	self:Bar("mage", L["mage_bar"], 82, 69705)
 end
 
 function mod:VerifyEnable()
@@ -75,7 +75,7 @@ function mod:Frozen(_, spellId)
 end
 
 function mod:FrozenCD(_, spellId)
-	self:Bar("mage", L["mage_bar"], 45, spellId)
+	self:Bar("mage", L["mage_bar"], 35, spellId)
 end
 
 function mod:Defeated()

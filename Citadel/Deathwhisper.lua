@@ -77,21 +77,16 @@ local function adds()
 	end
 end
 
-function mod:OnEngage()
-	difficulty = GetRaidDifficulty()
+function mod:OnEngage(diff)
+	difficulty = diff
 	self:Berserk(600, true)
 
-	if difficulty > 2 then
-		self:DelayedMessage("adds", 47, L["adds_warning"], "Attention")
-		self:Bar("adds", L["adds_bar"], 52, 70768)
-		handle_Adds = self:ScheduleTimer(adds, 52)
-	else
-		self:DelayedMessage("adds", 62, L["adds_warning"], "Attention")
-		self:Bar("adds", L["adds_bar"], 67, 70768)
-		handle_Adds = self:ScheduleTimer(adds, 67)
-	end
+	local time = 67
+	if diff > 2 then time = 52 end
+	self:DelayedMessage("adds", time-5, L["adds_warning"], "Attention")
+	self:Bar("adds", L["adds_bar"], time, 70768)
+	handle_Adds = self:ScheduleTimer(adds, time)
 end
-
 
 --------------------------------------------------------------------------------
 -- Event Handlers
@@ -141,5 +136,6 @@ do
 end
 
 function mod:Frostbolt(_, spellId, _, _, spellName)
-	self:Message(72501, spellName, "Attention", spellId, "Info")
+	self:Message(72501, spellName, "Attention", spellId)
 end
+

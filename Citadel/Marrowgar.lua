@@ -35,23 +35,20 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX verify bone storm cooldown on 10man
-
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
 	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826, 72088, 72089)
 	self:Log("SPELL_CAST_START", "BonestormCast", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Bonestorm", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
-
 	self:Death("Win", 36612)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-function mod:OnEngage()
-	difficulty = GetRaidDifficulty()
+function mod:OnEngage(diff)
+	difficulty = diff
 	self:Bar(69076, L["bonestorm_cd"], 45, 69076)
 	self:DelayedMessage(69076, 40, L["bonestorm_warning"], "Attention")
 end
@@ -97,16 +94,10 @@ local function afterTheStorm()
 end
 
 function mod:Bonestorm(_, spellId, _, _, spellName)
-	if difficulty > 2 then
-		self:Bar(69076, spellName, 34, spellId)
-		self:ScheduleTimer(afterTheStorm, 34)
-	else
-		self:Bar(69076, spellName, 20, spellId)
-		self:ScheduleTimer(afterTheStorm, 20)
-	end
-	if difficulty < 3 then
-		self:SendMessage("BigWigs_StopBar", self, L["impale_cd"])
-	end
+	local time = 20
+	if difficulty > 2 then time = 34 else self:SendMessage("BigWigs_StopBar", self, L["impale_cd"]) end
+	self:Bar(69076, spellName, time, spellId)
+	self:ScheduleTimer(afterTheStorm, time)
 end
 
 function mod:BonestormCast(_, spellId, _, _, spellName)
