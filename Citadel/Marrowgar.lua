@@ -12,7 +12,7 @@ mod.toggleOptions = {69076, 69057, {69146, "FLASHSHAKE"}, "bosskill"}
 --
 
 local impaleTargets = mod:NewTargetList()
-local difficulty = GetRaidDifficulty()
+local difficulty = 0
 
 --------------------------------------------------------------------------------
 -- Localization
