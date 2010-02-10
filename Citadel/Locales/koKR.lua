@@ -184,10 +184,10 @@ if L then
 
 	L.blazing = "타오르는 해골"
 	L.blazing_desc = "타오르는 해골의 |cffff0000추정|r되는 재생성 타이머 입니다. 이 타이머는 도적에게만 효용있게 만들어져 있습니다."
-	L.blazing_warning = "Blazing Skeleton Soon!"
+	L.blazing_warning = "곧 타오르는 해골!"
 
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.skull = "타오르는 해골에 해골 전술"
+	L.skull_desc = "소환된 타오르는 해골에게 해골 전술을 지정합니다. (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
