@@ -123,6 +123,7 @@ function mod:FuryofFrostmourne()
 	self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["vilespirits_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["harvestsoul_bar"])
 	self:Bar(72350, L["last_phase_bar"], 160, 72350)
 end
 

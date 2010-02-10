@@ -11,7 +11,6 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	adds = CL.phase:format(1),
 	[71204] = CL.phase:format(2),
-	[71426] = "heroic",
 	[71289] = "general",
 }
 
@@ -20,6 +19,7 @@ mod.optionHeaders = {
 --
 
 local difficulty = GetRaidDifficulty()
+local handle_Adds = nil
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -65,7 +65,6 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-local handle_Adds = nil
 local function adds()
 	if difficulty > 2 then
 		mod:DelayedMessage("adds", 40, L["adds_warning"], "Attention")
@@ -107,10 +106,10 @@ end
 
 function mod:Barrier(_, spellId)
 	if difficulty < 3 then
-		self:CancelDelayedMessage(L["adds_warning"])
 		self:CancelTimer(handle_Adds, true)
+		self:SendMessage("BigWigs_StopBar", self, L["adds_bar"])
+		self:CancelDelayedMessage(L["adds_warning"])
 	end
-	self:SendMessage("BigWigs_StopBar", self, L["adds_bar"])
 	self:Message(70842, L["phase2_message"], "Positive", spellId, "Info")
 end
 
