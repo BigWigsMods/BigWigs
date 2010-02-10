@@ -6,13 +6,20 @@ local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 --Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
 mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
-mod.toggleOptions = {"adds", 70842, 71204, {71289, "ICON"}, {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 70842, 71204, {71289, "ICON"}, {71001, "FLASHSHAKE"}, 71426, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	adds = CL.phase:format(1),
 	[71204] = CL.phase:format(2),
+	[71426] = "heroic",
 	[71289] = "general",
 }
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local difficulty = GetRaidDifficulty()
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -59,17 +66,30 @@ end
 
 local handle_Adds = nil
 local function adds()
-	mod:DelayedMessage("adds", 55, L["adds_warning"], "Attention")
-	mod:Bar("adds", L["adds_bar"], 60, 70768)
-	handle_Adds = mod:ScheduleTimer(adds, 60)
+	if difficulty > 2 then
+		mod:DelayedMessage("adds", 40, L["adds_warning"], "Attention")
+		mod:Bar("adds", L["adds_bar"], 45, 70768)
+		handle_Adds = mod:ScheduleTimer(adds, 45)
+	else
+		mod:DelayedMessage("adds", 55, L["adds_warning"], "Attention")
+		mod:Bar("adds", L["adds_bar"], 60, 70768)
+		handle_Adds = mod:ScheduleTimer(adds, 60)
+	end
 end
 
 function mod:OnEngage()
+	difficulty = GetRaidDifficulty()
 	self:Berserk(600, true)
 
-	self:DelayedMessage("adds", 62, L["adds_warning"], "Attention")
-	self:Bar("adds", L["adds_bar"], 67, 70768)
-	handle_Adds = self:ScheduleTimer(adds, 67)
+	if difficulty > 2 then
+		self:DelayedMessage("adds", 47, L["adds_warning"], "Attention")
+		self:Bar("adds", L["adds_bar"], 52, 70768)
+		handle_Adds = self:ScheduleTimer(adds, 52)
+	else
+		self:DelayedMessage("adds", 62, L["adds_warning"], "Attention")
+		self:Bar("adds", L["adds_bar"], 67, 70768)
+		handle_Adds = self:ScheduleTimer(adds, 67)
+	end
 end
 
 
@@ -85,8 +105,10 @@ function mod:DnD(player, spellId)
 end
 
 function mod:Barrier(_, spellId)
-	self:CancelDelayedMessage(L["adds_warning"])
-	self:CancelTimer(handle_Adds, true)
+	if difficulty < 3 then
+		self:CancelDelayedMessage(L["adds_warning"])
+		self:CancelTimer(handle_Adds, true)
+	end
 	self:SendMessage("BigWigs_StopBar", self, L["adds_bar"])
 	self:Message(70842, L["phase2_message"], "Positive", spellId, "Info")
 end

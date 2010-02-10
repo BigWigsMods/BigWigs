@@ -15,6 +15,7 @@ mod.toggleOptions = {"adds", 72408, 72385, {72293, "WHISPER", "ICON", "FLASHSHAK
 local bbTargets = mod:NewTargetList()
 local killed = nil
 local count = 1
+local difficulty = GetRaidDifficulty()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,8 +59,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	difficulty = GetRaidDifficulty()
 	self:OpenProximity(11)
-	self:Berserk(480)
+	if difficulty > 2 then
+		self:Berserk(360)
+	else
+		self:Berserk(480)
+	end
 	self:DelayedMessage("adds", 32, L["adds_warning"], "Urgent")
 	self:Bar("adds", L["adds_bar"], 37, 72172)
 	count = 1
