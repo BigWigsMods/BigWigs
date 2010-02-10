@@ -38,7 +38,8 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
-	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826)
+	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826, 72088, 72089)
+	self:Log("SPELL_CAST_START", "BonestormCast", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Bonestorm", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
 
@@ -97,5 +98,9 @@ function mod:Bonestorm(_, spellId, _, _, spellName)
 	self:Bar(69076, spellName, 20, spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["impale_cd"])
 	self:ScheduleTimer(afterTheStorm, 20)
+end
+
+function mod:BonestormCast(_, spellId, _, _, spellName)
+	self:Message(69076, spellName, "Attention", spellId)
 end
 

@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 73912)
-	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
+	self:Log("SPELL_DISPEL", "NPRemove", 70337, 70338, 73785, 73912)
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 
 	-- Phase 2
@@ -80,12 +80,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 
 	-- Phase 3
-	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980)
+	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325)
 	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980)
 	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 
 	-- Transition phases
-	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 74270)
+	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 72259, 74270, 74273)
 	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 
