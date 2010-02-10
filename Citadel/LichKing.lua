@@ -5,14 +5,14 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {{73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70541, 70372, 72143, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, {72743, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, 72350, "proximity", "bosskill"}
+mod.toggleOptions = {72143, 70541, 69409, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, "proximity", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
-	[73912] = CL.phase:format(1),
-	[74270] = CL.phase:format(2),
-	[72262] = CL.phase:format(3),
-	[68980] = CL.phase:format(5),
-	[72350] = CL.phase:format(6),
+	[72143] = "Warmup",
+	[70541] = CL.phase:format(1),
+	[72762] = CL.phase:format(2),
+	[68980] = CL.phase:format(3),
+	[74270] = "Transition",
 	proximity = "general",
 }
 
@@ -34,10 +34,8 @@ if L then
 	L.horror_bar = "~Next Horror"
 	L.horror_message = "Shambling Horror"
 	
-	L.necroticplague_message = "Necrotic Plague"
 	L.necroticplague_bar = "Necrotic Plague"
 
-	L.ragingspirit_message = "Raging Spirit"
 	L.ragingspirit_bar = "Raging Spirit"
 
 	L.valkyr_bar = "Next Val'kyr"
@@ -45,10 +43,11 @@ if L then
 
 	L.vilespirits_bar = "~Vile Spirits"
 
-	L.harvestsoul_message = "Harvest Soul"
+	L.harvestsoul_bar = "Harvest Soul"
 
 	L.remorselesswinter_message = "Remorseless Winter Casting"
 	L.quake_message = "Quake Casting"
+	L.quake_bar = "Quake"
 
 	L.defile_say = "Defile on ME!"
 	L.defile_message = "Defile on YOU!"
@@ -56,7 +55,6 @@ if L then
 
 	L.infest_bar = "~Next Infest"
 
-	L.reaper_message = "Soul Reaper"
 	L.reaper_bar = "~Next Reaper"
 
 	L.last_phase_bar = "Last Phase"
@@ -69,20 +67,28 @@ L = mod:GetLocale()
 
 
 function mod:OnBossEnable()
+	-- Phase 1
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
-	self:Log("SPELL_CAST_START", "DefileCast", 72762)
-	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
+	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 73912)
-	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
-	self:Log("SPELL_CAST_SUCCESS", "Reaper", 69409, 73797, 73798, 73799)
-	self:Log("SPELL_SUMMON", "Valkyr", 69037)
+	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
 	self:Log("SPELL_SUMMON", "Horror", 70372)
+
+	-- Phase 2
+	self:Log("SPELL_CAST_START", "DefileCast", 72762)
+	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
+	self:Log("SPELL_SUMMON", "Valkyr", 69037)
+
+	-- Phase 3
 	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980)
 	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980)
+	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
+
+	-- Transition phases
 	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 74270)
+	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
-	self:Log("SPELL_DAMAGE", "DefileRun", 72754, 73708, 73709, 73710)
-	self:Log("SPELL_DISPEL", "NPRemove", 70337, 73912)
+
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 72143, 72146, 72147, 72148)
 	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
@@ -100,7 +106,7 @@ end
 function mod:OnEngage()
 	print("Note that none of the timers in this bossfight have been verified by the Big Wigs team, so things might be a little off at this point. Nevertheless enjoy the fight!")
 	self:OpenProximity(10)
-	self:Bar(72743, L["necroticplague_bar"], 31, 73912)
+	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	phase = 1
 end
 
@@ -127,15 +133,15 @@ function mod:VileSpirits(_, spellId, _, _, spellName)
 	self:Bar(70498, L["vilespirits_bar"], 30.5, spellId)
 end
 
-function mod:Reaper(player, spellId)
-	self:TargetMessage(69409, L["reaper_message"], player, "Personal", spellId, "Alert")
+function mod:SoulReaper(player, spellId, _, _, spellName)
+	self:TargetMessage(69409, spellName, player, "Personal", spellId, "Alert")
 	self:Bar(69409, L["reaper_bar"], 30, spellId)
 end
 
-function mod:NecroticPlague(player, spellId)
-	self:TargetMessage(73912, L["necroticplague_message"], player, "Personal", spellId, "Alert")
+function mod:NecroticPlague(player, spellId, _, _, spellName)
+	self:TargetMessage(73912, spellName, player, "Personal", spellId, "Alert")
 	if UnitIsUnit(player, "player") then self:FlashShake(73912) end
-	self:Whisper(73912, player, L["necroticplague_message"])
+	self:Whisper(73912, player, spellName)
 	self:Bar(73912, L["necroticplague_bar"], 30, spellId)
 	self:SecondaryIcon(73912, player)
 end
@@ -144,10 +150,10 @@ function mod:Enrage(_, spellId, _, _, spellName)
 	self:Message(72143, spellName, "Attention", spellId)
 end
 
-function mod:RagingSpirit(player, spellId)
-	self:TargetMessage(69200, L["ragingspirit_message"], player, "Personal", spellId, "Alert")
+function mod:RagingSpirit(player, spellId, _, _, spellName)
+	self:TargetMessage(69200, spellName, player, "Personal", spellId, "Alert")
 	if UnitIsUnit(player, "player") then self:FlashShake(69200) end
-	self:Whisper(69200, player, L["ragingspirit_message"])
+	self:Whisper(69200, player, spellName)
 	self:Bar(69200, L["ragingspirit_bar"], 23, spellId)
 	self:PrimaryIcon(69200, player)
 end
@@ -162,8 +168,8 @@ function mod:DefileRun(player, spellId)
 	if (time - last) > 2 then
 		last = time
 		if UnitIsUnit(player, "player") then
-			self:LocalMessage(72743, L["defile_message"], "Personal", spellId, "Info")
-			self:FlashShake(72743)
+			self:LocalMessage(72762, L["defile_message"], "Personal", spellId, "Info")
+			self:FlashShake(72762)
 		end
 	end
 end
@@ -180,11 +186,11 @@ do
 	end
 end
 
-function mod:HarvestSoul(player, spellId)
-	self:Bar(68980, L["harvestsoul_message"], 75, spellId)
-	self:TargetMessage(68980, L["harvestsoul_message"], player, "Attention", spellId)
+function mod:HarvestSoul(player, spellId, _, _, spellName)
+	self:Bar(68980, L["harvestsoul_bar"], 75, spellId)
+	self:TargetMessage(68980, spellName, player, "Attention", spellId)
 	if UnitIsUnit(player, "player") then self:FlashShake(68980) end
-	self:Whisper(68980, player, L["harvestsoul_message"])
+	self:Whisper(68980, player, spellName)
 	self:SecondaryIcon(68980, player)
 end
 
@@ -197,7 +203,7 @@ function mod:RemorselessWinter(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["necroticplague_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["infest_bar"])
 	self:LocalMessage(74270, L["remorselesswinter_message"], "Urgent", spellId, "Alert")
-	self:Bar(72262, L["quake_message"], 60, 72262)
+	self:Bar(72262, L["quake_bar"], 60, 72262)
 	self:Bar(69200, L["ragingspirit_bar"], 15, spellId)
 end
 
@@ -205,13 +211,13 @@ function mod:Quake(_, spellId)
 	phase = phase + 1
 	self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
 	self:LocalMessage(72262, L["quake_message"], "Urgent", spellId, "Alert")
-	self:Bar(72743, L["defile_bar"], 30, 72743)
+	self:Bar(72762, L["defile_bar"], 30, 72762)
 	self:Bar(70541, L["infest_bar"], 13, 70541)
 	if phase == 3 then
 		self:Bar(69037, L["valkyr_bar"], 24, 71844)
 	elseif phase == 5 then
 		self:Bar(70498, L["vilespirits_bar"], 21, 70498)
-		self:Bar(68980, L["harvestsoul_message"], 12, 68980)
+		self:Bar(68980, L["harvestsoul_bar"], 12, 68980)
 	end
 end
 
@@ -223,14 +229,14 @@ do
 		local target = UnitName(bossId .. "target")
 		if target then
 			if UnitIsUnit(target, "player") then
-				mod:FlashShake(72743)
-				if bit.band(mod.db.profile[(GetSpellInfo(72743))], BigWigs.C.SAY) == BigWigs.C.SAY then
+				mod:FlashShake(72762)
+				if bit.band(mod.db.profile[(GetSpellInfo(72762))], BigWigs.C.SAY) == BigWigs.C.SAY then
 					SendChatMessage(L["defile_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72743, name, target, "Attention", id, "Alert")
-			mod:Whisper(72743, target, name)
-			mod:PrimaryIcon(72743, target)
+			mod:TargetMessage(72762, name, target, "Attention", id, "Alert")
+			mod:Whisper(72762, target, name)
+			mod:PrimaryIcon(72762, target)
 		end
 		handle = nil
 	end
@@ -238,7 +244,7 @@ do
 	function mod:DefileCast(player, spellId, _, _, spellName)
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
-		self:Bar(72743, L["defile_bar"], 33, 72743)
+		self:Bar(72762, L["defile_bar"], 33, 72762)
 		handle = self:ScheduleTimer(scanTarget, 0.1)
 	end
 end

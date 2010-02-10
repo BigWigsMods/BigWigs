@@ -189,29 +189,30 @@ if L then
 	--L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
-	L.necroticplague_message = "Nekrotische Seuche"
+	L.horror_bar = "~Torkelnder Schrecken"
+	L.horror_message = "Torkelnder Schrecken!"	
+
 	L.necroticplague_bar = "Nekrotische Seuche"
 
-	L.ragingspirit_message = "Tobender Geist"
 	L.ragingspirit_bar = "Tobender Geist"
 
 	L.valkyr_bar = "Nächste Val'kyr"
 	L.valkyr_message = "Val'kyr!"
 
-	--L.vilespirits_bar = "~Abscheuliche Geister" ???
+	L.vilespirits_bar = "~Widerwärtige Geister"
 
-	--L.harvestsoul_message = "Seele ernten" ???
+	L.harvestsoul_bar = "Seele ernten"
 
 	L.remorselesswinter_message = "Unbarmherziger Winter kommt!"
-	L.quake_message = "Beben kommt"
+	L.quake_message = "Beben kommt!"
+	L.quake_bar = "Beben"
 
-	--L.defile_say = "Besudeln auf MIR!" ???
-	--L.defile_message = "Besudeln auf DIR!" ???
-	--L.defile_bar = "Nächstes Besudeln"
+	L.defile_say = "Entweihen auf MIR!"
+	L.defile_message = "Entweihen auf DIR!"
+	L.defile_bar = "Nächstes Entweihen"
 
 	L.infest_bar = "~Befallen"
 
-	L.reaper_message = "Seelenernter"
 	L.reaper_bar = "~Seelenernter"
 
 	L.last_phase_bar = "Letzte Phase"
