@@ -45,7 +45,7 @@ if L then
 	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
 	L.buffet_message = "Magic x%d!"
-	
+
 	L.baconicon = "Icon on Bacon targets"
 	L.baconicon_desc = "Set a Skull, Cross & Square & Moon & Triangle on the players with a Bacon (requires promoted or leader)."
 end

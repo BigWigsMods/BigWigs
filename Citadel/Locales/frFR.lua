@@ -10,7 +10,46 @@ if L then
 	L.shock_say = "Vortex de choc sur moi !"
 
 	L.skullprince = "Crâne sur le prince actif"
-	L.skullprince_desc = "Place une icône de crâne sur le prince de sang actuellement surpuissant."
+	L.skullprince_desc = "Place une icône de raid en forme de crâne sur le prince de sang actuellement surpuissant."
+end
+
+L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
+if L then
+	L.engage_trigger = "Quelle est cette perturbation ?"
+	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
+
+	L.dnd_message = "Mort et décomposition sur VOUS !"
+
+	L.adds = "Membres du culte"
+	L.adds_desc = "Affiche des minuteurs concernant l'apparition des membres du culte."
+	L.adds_bar = "Prochains membres du culte"
+	L.adds_warning = "Prochains membres du culte dans 5 sec. !"
+
+	L.touch_message = "%2$dx Toucher sur %1$s"
+	L.touch_bar = "Prochain Toucher"
+
+	L.deformed_fanatic = "Fanatique déformé !"
+
+	L.Spirit_message = "Esprit vengeur invoqué !"
+end
+
+L = BigWigs:NewBossLocale("Festergut", "frFR")
+if L then
+	L.engage_trigger = "On joue ?"
+
+	L.inhale_message = "Inhalation de chancre %d"
+	L.inhale_bar = "Inhalation %d"
+
+	L.blight_warning = "Chancre âcre dans ~5 sec. !"
+	L.blight_bar = "Prochain Chancre"
+
+	L.bloat_message = "%2$dx Ballonnement gastrique sur %1$s"
+	L.bloat_bar = "~Ballonnement gastrique"
+
+	L.spore_bar = "~Spores gazeuses"
+
+	L.sporeicon = "Icônes sur les cibles des spores"
+	L.sporeicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par une Spore gazeuse (nécessite d'être promu ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
@@ -34,43 +73,6 @@ if L then
 	L.disable_trigger_horde = "L'Alliance baisse pavillon. Sus au roi-liche !"
 end
 
-L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
-if L then
-	L.engage_trigger = "Quelle est cette perturbation ?"
-	L.phase2_message = "Barrière de mana dissipée - Phase 2 !"
-
-	L.dnd_message = "Mort et décomposition sur VOUS !"
-
-	L.adds = "Membres du culte"
-	L.adds_desc = "Affiche des minuteurs concernant l'apparition des membres du culte."
-	L.adds_bar = "Prochains membres du culte"
-	L.adds_warning = "Prochains membres du culte dans 5 sec. !"
-
-	L.touch_message = "%2$dx Toucher sur %1$s"
-	L.touch_bar = "Prochain Toucher"
-
-	L.deformed_fanatic = "Fanatique déformé !"
-end
-
-L = BigWigs:NewBossLocale("Festergut", "frFR")
-if L then
-	L.engage_trigger = "On joue ?"
-
-	L.inhale_message = "Inhalation de chancre %d"
-	L.inhale_bar = "Inhalation %d"
-
-	L.blight_warning = "Chancre âcre dans ~5 sec. !"
-	L.blight_bar = "Prochain Chancre"
-
-	L.bloat_message = "%2$dx Ballonnement gastrique sur %1$s"
-	L.bloat_bar = "~Ballonnement gastrique"
-
-	L.spore_bar = "~Spores gazeuses"
-
-	L.sporeicon = "Icônes sur les cibles des spores"
-	L.sporeicon_desc = "Place un crâne, une croix et un carré sur les joueurs ayant une spore (nécessite d'être assistant ou mieux)."
-end
-
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
 if L then
 	L.engage_trigger = "Ce n'est pas une décision... très sage." -- à vérifier
@@ -87,6 +89,40 @@ if L then
 	L.phase_message = "Arrivée d'une phase aérienne !"
 	L.phase1_bar = "Retour sur le sol"
 	L.phase2_bar = "Phase aérienne"
+end
+
+L = BigWigs:NewBossLocale("The Lich King", "frFR")
+if L then
+	L.warmup_trigger = "Voici donc qu'arrive la fameuse" -- à compléter
+	L.engage_trigger = "Je vais te laisser en vie" -- à compléter
+
+	L.horror_bar = "~Prochaine Horreur"
+	L.horror_message = "Horreur titubante"
+
+	L.necroticplague_bar = "Peste nécrotique"
+
+	L.ragingspirit_bar = "Esprit déchaîné"
+
+	L.valkyr_bar = "Prochaine val'kyrs"
+	L.valkyr_message = "Val'kyr"
+
+	L.vilespirits_bar = "~Esprits vils"
+
+	L.harvestsoul_message = "Moisson d'âmes"
+
+	L.remorselesswinter_message = "Hiver impitoyable en incantation"
+	L.quake_message = "Secousse en incantation"
+	L.quake_bar = "Secousse"
+
+	L.defile_say = "Profanation sur moi !"
+	L.defile_message = "Profanation sur VOUS !"
+	L.defile_bar = "Prochaine Profanation"
+
+	L.infest_bar = "~Prochain Infester"
+
+	L.reaper_bar = "~Prochain Faucheur"
+
+	L.last_phase_bar = "Dernière phase"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
@@ -172,7 +208,7 @@ if L then
 	L.airphase = "Phase aérienne"
 	L.airphase_desc = "Prévient quand Sindragosas décolle."
 	L.airphase_trigger = "Votre incursion s'arrête ici" -- à compléter
-	L.airphase_message = "Phase aérienne"
+	L.airphase_message = "Phase aérienne !"
 	L.airphase_bar = "Prochaine phase aérienne"
 
 	L.boom_message = "Explosion !"
@@ -182,39 +218,9 @@ if L then
 	L.unchained_message = "Magie débridée x%d !"
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 	L.buffet_message = "Rafale mystique x%d !"
-end
 
-L = BigWigs:NewBossLocale("The Lich King", "frFR")
-if L then
-	L.warmup_trigger = "Voici donc qu'arrive la fameuse" -- à compléter
-	L.engage_trigger = "Je vais te laisser en vie" -- à compléter
-
-	L.necroticplague_message = "Peste nécrotique"
-	L.necroticplague_bar = "Peste nécrotique"
-
-	L.ragingspirit_message = "Esprit déchaîné"
-	L.ragingspirit_bar = "Esprit déchaîné"
-
-	L.valkyr_bar = "Prochaine val'kyrs"
-	L.valkyr_message = "Val'kyr"
-
-	L.vilespirits_bar = "~Esprits vils"
-
-	L.harvestsoul_bar = "Moisson d'âmes"
-
-	L.remorselesswinter_message = "Hiver impitoyable en incantation"
-	L.quake_message = "Secousse en incantation"
-
-	L.defile_say = "Profanation sur moi !"
-	L.defile_message = "Profanation sur VOUS !"
-	L.defile_bar = "Prochaine Profanation"
-
-	L.infest_bar = "~Prochain Infester"
-
-	L.reaper_message = "Faucheur d'âme"
-	L.reaper_bar = "~Prochain Faucheur"
-
-	L.last_phase_bar = "Dernière phase"
+	L.baconicon = "Icônes sur les cibles des guides"
+	L.baconicon_desc = "Place des icônes de raid en forme de crâne, croix, carré, lune et triangle sur les joueurs affectés par un Guide de givre (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
@@ -223,7 +229,7 @@ if L then
 
 	L.portal = "Portails du Cauchemar"
 	L.portal_desc = "Prévient quand Valithria ouvre des portails."
-	L.portal_message = "Portails actifs %d!"
+	L.portal_message = "Portails %d actifs !"
 	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
 	L.portal_bar = "Prochains portails %d"
 
@@ -235,9 +241,9 @@ if L then
 
 	L.blazing = "Squelette flamboyant"
 	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le comme un repère."
-	L.blazing_warning = "Blazing Skeleton Soon!"
+	L.blazing_warning = "Squelette flamboyant imminent !"
 
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.skull = "Crâne sur Squelette flamboyant"
+	L.skull_desc = "Place une icône de raid en forme de crâne sur les Squelettes flamboyants qui apparaissent (nécessite d'être assistant ou mieux)."
 end
 

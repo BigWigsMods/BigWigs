@@ -41,7 +41,7 @@ if L then
 	L.touch_bar = "Next Touch"
 
 	L.deformed_fanatic = "Deformed Fanatic!"
-	
+
 	L.Spirit_message = "Summon Spirit!"
 end
 L = mod:GetLocale()

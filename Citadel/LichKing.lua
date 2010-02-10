@@ -33,7 +33,7 @@ if L then
 
 	L.horror_bar = "~Next Horror"
 	L.horror_message = "Shambling Horror"
-	
+
 	L.necroticplague_bar = "Necrotic Plague"
 
 	L.ragingspirit_bar = "Raging Spirit"
