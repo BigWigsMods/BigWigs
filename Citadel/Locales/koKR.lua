@@ -184,6 +184,10 @@ if L then
 
 	L.blazing = "타오르는 해골"
 	L.blazing_desc = "타오르는 해골의 |cffff0000추정|r되는 재생성 타이머 입니다. 이 타이머는 도적에게만 효용있게 만들어져 있습니다."
+	L.blazing_warning = "Blazing Skeleton Soon!"
+
+	L.skull = "Skull on Blazing Skeleton"
+	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
@@ -208,7 +212,7 @@ L = BigWigs:NewBossLocale("The Lich King", "koKR")
 if L then
 	L.warmup_trigger = "그러니까 성스러운 빛이 자랑하던 정의가 마침내 왔다 이건가?"
 	L.engage_trigger = "폴드링, 너는 살려서 최후를 지켜보게 하겠다."
-	
+
 	L.horror_bar = "~다음 휘청 괴물"
 	L.horror_message = "휘청거리는 괴물"
 
@@ -239,3 +243,4 @@ if L then
 
 	L.last_phase_bar = "마지막 단계"
 end
+

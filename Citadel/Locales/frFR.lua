@@ -235,4 +235,9 @@ if L then
 
 	L.blazing = "Squelette flamboyant"
 	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le comme un repère."
+	L.blazing_warning = "Blazing Skeleton Soon!"
+
+	L.skull = "Skull on Blazing Skeleton"
+	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
 end
+

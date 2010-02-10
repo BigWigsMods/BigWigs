@@ -178,6 +178,10 @@ if L then
 
 	L.blazing = "Blazing Skeleton"
 	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be innacurate, use only as a rough guide."
+	L.blazing_warning = "Blazing Skeleton Soon!"
+
+	L.skull = "Skull on Blazing Skeleton"
+	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhCN")
@@ -197,3 +201,4 @@ if L then
 	L.phase1_bar = "<地面階段>"
 	L.phase2_bar = "<空中階段>"
 end
+
