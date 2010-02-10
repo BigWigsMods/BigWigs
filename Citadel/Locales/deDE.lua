@@ -182,6 +182,9 @@ if L then
 	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
+
+	L.baconicon = "Symbole auf Frostleuchtfeuer-Zielen"
+	L.baconicon_desc = "Setzt den Totenkopf, das Kreuz, das Quadrat, den Mond und das Dreieck auf Spieler mit Frostleuchtfeuer (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "deDE")
