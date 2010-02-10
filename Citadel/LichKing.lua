@@ -196,6 +196,7 @@ function mod:Quake(_, spellId)
 		self:Bar(69037, L["valkyr_bar"], 24, 71844)
 	elseif phase == 4 then
 		self:Bar(70498, L["vilespirits_bar"], 21, 70498)
+		self:Bar(68980, L["harvestsoul_message"], 12, 68980)
 	end
 end
 
