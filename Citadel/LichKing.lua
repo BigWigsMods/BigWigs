@@ -168,9 +168,16 @@ function mod:DefileRun(player, spellId)
 	end
 end
 
-function mod:Valkyr(_, spellId)
-	self:Message(69037, L["valkyr_message"], "Attention", 71844)
-	self:Bar(69037, L["valkyr_bar"], 48, 71844)
+do
+	local t = 0
+	function mod:Valkyr(_, spellId)
+		local time = GetTime()
+		if (time - t) > 2 then
+			t = time
+			self:Message(69037, L["valkyr_message"], "Attention", 71844)
+			self:Bar(69037, L["valkyr_bar"], 48, 71844)
+		end
+	end
 end
 
 function mod:HarvestSoul(player, spellId)
@@ -200,9 +207,9 @@ function mod:Quake(_, spellId)
 	self:LocalMessage(72262, L["quake_message"], "Urgent", spellId, "Alert")
 	self:Bar(72743, L["defile_bar"], 30, 72743)
 	self:Bar(70541, L["infest_bar"], 13, 70541)
-	if phase == 2 then
+	if phase == 3 then
 		self:Bar(69037, L["valkyr_bar"], 24, 71844)
-	elseif phase == 4 then
+	elseif phase == 5 then
 		self:Bar(70498, L["vilespirits_bar"], 21, 70498)
 		self:Bar(68980, L["harvestsoul_message"], 12, 68980)
 	end
