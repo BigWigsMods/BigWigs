@@ -9,8 +9,8 @@ if L then
 	L.regular_shock_message = "Vortex de choc"
 	L.shock_say = "Vortex de choc sur moi !"
 
-	L.skullprince = "Crâne sur le prince actif"
-	L.skullprince_desc = "Place une icône de raid en forme de crâne sur le prince de sang actuellement surpuissant."
+	L.skullprince = "Crâne sur le prince surpuissant"
+	L.skullprince_desc = "Place une icône de raid en forme de crâne sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
@@ -48,8 +48,8 @@ if L then
 
 	L.spore_bar = "~Spores gazeuses"
 
-	L.sporeicon = "Icônes sur les cibles des spores"
-	L.sporeicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par une Spore gazeuse (nécessite d'être promu ou mieux)."
+	L.sporeicon = "Icônes sur les cibles des Spores gazeuses"
+	L.sporeicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par une Spore gazeuse (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
@@ -219,7 +219,7 @@ if L then
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 	L.buffet_message = "Rafale mystique x%d !"
 
-	L.baconicon = "Icônes sur les cibles des guides"
+	L.baconicon = "Icônes sur les cibles des Guides de givre"
 	L.baconicon_desc = "Place des icônes de raid en forme de crâne, croix, carré, lune et triangle sur les joueurs affectés par un Guide de givre (nécessite d'être assistant ou mieux)."
 end
 
@@ -240,10 +240,10 @@ if L then
 	L.suppresser_message = "~Suppresseurs"
 
 	L.blazing = "Squelette flamboyant"
-	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le comme un repère."
+	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le donc comme un repère."
 	L.blazing_warning = "Squelette flamboyant imminent !"
 
-	L.skull = "Crâne sur Squelette flamboyant"
+	L.skull = "Crâne sur les Squelettes flamboyants"
 	L.skull_desc = "Place une icône de raid en forme de crâne sur les Squelettes flamboyants qui apparaissent (nécessite d'être assistant ou mieux)."
 end
 
