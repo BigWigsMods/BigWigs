@@ -31,6 +31,12 @@ if L then
 	L.deformed_fanatic = "Fanatique déformé !"
 
 	L.spirit_message = "Esprit vengeur invoqué !"
+	L.spirit_bar = "Prochain Esprit"
+
+	L.dominate_bar = "~Prochaine Emprise"
+
+	L.dmicon = "Icône sur les cibles de Emprise"
+	L.dmicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par Emprise (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
