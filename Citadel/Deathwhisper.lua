@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 --Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
 mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
-mod.toggleOptions = {"adds", 70842, 71204, 71426, 72501, 71289, "dmicon", {71001, "FLASHSHAKE"}, 70674, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 70842, 71204, 71426, 72501, 71289, "dmicon", {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	adds = CL.phase:format(1),
@@ -45,8 +45,6 @@ if L then
 
 	L.spirit_message = "Summon Spirit!"
 	L.spirit_bar = "Next Spirit"
-	
-	L.vampiric_message = "Vampiric Might!"
 
 	L.dominate_bar = "~Next Dominate Mind"
 
@@ -60,7 +58,6 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Vampiric", 70674)
 	self:Log("SPELL_AURA_APPLIED", "DnD", 71001, 72108, 72109, 72110)
 	self:Log("SPELL_AURA_REMOVED", "Barrier", 70842)
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
@@ -97,20 +94,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-do
-	local t = 0
-	function mod:Vampiric(_, spellId, _, _, _, _, _, _, _, dGUID)
-		local time = GetTime()
-		local target = tonumber(dGUID:sub(-12, -7), 16)
-		if target and target == 37890 then
-			if (time - t) > 3 then
-				t = time
-				self:Message(70674, L["vampiric_message"], "Attention", spellId)
-			end
-		end
-	end
-end
 
 function mod:DnD(player, spellId)
 	if UnitIsUnit(player, "player") then
