@@ -72,9 +72,11 @@ if L then
 
 	L.spirit_message = "영혼 소환!"
 	L.spirit_bar = "다음 새우"
-
+	
+	L.vampiric_message = "흡혈의 힘!"
+	
 	L.dominate_bar = "~다음 정신 지배"
-
+	
 	L.dmicon = "정신 지배 대상 전술"
 	L.dmicon_desc = "정신 지배 대상에게 해골, 가위 & 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
