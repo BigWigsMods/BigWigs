@@ -241,19 +241,9 @@ do
 		if self.OnEngage then
 			--XXX BIG ASS HACK BECAUSE BLIZZ SCREWED UP
 			--XXX GetRaidDifficulty() doesn't update when changing difficulty whilst inside the zone
-			local diff = 0
-			local _, type, index, _, _, heroic, dynamic = GetInstanceInfo()
-			if type == "raid" then
-				if dynamic then
-					diff = index
-					if heroic == 1 then
-						if diff <= 2 then
-							diff = diff + 2
-						end
-					end
-				else
-					diff = index
-				end
+			local _, type, diff, _, _, heroic, dynamic = GetInstanceInfo()
+			if type == "raid" and dynamic and heroic == 1 and diff <= 2 then
+				diff = diff + 2
 			end
 			self:OnEngage(diff)
 		end
