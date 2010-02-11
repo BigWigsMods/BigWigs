@@ -168,7 +168,7 @@ if L then
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warnt, wenn Phase 2 bei 35% beginnt."
-	--L.phase2_trigger = "Now, feel my master's limitless power and despair!"
+	L.phase2_trigger = "Fühlt die grenzenlose Macht meines Meisters, und verzweifelt!!"
 	L.phase2_message = "Phase 2!"
 
 	L.airphase = "Flugphase"
@@ -191,7 +191,7 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "deDE")
 if L then
-	--L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
+	L.warmup_trigger = "Der vielgerühmte Streiter des Lichts ist endlich hier?"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.horror_bar = "~Torkelnder Schrecken"
