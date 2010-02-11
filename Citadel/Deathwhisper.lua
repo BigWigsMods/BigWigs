@@ -45,11 +45,11 @@ if L then
 
 	L.spirit_message = "Summon Spirit!"
 	L.spirit_bar = "Next Spirit"
-	
+
 	L.dominate_bar = "~Next Dominate Mind"
-	
-	L.dmicon = "Icon on Dominate Mind targets"
-	L.dmicon_desc = "Set a Skull, Cross & Square on the players with a Dominate Mind (requires promoted or leader)."
+
+	L.dmicon = "Icon on Dominate Mind"
+	L.dmicon_desc = "Set a Skull, Cross & Square on the players with Dominate Mind (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -86,7 +86,7 @@ function mod:OnEngage(diff)
 	if diff > 2 then time = 45 end
 	self:Bar("adds", L["adds_bar"], 7, 70768)
 	if diff == 2 or diff == 4 then
-	self:Bar(71289, L["dominate_bar"], 30, 71289)
+		self:Bar(71289, L["dominate_bar"], 30, 71289)
 	end
 	handle_Adds = self:ScheduleTimer(adds, 7, time)
 end
@@ -116,7 +116,6 @@ do
 	local num = 8
 	local function dmWarn(spellName)
 		mod:TargetMessage(71289, spellName, dmTargets, "Important", 71289, "Alert")
-		mod:Bar(71289, L["dominate_bar"], 40, 71289)
 		scheduled = nil
 		num = 8
 	end
@@ -128,6 +127,7 @@ do
 		end
 		if not scheduled then
 			scheduled = true
+			self:Bar(71289, L["dominate_bar"], 40, 71289)
 			self:ScheduleTimer(dmWarn, 0.3, spellName)
 		end
 	end
