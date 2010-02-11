@@ -126,7 +126,7 @@ function mod:Barrier(_, spellId)
 		self:CancelDelayedMessage(L["adds_warning"])
 	end
 	self:Message(70842, L["phase2_message"], "Positive", spellId, "Info")
-	self:Bar(71426, L["spirit_bar"], 53, 71426)
+	self:Bar(71426, L["spirit_bar"], 30, 71426)
 end
 
 do
