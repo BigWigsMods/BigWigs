@@ -310,6 +310,31 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	slot.scrollTime = 0
 	FadingFrame_Show(slot)
 end
+do
+	local emphasizedText = nil
+	local frame = nil
+	function plugin:EmphasizedPrint(text, r, g, b)
+		if not emphasizedText then
+			frame = CreateFrame("Frame", nil, UIParent)
+			frame:SetFrameStrata("HIGH")
+			frame:SetPoint("CENTER")
+			frame:SetWidth(UIParent:GetWidth())
+			frame:SetHeight(100)
+			frame:SetScript("OnUpdate", FadingFrame_OnUpdate)
+			FadingFrame_OnLoad(frame)
+			FadingFrame_SetFadeInTime(frame, 0.2)
+			FadingFrame_SetHoldTime(frame, 1.5)
+			FadingFrame_SetFadeOutTime(frame, 3.5)
+			emphasizedText = frame:CreateFontString("BigWigsEmphasizedMessage", "OVERLAY", "ZoneTextFont")
+			emphasizedText:SetWidth(UIParent:GetWidth())
+			emphasizedText:SetHeight(100)
+			emphasizedText:SetPoint("CENTER")
+		end
+		emphasizedText:SetText(text)
+		emphasizedText:SetTextColor(r, g, b)
+		FadingFrame_Show(frame)
+	end
+end
 
 function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
@@ -334,18 +359,16 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		icon = nil
 	end
 
-	local font = nil
 	if seModule and module and key and seModule:IsSuperEmphasized(module, key) then
 		if seModule.db.profile.upper then
 			text = text:upper()
 		end
-		if seModule.db.profile.size then
-			font = BossEmoteNormalHuge
-		end
+		self:EmphasizedPrint(text, r, g, b)
+	else
+		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end
-
-	self:Pour(text, r, g, b, font, nil, nil, nil, nil, icon)
 	if self.db.profile.chat then
 		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end
 end
+
