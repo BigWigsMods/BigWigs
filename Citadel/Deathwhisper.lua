@@ -58,14 +58,14 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "DnD", 71001, 72108, 72109, 72110)
+	self:Log("SPELL_AURA_APPLIED", "DnD", 71001, 72108, 72109, 72110) --??, 25, ??, ??
 	self:Log("SPELL_AURA_REMOVED", "Barrier", 70842)
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
 	self:Log("SPELL_AURA_REMOVED", "DMRemoved", 71289)
 	self:Log("SPELL_AURA_APPLIED", "Touch", 71204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Touch", 71204)
 	self:Log("SPELL_CAST_START", "Deformed", 70900)
-	self:Log("SPELL_CAST_START", "Frostbolt", 71420, 72501, 72502) --10, ??, ??
+	self:Log("SPELL_CAST_START", "Frostbolt", 71420, 72007, 72501, 72502) --10, 25, ??, ??
 	self:Log("SPELL_SUMMON", "Spirit", 71426)
 	self:Death("Win", 36855)
 
