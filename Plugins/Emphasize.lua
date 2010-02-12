@@ -68,6 +68,7 @@ plugin.subPanelOptions = {
 				order = 11,
 				width = "full",
 				descStyle = "inline",
+				hidden = true,
 			},
 			countdown = {
 				type = "toggle",
