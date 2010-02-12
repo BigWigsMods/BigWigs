@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Super Emphasize")
+local plugin = BigWigs:NewPlugin("Super Emphasize", "AceTimer-3.0")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -104,8 +104,16 @@ function plugin:IsSuperEmphasized(module, key)
 	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
 end
 
--- XXX needs implementation
-function plugin:Emphasize(module, key)
+local function endEmphasize(key)
+	temporaryEmphasizes[key] = nil
+	plugin:SendMessage("BigWigs_SuperEmphasizeEnd", key)
+end
 
+function plugin:Emphasize(module, key, timeSpan)
+	if not module or not key then return end
+	if type(key) == "number" then key = GetSpellInfo(key) end
+	temporaryEmphasizes[key] = true
+	self:ScheduleTimer(endEmphasize, timeSpan, key)
+	self:SendMessage("BigWigs_SuperEmphasizeStart", key)
 end
 

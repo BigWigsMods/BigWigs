@@ -663,10 +663,9 @@ do
 end
 
 -- Super Emphasize the clicked bar
--- XXX the superemp click action is not actually implemented (needs coding in the emphasize plugin)
 clickHandlers.emphasize = function(bar)
 	if superemp then
-		superemp:Emphasize(bar:Get("bigwigs:module"), bar:Get("bigwigs:option"))
+		superemp:Emphasize(bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar.remaining + 0.2)
 	end
 end
 
