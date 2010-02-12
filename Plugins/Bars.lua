@@ -397,6 +397,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	self:RegisterMessage("BigWigs_SuperEmphasizeStart")
 
 	--  custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
@@ -755,7 +756,9 @@ local function countdown(bar)
 		local count = bar:Get("bigwigs:count")
 		bar:Set("bigwigs:count", count - 1)
 		PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3")
-		plugin:SendMessage("BigWigs_EmphasizedMessage", count, 1, 0, 0)
+		if count > 0.9 then
+			plugin:SendMessage("BigWigs_EmphasizedMessage", floor(count), 1, 0, 0)
+		end
 	end
 end
 local function flash(bar)
@@ -790,7 +793,7 @@ local function findBar(module, key)
 	end
 end
 
-function plugin:BigWigs_SuperEmphasizeStart(module, key, time)
+function plugin:BigWigs_SuperEmphasizeStart(event, module, key, time)
 	local bar = findBar(module, key)
 	if not bar then return end
 	actuallyEmphasize(bar, time)

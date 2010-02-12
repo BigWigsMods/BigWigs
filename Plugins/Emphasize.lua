@@ -102,7 +102,7 @@ function plugin:IsSuperEmphasized(module, key)
 	if not module or not key then return end
 	if temporaryEmphasizes[key] then return true end
 	if type(key) == "number" then key = GetSpellInfo(key) end
-	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
+	return module.db.profile[key] and bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag or nil
 end
 
 local function endEmphasize(data)

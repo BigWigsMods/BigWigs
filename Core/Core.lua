@@ -132,7 +132,7 @@ do
 			local color = colors[math.random(1, #colors)]
 			local sound = sounds[math.random(1, #sounds)]
 			local formatted = messageFormat:format(color, key, sound and "("..sound..")" or "")
-			addon:SendMessage("BigWigs_Message", nil, nil, formatted, color, true, sound, nil, messages[key])
+			addon:SendMessage("BigWigs_Message", addon, key, formatted, color, true, sound, nil, messages[key])
 			if math.random(1, 4) == 2 then addon:SendMessage("BigWigs_FlashShake") end
 			messages[key] = nil
 		end
@@ -167,7 +167,7 @@ do
 		if not spell then return end
 		local name, rank, icon = GetSpellInfo(spell.."()")
 		local time = math.random(11, 45)
-		addon:SendMessage("BigWigs_StartBar", addon, nil, name, time, icon)
+		addon:SendMessage("BigWigs_StartBar", addon, name, name, time, icon)
 		messages[spell] = icon
 	end
 end

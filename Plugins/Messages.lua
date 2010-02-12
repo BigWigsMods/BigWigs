@@ -133,7 +133,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
-	self:RegisterMessage("BigWigs_EmphasizedMessage", "EmphasizedPrint")
+	self:RegisterMessage("BigWigs_EmphasizedMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", function()
 		if not anchor then createAnchor() end
 		anchor:Show()
@@ -334,6 +334,9 @@ do
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
 		FadingFrame_Show(frame)
+	end
+	function plugin:BigWigs_EmphasizedMessage(event, ...)
+		self:EmphasizedPrint(...)
 	end
 end
 
