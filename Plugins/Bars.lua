@@ -666,6 +666,7 @@ end
 -- Super Emphasize the clicked bar
 clickHandlers.emphasize = function(bar)
 	if superemp then
+		-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
 		superemp:Emphasize(bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar.remaining + 0.2)
 	end
 end
@@ -704,6 +705,7 @@ do
 	end
 end
 
+-- XXX This also needs to prevent the associated messages from being triggered.
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
 	local anchor = bar:Get("bigwigs:anchor")
@@ -711,6 +713,7 @@ clickHandlers.remove = function(bar)
 	rearrangeBars(anchor)
 end
 
+-- XXX This also needs to prevent the associated messages from being triggered.
 -- Removes all bars EXCEPT the clicked one
 clickHandlers.removeOther = function(bar)
 	if normalAnchor then

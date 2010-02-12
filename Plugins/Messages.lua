@@ -324,6 +324,7 @@ do
 			frame:SetScript("OnUpdate", FadingFrame_OnUpdate)
 			FadingFrame_OnLoad(frame)
 			FadingFrame_SetFadeInTime(frame, 0.2)
+			-- XXX is 1.5 + 3.5 fade enough for a super emphasized message?
 			FadingFrame_SetHoldTime(frame, 1.5)
 			FadingFrame_SetFadeOutTime(frame, 3.5)
 			emphasizedText = frame:CreateFontString("BigWigsEmphasizedMessage", "OVERLAY", "ZoneTextFont")
