@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Lord Marrowgar", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36612)
-mod.toggleOptions = {69076, 69057, {69146, "FLASHSHAKE"}, "bosskill"}
+mod.toggleOptions = {69076, 69057, {69138, "FLASHSHAKE"}, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -22,8 +22,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.impale_cd = "~Next Impale"
 
-	L.bonestorm_cd = "~Next Bonestorm"
-	L.bonestorm_warning = "Bonestorm in 5 sec!"
+	L.bonestorm_cd = "~Next Bone Storm"
+	L.bonestorm_warning = "Bone Storm in 5 sec!"
 
 	L.coldflame_message = "Coldflame on YOU!"
 
@@ -36,11 +36,10 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670)
-	self:Log("SPELL_CAST_START", "ImpaleCD", 69057, 70826, 72088, 72089)
+	self:Log("SPELL_SUMMON", "Impale", 69062, 72669, 72670) --25, ??, ??
 	self:Log("SPELL_CAST_START", "BonestormCast", 69076)
 	self:Log("SPELL_AURA_APPLIED", "Bonestorm", 69076)
-	self:Log("SPELL_AURA_APPLIED", "Coldflame", 69146, 70823, 70824, 70825)
+	self:Log("SPELL_AURA_APPLIED", "Coldflame", 70823, 69146, 70824, 70825) --25, ??, ??, ??
 	self:Death("Win", 36612)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -72,18 +71,15 @@ do
 			scheduled = true
 			self:ScheduleTimer(impaleWarn, 0.3, spellName)
 			self:Bar(69057, achievName, 8, "achievement_boss_lordmarrowgar")
+			self:Bar(69057, L["impale_cd"], 15, 69057)
 		end
 	end
 end
 
-function mod:ImpaleCD(_, spellId, _, _, spellName)
-	self:Bar(69057, L["impale_cd"], 18, spellId)
-end
-
 function mod:Coldflame(player, spellId)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(69146, L["coldflame_message"], "Personal", spellId, "Alarm")
-		self:FlashShake(69146)
+		self:LocalMessage(69138, L["coldflame_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(69138)
 	end
 end
 
