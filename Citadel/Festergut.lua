@@ -40,7 +40,7 @@ if L then
 
 	L.sporeicon = "Icon on Spore targets"
 	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
-	
+
 	L.ball_message = "Goo ball incoming!"
 end
 L = mod:GetLocale()

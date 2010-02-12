@@ -56,6 +56,8 @@ if L then
 
 	L.sporeicon = "Icônes sur les cibles des Spores gazeuses"
 	L.sporeicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par une Spore gazeuse (nécessite d'être assistant ou mieux)."
+
+	L.ball_message = "Arrivée d'une Gelée malléable !"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "frFR")
@@ -153,8 +155,8 @@ if L then
 
 	L.engage_trigger = "Grande nouvelle, mes amis ! Je crois que j'ai mis au point une peste qui va détruire toute vie sur Azeroth !"
 
-	L.ball_bar = "Prochaine boule de Gelée"
-	L.ball_say = "Boule de Gelée sur moi !"
+	L.ball_bar = "Prochaine Gelée malléable"
+	L.ball_say = "Gelée malléable moi !"
 
 	L.experiment_message = "Arrivée d'une nouvelle expérience !"
 	L.experiment_bar = "Prochaine expérience"
