@@ -99,21 +99,21 @@ end
 
 function plugin:IsSuperEmphasized(module, key)
 	if not module or not key then return end
-	if type(key) == "number" then key = GetSpellInfo(key) end
 	if temporaryEmphasizes[key] then return true end
+	if type(key) == "number" then key = GetSpellInfo(key) end
 	return bit.band(module.db.profile[key], emphasizeFlag) == emphasizeFlag
 end
 
-local function endEmphasize(key)
+local function endEmphasize(data)
+	local module, key = unpack(data)
 	temporaryEmphasizes[key] = nil
-	plugin:SendMessage("BigWigs_SuperEmphasizeEnd", key)
+	plugin:SendMessage("BigWigs_SuperEmphasizeEnd", module, key)
 end
 
 function plugin:Emphasize(module, key, timeSpan)
 	if not module or not key then return end
-	if type(key) == "number" then key = GetSpellInfo(key) end
 	temporaryEmphasizes[key] = true
-	self:ScheduleTimer(endEmphasize, timeSpan, key)
-	self:SendMessage("BigWigs_SuperEmphasizeStart", key)
+	self:ScheduleTimer(endEmphasize, timeSpan, {module, key}) -- XXX wts one table per emphasize
+	self:SendMessage("BigWigs_SuperEmphasizeStart", module, key, timeSpan)
 end
 

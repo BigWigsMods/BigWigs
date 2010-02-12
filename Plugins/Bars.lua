@@ -755,7 +755,45 @@ local function countdown(bar)
 		local count = bar:Get("bigwigs:count")
 		bar:Set("bigwigs:count", count - 1)
 		PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3")
+		plugin:SendMessage("BigWigs_EmphasizedMessage", count, 1, 0, 0)
 	end
+end
+local function flash(bar)
+	if bar.remaining <= bar:Get("bigwigs:flashcount") then
+		local count = bar:Get("bigwigs:flashcount")
+		bar:Set("bigwigs:flashcount", count - 1)
+		plugin:SendMessage("BigWigs_FlashShake")
+	end
+end
+
+local function actuallyEmphasize(bar, time)
+	if time > 5 and superemp.db.profile.countdown then
+		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
+		bar:AddUpdateFunction(countdown)
+	end
+	if time > 3 and superemp.db.profile.flash then
+		bar:Set("bigwigs:flashcount", math.min(3, floor(time)) + .3)
+		bar:AddUpdateFunction(flash)
+	end
+end
+
+local function findBar(module, key)
+	for k in pairs(normalAnchor.bars) do
+		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
+			return k
+		end
+	end
+	for k in pairs(emphasizeAnchor.bars) do
+		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
+			return k
+		end
+	end
+end
+
+function plugin:BigWigs_SuperEmphasizeStart(module, key, time)
+	local bar = findBar(module, key)
+	if not bar then return end
+	actuallyEmphasize(bar, time)
 end
 
 function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
@@ -786,9 +824,8 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 		bar:EnableMouse(true)
 		bar:SetScript("OnMouseDown", barClicked)
 	end
-	if superemp and superemp:IsSuperEmphasized(module, key) and superemp.db.profile.countdown then
-		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
-		bar:AddUpdateFunction(countdown)
+	if superemp and superemp:IsSuperEmphasized(module, key) then
+		actuallyEmphasize(bar, time)
 	end
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))

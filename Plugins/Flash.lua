@@ -77,12 +77,12 @@ function mod:BigWigs_FlashShake(event, module, key)
 		flasher = CreateFrame("Frame", "BWFlash", UIParent)
 		flasher:SetFrameStrata("BACKGROUND")
 		flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-		flasher:SetAllPoints( UIParent)
-		flasher:SetScript("OnShow", function (self)
+		flasher:SetAllPoints(UIParent)
+		flasher:SetScript("OnShow", function(self)
 			self.elapsed = 0
 			self:SetAlpha(0)
 		end)
-		flasher:SetScript("OnUpdate", function (self, elapsed)
+		flasher:SetScript("OnUpdate", function(self, elapsed)
 			elapsed = self.elapsed + elapsed
 			if elapsed >= 0.8 then
 				self:Hide()
@@ -110,3 +110,4 @@ function mod:BigWigs_FlashShake(event, module, key)
 		startShake()
 	end
 end
+
