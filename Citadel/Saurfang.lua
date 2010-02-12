@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Deathbringer Saurfang", "Icecrown Citadel")
 if not mod then return end
 -- Deathbringer Saurfang, Muradin, Marine, Overlord Saurfang, Kor'kron Reaver
 mod:RegisterEnableMob(37813, 37200, 37830, 37187, 37920)
-mod.toggleOptions = {"adds", 72408, 72385, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 72410, 72385, {72293, "WHISPER", "ICON", "FLASHSHAKE"}, 72737, "proximity", "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -42,12 +42,10 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX validate add timer on engage
-
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172, 72173, 72356, 72357, 72358)
-	self:Log("SPELL_AURA_APPLIED", "RuneofBlood", 72408, 72409, 72410, 72447, 72448, 72449)
-	self:Log("SPELL_AURA_APPLIED", "BoilingBlood", 72385, 72441, 72442, 72443)
+	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172) --Check 10man Id's
+	self:Log("SPELL_AURA_APPLIED", "RuneofBlood", 72410)
+	self:Log("SPELL_AURA_APPLIED", "BoilingBlood", 72385, 72441, 72442, 72443) --??, 25, ??, ??
 	self:Log("SPELL_AURA_APPLIED", "Mark", 72293)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 72737)
 	self:Death("Deaths", 37813)
@@ -64,8 +62,8 @@ function mod:OnEngage(diff)
 	else
 		self:Berserk(480)
 	end
-	self:DelayedMessage("adds", 32, L["adds_warning"], "Urgent")
-	self:Bar("adds", L["adds_bar"], 37, 72172)
+	self:DelayedMessage("adds", 35, L["adds_warning"], "Urgent")
+	self:Bar("adds", L["adds_bar"], 40, 72172)
 	count = 1
 end
 
@@ -102,22 +100,15 @@ do
 	end
 end
 
-do
-	local t = 0
-	function mod:Adds(_, spellId)
-		local time = GetTime()
-		if (time - t) > 2 then
-			t = time
-			self:Message("adds", L["adds_message"], "Positive", spellId, "Alarm")
-			self:DelayedMessage("adds", 35, L["adds_warning"], "Urgent")
-			self:Bar("adds", L["adds_bar"], 40, spellId)
-		end
-	end
+function mod:Adds(_, spellId)
+	self:Message("adds", L["adds_message"], "Positive", 72173, "Alarm")
+	self:DelayedMessage("adds", 35, L["adds_warning"], "Urgent")
+	self:Bar("adds", L["adds_bar"], 40, 72173)
 end
 
 function mod:RuneofBlood(player, spellId, _, _, spellName)
-	self:TargetMessage(72408, spellName, player, "Attention", spellId)
-	self:Bar(72408, L["rune_bar"], 20, spellId)
+	self:TargetMessage(72410, spellName, player, "Attention", spellId)
+	self:Bar(72410, L["rune_bar"], 20, spellId)
 end
 
 function mod:Mark(player, spellId, _, _, spellName)
