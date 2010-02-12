@@ -30,6 +30,8 @@ if L then
 
 	L.sporeicon = "가스 포자 대상 전술"
 	L.sporeicon_desc = "가스 포자 대상에게 해골, 가위 & 네모 전술을 지정합니다 (승급된 사람만 가능)."
+	
+	L.ball_message = "곧 통통 끈적이!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
