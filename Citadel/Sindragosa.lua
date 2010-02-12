@@ -47,7 +47,7 @@ if L then
 	L.buffet_message = "Magic x%d!"
 
 	L.baconicon = "Icon on Beacon targets"
-	L.baconicon_desc = "Set a Skull, Cross & Square & Moon & Triangle on the players with a Beacon (requires promoted or leader)."
+	L.baconicon_desc = "Set Skull, Cross, Square, Moon and Triangle icons on the players with a Beacon (requires promoted or leader)."
 end
 L = mod:GetLocale()
 

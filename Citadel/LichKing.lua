@@ -104,7 +104,6 @@ function mod:Warmup()
 end
 
 function mod:OnEngage()
-	print("Note that none of the timers in this bossfight have been verified by the Big Wigs team, so things might be a little off at this point. Nevertheless enjoy the fight!")
 	self:OpenProximity(10)
 	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	phase = 1
