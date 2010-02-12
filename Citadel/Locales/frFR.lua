@@ -72,11 +72,8 @@ if L then
 	L.mage_message = "Mage apparu !"
 	L.mage_bar = "Prochain mage"
 
-	L.enable_trigger_alliance = "Faites chauffer les moteurs ! On a rencart avec le destin, les gars !"
-	L.enable_trigger_horde = "Levez-vous, fils et filles de la Horde ! Aujourd’hui, nous affrontons le plus haï de nos ennemis ! LOK’TAR OGAR !"
-
-	L.disable_trigger_alliance = "Vous direz pas que j'vous avais pas prévenus, canailles ! Mes frères et sœurs, en avant !"
-	L.disable_trigger_horde = "L'Alliance baisse pavillon. Sus au roi-liche !"
+	L.warmup_trigger_alliance = "Faites chauffer les moteurs"
+	L.warmup_trigger_horde = "Levez-vous, fils et filles"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")

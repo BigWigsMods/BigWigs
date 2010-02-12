@@ -4,8 +4,7 @@
 
 local mod = BigWigs:NewBoss("Icecrown Gunship Battle", "Icecrown Citadel")
 if not mod then return end
--- Muradin, Saurfang, Zafod Boombox
-mod:RegisterEnableMob(36939, 36948, 37184)
+mod:RegisterEnableMob(37184) --Zafod Boombox
 mod.toggleOptions = {"adds", "mage", "bosskill"}
 
 --------------------------------------------------------------------------------
@@ -32,11 +31,8 @@ if L then
 	L.mage_message = "Mage Spawned!"
 	L.mage_bar = "Next Mage"
 
-	L.enable_trigger_alliance = "Fire up the engines! We got a meetin' with destiny, lads!"
-	L.enable_trigger_horde = "Rise up, sons and daughters of the Horde! Today we battle a hated enemy! LOK'TAR OGAR!"
-
-	L.disable_trigger_alliance = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
-	L.disable_trigger_horde = "The Alliance falter. Onward to the Lich King!"
+	L.warmup_trigger_alliance = "Fire up the engines"
+	L.warmup_trigger_horde = "Rise up, sons and daughters"
 end
 L = mod:GetLocale()
 
@@ -45,14 +41,38 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Yell("Engage", L["enable_trigger_alliance"], L["enable_trigger_horde"])
-	self:Yell("AddsPortal", L["adds_trigger_alliance"], L["adds_trigger_horde"])
-	self:Yell("Defeated", L["disable_trigger_alliance"], L["disable_trigger_horde"])
+	self:Yell("Warmup", L["warmup_trigger_alliance"], L["warmup_trigger_horde"])
+	self:Yell("AddsPortal", L["adds_trigger_alliance"], L["adds_trigger_horde"]) --XXX unreliable, change to repeater
 	self:Log("SPELL_CAST_START", "Frozen", 69705)
 	self:Log("SPELL_AURA_REMOVED", "FrozenCD", 69705)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
-function mod:OnEngage()
+do
+	local count = 0
+	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+		--Need some sensible event args please Blizz
+		count = count + 1
+		if count == 2 then --2 bosses engaged
+			count = 0
+			local guid = UnitGUID("boss1")
+			if guid then
+				guid = tonumber(guid:sub(-12, -7), 16)
+				if guid == 37540 or guid == 37215 then
+					self:Engage()
+				else
+					self:Disable()
+				end
+			else
+				self:Defeated()
+			end
+		end
+	end
+end
+
+function mod:Warmup()
+	self:Bar("adds", COMBAT, 45, "achievement_dungeon_hordeairship")
+	--XXX Fix me, move to engage, need more logs for testing
 	self:Bar("adds", L["adds_bar"], 60, 53142)
 	self:Bar("mage", L["mage_bar"], 82, 69705)
 end

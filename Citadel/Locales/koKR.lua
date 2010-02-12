@@ -46,11 +46,8 @@ if L then
 	L.mage_message = "마법사 소환!"
 	L.mage_bar = "다음 마법사"
 
-	L.enable_trigger_alliance = "속도를 올려라! 제군들, 곧 운명과 마주할 것이다!"
-	L.enable_trigger_horde = "호드의 아들딸이여, 일어나라! 오늘 우리는 증오하던 적과 전투를 벌이리라! 록타르 오가르!"
-
-	L.disable_trigger_alliance = "악당 놈들, 분명히 경고했다! 형제자매여, 전진!"
-	L.disable_trigger_horde = "얼라이언스는 기가 꺾였다. 리치 왕을 향해 전진하라!"
+	L.warmup_trigger_alliance = "속도를 올려라"
+	L.warmup_trigger_horde = "호드의 아들딸이여"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")

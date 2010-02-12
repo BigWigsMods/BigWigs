@@ -93,11 +93,8 @@ if L then
 	L.mage_message = "Маг появился!"
 	L.mage_bar = "~Следующий маг"
 
-	L.enable_trigger_alliance = "Запускайте двигатели! Летим навстречу судьбе!"
-	L.enable_trigger_horde = "Воспряньте, сыны и дочери Орды! Сегодня мы будем биться со смертельным врагом! ЛОК'ТАР ОГАР!"
-
-	L.disable_trigger_alliance = "Ну не говорите теперь что я не предупреждал! Летим дальше, братья и сестры!"
-	L.disable_trigger_horde = "Альянс повержен. Вперед к Королю-Личу!"
+	L.warmup_trigger_alliance = "Запускайте двигатели"
+	L.warmup_trigger_horde = "Воспряньте, сыны и дочери Орды"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")

@@ -46,11 +46,8 @@ if L then
 	L.mage_message = "法師 出現！"
 	L.mage_bar = "<下一法師>"
 
-	L.enable_trigger_alliance = "發動引擎!小夥子們，我們即將面對命運啦!"
-	L.enable_trigger_horde = "起來吧，部落的子女!今天我們要和最可恨的敵人作戰!為了部落!"
-
-	L.disable_trigger_alliance = "別說我沒警告過你，無賴!兄弟姊妹們，向前衝!"
-	L.disable_trigger_horde = "聯盟已經動搖了。向巫妖王前進!"
+	L.warmup_trigger_alliance = "發動引擎"
+	L.warmup_trigger_horde = "起來吧，部落的子女"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhTW")
