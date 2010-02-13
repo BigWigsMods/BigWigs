@@ -9,8 +9,8 @@ if L then
 	L.regular_shock_message = "強力震擊漩渦區域！"
 	L.shock_say = ">我< 強力震擊漩渦區域！"
 
-	L.skullprince = "骷髏標記激活的王子"
-	L.skullprince_desc = "為激活的鮮血王子打上團隊骷髏標記。（需要權限）"
+	L.skullprince = "骷髏標記強化的血親王"
+	L.skullprince_desc = "為強化的血親王打上團隊骷髏標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
