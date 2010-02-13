@@ -11,6 +11,8 @@ if L then
 
 	L.skullprince = "활성화된 왕자 해골"
 	L.skullprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다."
+	
+	L.prison_message = "어둠의 감옥 x%d!"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "koKR")

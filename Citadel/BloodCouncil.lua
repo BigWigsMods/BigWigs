@@ -5,11 +5,12 @@ local mod = BigWigs:NewBoss("Blood Prince Council", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, 70981, "skullprince", "berserk", "proximity", "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, 72999, 70981, "skullprince", "berserk", "proximity", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72040] = "Taldaram",
 	[72039] = "Valanar",
+	[72999] = "hard",
 	[70981] = "general",
 }
 
@@ -36,6 +37,8 @@ if L then
 
 	L.skullprince = "Skull on active prince"
 	L.skullprince_desc = "Place a skull on the active blood prince with health (requires promoted or leader)."
+
+	L.prison_message = "Shadow Prison x%d!"
 end
 L = mod:GetLocale()
 
@@ -44,6 +47,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Prison", 72999)
 	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952)
 	self:Log("SPELL_CAST_START", "EmpoweredShock", 72039, 73037, 73038, 73039)
 	self:Log("SPELL_CAST_START", "RegularShock", 72037)
@@ -80,6 +84,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Prison(player, spellId, _, _, _, stack)
+	if stack > 2 and UnitIsUnit(player, "player") then
+		self:LocalMessage(70106, L["prison_message"]:format(stack), "Personal", spellId)
+	end
+end
 
 function mod:Switch(unit, spellId, _, _, spellName)
 	self:Message(70981, L["switch_message"]:format(unit), "Positive", spellId, "Info")
