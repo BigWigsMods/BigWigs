@@ -17,6 +17,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
+local phase = 0
 local beaconTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -40,6 +41,8 @@ if L then
 
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
+	
+	L.grip_bar = "Next Icy Grip"
 
 	L.unchained_message = "Unchained magic on YOU!"
 	L.instability_message = "Unstable x%d!"
@@ -81,8 +84,10 @@ function mod:Warmup()
 end
 
 function mod:OnEngage()
+	phase = 1
 	self:Berserk(600)
-	self:Bar("airphase", L["airphase_bar"], 40, 23684)
+	self:Bar("airphase", L["airphase_bar"], 63, 23684)
+	self:Bar(71047, L["grip_bar"], 44, 70117)
 end
 
 --------------------------------------------------------------------------------
@@ -130,14 +135,19 @@ end
 function mod:Grip()
 	self:Message(71047, L["boom_message"], "Important", 71047, "Alarm")
 	self:Bar(71047, L["boom_bar"], 5, 71047)
+	if phase == 2 then
+		self:Bar(71047, L["grip_bar"], 69, 70117)
+	end
 end
 
 function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
+	self:Bar(71047, L["grip_bar"], 89, 70117)
 end
 
 function mod:Phase2()
+	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"])
 	self:Message("phase2", L["phase2_message"], "Positive", nil, "Long")
 end
