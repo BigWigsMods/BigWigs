@@ -5,7 +5,18 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508, "ooze", "bosskill"}
+mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508, "ooze", 72272, "gasicon", "bosskill"}
+mod.optionHeaders = {
+	[69839] = "normal",
+	[72272] = "hard",
+	bosskill = "general",
+}
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local gasTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,6 +34,9 @@ if L then
 	L.ooze_message = "Ooze %dx"
 
 	L.spray_bar = "Next Spray"
+	
+	L.gasicon = "Icon on Gas targets"
+	L.gasicon_desc = "Set Cross, Square icons on the players with a Gas (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -31,6 +45,8 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "VileGas", 72272, 72273)
+	self:Log("SPELL_AURA_REMOVED", "GasRemoved", 72272, 72273)
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224, 73022, 73023)
 	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 69674, 71224)
 	self:Log("SPELL_CAST_START", "SlimeSpray", 69508)
@@ -87,3 +103,32 @@ function mod:Ooze(_, spellId, _, _, _, stack)
 	self:Message("ooze", L["ooze_message"]:format(stack), "Attention", spellId)
 end
 
+do
+	local scheduled = nil
+	local num = 7
+	local function gasWarn(spellName)
+		mod:TargetMessage(72272, spellName, gasTargets, "Urgent", 72272)
+		scheduled = nil
+		num = 7
+	end
+	function mod:VileGas(player, spellId, _, _, spellName)
+		gasTargets[#gasTargets + 1] = player
+		if self.db.profile.gasicon then
+			SetRaidTarget(player, num)
+			num = num - 1
+		end
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(72272)
+		end
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(gasWarn, 0.2, spellName)
+		end
+	end
+end
+
+function mod:GasRemoved(player)
+	if self.db.profile.gasicon then
+		SetRaidTarget(player, 0)
+	end
+end
