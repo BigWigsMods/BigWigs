@@ -116,6 +116,9 @@ if L then
 
 	L.gasbomb_bar = "다음 노란 가스탄"
 	L.gasbomb_message = "숨막히는 가스탄!"
+	
+	L.plagueicon = "역병 대상 전술"
+	L.plagueicon_desc = "역병 대상에게 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
@@ -130,6 +133,9 @@ if L then
 	L.ooze_message = "불안정한 수액괴물 %dx"
 
 	L.spray_bar = "다음 독액 뿌리기"
+	
+	L.gasicon = "가스 대상 전술"
+	L.gasicon_desc = "가스 대상에게 가위, 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "koKR")
@@ -151,7 +157,7 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "koKR")
 if L then
-	L.engage_trigger = "여기까지 오다니 너무나 어리석구나."
+	L.engage_trigger = "여기까지 오다니 너무나 어리석구나. 노스렌드의 얼음 바람이 영혼까지 삼키리라!"
 
 	L.phase2 = "2 단계"
 	L.phase2_desc = "2 단계 변화를 알립니다."
@@ -166,6 +172,8 @@ if L then
 
 	L.boom_message = "폭발!"
 	L.boom_bar = "폭발"
+	
+	L.grip_bar = "다음 손아귀"
 
 	L.unchained_message = "당신은 해방된 마법!"
 	L.instability_message = "불안정 x%d!"
@@ -173,7 +181,7 @@ if L then
 	L.buffet_message = "신비한 강타 x%d!"
 
 	L.baconicon = "봉화 대상 전술"
-	L.baconicon_desc = "봉화 대상에게 해골, 가위 & 네모 & 달 & 세모전술을 지정합니다 (승급된 사람만 가능)."
+	L.baconicon_desc = "봉화 대상에게 해골, 가위 & 네모 & 달 & 세모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
@@ -183,7 +191,7 @@ if L then
 	L.portal = "악몽의 차원문"
 	L.portal_desc = "악몽의 차원문을 알립니다."
 	L.portal_message = "차원문 %d 생성!"
-	L.portal_trigger = "에에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
+	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
 	L.portal_bar = "다음 차원문 %d"
 
 	L.manavoid_message = "당신은 마나 공허!"

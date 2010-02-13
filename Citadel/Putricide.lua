@@ -6,12 +6,13 @@ local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 --Putricide, Gas Cloud (Red Ooze), Volatile Ooze (Green Ooze)
 mod:RegisterEnableMob(36678, 37562, 37697)
-mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, 70352, 70353, 72855, "plagueicon", "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
 	[71255] = CL.phase:format(2),
 	[72451] = CL.phase:format(3),
+	[70352] = "hard",
 	phase = "general",
 }
 
@@ -20,7 +21,8 @@ mod.optionHeaders = {
 --
 
 local p2, p3, first, barText = nil, nil, nil, "test"
-local gooTargets = mod:NewTargetList()
+local oozeTargets = mod:NewTargetList()
+local gasTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -47,6 +49,9 @@ if L then
 
 	L.gasbomb_bar = "More yellow gas bombs"
 	L.gasbomb_message = "Yellow bombs!"
+	
+	L.plagueicon = "Icon on Plague targets"
+	L.plagueicon_desc = "Set Square icons on the players with a Plague (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -55,6 +60,9 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "Plague", 72855, 72856)
+	self:Log("SPELL_AURA_APPLIED", "OozeVariable", 70352, 74118)
+	self:Log("SPELL_AURA_APPLIED", "GasVariable", 70353, 74119)
 	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
@@ -196,3 +204,43 @@ do
 	end
 end
 
+do
+	local scheduled = nil
+	local function oozeWarn(spellName)
+		mod:TargetMessage(70352, spellName, oozeTargets, "Important", 70352, "Alert")
+		scheduled = nil
+	end
+	function mod:OozeVariable(player, spellId, _, _, spellName)
+		oozeTargets[#oozeTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(oozeWarn, 0.3, spellName)
+		end
+	end
+end
+
+do
+	local scheduled = nil
+	local function gasWarn(spellName)
+		mod:TargetMessage(70353, spellName, gasTargets, "Important", 70353, "Alert")
+		scheduled = nil
+	end
+	function mod:GasVariable(player, spellId, _, _, spellName)
+		gasTargets[#gasTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(gasWarn, 0.3, spellName)
+		end
+	end
+end
+
+function mod:Plague(player, spellId, _, _, spellName)
+	self:TargetMessage(72855, spellName, player, "Personal", spellId, "Alert")
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(72855)
+	end
+	self:Whisper(72855, player, spellName)
+	if self.db.profile.plagueicon then
+		SetRaidTarget(player, 6)
+	end
+end
