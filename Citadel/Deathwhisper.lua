@@ -85,7 +85,7 @@ function mod:OnEngage(diff)
 	local time = 60
 	if diff > 2 then time = 45 end
 	self:Bar("adds", L["adds_bar"], 7, 70768)
-	if diff == 2 or diff == 4 then
+	if diff > 1 then
 		self:Bar(71289, L["dominate_bar"], 30, 71289)
 	end
 	handle_Adds = self:ScheduleTimer(adds, 7, time)
