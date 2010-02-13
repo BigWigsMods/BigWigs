@@ -29,7 +29,7 @@ if L then
 	L.spore_bar = "<下一氣體孢子>"
 
 	L.sporeicon = "標記孢子目標"
-	L.sporeicon_desc = "為中了氣體孢子的玩家打上團隊骷髏、獅子、方塊標記。（需要權限）"
+	L.sporeicon_desc = "為中了氣體孢子的玩家打上團隊骷髏、十字、方塊標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhTW")
@@ -68,6 +68,12 @@ if L then
 	L.deformed_fanatic = "Deformed Fanatic!"
 
 	L.spirit_message = "Summon Spirit!"
+	L.spirit_bar = "Next Spirit"
+
+	L.dominate_bar = "~Next Dominate Mind"
+
+	L.dmicon = "Icon on Dominate Mind"
+	L.dmicon_desc = "Set a Skull, Cross & Square on the players with Dominate Mind (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")
@@ -163,6 +169,9 @@ if L then
 	L.instability_message = "不穩定 x%d！"
 	L.chilled_message = "沁骨之寒 x%d！"
 	L.buffet_message = "秘能連擊 x%d！"
+
+	L.baconicon = "Icon on Beacon targets"
+	L.baconicon_desc = "Set Skull, Cross, Square, Moon and Triangle icons on the players with a Beacon (需要權限)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
@@ -182,7 +191,7 @@ if L then
 	L.suppresser_message = "即將出現 抑制者！"
 
 	L.blazing = "熾熱骷髏"
-	L.blazing_desc = "熾熱骷髏|cffff0000监视|r出現計時條。此計時條可能不準確，只做參考。"
+	L.blazing_desc = "熾熱骷髏|cffff0000監視|r出現計時條。此計時條可能不準確，只做參考。"
 	L.blazing_warning = "即將 熾熱骷髏！"
 
 	L.skull = "骷髏標記熾熱骷髏"
@@ -212,10 +221,11 @@ if L then
 	L.warmup_trigger = "聖光所謂的正義終於來了嗎?我是否該把雙之哀傷放下,祈求你的寬恕呢,弗丁?"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
-	L.necroticplague_message = "亡域瘟疫"
+	L.horror_bar = "~Next Horror"
+	L.horror_message = "Shambling Horror"
+
 	L.necroticplague_bar = "<亡域瘟疫>"
 
-	L.ragingspirit_message = "狂怒的鬼魂"
 	L.ragingspirit_bar = "<狂怒的鬼魂>"
 
 	L.valkyr_bar = "<下一華爾琪>"
@@ -227,6 +237,7 @@ if L then
 
 	L.remorselesswinter_message = "正在施放 冷酷凜冬！"
 	L.quake_message = "正在施放 地震！"
+	L.quake_bar = "地震"
 
 	L.defile_say = ">我< 中了汙染！"
 	L.defile_message = "汙染：>你<！"
@@ -234,7 +245,6 @@ if L then
 
 	L.infest_bar = "<下一寄生>"
 
-	L.reaper_message = "靈魂收割者"
 	L.reaper_bar = "<下一靈魂收割者>"
 
 	L.last_phase_bar = "<最終階段>"

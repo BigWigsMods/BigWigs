@@ -68,6 +68,12 @@ if L then
 	L.deformed_fanatic = "Deformed Fanatic!"
 
 	L.spirit_message = "Summon Spirit!"
+	L.spirit_bar = "Next Spirit"
+
+	L.dominate_bar = "~Next Dominate Mind"
+
+	L.dmicon = "Icon on Dominate Mind"
+	L.dmicon_desc = "Set a Skull, Cross & Square on the players with Dominate Mind (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhCN")
@@ -201,3 +207,36 @@ if L then
 	L.phase2_bar = "<空中階段>"
 end
 
+L = BigWigs:NewBossLocale("The Lich King", "zhCN")
+if L then
+	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
+	L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
+
+	L.horror_bar = "~Next Horror"
+	L.horror_message = "Shambling Horror"
+
+	L.necroticplague_bar = "Necrotic Plague"
+
+	L.ragingspirit_bar = "Raging Spirit"
+
+	L.valkyr_bar = "Next Val'kyr"
+	L.valkyr_message = "Val'kyr"
+
+	L.vilespirits_bar = "~Vile Spirits"
+
+	L.harvestsoul_bar = "Harvest Soul"
+
+	L.remorselesswinter_message = "Remorseless Winter Casting"
+	L.quake_message = "Quake Casting"
+	L.quake_bar = "Quake"
+
+	L.defile_say = "Defile on ME!"
+	L.defile_message = "Defile on YOU!"
+	L.defile_bar = "Next Defile"
+
+	L.infest_bar = "~Next Infest"
+
+	L.reaper_bar = "~Next Reaper"
+
+	L.last_phase_bar = "Last Phase"
+end
