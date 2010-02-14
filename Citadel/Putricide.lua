@@ -104,7 +104,11 @@ do
 		if (time - t) > 5 then
 			t = time
 			self:Message(70341, spellName, "Important", spellId)
-			self:Bar(70341, L["puddle_bar"], 35, spellId)
+			if p3 then
+				self:Bar(70341, L["puddle_bar"], 20, spellId)
+			else
+				self:Bar(70341, L["puddle_bar"], 35, spellId)
+			end
 		end
 	end
 end
@@ -119,8 +123,8 @@ function mod:VolatileExperiment(_, spellId)
 end
 
 function mod:phaseChange()
-	self:Bar(70341, L["puddle_bar"], 10, 70341)
-	self:Bar(71255, L["gasbomb_bar"], 15, 71255)
+	self:Bar(70341, L["puddle_bar"], 16, 70341)
+	self:Bar(71255, L["gasbomb_bar"], 14, 71255)
 	self:Bar(72295, L["ball_bar"], 6, 72295)
 	if not first then
 		self:Message("phase", CL.phase:format(2), "Positive")
@@ -150,8 +154,8 @@ do
 		if stop then return end
 		stop = true
 		self:ScheduleTimer(nextPhase, 13)
-		self:Bar(70341, L["puddle_bar"], 10, 70341)
-		self:Bar(71255, L["gasbomb_bar"], 15, 71255)
+		self:Bar(70341, L["puddle_bar"], 16, 70341)
+		self:Bar(71255, L["gasbomb_bar"], 14, 71255)
 		self:Bar(72295, L["ball_bar"], 6, 72295)
 		if not first then
 			self:Message("phase", CL.phase:format(2), "Positive")

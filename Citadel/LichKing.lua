@@ -60,7 +60,7 @@ if L then
 	L.last_phase_bar = "Last Phase"
 
 	L.trap_say = "Shadow Trap on ME!"
-	--L.trap_bar = "Next Trap"
+	L.trap_bar = "Next Trap"
 end
 L = mod:GetLocale()
 
@@ -289,7 +289,7 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(trapTarget, 0.1, spellName)
-			--self:Bar(73529, L["trap_bar"], ??, spellId)
+			self:Bar(73529, L["trap_bar"], 30, spellId)
 		end
 	end
 end

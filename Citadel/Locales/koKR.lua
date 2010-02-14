@@ -140,9 +140,11 @@ if L then
 	L.ooze_message = "불안정한 수액괴물 %dx"
 
 	L.spray_bar = "다음 독액 뿌리기"
+	
+	L.gas_bar = "다음 치명적인 가스"
 
 	L.gasicon = "가스 대상 전술"
-	L.gasicon_desc = "가스 대상에게 가위, 네모 전술을 지정합니다 (승급된 사람만 가능)."
+	L.gasicon_desc = "가스 대상에게 가위, 네모, 달 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "koKR")

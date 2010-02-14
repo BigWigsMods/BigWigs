@@ -34,9 +34,11 @@ if L then
 	L.ooze_message = "Ooze %dx"
 
 	L.spray_bar = "Next Spray"
+	
+	L.gas_bar = "Next Vile Gas"
 
 	L.gasicon = "Icon on Gas targets"
-	L.gasicon_desc = "Set Cross, Square icons on the players with a Gas (requires promoted or leader)."
+	L.gasicon_desc = "Set Cross, Square, Moon icons on the players with a Gas (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -60,6 +62,7 @@ end
 
 function mod:OnEngage()
 	self:Bar(69508, L["spray_bar"], 19, 69508)
+	mod:Bar(72272, L["gas_bar"], 20, 72272)
 end
 
 --------------------------------------------------------------------------------
@@ -108,6 +111,7 @@ do
 	local num = 7
 	local function gasWarn(spellName)
 		mod:TargetMessage(72272, spellName, gasTargets, "Urgent", 72272)
+		mod:Bar(72272, L["gas_bar"], 30, 72272)
 		scheduled = nil
 		num = 7
 	end
