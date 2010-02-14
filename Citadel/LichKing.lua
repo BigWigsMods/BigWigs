@@ -59,7 +59,7 @@ if L then
 	L.reaper_bar = "~Next Reaper"
 
 	L.last_phase_bar = "Last Phase"
-	
+
 	L.trap_say = "Shadow Trap on ME!"
 	--L.trap_bar = "Next Trap"
 end

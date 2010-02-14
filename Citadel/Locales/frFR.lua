@@ -11,6 +11,8 @@ if L then
 
 	L.skullprince = "Crâne sur le prince surpuissant"
 	L.skullprince_desc = "Place une icône de raid en forme de crâne sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
+
+	L.prison_message = "Prison de l'ombre x%d !"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "frFR")
@@ -128,6 +130,9 @@ if L then
 	L.reaper_bar = "~Prochain Faucheur"
 
 	L.last_phase_bar = "Dernière phase"
+
+	L.trap_say = "Piège d'ombre sur moi !"
+	L.trap_bar = "Prochain Piège"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
@@ -152,6 +157,7 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase_warning = "Phase %d imminente !"
+	L.phase_bar = "Prochaine phase"
 
 	L.engage_trigger = "Grande nouvelle, mes amis ! Je crois que j'ai mis au point une peste qui va détruire toute vie sur Azeroth !"
 
@@ -168,6 +174,13 @@ if L then
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"
 	L.gasbomb_message = "Bombes de gaz !"
+
+	L.plagueicon = "Icône sur les cibles de Peste déliée"
+	L.plagueicon_desc = "Place une icône de raid en forme de carré sur les joueurs affectés par une Peste déliée (nécessite d'être assistant ou mieux)."
+
+	L.puddle_bar = "Prochaine Flaque"
+
+	L.add_message = "add ooze"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "frFR")
@@ -182,6 +195,9 @@ if L then
 	L.ooze_message = "Limon %dx"
 
 	L.spray_bar = "Prochaine Projection"
+
+	L.gasicon = "Icônes sur les cibles de Gaz abominable"
+	L.gasicon_desc = "Place des icônes de raid en forme de croix et carré sur les joueurs affectés par un Gaz abominable (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")
@@ -218,6 +234,8 @@ if L then
 
 	L.boom_message = "Explosion !"
 	L.boom_bar = "Explosion"
+
+	L.grip_bar = "Prochaine Poigne glaciale"
 
 	L.unchained_message = "Magie débridée sur VOUS !"
 	L.unchained_message = "Magie débridée x%d !"

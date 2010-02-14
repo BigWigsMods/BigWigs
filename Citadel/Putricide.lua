@@ -34,7 +34,7 @@ if L then
 	L.phase_desc = "Warn for phase changes."
 	L.phase_warning = "Phase %d soon!"
 	L.phase_bar = "Next Phase"
-	
+
 	L.engage_trigger = "I think I've perfected a plague"
 
 	L.ball_bar = "Next bouncing goo ball"
@@ -53,9 +53,9 @@ if L then
 
 	L.plagueicon = "Icon on Plague targets"
 	L.plagueicon_desc = "Set Square icons on the players with a Plague (requires promoted or leader)."
-	
+
 	L.puddle_bar = "Next Puddle"
-	
+
 	L.add_message = "add ooze"
 end
 L = mod:GetLocale()
