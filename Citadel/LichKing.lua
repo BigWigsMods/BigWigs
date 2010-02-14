@@ -110,7 +110,7 @@ function mod:Warmup()
 	self:Bar(72143, self.displayName, 53, "achievement_boss_lichking")
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	self:OpenProximity(10)
 	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	self:Bar(70372, L["horror_bar"], 22, 70372)
