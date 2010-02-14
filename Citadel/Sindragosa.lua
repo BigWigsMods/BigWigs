@@ -4,7 +4,8 @@
 
 local mod = BigWigs:NewBoss("Sindragosa", "Icecrown Citadel")
 if not mod then return end
-mod:RegisterEnableMob(36853)
+-- Sindragosa, Rimefang, Spinestalker
+mod:RegisterEnableMob(36853, 37533, 37534)
 mod.toggleOptions = {"airphase", "phase2", 70127, {69762, "FLASHSHAKE"}, 69766, 70106, 71047, {70126, "FLASHSHAKE"}, "baconicon", "proximity", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
@@ -87,7 +88,7 @@ function mod:OnEngage()
 	phase = 1
 	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 63, 23684)
-	self:Bar(71047, L["grip_bar"], 44, 70117)
+	self:Bar(71047, L["grip_bar"], 40, 70117)
 end
 
 --------------------------------------------------------------------------------
@@ -136,20 +137,21 @@ function mod:Grip()
 	self:Message(71047, L["boom_message"], "Important", 71047, "Alarm")
 	self:Bar(71047, L["boom_bar"], 5, 71047)
 	if phase == 2 then
-		self:Bar(71047, L["grip_bar"], 69, 70117)
+		self:Bar(71047, L["grip_bar"], 60, 70117)
 	end
 end
 
 function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
-	self:Bar(71047, L["grip_bar"], 89, 70117)
+	self:Bar(71047, L["grip_bar"], 85, 70117)
 end
 
 function mod:Phase2()
 	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"])
 	self:Message("phase2", L["phase2_message"], "Positive", nil, "Long")
+	self:Bar(71047, L["grip_bar"], 30, 70117)
 end
 
 function mod:Buffet(player, spellId, _, _, _, stack)
