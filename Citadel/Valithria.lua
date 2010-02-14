@@ -50,6 +50,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	if UnitPowerType("player") == 0 then
 		self:Log("SPELL_DAMAGE", "ManaVoid", 71086, 71179, 71743, 72030) --10/25
+		self:Log("SPELL_MISSED", "ManaVoid", 71086, 71179, 71743, 72030)
 	end
 	self:Log("SPELL_AURA_APPLIED", "LayWaste", 69325, 71730) -- 10/25
 	self:Log("SPELL_AURA_REMOVED", "LayWasteRemoved", 69325, 71730)

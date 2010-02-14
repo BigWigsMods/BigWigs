@@ -48,7 +48,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Prison", 72999)
-	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952)
+	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952, 70983, 70934, 71582, 71596)
 	self:Log("SPELL_CAST_START", "EmpoweredShock", 72039, 73037, 73038, 73039)
 	self:Log("SPELL_CAST_START", "RegularShock", 72037)
 
