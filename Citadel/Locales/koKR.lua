@@ -260,5 +260,7 @@ if L then
 	L.reaper_bar = "~다음 쐐기"
 
 	L.last_phase_bar = "마지막 단계"
+	
+	L.trap_say = "나에게 암흑의 덫!"
 end
 
