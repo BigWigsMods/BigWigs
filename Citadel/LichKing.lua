@@ -13,7 +13,7 @@ mod.optionHeaders = {
 	[72762] = CL.phase:format(2),
 	[68980] = CL.phase:format(3),
 	[74270] = "Transition",
-	[73529] = "hard",
+	[73529] = "heroic",
 	proximity = "general",
 }
 

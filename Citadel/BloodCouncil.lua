@@ -10,7 +10,7 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72040] = "Taldaram",
 	[72039] = "Valanar",
-	[72999] = "hard",
+	[72999] = "heroic",
 	[70981] = "general",
 }
 

@@ -8,7 +8,7 @@ mod:RegisterEnableMob(36626)
 mod.toggleOptions = {{69279, "FLASHSHAKE"}, "sporeicon", 69165, 71219, 72551, 71218, 72310, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[69279] = "normal",
-	[72310] = "hard",
+	[72310] = "heroic",
 	proximity = "general",
 }
 

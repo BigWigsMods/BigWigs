@@ -12,7 +12,7 @@ mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
 	[71255] = CL.phase:format(2),
 	[72451] = CL.phase:format(3),
-	[70352] = "hard",
+	[70352] = "heroic",
 	phase = "general",
 }
 
