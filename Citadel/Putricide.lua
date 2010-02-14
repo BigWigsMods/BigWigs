@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 --Putricide, Gas Cloud (Red Ooze), Volatile Ooze (Green Ooze)
 mod:RegisterEnableMob(36678, 37562, 37697)
-mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 70341, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, 72855, "plagueicon", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, 72855, "plagueicon", "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
@@ -54,8 +54,6 @@ if L then
 	L.plagueicon = "Icon on Plague targets"
 	L.plagueicon_desc = "Set Square icons on the players with a Plague (requires promoted or leader)."
 
-	L.puddle_bar = "Next Puddle"
-
 	L.add_message = "add ooze"
 end
 L = mod:GetLocale()
@@ -65,7 +63,6 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Puddle", 70341, 70343)
 	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672, 72832, 72833)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966, 71967, 71968)
@@ -74,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72615, 72295, 72873, 72874)
 	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
 	self:Log("SPELL_AURA_REMOVED", "TearGasOver", 71615)
-	self:Log("SPELL_AURA_APPLIED", "Plague", 72855, 72856)	--Heroic Ability
+	self:Log("SPELL_AURA_APPLIED", "UnboundPlague", 72855, 72856)	--Heroic Ability
 	self:Log("SPELL_CAST_START", "VolatileExperiment", 72840, 72841, 72842, 72843)	--Heroic Ability
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -90,31 +87,13 @@ function mod:OnEngage()
 	self:Berserk(600)
 	p2, p3, first = nil, nil, nil
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
-	self:Bar(70341, L["puddle_bar"], 10, 70341)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local t = 0
-	function mod:Puddle(_, spellId, _, _, spellName)
-		local time = GetTime()
-		if (time - t) > 5 then
-			t = time
-			self:Message(70341, spellName, "Important", spellId)
-			if p3 then
-				self:Bar(70341, L["puddle_bar"], 20, spellId)
-			else
-				self:Bar(70341, L["puddle_bar"], 35, spellId)
-			end
-		end
-	end
-end
-
 function mod:VolatileExperiment(_, spellId)
-	self:SendMessage("BigWigs_StopBar", self, L["puddle_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 	self:SendMessage("BigWigs_StopBar", self, barText)
 	self:Message("phase", L["add_message"], "Positive")
@@ -123,7 +102,6 @@ function mod:VolatileExperiment(_, spellId)
 end
 
 function mod:phaseChange()
-	self:Bar(70341, L["puddle_bar"], 16, 70341)
 	self:Bar(71255, L["gasbomb_bar"], 14, 71255)
 	self:Bar(72295, L["ball_bar"], 6, 72295)
 	if not first then
@@ -145,7 +123,6 @@ do
 		if stop then return end
 		stop = true
 		self:Bar("phase", spellName, 18, spellId)
-		self:SendMessage("BigWigs_StopBar", self, L["puddle_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 		self:SendMessage("BigWigs_StopBar", self, barText)
 		self:ScheduleTimer(nextPhase, 3)
@@ -154,7 +131,6 @@ do
 		if stop then return end
 		stop = true
 		self:ScheduleTimer(nextPhase, 13)
-		self:Bar(70341, L["puddle_bar"], 16, 70341)
 		self:Bar(71255, L["gasbomb_bar"], 14, 71255)
 		self:Bar(72295, L["ball_bar"], 6, 72295)
 		if not first then
@@ -197,7 +173,7 @@ function mod:ChasedByRedOoze(player, spellId)
 	self:SendMessage("BigWigs_StopBar", self, barText)
 	self:TargetMessage(72455, L["blight_message"], player, "Personal", spellId)
 	self:Whisper(72455, player, L["blight_message"])
-	self:SecondaryIcon(72455, player)
+	self:PrimaryIcon(72455, player)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(72455)
 	end
@@ -251,12 +227,11 @@ do
 	end
 end
 
-function mod:Plague(player, spellId, _, _, spellName)
+function mod:UnboundPlague(player, spellId, _, _, spellName)
 	self:TargetMessage(72855, spellName, player, "Personal", spellId, "Alert")
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(72855)
 	end
-	self:Whisper(72855, player, spellName)
 	if self.db.profile.plagueicon then
 		SetRaidTarget(player, 6)
 	end
