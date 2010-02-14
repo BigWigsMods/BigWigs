@@ -87,7 +87,7 @@ end
 
 function mod:Prison(player, spellId, _, _, _, stack)
 	if stack > 2 and UnitIsUnit(player, "player") then
-		self:LocalMessage(70106, L["prison_message"]:format(stack), "Personal", spellId)
+		self:LocalMessage(72999, L["prison_message"]:format(stack), "Personal", spellId)
 	end
 end
 
