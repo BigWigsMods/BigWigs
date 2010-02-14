@@ -178,8 +178,6 @@ if L then
 	L.plagueicon = "Icône sur les cibles de Peste déliée"
 	L.plagueicon_desc = "Place une icône de raid en forme de carré sur les joueurs affectés par une Peste déliée (nécessite d'être assistant ou mieux)."
 
-	L.puddle_bar = "Prochaine Flaque"
-
 	L.add_message = "add ooze"
 end
 
@@ -195,9 +193,6 @@ if L then
 	L.ooze_message = "Limon %dx"
 
 	L.spray_bar = "Prochaine Projection"
-
-	L.gasicon = "Icônes sur les cibles de Gaz abominable"
-	L.gasicon_desc = "Place des icônes de raid en forme de croix et carré sur les joueurs affectés par un Gaz abominable (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "frFR")

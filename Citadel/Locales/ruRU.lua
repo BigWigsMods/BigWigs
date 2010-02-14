@@ -147,7 +147,6 @@ end
 
 L = BigWigs:NewBossLocale("Rotface", "ruRU")
 if L then
-
 	L.engage_trigger = "УУИИИИИИ!"
 
 	L.infection_bar = "Инфекция на |3-5(%s)!"
@@ -158,7 +157,6 @@ if L then
 	L.ooze_message = "Нестабильный слизнюк %dx"
 
 	L.spray_bar = "Следующие брызги"
-
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")

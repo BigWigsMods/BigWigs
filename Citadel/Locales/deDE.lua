@@ -170,9 +170,6 @@ if L then
 	L.ooze_message = "%dx Brühschlammer!"
 
 	L.spray_bar = "~Schleimsprühen"
-
-	L.gasicon = "Symbole auf Gas-Zielen"
-	L.gasicon_desc = "Setzt das Kreuz und Quadrat auf Spieler mit Ekelhaftem Gas (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "deDE")

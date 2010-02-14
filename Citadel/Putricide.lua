@@ -71,8 +71,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72615, 72295, 72873, 72874)
 	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
 	self:Log("SPELL_AURA_REMOVED", "TearGasOver", 71615)
-	self:Log("SPELL_AURA_APPLIED", "UnboundPlague", 72855, 72856)	--Heroic Ability
-	self:Log("SPELL_CAST_START", "VolatileExperiment", 72840, 72841, 72842, 72843)	--Heroic Ability
+	self:Log("SPELL_AURA_APPLIED", "UnboundPlague", 72855, 72856) --Heroic Ability
+	self:Log("SPELL_CAST_START", "VolatileExperiment", 72840, 72841, 72842, 72843) --Heroic Ability
 
 	self:RegisterEvent("UNIT_HEALTH")
 
