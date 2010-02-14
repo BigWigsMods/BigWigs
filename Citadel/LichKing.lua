@@ -8,8 +8,7 @@ mod:RegisterEnableMob(36597)
 mod.toggleOptions = {72143, 70541, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, "berserk", "proximity", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
-	[72143] = "Warmup",
-	[70541] = CL.phase:format(1),
+	[72143] = CL.phase:format(1),
 	[72762] = CL.phase:format(2),
 	[68980] = CL.phase:format(3),
 	[74270] = "Transition",
@@ -252,7 +251,7 @@ do
 					SendChatMessage(L["defile_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(72762, name, target, "Attention", id, "Alert")
+			mod:TargetMessage(72762, name, target, "Important", id, "Alert")
 			mod:Whisper(72762, target, name)
 			mod:PrimaryIcon(72762, target)
 		end
