@@ -34,7 +34,7 @@ if L then
 	L.ooze_message = "Ooze %dx"
 
 	L.spray_bar = "Next Spray"
-	
+
 	L.gasicon = "Icon on Gas targets"
 	L.gasicon_desc = "Set Cross, Square icons on the players with a Gas (requires promoted or leader)."
 end
@@ -132,3 +132,4 @@ function mod:GasRemoved(player)
 		SetRaidTarget(player, 0)
 	end
 end
+

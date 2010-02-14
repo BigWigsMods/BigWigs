@@ -41,7 +41,7 @@ if L then
 
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
-	
+
 	L.grip_bar = "Next Icy Grip"
 
 	L.unchained_message = "Unchained magic on YOU!"

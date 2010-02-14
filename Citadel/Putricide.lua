@@ -49,7 +49,7 @@ if L then
 
 	L.gasbomb_bar = "More yellow gas bombs"
 	L.gasbomb_message = "Yellow bombs!"
-	
+
 	L.plagueicon = "Icon on Plague targets"
 	L.plagueicon_desc = "Set Square icons on the players with a Plague (requires promoted or leader)."
 end
@@ -244,3 +244,4 @@ function mod:Plague(player, spellId, _, _, spellName)
 		SetRaidTarget(player, 6)
 	end
 end
+

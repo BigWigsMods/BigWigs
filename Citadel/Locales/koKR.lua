@@ -11,7 +11,7 @@ if L then
 
 	L.skullprince = "활성화된 왕자 해골"
 	L.skullprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다."
-	
+
 	L.prison_message = "어둠의 감옥 x%d!"
 end
 
@@ -32,7 +32,7 @@ if L then
 
 	L.sporeicon = "가스 포자 대상 전술"
 	L.sporeicon_desc = "가스 포자 대상에게 해골, 가위 & 네모 전술을 지정합니다 (승급된 사람만 가능)."
-	
+
 	L.ball_message = "곧 통통 끈적이!"
 end
 
@@ -118,7 +118,7 @@ if L then
 
 	L.gasbomb_bar = "다음 노란 가스탄"
 	L.gasbomb_message = "숨막히는 가스탄!"
-	
+
 	L.plagueicon = "역병 대상 전술"
 	L.plagueicon_desc = "역병 대상에게 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
@@ -135,7 +135,7 @@ if L then
 	L.ooze_message = "불안정한 수액괴물 %dx"
 
 	L.spray_bar = "다음 독액 뿌리기"
-	
+
 	L.gasicon = "가스 대상 전술"
 	L.gasicon_desc = "가스 대상에게 가위, 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
@@ -174,7 +174,7 @@ if L then
 
 	L.boom_message = "폭발!"
 	L.boom_bar = "폭발"
-	
+
 	L.grip_bar = "다음 손아귀"
 
 	L.unchained_message = "당신은 해방된 마법!"

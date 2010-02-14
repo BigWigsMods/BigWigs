@@ -151,7 +151,7 @@ do
 	local deaths = 0
 	function mod:Deaths()
 		deaths = deaths + 1
-		if deaths == 3 then 
+		if deaths == 3 then
 			self:Win()
 		end
 	end
