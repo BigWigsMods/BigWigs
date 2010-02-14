@@ -164,7 +164,7 @@ do
 	local function scanRaid()
 		for i=1, GetNumRaidMembers() do
 			local player = ("raid%d"):format(i)
-			local isBuffed, _, _, _, _, _, expire = UnitBuff(player, buffText)
+			local isBuffed, _, _, _, _, _, expire = UnitDebuff(player, buffText)
 			if not isBuffed or expire-GetTime() < 13.5 then return end
 			player = UnitName(player)
 			self:TargetMessage(73912, buffText, player, "Personal", 70337, "Alert")
