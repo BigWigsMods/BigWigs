@@ -11,7 +11,7 @@ mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "sku
 -- Locals
 --
 
-local blazingTimers = {60, 51.5, 53.5, 41, 41}
+local blazingTimers = {60, 51.5, 53.5, 41, 41, 35}
 local blazingCount, blazingRepeater, portalCount = 1, nil, 1
 
 --------------------------------------------------------------------------------
