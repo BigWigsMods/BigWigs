@@ -142,7 +142,6 @@ plugin.subPanelOptions = {
 				width = "full",
 				get = function() return plugin.db.profile.interceptMouse end,
 				set = function(_, value) plugin.db.profile.interceptMouse = value end,
-				disabled = function() return true end,
 			},
 			left = {
 				type = "group",
