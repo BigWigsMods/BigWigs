@@ -6,13 +6,13 @@ local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 --Putricide, Gas Cloud (Red Ooze), Volatile Ooze (Green Ooze)
 mod:RegisterEnableMob(36678, 37562, 37697)
-mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, 70352, 70353, 72855, "plagueicon", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 70341, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, 72855, "plagueicon", "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),
 	[71255] = CL.phase:format(2),
 	[72451] = CL.phase:format(3),
-	[70352] = "heroic",
+	[72855] = "heroic",
 	phase = "general",
 }
 
@@ -33,7 +33,8 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
 	L.phase_warning = "Phase %d soon!"
-
+	L.phase_bar = "Next Phase"
+	
 	L.engage_trigger = "I think I've perfected a plague"
 
 	L.ball_bar = "Next bouncing goo ball"
@@ -52,6 +53,10 @@ if L then
 
 	L.plagueicon = "Icon on Plague targets"
 	L.plagueicon_desc = "Set Square icons on the players with a Plague (requires promoted or leader)."
+	
+	L.puddle_bar = "Next Puddle"
+	
+	L.add_message = "add ooze"
 end
 L = mod:GetLocale()
 
@@ -60,17 +65,17 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Plague", 72855, 72856)
-	self:Log("SPELL_AURA_APPLIED", "OozeVariable", 70352, 74118)
-	self:Log("SPELL_AURA_APPLIED", "GasVariable", 70353, 74119)
-	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672)
+	self:Log("SPELL_CAST_SUCCESS", "Puddle", 70341, 70343)
+	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672, 72832, 72833)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
-	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966)
+	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966, 71967, 71968)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72615, 72295, 72873, 72874)
 	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
 	self:Log("SPELL_AURA_REMOVED", "TearGasOver", 71615)
+	self:Log("SPELL_AURA_APPLIED", "Plague", 72855, 72856)	--Heroic Ability
+	self:Log("SPELL_CAST_START", "VolatileExperiment", 72840, 72841, 72842, 72843)	--Heroic Ability
 
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -85,11 +90,47 @@ function mod:OnEngage()
 	self:Berserk(600)
 	p2, p3, first = nil, nil, nil
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
+	self:Bar(70341, L["puddle_bar"], 10, 70341)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local t = 0
+	function mod:Puddle(_, spellId, _, _, spellName)
+		local time = GetTime()
+		if (time - t) > 5 then
+			t = time
+			self:Message(70341, spellName, "Important", spellId)
+			self:Bar(70341, L["puddle_bar"], 35, spellId)
+		end
+	end
+end
+
+function mod:VolatileExperiment(_, spellId)
+	self:SendMessage("BigWigs_StopBar", self, L["puddle_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
+	self:SendMessage("BigWigs_StopBar", self, barText)
+	self:Message("phase", L["add_message"], "Positive")
+	self:Bar(70351, L["phase_bar"], 53, spellId)
+	self:ScheduleTimer("phaseChange", 53)
+end
+
+function mod:phaseChange()
+	self:Bar(70341, L["puddle_bar"], 10, 70341)
+	self:Bar(71255, L["gasbomb_bar"], 15, 71255)
+	self:Bar(72295, L["ball_bar"], 6, 72295)
+	if not first then
+		self:Message("phase", CL.phase:format(2), "Positive")
+		self:Bar(70351, L["experiment_bar"], 25, 70351)
+		first = true
+	else
+		self:Message("phase", CL.phase:format(3), "Positive")
+		first = nil
+	end
+end
 
 do
 	local stop = nil
@@ -100,6 +141,7 @@ do
 		if stop then return end
 		stop = true
 		self:Bar("phase", spellName, 18, spellId)
+		self:SendMessage("BigWigs_StopBar", self, L["puddle_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 		self:SendMessage("BigWigs_StopBar", self, barText)
 		self:ScheduleTimer(nextPhase, 3)
@@ -108,6 +150,7 @@ do
 		if stop then return end
 		stop = true
 		self:ScheduleTimer(nextPhase, 13)
+		self:Bar(70341, L["puddle_bar"], 10, 70341)
 		self:Bar(71255, L["gasbomb_bar"], 15, 71255)
 		self:Bar(72295, L["ball_bar"], 6, 72295)
 		if not first then
@@ -150,7 +193,7 @@ function mod:ChasedByRedOoze(player, spellId)
 	self:SendMessage("BigWigs_StopBar", self, barText)
 	self:TargetMessage(72455, L["blight_message"], player, "Personal", spellId)
 	self:Whisper(72455, player, L["blight_message"])
-	self:PrimaryIcon(72455, player)
+	self:SecondaryIcon(72455, player)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(72455)
 	end
@@ -200,36 +243,6 @@ do
 			scheduled = true
 			self:ScheduleTimer(scanTarget, 0.2, spellName)
 			self:Bar(72295, L["ball_bar"], 25, spellId)
-		end
-	end
-end
-
-do
-	local scheduled = nil
-	local function oozeWarn(spellName)
-		mod:TargetMessage(70352, spellName, oozeTargets, "Important", 70352, "Alert")
-		scheduled = nil
-	end
-	function mod:OozeVariable(player, spellId, _, _, spellName)
-		oozeTargets[#oozeTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(oozeWarn, 0.3, spellName)
-		end
-	end
-end
-
-do
-	local scheduled = nil
-	local function gasWarn(spellName)
-		mod:TargetMessage(70353, spellName, gasTargets, "Important", 70353, "Alert")
-		scheduled = nil
-	end
-	function mod:GasVariable(player, spellId, _, _, spellName)
-		gasTargets[#gasTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(gasWarn, 0.3, spellName)
 		end
 	end
 end

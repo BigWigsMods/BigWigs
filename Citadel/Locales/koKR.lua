@@ -102,6 +102,7 @@ if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
 	L.phase_warning = "곧 %d 단계!"
+	L.phase_bar = "다음 단계"
 
 	L.engage_trigger = "좋은 소식이에요, 여러분!"
 
@@ -121,6 +122,10 @@ if L then
 
 	L.plagueicon = "역병 대상 전술"
 	L.plagueicon_desc = "역병 대상에게 네모 전술을 지정합니다 (승급된 사람만 가능)."
+	
+	L.puddle_bar = "다음 웅덩이"
+	
+	L.add_message = "수액들 추가"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
