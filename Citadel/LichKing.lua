@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {72143, 70541, {73912, "ICON", "WHISPER", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, "berserk", "proximity", "bosskill"}
+mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, "berserk", "proximity", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72143] = CL.phase:format(1),
@@ -73,6 +73,7 @@ function mod:OnBossEnable()
 	-- Phase 1
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
+	self:Log("SPELL_DISPEL", "PlagueScan", 528, 552, 4987) --cure, abolish, cleanse
 	self:Log("SPELL_DISPEL", "NPRemove", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 
@@ -154,9 +155,26 @@ end
 function mod:NecroticPlague(player, spellId, _, _, spellName)
 	self:TargetMessage(73912, spellName, player, "Personal", spellId, "Alert")
 	if UnitIsUnit(player, "player") then self:FlashShake(73912) end
-	self:Whisper(73912, player, spellName)
 	self:Bar(73912, L["necroticplague_bar"], 30, spellId)
 	self:SecondaryIcon(73912, player)
+end
+
+do
+	local buffText = GetSpellInfo(70337)
+	local function scanRaid()
+		for i=1, GetNumRaidMembers() do
+			local player = ("raid%d"):format(i)
+			local isBuffed, _, _, _, _, _, expire = UnitBuff(player, buffText)
+			if not isBuffed or expire-GetTime() < 13.5 then return end
+			player = UnitName(player)
+			self:TargetMessage(73912, buffText, player, "Personal", 70337, "Alert")
+			if UnitIsUnit(player, "player") then self:FlashShake(73912) end
+			self:SecondaryIcon(73912, player)
+		end
+	end
+	function mod:PlagueScan()
+		self:ScheduleTimer(scanRaid, 0.3)
+	end
 end
 
 function mod:Enrage(_, spellId, _, _, spellName)
