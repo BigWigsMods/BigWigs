@@ -55,7 +55,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LayWaste", 69325, 71730) -- 10/25
 	self:Log("SPELL_AURA_REMOVED", "LayWasteRemoved", 69325, 71730)
 	self:Log("SPELL_CAST_START", "Win", 71189)
-	self:Log("SPELL_CAST_START", "Fireball", 70754, 71748) --10/25
 
 	self:Yell("Portal", L["portal_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -63,6 +62,13 @@ function mod:OnBossEnable()
 end
 
 do
+	local function scanTarget()
+		local unitId = mod:GetUnitIdByGUID(36791)
+		if not unitId then return end
+		SetRaidTarget(unitId, 8)
+		mod:CancelTimer(blazingRepeater)
+		blazingRepeater = nil
+	end
 	local function suppresserSpawn()
 		mod:Bar("suppresser", L["suppresser_message"], 58, 70588)
 		mod:ScheduleTimer(suppresserSpawn, 58)
@@ -74,6 +80,10 @@ do
 		mod:ScheduleTimer(blazingSpawn, blazingTimers[blazingCount])
 		mod:DelayedMessage("blazing", blazingTimers[blazingCount] - 5, L["blazing_warning"], "Positive")
 		blazingCount = blazingCount + 1
+		if blazingRepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
+		if mod.db.profile.skull then
+			blazingRepeater = mod:ScheduleRepeatingTimer(scanTarget, 0.5)
+		end
 	end
 	function mod:OnEngage()
 		portalCount = 1
@@ -113,22 +123,6 @@ do
 			t = GetTime()
 			self:LocalMessage(71741, L["manavoid_message"], "Personal", spellId, "Alarm")
 			self:FlashShake(71741)
-		end
-	end
-end
-
-do
-	local function scanTarget()
-		local unitId = mod:GetUnitIdByGUID(36791)
-		if not unitId then return end
-		SetRaidTarget(unitId, 8)
-		mod:CancelTimer(blazingRepeater)
-		blazingRepeater = nil
-	end
-	function mod:Fireball()
-		if blazingRepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-		if self.db.profile.skull then
-			blazingRepeater = self:ScheduleRepeatingTimer(scanTarget, 0.5)
 		end
 	end
 end
