@@ -11,6 +11,8 @@ if L then
 
 	L.skullprince = "Totenkopf auf aktivem Prinz"
 	L.skullprince_desc = "Plaziert den Totenkopf auf dem aktiven Blutprinzen (benötigt Assistent oder höher)."
+
+	L.prison_message = "%dx Schattengefängnis!"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "deDE")
@@ -65,6 +67,8 @@ if L then
 
 	L.sporeicon = "Symbole auf Spielern mit Sporen"
 	L.sporeicon_desc = "Plaziert den Totenkopf, das Kreuz und das Quadrat auf Spielern mit Sporen (benötigt Assistent oder höher)."
+
+	L.ball_message = "Glibber!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
@@ -102,7 +106,13 @@ if L then
 
 	L.deformed_fanatic = "Deformierter Fanatiker!"
 
-	L.spirit_message = "Summon Spirit!"
+	L.spirit_message = "Geister!"
+	L.spirit_bar = "Nächsten Geister"
+
+	L.dominate_bar = "~Gedankenkontrolle"
+
+	L.dmicon = "Symbole auf gedankenkontrollierten Zielen"
+	L.dmicon_desc = "Setzt den Totenkopf, das Kreuz und das Quadrat auf gedankenkontrollierte Spieler (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
@@ -138,6 +148,9 @@ if L then
 
 	L.gasbomb_bar = "Weitere Gasbomben"
 	L.gasbomb_message = "Gasbomben!"
+
+	L.plagueicon = "Symbole auf Seuchen-Ziele"
+	L.plagueicon_desc = "Setzt das Quadrat auf Spieler mit Entfesselte Seuche (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
@@ -157,6 +170,9 @@ if L then
 	L.ooze_message = "%dx Brühschlammer!"
 
 	L.spray_bar = "~Schleimsprühen"
+
+	L.gasicon = "Symbole auf Gas-Zielen"
+	L.gasicon_desc = "Setzt das Kreuz und Quadrat auf Spieler mit Ekelhaftem Gas (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "deDE")
@@ -176,6 +192,8 @@ if L then
 
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
+
+	L.grip_bar = "Nächster Griff"
 
 	L.unchained_message = "Entfesselte Magie auf DIR!"
 	L.instability_message = "%dx Instabilität!"
@@ -198,7 +216,7 @@ if L then
 
 	L.ragingspirit_bar = "Tobender Geist"
 
-	L.valkyr_bar = "Nächste Val'kyr"
+	L.valkyr_bar = "Nächsten Val'kyr"
 	L.valkyr_message = "Val'kyr!"
 
 	L.vilespirits_bar = "~Widerwärtige Geister"
@@ -218,6 +236,9 @@ if L then
 	L.reaper_bar = "~Seelenernter"
 
 	L.last_phase_bar = "Letzte Phase"
+
+	L.trap_say = "Falle auf MIR!"
+	L.trap_bar = "Nächste Falle"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
@@ -228,7 +249,7 @@ if L then
 	L.portal_desc = "Warnt, wenn Valithria Alptraumportale öffnet."
 	L.portal_message = "Portale %d!"
 	L.portal_trigger = "Ich habe ein Portal in den Traum geöffnet. Darin liegt Eure Erlösung, Helden..."
-	L.portal_bar = "Nächsten Portale %d"
+	L.portal_bar = "Portale %d kommen"
 
 	L.manavoid_message = "Manaleere auf DIR!"
 

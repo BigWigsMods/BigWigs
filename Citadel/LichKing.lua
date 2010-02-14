@@ -76,7 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
 	self:Log("SPELL_DISPEL", "NPRemove", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
 	self:Log("SPELL_SUMMON", "Horror", 70372)
-	
+
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
 	self:Log("SPELL_CAST_START", "DefileCast", 72762)
@@ -95,7 +95,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "Enrage", 72143, 72146, 72147, 72148)
 	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
-	
+
 	-- Hard Mode
 	self:Log("SPELL_CAST_SUCCESS", "ShadowTrap", 73529)
 

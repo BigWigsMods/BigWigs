@@ -43,7 +43,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172) --Check 10man Id's
+	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172) --10man Id's: 72172, 72173; 25man Id's: 72172, 72173, 72356, 72357, 72358
 	self:Log("SPELL_AURA_APPLIED", "RuneofBlood", 72410)
 	self:Log("SPELL_AURA_APPLIED", "BoilingBlood", 72385, 72442, 72441, 72443) --10/25
 	self:Log("SPELL_AURA_APPLIED", "Mark", 72293)
