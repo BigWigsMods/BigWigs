@@ -241,8 +241,9 @@ function mod:Quake(_, spellId)
 	phase = phase + 1
 	self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
 	self:LocalMessage(72262, L["quake_message"], "Urgent", spellId, "Alert")
-	self:Bar(72762, L["defile_bar"], 30, 72762)
+	self:Bar(72762, L["defile_bar"], 37, 72762)
 	self:Bar(70541, L["infest_bar"], 13, 70541)
+	self:Bar(69409, L["reaper_bar"], 30, 69409)
 	if phase == 3 then
 		self:Bar(69037, L["valkyr_bar"], 24, 71844)
 	elseif phase == 5 then
