@@ -214,16 +214,16 @@ end
 
 L = BigWigs:NewBossLocale("Sindragosa", "frFR")
 if L then
-	L.engage_trigger = "Qu'il est stupide d'être venus ici." -- à vérifier
+	L.engage_trigger = "Qu'il est stupide d'être venus ici."
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 à 35%."
-	L.phase2_trigger = "Sentez maintenant le pouvoir infini de mon maître" -- à vérifier
+	L.phase2_trigger = "Sentez maintenant le pouvoir infini de mon maître, et désespérez !"
 	L.phase2_message = "Phase 2 !"
 
 	L.airphase = "Phase aérienne"
 	L.airphase_desc = "Prévient quand Sindragosas décolle."
-	L.airphase_trigger = "Votre incursion s'arrête ici" -- à vérifier
+	L.airphase_trigger = "Votre incursion s'arrête ici ! Personne n'en réchappera !"
 	L.airphase_message = "Phase aérienne !"
 	L.airphase_bar = "Prochaine phase aérienne"
 
