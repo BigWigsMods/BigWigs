@@ -173,7 +173,7 @@ function mod:ChasedByRedOoze(player, spellId)
 	self:SendMessage("BigWigs_StopBar", self, barText)
 	self:TargetMessage(72455, L["blight_message"], player, "Personal", spellId)
 	self:Whisper(72455, player, L["blight_message"])
-	self:PrimaryIcon(72455, player)
+	self:SecondaryIcon(72455, player)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(72455)
 	end
