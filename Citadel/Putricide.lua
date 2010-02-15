@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Professor Putricide", "Icecrown Citadel")
 if not mod then return end
 --Putricide, Gas Cloud (Red Ooze), Volatile Ooze (Green Ooze)
 mod:RegisterEnableMob(36678, 37562, 37697)
-mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, 72855, "plagueicon", "phase", "berserk", "bosskill"}
+mod.toggleOptions = {{70447, "ICON"}, {72455, "ICON", "WHISPER", "FLASHSHAKE"}, 71966, 71255, {72295, "ICON", "SAY", "FLASHSHAKE"}, 72451, {72855, "FLASHSHAKE"}, "plagueicon", "phase", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[70447] = CL.phase:format(1),

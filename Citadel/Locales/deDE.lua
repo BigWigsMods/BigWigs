@@ -132,6 +132,7 @@ if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
 	L.phase_warning = "Phase %d bald!"
+	L.phase_bar = "Nächste Phase"
 
 	L.engage_trigger = "Ich habe eine Seuche perfektioniert"
 
@@ -151,6 +152,8 @@ if L then
 
 	L.plagueicon = "Symbole auf Seuchen-Ziele"
 	L.plagueicon_desc = "Setzt das Quadrat auf Spieler mit Entfesselte Seuche (benötigt Assistent oder höher)."
+
+	--L.add_message = "add ooze"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
