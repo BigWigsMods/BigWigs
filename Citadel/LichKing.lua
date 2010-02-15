@@ -73,8 +73,7 @@ function mod:OnBossEnable()
 	-- Phase 1
 	self:Log("SPELL_CAST_START", "Infest", 70541, 73779, 73780, 73781)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
-	self:Log("SPELL_DISPEL", "PlagueScan", 528, 552, 4987) --cure, abolish, cleanse
-	self:Log("SPELL_DISPEL", "NPRemove", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
+	self:Log("SPELL_DISPEL", "PlagueScan", 528, 552, 4987, 51886) --cure, abolish, cleanse, cleanse spirit
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 
 	-- Phase 2
@@ -187,10 +186,6 @@ function mod:RagingSpirit(player, spellId, _, _, spellName)
 	self:Whisper(69200, player, spellName)
 	self:Bar(69200, L["ragingspirit_bar"], 23, spellId)
 	self:PrimaryIcon(69200, player)
-end
-
-function mod:NPRemove(player, spellId)
-	self:SecondaryIcon(73912, false)
 end
 
 local last = 0
