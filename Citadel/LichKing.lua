@@ -96,7 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
 	-- Hard Mode
-	self:Log("SPELL_CAST_SUCCESS", "ShadowTrap", 73529)
+	self:Log("SPELL_CAST_START", "ShadowTrap", 73529)
 
 	self:Death("Win", 36597)
 
