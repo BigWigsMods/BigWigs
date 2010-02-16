@@ -158,16 +158,18 @@ function mod:NecroticPlague(player, spellId, _, _, spellName)
 end
 
 do
-	local buffText = GetSpellInfo(70337)
+	local plague = GetSpellInfo(70337)
 	local function scanRaid()
-		for i=1, GetNumRaidMembers() do
-			local player = ("raid%d"):format(i)
-			local isBuffed, _, _, _, _, _, expire = UnitDebuff(player, buffText)
-			if not isBuffed or expire-GetTime() < 13.5 then return end
-			player = UnitName(player)
-			self:TargetMessage(73912, buffText, player, "Personal", 70337, "Alert")
-			if UnitIsUnit(player, "player") then self:FlashShake(73912) end
-			self:SecondaryIcon(73912, player)
+		for i = 1, GetNumRaidMembers() do
+			local player = GetRaidRosterInfo(i)
+			if player then
+				local debuffed, _, _, _, _, _, expire = UnitDebuff(player, plague)
+				if debuffed and (expire - GetTime()) > 13 then
+					self:TargetMessage(73912, plague, player, "Personal", 70337, "Alert")
+					if UnitIsUnit(player, "player") then self:FlashShake(73912) end
+					self:SecondaryIcon(73912, player)
+				end
+			end
 		end
 	end
 	function mod:PlagueScan()
