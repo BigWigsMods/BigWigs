@@ -65,15 +65,15 @@ if L then
 	L.touch_message = "無脅之觸%2$dx：>%1$s<！"
 	L.touch_bar = "<下一無脅之觸>"
 
-	L.deformed_fanatic = "Deformed Fanatic!"
+	L.deformed_fanatic = "畸形的狂熱者！"
 
-	L.spirit_message = "Summon Spirit!"
-	L.spirit_bar = "Next Spirit"
+	L.spirit_message = "召喚靈魂！"
+	L.spirit_bar = "<下一召喚靈魂>"
 
-	L.dominate_bar = "~Next Dominate Mind"
+	L.dominate_bar = "<下一支配心智>"
 
-	L.dmicon = "Icon on Dominate Mind"
-	L.dmicon_desc = "Set a Skull, Cross & Square on the players with Dominate Mind (requires promoted or leader)."
+	L.dmicon = "標記中了支配心智的玩家"
+	L.dmicon_desc = "為中了支配心智的玩家打上團隊骷髏、十字、方塊標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")
@@ -170,8 +170,8 @@ if L then
 	L.chilled_message = "沁骨之寒 x%d！"
 	L.buffet_message = "秘能連擊 x%d！"
 
-	L.baconicon = "Icon on Beacon targets"
-	L.baconicon_desc = "Set Skull, Cross, Square, Moon and Triangle icons on the players with a Beacon (需要權限)."
+	L.baconicon = "標記被上冰霜信標的目標"
+	L.baconicon_desc = "為被上冰霜信標的玩家打上團隊骷髏、十字、方塊、月亮以及三角標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
@@ -241,12 +241,15 @@ if L then
 
 	L.defile_say = ">我< 中了汙染！"
 	L.defile_message = "汙染：>你<！"
-	L.defile_bar = "<下一 汙染>"
+	L.defile_bar = "<下一汙染>"
 
 	L.infest_bar = "<下一寄生>"
 
 	L.reaper_bar = "<下一靈魂收割者>"
 
 	L.last_phase_bar = "<最終階段>"
+
+	L.trap_say = "暗影陷阱：>你<！"
+	L.trap_bar = "<下一暗影陷阱>"
 end
 
