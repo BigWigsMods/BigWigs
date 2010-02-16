@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, "berserk", "proximity", "bosskill"}
+mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72143] = CL.phase:format(1),
@@ -13,7 +13,7 @@ mod.optionHeaders = {
 	[68980] = CL.phase:format(3),
 	[74270] = "Transition",
 	[73529] = "heroic",
-	proximity = "general",
+	berserk = "general",
 }
 
 --------------------------------------------------------------------------------
@@ -106,11 +106,10 @@ function mod:OnBossEnable()
 end
 
 function mod:Warmup()
-	self:Bar(72143, self.displayName, 53, "achievement_boss_lichking")
+	self:Bar("berserk", self.displayName, 53, "achievement_boss_lichking")
 end
 
 function mod:OnEngage(diff)
-	self:OpenProximity(10)
 	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	self:Bar(70372, L["horror_bar"], 22, 70372)
 	phase = 1
