@@ -221,15 +221,15 @@ if L then
 	L.warmup_trigger = "聖光所謂的正義終於來了嗎?我是否該把雙之哀傷放下,祈求你的寬恕呢,弗丁?"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
-	L.horror_bar = "~Next Horror"
-	L.horror_message = "Shambling Horror"
+	L.horror_bar = "<下一血殭屍>"
+	L.horror_message = "蹣跚的血殭屍"
 
 	L.necroticplague_bar = "<亡域瘟疫>"
 
 	L.ragingspirit_bar = "<狂怒的鬼魂>"
 
-	L.valkyr_bar = "<下一華爾琪>"
-	L.valkyr_message = "華爾琪！"
+	L.valkyr_bar = "<下一華爾琪影衛>"
+	L.valkyr_message = "華爾琪影衛！"
 
 	L.vilespirits_bar = "<邪惡靈魂>"
 
@@ -241,7 +241,7 @@ if L then
 
 	L.defile_say = ">我< 中了汙染！"
 	L.defile_message = "汙染：>你<！"
-	L.defile_bar = "<下一汙染>"
+	L.defile_bar = "<下一 汙染>"
 
 	L.infest_bar = "<下一寄生>"
 
