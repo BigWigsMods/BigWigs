@@ -123,8 +123,8 @@ end
 --
 
 function mod:Horror(_, spellId)
-	self:Message(70372, L["horror_message"], "Attention", 70372)
-	self:Bar(70372, L["horror_bar"], 60, 70372)
+	self:Message(70372, L["horror_message"], "Attention", spellId)
+	self:Bar(70372, L["horror_bar"], 60, spellId)
 end
 
 function mod:FuryofFrostmourne()

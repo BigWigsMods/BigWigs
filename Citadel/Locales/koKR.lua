@@ -192,9 +192,9 @@ if L then
 
 	L.portal = "악몽의 차원문"
 	L.portal_desc = "악몽의 차원문을 알립니다."
-	L.portal_message = "차원문 %d 생성!"
+	L.portal_message = "차원문 생성!"
 	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
-	L.portal_bar = "다음 차원문 %d"
+	L.portalcd_bar = "다음 차원문 %d"
 
 	L.manavoid_message = "당신은 마나 공허!"
 

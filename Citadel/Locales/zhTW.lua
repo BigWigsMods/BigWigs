@@ -180,9 +180,9 @@ if L then
 
 	L.portal = "夢魘之門"
 	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
-	L.portal_message = "打開夢魘之門！ %d"
+	L.portal_message = "打開夢魘之門！"
 	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
-	L.portal_bar = "<下一夢魘之門 %d>"
+	L.portalcd_bar = "<下一夢魘之門 %d>"
 
 	L.manavoid_message = ">你< 潰法力場！"
 

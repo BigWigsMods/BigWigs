@@ -247,9 +247,11 @@ if L then
 
 	L.portal = "Alptraumportale"
 	L.portal_desc = "Warnt, wenn Valithria Alptraumportale öffnet."
-	L.portal_message = "Portale %d!"
+	L.portal_message = "Portale offen!"
+	L.portal_bar = "Portale kommen"
+	L.portalcd_message = "Portale %d in 14 sek offen!"
+	L.portalcd_bar = "Portale %d"
 	L.portal_trigger = "Ich habe ein Portal in den Traum geöffnet. Darin liegt Eure Erlösung, Helden..."
-	L.portal_bar = "Portale %d kommen"
 
 	L.manavoid_message = "Manaleere auf DIR!"
 

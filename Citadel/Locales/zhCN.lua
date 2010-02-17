@@ -176,7 +176,7 @@ if L then
 	L.manavoid_message = ">你< Mana Void！"
 	L.portal = "Nightmare Portal"
 	L.portal_desc = "当Valithria打开Portal时发出警报。"
-	L.portal_message = "打开Portal！ %d"
+	L.portal_message = "打开Portal！"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
 
 	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"

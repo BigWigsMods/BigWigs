@@ -24,9 +24,11 @@ if L then
 
 	L.portal = "Nightmare Portals"
 	L.portal_desc = "Warns when Valithria opens portals."
-	L.portal_message = "Portals %d up!"
+	L.portal_message = "Portals up!"
+	L.portal_bar = "Portals inc"
+	L.portalcd_message = "Portals %d up in 14 sec!"
+	L.portalcd_bar = "Next Portals %d"
 	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
-	L.portal_bar = "Next Portals %d"
 
 	L.manavoid_message = "Mana Void on YOU!"
 
@@ -88,7 +90,7 @@ do
 	function mod:OnEngage()
 		portalCount = 1
 		self:Bar("suppresser", L["suppresser_message"], 29, 70588)
-		self:Bar("portal", L["portal_bar"]:format(portalCount), 46, 72482)
+		self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
 		self:ScheduleTimer(suppresserSpawn, 29)
 		self:ScheduleTimer(blazingSpawn, 50)
 		self:Bar("blazing", L["blazing"], 50, 71730)
@@ -111,9 +113,12 @@ function mod:LayWasteRemoved(_, _, _, _, spellName)
 end
 
 function mod:Portal()
-	self:Message("portal", L["portal_message"]:format(portalCount), "Important")
+	-- 46 sec cd until initial positioning, +14 sec until 'real' spawn.
+	self:Message("portal", L["portalcd_message"]:format(portalCount), "Important")
+	self:Bar("portal", L["portal_bar"], 14, 72482)
+	self:DelayedMessage("portal", 14, L["portal_message"], "Important")
 	portalCount = portalCount + 1
-	self:Bar("portal", L["portal_bar"]:format(portalCount), 46, 72482)
+	self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
 end
 
 do
