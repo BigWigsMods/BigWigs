@@ -218,7 +218,7 @@ if L then
 
 	L.vilespirits_bar = "Зловещие духи"
 
-	L.harvestsoul_message = "Жнец Душ"
+	L.harvestsoul_bar = "Жнец Душ"
 
 	L.remorselesswinter_message = "Беспощадность зимы!"
 	L.quake_message = "Встряска"
