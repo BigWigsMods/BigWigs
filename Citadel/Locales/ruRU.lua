@@ -23,6 +23,8 @@ if L then
 
 	L.skullprince = "Череп на активном принце"
 	L.skullprince_desc = "Пометить черепом активного принца с полосой здоровья."
+	
+	L.prison_message = "Темница Тьмы x%d!"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "ruRU")
@@ -77,6 +79,8 @@ if L then
 
 	L.sporeicon = "Иконки на целях Спор"
 	L.sporeicon_desc = "Пометить черепом, крестом и квадратом игроков с Газообразными спорами."
+	
+	L.ball_message = "Скоро комок гадости!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "ruRU")
@@ -117,7 +121,13 @@ if L then
 
 	L.deformed_fanatic = "Кособокий фанатик!"
 
-	L.spirit_message = "Summon Spirit!"
+	L.spirit_message = "Призыв духа!"
+	L.spirit_bar = "~Призыв духа"
+
+	L.dominate_bar = "~Господство над разумом"
+
+	L.dmicon = "Помечать Господство над разумом"
+	L.dmicon_desc = "Помечает Черепом, Крестом и Квадратом игроков которые находятся под воздействием заклинания: Господство над разумом (доступно Лидеру группы/рейда или наводчику)."
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
@@ -125,6 +135,7 @@ if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Предупреждает о смене фаз."
 	L.phase_warning = "Скоро %d-я фаза!"
+	L.phase_bar = "Следующая фаза"
 
 	L.engage_trigger = "Отличные новости, народ!"
 
@@ -141,6 +152,11 @@ if L then
 
 	L.gasbomb_bar = "Следующие желтые газовые бомбы"
 	L.gasbomb_message = "Желтые бомбы!"
+	
+	L.plagueicon = "Помечать пораженных чумой"
+	L.plagueicon_desc = "Помечает Квадратом игроков пораженных чумой (доступно Лидеру группы/рейда или наводчику)."
+
+	L.add_message = "Слизнюк"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "ruRU")
@@ -164,20 +180,28 @@ end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "ruRU")
 if L then
-	L.manavoid_message = "На ВАС - Магическая воронка!"
+	L.engage_trigger = "Чужаки ворвались во внутренние покои. Уничтожьте зеленого дракона!"
+
 	L.portal = "Портал к кошмарам"
 	L.portal_desc = "Сообщать когда Валитрия открывает портал."
 	L.portal_message = "Портал!"
+	L.portal_bar = "Скоро портал"
+	L.portalcd_message = "Портал %d, через 14 сек!"
+	L.portalcd_bar = "Следующий портал %d"
 	L.portal_trigger = "Я открыла портал в Изумрудный Сон. Там вы найдете спасение, герои..."
 
-	L.engage_trigger = "Чужаки ворвались во внутренние покои. Уничтожьте зеленого дракона!"
+    L.manavoid_message = "На ВАС - Магическая воронка!"
+	
+	L.suppresser = "Появление Подавителей"
+	L.suppresser_desc = "Сообщать когда будут появляться Подавители."
+	L.suppresser_message = "~Подавители"
+	
+	L.blazing = "Исторгающий пламя скелет"
+	L.blazing_desc = "|cffff0000Предполагаемый|r таймер появления Исторгающего пламя скелета. Этот таймер может быть неточным, используйте его только в качестве приблизительного ориентира."
+	L.blazing_warning = "Скоро Исторгающий пламя скелет!"
 
-	L.blazing = "Blazing Skeleton"
-	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be inaccurate, use only as a rough guide."
-	L.blazing_warning = "Blazing Skeleton Soon!"
-
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.skull = "Помечать Исторгающего пламя скелета"
+	L.skull_desc = "Помечает Черепом появляющегося Исторгающего пламя скелета (доступно Лидеру группы/рейда или наводчику)."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
@@ -197,11 +221,16 @@ if L then
 
 	L.boom_message = "Взрыв!"
 	L.boom_bar = "Взрыв"
+	
+	L.grip_bar = "Морозная хватка"
 
 	L.unchained_message = "Освобожденная магия на ВАС!"
 	L.instability_message = "Неустойчивость x%d!"
 	L.chilled_message = "Обжигающий холод x%d!"
 	L.buffet_message = "Таинственная энергия x%d!"
+	
+	L.baconicon = "Помечает цели с меткой"
+	L.baconicon_desc = "Помечает Черепом, Крестом, Кругом, Квадратом, Луной и Треугольником игроков с меткой (доступно Лидеру группы/рейда или наводчику)."
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "ruRU")
@@ -236,5 +265,8 @@ if L then
 	L.reaper_bar = "~Следующий Жнец"
 
 	L.last_phase_bar = "Последняя фаза"
+	
+	L.trap_say = "На МНЕ - Shadow Trap!"
+	L.trap_bar = "Следующая ловушка"
 end
 
