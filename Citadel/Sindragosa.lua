@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Instability", 69766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127, 72528, 72529, 72530)
 
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 70126)
 	self:Log("SPELL_AURA_REMOVED", "BeaconRemoved", 70126)

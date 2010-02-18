@@ -84,9 +84,14 @@ function mod:Coldflame(player, spellId)
 end
 
 local function afterTheStorm()
-	mod:Bar(69076, L["bonestorm_cd"], 70, 69076)
-	mod:DelayedMessage(69076, 65, L["bonestorm_warning"], "Attention")
-	mod:Bar(69057, L["impale_cd"], 18, 69057)
+	if difficulty > 2 then
+		mod:Bar(69076, L["bonestorm_cd"], 55, 69076)
+		mod:DelayedMessage(69076, 50, L["bonestorm_warning"], "Attention")
+	else
+		mod:Bar(69076, L["bonestorm_cd"], 40, 69076)
+		mod:DelayedMessage(69076, 65, L["bonestorm_warning"], "Attention")
+		mod:Bar(69057, L["impale_cd"], 18, 69057)
+	end
 end
 
 function mod:Bonestorm(_, spellId, _, _, spellName)
