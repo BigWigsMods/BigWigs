@@ -95,6 +95,9 @@ if L then
 
 	L.warmup_trigger_alliance = "Запускайте двигатели"
 	L.warmup_trigger_horde = "Воспряньте, сыны и дочери Орды"
+
+	L.disable_trigger_alliance = "братья и сестры"
+	L.disable_trigger_horde = "Вперед к Королю-Личу"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "ruRU")

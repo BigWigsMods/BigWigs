@@ -52,6 +52,9 @@ if L then
 
 	L.warmup_trigger_alliance = "속도를 올려라"
 	L.warmup_trigger_horde = "호드의 아들딸이여"
+
+	L.disable_trigger_alliance = "형제자매여, 전진"
+	L.disable_trigger_horde = "리치 왕을 향해 전진하라"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "koKR")

@@ -33,6 +33,9 @@ if L then
 
 	L.warmup_trigger_alliance = "Fire up the engines"
 	L.warmup_trigger_horde = "Rise up, sons and daughters"
+
+	L.disable_trigger_alliance = "Onward, brothers and sisters"
+	L.disable_trigger_horde = "Onward to the Lich King"
 end
 L = mod:GetLocale()
 
@@ -43,6 +46,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Yell("Warmup", L["warmup_trigger_alliance"], L["warmup_trigger_horde"])
 	self:Yell("AddsPortal", L["adds_trigger_alliance"], L["adds_trigger_horde"]) --XXX unreliable, change to repeater
+	self:Yell("Defeated", L["disable_trigger_alliance"], L["disable_trigger_horde"])
 	self:Log("SPELL_CAST_START", "Frozen", 69705)
 	self:Log("SPELL_AURA_REMOVED", "FrozenCD", 69705)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -63,8 +67,6 @@ do
 				else
 					self:Disable()
 				end
-			else
-				self:Defeated()
 			end
 		end
 	end

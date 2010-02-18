@@ -48,6 +48,9 @@ if L then
 
 	L.warmup_trigger_alliance = "Fire up the engines"
 	L.warmup_trigger_horde = "Today we battle"
+
+	L.disable_trigger_alliance = "Onward, brothers and sisters"
+	L.disable_trigger_horde = "Onward to the Lich King"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhCN")

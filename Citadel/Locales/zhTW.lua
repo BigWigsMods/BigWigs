@@ -48,6 +48,9 @@ if L then
 
 	L.warmup_trigger_alliance = "發動引擎"
 	L.warmup_trigger_horde = "起來吧，部落的子女"
+
+	L.disable_trigger_alliance = "向前衝"
+	L.disable_trigger_horde = "向巫妖王前進"
 end
 
 L = BigWigs:NewBossLocale("Lady Deathwhisper", "zhTW")

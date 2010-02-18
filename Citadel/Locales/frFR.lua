@@ -78,6 +78,9 @@ if L then
 
 	L.warmup_trigger_alliance = "Faites chauffer les moteurs"
 	L.warmup_trigger_horde = "Levez-vous, fils et filles"
+
+	L.disable_trigger_alliance = "Mes frères et sœurs, en avant"
+	L.disable_trigger_horde = "Sus au roi-liche"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "frFR")
