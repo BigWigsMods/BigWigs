@@ -10,8 +10,6 @@ L.berserk = "Berserk"
 L.berserk_desc = "Show a timer bar for and timed warnings for when the boss will go berserk."
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
-L.logcheck_one = "|cffff0000WARNING!|r Your combat log appears to be broken. This is a Blizzard bug, and prevents all addons that depend on the combat log - like Big Wigs and Recount - from working."
-L.logcheck_two = "|cff33ff99FIX:|r If you need the combat log or addons that depend on it, you need to relog your character."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = true

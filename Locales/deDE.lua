@@ -12,8 +12,6 @@ L.berserk = "Berserker"
 L.berserk_desc = "Warnt, wenn der Boss zum Berserker wird."
 
 L.already_registered = "|cffff0000WARNUNG:|r |cff00ff00%s|r (|cffffff00%s|r) existiert bereits als Modul in Big Wigs, aber irgend etwas versucht es erneut anzumelden. Dies bedeutet normalerweise, dass du zwei Kopien des Moduls aufgrund eines Fehlers beim Aktualisieren in deinem Addon-Ordner hast. Es wird empfohlen, jegliche Big Wigs Ordner zu löschen und dann von Grund auf neu zu installieren."
-L.logcheck_one = "|cffff0000WARNUNG!|r Dein Kampflog scheint nicht mehr zu funktionieren. Dies ist ein Fehler seitens Blizzards und verhindert, dass alle Addons, die darauf basieren - wie Big Wigs oder Recount - weiterhin funktionieren."
-L.logcheck_two = "|cff33ff99FEHLERBEHEBUNG:|r Falls du oder Addons das Kampflog brauchen, solltest du deinen Charakter erneut laden."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Bei dir läuft ein offizieller Release von Big Wigs %s (revision %d)."

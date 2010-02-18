@@ -238,6 +238,7 @@ do
 
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
+		CombatLogClearEntries()
 		if self.OnEngage then
 			--XXX BIG ASS HACK BECAUSE BLIZZ SCREWED UP
 			--XXX GetRaidDifficulty() doesn't update when changing difficulty whilst inside the zone

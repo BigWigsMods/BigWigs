@@ -12,8 +12,6 @@ L.berserk = "狂暴"
 L.berserk_desc = "當首領狂暴時發出警報。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已經存在模組，但存在模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議刪除所有 Big Wigs 檔案夾並重新安裝。"
-L.logcheck_one = "|cffff0000WARNING!|r Your combat log appears to be broken. This is a Blizzard bug, and prevents all addons that depend on the combat log - like Big Wigs and Recount - from working."
-L.logcheck_two = "|cff33ff99FIX:|r If you need the combat log or addons that depend on it, you need to relog your character."
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 為官方正式版（修訂號%d）"
