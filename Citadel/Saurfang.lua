@@ -43,7 +43,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Adds", 72172) --10man Id's: 72172, 72173; 25man Id's: 72172, 72173, 72356, 72357, 72358
+	self:Log("SPELL_CAST_SUCCESS", "Adds", 72173) --10man Id's: 72172, 72173; 25man Id's: 72172, 72173, 72356, 72357, 72358
 	self:Log("SPELL_AURA_APPLIED", "RuneofBlood", 72410)
 	self:Log("SPELL_AURA_APPLIED", "BoilingBlood", 72385, 72442, 72441, 72443) --10/25
 	self:Log("SPELL_AURA_APPLIED", "Mark", 72293)
@@ -63,7 +63,7 @@ function mod:OnEngage(diff)
 		self:Berserk(480)
 	end
 	self:DelayedMessage("adds", 35, L["adds_warning"], "Urgent")
-	self:Bar("adds", L["adds_bar"], 40, 72172)
+	self:Bar("adds", L["adds_bar"], 40, 72173)
 	count = 1
 end
 
@@ -101,9 +101,9 @@ do
 end
 
 function mod:Adds(_, spellId)
-	self:Message("adds", L["adds_message"], "Positive", 72173, "Alarm")
+	self:Message("adds", L["adds_message"], "Positive", spellId, "Alarm")
 	self:DelayedMessage("adds", 35, L["adds_warning"], "Urgent")
-	self:Bar("adds", L["adds_bar"], 40, 72173)
+	self:Bar("adds", L["adds_bar"], 40, spellId)
 end
 
 function mod:RuneofBlood(player, spellId, _, _, spellName)
