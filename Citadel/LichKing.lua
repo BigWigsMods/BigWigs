@@ -165,9 +165,9 @@ do
 			if player then
 				local debuffed, _, _, _, _, _, expire = UnitDebuff(player, plague)
 				if debuffed and (expire - GetTime()) > 13 then
-					self:TargetMessage(73912, plague, player, "Personal", 70337, "Alert")
-					if UnitIsUnit(player, "player") then self:FlashShake(73912) end
-					self:SecondaryIcon(73912, player)
+					mod:TargetMessage(73912, plague, player, "Personal", 70337, "Alert")
+					if UnitIsUnit(player, "player") then mod:FlashShake(73912) end
+					mod:SecondaryIcon(73912, player)
 				end
 			end
 		end
