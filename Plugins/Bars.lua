@@ -740,7 +740,7 @@ end
 clickHandlers.disable = function(bar)
 	local m = bar:Get("bigwigs:module")
 	if m and m.db and m.db.profile and bar:Get("bigwigs:option") then
-		m.db.profile[bar:Get("bigwigs:option")] = false
+		m.db.profile[bar:Get("bigwigs:option")] = 0
 	end
 end
 
