@@ -705,7 +705,8 @@ do
 	end
 end
 
--- XXX This also needs to prevent the associated messages from being triggered.
+-- XXX This also needs to prevent the everything associated with this option from being triggered.
+-- XXX Messages, FlashNShake, Sound, etc.
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
 	local anchor = bar:Get("bigwigs:anchor")
@@ -713,7 +714,8 @@ clickHandlers.remove = function(bar)
 	rearrangeBars(anchor)
 end
 
--- XXX This also needs to prevent the associated messages from being triggered.
+-- XXX This also needs to prevent the everything associated with this option from being triggered.
+-- XXX Messages, FlashNShake, Sound, etc.
 -- Removes all bars EXCEPT the clicked one
 clickHandlers.removeOther = function(bar)
 	if normalAnchor then
