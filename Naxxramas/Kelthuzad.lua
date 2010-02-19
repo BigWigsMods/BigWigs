@@ -142,7 +142,7 @@ end
 
 function mod:UNIT_HEALTH(event, msg)
 	if UnitName(msg) == mod.displayName then
-		local health = UnitHealth(msg)
+		local health = UnitHealth(msg) / UnitHealthMax(msg) * 100
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
 			self:Message("phase", L["phase3_soon_warning"], "Attention")
 			self.warnedAboutPhase3Soon = true

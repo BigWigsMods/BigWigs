@@ -157,11 +157,11 @@ function mod:UNIT_HEALTH(_, unit)
 		return
 	end
 	if UnitName(unit) == self.displayName then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit)
-		if hp <= 0.83 and not p2 then
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp <= 83 and not p2 then
 			self:Message("phase", L["phase_warning"]:format(2), "Positive")
 			p2 = true
-		elseif hp <= 0.37 and not p3 then
+		elseif hp <= 37 and not p3 then
 			self:Message("phase", L["phase_warning"]:format(3), "Positive")
 			p3 = true
 		end

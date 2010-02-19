@@ -124,7 +124,7 @@ end
 
 function mod:UNIT_HEALTH(event, msg)
 	if phase == 1 and UnitName(msg) == mod.displayName then
-		local health = UnitHealth(msg)
+		local health = UnitHealth(msg) / UnitHealthMax(msg) * 100
 		if not exposed1 and health > 86 and health <= 88 then
 			exposed1 = true
 			self:Message(63849, L["exposed_warning"], "Attention")

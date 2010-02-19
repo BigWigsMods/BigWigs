@@ -90,7 +90,7 @@ end
 
 function mod:UNIT_HEALTH(event, msg)
 	if UnitName(msg) == mod.displayName then
-		local health = UnitHealth(msg)
+		local health = UnitHealth(msg) / UnitHealthMax(msg) * 100
 		if health > 30 and health <= 33 and not enrageannounced then
 			self:Message(54123, L["enragesoonwarn"], "Important")
 			enrageannounced = true

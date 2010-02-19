@@ -156,7 +156,7 @@ end
 function mod:UNIT_HEALTH(event, msg)
 	if phase ~= 1 then return end
 	if UnitName(msg) == self.displayName then
-		local hp = UnitHealth(msg)
+		local hp = UnitHealth(msg) / UnitHealthMax(msg) * 100
 		if hp > 51 and hp <= 54 then
 			self:Message("phase", L["phase2_warning"], "Attention")
 		end
