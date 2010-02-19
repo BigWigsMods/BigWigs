@@ -72,6 +72,7 @@ function mod:OnBossEnable()
 
 	self:Death("Deaths", 32867, 32927, 32857)
 	self:Yell("Engage", L["engage_trigger1"], L["engage_trigger2"], L["engage_trigger3"])
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 function mod:OnEngage(diff)
