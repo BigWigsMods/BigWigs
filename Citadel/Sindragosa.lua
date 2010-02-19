@@ -46,6 +46,7 @@ if L then
 	L.grip_bar = "Next Icy Grip"
 
 	L.unchained_message = "Unchained magic on YOU!"
+	L.unchained_bar = "Unchained Magic"
 	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
 	L.buffet_message = "Magic x%d!"
@@ -88,6 +89,7 @@ function mod:OnEngage()
 	phase = 1
 	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 63, 23684)
+	self:Bar(69762, L["unchained_bar"], 15, 69762)
 	self:Bar(71047, L["grip_bar"], 40, 70117)
 end
 
@@ -137,7 +139,7 @@ function mod:Grip()
 	self:Message(71047, L["boom_message"], "Important", 71047, "Alarm")
 	self:Bar(71047, L["boom_bar"], 5, 71047)
 	if phase == 2 then
-		self:Bar(71047, L["grip_bar"], 60, 70117)
+		self:Bar(71047, L["grip_bar"], 65, 70117)
 	end
 end
 
@@ -145,6 +147,7 @@ function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
 	self:Bar(71047, L["grip_bar"], 85, 70117)
+	self:Bar(69762, L["unchained_bar"], 60, 69762)
 end
 
 function mod:Phase2()
@@ -173,6 +176,11 @@ function mod:Chilled(player, spellId, _, _, _, stack)
 end
 
 function mod:Unchained(player, spellId)
+	if phase == 1 then
+		self:Bar(69762, L["unchained_bar"], 30, 69762)
+	elseif phase == 2 then
+		self:Bar(69762, L["unchained_bar"], 80, 69762)
+	end
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alert")
 		self:FlashShake(69762)
