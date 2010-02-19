@@ -3,8 +3,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "zhCN")
 if not L then return end
 
 -- Core.lua
-L["%s enabled"] = "%s已启用"	-- "<boss> enabled"  -- XXX used ?
-L["%s has been defeated"] = "%s被击败了！"     -- "<boss> has been defeated"
+L["%s has been defeated"] = "%s被击败了！"
 
 L.bosskill = "首领死亡"
 L.bosskill_desc = "首领被击杀时显示提示信息。"

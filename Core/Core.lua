@@ -26,7 +26,7 @@ local monitoring = nil
 local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
-		-- module:SendMessage("BigWigs_Message", module, "bosskill", "string.format(L["%s enabled"], module.displayName), "Core")
+		-- module:SendMessage("BigWigs_Message", module, "bosskill", string.format("%s enabled", module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
 		end

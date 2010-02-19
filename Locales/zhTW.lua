@@ -3,8 +3,7 @@
 if not L then return end
 
 -- Core.lua
-L["%s enabled"] = "%s已啟用"	-- "<boss> enabled"  -- XXX used ?
-L["%s has been defeated"] = "%s被擊敗了！"     -- "<boss> has been defeated"
+L["%s has been defeated"] = "%s被擊敗了！"
 
 L.bosskill = "首領死亡"
 L.bosskill_desc = "首領被擊敗時發出提示。"

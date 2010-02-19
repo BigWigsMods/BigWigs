@@ -1,8 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "frFR")
 if not L then return end
 -- Core.lua
-L["%s enabled"] = "%s activé" -- "<boss> enabled"
-L["%s has been defeated"] = "%s a été vaincu(e)" -- "<boss> has been defeated"
+L["%s has been defeated"] = "%s a été vaincu(e)"
 
 L.bosskill = "Défaite du boss"
 L.bosskill_desc = "Prévient quand le boss est vaincu."

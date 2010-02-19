@@ -3,12 +3,11 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "esES")
 if not L then return end
 
 -- Core.lua
-L["%s has been defeated"] = "%s ha sido derrotado"     -- "<boss> has been defeated"
-L["%s have been defeated"] = "%s han sido derrotados"    -- "<bosses> have been defeated"
+L["%s has been defeated"] = "%s ha sido derrotado"
 
 L["Bosses"] = "Jefes"
-L["Options for bosses in %s."] = "Opciones para jefes de %s." -- "Options for bosses in <zone>"
-L["Options for %s (r%d)."] = "Opciones para %s (r%d)."     -- "Options for <boss> (<revision>)"
+L["Options for bosses in %s."] = "Opciones para jefes de %s."
+L["Options for %s (r%d)."] = "Opciones para %s (r%d)."
 L["Plugins"] = "Plugins"
 L["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Los plugins administran las características de BigWigs sobre cómo mostrar mensajes, barras de tiempo y otras características esenciales."
 L["Extras"] = "Extras"
