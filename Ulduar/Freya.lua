@@ -72,11 +72,11 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Energy", 62865, 62451)				--Elder Brightleaf
-	self:Log("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)		--Elder Brightleaf
-	self:Log("UNIT_DIED", "Deaths")										--Elder Brightleaf
-	self:Log("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--Elder Ironbranch
-	self:Log("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--Elder Stonebark
+	self:Log("SPELL_AURA_APPLIED", "Energy", 62865, 62451)              --Elder Brightleaf
+	self:Log("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)        --Elder Brightleaf
+	self:Log("UNIT_DIED", "Deaths")                                     --Elder Brightleaf
+	self:Log("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)  --Elder Ironbranch
+	self:Log("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)  --Elder Stonebark
 	self:Log("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:Log("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:Log("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
