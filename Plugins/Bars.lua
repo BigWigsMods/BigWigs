@@ -741,6 +741,15 @@ local function barClicked(bar, button)
 	end
 end
 
+local function barOnEnter(bar)
+	bar.candyBarLabel:SetJustifyH("CENTER")
+	bar.candyBarBackground:SetVertexColor(1, 1, 1, 0.8)
+end
+local function barOnLeave(bar)
+	bar.candyBarLabel:SetJustifyH(db.align)
+	bar.candyBarBackground:SetVertexColor(0.5, 0.5, 0.5, 0.3)
+end
+
 local function countdown(bar)
 	if bar.remaining <= bar:Get("bigwigs:count") then
 		local count = bar:Get("bigwigs:count")
@@ -816,6 +825,8 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if db.interceptMouse then
 		bar:EnableMouse(true)
 		bar:SetScript("OnMouseDown", barClicked)
+		bar:SetScript("OnEnter", barOnEnter)
+		bar:SetScript("OnLeave", barOnLeave)
 	end
 	if superemp and superemp:IsSuperEmphasized(module, key) then
 		actuallyEmphasize(bar, time)
