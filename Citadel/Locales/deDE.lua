@@ -156,7 +156,7 @@ if L then
 	L.plagueicon = "Symbole auf Seuchen-Ziele"
 	L.plagueicon_desc = "Setzt das Quadrat auf Spieler mit Entfesselte Seuche (benötigt Assistent oder höher)."
 
-	--L.add_message = "add ooze"
+	L.add_message = "Weiterer Schlamm!"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
@@ -210,7 +210,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "deDE")
 if L then
 	L.warmup_trigger = "Der vielgerühmte Streiter des Lichts ist endlich hier?"
-	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
+	L.engage_trigger = "Ihr bleibt bis zum Ende am Leben, Fordring."
 
 	L.horror_bar = "~Torkelnder Schrecken"
 	L.horror_message = "Torkelnder Schrecken!"

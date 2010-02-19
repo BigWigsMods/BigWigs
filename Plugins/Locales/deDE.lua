@@ -6,6 +6,20 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Clickable Bars"] = "Interaktive Leisten"
+L.clickableBarsDesc = "Big Wigs Leisten sind grundsätzlich nicht anklickbar. Dadurch ist es möglich, das Ziel durch Anklicken zu wechseln, AoE-Zauber hinter die Leisten zu setzen, die Kameraperspektive zu ändern usw., während sich die Maus über den Leisten befindet. |cffff4411Falls die 'Interaktiven Leisten' aktiviert werden, wird dies nicht mehr funktionieren.|r Die Leisten werden jeden Mausklick abfangen, den sie abbekommen.\n"
+L["Enables bars to receive mouse clicks."] = "Aktiviert das Empfangen von Mausklicks durch Leisten."
+
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Hebt Leisten und zugehörige Nachrichten zeitweilig stark hervor."
+L["Report"] = "Berichten"
+L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "Gibt den aktuellen Status der Leiste in den aktiven Chat aus: Entweder Schlachtzugs-, Schlachtfeld-, Gruppen- oder Gildenchat."
+L["Remove"] = "Entfernen"
+L["Temporarily removes the bar and all associated messages."] = "Entfernt zeitweilig die Leiste und alle zugehörigen Nachrichten aus der Anzeige."
+L["Remove other"] = "Andere entfernen"
+L["Temporarily removes all other bars (except this one) and associated messages."] = "Entfernt zeitweilig alle anderen Leisten (außer der Angeklickten) und zugehörigen Nachrichten aus der Anzeige."
+L["Disable"] = "Deaktivieren"
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "Deaktiviert die Option, die diese Leiste erzeugt hat, zukünftig permanent."
+
 L["Scale"] = "Skalierung"
 L["Grow upwards"] = "Nach oben erweitern"
 L["Toggle bars grow upwards/downwards from anchor."] = "Legt fest, ob sich die Leisten von der Verankerung aus nach oben oder unten erweitern."
