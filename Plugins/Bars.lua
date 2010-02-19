@@ -66,54 +66,45 @@ plugin.defaultDB = {
 	MiddleButton = {
 		remove = true,
 	},
-	RightButton = {
-		menu = true,
-	},
+	RightButton = {},
 }
 
 -- XXX Clickable bar strings need to be finalized and localized before release
 local clickOptions = {
 	emphasize = {
 		type = "toggle",
-		name = colorize["Super Emphasize"],
-		desc = "Temporarily Super Emphasizes the bar and any messages associated with it for the duration.",
+		name = colorize[L["Super Emphasize"]],
+		desc = L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."],
 		descStyle = "inline",
 		order = 1,
 	},
 	report = {
 		type = "toggle",
-		name = colorize["Report"],
-		desc = "Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate.",
+		name = colorize[L["Report"]],
+		desc = L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."],
 		descStyle = "inline",
 		order = 2,
 	},
 	remove = {
 		type = "toggle",
-		name = colorize["Remove"],
-		desc = "Removes the bar and all associated messages from displaying.",
+		name = colorize[L["Remove"]],
+		desc = L["Removes the bar and all associated messages from displaying."],
 		descStyle = "inline",
 		order = 3,
 	},
 	removeOther = {
 		type = "toggle",
-		name = colorize["Remove other"],
-		desc = "Temporarily removes all other bars (except this one) and associated messages.",
+		name = colorize[L["Remove other"]],
+		desc = L["Temporarily removes all other bars (except this one) and associated messages."],
 		descStyle = "inline",
 		order = 4,
 	},
 	disable = {
 		type = "toggle",
-		name = colorize["Disable"],
-		desc = "Disables the boss encounter ability option that spawned this bar.",
+		name = colorize[L["Disable"]],
+		desc = L["Disables the boss encounter ability option that spawned this bar."],
 		descStyle = "inline",
 		order = 5,
-	},
-	menu = {
-		type = "toggle",
-		name = colorize["Menu"],
-		desc = "Opens a menu on the bar with entries like the options here.",
-		descStyle = "inline",
-		order = 6,
 	},
 }
 
@@ -121,23 +112,23 @@ local function shouldDisable() return not plugin.db.profile.interceptMouse end
 
 plugin.subPanelOptions = {
 	key = "Big Wigs: Clickable Bars",
-	name = "Clickable Bars",
+	name = L["Clickable Bars"],
 	options = {
-		name = "Clickable Bars",
+		name = L["Clickable Bars"],
 		type = "group",
 		childGroups = "tab",
 		args = {
 			heading = {
 				type = "description",
-				name = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n",
+				name = L.clickableBarsDesc,
 				order = 1,
 				width = "full",
 				fontSize = "medium",
 			},
 			interceptMouse = {
 				type = "toggle",
-				name = colorize["Enable"],
-				desc = "Enables bars to receive mouse clicks. Note that this makes it impossible to click through bars to target anything or perform any actions other than the ones specified below.",
+				name = colorize[L["Enable"]],
+				desc = L["Enables bars to receive mouse clicks."],
 				order = 2,
 				width = "full",
 				get = function() return plugin.db.profile.interceptMouse end,
@@ -145,7 +136,7 @@ plugin.subPanelOptions = {
 			},
 			left = {
 				type = "group",
-				name = "Left-click",
+				name = KEY_BUTTON1 or "Left",
 				order = 10,
 				args = clickOptions,
 				disabled = shouldDisable,
@@ -154,7 +145,7 @@ plugin.subPanelOptions = {
 			},
 			middle = {
 				type = "group",
-				name = "Middle-click",
+				name = KEY_BUTTON3 or "Middle",
 				order = 11,
 				args = clickOptions,
 				disabled = shouldDisable,
@@ -163,7 +154,7 @@ plugin.subPanelOptions = {
 			},
 			right = {
 				type = "group",
-				name = "Right-click",
+				name = KEY_BUTTON2 or "Right",
 				order = 12,
 				args = clickOptions,
 				disabled = shouldDisable,
@@ -741,12 +732,6 @@ clickHandlers.disable = function(bar)
 	if m and m.db and m.db.profile and bar:Get("bigwigs:option") then
 		m.db.profile[bar:Get("bigwigs:option")] = 0
 	end
-end
-
--- Opens a menu with the above actions
--- XXX menu click action is not working yet, either implement or remove from options before release.
-clickHandlers.menu = function(bar)
-	print("The bar menu is not implemented yet. Note that when it will be, it will not include any actions except the ones described in the clickable bars panel anyway.")
 end
 
 local function barClicked(bar, button)

@@ -4,6 +4,20 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 -- Bars.lua
 --
 
+L["Clickable Bars"] = true
+L.clickableBarsDesc = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
+L["Enables bars to receive mouse clicks."] = true
+
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = true
+L["Report"] = true
+L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = true
+L["Remove"] = true
+L["Removes the bar and all associated messages from displaying."] = true
+L["Remove other"] = true
+L["Temporarily removes all other bars (except this one) and associated messages."] = true
+L["Disable"] = true
+L["Disables the boss encounter ability option that spawned this bar."] = true
+
 L["Scale"] = true
 L["Grow upwards"] = true
 L["Toggle bars grow upwards/downwards from anchor."] = true
