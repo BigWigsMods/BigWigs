@@ -26,7 +26,6 @@ local monitoring = nil
 local function enableBossModule(module, noSync)
 	if not module:IsEnabled() then
 		module:Enable()
-		-- XXX DEBUG
 		-- module:SendMessage("BigWigs_Message", module, "bosskill", "string.format(L["%s enabled"], module.displayName), "Core")
 		if not noSync then
 			module:Sync("EnableModule", module:GetName())
@@ -219,7 +218,6 @@ do
 				return
 			end
 			m:UnregisterEvent("PLAYER_REGEN_DISABLED")
-			-- XXX DEBUG
 			-- print("Engaging " .. tostring(rest) .. " based on engage sync from " .. tostring(nick) .. ".")
 			m:Engage()
 		elseif sync == "EnableModule" or sync == "Death" then

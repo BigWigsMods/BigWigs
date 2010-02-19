@@ -69,7 +69,6 @@ plugin.defaultDB = {
 	RightButton = {},
 }
 
--- XXX Clickable bar strings need to be finalized and localized before release
 local clickOptions = {
 	emphasize = {
 		type = "toggle",
