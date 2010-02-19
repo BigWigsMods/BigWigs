@@ -316,6 +316,7 @@ do
 			if not next(silencedOptions) then
 				self:Hide()
 			end
+			total = 0
 		end
 	end)
 end
