@@ -101,7 +101,7 @@ local clickOptions = {
 	disable = {
 		type = "toggle",
 		name = colorize[L["Disable"]],
-		desc = L["Disables the boss encounter ability option that spawned this bar."],
+		desc = L["Permanently disables the boss encounter ability option that spawned this bar."],
 		descStyle = "inline",
 		order = 5,
 	},

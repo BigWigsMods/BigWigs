@@ -16,7 +16,7 @@ L["Temporarily removes the bar and all associated messages."] = true
 L["Remove other"] = true
 L["Temporarily removes all other bars (except this one) and associated messages."] = true
 L["Disable"] = true
-L["Disables the boss encounter ability option that spawned this bar."] = true
+L["Permanently disables the boss encounter ability option that spawned this bar."] = true
 
 L["Scale"] = true
 L["Grow upwards"] = true
