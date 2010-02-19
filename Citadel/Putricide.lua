@@ -137,9 +137,11 @@ do
 			self:Message("phase", CL.phase:format(2), "Positive")
 			self:Bar(70351, L["experiment_bar"], 25, 70351)
 			first = true
+			p2 = true
 		else
 			self:Message("phase", CL.phase:format(3), "Positive")
 			first = nil
+			p3 = true
 		end
 	end
 end
