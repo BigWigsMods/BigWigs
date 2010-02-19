@@ -4,6 +4,20 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Clickable Bars"] = "Barres cliquables"
+L.clickableBarsDesc = "Par défaut, les barres de Big Wigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, etc. tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne fonctionnera plus.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
+L["Enables bars to receive mouse clicks."] = "Permet aux barres de recevoir les clics de la souris."
+
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Met temporairement en super mise en évidence la barre et ses messages associés pendant sa durée."
+L["Report"] = "Rapport"
+L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "Rapporte le statut actuel des barres dans le canal de discussion de groupe actif."
+L["Remove"] = "Enlever"
+L["Temporarily removes the bar and all associated messages."] = "Enlève temporairement la barre et les messages qui y sont associés."
+L["Remove other"] = "Enlever les autres"
+L["Temporarily removes all other bars (except this one) and associated messages."] = "Enlève temporairement toutes les autres barres et leurs messages associés."
+L["Disable"] = "Désactiver"
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "Désactive l'option de la rencontre de boss qui a fait apparaître cette barre."
+
 L["Scale"] = "Échelle"
 L["Grow upwards"] = "Ajouter vers le haut"
 L["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre."

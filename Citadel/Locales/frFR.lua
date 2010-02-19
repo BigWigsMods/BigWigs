@@ -236,6 +236,7 @@ if L then
 	L.grip_bar = "Prochaine Poigne glaciale"
 
 	L.unchained_message = "Magie débridée sur VOUS !"
+	L.unchained_bar = "Magie débridée"
 	L.unchained_message = "Magie débridée x%d !"
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 	L.buffet_message = "Rafale mystique x%d !"
@@ -251,8 +252,10 @@ if L then
 	L.portal = "Portails du Cauchemar"
 	L.portal_desc = "Prévient quand Valithria ouvre des portails."
 	L.portal_message = "Portails actifs !"
-	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
+	L.portal_bar = "Arrivée des portails"
+	L.portalcd_message = "Portails %d ouverts dans 14 sec. !"
 	L.portalcd_bar = "Prochains portails %d"
+	L.portal_trigger = "J'ai ouvert un portail vers le Rêve. Vous y trouverez votre salut, héros…"
 
 	L.manavoid_message = "Vide de mana sur VOUS !"
 
