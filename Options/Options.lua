@@ -473,6 +473,9 @@ end
 local function getMasterOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
+	if type(module.db.profile[key]) ~= "number" then
+		module.db.profile[key] = module.toggleDefaults[key]
+	end
 	if module.db.profile[key] == 0 then
 		return false -- nothing go away
 	end
