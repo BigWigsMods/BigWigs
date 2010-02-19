@@ -177,9 +177,9 @@ end
 
 function mod:Unchained(player, spellId)
 	if phase == 1 then
-		self:Bar(69762, L["unchained_bar"], 30, 69762)
+		self:Bar(69762, L["unchained_bar"], 30, spellId)
 	elseif phase == 2 then
-		self:Bar(69762, L["unchained_bar"], 80, 69762)
+		self:Bar(69762, L["unchained_bar"], 80, spellId)
 	end
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alert")

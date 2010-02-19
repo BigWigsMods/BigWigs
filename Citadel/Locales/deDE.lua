@@ -199,6 +199,7 @@ if L then
 	L.grip_bar = "Nächster Griff"
 
 	L.unchained_message = "Entfesselte Magie auf DIR!"
+	L.unchained_bar = "Entfesselte Magie"
 	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
