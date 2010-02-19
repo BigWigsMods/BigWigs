@@ -705,22 +705,20 @@ do
 	end
 end
 
--- XXX This also needs to prevent the everything associated with this option from being triggered.
--- XXX Messages, FlashNShake, Sound, etc.
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
 	local anchor = bar:Get("bigwigs:anchor")
+	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
 	rearrangeBars(anchor)
 end
 
--- XXX This also needs to prevent the everything associated with this option from being triggered.
--- XXX Messages, FlashNShake, Sound, etc.
 -- Removes all bars EXCEPT the clicked one
 clickHandlers.removeOther = function(bar)
 	if normalAnchor then
 		for k in pairs(normalAnchor.bars) do
 			if k ~= bar then
+				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
@@ -729,6 +727,7 @@ clickHandlers.removeOther = function(bar)
 	if emphasizeAnchor then
 		for k in pairs(emphasizeAnchor.bars) do
 			if k ~= bar then
+				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end

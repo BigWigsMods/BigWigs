@@ -292,7 +292,39 @@ end
 -------------------------------------------------------------------------------
 -- Boss module APIs for messages, bars, icons, etc.
 --
+local silencedOptions = {}
+do
+	local bwOptionSilencer = CreateFrame("Frame")
+	bwOptionSilencer:Hide()
+	LibStub("AceEvent-3.0"):Embed(bwOptionSilencer)
+	bwOptionSilencer:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
+		silencedOptions[key] = time
+		bwOptionSilencer:Show()
+	end)
+	local total = 0
+	bwOptionSilencer:SetScript("OnUpdate", function(self, elapsed)
+		total = total + elapsed
+		if total >= 0.5 then
+			for k, t in pairs(silencedOptions) do
+				local newT = t - total
+				if newT < 0 then
+					silencedOptions[k] = nil
+				else
+					silencedOptions[k] = newT
+				end
+			end
+			if not next(silencedOptions) then
+				self:Hide()
+			end
+		end
+	end)
+end
+
+
 local function checkFlag(self, key, flag)
+	if silencedOptions[key] then
+		return
+	end
 	if type(key) == "number" then key = GetSpellInfo(key) end
 	-- XXX
 	if type(self.db.profile[key]) ~= "number" then
