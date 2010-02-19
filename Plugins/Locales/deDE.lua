@@ -7,10 +7,10 @@ if not L then return end
 --
 
 L["Clickable Bars"] = "Interaktive Leisten"
-L.clickableBarsDesc = "Big Wigs Leisten sind grundsätzlich nicht anklickbar. Dadurch ist es möglich, das Ziel durch Anklicken zu wechseln, AoE-Zauber hinter die Leisten zu setzen, die Kameraperspektive zu ändern usw., während sich die Maus über den Leisten befindet. |cffff4411Falls die 'Interaktiven Leisten' aktiviert werden, wird dies nicht mehr funktionieren.|r Die Leisten werden jeden Mausklick abfangen, den sie abbekommen.\n"
-L["Enables bars to receive mouse clicks."] = "Aktiviert das Empfangen von Mausklicks durch Leisten."
+L.clickableBarsDesc = "Big Wigs Leisten sind standardmäßig nicht anklickbar. Dies ermöglicht es, das Ziel zu wechseln, AoE-Zauber zu setzen und die Kameraperspektive zu ändern, während sich die Maus über den Leisten befindet. |cffff4411Die Aktivierung der Interaktiven Leisten verhindert dieses Verhalten.|r Die Leisten werden jeden Mausklick abfangen, oben beschriebene Aktionen können dann nur noch außerhalb der Leistenanzeige ausgeführt werden.\n"
+L["Enables bars to receive mouse clicks."] = "Aktiviert die Interaktiven Leisten."
 
-L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Hebt Leisten und zugehörige Nachrichten zeitweilig stark hervor."
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Hebt zeitweilig Leisten und zugehörige Nachrichten stark hervor."
 L["Report"] = "Berichten"
 L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "Gibt den aktuellen Status der Leiste in den aktiven Chat aus: Entweder Schlachtzugs-, Schlachtfeld-, Gruppen- oder Gildenchat."
 L["Remove"] = "Entfernen"
