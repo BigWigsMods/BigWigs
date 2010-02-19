@@ -11,6 +11,8 @@ if L then
 
 	L.skullprince = "骷髏標記強化的血親王"
 	L.skullprince_desc = "為強化的血親王打上團隊骷髏標記。（需要權限）"
+
+	L.prison_message = "暗影之牢：>x%d<！"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
@@ -30,6 +32,8 @@ if L then
 
 	L.sporeicon = "標記孢子目標"
 	L.sporeicon_desc = "為中了氣體孢子的玩家打上團隊骷髏、十字、方塊標記。（需要權限）"
+
+	L.ball_message = "即將 黏液之球！"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhTW")
@@ -75,7 +79,7 @@ if L then
 
 	L.dominate_bar = "<下一支配心智>"
 
-	L.dmicon = "標記中了支配心智的玩家"
+	L.dmicon = "支配心智標記"
 	L.dmicon_desc = "為中了支配心智的玩家打上團隊骷髏、十字、方塊標記。（需要權限）"
 end
 
@@ -101,6 +105,7 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段發出警報。"
 	L.phase_warning = "即將 第%d階段！"
+	L.phase_bar = "<下一階段>"
 
 	L.engage_trigger = "大夥聽著，好消息!"
 
@@ -117,6 +122,11 @@ if L then
 
 	L.gasbomb_bar = "<多個窒息毒氣彈>"
 	L.gasbomb_message = "窒息毒氣彈！"
+
+	L.plagueicon = "突變瘟疫標記"
+	L.plagueicon_desc = "為中了突變瘟疫的玩家打上團隊方塊標記。（需要權限）"
+
+	L.add_message = "軟泥怪 出現！"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "zhTW")
@@ -168,13 +178,15 @@ if L then
 	L.boom_message = "極凍之寒！"
 	L.boom_bar = "<極凍之寒>"
 
+	L.grip_bar = "<下一冰結之握>"
+
 	L.unchained_message = ">你< 無束魔法！"
 	L.instability_message = "不穩定 x%d！"
 	L.chilled_message = "沁骨之寒 x%d！"
 	L.buffet_message = "秘能連擊 x%d！"
 
-	L.baconicon = "標記被上冰霜信標的目標"
-	L.baconicon_desc = "為被上冰霜信標的玩家打上團隊骷髏、十字、方塊、月亮以及三角標記。（需要權限）"
+	L.baconicon = "冰霜信標標記"
+	L.baconicon_desc = "為中了冰霜信標的玩家打上團隊骷髏、十字、方塊、月亮以及三角標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
@@ -184,8 +196,10 @@ if L then
 	L.portal = "夢魘之門"
 	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
 	L.portal_message = "打開夢魘之門！"
+	L.portal_bar = "<即將夢魘之門>"
+	L.portalcd_message = "14秒後，夢魘之門：>%d<！"
+	L.portalcd_bar = "<下一夢魘之門：%d>"
 	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
-	L.portalcd_bar = "<下一夢魘之門 %d>"
 
 	L.manavoid_message = ">你< 潰法力場！"
 
@@ -225,7 +239,7 @@ if L then
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.horror_bar = "<下一血殭屍>"
-	L.horror_message = "蹣跚的血殭屍"
+	L.horror_message = "蹣跚的血殭屍！"
 
 	L.necroticplague_bar = "<亡域瘟疫>"
 
@@ -236,7 +250,7 @@ if L then
 
 	L.vilespirits_bar = "<邪惡靈魂>"
 
-	L.harvestsoul_message = "靈魂割取！"
+	L.harvestsoul_bar = "<靈魂割取>"
 
 	L.remorselesswinter_message = "正在施放 冷酷凜冬！"
 	L.quake_message = "正在施放 地震！"

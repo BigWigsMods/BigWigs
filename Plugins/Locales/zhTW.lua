@@ -6,6 +6,20 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Clickable Bars"] = "可點擊計時條"
+L.clickableBarsDesc = "Big Wigs 計時條預設是點擊穿越的。這樣可以選擇目標或使用 AoE 法術攻擊物體，更改鏡頭角度等等，當滑鼠指針劃過計時條。|cffff4411如果啟用可點擊計時條，這些將不能實現。|r計時條將攔截任何滑鼠點擊并阻止相應功能。\n"
+L["Enables bars to receive mouse clicks."] = "啟用計時條接受點擊。"
+
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "臨時超級強調調計時條及任何訊息的持續時間。"
+L["Report"] = "報告"
+L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "報告當前計時條狀態到適當的隊伍聊天；無論戰場，團隊，隊伍或公會。"
+L["Remove"] = "移除"
+L["Temporarily removes the bar and all associated messages."] = "臨時移除計時條和全部相關訊息。"
+L["Remove other"] = "移除其它"
+L["Temporarily removes all other bars (except this one) and associated messages."] = "臨時移除所有計時條（除此之外）和全部相關訊息。"
+L["Disable"] = "禁用"
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "永久禁用此首領戰斗技能計時條選項。"
+
 L["Scale"] = "縮放"
 L["Grow upwards"] = "向上成長"
 L["Toggle bars grow upwards/downwards from anchor."] = "切換計時條在錨點向上或向下成長。"
@@ -155,7 +169,7 @@ L["|cff%s%s|r says:"] = "|cff%s%s|r說："
 L["Cool!"] = "冷靜！"
 L["Tips"] = "提示"
 L["Tip of the Raid"] = "團隊提示"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "團隊提示根據預設顯示當你處于團隊副本，不能在戰鬥中以及你的團隊超過9個玩家。通常一個提示只會在進程中顯示一次。\n\n這裡可以調整提示顯示，或者使用我們的漂亮視窗（預設），或是輸出到聊天。如果團長過度使用 |cffff4411/sendtip command|r，反而會想在聊天視窗顯示它們！"
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "團隊提示根據預設顯示當你處于團隊副本，不能在戰鬥中以及你的團隊超過9個玩家。通常一個提示只會在進程中顯示一次。\n\n這裡可以調整提示顯示，或者使用我們的漂亮視窗（預設），或是輸出到聊天。如果團長過度使用 |cffff4411/sendtip command|r，反而會想在聊天視窗顯示它們！"
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "如果不想要到任何提示，可以從這裡切換關閉它們。團長發送的提示也會被屏蔽，小心使用。"
 L["Automatic tips"] = "自動提示"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "如果不想要到美妙的提示，成為世界上最好的 PvE 玩家，團隊副本時彈出視窗，你可以禁用這些選項。"

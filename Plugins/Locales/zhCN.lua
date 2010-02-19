@@ -6,6 +6,20 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Clickable Bars"] = "可点击计时条"
+L.clickableBarsDesc = "Big Wigs 计时条预设是点击穿越的。这样可以选择目标或使用 AoE 法术攻击物体，更改镜头角度等等，当滑鼠指针划过计时条。|cffff4411如果启用可点击计时条，这些将不能实现。|r计时条将拦截任何鼠标点击并阻止相应功能。\n"
+L["Enables bars to receive mouse clicks."] = "启用计时条接受点击。"
+
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "临时超级醒目计时条及任何讯息的持续时间。"
+L["Report"] = "报告"
+L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "报告当前计时条状态到适当的队伍聊天；无论战场，团队，队伍或公会。 "
+L["Remove"] = "移除"
+L["Temporarily removes the bar and all associated messages."] = "临时移除计时条和全部相关信息。"
+L["Remove other"] = "移除其它"
+L["Temporarily removes all other bars (except this one) and associated messages."] = "临时移除所有计时条（除此之外）和全部相关信息。"
+L["Disable"] = "禁用"
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "永久禁用此首领战斗技能计时条选项。" 
+
 L["Scale"] = "缩放"
 L["Grow upwards"] = "向上成长"
 L["Toggle bars grow upwards/downwards from anchor."] = "切换计时条在锚点向上或向下成长。"
@@ -155,8 +169,8 @@ L["|cff%s%s|r says:"] = "|cff%s%s|r说："
 L["Cool!"] = "冷静！"
 L["Tips"] = "提示"
 L["Tip of the Raid"] = "团队提示"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "团队提示根据默认显示当你处于团队副本，不能在战斗中以及你的团队超过9个玩家。通常一个提示只会在进程中显示一次。\n\n这里可以调整提示显示，或者使用我们的漂亮窗口（默认），或是输出到聊天。如果团长过度使用 |cffff4411/sendtip command|r，反而会想在聊天窗口显示它们！"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "如果不想看到任何提示，可以从这里切换关闭它们。团长发送的提示也会被屏蔽，小心使用。"
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "团队提示根据默认显示当你处于团队副本，不能在战斗中以及你的团队超过9个玩家。通常一个提示只会在进程中显示一次。\n\n这里可以调整提示显示，或者使用我们的漂亮窗口（默认），或是输出到聊天。如果团长过度使用 |cffff4411/sendtip command|r，反而会想在聊天窗口显示它们！"
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "如果不想看到任何提示，可以从这里切换关闭它们。团长发送的提示也会被屏蔽，小心使用。"
 L["Automatic tips"] = "自动提示"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "如果不想看到美妙的提示，成为世界上最好的 PvE 玩家，团队副本时弹出窗口，你可以禁用这些选项。"
 L["Manual tips"] = "手动提示"
