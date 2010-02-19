@@ -61,12 +61,14 @@ plugin.defaultDB = {
 	BigWigsEmphasizeAnchor_width = 300,
 	interceptMouse = nil,
 	LeftButton = {
-		emphasize = true,
+		report = true,
 	},
 	MiddleButton = {
 		remove = true,
 	},
-	RightButton = {},
+	RightButton = {
+		emphasize = true,
+	},
 }
 
 local clickOptions = {
