@@ -47,8 +47,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("UNIT_HEALTH")
-
-	wipe(inCocoon)
 end
 
 function mod:OnEngage()
@@ -101,3 +99,4 @@ function mod:UNIT_HEALTH(event, msg)
 		end
 	end
 end
+

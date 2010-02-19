@@ -106,8 +106,15 @@ function mod:OnBossEnable()
 	self:Death("Win", 33288)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Yells", L["phase2_trigger"], L["phase3_trigger"])
 	guid = nil
+end
+
+function mod:OnEngage()
+	guardianCount = 1
+	self:Message("phase", L["engage_warning"], "Attention")
+	self:Berserk(900, true)
 end
 
 function mod:VerifyEnable()
@@ -251,12 +258,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, unit)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger"]) then
-		guardianCount = 1
-		self:Message("phase", L["engage_warning"], "Attention")
-		self:Berserk(900, true)
-	elseif msg:find(L["phase2_trigger"]) then
+function mod:Yells(msg)
+	if msg:find(L["phase2_trigger"]) then
 		crusherCount = 1
 		self:Message("phase", L["phase2_warning"], "Attention")
 		self:Bar("portal", L["portal_bar"], 78, 35717)
@@ -272,3 +275,4 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar(64465, L["empower_bar"], 46, 64486)
 	end
 end
+

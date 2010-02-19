@@ -146,6 +146,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		deaths = 0
 		stage1warn = true
 		throw()
+		self:Engage()
 	elseif msg:find(L["trigger_phase2_1"]) or msg:find(L["trigger_phase2_2"]) or msg:find(L["trigger_phase2_3"]) then
 		self:CancelTimer(throwHandle, true)
 		self:SendMessage("BigWigs_StopBar", self, L["throw_bar"])
@@ -153,3 +154,4 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Berserk(360, true)
 	end
 end
+

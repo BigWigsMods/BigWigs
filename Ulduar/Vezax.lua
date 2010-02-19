@@ -77,7 +77,15 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
+end
+
+function mod:OnEngage()
+	lastVapor = nil
+	vaporCount = 1
+	surgeCount = 1
+	self:Berserk(600)
+	self:Bar(62662, L["surge_bar"]:format(surgeCount), 60, 62662)
 end
 
 --------------------------------------------------------------------------------
@@ -158,12 +166,3 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger"]) then
-		lastVapor = nil
-		vaporCount = 1
-		surgeCount = 1
-		self:Berserk(600)
-		self:Bar(62662, L["surge_bar"]:format(surgeCount), 60, 62662)
-	end
-end

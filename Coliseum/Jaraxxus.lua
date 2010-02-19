@@ -81,9 +81,9 @@ function mod:FirstEngage()
 	self:Bar("adds", L["engage"], 12, "INV_Gizmo_01")
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	self:Bar("adds", L["netherportal_bar"], 20, 68404)
-	if GetRaidDifficulty() > 2 then
+	if diff > 2 then
 		self:Berserk(600)
 	end
 end
@@ -144,3 +144,4 @@ function mod:MistressKissInterrupted(player, spellId)
 	if player ~= pName then return end
 	self:LocalMessage(67905, L["kiss_interrupted"], "Personal", spellId)
 end
+

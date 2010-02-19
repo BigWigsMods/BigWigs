@@ -55,7 +55,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Cloud", 65123, 65133)
 	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Win", L["end_trigger"])
+end
+
+function mod:OnEngage()
+	lastCold = nil
+	local name = GetSpellInfo(61968)
+	self:Bar(61968, name, 35, 61968)
+	self:Bar("hardmode", L["hardmode"], 180, 6673)
+	self:Berserk(480)
 end
 
 function mod:VerifyEnable(unit)
@@ -102,18 +111,6 @@ function mod:Frozen(_, spellId, _, _, spellName)
 	self:Bar(62478, spellName, 20, spellId)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["engage_trigger"] then
-		lastCold = nil
-		local name = GetSpellInfo(61968)
-		self:Bar(61968, name, 35, 61968)
-		self:Bar("hardmode", L["hardmode"], 180, 6673)
-		self:Berserk(480)
-	elseif msg == L["end_trigger"] then
-		self:Win()
-	end
-end
-
 function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
 	local _, _, icon, stack = UnitDebuff("player", cold)
@@ -125,3 +122,4 @@ function mod:UNIT_AURA(event, unit)
 		lastCold = stack
 	end
 end
+

@@ -63,3 +63,4 @@ function mod:Breath(_, spellId, _, _, spellName)
 	self:Bar(66665, L["breath_bar"]:format(count), 45, spellId)
 	self:DelayedMessage(66665, 40, L["breath_message"]:format(count), "Attention")
 end
+

@@ -27,8 +27,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28131)
 	self:Death("Win", 16028)
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+end
+
+function mod:OnEngage()
+	self:Berserk(360)
 end
 
 --------------------------------------------------------------------------------
@@ -39,8 +43,3 @@ function mod:Frenzy(_, spellId)
 	self:Message(28131, L["enragewarn"], "Attention", spellId, "Alarm")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
-		self:Berserk(360)
-	end
-end

@@ -67,3 +67,4 @@ end
 function mod:Knife(player, spellId, _, _, spellName)
 	self:TargetMessage(55550, spellName, player, "Important", spellId)
 end
+

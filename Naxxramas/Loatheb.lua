@@ -104,3 +104,4 @@ function mod:Spore()
 	sporeCount = sporeCount + 1
 	self:Bar(29234, L["sporebar"]:format(sporeCount), sporeTime, 38755)
 end
+

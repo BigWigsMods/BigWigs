@@ -126,3 +126,4 @@ function mod:OnSync(sync, rest, nick)
 		self:PrimaryIcon("eyebeam", rest)
 	end
 end
+

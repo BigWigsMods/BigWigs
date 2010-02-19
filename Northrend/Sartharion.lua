@@ -69,10 +69,16 @@ function mod:OnBossEnable()
 	self:Death("Win", 28860)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	shadronStarted, tenebronStarted, vesperonStarted = nil, nil, nil
+end
+
+function mod:OnEngage()
+	self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
+	self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
+	self:Berserk(900)
 end
 
 --------------------------------------------------------------------------------
@@ -119,10 +125,3 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["engage_trigger"] then
-		self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
-		self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
-		self:Berserk(900)
-	end
-end

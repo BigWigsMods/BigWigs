@@ -76,7 +76,8 @@ function mod:OnBossEnable()
 	self:Death("DKDead", 16125)
 	self:Death("RiderDead", 16126)
 	self:Death("Win", 16060)
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"])
+	self:Yell("InRoom", L["inroomtrigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
@@ -131,28 +132,29 @@ local function newRider()
 	numRider = numRider + 1
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
-		self:Message("room", L["startwarn"], "Important")
-		self:Bar("room", L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
-		self:DelayedMessage("room", 90, L["warn1"], "Attention")
-		self:DelayedMessage("room", 180, L["warn2"], "Attention")
-		self:DelayedMessage("room", 210, L["warn3"], "Urgent")
-		self:DelayedMessage("room", 240, L["warn4"], "Important")
-		self:DelayedMessage("room", 260, L["warn5"], "Important")
-		numTrainer = 1
-		numDK = 1
-		numRider = 1
-		if self.db.profile.add then
-			newTrainee()
-			newDeathknight()
-			newRider()
-		end
-		-- set the new times
-		timeTrainer = 20
-		timeDK = 25
-		timeRider = 30
-	elseif msg == L["inroomtrigger"] then
-		self:Message("room", L["inroomwarn"], "Important")
+function mod:OnEngage()
+	self:Message("room", L["startwarn"], "Important")
+	self:Bar("room", L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
+	self:DelayedMessage("room", 90, L["warn1"], "Attention")
+	self:DelayedMessage("room", 180, L["warn2"], "Attention")
+	self:DelayedMessage("room", 210, L["warn3"], "Urgent")
+	self:DelayedMessage("room", 240, L["warn4"], "Important")
+	self:DelayedMessage("room", 260, L["warn5"], "Important")
+	numTrainer = 1
+	numDK = 1
+	numRider = 1
+	if self.db.profile.add then
+		newTrainee()
+		newDeathknight()
+		newRider()
 	end
+	-- set the new times
+	timeTrainer = 20
+	timeDK = 25
+	timeRider = 30
 end
+
+function mod:InRoom()
+	self:Message("room", L["inroomwarn"], "Important")
+end
+

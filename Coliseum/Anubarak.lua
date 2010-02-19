@@ -21,7 +21,7 @@ local handle_NextStrike = nil
 
 local isBurrowed = nil
 local ssName = GetSpellInfo(66134)
-local difficulty = GetRaidDifficulty()
+local difficulty = 0
 local coldTargets = mod:NewTargetList()
 local pName = UnitName("player")
 local phase2 = nil
@@ -102,9 +102,9 @@ local function scheduleWave()
 	handle_NextWave = mod:ScheduleTimer(scheduleWave, 45)
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	isBurrowed = nil
-	difficulty = GetRaidDifficulty()
+	difficulty = diff
 	self:Message("burrow", L["engage_message"], "Attention", 65919)
 	self:Bar("burrow", L["burrow_cooldown"], 80, 65919)
 	self:DelayedMessage("burrow", 65, L["burrow_soon"], "Attention")
@@ -112,7 +112,7 @@ function mod:OnEngage()
 	self:Bar("burrow", L["nerubian_burrower"], 10, 66333)
 	handle_NextWave = self:ScheduleTimer(scheduleWave, 10)
 
-	if self:GetOption(66134) and difficulty > 2 then
+	if self:GetOption(66134) and diff > 2 then
 		scheduleStrike()
 	end
 

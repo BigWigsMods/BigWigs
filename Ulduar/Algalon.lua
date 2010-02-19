@@ -51,7 +51,24 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
+	self:Yell("Win", L["end_trigger"])
+end
+
+function mod:OnEngage()
+	blackholes = 0
+	phase = 1
+	local offset = 0
+	local text = select(3, GetWorldStateUIInfo(1))
+	local num = tonumber((text or ""):match("(%d+)") or nil)
+	if num == 60 then offset = 19 end
+	self:Bar("phase", L["phase_bar"]:format(phase), 8+offset, "INV_Gizmo_01")
+	local sn = GetSpellInfo(64443)
+	self:Bar(64443, sn, 98+offset, 64443)
+	self:DelayedMessage(64443, 93+offset, L["bigbang_soon"], "Attention")
+	local sn = GetSpellInfo(62301)
+	self:Bar(62301, sn, 33+offset, 64597)
+	self:Berserk(360+offset)
 end
 
 --------------------------------------------------------------------------------
@@ -98,22 +115,3 @@ function mod:BigBang(_, spellId, _, _, spellName)
 	self:DelayedMessage(64443, 85, L["bigbang_soon"], "Attention")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger"]) then
-		blackholes = 0
-		phase = 1
-		local offset = 0
-		local text = select(3, GetWorldStateUIInfo(1))
-		local num = tonumber((text or ""):match("(%d+)") or nil)
-		if num == 60 then offset = 19 end
-		self:Bar("phase", L["phase_bar"]:format(phase), 8+offset, "INV_Gizmo_01")
-		local sn = GetSpellInfo(64443)
-		self:Bar(64443, sn, 98+offset, 64443)
-		self:DelayedMessage(64443, 93+offset, L["bigbang_soon"], "Attention")
-		local sn = GetSpellInfo(62301)
-		self:Bar(62301, sn, 33+offset, 64597)
-		self:Berserk(360+offset)
-	elseif msg:find(L["end_trigger"]) then
-		self:Win()
-	end
-end

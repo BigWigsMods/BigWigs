@@ -125,6 +125,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		count = 0
 		self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
 		if not started then
+			self:Engage()
 			self:Berserk(900)
 			started = true
 			phase = 1
@@ -143,3 +144,4 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		--self:Message(L["air_message"], "Attention", nil, "Info")
 	end
 end
+

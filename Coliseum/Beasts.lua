@@ -16,7 +16,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local difficulty = GetRaidDifficulty()
+local difficulty = 0
 local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
@@ -123,11 +123,11 @@ function mod:OnBossEnable()
 	self:Death("Win", 34797)
 end
 
-function mod:OnEngage()
-	difficulty = GetRaidDifficulty()
+function mod:OnEngage(diff)
+	difficulty = diff
 	self:CloseProximity()
 	self:Bar("bosses", L["boss_incoming"]:format(gormok), 20, 67477)
-	if difficulty > 2 then
+	if diff > 2 then
 		self:Bar("bosses", L["boss_incoming"]:format(jormungars), 180, "INV_Misc_MonsterScales_18")
 	else
 		self:Berserk(900)
@@ -333,3 +333,4 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 		self:PrimaryIcon("charge", player)
 	end
 end
+

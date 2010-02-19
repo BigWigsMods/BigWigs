@@ -73,13 +73,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FBomb", 64623)
 	self:Log("SPELL_CAST_START", "Shock", 63631)
 	self:Log("SPELL_CAST_SUCCESS", "Spinning", 63414)
-	--self:Log("SPELL_AURA_APPLIED", "Shell", 63666, 65026)
 	self:Log("SPELL_SUMMON", "Magnetic", 64444)
 	self:Log("SPELL_SUMMON", "Bomb", 63811)
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_LOOT")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Yells", L["engage_trigger"], L["hardmode_trigger"], L["phase2_trigger"], L["phase3_trigger"], L["phase4_trigger"])
+	self:Yell("Win", L["end_trigger"])
 	self:AddSyncListener("MimiLoot")
 	self:AddSyncListener("MimiBarrage")
 end
@@ -149,15 +149,17 @@ local function start()
 	mod:DelayedMessage(62997, 17, L["plasma_soon"], "Attention")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
+function mod:Yells(msg)
 	if msg:find(L["hardmode_trigger"]) then
 		start()
 		ishardmode = true
 		self:Berserk(600, true)
 		self:OpenProximity(5)
+		self:Engage()
 	elseif msg:find(L["engage_trigger"]) then
 		start()
 		self:Berserk(900, true)
+		self:Engage()
 	elseif msg:find(L["phase2_trigger"]) then
 		phase = 2
 		self:SendMessage("BigWigs_StopBar", self, L["plasma_bar"])
@@ -180,8 +182,6 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 			self:Bar(64623, L["fbomb_bar"], 30, 64623)
 		end
 		self:Bar(63631, L["shock_next"], 48, 63631)
-	elseif msg:find(L["end_trigger"]) then
-		self:Win()
 	end
 end
 
@@ -218,3 +218,4 @@ function mod:OnSync(sync, rest, nick)
 		self:Bar(63274, L["laser_bar"], 60, 63274)
 	end
 end
+

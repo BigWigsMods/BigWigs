@@ -72,18 +72,25 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Energy", 62865, 62451)             -- Elder Brightleaf
-	self:Log("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)       -- Elder Brightleaf
-	self:Log("UNIT_DIED", "Deaths")                                    -- Elder Brightleaf
-	self:Log("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438) -- Elder Ironbranch
-	self:Log("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932) -- Elder Stonebark
+	self:Log("SPELL_AURA_APPLIED", "Energy", 62865, 62451)				--Elder Brightleaf
+	self:Log("SPELL_CAST_SUCCESS", "EnergySpawns", 62865, 62451)		--Elder Brightleaf
+	self:Log("UNIT_DIED", "Deaths")										--Elder Brightleaf
+	self:Log("SPELL_AURA_APPLIED", "Root", 62861, 62930, 62283, 62438)	--Elder Ironbranch
+	self:Log("SPELL_CAST_START", "Tremor", 62437, 62859, 62325, 62932)	--Elder Stonebark
 	self:Log("SPELL_CAST_START", "Sunbeam", 62623, 62872)
 	self:Log("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:Log("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
 	self:Log("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger1"], L["engage_trigger2"])
+	self:Yell("Yells", L["end_trigger"], L["conservator_trigger"], L["detonate_trigger"], L["elementals_trigger"])
+end
+
+function mod:OnEngage()
+	phase = 1
+	self:Berserk(600)
+	self:Bar("wave", L["wave_bar"], 11, 35594)
 end
 
 function mod:VerifyEnable(unit)
@@ -222,12 +229,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["engage_trigger1"] or msg == L["engage_trigger2"] then
-		phase = 1
-		self:Berserk(600)
-		self:Bar("wave", L["wave_bar"], 11, 35594)
-	elseif msg == L["end_trigger"] then
+function mod:Yells(msg)
+	if msg == L["end_trigger"] then
 		-- Never enable again this session!
 		sheIsDead = true
 		self:Win()
@@ -242,3 +245,4 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("wave", L["wave_bar"], 60, 35594)
 	end
 end
+

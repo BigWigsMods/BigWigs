@@ -45,7 +45,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SlagPot", 62717, 63477)
 	self:Log("SPELL_AURA_APPLIED", "Brittle", 62382)
 	self:Death("Win", 33118)
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
+end
+
+function mod:OnEngage(diff)
+	spawnTime = diff == 1 and 40 or 30
+	self:Bar(62680, L["flame_bar"], 21, 62680)
+	self:Bar(62488, L["construct_bar"], 10, "INV_Misc_Statue_07")
 end
 
 --------------------------------------------------------------------------------
@@ -111,10 +117,3 @@ do
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["engage_trigger"] then
-		spawnTime = GetRaidDifficulty() == 1 and 40 or 30
-		self:Bar(62680, L["flame_bar"], 21, 62680)
-		self:Bar(62488, L["construct_bar"], 10, "INV_Misc_Statue_07")
-	end
-end

@@ -84,10 +84,9 @@ do
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, _, unit, _, _, player)
-	-- XXX can we get the actual emote here, and not just assume that every time
-	-- the boss emotes, he does a charge? heh.
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, _, unit, _, _, player)
 	if unit == self.displayName then
 		self:TargetMessage("charge", L["charge"], player, "Attention", 11578)
 	end
 end
+

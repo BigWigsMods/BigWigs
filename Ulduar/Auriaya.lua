@@ -94,3 +94,4 @@ end
 function mod:Sentinel(_, spellId, _, _, spellName)
 	self:Message(64389, spellName, "Important", spellId)
 end
+

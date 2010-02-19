@@ -107,3 +107,4 @@ function mod:Icebolt(player, spellId, _, _, spellName)
 	end
 	self:PrimaryIcon(28522, player)
 end
+

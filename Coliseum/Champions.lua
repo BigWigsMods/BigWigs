@@ -117,3 +117,4 @@ end
 function mod:Bloodlust(player, spellId)
 	self:Message(65980, L["Bloodlust on champions!"], "Important", spellId)
 end
+

@@ -159,6 +159,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		wipe(mcTargets)
 		wipe(fbTargets)
 		self:CloseProximity()
+		self:Engage()
 	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
 		self:SendMessage("BigWigs_StopBar", self, L["start_bar"])
 		self:Message("phase", L["phase2_warning"], "Important")
@@ -171,3 +172,4 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		self:Bar("guardians", L["guardians_bar"], 10, 28866)
 	end
 end
+

@@ -141,3 +141,4 @@ function mod:TeleportToRoom()
 	self:DelayedMessage("teleport", timeroom - 10, L["teleportwarn2"], "Urgent")
 	self:ScheduleTimer("TeleportToBalcony", timeroom)
 end
+

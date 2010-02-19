@@ -71,8 +71,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "TendrilsRemoved", 61887, 63486) -- Brundir +2
 
 	self:Death("Deaths", 32867, 32927, 32857)
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger1"], L["engage_trigger2"], L["engage_trigger3"])
+end
+
+function mod:OnEngage(diff)
+	previous = nil
+	deaths = 0
+	overwhelmTime = diff == 1 and 60 or 35
+	self:Berserk(900)
 end
 
 --------------------------------------------------------------------------------
@@ -179,11 +185,3 @@ function mod:Deaths(_, _, unitName)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["engage_trigger1"]) or msg:find(L["engage_trigger2"]) or msg:find(L["engage_trigger3"]) then
-		previous = nil
-		deaths = 0
-		overwhelmTime = GetRaidDifficulty() == 1 and 60 or 35
-		self:Berserk(900)
-	end
-end

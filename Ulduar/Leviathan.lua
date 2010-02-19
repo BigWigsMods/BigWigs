@@ -45,7 +45,11 @@ function mod:OnBossEnable()
 	self:Death("Win", 33113)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["engage_trigger"])
+end
+
+function mod:OnEngage()
+	self:Message("engage", L["engage_message"]:format(unit), "Attention")
 end
 
 --------------------------------------------------------------------------------
@@ -81,8 +85,3 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, unit)
-	if msg:find(L["engage_trigger"]) then
-		self:Message("engage", L["engage_message"]:format(unit), "Attention")
-	end
-end

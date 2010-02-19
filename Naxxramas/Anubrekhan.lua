@@ -47,10 +47,10 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"], L["starttrigger3"])
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	if started then return end
 	started = true
-	locustTime = GetRaidDifficulty() == 1 and 102 or 90
+	locustTime = diff == 1 and 102 or 90
 	self:Message(28785, L["engagewarn"]:format(locustTime), "Urgent")
 	self:DelayedMessage(28785, locustTime - 10, L["gainwarn10sec"], "Important")
 	self:Bar(28785, L["gainincbar"], locustTime, 28785)
@@ -73,3 +73,4 @@ function mod:Swarm(_, spellId)
 	self:Message(28785, L["castwarn"], "Attention", spellId)
 	self:Bar(28785, L["castwarn"], 3, spellId)
 end
+

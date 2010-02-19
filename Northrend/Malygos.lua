@@ -77,10 +77,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
-function mod:OnBossDisable()
-	phase = 0
-end
-
 function mod:OnEngage()
 	phase = 1
 	self:Bar("vortex", L["vortex_next"], 29, 56105)
@@ -166,3 +162,4 @@ function mod:UNIT_HEALTH(event, msg)
 		end
 	end
 end
+

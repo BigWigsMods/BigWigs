@@ -15,7 +15,6 @@ mod.toggleOptions = {{"vortex", "FLASHSHAKE"}, "shield", "next", {"touch", "WHIS
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
 local started = nil
-local difficulty = GetRaidDifficulty()
 local pName = UnitName("player")
 local currentShieldStrength = nil
 local shieldStrengthMap = {
@@ -75,12 +74,11 @@ function mod:OnBossEnable()
 	started = nil
 end
 
-function mod:OnEngage()
-	difficulty = GetRaidDifficulty()
+function mod:OnEngage(diff)
 	if started then return end
 	started = true
 	self:Bar("next", L["vortex_or_shield_cd"], 45, 39089)
-	self:Berserk(difficulty > 2 and 360 or 480)
+	self:Berserk(diff > 2 and 360 or 480)
 end
 
 --------------------------------------------------------------------------------
@@ -190,3 +188,4 @@ function mod:DarkVortex(_, spellId, _, _, spellName)
 		self:FlashShake("vortex")
 	end
 end
+

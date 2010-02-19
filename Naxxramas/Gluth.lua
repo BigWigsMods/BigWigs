@@ -40,8 +40,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
-function mod:OnEngage()
-	enrageTime = GetRaidDifficulty() == 1 and 480 or 420
+function mod:OnEngage(diff)
+	enrageTime = diff == 1 and 480 or 420
 	self:Message(54426, L["startwarn"], "Attention")
 	self:Bar(54426, L["decimatebartext"], 105, 54426)
 	self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
@@ -66,3 +66,4 @@ function mod:Decimate(_, spellId, _, _, spellName)
 		self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
 	end
 end
+

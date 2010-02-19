@@ -43,9 +43,18 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Yell("Engage", L["starttrigger"], L["starttrigger2"], L["starttrigger3"])
+	self:Yell("Teleport", L["teleport_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 15936)
+end
+
+function mod:OnEngage()
+	self:Message("engage", L["engage_message"], "Important")
+	self:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
+	self:DelayedMessage("teleport", 30, L["teleport_1min_message"], "Attention")
+	self:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
+	self:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
 end
 
 --------------------------------------------------------------------------------
@@ -59,18 +68,11 @@ local function backToRoom()
 	mod:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
-		self:Message("engage", L["engage_message"], "Important")
-		self:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
-		self:DelayedMessage("teleport", 30, L["teleport_1min_message"], "Attention")
-		self:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
-		self:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
-	elseif msg:find(L["teleport_trigger"]) then
-		self:ScheduleTimer(backToRoom, 45)
-		self:Message("teleport", L["on_platform_message"], "Attention")
-		self:DelayedMessage("teleport", 15, L["to_floor_30sec_message"], "Urgent")
-		self:DelayedMessage("teleport", 35, L["to_floor_10sec_message"], "Important")
-		self:Bar("teleport", L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
-	end
+function mod:Teleport()
+	self:ScheduleTimer(backToRoom, 45)
+	self:Message("teleport", L["on_platform_message"], "Attention")
+	self:DelayedMessage("teleport", 15, L["to_floor_30sec_message"], "Urgent")
+	self:DelayedMessage("teleport", 35, L["to_floor_10sec_message"], "Important")
+	self:Bar("teleport", L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
 end
+

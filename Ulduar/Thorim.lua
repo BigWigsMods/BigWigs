@@ -169,3 +169,4 @@ function mod:PhaseThree()
 	self:Message("phase", L["phase3_message"], "Attention")
 	self:OpenProximity(5)
 end
+

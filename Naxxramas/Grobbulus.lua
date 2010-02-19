@@ -8,12 +8,6 @@ mod:RegisterEnableMob(15931)
 mod.toggleOptions = {{28169, "WHISPER", "ICON", "FLASHSHAKE"}, 28240, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local pName = UnitName("player")
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -47,7 +41,7 @@ end
 
 function mod:Inject(player, spellId)
 	self:TargetMessage(28169, L["bomb_message"], player, "Personal", spellId, "Alert")
-	if player == pName then self:FlashShake(28169) end
+	if UnitIsUnit(player, "player") then self:FlashShake(28169) end
 	self:Whisper(28169, player, L["bomb_message"])
 	self:Bar(28169, L["bomb_message_other"]:format(player), 10, spellId)
 	self:PrimaryIcon(28169, player)
@@ -57,3 +51,4 @@ function mod:Cloud(_, spellId, _, _, spellName)
 	self:Message(28240, spellName, "Attention", spellId)
 	self:Bar(28240, spellName, 15, spellId)
 end
+
