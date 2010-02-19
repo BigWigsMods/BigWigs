@@ -87,7 +87,7 @@ local clickOptions = {
 	remove = {
 		type = "toggle",
 		name = colorize[L["Remove"]],
-		desc = L["Removes the bar and all associated messages from displaying."],
+		desc = L["Temporarily removes the bar and all associated messages."],
 		descStyle = "inline",
 		order = 3,
 	},

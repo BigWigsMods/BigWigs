@@ -12,7 +12,7 @@ L["Temporarily Super Emphasizes the bar and any messages associated with it for 
 L["Report"] = true
 L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = true
 L["Remove"] = true
-L["Removes the bar and all associated messages from displaying."] = true
+L["Temporarily removes the bar and all associated messages."] = true
 L["Remove other"] = true
 L["Temporarily removes all other bars (except this one) and associated messages."] = true
 L["Disable"] = true
