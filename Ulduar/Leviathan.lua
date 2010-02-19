@@ -49,7 +49,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("engage", L["engage_message"]:format(unit), "Attention")
+	self:Message("engage", L["engage_message"]:format(self.displayName), "Attention")
 end
 
 --------------------------------------------------------------------------------
