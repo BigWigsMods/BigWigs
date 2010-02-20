@@ -6,6 +6,20 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Clickable Bars"] = "Полосы активизируемые щелчком мыши"
+L.clickableBarsDesc = "Полосы Big Wigs по умолчанию не реагируют на щелчки мыши в их области. Таким образом, можно целится в объекты или запустить массовое, целенаправленное заклинаний за ними, изменить ракурс камеры, и так далее, в то время как курсор находится в области полос.|cffff4411Если вы включите полосы активизируемые щелчком мыши, это больше работать не будет.|r Полосы будут перехватывать любые щелчки мыши выполняемые в их области.\n"
+L["Enables bars to receive mouse clicks."] = "Включает восприятие щелчков мыши в области полос."
+
+L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Временное супер увеличение полос и всех сообщений, связанные с ним в течение всего срока действия."
+L["Report"] = "Сообщить"
+L["Reports the current bars status to the active group chat; either battleground, raid, party or guild, as appropriate."] = "Сообщает текущий статус полосы в активный чат группы чата; либо поля боя, рейда, группы или гильдии, по мере необходимости."
+L["Remove"] = "Убрать"
+L["Temporarily removes the bar and all associated messages."] = "Временно убирает полосу и все связанные с ней сообщения."
+L["Remove other"] = "Убрать другие"
+L["Temporarily removes all other bars (except this one) and associated messages."] = "Временно удаляет все другие полосу (кроме одной) и связанные с ними сообщения."
+L["Disable"] = "Отключить"
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "Полностью отключает способность события босса, которое порождает эту полосу."
+
 L["Scale"] = "Масштаб"
 L["Grow upwards"] = "Рост вверх"
 L["Toggle bars grow upwards/downwards from anchor."] = "Преключение роста полос от якоря вверх или вниз."
@@ -156,15 +170,15 @@ L["Cool!"] = "Cool!"
 L["Tips"] = "Советы"
 L["Tip of the Raid"] = "Советы рейда"
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Советы рейда будет показыны по умолчанию, когда вы входите в рейдовую зону, когда вы вне боя, и ваша рейд группа состоит более чем из 9 игроков. За сессию будет показан всего один совет.\n\nЗдесь вы можете настроить способ отображения советов, либо с помощью всплываючего окна (по умолчанию), или выводить их в чате. Если ваш рейд лидером, злоупотребляет командой |cffff4411/sendtip command|r, вы можете выводить их в окно чата!"
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid leader will also be blocked by this, so be careful."] = "Если вы не хотите видеть какие-либо советы, здесь вы можете отключить их. Советы присланные вашым лидером рейда также будет заблокирован, так что будьте осторожны."
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Если вы не хотите видеть какие-либо советы, здесь вы можете отключить их. Советы присланные вашыми офицерами рейда также будет заблокированы, так что будьте осторожны."
 L["Automatic tips"] = "Авто-советы"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Если вы не хотите видеть потрясающие советы, которые всплывают при входе в рейд, предоставленные одними из лучших PvE игроков в мире, вы можете смело отключить эту опцию."
 L["Manual tips"] = "Советы в ручную"
-L["Raid leaders have the ability to show the players in the raid a manual tip with the /sendtip command. If you have a raid leader who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Рейд лидеры имеют возможность показать игрокам в рейде свои советы командой с /sendtip. Если ваш рейд лидер использует данную команду и спамит советы, или по какой другой причине, и вы просто не хотят их видеть, вы можете отключить это с помощью этой опции."
+L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Офицеры рейда имеют возможность показать игрокам в рейде свои советы командой /sendtip. Если ваш офицер использует данную команду и спамит советы, или по какой другой причине, и вы просто не хотят их видеть, вы можете отключить это с помощью этой опции."
 L["Output to chat frame"] = "Вывод в окно чата"
 L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "По умолчанию советы будут показаны в их собственном окно в центре экрана. Если вы переключите это, тем не менее, советы будут отображаться только в окне чата как простой текст, и окно никогда не будет беспокоить вас снова."
 L["Usage: /sendtip <index|\"Custom tip\">"] = "Используйте: /sendtip <index|\"свот совет\">"
-L["You must be the raid leader to broadcast a tip."] = "Вы должны быть лидером рейды для передачи советов."
+L["You must be an officer in the raid to broadcast a tip."] = "Вы должны быть офицером в рейде для передачи советов."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Индекс совета выходит за пределы поля, допустимый деапазон индекса от 1 до %d."
 
 -----------------------------------------------------------------------

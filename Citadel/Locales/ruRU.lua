@@ -225,6 +225,7 @@ if L then
 	L.grip_bar = "Морозная хватка"
 
 	L.unchained_message = "Освобожденная магия на ВАС!"
+	L.unchained_bar = "Освобожденная магия"
 	L.instability_message = "Неустойчивость x%d!"
 	L.chilled_message = "Обжигающий холод x%d!"
 	L.buffet_message = "Таинственная энергия x%d!"
