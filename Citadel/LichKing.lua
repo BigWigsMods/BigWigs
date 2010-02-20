@@ -205,10 +205,10 @@ do
 	local t = 0
 	function mod:Valkyr(_, spellId)
 		local time = GetTime()
-		if (time - t) > 3 then
+		if (time - t) > 4 then
 			t = time
 			self:Message(69037, L["valkyr_message"], "Attention", 71844)
-			self:Bar(69037, L["valkyr_bar"], 47, 71844)
+			self:Bar(69037, L["valkyr_bar"], 46, 71844)
 		end
 	end
 end
