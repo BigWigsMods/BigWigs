@@ -181,6 +181,7 @@ if L then
 	L.grip_bar = "다음 손아귀"
 
 	L.unchained_message = "당신은 해방된 마법!"
+	L.unchained_bar = "해방된 마법"
 	L.instability_message = "불안정 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
 	L.buffet_message = "신비한 강타 x%d!"
