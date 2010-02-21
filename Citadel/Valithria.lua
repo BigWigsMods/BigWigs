@@ -5,7 +5,12 @@
 local mod = BigWigs:NewBoss("Valithria Dreamwalker", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886, 37950, 37985)
-mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "skull", "portal", "bosskill"}
+mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "skull", "portal", "berserk", "bosskill"}
+mod.optionHeaders = {
+	[71730] = "normal",
+	berserk = "heroic",
+	bosskill = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -13,6 +18,7 @@ mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "sku
 
 local blazingTimers = {60, 51.5, 53.5, 41, 41, 35}
 local blazingCount, blazingRepeater, portalCount = 1, nil, 1
+local difficulty = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -72,8 +78,13 @@ do
 		blazingRepeater = nil
 	end
 	local function suppresserSpawn()
-		mod:Bar("suppresser", L["suppresser_message"], 58, 70588)
-		mod:ScheduleTimer(suppresserSpawn, 58)
+		if difficulty == 1 or 3 then
+			mod:Bar("suppresser", L["suppresser_message"], 31, 70588)
+			mod:ScheduleTimer(suppresserSpawn, 31)
+		else
+			mod:Bar("suppresser", L["suppresser_message"], 58, 70588)
+			mod:ScheduleTimer(suppresserSpawn, 58)
+		end
 	end
 	local function blazingSpawn()
 		--XXX more testing, same on 10man?
@@ -87,14 +98,27 @@ do
 			blazingRepeater = mod:ScheduleRepeatingTimer(scanTarget, 0.5)
 		end
 	end
-	function mod:OnEngage()
+	function mod:OnEngage(diff)
 		portalCount = 1
-		self:Bar("suppresser", L["suppresser_message"], 29, 70588)
-		self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
-		self:ScheduleTimer(suppresserSpawn, 29)
-		self:ScheduleTimer(blazingSpawn, 50)
-		self:Bar("blazing", L["blazing"], 50, 71730)
-		self:DelayedMessage("blazing", 45, L["blazing_warning"], "Positive")
+		difficulty = diff
+		if diff > 2 then
+			self:Berserk(420)
+		end
+		if diff == 1 or 3 then
+			self:Bar("suppresser", L["suppresser_message"], 14, 70588)
+			self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
+			self:ScheduleTimer(suppresserSpawn, 14)
+			self:ScheduleTimer(blazingSpawn, 37)
+			self:Bar("blazing", L["blazing"], 37, 71730)
+			self:DelayedMessage("blazing", 32, L["blazing_warning"], "Positive")		
+		else
+			self:Bar("suppresser", L["suppresser_message"], 29, 70588)
+			self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
+			self:ScheduleTimer(suppresserSpawn, 29)
+			self:ScheduleTimer(blazingSpawn, 50)
+			self:Bar("blazing", L["blazing"], 50, 71730)
+			self:DelayedMessage("blazing", 45, L["blazing_warning"], "Positive")
+		end
 		blazingCount = 1
 	end
 end
