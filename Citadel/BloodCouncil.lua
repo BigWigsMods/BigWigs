@@ -50,7 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Prison", 72999)
 	self:Log("SPELL_AURA_APPLIED", "Switch", 70981, 70982, 70952, 70983, 70934, 71582, 71596)
 	self:Log("SPELL_CAST_START", "EmpoweredShock", 72039, 73037, 73038, 73039)
-	self:Log("SPELL_CAST_START", "RegularShock", 72037)
+	self:Log("SPELL_SUMMON", "RegularShock", 72037)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -110,31 +110,26 @@ function mod:EmpoweredShock(_, spellId)
 	self:ScheduleTimer(self.CloseProximity, 5, self)
 end
 
-do
-	local function scanTarget()
-		for i = 1, 3 do
-			local bossNum = ("boss%d"):format(i)
-			local guid = UnitGUID(bossNum)
-			if not guid then return end
-			guid = tonumber((guid):sub(-12, -7), 16)
-			if guid == 37970 then
-				local target = UnitName(bossNum.."target")
-				if target then
-					if UnitIsUnit("player", target) then
-						mod:FlashShake(72037)
-						if bit.band(mod.db.profile[GetSpellInfo(72037)], BigWigs.C.SAY) == BigWigs.C.SAY then
-							SendChatMessage(L["shock_say"], "SAY")
-						end
+function mod:RegularShock()
+	for i = 1, 3 do
+		local bossNum = ("boss%d"):format(i)
+		local guid = UnitGUID(bossNum)
+		if not guid then return end
+		guid = tonumber((guid):sub(-12, -7), 16)
+		if guid == 37970 then
+			local target = UnitName(bossNum.."target")
+			if target then
+				if UnitIsUnit("player", target) then
+					mod:FlashShake(72037)
+					if bit.band(mod.db.profile[GetSpellInfo(72037)], BigWigs.C.SAY) == BigWigs.C.SAY then
+						SendChatMessage(L["shock_say"], "SAY")
 					end
-					mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
-					mod:Whisper(72037, target, L["regular_shock_message"])
 				end
-				break
+				mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
+				mod:Whisper(72037, target, L["regular_shock_message"])
 			end
+			break
 		end
-	end
-	function mod:RegularShock()
-		self:ScheduleTimer(scanTarget, 0.2)
 	end
 end
 
