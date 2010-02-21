@@ -84,7 +84,8 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
+	difficulty = diff
 	self:Berserk(600)
 	p2, p3, first = nil, nil, nil
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
