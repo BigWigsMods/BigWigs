@@ -23,6 +23,7 @@ mod.optionHeaders = {
 local p2, p3, first, barText = nil, nil, nil, "test"
 local oozeTargets = mod:NewTargetList()
 local gasTargets = mod:NewTargetList()
+local difficulty = 0
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -68,7 +69,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966, 71967, 71968)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
-	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72615, 72295, 72873, 72874)
+	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 74280, 72615, 74281) --10/25
 	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
 	self:Log("SPELL_AURA_REMOVED", "TearGasOver", 71615)
 	self:Log("SPELL_AURA_APPLIED", "UnboundPlague", 72855, 72856) --Heroic Ability
@@ -97,8 +98,8 @@ function mod:VolatileExperiment(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
 	self:SendMessage("BigWigs_StopBar", self, barText)
 	self:Message("phase", L["add_message"], "Positive")
-	self:Bar(70351, L["phase_bar"], 53, spellId)
-	self:ScheduleTimer("phaseChange", 53)
+	self:Bar(70351, L["phase_bar"], 47, "achievement_boss_profputricide")
+	self:ScheduleTimer("phaseChange", 47)
 end
 
 function mod:phaseChange()
@@ -224,7 +225,11 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(scanTarget, 0.2, spellName)
-			self:Bar(72295, L["ball_bar"], 25, spellId)
+			if difficulty < 3 then
+				self:Bar(72295, L["ball_bar"], 20, spellId)
+			else
+				self:Bar(72295, L["ball_bar"], 25, spellId)
+			end
 		end
 	end
 end
