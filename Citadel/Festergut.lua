@@ -5,10 +5,9 @@
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions = {{69279, "FLASHSHAKE"}, "sporeicon", 69165, 71219, 72551, 71218, 72310, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {{69279, "FLASHSHAKE"}, "sporeicon", 69165, 71219, 72551, 71218, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[69279] = "normal",
-	[72310] = "heroic",
 	proximity = "general",
 }
 
@@ -41,7 +40,6 @@ if L then
 	L.sporeicon = "Icon on Spore targets"
 	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
 
-	L.ball_message = "Goo ball incoming!"
 end
 L = mod:GetLocale()
 
@@ -55,10 +53,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
 	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)
 	self:Log("SPELL_CAST_SUCCESS", "VileGas", 69240, 71218, 73020, 73019)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Bloat", 72551, 72219)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Bloat", 72219, 72551, 72552, 72553)
 	self:Death("Win", 36626)
 
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 
@@ -148,18 +145,3 @@ do
 		end
 	end
 end
-
-do
-	local goo = GetSpellInfo(72310)
-	local t = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spell)
-		if spell == goo then
-		local time = GetTime()
-			if (time - t) > 2 then
-				t = time
-				self:Message(72310, L["ball_message"], "Important", 72295)
-			end
-		end
-	end
-end
-
