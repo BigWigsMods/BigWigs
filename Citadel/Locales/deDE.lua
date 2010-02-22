@@ -67,8 +67,6 @@ if L then
 
 	L.sporeicon = "Symbole auf Spielern mit Sporen"
 	L.sporeicon_desc = "Plaziert den Totenkopf, das Kreuz und das Quadrat auf Spielern mit Sporen (benötigt Assistent oder höher)."
-
-	L.ball_message = "Glibber!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
@@ -153,7 +151,7 @@ if L then
 	L.gasbomb_bar = "Weitere Gasbomben"
 	L.gasbomb_message = "Gasbomben!"
 
-	L.plagueicon = "Symbole auf Seuchen-Ziele"
+	L.plagueicon = "Symbole auf Seuchen-Zielen"
 	L.plagueicon_desc = "Setzt das Quadrat auf Spieler mit Entfesselte Seuche (benötigt Assistent oder höher)."
 
 	L.add_message = "Weiterer Schlamm!"
@@ -242,7 +240,11 @@ if L then
 	L.last_phase_bar = "Letzte Phase"
 
 	L.trap_say = "Falle auf MIR!"
+	L.trap_message = "Falle"
 	L.trap_bar = "Nächste Falle"
+
+	L.trapicon = "Quadrat auf Fallen-Zielen"
+	L.trapicon_desc = "Plaziert das Quadrat auf Spielern mit Schattenfalle (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
