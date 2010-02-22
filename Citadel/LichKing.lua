@@ -178,7 +178,7 @@ do
 		end
 	end
 	function mod:PlagueScan()
-		self:ScheduleTimer(scanRaid, 0.3)
+		self:ScheduleTimer(scanRaid, 0.8)
 	end
 end
 
