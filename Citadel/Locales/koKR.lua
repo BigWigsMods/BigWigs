@@ -270,5 +270,8 @@ if L then
 	L.trap_say = "나에게 암흑의 덫!"
 	L.trap_message = "암흑의 덫"
 	L.trap_bar = "다음 암흑의 덫"
+	
+	L.trapicon = "덫 대상 전술"
+	L.trapicon_desc = "암흑의 덫 대상에게 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
