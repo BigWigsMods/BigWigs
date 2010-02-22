@@ -5,14 +5,14 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73539, "SAY", "WHISPER", "FLASHSHAKE"}, "trapicon", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72143] = CL.phase:format(1),
 	[72762] = CL.phase:format(2),
 	[68980] = CL.phase:format(3),
 	[74270] = "Transition",
-	[73529] = "heroic",
+	[73539] = "heroic",
 	berserk = "general",
 }
 
@@ -60,7 +60,11 @@ if L then
 	L.last_phase_bar = "Last Phase"
 
 	L.trap_say = "Shadow Trap on ME!"
+	L.trap_message = "Shadow Trap"
 	L.trap_bar = "Next Trap"
+	
+	L.trapicon = "Icon on Trap targets"
+	L.trapicon_desc = "Set Square icons on the players with a Shadow Trap (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -88,7 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 
 	-- Transition phases
-	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 72259, 74270, 74273)
+	self:Log("SPELL_CAST_START", "RemorselessWinter", 68981, 72259, 74270, 74271, 74272, 74273, 74274, 74275)
 	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 
@@ -96,7 +100,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
 	-- Hard Mode
-	self:Log("SPELL_CAST_START", "ShadowTrap", 73529, 73539)
+	self:Log("SPELL_CAST_START", "ShadowTrap", 73539)
 
 	self:Death("Win", 36597)
 
@@ -115,6 +119,7 @@ function mod:OnEngage(diff)
 	phase = 1
 	if diff > 2 then
 		self:Berserk(900)
+		self:Bar(73539, L["trap_bar"], 16, 73539)
 	end
 end
 
@@ -233,6 +238,7 @@ function mod:RemorselessWinter(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["valkyr_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["trap_bar"])
 	self:LocalMessage(74270, L["remorselesswinter_message"], "Urgent", spellId, "Alert")
 	self:Bar(72262, L["quake_bar"], 62, 72262)
 	self:Bar(69200, L["ragingspirit_bar"], 15, spellId)
@@ -290,21 +296,23 @@ do
 		local target = UnitName(bossId .. "target")
 		if target then
 			if UnitIsUnit(target, "player") then
-				mod:FlashShake(73529)
-				if bit.band(mod.db.profile[(GetSpellInfo(73529))], BigWigs.C.SAY) == BigWigs.C.SAY then
+				mod:FlashShake(73539)
+				if bit.band(mod.db.profile[(GetSpellInfo(73539))], BigWigs.C.SAY) == BigWigs.C.SAY then
 					SendChatMessage(L["trap_say"], "SAY")
 				end
 			end
-			mod:TargetMessage(73529, spellName, target, "Attention", 73529)
-			mod:Whisper(73529, target, spellName)
-			mod:PrimaryIcon(73529, target)
+			mod:TargetMessage(73539, L["trap_message"], target, "Attention", 73539)
+			mod:Whisper(73539, target, spellName)
+			if self.db.profile.trapicon then
+				SetRaidTarget(target, 6)
+			end
 		end
 	end
 	function mod:ShadowTrap(_, spellId, _, _, spellName)
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(trapTarget, 0.1, spellName)
-			self:Bar(73529, L["trap_bar"], 30, spellId)
+			self:Bar(73539, L["trap_bar"], 16, spellId)
 		end
 	end
 end
