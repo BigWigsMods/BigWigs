@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 --Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
 mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
-mod.toggleOptions = {"adds", 70842, 71204, 71426, 72501, 71289, "dmicon", {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 70842, 71204, 71426, 71289, "dmicon", {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	adds = CL.phase:format(1),
@@ -65,7 +65,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Touch", 71204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Touch", 71204)
 	self:Log("SPELL_CAST_START", "Deformed", 70900)
-	self:Log("SPELL_CAST_START", "Frostbolt", 71420, 72007, 72501, 72502) --10, 25, ??, ??
 	self:Log("SPELL_SUMMON", "Spirit", 71426)
 	self:Death("Win", 36855)
 
@@ -161,10 +160,5 @@ do
 			self:Bar(71426, L["spirit_bar"], 13, spellId)
 		end
 	end
-end
-
-function mod:Frostbolt(_, spellId, _, _, spellName)
-	self:Message(72501, spellName, "Attention", spellId)
-	self:Bar(72501, spellName, 2, spellId)
 end
 
