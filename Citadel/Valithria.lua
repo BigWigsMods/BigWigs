@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Valithria Dreamwalker", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36789, 37868, 36791, 37934, 37886, 37950, 37985)
-mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", "blazing", "skull", "portal", "berserk", "bosskill"}
+mod.toggleOptions = {71730, {71741, "FLASHSHAKE"}, "suppresser", {"blazing", "ICON"}, "portal", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[71730] = "normal",
 	berserk = "heroic",
@@ -44,10 +44,7 @@ if L then
 
 	L.blazing = "Blazing Skeleton"
 	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be inaccurate, use only as a rough guide."
-	L.blazing_warning = "Blazing Skeleton Soon!"
-
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.blazing_warning = "Blazing Skeleton soon!"
 end
 L = mod:GetLocale()
 
@@ -73,7 +70,7 @@ do
 	local function scanTarget()
 		local unitId = mod:GetUnitIdByGUID(36791)
 		if not unitId then return end
-		SetRaidTarget(unitId, 8)
+		mod:PrimaryIcon(unitId)
 		mod:CancelTimer(blazingRepeater)
 		blazingRepeater = nil
 	end
@@ -94,7 +91,7 @@ do
 		mod:DelayedMessage("blazing", blazingTimers[blazingCount] - 5, L["blazing_warning"], "Positive")
 		blazingCount = blazingCount + 1
 		if blazingRepeater or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-		if mod.db.profile.skull then
+		if bit.band(mod.db.profile.blazing, BigWigs.C.ICON) == BigWigs.C.ICON then
 			blazingRepeater = mod:ScheduleRepeatingTimer(scanTarget, 0.5)
 		end
 	end
@@ -110,7 +107,7 @@ do
 			self:ScheduleTimer(suppresserSpawn, 14)
 			self:ScheduleTimer(blazingSpawn, 37)
 			self:Bar("blazing", L["blazing"], 37, 71730)
-			self:DelayedMessage("blazing", 32, L["blazing_warning"], "Positive")		
+			self:DelayedMessage("blazing", 32, L["blazing_warning"], "Positive")
 		else
 			self:Bar("suppresser", L["suppresser_message"], 29, 70588)
 			self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)

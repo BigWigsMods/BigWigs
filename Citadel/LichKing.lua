@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73539, "SAY", "WHISPER", "FLASHSHAKE"}, "trapicon", "berserk", "bosskill"}
+mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73539, "SAY", "WHISPER", "FLASHSHAKE", "ICON"}, "trapicon", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72143] = CL.phase:format(1),
@@ -62,9 +62,6 @@ if L then
 	L.trap_say = "Shadow Trap on ME!"
 	L.trap_message = "Shadow Trap"
 	L.trap_bar = "Next Trap"
-	
-	L.trapicon = "Icon on Trap targets"
-	L.trapicon_desc = "Set Square icons on the players with a Shadow Trap (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -303,9 +300,7 @@ do
 			end
 			mod:TargetMessage(73539, L["trap_message"], target, "Attention", 73539)
 			mod:Whisper(73539, target, spellName)
-			if self.db.profile.trapicon then
-				SetRaidTarget(target, 6)
-			end
+			mod:PrimaryIcon(73539, target)
 		end
 	end
 	function mod:ShadowTrap(_, spellId, _, _, spellName)

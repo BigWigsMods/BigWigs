@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Lady Deathwhisper", "Icecrown Citadel")
 if not mod then return end
 --Deathwhisper, Cult Adherent, Reanimated Adherent, Cult Fanatic, Reanimated Fanatic, Deformed Fanatic
 mod:RegisterEnableMob(36855, 37949, 38010, 37890, 38009, 38135)
-mod.toggleOptions = {"adds", 70842, 71204, 71426, 71289, "dmicon", {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {"adds", 70842, 71204, 71426, 71289, {71001, "FLASHSHAKE"}, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	adds = CL.phase:format(1),
@@ -47,9 +47,6 @@ if L then
 	L.spirit_bar = "Next Spirit"
 
 	L.dominate_bar = "~Next Dominate Mind"
-
-	L.dmicon = "Icon on Dominate Mind"
-	L.dmicon_desc = "Set a Skull, Cross & Square on the players with Dominate Mind (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -61,7 +58,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DnD", 71001, 72108, 72109, 72110) --??, 25, ??, ??
 	self:Log("SPELL_AURA_REMOVED", "Barrier", 70842)
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", 71289)
-	self:Log("SPELL_AURA_REMOVED", "DMRemoved", 71289)
 	self:Log("SPELL_AURA_APPLIED", "Touch", 71204)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Touch", 71204)
 	self:Log("SPELL_CAST_START", "Deformed", 70900)
@@ -121,21 +117,11 @@ do
 	end
 	function mod:DominateMind(player, spellId, _, _, spellName)
 		dmTargets[#dmTargets + 1] = player
-		if self.db.profile.dmicon then
-			SetRaidTarget(player, num)
-			num = num - 1
-		end
 		if not scheduled then
 			scheduled = true
 			self:Bar(71289, L["dominate_bar"], 40, 71289)
 			self:ScheduleTimer(dmWarn, 0.3, spellName)
 		end
-	end
-end
-
-function mod:DMRemoved(player)
-	if self.db.profile.dmicon then
-		SetRaidTarget(player, 0)
 	end
 end
 
