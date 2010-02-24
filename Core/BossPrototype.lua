@@ -327,10 +327,12 @@ local function checkFlag(self, key, flag)
 		return
 	end
 	if type(key) == "number" then key = GetSpellInfo(key) end
-	-- XXX Remove this for next major release
 	if type(self.db.profile[key]) ~= "number" then
-		self.db.profile[key] = self.toggleDefaults[key]
-		print(("The boss encounter script for %q tried to access the option %q as a bit flag setting, but in the database it's represented as something else (%s). Please report this in #bigwigs."):format(self.displayName, key, type(self.db.profile[key])))
+		if debug then
+			dbg(self, ("Tried to access %q, but in the database it's a %s."):format(key, type(self.db.profile[key])))
+		else
+			self.db.profile[key] = self.toggleDefaults[key]
+		end
 	end
 	return bit.band(self.db.profile[key], flag) == flag
 end
