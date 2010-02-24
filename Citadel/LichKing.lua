@@ -280,7 +280,7 @@ do
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
 		self:Bar(72762, L["defile_bar"], 32, 72762)
-		handle = self:ScheduleTimer(scanTarget, 0.1)
+		handle = self:ScheduleTimer(scanTarget, 0.01)
 	end
 end
 
@@ -306,7 +306,7 @@ do
 	function mod:ShadowTrap(_, spellId, _, _, spellName)
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(trapTarget, 0.1, spellName)
+			self:ScheduleTimer(trapTarget, 0.01, spellName)
 			self:Bar(73539, L["trap_bar"], 16, spellId)
 		end
 	end
