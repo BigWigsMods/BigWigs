@@ -205,9 +205,7 @@ do
 		if target then
 			if UnitIsUnit(target, "player") then
 				mod:FlashShake(72295)
-				if bit.band(mod.db.profile[(GetSpellInfo(72295))], BigWigs.C.SAY) == BigWigs.C.SAY then
-					SendChatMessage(L["ball_say"], "SAY")
-				end
+				mod:Say(72295, L["ball_say"])
 			end
 			mod:TargetMessage(72295, spellName, target, "Attention", 72295)
 		end

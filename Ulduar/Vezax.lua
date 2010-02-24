@@ -113,9 +113,7 @@ do
 		if target then
 			if target == pName then
 				mod:FlashShake(62660)
-				if bit.band(mod.db.profile[(GetSpellInfo(62660))], BigWigs.C.SAY) == BigWigs.C.SAY then
-					SendChatMessage(L["crash_say"], "SAY")
-				end
+				mod:Say(62660, L["crash_say"])
 			end
 			mod:TargetMessage(62660, name, target, "Personal", id, "Alert")
 			mod:Whisper(62660, target, name)

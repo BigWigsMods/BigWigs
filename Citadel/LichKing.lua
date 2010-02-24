@@ -265,9 +265,7 @@ do
 		if target then
 			if UnitIsUnit(target, "player") then
 				mod:FlashShake(72762)
-				if bit.band(mod.db.profile[(GetSpellInfo(72762))], BigWigs.C.SAY) == BigWigs.C.SAY then
-					SendChatMessage(L["defile_say"], "SAY")
-				end
+				mod:Say(72762, L["defile_say"])
 			end
 			mod:TargetMessage(72762, name, target, "Important", id, "Alert")
 			mod:Whisper(72762, target, name)
@@ -294,9 +292,7 @@ do
 		if target then
 			if UnitIsUnit(target, "player") then
 				mod:FlashShake(73539)
-				if bit.band(mod.db.profile[(GetSpellInfo(73539))], BigWigs.C.SAY) == BigWigs.C.SAY then
-					SendChatMessage(L["trap_say"], "SAY")
-				end
+				mod:Say(73539, L["trap_say"])
 			end
 			mod:TargetMessage(73539, L["trap_message"], target, "Attention", 73539)
 			mod:Whisper(73539, target, spellName)

@@ -35,8 +35,6 @@ if L then
 
 	L.icebolt_say = "I'm a Block!"
 
-	L.ping = "Ping"
-	L.ping_desc = "Ping your current location if you are afflicted by Icebolt."
 	L.ping_message = "Block - Pinging your location!"
 end
 L = mod:GetLocale()
@@ -95,9 +93,7 @@ end
 
 function mod:Icebolt(player, spellId, _, _, spellName)
 	if player == pName then
-		if bit.band(self.db.profile[iceboltName], BigWigs.C.SAY) == BigWigs.C.SAY then
-			SendChatMessage(L["icebolt_say"], "SAY")
-		end
+		self:Say(iceboltName, L["icebolt_say"])
 		if bit.band(self.db.profile[iceboltName], BigWigs.C.PING) == BigWigs.C.PING then
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])

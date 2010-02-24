@@ -414,9 +414,13 @@ do
 end
 
 function boss:FlashShake(key, r, g, b)
-	if checkFlag(self, key, C.FLASHSHAKE) then
-		self:SendMessage("BigWigs_FlashShake", self, key)
-	end
+	if not checkFlag(self, key, C.FLASHSHAKE) then return end
+	self:SendMessage("BigWigs_FlashShake", self, key)
+end
+
+function boss:Say(key, msg)
+	if not checkFlag(self, key, C.SAY) then return end
+	SendChatMessage(msg, "SAY")
 end
 
 do

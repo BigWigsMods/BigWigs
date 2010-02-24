@@ -5,7 +5,7 @@ local mod = BigWigs:NewBoss("Blood Prince Council", "Icecrown Citadel")
 if not mod then return end
 --Prince Valanar, Prince Keleseth, Prince Taldaram
 mod:RegisterEnableMob(37970, 37972, 37973)
-mod.toggleOptions = {{72040, "FLASHSHAKE"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, 72999, 70981, "skullprince", "berserk", "proximity", "bosskill"}
+mod.toggleOptions = {{72040, "FLASHSHAKE"}, 72039, {72037, "SAY", "FLASHSHAKE", "WHISPER"}, 72999, 70981, "iconprince", "berserk", "proximity", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72040] = "Taldaram",
@@ -35,8 +35,8 @@ if L then
 	L.regular_shock_message = "Shock zone"
 	L.shock_say = "Shock zone on me!"
 
-	L.skullprince = "Skull on active prince"
-	L.skullprince_desc = "Place a skull on the active blood prince with health (requires promoted or leader)."
+	L.iconprince = "Icon on active prince"
+	L.iconprince_desc = "Place the primary raid icon on the active prince (requires promoted or leader)."
 
 	L.prison_message = "Shadow Prison x%d!"
 end
@@ -95,10 +95,10 @@ function mod:Switch(unit, spellId, _, _, spellName)
 	self:Message(70981, L["switch_message"]:format(unit), "Positive", spellId, "Info")
 	self:Bar(70981, L["switch_bar"], 45, spellId)
 	for i = 1, 3 do
-		local bossNum = ("boss%d"):format(i)
-		local name = UnitName(bossNum)
-		if name and name == unit and self.db.profile.skullprince then
-			SetRaidTarget(bossNum, 8) --Skull
+		local bossId = ("boss%d"):format(i)
+		local name = UnitName(bossId)
+		if name and name == unit then
+			self:PrimaryIcon("iconprince", bossId)
 			break
 		end
 	end
@@ -112,21 +112,19 @@ end
 
 function mod:RegularShock()
 	for i = 1, 3 do
-		local bossNum = ("boss%d"):format(i)
-		local guid = UnitGUID(bossNum)
+		local bossId = ("boss%d"):format(i)
+		local guid = UnitGUID(bossId)
 		if not guid then return end
 		guid = tonumber((guid):sub(-12, -7), 16)
 		if guid == 37970 then
-			local target = UnitName(bossNum.."target")
+			local target = UnitName(bossId .. "target")
 			if target then
 				if UnitIsUnit("player", target) then
-					mod:FlashShake(72037)
-					if bit.band(mod.db.profile[GetSpellInfo(72037)], BigWigs.C.SAY) == BigWigs.C.SAY then
-						SendChatMessage(L["shock_say"], "SAY")
-					end
+					self:FlashShake(72037)
+					self:Say(72037, L["shock_say"])
 				end
-				mod:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
-				mod:Whisper(72037, target, L["regular_shock_message"])
+				self:TargetMessage(72037, L["regular_shock_message"], target, "Urgent", 72037)
+				self:Whisper(72037, target, L["regular_shock_message"])
 			end
 			break
 		end

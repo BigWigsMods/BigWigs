@@ -146,8 +146,8 @@ function mod:Impale(player, spellId, _, _, spellName)
 end
 
 function mod:Detonation(player, spellId, _, _, spellName)
-	if player == pName and bit.band(self.db.profile[(GetSpellInfo(62526))], BigWigs.C.SAY) == BigWigs.C.SAY then
-		SendChatMessage(L["detonation_say"], "SAY")
+	if player == pName then
+		self:Say(62526, L["detonation_say"])
 	else
 		self:TargetMessage(62526, spellName, player, "Important", spellId)
 	end
