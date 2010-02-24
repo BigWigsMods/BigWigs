@@ -95,8 +95,8 @@ end
 
 do
 	local function stopOldStuff()
-		self:SendMessage("BigWigs_StopBar", self, L["experiment_bar"])
-		self:SendMessage("BigWigs_StopBar", self, barText)
+		mod:SendMessage("BigWigs_StopBar", mod, L["experiment_bar"])
+		mod:SendMessage("BigWigs_StopBar", mod, barText)
 	end
 	local function newPhase()
 		mod:Bar(71255, L["gasbomb_bar"], 14, 71255)
