@@ -5,10 +5,10 @@
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions = {{69279, "FLASHSHAKE"}, 69165, 71219, 72551, 71218, 72310, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {{69279, "FLASHSHAKE"}, 69165, 71219, 72551, 71218, 72295, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[69279] = "normal",
-	[72310] = "heroic",
+	[72295] = "heroic",
 	proximity = "general",
 }
 
@@ -145,6 +145,6 @@ end
 
 function mod:OnSync(sync, rest, nick)
 	if sync == "GooBall" then
-		self:Message(72310, L["ball_message"], "Important", 72295)
+		self:Message(72295, L["ball_message"], "Important", 72295)
 	end
 end
