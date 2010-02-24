@@ -62,6 +62,8 @@ if L then
 	L.trap_say = "Shadow Trap on ME!"
 	L.trap_message = "Shadow Trap"
 	L.trap_bar = "Next Trap"
+
+	L.cave_phase = "Cave Phase"
 end
 L = mod:GetLocale()
 
@@ -84,7 +86,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 
 	-- Phase 3
-	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325, 74326, 74327)
+	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325, 74326, 74327, 74296)
 	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980, 74325, 74326, 74327)
 	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 
@@ -93,7 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 
-	self:Log("SPELL_AURA_APPLIED", "Enrage", 72143, 72146, 72147, 72148)
+	self:Log("SPELL_CAST_START", "Enrage", 72143, 72146, 72147, 72148)
 	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
 	-- Hard Mode
@@ -111,11 +113,12 @@ function mod:Warmup()
 end
 
 function mod:OnEngage(diff)
+	difficulty = diff
 	self:Berserk(900)
 	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	self:Bar(70372, L["horror_bar"], 22, 70372)
 	phase = 1
-	if diff > 2 then
+	if difficulty > 2 then
 		self:Bar(73539, L["trap_bar"], 16, 73539)
 	end
 end
@@ -180,7 +183,11 @@ do
 end
 
 function mod:Enrage(_, spellId, _, _, spellName)
-	self:Message(72143, spellName, "Attention", spellId)
+	if select(2,UnitClass("player")) == "HUNTER" then
+		self:Message(72143, spellName, "Attention", spellId, "Info")
+	else
+		self:Message(72143, spellName, "Attention", spellId)
+	end
 end
 
 function mod:RagingSpirit(player, spellId, _, _, spellName)
@@ -216,6 +223,9 @@ do
 end
 
 function mod:HarvestSoul(player, spellId, _, _, spellName)
+	if difficulty == 2 or difficulty == 4 then
+		self:Bar(74296, L["cave_phase"], 50, spellId)
+	end
 	self:Bar(68980, L["harvestsoul_bar"], 75, spellId)
 	self:TargetMessage(68980, spellName, player, "Attention", spellId)
 	if UnitIsUnit(player, "player") then self:FlashShake(68980) end
