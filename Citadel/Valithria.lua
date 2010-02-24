@@ -70,7 +70,7 @@ do
 	local function scanTarget()
 		local unitId = mod:GetUnitIdByGUID(36791)
 		if not unitId then return end
-		mod:PrimaryIcon(unitId)
+		mod:PrimaryIcon("blazing", unitId)
 		mod:CancelTimer(blazingRepeater)
 		blazingRepeater = nil
 	end
