@@ -22,7 +22,6 @@ mod.optionHeaders = {
 local previous = nil
 local deaths = 0
 local overwhelmTime = 35
-local pName = UnitName("player")
 local tendrilscanner = nil
 
 --------------------------------------------------------------------------------
@@ -91,7 +90,7 @@ function mod:Punch(_, spellId, _, _, spellName)
 end
 
 function mod:Overwhelm(player, spellId, _, _, spellName)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:OpenProximity(15)
 		self:FlashShake(64637)
 	end
@@ -102,7 +101,7 @@ function mod:Overwhelm(player, spellId, _, _, spellName)
 end
 
 function mod:OverRemove(player)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
 	end
 	self:SendMessage("BigWigs_StopBar", self, L["overwhelm_other"]:format(player))
@@ -125,7 +124,7 @@ function mod:RuneDeathCD(_, spellId, _, _, spellName)
 end
 
 function mod:RuneDeath(player, spellId)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(62269, L["death_message"], "Personal", spellId, "Alarm")
 		self:FlashShake(62269)
 	end
@@ -150,7 +149,7 @@ local function targetCheck()
 	local target = UnitName(bossId .. "target")
 	if target ~= previous then
 		if target then
-			if target == pName then
+			if UnitIsUnit(target, "player") then
 				mod:LocalMessage(61887, L["chased_you"], "Personal", nil, "Alarm")
 				mod:FlashShake(61887)
 			else

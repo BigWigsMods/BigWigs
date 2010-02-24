@@ -20,7 +20,6 @@ mod.optionHeaders = {
 local flashFreezed = mod:NewTargetList()
 local lastCold = nil
 local cold = GetSpellInfo(62039)
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization

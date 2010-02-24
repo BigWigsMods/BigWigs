@@ -112,7 +112,7 @@ end
 
 function mod:Detonate(player, spellId, _, _, spellName)
 	self:TargetMessage(27819, spellName, player, "Personal", spellId, "Alert")
-	if player == pName then self:FlashShake(27819) end
+	if UnitIsUnit(player, "player") then self:FlashShake(27819) end
 	self:Whisper(27819, player, spellName)
 	self:PrimaryIcon(27819, player)
 	self:Bar(27819, L["detonate_other"]:format(player), 5, spellId)

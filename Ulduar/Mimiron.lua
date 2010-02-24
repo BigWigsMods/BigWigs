@@ -19,7 +19,6 @@ mod.optionHeaders = {
 
 local ishardmode = nil
 local phase = nil
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -193,7 +192,7 @@ do
 		if not player then
 			item = select(3, msg:find(lootItemSelf))
 			if item then
-				player = pName
+				player = UnitName("player")
 			end
 		end
 

@@ -18,7 +18,6 @@ mod.optionHeaders = {
 --
 
 local phase = nil
-local pName = UnitName("player")
 local root = mod:NewTargetList()
 -- XXXLOLHAXBOOBS to prevent us from enabling again after she dies.
 -- I never have enough time after she does the yell to do any testing for which Unit* APIs will
@@ -169,7 +168,7 @@ do
 end
 
 function mod:Fury(player, spellId)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:OpenProximity(10)
 		self:FlashShake(62589)
 	end
@@ -181,7 +180,7 @@ end
 
 function mod:FuryRemove(player)
 	self:SendMessage("BigWigs_StopBar", self, L["fury_other"]:format(player))
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
 	end
 end
@@ -195,7 +194,7 @@ end
 do
 	local last = nil
 	function mod:Energy(player)
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(62865, L["energy_message"], "Personal",  62451, "Alarm")

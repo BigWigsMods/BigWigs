@@ -62,7 +62,6 @@ local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
 local GetSpellInfo = GetSpellInfo
 local fmt = string.format
-local pName = UnitName("player")
 
 -------------------------------------------------------------------------------
 -- Combat log related code
@@ -391,7 +390,7 @@ do
 			wipe(player)
 			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icon)
 		else
-			if player == pName then
+			if UnitIsUnit(player, "player") then
 				if ... then
 					local text = fmt(spellName, coloredNames[player], ...)
 					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon)
@@ -456,7 +455,7 @@ do
 		if not checkFlag(self, key, C.WHISPER) then return end
 		local msg = noName and spellName or fmt(L["you"], spellName)
 		sentWhispers[msg] = true
-		if player == pName or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
+		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
 		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
 	end

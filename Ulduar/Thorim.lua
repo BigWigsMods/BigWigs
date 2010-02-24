@@ -24,7 +24,6 @@ mod.proximitySilent = true
 --
 
 local chargeCount = 1
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -134,7 +133,7 @@ function mod:Shock(player, spellId)
 	local time = GetTime()
 	if (time - last) > 5 then
 		last = time
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			self:LocalMessage(62017, L["shock_message"], "Personal", spellId, "Info")
 			self:FlashShake(62017)
 		end
@@ -146,7 +145,7 @@ function mod:Impale(player, spellId, _, _, spellName)
 end
 
 function mod:Detonation(player, spellId, _, _, spellName)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:Say(62526, L["detonation_say"])
 	else
 		self:TargetMessage(62526, spellName, player, "Important", spellId)

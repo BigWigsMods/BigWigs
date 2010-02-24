@@ -27,8 +27,6 @@ if L then
 end
 L = mod:GetLocale()
 
-local pName = UnitName("player")
-
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -80,7 +78,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	if message:find(L["pursue_trigger"]) then
 		self:TargetMessage("pursue", L["pursue"], player, "Personal", 62374, "Alarm")
-		if player == pName then self:FlashShake("pursue") end
+		if UnitIsUnit(player, "player") then self:FlashShake("pursue") end
 		self:Bar("pursue", L["pursue_other"]:format(player), 30, 62374)
 	end
 end

@@ -12,7 +12,6 @@ mod.toggleOptions = {28542, 28524, {28522, "ICON", "SAY", "PING"}, "berserk", "b
 --
 
 local breath = 1
-local pName = UnitName("player")
 local iceboltName = GetSpellInfo(28522)
 
 --------------------------------------------------------------------------------
@@ -92,7 +91,7 @@ function mod:Drain(_, spellId)
 end
 
 function mod:Icebolt(player, spellId, _, _, spellName)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:Say(iceboltName, L["icebolt_say"])
 		if bit.band(self.db.profile[iceboltName], BigWigs.C.PING) == BigWigs.C.PING then
 			Minimap:PingLocation()

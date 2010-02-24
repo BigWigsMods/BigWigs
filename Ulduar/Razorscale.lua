@@ -18,7 +18,6 @@ mod.toggleOptions = {"phase", 64021, {64704, "FLASHSHAKE"}, "harpoon", "berserk"
 --
 
 local p2 = nil
-local pName = UnitName("player")
 local started = nil
 local count = 0
 local totalHarpoons = 4
@@ -78,7 +77,7 @@ end
 --
 
 function mod:Flame(player)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(64704, L["flame_message"], "Personal", 64733, "Alarm")
 		self:FlashShake(64704)
 	end

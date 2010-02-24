@@ -11,7 +11,6 @@ mod.toggleOptions = { 62488, 62382, 62680, {62546, "FLASHSHAKE"}, {62717, "FLASH
 -- Locals
 --
 
-local pName = UnitName("player")
 local spawnTime = 30
 
 --------------------------------------------------------------------------------
@@ -76,7 +75,7 @@ end
 do
 	local last = nil
 	function mod:Scorch(player, spellId)
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(62546, L["scorch_message"], "Personal", spellId, last and nil or "Alarm")

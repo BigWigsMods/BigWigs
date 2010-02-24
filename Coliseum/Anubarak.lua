@@ -23,7 +23,6 @@ local isBurrowed = nil
 local ssName = GetSpellInfo(66134)
 local difficulty = 0
 local coldTargets = mod:NewTargetList()
-local pName = UnitName("player")
 local phase2 = nil
 
 --------------------------------------------------------------------------------
@@ -141,14 +140,14 @@ do
 			self:ScheduleTimer(coldWarn, 0.2, spellName)
 			scheduled = true
 		end
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			self:FlashShake(68510)
 		end
 	end
 end
 
 function mod:ColdDebuff(player, spellId, _, _, spellName)
-	if player ~= pName or not phase2 then return end
+	if not UnitIsUnit(player, "player") or not phase2 then return end
 	self:LocalMessage(68510, spellName, "Personal", spellId)
 	self:FlashShake(68510)
 end
@@ -171,7 +170,7 @@ end
 
 function mod:Pursue(player, spellId)
 	self:TargetMessage(67574, L["chase"], player, "Personal", spellId, "Alert")
-	if player == pName then self:FlashShake(67574) end
+	if UnitIsUnit(player, "player") then self:FlashShake(67574) end
 	self:Whisper(67574, player, L["chase"])
 	self:PrimaryIcon(67574, player, "icon")
 end

@@ -11,12 +11,6 @@ mod.optionHeaders = {
 	bosskill = "general",
 }
 
--------------------------------------------------------------------------------
--- Locals
---
-
-local pName = UnitName("player")
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -105,7 +99,7 @@ end
 
 function mod:LegionFlame(player, spellId)
 	self:TargetMessage(68123, L["legionflame_message"], player, "Personal", spellId, "Alert")
-	if player == pName then self:FlashShake(68123) end
+	if UnitIsUnit(player, "player") then self:FlashShake(68123) end
 	self:Whisper(68123, player, L["legionflame_message"])
 	self:Bar(68123, L["legionflame_other"]:format(player), 8, spellId)
 	self:PrimaryIcon(68123, player)
@@ -129,19 +123,19 @@ function mod:InfernalEruption(_, spellId, _, _, spellName)
 end
 
 function mod:MistressKiss(player, spellId)
-	if player ~= pName then return end
+	if not UnitIsUnit(player, "player") then return end
 	self:LocalMessage(67905, L["kiss_message"], "Personal", spellId)
 	self:Bar(67905, L["kiss_message"], 15, spellId)
 	self:FlashShake(67905)
 end
 
 function mod:MistressKissRemoved(player, spellId)
-	if player ~= pName then return end
+	if not UnitIsUnit(player, "player") then return end
 	self:SendMessage("BigWigs_StopBar", self, L["kiss_message"])
 end
 
 function mod:MistressKissInterrupted(player, spellId)
-	if player ~= pName then return end
+	if not UnitIsUnit(player, "player") then return end
 	self:LocalMessage(67905, L["kiss_interrupted"], "Personal", spellId)
 end
 

@@ -15,7 +15,6 @@ mod.toggleOptions = {{"vortex", "FLASHSHAKE"}, "shield", "next", {"touch", "WHIS
 local essenceLight = GetSpellInfo(67223)
 local essenceDark = GetSpellInfo(67176)
 local started = nil
-local pName = UnitName("player")
 local currentShieldStrength = nil
 local shieldStrengthMap = {
 	[67261] = 1200000,
@@ -141,7 +140,7 @@ end
 
 function mod:Touch(player, spellId, _, _, spellName)
 	self:TargetMessage("touch", spellName, player, "Personal", spellId, "Info")
-	if pName == player then self:FlashShake("touch") end
+	if UnitIsUnit(player, "player") then self:FlashShake("touch") end
 	self:Whisper("touch", player, spellName)
 end
 

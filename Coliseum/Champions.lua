@@ -69,9 +69,8 @@ end
 
 do
 	local last = nil
-	local pName = UnitName("player")
 	function mod:HellfireOnYou(player, spellId, _, _, spellName)
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:TargetMessage(65816, spellName, player, "Personal", spellId, last and nil or "Alarm")

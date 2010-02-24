@@ -13,7 +13,6 @@ mod.toggleOptions = {"vapor", {"vaporstack", "FLASHSHAKE"}, {62660, "WHISPER", "
 
 local vaporCount = 1
 local surgeCount = 1
-local pName = UnitName("player")
 local lastVapor = nil
 local vapor = GetSpellInfo(63322)
 
@@ -70,7 +69,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Flame", 62661)
 	self:Log("SPELL_CAST_START", "Surge", 62662)
 	self:Log("SPELL_AURA_APPLIED", "SurgeGain", 62662)
-	self:Log("SPELL_CAST_SUCCESS", "Target", 60835, 62660)
+	self:Log("SPELL_CAST_SUCCESS", "Crash", 60835, 62660)
 	self:Log("SPELL_CAST_SUCCESS", "Mark", 63276)
 	self:Death("Win", 33271)
 
@@ -111,7 +110,7 @@ do
 		if not bossId then return end
 		local target = UnitName(bossId .. "target")
 		if target then
-			if target == pName then
+			if UnitIsUnit(target, "player") then
 				mod:FlashShake(62660)
 				mod:Say(62660, L["crash_say"])
 			end
@@ -122,7 +121,7 @@ do
 		handle = nil
 	end
 
-	function mod:Target(player, spellId, _, _, spellName)
+	function mod:Crash(player, spellId, _, _, spellName)
 		id, name = spellId, spellName
 		self:CancelTimer(handle, true)
 		handle = self:ScheduleTimer(scanTarget, 0.1)
@@ -131,7 +130,7 @@ end
 
 function mod:Mark(player, spellId)
 	self:TargetMessage(63276, L["mark_message"], player, "Personal", spellId, "Alert")
-	if pName == player then self:FlashShake(63276) end
+	if UnitIsUnit(player, "player") then self:FlashShake(63276) end
 	self:Whisper(63276, player, L["mark_message"])
 	self:Bar(63276, L["mark_message_other"]:format(player), 10, spellId)
 	self:PrimaryIcon(63276, player)

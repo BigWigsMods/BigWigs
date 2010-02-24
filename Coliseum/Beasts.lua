@@ -17,7 +17,6 @@ mod.optionHeaders = {
 --
 
 local difficulty = 0
-local pName = UnitName("player")
 local burn = mod:NewTargetList()
 local toxin = mod:NewTargetList()
 local snobolledWarned = {}
@@ -192,7 +191,7 @@ end
 do
 	local last = nil
 	function mod:FireBomb(player, spellId)
-		if player == pName then
+			if UnitIsUnit(player, "player") then
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(67472, L["firebomb_message"], "Personal", spellId, last and nil or "Alarm")
@@ -251,7 +250,7 @@ do
 		toxin[#toxin + 1] = player
 		if handle then self:CancelTimer(handle) end
 		handle = self:ScheduleTimer(toxinWarn, 0.2, spellId)
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			dontWarn = true
 			self:TargetMessage(67618, L["toxin_spell"], player, "Personal", spellId, "Info")
 			self:FlashShake(67618)
@@ -275,7 +274,7 @@ do
 		burn[#burn + 1] = player
 		if handle then self:CancelTimer(handle) end
 		handle = self:ScheduleTimer(burnWarn, 0.2, spellId)
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			dontWarn = true
 			self:TargetMessage(66869, L["burn_spell"], player, "Important", spellId, "Info")
 		end
@@ -289,7 +288,7 @@ end
 do
 	local last = nil
 	function mod:Slime(player, spellId)
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(67641, L["slime_message"], "Personal", spellId, last and nil or "Alarm")
@@ -323,11 +322,9 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
 	if unit == icehowl and message:find(L["charge_trigger"]) then
 		local spellName = GetSpellInfo(52311)
 		self:TargetMessage("charge", spellName, player, "Personal", 52311, "Alarm")
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			self:FlashShake("charge")
-			if bit.band(self.db.profile.charge, BigWigs.C.SAY) == BigWigs.C.SAY then
-				SendChatMessage(L["charge_say"], "SAY")
-			end
+			self:Say("charge", L["charge_say"])
 		end
 		self:Bar("charge", spellName, 7.5, 52311)
 		self:PrimaryIcon("charge", player)

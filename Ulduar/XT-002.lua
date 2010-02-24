@@ -16,7 +16,6 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local pName = UnitName("player")
 local phase = nil
 local exposed1 = nil
 local exposed2 = nil
@@ -87,7 +86,7 @@ function mod:Tantrum(_, spellId, _, _, spellName)
 end
 
 function mod:GravityBomb(player, spellId, _, _, spellName)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:OpenProximity(10)
 		self:FlashShake(63024)
 	end
@@ -98,7 +97,7 @@ function mod:GravityBomb(player, spellId, _, _, spellName)
 end
 
 function mod:LightBomb(player, spellId, _, _, spellName)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:OpenProximity(10)
 		self:FlashShake(63018)
 	end
@@ -109,14 +108,14 @@ function mod:LightBomb(player, spellId, _, _, spellName)
 end
 
 function mod:GravityRemoved(player)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
 	end
 	self:SecondaryIcon(63024, false)
 end
 
 function mod:LightRemoved(player)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
 	end
 	self:PrimaryIcon(63018, false)

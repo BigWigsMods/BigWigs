@@ -12,7 +12,6 @@ mod.toggleOptions = {"phase", "sparks", "sparkbuff", "vortex", "breath", {"surge
 -- Locals
 --
 
-local pName = UnitName("player")
 local phase = nil
 
 --------------------------------------------------------------------------------
@@ -97,7 +96,7 @@ function mod:Spark(unit, spellId)
 end
 
 function mod:Static(target, spellId, _, _, spellName)
-	if target == pName then
+	if UnitIsUnit(target, "player") then
 		self:LocalMessage(57429, spellName, "Urgent", spellId)
 	end
 end

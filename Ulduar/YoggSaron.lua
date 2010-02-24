@@ -23,7 +23,6 @@ mod.optionHeaders = {
 
 local guardianCount = 1
 local crusherCount = 1
-local pName = UnitName("player")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -139,7 +138,7 @@ end
 function mod:Fervor(player, spellId, _, _, spellName)
 	self:Bar(63138, L["fervor_message"]:format(player), 15, spellId)
 	self:Whisper(63138, player, spellName)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:FlashShake(63138)
 	end
 end
@@ -152,7 +151,7 @@ do
 	end
 	function mod:SanityDecrease(player, spellId, _, _, _, stack)
 		if warned[player] then return end
-		if player == pName then
+		if UnitIsUnit(player, "player") then
 			if stack > 40 then return end
 			self:Message(63050, L["sanity_message"], "Personal", spellId)
 			self:FlashShake(63050)
@@ -203,7 +202,7 @@ function mod:Squeeze(player, spellId, _, _, spellName)
 end
 
 function mod:Linked(player, spellId)
-	if player == pName then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(63802, L["link_warning"], "Personal", spellId, "Alarm")
 		self:FlashShake(63802)
 	end
