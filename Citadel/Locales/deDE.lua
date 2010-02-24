@@ -9,8 +9,8 @@ if L then
 	L.regular_shock_message = "Schockzone"
 	L.shock_say = "Schockzone auf MIR!"
 
-	L.skullprince = "Totenkopf auf aktivem Prinz"
-	L.skullprince_desc = "Plaziert den Totenkopf auf dem aktiven Blutprinzen (benötigt Assistent oder höher)."
+	L.iconprince = "Symbol auf aktivem Prinz"
+	L.iconprince_desc = "Plaziert das erste Schlachtzugs-Symbol auf dem aktiven Blutprinzen (benötigt Assistent oder höher)."
 
 	L.prison_message = "%dx Schattengefängnis!"
 end
@@ -64,6 +64,8 @@ if L then
 	L.bloat_bar = "~Magenblähung"
 
 	L.spore_bar = "~Gassporen"
+
+	L.ball_message = "Glibber!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
