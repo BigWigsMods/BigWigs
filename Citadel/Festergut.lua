@@ -5,9 +5,10 @@
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions = {{69279, "FLASHSHAKE"}, 69165, 71219, 72551, 71218, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {{69279, "FLASHSHAKE"}, 69165, 71219, 72551, 71218, 72310, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[69279] = "normal",
+	[72310] = "heroic",
 	proximity = "general",
 }
 
@@ -37,6 +38,7 @@ if L then
 
 	L.spore_bar = "~Gas Spores"
 
+	L.ball_message = "Goo ball incoming!"
 end
 L = mod:GetLocale()
 
@@ -53,6 +55,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Bloat", 72219, 72551, 72552, 72553)
 	self:Death("Win", 36626)
 
+	self:AddSyncListener("GooBall")
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 
@@ -127,5 +131,20 @@ do
 			t = time
 			self:Message(71218, spellName, "Important", spellId)
 		end
+	end
+end
+
+do
+	local goo = GetSpellInfo(72310)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spell)
+		if spell == goo then
+			self:Sync("GooBall")
+		end
+	end
+end
+
+function mod:OnSync(sync, rest, nick)
+	if sync == "GooBall" then
+		self:Message(72310, L["ball_message"], "Important", 72295)
 	end
 end

@@ -30,8 +30,7 @@ if L then
 
 	L.spore_bar = "~다음 가스 포자"
 
-	L.sporeicon = "가스 포자 대상 전술"
-	L.sporeicon_desc = "가스 포자 대상에게 해골, 가위 & 네모 전술을 지정합니다 (승급된 사람만 가능)."
+	L.ball_message = "탱탱볼!"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "koKR")
@@ -76,9 +75,6 @@ if L then
 	L.spirit_bar = "다음 새우"
 
 	L.dominate_bar = "~다음 정신 지배"
-
-	L.dmicon = "정신 지배 대상 전술"
-	L.dmicon_desc = "정신 지배 대상에게 해골, 가위 & 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "koKR")
@@ -120,9 +116,6 @@ if L then
 
 	L.gasbomb_bar = "다음 노란 가스탄"
 	L.gasbomb_message = "숨막히는 가스탄!"
-
-	L.plagueicon = "역병 대상 전술"
-	L.plagueicon_desc = "역병 대상에게 네모 전술을 지정합니다 (승급된 사람만 가능)."
 
 	L.add_message = "수액들 추가"
 end
@@ -183,9 +176,6 @@ if L then
 	L.instability_message = "불안정 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
 	L.buffet_message = "신비한 강타 x%d!"
-
-	L.baconicon = "봉화 대상 전술"
-	L.baconicon_desc = "봉화 대상에게 해골, 가위 & 네모 & 달 & 세모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")
@@ -209,9 +199,6 @@ if L then
 	L.blazing = "타오르는 해골"
 	L.blazing_desc = "타오르는 해골의 |cffff0000추정|r되는 재생성 타이머 입니다. 이 타이머는 도적에게만 효용있게 만들어져 있습니다."
 	L.blazing_warning = "곧 타오르는 해골!"
-
-	L.skull = "타오르는 해골에 해골 전술"
-	L.skull_desc = "소환된 타오르는 해골에게 해골 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "koKR")
@@ -268,8 +255,5 @@ if L then
 	L.trap_say = "나에게 암흑의 덫!"
 	L.trap_message = "암흑의 덫"
 	L.trap_bar = "다음 암흑의 덫"
-	
-	L.trapicon = "덫 대상 전술"
-	L.trapicon_desc = "암흑의 덫 대상에게 네모 전술을 지정합니다 (승급된 사람만 가능)."
 end
 
