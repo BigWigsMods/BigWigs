@@ -67,9 +67,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Vortex", 56105)
 	self:Death("Win", 28859)
 
+	self:Yell("Phase2", L["phase2_trigger"])
+	self:Yell("P2End", L["phase2_end_trigger"])
+	self:Yell("Phase3", L["phase3_trigger"])
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER")
+	-- Since we don't have the actual emotes here we can't use :Emote
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -132,24 +136,26 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg:find(L["phase2_trigger"]) then
-		phase = 2
-		self:CancelDelayedMessage(L["vortex_warning"])
-		self:CancelDelayedMessage(L["sparks_warning"])
-		self:SendMessage("BigWigs_StopBar", self, L["sparks"])
-		self:SendMessage("BigWigs_StopBar", self, L["vortex_next"])
-		self:Message("phase", L["phase2_message"], "Attention")
-		self:Bar("breath", L["breath"], 92, 43810)
-		self:DelayedMessage("breath", 87, L["breath_warning"], "Attention")
-	elseif msg:find(L["phase2_end_trigger"]) then
-		self:CancelDelayedMessage(L["breath_warning"])
-		self:SendMessage("BigWigs_StopBar", self, L["breath"])
-		self:Message("phase", L["phase3_warning"], "Attention")
-	elseif msg:find(L["phase3_trigger"]) then
-		phase = 3
-		self:Message("phase", L["phase3_message"], "Attention")
-	end
+function mod:Phase2()
+	phase = 2
+	self:CancelDelayedMessage(L["vortex_warning"])
+	self:CancelDelayedMessage(L["sparks_warning"])
+	self:SendMessage("BigWigs_StopBar", self, L["sparks"])
+	self:SendMessage("BigWigs_StopBar", self, L["vortex_next"])
+	self:Message("phase", L["phase2_message"], "Attention")
+	self:Bar("breath", L["breath"], 92, 43810)
+	self:DelayedMessage("breath", 87, L["breath_warning"], "Attention")
+end
+
+function mod:P2End()
+	self:CancelDelayedMessage(L["breath_warning"])
+	self:SendMessage("BigWigs_StopBar", self, L["breath"])
+	self:Message("phase", L["phase3_warning"], "Attention")
+end
+
+function mod:Phase3()
+	phase = 3
+	self:Message("phase", L["phase3_message"], "Attention")
 end
 
 function mod:UNIT_HEALTH(event, msg)

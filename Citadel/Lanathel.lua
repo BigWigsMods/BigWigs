@@ -53,11 +53,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "AirPhase", 73070)
 	-- 71623. 72264 are 10 man (and so on)
 	self:Log("SPELL_AURA_APPLIED", "Slash", 71623, 71624, 71625, 71626, 72264, 72265, 72266, 72267)
-	self:Death("Win", 37955)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
+	self:Emote("Shadows", L["shadow"])
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Death("Win", 37955)
 end
 
 function mod:OnEngage(diff)
@@ -92,14 +93,12 @@ do
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
-	if msg:find(L["shadow"]) then
-		if UnitIsUnit(player, "player") then
-			self:FlashShake(71265)
-		end
-		self:TargetMessage(71265, L["shadow_message"], player, "Attention", 71265)
-		self:Bar(71265, L["shadow_bar"], 30, 71265)
+function mod:Shadows(msg, _, _, _, player)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(71265)
 	end
+	self:TargetMessage(71265, L["shadow_message"], player, "Attention", 71265)
+	self:Bar(71265, L["shadow_bar"], 30, 71265)
 end
 
 function mod:Feed(player, spellId)

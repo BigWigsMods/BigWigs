@@ -12,6 +12,7 @@ local C = core.C
 local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
 local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
+local emoteMap = setmetatable({}, metaMap)
 local deathMap = setmetatable({}, metaMap)
 
 local boss = {}
@@ -29,6 +30,7 @@ function boss:OnDisable()
 
 	wipe(combatLogMap[self])
 	wipe(yellMap[self])
+	wipe(emoteMap[self])
 	wipe(deathMap[self])
 
 	self:SendMessage("BigWigs_OnBossDisable", self)
@@ -83,6 +85,17 @@ do
 			end
 		end
 	end
+	function boss:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, ...)
+		if emoteMap[self][msg] then
+			self[emoteMap[self][msg]](self, msg, ...)
+		else
+			for yell, func in pairs(emoteMap[self]) do
+				if msg:find(yell) then
+					self[func](self, msg, ...)
+				end
+			end
+		end
+	end
 
 	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId, buffStack)
 		if event == "UNIT_DIED" then
@@ -104,6 +117,14 @@ do
 		end
 	end
 
+	function boss:Emote(func, ...)
+		if not func then error(missingArgument:format(self.moduleName)) end
+		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		for i = 1, select("#", ...) do
+			emoteMap[self][(select(i, ...))] = func
+		end
+		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	end
 	function boss:Yell(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
 		if not self[func] then error(missingFunction:format(self.moduleName, func)) end

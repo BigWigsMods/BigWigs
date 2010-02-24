@@ -64,11 +64,12 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
-	self:Death("Win", 15954)
+
+	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"], L["starttrigger3"])
+	self:Emote("Blink", L["blinktrigger"])
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"], L["starttrigger3"])
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Death("Win", 15954)
 end
 
 function mod:OnEngage()
@@ -99,12 +100,10 @@ function mod:Curse(_, spellId)
 	self:Bar(29213, L["curseexplosion"], 10, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["blinktrigger"] then
-		self:Message("blink", L["blinkwarn"], "Important", 29208)
-		self:DelayedMessage("blink", 34, L["blinkwarn2"], "Attention")
-		self:Bar("blink", L["blinkbar"], 39, 29208)
-	end
+function mod:Blink()
+	self:Message("blink", L["blinkwarn"], "Important", 29208)
+	self:DelayedMessage("blink", 34, L["blinkwarn2"], "Attention")
+	self:Bar("blink", L["blinkbar"], 39, 29208)
 end
 
 function mod:TeleportToBalcony()

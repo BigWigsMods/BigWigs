@@ -87,7 +87,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FreezeCooldown", 66012)
 	self:Log("SPELL_MISSED", "FreezeCooldown", 66012)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Burrow", L["burrow_trigger"])
+	self:Emote("Surface", L["unburrow_trigger"])
 
 	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -175,27 +176,27 @@ function mod:Pursue(player, spellId)
 	self:PrimaryIcon(67574, player, "icon")
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg:find(L["unburrow_trigger"]) then
-		isBurrowed = nil
-		self:Bar("burrow", L["burrow_cooldown"], 76, 65919)
-		self:DelayedMessage("burrow", 61, L["burrow_soon"], "Attention")
+function mod:Burrow()
+	isBurrowed = true
+	unscheduleStrike()
+	self:SendMessage("BigWigs_StopBar", self, L["freeze_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
+	self:CancelTimer(handle_NextWave, true)
 
-		self:Bar("burrow", L["nerubian_burrower"], 5, 66333)
-		handle_NextWave = self:ScheduleTimer(scheduleWave, 5)
+	self:Bar("burrow", L["burrow"], 65, 65919)
+end
 
-		if self:GetOption(66134) and difficulty > 2 then
-			unscheduleStrike()
-			handle_NextStrike = self:ScheduleTimer(scheduleStrike, 5.5)
-		end
-	elseif msg:find(L["burrow_trigger"]) then
-		isBurrowed = true
+function mod:Surface()
+	isBurrowed = nil
+	self:Bar("burrow", L["burrow_cooldown"], 76, 65919)
+	self:DelayedMessage("burrow", 61, L["burrow_soon"], "Attention")
+
+	self:Bar("burrow", L["nerubian_burrower"], 5, 66333)
+	handle_NextWave = self:ScheduleTimer(scheduleWave, 5)
+
+	if self:GetOption(66134) and difficulty > 2 then
 		unscheduleStrike()
-		self:SendMessage("BigWigs_StopBar", self, L["freeze_bar"])
-		self:SendMessage("BigWigs_StopBar", self, L["nerubian_burrower"])
-		self:CancelTimer(handle_NextWave, true)
-
-		self:Bar("burrow", L["burrow"], 65, 65919)
+		handle_NextStrike = self:ScheduleTimer(scheduleStrike, 5.5)
 	end
 end
 

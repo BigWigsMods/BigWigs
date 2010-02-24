@@ -42,7 +42,7 @@ function mod:OnBossEnable()
 
 	self:Death("Win", 33113)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Pursue", L["pursue_trigger"])
 	self:Yell("Engage", L["engage_trigger"])
 end
 
@@ -75,11 +75,9 @@ function mod:Shutdown(unit, spellId, _, _, spellName)
 	self:Bar(62475, spellName, 20, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if message:find(L["pursue_trigger"]) then
-		self:TargetMessage("pursue", L["pursue"], player, "Personal", 62374, "Alarm")
-		if UnitIsUnit(player, "player") then self:FlashShake("pursue") end
-		self:Bar("pursue", L["pursue_other"]:format(player), 30, 62374)
-	end
+function mod:Pursue(_, _, _, _, player)
+	self:TargetMessage("pursue", L["pursue"], player, "Personal", 62374, "Alarm")
+	if UnitIsUnit(player, "player") then self:FlashShake("pursue") end
+	self:Bar("pursue", L["pursue_other"]:format(player), 30, 62374)
 end
 

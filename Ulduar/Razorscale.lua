@@ -63,9 +63,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "Flame", 64704, 64733)
 	self:Death("Win", 33186)
 
+	self:Emote("Phase2", L["phase2_trigger"])
+	self:Emote("Breath", L["breath_trigger"])
+	self:Emote("Harpoon", L["harpoon_trigger"])
+
+	self:Yell("Grounded", L["ground_trigger"])
+	self:Yell("Airphase", L["air_trigger"])
+	self:Yell("Airphase10", L["air_trigger2"])
+
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	totalHarpoons = GetRaidDifficulty() == 1 and 2 or 4
@@ -95,52 +101,56 @@ function mod:UNIT_HEALTH(event, msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["phase2_trigger"] then
-		phase = 2
-		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-		self:Message("phase", L["phase2_message"], "Attention")
-	elseif msg == L["breath_trigger"] then
-		self:Message(64021, L["breath_message"], "Attention", 64021)
-		if phase == 2 then
-			self:Bar(64021, L["breath_bar"], 21, 64021)
-		end
-	elseif msg == L["harpoon_trigger"] then
-		count = count + 1
-		self:Message("harpoon", L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
-		if count < totalHarpoons then
-			self:Bar("harpoon", L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
-		end
+function mod:Phase2()
+	phase = 2
+	self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
+	self:Message("phase", L["phase2_message"], "Attention")
+end
+
+function mod:Breath()
+	self:Message(64021, L["breath_message"], "Attention", 64021)
+	if phase == 2 then
+		self:Bar(64021, L["breath_bar"], 21, 64021)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg)
-	if msg == L["ground_trigger"] then
-		self:Message("phase", L["ground_message"], "Attention", nil, "Long")
-		self:Bar("phase", L["stun_bar"], 38, 20170) --20170, looks like a stun :p
-		count = 0
-	elseif msg == L["air_trigger"] then
-		p2 = nil
-		count = 0
-		self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
-		if not started then
-			self:Engage()
-			self:Berserk(900)
-			started = true
-			phase = 1
-		else
-			self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-			self:Message("phase", L["air_message"], "Attention", nil, "Info")
-		end
-	-- for 10man, has a different yell, and different timing <.<
-	-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
-	-- just a bar for the next harpoon
-	elseif msg == L["air_trigger2"] then
-		p2 = nil
-		count = 0
-		self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
-		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
-		--self:Message(L["air_message"], "Attention", nil, "Info")
+function mod:Harpoon()
+	count = count + 1
+	self:Message("harpoon", L["harpoon_message"]:format(count), "Attention", "Interface\\Icons\\INV_Spear_06")
+	if count < totalHarpoons then
+		self:Bar("harpoon", L["harpoon_nextbar"]:format(count+1), 18, "INV_Spear_06")
 	end
+end
+
+function mod:Grounded()
+	self:Message("phase", L["ground_message"], "Attention", nil, "Long")
+	self:Bar("phase", L["stun_bar"], 38, 20170) --20170, looks like a stun :p
+	count = 0
+end
+
+function mod:Airphase()
+	p2 = nil
+	count = 0
+	self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 55, "INV_Spear_06")
+	if not started then
+		self:Engage()
+		self:Berserk(900)
+		started = true
+		phase = 1
+	else
+		self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
+		self:Message("phase", L["air_message"], "Attention", nil, "Info")
+	end
+end
+
+-- for 10man, has a different yell, and different timing <.<
+-- it happens alot later then the 25m yell, so a "Takeoff" warning isn't really appropriate anymore.
+-- just a bar for the next harpoon
+function mod:Airphase10()
+	p2 = nil
+	count = 0
+	self:Bar("harpoon", L["harpoon_nextbar"]:format(1), 22, "INV_Spear_06")
+	self:SendMessage("BigWigs_StopBar", self, L["stun_bar"])
+	--self:Message(L["air_message"], "Attention", nil, "Info")
 end
 

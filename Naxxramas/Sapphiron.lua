@@ -12,7 +12,6 @@ mod.toggleOptions = {28542, 28524, {28522, "ICON", "SAY", "PING"}, "berserk", "b
 --
 
 local breath = 1
-local iceboltName = GetSpellInfo(28522)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,12 +45,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
 	self:Log("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
 	self:Log("SPELL_AURA_APPLIED", "Icebolt", 28522)
-	self:Death("Win", 15989)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Airphase", L["airphase_trigger"])
+	self:Emote("Deepbreath", L["deepbreath_trigger"])
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
+	self:Death("Win", 15989)
 end
 
 function mod:OnEngage()
@@ -63,18 +64,18 @@ end
 -- Event Handlers
 --
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["airphase_trigger"] then
-		self:CancelDelayedMessage(L["lifedrain_warn1"])
-		self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
-		--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-		self:Message(28524, L["deepbreath_incoming_message"], "Attention")
-		self:Bar(28524, L["deepbreath_incoming_bar"], 14, 43810)
-		self:DelayedMessage(28524, 9, L["deepbreath_incoming_soon_message"], "Attention")
-	elseif msg == L["deepbreath_trigger"] then
-		self:Message(28524, L["deepbreath_warning"], "Attention")
-		self:Bar(28524, L["deepbreath_bar"], 10, 29318)
-	end
+function mod:Airphase()
+	self:CancelDelayedMessage(L["lifedrain_warn1"])
+	self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
+	--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+	self:Message(28524, L["deepbreath_incoming_message"], "Attention")
+	self:Bar(28524, L["deepbreath_incoming_bar"], 14, 43810)
+	self:DelayedMessage(28524, 9, L["deepbreath_incoming_soon_message"], "Attention")
+end
+
+function mod:Deepbreath()
+	self:Message(28524, L["deepbreath_warning"], "Attention")
+	self:Bar(28524, L["deepbreath_bar"], 10, 29318)
 end
 
 function mod:Breath(_, spellId, _, _, spellName)
@@ -92,8 +93,8 @@ end
 
 function mod:Icebolt(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:Say(iceboltName, L["icebolt_say"])
-		if bit.band(self.db.profile[iceboltName], BigWigs.C.PING) == BigWigs.C.PING then
+		self:Say(28522, L["icebolt_say"])
+		if bit.band(self.db.profile[(GetSpellInfo(28522))], BigWigs.C.PING) == BigWigs.C.PING then
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])
 		end

@@ -80,7 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fury", 62589, 63571)
 	self:Log("SPELL_AURA_REMOVED", "FuryRemove", 62589, 63571)
 	self:Log("SPELL_AURA_REMOVED", "AttunedRemove", 62519)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Tree", L["tree_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger1"], L["engage_trigger2"])
 	self:Yell("Yells", L["end_trigger"], L["conservator_trigger"], L["detonate_trigger"], L["elementals_trigger"])
@@ -222,10 +222,8 @@ do
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["tree_trigger"] then
-		self:Message("tree", L["tree_message"], "Urgent", 5420, "Alarm")
-	end
+function mod:Tree()
+	self:Message("tree", L["tree_message"], "Urgent", 5420, "Alarm")
 end
 
 function mod:Yells(msg)

@@ -103,7 +103,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SanityIncrease", 63050)
 	self:Log("SPELL_SUMMON", "Guardian", 62979)
 	self:Death("Win", 33288)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Portal", L["portal_trigger"])
+	self:Emote("Weakened", L["weakened_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 	self:Yell("Yells", L["phase2_trigger"], L["phase3_trigger"])
@@ -248,13 +249,13 @@ do
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, unit)
-	if msg == L["portal_trigger"] then
-		self:Message("portal", L["portal_message"], "Positive", 35717)
-		self:Bar("portal", L["portal_bar"], 90, 35717)
-	elseif msg == L["weakened_trigger"] then
-		self:Message("weakened", L["weakened_message"]:format(unit), "Positive", 50661)
-	end
+function mod:Portal()
+	self:Message("portal", L["portal_message"], "Positive", 35717)
+	self:Bar("portal", L["portal_bar"], 90, 35717)
+end
+
+function mod:Weakened(_, unit)
+	self:Message("weakened", L["weakened_message"]:format(unit), "Positive", 50661)
 end
 
 function mod:Yells(msg)

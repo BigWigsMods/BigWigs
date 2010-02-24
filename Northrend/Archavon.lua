@@ -35,6 +35,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Cloud", 58965, 61672)
 	self:Death("Win", 31125)
 
+	-- Need the actual emote for the charge to use :Emote
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

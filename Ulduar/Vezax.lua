@@ -73,8 +73,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Mark", 63276)
 	self:Death("Win", 33271)
 
+	self:Emote("Vapor", L["vapor_trigger"])
+	self:Emote("Animus", L["animus_trigger"])
+
 	self:RegisterEvent("UNIT_AURA")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 end
@@ -90,6 +92,18 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Vapor()
+	self:Message("vapor", L["vapor_message"]:format(vaporCount), "Positive", 63323)
+	vaporCount = vaporCount + 1
+	if vaporCount < 7 then
+		self:Bar("vapor", L["vapor_bar"]:format(vaporCount), 30, 63323)
+	end
+end
+
+function mod:Animus()
+	self:Message("animus", L["animus_message"], "Important", 63319)
+end
 
 function mod:UNIT_AURA(event, unit)
 	if unit and unit ~= "player" then return end
@@ -149,17 +163,5 @@ end
 
 function mod:SurgeGain(_, spellId, _, _, spellName)
 	self:Bar(62662, spellName, 10, spellId)
-end
-
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg)
-	if msg == L["vapor_trigger"] then
-		self:Message("vapor", L["vapor_message"]:format(vaporCount), "Positive", 63323)
-		vaporCount = vaporCount + 1
-		if vaporCount < 7 then
-			self:Bar("vapor", L["vapor_bar"]:format(vaporCount), 30, 63323)
-		end
-	elseif msg == L["animus_trigger"] then
-		self:Message("animus", L["animus_message"], "Important", 63319)
-	end
 end
 

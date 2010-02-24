@@ -68,7 +68,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Breath", 56908, 58956)
 	self:Death("Win", 28860)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Tsunami", L["tsunami_trigger"])
+	self:Emote("Tenebron", L["twilight_trigger_tenebron"])
+	self:Emote("Shadron", L["twilight_trigger_shadron"])
+	self:Emote("Vesperon", L["twilight_trigger_vesperon"])
+
 	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -109,19 +113,26 @@ function mod:Breath(_, spellId)
 	self:Bar(56908, L["breath_cooldown"], 12, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, mob)
-	if msg == L["tsunami_trigger"] then
-		self:Message("tsunami", L["tsunami_message"], "Important", 57491, "Alert")
-		self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
-		self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
-	elseif mob == tenebron and msg == L["twilight_trigger_tenebron"] then
-		self:Bar("twilight", L["twilight_message_tenebron"], 20, 23851)
-		self:Message("twilight", L["twilight_message_tenebron"], "Attention", 23851)
-	elseif mob == shadron and msg == L["twilight_trigger_shadron"] then
-		self:Message("twilight", L["twilight_message"]:format(mob), "Urgent", 59570)
-	elseif mob == vesperon and msg == L["twilight_trigger_vesperon"] then
-		self:Message("twilight", L["twilight_message"]:format(mob), "Personal", 59569, "Alarm")
-		self:FlashShake("twilight")
-	end
+function mod:Tsunami()
+	self:Message("tsunami", L["tsunami_message"], "Important", 57491, "Alert")
+	self:Bar("tsunami", L["tsunami_cooldown"], 30, 57491)
+	self:DelayedMessage("tsunami", 25, L["tsunami_warning"], "Attention")
+end
+
+function mod:Tenebron(msg, mob)
+	if mob ~= tenebron then return end
+	self:Bar("twilight", L["twilight_message_tenebron"], 20, 23851)
+	self:Message("twilight", L["twilight_message_tenebron"], "Attention", 23851)
+end
+
+function mod:Shadron(msg, mob)
+	if mob ~= shadron then return end
+	self:Message("twilight", L["twilight_message"]:format(mob), "Urgent", 59570)
+end
+
+function mod:Vesperon(msg, mob)
+	if mob ~= vesperon then return end
+	self:Message("twilight", L["twilight_message"]:format(mob), "Personal", 59569, "Alarm")
+	self:FlashShake("twilight")
 end
 

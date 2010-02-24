@@ -52,7 +52,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EmpoweredShock", 72039, 73037, 73038, 73039)
 	self:Log("SPELL_SUMMON", "RegularShock", 72037)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("EmpoweredFlame", L["empowered_flames"])
+
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "Reboot")
 
@@ -131,13 +132,11 @@ function mod:RegularShock()
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, player)
-	if msg:find(L["empowered_flames"]) then
-		if UnitIsUnit(player, "player") then
-			self:FlashShake(72040)
-		end
-		self:TargetMessage(72040, L["empowered_flames"], player, "Urgent", 72040, "Long")
+function mod:EmpoweredFlame(msg, _, _, _, player)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(72040)
 	end
+	self:TargetMessage(72040, L["empowered_flames"], player, "Urgent", 72040, "Long")
 end
 
 do

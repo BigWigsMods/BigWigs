@@ -112,8 +112,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Rage", 66759, 67658, 67657, 67659)
 	self:Log("SPELL_AURA_APPLIED", "Daze", 66758)
 	self:Log("SPELL_AURA_APPLIED", "Butt", 67654, 67655, 66770)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:Yell("Icehowl", L["icehowl_trigger"])
+	self:Emote("Charge", L["charge_trigger"])
 
 	-- Common
 	self:Yell("Engage", L["engage_trigger"])
@@ -318,16 +318,15 @@ function mod:Butt(player, spellId, _, _, spellName)
 	self:Bar(67654,L["butt_bar"], 12, spellId)
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(event, message, unit, _, _, player)
-	if unit == icehowl and message:find(L["charge_trigger"]) then
-		local spellName = GetSpellInfo(52311)
-		self:TargetMessage("charge", spellName, player, "Personal", 52311, "Alarm")
-		if UnitIsUnit(player, "player") then
-			self:FlashShake("charge")
-			self:Say("charge", L["charge_say"])
-		end
-		self:Bar("charge", spellName, 7.5, 52311)
-		self:PrimaryIcon("charge", player)
+function mod:Charge(msg, unit, _, _, player)
+	if unit ~= icehowl then return end
+	local spellName = GetSpellInfo(52311)
+	self:TargetMessage("charge", spellName, player, "Personal", 52311, "Alarm")
+	if UnitIsUnit(player, "player") then
+		self:FlashShake("charge")
+		self:Say("charge", L["charge_say"])
 	end
+	self:Bar("charge", spellName, 7.5, 52311)
+	self:PrimaryIcon("charge", player)
 end
 
