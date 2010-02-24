@@ -10,7 +10,7 @@ if L then
 	L.shock_say = "Vortex de choc sur moi !"
 
 	L.skullprince = "Crâne sur le prince surpuissant"
-	L.skullprince_desc = "Place une icône de raid en forme de crâne sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
+	L.skullprince_desc = "Place l'icône de raid principale sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
 
 	L.prison_message = "Prison de l'ombre x%d !"
 end
@@ -97,8 +97,8 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "frFR")
 if L then
-	L.warmup_trigger = "Voici donc qu'arrive la fameuse" -- à compléter
-	L.engage_trigger = "Je vais te laisser en vie" -- à compléter
+	L.warmup_trigger = "Voici donc qu'arrive la fameuse justice de la Lumière ?"
+	L.engage_trigger = "Je vais te laisser en vie, que tu sois témoin de la fin, Fordring."
 
 	L.horror_bar = "~Prochaine Horreur"
 	L.horror_message = "Horreur titubante"
