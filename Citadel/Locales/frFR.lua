@@ -36,9 +36,6 @@ if L then
 	L.spirit_bar = "Prochain Esprit"
 
 	L.dominate_bar = "~Prochaine Emprise"
-
-	L.dmicon = "Icône sur les cibles de Emprise"
-	L.dmicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par Emprise (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Festergut", "frFR")
@@ -55,9 +52,6 @@ if L then
 	L.bloat_bar = "~Ballonnement gastrique"
 
 	L.spore_bar = "~Spores gazeuses"
-
-	L.sporeicon = "Icônes sur les cibles des Spores gazeuses"
-	L.sporeicon_desc = "Place des icônes de raid en forme de crâne, croix et carré sur les joueurs affectés par une Spore gazeuse (nécessite d'être assistant ou mieux)."
 
 	L.ball_message = "Arrivée d'une Gelée malléable !"
 end
@@ -135,6 +129,7 @@ if L then
 	L.last_phase_bar = "Dernière phase"
 
 	L.trap_say = "Piège d'ombre sur moi !"
+	L.trap_message = "Piège d'ombre"
 	L.trap_bar = "Prochain Piège"
 end
 
@@ -168,6 +163,7 @@ if L then
 	L.ball_say = "Gelée malléable moi !"
 
 	L.experiment_message = "Arrivée d'une nouvelle expérience !"
+	L.experiment_heroic_message = "Arrivée de nouvelles expériences !"
 	L.experiment_bar = "Prochaine expérience"
 	L.blight_message = "Nuage de gaz"
 	L.violation_message = "Limon volatil"
@@ -177,11 +173,6 @@ if L then
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"
 	L.gasbomb_message = "Bombes de gaz !"
-
-	L.plagueicon = "Icône sur les cibles de Peste déliée"
-	L.plagueicon_desc = "Place une icône de raid en forme de carré sur les joueurs affectés par une Peste déliée (nécessite d'être assistant ou mieux)."
-
-	L.add_message = "add ooze"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "frFR")
@@ -240,9 +231,6 @@ if L then
 	L.unchained_message = "Magie débridée x%d !"
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 	L.buffet_message = "Rafale mystique x%d !"
-
-	L.baconicon = "Icônes sur les cibles des Guides de givre"
-	L.baconicon_desc = "Place des icônes de raid en forme de crâne, croix, carré, lune et triangle sur les joueurs affectés par un Guide de givre (nécessite d'être assistant ou mieux)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
@@ -266,8 +254,4 @@ if L then
 	L.blazing = "Squelette flamboyant"
 	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le donc comme un repère."
 	L.blazing_warning = "Squelette flamboyant imminent !"
-
-	L.skull = "Crâne sur les Squelettes flamboyants"
-	L.skull_desc = "Place une icône de raid en forme de crâne sur les Squelettes flamboyants qui apparaissent (nécessite d'être assistant ou mieux)."
 end
-
