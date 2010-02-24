@@ -109,11 +109,9 @@ end
 
 do
 	local scheduled = nil
-	local num = 8
 	local function dmWarn(spellName)
 		mod:TargetMessage(71289, spellName, dmTargets, "Important", 71289, "Alert")
 		scheduled = nil
-		num = 8
 	end
 	function mod:DominateMind(player, spellId, _, _, spellName)
 		dmTargets[#dmTargets + 1] = player

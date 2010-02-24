@@ -64,9 +64,6 @@ if L then
 	L.bloat_bar = "~Magenblähung"
 
 	L.spore_bar = "~Gassporen"
-
-	L.sporeicon = "Symbole auf Spielern mit Sporen"
-	L.sporeicon_desc = "Plaziert den Totenkopf, das Kreuz und das Quadrat auf Spielern mit Sporen (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
@@ -111,9 +108,6 @@ if L then
 	L.spirit_bar = "Nächsten Geister"
 
 	L.dominate_bar = "~Gedankenkontrolle"
-
-	L.dmicon = "Symbole auf gedankenkontrollierten Zielen"
-	L.dmicon_desc = "Setzt den Totenkopf, das Kreuz und das Quadrat auf gedankenkontrollierte Spieler (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "deDE")
@@ -141,6 +135,7 @@ if L then
 	L.ball_say = "Glibber auf MIR!"
 
 	L.experiment_message = "Schlamm kommt!"
+	L.experiment_heroic_message = "Schlammer kommen!"
 	L.experiment_bar = "Nächster Schlamm"
 	L.blight_message = "Roter Schlamm"
 	L.violation_message = "Grüner Schlamm"
@@ -150,11 +145,6 @@ if L then
 
 	L.gasbomb_bar = "Weitere Gasbomben"
 	L.gasbomb_message = "Gasbomben!"
-
-	L.plagueicon = "Symbole auf Seuchen-Zielen"
-	L.plagueicon_desc = "Setzt das Quadrat auf Spieler mit Entfesselte Seuche (benötigt Assistent oder höher)."
-
-	L.add_message = "Weiterer Schlamm!"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
@@ -201,9 +191,6 @@ if L then
 	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
-
-	L.baconicon = "Symbole auf Frostleuchtfeuer-Zielen"
-	L.baconicon_desc = "Setzt den Totenkopf, das Kreuz, das Quadrat, den Mond und das Dreieck auf Spieler mit Frostleuchtfeuer (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "deDE")
@@ -242,9 +229,6 @@ if L then
 	L.trap_say = "Falle auf MIR!"
 	L.trap_message = "Falle"
 	L.trap_bar = "Nächste Falle"
-
-	L.trapicon = "Quadrat auf Fallen-Zielen"
-	L.trapicon_desc = "Plaziert das Quadrat auf Spielern mit Schattenfalle (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
@@ -268,8 +252,5 @@ if L then
 	L.blazing = "Loderndes Skelett"
 	L.blazing_desc = "|cffff0000Geschätzter|r Timer für die Lodernden Skelette. Dieser Timer ist wahrscheinlich ungenau, nur als Schätzung verwenden."
 	L.blazing_warning = "Loderndes Skelett bald!"
-
-	L.skull = "Totenkopf auf Loderndem Skelett"
-	L.skull_desc = "Plaziert den Totenkopf auf Lodernden Skeletten (benötigt Assistent oder höher)."
 end
 
