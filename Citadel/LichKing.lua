@@ -78,6 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "NecroticPlague", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
 	self:Log("SPELL_DISPEL", "PlagueScan", 528, 552, 4987, 51886) --cure, abolish, cleanse, cleanse spirit
 	self:Log("SPELL_SUMMON", "Horror", 70372)
+	self:Log("SPELL_CAST_START", "Enrage", 72143, 72146, 72147, 72148)
 
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
@@ -95,7 +96,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "RagingSpirit", 69200)
 	self:Log("SPELL_CAST_START", "Quake", 72262)
 
-	self:Log("SPELL_CAST_START", "Enrage", 72143, 72146, 72147, 72148)
 	self:Log("SPELL_CAST_START", "FuryofFrostmourne", 72350)
 
 	-- Hard Mode
@@ -224,7 +224,7 @@ end
 
 function mod:HarvestSoul(player, spellId, _, _, spellName)
 	if difficulty == 2 or difficulty == 4 then
-		self:Bar(74296, L["cave_phase"], 50, spellId)
+		self:Bar(68980, L["cave_phase"], 50, spellId)
 	end
 	self:Bar(68980, L["harvestsoul_bar"], 75, spellId)
 	self:TargetMessage(68980, spellName, player, "Attention", spellId)

@@ -231,6 +231,8 @@ if L then
 	L.trap_say = "Falle auf MIR!"
 	L.trap_message = "Falle"
 	L.trap_bar = "Nächste Falle"
+
+	L.cave_phase = "Höhlenphase"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
