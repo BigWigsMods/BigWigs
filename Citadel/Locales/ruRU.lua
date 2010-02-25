@@ -21,8 +21,8 @@ if L then
 	L.regular_shock_message = "Вихрь на "
 	L.shock_say = "Вихрь на мне!"
 
-	L.skullprince = "Череп на активном принце"
-	L.skullprince_desc = "Пометить черепом активного принца с полосой здоровья."
+	L.iconprince = "Помечать активного принца"
+	L.iconprince_desc = "Пометить черепом активного принца с полосой здоровья."
 	
 	L.prison_message = "Темница Тьмы x%d!"
 end
@@ -48,7 +48,7 @@ end
 L = BigWigs:NewBossLocale("Deathbringer Saurfang", "ruRU")
 if L then
 	L.adds = "Кровавые чудовища"
-	L.adds_desc = "Сообщать о призыве кровавых чудовищ"
+	L.adds_desc = "Сообщать о призыве кровавых чудовищ."
 	L.adds_warning = "Кровавые чудовища через 5 сек!"
 	L.adds_message = "Призваны кровавые чудовища"
 	L.adds_bar = "~Кровавые чудовища"
@@ -77,9 +77,6 @@ if L then
 
 	L.spore_bar = "~Следующие Газообразные споры"
 
-	L.sporeicon = "Иконки на целях Спор"
-	L.sporeicon_desc = "Пометить черепом, крестом и квадратом игроков с Газообразными спорами."
-	
 	L.ball_message = "Скоро комок гадости!"
 end
 
@@ -125,9 +122,6 @@ if L then
 	L.spirit_bar = "~Призыв духа"
 
 	L.dominate_bar = "~Господство над разумом"
-
-	L.dmicon = "Помечать Господство над разумом"
-	L.dmicon_desc = "Помечает Черепом, Крестом и Квадратом игроков которые находятся под воздействием заклинания: Господство над разумом (доступно Лидеру группы/рейда или наводчику)."
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "ruRU")
@@ -143,6 +137,7 @@ if L then
 	L.ball_say = "Бросок вязкой гадости на МНЕ!"
 
 	L.experiment_message = "Скоро появится слизнюк!"
+	L.experiment_heroic_message = "Скоро появятся слизнюки!"
 	L.experiment_bar = "Следующий слизнюк"
 	L.blight_message = "Газовое облако"
 	L.violation_message = "Зеленый слизнюк"
@@ -152,11 +147,6 @@ if L then
 
 	L.gasbomb_bar = "Следующие желтые газовые бомбы"
 	L.gasbomb_message = "Желтые бомбы!"
-	
-	L.plagueicon = "Помечать пораженных чумой"
-	L.plagueicon_desc = "Помечает Квадратом игроков пораженных чумой (доступно Лидеру группы/рейда или наводчику)."
-
-	L.add_message = "Слизнюк"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "ruRU")
@@ -199,9 +189,6 @@ if L then
 	L.blazing = "Исторгающий пламя скелет"
 	L.blazing_desc = "|cffff0000Предполагаемый|r таймер появления Исторгающего пламя скелета. Этот таймер может быть неточным, используйте его только в качестве приблизительного ориентира."
 	L.blazing_warning = "Скоро Исторгающий пламя скелет!"
-
-	L.skull = "Помечать Исторгающего пламя скелета"
-	L.skull_desc = "Помечает Черепом появляющегося Исторгающего пламя скелета (доступно Лидеру группы/рейда или наводчику)."
 end
 
 L = BigWigs:NewBossLocale("Sindragosa", "ruRU")
@@ -229,9 +216,6 @@ if L then
 	L.instability_message = "Неустойчивость x%d!"
 	L.chilled_message = "Обжигающий холод x%d!"
 	L.buffet_message = "Таинственная энергия x%d!"
-	
-	L.baconicon = "Помечает цели с меткой"
-	L.baconicon_desc = "Помечает Черепом, Крестом, Кругом, Квадратом, Луной и Треугольником игроков с меткой (доступно Лидеру группы/рейда или наводчику)."
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "ruRU")
@@ -268,6 +252,9 @@ if L then
 	L.last_phase_bar = "Последняя фаза"
 	
 	L.trap_say = "На МНЕ - Shadow Trap!"
-	L.trap_bar = "Следующая ловушка"
+	L.trap_message = "Shadow Trap"
+	L.trap_bar = "~Следующая ловушка"
+	
+	L.cave_phase = "Фаза пещеры"
 end
 
