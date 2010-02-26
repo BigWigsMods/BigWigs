@@ -170,10 +170,16 @@ function mod:TendrilsRemoved()
 	self:PrimaryIcon(61887, false)
 end
 
-function mod:Tendrils(_, spellId, _, _, spellName)
-	self:Message(61887, spellName, "Attention", spellId)
-	self:Bar(61887, spellName, 25, spellId)
-	tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
+do
+	local last = nil
+	function mod:Tendrils(_, spellId, _, _, spellName)
+		local t = GetTime()
+		if not last or (t > last + 2) then
+			self:Message(61887, spellName, "Attention", spellId)
+			self:Bar(61887, spellName, 25, spellId)
+			tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
+		end
+	end
 end
 
 function mod:Deaths(_, _, unitName)
