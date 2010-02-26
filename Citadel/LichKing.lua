@@ -227,12 +227,13 @@ function mod:HarvestSoul(player, spellId, _, _, spellName)
 		self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
 		self:Bar(68980, L["cave_phase"], 50, spellId)
 		self:Bar(68980, L["harvestsoul_bar"], 105, spellId)
-	end
-	self:Bar(68980, L["harvestsoul_bar"], 75, spellId)
-	self:TargetMessage(68980, spellName, player, "Attention", spellId)
-	if UnitIsUnit(player, "player") then self:FlashShake(68980) end
-	self:Whisper(68980, player, spellName)
-	self:SecondaryIcon(68980, player)
+	else
+		self:Bar(68980, L["harvestsoul_bar"], 75, spellId)
+		if UnitIsUnit(player, "player") then self:FlashShake(68980) end
+		self:TargetMessage(68980, spellName, player, "Attention", spellId)
+		self:Whisper(68980, player, spellName)
+		self:SecondaryIcon(68980, player)
+	end	
 end
 
 function mod:HSRemove(player, spellId)
