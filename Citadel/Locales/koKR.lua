@@ -8,9 +8,9 @@ if L then
 	L.empowered_shock_message = "충격의 소용돌이 시전!"
 	L.regular_shock_message = "충격 지역"
 	L.shock_say = "나에게 충격!"
-
-	L.skullprince = "활성화된 왕자 해골"
-	L.skullprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다."
+	
+	L.iconprince = "활성화된 왕자 해골"
+	L.iconprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다 (승급된 사람만 가능)."
 
 	L.prison_message = "어둠의 감옥 x%d!"
 end
@@ -255,5 +255,6 @@ if L then
 	L.trap_say = "나에게 암흑의 덫!"
 	L.trap_message = "암흑의 덫"
 	L.trap_bar = "다음 암흑의 덫"
+	
+	L.cave_phase = "동굴 단계"
 end
-
