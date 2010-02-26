@@ -177,7 +177,9 @@ do
 		if not last or (t > last + 2) then
 			self:Message(61887, spellName, "Attention", spellId)
 			self:Bar(61887, spellName, 25, spellId)
-			tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
+			if not tendrilscanner then
+				tendrilscanner = self:ScheduleRepeatingTimer(targetCheck, 0.2)
+			end
 		end
 	end
 end

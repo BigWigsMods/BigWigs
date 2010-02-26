@@ -191,7 +191,7 @@ end
 do
 	local last = nil
 	function mod:FireBomb(player, spellId)
-			if UnitIsUnit(player, "player") then
+		if UnitIsUnit(player, "player") then
 			local t = GetTime()
 			if not last or (t > last + 4) then
 				self:LocalMessage(67472, L["firebomb_message"], "Personal", spellId, last and nil or "Alarm")
