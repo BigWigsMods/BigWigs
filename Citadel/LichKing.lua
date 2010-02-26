@@ -5,14 +5,14 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73539, "SAY", "WHISPER", "FLASHSHAKE", "ICON"}, "berserk", "bosskill"}
+mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "WHISPER", "FLASHSHAKE", "ICON"}, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72143] = CL.phase:format(1),
 	[72762] = CL.phase:format(2),
 	[68980] = CL.phase:format(3),
 	[74270] = "Transition",
-	[73539] = "heroic",
+	[73529] = "heroic",
 	berserk = "general",
 }
 
@@ -301,19 +301,19 @@ do
 		local target = UnitName(bossId .. "target")
 		if target then
 			if UnitIsUnit(target, "player") then
-				mod:FlashShake(73539)
-				mod:Say(73539, L["trap_say"])
+				mod:FlashShake(73529)
+				mod:Say(73529, L["trap_say"])
 			end
-			mod:TargetMessage(73539, L["trap_message"], target, "Attention", 73539)
-			mod:Whisper(73539, target, spellName)
-			mod:PrimaryIcon(73539, target)
+			mod:TargetMessage(73529, L["trap_message"], target, "Attention", 73539)
+			mod:Whisper(73529, target, spellName)
+			mod:PrimaryIcon(73529, target)
 		end
 	end
 	function mod:ShadowTrap(_, spellId, _, _, spellName)
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(trapTarget, 0.01, spellName)
-			self:Bar(73539, L["trap_bar"], 16, spellId)
+			self:Bar(73529, L["trap_bar"], 16, spellId)
 		end
 	end
 end
