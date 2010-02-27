@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672, 72832, 72833)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966, 71967, 71968)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464, 72672)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 74280, 72615, 74281) --10/25
 	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
