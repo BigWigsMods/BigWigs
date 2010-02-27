@@ -214,7 +214,7 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(scanTarget, 0.2, spellName)
-			if difficulty < 3 then
+			if difficulty > 2 then
 				self:Bar(72295, L["ball_bar"], 20, spellId)
 			else
 				self:Bar(72295, L["ball_bar"], 25, spellId)
