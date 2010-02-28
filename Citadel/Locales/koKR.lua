@@ -107,6 +107,7 @@ if L then
 	L.ball_say = "곧 통통 끈적이!"
 
 	L.experiment_message = "곧 수액 추가!"
+	L.experiment_heroic_message = "수액들 추가!"
 	L.experiment_bar = "다음 수액 추가"
 	L.blight_message = "붉은 수액"
 	L.violation_message = "녹색 수액"
@@ -116,8 +117,6 @@ if L then
 
 	L.gasbomb_bar = "다음 노란 가스탄"
 	L.gasbomb_message = "숨막히는 가스탄!"
-
-	L.add_message = "수액들 추가"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "koKR")
