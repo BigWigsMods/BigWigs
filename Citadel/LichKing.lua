@@ -21,6 +21,7 @@ mod.optionHeaders = {
 --
 
 local phase = 0
+local difficulty = 0
 
 --------------------------------------------------------------------------------
 -- Localization
