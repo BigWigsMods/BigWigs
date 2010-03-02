@@ -119,7 +119,7 @@ function mod:OnEngage(diff)
 	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	self:Bar(70372, L["horror_bar"], 22, 70372)
 	phase = 1
-	if difficulty > 2 then
+	if diff > 2 then
 		self:Bar(73539, L["trap_bar"], 16, 73539)
 	end
 end

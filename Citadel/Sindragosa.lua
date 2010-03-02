@@ -130,15 +130,15 @@ end
 function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
-	self:Bar(71047, L["grip_bar"], 85, 70117)
-	self:Bar(69762, L["unchained_bar"], 60, 69762)
+	self:Bar(71047, L["grip_bar"], 77, 70117)
+	self:Bar(69762, L["unchained_bar"], 57, 69762)
 end
 
 function mod:Phase2()
 	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"])
 	self:Message("phase2", L["phase2_message"], "Positive", nil, "Long")
-	self:Bar(71047, L["grip_bar"], 30, 70117)
+	self:Bar(71047, L["grip_bar"], 40, 70117)
 end
 
 function mod:Buffet(player, spellId, _, _, _, stack)
