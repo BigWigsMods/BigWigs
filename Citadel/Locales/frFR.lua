@@ -97,7 +97,7 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "frFR")
 if L then
-	L.warmup_trigger = "Voici donc qu'arrive la fameuse justice de la Lumière ?"
+	L.warmup_trigger = "Voici donc qu’arrive la fameuse justice de la Lumière ?"
 	L.engage_trigger = "Je vais te laisser en vie, que tu sois témoin de la fin, Fordring."
 
 	L.horror_bar = "~Prochaine Horreur"
@@ -107,8 +107,8 @@ if L then
 
 	L.ragingspirit_bar = "Esprit déchaîné"
 
-	L.valkyr_bar = "Prochaine val'kyrs"
-	L.valkyr_message = "Val'kyr"
+	L.valkyr_bar = "Prochaine(s) val'kyr(s)"
+	L.valkyr_message = "Val'kyr(s)"
 
 	L.vilespirits_bar = "~Esprits vils"
 
@@ -131,6 +131,8 @@ if L then
 	L.trap_say = "Piège d'ombre sur moi !"
 	L.trap_message = "Piège d'ombre"
 	L.trap_bar = "Prochain Piège"
+
+	L.cave_phase = "Cave Phase"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
