@@ -257,3 +257,4 @@ if L then
 	L.blazing_desc = "Délai de réapparition |cffff0000estimé|r des Squelettes flamboyants. Ce délai est sans doute imprécis, utilisez-le donc comme un repère."
 	L.blazing_warning = "Squelette flamboyant imminent !"
 end
+

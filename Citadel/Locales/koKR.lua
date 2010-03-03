@@ -8,7 +8,7 @@ if L then
 	L.empowered_shock_message = "충격의 소용돌이 시전!"
 	L.regular_shock_message = "충격 지역"
 	L.shock_say = "나에게 충격!"
-	
+
 	L.iconprince = "활성화된 왕자 해골"
 	L.iconprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다 (승급된 사람만 가능)."
 
@@ -188,7 +188,7 @@ if L then
 	L.portalcd_message = "14 초후 차원문 %d 생성!"
 	L.portalcd_bar = "다음 차원문 %d"
 	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
-	
+
 	L.manavoid_message = "당신은 마나 공허!"
 
 	L.suppresser = "억제자 소환"
@@ -254,6 +254,7 @@ if L then
 	L.trap_say = "나에게 암흑의 덫!"
 	L.trap_message = "암흑의 덫"
 	L.trap_bar = "다음 암흑의 덫"
-	
+
 	L.cave_phase = "동굴 단계"
 end
+

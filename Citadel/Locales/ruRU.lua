@@ -23,7 +23,7 @@ if L then
 
 	L.iconprince = "Помечать активного принца"
 	L.iconprince_desc = "Пометить черепом активного принца с полосой здоровья."
-	
+
 	L.prison_message = "Темница Тьмы x%d!"
 end
 
@@ -181,11 +181,11 @@ if L then
 	L.portal_trigger = "Я открыла портал в Изумрудный Сон. Там вы найдете спасение, герои..."
 
     L.manavoid_message = "На ВАС - Магическая воронка!"
-	
+
 	L.suppresser = "Появление Подавителей"
 	L.suppresser_desc = "Сообщать когда будут появляться Подавители."
 	L.suppresser_message = "~Подавители"
-	
+
 	L.blazing = "Исторгающий пламя скелет"
 	L.blazing_desc = "|cffff0000Предполагаемый|r таймер появления Исторгающего пламя скелета. Этот таймер может быть неточным, используйте его только в качестве приблизительного ориентира."
 	L.blazing_warning = "Скоро Исторгающий пламя скелет!"
@@ -208,7 +208,7 @@ if L then
 
 	L.boom_message = "Взрыв!"
 	L.boom_bar = "Взрыв"
-	
+
 	L.grip_bar = "Морозная хватка"
 
 	L.unchained_message = "Освобожденная магия на ВАС!"
@@ -250,11 +250,11 @@ if L then
 	L.reaper_bar = "~Следующий Жнец"
 
 	L.last_phase_bar = "Последняя фаза"
-	
+
 	L.trap_say = "На МНЕ - Shadow Trap!"
 	L.trap_message = "Shadow Trap"
 	L.trap_bar = "~Следующая ловушка"
-	
+
 	L.cave_phase = "Фаза пещеры"
 end
 

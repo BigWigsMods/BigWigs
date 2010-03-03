@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Festergut", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36626)
-mod.toggleOptions = {{69279, "FLASHSHAKE"}, 69165, 71219, 72551, 71218, 72295, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {{69279, "FLASHSHAKE"}, "sporeicon", 69165, 71219, 72551, 71218, 72295, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[69279] = "normal",
 	[72295] = "heroic",
@@ -39,6 +39,9 @@ if L then
 	L.spore_bar = "~Gas Spores"
 
 	L.ball_message = "Goo ball incoming!"
+
+	L.sporeicon = "Icon on Spore targets"
+	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -61,6 +64,7 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "Spores", 69279)
+	self:Log("SPELL_AURA_REMOVED", "SporesRemoved", 69279)
 end
 
 function mod:OnEngage()
@@ -77,15 +81,21 @@ end
 
 do
 	local scheduled = nil
+	local num = 8
 	local function sporeWarn(spellName)
 		mod:TargetMessage(69279, spellName, sporeTargets, "Urgent", 69279, "Alert")
 		scheduled = nil
+		num = 8
 	end
 	local function sporeNext()
 		mod:Bar(69279, L["spore_bar"], 28, 69279)
 	end
 	function mod:Spores(player, spellId, _, _, spellName)
 		sporeTargets[#sporeTargets + 1] = player
+		if self.db.profile.sporeicon then
+			SetRaidTarget(player, num)
+			num = num - 1
+		end
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(69279)
 		end
@@ -96,6 +106,12 @@ do
 			local explodeName = GetSpellInfo(67729) --"Explode"
 			self:Bar(69279, explodeName, 12, spellId)
 		end
+	end
+end
+
+function mod:SporesRemoved(player)
+	if self.db.profile.sporeicon then
+		SetRaidTarget(player, 0)
 	end
 end
 
@@ -148,3 +164,4 @@ function mod:OnSync(sync, rest, nick)
 		self:Message(72295, L["ball_message"], "Important", 72295)
 	end
 end
+

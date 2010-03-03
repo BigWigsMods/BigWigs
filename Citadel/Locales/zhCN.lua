@@ -243,3 +243,4 @@ if L then
 
 	L.last_phase_bar = "Last Phase"
 end
+

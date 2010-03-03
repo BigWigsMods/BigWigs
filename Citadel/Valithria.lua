@@ -16,7 +16,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local blazingTimers = {60, 51.5, 53.5, 41, 41, 35}
+local blazingTimers = {60, 51.5, 53.5, 41, 41, 35, 33}
 local blazingCount, blazingRepeater, portalCount = 1, nil, 1
 
 --------------------------------------------------------------------------------
@@ -78,7 +78,6 @@ do
 		mod:ScheduleTimer(suppresserSpawn, time, time)
 	end
 	local function blazingSpawn()
-		--XXX more testing, same on 10man?
 		if not blazingTimers[blazingCount] then return end
 		mod:Bar("blazing", L["blazing"], blazingTimers[blazingCount], 71730)
 		mod:ScheduleTimer(blazingSpawn, blazingTimers[blazingCount])
