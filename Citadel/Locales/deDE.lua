@@ -66,6 +66,9 @@ if L then
 	L.spore_bar = "~Gassporen"
 
 	L.ball_message = "Glibber!"
+
+	L.sporeicon = "Symbole auf Spielern mit Sporen"
+	L.sporeicon_desc = "Plaziert den Totenkopf, das Kreuz und das Quadrat auf Spielern mit Sporen (benötigt Assistent oder höher)."
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "deDE")
