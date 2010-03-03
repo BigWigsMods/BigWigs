@@ -117,8 +117,13 @@ do
 	function mod:VolatileExperiment()
 		stopOldStuff()
 		self:Message("phase", L["experiment_heroic_message"], "Important")
-		self:Bar("phase", L["phase_bar"], 47, "achievement_boss_profputricide")
-		self:ScheduleTimer(newPhase, 47)
+		if not first then
+			self:Bar("phase", L["phase_bar"], 45, "achievement_boss_profputricide")
+			self:ScheduleTimer(newPhase, 45)
+		else
+			self:Bar("phase", L["phase_bar"], 37, "achievement_boss_profputricide")
+			self:ScheduleTimer(newPhase, 37)
+		end
 	end
 
 	-- Normal mode phase change
