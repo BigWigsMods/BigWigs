@@ -235,7 +235,7 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
-	L.warmup_trigger = "聖光所謂的正義終於來了嗎?我是否該把雙之哀傷放下,祈求你的寬恕呢,弗丁?"
+	L.warmup_trigger = "聖光所謂的正義終於來了嗎?我是否該把霜之哀傷放下,祈求你的寬恕呢,弗丁?"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.horror_bar = "<下一血殭屍>"
