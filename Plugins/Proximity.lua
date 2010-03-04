@@ -281,14 +281,12 @@ local function ensureDisplay()
 	sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
 	display.sound = sound
 
-	local header = display:CreateFontString(nil, "OVERLAY")
-	header:SetFontObject(GameFontNormal)
+	local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	header:SetText(L["Proximity"])
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 	display.header = header
 
-	local text = display:CreateFontString(nil, "OVERLAY")
-	text:SetFontObject(GameFontNormal)
+	local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	text:SetFont(L["proximityfont"], 12)
 	text:SetText("")
 	text:SetAllPoints(display)
@@ -324,7 +322,7 @@ local function ensureDisplay()
 		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		display:ClearAllPoints()
-		display:SetPoint("CENTER", UIParent, "CENTER")
+		display:SetPoint("CENTER", UIParent)
 	end
 
 	plugin:RestyleWindow()
@@ -420,13 +418,13 @@ local function updateProfile()
 		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		anchor:ClearAllPoints()
-		anchor:SetPoint("CENTER", UIParent, "CENTER")
+		anchor:SetPoint("CENTER", UIParent)
 	end
 end
 
 local function resetAnchor()
 	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER")
+	anchor:SetPoint("CENTER", UIParent)
 	anchor:SetWidth(plugin.defaultDB.width)
 	anchor:SetHeight(plugin.defaultDB.height)
 	plugin.db.profile.posx = nil
@@ -589,7 +587,7 @@ end
 do
 	local opener = nil
 	function plugin:BigWigs_ShowProximity(event, module, range)
-		if type(range) ~= "number" then return end -- Just so we don't error during the convertion
+		if self.db.profile.disabled or type(range) ~= "number" then return end
 		opener = module
 		self:Open(range)
 	end
@@ -663,3 +661,4 @@ SlashCmdList.BigWigs_Proximity = function(input)
 end
 SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/bwproximity" -- In case some other addon already has /proximity
+
