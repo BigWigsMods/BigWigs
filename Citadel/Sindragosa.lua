@@ -86,7 +86,7 @@ function mod:OnEngage()
 	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 63, 23684)
 	self:Bar(69762, L["unchained_bar"], 15, 69762)
-	self:Bar(71047, L["grip_bar"], 40, 70117)
+	self:Bar(71047, L["grip_bar"], 38, 70117)
 end
 
 --------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ function mod:Grip()
 	self:Message(71047, L["boom_message"], "Important", 71047, "Alarm")
 	self:Bar(71047, L["boom_bar"], 5, 71047)
 	if phase == 2 then
-		self:Bar(71047, L["grip_bar"], 65, 70117)
+		self:Bar(71047, L["grip_bar"], 70, 70117)
 	end
 end
 
@@ -138,7 +138,7 @@ function mod:Phase2()
 	phase = 2
 	self:SendMessage("BigWigs_StopBar", self, L["airphase_bar"])
 	self:Message("phase2", L["phase2_message"], "Positive", nil, "Long")
-	self:Bar(71047, L["grip_bar"], 40, 70117)
+	self:Bar(71047, L["grip_bar"], 38, 70117)
 end
 
 function mod:Buffet(player, spellId, _, _, _, stack)
