@@ -175,6 +175,7 @@ if L then
 	L.instability_message = "불안정 x%d!"
 	L.chilled_message = "사무치는 한기 x%d!"
 	L.buffet_message = "신비한 강타 x%d!"
+	L.buffet_cd = "다음 신비한 강타"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "koKR")

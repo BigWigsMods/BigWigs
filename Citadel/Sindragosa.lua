@@ -50,6 +50,7 @@ if L then
 	L.instability_message = "Unstable x%d!"
 	L.chilled_message = "Chilled x%d!"
 	L.buffet_message = "Magic x%d!"
+	L.buffet_cd = "Next Magic"
 end
 L = mod:GetLocale()
 
@@ -142,6 +143,7 @@ function mod:Phase2()
 end
 
 function mod:Buffet(player, spellId, _, _, _, stack)
+	self:Bar(70127, L["buffet_cd"], 6, 70127)
 	if (stack % 2 == 0) and UnitIsUnit(player, "player") then
 		self:LocalMessage(70127, L["buffet_message"]:format(stack), "Attention", spellId, "Info")
 	end
