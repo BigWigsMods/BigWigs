@@ -19,6 +19,7 @@ mod.optionHeaders = {
 --
 
 local phase = 0
+local difficulty = 0
 local beaconTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -60,6 +61,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Unchained", 69762)
+	self:Log("SPELL_AURA_REMOVED", "UnchainedRemoved", 69762)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Instability", 69766)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Chilled", 70106)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Buffet", 70127, 72528, 72529, 72530)
@@ -82,7 +84,8 @@ function mod:Warmup()
 	self:ScheduleTimer(self.Engage, 10, self)
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
+	difficulty = diff
 	phase = 1
 	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 63, 23684)
@@ -170,6 +173,13 @@ function mod:Unchained(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alert")
 		self:FlashShake(69762)
+		if difficulty > 2 then
+			self:OpenProximity(20)
+			self:ScheduleTimer(self.CloseProximity, 30, self)
+		end
 	end
 end
 
+function mod:UnchainedRemoved(player, spellId)
+	self:CloseProximity()
+end
