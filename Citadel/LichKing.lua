@@ -224,11 +224,13 @@ do
 end
 
 function mod:HarvestSoul(player, spellId, _, _, spellName)
-	if difficulty == 2 or difficulty == 4 then
+	if difficulty == 3 or difficulty == 4 then
+        print("heroic "..difficulty)
 		self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
 		self:Bar(68980, L["cave_phase"], 50, spellId)
 		self:Bar(68980, L["harvestsoul_bar"], 105, spellId)
 	else
+        print("normal "..difficulty)
 		self:Bar(68980, L["harvestsoul_bar"], 75, spellId)
 		if UnitIsUnit(player, "player") then self:FlashShake(68980) end
 		self:TargetMessage(68980, spellName, player, "Attention", spellId)
