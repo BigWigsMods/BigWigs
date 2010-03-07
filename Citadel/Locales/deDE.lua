@@ -193,6 +193,7 @@ if L then
 	L.instability_message = "%dx Instabilität!"
 	L.chilled_message = "%dx Durchgefroren!"
 	L.buffet_message = "%dx Puffer!"
+	L.buffet_cd = "Nächster Puffer"
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "deDE")
