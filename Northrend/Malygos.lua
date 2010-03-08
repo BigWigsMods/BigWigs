@@ -164,6 +164,7 @@ function mod:UNIT_HEALTH(event, msg)
 		local hp = UnitHealth(msg) / UnitHealthMax(msg) * 100
 		if hp > 51 and hp <= 54 then
 			self:Message("phase", L["phase2_warning"], "Attention")
+			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end
