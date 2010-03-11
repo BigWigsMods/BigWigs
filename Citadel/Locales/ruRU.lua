@@ -216,6 +216,7 @@ if L then
 	L.instability_message = "Неустойчивость x%d!"
 	L.chilled_message = "Обжигающий холод x%d!"
 	L.buffet_message = "Таинственная энергия x%d!"
+	L.buffet_cd = "~Таинственная энергия"
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "ruRU")
@@ -251,8 +252,8 @@ if L then
 
 	L.last_phase_bar = "Последняя фаза"
 
-	L.trap_say = "На МНЕ - Shadow Trap!"
-	L.trap_message = "Shadow Trap"
+	L.trap_say = "На МНЕ - Темная ловушка!"
+	L.trap_message = "Темная ловушка"
 	L.trap_bar = "~Следующая ловушка"
 
 	L.cave_phase = "Фаза пещеры"
