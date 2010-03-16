@@ -22,6 +22,8 @@ mod.optionHeaders = {
 
 local phase = 0
 local difficulty = 0
+local hugged = mod:NewTargetList()
+local class = select(2,UnitClass("player"))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,7 +66,10 @@ if L then
 	L.trap_message = "Shadow Trap"
 	L.trap_bar = "Next Trap"
 
+    L.valkyrhug_message = "Val'kyrs Hugged"
 	L.cave_phase = "Cave Phase"
+    
+    L.enrage_bar = "~Enrage"
 end
 L = mod:GetLocale()
 
@@ -184,8 +189,9 @@ do
 end
 
 function mod:Enrage(_, spellId, _, _, spellName)
-	if select(2,UnitClass("player")) == "HUNTER" then
+	if class == "HUNTER" or class == "ROGUE" then
 		self:Message(72143, spellName, "Attention", spellId, "Info")
+        self:Bar(72143, L["enrage_bar"], 21, spellId)
 	else
 		self:Message(72143, spellName, "Attention", spellId)
 	end
@@ -212,6 +218,16 @@ function mod:DefileRun(player, spellId)
 end
 
 do
+    local function ValkyrHugCheck()
+        for i=1, GetNumRaidMembers() do
+            local n = GetRaidRosterInfo(i)
+            if UnitInVehicle(n) then
+                hugged[#hugged + 1] = n
+            end
+        end
+        mod:TargetMessage(69037, L["valkyrhug_message"], hugged, "Urgent", 71844)
+    end
+
 	local t = 0
 	function mod:Valkyr(_, spellId)
 		local time = GetTime()
@@ -219,9 +235,12 @@ do
 			t = time
 			self:Message(69037, L["valkyr_message"], "Attention", 71844)
 			self:Bar(69037, L["valkyr_bar"], 46, 71844)
+            self:ScheduleTimer(ValkyrHugCheck, 6.1)
 		end
 	end
 end
+
+
 
 function mod:HarvestSoul(player, spellId, _, _, spellName)
 	if difficulty == 3 or difficulty == 4 then
@@ -234,7 +253,7 @@ function mod:HarvestSoul(player, spellId, _, _, spellName)
 		self:TargetMessage(68980, spellName, player, "Attention", spellId)
 		self:Whisper(68980, player, spellName)
 		self:SecondaryIcon(68980, player)
-	end	
+	end
 end
 
 function mod:HSRemove(player, spellId)
