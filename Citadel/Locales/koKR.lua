@@ -256,6 +256,9 @@ if L then
 	L.trap_message = "암흑의 덫"
 	L.trap_bar = "다음 암흑의 덫"
 
+	L.valkyrhug_message = "발키르 붙음"
 	L.cave_phase = "동굴 단계"
+    
+    L.enrage_bar = "~격노"
 end
 
