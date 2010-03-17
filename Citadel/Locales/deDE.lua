@@ -233,7 +233,10 @@ if L then
 	L.trap_message = "Falle"
 	L.trap_bar = "Nächste Falle"
 
+	L.valkyrhug_message = "Val'kyren Ziele"
 	L.cave_phase = "Höhlenphase"
+
+	L.enrage_bar = "~Wutanfall"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")
