@@ -41,7 +41,7 @@ if L then
 	L.adds = "傳送門"
 	L.adds_desc = "傳送門警報。"
 	L.adds_trigger_alliance = "劫奪者，士官們，攻擊!"
-	L.adds_trigger_horde = "水手們，士官們，攻擊!"
+	L.adds_trigger_horde = "海員們，士官們，攻擊!"
 	L.adds_message = "傳送門！"
 	L.adds_bar = "<下一傳送門>"
 
