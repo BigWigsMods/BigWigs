@@ -235,7 +235,7 @@ end
 
 L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
-	L.warmup_trigger = "聖光所謂的正義終於來了嗎?我是否該把霜之哀傷放下,祈求你的寬恕呢,弗丁?"
+	L.warmup_trigger = "聖光所謂的正義終於來了嗎"
 	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
 
 	L.horror_bar = "<下一血殭屍>"
@@ -267,6 +267,12 @@ if L then
 	L.last_phase_bar = "<最終階段>"
 
 	L.trap_say = "暗影陷阱：>你<！"
+	L.trap_message = "暗影陷阱"
 	L.trap_bar = "<下一暗影陷阱>"
+
+	L.valkyrhug_message = "Val'kyrs Hugged"
+	L.cave_phase = "Cave Phase"
+
+	L.enrage_bar = "即將 狂怒"
 end
 
