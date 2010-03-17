@@ -256,6 +256,9 @@ if L then
 	L.trap_message = "Темная ловушка"
 	L.trap_bar = "~Следующая ловушка"
 
+    	L.valkyrhug_message = "Валь'кира схватила"
 	L.cave_phase = "Фаза пещеры"
+
+    	L.enrage_bar = "~Берсерк"
 end
 
