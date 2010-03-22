@@ -481,6 +481,7 @@ do
 		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
 		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
+		self:SendMessage("BigWigs_Whisper", self, key, player, msg, spellName, noName)
 	end
 end
 
