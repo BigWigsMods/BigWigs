@@ -318,8 +318,10 @@ do
 	bwOptionSilencer:Hide()
 	LibStub("AceEvent-3.0"):Embed(bwOptionSilencer)
 	bwOptionSilencer:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
-		silencedOptions[key] = time
-		bwOptionSilencer:Show()
+		if key ~= nil then -- custom bars have a nil key
+			silencedOptions[key] = time
+			bwOptionSilencer:Show()
+		end
 	end)
 	local total = 0
 	bwOptionSilencer:SetScript("OnUpdate", function(self, elapsed)
