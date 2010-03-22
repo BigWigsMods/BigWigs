@@ -4,10 +4,12 @@ if L then
 	L.switch_bar = "~다음 대상 변경"
 
 	L.empowered_flames = "강력한 불꽃"
+	L.empowered_bar = "~다음 불꽃"
 
 	L.empowered_shock_message = "충격의 소용돌이 시전!"
 	L.regular_shock_message = "충격 지역"
 	L.shock_say = "나에게 충격!"
+	L.shock_bar = "~다음 충격"
 
 	L.iconprince = "활성화된 왕자 해골"
 	L.iconprince_desc = "활성화된 왕자에게 해골 징표를 표시합니다 (승급된 사람만 가능)."
