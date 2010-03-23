@@ -268,7 +268,10 @@ function addon:OnInitialize()
 			raidwarning = false,
 			broadcast = false,
 			showBlizzardWarnings = false,
-		}
+		},
+		global = {
+			optionShiftIndexes = {},
+		},
 	}
 	local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
 	local function profileUpdate()
