@@ -1,39 +1,41 @@
 local C = {}
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs", true)
+local names = {}
+local descriptions = {}
+	
+-- Option bitflags
+local coreToggles = { "BAR", "MESSAGE", "ICON", "WHISPER", "SOUND", "SAY", "PROXIMITY", "FLASHSHAKE", "PING", "EMPHASIZE" }
+for i, toggle in next, coreToggles do
+	C[toggle] = bit.lshift(1, i - 1)
+	if L[toggle] then
+		names[toggle] = L[toggle]
+		descriptions[toggle] = L[toggle .. "_desc"]
+	end
+end
+local nextShift = #coreToggles
+
+-- Toggles that should actually be shown in the interface options
+local listToggles = { "MESSAGE", "BAR", "FLASHSHAKE", "ICON", "WHISPER", "SAY", "PING" }
+
+function BigWigs:RegisterOption(key, name, desc)
+	if C[key] then error("Don't do that again!") end
+	C[key] = bit.lshift(1, nextShift)
+	nextShift = nextShift + 1
+
+	if name and desc then
+		names[key] = name
+		descriptions[key] = desc
+		listToggles[#listToggles + 1] = key
+	end
+end
+
+function BigWigs:GetOptionDetails(key)
+	return names[key], descriptions[key]
+end
+
+function BigWigs:GetOptions()
+	return listToggles
+end
+
 BigWigs.C = C
 
--- Option bitflags
-C.BAR = 0x00000001
-C.MESSAGE = 0x00000002
-C.ICON = 0x00000004
-C.WHISPER = 0x00000008
-C.SOUND = 0x00000010
-C.SAY = 0x00000020
-C.PROXIMITY = 0x00000040
-C.FLASHSHAKE = 0x00000080
-C.PING = 0x00000100
-C.EMPHASIZE = 0x00000200
---[[
-0x00000300
-0x00000400
-0x00000800
-0x00001000
-0x00002000
-0x00004000
-0x00008000
-0x00010000
-0x00020000
-0x00040000
-0x00080000
-0x00100000
-0x00200000
-0x00400000
-0x00800000
-0x01000000
-0x02000000
-0x04000000
-0x08000000
-0x10000000
-0x20000000
-0x40000000
-0x80000000
---]]

@@ -115,7 +115,7 @@ plugin.subPanelOptions = {
 local footers = {
 	"Premonition @ Sen'jin US\n|cff9999ffwww.premoguild.com|r",
 	"Big Wigs Developer\n|cff9999ffwowace.com/projects/big-wigs|r",
-	"Ensidia @ Tarren Mill EU\n|cff9999ffwww.ensidia.com|r",
+	"Ensidia @ Lightning's Blade EU\n|cff9999ffwww.ensidia.com|r",
 }
 
 ------------[[

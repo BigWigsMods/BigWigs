@@ -540,10 +540,11 @@ local listToggles = {
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
 	wipe(advancedOptions)
-	for i, key in next, listToggles do
+	for i, key in next, BigWigs:GetOptions() do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
-			advancedOptions[#advancedOptions + 1] = getSlaveToggle(L[key], L[key .. "_desc"], dbKey, module, flag, check)
+			local name, desc = BigWigs:GetOptionDetails(key)
+			advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
 		end
 	end
 	advancedOptions[#advancedOptions + 1] = getSlaveToggle(L["EMPHASIZE"], L["EMPHASIZE_desc"], dbKey, module, C.EMPHASIZE, check)

@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true)
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "enUS", true, true)
 
 -- Core.lua
 L["%s has been defeated"] = true
@@ -60,9 +60,7 @@ L["Select encounter"] = true
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"
-L["SOUND"] = "Sounds"
 L["ICON"] = "Icon"
-L["PROXIMITY"] = "Proximity"
 L["WHISPER"] = "Whisper"
 L["SAY"] = "Say"
 L["FLASHSHAKE"] = "Flash'n'shake"
