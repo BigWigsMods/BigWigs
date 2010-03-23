@@ -23,15 +23,19 @@ function BigWigs:RegisterOption(key, name, desc)
 	-- Build a list of used shift indexes
 	if not used then
 		used = {}
-		for key, index in pairs(self.db.global.optionShiftIndexes) do
-			used[index] = key
+		for k, i in pairs(self.db.global.optionShiftIndexes) do
+			used[i] = k
 		end
-		for index, key in next, coreToggles do
-			used[index - 1] = key
+		for i, k in next, coreToggles do
+			used[i - 1] = k
 		end
 	end
 	
 	if self.db.global.optionShiftIndexes[key] then
+		local index = self.db.global.optionShiftIndexes[key]
+		if used[index] and used[index] ~= key then
+			error("Bit field shift indexes are not consistent with the stored data. Big Wigs should automatically handle this, but at the moment it does not. Boss options might be completely fubar at the moment. Have fun.")
+		end
 		-- Use the stored shift index
 		C[key] = bit.lshift(1, self.db.global.optionShiftIndexes[key])
 	else
@@ -43,6 +47,13 @@ function BigWigs:RegisterOption(key, name, desc)
 				break
 			end
 		end
+		for i, k in pairs(used) do
+			if k == key then
+				error("That's weird, we seem to have a stored shift index for this key already.")
+				break
+			end
+		end
+
 		if not nextShiftIndex then error("BigWigs will now blow up. Please consult your local IT technician.") end
 		used[nextShiftIndex] = key
 		self.db.global.optionShiftIndexes[key] = nextShiftIndex
@@ -50,7 +61,6 @@ function BigWigs:RegisterOption(key, name, desc)
 	end
 
 	if name and desc then
-		print("Option is visible.")
 		names[key] = name
 		descriptions[key] = desc
 		listToggles[#listToggles + 1] = key
