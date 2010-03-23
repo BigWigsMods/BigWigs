@@ -4,10 +4,12 @@ if L then
 	L.switch_bar = "~Prochain chgt de cible"
 
 	L.empowered_flames = "L'Embrasement surpuissant"
+	L.empowered_bar = "~Prochain Embrasement"
 
 	L.empowered_shock_message = "Vortex de choc surpuissant en incantation !"
 	L.regular_shock_message = "Vortex de choc"
 	L.shock_say = "Vortex de choc sur moi !"
+	L.shock_bar = "~Prochain Vortex"
 
 	L.skullprince = "Crâne sur le prince surpuissant"
 	L.skullprince_desc = "Place l'icône de raid principale sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
@@ -132,7 +134,10 @@ if L then
 	L.trap_message = "Piège d'ombre"
 	L.trap_bar = "Prochain Piège"
 
+	L.valkyrhug_message = "Val'kyrs Hugged"
 	L.cave_phase = "Cave Phase"
+
+	L.enrage_bar = "~Enrager"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")
