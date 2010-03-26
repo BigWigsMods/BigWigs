@@ -93,7 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Valkyr", 69037)
 
 	-- Phase 3
-	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325, 74326, 74327, 74296)
+	self:Log("SPELL_CAST_SUCCESS", "HarvestSoul", 68980, 74325, 74326, 74327, 74295, 74296, 74297, 73654)
 	self:Log("SPELL_AURA_REMOVED", "HSRemove", 68980, 74325, 74326, 74327)
 	self:Log("SPELL_CAST_START", "VileSpirits", 70498)
 
