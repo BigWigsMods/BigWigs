@@ -4,13 +4,15 @@ if L then
 	L.switch_bar = "<下一生命轉換>"
 
 	L.empowered_flames = "製造強力烈焰"
+	L.empowered_bar = "<下一製造強力烈焰>"
 
 	L.empowered_shock_message = "正在施放 強力震擊漩渦！"
 	L.regular_shock_message = "強力震擊漩渦區域！"
 	L.shock_say = ">我< 強力震擊漩渦區域！"
+	L.shock_bar = "<下一強力震擊漩渦>"
 
-	L.skullprince = "骷髏標記強化的血親王"
-	L.skullprince_desc = "為強化的血親王打上團隊骷髏標記。（需要權限）"
+	L.iconprince = "強化的血親王標記"
+	L.iconprince_desc = "為強化的血親王打上團隊標記。（需要權限）"
 
 	L.prison_message = "暗影之牢：>x%d<！"
 end
@@ -29,9 +31,6 @@ if L then
 	L.bloat_bar = "<下一胃囊膨脹>"
 
 	L.spore_bar = "<下一氣體孢子>"
-
-	L.sporeicon = "標記孢子目標"
-	L.sporeicon_desc = "為中了氣體孢子的玩家打上團隊骷髏、十字、方塊標記。（需要權限）"
 
 	L.ball_message = "即將 黏液之球！"
 end
@@ -78,9 +77,6 @@ if L then
 	L.spirit_bar = "<下一召喚靈魂>"
 
 	L.dominate_bar = "<下一支配心智>"
-
-	L.dmicon = "支配心智標記"
-	L.dmicon_desc = "為中了支配心智的玩家打上團隊骷髏、十字、方塊標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhTW")
@@ -112,21 +108,17 @@ if L then
 	L.ball_bar = "<下一延展黏液>"
 	L.ball_say = "即將 延展黏液！"
 
-	L.experiment_message = "即將 增援！"
-	L.experiment_bar = "<下一增援>"
-	L.blight_message = "毒氣膨脹"
-	L.violation_message = "暴躁軟泥怪"
+	L.experiment_message = "即將 軟泥怪！"
+	L.experiment_heroic_message = "即將 軟泥怪！"
+	L.experiment_bar = "<下一軟泥怪>"
+	L.blight_message = "毒氣雲！"
+	L.violation_message = "暴躁軟泥怪！"
 
 	L.plague_message = "%2$dx突變瘟疫：>%1$s<！"
 	L.plague_bar = "<下一突變瘟疫>"
 
 	L.gasbomb_bar = "<多個窒息毒氣彈>"
 	L.gasbomb_message = "窒息毒氣彈！"
-
-	L.plagueicon = "突變瘟疫標記"
-	L.plagueicon_desc = "為中了突變瘟疫的玩家打上團隊方塊標記。（需要權限）"
-
-	L.add_message = "軟泥怪 出現！"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "zhTW")
@@ -181,12 +173,11 @@ if L then
 	L.grip_bar = "<下一冰結之握>"
 
 	L.unchained_message = ">你< 無束魔法！"
+	L.unchained_bar = "無束魔法！"
 	L.instability_message = "不穩定 x%d！"
 	L.chilled_message = "沁骨之寒 x%d！"
 	L.buffet_message = "秘能連擊 x%d！"
-
-	L.baconicon = "冰霜信標標記"
-	L.baconicon_desc = "為中了冰霜信標的玩家打上團隊骷髏、十字、方塊、月亮以及三角標記。（需要權限）"
+	L.buffet_cd = "<下一無束魔法>"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
@@ -210,9 +201,6 @@ if L then
 	L.blazing = "熾熱骷髏"
 	L.blazing_desc = "熾熱骷髏|cffff0000監視|r出現計時條。此計時條可能不準確，只做參考。"
 	L.blazing_warning = "即將 熾熱骷髏！"
-
-	L.skull = "骷髏標記熾熱骷髏"
-	L.skull_desc = "為出現的熾熱骷髏打上團隊骷髏標記。（需要權限）"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
@@ -236,7 +224,7 @@ end
 L = BigWigs:NewBossLocale("The Lich King", "zhTW")
 if L then
 	L.warmup_trigger = "聖光所謂的正義終於來了嗎"
-	--L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
+	L.engage_trigger = "我會讓你活著見證到最後，弗丁"
 
 	L.horror_bar = "<下一血殭屍>"
 	L.horror_message = "蹣跚的血殭屍！"
@@ -254,9 +242,9 @@ if L then
 
 	L.remorselesswinter_message = "正在施放 冷酷凜冬！"
 	L.quake_message = "正在施放 地震！"
-	L.quake_bar = "地震"
+	L.quake_bar = "<地震>"
 
-	L.defile_say = ">我< 中了汙染！"
+	L.defile_say = ">我< 汙染！"
 	L.defile_message = "汙染：>你<！"
 	L.defile_bar = "<下一汙染>"
 
@@ -267,12 +255,12 @@ if L then
 	L.last_phase_bar = "<最終階段>"
 
 	L.trap_say = "暗影陷阱：>你<！"
-	L.trap_message = "暗影陷阱"
+	L.trap_message = "暗影陷阱！"
 	L.trap_bar = "<下一暗影陷阱>"
 
-	L.valkyrhug_message = "Val'kyrs Hugged"
-	L.cave_phase = "Cave Phase"
+	L.valkyrhug_message = "華爾琪抓人！"
+	L.cave_phase = "劍內階段！"
 
-	L.enrage_bar = "即將 狂怒"
+	L.enrage_bar = "<狂怒>"
 end
 

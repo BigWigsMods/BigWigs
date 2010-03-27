@@ -260,7 +260,7 @@ if L then
 
 	L.valkyrhug_message = "발키르 붙음"
 	L.cave_phase = "동굴 단계"
-    
-    L.enrage_bar = "~격노"
+
+	L.enrage_bar = "~격노"
 end
 

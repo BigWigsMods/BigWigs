@@ -1,16 +1,20 @@
 local L = BigWigs:NewBossLocale("Blood Prince Council", "zhCN")
 if L then
-	L.switch_message = "虛弱轉換: %s"
-	L.switch_bar = "<下一虛弱轉換>"
+	L.switch_message = "生命转换：>%s<！"
+	L.switch_bar = "<下一生命转换>"
 
-	L.empowered_flames = "地獄火"
+	L.empowered_flames = "Empowered Flames"
+	L.empowered_bar = "<下一Empowered Flames>"
 
 	L.empowered_shock_message = "正在施放 強力震擊漩渦！"
-	L.regular_shock_message = "震擊漩渦區域！"
-	L.shock_say = ">我< 震擊漩渦！"
+	L.regular_shock_message = "震擊漩渦区域！"
+	L.shock_say = ">我< 震擊漩渦区域！"
+	L.shock_bar = "<下一強力震擊漩渦>"
 
-	L.skullprince = "Skull on active prince"
-	L.skullprince_desc = "Place a skull on the active blood prince with health."
+	L.iconprince = "標記強化的血親王"
+	L.iconprince_desc = "為強化的血親王打上團隊標記。（需要權限）"
+
+	L.prison_message = "暗影之牢：>x%d<！"
 end
 
 L = BigWigs:NewBossLocale("Festergut", "zhCN")
@@ -28,8 +32,7 @@ if L then
 
 	L.spore_bar = "<下一Gas Spore>"
 
-	L.sporeicon = "Icon on Spore targets"
-	L.sporeicon_desc = "Set a Skull, Cross & Square on the players with a spore (requires promoted or leader)."
+	L.ball_message = "即將 黏液之球！"
 end
 
 L = BigWigs:NewBossLocale("Icecrown Gunship Battle", "zhCN")
@@ -74,9 +77,6 @@ if L then
 	L.spirit_bar = "Next Spirit"
 
 	L.dominate_bar = "~Next Dominate Mind"
-
-	L.dmicon = "Icon on Dominate Mind"
-	L.dmicon_desc = "Set a Skull, Cross & Square on the players with Dominate Mind (requires promoted or leader)."
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhCN")
@@ -101,16 +101,18 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段發出警報。"
 	L.phase_warning = "即將 第%d階段！"
+	L.phase_bar = "<下一階段>"
 
 	L.engage_trigger = "大夥聽著，好消息!"
 
 	L.ball_bar = "<下一延展黏液>"
 	L.ball_say = "即將 延展黏液！"
 
-	L.experiment_message = "即將 增援！"
-	L.experiment_bar = "<下一增援>"
-	L.blight_message = "毒氣膨脹"
-	L.violation_message = "暴躁軟泥怪"
+	L.experiment_message = "即将 软泥怪！"
+	L.experiment_heroic_message = "即将 软泥怪！"
+	L.experiment_bar = "<下一软泥怪>"
+	L.blight_message = "毒氣雲！"
+	L.violation_message = "暴躁軟泥怪！"
 
 	L.plague_message = "%2$dx突變瘟疫：>%1$s<！"
 	L.plague_bar = "<下一突變瘟疫>"
@@ -168,28 +170,37 @@ if L then
 	L.boom_message = "Explosion!"
 	L.boom_bar = "Explosion"
 
-	L.unchained_message = "Unchained magic on YOU!"
-	L.instability_message = "Unstable x%d!"
-	L.chilled_message = "Chilled x%d!"
-	L.buffet_message = "Magic x%d!"
+	L.grip_bar = "<下一冰結之握>"
+
+	L.unchained_message = ">你< 無束魔法！"
+	L.unchained_bar = "Unchained Magic！"
+	L.instability_message = "Unstable x%d！"
+	L.chilled_message = "Chilled x%d！"
+	L.buffet_message = "秘能連擊 x%d！"
+	L.buffet_cd = "Next Magic"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhCN")
 if L then
-	L.manavoid_message = ">你< Mana Void！"
-	L.portal = "Nightmare Portal"
-	L.portal_desc = "当Valithria打开Portal时发出警报。"
-	L.portal_message = "打开Portal！"
-	L.portal_trigger = "I have opened a portal into the Dream. Your salvation lies within, heroes..."
+	L.engage_trigger = "入侵者已經突破了內部聖所。加快摧毀綠龍的速度!只要留下骨頭和肌腱來復活!"
 
-	L.engage_trigger = "Intruders have breached the inner sanctum. Hasten the destruction of the green dragon!"
+	L.portal = "夢魘之門"
+	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
+	L.portal_message = "打開夢魘之門！"
+	L.portal_bar = "<即將夢魘之門>"
+	L.portalcd_message = "14秒後，夢魘之門：>%d<！"
+	L.portalcd_bar = "<下一夢魘之門：%d>"
+	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
 
-	L.blazing = "Blazing Skeleton"
-	L.blazing_desc = "Blazing Skeleton |cffff0000estimated|r respawn timer. This timer may be inaccurate, use only as a rough guide."
-	L.blazing_warning = "Blazing Skeleton Soon!"
+	L.manavoid_message = ">你< 潰法力場！"
 
-	L.skull = "Skull on Blazing Skeleton"
-	L.skull_desc = "Place a skull Raid Icon on the Blazing Skeletons that spawn (requires promoted or leader)."
+	L.suppresser = "抑制者出現"
+	L.suppresser_desc = "當一群抑制者出現時發出警報。"
+	L.suppresser_message = "即將出現 抑制者！"
+
+	L.blazing = "熾熱骷髏"
+	L.blazing_desc = "熾熱骷髏|cffff0000監視|r出現計時條。此計時條可能不準確，只做參考。"
+	L.blazing_warning = "即將 熾熱骷髏！"
 end
 
 L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhCN")
@@ -241,6 +252,15 @@ if L then
 
 	L.reaper_bar = "~Next Reaper"
 
-	L.last_phase_bar = "Last Phase"
+	L.last_phase_bar = "<最終階段>"
+
+	L.trap_say = "暗影陷阱：>你<！"
+	L.trap_message = "暗影陷阱"
+	L.trap_bar = "<下一暗影陷阱>"
+
+	L.valkyrhug_message = "Val'kyrs Hugged"
+	L.cave_phase = "Cave Phase"
+
+	L.enrage_bar = "<激怒>"
 end
 
