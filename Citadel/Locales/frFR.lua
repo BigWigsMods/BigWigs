@@ -235,9 +235,10 @@ if L then
 
 	L.unchained_message = "Magie débridée sur VOUS !"
 	L.unchained_bar = "Magie débridée"
-	L.unchained_message = "Magie débridée x%d !"
+	L.instability_message = "Magie débridée x%d !"
 	L.chilled_message = "Transi jusqu'aux os x%d !"
 	L.buffet_message = "Rafale mystique x%d !"
+	L.buffet_cd = "Prochaine Rafale mystique"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "frFR")
