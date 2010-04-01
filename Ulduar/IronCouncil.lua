@@ -154,7 +154,7 @@ local function targetCheck()
 				mod:FlashShake(61887)
 			else
 				mod:Message(61887, L["chased_other"]:format(target), "Attention")
-				mod:Whisper(61887, player, L["chased_you"])
+				mod:Whisper(61887, target, L["chased_you"])
 			end
 			mod:PrimaryIcon(61887, target)
 			previous = target
