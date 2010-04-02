@@ -4,10 +4,12 @@ if L then
 	L.switch_bar = "~Ziel wechseln"
 
 	L.empowered_flames = "Machtvolle Flammen"
+	L.empowered_bar = "~Machtvolle Flammen"
 
 	L.empowered_shock_message = "Schockvortex kommt!"
 	L.regular_shock_message = "Schockzone"
 	L.shock_say = "Schockzone auf MIR!"
+	L.shock_bar = "~Nächster Schock"
 
 	L.iconprince = "Symbol auf aktivem Prinz"
 	L.iconprince_desc = "Plaziert das erste Schlachtzugs-Symbol auf dem aktiven Blutprinzen (benötigt Assistent oder höher)."
