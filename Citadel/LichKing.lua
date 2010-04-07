@@ -243,6 +243,8 @@ end
 function mod:HarvestSoul(player, spellId, _, _, spellName)
 	if difficulty == 3 or difficulty == 4 then
 		self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
+		self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
 		self:Bar(68980, L["cave_phase"], 50, spellId)
 		self:Bar(68980, L["harvestsoul_bar"], 105, spellId)
 	else

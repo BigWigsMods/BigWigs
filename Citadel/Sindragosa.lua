@@ -90,7 +90,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 63, 23684)
 	self:Bar(69762, L["unchained_bar"], 15, 69762)
-	self:Bar(71047, L["grip_bar"], 38, 70117)
+	self:Bar(71047, L["grip_bar"], 34, 70117)
 end
 
 --------------------------------------------------------------------------------
@@ -127,14 +127,14 @@ function mod:Grip()
 	self:Message(71047, L["boom_message"], "Important", 71047, "Alarm")
 	self:Bar(71047, L["boom_bar"], 5, 71047)
 	if phase == 2 then
-		self:Bar(71047, L["grip_bar"], 70, 70117)
+		self:Bar(71047, L["grip_bar"], 67, 70117)
 	end
 end
 
 function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
-	self:Bar(71047, L["grip_bar"], 77, 70117)
+	self:Bar(71047, L["grip_bar"], 84, 70117)
 	self:Bar(69762, L["unchained_bar"], 57, 69762)
 end
 
