@@ -134,7 +134,7 @@ end
 function mod:AirPhase()
 	self:Message("airphase", L["airphase_message"], "Positive")
 	self:Bar("airphase", L["airphase_bar"], 110, 23684)
-	self:Bar(71047, L["grip_bar"], 84, 70117)
+	self:Bar(71047, L["grip_bar"], 80, 70117)
 	self:Bar(69762, L["unchained_bar"], 57, 69762)
 end
 
