@@ -52,6 +52,8 @@ if L then
 
 	L.gasbomb_bar = "More yellow gas bombs"
 	L.gasbomb_message = "Yellow bombs!"
+
+	L.unbound_bar = "Unbound Plague: %s"
 end
 L = mod:GetLocale()
 
@@ -63,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ChasedByRedOoze", 72455, 70672, 72832, 72833)
 	self:Log("SPELL_AURA_APPLIED", "StunnedByGreenOoze", 70447, 72836, 72837, 72838)
 	self:Log("SPELL_CAST_START", "Experiment", 70351, 71966, 71967, 71968)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72464, 72672)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Plague", 72451, 72463, 72671, 72672)
 	self:Log("SPELL_CAST_SUCCESS", "GasBomb", 71255)
 	self:Log("SPELL_CAST_SUCCESS", "BouncingGooBall", 72295, 74280, 72615, 74281) --10/25
 	self:Log("SPELL_AURA_APPLIED", "TearGasStart", 71615)
@@ -228,11 +230,20 @@ do
 	end
 end
 
-function mod:UnboundPlague(player, spellId, _, _, spellName)
-	self:TargetMessage(72855, spellName, player, "Personal", spellId, "Alert")
-	self:SecondaryIcon(72855, player)
-	if UnitIsUnit(player, "player") then
-		self:FlashShake(72855)
+do
+	local oldPlagueBar = nil
+	function mod:UnboundPlague(player, spellId, _, _, spellName)
+		local expirationTime = select(7, UnitDebuff(player, spellName))
+		if expirationTime then
+			if oldPlagueBar then self:SendMessage("BigWigs_StopBar", self, oldPlagueBar) end
+			oldPlagueBar = L["unbound_bar"]:format(player)
+			self:Bar(72855, oldPlagueBar, expirationTime - GetTime(), spellId)
+		end
+		self:TargetMessage(72855, spellName, player, "Personal", spellId, "Alert")
+		self:SecondaryIcon(72855, player)
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(72855)
+		end
 	end
 end
 
