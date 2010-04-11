@@ -135,7 +135,7 @@ if L then
 	L.trap_bar = "Prochain Piège"
 
 	L.valkyrhug_message = "Val'kyrs Hugged"
-	L.cave_phase = "Cave Phase"
+	L.cave_phase = "Phase Deuillegivre"
 
 	L.enrage_bar = "~Enrager"
 end
@@ -180,6 +180,8 @@ if L then
 
 	L.gasbomb_bar = "D'autres Bombes de gaz !"
 	L.gasbomb_message = "Bombes de gaz !"
+
+	L.unbound_bar = "Peste déliée : %s"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "frFR")
