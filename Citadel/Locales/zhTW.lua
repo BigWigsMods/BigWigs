@@ -119,6 +119,8 @@ if L then
 
 	L.gasbomb_bar = "<多個窒息毒氣彈>"
 	L.gasbomb_message = "窒息毒氣彈！"
+
+	L.unbound_bar = "<肆虐瘟疫：%s>"
 end
 
 L = BigWigs:NewBossLocale("Rotface", "zhTW")

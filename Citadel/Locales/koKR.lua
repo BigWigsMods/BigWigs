@@ -119,7 +119,7 @@ if L then
 
 	L.gasbomb_bar = "다음 노란 가스탄"
 	L.gasbomb_message = "숨막히는 가스탄!"
-	
+
 	L.unbound_bar = "고삐 역병: %s"
 end
 
