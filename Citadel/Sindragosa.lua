@@ -116,6 +116,18 @@ do
 			self:OpenProximity(10)
 			self:FlashShake(70126)
 		end
+		--[[ 
+			Patch for marking FrostBeacon targets, currently the options screen shows
+			the ability to add marks over frost beacon targets, but current bigwigs api
+			only allows for 2 marks. in 25 man icc, there are up to 5 beacon targets during the air phase
+			this is a HACK till bigwigs allows for more than 2 marks to be set in the Plugins options
+			Rabbit, Ammo, FunkyDude if you got issue with this small hack remove it.
+		--]]
+		if IsRaidLeader() or IsRaidOfficer() then
+			SetRaidTarget(player,8 - (#beaconTargets - 1))
+		end
+		--[[ end patch]]
+		
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(baconWarn, 0.2, spellName)
