@@ -71,37 +71,37 @@ end
 --
 
 function mod:BigWigs_FlashShake(event, module, key)
-	if not BigWigs.db.profile.flashshake then return end
-	local r, g, b = colors:GetColor("flashshake", module, key)
-	if not flasher then --frame creation
-		flasher = CreateFrame("Frame", "BWFlash", UIParent)
-		flasher:SetFrameStrata("BACKGROUND")
-		flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-		flasher:SetAllPoints(UIParent)
-		flasher:SetScript("OnShow", function(self)
-			self.elapsed = 0
-			self:SetAlpha(0)
-		end)
-		flasher:SetScript("OnUpdate", function(self, elapsed)
-			elapsed = self.elapsed + elapsed
-			if elapsed >= 0.8 then
-				self:Hide()
+	if BigWigs.db.profile.flash then
+		local r, g, b = colors:GetColor("flashshake", module, key)
+		if not flasher then --frame creation
+			flasher = CreateFrame("Frame", "BWFlash", UIParent)
+			flasher:SetFrameStrata("BACKGROUND")
+			flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
+			flasher:SetAllPoints(UIParent)
+			flasher:SetScript("OnShow", function(self)
+				self.elapsed = 0
 				self:SetAlpha(0)
-				return
-			end
-			local alpha = elapsed % 0.4
-			if elapsed > 0.2 then
-				alpha = 0.4 - alpha
-			end
-			self:SetAlpha(alpha * 5)
-			self.elapsed = elapsed
-		end)
-		flasher:Hide()
+			end)
+			flasher:SetScript("OnUpdate", function(self, elapsed)
+				elapsed = self.elapsed + elapsed
+				if elapsed >= 0.8 then
+					self:Hide()
+					self:SetAlpha(0)
+					return
+				end
+				local alpha = elapsed % 0.4
+				if elapsed > 0.2 then
+					alpha = 0.4 - alpha
+				end
+				self:SetAlpha(alpha * 5)
+				self.elapsed = elapsed
+			end)
+			flasher:Hide()
+		end
+		flasher:SetBackdropColor(r, g, b, 0.55)
+		flasher:Show()
 	end
-	flasher:SetBackdropColor(r, g, b, 0.55)
-	flasher:Show()
-
-	if not WorldFrame:IsProtected() then
+	if not WorldFrame:IsProtected() and BigWigs.db.profile.shake then
 		if not shaker then
 			shaker = CreateFrame("Frame", "BWShaker", UIParent)
 			shaker:Hide()

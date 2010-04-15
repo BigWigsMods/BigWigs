@@ -263,7 +263,8 @@ function addon:OnInitialize()
 		profile = {
 			sound = true,
 			raidicon = true,
-			flashshake = true,
+			flash = true,
+			shake = true,
 			whisper = false,
 			raidwarning = false,
 			broadcast = false,

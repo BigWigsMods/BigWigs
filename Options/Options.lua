@@ -85,18 +85,25 @@ local acOptions = {
 			order = 21,
 			width = "full",
 		},
-		flashshake = {
+		flash = {
 			type = "toggle",
-			name = L["Flash and shake"],
+			name = L["Flash"],
 			desc = L.fnsDesc,
 			order = 22,
-			width = "full",
+			--width = "half",
+		},
+		shake = {
+			type = "toggle",
+			name = L["Shake"],
+			desc = L.fnsDesc,
+			order = 23,
+			--width = "full",
 		},
 		raidicon = {
 			type = "toggle",
 			name = L["Raid icons"],
 			desc = L.raidiconDesc,
-			order = 23,
+			order = 24,
 			width = "full",
 		},
 		separator2 = {
