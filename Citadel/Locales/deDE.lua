@@ -149,6 +149,8 @@ if L then
 
 	L.gasbomb_bar = "Weitere Gasbomben"
 	L.gasbomb_message = "Gasbomben!"
+	
+	L.unbound_bar = "Entfesselte Seuche: %s"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "deDE")
