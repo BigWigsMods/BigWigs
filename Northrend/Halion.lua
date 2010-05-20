@@ -55,7 +55,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	difficulty = diff
 	phase = 1
 	self:Berserk(600) -- assumed
 end
@@ -70,7 +69,7 @@ function mod:FireConsumption(player, spellId)
 		self:LocalMessage(74562, L["fireconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74562)
 	end
-	mod:TargetMessage(74562, L["fireconsumption_message"], player, "Urgent", 74562)
+	self:TargetMessage(74562, L["fireconsumption_message"], player, "Urgent", 74562)
 end
 
 function mod:ShadowConsumption(player, spellId)
@@ -79,7 +78,7 @@ function mod:ShadowConsumption(player, spellId)
 		self:LocalMessage(74792, L["shadowconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74792)
 	end   
-	mod:TargetMessage(74792, L["shadowconsumption_message"], player, "Urgent", 74792)
+	self:TargetMessage(74792, L["shadowconsumption_message"], player, "Urgent", 74792)
 end
 
 function mod:Breath(_, spellId)
