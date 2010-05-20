@@ -22,19 +22,18 @@ local phase = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Your world teeters on the brink of annihilation. You will ALL bear witness to the coming of a new age of DESTRUCTION!"
-	
+
 	L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
-	
+
 	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
 	L.twilight_cutter_bar = "~Twilight Cutter"
 	L.twilight_cutter_warning = "Twilight Cutter soon"
-	
+
 	L.fireconsumption_message_self = "Fire Consuption on YOU!"
 	L.fireconsumption_message = "Fire Consuption"
-	
+
 	L.shadowconsumption_message_self = "Shadow Consuption on YOU!"
 	L.shadowconsumption_message = "Shadow Consuption"
-  
 end
 L = mod:GetLocale()
 
@@ -50,7 +49,7 @@ function mod:OnBossEnable()
 
 	self:Emote("TwilightCutter", L["twilight_cutter_trigger"])
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 

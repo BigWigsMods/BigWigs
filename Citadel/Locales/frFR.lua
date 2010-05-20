@@ -114,7 +114,7 @@ if L then
 
 	L.vilespirits_bar = "~Esprits vils"
 
-	L.harvestsoul_message = "Moisson d'âmes"
+	L.harvestsoul_bar = "Moisson d'âmes"
 
 	L.remorselesswinter_message = "Hiver impitoyable en incantation"
 	L.quake_message = "Secousse en incantation"
@@ -134,7 +134,7 @@ if L then
 	L.trap_message = "Piège d'ombre"
 	L.trap_bar = "Prochain Piège"
 
-	L.valkyrhug_message = "Val'kyrs Hugged"
+	L.valkyrhug_message = "Étreinte val'kyrienne"
 	L.cave_phase = "Phase Deuillegivre"
 
 	L.enrage_bar = "~Enrager"

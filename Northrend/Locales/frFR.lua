@@ -20,6 +20,23 @@ if L then
 	L.overcharge_next = "~Prochaine Surcharge"
 end
 
+L = BigWigs:NewBossLocale("Halion", "frFR")
+if L then
+	L.engage_trigger = "Votre monde vacille au bord de l'élimination. Vous serez tous témoins de l'avènement d'une nouvelle ère de DESTRUCTION !"
+
+	L.phase_two_trigger = "Vous ne trouverez que souffrance au royaume du crépuscule ! Entrez si vous l'osez !"
+
+	L.twilight_cutter_trigger = "Les sphères volantes rayonnent d'énergie noire !"
+	L.twilight_cutter_bar = "~Tranchant du crépuscule"
+	L.twilight_cutter_warning = "Tranchant du crépuscule imminent"
+
+	L.fireconsumption_message_self = "Combustion ardente sur VOUS !"
+	L.fireconsumption_message = "Combustion ardente"
+
+	L.shadowconsumption_message_self = "Consomption d'âmes sur VOUS !"
+	L.shadowconsumption_message = "Consomption d'âmes"
+end
+
 local L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "frFR")
 if L then
 	L.cinder_message = "Braise enflammée sur VOUS !"
