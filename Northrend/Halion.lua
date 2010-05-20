@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Halion", "The Ruby Sanctum")
 if not mod then return end
 mod.otherMenu = "Northrend"
 
-mod:RegisterEnableMob(39863, 40141)
+mod:RegisterEnableMob(39863, 40142)
 mod.toggleOptions = {74769, 75954, {74562, "ICON", "FLASHSHAKE"}, {74792, "ICON", "FLASHSHAKE"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
