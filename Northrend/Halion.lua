@@ -30,7 +30,7 @@ if L then
 	L.twilight_cutter_warning = "Twilight Cutter soon"
 	
 	L.fireconsumption_message_self = "Fire Consuption on YOU!"
-	L.fireconsumption_message "Fire Consuption"
+	L.fireconsumption_message = "Fire Consuption"
 	
 	L.shadowconsumption_message_self = "Shadow Consuption on YOU!"
 	L.shadowconsumption_message = "Shadow Consuption"
