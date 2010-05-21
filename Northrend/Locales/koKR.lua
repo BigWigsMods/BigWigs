@@ -25,6 +25,18 @@ if L then
 	L.cinder_message = "당신은 잿더미!"
 end
 
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "koKR")
+if L then
+	L.whiteout_bar = "시아상실 %d"
+	L.whiteout_message = "곧 시아상실 %d !"
+
+	L.frostbite_message = "동상 %2$dx : %1$s"
+
+	L.freeze_message = "땅얼리기"
+
+	L.orb_bar = "다음 구슬"
+end
+
 L = BigWigs:NewBossLocale("Malygos", "koKR")
 if L then
 	L.sparks = "불꽃 소환"
@@ -89,14 +101,19 @@ if L then
 	L.twilight_message = "%s 신도 추가!"
 end
 
-L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "koKR")
+L = BigWigs:NewBossLocale("Halion", "koKR")
 if L then
-	L.whiteout_bar = "시아상실 %d"
-	L.whiteout_message = "곧 시아상실 %d !"
+	L.engage_trigger = "너희 세상에 파멸의 바람이 불어온다. 파괴의 시대가 새로운 도래할때 모두 그 증인이 되리라!"	--check
 
-	L.frostbite_message = "동상 %2$dx : %1$s"
+	L.phase_two_trigger = "황혼 세계에서는 고통만이 있으리라! 자신 있다면 들어와 봐라!"	--check
 
-	L.freeze_message = "땅얼리기"
+	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"	--check
+	L.twilight_cutter_bar = "~황혼 절단기"
+	L.twilight_cutter_warning = "곧 황혼 절단기"
 
-	L.orb_bar = "다음 구슬"
+	L.fireconsumption_message_self = "당신은 맹렬한 발화!"
+	L.fireconsumption_message = "맹렬한 발화"
+
+	L.shadowconsumption_message_self = "당신은 영혼 소멸!"
+	L.shadowconsumption_message = "영혼 소멸"
 end
