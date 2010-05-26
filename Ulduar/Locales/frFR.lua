@@ -231,10 +231,10 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase1_message = "Phase 1"
-	L.phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement allez pay -  Attendez, vous -"
+	L.phase2_trigger = "Des intrus ! Mortels, vous qui osez me déranger en plein divertissement allez pay - Attendez, vous -"
 	L.phase2_message = "Phase 2 - Berserk dans 6 min. 15 sec. !"
 	L.phase3_trigger = "Avortons impertinents, vous osez me défier sur mon piédestal ? Je vais vous écraser moi-même !"
-	L.phase3_message = "Phase 3 - %s engagé !"
+	L.phase3_message = "Phase 3 - Thorim engagé !"
 
 	L.hardmode = "Sifonné"
 	L.hardmode_desc = "Affiche le délai avant que Sif ne disparaisse."
