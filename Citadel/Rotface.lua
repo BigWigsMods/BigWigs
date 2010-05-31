@@ -9,7 +9,7 @@ mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508
 mod.optionHeaders = {
 	[69839] = "normal",
 	[72272] = "heroic",
-	bosskill = "general",
+	berserk = "general",
 }
 
 --------------------------------------------------------------------------------
