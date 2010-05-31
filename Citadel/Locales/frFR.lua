@@ -11,8 +11,8 @@ if L then
 	L.shock_say = "Vortex de choc sur moi !"
 	L.shock_bar = "~Prochain Vortex"
 
-	L.skullprince = "Crâne sur le prince surpuissant"
-	L.skullprince_desc = "Place l'icône de raid principale sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
+	L.iconprince = "Crâne sur le prince surpuissant"
+	L.iconprince_desc = "Place l'icône de raid principale sur le prince de sang actuellement surpuissant (nécessite d'être assistant ou mieux)."
 
 	L.prison_message = "Prison de l'ombre x%d !"
 end

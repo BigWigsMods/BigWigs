@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Rotface", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36627)
-mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508, "ooze", 72272, "bosskill"}
+mod.toggleOptions = {{69839, "FLASHSHAKE"}, {71224, "FLASHSHAKE", "ICON"}, 69508, "ooze", 72272, "berserk", "bosskill"}
 mod.optionHeaders = {
 	[69839] = "normal",
 	[72272] = "heroic",
@@ -55,6 +55,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	self:Berserk(600,true)
 	self:Bar(69508, L["spray_bar"], 19, 69508)
 	if diff > 2 then
 		self:Bar(72272, GetSpellInfo(72272), 20, 72272)
