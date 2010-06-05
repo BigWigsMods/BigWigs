@@ -49,6 +49,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Explode", 69839, 73029, 73030)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Ooze", 69558)
 
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Yell("Engage", L["engage_trigger"])
 
 	self:Death("Win", 36627)
