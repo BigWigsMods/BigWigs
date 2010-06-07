@@ -16,10 +16,12 @@ if L then
 	L.switch_bar = "~Следующая смена цели"
 
 	L.empowered_flames = "Жаркое пламя"
+	L.empowered_bar = "~Next Flames"
 
 	L.empowered_shock_message = "Могучий вихрь!"
-	L.regular_shock_message = "Вихрь на "
+	L.regular_shock_message = "Вихрь"
 	L.shock_say = "Вихрь на мне!"
+	L.shock_bar = "~Следующий вихрь"
 
 	L.iconprince = "Помечать активного принца"
 	L.iconprince_desc = "Пометить черепом активного принца с полосой здоровья."
@@ -147,6 +149,8 @@ if L then
 
 	L.gasbomb_bar = "Следующие желтые газовые бомбы"
 	L.gasbomb_message = "Желтые бомбы!"
+	
+	L.unbound_bar = "Безудержная чума: %s"
 end
 
 L = BigWigs:NewBossLocale("Putricide Dogs", "ruRU")
@@ -211,7 +215,7 @@ if L then
 
 	L.grip_bar = "Морозная хватка"
 
-	L.unchained_message = "Освобожденная магия на ВАС!"
+	L.unchained_message = "На ВАС - Освобожденная магия!"
 	L.unchained_bar = "Освобожденная магия"
 	L.instability_message = "Неустойчивость x%d!"
 	L.chilled_message = "Обжигающий холод x%d!"
@@ -256,9 +260,9 @@ if L then
 	L.trap_message = "Темная ловушка"
 	L.trap_bar = "~Следующая ловушка"
 
-    	L.valkyrhug_message = "Валь'кира схватила"
+    L.valkyrhug_message = "Валь'кира схватила"
 	L.cave_phase = "Фаза пещеры"
 
-    	L.enrage_bar = "~Берсерк"
+    L.enrage_bar = "~Исступление"
 end
 

@@ -62,7 +62,7 @@ if L then
 
 	L.surge = "Прилив мощи"
 	L.surge_desc = "Предупреждать кто получает Прилив мощи."
-	L.surge_you = "На ВАС Прилив мощи!"
+	L.surge_you = "На ВАС - Прилив мощи!"
 	L.surge_trigger = "%s уставился на вас!"
 
 	L.phase = "Фазы"
@@ -110,4 +110,23 @@ if L then
 	L.frostbite_message = "%2$dx Обморожение у %1$s"
 
 	L.freeze_message = "Мерзлый грунт"
+	
+	L.orb_bar = "Следующий шар"
+end
+
+L = BigWigs:NewBossLocale("Halion", "ruRU")
+if L then
+	--L.engage_trigger = "Your world teeters on the brink of annihilation. You will ALL bear witness to the coming of a new age of DESTRUCTION!"
+
+	--L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
+
+	--L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
+	L.twilight_cutter_bar = "~Лезвие сумерок"
+	L.twilight_cutter_warning = "Скоро Лезвие сумерок"
+
+	L.fireconsumption_message_self = "На ВАС - Пылающий огонь!"
+	L.fireconsumption_message = "Пылающий огонь"
+
+	L.shadowconsumption_message_self = "На ВАС - Пожирание души!"
+	L.shadowconsumption_message = "Пожирание души"
 end
