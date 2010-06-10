@@ -44,7 +44,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "VileGas", 72272, 72273) --Heroic only 10/25
 	self:Log("SPELL_AURA_APPLIED", "Infection", 69674, 71224, 73022, 73023)
-	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 69674, 71224)
+	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 69674, 71224, 73022, 73023)
 	self:Log("SPELL_CAST_START", "SlimeSpray", 69508)
 	self:Log("SPELL_CAST_START", "Explode", 69839, 73029, 73030)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Ooze", 69558)
