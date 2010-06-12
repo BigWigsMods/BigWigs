@@ -104,7 +104,6 @@ if L then
 	L.orb_bar = "Nächste Kugel"
 end
 
-
 L = BigWigs:NewBossLocale("Halion", "deDE")
 if L then
 	L.engage_trigger = "Eure Welt steht auf Messers Schneide. Ihr ALLE werdet Zeuge des Anbeginns eines neuen Zeitalters der ZERSTÖRUNG!"
@@ -114,9 +113,11 @@ if L then
 	L.twilight_cutter_bar = "~Zwielichtschnitter"
 	L.twilight_cutter_warning = "Zwielichtschnitter bald"
 
-	L.fireconsumption_message_self = "Fire Consuption on YOU!"
-	L.fireconsumption_message = "Fire Consuption"
+	L.fireconsumption_message_self = "Einäscherung auf DIR!"
+	L.fireconsumption_message = "Einäscherung"
 
-	L.shadowconsumption_message_self = "Shadow Consuption on YOU!"
-	L.shadowconsumption_message = "Shadow Consuption"
+	L.shadowconsumption_message_self = "Seelenverzehrung auf DIR!"
+	L.shadowconsumption_message = "Seelenverzehrung"
+
+	L.breath_cooldown = "Nächster Atem"
 end

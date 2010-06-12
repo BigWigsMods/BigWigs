@@ -7,7 +7,7 @@ if not mod then return end
 mod.otherMenu = "Northrend"
 
 mod:RegisterEnableMob(39863, 40142)
-mod.toggleOptions = {74769, 75954, {74562, "ICON", "FLASHSHAKE"}, {74792, "ICON", "FLASHSHAKE"}, "berserk", "bosskill"}
+mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE"}, {74792, "ICON", "FLASHSHAKE"}, 74769, 75954, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -29,11 +29,13 @@ if L then
 	L.twilight_cutter_bar = "~Twilight Cutter"
 	L.twilight_cutter_warning = "Twilight Cutter soon"
 
-	L.fireconsumption_message_self = "Fire Consuption on YOU!"
-	L.fireconsumption_message = "Fire Consuption"
+	L.fireconsumption_message_self = "Fiery Combustion on YOU!"
+	L.fireconsumption_message = "Fiery Combustion"
 
-	L.shadowconsumption_message_self = "Shadow Consuption on YOU!"
-	L.shadowconsumption_message = "Shadow Consuption"
+	L.shadowconsumption_message_self = "Soul Consumption on YOU!"
+	L.shadowconsumption_message = "Soul Consumption"
+	
+	L.breath_cooldown = "Next Breath"
 end
 L = mod:GetLocale()
 
@@ -69,7 +71,7 @@ function mod:FireConsumption(player, spellId)
 		self:LocalMessage(74562, L["fireconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74562)
 	end
-	self:TargetMessage(74562, L["fireconsumption_message"], player, "Urgent", 74562)
+	self:TargetMessage(74562, L["fireconsumption_message"], player, "Urgent", spellId)
 end
 
 function mod:ShadowConsumption(player, spellId)
@@ -78,7 +80,7 @@ function mod:ShadowConsumption(player, spellId)
 		self:LocalMessage(74792, L["shadowconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74792)
 	end   
-	self:TargetMessage(74792, L["shadowconsumption_message"], player, "Urgent", 74792)
+	self:TargetMessage(74792, L["shadowconsumption_message"], player, "Urgent", spellId)
 end
 
 function mod:Breath(_, spellId)
@@ -87,7 +89,7 @@ end
 
 function mod:TwilightCutter()
 	self:Bar(74769, L["twilight_cutter_bar"], 33, 74769)
-	self:Message(74769, L["twilight_cutter_warning"], "Important", 57491, "Alert")
+	self:Message(74769, L["twilight_cutter_warning"], "Important", 74769, "Alert")
 end
 
 function mod:PhaseTwo()
