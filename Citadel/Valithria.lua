@@ -94,18 +94,15 @@ do
 			self:Bar("suppresser", L["suppresser_message"], 14, 70588)
 			self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
 			self:ScheduleTimer(suppresserSpawn, 14, 31)
-			self:ScheduleTimer(blazingSpawn, 37)
-			self:Bar("blazing", L["blazing"], 37, 71730)
-			self:DelayedMessage("blazing", 32, L["blazing_warning"], "Positive")
 			self:Berserk(420)
 		else
 			self:Bar("suppresser", L["suppresser_message"], 29, 70588)
 			self:Bar("portal", L["portalcd_bar"]:format(portalCount), 46, 72482)
 			self:ScheduleTimer(suppresserSpawn, 29, 58)
-			self:ScheduleTimer(blazingSpawn, 50)
-			self:Bar("blazing", L["blazing"], 50, 71730)
-			self:DelayedMessage("blazing", 45, L["blazing_warning"], "Positive")
 		end
+		self:ScheduleTimer(blazingSpawn, 50)
+		self:Bar("blazing", L["blazing"], 50, 71730)
+		self:DelayedMessage("blazing", 45, L["blazing_warning"], "Positive")
 		blazingCount = 1
 	end
 end
