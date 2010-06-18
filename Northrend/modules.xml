@@ -7,6 +7,7 @@
 <Script file="Halion.lua"/>
 <Script file="Emalon.lua"/>
 <Script file="Koralon.lua"/>
+<Script file="Toravon"/>
 
 </Ui>
 
