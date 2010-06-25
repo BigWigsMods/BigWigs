@@ -135,11 +135,15 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", function()
-		if not anchor then createAnchor() end
-		anchor:Show()
+		if plugin.db.sink20OutputSink == "BigWigs" then
+			if not anchor then createAnchor() end
+			anchor:Show()
+		end
 	end)
 	self:RegisterMessage("BigWigs_StopConfigureMode", function()
-		anchor:Hide()
+		if plugin.db.sink20OutputSink == "BigWigs" then
+			anchor:Hide()
+		end
 	end)
 
 	seModule = BigWigs:GetPlugin("Super Emphasize", true)
