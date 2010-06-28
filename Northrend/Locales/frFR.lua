@@ -37,7 +37,7 @@ if L then
 	L.shadowconsumption_message = "Consomption d'âmes"
 end
 
-local L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "frFR")
+L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "frFR")
 if L then
 	L.cinder_message = "Braise enflammée sur VOUS !"
 

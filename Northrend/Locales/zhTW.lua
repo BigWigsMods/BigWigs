@@ -20,12 +20,31 @@ if L then
 	L.overcharge_next = "<下一超載>"
 end
 
+L = BigWigs:NewBossLocale("Halion", "zhTW")
+if L then
+	L.engage_trigger = "Your world teeters on the brink of annihilation. You will ALL bear witness to the coming of a new age of DESTRUCTION!"
+
+	L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
+
+	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
+	L.twilight_cutter_bar = "<暮光切割>"
+	L.twilight_cutter_warning = "即將 暮光切割！"
+
+	L.fireconsumption_message_self = ">你< 熾熱燃灼！"
+	L.fireconsumption_message = "熾熱燃灼！"
+
+	L.shadowconsumption_message_self = ">你< 靈魂耗損！"
+	L.shadowconsumption_message = "靈魂耗損！"
+	
+	L.breath_cooldown = "下一闇息術！"
+end
+
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "zhTW")
 if L then
 	L.cinder_message = ">你< 燃焰餘燼！"
 
-	L.breath_bar = "燃燒之息 %d"
-	L.breath_message = "即將 燃燒之息 %d!"
+	L.breath_bar = "<燃燒之息：%d>"
+	L.breath_message = "即將 燃燒之息：>%d<！"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "zhTW")

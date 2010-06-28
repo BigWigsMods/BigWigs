@@ -20,9 +20,31 @@ if L then
 	L.overcharge_next = "<下一能量超载>"
 end
 
+L = BigWigs:NewBossLocale("Halion", "zhCN")
+if L then
+	L.engage_trigger = "Your world teeters on the brink of annihilation. You will ALL bear witness to the coming of a new age of DESTRUCTION!"
+
+	L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
+
+	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
+	L.twilight_cutter_bar = "<Twilight Cutter>"
+	L.twilight_cutter_warning = "即将 Twilight Cutter！"
+
+	L.fireconsumption_message_self = ">你< Fiery Combustion！"
+	L.fireconsumption_message = "Fiery Combustion！"
+
+	L.shadowconsumption_message_self = ">你< Soul Consumption！"
+	L.shadowconsumption_message = "Soul Consumption！"
+	
+	L.breath_cooldown = "下一Dark Breath！"
+end
+
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "zhCN")
 if L then
 	L.cinder_message = ">你< Flaming Cinder！"
+
+	L.breath_bar = "<燃燒之息：%d>"
+	L.breath_message = "即將 燃燒之息：>%d<！"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "zhCN")
@@ -87,4 +109,16 @@ if L then
 	L.twilight_trigger_shadron = "一个沙德隆的信徒从暮光中出现！" --check
 	L.twilight_message_tenebron = "正在孵卵！"
 	L.twilight_message = "%s到来！"
+end
+
+L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "zhCN")
+if L then
+	L.whiteout_bar = "寒霜厲雪：>%d<！"
+	L.whiteout_message = "即將寒霜厲雪：>%d<！"
+
+	L.frostbite_message = "%2$dx霜寒刺骨：>%1$s<！"
+
+	L.freeze_message = "冰凍之地！"
+
+	L.orb_bar = "<下一冰凍寶珠>"
 end
