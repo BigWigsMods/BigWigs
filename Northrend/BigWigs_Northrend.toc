@@ -20,7 +20,7 @@
 
 ## X-Category: Raid
 ## X-BigWigs-Menu: Northrend
-## X-BigWigs-LoadOn-Zone: The Eye of Eternity, Vault of Archavon, The Obsidian Sanctum
+## X-BigWigs-LoadOn-Zone: The Eye of Eternity, Vault of Archavon, The Obsidian Sanctum, The Ruby Sanctum
 
 locales.xml
 modules.xml

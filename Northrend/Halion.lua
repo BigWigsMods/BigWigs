@@ -7,7 +7,7 @@ if not mod then return end
 mod.otherMenu = "Northrend"
 
 mod:RegisterEnableMob(39863, 40142)
-mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE"}, {74792, "ICON", "FLASHSHAKE"}, 74769, 75954, 75879, "berserk", "bosskill"}
+mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE", "WHISPER"}, {74792, "ICON", "FLASHSHAKE"}, 74769, 75954, 75879, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -75,6 +75,8 @@ function mod:FireConsumption(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(74562, L["fireconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74562)
+	else
+		self:Whisper(74562, player, L["fireconsumption_message_self"], true)
 	end
 	self:TargetMessage(74562, L["fireconsumption_message"], player, "Urgent", spellId)
 end
@@ -84,7 +86,7 @@ function mod:ShadowConsumption(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(74792, L["shadowconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74792)
-	end   
+	end
 	self:TargetMessage(74792, L["shadowconsumption_message"], player, "Urgent", spellId)
 end
 
@@ -106,3 +108,4 @@ function mod:PhaseTwo()
 	phase = 2
 	self:Bar(74769, L["twilight_cutter_bar"], 40, 74769)
 end
+
