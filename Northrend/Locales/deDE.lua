@@ -119,5 +119,8 @@ if L then
 	L.shadowconsumption_message_self = "Seelenverzehrung auf DIR!"
 	L.shadowconsumption_message = "Seelenverzehrung"
 
+	L.meteorstrike_bar = "Meteorschlag"
+	L.meteorstrike_warning = "Meteorschlag"
+
 	L.breath_cooldown = "Nächster Atem"
 end
