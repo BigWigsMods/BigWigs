@@ -7,7 +7,7 @@ if not mod then return end
 mod.otherMenu = "Northrend"
 
 mod:RegisterEnableMob(39863, 40142)
-mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE"}, {74792, "ICON", "FLASHSHAKE"}, 74769, 75954, "berserk", "bosskill"}
+mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE"}, {74792, "ICON", "FLASHSHAKE"}, 74769, 75954, 75879, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -34,6 +34,9 @@ if L then
 
 	L.shadowconsumption_message_self = "Soul Consumption on YOU!"
 	L.shadowconsumption_message = "Soul Consumption"
+    
+    L.meteorstrike_bar = "Meteor Strike"
+    L.meteorstrike_warning = "Meteor Strike"
 	
 	L.breath_cooldown = "Next Breath"
 end
@@ -46,6 +49,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FireConsumption", 74562)
 	self:Log("SPELL_AURA_APPLIED", "ShadowConsumption", 74792)
+    self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879)
 	self:Log("SPELL_CAST_START", "Breath", 75954, 74526) --2nd id is fire breath, not sure if we need it
 	self:Death("Win", 28860)
 
@@ -59,6 +63,7 @@ end
 function mod:OnEngage(diff)
 	phase = 1
 	self:Berserk(600) -- assumed
+    self:Bar(75879, L["meteorstrike_bar"], 30, 75879)
 end
 
 --------------------------------------------------------------------------------
@@ -92,7 +97,12 @@ function mod:TwilightCutter()
 	self:Message(74769, L["twilight_cutter_warning"], "Important", 74769, "Alert")
 end
 
+function mod:MeteorStrike()
+	self:Bar(75879, L["meteorstrike_bar"], 40, 75879)
+	self:Message(75879, L["meteorstrike_warning"], "Important", 75879, "Alert")
+end
+
 function mod:PhaseTwo()
 	phase = 2
-	self:Bar(74769, L["twilight_cutter_bar"], 30, 74769)
+	self:Bar(74769, L["twilight_cutter_bar"], 40, 74769)
 end
