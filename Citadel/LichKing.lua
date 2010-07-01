@@ -24,6 +24,8 @@ local phase = 0
 local difficulty = 0
 local hugged = mod:NewTargetList()
 local class = select(2,UnitClass("player"))
+local frenzied = {}
+local plagueTicks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -69,6 +71,8 @@ if L then
 	L.valkyrhug_message = "Val'kyrs Hugged"
 	L.cave_phase = "Cave Phase"
 
+	L.frenzy_bar = "%s frenzies!"
+	L.frenzy_survive_message = "%s will survive after plague"
 	L.enrage_bar = "~Enrage"
 	L.frenzy_message = "Add frenzied!"
 end
@@ -87,6 +91,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 	self:Log("SPELL_CAST_START", "Enrage", 72143, 72146, 72147, 72148)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28747)
+	self:Log("SPELL_PERIODIC_DAMAGE", "PlagueTick", 73786)
 
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
@@ -122,6 +127,9 @@ end
 
 function mod:OnEngage(diff)
 	difficulty = diff
+	wipe(frenzied)
+	wipe(plagueTicks)
+
 	self:Berserk(900)
 	self:Bar(73912, L["necroticplague_bar"], 31, 73912)
 	self:Bar(70372, L["horror_bar"], 22, 70372)
@@ -135,7 +143,46 @@ end
 -- Event Handlers
 --
 
-function mod:Frenzy()
+function mod:PlagueTick(horrorName, _, _, tickDamage, _, _, _, _, _, dGUID)
+	if difficulty < 3 then return end -- Doesn't apply on normal diff.
+	-- Not ticking on a Shambling Horror, so bail early
+	if tonumber(dGUID:sub(-12, -7), 16) ~= 37698 then return end
+
+	if not plagueTicks[dGUID] then plagueTicks[dGUID] = 1
+	else plagueTicks[dGUID] = plagueTicks[dGUID] + 1 end
+	if plagueTicks[dGUID] == 3 then
+		plagueTicks[dGUID] = nil
+		return
+	end
+
+	-- Search by full GUID, so we don't mistake one shambler for another
+	local unitId = self:GetUnitIdByGUID(dGUID)
+	if not unitId then return end
+
+	-- Shambler is already frenzied, will it die from the plague or endure
+	-- for a longer period?
+	if frenzied[dGUID] then
+		local damageLeft = (3 - plagueTicks[dGUID]) * tickDamage
+		local hp = UnitHealth(unitId)
+		if hp > damageLeft then
+			self:Message(70372, L["frenzy_survive_message"]:format(horrorName), "Attention", 72143)
+		end
+	else
+		local hp, max = UnitHealth(unitId), UnitHealthMax(unitId)
+		if not max or max == 0 then return end
+		local nextTickHP = hp - tickDamage
+		-- Will the shambler die from the next tick?
+		if nextTickHP <= 0 then return end
+		local percentHp = math.floor(nextTickHP / max * 100 + 0.5)
+		-- This sucker will frenzy in 5 seconds
+		if percentHp <= 20 then
+			self:Bar(70372, L["frenzy_bar"]:format(horrorName), 5, 72143)
+		end
+	end
+end
+
+function mod:Frenzy(_, _, _, _, _, _, _, _, _, dGUID)
+	frenzied[dGUID] = true
 	self:Message(70372, L["frenzy_message"], "Important", 72143, "Long")
 end
 
