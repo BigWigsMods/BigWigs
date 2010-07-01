@@ -22,11 +22,11 @@ end
 
 L = BigWigs:NewBossLocale("Halion", "zhTW")
 if L then
-	L.engage_trigger = "Your world teeters on the brink of annihilation. You will ALL bear witness to the coming of a new age of DESTRUCTION!"
+	L.engage_trigger = "你們的世界在滅亡的邊緣搖搖欲墜。你們接下來全都會見證這個毀滅新紀元的來臨!"
 
-	L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
+	L.phase_two_trigger = "在暮光的國度只有磨難在等著你!有膽量的話就進去吧!"
 
-	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
+	L.twilight_cutter_trigger = "暗影無所不在!"
 	L.twilight_cutter_bar = "<暮光切割>"
 	L.twilight_cutter_warning = "即將 暮光切割！"
 
