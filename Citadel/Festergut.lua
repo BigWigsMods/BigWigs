@@ -117,7 +117,7 @@ function mod:Blight(_, spellId, _, _, spellName)
 end
 
 function mod:Bloat(player, spellId, _, _, _, stack)
-	if stack > 5 then
+	if stack > 1 then
 		self:TargetMessage(72551, L["bloat_message"], player, "Positive", spellId, nil, stack)
 		self:Bar(72551, L["bloat_bar"], 10, spellId)
 	end

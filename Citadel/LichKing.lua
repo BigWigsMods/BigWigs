@@ -70,6 +70,7 @@ if L then
 	L.cave_phase = "Cave Phase"
 
 	L.enrage_bar = "~Enrage"
+	L.frenzy_message = "Add frenzied!"
 end
 L = mod:GetLocale()
 
@@ -85,6 +86,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DISPEL", "PlagueScan", 528, 552, 4987, 51886) --cure, abolish, cleanse, cleanse spirit
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 	self:Log("SPELL_CAST_START", "Enrage", 72143, 72146, 72147, 72148)
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28747)
 
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
@@ -132,6 +134,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Frenzy()
+	self:Message(70372, L["frenzy_message"], "Important", 72143, "Long")
+end
 
 function mod:Horror(_, spellId)
 	self:Message(70372, L["horror_message"], "Attention", spellId)

@@ -21,6 +21,7 @@ mod.optionHeaders = {
 local phase = 0
 local difficulty = 0
 local beaconTargets = mod:NewTargetList()
+local failed = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,6 +86,7 @@ function mod:Warmup()
 end
 
 function mod:OnEngage(diff)
+	failed = nil
 	difficulty = diff
 	phase = 1
 	self:Berserk(600)
@@ -146,13 +148,23 @@ function mod:Phase2()
 end
 
 function mod:Buffet(player, spellId, _, _, _, stack)
+	if not failed and stack > 5 then
+		failed = true
+		SendChatMessage(player .. " failed the achievement.", "RAID_WARNING")
+	end
 	self:Bar(70127, L["buffet_cd"], 6, 70127)
+	if phase == 2 and UnitIsPlayer(player) and stack > 5 then
+		ChatThrottleLib:SendChatMessage("BULK", "BW", "RESET STACK!", "WHISPER", nil, player, "BigWigs")
+	end
 	if (stack % 2 == 0) and UnitIsUnit(player, "player") then
 		self:LocalMessage(70127, L["buffet_message"]:format(stack), "Attention", spellId, "Info")
 	end
 end
 
 function mod:Instability(player, spellId, _, _, _, stack)
+	if phase == 2 and UnitIsPlayer(player) then
+		ChatThrottleLib:SendChatMessage("BULK", "BW", "STOP CASTING", "WHISPER", nil, player, "BigWigs")
+	end
 	if stack > 4 and UnitIsUnit(player, "player") then
 		self:LocalMessage(69766, L["instability_message"]:format(stack), "Personal", spellId)
 	end
@@ -183,3 +195,4 @@ end
 function mod:UnchainedRemoved(player, spellId)
 	self:CloseProximity()
 end
+
