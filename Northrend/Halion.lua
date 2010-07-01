@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Halion", "The Ruby Sanctum")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(39863, 40142)
-mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE", "WHISPER"}, 75879, {74792, "ICON", "FLASHSHAKE"}, 74769, 75954, "berserk", "bosskill"}
+mod.toggleOptions = {{74562, "ICON", "FLASHSHAKE", "WHISPER"}, 75879, {74792, "ICON", "FLASHSHAKE", "WHISPER"}, 74769, 75954, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -25,14 +25,11 @@ if L then
 	L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
 
 	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
-	L.twilight_cutter_bar = "~Twilight Cutter"
-	L.twilight_cutter_warning = "Twilight Cutter soon"
+	L.twilight_cutter_bar = "~Laser beams"
+	L.twilight_cutter_warning = "Laser beams incoming!"
 
-	L.fireconsumption_message_self = "Fiery Combustion on YOU!"
-	L.fireconsumption_message = "Fiery Combustion"
-
-	L.shadowconsumption_message_self = "Soul Consumption on YOU!"
-	L.shadowconsumption_message = "Soul Consumption"
+	L.fire_message = "Fire bomb"
+	L.shadow_message = "Shadow bomb"
 
 	L.meteorstrike_bar = "Meteor Strike"
 	L.meteorstrike_warning = "Meteor Strike"
@@ -46,8 +43,8 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "FireConsumption", 74562)
-	self:Log("SPELL_AURA_APPLIED", "ShadowConsumption", 74792)
+	self:Log("SPELL_AURA_APPLIED", "Fire", 74562)
+	self:Log("SPELL_AURA_APPLIED", "Shadow", 74792)
 	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879)
 	self:Log("SPELL_CAST_START", "Breath", 75954, 74526) -- Dark breath, flame breath
 	self:Death("Win", 28860)
@@ -69,24 +66,22 @@ end
 -- Event Handlers
 --
 
-function mod:FireConsumption(player, spellId)
-	self:PrimaryIcon(74562, player)
+function mod:Fire(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(74562, L["fireconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74562)
-	else
-		self:Whisper(74562, player, L["fireconsumption_message_self"], true)
 	end
-	self:TargetMessage(74562, L["fireconsumption_message"], player, "Urgent", spellId)
+	self:TargetMessage(74562, L["fire_message"], player, "Personal", spellId)
+	self:Whisper(74562, player, L["fire_message"])
+	self:PrimaryIcon(74562, player)
 end
 
-function mod:ShadowConsumption(player, spellId)
-	self:SecondaryIcon(74792, player)
+function mod:Shadow(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(74792, L["shadowconsumption_message_self"], "Personal", spellId, "Info")
 		self:FlashShake(74792)
 	end
-	self:TargetMessage(74792, L["shadowconsumption_message"], player, "Urgent", spellId)
+	self:TargetMessage(74792, L["shadow_message"], player, "Personal", spellId)
+	self:Whisper(74792, player, L["shadow_message"])
+	self:SecondaryIcon(74792, player)
 end
 
 function mod:Breath(_, spellId)
@@ -100,7 +95,7 @@ end
 
 function mod:MeteorStrike(_, spellId)
 	self:Bar(75879, L["meteorstrike_bar"], 40, spellId)
-	self:Message(75879, L["meteorstrike_warning"], "Important", spellId, "Alert")
+	self:Message(75879, L["meteorstrike_warning"], "Important", spellId)
 end
 
 function mod:PhaseTwo()
