@@ -1,4 +1,3 @@
-
 local L = BigWigs:NewBossLocale("Anub'Rekhan", "frFR")
 if L then
 	L.starttrigger1 = "Rien qu'une petite bouchée…"

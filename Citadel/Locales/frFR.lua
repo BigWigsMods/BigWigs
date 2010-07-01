@@ -137,7 +137,10 @@ if L then
 	L.valkyrhug_message = "Étreinte val'kyrienne"
 	L.cave_phase = "Phase Deuillegivre"
 
+	L.frenzy_bar = "%s s'enrage !"
+	L.frenzy_survive_message = "%s survivra après la Peste"
 	L.enrage_bar = "~Enrager"
+	L.frenzy_message = "Horreur enragée !"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")

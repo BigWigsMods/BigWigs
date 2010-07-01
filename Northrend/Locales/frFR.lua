@@ -30,11 +30,13 @@ if L then
 	L.twilight_cutter_bar = "~Tranchant du crépuscule"
 	L.twilight_cutter_warning = "Tranchant du crépuscule imminent"
 
-	L.fireconsumption_message_self = "Combustion ardente sur VOUS !"
-	L.fireconsumption_message = "Combustion ardente"
+	L.fire_message = "Combustion ardente"
+	L.shadow_message = "Consomption d'âmes"
 
-	L.shadowconsumption_message_self = "Consomption d'âmes sur VOUS !"
-	L.shadowconsumption_message = "Consomption d'âmes"
+	L.meteorstrike_bar = "Frappe météore"
+	L.meteorstrike_warning = "Frappe météore"
+
+	L.breath_cooldown = "Prochain Souffle"
 end
 
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "frFR")
