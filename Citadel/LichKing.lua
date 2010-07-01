@@ -91,7 +91,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "Horror", 70372)
 	self:Log("SPELL_CAST_START", "Enrage", 72143, 72146, 72147, 72148)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28747)
-	self:Log("SPELL_PERIODIC_DAMAGE", "PlagueTick", 73786)
+	self:Log("SPELL_PERIODIC_DAMAGE", "PlagueTick", 70337, 70338, 73785, 73786, 73787, 73912, 73913, 73914)
 
 	-- Phase 2
 	self:Log("SPELL_CAST_SUCCESS", "SoulReaper", 69409, 73797, 73798, 73799)
@@ -172,7 +172,9 @@ function mod:PlagueTick(horrorName, _, _, tickDamage, _, _, _, _, _, dGUID)
 		if not max or max == 0 then return end
 		local nextTickHP = hp - tickDamage
 		-- Will the shambler die from the next tick?
-		if nextTickHP <= 0 then return end
+		if nextTickHP <= 0 then
+			print("add will die from next tick")
+		return end
 		local percentHp = math.floor(nextTickHP / max * 100 + 0.5)
 		-- This sucker will frenzy in 5 seconds
 		if percentHp <= 20 then
