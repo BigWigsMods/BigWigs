@@ -17,6 +17,41 @@ if L then
 	L.prison_message = "暗影之牢：>x%d<！"
 end
 
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhCN")
+if L then
+	L.engage_trigger = "You have made an... unwise... decision."
+
+	L.shadow = "群聚暗影"
+	L.shadow_message = "群聚暗影！"
+	L.shadow_bar = "<下一群聚暗影>"
+
+	L.feed_message = "即將 狂亂嗜血！"
+
+	L.pact_message = "暗殞契印"
+	L.pact_bar = "<下一暗殞契印>"
+
+	L.phase_message = "即將 空中階段！"
+	L.phase1_bar = "<地面階段>"
+	L.phase2_bar = "<空中階段>"
+end
+
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhCN")
+if L then
+	L.adds = "Blood Beasts"
+	L.adds_desc = "当召唤Blood Beasts时发出警报和显示计时条。"
+	L.adds_warning = "5秒后，Blood Beasts！"
+	L.adds_message = "Blood Beasts！"
+	L.adds_bar = "<下一Blood Beasts>"
+
+	L.rune_bar = "<下一Rune of Blood>"
+
+	L.mark = "Mark of the Fallen Champion：>%d<！"
+
+	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
+	L.warmup_alliance = "Let's get a move on then! Move ou..."
+	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
+end
+
 L = BigWigs:NewBossLocale("Festergut", "zhCN")
 if L then
 	L.engage_trigger = "Fun time?"
@@ -76,7 +111,7 @@ if L then
 	L.spirit_message = "Summon Spirit!"
 	L.spirit_bar = "Next Spirit"
 
-	L.dominate_bar = "~Next Dominate Mind"
+	L.dominate_bar = "<下一Dominate Mind>"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "zhCN")
@@ -89,11 +124,6 @@ if L then
 	L.coldflame_message = ">你< Coldflame！"
 
 	L.engage_trigger = "The Scourge will wash over this world as a swarm of death and destruction!"
-end
-
-L = BigWigs:NewBossLocale("Putricide Dogs", "zhCN")
-if L then
-	L.wound_message = " Mortal Wound%2$dx：>%1$s<！"
 end
 
 L = BigWigs:NewBossLocale("Professor Putricide", "zhCN")
@@ -123,6 +153,11 @@ if L then
 	L.unbound_bar = "<Unbound Plague：%s>"
 end
 
+L = BigWigs:NewBossLocale("Putricide Dogs", "zhCN")
+if L then
+	L.wound_message = " Mortal Wound%2$dx：>%1$s<！"
+end
+
 L = BigWigs:NewBossLocale("Rotface", "zhCN")
 if L then
 	L.engage_trigger = "不不不不不!"
@@ -137,29 +172,12 @@ if L then
 	L.spray_bar = "<下一泥漿噴霧>"
 end
 
-L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhCN")
-if L then
-	L.adds = "Blood Beasts"
-	L.adds_desc = "当召唤Blood Beasts时发出警报和显示计时条。"
-	L.adds_warning = "5秒后，Blood Beasts！"
-	L.adds_message = "Blood Beasts！"
-	L.adds_bar = "<下一Blood Beasts>"
-
-	L.rune_bar = "<下一Rune of Blood>"
-
-	L.mark = "Mark of the Fallen Champion：>%d<！"
-
-	L.engage_trigger = "BY THE MIGHT OF THE LICH KING!"
-	L.warmup_alliance = "Let's get a move on then! Move ou..."
-	L.warmup_horde = "Kor'kron, move out! Champions, watch your backs. The Scourge have been..."
-end
-
 L = BigWigs:NewBossLocale("Sindragosa", "zhCN")
 if L then
 	L.engage_trigger = "You are fools to have come to this place."
 
 	L.phase2 = "第二阶段"
-	L.phase2_desc = "Warn when Sindragosa goes into phase 2, at 35%."
+	L.phase2_desc = "当辛达苟萨进入第二阶段发出警报。（35%）"
 	L.phase2_trigger = "Now, feel my master's limitless power and despair!"
 	L.phase2_message = "第二阶段！"
 
@@ -167,10 +185,10 @@ if L then
 	L.airphase_desc = "当辛达苟萨起飞时发出警报。"
 	L.airphase_trigger = "Your incursion ends here! None shall survive!"
 	L.airphase_message = "空中阶段！"
-	L.airphase_bar = "下一 空中阶段"
+	L.airphase_bar = "<下一空中阶段>"
 
-	L.boom_message = "Explosion!"
-	L.boom_bar = "Explosion"
+	L.boom_message = "Explosion！"
+	L.boom_bar = "<Explosion>"
 
 	L.grip_bar = "<下一冰結之握>"
 
@@ -179,7 +197,53 @@ if L then
 	L.instability_message = "Unstable x%d！"
 	L.chilled_message = "Chilled x%d！"
 	L.buffet_message = "秘能連擊 x%d！"
-	L.buffet_cd = "Next Magic"
+	L.buffet_cd = "<下一Magic>"
+end
+
+L = BigWigs:NewBossLocale("The Lich King", "zhCN")
+if L then
+	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
+	L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
+
+	L.horror_bar = "<下一Horror>"
+	L.horror_message = "Shambling Horror！"
+
+	L.necroticplague_bar = "<Necrotic Plague>"
+
+	L.ragingspirit_bar = "<Raging Spirit>"
+
+	L.valkyr_bar = "<下一Val'kyr>"
+	L.valkyr_message = "Val'kyr！"
+
+	L.vilespirits_bar = "<Vile Spirits>"
+
+	L.harvestsoul_bar = "<Harvest Soul>"
+
+	L.remorselesswinter_message = "正在施放 Remorseless Winter！"
+	L.quake_message = "正在施放 Quake！"
+	L.quake_bar = "<Quake>"
+
+	L.defile_say = ">我< Defile！"
+	L.defile_message = "Defile：>你<！"
+	L.defile_bar = "<下一Defile>"
+
+	L.infest_bar = "<下一Infest>"
+
+	L.reaper_bar = "<下一Reaper>"
+
+	L.last_phase_bar = "<最終階段>"
+
+	L.trap_say = "暗影陷阱：>你<！"
+	L.trap_message = "暗影陷阱！"
+	L.trap_bar = "<下一暗影陷阱>"
+
+	L.valkyrhug_message = "Val'kyrs 抓人！"
+	L.cave_phase = "剑内阶段！"
+
+	L.frenzy_bar = "%s狂乱！"
+	L.frenzy_survive_message = "%s将在瘟疫后存活！"
+	L.enrage_bar = "<激怒>"
+	L.frenzy_message = "小怪狂乱！"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhCN")
@@ -203,66 +267,5 @@ if L then
 	L.blazing = "熾熱骷髏"
 	L.blazing_desc = "熾熱骷髏|cffff0000監視|r出現計時條。此計時條可能不準確，只做參考。"
 	L.blazing_warning = "即將 熾熱骷髏！"
-end
-
-L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhCN")
-if L then
-	L.engage_trigger = "You have made an... unwise... decision."
-
-	L.shadow = "群聚暗影"
-	L.shadow_message = "群聚暗影！"
-	L.shadow_bar = "<下一群聚暗影>"
-
-	L.feed_message = "即將 狂亂嗜血！"
-
-	L.pact_message = "暗殞契印"
-	L.pact_bar = "<下一暗殞契印>"
-
-	L.phase_message = "即將 空中階段！"
-	L.phase1_bar = "<地面階段>"
-	L.phase2_bar = "<空中階段>"
-end
-
-L = BigWigs:NewBossLocale("The Lich King", "zhCN")
-if L then
-	L.warmup_trigger = "So the Light's vaunted justice has finally arrived"
-	L.engage_trigger = "I'll keep you alive to witness the end, Fordring."
-
-	L.horror_bar = "~Next Horror"
-	L.horror_message = "Shambling Horror"
-
-	L.necroticplague_bar = "Necrotic Plague"
-
-	L.ragingspirit_bar = "Raging Spirit"
-
-	L.valkyr_bar = "Next Val'kyr"
-	L.valkyr_message = "Val'kyr"
-
-	L.vilespirits_bar = "~Vile Spirits"
-
-	L.harvestsoul_bar = "Harvest Soul"
-
-	L.remorselesswinter_message = "Remorseless Winter Casting"
-	L.quake_message = "Quake Casting"
-	L.quake_bar = "Quake"
-
-	L.defile_say = "Defile on ME!"
-	L.defile_message = "Defile on YOU!"
-	L.defile_bar = "Next Defile"
-
-	L.infest_bar = "~Next Infest"
-
-	L.reaper_bar = "~Next Reaper"
-
-	L.last_phase_bar = "<最終階段>"
-
-	L.trap_say = "暗影陷阱：>你<！"
-	L.trap_message = "暗影陷阱"
-	L.trap_bar = "<下一暗影陷阱>"
-
-	L.valkyrhug_message = "Val'kyrs Hugged"
-	L.cave_phase = "Cave Phase"
-
-	L.enrage_bar = "<激怒>"
 end
 

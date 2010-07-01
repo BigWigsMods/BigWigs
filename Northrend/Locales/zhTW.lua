@@ -30,12 +30,11 @@ if L then
 	L.twilight_cutter_bar = "<暮光切割>"
 	L.twilight_cutter_warning = "即將 暮光切割！"
 
-	L.fireconsumption_message_self = ">你< 熾熱燃灼！"
-	L.fireconsumption_message = "熾熱燃灼！"
+	L.fire_message = "熾熱燃灼！"
+	L.shadow_message = "靈魂耗損！"
 
-	L.shadowconsumption_message_self = ">你< 靈魂耗損！"
-	L.shadowconsumption_message = "靈魂耗損！"
-	
+	L.meteorstrike_bar = "<隕石轟擊>"
+
 	L.breath_cooldown = "下一闇息術！"
 end
 

@@ -17,6 +17,41 @@ if L then
 	L.prison_message = "暗影之牢：>x%d<！"
 end
 
+L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
+if L then
+	L.engage_trigger = "你做了一個…不明智的…選擇。"
+
+	L.shadow = "群聚暗影"
+	L.shadow_message = "群聚暗影！"
+	L.shadow_bar = "<下一群聚暗影>"
+
+	L.feed_message = "即將 狂亂嗜血！"
+
+	L.pact_message = "暗殞契印"
+	L.pact_bar = "<下一暗殞契印>"
+
+	L.phase_message = "即將 空中階段！"
+	L.phase1_bar = "<地面階段>"
+	L.phase2_bar = "<空中階段>"
+end
+
+L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhTW")
+if L then
+	L.adds = "血獸"
+	L.adds_desc = "當召喚血獸時發出警報和顯示計時條。"
+	L.adds_warning = "5秒後，血獸！"
+	L.adds_message = "召喚血獸！"
+	L.adds_bar = "<下一血獸>"
+
+	L.rune_bar = "<下一血魄符文>"
+
+	L.mark = "墮落勇士印記：>%d<！"
+
+	L.engage_trigger = "以巫妖王之力!"
+	L.warmup_alliance = "那我們走吧!快點……"
+	L.warmup_horde = "柯爾克隆，前進!勇士們，要當心，天譴軍團已經……"
+end
+
 L = BigWigs:NewBossLocale("Festergut", "zhTW")
 if L then
 	L.engage_trigger = "玩耍時間?"
@@ -91,11 +126,6 @@ if L then
 	L.engage_trigger = "天譴軍團會化身為死亡與毀滅，席捲整個世界。"
 end
 
-L = BigWigs:NewBossLocale("Putricide Dogs", "zhTW")
-if L then
-	L.wound_message = "致死重傷%2$dx：>%1$s<！"
-end
-
 L = BigWigs:NewBossLocale("Professor Putricide", "zhTW")
 if L then
 	L.phase = "階段"
@@ -123,6 +153,11 @@ if L then
 	L.unbound_bar = "<肆虐瘟疫：%s>"
 end
 
+L = BigWigs:NewBossLocale("Putricide Dogs", "zhTW")
+if L then
+	L.wound_message = "致死重傷%2$dx：>%1$s<！"
+end
+
 L = BigWigs:NewBossLocale("Rotface", "zhTW")
 if L then
 	L.engage_trigger = "不不不不不!"
@@ -137,29 +172,12 @@ if L then
 	L.spray_bar = "<下一泥漿噴霧>"
 end
 
-L = BigWigs:NewBossLocale("Deathbringer Saurfang", "zhTW")
-if L then
-	L.adds = "血獸"
-	L.adds_desc = "當召喚血獸時發出警報和顯示計時條。"
-	L.adds_warning = "5秒後，血獸！"
-	L.adds_message = "召喚血獸！"
-	L.adds_bar = "<下一血獸>"
-
-	L.rune_bar = "<下一血魄符文>"
-
-	L.mark = "墮落勇士印記：>%d<！"
-
-	L.engage_trigger = "以巫妖王之力!"
-	L.warmup_alliance = "那我們走吧!快點……"
-	L.warmup_horde = "柯爾克隆，前進!勇士們，要當心，天譴軍團已經……"
-end
-
 L = BigWigs:NewBossLocale("Sindragosa", "zhTW")
 if L then
 	L.engage_trigger = "你們真是夠蠢了才會來到此地。北裂境的冰冷寒風將吞噬你們的靈魂!"
 
 	L.phase2 = "第二階段"
-	L.phase2_desc = "當進入第二階段發出警報。（35%）"
+	L.phase2_desc = "當辛德拉苟莎進入第二階段發出警報。（35%）"
 	L.phase2_trigger = "現在，絕望地感受我主無限的力量吧!"
 	L.phase2_message = "第二階段！"
 
@@ -180,47 +198,6 @@ if L then
 	L.chilled_message = "沁骨之寒 x%d！"
 	L.buffet_message = "秘能連擊 x%d！"
 	L.buffet_cd = "<下一無束魔法>"
-end
-
-L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
-if L then
-	L.engage_trigger = "入侵者已經突破了內部聖所。加快摧毀綠龍的速度!只要留下骨頭和肌腱來復活!"
-
-	L.portal = "夢魘之門"
-	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
-	L.portal_message = "打開夢魘之門！"
-	L.portal_bar = "<即將夢魘之門>"
-	L.portalcd_message = "14秒後，夢魘之門：>%d<！"
-	L.portalcd_bar = "<下一夢魘之門：%d>"
-	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
-
-	L.manavoid_message = ">你< 潰法力場！"
-
-	L.suppresser = "抑制者出現"
-	L.suppresser_desc = "當一群抑制者出現時發出警報。"
-	L.suppresser_message = "即將出現 抑制者！"
-
-	L.blazing = "熾熱骷髏"
-	L.blazing_desc = "熾熱骷髏|cffff0000監視|r出現計時條。此計時條可能不準確，只做參考。"
-	L.blazing_warning = "即將 熾熱骷髏！"
-end
-
-L = BigWigs:NewBossLocale("Blood-Queen Lana'thel", "zhTW")
-if L then
-	L.engage_trigger = "你做了一個…不明智的…選擇。"
-
-	L.shadow = "群聚暗影"
-	L.shadow_message = "群聚暗影！"
-	L.shadow_bar = "<下一群聚暗影>"
-
-	L.feed_message = "即將 狂亂嗜血！"
-
-	L.pact_message = "暗殞契印"
-	L.pact_bar = "<下一暗殞契印>"
-
-	L.phase_message = "即將 空中階段！"
-	L.phase1_bar = "<地面階段>"
-	L.phase2_bar = "<空中階段>"
 end
 
 L = BigWigs:NewBossLocale("The Lich King", "zhTW")
@@ -263,6 +240,32 @@ if L then
 	L.valkyrhug_message = "華爾琪抓人！"
 	L.cave_phase = "劍內階段！"
 
+	L.frenzy_bar = "%s狂亂！"
+	L.frenzy_survive_message = "%s將在瘟疫後存活！"
 	L.enrage_bar = "<狂怒>"
+	L.frenzy_message = "小怪狂亂！"
+end
+
+L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhTW")
+if L then
+	L.engage_trigger = "入侵者已經突破了內部聖所。加快摧毀綠龍的速度!只要留下骨頭和肌腱來復活!"
+
+	L.portal = "夢魘之門"
+	L.portal_desc = "當瓦莉絲瑞雅·夢行者打開夢魘之門時發出警報。"
+	L.portal_message = "打開夢魘之門！"
+	L.portal_bar = "<即將夢魘之門>"
+	L.portalcd_message = "14秒後，夢魘之門：>%d<！"
+	L.portalcd_bar = "<下一夢魘之門：%d>"
+	L.portal_trigger = "我打開了一道傳送門通往夢境。你們的救贖就在其中，英雄們……"
+
+	L.manavoid_message = ">你< 潰法力場！"
+
+	L.suppresser = "抑制者出現"
+	L.suppresser_desc = "當一群抑制者出現時發出警報。"
+	L.suppresser_message = "即將出現 抑制者！"
+
+	L.blazing = "熾熱骷髏"
+	L.blazing_desc = "熾熱骷髏|cffff0000監視|r出現計時條。此計時條可能不準確，只做參考。"
+	L.blazing_warning = "即將 熾熱骷髏！"
 end
 
