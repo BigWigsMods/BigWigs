@@ -46,8 +46,6 @@ L = mod:GetLocale()
 -- Initialization
 --
 
--- XXX validate spell IDs in triggers, especially vile gas
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "InhaleCD", 69165)
 	self:Log("SPELL_CAST_START", "Blight", 69195, 71219, 73031, 73032)
@@ -117,7 +115,7 @@ function mod:Blight(_, spellId, _, _, spellName)
 end
 
 function mod:Bloat(player, spellId, _, _, _, stack)
-	if stack > 1 then
+	if stack > 5 then
 		self:TargetMessage(72551, L["bloat_message"], player, "Positive", spellId, nil, stack)
 		self:Bar(72551, L["bloat_bar"], 10, spellId)
 	end

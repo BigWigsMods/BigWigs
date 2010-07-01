@@ -19,7 +19,7 @@ mod.optionHeaders = {
 --
 
 local handle_Adds = nil
-local difficulty = 0 --XXX temp
+local difficulty = 0
 local dmTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -109,16 +109,12 @@ end
 
 do
 	local scheduled = nil
-	local current = 1
 	local function dmWarn(spellName)
 		mod:TargetMessage(71289, spellName, dmTargets, "Important", 71289, "Alert")
 		scheduled = nil
 	end
 	function mod:DominateMind(player, spellId, _, _, spellName)
 		dmTargets[#dmTargets + 1] = player
-		SetRaidTarget(player, current)
-		current = current + 1
-		if current == 4 then current = 1 end
 		if not scheduled then
 			scheduled = true
 			self:Bar(71289, L["dominate_bar"], 40, 71289)
