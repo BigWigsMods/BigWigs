@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("The Lich King", "Icecrown Citadel")
 if not mod then return end
 mod:RegisterEnableMob(36597)
-mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, {69200, "ICON", "WHISPER", "FLASHSHAKE"}, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "WHISPER", "FLASHSHAKE", "ICON"}, "berserk", "bosskill"}
+mod.toggleOptions = {72143, 70541, {73912, "ICON", "FLASHSHAKE"}, 70372, {72762, "SAY", "ICON", "WHISPER", "FLASHSHAKE"}, 69409, 69037, {68980, "ICON", "WHISPER", "FLASHSHAKE"}, 70498, {74270, "FLASHSHAKE"}, 69200, {72262, "FLASHSHAKE"}, 72350, {73529, "SAY", "WHISPER", "FLASHSHAKE", "ICON"}, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[72143] = CL.phase:format(1),
@@ -75,6 +75,7 @@ if L then
 	L.frenzy_survive_message = "%s will survive after plague"
 	L.enrage_bar = "~Enrage"
 	L.frenzy_message = "Add frenzied!"
+	L.frenzy_soon_message = "5sec to frenzy!"
 end
 L = mod:GetLocale()
 
@@ -172,12 +173,11 @@ function mod:PlagueTick(horrorName, _, _, tickDamage, _, _, _, _, _, dGUID)
 		if not max or max == 0 then return end
 		local nextTickHP = hp - tickDamage
 		-- Will the shambler die from the next tick?
-		if nextTickHP <= 0 then
-			print("add will die from next tick")
-		return end
+		if nextTickHP <= 0 then return end
 		local percentHp = math.floor(nextTickHP / max * 100 + 0.5)
 		-- This sucker will frenzy in 5 seconds
 		if percentHp <= 20 then
+			self:Message(70372, L["frenzy_soon_message"], "Important", 72143, "Info")
 			self:Bar(70372, L["frenzy_bar"]:format(horrorName), 5, 72143)
 		end
 	end
@@ -254,10 +254,7 @@ end
 
 function mod:RagingSpirit(player, spellId, _, _, spellName)
 	self:TargetMessage(69200, spellName, player, "Personal", spellId, "Alert")
-	if UnitIsUnit(player, "player") then self:FlashShake(69200) end
-	self:Whisper(69200, player, spellName)
 	self:Bar(69200, L["ragingspirit_bar"], 23, spellId)
-	self:PrimaryIcon(69200, player)
 end
 
 local last = 0
