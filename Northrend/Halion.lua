@@ -45,8 +45,8 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fire", 74562)
 	self:Log("SPELL_AURA_APPLIED", "Shadow", 74792)
-	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879)
-	self:Log("SPELL_CAST_START", "Breath", 75954, 74526) -- Dark breath, flame breath
+	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879, 74648)
+	self:Log("SPELL_CAST_START", "Breath", 75954, 74526, 74806, 74525) -- Dark breath, flame breath
 	self:Death("Win", 28860)
 
 	self:Emote("TwilightCutter", L["twilight_cutter_trigger"])
