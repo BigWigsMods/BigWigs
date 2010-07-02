@@ -124,9 +124,11 @@ if L then
 	L.twilight_cutter_bar = "~Лезвие сумерок"
 	L.twilight_cutter_warning = "Скоро Лезвие сумерок"
 
-	L.fireconsumption_message_self = "На ВАС - Пылающий огонь!"
-	L.fireconsumption_message = "Пылающий огонь"
+	L.fire_message = "Огненная бомба"
+	L.shadow_message = "Пожирающая бомба"
 
-	L.shadowconsumption_message_self = "На ВАС - Пожирание души!"
-	L.shadowconsumption_message = "Пожирание души"
+	L.meteorstrike_bar = "Падение метеора"
+
+	L.breath_cooldown = "Следующее дыхание"
+	
 end
