@@ -103,11 +103,11 @@ end
 
 L = BigWigs:NewBossLocale("Halion", "koKR")
 if L then
-	L.engage_trigger = "너희 세상에 파멸의 바람이 불어온다. 파괴의 시대가 새로운 도래할때 모두 그 증인이 되리라!"	--check
+	L.engage_trigger = "너희 세상에 파멸의 바람이 불어온다"
 
-	L.phase_two_trigger = "황혼 세계에서는 고통만이 있으리라! 자신 있다면 들어와 봐라!"	--check
+	L.phase_two_trigger = "황혼 세계에서는 고통만이 있으리라"
 
-	L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"	--check
+	L.twilight_cutter_trigger = "주위에 파편하는 구슬들이 고동치며 어둠의 기운을"
 	L.twilight_cutter_bar = "~황혼 절단기"
 	L.twilight_cutter_warning = "곧 황혼 절단기"
 
