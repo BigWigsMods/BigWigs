@@ -74,8 +74,12 @@ L["Positive"] = true
 --
 
 L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
+L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = true
+L["Normal messages"] = true
+L["Emphasized messages"] = true
+L["Output"] = true
 
 L["Use colors"] = true
 L["Toggles white only messages ignoring coloring."] = true

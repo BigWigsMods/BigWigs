@@ -103,9 +103,27 @@ plugin.defaultDB = {
 	chat = nil,
 	useicons = true,
 	classcolor = true,
+	emphasizedMessages = {
+		sink20OutputSink = "BigWigsEmphasized",
+	},
 }
 
-plugin.pluginOptions = plugin:GetSinkAce3OptionsDataTable()
+local fakeEmphasizeMessageAddon = {}
+LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
+
+plugin.pluginOptions = {
+	type = "group",
+	name = L["Output"],
+	childGroups = "tab",
+	args = {
+		normal = plugin:GetSinkAce3OptionsDataTable(),
+		emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
+	},
+}
+plugin.pluginOptions.args.normal.name = L["Normal messages"]
+plugin.pluginOptions.args.normal.order = 1
+plugin.pluginOptions.args.emphasized.name = L["Emphasized messages"]
+plugin.pluginOptions.args.emphasized.order = 2
 
 local function updateProfile()
 	if not anchor then return end
@@ -124,6 +142,8 @@ end
 --
 
 function plugin:OnRegister()
+	fakeEmphasizeMessageAddon:SetSinkStorage(self.db.profile.emphasizedMessages)
+	self:RegisterSink("BigWigsEmphasized", "Big Wigs Emphasized", L.emphasizedSinkDescription, "EmphasizedPrint")
 	self:SetSinkStorage(self.db.profile)
 	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -135,15 +155,11 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", function()
-		if plugin.db.sink20OutputSink == "BigWigs" then
-			if not anchor then createAnchor() end
-			anchor:Show()
-		end
+		if not anchor then createAnchor() end
+		anchor:Show()
 	end)
 	self:RegisterMessage("BigWigs_StopConfigureMode", function()
-		if plugin.db.sink20OutputSink == "BigWigs" then
-			anchor:Hide()
-		end
+		anchor:Hide()
 	end)
 
 	seModule = BigWigs:GetPlugin("Super Emphasize", true)
@@ -213,7 +229,25 @@ do
 		icons:SetCallback("OnValueChanged", checkboxCallback)
 		icons:SetUserData("key", "useicons")
 		icons:SetUserData("tooltip", L["Show icons next to messages, only works for Raid Warning."])
+--[[
+		local normal = AceGUI:Create("InlineGroup")
+		normal:SetTitle(L["Normal messages"])
+		normal:SetFullWidth(true)
 
+		do
+			
+			normal:AddChildren()
+		end
+		
+		local emphasized = AceGUI:Create("InlineGroup")
+		emphasized:SetTitle(L["Emphasized messages"])
+		emphasized:SetFullWidth(true)
+		
+		do
+		
+			emphasized:AddChildren()
+		end
+]]
 		return chat, colors, classColors, icons
 	end
 end
@@ -307,7 +341,11 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	-- new message at 1
 	local slot = labels[1]
 
-	slot:SetFontObject(font or GameFontNormalHuge)
+	local f = font or GameFontNormalHuge
+	local face, size, flags = f:GetFont()
+	slot:SetFont(face, size, "THICKOUTLINE")
+
+	--slot:SetFontObject(font or GameFontNormalHuge)
 	slot.minHeight = select(2, slot:GetFont())
 	if icon then text = "|T"..icon..":" .. slot.minHeight .. ":" .. slot.minHeight .. ":-5|t"..text end
 	slot:SetText(text)
@@ -318,7 +356,7 @@ end
 do
 	local emphasizedText = nil
 	local frame = nil
-	function plugin:EmphasizedPrint(text, r, g, b)
+	function plugin:EmphasizedPrint(addon, text, r, g, b, font, size, _, _, _, icon)
 		if not emphasizedText then
 			frame = CreateFrame("Frame", nil, UIParent)
 			frame:SetFrameStrata("HIGH")
@@ -341,7 +379,7 @@ do
 		FadingFrame_Show(frame)
 	end
 	function plugin:BigWigs_EmphasizedMessage(event, ...)
-		self:EmphasizedPrint(...)
+		fakeEmphasizeMessageAddon:Pour(...)
 	end
 end
 
@@ -372,7 +410,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		if seModule.db.profile.upper then
 			text = text:upper()
 		end
-		self:EmphasizedPrint(text, r, g, b)
+		fakeEmphasizeMessageAddon:Pour(text, r, g, b)
 	else
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end
