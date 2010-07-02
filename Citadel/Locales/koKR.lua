@@ -190,7 +190,7 @@ if L then
 	L.portal_desc = "악몽의 차원문을 알립니다."
 	L.portal_message = "차원문 생성!"
 	L.portal_bar = "차원문 생성"
-	L.portalcd_message = "14 초후 차원문 %d 생성!"
+	L.portalcd_message = "14초 후 차원문 %d 생성!"
 	L.portalcd_bar = "다음 차원문 %d"
 	L.portal_trigger = "에메랄드의 꿈으로 가는 차원문을 열어두었다. 너희의 구원은 그 안에 있다..."
 
@@ -263,6 +263,10 @@ if L then
 	L.valkyrhug_message = "발키르 붙음"
 	L.cave_phase = "동굴 단계"
 
+	L.frenzy_bar = "%s 광기!"
+	L.frenzy_survive_message = "%s 역병 후 살아남음"
 	L.enrage_bar = "~격노"
+	L.frenzy_message = "격노 추가!"
+	L.frenzy_soon_message = "5초 후 격노!"
 end
 

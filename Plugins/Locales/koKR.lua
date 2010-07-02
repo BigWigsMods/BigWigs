@@ -76,8 +76,12 @@ L["Positive"] = "제안"
 --
 
 L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
+L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "메세지"
+L["Normal messages"] = "일반 메세지"
+L["Emphasized messages"] = "강조 메세지"
+L["Output"] = "출력"
 
 L["Use colors"] = "색상 사용"
 L["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다."
