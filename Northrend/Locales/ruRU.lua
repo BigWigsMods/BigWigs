@@ -116,11 +116,11 @@ end
 
 L = BigWigs:NewBossLocale("Halion", "ruRU")
 if L then
-	--L.engage_trigger = "Your world teeters on the brink of annihilation. You will ALL bear witness to the coming of a new age of DESTRUCTION!"
+	L.engage_trigger = "Этот мир вот-вот соскользнет в бездну. Вам выпала честь узреть начало эры РАЗРУШЕНИЯ!"
 
-	--L.phase_two_trigger = "You will find only suffering within the realm of twilight! Enter if you dare!"
+	L.phase_two_trigger = "В мире сумерек вы найдете лишь страдания! Входите, если посмеете!"
 
-	--L.twilight_cutter_trigger = "The orbiting spheres pulse with dark energy!"
+	L.twilight_cutter_trigger = "Во вращающихся сферах пульсирует темная энергия!"
 	L.twilight_cutter_bar = "~Лезвие сумерок"
 	L.twilight_cutter_warning = "Скоро Лезвие сумерок"
 
