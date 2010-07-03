@@ -244,6 +244,7 @@ if L then
 	L.frenzy_survive_message = "%s wird Seuchentick überleben!"
 	L.enrage_bar = "~Wutanfall"
 	L.frenzy_message = "Add Raserei!"
+	L.frenzy_soon_message = "5 sek bis Raserei!"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "deDE")

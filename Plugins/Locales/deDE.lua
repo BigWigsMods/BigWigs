@@ -75,9 +75,13 @@ L["Positive"] = "Positiv"
 -- Messages.lua
 --
 
-L.sinkDescription = "Tunnelt die Ausgabe durch die Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen wieder schnell, um den Nutzer darauf aufmerksam zu machen."
+L.sinkDescription = "Tunnelt die Big Wigs Ausgabe durch die normale Big Wigs Nachrichtenanzeige. Diese Anzeige unterstützt Symbole, Farben und kann 4 Nachrichten gleichzeitig anzeigen. Neuere Nachrichten werden größer und schrumpfen dann wieder schnell, um die Aufmerksamkeit dementsprechend zu lenken."
+L.emphasizedSinkDescription = "Tunnelt die Big Wigs Ausgabe durch Big Wigs 'stark hervorgehobene' Nachrichtenanzeige. Diese Anzeige unterstützt Text und Farbe und kann nur eine Nachricht gleichzeitig anzeigen."
 
 L["Messages"] = "Nachrichten"
+L["Normal messages"] = "Normale Nachrichten"
+L["Emphasized messages"] = "Hervorgehobene Nachrichten"
+L["Output"] = "Ausgabe"
 
 L["Use colors"] = "Farben verwenden"
 L["Toggles white only messages ignoring coloring."] = "Wählt, ob Nachrichten farbig oder weiß angezeigt werden."
