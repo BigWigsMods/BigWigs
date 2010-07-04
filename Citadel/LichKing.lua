@@ -174,9 +174,9 @@ function mod:PlagueTick(horrorName, _, _, tickDamage, _, _, _, _, _, dGUID)
 		local nextTickHP = hp - tickDamage
 		-- Will the shambler die from the next tick?
 		if nextTickHP <= 0 then return end
-		local percentHp = math.floor(nextTickHP / max * 100 + 0.5)
+		local percentHp = (nextTickHP / max) * 100
 		-- This sucker will frenzy in 5 seconds
-		if percentHp <= 20 then
+		if percentHp < 21 then
 			self:Message(70372, L["frenzy_soon_message"], "Important", 72143, "Info")
 			self:Bar(70372, L["frenzy_bar"]:format(horrorName), 5, 72143)
 		end

@@ -540,10 +540,6 @@ local function getSlaveToggle(label, desc, key, module, flag, master)
 	return toggle
 end
 
-local listToggles = {
-	"MESSAGE", "BAR", "FLASHSHAKE", "ICON", "WHISPER", "SAY", "PING"
-}
-
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
 	wipe(advancedOptions)
@@ -843,4 +839,3 @@ do
 		end
 	end
 end
-

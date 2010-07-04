@@ -44,7 +44,7 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fire", 74562)
 	self:Log("SPELL_AURA_APPLIED", "Shadow", 74792)
-	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879, 74648)
+	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879, 74648, 75877)
 	-- Dark breath 25m, flame breath 25m, dark breath 10m, flame breath 10m
 	self:Log("SPELL_CAST_START", "Breath", 75954, 74526, 74806, 74525)
 	self:Death("Win", 28860)
