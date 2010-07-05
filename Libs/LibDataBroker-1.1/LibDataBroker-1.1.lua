@@ -2,7 +2,7 @@
 assert(LibStub, "LibDataBroker-1.1 requires LibStub")
 assert(LibStub:GetLibrary("CallbackHandler-1.0", true), "LibDataBroker-1.1 requires CallbackHandler-1.0")
 
-local lib, oldminor = LibStub:NewLibrary("LibDataBroker-1.1", 3)
+local lib, oldminor = LibStub:NewLibrary("LibDataBroker-1.1", 4)
 if not lib then return end
 oldminor = oldminor or 0
 
@@ -62,5 +62,29 @@ if oldminor < 1 then
 
 	function lib:GetNameByDataObject(dataobject)
 		return self.namestorage[dataobject]
+	end
+end
+
+if oldminor < 4 then
+	local next = pairs(attributestorage)
+	function lib:pairs(dataobject_or_name)
+		local t = type(dataobject_or_name)
+		assert(t == "string" or t == "table", "Usage: ldb:pairs('dataobjectname') or ldb:pairs(dataobject)")
+
+		local dataobj = self.proxystorage[dataobject_or_name] or dataobject_or_name
+		assert(attributestorage[dataobj], "Data object not found")
+
+		return next, attributestorage[dataobj], nil
+	end
+
+	local ipairs_iter = ipairs(attributestorage)
+	function lib:ipairs(dataobject_or_name)
+		local t = type(dataobject_or_name)
+		assert(t == "string" or t == "table", "Usage: ldb:ipairs('dataobjectname') or ldb:ipairs(dataobject)")
+
+		local dataobj = self.proxystorage[dataobject_or_name] or dataobject_or_name
+		assert(attributestorage[dataobj], "Data object not found")
+
+		return ipairs_iter, attributestorage[dataobj], 0
 	end
 end
