@@ -244,6 +244,7 @@ if L then
 	L.frenzy_survive_message = "%s将在瘟疫后存活！"
 	L.enrage_bar = "<激怒>"
 	L.frenzy_message = "小怪狂乱！"
+	L.frenzy_soon_message = "5秒后，狂乱！"
 end
 
 L = BigWigs:NewBossLocale("Valithria Dreamwalker", "zhCN")

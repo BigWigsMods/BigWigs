@@ -75,9 +75,13 @@ L["Positive"] = "積極"
 -- Messages.lua
 --
 
-L.sinkDescription = "向外通過 Big Wigs 插件訊息顯示。這些包含了圖示，顏色和在同一時間在螢幕上的顯示4個訊息。新的訊息將再一次快速的放大和縮小來提醒用戶。"
+L.sinkDescription = "向外通過 Big Wigs 插件訊息顯示。這些包含了圖示，顏色和在同一時間在螢幕上的顯示4個訊息。新的訊息將再一次快速的放大和縮小來提醒用戶。新插入的訊息將增大並立即縮小提醒用戶注意。"
+L.emphasizedSinkDescription = "通過此插件輸出到 Big Wigs 醒目訊息顯示。此顯示支持文本和顏色，每次只可顯示一條訊息。"
 
 L["Messages"] = "訊息"
+L["Normal messages"] = "一般訊息"
+L["Emphasized messages"] = "強調訊息"
+L["Output"] = "輸出"
 
 L["Use colors"] = "使用彩色訊息"
 L["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。"
