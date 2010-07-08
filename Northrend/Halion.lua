@@ -31,7 +31,9 @@ if L then
 	L.fire_message = "Fire bomb"
 	L.shadow_message = "Shadow bomb"
 
+	L.meteorstrike_yell = "The heavens burn!"
 	L.meteorstrike_bar = "Meteor Strike"
+	L.meteor_warning_message = "Meteor incoming!"
 
 	L.breath_cooldown = "Next Breath"
 end
@@ -52,6 +54,7 @@ function mod:OnBossEnable()
 	self:Emote("TwilightCutter", L["twilight_cutter_trigger"])
 	self:Yell("Engage", L["engage_trigger"])
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
+	self:Yell("MeteorInc", L["meteorstrike_yell"])
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
@@ -70,7 +73,7 @@ function mod:Fire(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(74562)
 	end
-	self:TargetMessage(74562, L["fire_message"], player, "Personal", spellId)
+	self:TargetMessage(74562, L["fire_message"], player, "Personal", spellId, "Info")
 	self:Whisper(74562, player, L["fire_message"])
 	self:PrimaryIcon(74562, player)
 end
@@ -79,7 +82,7 @@ function mod:Shadow(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(74792)
 	end
-	self:TargetMessage(74792, L["shadow_message"], player, "Personal", spellId)
+	self:TargetMessage(74792, L["shadow_message"], player, "Personal", spellId, "Info")
 	self:Whisper(74792, player, L["shadow_message"])
 	self:SecondaryIcon(74792, player)
 end
@@ -93,6 +96,10 @@ function mod:TwilightCutter()
 	self:Message(74769, L["twilight_cutter_warning"], "Important", 74769, "Alert")
 end
 
+function mod:MeteorInc()
+	self:Message(75879, L["meteor_warning_message"], "Urgent", 75879, "Long")
+end
+
 function mod:MeteorStrike(_, spellId, _, _, spellName)
 	self:Bar(75879, L["meteorstrike_bar"], 40, spellId)
 	self:Message(75879, spellName, "Important", spellId)
@@ -102,3 +109,4 @@ function mod:PhaseTwo()
 	phase = 2
 	self:Bar(74769, L["twilight_cutter_bar"], 40, 74769)
 end
+
