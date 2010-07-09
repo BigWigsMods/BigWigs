@@ -141,6 +141,7 @@ if L then
 	L.frenzy_survive_message = "%s survivra après la Peste"
 	L.enrage_bar = "~Enrager"
 	L.frenzy_message = "Horreur enragée !"
+	L.frenzy_soon_message = "5 sec. avant Enrager !"
 end
 
 L = BigWigs:NewBossLocale("Lord Marrowgar", "frFR")

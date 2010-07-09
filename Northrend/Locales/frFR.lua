@@ -28,13 +28,14 @@ if L then
 
 	L.twilight_cutter_trigger = "Les sphères volantes rayonnent d'énergie noire !"
 	L.twilight_cutter_bar = "~Tranchant du crépuscule"
-	L.twilight_cutter_warning = "Tranchant du crépuscule imminent"
+	L.twilight_cutter_warning = "Arrivée d'un Tranchant du crépuscule !"
 
 	L.fire_message = "Combustion ardente"
 	L.shadow_message = "Consomption d'âmes"
 
+	L.meteorstrike_yell = "Les cieux s'embrasent !"
 	L.meteorstrike_bar = "Frappe météore"
-	L.meteorstrike_warning = "Frappe météore"
+	L.meteorstrike_warning = "Arrivée d'une Frappe météore !"
 
 	L.breath_cooldown = "Prochain Souffle"
 end
