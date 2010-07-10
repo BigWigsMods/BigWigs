@@ -61,7 +61,7 @@ end
 
 function mod:OnEngage(diff)
 	phase = 1
-	self:Berserk(600) -- assumed
+	self:Berserk(480)
 	self:Bar(75879, L["meteorstrike_bar"], 30, 75879)
 end
 
