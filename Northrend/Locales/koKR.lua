@@ -114,7 +114,9 @@ if L then
 	L.fire_message = "맹렬한 발화"
 	L.shadow_message = "영혼 소진"
 
+	L.meteorstrike_yell = "하늘이 타오른다!"
 	L.meteorstrike_bar = "유성 충돌"
+	L.meteor_warning_message = "곧 유성 충돌!"
 
 	L.breath_cooldown = "다음 숨결"
 end
