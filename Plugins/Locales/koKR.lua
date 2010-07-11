@@ -75,8 +75,8 @@ L["Positive"] = "제안"
 -- Messages.lua
 --
 
-L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
-L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
+L.sinkDescription = "Big Wigs 메세지 표시를 통해 이 애드온의 메세지를 출력합니다. 이것은 디스플레이와 색상, 아이콘을 지원하는 메시지가 화면에 한 번에 최대 4개로 표시됩니다."
+L.emphasizedSinkDescription = "Big Wigs Emphasized 메세지 표시를 통해 이 애드온의 메세지를 출력합니다. 이것은 텍스트와 색상을 지원하는 메세지가 화면에 한번에 하나만 표시됩니다."
 
 L["Messages"] = "메세지"
 L["Normal messages"] = "일반 메세지"
@@ -121,7 +121,7 @@ L["|cffff0000Disable|r"] = "|cffff0000비활성화|r"
 -- Sound.lua
 --
 
-L.soundDefaultDescription = "With this option set, Big Wigs will only use the default Blizzard raid warning sound for messages that come with a sound alert. Note that only some messages from encounter scripts will trigger a sound alert."
+L.soundDefaultDescription = "이 옵션을 세트로 Big Wigs 의 기본 소리 경고와 함께 메시지에 대한 블리자드의 공격대 경고 사운드를 사용합니다."
 
 L["Sounds"] = "효과음"
 
@@ -190,7 +190,7 @@ L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "팁 색인
 --
 
 L["Super Emphasize"] = "특수 강조바"
-L.superEmphasizeDesc = "특정 보스가 사용하는 스킬과 관련한 메세지와 바를 특징있게 나타냅니다.\n\n여기에서 보스가 사용하는 기술에 대하여 특수 강조 옵션을 구성합니다.\n\n|cffff4411체크를 해제하면 슈퍼 강조의 모든 능력은 기본적으로 해제됩니다.|r\n"
+L.superEmphasizeDesc = "특정 보스가 사용하는 스킬과 관련한 메세지와 바를 특징있게 나타냅니다.\n\n여기에서 보스가 사용하는 기술에 대하여 특수 강조 옵션을 구성합니다.\n\n|cffff4411체크를 해제하면 특수 강조의 모든 능력은 기본적으로 해제됩니다.|r\n"
 L["UPPERCASE"] = "대문자"
 L["Uppercases all messages related to a super emphasized option."] = "특수 강조의 모든 관련된 메세지를 대문자로 표시합니다."
 L["Double size"] = "2배 크기"
