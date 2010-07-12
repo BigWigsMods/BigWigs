@@ -49,7 +49,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879, 74648, 75877)
 	-- Dark breath 25m, flame breath 25m, dark breath 10m, flame breath 10m
 	self:Log("SPELL_CAST_START", "Breath", 75954, 74526, 74806, 74525)
-	self:Death("Win", 28860)
+	self:Death("Win", 39863, 40142)
 
 	self:Emote("TwilightCutter", L["twilight_cutter_trigger"])
 	self:Yell("Engage", L["engage_trigger"])
