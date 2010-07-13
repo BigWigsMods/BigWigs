@@ -372,16 +372,22 @@ do
 	end
 
 	function showTip(h, t, f)
-		if not window then createTipFrame() end
-		header:SetText(h)
-		text:SetText(t)
-		if f then
-			footer:SetText(f)
-			footer:Show()
+		if plugin.db.profile.chat then
+			print(h)
+			print(t)
+			if f then print(f) end
 		else
-			footer:Hide()
+			if not window then createTipFrame() end
+			header:SetText(h)
+			text:SetText(t)
+			if f then
+				footer:SetText(f)
+				footer:Show()
+			else
+				footer:Hide()
+			end
+			window:Show()
 		end
-		window:Show()
 	end
 end
 
