@@ -28,6 +28,7 @@ if L then
 	L.twilight_cutter_bar = "~Laser beams"
 	L.twilight_cutter_warning = "Laser beams incoming!"
 
+	L.fire_damage_message = "Your feet are burning!"
 	L.fire_message = "Fire bomb"
 	L.shadow_message = "Shadow bomb"
 
@@ -47,6 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fire", 74562)
 	self:Log("SPELL_AURA_APPLIED", "Shadow", 74792)
 	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879, 74648, 75877)
+	self:Log("SPELL_DAMAGE", "FireDamage", 75947, 75948, 75949, 75950, 75951, 75952)
 	-- Dark breath 25m, flame breath 25m, dark breath 10m, flame breath 10m
 	self:Log("SPELL_CAST_START", "Breath", 75954, 74526, 74806, 74525)
 	self:Death("Win", 39863, 40142)
@@ -68,6 +70,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:FireDamage(player)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(75879, L["fire_damage_message"], "Personal", 75947)
+	end
+end
 
 function mod:Fire(player, spellId)
 	if UnitIsUnit(player, "player") then
