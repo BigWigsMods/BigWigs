@@ -12,7 +12,6 @@ mod.toggleOptions = {69076, 69057, {69138, "FLASHSHAKE"}, "bosskill"}
 --
 
 local impaleTargets = mod:NewTargetList()
-local difficulty = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,8 +45,7 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-function mod:OnEngage(diff)
-	difficulty = diff
+function mod:OnEngage()
 	self:Bar(69076, L["bonestorm_cd"], 45, 69076)
 	self:DelayedMessage(69076, 40, L["bonestorm_warning"], "Attention")
 end
@@ -84,7 +82,7 @@ function mod:Coldflame(player, spellId)
 end
 
 local function afterTheStorm()
-	if difficulty > 2 then
+	if mod:GetInstanceDifficulty() > 2 then
 		mod:Bar(69076, L["bonestorm_cd"], 55, 69076)
 		mod:DelayedMessage(69076, 50, L["bonestorm_warning"], "Attention")
 	else
@@ -96,7 +94,11 @@ end
 
 function mod:Bonestorm(_, spellId, _, _, spellName)
 	local time = 20
-	if difficulty > 2 then time = 34 else self:SendMessage("BigWigs_StopBar", self, L["impale_cd"]) end
+	if self:GetInstanceDifficulty() > 2 then
+		time = 34
+	else
+		self:SendMessage("BigWigs_StopBar", self, L["impale_cd"])
+	end
 	self:Bar(69076, spellName, time, spellId)
 	self:ScheduleTimer(afterTheStorm, time)
 end

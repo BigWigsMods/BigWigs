@@ -19,7 +19,6 @@ mod.optionHeaders = {
 --
 
 local phase = 0
-local difficulty = 0
 local beaconTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -84,8 +83,7 @@ function mod:Warmup()
 	self:ScheduleTimer(self.Engage, 10, self)
 end
 
-function mod:OnEngage(diff)
-	difficulty = diff
+function mod:OnEngage()
 	phase = 1
 	self:Berserk(600)
 	self:Bar("airphase", L["airphase_bar"], 63, 23684)
@@ -173,7 +171,7 @@ function mod:Unchained(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(69762, L["unchained_message"], "Personal", spellId, "Alert")
 		self:FlashShake(69762)
-		if difficulty > 2 then
+		if self:GetInstanceDifficulty() > 2 then
 			self:OpenProximity(20)
 			self:ScheduleTimer(self.CloseProximity, 30, self)
 		end

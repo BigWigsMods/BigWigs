@@ -19,7 +19,6 @@ mod.optionHeaders = {
 --
 
 local handle_Adds = nil
-local difficulty = 0
 local dmTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -75,7 +74,6 @@ local function adds(time)
 end
 
 function mod:OnEngage(diff)
-	difficulty = diff
 	self:Berserk(600, true)
 	local time = 60
 	if diff > 2 then time = 45 end
@@ -98,7 +96,7 @@ function mod:DnD(player, spellId)
 end
 
 function mod:Barrier(_, spellId)
-	if difficulty < 3 then
+	if self:GetInstanceDifficulty() < 3 then
 		self:CancelTimer(handle_Adds, true)
 		self:SendMessage("BigWigs_StopBar", self, L["adds_bar"])
 		self:CancelDelayedMessage(L["adds_warning"])

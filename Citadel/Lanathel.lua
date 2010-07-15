@@ -18,7 +18,6 @@ local airPhaseTimers = {
 	{124, 120}, -- 10man Heroic
 	{127, 100}, -- 25man Heroic
 }
-local currentDifficulty = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -62,7 +61,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	currentDifficulty = diff
 	self:Berserk(320, true)
 	self:OpenProximity(6)
 	self:Bar(71772, L["phase2_bar"], airPhaseTimers[diff][1], 71772)
@@ -113,7 +111,7 @@ end
 function mod:AirPhase(player, spellId)
 	self:Message(71772, L["phase_message"], "Important", spellId, "Alarm")
 	self:Bar(71772, L["phase1_bar"], 12, spellId)
-	self:Bar(71772, L["phase2_bar"], airPhaseTimers[currentDifficulty][2], 71772)
+	self:Bar(71772, L["phase2_bar"], airPhaseTimers[self:GetInstanceDifficulty()][2], 71772)
 end
 
 function mod:Slash(player, spellId, _, _, spellName)

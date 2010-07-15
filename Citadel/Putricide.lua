@@ -23,7 +23,6 @@ mod.optionHeaders = {
 local p2, p3, first, barText = nil, nil, nil, "test"
 local oozeTargets = mod:NewTargetList()
 local gasTargets = mod:NewTargetList()
-local difficulty = 0
 
 --------------------------------------------------------------------------------
 --  Localization
@@ -84,8 +83,7 @@ function mod:OnBossEnable()
 	self:Yell("Engage", L["engage_trigger"])
 end
 
-function mod:OnEngage(diff)
-	difficulty = diff
+function mod:OnEngage()
 	self:Berserk(600)
 	p2, p3, first = nil, nil, nil
 	self:Bar(70351, L["experiment_bar"], 25, 70351)
@@ -221,7 +219,7 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(scanTarget, 0.2, spellName)
-			if difficulty > 2 then
+			if self:GetInstanceDifficulty() > 2 then
 				self:Bar(72295, L["ball_bar"], 20, spellId)
 			else
 				self:Bar(72295, L["ball_bar"], 25, spellId)

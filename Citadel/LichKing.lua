@@ -21,7 +21,6 @@ mod.optionHeaders = {
 --
 
 local phase = 0
-local difficulty = 0
 local hugged = mod:NewTargetList()
 local class = select(2,UnitClass("player"))
 local frenzied = {}
@@ -127,7 +126,6 @@ function mod:Warmup()
 end
 
 function mod:OnEngage(diff)
-	difficulty = diff
 	wipe(frenzied)
 	wipe(plagueTicks)
 
@@ -145,7 +143,7 @@ end
 --
 
 function mod:PlagueTick(horrorName, _, _, tickDamage, _, _, _, _, _, dGUID)
-	if difficulty < 3 then return end -- Doesn't apply on normal diff.
+	if self:GetInstanceDifficulty() < 3 then return end -- Doesn't apply on normal diff.
 	-- Not ticking on a Shambling Horror, so bail early
 	if tonumber(dGUID:sub(-12, -7), 16) ~= 37698 then return end
 
@@ -293,7 +291,7 @@ do
 end
 
 function mod:HarvestSoul(player, spellId, _, _, spellName)
-	if difficulty == 3 or difficulty == 4 then
+	if self:GetInstanceDifficulty() > 2 then
 		self:SendMessage("BigWigs_StopBar", self, L["defile_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["reaper_bar"])
 		self:SendMessage("BigWigs_StopBar", self, L["ragingspirit_bar"])
