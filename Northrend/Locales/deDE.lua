@@ -113,11 +113,14 @@ if L then
 	L.twilight_cutter_trigger = "Die kreisenden Sphären pulsieren vor dunkler Energie!"
 	L.twilight_cutter_bar = "~Zwielichtschnitter"
 	L.twilight_cutter_warning = "Zwielichtschnitter!"
-
+	
+	L.fire_damage_message = "Deine Füße brennen!"
 	L.fire_message = "Einäscherung"
 	L.shadow_message = "Seelenverzehrung"
 
+	L.meteorstrike_yell = "Die Himmel brennen!"
 	L.meteorstrike_bar = "Meteorschlag"
+	L.meteor_warning_message = "Meteor!"
 
 	L.breath_cooldown = "Nächster Atem"
 end
