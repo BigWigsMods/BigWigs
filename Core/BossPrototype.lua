@@ -259,8 +259,8 @@ do
 	--XXX BIG ASS HACK BECAUSE BLIZZ SCREWED UP
 	--XXX GetRaidDifficulty() doesn't update when changing difficulty whilst inside the zone
 	function boss:GetInstanceDifficulty()
-		local _, type, diff, _, _, heroic, dynamic = GetInstanceInfo()
-		if type == "raid" and dynamic and heroic == 1 and diff <= 2 then
+		local _, instanceType, diff, _, _, heroic, dynamic = GetInstanceInfo()
+		if instanceType == "raid" and dynamic and heroic == 1 and diff <= 2 then
 			diff = diff + 2
 		end
 		return type(diff) == "number" and diff or 1
