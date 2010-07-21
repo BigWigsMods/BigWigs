@@ -83,9 +83,9 @@ end
 
 function mod:Fire(player, spellId)
 	if self:GetInstanceDifficulty() > 2 then
-		self:Bar(75125, L["fire_bar"], 20, spellId)
+		self:Bar(74562, L["fire_bar"], 20, spellId)
 	else
-		self:Bar(75125, L["fire_bar"], 25, spellId)
+		self:Bar(74562, L["fire_bar"], 25, spellId)
 	end
 	if UnitIsUnit(player, "player") then
 		self:Say(74562, L["fire_say"])
@@ -98,9 +98,9 @@ end
 
 function mod:Shadow(player, spellId)
 	if self:GetInstanceDifficulty() > 2 then
-		self:Bar(75125, L["shadow_bar"], 20, spellId)
+		self:Bar(74792, L["shadow_bar"], 20, spellId)
 	else
-		self:Bar(75125, L["shadow_bar"], 25, spellId)
+		self:Bar(74792, L["shadow_bar"], 25, spellId)
 	end
 	if UnitIsUnit(player, "player") then
 		self:Say(74792, L["shadow_say"])
