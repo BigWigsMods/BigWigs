@@ -111,6 +111,7 @@ if L then
 	L.twilight_cutter_bar = "~황혼 절단기"
 	L.twilight_cutter_warning = "곧 황혼 절단기"
 	
+	L.fire_damage_message = "당신의 발이 불타는중!"
 	L.fire_message = "맹렬한 발화"
 	L.shadow_message = "영혼 소진"
 
