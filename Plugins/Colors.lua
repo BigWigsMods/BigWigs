@@ -224,6 +224,12 @@ plugin.pluginOptions.args.resetAll = {
 	--width = "half",
 }
 
+function plugin:OnRegister()
+	if self.db.profile.upgraded then
+		self.db.profile.upgraded = nil
+	end
+end
+
 local white = { 1, 1, 1 }
 function plugin:GetColorTable(hint, module, key)
 	if not self.db.profile[hint] then return white end
@@ -247,3 +253,4 @@ end
 function plugin:GetColor(hint, module, key)
 	return unpack(self:GetColorTable(hint, module, key))
 end
+
