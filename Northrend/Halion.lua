@@ -75,9 +75,9 @@ end
 -- Event Handlers
 --
 
-function mod:FireDamage(player)
+function mod:FireDamage(player, spellId)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(75879, L["fire_damage_message"], "Personal", 75947)
+		self:LocalMessage(75879, L["fire_damage_message"], "Personal", spellId)
 	end
 end
 

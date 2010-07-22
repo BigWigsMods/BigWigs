@@ -116,7 +116,11 @@ if L then
 	
 	L.fire_damage_message = "Deine Füße brennen!"
 	L.fire_message = "Einäscherung"
+	L.fire_bar = "~Einäscherung"
+	L.fire_say = "Einäscherung auf MIR!"
 	L.shadow_message = "Seelenverzehrung"
+	L.shadow_bar = "~Seelenverzehrung"
+	L.shadow_say = "Seelenverzehrung auf MIR!"
 
 	L.meteorstrike_yell = "Die Himmel brennen!"
 	L.meteorstrike_bar = "Meteorschlag"
