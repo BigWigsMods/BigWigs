@@ -30,8 +30,13 @@ if L then
 	L.twilight_cutter_bar = "~Tranchant du crépuscule"
 	L.twilight_cutter_warning = "Arrivée d'un Tranchant du crépuscule !"
 
+	L.fire_damage_message = "Vos pieds brûlent !"
 	L.fire_message = "Combustion ardente"
+	L.fire_bar = "Prochaine Combustion ardente"
+	L.fire_say = "Combustion ardente sur moi !"
 	L.shadow_message = "Consomption d'âmes"
+	L.shadow_bar = "Prochaine Consomption d'âmes"
+	L.shadow_say = "Consomption d'âmes sur moi !"
 
 	L.meteorstrike_yell = "Les cieux s'embrasent !"
 	L.meteorstrike_bar = "Frappe météore"
