@@ -3,10 +3,10 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "esES")
 if not L then return end
 
 -- Prototype.lua common words
-L.you = "%s on YOU"
+L.you = "%s en TI"
 L.other = "%s: %s"
 
-L.phase = "Phase %d"
+L.phase = "Fase %d"
 
 L.enrage_start = "%s Iniciado - Enfurecimiento en %d min"
 L.enrage_end = "%s Enfurecido"
