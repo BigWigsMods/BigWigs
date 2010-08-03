@@ -1,4 +1,27 @@
-﻿local L = BigWigs:NewBossLocale("The Beasts of Northrend", "esES")
+﻿local L = BigWigs:NewBossLocale("Anub'arak", "esES")
+if L then
+	L.engage_message = "¡Anub'arak activo, se entierra en 80sec!"
+	L.engage_trigger = "¡Este lugar será vuestra tumba!"
+
+	L.unburrow_trigger = "emerge de la tierra!"
+	L.burrow_trigger = "se entierra en el suelo!"
+	L.burrow = "Se entierra"
+	L.burrow_desc = "Mostrar contadores para emerger y enterrar, y también para aparición de adds."
+	L.burrow_cooldown = "Siguiente enterrar"
+	L.burrow_soon = "Se entierra pronto"
+
+	L.nerubian_message = "¡Aparecen Adds!"
+	L.nerubian_burrower = "Más adds"
+
+	L.shadow_soon = "¡Golpe de las Sombras en ~5sec!"
+
+	L.freeze_bar = "~Siguiente Tajo congelante"
+	L.pcold_bar = "~Siguiente Frío penetrante"
+
+	L.chase = "Perseguido"
+end
+
+L = BigWigs:NewBossLocale("The Beasts of Northrend", "esES")
 if L then
 	L.enable_trigger = "¡Bienvenidos, campeones! ¡Habéis escuchado la Llamada de la Cruzada Argenta y os habéis atrevido a responder!"
 	L.wipe_trigger = "Trágico..."
@@ -41,7 +64,7 @@ end
 L = BigWigs:NewBossLocale("Faction Champions", "esES")
 if L then
 	L.enable_trigger = "¡La siguiente batalla os enfrentará a los caballeros más poderosos de la Cruzada Argenta! Solo seréis dignos si los derrotáis..."
-	L.defeat_trigger = "A shallow and tragic victory."
+	L.defeat_trigger = "Una victoria trágica y fútil."
 
 	L["Shield on %s!"] = "¡Escudo en %s!"
 	L["Bladestorming!"] = "¡Filotormenta"
@@ -77,4 +100,24 @@ if L then
 
 	L.kiss_message = "¡Beso en TI!"
 	L.kiss_interrupted = "¡Cortado!"
+end
+
+L = BigWigs:NewBossLocale("The Twin Val'kyr", "esES")
+if L then
+	L.engage_trigger1 = "En el nombre de nuestro oscuro maestro. Por el Rey Exánime. Morirás."
+
+	L.vortex_or_shield_cd = "Siguiente Vórtice o Escudo"
+	L.next = "Siguiente Vórtice o Escudo"
+	L.next_desc = "Aviso para siguiente Vórtice o Escudo"
+
+	L.vortex = "Vórtice"
+	L.vortex_desc = "Aviso cuando la gemela empieza a lanzar vórtices."
+
+	L.shield = "Escudo de Oscuridad/Luz"
+	L.shield_desc = "Aviso para Escudo de Oscuridad/Luz."
+	L.shield_half_message = "¡Escudo al 50% de fuerza!"
+	L.shield_left_message = "%d%% fuerza del escudo acabada"
+
+	L.touch = "Toque de Oscuridad/Luz"
+	L.touch_desc = "Aviso para Toque de Oscuridad/Luz"
 end
