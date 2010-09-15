@@ -40,10 +40,10 @@ end
 
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "zhCN")
 if L then
-	L.cinder_message = ">你< Flaming Cinder！"
+	L.cinder_message = ">你< 余烬！"
 
-	L.breath_bar = "<燃燒之息：%d>"
-	L.breath_message = "即將 燃燒之息：>%d<！"
+	L.breath_bar = "<灼热吐息：%d>"
+	L.breath_message = "即將 灼热吐息：>%d<！"
 end
 
 L = BigWigs:NewBossLocale("Malygos", "zhCN")
@@ -76,11 +76,11 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段时发出警报。"
 	L.phase2_warning = "即将 第二阶段！"
-	L.phase2_trigger = "I had hoped to end your lives quickly" -- yell required
+	L.phase2_trigger = "我原本只是想尽快结束你们的生命"
 	L.phase2_message = "第二阶段 - 魔枢领主与永恒子嗣!"
 	L.phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic" -- yell required
 	L.phase3_warning = "即将 第三阶段！"
-	L.phase3_trigger = "Now your benefactors make their" -- yell required
+	L.phase3_trigger = "现在你们幕后的主使终于出现"
 	L.phase3_message = "第三阶段！"
 end
 
@@ -93,7 +93,7 @@ if L then
 	L.tsunami_warning = "约5秒，烈焰之啸！"
 	L.tsunami_message = "烈焰之啸！"
 	L.tsunami_cooldown = "烈焰之啸冷却！"
-	L.tsunami_trigger = "The lava surrounding %s churns!" --check
+	L.tsunami_trigger = "%s周围的岩浆沸腾了起来！"
 
 	L.breath_cooldown = "烈焰吐息冷却！"
 

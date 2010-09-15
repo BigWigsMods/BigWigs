@@ -13,45 +13,45 @@ if L then
 	L.nerubian_message = "即将 增援！"
 	L.nerubian_burrower = "更多增援！"
 
-	L.shadow_soon = "约5秒后，Shadow Strike！"
+	L.shadow_soon = "约5秒后，暗影突击！"
 
-	L.freeze_bar = "<下一Freezing Slash>"
-	L.pcold_bar = "<下一Penetrating Cold>"
+	L.freeze_bar = "<下一寒冰打击>"
+	L.pcold_bar = "<下一刺骨之寒>"
 
 	L.chase = "追击"
 end
 
 L = BigWigs:NewBossLocale("The Beasts of Northrend", "zhCN")
 if L then
---	L.enable_trigger = "You have heard the call of the Argent Crusade and you have boldly answered"
-	L.wipe_trigger = "Tragic..."
+	L.enable_trigger = "欢迎，勇士们！你们听到了银色北伐军的号召，并勇敢地作出了响应！"
+	L.wipe_trigger = "悲剧……"
 
---	L.engage_trigger = "Hailing from the deepest, darkest caverns of the Storm Peaks, Gormok the Impaler! Battle on, heroes!"
---	L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
---	L.icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!"
+	L.engage_trigger = "他来自风暴峭壁最幽深，最黑暗的洞穴，穿刺者戈莫克！准备战斗，英雄们！"
+	L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
+	L.icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!"
 	L.boss_incoming = "即将%s！"
 
 	-- Gormok
 	L.snobold = "Snobold"
 	L.snobold_desc = "当出现Snobold时发出警报。"
 	L.snobold_message = "Snobold！"
-	L.impale_message = "%2$dx Impale：>%1$s<！"
-	L.firebomb_message = ">你< Fire Bomb！"
+	L.impale_message = "%2$dx 穿刺：>%1$s<！"
+	L.firebomb_message = ">你< 燃烧弹！"
 
 	-- Jormungars
-	L.submerge = "Submerge"
-	L.submerge_desc = "当下一次虫子即将Submerge时显示计时条。"
-	L.spew = "Acidic/Molten Spew"
-	L.spew_desc = "当施放Acidic/Molten Spew时发出警报。"
-	L.sprays = "喷射"
-	L.sprays_desc = "显示下一次Paralytic喷射和Burning喷射计时条。"
-	L.slime_message = ">你< Slime pool！"
-	L.burn_spell = "Burning Bile"
-	L.toxin_spell = "Paralytic Toxin"
-	L.spray = "<下一喷射>"
+	L.submerge = "潜地"
+	L.submerge_desc = "当下一次虫子即将潜地时显示计时条。"
+	L.spew = "强酸/熔岩喷射"
+	L.spew_desc = "当施放强酸/熔岩喷射时发出警报。"
+	L.sprays = "喷溅"
+	L.sprays_desc = "显示下一次麻痹喷溅和烈焰喷射计时条。"
+	L.slime_message = ">你< 粘液池！"
+	L.burn_spell = "灼热胆汁"
+	L.toxin_spell = "麻痹毒素"
+	L.spray = "<下一喷溅>"
 
 	-- Icehowl
-	L.butt_bar = "<Ferocious Butt 冷却>"
+	L.butt_bar = "<野蛮头冲 冷却>"
 	L.charge = "野性冲锋"
 	L.charge_desc = "当玩家中了野性冲锋时发出警报。"
 --	L.charge_trigger = "^%%s"	--check
@@ -82,23 +82,23 @@ if L then
 --	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
 --	L.engage_trigger1 = "Banished to the Nether"
 
-	L.adds = "Portals和volcanos"
-	L.adds_desc = "当Jaraxxus召唤portals和volcanos时发出警报和显示计时条。"
+	L.adds = "虚空传送门和volcanos"
+	L.adds_desc = "当加拉克苏斯大王召唤虚空传送门和volcanos时发出警报和显示计时条。"
 
-	L.incinerate_message = "Incinerate"
-	L.incinerate_other = "Incinerate Flesh：>%s<！"
-	L.incinerate_bar = "<下一Incinerate Flash>"
+	L.incinerate_message = "血肉成灰"
+	L.incinerate_other = "血肉成灰：>%s<！"
+	L.incinerate_bar = "<下一血肉成灰>"
 	L.incinerate_safe = "安全：>%s<！"
 
-	L.legionflame_message = "Flame"
-	L.legionflame_other = "Legion Flame：>%s<！"
-	L.legionflame_bar = "<下一Legion Flame>"
+	L.legionflame_message = "军团烈焰"
+	L.legionflame_other = "军团烈焰：>%s<！"
+	L.legionflame_bar = "<下一军团烈焰>"
 
 	L.infernal_bar = "<Volcano出现>"
-	L.netherportal_bar = "<下一Nether Portal>"
-	L.netherpower_bar = "<下一Nether Power>"
+	L.netherportal_bar = "<下一虚空传送门>"
+	L.netherpower_bar = "<下一虚空之能>"
 
-	L.kiss_message = ">你< Mistress' Kiss！"
+	L.kiss_message = ">你< 仕女之吻！"
 	L.kiss_interrupted = "打断！"
 end
 

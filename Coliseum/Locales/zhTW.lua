@@ -96,7 +96,7 @@ if L then
 
 	L.infernal_bar = "<煉獄火山出現>"
 	L.netherportal_bar = "<下一虛空傳送門>"
-	L.netherpower_bar = "<下一虛空傳送門（能量）>"
+	L.netherpower_bar = "<下一虛空威能>"
 
 	L.kiss_message = ">你< 仕女之吻！"
 	L.kiss_interrupted = "中斷！"

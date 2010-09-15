@@ -6,18 +6,20 @@ if L then
 	L.engage_warning = "第一阶段！"
 	L.phase2_warning = "即将 第二阶段！"
 	L.phase_bar = "<阶段%d>"
---	L.engage_trigger = "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome."
+	L.engage_trigger = "你们的行动不合逻辑。这场战斗所有可能产生的结果都已被计算在内。无论结果如何，万神殿都会收到观察者发出的信息。"
 
 	L.punch_message = "相位冲压%2$d层：>%1$s<！"
 	L.smash_message = "即将 宇宙重击！"
 	L.blackhole_message = "黑洞爆炸：>%dx< 出现！"
 	L.bigbang_bar = "<下一大爆炸>"
 	L.bigbang_soon = "即将 大爆炸！"
+
+	L.end_trigger = "我曾经看过尘世沉浸在造物者的烈焰之中"
 end
 
 L = BigWigs:NewBossLocale("Auriaya", "zhCN")
 if L then
-	L.engage_trigger = "Some things are better left alone!"
+	L.engage_trigger = "有些东西，最好永远都不去碰！"
 
 	L.fear_warning = "即将 惊骇尖啸！"
 	L.fear_message = "正在施放 惊骇尖啸！"
@@ -47,8 +49,8 @@ if L then
 	L.wave_bar = "<下一波>"
 --	L.conservator_trigger = "Eonar, your servant requires aid!"
 --	L.detonate_trigger = "The swarm of the elements shall overtake you!"
---	L.elementals_trigger = "Children, assist me!"
---	L.tree_trigger = "A |cFF00FFFFLifebinder's Gift|r begins to grow!"
+	L.elementals_trigger = "孩子们，帮帮我！"
+	L.tree_trigger = "|cFF00FFFF生命缚誓者的礼物|r开始生长！"
 	L.conservator_message = "Conservator!"
 	L.detonate_message = "Detonating lashers!"
 	L.elementals_message = "古代水之精魂！"
@@ -66,7 +68,7 @@ if L then
 	L.sunbeam_message = "即将 阳光！"
 	L.sunbeam_bar = "<下一阳光>"
 
---	L.end_trigger = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
+--	L.end_trigger = "他对我的控制已经不复存在了。我又一次恢复了理智。谢谢你们，英雄们。"
 end
 
 L = BigWigs:NewBossLocale("Hodir", "zhCN")
@@ -83,7 +85,7 @@ if L then
 	L.hardmode = "困难模式"
 	L.hardmode_desc = "显示困难模式计时器。"
 
---	L.end_trigger = "I...I am released from his grasp! At...last!"
+	L.end_trigger = "我……我终于从他的魔掌中……解脱了。"
 end
 
 L = BigWigs:NewBossLocale("Ignis the Furnace Master", "zhCN")
@@ -135,7 +137,7 @@ if L then
 
 	L.eyebeam = "聚焦视线"
 	L.eyebeam_desc = "当玩家中了聚焦视线时发出警报。"
---	L.eyebeam_trigger = "%s focuses his eyes on you!"
+--	L.eyebeam_trigger = "%s在注视着你!"
 	L.eyebeam_message = "聚焦视线：>%s<！"
 	L.eyebeam_bar = "<聚焦视线>"
 	L.eyebeam_you = ">你< 聚焦视线！"
@@ -235,9 +237,9 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
 	L.phase1_message = "第一阶段！"
---	L.phase2_trigger = "Interlopers! You mortals who dare to interfere with my sport will pay.... Wait--you..."
+	L.phase2_trigger = "入侵者！你们这些凡人竟敢坏了我的兴致，看我怎么……等等，你们……"
 	L.phase2_message = "第二阶段 - 6分15秒后，狂暴！"
---	L.phase3_trigger = "Impertinent whelps, you dare challenge me atop my pedestal? I will crush you myself!"
+	L.phase3_trigger = "狂妄的小崽子们，竟敢在我的地盘上挑战我？我要亲自碾碎你们！"
 	L.phase3_message = "第三阶段 - %s已激怒！"
 
 	L.hardmode = "困难模式"
@@ -254,12 +256,12 @@ if L then
 
 	L.strike_bar = "<重压打击 冷却>"
 
---	L.end_trigger = "Stay your arms! I yield!"
+	L.end_trigger = "住手！我认输了！"
 end
 
 L = BigWigs:NewBossLocale("General Vezax", "zhCN")
 if L then
---	L.["Vezax Bunny"] = true -- For emote catching.
+--	L["Vezax Bunny"] = true -- For emote catching.
 
 --	L.engage_trigger = "^Your destruction will herald a new age of suffering!"
 
@@ -276,7 +278,7 @@ if L then
 	L.vapor_desc = "当萨隆邪铁蒸汽出现时发出警报。"
 	L.vapor_message = "萨隆邪铁蒸汽：>%d<！"
 	L.vapor_bar = "<萨隆邪铁蒸汽：%d/6>"
---	L.vapor_trigger = "A cloud of saronite vapors coalesces nearby!"
+	L.vapor_trigger = "一团萨隆邪铁蒸汽在附近聚集起来！"
 
 	L.vaporstack = "萨隆邪铁蒸汽堆叠"
 	L.vaporstack_desc = "当玩家中了5层或更多萨隆邪铁蒸汽时发出警报。"
@@ -308,9 +310,9 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当阶段改变发出警报。"
 	L.engage_warning = "第一阶段！"
---	L.engage_trigger = "^The time to"
+	L.engage_trigger = "攻击这头野兽要害的时刻即将来临！将你们的愤怒和仇恨倾泻到它的爪牙身上！"
 	L.phase2_warning = "第二阶段！"
---	L.phase2_trigger = "^I am the lucid dream"
+	L.phase2_trigger = "我是清醒的梦境。"
 	L.phase3_warning = "第三阶段！"
 --	L.phase3_trigger = "^Look upon the true face"
 
