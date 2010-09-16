@@ -23,6 +23,9 @@ end
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "koKR")
 if L then
 	L.cinder_message = "당신은 잿더미!"
+	
+	L.breath_bar = "숨결 %d"
+	L.breath_message = "곧 %d 숨결!"
 end
 
 L = BigWigs:NewBossLocale("Toravon the Ice Watcher", "koKR")
