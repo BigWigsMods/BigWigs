@@ -27,14 +27,14 @@ if L then
 	L.wipe_trigger = "悲剧……"
 
 	L.engage_trigger = "他来自风暴峭壁最幽深，最黑暗的洞穴，穿刺者戈莫克！准备战斗，英雄们！"
-	L.jormungars_trigger = "Steel yourselves, heroes, for the twin terrors, Acidmaw and Dreadscale, enter the arena!"
-	L.icehowl_trigger = "The air itself freezes with the introduction of our next combatant, Icehowl! Kill or be killed, champions!"
+	L.jormungars_trigger = "做好准备，英雄们，两头猛兽已经进入了竞技场！它们是酸喉和恐鳞！"
+	L.icehowl_trigger = "当下一名斗士出场时，空气都会为之冻结！它是冰吼，胜或是死，勇士们！"
 	L.boss_incoming = "即将%s！"
 
 	-- Gormok
-	L.snobold = "Snobold"
-	L.snobold_desc = "当出现Snobold时发出警报。"
-	L.snobold_message = "Snobold！"
+	L.snobold = "狗头人奴隶"
+	L.snobold_desc = "当出现狗头人奴隶时发出警报。"
+	L.snobold_message = "狗头人奴隶！"
 	L.impale_message = "%2$dx 穿刺：>%1$s<！"
 	L.firebomb_message = ">你< 燃烧弹！"
 
