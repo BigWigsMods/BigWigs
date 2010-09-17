@@ -76,14 +76,14 @@ end
 
 L = BigWigs:NewBossLocale("Lord Jaraxxus", "zhCN")
 if L then
---	L.enable_trigger = "Trifling gnome! Your arrogance will be your undoing!"
+	L.enable_trigger = "渺小的侏儒！你们的傲慢将会招致灭亡！"
 
 	L.engage = "激活"
 --	L.engage_trigger = "You face Jaraxxus, Eredar lord of the Burning Legion!"
 --	L.engage_trigger1 = "Banished to the Nether"
 
-	L.adds = "虚空传送门和volcanos"
-	L.adds_desc = "当加拉克苏斯大王召唤虚空传送门和volcanos时发出警报和显示计时条。"
+	L.adds = "虚空传送门和火山"
+	L.adds_desc = "当加拉克苏斯大王召唤虚空传送门和火山时发出警报和显示计时条。"
 
 	L.incinerate_message = "血肉成灰"
 	L.incinerate_other = "血肉成灰：>%s<！"
@@ -94,7 +94,7 @@ if L then
 	L.legionflame_other = "军团烈焰：>%s<！"
 	L.legionflame_bar = "<下一军团烈焰>"
 
-	L.infernal_bar = "<Volcano出现>"
+	L.infernal_bar = "<火山出现>"
 	L.netherportal_bar = "<下一虚空传送门>"
 	L.netherpower_bar = "<下一虚空之能>"
 

@@ -68,7 +68,7 @@ if L then
 	L.sunbeam_message = "即将 阳光！"
 	L.sunbeam_bar = "<下一阳光>"
 
---	L.end_trigger = "他对我的控制已经不复存在了。我又一次恢复了理智。谢谢你们，英雄们。"
+	L.end_trigger = "他对我的控制已经不复存在了。我又一次恢复了理智。谢谢你们，英雄们。"
 end
 
 L = BigWigs:NewBossLocale("Hodir", "zhCN")
@@ -137,7 +137,7 @@ if L then
 
 	L.eyebeam = "聚焦视线"
 	L.eyebeam_desc = "当玩家中了聚焦视线时发出警报。"
---	L.eyebeam_trigger = "%s在注视着你!"
+	L.eyebeam_trigger = "%s在注视着你"
 	L.eyebeam_message = "聚焦视线：>%s<！"
 	L.eyebeam_bar = "<聚焦视线>"
 	L.eyebeam_you = ">你< 聚焦视线！"
@@ -156,7 +156,7 @@ if L then
 
 	L.pursue = "追踪"
 	L.pursue_desc = "当烈焰巨兽追踪玩家时发出警报。"
---	L.pursue_trigger = "^%%s被追踪"
+	L.pursue_trigger = "^%%s被追踪"
 	L.pursue_other = "烈焰巨兽追踪：>%s<！"
 
 	L.shutdown_message = "系统关闭！"
@@ -167,13 +167,13 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
 	L.engage_warning = "第一阶段！"
---	L.engage_trigger = "^We haven't much time, friends!"
+	L.engage_trigger = "^我们时间不多了，朋友们！"
 	L.phase2_warning = "即将 第二阶段！"
---	L.phase2_trigger = "^WONDERFUL! Positively marvelous results!"
+	L.phase2_trigger = "^太棒了！测试结果非常好！"
 	L.phase3_warning = "即将 第三阶段！"
---	L.phase3_trigger = "^Thank you, friends!"
+	L.phase3_trigger = "^非常感谢，朋友们！"
 	L.phase4_warning = "即将 第四阶段！"
---	L.phase4_trigger = "^Preliminary testing phase complete"
+	L.phase4_trigger = "^初步测试阶段完成。真正的测试开始啦！"
 	L.phase_bar = "<阶段：%d>"
 
 	L.hardmode = "困难模式计时器"
@@ -209,12 +209,12 @@ if L then
 
 	L.phase = "阶段"
 	L.phase_desc = "当锋鳞转换不同阶段时发出警报。"
---	L.ground_trigger = "Move quickly! She won't remain grounded for long!"
+	L.ground_trigger = "快一点！她马上就要挣脱了！"
 	L.ground_message = "锋鳞被锁住了！"
---	L.air_trigger = "Give us a moment to prepare to build the turrets."
---	L.air_trigger2 = "Fires out! Let's rebuild those turrets!"
+	L.air_trigger = "给我们一点时间，做好建筑炮台的准备。"
+	L.air_trigger2 = "火灭了！准备重建炮台！"
 	L.air_message = "起飞！"
---	L.phase2_trigger = "Razorscale lands permanently!"
+	L.phase2_trigger = "%%s被永久地禁锢在地面上！"
 	L.phase2_message = "第二阶段！"
 	L.phase2_warning = "即将 第二阶段！"
 	L.stun_bar = "<昏迷>"
@@ -271,7 +271,7 @@ if L then
 
 	L.animus = "萨隆邪铁畸体"
 	L.animus_desc = "当萨隆邪铁畸体出现时发出警报。"
---	L.animus_trigger = "The saronite vapors mass and swirl violently, merging into a monstrous form!"
+	L.animus_trigger = "一团萨隆邪铁蒸汽在附近聚集起来！"
 	L.animus_message = "萨隆邪铁畸体 出现！"
 
 	L.vapor = "萨隆邪铁蒸汽"
