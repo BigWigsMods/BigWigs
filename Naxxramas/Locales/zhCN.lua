@@ -179,7 +179,7 @@ if L then
 	L.aura_message = "死灵光环 - 持续17秒！"
 	L.aura_warning = "3秒后，死灵光环消失！"
 
-	L.deathbloom_warning = "5秒后，死亡之花!"
+	L.deathbloom_warning = "5秒后，死亡之花！"
 
 	L.doombar = "<必然的厄运：%d>"
 	L.doomwarn = "必然的厄运%d，%d秒后！"
@@ -197,13 +197,13 @@ if L then
 	L.starttrigger1 = "死吧，入侵者！"
 	L.starttrigger2 = "荣耀归于我主！"
 	L.starttrigger3 = "我要没收你的生命！"
-	L.startwarn = "瘟疫使者诺斯已激活 - 90秒後，传送！"
+	L.startwarn = "药剂师诺斯已激活 - 90秒后，传送！"
 
 	L.blink = "闪现术"
 	L.blink_desc = "当施放闪现术时发出警报。"
---	L.blinktrigger = "%s blinks away!"
+	L.blinktrigger = "%s施放了瞬移！"
 	L.blinkwarn = "闪现术！停止攻击！"
-	L.blinkwarn2 = "约5秒後，闪现术！"
+	L.blinkwarn2 = "约5秒后，闪现术！"
 	L.blinkbar = "<闪现术>"
 
 	L.teleport = "传送"
@@ -211,13 +211,13 @@ if L then
 	L.teleportbar = "<传送>"
 	L.backbar = "<回到房间>"
 	L.teleportwarn = "传送！"
-	L.teleportwarn2 = "10秒後，传送！"
-	L.backwarn = "诺斯回到房间 - %d秒後，传送！"
-	L.backwarn2 = "10秒後诺斯回到房间！"
+	L.teleportwarn2 = "10秒后，传送！"
+	L.backwarn = "诺斯回到房间 - %d秒后，传送！"
+	L.backwarn2 = "10秒后诺斯回到房间！"
 
 	L.curseexplosion = "瘟疫使者的诅咒！"
-	L.cursewarn = "约55秒後，瘟疫使者的诅咒！"
-	L.curse10secwarn = "约10秒後，瘟疫使者的诅咒！"
+	L.cursewarn = "约55秒后，瘟疫使者的诅咒！"
+	L.curse10secwarn = "约10秒后，瘟疫使者的诅咒！"
 	L.cursebar = "<下一瘟疫使者的诅咒>"
 
 	L.wave = "骷髅"
@@ -225,7 +225,7 @@ if L then
 	L.addtrigger = "起来吧，我的战士们！起来，再为主人尽忠一次！"
 	L.wave1bar = "<第一波>"
 	L.wave2bar = "<第二波>"
-	L.wave2_message = "10秒後，第二波！"
+	L.wave2_message = "10秒后，第二波！"
 end
 
 L = BigWigs:NewBossLocale("Patchwerk", "zhCN")
@@ -252,11 +252,11 @@ end
 
 L = BigWigs:NewBossLocale("Sapphiron", "zhCN")
 if L then
---	L.airphase_trigger = "Sapphiron lifts off into the air!"
+	L.airphase_trigger = "萨菲隆缓缓升空！"
 	L.deepbreath_incoming_message = "约14秒后，冰霜吐息！"
 	L.deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！"
 	L.deepbreath_incoming_bar = "<施放 冰霜吐息>"
-	L.deepbreath_trigger = "%s深深地吸了一口气……"
+	L.deepbreath_trigger = "%s深深地吸了一口气。"
 	L.deepbreath_warning = "即将 冰霜吐息！"
 	L.deepbreath_bar = "<冰霜吐息 落地>"
 

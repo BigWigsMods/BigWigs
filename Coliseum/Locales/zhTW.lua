@@ -54,7 +54,7 @@ if L then
 	L.butt_bar = "<兇猛頭擊 冷卻>"
 	L.charge = "狂烈衝鋒"
 	L.charge_desc = "當玩家中了狂烈衝鋒時發出警報。"
---	L.charge_trigger = "^%%s"	--check
+	L.charge_trigger = "%s怒視著"
 	L.charge_say = ">我< 狂烈衝鋒！"
 
 	L.bosses = "首領"

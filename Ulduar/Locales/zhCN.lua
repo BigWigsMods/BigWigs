@@ -37,8 +37,8 @@ end
 
 L = BigWigs:NewBossLocale("Freya", "zhCN")
 if L then
---	L.engage_trigger1 = "The Conservatory must be protected!"
---	L.engage_trigger2 = "Elders grant me your strength!"
+	L.engage_trigger1 = "必须保卫温室！"
+	L.engage_trigger2 = "长老们，将你们的力量赐予我！"
 
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
@@ -47,12 +47,12 @@ if L then
 	L.wave = "波"
 	L.wave_desc = "当一波小怪时发出警报。"
 	L.wave_bar = "<下一波>"
---	L.conservator_trigger = "Eonar, your servant requires aid!"
---	L.detonate_trigger = "The swarm of the elements shall overtake you!"
+	L.conservator_trigger = "艾欧娜尔，您的仆人需要帮助！"
+	L.detonate_trigger = "元素之潮会击垮你们！"
 	L.elementals_trigger = "孩子们，帮帮我！"
 	L.tree_trigger = "|cFF00FFFF生命缚誓者的礼物|r开始生长！"
-	L.conservator_message = "Conservator!"
-	L.detonate_message = "Detonating lashers!"
+	L.conservator_message = "古树监护者！"
+	L.detonate_message = "引爆鞭笞者！"
 	L.elementals_message = "古代水之精魂！"
 
 	L.tree = "艾欧娜尔的礼物"
@@ -73,7 +73,7 @@ end
 
 L = BigWigs:NewBossLocale("Hodir", "zhCN")
 if L then
---	L.engage_trigger = "You will suffer for this trespass!"
+	L.engage_trigger = "擅闯此地就要付出代价！"
 
 	L.cold = "刺骨之寒（成就）"
 	L.cold_desc = "当你受到2层刺骨之寒效果时发出警报。"
@@ -90,7 +90,7 @@ end
 
 L = BigWigs:NewBossLocale("Ignis the Furnace Master", "zhCN")
 if L then
---	L.engage_trigger = "Insolent whelps! Your blood will temper the weapons used to reclaim this world!"
+	L.engage_trigger = "大胆！今天就要以尔等的鲜血，为曾用来改造这个世界的武器淬火"
 
 	L.construct_message = "即将 铁铸像！"
 	L.construct_bar = "<下一铸像>"
@@ -104,9 +104,9 @@ end
 
 L = BigWigs:NewBossLocale("The Iron Council", "zhCN")
 if L then
---	L.engage_trigger1 = "You will not defeat the Assembly of Iron so easily, invaders!"
---	L.engage_trigger2 = "Nothing short of total decimation will suffice!"
---	L.engage_trigger3 = "Whether the world's greatest gnats or the world's greatest heroes, you're still only mortal!"
+	L.engage_trigger1 = "你们这些入侵者，休想轻易击败钢铁议会！"
+	L.engage_trigger2 = "只有把你们全部消灭才能解恨。"
+	L.engage_trigger3 = "任你是天下最厉害的恶棍，还是最强大的英雄，都只不过是凡人之躯。"
 
 	L.overload_message = "6秒后，过载！"
 	L.death_message = ">你< 死亡符文！"
@@ -133,7 +133,7 @@ if L then
 
 	L.shockwave = "震荡波"
 	L.shockwave_desc = "当震荡波到来前发出警报。"
---	L.shockwave_trigger = "Oblivion!"
+	L.shockwave_trigger = "毁灭！"
 
 	L.eyebeam = "聚焦视线"
 	L.eyebeam_desc = "当玩家中了聚焦视线时发出警报。"
@@ -151,12 +151,12 @@ end
 
 L = BigWigs:NewBossLocale("Flame Leviathan", "zhCN")
 if L then
---	L.engage_trigger = "^Hostile entities detected."
+	L.engage_trigger = "检测到敌对实体。威胁评定协议启动。向主要目标发动攻击。30秒后重新评估。"
 	L.engage_message = "%s已激怒！"
 
 	L.pursue = "追踪"
 	L.pursue_desc = "当烈焰巨兽追踪玩家时发出警报。"
-	L.pursue_trigger = "^%%s被追踪"
+	L.pursue_trigger = "^%%s开始追赶"
 	L.pursue_other = "烈焰巨兽追踪：>%s<！"
 
 	L.shutdown_message = "系统关闭！"
@@ -167,18 +167,18 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
 	L.engage_warning = "第一阶段！"
-	L.engage_trigger = "^我们时间不多了，朋友们！"
+	L.engage_trigger = "我们时间不多了，朋友们！来帮忙测试一下我所发明的最新型、最强大的机体吧。在你们改变主意之前，请允许我提醒一下，你们把XT-002搞得一团糟，应该算是欠我个人情吧。"
 	L.phase2_warning = "即将 第二阶段！"
-	L.phase2_trigger = "^太棒了！测试结果非常好！"
+	L.phase2_trigger = "太棒了！测试结果非常好！外壳完整率百分之九十八点九！几乎没有划伤！继续。"
 	L.phase3_warning = "即将 第三阶段！"
-	L.phase3_trigger = "^非常感谢，朋友们！"
+	L.phase3_trigger = "非常感谢，朋友们！你们的帮助使我获得了一些极其珍贵的数据！下面，我要让你们——咦，我把它放哪去了？哦！这里。"
 	L.phase4_warning = "即将 第四阶段！"
-	L.phase4_trigger = "^初步测试阶段完成。真正的测试开始啦！"
+	L.phase4_trigger = "初步测试阶段完成。真正的测试开始啦！"
 	L.phase_bar = "<阶段：%d>"
 
 	L.hardmode = "困难模式计时器"
 	L.hardmode_desc = "显示困难模式计时器。"
---	L.hardmode_trigger = "^Now why would you go and do something like that?"
+	L.hardmode_trigger = "嘿，你们为什么要这么做啊？没看到上面写着“不要按这个按钮”吗？你们激活了自毁系统，还怎么完成测试呀？"
 	L.hardmode_message = "已开启困难模式！"
 	L.hardmode_warning = "困难模式结束！"
 
@@ -200,7 +200,7 @@ if L then
 
 	L.bomb_message = "炸弹机器人 出现！"
 
---	L.end_trigger = "^It would appear that I've made a slight miscalculation."
+	L.end_trigger = "看起来我的计算有一点小小的偏差。监狱中的恶魔侵蚀了我的思维，篡改了我的主要指令。所有系统都已恢复正常。完毕。"
 end
 
 L = BigWigs:NewBossLocale("Razorscale", "zhCN")
@@ -214,22 +214,22 @@ if L then
 	L.air_trigger = "给我们一点时间，做好建筑炮台的准备。"
 	L.air_trigger2 = "火灭了！准备重建炮台！"
 	L.air_message = "起飞！"
-	L.phase2_trigger = "%%s被永久地禁锢在地面上！"
+	L.phase2_trigger = "%s被永久地禁锢在地面上！"
 	L.phase2_message = "第二阶段！"
 	L.phase2_warning = "即将 第二阶段！"
 	L.stun_bar = "<昏迷>"
 
---	L.breath_trigger = "%s takes a deep breath..."
+	L.breath_trigger = "%s深深地吸了一口气……"
 	L.breath_message = "烈焰喷射！"
 	L.breath_bar = "<烈焰喷射 冷却>"
 
 	L.flame_message = ">你< 吞噬烈焰！"
 
-	L.harpoon = "魚叉炮台"
-	L.harpoon_desc = "当魚叉炮台可用时发出警报。"
-	L.harpoon_message = "魚叉炮台：>%d<可用！"
---	L.harpoon_trigger = "Harpoon Turret is ready for use!"
-	L.harpoon_nextbar = "<魚叉炮台：%d>"
+	L.harpoon = "鱼叉炮台"
+	L.harpoon_desc = "当鱼叉炮台可用时发出警报。"
+	L.harpoon_message = "鱼叉炮台：>%d<可用！"
+	L.harpoon_trigger = "可以使用鱼叉炮台了！"
+	L.harpoon_nextbar = "<鱼叉炮台：%d>"
 end
 
 L = BigWigs:NewBossLocale("Thorim", "zhCN")
@@ -263,7 +263,7 @@ L = BigWigs:NewBossLocale("General Vezax", "zhCN")
 if L then
 --	L["Vezax Bunny"] = true -- For emote catching.
 
---	L.engage_trigger = "^Your destruction will herald a new age of suffering!"
+	L.engage_trigger = "你们的毁灭预示着痛苦的新时代即将降临！"
 
 	L.surge_message = "黑暗涌动：>%d<！"
 	L.surge_cast = "正在施放 黑暗涌动：>%d<！"
@@ -314,20 +314,23 @@ if L then
 	L.phase2_warning = "第二阶段！"
 	L.phase2_trigger = "我是清醒的梦境。"
 	L.phase3_warning = "第三阶段！"
---	L.phase3_trigger = "^Look upon the true face"
+	L.phase3_trigger = "凝视死亡的真正面孔吧，你们的末日就要来了！"
 
 	L.portal = "传送门"
 	L.portal_desc = "当传送门时发出警报。"
---	L.portal_trigger = "Portals open into Yogg-Saron's mind!"
+	L.portal_trigger = "通往%s思维的传送门打开了！"
 	L.portal_message = "开启传送门！"
 	L.portal_bar = "<下一传送门>"
+
+	L.fervor_cast_message = "正在施放 萨拉的热情：>%s<！"
+	L.fervor_message = "萨拉的热情：>%s<！"
 
 	L.sanity_message = ">你< 即将疯狂！"
 
 	L.weakened = "昏迷"
 	L.weakened_desc = "当尤格-萨隆昏迷时发出警报。"
 	L.weakened_message = "昏迷：>%s<！"
---	L.weakened_trigger = "The Illusion shatters and a path to the central chamber opens!"
+	L.weakened_trigger = "幻象消散，通往中央房间的道路开启了！"
 
 	L.madness_warning = "5秒后，疯狂诱导！"
 	L.malady_message = "心灵疾病：>%s<！"

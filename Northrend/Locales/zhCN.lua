@@ -71,14 +71,14 @@ if L then
 	L.surge = "能量涌动"
 	L.surge_desc = "当玩家中了能量涌动时发出警报。"
 	L.surge_you = ">你< 能量涌动！"
-	L.surge_trigger = "%s fixes his eyes on you!" -- yell required
+	L.surge_trigger = "%s在注视你！"
 
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段时发出警报。"
 	L.phase2_warning = "即将 第二阶段！"
 	L.phase2_trigger = "我原本只是想尽快结束你们的生命"
 	L.phase2_message = "第二阶段 - 魔枢领主与永恒子嗣!"
-	L.phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic" -- yell required
+	L.phase2_end_trigger = "够了！既然你们这么想夺回艾泽拉斯的魔法，我就给你们！"
 	L.phase3_warning = "即将 第三阶段！"
 	L.phase3_trigger = "现在你们幕后的主使终于出现"
 	L.phase3_message = "第三阶段！"
@@ -86,7 +86,7 @@ end
 
 L = BigWigs:NewBossLocale("Sartharion", "zhCN")
 if L then
---	L.engage_trigger = "It is my charge to watch over these eggs. I will see you burn before any harm comes to them!"
+	L.engage_trigger = "我的职责是保护这些龙卵。在伤害到它们之前，你们就会被我的龙息烧成灰烬！"
 
 	L.tsunami = "烈焰之啸"
 	L.tsunami_desc = "当熔岩搅动时显示计时条。"
@@ -103,9 +103,9 @@ if L then
 
 	L.twilight = "暮光召唤"
 	L.twilight_desc = "当暮光召唤时发出警报。"
-	L.twilight_trigger_tenebron = "塔尼布隆在暮光中孵化龙蛋！" --check
-	L.twilight_trigger_vesperon = "一个维斯匹隆的信徒从暮光中出现！" --check
-	L.twilight_trigger_shadron = "一个沙德隆的信徒从暮光中出现！" --check
+	L.twilight_trigger_tenebron = "塔尼布隆开始孵蛋！"
+	L.twilight_trigger_vesperon = "一只维斯匹隆的信徒出现了！"
+	L.twilight_trigger_shadron = "一只沙德隆的信徒出现了！"
 	L.twilight_message_tenebron = "正在孵卵！"
 	L.twilight_message = "%s到来！"
 end

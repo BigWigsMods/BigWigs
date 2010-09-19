@@ -314,7 +314,7 @@ if L then
 	L.phase2_warning = "第二階段！"
 	L.phase2_trigger = "我是清醒的夢境。"
 	L.phase3_warning = "第三階段！"
-	L.phase3_trigger = "在我的真身面前顫抖吧。" --看看死亡的真實面貌，瞭解你們的末日降臨了!
+	L.phase3_trigger = "看看死亡的真實面貌，瞭解你們的末日降臨了!"
 
 	L.portal = "傳送門"
 	L.portal_desc = "當傳送門時發出警報。"
