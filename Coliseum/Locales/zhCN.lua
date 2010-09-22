@@ -63,8 +63,8 @@ end
 
 L = BigWigs:NewBossLocale("Faction Champions", "zhCN")
 if L then
---	L.enable_trigger = "The next battle will be against the Argent Crusade's most powerful knights! Only by defeating them will you be deemed worthy..."
---	L.defeat_trigger = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
+	L.enable_trigger = "接下来你们将面对银色北伐军最强的骑士！只有打败他们，才能证明你的价值……"
+	L.defeat_trigger = "肤浅且可悲的胜利。今天的内耗让我们又一次被削弱了。这种愚蠢的行为只能让巫妖王受益！伟大的战士们就这样白白牺牲，而真正的威胁却步步逼近。巫妖王正计算着我们的死期。"
 
 	L["Shield on %s!"] = "圣盾术：>%s<！"
 	L["Bladestorming!"] = "剑刃风暴！"
