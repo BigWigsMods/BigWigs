@@ -20,6 +20,7 @@ local count = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.fists_bar = "Next Fists"
 	L.cinder_message = "Flame on YOU!"
 
 	L.breath_bar = "Breath %d"
@@ -41,13 +42,19 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
+function mod:OnEngage()
+	count = 1
+	self:Bar(66725, L["fists_bar"], 47, 66725)
+	self:Bar(66665, L["breath_bar"]:format(count), 10, 66665)
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
 function mod:Fists(_, spellId, _, _, spellName)
 	self:Message(66725, spellName, "Attention", spellId)
-	self:Bar(66725, spellName, 15, spellId)
+	self:Bar(66725, L["fists_bar"], 47, spellId)
 end
 
 function mod:Cinder(player, spellId)
