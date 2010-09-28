@@ -40,6 +40,7 @@ end
 
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "zhTW")
 if L then
+	L.fists_bar = "<下一隕石之拳>"
 	L.cinder_message = ">你< 燃焰餘燼！"
 
 	L.breath_bar = "<燃燒之息：%d>"
