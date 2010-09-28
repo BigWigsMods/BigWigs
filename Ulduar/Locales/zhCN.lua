@@ -167,18 +167,18 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段发出警报。"
 	L.engage_warning = "第一阶段！"
-	L.engage_trigger = "我们时间不多了，朋友们！来帮忙测试一下我所发明的最新型、最强大的机体吧。在你们改变主意之前，请允许我提醒一下，你们把XT-002搞得一团糟，应该算是欠我个人情吧。"
+	L.engage_trigger = "^我们时间不多了，朋友们！"
 	L.phase2_warning = "即将 第二阶段！"
-	L.phase2_trigger = "太棒了！测试结果非常好！外壳完整率百分之九十八点九！几乎没有划伤！继续。"
+	L.phase2_trigger = "^太棒了！测试结果非常好！"
 	L.phase3_warning = "即将 第三阶段！"
-	L.phase3_trigger = "非常感谢，朋友们！你们的帮助使我获得了一些极其珍贵的数据！下面，我要让你们——咦，我把它放哪去了？哦！这里。"
+	L.phase3_trigger = "^非常感谢，朋友们！"
 	L.phase4_warning = "即将 第四阶段！"
-	L.phase4_trigger = "初步测试阶段完成。真正的测试开始啦！"
+	L.phase4_trigger = "^初步测试阶段完成。"
 	L.phase_bar = "<阶段：%d>"
 
 	L.hardmode = "困难模式计时器"
 	L.hardmode_desc = "显示困难模式计时器。"
-	L.hardmode_trigger = "嘿，你们为什么要这么做啊？没看到上面写着“不要按这个按钮”吗？你们激活了自毁系统，还怎么完成测试呀？"
+	L.hardmode_trigger = "^嘿，你们为什么要这么做啊？"
 	L.hardmode_message = "已开启困难模式！"
 	L.hardmode_warning = "困难模式结束！"
 
@@ -200,7 +200,7 @@ if L then
 
 	L.bomb_message = "炸弹机器人 出现！"
 
-	L.end_trigger = "看起来我的计算有一点小小的偏差。监狱中的恶魔侵蚀了我的思维，篡改了我的主要指令。所有系统都已恢复正常。完毕。"
+	L.end_trigger = "^看起来我的计算有一点小小的偏差。"
 end
 
 L = BigWigs:NewBossLocale("Razorscale", "zhCN")
@@ -240,7 +240,7 @@ if L then
 	L.phase2_trigger = "入侵者！你们这些凡人竟敢坏了我的兴致，看我怎么……等等，你们……"
 	L.phase2_message = "第二阶段 - 6分15秒后，狂暴！"
 	L.phase3_trigger = "狂妄的小崽子们，竟敢在我的地盘上挑战我？我要亲自碾碎你们！"
-	L.phase3_message = "第三阶段 - %s已激怒！"
+	L.phase3_message = "第三阶段 - 托里姆！"
 
 	L.hardmode = "困难模式"
 	L.hardmode_desc = "显示困难模式计时器。"
@@ -263,7 +263,7 @@ L = BigWigs:NewBossLocale("General Vezax", "zhCN")
 if L then
 --	L["Vezax Bunny"] = true -- For emote catching.
 
-	L.engage_trigger = "你们的毁灭预示着痛苦的新时代即将降临！"
+	L.engage_trigger = "^你们的毁灭预示着痛苦的新时代即将降临！"
 
 	L.surge_message = "黑暗涌动：>%d<！"
 	L.surge_cast = "正在施放 黑暗涌动：>%d<！"
@@ -271,7 +271,7 @@ if L then
 
 	L.animus = "萨隆邪铁畸体"
 	L.animus_desc = "当萨隆邪铁畸体出现时发出警报。"
-	L.animus_trigger = "一团萨隆邪铁蒸汽在附近聚集起来！"
+	L.animus_trigger = "萨隆邪铁蒸汽剧烈地旋转着，汇集成一个畸体。"
 	L.animus_message = "萨隆邪铁畸体 出现！"
 
 	L.vapor = "萨隆邪铁蒸汽"

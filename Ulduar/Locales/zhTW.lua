@@ -167,18 +167,18 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段發出警報。"
 	L.engage_warning = "第一階段！"
-	L.engage_trigger = "我們沒有太多時間，朋友們!你們要幫我測試我最新也是最偉大的創作。在你們改變心意之前，別忘了就是你們把XT-002搞得一團糟，你們欠我一次。"
+	L.engage_trigger = "^我們沒有太多時間，朋友們!"
 	L.phase2_warning = "即將 第二階段！"
-	L.phase2_trigger = "太好了!絕妙的良好結果!外殼完整度98.9%!幾乎只有一點擦痕!繼續下去。"
+	L.phase2_trigger = "^太好了!絕妙的良好結果!"
 	L.phase3_warning = "即將 第三階段！"
-	L.phase3_trigger = "感謝你，朋友們!我們的努力讓我獲得了一些絕佳的資料!現在，我把東西放在哪兒了--噢，在這裡。"
+	L.phase3_trigger = "^感謝你，朋友們!"
 	L.phase4_warning = "即將 第四階段！"
-	L.phase4_trigger = "初步測試階段完成。現在要玩真的啦!"
+	L.phase4_trigger = "^初步測試階段完成。"
 	L.phase_bar = "<階段：%d>"
 
 	L.hardmode = "困難模式計時器"
 	L.hardmode_desc = "顯示困難模式計時器。"
-	L.hardmode_trigger = "為什麼你要做出這種事?難道你沒看見標示上寫著「請勿觸碰這個按鈕!」嗎?現在自爆裝置已經啟動了，我們要怎麼完成測試呢?"
+	L.hardmode_trigger = "^為什麼你要做出這種事?"
 	L.hardmode_message = "已開啟困難模式！"
 	L.hardmode_warning = "困難模式結束！"
 
@@ -200,7 +200,7 @@ if L then
 
 	L.bomb_message = "炸彈機器人 出現！"
 
-	L.end_trigger = "看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。"
+	L.end_trigger = "^看來我還是產生了些許計算錯誤。"
 end
 
 L = BigWigs:NewBossLocale("Razorscale", "zhTW")
@@ -240,7 +240,7 @@ if L then
 	L.phase2_trigger = "擅闖者!像你們這種膽敢干涉我好事的凡人將付出…等等--你……"
 	L.phase2_message = "第二階段 - 6分15秒後，狂暴！"
 	L.phase3_trigger = "無禮的小輩，你竟敢在我的王座之上挑戰我?我會親手碾碎你們!"
-	L.phase3_message = "第三階段 - 索林姆已狂怒！"
+	L.phase3_message = "第三階段 - 索林姆！"
 
 	L.hardmode = "困難模式"
 	L.hardmode_desc = "顯示困難模式計時器。"
@@ -263,7 +263,7 @@ L = BigWigs:NewBossLocale("General Vezax", "zhTW")
 if L then
 	L["Vezax Bunny"] = "Vezax Bunny" -- For emote catching.
 
-	L.engage_trigger = "你的毀滅將會預告一個嶄新苦難時代的來臨!"
+	L.engage_trigger = "^你的毀滅將會預告一個嶄新苦難時代的來臨!"
 
 	L.surge_message = "暗鬱奔騰：>%d<！"
 	L.surge_cast = "正在施放 暗鬱奔騰：>%d<！"
