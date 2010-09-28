@@ -21,6 +21,7 @@ local count = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.fists_bar = "Next Fists"
+
 	L.cinder_message = "Flame on YOU!"
 
 	L.breath_bar = "Breath %d"
@@ -33,7 +34,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "Fists", 66725, 66808, 68160, 68161)
+	self:Log("SPELL_CAST_START", "Fists", 66725, 68161)
 	self:Log("SPELL_AURA_APPLIED", "Cinder", 67332, 66684)
 	self:Log("SPELL_CAST_START", "Breath", 66665, 67328)
 	self:Death("Win", 35013)
@@ -54,6 +55,7 @@ end
 
 function mod:Fists(_, spellId, _, _, spellName)
 	self:Message(66725, spellName, "Attention", spellId)
+	self:Bar(66725, spellName, 15, spellId)
 	self:Bar(66725, L["fists_bar"], 47, spellId)
 end
 

@@ -22,6 +22,8 @@ end
 
 L = BigWigs:NewBossLocale("Koralon the Flame Watcher", "deDE")
 if L then
+	L.fists_bar = "~Meteorfäuste"
+
 	L.cinder_message = "Flamme auf DIR!"
 
 	L.breath_bar = "Atem %d"
