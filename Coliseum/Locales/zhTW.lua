@@ -114,10 +114,10 @@ if L then
 	L.vortex_desc = "當華爾琪雙子開始施放漩渦時發出警報。"
 
 	L.shield = "黑暗/光明之盾"
-	L.shield_desc = "當施放黑暗/光明之盾時發出警報。"
+	L.shield_desc = "當施放黑暗或光明之盾時發出警報。"
 	L.shield_half_message = "盾血量：>50%<剩餘！"
 	L.shield_left_message = "%d%% 盾血量剩餘！"
 
 	L.touch = "黑暗/光明之觸"
-	L.touch_desc = "當玩家中了黑暗/光明之觸時發出警報。"
+	L.touch_desc = "當玩家中了黑暗或光明之觸時發出警報。"
 end

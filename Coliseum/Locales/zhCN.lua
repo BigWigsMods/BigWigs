@@ -104,20 +104,20 @@ end
 
 L = BigWigs:NewBossLocale("The Twin Val'kyr", "zhCN")
 if L then
---	L.engage_trigger1 = "In the name of our dark master. For the Lich King. You. Will. Die."
+	L.engage_trigger1 = "以黑暗之主的名义。为了巫妖王。你必死无疑。"
 
-	L.vortex_or_shield_cd = "<下一Vortex/Shield>"
-	L.next = "下一Vortex/Shield"
-	L.next_desc = "当下一次Vortex或Shield时发出警报。"
+	L.vortex_or_shield_cd = "<下一漩涡/盾>"
+	L.next = "下一漩涡/盾"
+	L.next_desc = "当下一次漩涡或盾时发出警报。"
 
-	L.vortex = "Vortex"
-	L.vortex_desc = "当双子开始施放Vortexes时发出警报。"
+	L.vortex = "漩涡"
+	L.vortex_desc = "当双子开始施放漩涡时发出警报。"
 
-	L.shield = "Shield of Darkness/Light"
-	L.shield_desc = "当施放Shield of Darkness/Light时发出警报。"
-	L.shield_half_message = "Shield： >50%<剩余！"
-	L.shield_left_message = "%d%% Shield血量剩余！"
+	L.shield = "黑暗/光明之盾"
+	L.shield_desc = "当施放黑暗或光明之盾时发出警报。"
+	L.shield_half_message = "盾血量： >50%<剩余！"
+	L.shield_left_message = "%d%% 盾血量剩余！"
 
-	L.touch = "Touch of Darkness/Light"
-	L.touch_desc = "当玩家中了Touch of Darkness/Light时发出警报。"
+	L.touch = "黑暗/光明之触"
+	L.touch_desc = "当玩家中了黑暗或光明之触时发出警报。"
 end
