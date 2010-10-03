@@ -137,7 +137,7 @@ if L then
 
 	L.eyebeam = "集束目光"
 	L.eyebeam_desc = "當玩家中了集束目光時發出警報。"
-	L.eyebeam_trigger = "%s正在注視著你!"
+	L.eyebeam_trigger = "柯洛剛恩正在注視著你!"
 	L.eyebeam_message = "集束目光：>%s<！"
 	L.eyebeam_bar = "<集束目光>"
 	L.eyebeam_you = ">你< 集束目光！"

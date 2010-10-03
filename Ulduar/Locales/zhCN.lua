@@ -137,7 +137,7 @@ if L then
 
 	L.eyebeam = "聚焦视线"
 	L.eyebeam_desc = "当玩家中了聚焦视线时发出警报。"
-	L.eyebeam_trigger = "%s在注视着你"
+	L.eyebeam_trigger = "科隆加恩在注视着你！"
 	L.eyebeam_message = "聚焦视线：>%s<！"
 	L.eyebeam_bar = "<聚焦视线>"
 	L.eyebeam_you = ">你< 聚焦视线！"
