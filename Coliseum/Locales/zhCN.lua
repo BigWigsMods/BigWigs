@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Anub'arak", "zhCN")
 if L then
 	L.engage_message = "阿努巴拉克已激活，80秒后，钻地！"
---	L.engage_trigger = "This place will serve as your tomb!"
+	L.engage_trigger = "这里将是你的葬身之地！"
 
---	L.unburrow_trigger = "emerges from the ground"
---	L.burrow_trigger = "burrows into the ground"
+	L.unburrow_trigger = "从地面上升起"
+	L.burrow_trigger = "钻入了地下"
 	L.burrow = "钻地"
 	L.burrow_desc = "当阿努巴拉克钻地时显示计时条。"
-	L.burrow_cooldown = "下一钻地"
+	L.burrow_cooldown = "<下一钻地>"
 	L.burrow_soon = "即将 钻地！"
 
 	L.nerubian_message = "即将 增援！"
