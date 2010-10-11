@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Halion", "The Ruby Sanctum")
 if not mod then return end
 mod.otherMenu = "Northrend"
 mod:RegisterEnableMob(39863, 40142)
-mod.toggleOptions = {{74562, "SAY", "ICON", "FLASHSHAKE", "WHISPER"}, 75879, {74792, "SAY", "ICON", "FLASHSHAKE", "WHISPER"}, 74769, 75954, "berserk", "bosskill"}
+mod.toggleOptions = {{74562, "SAY", "ICON", "FLASHSHAKE", "WHISPER"}, 75879, {74792, "SAY", "ICON", "FLASHSHAKE", "WHISPER"}, 74769, 75954, 74525, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -40,7 +40,8 @@ if L then
 	L.meteorstrike_bar = "Meteor Strike"
 	L.meteor_warning_message = "Meteor incoming!"
 
-	L.breath_cooldown = "Next Breath"
+	L.sbreath_cooldown = "Next Shadow Breath"
+	L.fbreath_cooldown = "Next Fire Breath"
 end
 L = mod:GetLocale()
 
@@ -54,7 +55,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MeteorStrike", 75879, 74648, 75877)
 	self:Log("SPELL_DAMAGE", "FireDamage", 75947, 75948, 75949, 75950, 75951, 75952)
 	-- Dark breath 25m, flame breath 25m, dark breath 10m, flame breath 10m
-	self:Log("SPELL_CAST_START", "Breath", 75954, 74526, 74806, 74525)
+	self:Log("SPELL_CAST_START", "ShadowBreath", 74806, 75954, 75955, 75956)
+	self:Log("SPELL_CAST_START", "FireBreath", 74525, 74526, 74527, 74528)
 	self:Death("Win", 39863, 40142)
 
 	self:Emote("TwilightCutter", L["twilight_cutter_trigger"])
@@ -111,8 +113,12 @@ function mod:Shadow(player, spellId)
 	self:SecondaryIcon(74792, player)
 end
 
-function mod:Breath(_, spellId)
-	self:Bar(75954, L["breath_cooldown"], 12, spellId)
+function mod:ShadowBreath(_, spellId)
+	self:Bar(75954, L["sbreath_cooldown"], 12, spellId)
+end
+
+function mod:FireBreath(_, spellId)
+	self:Bar(74525, L["fbreath_cooldown"], 12, spellId)
 end
 
 function mod:TwilightCutter()

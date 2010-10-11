@@ -127,5 +127,6 @@ if L then
 	L.meteorstrike_bar = "유성 충돌"
 	L.meteor_warning_message = "곧 유성 충돌!"
 
-	L.breath_cooldown = "다음 숨결"
+	L.sbreath_cooldown = "다음 어둠 숨결"
+	L.fbreath_cooldown = "다음 화염 숨결"
 end
