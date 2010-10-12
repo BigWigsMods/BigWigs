@@ -1,4 +1,4 @@
-## Interface: 30300
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fOptions|r]
 ## Title-deDE: Big Wigs [|cffeda55fOptionen|r]

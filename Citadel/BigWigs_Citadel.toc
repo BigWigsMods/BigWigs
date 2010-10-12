@@ -1,4 +1,4 @@
-## Interface: 30300
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fIcecrown Citadel|r]
 ## Title-frFR: Big Wigs [|cffeda55fCitadelle de la Couronne de glace|r]
