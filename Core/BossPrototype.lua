@@ -99,7 +99,7 @@ do
 
 	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId, buffStack)
 		if event == "UNIT_DIED" then
-			local numericId = tonumber(dGUID:sub(-12, -7), 16)
+			local numericId = tonumber(dGUID:sub(7, 10), 16)
 			local d = deathMap[self][numericId]
 			if not d then return end
 			if type(d) == "function" then d(numericId, dGUID, player, dFlags)
@@ -166,7 +166,7 @@ do
 		for i, unit in next, t do
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
 				local unitId = UnitGUID(unit)
-				if idType == "number" then unitId = tonumber(unitId:sub(-12, -7), 16) end
+				if idType == "number" then unitId = tonumber(unitId:sub(7, 10), 16) end
 				if unitId == id then return unit end
 			end
 		end
