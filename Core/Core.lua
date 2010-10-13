@@ -144,7 +144,7 @@ do
 				local _, _, offset, numSpells = GetSpellTabInfo(i)
 				if not offset then break end
 				for s = offset + 1, offset + numSpells do
-					local spell = GetSpellName(s, BOOKTYPE_SPELL)
+					local spell = GetSpellInfo(s, BOOKTYPE_SPELL)
 					spells[#spells + 1] = spell
 				end
 			end
