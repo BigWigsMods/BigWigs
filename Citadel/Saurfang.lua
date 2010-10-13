@@ -77,8 +77,7 @@ function mod:Warmup(msg)
 end
 
 function mod:VerifyEnable()
-	SetMapToCurrentZone()
-	if not killed and GetCurrentMapDungeonLevel() == 3 then return true end
+	if not killed then return true end
 end
 
 --------------------------------------------------------------------------------
