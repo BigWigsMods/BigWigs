@@ -128,5 +128,6 @@ if L then
 	L.meteorstrike_bar = "Meteorschlag"
 	L.meteor_warning_message = "Meteor!"
 
-	L.breath_cooldown = "Nächster Atem"
+	L.sbreath_cooldown = "~Schattenatem"
+	L.fbreath_cooldown = "~Feueratem"
 end
