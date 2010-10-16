@@ -140,12 +140,12 @@ do
 	function addon:Test()
 		if not spells then
 			spells = {}
-			for i = 2, MAX_SKILLLINE_TABS do
+			for i = 1, GetNumSpellTabs() do
 				local _, _, offset, numSpells = GetSpellTabInfo(i)
-				if not offset then break end
 				for s = offset + 1, offset + numSpells do
-					local spell = GetSpellInfo(s, BOOKTYPE_SPELL)
-					spells[#spells + 1] = spell
+					local spell = GetSpellBookItemName(s, BOOKTYPE_SPELL)
+					local name = GetSpellInfo(spell .. "()")
+					if name then spells[#spells+1] = name end
 				end
 			end
 		end
@@ -154,8 +154,8 @@ do
 			callbackRegistered = true
 		end
 		local spell = spells[math.random(1, #spells)]
-		if messages[spell] then -- Don't run the same spell twice
-			spell = nil
+		-- Try not to run the same spell twice.
+		if messages[spell] then
 			for i = 1, #spells do
 				if not messages[spells[i]] then
 					spell = spells[i]
@@ -163,7 +163,6 @@ do
 				end
 			end
 		end
-		if not spell then return end
 		local name, rank, icon = GetSpellInfo(spell.."()")
 		local time = math.random(11, 45)
 		addon:SendMessage("BigWigs_StartBar", addon, name, name, time, icon)
