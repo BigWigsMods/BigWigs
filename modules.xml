@@ -25,6 +25,9 @@
 <Include file="Citadel\locales.xml"/>
 <Include file="Citadel\modules.xml"/>
 
+<Include file="Blackwing\locales.xml"/>
+<Include file="Blackwing\modules.xml"/>
+
 <!--@end-debug@-->
 </Ui>
 
