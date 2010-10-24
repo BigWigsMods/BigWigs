@@ -1,17 +1,18 @@
-if GetBuildInfo() ~= "4.0.3" then return end -- lets not braek live stuff
+if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Omnitron Defense System", "Blackwing Descent")
 if not mod then return end
+mod:RegisterEnableMob(42166, 42179, 42178, 42180) -- Arcanotron, Electron, Magmatron, Toxitron
 mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, 79582, {79888, "ICON", "FLASHSHAKE"}, "proximity", 79900, 79729, {80161, "FLASHSHAKE"}, 79835, "bosskill"}
 mod.optionHeaders = {
 	bosskill = "general",
 	[79501] = "Magmatron",
 	[79888] = "Electron",
 	[79729] = "Arcanotron",
-	[80161] = "Toxitron",	
+	[80161] = "Toxitron",
 }
 
 --------------------------------------------------------------------------------
@@ -35,13 +36,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:OnRegister()
-	self:RegisterEnableMob(42166, 42179, 42178, 42180) -- Arcanotron, Electron, Magmatron, Toxitron
-end
-
 function mod:OnBossEnable()
-	BigWigs:Print("This is a alpha module, timers ARE inaccurate. Please provide us with Transcriptor logs! You can contact us at #bigwigs@freenode.net or with the wowace ticket tracker.")
-
 	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501)
 	self:Log("SPELL_CAST_START", "Barrier", 79582)
 	
@@ -121,3 +116,4 @@ do
 		end
 	end
 end
+

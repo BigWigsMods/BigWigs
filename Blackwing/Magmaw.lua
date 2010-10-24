@@ -1,10 +1,11 @@
-if GetBuildInfo() ~= "4.0.3" then return end -- lets not braek live stuff
+if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
+mod:RegisterEnableMob()
 mod.toggleOptions = {"bosskill"}
 mod.optionHeaders = {
 	bosskill = "general",
@@ -13,8 +14,6 @@ mod.optionHeaders = {
 --------------------------------------------------------------------------------
 -- Locals
 --
-
-
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,12 +29,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:OnRegister()
-	self:RegisterEnableMob()
-end
-
 function mod:OnBossEnable()
-	BigWigs:Print("This is a alpha module, timers ARE inaccurate. Please provide us with Transcriptor logs! You can contact us at #bigwigs@freenode.net or with the wowace ticket tracker.")
 
 end
 
@@ -47,3 +41,4 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+

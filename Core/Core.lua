@@ -312,6 +312,12 @@ function addon:OnEnable()
 	self.bossCore:Enable()
 
 	zoneChanged()
+
+	if GetSpellInfo(90000) then
+		print("|cffff0000The Cataclysm encounter modules are not complete, and timers ARE inaccurate.|r")
+		print("Please provide us with Transcriptor logs if you can.")
+		print("You can contact us at #bigwigs@irc.freenode.net or with the wowace ticket tracker.")
+	end
 end
 
 function addon:OnDisable()

@@ -1,10 +1,11 @@
-if GetBuildInfo() ~= "4.0.3" then return end -- lets not braek live stuff
+if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Maloriak", "Blackwing Descent")
 if not mod then return end
+mod:RegisterEnableMob(41378)
 mod.toggleOptions = {{77699, "ICON"}, {77760, "FLASHSHAKE", "ICON"}, "proximity", {77786, "FLASHSHAKE"}, 77912, 77991, "bosskill", "berserk", 77569}
 
 --------------------------------------------------------------------------------
@@ -48,13 +49,7 @@ mod.optionHeaders = {
 -- Initialization
 --
 
-function mod:OnRegister()
-	self:RegisterEnableMob(41378)
-end
-
 function mod:OnBossEnable()
-	BigWigs:Print("This is a alpha module, timers ARE inaccurate. Please provide us with Transcriptor logs! You can contact us at #bigwigs@freenode.net or with the wowace ticket tracker.")
-
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
 
 	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699)
@@ -108,11 +103,11 @@ function mod:ConsumingFlames(player, spellId)
 	self:TargetMessage(77786, L["consuming_flames"], player, "Personal", spellId, "Info")
 end
 
-function mod:ReleaseAll(_, spellId)	
+function mod:ReleaseAll(_, spellId)
 	self:Message(77991, L["release_all"]:format(aberrations), "Important", spellId, "Alert")
 end
 
-function mod:BitingChill(player, spellId, _, _, spellName)	
+function mod:BitingChill(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(77760, L["bitingchill_say"])
 		self:FlashShake(77760)
@@ -123,3 +118,4 @@ function mod:BitingChill(player, spellId, _, _, spellName)
 	self:Whisper(77760, player, spellName)
 	self:SecondaryIcon(77760, player)
 end
+

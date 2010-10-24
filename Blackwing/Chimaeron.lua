@@ -1,4 +1,4 @@
-if GetBuildInfo() ~= "4.0.3" then return end -- lets not braek live stuff
+if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -32,8 +32,6 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	BigWigs:Print("This is a alpha module, timers ARE inaccurate. Please provide us with Transcriptor logs! You can contact us at #bigwigs@freenode.net or with the wowace ticket tracker.")
-
 	self:Log("SPELL_AURA_APPLIED", "SystemFailureStart", 88853)
 	self:Log("SPELL_AURA_REMOVED", "SystemFailureEnd", 88853)
 	self:Log("SPELL_CAST_SUCCESS", "Mortality", 82890)
@@ -55,7 +53,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(88853, L["next_system_failure"], 85, 88853)
-	self:SendMessage("BigWigs_StopBar", self, L["warmup"])	
+	self:SendMessage("BigWigs_StopBar", self, L["warmup"])
 end
 
 --------------------------------------------------------------------------------
@@ -73,7 +71,7 @@ end
 
 function mod:Mortality(_, spellId, _, _, spellName)
 	self:Message(82890, spellName, "Urgent", spellId, "Info")
-	self:SendMessage("BigWigs_StopBar", self, L["next_system_failure"])	
+	self:SendMessage("BigWigs_StopBar", self, L["next_system_failure"])
 end
 
 function mod:Break(player, spellId, _, _, _, stack)
@@ -81,5 +79,6 @@ function mod:Break(player, spellId, _, _, _, stack)
 end
 
 function mod:DoubleAttack(_, spellId, _, _, spellName)
-	elf:Message(88826, spellName, "Attention", spellId)
+	self:Message(88826, spellName, "Attention", spellId)
 end
+
