@@ -28,6 +28,9 @@
 <Include file="Blackwing\locales.xml"/>
 <Include file="Blackwing\modules.xml"/>
 
+<Include file="Bastion\locales.xml"/>
+<Include file="Bastion\modules.xml"/>
+
 <!--@end-debug@-->
 </Ui>
 
