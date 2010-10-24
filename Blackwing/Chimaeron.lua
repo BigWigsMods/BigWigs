@@ -1,4 +1,4 @@
-if GetBuildInfo() ~= "4.0.3" then return end -- lets not brake live stuff
+if GetBuildInfo() ~= "4.0.3" then return end -- lets not braek live stuff
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
