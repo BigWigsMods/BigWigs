@@ -15,7 +15,7 @@ mod.toggleOptions = {82631, 82746, {82665, "ICON"}, 82762, 83067, 83500, 83565, 
 local searing_winds = GetSpellInfo(83500)
 local grounded = GetSpellInfo(83581)
 local grounded_check_allowed, searing_winds_check_allowed = false, false
-local boss_health_warned = false
+local bossHealthWarned = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -83,21 +83,21 @@ function mod:OnEngage(diff)
 	self:Bar(82631, (GetSpellInfo(82631)), 28, 82631)
 	self:Bar(82746, (GetSpellInfo(82746)), 15, 82746)
 	grounded_check_allowed, searing_winds_check_allowed = false, false
-	boss_health_warned = false
+	wipe(bossHealthWarned)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_HEALTH(event, unitID)
-	-- XXX who is boss1 and boss2 and where do they come from?
-	-- XXX also we need a boss_health_warned flag for both, I assume?
-	if ((unitID == boss1) or (unitID == boss2)) then
-		local percentage = UnitHealth(unitID)/(UnitHealthMax(unitID)/100)
-		if ((percentage > 25) and (percentage < 30)) and not boss_health_warned then
-			boss_health_warned = true
-			self:Message(82631, L["health_report"]:format(UnitName(unitID),tonumber(percentage)), "Attention", spellId, "Info")
+function mod:UNIT_HEALTH(event, unit)
+	local name = UnitName(unit)
+	if bossHealthWarned[name] then return end
+	if UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") then
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp < 30 then
+			bossHealthWarned[name] = true
+			self:Message(82631, L["health_report"]:format(name, hp), "Attention", 26662, "Info")
 		end
 	end
 end
