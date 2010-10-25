@@ -8,12 +8,11 @@ if not mod then return end
 mod:RegisterEnableMob(41442)
 mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", "bosskill"}
 
-
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local air_phase_duration = 30
+local airPhaseDuration = 30
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -53,10 +52,9 @@ function mod:OnBossEnable()
 	self:Death("Win", 41442)
 end
 
-
 function mod:OnEngage(diff)
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
-	self:Bar(77840, spellName, 45, spellId)
+	self:Bar(77840, (GetSpellInfo(77840)), 45, 77840)
 end
 
 --------------------------------------------------------------------------------
@@ -81,11 +79,11 @@ do
 	end
 	function mod:AirPhase()
 		self:Message("air_phase", L["air_phase"], "Attention", 5740) -- Rain of Fire Icon
-		self:Bar("ground_phase", L["ground_phase"], air_phase_duration, 61882) -- Earthquake Icon
+		self:Bar("ground_phase", L["ground_phase"], airPhaseDuration, 61882) -- Earthquake Icon
 		
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(groundPhase, air_phase_duration)
+			self:ScheduleTimer(groundPhase, airPhaseDuration)
 		end
 	end
 end

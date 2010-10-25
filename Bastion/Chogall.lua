@@ -8,13 +8,12 @@ if not mod then return end
 mod:RegisterEnableMob(43324)
 mod.toggleOptions = {91303, 81628, 82299, 82630, 82414, "bosskill"}
 
-
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local WTargets = mod:NewTargetList()
-local worship_cd = 24
+local worshipTargets = mod:NewTargetList()
+local worshipCooldown = 24
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -40,7 +39,6 @@ mod.optionHeaders = {
 --
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_AURA_APPLIED", "Worship", 91317)
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
@@ -57,7 +55,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
 	self:Bar(81628, (GetSpellInfo(81628)), 58, 81628)
-	worship_cd = 24 -- its not 40 sec till the 1st add
+	worshipCooldown = 24 -- its not 40 sec till the 1st add
 end
 
 --------------------------------------------------------------------------------
@@ -65,7 +63,7 @@ end
 --
 
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
-	worship_cd = 40
+	worshipCooldown = 40
 	self:Message(81628, spellName, "Attention", 81628)
 	self:Bar(81628, spellName, 91, 81628)
 	-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
@@ -88,16 +86,16 @@ end
 
 do
 	local scheduled = nil
-	local function WWarn(spellName)
-		mod:TargetMessage(91303, spellName, WTargets, "Important", 91303, "Alert")
+	local function worshipWarn(spellName)
+		mod:TargetMessage(91303, spellName, worshipTargets, "Important", 91303, "Alert")
 		scheduled = nil
 	end
 	function mod:Worship(player, spellId, _, _, spellName)
-		WTargets[#WTargets + 1] = player
+		worshipTargets[#worshipTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:Bar(91303, L["worship_cooldown"], worship_cd, 91303)
-			self:ScheduleTimer(WWarn, 0.3, spellName)
+			self:Bar(91303, L["worship_cooldown"], worshipCooldown, 91303)
+			self:ScheduleTimer(worshipWarn, 0.3, spellName)
 		end
 	end
 end

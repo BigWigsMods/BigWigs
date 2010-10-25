@@ -65,7 +65,7 @@ function mod:SystemFailureStart(_, spellId, _, _, spellName)
 	self:Message(88853, spellName, "Urgent", spellId, "Alarm")
 end
 
-function mod:SystemFailureEnd(_,spellId)
+function mod:SystemFailureEnd(_, spellId)
 	self:Bar(88853, L["next_system_failure"], 65, spellId)
 end
 

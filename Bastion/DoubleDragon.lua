@@ -17,9 +17,9 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local last_dazzling_destruction = 0
+local lastDestruction = 0
 local pName = UnitName("player")
-local marked_for_twilight_meteorite = GetSpellInfo(88518)
+local marked = GetSpellInfo(88518)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,17 +45,16 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-
--- Phase Switch -- should be able to do this easier once we get Transcriptor logs
+	-- Phase Switch -- should be able to do this easier once we get Transcriptor logs
 	self:Log("SPELL_CAST_START", "DazzlingDestruction", 86408)
 	self:Yell("DeepBreath", L["valiona_trigger"])
---
+
 	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788)
 	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
 
 	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622)
-	self:Log("SPELL_AURA_Removed", "EngulfingMagicRemoved", 86622)
+	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -67,7 +66,7 @@ end
 
 
 function mod:OnEngage(diff)
-	last_dazzling_destruction = 0
+	lastDestruction = 0
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
 	self:Bar("phase_switch", "Theralion", 95, 86408)
@@ -78,12 +77,12 @@ end
 --
 
 function mod:DazzlingDestruction()
-	if (GetTime() - last_dazzling_destruction) > 6 then
+	if (GetTime() - lastDestruction) > 6 then
 		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
 		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
 		self:Bar("phase_switch", "Valiona", 113, 86788) -- probably inaccurate, also need better icon
 	end
-	last_dazzling_destruction = GetTime()
+	lastDestruction = GetTime()
 end
 
 function mod:DeepBreath()
@@ -109,18 +108,18 @@ function mod:BlackoutRemoved(player, spellId, _, _, spellName)
 	self:Bar(86788, spellName, 40, spellId) -- make sure to remove bar when it takes off
 end
 
-function mod:UNIT_AURA(event, unitID)
+function mod:UNIT_AURA(event, unit)
 	for i = 1, GetNumRaidMembers() do
-		local _, _, _, _, _, _, expires = UnitDebuff("raid"..i, marked_for_twilight_meteorite)
+		local _, _, _, _, _, _, expires = UnitDebuff("raid"..i, marked)
 		if expires and (GetTime() - expires) > 5 then
 			-- make sure we only mark people with marks that are not older than 1 sec, might need more marks for 25 man
 			self:SecondaryIcon(88518, "raid"..i)
 		end
 	end
-	if unitID == "player" then
-		if UnitDebuff("player", marked_for_twilight_meteorite) then
+	if unit == "player" then
+		if UnitDebuff("player", marked) then
 			self:FlashShake(88518)
-			self:TargetMessage(88518, marked_for_twilight_meteorite, pName, "Personal", 88518, "Info")
+			self:TargetMessage(88518, marked, pName, "Personal", 88518, "Info")
 		end
 	end
 end

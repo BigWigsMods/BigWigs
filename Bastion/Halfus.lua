@@ -30,7 +30,6 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_AURA_APPLIED", "SpinningSlash", 83709)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

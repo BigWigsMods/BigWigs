@@ -90,13 +90,16 @@ function mod:PowerConversion(_, spellId, _, _, spellName)
 	self:Message(79729, spellName, "Important", spellId, "Alert")
 end
 
-function mod:ChemicalCloud(player, spellId)
-	local time = GetTime()
-	if (time - last) > 2 then
-		last = time
-		if UnitIsUnit(player, "player") then
-			self:LocalMessage(80161, L["chemical_cloud_message"], "Personal", spellId, "Info")
-			self:FlashShake(80161)
+do
+	local last = 0
+	function mod:ChemicalCloud(player, spellId)
+		local time = GetTime()
+		if (time - last) > 2 then
+			last = time
+			if UnitIsUnit(player, "player") then
+				self:LocalMessage(80161, L["chemical_cloud_message"], "Personal", spellId, "Info")
+				self:FlashShake(80161)
+			end
 		end
 	end
 end

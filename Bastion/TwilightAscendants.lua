@@ -12,7 +12,7 @@ mod.toggleOptions = {82631, 82746, {82665, "ICON"}, 82762, 83067, 83500, 83565, 
 -- Locals
 --
 
-local searing_winds = GetSpellInfo(83500)
+local searingWinds = GetSpellInfo(83500)
 local grounded = GetSpellInfo(83581)
 local grounded_check_allowed, searing_winds_check_allowed = false, false
 local bossHealthWarned = {}
@@ -126,7 +126,6 @@ function mod:Switch()
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82746)))
 	self:Bar(83565, (GetSpellInfo(83565)), 33, 83565)
 	self:Bar(83067, (GetSpellInfo(83067)), 70, 83067)
-	boss_health_warned = false
 end
 
 function mod:Quake(_, spellId, _, _, spellName)
@@ -153,7 +152,7 @@ end
 
 local function searing_winds_check()
 	if searing_winds_check_allowed then
-		if not UnitDebuff("player", searing_winds) then
+		if not UnitDebuff("player", searingWinds) then
 			self:Message(83500, L["searing_winds_message"], "Important", 83500, "Info")
 			mod:ScheduleTimer(searing_winds_check, 1) -- this might be a bit annoying but hey else you die
 		end

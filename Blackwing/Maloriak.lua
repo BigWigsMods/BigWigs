@@ -92,7 +92,7 @@ function mod:Remedy(_, spellId, _, _, spellName)
 end
 
 function mod:ReleaseAberrations(_,spellId)
-	aberrations = aberrations - 3 
+	aberrations = aberrations - 3
 	self:Message(77569, L["release_aberration_message"]:format(aberrations), "Important", spellId, "Alert")
 end
 
