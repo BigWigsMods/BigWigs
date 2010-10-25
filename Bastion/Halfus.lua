@@ -51,3 +51,4 @@ end
 function mod:SpinningSlash(_, spellId, _, _, spellName)
 	self:Message(83709, spellName, "Important", spellId, "Alert")
 end
+

@@ -17,7 +17,6 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local GetTime, GetSpellInfo = GetTime, GetSpellInfo
 local last_dazzling_destruction = 0
 local pName = UnitName("player")
 local marked_for_twilight_meteorite = GetSpellInfo(88518)
@@ -61,7 +60,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("UNIT_AURA", "TwilightMeteoriteTarget")
+	self:RegisterEvent("UNIT_AURA")
 
 	self:Death("Win", 45992) -- They Share HP, they die at the same time
 end
@@ -79,8 +78,8 @@ end
 --
 
 function mod:DazzlingDestruction()
-	if GetTime()-last_dazzling_destruction > 6 then
-		self:SendMessage("BigWigs_StopBar", self, GetSpellInfo(86788))
+	if (GetTime() - last_dazzling_destruction) > 6 then
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
 		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
 		self:Bar("phase_switch", "Valiona", 113, 86788) -- probably inaccurate, also need better icon
 	end
@@ -88,7 +87,7 @@ function mod:DazzlingDestruction()
 end
 
 function mod:DeepBreath()
-	self:TargetMessage(86059, GetSpellInfo(86059), player, "Personal", 86059, "Info")
+	self:TargetMessage(86059, (GetSpellInfo(86059)), player, "Personal", 86059, "Info")
 	self:Bar("phase_switch", "Valiona", 137, 86622) -- probably inaccurate, also need better icon
 	self:Bar(86788, GetSpellInfo(86788), 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
@@ -110,13 +109,11 @@ function mod:BlackoutRemoved(player, spellId, _, _, spellName)
 	self:Bar(86788, spellName, 40, spellId) -- make sure to remove bar when it takes off
 end
 
-function mod:TwilightMeteoriteTarget(unitID)
-	local num = GetNumRaidMembers()
-	for i=1, num do
-		local remaining = 0
+function mod:UNIT_AURA(event, unitID)
+	for i = 1, GetNumRaidMembers() do
 		local _, _, _, _, _, _, expires = UnitDebuff("raid"..i, marked_for_twilight_meteorite)
-		if expires then remaining = GetTime()-expires end
-		if remaining > 5 then	-- make sure we only mark people with marks that are not older than 1 sec, might need more marks for 25 man
+		if expires and (GetTime() - expires) > 5 then
+			-- make sure we only mark people with marks that are not older than 1 sec, might need more marks for 25 man
 			self:SecondaryIcon(88518, "raid"..i)
 		end
 	end
@@ -149,3 +146,4 @@ function mod:EngulfingMagicRemoved(player)
 		self:CloseProximity()
 	end
 end
+

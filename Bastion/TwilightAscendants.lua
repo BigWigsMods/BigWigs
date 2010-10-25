@@ -8,12 +8,10 @@ if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689) --Ignacious, Feludius, Arion, Terrastra
 mod.toggleOptions = {82631, 82746, {82665, "ICON"}, 82762, 83067, 83500, 83565, 83581, "proximity", "bosskill"}
 
-
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local GetSpellInfo = GetSpellInfo
 local searing_winds = GetSpellInfo(83500)
 local grounded = GetSpellInfo(83581)
 local grounded_check_allowed, searing_winds_check_allowed = false, false
@@ -40,7 +38,6 @@ if L then
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
 
 	L.last_phase = "Last Phase"
-
 end
 L = mod:GetLocale()
 
@@ -74,7 +71,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
-	self:RegisterEvent("UNIT_HEALTH", "BossHealthCheck")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:Yell("LastPhase", L["last_phase_trigger"])
 
@@ -83,8 +80,8 @@ end
 
 
 function mod:OnEngage(diff)
-	self:Bar(82631, GetSpellInfo(82631), 28, 82631)
-	self:Bar(82746, GetSpellInfo(82746), 15, 82746)
+	self:Bar(82631, (GetSpellInfo(82631)), 28, 82631)
+	self:Bar(82746, (GetSpellInfo(82746)), 15, 82746)
 	grounded_check_allowed, searing_winds_check_allowed = false, false
 	boss_health_warned = false
 end
@@ -93,7 +90,9 @@ end
 -- Event Handlers
 --
 
-function mod:BossHealthCheck(unitID)
+function mod:UNIT_HEALTH(event, unitID)
+	-- XXX who is boss1 and boss2 and where do they come from?
+	-- XXX also we need a boss_health_warned flag for both, I assume?
 	if ((unitID == boss1) or (unitID == boss2)) then
 		local percentage = UnitHealth(unitID)/(UnitHealthMax(unitID)/100)
 		if ((percentage > 25) and (percentage < 30)) and not boss_health_warned then
@@ -125,8 +124,8 @@ end
 function mod:Switch()
 	self:SendMessage("BigWigs_StopBar", self, GetSpellInfo(82631))
 	self:SendMessage("BigWigs_StopBar", self, GetSpellInfo(82746))
-	self:Bar(83565, GetSpellInfo(83565), 33, 83565)
-	self:Bar(83067, GetSpellInfo(83067), 70, 83067)
+	self:Bar(83565, (GetSpellInfo(83565)), 33, 83565)
+	self:Bar(83067, (GetSpellInfo(83067)), 70, 83067)
 	boss_health_warned = false
 end
 
@@ -144,12 +143,12 @@ end
 
 function mod:QuakeTrigger()
 	searing_winds_check_allowed = true
-	self:Bar(83565, GetSpellName(835659), 10, 83565) -- update the bar since we are sure about this timer
+	self:Bar(83565, (GetSpellName(83565)), 10, 83565) -- update the bar since we are sure about this timer
 end
 
 function mod:ThundershockTrigger()
 	grounded_check_allowed = true
-	self:Bar(83067, GetSpellName(83067), 10, 83067) -- update the bar since we are sure about this timer
+	self:Bar(83067, (GetSpellName(83067)), 10, 83067) -- update the bar since we are sure about this timer
 end
 
 local function searing_winds_check()
@@ -173,3 +172,4 @@ end
 function mod:LastPhase()
 	self:OpenProximity(10) -- assumed, not even sure if we need it
 end
+

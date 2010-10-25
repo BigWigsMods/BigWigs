@@ -13,7 +13,6 @@ mod.toggleOptions = {91303, 81628, 82299, 82630, 82414, "bosskill"}
 -- Locals
 --
 
-local GetSpellInfo = GetSpellInfo
 local WTargets = mod:NewTargetList()
 local worship_cd = 24
 
@@ -57,18 +56,20 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	self:Bar(81628, GetSpellInfo(81628), 58, 81628)
+	self:Bar(81628, (GetSpellInfo(81628)), 58, 81628)
 	worship_cd = 24 -- its not 40 sec till the 1st add
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 	worship_cd = 40
 	self:Message(81628, spellName, "Attention", 81628)
 	self:Bar(81628, spellName, 91, 81628)
-	self:Bar(82299, GetSpellInfo(82299), 40, 82299) -- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
+	-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
+	self:Bar(82299, (GetSpellInfo(82299)), 40, 82299)
 end
 
 function mod:FesterBlood(_, spellId, _, _, spellName)
@@ -77,7 +78,7 @@ end
 
 function mod:LastPhase(_, spellId, _, _, spellName)
 	self:Message(82630, spellName, "Attention", spellId, "Info")
-	self:Bar(82414, GetSpellInfo(82414), 6, 82414)
+	self:Bar(82414, (GetSpellInfo(82414)), 6, 82414)
 end
 
 function mod:DarkenedCreations(_, spellId, _, _, spellName)
@@ -100,3 +101,4 @@ do
 		end
 	end
 end
+
