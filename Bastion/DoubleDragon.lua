@@ -69,7 +69,7 @@ end
 function mod:OnEngage(diff)
 	last_dazzling_destruction = 0
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
-	self:Bar(86788, GetSpellInfo(86788), 20, 86788)
+	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
 	self:Bar("phase_switch", "Theralion", 95, 86408)
 end
 
@@ -89,7 +89,7 @@ end
 function mod:DeepBreath()
 	self:TargetMessage(86059, (GetSpellInfo(86059)), player, "Personal", 86059, "Info")
 	self:Bar("phase_switch", "Valiona", 137, 86622) -- probably inaccurate, also need better icon
-	self:Bar(86788, GetSpellInfo(86788), 60, 86788) -- probably inaccurate
+	self:Bar(86788, (GetSpellInfo(86788)), 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
 end
 
