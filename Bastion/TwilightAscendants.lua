@@ -15,7 +15,6 @@ mod.toggleOptions = {82631, 82746, {82665, "ICON"}, 82762, 83067, 83500, 83565, 
 local searingWinds = GetSpellInfo(83500)
 local grounded = GetSpellInfo(83581)
 local grounded_check_allowed, searing_winds_check_allowed = false, false
-local bossHealthWarned = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -83,7 +82,6 @@ function mod:OnEngage(diff)
 	self:Bar(82631, (GetSpellInfo(82631)), 28, 82631)
 	self:Bar(82746, (GetSpellInfo(82746)), 15, 82746)
 	grounded_check_allowed, searing_winds_check_allowed = false, false
-	wipe(bossHealthWarned)
 end
 
 --------------------------------------------------------------------------------
@@ -91,13 +89,13 @@ end
 --
 
 function mod:UNIT_HEALTH(event, unit)
-	local name = UnitName(unit)
-	if bossHealthWarned[name] then return end
-	if UnitIsUnit(unit, "boss1") or UnitIsUnit(unit, "boss2") then
+	--if unit:find("^boss%d$") then
+	-- this is probably faster, but uglier :P
+	if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp < 30 then
-			bossHealthWarned[name] = true
-			self:Message(82631, L["health_report"]:format(name, hp), "Attention", 26662, "Info")
+			self:Message(82631, L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
+			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end
@@ -126,6 +124,7 @@ function mod:Switch()
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82746)))
 	self:Bar(83565, (GetSpellInfo(83565)), 33, 83565)
 	self:Bar(83067, (GetSpellInfo(83067)), 70, 83067)
+	self:RegisterEvent("UNIT_HEALTH")
 end
 
 function mod:Quake(_, spellId, _, _, spellName)
