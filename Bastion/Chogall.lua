@@ -71,11 +71,11 @@ function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 end
 
 function mod:FesterBlood(_, spellId, _, _, spellName)
-	self:Message(82299, spellName, "Urgent", spellId, "Alaram")
+	self:Message(82299, spellName, "Important", spellId, "Alert")
 end
 
 function mod:LastPhase(_, spellId, _, _, spellName)
-	self:Message(82630, spellName, "Attention", spellId, "Info")
+	self:Message(82630, spellName, "Attention", spellId)
 	self:Bar(82414, (GetSpellInfo(82414)), 6, 82414)
 end
 

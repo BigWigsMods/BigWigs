@@ -67,7 +67,7 @@ function mod:SonicBreath(_, spellId, _, _, spellName)
 end
 
 function mod:SearingFlame(_, spellId, _, _, spellName)
-	self:Message(77840, spellName, "Urgent", spellId, "Alarm")
+	self:Message(77840, spellName, "Important", spellId, "Alert")
 	self:Bar(77840, spellName, 120, spellId) -- or is it realated to air/ground phase?
 end
 

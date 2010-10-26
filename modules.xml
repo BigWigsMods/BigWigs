@@ -31,6 +31,9 @@
 <Include file="Bastion\locales.xml"/>
 <Include file="Bastion\modules.xml"/>
 
+<Include file="Throne\locales.xml"/>
+<Include file="Throne\modules.xml"/>
+
 <!--@end-debug@-->
 </Ui>
 

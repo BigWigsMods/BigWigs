@@ -62,7 +62,7 @@ end
 
 function mod:SystemFailureStart(_, spellId, _, _, spellName)
 	self:Bar(88853, spellName, 30, spellId)
-	self:Message(88853, spellName, "Urgent", spellId, "Alarm")
+	self:Message(88853, spellName, "Important", spellId, "Alarm")
 end
 
 function mod:SystemFailureEnd(_, spellId)

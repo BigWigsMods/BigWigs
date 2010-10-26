@@ -86,7 +86,7 @@ function mod:DazzlingDestruction()
 end
 
 function mod:DeepBreath()
-	self:TargetMessage(86059, (GetSpellInfo(86059)), player, "Personal", 86059, "Info")
+	self:Message(86059, (GetSpellInfo(86059)), "Important", 86059, "Alert")
 	self:Bar("phase_switch", "Valiona", 137, 86622) -- probably inaccurate, also need better icon
 	self:Bar(86788, (GetSpellInfo(86788)), 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
@@ -98,7 +98,7 @@ function mod:BlackoutApplied(player, spellId, _, _, spellName)
 		self:FlashShake(86788)
 		self:CloseProximity()
 	end
-	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Info")
+	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(86788, player, spellName)
 	self:PrimaryIcon(86788, player)
 end
@@ -119,7 +119,7 @@ function mod:UNIT_AURA(event, unit)
 	if unit == "player" then
 		if UnitDebuff("player", marked) then
 			self:FlashShake(88518)
-			self:TargetMessage(88518, marked, pName, "Personal", 88518, "Info")
+			self:LocalMessage(88518, marked, pName, "Personal", 88518, "Alarm")
 		end
 	end
 end
@@ -135,7 +135,7 @@ function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
 		self:FlashShake(86622)
 		self:OpenProximity(10) -- assumed
 	end
-	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Info")
+	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(86622, player, spellName)
 	self:PrimaryIcon(86622, player)
 end

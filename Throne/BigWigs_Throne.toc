@@ -1,0 +1,14 @@
+## Interface: 40300
+
+## Title: Big Wigs [|cffeda55fThrone of the Four Winds|r]
+## Notes: Big Wigs Modules for The Throne of the Four Winds
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-Zone: Throne of the Four Winds
+
+locales.xml
+modules.xml
+

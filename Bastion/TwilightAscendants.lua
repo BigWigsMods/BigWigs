@@ -102,16 +102,18 @@ end
 
 function mod:AegisofFlame(_, spellId, _, _, spellName)
 	self:Bar(82631, spellName, 62, spellId)
-	self:Message(82631, spellName, "Urgent", spellId, "Alarm")
+	self:Message(82631, spellName, "Urgent", spellId, "Info")
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
 	self:Bar(82746, spellName, 33, spellId)
-	self:Message(82746, spellName, "Urgent", spellId, "Alarm")
+	self:Message(82746, spellName, "Urgent", spellId, "Info")
 end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
-	self:TargetMessage(82762, spellName, player, "Personal", spellId, "Info")
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(82762, spellName, player, "Personal", spellId)
+	end
 end
 
 function mod:HeartofIce(player, spellId, _, _, spellName)
@@ -129,30 +131,32 @@ end
 
 function mod:Quake(_, spellId, _, _, spellName)
 	self:Bar(83565, spellName, 65, spellId)
-	self:Message(83565, spellName, "Urgent", spellId, "Alarm")
+	self:Message(83565, spellName, "Important", spellId, "Alert")
 	searing_winds_check_allowed = false
 end
 
 function mod:Thundershock(_, spellId, _, _, spellName)
 	self:Bar(83067, spellName, 65, spellId)
-	self:Message(83067, spellName, "Urgent", spellId, "Alarm")
+	self:Message(83067, spellName, "Important", spellId, "Alert")
 	grounded_check_allowed = false
 end
 
 function mod:QuakeTrigger()
 	searing_winds_check_allowed = true
+	searing_winds_check()
 	self:Bar(83565, (GetSpellName(83565)), 10, 83565) -- update the bar since we are sure about this timer
 end
 
 function mod:ThundershockTrigger()
 	grounded_check_allowed = true
+	grounded_check()
 	self:Bar(83067, (GetSpellName(83067)), 10, 83067) -- update the bar since we are sure about this timer
 end
 
 local function searing_winds_check()
 	if searing_winds_check_allowed then
 		if not UnitDebuff("player", searingWinds) then
-			self:Message(83500, L["searing_winds_message"], "Important", 83500, "Info")
+			self:LocalMessage(83500, L["searing_winds_message"], "Personal", 83500, "Info")
 			mod:ScheduleTimer(searing_winds_check, 1) -- this might be a bit annoying but hey else you die
 		end
 	end
@@ -161,7 +165,7 @@ end
 local function grounded_check()
 	if grounded_check_allowed then
 		if not UnitDebuff("player", grounded) then
-			self:Message(83581, L["grounded_message"], "Important", 83581, "Info")
+			self:LocalMessage(83581, L["grounded_message"], "Personal", 83581, "Info")
 			mod:ScheduleTimer(grounded_check, 1) -- this might be a bit annoying but hey else you die
 		end
 	end

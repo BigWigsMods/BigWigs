@@ -93,14 +93,14 @@ end
 
 function mod:ReleaseAberrations(_,spellId)
 	aberrations = aberrations - 3
-	self:Message(77569, L["release_aberration_message"]:format(aberrations), "Important", spellId, "Alert")
+	self:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
 end
 
 function mod:ConsumingFlames(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(77786)
 	end
-	self:TargetMessage(77786, L["consuming_flames"], player, "Personal", spellId, "Info")
+	self:TargetMessage(77786, L["consuming_flames"], player, "Personal", spellId)
 end
 
 function mod:ReleaseAll(_, spellId)
@@ -114,7 +114,7 @@ function mod:BitingChill(player, spellId, _, _, spellName)
 		self:OpenProximity(3)
 		self:ScheduleTimer(self.CloseProximity, 10, self)
 	end
-	self:TargetMessage(77760, spellName, player, "Personal", spellId, "Info")
+	self:TargetMessage(77760, spellName, player, "Urgent", spellId, "Info")
 	self:Whisper(77760, player, spellName)
 	self:SecondaryIcon(77760, player)
 end

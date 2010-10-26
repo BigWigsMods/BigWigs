@@ -65,7 +65,7 @@ function mod:AcquiringTarget(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(79501)
 	end
-	self:TargetMessage(79501, L["acquiring_target"], player, "Urgent", spellId, "Long")
+	self:TargetMessage(79501, L["acquiring_target"], player, "Urgent", spellId)
 	self:SecondaryIcon(79501, player)
 end
 
