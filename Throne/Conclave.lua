@@ -46,9 +46,9 @@ function mod:OnBossEnable()
 	self:Log("PELL_AURA_APPLIED", "SleetStorm", 84644)
 ]]--
 
-	self:Log("SPELL_CAST_SUCCESS", "FullPower", 86193)
+--	self:Log("SPELL_CAST_SUCCESS", "FullPower", 86193)
 	self:Log("SPELL_CAST_SUCCESS", "FullPower", 84638)
-	self:Log("PELL_AURA_APPLIED", "FullPower", 84644)
+--	self:Log("PELL_AURA_APPLIED", "FullPower", 84644)
 	
 	self:Log("SPELL_CAST_START", "GatherStrength", 86307)	
 	
