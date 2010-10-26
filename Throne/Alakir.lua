@@ -53,7 +53,7 @@ function mod:Electrocute(player, spellId, _, _, spellName)
 	self:TargetMessage(88427, spellName, player, "Personal", spellId, "Alarm")
 end
 
-function mod:Nurture(_, spellId, _, _, spellName)
+function mod:WindBurst(_, spellId, _, _, spellName)
 	self:Bar(87770, spellName, 26, spellId)
 	self:Message(87770, spellName, "Important", spellId, "Alert")
 end
