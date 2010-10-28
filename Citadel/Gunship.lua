@@ -61,7 +61,7 @@ do
 			count = 0
 			local guid = UnitGUID("boss1")
 			if guid then
-				guid = tonumber(guid:sub(-12, -7), 16)
+				guid = tonumber(guid:sub(7, 10), 16)
 				if guid == 37540 or guid == 37215 then
 					self:Engage()
 				else

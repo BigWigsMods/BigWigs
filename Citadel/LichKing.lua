@@ -145,7 +145,7 @@ end
 function mod:PlagueTick(horrorName, _, _, tickDamage, _, _, _, _, _, dGUID)
 	if self:GetInstanceDifficulty() < 3 then return end -- Doesn't apply on normal diff.
 	-- Not ticking on a Shambling Horror, so bail early
-	if tonumber(dGUID:sub(-12, -7), 16) ~= 37698 then return end
+	if tonumber(dGUID:sub(7, 10), 16) ~= 37698 then return end
 
 	if not plagueTicks[dGUID] then plagueTicks[dGUID] = 1
 	else plagueTicks[dGUID] = plagueTicks[dGUID] + 1 end

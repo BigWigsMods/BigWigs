@@ -71,7 +71,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		count = 0
 		local guid = UnitGUID("boss1")
 		if guid then
-			guid = tonumber(guid:sub(-12, -7), 16)
+			guid = tonumber(guid:sub(7, 10), 16)
 			if guid == 37970 or guid == 37972 or guid == 37973 then
 				self:Engage()
 				self:Bar(70981, L["switch_bar"], 45, 70981)
@@ -126,7 +126,7 @@ function mod:RegularShock()
 		local bossId = ("boss%d"):format(i)
 		local guid = UnitGUID(bossId)
 		if not guid then return end
-		guid = tonumber((guid):sub(-12, -7), 16)
+		guid = tonumber((guid):sub(7, 10), 16)
 		if guid == 37970 then
 			local target = UnitName(bossId .. "target")
 			if target then
