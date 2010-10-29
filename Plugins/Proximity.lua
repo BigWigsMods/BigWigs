@@ -102,22 +102,22 @@ do
 	end
 
 	local spells = {
-		DEATHKNIGHT = { 61999, 49892, 49016 }, -- Raise Ally works even on players that are alive oO
-		DRUID = { 5185, 467, 1126 },
+		DEATHKNIGHT = { 49016 },
+		DRUID = { 5185, 467 },
 		-- HUNTER = { 34477 }, -- Misdirect is like 100y range, so forget it!
 		HUNTER = {},
 		MAGE = { 475, 1459 },
 		PALADIN = { 635, 19740, 20473 },
-		PRIEST = { 2050, 1243 },
+		PRIEST = { 2050, 6346 },
 		ROGUE = { 57934 },
-		SHAMAN = { 331, 526 },
-		WARRIOR = { 50720 }, -- Can't use Intervene since it has a minimum range.
+		SHAMAN = { 331, 546 },
+		WARRIOR = { 50720, 3411 },
 		WARLOCK = { 5697 },
 	}
 	local _, class = UnitClass("player")
 	local mySpells = spells[class]
 	-- Gift of the Naaru
-	if r == "Draenei" then tinsert(mySpells, 28880) end
+	if r == "Draenei" then mySpells[#mySpells+1] = 28880 end
 	if mySpells then
 		for i, spell in next, mySpells do
 			local name, _, _, _, _, _, _, minRange, range = GetSpellInfo(spell)
