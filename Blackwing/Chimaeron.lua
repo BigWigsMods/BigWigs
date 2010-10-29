@@ -8,7 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
 mod.toggleOptions = {"warmup", 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "bosskill"}
 mod.optionHeaders = {
-	bosskill = "general",
+	warmup = "general",
 }
 
 --------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Mortality", 82890)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Break", 82881)
 	self:Log("SPELL_AURA_APPLIED", "DoubleAttack", 88826)
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Warmup")

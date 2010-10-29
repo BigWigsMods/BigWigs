@@ -24,9 +24,9 @@ if L then
 	L.ground_phase_desc = "Warning for when Atramedes lands."
 	L.air_phase = "Air Phase"
 	L.air_phase_desc = "Warning for when Atramedes takes off."
-	
+
 	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
-	
+
 	L.sonicbreath_cooldown = "~Sonic Breath"
 end
 L = mod:GetLocale()
@@ -71,20 +71,19 @@ function mod:SearingFlame(_, spellId, _, _, spellName)
 	self:Bar(77840, spellName, 120, spellId) -- or is it realated to air/ground phase?
 end
 
-do 
-	local scheduled = nil
+do
 	local function groundPhase()
 		mod:Message("ground_phase", L["ground_phase"], "Attention", 61882) -- Earthquake Icon
-		mod:Bar("air_phase", L["air_phase"], 85, 5740) -- Rain of Fire Icon
+		mod:Bar("air_phase", L["air_phase"], 90, 5740) -- Rain of Fire Icon
+		self:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
+-- start a bar for searing flames for comparison, just need a good trigger for ground phase start to make this accurate
+		self:Bar(77840, "Searing Flame - Landing", 50, 77840)
 	end
 	function mod:AirPhase()
+		self:SendMessage("BigWigs_StopBar", self, L["sonicbreath_cooldown"])
 		self:Message("air_phase", L["air_phase"], "Attention", 5740) -- Rain of Fire Icon
 		self:Bar("ground_phase", L["ground_phase"], airPhaseDuration, 61882) -- Earthquake Icon
-		
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(groundPhase, airPhaseDuration)
-		end
+		self:ScheduleTimer(groundPhase, airPhaseDuration)
 	end
 end
 

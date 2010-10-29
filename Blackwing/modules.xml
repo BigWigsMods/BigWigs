@@ -6,6 +6,7 @@
 <Script file="Maloriak.lua" />
 <Script file="Magmaw.lua" />
 <Script file="Omnitron.lua" />
+<Script file="Nefarian.lua" />
 
 </Ui>
 
