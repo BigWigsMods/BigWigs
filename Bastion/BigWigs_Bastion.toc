@@ -1,7 +1,9 @@
 ## Interface: 40300
 
 ## Title: Big Wigs [|cffeda55fThe Bastion of Twilight|r]
+## Title-frFR: Big Wigs [|cffeda55fLe bastion du Crépuscule|r]
 ## Notes: Big Wigs Modules for The Bastion of Twilight
+## Notes-frFR: Modules Big Wigs concernant le bastion du Crépuscule.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

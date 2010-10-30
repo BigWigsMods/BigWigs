@@ -1,7 +1,9 @@
 ## Interface: 40300
 
 ## Title: Big Wigs [|cffeda55fThrone of the Four Winds|r]
+## Title-frFR: Big Wigs [|cffeda55fTrône des quatre vents|r]
 ## Notes: Big Wigs Modules for The Throne of the Four Winds
+## Notes-frFR: Modules Big Wigs concernant le Trône des quatre vents.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

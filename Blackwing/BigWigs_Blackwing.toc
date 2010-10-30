@@ -1,7 +1,9 @@
 ## Interface: 40300
 
 ## Title: Big Wigs [|cffeda55fBlackwing Descent|r]
+## Title-frFR: Big Wigs [|cffeda55fDescente de l'Aile noire|r]
 ## Notes: Big Wigs Modules for The Blackwing Descent
+## Notes-frFR: Modules Big Wigs concernant la Descente de l'Aile noire.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
