@@ -30,11 +30,9 @@ if L then
 	L.flashfreeze = "~Flash Freeze"
 	L.consuming_flames = "Consuming Flames on YOU!"
 
-	L.phase_desc = "Warning for Phase changes"
-	L.next_phase = "Next Phase"
-
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes"
+	L.next_phase = "Next Phase"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase = "|cFFFF0000Red|r phase"
