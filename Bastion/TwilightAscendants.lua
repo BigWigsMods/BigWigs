@@ -24,10 +24,10 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.health_report = "%s is at %d%% health, switch soon!"
 
-	L.switch_trigger = "Enough of this foolishness!"
+	L.switch_trigger = "We will handle them!"
 
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
-	L.thudershock_trigger = "The surrounding air crackles with energy...."
+	L.thundershock_trigger = "The surrounding air crackles with energy...."
 
 	L.searing_winds_message = "Get Searing Winds!"
 	L.grounded_message = "Get Grounded!"
@@ -87,6 +87,24 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function searing_winds_check()
+	if searing_winds_check_allowed then
+		if not UnitDebuff("player", searingWinds) then
+			self:LocalMessage(83500, L["searing_winds_message"], "Personal", 83500, "Info")
+			mod:ScheduleTimer(searing_winds_check, 1) -- this might be a bit annoying but hey else you die
+		end
+	end
+end
+
+local function grounded_check()
+	if grounded_check_allowed then
+		if not UnitDebuff("player", grounded) then
+			self:LocalMessage(83581, L["grounded_message"], "Personal", 83581, "Info")
+			mod:ScheduleTimer(grounded_check, 1) -- this might be a bit annoying but hey else you die
+		end
+	end
+end
 
 function mod:UNIT_HEALTH(event, unit)
 	--if unit:find("^boss%d$") then
@@ -153,25 +171,10 @@ function mod:ThundershockTrigger()
 	self:Bar(83067, (GetSpellName(83067)), 10, 83067) -- update the bar since we are sure about this timer
 end
 
-local function searing_winds_check()
-	if searing_winds_check_allowed then
-		if not UnitDebuff("player", searingWinds) then
-			self:LocalMessage(83500, L["searing_winds_message"], "Personal", 83500, "Info")
-			mod:ScheduleTimer(searing_winds_check, 1) -- this might be a bit annoying but hey else you die
-		end
-	end
-end
-
-local function grounded_check()
-	if grounded_check_allowed then
-		if not UnitDebuff("player", grounded) then
-			self:LocalMessage(83581, L["grounded_message"], "Personal", 83581, "Info")
-			mod:ScheduleTimer(grounded_check, 1) -- this might be a bit annoying but hey else you die
-		end
-	end
-end
 
 function mod:LastPhase()
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83565)))
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83067)))
 	self:OpenProximity(10) -- assumed, not even sure if we need it
 end
 

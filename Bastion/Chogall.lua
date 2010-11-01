@@ -75,6 +75,9 @@ function mod:FesterBlood(_, spellId, _, _, spellName)
 end
 
 function mod:LastPhase(_, spellId, _, _, spellName)
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(81628)))
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82299)))
+	self:SendMessage("BigWigs_StopBar", self, L["worship_cooldown"])
 	self:Message(82630, spellName, "Attention", spellId)
 	self:Bar(82414, (GetSpellInfo(82414)), 6, 82414)
 end
