@@ -34,10 +34,10 @@ L = BigWigs:NewBossLocale("Twilight Ascendants", "koKR")
 if L then
 	L.health_report = "%s의 체력 -%d%%-, 곧 전환!"
 
-	L.switch_trigger = "이 바보같은"	--check
+	L.switch_trigger = "우리가 상대하겠다"	--check
 
 	L.quake_trigger = "The ground beneath you rumbles ominously...."	--check
-	L.thudershock_trigger = "The surrounding air crackles with energy...."	--check
+	L.thundershock_trigger = "The surrounding air crackles with energy...."	--check
 
 	L.searing_winds_message = "소용돌이에 올라타세요!"
 	L.grounded_message = "땅에 착지하세요!"
