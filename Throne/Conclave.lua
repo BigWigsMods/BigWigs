@@ -115,6 +115,8 @@ function mod:Nurture(_, spellId, _, _, spellName)
 end
 
 function mod:GatherStrength(unit, spellId, _, _, spellName)
-	self:Message(86307, L["gather_strength"]:format(unit), "Important", spellId, "Long")
-	self:Bar(86307, L["gather_strength"]:format(unit), 60, spellId)
+	if unit then
+		self:Message(86307, L["gather_strength"]:format(unit), "Important", spellId, "Long")
+		self:Bar(86307, L["gather_strength"]:format(unit), 60, spellId)
+	end
 end
