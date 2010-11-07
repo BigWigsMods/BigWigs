@@ -6,7 +6,7 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-mod.toggleOptions = {91303, 81628, 82299, 82630, 82414, "bosskill"}
+mod.toggleOptions = {"orders", 91303, 81628, 82299, 82630, 82414, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -21,6 +21,11 @@ local worshipCooldown = 24
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	--heroic
+	L.orders = "Shadow/Flame Orders"
+	L.orders_desc = "Warning for Shadow/Flame Orders"
+
+	--normal
 	L.worship_cooldown = "~Worship"
 
 	L.phase_one = "Phase One"
@@ -29,6 +34,7 @@ end
 L = mod:GetLocale()
 
 mod.optionHeaders = {
+	orders = "heroic",
 	[91303] = L["phase_one"],
 	[82630] = L["phase_two"],
 	bosskill = "general",
@@ -39,7 +45,11 @@ mod.optionHeaders = {
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Worship", 91317)
+	--heroic
+	self:Log("SPELL_CAST_SUCCESS", "Orders", 81171, 81556)
+
+	--normal
+	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93366)
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
@@ -61,6 +71,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Orders(_, spellId, _, _, spellName)
+	self:Message("orders", spellName, "Urgent", spellId)
+end
 
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 	worshipCooldown = 40

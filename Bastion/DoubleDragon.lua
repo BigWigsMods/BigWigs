@@ -6,8 +6,9 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Valiona and Theralion", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
-mod.toggleOptions = {{86788, "ICON", "FLASHSHAKE"}, {88518, "ICON", "FLASHSHAKE"}, 86059, 86840, {86622, "ICON", "FLASHSHAKE"}, "proximity", "phase_switch", "bosskill"}
+mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "ICON", "FLASHSHAKE"}, 86059, 86840, {86622, "ICON", "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
 mod.optionHeaders = {
+	[93051] = "Heroic",
 	[86788] = "Valiona",
 	[86622] = "Theralion",
 	proximity = "general",
@@ -20,6 +21,7 @@ mod.optionHeaders = {
 local lastDestruction = 0
 local pName = UnitName("player")
 local marked = GetSpellInfo(88518)
+local markWarned = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,13 +32,13 @@ if L then
 	L.phase_switch = "Phase Switch"
 	L.phase_switch_desc = "Warning for Phase Switches"
 
-	L.blackout_say = "Blackout on ME!"
-
 	L.engulfingmagic_say = "Engulfing Magic on ME!"
 
 	L.devouringflames_cooldown = "~Devouring Flames"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+
+	L.twilight_shift = "%2$dx Twilight Shift on %1$s"
 end
 L = mod:GetLocale()
 
@@ -45,16 +47,19 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
+	-- Heroic
+	self:Log("SPELL_AURA_APPLIED_DOSE", "TwilightShift", 93051)
+
 	-- Phase Switch -- should be able to do this easier once we get Transcriptor logs
 	self:Log("SPELL_CAST_START", "DazzlingDestruction", 86408)
 	self:Yell("DeepBreath", L["valiona_trigger"])
 
-	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788)
-	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788)
+	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877)
+	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
 
-	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622)
-	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622)
+	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640)
+	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -67,6 +72,7 @@ end
 
 function mod:OnEngage(diff)
 	lastDestruction = 0
+	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
 	self:Bar("phase_switch", "Theralion", 95, 86408)
@@ -75,6 +81,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:TwilightShift(player, spellId, _, _, spellName, stack)
+	if stack > 3 then
+		self:TargetMessage(93051, L["twilight_shift"], player, "Important", spellId, nil, stack)
+	end
+end
 
 function mod:DazzlingDestruction()
 	if (GetTime() - lastDestruction) > 6 then
@@ -94,13 +106,13 @@ end
 
 function mod:BlackoutApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:Say(86788, L["blackout_say"])
 		self:FlashShake(86788)
-		self:CloseProximity()
 	end
 	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(86788, player, spellName)
 	self:PrimaryIcon(86788, player)
+	self:Bar(86788, spellName, 45, 86788)
+	self:CloseProximity()
 end
 
 function mod:BlackoutRemoved(player, spellId, _, _, spellName)
@@ -117,9 +129,10 @@ function mod:UNIT_AURA(event, unit)
 		end
 	end
 	if unit == "player" then
-		if UnitDebuff("player", marked) then
+		if UnitDebuff("player", marked) and not markWarned then
 			self:FlashShake(88518)
 			self:LocalMessage(88518, marked, pName, "Personal", 88518, "Alarm")
+			markWarned = true
 		end
 	end
 end
@@ -133,7 +146,7 @@ function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(86622, L["engulfingmagic_say"])
 		self:FlashShake(86622)
-		self:OpenProximity(10) -- assumed
+		self:OpenProximity(10)
 	end
 	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(86622, player, spellName)

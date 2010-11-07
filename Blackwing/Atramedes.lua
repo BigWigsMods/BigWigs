@@ -6,13 +6,14 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", "bosskill"}
+mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", "ancientDwarvenShield", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local airPhaseDuration = 30
+local sheilds = 10
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -20,6 +21,10 @@ local airPhaseDuration = 30
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.ancientDwarvenShield = "Ancient Dwarven Shield"
+	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
+	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
+
 	L.ground_phase = "Ground Phase"
 	L.ground_phase_desc = "Warning for when Atramedes lands."
 	L.air_phase = "Air Phase"
@@ -34,7 +39,7 @@ L = mod:GetLocale()
 mod.optionHeaders = {
 	ground_phase = L["ground_phase"],
 	air_phase = L["air_phase"],
-	bosskill = "general",
+	ancientDwarvenShield = "general",
 }
 
 --------------------------------------------------------------------------------
@@ -46,6 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SearingFlame", 77840)
 	self:Yell("AirPhase", L["air_phase_trigger"])
 
+	self:RegisterEvent("UNIT_DIED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -53,6 +59,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	shields = 10
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
 	self:Bar(77840, (GetSpellInfo(77840)), 45, 77840)
 end
@@ -61,6 +68,13 @@ end
 -- Event Handlers
 --
 
+function mod:UNIT_DIED(event,  destGUID, destName) -- I guess
+	if destName == L["ancientDwarvenShield"] then
+		shields = shields - 1
+		self:Message("ancientDwarvenShield", L["ancientDwarvenShieldLeft"]:format(shields), "Attention", 31935) -- Avenger's Shield Icon
+	end
+end
+
 function mod:SonicBreath(_, spellId, _, _, spellName)
 	self:Message(78075, spellName, "Urgent", spellId, "Info")
 	self:Bar(78075, L["sonicbreath_cooldown"], 42, spellId)
@@ -68,16 +82,15 @@ end
 
 function mod:SearingFlame(_, spellId, _, _, spellName)
 	self:Message(77840, spellName, "Important", spellId, "Alert")
-	self:Bar(77840, spellName, 120, spellId) -- or is it realated to air/ground phase?
 end
 
 do
 	local function groundPhase()
 		mod:Message("ground_phase", L["ground_phase"], "Attention", 61882) -- Earthquake Icon
 		mod:Bar("air_phase", L["air_phase"], 90, 5740) -- Rain of Fire Icon
-		self:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
--- start a bar for searing flames for comparison, just need a good trigger for ground phase start to make this accurate
-		self:Bar(77840, "Searing Flame - Landing", 50, 77840)
+		mod:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
+-- need a good trigger for ground phase start to make this even more accurate
+		mod:Bar(77840, (GetSpellInfo(77840)), 50, 77840)
 	end
 	function mod:AirPhase()
 		self:SendMessage("BigWigs_StopBar", self, L["sonicbreath_cooldown"])

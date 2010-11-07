@@ -26,8 +26,6 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warnings for the Phase changes"
 
-	L.phase_x = "Phase %d!"
-
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
@@ -63,14 +61,14 @@ function mod:UNIT_DIED(event, destGUID, destName) -- I guess
 		deadAdds = deadAdds + 1
 	end
 	if deadAdds == 3 then
-		self:SendMessage("BigWigs_StopBar", self, L["phase_x"]:format(phase))
+		self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
 		phase = 3
-		self:Message("phase", L["phase_x"]:format(phase), "Attention", 81007)
+		self:Message("phase", L["phase"]:format(phase), "Attention", 81007)
 	end
 end
 
 function mod:PhaseTwo()
 	phase = 2
-	self:Message("phase", L["phase_x"]:format(phase), "Attention", 78621)
-	mod:Bar("phase", L["phase_x"]:format(phase), 180, 78621)
+	self:Message("phase", L["phase"]:format(phase), "Attention", 78621)
+	mod:Bar("phase", L["phase"]:format(phase), 180, 78621)
 end
