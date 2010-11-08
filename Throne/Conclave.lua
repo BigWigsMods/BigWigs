@@ -23,6 +23,7 @@ if L then
 	
 	L.full_power = "Full Power"
 	L.full_power_desc = "Warning for when the bosses reach full power and start to cast the special abilities."
+	L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
 	
 	L.wind_chill = "YOU have %s stacks of Wind Chill"
 end
@@ -50,7 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FullPower", 84638)
 --	self:Log("PELL_AURA_APPLIED", "FullPower", 84644)
 	
-	self:Log("SPELL_CAST_START", "GatherStrength", 86307)	
+	self:Emote("GatherStrength", L["gather_strength_emote"])
 	
 	self:Log("PELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 
@@ -65,7 +66,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar("full_power", L["full_power"], 90, 86193)
-	self:Bar(85422, (GetSpellInfo(85422)), 52, 85422) -- assumed timer
+	self:Bar(85422, (GetSpellInfo(85422)), 30, 85422)
 end
 
 --------------------------------------------------------------------------------
@@ -114,9 +115,7 @@ function mod:Nurture(_, spellId, _, _, spellName)
 	self:Message(85422, spellName, "Urgent", spellId)
 end
 
-function mod:GatherStrength(unit, spellId, _, _, spellName)
-	if unit then
-		self:Message(86307, L["gather_strength"]:format(unit), "Important", spellId, "Long")
-		self:Bar(86307, L["gather_strength"]:format(unit), 60, spellId)
-	end
+function mod:GatherStrength(msg, sender)
+	self:Message(86307, L["gather_strength"]:format(sender), "Important", spellId, "Long")
+	self:Bar(86307, L["gather_strength"]:format(sender), 60, spellId)
 end
