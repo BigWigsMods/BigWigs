@@ -59,6 +59,11 @@ end
 function mod:UNIT_DIED(event, destGUID, destName) -- I guess
 	if destName == L["chromatic_prototype"] then
 		deadAdds = deadAdds + 1
+		if mod:GetInstanceDifficulty() > 2 then
+			self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
+			phase = 3
+			self:Message("phase", L["phase"]:format(phase), "Attention", 81007)
+		end
 	end
 	if deadAdds == 3 then
 		self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
