@@ -386,7 +386,7 @@ end
 do
 	local hexColors = {}
 	for k, v in pairs(RAID_CLASS_COLORS) do
-		hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+		hexColors[k] = "|cff" .. fmt("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 	end
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
@@ -524,11 +524,11 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	local halfMin = (half - m) / 60
 	self:DelayedMessage("berserk", half + m, fmt(L["berserk_min"], halfMin), "Positive")
 
-	self:DelayedMessage("berserk", seconds - 60, L["berserk_min"]:format(1), "Positive")
-	self:DelayedMessage("berserk", seconds - 30, L["berserk_sec"]:format(30), "Urgent")
-	self:DelayedMessage("berserk", seconds - 10, L["berserk_sec"]:format(10), "Urgent")
-	self:DelayedMessage("berserk", seconds - 5, L["berserk_sec"]:format(5), "Important")
-	self:DelayedMessage("berserk", seconds, L["berserk_end"]:format(boss), "Important", nil, "Alarm")
+	self:DelayedMessage("berserk", seconds - 60, fmt(L["berserk_min"], 1), "Positive")
+	self:DelayedMessage("berserk", seconds - 30, fmt(L["berserk_sec"], 30), "Urgent")
+	self:DelayedMessage("berserk", seconds - 10, fmt(L["berserk_sec"], 10), "Urgent")
+	self:DelayedMessage("berserk", seconds - 5, fmt(L["berserk_sec"], 5), "Important")
+	self:DelayedMessage("berserk", seconds, fmt(L["berserk_end"], boss), "Important", nil, "Alarm")
 
 	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
 	-- Brutallus is da bomb.

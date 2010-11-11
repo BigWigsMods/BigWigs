@@ -26,6 +26,8 @@ mod.optionHeaders = {
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.acquiring_target = "Acquiring Target"
+
+	L.cloud_message = "Cloud on YOU!"
 end
 L = mod:GetLocale()
 
@@ -96,7 +98,7 @@ do
 		if (time - last) > 2 then
 			last = time
 			if UnitIsUnit(player, "player") then
-				self:LocalMessage(80161, L["you"]:format((GetSpellInfo(80161))), "Personal", spellId, "Info")
+				self:LocalMessage(80161, L["cloud_message"], "Personal", spellId, "Info")
 				self:FlashShake(80161)
 			end
 		end
