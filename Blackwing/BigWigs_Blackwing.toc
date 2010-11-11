@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fBlackwing Descent|r]
 ## Title-frFR: Big Wigs [|cffeda55fDescente de l'Aile noire|r]

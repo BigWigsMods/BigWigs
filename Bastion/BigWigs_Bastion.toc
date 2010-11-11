@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fThe Bastion of Twilight|r]
 ## Title-frFR: Big Wigs [|cffeda55fLe bastion du Crépuscule|r]

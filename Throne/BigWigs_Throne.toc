@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fThrone of the Four Winds|r]
 ## Title-frFR: Big Wigs [|cffeda55fTrône des quatre vents|r]
