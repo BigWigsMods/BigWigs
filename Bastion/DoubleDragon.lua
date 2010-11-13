@@ -8,7 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
 mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "ICON", "FLASHSHAKE"}, 86059, 86840, {86622, "ICON", "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
 mod.optionHeaders = {
-	[93051] = "Heroic",
+	[93051] = "heroic",
 	[86788] = "Valiona",
 	[86622] = "Theralion",
 	proximity = "general",
