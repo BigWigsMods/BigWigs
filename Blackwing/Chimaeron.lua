@@ -52,7 +52,7 @@ function mod:Warmup(_, msg)
 end
 
 function mod:OnEngage(diff)
-	self:Bar(88853, L["next_system_failure"], 85, 88853)
+	self:Bar(88853, L["next_system_failure"], 90, 88853)
 	self:SendMessage("BigWigs_StopBar", self, L["warmup"])
 	self:OpenProximity(6)
 end
@@ -70,6 +70,7 @@ end
 
 function mod:SystemFailureEnd(_, spellId)
 	self:Bar(88853, L["next_system_failure"], 65, spellId)
+	self:FlashShake(88853)
 	self:OpenProximity(6)
 end
 
