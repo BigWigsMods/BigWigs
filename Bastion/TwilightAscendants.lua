@@ -6,7 +6,7 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Twilight Ascendants", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689) --Ignacious, Feludius, Arion, Terrastra
-mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY"}, {92307, "WHISPER"}, {82631, "FLASHSHAKE"}, {82660, "ICON"}, 82746, {82665, "ICON"}, 82762, 83067, 83500, 83565, 83581, "proximity", "bosskill"}
+mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 83581, "proximity", "switch", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -23,7 +23,12 @@ local grounded_check_allowed, searing_winds_check_allowed = false, false
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.static_overload_say = "Static Overload on ME!"
+	L.gravity_core_say = "Gravity Core on ME!"
 	L.health_report = "%s is at %d%% health, switch soon!"
+	L.switch = "Switch"
+	L.switch_desc = "Warning for boss switches"
+	
+	L.lightning_rod_say = "Lightning Rod on ME!"
 
 	L.switch_trigger = "We will handle them!"
 
@@ -33,12 +38,7 @@ if L then
 	L.searing_winds_message = "Get Searing Winds!"
 	L.grounded_message = "Get Grounded!"
 
-	L.heart_of_ice = "Heart of Ice on %s!"
-	L.burning_blood = "Burning Blood on %s!"
-
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
-
-	L.last_phase = "Last Phase"
 end
 L = mod:GetLocale()
 
@@ -48,7 +48,6 @@ mod.optionHeaders = {
 	[83067] = "Arion",
 	[83565] = "Terrastra",
 	[92067] = "heroic",
-	proximity = L["last_phase"],
 	proximity = "general",
 }
 
@@ -59,9 +58,12 @@ mod.optionHeaders = {
 function mod:OnBossEnable()
 	--heroic
 	self:Log("SPELL_AURA_APPLIED", "StaticOverload", 92067)
+	self:Log("SPELL_AURA_APPLIED", "GravityCore", 92075)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 92307)
 
 	--normal
+	self:Log("SPELL_AURA_APPLIED", "LightningRod",83099)
+	
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
@@ -99,16 +101,38 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:LightningRod(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:Say(83099, L["lightning_rod_say"])
+		self:FlashShake(83099)
+	end
+	self:TargetMessage(83099, spellName, player, "Personal", spellId, "Alarm")
+	self:SecondaryIcon(83099, player)
+end
+
+function mod:GravityCore(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:Say(92075, L["gravity_core_say"])
+		self:FlashShake(92075)
+	end
+	self:TargetMessage(92075, spellName, player, "Personal", spellId, "Alarm")
+	self:SecondaryIcon(92075, player)
+end
+
 function mod:StaticOverload(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(92067, L["static_overload_say"])
 		self:FlashShake(92067)
 	end
 	self:TargetMessage(92067, spellName, player, "Personal", spellId, "Alarm")
-	self:Whisper(92067, player, spellName)
+	self:PrimaryIcon(92067, player)
 end
 
 function mod:FrostBeacon(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(92307)
+	end
 	self:TargetMessage(92307, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(92307, player, spellName)
 end
@@ -137,14 +161,13 @@ function mod:UNIT_HEALTH(event, unit)
 	if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp < 30 then
-			self:Message(82631, L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
+			self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
 			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end
 
 function mod:AegisofFlame(_, spellId, _, _, spellName)
-	self:FlashShake(82631)
 	self:Bar(82631, spellName, 62, spellId)
 	self:Message(82631, spellName, "Urgent", spellId, "Info")
 end
@@ -161,13 +184,11 @@ function mod:Waterlogged(player, spellId, _, _, spellName)
 end
 
 function mod:HeartofIce(player, spellId, _, _, spellName)
-	self:Message(82665, L["heart_of_ice"]:format(player), "Attention", spellId)
-	self:PrimaryIcon(82665, player)
+	self:TargetMessage(82665, spellName, player, "Attention", spellId)
 end
 
 function mod:BurningBlood(player, spellId, _, _, spellName)
-	self:Message(82660, L["burning_blood"]:format(player), "Attention", spellId)
-	self:SecondaryIcon(82660, player)
+	self:TargetMessage(82660, spellName, player, "Attention", spellId)
 end
 
 function mod:Switch()

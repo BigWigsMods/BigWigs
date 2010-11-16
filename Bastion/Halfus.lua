@@ -49,5 +49,6 @@ end
 
 function mod:FuriousRoar(_, spellId, _, _, spellName)
 	self:Message(83710, spellName, "Urgent", spellId)
+	self:Bar(83710, spellName, 25, 83710)
 end
 
