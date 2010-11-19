@@ -35,7 +35,7 @@ if L then
 	
 end
 
-L = BigWigs:NewBossLocale("Twilight Ascendants", "koKR")
+L = BigWigs:NewBossLocale("Ascendant Council", "koKR")
 if L then
 	L.static_overload_say = "Static Overload on ME!"
 	L.health_report = "%s의 체력 -%d%%-, 곧 전환!"

@@ -1,7 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "frFR")
 if not L then return end
 -- Prototype.lua common words
-L.you = "%s sur VOUS"
+L.you = "%s sur vous !"
 L.other = "%s : %s"
 
 L.phase = "Phase %d"

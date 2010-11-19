@@ -30,10 +30,10 @@ if L then
 	L.inferno = (GetSpellInfo(92191))
 	L.inferno_desc = "Summons Blazing Bone Construct"
 
-	L.slump = "Slump"
-	L.slump_desc = "Slumps forward exposing itself"
+	L.slump = "Affalement"
+	L.slump_desc = "S'affale vers l'avant et s'expose."
 
-	L.slump_trigger = "%s slumps forward, exposing his pincers!" -- récupérer transcription
+	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")

@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Cho'gall", "frFR")
 if L then
 	--heroic
 	L.orders = "Ordres de l'ombre/de la flamme"
-	L.orders_desc = "Warning for Shadow/Flame Orders"
+	L.orders_desc = "Affiche des alertes concernant les Ordres de l'ombre/de la flamme."
 
 	--normal
 	L.worship_cooldown = "~Vénération"
@@ -35,23 +35,23 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("Twilight Ascendants", "frFR")
+L = BigWigs:NewBossLocale("Ascendant Council", "frFR")
 if L then
 	L.static_overload_say = "Surcharge statique sur moi !"
+	L.gravity_core_say = "Noyau de gravité sur moi !"
 	L.health_report = "%s est à %d%% de vie, changement imminent !"
+	L.switch = "Changement"
+	L.switch_desc = "Prévient quand les boss échangent leurs places."
 
-	L.switch_trigger = "We will handle them!" -- récupérer transcription
+	L.lightning_rod_say = "Bâtonnet d'éclair sur moi !"
+
+	L.switch_trigger = "We will handle them!" -- récupérer transcription (alternative : "Que cessent ces stupidités !"
 
 	L.quake_trigger = "The ground beneath you rumbles ominously...." -- récupérer transcription
 	L.thudershock_trigger = "The surrounding air crackles with energy...." -- récupérer transcription
 
-	L.searing_winds_message = "Get Searing Winds !" -- pas encore traduit dans beta
-	L.grounded_message = "Get Grounded !" -- pas encore traduit dans beta
-
-	L.heart_of_ice = "Coeur de glace sur %s !"
-	L.burning_blood = "Sang brûlant sur %s !"
+	L.searing_winds_message = "Obtenez des vents tournoyants !"
+	L.grounded_message = "Liez-vous à la terre !"
 
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!" -- récupérer transcription
-
-	L.last_phase = "Dernière phase"
 end

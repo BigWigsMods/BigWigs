@@ -3,7 +3,7 @@ if not GetSpellInfo(90000) then return end
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Twilight Ascendants", "The Bastion of Twilight")
+local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689) --Ignacious, Feludius, Arion, Terrastra
 mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 83581, "proximity", "switch", "bosskill"}
