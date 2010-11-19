@@ -40,7 +40,7 @@ L = BigWigs:NewBossLocale("Maloriak", "koKR")
 if L then
 	--heroic
 	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warning for when you stand in %s"):format((GetSpellInfo(92987)))
+	L.darkSludge_desc = ("%s 에 서있다면 알립니다."):format((GetSpellInfo(92987)))
 
 	--normal
 	L.final_phase = "마지막 단계"
