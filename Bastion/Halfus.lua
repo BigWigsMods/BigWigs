@@ -6,7 +6,7 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Halfus Wyrmbreaker", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(44600)
-mod.toggleOptions = {83710, "berserk", "bosskill"}
+mod.toggleOptions = {86170, "berserk", "bosskill"}
 mod.optionHeaders = {
 	berserk = "general",
 }
@@ -30,7 +30,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "FuriousRoar", 83710)
+	self:Log("SPELL_CAST_START", "FuriousRoar", 86170)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -48,7 +48,7 @@ end
 --
 
 function mod:FuriousRoar(_, spellId, _, _, spellName)
-	self:Message(83710, spellName, "Urgent", spellId)
-	self:Bar(83710, spellName, 25, 83710)
+	self:Message(86170, spellName, "Urgent", spellId)
+	self:Bar(86170, spellName, 25, 86170)
 end
 
