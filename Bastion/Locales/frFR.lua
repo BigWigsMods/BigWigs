@@ -20,7 +20,7 @@ if L then
 
 	L.devouringflames_cooldown = "~Flammes dévorantes"
 
-	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!" -- récupérer transcription
+	L.valiona_trigger = "Theralion, je m'occupe du vestibule. Couvre leur fuite !" -- à vérifier
 
 	L.twilight_shift = "%2$dx Transferts du Crépuscule sur %1$s"
 end
@@ -53,5 +53,5 @@ if L then
 	L.searing_winds_message = "Obtenez des vents tournoyants !"
 	L.grounded_message = "Liez-vous à la terre !"
 
-	L.last_phase_trigger = "BEHOLD YOUR DOOM!" -- récupérer transcription
+	L.last_phase_trigger = "CONTEMPLEZ VOTRE DESTIN !" -- à vérifier
 end

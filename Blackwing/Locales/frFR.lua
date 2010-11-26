@@ -9,7 +9,7 @@ if L then
 	L.air_phase = "Phase aérienne"
 	L.air_phase_desc = "Prévient quand Atramédès décolle."
 
-	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!" -- récupérer transcription
+	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent, comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !" -- à vérifier
 
 	L.sonicbreath_cooldown = "~Souffle sonique"
 end
@@ -31,7 +31,7 @@ if L then
 	L.inferno_desc = "Summons Blazing Bone Construct"
 
 	L.slump = "Affalement"
-	L.slump_desc = "S'affale vers l'avant et s'expose."
+	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose."
 
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
 end
@@ -56,11 +56,11 @@ if L then
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 	L.next_phase = "Prochaine phase"
 
-	L.red_phase_trigger = "Mix and stir, apply heat..." -- récupérer transcription
+	L.red_phase_trigger = "Mélanger et touiller, faire chauffer..." -- à vérifier
 	L.red_phase = "Phase |cFFFF0000rouge|r"
-	L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!" -- récupérer transcription
+	L.blue_phase_trigger = "Jusqu'où une enveloppe mortelle peut-elle supporter les écarts extrêmes de température ? Je dois trouver ! Pour la science !" -- à vérifier
 	L.blue_phase = "Phase |cFF809FFEbleue|r"
-	L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?" -- récupérer transcription
+	L.green_phase_trigger = "Celui-ci est un peu instable, mais que serai le progrès sans échec ?" -- à vérifier
 	L.green_phase = "Phase |cFF33FF00verte|r"
 	L.dark_phase = "Phase |cFF660099sombre|r"
 	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!" -- récupérer transcription
@@ -71,7 +71,7 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
-	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!" -- récupérer transcription
+	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traîté avec une extrême fermeté !" -- à vérifier
 
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name -- récupérer transcription
 end
