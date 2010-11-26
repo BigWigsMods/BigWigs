@@ -95,6 +95,14 @@ L["Colors player names in messages by their class."] = "Färbt Spielernamen in N
 L["Chat frame"] = "Chatfenster"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle Big Wigs Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 
+L["Font size"] = "Schriftgröße"
+L["None"] = "Nichts"
+L["Thin"] = "Dünn"
+L["Thick"] = "Dick"
+L["Outline"] = "Kontur"
+L["Monochrome"] = "Monochrom"
+L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Schaltet den Monochrom-Filter in allen Nachrichten an/aus, der die Schriftenkantenglättung entfernt."
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --
