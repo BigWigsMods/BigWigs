@@ -43,3 +43,4 @@ function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 		SendChatMessage(o, "RAID_WARNING")
 	end
 end
+

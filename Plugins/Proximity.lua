@@ -24,8 +24,6 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local AceGUI = nil
-
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
@@ -492,91 +490,68 @@ function plugin:BigWigs_SetConfigureTarget(event, module)
 end
 
 do
-	local function onControlEnter(widget, event, value)
-		GameTooltip:ClearLines()
-		GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
-		GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
-		GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
-		GameTooltip:Show()
-	end
-	local function onControlLeave() GameTooltip:Hide() end
-
-	local function checkboxCallback(widget, event, value)
-		local key = widget:GetUserData("key")
-		plugin.db.profile[key] = value and true or false
-		plugin:RestyleWindow()
-	end
-
+	local pluginOptions = nil
 	function plugin:GetPluginConfig()
-		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
-		local disable = AceGUI:Create("CheckBox")
-		disable:SetValue(self.db.profile.disabled)
-		disable:SetLabel(L["Disabled"])
-		disable:SetCallback("OnEnter", onControlEnter)
-		disable:SetCallback("OnLeave", onControlLeave)
-		disable:SetCallback("OnValueChanged", checkboxCallback)
-		disable:SetUserData("tooltip", L["Disable the proximity display for all modules that use it."])
-		disable:SetUserData("key", "disabled")
-		disable:SetFullWidth(true)
-
-		local lock = AceGUI:Create("CheckBox")
-		lock:SetValue(self.db.profile.lock)
-		lock:SetLabel(L["Lock"])
-		lock:SetCallback("OnEnter", onControlEnter)
-		lock:SetCallback("OnLeave", onControlLeave)
-		lock:SetCallback("OnValueChanged", checkboxCallback)
-		lock:SetUserData("tooltip", L["Locks the display in place, preventing moving and resizing."])
-		lock:SetUserData("key", "lock")
-		lock:SetFullWidth(true)
-
-		local showHide = AceGUI:Create("InlineGroup")
-		showHide:SetTitle(L["Show/hide"])
-		showHide:SetFullWidth(true)
-
-		do
-			local title = AceGUI:Create("CheckBox")
-			title:SetValue(self.db.profile.showTitle)
-			title:SetLabel(L["Title"])
-			title:SetCallback("OnEnter", onControlEnter)
-			title:SetCallback("OnLeave", onControlLeave)
-			title:SetCallback("OnValueChanged", checkboxCallback)
-			title:SetUserData("tooltip", L["Shows or hides the title."])
-			title:SetUserData("key", "showTitle")
-			title:SetRelativeWidth(0.5)
-
-			local background = AceGUI:Create("CheckBox")
-			background:SetValue(self.db.profile.showBackground)
-			background:SetLabel(L["Background"])
-			background:SetCallback("OnEnter", onControlEnter)
-			background:SetCallback("OnLeave", onControlLeave)
-			background:SetCallback("OnValueChanged", checkboxCallback)
-			background:SetUserData("tooltip", L["Shows or hides the background."])
-			background:SetUserData("key", "showBackground")
-			background:SetRelativeWidth(0.5)
-
-			local sound = AceGUI:Create("CheckBox")
-			sound:SetValue(self.db.profile.showSound)
-			sound:SetLabel(L["Sound button"])
-			sound:SetCallback("OnEnter", onControlEnter)
-			sound:SetCallback("OnLeave", onControlLeave)
-			sound:SetCallback("OnValueChanged", checkboxCallback)
-			sound:SetUserData("tooltip", L["Shows or hides the sound button."])
-			sound:SetUserData("key", "showSound")
-			sound:SetRelativeWidth(0.5)
-
-			local close = AceGUI:Create("CheckBox")
-			close:SetValue(self.db.profile.showClose)
-			close:SetLabel(L["Close button"])
-			close:SetCallback("OnEnter", onControlEnter)
-			close:SetCallback("OnLeave", onControlLeave)
-			close:SetCallback("OnValueChanged", checkboxCallback)
-			close:SetUserData("tooltip", L["Shows or hides the close button."])
-			close:SetUserData("key", "showClose")
-			close:SetRelativeWidth(0.5)
-
-			showHide:AddChildren(title, background, sound, close)
+		if not pluginOptions then
+			pluginOptions = {
+				type = "group",
+				get = function(info)
+					local key = info[#info]
+					return plugin.db.profile[key]
+				end,
+				set = function(info, value)
+					local key = info[#info]
+					plugin.db.profile[key] = value
+					plugin:RestyleWindow()
+				end,
+				args = {
+					disabled = {
+						type = "toggle",
+						name = L["Disabled"],
+						desc = L["Disable the proximity display for all modules that use it."],
+						order = 1,
+					},
+					lock = {
+						type = "toggle",
+						name = L["Lock"],
+						desc = L["Locks the display in place, preventing moving and resizing."],
+						order = 2,
+					},
+					showHide = {
+						type = "group",
+						name = L["Show/hide"],
+						inline = true,
+						args = {
+							showTitle = {
+								type = "toggle",
+								name = L["Title"],
+								desc = L["Shows or hides the title."],
+								order = 1,
+							},
+							showBackground = {
+								type = "toggle",
+								name = L["Background"],
+								desc = L["Shows or hides the background."],
+								order = 2,
+							},
+							showSound = {
+								type = "toggle",
+								name = L["Sound button"],
+								desc = L["Shows or hides the sound button."],
+								order = 3,
+							},
+							showClose = {
+								type = "toggle",
+								name = L["Close button"],
+								desc = L["Shows or hides the close button."],
+								order = 4,
+							},
+						},
+					},
+				},
+			}
 		end
-		return disable, lock, showHide
+		return pluginOptions
 	end
 end
 

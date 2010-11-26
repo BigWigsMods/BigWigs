@@ -341,17 +341,16 @@ do
 	local frame = nil
 	local plugins = {}
 	local tabs = nil
+	local tabSection = nil
 	local configMode = nil
+	local acId = "Big Wigs Configure Mode Plugin %s"
 
 	local function widgetSelect(widget, callback, tab)
 		if widget:GetUserData("tab") == tab then return end
 		local plugin = BigWigs:GetPlugin(tab)
 		if not plugin then return end
 		widget:SetUserData("tab", tab)
-		tabs:PauseLayout()
-		tabs:ReleaseChildren()
-		tabs:AddChildren(plugin:GetPluginConfig())
-		tabs:ResumeLayout()
+		acd:Open(acId:format(tab), tabSection)
 		local scroll = widget:GetUserData("scroll")
 		scroll:DoLayout()
 		options:SendMessage("BigWigs_SetConfigureTarget", plugin)
@@ -392,15 +391,20 @@ do
 					value = name,
 					text = name,
 				}
+				ac:RegisterOptionsTable(acId:format(name), module:GetPluginConfig())
 			end
 		end
 		tabs = AceGUI:Create("TabGroup")
-		tabs:SetLayout("Flow")
 		tabs:SetTabs(plugins)
 		tabs:SetCallback("OnGroupSelected", widgetSelect)
 		tabs:SetUserData("tab", "")
 		tabs:SetUserData("scroll", scroll)
 		tabs:SetFullWidth(true)
+
+		tabSection = AceGUI:Create("SimpleGroup")
+		tabSection:SetFullWidth(true)
+		tabs:AddChild(tabSection)
+
 		scroll:AddChild(tabs)
 		frame:AddChild(scroll)
 	end
@@ -571,7 +575,7 @@ local function advancedTabSelect(widget, callback, tab)
 		local group = AceGUI:Create("SimpleGroup")
 		group:SetFullWidth(true)
 		widget:AddChild(group)
-		colorModule:SetColorOptions(module.name, key,  module.toggleDefaults[key])
+		colorModule:SetColorOptions(module.name, key, module.toggleDefaults[key])
 		acd:Open("Big Wigs: Colors Override", group)
 	end
 	widget:ResumeLayout()

@@ -10,6 +10,8 @@ if not plugin then return end
 -- Locals
 --
 
+local media = LibStub("LibSharedMedia-3.0")
+
 local scaleUpTime = 0.2
 local scaleDownTime = 0.4
 local labels = {}
@@ -20,8 +22,6 @@ local messageFrame = nil
 local anchor = nil
 local floor = math.floor
 
-local AceGUI = nil
-
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 --------------------------------------------------------------------------------
@@ -31,8 +31,8 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
-    local s = self:GetEffectiveScale()
-   	plugin.db.profile.posx = self:GetLeft() * s
+	local s = self:GetEffectiveScale()
+	plugin.db.profile.posx = self:GetLeft() * s
 	plugin.db.profile.posy = self:GetTop() * s
 end
 
@@ -96,6 +96,10 @@ end
 
 plugin.defaultDB = {
 	sink20OutputSink = "BigWigs",
+	font = nil,
+	monochrome = nil,
+	outline = "THICKOUTLINE",
+	fontSize = nil,
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,
@@ -147,6 +151,14 @@ function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
 	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+
+	if not plugin.db.profile.font then
+		plugin.db.profile.font = media:GetDefault("font")
+	end
+	if not plugin.db.profile.fontSize then
+		local _, size = GameFontNormalHuge:GetFont()
+		plugin.db.profile.fontSize = size
+	end
 end
 
 function plugin:OnPluginEnable()
@@ -177,78 +189,96 @@ function plugin:BigWigs_SetConfigureTarget(event, module)
 end
 
 do
-	local function onControlEnter(widget, event, value)
-		GameTooltip:ClearLines()
-		GameTooltip:SetOwner(widget.frame, "ANCHOR_CURSOR")
-		GameTooltip:AddLine(widget.text and widget.text:GetText() or widget.label:GetText())
-		GameTooltip:AddLine(widget:GetUserData("tooltip"), 1, 1, 1, 1)
-		GameTooltip:Show()
-	end
-	local function onControlLeave() GameTooltip:Hide() end
-
-	local function checkboxCallback(widget, event, value)
-		local key = widget:GetUserData("key")
-		plugin.db.profile[key] = value and true or false
-	end
-
+	local pluginOptions = nil
 	function plugin:GetPluginConfig()
-		if not AceGUI then AceGUI = LibStub("AceGUI-3.0") end
-
-		local chat = AceGUI:Create("CheckBox")
-		chat:SetLabel(L["Chat frame"])
-		chat:SetValue(self.db.profile.chat and true or false)
-		chat:SetCallback("OnEnter", onControlEnter)
-		chat:SetCallback("OnLeave", onControlLeave)
-		chat:SetCallback("OnValueChanged", checkboxCallback)
-		chat:SetUserData("key", "chat")
-		chat:SetUserData("tooltip", L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."])
-
-		local colors = AceGUI:Create("CheckBox")
-		colors:SetLabel(L["Use colors"])
-		colors:SetValue(self.db.profile.usecolors and true or false)
-		colors:SetCallback("OnEnter", onControlEnter)
-		colors:SetCallback("OnLeave", onControlLeave)
-		colors:SetCallback("OnValueChanged", checkboxCallback)
-		colors:SetUserData("key", "usecolors")
-		colors:SetUserData("tooltip", L["Toggles white only messages ignoring coloring."])
-
-		local classColors = AceGUI:Create("CheckBox")
-		classColors:SetLabel(L["Class colors"])
-		classColors:SetValue(self.db.profile.classcolor and true or false)
-		classColors:SetCallback("OnEnter", onControlEnter)
-		classColors:SetCallback("OnLeave", onControlLeave)
-		classColors:SetCallback("OnValueChanged", checkboxCallback)
-		classColors:SetUserData("key", "classcolor")
-		classColors:SetUserData("tooltip", L["Colors player names in messages by their class."])
-
-		local icons = AceGUI:Create("CheckBox")
-		icons:SetLabel(L["Use icons"])
-		icons:SetValue(self.db.profile.useicons and true or false)
-		icons:SetCallback("OnEnter", onControlEnter)
-		icons:SetCallback("OnLeave", onControlLeave)
-		icons:SetCallback("OnValueChanged", checkboxCallback)
-		icons:SetUserData("key", "useicons")
-		icons:SetUserData("tooltip", L["Show icons next to messages, only works for Raid Warning."])
---[[
-		local normal = AceGUI:Create("InlineGroup")
-		normal:SetTitle(L["Normal messages"])
-		normal:SetFullWidth(true)
-
-		do
-			
-			normal:AddChildren()
+		if not pluginOptions then
+			pluginOptions = {
+				type = "group",
+				get = function(info)
+					local key = info[#info]
+					if key == "font" then
+						for i, v in next, media:List("font") do
+							if v == plugin.db.profile.font then return i end
+						end
+					elseif key == "outline" then
+						return plugin.db.profile[key] or "NONE"
+					end
+					return plugin.db.profile[key]
+				end,
+				set = function(info, value)
+					local key = info[#info]
+					if key == "font" then
+						local list = media:List("font")
+						plugin.db.profile.font = list[value]
+					elseif key == "outline" then
+						if value == "NONE" then value = nil end
+						plugin.db.profile[key] = value
+					else
+						plugin.db.profile[key] = value
+					end
+				end,
+				args = {
+					font = {
+						type = "select",
+						name = L["Font"],
+						order = 1,
+						values = media:List("font"),
+						width = "full",
+					},
+					outline = {
+						type = "select",
+						name = L["Outline"],
+						order = 2,
+						values = {
+							NONE = L["None"],
+							OUTLINE = L["Thin"],
+							THICKOUTLINE = L["Thick"],
+						},
+						width = "full",
+					},
+					fontSize = {
+						type = "range",
+						name = L["Font size"],
+						order = 3,
+						max = 40,
+						min = 8,
+						step = 1,
+						width = "full",
+					},
+					chat = {
+						type = "toggle",
+						name = L["Chat frame"],
+						desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
+						order = 4,
+					},
+					usecolors = {
+						type = "toggle",
+						name = L["Use colors"],
+						desc = L["Toggles white only messages ignoring coloring."],
+						order = 5,
+					},
+					monochrome = {
+						type = "toggle",
+						name = L["Monochrome"],
+						desc = L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."],
+						order = 6,
+					},
+					classcolor = {
+						type = "toggle",
+						name = L["Class colors"],
+						desc = L["Colors player names in messages by their class."],
+						order = 7,
+					},
+					useicons = {
+						type = "toggle",
+						name = L["Use icons"],
+						desc = L["Show icons next to messages, only works for Raid Warning."],
+						order = 8,
+					},
+				},
+			}
 		end
-		
-		local emphasized = AceGUI:Create("InlineGroup")
-		emphasized:SetTitle(L["Emphasized messages"])
-		emphasized:SetFullWidth(true)
-		
-		do
-		
-			emphasized:AddChildren()
-		end
-]]
-		return chat, colors, classColors, icons
+		return pluginOptions
 	end
 end
 
@@ -341,11 +371,14 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	-- new message at 1
 	local slot = labels[1]
 
-	local f = font or GameFontNormalHuge
-	local face, size, flags = f:GetFont()
-	slot:SetFont(face, size, "THICKOUTLINE")
+	local flags = nil
+	if plugin.db.profile.monochrome and plugin.db.profile.outline then flags = "MONOCHROME," .. plugin.db.profile.outline
+	elseif plugin.db.profile.monochrome then flags = "MONOCHROME"
+	elseif plugin.db.profile.outline then flags = plugin.db.profile.outline
+	end
+	print(tostringall(plugin.db.profile.font, plugin.db.profile.fontSize, flags))
+	slot:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, flags)
 
-	--slot:SetFontObject(font or GameFontNormalHuge)
 	slot.minHeight = select(2, slot:GetFont())
 	if icon then text = "|T"..icon..":" .. slot.minHeight .. ":" .. slot.minHeight .. ":-5|t"..text end
 	slot:SetText(text)

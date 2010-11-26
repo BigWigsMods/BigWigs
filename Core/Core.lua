@@ -67,20 +67,25 @@ local function chatMsgMonsterYell(event, msg, source)
 end
 local function updateMouseover() targetCheck("mouseover") end
 local function targetChanged() targetCheck("target") end
+local function unitTargetChanged(event, target)
+	targetCheck(target .. "target")
+end
 
 local function zoneChanged()
 	if enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()] then
 		if not monitoring then
 			monitoring = true
 			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
-			addon:RegisterEvent("PLAYER_TARGET_CHANGED", targetChanged)
+			--addon:RegisterEvent("PLAYER_TARGET_CHANGED", targetChanged)
 			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
+			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
 		end
 	elseif monitoring then
 		monitoring = nil
 		addon:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-		addon:UnregisterEvent("PLAYER_TARGET_CHANGED")
+		--addon:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
+		addon:UnregisterEvent("UNIT_TARGET")
 	end
 end
 
