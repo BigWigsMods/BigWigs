@@ -376,7 +376,6 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 	elseif plugin.db.profile.monochrome then flags = "MONOCHROME"
 	elseif plugin.db.profile.outline then flags = plugin.db.profile.outline
 	end
-	print(tostringall(plugin.db.profile.font, plugin.db.profile.fontSize, flags))
 	slot:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, flags)
 
 	slot.minHeight = select(2, slot:GetFont())
