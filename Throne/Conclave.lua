@@ -7,7 +7,11 @@ local mod = BigWigs:NewBoss("Conclave of Wind", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
 mod.toggleOptions = {{84645, "FLASHSHAKE"}, 85422, 86307, "full_power", "bosskill"}
-
+mod.optionHeaders = {
+	[84645] = "Nezir",
+	[85422] = "Anshal",
+	[86307] = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -28,12 +32,6 @@ if L then
 	L.wind_chill = "YOU have %s stacks of Wind Chill"
 end
 L = mod:GetLocale()
-
-mod.optionHeaders = {
-	[84645] = "Nezir",
-	[85422] = "Anshal",
-	[86307] = "general",
-}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -116,6 +114,6 @@ function mod:Nurture(_, spellId, _, _, spellName)
 end
 
 function mod:GatherStrength(msg, sender)
-	self:Message(86307, L["gather_strength"]:format(sender), "Important", spellId, "Long")
-	self:Bar(86307, L["gather_strength"]:format(sender), 60, spellId)
+	self:Message(86307, L["gather_strength"]:format(sender), "Important", 86307, "Long")
+	self:Bar(86307, L["gather_strength"]:format(sender), 60, 86307)
 end

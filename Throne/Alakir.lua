@@ -35,6 +35,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Death("Win", 46753)
 end
 
 
