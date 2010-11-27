@@ -16,7 +16,6 @@ end
 
 L = BigWigs:NewBossLocale("Chimaeron", "zhCN")
 if L then
-if L then
 	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
 
 	L.next_system_failure = "Next System Failure"
