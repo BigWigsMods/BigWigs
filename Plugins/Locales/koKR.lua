@@ -95,6 +95,14 @@ L["Colors player names in messages by their class."] = "메세지의 플레이�
 L["Chat frame"] = "대화창"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다."
 
+L["Font size"] = "글꼴 크기"
+L["None"] = "없음"
+L["Thin"] = "두겁게"
+L["Thick"] = "얇게"
+L["Outline"] = "외곽선"
+L["Monochrome"] = "단색"
+L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "글꼴 가장자리의 스무딩을 제거하여 모든 메세지를 단색으로 전환합니다."
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --
