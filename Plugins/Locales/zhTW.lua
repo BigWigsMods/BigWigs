@@ -95,6 +95,14 @@ L["Colors player names in messages by their class."] = "使用職業顏色來染
 L["Chat frame"] = "聊天框架"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了顯示設定，輸出所有 Big Wigs 訊息到預設聊天框體。"
 
+L["Font size"] = "字體大小"
+L["None"] = "無"
+L["Thin"] = "細"
+L["Thick"] = "粗"
+L["Outline"] = "離線"
+--L["Monochrome"] = true
+--L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = true
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --

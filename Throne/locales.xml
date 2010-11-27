@@ -2,5 +2,7 @@
 ..\FrameXML\UI.xsd">
 <Script file="Locales\koKR.lua"/>
 <Script file="Locales\frFR.lua"/>
+<Script file="Locales\zhTW.lua"/>
+<Script file="Locales\zhCN.lua"/>
 </Ui>
 
