@@ -97,8 +97,8 @@ L["Outputs all BigWigs messages to the default chat frame in addition to the dis
 
 L["Font size"] = "글꼴 크기"
 L["None"] = "없음"
-L["Thin"] = "두겁게"
-L["Thick"] = "얇게"
+L["Thin"] = "얇게"
+L["Thick"] = "두겁게"
 L["Outline"] = "외곽선"
 L["Monochrome"] = "단색"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "글꼴 가장자리의 스무딩을 제거하여 모든 메세지를 단색으로 전환합니다."
