@@ -306,11 +306,13 @@ local function newFontString(frame, i)
 	local fs = frame:CreateFontString(nil, "ARTWORK")
 	fs:SetWidth(0)
 	fs:SetHeight(0)
-	fs.lastUsed = 0
-	FadingFrame_SetFadeInTime(fs, 0.2)
-	FadingFrame_SetHoldTime(fs, 10)
-	FadingFrame_SetFadeOutTime(fs, 3)
+	fs.elapsed = 0
 	fs:Hide()
+	local icon = frame:CreateTexture(nil, "ARTWORK")
+	icon:SetPoint("RIGHT", fs, "LEFT")
+	icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+	icon:Hide()
+	fs.icon = icon
 	return fs
 end
 
@@ -318,20 +320,26 @@ local function onUpdate(self, elapsed)
 	local show = nil
 	for i, v in next, labels do
 		if v:IsShown() then
-			if v.scrollTime then
-				local min = v.minHeight
+			v.elapsed = v.elapsed + elapsed
+			if v.bounce then
+				local min = db.fontSize
 				local max = min + 10
-				v.scrollTime = v.scrollTime + elapsed
-				if v.scrollTime <= scaleUpTime then
-					v:SetTextHeight(floor(min + ((max - min) * v.scrollTime / scaleUpTime)))
-				elseif v.scrollTime <= scaleDownTime then
-					v:SetTextHeight(floor(max - ((max - min) * (v.scrollTime - scaleUpTime) / (scaleDownTime - scaleUpTime))))
+				if v.elapsed <= scaleUpTime then
+					v:SetTextHeight(floor(min + ((max - min) * v.elapsed / scaleUpTime)))
+				elseif v.elapsed <= scaleDownTime then
+					v:SetTextHeight(floor(max - ((max - min) * (v.elapsed - scaleUpTime) / (scaleDownTime - scaleUpTime))))
 				else
 					v:SetTextHeight(min)
-					v.scrollTime = nil
+					v.bounce = nil
 				end
+			elseif v:GetAlpha() == 0 then
+				v:Hide()
+				v.icon:Hide()
+			elseif v.elapsed > 7 then
+				local a = math.max(1 - ((v.elapsed - 7) / 3), 0)
+				v:SetAlpha(a)
+				v.icon:SetAlpha(a)
 			end
-			FadingFrame_OnUpdate(v)
 			show = true
 		end
 	end
@@ -364,7 +372,6 @@ local function getNextSlot()
 	labels[1] = old
 	-- reposition
 	for i = 1, 4 do
-		labels[i]:ClearAllPoints()
 		if i == 1 then
 			labels[i]:SetPoint("TOP")
 		else
@@ -381,7 +388,6 @@ end
 
 do
 	local parentFrame = nil
-	local iconFormat = "|T%s:0:0:-5|t%s"
 	function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 		if createAnchors then createAnchors() end
 		if createSlots then parentFrame = createSlots() end
@@ -396,16 +402,25 @@ do
 		elseif db.outline then flags = db.outline
 		end
 		slot:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
-		slot.minHeight = db.fontSize
+
+		slot:SetText(text)
+		slot:SetTextColor(r, g, b, 1)
+		slot:SetHeight(slot:GetStringHeight())
 
 		if icon then
-			slot:SetText(iconFormat:format(icon, text))
+			local h = slot:GetHeight()
+			slot.icon:SetWidth(h)
+			slot.icon:SetHeight(h)
+			slot.icon:SetTexture(icon)
+			slot.icon:Show()
 		else
-			slot:SetText(text)
+			slot.icon:Hide()
 		end
-		slot:SetTextColor(r, g, b, 1)
-		slot.scrollTime = 0
-		FadingFrame_Show(slot)
+		slot:SetAlpha(1)
+		slot.icon:SetAlpha(1)
+		slot.elapsed = 0
+		slot.bounce = true
+		slot:Show()
 	end
 end
 do
