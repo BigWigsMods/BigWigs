@@ -7,6 +7,10 @@ if not L then return end
 L["Clickable Bars"] = "Barres cliquables"
 L.clickableBarsDesc = "Par défaut, les barres de Big Wigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, etc. tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne fonctionnera plus.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
 L["Enables bars to receive mouse clicks."] = "Permet aux barres de recevoir les clics de la souris."
+L["Modifier"] = "Modificateur"
+L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Maintenez enfoncée la touche modificatrice sélectionnée pour activer les actions des clics sur les barres."
+L["Only with modifier key"] = "Seul. avec touche mod."
+L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = "Permet aux barres de ne pas réagir aux clics de la souris à moins que la touche modificatrice sélectionnée ne soit maintenue enfoncée, cas dans lequel les actions de la souris décrites ci-dessous seront disponibles."
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Met temporairement en super mise en évidence la barre et ses messages associés pendant sa durée."
 L["Report"] = "Rapport"
