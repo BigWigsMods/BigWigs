@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Cho'gall", "zhTW")
+﻿local L = BigWigs:NewBossLocale("Cho'gall", "zhTW")
 if L then
 	--heroic
 	L.orders = "Shadow/Flame Orders"
@@ -7,8 +7,8 @@ if L then
 	--normal
 	L.worship_cooldown = "~Worship"
 
-	L.phase_one = "Phase One"
-	L.phase_two = "Phase Two"
+	L.phase_one = "階段一"
+	L.phase_two = "階段二"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "zhTW")
@@ -22,7 +22,7 @@ if L then
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
 
-	L.twilight_shift = "%2$dx Twilight Shift on %1$s"
+	L.twilight_shift = "暮光變換%2$dx：>%1$s<！"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "zhTW")

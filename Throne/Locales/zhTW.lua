@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Al'Akir", "zhTW")
+﻿local L = BigWigs:NewBossLocale("Al'Akir", "zhTW")
 if L then
 
 end

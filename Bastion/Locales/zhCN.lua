@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Cho'gall", "zhCN")
+﻿local L = BigWigs:NewBossLocale("Cho'gall", "zhCN")
 if L then
 	--heroic
 	L.orders = "Shadow/Flame Orders"

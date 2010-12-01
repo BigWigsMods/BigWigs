@@ -1,12 +1,12 @@
-local L = BigWigs:NewBossLocale("Atramedes", "zhTW")
+﻿local L = BigWigs:NewBossLocale("Atramedes", "zhTW")
 if L then
 	L.ancientDwarvenShield = "Ancient Dwarven Shield"
 	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
 	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
 
-	L.ground_phase = "Ground Phase"
+	L.ground_phase = "地面階段"
 	L.ground_phase_desc = "Warning for when Atramedes lands."
-	L.air_phase = "Air Phase"
+	L.air_phase = "空中階段"
 	L.air_phase_desc = "Warning for when Atramedes takes off."
 
 	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
@@ -43,7 +43,7 @@ if L then
 	L.darkSludge_desc = ("Warning for when you stand in %s"):format((GetSpellInfo(92987)))
 
 	--normal
-	L.final_phase = "Final Phase"
+	L.final_phase = "最終階段"
 
 	L.release_aberration_message = "%s Aberration left"
 	L.release_all = "%s Aberration Released"
@@ -52,9 +52,9 @@ if L then
 
 	L.flashfreeze = "~Flash Freeze"
 
-	L.phase = "Phase"
-	L.phase_desc = "Warning for Phase changes"
-	L.next_phase = "Next Phase"
+	L.phase = "階段"
+	L.phase_desc = "階段轉換時發出警報。"
+	L.next_phase = "下一階段"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase = "|cFFFF0000Red|r phase"
@@ -68,8 +68,8 @@ end
 
 L = BigWigs:NewBossLocale("Nefarian", "zhTW")
 if L then
-	L.phase = "Phases"
-	L.phase_desc = "Warnings for the Phase changes"
+	L.phase = "階段"
+	L.phase_desc = "階段轉換時發出警報。"
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 

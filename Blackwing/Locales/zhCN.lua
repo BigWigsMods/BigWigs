@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Atramedes", "zhCN")
+﻿local L = BigWigs:NewBossLocale("Atramedes", "zhCN")
 if L then
 	L.ancientDwarvenShield = "Ancient Dwarven Shield"
 	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
