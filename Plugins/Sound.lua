@@ -104,7 +104,7 @@ function plugin:OnRegister()
 			disabled = shouldDisable,
 			values = soundList,
 			width = "full",
-			--itemControl = "DDI-Sound",
+			itemControl = "DDI-Sound",
 		}
 	end
 end

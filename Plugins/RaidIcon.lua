@@ -62,7 +62,7 @@ plugin.pluginOptions = {
 			order = 2,
 			values = icons,
 			width = "full",
-			--itemControl = "DDI-RaidIcon",
+			itemControl = "DDI-RaidIcon",
 		},
 		secondIcon = {
 			type = "select",
@@ -71,7 +71,7 @@ plugin.pluginOptions = {
 			order = 3,
 			values = icons,
 			width = "full",
-			--itemControl = "DDI-RaidIcon",
+			itemControl = "DDI-RaidIcon",
 		},
 	},
 }

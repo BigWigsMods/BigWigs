@@ -239,7 +239,7 @@ do
 						order = 1,
 						values = media:List("font"),
 						width = "full",
-						--itemControl = "DDI-Font",
+						itemControl = "DDI-Font",
 					},
 					outline = {
 						type = "select",

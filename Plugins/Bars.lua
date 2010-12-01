@@ -231,7 +231,7 @@ do
 						order = 1,
 						values = media:List("statusbar"),
 						width = "full",
-						--itemControl = "DDI-Statusbar",
+						itemControl = "DDI-Statusbar",
 					},
 					font = {
 						type = "select",
@@ -239,7 +239,7 @@ do
 						order = 2,
 						values = media:List("font"),
 						width = "full",
-						--itemControl = "DDI-Font",
+						itemControl = "DDI-Font",
 					},
 					align = {
 						type = "select",
