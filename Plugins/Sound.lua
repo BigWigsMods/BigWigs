@@ -83,10 +83,6 @@ plugin.pluginOptions = {
 --
 
 local function shouldDisable() return plugin.db.profile.defaultonly end
-local function updateList(mediaType)
-	if mediaType ~= mType then return end
-	soundList = media:List(mType)
-end
 
 function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3")
@@ -97,7 +93,6 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 	media:Register(mType, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.mp3")
 
-	media.RegisterCallback(self, "LibSharedMedia_Registered", updateList)
 	soundList = media:List(mType)
 
 	for k in pairs(sounds) do
@@ -109,6 +104,7 @@ function plugin:OnRegister()
 			disabled = shouldDisable,
 			values = soundList,
 			width = "full",
+			--itemControl = "DDI-Sound",
 		}
 	end
 end
@@ -142,3 +138,4 @@ function plugin:BigWigs_Sound(event, sound)
 	if not BigWigs.db.profile.sound or sound == false then return end
 	play(sound)
 end
+

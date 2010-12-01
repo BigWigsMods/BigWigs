@@ -143,7 +143,6 @@ L["The proximity display will show next time. To disable it completely for this 
 
 L.proximity = "Отображение близости"
 L.proximity_desc = "Показывать окно близости при соответствующей схватке, выводя список игроков которые стоят слишком близко к вам."
-L.proximityfont = "Fonts\\FRIZQT__.TTF"
 
 L["Close"] = "Закрыть"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Закрыть окно модуля близости.\n\nЧтобы полностью его отключить для любого боя, вам нужно зайти в опции соответствующего босса и там отключить опцию 'Близость'."

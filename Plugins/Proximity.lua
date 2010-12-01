@@ -24,6 +24,10 @@ plugin.defaultDB = {
 -- Locals
 --
 
+local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
+
+local media = LibStub("LibSharedMedia-3.0")
+
 local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
@@ -148,8 +152,6 @@ local function getClosestRangeFunction(toRange)
 	return ranges[closest], closest
 end
 
-local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
-
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -256,7 +258,7 @@ local function ensureDisplay()
 	display:SetHeight(plugin.db.profile.height)
 	display:SetMinResize(100, 30)
 	display:SetClampedToScreen(true)
-	local bg = display:CreateTexture(nil, "PARENT")
+	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
 	bg:SetTexture(0, 0, 0, 0.3)
@@ -285,7 +287,7 @@ local function ensureDisplay()
 	display.header = header
 
 	local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	text:SetFont(L["proximityfont"], 12)
+	text:SetFont(media:GetDefault("font"), 12)
 	text:SetText("")
 	text:SetAllPoints(display)
 	display.text = text
@@ -303,7 +305,7 @@ local function ensureDisplay()
 	drag:SetAlpha(0.5)
 	display.drag = drag
 
-	local tex = drag:CreateTexture(nil, "BACKGROUND")
+	local tex = drag:CreateTexture(nil, "OVERLAY")
 	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
 	tex:SetWidth(16)
 	tex:SetHeight(16)
@@ -320,7 +322,7 @@ local function ensureDisplay()
 		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		display:ClearAllPoints()
-		display:SetPoint("CENTER", UIParent)
+		display:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 	end
 
 	plugin:RestyleWindow()
@@ -416,13 +418,13 @@ local function updateProfile()
 		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		anchor:ClearAllPoints()
-		anchor:SetPoint("CENTER", UIParent)
+		anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 	end
 end
 
 local function resetAnchor()
 	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent)
+	anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 	anchor:SetWidth(plugin.defaultDB.width)
 	anchor:SetHeight(plugin.defaultDB.height)
 	plugin.db.profile.posx = nil

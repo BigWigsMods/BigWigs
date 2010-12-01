@@ -156,8 +156,6 @@ L["The proximity display will show next time. To disable it completely for this 
 L.proximity = "Nähe"
 L.proximity_desc = "Zeigt das Fenster für nahe Spieler an. Es listet alle Spieler auf, die dir zu nahe stehen."
 
-L.proximityfont = "Fonts\\FRIZQT__.TTF"
-
 L["Close"] = "Schließen"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Schließt die Anzeige naher Spieler.\n\nFalls du die Anzeige für alle Bosse deaktivieren willst, musst du die Option 'Nähe' seperat in den jeweiligen Bossmodulen ausschalten."
 L["Lock"] = "Sperren"

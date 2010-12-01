@@ -58,6 +58,8 @@ plugin.defaultDB = {
 	BigWigsAnchor_width = 200,
 	BigWigsEmphasizeAnchor_width = 300,
 	interceptMouse = nil,
+	onlyInterceptOnKeypress = nil,
+	interceptKey = "CTRL",
 	LeftButton = {
 		report = true,
 	},
@@ -116,6 +118,14 @@ plugin.subPanelOptions = {
 		name = L["Clickable Bars"],
 		type = "group",
 		childGroups = "tab",
+		get = function(i) return plugin.db.profile[i[#i]] end,
+		set = function(i, value)
+			local key = i[#i]
+			plugin.db.profile[key] = value
+			if key == "interceptMouse" then
+				plugin:RefixClickIntercepts()
+			end
+		end,
 		args = {
 			heading = {
 				type = "description",
@@ -126,12 +136,31 @@ plugin.subPanelOptions = {
 			},
 			interceptMouse = {
 				type = "toggle",
-				name = colorize[L["Enable"]],
+				name = L["Enable"],
 				desc = L["Enables bars to receive mouse clicks."],
 				order = 2,
 				width = "full",
-				get = function() return plugin.db.profile.interceptMouse end,
-				set = function(_, value) plugin.db.profile.interceptMouse = value end,
+			},
+			onlyInterceptOnKeypress = {
+				type = "toggle",
+				name = L["Only with modifier key"],
+				desc = L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."],
+				order = 3,
+				disabled = shouldDisable,
+			},
+			interceptKey = {
+				type = "select",
+				name = L["Modifier"],
+				desc = L["Hold down the selected modifier key to enable click actions on the timer bars."],
+				values = {
+					CTRL = CTRL_KEY_TEXT or "Ctrl",
+					ALT = ALT_KEY or "Alt",
+					SHIFT = SHIFT_KEY_TEXT or "Shift",
+				},
+				order = 4,
+				disabled = function()
+					return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
+				end,
 			},
 			left = {
 				type = "group",
@@ -163,247 +192,6 @@ plugin.subPanelOptions = {
 		},
 	},
 }
-
---------------------------------------------------------------------------------
--- Bar arrangement
---
-
-local function barSorter(a, b)
-	return a.remaining < b.remaining and true or false
-end
-local tmp = {}
-local function rearrangeBars(anchor)
-	wipe(tmp)
-	for bar in pairs(anchor.bars) do
-		tmp[#tmp + 1] = bar
-	end
-	table.sort(tmp, barSorter)
-	local lastDownBar, lastUpBar = nil, nil
-	local up = nil
-	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
-	for i, bar in next, tmp do
-		bar:ClearAllPoints()
-		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
-			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
-			lastUpBar = bar
-		else
-			bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT")
-			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT")
-			lastDownBar = bar
-		end
-	end
-	if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
-		if #tmp > 0 and db.emphasize then
-			empUpdate:Show()
-		else
-			empUpdate:Hide()
-		end
-	end
-end
-
-local function barStopped(event, bar)
-	local a = bar:Get("bigwigs:anchor")
-	if a and a.bars and a.bars[bar] then
-		a.bars[bar] = nil
-		rearrangeBars(a)
-	end
-end
-
---------------------------------------------------------------------------------
--- Anchors
---
-local defaultPositions = {
-	BigWigsAnchor = {"CENTER", "UIParent", "CENTER", 0, -50},
-	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the default BigWigs message frame
-}
-
-local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
-local function onDragHandleMouseUp(self, button) self:GetParent():StopMovingOrSizing() end
-local function onResize(self, width)
-	db[self.w] = width
-	rearrangeBars(self)
-end
-local function onDragStart(self) self:StartMoving() end
-local function onDragStop(self)
-	self:StopMovingOrSizing()
-	local s = self:GetEffectiveScale()
-	db[self.x] = self:GetLeft() * s
-	db[self.y] = self:GetTop() * s
-end
-
-local function onControlEnter(self)
-	GameTooltip:ClearLines()
-	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
-	GameTooltip:AddLine(self.tooltipHeader)
-	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
-	GameTooltip:Show()
-end
-local function onControlLeave() GameTooltip:Hide() end
-
-local function createAnchor(frameName, title)
-	local display = CreateFrame("Frame", frameName, UIParent)
-	local wKey, xKey, yKey = frameName .. "_width", frameName .. "_x", frameName .. "_y"
-	display.w, display.x, display.y = wKey, xKey, yKey
-	display:EnableMouse(true)
-	display:SetClampedToScreen(true)
-	display:SetMovable(true)
-	display:SetResizable(true)
-	display:RegisterForDrag("LeftButton")
-	display:SetWidth(db[wKey] or 200)
-	display:SetHeight(20)
-	display:SetMinResize(80, 20)
-	display:SetMaxResize(1920, 20)
-	display:ClearAllPoints()
-	if db[xKey] and db[yKey] then
-		local s = display:GetEffectiveScale()
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[xKey] / s, db[yKey] / s)
-	else
-		display:SetPoint(unpack(defaultPositions[frameName]))
-	end
-	local bg = display:CreateTexture(nil, "PARENT")
-	bg:SetAllPoints(display)
-	bg:SetBlendMode("BLEND")
-	bg:SetTexture(0, 0, 0, 0.3)
-	display.background = bg
-	local header = display:CreateFontString(nil, "OVERLAY")
-	header:SetFontObject(GameFontNormal)
-	header:SetText(title)
-	header:SetAllPoints(display)
-	header:SetJustifyH("CENTER")
-	header:SetJustifyV("MIDDLE")
-	local drag = CreateFrame("Frame", nil, display)
-	drag:SetFrameLevel(display:GetFrameLevel() + 10)
-	drag:SetWidth(16)
-	drag:SetHeight(16)
-	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
-	drag:EnableMouse(true)
-	drag:SetScript("OnMouseDown", onDragHandleMouseDown)
-	drag:SetScript("OnMouseUp", onDragHandleMouseUp)
-	drag:SetAlpha(0.5)
-	local tex = drag:CreateTexture(nil, "BACKGROUND")
-	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
-	tex:SetWidth(16)
-	tex:SetHeight(16)
-	tex:SetBlendMode("ADD")
-	tex:SetPoint("CENTER", drag)
-	display:SetScript("OnSizeChanged", onResize)
-	display:SetScript("OnDragStart", onDragStart)
-	display:SetScript("OnDragStop", onDragStop)
-	display:SetScript("OnMouseUp", function(self, button)
-		if button ~= "LeftButton" then return end
-		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-	end)
-	display.bars = {}
-	display:Hide()
-	return display
-end
-
-local function createAnchors()
-	if not normalAnchor then
-		normalAnchor = createAnchor("BigWigsAnchor", L["Regular bars"])
-		emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized bars"])
-	end
-end
-
-local function showAnchors()
-	if not normalAnchor then createAnchors() end
-	normalAnchor:Show()
-	emphasizeAnchor:Show()
-end
-
-local function hideAnchors()
-	normalAnchor:Hide()
-	emphasizeAnchor:Hide()
-end
-
-local function resetAnchors()
-	normalAnchor:ClearAllPoints()
-	normalAnchor:SetPoint(unpack(defaultPositions[normalAnchor:GetName()]))
-	db[normalAnchor.x] = nil
-	db[normalAnchor.y] = nil
-	db[normalAnchor.w] = nil
-	normalAnchor:SetWidth(plugin.defaultDB[normalAnchor.w])
-	emphasizeAnchor:ClearAllPoints()
-	emphasizeAnchor:SetPoint(unpack(defaultPositions[emphasizeAnchor:GetName()]))
-	db[emphasizeAnchor.x] = nil
-	db[emphasizeAnchor.y] = nil
-	db[emphasizeAnchor.w] = nil
-	emphasizeAnchor:SetWidth(plugin.defaultDB[emphasizeAnchor.w])
-end
-
-local function updateAnchor(anchor)
-	local frameName = anchor:GetName()
-	local wKey, xKey, yKey = frameName .. "_width", frameName .. "_x", frameName .. "_y"
-	anchor.w, anchor.x, anchor.y = wKey, xKey, yKey
-	if db[xKey] and db[yKey] then
-		local s = anchor:GetEffectiveScale()
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[xKey] / s, db[yKey] / s)
-	else
-		anchor:SetPoint(unpack(defaultPositions[frameName]))
-	end
-	anchor:SetWidth(db[wKey] or 200)
-end
-
-local function updateProfile()
-	db = plugin.db.profile
-	if normalAnchor then
-		updateAnchor(normalAnchor)
-		updateAnchor(emphasizeAnchor)
-	end
-end
-
---------------------------------------------------------------------------------
--- Initialization
---
-function plugin:OnRegister()
-	media:Register("statusbar", "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
-	media:Register("statusbar", "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
-	media:Register("statusbar", "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
-	media:Register("statusbar", "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
-	media:Register("statusbar", "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
-	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
-
-	db = self.db.profile
-	if not db.font then db.font = media:GetDefault("font") end
-
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-end
-
-function plugin:OnPluginEnable()
-	times = times or {}
-	messages = messages or {}
-	timers = timers or {}
-
-	colors = BigWigs:GetPlugin("Colors")
-	superemp = BigWigs:GetPlugin("Super Emphasize", true)
-
-	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
-	self:RegisterMessage("BigWigs_StartBar")
-	self:RegisterMessage("BigWigs_StopBar")
-	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
-	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_SuperEmphasizeStart")
-
-	--  custom bars
-	BigWigs:AddSyncListener(self, "BWCustomBar")
-end
-
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
-		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
-	else
-		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
-	end
-end
 
 do
 	local pluginOptions = nil
@@ -443,6 +231,7 @@ do
 						order = 1,
 						values = media:List("statusbar"),
 						width = "full",
+						--itemControl = "DDI-Statusbar",
 					},
 					font = {
 						type = "select",
@@ -450,6 +239,7 @@ do
 						order = 2,
 						values = media:List("font"),
 						width = "full",
+						--itemControl = "DDI-Font",
 					},
 					align = {
 						type = "select",
@@ -459,7 +249,7 @@ do
 							CENTER = L["Center"],
 							RIGHT = L["Right"],
 						},
-						--style = "radio", -- XXX Change this once Ace3 supports it!
+						style = "radio",
 						width = "half",
 						order = 3,
 					},
@@ -549,7 +339,242 @@ do
 end
 
 --------------------------------------------------------------------------------
--- Event Handlers
+-- Bar arrangement
+--
+
+local function barSorter(a, b)
+	return a.remaining < b.remaining and true or false
+end
+local tmp = {}
+local function rearrangeBars(anchor)
+	wipe(tmp)
+	for bar in pairs(anchor.bars) do
+		tmp[#tmp + 1] = bar
+	end
+	table.sort(tmp, barSorter)
+	local lastDownBar, lastUpBar = nil, nil
+	local up = nil
+	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
+	for i, bar in next, tmp do
+		bar:ClearAllPoints()
+		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
+			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
+			lastUpBar = bar
+		else
+			bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT")
+			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT")
+			lastDownBar = bar
+		end
+	end
+	if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
+		if #tmp > 0 and db.emphasize then
+			empUpdate:Show()
+		else
+			empUpdate:Hide()
+		end
+	end
+end
+
+local function barStopped(event, bar)
+	local a = bar:Get("bigwigs:anchor")
+	if a and a.bars and a.bars[bar] then
+		a.bars[bar] = nil
+		rearrangeBars(a)
+	end
+end
+
+local function findBar(module, key)
+	for k in pairs(normalAnchor.bars) do
+		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
+			return k
+		end
+	end
+	for k in pairs(emphasizeAnchor.bars) do
+		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
+			return k
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Anchors
+--
+
+local defaultPositions = {
+	BigWigsAnchor = {"CENTER", "UIParent", "CENTER", 0, -120},
+	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the default BigWigs message frame
+}
+
+local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
+local function onDragHandleMouseUp(self, button) self:GetParent():StopMovingOrSizing() end
+local function onResize(self, width)
+	db[self.w] = width
+	rearrangeBars(self)
+end
+local function onDragStart(self) self:StartMoving() end
+local function onDragStop(self)
+	self:StopMovingOrSizing()
+	local s = self:GetEffectiveScale()
+	db[self.x] = self:GetLeft() * s
+	db[self.y] = self:GetTop() * s
+end
+
+local function createAnchor(frameName, title)
+	local display = CreateFrame("Frame", frameName, UIParent)
+	display.w, display.x, display.y = frameName .. "_width", frameName .. "_x", frameName .. "_y"
+	display:EnableMouse(true)
+	display:SetClampedToScreen(true)
+	display:SetMovable(true)
+	display:SetResizable(true)
+	display:RegisterForDrag("LeftButton")
+	display:SetHeight(20)
+	display:SetMinResize(80, 20)
+	display:SetMaxResize(1920, 20)
+	local bg = display:CreateTexture(nil, "BACKGROUND")
+	bg:SetAllPoints(display)
+	bg:SetBlendMode("BLEND")
+	bg:SetTexture(0, 0, 0, 0.3)
+	display.background = bg
+	local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	header:SetText(title)
+	header:SetAllPoints(display)
+	header:SetJustifyH("CENTER")
+	header:SetJustifyV("MIDDLE")
+	local drag = CreateFrame("Frame", nil, display)
+	drag:SetFrameLevel(display:GetFrameLevel() + 10)
+	drag:SetWidth(16)
+	drag:SetHeight(16)
+	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
+	drag:EnableMouse(true)
+	drag:SetScript("OnMouseDown", onDragHandleMouseDown)
+	drag:SetScript("OnMouseUp", onDragHandleMouseUp)
+	drag:SetAlpha(0.5)
+	local tex = drag:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
+	tex:SetWidth(16)
+	tex:SetHeight(16)
+	tex:SetBlendMode("ADD")
+	tex:SetPoint("CENTER", drag)
+	display:SetScript("OnSizeChanged", onResize)
+	display:SetScript("OnDragStart", onDragStart)
+	display:SetScript("OnDragStop", onDragStop)
+	display:SetScript("OnMouseUp", function(self, button)
+		if button ~= "LeftButton" then return end
+		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
+	end)
+	display.bars = {}
+	display.Reset = function(self)
+		db[self.x] = nil
+		db[self.y] = nil
+		db[self.w] = nil
+		self:RefixPosition()
+	end
+	display.RefixPosition = function(self)
+		self:ClearAllPoints()
+		if db[self.x] and db[self.y] then
+			local s = self:GetEffectiveScale()
+			self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
+		else
+			self:SetPoint(unpack(defaultPositions[self:GetName()]))
+		end
+		self:SetWidth(db[self.w] or plugin.defaultDB[self.w])
+	end
+	display:RefixPosition()
+	display:Hide()
+	return display
+end
+
+local function createAnchors()
+	normalAnchor = createAnchor("BigWigsAnchor", L["Bars"])
+	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L["Emphasized bars"])
+
+	createAnchors = nil
+	createAnchor = nil
+end
+
+local function showAnchors()
+	if createAnchors then createAnchors() end
+	normalAnchor:Show()
+	emphasizeAnchor:Show()
+end
+
+local function hideAnchors()
+	normalAnchor:Hide()
+	emphasizeAnchor:Hide()
+end
+
+local function resetAnchors()
+	normalAnchor:Reset()
+	emphasizeAnchor:Reset()
+end
+
+local function updateProfile()
+	db = plugin.db.profile
+	if normalAnchor then
+		normalAnchor:RefixPosition()
+		emphasizeAnchor:RefixPosition()
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Initialization
+--
+
+function plugin:OnRegister()
+	media:Register("statusbar", "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
+	media:Register("statusbar", "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
+	media:Register("statusbar", "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
+	media:Register("statusbar", "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
+	media:Register("statusbar", "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
+	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
+
+	db = self.db.profile
+	if not db.font then db.font = media:GetDefault("font") end
+
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+end
+
+function plugin:OnPluginEnable()
+	times = times or {}
+	messages = messages or {}
+	timers = timers or {}
+
+	colors = BigWigs:GetPlugin("Colors")
+	superemp = BigWigs:GetPlugin("Super Emphasize", true)
+
+	if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
+	self:RegisterMessage("BigWigs_StartBar")
+	self:RegisterMessage("BigWigs_StopBar")
+	self:RegisterMessage("BigWigs_StopBars", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnPluginDisable", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
+	self:RegisterMessage("BigWigs_SetConfigureTarget")
+	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	self:RegisterMessage("BigWigs_SuperEmphasizeStart")
+
+	--  custom bars
+	BigWigs:AddSyncListener(self, "BWCustomBar")
+
+	self:RefixClickIntercepts()
+	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
+end
+
+function plugin:BigWigs_SetConfigureTarget(event, module)
+	if module == self then
+		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+	else
+		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Stopping bars
 --
 
 local function stopBars(bars, module, text)
@@ -574,25 +599,62 @@ end
 function plugin:BigWigs_OnBossDisable(message, module) stop(module) end
 function plugin:BigWigs_StopBar(message, module, text) stop(module, text) end
 
+--------------------------------------------------------------------------------
+-- Clickable bars
+--
+
+local function barClicked(bar, button)
+	for action, enabled in pairs(plugin.db.profile[button]) do
+		if enabled then clickHandlers[action](bar) end
+	end
+end
+
+local function barOnEnter(bar)
+	bar.candyBarLabel:SetJustifyH(db.align == "CENTER" and "LEFT" or "CENTER")
+	bar.candyBarBackground:SetVertexColor(1, 1, 1, 0.8)
+end
+local function barOnLeave(bar)
+	bar.candyBarLabel:SetJustifyH(db.align)
+	local module = bar:Get("bigwigs:module")
+	local key = bar:Get("bigwigs:option")
+	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
+end
+
+local function refixClickOnBar(intercept, bar)
+	if intercept then
+		bar:EnableMouse(true)
+		bar:SetScript("OnMouseDown", barClicked)
+		bar:SetScript("OnEnter", barOnEnter)
+		bar:SetScript("OnLeave", barOnLeave)
+	else
+		bar:EnableMouse(false)
+		bar:SetScript("OnMouseDown", nil)
+		bar:SetScript("OnEnter", nil)
+		bar:SetScript("OnLeave", nil)
+	end
+end
+local function refixClickOnAnchor(intercept, anchor)
+	for bar in pairs(anchor.bars) do
+		refixClickOnBar(intercept, bar)
+	end
+end
+
 do
-	empUpdate = CreateFrame("Frame")
-	empUpdate:Hide()
-	local total = 0
-	local dirty = nil
-	empUpdate:SetScript("OnUpdate", function(self, elapsed)
-		if dirty then return end
-		for k in pairs(normalAnchor.bars) do
-			if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
-				plugin:EmphasizeBar(k)
-				dirty = true
-			end
+	local keymap = {
+		LALT = "ALT", RALT = "ALT",
+		LSHIFT = "SHIFT", RSHIFT = "SHIFT",
+		LCTRL = "CTRL", RCTRL = "CTRL",
+	}
+	function plugin:RefixClickIntercepts(event, key, state)
+		if not db.interceptMouse or not normalAnchor then return end
+		if not db.onlyInterceptOnKeypress or (db.onlyInterceptOnKeypress and type(key) == "string" and db.interceptKey == keymap[key] and state == 1) then
+			refixClickOnAnchor(true, normalAnchor)
+			refixClickOnAnchor(true, emphasizeAnchor)
+		else
+			refixClickOnAnchor(false, normalAnchor)
+			refixClickOnAnchor(false, emphasizeAnchor)
 		end
-		if dirty then
-			rearrangeBars(normalAnchor)
-			rearrangeBars(emphasizeAnchor)
-			dirty = nil
-		end
-	end)
+	end
 end
 
 -- Super Emphasize the clicked bar
@@ -675,19 +737,29 @@ clickHandlers.disable = function(bar)
 	end
 end
 
-local function barClicked(bar, button)
-	for action, enabled in pairs(plugin.db.profile[button]) do
-		if enabled then clickHandlers[action](bar) end
-	end
-end
+-----------------------------------------------------------------------
+-- Super Emphasize
+--
 
-local function barOnEnter(bar)
-	bar.candyBarLabel:SetJustifyH("CENTER")
-	bar.candyBarBackground:SetVertexColor(1, 1, 1, 0.8)
-end
-local function barOnLeave(bar)
-	bar.candyBarLabel:SetJustifyH(db.align)
-	bar.candyBarBackground:SetVertexColor(0.5, 0.5, 0.5, 0.3)
+do
+	empUpdate = CreateFrame("Frame")
+	empUpdate:Hide()
+	local total = 0
+	local dirty = nil
+	empUpdate:SetScript("OnUpdate", function(self, elapsed)
+		if dirty then return end
+		for k in pairs(normalAnchor.bars) do
+			if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
+				plugin:EmphasizeBar(k)
+				dirty = true
+			end
+		end
+		if dirty then
+			rearrangeBars(normalAnchor)
+			rearrangeBars(emphasizeAnchor)
+			dirty = nil
+		end
+	end)
 end
 
 local function countdown(bar)
@@ -700,6 +772,7 @@ local function countdown(bar)
 		end
 	end
 end
+
 local function flash(bar)
 	if bar.remaining <= bar:Get("bigwigs:flashcount") then
 		local count = bar:Get("bigwigs:flashcount")
@@ -719,40 +792,31 @@ local function actuallyEmphasize(bar, time)
 	end
 end
 
-local function findBar(module, key)
-	for k in pairs(normalAnchor.bars) do
-		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
-			return k
-		end
-	end
-	for k in pairs(emphasizeAnchor.bars) do
-		if k:Get("bigwigs:module") == module and k:Get("bigwigs:option") == key then
-			return k
-		end
-	end
-end
-
 function plugin:BigWigs_SuperEmphasizeStart(event, module, key, time)
 	local bar = findBar(module, key)
 	if not bar then return end
 	actuallyEmphasize(bar, time)
 end
 
+-----------------------------------------------------------------------
+-- Start bars
+--
+
 function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
-	if not normalAnchor then createAnchors() end
+	if createAnchors then createAnchors() end
 	stop(module, text)
 	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
 	normalAnchor.bars[bar] = true
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
-	bar:Set("bigwigs:empColor", colors:GetColorTable("barEmphasized", module, key))
 	bar:Set("bigwigs:option", key)
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar.candyBarLabel:SetTextColor(colors:GetColor("barText", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
-	bar.candyBarLabel:SetFont(media:Fetch("font", db.font), 10)
-	bar.candyBarDuration:SetFont(media:Fetch("font", db.font), 10)
+	local f = media:Fetch("font", db.font)
+	bar.candyBarLabel:SetFont(f, 10)
+	bar.candyBarDuration:SetFont(f, 10)
 	bar:SetLabel(text)
 	bar:SetClampedToScreen(true)
 	bar:SetDuration(time)
@@ -762,11 +826,8 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if db.emphasize and time < 15 then
 		self:EmphasizeBar(bar)
 	end
-	if db.interceptMouse then
-		bar:EnableMouse(true)
-		bar:SetScript("OnMouseDown", barClicked)
-		bar:SetScript("OnEnter", barOnEnter)
-		bar:SetScript("OnLeave", barOnLeave)
+	if db.interceptMouse and not db.onlyInterceptOnKeypress then
+		refixClickOnBar(true, bar)
 	end
 	if superemp and superemp:IsSuperEmphasized(module, key) then
 		actuallyEmphasize(bar, time)
@@ -776,7 +837,7 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 end
 
 --------------------------------------------------------------------------------
--- Emphasize
+-- Normal Emphasize
 --
 
 local function flash(self)
@@ -801,7 +862,9 @@ function plugin:EmphasizeBar(bar)
 	if db.emphasizeFlash then
 		bar:AddUpdateFunction(flash)
 	end
-	bar:SetColor(unpack(bar:Get("bigwigs:empColor")))
+	local module = bar:Get("bigwigs:module")
+	local key = bar:Get("bigwigs:option")
+	bar:SetColor(colors:GetColor("barEmphasized", module, key))
 	bar:SetScale(db.emphasizeScale)
 	bar:Set("bigwigs:emphasized", true)
 end
@@ -881,6 +944,3 @@ _G["SlashCmdList"]["BWLCB_SHORTHAND"] = function(input)
 end
 _G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
 
--------------------------------------------------------------------------------
--- Interactive bars
---

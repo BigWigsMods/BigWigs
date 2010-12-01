@@ -137,4 +137,3 @@ L["Disable the proximity display for all modules that use it."] = "Desactivar la
 L.proximity = "Ventana de proximidad"
 L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropiado para este encuentro, listando los jugadores que est\195\161n demasiado cerca de t\195\173."
 
-L.proximityfont = "Fonts\\FRIZQT__.TTF"

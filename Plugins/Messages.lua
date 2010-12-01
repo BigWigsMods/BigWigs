@@ -2,7 +2,6 @@
 -- Module Declaration
 --
 
-
 local plugin = BigWigs:NewPlugin("Messages", "LibSink-2.0")
 if not plugin then return end
 
@@ -18,76 +17,99 @@ local labels = {}
 
 local seModule = nil
 local colorModule = nil
-local messageFrame = nil
-local anchor = nil
+
+local normalAnchor = nil
+local emphasizeAnchor = nil
+
+local db = nil
+
 local floor = math.floor
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
 --------------------------------------------------------------------------------
--- Anchor
+-- Anchors
 --
+
+local defaultPositions = {
+	BWMessageAnchor = {"CENTER"},
+	BWEmphasizeMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, 45},
+}
 
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
 	local s = self:GetEffectiveScale()
-	plugin.db.profile.posx = self:GetLeft() * s
-	plugin.db.profile.posy = self:GetTop() * s
+	db[self.x] = self:GetLeft() * s
+	db[self.y] = self:GetTop() * s
 end
 
-local function onControlEnter(self)
-	GameTooltip:ClearLines()
-	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
-	GameTooltip:AddLine(self.tooltipHeader)
-	GameTooltip:AddLine(self.tooltipText, 1, 1, 1, 1)
-	GameTooltip:Show()
-end
-local function onControlLeave() GameTooltip:Hide() end
-
-local createMsgFrame
-local function createAnchor()
-	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
-	anchor:EnableMouse(true)
-	anchor:SetMovable(true)
-	anchor:RegisterForDrag("LeftButton")
-	anchor:SetWidth(120)
-	anchor:SetHeight(20)
-	anchor:ClearAllPoints()
-	local x = plugin.db.profile.posx
-	local y = plugin.db.profile.posy
-	local s = anchor:GetEffectiveScale()
-	if not x or not y then
-		anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
-	else
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	end
-	local bg = anchor:CreateTexture(nil, "PARENT")
-	bg:SetAllPoints(anchor)
+local function createAnchor(frameName, title)
+	local display = CreateFrame("Frame", frameName, UIParent)
+	display.x, display.y = frameName .. "_x", frameName .. "_y"
+	display:EnableMouse(true)
+	display:SetClampedToScreen(true)
+	display:SetMovable(true)
+	display:RegisterForDrag("LeftButton")
+	display:SetWidth(200)
+	display:SetHeight(20)
+	local bg = display:CreateTexture(nil, "BACKGROUND")
+	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
-	bg:SetTexture(0.2, 1, 0.2, 0.3)
-	anchor.background = bg
-	local header = anchor:CreateFontString(nil, "OVERLAY")
-	header:SetFontObject(GameFontNormal)
-	header:SetText(L["Messages"])
-	header:SetAllPoints(anchor)
+	bg:SetTexture(0, 0, 0, 0.3)
+	display.background = bg
+	local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	header:SetText(title)
+	header:SetAllPoints(display)
 	header:SetJustifyH("CENTER")
 	header:SetJustifyV("MIDDLE")
-	anchor:SetScript("OnDragStart", onDragStart)
-	anchor:SetScript("OnDragStop", onDragStop)
-	anchor:SetScript("OnMouseUp", function(self, button)
+	display:SetScript("OnDragStart", onDragStart)
+	display:SetScript("OnDragStop", onDragStop)
+	display:SetScript("OnMouseUp", function(self, button)
 		if button ~= "LeftButton" then return end
 		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end)
-	anchor:Hide()
-	createMsgFrame()
+	display.Reset = function(self)
+		db[self.x] = nil
+		db[self.y] = nil
+		self:RefixPosition()
+	end
+	display.RefixPosition = function(self)
+		self:ClearAllPoints()
+		if db[self.x] and db[self.y] then
+			local s = self:GetEffectiveScale()
+			self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
+		else
+			self:SetPoint(unpack(defaultPositions[self:GetName()]))
+		end
+	end
+	display:RefixPosition()
+	display:Hide()
+	return display
 end
 
-local function resetAnchor()
-	anchor:ClearAllPoints()
-	anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
-	plugin.db.profile.posx = nil
-	plugin.db.profile.posy = nil
+local function createAnchors()
+	normalAnchor = createAnchor("BWMessageAnchor", L["Messages"])
+	emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L["Emphasized messages"])
+
+	createAnchors = nil
+	createAnchor = nil
+end
+
+local function showAnchors()
+	if createAnchors then createAnchors() end
+	normalAnchor:Show()
+	emphasizeAnchor:Show()
+end
+
+local function hideAnchors()
+	normalAnchor:Hide()
+	emphasizeAnchor:Hide()
+end
+
+local function resetAnchors()
+	normalAnchor:Reset()
+	emphasizeAnchor:Reset()
 end
 
 --------------------------------------------------------------------------------
@@ -102,8 +124,6 @@ plugin.defaultDB = {
 	fontSize = nil,
 	usecolors = true,
 	scale = 1.0,
-	posx = nil,
-	posy = -150,
 	chat = nil,
 	useicons = true,
 	classcolor = true,
@@ -130,14 +150,10 @@ plugin.pluginOptions.args.emphasized.name = L["Emphasized messages"]
 plugin.pluginOptions.args.emphasized.order = 2
 
 local function updateProfile()
-	if not anchor then return end
-	local x = plugin.db.profile.posx
-	local y = plugin.db.profile.posy
-	local s = anchor:GetEffectiveScale()
-	if not x or not y then
-		anchor:SetPoint("TOP", RaidWarningFrame, "BOTTOM", 0, 45) --Below the Blizzard raid warnings
-	else
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	db = plugin.db.profile
+	if normalAnchor then
+		normalAnchor:RefixPosition()
+		emphasizeAnchor:RefixPosition()
 	end
 end
 
@@ -146,33 +162,30 @@ end
 --
 
 function plugin:OnRegister()
-	fakeEmphasizeMessageAddon:SetSinkStorage(self.db.profile.emphasizedMessages)
+	db = self.db.profile
+
+	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
 	self:RegisterSink("BigWigsEmphasized", "Big Wigs Emphasized", L.emphasizedSinkDescription, "EmphasizedPrint")
 	self:SetSinkStorage(self.db.profile)
 	self:RegisterSink("BigWigs", "Big Wigs", L.sinkDescription, "Print")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
-	if not plugin.db.profile.font then
-		plugin.db.profile.font = media:GetDefault("font")
+	if not db.font then
+		db.font = media:GetDefault("font")
 	end
-	if not plugin.db.profile.fontSize then
+	if not db.fontSize then
 		local _, size = GameFontNormalHuge:GetFont()
-		plugin.db.profile.fontSize = size
+		db.fontSize = size
 	end
 end
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
+	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedMessage")
-	self:RegisterMessage("BigWigs_StartConfigureMode", function()
-		if not anchor then createAnchor() end
-		anchor:Show()
-	end)
-	self:RegisterMessage("BigWigs_StopConfigureMode", function()
-		anchor:Hide()
-	end)
+	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
+	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 
 	seModule = BigWigs:GetPlugin("Super Emphasize", true)
 	colorModule = BigWigs:GetPlugin("Colors", true)
@@ -182,9 +195,11 @@ end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
 	if module == self then
-		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		normalAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
+		emphasizeAnchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
-		anchor.background:SetTexture(0, 0, 0, 0.3)
+		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
+		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
 	end
 end
 
@@ -198,7 +213,7 @@ do
 					local key = info[#info]
 					if key == "font" then
 						for i, v in next, media:List("font") do
-							if v == plugin.db.profile.font then return i end
+							if v == db.font then return i end
 						end
 					elseif key == "outline" then
 						return plugin.db.profile[key] or "NONE"
@@ -209,7 +224,7 @@ do
 					local key = info[#info]
 					if key == "font" then
 						local list = media:List("font")
-						plugin.db.profile.font = list[value]
+						db.font = list[value]
 					elseif key == "outline" then
 						if value == "NONE" then value = nil end
 						plugin.db.profile[key] = value
@@ -224,6 +239,7 @@ do
 						order = 1,
 						values = media:List("font"),
 						width = "full",
+						--itemControl = "DDI-Font",
 					},
 					outline = {
 						type = "select",
@@ -286,9 +302,9 @@ end
 -- Message frame
 --
 
-local function newFontString(i)
-	local fs = messageFrame:CreateFontString(nil, "ARTWORK")
-	fs:SetWidth(800)
+local function newFontString(frame, i)
+	local fs = frame:CreateFontString(nil, "ARTWORK")
+	fs:SetWidth(0)
 	fs:SetHeight(0)
 	fs.lastUsed = 0
 	FadingFrame_SetFadeInTime(fs, 0.2)
@@ -322,43 +338,30 @@ local function onUpdate(self, elapsed)
 	if not show then self:Hide() end
 end
 
-function createMsgFrame()
-	messageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
-	messageFrame:SetWidth(512)
-	messageFrame:SetHeight(80)
-	messageFrame:SetPoint("TOP", anchor, "BOTTOM")
-	messageFrame:SetScale(plugin.db.profile.scale or 1)
-	messageFrame:SetFrameStrata("HIGH")
-	messageFrame:SetToplevel(true)
-	messageFrame:SetScript("OnUpdate", onUpdate)
+local function createSlots()
+	local frame = CreateFrame("Frame", "BWMessageFrame", UIParent)
+	frame:SetWidth(UIParent:GetWidth())
+	frame:SetHeight(80)
+	frame:SetPoint("TOP", normalAnchor, "BOTTOM")
+	frame:SetScale(db.scale or 1)
+	frame:SetFrameStrata("HIGH")
+	frame:SetToplevel(true)
+	frame:SetScript("OnUpdate", onUpdate)
 	for i = 1, 4 do
-		local fs = newFontString(i)
-		labels[i] = fs
-		if i == 1 then
-			fs:SetPoint("TOP")
-		else
-			fs:SetPoint("TOP", labels[i - 1], "BOTTOM")
-		end
+		labels[i] = newFontString(frame, i)
 	end
+	newFontString = nil
+	createSlots = nil
+	return frame
 end
 
--------------------------------------------------------------------------------
--- Event Handlers
---
-
-function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
-	if not anchor then createAnchor() end
-	if not messageFrame then createMsgFrame() end
-	messageFrame:SetScale(self.db.profile.scale)
-	messageFrame:Show()
-
+local function getNextSlot()
 	-- move 4 -> 1
 	local old = labels[4]
 	labels[4] = labels[3]
 	labels[3] = labels[2]
 	labels[2] = labels[1]
 	labels[1] = old
-
 	-- reposition
 	for i = 1, 4 do
 		labels[i]:ClearAllPoints()
@@ -369,42 +372,61 @@ function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
 		end
 	end
 	-- new message at 1
-	local slot = labels[1]
+	return labels[1]
+end
 
-	local flags = nil
-	if plugin.db.profile.monochrome and plugin.db.profile.outline then flags = "MONOCHROME," .. plugin.db.profile.outline
-	elseif plugin.db.profile.monochrome then flags = "MONOCHROME"
-	elseif plugin.db.profile.outline then flags = plugin.db.profile.outline
+-------------------------------------------------------------------------------
+-- Event Handlers
+--
+
+do
+	local parentFrame = nil
+	local iconFormat = "|T%s:0:0:-5|t%s"
+	function plugin:Print(addon, text, r, g, b, font, size, _, _, _, icon)
+		if createAnchors then createAnchors() end
+		if createSlots then parentFrame = createSlots() end
+		parentFrame:SetScale(db.scale or 1)
+		parentFrame:Show()
+
+		local slot = getNextSlot()
+
+		local flags = nil
+		if db.monochrome and db.outline then flags = "MONOCHROME," .. db.outline
+		elseif db.monochrome then flags = "MONOCHROME"
+		elseif db.outline then flags = db.outline
+		end
+		slot:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
+		slot.minHeight = db.fontSize
+
+		if icon then
+			slot:SetText(iconFormat:format(icon, text))
+		else
+			slot:SetText(text)
+		end
+		slot:SetTextColor(r, g, b, 1)
+		slot.scrollTime = 0
+		FadingFrame_Show(slot)
 	end
-	slot:SetFont(media:Fetch("font", plugin.db.profile.font), plugin.db.profile.fontSize, flags)
-
-	slot.minHeight = select(2, slot:GetFont())
-	if icon then text = "|T"..icon..":" .. slot.minHeight .. ":" .. slot.minHeight .. ":-5|t"..text end
-	slot:SetText(text)
-	slot:SetTextColor(r, g, b, 1)
-	slot.scrollTime = 0
-	FadingFrame_Show(slot)
 end
 do
 	local emphasizedText = nil
 	local frame = nil
 	function plugin:EmphasizedPrint(addon, text, r, g, b, font, size, _, _, _, icon)
+		if createAnchors then createAnchors() end
 		if not emphasizedText then
-			frame = CreateFrame("Frame", nil, UIParent)
+			frame = CreateFrame("Frame", "BWEmphasizeMessageFrame", UIParent)
 			frame:SetFrameStrata("HIGH")
-			frame:SetPoint("CENTER")
+			frame:SetPoint("TOP", emphasizeAnchor, "BOTTOM")
 			frame:SetWidth(UIParent:GetWidth())
-			frame:SetHeight(100)
+			frame:SetHeight(80)
 			frame:SetScript("OnUpdate", FadingFrame_OnUpdate)
 			FadingFrame_OnLoad(frame)
 			FadingFrame_SetFadeInTime(frame, 0.2)
 			-- XXX is 1.5 + 3.5 fade enough for a super emphasized message?
 			FadingFrame_SetHoldTime(frame, 1.5)
 			FadingFrame_SetFadeOutTime(frame, 3.5)
-			emphasizedText = frame:CreateFontString("BigWigsEmphasizedMessage", "OVERLAY", "ZoneTextFont")
-			emphasizedText:SetWidth(UIParent:GetWidth())
-			emphasizedText:SetHeight(100)
-			emphasizedText:SetPoint("CENTER")
+			emphasizedText = frame:CreateFontString(nil, "OVERLAY", "ZoneTextFont")
+			emphasizedText:SetPoint("TOP")
 		end
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
@@ -419,7 +441,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 	if broadcastonly or not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.
-	if self.db.profile.usecolors then
+	if db.usecolors then
 		if type(color) == "table" then
 			if color.r and color.g and color.b then
 				r, g, b = color.r, color.g, color.b
@@ -431,7 +453,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		end
 	end
 
-	if icon and self.db.profile.useicons then
+	if icon and db.useicons then
 		local _, _, gsiIcon = GetSpellInfo(icon)
 		icon = gsiIcon or icon
 	else
@@ -446,7 +468,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 	else
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end
-	if self.db.profile.chat then
+	if db.chat then
 		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end
 end

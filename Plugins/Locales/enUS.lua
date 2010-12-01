@@ -7,6 +7,10 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 L["Clickable Bars"] = true
 L.clickableBarsDesc = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
 L["Enables bars to receive mouse clicks."] = true
+L["Modifier"] = true
+L["Hold down the selected modifier key to enable click actions on the timer bars."] = true
+L["Only with modifier key"] = true
+L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = true
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = true
 L["Report"] = true
@@ -153,7 +157,6 @@ L["The proximity display will show next time. To disable it completely for this 
 
 L.proximity = "Proximity display"
 L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
-L.proximityfont = "Fonts\\FRIZQT__.TTF"
 
 L["Close"] = true
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
@@ -205,3 +208,4 @@ L["Countdown"] = true
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
 L["Flash"] = true
 L["Flashes the screen red during the last 3 seconds of any related timer."] = true
+

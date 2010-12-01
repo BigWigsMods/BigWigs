@@ -155,7 +155,6 @@ L["The proximity display will show next time. To disable it completely for this 
 
 L.proximity = "근접 표시"
 L.proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 근접 표시창을 표시합니다."
-L.proximityfont = "Fonts\\2002.TTF"
 
 L["Close"] = "닫기"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "근접 표시를 닫습니다.\n\n완전히 비활성화기 위해서는 해당 보스 모듈에 있는 옵션의 근접 표시를 끄세요."

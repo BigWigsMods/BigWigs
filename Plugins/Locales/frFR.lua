@@ -153,7 +153,6 @@ L["The proximity display will show next time. To disable it completely for this 
 
 L.proximity = "Affichage de proximité"
 L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
-L.proximityfont = "Fonts\\FRIZQT__.TTF"
 
 L["Close"] = "Fermer"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Ferme l'affichage de proximité.\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."

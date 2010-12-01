@@ -115,7 +115,8 @@ plugin.subPanelOptions = {
 local footers = {
 	"Premonition @ Sen'jin US\n|cff9999ffwww.premoguild.com|r",
 	"Big Wigs Developer\n|cff9999ffwowace.com/projects/big-wigs|r",
-	"Ensidia @ Lightning's Blade EU\n|cff9999ffwww.ensidia.com|r",
+	"Ensidia @ Lightning's Blade EU\n|cff9999ffwww.manaflask.com|r",
+	"vodka @ Alterac Mountains US\n|cff9999ffwww.vodka-guild.net|r",
 }
 
 ------------[[
@@ -164,8 +165,7 @@ local tips = {
 	"Vallkor#HUNTER#It's good to ask questions if you are unsure about something, unless it was answered minutes before you asked.#1",
 	"Vallkor#HUNTER#Making sure your combat log is readily accessible and easy to browse is crucial in figuring out \"what went wrong?\".#1",
 	"Nessala#ROGUE#Don't wait until the ready check to Eat, Buff, Eat, Buff and then Eat again.#1",
-	"Nessala#ROGUE#Don't stand next to an RP'ing mob if you have less than 25k armor, you never know who he is going to take that first swing at.#1",
-	"Nessala#ROGUE#Unless it is using the wrong rank of a spell 2+ months into the expansion... then it is deny > deny > DV.#1",
+	"Nessala#ROGUE#Don't stand next to a roleplaying NPC if you're not tanking - you never know who is going to get that first hit.#1",
 	"Shift#SHAMAN#Don't stand in fire or fire-like things.#1",
 	"Xav#WARRIOR#Standing next to the tank when he or she is tanking mobs is not a good idea. Most mobs have cleaves or frontal breath-like attacks that will quickly kill your character.#1",
 	"Devium#DEATHKNIGHT#Whenever you die, take some time to look through your combat log and figure out why you died. This makes you able to change your play for next time.#1",
@@ -180,12 +180,6 @@ local tips = {
 	"Pinch#ROGUE#If you're going to stand in the fire, make sure you ask your healers if they are comfortable with it first!#1",
 	"Kyridel#HUNTER#Raid frames aren't just for healers! Knowing what's happening to your raid is important for everyone.#1",
 	"Kyridel#HUNTER#Consistency is key! Dodging void zones 9 times out of 10 usually isn't good enough.#1",
-	"Darthn#DRUID#Don't worry about your gear when applying to a guild. Experience goes a long way.#1",
-	"Darthn#DRUID#Mods are helpful for the game but you should be able to play without them in case a patch breaks them all.#1",
-	"Darthn#DRUID#A clean UI makes it much easier to see void zones/flame patches/cosmic smashes/etc.#1",
-	"Darthn#DRUID#You should have all your \"Oh sh*t\" buttons keybound for optimal response time.#1",
-	"Darthn#DRUID#Threat meters should be a part of every DPS UI.#1",
-	"Darthn#DRUID#If you have over 450 days played, you should go outside... the sun doesn't hurt much contrary to what someone in game has told you!#1",
 
 	"Rabbit##Turn off warnings and bars for encounter events that you do not care about. That way you won't be spammed, and you can concentrate more on what matters.#2",
 	"Rabbit##Remember which sound goes with which message during an encounter. Then, next time, you won't even have to look at the messages.#2",
@@ -197,6 +191,25 @@ local tips = {
 	"Rabbit##Sometimes you'll want to remove a bar from the screen while in combat, so you can focus more on some other ability. You can configure the click-actions of bars in the Big Wigs interface options.#2",
 	"Rabbit##Flash and Shake is a great way to really make you act fast on something. But not if it happens for 5 different abilities in a fight! Remember to adjust your Big Wigs per-boss settings.#2",
 	"Rabbit##Boss mods are only useful if you take the time to adjust the per-boss settings to suit your needs. I really can't stress this enough. Right-click the Big Wigs LDB plugin while buffing up for a boss fight and look through the options.#2",
+
+	"Darthn#DRUID#Don't worry about your gear when applying to a guild. Experience goes a long way.#4",
+	"Darthn#DRUID#Mods are helpful for the game but you should be able to play without them in case a patch breaks them all.#4",
+	"Darthn#DRUID#A clean UI makes it much easier to see void zones/flame patches/cosmic smashes/etc.#4",
+	"Darthn#DRUID#You should have all your \"Oh sh*t\" buttons keybound for optimal response time.#4",
+	"Darthn#DRUID#Threat meters should be a part of every DPS UI.#4",
+	"Darthn#DRUID#If you have over 450 days played, you should go outside... the sun doesn't hurt much contrary to what someone in game has told you!#4",
+	"Killars#ROGUE#Not everything is about your personal DPS. Sacrificing DPS for the greater good may lower your glorious DPS on the damage meters, but what ever gives the raid the best chance to down the boss is what's important.#4",
+	"Killars#ROGUE#Usually there is more than one way to avoid mechanics or kill a boss. Just becau,se someone tells you how to do something one way doesn't mean you shouldn't think of alternative ways to get the job done.#4",
+	"Killars#ROGUE#Every raid is different. What works for one raid may need to be tweaked a bit to work for a different raid.#4",
+	"Skoobah#PALADIN#Hey, look at your feet. You're probably standing in some kind of ground effect! Watch for negative effects, as well as beneficial effects. Knowing how to manipulate your environment will often be the difference between a kill and a wipe.#4",
+	"Laythe#DRUID#Remember, the key to maximizing your raids potential is reducing the amount of damage you take. Get used to making and using keybinds for defensive cooldowns and always look for opportunities to use these abilities.#4",
+	"Moozhe#WARRIOR#The estimated DPS of a dead player, as calculated by theorycrafting spreadsheets, is approximately 0.#4",
+	"Landsoul#WARRIOR#When learning a new fight, concentrate on how the mechanics and flow of it works first, before worrying too much about maximizing your output. That will come naturally once you are comfortable with timings and movement.#4",
+	"Moozhe#WARRIOR#Watch your class debuffs and know when to help apply them. Reducing the attack power, speed and armor of your opponent is essential.#4",
+	"Rabz#PRIEST#Healing is a team effort, handle your assignments and trust in your other healers to do theirs. No one cares about your HPS if they're dead on the ground.#4",
+	"Adam#PALADIN#Using your microphone to coordinate cooldowns can decide life or death for raid members. Don't be shy!#4",
+	"Cev#DEATHKNIGHT#The ability to think two moves ahead can be the difference between a mediocre and an exceptional player.#4",
+	"Matt#SHAMAN#Take the time to study encounters with burst AOE so you can be proactive with your healing spells and defensive cooldowns.#4",
 }
 
 -------------------------------------------------------------------------------
@@ -390,8 +403,6 @@ do
 		end
 	end
 end
-
--- /script BigWigs:GetPlugin("Tip of the Raid"):RandomTip()
 
 -------------------------------------------------------------------------------
 -- Plugin init

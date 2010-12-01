@@ -147,7 +147,6 @@ L["The proximity display will show next time. To disable it completely for this 
 
 L.proximity = "近距离显示"
 L.proximity_desc = "显示近距离显示窗口，列出距离你很近的玩家。"
-L.proximityfont = "Fonts\\ZYKai_T.TTF"
 
 L["Close"] = "关闭"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "关闭近距离显示。\n\n要完全禁用此任一功能，需进入相对应首领模块选项关闭“近距离”功能。"
