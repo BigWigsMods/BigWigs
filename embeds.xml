@@ -2,13 +2,13 @@
 ..\FrameXML\UI.xsd">
 <!--@no-lib-strip@-->
 <Script file="Libs\LibStub\LibStub.lua"/>
-<Include file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml" /> 
+<Include file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml" />
 <Include file="Libs\AceLocale-3.0\AceLocale-3.0.xml" />
-<Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml" />  
-<Include file="Libs\AceDB-3.0\AceDB-3.0.xml" />  
-<Include file="Libs\AceEvent-3.0\AceEvent-3.0.xml" /> 
-<Include file="Libs\AceHook-3.0\AceHook-3.0.xml" />  
-<Include file="Libs\AceTimer-3.0\AceTimer-3.0.xml" />  
+<Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml" />
+<Include file="Libs\AceDB-3.0\AceDB-3.0.xml" />
+<Include file="Libs\AceEvent-3.0\AceEvent-3.0.xml" />
+<Include file="Libs\AceHook-3.0\AceHook-3.0.xml" />
+<Include file="Libs\AceTimer-3.0\AceTimer-3.0.xml" />
 
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Include file="Libs\LibSink-2.0\lib.xml"/>
@@ -25,3 +25,4 @@
 <Include file="Options\libs.xml"/>
 <!--@end-debug@-->
 </Ui>
+
