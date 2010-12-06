@@ -42,16 +42,16 @@ function mod:OnBossEnable()
 --[[ Lets leave these in for now in case on heroic they don't gain power at the same rate
 	self:Log("SPELL_CAST_SUCCESS", "WindBlast", 86193)
 	self:Log("SPELL_CAST_SUCCESS", "Zephyr", 84638)
-	self:Log("PELL_AURA_APPLIED", "SleetStorm", 84644)
+	self:Log("SPELL_AURA_APPLIED", "SleetStorm", 84644)
 ]]--
 
 --	self:Log("SPELL_CAST_SUCCESS", "FullPower", 86193)
 	self:Log("SPELL_CAST_SUCCESS", "FullPower", 84638)
---	self:Log("PELL_AURA_APPLIED", "FullPower", 84644)
+--	self:Log("SPELL_AURA_APPLIED", "FullPower", 84644)
 	
 	self:Emote("GatherStrength", L["gather_strength_emote"])
 	
-	self:Log("PELL_AURA_APPLIED_DOSE", "WindChill", 84645)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
 	
