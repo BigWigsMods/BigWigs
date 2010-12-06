@@ -1,0 +1,17 @@
+## Interface: 40000
+
+## Title: Big Wigs [|cffeda55fBaradin Hold|r]
+## Title-deDE: Big Wigs [|cffeda55fBaradin Hold|r]
+## Notes: Big Wigs Baradin Hold Modules
+## Notes-deDE: Big Wigs Module für Baradin Hold.
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-Menu: Baradin Hold
+## X-BigWigs-LoadOn-Zone: Baradin Hold
+
+locales.xml
+modules.xml
+

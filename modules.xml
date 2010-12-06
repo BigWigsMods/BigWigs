@@ -34,6 +34,9 @@
 <Include file="Throne\locales.xml"/>
 <Include file="Throne\modules.xml"/>
 
+<Include file="Baradin\locales.xml"/>
+<Include file="Baradin\modules.xml"/>
+
 <!--@end-debug@-->
 </Ui>
 
