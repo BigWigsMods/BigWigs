@@ -1,7 +1,7 @@
 ## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fThe Bastion of Twilight|r]
-## Title-deDE: Big Wigs [|cffeda55fBastion des Zwielichts|r]
+## Title-deDE: Big Wigs [|cffeda55fDie Bastion des Zwielichts|r]
 ## Title-frFR: Big Wigs [|cffeda55fLe bastion du Crépuscule|r]
 ## Title-zhTW: Big Wigs [|cffeda55f暮光堡壘|r]
 ## Notes: Big Wigs Modules for The Bastion of Twilight

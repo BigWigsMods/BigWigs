@@ -4,7 +4,7 @@
 ## Title-deDE: Big Wigs [|cffeda55fThron der Vier Winde|r]
 ## Title-frFR: Big Wigs [|cffeda55fTrône des quatre vents|r]
 ## Title-zhTW: Big Wigs [|cffeda55f四風王座|r]
-## Notes: Big Wigs Modules for The Throne of the Four Winds
+## Notes: Big Wigs Modules for the Throne of the Four Winds
 ## Notes-deDE: Big Wigs Module für den Thron der Vier Winde.
 ## Notes-frFR: Modules Big Wigs concernant le Trône des quatre vents.
 ## Notes-zhTW: Big Wigs 四風王座模組

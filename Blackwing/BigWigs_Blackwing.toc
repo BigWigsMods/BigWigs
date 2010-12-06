@@ -1,11 +1,11 @@
 ## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fBlackwing Descent|r]
-## Title-deDE: Big Wigs [|cffeda55fPechschwingenabgrund|r]
+## Title-deDE: Big Wigs [|cffeda55fPechschwingenabstieg|r]
 ## Title-frFR: Big Wigs [|cffeda55fDescente de l'Aile noire|r]
 ## Title-zhTW: Big Wigs [|cffeda55f黑翼陷窟|r]
 ## Notes: Big Wigs Modules for The Blackwing Descent
-## Notes-deDE: Big Wigs Module für den Pechschwingenabgrund.
+## Notes-deDE: Big Wigs Module für den Pechschwingenabstieg.
 ## Notes-frFR: Modules Big Wigs concernant la Descente de l'Aile noire.
 ## Notes-zhTW: Big Wigs 黑翼陷窟模組
 

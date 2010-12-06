@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 92307)
 
 	--normal
-	self:Log("SPELL_AURA_APPLIED", "LightningRod",83099)
+	self:Log("SPELL_AURA_APPLIED", "LightningRod", 83099)
 	
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507)

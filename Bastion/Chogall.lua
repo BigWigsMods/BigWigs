@@ -7,6 +7,13 @@ local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
 mod.toggleOptions = {"orders", 91303, 81628, 82299, 82630, 82414, "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+mod.optionHeaders = {
+	orders = "heroic",
+	[91303] = CL.phase:format(1),
+	[82630] = CL.phase:format(2),
+	bosskill = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -27,18 +34,8 @@ if L then
 
 	--normal
 	L.worship_cooldown = "~Worship"
-
-	L.phase_one = "Phase One"
-	L.phase_two = "Phase Two"
 end
 L = mod:GetLocale()
-
-mod.optionHeaders = {
-	orders = "heroic",
-	[91303] = L["phase_one"],
-	[82630] = L["phase_two"],
-	bosskill = "general",
-}
 
 --------------------------------------------------------------------------------
 -- Initialization

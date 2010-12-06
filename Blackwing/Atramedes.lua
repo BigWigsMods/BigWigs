@@ -68,7 +68,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_DIED(event,  destGUID, destName) -- I guess
+function mod:UNIT_DIED(event, destGUID, destName) -- I guess
 	if destName == L["ancientDwarvenShield"] then
 		shields = shields - 1
 		self:Message("ancientDwarvenShield", L["ancientDwarvenShieldLeft"]:format(shields), "Attention", 31935) -- Avenger's Shield Icon

@@ -1,9 +1,9 @@
 ## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fBaradin Hold|r]
-## Title-deDE: Big Wigs [|cffeda55fBaradin Hold|r]
+## Title-deDE: Big Wigs [|cffeda55fBaradinfestung|r]
 ## Notes: Big Wigs Baradin Hold Modules
-## Notes-deDE: Big Wigs Module für Baradin Hold.
+## Notes-deDE: Big Wigs Module für die Baradinfestung.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
