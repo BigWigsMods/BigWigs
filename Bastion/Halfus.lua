@@ -53,8 +53,8 @@ function mod:UNIT_HEALTH(event, unit)
 	if unit == "boss1" then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp == 50 then
-			self:Message(86169, spellName, "Urgent", spellId)
-			self:Bar(86169, spellName, 25, 86169)
+			self:Message(86169, (GetSpellInfo(86169)), "Urgent", 86169)
+			self:Bar(86169, (GetSpellInfo(86169)), 25, 86169)
 		end
 	end
 end
