@@ -6,7 +6,7 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689) --Ignacious, Feludius, Arion, Terrastra
-mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 83581, "proximity", "switch", "bosskill"}
+mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 92541, 83581, "proximity", "switch", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -68,6 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved",83099)
 
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512)
+	self:Log("SPELL_CAST_START", "HardenSkin", 92541)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
@@ -190,6 +191,11 @@ end
 function mod:AegisofFlame(_, spellId, _, _, spellName)
 	self:Bar(82631, spellName, 62, spellId)
 	self:Message(82631, spellName, "Urgent", spellId, "Info")
+end
+
+function mod:HardenSkin(_, spellId, _, _, spellName)
+	self:Bar(92541, spellName, 45, spellId)
+	self:Message(92541, spellName, "Urgent", spellId, "Info")
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
