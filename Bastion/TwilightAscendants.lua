@@ -15,6 +15,7 @@ mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE",
 local searingWinds = GetSpellInfo(83500)
 local grounded = GetSpellInfo(83581)
 local grounded_check_allowed, searing_winds_check_allowed = false, false
+local lrTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -104,14 +105,24 @@ end
 -- Event Handlers
 --
 
-function mod:LightningRodApplied(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:Say(83099, L["lightning_rod_say"])
-		self:FlashShake(83099)
-		self:OpenProximity(8)
+do
+	local scheduled = nil
+	local function lrWarn(spellName)
+		mod:TargetMessage(83099, spellName, lrTargets, "Important", 83099, "Alert")
+		scheduled = nil
 	end
-	self:TargetMessage(83099, spellName, player, "Personal", spellId, "Alarm")
-	self:SecondaryIcon(83099, player)
+	function mod:LightningRodApplied(player, spellId, _, _, spellName)
+		lrTargets[#lrTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(lrWarn, 0.3, spellName)
+		end
+		if UnitIsUnit(player, "player") then
+			self:Say(83099, L["lightning_rod_say"])
+			self:FlashShake(83099)
+			self:OpenProximity(8)
+		end
+	end
 end
 
 function mod:LightningRodRemoved(player, spellId)
