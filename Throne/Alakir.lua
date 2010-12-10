@@ -31,7 +31,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Electrocute", 88427)
-	self:Log("SPELL_CAST_START", "WindBurst", 87770)
+	self:Log("SPELL_CAST_START", "WindBurst", 87770, 93261)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
