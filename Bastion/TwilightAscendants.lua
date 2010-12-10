@@ -27,7 +27,7 @@ if L then
 	L.health_report = "%s is at %d%% health, switch soon!"
 	L.switch = "Switch"
 	L.switch_desc = "Warning for boss switches"
-	
+
 	L.lightning_rod_say = "Lightning Rod on ME!"
 
 	L.switch_trigger = "We will handle them!"
@@ -62,18 +62,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 92307)
 
 	--normal
-	self:Log("SPELL_AURA_APPLIED", "LightningRod", 83099)
-	
-	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513)
-	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507)
+
+	self:Log("SPELL_AURA_APPLIED", "LightningRodApplied",83099)
+	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved",83099)
+
+	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512)
+	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
 
 	self:Yell("Switch", L["switch_trigger"])
 
-	self:Log("SPELL_CAST_START", "Quake", 83565)
-	self:Log("SPELL_CAST_START", "Thundershock", 83067)
+	self:Log("SPELL_CAST_START", "Quake", 83565, 92544)
+	self:Log("SPELL_CAST_START", "Thundershock", 83067, 92469)
 
 	self:Emote("QuakeTrigger", L["quake_trigger"])
 	self:Emote("ThundershockTrigger", L["thundershock_trigger"])
@@ -102,13 +104,20 @@ end
 -- Event Handlers
 --
 
-function mod:LightningRod(player, spellId, _, _, spellName)
+function mod:LightningRodApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(83099, L["lightning_rod_say"])
 		self:FlashShake(83099)
+		self:OpenProximity(8)
 	end
 	self:TargetMessage(83099, spellName, player, "Personal", spellId, "Alarm")
 	self:SecondaryIcon(83099, player)
+end
+
+function mod:LightningRodRemoved(player, spellId)
+	if UnitIsUnit(player, "player") then
+		self:CloseProximity()
+	end
 end
 
 function mod:GravityCore(player, spellId, _, _, spellName)

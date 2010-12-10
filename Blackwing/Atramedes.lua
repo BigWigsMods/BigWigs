@@ -6,7 +6,7 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", "ancientDwarvenShield", "bosskill"}
+mod.toggleOptions = {"ground_phase", 78075, 77840, 78092, "air_phase", "ancientDwarvenShield", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -21,6 +21,8 @@ local sheilds = 10
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.tracking_me = "Tracking on ME!"
+
 	L.ancientDwarvenShield = "Ancient Dwarven Shield"
 	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
 	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
@@ -48,6 +50,7 @@ mod.optionHeaders = {
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SonicBreath", 78075)
+	self:Log("SPELL_AURA_APPLIED", "Tracking", 78092)
 	self:Log("SPELL_AURA_APPLIED", "SearingFlame", 77840)
 	self:Yell("AirPhase", L["air_phase_trigger"])
 
@@ -73,6 +76,15 @@ function mod:UNIT_DIED(event, destGUID, destName) -- I guess
 		shields = shields - 1
 		self:Message("ancientDwarvenShield", L["ancientDwarvenShieldLeft"]:format(shields), "Attention", 31935) -- Avenger's Shield Icon
 	end
+end
+
+function mod:Tracking(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:Say(78092, L["tracking_me"])
+		self:FlashShake(78092)
+	end
+	self:TargetMessage(78092, spellName, player, "Personal", spellId, "Alarm")
+	self:SecondaryIcon(78092, player)
 end
 
 function mod:SonicBreath(_, spellId, _, _, spellName)

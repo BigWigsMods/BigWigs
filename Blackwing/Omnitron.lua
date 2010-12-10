@@ -6,12 +6,12 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Omnitron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180) -- Arcanotron, Electron, Magmatron, Toxitron
-mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, 79582, {79888, "ICON", "FLASHSHAKE"}, "proximity", 79900, 79729, {80161, "FLASHSHAKE"}, 79835, "bosskill"}
+mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE"}, "switch", "bosskill"}
 mod.optionHeaders = {
-	bosskill = "general",
+	switch = "general",
 	[79501] = "Magmatron",
 	[79888] = "Electron",
-	[79729] = "Arcanotron",
+--	[] = "Arcanotron",
 	[80161] = "Toxitron",
 }
 
@@ -25,9 +25,15 @@ mod.optionHeaders = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.switch = "Switch"
+	L.switch_desc = "Warning for Switches"
+	
+	L.next_switch = "Next Switch"
+
 	L.acquiring_target = "Acquiring Target"
 
 	L.cloud_message = "Cloud on YOU!"
+
 end
 L = mod:GetLocale()
 
@@ -36,16 +42,15 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501)
-	self:Log("SPELL_CAST_START", "Barrier", 79582)
+	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035)
+	self:Log("SPELL_CAST_START", "Switch", 79582, 91516, 79900, 91447, 79729, 91543, 79835, 91503, 91501)
 
-	self:Log("SPELL_CAST_SUCCESS", "LightningConductor", 79888, 91433)
-	self:Log("SPELL_CAST_START", "UnstableShield", 79900)
-
-	self:Log("SPELL_CAST_START", "PowerConversion", 79729)
+	
+	self:Log("SPELL_CAST_SUCCESS", "LightningConductor", 79888, 91433, 91431)
+	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513)
+	self:Log("SPELL_CAST_SUCCESS", "Fixate", 80094)
 
 	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480)
-	self:Log("SPELL_CAST_START", "PoisonSoakedShell", 79835, 91503)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -61,6 +66,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:Switch(_, spellId, _, _, spellName)
+	self:Bar(91513, L["next_switch"], 45, 91513)
+	self:Message(79582, spellName, "Important", spellId, "Alert")
+end
 
 function mod:AcquiringTarget(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
@@ -70,8 +79,10 @@ function mod:AcquiringTarget(player, spellId, _, _, spellName)
 	self:SecondaryIcon(79501, player)
 end
 
-function mod:Barrier(_, spellId, _, _, spellName)
-	self:Message(79582, spellName, "Important", spellId, "Alert")
+function mod:Fixate(player)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(80094)
+	end
 end
 
 function mod:LightningConductor(player, spellId, _, _, spellName)
@@ -83,12 +94,8 @@ function mod:LightningConductor(player, spellId, _, _, spellName)
 	self:SecondaryIcon(79888, player)
 end
 
-function mod:UnstableShield(_, spellId, _, _, spellName)
-	self:Message(79900, spellName, "Important", spellId, "Alert")
-end
-
-function mod:PowerConversion(_, spellId, _, _, spellName)
-	self:Message(79729, spellName, "Important", spellId, "Alert")
+function mod:PoisonProtocol(_, spellId, _, _, spellName)
+	self:Bar(91513, spellName, 45, 91513)
 end
 
 do
@@ -105,9 +112,6 @@ do
 	end
 end
 
-function mod:PoisonSoakedShell(_, spellId, _, _, spellName)
-	self:Message(79835, spellName, "Important", spellId, "Alert")
-end
 
 do
 	local deaths = 0

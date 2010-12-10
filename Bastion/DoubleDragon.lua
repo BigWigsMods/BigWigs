@@ -54,12 +54,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DazzlingDestruction", 86408)
 	self:Yell("DeepBreath", L["valiona_trigger"])
 
-	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877)
-	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877)
+	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876)
+	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
 
-	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640)
-	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640)
+	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639)
+	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640, 95639)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

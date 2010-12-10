@@ -38,6 +38,8 @@ if L then
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes"
 	L.next_phase = "Next Phase"
+	
+	L.you = "%s on YOU!"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase = "|cFFFF0000Red|r phase"
@@ -65,19 +67,19 @@ mod.optionHeaders = {
 
 function mod:OnBossEnable()
 	--heroic
-	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987)
+	--self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987)
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
 
-	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979)
-	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979)
+	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978)
+	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978)
 
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
 
-	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972)
+	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972, 92971)
 
-	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92966)
+	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92966, 92965)
 
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
 
