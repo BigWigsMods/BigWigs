@@ -81,6 +81,7 @@ L["<< Back"] = true
 
 L["About"] = true
 L["Main Developers"] = true
+L["Developers"] = true
 L["Maintainers"] = true
 L["License"] = true
 L["Website"] = true
@@ -88,3 +89,4 @@ L["Contact"] = true
 L["See license.txt in the main Big Wigs folder."] = true
 L["irc.freenode.net in the #wowace channel"] = true
 L["Thanks to the following for all their help in various fields of development"] = true
+

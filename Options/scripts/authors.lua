@@ -44,7 +44,7 @@ numberOfCommits.rabbit = nil
 numberOfCommits.ammo = nil
 numberOfCommits.funkydude = nil
 -- Maat uses two logins, wtf?
-numberOfCommits.Maat = numberOfCommits.Maat + numberOfCommits.maat
+numberOfCommits.Maat = nil
 numberOfCommits.maat = nil
 
 local uniqueAuthors = {}

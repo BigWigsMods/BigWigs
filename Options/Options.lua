@@ -219,14 +219,14 @@ function options:OnInitialize()
 	about:SetScript("OnShow", function(frame)
 		local fields = {
 			L["Main Developers"],
-			L["Maintainers"],
+			L["Developers"],
 			L["License"],
 			L["Website"],
 			L["Contact"],
 		}
 		local fieldData = {
 			"Ammo, Rabbit",
-			"Funkydude",
+			"Maat, Funkydude",
 			L["See license.txt in the main Big Wigs folder."],
 			"http://www.wowace.com/addons/big-wigs/",
 			L["irc.freenode.net in the #wowace channel"],
