@@ -7,24 +7,6 @@
 <Include file="Plugins\locales.xml"/>
 <Include file="Plugins\modules.xml"/>
 
-<Include file="Northrend\locales.xml"/>
-<Include file="Northrend\modules.xml"/>
-
-<Include file="Coliseum\locales.xml"/>
-<Include file="Coliseum\modules.xml"/>
-
-<Include file="Ulduar\locales.xml"/>
-<Include file="Ulduar\modules.xml"/>
-
-<Include file="Naxxramas\locales.xml"/>
-<Include file="Naxxramas\modules.xml"/>
-
-<Include file="OnyxiasLair\locales.xml"/>
-<Include file="OnyxiasLair\modules.xml"/>
-
-<Include file="Citadel\locales.xml"/>
-<Include file="Citadel\modules.xml"/>
-
 <Include file="Blackwing\locales.xml"/>
 <Include file="Blackwing\modules.xml"/>
 
@@ -36,7 +18,6 @@
 
 <Include file="Baradin\locales.xml"/>
 <Include file="Baradin\modules.xml"/>
-
 <!--@end-debug@-->
 </Ui>
 

@@ -25,13 +25,8 @@ move-folders:
     BigWigs/Options: BigWigs_Options
     BigWigs/Foreign: BigWigs_Foreign
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Naxxramas: BigWigs_Naxxramas
-    BigWigs/Northrend: BigWigs_Northrend
-    BigWigs/Ulduar: BigWigs_Ulduar
-    BigWigs/Coliseum: BigWigs_Coliseum
-    BigWigs/OnyxiasLair: BigWigs_OnyxiasLair
-    BigWigs/Citadel: BigWigs_Citadel
     BigWigs/Blackwing: BigWigs_Blackwing
     BigWigs/Bastion: BigWigs_Bastion
     BigWigs/Throne: BigWigs_Throne
-	BigWigs/Baradin: BigWigs_Baradin
+    BigWigs/Baradin: BigWigs_Baradin
+
