@@ -13,12 +13,12 @@ end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "zhTW")
 if L then
-	L.phase_switch = "Phase Switch"
-	L.phase_switch_desc = "Warning for Phase Switches"
+	L.phase_switch = "階段變換"
+	L.phase_switch_desc = "當階段變換時發出警報。"
 
-	L.engulfingmagic_say = "Engulfing Magic on ME!"
+	L.engulfingmagic_say = ">我< 侵噬魔法！"
 
-	L.devouringflames_cooldown = "~Devouring Flames"
+	L.devouringflames_cooldown = "即將 吞噬烈焰"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
 
@@ -37,13 +37,13 @@ end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "zhTW")
 if L then
-	L.static_overload_say = "Static Overload on ME!"
-	L.gravity_core_say = "Gravity Core on ME!"
+	L.static_overload_say = ">我< 靜電超載！"
+	L.gravity_core_say = ">我< 重力之核！"
 	L.health_report = "%s is at %d%% health, switch soon!"
-	L.switch = "Switch"
-	L.switch_desc = "Warning for boss switches"
+	L.switch = "轉換"
+	L.switch_desc = "當階段首領轉換時發出警報。"
 	
-	L.lightning_rod_say = "Lightning Rod on ME!"
+	L.lightning_rod_say = ">我< 聚雷針！"
 
 	L.switch_trigger = "We will handle them!"
 

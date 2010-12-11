@@ -18,11 +18,11 @@ L = BigWigs:NewBossLocale("Chimaeron", "zhTW")
 if L then
 	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
 
-	L.next_system_failure = "Next System Failure"
+	L.next_system_failure = "<下一系統失效>"
 	L.break_message = "%2$dx Break on %1$s"
 
-	L.warmup = "Warmup"
-	L.warmup_desc = "Warmup timer"
+	L.warmup = "暖身"
+	L.warmup_desc = "暖身計時"
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhTW")
@@ -48,9 +48,9 @@ if L then
 	L.release_aberration_message = "%s Aberration left"
 	L.release_all = "%s Aberration Released"
 
-	L.bitingchill_say = "Biting Chill on ME!"
+	L.bitingchill_say = ">我< 刺骨之寒！"
 
-	L.flashfreeze = "~Flash Freeze"
+	L.flashfreeze = "即將 閃霜"
 
 	L.phase = "階段"
 	L.phase_desc = "階段轉換時發出警報。"
@@ -78,7 +78,7 @@ end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "zhTW")
 if L then
-	L.acquiring_target = "Acquiring Target"
+	L.acquiring_target = "鎖定目標"
 
 	L.cloud_message = "Cloud on YOU!"
 end
