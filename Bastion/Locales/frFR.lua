@@ -6,9 +6,6 @@ if L then
 
 	--normal
 	L.worship_cooldown = "~Vénération"
-
-	L.phase_one = "Phase 1"
-	L.phase_two = "Phase 2"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "frFR")

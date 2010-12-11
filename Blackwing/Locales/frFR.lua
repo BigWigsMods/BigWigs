@@ -1,5 +1,7 @@
 local L = BigWigs:NewBossLocale("Atramedes", "frFR")
 if L then
+	L.tracking_me = "Pistage sur moi !"
+
 	L.ancientDwarvenShield = "Ancient Dwarven Shield" -- récupérer transcription
 	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
 	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
@@ -56,6 +58,8 @@ if L then
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 	L.next_phase = "Prochaine phase"
 
+	L.you = "%s sur vous !"
+
 	L.red_phase_trigger = "Mélanger et touiller, faire chauffer..." -- à vérifier
 	L.red_phase = "Phase |cFFFF0000rouge|r"
 	L.blue_phase_trigger = "Jusqu'où une enveloppe mortelle peut-elle supporter les écarts extrêmes de température ? Je dois trouver ! Pour la science !" -- à vérifier
@@ -78,5 +82,12 @@ end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "frFR")
 if L then
+	L.switch = "Changement"
+	L.switch_desc = "Prévient de l'arrivée des changements."
+
+	L.next_switch = "Prochain changement"
+
 	L.acquiring_target = "Acquisition d'une cible"
+
+	L.cloud_message = "Nuage chimique sur vous !"
 end

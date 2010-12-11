@@ -3,9 +3,11 @@
 ## Title: Big Wigs [|cffeda55fBaradin Hold|r]
 ## Title-deDE: Big Wigs [|cffeda55fBaradinfestung|r]
 ## Title-zhTW: Big Wigs [|cffeda55f巴拉丁堡|r]
+## Title-frFR: Big Wigs [|cffeda55fBastion de Baradin|r]
 ## Notes: Big Wigs Baradin Hold Modules
 ## Notes-deDE: Big Wigs Module für die Baradinfestung.
 ## Notes-zhTW: Big Wigs 巴拉丁堡模組
+## Notes-frFR: Modules Big Wigs concernant le Bastion de Baradin.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
