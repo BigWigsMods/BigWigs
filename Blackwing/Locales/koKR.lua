@@ -1,5 +1,7 @@
 local L = BigWigs:NewBossLocale("Atramedes", "koKR")
 if L then
+	L.tracking_me = "나를 추적!"
+
 	L.ancientDwarvenShield = "고대 드워프 보호막"
 	L.ancientDwarvenShield_desc = "남아있는 고대 드워프 보호막을 알립니다."
 	L.ancientDwarvenShieldLeft = "%d 고대 드워프 보호막 남음"
@@ -55,6 +57,8 @@ if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
 	L.next_phase = "다음 단계"
+	
+	L.you = "당신은 %s!"
 
 	L.red_phase_trigger = "섞고 흔들어서, 열을 가한다..."
 	L.red_phase = "|cFFFF0000붉은|r 단계"
@@ -80,5 +84,12 @@ end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "koKR")
 if L then
+	L.switch = "전환"
+	L.switch_desc = "전환을 알립니다."
+	
+	L.next_switch = "다음 전환"
+	
 	L.acquiring_target = "대상 획득"
+	
+	L.cloud_message = "당신은 화학 구름!"
 end

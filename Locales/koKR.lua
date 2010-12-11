@@ -83,6 +83,7 @@ L["<< Back"] = "<< 뒤로"
 
 L["About"] = "정보"
 L["Main Developers"] = "메인 개발자"
+L["Developers"] = "개발자"
 L["Maintainers"] = "관리자"
 L["License"] = "라이센스"
 L["Website"] = "웹사이트"
