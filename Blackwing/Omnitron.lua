@@ -32,7 +32,6 @@ if L then
 	L.acquiring_target = "Acquiring Target"
 
 	L.cloud_message = "Cloud on YOU!"
-
 end
 L = mod:GetLocale()
 
@@ -69,7 +68,7 @@ function mod:Switch(_, spellId, _, _, spellName)
 	self:Message(79582, spellName, "Important", spellId, "Alert")
 end
 
-function mod:AcquiringTarget(player, spellId, _, _, spellName)
+function mod:AcquiringTarget(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(79501)
 	end
@@ -83,7 +82,7 @@ function mod:Fixate(player)
 	end
 end
 
-function mod:LightningConductor(player, spellId, _, _, spellName)
+function mod:LightningConductor(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(79888)
 		self:OpenProximity(15) --assumed
@@ -93,7 +92,7 @@ function mod:LightningConductor(player, spellId, _, _, spellName)
 end
 
 function mod:PoisonProtocol(_, spellId, _, _, spellName)
-	self:Bar(91513, spellName, 45, 91513)
+	self:Bar(91513, spellName, 45, spellId)
 end
 
 do

@@ -23,7 +23,7 @@ local phase, deadAdds = 1, 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase = "Phases"
-	L.phase_desc = "Warnings for the Phase changes"
+	L.phase_desc = "Warnings for the Phase changes."
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 

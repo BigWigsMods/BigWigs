@@ -22,7 +22,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	--heroic
 	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warning for when you stand in %s"):format((GetSpellInfo(92987)))
+	L.darkSludge_desc = ("Warning for when you stand in %s."):format((GetSpellInfo(92987)))
 
 	--normal
 	L.final_phase = "Final Phase"
@@ -35,7 +35,7 @@ if L then
 	L.flashfreeze = "~Flash Freeze"
 
 	L.phase = "Phase"
-	L.phase_desc = "Warning for Phase changes"
+	L.phase_desc = "Warning for Phase changes."
 	L.next_phase = "Next Phase"
 	
 	L.you = "%s on YOU!"

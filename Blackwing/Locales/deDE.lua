@@ -1,8 +1,10 @@
 local L = BigWigs:NewBossLocale("Atramedes", "deDE")
 if L then
-	L.ancientDwarvenShield = "Uralter Zwergenschild" --check
-	L.ancientDwarvenShield_desc = "Warnt, wieviele Uralte Zwergenschilde übrig sind."
-	L.ancientDwarvenShieldLeft = "%d Schilde noch"
+	L.tracking_me = "Absuchen auf MIR!"
+
+	L.shield = "Uralter Zwergenschild" --check
+	L.shield_desc = "Warnt, wieviele Uralte Zwergenschilde noch übrig sind."
+	L.shield_message = "%d Schilde noch"
 
 	L.ground_phase = "Bodenphase"
 	L.ground_phase_desc = "Warnt, wenn Atramedes landet."
@@ -22,25 +24,70 @@ if L then
 	L.break_message = "%2$dx Brechen auf %1$s"
 
 	L.warmup = "Aufwärmen"
-	L.warmup_desc = "Timer für die Aufwärmenphase."
+	L.warmup_desc = "Timer für die Aufwärmphase."
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "deDE")
 if L then
+	L.inferno = (GetSpellInfo(92191))
+	L.inferno_desc = "Beschwört [Blazing Bone Construct]." -- need german name
 
+	--L.slump = "Slump"
+	--L.slump_desc = "Slumps forward exposing itself"
+
+	--L.slump_trigger = "%s slumps forward, exposing his pincers!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
 if L then
+	--heroic
+	L.darkSludge = (GetSpellInfo(92987))
+	L.darkSludge_desc = ("Warnt, wenn du in %s stehst."):format((GetSpellInfo(92987)))
 
+	--normal
+	L.final_phase = "Letzte Phase"
+
+	L.release_aberration_message = "%s Entartungen noch"
+	L.release_all = "%s Entartungen kommen"
+
+	L.bitingchill_say = "Beißende Kälte auf MIR!"
+
+	L.flashfreeze = "~Blitzeis"
+
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt vor Phasenwechsel."
+	L.next_phase = "Nächste Phase"
+	
+	L.you = "%s auf DIR!"
+
+	--L.red_phase_trigger = "Mix and stir, apply heat..."
+	L.red_phase = "|cFFFF0000Rote|r Phase"
+	--L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"
+	L.blue_phase = "|cFF809FFEBlaue|r Phase"
+	--L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?"
+	L.green_phase = "|cFF33FF00Grüne|r Phase"
+	L.dark_phase = "|cFF660099Dunkle|r Phase"
+	--L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
 end
 
 L = BigWigs:NewBossLocale("Nefarian", "deDE")
 if L then
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt vor Phasenwechsel."
 
+	--L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
+
+	--L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "deDE")
 if L then
+	L.switch = "Wechsel"
+	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
+	
+	L.next_switch = "Nächster Wechsel"
 
+	L.acquiring_target = "Zielerfassung"
+
+	L.cloud_message = "Wolke auf DIR!"
 end
