@@ -9,6 +9,10 @@ if not L then return end
 L["Clickable Bars"] = "可點擊計時條"
 L.clickableBarsDesc = "Big Wigs 計時條預設是點擊穿越的。這樣可以選擇目標或使用 AoE 法術攻擊物體，更改鏡頭角度等等，當滑鼠指針劃過計時條。|cffff4411如果啟用可點擊計時條，這些將不能實現。|r計時條將攔截任何滑鼠點擊并阻止相應功能。\n"
 L["Enables bars to receive mouse clicks."] = "啟用計時條接受點擊。"
+L["Modifier"] = "修改"
+L["Hold down the selected modifier key to enable click actions on the timer bars."] = "按住選定的修改鍵以啟用計時條點擊操作。"
+L["Only with modifier key"] = "只與修改鍵配合"
+L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = "除非修改鍵被按下否則允許計時條點擊穿越，此時鼠標以下動作可用。"
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "臨時超級強調調計時條及任何訊息的持續時間。"
 L["Report"] = "報告"
@@ -95,13 +99,13 @@ L["Colors player names in messages by their class."] = "使用職業顏色來染
 L["Chat frame"] = "聊天框架"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了顯示設定，輸出所有 Big Wigs 訊息到預設聊天框體。"
 
-L["Font size"] = "字體大小"
+L["Font size"] = "字型大小"
 L["None"] = "無"
 L["Thin"] = "細"
 L["Thick"] = "粗"
-L["Outline"] = "離線"
---L["Monochrome"] = true
---L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = true
+L["Outline"] = "輪廓"
+L["Monochrome"] = "單一顏色"
+L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "在全部訊息切換為單一顏色，移除全部字型邊緣平滑。"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -206,3 +210,4 @@ L["Countdown"] = "冷卻"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "如果相關的計時器的長度超過5秒，一個聲音與視覺將增加倒計時的最後5秒。想像某個倒計時\"5... 4... 3... 2... 1... 冷卻！\"和大個數字位於螢幕中間。"
 L["Flash"] = "閃爍"
 L["Flashes the screen red during the last 3 seconds of any related timer."] = "當任一相關計時器最後3秒時螢幕紅色閃爍。"
+

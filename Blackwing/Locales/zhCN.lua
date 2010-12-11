@@ -1,8 +1,10 @@
 ﻿local L = BigWigs:NewBossLocale("Atramedes", "zhCN")
 if L then
-	L.ancientDwarvenShield = "Ancient Dwarven Shield"
-	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
-	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
+	L.tracking_me = "Tracking on ME!"
+
+	L.shield = "Ancient Dwarven Shield"
+	L.shield_desc = "Warning for the remaining Ancient Dwarven Shields."
+	L.shield_message = "%d Ancient Dwarven Shield left"
 
 	L.ground_phase = "Ground Phase"
 	L.ground_phase_desc = "Warning for when Atramedes lands."
@@ -40,7 +42,7 @@ L = BigWigs:NewBossLocale("Maloriak", "zhCN")
 if L then
 	--heroic
 	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warning for when you stand in %s"):format((GetSpellInfo(92987)))
+	L.darkSludge_desc = ("Warning for when you stand in %s."):format((GetSpellInfo(92987)))
 
 	--normal
 	L.final_phase = "Final Phase"
@@ -53,8 +55,10 @@ if L then
 	L.flashfreeze = "~Flash Freeze"
 
 	L.phase = "Phase"
-	L.phase_desc = "Warning for Phase changes"
+	L.phase_desc = "Warning for Phase changes."
 	L.next_phase = "Next Phase"
+	
+	L.you = "%s on YOU!"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase = "|cFFFF0000Red|r phase"
@@ -69,7 +73,7 @@ end
 L = BigWigs:NewBossLocale("Nefarian", "zhCN")
 if L then
 	L.phase = "Phases"
-	L.phase_desc = "Warnings for the Phase changes"
+	L.phase_desc = "Warnings for the Phase changes."
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
@@ -78,6 +82,11 @@ end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "zhCN")
 if L then
+	L.switch = "Switch"
+	L.switch_desc = "Warning for Switches"
+	
+	L.next_switch = "Next Switch"
+
 	L.acquiring_target = "Acquiring Target"
 
 	L.cloud_message = "Cloud on YOU!"

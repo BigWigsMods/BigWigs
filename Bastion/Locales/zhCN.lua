@@ -6,9 +6,6 @@ if L then
 
 	--normal
 	L.worship_cooldown = "~Worship"
-
-	L.phase_one = "Phase One"
-	L.phase_two = "Phase Two"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "zhCN")
@@ -42,7 +39,7 @@ if L then
 	L.health_report = "%s is at %d%% health, switch soon!"
 	L.switch = "Switch"
 	L.switch_desc = "Warning for boss switches"
-	
+
 	L.lightning_rod_say = "Lightning Rod on ME!"
 
 	L.switch_trigger = "We will handle them!"

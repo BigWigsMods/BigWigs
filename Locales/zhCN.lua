@@ -83,6 +83,7 @@ L["<< Back"] = "<< 返回"
 
 L["About"] = "关于"
 L["Main Developers"] = "主要开发者"
+L["Developers"] = "开发者"
 L["Maintainers"] = "维护"
 L["License"] = "许可"
 L["Website"] = "网站"
@@ -90,3 +91,4 @@ L["Contact"] = "联系方式"
 L["See license.txt in the main Big Wigs folder."] = "查看 license.txt 位于 Big Wigs 主文件夹。"
 L["irc.freenode.net in the #wowace channel"] = "#wowace 频道位于 irc.freenode.net"
 L["Thanks to the following for all their help in various fields of development"] = "感谢他们在各个领域的开发与帮助"
+
