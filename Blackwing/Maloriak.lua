@@ -171,7 +171,7 @@ function mod:FlashFreeze(player, spellId, _, _, spellName)
 end
 
 function mod:Remedy(unit, spellId, _, _, spellName)
-	if UnitName(unit) == "Maloriak" then -- XXX lolwut
+	if UnitIsUnit(unit, "boss1") then
 		self:Message(77912, spellName, "Important", spellId, "Alert")
 	end
 end
