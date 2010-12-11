@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -58,3 +57,4 @@ function mod:WindBurst(_, spellId, _, _, spellName)
 	self:Bar(87770, spellName, 26, spellId)
 	self:Message(87770, spellName, "Important", spellId, "Alert")
 end
+

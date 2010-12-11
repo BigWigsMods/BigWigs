@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

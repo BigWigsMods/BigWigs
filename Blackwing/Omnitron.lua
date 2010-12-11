@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -58,7 +57,6 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 42166, 42179, 42178, 42180)
 end
 
-
 function mod:OnEngage(diff)
 
 end
@@ -111,7 +109,6 @@ do
 		end
 	end
 end
-
 
 do
 	local deaths = 0

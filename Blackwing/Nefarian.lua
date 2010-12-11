@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -56,6 +55,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
 function mod:UNIT_DIED(event, destGUID, destName) -- I guess
 	if destName == L["chromatic_prototype"] then
 		deadAdds = deadAdds + 1
@@ -77,3 +77,4 @@ function mod:PhaseTwo()
 	self:Message("phase", L["phase"]:format(phase), "Attention", 78621)
 	mod:Bar("phase", L["phase"]:format(phase), 180, 78621)
 end
+

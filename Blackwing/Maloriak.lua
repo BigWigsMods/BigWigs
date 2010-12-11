@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -71,26 +70,23 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
-
 	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978)
 	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978)
-
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
-
 	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972, 92971)
-
 	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92966, 92965)
-
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
-
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
+	self:Yell("Red", L["red_phase_trigger"])
+	self:Yell("Blue", L["blue_phase_trigger"])
+	self:Yell("Green", L["green_phase_trigger"])
+	self:Yell("Dark", L["dark_phase_trigger"])
+
 	self:Death("Win", 41378)
 end
-
 
 function mod:OnEngage(diff)
 	if diff > 2 then
@@ -105,16 +101,16 @@ end
 -- Event Handlers
 --
 
-local function PhaseCounter(phase)
+local function nextPhase(phase)
 	if mod:GetInstanceDifficulty() > 2 then
 		if phaseCounter == 3 then
 			mod:SendMessage("BigWigs_StopBar", mod, L["next_phase"])
 			if phase == "dark" then
-				mod:Bar("phase", L["green_phase"], 100, "Interface\\Icons\\INV_POTION_162") -- not sure if we can use colored text on bars
+				mod:Bar("phase", L["green_phase"], 100, "Interface\\Icons\\INV_POTION_162")
 			elseif phase == "green" then
 				phaseCounter = 0
 			else
-				mod:Bar("phase", L["green_phase"], 47, "Interface\\Icons\\INV_POTION_162") -- not sure if we can use colored text on bars
+				mod:Bar("phase", L["green_phase"], 47, "Interface\\Icons\\INV_POTION_162")
 			end
 		end
 		phaseCounter = phaseCounter + 1
@@ -136,29 +132,33 @@ do
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(_, msg)
-	if msg == L["red_phase_trigger"] then
-		self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY") -- just use an empty vial for bars, might not be the best idea
-		self:Message("phase", L["red_phase"], "Attention", "Interface\\Icons\\INV_POTION_24", "Alarm")
-		self:CloseProximity()
-		PhaseCounter("red")
-	elseif msg == L["blue_phase_trigger"] then
-		self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
-		self:Bar(77699, L["flashfreeze"], 28, spellId) --
-		self:Message("phase", L["blue_phase"], "Attention", "Interface\\Icons\\INV_POTION_20", "Alarm")
-		self:OpenProximity(5)
-		PhaseCounter("blue")
-	elseif msg == L["green_phase_trigger"] then
-		self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
-		self:Message("phase", L["green_phase"], "Attention", "Interface\\Icons\\INV_POTION_162", "Alarm")
-		self:CloseProximity()
-		PhaseCounter("green")
-	elseif msg == L["dark_phase_trigger"] then
-		self:Bar("phase", L["next_phase"], 100, "INV_ALCHEMY_ELIXIR_EMPTY")
-		self:Message("phase", L["dark_phase"], "Attention", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
-		self:CloseProximity()
-		PhaseCounter("dark")
-	end
+function mod:Red()
+	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
+	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
+	self:CloseProximity()
+	nextPhase("red")
+end
+
+function mod:Blue()
+	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
+	self:Bar(77699, L["flashfreeze"], 28, spellId) --
+	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
+	self:OpenProximity(5)
+	nextPhase("blue")
+end
+
+function mod:Green()
+	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
+	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
+	self:CloseProximity()
+	nextPhase("green")
+end
+
+function mod:Dark()
+	self:Bar("phase", L["next_phase"], 100, "INV_ALCHEMY_ELIXIR_EMPTY")
+	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
+	self:CloseProximity()
+	nextPhase("dark")
 end
 
 function mod:FlashFreezeTimer(_, spellId, _, _, spellName)
@@ -171,7 +171,7 @@ function mod:FlashFreeze(player, spellId, _, _, spellName)
 end
 
 function mod:Remedy(unit, spellId, _, _, spellName)
-	if UnitName(unit) == "Maloriak" then
+	if UnitName(unit) == "Maloriak" then -- XXX lolwut
 		self:Message(77912, spellName, "Important", spellId, "Alert")
 	end
 end

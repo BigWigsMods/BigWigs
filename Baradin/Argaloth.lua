@@ -68,3 +68,4 @@ end
 function mod:FelFirestorm(_, spellId, _, _, spellName)
 	self:Message(88972, spellName, "Attention", spellId)
 end
+

@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -73,3 +72,4 @@ function mod:PillarOfFlame(_, spellId, _, _, spellName)
 	self:Message(78006, spellName, "Urgent", spellId, "Info")
 	self:Bar(78006, spellName, 30, spellId)
 end
+

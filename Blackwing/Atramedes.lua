@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -6,7 +5,7 @@ if not GetSpellInfo(90000) then return end
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-mod.toggleOptions = {"ground_phase", 78075, 77840, 78092, "air_phase", "ancientDwarvenShield", "bosskill"}
+mod.toggleOptions = {"ground_phase", 78075, 77840, 78092, "air_phase", "shield", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -23,9 +22,9 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.tracking_me = "Tracking on ME!"
 
-	L.ancientDwarvenShield = "Ancient Dwarven Shield"
-	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
-	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
+	L.shield = "Ancient Dwarven Shield"
+	L.shield_desc = "Warning for the remaining Ancient Dwarven Shields"
+	L.shield_message = "%d Ancient Dwarven Shield left"
 
 	L.ground_phase = "Ground Phase"
 	L.ground_phase_desc = "Warning for when Atramedes lands."
@@ -41,7 +40,7 @@ L = mod:GetLocale()
 mod.optionHeaders = {
 	ground_phase = L["ground_phase"],
 	air_phase = L["air_phase"],
-	ancientDwarvenShield = "general",
+	shield = "general",
 }
 
 --------------------------------------------------------------------------------
@@ -72,9 +71,9 @@ end
 --
 
 function mod:UNIT_DIED(event, destGUID, destName) -- I guess
-	if destName == L["ancientDwarvenShield"] then
+	if destName == L["shield"] then
 		shields = shields - 1
-		self:Message("ancientDwarvenShield", L["ancientDwarvenShieldLeft"]:format(shields), "Attention", 31935) -- Avenger's Shield Icon
+		self:Message("shield", L["shield_message"]:format(shields), "Attention", 31935) -- Avenger's Shield Icon
 	end
 end
 
@@ -101,7 +100,7 @@ do
 		mod:Message("ground_phase", L["ground_phase"], "Attention", 61882) -- Earthquake Icon
 		mod:Bar("air_phase", L["air_phase"], 90, 5740) -- Rain of Fire Icon
 		mod:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
--- need a good trigger for ground phase start to make this even more accurate
+		-- XXX need a good trigger for ground phase start to make this even more accurate
 		mod:Bar(77840, (GetSpellInfo(77840)), 50, 77840)
 	end
 	function mod:AirPhase()

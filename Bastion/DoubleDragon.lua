@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -68,7 +67,6 @@ function mod:OnBossEnable()
 
 	self:Death("Win", 45992) -- They Share HP, they die at the same time
 end
-
 
 function mod:OnEngage(diff)
 	lastDestruction = 0

@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -101,7 +100,7 @@ end
 do
 	local scheduled = nil
 	local function worshipWarn(spellName)
-		mod:TargetMessage(91303, spellName, worshipTargets, "Important", 91303, "Alert")
+		mod:TargetMessage(91303, spellName, worshipTargets, "Important", 91303, "Alarm")
 		scheduled = nil
 	end
 	function mod:Worship(player, spellId, _, _, spellName)

@@ -1,4 +1,3 @@
-if not GetSpellInfo(90000) then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -117,3 +116,4 @@ function mod:GatherStrength(msg, sender)
 	self:Message(86307, L["gather_strength"]:format(sender), "Important", 86307, "Long")
 	self:Bar(86307, L["gather_strength"]:format(sender), 60, 86307)
 end
+
