@@ -26,7 +26,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.switch = "Switch"
 	L.switch_desc = "Warning for Switches"
-	
+
 	L.next_switch = "Next Switch"
 
 	L.acquiring_target = "Acquiring Target"
@@ -43,7 +43,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035)
 	self:Log("SPELL_CAST_START", "Switch", 79582, 91516, 79900, 91447, 79729, 91543, 79835, 91503, 91501)
 
-	
+
 	self:Log("SPELL_CAST_SUCCESS", "LightningConductor", 79888, 91433, 91431)
 	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513)
 	self:Log("SPELL_CAST_SUCCESS", "Fixate", 80094)
@@ -64,8 +64,8 @@ end
 -- Event Handlers
 --
 function mod:Switch(_, spellId, _, _, spellName)
-	self:Bar(91513, L["next_switch"], 45, 91513)
-	self:Message(79582, spellName, "Important", spellId, "Alert")
+	self:Bar("switch", L["next_switch"], 45, 91513)
+	self:Message("switch", spellName, "Important", spellId, "Alert")
 end
 
 function mod:AcquiringTarget(player, spellId)

@@ -64,8 +64,8 @@ end
 --
 
 function mod:BlazingInferno(_, spellId, _, _, spellName)
-	self:Message(92191, spellName, "Urgent", spellId, "Info")
-	self:Bar(92191, spellName, 35, spellId)
+	self:Message("inferno", spellName, "Urgent", spellId, "Info")
+	self:Bar("inferno", spellName, 35, spellId)
 end
 
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
