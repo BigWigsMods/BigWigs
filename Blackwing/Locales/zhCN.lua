@@ -61,12 +61,12 @@ if L then
 	L.you = "%s on YOU!"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
-	L.red_phase = "|cFFFF0000Red|r phase"
+	L.red_phase = "|cFFFF0000红色|r阶段！"
 	L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"
-	L.blue_phase = "|cFF809FFEBlue|r phase"
+	L.blue_phase = "|cFF809FFE蓝色|r阶段！"
 	L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?"
-	L.green_phase = "|cFF33FF00Green|r phase"
-	L.dark_phase = "|cFF660099Dark|r phase"
+	L.green_phase = "|cFF33FF00绿色|r阶段！"
+	L.dark_phase = "|cFF660099黑色|r阶段！"
 	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
 end
 
@@ -82,10 +82,22 @@ end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "zhCN")
 if L then
-	L.switch = "Switch"
-	L.switch_desc = "Warning for Switches"
+	L.switch = "转换"
+	L.switch_desc = "当转换时发出警报。"
 	
-	L.next_switch = "Next Switch"
+	L.next_switch = "<下一转换>"
+
+	L.acquiring_target = "Acquiring Target"
+
+	L.cloud_message = "Cloud on YOU!"
+end
+
+L = BigWigs:NewBossLocale("Omnotron Defense System", "zhCN")
+if L then
+	L.switch = "转换"
+	L.switch_desc = "当转换时发出警报。"
+	
+	L.next_switch = "<下一转换>"
 
 	L.acquiring_target = "Acquiring Target"
 

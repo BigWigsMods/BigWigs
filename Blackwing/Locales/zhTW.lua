@@ -42,7 +42,7 @@ L = BigWigs:NewBossLocale("Maloriak", "zhTW")
 if L then
 	--heroic
 	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("當你站在%s上面時發出警報。."):format((GetSpellInfo(92987)))
+	L.darkSludge_desc = ("當你站在%s上面時發出警報。"):format((GetSpellInfo(92987)))
 
 	--normal
 	L.final_phase = "最終階段"
@@ -81,6 +81,18 @@ if L then
 end
 
 L = BigWigs:NewBossLocale("Omnitron Defense System", "zhTW")
+if L then
+	L.switch = "轉換"
+	L.switch_desc = "當轉換時發出警報。"
+	
+	L.next_switch = "<下一轉換>"
+
+	L.acquiring_target = "鎖定目標"
+
+	L.cloud_message = ">你< 化學毒霧！"
+end
+
+L = BigWigs:NewBossLocale("Omnotron Defense System", "zhTW")
 if L then
 	L.switch = "轉換"
 	L.switch_desc = "當轉換時發出警報。"
