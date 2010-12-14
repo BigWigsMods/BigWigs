@@ -7,7 +7,9 @@ if not mod then return end
 mod.otherMenu = "Baradin Hold"
 mod:RegisterEnableMob(47120)
 mod.toggleOptions = {88942, 88954, 88972, "berserk", "bosskill"}
-
+mod.optionHeaders = {
+	88942 = "general",
+}
 --------------------------------------------------------------------------------
 -- Locals
 --

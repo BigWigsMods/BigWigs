@@ -7,7 +7,8 @@ if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
 mod.toggleOptions = {"warmup", 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "bosskill"}
 mod.optionHeaders = {
-	warmup = "general",
+	warmup = "normal",
+	proximity = "general",
 }
 
 --------------------------------------------------------------------------------

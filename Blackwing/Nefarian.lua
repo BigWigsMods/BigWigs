@@ -9,7 +9,6 @@ mod.toggleOptions = {"phase", "bosskill"}
 mod.optionHeaders = {
 	phase = "general",
 }
-
 --------------------------------------------------------------------------------
 -- Locals
 --
