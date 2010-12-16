@@ -109,9 +109,9 @@ do
 			if m and m[spellId] then
 				local func = m[spellId]
 				if type(func) == "function" then
-					func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID)
+					func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
 				else
-					self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID)
+					self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
 				end
 			end
 		end

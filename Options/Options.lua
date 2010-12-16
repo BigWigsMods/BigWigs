@@ -22,7 +22,6 @@ local common = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local ac = LibStub("AceConfig-3.0")
-local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 

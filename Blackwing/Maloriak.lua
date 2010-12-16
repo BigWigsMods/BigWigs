@@ -27,8 +27,8 @@ if L then
 	--normal
 	L.final_phase = "Final Phase"
 
-	L.release_aberration_message = "%s Aberration left"
-	L.release_all = "%s Aberration Released"
+	L.release_aberration_message = "%s adds left!"
+	L.release_all = "%s adds released!"
 
 	L.bitingchill_say = "Biting Chill on ME!"
 
@@ -89,11 +89,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	-- XXX Berserk timers not confirmed
 	if diff > 2 then
-		self:Berserk(600) -- assumed
+		self:Berserk(600)
+	else
+		self:Berserk(360)
 	end
 	aberrations = 18
-	self:Berserk(360)
 	phaseCounter = 0
 end
 
@@ -118,15 +120,14 @@ local function nextPhase(phase)
 end
 
 do
-	if mod:GetInstanceDifficulty() > 2 then
-		local last = 0
-		function mod:DarkSludge(player, spellId)
-			local time = GetTime()
-			if (time - last) > 2 then
-				last = time
-				if UnitIsUnit(player, "player") then
-					self:LocalMessage("darkSludge", L["you"]:format((GetSpellInfo(92987))), "Personal", spellId, "Info")
-				end
+	local last = 0
+	function mod:DarkSludge(player, spellId)
+		if mod:GetInstanceDifficulty() < 3 then return end
+		local time = GetTime()
+		if (time - last) > 2 then
+			last = time
+			if UnitIsUnit(player, "player") then
+				self:LocalMessage("darkSludge", L["you"]:format((GetSpellInfo(92987))), "Personal", spellId, "Info")
 			end
 		end
 	end
