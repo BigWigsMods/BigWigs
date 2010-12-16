@@ -80,7 +80,7 @@ if L then
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name -- récupérer transcription
 end
 
-L = BigWigs:NewBossLocale("Omnitron Defense System", "frFR")
+L = BigWigs:NewBossLocale("Omnotron Defense System", "frFR")
 if L then
 	L.switch = "Changement"
 	L.switch_desc = "Prévient de l'arrivée des changements."
