@@ -47,8 +47,8 @@ if L then
 	--normal
 	L.final_phase = "마지막 단계"
 
-	L.release_aberration_message = "%s 주위 - 돌연변이!"
-	L.release_all = "%s 주위 - 모든 실험체!"
+	L.release_aberration_message = "돌연변이 %s 남음"
+	L.release_all = "모든 실험체 %s!"
 
 	L.bitingchill_say = "나에게 살을 에는 추위!"
 
@@ -82,14 +82,21 @@ if L then
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
 end
 
-L = BigWigs:NewBossLocale("Omnitron Defense System", "koKR")
+L = BigWigs:NewBossLocale("Omnotron Defense System", "koKR")
 if L then
+	L.nef = "군주 빅터 네파리우스"
+	L.nef_desc = "군주 빅터 네파리우스의 기술을 알립니다."
 	L.switch = "전환"
 	L.switch_desc = "전환을 알립니다."
-	
+
 	L.next_switch = "다음 전환"
-	
+
+	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."	--check
+	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"	--check
+
+	L.nef_next = "~Next ability buff"
+
 	L.acquiring_target = "대상 획득"
-	
+
 	L.cloud_message = "당신은 화학 구름!"
 end

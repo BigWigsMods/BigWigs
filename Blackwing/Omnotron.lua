@@ -71,10 +71,10 @@ end
 function mod:OnEngage(diff)
 	if diff > 2 then
 		self:Bar("switch", L["next_switch"], 30, 91513)
-		self:Message("switch", spellName, "Important", spellId, "Alert")
+		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
 	else
 		self:Bar("switch", L["next_switch"], 40, 91513)
-		self:Message("switch", spellName, "Important", spellId, "Alert")
+		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
 	end
 end
 
@@ -90,10 +90,10 @@ end
 function mod:Switch(_, spellId, _, _, spellName)
 	if mod:GetInstanceDifficulty() > 2 then
 		self:Bar("switch", L["next_switch"], 30, 91513)
-		self:Message("switch", spellName, "Important", spellId, "Alert")
+		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
 	else
-		self:Bar("switch", L["next_switch"], 45, 91513)
-		self:Message("switch", spellName, "Important", spellId, "Alert")
+		self:Bar("switch", L["next_switch"], 40, 91513)
+		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
 	end
 end
 

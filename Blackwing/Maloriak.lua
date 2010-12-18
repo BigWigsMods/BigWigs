@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Maloriak", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41378)
-mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 77991, "phase", 77912, 77569, "berserk", "bosskill"}
+mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -74,8 +74,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972, 92971)
-	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92966, 92965)
+	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
+	self:Log("SPELL_AURA_APPLIED", "ArcaneStorm", 77896)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -206,3 +207,6 @@ function mod:BitingChill(player, spellId, _, _, spellName)
 	self:SecondaryIcon(77760, player)
 end
 
+function mod:ArcaneStorm(_, spellId, _, _, spellName)
+	self:Message(77896, spellName, "Important", spellId, "Alert")
+end

@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41570)
-mod.toggleOptions = {"slump", 78006, "inferno", "bosskill"}
+mod.toggleOptions = {"slump", 78006, "inferno", "slump", "bosskill"}
 mod.optionHeaders = {
 	slump = "normal",
 	inferno = "heroic",
@@ -42,7 +42,7 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
-	--self:Emote("Slump", L["slump_trigger"])
+	self:Emote("Slump", L["slump_trigger"])
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -73,3 +73,7 @@ function mod:PillarOfFlame(_, spellId, _, _, spellName)
 	self:Bar(78006, spellName, 30, spellId)
 end
 
+function mod:Slump()
+	self:Bar("slump", L["slump"], 95, 94678)
+	self:Message("slump", L["slump"], "Important", 94678, "Info")
+end
