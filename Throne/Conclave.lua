@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Conclave of Wind", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
-mod.toggleOptions = {{84645, "FLASHSHAKE"}, 85422, 86307, "full_power", "bosskill"}
+mod.toggleOptions = {{84645, "FLASHSHAKE"}, 85422, 86307, "full_power", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[84645] = "Nezir",
 	[85422] = "Anshal",
@@ -62,6 +62,9 @@ end
 
 
 function mod:OnEngage(diff)
+	if diff > 2 then
+		self:Berserk(480)
+	end
 	self:Bar("full_power", L["full_power"], 90, 86193)
 	self:Bar(85422, (GetSpellInfo(85422)), 30, 85422)
 end
