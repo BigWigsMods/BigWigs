@@ -35,7 +35,7 @@ if L then
 	L.slump = "슬럼프"
 	L.slump_desc = "슬럼프 상태를 알립니다."
 
-	L.slump_trigger = "%s|1이;가; 집게를 드러내며 앞으로 몸을 기울입니다!"
+	L.slump_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "koKR")
