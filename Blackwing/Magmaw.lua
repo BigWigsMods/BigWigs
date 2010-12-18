@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41570)
-mod.toggleOptions = {"slump", 78006, "inferno", "slump", "bosskill"}
+mod.toggleOptions = {"slump", 78006, 91931, "inferno", "bosskill"}
 mod.optionHeaders = {
 	slump = "normal",
 	inferno = "heroic",
@@ -15,6 +15,8 @@ mod.optionHeaders = {
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local lavaSpew = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -42,7 +44,8 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
-	self:Emote("Slump", L["slump_trigger"])
+	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
+	--self:Emote("Slump", L["slump_trigger"])
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -57,11 +60,20 @@ function mod:OnEngage(diff)
 	end
 	self:Bar("slump", L["slump"], 100, 94678)
 	self:Bar(78006, (GetSpellInfo(78006)), 30, 78006)
+	lavaSpew = 0
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:LavaSpew(_, spellId, _, _, spellName)
+	if (GetTime() - lavaSpew) > 6 then
+		self:Message(91931, spellName, "Important", spellId)
+		self:Bar(91931, spellName, 26, spellId)
+	end
+	lavaSpew = GetTime()
+end
 
 function mod:BlazingInferno(_, spellId, _, _, spellName)
 	self:Message("inferno", spellName, "Urgent", spellId, "Info")
