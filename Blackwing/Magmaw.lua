@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41570)
-mod.toggleOptions = {"slump", 78006, 91931, "inferno", "bosskill"}
+mod.toggleOptions = {"slump", 89773, 78006, 91931, "inferno", "bosskill"}
 mod.optionHeaders = {
 	slump = "normal",
 	inferno = "heroic",
@@ -25,10 +25,10 @@ local lavaSpew = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "Summons Blazing Bone Construct"
+	L.inferno_desc = "Summons Blazing Bone Construct."
 
 	L.slump = "Slump"
-	L.slump_desc = "Slumps forward exposing itself"
+	L.slump_desc = "Magmaw slumps forward exposing itself."
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 end
@@ -44,6 +44,7 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
+	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617) -- check IDs
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
 	self:Emote("Slump", L["slump_trigger"])
 
@@ -81,7 +82,7 @@ function mod:BlazingInferno(_, spellId, _, _, spellName)
 end
 
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
-	self:Message(78006, spellName, "Urgent", spellId, "Info")
+	self:Message(78006, spellName, "Urgent", spellId, "Alert")
 	self:Bar(78006, spellName, 30, spellId)
 end
 
@@ -89,3 +90,8 @@ function mod:Slump()
 	self:Bar("slump", L["slump"], 95, 94678)
 	self:Message("slump", L["slump"], "Important", 94678, "Info")
 end
+
+function mod:Mangle(_, spellId, _, _, spellName)
+	self:Bar(89773, spellName, 30, spellId)
+end
+ 

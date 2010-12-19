@@ -11,14 +11,14 @@ if L then
 	L.air_phase = "Luftphase"
 	L.air_phase_desc = "Warnt, wenn Atramedes abhebt."
 
-	--L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
+	L.air_phase_trigger = "Ja, lauft! Jeder Schritt lässt Euer Herz stärker klopfen. Laut und heftig... ohrenbetäubend. Es gibt kein Entkommen!" --check
 
 	L.sonicbreath_cooldown = "~Schallatem"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "deDE")
 if L then
-	--L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
+	L.bileotron_engage = "Das Gall-O-Tron springt an und stößt einen übel riechende Substanz aus." -- check
 
 	L.next_system_failure = "Nächstes Systemversagen"
 	L.break_message = "%2$dx Brechen auf %1$s"
@@ -32,10 +32,10 @@ if L then
 	L.inferno = (GetSpellInfo(92191))
 	L.inferno_desc = "Beschwört [Blazing Bone Construct]." -- need german name
 
-	--L.slump = "Slump"
-	--L.slump_desc = "Slumps forward exposing itself"
+	L.slump = "Nach vorne schlittern"
+	L.slump_desc = "Magmaul schlittert nach vorne und entblößt seine Zangen."
 
-	--L.slump_trigger = "%s slumps forward, exposing his pincers!"
+	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
@@ -47,8 +47,8 @@ if L then
 	--normal
 	L.final_phase = "Letzte Phase"
 
-	L.release_aberration_message = "%s Entartungen noch"
-	L.release_all = "%s Entartungen kommen"
+	L.release_aberration_message = "%s Adds noch!"
+	L.release_all = "%s Adds freigelassen!"
 
 	L.bitingchill_say = "Beißende Kälte auf MIR!"
 
@@ -60,11 +60,11 @@ if L then
 	
 	L.you = "%s auf DIR!"
 
-	--L.red_phase_trigger = "Mix and stir, apply heat..."
+	L.red_phase_trigger = "Vermischen, rühren, erhitzen..." -- check
 	L.red_phase = "|cFFFF0000Rote|r Phase"
-	--L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"
+	L.blue_phase_trigger = "Muss rausfinden, wie die sterbliche Hülle auf extreme Temperaturen reagiert... FÜR DIE FORSCHUNG!" -- check
 	L.blue_phase = "|cFF809FFEBlaue|r Phase"
-	--L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?"
+	L.green_phase_trigger = "Etwas instabil vielleicht, aber keine Forschung ohne Risiko!" -- check
 	L.green_phase = "|cFF33FF00Grüne|r Phase"
 	L.dark_phase = "|cFF660099Dunkle|r Phase"
 	--L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
@@ -80,7 +80,7 @@ if L then
 	--L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
 
-L = BigWigs:NewBossLocale("Omnitron Defense System", "deDE")
+L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
 if L then
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt vor dem Wechseln der Bosse."

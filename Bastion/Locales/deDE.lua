@@ -17,7 +17,7 @@ if L then
 
 	L.devouringflames_cooldown = "~Verschlingende Flammen"
 
-	--L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+	L.valiona_trigger = "Theralion, ich werde den Gang einhüllen. Deck ihre Flucht!" -- check
 
 	L.twilight_shift = "%2$dx Zwielichtverschiebung auf %1$s"
 end
@@ -42,13 +42,13 @@ if L then
 	
 	L.lightning_rod_say = "Blitzableiter auf MIR!"
 
-	--L.switch_trigger = "We will handle them!"
+	L.switch_trigger = "Wir kümmern uns um sie!"
 
-	--L.quake_trigger = "The ground beneath you rumbles ominously...."
-	--L.thundershock_trigger = "The surrounding air crackles with energy...."
+	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..." -- check
+	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern...." -- check
 
 	L.searing_winds_message = "Wirbelnde Winde abholen!"
 	L.grounded_message = "Auf den Boden!"
 
-	--L.last_phase_trigger = "BEHOLD YOUR DOOM!"
+	L.last_phase_trigger = "SCHMECKT DIE VERDAMMNIS!" -- check
 end

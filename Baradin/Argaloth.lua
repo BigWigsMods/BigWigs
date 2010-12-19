@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Argaloth", "Baradin Hold")
 if not mod then return end
 mod.otherMenu = "Baradin Hold"
 mod:RegisterEnableMob(47120)
-mod.toggleOptions = {88942, 88954, 88972, "berserk", "bosskill"}
+mod.toggleOptions = {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
 mod.optionHeaders = {
 	[88942] = "general",
 }
@@ -69,5 +69,6 @@ end
 
 function mod:FelFirestorm(_, spellId, _, _, spellName)
 	self:Message(88972, spellName, "Attention", spellId)
+	self:FlashShake(88972)
 end
 
