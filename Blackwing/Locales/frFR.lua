@@ -2,9 +2,9 @@ local L = BigWigs:NewBossLocale("Atramedes", "frFR")
 if L then
 	L.tracking_me = "Pistage sur moi !"
 
-	L.ancientDwarvenShield = "Ancient Dwarven Shield" -- récupérer transcription
-	L.ancientDwarvenShield_desc = "Warning for the remaining Ancient Dwarven Shields"
-	L.ancientDwarvenShieldLeft = "%d Ancient Dwarven Shield left"
+	L.ancientDwarvenShield = "Ancien bouclier nain"
+	L.ancientDwarvenShield_desc = "Indique le nombre d'anciens boucliers nains restants."
+	L.ancientDwarvenShieldLeft = "%d Ancien(s) bouclier(s) nain(s) restant(s)"
 
 	L.ground_phase = "Phase au sol"
 	L.ground_phase_desc = "Prévient quand Atramédès atterrit."
@@ -77,15 +77,22 @@ if L then
 
 	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traîté avec une extrême fermeté !" -- à vérifier
 
-	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name -- récupérer transcription
+	L.chromatic_prototype = "Prototype chromatique" -- 3 adds name
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "frFR")
 if L then
+	L.nef = "Seigneur Victor Nefarius"
+	L.nef_desc = "Prévient quand le Seigneur Victor Nefarius utilise une technique."
 	L.switch = "Changement"
 	L.switch_desc = "Prévient de l'arrivée des changements."
 
 	L.next_switch = "Prochain changement"
+
+	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you." -- récupérer transcription
+	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?" -- récupérer transcription
+
+	L.nef_next = "~Prochain buff de technique"
 
 	L.acquiring_target = "Acquisition d'une cible"
 

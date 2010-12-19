@@ -80,7 +80,7 @@ L["Advanced options"] = "Options avancées"
 L["<< Back"] = "<< Retour"
 
 L["About"] = "À propos"
-L["Main Developers"] = "Développeurs principaux"
+L["Main Developers"] = "Dév. principaux"
 L["Developers"] = "Développeurs"
 L["Maintainers"] = "Gestionnaires"
 L["License"] = "Licence"

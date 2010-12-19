@@ -14,6 +14,7 @@ if L then
 	L.phase_switch_desc = "Prévient quand la rencontre change de phase."
 
 	L.engulfingmagic_say = "Magie enveloppante sur moi !"
+	L.engulfingmagic_cooldown = "~Magie enveloppante"
 
 	L.devouringflames_cooldown = "~Flammes dévorantes"
 
