@@ -16,9 +16,10 @@ if L then
 	L.phase_switch = "단계 전환"
 	L.phase_switch_desc = "단계 전환을 알립니다."
 
-	L.engulfingmagic_say = "나에게 휘몰아치는 마법!"
+	L.engulfingmagic_say = "나에게 사로잡힌 마법!"
+	L.engulfingmagic_cooldown = "다음 사로잡힌 마법"
 
-	L.devouringflames_cooldown = "~파멸의 불길"
+	L.devouringflames_cooldown = "다음 파멸의 불길"
 
 	L.valiona_trigger = "테랄리온, 내가 전당에 불을 뿜겠다. 놈들의 퇴로를 막아라!"
 
@@ -52,6 +53,9 @@ if L then
 
 	L.searing_winds_message = "소용돌이에 올라타세요!"
 	L.grounded_message = "땅에 착지하세요!"
-
+	
+	L.phase = "단계"
+	L.phase_desc = "단계 변화를 알립니다."
 	L.last_phase_trigger = "꽤나 인상적이었다만..."	--지금 넣은 트리거가 더 좋아보임. 실제 트리거 = "네놈들의 종말을 맞이해라!"
+	L.last_phase_message = "마지막 단계"
 end

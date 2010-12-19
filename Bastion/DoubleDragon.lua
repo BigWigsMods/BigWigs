@@ -21,6 +21,7 @@ local lastDestruction = 0
 local pName = UnitName("player")
 local marked = GetSpellInfo(88518)
 local markWarned = false
+local count = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +33,7 @@ if L then
 	L.phase_switch_desc = "Warning for Phase Switches"
 
 	L.engulfingmagic_say = "Engulfing Magic on ME!"
+	L.engulfingmagic_cooldown = "~Engulfing Magic"
 
 	L.devouringflames_cooldown = "~Devouring Flames"
 
@@ -45,6 +47,11 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:OnRegister()
+	Theralion = BigWigs:Translate("Theralion")
+	Valiona = BigWigs:Translate("Valiona")
+end
+
 function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TwilightShift", 93051)
@@ -57,8 +64,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
 
-	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639)
-	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640, 95639)
+	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639, 95641)
+	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640, 95639, 95641)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -73,7 +80,7 @@ function mod:OnEngage(diff)
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
-	self:Bar("phase_switch", "Theralion", 95, 86408)
+	self:Bar("phase_switch", Theralion, 95, 60639)
 end
 
 --------------------------------------------------------------------------------
@@ -90,14 +97,16 @@ function mod:DazzlingDestruction()
 	if (GetTime() - lastDestruction) > 6 then
 		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
 		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-		self:Bar("phase_switch", "Valiona", 113, 86788) -- probably inaccurate, also need better icon
+		self:Bar("phase_switch", Valiona, 113, 60639)
 	end
 	lastDestruction = GetTime()
+	count = 0
+	self:Bar(86059, (GetSpellInfo(86059)), 110, 92194)	-- looks like a dragon 'deep breath' :)
 end
 
 function mod:DeepBreath()
-	self:Message(86059, (GetSpellInfo(86059)), "Important", 86059, "Alert")
-	self:Bar("phase_switch", "Valiona", 137, 86622) -- probably inaccurate, also need better icon
+	self:Message(86059, (GetSpellInfo(86059)), "Important", 92194, "Alert")
+	self:Bar("phase_switch", Valiona, 137, 60639)
 	self:Bar(86788, (GetSpellInfo(86788)), 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
 end
@@ -149,6 +158,10 @@ function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
 	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(86622, player, spellName)
 	self:PrimaryIcon(86622, player)
+	count = count + 1
+	if count < 4 then
+		self:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
+	end
 end
 
 function mod:EngulfingMagicRemoved(player)
