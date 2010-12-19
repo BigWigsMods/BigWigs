@@ -14,6 +14,7 @@ if L then
 	L.phase_switch_desc = "Warnt, wenn die Phase gewechselt wird."
 
 	L.engulfingmagic_say = "Einhüllende Magie auf MIR!"
+	L.engulfingmagic_cooldown = "~Einhüllende Magie"
 
 	L.devouringflames_cooldown = "~Verschlingende Flammen"
 

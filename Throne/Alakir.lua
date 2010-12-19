@@ -5,9 +5,8 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-mod.toggleOptions = {{88427, "FLASHSHAKE"}, "phase_change", 87770, 87904, {89668, "FLASHSHAKE"}, 93286, "bosskill"}
+mod.toggleOptions = {{88427, "FLASHSHAKE"}, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 93286, "bosskill"}
 mod.optionHeaders = {
-	phase_change = "Phase Change",
 	bosskill = "general",
 }
 
@@ -16,6 +15,7 @@ mod.optionHeaders = {
 --
 
 local phase = 1
+local lastWindburst = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,12 +23,13 @@ local phase = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.WindBurst = (GetSpellInfo(87770))
-	L.LightningRod = (GetSpellInfo(89668))
+	L.windburst = (GetSpellInfo(87770))
 	
-	L.Phase = "Phase %d"
-	L.phase_change = "Phase Change"
-	L.phase_change_desc = "Announce Phase changes"
+	L.phase_change = "Phase change"
+	L.phase_change_desc = "Announce phase changes."
+	L.phase_message = "Phase %d"
+	
+	L.feedback_message = "%dx Feedback"
 	
 	L.you = "%s on YOU!"
 end
@@ -46,7 +47,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 93279) -- Acid Rain is applied at P2 transition
 	self:Log("SPELL_AURA_REMOVED", "Phase3", 93279) -- Acid Rain is removed at P3 transition
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668) -- drycoded, need to verify if messages and whisper work
-	
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286) -- Wind Burst in Phase 3 is instant cast
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -56,51 +56,43 @@ end
 
 
 function mod:OnEngage(diff)
-	self:Bar(87770, L["WindBurst"], 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
-	
+	self:Bar(87770, L["windburst"], 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase = 1
+	lastWindburst = 0
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:WindBurst3(_, spellId, _, _, spellName)
-	-- TODO: start Bar for 22sec and make sure, it does not get started multiple times, since the whole raid gets SPELL_DAMAGE
-	
-	-- self:Bar(93286, L["WindBurst"], 22, spellId)
-	-- self:Message(93286, L["WindBurst"], "Important", spellId, "Alert")
-end
-
-function mod:LightningRod(player, spellId, _, _, spellName) -- drycoded, please verify
+function mod:LightningRod(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(89668)
-		self:LocalMessage(89668, spellName, "Personal", spellId, "Info")
+		self:LocalMessage(89668, L["you"]:format(spellName), "Personal", spellId, "Info")
 	end
 	self:TargetMessage(89668, spellName, player, "Urgent", spellId)
-	self:Whisper(89668, player, L["you"]:format(L["LightningRod"]))
+	self:Whisper(89668, player, L["you"]:format(spellName))
 	self:PrimaryIcon(89668, player)
 end
 
 function mod:Phase2(_, spellId)
 	if phase >= 2 then return end
-	self:Message("phase_change", L["Phase"]:format(2), "Important", spellId, "Alert")
-	mod:SendMessage("BigWigs_StopBar", mod, L["WindBurst"]) -- stop Wind Burst bar at P2
+	self:Message("phase_change", L["phase_message"]:format(2), "Important", spellId, "Alert")
+	self:SendMessage("BigWigs_StopBar", self, L["windburst"])
 	phase = 2
 end
 
 function mod:Phase3(_, spellId)
 	if phase >= 3 then return end
-	self:Message("phase_change", L["Phase"]:format(3), "Important", spellId, "Alert")
-	self:Bar(93286, L["WindBurst"], 24, 93286) -- this is a estimated timer, need more accurate values
+	self:Message("phase_change", L["phase_message"]:format(3), "Important", spellId, "Alert")
+	self:Bar(93286, L["windburst"], 24, 93286) -- this is a estimated timer, need more accurate values
 	phase = 3
 end
 
-function mod:Feedback(_, spellId, _, _, spellName, buffStack)
+function mod:Feedback(_, spellId, _, _, spellName, stack)
 	self:Bar(87904, spellName, 20, spellId)
-	
-	if not buffStack then buffStack = 1 end
-	self:Message(87904, spellName.." ("..buffStack..")", "Important", spellId, "Alert")
+	if not stack then stack = 1 end
+	self:Message(87904, L["feedback_message"]:format(stack), "Important", spellId, "Alert")
 end
 
 function mod:Electrocute(player, spellId, _, _, spellName)
@@ -111,6 +103,15 @@ function mod:Electrocute(player, spellId, _, _, spellName)
 end
 
 function mod:WindBurst1(_, spellId, _, _, spellName)
-	self:Bar(87770, L["WindBurst"], 26, spellId)
-	self:Message(87770, L["WindBurst"], "Important", spellId, "Alert")
+	self:Bar(87770, L["windburst"], 26, spellId)
+	self:Message(87770, L["windburst"], "Important", spellId, "Alert")
 end
+
+function mod:WindBurst3(_, spellId, _, _, spellName)
+	if (GetTime() - lastWindburst) > 5 then
+		self:Bar(93286, spellName, 22, spellId)
+		self:Message(93286, spellName, "Important", spellId, "Alert")
+	end
+	lastWindburst = GetTime()
+end
+
