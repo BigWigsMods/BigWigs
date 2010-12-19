@@ -45,7 +45,7 @@ function mod:OnBossEnable()
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
-	--self:Emote("Slump", L["slump_trigger"])
+	self:Emote("Slump", L["slump_trigger"])
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

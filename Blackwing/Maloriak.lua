@@ -93,8 +93,6 @@ function mod:OnEngage(diff)
 	-- XXX Berserk timers not confirmed
 	if diff > 2 then
 		self:Berserk(600)
-	else
-		self:Berserk(360)
 	end
 	aberrations = 18
 	phaseCounter = 0
