@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-mod.toggleOptions = {{88427, "FLASHSHAKE"}, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 93286, "bosskill"}
+mod.toggleOptions = {88427, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 93286, "bosskill"}
 mod.optionHeaders = {
 	bosskill = "general",
 }
@@ -41,7 +41,7 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Electrocute", 88427)
-	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261)
+	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261, 93263)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 93279) -- Acid Rain is applied at P2 transition
@@ -96,9 +96,6 @@ function mod:Feedback(_, spellId, _, _, spellName, stack)
 end
 
 function mod:Electrocute(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:FlashShake(88427)
-	end
 	self:TargetMessage(88427, spellName, player, "Personal", spellId, "Alarm")
 end
 

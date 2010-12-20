@@ -66,7 +66,7 @@ mod.optionHeaders = {
 
 function mod:OnBossEnable()
 	--heroic
-	--self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987)
+	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987)
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
