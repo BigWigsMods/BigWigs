@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Chimaeron", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
-mod.toggleOptions = {"warmup", 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "bosskill"}
+mod.toggleOptions = {"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "bosskill"}
 mod.optionHeaders = {
 	warmup = "normal",
 	proximity = "general",
@@ -37,6 +37,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Mortality", 82890)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Break", 82881)
 	self:Log("SPELL_AURA_APPLIED", "DoubleAttack", 88826)
+	self:Log("SPELL_CAST_START", "Massacre", 82848)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -72,6 +73,11 @@ function mod:SystemFailureEnd(_, spellId)
 	self:Bar(88853, L["next_system_failure"], 65, spellId)
 	self:FlashShake(88853)
 	self:OpenProximity(6)
+end
+
+function mod:Massacre(_, spellId, _, _, spellName)
+	self:Message(82848, spellName, "Attention", spellId)
+	self:Bar(82848, spellName, 30, spellId)
 end
 
 function mod:Mortality(_, spellId, _, _, spellName)
