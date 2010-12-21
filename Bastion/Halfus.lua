@@ -29,7 +29,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170)
+	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170, 86171, 83710)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

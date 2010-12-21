@@ -1,6 +1,14 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "koKR")
 if L then
+	L.windburst = (GetSpellInfo(87770))
 	
+	L.phase_change = "단계 변화"
+	L.phase_change_desc = "단계 변화를 알립니다."
+	L.phase_message = "%d 단계"
+	
+	L.feedback_message = "역순환 %dx"
+	
+	L.you = "당신은 %s!"
 end
 
 L = BigWigs:NewBossLocale("Conclave of Wind", "koKR")
