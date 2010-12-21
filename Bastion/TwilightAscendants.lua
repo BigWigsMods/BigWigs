@@ -221,6 +221,7 @@ function mod:Switch()
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82746)))
 	self:Bar(83565, (GetSpellInfo(83565)), 33, 83565)
 	self:Bar(83067, (GetSpellInfo(83067)), 70, 83067)
+	self:Bar(92541, (GetSpellInfo(92541)), 27, spellId)
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
