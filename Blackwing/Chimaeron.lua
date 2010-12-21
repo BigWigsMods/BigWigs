@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Chimaeron", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
-mod.toggleOptions = {"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "bosskill"}
+mod.toggleOptions = {"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "berserk", "bosskill"}
 mod.optionHeaders = {
 	warmup = "normal",
 	proximity = "general",
@@ -56,6 +56,9 @@ function mod:OnEngage(diff)
 	self:Bar(88853, L["next_system_failure"], 90, 88853)
 	self:SendMessage("BigWigs_StopBar", self, L["warmup"])
 	self:OpenProximity(6)
+	if diff > 2 then
+		self:Berserk(480)
+	end
 end
 
 --------------------------------------------------------------------------------
