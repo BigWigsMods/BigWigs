@@ -251,6 +251,8 @@ end
 
 
 function mod:LastPhase()
+	grounded_check_allowed = false
+	searing_winds_check_allowed = false
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83565)))
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83067)))
 	self:OpenProximity(10) -- assumed, not even sure if we need it
