@@ -115,7 +115,7 @@ plugin.subPanelOptions = {
 local footers = {
 	"Premonition @ Sen'jin US\n|cff9999ffwww.premoguild.com|r",
 	"Big Wigs Developer\n|cff9999ffwowace.com/projects/big-wigs|r",
-	"Ensidia @ Lightning's Blade EU\n|cff9999ffwww.manaflask.com|r",
+	"Ensidia @ Tarren Mill EU\n|cff9999ffwww.manaflask.com|r",
 	"vodka @ Alterac Mountains US\n|cff9999ffwww.vodka-guild.net|r",
 }
 
@@ -155,6 +155,14 @@ local tips = {
 	"Hams#WARLOCK#When you wipe the raid don't start a 10 minute excuse about how you made a mistake, but admit the mistake and shut up.#3",
 	"Siiri#DEATHKNIGHT#Don't be afraid to speak up on ventrilo, but keep it relevant during a boss fight. Swearing or making grunts when you die will just make people nervous, and make a salvageable kill much less likely.#3",
 	"Implied#SHAMAN#We are what we do repeatedly, practice makes perfect. Excellence, therefore, is not an act; but a habit.#3",
+	"Calebv#HUNTER#Having enough well geared alts can turn the tide for your main raid. Don't underestimate the importance of alts when it comes to getting some extra practice on bosses with limited attempts.#3",
+	"Muqq#PRIEST#When explaining an encounter to someone who has never done it before, keep it simple and to the point. Long and complicated explanations will often do more harm than good.#3",
+	"Deify#HUNTER#When your raid time is set, be sure to be in front of the instance few minutes earlier before the start. No one likes the slackers.#3",
+	"Eoy#PRIEST#Don't be afraid to speak up if you don't understand something.#3",
+	"Eoy#PRIEST#Always come to raids prepared for anything. This includes having different flasks and glyphs ready for any role.#3",
+	"Eoy#PRIEST#During progress, the DPS flask isn't always the best choice for damage dealers. Survival is the key to success.#3",
+	"Eoy#PRIEST#Put the interest of the guild in front of your own.#3",
+
 
 	"Cheesycraft#MAGE#Think about all the abilities and talents available to your class before a fight. A player can often gain a tremendous advantage through the use of less commonly thought of abilities and talents.#1",
 	"Cheesycraft#MAGE#You gotta pay the cost to be the boss. Gold should never be a limiting factor in improving your character!#1",

@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-mod.toggleOptions = {"orders", 91303, 81628, 82299, 82630, 82414, "bosskill"}
+mod.toggleOptions = {"orders", 91303, 81628, 82299, 82630, 82414, "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	orders = "heroic",
@@ -61,6 +61,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
 	self:Bar(81628, (GetSpellInfo(81628)), 58, 81628)
+	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 end
 
