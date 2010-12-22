@@ -69,13 +69,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	if diff > 2 then
-		self:Bar("switch", L["next_switch"], 30, 91513)
-		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
-	else
-		self:Bar("switch", L["next_switch"], 40, 91513)
-		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
-	end
+	self:Bar("switch", L["next_switch"], diff > 2 and 30 or 40, 91513)
+	--self:Message("switch", L["switch"].." - "..GetSpellInfo(NNNNN), "Important", spellId, "Alert") --Decide which spell
 end
 
 --------------------------------------------------------------------------------
@@ -84,17 +79,12 @@ end
 
 function mod:NefAbilties()
 	self:Message("nef", L["nef_next"], "Attention", 92048)
-	mod:Bar("nef", L["nef_next"], 35, 92048)
+	self:Bar("nef", L["nef_next"], 35, 92048)
 end
 
 function mod:Switch(_, spellId, _, _, spellName)
-	if mod:GetInstanceDifficulty() > 2 then
-		self:Bar("switch", L["next_switch"], 30, 91513)
-		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
-	else
-		self:Bar("switch", L["next_switch"], 40, 91513)
-		self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
-	end
+	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 40, 91513)
+	self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
 end
 
 function mod:ShadowInfusion(player, spellId, _, _, spellName)
@@ -102,7 +92,7 @@ function mod:ShadowInfusion(player, spellId, _, _, spellName)
 		self:FlashShake(92048)
 	end
 	self:TargetMessage(92048, spellName, player, "Urgent", spellId)
-	mod:Bar("nef", L["nef_next"], 35, 92048)
+	self:Bar("nef", L["nef_next"], 35, 92048)
 	self:PrimaryIcon(92048, player)
 end
 
