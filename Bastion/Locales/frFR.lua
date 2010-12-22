@@ -43,10 +43,10 @@ if L then
 
 	L.lightning_rod_say = "Bâtonnet d'éclair sur moi !"
 
-	L.switch_trigger = "We will handle them!" -- récupérer transcription (alternative : "Que cessent ces stupidités !"
+	L.switch_trigger = "Nous allons nous occuper d'eux !" -- à vérifier
 
-	L.quake_trigger = "The ground beneath you rumbles ominously...." -- récupérer transcription
-	L.thudershock_trigger = "The surrounding air crackles with energy...." -- récupérer transcription
+	L.quake_trigger = "Le sol sous vos pieds gronde avec menace..." -- à vérifier
+	L.thudershock_trigger = "L'air qui vous entoure crépite d'énergie..." -- à vérifier
 
 	L.searing_winds_message = "Obtenez des vents tournoyants !"
 	L.grounded_message = "Liez-vous à la terre !"

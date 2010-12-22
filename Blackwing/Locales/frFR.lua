@@ -2,23 +2,23 @@ local L = BigWigs:NewBossLocale("Atramedes", "frFR")
 if L then
 	L.tracking_me = "Pistage sur moi !"
 
-	L.ancientDwarvenShield = "Ancien bouclier nain"
-	L.ancientDwarvenShield_desc = "Indique le nombre d'anciens boucliers nains restants."
-	L.ancientDwarvenShieldLeft = "%d Ancien(s) bouclier(s) nain(s) restant(s)"
+	L.shield = "Ancien bouclier nain"
+	L.shield_desc = "Indique le nombre d'anciens boucliers nains restants."
+	L.shield_message = "%d |4Anciens boucliers nains restants:Ancien bouclier nain restant;"
 
 	L.ground_phase = "Phase au sol"
 	L.ground_phase_desc = "Prévient quand Atramédès atterrit."
 	L.air_phase = "Phase aérienne"
 	L.air_phase_desc = "Prévient quand Atramédès décolle."
 
-	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent, comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !" -- à vérifier
+	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !" -- à vérifier
 
 	L.sonicbreath_cooldown = "~Souffle sonique"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "frFR")
 if L then
-	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance." -- récupérer transcription
+	L.bileotron_engage = "Le bile-o-tron s'anime et commence à secréter une substance malodorante."
 
 	L.next_system_failure = "Prochaine Défaillance"
 	L.break_message = "%2$dx Brèche sur %1$s"
@@ -76,6 +76,10 @@ if L then
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
 	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traîté avec une extrême fermeté !" -- à vérifier
+
+	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+
+	L.shadowblaze_trigger = "Flesh turns to ash!"
 
 	L.chromatic_prototype = "Prototype chromatique" -- 3 adds name
 end
