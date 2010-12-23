@@ -14,10 +14,11 @@ if L then
 	L.phase_switch_desc = "當進入不同階段時發出警報。"
 
 	L.engulfingmagic_say = ">我< 侵噬魔法！"
+	L.engulfingmagic_cooldown = "<侵噬魔法>"
 
 	L.devouringflames_cooldown = "<吞噬烈焰>"
 
-	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+	L.valiona_trigger = "瑟拉里恩"
 
 	L.twilight_shift = "暮光變換%2$dx：>%1$s<！"
 end

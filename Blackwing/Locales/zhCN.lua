@@ -33,7 +33,7 @@ if L then
 	L.inferno_desc = "Summons Blazing Bone Construct"
 
 	L.slump = "Slump"
-	L.slump_desc = "Slumps forward exposing itself"
+	L.slump_desc = "Magmaw slumps forward exposing itself."
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 end
@@ -47,8 +47,8 @@ if L then
 	--normal
 	L.final_phase = "Final Phase"
 
-	L.release_aberration_message = "%s Aberration left"
-	L.release_all = "%s Aberration Released"
+	L.release_aberration_message = "%s adds left!"
+	L.release_all = "%s adds released!"
 
 	L.bitingchill_say = "Biting Chill on ME!"
 
@@ -57,7 +57,7 @@ if L then
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes."
 	L.next_phase = "Next Phase"
-	
+
 	L.you = "%s on YOU!"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
@@ -77,27 +77,26 @@ if L then
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
+	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+
+	L.shadowblaze_trigger = "Flesh turns to ash!"
+
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
-end
-
-L = BigWigs:NewBossLocale("Omnitron Defense System", "zhCN")
-if L then
-	L.switch = "转换"
-	L.switch_desc = "当转换时发出警报。"
-	
-	L.next_switch = "<下一转换>"
-
-	L.acquiring_target = "Acquiring Target"
-
-	L.cloud_message = "Cloud on YOU!"
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "zhCN")
 if L then
+	L.nef = "维克多·奈法里奥斯"
+	L.nef_desc = "当维克多·奈法里奥斯施放技能时发出警报。"
 	L.switch = "转换"
 	L.switch_desc = "当转换时发出警报。"
-	
+
 	L.next_switch = "<下一转换>"
+
+	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+
+	L.nef_next = "~Next ability buff"
 
 	L.acquiring_target = "Acquiring Target"
 

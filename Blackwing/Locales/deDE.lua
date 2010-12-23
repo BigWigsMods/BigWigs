@@ -57,7 +57,7 @@ if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
 	L.next_phase = "Nächste Phase"
-	
+
 	L.you = "%s auf DIR!"
 
 	L.red_phase_trigger = "Vermischen, rühren, erhitzen..." -- check
@@ -84,7 +84,7 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
 if L then
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
-	
+
 	L.next_switch = "Nächster Wechsel"
 
 	L.acquiring_target = "Zielerfassung"

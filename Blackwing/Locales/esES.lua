@@ -57,7 +57,7 @@ if L then
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes."
 	L.next_phase = "Next Phase"
-	
+
 	L.you = "%s on YOU!"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."

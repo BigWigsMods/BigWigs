@@ -2,9 +2,9 @@
 if L then
 	L.tracking_me = ">我< 追蹤！"
 
-	L.shield = "Ancient Dwarven Shield"
-	L.shield_desc = "當Ancient Dwarven Shields剩餘時發出警報。"
-	L.shield_message = "%d Ancient Dwarven Shield 剩餘！"
+	L.shield = "古代矮人盾牌"
+	L.shield_desc = "當古代矮人盾牌剩餘時發出警報。"
+	L.shield_message = "%d古代矮人盾牌 剩餘！"
 
 	L.ground_phase = "地面階段"
 	L.ground_phase_desc = "當亞特拉米德著陸時發出警報。"
@@ -57,7 +57,7 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"
 	L.next_phase = "下一階段！"
-	
+
 	L.you = ">你< %s！"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
@@ -77,27 +77,26 @@ if L then
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
+	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+
+	L.shadowblaze_trigger = "Flesh turns to ash!"
+
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
-end
-
-L = BigWigs:NewBossLocale("Omnitron Defense System", "zhTW")
-if L then
-	L.switch = "轉換"
-	L.switch_desc = "當轉換時發出警報。"
-	
-	L.next_switch = "<下一轉換>"
-
-	L.acquiring_target = "鎖定目標"
-
-	L.cloud_message = ">你< 化學毒霧！"
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "zhTW")
 if L then
+	L.nef = "維克多·奈法利斯領主"
+	L.nef_desc = "當維克多·奈法利斯領主施放技能時發出警報。"
 	L.switch = "轉換"
 	L.switch_desc = "當轉換時發出警報。"
-	
+
 	L.next_switch = "<下一轉換>"
+
+	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+
+	L.nef_next = "~Next ability buff"
 
 	L.acquiring_target = "鎖定目標"
 

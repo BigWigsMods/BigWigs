@@ -28,12 +28,12 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "koKR")
 if L then
-	
+
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
-	
+
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "koKR")
@@ -43,7 +43,7 @@ if L then
 	L.health_report = "%s의 체력 -%d%%-, 곧 전환!"
 	L.switch = "전환"
 	L.switch_desc = "보스의 전환을 알립니다."
-	
+
 	L.lightning_rod_say = "나아게 벼락 막대!"
 
 	L.switch_trigger = "우리가 상대하겠다!"
@@ -53,7 +53,7 @@ if L then
 
 	L.searing_winds_message = "소용돌이에 올라타세요!"
 	L.grounded_message = "땅에 착지하세요!"
-	
+
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
 	L.last_phase_trigger = "꽤나 인상적이었다만..."	--지금 넣은 트리거가 더 좋아보임. 실제 트리거 = "네놈들의 종말을 맞이해라!"

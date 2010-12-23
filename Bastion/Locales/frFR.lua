@@ -46,7 +46,7 @@ if L then
 	L.switch_trigger = "Nous allons nous occuper d'eux !" -- à vérifier
 
 	L.quake_trigger = "Le sol sous vos pieds gronde avec menace..." -- à vérifier
-	L.thudershock_trigger = "L'air qui vous entoure crépite d'énergie..." -- à vérifier
+	L.thundershock_trigger = "L'air qui vous entoure crépite d'énergie..." -- à vérifier
 
 	L.searing_winds_message = "Obtenez des vents tournoyants !"
 	L.grounded_message = "Liez-vous à la terre !"

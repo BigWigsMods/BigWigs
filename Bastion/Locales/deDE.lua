@@ -8,7 +8,7 @@ if L then
 	L.worship_cooldown = "~Verehren"
 end
 
-local L = BigWigs:NewBossLocale("Valiona and Theralion", "deDE")
+L = BigWigs:NewBossLocale("Valiona and Theralion", "deDE")
 if L then
 	L.phase_switch = "Phasenwechsel"
 	L.phase_switch_desc = "Warnt, wenn die Phase gewechselt wird."
@@ -40,7 +40,7 @@ if L then
 	L.health_report = "%s ist bei %d%% Leben!"
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt, wenn die Bosse wechseln."
-	
+
 	L.lightning_rod_say = "Blitzableiter auf MIR!"
 
 	L.switch_trigger = "Wir kümmern uns um sie!"

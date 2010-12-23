@@ -2,9 +2,9 @@ local L = BigWigs:NewBossLocale("Atramedes", "koKR")
 if L then
 	L.tracking_me = "나를 추적!"
 
-	L.ancientDwarvenShield = "고대 드워프 보호막"
-	L.ancientDwarvenShield_desc = "남아있는 고대 드워프 보호막을 알립니다."
-	L.ancientDwarvenShieldLeft = "%d 고대 드워프 보호막 남음"
+	L.shield = "고대 드워프 보호막"
+	L.shield_desc = "남아있는 고대 드워프 보호막을 알립니다."
+	L.shield_message = "%d 고대 드워프 보호막 남음"
 
 	L.ground_phase = "지상 단계"
 	L.ground_phase_desc = "아트라메데스의 착지를 알립니다."
@@ -19,7 +19,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "koKR")
 if L then
 	L.bileotron_engage = "담즙로봇이 움직이기 시작하더니 고약한 냄새가 나는 물질을 방출합니다."
-	
+
 	L.next_system_failure = "다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"
 
@@ -53,11 +53,11 @@ if L then
 	L.bitingchill_say = "나에게 살을 에는 추위!"
 
 	L.flashfreeze = "~순간 빙결"
-	
+
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
 	L.next_phase = "다음 단계"
-	
+
 	L.you = "당신은 %s!"
 
 	L.red_phase_trigger = "섞고 흔들어서, 열을 가한다..."

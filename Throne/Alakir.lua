@@ -24,13 +24,13 @@ local lastWindburst = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.windburst = (GetSpellInfo(87770))
-	
+
 	L.phase_change = "Phase change"
 	L.phase_change_desc = "Announce phase changes."
 	L.phase_message = "Phase %d"
-	
+
 	L.feedback_message = "%dx Feedback"
-	
+
 	L.you = "%s on YOU!"
 end
 L = mod:GetLocale()
