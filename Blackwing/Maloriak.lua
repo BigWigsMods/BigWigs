@@ -141,7 +141,7 @@ do
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
-	local potion = msg:match("INV_(.*)")
+	local potion = msg:match("INV_(.-).BLP")
 	if not potion then return end
 	if warnedAlready then
 		warnedAlready = nil
