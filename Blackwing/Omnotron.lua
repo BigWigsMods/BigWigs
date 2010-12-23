@@ -49,16 +49,16 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036)
-	self:Log("SPELL_CAST_START", "Switch", 79582, 91516, 79900, 91447, 79729, 91543, 79835, 91503, 91501, 91544, 91448, 91517, 91505)
+	self:Log("SPELL_CAST_START", "Switch", 79582, 91516, 79900, 91447, 79729, 91543, 79835, 91503, 91501, 91544, 91448, 91517, 91505, 91545, 91518, 91449, 91515)
 
 	self:Yell("NefAbilties", L["nef_trigger1"])
 	self:Yell("NefAbilties", L["nef_trigger2"])
 
 	self:Log("SPELL_CAST_SUCCESS", "LightningConductor", 79888, 91433, 91431, 91432)
-	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 91499, 91514)
+	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 91499, 91514, 91515)
 	self:Log("SPELL_CAST_SUCCESS", "Fixate", 80094)
 
-	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479)
+	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479, 91473)
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
 
