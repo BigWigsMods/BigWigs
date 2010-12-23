@@ -74,10 +74,12 @@ L = BigWigs:NewBossLocale("Nefarian", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
-
-	L.phase_x = "%d 단계!"
-
+	
 	L.phase_two_trigger = "저주받을 필멸자들!"	--check
+	
+	L.phase_three_trigger = "품위있는"	--check
+
+	L.shadowblaze_trigger = "Flesh turns to ash!"
 
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
 end
