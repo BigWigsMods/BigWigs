@@ -24,6 +24,8 @@ local lastWindburst = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.windburst = (GetSpellInfo(87770))
+	
+	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase_change = "Phase change"
 	L.phase_change_desc = "Announce phase changes."
@@ -45,8 +47,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 93279) -- Acid Rain is applied at P2 transition
-	self:Log("SPELL_AURA_REMOVED", "Phase3", 93279) -- Acid Rain is removed at P3 transition
-	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668) -- drycoded, need to verify if messages and whisper work
+	--self:Log("SPELL_AURA_REMOVED", "Phase3", 93279) -- Somehow it is also removed sometimes at P2 transition, use Yell instead
+	
+	self:Yell("Phase3", L["phase3_yell"])
+	
+	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286) -- Wind Burst in Phase 3 is instant cast
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -60,6 +65,7 @@ function mod:OnEngage(diff)
 	phase = 1
 	lastWindburst = 0
 end
+
 
 --------------------------------------------------------------------------------
 -- Event Handlers
@@ -82,10 +88,10 @@ function mod:Phase2(_, spellId)
 	phase = 2
 end
 
-function mod:Phase3(_, spellId)
+function mod:Phase3()
 	if phase >= 3 then return end
-	self:Message("phase_change", L["phase_message"]:format(3), "Important", spellId, "Alert")
-	self:Bar(93286, L["windburst"], 24, 93286) -- this is a estimated timer, need more accurate values
+	self:Message("phase_change", L["phase_message"]:format(3), "Important", 93279, "Alert")
+	self:Bar(93286, L["windburst"], 24, 93286)
 	phase = 3
 end
 
@@ -106,7 +112,7 @@ end
 
 function mod:WindBurst3(_, spellId, _, _, spellName)
 	if (GetTime() - lastWindburst) > 5 then
-		self:Bar(93286, spellName, 22, spellId)
+		self:Bar(93286, spellName, 19, spellId) -- 22 was too long, 19 should work
 		self:Message(93286, spellName, "Important", spellId, "Alert")
 	end
 	lastWindburst = GetTime()
