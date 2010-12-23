@@ -13,6 +13,7 @@ mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON"
 
 local aberrations = 18
 local phaseCounter = 0
+local warnedAlready = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,6 +82,12 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
+	-- We keep the emotes in case the group uses Curse of Tongues, in which
+	-- case the yells become Demonic.
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+
+	-- We keep the yell triggers around because sometimes he does them far ahead
+	-- of the emote.
 	self:Yell("Red", L["red_phase_trigger"])
 	self:Yell("Blue", L["blue_phase_trigger"])
 	self:Yell("Green", L["green_phase_trigger"])
@@ -96,6 +103,7 @@ function mod:OnEngage(diff)
 	end
 	aberrations = 18
 	phaseCounter = 0
+	warnedAlready = nil
 end
 
 --------------------------------------------------------------------------------
@@ -132,7 +140,27 @@ do
 	end
 end
 
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	local potion = msg:match("INV_(.*)")
+	if not potion then return end
+	if warnedAlready then
+		warnedAlready = nil
+		return
+	end
+	if potion == "POTION_20" then
+		self:Blue()
+	elseif potion == "POTION_24" then
+		self:Red()
+	elseif potion == "POTION_162" then
+		self:Green()
+	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
+		self:Dark()
+	end
+	warnedAlready = nil
+end
+
 function mod:Red()
+	warnedAlready = true
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
@@ -140,6 +168,7 @@ function mod:Red()
 end
 
 function mod:Blue()
+	warnedAlready = true
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Bar(77699, L["flashfreeze"], 28, spellId) --
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
@@ -148,6 +177,7 @@ function mod:Blue()
 end
 
 function mod:Green()
+	warnedAlready = true
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()
@@ -155,6 +185,7 @@ function mod:Green()
 end
 
 function mod:Dark()
+	warnedAlready = true
 	self:Bar("phase", L["next_phase"], 100, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
 	self:CloseProximity()
@@ -208,3 +239,4 @@ end
 function mod:ArcaneStorm(_, spellId, _, _, spellName)
 	self:Message(77896, spellName, "Important", spellId, "Alert")
 end
+
