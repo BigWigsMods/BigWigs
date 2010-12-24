@@ -16,7 +16,7 @@ mod.optionHeaders = {
 --
 
 local consumingTargets = mod:NewTargetList()
-local firestorm1, firestorm2 = true, true
+local firestorm1, firestorm2
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,6 +46,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(300)
+	firestorm1, firestorm2 = nil, nil
 end
 
 --------------------------------------------------------------------------------
@@ -77,17 +78,16 @@ function mod:FelFirestorm(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH(_, unit)
-	local guid = UnitGUID(unit)
-	if not guid then return end
-	guid = tonumber((guid):sub(-12, -9), 16)
-	if guid == 47120 then
+	if unit ~= "boss1" then return end
+	if UnitName(unit) == self.displayName then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp <= 69 and firestorm1 then
+		if hp < 69 and not firestorm1 then
 			self:Message(88972, L["firestorm_message"], "Attention")
-			firestorm1 = false
-		elseif hp <= 36 and firestorm2 then
+			firestorm1 = true
+		elseif hp <= 36 and not firestorm2 then
 			self:Message(88972, L["firestorm_message"], "Attention")
-			firestorm2 = false
+			firestorm2 = true
+			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end
