@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "koKR")
 if L then
 	L.windburst = (GetSpellInfo(87770))
+	
+	L.phase3_yell = "그만!"	--check
 
 	L.phase_change = "단계 변화"
 	L.phase_change_desc = "단계 변화를 알립니다."
