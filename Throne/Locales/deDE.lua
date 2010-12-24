@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "deDE")
 if L then
-	L.windburst = (GetSpellInfo(87770))
+	--L.windburst = (GetSpellInfo(87770))
+
+	--L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase_change = "Phasenwechsel"
 	L.phase_change_desc = "Warnt vor Phasenwechsel."
