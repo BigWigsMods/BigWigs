@@ -62,7 +62,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 92307)
 
 	--normal
-
 	self:Log("SPELL_AURA_APPLIED", "LightningRodApplied",83099)
 	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved",83099)
 
@@ -189,7 +188,7 @@ end
 
 function mod:AegisofFlame(_, spellId, _, _, spellName)
 	self:Bar(82631, spellName, 62, spellId)
-	self:Message(82631, spellName, "Urgent", spellId, "Info")
+	self:Message(82631, spellName, "Important", spellId, "Info")
 end
 
 function mod:HardenSkin(_, spellId, _, _, spellName)
@@ -204,7 +203,7 @@ end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(82762, spellName, player, "Personal", spellId)
+		self:LocalMessage(82762, spellName, "Important", spellId, "Long")
 	end
 end
 
@@ -248,7 +247,6 @@ function mod:ThundershockTrigger()
 	grounded_check()
 	self:Bar(83067, (GetSpellInfo(83067)), 10, 83067) -- update the bar since we are sure about this timer
 end
-
 
 function mod:LastPhase()
 	grounded_check_allowed = false
