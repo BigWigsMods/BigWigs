@@ -56,7 +56,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_SUCCESS", "LightningConductor", 79888, 91433, 91431, 91432)
 	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 91499, 91514, 91515)
-	self:Log("SPELL_CAST_SUCCESS", "Fixate", 80094)
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094) -- Might be a bit more accurate than SPELL_CAST_SUCCESS, but still there is something fishy going on here
 
 	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479, 91473)
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)

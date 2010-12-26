@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Maloriak", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41378)
-mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
+mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -71,10 +71,11 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
-	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978)
-	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978)
+	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978, 92980)
+	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
-	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972, 92971)
+	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972, 92971, 92973)
+	self:Log("SPELL_CAST_SUCCESS", "ScorchingBlast", 77679, 92968, 92969, 92970)
 	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneStorm", 77896)
@@ -149,10 +150,13 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 	if potion == "POTION_20" then
 		self:Blue()
+		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
 	elseif potion == "POTION_24" then
 		self:Red()
+		self:Bar(92968, "~"..(GetSpellInfo(92968)), 25, 92968)
 	elseif potion == "POTION_162" then
 		self:Green()
+		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
 	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
 		self:Dark()
 	end
@@ -220,6 +224,11 @@ function mod:ConsumingFlames(player, spellId, _, _, spellName)
 	self:TargetMessage(77786, spellName, player, "Urgent", spellId) -- let the other know too so they can shout on the guy if he is slow
 	self:Whisper(77786, player, L["you"]:format((GetSpellInfo(77786))))
 	self:PrimaryIcon(77786, player)
+end
+
+function mod:ScorchingBlast(_, spellId, _, _, spellName)
+	self:Message(92968, spellName, "Attention", spellId)
+	self:Bar(92968, "~"..spellName, 10, 92968)
 end
 
 function mod:ReleaseAll(_, spellId)
