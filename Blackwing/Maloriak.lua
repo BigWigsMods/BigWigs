@@ -165,6 +165,7 @@ end
 
 function mod:Red()
 	warnedAlready = true
+	self:Bar(92968, "~"..(GetSpellInfo(92968)), 25, 92968)
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
@@ -173,6 +174,7 @@ end
 
 function mod:Blue()
 	warnedAlready = true
+	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Bar(77699, L["flashfreeze"], 28, spellId) --
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
@@ -182,6 +184,7 @@ end
 
 function mod:Green()
 	warnedAlready = true
+	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()

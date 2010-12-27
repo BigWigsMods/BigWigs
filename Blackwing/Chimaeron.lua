@@ -57,7 +57,7 @@ function mod:OnEngage(diff)
 	self:SendMessage("BigWigs_StopBar", self, L["warmup"])
 	self:OpenProximity(6)
 	if diff > 2 then
-		self:Berserk(480)
+		self:Berserk(420)
 	end
 end
 
