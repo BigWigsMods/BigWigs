@@ -20,11 +20,11 @@ L = BigWigs:NewBossLocale("Chimaeron", "esES")
 if L then
 	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
 
-	L.next_system_failure = "Next System Failure"
-	L.break_message = "%2$dx Break on %1$s"
+	L.next_system_failure = "Siguiente fallo del sistema"
+	L.break_message = "%2$dx Romper en %1$s"
 
-	L.warmup = "Warmup"
-	L.warmup_desc = "Warmup timer"
+	L.warmup = "Entrar en calor"
+	L.warmup_desc = "Contador para entrar en calor"
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "esES")
