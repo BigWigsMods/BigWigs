@@ -45,28 +45,28 @@ if L then
 	L.darkSludge_desc = ("Warning for when you stand in %s."):format((GetSpellInfo(92987)))
 
 	--normal
-	L.final_phase = "Final Phase"
+	L.final_phase = "Fase final"
 
-	L.release_aberration_message = "%s adds left!"
-	L.release_all = "%s adds released!"
+	L.release_aberration_message = "%s adds restantes!"
+	L.release_all = "%s adds liberados!"
 
-	L.bitingchill_say = "Biting Chill on ME!"
+	L.bitingchill_say = "Escalofrío cortante en MI!"
 
-	L.flashfreeze = "~Flash Freeze"
+	L.flashfreeze = "~Congelación apresurada"
 
-	L.phase = "Phase"
-	L.phase_desc = "Warning for Phase changes."
-	L.next_phase = "Next Phase"
+	L.phase = "Fase"
+	L.phase_desc = "Advertencia para cambios de fase."
+	L.next_phase = "Siguiente fase"
 
-	L.you = "%s on YOU!"
+	L.you = "%s en TI!"
+	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
 
-	L.red_phase_trigger = "Mix and stir, apply heat..."
-	L.red_phase = "|cFFFF0000Red|r phase"
-	L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"
-	L.blue_phase = "|cFF809FFEBlue|r phase"
-	L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?"
-	L.green_phase = "|cFF33FF00Green|r phase"
-	L.dark_phase = "|cFF660099Dark|r phase"
+	L.red_phase = "|cFFFF0000Red|r fase"
+	L.blue_phase_trigger = "¿Cómo afecta el cambio extremo de temperatura al cuerpo mortal? ¡Debo averiguarlo! ¡Por la ciencia!"
+	L.blue_phase = "|cFF809FFEBlue|r fase"
+	L.green_phase_trigger = "Este es un poco inestable, pero ¿acaso hay progreso sin fracaso?"
+	L.green_phase = "|cFF33FF00Green|r fase"
+	L.dark_phase = "|cFF660099Dark|r fase"
 	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
 end
 
