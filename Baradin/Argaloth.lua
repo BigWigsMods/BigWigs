@@ -4,12 +4,8 @@
 
 local mod = BigWigs:NewBoss("Argaloth", "Baradin Hold")
 if not mod then return end
-mod.otherMenu = "Baradin Hold"
 mod:RegisterEnableMob(47120)
 mod.toggleOptions = {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
-mod.optionHeaders = {
-	[88942] = "general",
-}
 
 --------------------------------------------------------------------------------
 -- Locals
