@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
-mod.toggleOptions = {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "phase", 94085, "bosskill"}
+mod.toggleOptions = {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "proximity", "phase", 94085, "bosskill"}
 mod.optionHeaders = {
 	[79339] = "heroic",
 	phase = "general",
@@ -48,7 +48,8 @@ function mod:OnBossEnable()
 	self:Yell("PhaseThree", L["phase_three_trigger"])
 	self:Yell("ShadowBlaze", L["shadowblaze_trigger"])
 
-	self:Log("SPELL_AURA_APPLIED", "ExplosiveCinders", 79339)
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
+	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
 
 	self:RegisterEvent("UNIT_DIED")
@@ -116,11 +117,13 @@ do
 		mod:TargetMessage(79339, spellName, cinderTargets, "Urgent", 79339, "Info")
 		scheduled = nil
 	end
-	function mod:ExplosiveCinders(player, spellId, _, _, spellName)
+	function mod:ExplosiveCindersApplied(player, spellId, _, _, spellName)
 		cinderTargets[#cinderTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(79339)
 			self:Say(79339, L["cinder_say"])
+			self:Bar(79339, spellName, 8, 79339)
+			self:OpenProximity(6) -- assumed
 		end
 		if not scheduled then
 			scheduled = true
@@ -132,6 +135,11 @@ end
 function mod:StolenPower(player, spellId, _, _, spellName, stack)
 	if UnitIsUnit(player, "player") and stack == 150 then
 		self:FlashShake(80626)
-		self:LocalMessage(80626, spellName, "Personal", spellId, "Info")
+		self:LocalMessage(80626, spellName, "Personal", spellId, "Info")	end
+end
+
+function mod:ExplosiveCindersRemoved(player)
+	if UnitIsUnit(player, "player") then
+		self:CloseProximity(6)
 	end
 end
