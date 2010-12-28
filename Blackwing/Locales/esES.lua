@@ -61,11 +61,11 @@ if L then
 	L.you = "%s en TI!"
 	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
 
-	L.red_phase = "|cFFFF0000Red|r fase"
+	L.red_phase = "Fase |cFFFF0000Roja|r"
 	L.blue_phase_trigger = "¿Cómo afecta el cambio extremo de temperatura al cuerpo mortal? ¡Debo averiguarlo! ¡Por la ciencia!"
-	L.blue_phase = "|cFF809FFEBlue|r fase"
+	L.blue_phase = "Fase |cFF809FFEAzul|r"
 	L.green_phase_trigger = "Este es un poco inestable, pero ¿acaso hay progreso sin fracaso?"
-	L.green_phase = "|cFF33FF00Green|r fase"
+	L.green_phase = "Fase |cFF33FF00Verde|r"
 	L.dark_phase = "|cFF660099Dark|r fase"
 	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
 end
