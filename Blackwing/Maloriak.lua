@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Maloriak", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41378)
-mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
+mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -14,6 +14,7 @@ mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "ICON"
 local aberrations = 18
 local phaseCounter = 0
 local warnedAlready = nil
+local chillTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -74,7 +75,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
-	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlames", 77786, 92972, 92971, 92973)
+	self:Log("SPELL_AURA_APPLIED", "ConsumingFlames", 77786, 92972, 92971, 92973)
 	self:Log("SPELL_CAST_SUCCESS", "ScorchingBlast", 77679, 92968, 92969, 92970)
 	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
@@ -100,7 +101,7 @@ end
 function mod:OnEngage(diff)
 	-- XXX Berserk timers not confirmed
 	if diff > 2 then
-		self:Berserk(600)
+		self:Berserk(840)
 	end
 	aberrations = 18
 	phaseCounter = 0
@@ -116,11 +117,11 @@ local function nextPhase(phase)
 		if phaseCounter == 3 then
 			mod:SendMessage("BigWigs_StopBar", mod, L["next_phase"])
 			if phase == "dark" then
-				mod:Bar("phase", L["green_phase"], 100, "Interface\\Icons\\INV_POTION_162")
+				mod:Bar("phase", L["green_phase"], 100, "INV_POTION_162")
 			elseif phase == "green" then
 				phaseCounter = 0
 			else
-				mod:Bar("phase", L["green_phase"], 47, "Interface\\Icons\\INV_POTION_162")
+				mod:Bar("phase", L["green_phase"], 47, "INV_POTION_162")
 			end
 		end
 		phaseCounter = phaseCounter + 1
@@ -176,7 +177,7 @@ function mod:Blue()
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
-	self:Bar(77699, L["flashfreeze"], 28, spellId) --
+	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
 	self:OpenProximity(5)
 	nextPhase("blue")
@@ -238,14 +239,23 @@ function mod:ReleaseAll(_, spellId)
 	self:Message(77991, L["release_all"]:format(aberrations), "Important", spellId, "Alert")
 end
 
-function mod:BitingChill(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:Say(77760, L["bitingchill_say"])
-		self:FlashShake(77760)
+do
+	local scheduled = nil
+	local function chillWarn(spellName)
+		mod:TargetMessage(77760, spellName, chillTargets, "Urgent", 77760, "Info")
+		scheduled = nil
 	end
-	self:TargetMessage(77760, spellName, player, "Urgent", spellId, "Info")
-	self:Whisper(77760, player, spellName)
-	self:SecondaryIcon(77760, player)
+	function mod:BitingChill(player, spellId, _, _, spellName)
+		chillTargets[#chillTargets + 1] = player
+		if UnitIsUnit(player, "player") then
+			self:Say(77760, L["bitingchill_say"])
+			self:FlashShake(77760)
+		end
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(chillWarn, 0.3, spellName)
+		end
+	end
 end
 
 function mod:ArcaneStorm(_, spellId, _, _, spellName)
