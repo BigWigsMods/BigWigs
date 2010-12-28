@@ -5,8 +5,9 @@
 local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
-mod.toggleOptions = {"phase", 94085, 79339, { 80626, "FLASHSHAKE"}, "bosskill"}
+mod.toggleOptions = {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "phase", 94085, "bosskill"}
 mod.optionHeaders = {
+	[79339] = "heroic",
 	phase = "general",
 }
 --------------------------------------------------------------------------------
