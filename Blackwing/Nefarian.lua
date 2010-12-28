@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
-mod.toggleOptions = {"phase", 94085, "bosskill"}
+mod.toggleOptions = {"phase", 94085, 79339, { 80626, "FLASHSHAKE"}, "bosskill"}
 mod.optionHeaders = {
 	phase = "general",
 }
@@ -14,6 +14,7 @@ mod.optionHeaders = {
 --
 
 local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
+local cinderTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,6 +31,8 @@ if L then
 
 	L.shadowblaze_trigger = "Flesh turns to ash!"
 
+	L.cinder_say = "Explosive Cinders on ME!"
+
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
 L = mod:GetLocale()
@@ -43,6 +46,9 @@ function mod:OnBossEnable()
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
 	self:Yell("PhaseThree", L["phase_three_trigger"])
 	self:Yell("ShadowBlaze", L["shadowblaze_trigger"])
+
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveCinders", 79339)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
 
 	self:RegisterEvent("UNIT_DIED")
 
@@ -101,4 +107,30 @@ end
 function mod:ShadowBlaze()
 	mod:Bar(94085, (GetSpellInfo(94085)), shadowBlazeTimer, 94085)
 	self:ScheduleTimer(ShadowBlazeNoTrigger, shadowBlazeTimer)
+end
+
+do
+	local scheduled = nil
+	local function cinderWarn(spellName)
+		mod:TargetMessage(79339, spellName, cinderTargets, "Urgent", 79339, "Info")
+		scheduled = nil
+	end
+	function mod:ExplosiveCinders(player, spellId, _, _, spellName)
+		cinderTargets[#cinderTargets + 1] = player
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(79339)
+			self:Say(79339, L["cinder_say"])
+		end
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(cinderWarn, 0.3, spellName)
+		end
+	end
+end
+
+function mod:StolenPower(player, spellId, _, _, spellName, stack)
+	if UnitIsUnit(player, "player") and stack == 150 then
+		self:FlashShake(80626)
+		self:LocalMessage(80626, spellName, "Personal", spellId, "Info")
+	end
 end
