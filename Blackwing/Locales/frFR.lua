@@ -47,8 +47,8 @@ if L then
 	--normal
 	L.final_phase = "Phase finale"
 
-	L.release_aberration_message = "%s aberration(s) restante(s)"
-	L.release_all = "%s aberration(s) libérée(s)"
+	L.release_aberration_message = "%s aberrations restantes !"
+	L.release_all = "%s aberrations libérées !"
 
 	L.bitingchill_say = "Frisson mordant sur moi !"
 
@@ -75,11 +75,13 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
-	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traîté avec une extrême fermeté !" -- à vérifier
+	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traité avec une extrême fermeté !" -- à vérifier
 
-	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+	L.phase_three_trigger = "J'ai tout fait pour être un hôte accomodant, mais vous ne daignez pas mourir ! Oublions les bonnes manières et passons aux choses sérieuses... VOUS TUER TOUS !" -- à vérifier
 
-	L.shadowblaze_trigger = "Flesh turns to ash!"
+	L.shadowblaze_trigger = "Que la chair se transforme en cendres !" -- à vérifier
+
+	L.cinder_say = "Braises explosives sur moi !"
 
 	L.chromatic_prototype = "Prototype chromatique" -- 3 adds name
 end

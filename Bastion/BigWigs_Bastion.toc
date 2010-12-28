@@ -7,7 +7,7 @@
 ## Title-koKR: Big Wigs [|cffeda55f황혼의 성채|r]
 ## Notes: Big Wigs Modules for The Bastion of Twilight
 ## Notes-deDE: Big Wigs Module für die Bastion des Zwielichts.
-## Notes-frFR: Modules Big Wigs concernant le bastion du Crépuscule.
+## Notes-frFR: Modules Big Wigs concernant le Bastion du Crépuscule.
 ## Notes-zhTW: Big Wigs 暮光堡壘模組
 ## Notes-koKR: Big Wigs 황혼의 성채 모듈
 
