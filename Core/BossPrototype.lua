@@ -157,7 +157,7 @@ end
 -- Engage / wipe checking + unit scanning
 --
 
-function mod:CheckBossStatus()
+function boss:CheckBossStatus()
 	if debug then dbg(self, ":CheckBossStatus called.") end
 	--rough draft, subject to change
 	--possibly handle multi-mob/non-mob named modules in future
