@@ -36,8 +36,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 47120)
 
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 end
 
 function mod:OnEngage()

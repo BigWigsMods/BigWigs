@@ -32,6 +32,7 @@ function boss:OnDisable()
 	wipe(yellMap[self])
 	wipe(emoteMap[self])
 	wipe(deathMap[self])
+	self.isEngaged = nil
 
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
@@ -156,6 +157,20 @@ end
 -- Engage / wipe checking + unit scanning
 --
 
+function mod:CheckBossStatus()
+	if debug then dbg(self, ":CheckBossStatus called.") end
+	--rough draft, subject to change
+	--possibly handle multi-mob/non-mob named modules in future
+	--maybe check a table of id's against a specific module to remove locale dependancy
+	--could also use that method to handle multi-mob modules
+	--if self.enableIds[tonumber((UnitGUID("boss1"):sub(7, 10), 16)] ?
+	if not UnitName("boss1") and self.isEngaged then
+		self:Reboot()
+	elseif not self.isEngaged and UnitName("boss1") == self.displayName then
+		self:Engage()
+	end
+end
+
 do
 	local t = {"target", "targettarget", "focus", "focustarget", "mouseover", "mouseovertarget"}
 	for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end
@@ -269,6 +284,7 @@ do
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
 		CombatLogClearEntries()
+		self.isEngaged = true
 		if self.OnEngage then
 			self:OnEngage(self:GetInstanceDifficulty())
 		end

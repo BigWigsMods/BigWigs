@@ -354,6 +354,11 @@ end
 
 function loader:ZoneChanged()
 	if not grouped then return end
+	if UnitIsGhost("player") then
+		for name, module in BigWigs:IterateBossModules() do
+			if module:IsEnabled() then module:Reboot() end
+		end
+	end
 	local z1, z2 = GetRealZoneText(), GetZoneText()
 	-- load party content in raid, but don't load raid content in a party...
 	if (enableZones[z1] and enableZones[z1] <= grouped) or (enableZones[z2] and enableZones[z2] <= grouped) then
