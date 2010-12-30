@@ -20,6 +20,7 @@ mod.optionHeaders = {
 local lastDestruction = 0
 local marked = GetSpellInfo(88518)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local Theralion, Valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local markWarned = false
 local count = 0
 
@@ -75,7 +76,7 @@ function mod:OnEngage(diff)
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
-	self:Bar("phase_switch", self.optionHeaders[86622], 95, 60639) --Theralion
+	self:Bar("phase_switch", Theralion, 95, 60639)
 end
 
 --------------------------------------------------------------------------------
@@ -92,7 +93,7 @@ function mod:DazzlingDestruction()
 	if (GetTime() - lastDestruction) > 6 then
 		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
 		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-		self:Bar("phase_switch", self.optionHeaders[86788], 113, 60639) --Valiona
+		self:Bar("phase_switch", Valiona, 113, 60639)
 	end
 	lastDestruction = GetTime()
 	count = 0
@@ -101,7 +102,7 @@ end
 
 function mod:DeepBreath()
 	self:Message(86059, (GetSpellInfo(86059)), "Important", 92194, "Alert")
-	self:Bar("phase_switch", self.optionHeaders[86788], 137, 60639) --Valiona
+	self:Bar("phase_switch", Valiona, 137, 60639)
 	self:Bar(86788, (GetSpellInfo(86788)), 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
 end
