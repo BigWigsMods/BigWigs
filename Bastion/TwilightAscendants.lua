@@ -254,5 +254,6 @@ function mod:LastPhase()
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83565)))
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83067)))
 	self:OpenProximity(10) -- assumed, not even sure if we need it
+	self:UnregisterEvent("UNIT_HEALTH")
 end
 
