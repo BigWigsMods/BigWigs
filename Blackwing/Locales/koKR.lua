@@ -79,7 +79,9 @@ if L then
 	
 	L.phase_three_trigger = "품위있는"	--check
 
-	L.shadowblaze_trigger = "Flesh turns to ash!"
+	L.shadowblaze_trigger = "살을 재로"	--check
+	
+	L.cinder_say = "나에게 폭발하는 잿더미!"
 
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
 end
