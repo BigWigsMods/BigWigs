@@ -87,7 +87,7 @@ function mod:OnBossEnable()
 
 	self:Yell("LastPhase", L["last_phase_trigger"])
 
-	self:Death("Win", 73735) -- Elementium Mostrosity
+	self:Death("Win", 43735) -- Elementium Monstrosity
 end
 
 
