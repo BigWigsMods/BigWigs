@@ -18,8 +18,8 @@ mod.optionHeaders = {
 --
 
 local lastDestruction = 0
-local pName = UnitName("player")
 local marked = GetSpellInfo(88518)
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local markWarned = false
 local count = 0
 
@@ -46,11 +46,6 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
-
-function mod:OnRegister()
-	Theralion = BigWigs:Translate("Theralion")
-	Valiona = BigWigs:Translate("Valiona")
-end
 
 function mod:OnBossEnable()
 	-- Heroic
@@ -80,7 +75,7 @@ function mod:OnEngage(diff)
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
-	self:Bar("phase_switch", Theralion, 95, 60639)
+	self:Bar("phase_switch", self.optionHeaders[86622], 95, 60639) --Theralion
 end
 
 --------------------------------------------------------------------------------
@@ -97,7 +92,7 @@ function mod:DazzlingDestruction()
 	if (GetTime() - lastDestruction) > 6 then
 		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
 		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-		self:Bar("phase_switch", Valiona, 113, 60639)
+		self:Bar("phase_switch", self.optionHeaders[86788], 113, 60639) --Valiona
 	end
 	lastDestruction = GetTime()
 	count = 0
@@ -106,7 +101,7 @@ end
 
 function mod:DeepBreath()
 	self:Message(86059, (GetSpellInfo(86059)), "Important", 92194, "Alert")
-	self:Bar("phase_switch", Valiona, 137, 60639)
+	self:Bar("phase_switch", self.optionHeaders[86788], 137, 60639) --Valiona
 	self:Bar(86788, (GetSpellInfo(86788)), 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
 end
@@ -138,7 +133,7 @@ function mod:UNIT_AURA(event, unit)
 	if unit == "player" then
 		if UnitDebuff("player", marked) and not markWarned then
 			self:FlashShake(88518)
-			self:LocalMessage(88518, marked, pName, "Personal", 88518, "Alarm")
+			self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Alarm")
 			markWarned = true
 		end
 	end

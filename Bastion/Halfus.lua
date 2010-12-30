@@ -6,23 +6,6 @@ local mod = BigWigs:NewBoss("Halfus Wyrmbreaker", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(44600)
 mod.toggleOptions = {86169, "berserk", "bosskill"}
-mod.optionHeaders = {
-	berserk = "general",
-}
-
---------------------------------------------------------------------------------
--- Locals
---
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -31,14 +14,12 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170, 86171, 83710)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 44600)
 end
 
-
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(360)
 end
 

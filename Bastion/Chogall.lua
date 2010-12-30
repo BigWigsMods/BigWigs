@@ -51,14 +51,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
 	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 43324)
 end
 
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
 	self:Bar(81628, (GetSpellInfo(81628)), 58, 81628)
 	self:Berserk(600)

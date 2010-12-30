@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-
+--[[
 local mod = BigWigs:NewBoss("Sinestra", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob()
@@ -40,4 +40,4 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
+]]
