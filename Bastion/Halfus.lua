@@ -14,7 +14,8 @@ mod.toggleOptions = {86169, "berserk", "bosskill"}
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170, 86171, 83710)
 
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:Death("Win", 44600)
 end
