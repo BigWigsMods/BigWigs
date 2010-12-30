@@ -217,7 +217,7 @@ do
 		if not registered[sync] then return end
 		if sync == "BossEngaged" then
 			local m = addon:GetBossModule(rest, true)
-			if not m then
+			if not m or m.isEngaged then
 				-- print(bossEngagedSyncError:format(rest, nick))
 				return
 			end
