@@ -354,7 +354,7 @@ end
 
 function loader:ZoneChanged()
 	if not grouped then return end
-	if BigWigs and UnitIsGhost(pName) and BigWigs:IsEnabled() then
+	if BigWigs and UnitIsGhost("player") and BigWigs:IsEnabled() then
 		for name, module in BigWigs:IterateBossModules() do
 			if module.isEngaged then module:Reboot() end
 		end
