@@ -83,18 +83,18 @@ end
 L = BigWigs:NewBossLocale("Omnotron Defense System", "esES")
 if L then
 	L.nef = "Lord Victor Nefarius"
-	L.nef_desc = "Warnings for Lord Victor Nefarius abilities"
-	L.switch = "Switch"
-	L.switch_desc = "Warning for Switches"
+	L.nef_desc = "Avisos para las abilidades de Lord Victor Nefarius"
+	L.switch = "Cambio"
+	L.switch_desc = "Advertencia para los cambios"
 
-	L.next_switch = "Next Switch"
+	L.next_switch = "Siguiente cambio"
 
 	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
-	L.nef_next = "~Next ability buff"
+	L.nef_next = "~Siguiente bufo de habilidad"
 
-	L.acquiring_target = "Acquiring Target"
+	L.acquiring_target = "Eligiendo objetivo"
 
-	L.cloud_message = "Cloud on YOU!"
+	L.cloud_message = "¡Nube en TI!"
 end
