@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41570)
-mod.toggleOptions = {"slump", 89773, 78006, 91931, "inferno", "bosskill"}
+mod.toggleOptions = {"slump", 79011, 89773, 78006, 91931, "inferno", "bosskill"}
 mod.optionHeaders = {
 	slump = "normal",
 	inferno = "heroic",
@@ -27,6 +27,8 @@ if L then
 	L.inferno = (GetSpellInfo(92191))
 	L.inferno_desc = "Summons Blazing Bone Construct."
 
+	L.pillar_of_flame_cd = "~Pillar of Flame"
+
 	L.slump = "Slump"
 	L.slump_desc = "Magmaw slumps forward exposing itself."
 
@@ -44,6 +46,7 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
+	self:Log("SPELL_AURA_APPLIED", "Vulnerability", 79011)
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617) -- check IDs
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
 	self:Emote("Slump", L["slump_trigger"])
@@ -68,6 +71,12 @@ end
 -- Event Handlers
 --
 
+function mod:Vulnerability(_, spellId, _, _, spellName)
+	self:Message(79011, spellName, "Attention", spellId)
+	self:Bar(79011, spellName, 30, spellId)
+	self:Bar(78006, L["pillar_of_flame_cd"], 40, 78006) -- 10 sec after vulnerability ends, might not be accurate
+end
+
 function mod:LavaSpew(_, spellId, _, _, spellName)
 	if (GetTime() - lavaSpew) > 6 then
 		self:Message(91931, spellName, "Important", spellId)
@@ -83,10 +92,11 @@ end
 
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
 	self:Message(78006, spellName, "Urgent", spellId, "Alert")
-	self:Bar(78006, spellName, 30, spellId)
+	self:Bar(78006, L["pillar_of_flame_cd"], 32, spellId)
 end
 
 function mod:Slump()
+	self:SendMessage("BigWigs_StopBar", self,  L["pillar_of_flame_cd"])
 	self:Bar("slump", L["slump"], 95, 94678)
 	self:Message("slump", L["slump"], "Important", 94678, "Info")
 end
@@ -94,4 +104,3 @@ end
 function mod:Mangle(_, spellId, _, _, spellName)
 	self:Bar(89773, spellName, 30, spellId)
 end
- 
