@@ -2,10 +2,6 @@ local L = BigWigs:NewBossLocale("Atramedes", "koKR")
 if L then
 	L.tracking_me = "나를 추적!"
 
-	L.shield = "고대 드워프 보호막"
-	L.shield_desc = "남아있는 고대 드워프 보호막을 알립니다."
-	L.shield_message = "%d 고대 드워프 보호막 남음"
-
 	L.ground_phase = "지상 단계"
 	L.ground_phase_desc = "아트라메데스의 착지를 알립니다."
 	L.air_phase = "공중 단계"
