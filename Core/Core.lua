@@ -318,11 +318,8 @@ function addon:OnEnable()
 
 	zoneChanged()
 
-	if GetSpellInfo(90000) then
-		print("|cffff0000The Cataclysm encounter modules are not complete, and timers ARE inaccurate.|r")
-		print("Please provide us with Transcriptor logs if you can.")
-		print("You can contact us at #bigwigs@irc.freenode.net or with the wowace ticket tracker.")
-	end
+	-- XXX calebv remove at will!
+	print("|cffffff00The Cataclysm encounter modules are getting better, but we could still use some Transcriptor logs. You can contact us at #bigwigs@irc.freenode.net or with the wowace ticket tracker.|r")
 end
 
 function addon:OnDisable()
