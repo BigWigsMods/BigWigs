@@ -2,10 +2,6 @@
 if L then
 	L.tracking_me = "Tracking on ME!"
 
-	L.shield = "Ancient Dwarven Shield"
-	L.shield_desc = "Warning for the remaining Ancient Dwarven Shields."
-	L.shield_message = "%d Ancient Dwarven Shield left"
-
 	L.ground_phase = "Fase en el suelo"
 	L.ground_phase_desc = "Aviso cuando Atramedes aterriza."
 	L.air_phase = "Fase aérea"
@@ -30,19 +26,21 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "esES")
 if L then
 	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "Summons Blazing Bone Construct"
+	L.inferno_desc = "Invoca Ensamblaje osario llameante"
 
-	L.slump = "Slump"
-	L.slump_desc = "Slumps forward exposing itself"
+	L.pillar_of_flame_cd = "~Columna de llamas"
 
-	L.slump_trigger = "%s slumps forward, exposing his pincers!"
+	L.slump = "Cae"
+	L.slump_desc = "Cae hacia delante exponiendose a sí mismo"
+
+	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "esES")
 if L then
 	--heroic
 	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warning for when you stand in %s."):format((GetSpellInfo(92987)))
+	L.darkSludge_desc = ("Aviso cuando estas en %s."):format((GetSpellInfo(92987)))
 
 	--normal
 	L.final_phase = "Fase final"
@@ -72,10 +70,16 @@ end
 
 L = BigWigs:NewBossLocale("Nefarian", "esES")
 if L then
-	L.phase = "Phases"
-	L.phase_desc = "Warnings for the Phase changes."
+	L.phase = "Fases"
+	L.phase_desc = "Aviso para los cambios de fase."
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
+
+	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+
+	L.shadowblaze_trigger = "Flesh turns to ash!"
+
+	L.cinder_say = "¡Cenizas explosivas en MI!"
 
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
