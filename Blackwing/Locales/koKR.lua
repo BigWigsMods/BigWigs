@@ -27,6 +27,8 @@ L = BigWigs:NewBossLocale("Magmaw", "koKR")
 if L then
 	L.inferno = (GetSpellInfo(92191))
 	L.inferno_desc = "이글거리는 지옥불 소환을 알립니다."
+	
+	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
 
 	L.slump = "슬럼프"
 	L.slump_desc = "슬럼프 상태를 알립니다."
