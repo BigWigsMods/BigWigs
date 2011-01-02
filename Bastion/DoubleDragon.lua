@@ -56,8 +56,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DazzlingDestruction", 86408)
 	self:Yell("DeepBreath", L["valiona_trigger"])
 
-	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876)
-	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876)
+	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876, 92878)
+	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876, 92878)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
 
 	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639, 95641)
@@ -84,6 +84,7 @@ end
 --
 
 function mod:TwilightShift(player, spellId, _, _, spellName, stack)
+	self:Bar(93051, spellName, 20, 93051)
 	if stack > 3 then
 		self:TargetMessage(93051, L["twilight_shift"], player, "Important", spellId, nil, stack)
 	end
@@ -123,6 +124,10 @@ function mod:BlackoutRemoved(player, spellId, _, _, spellName)
 	self:Bar(86788, spellName, 40, spellId) -- make sure to remove bar when it takes off
 end
 
+local function markRemoved()
+	markWarned = false
+end
+
 function mod:UNIT_AURA(event, unit)
 	for i = 1, GetNumRaidMembers() do
 		local _, _, _, _, _, _, expires = UnitDebuff("raid"..i, marked)
@@ -136,6 +141,7 @@ function mod:UNIT_AURA(event, unit)
 			self:FlashShake(88518)
 			self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Alarm")
 			markWarned = true
+			self:ScheduleTimer(markRemoved, 7)
 		end
 	end
 end
@@ -165,4 +171,3 @@ function mod:EngulfingMagicRemoved(player)
 		self:CloseProximity()
 	end
 end
-
