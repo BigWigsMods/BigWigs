@@ -56,7 +56,6 @@ function mod:OnBossEnable()
 	self:Death("Win", 41570)
 end
 
-
 function mod:OnEngage(diff)
 	if diff > 2 then
 		self:Bar("inferno", (GetSpellInfo(92191)), 20, 92191)
@@ -71,6 +70,7 @@ end
 --
 
 function mod:Vulnerability(_, spellId, _, _, spellName)
+	if not UnitName("boss1") then return end --prevent this firing when the boss respawns after a wipe
 	self:Message(79011, spellName, "Attention", spellId)
 	self:Bar(79011, spellName, 30, spellId)
 	self:Bar(78006, L["pillar_of_flame_cd"], 40, 78006) -- 10 sec after vulnerability ends, might not be accurate
