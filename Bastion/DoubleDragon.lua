@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Valiona and Theralion", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
-mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "ICON", "FLASHSHAKE"}, 86059, 86840, {86622, "ICON", "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
+mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840, {86622, "ICON", "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
 mod.optionHeaders = {
 	[93051] = "heroic",
 	[86788] = "Valiona",
@@ -129,13 +129,6 @@ local function markRemoved()
 end
 
 function mod:UNIT_AURA(event, unit)
-	for i = 1, GetNumRaidMembers() do
-		local _, _, _, _, _, _, expires = UnitDebuff("raid"..i, marked)
-		if expires and (GetTime() - expires) > 5 then
-			-- make sure we only mark people with marks that are not older than 1 sec, might need more marks for 25 man
-			self:SecondaryIcon(88518, "raid"..i)
-		end
-	end
 	if unit == "player" then
 		if UnitDebuff("player", marked) and not markWarned then
 			self:FlashShake(88518)
