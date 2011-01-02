@@ -48,8 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SearingFlame", 77840)
 	self:Yell("AirPhase", L["air_phase_trigger"])
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 41442)
 end

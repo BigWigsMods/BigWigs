@@ -81,8 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneStorm", 77896)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	-- We keep the emotes in case the group uses Curse of Tongues, in which
 	-- case the yells become Demonic.

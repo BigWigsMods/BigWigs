@@ -39,8 +39,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DoubleAttack", 88826)
 	self:Log("SPELL_CAST_START", "Massacre", 82848)
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Warmup")
 
 	self:Death("Win", 43296)

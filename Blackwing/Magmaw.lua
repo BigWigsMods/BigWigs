@@ -51,8 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
 	self:Emote("Slump", L["slump_trigger"])
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 41570)
 end
@@ -104,3 +103,4 @@ end
 function mod:Mangle(_, spellId, _, _, spellName)
 	self:Bar(89773, spellName, 30, spellId)
 end
+

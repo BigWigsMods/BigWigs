@@ -54,8 +54,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286) -- Wind Burst in Phase 3 is instant cast
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 46753)
 end
 
