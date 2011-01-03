@@ -21,7 +21,10 @@ local firestorm1, firestorm2
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.darkness_message = "Darkness"
+
 	L.firestorm_message = "Firestorm soon!"
+
+	L.meteor_bar = "~Meteor Slash"
 end
 L = mod:GetLocale()
 
@@ -41,6 +44,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(300)
+	self:Bar(88942, L["meteor_bar"], 10, 88942)
 	firestorm1, firestorm2 = nil, nil
 end
 
@@ -50,6 +54,7 @@ end
 
 function mod:MeteorSlash(_, spellId, _, _, spellName)
 	self:Message(88942, spellName, "Important", spellId)
+	self:Bar(88942, L["meteor_bar"], 17, spellId)
 end
 
 do
@@ -62,14 +67,16 @@ do
 		consumingTargets[#consumingTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(consumingWarn, 0.2)
+			self:ScheduleTimer(consumingWarn, 0.5)
 		end
 	end
 end
 
 function mod:FelFirestorm(_, spellId, _, _, spellName)
+	self:SendMessage("BigWigs_StopBar", self, L["meteor_bar"])
 	self:Message(88972, spellName, "Attention", spellId, "Alert")
 	self:FlashShake(88972)
+	self:Bar(88942, L["meteor_bar"], 32, 88942)
 end
 
 function mod:UNIT_HEALTH(_, unit)
