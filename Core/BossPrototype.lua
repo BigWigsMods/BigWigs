@@ -160,14 +160,14 @@ end
 function boss:CheckBossStatus()
 	if debug then dbg(self, ":CheckBossStatus called.") end
 	--rough draft, subject to change
-	--possibly handle multi-mob/non-mob named modules in future
-	--maybe check a table of id's against a specific module to remove locale dependancy
-	--could also use that method to handle multi-mob modules
-	--if self.enableIds[tonumber((UnitGUID("boss1"):sub(7, 10), 16)] ?
-	if not UnitName("boss1") and self.isEngaged then
+	local guid = UnitGUID("boss1")
+	if not guid and self.isEngaged then
 		self:Reboot()
-	elseif not self.isEngaged and UnitName("boss1") == self.displayName then
-		self:Engage()
+	elseif not self.isEngaged and guid then
+		local enableMobs, id = core:GetEnableMobs(), tonumber((guid:sub(7, 10), 16))
+		if enableMobs[id] == self.moduleName then
+			self:Engage()
+		end
 	end
 end
 
