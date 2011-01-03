@@ -19,6 +19,8 @@ if L then
 	L.next_system_failure = "Siguiente fallo del sistema"
 	L.break_message = "%2$dx Romper en %1$s"
 
+	L.mortality_report = "¡%s está al %d%% de vida, %s pronto!"
+
 	L.warmup = "Calentamiento"
 	L.warmup_desc = "Temporizador para Calentamiento"
 end
