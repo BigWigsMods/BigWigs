@@ -43,7 +43,6 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
 	self:Yell("PhaseThree", L["phase_three_trigger"])
 	self:Yell("ShadowBlaze", L["shadowblaze_trigger"])
@@ -142,3 +141,4 @@ function mod:ExplosiveCindersRemoved(player)
 		self:CloseProximity(6)
 	end
 end
+

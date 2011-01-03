@@ -14,6 +14,7 @@ mod.toggleOptions = {86169, "berserk", "bosskill"}
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170, 86171, 83710)
 
+	--no CheckBossStatus here as event does not fire, GM confirms known issue
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 

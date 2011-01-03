@@ -16,10 +16,6 @@ mod.optionHeaders = {
 }
 
 --------------------------------------------------------------------------------
--- Locals
---
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -62,8 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Deaths", 42166, 42179, 42178, 42180)
 end

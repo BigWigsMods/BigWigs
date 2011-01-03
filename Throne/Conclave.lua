@@ -23,11 +23,11 @@ mod.optionHeaders = {
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.gather_strength = "%s is Gathering Strength"
-	
+
 	L.full_power = "Full Power"
 	L.full_power_desc = "Warning for when the bosses reach full power and start to cast the special abilities."
 	L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
-	
+
 	L.wind_chill = "YOU have %s stacks of Wind Chill"
 end
 L = mod:GetLocale()
@@ -47,16 +47,15 @@ function mod:OnBossEnable()
 --	self:Log("SPELL_CAST_SUCCESS", "FullPower", 86193)
 	self:Log("SPELL_CAST_SUCCESS", "FullPower", 84638)
 --	self:Log("SPELL_AURA_APPLIED", "FullPower", 84644)
-	
+
 	self:Emote("GatherStrength", L["gather_strength_emote"])
-	
+
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
-	
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	
+
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	self:Death("Win", 45872) -- They die at the same time, enough to check for one
 end
 
