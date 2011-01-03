@@ -37,13 +37,13 @@ L = BigWigs:NewBossLocale("Ascendant Council", "deDE")
 if L then
 	L.static_overload_say = "Statische Überladung auf MIR!"
 	L.gravity_core_say = "Gravitationskern auf MIR!"
-	L.health_report = "%s ist bei %d%% Leben!"
+	L.health_report = "%s ist bei %d%% Leben, Wechsel bald!"
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt, wenn die Bosse wechseln."
 
 	L.lightning_rod_say = "Blitzableiter auf MIR!"
 
-	L.switch_trigger = "Wir kümmern uns um sie!"
+	L.switch_trigger = "Wir kümmern uns um sie!" -- check
 
 	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..." -- check
 	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern...." -- check

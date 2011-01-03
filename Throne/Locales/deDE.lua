@@ -1,8 +1,8 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "deDE")
 if L then
-	--L.windburst = (GetSpellInfo(87770))
+	L.windburst = (GetSpellInfo(87770))
 
-	--L.phase3_yell = "Enough! I will no longer be contained!"
+	L.phase3_yell = "Genug! Ich werde mich nicht länger zurückhalten!" -- check
 
 	L.phase_change = "Phasenwechsel"
 	L.phase_change_desc = "Warnt vor Phasenwechsel."
@@ -19,7 +19,7 @@ if L then
 
 	L.full_power = "Volle Stärke"
 	L.full_power_desc = "Warnt, wenn der Boss volle Stärke erreicht hat und seine Spezialfähigkeiten wirkt."
-	--L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
+	L.gather_strength_emote = "%s beginnt von den verbliebenen Windlords Stärke zu beziehen!" -- check
 
 	L.wind_chill = "%sx Windkühle auf DIR!"
 end
