@@ -19,6 +19,8 @@ if L then
 	L.next_system_failure = "Prochaine Défaillance"
 	L.break_message = "%2$dx Brèche sur %1$s"
 
+	L.mortality_report = "%s est à %d%% de vie, %s imminent !"
+
 	L.warmup = "Échauffement"
 	L.warmup_desc = "Minuteur de l'échauffement."
 end
