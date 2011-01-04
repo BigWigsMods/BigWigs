@@ -106,4 +106,6 @@ if L then
 	L.acquiring_target = "Acquisition d'une cible"
 
 	L.cloud_message = "Nuage chimique sur vous !"
+	L.protocol_message = "Poison Bombs!"
 end
+

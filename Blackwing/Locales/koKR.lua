@@ -104,5 +104,6 @@ if L then
 	L.acquiring_target = "대상 획득"
 
 	L.cloud_message = "당신은 화학 구름!"
+	L.protocol_message = "Poison Bombs!"
 end
 

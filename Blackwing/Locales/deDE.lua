@@ -97,4 +97,6 @@ if L then
 	L.acquiring_target = "Zielerfassung"
 
 	L.cloud_message = "Wolke auf DIR!"
+	L.protocol_message = "Poison Bombs!"
 end
+

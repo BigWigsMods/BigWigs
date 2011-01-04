@@ -104,4 +104,6 @@ if L then
 	L.acquiring_target = "鎖定目標"
 
 	L.cloud_message = ">你< 化學毒霧！"
+	L.protocol_message = "Poison Bombs!"
 end
+

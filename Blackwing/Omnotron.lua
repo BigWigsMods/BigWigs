@@ -6,6 +6,7 @@ local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
 mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE"}, "nef", {92048, "ICON"}, 92023, "switch", "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	switch = "general",
 	[79501] = "Magmatron",
@@ -36,6 +37,7 @@ if L then
 	L.acquiring_target = "Acquiring Target"
 
 	L.cloud_message = "Cloud on YOU!"
+	L.protocol_message = "Poison Bombs!"
 end
 L = mod:GetLocale()
 
@@ -107,8 +109,8 @@ end
 function mod:Fixate(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(80094)
+		self:LocalMessage(80094, CL["you"]:format(spellName), "Personal", spellId, "Info")
 	end
-	self:TargetMessage(80094, spellName, player, "Urgent", spellId)
 end
 
 function mod:LightningConductor(player, spellId)
@@ -122,6 +124,7 @@ end
 
 function mod:PoisonProtocol(_, spellId, _, _, spellName)
 	self:Bar(91513, spellName, 45, spellId)
+	self:Message(91513, L["protocol_message"], "Positive", spellId)
 end
 
 do

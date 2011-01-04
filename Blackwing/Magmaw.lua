@@ -34,8 +34,8 @@ if L then
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
-	L.expose_trigger = "head",
-	L.expose_message = "Head Explosed!",
+	L.expose_trigger = "head"
+	L.expose_message = "Head Explosed!"
 end
 L = mod:GetLocale()
 
