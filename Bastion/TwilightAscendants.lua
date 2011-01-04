@@ -65,17 +65,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightningRodApplied",83099)
 	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved",83099)
 
-	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512)
-	self:Log("SPELL_CAST_START", "HardenSkin", 92541, 92542)
-	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506)
+	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
+	self:Log("SPELL_CAST_START", "HardenSkin", 92541, 92542, 92543)
+	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
 
 	self:Yell("Switch", L["switch_trigger"])
 
-	self:Log("SPELL_CAST_START", "Quake", 83565, 92544, 92545)
-	self:Log("SPELL_CAST_START", "Thundershock", 83067, 92469, 92470)
+	self:Log("SPELL_CAST_START", "Quake", 83565, 92544, 92545, 92546)
+	self:Log("SPELL_CAST_START", "Thundershock", 83067, 92469, 92470, 92471)
 
 	self:Emote("QuakeTrigger", L["quake_trigger"])
 	self:Emote("ThundershockTrigger", L["thundershock_trigger"])
