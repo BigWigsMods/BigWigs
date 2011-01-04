@@ -34,6 +34,9 @@ if L then
 	L.slump_desc = "Magmaul schlittert nach vorne und entblößt seine Zangen."
 
 	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
+
+	L.expose_trigger = "head"
+	L.expose_message = "Head Explosed!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")

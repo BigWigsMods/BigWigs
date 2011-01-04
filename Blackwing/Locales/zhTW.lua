@@ -36,6 +36,9 @@ if L then
 	L.slump_desc = "當跌落並暴露時發出警報。"
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
+
+	L.expose_trigger = "head"
+	L.expose_message = "Head Explosed!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "zhTW")

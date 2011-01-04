@@ -27,13 +27,16 @@ L = BigWigs:NewBossLocale("Magmaw", "koKR")
 if L then
 	L.inferno = (GetSpellInfo(92191))
 	L.inferno_desc = "이글거리는 지옥불 소환을 알립니다."
-	
+
 	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
 
 	L.slump = "슬럼프"
 	L.slump_desc = "슬럼프 상태를 알립니다."
 
 	L.slump_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
+
+	L.expose_trigger = "head"
+	L.expose_message = "Head Explosed!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "koKR")
@@ -72,13 +75,13 @@ L = BigWigs:NewBossLocale("Nefarian", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
-	
+
 	L.phase_two_trigger = "저주받을 필멸자들!"	--check
-	
+
 	L.phase_three_trigger = "품위있는"	--check
 
 	L.shadowblaze_trigger = "살을 재로"	--check
-	
+
 	L.cinder_say = "나에게 폭발하는 잿더미!"
 
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
@@ -102,3 +105,4 @@ if L then
 
 	L.cloud_message = "당신은 화학 구름!"
 end
+

@@ -36,6 +36,9 @@ if L then
 	L.slump_desc = "Cae hacia delante exponiendose a sí mismo"
 
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
+
+	L.expose_trigger = "head"
+	L.expose_message = "Head Explosed!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "esES")
@@ -104,3 +107,4 @@ if L then
 
 	L.cloud_message = "¡Nube en TI!"
 end
+

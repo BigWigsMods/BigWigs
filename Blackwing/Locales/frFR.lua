@@ -36,6 +36,9 @@ if L then
 	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose."
 
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
+
+	L.expose_trigger = "head"
+	L.expose_message = "Head Explosed!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")

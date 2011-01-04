@@ -33,6 +33,9 @@ if L then
 	L.slump_desc = "Magmaw slumps forward exposing itself."
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
+
+	L.expose_trigger = "head",
+	L.expose_message = "Head Explosed!",
 end
 L = mod:GetLocale()
 
@@ -46,10 +49,10 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
-	self:Log("SPELL_AURA_APPLIED", "Vulnerability", 79011)
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617) -- check IDs
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
 	self:Emote("Slump", L["slump_trigger"])
+	self:Emote("Vulnerability", L["expose_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -69,10 +72,9 @@ end
 -- Event Handlers
 --
 
-function mod:Vulnerability(_, spellId, _, _, spellName)
-	if not UnitName("boss1") then return end --prevent this firing when the boss respawns after a wipe
-	self:Message(79011, spellName, "Attention", spellId)
-	self:Bar(79011, spellName, 30, spellId)
+function mod:Vulnerability()
+	self:Message(79011, L["expose_message"], "Attention", 79011)
+	self:Bar(79011, L["expose_message"], 30, 79011)
 	self:Bar(78006, L["pillar_of_flame_cd"], 40, 78006) -- 10 sec after vulnerability ends, might not be accurate
 end
 
