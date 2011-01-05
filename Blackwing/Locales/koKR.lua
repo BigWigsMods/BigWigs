@@ -18,6 +18,8 @@ if L then
 
 	L.next_system_failure = "다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"
+	
+	L.mortality_report = "%s 체력 %d%%, 곧 %s!"
 
 	L.warmup = "전투 준비"
 	L.warmup_desc = "전투가 시작되기까지의 시간입니다."
