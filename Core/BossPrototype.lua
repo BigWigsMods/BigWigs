@@ -159,7 +159,6 @@ end
 
 function boss:CheckBossStatus()
 	if debug then dbg(self, ":CheckBossStatus called.") end
-	--rough draft, subject to change
 	local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4")
 	if not guid and self.isEngaged then
 		self:Reboot()
