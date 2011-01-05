@@ -91,6 +91,7 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
 if L then
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
+	L.switch_message = "Wechsel - %s %s"
 
 	L.next_switch = "Nächster Wechsel"
 
@@ -98,5 +99,8 @@ if L then
 
 	L.cloud_message = "Wolke auf DIR!"
 	L.protocol_message = "Poison Bombs!"
+
+	L.iconomnotron = "Icon on active boss"
+	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
 end
 

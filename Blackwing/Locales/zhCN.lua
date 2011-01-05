@@ -93,6 +93,7 @@ if L then
 	L.nef_desc = "当维克多·奈法里奥斯施放技能时发出警报。"
 	L.switch = "转换"
 	L.switch_desc = "当转换时发出警报。"
+	L.switch_message = "转换 - %s %s"
 
 	L.next_switch = "<下一转换>"
 
@@ -105,5 +106,8 @@ if L then
 
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs!"
+
+	L.iconomnotron = "Icon on active boss"
+	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
 end
 

@@ -95,6 +95,7 @@ if L then
 	L.nef_desc = "Avisos para las abilidades de Lord Victor Nefarius"
 	L.switch = "Cambio"
 	L.switch_desc = "Advertencia para los cambios"
+	L.switch_message = "Cambio - %s %s"
 
 	L.next_switch = "Siguiente cambio"
 
@@ -107,5 +108,8 @@ if L then
 
 	L.cloud_message = "¡Nube en TI!"
 	L.protocol_message = "¡Bomba de veneno!"
+
+	L.iconomnotron = "Icon on active boss"
+	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
 end
 

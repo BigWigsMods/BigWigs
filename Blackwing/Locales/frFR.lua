@@ -95,6 +95,7 @@ if L then
 	L.nef_desc = "Prévient quand le Seigneur Victor Nefarius utilise une technique."
 	L.switch = "Changement"
 	L.switch_desc = "Prévient de l'arrivée des changements."
+	L.switch_message = "Changement - %s %s"
 
 	L.next_switch = "Prochain changement"
 
@@ -107,5 +108,8 @@ if L then
 
 	L.cloud_message = "Nuage chimique sur vous !"
 	L.protocol_message = "Bombes de poison !"
+
+	L.iconomnotron = "Icon on active boss"
+	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
 end
 

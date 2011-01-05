@@ -93,6 +93,7 @@ if L then
 	L.nef_desc = "군주 빅터 네파리우스의 기술을 알립니다."
 	L.switch = "전환"
 	L.switch_desc = "전환을 알립니다."
+	L.switch_message = "전환 - %s %s"
 
 	L.next_switch = "다음 전환"
 
@@ -105,5 +106,8 @@ if L then
 
 	L.cloud_message = "당신은 화학 구름!"
 	L.protocol_message = "Poison Bombs!"
+
+	L.iconomnotron = "Icon on active boss"
+	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
 end
 

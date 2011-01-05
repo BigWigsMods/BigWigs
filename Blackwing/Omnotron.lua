@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
-mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE"}, "nef", {92048, "ICON"}, 92023, "switch", "bosskill"}
+mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE"}, "nef", {92048, "ICON"}, 92023, "switch", "iconomnotron", bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	switch = "general",
@@ -26,6 +26,7 @@ if L then
 	L.nef_desc = "Warnings for Lord Victor Nefarius abilities"
 	L.switch = "Switch"
 	L.switch_desc = "Warning for Switches"
+	L.switch_message = "Switch - %s %s"
 
 	L.next_switch = "Next Switch"
 
@@ -38,6 +39,9 @@ if L then
 
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs!"
+
+	L.iconomnotron = "Icon on active boss"
+	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
 end
 L = mod:GetLocale()
 
@@ -47,18 +51,18 @@ L = mod:GetLocale()
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036)
-	self:Log("SPELL_CAST_START", "Switch", 79582, 91516, 79900, 91447, 79729, 91543, 79835, 91503, 91501, 91544, 91448, 91517, 91505, 91545, 91518, 91449, 91515)
 
 	self:Yell("NefAbilties", L["nef_trigger1"])
 	self:Yell("NefAbilties", L["nef_trigger2"])
 
-	self:Log("SPELL_CAST_SUCCESS", "LightningConductor", 79888, 91433, 91431, 91432)
 	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 91499, 91514, 91515)
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094) -- Might be a bit more accurate than SPELL_CAST_SUCCESS, but still there is something fishy going on here
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094)
 
 	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479, 91473)
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
+	self:Log("SPELL_AURA_APPLIED", "LightningConductor", 79888, 91433, 91431, 91432)
+	self:Log("SPELL_AURA_APPLIED", "Switch", 78740, 95016)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -67,7 +71,6 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar("switch", L["next_switch"], diff > 2 and 30 or 40, 91513)
-	--self:Message("switch", L["switch"].." - "..GetSpellInfo(NNNNN), "Important", spellId, "Alert") --Decide which spell
 end
 
 --------------------------------------------------------------------------------
@@ -79,9 +82,17 @@ function mod:NefAbilties()
 	self:Bar("nef", L["nef_next"], 35, 92048)
 end
 
-function mod:Switch(_, spellId, _, _, spellName)
-	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 40, 91513)
-	self:Message("switch", L["switch"].." - "..spellName, "Important", spellId, "Alert")
+function mod:Switch(unit, spellId, _, _, spellName)
+	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 40, spellId)
+	self:Message("switch", L["switch_message"]:format(unit, spellName), "Important", spellId, "Alert")
+	for i = 1, 4 do
+		local bossId = ("boss%d"):format(i)
+		local name = UnitName(bossId)
+		if name and name == unit then
+			self:PrimaryIcon("iconomnotron", bossId)
+			break
+		end
+	end
 end
 
 function mod:ShadowInfusion(player, spellId, _, _, spellName)
@@ -90,12 +101,12 @@ function mod:ShadowInfusion(player, spellId, _, _, spellName)
 	end
 	self:TargetMessage(92048, spellName, player, "Urgent", spellId)
 	self:Bar("nef", L["nef_next"], 35, 92048)
-	self:PrimaryIcon(92048, player)
+	self:SecondaryIcon(92048, player)
 end
 
 function mod:EncasingShadows(player, spellId, _, _, spellName)
 	self:TargetMessage(92023, spellName, player, "Urgent", spellId)
-	mod:Bar("nef", L["nef_next"], 35, 92048)
+	self:Bar("nef", L["nef_next"], 35, 92048)
 end
 
 function mod:AcquiringTarget(player, spellId)
@@ -113,12 +124,13 @@ function mod:Fixate(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:LightningConductor(player, spellId)
+function mod:LightningConductor(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(79888)
 		self:OpenProximity(15) --assumed
 		self:ScheduleTimer(self.CloseProximity, 10, self)
 	end
+	self:TargetMessage(79888, spellName, player, "Attention", spellId)
 	self:SecondaryIcon(79888, player)
 end
 
