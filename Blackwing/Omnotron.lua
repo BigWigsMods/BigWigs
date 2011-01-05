@@ -50,7 +50,7 @@ L = mod:GetLocale()
 --
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036)
+	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036, 92037)
 
 	self:Yell("NefAbilties", L["nef_trigger1"])
 	self:Yell("NefAbilties", L["nef_trigger2"])
