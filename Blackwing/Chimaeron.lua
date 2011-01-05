@@ -50,7 +50,7 @@ end
 
 function mod:Warmup(_, msg)
 	if msg == L["bileotron_engage"] then
-		self:Bar("warmup", L["warmup"], 30, "achievement_boss_chimaeron")
+		self:Bar("warmup", L["warmup"], 30, "achievement_dungeon_blackwingdescent_raid_chimaron")
 	end
 end
 
