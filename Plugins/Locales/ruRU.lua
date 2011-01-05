@@ -9,6 +9,10 @@ if not L then return end
 L["Clickable Bars"] = "Полосы активизируемые щелчком мыши"
 L.clickableBarsDesc = "Полосы Big Wigs по умолчанию не реагируют на щелчки мыши в их области. Таким образом, можно целится в объекты или запустить массовое, целенаправленное заклинаний за ними, изменить ракурс камеры, и так далее, в то время как курсор находится в области полос.|cffff4411Если вы включите полосы активизируемые щелчком мыши, это больше работать не будет.|r Полосы будут перехватывать любые щелчки мыши выполняемые в их области.\n"
 L["Enables bars to receive mouse clicks."] = "Включает восприятие щелчков мыши в области полос."
+L["Modifier"] = "Модификатор"
+L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Удерживайте выбранную клавишу, чтобы разрешить нажмитие по полоске таймера."
+L["Only with modifier key"] = "Только с модифицирующей клавишей"
+L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = "Блокирует нажатие на панели/полосы, за исключением удерживания заданной клавиши, после чего действия мышкой, описанные ниже, будут доступны."
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Временное супер увеличение полос и всех сообщений, связанные с ним в течение всего срока действия."
 L["Report"] = "Сообщить"
@@ -76,8 +80,12 @@ L["Positive"] = "Позитивные"
 --
 
 L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
+L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 
 L["Messages"] = "Сообщения"
+L["Normal messages"] = "Обычные сообщения"
+L["Emphasized messages"] = "Увеличенные сообщения"
+L["Output"] = "Вывод"
 
 L["Use colors"] = "Использовать цвета"
 L["Toggles white only messages ignoring coloring."] = "Не раскрашивать сообщения (белый текст)."
@@ -90,6 +98,14 @@ L["Colors player names in messages by their class."] = "Окрашивает и�
 
 L["Chat frame"] = "Окно чата"
 L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Выводить все сообщения BigWigs в стандартное окно чата в дополнении с настройками отображения."
+
+L["Font size"] = "Размер шрифта"
+L["None"] = "Нету"
+L["Thin"] = "Тонкий"
+L["Thick"] = "Толстый"
+L["Outline"] = "Контур"
+L["Monochrome"] = "Монохромный"
+L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Переключение монохромного флага на всех сообщениях, удаляя все сглаживание края шрифта."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
