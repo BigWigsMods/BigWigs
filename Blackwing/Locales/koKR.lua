@@ -33,9 +33,9 @@ if L then
 	L.slump = "슬럼프"
 	L.slump_desc = "슬럼프 상태를 알립니다."
 
-	L.slump_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
+	L.slump_trigger = "%s|1이;가; 집게를 드러내며 앞으로 몸을 기울입니다!"
 
-	L.expose_trigger = "head"
+	L.expose_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
 	L.expose_message = "Head Explosed!"
 end
 
@@ -105,9 +105,9 @@ if L then
 	L.acquiring_target = "대상 획득"
 
 	L.cloud_message = "당신은 화학 구름!"
-	L.protocol_message = "Poison Bombs!"
+	L.protocol_message = "독 폭탄!"
 
-	L.iconomnotron = "Icon on active boss"
-	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
+	L.iconomnotron = "활성화 보스 전술"
+	L.iconomnotron_desc = "활성화된 보스에 공격대 전술을 지정합니다. (공격대장이나 승급된 사람만이 가능합니다)."
 end
 
