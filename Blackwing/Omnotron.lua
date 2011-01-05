@@ -23,9 +23,9 @@ mod.optionHeaders = {
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.nef = "Lord Victor Nefarius"
-	L.nef_desc = "Warnings for Lord Victor Nefarius abilities"
+	L.nef_desc = "Warnings for Lord Victor Nefarius abilities."
 	L.switch = "Switch"
-	L.switch_desc = "Warning for Switches"
+	L.switch_desc = "Warning for Switches."
 	L.switch_message = "Switch - %s %s"
 
 	L.next_switch = "Next Switch"

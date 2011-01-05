@@ -19,6 +19,8 @@ if L then
 	L.next_system_failure = "Nächstes Systemversagen"
 	L.break_message = "%2$dx Brechen auf %1$s"
 
+	L.mortality_report = "%s ist bei %d%% Leben, %s bald!"
+
 	L.warmup = "Aufwärmen"
 	L.warmup_desc = "Timer für die Aufwärmphase."
 end
@@ -35,8 +37,8 @@ if L then
 
 	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
 
-	L.expose_trigger = "head"
-	L.expose_message = "Head Explosed!"
+	L.expose_trigger = "Kopf"
+	L.expose_message = "Kopf freigelegt!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
@@ -89,18 +91,25 @@ end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
 if L then
+	L.nef = "Lord Victor Nefarius"
+	L.nef_desc = "Warnungen für Nefarians Fähigkeiten."
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
 	L.switch_message = "Wechsel - %s %s"
 
 	L.next_switch = "Nächster Wechsel"
 
+	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+
+	L.nef_next = "~Fähigkeiten Buff"
+
 	L.acquiring_target = "Zielerfassung"
 
 	L.cloud_message = "Wolke auf DIR!"
-	L.protocol_message = "Poison Bombs!"
+	L.protocol_message = "Giftbombe!"
 
-	L.iconomnotron = "Icon on active boss"
-	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
+	L.iconomnotron = "Symbol auf aktivem Boss"
+	L.iconomnotron_desc = "Plaziert das primäre Schlachtzugssymbol auf dem aktiven Boss (benötigt Assistent oder höher)."
 end
 
