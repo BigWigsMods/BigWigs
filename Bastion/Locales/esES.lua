@@ -43,13 +43,13 @@ if L then
 
 	L.lightning_rod_say = "¡Vara relámpago en MI!"
 
-	-- L.switch_trigger = "We will handle them!"
+	L.switch_trigger = "¡Nos ocuparemos de ellos!"
 
-	-- L.quake_trigger = "The ground beneath you rumbles ominously...."
-	-- L.thundershock_trigger = "The surrounding air crackles with energy...."
+	L.quake_trigger = "El suelo bajo tus pies empieza a temblar ominosamente..."
+	L.thundershock_trigger = "El aire circundante chisporrotea de energía..."
 
 	L.searing_winds_message = "¡Se forman Vientos espirales!"
 	L.grounded_message = "¡Toma tierra!"
 
-	-- L.last_phase_trigger = "BEHOLD YOUR DOOM!"
+	L.last_phase_trigger = "¡CONTEMPLAD VUESTRA PERDICIÓN!"
 end
