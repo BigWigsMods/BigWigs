@@ -72,6 +72,11 @@ local function unitTargetChanged(event, target)
 end
 
 local function zoneChanged()
+	if UnitIsGhost("player") then
+		for _, module in addon:IterateBossModules() do
+			if module.isEngaged then module:Reboot() end
+		end
+	end
 	if enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()] then
 		if not monitoring then
 			monitoring = true
