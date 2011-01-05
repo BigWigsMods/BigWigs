@@ -37,8 +37,8 @@ if L then
 
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
 
-	L.expose_trigger = "head"
-	L.expose_message = "Head Explosed!"
+	L.expose_trigger = "expose sa tête"
+	L.expose_message = "Tête exposée !"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")
@@ -106,6 +106,6 @@ if L then
 	L.acquiring_target = "Acquisition d'une cible"
 
 	L.cloud_message = "Nuage chimique sur vous !"
-	L.protocol_message = "Poison Bombs!"
+	L.protocol_message = "Bombes de poison !"
 end
 
