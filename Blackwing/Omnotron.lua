@@ -87,8 +87,7 @@ function mod:Switch(unit, spellId, _, _, spellName)
 	self:Message("switch", L["switch_message"]:format(unit, spellName), "Important", spellId, "Alert")
 	for i = 1, 4 do
 		local bossId = ("boss%d"):format(i)
-		local name = UnitName(bossId)
-		if name and name == unit then
+		if UnitName(bossId) == unit then
 			self:PrimaryIcon("iconomnotron", bossId)
 			break
 		end
