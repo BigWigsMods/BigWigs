@@ -95,7 +95,7 @@ if L then
 	L.nef_desc = "Сообщать о способностях Лорда Виктора Нефария."
 	L.switch = "Смена"
 	L.switch_desc = "Сообщать о сменах."
-	L.switch_message = "Смена - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "След. Смена"
 

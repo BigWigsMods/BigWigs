@@ -95,7 +95,7 @@ if L then
 	L.nef_desc = "Warnungen für Nefarians Fähigkeiten."
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
-	L.switch_message = "Wechsel - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "Nächster Wechsel"
 

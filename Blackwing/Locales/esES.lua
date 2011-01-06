@@ -95,7 +95,7 @@ if L then
 	L.nef_desc = "Avisos para las abilidades de Lord Victor Nefarius"
 	L.switch = "Cambio"
 	L.switch_desc = "Advertencia para los cambios"
-	L.switch_message = "Cambio - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "Siguiente cambio"
 

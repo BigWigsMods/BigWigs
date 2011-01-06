@@ -95,7 +95,7 @@ if L then
 	L.nef_desc = "군주 빅터 네파리우스의 기술을 알립니다."
 	L.switch = "전환"
 	L.switch_desc = "전환을 알립니다."
-	L.switch_message = "전환 - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "다음 전환"
 

@@ -95,7 +95,7 @@ if L then
 	L.nef_desc = "Prévient quand le Seigneur Victor Nefarius utilise une technique."
 	L.switch = "Changement"
 	L.switch_desc = "Prévient de l'arrivée des changements."
-	L.switch_message = "Changement - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "Prochain changement"
 

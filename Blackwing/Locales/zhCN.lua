@@ -93,7 +93,7 @@ if L then
 	L.nef_desc = "当维克多·奈法里奥斯施放技能时发出警报。"
 	L.switch = "转换"
 	L.switch_desc = "当转换时发出警报。"
-	L.switch_message = "转换 - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "<下一转换>"
 

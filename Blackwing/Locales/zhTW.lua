@@ -93,7 +93,7 @@ if L then
 	L.nef_desc = "當維克多·奈法利斯領主施放技能時發出警報。"
 	L.switch = "轉換"
 	L.switch_desc = "當轉換時發出警報。"
-	L.switch_message = "轉換 - %s %s"
+	L.switch_message = "%s %s"
 
 	L.next_switch = "<下一轉換>"
 
