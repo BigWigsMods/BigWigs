@@ -33,14 +33,14 @@ if L then
 	L.phase_switch = "Phase Switch"
 	L.phase_switch_desc = "Warning for Phase Switches"
 
-	L.engulfingmagic_say = "Engulfing Magic on ME!"
+	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
 
 	L.devouringflames_cooldown = "~Devouring Flames"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
 
-	L.twilight_shift = "%2$dx Twilight Shift on %1$s"
+	L.twilight_shift = "%2$dx shift on %1$s"
 end
 L = mod:GetLocale()
 

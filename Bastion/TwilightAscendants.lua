@@ -20,9 +20,9 @@ local aegis = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.static_overload_say = "Static Overload on ME!"
-	L.gravity_core_say = "Gravity Core on ME!"
-	L.health_report = "%s is at %d%% health, switch soon!"
+	L.static_overload_say = "Overload on ME!"
+	L.gravity_core_say = "Gravity on ME!"
+	L.health_report = "%s at %d%%, phase change soon!"
 	L.switch = "Switch"
 	L.switch_desc = "Warning for boss switches"
 
@@ -35,8 +35,8 @@ if L then
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
 	L.thundershock_trigger = "The surrounding air crackles with energy...."
 
-	L.searing_winds_message = "Get Searing Winds!"
-	L.grounded_message = "Get Grounded!"
+	L.searing_winds_message = "Lightning incoming!"
+	L.grounded_message = "Earthquake incoming!"
 
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
 end

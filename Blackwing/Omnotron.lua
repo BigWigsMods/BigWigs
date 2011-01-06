@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
-mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE"}, "nef", {92048, "ICON"}, 92023, "switch", "iconomnotron", "bosskill"}
+mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, "switch", "iconomnotron", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	switch = "general",
@@ -26,9 +26,9 @@ if L then
 	L.nef_desc = "Warnings for Lord Victor Nefarius abilities."
 	L.switch = "Switch"
 	L.switch_desc = "Warning for Switches."
-	L.switch_message = "Switch - %s %s"
+	L.switch_message = "Target active: %s %s"
 
-	L.next_switch = "Next Switch"
+	L.next_switch = "Next target active"
 
 	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
@@ -38,7 +38,7 @@ if L then
 	L.acquiring_target = "Acquiring Target"
 
 	L.cloud_message = "Cloud on YOU!"
-	L.protocol_message = "Poison Bombs!"
+	L.protocol_message = "Poison Bombs incoming!"
 
 	L.iconomnotron = "Icon on active boss"
 	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
@@ -120,6 +120,8 @@ function mod:Fixate(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(80094)
 		self:LocalMessage(80094, CL["you"]:format(spellName), "Personal", spellId, "Info")
+	else
+		self:Whisper(80094, player, spellName)
 	end
 end
 
