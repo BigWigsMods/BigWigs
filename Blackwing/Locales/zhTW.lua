@@ -11,7 +11,7 @@ if L then
 	L.air_phase = "空中階段"
 	L.air_phase_desc = "當亞特拉米德起飛時發出警報。"
 
-	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
+	L.air_phase_trigger = "沒錯，逃吧!每一步都會讓你的心跳加速。跳得轟隆作響...震耳欲聾。你逃不掉的!"
 
 	L.sonicbreath_cooldown = "<音之息>"
 end
@@ -78,13 +78,13 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"
 
-	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
+	L.phase_two_trigger = "詛咒你們，凡人!如此冷酷地漠視他人的所有物必須受到嚴厲的懲罰!"
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
-	L.shadowblaze_trigger = "Flesh turns to ash!"
+	L.shadowblaze_trigger = "化為灰燼吧!"
 
-	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
+	L.chromatic_prototype = "炫彩原型體" -- 3 adds name
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "zhTW")
