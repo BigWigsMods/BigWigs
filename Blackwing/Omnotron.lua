@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
 	self:Log("SPELL_AURA_APPLIED", "LightningConductor", 79888, 91433, 91431, 91432)
-	self:Log("SPELL_AURA_APPLIED", "Switch", 78740, 95016)
+	self:Log("SPELL_AURA_APPLIED", "Switch", 78740, 95016, 95017, 95018)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
