@@ -74,7 +74,7 @@ function mod:OnEngage(diff)
 	lastDestruction = 0
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
-	self:Bar(86788, (GetSpellInfo(86788)), 20, 86788)
+	self:Bar(86788, (GetSpellInfo(86788)), 11, 86788)
 	self:Bar("phase_switch", Theralion, 95, 60639)
 end
 
