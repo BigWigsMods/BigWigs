@@ -5,16 +5,14 @@
 local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, Arion, Terrastra, Elementium Monstrosity
-mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 92541, 83581, "proximity", "switch", "bosskill"}
+mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "ICON", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 92541, 83581, 92488, "proximity", "switch", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local searingWinds = GetSpellInfo(83500)
-local grounded = GetSpellInfo(83581)
-local grounded_check_allowed, searing_winds_check_allowed = false, false
-local lrTargets = mod:NewTargetList()
+local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
+local aegis = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +30,8 @@ if L then
 
 	L.switch_trigger = "We will handle them!"
 
+	L.thundershock_quake_soon = "%s in 10 sec!"
+
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
 	L.thundershock_trigger = "The surrounding air crackles with energy...."
 
@@ -47,6 +47,7 @@ mod.optionHeaders = {
 	[82746] = "Feludius",
 	[83067] = "Arion",
 	[83565] = "Terrastra",
+	[92488] = "Elementium Monstrosity",
 	[92067] = "heroic",
 	proximity = "general",
 }
@@ -66,11 +67,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved",83099)
 
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
-	self:Log("SPELL_CAST_START", "HardenSkin", 92541, 92542, 92543)
+	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
+	self:Log("SPELL_AURA_APPLIED", "HardenSkinApplied", 92541, 92542, 92543)
+	self:Log("SPELL_AURA_APPLIED", "HardenSkinRemoved", 92541, 92542, 92543)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
+	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 92488)
 
 	self:Yell("Switch", L["switch_trigger"])
 
@@ -94,9 +98,10 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		self:OpenProximity(8)
 	end
+	hardenSkin = false
+
 	self:Bar(82631, (GetSpellInfo(82631)), 28, 82631)
 	self:Bar(82746, (GetSpellInfo(82746)), 15, 82746)
-	grounded_check_allowed, searing_winds_check_allowed = false, false
 end
 
 --------------------------------------------------------------------------------
@@ -109,7 +114,7 @@ do
 		mod:TargetMessage(83099, spellName, lrTargets, "Important", 83099, "Alert")
 		scheduled = nil
 	end
-	function mod:LightningRodApplied(player, spellId, _, _, spellName)
+	function mod:LightningRodApplied(player, _, _, _, spellName)
 		lrTargets[#lrTargets + 1] = player
 		if not scheduled then
 			scheduled = true
@@ -120,6 +125,22 @@ do
 			self:FlashShake(83099)
 			self:OpenProximity(8)
 		end
+	end
+end
+
+do
+	local scheduled = nil
+	local function gcWarn(spellName)
+		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alert")
+		scheduled = nil
+	end
+	function mod:GravityCrush(player, spellId, _, _, spellName)
+		gcTargets[#gcTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(gcWarn, 0.3, spellName)
+		end
+		self:Bar(92488, spellName, 25, spellId)
 	end
 end
 
@@ -153,24 +174,7 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 	end
 	self:TargetMessage(92307, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(92307, player, spellName)
-end
-
-local function searing_winds_check()
-	if searing_winds_check_allowed then
-		if not UnitDebuff("player", searingWinds) and not UnitIsDeadOrGhost("player") then
-			mod:LocalMessage(83500, L["searing_winds_message"], "Personal", 83500, "Info")
-			mod:ScheduleTimer(searing_winds_check, 1) -- this might be a bit annoying but hey else you die
-		end
-	end
-end
-
-local function grounded_check()
-	if grounded_check_allowed then
-		if not UnitDebuff("player", grounded) and not UnitIsDeadOrGhost("player") then
-			mod:LocalMessage(83581, L["grounded_message"], "Personal", 83581, "Info")
-			mod:ScheduleTimer(grounded_check, 1) -- this might be a bit annoying but hey else you die
-		end
-	end
+	self:PrimaryIcon(92307, player)
 end
 
 function mod:UNIT_HEALTH(event, unit)
@@ -188,11 +192,20 @@ end
 function mod:AegisofFlame(_, spellId, _, _, spellName)
 	self:Bar(82631, spellName, 62, spellId)
 	self:Message(82631, spellName, "Important", spellId, "Info")
+	aegis = self:ScheduleTimer(function() end, 62)
 end
 
-function mod:HardenSkin(_, spellId, _, _, spellName)
+function mod:HardenSkinStart(_, spellId, _, _, spellName)
 	self:Bar(92541, spellName, 45, spellId)
 	self:Message(92541, spellName, "Urgent", spellId, "Info")
+end
+
+function mod:HardenSkinApplied()
+	hardenSkin = true
+end
+
+function mod:HardenSkinRemoved()
+	hardenSkin = false
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
@@ -201,7 +214,7 @@ function mod:Glaciate(_, spellId, _, _, spellName)
 end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
+	if UnitIsUnit(player, "player") and self:TimeLeft(aegis) > 5 then
 		self:LocalMessage(82762, spellName, "Important", spellId, "Long")
 	end
 end
@@ -225,34 +238,33 @@ end
 
 function mod:Quake(_, spellId, _, _, spellName)
 	self:Bar(83565, spellName, 65, spellId)
-	self:Message(83565, spellName, "Important", spellId, "Alert")
-	searing_winds_check_allowed = false
+	if hardenSkin then
+		self:Message(83565, spellName, "Important", spellId, "Alert")
+	end
 end
 
 function mod:Thundershock(_, spellId, _, _, spellName)
 	self:Bar(83067, spellName, 65, spellId)
 	self:Message(83067, spellName, "Important", spellId, "Alert")
-	grounded_check_allowed = false
 end
 
 function mod:QuakeTrigger()
-	searing_winds_check_allowed = true
-	searing_winds_check()
 	self:Bar(83565, (GetSpellInfo(83565)), 10, 83565) -- update the bar since we are sure about this timer
+	if hardenSkin then
+		self:Message(83565, L["thundershock_quake_soon"]:format((GetSpellInfo(83565))), "Important", spellId, "Alert")
+	end
 end
 
 function mod:ThundershockTrigger()
-	grounded_check_allowed = true
-	grounded_check()
+	self:Message(83067, L["thundershock_quake_soon"]:format((GetSpellInfo(83067))), "Important", spellId, "Alert")
 	self:Bar(83067, (GetSpellInfo(83067)), 10, 83067) -- update the bar since we are sure about this timer
 end
 
 function mod:LastPhase()
-	grounded_check_allowed = false
-	searing_winds_check_allowed = false
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83565)))
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83067)))
-	self:OpenProximity(10) -- assumed, not even sure if we need it
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(92541)))
+	self:Bar(92488, (GetSpellInfo(92488)), 30, 92488)
+	self:OpenProximity(9)
 	self:UnregisterEvent("UNIT_HEALTH")
 end
-
