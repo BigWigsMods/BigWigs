@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Conclave of Wind", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
-mod.toggleOptions = {86193, "storm_shield", {84645, "FLASHSHAKE"}, 85422, 86307, "full_power", "berserk", "bosskill"}
+mod.toggleOptions = {86193, "storm_shield", {84645, "FLASHSHAKE"}, 85422, 86281, 86307, "full_power", "berserk", "bosskill"}
 mod.optionHeaders = {
 	[86193] = "Rohash",
 	[84645] = "Nezir",
@@ -18,6 +18,7 @@ mod.optionHeaders = {
 --
 
 local firstWindBlast = true
+local toxicSporesWarned = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -61,6 +62,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
+	self:Log("SPELL_AURA_APPLIED", "ToxicSporesApplied", 86281)
+	self:Log("SPELL_AURA_REMOVED", "ToxicSporesRemoved", 86281)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -73,6 +76,7 @@ function mod:OnEngage(diff)
 		self:Berserk(480)
 	end
 	firstWindBlast = true
+	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
 	self:Bar(85422, (GetSpellInfo(85422)), 30, 85422)
 	self:Bar(86193, (GetSpellInfo(86193)), 30, 86193)
@@ -130,9 +134,22 @@ function mod:WindBlast(_, spellId, _, _, spellName)
 	end
 end
 
+function mod:ToxicSporesRemoved()
+	toxicSporesWarned = false
+end
+
+function mod:ToxicSporesApplied(_, spellId, _, _, spellName)
+	if not toxicSporesWarned then
+		self:Bar(86281, spellName, 20, spellId)
+		self:Message(86281, spellName, "Urgent", spellId)
+		toxicSporesWarned = true
+	end
+end
+
 function mod:Nurture(_, spellId, _, _, spellName)
 	self:Bar(85422, spellName, 113, spellId)
 	self:Message(85422, spellName, "Urgent", spellId)
+	self:Bar(86281, (GetSpellInfo(86281)), 23, 86281)
 end
 
 function mod:GatherStrength(msg, sender)
