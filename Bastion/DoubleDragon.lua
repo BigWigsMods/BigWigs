@@ -17,7 +17,6 @@ mod.optionHeaders = {
 -- Locals
 --
 
-local lastDestruction = 0
 local marked = GetSpellInfo(88518)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local Theralion, Valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
@@ -71,11 +70,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	lastDestruction = 0
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, (GetSpellInfo(86788)), 11, 86788)
 	self:Bar("phase_switch", Theralion, 95, 60639)
+	self:OpenProximity(8)
 end
 
 --------------------------------------------------------------------------------
@@ -89,15 +88,19 @@ function mod:TwilightShift(player, spellId, _, _, spellName, stack)
 	end
 end
 
-function mod:DazzlingDestruction()
-	if (GetTime() - lastDestruction) > 6 then
-		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
-		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-		self:Bar("phase_switch", Valiona, 113, 60639)
+do
+	local lastDestruction = 0
+	function mod:DazzlingDestruction()
+		local time = GetTime()
+		if (time - lastDestruction) > 6 then
+			self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(86788)))
+			self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
+			self:Bar("phase_switch", Valiona, 113, 60639)
+		end
+		lastDestruction = time
+		count = 0
+		self:Bar(86059, (GetSpellInfo(86059)), 110, 92194) -- looks like a dragon 'deep breath' :)
 	end
-	lastDestruction = GetTime()
-	count = 0
-	self:Bar(86059, (GetSpellInfo(86059)), 110, 92194)	-- looks like a dragon 'deep breath' :)
 end
 
 function mod:DeepBreath()
@@ -147,6 +150,7 @@ function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(86622, L["engulfingmagic_say"])
 		self:FlashShake(86622)
+		self:CloseProximity()
 		self:OpenProximity(10)
 	end
 	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Alarm")
@@ -161,6 +165,7 @@ end
 function mod:EngulfingMagicRemoved(player)
 	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
+		self:OpenProximity(8)
 	end
 end
 
