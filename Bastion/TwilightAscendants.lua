@@ -214,7 +214,7 @@ function mod:Glaciate(_, spellId, _, _, spellName)
 end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") and self:TimeLeft(aegis) > 5 then
+	if UnitIsUnit(player, "player") and aegis and self:TimeLeft(aegis) > 5 then
 		self:LocalMessage(82762, spellName, "Important", spellId, "Long")
 	end
 end
