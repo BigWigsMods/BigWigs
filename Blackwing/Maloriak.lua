@@ -30,8 +30,8 @@ if L then
 	--normal
 	L.final_phase = "Final Phase"
 
-	L.release_aberration_message = "%s adds left!"
-	L.release_all = "%s adds released!"
+	L.release_aberration_message = "%d adds left!"
+	L.release_all = "%d adds released!"
 
 	L.bitingchill_say = "Biting Chill on ME!"
 
@@ -73,6 +73,8 @@ function mod:OnBossEnable()
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
+	self:Log("SPELL_INTERRUPT", "Interrupt", "*")
+
 	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
@@ -215,9 +217,23 @@ function mod:Remedy(unit, spellId, _, _, spellName)
 	end
 end
 
-function mod:ReleaseAberrations(_, spellId)
-	aberrations = aberrations - 3
-	self:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
+do
+	local handle = nil
+	local function release(spellId)
+		aberrations = aberrations - 3
+		self:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
+	end
+	function mod:ReleaseAberrations(_, spellId)
+		handle = self:ScheduleTimer(release, 1.5, spellId)
+	end
+	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
+		if secSpellId ~= 77569 then return end
+		local guid = tonumber(dGUID:sub(7, 10), 16)
+		if guid ~= 41378 then return end
+		-- Someone interrupted release aberrations!
+		self:CancelTimer(handle, true)
+		handle = nil
+	end
 end
 
 function mod:ConsumingFlames(player, spellId, _, _, spellName)
@@ -225,7 +241,8 @@ function mod:ConsumingFlames(player, spellId, _, _, spellName)
 		self:FlashShake(77786)
 		self:LocalMessage(77786, spellName, "Personal", spellId, "Info")
 	end
-	self:TargetMessage(77786, spellName, player, "Urgent", spellId) -- let the other know too so they can shout on the guy if he is slow
+	-- let the other know too so they can shout on the guy if he is slow
+	self:TargetMessage(77786, spellName, player, "Urgent", spellId)
 	self:Whisper(77786, player, L["you"]:format(spellName))
 	self:PrimaryIcon(77786, player)
 end
@@ -236,7 +253,7 @@ function mod:ScorchingBlast(_, spellId, _, _, spellName)
 end
 
 function mod:ReleaseAll(_, spellId)
-	self:Message(77991, L["release_all"]:format(aberrations), "Important", spellId, "Alert")
+	self:Message(77991, L["release_all"]:format(aberrations + 2), "Important", spellId, "Alert")
 end
 
 do
