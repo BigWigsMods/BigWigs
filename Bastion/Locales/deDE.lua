@@ -20,7 +20,7 @@ if L then
 
 	L.valiona_trigger = "Theralion, ich werde den Gang einhüllen. Deck ihre Flucht!" -- check
 
-	L.twilight_shift = "%2$dx Zwielichtverschiebung auf %1$s"
+	L.twilight_shift = "%2$dx Verschiebung auf %1$s"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "deDE")
@@ -35,9 +35,9 @@ end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "deDE")
 if L then
-	L.static_overload_say = "Statische Überladung auf MIR!"
-	L.gravity_core_say = "Gravitationskern auf MIR!"
-	L.health_report = "%s ist bei %d%% Leben, Wechsel bald!"
+	L.static_overload_say = "Überladung auf MIR!"
+	L.gravity_core_say = "Gravitation auf MIR!"
+	L.health_report = "%s bei %d%%, Wechsel bald!"
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt, wenn die Bosse wechseln."
 
@@ -45,11 +45,13 @@ if L then
 
 	L.switch_trigger = "Wir kümmern uns um sie!" -- check
 
+	L.thundershock_quake_soon = "%s in 10 sek!"
+
 	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..." -- check
 	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern...." -- check
 
-	L.searing_winds_message = "Wirbelnde Winde abholen!"
-	L.grounded_message = "Auf den Boden!"
+	L.searing_winds_message = "Donnerschock kommt!"
+	L.grounded_message = "Erdbeben kommt!"
 
 	L.last_phase_trigger = "SCHMECKT DIE VERDAMMNIS!" -- check
 end

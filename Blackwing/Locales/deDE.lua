@@ -107,7 +107,7 @@ if L then
 	L.acquiring_target = "Zielerfassung"
 
 	L.cloud_message = "Wolke auf DIR!"
-	L.protocol_message = "Giftbombe!"
+	L.protocol_message = "Giftbomben kommen!"
 
 	L.iconomnotron = "Symbol auf aktivem Boss"
 	L.iconomnotron_desc = "Plaziert das primäre Schlachtzugssymbol auf dem aktiven Boss (benötigt Assistent oder höher)."
