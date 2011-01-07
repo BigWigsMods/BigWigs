@@ -2,7 +2,7 @@
 -- Prototype
 --
 
-local debug = nil -- Set to true to get (very spammy) debug messages.
+local debug = false -- Set to true to get (very spammy) debug messages.
 local dbgStr = "[DBG:%s] %s"
 local function dbg(self, msg) print(dbgStr:format(self.displayName, msg)) end
 
@@ -107,8 +107,8 @@ do
 			else self[d](self, numericId, dGUID, player, dFlags) end
 		else
 			local m = combatLogMap[self][event]
-			if m and m[spellId] then
-				local func = m[spellId]
+			if m and (m[spellId] or m["*"]) then
+				local func = m[spellId] or m["*"]
 				if type(func) == "function" then
 					func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
 				else
