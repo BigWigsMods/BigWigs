@@ -19,7 +19,7 @@ if L then
 	L.next_system_failure = "다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"
 	
-	L.mortality_report = "%s 체력 %d%%, 곧 %s!"
+	L.phase2_message = "곧 치명상 단계!"
 
 	L.warmup = "전투 준비"
 	L.warmup_desc = "전투가 시작되기까지의 시간입니다."
@@ -36,6 +36,8 @@ if L then
 	L.slump_desc = "슬럼프 상태를 알립니다."
 
 	L.slump_trigger = "%s|1이;가; 집게를 드러내며 앞으로 몸을 기울입니다!"
+	
+	L.infection_message = "당신은 기생 감염!"
 
 	L.expose_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
 	L.expose_message = "Head Explosed!"
@@ -50,8 +52,8 @@ if L then
 	--normal
 	L.final_phase = "마지막 단계"
 
-	L.release_aberration_message = "돌연변이 %s 남음"
-	L.release_all = "모든 실험체 %s!"
+	L.release_aberration_message = "돌연변이 %d 남음"
+	L.release_all = "모든 실험체 %d!"
 
 	L.bitingchill_say = "나에게 살을 에는 추위!"
 
