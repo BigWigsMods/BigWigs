@@ -16,6 +16,7 @@ mod.optionHeaders = {
 
 local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
 local cinderTargets = mod:NewTargetList()
+local shadowblaze = GetSpellInfo(94085)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -93,19 +94,19 @@ function mod:PhaseThree()
 	self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
 	phase = 3
 	self:Message("phase", L["phase"]:format(phase), "Attention", 78621)
-	mod:Bar(94085, (GetSpellInfo(94085)), 10, 94085)
+	mod:Bar(94085, shadowblaze, 10, 94085)
 end
 
 local function ShadowBlazeNoTrigger()
 	if shadowBlazeTimer > 10 then
 		shadowBlazeTimer = shadowBlazeTimer - 5
 	end
-	mod:Bar(94085, (GetSpellInfo(94085)), shadowBlazeTimer, 94085)
+	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
 	mod:ScheduleTimer(ShadowBlazeNoTrigger, shadowBlazeTimer)
 end
 
 function mod:ShadowBlaze()
-	mod:Bar(94085, (GetSpellInfo(94085)), shadowBlazeTimer, 94085)
+	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
 	self:ScheduleTimer(ShadowBlazeNoTrigger, shadowBlazeTimer)
 end
 

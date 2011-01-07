@@ -12,7 +12,9 @@ mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE",
 --
 
 local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
-local aegis = nil
+local aegisOfFlame, glaciate = GetSpellInfo(82631), GetSpellInfo(82746)
+local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
+local gravityCrush = GetSpellInfo(92488)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,8 +37,8 @@ if L then
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
 	L.thundershock_trigger = "The surrounding air crackles with energy...."
 
-	L.searing_winds_message = "Lightning incoming!"
-	L.grounded_message = "Earthquake incoming!"
+	--L.searing_winds_message = "Lightning incoming!"
+	--L.grounded_message = "Earthquake incoming!"
 
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
 end
@@ -98,10 +100,9 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		self:OpenProximity(8)
 	end
-	hardenSkin = false
 
-	self:Bar(82631, (GetSpellInfo(82631)), 28, 82631)
-	self:Bar(82746, (GetSpellInfo(82746)), 15, 82746)
+	self:Bar(82631, aegisOfFlame, 28, 82631)
+	self:Bar(82746, glaciate, 15, 82746)
 end
 
 --------------------------------------------------------------------------------
@@ -192,20 +193,11 @@ end
 function mod:AegisofFlame(_, spellId, _, _, spellName)
 	self:Bar(82631, spellName, 62, spellId)
 	self:Message(82631, spellName, "Important", spellId, "Info")
-	aegis = self:ScheduleTimer(function() end, 62)
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
 	self:Bar(92541, spellName, 45, spellId)
 	self:Message(92541, spellName, "Urgent", spellId, "Info")
-end
-
-function mod:HardenSkinApplied()
-	hardenSkin = true
-end
-
-function mod:HardenSkinRemoved()
-	hardenSkin = false
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
@@ -214,7 +206,7 @@ function mod:Glaciate(_, spellId, _, _, spellName)
 end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") and aegis and self:TimeLeft(aegis) > 5 then
+	if UnitIsUnit(player, "player") then
 		self:LocalMessage(82762, spellName, "Important", spellId, "Long")
 	end
 end
@@ -228,19 +220,17 @@ function mod:BurningBlood(player, spellId, _, _, spellName)
 end
 
 function mod:Switch()
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82631)))
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82746)))
-	self:Bar(83565, (GetSpellInfo(83565)), 33, 83565)
-	self:Bar(83067, (GetSpellInfo(83067)), 70, 83067)
-	self:Bar(92541, (GetSpellInfo(92541)), 27, 92541)
+	self:SendMessage("BigWigs_StopBar", self, aegisOfFlame)
+	self:SendMessage("BigWigs_StopBar", self, glaciate)
+	self:Bar(83565, quake, 33, 83565)
+	self:Bar(83067, thundershock, 70, 83067)
+	self:Bar(92541, hardenSkin, 27, 92541)
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
 function mod:Quake(_, spellId, _, _, spellName)
 	self:Bar(83565, spellName, 65, spellId)
-	if hardenSkin then
-		self:Message(83565, spellName, "Important", spellId, "Alert")
-	end
+	self:Message(83565, spellName, "Important", spellId, "Alert")
 end
 
 function mod:Thundershock(_, spellId, _, _, spellName)
@@ -249,22 +239,22 @@ function mod:Thundershock(_, spellId, _, _, spellName)
 end
 
 function mod:QuakeTrigger()
-	self:Bar(83565, (GetSpellInfo(83565)), 10, 83565) -- update the bar since we are sure about this timer
-	if hardenSkin then
-		self:Message(83565, L["thundershock_quake_soon"]:format((GetSpellInfo(83565))), "Important", spellId, "Alert")
-	end
+	self:Bar(83565, quake, 10, 83565) -- update the bar since we are sure about this timer
+	self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", spellId, "Alert")
 end
 
 function mod:ThundershockTrigger()
-	self:Message(83067, L["thundershock_quake_soon"]:format((GetSpellInfo(83067))), "Important", spellId, "Alert")
-	self:Bar(83067, (GetSpellInfo(83067)), 10, 83067) -- update the bar since we are sure about this timer
+	self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", spellId, "Alert")
+	self:Bar(83067, thundershock, 10, 83067) -- update the bar since we are sure about this timer
 end
 
 function mod:LastPhase()
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83565)))
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(83067)))
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(92541)))
-	self:Bar(92488, (GetSpellInfo(92488)), 30, 92488)
+	Recount:ResetData()
+	self:SendMessage("BigWigs_StopBar", self, quake)
+	self:SendMessage("BigWigs_StopBar", self, thundershock)
+	self:SendMessage("BigWigs_StopBar", self, hardenSkin)
+	self:Bar(92488, gravityCrush, 30, 92488)
 	self:OpenProximity(9)
 	self:UnregisterEvent("UNIT_HEALTH")
 end
+

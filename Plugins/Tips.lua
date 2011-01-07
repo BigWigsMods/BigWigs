@@ -117,6 +117,7 @@ local footers = {
 	"Big Wigs Developer\n|cff9999ffwowace.com/projects/big-wigs|r",
 	"Ensidia @ Tarren Mill EU\n|cff9999ffwww.manaflask.com|r",
 	"vodka @ Alterac Mountains US\n|cff9999ffwww.vodka-guild.net|r",
+	"For the Horde @ Nazjatar EU\n|cff9999ffwww.manaflask.com|r",
 }
 
 ------------[[
@@ -162,7 +163,6 @@ local tips = {
 	"Eoy#PRIEST#Always come to raids prepared for anything. This includes having different flasks and glyphs ready for any role.#3",
 	"Eoy#PRIEST#During progress, the DPS flask isn't always the best choice for damage dealers. Survival is the key to success.#3",
 	"Eoy#PRIEST#Put the interest of the guild in front of your own.#3",
-
 
 	"Cheesycraft#MAGE#Think about all the abilities and talents available to your class before a fight. A player can often gain a tremendous advantage through the use of less commonly thought of abilities and talents.#1",
 	"Cheesycraft#MAGE#You gotta pay the cost to be the boss. Gold should never be a limiting factor in improving your character!#1",
@@ -218,6 +218,11 @@ local tips = {
 	"Adam#PALADIN#Using your microphone to coordinate cooldowns can decide life or death for raid members. Don't be shy!#4",
 	"Cev#DEATHKNIGHT#The ability to think two moves ahead can be the difference between a mediocre and an exceptional player.#4",
 	"Matt#SHAMAN#Take the time to study encounters with burst AOE so you can be proactive with your healing spells and defensive cooldowns.#4",
+
+	"Nadee#WARLOCK#Don't stand near edges... nothing good comes of it.#5",
+	"Sheya#DEATHKNIGHT#Remember that you can use two potions per fight by using one right before the pull and the second one during the fight after the cooldown wears off.#5",
+	"Nü#DRUID#The journey is the reward.#5",
+	"Buschii#PRIEST#Click the Lightwell!#5",
 }
 
 -------------------------------------------------------------------------------

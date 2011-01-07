@@ -12,6 +12,7 @@ mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSH
 --
 
 local airPhaseDuration = 30
+local searingFlame = GetSpellInfo(77840)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -55,7 +56,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
-	self:Bar(77840, (GetSpellInfo(77840)), 45, 77840)
+	self:Bar(77840, searingFlame, 45, 77840)
 	self:Bar("air_phase", L["air_phase"], 100, 5740) -- Rain of Fire Icon
 end
 
@@ -87,7 +88,7 @@ do
 		mod:Bar("air_phase", L["air_phase"], 90, 5740) -- Rain of Fire Icon
 		mod:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
 		-- XXX need a good trigger for ground phase start to make this even more accurate
-		mod:Bar(77840, (GetSpellInfo(77840)), 50, 77840)
+		mod:Bar(77840, searingFlame, 50, 77840)
 	end
 	function mod:AirPhase()
 		self:SendMessage("BigWigs_StopBar", self, L["sonicbreath_cooldown"])

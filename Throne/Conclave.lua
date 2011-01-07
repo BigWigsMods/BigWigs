@@ -19,6 +19,7 @@ mod.optionHeaders = {
 
 local firstWindBlast = true
 local toxicSporesWarned = false
+local stormShield, nurture, windBlast, toxicSpores = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193), GetSpellInfo(86281)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,7 +29,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.gather_strength = "%s is Gathering Strength"
 
-	L.storm_shield = GetSpellInfo(95865)
+	L.storm_shield = stormShield
 	L.storm_shield_desc = "Absorption Shield"
 
 	L.full_power = "Full Power"
@@ -78,9 +79,9 @@ function mod:OnEngage(diff)
 	firstWindBlast = true
 	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
-	self:Bar(85422, (GetSpellInfo(85422)), 30, 85422)
-	self:Bar(86193, (GetSpellInfo(86193)), 30, 86193)
-	self:Bar("storm_shield", (GetSpellInfo(95865)), 30, 95865)
+	self:Bar(85422, nurture, 30, 85422)
+	self:Bar(86193, windBlast, 30, 86193)
+	self:Bar("storm_shield", stormShield, 30, 95865)
 end
 
 --------------------------------------------------------------------------------
@@ -149,7 +150,7 @@ end
 function mod:Nurture(_, spellId, _, _, spellName)
 	self:Bar(85422, spellName, 113, spellId)
 	self:Message(85422, spellName, "Urgent", spellId)
-	self:Bar(86281, (GetSpellInfo(86281)), 23, 86281)
+	self:Bar(86281, toxicSpores, 23, 86281)
 end
 
 function mod:GatherStrength(msg, sender)

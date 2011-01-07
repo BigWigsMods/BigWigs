@@ -12,6 +12,12 @@ mod.optionHeaders = {
 }
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local mortality = GetSpellInfo(82890)
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -102,8 +108,9 @@ function mod:UNIT_HEALTH(event, unit)
 	if unit == "boss1" then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp < 25 then
-			self:Message(82890, L["mortality_report"]:format((UnitName(unit)), hp, (GetSpellInfo(82890))), "Attention", 82890, "Info")
+			self:Message(82890, L["mortality_report"]:format((UnitName(unit)), hp, mortality), "Attention", 82890, "Info")
 			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end
+

@@ -17,6 +17,7 @@ mod.optionHeaders = {
 --
 
 local lavaSpew = 0
+local infernom pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,7 +25,7 @@ local lavaSpew = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.inferno = (GetSpellInfo(92191))
+	L.inferno = inferno
 	L.inferno_desc = "Summons Blazing Bone Construct."
 
 	L.pillar_of_flame_cd = "~Pillar of Flame"
@@ -61,10 +62,10 @@ end
 
 function mod:OnEngage(diff)
 	if diff > 2 then
-		self:Bar("inferno", (GetSpellInfo(92191)), 20, 92191)
+		self:Bar("inferno", inferno, 20, 92191)
 	end
 	self:Bar("slump", L["slump"], 100, 94678)
-	self:Bar(78006, (GetSpellInfo(78006)), 30, 78006)
+	self:Bar(78006, pillarOfFlame, 30, 78006)
 	lavaSpew = 0
 end
 

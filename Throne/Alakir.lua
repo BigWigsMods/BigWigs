@@ -16,6 +16,7 @@ mod.optionHeaders = {
 
 local phase = 1
 local lastWindburst = 0
+local windburst = GetSpellInfo(87770)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,8 +24,8 @@ local lastWindburst = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.windburst = (GetSpellInfo(87770))
-	
+	L.windburst = windburst
+
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase_change = "Phase change"
@@ -48,9 +49,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279) -- Acid Rain is applied at P2 transition
 	--self:Log("SPELL_AURA_REMOVED", "Phase3", 93279) -- Somehow it is also removed sometimes at P2 transition, use Yell instead
-	
+
 	self:Yell("Phase3", L["phase3_yell"])
-	
+
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286) -- Wind Burst in Phase 3 is instant cast
 

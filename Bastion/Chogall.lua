@@ -20,6 +20,7 @@ mod.optionHeaders = {
 
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
+local festerBlood, adherent, darkenedCreations = GetSpellInfo(82299), GetSpellInfo(81628), GetSpellInfo(82414)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,7 +46,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Orders", 81171, 81556)
 
 	--normal
-	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93365, 93366, 93367) --check
+	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93365, 93366, 93367)
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
@@ -59,7 +60,7 @@ end
 
 function mod:OnEngage()
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	self:Bar(81628, (GetSpellInfo(81628)), 58, 81628)
+	self:Bar(81628, adherent, 58, 81628)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 end
@@ -77,7 +78,7 @@ function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 	self:Message(81628, spellName, "Attention", 81628)
 	self:Bar(81628, spellName, 91, 81628)
 	-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
-	self:Bar(82299, (GetSpellInfo(82299)), 40, 82299)
+	self:Bar(82299, festerBlood, 40, 82299)
 end
 
 function mod:FesterBlood(_, spellId, _, _, spellName)
@@ -85,11 +86,11 @@ function mod:FesterBlood(_, spellId, _, _, spellName)
 end
 
 function mod:LastPhase(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(81628)))
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(82299)))
+	self:SendMessage("BigWigs_StopBar", self, adherent)
+	self:SendMessage("BigWigs_StopBar", self, festerBlood)
 	self:SendMessage("BigWigs_StopBar", self, L["worship_cooldown"])
 	self:Message(82630, spellName, "Attention", spellId)
-	self:Bar(82414, (GetSpellInfo(82414)), 6, 82414)
+	self:Bar(82414, darkenedCreations, 6, 82414)
 end
 
 function mod:DarkenedCreations(_, spellId, _, _, spellName)

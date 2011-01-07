@@ -15,6 +15,7 @@ local aberrations = 18
 local phaseCounter = 0
 local warnedAlready = nil
 local chillTargets = mod:NewTargetList()
+local darkSludge, scorchingBlast = GetSpellInfo(92987), GetSpellInfo(77679)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,8 +24,8 @@ local chillTargets = mod:NewTargetList()
 local L = mod:NewLocale("enUS", true)
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warning for when you stand in %s."):format((GetSpellInfo(92987)))
+	L.darkSludge = darkSludge
+	L.darkSludge_desc = ("Warning for when you stand in %s."):format(darkSludge)
 
 	--normal
 	L.final_phase = "Final Phase"
@@ -135,7 +136,7 @@ do
 		if (time - last) > 2 then
 			last = time
 			if UnitIsUnit(player, "player") then
-				self:LocalMessage("darkSludge", L["you"]:format((GetSpellInfo(92987))), "Personal", spellId, "Info")
+				self:LocalMessage("darkSludge", L["you"]:format(darkSludge), "Personal", spellId, "Info")
 			end
 		end
 	end
@@ -150,13 +151,13 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 	if potion == "POTION_20" then
 		self:Blue()
-		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
+		self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
 	elseif potion == "POTION_24" then
 		self:Red()
-		self:Bar(92968, "~"..(GetSpellInfo(92968)), 25, 92968)
+		self:Bar(92968, "~"..scorchingBlast, 25, 92968)
 	elseif potion == "POTION_162" then
 		self:Green()
-		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
+		self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
 	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
 		self:Dark()
 	end
@@ -165,7 +166,7 @@ end
 
 function mod:Red()
 	warnedAlready = true
-	self:Bar(92968, "~"..(GetSpellInfo(92968)), 25, 92968)
+	self:Bar(92968, "~"..scorchingBlast, 25, 92968)
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
@@ -174,7 +175,7 @@ end
 
 function mod:Blue()
 	warnedAlready = true
-	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
+	self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
@@ -184,7 +185,7 @@ end
 
 function mod:Green()
 	warnedAlready = true
-	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(92968)))
+	self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()
@@ -225,7 +226,7 @@ function mod:ConsumingFlames(player, spellId, _, _, spellName)
 		self:LocalMessage(77786, spellName, "Personal", spellId, "Info")
 	end
 	self:TargetMessage(77786, spellName, player, "Urgent", spellId) -- let the other know too so they can shout on the guy if he is slow
-	self:Whisper(77786, player, L["you"]:format((GetSpellInfo(77786))))
+	self:Whisper(77786, player, L["you"]:format(spellName))
 	self:PrimaryIcon(77786, player)
 end
 
