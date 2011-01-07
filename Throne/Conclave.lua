@@ -63,8 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
-	self:Log("SPELL_AURA_APPLIED", "ToxicSporesApplied", 86281)
-	self:Log("SPELL_AURA_REMOVED", "ToxicSporesRemoved", 86281)
+	self:Log("SPELL_AURA_APPLIED", "ToxicSpores", 86281)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -135,11 +134,7 @@ function mod:WindBlast(_, spellId, _, _, spellName)
 	end
 end
 
-function mod:ToxicSporesRemoved()
-	toxicSporesWarned = false
-end
-
-function mod:ToxicSporesApplied(_, spellId, _, _, spellName)
+function mod:ToxicSpores(_, spellId, _, _, spellName)
 	if not toxicSporesWarned then
 		self:Bar(86281, spellName, 20, spellId)
 		self:Message(86281, spellName, "Urgent", spellId)
@@ -151,6 +146,7 @@ function mod:Nurture(_, spellId, _, _, spellName)
 	self:Bar(85422, spellName, 113, spellId)
 	self:Message(85422, spellName, "Urgent", spellId)
 	self:Bar(86281, toxicSpores, 23, 86281)
+	toxicSporesWarned = false
 end
 
 function mod:GatherStrength(msg, sender)
