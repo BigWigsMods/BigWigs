@@ -49,7 +49,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
-	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414)
+	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414, 93160)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
