@@ -45,7 +45,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Orders", 81171, 81556)
 
 	--normal
-	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93366)
+	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93365, 93366, 93367) --check
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
