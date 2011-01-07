@@ -37,7 +37,7 @@ L = BigWigs:NewBossLocale("Ascendant Council", "frFR")
 if L then
 	L.static_overload_say = "Surcharge statique sur moi !"
 	L.gravity_core_say = "Noyau de gravité sur moi !"
-	L.health_report = "%s est à %d%% de vie, changement imminent !"
+	L.health_report = "%s est à %d%%, changement de phase imminent !"
 	L.switch = "Changement"
 	L.switch_desc = "Prévient quand les boss échangent leurs places."
 
@@ -48,8 +48,8 @@ if L then
 	L.quake_trigger = "Le sol sous vos pieds gronde avec menace..." -- à vérifier
 	L.thundershock_trigger = "L'air qui vous entoure crépite d'énergie..." -- à vérifier
 
-	L.searing_winds_message = "Obtenez des vents tournoyants !"
-	L.grounded_message = "Liez-vous à la terre !"
+	--L.searing_winds_message = "Obtenez des vents tournoyants !"
+	--L.grounded_message = "Liez-vous à la terre !"
 
 	L.last_phase_trigger = "CONTEMPLEZ VOTRE DESTIN !" -- à vérifier
 end

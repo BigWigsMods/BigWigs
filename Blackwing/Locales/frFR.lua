@@ -19,7 +19,7 @@ if L then
 	L.next_system_failure = "Prochaine Défaillance"
 	L.break_message = "%2$dx Brèche sur %1$s"
 
-	L.mortality_report = "%s est à %d%% de vie, %s imminent !"
+	L.phase2_message = "Phase Mortalité imminente !"
 
 	L.warmup = "Échauffement"
 	L.warmup_desc = "Minuteur de l'échauffement."
@@ -36,6 +36,8 @@ if L then
 	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose."
 
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
+
+	L.infection_message = "Vous êtes infecté !"
 
 	L.expose_trigger = "expose sa tête"
 	L.expose_message = "Tête exposée !"
@@ -97,7 +99,7 @@ if L then
 	L.switch_desc = "Prévient de l'arrivée des changements."
 	L.switch_message = "%s %s"
 
-	L.next_switch = "Prochain changement"
+	L.next_switch = "Prochaine activation"
 
 	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you." -- récupérer transcription
 	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?" -- récupérer transcription
@@ -107,9 +109,9 @@ if L then
 	L.acquiring_target = "Acquisition d'une cible"
 
 	L.cloud_message = "Nuage chimique sur vous !"
-	L.protocol_message = "Bombes de poison !"
+	L.protocol_message = "Arrivée de Bombes de poison !"
 
-	L.iconomnotron = "Icon on active boss"
-	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
+	L.iconomnotron = "Icône sur le boss actif"
+	L.iconomnotron_desc = "Place l'icône de raid primaire sur le boss actif (nécessite d'être assistant ou mieux)."
 end
 
