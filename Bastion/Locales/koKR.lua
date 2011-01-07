@@ -37,19 +37,18 @@ L = BigWigs:NewBossLocale("Ascendant Council", "koKR")
 if L then
 	L.static_overload_say = "나에게 전화 과부하!"
 	L.gravity_core_say = "나에게 중력 핵!"
-	L.health_report = "%s의 체력 -%d%%-, 곧 전환!"
+	L.health_report = "%s의 체력 -%d%%-, 곧 단계 변화!"
 	L.switch = "전환"
 	L.switch_desc = "보스의 전환을 알립니다."
 
 	L.lightning_rod_say = "나아게 벼락 막대!"
 
 	L.switch_trigger = "우리가 상대하겠다!"
+	
+	L.thundershock_quake_soon = "10초 후 %s!"
 
 	L.quake_trigger = "발밑의 땅이 불길하게 우르릉거립니다..."
 	L.thundershock_trigger = "주변의 공기가 에너지로 진동합니다..."
-
-	L.searing_winds_message = "소용돌이에 올라타세요!"
-	L.grounded_message = "땅에 착지하세요!"
 
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."

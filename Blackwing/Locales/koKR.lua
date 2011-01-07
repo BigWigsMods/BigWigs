@@ -97,7 +97,7 @@ if L then
 	L.switch_desc = "전환을 알립니다."
 	L.switch_message = "%s %s"
 
-	L.next_switch = "다음 전환"
+	L.next_switch = "다음 활성화"
 
 	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."	--check
 	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"	--check
