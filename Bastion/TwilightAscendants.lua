@@ -132,7 +132,7 @@ end
 do
 	local scheduled = nil
 	local function gcWarn(spellName)
-		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alert")
+		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alarm")
 		scheduled = nil
 	end
 	function mod:GravityCrush(player, spellId, _, _, spellName)
@@ -192,7 +192,7 @@ end
 
 function mod:AegisofFlame(_, spellId, _, _, spellName)
 	self:Bar(82631, spellName, 62, spellId)
-	self:Message(82631, spellName, "Important", spellId, "Info")
+	self:Message(82631, spellName, "Important", spellId, "Alert")
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
@@ -202,7 +202,7 @@ end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
 	self:Bar(82746, spellName, 33, spellId)
-	self:Message(82746, spellName, "Urgent", spellId, "Info")
+	self:Message(82746, spellName, "Urgent", spellId, "Alert")
 end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
@@ -212,11 +212,11 @@ function mod:Waterlogged(player, spellId, _, _, spellName)
 end
 
 function mod:HeartofIce(player, spellId, _, _, spellName)
-	self:TargetMessage(82665, spellName, player, "Attention", spellId)
+	self:TargetMessage(82665, spellName, player, "Positive", spellId)
 end
 
 function mod:BurningBlood(player, spellId, _, _, spellName)
-	self:TargetMessage(82660, spellName, player, "Attention", spellId)
+	self:TargetMessage(82660, spellName, player, "Positive", spellId)
 end
 
 function mod:Switch()
@@ -230,21 +230,21 @@ end
 
 function mod:Quake(_, spellId, _, _, spellName)
 	self:Bar(83565, spellName, 65, spellId)
-	self:Message(83565, spellName, "Important", spellId, "Alert")
+	self:Message(83565, spellName, "Important", spellId, "Alarm")
 end
 
 function mod:Thundershock(_, spellId, _, _, spellName)
 	self:Bar(83067, spellName, 65, spellId)
-	self:Message(83067, spellName, "Important", spellId, "Alert")
+	self:Message(83067, spellName, "Important", spellId, "Alarm")
 end
 
 function mod:QuakeTrigger()
 	self:Bar(83565, quake, 10, 83565) -- update the bar since we are sure about this timer
-	self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", spellId, "Alert")
+	self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", spellId, "Info")
 end
 
 function mod:ThundershockTrigger()
-	self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", spellId, "Alert")
+	self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", spellId, "Info")
 	self:Bar(83067, thundershock, 10, 83067) -- update the bar since we are sure about this timer
 end
 
