@@ -221,7 +221,7 @@ local tips = {
 
 	"Nadee#WARLOCK#Don't stand near edges... nothing good comes of it.#5",
 	"Sheya#DEATHKNIGHT#Remember that you can use two potions per fight by using one right before the pull and the second one during the fight after the cooldown wears off.#5",
-	"Nü#DRUID#The journey is the reward.#5",
+	"Nu#DRUID#The journey is the reward.#5",
 	"Buschii#PRIEST#Click the Lightwell!#5",
 }
 
