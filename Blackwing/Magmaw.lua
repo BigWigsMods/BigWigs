@@ -17,7 +17,7 @@ mod.optionHeaders = {
 --
 
 local lavaSpew = 0
-local infernom pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
+local inferno, pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
 
 --------------------------------------------------------------------------------
 -- Localization
