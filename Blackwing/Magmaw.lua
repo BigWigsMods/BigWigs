@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41570)
-mod.toggleOptions = {"slump", 79011, 89773, 78006, 91931, "inferno", "bosskill"}
+mod.toggleOptions = {"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "PROXIMITY", "WHISPER"}, 91931, "inferno", "bosskill"}
 mod.optionHeaders = {
 	slump = "normal",
 	inferno = "heroic",
@@ -35,8 +35,10 @@ if L then
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
+	L.infection_message = "You are infected!"
+
 	L.expose_trigger = "head"
-	L.expose_message = "Head Exposed!"
+	L.expose_message = "Head exposed!"
 end
 L = mod:GetLocale()
 
@@ -49,6 +51,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "BlazingInferno", 92191)
 
 	--normal
+	self:Log("SPELL_AURA_APPLIED", "Infection", 94679, 78097, 78941, 91913, 94678)
+	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 94679, 78097, 78941, 91913, 94678)
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617) -- check IDs
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
@@ -74,9 +78,10 @@ end
 --
 
 function mod:Vulnerability()
-	self:Message(79011, L["expose_message"], "Attention", 79011)
+	self:Message(79011, L["expose_message"], "Positive", 79011)
 	self:Bar(79011, L["expose_message"], 30, 79011)
-	self:Bar(78006, L["pillar_of_flame_cd"], 40, 78006) -- 10 sec after vulnerability ends, might not be accurate
+	-- XXX 10 sec after vulnerability ends, might not be accurate
+	self:Bar(78006, L["pillar_of_flame_cd"], 40, 78006)
 end
 
 function mod:LavaSpew(_, spellId, _, _, spellName)
@@ -95,6 +100,21 @@ end
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
 	self:Message(78006, spellName, "Urgent", spellId, "Alert")
 	self:Bar(78006, L["pillar_of_flame_cd"], 32, spellId)
+end
+
+function mod:Infection(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:Message(94679, L["infection_message"], "Important", spellId, "Alarm")
+		self:FlashShake(94679)
+		self:OpenProximity(8)
+	else
+		self:Whisper(94679, player, L["infection_message"], true)
+	end
+end
+
+function mod:InfectionRemoved(player)
+	if not UnitIsUnit(player, "player") then return end
+	self:CloseProximity()
 end
 
 function mod:Slump()
