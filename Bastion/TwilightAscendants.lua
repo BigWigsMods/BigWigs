@@ -70,8 +70,6 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
 	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
-	self:Log("SPELL_AURA_APPLIED", "HardenSkinApplied", 92541, 92542, 92543)
-	self:Log("SPELL_AURA_APPLIED", "HardenSkinRemoved", 92541, 92542, 92543)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
