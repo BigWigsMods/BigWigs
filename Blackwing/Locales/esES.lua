@@ -19,7 +19,7 @@ if L then
 	L.next_system_failure = "Siguiente fallo del sistema"
 	L.break_message = "%2$dx Romper en %1$s"
 
-	L.mortality_report = "¡%s está al %d%% de vida, %s pronto!"
+	L.phase2_message = "¡Fase de mortalidad pronto!"
 
 	L.warmup = "Calentamiento"
 	L.warmup_desc = "Temporizador para Calentamiento"
@@ -36,6 +36,8 @@ if L then
 	L.slump_desc = "Cae hacia delante exponiendose a sí mismo"
 
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
+
+	L.infection_message = "¡Estás infectado!"
 
 	L.expose_trigger = "cabeza"
 	L.expose_message = "¡Cabeza expuesta!"
@@ -62,8 +64,8 @@ if L then
 	L.next_phase = "Siguiente fase"
 
 	L.you = "%s en TI!"
-	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
 
+	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
 	L.red_phase = "Fase |cFFFF0000Roja|r"
 	L.blue_phase_trigger = "¿Cómo afecta el cambio extremo de temperatura al cuerpo mortal? ¡Debo averiguarlo! ¡Por la ciencia!"
 	L.blue_phase = "Fase |cFF809FFEAzul|r"

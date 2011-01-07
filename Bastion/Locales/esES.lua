@@ -45,6 +45,8 @@ if L then
 
 	L.switch_trigger = "¡Nos ocuparemos de ellos!"
 
+	L.thundershock_quake_soon = "¡%s en 10 seg!"
+
 	L.quake_trigger = "El suelo bajo tus pies empieza a temblar ominosamente..."
 	L.thundershock_trigger = "El aire circundante chisporrotea de energía..."
 
