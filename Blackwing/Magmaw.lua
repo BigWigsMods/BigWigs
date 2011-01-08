@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41570)
-mod.toggleOptions = {"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "PROXIMITY", "WHISPER"}, 91931, "inferno", "bosskill"}
+mod.toggleOptions = {"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER"}, "proximity", 91931, "inferno", "bosskill"}
 mod.optionHeaders = {
 	slump = "normal",
 	inferno = "heroic",
