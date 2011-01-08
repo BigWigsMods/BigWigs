@@ -19,7 +19,7 @@ if L then
 	L.next_system_failure = "Nächstes Systemversagen"
 	L.break_message = "%2$dx Brechen auf %1$s"
 
-	L.mortality_report = "%s ist bei %d%% Leben, %s bald!"
+	L.phase2_message = "Sterblichkeitsphase bald!"
 
 	L.warmup = "Aufwärmen"
 	L.warmup_desc = "Timer für die Aufwärmphase."
@@ -27,7 +27,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "deDE")
 if L then
-	L.inferno = (GetSpellInfo(92191))
+	L.inferno = "Loderndes Inferno"
 	L.inferno_desc = "Beschwört [Blazing Bone Construct]." -- need german name
 
 	L.pillar_of_flame_cd = "~Flammensäule"
@@ -37,6 +37,8 @@ if L then
 
 	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
 
+	L.infection_message = "Infektion auf DIR!"
+
 	L.expose_trigger = "Kopf"
 	L.expose_message = "Kopf freigelegt!"
 end
@@ -44,8 +46,8 @@ end
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warnt, wenn du in %s stehst."):format((GetSpellInfo(92987)))
+	L.darkSludge = "Dunkler Schlick"
+	L.darkSludge_desc = "Warnt, wenn du in Dunkler Schlick stehst."
 
 	--normal
 	L.final_phase = "Letzte Phase"

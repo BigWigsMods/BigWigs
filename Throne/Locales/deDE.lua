@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "deDE")
 if L then
-	L.windburst = (GetSpellInfo(87770))
+	L.windburst = "Windstoß"
 
 	L.phase3_yell = "Genug! Ich werde mich nicht länger zurückhalten!" -- check
 
@@ -17,7 +17,7 @@ local L = BigWigs:NewBossLocale("Conclave of Wind", "deDE")
 if L then
 	L.gather_strength = "%s sammelt Stärke"
 
-	L.storm_shield = GetSpellInfo(95865)
+	L.storm_shield = "Sturmschild"
 	L.storm_shield_desc = "Warnt, wenn Rohash Sturmschild wirkt."
 
 	L.full_power = "Volle Stärke"
