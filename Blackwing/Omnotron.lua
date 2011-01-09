@@ -35,7 +35,7 @@ if L then
 
 	L.nef_next = "~Next ability buff"
 
-	L.acquiring_target = "Acquiring Target"
+	L.acquiring_target = "Acquiring target!"
 
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs incoming!"

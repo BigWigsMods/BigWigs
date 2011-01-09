@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Maloriak", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41378)
-mod.toggleOptions = {"darkSludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
+mod.toggleOptions = {"sludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -15,7 +15,6 @@ local aberrations = 18
 local phaseCounter = 0
 local warnedAlready = nil
 local chillTargets = mod:NewTargetList()
-local darkSludge, scorchingBlast = GetSpellInfo(92987), GetSpellInfo(77679)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,8 +23,8 @@ local darkSludge, scorchingBlast = GetSpellInfo(92987), GetSpellInfo(77679)
 local L = mod:NewLocale("enUS", true)
 if L then
 	--heroic
-	L.darkSludge = darkSludge
-	L.darkSludge_desc = ("Warning for when you stand in %s."):format(darkSludge)
+	L.sludge = "Dark Sludge"
+	L.sludge_desc = "Warning for when you stand in Dark Sludge."
 
 	--normal
 	L.final_phase = "Final Phase"
@@ -36,6 +35,7 @@ if L then
 	L.bitingchill_say = "Biting Chill on ME!"
 
 	L.flashfreeze = "~Flash Freeze"
+	L.next_blast = "~Scorching Blast"
 
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes."
@@ -59,7 +59,7 @@ mod.optionHeaders = {
 	[77786] = L["red_phase"],
 	[92987] = L["dark_phase"],
 	[77991] = L["final_phase"],
-	darkSludge = "heroic",
+	sludge = "heroic",
 	phase = "general",
 }
 
@@ -132,14 +132,12 @@ end
 
 do
 	local last = 0
-	function mod:DarkSludge(player, spellId)
-		if mod:GetInstanceDifficulty() < 3 then return end
+	function mod:DarkSludge(player, spellId, _, _, spellName)
+		if not UnitIsUnit(player, "player") then return end
 		local time = GetTime()
 		if (time - last) > 2 then
 			last = time
-			if UnitIsUnit(player, "player") then
-				self:LocalMessage("darkSludge", L["you"]:format(darkSludge), "Personal", spellId, "Info")
-			end
+			self:LocalMessage("sludge", L["you"]:format(spellName), "Personal", spellId, "Info")
 		end
 	end
 end
@@ -153,13 +151,13 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 	if potion == "POTION_20" then
 		self:Blue()
-		self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
+		self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	elseif potion == "POTION_24" then
 		self:Red()
-		self:Bar(92968, "~"..scorchingBlast, 25, 92968)
+		self:Bar(92968, L["next_blast"], 25, 92968)
 	elseif potion == "POTION_162" then
 		self:Green()
-		self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
+		self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
 		self:Dark()
 	end
@@ -168,7 +166,7 @@ end
 
 function mod:Red()
 	warnedAlready = true
-	self:Bar(92968, "~"..scorchingBlast, 25, 92968)
+	self:Bar(92968, L["next_blast"], 25, 92968)
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
@@ -177,7 +175,7 @@ end
 
 function mod:Blue()
 	warnedAlready = true
-	self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
+	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
@@ -187,7 +185,7 @@ end
 
 function mod:Green()
 	warnedAlready = true
-	self:SendMessage("BigWigs_StopBar", self, "~"..scorchingBlast)
+	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()
@@ -212,7 +210,7 @@ function mod:FlashFreeze(player, spellId, _, _, spellName)
 end
 
 function mod:Remedy(unit, spellId, _, _, spellName)
-	if UnitIsUnit(unit, "boss1") then
+	if UnitIsUnit(unit, "boss1") then -- XXX I don't think this works?
 		self:Message(77912, spellName, "Important", spellId, "Alert")
 	end
 end
@@ -249,7 +247,7 @@ end
 
 function mod:ScorchingBlast(_, spellId, _, _, spellName)
 	self:Message(92968, spellName, "Attention", spellId)
-	self:Bar(92968, "~"..spellName, 10, 92968)
+	self:Bar(92968, L["next_blast"], 10, 92968)
 end
 
 function mod:ReleaseAll(_, spellId)

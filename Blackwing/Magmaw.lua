@@ -30,9 +30,14 @@ if L then
 
 	L.pillar_of_flame_cd = "~Pillar of Flame"
 
-	L.slump = "Slump"
-	L.slump_desc = "Magmaw slumps forward exposing itself."
+	L.blazing_message = "Add incoming!"
+	L.blazing_bar = "Next skeleton"
 
+	L.slump = "Slump"
+	L.slump_desc = "Warn for when Magmaw slumps forward and exposes himself."
+
+	L.slump_bar = "Next rodeo"
+	L.slump_message = "Yeehaw, ride on!"
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
 	L.infection_message = "You are infected!"
@@ -66,9 +71,9 @@ end
 
 function mod:OnEngage(diff)
 	if diff > 2 then
-		self:Bar("inferno", inferno, 20, 92191)
+		self:Bar("inferno", L["blazing_bar"], 20, 92191)
 	end
-	self:Bar("slump", L["slump"], 100, 94678)
+	self:Bar("slump", L["slump_bar"], 100, 36702)
 	self:Bar(78006, pillarOfFlame, 30, 78006)
 	lavaSpew = 0
 end
@@ -92,9 +97,9 @@ function mod:LavaSpew(_, spellId, _, _, spellName)
 	lavaSpew = GetTime()
 end
 
-function mod:BlazingInferno(_, spellId, _, _, spellName)
-	self:Message("inferno", spellName, "Urgent", spellId, "Info")
-	self:Bar("inferno", spellName, 35, spellId)
+function mod:BlazingInferno(_, spellId)
+	self:Message("inferno", L["blazing_message"], "Urgent", spellId, "Info")
+	self:Bar("inferno", L["blazing_bar"], 35, spellId)
 end
 
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
@@ -119,8 +124,8 @@ end
 
 function mod:Slump()
 	self:SendMessage("BigWigs_StopBar", self,  L["pillar_of_flame_cd"])
-	self:Bar("slump", L["slump"], 95, 94678)
-	self:Message("slump", L["slump"], "Important", 94678, "Info")
+	self:Bar("slump", L["slump_bar"], 95, 36702)
+	self:Message("slump", L["slump_message"], "Positive", 36702, "Info")
 end
 
 function mod:Mangle(_, spellId, _, _, spellName)
