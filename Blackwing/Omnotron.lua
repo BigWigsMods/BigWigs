@@ -82,15 +82,20 @@ function mod:NefAbilties()
 	self:Bar("nef", L["nef_next"], 35, 92048)
 end
 
-function mod:Switch(unit, spellId, _, _, spellName)
-	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 40, spellId)
-	self:Message("switch", L["switch_message"]:format(unit, spellName), "Important", spellId, "Alert")
-	for i = 1, 4 do
-		local bossId = ("boss%d"):format(i)
-		if UnitName(bossId) == unit then
-			self:PrimaryIcon("iconomnotron", bossId)
-			break
+do
+	local function setIcon(unit)
+		for i = 1, 4 do
+			local bossId = ("boss%d"):format(i)
+			if UnitName(bossId) == unit then
+				mod:PrimaryIcon("iconomnotron", bossId)
+				break
+			end
 		end
+	end
+	function mod:Switch(unit, spellId, _, _, spellName)
+		self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 40, spellId)
+		self:Message("switch", L["switch_message"]:format(unit, spellName), "Important", spellId, "Alert")
+		self:ScheduleTimer(setIcon, 2, unit) --delay this check so new bosses don't return "UNKNOWN"
 	end
 end
 
