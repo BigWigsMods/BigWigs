@@ -58,6 +58,7 @@ function mod:OnBossEnable()
 	-- Phase Switch -- should be able to do this easier once we get Transcriptor logs
 	self:Log("SPELL_CAST_START", "DazzlingDestruction", 86408)
 	self:Yell("DeepBreath", L["valiona_trigger"])
+	self:Emote("DeepBreathCast", deepBreath)
 
 	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876, 92878)
 	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876, 92878)
@@ -107,19 +108,22 @@ function mod:DazzlingDestruction()
 	end
 end
 
+function mod:DeepBreathCast()
+	self:Message(86059, L["breath_message"], "Important", 92194, "Alarm")
+end
+
 -- Valiona does this when she is about to land
 -- It only triggers once from her yell, not 3 times.
 function mod:DeepBreath()
-	self:Message(86059, L["breath_message"], "Important", 92194, "Alarm")
-	-- XXX add a bar showing how long she will keep doing breaths here
-	-- XXX and a message like
-	-- self:Message("phase_switch", L["phase_bar"]:format(valiona), "Positive", 60639)
-	-- XXX when she actually lands .. dunno how long after the yell until she actually lands
-
 	-- XXX These are probably inaccurate
-	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840)
-	self:Bar(86788, blackout, 60, 86788)
-	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 137, 60639)
+	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 128, 60639)
+	-- XXX add a bar showing how long she will keep doing breaths here
+	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 50, 60639) -- assumed
+	-- XXX and a messag when she actually lands .. dunno how long after the yell until she actually lands
+	self:DelayedMessage("phase_switch", 50, L["phase_bar"]:format(valiona), "Positive", 60639) -- assumed
+
+	self:Bar(86840, L["devouringflames_cooldown"], 66, 86840)
+	self:Bar(86788, blackout, 51, 86788)
 end
 
 function mod:BlackoutApplied(player, spellId, _, _, spellName)
