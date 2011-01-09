@@ -32,6 +32,8 @@ if L then
 	L.phase_switch_desc = "Warning for Phase Switches"
 
 	L.phase_bar = "%s landing"
+	L.breath_message = "Deep Breaths incoming!"
+	L.dazzling_message = "Swirly zones incoming!"
 
 	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
@@ -93,21 +95,29 @@ do
 	local lastDestruction = 0
 	function mod:DazzlingDestruction()
 		local time = GetTime()
+		-- When Theralion is landing he casts DD 3 times, with a 5 second interval
+		-- This if-statement triggers on the first one he does AFTER those 3, so actually the
+		-- NEXT time he is about to land .. I think that's the point?
 		if (time - lastDestruction) > 6 then
 			self:SendMessage("BigWigs_StopBar", self, blackout)
 			self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
 			self:Bar("phase_switch", L["phase_bar"]:format(valiona), 113, 60639)
 		end
+		-- XXX Should do a dazzling_message :Message here, but only one time per phase change, not 3 in a row.
 		lastDestruction = time
-		self:Bar(86059, deepBreath, 110, 92194) -- looks like a dragon 'deep breath' :)
+		self:Bar(86059, deepBreath, 110, 92194)
 	end
 end
 
+-- Valiona does this when she is about to land
+-- It only triggers once from her yell, not 3 times.
 function mod:DeepBreath()
-	self:Message(86059, deepBreath, "Important", 92194, "Alert")
-	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 137, 60639)
-	self:Bar(86788, deepBreath, 60, 86788) -- probably inaccurate
-	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
+	self:Message(86059, L["breath_message"], "Important", 92194, "Alarm")
+
+	-- XXX These are probably inaccurate
+	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840)
+	self:Bar(86788, blackout, 60, 86788)
+	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 137, 60639)
 end
 
 function mod:BlackoutApplied(player, spellId, _, _, spellName)
