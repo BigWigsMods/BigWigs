@@ -32,9 +32,14 @@ if L then
 
 	L.pillar_of_flame_cd = "~Pilier de flammes"
 
-	L.slump = "Affalement"
-	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose."
+	L.blazing_message = "Arrivée d'un Assemblage !"
+	L.blazing_bar = "Prochain Assemblage"
 
+	L.slump = "Affalement (rodéo)"
+	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose, permettant ainsi au rodéo de commencer."
+
+	L.slump_bar = "Prochain rodéo"
+	L.slump_message = "Yeehaw, chevauchez !"
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
 
 	L.infection_message = "Vous êtes infecté !"
@@ -58,6 +63,7 @@ if L then
 	L.bitingchill_say = "Frisson mordant sur moi !"
 
 	L.flashfreeze = "~Gel instantané"
+	L.next_blast = "~Scorching Blast"
 
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
