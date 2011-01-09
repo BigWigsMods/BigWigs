@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, Arion, Terrastra, Elementium Monstrosity
-mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "ICON", "WHISPER"}, 82631, 82660, 82746, 82665, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 92541, 83581, 92488, "proximity", "switch", "bosskill"}
+mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "ICON", "WHISPER"}, 82631, 82660, 82663, 82746, 82665, 82666, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 92541, 83581, 92488, "proximity", "switch", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -77,6 +77,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
+	self:Log("SPELL_AURA_APPLIED", "FrostImbued", 82666)
+	self:Log("SPELL_AURA_APPLIED", "FlameImbued", 82663)
 	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 92488)
 
 	self:Yell("Switch", L["switch_trigger"])
@@ -137,6 +139,7 @@ do
 		scheduled = nil
 	end
 	function mod:GravityCrush(player, spellId, _, _, spellName)
+		print(player)
 		gcTargets[#gcTargets + 1] = player
 		if not scheduled then
 			scheduled = true
@@ -212,6 +215,18 @@ function mod:Waterlogged(player, spellId, _, _, spellName)
 	end
 end
 
+function mod:FrostImbued(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(82666, spellName, "Attention", spellId, "Long")
+	end
+end
+
+function mod:FlameImbued(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(82663, spellName, "Attention", spellId, "Long")
+	end
+end
+
 function mod:HeartofIce(player, spellId, _, _, spellName)
 	self:TargetMessage(82665, spellName, player, "Positive", spellId)
 end
@@ -250,6 +265,7 @@ function mod:ThundershockTrigger()
 end
 
 function mod:LastPhase()
+	Recount:ResetData()
 	self:SendMessage("BigWigs_StopBar", self, quake)
 	self:SendMessage("BigWigs_StopBar", self, thundershock)
 	self:SendMessage("BigWigs_StopBar", self, hardenSkin)
