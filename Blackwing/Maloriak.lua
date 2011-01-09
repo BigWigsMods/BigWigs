@@ -219,7 +219,7 @@ do
 	local handle = nil
 	local function release(spellId)
 		aberrations = aberrations - 3
-		self:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
+		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
 	end
 	function mod:ReleaseAberrations(_, spellId)
 		handle = self:ScheduleTimer(release, 1.5, spellId)
