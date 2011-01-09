@@ -19,7 +19,7 @@ mod.optionHeaders = {
 
 local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), GetSpellInfo(86059)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local Theralion, Valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
+local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local markWarned = false
 local count = 0
 
@@ -31,6 +31,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase_switch = "Phase Switch"
 	L.phase_switch_desc = "Warning for Phase Switches"
+
+	L.phase_bar = "%s landing"
 
 	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
@@ -73,7 +75,7 @@ function mod:OnEngage(diff)
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, blackout, 11, 86788)
-	self:Bar("phase_switch", Theralion, 95, 60639)
+	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 95, 60639)
 	self:OpenProximity(8)
 end
 
@@ -95,7 +97,7 @@ do
 		if (time - lastDestruction) > 6 then
 			self:SendMessage("BigWigs_StopBar", self, blackout)
 			self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-			self:Bar("phase_switch", Valiona, 113, 60639)
+			self:Bar("phase_switch", L["phase_bar"]:format(valiona), 113, 60639)
 		end
 		lastDestruction = time
 		count = 0
@@ -105,7 +107,7 @@ end
 
 function mod:DeepBreath()
 	self:Message(86059, deepBreath, "Important", 92194, "Alert")
-	self:Bar("phase_switch", Valiona, 137, 60639)
+	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 137, 60639)
 	self:Bar(86788, deepBreath, 60, 86788) -- probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840) -- probably inaccurate
 end

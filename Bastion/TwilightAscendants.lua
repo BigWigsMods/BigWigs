@@ -12,7 +12,7 @@ mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE",
 --
 
 local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
-local aegisOfFlame, glaciate = GetSpellInfo(82631), GetSpellInfo(82746)
+local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
 
@@ -28,11 +28,14 @@ if L then
 	L.switch = "Switch"
 	L.switch_desc = "Warning for boss switches"
 
+	L.shield_up_message = "Shield is up!"
+	L.shield_bar = "Next shield"
+
 	L.lightning_rod_say = "Lightning Rod on ME!"
 
 	L.switch_trigger = "We will handle them!"
 
-	L.thundershock_quake_soon = "%s in 10 sec!"
+	L.thundershock_quake_soon = "%s in 10sec!"
 
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
 	L.thundershock_trigger = "The surrounding air crackles with energy...."
@@ -99,7 +102,7 @@ function mod:OnEngage(diff)
 		self:OpenProximity(8)
 	end
 
-	self:Bar(82631, aegisOfFlame, 28, 82631)
+	self:Bar(82631, L["shield_bar"], 28, 82631)
 	self:Bar(82746, glaciate, 15, 82746)
 end
 
@@ -188,9 +191,9 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
-function mod:AegisofFlame(_, spellId, _, _, spellName)
-	self:Bar(82631, spellName, 62, spellId)
-	self:Message(82631, spellName, "Important", spellId, "Alert")
+function mod:AegisofFlame(_, spellId)
+	self:Bar(82631, L["shield_bar"], 62, spellId)
+	self:Message(82631, L["shield_up_message"], "Important", spellId, "Alert")
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
@@ -218,7 +221,7 @@ function mod:BurningBlood(player, spellId, _, _, spellName)
 end
 
 function mod:Switch()
-	self:SendMessage("BigWigs_StopBar", self, aegisOfFlame)
+	self:SendMessage("BigWigs_StopBar", self, L["shield_bar"])
 	self:SendMessage("BigWigs_StopBar", self, glaciate)
 	self:Bar(83565, quake, 33, 83565)
 	self:Bar(83067, thundershock, 70, 83067)

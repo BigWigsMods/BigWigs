@@ -20,7 +20,6 @@ mod.optionHeaders = {
 
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
-local festerBlood, adherent, darkenedCreations = GetSpellInfo(82299), GetSpellInfo(81628), GetSpellInfo(82414)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,12 +27,19 @@ local festerBlood, adherent, darkenedCreations = GetSpellInfo(82299), GetSpellIn
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	--heroic
-	L.orders = "Shadow/Flame Orders"
-	L.orders_desc = "Warning for Shadow/Flame Orders"
+	L.orders = "Stance changes"
+	L.orders_desc = "Warning for when Cho'gall changes between Shadow/Flame Orders stances."
 
-	--normal
 	L.worship_cooldown = "~Worship"
+	L.adherent_bar = "Next big add"
+	L.adherent_message = "Add spawned!"
+	L.ooze_bar = "Ooze adds"
+	L.ooze_message = "Ooze swarm incoming!"
+	L.tentacles_bar = "Tentacles spawn"
+	L.tentacles_message = "Tentacle disco party!"
+
+	L.phase2_message = "Phase 2!"
+	L.phase2_soon = "Phase 2 soon!"
 end
 L = mod:GetLocale()
 
@@ -57,12 +63,12 @@ function mod:OnBossEnable()
 	self:Death("Win", 43324)
 end
 
-
 function mod:OnEngage()
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	self:Bar(81628, adherent, 58, 81628)
+	self:Bar(81628, L["adherent_bar"], 58, 81628)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
+	self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
@@ -75,27 +81,38 @@ end
 
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 	worshipCooldown = 40
-	self:Message(81628, spellName, "Attention", 81628)
-	self:Bar(81628, spellName, 91, 81628)
+	self:Message(81628, L["adherent_message"], "Important", spellId)
+	self:Bar(81628, L["adherent_bar"], 91, spellId)
+
 	-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
-	self:Bar(82299, festerBlood, 40, 82299)
+	self:Bar(82299, L["ooze_bar"], 40, 82299)
 end
 
 function mod:FesterBlood(_, spellId, _, _, spellName)
-	self:Message(82299, spellName, "Important", spellId, "Alert")
+	self:Message(82299, L["ooze_message"], "Attention", spellId, "Alert")
 end
 
-function mod:LastPhase(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, adherent)
-	self:SendMessage("BigWigs_StopBar", self, festerBlood)
+function mod:UNIT_HEALTH(event, unit)
+	if unit == "boss1" then
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp < 30 then
+			self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
+			self:UnregisterEvent("UNIT_HEALTH")
+		end
+	end
+end
+
+function mod:LastPhase(_, spellId)
+	self:SendMessage("BigWigs_StopBar", self, L["adherent_bar"])
+	self:SendMessage("BigWigs_StopBar", self, L["ooze_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["worship_cooldown"])
-	self:Message(82630, spellName, "Attention", spellId)
-	self:Bar(82414, darkenedCreations, 6, 82414)
+	self:Message(82630, L["phase2_message"], "Positive", spellId)
+	self:Bar(82414, L["tentacles_bar"], 6, 82414)
 end
 
-function mod:DarkenedCreations(_, spellId, _, _, spellName)
-	self:Message(82414, spellName, "Urgent", spellId)
-	self:Bar(82414, spellName, 40, 82414)
+function mod:DarkenedCreations(_, spellId)
+	self:Message(82414, L["tentacles_message"], "Urgent", spellId)
+	self:Bar(82414, L["tentacles_bar"], 40, 82414)
 end
 
 do
