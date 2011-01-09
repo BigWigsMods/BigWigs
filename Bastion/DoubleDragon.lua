@@ -21,6 +21,7 @@ local dazzlingCount = 0
 local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), GetSpellInfo(86059)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
+local emTargets = mod:NewTargetList()
 local markWarned = false
 
 --------------------------------------------------------------------------------
@@ -170,15 +171,26 @@ function mod:DevouringFlames(_, spellId, _, _, spellName)
 	self:Message(86840, spellName, "Important", spellId, "Alert")
 end
 
-function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:Say(86622, L["engulfingmagic_say"])
-		self:FlashShake(86622)
-		self:OpenProximity(10)
+do
+	local scheduled = nil
+	local function emWarn(spellName)
+		mod:TargetMessage(86622, spellName, emTargets, "Personal", 86622, "Alarm")
+		mod:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
+		scheduled = nil
 	end
-	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Alarm")
-	self:Whisper(86622, player, spellName)
-	self:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
+	function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
+		if UnitIsUnit(player, "player") then
+			self:Say(86622, L["engulfingmagic_say"])
+			self:FlashShake(86622)
+			self:OpenProximity(10)
+		end
+		emTargets[#emTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(emWarn, 0.3, spellName)
+		end
+		self:Whisper(86622, player, spellName)
+	end
 end
 
 function mod:EngulfingMagicRemoved(player)
