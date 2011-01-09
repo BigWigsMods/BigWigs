@@ -72,8 +72,7 @@ local function unitTargetChanged(event, target)
 end
 
 local function zoneChanged()
-	local boss = UnitName("boss1") or UnitName("boss2") or UnitName("boss3") or UnitName("boss4")
-	if not boss then
+	if not IsInInstance() then
 		for _, module in addon:IterateBossModules() do
 			if module.isEngaged then module:Reboot() end
 		end
