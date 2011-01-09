@@ -163,20 +163,24 @@ function boss:CheckBossStatus()
 	if not guid and self.isEngaged then
 		self:Reboot()
 	elseif not self.isEngaged and guid then
-		local enableMobs, id = core:GetEnableMobs(), tonumber(guid:sub(7, 10), 16)
-		if enableMobs[id] == self.moduleName then
+		local id = tonumber(guid:sub(7, 10), 16)
+		if core:GetEnableMobs()[id] == self.moduleName then
 			self:Engage()
 		end
 	end
 end
 
 do
-	local t = {"target", "targettarget", "focus", "focustarget", "mouseover", "mouseovertarget"}
-	for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end
-	for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
-	for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
+	local t = nil
+	local function buildTable()
+		t = {"target", "targettarget", "focus", "focustarget", "mouseover", "mouseovertarget"}
+		for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end
+		for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
+		for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
+	end
 	local function findTargetByGUID(id)
 		local idType = type(id)
+		if not t then buildTable() end
 		for i, unit in next, t do
 			if UnitExists(unit) and not UnitIsPlayer(unit) then
 				local unitId = UnitGUID(unit)
@@ -187,54 +191,19 @@ do
 	end
 	function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
 
-	local scan = nil
-	if debug then
-		function scan(self)
-			local mobs = {}
-			local found = nil
-			for mobId, entry in pairs(core:GetEnableMobs()) do
-				if type(entry) == "table" then
-					for i, module in next, entry do
-						if module == self.moduleName then
-							local unit = findTargetByGUID(mobId)
-							if unit and UnitAffectingCombat(unit) then
-								mobs[#mobs + 1] = tostring(mobId) .. ":" .. unit
-								found = true
-							else
-								mobs[#mobs + 1] = tostring(mobId) .. ":no target"
-								mobs[mobId] = "no target"
-							end
-						end
-					end
-				elseif entry == self.moduleName then
-					local unit = findTargetByGUID(mobId)
-					if unit and UnitAffectingCombat(unit) then
-						mobs[#mobs + 1] = tostring(mobId) .. ":" .. unit
-						found = true
-					else
-						mobs[#mobs + 1] = tostring(mobId) .. ":no target"
+	local function scan(self)
+		for mobId, entry in pairs(core:GetEnableMobs()) do
+			if type(entry) == "table" then
+				for i, module in next, entry do
+					if module == self.moduleName then
+						local unit = findTargetByGUID(mobId)
+						if unit and UnitAffectingCombat(unit) then return unit end
+						break
 					end
 				end
-			end
-			dbg(self, "scan data: " .. table.concat(mobs, ","))
-			mobs = nil
-			return found
-		end
-	else
-		function scan(self)
-			for mobId, entry in pairs(core:GetEnableMobs()) do
-				if type(entry) == "table" then
-					for i, module in next, entry do
-						if module == self.moduleName then
-							local unit = findTargetByGUID(mobId)
-							if unit and UnitAffectingCombat(unit) then return unit end
-							break
-						end
-					end
-				elseif entry == self.moduleName then
-					local unit = findTargetByGUID(mobId)
-					if unit and UnitAffectingCombat(unit) then return unit end
-				end
+			elseif entry == self.moduleName then
+				local unit = findTargetByGUID(mobId)
+				if unit and UnitAffectingCombat(unit) then return unit end
 			end
 		end
 	end

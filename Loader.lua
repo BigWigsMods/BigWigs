@@ -106,8 +106,8 @@ do
 				if n then members[#members + 1] = n end
 			end
 		elseif party > 0 then
-			members[#members + 1] = UnitName("player")
-			for i = 1, 4, 1 do
+			members[#members + 1] = pName
+			for i = 1, 4 do
 				local n = UnitName("party" .. i)
 				if n then members[#members + 1] = n end
 			end
@@ -193,25 +193,37 @@ end
 --
 
 local function versionTooltipFunc(tt)
-	local m = getGroupMembers()
-	if not m then return end
+	-- Try to avoid calling getGroupMembers as long as possible.
+	-- XXX We should just get a file-local boolean flag that we update
+	-- whenever we receive a version reply from someone. That way we
+	-- reduce the processing required to open a simple tooltip.
 	local add = nil
-	for i, player in next, m do
-		if usersRelease[player] then
-			if usersRelease[player] < highestReleaseRevision then
-				add = true
-				break
-			end
-		elseif usersAlpha[player] then
-			-- version == -1 means the user is using a svn checkout, and not a downloadable alpha zip
-			-- we ignore svn users
-			if usersAlpha[player] < (highestReleaseRevision - 1) and usersAlpha[player] ~= -1 then
-				add = true
-				break
-			end
-		else
+	for player, version in pairs(usersRelease) do
+		if version < highestReleaseRevision then
 			add = true
 			break
+		end
+	end
+	if not add then
+		for player, version in pairs(usersAlpha) do
+			if version ~= -1 and version < (highestReleaseRevision - 1) then
+				add = true
+				break
+			end
+		end
+	end
+	if not add and next(usersUnknown) then
+		add = true
+	end
+	if not add then
+		local m = getGroupMembers()
+		if m then
+			for i, player in next, m do
+				if not usersRelease[player] and not usersAlpha[player] then
+					add = true
+					break
+				end
+			end
 		end
 	end
 	if add then
@@ -605,3 +617,4 @@ do
 	InterfaceOptions_AddCategory(frame)
 	loader.RemoveInterfaceOptions = removeFrame
 end
+

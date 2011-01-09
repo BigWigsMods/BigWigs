@@ -66,7 +66,6 @@ local function chatMsgMonsterYell(event, msg, source)
 	end
 end
 local function updateMouseover() targetCheck("mouseover") end
-local function targetChanged() targetCheck("target") end
 local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
 end
@@ -81,43 +80,36 @@ local function zoneChanged()
 		if not monitoring then
 			monitoring = true
 			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
-			--addon:RegisterEvent("PLAYER_TARGET_CHANGED", targetChanged)
 			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
 		end
 	elseif monitoring then
 		monitoring = nil
 		addon:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-		--addon:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		addon:UnregisterEvent("UNIT_TARGET")
 	end
 end
 
 do
-	local function add(moduleName, tbl, entry)
-		local t = type(tbl[entry])
-		if t == "nil" then
-			tbl[entry] = moduleName
-		elseif t == "table" then
-			tbl[entry][#tbl[entry] + 1] = moduleName
-		elseif t == "string" then
-			local tmp = tbl[entry]
-			tbl[entry] = { tmp, moduleName }
-		else
-			error("What the hell .. Unknown type in a enable trigger table.")
-		end
-	end
-	function addon:RegisterEnableMob(module, ...)
+	local function add(moduleName, tbl, ...)
 		for i = 1, select("#", ...) do
-			add(module.moduleName, enablemobs, (select(i, ...)))
+			local entry = select(i, ...)
+			local t = type(tbl[entry])
+			if t == "nil" then
+				tbl[entry] = moduleName
+			elseif t == "table" then
+				tbl[entry][#tbl[entry] + 1] = moduleName
+			elseif t == "string" then
+				local tmp = tbl[entry]
+				tbl[entry] = { tmp, moduleName }
+			else
+				error(("Unknown type in a enable trigger table at index %d for %q."):format(i, tostring(moduleName)))
+			end
 		end
 	end
-	function addon:RegisterEnableYell(module, ...)
-		for i = 1, select("#", ...) do
-			add(module.moduleName, enableyells, (select(i, ...)))
-		end
-	end
+	function addon:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
+	function addon:RegisterEnableYell(module, ...) add(module.moduleName, enableyells, ...) end
 	function addon:GetEnableMobs() return enablemobs end
 	function addon:GetEnableYells() return enableyells end
 end
@@ -324,7 +316,7 @@ function addon:OnEnable()
 	zoneChanged()
 
 	-- XXX calebv remove at will!
-	print("|cffffff00The Cataclysm encounter modules are getting better, but we could still use some Transcriptor logs. You can contact us at #bigwigs@irc.freenode.net or with the wowace ticket tracker.|r")
+	self:Print("The Cataclysm encounter modules are nearing completion. You can contact us at #bigwigs@irc.freenode.net or with the wowace ticket tracker.")
 end
 
 function addon:OnDisable()
@@ -335,7 +327,7 @@ function addon:OnDisable()
 end
 
 function addon:Print(...)
-	print("|cff33ff99BigWigs|r:", ...)
+	print("|cffffff00", ..., "|r")
 end
 
 -------------------------------------------------------------------------------
@@ -521,3 +513,4 @@ function pluginCore:OnEnable()
 		mod:Enable()
 	end
 end
+
