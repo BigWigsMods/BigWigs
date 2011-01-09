@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Valiona and Theralion", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
-mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840, {86622, "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
+mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86408, 86840, {86622, "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
 mod.optionHeaders = {
 	[93051] = "heroic",
 	[86788] = "Valiona",
@@ -17,6 +17,7 @@ mod.optionHeaders = {
 -- Locals
 --
 
+local dazzlingCount = 0
 local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), GetSpellInfo(86059)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
@@ -78,6 +79,7 @@ function mod:OnEngage(diff)
 	self:Bar(86788, blackout, 11, 86788)
 	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 95, 60639)
 	self:OpenProximity(8)
+	dazzlingCount = 0
 end
 
 --------------------------------------------------------------------------------
@@ -91,21 +93,17 @@ function mod:TwilightShift(player, spellId, _, _, spellName, stack)
 	end
 end
 
-do
-	local lastDestruction = 0
-	function mod:DazzlingDestruction()
-		local time = GetTime()
-		-- When Theralion is landing he casts DD 3 times, with a 5 second interval
-		-- This if-statement triggers on the first one he does AFTER those 3, so actually the
-		-- NEXT time he is about to land .. I think that's the point?
-		if (time - lastDestruction) > 6 then
-			self:SendMessage("BigWigs_StopBar", self, blackout)
-			self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-			self:Bar("phase_switch", L["phase_bar"]:format(valiona), 113, 60639)
-		end
-		-- XXX Should do a dazzling_message :Message here, but only one time per phase change, not 3 in a row.
-		lastDestruction = time
-		self:Bar(86059, deepBreath, 110, 92194)
+-- When Theralion is landing he casts DD 3 times, with a 5 second interval.
+function mod:DazzlingDestruction()
+	dazzlingCount = dazzlingCount + 1
+	if dazzlingCount == 1 then
+		self:Message(86408, L["dazzling_message"], "Important", 86408, "Alarm")
+	elseif dazzlingCount == 3 then
+		self:SendMessage("BigWigs_StopBar", self, blackout)
+		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
+		self:Bar("phase_switch", L["phase_bar"]:format(valiona), 100, 60639)
+		self:Message("phase_switch", L["phase_bar"]:format(theralion), "Positive", 60639)
+		dazzlingCount = 0
 	end
 end
 
@@ -113,6 +111,10 @@ end
 -- It only triggers once from her yell, not 3 times.
 function mod:DeepBreath()
 	self:Message(86059, L["breath_message"], "Important", 92194, "Alarm")
+	-- XXX add a bar showing how long she will keep doing breaths here
+	-- XXX and a message like
+	-- self:Message("phase_switch", L["phase_bar"]:format(valiona), "Positive", 60639)
+	-- XXX when she actually lands .. dunno how long after the yell until she actually lands
 
 	-- XXX These are probably inaccurate
 	self:Bar(86840, L["devouringflames_cooldown"], 75, 86840)
