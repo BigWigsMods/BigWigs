@@ -11,9 +11,8 @@ mod.optionHeaders = {
 	switch = "general",
 	[79501] = "Magmatron",
 	[79888] = "Electron",
---	[] = "Arcanotron",
 	[80161] = "Toxitron",
-	nef = "Nefarian",
+	nef = "heroic",
 }
 
 --------------------------------------------------------------------------------

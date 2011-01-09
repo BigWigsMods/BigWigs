@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Maloriak", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41378)
-mod.toggleOptions = {"sludge", {77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "phase", 77912, 77569, 77896, "berserk", "bosskill"}
+mod.toggleOptions = {{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "sludge", "phase", 77912, 77569, 77896, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -57,7 +57,6 @@ L = mod:GetLocale()
 mod.optionHeaders = {
 	[77699] = L["blue_phase"],
 	[77786] = L["red_phase"],
-	[92987] = L["dark_phase"],
 	[77991] = L["final_phase"],
 	sludge = "heroic",
 	phase = "general",
@@ -69,8 +68,7 @@ mod.optionHeaders = {
 
 function mod:OnBossEnable()
 	--heroic
-	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987)
-	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92988)	
+	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987, 92988)
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
