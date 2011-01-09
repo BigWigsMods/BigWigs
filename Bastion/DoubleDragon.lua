@@ -102,26 +102,34 @@ function mod:DazzlingDestruction()
 	elseif dazzlingCount == 3 then
 		self:SendMessage("BigWigs_StopBar", self, blackout)
 		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
+		-- XXX Phase timer is probably inaccurate
 		self:Bar("phase_switch", L["phase_bar"]:format(valiona), 100, 60639)
 		self:Message("phase_switch", L["phase_bar"]:format(theralion), "Positive", 60639)
 		dazzlingCount = 0
 	end
 end
 
+-- She emotes 3 times, every time she does a breath
 function mod:DeepBreathCast()
 	self:Message(86059, L["breath_message"], "Important", 92194, "Alarm")
 end
 
--- Valiona does this when she is about to land
+-- Valiona does this when she fires the first deep breath and begins the landing phase
 -- It only triggers once from her yell, not 3 times.
 function mod:DeepBreath()
-	-- XXX These are probably inaccurate
+	-- XXX Probably inaccurate
 	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 128, 60639)
-	-- XXX add a bar showing how long she will keep doing breaths here
-	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 50, 60639) -- assumed
-	-- XXX and a messag when she actually lands .. dunno how long after the yell until she actually lands
-	self:DelayedMessage("phase_switch", 50, L["phase_bar"]:format(valiona), "Positive", 60639) -- assumed
 
+	-- XXX Not sure exactly how long it takes Valiona to land after the yell
+	-- XXX Most certainly inaccurate, need to confirm next raid.
+
+	-- XXX Should this be a "Deep Breaths incoming" bar instead?
+	-- XXX Like it is now, it just readjusts the phase change bar.
+	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 40, 60639)
+
+	self:DelayedMessage("phase_switch", 40, L["phase_bar"]:format(valiona), "Positive", 60639)
+
+	-- XXX Need to confirm these as well.
 	self:Bar(86840, L["devouringflames_cooldown"], 66, 86840)
 	self:Bar(86788, blackout, 51, 86788)
 end
