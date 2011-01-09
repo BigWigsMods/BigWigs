@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Valiona and Theralion", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
-mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840, {86622, "ICON", "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
+mod.toggleOptions = {93051, {86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840, {86622, "FLASHSHAKE", "WHISPER"}, "proximity", "phase_switch", "bosskill"}
 mod.optionHeaders = {
 	[93051] = "heroic",
 	[86788] = "Valiona",
@@ -21,7 +21,6 @@ local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), G
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local markWarned = false
-local count = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -100,7 +99,6 @@ do
 			self:Bar("phase_switch", L["phase_bar"]:format(valiona), 113, 60639)
 		end
 		lastDestruction = time
-		count = 0
 		self:Bar(86059, deepBreath, 110, 92194) -- looks like a dragon 'deep breath' :)
 	end
 end
@@ -116,7 +114,7 @@ function mod:BlackoutApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(86788)
 	end
-	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Alarm")
+	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Alert")
 	self:Whisper(86788, player, spellName)
 	self:PrimaryIcon(86788, player)
 	self:Bar(86788, spellName, 45, 86788)
@@ -136,7 +134,7 @@ function mod:UNIT_AURA(event, unit)
 	if unit == "player" then
 		if UnitDebuff("player", marked) and not markWarned then
 			self:FlashShake(88518)
-			self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Alarm")
+			self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Long")
 			markWarned = true
 			self:ScheduleTimer(markRemoved, 7)
 		end
@@ -152,21 +150,15 @@ function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(86622, L["engulfingmagic_say"])
 		self:FlashShake(86622)
-		self:CloseProximity()
 		self:OpenProximity(10)
 	end
 	self:TargetMessage(86622, spellName, player, "Personal", spellId, "Alarm")
 	self:Whisper(86622, player, spellName)
-	self:PrimaryIcon(86622, player)
-	count = count + 1
-	if count < 4 then
-		self:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
-	end
+	self:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
 end
 
 function mod:EngulfingMagicRemoved(player)
 	if UnitIsUnit(player, "player") then
-		self:CloseProximity()
 		self:OpenProximity(8)
 	end
 end
