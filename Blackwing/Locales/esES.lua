@@ -27,14 +27,19 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "esES")
 if L then
-	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "Invoca Ensamblaje osario llameante"
+	L.inferno = inferno
+	L.inferno_desc = "Invoca Ensamblaje osario llameante."
 
 	L.pillar_of_flame_cd = "~Columna de llamas"
 
-	L.slump = "Cae"
-	L.slump_desc = "Cae hacia delante exponiendose a sí mismo"
+	L.blazing_message = "¡Add entrante!"
+	L.blazing_bar = "Siguiente esqueleto"
 
+	L.slump = "Cae (Rodeo)"
+	L.slump_desc = "Cae hacia delante exponiendose a sí mismo, permitiendo que el rodeo empiece."
+
+	L.slump_bar = "Próximo rodeo"
+	L.slump_message = "¡Yeepah, móntalo!"
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
 
 	L.infection_message = "¡Estás infectado!"
@@ -46,8 +51,8 @@ end
 L = BigWigs:NewBossLocale("Maloriak", "esES")
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Aviso cuando estas en %s."):format((GetSpellInfo(92987)))
+	L.sludge = "Fango oscuro"
+	L.sludge_desc = "Aviso para cuando estas en Fango oscuro."
 
 	--normal
 	L.final_phase = "Fase final"
@@ -58,12 +63,13 @@ if L then
 	L.bitingchill_say = "Escalofrío cortante en MI!"
 
 	L.flashfreeze = "~Congelación apresurada"
+	L.next_blast = "~Explosión agostadora"
 
 	L.phase = "Fase"
 	L.phase_desc = "Advertencia para cambios de fase."
 	L.next_phase = "Siguiente fase"
 
-	L.you = "%s en TI!"
+	L.you = "¡%s en TI!"
 
 	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
 	L.red_phase = "Fase |cFFFF0000Roja|r"

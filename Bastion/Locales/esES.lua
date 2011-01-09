@@ -1,17 +1,28 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if L then
-	--heroic
-	L.orders = "Shadow/Flame Orders"
-	L.orders_desc = "Warning for Shadow/Flame Orders"
+	L.orders = "Cambios de posición"
+	L.orders_desc = "Aviso para cuando Cho'gall cambia el orden de posiciones entre Sombre/Llama."
 
-	--normal
 	L.worship_cooldown = "~Adoración"
+	L.adherent_bar = "Próximo gran add"
+	L.adherent_message = "¡Add aparece!"
+	L.ooze_bar = "Moco"
+	L.ooze_message = "¡Enjambre de mocos llegando!"
+	L.tentacles_bar = "Aparecen tantáculos"
+	L.tentacles_message = "¡Fiesta de tentáculos!"
+
+	L.phase2_message = "¡Fase 2!"
+	L.phase2_soon = "¡Fase 2 pronto!"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "esES")
 if L then
 	L.phase_switch = "Cambio de fase"
 	L.phase_switch_desc = "Aviso para cambios de fase"
+
+	L.phase_bar = "%s aterriza"
+	L.breath_message = "¡Aliento profundo entrante!"
+	L.dazzling_message = "¡Zonas espirales entrantes!"
 
 	L.engulfingmagic_say = "¡Trago de magia en MI!"
 	L.engulfingmagic_cooldown = "~Trago de magia"
@@ -20,7 +31,7 @@ if L then
 
 	-- L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
 
-	L.twilight_shift = "%2$dx Cambio crepuscular en %1$s"
+	L.twilight_shift = "%2$dx Cambio en %1$s"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "esES")
@@ -40,6 +51,9 @@ if L then
 	L.health_report = "%s está al %d%% de vida, ¡cambio pronto!"
 	L.switch = "Cambio"
 	L.switch_desc = "Avisa los cambios de jefes"
+
+	L.shield_up_message = "¡Escudo!"
+	L.shield_bar = "Próximo escudo"
 
 	L.lightning_rod_say = "¡Vara relámpago en MI!"
 
