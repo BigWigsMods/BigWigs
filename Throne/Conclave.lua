@@ -72,9 +72,7 @@ end
 
 
 function mod:OnEngage(diff)
-	if diff > 2 then
-		self:Berserk(480)
-	end
+	self:Berserk(480)
 	firstWindBlast = true
 	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
