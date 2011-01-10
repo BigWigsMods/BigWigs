@@ -5,7 +5,8 @@
 local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
-mod.toggleOptions = {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "proximity", "phase", 94085, "bosskill"}
+mod.toggleOptions = {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "proximity", "phase", 81272, 94085, "bosskill"}
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[79339] = "heroic",
 	phase = "general",
@@ -31,6 +32,9 @@ if L then
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
+	L.crackle_trigger = "The air crackles with electricity!"
+	L.crackle_message = "Electrocute soon!"
+
 	L.shadowblaze_trigger = "Flesh turns to ash!"
 
 	L.cinder_say = "Explosive Cinders on ME!"
@@ -52,6 +56,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
 
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+
 	self:RegisterEvent("UNIT_DIED")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -68,32 +74,38 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_DIED(event, _, _, _, _, destName) -- I guess
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if msg:match(L["crackle_trigger"]) then
+		mod:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
+	end
+end
+
+function mod:UNIT_DIED(event, _, _, _, _, destName) -- I guess. Their npc id is 41948
 	if destName == L["chromatic_prototype"] then
 		deadAdds = deadAdds + 1
 		if mod:GetInstanceDifficulty() > 2 then
-			self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
+			self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 			phase = 3
-			self:Message("phase", L["phase"]:format(phase), "Attention", 81007)
+			self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
 		end
 	end
 	if deadAdds == 3 then
-		self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
+		self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 		phase = 3
-		self:Message("phase", L["phase"]:format(phase), "Attention", 81007)
+		self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
 	end
 end
 
 function mod:PhaseTwo()
 	phase = 2
-	self:Message("phase", L["phase"]:format(phase), "Attention", 78621)
-	mod:Bar("phase", L["phase"]:format(phase), 180, 78621)
+	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
+	mod:Bar("phase", CL["phase"]:format(phase), 180, 78621)
 end
 
 function mod:PhaseThree()
-	self:SendMessage("BigWigs_StopBar", self, L["phase"]:format(phase))
+	self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 	phase = 3
-	self:Message("phase", L["phase"]:format(phase), "Attention", 78621)
+	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
 	mod:Bar(94085, shadowblaze, 10, 94085)
 end
 
