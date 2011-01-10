@@ -56,13 +56,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
-	self:RegisterEvent("UNIT_DIED")
+	self:Emote("Electrocute", L["crackle_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 41376)
+	self:Death("Deaths", 41376, 41948)
 end
 
 
@@ -74,39 +72,39 @@ end
 -- Event Handlers
 --
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
-	if msg:match(L["crackle_trigger"]) then
-		mod:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
-	end
+function mod:Electrocute()
+	self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
 end
 
-function mod:UNIT_DIED(event, _, _, _, _, destName) -- I guess. Their npc id is 41948
-	if destName == L["chromatic_prototype"] then
+function mod:Deaths(mobId)
+	if mobId == 41948 then
 		deadAdds = deadAdds + 1
-		if mod:GetInstanceDifficulty() > 2 then
+		if self:GetInstanceDifficulty() > 2 then
 			self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 			phase = 3
 			self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
 		end
-	end
-	if deadAdds == 3 then
-		self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
-		phase = 3
-		self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
+		if deadAdds == 3 then
+			self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
+			phase = 3
+			self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
+		end
+	elseif mobId == 41376 then
+		self:Win()
 	end
 end
 
 function mod:PhaseTwo()
 	phase = 2
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
-	mod:Bar("phase", CL["phase"]:format(phase), 180, 78621)
+	self:Bar("phase", CL["phase"]:format(phase), 180, 78621)
 end
 
 function mod:PhaseThree()
 	self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 	phase = 3
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
-	mod:Bar(94085, shadowblaze, 10, 94085)
+	self:Bar(94085, shadowblaze, 10, 94085)
 end
 
 local function ShadowBlazeNoTrigger()
@@ -118,7 +116,7 @@ local function ShadowBlazeNoTrigger()
 end
 
 function mod:ShadowBlaze()
-	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
+	self:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
 	self:ScheduleTimer(ShadowBlazeNoTrigger, shadowBlazeTimer)
 end
 
