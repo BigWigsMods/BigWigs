@@ -265,7 +265,6 @@ function mod:ThundershockTrigger()
 end
 
 function mod:LastPhase()
-	Recount:ResetData()
 	self:SendMessage("BigWigs_StopBar", self, quake)
 	self:SendMessage("BigWigs_StopBar", self, thundershock)
 	self:SendMessage("BigWigs_StopBar", self, hardenSkin)
