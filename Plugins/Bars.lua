@@ -899,7 +899,7 @@ local function startCustomBar(bar, nick, localOnly)
 	local time, barText = select(3, bar:find("(%S+) (.*)"))
 	local seconds = parseTime(time)
 	if type(seconds) ~= "number" or type(barText) ~= "string" then
-		BigWigs:Print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick or UnitName("player")))
+		print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick or UnitName("player")))
 		return
 	end
 

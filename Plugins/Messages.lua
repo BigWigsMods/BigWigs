@@ -484,7 +484,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end
 	if db.chat then
-		BigWigs:Print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
+		print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
 	end
 end
 

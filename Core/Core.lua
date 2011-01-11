@@ -326,8 +326,11 @@ function addon:OnDisable()
 	monitoring = nil
 end
 
-function addon:Print(...)
-	print("|cffffff00", ..., "|r")
+do
+	local outputFormat = "|cffffff00%s|r"
+	function addon:Print(msg)
+		print(outputFormat:format(msg))
+	end
 end
 
 -------------------------------------------------------------------------------
