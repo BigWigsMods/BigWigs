@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if L then
 	L.orders = "Cambios de posición"
-	L.orders_desc = "Aviso para cuando Cho'gall cambia el orden de posiciones entre Sombre/Llama."
+	L.orders_desc = "Aviso para cuando Cho'gall cambia el orden de posiciones entre Sombra/Llama."
 
 	L.worship_cooldown = "~Adoración"
 	L.adherent_bar = "Próximo gran add"
@@ -29,7 +29,7 @@ if L then
 
 	L.devouringflames_cooldown = "~Llamas devoradoras"
 
-	-- L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+	L.valiona_trigger = "Theralion, voy a incendiar el corredor. ¡Que no escapen!"
 
 	L.twilight_shift = "%2$dx Cambio en %1$s"
 end
