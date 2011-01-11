@@ -15,6 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "koKR")
 if L then
 	L.bileotron_engage = "담즙로봇이 움직이기 시작하더니 고약한 냄새가 나는 물질을 방출합니다."
+	L.win_trigger = "A shame to lose that experiment..."	--check
 
 	L.next_system_failure = "다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"
@@ -31,23 +32,28 @@ if L then
 	L.inferno_desc = "이글거리는 지옥불 소환을 알립니다."
 
 	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
+	
+	L.blazing_message = "해골 추가!"
+	L.blazing_bar = "다음 해골"
 
-	L.slump = "슬럼프"
+	L.slump = "슬럼프 (로데오)"
 	L.slump_desc = "슬럼프 상태를 알립니다."
 
+	L.slump_bar = "다음 슬럼프"
+	L.slump_message = "올라타세요~!"
 	L.slump_trigger = "%s|1이;가; 집게를 드러내며 앞으로 몸을 기울입니다!"
 	
 	L.infection_message = "당신은 기생 감염!"
 
 	L.expose_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
-	L.expose_message = "Head Explosed!"
+	L.expose_message = "머리 노출!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "koKR")
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("%s 에 서있다면 알립니다."):format((GetSpellInfo(92987)))
+	L.sludge = "어둠의 폐수"
+	L.sludge_desc = "어둠의 폐수에 서있을시 알립니다."
 
 	--normal
 	L.final_phase = "마지막 단계"
@@ -58,6 +64,7 @@ if L then
 	L.bitingchill_say = "나에게 살을 에는 추위!"
 
 	L.flashfreeze = "~순간 빙결"
+	L.next_blast = "~맹렬한 폭발"
 
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
@@ -83,6 +90,9 @@ if L then
 	L.phase_two_trigger = "저주받을 필멸자들!"	--check
 
 	L.phase_three_trigger = "품위있는"	--check
+	
+	L.crackle_trigger = "전기가"	--check
+	L.crackle_message = "곧 감전!"
 
 	L.shadowblaze_trigger = "살을 재로"	--check
 

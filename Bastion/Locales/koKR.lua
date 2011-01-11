@@ -1,17 +1,28 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "koKR")
 if L then
-	--heroic
-	L.orders = "그림자/불꽃의 명령"
-	L.orders_desc = "그림자/불꽃의 명령에 대해 알립니다."
+	L.orders = "상태 변경"
+	L.orders_desc = "초갈의 그림자/불꽃의 명령 상태를 알립니다."
 
-	--normal
 	L.worship_cooldown = "~개종"
+	L.adherent_bar = "다음 추종자 추가"
+	L.adherent_message = "타락의 추종자 소환!"
+	L.ooze_bar = "슬라임 추가"
+	L.ooze_message = "곧 슬라임 추가!"
+	L.tentacles_bar = "촉수 소환"
+	L.tentacles_message = "촉수 디스코 파티!"
+
+	L.phase2_message = "2 단계!"
+	L.phase2_soon = "곧 2 단계!"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "koKR")
 if L then
 	L.phase_switch = "단계 전환"
 	L.phase_switch_desc = "단계 전환을 알립니다."
+	
+	L.phase_bar = "%s 착지"
+	L.breath_message = "곧 깊은 숨결!"
+	L.dazzling_message = "곧 황혼 세계"
 
 	L.engulfingmagic_say = "나에게 사로잡힌 마법!"
 	L.engulfingmagic_cooldown = "다음 사로잡힌 마법"
@@ -40,6 +51,9 @@ if L then
 	L.health_report = "%s의 체력 -%d%%-, 곧 단계 변화!"
 	L.switch = "전환"
 	L.switch_desc = "보스의 전환을 알립니다."
+	
+	L.shield_up_message = "방패 사용!"
+	L.shield_bar = "다음 방패"
 
 	L.lightning_rod_say = "나아게 벼락 막대!"
 
@@ -49,9 +63,9 @@ if L then
 
 	L.quake_trigger = "발밑의 땅이 불길하게 우르릉거립니다..."
 	L.thundershock_trigger = "주변의 공기가 에너지로 진동합니다..."
+	
+	--L.searing_winds_message = "Lightning incoming!"
+	--L.grounded_message = "Earthquake incoming!"
 
-	L.phase = "단계"
-	L.phase_desc = "단계 변화를 알립니다."
 	L.last_phase_trigger = "꽤나 인상적이었다만..."	--지금 넣은 트리거가 더 좋아보임. 실제 트리거 = "네놈들의 종말을 맞이해라!"
-	L.last_phase_message = "마지막 단계"
 end
