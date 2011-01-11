@@ -51,8 +51,8 @@ end
 L = BigWigs:NewBossLocale("Maloriak", "frFR")
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Prévient quand vous vous trouvez dans une %s."):format((GetSpellInfo(92987)))
+	L.sludge = "Sombre vase"
+	L.sludge_desc = "Prévient quand vous vous trouvez dans une Sombre vase."
 
 	--normal
 	L.final_phase = "Phase finale"
@@ -63,7 +63,7 @@ if L then
 	L.bitingchill_say = "Frisson mordant sur moi !"
 
 	L.flashfreeze = "~Gel instantané"
-	L.next_blast = "~Scorching Blast"
+	L.next_blast = "~Déflagration brûlante"
 
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
@@ -78,7 +78,7 @@ if L then
 	L.green_phase_trigger = "Celui-ci est un peu instable, mais que serai le progrès sans échec ?" -- à vérifier
 	L.green_phase = "Phase |cFF33FF00verte|r"
 	L.dark_phase = "Phase |cFF660099sombre|r"
-	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!" -- récupérer transcription
+	L.dark_phase_trigger = "Tes mixtures sont insipides, Maloriak ! Elles ont besoin d'un peu de... force !" -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Nefarian", "frFR")
@@ -89,6 +89,9 @@ if L then
 	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traité avec une extrême fermeté !" -- à vérifier
 
 	L.phase_three_trigger = "J'ai tout fait pour être un hôte accomodant, mais vous ne daignez pas mourir ! Oublions les bonnes manières et passons aux choses sérieuses... VOUS TUER TOUS !" -- à vérifier
+
+	L.crackle_trigger = "L'électricité crépite dans l'air !" -- à vérifier
+	L.crackle_message = "Electrocuter imminent !"
 
 	L.shadowblaze_trigger = "Que la chair se transforme en cendres !" -- à vérifier
 
@@ -107,8 +110,8 @@ if L then
 
 	L.next_switch = "Prochaine activation"
 
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you." -- récupérer transcription
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?" -- récupérer transcription
+	L.nef_trigger1 = "Vous aviez l'intention d'utiliser les attaques chimiques de Toxitron contre les autres assemblages ?" -- à compléter
+	L.nef_trigger2 = "Ces nains stupides et leur fascination pour les runes !" -- à compléter
 
 	L.nef_next = "~Prochain buff de technique"
 
