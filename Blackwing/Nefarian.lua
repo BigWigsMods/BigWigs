@@ -165,7 +165,7 @@ function mod:ExplosiveCindersRemoved(player)
 end
 
 function mod:UNIT_POWER(event, unit, powerType)
-	if UnitIsUnit("boss1", unit) and powerType == "ALTERNATE" then
+	if unit == "boss1" and powerType == "ALTERNATE" then
 		local power = UnitPower(unit, ALTERNATE_POWER_INDEX)
 		if power > 80 then
 			self:Message(78999, L["onyxia_power_message"], "Attention", 78999)
@@ -173,5 +173,4 @@ function mod:UNIT_POWER(event, unit, powerType)
 		end
 	end
 end
-
 
