@@ -5,7 +5,33 @@
 local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, Arion, Terrastra, Elementium Monstrosity
-mod.toggleOptions = {{92067, "FLASHSHAKE", "SAY", "ICON"}, {92075, "FLASHSHAKE", "SAY", "ICON"}, {92307, "FLASHSHAKE", "ICON", "WHISPER"}, 82631, 82660, 82663, 82746, 82665, 82666, 82762, 83067, {83099, "SAY", "ICON", "FLASHSHAKE"}, 83500, 83565, 92541, 83581, 92488, "proximity", "switch", "bosskill"}
+mod.toggleOptions = {
+	-- Ignacious
+	82631, 82660, 82663,
+	-- Feludius
+	82746, 82665, 82666, 82762,
+	-- Arion
+	83067, {83099, "SAY", "ICON", "FLASHSHAKE"},
+	-- Terrastra
+	83565, 92541,
+	-- Monstrosity
+	92488,
+	-- Heroic
+	{92067, "FLASHSHAKE", "SAY", "ICON"},
+	{92075, "FLASHSHAKE", "SAY", "ICON"},
+	{92307, "FLASHSHAKE", "ICON", "WHISPER"},
+	-- General
+	"proximity", "switch", "bosskill"}
+
+mod.optionHeaders = {
+	[82631] = "Ignacious",
+	[82746] = "Feludius",
+	[83067] = "Arion",
+	[83565] = "Terrastra",
+	[92488] = "Elementium Monstrosity",
+	[92067] = "heroic",
+	proximity = "general",
+}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -46,16 +72,6 @@ if L then
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
 end
 L = mod:GetLocale()
-
-mod.optionHeaders = {
-	[82631] = "Ignacious",
-	[82746] = "Feludius",
-	[83067] = "Arion",
-	[83565] = "Terrastra",
-	[92488] = "Elementium Monstrosity",
-	[92067] = "heroic",
-	proximity = "general",
-}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -217,13 +233,13 @@ end
 
 function mod:FrostImbued(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(82666, spellName, "Attention", spellId, "Long")
+		self:LocalMessage(82666, spellName, "Positive", spellId, "Info")
 	end
 end
 
 function mod:FlameImbued(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(82663, spellName, "Attention", spellId, "Long")
+		self:LocalMessage(82663, spellName, "Positive", spellId, "Info")
 	end
 end
 
