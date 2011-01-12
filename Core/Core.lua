@@ -314,9 +314,6 @@ function addon:OnEnable()
 	self.bossCore:Enable()
 
 	zoneChanged()
-
-	-- XXX calebv remove at will!
-	self:Print("The Cataclysm encounter modules are nearing completion. You can contact us at #bigwigs@irc.freenode.net or with the wowace ticket tracker.")
 end
 
 function addon:OnDisable()
