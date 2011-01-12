@@ -57,8 +57,8 @@ if L then
 	--normal
 	L.final_phase = "Phase finale"
 
-	L.release_aberration_message = "%s aberrations restantes !"
-	L.release_all = "%s aberrations libérées !"
+	L.release_aberration_message = "%d aberrations restantes !"
+	L.release_all = "%d aberrations libérées !"
 
 	L.bitingchill_say = "Frisson mordant sur moi !"
 
