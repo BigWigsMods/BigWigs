@@ -15,6 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "esES")
 if L then
 	L.bileotron_engage = "El Bilistrón se activa y empieza a emitir una sustancia de olor asqueroso."
+	L.win_trigger = "El Bilistrón hace señales afirmativas y se apaga de forma permanente."	
 
 	L.next_system_failure = "Siguiente fallo del sistema"
 	L.break_message = "%2$dx Romper en %1$s"
@@ -90,7 +91,10 @@ if L then
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
-	L.shadowblaze_trigger = "Flesh turns to ash!"
+	L.crackle_trigger = "The air crackles with electricity!"
+	L.crackle_message = "¡Electrocutar pronto!"
+
+	L.onyxia_power_message = "¡Explosión pronto!"
 
 	L.cinder_say = "¡Cenizas explosivas en MI!"
 
