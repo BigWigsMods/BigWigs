@@ -14,6 +14,7 @@ mod.toggleOptions = {{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "
 local aberrations = 18
 local phaseCounter = 0
 local warnedAlready = nil
+local maloriak = BigWigs:Translate("Maloriak")
 local chillTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -209,7 +210,7 @@ function mod:FlashFreeze(player, spellId, _, _, spellName)
 end
 
 function mod:Remedy(unit, spellId, _, _, spellName)
-	if UnitIsUnit(unit, "boss1") then -- XXX I don't think this works?
+	if unit == maloriak then
 		self:Message(77912, spellName, "Important", spellId, "Alert")
 	end
 end
