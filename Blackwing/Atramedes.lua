@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "SAY"}, "bosskill"}
+mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "SAY"}, "bosskill"} --XXX "berserk",
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -58,6 +58,7 @@ function mod:OnEngage(diff)
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
 	self:Bar(77840, searingFlame, 45, 77840)
 	self:Bar("air_phase", L["air_phase"], 100, 5740) -- Rain of Fire Icon
+	--self:Berserk(600) --XXX v4.0.6
 end
 
 --------------------------------------------------------------------------------
