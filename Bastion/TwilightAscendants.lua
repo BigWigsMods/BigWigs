@@ -95,7 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
 	self:Log("SPELL_AURA_APPLIED", "FrostImbued", 82666)
 	self:Log("SPELL_AURA_APPLIED", "FlameImbued", 82663)
-	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 92488)
+	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 84948, 92486, 92487, 92488)
 
 	self:Yell("Switch", L["switch_trigger"])
 
@@ -155,11 +155,10 @@ do
 		scheduled = nil
 	end
 	function mod:GravityCrush(player, spellId, _, _, spellName)
-		print(player)
 		gcTargets[#gcTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(gcWarn, 0.3, spellName)
+			self:ScheduleTimer(gcWarn, 0.02, spellName)
 		end
 		self:Bar(92488, spellName, 25, spellId)
 	end
