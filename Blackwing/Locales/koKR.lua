@@ -69,6 +69,7 @@ if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
 	L.next_phase = "다음 단계"
+	L.green_phase_bar = "녹색 단계"
 
 	L.you = "당신은 %s!"
 
@@ -94,7 +95,7 @@ if L then
 	L.crackle_trigger = "전기가"	--check
 	L.crackle_message = "곧 감전!"
 
-	L.shadowblaze_trigger = "살을 재로"	--check
+	L.onyxia_power_message = "곧 폭발!"
 
 	L.cinder_say = "나에게 폭발하는 잿더미!"
 
@@ -118,6 +119,7 @@ if L then
 
 	L.acquiring_target = "대상 획득"
 
+	L.cloud_say = "나에게 화학 구름!"
 	L.cloud_message = "당신은 화학 구름!"
 	L.protocol_message = "독 폭탄!"
 
