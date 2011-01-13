@@ -121,7 +121,7 @@ local function nextPhase()
 	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
 		mod:SendMessage("BigWigs_StopBar", mod, L["next_phase"])
 		mod:Bar("phase", L["green_phase_bar"], 47, "INV_POTION_162")
-		phaseCounter == 0
+		phaseCounter = 0
 	end
 end
 
