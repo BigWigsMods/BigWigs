@@ -19,6 +19,7 @@ local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
 local cinderTargets = mod:NewTargetList()
 local shadowblaze = GetSpellInfo(94085)
 local phase3warned = false
+local onyxia = BigWigs:Translate("Onyxia")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -166,10 +167,12 @@ end
 
 function mod:UNIT_POWER(event, unit, powerType)
 	if unit == "boss1" and powerType == "ALTERNATE" then
-		local power = UnitPower(unit, ALTERNATE_POWER_INDEX)
-		if power > 80 then
-			self:Message(78999, L["onyxia_power_message"], "Attention", 78999)
-			self:UnregisterEvent("UNIT_POWER")
+		if UnitName(unit) == onyxia then
+			local power = UnitPower(unit, ALTERNATE_POWER_INDEX)
+			if power > 80 then
+				self:Message(78999, L["onyxia_power_message"], "Attention", 78999)
+				self:UnregisterEvent("UNIT_POWER")
+			end
 		end
 	end
 end

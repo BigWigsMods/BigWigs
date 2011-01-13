@@ -41,6 +41,7 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
+local ignacious, feludius, arion, terrastra = BigWigs:Translate("Ignacious"), BigWigs:Translate("Feludius"),BigWigs:Translate("Arion"), BigWigs:Translate("Terrastra")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -201,10 +202,12 @@ function mod:UNIT_HEALTH(event, unit)
 	--if unit:find("^boss%d$") then
 	-- this is probably faster, but uglier :P
 	if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 30 then
-			self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
-			self:UnregisterEvent("UNIT_HEALTH")
+		if UnitName(unit) == ignacious or UnitName(unit) == feludius or UnitName(unit) == arion or UnitName(unit) == terrastra then
+			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+			if hp < 30 then
+				self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
+				self:UnregisterEvent("UNIT_HEALTH")
+			end
 		end
 	end
 end
