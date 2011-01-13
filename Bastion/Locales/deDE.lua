@@ -1,17 +1,28 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "deDE")
 if L then
-	--heroic
 	L.orders = "Schatten- / Flammenbefehl"
-	L.orders_desc = "Warnt, wenn Cho'gall Befehle des Schattens und Flammenbefehl wirkt."
+	L.orders_desc = "Warnt, wenn Cho'gall zwischen Befehle des Schattens und Flammenbefehl wechselt."
 
-	--normal
 	L.worship_cooldown = "~Verehren"
+	L.adherent_bar = "Nächster Kultist"
+	L.adherent_message = "Kultist!"
+	L.ooze_bar = "Schleim Adds"
+	L.ooze_message = "Schleime kommen!"
+	L.tentacles_bar = "Nächste Tentakel"
+	L.tentacles_message = "Tentakel Disco Party!"
+
+	L.phase2_message = "Phase 2!"
+	L.phase2_soon = "Phase 2 bald!"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "deDE")
 if L then
 	L.phase_switch = "Phasenwechsel"
 	L.phase_switch_desc = "Warnt, wenn die Phase gewechselt wird."
+
+	L.phase_bar = "%s landet"
+	L.breath_message = "Tiefer Atem kommt!"
+	L.dazzling_message = "Wirbelzonen kommen!"
 
 	L.engulfingmagic_say = "Einhüllende Magie auf MIR!"
 	L.engulfingmagic_cooldown = "~Einhüllende Magie"
@@ -41,6 +52,9 @@ if L then
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt, wenn die Bosse wechseln."
 
+	L.shield_up_message = "Schild ist oben!"
+	L.shield_bar = "Nächstes Schild"
+
 	L.lightning_rod_say = "Blitzableiter auf MIR!"
 
 	L.switch_trigger = "Wir kümmern uns um sie!" -- check
@@ -50,8 +64,8 @@ if L then
 	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..." -- check
 	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern...." -- check
 
-	L.searing_winds_message = "Donnerschock kommt!"
-	L.grounded_message = "Erdbeben kommt!"
+	--L.searing_winds_message = "Donnerschock kommt!"
+	--L.grounded_message = "Erdbeben kommt!"
 
 	L.last_phase_trigger = "SCHMECKT DIE VERDAMMNIS!" -- check
 end

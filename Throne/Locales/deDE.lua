@@ -13,7 +13,7 @@ if L then
 	L.you = "%s auf DIR!"
 end
 
-local L = BigWigs:NewBossLocale("Conclave of Wind", "deDE")
+L = BigWigs:NewBossLocale("Conclave of Wind", "deDE")
 if L then
 	L.gather_strength = "%s sammelt Stärke"
 
@@ -21,7 +21,7 @@ if L then
 	L.storm_shield_desc = "Warnt, wenn Rohash Sturmschild wirkt."
 
 	L.full_power = "Volle Stärke"
-	L.full_power_desc = "Warnt, wenn der Boss volle Stärke erreicht hat und seine Spezialfähigkeiten wirkt."
+	L.full_power_desc = "Warnt, wenn die Bosse volle Stärke erreicht haben und ihre Spezialfähigkeiten wirken."
 	L.gather_strength_emote = "%s beginnt von den verbliebenen Windlords Stärke zu beziehen!" -- check
 
 	L.wind_chill = "%sx Windkühle auf DIR!"

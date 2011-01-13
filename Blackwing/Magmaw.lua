@@ -35,7 +35,6 @@ if L then
 
 	L.slump = "Slump (Rodeo)"
 	L.slump_desc = "Warn for when Magmaw slumps forward and exposes himself, allowing the riding rodeo to start."
-
 	L.slump_bar = "Next rodeo"
 	L.slump_message = "Yeehaw, ride on!"
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"

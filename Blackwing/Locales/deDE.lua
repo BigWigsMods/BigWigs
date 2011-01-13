@@ -15,6 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "deDE")
 if L then
 	L.bileotron_engage = "Der Gall-O-Tron springt an und stößt eine übel riechende Substanz aus." -- check
+	--L.win_trigger = "A shame to lose that experiment..."
 
 	L.next_system_failure = "Nächstes Systemversagen"
 	L.break_message = "%2$dx Brechen auf %1$s"
@@ -32,9 +33,13 @@ if L then
 
 	L.pillar_of_flame_cd = "~Flammensäule"
 
-	L.slump = "Nach vorne schlittern"
-	L.slump_desc = "Magmaul schlittert nach vorne und entblößt seine Zangen."
+	L.blazing_message = "Add kommt!"
+	L.blazing_bar = "Nächstes Skelett"
 
+	L.slump = "Nach vorne schlittern (Rodeo)"
+	L.slump_desc = "Warnt vor dem nach vorne Schlittern, das das Rodeo erlaubt zu starten."
+	L.slump_bar = "Nächstes Rodeo"
+	L.slump_message = "Yeehaa, Rodeo!"
 	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
 
 	L.infection_message = "Infektion auf DIR!"
@@ -46,11 +51,11 @@ end
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
 if L then
 	--heroic
-	L.darkSludge = "Dunkler Schlick"
-	L.darkSludge_desc = "Warnt, wenn du in Dunkler Schlick stehst."
+	L.sludge = "Dunkler Schlick"
+	L.sludge_desc = "Warnt, wenn du in Dunkler Schlick stehst."
 
 	--normal
-	L.final_phase = "Letzte Phase"
+	L.final_phase = "Finale Phase"
 
 	L.release_aberration_message = "%s Adds noch!"
 	L.release_all = "%s Adds freigelassen!"
@@ -58,10 +63,12 @@ if L then
 	L.bitingchill_say = "Beißende Kälte auf MIR!"
 
 	L.flashfreeze = "~Blitzeis"
+	L.next_blast = "~Sengende Explosion"
 
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
 	L.next_phase = "Nächste Phase"
+	L.green_phase_bar = "Grüne Phase"
 
 	L.you = "%s auf DIR!"
 
@@ -84,7 +91,10 @@ if L then
 
 	L.phase_three_trigger = "Ich habe versucht, ein guter Gastgeber zu sein, aber ihr wollt einfach nicht sterben! Genug der Spielchen! Ich werde euch einfach... ALLE TÖTEN!" -- check
 
-	L.shadowblaze_trigger = "Fleisch wird zu Asche!" -- check
+	L.crackle_trigger = "Elektrizität lässt die Luft knistern!" -- check
+	L.crackle_message = "Stromschlag bald!"
+
+	L.onyxia_power_message = "Überladung bald!"
 
 	L.cinder_say = "Explodierende Asche auf MIR!"
 
@@ -108,6 +118,7 @@ if L then
 
 	L.acquiring_target = "Zielerfassung"
 
+	L.cloud_say = "Wolke auf MIR!"
 	L.cloud_message = "Wolke auf DIR!"
 	L.protocol_message = "Giftbomben kommen!"
 

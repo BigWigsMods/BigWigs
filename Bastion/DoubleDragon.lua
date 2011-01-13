@@ -31,7 +31,7 @@ local markWarned = false
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase_switch = "Phase Switch"
-	L.phase_switch_desc = "Warning for Phase Switches"
+	L.phase_switch_desc = "Warning for phase switches."
 
 	L.phase_bar = "%s landing"
 	L.breath_message = "Deep Breaths incoming!"

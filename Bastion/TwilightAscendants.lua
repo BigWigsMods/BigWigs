@@ -52,7 +52,7 @@ if L then
 	L.gravity_core_say = "Gravity on ME!"
 	L.health_report = "%s at %d%%, phase change soon!"
 	L.switch = "Switch"
-	L.switch_desc = "Warning for boss switches"
+	L.switch_desc = "Warning for boss switches."
 
 	L.shield_up_message = "Shield is up!"
 	L.shield_bar = "Next shield"
