@@ -28,7 +28,7 @@ if L then
 	L.sludge_desc = "Warning for when you stand in Dark Sludge."
 
 	--normal
-	L.final_phase = "Final Phase"
+	L.final_phase = "Final phase"
 
 	L.release_aberration_message = "%d adds left!"
 	L.release_all = "%d adds released!"
@@ -39,8 +39,9 @@ if L then
 	L.next_blast = "~Scorching Blast"
 
 	L.phase = "Phase"
-	L.phase_desc = "Warning for Phase changes."
-	L.next_phase = "Next Phase"
+	L.phase_desc = "Warning for phase changes."
+	L.next_phase = "Next phase"
+	L.green_phase_bar = "Green phase"
 
 	L.you = "%s on YOU!"
 
@@ -114,19 +115,13 @@ end
 -- Event Handlers
 --
 
-local function nextPhase(phase)
-	if mod:GetInstanceDifficulty() > 2 then
-		if phaseCounter == 3 then
-			mod:SendMessage("BigWigs_StopBar", mod, L["next_phase"])
-			if phase == "dark" then
-				mod:Bar("phase", L["green_phase"], 100, "INV_POTION_162")
-			elseif phase == "green" then
-				phaseCounter = 0
-			else
-				mod:Bar("phase", L["green_phase"], 47, "INV_POTION_162")
-			end
-		end
-		phaseCounter = phaseCounter + 1
+local function nextPhase()
+	phaseCounter = phaseCounter + 1
+	local diff = mod:GetInstanceDifficulty()
+	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
+		mod:SendMessage("BigWigs_StopBar", mod, L["next_phase"])
+		mod:Bar("phase", L["green_phase_bar"], 47, "INV_POTION_162")
+		phaseCounter == 0
 	end
 end
 
@@ -170,7 +165,7 @@ function mod:Red()
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
-	nextPhase("red")
+	nextPhase()
 end
 
 function mod:Blue()
@@ -180,7 +175,7 @@ function mod:Blue()
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
 	self:OpenProximity(5)
-	nextPhase("blue")
+	nextPhase()
 end
 
 function mod:Green()
@@ -189,7 +184,7 @@ function mod:Green()
 	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()
-	nextPhase("green")
+	nextPhase()
 end
 
 function mod:Dark()
@@ -197,7 +192,7 @@ function mod:Dark()
 	self:Bar("phase", L["next_phase"], 100, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
 	self:CloseProximity()
-	nextPhase("dark")
+	nextPhase()
 end
 
 function mod:FlashFreezeTimer(_, spellId, _, _, spellName)
