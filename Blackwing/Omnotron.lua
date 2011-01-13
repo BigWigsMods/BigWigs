@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
-mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, "switch", "iconomnotron", "bosskill"}
+mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY", "ICON"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, "switch", "iconomnotron", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	switch = "general",
@@ -36,6 +36,7 @@ if L then
 
 	L.acquiring_target = "Acquiring target!"
 
+	L.cloud_say = "Cloud on ME!"
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs incoming!"
 
@@ -58,6 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094)
 
 	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479, 91473, 91471) --91471 for 25norm, not sure about the rest, obviously 1 is wrong
+	self:Log("SPELL_CAST_SUCCESS", "ChemicalCloudCast", 80157)
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
 	self:Log("SPELL_AURA_APPLIED", "LightningConductor", 79888, 91433, 91431, 91432)
@@ -75,6 +77,29 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local scheduled = nil
+	local function cloudTarget(spellName)
+		scheduled = nil
+		local bossId = mod:GetUnitIdByGUID(42180)
+		if not bossId then return end
+		local target = UnitName(bossId .. "target")
+		if target then
+			if UnitIsUnit(target, "player") then
+				mod:FlashShake(80157)
+				mod:Say(80157, L["cloud_say"])
+			end
+			mod:SecondaryIcon(80157, target)
+		end
+	end
+	function mod:ChemicalCloudCast(_, _, _, _, spellName)
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(cloudTarget, 0.01, spellName)
+		end
+	end
+end
 
 function mod:NefAbilties()
 	self:Message("nef", L["nef_next"], "Attention", 92048)
