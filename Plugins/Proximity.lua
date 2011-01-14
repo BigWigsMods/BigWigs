@@ -497,6 +497,30 @@ function plugin:OnRegister()
 		update()
 	end
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+
+	local function iterateFloors(map, ...)
+		for i = 1, select("#", ...), 2 do
+			local w, h = select(i, ...)
+			table.insert(mapData[map], { tonumber(w), tonumber(h) })
+		end
+	end
+	local function iterateMaps(addonIndex, ...)
+		for i = 1, select("#", ...) do
+			local map = select(i, ...)
+			local meta = GetAddOnMetadata(addonIndex, "X-BigWigs-MapSize-" .. map)
+			if meta then
+				if not mapData[map] then mapData[map] = {} end
+				iterateFloors(map, strsplit(",", meta)
+			end
+		end
+	end
+
+	for i = 1, GetNumAddOns() do
+		local meta = GetAddOnMetadata(i, "X-BigWigs-Maps")
+		if meta then
+			iterateMaps(i, strsplit(",", meta))
+		end
+	end
 end
 
 function plugin:OnPluginEnable()
