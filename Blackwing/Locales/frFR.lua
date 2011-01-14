@@ -15,6 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "frFR")
 if L then
 	L.bileotron_engage = "Le bile-o-tron s'anime et commence à secréter une substance malodorante."
+	L.win_trigger = "Quel dommage de perdre cette expérience..."
 
 	L.next_system_failure = "Prochaine Défaillance"
 	L.break_message = "%2$dx Brèche sur %1$s"
@@ -37,7 +38,6 @@ if L then
 
 	L.slump = "Affalement (rodéo)"
 	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose, permettant ainsi au rodéo de commencer."
-
 	L.slump_bar = "Prochain rodéo"
 	L.slump_message = "Yeehaw, chevauchez !"
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
@@ -68,6 +68,7 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 	L.next_phase = "Prochaine phase"
+	L.green_phase_bar = "Phase verte"
 
 	L.you = "%s sur vous !"
 
@@ -117,6 +118,7 @@ if L then
 
 	L.acquiring_target = "Acquisition d'une cible"
 
+	L.cloud_say = "Nuage chimique sur moi !"
 	L.cloud_message = "Nuage chimique sur vous !"
 	L.protocol_message = "Arrivée de Bombes de poison !"
 

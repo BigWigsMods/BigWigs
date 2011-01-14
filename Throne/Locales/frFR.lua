@@ -24,5 +24,5 @@ if L then
 	L.full_power_desc = "Prévient quand les boss atteignent leur puissance maximale et commence à incanter les techniques spéciales."
 	L.gather_strength_emote = "%s commence à puiser la force des seigneurs du Vent encore présents !"  -- à vérifier
 
-	L.wind_chill = "Vous avez %s cumuls de Frisson du vent"
+	L.wind_chill = "%sx Frisson du vent sur vous !"
 end
