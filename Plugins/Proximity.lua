@@ -61,6 +61,9 @@ local coloredNames = setmetatable({}, {__index =
 --
 
 local bandages = {
+	53051, -- Dense Embersilk Bandage
+	53050, -- Heavy Embersilk Bandage
+	53049, -- Embersilk Bandage
 	34722, -- Heavy Frostweave Bandage
 	34721, -- Frostweave Bandage
 	21991, -- Heavy Netherweave Bandage
