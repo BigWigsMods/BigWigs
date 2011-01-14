@@ -33,6 +33,7 @@ local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
 local activeProximityFunction = nil
+local activeRange = nil
 local anchor = nil
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -141,8 +142,39 @@ do
 		end
 	end
 end
-local function getClosestRangeFunction(toRange)
-	if ranges[toRange] then return ranges[toRange], toRange end
+
+-- Copied from LibMapData-1.0 (All Rights Reserved) with permission from kagaro
+local mapData = {
+	TheBastionofTwilight = {
+		{ 1078.33402252197, 718.889984130859 },
+		{ 778.343017578125, 518.894958496094 },
+		{ 1042.34202575684, 694.894958496094 },
+	},
+	BaradinHold = {
+		{ 585.0, 390.0 },
+	},
+	BlackwingDescent = {
+		{ 849.69401550293, 566.462341070175 },
+		{ 999.692977905273, 666.462005615234 },
+	},
+	ThroneoftheFourWinds = {
+		{ 1500, 1000 },
+	},
+}
+
+local function rangeFromMapData(unit, x, y)
+	local floors = mapData[(GetMapInfo())]
+	if not floors then return end
+	local currentFloor = GetCurrentMapDungeonLevel()
+	if currentFloor == 0 then currentFloor = 1 end
+	local width, height = floors[currentFloor][1], floors[currentFloor][2]
+	local dstX, dstY = GetPlayerMapPosition(unit)
+	local x = (dstX - x) * width
+	local y = (dstY - y) * height
+	return (x*x + y*y) ^ 0.5 < activeRange
+end
+
+local function findClosest(toRange)
 	local closest = 15
 	local closestDiff = math.abs(toRange - 15)
 	for range, func in pairs(ranges) do
@@ -153,6 +185,14 @@ local function getClosestRangeFunction(toRange)
 		end
 	end
 	return ranges[closest], closest
+end
+
+local function getClosestRangeFunction(toRange)
+	if ranges[toRange] then return ranges[toRange], toRange end
+	SetMapToCurrentZone()
+	local floors = mapData[(GetMapInfo())]
+	if not floors then return findClosest(toRange) end
+	return rangeFromMapData, toRange
 end
 
 --------------------------------------------------------------------------------
@@ -372,10 +412,15 @@ do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
 	local function updateProximity()
+		local srcX, srcY = GetPlayerMapPosition("player")
+		if srcX == 0 and srcY == 0 then
+			SetMapToCurrentZone()
+			srcX, srcY = GetPlayerMapPosition("player")
+		end
 		local num = GetNumRaidMembers()
 		for i = 1, num do
 			local n = GetRaidRosterInfo(i)
-			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n) then
+			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
 				tooClose[#tooClose + 1] = coloredNames[n]
 			end
 			if #tooClose > 4 or i > 25 then break end
@@ -584,6 +629,7 @@ end
 
 function plugin:Close()
 	activeProximityFunction = nil
+	activeRange = nil
 	if anchor then
 		anchor.header:SetText(L["Proximity"])
 		-- Just in case we were the last target of
@@ -601,6 +647,7 @@ function plugin:Open(range)
 	-- Get the best range function for the given range
 	local func, actualRange = getClosestRangeFunction(range)
 	activeProximityFunction = func
+	activeRange = actualRange
 	-- Update the header to reflect the actual range we're checking
 	anchor.header:SetText(L["%d yards"]:format(actualRange))
 	-- Unbreak the sound+close buttons
@@ -628,11 +675,7 @@ SlashCmdList.BigWigs_Proximity = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	input = input:trim()
 	if input == "" or input == "?" or input == "ranges" then
-		print("Available ranges (in yards) for the promixity display:")
-		local t = {}
-		for range in pairs(ranges) do t[#t + 1] = range end
-		print(table.concat(t, ", "))
-		print("Example: /proximity " .. tostring(t[1]))
+		print("Usage: /proximity 1-100")
 	else
 		local range = tonumber(input)
 		if not range then return end
