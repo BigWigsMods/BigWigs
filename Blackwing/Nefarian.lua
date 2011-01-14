@@ -103,7 +103,10 @@ end
 function mod:PhaseTwo()
 	phase = 2
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
-	self:Bar("phase", CL["phase"]:format(phase), 127, 78621)
+	local d = self:GetInstanceDifficulty()
+	if d == 2 or d == 4 then
+		self:Bar("phase", CL["phase"]:format(phase), 127, 78621)
+	end
 end
 
 local function ShadowBlazeNoTrigger()

@@ -105,6 +105,8 @@ function mod:OnEngage(diff)
 	-- XXX Berserk timers not confirmed
 	if diff > 2 then
 		self:Berserk(840)
+	else
+		self:Berserk(360)
 	end
 	aberrations = 18
 	phaseCounter = 0
@@ -217,7 +219,9 @@ do
 		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
 	end
 	function mod:ReleaseAberrations(_, spellId)
-		handle = self:ScheduleTimer(release, 1.5, spellId)
+		if aberrations > 0 then
+			handle = self:ScheduleTimer(release, 1.5, spellId)
+		end
 	end
 	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
 		if secSpellId ~= 77569 then return end
