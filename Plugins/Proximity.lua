@@ -162,15 +162,15 @@ local mapData = {
 	},
 }
 
-local function rangeFromMapData(unit, x, y)
+local function rangeFromMapData(unit, srcX, srcY)
 	local floors = mapData[(GetMapInfo())]
 	if not floors then return end
 	local currentFloor = GetCurrentMapDungeonLevel()
 	if currentFloor == 0 then currentFloor = 1 end
 	local width, height = floors[currentFloor][1], floors[currentFloor][2]
 	local dstX, dstY = GetPlayerMapPosition(unit)
-	local x = (dstX - x) * width
-	local y = (dstY - y) * height
+	local x = (dstX - srcX) * width
+	local y = (dstY - srcY) * height
 	return (x*x + y*y) ^ 0.5 < activeRange
 end
 
