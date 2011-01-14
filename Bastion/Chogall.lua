@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-mod.toggleOptions = {91303, 81628, 82299, 82630, 82414, "orders", "berserk", "bosskill"}
+mod.toggleOptions = {91303, 82524, 81628, 82299, 82630, 82414, "orders", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[91303] = CL.phase:format(1),
@@ -19,6 +19,7 @@ mod.optionHeaders = {
 
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
+local furyOfChogall = (GetSpellInfo(82524))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -53,6 +54,7 @@ function mod:OnBossEnable()
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93365, 93366, 93367)
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
+	self:Log("SPELL_CAST_START", "FuryOfChogall", 82524)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
 	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414, 93160)
@@ -62,9 +64,14 @@ function mod:OnBossEnable()
 	self:Death("Win", 43324)
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	self:Bar(81628, L["adherent_bar"], 58, 81628)
+	if diff > 2 then
+		self:Bar(81628, L["adherent_bar"], 107, 81628)
+	else
+		self:Bar(81628, L["adherent_bar"], 58, 81628)
+	end
+	self:Bar(82524, furyOfChogall, 100, 82524)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 	self:RegisterEvent("UNIT_HEALTH")
@@ -73,6 +80,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:FuryOfChogall(_, spellId, _, _, spellName)
+	self:Message(82524, spellName, "Attention", spellId)
+	self:Bar(82524, spellName, 47, spellId)
+end
 
 function mod:Orders(_, spellId, _, _, spellName)
 	self:Message("orders", spellName, "Urgent", spellId)
