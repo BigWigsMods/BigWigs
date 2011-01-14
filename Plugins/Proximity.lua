@@ -151,7 +151,7 @@ local mapData = {
 		{ 1042.34202575684, 694.894958496094 },
 	},
 	BaradinHold = {
-		{ 585.0, 390.0 },
+		{ 585, 390 },
 	},
 	BlackwingDescent = {
 		{ 849.69401550293, 566.462341070175 },
@@ -672,15 +672,17 @@ end
 
 SlashCmdList.BigWigs_Proximity = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
-	input = input:trim()
-	if input == "" or input == "?" or input == "ranges" then
+	local range = tonumber(input)
+	if not range then
 		print("Usage: /proximity 1-100")
 	else
-		local range = tonumber(input)
-		if not range then return end
 		plugin:Open(range)
 	end
 end
 SLASH_BigWigs_Proximity1 = "/proximity"
 SLASH_BigWigs_Proximity2 = "/bwproximity" -- In case some other addon already has /proximity
+
+-- Apparently some users (idiots?) don't read through the interface options before using
+-- a complicated addon such as BigWigs. Go figure.
+SLASH_BigWigs_Proximity3 = "/range" 
 

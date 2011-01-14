@@ -214,14 +214,14 @@ end
 
 do
 	local handle = nil
-	local function release(spellId)
+	local function release()
 		aberrations = aberrations - 3
-		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", spellId)
+		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", 688)
 	end
-	function mod:ReleaseAberrations(_, spellId)
-		if aberrations > 0 then
-			handle = self:ScheduleTimer(release, 1.5, spellId)
-		end
+	function mod:ReleaseAberrations()
+		-- He keeps casting it even if there are no adds left to release...
+		if aberrations < 0 then return end
+		handle = self:ScheduleTimer(release, 1.5)
 	end
 	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
 		if secSpellId ~= 77569 then return end
