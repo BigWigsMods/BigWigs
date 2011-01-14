@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-mod.toggleOptions = {91303, 82524, 81628, 82299, 82630, 82414, "orders", "berserk", "bosskill"}
+mod.toggleOptions = {91303, 82524, 81628, 82299, 82630, 82414, "orders", 82235, "proximity", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[91303] = CL.phase:format(1),
@@ -19,7 +19,7 @@ mod.optionHeaders = {
 
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
-local furyOfChogall = (GetSpellInfo(82524))
+local sicknessWarned = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,6 +37,7 @@ if L then
 	L.ooze_message = "Ooze swarm incoming!"
 	L.tentacles_bar = "Tentacles spawn"
 	L.tentacles_message = "Tentacle disco party!"
+	L.sickness_message = "You feel terrible!"
 
 	L.phase2_message = "Phase 2!"
 	L.phase2_soon = "Phase 2 soon!"
@@ -71,15 +72,28 @@ function mod:OnEngage(diff)
 	else
 		self:Bar(81628, L["adherent_bar"], 58, 81628)
 	end
-	self:Bar(82524, furyOfChogall, 100, 82524)
+	self:Bar(82524, (GetSpellInfo(82524)), 100, 82524)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
+	sicknessWarned = nil
+
+	self:RegisterEvent("UNIT_POWER")
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_POWER(event, unit, powerType)
+	if sicknessWarned or unit ~= "player" or powerType ~= "ALTERNATE" then return end
+	local power = UnitPower("player", ALTERNATE_POWER_INDEX)
+	if power > 49 then
+		self:Message(82235, L["sickness_message"], "Important", 81831, "Long")
+		self:OpenProximity(5)
+		sicknessWarned = true
+	end
+end
 
 function mod:FuryOfChogall(_, spellId, _, _, spellName)
 	self:Message(82524, spellName, "Attention", spellId)
