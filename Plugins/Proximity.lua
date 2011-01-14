@@ -162,18 +162,6 @@ local mapData = {
 	},
 }
 
-local function rangeFromMapData(unit, srcX, srcY)
-	local floors = mapData[(GetMapInfo())]
-	if not floors then return end
-	local currentFloor = GetCurrentMapDungeonLevel()
-	if currentFloor == 0 then currentFloor = 1 end
-	local width, height = floors[currentFloor][1], floors[currentFloor][2]
-	local dstX, dstY = GetPlayerMapPosition(unit)
-	local x = (dstX - srcX) * width
-	local y = (dstY - srcY) * height
-	return (x*x + y*y) ^ 0.5 < activeRange
-end
-
 local function findClosest(toRange)
 	local closest = 15
 	local closestDiff = math.abs(toRange - 15)
@@ -192,7 +180,18 @@ local function getClosestRangeFunction(toRange)
 	SetMapToCurrentZone()
 	local floors = mapData[(GetMapInfo())]
 	if not floors then return findClosest(toRange) end
-	return rangeFromMapData, toRange
+	local currentFloor = GetCurrentMapDungeonLevel()
+	if currentFloor == 0 then currentFloor = 1 end
+	local id = floors[currentFloor]
+	if not ranges[id] then
+		ranges[id] = function(unit, srcX, srcY)
+			local dstX, dstY = GetPlayerMapPosition(unit)
+			local x = (dstX - srcX) * id[1]
+			local y = (dstY - srcY) * id[2]
+			return (x*x + y*y) ^ 0.5 < activeRange
+		end
+	end
+	return ranges[id], toRange
 end
 
 --------------------------------------------------------------------------------
