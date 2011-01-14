@@ -11,8 +11,7 @@ mod.toggleOptions = {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
 -- Locals
 --
 
-local consumingTargets = mod:NewTargetList()
-local firestorm1, firestorm2
+local fireStorm, consumingTargets = 100, mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,7 +44,7 @@ end
 function mod:OnEngage()
 	self:Berserk(300)
 	self:Bar(88942, L["meteor_bar"], 10, 88942)
-	firestorm1, firestorm2 = nil, nil
+	fireStorm = 100
 end
 
 --------------------------------------------------------------------------------
@@ -74,21 +73,20 @@ end
 
 function mod:FelFirestorm(_, spellId, _, _, spellName)
 	self:SendMessage("BigWigs_StopBar", self, L["meteor_bar"])
-	self:Message(88972, spellName, "Attention", spellId, "Alert")
+	self:Message(88972, fireStorm.."% - "..spellName, "Attention", spellId, "Alert")
 	self:FlashShake(88972)
 	self:Bar(88942, L["meteor_bar"], 32, 88942)
 end
 
 function mod:UNIT_HEALTH(_, unit)
-	if unit ~= "boss1" then return end
-	if UnitName(unit) == self.displayName then
+	if unit == "boss1" and UnitName(unit) == self.displayName then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 69 and not firestorm1 then
+		if hp < 69 and fireStorm > 70 then
 			self:Message(88972, L["firestorm_message"], "Attention")
-			firestorm1 = true
-		elseif hp <= 36 and not firestorm2 then
+			fireStorm = 66
+		elseif hp < 36 and fireStorm > 50 then
 			self:Message(88972, L["firestorm_message"], "Attention")
-			firestorm2 = true
+			fireStorm = 33
 			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end

@@ -199,8 +199,6 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	--if unit:find("^boss%d$") then
-	-- this is probably faster, but uglier :P
 	if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
 		if UnitName(unit) == ignacious or UnitName(unit) == feludius or UnitName(unit) == arion or UnitName(unit) == terrastra then
 			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100

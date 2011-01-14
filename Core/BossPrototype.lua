@@ -90,8 +90,8 @@ do
 		if emoteMap[self][msg] then
 			self[emoteMap[self][msg]](self, msg, ...)
 		else
-			for yell, func in pairs(emoteMap[self]) do
-				if msg:find(yell) then
+			for emote, func in pairs(emoteMap[self]) do
+				if msg:find(emote) then
 					self[func](self, msg, ...)
 				end
 			end

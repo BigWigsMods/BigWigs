@@ -101,13 +101,11 @@ function mod:DoubleAttack(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" then
-		if UnitName(unit) == self.displayName then
-			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-			if hp < 25 then
-				self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
-				self:UnregisterEvent("UNIT_HEALTH")
-			end
+	if unit == "boss1" and UnitName(unit) == self.displayName then
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp < 25 then
+			self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
+			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end

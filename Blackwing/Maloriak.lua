@@ -102,12 +102,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	-- XXX Berserk timers not confirmed
-	if diff > 2 then
-		self:Berserk(840)
-	else
-		self:Berserk(360)
-	end
+	self:Berserk(diff > 2 and 840 or 360) -- XXX Berserk timers not confirmed
 	aberrations = 18
 	phaseCounter = 0
 	warnedAlready = nil

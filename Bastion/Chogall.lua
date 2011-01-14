@@ -67,11 +67,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	if diff > 2 then
-		self:Bar(81628, L["adherent_bar"], 107, 81628)
-	else
-		self:Bar(81628, L["adherent_bar"], 58, 81628)
-	end
+	self:Bar(81628, L["adherent_bar"], diff > 2 and 107 or 58, 81628)
 	self:Bar(82524, (GetSpellInfo(82524)), 100, 82524)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
@@ -118,7 +114,7 @@ function mod:FesterBlood(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" then
+	if unit == "boss1" and UnitName(unit) == self.displayName then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp < 30 then
 			self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
