@@ -510,7 +510,7 @@ function plugin:OnRegister()
 			local meta = GetAddOnMetadata(addonIndex, "X-BigWigs-MapSize-" .. map)
 			if meta then
 				if not mapData[map] then mapData[map] = {} end
-				iterateFloors(map, strsplit(",", meta)
+				iterateFloors(map, strsplit(",", meta))
 			end
 		end
 	end
