@@ -32,12 +32,14 @@ if L then
 
 	L.worship_cooldown = "~Worship"
 	L.adherent_bar = "Next big add"
-	L.adherent_message = "Add spawned!"
+	L.adherent_message = "Add incoming!"
 	L.ooze_bar = "Ooze adds"
 	L.ooze_message = "Ooze swarm incoming!"
 	L.tentacles_bar = "Tentacles spawn"
 	L.tentacles_message = "Tentacle disco party!"
 	L.sickness_message = "You feel terrible!"
+	L.fury_bar = "Next Fury"
+	L.fury_message = "Fury!"
 
 	L.phase2_message = "Phase 2!"
 	L.phase2_soon = "Phase 2 soon!"
@@ -69,7 +71,7 @@ function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
 	self:Bar(81628, L["adherent_bar"], diff > 2 and 107 or 58, 81628)
 	-- Fury of Cho'gall bar
-	self:Bar(82524, (GetSpellInfo(82524)), 100, 82524)
+	self:Bar(82524, L["fury_bar"], 100, 82524)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 	sicknessWarned = nil
@@ -86,7 +88,7 @@ function mod:UNIT_POWER(event, unit, powerType)
 	if sicknessWarned or unit ~= "player" or powerType ~= "ALTERNATE" then return end
 	local power = UnitPower("player", ALTERNATE_POWER_INDEX)
 	if power > 49 then
-		self:LocalMessage(82235, L["sickness_message"], "Important", 81831, "Long")
+		self:LocalMessage(82235, L["sickness_message"], "Personal", 81831, "Long")
 		self:OpenProximity(5)
 		self:FlashShake(82235)
 		sicknessWarned = true
@@ -94,8 +96,8 @@ function mod:UNIT_POWER(event, unit, powerType)
 end
 
 function mod:FuryOfChogall(_, spellId, _, _, spellName)
-	self:Message(82524, spellName, "Attention", spellId)
-	self:Bar(82524, spellName, 47, spellId)
+	self:Message(82524, L["fury_message"], "Attention", spellId)
+	self:Bar(82524, L["fury_bar"], 47, spellId)
 end
 
 function mod:Orders(_, spellId, _, _, spellName)
