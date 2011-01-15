@@ -10,6 +10,9 @@ if L then
 	L.ooze_message = "곧 슬라임 추가!"
 	L.tentacles_bar = "촉수 소환"
 	L.tentacles_message = "촉수 디스코 파티!"
+	L.sickness_message = "당신은 피부 트러블!"
+	L.fury_bar = "다음 격노"
+	L.fury_message = "격노!"
 
 	L.phase2_message = "2 단계!"
 	L.phase2_soon = "곧 2 단계!"
