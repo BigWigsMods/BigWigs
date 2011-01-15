@@ -85,7 +85,7 @@ function mod:UNIT_POWER(event, unit, powerType)
 	if sicknessWarned or unit ~= "player" or powerType ~= "ALTERNATE" then return end
 	local power = UnitPower("player", ALTERNATE_POWER_INDEX)
 	if power > 49 then
-		self:Message(82235, L["sickness_message"], "Important", 81831, "Long")
+		self:LocalMessage(82235, L["sickness_message"], "Important", 81831, "Long")
 		self:OpenProximity(5)
 		sicknessWarned = true
 	end
