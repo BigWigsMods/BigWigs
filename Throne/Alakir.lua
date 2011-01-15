@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-mod.toggleOptions = {88427, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 93286, "bosskill"}
+mod.toggleOptions = {88427, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 93286, "proximity", "bosskill"}
 mod.optionHeaders = {
 	bosskill = "general",
 }
@@ -53,6 +53,7 @@ function mod:OnBossEnable()
 	self:Yell("Phase3", L["phase3_yell"])
 
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
+	self:Log("SPELL_AURA_REMOVED", "RodRemoved", 89668)
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286) -- Wind Burst in Phase 3 is instant cast
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -75,10 +76,16 @@ function mod:LightningRod(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(89668)
 		self:LocalMessage(89668, L["you"]:format(spellName), "Personal", spellId, "Info")
+		self:OpenProximity(20)
 	end
 	self:TargetMessage(89668, spellName, player, "Urgent", spellId)
 	self:Whisper(89668, player, L["you"]:format(spellName))
 	self:PrimaryIcon(89668, player)
+end
+
+function mod:RodRemoved(player)
+	if not UnitIsUnit(player, "player") then return end
+	self:CloseProximity()
 end
 
 function mod:Phase2(_, spellId)
