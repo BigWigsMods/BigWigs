@@ -10,6 +10,9 @@ if L then
 	L.ooze_message = "Arrivée d'une nuée de Sangs !"
 	L.tentacles_bar = "Apparition de Créations"
 	L.tentacles_message = "Créations assombries !"
+	L.sickness_message = "Vous ne vous sentez pas bien !"
+	L.fury_bar = "Prochaine Fureur"
+	L.fury_message = "Fureur !"
 
 	L.phase2_message = "Phase 2 !"
 	L.phase2_soon = "Phase 2 imminente !"
