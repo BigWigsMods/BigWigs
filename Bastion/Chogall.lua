@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-mod.toggleOptions = {91303, 82524, 81628, 82299, 82630, 82414, "orders", 82235, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {91303, 82524, 81628, 82299, 82630, 82414, "orders", {82235, "FLASHSHAKE"}, "proximity", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[91303] = CL.phase:format(1),
@@ -68,6 +68,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
 	self:Bar(81628, L["adherent_bar"], diff > 2 and 107 or 58, 81628)
+	-- Fury of Cho'gall bar
 	self:Bar(82524, (GetSpellInfo(82524)), 100, 82524)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
@@ -87,6 +88,7 @@ function mod:UNIT_POWER(event, unit, powerType)
 	if power > 49 then
 		self:LocalMessage(82235, L["sickness_message"], "Important", 81831, "Long")
 		self:OpenProximity(5)
+		self:FlashShake(82235)
 		sicknessWarned = true
 	end
 end
