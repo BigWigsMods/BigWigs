@@ -5,11 +5,14 @@ if L then
 
 	L.worship_cooldown = "~Verehren"
 	L.adherent_bar = "Nächster Kultist"
-	L.adherent_message = "Kultist!"
+	L.adherent_message = "Kultist kommt!"
 	L.ooze_bar = "Schleim Adds"
 	L.ooze_message = "Schleime kommen!"
 	L.tentacles_bar = "Nächste Tentakel"
 	L.tentacles_message = "Tentakel Disco Party!"
+	L.sickness_message = "Krankheit auf DIR!"
+	L.fury_bar = "Nächster Furor"
+	L.fury_message = "Furor!"
 
 	L.phase2_message = "Phase 2!"
 	L.phase2_soon = "Phase 2 bald!"
