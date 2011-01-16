@@ -47,7 +47,7 @@ L["Icon"] = "아이콘"
 L["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니다."
 L["Font"] = "글꼴"
 L["Restart"] = "재시작"
-L["Restarts emphasized bars so they start from the beginning and count from 10."] = true
+L["Restarts emphasized bars so they start from the beginning and count from 10."] = "이전의 시간을 그대로 적용하지않고 새롭게 10초부터 특수강조바를 생성합니다."
 L["Fill"] = "채우기"
 L["Fills the bars up instead of draining them."] = "바를 채우기로 표시합니다."
 
