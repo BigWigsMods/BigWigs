@@ -45,6 +45,10 @@ L["Whether to show or hide the time left on the bars."] = "Bestimmt, ob die verb
 L["Icon"] = "Symbol"
 L["Shows or hides the bar icons."] = "Zeigt oder versteckt die Symbole auf den Leisten."
 L["Font"] = "Schriftart"
+L["Restart"] = "Neu starten"
+L["Restarts emphasized bars so they start from the beginning and count from 10."] = "Startet die hervorgehobenen Leisten neu, so dass sie bis 10 hochzählen anstatt von 10 herunter."
+L["Fill"] = "Füllen"
+L["Fills the bars up instead of draining them."] = "Füllt die Leisten anstatt sie zu entleeren."
 
 L["Local"] = "Lokal"
 L["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet."

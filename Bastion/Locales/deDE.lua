@@ -67,8 +67,8 @@ if L then
 	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..." -- check
 	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern...." -- check
 
-	--L.searing_winds_message = "Donnerschock kommt!"
-	--L.grounded_message = "Erdbeben kommt!"
+	L.searing_winds_message = "Donnerschock kommt!"
+	L.grounded_message = "Erdbeben kommt!"
 
 	L.last_phase_trigger = "SCHMECKT DIE VERDAMMNIS!" -- check
 end
