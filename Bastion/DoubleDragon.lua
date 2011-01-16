@@ -132,7 +132,7 @@ function mod:DeepBreath()
 	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 40, 60639)
 
 	self:DelayedMessage("phase_switch", 40, L["phase_bar"]:format(valiona), "Positive", 60639)
-	--self:SendMessage("BigWigs_StopBar", self, L["engulfingmagic_cooldown"]) --XXX check this, as far as I'm aware, he no longer casts it after DB
+	self:SendMessage("BigWigs_StopBar", self, L["engulfingmagic_cooldown"])
 
 	-- XXX Need to confirm these as well.
 	self:Bar(86840, L["devouringflames_cooldown"], 66, 86840)
