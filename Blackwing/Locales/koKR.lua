@@ -112,10 +112,10 @@ if L then
 
 	L.next_switch = "다음 활성화"
 
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."	--check
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"	--check
+	L.nef_trigger1 = "맹독골렘의 화학 물질로 다른 골렘에 피해를 줄 생각이었겠지? 영리한 계획이다만, 그렇게 둘 수는 없지."
+	L.nef_trigger2 = "멍청한 드워프 놈들은 왜 그렇게 룬을 좋아하는지! 적을 도울 수도 있는 걸 도대체 왜 만들었는지 모르겠군."
 
-	L.nef_next = "~Next ability buff"
+	L.nef_next = "~다음 기술 버프"
 
 	L.acquiring_target = "대상 획득"
 
