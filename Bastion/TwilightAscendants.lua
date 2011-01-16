@@ -41,7 +41,6 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
-local ignacious, feludius, arion, terrastra = BigWigs:Translate("Ignacious"), BigWigs:Translate("Feludius"),BigWigs:Translate("Arion"), BigWigs:Translate("Terrastra")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -67,8 +66,8 @@ if L then
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
 	L.thundershock_trigger = "The surrounding air crackles with energy...."
 
-	--L.searing_winds_message = "Lightning incoming!"
-	--L.grounded_message = "Earthquake incoming!"
+	L.searing_winds_message = "Lightning incoming!"
+	L.grounded_message = "Earthquake incoming!"
 
 	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
 end
@@ -90,6 +89,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
 	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
+	self:Log("SPELL_INTERRUPT", "Interrupt", "*")
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
@@ -114,7 +114,6 @@ function mod:OnBossEnable()
 
 	self:Death("Win", 43735) -- Elementium Monstrosity
 end
-
 
 function mod:OnEngage(diff)
 	if diff > 2 then
@@ -200,12 +199,10 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
-		if UnitName(unit) == ignacious or UnitName(unit) == feludius or UnitName(unit) == arion or UnitName(unit) == terrastra then
-			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-			if hp < 30 then
-				self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
-				self:UnregisterEvent("UNIT_HEALTH")
-			end
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp < 30 then
+			self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
+			self:UnregisterEvent("UNIT_HEALTH")
 		end
 	end
 end
@@ -213,6 +210,21 @@ end
 function mod:AegisofFlame(_, spellId)
 	self:Bar(82631, L["shield_bar"], 62, spellId)
 	self:Message(82631, L["shield_up_message"], "Important", spellId, "Alert")
+end
+
+do
+	local harden = {
+		[92541] = true,
+		[92542] = true,
+		[92543] = true,
+	}
+	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
+		if not harden[secSpellId] then return end
+		local guid = tonumber(dGUID:sub(7, 10), 16)
+		if guid ~= 43689 then return end -- Terrastra
+		-- Someone interrupted Harden Skin, which means he won't cast Quake
+		self:SendMessage("BigWigs_StopBar", self, quake)
+	end
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
@@ -257,33 +269,65 @@ function mod:Switch()
 	self:Bar(83565, quake, 33, 83565)
 	self:Bar(83067, thundershock, 70, 83067)
 	self:Bar(92541, hardenSkin, 27, 92541)
+	self:CancelAllTimers()
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
-function mod:Quake(_, spellId, _, _, spellName)
-	self:Bar(83565, spellName, 65, spellId)
-	self:Message(83565, spellName, "Important", spellId, "Alarm")
+do
+	local flying = GetSpellInfo(83500)
+	local timer = nil
+	local function quakeIncoming()
+		local name, _, icon = UnitDebuff("player", flying)
+		if name then
+			mod:CancelTimer(timer, true)
+			return
+		end
+		mod:LocalMessage(83565, L["grounded_message"], "Personal", icon, "Info")
+	end
+
+	function mod:QuakeTrigger()
+		self:Bar(83565, quake, 10, 83565)
+		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", spellId, "Info")
+		timer = self:ScheduleRepeatingTimer(quakeIncoming, 1)
+	end
+
+	function mod:Quake(_, spellId, _, _, spellName)
+		self:Bar(83565, spellName, 65, spellId)
+		self:Message(83565, spellName, "Important", spellId, "Alarm")
+		self:CancelTimer(timer, true) -- Should really wait 3 more sec.
+	end
 end
 
-function mod:Thundershock(_, spellId, _, _, spellName)
-	self:Bar(83067, spellName, 65, spellId)
-	self:Message(83067, spellName, "Important", spellId, "Alarm")
-end
+do
+	local grounded = GetSpellInfo(83581)
+	local timer = nil
+	local function thunderShockIncoming()
+		local name, _, icon = UnitDebuff("player", grounded)
+		if name then
+			mod:CancelTimer(timer, true)
+			return
+		end
+		mod:LocalMessage(83067, L["searing_winds_message"], "Personal", icon, "Info")
+	end
 
-function mod:QuakeTrigger()
-	self:Bar(83565, quake, 10, 83565) -- update the bar since we are sure about this timer
-	self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", spellId, "Info")
-end
+	function mod:ThundershockTrigger()
+		self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", spellId, "Info")
+		self:Bar(83067, thundershock, 10, 83067)
+		timer = self:ScheduleRepeatingTimer(thunderShockIncoming, 1)
+	end
 
-function mod:ThundershockTrigger()
-	self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", spellId, "Info")
-	self:Bar(83067, thundershock, 10, 83067) -- update the bar since we are sure about this timer
+	function mod:Thundershock(_, spellId, _, _, spellName)
+		self:Bar(83067, spellName, 65, spellId)
+		self:Message(83067, spellName, "Important", spellId, "Alarm")
+		self:CancelTimer(timer, true) -- Should really wait 3 more sec but meh.
+	end
 end
 
 function mod:LastPhase()
 	self:SendMessage("BigWigs_StopBar", self, quake)
 	self:SendMessage("BigWigs_StopBar", self, thundershock)
 	self:SendMessage("BigWigs_StopBar", self, hardenSkin)
+	self:CancelAllTimers()
 	self:Bar(92488, gravityCrush, 30, 92488)
 	self:OpenProximity(9)
 	self:UnregisterEvent("UNIT_HEALTH")
