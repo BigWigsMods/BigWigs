@@ -1,14 +1,9 @@
 ﻿local L = BigWigs:NewBossLocale("Al'Akir", "zhTW")
 if L then
-	L.windburst = (GetSpellInfo(87770))
-
-	L.phase_change = "階段轉換"
-	L.phase_change_desc = "當進入不同階段時發出警報。"
-	L.phase_message = "第%d階段！"
+	L.phase = "階段轉換"
+	L.phase_desc = "當進入不同階段時發出警報。"
 
 	L.feedback_message = "%dx 回饋！"
-
-	L.you = ">你< %s！"
 end
 
 local L = BigWigs:NewBossLocale("Conclave of Wind", "zhTW")

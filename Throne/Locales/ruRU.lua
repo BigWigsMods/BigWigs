@@ -2,8 +2,8 @@ local L = BigWigs:NewBossLocale("Al'Akir", "ruRU")
 if L then
 	L.phase3_yell = "Довольно! Меня ничто не в силах сдерживать!"
 
-	L.phase_change = "Смена фаз"
-	L.phase_change_desc = "Сообщать о смене фаз."
+	L.phase = "Смена фаз"
+	L.phase_desc = "Сообщать о смене фаз."
 
 	L.cloud_message = "Грозовые облака!"
 	L.feedback_message = "%dx Ответная реакция"

@@ -1,16 +1,11 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "frFR")
 if L then
-	L.windburst = (GetSpellInfo(87770))
-
 	L.phase3_yell = "Assez ! Je ne serais pas contenu plus longtemps !" -- à vérifier
 
-	L.phase_change = "Changement de phase"
-	L.phase_change_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
-	L.phase_message = "Phase %d"
+	L.phase = "Changement de phase"
+	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
 	L.feedback_message = "%dx Réaction"
-
-	L.you = "%s sur vous !"
 end
 
 local L = BigWigs:NewBossLocale("Conclave of Wind", "frFR")

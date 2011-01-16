@@ -5,10 +5,13 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-mod.toggleOptions = {88427, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity", "bosskill"}
+mod.toggleOptions = {87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity", 88427, "phase", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
-	bosskill = "general",
+	[87770] = CL["phase"]:format(1),
+	[87904] = CL["phase"]:format(2),
+	[89668] = CL["phase"]:format(3),
+	[88427] = "general",
 }
 
 --------------------------------------------------------------------------------
@@ -27,8 +30,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
-	L.phase_change = "Phase change"
-	L.phase_change_desc = "Announce phase changes."
+	L.phase = "Phase change"
+	L.phase_desc = "Announce phase changes."
 
 	L.cloud_message = "Franklin would be proud!"
 	L.feedback_message = "%dx Feedback"
@@ -92,14 +95,14 @@ end
 
 function mod:Phase2(_, spellId)
 	if phase >= 2 then return end
-	self:Message("phase_change", CL["phase"]:format(2), "Positive", spellId, "Info")
+	self:Message("phase", CL["phase"]:format(2), "Positive", spellId, "Info")
 	self:SendMessage("BigWigs_StopBar", self, windburst)
 	phase = 2
 end
 
 function mod:Phase3()
 	if phase >= 3 then return end
-	self:Message("phase_change", CL["phase"]:format(3), "Positive", 93279)
+	self:Message("phase", CL["phase"]:format(3), "Positive", 93279)
 	self:Bar(93286, windburst, 24, 93286)
 	phase = 3
 end

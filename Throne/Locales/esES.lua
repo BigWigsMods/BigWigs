@@ -1,16 +1,11 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "esES")
 if L then
-	L.windburst = windburst
-
 	-- L.phase3_yell = "Enough! I will no longer be contained!"
 	
-	L.phase_change = "Cambio de fase"
-	L.phase_change_desc = "Anuncia los cambios de fase."
-	L.phase_message = "Fase %d"
+	L.phase = "Cambio de fase"
+	L.phase_desc = "Anuncia los cambios de fase."
 	
 	L.feedback_message = "%dx rebote"
-	
-	L.you = "%s en TI!"
 end
 
 local L = BigWigs:NewBossLocale("Conclave of Wind", "esES")
