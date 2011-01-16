@@ -5,6 +5,7 @@ if L then
 	L.phase = "Changement de phase"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
+	L.cloud_message = "Franklin serait fier !"
 	L.feedback_message = "%dx Réaction"
 end
 

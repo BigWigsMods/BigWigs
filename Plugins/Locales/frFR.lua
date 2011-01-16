@@ -43,6 +43,10 @@ L["Whether to show or hide the time left on the bars."] = "Affiche ou non le tem
 L["Icon"] = "Icône"
 L["Shows or hides the bar icons."] = "Affiche ou non les icônes des barres."
 L["Font"] = "Police d'écriture"
+L["Restart"] = "Relancer"
+L["Restarts emphasized bars so they start from the beginning and count from 10."] = "Relance les barres mises en évidence afin qu'elles commencent du début."
+L["Fill"] = "Remplir"
+L["Fills the bars up instead of draining them."] = "Remplit les barres au lieu de les vider."
 
 L["Local"] = "Local"
 L["%s: Timer [%s] finished."] = "%s : Minuteur [%s] terminé."

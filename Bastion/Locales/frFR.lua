@@ -67,8 +67,8 @@ if L then
 	L.quake_trigger = "Le sol sous vos pieds gronde avec menace..." -- à vérifier
 	L.thundershock_trigger = "L'air qui vous entoure crépite d'énergie..." -- à vérifier
 
-	--L.searing_winds_message = "Obtenez des vents tournoyants !"
-	--L.grounded_message = "Liez-vous à la terre !"
+	L.searing_winds_message = "Arrivée d'un Coup de tonnerre !"
+	L.grounded_message = "Arrivée d'une Secousse !"
 
 	L.last_phase_trigger = "CONTEMPLEZ VOTRE DESTIN !" -- à vérifier
 end
