@@ -15,11 +15,12 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "ruRU")
 if L then
 	L.bileotron_engage = "Желче-трон оживает и начинает извергать из себя некое вонючее вещество."
+	L.win_trigger = "A shame to lose that experiment..."
 
 	L.next_system_failure = "~Системная ошибка"
 	L.break_message = "%2$dx Разлом на |3-3(%1$s)"
 
-	L.mortality_report = "%s осталось %d%% здоровья, скоро %s!"
+	L.phase2_message = "Скоро фаза Смертности!"
 
 	L.warmup = "Warmup"
 	L.warmup_desc = "Warmup timer"
@@ -31,12 +32,18 @@ if L then
 	L.inferno_desc = "Призывает Blazing Bone Construct."
 
 	L.pillar_of_flame_cd = "~Огненный столп"
+	
+	L.blazing_message = "Надвигается помощник!"
+	L.blazing_bar = "След. скелет"
 
-	L.slump = "Падение"
-	L.slump_desc = "Магмарь падает вперед открывая себя."
-
+	L.slump = "Падение (Родео)"
+	L.slump_desc = "Магмарь падает вперед открывая себя, позволяя начать родео."
+	L.slump_bar = "След. родео"
+	L.slump_message = "Йихо, погнали!"
 	L.slump_trigger = "%s внезапно падает, выставляя клешки!"
 
+	L.infection_message = "Вы заражены!"
+	
 	L.expose_trigger = "голову"
 	L.expose_message = "Голова обнажена!"
 end
@@ -44,8 +51,8 @@ end
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Сообщает если вы вставли в %s."):format((GetSpellInfo(92987)))
+	L.darkSludge = "Темная жижа"
+	L.darkSludge_desc = "Сообщает если вы вставли в Темную жижу."
 
 	--normal
 	L.final_phase = "Финальная фаза"
@@ -56,21 +63,23 @@ if L then
 	L.bitingchill_say = "На МНЕ - Жгучий холод!"
 
 	L.flashfreeze = "~Ледяная вспышка"
+	L.next_blast = "~Обжигающий поток"
 
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
 	L.next_phase = "След. фаза"
+	L.green_phase_bar = "Зеленая фаза"
 
 	L.you = "На ВАС - %s!"
 
-	L.red_phase_trigger = "красный|r пузырек в котел!"
+	L.red_phase_trigger = "Помешивая, довести до кипения..."
 	L.red_phase = "|cFFFF0000Красная|r фаза"
-	L.blue_phase_trigger = "синий|r пузырек в котел!"
+	L.blue_phase_trigger = "синий|r пузырек в котел!" --How well does the mortal shell handle extreme temperature change? Must find out! For science!
 	L.blue_phase = "|cFF809FFEСиняя|r фаза"
-	L.green_phase_trigger = "зеленый|r пузырек в котел!"
+	L.green_phase_trigger = "Некак не удается стабилизировать, но без ошибок нет прогресса!"
 	L.green_phase = "|cFF33FF00Зеленая|r фаза"
 	L.dark_phase = "|cFF660099Темная|r фаза"
-	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!" -- темный|r пузырек в котел!
+	L.dark_phase_trigger = "Слабоваты твои настои, Малориак! Подбавить бы к ним... специй!" -- темную|r магию на котле!
 end
 
 L = BigWigs:NewBossLocale("Nefarian", "ruRU")
@@ -78,11 +87,14 @@ if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
 
-	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
+	L.phase_two_trigger = "Дерзкие смертные! Неуважение к чужой собственности нужно пресекать самым жестоким образом!"
 
-	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+	L.phase_three_trigger = "Я пытался следовать законам гостеприимства, но вы все никак не умрете! Придется отбросить условности и просто... УБИТЬ ВАС ВСЕХ!"
 
-	L.shadowblaze_trigger = "Flesh turns to ash!"
+	L.crackle_trigger = "В воздухе трещат электрические разряды!"
+	L.crackle_message = "Скоро Электрический удар!"
+	
+	L.onyxia_power_message = "Скоро Взрыв!"
 
 	L.cinder_say = "На МНЕ - Взрывчатый пепел!"
 
@@ -106,6 +118,7 @@ if L then
 
 	L.acquiring_target = "Выбор цели"
 
+	L.cloud_say = "Облако на МНЕ!"
 	L.cloud_message = "Вы в Облаке!"
 	L.protocol_message = "Химическая бомба!"
 
