@@ -43,6 +43,10 @@ L["Whether to show or hide the time left on the bars."] = true
 L["Icon"] = true
 L["Shows or hides the bar icons."] = true
 L["Font"] = true
+L["Restart"] = true
+L["Restarts emphasized bars so they start from the beginning and count from 10."] = true
+L["Fill"] = true
+L["Fills the bars up instead of draining them."] = true
 
 L["Local"] = true
 L["%s: Timer [%s] finished."] = true

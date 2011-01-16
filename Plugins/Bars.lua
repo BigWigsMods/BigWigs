@@ -50,11 +50,13 @@ plugin.defaultDB = {
 	time = true,
 	align = "LEFT",
 	icon = true,
+	fill = nil,
 	emphasize = true,
 	emphasizeFlash = true,
 	emphasizeMove = true,
 	emphasizeScale = 1.5,
 	emphasizeGrowup = nil,
+	emphasizeRestart = true,
 	BigWigsAnchor_width = 200,
 	BigWigsEmphasizeAnchor_width = 300,
 	interceptMouse = nil,
@@ -258,12 +260,21 @@ do
 						name = L["Icon"],
 						desc = L["Shows or hides the bar icons."],
 						order = 4,
+						width = "half",
 					},
 					time = {
 						type = "toggle",
 						name = L["Time"],
 						desc = L["Whether to show or hide the time left on the bars."],
 						order = 5,
+						width = "half",
+					},
+					fill = {
+						type = "toggle",
+						name = L["Fill"],
+						desc = L["Fills the bars up instead of draining them."],
+						order = 6,
+						width = "half",
 					},
 					normal = {
 						type = "group",
@@ -276,7 +287,6 @@ do
 								name = L["Grow upwards"],
 								desc = L["Toggle bars grow upwards/downwards from anchor."],
 								order = 1,
-								width = "full",
 							},
 							scale = {
 								type = "range",
@@ -284,11 +294,11 @@ do
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
-								order = 2,
+								order = 3,
 								width = "full",
 							},
 						},
-						order = 6,
+						order = 10,
 					},
 					emphasize = {
 						type = "group",
@@ -300,36 +310,48 @@ do
 								type = "toggle",
 								name = L["Enable"],
 								order = 1,
+								width = "half",
 							},
 							emphasizeFlash = {
 								type = "toggle",
 								name = L["Flash"],
 								desc = L["Flashes the background of emphasized bars, which could make it easier for you to spot them."],
 								order = 2,
+								width = "half",
 							},
 							emphasizeMove = {
 								type = "toggle",
 								name = L["Move"],
 								desc = L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."],
 								order = 3,
+								width = "half",
 							},
 							emphasizeGrowup = {
 								type = "toggle",
 								name = L["Grow upwards"],
 								desc = L["Toggle bars grow upwards/downwards from anchor."],
 								order = 4,
+								width = "half",
+							},
+							emphasizeRestart = {
+								type = "toggle",
+								name = L["Restart"],
+								desc = L["Restarts emphasized bars so they start from the beginning and count from 10."],
+								order = 6,
+								width = "half",
+								disabled = function() return not db.emphasizeMove end,
 							},
 							emphasizeScale = {
 								type = "range",
 								name = L["Scale"],
-								order = 5,
+								order = 7,
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
 								width = "full",
-							}
+							},
 						},
-						order = 7,
+						order = 20,
 					},
 				},
 			}
@@ -823,6 +845,7 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	bar:SetTimeVisibility(db.time)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetScale(db.scale)
+	bar:SetFill(db.fill)
 	if db.emphasize and time < 15 then
 		self:EmphasizeBar(bar)
 	end
@@ -857,7 +880,9 @@ function plugin:EmphasizeBar(bar)
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
-		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+		if db.emphasizeRestart then
+			bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+		end
 	end
 	if db.emphasizeFlash then
 		bar:AddUpdateFunction(flash)
