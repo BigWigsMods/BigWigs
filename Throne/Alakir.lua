@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-mod.toggleOptions = {88427, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 93286, "proximity", "bosskill"}
+mod.toggleOptions = {88427, "phase_change", 87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity", "bosskill"}
 mod.optionHeaders = {
 	bosskill = "general",
 }
@@ -24,14 +24,13 @@ local windburst = GetSpellInfo(87770)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.windburst = windburst
-
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase_change = "Phase change"
 	L.phase_change_desc = "Announce phase changes."
 	L.phase_message = "Phase %d"
 
+	L.cloud_message = "Franklin would be proud!"
 	L.feedback_message = "%dx Feedback"
 
 	L.you = "%s on YOU!"
@@ -48,13 +47,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279) -- Acid Rain is applied at P2 transition
-	--self:Log("SPELL_AURA_REMOVED", "Phase3", 93279) -- Somehow it is also removed sometimes at P2 transition, use Yell instead
 
 	self:Yell("Phase3", L["phase3_yell"])
 
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
 	self:Log("SPELL_AURA_REMOVED", "RodRemoved", 89668)
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286) -- Wind Burst in Phase 3 is instant cast
+	self:Log("SPELL_DAMAGE", "Cloud", 89588, 93299, 93298, 93297)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 46753)
@@ -62,7 +61,7 @@ end
 
 
 function mod:OnEngage(diff)
-	self:Bar(87770, L["windburst"], 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
+	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase = 1
 	lastWindburst = 0
 end
@@ -71,6 +70,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Clouds(player, spellId)
+	if not UnitIsUnit(player, "player") then return end
+	self:LocalMessage(89588, L["cloud_message"], "Urgent", spellId, "Alarm")
+end
 
 function mod:LightningRod(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
@@ -84,21 +88,23 @@ function mod:LightningRod(player, spellId, _, _, spellName)
 end
 
 function mod:RodRemoved(player)
-	if not UnitIsUnit(player, "player") then return end
-	self:CloseProximity()
+	self:PrimaryIcon(89668) -- De-mark
+	if UnitIsUnit(player, "player") then
+		self:CloseProximity()
+	end
 end
 
 function mod:Phase2(_, spellId)
 	if phase >= 2 then return end
 	self:Message("phase_change", L["phase_message"]:format(2), "Important", spellId, "Alert")
-	self:SendMessage("BigWigs_StopBar", self, L["windburst"])
+	self:SendMessage("BigWigs_StopBar", self, windburst)
 	phase = 2
 end
 
 function mod:Phase3()
 	if phase >= 3 then return end
 	self:Message("phase_change", L["phase_message"]:format(3), "Important", 93279, "Alert")
-	self:Bar(93286, L["windburst"], 24, 93286)
+	self:Bar(93286, windburst, 24, 93286)
 	phase = 3
 end
 
@@ -113,8 +119,8 @@ function mod:Electrocute(player, spellId, _, _, spellName)
 end
 
 function mod:WindBurst1(_, spellId, _, _, spellName)
-	self:Bar(87770, L["windburst"], 26, spellId)
-	self:Message(87770, L["windburst"], "Important", spellId, "Alert")
+	self:Bar(87770, spellName, 26, spellId)
+	self:Message(87770, spellName, "Important", spellId, "Alert")
 end
 
 function mod:WindBurst3(_, spellId, _, _, spellName)
