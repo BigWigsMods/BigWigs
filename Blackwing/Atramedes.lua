@@ -57,7 +57,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
 	self:Bar(77840, searingFlame, 45, 77840)
-	self:Bar("air_phase", L["air_phase"], 100, 5740) -- Rain of Fire Icon
+	self:Bar("air_phase", L["air_phase"], 92, 5740) -- Rain of Fire Icon
 	--self:Berserk(600) --XXX v4.0.6
 end
 

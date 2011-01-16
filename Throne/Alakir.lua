@@ -68,7 +68,7 @@ end
 -- Event Handlers
 --
 
-function mod:Clouds(player, spellId)
+function mod:Cloud(player, spellId)
 	if not UnitIsUnit(player, "player") then return end
 	self:LocalMessage(89588, L["cloud_message"], "Urgent", spellId, "Alarm")
 end

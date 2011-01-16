@@ -46,6 +46,10 @@ L["Whether to show or hide the time left on the bars."] = "바의 우측에 시�
 L["Icon"] = "아이콘"
 L["Shows or hides the bar icons."] = "바 아이콘을 숨기거나 표시합니다."
 L["Font"] = "글꼴"
+L["Restart"] = "재시작"
+L["Restarts emphasized bars so they start from the beginning and count from 10."] = true
+L["Fill"] = "채우기"
+L["Fills the bars up instead of draining them."] = "바를 채우기로 표시합니다."
 
 L["Local"] = "로컬"
 L["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다."
