@@ -5,6 +5,7 @@ if L then
 	L.phase = "Cambio de fase"
 	L.phase_desc = "Anuncia los cambios de fase."
 	
+	L.cloud_message = "¡Franklin estaría orgulloso!"
 	L.feedback_message = "%dx rebote"
 end
 
@@ -17,7 +18,7 @@ if L then
 	
 	L.full_power = "Lleno de poder"
 	L.full_power_desc = "Avisa cuando los jefes están llenos de poder y empiezan a lanzar las abilidades especiales."
-	L.gather_strength_emote = "¡%s empieza a reunir fuerza de los señores de viento restantes!"
+	L.gather_strength_emote = "¡%s empieza a extraer fuerza de los señores del viento que quedan!"
 	
-	L.wind_chill = "TIENES %s stacks de Viento escalofriante"
+	L.wind_chill = "%sx Viento escalofriante en TI!"
 end

@@ -2,7 +2,7 @@
 if L then
 	L.tracking_me = "Tracking on ME!"
 
-	L.ground_phase = "Fase en el suelo"
+	L.ground_phase = "Fase en tierra"
 	L.ground_phase_desc = "Aviso cuando Atramedes aterriza."
 	L.air_phase = "Fase aérea"
 	L.air_phase_desc = "Aviso cuando Atramedes despega."
@@ -45,7 +45,7 @@ if L then
 
 	L.infection_message = "¡Estás infectado!"
 
-	L.expose_trigger = "cabeza"
+	L.expose_trigger = "¡%s acaba empalado en el pincho y deja expuesta la cabeza!"
 	L.expose_message = "¡Cabeza expuesta!"
 end
 
@@ -69,6 +69,7 @@ if L then
 	L.phase = "Fase"
 	L.phase_desc = "Advertencia para cambios de fase."
 	L.next_phase = "Siguiente fase"
+	L.green_phase_bar = "Fase Verde"
 
 	L.you = "¡%s en TI!"
 
@@ -118,10 +119,11 @@ if L then
 
 	L.acquiring_target = "Eligiendo objetivo"
 
+	L.cloud_say = "¡Nube en MI!"
 	L.cloud_message = "¡Nube en TI!"
 	L.protocol_message = "¡Bomba de veneno!"
 
-	L.iconomnotron = "Icon on active boss"
-	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
+	L.iconomnotron = "Icono en el jefe activo"
+	L.iconomnotron_desc = "Coloca el icono principal de raid en el jefe activo (requiere ayudante o lider)."
 end
 

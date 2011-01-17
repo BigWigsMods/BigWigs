@@ -10,6 +10,9 @@ if L then
 	L.ooze_message = "¡Enjambre de mocos llegando!"
 	L.tentacles_bar = "Aparecen tantáculos"
 	L.tentacles_message = "¡Fiesta de tentáculos!"
+	L.sickness_message = "¡Te sientes fatal!"
+	L.fury_bar = "Próxima furia"
+	L.fury_message = "¡Furia!"
 
 	L.phase2_message = "¡Fase 2!"
 	L.phase2_soon = "¡Fase 2 pronto!"
