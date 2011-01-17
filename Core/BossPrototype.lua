@@ -163,9 +163,21 @@ function boss:CheckBossStatus()
 	if not guid and self.isEngaged then
 		self:Reboot()
 	elseif not self.isEngaged and guid then
-		local id = tonumber(guid:sub(7, 10), 16)
-		if core:GetEnableMobs()[id] == self.moduleName then
-			self:Engage()
+		local module = core:GetEnableMobs()[tonumber(guid:sub(7, 10), 16)]
+		local modType = type(module)
+		if modType == "string" then
+			if module == self.moduleName then
+				self:Engage()
+			else
+				self:Disable()
+			end
+		elseif modType == "table" then
+			for i = 1, #module do
+				if module[i] == self.moduleName then
+					self:Engage()
+				end
+			end
+			if not self.isEngaged then self:Disable() end
 		end
 	end
 end
