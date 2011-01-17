@@ -17,7 +17,7 @@ if L then
 	L.bileotron_engage = "Der Gall-O-Tron springt an und stößt eine übel riechende Substanz aus." -- check
 	--L.win_trigger = "A shame to lose that experiment..."
 
-	L.next_system_failure = "Nächstes Systemversagen"
+	L.next_system_failure = "~Systemversagen"
 	L.break_message = "%2$dx Brechen auf %1$s"
 
 	L.phase2_message = "Sterblichkeitsphase bald!"

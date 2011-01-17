@@ -32,7 +32,7 @@ if L then
 
 	L.devouringflames_cooldown = "~Verschlingende Flammen"
 
-	L.valiona_trigger = "Theralion, ich werde den Gang einhüllen. Deck ihre Flucht!" -- check
+	L.valiona_trigger = "Theralion, ich werde den Gang einhüllen. Deck ihre Flucht!"
 
 	L.twilight_shift = "%2$dx Verschiebung auf %1$s"
 end
