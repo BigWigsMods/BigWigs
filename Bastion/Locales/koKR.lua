@@ -67,8 +67,8 @@ if L then
 	L.quake_trigger = "발밑의 땅이 불길하게 우르릉거립니다..."
 	L.thundershock_trigger = "주변의 공기가 에너지로 진동합니다..."
 	
-	--L.searing_winds_message = "Lightning incoming!"
-	--L.grounded_message = "Earthquake incoming!"
+	L.searing_winds_message = "천둥충격이 다가옴!"
+	L.grounded_message = "지진이 다가옴!"
 
 	L.last_phase_trigger = "꽤나 인상적이었다만..."	--지금 넣은 트리거가 더 좋아보임. 실제 트리거 = "네놈들의 종말을 맞이해라!"
 end
