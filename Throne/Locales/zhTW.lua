@@ -12,7 +12,7 @@ if L then
 
 	L.full_power = "滿能量"
 	L.full_power_desc = "當首領獲得滿能量並開始施放特殊技能時發出警報。"
-	L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
+	L.gather_strength_emote = "%s開始從剩下的風之王那裡取得力量!"
 
 	L.wind_chill = ">你<獲得%s層風寒冷卻！"
 end
