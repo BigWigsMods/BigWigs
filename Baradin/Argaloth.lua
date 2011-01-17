@@ -79,7 +79,7 @@ function mod:FelFirestorm(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH(_, unit)
-	if unit == "boss1" and UnitName(unit) == self.displayName then
+	if unit == "boss1" then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp < 69 and fireStorm > 70 then
 			self:Message(88972, L["firestorm_message"], "Attention")

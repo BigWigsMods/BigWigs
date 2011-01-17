@@ -160,13 +160,11 @@ local function markRemoved()
 end
 
 function mod:UNIT_AURA(event, unit)
-	if unit == "player" then
-		if UnitDebuff("player", marked) and not markWarned then
-			self:FlashShake(88518)
-			self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Long")
-			markWarned = true
-			self:ScheduleTimer(markRemoved, 7)
-		end
+	if unit == "player" and not markWarned and UnitDebuff("player", marked) then
+		self:FlashShake(88518)
+		self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Long")
+		markWarned = true
+		self:ScheduleTimer(markRemoved, 7)
 	end
 end
 

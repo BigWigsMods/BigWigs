@@ -118,7 +118,7 @@ function mod:FesterBlood(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" and UnitName(unit) == self.displayName then
+	if unit == "boss1" then
 		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 		if hp < 30 then
 			self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
