@@ -3,7 +3,7 @@ if L then
 	L.orders = "상태 변경"
 	L.orders_desc = "초갈의 그림자/불꽃의 명령 상태를 알립니다."
 
-	L.crush_say = "나에게 부패의 충돌!"
+	L.crash_say = "나에게 부패의 충돌!"
 	L.worship_cooldown = "~개종"
 	L.adherent_bar = "다음 추종자 추가"
 	L.adherent_message = "타락의 추종자 소환!"
