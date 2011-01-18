@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-mod.toggleOptions = {91303, 82524, 81628, 82299, 82630, 82414, "orders", {82235, "FLASHSHAKE"}, "proximity", "berserk", "bosskill"}
+mod.toggleOptions = {91303, {93180, "FLASHSHAKE", "ICON", "SAY"}, 82524, 81628, 82299, 82630, 82414, "orders", {82235, "FLASHSHAKE"}, "proximity", "berserk", "bosskill"}
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 mod.optionHeaders = {
 	[91303] = CL.phase:format(1),
@@ -20,6 +20,8 @@ mod.optionHeaders = {
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
 local sicknessWarned = nil
+local counter = 1
+local corruptingCrash = (GetSpellInfo(93180))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,6 +32,7 @@ if L then
 	L.orders = "Stance changes"
 	L.orders_desc = "Warning for when Cho'gall changes between Shadow/Flame Orders stances."
 
+	L.crush_say = "Crush on ME!"
 	L.worship_cooldown = "~Worship"
 	L.adherent_bar = "Next big add"
 	L.adherent_message = "Add incoming!"
@@ -61,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
 	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414, 93160, 93162)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptingCrash", 93180)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -75,6 +79,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 	sicknessWarned = nil
+	counter = 1
 
 	self:RegisterEvent("UNIT_POWER")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -83,6 +88,29 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function checkTarget(sGUID)
+	local mobId = mod:GetUnitIdByGUID(sGUID)
+	if mobId then
+		local player = UnitName(mobId.."target")
+		if UnitIsUnit("player", player) then
+			mod:Say(93180, L["crush_say"])
+			mod:FlashShake(93180)
+		end
+		mod:TargetMessage(93180, corruptingCrash, player, "Urgent", 93180)
+		if counter == 1 then
+			mod:PrimaryIcon(93180, player)
+		else
+			mod:SecondaryIcon(93180, player)
+		end
+		if mod:GetInstanceDifficulty() == 4 then counter = counter + 1 end
+	end
+	if counter > 2 then counter = 1 end
+end
+
+function mod:CorruptingCrash(_, _, _, _, _, _, _, _, _, _, sGUID)
+	self:ScheduleTimer(checkTarget, 0.25, sGUID)
+end
 
 function mod:UNIT_POWER(event, unit, powerType)
 	if sicknessWarned or unit ~= "player" or powerType ~= "ALTERNATE" then return end
