@@ -71,8 +71,6 @@ if L then
 	L.next_phase = "다음 단계"
 	L.green_phase_bar = "녹색 단계"
 
-	L.you = "당신은 %s!"
-
 	L.red_phase_trigger = "섞고 흔들어서, 열을 가한다..."
 	L.red_phase = "|cFFFF0000붉은|r 단계"
 	L.blue_phase_trigger = "급격한 온도 변화에 필멸의 육신"

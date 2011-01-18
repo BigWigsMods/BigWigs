@@ -1,13 +1,9 @@
 ﻿local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if L then
-	L.tracking_me = "Tracking on ME!"
-
 	L.ground_phase = "Fase en tierra"
 	L.ground_phase_desc = "Aviso cuando Atramedes aterriza."
 	L.air_phase = "Fase aérea"
 	L.air_phase_desc = "Aviso cuando Atramedes despega."
-
-	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
 
 	L.sonicbreath_cooldown = "~Aliento sónico"
 end
@@ -71,8 +67,6 @@ if L then
 	L.next_phase = "Siguiente fase"
 	L.green_phase_bar = "Fase Verde"
 
-	L.you = "¡%s en TI!"
-
 	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
 	L.red_phase = "Fase |cFFFF0000Roja|r"
 	L.blue_phase_trigger = "¿Cómo afecta el cambio extremo de temperatura al cuerpo mortal? ¡Debo averiguarlo! ¡Por la ciencia!"
@@ -88,18 +82,11 @@ if L then
 	L.phase = "Fases"
 	L.phase_desc = "Aviso para los cambios de fase."
 
-	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
-
-	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
-
-	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "¡Electrocutar pronto!"
 
 	L.onyxia_power_message = "¡Explosión pronto!"
 
 	L.cinder_say = "¡Cenizas explosivas en MI!"
-
-	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "esES")
@@ -111,9 +98,6 @@ if L then
 	L.switch_message = "%s %s"
 
 	L.next_switch = "Siguiente cambio"
-
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~Siguiente bufo de habilidad"
 

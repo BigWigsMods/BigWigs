@@ -61,8 +61,6 @@ if L then
 	L.phase_desc = "當進入不同階段時發出警報。"
 	L.next_phase = "下一階段！"
 
-	L.you = ">你< %s！"
-
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase = "|cFFFF0000紅色|r階段！"
 	L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"

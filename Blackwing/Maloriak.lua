@@ -26,6 +26,7 @@ if L then
 	--heroic
 	L.sludge = "Dark Sludge"
 	L.sludge_desc = "Warning for when you stand in Dark Sludge."
+	L.sludge_message = "Sludge on YOU!"
 
 	--normal
 	L.final_phase = "Final phase"
@@ -42,8 +43,6 @@ if L then
 	L.phase_desc = "Warning for phase changes."
 	L.next_phase = "Next phase"
 	L.green_phase_bar = "Green phase"
-
-	L.you = "%s on YOU!"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase = "|cFFFF0000Red|r phase"
@@ -124,12 +123,12 @@ end
 
 do
 	local last = 0
-	function mod:DarkSludge(player, spellId, _, _, spellName)
+	function mod:DarkSludge(player, spellId)
 		if not UnitIsUnit(player, "player") then return end
 		local time = GetTime()
 		if (time - last) > 2 then
 			last = time
-			self:LocalMessage("sludge", L["you"]:format(spellName), "Personal", spellId, "Info")
+			self:LocalMessage("sludge", L["sludge_message"], "Personal", spellId, "Info")
 		end
 	end
 end
@@ -231,11 +230,9 @@ end
 function mod:ConsumingFlames(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(77786)
-		self:LocalMessage(77786, spellName, "Personal", spellId, "Info")
 	end
-	-- let the other know too so they can shout on the guy if he is slow
-	self:TargetMessage(77786, spellName, player, "Urgent", spellId)
-	self:Whisper(77786, player, L["you"]:format(spellName))
+	self:TargetMessage(77786, spellName, player, "Personal", spellId, "Info")
+	self:Whisper(77786, player, spellName)
 	self:PrimaryIcon(77786, player)
 end
 

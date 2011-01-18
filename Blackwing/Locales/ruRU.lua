@@ -70,8 +70,6 @@ if L then
 	L.next_phase = "След. фаза"
 	L.green_phase_bar = "Зеленая фаза"
 
-	L.you = "На ВАС - %s!"
-
 	L.red_phase_trigger = "Помешивая, довести до кипения..."
 	L.red_phase = "|cFFFF0000Красная|r фаза"
 	L.blue_phase_trigger = "синий|r пузырек в котел!" --How well does the mortal shell handle extreme temperature change? Must find out! For science!
@@ -110,9 +108,6 @@ if L then
 	L.switch_message = "%s %s"
 
 	L.next_switch = "След. Смена"
-
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~След. Вливание Тьмы"
 

@@ -70,8 +70,6 @@ if L then
 	L.next_phase = "Prochaine phase"
 	L.green_phase_bar = "Phase verte"
 
-	L.you = "%s sur vous !"
-
 	L.red_phase_trigger = "Mélanger et touiller, faire chauffer..." -- à vérifier
 	L.red_phase = "Phase |cFFFF0000rouge|r"
 	L.blue_phase_trigger = "Jusqu'où une enveloppe mortelle peut-elle supporter les écarts extrêmes de température ? Je dois trouver ! Pour la science !" -- à vérifier

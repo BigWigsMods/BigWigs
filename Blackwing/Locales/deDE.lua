@@ -70,8 +70,6 @@ if L then
 	L.next_phase = "Nächste Phase"
 	L.green_phase_bar = "Grüne Phase"
 
-	L.you = "%s auf DIR!"
-
 	L.red_phase_trigger = "Vermischen, rühren, erhitzen..." -- check
 	L.red_phase = "|cFFFF0000Rote|r Phase"
 	L.blue_phase_trigger = "Muss rausfinden, wie die sterbliche Hülle auf extreme Temperaturen reagiert... FÜR DIE FORSCHUNG!" -- check
