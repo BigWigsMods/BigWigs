@@ -71,11 +71,11 @@ if L then
 	L.next_phase = "Nächste Phase"
 	L.green_phase_bar = "Grüne Phase"
 
-	L.red_phase_trigger = "Vermischen, rühren, erhitzen..." -- check
+	L.red_phase_trigger = "Vermischen, rühren, erhitzen..."
 	L.red_phase = "|cFFFF0000Rote|r Phase"
-	L.blue_phase_trigger = "Muss rausfinden, wie die sterbliche Hülle auf extreme Temperaturen reagiert... FÜR DIE FORSCHUNG!" -- check
+	L.blue_phase_trigger = "Muss rausfinden, wie die sterbliche Hülle auf extreme Temperaturen reagiert... FÜR DIE FORSCHUNG!"
 	L.blue_phase = "|cFF809FFEBlaue|r Phase"
-	L.green_phase_trigger = "Etwas instabil vielleicht, aber keine Forschung ohne Risiko!" -- check
+	L.green_phase_trigger = "Etwas instabil vielleicht, doch keine Forschung ohne Risiko!"
 	L.green_phase = "|cFF33FF00Grüne|r Phase"
 	L.dark_phase = "|cFF660099Dunkle|r Phase"
 	--L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
