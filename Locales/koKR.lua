@@ -28,6 +28,8 @@ L["Up to date:"] = "최신 버전:"
 L["Out of date:"] = "구 버전"
 L["No Big Wigs 3.x:"] = "Big Wigs 3.x 미사용:"
 
+L.coreAddonDisabled = "%s 애드온 비활성화이기 때문에 Big Wigs가 제대로 작동하지 않습니다. 캐릭터 선택 화면에서 좌측하단의 '외부 인터페이스'에서 활성화/비활성화를 설정할 수 있습니다."
+
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs 교전 모듈"
 L["Customize ..."] = "사용자 설정 ..."
