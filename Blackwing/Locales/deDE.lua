@@ -14,7 +14,7 @@ end
 
 L = BigWigs:NewBossLocale("Chimaeron", "deDE")
 if L then
-	L.bileotron_engage = "Der Gall-O-Tron springt an und stößt eine übel riechende Substanz aus." -- check
+	L.bileotron_engage = "Der Gall-O-Tron springt an und stößt eine übel riechende Substanz aus."
 	--L.win_trigger = "A shame to lose that experiment..."
 
 	L.next_system_failure = "~Systemversagen"
