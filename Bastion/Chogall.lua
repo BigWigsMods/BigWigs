@@ -124,7 +124,7 @@ local function checkTarget(sGUID)
 end
 
 function mod:CorruptingCrash(_, _, _, _, _, _, _, _, _, _, sGUID)
-	self:ScheduleTimer(checkTarget, 0.25, sGUID)
+	self:ScheduleTimer(checkTarget, 0.01, sGUID)
 end
 
 function mod:UNIT_POWER(event, unit, powerType)
