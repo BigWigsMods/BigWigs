@@ -11,7 +11,7 @@ mod.toggleOptions = {
 	-- Feludius
 	82746, 82665, 82666, 82762,
 	-- Arion
-	83067, {83099, "SAY", "ICON", "FLASHSHAKE"},
+	83067, {83099, "SAY", "FLASHSHAKE"},
 	-- Terrastra
 	83565, 92541,
 	-- Monstrosity
