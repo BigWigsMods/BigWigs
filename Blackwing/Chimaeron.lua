@@ -52,14 +52,14 @@ end
 
 function mod:Warmup(_, msg)
 	if msg == L["bileotron_engage"] then
-		self:Bar("warmup", L["warmup"], 30, "achievement_dungeon_blackwingdescent_raid_chimaron")
+		self:Bar("warmup", self.displayName, 30, "achievement_dungeon_blackwingdescent_raid_chimaron")
+		self:OpenProximity(6)
 	end
 end
 
 function mod:OnEngage(diff)
 	self:Bar(88853, L["next_system_failure"], 90, 88853)
-	self:SendMessage("BigWigs_StopBar", self, L["warmup"])
-	self:OpenProximity(6)
+	self:SendMessage("BigWigs_StopBar", self, self.displayName)
 	if diff > 2 then
 		self:Berserk(420)
 	end
@@ -77,9 +77,11 @@ function mod:SystemFailureStart(_, spellId, _, _, spellName)
 end
 
 function mod:SystemFailureEnd(_, spellId)
-	self:Bar(88853, L["next_system_failure"], 65, spellId)
-	self:FlashShake(88853)
-	self:OpenProximity(6)
+	if self.isEngaged then
+		self:Bar(88853, L["next_system_failure"], 65, spellId)
+		self:FlashShake(88853)
+		self:OpenProximity(6)
+	end
 end
 
 function mod:Massacre(_, spellId, _, _, spellName)
