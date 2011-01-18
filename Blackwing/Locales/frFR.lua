@@ -53,6 +53,7 @@ if L then
 	--heroic
 	L.sludge = "Sombre vase"
 	L.sludge_desc = "Prévient quand vous vous trouvez dans une Sombre vase."
+	L.sludge_message = "Sombre vase sur vous !"
 
 	--normal
 	L.final_phase = "Phase finale"

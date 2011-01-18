@@ -26,6 +26,8 @@ L["Up to date:"] = "À jour :"
 L["Out of date:"] = "Périmé :"
 L["No Big Wigs 3.x:"] = "BW 3.x absent :"
 
+L.coreAddonDisabled = "Big Wigs ne fonctionnera pas correctement car l'addon %s est désactivé. Vous pouvez l'activer via le panneau de contrôle des addons à l'écran de sélection du personnage."
+
 -- Options.lua
 L["Big Wigs Encounters"] = "Rencontres Big Wigs"
 L["Customize ..."] = "Personnaliser..."

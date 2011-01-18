@@ -3,6 +3,7 @@ if L then
 	L.orders = "Changements de posture"
 	L.orders_desc = "Prévient quand Cho'gall passe en posture Ordres de l'ombre/de la flamme."
 
+	L.crash_say = "Déferlante sur moi !"
 	L.worship_cooldown = "~Vénération"
 	L.adherent_bar = "Prochain Adhérent"
 	L.adherent_message = "Adhérent invoqué !"
