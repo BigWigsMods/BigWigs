@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "SAY"}, "bosskill"} --XXX "berserk",
+mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "ICON", "SAY"}, "bosskill"} --XXX "berserk",
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -71,7 +71,7 @@ function mod:Tracking(player, spellId, _, _, spellName)
 		self:FlashShake(78092)
 	end
 	self:TargetMessage(78092, spellName, player, "Personal", spellId, "Alarm")
-	self:SecondaryIcon(78092, player)
+	self:PrimaryIcon(78092, player)
 end
 
 function mod:SonicBreath(_, spellId, _, _, spellName)
