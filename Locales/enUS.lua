@@ -26,6 +26,8 @@ L["Up to date:"] = true
 L["Out of date:"] = true
 L["No Big Wigs 3.x:"] = true
 
+L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
+
 -- Options.lua
 L["Big Wigs Encounters"] = true
 L["Customize ..."] = true
