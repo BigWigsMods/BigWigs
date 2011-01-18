@@ -3,6 +3,7 @@ if L then
 	L.orders = "Schatten- / Flammenbefehl"
 	L.orders_desc = "Warnt, wenn Cho'gall zwischen Befehle des Schattens und Flammenbefehl wechselt."
 
+	L.crush_say = "Schmettern auf MIR!"
 	L.worship_cooldown = "~Verehren"
 	L.adherent_bar = "Nächster Kultist"
 	L.adherent_message = "Kultist kommt!"

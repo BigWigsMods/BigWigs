@@ -53,6 +53,7 @@ if L then
 	--heroic
 	L.sludge = "Dunkler Schlick"
 	L.sludge_desc = "Warnt, wenn du in Dunkler Schlick stehst."
+	L.sludge_message = "Schlick auf DIR!"
 
 	--normal
 	L.final_phase = "Finale Phase"
