@@ -140,7 +140,6 @@ function mod:DeepBreath()
 	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 40, 60639)
 
 	self:DelayedMessage("phase_switch", 40, L["phase_bar"]:format(valiona), "Positive", 60639)
-	self:SendMessage("BigWigs_StopBar", self, L["engulfingmagic_cooldown"])
 
 	-- XXX Need to confirm these as well.
 	self:Bar(86840, L["devouringflames_cooldown"], 66, 86840)
@@ -157,7 +156,7 @@ function mod:BlackoutApplied(player, spellId, _, _, spellName)
 	self:CloseProximity()
 end
 
-function mod:BlackoutCast()
+function mod:BlackoutCast(player, spellId, _, _, spellName)
 	--Show the cooldown when it's cast, incase the application is absorbed by a totem
 	self:Bar(86788, spellName, 45, 86788)
 end
