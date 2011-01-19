@@ -67,7 +67,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DazzlingDestruction", 86408)
 	self:Yell("DeepBreath", L["valiona_trigger"])
 	self:Emote("DeepBreathCast", deepBreath)
-	self:Emote("BlackoutCast", blackout)
 
 	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876, 92878)
 	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876, 92878)
@@ -151,14 +150,10 @@ function mod:BlackoutApplied(player, spellId, _, _, spellName)
 		self:FlashShake(86788)
 	end
 	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Alert")
+	self:Bar(86788, spellName, 45, spellId)
 	self:Whisper(86788, player, spellName)
 	self:PrimaryIcon(86788, player)
 	self:CloseProximity()
-end
-
-function mod:BlackoutCast(player, spellId, _, _, spellName)
-	--Show the cooldown when it's cast, incase the application is absorbed by a totem
-	self:Bar(86788, spellName, 45, 86788)
 end
 
 function mod:BlackoutRemoved(player, spellId, _, _, spellName)
