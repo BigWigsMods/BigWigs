@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Localization

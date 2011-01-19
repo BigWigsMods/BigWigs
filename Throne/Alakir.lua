@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Locals

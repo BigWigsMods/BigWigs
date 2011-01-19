@@ -289,7 +289,7 @@ do
 
 	function mod:QuakeTrigger()
 		self:Bar(83565, quake, 10, 83565)
-		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", spellId, "Info")
+		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", 83565, "Info")
 		timer = self:ScheduleRepeatingTimer(quakeIncoming, 1)
 	end
 
@@ -313,7 +313,7 @@ do
 	end
 
 	function mod:ThundershockTrigger()
-		self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", spellId, "Info")
+		self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", 83067, "Info")
 		self:Bar(83067, thundershock, 10, 83067)
 		timer = self:ScheduleRepeatingTimer(thunderShockIncoming, 1)
 	end
