@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, Arion, Terrastra, Elementium Monstrosity
-mod.toggleOptions = {
+function mod:GetOptions() return {
 	-- Ignacious
 	82631, 82660, 82663,
 	-- Feludius
@@ -21,9 +21,7 @@ mod.toggleOptions = {
 	{92075, "FLASHSHAKE", "SAY", "ICON"},
 	{92307, "FLASHSHAKE", "ICON", "WHISPER"},
 	-- General
-	"proximity", "switch", "bosskill"}
-
-mod.optionHeaders = {
+	"proximity", "switch", "bosskill"}, {
 	[82631] = "Ignacious",
 	[82746] = "Feludius",
 	[83067] = "Arion",
@@ -31,7 +29,7 @@ mod.optionHeaders = {
 	[92488] = "Elementium Monstrosity",
 	[92067] = "heroic",
 	proximity = "general",
-}
+} end
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -5,15 +5,16 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
-mod.toggleOptions = {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, {"switch", "ICON"}, "bosskill"} --XXX "berserk",
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-mod.optionHeaders = {
+function mod:GetOptions()
+return {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, {"switch", "ICON"}, "bosskill"}, --XXX "berserk",
+{
 	switch = "general",
 	[79501] = "Magmatron",
 	[79888] = "Electron",
 	[80161] = "Toxitron",
 	nef = "heroic",
 }
+end
 
 --------------------------------------------------------------------------------
 -- Localization

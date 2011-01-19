@@ -12,6 +12,7 @@ local GetSpellInfo = GetSpellInfo
 local C -- = BigWigs.C, set from Constants.lua
 local AL = LibStub("AceLocale-3.0")
 local L = AL:GetLocale("Big Wigs")
+local CL = AL:GetLocale("Big Wigs: Common")
 
 local customBossOptions = {}
 local pName = UnitName("player")
@@ -392,22 +393,21 @@ do
 	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
 	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
-	local function register(module)
+	local defaultToggles = nil
+
+	local function setupOptions(module)
 		if not C then C = addon.C end
-		if not addon.defaultToggles then
-			addon.defaultToggles = setmetatable({
+		if not defaultToggles then
+			defaultToggles = setmetatable({
 				berserk = C.BAR + C.MESSAGE,
 				bosskill = C.MESSAGE,
-				proximity = C.PROXIMITY
+				proximity = C.PROXIMITY,
 			}, {__index = function(self, key)
-				if not rawget(self, key) then
-					return C.BAR + C.MESSAGE
-				end
+				return C.BAR + C.MESSAGE
 			end })
 		end
 
 		if module.optionHeaders then
-			local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 			for k, v in pairs(module.optionHeaders) do
 				if type(v) == "string" then
 					if CL[v] then
@@ -418,41 +418,44 @@ do
 				end
 			end
 		end
+
 		if module.toggleOptions then
 			module.toggleDefaults = {}
-			local bf
 			for k, v in next, module.toggleOptions do
-				bf = 0
+				local bitflags = 0
 				local t = type(v)
 				if t == "table" then
-					for i=2,#v,1 do
-						if C[v[i]] and v[i] ~= "EMPHASIZE" then
-							bf = bf + C[v[i]]
+					for i = 2, #v do
+						local flagName = v[i]
+						if C[flagName] and flagName ~= "EMPHASIZE" then
+							bitflags = bitflags + C[flagName]
 						else
-							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, v[1], v[i]))
+							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, flagName, v[1]))
 						end
 					end
 					v = v[1]
 					t = type(v)
 				end
-				-- mix in default toggles for keys we know this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}} while bosskill usually only has message
-				for n, b in pairs(C) do
-					if bit.band(addon.defaultToggles[v], b) == b and bit.band(bf, b) ~= b then
-						bf = bf + b
+				-- mix in default toggles for keys we know
+				-- this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}}
+				-- while bosskill usually only has message
+				for _, b in pairs(C) do
+					if bit.band(defaultToggles[v], b) == b and bit.band(bitflags, b) ~= b then
+						bitflags = bitflags + b
 					end
 				end
-				if t == "string"  then
-					module.toggleDefaults[v] = bf
+				if t == "string" then
+					module.toggleDefaults[v] = bitflags
 				elseif t == "number" and v > 1 then
 					local n = GetSpellInfo(v)
 					if not n then error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
-					module.toggleDefaults[n] = bf
+					module.toggleDefaults[n] = bitflags
 				end
 			end
 			module.db = addon.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
 		end
 	end
-
+	-- 609
 	function addon:RegisterBossModule(module)
 		if not module.displayName then module.displayName = module.moduleName end
 		if LOCALE ~= "enUS" and BB and BZ then
@@ -466,7 +469,16 @@ do
 		end
 		enablezones[module.zoneName] = true
 
-		register(module)
+		module.SetupOptions = function(self)
+			if self.GetOptions then
+				local toggles, headers = self:GetOptions(CL)
+				if toggles then self.toggleOptions = toggles end
+				if headers then self.optionHeaders = headers end
+				self.GetOptions = nil
+			end
+			setupOptions(self)
+			self.SetupOptions = nil
+		end
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
@@ -480,7 +492,7 @@ do
 			module.db = self.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end
 
-		register(module)
+		setupOptions(module)
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then

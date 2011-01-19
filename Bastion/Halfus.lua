@@ -5,7 +5,7 @@
 local mod = BigWigs:NewBoss("Halfus Wyrmbreaker", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(44600)
-mod.toggleOptions = {86169, "berserk", "bosskill"}
+function mod:GetOptions() return {86169, "berserk", "bosskill"} end
 
 --------------------------------------------------------------------------------
 -- Initialization

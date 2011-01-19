@@ -5,14 +5,14 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-mod.toggleOptions = {87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity", 88427, "phase", "bosskill"}
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-mod.optionHeaders = {
-	[87770] = CL["phase"]:format(1),
-	[87904] = CL["phase"]:format(2),
-	[89668] = CL["phase"]:format(3),
-	[88427] = "general",
-}
+function mod:GetOptions(CL)
+	return {87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity", 88427, "phase", "bosskill"}, {
+		[87770] = CL["phase"]:format(1),
+		[87904] = CL["phase"]:format(2),
+		[89668] = CL["phase"]:format(3),
+		[88427] = "general",
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Locals

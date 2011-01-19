@@ -5,11 +5,10 @@
 local mod = BigWigs:NewBoss("Chimaeron", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
-mod.toggleOptions = {"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "berserk", "bosskill"}
-mod.optionHeaders = {
-	warmup = "normal",
-	proximity = "general",
-}
+function mod:GetOptions() return
+	{"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "berserk", "bosskill"},
+	{ warmup = "normal", proximity = "general" }
+end
 
 --------------------------------------------------------------------------------
 -- Localization

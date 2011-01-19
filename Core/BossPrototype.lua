@@ -21,6 +21,7 @@ function boss:IsBossModule() return true end
 function boss:OnInitialize() core:RegisterBossModule(self) end
 function boss:OnEnable()
 	if debug then dbg(self, "OnEnable()") end
+	if self.SetupOptions then self:SetupOptions() end
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 	self:SendMessage("BigWigs_OnBossEnable", self)
 end
@@ -343,28 +344,36 @@ do
 	end)
 end
 
-
-local function checkFlag(self, key, flag)
-	if silencedOptions[key] then
-		return
-	end
-	if type(key) == "number" then key = GetSpellInfo(key) end
-	if type(self.db.profile[key]) ~= "number" then
-		if debug then
+local checkFlag = nil
+-- XXX the idea here is that the debug version should check whether or not the given flag exists in the defaults
+-- XXX and if not, print a warning - someone is checking if an option contains SAY, for example, but the defaults
+-- XXX don't? that's a problem.
+if debug then
+	checkFlag = function(self, key, flag)
+		if silencedOptions[key] then return end
+		if type(key) == "number" then key = GetSpellInfo(key) end
+		if type(self.db.profile[key]) ~= "number" then
 			dbg(self, ("Tried to access %q, but in the database it's a %s."):format(key, type(self.db.profile[key])))
-		else
+		end
+		return bit.band(self.db.profile[key], flag) == flag
+	end
+else
+	checkFlag = function(self, key, flag)
+		if silencedOptions[key] then return end
+		if type(key) == "number" then key = GetSpellInfo(key) end
+		if type(self.db.profile[key]) ~= "number" then
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
+		return bit.band(self.db.profile[key], flag) == flag
 	end
-	return bit.band(self.db.profile[key], flag) == flag
 end
 
-function boss:OpenProximity(range)
-	if not checkFlag(self, "proximity", C.PROXIMITY) then return end
+function boss:OpenProximity(range, key)
+	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
 	self:SendMessage("BigWigs_ShowProximity", self, range)
 end
-function boss:CloseProximity()
-	if not checkFlag(self, "proximity", C.PROXIMITY) then return end
+function boss:CloseProximity(key)
+	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
 	self:SendMessage("BigWigs_HideProximity")
 end
 

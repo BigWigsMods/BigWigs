@@ -667,6 +667,7 @@ end
 local function populateToggleOptions(widget, module)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
+	if module.SetupOptions then module:SetupOptions() end
 	for i, option in next, module.toggleOptions do
 		local o = option
 		if type(o) == "table" then o = option[1] end
@@ -815,7 +816,7 @@ do
 	function options:Register(message, moduleName, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
-		if module.toggleOptions then
+		if module.toggleOptions or module.GetOptions then
 			if module:IsBossModule() then
 				local zone = module.otherMenu or module.zoneName
 				if not zone then error(module.name .. " doesn't have any valid zone set!") end
@@ -842,3 +843,4 @@ do
 		end
 	end
 end
+

@@ -5,13 +5,14 @@
 local mod = BigWigs:NewBoss("Valiona and Theralion", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
-mod.toggleOptions = {{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840, {86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 93051, "proximity", "phase_switch", "bosskill"}
-mod.optionHeaders = {
-	[86788] = "Valiona",
-	[86622] = "Theralion",
-	[93051] = "heroic",
-	proximity = "general",
-}
+function mod:GetOptions(CL)
+	return {{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840, {86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 93051, "proximity", "phase_switch", "bosskill"}, {
+		[86788] = "Valiona",
+		[86622] = "Theralion",
+		[93051] = "heroic",
+		proximity = "general",
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -5,12 +5,14 @@
 local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
-mod.toggleOptions = {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "proximity", "phase", 78999, 81272, 94085, "bosskill"}
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-mod.optionHeaders = {
-	[79339] = "heroic",
-	phase = "general",
-}
+function mod:GetOptions()
+	return {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "proximity", "phase", 78999, 81272, 94085, "bosskill"},
+	{
+		[79339] = "heroic",
+		phase = "general",
+	}
+end
+
 --------------------------------------------------------------------------------
 -- Locals
 --

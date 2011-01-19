@@ -5,7 +5,9 @@
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-mod.toggleOptions = {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "ICON", "SAY"}, "bosskill"} --XXX "berserk",
+function mod:GetOptions()
+	return {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "ICON", "SAY"}, "bosskill"} --XXX "berserk"
+end
 
 --------------------------------------------------------------------------------
 -- Locals
