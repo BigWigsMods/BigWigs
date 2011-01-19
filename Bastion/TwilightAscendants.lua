@@ -14,6 +14,8 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
+local hardenInterrupted = nil
+local hardenTimer, thunderTimer = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -124,6 +126,8 @@ function mod:OnEngage(diff)
 
 	self:Bar(82631, L["shield_bar"], 28, 82631)
 	self:Bar(82746, glaciate, 15, 82746)
+
+	hardenInterrupted = nil
 end
 
 --------------------------------------------------------------------------------
@@ -226,12 +230,14 @@ do
 		if guid ~= 43689 then return end -- Terrastra
 		-- Someone interrupted Harden Skin, which means he won't cast Quake
 		self:SendMessage("BigWigs_StopBar", self, quake)
+		hardenInterrupted = true
 	end
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
 	self:Bar(92541, spellName, 45, spellId)
 	self:Message(92541, spellName, "Urgent", spellId, "Info")
+	hardenInterrupted = nil
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
@@ -272,41 +278,45 @@ function mod:Switch()
 	self:Bar(83067, thundershock, 70, 83067)
 	self:Bar(92541, hardenSkin, 27, 92541)
 	self:CancelAllTimers()
+	-- XXX this needs to be delayed
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
 do
 	local flying = GetSpellInfo(83500)
-	local timer = nil
 	local function quakeIncoming()
 		local name, _, icon = UnitDebuff("player", flying)
 		if name then
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(hardenTimer, true)
 			return
 		end
 		mod:LocalMessage(83565, L["grounded_message"], "Personal", icon, "Info")
 	end
 
+	-- We get the quake trigger even if Harden Skin was interrupted.
 	function mod:QuakeTrigger()
+		if hardenInterrupted then
+			hardenInterrupted = nil
+			return
+		end
 		self:Bar(83565, quake, 10, 83565)
 		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", 83565, "Info")
-		timer = self:ScheduleRepeatingTimer(quakeIncoming, 1)
+		hardenTimer = self:ScheduleRepeatingTimer(quakeIncoming, 2)
 	end
 
 	function mod:Quake(_, spellId, _, _, spellName)
 		self:Bar(83565, spellName, 65, spellId)
 		self:Message(83565, spellName, "Important", spellId, "Alarm")
-		self:CancelTimer(timer, true) -- Should really wait 3 more sec.
+		self:CancelTimer(hardenTimer, true) -- Should really wait 3 more sec.
 	end
 end
 
 do
 	local grounded = GetSpellInfo(83581)
-	local timer = nil
 	local function thunderShockIncoming()
 		local name, _, icon = UnitDebuff("player", grounded)
 		if name then
-			mod:CancelTimer(timer, true)
+			mod:CancelTimer(thunderTimer, true)
 			return
 		end
 		mod:LocalMessage(83067, L["searing_winds_message"], "Personal", icon, "Info")
@@ -315,13 +325,13 @@ do
 	function mod:ThundershockTrigger()
 		self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", 83067, "Info")
 		self:Bar(83067, thundershock, 10, 83067)
-		timer = self:ScheduleRepeatingTimer(thunderShockIncoming, 1)
+		thunderTimer = self:ScheduleRepeatingTimer(thunderShockIncoming, 2)
 	end
 
 	function mod:Thundershock(_, spellId, _, _, spellName)
 		self:Bar(83067, spellName, 65, spellId)
 		self:Message(83067, spellName, "Important", spellId, "Alarm")
-		self:CancelTimer(timer, true) -- Should really wait 3 more sec but meh.
+		self:CancelTimer(thunderTimer, true) -- Should really wait 3 more sec but meh.
 	end
 end
 
