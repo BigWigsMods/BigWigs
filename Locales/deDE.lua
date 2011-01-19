@@ -82,6 +82,8 @@ L["WHISPER_desc"] = "Manche Effekte sind wichtig genug, dass Big Wigs eine gefl�
 L["SAY_desc"] = "Chatblasen sind leicht zu sehen. Big Wigs benutzt eine /sagen-Nachricht, um Leute um dich herum auf Effekte auf dir aufmerksam zu machen."
 L["PING_desc"] = "Manchmal können bestimmte Orte wichtig sein und Big Wigs kann dann die Minimap pingen, so dass die Leute wissen, wo du bist."
 L["EMPHASIZE_desc"] = "Sobald aktiviert, werden entsprechende Nachrichten und Leisten stark HERVORGEHOBEN. Nachrichten werden größer, Leisten werden blinken und eine andere Farbe bekommen und Sounds werden als Countdown verwendet. Du wirst die Fähigkeit definitiv bemerken."
+L["PROXIMITY"] = "Näheanzeige"
+L["PROXIMITY_desc"] = "Fähigkeiten von Begegnungen erfordern manchmal, dass alle Mitspieler auseinander stehen. Die Näheanzeige wird speziell für diese Fähigkeit eingestellt, so dass du auf einen Blick siehst, ob du sicher bist oder nicht."
 L["Advanced options"] = "Erweiterte Optionen"
 L["<< Back"] = "<< Zurück"
 
