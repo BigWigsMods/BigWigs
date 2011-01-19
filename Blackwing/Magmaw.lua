@@ -45,7 +45,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions() return
-	{"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER"}, "proximity", 91931, "inferno", "bosskill"},
+	{"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931, "inferno", "bosskill"},
 	{
 		slump = "normal",
 		inferno = "heroic",
@@ -113,7 +113,7 @@ function mod:Infection(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Message(94679, L["infection_message"], "Important", spellId, "Alarm")
 		self:FlashShake(94679)
-		self:OpenProximity(8)
+		self:OpenProximity(8, 94679)
 	else
 		self:Whisper(94679, player, L["infection_message"], true)
 	end
@@ -121,7 +121,7 @@ end
 
 function mod:InfectionRemoved(player)
 	if not UnitIsUnit(player, "player") then return end
-	self:CloseProximity()
+	self:CloseProximity(94679)
 end
 
 function mod:Slump()

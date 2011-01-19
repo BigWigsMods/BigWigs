@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
 function mod:GetOptions()
-return {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE"}, "proximity", {80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, {"switch", "ICON"}, "bosskill"}, --XXX "berserk",
+return {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE", "PROXIMITY"}, {80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, {"switch", "ICON"}, "bosskill"}, --XXX "berserk",
 {
 	switch = "general",
 	[79501] = "Magmatron",
@@ -64,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
 	self:Log("SPELL_AURA_APPLIED", "LightningConductor", 79888, 91433, 91431, 91432)
+	self:Log("SPELL_AURA_REMOVED", "LightningConductorRemoved", 79888, 91433, 91431, 91432)
 	self:Log("SPELL_AURA_APPLIED", "Switch", 78740, 95016, 95017, 95018)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -149,11 +150,15 @@ end
 function mod:LightningConductor(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(79888)
-		self:OpenProximity(15) --assumed
-		self:ScheduleTimer(self.CloseProximity, 10, self)
+		self:OpenProximity(15, 79888) --assumed
 	end
 	self:TargetMessage(79888, spellName, player, "Attention", spellId)
 	self:SecondaryIcon(79888, player)
+end
+
+function mod:LightningConductorRemoved(player)
+	if not UnitIsUnit(player, "player") then return end
+	self:CloseProximity(79888)
 end
 
 function mod:PoisonProtocol(_, spellId, _, _, spellName)

@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
 function mod:GetOptions()
-	return {{79339, "FLASHSHAKE", "SAY"}, { 80626, "FLASHSHAKE"}, "proximity", "phase", 78999, 81272, 94085, "bosskill"},
+	return {{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "phase", 78999, 81272, 94085, "bosskill"},
 	{
 		[79339] = "heroic",
 		phase = "general",
@@ -147,7 +147,7 @@ do
 			self:FlashShake(79339)
 			self:Say(79339, L["cinder_say"])
 			self:Bar(79339, spellName, 8, 79339)
-			self:OpenProximity(10) -- assumed
+			self:OpenProximity(10, 79339) -- assumed
 		end
 		if not scheduled then
 			scheduled = true
@@ -165,7 +165,7 @@ end
 
 function mod:ExplosiveCindersRemoved(player)
 	if UnitIsUnit(player, "player") then
-		self:CloseProximity()
+		self:CloseProximity(79339)
 	end
 end
 
