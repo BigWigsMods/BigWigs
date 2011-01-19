@@ -35,9 +35,9 @@ if L then
 	L.slump = "跌落"
 	L.slump_desc = "當跌落並暴露時發出警報。"
 
-	L.slump_trigger = "%s slumps forward, exposing his pincers!"
+	L.slump_trigger = "%s往前撲倒，露出他的鉗子!"
 
-	L.expose_trigger = "head"
+	L.expose_trigger = "頭"
 	L.expose_message = "Head Explosed!"
 end
 
@@ -80,7 +80,12 @@ if L then
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
-	L.shadowblaze_trigger = "化為灰燼吧!"
+	L.crackle_trigger = "The air crackles with electricity!"
+	L.crackle_message = "Electrocute soon!"
+
+	L.onyxia_power_message = "Explosion soon!"
+
+	L.cinder_say = "Explosive Cinders on ME!"
 
 	L.chromatic_prototype = "炫彩原型體" -- 3 adds name
 end
