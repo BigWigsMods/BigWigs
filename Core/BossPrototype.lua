@@ -368,6 +368,11 @@ else
 	end
 end
 
+-- XXX the key needs to be passed to proximity so that we can show something meaningful
+-- XXX in the monitor header now that the option can be set per-ability rather than at
+-- XXX boss level.
+-- XXX the monitor should probably also get a button to turn off the proximity bitflag
+-- XXX for the given key.
 function boss:OpenProximity(range, key)
 	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
 	self:SendMessage("BigWigs_ShowProximity", self, range)

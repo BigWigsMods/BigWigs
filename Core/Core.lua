@@ -455,7 +455,7 @@ do
 			module.db = addon.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
 		end
 	end
-	-- 609
+
 	function addon:RegisterBossModule(module)
 		if not module.displayName then module.displayName = module.moduleName end
 		if LOCALE ~= "enUS" and BB and BZ then

@@ -12,8 +12,8 @@ function mod:GetOptions(CL)
 		{93180, "FLASHSHAKE", "ICON", "SAY"},
 		82524, 81628, 82299, 82630, 82414,
 		"orders",
-		{82235, "FLASHSHAKE"},
-		"proximity", "berserk", "bosskill"
+		{82235, "FLASHSHAKE", "PROXIMITY"},
+		"berserk", "bosskill"
 	},
 	{
 		[91303] = CL.phase:format(1),
@@ -141,7 +141,7 @@ function mod:UNIT_POWER(event, unit, powerType)
 	local power = UnitPower("player", ALTERNATE_POWER_INDEX)
 	if power > 49 then
 		self:LocalMessage(82235, L["sickness_message"], "Personal", 81831, "Long")
-		self:OpenProximity(5)
+		self:OpenProximity(5, 82235)
 		self:FlashShake(82235)
 		sicknessWarned = true
 	end
