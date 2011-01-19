@@ -5,14 +5,6 @@
 local mod = BigWigs:NewBoss("Conclave of Wind", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
-function mod:GetOptions() return
-	{86193, "storm_shield", {84645, "FLASHSHAKE"}, 85422, 86281, 86307, "full_power", "berserk", "bosskill"}, {
-		[86193] = "Rohash",
-		[84645] = "Nezir",
-		[85422] = "Anshal",
-		[86307] = "general",
-	}
-end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -44,6 +36,20 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		86193, "storm_shield",
+		{84645, "FLASHSHAKE"},
+		85422, 86281,
+		86307, "full_power", "berserk", "bosskill"
+	}, {
+		[86193] = "Rohash",
+		[84645] = "Nezir",
+		[85422] = "Anshal",
+		[86307] = "general",
+	}
+end
 
 function mod:OnBossEnable()
 

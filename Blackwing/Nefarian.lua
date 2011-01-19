@@ -5,13 +5,6 @@
 local mod = BigWigs:NewBoss("Nefarian", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
-function mod:GetOptions()
-	return {{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "phase", 78999, 81272, 94085, "bosskill"},
-	{
-		[79339] = "heroic",
-		phase = "general",
-	}
-end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -50,6 +43,16 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"},
+		"phase", 78999, 81272, 94085, "bosskill"
+	}, {
+		[79339] = "heroic",
+		phase = "general"
+	}
+end
 
 function mod:OnBossEnable()
 	self:Yell("PhaseTwo", L["phase_two_trigger"])

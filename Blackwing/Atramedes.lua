@@ -5,9 +5,6 @@
 local mod = BigWigs:NewBoss("Atramedes", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(41442)
-function mod:GetOptions()
-	return {"ground_phase", 78075, 77840, "air_phase", {78092, "FLASHSHAKE", "ICON", "SAY"}, "bosskill"} --XXX "berserk"
-end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -35,15 +32,21 @@ if L then
 end
 L = mod:GetLocale()
 
-mod.optionHeaders = {
-	ground_phase = L["ground_phase"],
-	air_phase = L["air_phase"],
-	[78092] = "general",
-}
-
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		"ground_phase", 78075, 77840,
+		"air_phase",
+		{78092, "FLASHSHAKE", "ICON", "SAY"}, "bosskill"
+	}, {--XXX "berserk"
+		ground_phase = L["ground_phase"],
+		air_phase = L["air_phase"],
+		[78092] = "general"
+	}
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SonicBreath", 78075)

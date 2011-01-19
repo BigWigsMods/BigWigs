@@ -5,22 +5,6 @@
 local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43324)
-function mod:GetOptions(CL)
-	return {
-		91303,
-		{81538, "FLASHSHAKE"},
-		{93180, "FLASHSHAKE", "ICON", "SAY"},
-		82524, 81628, 82299, 82630, 82414,
-		"orders",
-		{82235, "FLASHSHAKE", "PROXIMITY"},
-		"berserk", "bosskill"
-	},
-	{
-		[91303] = CL.phase:format(1),
-		[82630] = CL.phase:format(2),
-		orders = "general",
-	}
-end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -61,6 +45,18 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions(CL)
+	return {
+		91303, {81538, "FLASHSHAKE"}, {93180, "FLASHSHAKE", "ICON", "SAY"}, 82524, 81628, 82299,
+		82630, 82414,
+		"orders", {82235, "FLASHSHAKE", "PROXIMITY"}, "berserk", "bosskill"
+	}, {
+		[91303] = CL.phase:format(1),
+		[82630] = CL.phase:format(2),
+		orders = "general",
+	}
+end
 
 function mod:OnBossEnable()
 	--heroic

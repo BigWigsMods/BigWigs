@@ -5,10 +5,7 @@
 local mod = BigWigs:NewBoss("Argaloth", "Baradin Hold")
 if not mod then return end
 mod:RegisterEnableMob(47120)
---mod.toggleOptions = {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
-function mod:GetOptions()
-	return {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
-end
+
 --------------------------------------------------------------------------------
 -- Locals
 --
@@ -32,6 +29,10 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MeteorSlash", 88942, 95172)

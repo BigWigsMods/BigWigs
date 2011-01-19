@@ -44,12 +44,15 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions() return
-	{"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931, "inferno", "bosskill"},
-	{
+function mod:GetOptions()
+	return {
+		"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931,
+		"inferno",
+		"bosskill"
+	}, {
 		slump = "normal",
 		inferno = "heroic",
-		bosskill = "general",
+		bosskill = "general"
 	}
 end
 

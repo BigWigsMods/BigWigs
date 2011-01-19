@@ -59,12 +59,18 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return {{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity", {77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968, 77991, "sludge", "phase", 77912, 77569, 77896, "berserk", "bosskill"}, {
+	return {
+		{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity",
+		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968,
+		77991,
+		"sludge",
+		"phase", 77912, 77569, 77896, "berserk", "bosskill"
+	}, {
 		[77699] = L["blue_phase"],
 		[77786] = L["red_phase"],
 		[77991] = L["final_phase"],
 		sludge = "heroic",
-		phase = "general",
+		phase = "general"
 	}
 end
 

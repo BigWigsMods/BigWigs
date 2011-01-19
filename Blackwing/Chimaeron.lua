@@ -5,10 +5,6 @@
 local mod = BigWigs:NewBoss("Chimaeron", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
-function mod:GetOptions() return
-	{"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890, "proximity", "berserk", "bosskill"},
-	{ warmup = "normal", proximity = "general" }
-end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +28,16 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890,
+		"proximity", "berserk", "bosskill"
+	}, {
+		warmup = "normal",
+		proximity = "general"
+	}
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SystemFailureStart", 88853)

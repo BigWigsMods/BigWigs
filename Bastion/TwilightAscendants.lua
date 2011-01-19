@@ -5,31 +5,6 @@
 local mod = BigWigs:NewBoss("Ascendant Council", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, Arion, Terrastra, Elementium Monstrosity
-function mod:GetOptions() return {
-	-- Ignacious
-	82631, 82660, 82663,
-	-- Feludius
-	82746, 82665, 82666, 82762,
-	-- Arion
-	83067, {83099, "SAY", "FLASHSHAKE"},
-	-- Terrastra
-	83565, 92541,
-	-- Monstrosity
-	92488,
-	-- Heroic
-	{92067, "FLASHSHAKE", "SAY", "ICON"},
-	{92075, "FLASHSHAKE", "SAY", "ICON"},
-	{92307, "FLASHSHAKE", "ICON", "WHISPER"},
-	-- General
-	"proximity", "switch", "bosskill"}, {
-	[82631] = "Ignacious",
-	[82746] = "Feludius",
-	[83067] = "Arion",
-	[83565] = "Terrastra",
-	[92488] = "Elementium Monstrosity",
-	[92067] = "heroic",
-	proximity = "general",
-} end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -74,6 +49,35 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		-- Ignacious
+		82631, 82660, 82663,
+		-- Feludius
+		82746, 82665, 82666, 82762,
+		-- Arion
+		83067, {83099, "SAY", "FLASHSHAKE"},
+		-- Terrastra
+		83565, 92541,
+		-- Monstrosity
+		92488,
+		-- Heroic
+		{92067, "FLASHSHAKE", "SAY", "ICON"},
+		{92075, "FLASHSHAKE", "SAY", "ICON"},
+		{92307, "FLASHSHAKE", "ICON", "WHISPER"},
+		-- General
+		"proximity", "switch", "bosskill"
+	}, {
+		[82631] = "Ignacious",
+		[82746] = "Feludius",
+		[83067] = "Arion",
+		[83565] = "Terrastra",
+		[92488] = "Elementium Monstrosity",
+		[92067] = "heroic",
+		proximity = "general",
+	}
+end
 
 function mod:OnBossEnable()
 	--heroic

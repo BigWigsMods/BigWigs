@@ -5,14 +5,6 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-function mod:GetOptions(CL)
-	return {87770, 87904, {89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity", 88427, "phase", "bosskill"}, {
-		[87770] = CL["phase"]:format(1),
-		[87904] = CL["phase"]:format(2),
-		[89668] = CL["phase"]:format(3),
-		[88427] = "general",
-	}
-end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -41,6 +33,20 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions(CL)
+	return {
+		87770,
+		87904,
+		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
+		88427, "phase", "bosskill"
+	}, {
+		[87770] = CL["phase"]:format(1),
+		[87904] = CL["phase"]:format(2),
+		[89668] = CL["phase"]:format(3),
+		[88427] = "general",
+	}
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Electrocute", 88427)

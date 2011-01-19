@@ -5,16 +5,6 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
-function mod:GetOptions()
-return {{79501, "ICON", "FLASHSHAKE"}, {79888, "ICON", "FLASHSHAKE", "PROXIMITY"}, {80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"}, "nef", {92048, "ICON"}, 92023, {"switch", "ICON"}, "bosskill"}, --XXX "berserk",
-{
-	switch = "general",
-	[79501] = "Magmatron",
-	[79888] = "Electron",
-	[80161] = "Toxitron",
-	nef = "heroic",
-}
-end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -49,6 +39,22 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		{79501, "ICON", "FLASHSHAKE"},
+		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},
+		{80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"},
+		"nef", {92048, "ICON"}, 92023,
+		{"switch", "ICON"}, "bosskill"
+	}, {--XXX "berserk",
+		[79501] = "Magmatron",
+		[79888] = "Electron",
+		[80161] = "Toxitron",
+		nef = "heroic",
+		switch = "general"
+	}
+end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036, 92037)
