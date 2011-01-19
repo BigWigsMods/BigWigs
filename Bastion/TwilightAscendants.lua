@@ -220,6 +220,7 @@ end
 
 do
 	local harden = {
+		[83718] = true,
 		[92541] = true,
 		[92542] = true,
 		[92543] = true,
@@ -285,6 +286,7 @@ end
 do
 	local flying = GetSpellInfo(83500)
 	local function quakeIncoming()
+		if hardenInterrupted then return end
 		local name, _, icon = UnitDebuff("player", flying)
 		if name then
 			mod:CancelTimer(hardenTimer, true)
