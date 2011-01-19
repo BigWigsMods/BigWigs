@@ -215,7 +215,7 @@ do
 	end
 	function mod:ReleaseAberrations()
 		-- He keeps casting it even if there are no adds left to release...
-		if aberrations < 0 then return end
+		if aberrations <= 0 then return end
 		handle = self:ScheduleTimer(release, 1.5)
 	end
 	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
