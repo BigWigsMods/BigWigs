@@ -130,14 +130,35 @@ do
 	end
 end
 
+--[[
+NORMAL
+engage: 0
+red/blue: 1
+blue/red: 2 - start green phase bar
+green: 3 - set counter to 0
+red/blue: 1
+blue/red: 2 - start green phase bar
+green: 3
+
+HEROIC
+engage: 0
+dark: 1
+red/blue: 2
+blue/red: 3 - start green phase bar
+green: 4 - set counter to 0
+dark: 1
+red/blue: 2
+blue/red: 3 - start green phase bar
+green: 4 - set counter to 0
+]]
+
 -- XXX The phase counter is NOT working on normal, we get the "Green phase" bar when we should not.
 -- XXX Someone needs to add some debug messages around here before they pull.
 local function nextPhase(timeToNext)
 	phaseCounter = phaseCounter + 1
 	local diff = mod:GetInstanceDifficulty()
 	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
-		mod:Bar("phase", L["green_phase_bar"], 47, "INV_POTION_162")
-		phaseCounter = 0
+		mod:Bar("phase", L["green_phase_bar"], timeToNext, "INV_POTION_162")
 	else
 		mod:Bar("phase", L["next_phase"], timeToNext, "INV_ALCHEMY_ELIXIR_EMPTY")
 	end
@@ -186,6 +207,8 @@ function mod:Green()
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()
 	nextPhase(47)
+	-- Make sure to reset after the nextPhase() call, which increments it
+	phaseCounter = 0
 end
 
 function mod:Dark()
