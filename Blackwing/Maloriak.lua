@@ -118,16 +118,6 @@ end
 -- Event Handlers
 --
 
-local function nextPhase()
-	phaseCounter = phaseCounter + 1
-	local diff = mod:GetInstanceDifficulty()
-	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
-		mod:SendMessage("BigWigs_StopBar", mod, L["next_phase"])
-		mod:Bar("phase", L["green_phase_bar"], 47, "INV_POTION_162")
-		phaseCounter = 0
-	end
-end
-
 do
 	local last = 0
 	function mod:DarkSludge(player, spellId)
@@ -140,6 +130,19 @@ do
 	end
 end
 
+-- XXX The phase counter is NOT working on normal, we get the "Green phase" bar when we should not.
+-- XXX Someone needs to add some debug messages around here before they pull.
+local function nextPhase(timeToNext)
+	phaseCounter = phaseCounter + 1
+	local diff = mod:GetInstanceDifficulty()
+	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
+		mod:Bar("phase", L["green_phase_bar"], 47, "INV_POTION_162")
+		phaseCounter = 0
+	else
+		mod:Bar("phase", L["next_phase"], timeToNext, "INV_ALCHEMY_ELIXIR_EMPTY")
+	end
+end
+
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	local potion = msg:match("INV_(.-).BLP")
 	if not potion then return end
@@ -149,13 +152,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 	if potion == "POTION_20" then
 		self:Blue()
-		self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	elseif potion == "POTION_24" then
 		self:Red()
-		self:Bar(92968, L["next_blast"], 25, 92968)
 	elseif potion == "POTION_162" then
 		self:Green()
-		self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
 		self:Dark()
 	end
@@ -165,37 +165,34 @@ end
 function mod:Red()
 	warnedAlready = true
 	self:Bar(92968, L["next_blast"], 25, 92968)
-	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
-	nextPhase()
+	nextPhase(47)
 end
 
 function mod:Blue()
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
-	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
 	self:OpenProximity(5)
-	nextPhase()
+	nextPhase(47)
 end
 
 function mod:Green()
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
-	self:Bar("phase", L["next_phase"], 47, "INV_ALCHEMY_ELIXIR_EMPTY")
+	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
 	self:CloseProximity()
-	nextPhase()
+	nextPhase(47)
 end
 
 function mod:Dark()
 	warnedAlready = true
-	self:Bar("phase", L["next_phase"], 100, "INV_ALCHEMY_ELIXIR_EMPTY")
 	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
 	self:CloseProximity()
-	nextPhase()
+	nextPhase(100)
 end
 
 function mod:FlashFreezeTimer(_, spellId, _, _, spellName)
