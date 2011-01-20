@@ -54,6 +54,7 @@ if L then
 	--heroic
 	L.sludge = "어둠의 폐수"
 	L.sludge_desc = "어둠의 폐수에 서있을시 알립니다."
+	L.sludge_message = "당신은 폐수!"
 
 	--normal
 	L.final_phase = "마지막 단계"
