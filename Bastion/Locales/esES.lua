@@ -3,6 +3,7 @@ if L then
 	L.orders = "Cambios de posición"
 	L.orders_desc = "Aviso para cuando Cho'gall cambia el orden de posiciones entre Sombra/Llama."
 
+	L.crash_say = "¡Crash en MI!"
 	L.worship_cooldown = "~Adoración"
 	L.adherent_bar = "Próximo gran add"
 	L.adherent_message = "¡Add aparece!"
