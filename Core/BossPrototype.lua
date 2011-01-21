@@ -301,7 +301,7 @@ do
 
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
-		if type(delay) ~= "number" then error(string.format("Module %s tried to schedule a delayed message with delay as type %q, but it must be a number.", module.name, type(delay))) end
+		if type(delay) ~= "number" then error(string.format("Module %s tried to schedule a delayed message with delay as type %q, but it must be a number.", self.name, type(delay))) end
 		self:CancelDelayedMessage(text)
 
 		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
@@ -489,7 +489,7 @@ do
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 
 	function boss:Whisper(key, player, spellName, noName)
-		self:SendMessage("BigWigs_Whisper", self, key, player, msg, spellName, noName)
+		self:SendMessage("BigWigs_Whisper", self, key, player, spellName, noName)
 		if not checkFlag(self, key, C.WHISPER) then return end
 		local msg = noName and spellName or fmt(L["you"], spellName)
 		sentWhispers[msg] = true

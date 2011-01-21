@@ -13,7 +13,6 @@ local L = BigWigs:NewBossLocale("Conclave of Wind", "esES")
 if L then
 	L.gather_strength = "%s está reuniendo fuerza"
 
-	L.storm_shield = stormShield
 	L.storm_shield_desc = "Escudo de absorción"
 	
 	L.full_power = "Lleno de poder"
