@@ -185,6 +185,7 @@ end
 
 function mod:Red()
 	warnedAlready = true
+	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"]) -- XXX untested, but seems logical
 	self:Bar(92968, L["next_blast"], 25, 92968)
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
 	self:CloseProximity()
