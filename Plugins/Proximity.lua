@@ -268,9 +268,7 @@ end
 local function onControlLeave() GameTooltip:Hide() end
 
 local function onNormalClose()
-	if active then
-		BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
-	end
+	BigWigs:Print(L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."])
 	plugin:Close()
 end
 

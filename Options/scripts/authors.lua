@@ -47,15 +47,15 @@ numberOfCommits.funkydude = nil
 numberOfCommits.Maat = nil
 numberOfCommits.maat = nil
 
-local uniqueAuthors = {}
+local sorted = {}
 for k, v in pairs(numberOfCommits) do
-	if v > 2 then uniqueAuthors[#uniqueAuthors + 1] = k end
+	if v > 2 then sorted[#sorted + 1] = k end
 end
-table.sort(uniqueAuthors, function(a, b) return numberOfCommits[a] > numberOfCommits[b] end)
+table.sort(sorted, function(a, b) return numberOfCommits[a] > numberOfCommits[b] end)
 
 local output = assert(io.open(arg[2], "w"))
 output:write("_G.BIGWIGS_AUTHORS = \"")
-output:write(table.concat(uniqueAuthors, ", "))
+output:write(table.concat(sorted, ", "))
 output:write(".\"\n")
 output:close()
 
