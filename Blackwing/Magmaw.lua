@@ -58,7 +58,7 @@ end
 
 function mod:OnBossEnable()
 	--heroic
-	self:Log("SPELL_SUMMON", "BlazingInferno", 92191, 92192)
+	self:Log("SPELL_SUMMON", "BlazingInferno", 92154, 92190, 92191, 92192)
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "Infection", 94679, 78097, 78941, 91913, 94678)
