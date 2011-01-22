@@ -141,17 +141,15 @@ local acceptedGlobals = {
 	GetNumRaidMembers = true,
 }
 
-local match = "\t%[(%d+)%]\t([SG]ETGLOBAL).-;%s+(.*)"
+local match = "\t%d+\t%[(%d+)%]\t([SG]ETGLOBAL)\t%d+ ?%-%d+\t; (.*)"
 local fmt = "\tLine %d: %s (%s)"
 local function printLine(line)
-	local globalName = strmatch(line, "\t; (.+)%s*")
-	if globalName and acceptedGlobals[globalName] then return end
-	line = line:gsub("%d+\t(%[%d+%])", "%1")
+	local lineNumber, setOrGet, globalName = select(3, line:find(match))
+	if not globalName or acceptedGlobals[globalName] then return end
 	if not hasPrintedFileName then
 		print(fileName)
 		hasPrintedFileName = true
 	end
-	local lineNumber, setOrGet, globalName = select(3, line:find(match))
 	print(fmt:format(lineNumber, globalName, setOrGet == "GETGLOBAL" and "get" or "set"))
 end
 
