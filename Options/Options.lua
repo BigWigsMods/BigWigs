@@ -460,7 +460,7 @@ do
 	end
 end
 
-local function getOptionDetails(module, bossOption)
+function options:GetBossOptionDetails(module, bossOption)
 	local customBossOptions = BigWigs:GetCustomBossOptions()
 	local option = bossOption
 	local t = type(option)
@@ -594,7 +594,7 @@ local advancedTabs = {
 }
 
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc = getOptionDetails(module, bossOption)
+	local dbKey, name, desc = options:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L["<< Back"])
 	back:SetFullWidth(true)
@@ -640,7 +640,7 @@ local function buttonClicked(widget)
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon = getOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon = options:GetBossOptionDetails(module, bossOption)
 
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize[name])

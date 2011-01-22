@@ -321,12 +321,17 @@ local function ensureDisplay()
 	sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
 	display.sound = sound
 
-	local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	header:SetText(L["Proximity"])
+	local header = display:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	header:SetText(L["%d yards"]:format(0))
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 	display.header = header
 
-	local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	local abilityName = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	abilityName:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
+	abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
+	display.abilityName = abilityName
+
+	local text = display:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	text:SetFont(media:GetDefault("font"), 12)
 	text:SetText("")
 	text:SetAllPoints(display)
@@ -632,13 +637,13 @@ end
 
 do
 	local opener = nil
-	function plugin:BigWigs_ShowProximity(event, module, range)
+	function plugin:BigWigs_ShowProximity(event, module, range, optionKey)
 		if self.db.profile.disabled or type(range) ~= "number" then return end
 		opener = module
-		self:Open(range)
+		self:Open(range, module, optionKey)
 	end
 
-	function plugin:BigWigs_OnBossDisable(event, module)
+	function plugin:BigWigs_OnBossDisable(event, module, optionKey)
 		if module ~= opener then return end
 		self:Close()
 	end
@@ -652,7 +657,8 @@ function plugin:Close()
 	activeProximityFunction = nil
 	activeRange = nil
 	if anchor then
-		anchor.header:SetText(L["Proximity"])
+		anchor.header:SetText(L["%d yards"]:format(0))
+		anchor.abilityName:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
 		-- Just in case we were the last target of
 		-- configure mode, reset the background color.
 		anchor.background:SetTexture(0, 0, 0, 0.3)
@@ -661,7 +667,8 @@ function plugin:Close()
 	updater:Hide()
 end
 
-function plugin:Open(range)
+local abilityNameFormat = "|T%s:20:20:-5|t%s"
+function plugin:Open(range, module, key)
 	if type(range) ~= "number" then error("Range needs to be a number!") end
 	-- Make sure the anchor is there
 	ensureDisplay()
@@ -671,6 +678,17 @@ function plugin:Open(range)
 	activeRange = actualRange
 	-- Update the header to reflect the actual range we're checking
 	anchor.header:SetText(L["%d yards"]:format(actualRange))
+	-- Update the ability name display
+	if module and key then
+		local dbKey, name, desc, icon = BigWigsOptions:GetBossOptionDetails(module, bossOption)
+		if icon then
+			anchor.abilityName:SetText(abilityNameFormat:format(icon, name))
+		else
+			anchor.abilityName:SetText(name)
+		end
+	else
+		anchor.abilityName:SetText(L["Custom range indicator"])
+	end
 	-- Unbreak the sound+close buttons
 	makeThingsWork()
 	-- Start the show!

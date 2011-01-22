@@ -11,10 +11,6 @@ local ignoredFiles = {
 local fileName = arg[1]
 if ignoredFiles[fileName] then return end
 
-local hasPrintedFileName = nil
-local strmatch = string.match
-local stdin = io.input()
-
 local acceptedGlobals = {
 	GetNumSpellTabs = true,
 	GetSpellTabInfo = true,
@@ -141,23 +137,21 @@ local acceptedGlobals = {
 	GetNumRaidMembers = true,
 }
 
-local match = "\t%d+\t%[(%d+)%]\t([SG]ETGLOBAL)\t%d+ ?%-%d+\t; (.*)"
+local hasPrintedFileName = nil
+local match = "^\t%d+\t%[(%d+)%]\t([SG]ETGLOBAL)\t%d+%s?%-%d+\t;%s(%S+)$"
 local fmt = "\tLine %d: %s (%s)"
-local function printLine(line)
-	local lineNumber, setOrGet, globalName = select(3, line:find(match))
-	if not globalName or acceptedGlobals[globalName] then return end
-	if not hasPrintedFileName then
-		print(fileName)
-		hasPrintedFileName = true
-	end
-	print(fmt:format(lineNumber, globalName, setOrGet == "GETGLOBAL" and "get" or "set"))
-end
 
+local stdin = io.input()
 while true do
 	local line = stdin:read()
 	if not line then break end
-	if line:match("[SG]ETGLOBAL\t") then
-		printLine(line)
+	local lineNumber, setOrGet, globalName = select(3, line:find(match))
+	if globalName and not acceptedGlobals[globalName] then
+		if not hasPrintedFileName then
+			print(fileName)
+			hasPrintedFileName = true
+		end
+		print(fmt:format(lineNumber, globalName, setOrGet == "GETGLOBAL" and "get" or "set"))
 	end
 end
 
