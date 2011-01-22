@@ -26,6 +26,7 @@ if L then
 
 	L.omlet_trigger = "You mistake this for weakness?  Fool!"
 
+	L.phase13 = "Phase 1 and 3"
 	L.phase = "Phase"
 	L.phase_desc = "Warning for phase changes"
 end
@@ -37,7 +38,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-	-- Phase 1
+	-- Phase 1 and 3
 		92944,
 		92954, -- Twilight Slicer
 
@@ -49,7 +50,7 @@ function mod:GetOptions()
 		"phase",
 		"bosskill",
 	}, {
-		[92944] = CL["phase"]:format(1),
+		[92944] = L["phase13"],
 		[87654] = CL["phase"]:format(2),
 		phase = "general",
 	}
