@@ -435,51 +435,6 @@ do
 	end
 end
 
-local getSpellDescription
-do
-	local cache = {}
-	local scanner = CreateFrame("GameTooltip")
-	scanner:SetOwner(WorldFrame, "ANCHOR_NONE")
-	local lcache, rcache = {}, {}
-	for i = 1, 4 do
-		lcache[i], rcache[i] = scanner:CreateFontString(), scanner:CreateFontString()
-		lcache[i]:SetFontObject(GameFontNormal); rcache[i]:SetFontObject(GameFontNormal)
-		scanner:AddFontStrings(lcache[i], rcache[i])
-	end
-	function getSpellDescription(spellId)
-		if cache[spellId] then return cache[spellId] end
-		scanner:ClearLines()
-		scanner:SetHyperlink("spell:"..spellId)
-		for i = scanner:NumLines(), 1, -1  do
-			local desc = lcache[i] and lcache[i]:GetText()
-			if desc then
-				cache[spellId] = desc
-				return desc
-			end
-		end
-	end
-end
-
-function options:GetBossOptionDetails(module, bossOption)
-	local customBossOptions = BigWigs:GetCustomBossOptions()
-	local option = bossOption
-	local t = type(option)
-	if t == "table" then option = option[1]; t = type(option) end
-	local bf = module.toggleDefaults[option]
-	if t == "string" then
-		if customBossOptions[option] then
-			return option, customBossOptions[option][1], customBossOptions[option][2]
-		else
-			local L = module:GetLocale()
-			return option, L[option], L[option .. "_desc"] -- , L[option .. "_icon"]
-		end
-	elseif t == "number" then
-		local spellName, _, icon = GetSpellInfo(option)
-		if not spellName then error(("Invalid option %d in module %s."):format(option, module.displayName)) end
-		return spellName, spellName, getSpellDescription(option), icon
-	end
-end
-
 local function getMasterOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
@@ -594,7 +549,7 @@ local advancedTabs = {
 }
 
 local function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc = options:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L["<< Back"])
 	back:SetFullWidth(true)
@@ -640,7 +595,7 @@ local function buttonClicked(widget)
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon = options:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize[name])

@@ -680,7 +680,7 @@ function plugin:Open(range, module, key)
 	anchor.header:SetText(L["%d yards"]:format(actualRange))
 	-- Update the ability name display
 	if module and key then
-		local dbKey, name, desc, icon = BigWigsOptions:GetBossOptionDetails(module, bossOption)
+		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
 		if icon then
 			anchor.abilityName:SetText(abilityNameFormat:format(icon, name))
 		else
