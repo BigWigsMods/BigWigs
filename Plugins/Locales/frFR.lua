@@ -152,6 +152,8 @@ L["Default only"] = "Son par défaut uniquement"
 -- Proximity.lua
 --
 
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tNom technique"
+L["Custom range indicator"] = "Indicateur personnalisé de portée"
 L["%d yards"] = "%d mètres"
 L["Proximity"] = "Proximité"
 L["Sound"] = "Son"

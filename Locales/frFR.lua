@@ -78,6 +78,8 @@ L["WHISPER_desc"] = "Certains effets sont tellement importants que Big Wigs enve
 L["SAY_desc"] = "Les bulles de dialogue sont faciles à repérer. Big Wigs fera dire un message à votre personnage pour avertir les joueurs proches qu'un effet vous affecte."
 L["PING_desc"] = "Parfois votre position est importante. Big Wigs pingera la minicarte afin que les autres sachent où vous êtes."
 L["EMPHASIZE_desc"] = "L'activation de ceci mettra très largement en ÉVIDENCE tout message ou barre associé à cette technique. Les messages seront plus grands, les barres clignoteront et auront une couleur différente, et enfin les sons seront utilisés comme compte à rebours quand la technique est imminente. Bref, peu de chance de la louper."
+L["PROXIMITY"] = "Affichage de proximité"
+L["PROXIMITY_desc"] = "Certaines techniques nécessitent que vous vous espaciez. L'affichage de proximité sera paramétré spécifiquement pour cette technique afin que vous puissiez voir d'un coup d'oeil si vous êtes en sécurité."
 L["Advanced options"] = "Options avancées"
 L["<< Back"] = "<< Retour"
 

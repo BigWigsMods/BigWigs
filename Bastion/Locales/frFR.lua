@@ -5,8 +5,8 @@ if L then
 
 	L.crash_say = "Déferlante sur moi !"
 	L.worship_cooldown = "~Vénération"
-	L.adherent_bar = "Prochain Adhérent"
-	L.adherent_message = "Adhérent invoqué !"
+	L.adherent_bar = "Prochain(s) Adhérent(s)"
+	L.adherent_message = "Adhérent(s) invoqué(s) !"
 	L.ooze_bar = "Nuée de Sangs"
 	L.ooze_message = "Arrivée d'une nuée de Sangs !"
 	L.tentacles_bar = "Apparition de Créations"
@@ -71,5 +71,5 @@ if L then
 	L.searing_winds_message = "Arrivée d'un Coup de tonnerre !"
 	L.grounded_message = "Arrivée d'une Secousse !"
 
-	L.last_phase_trigger = "CONTEMPLEZ VOTRE DESTIN !" -- à vérifier
+	L.last_phase_trigger = "Quelle démonstration impressionnante" -- "CONTEMPLEZ VOTRE DESTIN !" -- à vérifier
 end
