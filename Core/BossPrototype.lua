@@ -375,11 +375,11 @@ end
 -- XXX for the given key.
 function boss:OpenProximity(range, key)
 	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
-	self:SendMessage("BigWigs_ShowProximity", self, range)
+	self:SendMessage("BigWigs_ShowProximity", self, range, key)
 end
 function boss:CloseProximity(key)
 	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
-	self:SendMessage("BigWigs_HideProximity")
+	self:SendMessage("BigWigs_HideProximity", self, key)
 end
 
 function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)

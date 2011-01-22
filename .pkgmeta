@@ -30,3 +30,7 @@ move-folders:
     BigWigs/Throne: BigWigs_Throne
     BigWigs/Baradin: BigWigs_Baradin
 
+ignore:
+	- globals.sh
+	- globals.lua
+	- Options/scripts
