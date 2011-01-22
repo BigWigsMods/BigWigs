@@ -44,7 +44,7 @@ if L then
 	L.searing_winds_message = "Lightning incoming!"
 	L.grounded_message = "Earthquake incoming!"
 
-	L.last_phase_trigger = "BEHOLD YOUR DOOM!"
+	L.last_phase_trigger = "An impressive display..."
 end
 L = mod:GetLocale()
 
@@ -342,7 +342,7 @@ function mod:LastPhase()
 	self:SendMessage("BigWigs_StopBar", self, thundershock)
 	self:SendMessage("BigWigs_StopBar", self, hardenSkin)
 	self:CancelAllTimers()
-	self:Bar(92488, gravityCrush, 30, 92488)
+	self:Bar(92488, gravityCrush, 43, 92488)
 	self:OpenProximity(9)
 	self:UnregisterEvent("UNIT_HEALTH")
 end
