@@ -20,11 +20,15 @@ plugin.defaultDB = {
 	sound = true,
 	disabled = nil,
 	proximity = true,
+	font = nil,
+	fontSize = nil,
 }
 
 -------------------------------------------------------------------------------
 -- Locals
 --
+
+local db = nil
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 
@@ -203,10 +207,10 @@ end
 
 local function updateSoundButton()
 	if not anchor then return end
-	anchor.sound:SetNormalTexture(plugin.db.profile.sound and unmute or mute)
+	anchor.sound:SetNormalTexture(db.sound and unmute or mute)
 end
 local function toggleSound()
-	plugin.db.profile.sound = not plugin.db.profile.sound
+	db.sound = not db.sound
 	updateSoundButton()
 end
 
@@ -218,14 +222,14 @@ local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
 	self:StopMovingOrSizing()
 	local s = self:GetEffectiveScale()
-	plugin.db.profile.posx = self:GetLeft() * s
-	plugin.db.profile.posy = self:GetTop() * s
+	db.posx = self:GetLeft() * s
+	db.posy = self:GetTop() * s
 end
 local function OnDragHandleMouseDown(self) self.frame:StartSizing("BOTTOMRIGHT") end
 local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing() end
 local function onResize(self, width, height)
-	plugin.db.profile.width = width
-	plugin.db.profile.height = height
+	db.width = width
+	db.height = height
 end
 
 local function setConfigureTarget(self, button)
@@ -234,7 +238,7 @@ local function setConfigureTarget(self, button)
 end
 
 local function onDisplayEnter(self)
-	if not activeSpellID or not plugin.db.profile.showTooltip then return end
+	if not activeSpellID or not db.showTooltip then return end
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
 	GameTooltip:SetHyperlink("spell:" .. activeSpellID)
 	GameTooltip:Show()
@@ -308,8 +312,8 @@ local function ensureDisplay()
 	if anchor then return end
 
 	local display = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-	display:SetWidth(plugin.db.profile.width)
-	display:SetHeight(plugin.db.profile.height)
+	display:SetWidth(db.width)
+	display:SetHeight(db.height)
 	display:SetMinResize(100, 30)
 	display:SetClampedToScreen(true)
 	local bg = display:CreateTexture(nil, "BACKGROUND")
@@ -346,7 +350,6 @@ local function ensureDisplay()
 	display.abilityName = abilityName
 
 	local text = display:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-	text:SetFont(media:GetDefault("font"), 12)
 	text:SetText("")
 	text:SetAllPoints(display)
 	display.text = text
@@ -373,8 +376,8 @@ local function ensureDisplay()
 
 	anchor = display
 
-	local x = plugin.db.profile.posx
-	local y = plugin.db.profile.posy
+	local x = db.posx
+	local y = db.posy
 	if x and y then
 		local s = display:GetEffectiveScale()
 		display:ClearAllPoints()
@@ -389,32 +392,33 @@ end
 
 function plugin:RestyleWindow()
 	updateSoundButton()
-	if self.db.profile.showTitle then
+	if db.showTitle then
 		anchor.header:Show()
 	else
 		anchor.header:Hide()
 	end
-	if self.db.profile.showBackground then
+	if db.showBackground then
 		anchor.background:Show()
 	else
 		anchor.background:Hide()
 	end
-	if self.db.profile.showSound then
+	if db.showSound then
 		anchor.sound:Show()
 	else
 		anchor.sound:Hide()
 	end
-	if self.db.profile.showClose then
+	if db.showClose then
 		anchor.close:Show()
 	else
 		anchor.close:Hide()
 	end
-	if self.db.profile.showAbility then
+	if db.showAbility then
 		anchor.abilityName:Show()
 	else
 		anchor.abilityName:Hide()
 	end
-	if self.db.profile.lock then
+	anchor.text:SetFont(media:Fetch("font", db.font), db.fontSize)
+	if db.lock then
 		locked = nil
 		lockDisplay()
 	else
@@ -452,7 +456,7 @@ do
 		else
 			anchor.text:SetText(table.concat(tooClose, "\n"))
 			wipe(tooClose)
-			if not plugin.db.profile.sound then return end
+			if not db.sound then return end
 			local t = GetTime()
 			if t > lastplayed + 1 then
 				lastplayed = t
@@ -474,13 +478,15 @@ do
 end
 
 local function updateProfile()
+	db = plugin.db.profile
+
 	if not anchor then return end
 
-	anchor:SetWidth(plugin.db.profile.width)
-	anchor:SetHeight(plugin.db.profile.height)
+	anchor:SetWidth(db.width)
+	anchor:SetHeight(db.height)
 
-	local x = plugin.db.profile.posx
-	local y = plugin.db.profile.posy
+	local x = db.posx
+	local y = db.posy
 	if x and y then
 		local s = anchor:GetEffectiveScale()
 		anchor:ClearAllPoints()
@@ -496,17 +502,19 @@ local function resetAnchor()
 	anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
 	anchor:SetWidth(plugin.defaultDB.width)
 	anchor:SetHeight(plugin.defaultDB.height)
-	plugin.db.profile.posx = nil
-	plugin.db.profile.posy = nil
-	plugin.db.profile.width = nil
-	plugin.db.profile.height = nil
+	db.posx = nil
+	db.posy = nil
+	db.width = nil
+	db.height = nil
 end
 
 -------------------------------------------------------------------------------
---      Initialization
+-- Initialization
 --
 
 function plugin:OnRegister()
+	db = self.db.profile
+
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
 	if CUSTOM_CLASS_COLORS then
 		local function update()
@@ -542,6 +550,14 @@ function plugin:OnRegister()
 		if meta then
 			iterateMaps(i, strsplit(",", meta))
 		end
+	end
+
+	if not db.font then
+		db.font = media:GetDefault("font")
+	end
+	if not db.fontSize then
+		local _, size = GameFontNormal:GetFont()
+		db.fontSize = size
 	end
 end
 
@@ -592,11 +608,22 @@ do
 				type = "group",
 				get = function(info)
 					local key = info[#info]
-					return plugin.db.profile[key]
+					if key == "font" then
+						for i, v in next, media:List("font") do
+							if v == db.font then return i end
+						end
+					else
+						return db[key]
+					end
 				end,
 				set = function(info, value)
 					local key = info[#info]
-					plugin.db.profile[key] = value
+					if key == "font" then
+						local list = media:List("font")
+						db.font = list[value]
+					else
+						db[key] = value
+					end
 					plugin:RestyleWindow()
 				end,
 				args = {
@@ -612,10 +639,28 @@ do
 						desc = L["Locks the display in place, preventing moving and resizing."],
 						order = 2,
 					},
+					font = {
+						type = "select",
+						name = L["Font"],
+						order = 3,
+						values = media:List("font"),
+						width = "full",
+						itemControl = "DDI-Font",
+					},
+					fontSize = {
+						type = "range",
+						name = L["Font size"],
+						order = 4,
+						max = 40,
+						min = 8,
+						step = 1,
+						width = "full",
+					},
 					showHide = {
 						type = "group",
 						name = L["Show/hide"],
 						inline = true,
+						order = 10,
 						args = {
 							showTitle = {
 								type = "toggle",
@@ -669,7 +714,7 @@ end
 do
 	local opener = nil
 	function plugin:BigWigs_ShowProximity(event, module, range, optionKey)
-		if self.db.profile.disabled or type(range) ~= "number" then return end
+		if db.disabled or type(range) ~= "number" then return end
 		opener = module
 		self:Open(range, module, optionKey)
 	end
