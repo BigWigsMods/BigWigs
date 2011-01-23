@@ -11,7 +11,7 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 -- Locals
 --
 
-local breath, slicer = (GetSpellInfo(92944)), "~"..(GetSpellInfo(92954))
+local breath, slicer = (GetSpellInfo(92944)), (GetSpellInfo(92954))
 local orbTimer = 28
 local eggs = 0
 local handle = nil
@@ -71,13 +71,14 @@ function mod:OnBossEnable()
 end
 
 local function orbSpawn() -- can't think of a better way to do it
-	mod:Bar(92954, slicer, orbTimer, 92954)
+	mod:Message(92954, slicer, "Personal", 92954)
+	mod:Bar(92954, "~"..slicer, orbTimer, 92954)
 	handle = mod:ScheduleTimer(orbSpawn, orbTimer)
 end
 
 function mod:OnEngage()
-	self:Bar(92944, breath, 24, 92944)
-	self:Bar(92954, slicer, orbTimer, 92954)
+	self:Bar(92944, "~"..breath, 24, 92944)
+	self:Bar(92954, "~"..slicer, orbTimer, 92954)
 	self:ScheduleTimer(orbSpawn, orbTimer)
 	orbTimer = 30
 	eggs = 0
@@ -90,7 +91,7 @@ end
 
 function mod:Egg(_, spellId)
 	-- You get warning twice till two eggs are up, but ohh well guess we can liev with that
-	self:Message(87654, L["egg_vulnerable"], "Urgent", spellId, "Alert")
+	self:Message(87654, L["egg_vulnerable"], "Important", spellId, "Alert")
 end
 
 function mod:EggTrigger()
@@ -98,7 +99,7 @@ function mod:EggTrigger()
 end
 
 function mod:Indomitable(player, spellId, _, _, spellName)
-	self:Message(92946, spellName, "Important", spellId)
+	self:Message(92946, spellName, "Urgent", spellId)
 	local _, class = UnitClass("player")
 	if class == "HUNTER" or class == "ROGUE" then
 		self:FlashShake(92946)
@@ -119,8 +120,8 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 function mod:Breath(_, spellId, _, _, spellName)
-	self:Bar(92944, spellName, 27, spellId) -- Might need to change it to CD
-	self:Message(92944, spellName, "Attention", spellId)
+	self:Bar(92944, "~"..spellName, 24, spellId)
+	self:Message(92944, spellName, "Ugent", spellId)
 end
 
 function mod:Deaths(mobId)
@@ -128,7 +129,8 @@ function mod:Deaths(mobId)
 		eggs = eggs + 1
 		if eggs == 2 then
 			self:Message("phase", CL["phase"]:format(3), "Positive", 51070, "Info") -- broken egg icon
-			self:Bar(92954, slicer, orbTimer, 92954)
+			self:Bar(92954, "~"..slicer, orbTimer, 92954)
+			self:Bar(92944, "~"..breath, 24, 92944)
 			self:ScheduleTimer(orbSpawn, orbTimer)
 		end
 	elseif mobId == 45213 then
