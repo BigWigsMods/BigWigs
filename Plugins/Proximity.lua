@@ -8,6 +8,8 @@ if not plugin then return end
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
+	showAbility = true,
+	showTooltip = true,
 	showTitle = true,
 	showBackground = true,
 	showSound = true,
@@ -34,6 +36,7 @@ local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 local inConfigMode = nil
 local activeProximityFunction = nil
 local activeRange = nil
+local activeSpellID = nil
 local anchor = nil
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -230,6 +233,13 @@ local function setConfigureTarget(self, button)
 	plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
 end
 
+local function onDisplayEnter(self)
+	if not activeSpellID or not plugin.db.profile.showTooltip then return end
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+	GameTooltip:SetHyperlink("spell:" .. activeSpellID)
+	GameTooltip:Show()
+end
+
 local locked = nil
 local function lockDisplay()
 	if locked then return end
@@ -279,6 +289,8 @@ local function breakThings()
 	anchor.close:SetScript("OnEnter", nil)
 	anchor.close:SetScript("OnLeave", nil)
 	anchor.close:SetScript("OnClick", nil)
+	anchor:SetScript("OnEnter", nil)
+	anchor:SetScript("OnLeave", nil)
 end
 
 local function makeThingsWork()
@@ -288,6 +300,8 @@ local function makeThingsWork()
 	anchor.close:SetScript("OnEnter", onControlEnter)
 	anchor.close:SetScript("OnLeave", onControlLeave)
 	anchor.close:SetScript("OnClick", onNormalClose)
+	anchor:SetScript("OnEnter", onDisplayEnter)
+	anchor:SetScript("OnLeave", onControlLeave)
 end
 
 local function ensureDisplay()
@@ -394,6 +408,11 @@ function plugin:RestyleWindow()
 		anchor.close:Show()
 	else
 		anchor.close:Hide()
+	end
+	if self.db.profile.showAbility then
+		anchor.abilityName:Show()
+	else
+		anchor.abilityName:Hide()
 	end
 	if self.db.profile.lock then
 		locked = nil
@@ -622,6 +641,18 @@ do
 								desc = L["Shows or hides the close button."],
 								order = 4,
 							},
+							showAbility = {
+								type = "toggle",
+								name = L["Ability name"],
+								desc = L["Shows or hides the ability name above the window."],
+								order = 5,
+							},
+							showTooltip = {
+								type = "toggle",
+								name = L["Tooltip"],
+								desc = L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."],
+								order = 6,
+							}
 						},
 					},
 				},
@@ -656,6 +687,7 @@ end
 function plugin:Close()
 	activeProximityFunction = nil
 	activeRange = nil
+	activeSpellID = nil
 	if anchor then
 		anchor.header:SetText(L["%d yards"]:format(0))
 		anchor.abilityName:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
@@ -688,6 +720,11 @@ function plugin:Open(range, module, key)
 		end
 	else
 		anchor.abilityName:SetText(L["Custom range indicator"])
+	end
+	if type(key) == "number" then
+		activeSpellID = key
+	else
+		activeSpellID = nil
 	end
 	-- Unbreak the sound+close buttons
 	makeThingsWork()

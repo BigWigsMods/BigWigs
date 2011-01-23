@@ -179,6 +179,10 @@ L["Shows or hides the sound button."] = true
 L["Close button"] = true
 L["Shows or hides the close button."] = true
 L["Show/hide"] = true
+L["Ability name"] = true
+L["Shows or hides the ability name above the window."] = true
+L["Tooltip"] = true
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = true
 
 -----------------------------------------------------------------------
 -- Tips.lua
