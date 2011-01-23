@@ -71,5 +71,16 @@ if L then
 	L.searing_winds_message = "천둥충격이 다가옴!"
 	L.grounded_message = "지진이 다가옴!"
 
-	L.last_phase_trigger = "꽤나 인상적이었다만..."	--지금 넣은 트리거가 더 좋아보임. 실제 트리거 = "네놈들의 종말을 맞이해라!"
+	L.last_phase_trigger = "꽤나 인상적이었다만..."
+end
+
+L = BigWigs:NewBossLocale("Sinestra", "koKR")
+if L then
+	L.egg_vulnerable = "알 요리 시간!"
+
+	L.omlet_trigger = "이게 약해진 걸로 보이느냐"	--check
+
+	L.phase13 = "1 & 3 단계"
+	L.phase = "단계"
+	L.phase_desc = "단계 변화에 대해 알립니다."
 end

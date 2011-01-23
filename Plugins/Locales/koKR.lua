@@ -155,6 +155,8 @@ L["Default only"] = "기본음"
 -- Proximity.lua
 --
 
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t스킬 이름"
+L["Custom range indicator"] = "사용자 거리 지시기"
 L["%d yards"] = "%d 미터"
 L["Proximity"] = "근접"
 L["Sound"] = "효과음"
@@ -180,6 +182,10 @@ L["Shows or hides the sound button."] = "소리 버튼을 표시하거나 숨깁
 L["Close button"] = "닫기 버튼"
 L["Shows or hides the close button."] = "닫기 버튼을 표시하거나 숨깁니다."
 L["Show/hide"] = "표시/숨김"
+L["Ability name"] = "스킬 이름"
+L["Shows or hides the ability name above the window."] = "스킬의 이름을 창위에 표시하거나 숨깁니다."
+L["Tooltip"] = "툴팁"
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "현재 보스 스킬에 직접 연결되어 자동으로 뜨는 근접 표시창에 대해 커서를 올릴시 툴팁을 표시하거나 숨깁니다."
 
 -----------------------------------------------------------------------
 -- Tips.lua
