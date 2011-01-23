@@ -114,7 +114,7 @@ function mod:PhaseTwo()
 	end
 end
 
-local function ShadowBlazeNoTrigger()
+local function nextBlaze()
 	if mod:GetInstanceDifficulty() > 2 then
 		if shadowBlazeTimer > 5 then
 			shadowBlazeTimer = shadowBlazeTimer - 5
@@ -124,8 +124,9 @@ local function ShadowBlazeNoTrigger()
 			shadowBlazeTimer = shadowBlazeTimer - 5
 		end
 	end
+	mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
 	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
-	mod:ScheduleTimer(ShadowBlazeNoTrigger, shadowBlazeTimer)
+	mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
 end
 
 function mod:PhaseThree()
@@ -136,7 +137,7 @@ function mod:PhaseThree()
 		phase3warned = true
 	end
 	self:Bar(94085, shadowblaze, 10, 94085)
-	self:ScheduleTimer(ShadowBlazeNoTrigger, 10)
+	self:ScheduleTimer(nextBlaze, 10)
 end
 
 do
