@@ -121,7 +121,7 @@ end
 
 function mod:Breath(_, spellId, _, _, spellName)
 	self:Bar(92944, "~"..spellName, 24, spellId)
-	self:Message(92944, spellName, "Ugent", spellId)
+	self:Message(92944, spellName, "Urgent", spellId)
 end
 
 function mod:Deaths(mobId)
