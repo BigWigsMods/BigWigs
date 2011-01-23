@@ -1,8 +1,8 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "ruRU")
 if L then
 	--heroic
-	L.orders = "Приказы огня/Тьмы"
-	L.orders_desc = "Сообщать о Приказах огня/Тьмы"
+	L.orders = "Смена приказа"
+	L.orders_desc = "Сообщать когда Чо'Галл сменяет приказы огня/тьмы"
 
 	--normal
 	L.worship_cooldown = "~Поклонение"	
@@ -46,7 +46,13 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "ruRU")
 if L then
+	L.egg_vulnerable = "Omlet time!"
 
+	L.omlet_trigger = "You mistake this for weakness?  Fool!"
+
+	L.phase13 = "Фаза 1 и 3"
+	L.phase = "Фаза"
+	L.phase_desc = "Сообщать о смене фаз"
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "ruRU")

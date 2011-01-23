@@ -28,6 +28,8 @@ L["Up to date:"] = "Текущий:"
 L["Out of date:"] = "Устарелый:"
 L["No Big Wigs 3.x:"] = "Нет Big Wigs 3.x:"
 
+L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
+
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs Encounters"
 L["Customize ..."] = "Настройки ..."
@@ -78,6 +80,8 @@ L["WHISPER_desc"] = "Некоторые эффекты являются дост
 L["SAY_desc"] = "Сообщения над головой персонажей легко обнаружить. Big Wigs будут использоваться канал \"сказать\" для оповещения персонажей поблизости о эффекте на вас."
 L["PING_desc"] = "Иногда местонахождение играет не малую роль, Big Wigs будет издавать импульс по мини-карте, чтобы люди знали, где вы находитесь."
 L["EMPHASIZE_desc"] = "Включив это, будет СУПЕР УВЕЛИЧЕНИЕ любого сообщение или полосы, связанные с способностью босса. Сообщение будет больше, полосы будет мигать и иметь различные цвета, при надвигающейся способности будут использоваться звуки для отсчета времени. В общем, вы сами всё увидите."
+L["PROXIMITY"] = "Proximity display"
+L["PROXIMITY_desc"] = "Abilities will sometimes require you to spread out. The proximity display will be set up specifically for this ability so that you will be able to tell at-a-glance whether or not you are safe."
 L["Advanced options"] = "Расширенны опции"
 L["<< Back"] = "<< назад"
 

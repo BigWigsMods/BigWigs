@@ -51,8 +51,9 @@ end
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
 if L then
 	--heroic
-	L.darkSludge = "Темная жижа"
-	L.darkSludge_desc = "Сообщает если вы вставли в Темную жижу."
+	L.sludge = "Темная жижа"
+	L.sludge_desc = "Сообщает если вы вставли в Темную жижу."
+	L.sludge_message = "Темная жижа на ВАС!"
 
 	--normal
 	L.final_phase = "Финальная фаза"
@@ -113,6 +114,7 @@ if L then
 
 	L.acquiring_target = "Выбор цели"
 
+	L.bomb_message = "ВАС преследует Слизнюк!"
 	L.cloud_say = "Облако на МНЕ!"
 	L.cloud_message = "Вы в Облаке!"
 	L.protocol_message = "Химическая бомба!"
