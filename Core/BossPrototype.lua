@@ -345,23 +345,23 @@ do
 end
 
 local checkFlag = nil
--- XXX the idea here is that the debug version should check whether or not the given flag exists in the defaults
--- XXX and if not, print a warning - someone is checking if an option contains SAY, for example, but the defaults
--- XXX don't? that's a problem.
-if debug then
+do
+	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
+	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
+	local nilKeyError      = "Module %s tried to check the bitflags for nil."
+	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
 	checkFlag = function(self, key, flag)
+		if type(key) == "nil" then error(nilKeyError:format(self.name)) end
+		if type(flag) ~= "number" then error(invalidFlagError:format(self.name, type(flag), tostring(flag))) end
 		if silencedOptions[key] then return end
 		if type(key) == "number" then key = GetSpellInfo(key) end
 		if type(self.db.profile[key]) ~= "number" then
-			dbg(self, ("Tried to access %q, but in the database it's a %s."):format(key, type(self.db.profile[key])))
-		end
-		return bit.band(self.db.profile[key], flag) == flag
-	end
-else
-	checkFlag = function(self, key, flag)
-		if silencedOptions[key] then return end
-		if type(key) == "number" then key = GetSpellInfo(key) end
-		if type(self.db.profile[key]) ~= "number" then
+			if not self.toggleDefaults[key] then
+				error(noDefaultError:format(self.name, key))
+			end
+			if debug then
+				error(notNumberError:format(self.name, key, type(self.db.profile[key])))
+			end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
 		return bit.band(self.db.profile[key], flag) == flag

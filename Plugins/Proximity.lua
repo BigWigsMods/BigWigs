@@ -568,7 +568,7 @@ function plugin:OnRegister()
 		db.font = media:GetDefault("font")
 	end
 	if not db.fontSize then
-		local _, size = GameFontNormal:GetFont()
+		local _, size = GameFontNormalHuge:GetFont()
 		db.fontSize = size
 	end
 end
