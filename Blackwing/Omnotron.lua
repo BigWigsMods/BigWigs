@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Omnotron Defense System", "Blackwing Descent")
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,8 +25,9 @@ if L then
 
 	L.nef_next = "~Next ability buff"
 
-	L.acquiring_target = "Acquiring target!"
+	L.acquiring_target = "Acquiring target"
 
+	L.bomb_message = "Ooze chasing YOU!"
 	L.cloud_say = "Cloud on ME!"
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs incoming!"
@@ -148,9 +148,9 @@ end
 function mod:Fixate(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(80094)
-		self:LocalMessage(80094, CL["you"]:format(spellName), "Personal", spellId, "Info")
+		self:LocalMessage(80094, L["bomb_message"], "Personal", spellId, "Info")
 	else
-		self:Whisper(80094, player, spellName)
+		self:Whisper(80094, player, L["bomb_message"], true)
 	end
 end
 

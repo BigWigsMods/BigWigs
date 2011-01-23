@@ -86,7 +86,7 @@ function mod:OnEngage(diff)
 	markWarned = false
 	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
 	self:Bar(86788, blackout, 11, 86788)
-	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 105, 60639)
+	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 103, 60639)
 	self:OpenProximity(8)
 	phaseCount = 0
 end
