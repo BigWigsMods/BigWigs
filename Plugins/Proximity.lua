@@ -38,6 +38,12 @@ local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
+local configModeString = [[
+|cffaad372Legolasftw|r
+|cfff48cbaTirionman|r
+|cfffff468Sneakystab|r
+|cffc69b6dIamconanok|r
+]]
 local activeProximityFunction = nil
 local activeRange = nil
 local activeSpellID = nil
@@ -353,7 +359,13 @@ local function ensureDisplay()
 	text:SetText("")
 	text:SetAllPoints(display)
 	display.text = text
-	display:SetScript("OnShow", function() text:SetText("|cff777777:-)|r") end)
+	display:SetScript("OnShow", function()
+		if inConfigMode then
+			text:SetText(configModeString)
+		else
+			text:SetText("|cff777777:-)|r")
+		end
+	end)
 
 	local drag = CreateFrame("Frame", nil, display)
 	drag.frame = display
