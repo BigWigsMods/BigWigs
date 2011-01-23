@@ -45,7 +45,13 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "esES")
 if L then
+	L.egg_vulnerable = "¡Hora de la tortilla!"
 
+	L.omlet_trigger = "You mistake this for weakness?  Fool!"
+
+	L.phase13 = "Fase 1 y 3"
+	L.phase = "Fase"
+	L.phase_desc = "Aviso para cambios de fase"
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "esES")

@@ -115,6 +115,7 @@ if L then
 
 	L.acquiring_target = "Eligiendo objetivo"
 
+	L.bomb_message = "¡Un moco te persigue a TI!"
 	L.cloud_say = "¡Nube en MI!"
 	L.cloud_message = "¡Nube en TI!"
 	L.protocol_message = "¡Bomba de veneno!"
