@@ -111,6 +111,8 @@ function mod:PhaseTwo()
 	local d = self:GetInstanceDifficulty()
 	if d == 2 or d == 4 then
 		self:Bar("phase", CL["phase"]:format(phase), 127, 78621)
+	else
+		self:Bar("phase", CL["phase"]:format(phase), 180, 78621)
 	end
 end
 
