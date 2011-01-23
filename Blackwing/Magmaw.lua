@@ -11,6 +11,7 @@ mod:RegisterEnableMob(41570)
 --
 
 local lavaSpew = 0
+local phase = 1
 local inferno, pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
 
 --------------------------------------------------------------------------------
@@ -19,9 +20,16 @@ local inferno, pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	-- heroic
 	L.inferno = inferno
 	L.inferno_desc = "Summons Blazing Bone Construct."
-
+	
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Warn for Phase 2 transition and display range check."
+	L.phase2_message = "Phase 2. Spread out!"
+	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	
+	-- normal
 	L.pillar_of_flame_cd = "~Pillar of Flame"
 
 	L.blazing_message = "Add incoming!"
@@ -47,7 +55,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931,
-		"inferno",
+		"inferno", {"phase2", "PROXIMITY"},
 		"bosskill"
 	}, {
 		slump = "normal",
@@ -59,6 +67,7 @@ end
 function mod:OnBossEnable()
 	--heroic
 	self:Log("SPELL_SUMMON", "BlazingInferno", 92154, 92190, 92191, 92192)
+	self:Yell("Phase2", L["phase2_yell"])
 
 	--normal
 	self:Log("SPELL_AURA_APPLIED", "Infection", 94679, 78097, 78941, 91913, 94678)
@@ -81,6 +90,7 @@ function mod:OnEngage(diff)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
 	self:Bar(78006, pillarOfFlame, 30, 78006)
 	lavaSpew = 0
+	phase = 1
 end
 
 --------------------------------------------------------------------------------
@@ -107,6 +117,14 @@ function mod:BlazingInferno(_, spellId)
 	self:Bar("inferno", L["blazing_bar"], 35, spellId)
 end
 
+function mod:Phase2()
+	phase = 2
+
+	self:Message("phase2", L["phase2_message"], "Attention", 92195)
+	self:SendMessage("BigWigs_StopBar", self, L["blazing_bar"])
+	mod:OpenProximity(8, "phase2")
+end
+
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
 	self:Message(78006, spellName, "Urgent", spellId, "Alert")
 	self:Bar(78006, L["pillar_of_flame_cd"], 32, spellId)
@@ -124,7 +142,7 @@ end
 
 function mod:InfectionRemoved(player)
 	if not UnitIsUnit(player, "player") then return end
-	self:CloseProximity(94679)
+	if (phase == 1) then self:CloseProximity(94679) end
 end
 
 function mod:Slump()
