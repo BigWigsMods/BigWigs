@@ -39,8 +39,9 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 	-- Phase 1 and 3
-		92944,
+		92944, -- Breath
 		92954, -- Twilight Slicer
+		86227, -- Extinction
 
 	-- Phase 2
 		87654, -- Omlet Time
@@ -61,6 +62,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_REMOVED", "Egg", 87654)
 	self:Log("SPELL_AURA_APPLIED", "Indomitable", 92946)
+	self:Log("SPELL_CAST_START", "Extinction", 86227)
 
 	self:Yell("EggTrigger", L["omlet_trigger"])
 
@@ -89,9 +91,22 @@ end
 -- Event Handlers
 --
 
-function mod:Egg(_, spellId)
-	-- You get warning twice till two eggs are up, but ohh well guess we can liev with that
-	self:Message(87654, L["egg_vulnerable"], "Important", spellId, "Alert")
+function mod:Extinction(_, spellId, _, _, spellName)
+	self:Bar(86227, spellName, 15, spellId)
+end
+
+do
+	local scheduled = nil
+	local function EggMessage(spellId)
+		mod:Message(87654, L["egg_vulnerable"], "Important", spellId, "Alert")
+		scheduled = nil
+	end
+	function mod:Egg(_, spellId)
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(EggMessage, 0.1, spellId)
+		end
+	end
 end
 
 function mod:EggTrigger()
@@ -113,8 +128,8 @@ function mod:UNIT_HEALTH(event, unit)
 			self:Message("phase", CL["phase"]:format(2), "Positive", 86226, "Info")
 			self:UnregisterEvent("UNIT_HEALTH")
 			self:CancelTimer(handle)
-			self:SendMessage("BigWigs_StopBar", self, slicer)
-			self:SendMessage("BigWigs_StopBar", self, breath) -- breath
+			self:SendMessage("BigWigs_StopBar", self, "~"..slicer)
+			self:SendMessage("BigWigs_StopBar", self, "~"..breath)
 		end
 	end
 end
