@@ -80,7 +80,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	--self:Berserk(600) --XXX v4.0.6
+	--[[if diff > 2 then
+		self:Berserk(600) --XXX v4.0.6
+	end]]
 end
 
 --------------------------------------------------------------------------------

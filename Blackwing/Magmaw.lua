@@ -26,7 +26,7 @@ if L then
 	
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warn for Phase 2 transition and display range check."
-	L.phase2_message = "Phase 2. Spread out!"
+	L.phase2_message = "Phase 2!"
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 	
 	-- normal
