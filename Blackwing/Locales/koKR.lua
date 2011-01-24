@@ -28,8 +28,16 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "koKR")
 if L then
-	L.inferno = (GetSpellInfo(92191))
+	-- heroic
+	L.inferno = "이글거리는 지옥불"
 	L.inferno_desc = "이글거리는 지옥불 소환을 알립니다."
+	
+	L.phase2 = "2 단계"
+	L.phase2_desc = "2 단계 알림과 근접창 체크를 표시합니다."
+	L.phase2_message = "2 단계!"
+	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암"	--check
+	
+	-- normal
 
 	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
 	
