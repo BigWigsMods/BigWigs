@@ -15,7 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "frFR")
 if L then
 	L.bileotron_engage = "Le bile-o-tron s'anime et commence à secréter une substance malodorante."
-	L.win_trigger = "Quel dommage de perdre cette expérience..."
+	L.win_trigger = "Quel dommage de perdre cette expérience"
 
 	L.next_system_failure = "Prochaine Défaillance"
 	L.break_message = "%2$dx Brèche sur %1$s"
@@ -93,7 +93,7 @@ if L then
 	L.crackle_trigger = "L'électricité crépite dans l'air !" -- à vérifier
 	L.crackle_message = "Electrocuter imminent !"
 
-	L.shadowblaze_trigger = "Que la chair se transforme en cendres !" -- à vérifier
+	L.onyxia_power_message = "Explosion imminente !"
 
 	L.cinder_say = "Braises explosives sur moi !"
 
@@ -117,6 +117,7 @@ if L then
 
 	L.acquiring_target = "Acquisition d'une cible"
 
+	L.bomb_message = "Une Bombe de poison vous poursuit !"
 	L.cloud_say = "Nuage chimique sur moi !"
 	L.cloud_message = "Nuage chimique sur vous !"
 	L.protocol_message = "Arrivée de Bombes de poison !"

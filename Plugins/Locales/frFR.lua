@@ -179,6 +179,10 @@ L["Shows or hides the sound button."] = "Affiche ou non le bouton du son."
 L["Close button"] = "Bouton de fermeture"
 L["Shows or hides the close button."] = "Affiche ou non le bouton de fermeture."
 L["Show/hide"] = "Afficher/cacher"
+L["Ability name"] = "Nom de la technique"
+L["Shows or hides the ability name above the window."] = "Affiche ou non le nom de la technique au dessus de la fenêtre."
+L["Tooltip"] = "Bulle d'aide"
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Affiche ou non la bulle d'aide du sort si l'affichage de proximité est actuellement directement lié avec une technique de rencontre de boss."
 
 -----------------------------------------------------------------------
 -- Tips.lua
