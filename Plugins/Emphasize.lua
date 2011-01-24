@@ -78,6 +78,8 @@ plugin.subPanelOptions = {
 				width = "full",
 				descStyle = "inline",
 			},
+			-- XXX make the flash option also flash once when a super emphasized message
+			-- XXX is displayed, for stuff that has no bar, like the electrocute on nef
 			flash = {
 				type = "toggle",
 				name = colorize[L["Flash"]],

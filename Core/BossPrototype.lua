@@ -257,6 +257,7 @@ do
 	function boss:GetInstanceDifficulty()
 		local _, instanceType, diff, _, _, heroic, dynamic = GetInstanceInfo()
 		if instanceType == "raid" and dynamic and heroic == 1 and diff <= 2 then
+			if debug then dbg(self, "Adjusting difficulty returned from GetInstanceInfo().") end
 			diff = diff + 2
 		end
 		return type(diff) == "number" and diff or 1
@@ -360,7 +361,7 @@ do
 				error(noDefaultError:format(self.name, key))
 			end
 			if debug then
-				error(notNumberError:format(self.name, key, type(self.db.profile[key])))
+				error(self, notNumberError:format(self.name, key, type(self.db.profile[key])))
 			end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end

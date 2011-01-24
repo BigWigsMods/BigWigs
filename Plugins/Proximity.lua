@@ -8,16 +8,20 @@ if not plugin then return end
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
-	showAbility = true,
-	showTooltip = true,
-	showTitle = true,
-	showBackground = true,
-	showSound = true,
-	showClose = true,
+	objects = {
+		ability = true,
+		tooltip = true,
+		title = true,
+		background = true,
+		sound = true,
+		close = true,
+	},
 	lock = nil,
 	width = 100,
 	height = 80,
 	sound = true,
+	soundDelay = 1,
+	soundName = "BigWigs: Alarm",
 	disabled = nil,
 	proximity = true,
 	font = nil,
@@ -244,16 +248,15 @@ local function setConfigureTarget(self, button)
 end
 
 local function onDisplayEnter(self)
-	if not activeSpellID or not db.showTooltip then return end
+	if not db.objects.tooltip then return end
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-	GameTooltip:SetHyperlink("spell:" .. activeSpellID)
+	GameTooltip:SetHyperlink("spell:" .. (activeSpellID or 44318))
 	GameTooltip:Show()
 end
 
 local locked = nil
 local function lockDisplay()
 	if locked then return end
-	anchor:EnableMouse(false)
 	anchor:SetMovable(false)
 	anchor:SetResizable(false)
 	anchor:RegisterForDrag()
@@ -266,7 +269,6 @@ local function lockDisplay()
 end
 local function unlockDisplay()
 	if not locked then return end
-	anchor:EnableMouse(true)
 	anchor:SetMovable(true)
 	anchor:SetResizable(true)
 	anchor:RegisterForDrag("LeftButton")
@@ -299,8 +301,6 @@ local function breakThings()
 	anchor.close:SetScript("OnEnter", nil)
 	anchor.close:SetScript("OnLeave", nil)
 	anchor.close:SetScript("OnClick", nil)
-	anchor:SetScript("OnEnter", nil)
-	anchor:SetScript("OnLeave", nil)
 end
 
 local function makeThingsWork()
@@ -310,8 +310,6 @@ local function makeThingsWork()
 	anchor.close:SetScript("OnEnter", onControlEnter)
 	anchor.close:SetScript("OnLeave", onControlLeave)
 	anchor.close:SetScript("OnClick", onNormalClose)
-	anchor:SetScript("OnEnter", onDisplayEnter)
-	anchor:SetScript("OnLeave", onControlLeave)
 end
 
 local function ensureDisplay()
@@ -322,6 +320,9 @@ local function ensureDisplay()
 	display:SetHeight(db.height)
 	display:SetMinResize(100, 30)
 	display:SetClampedToScreen(true)
+	display:EnableMouse(true)
+	display:SetScript("OnEnter", onDisplayEnter)
+	display:SetScript("OnLeave", onControlLeave)
 	local bg = display:CreateTexture(nil, "BACKGROUND")
 	bg:SetAllPoints(display)
 	bg:SetBlendMode("BLEND")
@@ -348,12 +349,12 @@ local function ensureDisplay()
 	local header = display:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
 	header:SetText(L["%d yards"]:format(0))
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
-	display.header = header
+	display.title = header
 
 	local abilityName = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 	abilityName:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
 	abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
-	display.abilityName = abilityName
+	display.ability = abilityName
 
 	local text = display:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	text:SetText("")
@@ -404,30 +405,14 @@ end
 
 function plugin:RestyleWindow()
 	updateSoundButton()
-	if db.showTitle then
-		anchor.header:Show()
-	else
-		anchor.header:Hide()
-	end
-	if db.showBackground then
-		anchor.background:Show()
-	else
-		anchor.background:Hide()
-	end
-	if db.showSound then
-		anchor.sound:Show()
-	else
-		anchor.sound:Hide()
-	end
-	if db.showClose then
-		anchor.close:Show()
-	else
-		anchor.close:Hide()
-	end
-	if db.showAbility then
-		anchor.abilityName:Show()
-	else
-		anchor.abilityName:Hide()
+	for k, v in pairs(db.objects) do
+		if anchor[k] then
+			if v then
+				anchor[k]:Show()
+			else
+				anchor[k]:Hide()
+			end
+		end
 	end
 	anchor.text:SetFont(media:Fetch("font", db.font), db.fontSize)
 	if db.lock then
@@ -465,14 +450,15 @@ do
 
 		if #tooClose == 0 then
 			anchor.text:SetText("|cff777777:-)|r")
+			lastplayed = 0
 		else
 			anchor.text:SetText(table.concat(tooClose, "\n"))
 			wipe(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
-			if t > lastplayed + 1 then
+			if t > (lastplayed + db.soundDelay) then
 				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", "Alarm")
+				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
 		end
 	end
@@ -624,6 +610,10 @@ do
 						for i, v in next, media:List("font") do
 							if v == db.font then return i end
 						end
+					elseif key == "soundName" then
+						for i, v in next, media:List("sound") do
+							if v == db.soundName then return i end
+						end
 					else
 						return db[key]
 					end
@@ -631,8 +621,9 @@ do
 				set = function(info, value)
 					local key = info[#info]
 					if key == "font" then
-						local list = media:List("font")
-						db.font = list[value]
+						db.font = media:List("font")[value]
+					elseif key == "soundName" then
+						db.soundName = media:List("sound")[value]
 					else
 						db[key] = value
 					end
@@ -644,12 +635,14 @@ do
 						name = L["Disabled"],
 						desc = L["Disable the proximity display for all modules that use it."],
 						order = 1,
+						width = "half",
 					},
 					lock = {
 						type = "toggle",
 						name = L["Lock"],
 						desc = L["Locks the display in place, preventing moving and resizing."],
 						order = 2,
+						width = "half",
 					},
 					font = {
 						type = "select",
@@ -668,47 +661,80 @@ do
 						step = 1,
 						width = "full",
 					},
+					soundName = {
+						type = "select",
+						name = L["Sound"],
+						order = 5,
+						values = media:List("sound"),
+						width = "full",
+						itemControl = "DDI-Sound"
+					},
+					soundDelay = {
+						type = "range",
+						name = "Sound delay",
+						desc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you.",
+						order = 6,
+						max = 10,
+						min = 1,
+						step = 1,
+						width = "full",
+					},
 					showHide = {
 						type = "group",
 						name = L["Show/hide"],
 						inline = true,
 						order = 10,
+						get = function(info)
+							local key = info[#info]
+							return db.objects[key]
+						end,
+						set = function(info, value)
+							local key = info[#info]
+							db.objects[key] = value
+							plugin:RestyleWindow()
+						end,
 						args = {
-							showTitle = {
+							title = {
 								type = "toggle",
 								name = L["Title"],
 								desc = L["Shows or hides the title."],
 								order = 1,
+								width = "half",
 							},
-							showBackground = {
+							background = {
 								type = "toggle",
 								name = L["Background"],
 								desc = L["Shows or hides the background."],
 								order = 2,
+								width = "half",
 							},
-							showSound = {
+							sound = {
 								type = "toggle",
 								name = L["Sound button"],
 								desc = L["Shows or hides the sound button."],
 								order = 3,
+								width = "half",
 							},
-							showClose = {
+							close = {
 								type = "toggle",
 								name = L["Close button"],
 								desc = L["Shows or hides the close button."],
 								order = 4,
+								width = "half",
 							},
-							showAbility = {
+							ability = {
 								type = "toggle",
 								name = L["Ability name"],
 								desc = L["Shows or hides the ability name above the window."],
 								order = 5,
+								width = "half",
 							},
-							showTooltip = {
+							tooltip = {
 								type = "toggle",
 								name = L["Tooltip"],
 								desc = L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."],
 								order = 6,
+								width = "half",
 							}
 						},
 					},
@@ -746,8 +772,8 @@ function plugin:Close()
 	activeRange = nil
 	activeSpellID = nil
 	if anchor then
-		anchor.header:SetText(L["%d yards"]:format(0))
-		anchor.abilityName:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
+		anchor.title:SetText(L["%d yards"]:format(0))
+		anchor.ability:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
 		-- Just in case we were the last target of
 		-- configure mode, reset the background color.
 		anchor.background:SetTexture(0, 0, 0, 0.3)
@@ -766,17 +792,17 @@ function plugin:Open(range, module, key)
 	activeProximityFunction = func
 	activeRange = actualRange
 	-- Update the header to reflect the actual range we're checking
-	anchor.header:SetText(L["%d yards"]:format(actualRange))
+	anchor.title:SetText(L["%d yards"]:format(actualRange))
 	-- Update the ability name display
 	if module and key then
 		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
 		if icon then
-			anchor.abilityName:SetText(abilityNameFormat:format(icon, name))
+			anchor.ability:SetText(abilityNameFormat:format(icon, name))
 		else
-			anchor.abilityName:SetText(name)
+			anchor.ability:SetText(name)
 		end
 	else
-		anchor.abilityName:SetText(L["Custom range indicator"])
+		anchor.ability:SetText(L["Custom range indicator"])
 	end
 	if type(key) == "number" then
 		activeSpellID = key
