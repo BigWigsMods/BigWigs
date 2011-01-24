@@ -12,6 +12,7 @@ mod:RegisterEnableMob(41270, 41376)
 
 local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
 local cinderTargets = mod:NewTargetList()
+local powerTargets = mod:NewTargetList()
 local shadowblaze = GetSpellInfo(94085)
 local phase3warned = false
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
@@ -46,7 +47,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"},
+		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "berserk",
 		"phase", 78999, 81272, 94085, "bosskill"
 	}, {
 		[79339] = "heroic",
@@ -61,6 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
+	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80626, 80627)
 
 	self:Emote("Electrocute", L["crackle_trigger"])
 
@@ -73,6 +75,9 @@ end
 
 
 function mod:OnEngage(diff)
+	if diff >2 then
+		self:Berserk(600) -- is it really?
+	end
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
 end
@@ -109,8 +114,10 @@ function mod:PhaseTwo()
 	phase = 2
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
 	local d = self:GetInstanceDifficulty()
-	if d == 2 or d == 4 then
+	if d == 2 then
 		self:Bar("phase", CL["phase"]:format(phase), 127, 78621)
+	elseif d == 4 then
+		self:Bar("phase", CL["phase"]:format(phase), 240, 78621) -- random guessed number
 	else
 		self:Bar("phase", CL["phase"]:format(phase), 180, 78621)
 	end
@@ -159,6 +166,21 @@ do
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(cinderWarn, 0.3, spellName)
+		end
+	end
+end
+
+do
+	local scheduled = nil
+	local function powerWarn(spellName)
+		mod:TargetMessage(80626, spellName, powerTargets, "Attention", 80626)
+		scheduled = nil
+	end
+	function mod:InitialStolenPower(player, _, _, _, spellName)
+		powerTargets[#powerTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(powerWarn, 1, spellName) -- 1 sec :S
 		end
 	end
 end
