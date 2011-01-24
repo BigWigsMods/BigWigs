@@ -154,6 +154,8 @@ L["Default only"] = "Nur Standards"
 -- Proximity.lua
 --
 
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tFähigkeitsname"
+L["Custom range indicator"] = "Eigene Reichweitenanzeige"
 L["%d yards"] = "%d Meter"
 L["Proximity"] = "Nähe"
 L["Sound"] = "Sound"
@@ -179,6 +181,10 @@ L["Shows or hides the sound button."] = "Zeigt oder versteckt den Sound-Button."
 L["Close button"] = "Schließen-Button"
 L["Shows or hides the close button."] = "Zeigt oder versteckt den Schließen-Button."
 L["Show/hide"] = "Zeigen/Verstecken"
+L["Ability name"] = "Fähigkeitsname"
+L["Shows or hides the ability name above the window."] = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
+L["Tooltip"] = "Tooltip"
+L["Shows or hides a spell tooltip if the Proximity display is currently tied directly to a boss encounter ability."] = "Zeigt oder versteckt den Zaubertooltip, wenn die Näheanzeige direkt an eine Bossfähigkeit gebunden ist."
 
 -----------------------------------------------------------------------
 -- Tips.lua

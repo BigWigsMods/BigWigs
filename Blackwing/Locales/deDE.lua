@@ -28,9 +28,16 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "deDE")
 if L then
+	-- heroic
 	L.inferno = "Loderndes Inferno"
 	L.inferno_desc = "Beschwört [Blazing Bone Construct]." -- need german name
 
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Warnt vor dem Übergang in Phase 2 und öffnet die Anzeige naher Spieler."
+	L.phase2_message = "Phase 2!"
+	--L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+
+	-- normal
 	L.pillar_of_flame_cd = "~Flammensäule"
 
 	L.blazing_message = "Add kommt!"
@@ -117,6 +124,7 @@ if L then
 
 	L.acquiring_target = "Zielerfassung"
 
+	L.bomb_message = "Giftbombe verfolgt DICH!"
 	L.cloud_say = "Wolke auf MIR!"
 	L.cloud_message = "Wolke auf DIR!"
 	L.protocol_message = "Giftbomben kommen!"
