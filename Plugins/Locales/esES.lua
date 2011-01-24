@@ -162,7 +162,7 @@ L["Disable the proximity display for all modules that use it."] = "Desactiva la 
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "La ventana de proximidad se mostrar\195\161 la pr\195\179xima vez. Para desativarla completamente de este encuentro, necesitas apagarla de las opciones de encuentros."
 
 L.proximity = "Visualizar proximidad"
-L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropidada para este encuentro, lista los jugadores que están demasiado cerca tuya."
+L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropidada para este encuentro, lista los jugadores que est\195\161n demasiado cerca tuya."
 
 L["Close"] = "Cerrar"
 L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
@@ -194,7 +194,7 @@ L["Tips"] = "Tips"
 L["Tip of the Raid"] = "Tip de la raid"
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = true
-L["Automatic tips"] = "Tips automáticos"
+L["Automatic tips"] = "Tips autom\195\161ticos"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = true
 L["Manual tips"] = "Tips manuales"
 L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = true

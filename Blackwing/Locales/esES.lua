@@ -4,12 +4,12 @@ if L then
 
 	L.ground_phase = "Fase en tierra"
 	L.ground_phase_desc = "Aviso cuando Atramedes aterriza."
-	L.air_phase = "Fase aérea"
+	L.air_phase = "Fase a\195\169rea"
 	L.air_phase_desc = "Aviso cuando Atramedes despega."
 
 	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
 
-	L.sonicbreath_cooldown = "~Aliento sónico"
+	L.sonicbreath_cooldown = "~Aliento s\195\179nico"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "esES")
@@ -37,13 +37,13 @@ if L then
 	L.blazing_bar = "Siguiente esqueleto"
 
 	L.slump = "Cae (Rodeo)"
-	L.slump_desc = "Cae hacia delante exponiendose a sí mismo, permitiendo que el rodeo empiece."
+	L.slump_desc = "Cae hacia delante exponiendose a s\195\173 mismo, permitiendo que el rodeo empiece."
 
-	L.slump_bar = "Próximo rodeo"
-	L.slump_message = "¡Yeepah, móntalo!"
+	L.slump_bar = "Pr\195\179ximo rodeo"
+	L.slump_message = "¡Yeepah, m\195\179ntalo!"
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
 
-	L.infection_message = "¡Estás infectado!"
+	L.infection_message = "¡Est\195\161s infectado!"
 
 	L.expose_trigger = "¡%s acaba empalado en el pincho y deja expuesta la cabeza!"
 	L.expose_message = "¡Cabeza expuesta!"
@@ -62,10 +62,10 @@ if L then
 	L.release_aberration_message = "%s adds restantes!"
 	L.release_all = "%s adds liberados!"
 
-	L.bitingchill_say = "¡Escalofrío cortante en MI!"
+	L.bitingchill_say = "¡Escalofr\195\173o cortante en MI!"
 
-	L.flashfreeze = "~Congelación apresurada"
-	L.next_blast = "~Explosión agostadora"
+	L.flashfreeze = "~Congelaci\195\179n apresurada"
+	L.next_blast = "~Explosi\195\179n agostadora"
 
 	L.phase = "Fase"
 	L.phase_desc = "Advertencia para cambios de fase."
@@ -94,7 +94,7 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "¡Electrocutar pronto!"
 
-	L.onyxia_power_message = "¡Explosión pronto!"
+	L.onyxia_power_message = "¡Explosi\195\179n pronto!"
 
 	L.cinder_say = "¡Cenizas explosivas en MI!"
 

@@ -11,12 +11,13 @@ end
 
 local L = BigWigs:NewBossLocale("Conclave of Wind", "esES")
 if L then
-	L.gather_strength = "%s está reuniendo fuerza"
+	L.gather_strength = "%s empieza a extraer fuerza"
 
-	L.storm_shield_desc = "Escudo de absorción"
+	L.storm_shield = stormShield
+	L.storm_shield_desc = "Escudo de absorci\195\179n"
 	
 	L.full_power = "Lleno de poder"
-	L.full_power_desc = "Avisa cuando los jefes están llenos de poder y empiezan a lanzar las abilidades especiales."
+	L.full_power_desc = "Avisa cuando los jefes est\195\161n llenos de poder y empiezan a lanzar las abilidades especiales."
 	L.gather_strength_emote = "¡%s empieza a extraer fuerza de los señores del viento que quedan!"
 	
 	L.wind_chill = "%sx Viento escalofriante en TI!"

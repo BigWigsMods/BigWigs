@@ -5,5 +5,5 @@ if L then
 
 	L.firestorm_message = "¡Tormenta de fuego pronto!"
 
-	L.meteor_bar = "~Tajo meteórico"
+	L.meteor_bar = "~Tajo mete\195\179rico"
 end

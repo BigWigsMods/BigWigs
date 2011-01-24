@@ -1,18 +1,18 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if L then
-	L.orders = "Cambios de posición"
+	L.orders = "Cambios de posici\195\179n"
 	L.orders_desc = "Aviso para cuando Cho'gall cambia el orden de posiciones entre Sombra/Llama."
 
 	L.crash_say = "¡Crash en MI!"
-	L.worship_cooldown = "~Adoración"
-	L.adherent_bar = "Próximo gran add"
+	L.worship_cooldown = "~Adoraci\195\179n"
+	L.adherent_bar = "Pr\195\179ximo gran add"
 	L.adherent_message = "¡Add aparece!"
 	L.ooze_bar = "Moco"
 	L.ooze_message = "¡Enjambre de mocos llegando!"
-	L.tentacles_bar = "Aparecen tantáculos"
-	L.tentacles_message = "¡Fiesta de tentáculos!"
+	L.tentacles_bar = "Aparecen tant\195\161culos"
+	L.tentacles_message = "¡Fiesta de tent\195\161culos!"
 	L.sickness_message = "¡Te sientes fatal!"
-	L.fury_bar = "Próxima furia"
+	L.fury_bar = "Pr\195\179xima furia"
 	L.fury_message = "¡Furia!"
 
 	L.phase2_message = "¡Fase 2!"
@@ -56,16 +56,16 @@ end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "esES")
 if L then
-	L.static_overload_say = "¡Sobrecarga estática en MI!"
-	L.gravity_core_say = "¡Núcleo de gravedad en MI!"
-	L.health_report = "%s está al %d%% de vida, ¡cambio pronto!"
+	L.static_overload_say = "¡Sobrecarga est\195\161tica en MI!"
+	L.gravity_core_say = "¡N\195\186cleo de gravedad en MI!"
+	L.health_report = "%s est\195\161 al %d%% de vida, ¡cambio pronto!"
 	L.switch = "Cambio"
 	L.switch_desc = "Avisa los cambios de jefes"
 
 	L.shield_up_message = "¡Escudo!"
-	L.shield_bar = "Próximo escudo"
+	L.shield_bar = "Pr\195\179ximo escudo"
 
-	L.lightning_rod_say = "¡Vara relámpago en MI!"
+	L.lightning_rod_say = "¡Vara rel\195\161mpago en MI!"
 
 	L.switch_trigger = "¡Nos ocuparemos de ellos!"
 
