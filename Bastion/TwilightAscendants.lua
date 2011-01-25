@@ -16,7 +16,6 @@ local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
 local hardenInterrupted = nil
 local hardenTimer, thunderTimer = nil, nil
-local ignacious, feludius, arion, terrastra, monstrosity = BigWigs:Translate("Ignacious"), BigWigs:Translate("Feludius"), BigWigs:Translate("Arion"), BigWigs:Translate("Terrastra"), BigWigs:Translate("Elementium Monstrosity")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,6 +53,8 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
+	local ignacious, feludius, arion = BigWigs:Translate("Ignacious"), BigWigs:Translate("Feludius"), BigWigs:Translate("Arion")
+	local terrastra, monstrosity = BigWigs:Translate("Terrastra"), BigWigs:Translate("Elementium Monstrosity")
 	return {
 		-- Ignacious
 		82631, 82660, 82663,

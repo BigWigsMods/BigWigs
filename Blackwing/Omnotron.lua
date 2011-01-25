@@ -7,12 +7,6 @@ if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local electron, magmatron, toxitron = BigWigs:Translate("Electron"), BigWigs:Translate("Magmatron"), BigWigs:Translate("Toxitron")
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -48,6 +42,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
+	local electron, magmatron, toxitron = BigWigs:Translate("Electron"), BigWigs:Translate("Magmatron"), BigWigs:Translate("Toxitron")
 	return {
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},

@@ -13,7 +13,6 @@ mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
 local firstWindBlast = true
 local toxicSporesWarned = false
 local stormShield, nurture, windBlast, toxicSpores = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193), GetSpellInfo(86281)
-local anshal, nezir, rohash = BigWigs:Translate("Anshal"), BigWigs:Translate("Nezir"), BigWigs:Translate("Rohash")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -39,6 +38,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
+	local anshal, nezir, rohash = BigWigs:Translate("Anshal"), BigWigs:Translate("Nezir"), BigWigs:Translate("Rohash")
 	return {
 		86193, "storm_shield",
 		{84645, "FLASHSHAKE"},

@@ -14,7 +14,7 @@ local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
 local sicknessWarned = nil
 local counter = 1
-local corruptingCrash = (GetSpellInfo(93180))
+local corruptingCrash = GetSpellInfo(93180)
 local bigcount = 1
 local oozecount = 1
 
@@ -132,7 +132,8 @@ local function checkTarget(sGUID)
 	if counter > 2 then counter = 1 end
 end
 
-function mod:CorruptingCrash(_, _, _, _, _, _, _, _, _, _, sGUID)
+function mod:CorruptingCrash(...)
+	local sGUID = select(11, ...)
 	self:ScheduleTimer(checkTarget, 0.01, sGUID)
 end
 

@@ -10,11 +10,9 @@ mod:RegisterEnableMob(46753)
 -- Locals
 --
 
-local phase = 1
-local lastWindburst = 0
-local windburst, lightningshock = GetSpellInfo(87770), GetSpellInfo(93257)
-local shock, shocktimer = 0, 10
-local handle = nil
+local phase, lastWindburst = 1, 0
+local windburst = GetSpellInfo(87770)
+local shock = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
@@ -75,26 +73,26 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
-	phase = 1
-	lastWindburst = 0
+	phase, lastWindburst = 1, 0
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-local function Shocker()
-	if phase == 1 then
-	mod:Bar(93257, lightningshock, shocktimer, 93257)
-	handle = mod:ScheduleTimer(Shocker, shocktimer)
+do
+	local function Shocker(spellName)
+		if phase == 1 then
+			mod:Bar(93257, spellName, 10, 93257)
+			mod:ScheduleTimer(Shocker, 10, spellName)
+		end
 	end
-end
-
-function mod:Shock(_, spellId, _, _, spellName)
-	if shock == 0 then
-	self:Bar(93257, lightningshock, 10, 93257)	
-	mod:ScheduleTimer(Shocker, shocktimer)
-	shock = 1
+	function mod:Shock(_, _, _, _, spellName)
+		if not shock then
+			--Do we need a looping timer here?
+			Shocker(spellName)
+			shock = true
+		end
 	end
 end
 

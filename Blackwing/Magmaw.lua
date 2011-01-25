@@ -23,12 +23,12 @@ if L then
 	-- heroic
 	L.inferno = inferno
 	L.inferno_desc = "Summons Blazing Bone Construct."
-	
+
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warn for Phase 2 transition and display range check."
 	L.phase2_message = "Phase 2!"
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
-	
+
 	-- normal
 	L.pillar_of_flame_cd = "~Pillar of Flame"
 
@@ -122,7 +122,7 @@ function mod:Phase2()
 
 	self:Message("phase2", L["phase2_message"], "Attention", 92195)
 	self:SendMessage("BigWigs_StopBar", self, L["blazing_bar"])
-	mod:OpenProximity(8, "phase2")
+	self:OpenProximity(8, "phase2")
 end
 
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
