@@ -395,16 +395,19 @@ do
 	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
 	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
-	local defaultToggles = setmetatable({
-		berserk = C.BAR + C.MESSAGE,
-		bosskill = C.MESSAGE,
-		proximity = C.PROXIMITY,
-	}, {__index = function(self, key)
-		return C.BAR + C.MESSAGE
-	end})
+	local defaultToggles = nil
 
 	local function setupOptions(module)
 		if not C then C = addon.C end
+		if not defaultToggles then
+			defaultToggles = setmetatable({
+				berserk = C.BAR + C.MESSAGE,
+				bosskill = C.MESSAGE,
+				proximity = C.PROXIMITY,
+			}, {__index = function(self, key)
+				return C.BAR + C.MESSAGE
+			end})
+		end
 
 		if module.optionHeaders then
 			for k, v in pairs(module.optionHeaders) do
