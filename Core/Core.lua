@@ -286,9 +286,11 @@ function addon:OnInitialize()
 	self.db = db
 
 	-- check for and load the babbles early if available, used for packed versions of bigwigs
-	if LOCALE ~= "enUS" and ( not BZ or not BB ) and LibStub("LibBabble-Boss-3.0", true) and LibStub("LibBabble-Zone-3.0", true) then
-		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
-		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
+	if LOCALE ~= "enUS" and (not BZ or not BB) then
+		local lbz = LibStub("LibBabble-Boss-3.0", true)
+		if lbz then BZ = lbz:GetUnstrictLookupTable() end
+		local lbb = LibStub("LibBabble-Zone-3.0", true)
+		if lbb then BB = lbb:GetUnstrictLookupTable() end
 	end
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
@@ -393,26 +395,23 @@ do
 	function addon:IteratePlugins() return self.pluginCore:IterateModules() end
 	function addon:GetPlugin(...) return self.pluginCore:GetModule(...) end
 
-	local defaultToggles = nil
+	local defaultToggles = setmetatable({
+		berserk = C.BAR + C.MESSAGE,
+		bosskill = C.MESSAGE,
+		proximity = C.PROXIMITY,
+	}, {__index = function(self, key)
+		return C.BAR + C.MESSAGE
+	end})
 
 	local function setupOptions(module)
 		if not C then C = addon.C end
-		if not defaultToggles then
-			defaultToggles = setmetatable({
-				berserk = C.BAR + C.MESSAGE,
-				bosskill = C.MESSAGE,
-				proximity = C.PROXIMITY,
-			}, {__index = function(self, key)
-				return C.BAR + C.MESSAGE
-			end })
-		end
 
 		if module.optionHeaders then
 			for k, v in pairs(module.optionHeaders) do
 				if type(v) == "string" then
 					if CL[v] then
 						module.optionHeaders[k] = CL[v]
-					elseif LOCALE ~= "enUS" and BB and BZ then
+					elseif LOCALE ~= "enUS" and BB then
 						module.optionHeaders[k] = BB[v]
 					end
 				end
@@ -458,13 +457,17 @@ do
 
 	function addon:RegisterBossModule(module)
 		if not module.displayName then module.displayName = module.moduleName end
-		if LOCALE ~= "enUS" and BB and BZ then
-			module.zoneName = BZ[module.zoneName] or module.zoneName
-			if module.otherMenu then
-				module.otherMenu = BZ[module.otherMenu]
+		if LOCALE ~= "enUS" then
+			if BZ then
+				module.zoneName = BZ[module.zoneName] or module.zoneName
+				if module.otherMenu then
+					module.otherMenu = BZ[module.otherMenu]
+				end
 			end
-			if module.displayName and BB[module.displayName] then
-				module.displayName = BB[module.displayName]
+			if BB then
+				if module.displayName and BB[module.displayName] then
+					module.displayName = BB[module.displayName]
+				end
 			end
 		end
 		enablezones[module.zoneName] = true
