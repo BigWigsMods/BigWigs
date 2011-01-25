@@ -5,15 +5,19 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local phase, lastWindburst = 1, 0
+local phase = 1
+local lastWindburst = 0
 local windburst = GetSpellInfo(87770)
-local shock = nil
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local lightningshock = GetSpellInfo(93257)
+local shock = 0
+local shocktimer = 10
+local handle = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,7 +31,7 @@ if L then
 	L.phase_desc = "Announce phase changes."
 
 	L.cloud_message = "Franklin would be proud!"
-	L.feedback_message = "%dx Feedback"
+	L.feedback_message = "Feedback (%d)"
 end
 L = mod:GetLocale()
 
@@ -37,16 +41,15 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		87770,
+		87770,		
+		93257, -- Heroic Lightning Shock Attempt at trying to predict
 		87904,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
-		93257, -- Heroic Lightning Shock Attempt at trying to predict
 		88427, "phase", "bosskill"
 	}, {
 		[87770] = CL["phase"]:format(1),
 		[87904] = CL["phase"]:format(2),
 		[89668] = CL["phase"]:format(3),
-		[93257] = "heroic",
 		[88427] = "general",
 	}
 end
@@ -71,28 +74,28 @@ function mod:OnBossEnable()
 	self:Death("Win", 46753)
 end
 
+local function Shocker()
+	if phase == 1 then
+	mod:Bar(93257, lightningshock, shocktimer, 93257)
+	handle = mod:ScheduleTimer(Shocker, shocktimer)
+	end
+end
+
 function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
-	phase, lastWindburst = 1, 0
+	phase = 1
+	lastWindburst = 0
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local function Shocker(spellName)
-		if phase == 1 then
-			mod:Bar(93257, spellName, 10, 93257)
-			mod:ScheduleTimer(Shocker, 10, spellName)
-		end
-	end
-	function mod:Shock(_, _, _, _, spellName)
-		if not shock then
-			--Do we need a looping timer here?
-			Shocker(spellName)
-			shock = true
-		end
+function mod:Shock(_, spellId, _, _, spellName)
+	if shock == 0 then
+	self:Bar(93257, lightningshock, 10, 93257)	
+	mod:ScheduleTimer(Shocker, shocktimer)
+	shock = 1
 	end
 end
 
@@ -133,8 +136,8 @@ function mod:Phase3()
 end
 
 function mod:Feedback(_, spellId, _, _, spellName, stack)
-	self:Bar(87904, spellName, 20, spellId)
-	if not stack then stack = 1 end
+	if not stack then stack = 1 else self:SendMessage("BigWigs_StopBar", self, L["feedback_message"]:format(stack-1)) end
+	self:Bar(87904, L["feedback_message"]:format(stack), 20, spellId)
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId, "Info")
 end
 
