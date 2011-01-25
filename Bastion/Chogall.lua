@@ -83,7 +83,7 @@ function mod:OnEngage(diff)
 	bigcount = 1
 	oozecount = 1
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	self:Bar(81628, L["adherent_bar"]:format(bigcount), diff > 2 and 75 or 58, 81628)
+	-- self:Bar(81628, L["adherent_bar"]:format(bigcount), diff > 2 and 75 or 58, 81628)
 	-- Fury of Cho'gall bar
 	self:Bar(82524, L["fury_bar"], 100, 82524)
 	self:Berserk(600)
