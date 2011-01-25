@@ -17,8 +17,8 @@ plugin.defaultDB = {
 		close = true,
 	},
 	lock = nil,
-	width = 100,
-	height = 80,
+	width = 140,
+	height = 120,
 	sound = true,
 	soundDelay = 1,
 	soundName = "BigWigs: Alarm",
@@ -316,8 +316,8 @@ local function ensureDisplay()
 	if anchor then return end
 
 	local display = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-	display:SetWidth(db.width)
-	display:SetHeight(db.height)
+	display:SetWidth(db.width or plugin.defaultDB.width)
+	display:SetHeight(db.height or plugin.defaultDB.height)
 	display:SetMinResize(100, 30)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
@@ -443,9 +443,11 @@ do
 		for i = 1, num do
 			local n = GetRaidRosterInfo(i)
 			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
-				tooClose[#tooClose + 1] = coloredNames[n]
+				local nextIndex = #tooClose + 1
+				tooClose[nextIndex] = coloredNames[n]
+				if nextIndex > 4 then break end
 			end
-			if #tooClose > 4 or i > 25 then break end
+			if i > 25 then break end
 		end
 
 		if #tooClose == 0 then
