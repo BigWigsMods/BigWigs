@@ -15,6 +15,8 @@ local worshipCooldown = 24
 local sicknessWarned = nil
 local counter = 1
 local corruptingCrash = (GetSpellInfo(93180))
+local bigcount = 1
+local oozecount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,10 +29,10 @@ if L then
 
 	L.crash_say = "Crash on ME!"
 	L.worship_cooldown = "~Worship"
-	L.adherent_bar = "Next big add"
-	L.adherent_message = "Add incoming!"
-	L.ooze_bar = "Ooze adds"
-	L.ooze_message = "Ooze swarm incoming!"
+	L.adherent_bar = "Next big add (%d)"
+	L.adherent_message = "Add incoming (%d)!"
+	L.ooze_bar = "Ooze adds (%d)"
+	L.ooze_message = "Ooze swarm incoming (%d)!"
 	L.tentacles_bar = "Tentacles spawn"
 	L.tentacles_message = "Tentacle disco party!"
 	L.sickness_message = "You feel terrible!"
@@ -78,8 +80,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	bigcount = 1
+	oozecount = 1
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	self:Bar(81628, L["adherent_bar"], diff > 2 and 75 or 58, 81628)
+	self:Bar(81628, L["adherent_bar"]:format(bigcount), diff > 2 and 75 or 58, 81628)
 	-- Fury of Cho'gall bar
 	self:Bar(82524, L["fury_bar"], 100, 82524)
 	self:Berserk(600)
@@ -155,14 +159,16 @@ end
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 	worshipCooldown = 40
 	self:Message(81628, L["adherent_message"], "Important", spellId)
-	self:Bar(81628, L["adherent_bar"], 91, spellId)
+	bigcount = bigcount + 1
+	self:Bar(81628, L["adherent_bar"]:format(bigcount), 91, spellId)
 
 	-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
-	self:Bar(82299, L["ooze_bar"], 40, 82299)
+	self:Bar(82299, L["ooze_bar"]:format(oozecount), 40, 82299)
 end
 
 function mod:FesterBlood(_, spellId, _, _, spellName)
-	self:Message(82299, L["ooze_message"], "Attention", spellId, "Alert")
+	self:Message(82299, L["ooze_message"]:format(oozecount), "Attention", spellId, "Alert")
+	oozecount = oozecount + 1
 end
 
 function mod:UNIT_HEALTH(event, unit)
