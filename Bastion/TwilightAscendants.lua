@@ -16,6 +16,7 @@ local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
 local hardenInterrupted = nil
 local hardenTimer, thunderTimer = nil, nil
+local ignacious, feludius, arion, terrastra, monstrosity = BigWigs:Translate("Ignacious"), BigWigs:Translate("Feludius"), BigWigs:Translate("Arion"), BigWigs:Translate("Terrastra"), BigWigs:Translate("Elementium Monstrosity")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -71,11 +72,11 @@ function mod:GetOptions()
 		-- General
 		"proximity", "switch", "bosskill"
 	}, {
-		[82631] = "Ignacious",
-		[82746] = "Feludius",
-		[83067] = "Arion",
-		[83565] = "Terrastra",
-		[92488] = "Elementium Monstrosity",
+		[82631] = ignacious,
+		[82746] = feludius,
+		[83067] = arion,
+		[83565] = terrastra,
+		[92488] = monstrosity,
 		[92067] = "heroic",
 		proximity = "general",
 	}

@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
 if not mod then return end
 mod:RegisterEnableMob(46753)
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -13,11 +12,10 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 local phase = 1
 local lastWindburst = 0
-local windburst = GetSpellInfo(87770)
-local lightningshock = GetSpellInfo(93257)
-local shock = 0
-local shocktimer = 10
+local windburst, lightningshock = GetSpellInfo(87770), GetSpellInfo(93257)
+local shock, shocktimer = 0, 10
 local handle = nil
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,15 +39,16 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		87770,		
-		93257, -- Heroic Lightning Shock Attempt at trying to predict
+		87770,
 		87904,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
+		93257, -- Heroic Lightning Shock Attempt at trying to predict
 		88427, "phase", "bosskill"
 	}, {
 		[87770] = CL["phase"]:format(1),
 		[87904] = CL["phase"]:format(2),
 		[89668] = CL["phase"]:format(3),
+		[93257] = "heroic",
 		[88427] = "general",
 	}
 end
@@ -74,13 +73,6 @@ function mod:OnBossEnable()
 	self:Death("Win", 46753)
 end
 
-local function Shocker()
-	if phase == 1 then
-	mod:Bar(93257, lightningshock, shocktimer, 93257)
-	handle = mod:ScheduleTimer(Shocker, shocktimer)
-	end
-end
-
 function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase = 1
@@ -90,6 +82,13 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function Shocker()
+	if phase == 1 then
+	mod:Bar(93257, lightningshock, shocktimer, 93257)
+	handle = mod:ScheduleTimer(Shocker, shocktimer)
+	end
+end
 
 function mod:Shock(_, spellId, _, _, spellName)
 	if shock == 0 then

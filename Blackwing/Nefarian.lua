@@ -47,9 +47,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		78999, 81272, 94085,
 		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "berserk",
-		"phase", 78999, 81272, 94085, "bosskill"
+		"phase", "bosskill"
 	}, {
+		[78999] = "normal",
 		[79339] = "heroic",
 		phase = "general"
 	}
@@ -75,7 +77,7 @@ end
 
 
 function mod:OnEngage(diff)
-	if diff >2 then
+	if diff > 2 then
 		self:Berserk(600) -- is it really?
 	end
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35

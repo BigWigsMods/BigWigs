@@ -52,8 +52,8 @@ function mod:GetOptions(CL)
 		93051,
 		"proximity", "phase_switch", "bosskill"
 	}, {
-		[86788] = "Valiona",
-		[86622] = "Theralion",
+		[86788] = valiona,
+		[86622] = theralion,
 		[93051] = "heroic",
 		proximity = "general",
 	}

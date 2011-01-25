@@ -13,6 +13,7 @@ mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
 local firstWindBlast = true
 local toxicSporesWarned = false
 local stormShield, nurture, windBlast, toxicSpores = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193), GetSpellInfo(86281)
+local anshal, nezir, rohash = BigWigs:Translate("Anshal"), BigWigs:Translate("Nezir"), BigWigs:Translate("Rohash")
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,9 +45,9 @@ function mod:GetOptions()
 		85422, 86281,
 		86307, "full_power", "berserk", "bosskill"
 	}, {
-		[86193] = "Rohash",
-		[84645] = "Nezir",
-		[85422] = "Anshal",
+		[86193] = rohash,
+		[84645] = nezir,
+		[85422] = anshal,
 		[86307] = "general",
 	}
 end
