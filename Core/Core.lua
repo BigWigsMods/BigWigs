@@ -412,10 +412,10 @@ do
 		if module.optionHeaders then
 			for k, v in pairs(module.optionHeaders) do
 				if type(v) == "string" then
-					if CL[v] then
-						module.optionHeaders[k] = CL[v]
-					elseif LOCALE ~= "enUS" and BB then
+					if LOCALE ~= "enUS" and BB and BB[v] then
 						module.optionHeaders[k] = BB[v]
+					elseif CL[v] then
+						module.optionHeaders[k] = CL[v]
 					end
 				end
 			end
