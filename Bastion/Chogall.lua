@@ -158,7 +158,7 @@ end
 
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 	worshipCooldown = 40
-	self:Message(81628, L["adherent_message"], "Important", spellId)
+	self:Message(81628, L["adherent_message"]:format(bigcount), "Important", spellId)
 	bigcount = bigcount + 1
 	self:Bar(81628, L["adherent_bar"]:format(bigcount), 91, spellId)
 
