@@ -14,6 +14,10 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local phase = 1
 local lastWindburst = 0
 local windburst = GetSpellInfo(87770)
+local lightningshock = GetSpellInfo(93257)
+local shock = 0
+local shocktimer = 10
+local handle = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -37,7 +41,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		87770,
+		87770,		
+		93257, -- Heroic Lightning Shock Attempt at trying to predict
 		87904,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
 		88427, "phase", "bosskill"
@@ -54,6 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261, 93263)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
+	self:Log("SPELL_DAMAGE", "Shock", 93257)
 	-- Acid Rain is applied at P2 transition
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279, 93281)
 
@@ -68,6 +74,13 @@ function mod:OnBossEnable()
 	self:Death("Win", 46753)
 end
 
+local function Shocker()
+	if phase == 1 then
+	mod:Bar(93257, lightningshock, shocktimer, 93257)
+	handle = mod:ScheduleTimer(Shocker, shocktimer)
+	end
+end
+
 function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase = 1
@@ -77,6 +90,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Shock(_, spellId, _, _, spellName)
+	if shock == 0 then
+	self:Bar(93257, lightningshock, 10, 93257)	
+	mod:ScheduleTimer(Shocker, shocktimer)
+	shock = 1
+	end
+end
 
 function mod:Cloud(player, spellId)
 	if not UnitIsUnit(player, "player") then return end
