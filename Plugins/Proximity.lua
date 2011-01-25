@@ -846,5 +846,5 @@ SLASH_BigWigs_Proximity2 = "/bwproximity" -- In case some other addon already ha
 
 -- Apparently some users (idiots?) don't read through the interface options before using
 -- a complicated addon such as BigWigs. Go figure.
-SLASH_BigWigs_Proximity3 = "/range" 
+SLASH_BigWigs_Proximity3 = "/range"
 
