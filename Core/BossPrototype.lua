@@ -349,7 +349,7 @@ local checkFlag = nil
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
-	local nilKeyError      = "Module %s tried to check the bitflags for nil."
+	local nilKeyError      = "Module %s tried to check the bitflags for a nil option key."
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
 	checkFlag = function(self, key, flag)
 		if type(key) == "nil" then error(nilKeyError:format(self.name)) end
@@ -361,7 +361,7 @@ do
 				error(noDefaultError:format(self.name, key))
 			end
 			if debug then
-				error(self, notNumberError:format(self.name, key, type(self.db.profile[key])))
+				error(notNumberError:format(self.name, key, type(self.db.profile[key])))
 			end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
