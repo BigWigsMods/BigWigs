@@ -5,10 +5,10 @@ if L then
 
 	L.crash_say = "Schmettern auf MIR!"
 	L.worship_cooldown = "~Verehren"
-	L.adherent_bar = "Nächster Kultist"
-	L.adherent_message = "Kultist kommt!"
-	L.ooze_bar = "Schleim Adds"
-	L.ooze_message = "Schleime kommen!"
+	L.adherent_bar = "Nächster Kultist %d"
+	L.adherent_message = "Kultist %d kommt!"
+	L.ooze_bar = "Schleime %d"
+	L.ooze_message = "Schleime %d kommen!"
 	L.tentacles_bar = "Nächste Tentakel"
 	L.tentacles_message = "Tentakel Disco Party!"
 	L.sickness_message = "Krankheit auf DIR!"
@@ -45,7 +45,13 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "deDE")
 if L then
+	L.egg_vulnerable = "Zeit für Omlet!"
 
+	--L.omlet_trigger = "You mistake this for weakness?  Fool!"
+
+	L.phase13 = "Phase 1 und 3"
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt, wenn die Phasen wechseln."
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "deDE")
