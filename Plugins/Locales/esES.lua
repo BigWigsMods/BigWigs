@@ -5,12 +5,12 @@ if not L then return end
 --
 
 L["Clickable Bars"] = "Barras clicables"
-L.clickableBarsDesc = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
+L.clickableBarsDesc = "Las barras de Big Wigs bars son clicables por defecto. De esta forma puedes targetear objetos o lanzar hechizos AoE detr\195\161s de ellos, cambia el \195\161ngulo de la c\195\161mara, y as\195\173 sucesivamente, mientras tu cursos est\195\161 encima de las barras. |cffff4411Si habilitas las barras clicables, esto dejar\195\161 de funcionar.|r Las barras interceptar\195\161n cualquier clic de rat\195\179n que hagas en ellas.\n"
 L["Enables bars to receive mouse clicks."] = "Activa las barras para recivir clics de rat\195\179n"
 L["Modifier"] = "Modificador"
 L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Presiona la tecla de modificador elegido para activar acciones de clics en los tiempos de las barras."
 L["Only with modifier key"] = "Solo con una tecla de modificador"
-L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = true
+L["Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."] = "Permite a las barras que sean clicables en el caso de que est\195\169 presionada la tecla modificadora, en este punto las acciones de rat\195\179n describir\195\161n justo debajo si estar\195\161n disponibles."
 
 L["Temporarily Super Emphasizes the bar and any messages associated with it for the duration."] = "Temporalmente Super Enfatiza la barra y los mensajes asociados para la duraci\195\179n."
 L["Report"] = "Reportar"
@@ -20,7 +20,7 @@ L["Temporarily removes the bar and all associated messages."] = "Temporalmente q
 L["Remove other"] = "Quitar otro"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "Temporalmente quita todas las barras (excepto esta) y los mensajes asociados."
 L["Disable"] = "Desactivar"
-L["Permanently disables the boss encounter ability option that spawned this bar."] = true
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "Desactiva permanentemente la habilidad del encuentro para que no de opci\195\179n a que reaparezca esta barra"
 
 L["Scale"] = "Escala"
 L["Grow upwards"] = "Crecer ascendente"
@@ -29,7 +29,7 @@ L["Texture"] = "Textura"
 L["Emphasize"] = "Enfatizar"
 L["Enable"] = "Permitir"
 L["Move"] = "Mover"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = true
+L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Mueve las barras enfatizadas al anclaje de Enfatizar. Si esta opcion esta apagada, las barras enfatizadas simplemente cambiar\195\161n el color y la escala, y puede que empiecen a flashear."
 L["Flash"] = "Flash"
 L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Flashea el fondo de la barra enfatizada, haciendola m\195\161s facil de ver"
 L["Regular bars"] = "Barras regulares"
@@ -190,19 +190,19 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 
 L["|cff%s%s|r says:"] = "|cff%s%s|r dice:"
 L["Cool!"] = "Guay!"
-L["Tips"] = "Tips"
-L["Tip of the Raid"] = "Tip de la raid"
-L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = true
-L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = true
-L["Automatic tips"] = "Tips autom\195\161ticos"
-L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = true
-L["Manual tips"] = "Tips manuales"
-L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = true
+L["Tips"] = "Consejos"
+L["Tip of the Raid"] = "Consejo de la raid"
+L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with officers who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Los consejos de la raid se mostrar\195\161n por defecto cuando entres en una zona dentro de una estancia de raid, si no estas en combate, y tu grupo de raid tiene m\195\161s de 9 jugadores en el. Solo un consejo se mostrar\195\161 por sesi\195\179n, normalmente.\n\nAqu\195\173 puedes descubrir como visualizar estos consejos, o usar la ventana chula (por defecto), o visualizarlos en el chat. Si juegas con oficiales quienes usando el |cffff4411comando /sendtip |r, puedes ver lo que quieren mostrarnos en el chat \194\161en lugar de la ventana!."
+L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Si no quieres ver alg\195\186n consejo, siempre, pueedes cambiarlo a apagado aqu\195\173. Los consejos enviados por tus oficiales de raid tambi\195\169n son bloqueados por esto, se cuidadoso."
+L["Automatic tips"] = "Consejos autom\195\161ticos"
+L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Si no quieres ver los formidables consejos que tenemos, contribuidos por algunos de los mejores jugadores PvE del mundo, con una ventanita cuando entres en una zona de raid, puedes desactivar esta opci\195\179n."
+L["Manual tips"] = "Consejos manuales"
+L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Los oficiales de raid tienen la habilidad de mostrar manualmente consejos con el comando /sendtip. Si tienes un oficial que spamea esto, o por otras razones solo no quieres verlos, puedes desactivar esto con esta opci\195\179n."
 L["Output to chat frame"] = "Salida al marco de chat"
-L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = true
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Uso: /sendtip <index|\"Tip personalizado\">"
+L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "Por defecto los consejos se mostrar\195\161n para cada uno, en una formidable ventanita en el medio de la pantalla. Si quieres cambiar esto, sin embargo, los consejos SOLO ser\195\161n mostrados en tu chat como texto puro, y la ventana nunca se mostrar\195\161 de nuevo."
+L["Usage: /sendtip <index|\"Custom tip\">"] = "Uso: /sendtip <index|\"Consejo personalizado personalizado\">"
 L["You must be an officer in the raid to broadcast a tip."] = "Debes ser un oficial en la raid para difundir un tip"
-L["Tip index out of bounds, accepted indexes range from 1 to %d."] = true
+L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "\195\173ndice de consejos fuera de l\195\173mite, aceptados rangos de \195\173ndices desde 1 a %d."
 
 -----------------------------------------------------------------------
 -- Emphasize.lua
@@ -215,7 +215,7 @@ L["Uppercases all messages related to a super emphasized option."] = "May\195\18
 L["Double size"] = "Tama\195\177o doble"
 L["Doubles the size of super emphasized bars and messages."] = "Dobla el tama\195\177o de las barras super enfatizadas y los mensajes"
 L["Countdown"] = "Cuenta atr\195\161s"
-L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = true
+L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Si un contador es relativamente mayor de 5 segundos, una cuenta vocal y visual ser\195\161 a\195\177adida para los \195\186ltimos 5 segundos. Imagina alguna cuenta atr\195\161s \"5... 4... 3... 2... 1... \194\161CUENTA ATR\195\161S!\" y grandes n\195\186meros en el medio de la pantalla."
 L["Flash"] = "Flash"
 L["Flashes the screen red during the last 3 seconds of any related timer."] = "Flashea la pantalla en rojo durante los 3 \195\186ltimos segundos o de algun contador relacionado."
 

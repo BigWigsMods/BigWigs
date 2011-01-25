@@ -1,6 +1,6 @@
 ﻿local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if L then
-	L.tracking_me = "Tracking on ME!"
+	L.tracking_me = "¡Rastreando en MI!"
 
 	L.ground_phase = "Fase en tierra"
 	L.ground_phase_desc = "Aviso cuando Atramedes aterriza."
@@ -28,9 +28,16 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "esES")
 if L then
+	-- heroic
 	L.inferno = inferno
 	L.inferno_desc = "Invoca Ensamblaje osario llameante."
+		
+	L.phase2 = "Fase 2"
+	L.phase2_desc = "Aviso para la transici\195\179n de la fase 2 y visualiza el comprobador de rango."
+	L.phase2_message = "¡Fase 2!"
+	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
+	-- normal
 	L.pillar_of_flame_cd = "~Columna de llamas"
 
 	L.blazing_message = "¡Add entrante!"
@@ -45,7 +52,7 @@ if L then
 
 	L.infection_message = "¡Est\195\161s infectado!"
 
-	L.expose_trigger = "¡%s acaba empalado en el pincho y deja expuesta la cabeza!"
+	L.expose_trigger = "cabeza"
 	L.expose_message = "¡Cabeza expuesta!"
 end
 
