@@ -125,7 +125,7 @@ function mod:OnEngage(diff)
 	self:Bar(82746, glaciate, 15, 82746)
 
 	hardenInterrupted, first = nil, nil
-	--self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
@@ -202,7 +202,6 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH()
-	if not UnitExists("boss1") then return end
 	local boss1 = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 	local boss2 = UnitHealth("boss2") / UnitHealthMax("boss2") * 100
 	local boss3 = UnitExists("boss3") and (UnitHealth("boss3") / UnitHealthMax("boss3") * 100) or 100

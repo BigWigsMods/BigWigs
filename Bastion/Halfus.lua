@@ -58,3 +58,4 @@ function mod:MalevolentStrikes(player, spellId, _, _, spellName, stack)
 		self:TargetMessage(83908, L["strikes_message"], player, "Urgent", spellId, "Info", stack)
 	end
 end
+
