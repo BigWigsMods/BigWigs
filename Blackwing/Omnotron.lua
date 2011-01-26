@@ -114,7 +114,7 @@ end
 
 function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
 	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 45, spellId)
-	self:Message("switch", L["switch_message"]:format(unit, spellName), "Positive", spellId, "Alert")
+	self:Message("switch", L["switch_message"]:format(unit, spellName), "Positive", spellId, "Long")
 	--Using dGUID to avoid issues with names appearing as "UNKNOWN" for a second or so
 	for i = 1, 4 do
 		local bossId = ("boss%d"):format(i)
@@ -143,14 +143,14 @@ function mod:AcquiringTarget(player, spellId)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(79501)
 	end
-	self:TargetMessage(79501, L["acquiring_target"], player, "Urgent", spellId)
+	self:TargetMessage(79501, L["acquiring_target"], player, "Urgent", spellId, "Alarm")
 	self:SecondaryIcon(79501, player)
 end
 
 function mod:Fixate(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(80094)
-		self:LocalMessage(80094, L["bomb_message"], "Personal", spellId, "Info")
+		self:LocalMessage(80094, L["bomb_message"], "Personal", spellId, "Alarm")
 	else
 		self:Whisper(80094, player, L["bomb_message"], true)
 	end
@@ -161,7 +161,7 @@ function mod:LightningConductor(player, spellId, _, _, spellName)
 		self:FlashShake(79888)
 		self:OpenProximity(15, 79888) --assumed
 	end
-	self:TargetMessage(79888, spellName, player, "Attention", spellId)
+	self:TargetMessage(79888, spellName, player, "Attention", spellId, "Alarm")
 	self:SecondaryIcon(79888, player)
 end
 
@@ -172,7 +172,7 @@ end
 
 function mod:PoisonProtocol(_, spellId, _, _, spellName)
 	self:Bar(91513, spellName, 45, spellId)
-	self:Message(91513, L["protocol_message"], "Important", spellId)
+	self:Message(91513, L["protocol_message"], "Important", spellId, "Alert")
 end
 
 do
