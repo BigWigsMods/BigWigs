@@ -114,7 +114,7 @@ end
 
 function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
 	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 45, spellId)
-	self:Message("switch", L["switch_message"]:format(unit, spellName), "Important", spellId, "Alert")
+	self:Message("switch", L["switch_message"]:format(unit, spellName), "Positive", spellId, "Alert")
 	--Using dGUID to avoid issues with names appearing as "UNKNOWN" for a second or so
 	for i = 1, 4 do
 		local bossId = ("boss%d"):format(i)
@@ -172,7 +172,7 @@ end
 
 function mod:PoisonProtocol(_, spellId, _, _, spellName)
 	self:Bar(91513, spellName, 45, spellId)
-	self:Message(91513, L["protocol_message"], "Positive", spellId)
+	self:Message(91513, L["protocol_message"], "Important", spellId)
 end
 
 do
