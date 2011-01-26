@@ -14,8 +14,7 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
-local hardenInterrupted = nil
-local hardenTimer, thunderTimer = nil, nil
+local hardenInterrupted, hardenTimer, thunderTimer, first = nil, nil, nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -114,8 +113,6 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:RegisterEvent("UNIT_HEALTH")
-
 	self:Yell("LastPhase", L["last_phase_trigger"])
 
 	self:Death("Win", 43735) -- Elementium Monstrosity
@@ -129,7 +126,8 @@ function mod:OnEngage(diff)
 	self:Bar(82631, L["shield_bar"], 28, 82631)
 	self:Bar(82746, glaciate, 15, 82746)
 
-	hardenInterrupted = nil
+	hardenInterrupted, first = nil, nil
+	--self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
@@ -205,13 +203,24 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 	self:PrimaryIcon(92307, player)
 end
 
-function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 30 then
-			self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
-			self:UnregisterEvent("UNIT_HEALTH")
-		end
+function mod:UNIT_HEALTH()
+	if not UnitExists("boss1") then return end
+	local boss1 = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+	local boss2 = UnitHealth("boss2") / UnitHealthMax("boss2") * 100
+	local boss3 = UnitExists("boss3") and (UnitHealth("boss3") / UnitHealthMax("boss3") * 100) or 100
+	local boss4 = UnitExists("boss4") and (UnitHealth("boss4") / UnitHealthMax("boss4") * 100) or 100
+	if boss1 < 30 and not first then
+		self:Message("switch", L["health_report"]:format((UnitName("boss1")), hp), "Attention", 26662, "Info")
+		first = true
+	elseif boss2 < 30 and not first then
+		self:Message("switch", L["health_report"]:format((UnitName("boss2")), hp), "Attention", 26662, "Info")
+		first = true
+	elseif boss3 < 30 and first then
+		self:Message("switch", L["health_report"]:format((UnitName("boss3")), hp), "Attention", 26662, "Info")
+		self:UnregisterEvent("UNIT_HEALTH")
+	elseif boss4 < 30 and first then
+		self:Message("switch", L["health_report"]:format((UnitName("boss4")), hp), "Attention", 26662, "Info")
+		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
 
@@ -282,7 +291,6 @@ function mod:Switch()
 	self:Bar(92541, hardenSkin, 27, 92541)
 	self:CancelAllTimers()
 	-- XXX this needs to be delayed
-	self:RegisterEvent("UNIT_HEALTH")
 end
 
 do

@@ -172,13 +172,11 @@ function mod:FesterBlood(_, spellId, _, _, spellName)
 	oozecount = oozecount + 1
 end
 
-function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 30 then
-			self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
-			self:UnregisterEvent("UNIT_HEALTH")
-		end
+function mod:UNIT_HEALTH()
+	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+	if hp < 30 then
+		self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
+		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
 

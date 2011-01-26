@@ -70,8 +70,6 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:RegisterEvent("UNIT_POWER")
-
 	self:Death("Deaths", 41376, 41948)
 end
 
@@ -82,6 +80,7 @@ function mod:OnEngage(diff)
 	end
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
+	self:RegisterEvent("UNIT_POWER")
 end
 
 --------------------------------------------------------------------------------
@@ -200,12 +199,15 @@ function mod:ExplosiveCindersRemoved(player)
 	end
 end
 
-function mod:UNIT_POWER(event, unit, powerType)
-	if unit == "boss1" and powerType == "ALTERNATE" then
-		local power = UnitPower(unit, ALTERNATE_POWER_INDEX)
-		if power > 80 then
-			self:Message(78999, L["onyxia_power_message"], "Attention", 78999)
-			self:UnregisterEvent("UNIT_POWER")
+do
+	local onyxia = BigWigs:Translate("Onyxia")
+	function mod:UNIT_POWER()
+		if UnitName("boss1") == onyxia then
+			local power = UnitPower("boss1", ALTERNATE_POWER_INDEX)
+			if power > 80 then
+				self:Message(78999, L["onyxia_power_message"], "Attention", 78999)
+				self:UnregisterEvent("UNIT_POWER")
+			end
 		end
 	end
 end

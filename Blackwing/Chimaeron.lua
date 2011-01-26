@@ -49,7 +49,6 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Warmup")
-	self:RegisterEvent("UNIT_HEALTH")
 
 	self:Death("Win", 43296)
 	self:Yell("Win", L["win_trigger"])
@@ -68,6 +67,7 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		self:Berserk(420)
 	end
+	self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
@@ -108,13 +108,11 @@ function mod:DoubleAttack(_, spellId, _, _, spellName)
 	self:Message(88826, spellName, "Urgent", spellId)
 end
 
-function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 25 then
-			self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
-			self:UnregisterEvent("UNIT_HEALTH")
-		end
+function mod:UNIT_HEALTH()
+	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+	if hp < 25 then
+		self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
+		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
 

@@ -66,7 +66,6 @@ function mod:OnBossEnable()
 
 	self:Yell("EggTrigger", L["omlet_trigger"])
 
-	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Deaths", 45213, 46842) -- Sinestra, Pulsing Twilight Egg
@@ -85,6 +84,7 @@ function mod:OnEngage()
 	orbTimer = 30
 	eggs = 0
 	handle = nil
+	self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
@@ -121,16 +121,14 @@ function mod:Indomitable(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:UNIT_HEALTH(event, unit)
-	if unit == "boss1" then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp <= 30.5 then
-			self:Message("phase", CL["phase"]:format(2), "Positive", 86226, "Info")
-			self:UnregisterEvent("UNIT_HEALTH")
-			self:CancelTimer(handle)
-			self:SendMessage("BigWigs_StopBar", self, "~"..slicer)
-			self:SendMessage("BigWigs_StopBar", self, "~"..breath)
-		end
+function mod:UNIT_HEALTH()
+	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+	if hp <= 30.5 then
+		self:Message("phase", CL["phase"]:format(2), "Positive", 86226, "Info")
+		self:UnregisterEvent("UNIT_HEALTH")
+		self:CancelTimer(handle)
+		self:SendMessage("BigWigs_StopBar", self, "~"..slicer)
+		self:SendMessage("BigWigs_StopBar", self, "~"..breath)
 	end
 end
 
