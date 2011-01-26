@@ -4,6 +4,9 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 -- Bars.lua
 --
 
+L.bigWigsBarStyleName_Default = "Default"
+L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
+
 L["Clickable Bars"] = true
 L.clickableBarsDesc = "Big Wigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
 L["Enables bars to receive mouse clicks."] = true

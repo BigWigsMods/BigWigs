@@ -38,6 +38,114 @@ local timers = nil
 
 local clickHandlers = {}
 
+local barStyles = {
+	Default = {
+		apiVersion = 1,
+		version = 1,
+		GetSpacing = function(bar) return 0 end,
+		ApplyStyle = function(bar) end,
+		BarStopped = function(bar) end,
+		GetStyleName = function()
+			return L.bigWigsBarStyleName_Default
+		end,
+	},
+}
+local barStyleRegister = {}
+
+-- XXX this access should be static, with a pointer just changed when
+-- XXX the bar style option changes
+-- XXX perhaps all function access should be static as well (ApplyStyle, BarStopped, etc)
+local function getBarStyler()
+	return barStyles[db.barStyle] or barStyles.Default
+end
+
+do
+	-- BeautyCase styling, based on !BeatyCase by someone, I forget who.
+	local textureNormal = "Interface\\AddOns\\BigWigs\\Textures\\beautycase"
+
+	local function createBorder(self)
+		local border = UIParent:CreateTexture(nil, "OVERLAY")
+		border:SetParent(self)
+		border:SetTexture(textureNormal)
+		border:SetWidth(11)
+		border:SetHeight(11)
+		border:SetVertexColor(1, 1, 1)
+		return border
+	end
+
+	local freeBorderSets = {}
+
+	local function freeStyle(bar)
+		local borders = bar:Get("bigwigs:beautycase:borders")
+		if not borders then return end
+		for i, border in next, borders do
+			border:SetParent(UIParent)
+			border:Hide()
+		end
+		freeBorderSets[#freeBorderSets + 1] = borders
+	end
+
+	local function styleBar(bar)
+		local borders = nil
+		if #freeBorderSets > 0 then
+			borders = table.remove(freeBorderSets)
+			for i, border in next, borders do
+				border:SetParent(bar.candyBarBar)
+				border:ClearAllPoints()
+				border:Show()
+			end
+		else
+			borders = {}
+			for i = 1, 8 do
+				borders[i] = createBorder(bar.candyBarBar)
+			end
+		end
+		for i, border in next, borders do
+			if i == 1 then
+				border:SetTexCoord(0, 1/3, 0, 1/3)
+				border:SetPoint("TOPLEFT", -18, 4)
+			elseif i == 2 then
+				border:SetTexCoord(2/3, 1, 0, 1/3)
+				border:SetPoint("TOPRIGHT", 4, 4)
+			elseif i == 3 then
+				border:SetTexCoord(0, 1/3, 2/3, 1)
+				border:SetPoint("BOTTOMLEFT", -18, -4)
+			elseif i == 4 then
+				border:SetTexCoord(2/3, 1, 2/3, 1)
+				border:SetPoint("BOTTOMRIGHT", 4, -4)
+			elseif i == 5 then
+				border:SetTexCoord(1/3, 2/3, 0, 1/3)
+				border:SetPoint("TOPLEFT", borders[1], "TOPRIGHT")
+				border:SetPoint("TOPRIGHT", borders[2], "TOPLEFT")
+			elseif i == 6 then
+				border:SetTexCoord(1/3, 2/3, 2/3, 1)
+				border:SetPoint("BOTTOMLEFT", borders[3], "BOTTOMRIGHT")
+				border:SetPoint("BOTTOMRIGHT", borders[4], "BOTTOMLEFT")
+			elseif i == 7 then
+				border:SetTexCoord(0, 1/3, 1/3, 2/3)
+				border:SetPoint("TOPLEFT", borders[1], "BOTTOMLEFT")
+				border:SetPoint("BOTTOMLEFT", borders[3], "TOPLEFT")
+			elseif i == 8 then
+				border:SetTexCoord(2/3, 1, 1/3, 2/3)
+				border:SetPoint("TOPRIGHT", borders[2], "BOTTOMRIGHT")
+				border:SetPoint("BOTTOMRIGHT", borders[4], "TOPRIGHT")
+			end
+		end
+		bar:Set("bigwigs:beautycase:borders", borders)
+	end
+
+	barStyles.BeautyCase = {
+		apiVersion = 1,
+		version = 1,
+		GetSpacing = function(bar) return 11 end,
+		ApplyStyle = styleBar, -- function(bar) return end
+		BarStopped = freeStyle,
+		GetStyleName = function()
+			return L.bigWigsBarStyleName_BeautyCase
+		end,
+	}
+end
+
 --------------------------------------------------------------------------------
 -- Options
 --
@@ -51,6 +159,7 @@ plugin.defaultDB = {
 	align = "LEFT",
 	icon = true,
 	fill = nil,
+	barStyle = "Default",
 	emphasize = true,
 	emphasizeFlash = true,
 	emphasizeMove = true,
@@ -243,6 +352,13 @@ do
 						width = "full",
 						itemControl = "DDI-Font",
 					},
+					barStyle = {
+						type = "select",
+						name = "Style",
+						order = 2,
+						values = barStyleRegister,
+						width = "full",
+					},
 					align = {
 						type = "select",
 						name = L["Align"],
@@ -378,14 +494,15 @@ local function rearrangeBars(anchor)
 	local up = nil
 	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 	for i, bar in next, tmp do
+		local spacing = getBarStyler().GetSpacing(bar)
 		bar:ClearAllPoints()
 		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT")
-			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT")
+			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT", 0, spacing)
+			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT", 0, spacing)
 			lastUpBar = bar
 		else
-			bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT")
-			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT")
+			bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT", 0, -spacing)
+			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT", 0, -spacing)
 			lastDownBar = bar
 		end
 	end
@@ -401,6 +518,7 @@ end
 local function barStopped(event, bar)
 	local a = bar:Get("bigwigs:anchor")
 	if a and a.bars and a.bars[bar] then
+		getBarStyler().BarStopped(bar)
 		a.bars[bar] = nil
 		rearrangeBars(a)
 	end
@@ -555,6 +673,10 @@ function plugin:OnRegister()
 	if not db.font then db.font = media:GetDefault("font") end
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+
+	for k, v in pairs(barStyles) do
+		barStyleRegister[k] = v:GetStyleName()
+	end
 end
 
 function plugin:OnPluginEnable()
@@ -592,6 +714,28 @@ function plugin:BigWigs_SetConfigureTarget(event, module)
 	else
 		normalAnchor.background:SetTexture(0, 0, 0, 0.3)
 		emphasizeAnchor.background:SetTexture(0, 0, 0, 0.3)
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Bar styles
+--
+
+do
+	local currentAPIVersion = 1
+	local errorWrongAPI = "The bar style API version is now %d; the bar style %q needs to be updated for this version of Big Wigs."
+	local errorMismatchedData = "The given style data does not seem to be a Big Wigs bar styler."
+	local errorAlreadyExist = "Trying to register %q as a bar styler, but it already exists."
+	function plugin:RegisterBarStyle(key, styleData)
+		if type(key) ~= "string" then error(errorMismatchedData) end
+		if type(styleData) ~= "table" then error(errorMismatchedData) end
+		if type(styleData.version) ~= "number" then error(errorMismatchedData) end
+		if type(styleData.apiVersion) ~= "number" then error(errorMismatchedData) end
+		if styleData.apiVersion ~= currentAPIVersion then error(errorWrongAPI:format(currentAPIVersion, key)) end
+		if barStyles[key] and barStyles[key].version == styleData.version then error(errorAlreadyExist:format(key)) end
+		if not barStyles[key] or barStyles[key].version < styleData.version then
+			barStyles[key] = styleData
+		end
 	end
 end
 
@@ -855,6 +999,7 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if superemp and superemp:IsSuperEmphasized(module, key) then
 		actuallyEmphasize(bar, time)
 	end
+	getBarStyler().ApplyStyle(bar)
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
