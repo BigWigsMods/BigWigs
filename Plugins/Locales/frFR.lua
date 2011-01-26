@@ -4,6 +4,10 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Style"] = "Style"
+L.bigWigsBarStyleName_Default = "Défaut"
+L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
+
 L["Clickable Bars"] = "Barres cliquables"
 L.clickableBarsDesc = "Par défaut, les barres de Big Wigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, etc. tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne fonctionnera plus.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
 L["Enables bars to receive mouse clicks."] = "Permet aux barres de recevoir les clics de la souris."

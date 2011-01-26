@@ -78,11 +78,11 @@ if L then
 	L.next_phase = "Prochaine phase"
 	L.green_phase_bar = "Phase verte"
 
-	L.red_phase_trigger = "Mélanger et touiller, faire chauffer..." -- à vérifier
+	L.red_phase_trigger = "Mélanger, touiller, faire chauffer..." -- à vérifier
 	L.red_phase = "Phase |cFFFF0000rouge|r"
-	L.blue_phase_trigger = "Jusqu'où une enveloppe mortelle peut-elle supporter les écarts extrêmes de température ? Je dois trouver ! Pour la science !" -- à vérifier
+	L.blue_phase_trigger = "Celui-ci est un peu instable, mais que serait le progrès sans échec ?" -- à vérifier
 	L.blue_phase = "Phase |cFF809FFEbleue|r"
-	L.green_phase_trigger = "Celui-ci est un peu instable, mais que serai le progrès sans échec ?" -- à vérifier
+	L.green_phase_trigger = "Jusqu'où une enveloppe mortelle peut-elle supporter des écarts extrêmes de température ? Je dois trouver ! Pour la science !" -- à vérifier
 	L.green_phase = "Phase |cFF33FF00verte|r"
 	L.dark_phase = "Phase |cFF660099sombre|r"
 	L.dark_phase_trigger = "Tes mixtures sont insipides, Maloriak ! Elles ont besoin d'un peu de... force !" -- à vérifier
