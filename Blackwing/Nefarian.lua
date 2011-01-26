@@ -35,8 +35,6 @@ if L then
 
 	L.onyxia_power_message = "Explosion soon!"
 
-	L.cinder_say = "Explosive Cinders on ME!"
-
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
 L = mod:GetLocale()
@@ -45,7 +43,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 		78999, 81272, 94085,
 		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "berserk",
@@ -160,7 +158,7 @@ do
 		cinderTargets[#cinderTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(79339)
-			self:Say(79339, L["cinder_say"])
+			self:Say(79339, CL["say"]:format((GetSpellInfo(79339))))
 			self:Bar(79339, spellName, 8, 79339)
 			self:OpenProximity(10, 79339) -- assumed
 		end

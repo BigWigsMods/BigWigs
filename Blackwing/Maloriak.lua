@@ -33,8 +33,6 @@ if L then
 	L.release_aberration_message = "%d adds left!"
 	L.release_all = "%d adds released!"
 
-	L.bitingchill_say = "Biting Chill on ME!"
-
 	L.flashfreeze = "~Flash Freeze"
 	L.next_blast = "~Scorching Blast"
 
@@ -58,7 +56,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 		{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity",
 		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968,
@@ -288,7 +286,7 @@ do
 	function mod:BitingChill(player, spellId, _, _, spellName)
 		chillTargets[#chillTargets + 1] = player
 		if UnitIsUnit(player, "player") then
-			self:Say(77760, L["bitingchill_say"])
+			self:Say(77760, CL["say"]:format((GetSpellInfo(77760))))
 			self:FlashShake(77760)
 		end
 		if not scheduled then

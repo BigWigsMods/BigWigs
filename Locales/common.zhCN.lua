@@ -5,6 +5,7 @@ if not L then return end
 -- Prototype.lua common words
 L.you = ">你< %s！"
 L.other = "%s：>%s<！"
+L.say = "%s on ME!"
 
 L.phase = "阶段%d"
 L.normal = "普通模式"

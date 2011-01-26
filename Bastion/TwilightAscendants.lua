@@ -30,8 +30,6 @@ if L then
 	L.shield_up_message = "Shield is up!"
 	L.shield_bar = "Next shield"
 
-	L.lightning_rod_say = "Lightning Rod on ME!"
-
 	L.switch_trigger = "We will handle them!"
 
 	L.thundershock_quake_soon = "%s in 10sec!"
@@ -50,7 +48,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 		-- Ignacious
 		82631, 82660, 82663,
@@ -143,7 +141,7 @@ do
 			self:ScheduleTimer(lrWarn, 0.3, spellName)
 		end
 		if UnitIsUnit(player, "player") then
-			self:Say(83099, L["lightning_rod_say"])
+			self:Say(83099, CL["say"]:format((GetSpellInfo(83099))))
 			self:FlashShake(83099)
 			self:OpenProximity(8)
 		end

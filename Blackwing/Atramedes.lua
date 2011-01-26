@@ -19,8 +19,6 @@ local searingFlame = GetSpellInfo(77840)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.tracking_me = "Tracking on ME!"
-
 	L.ground_phase = "Ground Phase"
 	L.ground_phase_desc = "Warning for when Atramedes lands."
 	L.air_phase = "Air Phase"
@@ -36,7 +34,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 		"ground_phase", 78075, 77840,
 		"air_phase",
@@ -74,7 +72,7 @@ end
 
 function mod:Tracking(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:Say(78092, L["tracking_me"])
+		self:Say(78092, CL["say"]:format((GetSpellInfo(78092))))
 		self:FlashShake(78092)
 	end
 	self:TargetMessage(78092, spellName, player, "Personal", spellId, "Alarm")

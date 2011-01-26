@@ -27,7 +27,6 @@ if L then
 	L.orders = "Stance changes"
 	L.orders_desc = "Warning for when Cho'gall changes between Shadow/Flame Orders stances."
 
-	L.crash_say = "Crash on ME!"
 	L.worship_cooldown = "~Worship"
 	L.adherent_bar = "Big add #%d"
 	L.adherent_message = "Add %d incoming!"
@@ -118,7 +117,7 @@ local function checkTarget(sGUID)
 	if mobId then
 		local player = UnitName(mobId.."target")
 		if UnitIsUnit("player", player) then
-			mod:Say(93180, L["crash_say"])
+			mod:Say(93180, CL["say"]:format((GetSpellInfo(93180))))
 			mod:FlashShake(93180)
 		end
 		mod:TargetMessage(93180, corruptingCrash, player, "Urgent", 93180)

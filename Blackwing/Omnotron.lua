@@ -28,7 +28,6 @@ if L then
 	L.acquiring_target = "Acquiring target"
 
 	L.bomb_message = "Ooze chasing YOU!"
-	L.cloud_say = "Cloud on ME!"
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs incoming!"
 
@@ -41,7 +40,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},
@@ -96,7 +95,7 @@ do
 			if UnitName(bossId) == source then
 				if UnitIsUnit(bossId.."target", "player") then
 					mod:FlashShake(80157)
-					mod:Say(80157, L["cloud_say"])
+					mod:Say(80157, CL["say"]:format((GetSpellInfo(80157))))
 				end
 				break
 			end

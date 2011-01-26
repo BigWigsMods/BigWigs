@@ -5,6 +5,7 @@ if not L then return end
 -- Prototype.lua common words
 L.you = "당신은 %s!"
 L.other = "%s: %s"
+L.say = "%s on ME!"
 
 L.phase = "%d 단계"
 L.normal = "일반 모드"

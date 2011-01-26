@@ -3,6 +3,7 @@ if not L then return end
 -- Prototype.lua common words
 L.you = "%s en TI"
 L.other = "%s: %s"
+L.say = "%s on ME!"
 
 L.phase = "Fase %d"
 L.normal = "Modo normal"
