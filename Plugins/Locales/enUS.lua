@@ -4,6 +4,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "enUS", true)
 -- Bars.lua
 --
 
+L["Style"] = true
 L.bigWigsBarStyleName_Default = "Default"
 L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
 
