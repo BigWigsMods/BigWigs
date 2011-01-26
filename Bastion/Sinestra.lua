@@ -22,9 +22,9 @@ local handle = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.egg_vulnerable = "Omlet time!"
+	L.egg_vulnerable = "Omelet time!"
 
-	L.omlet_trigger = "You mistake this for weakness?  Fool!"
+	L.omelet_trigger = "You mistake this for weakness?  Fool!"
 
 	L.phase13 = "Phase 1 and 3"
 	L.phase = "Phase"
@@ -44,7 +44,7 @@ function mod:GetOptions()
 		86227, -- Extinction
 
 	-- Phase 2
-		87654, -- Omlet Time
+		87654, -- Omelet Time
 		{92946, "FLASHSHAKE"}, -- Indomitable
 
 	-- General
@@ -64,7 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Indomitable", 92946)
 	self:Log("SPELL_CAST_START", "Extinction", 86227)
 
-	self:Yell("EggTrigger", L["omlet_trigger"])
+	self:Yell("EggTrigger", L["omelet_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
