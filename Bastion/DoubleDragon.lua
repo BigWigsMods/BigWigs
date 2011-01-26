@@ -30,6 +30,7 @@ if L then
 	L.breath_message = "Deep Breaths incoming!"
 	L.dazzling_message = "Swirly zones incoming!"
 
+	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
 
 	L.devouringflames_cooldown = "~Devouring Flames"
@@ -179,7 +180,7 @@ do
 	end
 	function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)
 		if UnitIsUnit(player, "player") then
-			self:Say(86622, CL["say"]:format((GetSpellInfo(86622))))
+			self:Say(86622, L["engulfingmagic_say"])
 			self:FlashShake(86622)
 			self:OpenProximity(10)
 		end
