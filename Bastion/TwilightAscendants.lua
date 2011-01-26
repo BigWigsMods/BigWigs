@@ -207,16 +207,16 @@ function mod:UNIT_HEALTH()
 	local boss3 = UnitExists("boss3") and (UnitHealth("boss3") / UnitHealthMax("boss3") * 100) or 100
 	local boss4 = UnitExists("boss4") and (UnitHealth("boss4") / UnitHealthMax("boss4") * 100) or 100
 	if boss1 < 30 and not first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss1")), hp), "Attention", 26662, "Info")
+		self:Message("switch", L["health_report"]:format((UnitName("boss1")), boss1), "Attention", 26662, "Info")
 		first = true
 	elseif boss2 < 30 and not first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss2")), hp), "Attention", 26662, "Info")
+		self:Message("switch", L["health_report"]:format((UnitName("boss2")), boss2), "Attention", 26662, "Info")
 		first = true
 	elseif boss3 < 30 and first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss3")), hp), "Attention", 26662, "Info")
+		self:Message("switch", L["health_report"]:format((UnitName("boss3")), boss3), "Attention", 26662, "Info")
 		self:UnregisterEvent("UNIT_HEALTH")
 	elseif boss4 < 30 and first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss4")), hp), "Attention", 26662, "Info")
+		self:Message("switch", L["health_report"]:format((UnitName("boss4")), boss4), "Attention", 26662, "Info")
 		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
