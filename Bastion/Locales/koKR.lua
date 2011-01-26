@@ -23,7 +23,7 @@ L = BigWigs:NewBossLocale("Valiona and Theralion", "koKR")
 if L then
 	L.phase_switch = "단계 전환"
 	L.phase_switch_desc = "단계 전환을 알립니다."
-	
+
 	L.phase_bar = "%s 착지"
 	L.breath_message = "곧 깊은 숨결!"
 	L.dazzling_message = "곧 황혼 세계"
@@ -55,19 +55,19 @@ if L then
 	L.health_report = "%s의 체력 -%d%%-, 곧 단계 변화!"
 	L.switch = "전환"
 	L.switch_desc = "보스의 전환을 알립니다."
-	
+
 	L.shield_up_message = "방패 사용!"
 	L.shield_bar = "다음 방패"
 
 	L.lightning_rod_say = "나아게 벼락 막대!"
 
 	L.switch_trigger = "우리가 상대하겠다!"
-	
+
 	L.thundershock_quake_soon = "10초 후 %s!"
 
 	L.quake_trigger = "발밑의 땅이 불길하게 우르릉거립니다..."
 	L.thundershock_trigger = "주변의 공기가 에너지로 진동합니다..."
-	
+
 	L.searing_winds_message = "천둥충격이 다가옴!"
 	L.grounded_message = "지진이 다가옴!"
 
@@ -78,7 +78,7 @@ L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
 	L.egg_vulnerable = "알 요리 시간!"
 
-	L.omlet_trigger = "이게 약해진 걸로 보이느냐"	--check
+	L.omelet_trigger = "이게 약해진 걸로 보이느냐"	--check
 
 	L.phase13 = "1 & 3 단계"
 	L.phase = "단계"
