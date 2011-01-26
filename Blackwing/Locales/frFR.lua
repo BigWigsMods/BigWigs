@@ -28,9 +28,16 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "frFR")
 if L then
+	-- heroic
 	L.inferno = (GetSpellInfo(92191))
 	L.inferno_desc = "Invoque un Assemblage d'os flamboyant."
 
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 et affiche le vérificateur de portées."
+	L.phase2_message = "Phase 2 !"
+	L.phase2_yell = "Inconcevable ! Vous pourriez vraiment vaincre mon ver de lave !" -- à vérifier
+
+	-- normal
 	L.pillar_of_flame_cd = "~Pilier de flammes"
 
 	L.blazing_message = "Arrivée d'un Assemblage !"

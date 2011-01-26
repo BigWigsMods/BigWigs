@@ -5,10 +5,10 @@ if L then
 
 	L.crash_say = "Déferlante sur moi !"
 	L.worship_cooldown = "~Vénération"
-	L.adherent_bar = "Prochain(s) Adhérent(s)"
-	L.adherent_message = "Adhérent(s) invoqué(s) !"
-	L.ooze_bar = "Nuée de Sangs"
-	L.ooze_message = "Arrivée d'une nuée de Sangs !"
+	L.adherent_bar = "Adhérent(s) #%d"
+	L.adherent_message = "Adhérent(s) invoqué(s) (%d) !"
+	L.ooze_bar = "Nuée de Sangs %d"
+	L.ooze_message = "Arrivée d'une nuée de Sangs (%d) !"
 	L.tentacles_bar = "Apparition de Créations"
 	L.tentacles_message = "Créations assombries !"
 	L.sickness_message = "Vous ne vous sentez pas bien !"
@@ -35,12 +35,12 @@ if L then
 
 	L.valiona_trigger = "Theralion, je m'occupe du vestibule. Couvre leur fuite !" -- à vérifier
 
-	L.twilight_shift = "%2$dx transferts sur %1$s"
+	L.twilight_shift = "%2$dx Transferts sur %1$s"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "frFR")
 if L then
-
+	L.strikes_message = "%2$dx Frappes sur %1$s"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "frFR")
