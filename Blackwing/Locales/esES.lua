@@ -1,6 +1,6 @@
 ﻿local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if L then
-	L.tracking_me = "¡Rastreando en MI!"
+	L.tracking_me = "\194\161Rastreando en MI!"
 
 	L.ground_phase = "Fase en tierra"
 	L.ground_phase_desc = "Aviso cuando Atramedes aterriza."
@@ -20,7 +20,7 @@ if L then
 	L.next_system_failure = "Siguiente fallo del sistema"
 	L.break_message = "%2$dx Romper en %1$s"
 
-	L.phase2_message = "¡Fase de mortalidad pronto!"
+	L.phase2_message = "\194\161Fase de mortalidad pronto!"
 
 	L.warmup = "Calentamiento"
 	L.warmup_desc = "Temporizador para Calentamiento"
@@ -34,26 +34,26 @@ if L then
 		
 	L.phase2 = "Fase 2"
 	L.phase2_desc = "Aviso para la transici\195\179n de la fase 2 y visualiza el comprobador de rango."
-	L.phase2_message = "¡Fase 2!"
+	L.phase2_message = "\194\161Fase 2!"
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
 	-- normal
 	L.pillar_of_flame_cd = "~Columna de llamas"
 
-	L.blazing_message = "¡Add entrante!"
+	L.blazing_message = "\194\161Add entrante!"
 	L.blazing_bar = "Siguiente esqueleto"
 
 	L.slump = "Cae (Rodeo)"
 	L.slump_desc = "Cae hacia delante exponiendose a s\195\173 mismo, permitiendo que el rodeo empiece."
 
 	L.slump_bar = "Pr\195\179ximo rodeo"
-	L.slump_message = "¡Yeepah, m\195\179ntalo!"
+	L.slump_message = "\194\161Yeepah, m\195\179ntalo!"
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
 
-	L.infection_message = "¡Est\195\161s infectado!"
+	L.infection_message = "\194\161Est\195\161s infectado!"
 
 	L.expose_trigger = "cabeza"
-	L.expose_message = "¡Cabeza expuesta!"
+	L.expose_message = "\194\161Cabeza expuesta!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "esES")
@@ -61,7 +61,7 @@ if L then
 	--heroic
 	L.sludge = "Fango oscuro"
 	L.sludge_desc = "Aviso para cuando estas en Fango oscuro."
-	L.sludge_message = "¡Fango en TI!"
+	L.sludge_message = "\194\161Fango en TI!"
 
 	--normal
 	L.final_phase = "Fase final"
@@ -69,7 +69,7 @@ if L then
 	L.release_aberration_message = "%s adds restantes!"
 	L.release_all = "%s adds liberados!"
 
-	L.bitingchill_say = "¡Escalofr\195\173o cortante en MI!"
+	L.bitingchill_say = "\194\161Escalofr\195\173o cortante en MI!"
 
 	L.flashfreeze = "~Congelaci\195\179n apresurada"
 	L.next_blast = "~Explosi\195\179n agostadora"
@@ -99,11 +99,11 @@ if L then
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
 	L.crackle_trigger = "The air crackles with electricity!"
-	L.crackle_message = "¡Electrocutar pronto!"
+	L.crackle_message = "\194\161Electrocutar pronto!"
 
-	L.onyxia_power_message = "¡Explosi\195\179n pronto!"
+	L.onyxia_power_message = "\194\161Explosi\195\179n pronto!"
 
-	L.cinder_say = "¡Cenizas explosivas en MI!"
+	L.cinder_say = "\194\161Cenizas explosivas en MI!"
 
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
@@ -122,10 +122,10 @@ if L then
 
 	L.acquiring_target = "Eligiendo objetivo"
 
-	L.bomb_message = "¡Un moco te persigue a TI!"
-	L.cloud_say = "¡Nube en MI!"
-	L.cloud_message = "¡Nube en TI!"
-	L.protocol_message = "¡Bomba de veneno!"
+	L.bomb_message = "\194\161Un moco te persigue a TI!"
+	L.cloud_say = "\194\161Nube en MI!"
+	L.cloud_message = "\194\161Nube en TI!"
+	L.protocol_message = "\194\161Bomba de veneno!"
 
 	L.iconomnotron = "Icono en el jefe activo"
 	L.iconomnotron_desc = "Coloca el icono principal de raid en el jefe activo (requiere ayudante o lider)."
