@@ -10,6 +10,7 @@ mod:RegisterEnableMob(41442)
 -- Locals
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local airPhaseDuration = 30
 local searingFlame = GetSpellInfo(77840)
 

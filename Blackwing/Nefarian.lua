@@ -10,6 +10,7 @@ mod:RegisterEnableMob(41270, 41376)
 -- Locals
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
 local cinderTargets = mod:NewTargetList()
 local powerTargets = mod:NewTargetList()

@@ -10,6 +10,7 @@ mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron
 -- Localization
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.nef = "Lord Victor Nefarius"

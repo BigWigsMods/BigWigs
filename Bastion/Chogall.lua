@@ -10,6 +10,7 @@ mod:RegisterEnableMob(43324)
 -- Locals
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
 local sicknessWarned = nil

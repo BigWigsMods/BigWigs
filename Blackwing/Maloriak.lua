@@ -10,6 +10,7 @@ mod:RegisterEnableMob(41378)
 -- Locals
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local aberrations = 18
 local phaseCounter = 0
 local warnedAlready = nil
