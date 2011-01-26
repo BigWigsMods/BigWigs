@@ -14,6 +14,7 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
+local first = nil
 
 --------------------------------------------------------------------------------
 -- Localization
