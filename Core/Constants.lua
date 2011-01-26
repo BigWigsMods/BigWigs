@@ -115,7 +115,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 		end
 	elseif t == "number" then
 		local spellName, _, icon = GetSpellInfo(option)
-		if not spellName then error(("Invalid option %d in module %s."):format(option, module.displayName)) end
+		if not spellName then error(("Invalid option %d in module %s."):format(option, module.name)) end
 		return spellName, spellName, getSpellDescription(option), icon
 	end
 end

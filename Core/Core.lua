@@ -287,10 +287,10 @@ function addon:OnInitialize()
 
 	-- check for and load the babbles early if available, used for packed versions of bigwigs
 	if LOCALE ~= "enUS" and (not BZ or not BB) then
-		local lbz = LibStub("LibBabble-Boss-3.0", true)
-		if lbz then BZ = lbz:GetUnstrictLookupTable() end
-		local lbb = LibStub("LibBabble-Zone-3.0", true)
+		local lbb = LibStub("LibBabble-Boss-3.0", true)
 		if lbb then BB = lbb:GetUnstrictLookupTable() end
+		local lbz = LibStub("LibBabble-Zone-3.0", true)
+		if lbz then BZ = lbz:GetUnstrictLookupTable() end
 	end
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
@@ -417,6 +417,8 @@ do
 					elseif CL[v] then
 						module.optionHeaders[k] = CL[v]
 					end
+				elseif type(v) == "number" then
+					module.optionHeaders[k] = GetSpellInfo(v)
 				end
 			end
 		end

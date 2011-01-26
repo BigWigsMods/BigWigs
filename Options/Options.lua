@@ -629,13 +629,8 @@ local function populateToggleOptions(widget, module)
 		local o = option
 		if type(o) == "table" then o = option[1] end
 		if module.optionHeaders and module.optionHeaders[o] then
-			local heading = module.optionHeaders[o]
-			local text = nil
-			if type(heading) == "number" then text = GetSpellInfo(heading)
-			elseif common[heading] then text = common[heading]
-			else text = BigWigs:Translate(heading) end
 			local header = AceGUI:Create("Heading")
-			header:SetText(text)
+			header:SetText(module.optionHeaders[o])
 			header:SetFullWidth(true)
 			scrollFrame:AddChild(header)
 		end
@@ -688,7 +683,6 @@ do
 			group:SetTitle(L["Select encounter"])
 			group:SetLayout("Flow")
 			group:SetCallback("OnGroupSelected", showToggleOptions)
-			table.sort(zoneModules[zone])
 			group:SetUserData("zone", zone)
 			group:SetGroupList(zoneModules[zone])
 		else
@@ -710,6 +704,7 @@ do
 			for name, module in BigWigs:IterateBossModules() do
 				if module:IsEnabled() then
 					enabledModule = module.moduleName
+					break
 				end
 			end
 			if enabledModule and zoneModules[zone][enabledModule] then
