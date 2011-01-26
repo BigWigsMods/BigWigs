@@ -354,7 +354,7 @@ do
 					},
 					barStyle = {
 						type = "select",
-						name = "Style",
+						name = L["Style"],
 						order = 2,
 						values = barStyleRegister,
 						width = "full",
