@@ -5,7 +5,7 @@ if not L then return end
 -- Prototype.lua common words
 L.you = "%s auf DIR!"
 L.other = "%s: %s"
-L.say = "%s on ME!"
+L.say = "%s auf MIR!"
 
 L.phase = "Phase %d"
 L.normal = "Normaler Modus"

@@ -47,7 +47,7 @@ L = BigWigs:NewBossLocale("Sinestra", "deDE")
 if L then
 	L.egg_vulnerable = "Zeit für Omelett!"
 
-	--L.omlet_trigger = "You mistake this for weakness?  Fool!"
+	--L.omelet_trigger = "You mistake this for weakness?  Fool!"
 
 	L.phase13 = "Phase 1 und 3"
 	L.phase = "Phasen"
@@ -64,8 +64,6 @@ if L then
 
 	L.shield_up_message = "Schild ist oben!"
 	L.shield_bar = "Nächstes Schild"
-
-	L.lightning_rod_say = "Blitzableiter auf MIR!"
 
 	L.switch_trigger = "Wir kümmern uns um sie!"
 

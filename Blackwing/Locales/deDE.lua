@@ -1,7 +1,5 @@
 local L = BigWigs:NewBossLocale("Atramedes", "deDE")
 if L then
-	L.tracking_me = "Absuchen auf MIR!"
-
 	L.ground_phase = "Bodenphase"
 	L.ground_phase_desc = "Warnt, wenn Atramedes landet."
 	L.air_phase = "Luftphase"
@@ -68,8 +66,6 @@ if L then
 	L.release_aberration_message = "%s Adds noch!"
 	L.release_all = "%s Adds freigelassen!"
 
-	L.bitingchill_say = "Beißende Kälte auf MIR!"
-
 	L.flashfreeze = "~Blitzeis"
 	L.next_blast = "~Sengende Explosion"
 
@@ -102,8 +98,6 @@ if L then
 
 	L.onyxia_power_message = "Überladung bald!"
 
-	L.cinder_say = "Explodierende Asche auf MIR!"
-
 	L.chromatic_prototype = "Chromatischer Prototyp"
 end
 
@@ -125,7 +119,6 @@ if L then
 	L.acquiring_target = "Zielerfassung"
 
 	L.bomb_message = "Giftbombe verfolgt DICH!"
-	L.cloud_say = "Wolke auf MIR!"
 	L.cloud_message = "Wolke auf DIR!"
 	L.protocol_message = "Giftbomben kommen!"
 

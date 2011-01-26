@@ -6,6 +6,10 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Style"] = "Stil"
+L.bigWigsBarStyleName_Default = "Standard"
+L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
+
 L["Clickable Bars"] = "Interaktive Leisten"
 L.clickableBarsDesc = "Big Wigs Leisten sind standardmäßig nicht anklickbar. Dies ermöglicht es, das Ziel zu wechseln, AoE-Zauber zu setzen und die Kameraperspektive zu ändern, während sich die Maus über den Leisten befindet. |cffff4411Die Aktivierung der Interaktiven Leisten verhindert dieses Verhalten.|r Die Leisten werden jeden Mausklick abfangen, oben beschriebene Aktionen können dann nur noch außerhalb der Leistenanzeige ausgeführt werden.\n"
 L["Enables bars to receive mouse clicks."] = "Aktiviert die Interaktiven Leisten."
@@ -220,3 +224,4 @@ L["Countdown"] = "Countdown"
 L["If a related timer is longer than 5 seconds, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1... COUNTDOWN!\" and big numbers in the middle of your screen."] = "Falls ein zugehöriger Timer länger als 5 Sekunden dauert, wird ein visueller und auditiver Countdown die letzten 5 Sekunden begleiten. Stell dir vor, jemand würde \"5... 4... 3... 2... 1... COUNTDOWN!\" herunterzählen und große Nummern in die Mitte des Bildschirm setzen."
 L["Flash"] = "Aufblitzen"
 L["Flashes the screen red during the last 3 seconds of any related timer."] = "Lässt den Bildschirm während der letzten 3 Sekunden eines zugehörigen Timers rot aufblitzen."
+
