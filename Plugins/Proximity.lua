@@ -249,6 +249,7 @@ end
 
 local function onDisplayEnter(self)
 	if not db.objects.tooltip then return end
+	if not activeSpellID and not inConfigMode then return end
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
 	GameTooltip:SetHyperlink("spell:" .. (activeSpellID or 44318))
 	GameTooltip:Show()

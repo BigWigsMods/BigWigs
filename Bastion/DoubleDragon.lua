@@ -203,7 +203,7 @@ end
 
 function mod:EngulfingMagicRemoved(player)
 	if UnitIsUnit(player, "player") then
-		self:OpenProximity(8)
+		self:CloseProximity()
 	end
 end
 
