@@ -11,7 +11,7 @@
 ## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Author: Ammo, Rabbit, Funkydude
-## Version: 3.400
+## Version: 3.500
 ## X-Category: Raid
 
 ## LoadManagers: AddonLoader
