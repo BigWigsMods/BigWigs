@@ -52,8 +52,6 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	local ignacious, feludius, arion = BigWigs:Translate("Ignacious"), BigWigs:Translate("Feludius"), BigWigs:Translate("Arion")
-	local terrastra, monstrosity = BigWigs:Translate("Terrastra"), BigWigs:Translate("Elementium Monstrosity")
 	return {
 		-- Ignacious
 		82631, 82660, 82663,
@@ -72,11 +70,11 @@ function mod:GetOptions()
 		-- General
 		"proximity", "switch", "bosskill"
 	}, {
-		[82631] = ignacious,
-		[82746] = feludius,
-		[83067] = arion,
-		[83565] = terrastra,
-		[92488] = monstrosity,
+		[82631] = "Ignacious",
+		[82746] = "Feludius",
+		[83067] = "Arion",
+		[83565] = "Terrastra",
+		[92488] = "Elementium Monstrosity",
 		[92067] = "heroic",
 		proximity = "general",
 	}

@@ -5,7 +5,7 @@ if L then
 
 	L.crash_say = "Schmettern auf MIR!"
 	L.worship_cooldown = "~Verehren"
-	L.adherent_bar = "Nächster Kultist %d"
+	L.adherent_bar = "Kultist %d"
 	L.adherent_message = "Kultist %d kommt!"
 	L.ooze_bar = "Schleime %d"
 	L.ooze_message = "Schleime %d kommen!"

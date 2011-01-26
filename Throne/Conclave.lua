@@ -38,16 +38,15 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	local anshal, nezir, rohash = BigWigs:Translate("Anshal"), BigWigs:Translate("Nezir"), BigWigs:Translate("Rohash")
 	return {
 		86193, "storm_shield",
 		{84645, "FLASHSHAKE"},
 		85422, 86281,
 		86307, "full_power", "berserk", "bosskill"
 	}, {
-		[86193] = rohash,
-		[84645] = nezir,
-		[85422] = anshal,
+		[86193] = "Rohash",
+		[84645] = "Nezir",
+		[85422] = "Anshal",
 		[86307] = "general",
 	}
 end

@@ -42,7 +42,6 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	local electron, magmatron, toxitron = BigWigs:Translate("Electron"), BigWigs:Translate("Magmatron"), BigWigs:Translate("Toxitron")
 	return {
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},
@@ -50,9 +49,9 @@ function mod:GetOptions()
 		"nef", {92048, "ICON"}, 92023, --XXX "berserk",
 		{"switch", "ICON"}, "bosskill"
 	}, {
-		[79501] = magmatron,
-		[79888] = electron,
-		[80161] = toxitron,
+		[79501] = "Magmatron",
+		[79888] = "Electron",
+		[80161] = "Toxitron",
 		nef = "heroic",
 		switch = "general"
 	}
