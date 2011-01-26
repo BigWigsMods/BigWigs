@@ -14,7 +14,6 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
-local hardenInterrupted, hardenTimer, thunderTimer, first = nil, nil, nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -92,7 +91,6 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
 	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
-	self:Log("SPELL_INTERRUPT", "Interrupt", "*")
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
@@ -124,7 +122,7 @@ function mod:OnEngage(diff)
 	self:Bar(82631, L["shield_bar"], 28, 82631)
 	self:Bar(82746, glaciate, 15, 82746)
 
-	hardenInterrupted, first = nil, nil
+	first = nil
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -226,27 +224,9 @@ function mod:AegisofFlame(_, spellId)
 	self:Message(82631, L["shield_up_message"], "Important", spellId, "Alert")
 end
 
-do
-	local harden = {
-		[83718] = true,
-		[92541] = true,
-		[92542] = true,
-		[92543] = true,
-	}
-	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
-		if not harden[secSpellId] then return end
-		local guid = tonumber(dGUID:sub(7, 10), 16)
-		if guid ~= 43689 then return end -- Terrastra
-		-- Someone interrupted Harden Skin, which means he won't cast Quake
-		self:SendMessage("BigWigs_StopBar", self, quake)
-		hardenInterrupted = true
-	end
-end
-
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
 	self:Bar(92541, spellName, 45, spellId)
 	self:Message(92541, spellName, "Urgent", spellId, "Info")
-	hardenInterrupted = nil
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
@@ -291,9 +271,9 @@ function mod:Switch()
 end
 
 do
+	local hardenTimer = nil
 	local flying = GetSpellInfo(83500)
 	local function quakeIncoming()
-		if hardenInterrupted then return end
 		local name, _, icon = UnitDebuff("player", flying)
 		if name then
 			mod:CancelTimer(hardenTimer, true)
@@ -302,12 +282,7 @@ do
 		mod:LocalMessage(83565, L["grounded_message"], "Personal", icon, "Info")
 	end
 
-	-- We get the quake trigger even if Harden Skin was interrupted.
 	function mod:QuakeTrigger()
-		if hardenInterrupted then
-			hardenInterrupted = nil
-			return
-		end
 		self:Bar(83565, quake, 10, 83565)
 		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", 83565, "Info")
 		hardenTimer = self:ScheduleRepeatingTimer(quakeIncoming, 2)
@@ -321,6 +296,7 @@ do
 end
 
 do
+	local thunderTimer = nil
 	local grounded = GetSpellInfo(83581)
 	local function thunderShockIncoming()
 		local name, _, icon = UnitDebuff("player", grounded)
