@@ -40,12 +40,12 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "deDE")
 if L then
-
+	L.strikes_message = "%2$dx Stöße auf %1$s"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "deDE")
 if L then
-	L.egg_vulnerable = "Zeit für Omlet!"
+	L.egg_vulnerable = "Zeit für Omelett!"
 
 	--L.omlet_trigger = "You mistake this for weakness?  Fool!"
 
@@ -67,15 +67,16 @@ if L then
 
 	L.lightning_rod_say = "Blitzableiter auf MIR!"
 
-	L.switch_trigger = "Wir kümmern uns um sie!" -- check
+	L.switch_trigger = "Wir kümmern uns um sie!"
 
 	L.thundershock_quake_soon = "%s in 10 sek!"
 
-	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..." -- check
-	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern...." -- check
+	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..."
+	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern..."
 
 	L.searing_winds_message = "Donnerschock kommt!"
 	L.grounded_message = "Erdbeben kommt!"
 
-	L.last_phase_trigger = "SCHMECKT DIE VERDAMMNIS!" -- check
+	L.last_phase_trigger = "Beeindruckende Leistung…" -- what the heck Blizz??
 end
+

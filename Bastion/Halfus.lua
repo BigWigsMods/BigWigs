@@ -18,7 +18,7 @@ local stackWarn = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.strikes_message = "%2$dx Malevolent Strikes on %1$s"
+	L.strikes_message = "%2$dx Strikes on %1$s"
 end
 L = mod:GetLocale()
 
@@ -40,7 +40,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	stackWarn = diff > 2 and 5 or 10 --8% in heroic, 6% in normal, announce around 50-60% reduced healing
+	stackWarn = diff > 2 and 5 or 10 -- 8% in heroic, 6% in normal, announce around 50-60% reduced healing
 	self:Berserk(360)
 end
 
@@ -49,7 +49,7 @@ end
 --
 
 function mod:FuriousRoar(_, spellId, _, _, spellName)
-	self:Message(86169, spellName, "Urgent", spellId)
+	self:Message(86169, spellName, "Important", spellId)
 	self:Bar(86169, spellName, 25, 86169)
 end
 
