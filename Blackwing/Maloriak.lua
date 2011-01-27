@@ -129,30 +129,6 @@ do
 	end
 end
 
---[[
-NORMAL
-engage: 0
-red/blue: 1
-blue/red: 2 - start green phase bar
-green: 3 - set counter to 0
-red/blue: 1
-blue/red: 2 - start green phase bar
-green: 3
-
-HEROIC
-engage: 0
-dark: 1
-red/blue: 2
-blue/red: 3 - start green phase bar
-green: 4 - set counter to 0
-dark: 1
-red/blue: 2
-blue/red: 3 - start green phase bar
-green: 4 - set counter to 0
-]]
-
--- XXX The phase counter is NOT working on normal, we get the "Green phase" bar when we should not.
--- XXX Someone needs to add some debug messages around here before they pull.
 local function nextPhase(timeToNext)
 	phaseCounter = phaseCounter + 1
 	local diff = mod:GetInstanceDifficulty()

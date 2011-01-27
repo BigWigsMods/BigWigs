@@ -1,3 +1,32 @@
+--[[
+
+	HOW TO REGISTER CUSTOM BAR STYLERS FROM OUTSIDE BIGWIGS
+
+local f = CreateFrame("Frame")
+local function registerMyStyle()
+	f:UnregisterEvent("ADDON_LOADED")
+	BigWigs:GetPlugin("Bars"):RegisterBarStyle("identifier", {
+		apiVersion = 1,
+		version = 1,
+		GetSpacing = function(bar) return 4 end,
+		ApplyStyle = function(bar) end,
+		BarStopped = function(bar) end,
+		GetStyleName = function() return "My Style Name" end,
+	})
+end
+f:RegisterEvent("ADDON_LOADED")
+f:SetScript("OnEvent", function(self, event, msg)
+	if event == "ADDON_LOADED" and msg:find("BigWigs") then
+		local _, _, _, _, _, reason = GetAddOnInfo("BigWigs_Plugins")
+		if reason == "MISSING" and msg == "BigWigs" then
+			registerMyStyle()
+		elseif msg == "BigWigs_Plugins" then
+			registerMyStyle()
+		end
+	end
+end)
+]]
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
