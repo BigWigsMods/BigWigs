@@ -51,7 +51,7 @@ function mod:GetOptions(CL)
 		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840,
 		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408,
 		93051,
-		"proximity", "phase_switch", "bosskill"
+		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
 		[86788] = "Valiona",
 		[86622] = "Theralion",
@@ -90,6 +90,7 @@ function mod:OnEngage(diff)
 	self:Bar(86788, blackout, 11, 86788)
 	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 103, 60639)
 	self:OpenProximity(8)
+	self:Berserk(600)
 	phaseCount = 0
 end
 
