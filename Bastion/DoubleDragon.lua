@@ -97,6 +97,19 @@ end
 -- Event Handlers
 --
 
+local function valionaHasLanded()
+	mod:SendMessage("BigWigs_StopBar", mod, L["engulfingmagic_cooldown"])
+	mod:Message("phase_switch", L["phase_bar"]:format(valiona), "Positive", 60639)
+	mod:Bar(86840, L["devouringflames_cooldown"], 26, 86840)
+	mod:Bar(86788, blackout, 11, 86788)
+end
+
+local function theralionHasLanded()
+	mod:SendMessage("BigWigs_StopBar", mod, blackout)
+	mod:SendMessage("BigWigs_StopBar", mod, L["devouringflames_cooldown"])
+	mod:Bar("phase_switch", L["phase_bar"]:format(valiona), 130, 60639)
+end
+
 function mod:TwilightShift(player, spellId, _, _, spellName, stack)
 	self:Bar(93051, spellName, 20, 93051)
 	if stack > 3 then
@@ -110,9 +123,7 @@ function mod:DazzlingDestruction()
 	if phaseCount == 1 then
 		self:Message(86408, L["dazzling_message"], "Important", 86408, "Alarm")
 	elseif phaseCount == 3 then
-		self:SendMessage("BigWigs_StopBar", self, blackout)
-		self:SendMessage("BigWigs_StopBar", self, L["devouringflames_cooldown"])
-		self:Bar("phase_switch", L["phase_bar"]:format(valiona), 135, 60639)
+		self:ScheduleTimer(theralionHasLanded, 5)
 		self:Message("phase_switch", L["phase_bar"]:format(theralion), "Positive", 60639)
 		phaseCount = 0
 	end
@@ -132,11 +143,7 @@ end
 -- It only triggers once from her yell, not 3 times.
 function mod:DeepBreath()
 	self:Bar("phase_switch", L["phase_bar"]:format(valiona), 40, 60639)
-
-	self:DelayedMessage("phase_switch", 40, L["phase_bar"]:format(valiona), "Positive", 60639)
-
-	self:Bar(86840, L["devouringflames_cooldown"], 66, 86840)
-	self:Bar(86788, blackout, 51, 86788)
+	self:ScheduleTimer(valionaHasLanded, 40)
 end
 
 function mod:BlackoutApplied(player, spellId, _, _, spellName)
