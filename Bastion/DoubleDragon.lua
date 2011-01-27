@@ -36,6 +36,7 @@ if L then
 	L.devouringflames_cooldown = "~Devouring Flames"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+	L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "%2$dx shift on %1$s"
 end
@@ -79,7 +80,8 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("UNIT_AURA")
 
-	self:Death("Win", 45992) -- They Share HP, they die at the same time
+	self:Death("Win", 45992, 45993)
+	self:Yell("Win", L["win_trigger"])
 end
 
 function mod:OnEngage(diff)
