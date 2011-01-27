@@ -7,6 +7,12 @@ if not mod then return end
 mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local causticSlime = GetSpellInfo(88917)
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -31,7 +37,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 82890,
+		"warmup", 82848, 88826, 82881, {88853, "FLASHSHAKE"}, 88917, 82890,
 		"proximity", "berserk", "bosskill"
 	}, {
 		warmup = "normal",
@@ -93,6 +99,7 @@ end
 function mod:Massacre(_, spellId, _, _, spellName)
 	self:Message(82848, spellName, "Attention", spellId)
 	self:Bar(82848, spellName, 30, spellId)
+	self:Bar(88917, causticSlime, 23, 88917)
 end
 
 function mod:Mortality(_, spellId, _, _, spellName)
