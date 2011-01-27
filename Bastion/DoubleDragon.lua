@@ -102,12 +102,14 @@ local function valionaHasLanded()
 	mod:Message("phase_switch", L["phase_bar"]:format(valiona), "Positive", 60639)
 	mod:Bar(86840, L["devouringflames_cooldown"], 26, 86840)
 	mod:Bar(86788, blackout, 11, 86788)
+	mod:OpenProximity(8)
 end
 
 local function theralionHasLanded()
 	mod:SendMessage("BigWigs_StopBar", mod, blackout)
 	mod:SendMessage("BigWigs_StopBar", mod, L["devouringflames_cooldown"])
 	mod:Bar("phase_switch", L["phase_bar"]:format(valiona), 130, 60639)
+	mod:CloseProximity()
 end
 
 function mod:TwilightShift(player, spellId, _, _, spellName, stack)
