@@ -145,6 +145,57 @@ do
 	}
 end
 
+do
+	-- TukUI Bar Styler
+	local freeBackgrounds = {}
+	local backdrop = {
+		bgFile = "Interface\\Buttons\\WHITE8X8",
+		edgeFile = "Interface\\Buttons\\WHITE8X8",
+		tile = false, tileSize = 0, edgeSize = 0.64, 
+		insets = { left = -0.64, right = -0.64, top = -0.64, bottom = -0.64}
+	}
+	local function createBackground()
+		local bg = CreateFrame("Frame")
+		bg:SetBackdrop(backdrop)
+		bg:SetBackdropColor(.1,.1,.1,1)
+		bg:SetBackdropBorderColor(.6,.6,.6,1)
+		return bg
+	end
+
+	local function freeStyle(bar)
+		local bg = bar:Get("bigwigs:tukui:bg")
+		if not bg then return end
+		bg:SetParent(UIParent)
+		bg:Hide()
+		freeBackgrounds[#freeBackgrounds + 1] = bg
+	end
+
+	local function styleBar(bar)
+		local bg = nil
+		if #freeBackgrounds > 0 then
+			bg = table.remove(freeBackgrounds)
+		else
+			bg = createBackground()
+		end
+		bg:SetParent(bar)
+		bg:ClearAllPoints()
+		bg:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
+		bg:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+		bg:SetFrameStrata("BACKGROUND")
+		bg:Show()
+		bar:Set("bigwigs:tukui:bg", bg)
+	end
+
+	barStyles.TukUI = {
+		apiVersion = 1,
+		version = 1,
+		GetSpacing = function(bar) return 4 end,
+		ApplyStyle = styleBar,
+		BarStopped = freeStyle,
+		GetStyleName = function() return "TukUI" end,
+	}
+end
+
 --------------------------------------------------------------------------------
 -- Options
 --
