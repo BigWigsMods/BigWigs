@@ -34,12 +34,15 @@ if L then
 	L.devouringflames_cooldown = "~Verschlingende Flammen"
 
 	L.valiona_trigger = "Theralion, ich werde den Gang einhüllen. Deck ihre Flucht!"
+	--L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "%2$dx Verschiebung auf %1$s"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "deDE")
 if L then
+	L.paralysis_bar = "Nächste Paralyse"
+
 	L.strikes_message = "%2$dx Stöße auf %1$s"
 end
 
