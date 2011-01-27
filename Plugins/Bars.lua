@@ -38,26 +38,25 @@ local timers = nil
 
 local clickHandlers = {}
 
+--------------------------------------------------------------------------------
+-- Bar styles setup
+--
+
+local currentBarStyler = nil
+
 local barStyles = {
 	Default = {
 		apiVersion = 1,
 		version = 1,
-		GetSpacing = function(bar) return 0 end,
-		ApplyStyle = function(bar) end,
-		BarStopped = function(bar) end,
+		--GetSpacing = function(bar) end,
+		--ApplyStyle = function(bar) end,
+		--BarStopped = function(bar) end,
 		GetStyleName = function()
 			return L.bigWigsBarStyleName_Default
 		end,
 	},
 }
 local barStyleRegister = {}
-
--- XXX this access should be static, with a pointer just changed when
--- XXX the bar style option changes
--- XXX perhaps all function access should be static as well (ApplyStyle, BarStopped, etc)
-local function getBarStyler()
-	return barStyles[db.barStyle] or barStyles.Default
-end
 
 do
 	-- BeautyCase styling, based on !BeatyCase by someone, I forget who.
@@ -331,6 +330,8 @@ do
 					elseif key == "font" then
 						local list = media:List("font")
 						db.font = list[value]
+					elseif key == "barStyle" then
+						plugin:SetBarStyle(value)
 					else
 						db[key] = value
 					end
@@ -485,6 +486,16 @@ local function barSorter(a, b)
 end
 local tmp = {}
 local function rearrangeBars(anchor)
+	if not anchor then return end
+	if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
+		if next(anchor.bars) and db.emphasize then
+			empUpdate:Show()
+		else
+			empUpdate:Hide()
+		end
+	end
+	if not next(anchor.bars) then return end
+
 	wipe(tmp)
 	for bar in pairs(anchor.bars) do
 		tmp[#tmp + 1] = bar
@@ -494,7 +505,7 @@ local function rearrangeBars(anchor)
 	local up = nil
 	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 	for i, bar in next, tmp do
-		local spacing = getBarStyler().GetSpacing(bar)
+		local spacing = currentBarStyler.GetSpacing(bar) or 0
 		bar:ClearAllPoints()
 		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
 			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT", 0, spacing)
@@ -506,17 +517,10 @@ local function rearrangeBars(anchor)
 			lastDownBar = bar
 		end
 	end
-	if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
-		if #tmp > 0 and db.emphasize then
-			empUpdate:Show()
-		else
-			empUpdate:Hide()
-		end
-	end
 end
 
 local function barStopped(event, bar)
-	getBarStyler().BarStopped(bar)
+	currentBarStyler.BarStopped(bar)
 	local a = bar:Get("bigwigs:anchor")
 	if a and a.bars and a.bars[bar] then
 		a.bars[bar] = nil
@@ -677,6 +681,8 @@ function plugin:OnRegister()
 	for k, v in pairs(barStyles) do
 		barStyleRegister[k] = v:GetStyleName()
 	end
+
+	self:SetBarStyle(db.barStyle)
 end
 
 function plugin:OnPluginEnable()
@@ -718,7 +724,7 @@ function plugin:BigWigs_SetConfigureTarget(event, module)
 end
 
 --------------------------------------------------------------------------------
--- Bar styles
+-- Bar styles API
 --
 
 do
@@ -736,6 +742,39 @@ do
 		if not barStyles[key] or barStyles[key].version < styleData.version then
 			barStyles[key] = styleData
 		end
+	end
+end
+
+do
+	local errorNoStyle = "No style with the ID %q has been registered. Reverting to default style."
+	local function noop() end
+	function plugin:SetBarStyle(style)
+		if type(style) ~= "string" or not barStyles[style] then
+			error(errorNoStyle:format(tostring(style)))
+			style = "Default"
+		end
+		local newBarStyler = barStyles[style]
+		if not newBarStyler.ApplyStyle then newBarStyler.ApplyStyle = noop end
+		if not newBarStyler.BarStopped then newBarStyler.BarStopped = noop end
+		if not newBarStyler.GetSpacing then newBarStyler.GetSpacing = noop end
+
+		-- Iterate all running bars
+		if currentBarStyler then
+			for bar in pairs(normalAnchor.bars) do
+				currentBarStyler.BarStopped(bar)
+				newBarStyler.ApplyStyle(bar)
+			end
+			for bar in pairs(emphasizeAnchor.bars) do
+				currentBarStyler.BarStopped(bar)
+				newBarStyler.ApplyStyle(bar)
+			end
+		end
+		currentBarStyler = newBarStyler
+
+		rearrangeBars(normalAnchor)
+		rearrangeBars(emphasizeAnchor)
+
+		db.barStyle = style
 	end
 end
 
@@ -999,7 +1038,7 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	if superemp and superemp:IsSuperEmphasized(module, key) then
 		actuallyEmphasize(bar, time)
 	end
-	getBarStyler().ApplyStyle(bar)
+	currentBarStyler.ApplyStyle(bar)
 	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 end
