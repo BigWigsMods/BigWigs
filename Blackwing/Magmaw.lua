@@ -56,7 +56,7 @@ function mod:GetOptions()
 	return {
 		"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931,
 		"inferno", {"phase2", "PROXIMITY"},
-		"bosskill"
+		"berserk", "bosskill"
 	}, {
 		slump = "normal",
 		inferno = "heroic",
@@ -87,6 +87,7 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		self:Bar("inferno", L["blazing_bar"], 20, 92191)
 	end
+	self:Berserk(600)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
 	self:Bar(78006, pillarOfFlame, 30, 78006)
 	lavaSpew = 0
