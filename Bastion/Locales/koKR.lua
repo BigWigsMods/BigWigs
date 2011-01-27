@@ -34,6 +34,7 @@ if L then
 	L.devouringflames_cooldown = "다음 파멸의 불길"
 
 	L.valiona_trigger = "테랄리온, 내가 전당에 불을 뿜겠다. 놈들의 퇴로를 막아라!"
+	L.win_trigger = "그나마... 테랄리온 녀석도 죽어서 다행이야..."
 
 	L.twilight_shift = "황혼 이동 x%2$d : %1$s"
 end
@@ -45,7 +46,13 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
+	L.egg_vulnerable = "알 요리 시간!"
 
+	L.omelet_trigger = "이게 약해진 걸로 보이느냐"	--check
+
+	L.phase13 = "1 & 3 단계"
+	L.phase = "단계"
+	L.phase_desc = "단계 변화에 대해 알립니다."
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "koKR")
@@ -72,15 +79,4 @@ if L then
 	L.grounded_message = "지진이 다가옴!"
 
 	L.last_phase_trigger = "꽤나 인상적이었다만..."
-end
-
-L = BigWigs:NewBossLocale("Sinestra", "koKR")
-if L then
-	L.egg_vulnerable = "알 요리 시간!"
-
-	L.omelet_trigger = "이게 약해진 걸로 보이느냐"	--check
-
-	L.phase13 = "1 & 3 단계"
-	L.phase = "단계"
-	L.phase_desc = "단계 변화에 대해 알립니다."
 end

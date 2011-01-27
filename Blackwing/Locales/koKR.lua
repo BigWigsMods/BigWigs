@@ -1,7 +1,5 @@
 local L = BigWigs:NewBossLocale("Atramedes", "koKR")
 if L then
-	L.tracking_me = "나를 추적!"
-
 	L.ground_phase = "지상 단계"
 	L.ground_phase_desc = "아트라메데스의 착지를 알립니다."
 	L.air_phase = "공중 단계"
@@ -70,8 +68,6 @@ if L then
 	L.release_aberration_message = "돌연변이 %d 남음"
 	L.release_all = "모든 실험체 %d!"
 
-	L.bitingchill_say = "나에게 살을 에는 추위!"
-
 	L.flashfreeze = "~순간 빙결"
 	L.next_blast = "~맹렬한 폭발"
 
@@ -104,8 +100,6 @@ if L then
 
 	L.onyxia_power_message = "곧 폭발!"
 
-	L.cinder_say = "나에게 폭발하는 잿더미!"
-
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
 end
 
@@ -126,7 +120,6 @@ if L then
 
 	L.acquiring_target = "대상 획득"
 
-	L.cloud_say = "나에게 화학 구름!"
 	L.cloud_message = "당신은 화학 구름!"
 	L.protocol_message = "독 폭탄!"
 
