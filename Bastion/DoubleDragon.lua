@@ -30,6 +30,7 @@ if L then
 	L.breath_message = "Deep Breaths incoming!"
 	L.dazzling_message = "Swirly zones incoming!"
 
+	L.blast_say = "Blast on ME!"
 	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
 
@@ -50,6 +51,7 @@ function mod:GetOptions(CL)
 	return {
 		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840,
 		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408,
+		{86369, "SAY"},
 		93051,
 		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
@@ -72,6 +74,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876, 92878)
 	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876, 92878)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
+
+	self:Log("SPELL_CAST_START", "TwilightBlast", 86369, 92898, 92899, 92900)
 
 	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639, 95641)
 	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640, 95639, 95641)
@@ -97,6 +101,21 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function checkTarget(sGUID)
+	local mobId = mod:GetUnitIdByGUID(sGUID)
+	if mobId then
+		local player = UnitName(mobId.."target")
+		if UnitIsUnit("player", player) then
+			mod:Say(86369, L["blast_say"])
+		end
+	end
+end
+
+function mod:TwilightBlast(...)
+	local sGUID = select(11, ...)
+	self:ScheduleTimer(checkTarget, 0.1, sGUID) -- might need to adjust this
+end
 
 local function valionaHasLanded()
 	mod:SendMessage("BigWigs_StopBar", mod, L["engulfingmagic_cooldown"])
