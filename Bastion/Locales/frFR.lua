@@ -31,18 +31,22 @@ do
 		L.breath_message = "Arrivée des Souffles profonds !"
 		L.dazzling_message = "Arrivée des zones tourbillonnantes !"
 
-		L.engulfingmagic_say = "Magie enveloppante sur moi !"
+		L.blast_say = "Déflagration sur moi !"
+		L.engulfingmagic_say = "Magie sur moi !"
 		L.engulfingmagic_cooldown = "~Magie enveloppante"
 
 		L.devouringflames_cooldown = "~Flammes dévorantes"
 
 		L.valiona_trigger = "Theralion, je m'occupe du vestibule. Couvre leur fuite !" -- à vérifier
+		L.win_trigger = "Au moins... Theralion meurt avec moi..." -- à vérifier
 
 		L.twilight_shift = "%2$dx Transferts sur %1$s"
 	end
 
 	L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "frFR")
 	if L then
+		L.paralysis_bar = "Prochaine paralysie"
+
 		L.strikes_message = "%2$dx Frappes sur %1$s"
 	end
 
@@ -59,8 +63,8 @@ do
 
 	L = BigWigs:NewBossLocale("Ascendant Council", "frFR")
 	if L then
-		L.static_overload_say = "Surcharge statique sur moi !"
-		L.gravity_core_say = "Noyau de gravité sur moi !"
+		L.static_overload_say = "Surcharge sur moi !"
+		L.gravity_core_say = "Gravité sur moi !"
 		L.health_report = "%s est à %d%%, changement de phase imminent !"
 		L.switch = "Changement"
 		L.switch_desc = "Prévient quand les boss échangent leurs places."

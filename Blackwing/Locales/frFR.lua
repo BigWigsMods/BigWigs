@@ -73,8 +73,6 @@ do
 		L.release_aberration_message = "%d aberrations restantes !"
 		L.release_all = "%d aberrations libérées !"
 
-		L.bitingchill_say = "Frisson mordant sur moi !"
-
 		L.flashfreeze = "~Gel instantané"
 		L.next_blast = "~Déflagration brûlante"
 
@@ -102,12 +100,10 @@ do
 
 		L.phase_three_trigger = "J'ai tout fait pour être un hôte accomodant, mais vous ne daignez pas mourir ! Oublions les bonnes manières et passons aux choses sérieuses... VOUS TUER TOUS !" -- à vérifier
 
-		L.crackle_trigger = "L'électricité crépite dans l'air !" -- à vérifier
+		L.crackle_trigger = "L'électricité crépite dans l'air !"
 		L.crackle_message = "Electrocuter imminent !"
 
 		L.onyxia_power_message = "Explosion imminente !"
-
-		L.cinder_say = "Braises explosives sur moi !"
 
 		L.chromatic_prototype = "Prototype chromatique" -- 3 adds name
 	end
@@ -130,7 +126,6 @@ do
 		L.acquiring_target = "Acquisition d'une cible"
 
 		L.bomb_message = "Une Bombe de poison vous poursuit !"
-		L.cloud_say = "Nuage chimique sur moi !"
 		L.cloud_message = "Nuage chimique sur vous !"
 		L.protocol_message = "Arrivée de Bombes de poison !"
 
