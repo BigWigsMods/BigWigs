@@ -31,6 +31,7 @@ do
 		L.breath_message = "Tiefer Atem kommt!"
 		L.dazzling_message = "Wirbelzonen kommen!"
 
+		L.blast_say = "Druckwelle auf MIR!"
 		L.engulfingmagic_say = "Einhüllende Magie auf MIR!"
 		L.engulfingmagic_cooldown = "~Einhüllende Magie"
 

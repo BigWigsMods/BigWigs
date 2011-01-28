@@ -30,8 +30,8 @@ do
 	L = BigWigs:NewBossLocale("Magmaw", "deDE")
 	if L then
 		-- heroic
-		L.blazing = "Skeleton Ads"
-		L.blazing_desc = "Beschwört [Blazing Bone Construct]." -- need german name
+		L.blazing = "Loderndes Knochenkonstrukt"
+		L.blazing_desc = "Warnt vor dem Auftauchen der Lodernden Knochenkonstrukte."
 		L.blazing_message = "Add kommt!"
 		L.blazing_bar = "Nächstes Skelett"
 
@@ -51,11 +51,11 @@ do
 
 		L.infection_message = "Infektion auf DIR!"
 
-		L.expose_trigger = "Kopf"
+		L.expose_trigger = "Kopf" -- check
 		L.expose_message = "Kopf freigelegt!"
 
-		L.spew_bar = "~Next Spew"
-		L.spew_warning = "Lava Spew Soon!"
+		L.spew_bar = "~Lavafontäne"
+		L.spew_warning = "Lavafontäne bald!"
 	end
 
 	L = BigWigs:NewBossLocale("Maloriak", "deDE")
@@ -85,7 +85,7 @@ do
 		L.blue_phase = "|cFF809FFEBlaue|r Phase"
 		L.green_phase_trigger = "grüne"
 		L.green_phase = "|cFF33FF00Grüne|r Phase"
-		L.dark_phase_trigger = "dunkle" --verifizieren
+		L.dark_phase_trigger = "dunkle" -- verifizieren
 		L.dark_phase = "|cFF660099Dunkle|r Phase"
 	end
 
