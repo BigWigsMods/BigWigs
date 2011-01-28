@@ -85,7 +85,7 @@ end
 
 function mod:OnEngage(diff)
 	if diff > 2 then
-		self:Bar("blazing", L["blazing_bar"], 20, 92191)
+		self:Bar("blazing", L["blazing_bar"], 20, "SPELL_SHADOW_RAISEDEAD")
 	end
 	self:Berserk(600)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
@@ -127,8 +127,8 @@ do
 end
 
 function mod:BlazingInferno(_, spellId)
-	self:Message("blazing", L["blazing_message"], "Urgent", spellId, "Info")
-	self:Bar("blazing", L["blazing_bar"], 35, spellId)
+	self:Message("blazing", L["blazing_message"], "Urgent", "Interface\\Icons\\SPELL_SHADOW_RAISEDEAD", "Info")
+	self:Bar("blazing", L["blazing_bar"], 35, "SPELL_SHADOW_RAISEDEAD")
 end
 
 function mod:Phase2()

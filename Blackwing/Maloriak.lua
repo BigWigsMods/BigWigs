@@ -182,17 +182,15 @@ do
 	local handle = nil
 	local function release()
 		aberrations = aberrations - 3
-		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", 688)
+		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", 688) --Summon Imp Icon
 	end
 	function mod:ReleaseAberrations()
 		-- He keeps casting it even if there are no adds left to release...
-		if aberrations <= 0 then return end
-		handle = self:ScheduleTimer(release, 1.5)
+		if aberrations < 1 then return end
+		handle = self:ScheduleTimer(release, 2)
 	end
-	function mod:Interrupt(_, _, _, secSpellId, _, _, _, _, _, dGUID)
+	function mod:Interrupt(_, _, _, secSpellId)
 		if secSpellId ~= 77569 then return end
-		local guid = tonumber(dGUID:sub(7, 10), 16)
-		if guid ~= 41378 then return end
 		-- Someone interrupted release aberrations!
 		self:CancelTimer(handle, true)
 		handle = nil
