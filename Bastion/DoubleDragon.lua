@@ -50,7 +50,7 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840,
-		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408,
+		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, {92898, "SAY"},
 		93051,
 		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
@@ -77,6 +77,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639, 95641)
 	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640, 95639, 95641)
 
+	self:Log("SPELL_CAST_START", "TwilightBlast", 86369, 95416, 92898, 92899, 92900)
+
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:RegisterEvent("UNIT_AURA")
@@ -98,6 +100,21 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local function blastWarn()
+		local theralionId = mod:GetUnitIdByGUID(45993)
+		if theralionId then
+			local target = UnitName(theralionId .. "target")
+			if UnitIsUnit("player", target) then
+				mod:Say(92898, L["blast_say"])
+			end
+		end
+	end
+	function mod:TwilightBlast()
+		self:ScheduleTimer(blastWarn, 0.1)
+	end
+end
 
 local function valionaHasLanded()
 	mod:SendMessage("BigWigs_StopBar", mod, L["engulfingmagic_cooldown"])
