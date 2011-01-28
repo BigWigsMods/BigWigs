@@ -1,130 +1,134 @@
-local L = BigWigs:NewBossLocale("Atramedes", "deDE")
-if L then
-	L.ground_phase = "Bodenphase"
-	L.ground_phase_desc = "Warnt, wenn Atramedes landet."
-	L.air_phase = "Luftphase"
-	L.air_phase_desc = "Warnt, wenn Atramedes abhebt."
 
-	L.air_phase_trigger = "Ja, lauft! Jeder Schritt lässt Euer Herz stärker klopfen. Laut und heftig... ohrenbetäubend. Es gibt kein Entkommen!" -- check
+do
+	local L = BigWigs:NewBossLocale("Atramedes", "deDE")
+	if not L then return end
+	if L then
+		L.ground_phase = "Bodenphase"
+		L.ground_phase_desc = "Warnt, wenn Atramedes landet."
+		L.air_phase = "Luftphase"
+		L.air_phase_desc = "Warnt, wenn Atramedes abhebt."
 
-	L.sonicbreath_cooldown = "~Schallatem"
-end
+		L.air_phase_trigger = "Ja, lauft! Jeder Schritt lässt Euer Herz stärker klopfen. Laut und heftig... ohrenbetäubend. Es gibt kein Entkommen!" -- check
 
-L = BigWigs:NewBossLocale("Chimaeron", "deDE")
-if L then
-	L.bileotron_engage = "Der Gall-O-Tron springt an und stößt eine übel riechende Substanz aus."
-	--L.win_trigger = "A shame to lose that experiment..."
+		L.sonicbreath_cooldown = "~Schallatem"
+	end
 
-	L.next_system_failure = "~Systemversagen"
-	L.break_message = "%2$dx Brechen auf %1$s"
+	L = BigWigs:NewBossLocale("Chimaeron", "deDE")
+	if L then
+		L.bileotron_engage = "Der Gall-O-Tron springt an und stößt eine übel riechende Substanz aus."
+		--L.win_trigger = "A shame to lose that experiment..."
 
-	L.phase2_message = "Sterblichkeitsphase bald!"
+		L.next_system_failure = "~Systemversagen"
+		L.break_message = "%2$dx Brechen auf %1$s"
 
-	L.warmup = "Aufwärmen"
-	L.warmup_desc = "Timer für die Aufwärmphase."
-end
+		L.phase2_message = "Sterblichkeitsphase bald!"
 
-L = BigWigs:NewBossLocale("Magmaw", "deDE")
-if L then
-	-- heroic
-	L.blazing = "Skeleton Ads"
-	L.blazing_desc = "Beschwört [Blazing Bone Construct]." -- need german name
-	L.blazing_message = "Add kommt!"
-	L.blazing_bar = "Nächstes Skelett"
+		L.warmup = "Aufwärmen"
+		L.warmup_desc = "Timer für die Aufwärmphase."
+	end
 
-	L.phase2 = "Phase 2"
-	L.phase2_desc = "Warnt vor dem Übergang in Phase 2 und öffnet die Anzeige naher Spieler."
-	L.phase2_message = "Phase 2!"
-	--L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L = BigWigs:NewBossLocale("Magmaw", "deDE")
+	if L then
+		-- heroic
+		L.blazing = "Skeleton Ads"
+		L.blazing_desc = "Beschwört [Blazing Bone Construct]." -- need german name
+		L.blazing_message = "Add kommt!"
+		L.blazing_bar = "Nächstes Skelett"
 
-	-- normal
-	L.pillar_of_flame_cd = "~Flammensäule"
+		L.phase2 = "Phase 2"
+		L.phase2_desc = "Warnt vor dem Übergang in Phase 2 und öffnet die Anzeige naher Spieler."
+		L.phase2_message = "Phase 2!"
+		--L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
-	L.slump = "Nach vorne schlittern (Rodeo)"
-	L.slump_desc = "Warnt vor dem nach vorne Schlittern, das das Rodeo erlaubt zu starten."
-	L.slump_bar = "Nächstes Rodeo"
-	L.slump_message = "Yeehaa, Rodeo!"
-	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
+		-- normal
+		L.pillar_of_flame_cd = "~Flammensäule"
 
-	L.infection_message = "Infektion auf DIR!"
+		L.slump = "Nach vorne schlittern (Rodeo)"
+		L.slump_desc = "Warnt vor dem nach vorne Schlittern, das das Rodeo erlaubt zu starten."
+		L.slump_bar = "Nächstes Rodeo"
+		L.slump_message = "Yeehaa, Rodeo!"
+		L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
 
-	L.expose_trigger = "Kopf"
-	L.expose_message = "Kopf freigelegt!"
+		L.infection_message = "Infektion auf DIR!"
 
-	L.spew_bar = "~Next Spew"
-	L.spew_warning = "Lava Spew Soon!"
-end
+		L.expose_trigger = "Kopf"
+		L.expose_message = "Kopf freigelegt!"
 
-L = BigWigs:NewBossLocale("Maloriak", "deDE")
-if L then
-	--heroic
-	L.sludge = "Dunkler Schlick"
-	L.sludge_desc = "Warnt, wenn du in Dunkler Schlick stehst."
-	L.sludge_message = "Schlick auf DIR!"
+		L.spew_bar = "~Next Spew"
+		L.spew_warning = "Lava Spew Soon!"
+	end
 
-	--normal
-	L.final_phase = "Finale Phase"
+	L = BigWigs:NewBossLocale("Maloriak", "deDE")
+	if L then
+		--heroic
+		L.sludge = "Dunkler Schlick"
+		L.sludge_desc = "Warnt, wenn du in Dunkler Schlick stehst."
+		L.sludge_message = "Schlick auf DIR!"
 
-	L.release_aberration_message = "%s Adds noch!"
-	L.release_all = "%s Adds freigelassen!"
+		--normal
+		L.final_phase = "Finale Phase"
 
-	L.flashfreeze = "~Blitzeis"
-	L.next_blast = "~Sengende Explosion"
+		L.release_aberration_message = "%s Adds noch!"
+		L.release_all = "%s Adds freigelassen!"
 
-	L.phase = "Phasen"
-	L.phase_desc = "Warnt vor Phasenwechsel."
-	L.next_phase = "Nächste Phase"
-	L.green_phase_bar = "Grüne Phase"
+		L.flashfreeze = "~Blitzeis"
+		L.next_blast = "~Sengende Explosion"
 
-	L.red_phase_trigger = "rote"
-	L.red_phase = "|cFFFF0000Rote|r Phase"
-	L.blue_phase_trigger = "blaue"
-	L.blue_phase = "|cFF809FFEBlaue|r Phase"
-	L.green_phase_trigger = "grüne"
-	L.green_phase = "|cFF33FF00Grüne|r Phase"
-	L.dark_phase_trigger = "dunkle" --verifizieren
-	L.dark_phase = "|cFF660099Dunkle|r Phase"
-end
+		L.phase = "Phasen"
+		L.phase_desc = "Warnt vor Phasenwechsel."
+		L.next_phase = "Nächste Phase"
+		L.green_phase_bar = "Grüne Phase"
 
-L = BigWigs:NewBossLocale("Nefarian", "deDE")
-if L then
-	L.phase = "Phasen"
-	L.phase_desc = "Warnt vor Phasenwechsel."
+		L.red_phase_trigger = "rote"
+		L.red_phase = "|cFFFF0000Rote|r Phase"
+		L.blue_phase_trigger = "blaue"
+		L.blue_phase = "|cFF809FFEBlaue|r Phase"
+		L.green_phase_trigger = "grüne"
+		L.green_phase = "|cFF33FF00Grüne|r Phase"
+		L.dark_phase_trigger = "dunkle" --verifizieren
+		L.dark_phase = "|cFF660099Dunkle|r Phase"
+	end
 
-	L.phase_two_trigger = "Verfluchte Sterbliche! Ein solcher Umgang mit dem Eigentum anderer verlangt nach Gewalt!" -- check
+	L = BigWigs:NewBossLocale("Nefarian", "deDE")
+	if L then
+		L.phase = "Phasen"
+		L.phase_desc = "Warnt vor Phasenwechsel."
 
-	L.phase_three_trigger = "Ich habe versucht, ein guter Gastgeber zu sein, aber ihr wollt einfach nicht sterben! Genug der Spielchen! Ich werde euch einfach... ALLE TÖTEN!" -- check
+		L.phase_two_trigger = "Verfluchte Sterbliche! Ein solcher Umgang mit dem Eigentum anderer verlangt nach Gewalt!" -- check
 
-	L.crackle_trigger = "Elektrizität lässt die Luft knistern!" -- check
-	L.crackle_message = "Stromschlag bald!"
+		L.phase_three_trigger = "Ich habe versucht, ein guter Gastgeber zu sein, aber ihr wollt einfach nicht sterben! Genug der Spielchen! Ich werde euch einfach... ALLE TÖTEN!" -- check
 
-	L.onyxia_power_message = "Überladung bald!"
+		L.crackle_trigger = "Elektrizität lässt die Luft knistern!" -- check
+		L.crackle_message = "Stromschlag bald!"
 
-	L.chromatic_prototype = "Chromatischer Prototyp"
-end
+		L.onyxia_power_message = "Überladung bald!"
 
-L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
-if L then
-	L.nef = "Lord Victor Nefarius"
-	L.nef_desc = "Warnungen für Nefarians Fähigkeiten."
-	L.switch = "Wechsel"
-	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
-	L.switch_message = "%s %s"
+		L.chromatic_prototype = "Chromatischer Prototyp"
+	end
 
-	L.next_switch = "Nächster Wechsel"
+	L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
+	if L then
+		L.nef = "Lord Victor Nefarius"
+		L.nef_desc = "Warnungen für Nefarians Fähigkeiten."
+		L.switch = "Wechsel"
+		L.switch_desc = "Warnt vor dem Wechseln der Bosse."
+		L.switch_message = "%s %s"
 
-	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+		L.next_switch = "Nächster Wechsel"
 
-	L.nef_next = "~Fähigkeiten Buff"
+		--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+		--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
-	L.acquiring_target = "Zielerfassung"
+		L.nef_next = "~Fähigkeiten Buff"
 
-	L.bomb_message = "Giftbombe verfolgt DICH!"
-	L.cloud_message = "Wolke auf DIR!"
-	L.protocol_message = "Giftbomben kommen!"
+		L.acquiring_target = "Zielerfassung"
 
-	L.iconomnotron = "Symbol auf aktivem Boss"
-	L.iconomnotron_desc = "Plaziert das primäre Schlachtzugssymbol auf dem aktiven Boss (benötigt Assistent oder höher)."
+		L.bomb_message = "Giftbombe verfolgt DICH!"
+		L.cloud_message = "Wolke auf DIR!"
+		L.protocol_message = "Giftbomben kommen!"
+
+		L.iconomnotron = "Symbol auf aktivem Boss"
+		L.iconomnotron_desc = "Plaziert das primäre Schlachtzugssymbol auf dem aktiven Boss (benötigt Assistent oder höher)."
+	end
 end
 
