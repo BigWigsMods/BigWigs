@@ -76,14 +76,14 @@ if L then
 	L.next_phase = "다음 단계"
 	L.green_phase_bar = "녹색 단계"
 
-	L.red_phase_trigger = "섞고 흔들어서, 열을 가한다..."
+	L.red_phase_trigger = "붉은" --확인
 	L.red_phase = "|cFFFF0000붉은|r 단계"
-	L.blue_phase_trigger = "급격한 온도 변화에 필멸의 육신"
+	L.blue_phase_trigger = "푸른" --확인
 	L.blue_phase = "|cFF809FFE푸른|r 단계"
-	L.green_phase_trigger = "이건 좀 불안정하지만"
+	L.green_phase_trigger = "초록" --확인
 	L.green_phase = "|cFF33FF00초록|r 단계"
+	L.dark_phase_trigger = "암흑" --확인
 	L.dark_phase = "|cFF660099암흑|r 단계"
-	L.dark_phase_trigger = "혼합물이 너무 약하구나, 말로리악!"
 end
 
 L = BigWigs:NewBossLocale("Nefarian", "koKR")
