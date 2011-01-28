@@ -13,6 +13,7 @@ mod:RegisterEnableMob(41378)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local aberrations = 18
 local phaseCounter = 0
+local warnedAlready = nil
 local maloriak = BigWigs:Translate("Maloriak")
 local chillTargets = mod:NewTargetList()
 
@@ -91,10 +92,18 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Emote("Red", L["red_phase_trigger"])
-	self:Emote("Blue", L["blue_phase_trigger"])
-	self:Emote("Green", L["green_phase_trigger"])
-	self:Emote("Dark", L["dark_phase_trigger"])
+	-- We keep the emotes in case the group uses Curse of Tongues, in which
+	-- case the yells become Demonic.
+	-- AND EVEN WITH THIS COMMENT HERE, YOU REMOVED IT WITHOUT ASKING?
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+
+	-- We keep the yell triggers around because sometimes he does them far ahead
+	-- of the emote.
+	-- What about this comment then, wasn't it clear enough?
+	self:Yell("Red", L["red_phase_trigger"])
+	self:Yell("Blue", L["blue_phase_trigger"])
+	self:Yell("Green", L["green_phase_trigger"])
+	self:Yell("Dark", L["dark_phase_trigger"])
 
 	self:Death("Win", 41378)
 end
@@ -103,6 +112,7 @@ function mod:OnEngage(diff)
 	self:Berserk(diff > 2 and 720 or 420)
 	aberrations = 18
 	phaseCounter = 0
+	warnedAlready = nil
 end
 
 --------------------------------------------------------------------------------
@@ -131,7 +141,27 @@ local function nextPhase(timeToNext)
 	end
 end
 
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	local potion = msg:match("INV_(.-).BLP")
+	if not potion then return end
+	if warnedAlready then
+		warnedAlready = nil
+		return
+	end
+	if potion == "POTION_20" then
+		self:Blue()
+	elseif potion == "POTION_24" then
+		self:Red()
+	elseif potion == "POTION_162" then
+		self:Green()
+	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
+		self:Dark()
+	end
+	warnedAlready = nil
+end
+
 function mod:Red()
+	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"]) -- XXX untested, but seems logical
 	self:Bar(92968, L["next_blast"], 25, 92968)
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
@@ -140,6 +170,7 @@ function mod:Red()
 end
 
 function mod:Blue()
+	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
@@ -148,6 +179,7 @@ function mod:Blue()
 end
 
 function mod:Green()
+	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
