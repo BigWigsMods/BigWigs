@@ -29,8 +29,8 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhCN")
 if L then
-	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "Summons Blazing Bone Construct"
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "Summons Blazing Bone Construct"
 
 	L.slump = "Slump"
 	L.slump_desc = "Magmaw slumps forward exposing itself."

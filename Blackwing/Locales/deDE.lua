@@ -27,8 +27,10 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "deDE")
 if L then
 	-- heroic
-	L.inferno = "Loderndes Inferno"
-	L.inferno_desc = "Beschwört [Blazing Bone Construct]." -- need german name
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "Beschwört [Blazing Bone Construct]." -- need german name
+	L.blazing_message = "Add kommt!"
+	L.blazing_bar = "Nächstes Skelett"
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warnt vor dem Übergang in Phase 2 und öffnet die Anzeige naher Spieler."
@@ -37,9 +39,6 @@ if L then
 
 	-- normal
 	L.pillar_of_flame_cd = "~Flammensäule"
-
-	L.blazing_message = "Add kommt!"
-	L.blazing_bar = "Nächstes Skelett"
 
 	L.slump = "Nach vorne schlittern (Rodeo)"
 	L.slump_desc = "Warnt vor dem nach vorne Schlittern, das das Rodeo erlaubt zu starten."
@@ -51,6 +50,9 @@ if L then
 
 	L.expose_trigger = "Kopf"
 	L.expose_message = "Kopf freigelegt!"
+
+	L.spew_bar = "~Next Spew"
+	L.spew_warning = "Lava Spew Soon!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")

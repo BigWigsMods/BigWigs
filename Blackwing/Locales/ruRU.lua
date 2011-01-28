@@ -28,13 +28,19 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "ruRU")
 if L then
-	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "Призывает Blazing Bone Construct."
-
-	L.pillar_of_flame_cd = "~Огненный столп"
-	
+	-- heroic
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "Призывает Blazing Bone Construct."
 	L.blazing_message = "Надвигается помощник!"
 	L.blazing_bar = "След. скелет"
+
+	L.phase2 = "Phase 2"
+	L.phase2_desc = "Warn for Phase 2 transition and display range check."
+	L.phase2_message = "Phase 2!"
+	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+
+	-- normal
+	L.pillar_of_flame_cd = "~Огненный столп"
 
 	L.slump = "Падение (Родео)"
 	L.slump_desc = "Магмарь падает вперед открывая себя, позволяя начать родео."
@@ -43,9 +49,12 @@ if L then
 	L.slump_trigger = "%s внезапно падает, выставляя клешки!"
 
 	L.infection_message = "Вы заражены!"
-	
+
 	L.expose_trigger = "голову"
 	L.expose_message = "Голова обнажена!"
+
+	L.spew_bar = "~Next Spew"
+	L.spew_warning = "Lava Spew Soon!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
@@ -92,7 +101,7 @@ if L then
 
 	L.crackle_trigger = "В воздухе трещат электрические разряды!"
 	L.crackle_message = "Скоро Электрический удар!"
-	
+
 	L.onyxia_power_message = "Скоро Взрыв!"
 
 	L.cinder_say = "На МНЕ - Взрывчатый пепел!"

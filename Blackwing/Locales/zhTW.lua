@@ -29,8 +29,8 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhTW")
 if L then
-	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "當召喚Blazing Bone Construct時發出警報。"
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "當召喚Blazing Bone Construct時發出警報。"
 
 	L.slump = "跌落"
 	L.slump_desc = "當跌落並暴露時發出警報。"

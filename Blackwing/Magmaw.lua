@@ -10,9 +10,7 @@ mod:RegisterEnableMob(41570)
 -- Locals
 --
 
-local lavaSpew = 0
 local phase = 1
-local inferno, pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,8 +19,10 @@ local inferno, pillarOfFlame = GetSpellInfo(92191), GetSpellInfo(78006)
 local L = mod:NewLocale("enUS", true)
 if L then
 	-- heroic
-	L.inferno = inferno
-	L.inferno_desc = "Summons Blazing Bone Construct."
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "Summons Blazing Bone Construct."
+	L.blazing_message = "Add incoming!"
+	L.blazing_bar = "Next skeleton"
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warn for Phase 2 transition and display range check."
@@ -31,9 +31,6 @@ if L then
 
 	-- normal
 	L.pillar_of_flame_cd = "~Pillar of Flame"
-
-	L.blazing_message = "Add incoming!"
-	L.blazing_bar = "Next skeleton"
 
 	L.slump = "Slump (Rodeo)"
 	L.slump_desc = "Warn for when Magmaw slumps forward and exposes himself, allowing the riding rodeo to start."
@@ -45,6 +42,9 @@ if L then
 
 	L.expose_trigger = "head"
 	L.expose_message = "Head exposed!"
+
+	L.spew_bar = "~Next Spew"
+	L.spew_warning = "Lava Spew Soon!"
 end
 L = mod:GetLocale()
 
@@ -55,11 +55,11 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931,
-		"inferno", {"phase2", "PROXIMITY"},
+		"blazing", {"phase2", "PROXIMITY"},
 		"berserk", "bosskill"
 	}, {
 		slump = "normal",
-		inferno = "heroic",
+		blazing = "heroic",
 		bosskill = "general"
 	}
 end
@@ -74,7 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 94679, 78097, 78941, 91913, 94678)
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617) -- check IDs
-	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 91931)
+	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690, 91919, 91931, 91932)
 	self:Emote("Slump", L["slump_trigger"])
 	self:Emote("Vulnerability", L["expose_trigger"])
 
@@ -85,12 +85,13 @@ end
 
 function mod:OnEngage(diff)
 	if diff > 2 then
-		self:Bar("inferno", L["blazing_bar"], 20, 92191)
+		self:Bar("blazing", L["blazing_bar"], 20, 92191)
 	end
 	self:Berserk(600)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
-	self:Bar(78006, pillarOfFlame, 30, 78006)
-	lavaSpew = 0
+	self:Bar(78006, GetSpellInfo(78006), 30, 78006) --Pillar of Flame
+	self:Bar(91931, L["spew_bar"], 24, 91931)
+	self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
 	phase = 1
 end
 
@@ -98,24 +99,36 @@ end
 -- Event Handlers
 --
 
-function mod:Vulnerability()
-	self:Message(79011, L["expose_message"], "Positive", 79011)
-	self:Bar(79011, L["expose_message"], 30, 79011)
-	-- XXX 10 sec after vulnerability ends, might not be accurate
-	self:Bar(78006, L["pillar_of_flame_cd"], 40, 78006)
+do
+	local function rebootTimers()
+		mod:Bar(78006, L["pillar_of_flame_cd"], 9.5, 78006)
+		mod:Bar(91931, L["spew_bar"], 4.5, 91931)
+	end
+	function mod:Vulnerability()
+		self:Message(79011, L["expose_message"], "Positive", 79011)
+		self:Bar(79011, L["expose_message"], 30, 79011)
+		self:SendMessage("BigWigs_StopBar", self, L["pillar_of_flame_cd"])
+		self:SendMessage("BigWigs_StopBar", self, L["spew_bar"])
+		self:ScheduleTimer(rebootTimers, 30)
+	end
 end
 
-function mod:LavaSpew(_, spellId, _, _, spellName)
-	if (GetTime() - lavaSpew) > 6 then
-		self:Message(91931, spellName, "Important", spellId)
-		self:Bar(91931, spellName, 26, spellId)
+do
+	local prev = 0
+	function mod:LavaSpew(_, spellId, _, _, spellName)
+		local time = GetTime()
+		if time - prev > 10 then
+			prev = time
+			self:Message(91931, spellName, "Important", spellId)
+			self:Bar(91931, L["spew_bar"], 26, spellId)
+			self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
+		end
 	end
-	lavaSpew = GetTime()
 end
 
 function mod:BlazingInferno(_, spellId)
-	self:Message("inferno", L["blazing_message"], "Urgent", spellId, "Info")
-	self:Bar("inferno", L["blazing_bar"], 35, spellId)
+	self:Message("blazing", L["blazing_message"], "Urgent", spellId, "Info")
+	self:Bar("blazing", L["blazing_bar"], 35, spellId)
 end
 
 function mod:Phase2()
@@ -133,7 +146,7 @@ end
 
 function mod:Infection(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:Message(94679, L["infection_message"], "Important", spellId, "Alarm")
+		self:LocalMessage(94679, L["infection_message"], "Personal", spellId, "Alarm")
 		self:FlashShake(94679)
 		self:OpenProximity(8, 94679)
 	else
@@ -142,8 +155,9 @@ function mod:Infection(player, spellId, _, _, spellName)
 end
 
 function mod:InfectionRemoved(player)
-	if not UnitIsUnit(player, "player") then return end
-	if (phase == 1) then self:CloseProximity(94679) end
+	if phase == 1 and UnitIsUnit(player, "player") then
+		self:CloseProximity(94679)
+	end
 end
 
 function mod:Slump()

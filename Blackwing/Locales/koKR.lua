@@ -17,7 +17,7 @@ if L then
 
 	L.next_system_failure = "~다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"
-	
+
 	L.phase2_message = "곧 치명상 단계!"
 
 	L.warmup = "전투 준비"
@@ -27,32 +27,32 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "koKR")
 if L then
 	-- heroic
-	L.inferno = "이글거리는 지옥불"
-	L.inferno_desc = "이글거리는 지옥불 소환을 알립니다."
-	
+	L.blazing = "이글거리는 지옥불"
+	L.blazing_desc = "이글거리는 지옥불 소환을 알립니다."
+	L.blazing_message = "해골 추가!"
+	L.blazing_bar = "다음 해골"
+
 	L.phase2 = "2 단계"
 	L.phase2_desc = "2 단계 알림과 근접창 체크를 표시합니다."
 	L.phase2_message = "2 단계!"
 	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암"	--check
-	
-	-- normal
 
+	-- normal
 	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
-	
-	L.blazing_message = "해골 추가!"
-	L.blazing_bar = "다음 해골"
 
 	L.slump = "슬럼프 (로데오)"
 	L.slump_desc = "슬럼프 상태를 알립니다."
-
 	L.slump_bar = "다음 슬럼프"
 	L.slump_message = "올라타세요~!"
 	L.slump_trigger = "%s|1이;가; 집게를 드러내며 앞으로 몸을 기울입니다!"
-	
+
 	L.infection_message = "당신은 기생 감염!"
 
 	L.expose_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
 	L.expose_message = "머리 노출!"
+
+	L.spew_bar = "~Next Spew"
+	L.spew_warning = "Lava Spew Soon!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "koKR")
@@ -94,7 +94,7 @@ if L then
 	L.phase_two_trigger = "저주받을 필멸자들!"	--check
 
 	L.phase_three_trigger = "품위있는"	--check
-	
+
 	L.crackle_trigger = "전기가"	--check
 	L.crackle_message = "곧 감전!"
 

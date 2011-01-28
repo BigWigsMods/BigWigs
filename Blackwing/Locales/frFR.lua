@@ -29,8 +29,10 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "frFR")
 if L then
 	-- heroic
-	L.inferno = (GetSpellInfo(92191))
-	L.inferno_desc = "Invoque un Assemblage d'os flamboyant."
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "Invoque un Assemblage d'os flamboyant."
+	L.blazing_message = "Arrivée d'un Assemblage !"
+	L.blazing_bar = "Prochain Assemblage"
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 et affiche le vérificateur de portées."
@@ -39,9 +41,6 @@ if L then
 
 	-- normal
 	L.pillar_of_flame_cd = "~Pilier de flammes"
-
-	L.blazing_message = "Arrivée d'un Assemblage !"
-	L.blazing_bar = "Prochain Assemblage"
 
 	L.slump = "Affalement (rodéo)"
 	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose, permettant ainsi au rodéo de commencer."
@@ -53,6 +52,9 @@ if L then
 
 	L.expose_trigger = "expose sa tête"
 	L.expose_message = "Tête exposée !"
+
+	L.spew_bar = "~Next Spew"
+	L.spew_warning = "Lava Spew Soon!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")

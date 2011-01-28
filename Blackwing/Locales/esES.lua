@@ -15,7 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "esES")
 if L then
 	L.bileotron_engage = "El Bilistrón se activa y empieza a emitir una sustancia de olor asqueroso."
-	L.win_trigger = "El Bilistrón hace señales afirmativas y se apaga de forma permanente."	
+	L.win_trigger = "El Bilistrón hace señales afirmativas y se apaga de forma permanente."
 
 	L.next_system_failure = "Siguiente fallo del sistema"
 	L.break_message = "%2$dx Romper en %1$s"
@@ -29,9 +29,11 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "esES")
 if L then
 	-- heroic
-	L.inferno = inferno
-	L.inferno_desc = "Invoca Ensamblaje osario llameante."
-		
+	L.blazing = "Skeleton Ads"
+	L.blazing_desc = "Invoca Ensamblaje osario llameante."
+	L.blazing_message = "\194\161Add entrante!"
+	L.blazing_bar = "Siguiente esqueleto"
+
 	L.phase2 = "Fase 2"
 	L.phase2_desc = "Aviso para la transici\195\179n de la fase 2 y visualiza el comprobador de rango."
 	L.phase2_message = "\194\161Fase 2!"
@@ -40,12 +42,8 @@ if L then
 	-- normal
 	L.pillar_of_flame_cd = "~Columna de llamas"
 
-	L.blazing_message = "\194\161Add entrante!"
-	L.blazing_bar = "Siguiente esqueleto"
-
 	L.slump = "Cae (Rodeo)"
 	L.slump_desc = "Cae hacia delante exponiendose a s\195\173 mismo, permitiendo que el rodeo empiece."
-
 	L.slump_bar = "Pr\195\179ximo rodeo"
 	L.slump_message = "\194\161Yeepah, m\195\179ntalo!"
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
@@ -54,6 +52,9 @@ if L then
 
 	L.expose_trigger = "cabeza"
 	L.expose_message = "\194\161Cabeza expuesta!"
+
+	L.spew_bar = "~Next Spew"
+	L.spew_warning = "Lava Spew Soon!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "esES")
