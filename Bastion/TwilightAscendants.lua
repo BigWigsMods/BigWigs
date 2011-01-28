@@ -15,6 +15,7 @@ local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
 local gravityCrush = GetSpellInfo(92488)
+local crushMarked = false
 local first = nil
 
 --------------------------------------------------------------------------------
@@ -61,7 +62,7 @@ function mod:GetOptions(CL)
 		-- Terrastra
 		83565, 92541,
 		-- Monstrosity
-		92488,
+		{92488, "ICON"},
 		-- Heroic
 		{92067, "FLASHSHAKE", "SAY", "ICON"},
 		{92075, "FLASHSHAKE", "SAY", "ICON"},
@@ -123,6 +124,7 @@ function mod:OnEngage(diff)
 	self:Bar(82746, glaciate, 15, 82746)
 
 	first = nil
+	crushMarked = false
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -156,8 +158,16 @@ do
 		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alarm")
 		scheduled = nil
 	end
+	local function marked()
+		crushMarked = false
+	end
 	function mod:GravityCrush(player, spellId, _, _, spellName)
 		gcTargets[#gcTargets + 1] = player
+		if not crushMarked  then
+			self:PrimaryIcon(92488, player)
+			crushMarked = true
+		end
+		self:ScheduleTimer(marked, 5)
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(gcWarn, 0.02, spellName)
