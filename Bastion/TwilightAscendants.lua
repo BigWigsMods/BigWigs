@@ -166,8 +166,8 @@ do
 		if not crushMarked  then
 			self:PrimaryIcon(92488, player)
 			crushMarked = true
+			self:ScheduleTimer(marked, 5)
 		end
-		self:ScheduleTimer(marked, 5)
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(gcWarn, 0.02, spellName)
