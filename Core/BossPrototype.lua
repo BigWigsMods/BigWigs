@@ -176,6 +176,7 @@ function boss:CheckBossStatus()
 			for i = 1, #module do
 				if module[i] == self.moduleName then
 					self:Engage()
+					break
 				end
 			end
 			if not self.isEngaged then self:Disable() end
@@ -193,7 +194,7 @@ do
 			"mouseover", "mouseovertarget",
 			"party1target", "party2target", "party3target", "party4target"
 		}
-		for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
+		for i = 1, 25 do t[#t+1] = fmt("raid%dtarget", i) end
 	end
 	local function findTargetByGUID(id)
 		local idType = type(id)
