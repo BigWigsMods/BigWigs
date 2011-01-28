@@ -1,0 +1,41 @@
+  HOW TO REGISTER CUSTOM BAR STYLERS FROM OUTSIDE BIGWIGS
+
+Note that if you're applying anything custom to a LibCandyBar that is
+not available as a function directly on the bar (i.e. :SetIcon), you
+need to reset that in your BarStopped function manually. If not, other
+addons using LibCandyBar will be screwed.
+
+Also note that you should not be creating new frames every time a bar
+is spawned - you should free up unused frames when a bar is stopped,
+and reuse those same frames again on the next bar. The code for the
+"Beauty Case" style has an example of how that works.
+
+When reusing a frame it's important to re-parent it to something else
+when a bar stops, and to clear all points and such. And :Hide it.
+
+local f = CreateFrame("Frame")
+local function registerMyStyle()
+	f:UnregisterEvent("ADDON_LOADED")
+	BigWigs:GetPlugin("Bars"):RegisterBarStyle("identifier", {
+		apiVersion = 1,
+		version = 1,
+		GetSpacing = function(bar) return 4 end,
+		ApplyStyle = function(bar) end,
+		BarStopped = function(bar) end,
+		GetStyleName = function() return "My Style Name" end,
+	})
+end
+f:RegisterEvent("ADDON_LOADED")
+
+local reason = nil
+f:SetScript("OnEvent", function(self, event, msg)
+	if event == "ADDON_LOADED" then
+		if not reason then reason = (select(6, GetAddOnInfo("BigWigs_Plugins"))) end
+		if reason == "MISSING" and msg == "BigWigs" then
+			registerMyStyle()
+		elseif msg == "BigWigs_Plugins" then
+			registerMyStyle()
+		end
+	end
+end)
+

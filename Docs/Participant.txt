@@ -2,7 +2,6 @@ $Id$
 
 This document is intended for raid participants.
 
-
     When the fight begings
 
 Big Wigs automatically senses the nearby presence of a boss and enables the

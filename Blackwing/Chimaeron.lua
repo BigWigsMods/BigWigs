@@ -99,7 +99,7 @@ end
 function mod:Massacre(_, spellId, _, _, spellName)
 	self:Message(82848, spellName, "Attention", spellId)
 	self:Bar(82848, spellName, 30, spellId)
-	self:Bar(88917, causticSlime, 23, 88917)
+	self:Bar(88917, causticSlime, 19, 88917)
 end
 
 function mod:Mortality(_, spellId, _, _, spellName)

@@ -1,1 +1,0 @@
-Please read http://wowace.com/wiki/BigWigs/ModuleAPI for information on how to create BigWigs modules.
