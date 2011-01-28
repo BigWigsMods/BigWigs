@@ -18,3 +18,4 @@ L.berserk_end = "%s wird zum Berserker!"
 L.berserk_min = "Berserker in %d min"
 L.berserk_sec = "Berserker in %d sek!"
 L.berserk = "Berserker"
+

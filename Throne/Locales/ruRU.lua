@@ -1,24 +1,29 @@
-local L = BigWigs:NewBossLocale("Al'Akir", "ruRU")
-if L then
-	L.phase3_yell = "Довольно! Меня ничто не в силах сдерживать!"
 
-	L.phase = "Смена фаз"
-	L.phase_desc = "Сообщать о смене фаз."
+do
+	local L = BigWigs:NewBossLocale("Al'Akir", "ruRU")
+	if not L then return end
+	if L then
+		L.phase3_yell = "Г„Г®ГўГ®Г«ГјГ­Г®! ГЊГҐГ­Гї Г­ГЁГ·ГІГ® Г­ГҐ Гў Г±ГЁГ«Г Гµ Г±Г¤ГҐГ°Г¦ГЁГўГ ГІГј!"
 
-	L.cloud_message = "Грозовые облака!"
-	L.feedback_message = "%dx Ответная реакция"
+		L.phase = "Г‘Г¬ГҐГ­Г  ГґГ Г§"
+		L.phase_desc = "Г‘Г®Г®ГЎГ№Г ГІГј Г® Г±Г¬ГҐГ­ГҐ ГґГ Г§."
+
+		L.cloud_message = "ГѓГ°Г®Г§Г®ГўГ»ГҐ Г®ГЎГ«Г ГЄГ !"
+		L.feedback_message = "%dx ГЋГІГўГҐГІГ­Г Гї Г°ГҐГ ГЄГ¶ГЁГї"
+	end
+
+	L = BigWigs:NewBossLocale("Conclave of Wind", "ruRU")
+	if L then
+		L.gather_strength = "%s ГЎГ«ГЁГ§Г®ГЄ ГЄ Г®ГЎГ°ГЁГІГҐГ­ГЁГѕ Г®ГЎГ±Г®Г«ГѕГІГ­Г®Г© Г±ГЁГ«Г»!"
+
+		L.storm_shield = GetSpellInfo(95865)
+		L.storm_shield_desc = "Г™ГЁГІ ГЇГ®ГЈГ«Г®Г№ГҐГ­ГЁГї ГіГ°Г®Г­Г "
+
+		L.full_power = "ГЏГ®Г«Г­Г Гї Г±ГЁГ«Г "
+		L.full_power_desc = "Г‘Г®Г®ГЎГ№Г ГҐГІ ГЄГ®ГЈГ¤Г  ГЎГ®Г±Г± Г¤Г®Г±ГІГЁГЈГ ГҐГІ ГЇГ®Г«Г­Г®Г© Г±ГЁГ«Г» ГЁ Г­Г Г·ГЁГ­Г ГҐГІ ГЇГ°ГЁГ¬ГҐГ­ГїГІГј Г±ГЇГҐГ¶ГЁГ Г«ГјГ­Г»ГҐ Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГЁ."
+		L.gather_strength_emote = "%s Г­Г Г·ГЁГ­Г ГҐГІ ГўГЎГЁГ°Г ГІГј Г±ГЁГ«Гі Г®Г±ГІГ ГўГёГЁГµГ±Гї ГўГ«Г Г¤Г»ГЄ ГўГҐГІГ°Г !"
+
+		L.wind_chill = "ГЌГ  Г‚ГЂГ‘ %s Г±ГІГ ГЄГ®Гў Г•Г®Г«Г®Г¤Г­Г®ГЈГ® ГўГҐГІГ°Г "
+	end
 end
 
-local L = BigWigs:NewBossLocale("Conclave of Wind", "ruRU")
-if L then
-	L.gather_strength = "%s близок к обритению обсолютной силы!"
-
-	L.storm_shield = GetSpellInfo(95865)
-	L.storm_shield_desc = "Щит поглощения урона"
-
-	L.full_power = "Полная сила"
-	L.full_power_desc = "Сообщает когда босс достигает полной силы и начинает применять специальные способности."
-	L.gather_strength_emote = "%s начинает вбирать силу оставшихся владык ветра!"
-
-	L.wind_chill = "На ВАС %s стаков Холодного ветра"
-end

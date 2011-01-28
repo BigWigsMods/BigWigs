@@ -19,4 +19,3 @@ L.berserk_min = "Берсерк через %d мин"
 L.berserk_sec = "Берсерк через %d сек"
 L.berserk = "Берсерк"
 
-

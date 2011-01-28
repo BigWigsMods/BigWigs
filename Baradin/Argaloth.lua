@@ -19,9 +19,7 @@ local fireStorm, consumingTargets = 100, mod:NewTargetList()
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.darkness_message = "Darkness"
-
 	L.firestorm_message = "Firestorm soon!"
-
 	L.meteor_bar = "~Meteor Slash"
 end
 L = mod:GetLocale()

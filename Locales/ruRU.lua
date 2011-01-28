@@ -95,3 +95,4 @@ L["Contact"] = "Связь"
 L["See license.txt in the main Big Wigs folder."] = "Смотрите license.txt в основной папке Big Wigs."
 L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net в канале #wowace"
 L["Thanks to the following for all their help in various fields of development"] = "Благодарим следующих лиц за их помощь в различных областях развития"
+

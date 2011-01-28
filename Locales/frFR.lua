@@ -93,3 +93,4 @@ L["Contact"] = "Contact"
 L["See license.txt in the main Big Wigs folder."] = "Voir license.txt dans le dossier BigWigs"
 L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net sur le canal #wowace"
 L["Thanks to the following for all their help in various fields of development"] = "Merci aux personnes suivantes pour leur aide :"
+

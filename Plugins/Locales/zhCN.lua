@@ -26,7 +26,7 @@ L["Temporarily removes the bar and all associated messages."] = "临时移除计
 L["Remove other"] = "移除其它"
 L["Temporarily removes all other bars (except this one) and associated messages."] = "临时移除所有计时条（除此之外）和全部相关信息。"
 L["Disable"] = "禁用"
-L["Permanently disables the boss encounter ability option that spawned this bar."] = "永久禁用此首领战斗技能计时条选项。" 
+L["Permanently disables the boss encounter ability option that spawned this bar."] = "永久禁用此首领战斗技能计时条选项。"
 
 L["Scale"] = "缩放"
 L["Grow upwards"] = "向上成长"
@@ -158,7 +158,7 @@ L["Default only"] = "只用预设"
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "T%s:20:20:-5|t技能名称"
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t技能名称"
 L["Custom range indicator"] = "自定义距离指示器"
 L["%d yards"] = "%d码"
 L["Proximity"] = "近距离"

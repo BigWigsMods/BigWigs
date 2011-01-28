@@ -1,4 +1,4 @@
-﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "zhTW")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "zhTW")
 
 if not L then return end
 
@@ -18,3 +18,4 @@ L.berserk_end = "%s已狂暴！"
 L.berserk_min = "%d分後狂暴！"
 L.berserk_sec = "%d秒後狂暴！"
 L.berserk = "狂暴"
+

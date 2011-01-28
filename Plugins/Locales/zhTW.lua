@@ -158,7 +158,7 @@ L["Default only"] = "僅用預設"
 -- Proximity.lua
 --
 
-L["|T%s:20:20:-5|tAbility name"] = "T%s:20:20:-5|t技能名稱"
+L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|t技能名稱"
 L["Custom range indicator"] = "自訂距離指示器"
 L["%d yards"] = "%d碼"
 L["Proximity"] = "近距離顯"

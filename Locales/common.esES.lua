@@ -12,7 +12,8 @@ L.hard = "Modo dif\195\173cil"
 L.general = "General" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.berserk_start = "%s Iniciado - Rabia en %d min"
-L.berserk_end = "¡%s entra en Rabia!"
-L.berserk_min = "¡Rabia en %d min"
-L.berserk_sec = "¡Rabia en %d seg!"
+L.berserk_end = "Â¡%s entra en Rabia!"
+L.berserk_min = "Â¡Rabia en %d min"
+L.berserk_sec = "Â¡Rabia en %d seg!"
 L.berserk = "Rabia"
+

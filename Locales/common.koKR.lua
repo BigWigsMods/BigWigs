@@ -18,3 +18,4 @@ L.berserk_end = "%s 광폭화!"
 L.berserk_min = "%d분 후 광폭화"
 L.berserk_sec = "%d초 후 광폭화!"
 L.berserk = "광폭화"
+

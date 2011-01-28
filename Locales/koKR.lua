@@ -95,3 +95,4 @@ L["Contact"] = "연락처"
 L["See license.txt in the main Big Wigs folder."] = "메인 Big Wigs 폴더의 license.txt를 참조하세요."
 L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net의 #wowace 채널"
 L["Thanks to the following for all their help in various fields of development"] = "다양한 분야에서 개발을 위해 다음과 같은 사람들의 도움이 있었습니다."
+
