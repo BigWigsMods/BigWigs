@@ -186,9 +186,13 @@ end
 do
 	local t = nil
 	local function buildTable()
-		t = {"target", "targettarget", "focus", "focustarget", "mouseover", "mouseovertarget"}
-		for i = 1, 4 do t[#t+1] = fmt("boss%d", i) end
-		for i = 1, 4 do t[#t+1] = fmt("party%dtarget", i) end
+		t = {
+			"boss1", "boss2", "boss3", "boss4",
+			"target", "targettarget",
+			"focus", "focustarget",
+			"mouseover", "mouseovertarget",
+			"party1target", "party2target", "party3target", "party4target"
+		}
 		for i = 1, 40 do t[#t+1] = fmt("raid%dtarget", i) end
 	end
 	local function findTargetByGUID(id)
