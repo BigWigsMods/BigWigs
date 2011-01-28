@@ -24,7 +24,7 @@ L = BigWigs:NewBossLocale("Valiona and Theralion", "ruRU")
 if L then
 	L.phase_switch = "Смена фаз"
 	L.phase_switch_desc = "Сообщать о смене фаз"
-	
+
 	L.phase_bar = "%s приземление"
 	L.breath_message = "Надвигается Глубокий вдох!"
 	L.dazzling_message = "Надвигается Шокирующее разрушение!"
@@ -65,11 +65,11 @@ if L then
 
 	L.shield_up_message = "ЩИТ!"
 	L.shield_bar = "След. щит"
-	
+
 	L.lightning_rod_say = "На МНЕ - Громоотвод!"
 
 	L.switch_trigger = "Мы займемся ими!"
-	
+
 	L.thundershock_quake_soon = "%s через 10сек!"
 
 	L.quake_trigger = "Земля уходит у вас из-под ног..."

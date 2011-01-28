@@ -4,7 +4,7 @@ if L then
 
 	L.phase = "단계 변화"
 	L.phase_desc = "단계 변화를 알립니다."
-	
+
 	L.cloud_message = "번개 구름!"
 	L.feedback_message = "역순환 %dx"
 end
@@ -12,7 +12,7 @@ end
 local L = BigWigs:NewBossLocale("Conclave of Wind", "koKR")
 if L then
 	L.gather_strength = "힘 모으기: %s"
-	
+
 	L.storm_shield = GetSpellInfo(95865)
 	L.storm_shield_desc = "폭풍 방패"
 

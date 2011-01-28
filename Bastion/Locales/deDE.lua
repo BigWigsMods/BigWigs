@@ -80,4 +80,3 @@ if L then
 
 	L.last_phase_trigger = "Beeindruckende Leistung…" -- what the heck Blizz??
 end
-

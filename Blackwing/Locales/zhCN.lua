@@ -1,11 +1,5 @@
 local L = BigWigs:NewBossLocale("Atramedes", "zhCN")
 if L then
-	L.tracking_me = "Tracking on ME!"
-
-	L.shield = "Ancient Dwarven Shield"
-	L.shield_desc = "Warning for the remaining Ancient Dwarven Shields."
-	L.shield_message = "%d Ancient Dwarven Shield left"
-
 	L.ground_phase = "Ground Phase"
 	L.ground_phase_desc = "Warning for when Atramedes lands."
 	L.air_phase = "Air Phase"

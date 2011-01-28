@@ -9,7 +9,7 @@ if L then
 	L.feedback_message = "%dx Rückkopplung"
 end
 
-L = BigWigs:NewBossLocale("Conclave of Wind", "deDE")
+local L = BigWigs:NewBossLocale("Conclave of Wind", "deDE")
 if L then
 	L.gather_strength = "%s sammelt Stärke"
 

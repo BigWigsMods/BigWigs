@@ -28,6 +28,8 @@ L["Up to date:"] = "已更新："
 L["Out of date:"] = "過期："
 L["No Big Wigs 3.x:"] = "沒有 Big Wigs 3.x："
 
+L.coreAddonDisabled = "當%s被禁用時，Big Wigs 將無法正常工作。你可以在角色選擇螢幕的插件控制面板開啟它們。"
+
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs 戰鬥"
 L["Customize ..."] = "自定義…"
@@ -78,6 +80,8 @@ L["WHISPER_desc"] = "當一些技能足夠重要時 Big Wigs 將發送密語給�
 L["SAY_desc"] = "聊天泡沫容易辨認。Big Wigs 將使用說的訊息方式通知給附近的人告訴他們你中了什麼技能。"
 L["PING_desc"] = "有時所在位置也很重要，Big Wigs 將點擊小地圖通知大家你位於何處。"
 L["EMPHASIZE_desc"] = "啟用這些將特別強調所相關遇到技能的任何訊息或計時條。訊息將被放大，計時條將會閃現並有不同的顏色，技能即將出現時會使用計時音效，基本上你會發現它。"
+L["PROXIMITY"] = "近距離顯示"
+L["PROXIMITY_desc"] = "有些技能有時會要求團隊散開。近距離顯示為這些技能獨立的設置一個視窗告訴你誰離你過近是並且是不安全的。"
 L["Advanced options"] = "進階選項"
 L["<< Back"] = "<< 返回"
 
