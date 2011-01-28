@@ -54,8 +54,8 @@ do
 		L.expose_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
 		L.expose_message = "머리 노출!"
 
-		L.spew_bar = "~Next Spew"
-		L.spew_warning = "Lava Spew Soon!"
+		L.spew_bar = "~다음 용암 내뿜기"
+		L.spew_warning = "곧 용암 내뿜기!"
 	end
 
 	L = BigWigs:NewBossLocale("Maloriak", "koKR")
@@ -79,13 +79,13 @@ do
 		L.next_phase = "다음 단계"
 		L.green_phase_bar = "녹색 단계"
 
-		L.red_phase_trigger = "붉은" --확인
+		L.red_phase_trigger = "붉은"
 		L.red_phase = "|cFFFF0000붉은|r 단계"
-		L.blue_phase_trigger = "푸른" --확인
+		L.blue_phase_trigger = "푸른"
 		L.blue_phase = "|cFF809FFE푸른|r 단계"
-		L.green_phase_trigger = "초록" --확인
+		L.green_phase_trigger = "초록"
 		L.green_phase = "|cFF33FF00초록|r 단계"
-		L.dark_phase_trigger = "암흑" --확인
+		L.dark_phase_trigger = "암흑"
 		L.dark_phase = "|cFF660099암흑|r 단계"
 	end
 
