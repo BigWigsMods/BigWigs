@@ -42,13 +42,17 @@ if L then
 	L.next_phase = "Next phase"
 	L.green_phase_bar = "Green phase"
 
-	L.red_phase_trigger = "red"
+	L.red_phase_trigger = "Mix and stir, apply heat..."
+	L.red_phase_emote_trigger = "red"
 	L.red_phase = "|cFFFF0000Red|r phase"
-	L.blue_phase_trigger = "blue"
+	L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"
+	L.blue_phase_emote_trigger = "blue"
 	L.blue_phase = "|cFF809FFEBlue|r phase"
-	L.green_phase_trigger = "green"
+	L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?"
+	L.green_phase_emote_trigger = "green"
 	L.green_phase = "|cFF33FF00Green|r phase"
-	L.dark_phase_trigger = "dark"
+	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_emote_trigger = "dark"
 	L.dark_phase = "|cFF660099Dark|r phase"
 end
 L = mod:GetLocale()
@@ -148,13 +152,13 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		warnedAlready = nil
 		return
 	end
-	if potion == "POTION_20" then
+	if msg:find(L.blue_phase_emote_trigger) then
 		self:Blue()
-	elseif potion == "POTION_24" then
+	elseif msg:find(L.red_phase_emote_trigger) then
 		self:Red()
-	elseif potion == "POTION_162" then
+	elseif msg:find(L.green_phase_emote_trigger) then
 		self:Green()
-	elseif potion == "ELEMENTAL_PRIMAL_SHADOW" then
+	elseif msg:find(L.dark_phase_emote_trigger) then
 		self:Dark()
 	end
 	warnedAlready = nil
