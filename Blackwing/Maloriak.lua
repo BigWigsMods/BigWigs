@@ -16,6 +16,7 @@ local phaseCounter = 0
 local warnedAlready = nil
 local maloriak = BigWigs:Translate("Maloriak")
 local chillTargets = mod:NewTargetList()
+local isChilled, isBluePhase = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -88,6 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
+	self:Log("SPELL_AURA_REMOVED", "BitingChillRemoved", 77760)
 	self:Log("SPELL_AURA_APPLIED", "ConsumingFlames", 77786, 92972, 92971, 92973)
 	self:Log("SPELL_CAST_SUCCESS", "ScorchingBlast", 77679, 92968, 92969, 92970)
 	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
@@ -98,12 +100,10 @@ function mod:OnBossEnable()
 
 	-- We keep the emotes in case the group uses Curse of Tongues, in which
 	-- case the yells become Demonic.
-	-- AND EVEN WITH THIS COMMENT HERE, YOU REMOVED IT WITHOUT ASKING?
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	-- We keep the yell triggers around because sometimes he does them far ahead
 	-- of the emote.
-	-- What about this comment then, wasn't it clear enough?
 	self:Yell("Red", L["red_phase_trigger"])
 	self:Yell("Blue", L["blue_phase_trigger"])
 	self:Yell("Green", L["green_phase_trigger"])
@@ -117,6 +117,7 @@ function mod:OnEngage(diff)
 	aberrations = 18
 	phaseCounter = 0
 	warnedAlready = nil
+	isChilled, isBluePhase = nil, nil
 end
 
 --------------------------------------------------------------------------------
@@ -146,8 +147,6 @@ local function nextPhase(timeToNext)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
-	local potion = msg:match("INV_(.-).BLP")
-	if not potion then return end
 	if warnedAlready then
 		warnedAlready = nil
 		return
@@ -165,15 +164,19 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 end
 
 function mod:Red()
+	isBluePhase = nil
 	warnedAlready = true
-	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"]) -- XXX untested, but seems logical
+	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Bar(92968, L["next_blast"], 25, 92968)
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
-	self:CloseProximity()
+	if not isChilled then
+		self:CloseProximity()
+	end
 	nextPhase(47)
 end
 
 function mod:Blue()
+	isBluePhase = true
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
@@ -183,19 +186,25 @@ function mod:Blue()
 end
 
 function mod:Green()
+	isBluePhase = nil
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
-	self:CloseProximity()
+	if not isChilled then
+		self:CloseProximity()
+	end
 	nextPhase(47)
 	-- Make sure to reset after the nextPhase() call, which increments it
 	phaseCounter = 0
 end
 
 function mod:Dark()
+	isBluePhase = nil
 	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
-	self:CloseProximity()
+	if not isChilled then
+		self:CloseProximity()
+	end
 	nextPhase(100)
 end
 
@@ -262,10 +271,20 @@ do
 		if UnitIsUnit(player, "player") then
 			self:Say(77760, CL["say"]:format((GetSpellInfo(77760))))
 			self:FlashShake(77760)
+			isChilled = true
 		end
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(chillWarn, 0.3, spellName)
+		end
+	end
+end
+
+function mod:BitingChillRemoved(player)
+	if UnitIsUnit(player, "player") then
+		isChilled = nil
+		if not isBluePhase then
+			self:CloseProximity()
 		end
 	end
 end
