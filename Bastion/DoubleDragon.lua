@@ -106,6 +106,7 @@ do
 		local theralionId = mod:GetUnitIdByGUID(45993)
 		if theralionId then
 			local target = UnitName(theralionId .. "target")
+			if not target then return end
 			if UnitIsUnit("player", target) then
 				mod:Say(92898, L["blast_say"])
 			end
