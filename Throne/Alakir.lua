@@ -21,6 +21,12 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.stormling = "Stormling Ads"
+	L.stormling_desc = "Summons Stormling."
+	L.stormling_message = "Stormling incoming!"
+	L.stormling_bar = "Next stormling"
+	L.stormling_yell = "Storms! I summon you to my side!"
+
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "Phase change"
@@ -39,6 +45,7 @@ function mod:GetOptions(CL)
 	return {
 		87770,
 		87904,
+		"stormling",
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
 		93257, -- Heroic Lightning Shock Attempt at trying to predict
 		88427, "phase", "bosskill"
@@ -60,6 +67,7 @@ function mod:OnBossEnable()
 	-- Acid Rain is applied at P2 transition
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279, 93281)
 
+	self:Yell("Stormling", L["stormling_yell"])
 	self:Yell("Phase3", L["phase3_yell"])
 
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
@@ -155,3 +163,7 @@ function mod:WindBurst3(_, spellId, _, _, spellName)
 	lastWindburst = GetTime()
 end
 
+function mod:Stormling()
+	self:Bar("stormling", L["stormling_bar"], 20, 75096)
+	self:Message("stormling", L["stormling_message"], "Important", 75096, "Info")
+end
