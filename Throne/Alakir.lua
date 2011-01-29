@@ -21,7 +21,7 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.stormling = "Stormling Ads"
+	L.stormling = "Stormling adds"
 	L.stormling_desc = "Summons Stormling."
 	L.stormling_message = "Stormling incoming!"
 	L.stormling_bar = "Next stormling"

@@ -78,13 +78,17 @@ if L then
 	L.next_phase = "Nächste Phase"
 	L.green_phase_bar = "Grüne Phase"
 
-	L.red_phase_trigger = "rote"
+	L.red_phase_trigger = "Vermischen, rühren, erhitzen..."
+	L.red_phase_emote_trigger = "rote"
 	L.red_phase = "|cFFFF0000Rote|r Phase"
-	L.blue_phase_trigger = "blaue"
+	L.blue_phase_trigger = "Muss rausfinden, wie die sterbliche Hülle auf extreme Temperaturen reagiert... FÜR DIE FORSCHUNG!"
+	L.blue_phase_emote_trigger = "blaue"
 	L.blue_phase = "|cFF809FFEBlaue|r Phase"
-	L.green_phase_trigger = "grüne"
+	L.green_phase_trigger = "Etwas instabil vielleicht, doch keine Forschung ohne Risiko!"
+	L.green_phase_emote_trigger = "grüne"
 	L.green_phase = "|cFF33FF00Grüne|r Phase"
-	L.dark_phase_trigger = "dunkle" -- verifizieren
+	--L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_emote_trigger = "dunkle" -- check
 	L.dark_phase = "|cFF660099Dunkle|r Phase"
 end
 
