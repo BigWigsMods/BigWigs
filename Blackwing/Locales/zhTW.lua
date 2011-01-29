@@ -25,7 +25,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhTW")
 if L then
-	L.blazing = "Skeleton Ads"
+	L.blazing = "Skeleton Adds"
 	L.blazing_desc = "當召喚Blazing Bone Construct時發出警報。"
 
 	L.slump = "撲倒"
@@ -57,13 +57,18 @@ if L then
 	L.phase_desc = "當進入不同階段時發出警報。"
 	L.next_phase = "下一階段！"
 
-	L.red_phase_trigger = "紅色" --verify
+
+	L.red_phase_trigger = "Mix and stir, apply heat..."
+	L.red_phase_emote_trigger = "紅色" --verify
 	L.red_phase = "|cFFFF0000紅色|r階段！"
-	L.blue_phase_trigger = "藍色" --verify
+	L.blue_phase_trigger = "How well does the mortal shell handle extreme temperature change? Must find out! For science!"
+	L.blue_phase_emote_trigger = "藍色" --verify
 	L.blue_phase = "|cFF809FFE藍色|r階段！"
-	L.green_phase_trigger = "綠色" --verify
+	L.green_phase_trigger = "This one's a little unstable, but what's progress without failure?"
+	L.green_phase_emote_trigger = "綠色" --verify
 	L.green_phase = "|cFF33FF00綠色|r階段！"
-	L.dark_phase_trigger = "黑色" --verify
+	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_emote_trigger = "黑色" --verify
 	L.dark_phase = "|cFF660099黑色|r階段！"
 end
 

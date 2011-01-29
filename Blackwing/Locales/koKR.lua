@@ -77,7 +77,7 @@ if L then
 	L.phase_desc = "단계 변화를 알립니다."
 	L.next_phase = "다음 단계"
 	L.green_phase_bar = "녹색 단계"
-	
+
 	L.red_phase_trigger = "섞고 흔들어서, 열을 가한다..."
 	L.red_phase_emote_trigger = "붉은"
 	L.red_phase = "|cFFFF0000붉은|r 단계"

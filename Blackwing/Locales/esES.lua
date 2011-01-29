@@ -31,7 +31,7 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "esES")
 if L then
 	-- heroic
-	L.blazing = "Skeleton Ads"
+	L.blazing = "Skeleton Adds"
 	L.blazing_desc = "Invoca Ensamblaje osario llameante."
 	L.blazing_message = "\194\161Add entrante!"
 	L.blazing_bar = "Siguiente esqueleto"
@@ -82,13 +82,17 @@ if L then
 	L.next_phase = "Siguiente fase"
 	L.green_phase_bar = "Fase Verde"
 
-	L.red_phase_trigger = "roja"
+	L.red_phase_trigger = "Mezclar y agitar, aplicar calor..."
+	L.red_phase_emote_trigger = "roja"
 	L.red_phase = "Fase |cFFFF0000Roja|r"
-	L.blue_phase_trigger = "azul"
+	L.blue_phase_trigger = "¿Cómo afecta el cambio extremo de temperatura al cuerpo mortal? ¡Debo averiguarlo! ¡Por la ciencia!"
+	L.blue_phase_emote_trigger = "azul"
 	L.blue_phase = "Fase |cFF809FFEAzul|r"
-	L.green_phase_trigger = "verde"
+	L.green_phase_trigger = "Este es un poco inestable, pero ¿acaso hay progreso sin fracaso?"
+	L.green_phase_emote_trigger = "verde"
 	L.green_phase = "Fase |cFF33FF00Verde|r"
-	L.dark_phase_trigger = "oscure" --verificar
+	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_emote_trigger = "oscure" --verificar
 	L.dark_phase = "|cFF660099Dark|r fase"
 end
 

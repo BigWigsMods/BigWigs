@@ -31,7 +31,7 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "ruRU")
 if L then
 	-- heroic
-	L.blazing = "Skeleton Ads"
+	L.blazing = "Skeleton Adds"
 	L.blazing_desc = "Призывает Blazing Bone Construct."
 	L.blazing_message = "Надвигается помощник!"
 	L.blazing_bar = "След. скелет"
@@ -82,13 +82,17 @@ if L then
 	L.next_phase = "След. фаза"
 	L.green_phase_bar = "Зеленая фаза"
 
-	L.red_phase_trigger = "красный" --проверить
+	L.red_phase_trigger = "Помешивая, довести до кипения..."
+	L.red_phase_emote_trigger = "красный" --проверить
 	L.red_phase = "|cFFFF0000Красная|r фаза"
-	L.blue_phase_trigger = "синий" --проверить
+	L.blue_phase_trigger = "синий|r пузырек в котел!" --How well does the mortal shell handle extreme temperature change? Must find out! For science!
+	L.blue_phase_emote_trigger = "синий" --проверить
 	L.blue_phase = "|cFF809FFEСиняя|r фаза"
-	L.green_phase_trigger = "Зеленая" --проверить
+	L.green_phase_trigger = "Некак не удается стабилизировать, но без ошибок нет прогресса!"
+	L.green_phase_emote_trigger = "Зеленая" --проверить
 	L.green_phase = "|cFF33FF00Зеленая|r фаза"
-	L.dark_phase_trigger = "Темная" --проверить
+	L.dark_phase_trigger = "Слабоваты твои настои, Малориак! Подбавить бы к ним... специй!" -- темную|r магию на котле!
+	L.dark_phase_emote_trigger = "Темная" --проверить
 	L.dark_phase = "|cFF660099Темная|r фаза"
 end
 
