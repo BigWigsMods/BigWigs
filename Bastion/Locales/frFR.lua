@@ -7,9 +7,9 @@ if L then
 
 	L.crash_say = "Déferlante sur moi !"
 	L.worship_cooldown = "~Vénération"
-	L.adherent_bar = "Adhérent(s) #%d"
-	L.adherent_message = "Adhérent(s) invoqué(s) (%d) !"
-	L.ooze_bar = "Nuée de Sangs %d"
+	L.adherent_bar = "Adhérent #%d"
+	L.adherent_message = "Arrivée d'un Adhérent (%d) !"
+	L.ooze_bar = "Nuée de Sangs #%d"
 	L.ooze_message = "Arrivée d'une nuée de Sangs (%d) !"
 	L.tentacles_bar = "Apparition de Créations"
 	L.tentacles_message = "Créations assombries !"
@@ -70,8 +70,6 @@ if L then
 
 	L.shield_up_message = "Bouclier en place !"
 	L.shield_bar = "Prochain Bouclier"
-
-	L.lightning_rod_say = "Bâtonnet d'éclair sur moi !"
 
 	L.switch_trigger = "Nous allons nous occuper d'eux !" -- à vérifier
 

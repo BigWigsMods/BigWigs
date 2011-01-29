@@ -2,8 +2,6 @@
 local L = BigWigs:NewBossLocale("Atramedes", "frFR")
 if not L then return end
 if L then
-	L.tracking_me = "Pistage sur moi !"
-
 	L.ground_phase = "Phase au sol"
 	L.ground_phase_desc = "Prévient quand Atramédès atterrit."
 	L.air_phase = "Phase aérienne"
@@ -31,8 +29,8 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "frFR")
 if L then
 	-- heroic
-	L.blazing = "Skeleton Adds"
-	L.blazing_desc = "Invoque un Assemblage d'os flamboyant."
+	L.blazing = "Assemblage d'os flamboyant"
+	L.blazing_desc = "Prévient quand un Assemblage d'os flamboyant est invoqué."
 	L.blazing_message = "Arrivée d'un Assemblage !"
 	L.blazing_bar = "Prochain Assemblage"
 
@@ -55,8 +53,8 @@ if L then
 	L.expose_trigger = "expose sa tête"
 	L.expose_message = "Tête exposée !"
 
-	L.spew_bar = "~Next Spew"
-	L.spew_warning = "Lava Spew Soon!"
+	L.spew_bar = "~Prochain Crachement"
+	L.spew_warning = "Crachement de magma imminent !"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")
