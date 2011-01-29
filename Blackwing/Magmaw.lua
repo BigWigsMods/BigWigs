@@ -19,7 +19,7 @@ local phase = 1
 local L = mod:NewLocale("enUS", true)
 if L then
 	-- heroic
-	L.blazing = "Skeleton Ads"
+	L.blazing = "Skeleton Adds"
 	L.blazing_desc = "Summons Blazing Bone Construct."
 	L.blazing_message = "Add incoming!"
 	L.blazing_bar = "Next skeleton"
