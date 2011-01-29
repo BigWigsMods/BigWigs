@@ -2,13 +2,19 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "esES")
 if not L then return end
 if L then
-	--L.phase3_yell = "Enough! I will no longer be contained!"
+	L.stormling = "Tormentillas"
+	L.stormling_desc = "Invoca Tormentillas."
+	L.stormling_message = "\194\161Tormentilla entrante!"
+	L.stormling_bar = "Siguiente Tormentilla"
+	L.stormling_yell = "Storms! I summon you to my side!"
+	
+	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "Cambio de fase"
 	L.phase_desc = "Anuncia los cambios de fase."
 
 	L.cloud_message = "\194\161Franklin estar\195\173a orgulloso!"
-	L.feedback_message = "%dx rebote"
+	L.feedback_message = "%dx Rebote"
 end
 
 L = BigWigs:NewBossLocale("Conclave of Wind", "esES")
