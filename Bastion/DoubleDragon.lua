@@ -12,7 +12,6 @@ mod:RegisterEnableMob(45992, 45993)
 
 local phaseCount = 0
 local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), GetSpellInfo(86059)
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local emTargets = mod:NewTargetList()
 local markWarned = false
@@ -21,6 +20,7 @@ local markWarned = false
 -- Localization
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase_switch = "Phase Switch"
@@ -30,7 +30,7 @@ if L then
 	L.breath_message = "Deep Breaths incoming!"
 	L.dazzling_message = "Swirly zones incoming!"
 
-	L.blast_say = "Blast on ME!"
+	L.blast_message = "Falling Blast" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
 
@@ -47,11 +47,10 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840,
-		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, {92898, "SAY"},
-		93051,
+		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 92898, 93051,
 		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
 		[86788] = "Valiona",
@@ -102,18 +101,18 @@ end
 --
 
 do
-	local function blastWarn()
-		local theralionId = mod:GetUnitIdByGUID(45993)
-		if theralionId then
-			local target = UnitName(theralionId .. "target")
-			if not target then return end
-			if UnitIsUnit("player", target) then
-				mod:Say(92898, L["blast_say"])
-			end
+	local function checkTarget(sGUID)
+		local bossId = UnitGUID("boss2") == sGUID and "boss2" or "boss1"
+		--XXX clean this up after we confirm target is never nil at .3
+		local target = UnitName(bossId .. "target")
+		if not target then print("TARGET WAS NIL, TELL THE BIGWIGS AUTHORS!") return end --temp debug
+		if UnitIsUnit(target, "player") then
+			mod:LocalMessage(92898, CL["you"]:format(L["blast_message"]), "Personal", 92898, "Long")
 		end
 	end
-	function mod:TwilightBlast()
-		self:ScheduleTimer(blastWarn, 0.1)
+	function mod:TwilightBlast(...)
+		local sGUID = select(11, ...)
+		self:ScheduleTimer(checkTarget, 0.3, sGUID)
 	end
 end
 

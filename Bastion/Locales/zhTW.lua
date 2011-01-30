@@ -30,7 +30,7 @@ if L then
 	L.breath_message = "即將 深呼吸！"
 	L.dazzling_message = "即將！暮光之境！"
 
-	L.blast_say = ">我< 暮光衝擊！"
+	L.blast_message = "Falling Blast"
 	L.engulfingmagic_say = ">我< 侵噬魔法！"
 	L.engulfingmagic_cooldown = "<侵噬魔法>"
 

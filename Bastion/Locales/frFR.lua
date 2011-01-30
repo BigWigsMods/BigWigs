@@ -30,7 +30,7 @@ if L then
 	L.breath_message = "Arrivée des Souffles profonds !"
 	L.dazzling_message = "Arrivée des zones tourbillonnantes !"
 
-	L.blast_say = "Déflagration sur moi !"
+	L.blast_message = "Falling Blast"
 	L.engulfingmagic_say = "Magie sur moi !"
 	L.engulfingmagic_cooldown = "~Magie enveloppante"
 
