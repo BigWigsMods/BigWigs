@@ -88,6 +88,7 @@ end
 
 function mod:Electrocute()
 	self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
+	self:Bar(81272, (GetSpellInfo(81272)), 5, 81272)
 end
 
 function mod:Deaths(mobId)
