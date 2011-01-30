@@ -7,11 +7,12 @@ if L then
 	L.orders_desc = "Сообщать когда Чо'Галл сменяет приказы огня/тьмы"
 
 	--normal
+	L.crash_say = "Crash on ME!"
 	L.worship_cooldown = "~Поклонение"
-	L.adherent_bar = "След. адепт-искуситель"
-	L.adherent_message = "Адепт-искуситель!"
-	L.ooze_bar = "Слизнюки"
-	L.ooze_message = "Надвигаются Слизнюки!"
+	L.adherent_bar = "Помощник #%d"
+	L.adherent_message = "Надвигается помощник %d!"
+	L.ooze_bar = "Слизнюки %d"
+	L.ooze_message = "Надвигаются Слизнюки %d!"
 	L.tentacles_bar = "Смутные творения"
 	L.tentacles_message = "Смутные творения!"
 	L.sickness_message = "Вы больны, и вас сейчас стошнит!"
@@ -31,19 +32,23 @@ if L then
 	L.breath_message = "Надвигается Глубокий вдох!"
 	L.dazzling_message = "Надвигается Шокирующее разрушение!"
 
+	L.blast_message = "Сумеречный взрыв" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "Избыточная магия на МНЕ!"
 	L.engulfingmagic_cooldown = "~Избыточная магия"
 
 	L.devouringflames_cooldown = "~Всепоглощающее пламя"
 
 	L.valiona_trigger = "Тералион, я подожгу коридор. Не дай им уйти!"
+	L.win_trigger = "Одно утешает... Тералион погиб вместе со мной..."
 
 	L.twilight_shift = "%2$dx Сумеречный сдвиг на |3-3(%1$s)"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "ruRU")
 if L then
+	L.paralysis_bar = "След. Паралич"
 
+	L.strikes_message = "%2$dx удар(а) на |3-3(%1$s)"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "ruRU")
@@ -67,8 +72,6 @@ if L then
 
 	L.shield_up_message = "ЩИТ!"
 	L.shield_bar = "След. щит"
-
-	L.lightning_rod_say = "На МНЕ - Громоотвод!"
 
 	L.switch_trigger = "Мы займемся ими!"
 

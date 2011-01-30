@@ -2,8 +2,6 @@
 local L = BigWigs:NewBossLocale("Atramedes", "ruRU")
 if not L then return end
 if L then
-	L.tracking_me = "На МНЕ - Выслеживание!"
-
 	L.ground_phase = "Наземная фаза"
 	L.ground_phase_desc = "Сообщать о приземлении Атрамеда."
 	L.air_phase = "Воздушная фаза"
@@ -31,14 +29,14 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "ruRU")
 if L then
 	-- heroic
-	L.blazing = "Skeleton Adds"
-	L.blazing_desc = "Призывает Blazing Bone Construct."
+	L.blazing = "Помощник - скелет"
+	L.blazing_desc = "Призывает Пыляющее костяное создание."
 	L.blazing_message = "Надвигается помощник!"
 	L.blazing_bar = "След. скелет"
 
-	L.phase2 = "Phase 2"
-	L.phase2_desc = "Warn for Phase 2 transition and display range check."
-	L.phase2_message = "Phase 2!"
+	L.phase2 = "2-ая фаза"
+	L.phase2_desc = "Сообщить о переходе во 2-ую фазу и показать проверку близости."
+	L.phase2_message = "2-ая фаза!"
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
 	-- normal
@@ -55,8 +53,8 @@ if L then
 	L.expose_trigger = "голову"
 	L.expose_message = "Голова обнажена!"
 
-	L.spew_bar = "~Next Spew"
-	L.spew_warning = "Lava Spew Soon!"
+	L.spew_bar = "~Изрыгание лавы"
+	L.spew_warning = "Скоро Изрыгание лавы!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
@@ -71,8 +69,6 @@ if L then
 
 	L.release_aberration_message = "%s осталось аберрации!"
 	L.release_all = "%s аберрации!"
-
-	L.bitingchill_say = "На МНЕ - Жгучий холод!"
 
 	L.flashfreeze = "~Ледяная вспышка"
 	L.next_blast = "~Обжигающий поток"
@@ -110,8 +106,6 @@ if L then
 
 	L.onyxia_power_message = "Скоро Взрыв!"
 
-	L.cinder_say = "На МНЕ - Взрывчатый пепел!"
-
 	L.chromatic_prototype = "Хроматический прообраз" -- 3 adds name
 end
 
@@ -124,13 +118,15 @@ if L then
 	L.switch_message = "%s %s"
 
 	L.next_switch = "След. Смена"
+	
+	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~След. Вливание Тьмы"
 
 	L.acquiring_target = "Выбор цели"
 
 	L.bomb_message = "ВАС преследует Слизнюк!"
-	L.cloud_say = "Облако на МНЕ!"
 	L.cloud_message = "Вы в Облаке!"
 	L.protocol_message = "Химическая бомба!"
 
