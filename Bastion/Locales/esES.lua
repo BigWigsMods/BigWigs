@@ -30,6 +30,7 @@ if L then
 	L.breath_message = "\194\161Aliento profundo entrante!"
 	L.dazzling_message = "\194\161Zonas espirales entrantes!"
 
+	L.blast_message = "Explosi\195\179n en ca\195\173da" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "\194\161Trago de magia en MI!"
 	L.engulfingmagic_cooldown = "(CD) Trago de magia"
 
