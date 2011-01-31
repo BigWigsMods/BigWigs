@@ -5,12 +5,12 @@
 local mod = BigWigs:NewBoss("Sinestra", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45213)
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local breath, slicer = (GetSpellInfo(92944)), (GetSpellInfo(92954))
 local orbTimer = 28
 local eggs = 0

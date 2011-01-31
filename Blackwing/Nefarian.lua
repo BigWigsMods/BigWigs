@@ -10,7 +10,6 @@ mod:RegisterEnableMob(41270, 41376)
 -- Locals
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
 local cinderTargets = mod:NewTargetList()
 local powerTargets = mod:NewTargetList()
@@ -34,7 +33,7 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
-	L.shadowblaze_message = "Fire on YOU!"
+	L.shadowblaze_message = "Fire"
 
 	L.onyxia_power_message = "Explosion soon!"
 
@@ -66,7 +65,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
 	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80626, 80627)
-
 	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007, 94085, 94086, 94087)
 
 	self:Emote("Electrocute", L["crackle_trigger"])
@@ -97,7 +95,7 @@ do
 		if (time - last) > 2 then
 			last = time
 			if UnitIsUnit(player, "player") then
-				self:LocalMessage(94085, L["shadowblaze_message"], "Personal", spellId, "Info")
+				self:LocalMessage(94085, CL["you"]:format(["shadowblaze_message"]), "Personal", spellId, "Info")
 				self:FlashShake(94085)
 			end
 		end

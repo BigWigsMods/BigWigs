@@ -36,9 +36,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MeteorSlash", 88942, 95172)
 	self:Log("SPELL_AURA_APPLIED", "ConsumingDarkness", 88954, 95173)
 	self:Log("SPELL_CAST_START", "FelFirestorm", 88972)
-	self:Death("Win", 47120)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
+	self:Death("Win", 47120)
 end
 
 function mod:OnEngage()
@@ -74,7 +75,7 @@ end
 
 function mod:FelFirestorm(_, spellId, _, _, spellName)
 	self:SendMessage("BigWigs_StopBar", self, L["meteor_bar"])
-	self:Message(88972, fireStorm.."% - "..spellName, "Attention", spellId, "Alert")
+	self:Message(88972, fireStorm.."% - "..spellName, "Urgent", spellId, "Alert")
 	self:FlashShake(88972)
 	self:Bar(88942, L["meteor_bar"], 32, 88942)
 end

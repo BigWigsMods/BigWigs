@@ -15,12 +15,12 @@ local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), G
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local emTargets = mod:NewTargetList()
 local markWarned = false
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.phase_switch = "Phase Switch"
