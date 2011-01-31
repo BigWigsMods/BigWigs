@@ -103,6 +103,8 @@ if L then
 
 	L.crackle_trigger = "전기가"	--check
 	L.crackle_message = "곧 감전!"
+	
+	L.shadowblaze_message = "당신은 암흑 화로!"
 
 	L.onyxia_power_message = "곧 폭발!"
 
