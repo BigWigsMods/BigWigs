@@ -71,7 +71,7 @@ function mod:OnEngage(diff)
 	self:Bar(88853, L["next_system_failure"], 90, 88853)
 	self:SendMessage("BigWigs_StopBar", self, self.displayName)
 	if diff > 2 then
-		self:Berserk(420)
+		self:Berserk(450)
 	end
 	self:RegisterEvent("UNIT_HEALTH")
 end
