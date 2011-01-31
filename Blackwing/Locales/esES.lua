@@ -101,12 +101,14 @@ if L then
 	L.phase = "Fases"
 	L.phase_desc = "Avisa los cambios de fase."
 
-	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
+	L.phase_two_trigger = "¡Os maldigo, mortales! ¡Ese cruel menosprecio por las posesiones de uno debe ser castigado con fuerza extrema!"
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
-	L.crackle_trigger = "The air crackles with electricity!"
+	L.crackle_trigger = "¡El aire crepita cargado de electricidad!"
 	L.crackle_message = "\194\161Electrocutar pronto!"
+	
+	L.shadowblaze_message = "Fuego"
 
 	L.onyxia_power_message = "\194\161Explosi\195\179n pronto!"
 
