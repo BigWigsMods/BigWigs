@@ -95,7 +95,7 @@ do
 		if (time - last) > 2 then
 			last = time
 			if UnitIsUnit(player, "player") then
-				self:LocalMessage(94085, CL["you"]:format(["shadowblaze_message"]), "Personal", spellId, "Info")
+				self:LocalMessage(94085, CL["you"]:format(L["shadowblaze_message"]), "Personal", spellId, "Info")
 				self:FlashShake(94085)
 			end
 		end
