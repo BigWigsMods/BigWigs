@@ -201,6 +201,7 @@ end
 
 function mod:Dark()
 	isBluePhase = nil
+	warnedAlready = true
 	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
 	if not isChilled then
 		self:CloseProximity()
