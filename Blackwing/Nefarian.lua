@@ -34,6 +34,8 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
+	L.shadowblaze_message = "Fire on YOU!"
+
 	L.onyxia_power_message = "Explosion soon!"
 
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
@@ -46,7 +48,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		78999, 81272, 94085,
+		78999, 81272, {94085, "FLASHSHAKE"},
 		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "berserk",
 		"phase", "bosskill"
 	}, {
@@ -64,6 +66,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
 	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80626, 80627)
+
+	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007, 94085, 94086, 94087)
 
 	self:Emote("Electrocute", L["crackle_trigger"])
 
@@ -85,6 +89,20 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local last = 0
+	function mod:PersonalShadowBlaze(player, spellId)
+		local time = GetTime()
+		if (time - last) > 2 then
+			last = time
+			if UnitIsUnit(player, "player") then
+				self:LocalMessage(94085, L["shadowblaze_message"], "Personal", spellId, "Info")
+				self:FlashShake(94085)
+			end
+		end
+	end
+end
 
 function mod:Electrocute()
 	self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
@@ -134,7 +152,9 @@ local function nextBlaze()
 			shadowBlazeTimer = shadowBlazeTimer - 5
 		end
 	end
-	mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
+	if shadowBlazeTimer > 5 then
+		mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
+	end
 	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
 	mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
 end
