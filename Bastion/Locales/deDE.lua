@@ -45,8 +45,10 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "deDE")
 if L then
 	L.paralysis_bar = "Nächste Paralyse"
-
 	L.strikes_message = "%2$dx Stöße auf %1$s"
+
+	L.breath_message = "Atem kommt!"
+	L.breath_bar = "Atem"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "deDE")
