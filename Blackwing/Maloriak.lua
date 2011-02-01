@@ -81,6 +81,7 @@ end
 function mod:OnBossEnable()
 	--heroic
 	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987, 92988)
+	self:Log("SPELL_PERIODIC_DAMAGE", "DarkSludge", 92987, 92988)
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
