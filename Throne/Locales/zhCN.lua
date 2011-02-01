@@ -15,7 +15,7 @@ L = BigWigs:NewBossLocale("Conclave of Wind", "zhCN")
 if L then
 	L.gather_strength = "%s is Gathering Strength"
 
-	L.storm_shield = stormShield
+	L.storm_shield = "Storm shield"
 	L.storm_shield_desc = "Absorption Shield"
 
 	L.full_power = "Full Power"
