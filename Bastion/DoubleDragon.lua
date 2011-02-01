@@ -102,11 +102,9 @@ end
 
 do
 	local function checkTarget(sGUID)
-		local bossId = UnitGUID("boss2") == sGUID and "boss2" or "boss1"
-		--XXX clean this up after we confirm target is never nil at .3
-		local target = UnitName(bossId .. "target")
-		if not target then print("TARGET WAS NIL, TELL THE BIGWIGS AUTHORS!") return end --temp debug
-		if UnitIsUnit(target, "player") then
+		local bossId = UnitGUID("boss2") == sGUID and "boss2target" or "boss1target"
+		if not UnitName(bossId) then return end --The first is sometimes delayed longer than 0.3
+		if UnitIsUnit(bossId, "player") then
 			mod:LocalMessage(92898, CL["you"]:format(L["blast_message"]), "Personal", 92898, "Long")
 		end
 	end
