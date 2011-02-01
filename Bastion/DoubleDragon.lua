@@ -82,7 +82,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("UNIT_AURA")
 
-	self:Death("Win", 45992)
+	self:Death("Deaths", 45992, 45993)
 end
 
 function mod:OnEngage(diff)
@@ -223,6 +223,16 @@ end
 function mod:EngulfingMagicRemoved(player)
 	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
+	end
+end
+
+do
+	local count = 0
+	function mod:Deaths()
+		count = count + 1
+		if count == 2 then
+			self:Win()
+		end
 	end
 end
 
