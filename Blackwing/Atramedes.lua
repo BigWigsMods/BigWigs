@@ -11,7 +11,6 @@ mod:RegisterEnableMob(41442)
 --
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local airPhaseDuration = 30
 local searingFlame = GetSpellInfo(77840)
 
 --------------------------------------------------------------------------------
@@ -95,13 +94,13 @@ do
 		mod:Bar("air_phase", L["air_phase"], 90, 5740) -- Rain of Fire Icon
 		mod:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
 		-- XXX need a good trigger for ground phase start to make this even more accurate
-		mod:Bar(77840, searingFlame, 50, 77840)
+		mod:Bar(77840, searingFlame, 48.5, 77840)
 	end
 	function mod:AirPhase()
 		self:SendMessage("BigWigs_StopBar", self, L["sonicbreath_cooldown"])
 		self:Message("air_phase", L["air_phase"], "Attention", 5740) -- Rain of Fire Icon
-		self:Bar("ground_phase", L["ground_phase"], airPhaseDuration, 61882) -- Earthquake Icon
-		self:ScheduleTimer(groundPhase, airPhaseDuration)
+		self:Bar("ground_phase", L["ground_phase"], 30, 61882) -- Earthquake Icon
+		self:ScheduleTimer(groundPhase, 30)
 	end
 end
 
