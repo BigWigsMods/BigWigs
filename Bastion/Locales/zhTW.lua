@@ -71,12 +71,12 @@ if L then
 	L.shield_up_message = "火焰之禦 出現!"
 	L.shield_bar = "<下一火焰之禦>"
 
-	L.switch_trigger = "We will handle them!"
+	L.switch_trigger = "我們會解決他們!"
 
 	L.thundershock_quake_soon = "约10秒後，%s！"
 
-	L.quake_trigger = "The ground beneath you rumbles ominously...."
-	L.thundershock_trigger = "The surrounding air crackles with energy...."
+	L.quake_trigger = "你腳下的地面開始不祥地震動起來...."
+	L.thundershock_trigger = "四周的空氣爆出能量霹啪作響聲音...."
 
 	L.searing_winds_message = "即將 雷霆震擊！"
 	L.grounded_message = "即將 地震！"
