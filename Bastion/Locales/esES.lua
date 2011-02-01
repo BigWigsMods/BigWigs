@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if not L then return end
 if L then
@@ -46,8 +46,10 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "esES")
 if L then
 	L.paralysis_bar = "Pr\195\179xima par\195\161lisis"
-
 	L.strikes_message = "%2$dx Golpes mal\195\169volos en %1$s"
+
+	L.breath_message = "\194\161Aliento entrante!"
+	L.breath_bar = "Aliento"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "esES")
