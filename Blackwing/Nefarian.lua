@@ -103,8 +103,10 @@ do
 end
 
 function mod:Electrocute()
-	self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
-	self:Bar(81272, (GetSpellInfo(81272)), 5, 81272)
+	if UnitExists("boss1") then
+		self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
+		self:Bar(81272, (GetSpellInfo(81272)), 5, 81272)
+	end
 end
 
 function mod:Deaths(mobId)
