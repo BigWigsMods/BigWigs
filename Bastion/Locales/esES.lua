@@ -38,8 +38,6 @@ if L then
 
 	L.valiona_trigger = "Theralion, voy a incendiar el corredor. ¡Que no escapen!"
 
-	L.win_trigger = "Al menos... Theralion muere conmigo..."
-
 	L.twilight_shift = "%2$dx Cambio en %1$s"
 end
 

@@ -39,7 +39,6 @@ if L then
 	L.devouringflames_cooldown = "~Всепоглощающее пламя"
 
 	L.valiona_trigger = "Тералион, я подожгу коридор. Не дай им уйти!"
-	L.win_trigger = "Одно утешает... Тералион погиб вместе со мной..."
 
 	L.twilight_shift = "%2$dx Сумеречный сдвиг на |3-3(%1$s)"
 end

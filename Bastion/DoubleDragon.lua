@@ -82,8 +82,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("UNIT_AURA")
 
-	self:Death("Win", 45992, 45993)
-	self:Yell("Win", L["win_trigger"])
+	self:Death("Win", 45992)
 end
 
 function mod:OnEngage(diff)

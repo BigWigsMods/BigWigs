@@ -37,7 +37,6 @@ if L then
 	L.devouringflames_cooldown = "<吞噬烈焰>"
 
 	L.valiona_trigger = "瑟拉里恩，我的火會淹沒整個通道。擋住他們的退路!"
-	L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "暮光變換%2$dx：>%1$s<！"
 end

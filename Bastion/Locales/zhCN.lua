@@ -37,7 +37,6 @@ if L then
 	L.devouringflames_cooldown = "<Devouring Flame>"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
-	L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "Twilight Shift%2$dx：>%1$s<！"
 end

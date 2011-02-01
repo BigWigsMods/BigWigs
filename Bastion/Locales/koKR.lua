@@ -37,7 +37,6 @@ if L then
 	L.devouringflames_cooldown = "다음 파멸의 불길"
 
 	L.valiona_trigger = "테랄리온, 내가 전당에 불을 뿜겠다. 놈들의 퇴로를 막아라!"
-	L.win_trigger = "그나마... 테랄리온 녀석도 죽어서 다행이야..."
 
 	L.twilight_shift = "황혼 이동 x%2$d : %1$s"
 end
