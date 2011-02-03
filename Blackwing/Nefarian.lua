@@ -133,13 +133,15 @@ function mod:PhaseTwo()
 	phase = 2
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
 	local d = self:GetInstanceDifficulty()
-	if d == 2 then
-		self:Bar("phase", CL["phase"]:format(phase), 127, 78621)
-	elseif d == 4 then
+	if d == 4 then
+		-- Heroic 25man (diff 4) probably 4 minutes
 		self:Bar("phase", CL["phase"]:format(phase), 240, 78621) -- random guessed number
 	else
+		-- Normal 10man (diff 1) probably 3 minutes
+		-- Normal 25man (diff 2) confirmed 3 minutes
 		self:Bar("phase", CL["phase"]:format(phase), 180, 78621)
 	end
+	-- XXX Heroic 10man (diff 3) - no idea.
 end
 
 local function nextBlaze()
