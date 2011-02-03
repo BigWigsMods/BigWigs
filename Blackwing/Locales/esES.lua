@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if not L then return end
 if L then
@@ -112,7 +112,7 @@ if L then
 
 	L.onyxia_power_message = "\194\161Explosi\195\179n pronto!"
 
-	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
+	L.chromatic_prototype = "Prototipo cromático" -- 3 adds name
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "esES")
