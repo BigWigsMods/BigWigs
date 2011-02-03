@@ -128,6 +128,7 @@ if L then
 
 	L.acquiring_target = "대상 획득"
 
+	L.bomb_message = "슬라임이 당신을 추적!"
 	L.cloud_message = "당신은 화학 구름!"
 	L.protocol_message = "독 폭탄!"
 
