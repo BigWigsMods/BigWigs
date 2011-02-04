@@ -160,10 +160,11 @@ end
 
 function boss:CheckBossStatus()
 	if debug then dbg(self, ":CheckBossStatus called.") end
-	local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4")
-	if not guid and self.isEngaged then
+	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100
+	if not hasBoss and self.isEngaged then
 		self:Reboot()
-	elseif not self.isEngaged and guid then
+	elseif not self.isEngaged and hasBoss then
+		local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4")
 		local module = core:GetEnableMobs()[tonumber(guid:sub(7, 10), 16)]
 		local modType = type(module)
 		if modType == "string" then
