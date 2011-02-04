@@ -76,7 +76,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 42166, 42179, 42178, 42180)
+	self:Death("Deaths", 42166, 42179, 42178, 42180)
 end
 
 function mod:OnEngage(diff)
@@ -185,6 +185,17 @@ do
 				self:LocalMessage(80161, L["cloud_message"], "Personal", spellId, "Info")
 				self:FlashShake(80161)
 			end
+		end
+	end
+end
+
+do
+	local deaths = 0
+	function mod:Deaths()
+		--Prevent the module from re-enabling in the second or so after 1 boss dies
+		deaths = deaths + 1
+		if deaths == 4 then
+			self:Win()
 		end
 	end
 end

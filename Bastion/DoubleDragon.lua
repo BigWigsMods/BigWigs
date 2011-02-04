@@ -229,6 +229,7 @@ end
 do
 	local count = 0
 	function mod:Deaths()
+		--Prevent the module from re-enabling in the second or so after 1 boss dies
 		count = count + 1
 		if count == 2 then
 			self:Win()
