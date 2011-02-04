@@ -27,15 +27,20 @@ if L then
 	L.orders = "Stance changes"
 	L.orders_desc = "Warning for when Cho'gall changes between Shadow/Flame Orders stances."
 
-	L.crash_say = "Crash on ME!"
 	L.worship_cooldown = "~Worship"
+	
 	L.adherent_bar = "Big add #%d"
 	L.adherent_message = "Add %d incoming!"
 	L.ooze_bar = "Ooze swarm %d"
 	L.ooze_message = "Ooze swarm %d incoming!"
+	
 	L.tentacles_bar = "Tentacles spawn"
 	L.tentacles_message = "Tentacle disco party!"
+	
 	L.sickness_message = "You feel terrible!"
+	L.blaze_message = "Blaze on YOU!"
+	L.crash_say = "Crash on ME!"
+	
 	L.fury_bar = "Next Fury"
 	L.fury_message = "Fury!"
 
@@ -71,7 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
 	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414, 93160, 93162)
-	self:Log("SPELL_CAST_SUCCESS", "CorruptingCrash", 93180)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptingCrash", 81685, 93178, 93179, 93180)
 	self:Log("SPELL_DAMAGE", "Blaze", 81538, 93212, 93213, 93214)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -106,7 +111,7 @@ do
 		if (time - last) > 2 then
 			last = time
 			if UnitIsUnit(player, "player") then
-				self:LocalMessage(81538, spellName, "Personal", spellId, "Info")
+				self:LocalMessage(81538, L["blaze_message"], "Personal", spellId, "Info")
 				self:FlashShake(81538)
 			end
 		end
