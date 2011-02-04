@@ -28,19 +28,19 @@ if L then
 	L.orders_desc = "Warning for when Cho'gall changes between Shadow/Flame Orders stances."
 
 	L.worship_cooldown = "~Worship"
-	
+
 	L.adherent_bar = "Big add #%d"
 	L.adherent_message = "Add %d incoming!"
 	L.ooze_bar = "Ooze swarm %d"
 	L.ooze_message = "Ooze swarm %d incoming!"
-	
+
 	L.tentacles_bar = "Tentacles spawn"
 	L.tentacles_message = "Tentacle disco party!"
-	
+
 	L.sickness_message = "You feel terrible!"
 	L.blaze_message = "Blaze on YOU!"
 	L.crash_say = "Crash on ME!"
-	
+
 	L.fury_bar = "Next Fury"
 	L.fury_message = "Fury!"
 

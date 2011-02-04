@@ -5,15 +5,20 @@ if L then
 	L.orders = "Schatten- / Flammenbefehl"
 	L.orders_desc = "Warnt, wenn Cho'gall zwischen Befehle des Schattens und Flammenbefehl wechselt."
 
-	L.crash_say = "Schmettern auf MIR!"
 	L.worship_cooldown = "~Verehren"
+
 	L.adherent_bar = "Kultist %d"
 	L.adherent_message = "Kultist %d kommt!"
 	L.ooze_bar = "Schleime %d"
 	L.ooze_message = "Schleime %d kommen!"
+
 	L.tentacles_bar = "Nächste Tentakel"
 	L.tentacles_message = "Tentakel Disco Party!"
+
 	L.sickness_message = "Krankheit auf DIR!"
+	L.blaze_message = "Lohe auf DIR!"
+	L.crash_say = "Schmettern auf MIR!"
+
 	L.fury_bar = "Nächster Furor"
 	L.fury_message = "Furor!"
 
@@ -47,7 +52,7 @@ if L then
 	L.strikes_message = "%2$dx Stöße auf %1$s"
 
 	L.breath_message = "Atem kommt!"
-	L.breath_bar = "Atem"
+	L.breath_bar = "Nächster Atem"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "deDE")

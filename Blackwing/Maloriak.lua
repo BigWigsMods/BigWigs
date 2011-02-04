@@ -89,6 +89,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978, 92980)
+	self:Log("SPELL_AURA_REMOVED", "FlashFreezeRemoved", 77699, 92979, 92978, 92980)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
 	self:Log("SPELL_AURA_REMOVED", "BitingChillRemoved", 77760)
 	self:Log("SPELL_AURA_APPLIED", "ConsumingFlames", 77786, 92972, 92971, 92973)
@@ -217,6 +218,10 @@ end
 function mod:FlashFreeze(player, spellId, _, _, spellName)
 	self:TargetMessage(77699, spellName, player, "Attention", spellId) -- attention cuz on heroic you don't break it instantly
 	self:PrimaryIcon(77699, player)
+end
+
+function mod:FlashFreezeRemoved()
+	self:PrimaryIcon(77699)
 end
 
 function mod:Remedy(unit, spellId, _, _, spellName)
