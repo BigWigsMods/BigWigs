@@ -14,7 +14,7 @@ local phase, lastWindburst = 1, 0
 local windburst = GetSpellInfo(87770)
 local shock = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local acidRainCounter, acidRaindCounted = 0, nil
+local acidRainCounter, acidRaindCounted = 1, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -68,7 +68,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301, 93279, 93280, 93281)
-	self:Log("SPELL_AURA_APPLIED", "AcidRain", 88301, 93279, 93280, 93281)
 	self:Log("SPELL_DAMAGE", "Shock", 93257)
 	-- Acid Rain is applied at P2 transition
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279, 93280, 93281)
@@ -88,7 +87,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase, lastWindburst = 1, 0
-	acidRainCounter = 0, nil
+	acidRainCounter = 1, nil
 end
 
 --------------------------------------------------------------------------------
