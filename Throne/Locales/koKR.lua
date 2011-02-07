@@ -8,6 +8,8 @@ if L then
 	L.stormling_bar = "다음 폭풍 정령"
 	L.stormling_yell = "폭풍이여! 너를 소환하노라!"
 	
+	L.acid_rain = "산성 비 (%d)"
+	
 	L.phase3_yell = "그만!" --check
 
 	L.phase = "단계 변화"
