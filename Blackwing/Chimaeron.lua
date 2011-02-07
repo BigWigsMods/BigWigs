@@ -92,7 +92,7 @@ function mod:SystemFailureStart(_, spellId, _, _, spellName)
 end
 
 function mod:SystemFailureEnd(_, spellId)
-	if self.isEngaged then
+	if self.isEngaged then --To prevent firing after a wipe
 		if difficulty < 3 then
 			self:Bar(88853, L["next_system_failure"], 65, spellId)
 		end

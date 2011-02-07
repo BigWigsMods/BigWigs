@@ -85,9 +85,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	if diff > 2 then
-		self:Berserk(600) -- confirmed for 25 man heroic
-	end
+	self:Berserk(600)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase, lastWindburst = 1, 0
 	acidRainCounter = 1, nil
