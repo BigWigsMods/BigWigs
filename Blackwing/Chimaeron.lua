@@ -11,6 +11,7 @@ mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle
 --
 
 local causticSlime = GetSpellInfo(88917)
+local difficulty = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -68,11 +69,13 @@ function mod:Warmup(_, msg)
 end
 
 function mod:OnEngage(diff)
-	self:Bar(88853, L["next_system_failure"], 90, 88853)
 	self:SendMessage("BigWigs_StopBar", self, self.displayName)
 	if diff > 2 then
 		self:Berserk(450)
+	else
+		self:Bar(88853, L["next_system_failure"], 90, 88853) --typically happens at 60 or 90 on heroic, but random
 	end
+	difficulty = diff
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -90,7 +93,9 @@ end
 
 function mod:SystemFailureEnd(_, spellId)
 	if self.isEngaged then
-		self:Bar(88853, L["next_system_failure"], 65, spellId)
+		if difficulty < 3 then
+			self:Bar(88853, L["next_system_failure"], 65, spellId)
+		end
 		self:FlashShake(88853)
 		self:OpenProximity(6)
 	end
@@ -122,4 +127,3 @@ function mod:UNIT_HEALTH()
 		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
-
