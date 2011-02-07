@@ -115,13 +115,17 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "frFR")
 if L then
 	L.nef = "Seigneur Victor Nefarius"
 	L.nef_desc = "Prévient quand le Seigneur Victor Nefarius utilise une technique."
+
+	L.pool = "Générateur instable"
+	L.pool_desc = "Le Seigneur Victor Nefarius surcharge et fait exploser le générateur de puissance de Arcanotron, tuant toute personne à proximité."
+
 	L.switch = "Changement"
 	L.switch_desc = "Prévient de l'arrivée des changements."
 	L.switch_message = "%s %s"
 
 	L.next_switch = "Prochaine activation"
 
-	L.nef_trigger1 = "Vous aviez l'intention d'utiliser les attaques chimiques de Toxitron contre les autres assemblages ?" -- à compléter
+	--L.nef_trigger1 = "Vous aviez l'intention d'utiliser les attaques chimiques de Toxitron contre les autres assemblages ?" -- à compléter
 	L.nef_trigger2 = "Ces nains stupides et leur fascination pour les runes !" -- à compléter
 
 	L.nef_next = "~Prochain buff de technique"
