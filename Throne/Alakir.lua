@@ -14,6 +14,7 @@ local phase, lastWindburst = 1, 0
 local windburst = GetSpellInfo(87770)
 local shock = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local acidRainCounter, acidRaindCounted = 0, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +27,8 @@ if L then
 	L.stormling_message = "Stormling incoming!"
 	L.stormling_bar = "Next stormling"
 	L.stormling_yell = "Storms! I summon you to my side!"
+
+	L.acid_rain = "Acid Rain (%d)"
 
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
@@ -46,6 +49,7 @@ function mod:GetOptions(CL)
 		87770,
 		87904,
 		"stormling",
+		93279,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
 		93257, -- Heroic Lightning Shock Attempt at trying to predict
 		88427, "phase", "bosskill"
@@ -63,9 +67,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261, 93263)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301, 93279, 93280, 93281)
+	self:Log("SPELL_AURA_APPLIED", "AcidRain", 88301, 93279, 93280, 93281)
 	self:Log("SPELL_DAMAGE", "Shock", 93257)
 	-- Acid Rain is applied at P2 transition
-	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279, 93281)
+	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279, 93280, 93281)
 
 	self:Yell("Stormling", L["stormling_yell"])
 	self:Yell("Phase3", L["phase3_yell"])
@@ -82,6 +88,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase, lastWindburst = 1, 0
+	acidRainCounter = 0, nil
 end
 
 --------------------------------------------------------------------------------
@@ -137,6 +144,9 @@ function mod:Phase3()
 	if phase >= 3 then return end
 	self:Message("phase", CL["phase"]:format(3), "Positive", 93279)
 	self:Bar(93286, windburst, 24, 93286)
+	self:SendMessage("BigWigs_StopBar", self, L["stormling_bar"])
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(87904))) -- Feedback
+	self:SendMessage("BigWigs_StopBar", self, L["acid_rain"]:format(acidRainCounter))
 	phase = 3
 end
 
@@ -144,6 +154,18 @@ function mod:Feedback(_, spellId, _, _, spellName, stack)
 	self:Bar(87904, spellName, 20, spellId)
 	if not stack then stack = 1 end
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId, "Info")
+end
+
+local function AcidRainCounted()
+	acidRainCounted = nil
+end
+
+function mod:AcidRain(_, spellId)
+	if acidRainCounted then return end
+	acidRainCounter, acidRainCounted = acidRainCounter + 1, true
+	self:ScheduleTimer(AcidRainCounted, 12) -- 15 - 3
+	self:Bar(93279, L["acid_rain"]:format(acidRainCounter), 15, spellId) -- do we really want counter on bar too?
+	self:Message(93279, L["acid_rain"]:format(acidRainCounter), "Attention", spellId)
 end
 
 function mod:Electrocute(player, spellId, _, _, spellName)

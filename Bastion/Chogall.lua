@@ -44,6 +44,8 @@ if L then
 	L.fury_bar = "Next Fury"
 	L.fury_message = "Fury!"
 
+	L.unleashed_shadows = "Pulsing Shadow"
+
 	L.phase2_message = "Phase 2!"
 	L.phase2_soon = "Phase 2 soon!"
 end
@@ -55,7 +57,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		91303, {81538, "FLASHSHAKE"}, {93180, "FLASHSHAKE", "ICON", "SAY"}, 82524, 81628, 82299,
+		91303, {81538, "FLASHSHAKE"}, {93180, "FLASHSHAKE", "ICON", "SAY"}, 93223, 82524, 81628, 82299,
 		82630, 82414,
 		"orders", {82235, "FLASHSHAKE", "PROXIMITY"}, "berserk", "bosskill"
 	}, {
@@ -66,10 +68,8 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	--heroic
-	self:Log("SPELL_CAST_SUCCESS", "Orders", 81171, 81556)
-
 	--normal
+	self:Log("SPELL_CAST_SUCCESS", "Orders", 81171, 81556)
 	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93365, 93366, 93367)
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FuryOfChogall", 82524)
@@ -160,6 +160,9 @@ end
 
 function mod:Orders(_, spellId, _, _, spellName)
 	self:Message("orders", spellName, "Urgent", spellId)
+	if spellId == 81171 then
+		self:Bar(93223, L["unleashed_shadows"], 24, 93223) -- verified for 25man heroic
+	end
 end
 
 function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
