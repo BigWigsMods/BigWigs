@@ -52,7 +52,7 @@ function mod:GetOptions(CL)
 		93279,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
 		93257, -- Heroic Lightning Shock Attempt at trying to predict
-		88427, "phase", "bosskill"
+		88427, "phase", "berserk", "bosskill"
 	}, {
 		[87770] = CL["phase"]:format(1),
 		[87904] = CL["phase"]:format(2),
@@ -85,6 +85,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	if diff > 2 then
+		self:Berserk(600) -- confirmed for 25 man heroic
+	end
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase, lastWindburst = 1, 0
 	acidRainCounter = 1, nil
