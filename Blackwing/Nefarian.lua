@@ -182,8 +182,8 @@ do
 		cinderTargets[#cinderTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(79339)
-			self:Say(79339, CL["say"]:format((GetSpellInfo(79339))))
-			self:Bar(79339, spellName, 8, 79339)
+			self:Say(79339, CL["say"]:format(spellName))
+			self:Bar(79339, spellName, 8, spellId)
 			self:OpenProximity(10, 79339) -- assumed
 		end
 		if not scheduled then

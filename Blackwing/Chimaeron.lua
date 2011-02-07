@@ -127,3 +127,4 @@ function mod:UNIT_HEALTH()
 		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
+
