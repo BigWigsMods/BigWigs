@@ -5,17 +5,24 @@ if L then
 	L.orders = "Changements de posture"
 	L.orders_desc = "Prévient quand Cho'gall passe en posture Ordres de l'ombre/de la flamme."
 
-	L.crash_say = "Déferlante sur moi !"
 	L.worship_cooldown = "~Vénération"
+
 	L.adherent_bar = "Adhérent #%d"
 	L.adherent_message = "Arrivée d'un Adhérent (%d) !"
 	L.ooze_bar = "Nuée de Sangs #%d"
 	L.ooze_message = "Arrivée d'une nuée de Sangs (%d) !"
+
 	L.tentacles_bar = "Apparition de Créations"
 	L.tentacles_message = "Créations assombries !"
+
 	L.sickness_message = "Vous ne vous sentez pas bien !"
+	L.blaze_message = "Brasier sur vous !"
+	L.crash_say = "Déferlante sur moi !"
+
 	L.fury_bar = "Prochaine Fureur"
 	L.fury_message = "Fureur !"
+
+	L.unleashed_shadows = "Ombre vibrante"
 
 	L.phase2_message = "Phase 2 !"
 	L.phase2_soon = "Phase 2 imminente !"
@@ -30,13 +37,14 @@ if L then
 	L.breath_message = "Arrivée des Souffles profonds !"
 	L.dazzling_message = "Arrivée des zones tourbillonnantes !"
 
-	L.blast_message = "Falling Blast"
+	L.blast_message = "Déflagration"
 	L.engulfingmagic_say = "Magie sur moi !"
 	L.engulfingmagic_cooldown = "~Magie enveloppante"
 
 	L.devouringflames_cooldown = "~Flammes dévorantes"
 
 	L.valiona_trigger = "Theralion, je m'occupe du vestibule. Couvre leur fuite !" -- à vérifier
+	L.win_trigger = "Au moins... Theralion meurt avec moi..." -- à vérifier
 
 	L.twilight_shift = "%2$dx Transferts sur %1$s"
 end
