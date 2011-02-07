@@ -21,6 +21,8 @@ if L then
 	
 	L.fury_bar = "다음 격노"
 	L.fury_message = "격노!"
+	
+	L.unleashed_shadows = "해방된 어둠"
 
 	L.phase2_message = "2 단계!"
 	L.phase2_soon = "곧 2 단계!"
