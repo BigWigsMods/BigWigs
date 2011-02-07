@@ -22,8 +22,12 @@ local handle = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.whelps = "Whelps"
+	L.whelps_desc = "Warning for the whelp waves"
+
 	L.egg_vulnerable = "Omelet time!"
 
+	L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
 	L.omelet_trigger = "You mistake this for weakness?  Fool!"
 
 	L.phase13 = "Phase 1 and 3"
@@ -42,6 +46,7 @@ function mod:GetOptions()
 		92944, -- Breath
 		92954, -- Twilight Slicer
 		86227, -- Extinction
+		"whelps",
 
 	-- Phase 2
 		87654, -- Omelet Time
@@ -65,6 +70,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Extinction", 86227)
 
 	self:Yell("EggTrigger", L["omelet_trigger"])
+	self:Yell("Whelps", L["whelps_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -80,6 +86,7 @@ end
 function mod:OnEngage()
 	self:Bar(92944, "~"..breath, 24, 92944)
 	self:Bar(92954, "~"..slicer, orbTimer, 92954)
+	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
 	self:ScheduleTimer(orbSpawn, orbTimer)
 	orbTimer = 30
 	eggs = 0
@@ -90,6 +97,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Whelps()
+	self:Bar("whelps", L["whelps"], 50, 69005)
+	self:Message("whelps", L["whelps"], "Important", 69005)
+end
 
 function mod:Extinction(_, spellId, _, _, spellName)
 	self:Bar(86227, spellName, 15, spellId)
@@ -142,6 +154,7 @@ function mod:Deaths(mobId)
 		eggs = eggs + 1
 		if eggs == 2 then
 			self:Message("phase", CL["phase"]:format(3), "Positive", 51070, "Info") -- broken egg icon
+			self:Bar("whelps", L["whelps"], 50, 69005)
 			self:Bar(92954, "~"..slicer, orbTimer, 92954)
 			self:Bar(92944, "~"..breath, 24, 92944)
 			self:ScheduleTimer(orbSpawn, orbTimer)
