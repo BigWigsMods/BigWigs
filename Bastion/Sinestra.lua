@@ -23,7 +23,7 @@ local handle = nil
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.whelps = "Whelps"
-	L.whelps_desc = "Warning for the whelp waves"
+	L.whelps_desc = "Warning for the whelp waves."
 
 	L.egg_vulnerable = "Omelet time!"
 
@@ -32,7 +32,7 @@ if L then
 
 	L.phase13 = "Phase 1 and 3"
 	L.phase = "Phase"
-	L.phase_desc = "Warning for phase changes"
+	L.phase_desc = "Warning for phase changes."
 end
 L = mod:GetLocale()
 
