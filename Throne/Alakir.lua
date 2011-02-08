@@ -14,7 +14,7 @@ local phase, lastWindburst = 1, 0
 local windburst = GetSpellInfo(87770)
 local shock = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local acidRainCounter, acidRaindCounted = 1, nil
+local acidRainCounter, acidRainCounted = 1, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -156,16 +156,17 @@ function mod:Feedback(_, spellId, _, _, spellName, stack)
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId, "Info")
 end
 
-local function AcidRainCounted()
-	acidRainCounted = nil
-end
-
-function mod:AcidRain(_, spellId)
-	if acidRainCounted then return end
-	acidRainCounter, acidRainCounted = acidRainCounter + 1, true
-	self:ScheduleTimer(AcidRainCounted, 12) -- 15 - 3
-	self:Bar(93279, L["acid_rain"]:format(acidRainCounter), 15, spellId) -- do we really want counter on bar too?
-	self:Message(93279, L["acid_rain"]:format(acidRainCounter), "Attention", spellId)
+do
+	local function clearCount()
+		acidRainCounted = nil
+	end
+	function mod:AcidRain(_, spellId)
+		if acidRainCounted then return end
+		acidRainCounter, acidRainCounted = acidRainCounter + 1, true
+		self:ScheduleTimer(clearCount, 12) -- 15 - 3
+		self:Bar(93279, L["acid_rain"]:format(acidRainCounter), 15, spellId) -- do we really want counter on bar too?
+		self:Message(93279, L["acid_rain"]:format(acidRainCounter), "Attention", spellId)
+	end
 end
 
 function mod:Electrocute(player, spellId, _, _, spellName)
