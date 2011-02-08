@@ -12,7 +12,7 @@ mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
 
 local firstWindBlast = true
 local toxicSporesWarned = false
-local stormShield, nurture, windBlast, toxicSpores = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193), GetSpellInfo(86281)
+local toxicSpores = GetSpellInfo(86281)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -83,9 +83,15 @@ function mod:OnEngage(diff)
 	firstWindBlast = true
 	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
-	self:Bar(85422, nurture, 30, 85422)
-	self:Bar(86193, windBlast, 30, 86193)
-	self:Bar("storm_shield", stormShield, 30, 95865)
+
+	local stormShield, nurture, windBlast = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193)
+	if self.db.profile.storm_shield and self.db.profile[nurture] and self.db.profile[windBlast] then
+		self:Bar(85422, nurture.."/"..windBlast.."/"..stormShield, 30, "achievement_boss_murmur")
+	else
+		self:Bar(85422, nurture, 30, 85422)
+		self:Bar(86193, windBlast, 30, 86193)
+		self:Bar("storm_shield", stormShield, 30, 95865)
+	end
 end
 
 --------------------------------------------------------------------------------
