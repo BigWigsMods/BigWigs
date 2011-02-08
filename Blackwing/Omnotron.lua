@@ -50,8 +50,8 @@ function mod:GetOptions(CL)
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},
 		{80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"},
-		"nef", 91849, 91880, {92048, "ICON"}, 92023, --XXX "berserk",
-		{"switch", "ICON"}, "bosskill"
+		"nef", 91849, 91880, {92048, "ICON"}, 92023, {"switch", "ICON"},
+		"berserk", "bosskill"
 	}, {
 		[79501] = "Magmatron",
 		[79888] = "Electron",
@@ -84,9 +84,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	--[[if diff > 2 then
-		self:Berserk(600) --XXX v4.0.6
-	end]]
+	if diff > 2 then
+		self:Berserk(600)
+	end
 end
 
 --------------------------------------------------------------------------------

@@ -37,9 +37,9 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		"ground_phase", 78075, 77840,
-		"air_phase",
-		{78092, "FLASHSHAKE", "ICON", "SAY"}, "bosskill"
-	}, {--XXX "berserk"
+		"air_phase", {78092, "FLASHSHAKE", "ICON", "SAY"},
+		"berserk", "bosskill"
+	}, {
 		ground_phase = L["ground_phase"],
 		air_phase = L["air_phase"],
 		[78092] = "general"
@@ -61,9 +61,9 @@ function mod:OnEngage(diff)
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
 	self:Bar(77840, searingFlame, 45, 77840)
 	self:Bar("air_phase", L["air_phase"], 92, 5740) -- Rain of Fire Icon
-	--[[if diff > 2 then
-		self:Berserk(600) --XXX v4.0.6
-	end]]
+	if diff > 2 then
+		self:Berserk(600)
+	end
 end
 
 --------------------------------------------------------------------------------
