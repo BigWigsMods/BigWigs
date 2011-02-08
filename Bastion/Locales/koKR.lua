@@ -53,8 +53,10 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "koKR")
 if L then
 	L.paralysis_bar = "다음 마비"
-
 	L.strikes_message = "악의의 일격 %2$dx : %1$s"
+	
+	L.breath_message = "곧 숨결!"
+	L.breath_bar = "~숨결"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "koKR")
