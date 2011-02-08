@@ -17,7 +17,6 @@ if L then
 	L.nef_desc = "Warnings for Lord Victor Nefarius abilities."
 
 	L.pool = "Pool Explosion"
-	L.pool_desc = "Lord Victor Nefarious empowers Arcanotron's buffing pool, the pool is going to explode."
 
 	L.switch = "Switch"
 	L.switch_desc = "Warning for Switches."
@@ -25,10 +24,9 @@ if L then
 
 	L.next_switch = "Next activation"
 
-	-- not using this but lets not just remove it yet who knows what will 4.0.6 break
+	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
 	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~Next ability buff"
 
@@ -52,7 +50,7 @@ function mod:GetOptions(CL)
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},
 		{80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"},
-		"nef", 91849, "pool", {92048, "ICON"}, 92023, --XXX "berserk",
+		"nef", 91849, 91880, {92048, "ICON"}, 92023, --XXX "berserk",
 		{"switch", "ICON"}, "bosskill"
 	}, {
 		[79501] = "Magmatron",
@@ -67,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036, 92037)
 
 	self:Log("SPELL_CAST_START", "Grip", 91849)
-	self:Yell("PoolExplosion", L["nef_trigger2"])
+	self:Log("SPELL_CAST_SUCCESS", "PoolExplosion", 91857)
 
 	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 91499, 91514, 91515)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094)
@@ -114,8 +112,9 @@ do
 end
 
 function mod:PoolExplosion()
-	self:Message("nef", L["pool"], "Urgent", 92048)
+	self:Message(91880, L["pool"], "Urgent", 91880)
 	self:Bar("nef", L["nef_next"], 35, 69005)
+	self:Bar(91880, L["pool"], 8, 91880)
 end
 
 function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
