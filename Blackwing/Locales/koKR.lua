@@ -115,14 +115,17 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "koKR")
 if L then
 	L.nef = "군주 빅터 네파리우스"
 	L.nef_desc = "군주 빅터 네파리우스의 기술을 알립니다."
+	
+	L.pool = "바닥 웅덩이 폭발"
+	
 	L.switch = "전환"
 	L.switch_desc = "전환을 알립니다."
 	L.switch_message = "%s %s"
 
 	L.next_switch = "다음 활성화"
 
-	L.nef_trigger1 = "맹독골렘의 화학 물질로 다른 골렘에 피해를 줄 생각이었겠지? 영리한 계획이다만, 그렇게 둘 수는 없지."
-	L.nef_trigger2 = "멍청한 드워프 놈들은 왜 그렇게 룬을 좋아하는지! 적을 도울 수도 있는 걸 도대체 왜 만들었는지 모르겠군."
+	--L.nef_trigger1 = "맹독골렘의 화학 물질로 다른 골렘에 피해를 줄 생각이었겠지? 영리한 계획이다만, 그렇게 둘 수는 없지."
+	--L.nef_trigger2 = "멍청한 드워프 놈들은 왜 그렇게 룬을 좋아하는지! 적을 도울 수도 있는 걸 도대체 왜 만들었는지 모르겠군."
 
 	L.nef_next = "~다음 기술 버프"
 

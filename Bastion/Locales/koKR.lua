@@ -7,8 +7,8 @@ if L then
 
 	L.worship_cooldown = "~개종"
 
-	L.adherent_bar = "추종자 추가 (%d)"
-	L.adherent_message = "타락의 추종자 (%d) 소환!"
+	L.adherent_bar = "코끼리 추가 (%d)"
+	L.adherent_message = "코끼리 (%d) 소환!"
 	L.ooze_bar = "슬라임 추가 (%d)"
 	L.ooze_message = "곧 슬라임 (%d) 추가!"
 
@@ -21,8 +21,8 @@ if L then
 
 	L.fury_bar = "다음 격노"
 	L.fury_message = "격노!"
-	L.first_fury_soon = "Fury Soon!"
-	L.first_fury_message = "85% - Fury Begins!"
+	L.first_fury_soon = "곧 격노!"
+	L.first_fury_message = "85% - 격노, 코끼리 시작!"
 
 	L.unleashed_shadows = "해방된 어둠"
 
@@ -59,8 +59,12 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
+	L.whelps = "새끼용"
+	L.whelps_desc = "새끼용 웨이브를 알립니다."
+	
 	L.egg_vulnerable = "알 요리 시간!"
 
+	L.whelps_trigger = "얘들아, 먹어치워라" --check
 	L.omelet_trigger = "이게 약해진 걸로 보이느냐" --check
 
 	L.phase13 = "1 & 3 단계"
