@@ -8,6 +8,8 @@ if L then
 	L.stormling_bar = "Nächster Sturmling"
 	L.stormling_yell = "Stürme! Ich rufe euch an meine Seite!" -- check
 
+	L.acid_rain = "Säureregen (%d)"
+
 	L.phase3_yell = "Genug! Ich werde mich nicht länger zurückhalten!" -- check
 
 	L.phase = "Phasenwechsel"

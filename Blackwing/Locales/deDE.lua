@@ -115,12 +115,16 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "deDE")
 if L then
 	L.nef = "Lord Victor Nefarius"
 	L.nef_desc = "Warnungen für Nefarians Fähigkeiten."
+
+	L.pool = "Pool-Explosion"
+
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt vor dem Wechseln der Bosse."
 	L.switch_message = "%s %s"
 
 	L.next_switch = "Nächster Wechsel"
 
+	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
 	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 

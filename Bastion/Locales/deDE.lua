@@ -21,8 +21,10 @@ if L then
 
 	L.fury_bar = "Nächster Furor"
 	L.fury_message = "Furor!"
-	L.first_fury_soon = "Fury Soon!"
-	L.first_fury_message = "85% - Fury Begins!"
+	L.first_fury_soon = "Furor bald!"
+	L.first_fury_message = "85% - Furor kommt!"
+
+	L.unleashed_shadows = "Schatten"
 
 	L.phase2_message = "Phase 2!"
 	L.phase2_soon = "Phase 2 bald!"
@@ -54,13 +56,17 @@ if L then
 	L.strikes_message = "%2$dx Stöße auf %1$s"
 
 	L.breath_message = "Atem kommt!"
-	L.breath_bar = "Nächster Atem"
+	L.breath_bar = "~Atem"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "deDE")
 if L then
+	L.whelps = "Welpen"
+	L.whelps_desc = "Warnt vor den Wellen der Welpen."
+
 	L.egg_vulnerable = "Zeit für Omelett!"
 
+	--L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
 	--L.omelet_trigger = "You mistake this for weakness?  Fool!"
 
 	L.phase13 = "Phase 1 und 3"
