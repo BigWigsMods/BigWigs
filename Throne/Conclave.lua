@@ -27,7 +27,7 @@ if L then
 
 	L.full_power = "Full Power"
 	L.full_power_desc = "Warning for when the bosses reach full power and start to cast the special abilities."
-	L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
+	L.gather_strength_emote = "%s begins to gather strength"
 
 	L.wind_chill = "%sx Wind Chill on YOU!"
 end
