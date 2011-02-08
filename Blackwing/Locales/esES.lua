@@ -2,8 +2,6 @@
 local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if not L then return end
 if L then
-	L.tracking_me = "\194\161RastreandoME!"
-
 	L.ground_phase = "Fase en tierra"
 	L.ground_phase_desc = "Avisa cuando Atramedes aterriza."
 	L.air_phase = "Fase a\195\169rea"
@@ -33,7 +31,7 @@ if L then
 	-- heroic
 	L.blazing = "Esqueletos"
 	L.blazing_desc = "Invoca Ensamblaje osario llameante."
-	L.blazing_message = "\194\161Add entrante!"
+	L.blazing_message = "\194\161Add inminente!"
 	L.blazing_bar = "Siguiente esqueleto"
 
 	L.phase2 = "Fase 2"
@@ -119,6 +117,9 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "esES")
 if L then
 	L.nef = "Lord Victor Nefarius"
 	L.nef_desc = "Avisos para las abilidades de Lord Victor Nefarius"
+	
+	L.pool = "Generador de poder sobrecargado"
+	
 	L.switch = "Cambio"
 	L.switch_desc = "Avisa los cambios"
 	L.switch_message = "%s %s"
@@ -134,7 +135,7 @@ if L then
 
 	L.bomb_message = "\194\161Un moco TE persigue!"
 	L.cloud_message = "\194\161Nube en TI!"
-	L.protocol_message = "\194\161Bomba de veneno entrante!"
+	L.protocol_message = "\194\161Bomba de veneno inminente!"
 
 	L.iconomnotron = "Icono en el jefe activo"
 	L.iconomnotron_desc = "Coloca el icono principal de raid en el jefe activo (requiere ayudante o lider)."

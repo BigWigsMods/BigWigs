@@ -4,10 +4,12 @@ if not L then return end
 if L then
 	L.stormling = "Tormentillas"
 	L.stormling_desc = "Invoca Tormentillas."
-	L.stormling_message = "\194\161Tormentilla entrante!"
+	L.stormling_message = "\194\161Tormentilla inminente!"
 	L.stormling_bar = "Siguiente Tormentilla"
 	L.stormling_yell = "Storms! I summon you to my side!"
 
+	L.acid_rain = "Lluvia \195\161cida (%d)"
+	
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "Cambio de fase"
