@@ -37,7 +37,7 @@ if L then
 	L.phase2 = "2-ая фаза"
 	L.phase2_desc = "Сообщить о переходе во 2-ую фазу и показать проверку близости."
 	L.phase2_message = "2-ая фаза!"
-	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L.phase2_yell = "Непостижимо! Вы, кажется, можете уничтожить моего лавового червяка! Пожалуй, я помогу ему."
 
 	-- normal
 	L.pillar_of_flame_cd = "~Огненный столп"
@@ -103,6 +103,8 @@ if L then
 
 	L.crackle_trigger = "В воздухе трещат электрические разряды!"
 	L.crackle_message = "Скоро Электрический удар!"
+	
+	L.shadowblaze_message = "Пламя тени"
 
 	L.onyxia_power_message = "Скоро Взрыв!"
 
@@ -113,14 +115,18 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "ruRU")
 if L then
 	L.nef = "Лорд Виктор Нефарий"
 	L.nef_desc = "Сообщать о способностях Лорда Виктора Нефария."
+	
+	L.pool = "Обратная вспышка"
+
 	L.switch = "Смена"
 	L.switch_desc = "Сообщать о сменах."
 	L.switch_message = "%s %s"
 
 	L.next_switch = "След. Смена"
 
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
+	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~След. Вливание Тьмы"
 

@@ -6,20 +6,26 @@ if L then
 	L.orders = "Смена приказа"
 	L.orders_desc = "Сообщать когда Чо'Галл сменяет приказы огня/тьмы"
 
-	--normal
-	L.crash_say = "Crash on ME!"
-	L.worship_cooldown = "~Поклонение"
+	L.worship_cooldown = "~Поклонение"	
+
 	L.adherent_bar = "Помощник #%d"
 	L.adherent_message = "Надвигается помощник %d!"
 	L.ooze_bar = "Слизнюки %d"
 	L.ooze_message = "Надвигаются Слизнюки %d!"
+	
 	L.tentacles_bar = "Смутные творения"
 	L.tentacles_message = "Смутные творения!"
+	
 	L.sickness_message = "Вы больны, и вас сейчас стошнит!"
+	L.blaze_message = "На вас - Пламень!"
+	L.crash_say = "На мне - Оскверняющее сокрушение!"
+
 	L.fury_bar = "След. Неистовство"
 	L.fury_message = "Неистовство!"
-	L.first_fury_soon = "Fury Soon!"
-	L.first_fury_message = "85% - Fury Begins!"
+	L.first_fury_soon = "Скоро Неистовство!"
+	L.first_fury_message = "85% - Неистовство Чо'Галла!"
+	
+	L.unleashed_shadows = "Освобожденные тени"
 
 	L.phase2_message = "2-ая фаза!"
 	L.phase2_soon = "Скоро 2-ая фаза!"
@@ -41,6 +47,7 @@ if L then
 	L.devouringflames_cooldown = "~Всепоглощающее пламя"
 
 	L.valiona_trigger = "Тералион, я подожгу коридор. Не дай им уйти!"
+	L.win_trigger = "Одно утешает... Тералион погиб вместе со мной..."
 
 	L.twilight_shift = "%2$dx Сумеречный сдвиг на |3-3(%1$s)"
 end
@@ -54,8 +61,12 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "ruRU")
 if L then
+	L.whelps = "Whelps"
+	L.whelps_desc = "Warning for the whelp waves"
+	
 	L.egg_vulnerable = "Omlet time!"
 
+	L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
 	L.omelet_trigger = "You mistake this for weakness?  Fool!"
 
 	L.phase13 = "Фаза 1 и 3"
