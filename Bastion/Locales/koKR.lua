@@ -6,22 +6,24 @@ if L then
 	L.orders_desc = "초갈의 그림자/불꽃의 명령 상태를 알립니다."
 
 	L.worship_cooldown = "~개종"
-	
+
 	L.adherent_bar = "추종자 추가 (%d)"
 	L.adherent_message = "타락의 추종자 (%d) 소환!"
 	L.ooze_bar = "슬라임 추가 (%d)"
 	L.ooze_message = "곧 슬라임 (%d) 추가!"
-	
+
 	L.tentacles_bar = "촉수 소환"
 	L.tentacles_message = "촉수 디스코 파티!"
-	
+
 	L.sickness_message = "당신은 피부 트러블!"
 	L.blaze_message = "당신은 불꽃!"
 	L.crash_say = "나에게 부패의 충돌!"
-	
+
 	L.fury_bar = "다음 격노"
 	L.fury_message = "격노!"
-	
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
+
 	L.unleashed_shadows = "해방된 어둠"
 
 	L.phase2_message = "2 단계!"
@@ -59,7 +61,7 @@ L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
 	L.egg_vulnerable = "알 요리 시간!"
 
-	L.omelet_trigger = "이게 약해진 걸로 보이느냐"	--check
+	L.omelet_trigger = "이게 약해진 걸로 보이느냐" --check
 
 	L.phase13 = "1 & 3 단계"
 	L.phase = "단계"

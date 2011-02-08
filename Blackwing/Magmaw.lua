@@ -109,6 +109,7 @@ do
 		self:Bar(79011, L["expose_message"], 30, 79011)
 		self:SendMessage("BigWigs_StopBar", self, L["pillar_of_flame_cd"])
 		self:SendMessage("BigWigs_StopBar", self, L["spew_bar"])
+		self:CancelDelayedMessage(L["spew_warning"])
 		self:ScheduleTimer(rebootTimers, 30)
 	end
 end

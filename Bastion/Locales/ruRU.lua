@@ -18,6 +18,8 @@ if L then
 	L.sickness_message = "Вы больны, и вас сейчас стошнит!"
 	L.fury_bar = "След. Неистовство"
 	L.fury_message = "Неистовство!"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.phase2_message = "2-ая фаза!"
 	L.phase2_soon = "Скоро 2-ая фаза!"

@@ -21,6 +21,8 @@ if L then
 
 	L.fury_bar = "Prochaine Fureur"
 	L.fury_message = "Fureur !"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.unleashed_shadows = "Ombre vibrante"
 

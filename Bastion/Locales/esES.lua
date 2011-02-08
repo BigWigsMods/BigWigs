@@ -1,4 +1,4 @@
-﻿
+
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if not L then return end
 if L then
@@ -16,6 +16,8 @@ if L then
 	L.sickness_message = "\194\161Te sientes fatal!"
 	L.fury_bar = "Pr\195\179xima furia"
 	L.fury_message = "\194\161Furia!"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.phase2_message = "\194\161Fase 2!"
 	L.phase2_soon = "\194\161Fase 2 pronto!"

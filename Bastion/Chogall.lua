@@ -13,6 +13,7 @@ mod:RegisterEnableMob(43324)
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
 local sicknessWarned = nil
+local firstFury = 0
 local counter = 1
 local corruptingCrash = GetSpellInfo(93180)
 local bigcount = 1
@@ -43,6 +44,8 @@ if L then
 
 	L.fury_bar = "Next Fury"
 	L.fury_message = "Fury!"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.unleashed_shadows = "Pulsing Shadow"
 
@@ -89,11 +92,10 @@ function mod:OnEngage(diff)
 	oozecount = 1
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
 	-- self:Bar(81628, L["adherent_bar"]:format(bigcount), diff > 2 and 75 or 58, 81628)
-	-- Fury of Cho'gall bar
-	self:Bar(82524, L["fury_bar"], 100, 82524)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 	sicknessWarned = nil
+	firstFury = 0
 	counter = 1
 
 	self:RegisterEvent("UNIT_POWER")
@@ -154,7 +156,12 @@ function mod:UNIT_POWER(event, unit, powerType)
 end
 
 function mod:FuryOfChogall(_, spellId, _, _, spellName)
-	self:Message(82524, L["fury_message"], "Attention", spellId)
+	if firstFury == 1 then
+		self:Message(82524, L["first_fury_message"], "Attention", spellId)
+		firstFury = 2
+	else
+		self:Message(82524, L["fury_message"], "Attention", spellId)
+	end
 	self:Bar(82524, L["fury_bar"], 47, spellId)
 end
 
@@ -182,7 +189,10 @@ end
 
 function mod:UNIT_HEALTH()
 	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-	if hp < 30 then
+	if firstFury == 0 and hp > 86 and hp < 89 then
+		self:Message(82524, L["first_fury_soon"], "Attention", 82524)
+		firstFury = 1
+	elseif hp < 30 then
 		self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
 		self:UnregisterEvent("UNIT_HEALTH")
 	end

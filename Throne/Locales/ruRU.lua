@@ -6,7 +6,7 @@ if L then
 	L.stormling_message = "Прибытие помощника!"
 	L.stormling_bar = "След. помощники"
 	L.stormling_yell = "Буря! Приди мне на помощь!"
-	
+
 	L.phase3_yell = "Довольно! Меня ничто не в силах сдерживать!"
 
 	L.phase = "Смена фаз"

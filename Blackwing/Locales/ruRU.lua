@@ -118,7 +118,7 @@ if L then
 	L.switch_message = "%s %s"
 
 	L.next_switch = "След. Смена"
-	
+
 	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 

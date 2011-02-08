@@ -1,4 +1,4 @@
-﻿
+
 local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if not L then return end
 if L then
@@ -107,7 +107,7 @@ if L then
 
 	L.crackle_trigger = "¡El aire crepita cargado de electricidad!"
 	L.crackle_message = "\194\161Electrocutar pronto!"
-	
+
 	L.shadowblaze_message = "Fuego"
 
 	L.onyxia_power_message = "\194\161Explosi\195\179n pronto!"
@@ -124,7 +124,7 @@ if L then
 	L.switch_message = "%s %s"
 
 	L.next_switch = "Siguiente cambio"
-	
+
 	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 

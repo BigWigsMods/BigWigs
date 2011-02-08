@@ -16,6 +16,8 @@ if L then
 	L.sickness_message = ">你< 快要呕吐了!"
 	L.fury_bar = "<下一Fury of Cho'gall>"
 	L.fury_message = "Fury of Cho'gall！"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.phase2_message = "第二阶段"
 	L.phase2_soon = "即将 第二阶段！"

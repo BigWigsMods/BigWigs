@@ -16,6 +16,8 @@ if L then
 	L.sickness_message = ">你< 快要嘔吐了!"
 	L.fury_bar = "<下一丘加利之怒>"
 	L.fury_message = "丘加利之怒！"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.phase2_message = "第二階段！"
 	L.phase2_soon = "即將 第二階段！"

@@ -21,6 +21,8 @@ if L then
 
 	L.fury_bar = "Nächster Furor"
 	L.fury_message = "Furor!"
+	L.first_fury_soon = "Fury Soon!"
+	L.first_fury_message = "85% - Fury Begins!"
 
 	L.phase2_message = "Phase 2!"
 	L.phase2_soon = "Phase 2 bald!"
