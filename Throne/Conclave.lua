@@ -52,23 +52,13 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
---[[ Lets leave these in for now in case on heroic they don't gain power at the same rate
-	self:Log("SPELL_CAST_SUCCESS", "Zephyr", 84638)
-	self:Log("SPELL_AURA_APPLIED", "SleetStorm", 84644)
-]]--
-
---	self:Log("SPELL_CAST_SUCCESS", "FullPower", 86193)
 	self:Log("SPELL_CAST_SUCCESS", "FullPower", 84638)
---	self:Log("SPELL_AURA_APPLIED", "FullPower", 84644)
 
 	self:Emote("GatherStrength", L["gather_strength_emote"])
 
 	self:Log("SPELL_AURA_APPLIED", "StormShield", 95865, 93059)
 	self:Log("SPELL_CAST_SUCCESS", "WindBlast", 86193)
-
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
-
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
 	self:Log("SPELL_AURA_APPLIED", "ToxicSpores", 86281)
 
@@ -77,15 +67,15 @@ function mod:OnBossEnable()
 	self:Death("Win", 45872) -- They die at the same time, enough to check for one
 end
 
-
 function mod:OnEngage(diff)
 	self:Berserk(480)
 	firstWindBlast = true
 	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
 
+	local flag = BigWigs.C.BAR
 	local stormShield, nurture, windBlast = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193)
-	if self.db.profile.storm_shield and self.db.profile[nurture] and self.db.profile[windBlast] then
+	if bit.band(self.db.profile.storm_shield, flag) == flag and bit.band(self.db.profile[nurture], flag) == flag and bit.band(self.db.profile[windBlast], flag) == flag then
 		self:Bar(85422, nurture.."/"..windBlast.."/"..stormShield, 30, "achievement_boss_murmur")
 	else
 		self:Bar(85422, nurture, 30, 85422)
@@ -98,7 +88,6 @@ end
 -- Event Handlers
 --
 function mod:FullPower(_, spellId)
-	-- this is actually based on the power bar of the boss so might need to use that to adjust timer
 	self:Bar("full_power", L["full_power"], 113, spellId)
 	self:Message("full_power", L["full_power"], "Attention", spellId)
 end
@@ -114,20 +103,6 @@ function mod:WindChill(player, spellId, _, _, _, stack)
 		end
 	end
 end
-
---[[ Lets leave these in for now in case on heroic they don't gain power at the same rate
-function mod:SleetStorm(_, spellId, _, _, spellName)
-	-- this is actually based on the power bar of the boss so might need to use that to adjust timer
-	self:Bar(84644, spellName, 113, spellId)
-	self:Message(84644, spellName, "Attention", spellId) -- Might need sound
-end
-
-function mod:Zephyr(_, spellId, _, _, spellName)
--- this is actually based on the power bar of the boss so might need to use that to adjust timer
-	self:Bar(84638, spellName, 113, spellId)
-	self:Message(84638, spellName, "Attention", spellId)
-end
-]]--
 
 function mod:StormShield(_, spellId, _, _, spellName)
 	self:Bar("storm_shield", spellName, 113, spellId)
