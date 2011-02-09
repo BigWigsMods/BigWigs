@@ -21,8 +21,8 @@ if L then
 
 	L.fury_bar = "Prochaine Fureur"
 	L.fury_message = "Fureur !"
-	L.first_fury_soon = "Fury Soon!"
-	L.first_fury_message = "85% - Fury Begins!"
+	L.first_fury_soon = "Fureur imminente !"
+	L.first_fury_message = "85% - Fureur commence !"
 
 	L.unleashed_shadows = "Ombre vibrante"
 
@@ -54,8 +54,10 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "frFR")
 if L then
 	L.paralysis_bar = "Prochaine paralysie"
-
 	L.strikes_message = "%2$dx Frappes sur %1$s"
+
+	L.breath_message = "Arrivée d'un Souffle !"
+	L.breath_bar = "~Souffle"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "frFR")
