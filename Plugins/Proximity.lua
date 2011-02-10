@@ -26,6 +26,7 @@ plugin.defaultDB = {
 	proximity = true,
 	font = nil,
 	fontSize = nil,
+	graphical = true,
 }
 
 -------------------------------------------------------------------------------
@@ -389,7 +390,6 @@ local function ensureDisplay()
 		end
 	end)
 	
-	
 	local rangeCircle = display:CreateTexture(nil, "OVERLAY")
 	rangeCircle:SetPoint("CENTER", display, "CENTER")
 	rangeCircle:SetSize(32, 32)
@@ -473,11 +473,13 @@ do
 	local cacheDots = {}
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
-	setDot = function(dx, dy, class, facing) -- dx, dy are in yards, class is just class, facing = radians with 0 being north counting up clockwise
+	-- dx and dy are in yards
+	-- class is player class
+	-- facing is radians with 0 being north, counting up clockwise
+	setDot = function(dx, dy, class, facing)
 		local nextIndex = #proxDots + 1
 		if #cacheDots > 0 then
-			proxDots[nextIndex] = cacheDots[#cacheDots]
-			cacheDots[#cacheDots] = nil
+			proxDots[nextIndex] = table.remove(cacheDots)
 		else
 			proxDots[nextIndex] = anchor:CreateTexture(nil, "OVERLAY")
 			proxDots[nextIndex]:SetSize(16, 16)
@@ -488,13 +490,13 @@ do
 		local dot = proxDots[nextIndex]
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
-		local pixperyard = math.min(width, height) / (range*3) -- range * 3, so we have 3x radius space
-		
+		-- range * 3, so we have 3x radius space
+		local pixperyard = math.min(width, height) / (range * 3)
+
 		-- rotate relative to player facing
-		
-		local rotangle = (2*math.pi) - facing
-		local x = (dx * math.cos(rotangle)) - (-1*dy * math.sin(rotangle))
-		local y = (dx * math.sin(rotangle)) + (-1*dy * math.cos(rotangle))
+		local rotangle = (2 * math.pi) - facing
+		local x = (dx * math.cos(rotangle)) - (-1 * dy * math.sin(rotangle))
+		local y = (dx * math.sin(rotangle)) + (-1 * dy * math.cos(rotangle))
 
 		x = x * pixperyard
 		y = y * pixperyard
@@ -504,7 +506,7 @@ do
 		dot:SetVertexColor(unpack(vertexColors[class]))
 		dot:Show()
 	end
-	
+
 	hideDots = function()
 		-- shuffle existing dots into cacheDots
 		-- hide those cacheDots
@@ -531,13 +533,20 @@ do
 		anchor.rangeCircle:Show()
 		anchor.playerDot:Show()
 	end
-	
+
 	local function updateProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
 			srcX, srcY = GetPlayerMapPosition("player")
 		end
+		
+		-- XXX only do this if needed, if the option is on
+		-- XXX we can probably fork this into two updateProximity() functions now,
+		-- XXX based on whether map data is available and if the option is on
+		-- The only user of updateProximity is the updater frame below, so we can
+		-- just :SetScript a different function on it to run the graphical or textual
+		-- proximity displays as appropriate.
 		local currentFloor, id = nil, nil
 		if activeMap then
 			currentFloor = GetCurrentMapDungeonLevel()
@@ -546,21 +555,22 @@ do
 		end
 		hideDots()
 		local facing = GetPlayerFacing()
+		-- -
+
 		local num = GetNumRaidMembers()
 		local nextIndex = 0
 		for i = 1, num do
-			local n = GetRaidRosterInfo(i)
+			local n, _, _, _, _, class = GetRaidRosterInfo(i)
 			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
 				if activeProximityFunction(n, srcX, srcY) and nextIndex <= 4 then
 					nextIndex = #tooClose + 1
 					tooClose[nextIndex] = coloredNames[n]
 				end
-				if activeMap and id then
+				if db.graphical and activeMap and id then
 					local unitX, unitY = GetPlayerMapPosition(n)
-					local dx = (unitX - srcX ) * id[1]
-					local dy = (unitY - srcY ) * id[2]
-					if (dx*dx + dy*dy) ^ 0.5 < (activeRange*1.5) then 
-						local _, class = UnitClass(n)
+					local dx = (unitX - srcX) * id[1]
+					local dy = (unitY - srcY) * id[2]
+					if (dx * dx + dy * dy) ^ 0.5 < (activeRange * 1.5) then
 						setDot(dx, dy, class, facing)
 					end
 				elseif nextIndex > 4 then -- early break if we're not in advanced active mode
@@ -777,10 +787,17 @@ do
 						order = 2,
 						width = "half",
 					},
+					graphical = {
+						type = "toggle",
+						name = L["Graphical display"],
+						desc = L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."],
+						order = 3,
+						width = "full",
+					},
 					font = {
 						type = "select",
 						name = L["Font"],
-						order = 3,
+						order = 4,
 						values = media:List("font"),
 						width = "full",
 						itemControl = "DDI-Font",
@@ -788,7 +805,7 @@ do
 					fontSize = {
 						type = "range",
 						name = L["Font size"],
-						order = 4,
+						order = 5,
 						max = 40,
 						min = 8,
 						step = 1,
@@ -797,7 +814,7 @@ do
 					soundName = {
 						type = "select",
 						name = L["Sound"],
-						order = 5,
+						order = 6,
 						values = media:List("sound"),
 						width = "full",
 						itemControl = "DDI-Sound"
@@ -806,7 +823,7 @@ do
 						type = "range",
 						name = "Sound delay",
 						desc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you.",
-						order = 6,
+						order = 7,
 						max = 10,
 						min = 1,
 						step = 1,
