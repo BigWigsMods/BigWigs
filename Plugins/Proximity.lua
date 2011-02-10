@@ -51,13 +51,18 @@ local configModeString = [[
 local activeProximityFunction = nil
 local activeRange = nil
 local activeSpellID = nil
+local activeMap = nil
 local anchor = nil
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
+local setDot, hideDots, testDots -- funcs defined later
+
 local hexColors = {}
+local vertexColors = {}
 for k, v in pairs(RAID_CLASS_COLORS) do
 	hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
+	vertexColors[k] = { v.r, v.g, v.b }
 end
 
 -- Helper table to cache colored player names.
@@ -109,6 +114,7 @@ local ranges = {
 		end
 	end,
 }
+
 
 do
 	local checkInteractDistance = nil
@@ -162,6 +168,9 @@ end
 
 -- Copied from LibMapData-1.0 (All Rights Reserved) with permission from kagaro
 local mapData = {
+	StormwindCity = { 
+		{1737.499958992,1158.3330078125 },
+	},
 	TheBastionofTwilight = {
 		{ 1078.33402252197, 718.889984130859 },
 		{ 778.343017578125, 518.894958496094 },
@@ -240,6 +249,14 @@ local function OnDragHandleMouseUp(self, button) self.frame:StopMovingOrSizing()
 local function onResize(self, width, height)
 	db.width = width
 	db.height = height
+	if inConfigMode then
+		testDots()
+	else
+		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local range = activeRange and activeRange or 10
+		local pixperyard = math.min(width, height) / (range*3)
+		anchor.rangeCircle:SetSize( range*2*pixperyard, range*2*pixperyard)
+	end
 end
 
 local function setConfigureTarget(self, button)
@@ -368,7 +385,24 @@ local function ensureDisplay()
 			text:SetText("|cff777777:-)|r")
 		end
 	end)
-
+	
+	
+	local rangeCircle = display:CreateTexture(nil, "OVERLAY")
+	rangeCircle:SetPoint("CENTER", display, "CENTER")
+	rangeCircle:SetSize(32, 32)
+	rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])
+	rangeCircle:SetBlendMode("ADD")
+	display.rangeCircle = rangeCircle
+	
+	local _, class = UnitClass("player")
+	local playerDot = display:CreateTexture(nil, "OVERLAY")
+	playerDot:SetSize(32, 32)
+	playerDot:SetTexture([[Interface\Minimap\MinimapArrow]])
+	playerDot:SetBlendMode("ADD")
+	playerDot:SetVertexColor(unpack(vertexColors[class]))
+	playerDot:SetPoint("CENTER", display, "CENTER")
+	display.playerDot = playerDot
+	
 	local drag = CreateFrame("Frame", nil, display)
 	drag.frame = display
 	drag:SetFrameLevel(display:GetFrameLevel() + 10) -- place this above everything
@@ -387,7 +421,7 @@ local function ensureDisplay()
 	tex:SetHeight(16)
 	tex:SetBlendMode("ADD")
 	tex:SetPoint("CENTER", drag)
-
+	
 	anchor = display
 
 	local x = db.posx
@@ -432,30 +466,118 @@ end
 local updater = nil
 do
 	local tooClose = {} -- List of players who are too close.
+	local proxDots = {}
+	local cacheDots = {}
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
+	setDot = function(dx, dy, class, facing) -- dx, dy are in yards, class is just class, facing = radians with 0 being north counting up clockwise
+		local nextIndex = #proxDots + 1
+		if #cacheDots > 0 then
+			proxDots[nextIndex] = cacheDots[#cacheDots]
+			cacheDots[#cacheDots] = nil
+		else
+			proxDots[nextIndex] = anchor:CreateTexture(nil, "OVERLAY")
+			proxDots[nextIndex]:SetSize(16, 16)
+			proxDots[nextIndex]:SetTexture([[Interface\GLUES\MODELS\UI_Tauren\gradientCircle]])
+			proxDots[nextIndex]:SetTexCoord(0.25, 0.75, 0.25, 0.75)
+			proxDots[nextIndex]:SetBlendMode("ADD")
+		end
+		local dot = proxDots[nextIndex]
+		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local range = activeRange and activeRange or 10
+		local pixperyard = math.min(width, height) / (range*3) -- range * 3, so we have 3x radius space
+		
+		-- rotate relative to player facing
+		
+		local rotangle = (2*math.pi) - facing
+		local x = (dx * math.cos(rotangle)) - (-1*dy * math.sin(rotangle))
+		local y = (dx * math.sin(rotangle)) + (-1*dy * math.cos(rotangle))
+
+		x = x * pixperyard
+		y = y * pixperyard
+		
+		dot:ClearAllPoints()
+		dot:SetPoint("CENTER", anchor, "CENTER", x, y)
+		dot:SetVertexColor(unpack(vertexColors[class]))
+		dot:Show()
+	end
+	
+	hideDots = function()
+		-- shuffle existing dots into cacheDots
+		-- hide those cacheDots
+		for i = 1, #proxDots, 1 do
+			local nextIndex = #cacheDots+1
+			cacheDots[nextIndex] = proxDots[i]
+			cacheDots[nextIndex]:Hide()
+		end
+		wipe(proxDots)
+	end
+	
+	testDots = function()
+		hideDots()
+		setDot(10, 10, "WARLOCK", 0)
+		setDot(5, 0, "HUNTER", 0)
+		setDot(3, 10, "MAGE", 0)
+		setDot(-9, -7, "PRIEST", 0)
+		setDot(0, 10, "WARLOCK", 0)
+		setDot(0, 20, "WARLOCK", 2.25)
+		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local pixperyard = math.min(width, height) / 30
+		anchor.rangeCircle:SetSize( pixperyard * 20,  pixperyard * 20)
+		anchor.rangeCircle:SetVertexColor(1,0,0, .6)
+		anchor.rangeCircle:Show()
+		anchor.playerDot:Show()
+	end
+	
 	local function updateProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
 			srcX, srcY = GetPlayerMapPosition("player")
 		end
+		local currentFloor, id = nil, nil
+		if activeMap then
+			currentFloor = GetCurrentMapDungeonLevel()
+			if currentFloor == 0 then currentFloor = 1 end
+			id = activeMap[currentFloor]
+		end
+		hideDots()
+		local facing = GetPlayerFacing()
 		local num = GetNumRaidMembers()
+		local nextIndex = 0
 		for i = 1, num do
 			local n = GetRaidRosterInfo(i)
-			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
-				local nextIndex = #tooClose + 1
-				tooClose[nextIndex] = coloredNames[n]
-				if nextIndex > 4 then break end
+			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
+				if activeProximityFunction(n, srcX, srcY) and nextIndex <= 4 then
+					nextIndex = #tooClose + 1
+					tooClose[nextIndex] = coloredNames[n]
+				end
+				if activeMap and id then
+					local unitX, unitY = GetPlayerMapPosition(n)
+					local dx = (unitX - srcX ) * id[1]
+					local dy = (unitY - srcY ) * id[2]
+					if (dx*dx + dy*dy) ^ 0.5 < (activeRange*2) then -- default to 2x range
+						local _, class = UnitClass(n)
+						setDot(dx, dy, class, facing)
+					end
+				elseif nextIndex > 4 then -- early break if we're not in advanced active mode
+					break
+				end
 			end
 			if i > 25 then break end
 		end
 
 		if #tooClose == 0 then
-			anchor.text:SetText("|cff777777:-)|r")
+			if not activeMap then
+				anchor.text:SetText("|cff777777:-)|r")
+			end
 			lastplayed = 0
+			anchor.rangeCircle:SetVertexColor(0, 1, 0, .6)
 		else
-			anchor.text:SetText(table.concat(tooClose, "\n"))
+			anchor.rangeCircle:SetVertexColor(1, 0, 0, .6)
+			if not activeMap then
+				anchor.text:SetText(table.concat(tooClose, "\n"))
+			end
 			wipe(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
@@ -471,7 +593,7 @@ do
 	local total = 0
 	updater:SetScript("OnUpdate", function(self, elapsed)
 		total = total + elapsed
-		if total >= .5 then
+		if total >= .5 or ( activeMap and total >= .1 ) then -- 10x per second for activeMap mode
 			total = 0
 			updateProximity()
 		end
@@ -522,6 +644,7 @@ function plugin:OnRegister()
 			wipe(coloredNames)
 			for k, v in pairs(CUSTOM_CLASS_COLORS) do
 				hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
+				vertexColors[k] = { v.r, v.g, v.b }
 			end
 		end
 		CUSTOM_CLASS_COLORS:RegisterCallback(update)
@@ -774,7 +897,11 @@ function plugin:Close()
 	activeProximityFunction = nil
 	activeRange = nil
 	activeSpellID = nil
+	activeMap = nil
 	if anchor then
+		-- FIXME
+		-- hide circle
+		-- hide playerdot
 		anchor.title:SetText(L["%d yards"]:format(0))
 		anchor.ability:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
 		-- Just in case we were the last target of
@@ -794,6 +921,19 @@ function plugin:Open(range, module, key)
 	local func, actualRange = getClosestRangeFunction(range)
 	activeProximityFunction = func
 	activeRange = actualRange
+	SetMapToCurrentZone()
+	activeMap = mapData[(GetMapInfo())]
+	hideDots()
+	if activeMap then
+		local width, height = anchor:GetWidth(), anchor:GetHeight()
+		local pixperyard = math.min(width, height) / (actualRange*3)
+		anchor.rangeCircle:SetSize( pixperyard * actualRange * 2,  pixperyard * actualRange * 2)
+		anchor.playerDot:Show()
+		anchor.rangeCircle:Show()
+	else
+		anchor.rangeCircle:Hide()
+		anchor.playerDot:Hide()
+	end
 	-- Update the header to reflect the actual range we're checking
 	anchor.title:SetText(L["%d yards"]:format(actualRange))
 	-- Update the ability name display
@@ -826,6 +966,7 @@ function plugin:Test()
 	self:Close()
 	-- Break the sound+close buttons
 	breakThings()
+	testDots()
 	anchor:Show()
 end
 
