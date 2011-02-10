@@ -556,7 +556,7 @@ do
 					local unitX, unitY = GetPlayerMapPosition(n)
 					local dx = (unitX - srcX ) * id[1]
 					local dy = (unitY - srcY ) * id[2]
-					if (dx*dx + dy*dy) ^ 0.5 < (activeRange*2) then -- default to 2x range
+					if (dx*dx + dy*dy) ^ 0.5 < (activeRange*1.5) then 
 						local _, class = UnitClass(n)
 						setDot(dx, dy, class, facing)
 					end
