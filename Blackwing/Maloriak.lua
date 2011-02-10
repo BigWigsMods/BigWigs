@@ -239,7 +239,8 @@ do
 	function mod:ReleaseAberrations()
 		-- He keeps casting it even if there are no adds left to release...
 		if aberrations < 1 then return end
-		handle = self:ScheduleTimer(release, 2)
+		--cast is 1.95sec with Tongues, plus some latency time
+		handle = self:ScheduleTimer(release, 2.1)
 	end
 	function mod:Interrupt(_, _, _, secSpellId)
 		if secSpellId ~= 77569 then return end
