@@ -390,7 +390,7 @@ local function ensureDisplay()
 		end
 	end)
 	
-	local rangeCircle = display:CreateTexture(nil, "OVERLAY")
+	local rangeCircle = display:CreateTexture(nil, "ARTWORK")
 	rangeCircle:SetPoint("CENTER")
 	rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])
 	rangeCircle:SetBlendMode("ADD")
@@ -464,8 +464,8 @@ end
 --
 
 local updater = nil
+local graphicalUpdater, textUpdater = nil, nil
 do
-	local tooClose = {} -- List of players who are too close.
 	local proxDots = {}
 	local cacheDots = {}
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
@@ -503,7 +503,6 @@ do
 		dot:Show()
 	end
 
-	-- 
 	hideDots = function()
 		-- shuffle existing dots into cacheDots
 		-- hide those cacheDots
@@ -512,7 +511,7 @@ do
 			cacheDots[#cacheDots + 1] = table.remove(proxDots, 1)
 		end
 	end
-	
+
 	testDots = function()
 		hideDots()
 		-- XXX These values could be randomized a bit
@@ -532,68 +531,92 @@ do
 		anchor.playerDot:Show()
 	end
 
-	local function updateProximity()
+	local tooClose = {} -- List of players who are too close.
+	local function updateProximityText()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
 			srcX, srcY = GetPlayerMapPosition("player")
 		end
-		
-		-- XXX only do this if needed, if the option is on
-		-- XXX we can probably fork this into two updateProximity() functions now,
-		-- XXX based on whether map data is available and if the option is on
-		-- The only user of updateProximity is the updater frame below, so we can
-		-- just :SetScript a different function on it to run the graphical or textual
-		-- proximity displays as appropriate.
-		local currentFloor, id = nil, nil
-		if activeMap then
-			currentFloor = GetCurrentMapDungeonLevel()
-			if currentFloor == 0 then currentFloor = 1 end
-			id = activeMap[currentFloor]
-		end
-		hideDots()
-		local facing = GetPlayerFacing()
-		-- -
-
 		local num = GetNumRaidMembers()
-		local nextIndex = 0
 		for i = 1, num do
-			local n, _, _, _, _, class = GetRaidRosterInfo(i)
-			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
-				if activeProximityFunction(n, srcX, srcY) and nextIndex <= 4 then
-					nextIndex = #tooClose + 1
-					tooClose[nextIndex] = coloredNames[n]
-				end
-				if db.graphical and activeMap and id then
-					local unitX, unitY = GetPlayerMapPosition(n)
-					local dx = (unitX - srcX) * id[1]
-					local dy = (unitY - srcY) * id[2]
-					if (dx * dx + dy * dy) ^ 0.5 < (activeRange * 1.5) then
-						setDot(dx, dy, class, facing)
-					end
-				elseif nextIndex > 4 then -- early break if we're not in advanced active mode
-					break
-				end
+			local n = GetRaidRosterInfo(i)
+			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
+				local nextIndex = #tooClose + 1
+				tooClose[nextIndex] = coloredNames[n]
+				if nextIndex > 4 then break end
 			end
 			if i > 25 then break end
 		end
 
 		if #tooClose == 0 then
-			if not activeMap then
-				anchor.text:SetText("|cff777777:-)|r")
-			else
-				anchor.text:SetText("")
+			anchor.text:SetText("|cff777777:-)|r")
+			lastplayed = 0
+		else
+			anchor.text:SetText(table.concat(tooClose, "\n"))
+			wipe(tooClose)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
+		end
+	end
+
+	local function updateProximityRadar()
+		local srcX, srcY = GetPlayerMapPosition("player")
+		if srcX == 0 and srcY == 0 then
+			SetMapToCurrentZone()
+			srcX, srcY = GetPlayerMapPosition("player")
+		end
+
+		-- XXX This could probably be checked and set when the proximity
+		-- XXX display is opened? We won't change dungeon floors while
+		-- XXX it is open, surely.
+		local id = nil
+		if activeMap then
+			local currentFloor = GetCurrentMapDungeonLevel()
+			if currentFloor == 0 then currentFloor = 1 end
+			id = activeMap[currentFloor]
+		end
+
+		-- Fall back to text
+		if not id then
+			updater:SetScript("OnUpdate", textUpdater)
+			anchor.text:Show()
+			anchor.rangeCircle:Hide()
+			anchor.playerDot:Hide()
+			return updateProximityText()
+		end
+
+		local anyoneClose = nil
+
+		-- XXX We can't show/hide dots every update, that seems excessive.
+		hideDots()
+		local facing = GetPlayerFacing()
+		for i = 1, GetNumRaidMembers() do
+			local n, _, _, _, _, class = GetRaidRosterInfo(i)
+			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
+				local unitX, unitY = GetPlayerMapPosition(n)
+				local dx = (unitX - srcX) * id[1]
+				local dy = (unitY - srcY) * id[2]
+				local range = (dx * dx + dy * dy) ^ 0.5
+				if range < (activeRange * 1.5) then
+					setDot(dx, dy, class, facing)
+					if range <= activeRange then
+						anyoneClose = true
+					end
+				end
+			end
+			if i > 25 then break end
+		end
+
+		if not anyoneClose then
 			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
-			if not activeMap then
-				anchor.text:SetText(table.concat(tooClose, "\n"))
-			else
-				anchor.text:SetText("")
-			end
-			wipe(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) then
@@ -606,13 +629,23 @@ do
 	updater = CreateFrame("Frame")
 	updater:Hide()
 	local total = 0
-	updater:SetScript("OnUpdate", function(self, elapsed)
+
+	-- 20x per second for radar mode
+	function graphicalUpdater(self, elapsed)
 		total = total + elapsed
-		if total >= .5 or ( activeMap and total >= .05 ) then -- 20x per second for activeMap mode
+		if total >= .05 then
 			total = 0
-			updateProximity()
+			updateProximityRadar()
 		end
-	end)
+	end
+	-- 2 times per second for text mode
+	function textUpdater(self, elapsed)
+		total = total + elapsed
+		if total >= .5 then
+			total = 0
+			updateProximityText()
+		end
+	end
 end
 
 local function updateProfile()
@@ -931,6 +964,7 @@ function plugin:Close()
 		anchor.background:SetTexture(0, 0, 0, 0.3)
 		anchor:Hide()
 	end
+	updater:SetScript("OnUpdate", nil)
 	updater:Hide()
 end
 
@@ -943,21 +977,26 @@ function plugin:Open(range, module, key)
 	local func, actualRange = getClosestRangeFunction(range)
 	activeProximityFunction = func
 	activeRange = actualRange
+
 	SetMapToCurrentZone()
-	-- XXX Here we need to set the actual script for the updater frames OnUpdate based
-	-- XXX on whether or not map info is available, and on db.graphical true/false.
 	activeMap = mapData[(GetMapInfo())]
 	hideDots()
-	if activeMap then
+
+	if activeMap and db.graphical then
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
-		local pixperyard = math.min(width, height) / (actualRange*3)
-		anchor.rangeCircle:SetSize( pixperyard * actualRange * 2,  pixperyard * actualRange * 2)
+		local ppy = math.min(width, height) / (actualRange * 3)
+		anchor.rangeCircle:SetSize(ppy * actualRange * 2, ppy * actualRange * 2)
 		anchor.playerDot:Show()
 		anchor.rangeCircle:Show()
+		anchor.text:Hide()
+		updater:SetScript("OnUpdate", graphicalUpdater)
 	else
 		anchor.rangeCircle:Hide()
 		anchor.playerDot:Hide()
+		anchor.text:Show()
+		updater:SetScript("OnUpdate", textUpdater)
 	end
+
 	-- Update the header to reflect the actual range we're checking
 	anchor.title:SetText(L["%d yards"]:format(actualRange))
 	-- Update the ability name display
@@ -992,6 +1031,7 @@ function plugin:Test()
 	breakThings()
 	-- XXX Dots should be shown/hidden based on the option in config mode.
 	-- XXX And so should the text, I guess. People can just toggle it while configuring.
+	anchor.text:Show()
 	testDots()
 	anchor:Show()
 end
