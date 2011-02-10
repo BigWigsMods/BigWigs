@@ -493,9 +493,7 @@ do
 		else
 			dot = anchor:CreateTexture(nil, "OVERLAY")
 			dot:SetSize(16, 16)
-			dot:SetTexture([[Interface\GLUES\MODELS\UI_Tauren\gradientCircle]])
-			dot:SetTexCoord(0.25, 0.75, 0.25, 0.75)
-			dot:SetBlendMode("ADD")
+			dot:SetTexture([[Interface\AddOns\BigWigs\Textures\blip]])
 		end
 		proxDots[#proxDots + 1] = dot
 
