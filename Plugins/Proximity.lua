@@ -391,21 +391,18 @@ local function ensureDisplay()
 	end)
 	
 	local rangeCircle = display:CreateTexture(nil, "OVERLAY")
-	rangeCircle:SetPoint("CENTER", display, "CENTER")
-	rangeCircle:SetSize(32, 32)
+	rangeCircle:SetPoint("CENTER")
 	rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])
 	rangeCircle:SetBlendMode("ADD")
 	display.rangeCircle = rangeCircle
-	
-	local _, class = UnitClass("player")
+
 	local playerDot = display:CreateTexture(nil, "OVERLAY")
 	playerDot:SetSize(32, 32)
 	playerDot:SetTexture([[Interface\Minimap\MinimapArrow]])
 	playerDot:SetBlendMode("ADD")
-	playerDot:SetVertexColor(unpack(vertexColors[class]))
-	playerDot:SetPoint("CENTER", display, "CENTER")
+	playerDot:SetPoint("CENTER")
 	display.playerDot = playerDot
-	
+
 	local drag = CreateFrame("Frame", nil, display)
 	drag.frame = display
 	drag:SetFrameLevel(display:GetFrameLevel() + 10) -- place this above everything
@@ -424,7 +421,7 @@ local function ensureDisplay()
 	tex:SetHeight(16)
 	tex:SetBlendMode("ADD")
 	tex:SetPoint("CENTER", drag)
-	
+
 	anchor = display
 
 	local x = db.posx
@@ -477,17 +474,6 @@ do
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
 	setDot = function(dx, dy, class, facing)
-		local nextIndex = #proxDots + 1
-		if #cacheDots > 0 then
-			proxDots[nextIndex] = table.remove(cacheDots)
-		else
-			proxDots[nextIndex] = anchor:CreateTexture(nil, "OVERLAY")
-			proxDots[nextIndex]:SetSize(16, 16)
-			proxDots[nextIndex]:SetTexture([[Interface\GLUES\MODELS\UI_Tauren\gradientCircle]])
-			proxDots[nextIndex]:SetTexCoord(0.25, 0.75, 0.25, 0.75)
-			proxDots[nextIndex]:SetBlendMode("ADD")
-		end
-		local dot = proxDots[nextIndex]
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
@@ -500,26 +486,40 @@ do
 
 		x = x * pixperyard
 		y = y * pixperyard
-		
+
+		local dot = nil
+		if #cacheDots > 0 then
+			dot = table.remove(cacheDots)
+		else
+			dot = anchor:CreateTexture(nil, "OVERLAY")
+			dot:SetSize(16, 16)
+			dot:SetTexture([[Interface\GLUES\MODELS\UI_Tauren\gradientCircle]])
+			dot:SetTexCoord(0.25, 0.75, 0.25, 0.75)
+			dot:SetBlendMode("ADD")
+		end
+		proxDots[#proxDots + 1] = dot
+
 		dot:ClearAllPoints()
 		dot:SetPoint("CENTER", anchor, "CENTER", x, y)
 		dot:SetVertexColor(unpack(vertexColors[class]))
 		dot:Show()
 	end
 
+	-- 
 	hideDots = function()
 		-- shuffle existing dots into cacheDots
 		-- hide those cacheDots
-		for i = 1, #proxDots, 1 do
-			local nextIndex = #cacheDots+1
-			cacheDots[nextIndex] = proxDots[i]
-			cacheDots[nextIndex]:Hide()
+		while #proxDots > 0 do
+			proxDots[1]:Hide()
+			cacheDots[#cacheDots + 1] = table.remove(proxDots, 1)
 		end
-		wipe(proxDots)
 	end
 	
 	testDots = function()
 		hideDots()
+		-- XXX These values could be randomized a bit
+		-- XXX And if we're grouped with anyone, they should probably be
+		-- XXX shown even if we're using a graphical or textual display.
 		setDot(10, 10, "WARLOCK", 0)
 		setDot(5, 0, "HUNTER", 0)
 		setDot(3, 10, "MAGE", 0)
@@ -528,7 +528,7 @@ do
 		setDot(0, 20, "WARLOCK", 2.25)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = math.min(width, height) / 30
-		anchor.rangeCircle:SetSize( pixperyard * 20,  pixperyard * 20)
+		anchor.rangeCircle:SetSize(pixperyard * 20,  pixperyard * 20)
 		anchor.rangeCircle:SetVertexColor(1,0,0, .6)
 		anchor.rangeCircle:Show()
 		anchor.playerDot:Show()
