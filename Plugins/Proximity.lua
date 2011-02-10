@@ -527,7 +527,7 @@ do
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = math.min(width, height) / 30
 		anchor.rangeCircle:SetSize(pixperyard * 20,  pixperyard * 20)
-		anchor.rangeCircle:SetVertexColor(1,0,0, .6)
+		anchor.rangeCircle:SetVertexColor(1,0,0)
 		anchor.rangeCircle:Show()
 		anchor.playerDot:Show()
 	end
@@ -585,9 +585,9 @@ do
 				anchor.text:SetText("")
 			end
 			lastplayed = 0
-			anchor.rangeCircle:SetVertexColor(0, 1, 0, .6)
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
-			anchor.rangeCircle:SetVertexColor(1, 0, 0, .6)
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			if not activeMap then
 				anchor.text:SetText(table.concat(tooClose, "\n"))
 			else
@@ -608,7 +608,7 @@ do
 	local total = 0
 	updater:SetScript("OnUpdate", function(self, elapsed)
 		total = total + elapsed
-		if total >= .5 or ( activeMap and total >= .1 ) then -- 10x per second for activeMap mode
+		if total >= .5 or ( activeMap and total >= .05 ) then -- 20x per second for activeMap mode
 			total = 0
 			updateProximity()
 		end
