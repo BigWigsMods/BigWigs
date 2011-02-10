@@ -88,7 +88,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600)
 	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
 	phase, lastWindburst = 1, 0
-	acidRainCounter = 1, nil
+	acidRainCounter, acidRainCounted = 1, nil
 end
 
 --------------------------------------------------------------------------------
