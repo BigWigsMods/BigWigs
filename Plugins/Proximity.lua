@@ -946,6 +946,8 @@ function plugin:Open(range, module, key)
 	activeProximityFunction = func
 	activeRange = actualRange
 	SetMapToCurrentZone()
+	-- XXX Here we need to set the actual script for the updater frames OnUpdate based
+	-- XXX on whether or not map info is available, and on db.graphical true/false.
 	activeMap = mapData[(GetMapInfo())]
 	hideDots()
 	if activeMap then
@@ -990,6 +992,8 @@ function plugin:Test()
 	self:Close()
 	-- Break the sound+close buttons
 	breakThings()
+	-- XXX Dots should be shown/hidden based on the option in config mode.
+	-- XXX And so should the text, I guess. People can just toggle it while configuring.
 	testDots()
 	anchor:Show()
 end
