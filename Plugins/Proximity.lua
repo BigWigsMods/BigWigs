@@ -169,8 +169,11 @@ end
 -- Copied from LibMapData-1.0 (All Rights Reserved) with permission from kagaro
 local mapData = {
 	StormwindCity = { 
-		{1737.499958992,1158.3330078125 },
+		{ 1737.499958992,1158.3330078125 },
 	},
+	Orgrimmar = {
+		{ 1739.375,1159.58349609375 },
+	}
 	TheBastionofTwilight = {
 		{ 1078.33402252197, 718.889984130859 },
 		{ 778.343017578125, 518.894958496094 },
