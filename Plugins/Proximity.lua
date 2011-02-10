@@ -570,6 +570,8 @@ do
 		if #tooClose == 0 then
 			if not activeMap then
 				anchor.text:SetText("|cff777777:-)|r")
+			else
+				anchor.text:SetText("")
 			end
 			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0, .6)
@@ -577,6 +579,8 @@ do
 			anchor.rangeCircle:SetVertexColor(1, 0, 0, .6)
 			if not activeMap then
 				anchor.text:SetText(table.concat(tooClose, "\n"))
+			else
+				anchor.text:SetText("")
 			end
 			wipe(tooClose)
 			if not db.sound then return end
