@@ -74,7 +74,7 @@ if L then
 
 	L.flashfreeze = "(CD) Congelaci\195\179n apresurada"
 	L.next_blast = "(CD) Explosi\195\179n agostadora"
-	L.jets_bar = "Next Magma Jets"
+	L.jets_bar = "Siguiente Chorros de magma"
 
 	L.phase = "Fase"
 	L.phase_desc = "Avisa los cambios de fase."
