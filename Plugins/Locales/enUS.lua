@@ -166,6 +166,8 @@ L["Disable the proximity display for all modules that use it."] = true
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = true
 L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = true
 L["Graphical display"] = true
+L["Sound delay"] = true
+L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = true
 
 L.proximity = "Proximity display"
 L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."

@@ -852,8 +852,8 @@ do
 					},
 					soundDelay = {
 						type = "range",
-						name = "Sound delay",
-						desc = "Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you.",
+						name = L["Sound delay"],
+						desc = L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."],
 						order = 7,
 						max = 10,
 						min = 1,
