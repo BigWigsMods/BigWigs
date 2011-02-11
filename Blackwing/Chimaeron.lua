@@ -70,9 +70,8 @@ end
 
 function mod:OnEngage(diff)
 	self:SendMessage("BigWigs_StopBar", self, self.displayName)
-	if diff > 2 then
-		self:Berserk(450)
-	else
+	self:Berserk(450)
+	if diff < 3 then
 		self:Bar(88853, L["next_system_failure"], 90, 88853) --typically happens at 60 or 90 on heroic, but random
 	end
 	difficulty = diff

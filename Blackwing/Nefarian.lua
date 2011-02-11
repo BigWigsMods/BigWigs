@@ -76,9 +76,7 @@ end
 
 
 function mod:OnEngage(diff)
-	if diff > 2 then
-		self:Berserk(630) -- is it really?
-	end
+	self:Berserk(630) -- is it really?
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
 	self:RegisterEvent("UNIT_POWER")
