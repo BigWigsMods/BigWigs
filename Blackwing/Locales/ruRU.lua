@@ -72,6 +72,7 @@ if L then
 
 	L.flashfreeze = "~Ледяная вспышка"
 	L.next_blast = "~Обжигающий поток"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
@@ -103,7 +104,7 @@ if L then
 
 	L.crackle_trigger = "В воздухе трещат электрические разряды!"
 	L.crackle_message = "Скоро Электрический удар!"
-	
+
 	L.shadowblaze_message = "Пламя тени"
 
 	L.onyxia_power_message = "Скоро Взрыв!"
@@ -115,7 +116,7 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "ruRU")
 if L then
 	L.nef = "Лорд Виктор Нефарий"
 	L.nef_desc = "Сообщать о способностях Лорда Виктора Нефария."
-	
+
 	L.pool = "Обратная вспышка"
 
 	L.switch = "Смена"

@@ -169,7 +169,7 @@ end
 
 -- Copied from LibMapData-1.0 (All Rights Reserved) with permission from kagaro
 local mapData = {
-	StormwindCity = { 
+	StormwindCity = {
 		{ 1737.499958992,1158.3330078125 },
 	},
 	Orgrimmar = {
@@ -389,7 +389,7 @@ local function ensureDisplay()
 			text:SetText("|cff777777:-)|r")
 		end
 	end)
-	
+
 	local rangeCircle = display:CreateTexture(nil, "ARTWORK")
 	rangeCircle:SetPoint("CENTER")
 	rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])

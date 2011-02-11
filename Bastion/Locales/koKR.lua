@@ -54,7 +54,7 @@ L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "koKR")
 if L then
 	L.paralysis_bar = "다음 마비"
 	L.strikes_message = "악의의 일격 %2$dx : %1$s"
-	
+
 	L.breath_message = "곧 숨결!"
 	L.breath_bar = "~숨결"
 end
@@ -63,7 +63,7 @@ L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
 	L.whelps = "새끼용"
 	L.whelps_desc = "새끼용 웨이브를 알립니다."
-	
+
 	L.egg_vulnerable = "알 요리 시간!"
 
 	L.whelps_trigger = "얘들아, 먹어치워라" --check

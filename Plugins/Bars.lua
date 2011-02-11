@@ -156,7 +156,7 @@ do
 	local backdrop = {
 		bgFile = "Interface\\Buttons\\WHITE8X8",
 		edgeFile = "Interface\\Buttons\\WHITE8X8",
-		tile = false, tileSize = 0, edgeSize = 0.64, 
+		tile = false, tileSize = 0, edgeSize = 0.64,
 		insets = { left = -0.64, right = -0.64, top = -0.64, bottom = -0.64}
 	}
 	local function createBackground()

@@ -72,6 +72,7 @@ if L then
 
 	L.flashfreeze = "~Gel instantané"
 	L.next_blast = "~Déflagration brûlante"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."

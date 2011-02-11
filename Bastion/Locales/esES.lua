@@ -14,16 +14,16 @@ if L then
 	L.tentacles_bar = "Aparecen tent\195\161culos"
 	L.tentacles_message = "\194\161Fiesta de tent\195\161culos!"
 	L.sickness_message = "\194\161Te sientes fatal!"
-	
+
 	L.blaze_message = "\194\161Fuego en TI!"
-	
+
 	L.fury_bar = "Pr\195\179xima furia"
 	L.fury_message = "\194\161Furia!"
 	L.first_fury_soon = "\194\161Furia pronto!"
 	L.first_fury_message = "\194\16185% - comienza la Furia!"
-	
+
 	L.unleashed_shadows = "Sombras desatadas"
-	
+
 	L.phase2_message = "\194\161Fase 2!"
 	L.phase2_soon = "\194\161Fase 2 pronto!"
 end

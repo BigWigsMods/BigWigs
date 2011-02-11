@@ -9,7 +9,7 @@ if L then
 	L.stormling_yell = "Storms! I summon you to my side!"
 
 	L.acid_rain = "Lluvia \195\161cida (%d)"
-	
+
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "Cambio de fase"

@@ -52,6 +52,7 @@ if L then
 	L.bitingchill_say = "Biting Chill on ME!"
 
 	L.flashfreeze = "~Flash Freeze"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes."

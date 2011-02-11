@@ -52,6 +52,7 @@ if L then
 	L.bitingchill_say = ">我< 刺骨之寒！"
 
 	L.flashfreeze = "<閃霜>"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"

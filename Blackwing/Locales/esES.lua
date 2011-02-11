@@ -74,6 +74,7 @@ if L then
 
 	L.flashfreeze = "(CD) Congelaci\195\179n apresurada"
 	L.next_blast = "(CD) Explosi\195\179n agostadora"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Fase"
 	L.phase_desc = "Avisa los cambios de fase."
@@ -117,9 +118,9 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "esES")
 if L then
 	L.nef = "Lord Victor Nefarius"
 	L.nef_desc = "Avisos para las abilidades de Lord Victor Nefarius"
-	
+
 	L.pool = "Generador de poder sobrecargado"
-	
+
 	L.switch = "Cambio"
 	L.switch_desc = "Avisa los cambios"
 	L.switch_message = "%s %s"

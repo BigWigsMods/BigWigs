@@ -15,7 +15,7 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "koKR")
 if L then
 	L.bileotron_engage = "담즙로봇이 움직이기 시작하더니 고약한 냄새가 나는 물질을 방출합니다."
-	L.win_trigger = "A shame to lose that experiment..."	--check
+	L.win_trigger = "A shame to lose that experiment..." --check
 
 	L.next_system_failure = "~다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"
@@ -37,7 +37,7 @@ if L then
 	L.phase2 = "2 단계"
 	L.phase2_desc = "2 단계 알림과 근접창 체크를 표시합니다."
 	L.phase2_message = "2 단계!"
-	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암"	--check
+	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암" --check
 
 	-- normal
 	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
@@ -72,6 +72,7 @@ if L then
 
 	L.flashfreeze = "~순간 빙결"
 	L.next_blast = "~맹렬한 폭발"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
@@ -115,9 +116,9 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "koKR")
 if L then
 	L.nef = "군주 빅터 네파리우스"
 	L.nef_desc = "군주 빅터 네파리우스의 기술을 알립니다."
-	
+
 	L.pool = "바닥 웅덩이 폭발"
-	
+
 	L.switch = "전환"
 	L.switch_desc = "전환을 알립니다."
 	L.switch_message = "%s %s"

@@ -2,7 +2,7 @@ local C = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs", true)
 local names = {}
 local descriptions = {}
-	
+
 -- Option bitflags
 local coreToggles = { "BAR", "MESSAGE", "ICON", "WHISPER", "SOUND", "SAY", "PROXIMITY", "FLASHSHAKE", "PING", "EMPHASIZE" }
 for i, toggle in next, coreToggles do
@@ -30,7 +30,7 @@ function BigWigs:RegisterOption(key, name, desc)
 			used[i - 1] = k
 		end
 	end
-	
+
 	if self.db.global.optionShiftIndexes[key] then
 		local index = self.db.global.optionShiftIndexes[key]
 		if used[index] and used[index] ~= key then

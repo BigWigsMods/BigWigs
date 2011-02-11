@@ -37,6 +37,7 @@ if L then
 
 	L.flashfreeze = "~Flash Freeze"
 	L.next_blast = "~Scorching Blast"
+	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Phase"
 	L.phase_desc = "Warning for phase changes."
@@ -66,7 +67,7 @@ function mod:GetOptions(CL)
 	return {
 		{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity",
 		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968,
-		77991,
+		77991, 78194,
 		"sludge",
 		"phase", 77912, 77569, 77896, "berserk", "bosskill"
 	}, {
@@ -97,6 +98,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneStorm", 77896)
+	self:Log("SPELL_CAST_START", "Jets", 78194)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -266,6 +268,7 @@ end
 
 function mod:ReleaseAll(_, spellId)
 	self:Message(77991, L["release_all"]:format(aberrations + 2), "Important", spellId, "Alert")
+	self:Bar(78194, L["jets_bar"], 12.5, spellId)
 end
 
 do
@@ -299,5 +302,9 @@ end
 
 function mod:ArcaneStorm(_, spellId, _, _, spellName)
 	self:Message(77896, spellName, "Important", spellId, "Alert")
+end
+
+function mod:Jets(_, spellId)
+	self:Bar(78194, L["jets_bar"], 10, spellId)
 end
 
