@@ -72,7 +72,7 @@ if L then
 
 	L.flashfreeze = "~Blitzeis"
 	L.next_blast = "~Sengende Explosion"
-	L.jets_bar = "Next Magma Jets"
+	L.jets_bar = "Nächste Magmastrahlen"
 
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
