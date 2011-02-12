@@ -72,7 +72,7 @@ if L then
 
 	L.flashfreeze = "~순간 빙결"
 	L.next_blast = "~맹렬한 폭발"
-	L.jets_bar = "Next Magma Jets"
+	L.jets_bar = "다음 마그마 분출"
 
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
