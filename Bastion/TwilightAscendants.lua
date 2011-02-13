@@ -54,9 +54,9 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		-- Ignacious
-		82631, 82660, 82663,
+		82631, {82660, "FLASHSHAKE"}
 		-- Feludius
-		82746, 82665, 82666, 82762,
+		82746, {82665, "FLASHSHAKE"}, 82762,
 		-- Arion
 		83067, {83099, "SAY", "FLASHSHAKE"},
 		-- Terrastra
@@ -96,8 +96,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
-	self:Log("SPELL_AURA_APPLIED", "FrostImbued", 82666)
-	self:Log("SPELL_AURA_APPLIED", "FlameImbued", 82663)
 	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 84948, 92486, 92487, 92488)
 
 	self:Yell("Switch", L["switch_trigger"])
@@ -121,7 +119,7 @@ function mod:OnEngage(diff)
 	end
 
 	self:Bar(82631, L["shield_bar"], 30, 82631)
-	self:Bar(82746, glaciate, 15, 82746)
+	self:Bar(82746, glaciate, 30, 82746)
 
 	first = nil
 	crushMarked = false
@@ -145,7 +143,7 @@ do
 			self:ScheduleTimer(lrWarn, 0.3, spellName)
 		end
 		if UnitIsUnit(player, "player") then
-			self:Say(83099, CL["say"]:format((GetSpellInfo(83099))))
+			self:Say(83099, CL["say"]:format(spellName))
 			self:FlashShake(83099)
 			self:OpenProximity(8)
 		end
@@ -155,7 +153,7 @@ end
 do
 	local scheduled = nil
 	local function gcWarn(spellName)
-		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alarm")
+		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alert")
 		scheduled = nil
 	end
 	local function marked()
@@ -170,7 +168,7 @@ do
 		end
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(gcWarn, 0.02, spellName)
+			self:ScheduleTimer(gcWarn, 0.2, spellName)
 		end
 		self:Bar(92488, spellName, 25, spellId)
 	end
@@ -187,7 +185,7 @@ function mod:GravityCore(player, spellId, _, _, spellName)
 		self:Say(92075, L["gravity_core_say"])
 		self:FlashShake(92075)
 	end
-	self:TargetMessage(92075, spellName, player, "Personal", spellId, "Alarm")
+	self:TargetMessage(92075, spellName, player, "Attention", spellId, "Alarm")
 	self:SecondaryIcon(92075, player)
 end
 
@@ -196,7 +194,7 @@ function mod:StaticOverload(player, spellId, _, _, spellName)
 		self:Say(92067, L["static_overload_say"])
 		self:FlashShake(92067)
 	end
-	self:TargetMessage(92067, spellName, player, "Personal", spellId, "Alarm")
+	self:TargetMessage(92067, spellName, player, "Attention", spellId, "Alarm")
 	self:PrimaryIcon(92067, player)
 end
 
@@ -204,7 +202,7 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(92307)
 	end
-	self:TargetMessage(92307, spellName, player, "Personal", spellId, "Alarm")
+	self:TargetMessage(92307, spellName, player, "Attention", spellId, "Alarm")
 	self:Whisper(92307, player, spellName)
 	self:PrimaryIcon(92307, player)
 end
@@ -250,39 +248,33 @@ function mod:AegisofFlame(_, spellId)
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
-	self:Bar(92541, spellName, 45, spellId)
+	self:Bar(92541, spellName, 44, spellId)
 	self:Message(92541, spellName, "Urgent", spellId, "Info")
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
 	self:Bar(82746, spellName, 33, spellId)
-	self:Message(82746, spellName, "Urgent", spellId, "Alert")
+	self:Message(82746, spellName, "Attention", spellId, "Alert")
 end
 
 function mod:Waterlogged(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(82762, spellName, "Important", spellId, "Long")
-	end
-end
-
-function mod:FrostImbued(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage(82666, spellName, "Positive", spellId, "Info")
-	end
-end
-
-function mod:FlameImbued(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage(82663, spellName, "Positive", spellId, "Info")
+		self:LocalMessage(82762, spellName, "Personal", spellId, "Long")
 	end
 end
 
 function mod:HeartofIce(player, spellId, _, _, spellName)
-	self:TargetMessage(82665, spellName, player, "Positive", spellId)
+	self:TargetMessage(82665, spellName, player, "Important", spellId)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(82665)
+	end
 end
 
 function mod:BurningBlood(player, spellId, _, _, spellName)
-	self:TargetMessage(82660, spellName, player, "Positive", spellId)
+	self:TargetMessage(82660, spellName, player, "Important", spellId)
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(82660)
+	end
 end
 
 function mod:Switch()
@@ -290,7 +282,7 @@ function mod:Switch()
 	self:SendMessage("BigWigs_StopBar", self, glaciate)
 	self:Bar(83565, quake, 33, 83565)
 	self:Bar(83067, thundershock, 70, 83067)
-	self:Bar(92541, hardenSkin, 27, 92541)
+	self:Bar(92541, hardenSkin, 25.5, 92541)
 	self:CancelAllTimers()
 	-- XXX this needs to be delayed
 end
@@ -339,7 +331,7 @@ do
 	end
 
 	function mod:Thundershock(_, spellId, _, _, spellName)
-		self:Bar(83067, spellName, 67, spellId)
+		self:Bar(83067, spellName, 65, spellId)
 		self:Message(83067, spellName, "Important", spellId, "Alarm")
 		self:CancelTimer(thunderTimer, true) -- Should really wait 3 more sec but meh.
 	end
