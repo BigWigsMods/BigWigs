@@ -13,7 +13,7 @@ mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
-local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83067)
+local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(92541)
 local gravityCrush = GetSpellInfo(92488)
 local crushMarked = false
 local first = nil
@@ -87,8 +87,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 92307)
 
 	--normal
-	self:Log("SPELL_AURA_APPLIED", "LightningRodApplied",83099)
-	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved",83099)
+	self:Log("SPELL_AURA_APPLIED", "LightningRodApplied", 83099)
+	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved", 83099)
 
 	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
 	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
@@ -120,7 +120,7 @@ function mod:OnEngage(diff)
 		self:OpenProximity(8)
 	end
 
-	self:Bar(82631, L["shield_bar"], 28, 82631)
+	self:Bar(82631, L["shield_bar"], 30, 82631)
 	self:Bar(82746, glaciate, 15, 82746)
 
 	first = nil
@@ -209,23 +209,38 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 	self:PrimaryIcon(92307, player)
 end
 
-function mod:UNIT_HEALTH()
-	local boss1 = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-	local boss2 = UnitHealth("boss2") / UnitHealthMax("boss2") * 100
-	local boss3 = UnitExists("boss3") and (UnitHealth("boss3") / UnitHealthMax("boss3") * 100) or 100
-	local boss4 = UnitExists("boss4") and (UnitHealth("boss4") / UnitHealthMax("boss4") * 100) or 100
-	if boss1 < 30 and not first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss1")), boss1), "Attention", 26662, "Info")
-		first = true
-	elseif boss2 < 30 and not first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss2")), boss2), "Attention", 26662, "Info")
-		first = true
-	elseif boss3 < 30 and first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss3")), boss3), "Attention", 26662, "Info")
-		self:UnregisterEvent("UNIT_HEALTH")
-	elseif boss4 < 30 and first then
-		self:Message("switch", L["health_report"]:format((UnitName("boss4")), boss4), "Attention", 26662, "Info")
-		self:UnregisterEvent("UNIT_HEALTH")
+do
+	local terrastra, arion = BigWigs:Translate("Terrastra"), BigWigs:Translate("Arion")
+	function mod:UNIT_HEALTH()
+		--The mess that we need thanks to Blizz...
+		if not first then
+			local boss1, boss2 = UnitHealth("boss1") / UnitHealthMax("boss1") * 100, UnitHealth("boss2") / UnitHealthMax("boss2") * 100
+			if boss1 < 30 then
+				self:Message("switch", L["health_report"]:format((UnitName("boss1")), boss1), "Attention", 26662, "Info")
+				first = true
+			elseif boss2 < 30 and not first then
+				self:Message("switch", L["health_report"]:format((UnitName("boss2")), boss2), "Attention", 26662, "Info")
+				first = true
+			end
+		else
+			local boss1 = (UnitName("boss1") == arion or UnitName("boss1") == terrastra) and UnitHealth("boss1") / UnitHealthMax("boss1") * 100 or 0
+			local boss2 = (UnitName("boss2") == arion or UnitName("boss2") == terrastra) and UnitHealth("boss2") / UnitHealthMax("boss2") * 100 or 0
+			local boss3 = (UnitName("boss3") == arion or UnitName("boss3") == terrastra) and UnitHealth("boss3") / UnitHealthMax("boss3") * 100 or 0
+			local boss4 = (UnitName("boss4") == arion or UnitName("boss4") == terrastra) and UnitHealth("boss4") / UnitHealthMax("boss4") * 100 or 0
+			if boss1 >1 and boss1 <30 then
+				self:Message("switch", L["health_report"]:format((UnitName("boss1")), boss1), "Attention", 26662, "Info")
+				self:UnregisterEvent("UNIT_HEALTH")
+			elseif boss2 >1 and boss2 <30 then
+				self:Message("switch", L["health_report"]:format((UnitName("boss2")), boss2), "Attention", 26662, "Info")
+				self:UnregisterEvent("UNIT_HEALTH")
+			elseif boss3 >1 and boss3 <30 then
+				self:Message("switch", L["health_report"]:format((UnitName("boss3")), boss3), "Attention", 26662, "Info")
+				self:UnregisterEvent("UNIT_HEALTH")
+			elseif boss4 >1 and boss4 <30 then
+				self:Message("switch", L["health_report"]:format((UnitName("boss4")), boss4), "Attention", 26662, "Info")
+				self:UnregisterEvent("UNIT_HEALTH")
+			end
+		end
 	end
 end
 
@@ -299,7 +314,7 @@ do
 	end
 
 	function mod:Quake(_, spellId, _, _, spellName)
-		self:Bar(83565, spellName, 65, spellId)
+		self:Bar(83565, spellName, 68, spellId)
 		self:Message(83565, spellName, "Important", spellId, "Alarm")
 		self:CancelTimer(hardenTimer, true) -- Should really wait 3 more sec.
 	end
@@ -324,7 +339,7 @@ do
 	end
 
 	function mod:Thundershock(_, spellId, _, _, spellName)
-		self:Bar(83067, spellName, 65, spellId)
+		self:Bar(83067, spellName, 67, spellId)
 		self:Message(83067, spellName, "Important", spellId, "Alarm")
 		self:CancelTimer(thunderTimer, true) -- Should really wait 3 more sec but meh.
 	end
