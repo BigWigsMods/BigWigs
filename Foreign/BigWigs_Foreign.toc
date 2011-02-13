@@ -1,7 +1,8 @@
-## Interface: 40000
+﻿## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fForeign Language|r]
 ## Title-deDE: Big Wigs [|cffeda55fSprachpaket|r]
+## Title-esES: Big Wigs [|cffeda55fPaquete de idiomas|r]
 ## Title-ruRU: Big Wigs [|cffeda55fИностранный язык|r]
 ## Title-frFR: Big Wigs [|cffeda55fPaquet linguistique|r]
 ## Title-zhCN: Big Wigs [|cffeda55f外语|r]
@@ -9,6 +10,7 @@
 ## Title-koKR: Big Wigs [|cffeda55f외국어 언어 팩|r]
 ## Notes: Non English Language Pack for Big Wigs
 ## Notes-deDE: Nicht-englisches Sprachpaket für Big Wigs.
+## Notes-esES: Paquete de idiomas para Big Wigs.
 ## Notes-ruRU: Языковый пакет для Big Wigs
 ## Notes-frFR: Paquet linguistique pour Big Wigs.
 ## Notes-zhCN: Big Wigs 非英语模块

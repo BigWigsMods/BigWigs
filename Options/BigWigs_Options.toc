@@ -1,13 +1,15 @@
-## Interface: 40000
+﻿## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fOptions|r]
 ## Title-deDE: Big Wigs [|cffeda55fOptionen|r]
+## Title-esES: Big Wigs [|cffeda55fOpciones|r]
 ## Title-ruRU: Big Wigs [|cffeda55fНастройки|r]
 ## Title-zhCN: Big Wigs [|cffeda55f选项|r]
 ## Title-zhTW: Big Wigs [|cffeda55f選項|r]
 ## Title-koKR: Big Wigs [|cffeda55f옵션|r]
 ## Notes: Big Wigs Configuration Options
 ## Notes-deDE: Big Wigs Einstellungsmöglichkeiten.
+## Notes-esES: Opciones de configuración de Big Wigs.
 ## Notes-ruRU: Модуль настроек Big Wigs
 ## Notes-zhCN: Big Wigs 配置选项
 ## Notes-zhTW: Big Wigs 配置選項
