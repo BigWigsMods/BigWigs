@@ -5,19 +5,26 @@ if L then
 	L.orders = "形态转换"
 	L.orders_desc = "当Cho'gall改变Shadow/Flame Orders形态时发出警报。"
 
-	L.crash_say = ">我< Corrupting Crash！"
 	L.worship_cooldown = "<Worship>"
+
 	L.adherent_bar = "<Corrupting Adherent：#%d>"
 	L.adherent_message = "即将 Corrupting Adherent：>%d<！"
 	L.ooze_bar = "<聚集上古之神的血：%d>"
 	L.ooze_message = "即将聚集上古之神的血：>%d<！"
+
 	L.tentacles_bar = "<Darkened Creations出现>"
 	L.tentacles_message = "大量Darkened Creations！"
+
 	L.sickness_message = ">你< 快要呕吐了!"
+	L.blaze_message = ">你< 燃炎！"
+	L.crash_say = ">我< Corrupting Crash！"
+
 	L.fury_bar = "<下一Fury of Cho'gall>"
 	L.fury_message = "Fury of Cho'gall！"
 	L.first_fury_soon = "Fury Soon!"
 	L.first_fury_message = "85% - Fury Begins!"
+
+	L.unleashed_shadows = "釋放暗影！"
 
 	L.phase2_message = "第二阶段"
 	L.phase2_soon = "即将 第二阶段！"
@@ -39,6 +46,7 @@ if L then
 	L.devouringflames_cooldown = "<Devouring Flame>"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+	L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "Twilight Shift%2$dx：>%1$s<！"
 end
@@ -46,14 +54,20 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "zhCN")
 if L then
 	L.paralysis_bar = "<下一麻痹>"
-
 	L.strikes_message = "致死打击%2$dx：>%1$s<！"
+
+	L.breath_message = "Breath incoming!"
+	L.breath_bar = "~Breath"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "zhCN")
 if L then
+	L.whelps = "Whelps"
+	L.whelps_desc = "Warning for the whelp waves."
+
 	L.egg_vulnerable = "Omelet time!"
 
+	L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
 	L.omelet_trigger = "You mistake this for weakness?  Fool!"
 
 	L.phase13 = "第一和第三阶段"

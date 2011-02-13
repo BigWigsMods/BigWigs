@@ -15,9 +15,12 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "zhCN")
 if L then
 	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
+	L.win_trigger = "A shame to lose that experiment..."
 
 	L.next_system_failure = "Next System Failure"
 	L.break_message = "%2$dx Break on %1$s"
+
+	L.phase2_message = "即將 致命性階段！"
 
 	L.warmup = "Warmup"
 	L.warmup_desc = "Warmup timer"
@@ -25,23 +28,41 @@ end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhCN")
 if L then
+	-- heroic
 	L.blazing = "Skeleton Adds"
 	L.blazing_desc = "Summons Blazing Bone Construct"
+	L.blazing_message = "即將 熾炎骸骨傀儡！"
+	L.blazing_bar = "<下一熾炎骸骨傀儡>"
+
+	L.phase2 = "第二階段"
+	L.phase2_desc = "當第二階段時顯示距離檢查。"
+	L.phase2_message = "第二階段！"
+	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+
+	-- normal
+	L.pillar_of_flame_cd = "<烈焰之柱>"
 
 	L.slump = "Slump"
 	L.slump_desc = "Magmaw slumps forward exposing itself."
+	L.slump_bar = "<下一騎乘>"
+	L.slump_message = "嘢，快騎上它！"
+	L.slump_trigger = "%s往前撲倒，露出他的鉗子!"
 
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
 	L.expose_trigger = "head"
 	L.expose_message = "Head Explosed!"
+
+	L.spew_bar = "<下一熔岩噴灑>"
+	L.spew_warning = "即將 熔岩噴灑！"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "zhCN")
 if L then
 	--heroic
-	L.darkSludge = (GetSpellInfo(92987))
-	L.darkSludge_desc = ("Warning for when you stand in %s."):format((GetSpellInfo(92987)))
+	L.sludge = "黑暗淤泥"
+	L.sludge_desc = "當你站在黑暗淤泥上面時發出警報。"
+	L.sludge_message = ">你< 黑暗淤泥！"
 
 	--normal
 	L.final_phase = "Final Phase"
@@ -49,14 +70,14 @@ if L then
 	L.release_aberration_message = "%s adds left!"
 	L.release_all = "%s adds released!"
 
-	L.bitingchill_say = "Biting Chill on ME!"
-
 	L.flashfreeze = "~Flash Freeze"
+	L.next_blast = "<灼燒衝擊>"
 	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Phase"
 	L.phase_desc = "Warning for Phase changes."
 	L.next_phase = "Next Phase"
+	L.green_phase_bar = "綠色階段"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase_emote_trigger = "红色" --verify
@@ -84,6 +105,8 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
+	L.shadowblaze_message = "暗影炎！"
+
 	L.onyxia_power_message = "Explosion soon!"
 
 	L.cinder_say = "Explosive Cinders on ME!"
@@ -95,19 +118,24 @@ L = BigWigs:NewBossLocale("Omnotron Defense System", "zhCN")
 if L then
 	L.nef = "维克多·奈法里奥斯"
 	L.nef_desc = "当维克多·奈法里奥斯施放技能时发出警报。"
+
+	L.pool = "Pool Explosion"
+
 	L.switch = "转换"
 	L.switch_desc = "当转换时发出警报。"
 	L.switch_message = "%s %s"
 
 	L.next_switch = "<下一转换>"
 
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
+	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~Next ability buff"
 
 	L.acquiring_target = "Acquiring Target"
 
+	L.bomb_message = "Ooze chasing YOU!"
 	L.cloud_message = "Cloud on YOU!"
 	L.protocol_message = "Poison Bombs!"
 

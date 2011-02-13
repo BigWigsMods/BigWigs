@@ -2,6 +2,14 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "zhCN")
 if not L then return end
 if L then
+	L.stormling = "Stormling adds"
+	L.stormling_desc = "Summons Stormling."
+	L.stormling_message = "Stormling incoming!"
+	L.stormling_bar = "Next stormling"
+	L.stormling_yell = "Storms! I summon you to my side!"
+
+	L.acid_rain = "Acid Rain (%d)"
+
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "阶段转换"

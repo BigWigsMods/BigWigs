@@ -2,6 +2,14 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "zhTW")
 if not L then return end
 if L then
+	L.stormling = "小風暴"
+	L.stormling_desc = "當召喚小風暴時發出警報。"
+	L.stormling_message = "即將 小風暴！"
+	L.stormling_bar = "<下一小風暴>"
+	L.stormling_yell = "Storms! I summon you to my side!"
+
+	L.acid_rain = "酸雨 （%d）！"
+
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "階段轉換"
