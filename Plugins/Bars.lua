@@ -1027,7 +1027,7 @@ local function countdown(bar)
 	if bar.remaining <= bar:Get("bigwigs:count") then
 		local count = bar:Get("bigwigs:count")
 		bar:Set("bigwigs:count", count - 1)
-		PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3")
+		PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3", "Master")
 		if count > 0.9 then
 			plugin:SendMessage("BigWigs_EmphasizedMessage", floor(count), 1, 0, 0)
 		end

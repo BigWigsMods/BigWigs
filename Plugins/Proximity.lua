@@ -491,6 +491,10 @@ do
 		if #cacheDots > 0 then
 			dot = table.remove(cacheDots)
 		else
+			-- XXX Investigate making dots actual frames, so we can have a mouseover tooltip?
+			-- XXX It's either that, or we show some label next to them, I guess. You should
+			-- XXX be able to yell like "Hey, Nubwarlock, get away from me!".
+			-- Problems include click-through and bloat, I guess.
 			dot = anchor:CreateTexture(nil, "OVERLAY")
 			dot:SetSize(16, 16)
 			dot:SetTexture([[Interface\AddOns\BigWigs\Textures\blip]])
