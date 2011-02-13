@@ -437,7 +437,7 @@ do
 					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon)
 					self:SendMessage("BigWigs_Message", self, key, text, nil, nil, nil, true)
 				else
-					self:SendMessage("BigWigs_Message", self, key, fmt(L["you"], spellName), color, true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", self, key, fmt(L["you"], spellName), "Personal", true, sound, nil, icon)
 					self:SendMessage("BigWigs_Message", self, key, fmt(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
