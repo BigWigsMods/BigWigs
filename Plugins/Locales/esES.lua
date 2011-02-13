@@ -4,6 +4,10 @@ if not L then return end
 -- Bars.lua
 --
 
+L["Style"] = "Estilo"
+L.bigWigsBarStyleName_Default = "Por defecto"
+L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
+
 L["Clickable Bars"] = "Barras clicables"
 L.clickableBarsDesc = "Las barras de Big Wigs bars son clicables por defecto. De esta forma puedes targetear objetos o lanzar hechizos AoE detr\195\161s de ellos, cambia el \195\161ngulo de la c\195\161mara, y as\195\173 sucesivamente, mientras tu cursos est\195\161 encima de las barras. |cffff4411Si habilitas las barras clicables, esto dejar\195\161 de funcionar.|r Las barras interceptar\195\161n cualquier clic de rat\195\179n que hagas en ellas.\n"
 L["Enables bars to receive mouse clicks."] = "Activa las barras para recivir clics de rat\195\179n"
@@ -50,7 +54,7 @@ L["Fills the bars up instead of draining them."] = "Llena las barras o las drena
 
 L["Local"] = "Local"
 L["%s: Timer [%s] finished."] = "%s: Contador [%s] terminado."
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = true
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo incorrecto (|cffff0000%q|r) o fallo encontrado en el texto de la barra personalizada empezada por |cffd9d919%s|r. <time> puede ser un numero en segundos, una pareja M:S, o Mm. Por ejemplo 5, 1:20 o 2m."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -81,8 +85,8 @@ L["Positive"] = "Positivo"
 -- Messages.lua
 --
 
-L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
-L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
+L.sinkDescription = "Gu\195\173a fuera de este addon siguiendo los mensajes mostrados de Big Wigs. Estos soportan iconos, colores y pueden mostrarse hasta 4 mensajes en la pantalla a la vez. Reci\195\169n insertados los mensajes crecer\195\161n en tama\195\177o y encoger\195\161n de nuevo r\195\161pidamente para notificar al usuario."
+L.emphasizedSinkDescription = "Gu\195\173a fuera de este addon siguiendo los mensajes enfatizados mostrados de Big Wigs. Estos soportan texto y colores, y solo pueden mostrarse uno a la vez."
 
 L["Messages"] = "Mensajes"
 L["Normal messages"] = "Mensajes normales"
@@ -160,12 +164,16 @@ L["Sound"] = "Sonido"
 L["Disabled"] = "Desactivado"
 L["Disable the proximity display for all modules that use it."] = "Desactiva la ventana de proximidad pra todos los m\195\179dulos que la usen."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "La ventana de proximidad se mostrar\195\161 la pr\195\179xima vez. Para desativarla completamente de este encuentro, necesitas apagarla de las opciones de encuentros."
+L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = "Deja en el monitor de proximidad una representaci\195\179n gr\195\161fica de la gente que podr\195\173a estar cerca de ti en lugar de solo listar los nombres. Esto s\195\179lo funciona para zonas donde Big Wigs tiene acceso a la informaci\195\179n del tama\195\177o real; para otras zonas volver\195\173a a listar los nombres."
+L["Graphical display"] = "Visualizaci\195\179n gr\195\161fica"
+L["Sound delay"] = "Retardo de sonido"
+L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Especifica el tiempo que Big Wigs deber\195\173a esperar entre cada repetici\195\179n de sonido cuando alguien est\195\161 demasiado cerca de ti."
 
 L.proximity = "Visualizar proximidad"
 L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropidada para este encuentro, lista los jugadores que est\195\161n demasiado cerca tuya."
 
 L["Close"] = "Cerrar"
-L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = true
+L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."] = "Cierra la ventana de proximidad.\n\nPara desactivarla completamente para un encuentro, tienes que ir a las opciones para ese encuentro y desactivar la opci\195\179n de 'Proximidad'."
 L["Lock"] = "Bloquear"
 L["Locks the display in place, preventing moving and resizing."] = "Bloquea la ventana en el lugar, previniendo que se mueva y redimensione"
 L["Title"] = "T\195\173tulo"
