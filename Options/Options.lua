@@ -350,7 +350,7 @@ do
 		widget:SetUserData("tab", tab)
 		acd:Open(acId:format(tab), tabSection)
 		local scroll = widget:GetUserData("scroll")
-		scroll:DoLayout()
+		scroll:PerformLayout()
 		options:SendMessage("BigWigs_SetConfigureTarget", plugin)
 	end
 	local function onTestClick() BigWigs:Test() end
@@ -418,7 +418,7 @@ do
 		if not hideFrame then
 			createPluginFrame()
 			frame:Show()
-			frame:DoLayout()
+			frame:PerformLayout()
 		end
 	end
 
@@ -532,8 +532,8 @@ local function advancedTabSelect(widget, callback, tab)
 		acd:Open("Big Wigs: Colors Override", group)
 	end
 	widget:ResumeLayout()
-	widget:GetUserData("scrollFrame"):DoLayout()
-	widget:DoLayout()
+	widget:GetUserData("scrollFrame"):PerformLayout()
+	widget:PerformLayout()
 end
 
 local advancedTabs = {
@@ -590,7 +590,7 @@ local function buttonClicked(widget)
 	local bossOption = widget:GetUserData("bossOption")
 	scrollFrame:ReleaseChildren()
 	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
-	scrollFrame:DoLayout()
+	scrollFrame:PerformLayout()
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
@@ -620,6 +620,60 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	return check, button
 end
 
+local listAbilitiesInChat = nil
+do
+	-- XXX This stuff needs some serious cleaning up.
+
+	local function output(channel, ...)
+		if channel then
+			SendChatMessage(strjoin(" ", ...), channel)
+		else
+			print(...)
+		end
+	end
+
+	local function printList(channel, header, list)
+		if #list == 0 then return end
+		if header then output(channel, header, unpack(list))
+		else output(channel, unpack(list)) end
+	end
+
+	local function checkSize(header, list)
+		local hS = header and header:len() + 1 or 0
+		local lS = strjoin(" ", unpack(list)):len()
+		return hS + lS
+	end
+
+	function listAbilitiesInChat(widget)
+		local module = widget:GetUserData("module")
+		local channel = nil
+		if UnitInRaid("player") then channel = "RAID"
+		elseif GetNumPartyMembers() > 0 then channel = "PARTY" end
+		local abilities = {}
+		local header = nil
+		output(channel, module.displayName or module.moduleName or module.name)
+		for i, option in next, module.toggleOptions do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if module.optionHeaders and module.optionHeaders[o] then
+				-- print what we have so far
+				printList(channel, header, abilities)
+				wipe(abilities)
+				header = module.optionHeaders[o]
+			end
+			if type(o) == "number" then
+				local l = GetSpellLink(o)
+				if checkSize(header, abilities) + l:len() > 255 then
+					printList(channel, header, abilities)
+					wipe(abilities)
+				end
+				abilities[#abilities + 1] = l
+			end
+		end
+		printList(channel, header, abilities)
+	end
+end
+
 local function populateToggleOptions(widget, module)
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
@@ -635,7 +689,15 @@ local function populateToggleOptions(widget, module)
 		end
 		scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
 	end
-	scrollFrame:DoLayout()
+	local list = AceGUI:Create("Button")
+	list:SetFullWidth(true)
+	-- XXX [List|Print] [abilities|encounter abilities] [all] [[in|to] chat]
+	-- XXX I dunno what sounds best.
+	list:SetText("List all abilities in group chat")
+	list:SetUserData("module", module)
+	list:SetCallback("OnClick", listAbilitiesInChat)
+	scrollFrame:AddChild(list)
+	scrollFrame:PerformLayout()
 end
 
 function showToggleOptions(widget, event, group)
@@ -658,47 +720,72 @@ do
 		-- Make sure all the bosses for this zone are loaded.
 		BigWigsLoader:LoadZone(zone)
 
-		local hasZones = zone and zoneModules[zone] and true or nil
+		-- Does this zone have multiple encounters?
+		local multiple = zone and zoneModules[zone] and true or nil
 
-		if not hasZones and not frame.module then -- this zone has no modules, nor is the panel related to a module
+		-- This zone has no modules, nor is the panel related
+		-- to a module.
+		if not multiple and not frame.module then
+			error(("We wanted to show options for the zone %q, but it does not have any modules registered."):format(tostring(zone)))
 			return
 		end
 
-		local sframe = AceGUI:Create("SimpleGroup")
-		sframe:PauseLayout()
-		sframe:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
-		sframe:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
-		sframe:SetLayout("Fill")
-		sframe:SetFullWidth(true)
+		local outerContainer = AceGUI:Create("SimpleGroup")
+		outerContainer:PauseLayout()
+		outerContainer:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -8)
+		outerContainer:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -8, 8)
+		outerContainer:SetLayout("Fill")
+		outerContainer:SetFullWidth(true)
 
+		local innerContainer = nil
+		if multiple then
+			innerContainer = AceGUI:Create("DropdownGroup")
+			innerContainer:SetTitle(L["Select encounter"])
+			innerContainer:SetLayout("Flow")
+			innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
+			innerContainer:SetUserData("zone", zone)
+
+			-- Sort the encounters for this zone, so we don't have
+			-- to do it twice.
+			wipe(sorted)
+			for k, v in pairs(zoneModules[zone]) do
+				sorted[#sorted + 1] = k
+			end
+			table.sort(sorted)
+			innerContainer:SetGroupList(zoneModules[zone], sorted)
+		else
+			innerContainer = AceGUI:Create("SimpleGroup")
+			innerContainer:SetLayout("Fill")
+			innerContainer:SetUserData("module", frame.module)
+		end
+
+		-- scroll is where we actually put stuff in case things
+		-- overflow vertically
 		local scroll = AceGUI:Create("ScrollFrame")
 		scroll:SetLayout("Flow")
 		scroll:SetFullWidth(true)
 		scroll:SetFullHeight(true)
+		innerContainer:SetUserData("parent", scroll)
+		innerContainer:AddChild(scroll)
 
-		local group = nil
-		if hasZones then
-			group = AceGUI:Create("DropdownGroup")
-			group:SetTitle(L["Select encounter"])
-			group:SetLayout("Flow")
-			group:SetCallback("OnGroupSelected", showToggleOptions)
-			group:SetUserData("zone", zone)
-			group:SetGroupList(zoneModules[zone])
-		else
-			group = AceGUI:Create("SimpleGroup")
-			group:SetLayout("Fill")
-			group:SetUserData("module", frame.module)
-		end
-		group:AddChild(scroll)
-		sframe:AddChild(group)
-		group:SetUserData("parent", scroll)
-		sframe.frame:SetParent(frame)
-		sframe:ResumeLayout()
-		sframe:DoLayout()
-		sframe.frame:Show()
-		frame.container = sframe
+		outerContainer:AddChild(innerContainer)
 
-		if hasZones then
+		outerContainer:ResumeLayout()
+		outerContainer:PerformLayout()
+		
+		-- Need to parent the AceGUI container to the actual
+		-- zone panel frame so that the AceGUI container will
+		-- show at all.
+		outerContainer.frame:SetParent(frame)
+		outerContainer.frame:Show()
+
+		-- Need a reference to the outer container so that we can
+		-- release all children when the zone panel is hidden.
+		frame.container = outerContainer
+
+		if multiple then
+			-- Find the first enabled module and select that in the
+			-- dropdown if possible.
 			local enabledModule = nil
 			for name, module in BigWigs:IterateBossModules() do
 				if module:IsEnabled() then
@@ -707,18 +794,14 @@ do
 				end
 			end
 			if enabledModule and zoneModules[zone][enabledModule] then
-				group:SetGroup(enabledModule)
+				innerContainer:SetGroup(enabledModule)
 			else
-				-- select first one
-				wipe(sorted)
-				for k, v in pairs(zoneModules[zone]) do
-					sorted[#sorted + 1] = k
-				end
-				table.sort(sorted)
-				group:SetGroup(sorted[1])
+				-- Since we could not find any enabled modules,
+				-- just select the first one.
+				innerContainer:SetGroup(sorted[1])
 			end
 		else
-			populateToggleOptions(group, frame.module)
+			populateToggleOptions(innerContainer, frame.module)
 		end
 	end
 end
