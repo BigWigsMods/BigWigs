@@ -54,7 +54,7 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		-- Ignacious
-		82631, {82660, "FLASHSHAKE"}
+		82631, {82660, "FLASHSHAKE"},
 		-- Feludius
 		82746, {82665, "FLASHSHAKE"}, 82762,
 		-- Arion
