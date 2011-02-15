@@ -1,4 +1,4 @@
-﻿## Interface: 40000
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fForeign Language|r]
 ## Title-deDE: Big Wigs [|cffeda55fSprachpaket|r]

@@ -1,4 +1,4 @@
-﻿## Interface: 40000
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fCore|r]
 ## Title-deDE: Big Wigs [|cffeda55fKern|r]
@@ -19,3 +19,4 @@
 ## Dependencies: BigWigs
 
 modules.xml
+

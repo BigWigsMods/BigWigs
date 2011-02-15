@@ -1,4 +1,4 @@
-﻿## Interface: 40000
+## Interface: 40000
 
 ## Title: Big Wigs [|cffeda55fBlackwing Descent|r]
 ## Title-ruRU: Big Wigs [|cffeda55fТвердыня Крыла Тьмы|r]
