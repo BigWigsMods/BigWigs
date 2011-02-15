@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if not L then return end
 if L then
@@ -6,7 +6,7 @@ if L then
 	L.orders_desc = "Avisa cuando Cho'gall cambia el orden de posiciones entre Sombra/Llama."
 
 	L.crash_say = "¡Colisión en MI!"
-	L.worship_cooldown = "~Conversión"
+	L.worship_cooldown = "(CD) Conversión"
 	L.adherent_bar = "Gran add #%d"
 	L.adherent_message = "¡Add %d aparece!"
 	L.ooze_bar = "Enjambre de mocos %d"
