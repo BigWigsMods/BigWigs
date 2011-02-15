@@ -10,8 +10,39 @@ is spawned - you should free up unused frames when a bar is stopped,
 and reuse those same frames again on the next bar. The code for the
 "Beauty Case" style has an example of how that works.
 
+Note that if you're putting your bar style in a 3rd party addon - so
+that you don't have to edit BigWigs every time you update it - you
+need to put the following in your addons .toc file;
+OptionalDeps: BigWigs, BigWigs_Plugins
+
 When reusing a frame it's important to re-parent it to something else
 when a bar stops, and to clear all points and such. And :Hide it.
+
+Bar style table properties;
+  version
+    Must be a number.
+    The version of the style you're registering. If a style with the
+    same identifier has already been registered, your attempt to
+    re-register will be ignored if the given version is less than
+    or the same as the one already registered.
+  apiVersion
+    Must be a number.
+    Currently the BW bar style API is at version 1. If, at any point,
+    the API version is incremented, any style that tries to register
+    with an older version number will be automatically discarded.
+  GetSpacing
+    Must be a function reference or nil. The function will be invoked
+    every time BW positions a bar to see how far apart it should be
+    from other bars.
+  ApplyStyle
+    Must be a function reference or nil. Called every time a bar is
+    created.
+  BarStopped
+    Must be a function reference or nil. Called every time a bar is
+    stopped.
+  GetStyleName
+    Must be a function reference or nil, and return the name you want
+    your bar style to have in the user interface.
 
 local f = CreateFrame("Frame")
 local function registerMyStyle()
