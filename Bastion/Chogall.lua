@@ -124,6 +124,7 @@ local function checkTarget(sGUID)
 	local mobId = mod:GetUnitIdByGUID(sGUID)
 	if mobId then
 		local player = UnitName(mobId.."target")
+		if not player then return end
 		if UnitIsUnit("player", player) then
 			mod:Say(93180, L["crash_say"])
 			mod:FlashShake(93180)
@@ -141,7 +142,7 @@ end
 
 function mod:CorruptingCrash(...)
 	local sGUID = select(11, ...)
-	self:ScheduleTimer(checkTarget, 0.01, sGUID)
+	self:ScheduleTimer(checkTarget, 0.2, sGUID)
 end
 
 function mod:UNIT_POWER(event, unit, powerType)
@@ -173,14 +174,14 @@ function mod:Orders(_, spellId, _, _, spellName)
 end
 
 do
-	local function nextAd(spellId)
+	local function nextAdd(spellId)
 		mod:Bar(81628, L["adherent_bar"]:format(bigcount), 50, spellId)
 	end
 	function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
 		worshipCooldown = 40
 		self:Message(81628, L["adherent_message"]:format(bigcount), "Important", spellId)
 		bigcount = bigcount + 1
-		self:ScheduleTimer(nextAd, 41, spellId)
+		self:ScheduleTimer(nextAdd, 41, spellId)
 
 		-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
 		self:Bar(82299, L["ooze_bar"]:format(oozecount), 40, 82299)
