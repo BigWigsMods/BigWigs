@@ -172,14 +172,19 @@ function mod:Orders(_, spellId, _, _, spellName)
 	end
 end
 
-function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
-	worshipCooldown = 40
-	self:Message(81628, L["adherent_message"]:format(bigcount), "Important", spellId)
-	bigcount = bigcount + 1
-	self:Bar(81628, L["adherent_bar"]:format(bigcount), 91, spellId)
+do
+	local function nextAd(spellId)
+		mod:Bar(81628, L["adherent_bar"]:format(bigcount), 50, spellId)
+	end
+	function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
+		worshipCooldown = 40
+		self:Message(81628, L["adherent_message"]:format(bigcount), "Important", spellId)
+		bigcount = bigcount + 1
+		self:ScheduleTimer(nextAd, 41, spellId)
 
-	-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
-	self:Bar(82299, L["ooze_bar"]:format(oozecount), 40, 82299)
+		-- I assume its 40 sec from summon and the timer is not between two casts of Fester Blood
+		self:Bar(82299, L["ooze_bar"]:format(oozecount), 40, 82299)
+	end
 end
 
 function mod:FesterBlood(_, spellId, _, _, spellName)
