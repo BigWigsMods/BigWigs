@@ -122,7 +122,7 @@ local function play(sound)
 			return
 		end
 	end
-	PlaySound("RaidWarning", "Master")
+	--PlaySound("RaidWarning", "Master")
 end
 
 -------------------------------------------------------------------------------
