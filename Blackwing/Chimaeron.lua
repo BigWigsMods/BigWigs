@@ -121,7 +121,7 @@ end
 
 function mod:UNIT_HEALTH()
 	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-	if hp < 25 then
+	if hp < 22 then
 		self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
 		self:UnregisterEvent("UNIT_HEALTH")
 	end
