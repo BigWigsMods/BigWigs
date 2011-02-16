@@ -130,12 +130,12 @@ end
 --
 
 function plugin:BigWigs_Message(event, module, key, text, color, noraidsay, sound, broadcastonly)
-	if not text or sound == false or broadcastonly or not BigWigs.db.profile.sound then return end
+	if not text or not sound or broadcastonly or not BigWigs.db.profile.sound then return end
 	play(sound)
 end
 
 function plugin:BigWigs_Sound(event, sound)
-	if not BigWigs.db.profile.sound or sound == false then return end
+	if not BigWigs.db.profile.sound or not sound then return end
 	play(sound)
 end
 
