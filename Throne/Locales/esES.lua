@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Al'Akir", "esES")
 if not L then return end
 if L then
@@ -6,11 +6,11 @@ if L then
 	L.stormling_desc = "Invoca Tormentillas."
 	L.stormling_message = "¡Tormentilla inminente!"
 	L.stormling_bar = "Siguiente Tormentilla"
-	L.stormling_yell = "Storms! I summon you to my side!"
+	L.stormling_yell = "¡Tormentas! ¡Os convoco a mi lado!"
 
 	L.acid_rain = "Lluvia ácida (%d)"
 
-	L.phase3_yell = "Enough! I will no longer be contained!"
+	L.phase3_yell = "¡Basta! ¡No permitiré que se me contenga más tiempo!"
 
 	L.phase = "Cambio de fase"
 	L.phase_desc = "Anuncia los cambios de fase."
