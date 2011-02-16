@@ -16,6 +16,7 @@ local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(92541)
 local gravityCrush = GetSpellInfo(92488)
 local crushMarked = false
+local timeLeft = 8
 local first = nil
 
 --------------------------------------------------------------------------------
@@ -289,7 +290,6 @@ end
 do
 	local hardenTimer = nil
 	local flying = GetSpellInfo(83500)
-	local timeLeft = 0
 	local function quakeIncoming()
 		local name, _, icon = UnitDebuff("player", flying)
 		if name then
@@ -303,8 +303,8 @@ do
 	function mod:QuakeTrigger()
 		self:Bar(83565, quake, 10, 83565)
 		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", 83565, "Info")
-		hardenTimer = self:ScheduleRepeatingTimer(quakeIncoming, 2)
 		timeLeft = 8
+		hardenTimer = self:ScheduleRepeatingTimer(quakeIncoming, 2)
 	end
 
 	function mod:Quake(_, spellId, _, _, spellName)
@@ -317,7 +317,6 @@ end
 do
 	local thunderTimer = nil
 	local grounded = GetSpellInfo(83581)
-	local timeLeft = 0
 	local function thunderShockIncoming()
 		local name, _, icon = UnitDebuff("player", grounded)
 		if name then
@@ -331,8 +330,8 @@ do
 	function mod:ThundershockTrigger()
 		self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", 83067, "Info")
 		self:Bar(83067, thundershock, 10, 83067)
-		thunderTimer = self:ScheduleRepeatingTimer(thunderShockIncoming, 2)
 		timeLeft = 8
+		thunderTimer = self:ScheduleRepeatingTimer(thunderShockIncoming, 2)
 	end
 
 	function mod:Thundershock(_, spellId, _, _, spellName)
