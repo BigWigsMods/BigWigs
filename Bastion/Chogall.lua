@@ -127,7 +127,7 @@ local function checkTarget(sGUID)
 			mod:Say(93180, L["crash_say"])
 			mod:FlashShake(93180)
 		end
-		mod:TargetMessage(93180, corruptingCrash, player, "Urgent", 93180)
+		mod:TargetMessage(93180, corruptingCrash, player, "Urgent", 93180, "Long")
 		if counter == 1 then
 			mod:PrimaryIcon(93180, player)
 		else
@@ -225,7 +225,8 @@ end
 do
 	local scheduled = nil
 	local function worshipWarn(spellName)
-		mod:TargetMessage(91303, spellName, worshipTargets, "Important", 91303, "Alarm")
+		mod:TargetMessage(91303, spellName, worshipTargets, "Important", 91303)
+		mod:PlaySound(91303, "Alarm")
 		scheduled = nil
 	end
 	function mod:Worship(player, spellId, _, _, spellName)
