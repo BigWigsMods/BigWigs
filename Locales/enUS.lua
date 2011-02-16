@@ -61,6 +61,7 @@ L["Reset positions"] = true
 L["Options for %s."] = true -- XXX used ?
 L["Colors"] = true
 L["Select encounter"] = true
+L["List abilities in group chat"] = true
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"

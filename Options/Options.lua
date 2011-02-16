@@ -691,9 +691,7 @@ local function populateToggleOptions(widget, module)
 	end
 	local list = AceGUI:Create("Button")
 	list:SetFullWidth(true)
-	-- XXX [List|Print] [all] [abilities|encounter abilities] [[in|to] chat]
-	-- XXX I dunno what sounds best.
-	list:SetText("List all abilities in group chat")
+	list:SetText(L["List abilities in group chat"])
 	list:SetUserData("module", module)
 	list:SetCallback("OnClick", listAbilitiesInChat)
 	scrollFrame:AddChild(list)
