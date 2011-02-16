@@ -691,7 +691,7 @@ local function populateToggleOptions(widget, module)
 	end
 	local list = AceGUI:Create("Button")
 	list:SetFullWidth(true)
-	-- XXX [List|Print] [abilities|encounter abilities] [all] [[in|to] chat]
+	-- XXX [List|Print] [all] [abilities|encounter abilities] [[in|to] chat]
 	-- XXX I dunno what sounds best.
 	list:SetText("List all abilities in group chat")
 	list:SetUserData("module", module)
@@ -786,20 +786,15 @@ do
 		if multiple then
 			-- Find the first enabled module and select that in the
 			-- dropdown if possible.
-			local enabledModule = nil
-			for name, module in BigWigs:IterateBossModules() do
-				if module:IsEnabled() then
-					enabledModule = module.moduleName
+			local index = 1
+			for i, v in next, sorted do
+				local m = BigWigs:GetBossModule(v)
+				if m:IsEnabled() then
+					index = i
 					break
 				end
 			end
-			if enabledModule and zoneModules[zone][enabledModule] then
-				innerContainer:SetGroup(enabledModule)
-			else
-				-- Since we could not find any enabled modules,
-				-- just select the first one.
-				innerContainer:SetGroup(sorted[1])
-			end
+			innerContainer:SetGroup(sorted[index])
 		else
 			populateToggleOptions(innerContainer, frame.module)
 		end
