@@ -737,8 +737,6 @@ function plugin:OnRegister()
 	for k, v in pairs(barStyles) do
 		barStyleRegister[k] = v:GetStyleName()
 	end
-
-	self:SetBarStyle(db.barStyle)
 end
 
 function plugin:OnPluginEnable()
@@ -767,6 +765,8 @@ function plugin:OnPluginEnable()
 
 	self:RefixClickIntercepts()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
+
+	self:SetBarStyle(db.barStyle)
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
@@ -793,10 +793,12 @@ do
 		if type(styleData) ~= "table" then error(errorMismatchedData) end
 		if type(styleData.version) ~= "number" then error(errorMismatchedData) end
 		if type(styleData.apiVersion) ~= "number" then error(errorMismatchedData) end
+		if type(styleData.GetStyleName) ~= "function" then error(errorMismatchedData) end
 		if styleData.apiVersion ~= currentAPIVersion then error(errorWrongAPI:format(currentAPIVersion, key)) end
 		if barStyles[key] and barStyles[key].version == styleData.version then error(errorAlreadyExist:format(key)) end
 		if not barStyles[key] or barStyles[key].version < styleData.version then
 			barStyles[key] = styleData
+			barStyleRegister[key] = styleData:GetStyleName()
 		end
 	end
 end

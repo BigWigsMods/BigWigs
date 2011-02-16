@@ -115,14 +115,14 @@ function plugin:OnPluginEnable()
 end
 
 local function play(sound)
-	if type(sound) == "string" and not plugin.db.profile.defaultonly then
+	if plugin.db.profile.defaultonly then
+		PlaySound("RaidWarning", "Master")
+	elseif type(sound) == "string" then
 		local s = plugin.db.profile.media[sound] and media:Fetch(mType, plugin.db.profile.media[sound]) or media:Fetch(mType, sound)
 		if type(s) == "string" then
 			PlaySoundFile(s, "Master")
-			return
 		end
 	end
-	--PlaySound("RaidWarning", "Master")
 end
 
 -------------------------------------------------------------------------------
