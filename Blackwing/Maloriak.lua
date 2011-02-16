@@ -236,9 +236,7 @@ do
 	local handle = nil
 	local function release()
 		aberrations = aberrations - 3
-		if aberrations > 0 then
-			mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", 688) --Summon Imp Icon
-		end
+		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", 688) --Summon Imp Icon
 	end
 	function mod:ReleaseAberrations()
 		-- He keeps casting it even if there are no adds left to release...
