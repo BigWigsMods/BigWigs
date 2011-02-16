@@ -61,6 +61,7 @@ L["Reset positions"] = "Reiniciar posiciones"
 L["Options for %s."] = "Opciones para %s."
 L["Colors"] = "Colores"
 L["Select encounter"] = "Seleccionar encuentro"
+L["List abilities in group chat"] = "Listar las habilidades en el chat"
 
 L["BAR"] = "Barras"
 L["MESSAGE"] = "Mensajes"
