@@ -207,6 +207,7 @@ do
 end
 
 function mod:StolenPower(player, spellId, _, _, spellName, stack)
+	-- XXX this needs a new stack value
 	if UnitIsUnit(player, "player") and stack == 150 then
 		self:FlashShake(80626)
 		self:LocalMessage(80626, spellName, "Personal", spellId, "Info")

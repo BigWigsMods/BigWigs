@@ -153,7 +153,7 @@ end
 function mod:Feedback(_, spellId, _, _, spellName, stack)
 	self:Bar(87904, spellName, 20, spellId)
 	if not stack then stack = 1 end
-	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId, "Info")
+	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId)
 end
 
 do
@@ -188,5 +188,5 @@ end
 
 function mod:Stormling()
 	self:Bar("stormling", L["stormling_bar"], 20, 75096)
-	self:Message("stormling", L["stormling_message"], "Important", 75096, "Info")
+	self:Message("stormling", L["stormling_message"], "Important", 75096)
 end

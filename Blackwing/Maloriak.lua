@@ -256,7 +256,7 @@ function mod:ConsumingFlames(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(77786)
 	end
-	self:TargetMessage(77786, spellName, player, "Personal", spellId, "Info")
+	self:TargetMessage(77786, spellName, player, "Personal", spellId)
 	self:Whisper(77786, player, spellName)
 	self:PrimaryIcon(77786, player)
 end
@@ -274,7 +274,7 @@ end
 do
 	local scheduled = nil
 	local function chillWarn(spellName)
-		mod:TargetMessage(77760, spellName, chillTargets, "Urgent", 77760, "Info")
+		mod:TargetMessage(77760, spellName, chillTargets, "Urgent", 77760)
 		scheduled = nil
 	end
 	function mod:BitingChill(player, spellId, _, _, spellName)

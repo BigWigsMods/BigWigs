@@ -201,7 +201,7 @@ end
 do
 	local scheduled = nil
 	local function emWarn(spellName)
-		mod:TargetMessage(86622, spellName, emTargets, "Personal", 86622, "Alarm")
+		mod:TargetMessage(86622, spellName, emTargets, "Personal", 86622)
 		mod:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
 		scheduled = nil
 	end

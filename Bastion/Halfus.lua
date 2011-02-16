@@ -69,7 +69,7 @@ end
 
 function mod:MalevolentStrikes(player, spellId, _, _, spellName, stack)
 	if stack > stackWarn then
-		self:TargetMessage(83908, L["strikes_message"], player, "Urgent", spellId, "Info", stack)
+		self:TargetMessage(83908, L["strikes_message"], player, "Urgent", spellId, nil, stack)
 	end
 end
 
