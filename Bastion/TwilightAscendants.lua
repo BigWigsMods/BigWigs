@@ -40,8 +40,7 @@ if L then
 	L.quake_trigger = "The ground beneath you rumbles ominously...."
 	L.thundershock_trigger = "The surrounding air crackles with energy...."
 
-	L.searing_winds_message = "Lightning incoming!"
-	L.grounded_message = "Earthquake incoming!"
+	L.thundershock_quake_spam = "%s in %d"
 
 	L.last_phase_trigger = "An impressive display..."
 end
@@ -290,19 +289,22 @@ end
 do
 	local hardenTimer = nil
 	local flying = GetSpellInfo(83500)
+	local timeLeft = 0
 	local function quakeIncoming()
 		local name, _, icon = UnitDebuff("player", flying)
 		if name then
 			mod:CancelTimer(hardenTimer, true)
 			return
 		end
-		mod:LocalMessage(83565, L["grounded_message"], "Personal", icon, "Info")
+		mod:LocalMessage(83565, L["thundershock_quake_spam"]:format(quake, timeLeft), "Personal", icon, "Info")
+		timeLeft = timeLeft - 2
 	end
 
 	function mod:QuakeTrigger()
 		self:Bar(83565, quake, 10, 83565)
 		self:Message(83565, L["thundershock_quake_soon"]:format(quake), "Important", 83565, "Info")
 		hardenTimer = self:ScheduleRepeatingTimer(quakeIncoming, 2)
+		timeLeft = 8
 	end
 
 	function mod:Quake(_, spellId, _, _, spellName)
@@ -315,19 +317,22 @@ end
 do
 	local thunderTimer = nil
 	local grounded = GetSpellInfo(83581)
+	local timeLeft = 0
 	local function thunderShockIncoming()
 		local name, _, icon = UnitDebuff("player", grounded)
 		if name then
 			mod:CancelTimer(thunderTimer, true)
 			return
 		end
-		mod:LocalMessage(83067, L["searing_winds_message"], "Personal", icon, "Info")
+		mod:LocalMessage(83067, L["thundershock_quake_spam"]:format(thundershock, timeLeft), "Personal", icon, "Info")
+		timeLeft = timeLeft - 2
 	end
 
 	function mod:ThundershockTrigger()
 		self:Message(83067, L["thundershock_quake_soon"]:format(thundershock), "Important", 83067, "Info")
 		self:Bar(83067, thundershock, 10, 83067)
 		thunderTimer = self:ScheduleRepeatingTimer(thunderShockIncoming, 2)
+		timeLeft = 8
 	end
 
 	function mod:Thundershock(_, spellId, _, _, spellName)

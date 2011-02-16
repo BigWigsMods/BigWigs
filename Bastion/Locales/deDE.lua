@@ -92,8 +92,7 @@ if L then
 	L.quake_trigger = "Der Boden unter Euch grollt unheilvoll..."
 	L.thundershock_trigger = "Die Luft beginnt, vor Energie zu knistern..."
 
-	L.searing_winds_message = "Donnerschock kommt!"
-	L.grounded_message = "Erdbeben kommt!"
+	L.thundershock_quake_spam = "%s in %d"
 
 	L.last_phase_trigger = "Beeindruckende Leistung…" -- what the heck Blizz??
 end

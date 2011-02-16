@@ -92,8 +92,7 @@ if L then
 	L.quake_trigger = "Земля уходит у вас из-под ног..."
 	L.thundershock_trigger = "Воздух потрескивает от скопившейся энергии..."
 
-	L.searing_winds_message = "Кружащиеся ветра!"
-	L.grounded_message = "Заземление!"
+	L.thundershock_quake_spam = "%s in %d"
 
 	L.last_phase_trigger = "ВОТ ВАША СМЕРТЬ!"
 end

@@ -90,8 +90,7 @@ if L then
 	L.quake_trigger = "El suelo bajo tus pies empieza a temblar ominosamente..."
 	L.thundershock_trigger = "El aire circundante chisporrotea de energía..."
 
-	L.searing_winds_message = "¡Relámpago inminente!"
-	L.grounded_message = "¡Terremoto inminente!"
+	L.thundershock_quake_spam = "%s in %d"
 
 	L.last_phase_trigger = "¡CONTEMPLAD VUESTRA PERDICIÓN!"
 end

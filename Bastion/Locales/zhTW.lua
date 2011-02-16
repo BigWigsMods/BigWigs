@@ -93,8 +93,7 @@ if L then
 	L.quake_trigger = "你腳下的地面開始不祥地震動起來...."
 	L.thundershock_trigger = "四周的空氣爆出能量霹啪作響聲音...."
 
-	L.searing_winds_message = "即將 雷霆震擊！"
-	L.grounded_message = "即將 地震！"
+	L.thundershock_quake_spam = "%s in %d"
 
 	L.last_phase_trigger = "An impressive display..."
 end

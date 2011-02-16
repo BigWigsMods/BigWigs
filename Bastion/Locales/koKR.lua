@@ -94,8 +94,7 @@ if L then
 	L.quake_trigger = "발밑의 땅이 불길하게 우르릉거립니다..."
 	L.thundershock_trigger = "주변의 공기가 에너지로 진동합니다..."
 
-	L.searing_winds_message = "천둥충격이 다가옴!"
-	L.grounded_message = "지진이 다가옴!"
+	L.thundershock_quake_spam = "%s in %d"
 
 	L.last_phase_trigger = "꽤나 인상적이었다만..."
 end
