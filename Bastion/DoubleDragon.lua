@@ -167,6 +167,8 @@ end
 function mod:BlackoutApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake(86788)
+	else
+		self:PlaySound(86788, "Alert")
 	end
 	self:TargetMessage(86788, spellName, player, "Personal", spellId, "Alert")
 	self:Bar(86788, spellName, 45, spellId)
