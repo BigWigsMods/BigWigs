@@ -12,7 +12,6 @@ mod:RegisterEnableMob(43324)
 
 local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
-local sicknessWarned = nil
 local firstFury = 0
 local counter = 1
 local corruptingCrash = GetSpellInfo(93180)
@@ -94,11 +93,10 @@ function mod:OnEngage(diff)
 	-- self:Bar(81628, L["adherent_bar"]:format(bigcount), diff > 2 and 75 or 58, 81628)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
-	sicknessWarned = nil
 	firstFury = 0
 	counter = 1
 
-	self:RegisterEvent("UNIT_POWER")
+	self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -145,14 +143,21 @@ function mod:CorruptingCrash(...)
 	self:ScheduleTimer(checkTarget, 0.2, sGUID)
 end
 
-function mod:UNIT_POWER(event, unit, powerType)
-	if sicknessWarned or unit ~= "player" or powerType ~= "ALTERNATE" then return end
-	local power = UnitPower("player", ALTERNATE_POWER_INDEX)
-	if power > 49 then
-		self:LocalMessage(82235, L["sickness_message"], "Personal", 81831, "Long")
-		self:OpenProximity(5, 82235)
-		self:FlashShake(82235)
-		sicknessWarned = true
+do
+	local sickness = GetSpellInfo(82235)
+	local prev = 0
+	function mod:UNIT_AURA(_, unit)
+		if unit ~= "player" then return end
+		local t = GetTime()
+		if (t - prev) > 7 then
+			local sick = UnitDebuff("player", sickness)
+			if sick then
+				prev = t
+				self:LocalMessage(82235, L["sickness_message"], "Personal", 81831, "Long")
+				self:OpenProximity(5, 82235)
+				self:FlashShake(82235)
+			end
+		end
 	end
 end
 
