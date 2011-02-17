@@ -449,11 +449,16 @@ local function getMasterOption(self)
 	return nil -- some options set
 end
 
+local notNumberError = "The option %q for module %q either has a mismatched current value (%q) or target value (%q)."
 local function getSlaveOption(self)
 	local key = self:GetUserData("key")
 	local module = self:GetUserData("module")
 	local flag = self:GetUserData("flag")
-	return bit.band(module.db.profile[key], flag) == flag
+	local current = module.db.profile[key]
+	if type(current) ~= "number" or type(flag) ~= "number" then
+		error(notNumberError:format(tostringall(key, module.moduleName, current, flag)))
+	end
+	return bit.band(current, flag) == flag
 end
 
 local function masterOptionToggled(self, event, value)
