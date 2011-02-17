@@ -1,4 +1,4 @@
-﻿
+
 local L = BigWigs:NewBossLocale("Cho'gall", "esES")
 if not L then return end
 if L then

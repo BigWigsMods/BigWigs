@@ -15,7 +15,6 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "koKR")
 if L then
 	L.bileotron_engage = "담즙로봇이 움직이기 시작하더니 고약한 냄새가 나는 물질을 방출합니다."
-	L.win_trigger = "A shame to lose that experiment..." --check
 
 	L.next_system_failure = "~다음 시스템 오류"
 	L.break_message = "깨부수기 x%2$d : %1$s"

@@ -4,14 +4,7 @@
 
 local mod = BigWigs:NewBoss("Chimaeron", "Blackwing Descent")
 if not mod then return end
-mod:RegisterEnableMob(43296) -- Chimaeron, 44418, 44202 Bile-O-Tron 800, Finkle Einhorn
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local causticSlime = GetSpellInfo(88917)
-local difficulty = nil
+mod:RegisterEnableMob(43296)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -20,7 +13,6 @@ local difficulty = nil
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
-	L.win_trigger = "A shame to lose that experiment..."
 
 	L.next_system_failure = "~Next System Failure"
 	L.break_message = "%2$dx Break on %1$s"
@@ -73,7 +65,6 @@ function mod:OnEngage(diff)
 	if diff < 3 then
 		self:Bar(88853, L["next_system_failure"], 90, 88853) --typically happens at 60 or 90 on heroic, but random
 	end
-	difficulty = diff
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -91,7 +82,7 @@ end
 
 function mod:SystemFailureEnd(_, spellId)
 	if self.isEngaged then --To prevent firing after a wipe
-		if difficulty < 3 then
+		if self:GetInstanceDifficulty() < 3 then
 			self:Bar(88853, L["next_system_failure"], 65, spellId)
 		end
 		self:FlashShake(88853)
@@ -102,7 +93,8 @@ end
 function mod:Massacre(_, spellId, _, _, spellName)
 	self:Message(82848, spellName, "Attention", spellId)
 	self:Bar(82848, spellName, 30, spellId)
-	self:Bar(88917, causticSlime, 19, 88917)
+	--Caustic Slime
+	self:Bar(88917, GetSpellInfo(88917), 19, 88917)
 end
 
 function mod:Mortality(_, spellId, _, _, spellName)
@@ -120,7 +112,7 @@ end
 
 function mod:UNIT_HEALTH()
 	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-	if hp < 22 then
+	if hp < 23 then
 		self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
 		self:UnregisterEvent("UNIT_HEALTH")
 	end

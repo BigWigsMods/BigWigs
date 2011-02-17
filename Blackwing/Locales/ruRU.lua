@@ -15,7 +15,6 @@ end
 L = BigWigs:NewBossLocale("Chimaeron", "ruRU")
 if L then
 	L.bileotron_engage = "Желче-трон оживает и начинает извергать из себя некое вонючее вещество."
-	L.win_trigger = "A shame to lose that experiment..."
 
 	L.next_system_failure = "~Системная ошибка"
 	L.break_message = "%2$dx Разлом на |3-3(%1$s)"
