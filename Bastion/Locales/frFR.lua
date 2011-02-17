@@ -93,7 +93,7 @@ if L then
 	L.quake_trigger = "Le sol sous vos pieds gronde avec menace..." -- à vérifier
 	L.thundershock_trigger = "L'air qui vous entoure crépite d'énergie..." -- à vérifier
 
-	L.thundershock_quake_spam = "%s in %d"
+	L.thundershock_quake_spam = "%s dans %d"
 
 	L.last_phase_trigger = "Quelle démonstration impressionnante" -- "CONTEMPLEZ VOTRE DESTIN !" -- à vérifier
 end
