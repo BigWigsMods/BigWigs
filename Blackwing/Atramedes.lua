@@ -26,6 +26,7 @@ if L then
 
 	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
 
+	L.searing_soon = "Searing Flame in 10sec!"
 	L.sonicbreath_cooldown = "~Sonic Breath"
 end
 L = mod:GetLocale()
@@ -60,6 +61,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
 	self:Bar(77840, searingFlame, 45, 77840)
+	self:DelayedMessage(77840, 35, L["searing_soon"], "Attention", 77840)
 	self:Bar("air_phase", L["air_phase"], 92, 5740) -- Rain of Fire Icon
 	if diff > 2 then
 		self:Berserk(600)
@@ -95,6 +97,7 @@ do
 		mod:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
 		-- XXX need a good trigger for ground phase start to make this even more accurate
 		mod:Bar(77840, searingFlame, 48.5, 77840)
+		mod:DelayedMessage(77840, 38.5, L["searing_soon"], "Attention", 77840)
 	end
 	function mod:AirPhase()
 		self:SendMessage("BigWigs_StopBar", self, L["sonicbreath_cooldown"])
