@@ -8,7 +8,8 @@ if L then
 	L.air_phase_desc = "아트라메데스의 이륙을 알립니다."
 
 	L.air_phase_trigger = "그래, 도망가라! 발을 디딜 때마다 맥박은 빨라지지. 점점 더 크게 울리는구나... 귀청이 터질 것만 같군! 넌 달아날 수 없다!"
-
+	
+	L.searing_soon = "10초 후 이글거리는 불길!"
 	L.sonicbreath_cooldown = "~음파 숨결"
 end
 
