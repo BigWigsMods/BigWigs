@@ -12,6 +12,9 @@ local fileName = arg[1]
 if ignoredFiles[fileName] then return end
 
 local acceptedGlobals = {
+	GetPlayerFacing = true,
+	GetSpellLink = true,
+	AddonLoader = true,
 	GetNumSpellTabs = true,
 	GetSpellTabInfo = true,
 	GetSpellBookItemName = true,

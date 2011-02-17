@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Chimaeron", "Blackwing Descent")
 if not mod then return end
-mod:RegisterEnableMob(43296, 44418, 44202) -- Chimaeron, Bile-O-Tron 800, Finkle Einhorn
+mod:RegisterEnableMob(43296) -- Chimaeron, 44418, 44202 Bile-O-Tron 800, Finkle Einhorn
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -58,7 +58,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Warmup")
 
 	self:Death("Win", 43296)
-	self:Yell("Win", L["win_trigger"])
 end
 
 function mod:Warmup(_, msg)
