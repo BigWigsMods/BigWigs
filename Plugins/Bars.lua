@@ -576,9 +576,9 @@ local function rearrangeBars(anchor)
 end
 
 local function barStopped(event, bar)
-	currentBarStyler.BarStopped(bar)
 	local a = bar:Get("bigwigs:anchor")
 	if a and a.bars and a.bars[bar] then
+		currentBarStyler.BarStopped(bar)
 		a.bars[bar] = nil
 		rearrangeBars(a)
 	end
