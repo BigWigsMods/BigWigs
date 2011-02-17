@@ -172,7 +172,7 @@ function mod:Red()
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Bar(92968, L["next_blast"], 25, 92968)
-	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Alarm")
+	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Long")
 	if not isChilled then
 		self:CloseProximity()
 	end
@@ -184,7 +184,7 @@ function mod:Blue()
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
-	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Alarm")
+	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Long")
 	self:OpenProximity(5)
 	nextPhase(47)
 end
@@ -194,7 +194,7 @@ function mod:Green()
 	warnedAlready = true
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
-	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Alarm")
+	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Long")
 	if not isChilled then
 		self:CloseProximity()
 	end
@@ -206,7 +206,7 @@ end
 function mod:Dark()
 	isBluePhase = nil
 	warnedAlready = true
-	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Alarm")
+	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Long")
 	if not isChilled then
 		self:CloseProximity()
 	end
@@ -218,7 +218,7 @@ function mod:FlashFreezeTimer(_, spellId, _, _, spellName)
 end
 
 function mod:FlashFreeze(player, spellId, _, _, spellName)
-	self:TargetMessage(77699, spellName, player, "Attention", spellId) -- attention cuz on heroic you don't break it instantly
+	self:TargetMessage(77699, spellName, player, "Attention", spellId, "Info")
 	self:PrimaryIcon(77699, player)
 end
 
@@ -228,7 +228,7 @@ end
 
 function mod:Remedy(unit, spellId, _, _, spellName)
 	if unit == maloriak then
-		self:Message(77912, spellName, "Important", spellId, "Alert")
+		self:Message(77912, spellName, "Important", spellId, "Alarm")
 	end
 end
 
@@ -236,7 +236,7 @@ do
 	local handle = nil
 	local function release()
 		aberrations = aberrations - 3
-		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Urgent", 688) --Summon Imp Icon
+		mod:Message(77569, L["release_aberration_message"]:format(aberrations), "Important", 688, "Alert") --Summon Imp Icon
 	end
 	function mod:ReleaseAberrations()
 		-- He keeps casting it even if there are no adds left to release...
@@ -274,7 +274,7 @@ end
 do
 	local scheduled = nil
 	local function chillWarn(spellName)
-		mod:TargetMessage(77760, spellName, chillTargets, "Urgent", 77760, "Info")
+		mod:TargetMessage(77760, spellName, chillTargets, "Attention", 77760, "Info")
 		scheduled = nil
 	end
 	function mod:BitingChill(player, spellId, _, _, spellName)
@@ -301,7 +301,7 @@ function mod:BitingChillRemoved(player)
 end
 
 function mod:ArcaneStorm(_, spellId, _, _, spellName)
-	self:Message(77896, spellName, "Important", spellId, "Alert")
+	self:Message(77896, spellName, "Urgent", spellId)
 end
 
 function mod:Jets(_, spellId)
