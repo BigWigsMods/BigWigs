@@ -9,6 +9,7 @@ if L then
 
 	L.air_phase_trigger = "Ja, lauft! Jeder Schritt lässt Euer Herz stärker klopfen. Laut und heftig... ohrenbetäubend. Es gibt kein Entkommen!" -- check
 
+	L.searing_soon = "Sengende Flamme in 10 sek!"
 	L.sonicbreath_cooldown = "~Schallatem"
 end
 
