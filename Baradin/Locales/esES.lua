@@ -3,7 +3,7 @@ local L = BigWigs:NewBossLocale("Argaloth", "esES")
 if not L then return end
 if L then
 	L.darkness_message = "Oscuridad"
-	L.firestorm_message = "¡Tormenta de fuego pronto!"
-	L.meteor_bar = "(CD) Tajo meteórico"
+	L.firestorm_message = "Â¡Tormenta de fuego pronto!"
+	L.meteor_bar = "(CD) Tajo meteÃ³rico"
 end
 
