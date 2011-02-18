@@ -119,7 +119,7 @@ L["Toggles the monochrome flag on all messages, removing any smoothing of the fo
 
 L["Icons"] = "Iconos"
 
-L.raidIconDescription = "Elementos de tipo 'bomba' y simirales en un jugador pueden ser de interes especial. Aqui puedes configurar como se debería marar con iconos algunos pjs.\n\nSi solo se usa un icono para un encuentro se usará el primario, nunca se usará el mismo icono para 2 habilidades distintas, para eso esta el icono secundario.\n\n|cffff4411Nota si un jugador ha sido marcado manualmente Big Wigs nunca cambiará su icono.|r"
+L.raidIconDescription = "Elementos de tipo 'bomba' y simirales en un jugador pueden ser de interes especial. Aqui puedes configurar como se debería marar con iconos algunos pjs.\n\nSi solo se usa un icono para un encuentro se usará el primario, nunca se usará el mismo icono para 2 habilidades distintas, para eso esta el icono secundario.\n\n|cffff4411Nota: Si un jugador ha sido marcado manualmente Big Wigs nunca cambiará su icono.|r"
 L["Primary"] = "Primario"
 L["The first raid target icon that a encounter script should use."] = "El primer objetivo de la raid el cual deberia usar este icono"
 L["Secondary"] = "Secundario"
@@ -139,7 +139,7 @@ L["|cffff0000Disable|r"] = "|cffff0000Desactivar|r"
 -- Sound.lua
 --
 
-L.soundDefaultDescription = "Con esa opción puesta, Big Wigs solo usará el sonido por defecto de Blizzard para las alertas de raid y para mensajes que llegan con una alerta de sonido. Nota que solo algunos mensajes de los scripts de encuentros usarán un gatillo como alerta de sonido."
+L.soundDefaultDescription = "Con esa opción puesta, Big Wigs solo usará el sonido por defecto de Blizzard para las alertas de raid y para mensajes que llegan con una alerta de sonido. Nota: Solo algunos mensajes de los scripts de encuentros usarán un gatillo como alerta de sonido."
 
 L["Sounds"] = "Sonidos"
 
@@ -217,7 +217,7 @@ L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "índice de
 --
 
 L["Super Emphasize"] = "Super Enfatizar"
-L.superEmphasizeDesc = "Da a los mensajes o barras relacionados con una habilidad de un encuentro.\n\nAquí configuras exactamente que debería ocurrir cuando cambias a activado en la opción de Super Enfatizar en la sección avanzada para una habilidad de un encuentro de un jefe.\n\n|cffff4411Nota que Super Enfatizar está apagado por defecto para todas las habilidades.|r\n"
+L.superEmphasizeDesc = "Da un aviso mucho más detectable a los mensajes o barras relacionados con una habilidad de un encuentro.\n\nAquí configuras exactamente que debería ocurrir cuando cambias a activado en la opción de Super Enfatizar en la sección avanzada para una habilidad de un encuentro de un jefe.\n\n|cffff4411Nota: Super Enfatizar está apagado por defecto para todas las habilidades.|r\n"
 L["UPPERCASE"] = "MAYUSCULAS"
 L["Uppercases all messages related to a super emphasized option."] = "Mayúsculas en todos los mensajes relacionados con una opción super enfatizada."
 L["Double size"] = "Tamaño doble"

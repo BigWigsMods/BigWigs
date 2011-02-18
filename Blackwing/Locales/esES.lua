@@ -126,8 +126,8 @@ if L then
 
 	L.next_switch = "Siguiente cambio"
 
-	L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
+	-- L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
+	-- L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "(CD) Siguiente bufo de habilidad"
 

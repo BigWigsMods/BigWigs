@@ -8,7 +8,7 @@
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
 ## Notes-koKR: 각종 보스에 대하여 간략하고 시각적으로 경고합니다.
 ## Notes-frFR: Approche modulaire, légère et non-intrusive des alertes des rencontres de boss.
-## Notes-esES: Avisos y barras para encuentros con jefes. Con módulos, ligero y no intrusivo.
+## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Author: Ammo, Rabbit, Funkydude
 ## Version: 3.600
