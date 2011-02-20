@@ -53,6 +53,7 @@ local activeProximityFunction = nil
 local activeRange = nil
 local activeSpellID = nil
 local activeMap = nil
+local maxPlayers = 0
 local anchor = nil
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -79,6 +80,22 @@ local coloredNames = setmetatable({}, {__index =
 		end
 	end
 })
+
+--Radial upvalues
+local GetPlayerMapPosition = GetPlayerMapPosition
+local GetPlayerFacing = GetPlayerFacing
+local format = string.format
+local UnitExists = UnitExists
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitIsUnit = UnitIsUnit
+local GetTime = GetTime
+local UnitClass = UnitClass
+local min = math.min
+local pi = math.pi
+local cos = math.cos
+local sin = math.sin
+local tremove = table.remove
+local unpack = unpack
 
 -------------------------------------------------------------------------------
 -- Range functions
@@ -258,7 +275,7 @@ local function onResize(self, width, height)
 	else
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
-		local pixperyard = math.min(width, height) / (range*3)
+		local pixperyard = min(width, height) / (range*3)
 		anchor.rangeCircle:SetSize( range*2*pixperyard, range*2*pixperyard)
 	end
 end
@@ -477,19 +494,19 @@ do
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
-		local pixperyard = math.min(width, height) / (range * 3)
+		local pixperyard = min(width, height) / (range * 3)
 
 		-- rotate relative to player facing
-		local rotangle = (2 * math.pi) - facing
-		local x = (dx * math.cos(rotangle)) - (-1 * dy * math.sin(rotangle))
-		local y = (dx * math.sin(rotangle)) + (-1 * dy * math.cos(rotangle))
+		local rotangle = (2 * pi) - facing
+		local x = (dx * cos(rotangle)) - (-1 * dy * sin(rotangle))
+		local y = (dx * sin(rotangle)) + (-1 * dy * cos(rotangle))
 
 		x = x * pixperyard
 		y = y * pixperyard
 
 		local dot = nil
 		if #cacheDots > 0 then
-			dot = table.remove(cacheDots)
+			dot = tremove(cacheDots)
 		else
 			-- XXX Investigate making dots actual frames, so we can have a mouseover tooltip?
 			-- XXX It's either that, or we show some label next to them, I guess. You should
@@ -512,7 +529,7 @@ do
 		-- hide those cacheDots
 		while #proxDots > 0 do
 			proxDots[1]:Hide()
-			cacheDots[#cacheDots + 1] = table.remove(proxDots, 1)
+			cacheDots[#cacheDots + 1] = tremove(proxDots, 1)
 		end
 	end
 
@@ -528,7 +545,7 @@ do
 		setDot(0, 10, "WARLOCK", 0)
 		setDot(0, 20, "WARLOCK", 2.25)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
-		local pixperyard = math.min(width, height) / 30
+		local pixperyard = min(width, height) / 30
 		anchor.rangeCircle:SetSize(pixperyard * 20,  pixperyard * 20)
 		anchor.rangeCircle:SetVertexColor(1,0,0)
 		anchor.rangeCircle:Show()
@@ -599,21 +616,21 @@ do
 		-- XXX We can't show/hide dots every update, that seems excessive.
 		hideDots()
 		local facing = GetPlayerFacing()
-		for i = 1, GetNumRaidMembers() do
-			local n, _, _, _, _, class = GetRaidRosterInfo(i)
-			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
+		for i = 1, maxPlayers do
+			local n = format("raid%d", i)
+			if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
 				local unitX, unitY = GetPlayerMapPosition(n)
 				local dx = (unitX - srcX) * id[1]
 				local dy = (unitY - srcY) * id[2]
 				local range = (dx * dx + dy * dy) ^ 0.5
 				if range < (activeRange * 1.5) then
+					local _, class = UnitClass(n)
 					setDot(dx, dy, class, facing)
 					if range <= activeRange then
 						anyoneClose = true
 					end
 				end
 			end
-			if i > 25 then break end
 		end
 
 		if not anyoneClose then
@@ -981,6 +998,7 @@ function plugin:Open(range, module, key)
 	local func, actualRange = getClosestRangeFunction(range)
 	activeProximityFunction = func
 	activeRange = actualRange
+	maxPlayers = select(5, GetInstanceInfo())
 
 	SetMapToCurrentZone()
 	activeMap = mapData[(GetMapInfo())]
@@ -988,7 +1006,7 @@ function plugin:Open(range, module, key)
 
 	if activeMap and db.graphical then
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
-		local ppy = math.min(width, height) / (actualRange * 3)
+		local ppy = min(width, height) / (actualRange * 3)
 		anchor.rangeCircle:SetSize(ppy * actualRange * 2, ppy * actualRange * 2)
 		anchor.playerDot:Show()
 		anchor.rangeCircle:Show()
