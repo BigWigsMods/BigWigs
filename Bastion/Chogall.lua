@@ -219,7 +219,7 @@ end
 
 function mod:DarkenedCreations(_, spellId)
 	self:Message(82414, L["tentacles_message"], "Urgent", spellId)
-	self:Bar(82414, L["tentacles_bar"], 40, 82414)
+	self:Bar(82414, L["tentacles_bar"], 30, 82414)
 end
 
 do
