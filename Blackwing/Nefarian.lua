@@ -26,6 +26,8 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warnings for the Phase changes."
 
+	L.discharge_bar = "~Discharge CD"
+
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
@@ -47,10 +49,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		78999, 81272, {94085, "FLASHSHAKE"},
-		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 80626, "FLASHSHAKE"}, "berserk",
+		94115, 78999, 81272, {94085, "FLASHSHAKE"},
+		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, {80626, "FLASHSHAKE"}, "berserk",
 		"phase", "bosskill"
 	}, {
+		[94115] = "Onyxia",
 		[78999] = "normal",
 		[79339] = "heroic",
 		phase = "general"
@@ -60,6 +63,9 @@ end
 function mod:OnBossEnable()
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
 	self:Yell("PhaseThree", L["phase_three_trigger"])
+
+	self:Log("SPELL_DAMAGE", "LightningDischarge", 94115, 94118)
+	self:Log("SPELL_MISSED", "LightningDischarge", 94115, 94118)
 
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
@@ -74,7 +80,6 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 41376, 41948)
 end
 
-
 function mod:OnEngage(diff)
 	self:Berserk(630) -- is it really?
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
@@ -85,6 +90,17 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:LightningDischarge(_, spellId)
+		local t = GetTime()
+		if (t - prev) > 10 then
+			prev = t
+			self:Bar(94115, L["discharge_bar"], 21, spellId)
+		end
+	end
+end
 
 do
 	local last = 0
