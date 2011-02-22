@@ -54,6 +54,7 @@ local activeRange = nil
 local activeSpellID = nil
 local activeMap = nil
 local maxPlayers = 0
+local classCache = nil
 local anchor = nil
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -85,11 +86,10 @@ local coloredNames = setmetatable({}, {__index =
 local GetPlayerMapPosition = GetPlayerMapPosition
 local GetPlayerFacing = GetPlayerFacing
 local format = string.format
-local UnitExists = UnitExists
-local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitIsVisible = UnitIsVisible
+local UnitIsDead = UnitIsDead
 local UnitIsUnit = UnitIsUnit
 local GetTime = GetTime
-local UnitClass = UnitClass
 local min = math.min
 local pi = math.pi
 local cos = math.cos
@@ -559,15 +559,13 @@ do
 			SetMapToCurrentZone()
 			srcX, srcY = GetPlayerMapPosition("player")
 		end
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local n = GetRaidRosterInfo(i)
-			if n and UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
+		for i = 1, maxPlayers do
+			local n = format("raid%d", i)
+			if UnitIsVisible(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
 				local nextIndex = #tooClose + 1
 				tooClose[nextIndex] = coloredNames[n]
 				if nextIndex > 4 then break end
 			end
-			if i > 25 then break end
 		end
 
 		if #tooClose == 0 then
@@ -618,14 +616,13 @@ do
 		local facing = GetPlayerFacing()
 		for i = 1, maxPlayers do
 			local n = format("raid%d", i)
-			if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
+			if UnitIsVisible(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") then
 				local unitX, unitY = GetPlayerMapPosition(n)
 				local dx = (unitX - srcX) * id[1]
 				local dy = (unitY - srcY) * id[2]
 				local range = (dx * dx + dy * dy) ^ 0.5
 				if range < (activeRange * 1.5) then
-					local _, class = UnitClass(n)
-					setDot(dx, dy, class, facing)
+					setDot(dx, dy, classCache[i], facing)
 					if range <= activeRange then
 						anyoneClose = true
 					end
@@ -974,6 +971,10 @@ function plugin:Close()
 	activeRange = nil
 	activeSpellID = nil
 	activeMap = nil
+	if classCache then
+		wipe(classCache)
+		classCache = nil
+	end
 	if anchor then
 		-- FIXME
 		-- hide circle
@@ -999,6 +1000,12 @@ function plugin:Open(range, module, key)
 	activeProximityFunction = func
 	activeRange = actualRange
 	maxPlayers = select(5, GetInstanceInfo())
+
+	if not classCache then classCache = {} end
+	for i=1, maxPlayers do
+		local _, class = UnitClass(format("raid%d", i))
+		classCache[i] = class
+	end
 
 	SetMapToCurrentZone()
 	activeMap = mapData[(GetMapInfo())]
