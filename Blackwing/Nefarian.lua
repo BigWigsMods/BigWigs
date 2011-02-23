@@ -83,7 +83,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(630) -- is it really?
-	self:Bar(94115, L["discharge_bar"], 30, spellId)
+	self:Bar(94115, L["discharge_bar"], 30, 94115)
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
 	self:RegisterEvent("UNIT_POWER")
