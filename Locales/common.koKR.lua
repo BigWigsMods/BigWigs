@@ -9,9 +9,9 @@ L.say = "나에게 %s!"
 
 L.phase = "%d 단계"
 L.normal = "일반 모드"
-L.heroic = "영웅 모드"
+L.heroic = "영웅(하드) 모드"
 L.hard = "도전 모드"
-L.general = "일반" -- General settings, i.e. things that apply to both normal and hard mode.
+L.general = "일반 경고" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.berserk_start = "%s 전투 개시 - %d분 후 광폭화"
 L.berserk_end = "%s 광폭화!"
