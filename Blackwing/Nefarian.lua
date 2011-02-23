@@ -64,8 +64,9 @@ function mod:OnBossEnable()
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
 	self:Yell("PhaseThree", L["phase_three_trigger"])
 
-	self:Log("SPELL_DAMAGE", "LightningDischarge", 94115, 94118)
-	self:Log("SPELL_MISSED", "LightningDischarge", 94115, 94118)
+	--Not bad enough that there is no cast trigger, there's also over 9 thousand Id's
+	self:Log("SPELL_DAMAGE", "LightningDischarge", "*")
+	self:Log("SPELL_MISSED", "LightningDischarge", "*")
 
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
@@ -82,6 +83,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(630) -- is it really?
+	self:Bar(94115, L["discharge_bar"], 30, spellId)
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
 	self:RegisterEvent("UNIT_POWER")
@@ -93,7 +95,9 @@ end
 
 do
 	local prev = 0
-	function mod:LightningDischarge(_, spellId)
+	local discharge = GetSpellInfo(94115)
+	function mod:LightningDischarge(_, spellId, _, _, spellName)
+		if spellName ~= discharge then return end
 		local t = GetTime()
 		if (t - prev) > 10 then
 			prev = t
