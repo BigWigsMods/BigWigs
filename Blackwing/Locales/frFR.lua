@@ -9,6 +9,7 @@ if L then
 
 	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !" -- à vérifier
 
+	L.searing_soon = "Flamme incendiaire dans 10 sec. !"
 	L.sonicbreath_cooldown = "~Souffle sonique"
 end
 
@@ -65,7 +66,7 @@ if L then
 
 	--normal
 	L.final_phase = "Phase finale"
-	L.final_phase_soon = "Final phase soon!"
+	L.final_phase_soon = "Phase finale imminente !"
 
 	L.release_aberration_message = "%d aberrations restantes !"
 	L.release_all = "%d aberrations libérées !"
@@ -97,6 +98,8 @@ L = BigWigs:NewBossLocale("Nefarian", "frFR")
 if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+
+	L.discharge_bar = "~Recharge Décharge"
 
 	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traité avec une extrême fermeté !" -- à vérifier
 
