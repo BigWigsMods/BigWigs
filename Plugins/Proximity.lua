@@ -86,7 +86,7 @@ local coloredNames = setmetatable({}, {__index =
 local GetPlayerMapPosition = GetPlayerMapPosition
 local GetPlayerFacing = GetPlayerFacing
 local format = string.format
-local UnitIsVisible = UnitIsVisible
+local UnitInRange = UnitInRange
 local UnitIsDead = UnitIsDead
 local UnitIsUnit = UnitIsUnit
 local GetTime = GetTime
@@ -561,7 +561,7 @@ do
 		end
 		for i = 1, maxPlayers do
 			local n = format("raid%d", i)
-			if UnitIsVisible(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
+			if UnitInRange(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
 				local nextIndex = #tooClose + 1
 				tooClose[nextIndex] = coloredNames[n]
 				if nextIndex > 4 then break end
@@ -616,7 +616,7 @@ do
 		local facing = GetPlayerFacing()
 		for i = 1, maxPlayers do
 			local n = format("raid%d", i)
-			if UnitIsVisible(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") then
+			if UnitInRange(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") then
 				local unitX, unitY = GetPlayerMapPosition(n)
 				local dx = (unitX - srcX) * id[1]
 				local dy = (unitY - srcY) * id[2]

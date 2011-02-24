@@ -99,6 +99,7 @@ end
 
 function mod:Mortality(_, spellId, _, _, spellName)
 	self:Message(82890, spellName, "Important", spellId, "Long")
+	self:CloseProximity()
 	self:SendMessage("BigWigs_StopBar", self, L["next_system_failure"])
 end
 
