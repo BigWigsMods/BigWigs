@@ -174,7 +174,11 @@ end
 function mod:Orders(_, spellId, _, _, spellName)
 	self:Message("orders", spellName, "Urgent", spellId)
 	if spellId == 81556 then
-		self:Bar(93223, L["unleashed_shadows"], 24, 93223) -- verified for 25man heroic
+		if self:GetInstanceDifficulty() > 2 then
+			self:Bar(93223, L["unleashed_shadows"], 24, 93223) -- verified for 25man heroic
+		else
+			self:Bar(93223, L["unleashed_shadows"], 15, 93223) -- verified for 10man normal
+		end
 	end
 end
 
