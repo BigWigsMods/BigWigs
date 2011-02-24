@@ -97,12 +97,14 @@ L = BigWigs:NewBossLocale("Nefarian", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
+	
+	L.discharge_bar = "~번개 방출 대기시간"
 
-	L.phase_two_trigger = "저주받을 필멸자들!"	--check
+	L.phase_two_trigger = "저주받을 필멸자들!"
 
-	L.phase_three_trigger = "품위있는"	--check
+	L.phase_three_trigger = "품위있는"
 
-	L.crackle_trigger = "전기가"	--check
+	L.crackle_trigger = "전기가"
 	L.crackle_message = "곧 감전!"
 
 	L.shadowblaze_message = "당신은 암흑 화로!"
