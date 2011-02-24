@@ -65,6 +65,7 @@ if L then
 
 	--normal
 	L.final_phase = "Final Phase"
+	L.final_phase_soon = "Final phase soon!"
 
 	L.release_aberration_message = "%s adds left!"
 	L.release_all = "%s adds released!"

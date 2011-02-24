@@ -31,6 +31,7 @@ if L then
 
 	--normal
 	L.final_phase = "Final phase"
+	L.final_phase_soon = "Final phase soon!"
 
 	L.release_aberration_message = "%d adds left!"
 	L.release_all = "%d adds released!"
@@ -122,6 +123,7 @@ function mod:OnEngage(diff)
 	phaseCounter = 0
 	warnedAlready = nil
 	isChilled, isBluePhase = nil, nil
+	self:RegisterEvent("UNIT_HEALTH")
 end
 
 --------------------------------------------------------------------------------
@@ -268,7 +270,7 @@ end
 
 function mod:ReleaseAll(_, spellId)
 	self:Message(77991, L["release_all"]:format(aberrations + 2), "Important", spellId, "Alert")
-	self:Bar(78194, L["jets_bar"], 12.5, spellId)
+	self:Bar(78194, L["jets_bar"], 12.5, 78194)
 end
 
 do
@@ -306,5 +308,13 @@ end
 
 function mod:Jets(_, spellId)
 	self:Bar(78194, L["jets_bar"], 10, spellId)
+end
+
+function mod:UNIT_HEALTH()
+	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+	if hp < 27 then
+		self:Message("phase", L["final_phase_soon"], "Positive", 77991, "Info")
+		self:UnregisterEvent("UNIT_HEALTH")
+	end
 end
 

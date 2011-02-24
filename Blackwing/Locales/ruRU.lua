@@ -65,6 +65,7 @@ if L then
 
 	--normal
 	L.final_phase = "Финальная фаза"
+	L.final_phase_soon = "Final phase soon!"
 
 	L.release_aberration_message = "%s осталось аберрации!"
 	L.release_all = "%s аберрации!"

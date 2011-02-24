@@ -8,7 +8,7 @@ if L then
 	L.air_phase_desc = "아트라메데스의 이륙을 알립니다."
 
 	L.air_phase_trigger = "그래, 도망가라! 발을 디딜 때마다 맥박은 빨라지지. 점점 더 크게 울리는구나... 귀청이 터질 것만 같군! 넌 달아날 수 없다!"
-	
+
 	L.searing_soon = "10초 후 이글거리는 불길!"
 	L.sonicbreath_cooldown = "~음파 숨결"
 end
@@ -66,6 +66,7 @@ if L then
 
 	--normal
 	L.final_phase = "마지막 단계"
+	L.final_phase_soon = "Final phase soon!"
 
 	L.release_aberration_message = "돌연변이 %d 남음"
 	L.release_all = "모든 실험체 %d!"
@@ -97,7 +98,7 @@ L = BigWigs:NewBossLocale("Nefarian", "koKR")
 if L then
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
-	
+
 	L.discharge_bar = "~번개 방출 대기시간"
 
 	L.phase_two_trigger = "저주받을 필멸자들!"

@@ -65,6 +65,7 @@ if L then
 
 	--normal
 	L.final_phase = "最終階段"
+	L.final_phase_soon = "Final phase soon!"
 
 	L.release_aberration_message = ">%s< 畸形者剩餘！"
 	L.release_all = ">%s< 釋放畸形者！"
