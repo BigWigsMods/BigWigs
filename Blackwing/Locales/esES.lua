@@ -98,6 +98,8 @@ L = BigWigs:NewBossLocale("Nefarian", "esES")
 if L then
 	L.phase = "Fases"
 	L.phase_desc = "Avisa los cambios de fase."
+	
+	L.discharge_bar = "(CD) Descarga"
 
 	L.phase_two_trigger = "¡Os maldigo, mortales! ¡Ese cruel menosprecio por las posesiones de uno debe ser castigado con fuerza extrema!"
 
