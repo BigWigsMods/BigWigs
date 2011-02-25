@@ -490,14 +490,14 @@ do
 	-- dx and dy are in yards
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
-	setDot = function(dx, dy, class, facing)
+	setDot = function(dx, dy, class)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
 		local pixperyard = min(width, height) / (range * 3)
 
 		-- rotate relative to player facing
-		local rotangle = (2 * pi) - facing
+		local rotangle = (2 * pi) - GetPlayerFacing()
 		local x = (dx * cos(rotangle)) - (-1 * dy * sin(rotangle))
 		local y = (dx * sin(rotangle)) + (-1 * dy * cos(rotangle))
 
@@ -613,7 +613,6 @@ do
 
 		-- XXX We can't show/hide dots every update, that seems excessive.
 		hideDots()
-		local facing = GetPlayerFacing()
 		for i = 1, maxPlayers do
 			local n = format("raid%d", i)
 			if UnitInRange(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") then
@@ -622,7 +621,7 @@ do
 				local dy = (unitY - srcY) * id[2]
 				local range = (dx * dx + dy * dy) ^ 0.5
 				if range < (activeRange * 1.5) then
-					setDot(dx, dy, classCache[i], facing)
+					setDot(dx, dy, classCache[i])
 					if range <= activeRange then
 						anyoneClose = true
 					end
