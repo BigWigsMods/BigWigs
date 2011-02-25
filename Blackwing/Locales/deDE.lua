@@ -66,7 +66,7 @@ if L then
 
 	--normal
 	L.final_phase = "Finale Phase"
-	L.final_phase_soon = "Final phase soon!"
+	L.final_phase_soon = "Finale Phase bald!"
 
 	L.release_aberration_message = "%s Adds noch!"
 	L.release_all = "%s Adds freigelassen!"
@@ -98,6 +98,8 @@ L = BigWigs:NewBossLocale("Nefarian", "deDE")
 if L then
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
+
+	L.discharge_bar = "~Blitzentladung"
 
 	L.phase_two_trigger = "Verfluchte Sterbliche! Ein solcher Umgang mit dem Eigentum anderer verlangt nach Gewalt!" -- check
 
