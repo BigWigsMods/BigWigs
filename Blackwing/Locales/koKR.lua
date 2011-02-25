@@ -66,7 +66,7 @@ if L then
 
 	--normal
 	L.final_phase = "마지막 단계"
-	L.final_phase_soon = "Final phase soon!"
+	L.final_phase_soon = "곧 마지막 단계!"
 
 	L.release_aberration_message = "돌연변이 %d 남음"
 	L.release_all = "모든 실험체 %d!"
