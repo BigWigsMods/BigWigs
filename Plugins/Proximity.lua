@@ -43,12 +43,6 @@ local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
-local configModeString = [[
-|cffaad372Legolasftw|r
-|cfff48cbaTirionman|r
-|cfffff468Sneakystab|r
-|cffc69b6dIamconanok|r
-]]
 local activeProximityFunction = nil
 local activeRange = nil
 local activeSpellID = nil
@@ -276,7 +270,7 @@ local function onResize(self, width, height)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		local pixperyard = min(width, height) / (range*3)
-		anchor.rangeCircle:SetSize( range*2*pixperyard, range*2*pixperyard)
+		anchor.rangeCircle:SetSize(range*2*pixperyard, range*2*pixperyard)
 	end
 end
 
@@ -401,7 +395,7 @@ local function ensureDisplay()
 	display.text = text
 	display:SetScript("OnShow", function()
 		if inConfigMode then
-			text:SetText(configModeString)
+			text:SetText("|cffaad372Legolasftw|r\n|cfff48cbaTirionman|r\n|cfffff468Sneakystab|r\n|cffc69b6dIamconanok|r")
 		else
 			text:SetText("|cff777777:-)|r")
 		end
@@ -508,10 +502,6 @@ do
 		if #cacheDots > 0 then
 			dot = tremove(cacheDots)
 		else
-			-- XXX Investigate making dots actual frames, so we can have a mouseover tooltip?
-			-- XXX It's either that, or we show some label next to them, I guess. You should
-			-- XXX be able to yell like "Hey, Nubwarlock, get away from me!".
-			-- Problems include click-through and bloat, I guess.
 			dot = anchor:CreateTexture(nil, "OVERLAY")
 			dot:SetSize(16, 16)
 			dot:SetTexture([[Interface\AddOns\BigWigs\Textures\blip]])
@@ -535,15 +525,11 @@ do
 
 	testDots = function()
 		hideDots()
-		-- XXX These values could be randomized a bit
-		-- XXX And if we're grouped with anyone, they should probably be
-		-- XXX shown even if we're using a graphical or textual display.
 		setDot(10, 10, "WARLOCK", 0)
 		setDot(5, 0, "HUNTER", 0)
 		setDot(3, 10, "MAGE", 0)
 		setDot(-9, -7, "PRIEST", 0)
 		setDot(0, 10, "WARLOCK", 0)
-		setDot(0, 20, "WARLOCK", 2.25)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = min(width, height) / 30
 		anchor.rangeCircle:SetSize(pixperyard * 20,  pixperyard * 20)
@@ -1057,10 +1043,15 @@ function plugin:Test()
 	self:Close()
 	-- Break the sound+close buttons
 	breakThings()
-	-- XXX Dots should be shown/hidden based on the option in config mode.
-	-- XXX And so should the text, I guess. People can just toggle it while configuring.
-	anchor.text:Show()
-	testDots()
+	if db.graphical then
+		testDots()
+		anchor.text:Hide()
+	else
+		hideDots()
+		anchor.rangeCircle:Hide()
+		anchor.playerDot:Hide()
+		anchor.text:Show()
+	end
 	anchor:Show()
 end
 
@@ -1074,7 +1065,11 @@ SlashCmdList.BigWigs_Proximity = function(input)
 	if not range then
 		print("Usage: /proximity 1-100")
 	else
-		plugin:Open(range)
+		if range > 0 then
+			plugin:Open(range)
+		else
+			plugin:Close()
+		end
 	end
 end
 SLASH_BigWigs_Proximity1 = "/proximity"
