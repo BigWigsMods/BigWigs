@@ -22,7 +22,7 @@ if L then
 	L.fury_bar = "다음 격노"
 	L.fury_message = "격노!"
 	L.first_fury_soon = "곧 격노!"
-	L.first_fury_message = "85% - 격노, 코끼리 시작!"
+	L.first_fury_message = "85% - 격노 시작 & 곧 코끼리!"
 
 	L.unleashed_shadows = "해방된 어둠"
 
@@ -78,14 +78,12 @@ L = BigWigs:NewBossLocale("Ascendant Council", "koKR")
 if L then
 	L.static_overload_say = "나에게 전화 과부하!"
 	L.gravity_core_say = "나에게 중력 핵!"
-	L.health_report = "%s의 체력 -%d%%-, 곧 단계 변화!"
+	L.health_report = "%s 체력 -%d%%-, 곧 단계 변화!"
 	L.switch = "전환"
 	L.switch_desc = "보스의 전환을 알립니다."
 
 	L.shield_up_message = "방패 사용!"
 	L.shield_bar = "다음 방패"
-
-	L.lightning_rod_say = "나아게 벼락 막대!"
 
 	L.switch_trigger = "우리가 상대하겠다!"
 
@@ -94,7 +92,7 @@ if L then
 	L.quake_trigger = "발밑의 땅이 불길하게 우르릉거립니다..."
 	L.thundershock_trigger = "주변의 공기가 에너지로 진동합니다..."
 
-	L.thundershock_quake_spam = "x%2$d초 후 %1$s"
+	L.thundershock_quake_spam = "%2$d초 후 %1$s"
 
 	L.last_phase_trigger = "꽤나 인상적이었다만..."
 end
