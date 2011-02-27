@@ -85,10 +85,10 @@ end
 
 function mod:OnEngage()
 	self:Bar(92944, "~"..breath, 24, 92944)
-	self:Bar(92954, "~"..slicer, orbTimer, 92954)
+	self:Bar(92954, "~"..slicer, 30, 92954)
 	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
-	self:ScheduleTimer(orbSpawn, orbTimer)
-	orbTimer = 30
+	self:ScheduleTimer(orbSpawn, 30)
+	orbTimer = 28
 	eggs = 0
 	handle = nil
 	self:RegisterEvent("UNIT_HEALTH")
@@ -155,9 +155,9 @@ function mod:Deaths(mobId)
 		if eggs == 2 then
 			self:Message("phase", CL["phase"]:format(3), "Positive", 51070, "Info") -- broken egg icon
 			self:Bar("whelps", L["whelps"], 50, 69005)
-			self:Bar(92954, "~"..slicer, orbTimer, 92954)
+			self:Bar(92954, "~"..slicer, 30, 92954)
 			self:Bar(92944, "~"..breath, 24, 92944)
-			self:ScheduleTimer(orbSpawn, orbTimer)
+			self:ScheduleTimer(orbSpawn, 30)
 		end
 	elseif mobId == 45213 then
 		self:Win()
