@@ -69,7 +69,7 @@ function mod:GetOptions(CL)
 		{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity",
 		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968,
 		77991, 78194,
-		"sludge",
+		{"sludge", "FLASHSHAKE"},
 		"phase", 77912, 77569, 77896, "berserk", "bosskill"
 	}, {
 		[77699] = L["blue_phase"],
@@ -138,6 +138,7 @@ do
 		if (time - last) > 2 then
 			last = time
 			self:LocalMessage("sludge", L["sludge_message"], "Personal", spellId, "Info")
+			self:FlashShake("sludge")
 		end
 	end
 end
