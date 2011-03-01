@@ -9,6 +9,7 @@ if L then
 
 	L.air_phase_trigger = "¡Sí, corred! Con cada paso, vuestros corazones se aceleran. El latido, fuerte y clamoroso... Casi ensordecedor. ¡No podéis escapar!"
 
+	L.searing_soon = "¡Llamas abrasadoras en 10 seg!"
 	L.sonicbreath_cooldown = "(CD) Aliento sónico"
 end
 
