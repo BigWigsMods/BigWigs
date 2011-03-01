@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "esES")
+﻿local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "esES")
 if not L then return end
 -- Prototype.lua common words
 L.you = "%s en TI"
@@ -7,7 +7,7 @@ L.say = "¡%s en MI!"
 
 L.phase = "Fase %d"
 L.normal = "Modo normal"
-L.heroic = "Modo heróico"
+L.heroic = "Modo heroico"
 L.hard = "Modo difícil"
 L.general = "General" -- General settings, i.e. things that apply to both normal and hard mode.
 
