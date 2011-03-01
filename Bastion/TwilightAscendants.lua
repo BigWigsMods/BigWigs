@@ -31,7 +31,8 @@ if L then
 	L.switch = "Switch"
 	L.switch_desc = "Warning for boss switches."
 
-	L.shield_up_message = "Shield is up!"
+	L.shield_up_message = "Shield is UP!"
+	L.shield_down_message = "Shield is DOWN!"
 	L.shield_bar = "Next shield"
 
 	L.switch_trigger = "We will handle them!"
@@ -90,7 +91,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightningRodApplied", 83099)
 	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved", 83099)
 
-	self:Log("SPELL_CAST_START", "AegisofFlame", 82631, 92513, 92512, 92514)
+	--Shield
+	self:Log("SPELL_CAST_START", "FlameShield", 82631, 92513, 92512, 92514)
+	self:Log("SPELL_AURA_REMOVED", "FlameShieldRemoved", 82631, 92513, 92512, 92514)
+
 	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
@@ -242,9 +246,13 @@ do
 	end
 end
 
-function mod:AegisofFlame(_, spellId)
+function mod:FlameShield(_, spellId)
 	self:Bar(82631, L["shield_bar"], 62, spellId)
 	self:Message(82631, L["shield_up_message"], "Important", spellId, "Alert")
+end
+
+function mod:FlameShieldRemoved(_, spellId)
+	self:Message(82631, L["shield_down_message"], "Important", spellId, "Alert")
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
