@@ -38,7 +38,7 @@ if L then
 	L.tentacles_message = "Tentacle disco party!"
 
 	L.sickness_message = "You feel terrible!"
-	L.blaze_message = "Blaze on YOU!"
+	L.blaze_message = "Fire under YOU!"
 	L.crash_say = "Crash on ME!"
 
 	L.fury_bar = "Next Fury"
