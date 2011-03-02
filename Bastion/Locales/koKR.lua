@@ -83,6 +83,7 @@ if L then
 	L.switch_desc = "보스의 전환을 알립니다."
 
 	L.shield_up_message = "방패 사용!"
+	L.shield_down_message = "방패 사라짐!"
 	L.shield_bar = "다음 방패"
 
 	L.switch_trigger = "우리가 상대하겠다!"
