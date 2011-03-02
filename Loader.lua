@@ -8,6 +8,7 @@ _G.BIGWIGS_LOADER_TIME = GetTime()
 -- Generate our version variables
 --
 
+local REPO = "REPO"
 local ALPHA = "ALPHA"
 local RELEASE = "RELEASE"
 local UNKNOWN = "UNKNOWN"
@@ -27,12 +28,13 @@ do
 
 	-- If the releaseRevision ends up NOT being a number, it means we're running a SVN copy.
 	if type(releaseRevision) ~= "number" then
-		releaseRevision = tonumber(("$Revision$"):sub(12, -3))
+		releaseRevision = -1
+		releaseType = REPO
 	end
 
 	-- Then build the release string, which we can add to the interface option panel.
 	local majorVersion = GetAddOnMetadata("BigWigs", "Version") or "3.?"
-	if releaseRevision == -1 then
+	if releaseType == REPO then
 		releaseString = L["You are running a source checkout of Big Wigs %s directly from the repository."]:format(majorVersion)
 	elseif releaseType == RELEASE then
 		releaseString = L["You are running an official release of Big Wigs %s (revision %d)"]:format(majorVersion, releaseRevision)
@@ -352,7 +354,7 @@ do
 			delayTransmitter:Show()
 		elseif prefix == "BWOOD3" then
 			if not tonumber(message) or warnedOutOfDate then return end
-			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
+			if tonumber(message) > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE ~= REPO then
 				warnedOutOfDate = true
 				sysprint(L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
 			end
@@ -373,7 +375,7 @@ do
 			usersRelease[sender] = nil
 			usersUnknown[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if sender ~= pName and (highestAlphaRevision - 5) > message then
+			if sender ~= pName and message ~= -1 and (highestAlphaRevision - 5) > message then
 				SendAddonMessage("BWOOD3", highestAlphaRevision, "WHISPER", sender)
 			end
 		end
