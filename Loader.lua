@@ -74,7 +74,8 @@ local grouped = nil
 local usersAlpha = {}
 local usersRelease = {}
 local usersUnknown = {}
-local highestReleaseRevision = _G.BIGWIGS_RELEASE_REVISION
+local highestReleaseRevision = _G.BIGWIGS_RELEASE_TYPE == RELEASE and _G.BIGWIGS_RELEASE_REVISION or -1
+local highestAlphaRevision = _G.BIGWIGS_RELEASE_TYPE == ALPHA and _G.BIGWIGS_RELEASE_REVISION or -1
 local warnedOutOfDate = nil
 
 -- Loading
@@ -209,7 +210,7 @@ local function versionTooltipFunc(tt)
 	end
 	if not add then
 		for player, version in pairs(usersAlpha) do
-			if version ~= -1 and version < (highestReleaseRevision - 1) then
+			if version ~= -1 and (version < (highestReleaseRevision - 1) or version < (highestAlphaRevision - 5)) then
 				add = true
 				break
 			end
@@ -371,6 +372,10 @@ do
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			usersUnknown[sender] = nil
+			if message > highestAlphaRevision then highestAlphaRevision = message end
+			if sender ~= pName and (highestAlphaRevision - 5) > message then
+				SendAddonMessage("BWOOD3", highestAlphaRevision, "WHISPER", sender)
+			end
 		end
 	end
 end
@@ -581,7 +586,7 @@ do
 				ugly[#ugly + 1] = coloredNames[player]
 			elseif usersAlpha[player] then
 				-- release revision -1 because of tagging
-				if usersAlpha[player] >= (highestReleaseRevision - 1) or usersAlpha[player] == -1 then
+				if (usersAlpha[player] >= (highestReleaseRevision - 1) and usersAlpha[player] >= (highestAlphaRevision - 5)) or usersAlpha[player] == -1 then
 					good[#good + 1] = coloredNameVersion(player, usersAlpha[player])
 				else
 					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player])
