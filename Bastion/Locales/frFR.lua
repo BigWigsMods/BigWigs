@@ -65,6 +65,8 @@ if L then
 	L.whelps = "Dragonnets"
 	L.whelps_desc = "Prévient de l'arrivée des vagues de dragonnets."
 
+	L.slicer = "Cibles probables des orbes :"
+
 	L.egg_vulnerable = "C'est l'heure de l'omelette !"
 
 	L.whelps_trigger = "Mangez, mes enfants !" -- à vérifier/compléter
@@ -84,6 +86,7 @@ if L then
 	L.switch_desc = "Prévient quand les boss échangent leurs places."
 
 	L.shield_up_message = "Bouclier en place !"
+	L.shield_down_message = "Bouclier dissipé !"
 	L.shield_bar = "Prochain Bouclier"
 
 	L.switch_trigger = "Nous allons nous occuper d'eux !" -- à vérifier

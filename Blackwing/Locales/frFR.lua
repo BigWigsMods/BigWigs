@@ -9,6 +9,8 @@ if L then
 
 	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !" -- à vérifier
 
+	L.obnoxious_soon = "Démon odieux imminent !"
+
 	L.searing_soon = "Flamme incendiaire dans 10 sec. !"
 	L.sonicbreath_cooldown = "~Souffle sonique"
 end
