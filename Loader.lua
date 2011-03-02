@@ -212,7 +212,7 @@ local function versionTooltipFunc(tt)
 	end
 	if not add then
 		for player, version in pairs(usersAlpha) do
-			if version ~= -1 and (version < (highestReleaseRevision - 1) or version < (highestAlphaRevision - 5)) then
+			if version ~= -1 and (version < (highestReleaseRevision - 1) or version < (highestAlphaRevision - 10)) then
 				add = true
 				break
 			end
@@ -375,7 +375,7 @@ do
 			usersRelease[sender] = nil
 			usersUnknown[sender] = nil
 			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if sender ~= pName and message ~= -1 and (highestAlphaRevision - 5) > message then
+			if sender ~= pName and message ~= -1 and (highestAlphaRevision - 10) > message then
 				SendAddonMessage("BWOOD3", highestAlphaRevision, "WHISPER", sender)
 			end
 		end
@@ -561,9 +561,9 @@ do
 			return self[key]
 		end
 	})
-	local function coloredNameVersion(name, version)
-		if version == -1 then version = "svn" end
-		return string.format("%s|cffcccccc(%s)|r", coloredNames[name], version or "unknown")
+	local function coloredNameVersion(name, version, alpha)
+		if version == -1 then version = "svn" alpha = nil end
+		return string.format("%s|cffcccccc(%s%s)|r", coloredNames[name], version or "unknown", alpha or "")
 	end
 	local function showVersions()
 		local m = getGroupMembers()
@@ -588,10 +588,10 @@ do
 				ugly[#ugly + 1] = coloredNames[player]
 			elseif usersAlpha[player] then
 				-- release revision -1 because of tagging
-				if (usersAlpha[player] >= (highestReleaseRevision - 1) and usersAlpha[player] >= (highestAlphaRevision - 5)) or usersAlpha[player] == -1 then
-					good[#good + 1] = coloredNameVersion(player, usersAlpha[player])
+				if (usersAlpha[player] >= (highestReleaseRevision - 1) and usersAlpha[player] >= (highestAlphaRevision - 10)) or usersAlpha[player] == -1 then
+					good[#good + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
 				else
-					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player])
+					ugly[#ugly + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
 				end
 			else
 				bad[#bad + 1] = coloredNames[player]
