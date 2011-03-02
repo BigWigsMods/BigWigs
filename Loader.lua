@@ -27,7 +27,7 @@ do
 
 	-- If the releaseRevision ends up NOT being a number, it means we're running a SVN copy.
 	if type(releaseRevision) ~= "number" then
-		releaseRevision = -1
+		releaseRevision = tonumber(("$Revision$"):sub(12, -3))
 	end
 
 	-- Then build the release string, which we can add to the interface option panel.
