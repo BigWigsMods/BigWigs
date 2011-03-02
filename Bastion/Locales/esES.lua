@@ -80,7 +80,8 @@ if L then
 	L.switch = "Cambio"
 	L.switch_desc = "Avisa los cambios de jefes"
 
-	L.shield_up_message = "¡Escudo activo!"
+	L.shield_up_message = "¡El escudo está ALTO!"
+	L.shield_down_message = "¡El escudo está BAJO!"
 	L.shield_bar = "Próximo escudo"
 
 	L.switch_trigger = "¡Nos ocuparemos de ellos!"
