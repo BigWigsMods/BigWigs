@@ -16,7 +16,7 @@ L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이�
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 공식 릴리스가 실행중입니다."
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Big Wigs %s (revision %d) 의 알파 릴리스가 실행중입니다."
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "저장소에서 Big Wigs %s 을 직접 소스를 체크 아웃을 실행하고 있습니다."
-L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Big Wigs을 사용할 수있는 새로운 릴리스는 curse.com, wowinterface.com, wowace.com 또는 Curse Updater를 통하여 새로운 릴리스 버전을 찾아 사용할수 있습니다."
+L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Big Wigs을 사용할 수있는 새로운 릴리스는 curse.com, wowinterface.com, wowace.com 또는 Curse Updater를 통하여 새로운 릴리스 버전을 찾아 사용할수 있습니다."
 
 L.tooltipHint = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트-클릭|r 비활성화 |cffeda55f컨트롤-알트-클릭|r : BigWigs 비활성화."
 L["Active boss modules:"] = "사용중인 보스 모듈:"

@@ -354,7 +354,7 @@ do
 			if not tonumber(message) or warnedOutOfDate then return end
 			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
 				warnedOutOfDate = true
-				sysprint(L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+				sysprint(L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
 			end
 		elseif prefix == "BWVR3" then
 			message = tonumber(message)

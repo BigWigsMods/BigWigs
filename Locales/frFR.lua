@@ -14,7 +14,7 @@ L.already_registered = "|cffff0000ATTENTION :|r |cff00ff00%s|r (|cffffff00%s|r)
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Vous utilisez une version FINALISÉE de Big Wigs %s (r%d)."
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Vous utilisez une version ALPHA de Big Wigs %s (r%d)."
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Vous utilisez une version du dépôt de Big Wigs %s."
-L["There is a new release of Big Wigs available. You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Une nouvelle version de Big Wigs est disponible. Vous pouvez visiter curse.com, wowinterface.com, wowace.com ou utiliser le Curse Updater pour obtenir cette nouvelle version."
+L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Une nouvelle version de Big Wigs est disponible(/bwv). Vous pouvez visiter curse.com, wowinterface.com, wowace.com ou utiliser le Curse Updater pour obtenir cette nouvelle version."
 
 L.tooltipHint = "|cffeda55fClic gauche|r pour redémarrer les modules actifs. |cffeda55fAlt-Clic gauche|r pour les désactiver. |cffeda55fClic droit|r pour accéder aux options."
 L["Active boss modules:"] = "Modules de boss actifs :"
