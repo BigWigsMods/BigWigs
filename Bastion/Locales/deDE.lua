@@ -82,7 +82,8 @@ if L then
 	L.switch = "Wechsel"
 	L.switch_desc = "Warnt, wenn die Bosse wechseln."
 
-	L.shield_up_message = "Schild ist oben!"
+	L.shield_up_message = "Schild ist OBEN!"
+	L.shield_down_message = "Schild ist UNTEN!"
 	L.shield_bar = "Nächstes Schild"
 
 	L.switch_trigger = "Wir kümmern uns um sie!"
