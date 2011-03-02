@@ -11,7 +11,7 @@ mod:RegisterEnableMob(41442)
 --
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local searingFlame = GetSpellInfo(77840)
+local searingFlame, obnoxious = GetSpellInfo(77840), GetSpellInfo(92702)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +26,8 @@ if L then
 
 	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
 
+	L.obnoxious_soon = "Obnoxious Fiend soon!"
+
 	L.searing_soon = "Searing Flame in 10sec!"
 	L.sonicbreath_cooldown = "~Sonic Breath"
 end
@@ -38,11 +40,13 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		"ground_phase", 78075, 77840,
-		"air_phase", {78092, "FLASHSHAKE", "ICON", "SAY"},
-		"berserk", "bosskill"
+		"air_phase",
+		{92702, "ICON", "SAY"},
+		{78092, "FLASHSHAKE", "ICON", "SAY"}, "berserk", "bosskill"
 	}, {
 		ground_phase = L["ground_phase"],
 		air_phase = L["air_phase"],
+		[92702] = "heroic",
 		[78092] = "general"
 	}
 end
@@ -52,6 +56,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Tracking", 78092)
 	self:Log("SPELL_AURA_APPLIED", "SearingFlame", 77840)
 	self:Yell("AirPhase", L["air_phase_trigger"])
+
+	self:Log("SPELL_AURA_APPLIED", "ObnoxiousPhaseShift", 92681)
+	-- I assume whoever it melees it will cast obnoxious on, but that has no destName
+	self:Log("SWING_DAMAGE", "Obnoxious", "*")
+	self:Log("SWING_MISS", "Obnoxious", "*")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -71,6 +80,29 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function FiendCheck(dGUID)
+	local fiend = mod:GetUnitIdByGUID(dGUID)
+	if not fiend then
+		mod:ScheduleTimer(FiendCheck, 0.1, dGUID)
+	else
+		mod:SecondaryIcon(92702, fiend)
+	end
+end
+
+function mod:ObnoxiousPhaseShift(...)
+	self:Message(92677, L["obnoxious_soon"], "Attention", 92677) -- do we really need this?
+	local dGUID = select(10, ...)
+	FiendCheck(dGUID)
+end
+
+function mod:Obnoxious(player, _, _, _, _, _, _, _, _, _, sGUID)
+	if tonumber(sGUID:sub(7, 10), 16) ~= 49740 then return end
+	if UnitIsUnit(player, "player") then
+		self:Say(92702, CL["say"]:format(obnoxious))
+	end
+	self:TargetMessage(92702, obnoxious, player, "Attention", spellId, "Long")
+end
 
 function mod:Tracking(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then

@@ -2,28 +2,22 @@
 -- Module Declaration
 --
 
+-- XXX This module needs a code review
 local mod = BigWigs:NewBoss("Sinestra", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45213)
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local breath, slicer = (GetSpellInfo(92944)), (GetSpellInfo(92954))
-local orbTimer = 28
-local eggs = 0
-local handle = nil
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
+local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.whelps = "Whelps"
 	L.whelps_desc = "Warning for the whelp waves."
+
+	L.slicer = "Possible Orb targets:"
 
 	L.egg_vulnerable = "Omelet time!"
 
@@ -37,6 +31,99 @@ end
 L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local breath, slicer = (GetSpellInfo(92944)), (GetSpellInfo(92954))
+local roleCheckWarned = nil
+local eggs = 0
+local handle = nil
+local orbList = mod:NewTargetList()
+local orbWarned = nil
+local whelpGUIDs = {}
+local whelpIds = {
+	[1] = 47265,
+	[2] = 48047,
+	[3] = 48048,
+	[4] = 48049,
+	[5] = 48050,
+}
+
+local function IsTank(unit)
+	-- 1. check blizzard tanks first
+	-- 2. check blizzard roles second
+	if GetPartyAssignment("MAINTANK", unit, 1) then
+		return true
+	end
+	if UnitGroupRolesAssigned(unit) == "TANK" then
+		return true
+	end
+	return false
+end
+
+local function IsTargetableByOrb(unit)
+	-- check tanks
+	if IsTank(unit) then return false end
+	-- check sinestra's target too
+	if UnitIsUnit("boss1target", unit) then return false end
+	-- and maybe do a check for whelp targets
+	-- not 100% sure if whelp "tanks" can be targeted by the orb or not
+	for k, v in pairs(whelpGUIDs) do
+		local whelp = mod:GetUnitIdByGUID(k)
+		if whelp then
+			if UnitIsUnit(whelp.."target", unit) then return false end
+		end
+	end
+	return true
+end
+
+local function PopulateOrbList()
+	wipe(orbList)
+	for i=1, GetNumRaidMembers() do
+		-- do some checks for 25/10 man raid size so we don't warn for ppl who are not in the instance
+		if GetInstanceDifficulty() == 3 and i > 10 then return end
+		if GetInstanceDifficulty() == 4 and i > 25 then return end
+		local unit = ("raid%d"):format(i)
+		-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
+		if UnitThreatSituation(unit) == 3 and IsTargetableByOrb(unit) then
+			orbList[#orbList+1] = UnitName(unit)
+		end
+	end
+end
+
+local function OrbWarning(source)
+	for k, v in ipairs(orbList) do
+		if v:find(UnitName("player")) then
+			mod:FlashShake(92954)
+		end
+	end
+	-- decolorize
+	if orbList[1] then mod:PrimaryIcon(92954, orbList[1]:sub(11,-3)) end
+	if orbList[2] then mod:SecondaryIcon(92954, orbList[2]:sub(11,-3)) end
+	if source == "spawn" then
+		-- here #orbList can be 0 since we have no accurate way of timing this warning
+		if orbList then
+			mod:TargetMessage(92954, L["slicer"], orbList, "Personal", 92954, "Alarm")
+			-- if we could guess orb targets lets wipe the whelpGUIDs in 5 sec
+			-- if not then we might as well just save them for next time
+			mod:ScheduleTimer(function() wipe(whelpGUIDs) end, 5) -- might need to adjust this
+		else
+			mod:Message(92954, slicer, "Personal", 92954)
+		end
+	elseif source == "damage" then
+		mod:TargetMessage(92954, L["slicer"], orbList, "Personal", 92954, "Alarm")
+		mod:ScheduleTimer(function() orbWarned = nil wipe(whelpGUIDs) end, 10) -- might need to adjust this
+	end
+end
+
+local function OrbSpawn() -- can't think of a better way to do it
+	mod:Bar(92954, "~"..slicer, 30, 92954)
+	PopulateOrbList()
+	OrbWarning("spawn")
+	handle = mod:ScheduleTimer(OrbSpawn, 30)
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -44,7 +131,7 @@ function mod:GetOptions()
 	return {
 	-- Phase 1 and 3
 		92944, -- Breath
-		92954, -- Twilight Slicer
+		{92954, "FLASHSHAKE", "ICON"}, -- Twilight Slicer
 		86227, -- Extinction
 		"whelps",
 
@@ -63,6 +150,15 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	if not roleCheckWarned then
+		print("|cffff0000It is recommended that you set roles (tanks) and Blizzard Main Tanks for this encounter to improve the orb target detections.|r")
+		roleCheckWarned = true
+	end
+
+	self:Log("SPELL_DAMAGE", "OrbDamage", 92954, 92959) -- twilight slicer, twlight pulse 25 man heroic spellIds
+	self:Log("SWING_DAMAGE", "WhelpWatcher", "*")
+	self:Log("SWING_MISS", "WhelpWatcher", "*")
+
 	self:Log("SPELL_CAST_START", "Breath", 92944)
 
 	self:Log("SPELL_AURA_REMOVED", "Egg", 87654)
@@ -77,26 +173,38 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 45213, 46842) -- Sinestra, Pulsing Twilight Egg
 end
 
-local function orbSpawn() -- can't think of a better way to do it
-	mod:Message(92954, slicer, "Personal", 92954)
-	mod:Bar(92954, "~"..slicer, orbTimer, 92954)
-	handle = mod:ScheduleTimer(orbSpawn, orbTimer)
-end
-
 function mod:OnEngage()
 	self:Bar(92944, "~"..breath, 24, 92944)
 	self:Bar(92954, "~"..slicer, 30, 92954)
 	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
-	self:ScheduleTimer(orbSpawn, 30)
-	orbTimer = 28
+	self:ScheduleTimer(OrbSpawn, 30)
 	eggs = 0
 	handle = nil
 	self:RegisterEvent("UNIT_HEALTH")
+	whelpGUIDs = {}
+	orbWarned = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:WhelpWatcher(...)
+	local sGUID = select(11, ...)
+	local mobId = tonumber(sGUID:sub(7, 10), 16)
+	for _, v in ipairs(whelpIds) do
+		if mobId == v and not whelpGUIDs[sGUID] then
+			whelpGUIDs[sGUID] = true
+		end
+	end
+end
+
+function mod:OrbDamage()
+	PopulateOrbList()
+	if orbWarned then return end
+	orbWarned = true
+	OrbWarning("damage")
+end
 
 function mod:Whelps()
 	self:Bar("whelps", L["whelps"], 50, 69005)
@@ -129,6 +237,7 @@ function mod:Indomitable(player, spellId, _, _, spellName)
 	self:Message(92946, spellName, "Urgent", spellId)
 	local _, class = UnitClass("player")
 	if class == "HUNTER" or class == "ROGUE" then
+		self:PlaySound(92946, "Info")
 		self:FlashShake(92946)
 	end
 end
@@ -157,7 +266,7 @@ function mod:Deaths(mobId)
 			self:Bar("whelps", L["whelps"], 50, 69005)
 			self:Bar(92954, "~"..slicer, 30, 92954)
 			self:Bar(92944, "~"..breath, 24, 92944)
-			self:ScheduleTimer(orbSpawn, 30)
+			self:ScheduleTimer(OrbSpawn, 30)
 		end
 	elseif mobId == 45213 then
 		self:Win()
