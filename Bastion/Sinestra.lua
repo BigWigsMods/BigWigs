@@ -16,7 +16,7 @@ if L then
 	L.whelps = "Whelps"
 	L.whelps_desc = "Warning for the whelp waves."
 
-	L.slicer = "Possible Orb targets"
+	L.w = "Possible Orb targets"
 
 	L.egg_vulnerable = "Omelet time!"
 
@@ -130,8 +130,8 @@ end
 -- need to change it once there is a proper trigger for orbs
 local function nextOrbSpawned()
 	mod:Bar(92954, "~"..slicer, 28, 92954)
-	PopulateOrbList()
-	OrbWarning("spawn")
+	populateOrbList()
+	orbWarning("spawn")
 	mod:ScheduleTimer(nextOrbSpawned, 28)
 end
 
