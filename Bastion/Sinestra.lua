@@ -41,13 +41,10 @@ local handle = nil
 local orbList = mod:NewTargetList()
 local orbWarned = nil
 local whelpGUIDs = {}
-local whelpIds = {
-	[1] = 47265,
-	[2] = 48047,
-	[3] = 48048,
-	[4] = 48049,
-	[5] = 48050,
-}
+
+-- XXX Local functions always start with a lowercased letter, so these should be
+-- XXX isTank, isTargetableByOrb, populateOrbList, orbWarning and orbSpawn.
+-- Although I think some of the functions could have better names.
 
 local function IsTank(unit)
 	-- 1. check blizzard tanks first
@@ -79,44 +76,60 @@ end
 
 local function PopulateOrbList()
 	wipe(orbList)
-	for i=1, GetNumRaidMembers() do
+	for i = 1, GetNumRaidMembers() do
 		-- do some checks for 25/10 man raid size so we don't warn for ppl who are not in the instance
 		if GetInstanceDifficulty() == 3 and i > 10 then return end
 		if GetInstanceDifficulty() == 4 and i > 25 then return end
+		-- XXX Someone should test whether or not GetPartyAssignment and UnitGroupRolesAssigned
+		-- XXX work on player names or not. If it does, we should use that directly.
 		local unit = ("raid%d"):format(i)
 		-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
 		if UnitThreatSituation(unit) == 3 and IsTargetableByOrb(unit) then
-			orbList[#orbList+1] = UnitName(unit)
+			orbList[#orbList + 1] = UnitName(unit)
 		end
 	end
 end
 
+local function wipeWhelpList(resetWarning)
+	if resetWarning then orbWarned = nil end
+	wipe(whelpGUIDs)
+end
+
 local function OrbWarning(source)
-	for k, v in ipairs(orbList) do
+	for i, v in next, orbList do
+		-- XXX We should just have a isPlayerInList boolean that we set in PopulateOrbList
 		if v:find(UnitName("player")) then
 			mod:FlashShake(92954)
 		end
 	end
+
 	-- decolorize
+	-- XXX What an awful hack. I'd rather we just use :Message instead of :TargetMessage
+	-- XXX and colorize the names ourselves before firing it off.
+	-- XXX :TargetMessage is a convenience method, not the only solution.
 	if orbList[1] then mod:PrimaryIcon(92954, orbList[1]:sub(11,-3)) end
 	if orbList[2] then mod:SecondaryIcon(92954, orbList[2]:sub(11,-3)) end
+
 	if source == "spawn" then
 		-- here #orbList can be 0 since we have no accurate way of timing this warning
+		-- XXX if #orbList > 0 then ? Why else would you have such a comment above?
 		if orbList then
 			mod:TargetMessage(92954, L["slicer"], orbList, "Personal", 92954, "Alarm")
 			-- if we could guess orb targets lets wipe the whelpGUIDs in 5 sec
 			-- if not then we might as well just save them for next time
-			mod:ScheduleTimer(function() wipe(whelpGUIDs) end, 5) -- might need to adjust this
+			mod:ScheduleTimer(wipeWhelpList, 5) -- might need to adjust this
 		else
 			mod:Message(92954, slicer, "Personal", 92954)
 		end
 	elseif source == "damage" then
 		mod:TargetMessage(92954, L["slicer"], orbList, "Personal", 92954, "Alarm")
-		mod:ScheduleTimer(function() orbWarned = nil wipe(whelpGUIDs) end, 10) -- might need to adjust this
+		mod:ScheduleTimer(wipeWhelpList, 10, true) -- might need to adjust this
 	end
 end
 
-local function OrbSpawn() -- can't think of a better way to do it
+local function OrbSpawn()
+	-- can't think of a better way to do it
+	-- XXX do what?
 	mod:Bar(92954, "~"..slicer, 30, 92954)
 	PopulateOrbList()
 	OrbWarning("spawn")
@@ -151,6 +164,7 @@ end
 
 function mod:OnBossEnable()
 	if not roleCheckWarned then
+		-- XXX What if tanks have already been set? Should we print this still?
 		print("|cffff0000It is recommended that you set roles (tanks) and Blizzard Main Tanks for this encounter to improve the orb target detections.|r")
 		roleCheckWarned = true
 	end
@@ -179,9 +193,9 @@ function mod:OnEngage()
 	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
 	self:ScheduleTimer(OrbSpawn, 30)
 	eggs = 0
-	handle = nil
+	handle = nil -- XXX Why do we need to save the handle? Can't we just do :CancelAllTimers() at phase change?
 	self:RegisterEvent("UNIT_HEALTH")
-	whelpGUIDs = {}
+	whelpGUIDs = {} -- XXX Table is already initialized at declaration, can't we just wipe() it here?
 	orbWarned = nil
 end
 
@@ -189,12 +203,19 @@ end
 -- Event Handlers
 --
 
-function mod:WhelpWatcher(...)
-	local sGUID = select(11, ...)
-	local mobId = tonumber(sGUID:sub(7, 10), 16)
-	for _, v in ipairs(whelpIds) do
-		if mobId == v and not whelpGUIDs[sGUID] then
-			whelpGUIDs[sGUID] = true
+do
+	local whelpIds = {
+		47265,
+		48047,
+		48048,
+		48049,
+		48050,
+	}
+	function mod:WhelpWatcher(...)
+		local sGUID = select(11, ...)
+		local mobId = tonumber(sGUID:sub(7, 10), 16)
+		for i, v in next, whelpIds do
+			if mobId == v then whelpGUIDs[sGUID] = true end
 		end
 	end
 end
