@@ -6,7 +6,7 @@ if L then
 	L.orders_desc = "Avisa cuando Cho'gall cambia el orden de posiciones entre Sombra/Llama."
 
 	L.crash_say = "¡Colisión en MI!"
-	L.worship_cooldown = "(CD) Conversión"
+	L.worship_cooldown = "~Conversión"
 	L.adherent_bar = "Gran add #%d"
 	L.adherent_message = "¡Add %d aparece!"
 	L.ooze_bar = "Enjambre de mocos %d"
@@ -19,13 +19,13 @@ if L then
 
 	L.fury_bar = "Próxima furia"
 	L.fury_message = "¡Furia!"
-	L.first_fury_soon = "¡Furia pronto!"
+	L.first_fury_soon = "¡Furia inminente!"
 	L.first_fury_message = "¡85% - comienza la Furia!"
 
 	L.unleashed_shadows = "Sombras desatadas"
 
 	L.phase2_message = "¡Fase 2!"
-	L.phase2_soon = "¡Fase 2 pronto!"
+	L.phase2_soon = "¡Fase 2 inminente!"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "esES")
@@ -39,9 +39,9 @@ if L then
 
 	L.blast_message = "Explosión en caída" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "¡Trago de magia en MI!"
-	L.engulfingmagic_cooldown = "(CD) Trago de magia"
+	L.engulfingmagic_cooldown = "~Trago de magia"
 
-	L.devouringflames_cooldown = "(CD) Llamas devoradoras"
+	L.devouringflames_cooldown = "~Llamas devoradoras"
 
 	L.valiona_trigger = "Theralion, voy a incendiar el corredor. ¡Que no escapen!"
 
