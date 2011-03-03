@@ -12,14 +12,14 @@ if L then
 	L.obnoxious_soon = "¡Demonio inminente!"
 
 	L.searing_soon = "¡Llamas abrasadoras en 10 seg!"
-	L.sonicbreath_cooldown = "(CD) Aliento sónico"
+	L.sonicbreath_cooldown = "~Aliento sónico"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "esES")
 if L then
 	L.bileotron_engage = "El Bilistrón se activa y empieza a emitir una sustancia de olor asqueroso."
 
-	L.next_system_failure = "(CD) Siguiente fallo del sistema"
+	L.next_system_failure = "~Siguiente fallo del sistema"
 	L.break_message = "%2$dx Romper en %1$s"
 
 	L.phase2_message = "¡Fase de Mortalidad pronto!"
@@ -42,7 +42,7 @@ if L then
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
 	-- normal
-	L.pillar_of_flame_cd = "(CD) Columna de llamas"
+	L.pillar_of_flame_cd = "~Columna de llamas"
 
 	L.slump = "Cae (Rodeo)"
 	L.slump_desc = "Cae hacia delante exponiendose a sí mismo, permitiendo que el rodeo empiece."
@@ -55,7 +55,7 @@ if L then
 	L.expose_trigger = "cabeza"
 	L.expose_message = "¡Cabeza expuesta!"
 
-	L.spew_bar = "(CD) Próximo Vómito"
+	L.spew_bar = "~Próximo Vómito"
 	L.spew_warning = "¡Vómito de lava pronto!"
 end
 
@@ -75,8 +75,8 @@ if L then
 
 	L.bitingchill_say = "¡Escalofrío cortante en MI!"
 
-	L.flashfreeze = "(CD) Congelación apresurada"
-	L.next_blast = "(CD) Explosión agostadora"
+	L.flashfreeze = "~Congelación apresurada"
+	L.next_blast = "~Explosión agostadora"
 	L.jets_bar = "Siguiente Chorros de magma"
 
 	L.phase = "Fase"
@@ -103,7 +103,7 @@ if L then
 	L.phase = "Fases"
 	L.phase_desc = "Avisa los cambios de fase."
 
-	L.discharge_bar = "(CD) Descarga"
+	L.discharge_bar = "~Descarga"
 
 	L.phase_two_trigger = "¡Os maldigo, mortales! ¡Ese cruel menosprecio por las posesiones de uno debe ser castigado con fuerza extrema!"
 
@@ -130,12 +130,12 @@ if L then
 	L.switch_desc = "Avisa los cambios"
 	L.switch_message = "%s %s"
 
-	L.next_switch = "Siguiente cambio"
+	L.next_switch = "Siguiente activación"
 
 	-- L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	-- L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
-	L.nef_next = "(CD) Siguiente bufo de habilidad"
+	L.nef_next = "~Siguiente bufo de habilidad"
 
 	L.acquiring_target = "Eligiendo objetivo"
 
