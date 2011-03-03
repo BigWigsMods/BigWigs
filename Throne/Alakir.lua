@@ -151,8 +151,8 @@ function mod:Phase3()
 end
 
 function mod:Feedback(_, spellId, _, _, spellName, stack)
-	self:Bar(87904, spellName, 20, spellId)
 	if not stack then stack = 1 end
+	self:Bar(87904, L["feedback_message"]:format(stack), 20, spellId)
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId)
 end
 
