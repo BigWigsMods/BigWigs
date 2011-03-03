@@ -63,11 +63,13 @@ L = BigWigs:NewBossLocale("Sinestra", "koKR")
 if L then
 	L.whelps = "새끼용"
 	L.whelps_desc = "새끼용 웨이브를 알립니다."
-
+	
+	L.slicer = "예상되는 구슬 대상:"
+	
 	L.egg_vulnerable = "알 요리 시간!"
 
-	L.whelps_trigger = "얘들아, 먹어치워라" --check
-	L.omelet_trigger = "이게 약해진 걸로 보이느냐" --check
+	L.whelps_trigger = "얘들아, 먹어치워라"
+	L.omelet_trigger = "이게 약해진 걸로 보이느냐"
 
 	L.phase13 = "1 & 3 단계"
 	L.phase = "단계"

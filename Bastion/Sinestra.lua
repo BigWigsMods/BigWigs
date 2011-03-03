@@ -130,10 +130,10 @@ end
 local function OrbSpawn()
 	-- can't think of a better way to do it
 	-- XXX do what?
-	mod:Bar(92954, "~"..slicer, 30, 92954)
+	mod:Bar(92954, "~"..slicer, 28, 92954)
 	PopulateOrbList()
 	OrbWarning("spawn")
-	handle = mod:ScheduleTimer(OrbSpawn, 30)
+	handle = mod:ScheduleTimer(OrbSpawn, 28)
 end
 
 --------------------------------------------------------------------------------
