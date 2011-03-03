@@ -358,7 +358,7 @@ do
 				warnedOutOfDate = true
 				if BIGWIGS_RELEASE_TYPE == RELEASE then
 					sysprint(L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
-				elseif BIGWIGS_RELEASE_TYPE == ALPHA
+				elseif BIGWIGS_RELEASE_TYPE == ALPHA then
 					sysprint(L["Your alpha version of Big Wigs is out of date(/bwv)."])
 				end
 			end
