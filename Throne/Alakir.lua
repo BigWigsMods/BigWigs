@@ -141,6 +141,12 @@ function mod:Phase2(_, spellId)
 	phase = 2
 end
 
+local function CloudSpawn()
+	mod:Bar(89588, cloud, 9, 89588)
+	mod:Message(89588, cloud, "Important", 89588, "Info")
+	mod:ScheduleTimer(CloudSpawn, 9)
+end
+
 function mod:Phase3()
 	if phase >= 3 then return end
 	self:Message("phase", CL["phase"]:format(3), "Positive", 93279)
@@ -192,10 +198,4 @@ end
 function mod:Stormling()
 	self:Bar("stormling", L["stormling_bar"], 20, 75096)
 	self:Message("stormling", L["stormling_message"], "Important", 75096)
-end
-
-local function CloudSpawn()
-	mod:Bar(89588, cloud, 9, 89588)
-	mod:Message(89588, cloud, "Important", 89588, "Info")
-	mod:ScheduleTimer(CloudSpawn, 9)
 end
