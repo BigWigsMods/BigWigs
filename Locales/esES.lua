@@ -15,6 +15,7 @@ L["You are running an official release of Big Wigs %s (revision %d)"] = "Estás 
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Estás usando la VERSION ALPHA de Big Wigs %s (revisión %d)"
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Estás usando la versión de Big Wigs %s directamente del repositorio."
 L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Existe una nueva versión de Big Wigs disponible(/bwv). Puedes visitar curse.com, wowinterface.com, wowace.com o usar el cliente de Curse para adquirirla."
+L["Your alpha version of Big Wigs is out of date(/bwv)."] = "Your alpha version of Big Wigs is out of date(/bwv)."
 
 L.tooltipHint = "|cffeda55fClic|r para reiniciar todos los módulos. |cffeda55fAlt-Clic|r para desactivarlos. |cffeda55fRight-Clic|r para acceder a las opciones."
 L["Active boss modules:"] = "Módulos de jefes activos:"

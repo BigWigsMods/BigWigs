@@ -354,9 +354,13 @@ do
 			delayTransmitter:Show()
 		elseif prefix == "BWOOD3" then
 			if not tonumber(message) or warnedOutOfDate then return end
-			if tonumber(message) > BIGWIGS_RELEASE_REVISION and BIGWIGS_RELEASE_TYPE ~= REPO then
+			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
 				warnedOutOfDate = true
-				sysprint(L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+				if BIGWIGS_RELEASE_TYPE == RELEASE then
+					sysprint(L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+				elseif BIGWIGS_RELEASE_TYPE == ALPHA
+					sysprint(L["Your alpha version of Big Wigs is out of date(/bwv)."])
+				end
 			end
 		elseif prefix == "BWVR3" then
 			message = tonumber(message)
@@ -563,7 +567,7 @@ do
 	})
 	local function coloredNameVersion(name, version, alpha)
 		if version == -1 then version = "svn" alpha = nil end
-		return string.format("%s|cffcccccc(%s%s)|r", coloredNames[name], version or "unknown", alpha or "")
+		return string.format("%s|cffcccccc(%s%s)|r", coloredNames[name], alpha and "a" or "", version or "unknown")
 	end
 	local function showVersions()
 		local m = getGroupMembers()

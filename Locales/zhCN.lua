@@ -17,6 +17,7 @@ L["You are running an official release of Big Wigs %s (revision %d)"] = "你所�
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 为“α测试版”（修订号%d）"
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 为从源直接检出的。"
 L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "有新的 Big Wigs 正式版可用。你可以访问 Curse.com，wowinterface.com，wowace.com 或使用 Curse 更新器来更新到新的正式版。"
+L["Your alpha version of Big Wigs is out of date(/bwv)."] = "Your alpha version of Big Wigs is out of date(/bwv)."
 
 L.tooltipHint = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt-点击|r可以禁用所有首领模块。"
 L["Active boss modules:"] = "激活首领模块："
