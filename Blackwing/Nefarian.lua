@@ -70,7 +70,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80626, 80627)
 	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80626, 80627)
 	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007, 94085, 94086, 94087)
 
