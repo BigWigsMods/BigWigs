@@ -85,7 +85,7 @@ end
 
 function mod:OnEngage(diff)
 	if diff > 2 then
-		self:Bar("blazing", L["blazing_bar"], 20, "SPELL_SHADOW_RAISEDEAD")
+		self:Bar("blazing", L["blazing_bar"], 30, "SPELL_SHADOW_RAISEDEAD")
 	end
 	self:Berserk(600)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
