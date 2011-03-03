@@ -65,7 +65,7 @@ if L then
 	L.whelps = "Dragonnets"
 	L.whelps_desc = "Prévient de l'arrivée des vagues de dragonnets."
 
-	L.slicer = "Cibles probables des orbes :"
+	L.slicer = "Cibles probables des orbes"
 
 	L.egg_vulnerable = "C'est l'heure de l'omelette !"
 

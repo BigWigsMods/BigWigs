@@ -2,7 +2,6 @@
 -- Module Declaration
 --
 
--- XXX This module needs a code review
 local mod = BigWigs:NewBoss("Sinestra", "The Bastion of Twilight")
 if not mod then return end
 mod:RegisterEnableMob(45213)
@@ -17,7 +16,7 @@ if L then
 	L.whelps = "Whelps"
 	L.whelps_desc = "Warning for the whelp waves."
 
-	L.slicer = "Possible Orb targets:"
+	L.slicer = "Possible Orb targets"
 
 	L.egg_vulnerable = "Omelet time!"
 
@@ -37,16 +36,12 @@ L = mod:GetLocale()
 local breath, slicer = (GetSpellInfo(92944)), (GetSpellInfo(92954))
 local roleCheckWarned = nil
 local eggs = 0
-local handle = nil
-local orbList = mod:NewTargetList()
+local orbList = {}
 local orbWarned = nil
+local playerInList = nil
 local whelpGUIDs = {}
 
--- XXX Local functions always start with a lowercased letter, so these should be
--- XXX isTank, isTargetableByOrb, populateOrbList, orbWarning and orbSpawn.
--- Although I think some of the functions could have better names.
-
-local function IsTank(unit)
+local function isTank(unit)
 	-- 1. check blizzard tanks first
 	-- 2. check blizzard roles second
 	if GetPartyAssignment("MAINTANK", unit, 1) then
@@ -58,9 +53,9 @@ local function IsTank(unit)
 	return false
 end
 
-local function IsTargetableByOrb(unit)
+local function isTargetableByOrb(unit)
 	-- check tanks
-	if IsTank(unit) then return false end
+	if isTank(unit) then return false end
 	-- check sinestra's target too
 	if UnitIsUnit("boss1target", unit) then return false end
 	-- and maybe do a check for whelp targets
@@ -74,47 +69,51 @@ local function IsTargetableByOrb(unit)
 	return true
 end
 
-local function PopulateOrbList()
+local function populateOrbList()
 	wipe(orbList)
 	for i = 1, GetNumRaidMembers() do
 		-- do some checks for 25/10 man raid size so we don't warn for ppl who are not in the instance
 		if GetInstanceDifficulty() == 3 and i > 10 then return end
 		if GetInstanceDifficulty() == 4 and i > 25 then return end
-		-- XXX Someone should test whether or not GetPartyAssignment and UnitGroupRolesAssigned
-		-- XXX work on player names or not. If it does, we should use that directly.
-		local unit = ("raid%d"):format(i)
+		local n = GetRaidRosterInfo(i)
 		-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
-		if UnitThreatSituation(unit) == 3 and IsTargetableByOrb(unit) then
-			orbList[#orbList + 1] = UnitName(unit)
+		if UnitThreatSituation(n) == 3 and isTargetableByOrb(n) then
+			if UnitIsUnit(n, "player") then playerInList = true end
+			orbList[#orbList + 1] = n
 		end
 	end
 end
 
 local function wipeWhelpList(resetWarning)
 	if resetWarning then orbWarned = nil end
+	playerInList = nil
 	wipe(whelpGUIDs)
 end
 
-local function OrbWarning(source)
-	for i, v in next, orbList do
-		-- XXX We should just have a isPlayerInList boolean that we set in PopulateOrbList
-		if v:find(UnitName("player")) then
-			mod:FlashShake(92954)
+local hexColors = {}
+for k, v in pairs(RAID_CLASS_COLORS) do
+	hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+end
+
+local function colorize(tbl)
+	for i, v in next, tbl do
+		local class = select(2, UnitClass(v))
+		if class then
+			tbl[i] = hexColors[class]  .. v .. "|r"
 		end
 	end
+	return tbl
+end
 
-	-- decolorize
-	-- XXX What an awful hack. I'd rather we just use :Message instead of :TargetMessage
-	-- XXX and colorize the names ourselves before firing it off.
-	-- XXX :TargetMessage is a convenience method, not the only solution.
-	if orbList[1] then mod:PrimaryIcon(92954, orbList[1]:sub(11,-3)) end
-	if orbList[2] then mod:SecondaryIcon(92954, orbList[2]:sub(11,-3)) end
+local function orbWarning(source)
+	if playerInList then mod:FlashShake(92954) end
+
+	if orbList[1] then mod:PrimaryIcon(92954, orbList[1]) end
+	if orbList[2] then mod:SecondaryIcon(92954, orbList[2]) end
 
 	if source == "spawn" then
-		-- here #orbList can be 0 since we have no accurate way of timing this warning
-		-- XXX if #orbList > 0 then ? Why else would you have such a comment above?
-		if orbList then
-			mod:TargetMessage(92954, L["slicer"], orbList, "Personal", 92954, "Alarm")
+		if #orbList > 0 then
+			mod:TargetMessage(92954, L["slicer"], colourize(orbList), "Personal", 92954, "Alarm")
 			-- if we could guess orb targets lets wipe the whelpGUIDs in 5 sec
 			-- if not then we might as well just save them for next time
 			mod:ScheduleTimer(wipeWhelpList, 5) -- might need to adjust this
@@ -122,18 +121,18 @@ local function OrbWarning(source)
 			mod:Message(92954, slicer, "Personal", 92954)
 		end
 	elseif source == "damage" then
-		mod:TargetMessage(92954, L["slicer"], orbList, "Personal", 92954, "Alarm")
+		mod:TargetMessage(92954, L["slicer"], colourize(orbList), "Personal", 92954, "Alarm")
 		mod:ScheduleTimer(wipeWhelpList, 10, true) -- might need to adjust this
 	end
 end
 
-local function OrbSpawn()
-	-- can't think of a better way to do it
-	-- XXX do what?
+-- this gets run every 30 sec
+-- need to change it once there is a proper trigger for orbs
+local function nextOrbSpawned()
 	mod:Bar(92954, "~"..slicer, 28, 92954)
 	PopulateOrbList()
 	OrbWarning("spawn")
-	handle = mod:ScheduleTimer(OrbSpawn, 28)
+	mod:ScheduleTimer(nextOrbSpawned, 28)
 end
 
 --------------------------------------------------------------------------------
@@ -163,9 +162,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	if not roleCheckWarned then
-		-- XXX What if tanks have already been set? Should we print this still?
-		print("|cffff0000It is recommended that you set roles (tanks) and Blizzard Main Tanks for this encounter to improve the orb target detections.|r")
+	if not roleCheckWarned and (IsRaidLeader() or IsRaidOfficer()) then
+		BigWigs:Print("It is recommended that your raid has proper main tanks set for this encounter to improve orb target detection.")
 		roleCheckWarned = true
 	end
 
@@ -191,11 +189,10 @@ function mod:OnEngage()
 	self:Bar(92944, "~"..breath, 24, 92944)
 	self:Bar(92954, "~"..slicer, 30, 92954)
 	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
-	self:ScheduleTimer(OrbSpawn, 30)
+	self:ScheduleTimer(nextOrbSpawned, 30)
 	eggs = 0
-	handle = nil -- XXX Why do we need to save the handle? Can't we just do :CancelAllTimers() at phase change?
 	self:RegisterEvent("UNIT_HEALTH")
-	whelpGUIDs = {} -- XXX Table is already initialized at declaration, can't we just wipe() it here?
+	wipe(whelpGUIDs)
 	orbWarned = nil
 end
 
@@ -221,10 +218,10 @@ do
 end
 
 function mod:OrbDamage()
-	PopulateOrbList()
+	populateOrbList()
 	if orbWarned then return end
 	orbWarned = true
-	OrbWarning("damage")
+	orbWarning("damage")
 end
 
 function mod:Whelps()
@@ -268,7 +265,7 @@ function mod:UNIT_HEALTH()
 	if hp <= 30.5 then
 		self:Message("phase", CL["phase"]:format(2), "Positive", 86226, "Info")
 		self:UnregisterEvent("UNIT_HEALTH")
-		self:CancelTimer(handle)
+		self:CancelAllTimers()
 		self:SendMessage("BigWigs_StopBar", self, "~"..slicer)
 		self:SendMessage("BigWigs_StopBar", self, "~"..breath)
 	end
@@ -287,7 +284,7 @@ function mod:Deaths(mobId)
 			self:Bar("whelps", L["whelps"], 50, 69005)
 			self:Bar(92954, "~"..slicer, 30, 92954)
 			self:Bar(92944, "~"..breath, 24, 92944)
-			self:ScheduleTimer(OrbSpawn, 30)
+			self:ScheduleTimer(nextOrbSpawned, 30)
 		end
 	elseif mobId == 45213 then
 		self:Win()
