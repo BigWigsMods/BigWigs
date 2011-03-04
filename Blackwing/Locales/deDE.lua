@@ -9,6 +9,8 @@ if L then
 
 	L.air_phase_trigger = "Ja, lauft! Jeder Schritt lässt Euer Herz stärker klopfen. Laut und heftig... ohrenbetäubend. Es gibt kein Entkommen!" -- check
 
+	L.obnoxious_soon = "Nerviges Scheusal bald!"
+
 	L.searing_soon = "Sengende Flamme in 10 sek!"
 	L.sonicbreath_cooldown = "~Schallatem"
 end
@@ -136,9 +138,9 @@ if L then
 
 	L.acquiring_target = "Zielerfassung"
 
-	L.bomb_message = "Giftbombe verfolgt DICH!"
-	L.cloud_message = "Wolke auf DIR!"
-	L.protocol_message = "Giftbomben kommen!"
+	L.bomb_message = "Blob verfolgt DICH!"
+	L.cloud_message = "Wolke unter DIR!"
+	L.protocol_message = "Blobs kommen!"
 
 	L.iconomnotron = "Symbol auf aktivem Boss"
 	L.iconomnotron_desc = "Plaziert das primäre Schlachtzugssymbol auf dem aktiven Boss (benötigt Assistent oder höher)."

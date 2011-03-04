@@ -16,7 +16,7 @@ if L then
 	L.whelps = "Whelps"
 	L.whelps_desc = "Warning for the whelp waves."
 
-	L.w = "Possible Orb targets"
+	L.slicer = "Possible Orb targets"
 
 	L.egg_vulnerable = "Omelet time!"
 
