@@ -102,7 +102,7 @@ if L then
 
 	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
 
-	L.crackle_trigger = "The air crackles with electricity!"
+	L.crackle_trigger = "響起了電流霹啪作響的聲音!"
 	L.crackle_message = "即將 電擊！"
 
 	L.shadowblaze_message = "暗影炎！"

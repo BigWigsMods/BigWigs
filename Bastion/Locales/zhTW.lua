@@ -95,6 +95,6 @@ if L then
 
 	L.thundershock_quake_spam = "%s in %d"
 
-	L.last_phase_trigger = "An impressive display..."
+	L.last_phase_trigger = "令人印象深刻的表現..."
 end
 
