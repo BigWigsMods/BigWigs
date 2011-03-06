@@ -179,7 +179,7 @@ function mod:PhaseThree()
 		phase3warned = true
 	end
 	self:Bar(94085, shadowblaze, 10, 94085)
-	self:ScheduleTimer(nextBlaze, 10)
+	self:ScheduleTimer(nextBlaze, 13)
 end
 
 do
