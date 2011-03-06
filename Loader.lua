@@ -77,7 +77,7 @@ local usersAlpha = {}
 local usersRelease = {}
 local usersUnknown = {}
 -- Only set highestReleaseRevision if we're actually using a release of BigWigs.
--- If we set this an an alpha user we will alert release users with out-of-date warnings
+-- If we set this as an alpha user we will alert release users with out-of-date warnings
 -- and class them as out-of-date in /bwv (if our alpha version is higher). But they may be
 -- using the latest available release version of BigWigs. This method ensures they are
 -- classed as up-to-date in /bwv if they use the latest available release of BigWigs
@@ -219,8 +219,8 @@ local function versionTooltipFunc(tt)
 	end
 	if not add then
 		for player, version in pairs(usersAlpha) do
-			-- If this person's alpha version isn't SVN (-1) and it's lower than the highest registered release version minus 1 because
-			-- of tagging, or it's lower the highest registered alpha version (with 10 revision leeway) then that person is out-of-date
+			-- If this person's alpha version isn't SVN (-1) and it's lower than the highest found release version minus 1 because
+			-- of tagging, or it's lower than the highest found alpha version (with a 10 revision leeway) then that person is out-of-date
 			if version ~= -1 and (version < (highestReleaseRevision - 1) or version < (highestAlphaRevision - 10)) then
 				add = true
 				break
@@ -392,11 +392,12 @@ do
 			usersAlpha[sender] = message
 			usersRelease[sender] = nil
 			usersUnknown[sender] = nil
-			-- Harvest the highest alpha version we can find then use that
-			-- to make sure others are up-to-date. We allow upto a
-			-- 10 revision leeway before sending a nag
+			-- Harvest the highest alpha version we can find then use that to make sure
+			-- others are up-to-date. We allow upto a 10 revision leeway before sending a nag
+			-- Also compare that alpha version against the highest release version for a situation
+			-- where there is only 1 alpha in the raid and it is majorly out-of-date
 			if message > highestAlphaRevision then highestAlphaRevision = message end
-			if sender ~= pName and message ~= -1 and (highestAlphaRevision - 10) > message then
+			if sender ~= pName and message ~= -1 and ((highestAlphaRevision - 10) > message or (highestReleaseRevision - 10) > message) then
 				SendAddonMessage("BWOOD3", highestAlphaRevision, "WHISPER", sender)
 			end
 		end
@@ -608,8 +609,8 @@ do
 			elseif usersUnknown[player] then
 				ugly[#ugly + 1] = coloredNames[player]
 			elseif usersAlpha[player] then
-				-- If this person's alpha version isn't SVN (-1) and it's higher or the same as the highest registered release version minus 1 because
-				-- of tagging, or it's higher or the same as the highest registered alpha version (with 10 revision leeway) then that person good
+				-- If this person's alpha version isn't SVN (-1) and it's higher or the same as the highest found release version minus 1 because
+				-- of tagging, or it's higher or the same as the highest found alpha version (with a 10 revision leeway) then that person's good
 				if (usersAlpha[player] >= (highestReleaseRevision - 1) and usersAlpha[player] >= (highestAlphaRevision - 10)) or usersAlpha[player] == -1 then
 					good[#good + 1] = coloredNameVersion(player, usersAlpha[player], ALPHA)
 				else
