@@ -194,6 +194,7 @@ function mod:OnEngage()
 	self:RegisterEvent("UNIT_HEALTH")
 	wipe(whelpGUIDs)
 	orbWarned = nil
+	playerInList = nil
 end
 
 --------------------------------------------------------------------------------
