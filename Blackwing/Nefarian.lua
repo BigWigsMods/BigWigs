@@ -10,7 +10,7 @@ mod:RegisterEnableMob(41270, 41376)
 -- Locals
 --
 
-local phase, deadAdds, shadowBlazeTimer = 1, 0, 30
+local phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 local cinderTargets = mod:NewTargetList()
 local powerTargets = mod:NewTargetList()
 local shadowblaze = GetSpellInfo(94085)
