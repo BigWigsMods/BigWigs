@@ -142,17 +142,17 @@ function mod:Phase2(_, spellId)
 end
 
 local function CloudSpawn()
-	mod:Bar(89588, cloud, 9, 89588)
+	mod:Bar(89588, cloud, 10, 89588)
 	mod:Message(89588, cloud, "Important", 89588, "Info")
-	mod:ScheduleTimer(CloudSpawn, 9)
+	mod:ScheduleTimer(CloudSpawn, 10)
 end
 
 function mod:Phase3()
 	if phase >= 3 then return end
 	self:Message("phase", CL["phase"]:format(3), "Positive", 93279)
 	self:Bar(93286, windburst, 24, 93286)
-	self:Bar(89588, cloud, 15, 89588)
-	self:ScheduleTimer(CloudSpawn, 15)
+	self:Bar(89588, cloud, 16, 89588)
+	self:ScheduleTimer(CloudSpawn, 16)
 	self:SendMessage("BigWigs_StopBar", self, L["stormling_bar"])
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(87904))) -- Feedback
 	self:SendMessage("BigWigs_StopBar", self, L["acid_rain"]:format(acidRainCounter))
