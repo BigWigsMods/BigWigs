@@ -163,18 +163,10 @@ function mod:PhaseTwo()
 end
 
 local function nextBlaze()
-	if mod:GetInstanceDifficulty() > 2 then
-		if shadowBlazeTimer > 5 then
-			shadowBlazeTimer = shadowBlazeTimer - 5
-		end
-	else
-		if shadowBlazeTimer > 10 then
-			shadowBlazeTimer = shadowBlazeTimer - 5
-		end
+	if shadowBlazeTimer > 10 then
+		shadowBlazeTimer = shadowBlazeTimer - 5
 	end
-	if shadowBlazeTimer > 5 then
-		mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
-	end
+	mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
 	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
 	mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
 end
