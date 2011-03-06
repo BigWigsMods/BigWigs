@@ -9,6 +9,9 @@ if L then
 
 	L.air_phase_trigger = "Да, беги! С каждым шагом твое сердце бьется все быстрее. Эти громкие, оглушительные удары... Тебе некуда бежать!"
 
+	L.obnoxious_soon = "Скоро Несносность Беса!"
+
+	L.searing_soon = "Жгучее пламя через 10сек!"
 	L.sonicbreath_cooldown = "~Волновое дыхание"
 end
 
@@ -97,6 +100,8 @@ L = BigWigs:NewBossLocale("Nefarian", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
+	
+	L.discharge_bar = "~Искровой разряд"
 
 	L.phase_two_trigger = "Дерзкие смертные! Неуважение к чужой собственности нужно пресекать самым жестоким образом!"
 

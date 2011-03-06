@@ -55,23 +55,10 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "ruRU")
 if L then
 	L.paralysis_bar = "След. Паралич"
-
 	L.strikes_message = "%2$dx удар(а) на |3-3(%1$s)"
-end
-
-L = BigWigs:NewBossLocale("Sinestra", "ruRU")
-if L then
-	L.whelps = "Whelps"
-	L.whelps_desc = "Warning for the whelp waves"
-
-	L.egg_vulnerable = "Omlet time!"
-
-	L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
-	L.omelet_trigger = "You mistake this for weakness?  Fool!"
-
-	L.phase13 = "Фаза 1 и 3"
-	L.phase = "Фаза"
-	L.phase_desc = "Сообщать о смене фаз"
+	
+	L.breath_message = "Обжигающее дыхание!"
+	L.breath_bar = "~Дыхание"
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "ruRU")
@@ -83,6 +70,7 @@ if L then
 	L.switch_desc = "Сообщать о смене боссов"
 
 	L.shield_up_message = "ЩИТ!"
+	L.shield_down_message = "Щит СПАЛ!"
 	L.shield_bar = "След. щит"
 
 	L.switch_trigger = "Мы займемся ими!"
@@ -94,6 +82,23 @@ if L then
 
 	L.thundershock_quake_spam = "%s in %d"
 
-	L.last_phase_trigger = "ВОТ ВАША СМЕРТЬ!"
+	L.last_phase_trigger = "Ваше упорство..."
+end
+
+L = BigWigs:NewBossLocale("Sinestra", "ruRU")
+if L then
+	L.whelps = "Дракончики"
+	L.whelps_desc = "Сообщать о волнах дракончиков"
+	
+	L.slicer = "Possible Orb targets"
+
+	L.egg_vulnerable = "Omlet time!"
+
+	L.whelps_trigger = "Ешьте, дети мои! Пусть их мясо насытит вас!"
+	L.omelet_trigger = "Ты так в этом уверен? Глупец!"
+
+	L.phase13 = "Фаза 1 и 3"
+	L.phase = "Фаза"
+	L.phase_desc = "Сообщать о смене фаз"
 end
 
