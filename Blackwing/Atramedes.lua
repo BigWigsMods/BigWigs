@@ -98,12 +98,13 @@ function mod:ObnoxiousPhaseShift(...)
 end
 
 function mod:UNIT_AURA(_, unit)
-	if pesteredWarned then return end
-	if unit == "player" and UnitDebuff("player", pestered) then
-		self:Say(92677, CL["say"]:format(obnoxious))
+	if not pesteredWarned and UnitDebuff(unit, pestered) then
+		if unit == "player" then
+			self:Say(92677, CL["say"]:format(obnoxious))
+		end
+		self:TargetMessage(92677, obnoxious, UnitName(unit), "Attention", 92677, "Long")
+		pesteredWarned = true
 	end
-	self:TargetMessage(92677, obnoxious, UnitName(unit), "Attention", 92677, "Long")
-	pesteredWarned = true
 end
 
 function mod:Tracking(player, spellId, _, _, spellName)
