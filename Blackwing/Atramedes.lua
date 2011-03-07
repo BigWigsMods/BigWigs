@@ -102,7 +102,7 @@ function mod:UNIT_AURA(_, unit)
 	if unit == "player" and UnitDebuff("player", pestered) then
 		self:Say(92677, CL["say"]:format(obnoxious))
 	end
-	self:TargetMessage(92677, obnoxious, unit, "Attention", 92677, "Long")
+	self:TargetMessage(92677, obnoxious, UnitName(unit), "Attention", 92677, "Long")
 	pesteredWarned = true
 end
 
