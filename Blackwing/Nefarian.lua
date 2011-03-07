@@ -178,7 +178,7 @@ function mod:PhaseThree()
 		self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
 		phase3warned = true
 	end
-	self:Bar(94085, shadowblaze, 10, 94085)
+	self:Bar(94085, shadowblaze, 13, 94085)
 	self:ScheduleTimer(nextBlaze, 13)
 end
 
