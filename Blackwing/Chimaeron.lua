@@ -42,6 +42,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SystemFailureStart", 88853)
 	self:Log("SPELL_AURA_REMOVED", "SystemFailureEnd", 88853)
 	self:Log("SPELL_CAST_SUCCESS", "Mortality", 82890)
+	self:Log("SPELL_AURA_APPLIED", "Break", 82881)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Break", 82881)
 	self:Log("SPELL_AURA_APPLIED", "DoubleAttack", 88826)
 	self:Log("SPELL_CAST_START", "Massacre", 82848)
@@ -63,8 +64,10 @@ function mod:OnEngage(diff)
 	self:SendMessage("BigWigs_StopBar", self, self.displayName)
 	self:Berserk(450)
 	if diff < 3 then
-		self:Bar(88853, L["next_system_failure"], 90, 88853) --typically happens at 60 or 90 on heroic, but random
+		self:Bar(88853, L["next_system_failure"], 90, 88853) --happens randomly at either 60 or 90 on heroic
 	end
+	self:Bar(82848, GetSpellInfo(82848), 30, 82848) --Massacre
+	
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -104,7 +107,7 @@ function mod:Mortality(_, spellId, _, _, spellName)
 end
 
 function mod:Break(player, spellId, _, _, _, stack)
-	self:TargetMessage(82881, L["break_message"], player, "Attention", spellId, nil, stack)
+	self:TargetMessage(82881, L["break_message"], player, "Attention", spellId, nil, stack or 1)
 end
 
 function mod:DoubleAttack(_, spellId, _, _, spellName)
