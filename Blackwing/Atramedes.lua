@@ -11,8 +11,7 @@ mod:RegisterEnableMob(41442)
 --
 
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
-local searingFlame, obnoxious, pestered = GetSpellInfo(77840), GetSpellInfo(92702), GetSpellInfo(92685)
-local pesteredWarned = nil
+local searingFlame = GetSpellInfo(77840)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -59,7 +58,6 @@ function mod:OnBossEnable()
 	self:Yell("AirPhase", L["air_phase_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "ObnoxiousPhaseShift", 92681)
-	self:RegisterEvent("UNIT_AURA")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -72,7 +70,7 @@ function mod:OnEngage(diff)
 	self:DelayedMessage(77840, 35, L["searing_soon"], "Attention", 77840)
 	self:Bar("air_phase", L["air_phase"], 92, 5740) -- Rain of Fire Icon
 	if diff > 2 then
-		pesteredWarned = nil
+		self:RegisterEvent("UNIT_AURA")
 		self:Berserk(600)
 	end
 end
@@ -94,16 +92,22 @@ function mod:ObnoxiousPhaseShift(...)
 	self:Message(92677, L["obnoxious_soon"], "Attention", 92677) -- do we really need this?
 	local dGUID = select(10, ...)
 	FiendCheck(dGUID)
-	pesteredWarned = nil
+	if self:GetInstanceDifficulty() > 2 then
+		self:RegisterEvent("UNIT_AURA")
+	end
 end
 
-function mod:UNIT_AURA(_, unit)
-	if not pesteredWarned and UnitDebuff(unit, pestered) then
-		if unit == "player" then
-			self:Say(92677, CL["say"]:format(obnoxious))
+do
+	local pestered = GetSpellInfo(92685)
+	local obnoxious = GetSpellInfo(92702)
+	function mod:UNIT_AURA(_, unit)
+		if UnitDebuff(unit, pestered) then
+			if unit == "player" then
+				self:Say(92677, CL["say"]:format(obnoxious))
+			end
+			self:TargetMessage(92677, obnoxious, UnitName(unit), "Attention", 92677, "Long")
+			self:UnregisterEvent("UNIT_AURA")
 		end
-		self:TargetMessage(92677, obnoxious, UnitName(unit), "Attention", 92677, "Long")
-		pesteredWarned = true
 	end
 end
 
