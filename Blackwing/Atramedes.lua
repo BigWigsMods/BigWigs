@@ -92,9 +92,7 @@ function mod:ObnoxiousPhaseShift(...)
 	self:Message(92677, L["obnoxious_soon"], "Attention", 92677) -- do we really need this?
 	local dGUID = select(10, ...)
 	FiendCheck(dGUID)
-	if self:GetInstanceDifficulty() > 2 then
-		self:RegisterEvent("UNIT_AURA")
-	end
+	self:RegisterEvent("UNIT_AURA")
 end
 
 do
