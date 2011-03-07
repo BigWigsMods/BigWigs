@@ -119,7 +119,7 @@ end
 
 function mod:OnEngage(diff)
 	if diff > 2 then
-		self:OpenProximity(8)
+		self:OpenProximity(10)
 	end
 
 	self:Bar(82631, L["shield_bar"], 30, 82631)
@@ -149,7 +149,7 @@ do
 		if UnitIsUnit(player, "player") then
 			self:Say(83099, CL["say"]:format(spellName))
 			self:FlashShake(83099)
-			self:OpenProximity(8)
+			self:OpenProximity(10)
 		end
 	end
 end
