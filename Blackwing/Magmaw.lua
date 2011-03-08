@@ -45,7 +45,7 @@ if L then
 
 	L.spew_bar = "~Next Spew"
 	L.spew_warning = "Lava Spew Soon!"
-	
+
 	L.mangle_bar = "Mangle: %s"
 	L.mangle_cooldown = "~Next Mangle"
 end
@@ -176,3 +176,4 @@ function mod:Mangle(player, spellId, _, _, spellName)
 	self:Bar(89773, L["mangle_bar"]:format(player), 30, spellId)
 	self:Bar(89773, L["mangle_cooldown"], 90, spellId)
 end
+

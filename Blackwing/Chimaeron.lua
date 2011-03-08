@@ -67,7 +67,6 @@ function mod:OnEngage(diff)
 		self:Bar(88853, L["next_system_failure"], 90, 88853) --happens randomly at either 60 or 90 on heroic
 	end
 	self:Bar(82848, GetSpellInfo(82848), 30, 82848) --Massacre
-	
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -96,8 +95,7 @@ end
 function mod:Massacre(_, spellId, _, _, spellName)
 	self:Message(82848, spellName, "Attention", spellId)
 	self:Bar(82848, spellName, 30, spellId)
-	--Caustic Slime
-	self:Bar(88917, GetSpellInfo(88917), 19, 88917)
+	self:Bar(88917, GetSpellInfo(88917), 19, 88917) --Caustic Slime
 end
 
 function mod:Mortality(_, spellId, _, _, spellName)

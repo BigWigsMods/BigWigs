@@ -57,6 +57,9 @@ if L then
 
 	L.spew_bar = "~Lavafontäne"
 	L.spew_warning = "Lavafontäne bald!"
+
+	L.mangle_bar = "Zerfleischen: %s"
+	L.mangle_cooldown = "~Zerfleischen"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
