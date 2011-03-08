@@ -57,6 +57,9 @@ if L then
 
 	L.spew_bar = "~다음 용암 내뿜기"
 	L.spew_warning = "곧 용암 내뿜기!"
+	
+	L.mangle_bar = "짓이기기: %s"
+	L.mangle_cooldown = "~다음 짓이기기"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "koKR")

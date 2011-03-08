@@ -45,6 +45,9 @@ if L then
 
 	L.spew_bar = "~Next Spew"
 	L.spew_warning = "Lava Spew Soon!"
+	
+	L.mangle_bar = "Mangle: %s"
+	L.mangle_cooldown = "~Next Mangle"
 end
 L = mod:GetLocale()
 
@@ -73,7 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Infection", 94679, 78097, 78941, 91913, 94678)
 	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 94679, 78097, 78941, 91913, 94678)
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
-	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617) -- check IDs
+	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617)
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690, 91919, 91931, 91932)
 	self:Emote("Slump", L["slump_trigger"])
 	self:Emote("Vulnerability", L["expose_trigger"])
@@ -91,6 +94,7 @@ function mod:OnEngage(diff)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
 	self:Bar(78006, GetSpellInfo(78006), 30, 78006) --Pillar of Flame
 	self:Bar(91931, L["spew_bar"], 24, 91931)
+	self:Bar(89773, L["mangle_cooldown"], 90, 89773)
 	self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
 	phase = 1
 end
@@ -167,7 +171,8 @@ function mod:Slump()
 	self:Message("slump", L["slump_message"], "Positive", 36702, "Info")
 end
 
-function mod:Mangle(_, spellId, _, _, spellName)
-	self:Bar(89773, spellName, 30, spellId)
+function mod:Mangle(player, spellId, _, _, spellName)
+	self:TargetMessage(89773, spellName, player, "Personal", spellId, "Info")
+	self:Bar(89773, L["mangle_bar"]:format(player), 30, spellId)
+	self:Bar(89773, L["mangle_cooldown"], 90, spellId)
 end
-
