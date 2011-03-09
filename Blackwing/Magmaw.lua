@@ -77,6 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 94679, 78097, 78941, 91913, 94678)
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617)
+	self:Log("SPELL_AURA_REMOVED", "MangleRemoved", 89773, 91912, 94616, 94617)
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690, 91919, 91931, 91932)
 	self:Emote("Slump", L["slump_trigger"])
 	self:Emote("Vulnerability", L["expose_trigger"])
@@ -171,9 +172,17 @@ function mod:Slump()
 	self:Message("slump", L["slump_message"], "Positive", 36702, "Info")
 end
 
-function mod:Mangle(player, spellId, _, _, spellName)
-	self:TargetMessage(89773, spellName, player, "Personal", spellId, "Info")
-	self:Bar(89773, L["mangle_bar"]:format(player), 30, spellId)
-	self:Bar(89773, L["mangle_cooldown"], 90, spellId)
+do
+	local mangleTarget = nil
+	function mod:Mangle(player, spellId, _, _, spellName)
+		mangleTarget = player
+		self:TargetMessage(89773, spellName, player, "Personal", spellId, "Info")
+		self:Bar(89773, L["mangle_bar"]:format(player), 30, spellId)
+		self:Bar(89773, L["mangle_cooldown"], 90, spellId)
+	end
+
+	function mod:MangleRemoved(player, spellId, _, _, spellName)
+		self:SendMessage("BigWigs_StopBar", self,  L["mangle_bar"]:format(mangleTarget))
+	end
 end
 
