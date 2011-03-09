@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if not L then return end
 if L then
@@ -57,6 +57,9 @@ if L then
 
 	L.spew_bar = "~Próximo Vómito"
 	L.spew_warning = "¡Vómito de lava pronto!"
+
+	L.mangle_bar = "Destrozar: %s"
+	L.mangle_cooldown = "~Próximo Destrozar"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "esES")
