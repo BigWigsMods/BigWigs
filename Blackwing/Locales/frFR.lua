@@ -57,6 +57,9 @@ if L then
 
 	L.spew_bar = "~Prochain Crachement"
 	L.spew_warning = "Crachement de magma imminent !"
+
+	L.mangle_bar = "Mutilation : %s"
+	L.mangle_cooldown = "~Prochain Mutilation"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")
