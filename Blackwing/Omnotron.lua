@@ -94,20 +94,19 @@ end
 --
 
 do
-	local function checkTarget(source)
+	local function checkTarget(sGUID)
 		for i = 1, 4 do
 			local bossId = ("boss%d"):format(i)
-			if UnitName(bossId) == source then
-				if UnitIsUnit(bossId.."target", "player") then
-					mod:FlashShake(80157)
-					mod:Say(80157, CL["say"]:format((GetSpellInfo(80157))))
-				end
+			if UnitGUID(bossId) == sGUID and UnitIsUnit(bossId.."target", "player") then
+				mod:FlashShake(80157)
+				mod:Say(80157, CL["say"]:format((GetSpellInfo(80157))))
 				break
 			end
 		end
 	end
-	function mod:ChemicalCloudCast(_, _, source)
-		self:ScheduleTimer(checkTarget, 0.1, source)
+	function mod:ChemicalCloudCast(...)
+		local sGUID = select(11, ...)
+		self:ScheduleTimer(checkTarget, 0.1, sGUID)
 	end
 end
 
