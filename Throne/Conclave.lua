@@ -13,6 +13,7 @@ mod:RegisterEnableMob(45870, 45871, 45872) -- Anshal, Nezir, Rohash
 local firstWindBlast = true
 local toxicSporesWarned = false
 local toxicSpores = GetSpellInfo(86281)
+local soothingBreeze = GetSpellInfo(86205)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,7 +42,7 @@ function mod:GetOptions()
 	return {
 		86193, "storm_shield",
 		{84645, "FLASHSHAKE"},
-		85422, 86281,
+		85422, 86281, 86205,
 		86307, "full_power", "berserk", "bosskill"
 	}, {
 		[86193] = "Rohash",
@@ -61,7 +62,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
 	self:Log("SPELL_AURA_APPLIED", "ToxicSpores", 86281)
-
+	self:Log("SPELL_CAST_START", "SoothingBreeze", 86205) -- Only SPELL_CAST_START works here.
+	
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 45872) -- They die at the same time, enough to check for one
@@ -72,6 +74,7 @@ function mod:OnEngage(diff)
 	firstWindBlast = true
 	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
+    self:Bar(86205, soothingBreeze, 16.2, 86205)
 
 	local flag = BigWigs.C.BAR
 	local stormShield, nurture, windBlast = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193)
@@ -90,6 +93,7 @@ end
 function mod:FullPower(_, spellId)
 	self:Bar("full_power", L["full_power"], 113, spellId)
 	self:Message("full_power", L["full_power"], "Attention", spellId)
+	self:Bar(86205, soothingBreeze, 31.3, 86205)
 end
 
 function mod:WindChill(player, spellId, _, _, _, stack)
@@ -126,6 +130,11 @@ function mod:ToxicSpores(_, spellId, _, _, spellName)
 		self:Message(86281, spellName, "Urgent", spellId)
 		toxicSporesWarned = true
 	end
+end
+
+function mod:SoothingBreeze(_, spellId, _, _, spellName)
+	self:Bar(86205, spellName, 32.5, spellId)
+	self:Message(86205, spellName, "Urgent", spellId)
 end
 
 function mod:Nurture(_, spellId, _, _, spellName)
