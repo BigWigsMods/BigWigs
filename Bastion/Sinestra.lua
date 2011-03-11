@@ -146,6 +146,7 @@ function mod:GetOptions()
 		{92954, "FLASHSHAKE", "ICON"}, -- Twilight Slicer
 		86227, -- Extinction
 		"whelps",
+		87946,
 
 	-- Phase 2
 		87654, -- Omelet Time
@@ -176,6 +177,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "Egg", 87654)
 	self:Log("SPELL_AURA_APPLIED", "Indomitable", 92946)
 	self:Log("SPELL_CAST_START", "Extinction", 86227)
+	
+	elf:Log("SPELL_AURA_APPLIED", "RedEssence", 92946)
 
 	self:Yell("EggTrigger", L["omelet_trigger"])
 	self:Yell("Whelps", L["whelps_trigger"])
@@ -289,5 +292,20 @@ function mod:Deaths(mobId)
 		end
 	elseif mobId == 45213 then
 		self:Win()
+	end
+end
+
+do
+	local scheduled = nil
+	local function Essence(spellName)
+		mod:Message(87946, spellName, "Attention", 87946, "Long")
+		mod:Bar(87946, spellName, 180, 87946)
+		scheduled = nil
+	end
+	function mod:RedEssence(_, spellId, _, _, spellName)
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(Essence, 0.3, spellName)
+		end
 	end
 end
