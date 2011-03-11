@@ -31,6 +31,7 @@ if L then
 	L.dazzling_message = "Swirly zones incoming!"
 
 	L.blast_message = "Falling Blast" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
+	L.meteorite_say = "Meteorite on ME!"
 	L.engulfingmagic_say = "Engulf on ME!"
 	L.engulfingmagic_cooldown = "~Engulfing Magic"
 
@@ -49,7 +50,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840,
+		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE", "SAY"}, 86059, 86840,
 		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 92898, 93051,
 		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
@@ -188,6 +189,7 @@ end
 
 function mod:UNIT_AURA(event, unit)
 	if unit == "player" and not markWarned and UnitDebuff("player", marked) then
+		self:Say(88518, L["meteorite_say"])
 		self:FlashShake(88518)
 		self:LocalMessage(88518, CL["you"]:format(marked), "Personal", 88518, "Long")
 		markWarned = true
