@@ -14,7 +14,7 @@ end
 
 L = BigWigs:NewBossLocale("Chimaeron", "zhTW")
 if L then
-	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
+	L.bileotron_engage = "「好膽」機器人開始活動，並且噴出一種惡臭的物質。"
 
 	L.next_system_failure = "<下一系統失效>"
 	L.break_message = "破壞%2$dx：>%1$s<！"
@@ -36,7 +36,7 @@ if L then
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當第二階段時顯示距離檢查。"
 	L.phase2_message = "第二階段！"
-	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L.phase2_yell = "真難想像!看來你真有機會打敗我的蟲子!也許我可幫忙...扭轉戰局。"
 
 	-- normal
 	L.pillar_of_flame_cd = "<烈焰之柱>"
@@ -65,7 +65,7 @@ if L then
 
 	--normal
 	L.final_phase = "最終階段"
-	L.final_phase_soon = "Final phase soon!"
+	L.final_phase_soon = "即將 最終階段"
 
 	L.release_aberration_message = ">%s< 畸形者剩餘！"
 	L.release_all = ">%s< 釋放畸形者！"
@@ -88,7 +88,7 @@ if L then
 	L.green_phase_trigger = "這個有點不穩定，但哪有實驗不失敗的?"
 	L.green_phase_emote_trigger = "綠色" --verify
 	L.green_phase = "|cFF33FF00綠色|r階段！"
-	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_trigger = "你的混合劑太弱了，瑪洛里亞克!需要多點...後勁!"
 	L.dark_phase_emote_trigger = "黑色" --verify
 	L.dark_phase = "|cFF660099黑色|r階段！"
 end
@@ -119,7 +119,7 @@ if L then
 	L.nef = "維克多·奈法利斯領主"
 	L.nef_desc = "當維克多·奈法利斯領主施放技能時發出警報。"
 
-	L.pool = "Pool Explosion"
+	L.pool = "秘法逆爆"
 
 	L.switch = "轉換"
 	L.switch_desc = "當轉換時發出警報。"
