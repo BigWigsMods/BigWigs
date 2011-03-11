@@ -346,7 +346,7 @@ do
 		self.elapsed = self.elapsed + elapsed
 		if self.elapsed > 5 then
 			self:Hide()
-			if BIGWIGS_RELEASE_TYPE == ALPHA then
+			if BIGWIGS_RELEASE_TYPE == ALPHA or BIGWIGS_RELEASE_TYPE == REPO then
 				SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
 			else
 				SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
