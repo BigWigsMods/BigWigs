@@ -178,7 +178,7 @@ do
 		mangleTarget = player
 		self:TargetMessage(89773, spellName, player, "Personal", spellId, "Info")
 		self:Bar(89773, L["mangle_bar"]:format(player), 30, spellId)
-		self:Bar(89773, L["mangle_cooldown"], 90, spellId)
+		self:Bar(89773, L["mangle_cooldown"], 95, spellId)
 	end
 
 	function mod:MangleRemoved(player, spellId, _, _, spellName)
