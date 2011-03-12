@@ -40,7 +40,6 @@ if L then
 	L.dazzling_message = "곧 황혼 세계"
 
 	L.blast_message = "황혼 폭발"
-	L.meteorite_say = "나에게 황혼 유성!!"
 	L.engulfingmagic_say = "나에게 사로잡힌 마법!"
 	L.engulfingmagic_cooldown = "다음 사로잡힌 마법"
 
