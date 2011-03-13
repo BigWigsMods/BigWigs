@@ -38,7 +38,6 @@ if L then
 	L.dazzling_message = "¡Zonas espirales inminentes!"
 
 	L.blast_message = "Explosión en caída" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
-	L.meteorite_say = "¡Meteorito en MI!"
 	L.engulfingmagic_say = "¡Trago de magia en MI!"
 	L.engulfingmagic_cooldown = "~Trago de magia"
 

@@ -62,8 +62,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
 	self:Log("SPELL_AURA_APPLIED", "ToxicSpores", 86281)
-	self:Log("SPELL_CAST_START", "SoothingBreeze", 86205) -- Only SPELL_CAST_START works here.
-	
+	self:Log("SPELL_CAST_START", "SoothingBreeze", 86205)
+
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 45872) -- They die at the same time, enough to check for one
@@ -74,7 +74,7 @@ function mod:OnEngage(diff)
 	firstWindBlast = true
 	toxicSporesWarned = false
 	self:Bar("full_power", L["full_power"], 90, 86193)
-    self:Bar(86205, soothingBreeze, 16.2, 86205)
+	self:Bar(86205, soothingBreeze, 16.2, 86205)
 
 	local flag = BigWigs.C.BAR
 	local stormShield, nurture, windBlast = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193)
