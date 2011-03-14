@@ -160,7 +160,11 @@ function mod:Phase3()
 end
 
 function mod:Feedback(_, spellId, _, _, spellName, stack)
-	if not stack then stack = 1 end
+	if not stack then
+		stack = 1
+	else
+		self:SendMessage("BigWigs_StopBar", self, L["feedback_message"]:format(stack-1))
+	end
 	self:Bar(87904, L["feedback_message"]:format(stack), 20, spellId)
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId)
 end
