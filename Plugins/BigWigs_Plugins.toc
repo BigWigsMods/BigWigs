@@ -16,6 +16,7 @@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
+## OptionalDeps: Tukui
 
 ## X-Category: Raid
 ## X-BigWigs-LoadOn-CoreEnabled: 1

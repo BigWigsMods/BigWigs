@@ -6,7 +6,6 @@ if not L then return end
 
 L["Style"] = "Estilo"
 L.bigWigsBarStyleName_Default = "Por defecto"
-L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
 
 L["Clickable Bars"] = "Barras clicables"
 L.clickableBarsDesc = "Las barras de Big Wigs bars son clicables por defecto. De esta forma puedes targetear objetos o lanzar hechizos AoE detrás de ellos, cambia el ángulo de la cámara, y así sucesivamente, mientras tu cursos está encima de las barras. |cffff4411Si habilitas las barras clicables, esto dejará de funcionar.|r Las barras interceptarán cualquier clic de ratón que hagas en ellas.\n"

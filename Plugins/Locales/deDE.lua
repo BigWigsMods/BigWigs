@@ -8,7 +8,6 @@ if not L then return end
 
 L["Style"] = "Stil"
 L.bigWigsBarStyleName_Default = "Standard"
-L.bigWigsBarStyleName_BeautyCase = "Beauty Case"
 
 L["Clickable Bars"] = "Interaktive Leisten"
 L.clickableBarsDesc = "Big Wigs Leisten sind standardmäßig nicht anklickbar. Dies ermöglicht es, das Ziel zu wechseln, AoE-Zauber zu setzen und die Kameraperspektive zu ändern, während sich die Maus über den Leisten befindet. |cffff4411Die Aktivierung der Interaktiven Leisten verhindert dieses Verhalten.|r Die Leisten werden jeden Mausklick abfangen, oben beschriebene Aktionen können dann nur noch außerhalb der Leistenanzeige ausgeführt werden.\n"

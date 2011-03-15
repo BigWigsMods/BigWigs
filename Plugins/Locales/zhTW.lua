@@ -8,7 +8,6 @@ if not L then return end
 
 L["Style"] = "風格"
 L.bigWigsBarStyleName_Default = "預設"
-L.bigWigsBarStyleName_BeautyCase = "美化"
 
 L["Clickable Bars"] = "可點擊計時條"
 L.clickableBarsDesc = "Big Wigs 計時條預設是點擊穿越的。這樣可以選擇目標或使用 AoE 法術攻擊物體，更改鏡頭角度等等，當滑鼠指針劃過計時條。|cffff4411如果啟用可點擊計時條，這些將不能實現。|r計時條將攔截任何滑鼠點擊并阻止相應功能。\n"

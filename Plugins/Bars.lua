@@ -1,3 +1,4 @@
+
 --[[
 See BigWigs/Docs/BarStyles.txt for in-depth information on how to register new
 bar styles from 3rd party addons.
@@ -64,15 +65,32 @@ local barStyles = {
 local barStyleRegister = {}
 
 do
-	-- BeautyCase styling, based on !BeatyCase by someone, I forget who.
+	-- !Beautycase styling, based on !Beatycase by Neal "Neave" @ WowI, texture made by Game92 "Aftermathh" @ WowI
+
 	local textureNormal = "Interface\\AddOns\\BigWigs\\Textures\\beautycase"
+
+	local freeBackgroundsbc = {}
+
+	local backdropbc = {
+		bgFile = [[Interface\Buttons\WHITE8x8]],
+		insets = {top = 1, left = 1, bottom = 1, right = 1},
+	}
+
+	local function createBackgroundbc()
+		local bgbc = CreateFrame("Frame")
+		bgbc:SetBackdrop(backdropbc)
+		bgbc:SetBackdropColor(.1,.1,.1,1)
+		bgbc:SetWidth(10)
+		bgbc:SetHeight(10)
+		return bgbc
+	end
 
 	local function createBorder(self)
 		local border = UIParent:CreateTexture(nil, "OVERLAY")
 		border:SetParent(self)
 		border:SetTexture(textureNormal)
-		border:SetWidth(11)
-		border:SetHeight(11)
+		border:SetWidth(12)
+		border:SetHeight(12)
 		border:SetVertexColor(1, 1, 1)
 		return border
 	end
@@ -87,9 +105,28 @@ do
 			border:Hide()
 		end
 		freeBorderSets[#freeBorderSets + 1] = borders
+
+		if not bgbc then return end
+		bgbc:SetParent(UIParent)
+		bgbc:Hide()
+		freeBackgroundsbc[#freeBackgroundsbc + 1] = bgbc
 	end
 
 	local function styleBar(bar)
+		local bgbc = nil
+		if #freeBackgroundsbc > 0 then
+			bgbc = table.remove(freeBackgroundsbc)
+		else
+			bgbc = createBackgroundbc()
+		end
+		bgbc:SetParent(bar)
+		bgbc:ClearAllPoints()
+		bgbc:SetPoint("TOPLEFT", bar, "TOPLEFT", -1, 1)
+		bgbc:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
+		bgbc:SetFrameStrata("LOW")
+		bgbc:Show()
+		bar:Set("bigwigs:beautycase:borders", bgbc)
+
 		local borders = nil
 		if #freeBorderSets > 0 then
 			borders = table.remove(freeBorderSets)
@@ -135,35 +172,43 @@ do
 				border:SetPoint("BOTTOMRIGHT", borders[4], "TOPRIGHT")
 			end
 		end
+
 		bar:Set("bigwigs:beautycase:borders", borders)
 	end
 
 	barStyles.BeautyCase = {
 		apiVersion = 1,
 		version = 1,
-		GetSpacing = function(bar) return 11 end,
+		GetSpacing = function(bar) return 10 end,
 		ApplyStyle = styleBar, -- function(bar) return end
 		BarStopped = freeStyle,
-		GetStyleName = function()
-			return L.bigWigsBarStyleName_BeautyCase
-		end,
+		GetStyleName = function() return "!Beautycase" end,
 	}
 end
 
 do
 	-- TukUI Bar Styler
+
 	local freeBackgrounds = {}
+
 	local backdrop = {
 		bgFile = "Interface\\Buttons\\WHITE8X8",
 		edgeFile = "Interface\\Buttons\\WHITE8X8",
 		tile = false, tileSize = 0, edgeSize = 0.64,
 		insets = { left = -0.64, right = -0.64, top = -0.64, bottom = -0.64}
 	}
+
 	local function createBackground()
 		local bg = CreateFrame("Frame")
 		bg:SetBackdrop(backdrop)
-		bg:SetBackdropColor(.1,.1,.1,1)
-		bg:SetBackdropBorderColor(.6,.6,.6,1)
+		if IsAddOnLoaded("Tukui") then
+			local F, C, L = unpack(Tukui) -- tukui support :)
+			bg:SetBackdropColor(unpack(C["media"].backdropcolor))
+			bg:SetBackdropBorderColor(unpack(C["media"].bordercolor))
+		else
+			bg:SetBackdropColor(.1,.1,.1,1)
+			bg:SetBackdropBorderColor(.6,.6,.6,1)
+		end
 		return bg
 	end
 
@@ -818,17 +863,13 @@ do
 
 		-- Iterate all running bars
 		if currentBarStyler then
-			if normalAnchor then
-				for bar in pairs(normalAnchor.bars) do
-					currentBarStyler.BarStopped(bar)
-					newBarStyler.ApplyStyle(bar)
-				end
+			for bar in pairs(normalAnchor.bars) do
+				currentBarStyler.BarStopped(bar)
+				newBarStyler.ApplyStyle(bar)
 			end
-			if emphasizeAnchor then
-				for bar in pairs(emphasizeAnchor.bars) do
-					currentBarStyler.BarStopped(bar)
-					newBarStyler.ApplyStyle(bar)
-				end
+			for bar in pairs(emphasizeAnchor.bars) do
+				currentBarStyler.BarStopped(bar)
+				newBarStyler.ApplyStyle(bar)
 			end
 		end
 		currentBarStyler = newBarStyler
