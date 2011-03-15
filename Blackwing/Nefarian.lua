@@ -110,7 +110,7 @@ do
 	local prev = 0
 	function mod:PersonalShadowBlaze(player, spellId)
 		local t = GetTime()
-		if (t - prev) > 2 and UnitIsUnit(player, "player") then
+		if (t - prev) > 1 and UnitIsUnit(player, "player") then
 			prev = t
 			self:LocalMessage(94085, L["shadowblaze_message"], "Personal", spellId, "Info")
 			self:FlashShake(94085)
