@@ -35,7 +35,7 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
-	L.shadowblaze_message = "Fire under you!"
+	L.shadowblaze_message = "Fire under YOU!"
 
 	L.onyxia_power_message = "Explosion soon!"
 
