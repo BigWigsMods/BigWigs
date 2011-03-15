@@ -35,7 +35,7 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
-	L.shadowblaze_message = "Fire"
+	L.shadowblaze_message = "Fire under you!"
 
 	L.onyxia_power_message = "Explosion soon!"
 
@@ -47,7 +47,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		94115, 78999, 81272, {94085, "FLASHSHAKE"},
 		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, {80626, "FLASHSHAKE"}, "berserk",
@@ -107,15 +107,13 @@ do
 end
 
 do
-	local last = 0
+	local prev = 0
 	function mod:PersonalShadowBlaze(player, spellId)
-		local time = GetTime()
-		if (time - last) > 2 then
-			last = time
-			if UnitIsUnit(player, "player") then
-				self:LocalMessage(94085, CL["you"]:format(L["shadowblaze_message"]), "Personal", spellId, "Info")
-				self:FlashShake(94085)
-			end
+		local t = GetTime()
+		if (t - prev) > 2 and UnitIsUnit(player, "player") then
+			prev = t
+			self:LocalMessage(94085, L["shadowblaze_message"], "Personal", spellId, "Info")
+			self:FlashShake(94085)
 		end
 	end
 end
