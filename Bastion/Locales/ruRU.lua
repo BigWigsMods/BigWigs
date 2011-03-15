@@ -90,9 +90,9 @@ if L then
 	L.whelps = "Дракончики"
 	L.whelps_desc = "Сообщать о волнах дракончиков"
 	
-	L.slicer = "Possible Orb targets"
+	L.slicer = "Возможные цели луча"
 
-	L.egg_vulnerable = "Omlet time!"
+	L.egg_vulnerable = "Время омлета!"
 
 	L.whelps_trigger = "Ешьте, дети мои! Пусть их мясо насытит вас!"
 	L.omelet_trigger = "Ты так в этом уверен? Глупец!"

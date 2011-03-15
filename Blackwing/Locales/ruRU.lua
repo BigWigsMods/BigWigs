@@ -57,6 +57,9 @@ if L then
 
 	L.spew_bar = "~Изрыгание лавы"
 	L.spew_warning = "Скоро Изрыгание лавы!"
+	
+	L.mangle_bar = "Увечье: %s"
+	L.mangle_cooldown = "~Увечье"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
