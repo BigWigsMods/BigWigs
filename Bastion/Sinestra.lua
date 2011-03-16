@@ -40,7 +40,6 @@ local orbList = {}
 local orbWarned = nil
 local playerInList = nil
 local whelpGUIDs = {}
-local essenceWarned = nil
 
 local function isTank(unit)
 	-- 1. check blizzard tanks first
@@ -147,7 +146,6 @@ function mod:GetOptions()
 		{92954, "FLASHSHAKE", "ICON"}, -- Twilight Slicer
 		86227, -- Extinction
 		"whelps",
-		87946,
 
 	-- Phase 2
 		87654, -- Omelet Time
@@ -179,8 +177,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Indomitable", 92946)
 	self:Log("SPELL_CAST_START", "Extinction", 86227)
 
-	self:Log("SPELL_AURA_APPLIED", "RedEssence", 92946)
-
 	self:Yell("EggTrigger", L["omelet_trigger"])
 	self:Yell("Whelps", L["whelps_trigger"])
 
@@ -199,7 +195,6 @@ function mod:OnEngage()
 	wipe(whelpGUIDs)
 	orbWarned = nil
 	playerInList = nil
-	essenceWarned = nil
 end
 
 --------------------------------------------------------------------------------
@@ -295,11 +290,4 @@ function mod:Deaths(mobId)
 	elseif mobId == 45213 then
 		self:Win()
 	end
-end
-
-function mod:RedEssence(_, spellId, _, _, spellName)
-	if not essenceWarned then return end
-	essenceWarned = true
-	self:Bar(87946, spellName, 180, spellId)
-	self:Message(87946, spellName, "Attention", spellId, "Long")
 end
