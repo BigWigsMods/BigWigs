@@ -562,7 +562,7 @@ do
 			wipe(tooClose)
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) then
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
@@ -622,7 +622,7 @@ do
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
 			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) then
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
