@@ -119,10 +119,8 @@ do
 end
 
 function mod:Electrocute()
-	if self.isEngaged then
-		self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
-		self:Bar(81272, (GetSpellInfo(81272)), 5, 81272)
-	end
+	self:Message(81272, L["crackle_message"], "Urgent", 81272, "Alert")
+	self:Bar(81272, (GetSpellInfo(81272)), 5, 81272)
 end
 
 function mod:Deaths(mobId)
@@ -176,8 +174,8 @@ function mod:PhaseThree()
 		self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
 		phase3warned = true
 	end
-	self:Bar(94085, shadowblaze, 13, 94085)
-	self:ScheduleTimer(nextBlaze, 13)
+	self:Bar(94085, shadowblaze, 12, 94085)
+	self:ScheduleTimer(nextBlaze, 12)
 end
 
 do
@@ -217,7 +215,6 @@ do
 end
 
 function mod:StolenPower(player, spellId, _, _, spellName, stack)
-	-- XXX this needs a new stack value
 	if UnitIsUnit(player, "player") and stack == 150 then
 		self:FlashShake(80626)
 		self:LocalMessage(80626, spellName, "Personal", spellId, "Info")
