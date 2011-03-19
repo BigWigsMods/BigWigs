@@ -113,7 +113,7 @@ if L then
 	L.crackle_trigger = "L'électricité crépite dans l'air !"
 	L.crackle_message = "Electrocuter imminent !"
 
-	L.shadowblaze_message = "Feu"
+	L.shadowblaze_message = "Ombrase sur vous !"
 
 	L.onyxia_power_message = "Explosion imminente !"
 
@@ -147,4 +147,3 @@ if L then
 	L.iconomnotron = "Icône sur le boss actif"
 	L.iconomnotron_desc = "Place l'icône de raid primaire sur le boss actif (nécessite d'être assistant ou mieux)."
 end
-
