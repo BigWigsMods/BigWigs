@@ -69,8 +69,6 @@ do
 
 	local textureNormal = "Interface\\AddOns\\BigWigs\\Textures\\beautycase"
 
-	local freeBackgroundsbc = {}
-
 	local backdropbc = {
 		bgFile = [[Interface\Buttons\WHITE8x8]],
 		insets = {top = 1, left = 1, bottom = 1, right = 1},
@@ -79,7 +77,7 @@ do
 	local function createBackgroundbc()
 		local bgbc = CreateFrame("Frame")
 		bgbc:SetBackdrop(backdropbc)
-		bgbc:SetBackdropColor(.1,.1,.1,1)
+		bgbc:SetBackdropColor(.1, .1, .1, 1)
 		bgbc:SetWidth(10)
 		bgbc:SetHeight(10)
 		return bgbc
@@ -95,21 +93,25 @@ do
 		return border
 	end
 
+	local freeBackgroundsbc = {}
 	local freeBorderSets = {}
 
 	local function freeStyle(bar)
 		local borders = bar:Get("bigwigs:beautycase:borders")
-		if not borders then return end
-		for i, border in next, borders do
-			border:SetParent(UIParent)
-			border:Hide()
+		if borders then
+			for i, border in next, borders do
+				border:SetParent(UIParent)
+				border:Hide()
+			end
+			freeBorderSets[#freeBorderSets + 1] = borders
 		end
-		freeBorderSets[#freeBorderSets + 1] = borders
 
-		if not bgbc then return end
-		bgbc:SetParent(UIParent)
-		bgbc:Hide()
-		freeBackgroundsbc[#freeBackgroundsbc + 1] = bgbc
+		local bgbc = bar:Get("bigwigs:beautycase:bgbc")
+		if bgbc then
+			bgbc:SetParent(UIParent)
+			bgbc:Hide()
+			freeBackgroundsbc[#freeBackgroundsbc + 1] = bgbc
+		end
 	end
 
 	local function styleBar(bar)
@@ -125,7 +127,7 @@ do
 		bgbc:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
 		bgbc:SetFrameStrata("LOW")
 		bgbc:Show()
-		bar:Set("bigwigs:beautycase:borders", bgbc)
+		bar:Set("bigwigs:beautycase:bgbc", bgbc)
 
 		local borders = nil
 		if #freeBorderSets > 0 then
