@@ -865,13 +865,17 @@ do
 
 		-- Iterate all running bars
 		if currentBarStyler then
-			for bar in pairs(normalAnchor.bars) do
-				currentBarStyler.BarStopped(bar)
-				newBarStyler.ApplyStyle(bar)
+			if normalAnchor then
+				for bar in pairs(normalAnchor.bars) do
+					currentBarStyler.BarStopped(bar)
+					newBarStyler.ApplyStyle(bar)
+				end
 			end
-			for bar in pairs(emphasizeAnchor.bars) do
-				currentBarStyler.BarStopped(bar)
-				newBarStyler.ApplyStyle(bar)
+			if emphasizeAnchor then
+				for bar in pairs(emphasizeAnchor.bars) do
+					currentBarStyler.BarStopped(bar)
+					newBarStyler.ApplyStyle(bar)
+				end
 			end
 		end
 		currentBarStyler = newBarStyler
