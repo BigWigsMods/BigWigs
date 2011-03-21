@@ -961,9 +961,6 @@ function plugin:Close()
 		classCache = nil
 	end
 	if anchor then
-		-- FIXME
-		-- hide circle
-		-- hide playerdot
 		anchor.title:SetText(L["%d yards"]:format(0))
 		anchor.ability:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
 		-- Just in case we were the last target of
