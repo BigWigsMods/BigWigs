@@ -61,7 +61,6 @@ L["Toggle show/hide of the minimap icon."] = "미니맵 아이콘을 표시하�
 L["Configure"] = "설정"
 L["Test"] = "테스트"
 L["Reset positions"] = "위치 초기화"
-L["Options for %s."] = "%s 대한 설정입니다."
 L["Colors"] = "색상"
 L["Select encounter"] = "교전 선택"
 L["List abilities in group chat"] = "대화창에 스킬 목록 표시"

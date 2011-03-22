@@ -61,7 +61,6 @@ L["Toggle show/hide of the minimap icon."] = "Показать/скрыть ик
 L["Configure"] = "Настройка"
 L["Test"] = "Тест"
 L["Reset positions"] = "Сброс позиции"
-L["Options for %s."] = "Опции для %s."
 L["Colors"] = "Цвета"
 L["Select encounter"] = "Выберите событие"
 L["List abilities in group chat"] = "Вывести способности в групповой чат"

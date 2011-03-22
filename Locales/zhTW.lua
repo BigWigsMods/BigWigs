@@ -61,7 +61,6 @@ L["Toggle show/hide of the minimap icon."] = "打開或關閉小地圖圖示。"
 L["Configure"] = "配置"
 L["Test"] = "測試"
 L["Reset positions"] = "重置位置"
-L["Options for %s."] = "%s選項。"
 L["Colors"] = "顏色"
 L["Select encounter"] = "選擇戰鬥"
 

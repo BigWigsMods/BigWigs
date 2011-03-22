@@ -61,7 +61,6 @@ L["Toggle show/hide of the minimap icon."] = "Zeigt oder versteckt das Minimap S
 L["Configure"] = "Einstellungen"
 L["Test"] = "Testen"
 L["Reset positions"] = "Positionen zurücksetzen"
-L["Options for %s."] = "Optionen für %s."
 L["Colors"] = "Farben"
 L["Select encounter"] = "Wähle Begegnung"
 L["List abilities in group chat"] = "Fähigkeiten im Chat auflisten"
