@@ -57,7 +57,7 @@ if L then
 
 	L.spew_bar = "~Изрыгание лавы"
 	L.spew_warning = "Скоро Изрыгание лавы!"
-	
+
 	L.mangle_bar = "Увечье: %s"
 	L.mangle_cooldown = "~Увечье"
 end
@@ -103,12 +103,12 @@ L = BigWigs:NewBossLocale("Nefarian", "ruRU")
 if L then
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
-	
+
 	L.discharge_bar = "~Искровой разряд"
 
 	L.phase_two_trigger = "Дерзкие смертные! Неуважение к чужой собственности нужно пресекать самым жестоким образом!"
 
-	L.phase_three_trigger = "Я пытался следовать законам гостеприимства, но вы все никак не умрете! Придется отбросить условности и просто... УБИТЬ ВАС ВСЕХ!"
+	L.phase_three_trigger = "Я пытался следовать законам гостеприимства"
 
 	L.crackle_trigger = "В воздухе трещат электрические разряды!"
 	L.crackle_message = "Скоро Электрический удар!"

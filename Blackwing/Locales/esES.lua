@@ -1,4 +1,4 @@
-﻿
+
 local L = BigWigs:NewBossLocale("Atramedes", "esES")
 if not L then return end
 if L then
@@ -8,7 +8,7 @@ if L then
 	L.air_phase_desc = "Avisa cuando Atramedes despega."
 
 	L.air_phase_trigger = "¡Sí, corred! Con cada paso, vuestros corazones se aceleran. El latido, fuerte y clamoroso... Casi ensordecedor. ¡No podéis escapar!"
-	
+
 	L.obnoxious_soon = "¡Maligno Execrable inminente!"
 
 	L.searing_soon = "¡Llamas abrasadoras en 10 seg!"
@@ -110,7 +110,7 @@ if L then
 
 	L.phase_two_trigger = "¡Os maldigo, mortales! ¡Ese cruel menosprecio por las posesiones de uno debe ser castigado con fuerza extrema!"
 
-	L.phase_three_trigger = "He intentado ser un buen anfitrión, pero ¡no morís! Es hora de dejarnos de tonterías y simplemente... ¡MATAROS A TODOS!"
+	L.phase_three_trigger = "He intentado ser un buen anfitrión"
 
 	L.crackle_trigger = "¡El aire crepita cargado de electricidad!"
 	L.crackle_message = "¡Electrocutar pronto!"

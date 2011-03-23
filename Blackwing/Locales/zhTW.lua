@@ -100,7 +100,7 @@ if L then
 
 	L.phase_two_trigger = "詛咒你們，凡人!如此冷酷地漠視他人的所有物必須受到嚴厲的懲罰!"
 
-	L.phase_three_trigger = "我本來只想略盡地主之誼，但是你們就是不肯痛快的受死!是時候拋下一切的虛偽...殺光你們就好!"
+	L.phase_three_trigger = "我本來只想略盡地主之誼"
 
 	L.crackle_trigger = "響起了電流霹啪作響的聲音!"
 	L.crackle_message = "即將 電擊！"

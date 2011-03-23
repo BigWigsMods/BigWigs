@@ -100,7 +100,7 @@ if L then
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
-	L.phase_three_trigger = "I have tried to be an accommodating host, but you simply will not die! Time to throw all pretense aside and just... KILL YOU ALL!"
+	L.phase_three_trigger = "I have tried to be an accommodating host"
 
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"

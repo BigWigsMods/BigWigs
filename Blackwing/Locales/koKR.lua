@@ -10,7 +10,7 @@ if L then
 	L.air_phase_trigger = "그래, 도망가라! 발을 디딜 때마다 맥박은 빨라지지. 점점 더 크게 울리는구나... 귀청이 터질 것만 같군! 넌 달아날 수 없다!"
 
 	L.obnoxious_soon = "곧 불쾌한 마귀!"
-	
+
 	L.searing_soon = "10초 후 이글거리는 불길!"
 	L.sonicbreath_cooldown = "~음파 숨결"
 end
@@ -57,7 +57,7 @@ if L then
 
 	L.spew_bar = "~다음 용암 내뿜기"
 	L.spew_warning = "곧 용암 내뿜기!"
-	
+
 	L.mangle_bar = "짓이기기: %s"
 	L.mangle_cooldown = "~다음 짓이기기"
 end
