@@ -64,7 +64,7 @@ if L then
 	L.whelps = "Welpen"
 	L.whelps_desc = "Warnt vor den Wellen der Welpen."
 
-	L.slicer = "~Orb Ziele"
+	L.slicer_message = "~Orb Ziele"
 
 	L.egg_vulnerable = "Zeit für Omelett!"
 

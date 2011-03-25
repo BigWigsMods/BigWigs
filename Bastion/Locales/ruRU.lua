@@ -90,7 +90,7 @@ if L then
 	L.whelps = "Дракончики"
 	L.whelps_desc = "Сообщать о волнах дракончиков"
 	
-	L.slicer = "Возможные цели луча"
+	L.slicer_message = "Возможные цели луча"
 
 	L.egg_vulnerable = "Время омлета!"
 
