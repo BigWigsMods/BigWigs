@@ -549,7 +549,7 @@ do
 			local n = format("raid%d", i)
 			if UnitInRange(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
 				local nextIndex = #tooClose + 1
-				tooClose[nextIndex] = coloredNames[n]
+				tooClose[nextIndex] = coloredNames[UnitName(n)]
 				if nextIndex > 4 then break end
 			end
 		end
