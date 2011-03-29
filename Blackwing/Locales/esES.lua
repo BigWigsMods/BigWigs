@@ -96,8 +96,8 @@ if L then
 	L.green_phase_trigger = "Este es un poco inestable, pero ¿acaso hay progreso sin fracaso?"
 	L.green_phase_emote_trigger = "verde"
 	L.green_phase = "Fase |cFF33FF00Verde|r"
-	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
-	L.dark_phase_emote_trigger = "oscuro"
+	L.dark_phase_trigger = "¡Tus mezclas son flojas, Maloriak! ¡Necesitan un poco más de... sustancia!"
+	L.dark_phase_emote_trigger = "oscura"
 	L.dark_phase = "Fase |cFF660099Oscura|r"
 end
 
