@@ -1,4 +1,4 @@
-﻿
+
 local L = BigWigs:NewBossLocale("Argaloth", "esES")
 if not L then return end
 if L then

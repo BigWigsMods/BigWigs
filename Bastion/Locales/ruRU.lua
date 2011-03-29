@@ -56,7 +56,7 @@ L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "ruRU")
 if L then
 	L.paralysis_bar = "След. Паралич"
 	L.strikes_message = "%2$dx удар(а) на |3-3(%1$s)"
-	
+
 	L.breath_message = "Обжигающее дыхание!"
 	L.breath_bar = "~Дыхание"
 end
@@ -89,7 +89,7 @@ L = BigWigs:NewBossLocale("Sinestra", "ruRU")
 if L then
 	L.whelps = "Дракончики"
 	L.whelps_desc = "Сообщать о волнах дракончиков"
-	
+
 	L.slicer_message = "Возможные цели луча"
 
 	L.egg_vulnerable = "Время омлета!"
