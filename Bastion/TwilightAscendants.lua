@@ -84,7 +84,9 @@ end
 function mod:OnBossEnable()
 	--heroic
 	self:Log("SPELL_AURA_APPLIED", "StaticOverload", 92067)
+	self:Log("SPELL_AURA_REMOVED", "StaticOverloadRemoved", 92067)
 	self:Log("SPELL_AURA_APPLIED", "GravityCore", 92075)
+	self:Log("SPELL_AURA_REMOVED", "GravityCoreRemoved", 92075)
 	self:Log("SPELL_AURA_APPLIED", "FrostBeacon", 92307)
 
 	--normal
@@ -193,6 +195,10 @@ function mod:GravityCore(player, spellId, _, _, spellName)
 	self:SecondaryIcon(92075, player)
 end
 
+function mod:GravityCoreRemoved()
+	self:SecondaryIcon(92075)
+end
+
 function mod:StaticOverload(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
 		self:Say(92067, L["static_overload_say"])
@@ -200,6 +206,10 @@ function mod:StaticOverload(player, spellId, _, _, spellName)
 	end
 	self:TargetMessage(92067, spellName, player, "Attention", spellId, "Alarm")
 	self:PrimaryIcon(92067, player)
+end
+
+function mod:StaticOverloadRemoved()
+	self:PrimaryIcon(92067)
 end
 
 function mod:FrostBeacon(player, spellId, _, _, spellName)
