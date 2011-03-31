@@ -39,7 +39,7 @@ if L then
 	L.phase2 = "Fase 2"
 	L.phase2_desc = "Aviso para la transición de la fase 2 y visualiza el comprobador de rango."
 	L.phase2_message = "¡Fase 2!"
-	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L.phase2_yell = "¡Inconcebible! ¡Existe la posibilidad de que venzáis a mi gusano de lava! Quizás yo pueda... desequilibrar la balanza."
 
 	-- normal
 	L.pillar_of_flame_cd = "~Columna de llamas"
