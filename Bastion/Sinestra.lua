@@ -238,6 +238,7 @@ do
 	local scheduled = nil
 	local function EggMessage(spellId)
 		mod:Message(87654, L["egg_vulnerable"], "Important", spellId, "Alert")
+		mod:Bar(87654, L["egg_vulnerable"], 30, 87654)
 		scheduled = nil
 	end
 	function mod:Egg(_, spellId)
