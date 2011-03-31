@@ -171,10 +171,10 @@ function mod:OnBossEnable()
 	self:Log("SWING_DAMAGE", "WhelpWatcher", "*")
 	self:Log("SWING_MISS", "WhelpWatcher", "*")
 
-	self:Log("SPELL_CAST_START", "Breath", 92944)
+	self:Log("SPELL_CAST_START", "Breath", 90125, 92944)
 
 	self:Log("SPELL_AURA_REMOVED", "Egg", 87654)
-	self:Log("SPELL_AURA_APPLIED", "Indomitable", 92946)
+	self:Log("SPELL_AURA_APPLIED", "Indomitable", 90045, 92946)
 	self:Log("SPELL_CAST_START", "Extinction", 86227)
 
 	self:Yell("EggTrigger", L["omelet_trigger"])
