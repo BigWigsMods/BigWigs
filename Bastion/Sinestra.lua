@@ -187,9 +187,9 @@ end
 
 function mod:OnEngage()
 	self:Bar(92944, "~"..breath, 24, 92944)
-	self:Bar(92954, "~"..slicer, 30, 92954)
+	self:Bar(92954, "~"..slicer, 29, 92954)
 	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
-	self:ScheduleTimer(nextOrbSpawned, 30)
+	self:ScheduleTimer(nextOrbSpawned, 29)
 	eggs = 0
 	self:RegisterEvent("UNIT_HEALTH")
 	wipe(whelpGUIDs)
