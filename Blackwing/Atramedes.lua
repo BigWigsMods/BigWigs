@@ -24,7 +24,7 @@ if L then
 	L.air_phase = "Air Phase"
 	L.air_phase_desc = "Warning for when Atramedes takes off."
 
-	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
+	L.air_phase_trigger = "Yes, run! With every step your heart quickens."
 
 	L.obnoxious_soon = "Obnoxious Fiend soon!"
 
@@ -119,7 +119,6 @@ function mod:Tracking(player, spellId, _, _, spellName)
 end
 
 function mod:SonicBreath(_, spellId, _, _, spellName)
-	self:Message(78075, spellName, "Urgent", spellId, "Info")
 	self:Bar(78075, L["sonicbreath_cooldown"], 42, spellId)
 end
 
