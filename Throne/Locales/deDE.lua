@@ -28,7 +28,7 @@ if L then
 
 	L.full_power = "Volle Stärke"
 	L.full_power_desc = "Warnt, wenn die Bosse volle Stärke erreicht haben und ihre Spezialfähigkeiten wirken."
-	L.gather_strength_emote = "%s beginnt von den verbliebenen Windlords Stärke zu beziehen!" -- check
+	L.gather_strength_emote = "%s beinnt von den verbliebenen"
 
 	L.wind_chill = "%sx Windkühle auf DIR!"
 end
