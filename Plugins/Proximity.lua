@@ -608,7 +608,7 @@ do
 				local range = (dx * dx + dy * dy) ^ 0.5
 				if range < (activeRange * 1.5) then
 					setDot(dx, dy, classCache[i])
-					if range <= activeRange then
+					if range <= activeRange*1.1 then  -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = true
 					end
 				end
