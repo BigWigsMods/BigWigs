@@ -139,7 +139,7 @@ if L then
 	L.cloud_message = ">你< 化學毒霧！"
 	L.protocol_message = "毒炸彈！"
 
-	L.iconomnotron = "標記激活首領"
-	L.iconomnotron_desc = "為激活的首領打上主團隊標記。（需要權限）"
+	L.iconomnotron = "標記啟動首領"
+	L.iconomnotron_desc = "為啟動的首領打上主團隊標記。（需要權限）"
 end
 
