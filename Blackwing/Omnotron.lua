@@ -116,15 +116,23 @@ function mod:PoolExplosion()
 	self:Bar(91880, L["pool"], 8, 91880)
 end
 
-function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
-	self:Bar("switch", L["next_switch"], self:GetInstanceDifficulty() > 2 and 30 or 45, spellId)
-	self:Message("switch", L["switch_message"]:format(unit, spellName), "Positive", spellId, "Long")
-	--Using dGUID to avoid issues with names appearing as "UNKNOWN" for a second or so
-	for i = 1, 4 do
-		local bossId = ("boss%d"):format(i)
-		if UnitGUID(bossId) == dGUID then
-			self:PrimaryIcon("switch", bossId)
-			break
+do
+	local prev = 0
+	function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
+		local timer = self:GetInstanceDifficulty() > 2 and 27 or 42
+		local t = GetTime()
+		if (t - prev) > timer then
+			prev = t
+			self:Bar("switch", L["next_switch"], timer+3, spellId)
+			self:Message("switch", L["switch_message"]:format(unit, spellName), "Positive", spellId, "Long")
+			--Using dGUID to avoid issues with names appearing as "UNKNOWN" for a second or so
+			for i = 1, 4 do
+				local bossId = ("boss%d"):format(i)
+				if UnitGUID(bossId) == dGUID then
+					self:PrimaryIcon("switch", bossId)
+					break
+				end
+			end
 		end
 	end
 end
