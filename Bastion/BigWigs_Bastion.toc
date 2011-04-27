@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 40100
 
 ## Title: Big Wigs [|cffeda55fThe Bastion of Twilight|r]
 ## Title-ruRU: Big Wigs [|cffeda55fСумеречный бастион|r]
