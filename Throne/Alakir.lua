@@ -52,7 +52,7 @@ function mod:GetOptions(CL)
 		"stormling",
 		93279,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
-		93257, -- Heroic Lightning Shock Attempt at trying to predict
+		93257,
 		88427, "phase", "berserk", "bosskill"
 	}, {
 		[87770] = CL["phase"]:format(1),
@@ -87,7 +87,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(600)
-	self:Bar(87770, windburst, 22, 87770) -- this is a try to guess the Wind Burst cooldown at fight start
+	self:Bar(87770, windburst, 22, 87770) -- accurate?
 	phase, lastWindburst = 1, 0
 	acidRainCounter, acidRainCounted = 1, nil
 end
@@ -203,3 +203,4 @@ function mod:Stormling()
 	self:Bar("stormling", L["stormling_bar"], 20, 75096)
 	self:Message("stormling", L["stormling_message"], "Important", 75096)
 end
+

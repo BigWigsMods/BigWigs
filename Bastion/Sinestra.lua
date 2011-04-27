@@ -292,3 +292,4 @@ function mod:Deaths(mobId)
 		self:Win()
 	end
 end
+

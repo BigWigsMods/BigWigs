@@ -139,7 +139,6 @@ end
 
 function mod:Phase2()
 	phase = 2
-
 	self:Message("phase2", L["phase2_message"], "Attention", 92195)
 	self:SendMessage("BigWigs_StopBar", self, L["blazing_bar"])
 	self:OpenProximity(8, "phase2")
