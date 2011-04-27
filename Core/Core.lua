@@ -231,8 +231,8 @@ do
 		end
 	end
 
-	function chatMsgAddon(event, prefix, message, type, sender)
-		if prefix ~= "BigWigs" then return end
+	function chatMsgAddon(event, prefix, message, sender)
+		if prefix ~= "T" then return end
 		local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
 		if not sync then return end
 		if not times[sync] or GetTime() > (times[sync] + 2) then
@@ -250,7 +250,7 @@ do
 		if not sync then return end
 		if not times[sync] or GetTime() > (times[sync] + 2) then
 			times[sync] = GetTime()
-			SendAddonMessage("BigWigs", strjoin(" ", sync, ...), "RAID")
+			SendAddonMessage("BigWigs", "T:"..strjoin(" ", sync, ...), "RAID")
 			onSync(sync, strjoin(" ", ...), pName)
 		end
 	end
@@ -308,7 +308,7 @@ function addon:OnEnable()
 		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
-	self:RegisterEvent("CHAT_MSG_ADDON", chatMsgAddon)
+	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
 	self:RegisterEvent("ZONE_CHANGED", zoneChanged)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 

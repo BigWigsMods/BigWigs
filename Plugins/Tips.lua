@@ -454,16 +454,15 @@ function plugin:OnPluginEnable()
 		self:RegisterEvent("RAID_ROSTER_UPDATE", check)
 		self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
 	end
-	self:RegisterEvent("CHAT_MSG_ADDON")
+	self:RegisterMessage("BigWigs_AddonMessage")
 end
 
 -------------------------------------------------------------------------------
 -- Events
 --
 
-function plugin:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
-	if prefix ~= "BWTIP" or not self.db.profile.manual then return end
-	if not UnitIsRaidOfficer(sender) then return end
+function plugin:BigWigs_AddonMessage(event, prefix, message, sender)
+	if prefix ~= "TIP" or not UnitIsRaidOfficer(sender) or not self.db.profile.manual then return end
 	self:ShowTip(message)
 end
 
@@ -521,14 +520,14 @@ SlashCmdList.BigWigs_SendRaidTip = function(input)
 	if tonumber(input) then
 		local index = tonumber(input)
 		if tips[index] then
-			SendAddonMessage("BWTIP", tips[index], "RAID")
+			SendAddonMessage("BigWigs", "TIP:"..tips[index], "RAID")
 		else
 			print(L["Tip index out of bounds, accepted indexes range from 1 to %d."]:format(#tips))
 		end
 	else
 		local guildName = IsInGuild() and (GetGuildInfo("player")) or ""
 		local tip = pName .. "#" .. pClass .. "#" .. input .. "#" .. guildName
-		SendAddonMessage("BWTIP", tip, "RAID")
+		SendAddonMessage("BigWigs", "TIP:"..tip, "RAID")
 	end
 end
 SLASH_BigWigs_SendRaidTip1 = "/sendtip"

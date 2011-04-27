@@ -325,6 +325,8 @@ function loader:OnEnable()
 	self:RegisterEvent("PARTY_MEMBERS_CHANGED", "CheckRoster")
 
 	self:RegisterEvent("CHAT_MSG_ADDON")
+	self:RegisterMessage("BigWigs_AddonMessage")
+	RegisterAddonMessagePrefix("BigWigs")
 
 	self:RegisterMessage("BigWigs_JoinedGroup")
 	self:RegisterMessage("BigWigs_LeftGroup")
@@ -339,6 +341,14 @@ end
 -- Events
 --
 
+function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
+	if prefix ~= "BigWigs" then return end
+	local bwPrefix = (message):gsub("^(%u-):.+", "%1")
+	if not bwPrefix then return end
+	message = (message):gsub("^%u-:(.+)", "%1")
+	self:SendMessage("BigWigs_AddonMessage", bwPrefix, message, sender)
+end
+
 do
 	local delayTransmitter = CreateFrame("Frame")
 	delayTransmitter:Hide()
@@ -347,21 +357,21 @@ do
 		if self.elapsed > 5 then
 			self:Hide()
 			if BIGWIGS_RELEASE_TYPE == RELEASE then
-				SendAddonMessage("BWVR3", BIGWIGS_RELEASE_REVISION, "RAID")
+				SendAddonMessage("BigWigs", "VR:"..BIGWIGS_RELEASE_REVISION, "RAID")
 			else
-				SendAddonMessage("BWVRA3", BIGWIGS_RELEASE_REVISION, "RAID")
+				SendAddonMessage("BigWigs", "VRA:"..BIGWIGS_RELEASE_REVISION, "RAID")
 			end
 		end
 	end)
 
-	function loader:CHAT_MSG_ADDON(event, prefix, message, distribution, sender)
-		if prefix == "BWVQ3" then
+	function loader:BigWigs_AddonMessage(event, prefix, message, sender)
+		if prefix == "VQ" then
 			if not usersRelease[sender] and not usersAlpha[sender] then
 				usersUnknown[sender] = true
 			end
 			delayTransmitter.elapsed = 0
 			delayTransmitter:Show()
-		elseif prefix == "BWOOD3" then
+		elseif prefix == "OOD" then
 			if not tonumber(message) or warnedOutOfDate then return end
 			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
 				warnedOutOfDate = true
@@ -372,7 +382,7 @@ do
 					sysprint(L["Your alpha version of Big Wigs is out of date(/bwv)."])
 				end
 			end
-		elseif prefix == "BWVR3" then
+		elseif prefix == "VR" then
 			message = tonumber(message)
 			if not message then return end
 			usersRelease[sender] = message
@@ -384,9 +394,9 @@ do
 			-- instead of leaving any leeway (e.g. 10 revisions for alpha)
 			if message > highestReleaseRevision then highestReleaseRevision = message end
 			if sender ~= pName and highestReleaseRevision > message then
-				SendAddonMessage("BWOOD3", highestReleaseRevision, "WHISPER", sender)
+				SendAddonMessage("BigWigs", "OOD:"..highestReleaseRevision, "WHISPER", sender)
 			end
-		elseif prefix == "BWVRA3" then
+		elseif prefix == "VRA" then
 			message = tonumber(message)
 			if not message then return end
 			usersAlpha[sender] = message
@@ -398,7 +408,7 @@ do
 			-- where there is only 1 alpha in the raid and it is majorly out-of-date
 			if message > highestAlphaRevision then highestAlphaRevision = message end
 			if sender ~= pName and message ~= -1 and ((highestAlphaRevision - 10) > message or (highestReleaseRevision - 10) > message) then
-				SendAddonMessage("BWOOD3", highestAlphaRevision, "WHISPER", sender)
+				SendAddonMessage("BigWigs", "OOD:"..highestAlphaRevision, "WHISPER", sender)
 			end
 		end
 	end
@@ -468,7 +478,7 @@ end
 
 function loader:BigWigs_JoinedGroup()
 	self:ZoneChanged()
-	SendAddonMessage("BWVQ3", BIGWIGS_RELEASE_REVISION, "RAID")
+	SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, "RAID")
 end
 
 function loader:BigWigs_LeftGroup()
