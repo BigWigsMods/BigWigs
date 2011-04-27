@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80627)
-	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80626, 80627)
+	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80627)
 	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007, 94085, 94086, 94087)
 
 	self:Emote("Electrocute", L["crackle_trigger"])
@@ -202,7 +202,7 @@ end
 do
 	local scheduled = nil
 	local function powerWarn(spellName)
-		mod:TargetMessage(80626, spellName, powerTargets, "Attention", 80626)
+		mod:TargetMessage(80627, spellName, powerTargets, "Attention", 80627)
 		scheduled = nil
 	end
 	function mod:InitialStolenPower(player, _, _, _, spellName)
@@ -216,8 +216,8 @@ end
 
 function mod:StolenPower(player, spellId, _, _, spellName, stack)
 	if UnitIsUnit(player, "player") and stack == 150 then
-		self:FlashShake(80626)
-		self:LocalMessage(80626, spellName, "Personal", spellId, "Info")
+		self:FlashShake(80627)
+		self:LocalMessage(80627, spellName, "Personal", spellId, "Info")
 	end
 end
 
