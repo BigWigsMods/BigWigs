@@ -10,7 +10,7 @@ if L then
 
 	L.acid_rain = "Pluie acide (%d)"
 
-	L.phase3_yell = "Assez ! Je ne serais pas contenu plus longtemps !" -- à vérifier
+	L.phase3_yell = "Assez ! Je ne serai pas contenu plus longtemps !"
 
 	L.phase = "Changement de phase"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
