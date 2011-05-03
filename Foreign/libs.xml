@@ -2,7 +2,6 @@
 ..\FrameXML\UI.xsd">
 <!--@no-lib-strip@-->
 <Include file="Libs\LibBabble-Boss-3.0\lib.xml"/>
-<Include file="Libs\LibBabble-Zone-3.0\lib.xml"/>
 <!--@end-no-lib-strip@-->
 </Ui>
 

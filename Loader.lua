@@ -89,8 +89,7 @@ local warnedOutOfDate = nil
 
 -- Loading
 local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-Zone directive. Filled in OnInitialize, garbagecollected in OnEnable.
-local BZ -- BabbleZone-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
-local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBZ-3.0 and LBB-3.0
+local BB -- BabbleBoss-3.0 lookup table, will only be used if the foreign language pack is loaded aka LBB-3.0
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the core is loaded
@@ -101,6 +100,15 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 -----------------------------------------------------------------------
 -- Utility
 --
+
+--[[
+function GetMapID(name)
+	for i=1,800 do
+		local fetchedName = GetMapNameByID(i)
+		if name == fetchedName then return i end
+	end
+end
+]]
 
 local printFormat = "|cffffff00%s|r"
 local function sysprint(msg) print(printFormat:format(msg)) end
@@ -130,7 +138,6 @@ do
 end
 
 local function registerEnableZone(zone, groupsize)
-	if BZ then zone = BZ[zone] or zone end
 	-- only update enablezones if content is of lower level than before.
 	-- if someone adds a party module to a zone that is already in the table as a raid, set the level of that zone to party
 	if not enableZones[zone] or (enableZones[zone] and enableZones[zone] > groupsize) then
@@ -138,20 +145,25 @@ local function registerEnableZone(zone, groupsize)
 	end
 end
 
+local errorInvalidZoneID = "The zone ID %q from the addon %q was not parsable."
 local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
-		local zone = (select(i, ...)):trim()
-		-- register the zone for enabling.
-		registerEnableZone(zone, partyContent and BWPARTY or BWRAID)
-		if BZ then zone = BZ[zone] or zone end
+		local rawZone = select(i, ...)
+		local zone = tonumber(rawZone:trim())
+		if zone then
+			-- register the zone for enabling.
+			registerEnableZone(zone, partyContent and BWPARTY or BWRAID)
 
-		if not loadOnZone[zone] then loadOnZone[zone] = {} end
-		loadOnZone[zone][#loadOnZone[zone] + 1] = addon
+			if not loadOnZone[zone] then loadOnZone[zone] = {} end
+			loadOnZone[zone][#loadOnZone[zone] + 1] = addon
 
-		if override then
-			loadOnZone[override][#loadOnZone[override] + 1] = addon
+			if override then
+				loadOnZone[override][#loadOnZone[override] + 1] = addon
+			else
+				menus[zone] = true
+			end
 		else
-			menus[zone] = true
+			sysprint(errorInvalidZoneID:format(tostring(rawZone), tostring(addon)))
 		end
 	end
 end
@@ -268,9 +280,14 @@ function loader:OnInitialize()
 			if meta then
 				loadOnCoreLoaded[#loadOnCoreLoaded + 1] = name
 			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
 			if meta then
 				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
+			end
+			-- XXX remove at some point
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
+			if meta then
+				sysprint(("The addon %q is using the old way of registering when to load its content, please tell the author to fix it and update your copy."):format(name))
 			end
 		elseif not enabled and reqFuncAddons[name] then
 			sysprint(L["coreAddonDisabled"])
@@ -290,36 +307,35 @@ function loader:OnInitialize()
 end
 
 function loader:OnEnable()
-	if LOCALE ~= "enUS" and (not BZ or not BB) then
-		if not LibStub("LibBabble-Boss-3.0", true) or not LibStub("LibBabble-Zone-3.0", true) then
+	if LOCALE ~= "enUS" and not BB then
+		if not LibStub("LibBabble-Boss-3.0", true) then
 			load(nil, "BigWigs_Foreign")
 		end
 		-- check again and error if you can't find
-		if not LibStub("LibBabble-Zone-3.0", true) or not LibStub("LibBabble-Boss-3.0", true) then
-			sysprint("Error retrieving LibBabble-Zone-3.0 and LibBabble-Boss-3.0, please reinstall Big Wigs.")
+		if not LibStub("LibBabble-Boss-3.0", true) then
+			sysprint("Error retrieving LibBabble-Boss-3.0, please reinstall Big Wigs.")
 		else
-			BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
 			BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 		end
 	end
 
 	if loadOnZoneAddons then
-		-- From this point onward BZ and BB should be available for non-english locales
+		-- From this point onward BB should be available for non-english locales
 		for i, name in next, loadOnZoneAddons do
-			local menu = GetAddOnMetadata(name, "X-BigWigs-Menu")
+			local menu = tonumber(GetAddOnMetadata(name, "X-BigWigs-Menu"))
 			if menu then
-				if BZ then menu = BZ[menu] or menu end
 				if not loadOnZone[menu] then loadOnZone[menu] = {} end
 				menus[menu] = true
 			end
-			local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
-			local meta = GetAddOnMetadata(name, "X-BigWigs-LoadOn-Zone")
-			iterateZones(name, menu, partyContent, strsplit(",", meta))
+			local zones = GetAddOnMetadata(name, "X-BigWigs-LoadOn-ZoneId")
+			if zones then
+				local partyContent = GetAddOnMetadata(name, "X-BigWigs-PartyContent")
+				iterateZones(name, menu, partyContent, strsplit(",", zones))
+			end
 		end
 		loadOnZoneAddons = nil
 	end
 
-	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 	self:RegisterEvent("RAID_ROSTER_UPDATE", "CheckRoster")
 	self:RegisterEvent("PARTY_MEMBERS_CHANGED", "CheckRoster")
@@ -332,6 +348,9 @@ function loader:OnEnable()
 	self:RegisterMessage("BigWigs_LeftGroup")
 	self:RegisterMessage("BigWigs_CoreEnabled")
 	self:RegisterMessage("BigWigs_CoreDisabled")
+
+	-- XXX Hack to make the zone ID available when reloading/relogging inside an instance
+	SetMapToCurrentZone()
 
 	self:CheckRoster()
 	self:ZoneChanged()
@@ -416,13 +435,12 @@ end
 
 function loader:ZoneChanged()
 	if not grouped then return end
-	local z1, z2 = GetRealZoneText(), GetZoneText()
+	local id = GetCurrentMapAreaID()
 	-- load party content in raid, but don't load raid content in a party...
-	if (enableZones[z1] and enableZones[z1] <= grouped) or (enableZones[z2] and enableZones[z2] <= grouped) then
+	if enableZones[id] and enableZones[id] <= grouped then
 		if load(BigWigs, "BigWigs_Core") then
-			if BigWigs:IsEnabled() and (loadOnZone[z1] or loadOnZone[z2]) then
-				loadZone(z1)
-				loadZone(z2)
+			if BigWigs:IsEnabled() and loadOnZone[id] then
+				loadZone(id)
 			else
 				BigWigs:Enable()
 			end
@@ -451,7 +469,7 @@ function loader:CheckRoster()
 end
 
 function loader:BigWigs_BossModuleRegistered(message, name, module)
-	registerEnableZone(module.zoneName, module.partyContent and BWPARTY or BWRAID)
+	registerEnableZone(module.zoneId, module.partyContent and BWPARTY or BWRAID)
 end
 
 function loader:BigWigs_CoreEnabled()
@@ -462,8 +480,7 @@ function loader:BigWigs_CoreEnabled()
 	loadAddons(loadOnCoreEnabled)
 
 	-- core is enabled, unconditionally load the zones
-	loadZone(GetRealZoneText())
-	loadZone(GetZoneText())
+	loadZone(GetCurrentMapAreaID())
 end
 
 function loader:BigWigs_CoreDisabled()

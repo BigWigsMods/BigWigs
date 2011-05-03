@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Al'Akir", "Throne of the Four Winds")
+local mod = BigWigs:NewBoss("Al'Akir", 773)
 if not mod then return end
 mod:RegisterEnableMob(46753)
 

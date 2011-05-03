@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Magmaw", "Blackwing Descent")
+local mod = BigWigs:NewBoss("Magmaw", 754)
 if not mod then return end
 mod:RegisterEnableMob(41570)
 
@@ -79,6 +79,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617)
 	self:Log("SPELL_AURA_REMOVED", "MangleRemoved", 89773, 91912, 94616, 94617)
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690, 91919, 91931, 91932)
+	-- --self:Log("SPELL_CAST_START", "Armageddon", 92177)
+	--self:Log("SPELL_CAST_SUCCESS", "Armageddon", 92177)
 	self:Emote("Slump", L["slump_trigger"])
 	self:Emote("Vulnerability", L["expose_trigger"])
 
@@ -103,6 +105,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+--[[
+function mod:Armageddon()
+	mod:Message(79011, "+! ARMAGEDDON !+", "Important", 92177, "Alarm")
+end]]
 
 do
 	local function rebootTimers()

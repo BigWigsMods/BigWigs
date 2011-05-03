@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Halfus Wyrmbreaker", "The Bastion of Twilight")
+local mod = BigWigs:NewBoss("Halfus Wyrmbreaker", 758)
 if not mod then return end
 mod:RegisterEnableMob(44600)
 

@@ -3,9 +3,9 @@ local addon = BigWigs
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
--- locale stuff for BZ or BB conditionals
+-- locale stuff for BB conditionals
 local LOCALE = BigWigsLoader.LOCALE
-local BB, BZ
+local BB
 
 local GetSpellInfo = GetSpellInfo
 
@@ -77,7 +77,7 @@ local function zoneChanged()
 			if module.isEngaged then module:Reboot() end
 		end
 	end
-	if enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()] then
+	if enablezones[GetCurrentMapAreaID()] then
 		if not monitoring then
 			monitoring = true
 			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
@@ -286,11 +286,9 @@ function addon:OnInitialize()
 	self.db = db
 
 	-- check for and load the babbles early if available, used for packed versions of bigwigs
-	if LOCALE ~= "enUS" and (not BZ or not BB) then
+	if LOCALE ~= "enUS" and not BB then
 		local lbb = LibStub("LibBabble-Boss-3.0", true)
 		if lbb then BB = lbb:GetUnstrictLookupTable() end
-		local lbz = LibStub("LibBabble-Zone-3.0", true)
-		if lbz then BZ = lbz:GetUnstrictLookupTable() end
 	end
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
@@ -304,12 +302,10 @@ end
 
 function addon:OnEnable()
 	-- load the babbles, used for unpacked versions of bigwigs.
-	if LOCALE ~= "enUS" and (not BZ or not BB) then
-		BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable()
+	if LOCALE ~= "enUS" and not BB then
 		BB = LibStub("LibBabble-Boss-3.0"):GetUnstrictLookupTable()
 	end
 	self:RegisterMessage("BigWigs_AddonMessage", chatMsgAddon)
-	self:RegisterEvent("ZONE_CHANGED", zoneChanged)
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
 
 	self:SendMessage("BigWigs_CoreEnabled")
@@ -361,21 +357,28 @@ function addon:NewBossLocale(name, locale, default) return AL:NewLocale(string.f
 --
 
 do
+	local errorDeprecatedNew = "%q is using the deprecated :New() API. Please tell the author to fix it for Big Wigs 3."
+	local errorDeprecatedZone = "%q is using the old way of registering zones (%s), tell the author to fix it for Big Wigs 3.7."
+	local errorAlreadyRegistered = "%q already exists as a module in Big Wigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any Big Wigs folders you have and then reinstall it from scratch."
+
 	-- either you get me the hell out of these woods, or you'll know how my
 	-- mother felt after drinking my chocolate milkshake
 	-- did she make it for you?
 	-- you're a dead man.
 	function addon:New(module)
-		error(("%q tried to use the deprecated :New() API. Please notify the author that he needs to update it for Big Wigs 3."):format(module))
+		self:Print(errorDeprecatedNew:format(module))
 	end
 
 	local function new(core, module, zone, ...)
 		if core:GetModule(module, true) then
-			local oldM = core:GetModule(module)
-			print(L["already_registered"]:format(module, core.moduleName))
+			self:Print(errorAlreadyRegistered:format(module))
 		else
+			if type(zone) == "string" then
+				self:Print(errorDeprecatedZone:format(module, tostring(zone)))
+				return
+			end
 			local m = core:NewModule(module, ...)
-			if zone then m.zoneName = zone end
+			m.zoneId = zone
 			return m
 		end
 	end
@@ -463,19 +466,13 @@ do
 	function addon:RegisterBossModule(module)
 		if not module.displayName then module.displayName = module.moduleName end
 		if LOCALE ~= "enUS" then
-			if BZ then
-				module.zoneName = BZ[module.zoneName] or module.zoneName
-				if module.otherMenu then
-					module.otherMenu = BZ[module.otherMenu]
-				end
-			end
 			if BB then
 				if module.displayName and BB[module.displayName] then
 					module.displayName = BB[module.displayName]
 				end
 			end
 		end
-		enablezones[module.zoneName] = true
+		enablezones[module.zoneId] = true
 
 		module.SetupOptions = function(self)
 			if self.GetOptions then

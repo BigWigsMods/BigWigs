@@ -18,7 +18,6 @@ externals:
     Options/Libs/AceDBOptions-3.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceDBOptions-3.0
     Options/Libs/LibDDI-1.0: svn://svn.wowace.com/wow/libddi-1-0/mainline/trunk
     Foreign/Libs/LibBabble-Boss-3.0: svn://svn.wowace.com/wow/libbabble-boss-3-0/mainline/trunk
-    Foreign/Libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
 
 move-folders:
     BigWigs/Core: BigWigs_Core

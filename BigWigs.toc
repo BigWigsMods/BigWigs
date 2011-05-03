@@ -11,13 +11,13 @@
 ## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Author: Ammo, Rabbit, Funkydude
-## Version: 3.602
+## Version: 3.7
 ## X-Category: Raid
 
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Always: true
 
-## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0
+## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibBabble-Boss-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0
 
 ## SavedVariables: BigWigs3DB, BigWigs3IconDB
 

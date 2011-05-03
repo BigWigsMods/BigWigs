@@ -19,8 +19,8 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-Menu: Baradin Hold
-## X-BigWigs-LoadOn-Zone: Baradin Hold
+## X-BigWigs-Menu: 752
+## X-BigWigs-LoadOn-Zone: 752
 
 locales.xml
 modules.xml

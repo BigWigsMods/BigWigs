@@ -19,7 +19,7 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-LoadOn-Zone: Blackwing Descent
+## X-BigWigs-LoadOn-ZoneId: 754
 
 locales.xml
 modules.xml

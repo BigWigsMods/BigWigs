@@ -322,7 +322,7 @@ end
 function options:Open()
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
-			local menu = module.otherMenu or module.zoneName
+			local menu = module.otherMenu and (GetMapNameByID(module.otherMenu) or select(module.otherMenu, GetMapContinents())) or GetMapNameByID(module.zoneId)
 			InterfaceOptionsFrame_OpenToCategory(menu)
 		end
 	end
@@ -718,7 +718,7 @@ local onZoneShow
 do
 	local sorted = {}
 	function onZoneShow(frame)
-		local zone = frame.name
+		local zone = frame.id
 
 		-- Make sure all the bosses for this zone are loaded.
 		BigWigsLoader:LoadZone(zone)
@@ -815,10 +815,11 @@ end
 do
 	local panels = {}
 	local noop = function() end
-	function options:GetPanel(id, parent)
+	function options:GetPanel(id, parent, zoneId)
 		if not panels[id] then
 			local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
 			frame.name = id
+			frame.id = zoneId
 			frame.parent = parent
 			frame.addonname = "BigWigs"
 			frame.okay = noop
@@ -834,7 +835,7 @@ do
 	end
 
 	function options:GetZonePanel(zone)
-		local panel, created = self:GetPanel(zone, L["Big Wigs Encounters"])
+		local panel, created = self:GetPanel(select(zone, GetMapContinents()) or GetMapNameByID(zone), L["Big Wigs Encounters"], zone)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
 			panel:SetScript("OnHide", onZoneHide)
@@ -850,7 +851,7 @@ do
 		registered[module.name] = true
 		if module.toggleOptions or module.GetOptions then
 			if module:IsBossModule() then
-				local zone = module.otherMenu or module.zoneName
+				local zone = module.otherMenu or module.zoneId
 				if not zone then error(module.name .. " doesn't have any valid zone set!") end
 				if not zoneModules[zone] then zoneModules[zone] = {} end
 				zoneModules[zone][module.moduleName] = module.displayName

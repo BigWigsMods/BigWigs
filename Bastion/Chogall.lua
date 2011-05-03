@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Cho'gall", "The Bastion of Twilight")
+local mod = BigWigs:NewBoss("Cho'gall", 758)
 if not mod then return end
 mod:RegisterEnableMob(43324)
 
