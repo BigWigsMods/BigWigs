@@ -1,0 +1,26 @@
+## Interface: 40200
+
+## Title: Big Wigs [|cffeda55fFirelands|r]
+## Title-ruRU: Big Wigs [|cffeda55f|r]
+## Title-deDE: Big Wigs [|cffeda55f|r]
+## Title-esES: Big Wigs [|cffeda55f|r]
+## Title-frFR: Big Wigs [|cffeda55f|r]
+## Title-zhTW: Big Wigs [|cffeda55f|r]
+## Title-koKR: Big Wigs [|cffeda55f|r]
+## Notes: Big Wigs Modules for Firelands
+## Notes-ruRU:
+## Notes-deDE:
+## Notes-esES:
+## Notes-frFR:
+## Notes-zhTW:
+## Notes-koKR:
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-ZoneId: 800
+
+locales.xml
+modules.xml
+

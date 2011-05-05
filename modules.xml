@@ -18,6 +18,9 @@
 
 <Include file="Baradin\locales.xml"/>
 <Include file="Baradin\modules.xml"/>
+
+<Include file="Firelands\locales.xml"/>
+<Include file="Firelands\modules.xml"/>
 <!--@end-debug@-->
 </Ui>
 

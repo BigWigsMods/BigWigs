@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Bethtilac.lua" />
+<Script file="Rhyolith.lua" />
+<Script file="Alysrazor.lua" />
+<Script file="Shannox.lua" />
+<Script file="Baleroc.lua" />
+<Script file="Staghelm.lua" />
+<Script file="Ragnaros.lua" />
+
+</Ui>

@@ -28,6 +28,7 @@ move-folders:
     BigWigs/Bastion: BigWigs_Bastion
     BigWigs/Throne: BigWigs_Throne
     BigWigs/Baradin: BigWigs_Baradin
+    BigWigs/Firelands: BigWigs_Firelands
 
 ignore:
 	- globals.sh
