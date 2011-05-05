@@ -24,12 +24,12 @@ if L then
 	L.gather_strength = "%正在聚集力量！"
 
 	L.storm_shield = "風暴之盾"
-	L.storm_shield_desc = "風暴之盾吸收傷害時發出警報。"
+	L.storm_shield_desc = "當風暴之盾吸收傷害時發出警報。"
 
 	L.full_power = "滿能量"
 	L.full_power_desc = "當首領獲得滿能量並開始施放特殊技能時發出警報。"
 	L.gather_strength_emote = "%s開始從剩下的風之王那裡取得力量!"
 
-	L.wind_chill = ">你<獲得%s層風寒冷卻！"
+	L.wind_chill = ">你< %sx風寒冷卻！"
 end
 

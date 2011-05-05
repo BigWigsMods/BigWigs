@@ -63,6 +63,7 @@ L["Test"] = "测试"
 L["Reset positions"] = "重置位置"
 L["Colors"] = "颜色"
 L["Select encounter"] = "选择战斗"
+L["List abilities in group chat"] = "列出技能到团队聊天"
 
 L["BAR"] = "计时条"
 L["MESSAGE"] = "信息"

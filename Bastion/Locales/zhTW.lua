@@ -62,8 +62,10 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "zhTW")
 if L then
-	L.whelps = "Whelps"
-	L.whelps_desc = "Warning for the whelp waves."
+	L.whelps = "暮光雏龙"
+	L.whelps_desc = "當每波暮光雏龙到來時發出警報。"
+
+	L.slicer_message = "可能火息術目標！"
 
 	L.egg_vulnerable = "集中火力攻擊！"
 
@@ -77,13 +79,14 @@ end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "zhTW")
 if L then
-	L.static_overload_say = "靜電超載！"
+	L.static_overload_say = ">我< 靜電超載！"
 	L.gravity_core_say = ">我< 重力之核！"
 	L.health_report = "%s生命值>%d%%<，即將階段轉換！"
 	L.switch = "轉換"
 	L.switch_desc = "當首領轉換時發出警報。"
 
 	L.shield_up_message = "火焰之禦 出現!"
+	L.shield_down_message = "火焰之禦 消失！"
 	L.shield_bar = "<下一火焰之禦>"
 
 	L.switch_trigger = "我們會解決他們!"
@@ -93,7 +96,7 @@ if L then
 	L.quake_trigger = "你腳下的地面開始不祥地震動起來...."
 	L.thundershock_trigger = "四周的空氣爆出能量霹啪作響聲音...."
 
-	L.thundershock_quake_spam = "%s in %d"
+	L.thundershock_quake_spam = ">%s< %d！"
 
 	L.last_phase_trigger = "令人印象深刻的表現..."
 end

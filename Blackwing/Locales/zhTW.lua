@@ -9,6 +9,9 @@ if L then
 
 	L.air_phase_trigger = "沒錯，逃吧!每一步都會讓你的心跳加速。跳得轟隆作響...震耳欲聾。你逃不掉的!"
 
+	L.obnoxious_soon = "即將 討人厭的惡魔！"
+
+	L.searing_soon = "10秒後，灼熱烈焰！"
 	L.sonicbreath_cooldown = "<音之息>"
 end
 
@@ -54,6 +57,9 @@ if L then
 
 	L.spew_bar = "<下一熔岩噴灑>"
 	L.spew_warning = "即將 熔岩噴灑！"
+
+	L.mangle_bar = "割碎：>%s<！"
+	L.mangle_cooldown = "<下一割碎>"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "zhTW")
@@ -80,16 +86,16 @@ if L then
 	L.green_phase_bar = "綠色階段"
 
 	L.red_phase_trigger = "混合攪拌，然後加熱..."
-	L.red_phase_emote_trigger = "紅色" --verify
+	L.red_phase_emote_trigger = "紅色"
 	L.red_phase = "|cFFFF0000紅色|r階段！"
 	L.blue_phase_trigger = "凡人之軀能承受多大的溫度改變?必須測試!為了科學!"
-	L.blue_phase_emote_trigger = "藍色" --verify
+	L.blue_phase_emote_trigger = "藍色"
 	L.blue_phase = "|cFF809FFE藍色|r階段！"
 	L.green_phase_trigger = "這個有點不穩定，但哪有實驗不失敗的?"
-	L.green_phase_emote_trigger = "綠色" --verify
+	L.green_phase_emote_trigger = "綠色"
 	L.green_phase = "|cFF33FF00綠色|r階段！"
 	L.dark_phase_trigger = "你的混合劑太弱了，瑪洛里亞克!需要多點...後勁!"
-	L.dark_phase_emote_trigger = "黑色" --verify
+	L.dark_phase_emote_trigger = "黑色"
 	L.dark_phase = "|cFF660099黑色|r階段！"
 end
 
@@ -98,6 +104,8 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"
 
+	L.discharge_bar = "<閃電釋放 冷卻>"
+
 	L.phase_two_trigger = "詛咒你們，凡人!如此冷酷地漠視他人的所有物必須受到嚴厲的懲罰!"
 
 	L.phase_three_trigger = "我本來只想略盡地主之誼"
@@ -105,11 +113,9 @@ if L then
 	L.crackle_trigger = "響起了電流霹啪作響的聲音!"
 	L.crackle_message = "即將 電擊！"
 
-	L.shadowblaze_message = "暗影炎！"
+	L.shadowblaze_message = ">你< 暗影炎！"
 
 	L.onyxia_power_message = "即將 電荷超載！"
-
-	L.cinder_say = ">我< 爆裂灰燼！"
 
 	L.chromatic_prototype = "炫彩原型體" -- 3 adds name
 end
@@ -123,7 +129,7 @@ if L then
 
 	L.switch = "轉換"
 	L.switch_desc = "當轉換時發出警報。"
-	L.switch_message = "%s %s"
+	L.switch_message = ">%s< %s！"
 
 	L.next_switch = "<下一轉換>"
 
