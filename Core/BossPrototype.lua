@@ -98,7 +98,7 @@ do
 		end
 	end
 
-	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId, buffStack)
+	local function cleuHandler(self, event, _, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId, buffStack)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(7, 10), 16)
 			local d = deathMap[self][numericId]
@@ -115,6 +115,16 @@ do
 					self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
 				end
 			end
+		end
+	end
+	local is42 = tonumber((select(4, GetBuildInfo()))) > 40100
+	if is42 then
+		function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
+			cleuHandler(self, event, nil, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, nil, secSpellId, buffStack)
+		end
+	else
+		function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, ...)
+			cleuHandler(self, ...)
 		end
 	end
 
