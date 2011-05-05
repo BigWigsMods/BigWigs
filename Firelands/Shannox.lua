@@ -1,4 +1,4 @@
-if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
+--[[if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -44,5 +44,5 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
+]]
 
