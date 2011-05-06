@@ -371,10 +371,10 @@ do
 
 	local function new(core, module, zone, ...)
 		if core:GetModule(module, true) then
-			self:Print(errorAlreadyRegistered:format(module))
+			addon:Print(errorAlreadyRegistered:format(module))
 		else
 			if type(zone) == "string" then
-				self:Print(errorDeprecatedZone:format(module, tostring(zone)))
+				addon:Print(errorDeprecatedZone:format(module, tostring(zone)))
 				return
 			end
 			local m = core:NewModule(module, ...)
