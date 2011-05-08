@@ -23,6 +23,8 @@ if L then
 
 	L.breath_message = "Breath incoming!"
 	L.breath_bar = "~Breath"
+
+	L.engage_yell = "Cho'gall will have your heads"
 end
 L = mod:GetLocale()
 
@@ -38,8 +40,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MalevolentStrikes", 83908, 86158, 86157, 86159) -- used with Slate Dragon ready
 	self:Log("SPELL_CAST_START", "Breath", 83707) -- used by Proto-Behemoth with whelps ready
 
-	--no CheckBossStatus here as event does not fire, GM confirms known issue
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	--No CheckBossStatus() here as event does not fire, GM confirms "known" issue.
+	--It's more likely to be because there isn't enough frames for all bosses on heroic.
+	self:Yell("Engage", L["engage_yell"])
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:Death("Win", 44600)

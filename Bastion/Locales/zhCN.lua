@@ -58,6 +58,8 @@ if L then
 
 	L.breath_message = "Breath incoming!"
 	L.breath_bar = "~Breath"
+
+	L.engage_yell = "Cho'gall will have your heads"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "zhCN")

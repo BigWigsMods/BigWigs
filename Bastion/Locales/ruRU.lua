@@ -59,6 +59,8 @@ if L then
 
 	L.breath_message = "Обжигающее дыхание!"
 	L.breath_bar = "~Дыхание"
+
+	L.engage_yell = "Cho'gall will have your heads"
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "ruRU")
