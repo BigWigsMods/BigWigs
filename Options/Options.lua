@@ -179,6 +179,15 @@ local function getProfileOptions()
 	return profileOptions
 end
 
+local function translateZoneID(id)
+	if not id or type(id) ~= "number" then return end
+	local name = GetMapNameByID(id) or select(id, GetMapContinents())
+	if not name then
+		print(("Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
+	end
+	return name
+end
+
 local function findPanel(name, parent)
 	for i, button in next, InterfaceOptionsFrameAddOns.buttons do
 		if button.element then
@@ -322,7 +331,8 @@ end
 function options:Open()
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
-			local menu = module.otherMenu and (GetMapNameByID(module.otherMenu) or select(module.otherMenu, GetMapContinents())) or GetMapNameByID(module.zoneId)
+			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
+			if not menu then return end
 			InterfaceOptionsFrame_OpenToCategory(menu)
 		end
 	end
@@ -834,8 +844,10 @@ do
 		return panels[id]
 	end
 
-	function options:GetZonePanel(zone)
-		local panel, created = self:GetPanel(select(zone, GetMapContinents()) or GetMapNameByID(zone), L["Big Wigs Encounters"], zone)
+	function options:GetZonePanel(zoneId)
+		local zoneName = translateZoneID(zoneId)
+		if not zoneName then return end
+		local panel, created = self:GetPanel(zoneName, L["Big Wigs Encounters"], zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
 			panel:SetScript("OnHide", onZoneHide)
