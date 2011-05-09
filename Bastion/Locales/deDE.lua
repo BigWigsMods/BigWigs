@@ -58,7 +58,7 @@ if L then
 	L.breath_message = "Atem kommt!"
 	L.breath_bar = "~Atem"
 
-	L.engage_yell = "Cho'gall will have your heads"
+	L.engage_yell = "Cho'gall wird eure Köpfe fordern! ALLE!"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "deDE")
