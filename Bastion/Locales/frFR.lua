@@ -59,7 +59,7 @@ if L then
 	L.breath_message = "Arrivée d'un Souffle !"
 	L.breath_bar = "~Souffle"
 
-	L.engage_yell = "Cho'gall will have your heads"
+	L.engage_yell = "Cho'gall aura bientôt vos têtes"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "frFR")
@@ -71,8 +71,8 @@ if L then
 
 	L.egg_vulnerable = "C'est l'heure de l'omelette !"
 
-	L.whelps_trigger = "Mangez, mes enfants !" -- à vérifier/compléter
-	L.omelet_trigger = "Vous avez cru à une marque de faiblesse ?" -- à vérifier
+	L.whelps_trigger = "Mangez, mes enfants !"
+	L.omelet_trigger = "Vous avez cru à une marque de faiblesse ?"
 
 	L.phase13 = "Phase 1 et 3"
 	L.phase = "Phase"

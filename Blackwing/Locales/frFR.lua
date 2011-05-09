@@ -7,7 +7,7 @@ if L then
 	L.air_phase = "Phase aérienne"
 	L.air_phase_desc = "Prévient quand Atramédès décolle."
 
-	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !" -- à vérifier
+	L.air_phase_trigger = "Oui, fuyez ! Chaque foulée accélère votre cœur. Les battements résonnent comme le tonnerre... Assourdissant. Vous ne vous échapperez pas !"
 
 	L.obnoxious_soon = "Démon odieux imminent !"
 
@@ -39,7 +39,7 @@ if L then
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 et affiche le vérificateur de portées."
 	L.phase2_message = "Phase 2 !"
-	L.phase2_yell = "Inconcevable ! Vous pourriez vraiment vaincre mon ver de lave !" -- à vérifier
+	L.phase2_yell = "Inconcevable ! Vous pourriez vraiment vaincre mon ver de lave !"
 
 	-- normal
 	L.pillar_of_flame_cd = "~Pilier de flammes"
@@ -106,9 +106,9 @@ if L then
 
 	L.discharge_bar = "~Recharge Décharge"
 
-	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traité avec une extrême fermeté !" -- à vérifier
+	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traité avec une extrême fermeté !"
 
-	L.phase_three_trigger = "J'ai tout fait pour être un hôte accommodant" -- à vérifier
+	L.phase_three_trigger = "J'ai tout fait pour être un hôte accommodant"
 
 	L.crackle_trigger = "L'électricité crépite dans l'air !"
 	L.crackle_message = "Electrocuter imminent !"
