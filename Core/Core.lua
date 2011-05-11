@@ -325,7 +325,7 @@ end
 do
 	local outputFormat = "|cffffff00%s|r"
 	function addon:Print(msg)
-		print(outputFormat:format(msg))
+		print("Big Wigs:", outputFormat:format(msg))
 	end
 end
 

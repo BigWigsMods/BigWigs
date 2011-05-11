@@ -182,8 +182,9 @@ end
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
 	local name = GetMapNameByID(id) or select(id, GetMapContinents())
+	if not name and id == 800 then name = "Firelands" end --XXX temporary hack
 	if not name then
-		print(("Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
+		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
 	end
 	return name
 end
