@@ -23,7 +23,7 @@ if L then
 	L.phase_one = "Phase 1"
 	L.phase_two = "Phase 2"
 
-	L.kiss_message = "%2$dx Strikes on %1$s"
+	L.kiss_message = "%2$dx Kiss on %1$s"
 end
 L = mod:GetLocale()
 
@@ -44,7 +44,6 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Kiss", 99506)
 	self:Log("SPELL_CAST_START", "Devastate", 99052)
 
@@ -69,6 +68,8 @@ function mod:Kiss(player, spellId, _, _, _, stack)
 end
 
 function mod:Devastate(_, spellId, _, _, spellName)
-	self:Message(99052, spellName, "Important", spellId)
+	self:Message(99052, spellName, "Important", spellId, "Long")
+	-- This timer is only accurate if you dont fail with the Drones
+	-- Might need to use the bosses power bar or something to adjust this
 	self:Bar(99052, spellName, 90, spellId)
 end
