@@ -90,6 +90,7 @@ function mod:OnEngage(diff)
 	self:Bar(87770, windburst, 22, 87770) -- accurate?
 	phase, lastWindburst = 1, 0
 	acidRainCounter, acidRainCounted = 1, nil
+	shock = nil
 end
 
 --------------------------------------------------------------------------------
