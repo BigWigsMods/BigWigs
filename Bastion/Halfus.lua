@@ -10,7 +10,7 @@ mod:RegisterEnableMob(44600)
 -- Locals
 --
 
-local stackWarn = nil
+local stackWarn = 10
 
 --------------------------------------------------------------------------------
 -- Localization
