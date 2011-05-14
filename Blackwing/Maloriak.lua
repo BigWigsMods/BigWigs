@@ -13,10 +13,9 @@ mod:RegisterEnableMob(41378)
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local aberrations = 18
 local phaseCounter = 0
-local warnedAlready = nil
 local maloriak = BigWigs:Translate("Maloriak")
 local chillTargets = mod:NewTargetList()
-local isChilled, isBluePhase = nil, nil
+local isChilled, currentPhase = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -105,7 +104,10 @@ function mod:OnBossEnable()
 
 	-- We keep the emotes in case the group uses Curse of Tongues, in which
 	-- case the yells become Demonic.
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:Emote("Red", L["red_phase_emote_trigger"])
+	self:Emote("Blue", L["blue_phase_emote_trigger"])
+	self:Emote("Green", L["green_phase_emote_trigger"])
+	self:Emote("Dark", L["dark_phase_emote_trigger"])
 
 	-- We keep the yell triggers around because sometimes he does them far ahead
 	-- of the emote.
@@ -121,8 +123,7 @@ function mod:OnEngage(diff)
 	self:Berserk(diff > 2 and 720 or 420)
 	aberrations = 18
 	phaseCounter = 0
-	warnedAlready = nil
-	isChilled, isBluePhase = nil, nil
+	isChilled, currentPhase = nil, nil
 	self:RegisterEvent("UNIT_HEALTH")
 end
 
@@ -153,26 +154,9 @@ local function nextPhase(timeToNext)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
-	if warnedAlready then
-		warnedAlready = nil
-		return
-	end
-	if msg:find(L.blue_phase_emote_trigger) then
-		self:Blue()
-	elseif msg:find(L.red_phase_emote_trigger) then
-		self:Red()
-	elseif msg:find(L.green_phase_emote_trigger) then
-		self:Green()
-	elseif msg:find(L.dark_phase_emote_trigger) then
-		self:Dark()
-	end
-	warnedAlready = nil
-end
-
 function mod:Red()
-	isBluePhase = nil
-	warnedAlready = true
+	if currentPhase == "red" then return end
+	currentPhase = "red"
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Bar(92968, L["next_blast"], 25, 92968)
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Long")
@@ -183,8 +167,8 @@ function mod:Red()
 end
 
 function mod:Blue()
-	isBluePhase = true
-	warnedAlready = true
+	if currentPhase == "blue" then return end
+	currentPhase = "blue"
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:Bar(77699, L["flashfreeze"], 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Long")
@@ -193,8 +177,8 @@ function mod:Blue()
 end
 
 function mod:Green()
-	isBluePhase = nil
-	warnedAlready = true
+	if currentPhase == "green" then return end
+	currentPhase = "green"
 	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
 	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Long")
@@ -207,8 +191,8 @@ function mod:Green()
 end
 
 function mod:Dark()
-	isBluePhase = nil
-	warnedAlready = true
+	if currentPhase == "dark" then return end
+	currentPhase = "dark"
 	self:Message("phase", L["dark_phase"], "Positive", "Interface\\Icons\\INV_ELEMENTAL_PRIMAL_SHADOW", "Long")
 	if not isChilled then
 		self:CloseProximity()
@@ -297,7 +281,7 @@ end
 function mod:BitingChillRemoved(player)
 	if UnitIsUnit(player, "player") then
 		isChilled = nil
-		if not isBluePhase then
+		if currentPhase ~= "blue" then
 			self:CloseProximity()
 		end
 	end

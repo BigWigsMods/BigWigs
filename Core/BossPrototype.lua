@@ -86,7 +86,7 @@ do
 			end
 		end
 	end
-	function boss:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, ...)
+	function boss:RAID_BOSS_EMOTE(_, msg, ...)
 		if emoteMap[self][msg] then
 			self[emoteMap[self][msg]](self, msg, ...)
 		else
@@ -134,7 +134,8 @@ do
 		for i = 1, select("#", ...) do
 			emoteMap[self][(select(i, ...))] = func
 		end
-		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+		self:RegisterEvent("RAID_BOSS_EMOTE")
+		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE", "RAID_BOSS_EMOTE") --XXX 4.2 compat
 	end
 	function boss:Yell(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
