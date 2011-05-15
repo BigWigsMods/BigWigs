@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Argaloth.lua"/>
+<Script file="Occuthar.lua"/>
 
 </Ui>
 
