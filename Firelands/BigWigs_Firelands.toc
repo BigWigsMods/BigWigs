@@ -2,14 +2,14 @@
 
 ## Title: Big Wigs [|cffeda55fFirelands|r]
 ## Title-ruRU: Big Wigs [|cffeda55f|r]
-## Title-deDE: Big Wigs [|cffeda55f|r]
+## Title-deDE: Big Wigs [|cffeda55fFeuerlande|r]
 ## Title-esES: Big Wigs [|cffeda55f|r]
 ## Title-frFR: Big Wigs [|cffeda55f|r]
 ## Title-zhTW: Big Wigs [|cffeda55f|r]
 ## Title-koKR: Big Wigs [|cffeda55f|r]
 ## Notes: Big Wigs Modules for Firelands
 ## Notes-ruRU:
-## Notes-deDE:
+## Notes-deDE: Big Wigs Module für die Feuerlande.
 ## Notes-esES:
 ## Notes-frFR:
 ## Notes-zhTW:

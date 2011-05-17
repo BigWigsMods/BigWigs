@@ -20,9 +20,6 @@ local stackWarn = 5 -- probably needs change
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.phase_one = "Phase 1"
-	L.phase_two = "Phase 2"
-
 	L.kiss_message = "%2$dx Kiss on %1$s"
 end
 L = mod:GetLocale()
@@ -37,8 +34,8 @@ function mod:GetOptions(CL)
 		99506, 99497,
 		"bosskill"
 	}, {
-		[99052] = L["phase_one"],
-		[99506] = L["phase_two"],
+		[99052] = CL.phase:format(1),
+		[99506] = CL.phase:format(2),
 		bosskill = "general"
 	}
 end
@@ -54,7 +51,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(99497, L["phase_two"], 270, 99497) -- untested
+	self:Bar(99497, CL["phase"]:format(2), 270, 99497) -- untested
 end
 
 --------------------------------------------------------------------------------
