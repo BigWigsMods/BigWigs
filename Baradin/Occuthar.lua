@@ -1,17 +1,11 @@
---[[if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
+if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod = BigWigs:NewBoss("Occu'thar", 752)
 if not mod then return end
-mod:RegisterEnableMob(47120)
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local fireStorm, consumingTargets = 100, mod:NewTargetList()
+mod:RegisterEnableMob(52363)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -19,9 +13,7 @@ local fireStorm, consumingTargets = 100, mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.darkness_message = "Darkness"
-	L.firestorm_message = "Firestorm soon!"
-	L.meteor_bar = "~Meteor Slash"
+	L.destruction_bar = "Explosion incoming"
 end
 L = mod:GetLocale()
 
@@ -30,66 +22,39 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return {88942, 88954, {88972, "FLASHSHAKE"}, "berserk", "bosskill"}
+	return {96913, {96920, "FLASHSHAKE"}, 96883, "berserk", "bosskill"}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "MeteorSlash", 88942, 95172)
-	self:Log("SPELL_AURA_APPLIED", "ConsumingDarkness", 88954, 95173)
-	self:Log("SPELL_CAST_START", "FelFirestorm", 88972)
+	self:Log("SPELL_CAST_START", "SearingShadows", 96913)
+	self:Log("SPELL_CAST_START", "Eyes", 96920)
+	self:Log("SPELL_CAST_SUCCESS", "FocusedFire", 96882, 96883, 96884) -- XXX It's just one of them, confirm.
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 47120)
+	self:Death("Win", 52363)
 end
 
 function mod:OnEngage()
-	self:Berserk(300)
-	self:Bar(88942, L["meteor_bar"], 10, 88942)
-	fireStorm = 100
-	self:RegisterEvent("UNIT_HEALTH")
+	self:Berserk(300) -- XXX guestimate
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:MeteorSlash(_, spellId, _, _, spellName)
-	self:Message(88942, spellName, "Important", spellId)
-	self:Bar(88942, L["meteor_bar"], 17, spellId)
+function mod:SearingShadows(_, spellId, _, _, spellName)
+	self:Message(96913, spellName, "Important", spellId)
+	self:Bar(96913, spellName, 30, spellId) -- XXX guestimate
 end
 
-do
-	local scheduled = nil
-	local function consumingWarn()
-		mod:TargetMessage(88954, L["darkness_message"], consumingTargets, "Personal", 88954)
-		scheduled = nil
-	end
-	function mod:ConsumingDarkness(player)
-		consumingTargets[#consumingTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(consumingWarn, 0.5)
-		end
-	end
+function mod:Eyes(_, spellId, _, _, spellName)
+	self:Message(96920, spellName, "Urgent", spellId, "Alert")
+	self:FlashShake(96920)
+	self:Bar(96920, L["destruction_bar"], 10, 96968) -- 96968 is Occu'thar's Destruction
 end
 
-function mod:FelFirestorm(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, L["meteor_bar"])
-	self:Message(88972, fireStorm.."% - "..spellName, "Urgent", spellId, "Alert")
-	self:FlashShake(88972)
-	self:Bar(88942, L["meteor_bar"], 32, 88942)
+function mod:FocusedFire(_, spellId, _, _, spellName)
+	self:Message(96883, spellName, "Important", spellId)
 end
 
-function mod:UNIT_HEALTH()
-	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-	if hp < 69 and fireStorm > 70 then
-		self:Message(88972, L["firestorm_message"], "Attention")
-		fireStorm = 66
-	elseif hp < 36 and fireStorm > 50 then
-		self:Message(88972, L["firestorm_message"], "Attention")
-		fireStorm = 33
-		self:UnregisterEvent("UNIT_HEALTH")
-	end
-end
-]]
