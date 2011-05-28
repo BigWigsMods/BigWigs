@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Baleroc", 800)
 if not mod then return end
 mod:RegisterEnableMob(53494)
 
-local counter = 1
+local iconCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -39,11 +39,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Death", 53494)
+	self:Death("Win", 53494)
 end
 
 function mod:OnEngage(diff)
-	counter = 1
+	iconCounter = 1
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
 end
 
@@ -59,12 +59,12 @@ end
 function mod:Torment(player, spellId, _, _, _, stack)
 	if stack == 5 then -- for 25 man
 		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, _, stack)
-		if counter == 1 then
+		if iconCounter == 1 then
 			self:PrimaryIcon(100230, player)
-			counter = 2
+			iconCounter = 2
 		else
 			self:SecondaryIcon(100230, player)
-			counter = 1
+			iconCounter = 1
 		end
 	end
 end
