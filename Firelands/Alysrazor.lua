@@ -8,6 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(52530)
 
 local fieryTornado = GetSpellInfo(99816)
+local powerWarned = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,11 +34,11 @@ function mod:GetOptions(CL)
 	return {
 		99816,
 		99844, {99925, "FLASHSHAKE"},
-		"bosskill"
+		"berserk", "bosskill"
 	}, {
 		[99816] = L["ultimate_firepower"],
 		[99844] = L["re_ignition"],
-		bosskill = "general"
+		berserk = "general"
 	}
 end
 
@@ -52,7 +53,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	self:Berserk(600) -- assumed
 	self:Bar(99816, fieryTornado, 190, 99816)
+	powerWarned = false
 end
 
 --------------------------------------------------------------------------------
@@ -72,9 +75,12 @@ function mod:BlazingClaw(player, spellId, _, _, _, stack)
 end
 
 function mod:UNIT_POWER()
-	local power = UnitPower("boss1", "FOCUS") -- not sure if its actually focus, also assume boss is always boss1
-	if power > 90 then
+	local power = UnitPower("boss1", "FOCUS")
+	if power > 80 and not powerWarned then
+		powerWarned = true
 		self:Message(99925, L["fullpower_message"]:format(GetSpellInfo(99925)), "Attention", 99925)
+	elseif power < 80 then
+		powerWarned = false
 	elseif power == 100 then
 		self:Message(99925, (GetSpellInfo(99925)), "Urgent", 99925, "Alert")
 		self:FlashShake(99925)
