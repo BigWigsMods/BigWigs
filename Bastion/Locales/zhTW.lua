@@ -64,8 +64,8 @@ end
 
 L = BigWigs:NewBossLocale("Sinestra", "zhTW")
 if L then
-	L.whelps = "暮光雏龙"
-	L.whelps_desc = "當每波暮光雏龙到來時發出警報。"
+	L.whelps = "暮光雛龍"
+	L.whelps_desc = "當每波暮光雛龍到來時發出警報。"
 
 	L.slicer_message = "可能火息術目標！"
 
