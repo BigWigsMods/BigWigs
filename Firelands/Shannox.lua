@@ -35,7 +35,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FaceRage", 99945)
 	self:Log("SPELL_AURA_REMOVED", "FaceRageRemoved", 99945)
-	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 100031)
+	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978, 100031)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
