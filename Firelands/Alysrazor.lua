@@ -17,9 +17,6 @@ local powerWarned = false
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.ultimate_firepower = "Ultimate Firepower" -- maybe should get this from the EJ
-	L.re_ignition = "Re-Ignition" -- maybe should get this from the EJ
-
 	L.tornado_trigger = "These skies are MINE!"
 	L.claw_message = "%2$dx Claw on %1$s"
 	L.fullpower_message = "%s soon!"
@@ -36,8 +33,8 @@ function mod:GetOptions(CL)
 		99844, {99925, "FLASHSHAKE"},
 		"berserk", "bosskill"
 	}, {
-		[99816] = L["ultimate_firepower"],
-		[99844] = L["re_ignition"],
+		[99816] = (EJ_GetSectionInfo(2821)),
+		[99844] = (EJ_GetSectionInfo(2823)),
 		berserk = "general"
 	}
 end

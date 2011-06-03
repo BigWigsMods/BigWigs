@@ -40,7 +40,7 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED_DOSE", "MoltenArmor", 98255)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MoltenArmor", 98255, 101157)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 

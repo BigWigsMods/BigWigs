@@ -11,9 +11,6 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "frFR")
 if L then
-	L.ultimate_firepower = "Ultimate Firepower" -- maybe should get this from the EJ
-	L.re_ignition = "Re-Ignition" -- maybe should get this from the EJ
-
 	L.tornado_trigger = "These skies are MINE!" -- transcription needed
 	L.claw_message = "%2$dx Griffes sur %1$s"
 	L.fullpower_message = "%s imminent !"

@@ -25,7 +25,6 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.seed_explosion = "Seed explosion soon!"
-	L.human_form = "Human Form" -- Shouls use EJ here
 end
 L = mod:GetLocale()
 
@@ -42,7 +41,7 @@ function mod:GetOptions(CL)
 	}, {
 		[98379] = scorpionForm,
 		[98374] = catForm,
-		[98450] = L["human_form"],
+		[98450] = (EJ_GetSectionInfo(2922)),
 		[97238] = "general"
 	}
 end
