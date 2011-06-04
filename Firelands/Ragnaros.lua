@@ -11,7 +11,7 @@ mod:RegisterEnableMob(52409)
 -- Locals
 --
 
-local seedWarnedm, intermission1warned, intermission2warned = false, false, false
+local seedWarned, intermission1warned, intermission2warned = false, false, false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
@@ -73,7 +73,7 @@ function mod:OnEngage(diff)
 	self:Bar(98710, sulfurasSmash, 30, 98710)
 	self:OpenProximity(6)
 	self:Berserk(600)
-	seedWarnedm, intermission1warned, intermission2warned = false, false, false
+	seedWarned, intermission1warned, intermission2warned = false, false, false
 	sons = 8
 	phase = 1
 end
@@ -92,7 +92,7 @@ local function intermissionEnd()
 	elseif phase == 3 and not intermission2warned then
 		intermission2warned = true
 		phase = phase + 1
-		self:OpenProximity(5)
+		mod:OpenProximity(5)
 		-- this is just guesswork
 		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317) -- Living Meteor
 		mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
