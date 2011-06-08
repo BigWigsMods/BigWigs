@@ -52,7 +52,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CatForm", 98374)
 	self:Log("SPELL_AURA_APPLIED", "ScorpionForm", 98379)
 	self:Log("SPELL_CAST_SUCCESS", "LaepingFlames", 98476)
-	self:Log("SPELL_AURA_APPLIED", "SearingSeedsApplied", 98450)
+	self:Log("SPELL_AURA_APPLIED", "SearingSeeds", 98450)
 	self:Log("SPELL_AURA_REMOVED", "SearingSeedsRemoved", 98450)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -117,7 +117,7 @@ end
 do
 	local function searingSeed()
 		mod:LocalMessage(98450, L["seed_explosion"], "Personal", 98450, "Info")
-		mod:FlahShake(98450)
+		mod:FlashShake(98450)
 		mod:OpenProximity(10, 98450)
 	end
 
