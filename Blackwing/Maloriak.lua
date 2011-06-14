@@ -97,7 +97,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ScorchingBlast", 77679, 92968, 92969, 92970)
 	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
-	self:Log("SPELL_AURA_APPLIED", "ArcaneStorm", 77896)
+	self:Log("SPELL_CAST_START", "ArcaneStorm", 77896)
 	self:Log("SPELL_CAST_START", "Jets", 78194)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -120,7 +120,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Berserk(diff > 2 and 720 or 420)
+	if diff > 2 then
+		self:Bar("phase", L["next_phase"], 16, "INV_ELEMENTAL_PRIMAL_SHADOW")
+		self:Berserk(720)
+	else
+		self:Berserk(420)
+	end
 	aberrations = 18
 	phaseCounter = 0
 	isChilled, currentPhase = nil, nil
