@@ -11,6 +11,7 @@ mod:RegisterEnableMob(41570)
 --
 
 local phase = 1
+local isHeadPhase = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,10 +25,13 @@ if L then
 	L.blazing_message = "Add incoming!"
 	L.blazing_bar = "Next skeleton"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warn for Phase 2 transition and display range check."
 	L.phase2_message = "Phase 2!"
-	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L.phase2_yell = "You may actually defeat my lava worm"
 
 	-- normal
 	L.pillar_of_flame_cd = "~Pillar of Flame"
@@ -58,7 +62,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931,
-		"blazing", {"phase2", "PROXIMITY"},
+		"blazing", "armageddon", {"phase2", "PROXIMITY"},
 		"berserk", "bosskill"
 	}, {
 		slump = "normal",
@@ -79,8 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617)
 	self:Log("SPELL_AURA_REMOVED", "MangleRemoved", 89773, 91912, 94616, 94617)
 	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690, 91919, 91931, 91932)
-	-- --self:Log("SPELL_CAST_START", "Armageddon", 92177)
-	--self:Log("SPELL_CAST_SUCCESS", "Armageddon", 92177)
+	self:Log("SPELL_AURA_APPLIED", "Armageddon", 92177)
 	self:Emote("Slump", L["slump_trigger"])
 	self:Emote("Vulnerability", L["expose_trigger"])
 
@@ -100,22 +103,27 @@ function mod:OnEngage(diff)
 	self:Bar(89773, L["mangle_cooldown"], 90, 89773)
 	self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
 	phase = 1
+	isHeadPhase = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
---[[
-function mod:Armageddon()
-	mod:Message(79011, "+! ARMAGEDDON !+", "Important", 92177, "Alarm")
-end]]
+
+function mod:Armageddon(_, spellId, _, _, spellName)
+	if not isHeadPhase then return end
+	self:Message(79011, spellName, "Important", spellId, "Alarm")
+	self:Bar(79011, spellName, 8, spellId)
+end
 
 do
 	local function rebootTimers()
+		isHeadPhase = nil
 		mod:Bar(78006, L["pillar_of_flame_cd"], 9.5, 78006)
 		mod:Bar(91931, L["spew_bar"], 4.5, 91931)
 	end
 	function mod:Vulnerability()
+		isHeadPhase = true
 		self:Message(79011, L["expose_message"], "Positive", 79011)
 		self:Bar(79011, L["expose_message"], 30, 79011)
 		self:SendMessage("BigWigs_StopBar", self, L["pillar_of_flame_cd"])

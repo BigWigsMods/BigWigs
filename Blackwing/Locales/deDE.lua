@@ -36,6 +36,9 @@ if L then
 	L.blazing_message = "Add kommt!"
 	L.blazing_bar = "Nächstes Skelett"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warnt vor dem Übergang in Phase 2 und öffnet die Anzeige naher Spieler."
 	L.phase2_message = "Phase 2!"

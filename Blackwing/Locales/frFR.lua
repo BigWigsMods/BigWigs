@@ -36,6 +36,9 @@ if L then
 	L.blazing_message = "Arrivée d'un Assemblage !"
 	L.blazing_bar = "Prochain Assemblage"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 et affiche le vérificateur de portées."
 	L.phase2_message = "Phase 2 !"

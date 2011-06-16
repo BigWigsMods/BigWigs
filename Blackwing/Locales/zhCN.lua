@@ -33,6 +33,9 @@ if L then
 	L.blazing_message = "即將 熾炎骸骨傀儡！"
 	L.blazing_bar = "<下一熾炎骸骨傀儡>"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當第二階段時顯示距離檢查。"
 	L.phase2_message = "第二階段！"

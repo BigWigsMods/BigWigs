@@ -36,6 +36,9 @@ if L then
 	L.blazing_message = "¡Add inminente!"
 	L.blazing_bar = "Siguiente esqueleto"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "Fase 2"
 	L.phase2_desc = "Aviso para la transición de la fase 2 y visualiza el comprobador de rango."
 	L.phase2_message = "¡Fase 2!"

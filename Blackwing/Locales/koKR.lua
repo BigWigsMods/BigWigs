@@ -36,6 +36,9 @@ if L then
 	L.blazing_message = "해골 추가!"
 	L.blazing_bar = "다음 해골"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "2 단계"
 	L.phase2_desc = "2 단계 알림과 근접창 체크를 표시합니다."
 	L.phase2_message = "2 단계!"

@@ -36,6 +36,9 @@ if L then
 	L.blazing_message = "Надвигается помощник!"
 	L.blazing_bar = "След. скелет"
 
+	L.armageddon = "Armageddon"
+	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+
 	L.phase2 = "2-ая фаза"
 	L.phase2_desc = "Сообщить о переходе во 2-ую фазу и показать проверку близости."
 	L.phase2_message = "2-ая фаза!"
