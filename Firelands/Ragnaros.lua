@@ -61,7 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890)
-	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951)
+	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877)
 	--self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus") -- Not yet implemented for the boss
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 

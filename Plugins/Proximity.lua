@@ -201,6 +201,11 @@ local mapData = {
 	ThroneoftheFourWinds = {
 		{ 1500, 1000 },
 	},
+	Firelands = {
+		false, -- no data
+		{ 375, 250 },
+		{ 1440, 960 },
+	},
 }
 
 local function findClosest(toRange)
@@ -224,6 +229,7 @@ local function getClosestRangeFunction(toRange)
 	local currentFloor = GetCurrentMapDungeonLevel()
 	if currentFloor == 0 then currentFloor = 1 end
 	local id = floors[currentFloor]
+	if id == false then return findClosest(toRange) end -- handle if a floor has no data
 	if not ranges[id] then	-- note to the confused: id is a tableref here, not an integer
 		ranges[id] = function(unit, srcX, srcY)
 			local dstX, dstY = GetPlayerMapPosition(unit)

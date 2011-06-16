@@ -7,7 +7,8 @@ local mod = BigWigs:NewBoss("Baleroc", 800)
 if not mod then return end
 mod:RegisterEnableMob(53494)
 
-local iconCounter = 1
+local countdownTargets = mod:NewTargetList()
+local countdownCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,30 +27,62 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		99259, {100230, "ICON"},
-		"bosskill"
+		99259, 100230, "berserk", "bosskill",
+		{99516, "FLASHSHAKE", "ICON"}
 	}, {
-		[99259] = "general"
+		[99259] = "general",
+		[99516] = "heroic"
 	}
 end
 
 function mod:OnBossEnable()
 
+	self:Log("SPELL_AURA_APPLIED", "Countdown", 99516)
 	self:Log("SPELL_CAST_START", "TormentTimer", 99259)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230, 100231, 100232)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 53494)
 end
 
 function mod:OnEngage(diff)
-	iconCounter = 1
+	self:Berserk(360)
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
+	if diff > 2 then
+		self:Bar(99516, (GetSpellInfo(99516)), 25, 99516) -- Countdown
+		countdownCounter = 1
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local scheduled = nil
+	local function countdownWarn(spellName)
+		mod:TargetMessage(99516, spellName, countdownTargets, "Important", 99516)
+		scheduled = nil
+	end
+	function mod:Countdown(player, spellId, _, _, spellName)
+		self:Bar(99516, spellName, 47.6, spellId)
+		if UnitIsUnit(player, "player") then
+			self:FlashShake(99516)
+		end
+		if countdownCounter == 1 then
+			self:PrimaryIcon(99516, player)
+			countdownCounter = 2
+		else
+			self:SecondaryIcon(99516, player)
+			countdownCounter = 1
+		end
+		countdownTargets[#countdownTargets + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(countdownWarn, 0.1, spellName)
+		end
+	end
+end
 
 function mod:TormentTimer(_, spellId, _, _, spellName)
 	self:Message(99259, spellName, "Important", spellId, "Alert")
@@ -57,14 +90,9 @@ function mod:TormentTimer(_, spellId, _, _, spellName)
 end
 
 function mod:Torment(player, spellId, _, _, _, stack)
-	if stack == 5 then -- for 25 man
+	if stack == 5 and (GetInstanceDifficulty() == 2 or GetInstanceDifficulty() == 4) then
 		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, _, stack)
-		if iconCounter == 1 then
-			self:PrimaryIcon(100230, player)
-			iconCounter = 2
-		else
-			self:SecondaryIcon(100230, player)
-			iconCounter = 1
-		end
+	elseif stack == 6 and (GetInstanceDifficulty() == 1 or GetInstanceDifficulty() == 3) then
+		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, _, stack)
 	end
 end

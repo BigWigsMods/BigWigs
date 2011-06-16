@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Alysrazor", 800)
 if not mod then return end
 mod:RegisterEnableMob(52530)
 
-local fieryTornado = GetSpellInfo(99816)
+local fieryTornado, firestorm = (GetSpellInfo(99816)), (GetSpellInfo(101659))
 local powerWarned = false
 
 --------------------------------------------------------------------------------
@@ -29,12 +29,14 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		99816,
+		99816, 99464,
 		99844, {99925, "FLASHSHAKE"},
+		{100744, "FLASHSHAKE"}, 100761,
 		"berserk", "bosskill"
 	}, {
 		[99816] = (EJ_GetSectionInfo(2821)),
 		[99844] = (EJ_GetSectionInfo(2823)),
+		[100744] = "heroic",
 		berserk = "general"
 	}
 end
@@ -42,6 +44,9 @@ end
 function mod:OnBossEnable()
 	self:Yell("FieryTorndo", L["tornado_trigger"])
 
+	self:Log("SPELL_AURA_APPLIED", "Molting", 99464, 99465, 100698)
+	self:Log("SPELL_CAST_START", "Firestorm", 100744)
+	self:Log("SPELL_CAST_START", "Cataclysm", 100761)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazingClaw", 99844)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -52,6 +57,12 @@ end
 function mod:OnEngage(diff)
 	self:Berserk(600) -- assumed
 	self:Bar(99816, fieryTornado, 190, 99816)
+	if diff > 2 then
+		self:Bar(99816, fieryTornado, 250, 99816)
+		self:Bar(100744, firestorm, 93, 100744)
+	else
+		self:Bar(99464, (GetSpellInfo(99464)), 60, 99464) -- Molting
+	end
 	powerWarned = false
 end
 
@@ -59,7 +70,27 @@ end
 -- Event Handlers
 --
 
+-- don't need molting warning for heroic because molting happens at every firestorm
+function mod:Molting(_, spellId, _, _, spellName)
+	if GetInstanceDifficulty() < 3 then
+		self:Message(99464, spellName, "Positive", spellId)
+		self:Bar(99464, spellName, 60, spellId)
+	end
+end
+
+function mod:Firestorm(_, spellId, _, _, spellName)
+	self:FlashShake(100744)
+	self:Message(100744, spellName, "Urgent", spellId, "Alert")
+	self:Bar(100744, "~"..spellName, 86, spellId)
+	self:Bar(100744, spellName, 15, spellId)
+end
+
+function mod:Cataclysm(_, spellId, _, _, spellName)
+	self:Message(100761, spellName, "Attention", spellId, "Alarm")
+end
+
 function mod:FieryTorndo()
+	self:SendMessage("BigWigs_StopBar", self, firestorm)
 	self:Bar(99816, fieryTornado, 35, 99816)
 	self:Message(99816, fieryTornado, "Important", 99816, "Alarm")
 	self:RegisterEvent("UNIT_POWER")
