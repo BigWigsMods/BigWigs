@@ -49,7 +49,7 @@ end
 
 function mod:OnEngage(diff)
 	moltenArmorWarned = nil
-	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -71,14 +71,15 @@ do
 	end
 end
 
-function mod:UNIT_HEALTH(unitId)
+function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	-- Boss frames were jumping around, there are 3 up with the buff on, so one of boss1 or boss2 is bound to exsist
-	if unitId == "boss1" or "boss2" then
+	if unitId == "boss1" or unitId == "boss2" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 28 then -- phase starts at 25
-			local stack = select(4,UnitBuff(unitId, moltenArmor))
+			local stack = select(4, UnitBuff(unitId, moltenArmor))
 			self:Message(99846, L["phase2_message"]:format(stack,moltenArmor), "Positive", 99846, "Info")
-			self:UnregisterEvent("UNIT_HEALTH")
+			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
 end
+

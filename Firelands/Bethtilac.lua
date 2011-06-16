@@ -131,3 +131,4 @@ function mod:Devastate(_, spellId)
 	self:Bar(99052, ("~%s (%d)"):format(smolderingDevastate, devastateCount), 90, spellId)
 	devastateCount = devastateCount + 1
 end
+

@@ -36,7 +36,6 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_AURA_APPLIED", "Countdown", 99516)
 	self:Log("SPELL_CAST_START", "TormentTimer", 99259)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230, 100231, 100232)
@@ -96,3 +95,4 @@ function mod:Torment(player, spellId, _, _, _, stack)
 		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, _, stack)
 	end
 end
+

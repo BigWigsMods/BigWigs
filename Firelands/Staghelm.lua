@@ -48,7 +48,6 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Adrenaline", 97238)
 	self:Log("SPELL_AURA_APPLIED", "CatForm", 98374)
 	self:Log("SPELL_AURA_APPLIED", "ScorpionForm", 98379)
@@ -139,5 +138,4 @@ do
 		end
 	end
 end
-
 

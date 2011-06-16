@@ -54,7 +54,6 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579)
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 100175, 100171, 100181)
 
@@ -186,5 +185,4 @@ function mod:Deaths(mobId)
 		self:Win()
 	end
 end
-
 
