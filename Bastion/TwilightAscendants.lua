@@ -129,7 +129,7 @@ function mod:OnEngage(diff)
 
 	first = nil
 	crushMarked = false
-	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -223,34 +223,19 @@ end
 
 do
 	local terrastra, arion = BigWigs:Translate("Terrastra"), BigWigs:Translate("Arion")
-	function mod:UNIT_HEALTH()
-		--The mess that we need thanks to Blizz...
-		if not first then
-			local boss1, boss2 = UnitHealth("boss1") / UnitHealthMax("boss1") * 100, UnitHealth("boss2") / UnitHealthMax("boss2") * 100
-			if boss1 < 30 then
-				self:Message("switch", L["health_report"]:format((UnitName("boss1")), boss1), "Attention", 26662, "Info")
-				first = true
-			elseif boss2 < 30 and not first then
-				self:Message("switch", L["health_report"]:format((UnitName("boss2")), boss2), "Attention", 26662, "Info")
-				first = true
-			end
-		else
-			local boss1 = (UnitName("boss1") == arion or UnitName("boss1") == terrastra) and UnitHealth("boss1") / UnitHealthMax("boss1") * 100 or 0
-			local boss2 = (UnitName("boss2") == arion or UnitName("boss2") == terrastra) and UnitHealth("boss2") / UnitHealthMax("boss2") * 100 or 0
-			local boss3 = (UnitName("boss3") == arion or UnitName("boss3") == terrastra) and UnitHealth("boss3") / UnitHealthMax("boss3") * 100 or 0
-			local boss4 = (UnitName("boss4") == arion or UnitName("boss4") == terrastra) and UnitHealth("boss4") / UnitHealthMax("boss4") * 100 or 0
-			if boss1 >1 and boss1 <30 then
-				self:Message("switch", L["health_report"]:format((UnitName("boss1")), boss1), "Attention", 26662, "Info")
-				self:UnregisterEvent("UNIT_HEALTH")
-			elseif boss2 >1 and boss2 <30 then
-				self:Message("switch", L["health_report"]:format((UnitName("boss2")), boss2), "Attention", 26662, "Info")
-				self:UnregisterEvent("UNIT_HEALTH")
-			elseif boss3 >1 and boss3 <30 then
-				self:Message("switch", L["health_report"]:format((UnitName("boss3")), boss3), "Attention", 26662, "Info")
-				self:UnregisterEvent("UNIT_HEALTH")
-			elseif boss4 >1 and boss4 <30 then
-				self:Message("switch", L["health_report"]:format((UnitName("boss4")), boss4), "Attention", 26662, "Info")
-				self:UnregisterEvent("UNIT_HEALTH")
+	function mod:UNIT_HEALTH_FREQUENT(_, unit)
+		if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
+			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+			if not first then
+				if hp < 30 then
+					self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
+					first = true
+				end
+			else
+				if hp > 1 and hp < 30 and (UnitName(unit) == arion or UnitName(unit) == terrastra) then
+					self:Message("switch", L["health_report"]:format((UnitName(unit)), hp), "Attention", 26662, "Info")
+					self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+				end
 			end
 		end
 	end

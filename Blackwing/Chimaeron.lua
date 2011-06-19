@@ -67,7 +67,7 @@ function mod:OnEngage(diff)
 		self:Bar(88853, L["next_system_failure"], 90, 88853) --happens randomly at either 60 or 90 on heroic
 	end
 	self:Bar(82848, GetSpellInfo(82848), 30, 82848) --Massacre
-	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -112,11 +112,12 @@ function mod:DoubleAttack(_, spellId, _, _, spellName)
 	self:Message(88826, spellName, "Urgent", spellId)
 end
 
-function mod:UNIT_HEALTH()
-	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+function mod:UNIT_HEALTH_FREQUENT(_, unit)
+	if unit ~= "boss1" then return end
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 23 then
 		self:Message(82890, L["phase2_message"], "Positive", 82890, "Info")
-		self:UnregisterEvent("UNIT_HEALTH")
+		self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 	end
 end
 

@@ -97,7 +97,7 @@ function mod:OnEngage(diff)
 	counter = 1
 
 	self:RegisterEvent("UNIT_AURA")
-	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -203,14 +203,15 @@ function mod:FesterBlood(_, spellId, _, _, spellName)
 	oozecount = oozecount + 1
 end
 
-function mod:UNIT_HEALTH()
-	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
+function mod:UNIT_HEALTH_FREQUENT(_, unit)
+	if unit ~= "boss1" then return end
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if firstFury == 0 and hp > 86 and hp < 89 then
 		self:Message(82524, L["first_fury_soon"], "Attention", 82524)
 		firstFury = 1
 	elseif hp < 30 then
 		self:Message(82630, L["phase2_soon"], "Attention", 82630, "Info")
-		self:UnregisterEvent("UNIT_HEALTH")
+		self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 	end
 end
 

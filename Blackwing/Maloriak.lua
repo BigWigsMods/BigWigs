@@ -129,7 +129,7 @@ function mod:OnEngage(diff)
 	aberrations = 18
 	phaseCounter = 0
 	isChilled, currentPhase = nil, nil
-	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -300,11 +300,12 @@ function mod:Jets(_, spellId)
 	self:Bar(78194, L["jets_bar"], 10, spellId)
 end
 
-function mod:UNIT_HEALTH()
-	local hp = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-	if hp < 31 then
+function mod:UNIT_HEALTH_FREQUENT(_, unit)
+	if unit ~= "boss1" then return end
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < 29 then --Switches at 25%
 		self:Message("phase", L["final_phase_soon"], "Positive", 77991, "Info")
-		self:UnregisterEvent("UNIT_HEALTH")
+		self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 	end
 end
 
