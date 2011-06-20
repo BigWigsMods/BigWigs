@@ -3,7 +3,7 @@ if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Lord Rhyolith", 800)
+local mod = BigWigs:NewBoss("Lord Rhyolith", 800, 193)
 if not mod then return end
 mod:RegisterEnableMob(52577, 53087, 52558) -- Left foot, Right Foot, Lord Rhyolith
 
@@ -72,7 +72,7 @@ do
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	-- Boss frames were jumping around, there are 3 up with the buff on, so one of boss1 or boss2 is bound to exsist
+	-- Boss frames were jumping around, there are 3 up with the buff on, so one of boss1 or boss2 is bound to exist
 	if unitId == "boss1" or unitId == "boss2" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 28 then -- phase starts at 25

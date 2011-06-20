@@ -3,7 +3,7 @@ if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Baleroc", 800)
+local mod = BigWigs:NewBoss("Baleroc", 800, 196)
 if not mod then return end
 mod:RegisterEnableMob(53494)
 

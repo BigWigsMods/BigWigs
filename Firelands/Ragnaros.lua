@@ -3,7 +3,7 @@ if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Ragnaros", 800)
+local mod = BigWigs:NewBoss("Ragnaros", 800, 198)
 if not mod then return end
 mod:RegisterEnableMob(52409)
 
@@ -29,7 +29,6 @@ if L then
 	L.engulfing_close = "Close %s"
 	L.engulfing_middle = "Far %s"
 	L.engulfing_far = "Middle %s"
-
 end
 L = mod:GetLocale()
 

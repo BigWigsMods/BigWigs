@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Argaloth", 752)
+local mod = BigWigs:NewBoss("Argaloth", 752, 139)
 if not mod then return end
 mod:RegisterEnableMob(47120)
 

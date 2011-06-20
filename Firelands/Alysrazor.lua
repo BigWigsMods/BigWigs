@@ -3,7 +3,7 @@ if tonumber((select(4, GetBuildInfo()))) < 40200 then return end
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Alysrazor", 800)
+local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530)
 
@@ -42,7 +42,7 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	self:Yell("FieryTorndo", L["tornado_trigger"])
+	self:Yell("FieryTornado", L["tornado_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "Molting", 99464, 99465, 100698)
 	self:Log("SPELL_CAST_START", "Firestorm", 100744)
@@ -89,7 +89,7 @@ function mod:Cataclysm(_, spellId, _, _, spellName)
 	self:Message(100761, spellName, "Attention", spellId, "Alarm")
 end
 
-function mod:FieryTorndo()
+function mod:FieryTornado()
 	self:SendMessage("BigWigs_StopBar", self, firestorm)
 	self:Bar(99816, fieryTornado, 35, 99816)
 	self:Message(99816, fieryTornado, "Important", 99816, "Alarm")

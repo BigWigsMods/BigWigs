@@ -369,7 +369,7 @@ do
 		self:Print(errorDeprecatedNew:format(module))
 	end
 
-	local function new(core, module, zone, ...)
+	local function new(core, module, zone, encounterId, ...)
 		if core:GetModule(module, true) then
 			addon:Print(errorAlreadyRegistered:format(module))
 		else
@@ -379,6 +379,7 @@ do
 			end
 			local m = core:NewModule(module, ...)
 			m.zoneId = zone
+			m.encounterId = encounterId
 			return m
 		end
 	end
@@ -389,7 +390,7 @@ do
 		return new(self.bossCore, module, zone, ...)
 	end
 	function addon:NewPlugin(module, ...)
-		return new(self.pluginCore, module, nil, ...)
+		return new(self.pluginCore, module, nil, nil, ...)
 	end
 
 	function addon:IterateBossModules() return self.bossCore:IterateModules() end
@@ -465,12 +466,10 @@ do
 
 	function addon:RegisterBossModule(module)
 		if not module.displayName then module.displayName = module.moduleName end
-		if LOCALE ~= "enUS" then
-			if BB then
-				if module.displayName and BB[module.displayName] then
-					module.displayName = BB[module.displayName]
-				end
-			end
+		if module.encounterId and EJ_GetEncounterInfo then
+			module.displayName = EJ_GetEncounterInfo(module.encounterId)
+		elseif LOCALE ~= "enUS" and BB and module.displayName and BB[module.displayName] then
+			module.displayName = BB[module.displayName]
 		end
 		enablezones[module.zoneId] = true
 
