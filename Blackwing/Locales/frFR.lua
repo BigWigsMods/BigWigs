@@ -37,7 +37,7 @@ if L then
 	L.blazing_bar = "Prochain Assemblage"
 
 	L.armageddon = "Armageddon"
-	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+	L.armageddon_desc = "Prévient si Armageddon est incanté durant la phase de la tête."
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Prévient quand la rencontre passe en phase 2 et affiche le vérificateur de portées."
