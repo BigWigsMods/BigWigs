@@ -165,6 +165,8 @@ end
 function mod:FuryOfChogall(_, spellId, _, _, spellName)
 	if firstFury == 1 then
 		self:Message(82524, L["first_fury_message"], "Attention", spellId)
+		self:Bar(91303, L["worship_cooldown"], 10, 91303)
+		worshipCooldown = 40
 		firstFury = 2
 	else
 		self:Message(82524, L["fury_message"], "Attention", spellId)
@@ -188,7 +190,6 @@ do
 		mod:Bar(81628, L["adherent_bar"]:format(bigcount), 50, spellId)
 	end
 	function mod:SummonCorruptingAdherent(_, spellId, _, _, spellName)
-		worshipCooldown = 40
 		self:Message(81628, L["adherent_message"]:format(bigcount), "Important", spellId)
 		bigcount = bigcount + 1
 		self:ScheduleTimer(nextAdd, 41, spellId)
