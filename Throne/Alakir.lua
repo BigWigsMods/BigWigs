@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Electrocute", 88427)
 	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261, 93262, 93263)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
-	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
+	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904, 101458, 101459, 101460)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301, 93279, 93280, 93281)
 	self:Log("SPELL_DAMAGE", "Shock", 93257)
 	-- Acid Rain is applied at P2 transition
@@ -166,6 +166,7 @@ function mod:Feedback(_, spellId, _, _, spellName, stack)
 	else
 		self:SendMessage("BigWigs_StopBar", self, L["feedback_message"]:format(stack-1))
 	end
+	--self:Bar(87904, L["feedback_message"]:format(stack), self:GetInstanceDifficulty() > 2 and 20 or 30, spellId) -- XXX 4.2
 	self:Bar(87904, L["feedback_message"]:format(stack), 20, spellId)
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId)
 end
