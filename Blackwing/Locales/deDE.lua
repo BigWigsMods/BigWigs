@@ -37,12 +37,12 @@ if L then
 	L.blazing_bar = "Nächstes Skelett"
 
 	L.armageddon = "Armageddon"
-	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+	L.armageddon_desc = "Warnt, wenn Armageddon während der Kopfphase gewirkt wird."
 
 	L.phase2 = "Phase 2"
 	L.phase2_desc = "Warnt vor dem Übergang in Phase 2 und öffnet die Anzeige naher Spieler."
 	L.phase2_message = "Phase 2!"
-	--L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L.phase2_yell = "Ihr könntet tatsächlich meinen Lavawurm besiegen" -- check
 
 	-- normal
 	L.pillar_of_flame_cd = "~Flammensäule"
@@ -97,7 +97,7 @@ if L then
 	L.green_phase_trigger = "Etwas instabil vielleicht, doch keine Forschung ohne Risiko!"
 	L.green_phase_emote_trigger = "grüne"
 	L.green_phase = "|cFF33FF00Grüne|r Phase"
-	--L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_trigger = "Eure Mixturen sind schwach, Maloriak!" -- check
 	L.dark_phase_emote_trigger = "dunkle" -- check
 	L.dark_phase = "|cFF660099Dunkle|r Phase"
 end

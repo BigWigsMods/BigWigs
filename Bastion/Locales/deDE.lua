@@ -70,8 +70,8 @@ if L then
 
 	L.egg_vulnerable = "Zeit für Omelett!"
 
-	--L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
-	--L.omelet_trigger = "You mistake this for weakness?  Fool!"
+	L.whelps_trigger = "Fresst, Kinder!" -- check
+	L.omelet_trigger = "Ihr denkt, ich sei schwach?" -- check
 
 	L.phase13 = "Phase 1 und 3"
 	L.phase = "Phasen"
