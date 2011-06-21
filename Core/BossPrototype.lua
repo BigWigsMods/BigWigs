@@ -271,7 +271,7 @@ do
 	end
 
 	function boss:GetInstanceDifficulty()
-		local diff = select(3, GetInstanceInfo())
+		local _, _, diff = GetInstanceInfo()
 		return diff
 	end
 

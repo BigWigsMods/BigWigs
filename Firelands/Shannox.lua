@@ -58,7 +58,6 @@ function mod:ImmolationTrap(player, spellId, _, _, spellName, _, _, _, _, dGUID)
 	end
 end
 
-
 function mod:HurlSpear(_, spellId, _, _, spellName)
 	self:Message(100002, spellName, "Attention", spellId)
 	self:Bar(100002, spellName, 41, spellId)

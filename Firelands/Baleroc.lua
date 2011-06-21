@@ -89,10 +89,9 @@ function mod:TormentTimer(_, spellId, _, _, spellName)
 end
 
 function mod:Torment(player, spellId, _, _, _, stack)
-	if stack == 5 and (GetInstanceDifficulty() == 2 or GetInstanceDifficulty() == 4) then
-		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, _, stack)
-	elseif stack == 6 and (GetInstanceDifficulty() == 1 or GetInstanceDifficulty() == 3) then
-		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, _, stack)
+	local diff = self:GetInstanceDifficulty()
+	if (stack == 5 and (diff == 2 or diff == 4)) or (stack == 6 and (diff == 1 or diff == 3)) then
+		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, nil, stack)
 	end
 end
 
