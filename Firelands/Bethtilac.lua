@@ -100,7 +100,7 @@ do
 		end
 	end
 	function mod:BroodlingWatcher()
-		if self:GetInstanceDifficulty() < 3 then
+		if self:GetInstanceDifficulty() > 2 then
 			broodlingWarn()
 		end
 	end
