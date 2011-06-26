@@ -673,7 +673,7 @@ do
 			end
 			if type(o) == "number" then
 				local l = GetSpellLink(o)
-				if currentSize + #l + 1 > 255 then
+				if currentSize + #l + 1 > 255 then
 					printList(channel, header, abilities)
 					wipe(abilities)
 					currentSize = 0
@@ -684,7 +684,7 @@ do
 				local ejID = option:match("^ej:(%d+)$")
 				if tonumber(ejID) then
 					local l = select(9, EJ_GetSectionInfo(tonumber(ejID)))
-					if currentSize + #l + 1 > 255 then
+					if currentSize + #l + 1 > 255 then
 						printList(channel, header, abilities)
 						wipe(abilities)
 						currentSize = 0

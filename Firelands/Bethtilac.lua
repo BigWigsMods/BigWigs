@@ -15,6 +15,7 @@ local stackWarn = 5 -- probably needs change
 local devastateCount = 1
 local burst, smolderingDevastate = (GetSpellInfo(99990)), (GetSpellInfo(99052))
 local cinderwebDrone_icon = "INV_Misc_Head_Nerubian_01"
+local cinderwebDrone = EJ_GetSectionInfo(2773)
 local lastBroodlingTarget = ""
 
 --------------------------------------------------------------------------------
@@ -25,14 +26,13 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.kiss_message = "%2$dx Kiss on %1$s"
-	L.cinderwebDrone, L.cinderwebDrone_desc = EJ_GetSectionInfo(2773)
 end
 L = mod:GetLocale()
 
 -- untested
 local function droneWarning()
-	mod:Message("cinderwebDrone", L["cinderwebDrone"], "Attention", cinderwebDrone_icon)
-	mod:Bar("cinderwebDrone", L["cinderwebDrone"], 60, cinderwebDrone_icon)
+	mod:Message("ej:2773", cinderwebDrone, "Attention", cinderwebDrone_icon)
+	mod:Bar("ej:2773", cinderwebDrone, 60, cinderwebDrone_icon)
 	mod:ScheduleTimer(droneWarning, 60)
 end
 
@@ -42,7 +42,7 @@ end
 
 function mod:GetOptions(CL)
 	return {
-		99052, "cinderwebDrone",
+		99052, "ej:2773",
 		99506, 99497,
 		{99559, "FLASHSHAKE", "WHISPER"}, {99990, "FLASHSHAKE", "SAY"},
 		"bosskill"
@@ -74,7 +74,7 @@ function mod:OnEngage(diff)
 		lastBroodlingTarget = ""
 	end
 	self:Bar(99052, ("~%s (%d)"):format(smolderingDevastate, devastateCount), 80, 99052)
-	self:Bar("cinderwebDrone", L["cinderwebDrone"], 45, cinderwebDrone_icon)
+	self:Bar("ej:2773", cinderwebDrone, 45, cinderwebDrone_icon)
 	self:ScheduleTimer(droneWarning, 45)
 end
 
