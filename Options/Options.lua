@@ -684,6 +684,16 @@ do
 					wipe(abilities)
 				end
 				abilities[#abilities + 1] = l
+			elseif type(o) == "string" then
+				local ejID = option:match("^ej:(%d+)$")
+				if tonumber(ejID) then
+					local l = select(9, EJ_GetSectionInfo(tonumber(ejID)))
+					if checkSize(header, abilities) + l:len() > 255 then
+						printList(channel, header, abilities)
+						wipe(abilities)
+					end
+					abilities[#abilities + 1] = l
+				end
 			end
 		end
 		printList(channel, header, abilities)
@@ -786,7 +796,7 @@ do
 
 		outerContainer:ResumeLayout()
 		outerContainer:PerformLayout()
-		
+
 		-- Need to parent the AceGUI container to the actual
 		-- zone panel frame so that the AceGUI container will
 		-- show at all.
