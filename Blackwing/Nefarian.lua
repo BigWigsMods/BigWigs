@@ -126,7 +126,7 @@ end
 function mod:Deaths(mobId)
 	if mobId == 41948 then
 		deadAdds = deadAdds + 1
-		if self:GetInstanceDifficulty() > 2 and not phase3warned then
+		if self:Difficulty() > 2 and not phase3warned then
 			self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 			phase = 3
 			self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
@@ -146,7 +146,7 @@ end
 function mod:PhaseTwo()
 	phase = 2
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
-	local d = self:GetInstanceDifficulty()
+	local d = self:Difficulty()
 	if d == 4 then
 		-- Heroic 25man (diff 4) probably 4 minutes
 		self:Bar("phase", CL["phase"]:format(phase), 240, 78621) -- random guessed number

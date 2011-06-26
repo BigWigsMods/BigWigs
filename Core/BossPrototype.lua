@@ -270,17 +270,18 @@ do
 		end
 	end
 
-	function boss:GetInstanceDifficulty()
+	function boss:Difficulty()
 		local _, _, diff = GetInstanceInfo()
 		return diff
 	end
+	boss.GetInstanceDifficulty = boss.Difficulty
 
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
 		CombatLogClearEntries()
 		self.isEngaged = true
 		if self.OnEngage then
-			self:OnEngage(self:GetInstanceDifficulty())
+			self:OnEngage(self:Difficulty())
 		end
 	end
 

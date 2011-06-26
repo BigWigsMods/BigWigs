@@ -64,7 +64,7 @@ function mod:Paralysis(_, spellId, _, _, spellName)
 end
 
 function mod:MalevolentStrikes(player, spellId, _, _, spellName, stack)
-	local stackWarn = self:GetInstanceDifficulty() > 2 and 5 or 10 -- 8% in heroic, 6% in normal, announce around 50-60% reduced healing
+	local stackWarn = self:Difficulty() > 2 and 5 or 10 -- 8% in heroic, 6% in normal, announce around 50-60% reduced healing
 	if stack > stackWarn then
 		self:TargetMessage(83908, L["strikes_message"], player, "Urgent", spellId, "Info", stack)
 	end

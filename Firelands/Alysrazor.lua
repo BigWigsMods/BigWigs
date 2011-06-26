@@ -72,7 +72,7 @@ end
 
 -- don't need molting warning for heroic because molting happens at every firestorm
 function mod:Molting(_, spellId, _, _, spellName)
-	if self:GetInstanceDifficulty() < 3 then
+	if self:Difficulty() < 3 then
 		self:Message(99464, spellName, "Positive", spellId)
 		self:Bar(99464, spellName, 60, spellId)
 	end

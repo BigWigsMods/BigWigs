@@ -119,7 +119,7 @@ end
 do
 	local prev = 0
 	function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
-		local timer = self:GetInstanceDifficulty() > 2 and 27 or 42
+		local timer = self:Difficulty() > 2 and 27 or 42
 		local t = GetTime()
 		if (t - prev) > timer then
 			prev = t

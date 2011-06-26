@@ -84,7 +84,7 @@ end
 
 function mod:SystemFailureEnd(_, spellId)
 	if self.isEngaged then --To prevent firing after a wipe
-		if self:GetInstanceDifficulty() < 3 then
+		if self:Difficulty() < 3 then
 			self:Bar(88853, L["next_system_failure"], 65, spellId)
 		end
 		self:FlashShake(88853)

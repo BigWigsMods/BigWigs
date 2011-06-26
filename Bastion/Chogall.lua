@@ -134,7 +134,7 @@ do
 			else
 				mod:SecondaryIcon(93180, player)
 			end
-			if mod:GetInstanceDifficulty() == 4 then counter = counter + 1 end
+			if mod:Difficulty() == 4 then counter = counter + 1 end
 		end
 		if counter > 2 then counter = 1 end
 	end
@@ -177,7 +177,7 @@ end
 function mod:Orders(_, spellId, _, _, spellName)
 	self:Message("orders", spellName, "Urgent", spellId)
 	if spellId == 81556 then
-		if self:GetInstanceDifficulty() > 2 then
+		if self:Difficulty() > 2 then
 			self:Bar(93223, L["unleashed_shadows"], 24, 93223) -- verified for 25man heroic
 		else
 			self:Bar(93223, L["unleashed_shadows"], 15, 93223) -- verified for 10man normal

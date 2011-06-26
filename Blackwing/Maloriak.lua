@@ -151,7 +151,7 @@ end
 
 local function nextPhase(timeToNext)
 	phaseCounter = phaseCounter + 1
-	local diff = mod:GetInstanceDifficulty()
+	local diff = mod:Difficulty()
 	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
 		mod:Bar("phase", L["green_phase_bar"], timeToNext, "INV_POTION_162")
 	else

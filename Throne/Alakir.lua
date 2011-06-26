@@ -166,7 +166,7 @@ function mod:Feedback(_, spellId, _, _, spellName, stack)
 	else
 		self:SendMessage("BigWigs_StopBar", self, L["feedback_message"]:format(stack-1))
 	end
-	--self:Bar(87904, L["feedback_message"]:format(stack), self:GetInstanceDifficulty() > 2 and 20 or 30, spellId) -- XXX 4.2
+	--self:Bar(87904, L["feedback_message"]:format(stack), self:Difficulty() > 2 and 20 or 30, spellId) -- XXX 4.2
 	self:Bar(87904, L["feedback_message"]:format(stack), 20, spellId)
 	self:Message(87904, L["feedback_message"]:format(stack), "Positive", spellId)
 end
