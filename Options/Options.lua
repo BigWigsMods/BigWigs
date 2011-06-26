@@ -638,8 +638,6 @@ end
 
 local listAbilitiesInChat = nil
 do
-	-- XXX This stuff needs some serious cleaning up.
-
 	local function output(channel, ...)
 		if channel then
 			SendChatMessage(strjoin(" ", ...), channel)
@@ -654,12 +652,6 @@ do
 		else output(channel, unpack(list)) end
 	end
 
-	local function checkSize(header, list)
-		local hS = header and header:len() + 1 or 0
-		local lS = strjoin(" ", unpack(list)):len()
-		return hS + lS
-	end
-
 	function listAbilitiesInChat(widget)
 		local module = widget:GetUserData("module")
 		local channel = nil
@@ -668,6 +660,7 @@ do
 		local abilities = {}
 		local header = nil
 		output(channel, module.displayName or module.moduleName or module.name)
+		local currentSize = 0
 		for i, option in next, module.toggleOptions do
 			local o = option
 			if type(o) == "table" then o = option[1] end
@@ -676,23 +669,28 @@ do
 				printList(channel, header, abilities)
 				wipe(abilities)
 				header = module.optionHeaders[o]
+				currentSize = #header
 			end
 			if type(o) == "number" then
 				local l = GetSpellLink(o)
-				if checkSize(header, abilities) + l:len() > 255 then
+				if currentSize + #l + 1 > 255 then
 					printList(channel, header, abilities)
 					wipe(abilities)
+					currentSize = 0
 				end
 				abilities[#abilities + 1] = l
+				currentSize = currentSize + #l + 1
 			elseif type(o) == "string" then
 				local ejID = option:match("^ej:(%d+)$")
 				if tonumber(ejID) then
 					local l = select(9, EJ_GetSectionInfo(tonumber(ejID)))
-					if checkSize(header, abilities) + l:len() > 255 then
+					if currentSize + #l + 1 > 255 then
 						printList(channel, header, abilities)
 						wipe(abilities)
+						currentSize = 0
 					end
 					abilities[#abilities + 1] = l
+					currentSize = currentSize + #l + 1
 				end
 			end
 		end
