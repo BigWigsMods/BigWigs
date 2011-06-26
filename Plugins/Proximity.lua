@@ -1019,7 +1019,7 @@ function plugin:Open(range, module, key)
 	-- Update the ability name display
 	if module and key then
 		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
-		if icon then
+		if type(icon) == "string" then
 			anchor.ability:SetText(abilityNameFormat:format(icon, name))
 		else
 			anchor.ability:SetText(name)

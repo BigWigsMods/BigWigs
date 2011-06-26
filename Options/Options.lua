@@ -622,7 +622,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetDescription(desc)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
-	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
+	if type(icon) == "string" then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
 	local button = AceGUI:Create("Button")
 	button:SetText(">>")
