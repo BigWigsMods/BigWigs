@@ -116,6 +116,7 @@ if L then
 	L.crackle_trigger = "Elektrizität lässt die Luft knistern!" -- check
 	L.crackle_message = "Stromschlag bald!"
 
+	L.shadowblaze_trigger = "Fleisch wird zu Asche!" -- check
 	L.shadowblaze_message = "Feuer"
 
 	L.onyxia_power_message = "Überladung bald!"
