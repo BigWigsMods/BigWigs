@@ -16,6 +16,7 @@ local powerTargets = mod:NewTargetList()
 local shadowblaze = GetSpellInfo(94085)
 local phase3warned = false
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
+local shadowblazeHandle, lastBlaze = nil, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +36,7 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
+	L.shadowblaze_trigger = "Flesh turns to ash!"
 	L.shadowblaze_message = "Fire under YOU!"
 
 	L.onyxia_power_message = "Explosion soon!"
@@ -63,6 +65,7 @@ end
 function mod:OnBossEnable()
 	self:Yell("PhaseTwo", L["phase_two_trigger"])
 	self:Yell("PhaseThree", L["phase_three_trigger"])
+	self:Yell("ShadowblazeCorrection", L["shadowblaze_trigger"])
 
 	--Not bad enough that there is no cast trigger, there's also over 9 thousand Id's
 	self:Log("SPELL_DAMAGE", "LightningDischarge", "*")
@@ -87,6 +90,7 @@ function mod:OnEngage(diff)
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
 	self:RegisterEvent("UNIT_POWER")
+	shadowblazeHandle, lastBlaze = nil, 0
 end
 
 --------------------------------------------------------------------------------
@@ -164,7 +168,18 @@ local function nextBlaze()
 	end
 	mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
 	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
-	mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
+	lastBlaze = GetTime()
+	shadowblazeHandle = mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
+end
+
+function mod:ShadowblazeCorrection()
+	self:CancelTimer(shadowblazeHandle, true)
+	if (GetTime() - lastBlaze) <= 3 then
+		shadowblazeHandle = mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
+	elseif (GetTime() - lastBlaze) >= 6 then
+		nextBlaze()
+	end
+	lastBlaze = GetTime()
 end
 
 function mod:PhaseThree()
@@ -175,7 +190,7 @@ function mod:PhaseThree()
 		phase3warned = true
 	end
 	self:Bar(94085, shadowblaze, 12, 94085)
-	self:ScheduleTimer(nextBlaze, 12)
+	shadowblazeHandle = self:ScheduleTimer(nextBlaze, 12)
 end
 
 do
