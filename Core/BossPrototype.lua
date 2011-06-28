@@ -98,7 +98,7 @@ do
 		end
 	end
 
-	local function cleuHandler(self, event, _, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId, buffStack)
+	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
 		if event == "UNIT_DIED" then
 			local numericId = tonumber(dGUID:sub(7, 10), 16)
 			local d = deathMap[self][numericId]
@@ -116,15 +116,6 @@ do
 				end
 			end
 		end
-	end
-	local is42 = tonumber((select(4, GetBuildInfo()))) > 40100
-	if is42 then
-		function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
-			cleuHandler(self, event, nil, sGUID, source, sFlags, dGUID, player, dFlags, spellId, spellName, nil, secSpellId, buffStack)
-		end
-	else
-		function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, ...)
-			cleuHandler(self, ...)
 		end
 	end
 
@@ -135,7 +126,6 @@ do
 			emoteMap[self][(select(i, ...))] = func
 		end
 		self:RegisterEvent("RAID_BOSS_EMOTE")
-		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE", "RAID_BOSS_EMOTE") --XXX 4.2 compat
 	end
 	function boss:Yell(func, ...)
 		if not func then error(missingArgument:format(self.moduleName)) end
