@@ -115,7 +115,7 @@ end
 
 function mod:Frenzy()
 	self:SendMessage("BigWigs_StopBar", self, ("~%s (%d)"):format(smolderingDevastate, devastateCount))
-	self:Message(99497, CL["phase"]:format(2), "Attention", spellId, "Alarm")
+	self:Message(99497, CL["phase"]:format(2), "Attention", 99497, "Alarm")
 end
 
 function mod:Kiss(player, spellId, _, _, _, stack)
