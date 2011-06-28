@@ -10,7 +10,7 @@
 ## Notes: Big Wigs Modules for Firelands
 ## Notes-ruRU:
 ## Notes-deDE: Big Wigs Module für die Feuerlande.
-## Notes-esES:
+## Notes-esES: Módulos de las Tierras de Fuego para Big Wigs.
 ## Notes-frFR: Modules Big Wigs concernant les Terres de Feu.
 ## Notes-zhTW: Big Wigs 火源之界模組
 ## Notes-koKR:
