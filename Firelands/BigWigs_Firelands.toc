@@ -1,9 +1,9 @@
 ## Interface: 40200
 
 ## Title: Big Wigs [|cffeda55fFirelands|r]
-## Title-ruRU: Big Wigs [|cffeda55f|r]
+## Title-ruRU: Big Wigs [|cffeda55fОгненные Просторы|r]
 ## Title-deDE: Big Wigs [|cffeda55fFeuerlande|r]
-## Title-esES: Big Wigs [|cffeda55f|r]
+## Title-esES: Big Wigs [|cffeda55fTierras de Fuego|r]
 ## Title-frFR: Big Wigs [|cffeda55fTerres de Feu|r]
 ## Title-zhTW: Big Wigs [|cffeda55f火源之界|r]
 ## Title-koKR: Big Wigs [|cffeda55f|r]
