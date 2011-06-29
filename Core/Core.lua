@@ -466,7 +466,7 @@ do
 
 	function addon:RegisterBossModule(module)
 		if not module.displayName then module.displayName = module.moduleName end
-		if module.encounterId and EJ_GetEncounterInfo then
+		if module.encounterId then
 			module.displayName = EJ_GetEncounterInfo(module.encounterId)
 		elseif LOCALE ~= "enUS" and BB and module.displayName and BB[module.displayName] then
 			module.displayName = BB[module.displayName]
