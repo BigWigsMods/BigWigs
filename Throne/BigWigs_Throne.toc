@@ -5,6 +5,7 @@
 ## Title-deDE: Big Wigs [|cffeda55fThron der Vier Winde|r]
 ## Title-esES: Big Wigs [|cffeda55fTrono de los Cuatro Vientos|r]
 ## Title-frFR: Big Wigs [|cffeda55fTrône des quatre vents|r]
+## Title-zhCN: Big Wigs [|cffeda55f风神王座|r]
 ## Title-zhTW: Big Wigs [|cffeda55f四風王座|r]
 ## Title-koKR: Big Wigs [|cffeda55f네 바람의 왕좌|r]
 ## Notes: Big Wigs Modules for the Throne of the Four Winds
@@ -12,6 +13,7 @@
 ## Notes-deDE: Big Wigs Module für den Thron der Vier Winde.
 ## Notes-esES: Módulo de BigWigs para el Trono de los Cuatro Vientos.
 ## Notes-frFR: Modules Big Wigs concernant le Trône des quatre vents.
+## Notes-zhCN: Big Wigs 风神王座模块
 ## Notes-zhTW: Big Wigs 四風王座模組
 ## Notes-koKR: Big Wigs 네 바람의 왕좌 모듈
 

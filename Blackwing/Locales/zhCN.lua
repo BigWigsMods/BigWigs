@@ -2,39 +2,42 @@
 local L = BigWigs:NewBossLocale("Atramedes", "zhCN")
 if not L then return end
 if L then
-	L.ground_phase = "Ground Phase"
-	L.ground_phase_desc = "Warning for when Atramedes lands."
-	L.air_phase = "Air Phase"
-	L.air_phase_desc = "Warning for when Atramedes takes off."
+	L.ground_phase = "地面阶段"
+	L.ground_phase_desc = "当艾卓曼德斯着陆时发出警报。"
+	L.air_phase = "空中阶段"
+	L.air_phase_desc = "当艾卓曼德斯起飞时发出警报。"
 
 	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
 
-	L.sonicbreath_cooldown = "~Sonic Breath"
+	L.obnoxious_soon = "即将 喧闹恶鬼！"
+
+	L.searing_soon = "10秒後，灼热烈焰！"
+	L.sonicbreath_cooldown = "<音波吐息>"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "zhCN")
 if L then
 	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
 
-	L.next_system_failure = "Next System Failure"
-	L.break_message = "%2$dx Break on %1$s"
+	L.next_system_failure = "<下一系统故障>"
+	L.break_message = "破坏%2$dx：>%1$s<！"
 
-	L.phase2_message = "即將 致命性階段！"
+	L.phase2_message = "即将 至死方休阶段！"
 
-	L.warmup = "Warmup"
-	L.warmup_desc = "Warmup timer"
+	L.warmup = "热身"
+	L.warmup_desc = "热身计时器。"
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhCN")
 if L then
 	-- heroic
 	L.blazing = "Skeleton Adds"
-	L.blazing_desc = "Summons Blazing Bone Construct"
-	L.blazing_message = "即將 熾炎骸骨傀儡！"
-	L.blazing_bar = "<下一熾炎骸骨傀儡>"
+	L.blazing_desc = "当召唤Blazing Bone Construct时发出警报。"
+	L.blazing_message = "即將 Blazing Bone Construct！"
+	L.blazing_bar = "<下一Blazing Bone Construct>"
 
-	L.armageddon = "Armageddon"
-	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+	L.armageddon = "末日降临"
+	L.armageddon_desc = "当头部阶段施放末日降临时发出警报。"
 
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當第二階段時顯示距離檢查。"
@@ -42,45 +45,48 @@ if L then
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
 	-- normal
-	L.pillar_of_flame_cd = "<烈焰之柱>"
+	L.pillar_of_flame_cd = "<烈焰火柱>"
 
-	L.slump = "Slump"
-	L.slump_desc = "Magmaw slumps forward exposing itself."
-	L.slump_bar = "<下一騎乘>"
-	L.slump_message = "嘢，快騎上它！"
-	L.slump_trigger = "%s往前撲倒，露出他的鉗子!"
-
+	L.slump = "扑倒（骑乘）"
+	L.slump_desc = "当熔喉扑倒并暴露时发出警报。"
+	L.slump_bar = "<下一骑乘>"
+	L.slump_message = "嘿，快骑上它！"
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
-	L.expose_trigger = "head"
-	L.expose_message = "Head Explosed!"
+	L.infection_message = ">你< 寄生感染！"
 
-	L.spew_bar = "<下一熔岩噴灑>"
-	L.spew_warning = "即將 熔岩噴灑！"
+	L.expose_trigger = "头部"
+	L.expose_message = "头部暴露！"
+
+	L.spew_bar = "<下一熔岩喷涌>"
+	L.spew_warning = "即將 熔岩喷涌！"
+
+	L.mangle_bar = "裂伤：>%s<！"
+	L.mangle_cooldown = "<下一裂伤>"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "zhCN")
 if L then
 	--heroic
-	L.sludge = "黑暗淤泥"
-	L.sludge_desc = "當你站在黑暗淤泥上面時發出警報。"
-	L.sludge_message = ">你< 黑暗淤泥！"
+	L.sludge = "黑暗污泥"
+	L.sludge_desc = "当你站在黑暗污泥上面时发出警报。"
+	L.sludge_message = ">你< 黑暗污泥！"
 
 	--normal
-	L.final_phase = "Final Phase"
-	L.final_phase_soon = "Final phase soon!"
+	L.final_phase = "最终阶段"
+	L.final_phase_soon = "即将 最终阶段！"
 
-	L.release_aberration_message = "%s adds left!"
-	L.release_all = "%s adds released!"
+	L.release_aberration_message = ">%s< 畸变怪剩余！"
+	L.release_all = ">%s< 释放畸变怪！"
 
-	L.flashfreeze = "~Flash Freeze"
-	L.next_blast = "<灼燒衝擊>"
-	L.jets_bar = "Next Magma Jets"
+	L.flashfreeze = "<快速冻结>"
+	L.next_blast = "<灼热爆破>"
+	L.jets_bar = "<下一熔岩喷射>"
 
-	L.phase = "Phase"
-	L.phase_desc = "Warning for Phase changes."
-	L.next_phase = "Next Phase"
-	L.green_phase_bar = "綠色階段"
+	L.phase = "阶段"
+	L.phase_desc = "当进入不同阶段时发出警报。"
+	L.next_phase = "下一阶段！"
+	L.green_phase_bar = "<绿色阶段>"
 
 	L.red_phase_trigger = "Mix and stir, apply heat..."
 	L.red_phase_emote_trigger = "红色" --verify
@@ -98,8 +104,10 @@ end
 
 L = BigWigs:NewBossLocale("Nefarian", "zhCN")
 if L then
-	L.phase = "Phases"
-	L.phase_desc = "Warnings for the Phase changes."
+	L.phase = "阶段"
+	L.phase_desc = "当进入不同阶段时发出警报。"
+
+	L.discharge_bar = "<闪电倾泻 冷却>"
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 
@@ -108,11 +116,9 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "Electrocute soon!"
 
-	L.shadowblaze_message = "暗影炎！"
+	L.shadowblaze_message = ">你< 暗影爆燃！"
 
-	L.onyxia_power_message = "Explosion soon!"
-
-	L.cinder_say = "Explosive Cinders on ME!"
+	L.onyxia_power_message = "即将 电荷过载！"
 
 	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
 end
@@ -122,11 +128,11 @@ if L then
 	L.nef = "维克多·奈法里奥斯"
 	L.nef_desc = "当维克多·奈法里奥斯施放技能时发出警报。"
 
-	L.pool = "Pool Explosion"
+	L.pool = "奥术反冲"
 
 	L.switch = "转换"
 	L.switch_desc = "当转换时发出警报。"
-	L.switch_message = "%s %s"
+	L.switch_message = ">%s< %s！"
 
 	L.next_switch = "<下一转换>"
 
@@ -134,15 +140,15 @@ if L then
 	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
 	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
-	L.nef_next = "~Next ability buff"
+	L.nef_next = "<下一暗影灌注>"
 
-	L.acquiring_target = "Acquiring Target"
+	L.acquiring_target = "获取目标"
 
-	L.bomb_message = "Ooze chasing YOU!"
-	L.cloud_message = "Cloud on YOU!"
-	L.protocol_message = "Poison Bombs!"
+	L.bomb_message = ">你< 毒液炸弹追击！"
+	L.cloud_message = ">你< 化学云雾！"
+	L.protocol_message = "毒液炸弹！"
 
-	L.iconomnotron = "Icon on active boss"
-	L.iconomnotron_desc = "Place the primary raid icon on the active boss (requires promoted or leader)."
+	L.iconomnotron = "标记激活首领"
+	L.iconomnotron_desc = "为激活的首领打上主团队标记。（需要权限）"
 end
 

@@ -8,7 +8,7 @@ if L then
 	L.stormling_bar = "<下一小風暴>"
 	L.stormling_yell = "風暴啊!我召喚你們來我身邊!"
 
-	L.acid_rain = "酸雨 （%d）！"
+	L.acid_rain = "酸雨（%d）！"
 
 	L.phase3_yell = "夠了!我不要再被束縛住了!"
 

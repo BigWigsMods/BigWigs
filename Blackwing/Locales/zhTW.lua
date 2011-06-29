@@ -36,8 +36,8 @@ if L then
 	L.blazing_message = "即將 熾炎骸骨傀儡！"
 	L.blazing_bar = "<下一熾炎骸骨傀儡>"
 
-	L.armageddon = "Armageddon"
-	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+	L.armageddon = "末日風暴"
+	L.armageddon_desc = "當頭部階段施放末日風暴時發出警報。"
 
 	L.phase2 = "第二階段"
 	L.phase2_desc = "當第二階段時顯示距離檢查。"
@@ -48,12 +48,12 @@ if L then
 	L.pillar_of_flame_cd = "<烈焰之柱>"
 
 	L.slump = "撲倒（騎乘）"
-	L.slump_desc = "當熔喉撲倒並暴露時發出警報。騎乘載具開始。"
+	L.slump_desc = "當熔喉撲倒並暴露時發出警報。"
 	L.slump_bar = "<下一騎乘>"
 	L.slump_message = "嘿，快騎上它！"
 	L.slump_trigger = "%s往前撲倒，露出他的鉗子!"
 
-	L.infection_message = ">你< 感染！"
+	L.infection_message = ">你< 寄生感染！"
 
 	L.expose_trigger = "露出了他的頭"
 	L.expose_message = "頭部暴露！"
@@ -74,19 +74,19 @@ if L then
 
 	--normal
 	L.final_phase = "最終階段"
-	L.final_phase_soon = "即將 最終階段"
+	L.final_phase_soon = "即將 最終階段！"
 
 	L.release_aberration_message = ">%s< 畸形者剩餘！"
 	L.release_all = ">%s< 釋放畸形者！"
 
-	L.flashfreeze = "<閃霜>"
+	L.flashfreeze = "<瞬間冷凍>"
 	L.next_blast = "<灼燒衝擊>"
 	L.jets_bar = "<下一岩漿噴洩>"
 
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"
 	L.next_phase = "下一階段！"
-	L.green_phase_bar = "綠色階段"
+	L.green_phase_bar = "<綠色階段>"
 
 	L.red_phase_trigger = "混合攪拌，然後加熱..."
 	L.red_phase_emote_trigger = "紅色"

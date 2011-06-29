@@ -87,7 +87,7 @@ if L then
 	L.switch = "轉換"
 	L.switch_desc = "當首領轉換時發出警報。"
 
-	L.shield_up_message = "火焰之禦 出現!"
+	L.shield_up_message = "火焰之禦 出現！"
 	L.shield_down_message = "火焰之禦 消失！"
 	L.shield_bar = "<下一火焰之禦>"
 

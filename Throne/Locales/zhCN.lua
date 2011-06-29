@@ -2,34 +2,34 @@
 local L = BigWigs:NewBossLocale("Al'Akir", "zhCN")
 if not L then return end
 if L then
-	L.stormling = "Stormling adds"
-	L.stormling_desc = "Summons Stormling."
-	L.stormling_message = "Stormling incoming!"
-	L.stormling_bar = "Next stormling"
+	L.stormling = "风暴火花"
+	L.stormling_desc = "当召唤风暴火花时发出警报。"
+	L.stormling_message = "即将 风暴火花！"
+	L.stormling_bar = "<下一风暴火花>"
 	L.stormling_yell = "Storms! I summon you to my side!"
 
-	L.acid_rain = "Acid Rain (%d)"
+	L.acid_rain = "酸雨（%d）！"
 
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
 	L.phase = "阶段转换"
-	L.phase_desc = "当进入不同阶段是发出警报。"
+	L.phase_desc = "当进入不同阶段时发出警报。"
 
-	L.cloud_message = "Franklin would be proud!"
-	L.feedback_message = "%dx Feedback"
+	L.cloud_message = "闪电云层！"
+	L.feedback_message = "%dx 回馈！"
 end
 
 L = BigWigs:NewBossLocale("Conclave of Wind", "zhCN")
 if L then
 	L.gather_strength = "%s is Gathering Strength"
 
-	L.storm_shield = "Storm shield"
-	L.storm_shield_desc = "Absorption Shield"
+	L.storm_shield = "风暴护盾"
+	L.storm_shield_desc = "当风暴护盾吸收伤害时发出警报。"
 
-	L.full_power = "Full Power"
-	L.full_power_desc = "Warning for when the bosses reach full power and start to cast the special abilities."
+	L.full_power = "满能量"
+	L.full_power_desc = "当首领获得满能量并开始施放特殊技能时发出警报。"
 	L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
 
-	L.wind_chill = "%sx Wind Chill on YOU!"
+	L.wind_chill = ">你< %sx风寒！"
 end
 
