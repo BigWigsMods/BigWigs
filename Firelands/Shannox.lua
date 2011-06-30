@@ -32,10 +32,10 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "ImmolationTrap", 101209)
-	self:Log("SPELL_CAST_SUCCESS", "FaceRage", 99945)
-	self:Log("SPELL_AURA_REMOVED", "FaceRageRemoved", 99945)
-	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978, 100031)
+	self:Log("SPELL_AURA_APPLIED", "ImmolationTrap", 101209, 99838)
+	self:Log("SPELL_CAST_SUCCESS", "FaceRage", 99945, 99947)
+	self:Log("SPELL_AURA_REMOVED", "FaceRageRemoved", 99945, 99947)
+	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978)--, 100031) --was getting 2 alerts on 10 man normal with both IDs
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
