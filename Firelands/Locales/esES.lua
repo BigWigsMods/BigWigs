@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
+﻿local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
 if not L then return end
 if L then
 	L.devastate_message = "¡Devastación #%d!"
@@ -24,7 +24,7 @@ if L then
 	L.claw_message = "%2$dx Garra en %1$s"
 	L.fullpower_soon_message = "¡Poder máximo inminente!"
 	L.halfpower_soon_message = "¡Fase 4 inminente!"
-	L.encounter_restart = "Full power! Here we go again ..."
+	L.encounter_restart = "¡Poder máximo! Aquí vamos otra vez ..."
 end
 
 L = BigWigs:NewBossLocale("Shannox", "esES")
