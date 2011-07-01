@@ -420,6 +420,11 @@ do
 						module.optionHeaders[k] = BB[v]
 					elseif CL[v] then
 						module.optionHeaders[k] = CL[v]
+					else
+						local ej = v:match("^ej:(%d+)$")
+						if tonumber(ej) then
+							module.optionHeaders[k] = EJ_GetSectionInfo(tonumber(ej))
+						end
 					end
 				elseif type(v) == "number" then
 					module.optionHeaders[k] = GetSpellInfo(v)

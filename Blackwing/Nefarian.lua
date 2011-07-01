@@ -52,7 +52,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		94115, 78999, 81272, {94085, "FLASHSHAKE"},
-		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, {80627, "FLASHSHAKE"}, "berserk",
+		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, "berserk",
 		"phase", "bosskill"
 	}, {
 		[94115] = "Onyxia",
@@ -73,8 +73,6 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "StolenPower", 80627)
-	self:Log("SPELL_AURA_APPLIED", "InitialStolenPower", 80573, 80591, 80592, 80621, 80622, 80623, 80624, 80625, 80627)
 	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007, 94085, 94086, 94087)
 
 	self:Emote("Electrocute", L["crackle_trigger"])
@@ -211,28 +209,6 @@ do
 			scheduled = true
 			self:ScheduleTimer(cinderWarn, 0.3, spellName)
 		end
-	end
-end
-
-do
-	local scheduled = nil
-	local function powerWarn(spellName)
-		mod:TargetMessage(80627, spellName, powerTargets, "Attention", 80627)
-		scheduled = nil
-	end
-	function mod:InitialStolenPower(player, _, _, _, spellName)
-		powerTargets[#powerTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(powerWarn, 1, spellName) -- 1 sec :S
-		end
-	end
-end
-
-function mod:StolenPower(player, spellId, _, _, spellName, stack)
-	if UnitIsUnit(player, "player") and stack == 150 then
-		self:FlashShake(80627)
-		self:LocalMessage(80627, spellName, "Personal", spellId, "Info")
 	end
 end
 
