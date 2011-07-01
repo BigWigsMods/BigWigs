@@ -116,7 +116,7 @@ function mod:Fixate(player, spellId, _, _, spellName)
 end
 
 function mod:Frenzy()
-	self:SendMessage("BigWigs_StopBar", self, L["devastate_bar"]:format(devastateCount))
+	self:SendMessage("BigWigs_StopBar", self, L["devastate_bar"])
 	self:Message(99497, CL["phase"]:format(2), "Positive", 99497, "Alarm")
 end
 
