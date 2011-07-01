@@ -37,10 +37,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		98552, 98136, 97282, 98255, 99846,
+		98632, 98552, 98136, 97282, 98255, 99846,
 		"bosskill"
 	}, {
-		[98255] = "general"
+		[98632] = "general"
 	}
 end
 
