@@ -47,7 +47,7 @@ end
 function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "Molting", 99464, 99465, 100698)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazingClaw", 99844)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazingClaw", 99844, 101729, 101730, 101731)
 
 	-- Phase 1
 	self:Log("SPELL_AURA_APPLIED", "Wound", 100723, 100722, 100721, 100720, 100719, 100718, 100024, 99308)
@@ -131,9 +131,8 @@ function mod:FieryTornado()
 	self:Message(99816, fieryTornado, "Important", 99816, "Alarm")
 end
 
---6/30 21:26:46.766  SPELL_AURA_APPLIED_DOSE,0xF150CD320000A8FD,"Alysrazor",0x30a48,0x0,0x040000000031DEC6,"Hezekiah",0x40514,0x0,101729,"Blazing Claw",0x1,DEBUFF,2
 function mod:BlazingClaw(player, spellId, _, _, _, stack)
-	if stack > 5 then -- 50% extra fire and physical damage taken on tank
+	if stack > 4 then -- 50% extra fire and physical damage taken on tank
 		self:TargetMessage(99844, L["claw_message"], player, "Urgent", spellId, "Info", stack)
 	end
 end
