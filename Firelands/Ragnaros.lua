@@ -43,10 +43,10 @@ function mod:GetOptions(CL)
 		99317,
 		98710, "proximity", "berserk", "bosskill"
 	}, {
-		[98237] = (EJ_GetSectionInfo(2629)),
+		[98237] = "ej:2629",
 		[98953] = L["intermission"],
-		[98498] = (EJ_GetSectionInfo(2640)),
-		[99317] = (EJ_GetSectionInfo(2655)),
+		[98498] = "ej:2640",
+		[99317] = "ej:2655",
 		[98710] = "general"
 	}
 end
