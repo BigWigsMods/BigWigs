@@ -1,7 +1,6 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "frFR")
 if not L then return end
 if L then
-	L.kiss_message = "%2$dx Baisers sur %1$s"
 	L.devastate_message = "Dévastation #%d !"
 	L.devastate_bar = "~Prochaine dévastation"
 	L.drone_bar = "Prochaine ouvrière braisetoile"

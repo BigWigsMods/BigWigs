@@ -22,7 +22,6 @@ local lastBroodlingTarget = ""
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.kiss_message = "%2$dx Kiss on %1$s"
 	L.devastate_message = "Devastation #%d!"
 	L.devastate_bar = "~Next devastation"
 	L.drone_bar = "Next Cinderweb Drone"
