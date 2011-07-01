@@ -20,7 +20,7 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "esES")
 if L then
-	L.tornado_trigger = "¡El cielo es mío!"
+	L.tornado_trigger = "¡Estos cielos son MÍOS!"
 	L.claw_message = "%2$dx Garra en %1$s"
 	L.fullpower_soon_message = "¡Poder máximo inminente!"
 	L.halfpower_soon_message = "¡Fase 4 inminente!"
