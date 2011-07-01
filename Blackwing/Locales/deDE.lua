@@ -33,7 +33,7 @@ if L then
 	-- heroic
 	L.blazing = "Loderndes Knochenkonstrukt"
 	L.blazing_desc = "Warnt vor dem Auftauchen der Lodernden Knochenkonstrukte."
-	L.blazing_message = "Add kommt!"
+	L.blazing_message = "Skelett kommt!"
 	L.blazing_bar = "Nächstes Skelett"
 
 	L.armageddon = "Armageddon"

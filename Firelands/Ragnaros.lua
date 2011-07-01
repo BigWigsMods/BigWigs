@@ -26,8 +26,8 @@ if L then
 	L.intermission = "Intermission"
 	L.sons_left = "%d Sons Left"
 	L.engulfing_close = "Close %s"
-	L.engulfing_middle = "Far %s"
-	L.engulfing_far = "Middle %s"
+	L.engulfing_middle = "Middle %s"
+	L.engulfing_far = "Far %s"
 end
 L = mod:GetLocale()
 
@@ -54,7 +54,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579)
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 100175, 100171, 100181)
-
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890)
@@ -136,7 +135,6 @@ do
 		mod:TargetMessage(100460, spellName, blazingHeatTargets, "Attention", 100460, "Info")
 		scheduled = nil
 	end
-
 	function mod:BlazingHeat(player, spellID, _, _, spellName)
 		blazingHeatTargets[#blazingHeatTargets + 1] = player
 		if UnitIsUnit(player, "player") then
