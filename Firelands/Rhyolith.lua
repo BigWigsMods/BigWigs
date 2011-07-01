@@ -12,7 +12,6 @@ mod:RegisterEnableMob(52577, 53087, 52558) -- Left foot, Right Foot, Lord Rhyoli
 
 local moltenArmor = GetSpellInfo(98255)
 local lastFragments = nil
-local bossGuid = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -60,7 +59,6 @@ end
 function mod:OnEngage(diff)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	lastFragments = GetTime()
-	bossGuid = UnitGUID("boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -68,12 +66,14 @@ end
 --
 
 function mod:Obsidian(_, spellId, _, _, _, _, _, _, _, dGUID)
-	if dGUID ~= bossGuid then return end
+	local unitId = tonumber(dGUID:sub(7, 10), 16)
+	if unitId ~= 52558 then return end
 	self:Message(98632, L["armor_gone_message"], "Positive", spellId)
 end
 
 function mod:ObsidianStack(_, spellId, _, _, _, buffStack, _, _, _, dGUID)
-	if dGUID ~= bossGuid then return end
+	local unitId = tonumber(dGUID:sub(7, 10), 16)
+	if unitId ~= 52558 then return end
 	if buffStack % 20 ~= 0 then return end -- Only warn every 20
 	self:Message(98632, L["armor_message"]:format(buffStack), "Positive", spellId)
 end

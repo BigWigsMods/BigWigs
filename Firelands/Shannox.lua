@@ -35,7 +35,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ImmolationTrap", 101209, 99838)
 	self:Log("SPELL_CAST_SUCCESS", "FaceRage", 99945, 99947)
 	self:Log("SPELL_AURA_REMOVED", "FaceRageRemoved", 99945, 99947)
-	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978)--, 100031) --was getting 2 alerts on 10 man normal with both IDs
+	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -68,6 +68,6 @@ function mod:FaceRage(player, spellId, _, _, spellName)
 end
 
 function mod:FaceRageRemoved(player, spellId)
-	self:Message(100129, L["safe"]:format(player), "Important", spellId)
+	self:Message(100129, L["safe"]:format(player), "Positive", spellId)
 end
 
