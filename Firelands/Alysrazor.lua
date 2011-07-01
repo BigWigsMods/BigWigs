@@ -52,7 +52,7 @@ function mod:OnBossEnable()
 	-- Phase 1
 	self:Log("SPELL_AURA_APPLIED", "Wound", 100723, 100722, 100721, 100720, 100719, 100718, 100024, 99308)
 	self:Log("SPELL_AURA_APPLIED", "Tantrum", 99362)
-	
+
 	-- Phase 2
 	self:Yell("FieryTornado", L["tornado_trigger"])
 
@@ -154,7 +154,7 @@ do
 		if t ~= SPELL_POWER_FOCUS then
 			print("Power type is " .. tostring(t) .. "?!")
 		end
-		if power > 40 and not halfWarned then
+		if power > 40 and not halfWarned then
 			self:Message(99925, L["halfpower_soon_message"], "Urgent", 99925)
 			halfWarned = true
 		elseif power > 80 and not fullWarned then
