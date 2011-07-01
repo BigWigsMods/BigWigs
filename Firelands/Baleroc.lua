@@ -48,6 +48,7 @@ end
 function mod:OnEngage(diff)
 	self:Berserk(360)
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
+	self:Bar(99352, L["blade"], 30, 99352)
 	if diff > 2 then
 		self:Bar(99516, (GetSpellInfo(99516)), 25, 99516) -- Countdown
 		countdownCounter = 1
