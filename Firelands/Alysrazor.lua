@@ -86,7 +86,7 @@ end
 do
 	local scheduled = nil
 	local function woundWarn(spellName)
-		mod:TargetMessage(100723, spellName, woundTargets, "Personal", 100723, "Info")
+		mod:TargetMessage(100723, spellName, woundTargets, "Personal", 100723)
 		scheduled = nil
 	end
 	function mod:Wound(player, spellId, _, _, spellName)
