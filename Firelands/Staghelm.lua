@@ -114,26 +114,27 @@ function mod:ScorpionForm(_, spellId, _, _, spellName)
 	self:Bar(100213, flameScythe, specialCD[specialCounter], 100213)
 end
 
-function mod:SearingSeedsRemoved()
+function mod:SearingSeedsRemoved(player)
+	if not UnitIsUnit(player, "player") then return end
 	self:CloseProximity(98450)
 end
 
 do
 	local function searingSeed()
-		mod:LocalMessage(98450, L["seed_explosion"], "Personal", 98450, "Info")
+		mod:LocalMessage(98450, L["seed_explosion"], "Personal", 98450, "Alarm")
 		mod:FlashShake(98450)
-		mod:OpenProximity(10, 98450)
+		mod:OpenProximity(12, 98450)
 	end
 
 	function mod:SearingSeeds(player, spellId, _, _, spellName)
 		self:SendMessage("BigWigs_StopBar", self, leapingFlames)
 		if not UnitIsUnit(player, "player") then return end
-		local remaining = (select(7,UnitDebuff("player", spellName)) - GetTime())
+		local remaining = (select(7, UnitDebuff("player", spellName))) - GetTime()
 		self:Bar(98450, spellName, remaining, 98450)
-		if remaining < 5 then
+		if remaining < 6 then
 			searingSeed()
 		else
-			self:ScheduleTimer(searingSeed, remaining - 5)
+			self:ScheduleTimer(searingSeed, remaining - 6)
 		end
 	end
 end
