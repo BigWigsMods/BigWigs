@@ -61,7 +61,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 99559, 99526)
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 99497)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Kiss", 99506)
+	self:Log("SPELL_AURA_APPLIED", "Kiss", 99506)
 	self:Log("SPELL_CAST_START", "Devastate", 99052)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -116,14 +116,15 @@ function mod:Fixate(player, spellId, _, _, spellName)
 end
 
 function mod:Frenzy()
+	self:CancelAllTimers()
+	self:SendMessage("BigWigs_StopBar", self, L["drone_bar"])
 	self:SendMessage("BigWigs_StopBar", self, L["devastate_bar"])
 	self:Message(99497, CL["phase"]:format(2), "Positive", 99497, "Alarm")
 end
 
-function mod:Kiss(player, spellId, _, _, _, stack)
-	if stack > 5 then
-		self:TargetMessage(99506, L["kiss_message"], player, "Urgent", spellId, "Info", stack)
-	end
+function mod:Kiss(player, spellId, _, _, spellName)
+	self:TargetMessage(99506, spellName, player, "Urgent", spellId)
+	self:PlaySound(99506, "Info")
 end
 
 function mod:Devastate(_, spellId)
