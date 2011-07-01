@@ -2,28 +2,42 @@ local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
 if not L then return end
 if L then
 	L.kiss_message = "%2$dx Beso en %1$s"
+	L.devastate_message = "¡Devastación #%d!"
+	L.devastate_bar = "~Próxima devastación"
+	L.drone_bar = "Próximo Zángano telaceniza"
+	L.drone_message = "¡Atención zángano aparece!"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "esES")
 if L then
-	L.phase2_message = "¡Fase de inmolación inminente! El jefe tiene %dx %s"
+	L.molten_message = "%dx stacks en el jefe!"
+	L.armor_message = "%d%% armadura restante"
+	L.armor_gone_message = "¡Armadura destruida!"
+	L.phase2_soon_message = "Fase 2 inminente!"
+	L.stomp_message = "¡Pisotón! ¡Pisotón! ¡Pisotón!"
+	L.big_add_message = "¡Atención add aparece!"
+	L.small_adds_message = "¡Aparecen fragmentos pequeños!"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "esES")
 if L then
 	L.tornado_trigger = "¡El cielo es mío!"
 	L.claw_message = "%2$dx Garra en %1$s"
-	L.fullpower_message = "¡%s pronto!"
+	L.fullpower_soon_message = "¡Poder máximo inminente!"
+	L.halfpower_soon_message = "¡Fase 4 inminente!"
+	L.encounter_restart = "Full power! Here we go again ..."
 end
 
 L = BigWigs:NewBossLocale("Shannox", "esES")
 if L then
 	L.safe = "%s a salvo"
+	L.immolation_trap = "¡Inmolación en %s!"
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "esES")
 if L then
 	L.torment_message = "%2$dx Tormento en %1$s"
+	L.blade = "~Hoja"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "esES")
