@@ -10,11 +10,9 @@ mod:RegisterEnableMob(52498)
 -- Locals
 --
 
-local stackWarn = 5 -- probably needs change
 local devastateCount = 1
-local burst, smolderingDevastate = (GetSpellInfo(99990)), (GetSpellInfo(99052))
-local cinderwebDrone_icon = "INV_Misc_Head_Nerubian_01"
-local cinderwebDrone = EJ_GetSectionInfo(2773)
+local burst = (GetSpellInfo(99990))
+local droneIcon = "INV_Misc_Head_Nerubian_01"
 local lastBroodlingTarget = ""
 
 --------------------------------------------------------------------------------
@@ -25,13 +23,17 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.kiss_message = "%2$dx Kiss on %1$s"
+	L.devastate_message = "Devastation #%d!"
+	L.devastate_bar = "~Next devastation"
+	L.drone_bar = "Next Cinderweb Drone"
+	L.drone_message = "Big drone incoming!"
 end
 L = mod:GetLocale()
 
 -- untested
 local function droneWarning()
-	mod:Message("ej:2773", cinderwebDrone, "Attention", cinderwebDrone_icon)
-	mod:Bar("ej:2773", cinderwebDrone, 60, cinderwebDrone_icon)
+	mod:Message("ej:2773", L["drone_message"], "Attention", droneIcon, "Info")
+	mod:Bar("ej:2773", L["drone_bar"], 60, droneIcon)
 	mod:ScheduleTimer(droneWarning, 60)
 end
 
@@ -46,8 +48,8 @@ function mod:GetOptions(CL)
 		{99559, "FLASHSHAKE", "WHISPER"}, {99990, "FLASHSHAKE", "SAY"},
 		"bosskill"
 	}, {
-		[99052] = (EJ_GetSectionInfo(2764)),
-		[99506] = (EJ_GetSectionInfo(2782)),
+		[99052] = "ej:2764",
+		[99506] = "ej:2782",
 		[99559] = "heroic",
 		bosskill = "general"
 	}
@@ -72,8 +74,8 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		lastBroodlingTarget = ""
 	end
-	self:Bar(99052, ("~%s (%d)"):format(smolderingDevastate, devastateCount), 80, 99052)
-	self:Bar("ej:2773", cinderwebDrone, 45, cinderwebDrone_icon)
+	self:Bar(99052, L["devastate_bar"], 80, 99052)
+	self:Bar("ej:2773", L["drone_bar"], 45, droneIcon)
 	self:ScheduleTimer(droneWarning, 45)
 end
 
@@ -114,21 +116,22 @@ function mod:Fixate(player, spellId, _, _, spellName)
 end
 
 function mod:Frenzy()
-	self:SendMessage("BigWigs_StopBar", self, ("~%s (%d)"):format(smolderingDevastate, devastateCount))
-	self:Message(99497, CL["phase"]:format(2), "Attention", 99497, "Alarm")
+	self:SendMessage("BigWigs_StopBar", self, L["devastate_bar"]:format(devastateCount))
+	self:Message(99497, CL["phase"]:format(2), "Positive", 99497, "Alarm")
 end
 
 function mod:Kiss(player, spellId, _, _, _, stack)
-	if stack > stackWarn then
+	if stack > 5 then
 		self:TargetMessage(99506, L["kiss_message"], player, "Urgent", spellId, "Info", stack)
 	end
 end
 
 function mod:Devastate(_, spellId)
-	self:Message(99052, ("%s (%d)"):format(smolderingDevastate, devastateCount), "Important", spellId, "Long")
+	self:Message(99052, L["devastate_message"]:format(devastateCount), "Important", spellId, "Long")
+	devastateCount = devastateCount + 1
 	-- This timer is only accurate if you dont fail with the Drones
 	-- Might need to use the bosses power bar or something to adjust this
-	self:Bar(99052, ("~%s (%d)"):format(smolderingDevastate, devastateCount), 90, spellId)
-	devastateCount = devastateCount + 1
+	if devastateCount > 3 then return end
+	self:Bar(99052, L["devastate_bar"], 90, spellId)
 end
 
