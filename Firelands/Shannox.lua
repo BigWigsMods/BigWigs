@@ -15,6 +15,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.safe = "%s safe"
 	L.immolation_trap = "Immolation on %s!"
+	L.crystaltrap = "Crystal Trap"
 end
 L = mod:GetLocale()
 
@@ -53,18 +54,18 @@ end
 --
 
 do
-	local function trapWarn(spellName)
+	local function trapWarn()
 		if UnitExists("boss1target") then
-			mod:TargetMessage(99836, spellName, (UnitName("boss1target")), "Urgent", 99836, "Alarm")
+			mod:TargetMessage(99836, L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
 			if UnitIsUnit("boss1target", "player") then
 				mod:FlashShake(99836)
-				mod:Say(99836, CL["say"]:format(spellName))
+				mod:Say(99836, CL["say"]:format(L["crystaltrap"]))
 			end
 		end
 	end
 
-	function mod:CrystalTrap(_, _, _, _, spellName)
-		self:ScheduleTimer(trapWarn, 0.2, spellName)
+	function mod:CrystalTrap()
+		self:ScheduleTimer(trapWarn, 0.2)
 	end
 end
 
