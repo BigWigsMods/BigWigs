@@ -123,6 +123,7 @@ end
 
 function mod:Kiss(player, spellId, _, _, spellName)
 	self:TargetMessage(99506, spellName, player, "Urgent", spellId)
+	-- We play the sound manually because TargetMessage strips it unless the target is the player
 	self:PlaySound(99506, "Info")
 end
 

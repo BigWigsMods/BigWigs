@@ -14,6 +14,7 @@ local seedWarned, intermission1warned, intermission2warned = false, false, false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
+local smashCD = 30
 local moltenSeed, handOfRagnaros, sulfurasSmash = (GetSpellInfo(98498)), (GetSpellInfo(98237)), (GetSpellInfo(98710))
 
 --------------------------------------------------------------------------------
@@ -69,6 +70,7 @@ function mod:OnEngage(diff)
 	self:Bar(98710, sulfurasSmash, 30, 98710)
 	self:OpenProximity(6)
 	self:Berserk(600)
+	smashCD = 30
 	seedWarned, intermission1warned, intermission2warned = false, false, false
 	sons = 8
 	phase = 1
@@ -79,15 +81,17 @@ end
 --
 
 local function intermissionEnd()
+	phase = phase + 1
+	mod:SendMessage("BigWigs_StopBar", self, L["intermission"])
 	if phase == 2 and not intermission1warned then
+		smashCD = 40 -- need to confirm
 		intermission1warned = true
-		phase = phase + 1
 		mod:Bar(98498, moltenSeed, 15, 98498)
 		mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
 		mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
+		mod:OpenProximity(6)
 	elseif phase == 3 and not intermission2warned then
 		intermission2warned = true
-		phase = phase + 1
 		mod:OpenProximity(5)
 		-- this is just guesswork
 		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317) -- Living Meteor
@@ -115,7 +119,7 @@ end
 
 function mod:SulfurasSmash(_, spellId, _, _, spellName)
 	self:Message(98710, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(98710, spellName, 41, spellId)
+	self:Bar(98710, spellName, smashCD, spellId)
 end
 
 function mod:EngulfingFlames(_, spellId, _, _, spellName)
