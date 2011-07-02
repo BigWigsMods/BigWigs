@@ -102,7 +102,7 @@ function mod:Tantrum(_, spellId, _, _, spellName, _, _, _, _, _, sGUID)
 	local target = UnitGUID("target")
 	if not target then return end
 	-- Just warn for the tank
-	if not UnitIsUnit(sGUID, target) then return end
+	if sGUID ~= target then return end
 	self:Message(99362, spellName, "Important", spellId)
 end
 
