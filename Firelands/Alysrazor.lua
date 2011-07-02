@@ -148,11 +148,7 @@ do
 	end
 
 	function mod:UNIT_POWER(_, unit)
-		local t = UnitPowerType("boss1") -- I think it's SPELL_POWER_FOCUS
-		local power = UnitPower("boss1", t)
-		if t ~= SPELL_POWER_FOCUS then
-			print("Power type is " .. tostring(t) .. "?!")
-		end
+		local power = UnitPower("boss1", 0)
 		if power > 40 and not halfWarned then
 			self:Message(99925, L["halfpower_soon_message"], "Urgent", 99925)
 			halfWarned = true
