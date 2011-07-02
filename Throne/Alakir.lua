@@ -66,7 +66,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Electrocute", 88427)
 	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261, 93262, 93263)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904, 101458, 101459, 101460)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904, 101458, 101459, 101460)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301, 93279, 93280, 93281)
 	self:Log("SPELL_DAMAGE", "Shock", 93257)
