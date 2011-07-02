@@ -49,6 +49,6 @@ if L then
 	L.intermission = "Intervalle"
 	L.sons_left = "Il reste %d Fils"
 	L.engulfing_close = "%s proches"
-	L.engulfing_middle = "%s éloignées"
-	L.engulfing_far = "%s au milieu"
+	L.engulfing_middle = "%s au milieu"
+	L.engulfing_far = "%s éloignées"
 end

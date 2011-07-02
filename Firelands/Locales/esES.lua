@@ -49,7 +49,7 @@ if L then
 	L.intermission = "Intermedio"
 	L.sons_left = "%d Hijos restantes"
 	L.engulfing_close = "Cerca %s"
-	L.engulfing_middle = "Lejos %s"
-	L.engulfing_far = "Medio %s"
+	L.engulfing_middle = "Medio %s"
+	L.engulfing_far = "Lejos %s"
 end
 
