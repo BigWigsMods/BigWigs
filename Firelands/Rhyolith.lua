@@ -94,8 +94,8 @@ function mod:Stomp(_, spellId, _, _, spellName)
 	self:Bar(97282, L["stomp_message"], 3, spellId)
 end
 
-function mod:MoltenArmor(_, spellId, _, _, spellName, stack)
-	if stack < 4 or stack % 2 ~= 0 then return end
+function mod:MoltenArmor(player, spellId, _, _, spellName, stack)
+	if stack < 4 or stack % 2 ~= 0 or not UnitIsUnit(player, "boss1") then return end
 	self:Message(98255, L["molten_message"]:format(stack), "Attention", spellId)
 end
 
