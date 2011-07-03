@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Beth'tilac", "zhCN")
 if not L then return end
 if L then
 	L.devastate_message = "Devastation #%d!"
-	L.devastate_bar = "~Next devastation"
+	L.devastate_bar = "<下一Devastation>"
 	L.drone_bar = "Next Cinderweb Drone"
 	L.drone_message = "Big drone incoming!"
 end
@@ -24,13 +24,19 @@ if L then
 	L.claw_message = "%2$dx Claw on %1$s"
 	L.fullpower_soon_message = "Full power soon!"
 	L.halfpower_soon_message = "Phase 4 soon!"
-	L.encounter_restart = "Full power! Here we go again ..."
+	L.encounter_restart = "完全的力量"
+	L.no_stacks_message = "你沒有羽毛！"
+	L.moonkin_message = "去拿一些羽毛！"
+
+	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
+	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhCN")
 if L then
 	L.safe = "%s safe"
 	L.immolation_trap = "Immolation on %s!"
+	L.crystaltrap = "水晶囚牢陷阱！"
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "zhCN")
