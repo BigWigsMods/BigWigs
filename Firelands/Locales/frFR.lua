@@ -25,12 +25,22 @@ if L then
 	L.fullpower_soon_message = "Pleine puissance imminente !"
 	L.halfpower_soon_message = "Phase 4 imminente !"
 	L.encounter_restart = "Pleine puissance ! Et c'est reparti..."
+	L.no_stacks_message = "Juste au cas où : vous n'avez pas de plumes."
+	L.moonkin_message = "Arrêtez de faire genre et récupérez de vraies plumes."
+
+	L.worm_emote = "Des vers de lave embrasés surgissent du sol !" -- à vérifier
+	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!" -- à traduire
+	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
+	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
+	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
+	L.restart_emote = "99925" -- Full Power spell ID used in the emote
 end
 
 L = BigWigs:NewBossLocale("Shannox", "frFR")
 if L then
 	L.safe = "%s sauvé"
 	L.immolation_trap = "Immolation sur %s !"
+	L.crystaltrap = "Prison de cristal"
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "frFR")
