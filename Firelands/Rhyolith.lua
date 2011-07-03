@@ -106,10 +106,11 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 30 then -- phase starts at 25
 			self:Message(99846, L["phase2_soon_message"], "Positive", 99846, "Info")
-			local stack = select(4, UnitBuff(unitId, moltenArmor))
-			if not stack then return end
-			self:Message(98255, L["molten_message"]:format(stack), "Important", 98255, "Alarm")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+			local stack = select(4, UnitBuff(unitId, moltenArmor))
+			if stack then
+				self:Message(98255, L["molten_message"]:format(stack), "Important", 98255, "Alarm")
+			end
 		end
 	end
 end
