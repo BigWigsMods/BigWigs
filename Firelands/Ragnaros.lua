@@ -83,7 +83,7 @@ end
 local function intermissionEnd()
 	mod:CancelAllTimers()
 	phase = phase + 1
-	mod:SendMessage("BigWigs_StopBar", self, L["intermission"])
+	mod:SendMessage("BigWigs_StopBar", mod, L["intermission"])
 	if phase == 2 and not intermission1warned then
 		smashCD = 40 -- need to confirm
 		intermission1warned = true
