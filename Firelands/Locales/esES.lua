@@ -25,6 +25,15 @@ if L then
 	L.fullpower_soon_message = "¡Poder máximo inminente!"
 	L.halfpower_soon_message = "¡Fase 4 inminente!"
 	L.encounter_restart = "¡Poder máximo! Aquí vamos otra vez ..."
+	L.no_stacks_message = "No sé si te importa, pero no tienes plumas"
+	L.moonkin_message = "Deja de fingir y consigue algunas plumas reales"
+
+	L.worm_emote = "¡Gusanos de lava ígneos surgen del suelo!"
+	L.phase2_soon_emote = "Alysrazor empieza a volar rápido en círculos."
+	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
+	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
+	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
+	L.restart_emote = "99925" -- Full Power spell ID used in the emote
 end
 
 L = BigWigs:NewBossLocale("Shannox", "esES")
@@ -49,8 +58,8 @@ L = BigWigs:NewBossLocale("Ragnaros", "esES")
 if L then
 	L.intermission = "Intermedio"
 	L.sons_left = "%d Hijos restantes"
-	L.engulfing_close = "Cerca %s"
-	L.engulfing_middle = "Medio %s"
-	L.engulfing_far = "Lejos %s"
+	L.engulfing_close = "%s cerca"
+	L.engulfing_middle = "%s en el medio"
+	L.engulfing_far = "%s lejos"
 end
 
