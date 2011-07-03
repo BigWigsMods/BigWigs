@@ -16,6 +16,7 @@ local catForm, scorpionForm = (GetSpellInfo(98374)), (GetSpellInfo(98379))
 -- got data up to 15 stacks, after 11 its 3.7
 local specialCD = {17.5, 13.4, 10.9, 8.6, 7.4, 7.3, 6.1, 6.1, 4.9, 4.9, 4.9}
 local specialCounter = 1
+local leapWarned = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -47,10 +48,11 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "Adrenaline", 97238)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Adrenaline", 97238)
 	self:Log("SPELL_AURA_APPLIED", "CatForm", 98374)
 	self:Log("SPELL_AURA_APPLIED", "ScorpionForm", 98379)
-	self:Log("SPELL_CAST_SUCCESS", "LeapingFlames", 98476)
+	self:Log("SPELL_CAST_SUCCESS", "LeapingFlames", 98476, 100206)
 	self:Log("SPELL_AURA_APPLIED", "SearingSeeds", 98450)
 	self:Log("SPELL_AURA_REMOVED", "SearingSeedsRemoved", 98450)
 
@@ -62,6 +64,7 @@ end
 function mod:OnEngage(diff)
 	self:Berserk(600) -- assumed
 	specialCounter = 1
+	leapWarned = nil
 end
 
 --------------------------------------------------------------------------------
@@ -69,8 +72,8 @@ end
 --
 
 function mod:Adrenaline(_, spellId, _, _, spellName, stack)
-	local form = (UnitDebuff("boss1", catForm)) or (UnitDebuff("boss1", scorpionForm)) or ""
-	self:Message(97238, adrenaline:format(form, spellName, stack), "Attention", spellId)
+	local form = (UnitBuff("boss1", catForm)) or (UnitBuff("boss1", scorpionForm)) or ""
+	self:Message(97238, adrenaline:format(form, spellName, stack or 1), "Attention", spellId)
 	 -- this is power based, not time. Power regen is affected by adrenaline
 	 -- adrenaline gets stacked every special
 	specialCounter = specialCounter + 1
@@ -82,11 +85,15 @@ function mod:Adrenaline(_, spellId, _, _, spellName, stack)
 end
 
 do
+	local function LeapWarned()
+		leapWarned = nil
+	end
 	local function checkTarget()
 		local mobId = mod:GetUnitIdByGUID(52571)
 		if mobId then
 			local player = UnitName(mobId.."target")
 			if not player then return end
+			leapWarned = true
 			if UnitIsUnit("player", player) then
 				mod:Say(98476, CL["say"]:format(leapingFlames))
 				mod:FlashShake(98476)
@@ -96,7 +103,10 @@ do
 		end
 	end
 	function mod:LeapingFlames(...)
-		self:ScheduleTimer(checkTarget, 0.1)
+		if leapWarned then return end
+		leapWarned = true
+		self:ScheduleTimer(LeapWarned, 2)
+		self:ScheduleTimer(checkTarget, 0.2)
 	end
 end
 
