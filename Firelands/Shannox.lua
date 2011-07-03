@@ -54,18 +54,23 @@ end
 --
 
 do
+	local timer
 	local function trapWarn()
-		if UnitExists("boss1target") then
+		if UnitExists("boss1target") and not UnitDetailedThreatSituation("boss1target", "boss1") then
 			mod:TargetMessage(99836, L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
+			mod:CancelTimer(timer, true)
 			if UnitIsUnit("boss1target", "player") then
 				mod:FlashShake(99836)
 				mod:Say(99836, CL["say"]:format(L["crystaltrap"]))
 			end
 		end
 	end
-
+	local function cancelTimer()
+		mod:CancelTimer(timer, true)
+	end
 	function mod:CrystalTrap()
-		self:ScheduleTimer(trapWarn, 0.2)
+		timer = self:ScheduleRepeatingTimer(trapWarn, 0.05)
+		self:ScheduleTimer(cancelTimer, 1)
 	end
 end
 
