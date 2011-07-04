@@ -20,17 +20,23 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "deDE")
 if L then
-	--L.tornado_trigger = "These skies are MINE!"
+	L.tornado_trigger = "Dieser Himmel ist MEIN" -- check
 	L.claw_message = "%2$dx Klauen: %1$s"
 	L.fullpower_soon_message = "Volle Kraft bald!"
 	L.halfpower_soon_message = "Phase 4 bald!"
 	L.encounter_restart = "Volle Kraft! Es geht wieder los..."
+	L.no_stacks_message = "Du hast keine Federn!"
+	L.moonkin_message = "Beschaff' dir richtige Federn!"
+
+	L.worm_emote = "Feurige Lavawürmer brechen aus dem Boden hervor!" -- check
+	L.phase2_soon_emote = "Alysrazar beginnt, in einem schnellen Kreis zu fliegen!" -- check
 end
 
 L = BigWigs:NewBossLocale("Shannox", "deDE")
 if L then
 	L.safe = "%s ist sicher!"
 	L.immolation_trap = "Brandfalle auf %s!"
+	L.crystaltrap = "Kristallfalle"
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "deDE")
@@ -46,6 +52,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "deDE")
 if L then
+	L.seed_explosion = "Samenexplosion!"
 	L.intermission = "Übergang"
 	L.sons_left = "%d Söhne noch"
 	L.engulfing_close = "Nahe %s"
