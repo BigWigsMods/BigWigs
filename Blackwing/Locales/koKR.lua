@@ -36,13 +36,13 @@ if L then
 	L.blazing_message = "해골 추가!"
 	L.blazing_bar = "다음 해골"
 
-	L.armageddon = "Armageddon"
-	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+	L.armageddon = "아마겟돈"
+	L.armageddon_desc = "머리 노출 단계에서 아마겟돈을 사용시 알립니다."
 
 	L.phase2 = "2 단계"
 	L.phase2_desc = "2 단계 알림과 근접창 체크를 표시합니다."
 	L.phase2_message = "2 단계!"
-	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암" --check
+	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암"
 
 	-- normal
 	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
@@ -113,11 +113,12 @@ if L then
 
 	L.phase_three_trigger = "품위있는"
 
-	L.crackle_trigger = "전기가"
+	L.crackle_trigger = "전기가 튀며 파지직하는 소리가 납니다!"
 	L.crackle_message = "곧 감전!"
 
+	L.shadowblaze_trigger = "살을 재로 만들어 주마!"
 	L.shadowblaze_message = "당신은 타오르는중!"
-
+	
 	L.onyxia_power_message = "곧 폭발!"
 
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
