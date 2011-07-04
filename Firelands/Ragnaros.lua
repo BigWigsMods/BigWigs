@@ -24,6 +24,7 @@ local moltenSeed, handOfRagnaros, sulfurasSmash = (GetSpellInfo(98498)), (GetSpe
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.seed_explosion = "Seed Explosion!"
 	L.intermission = "Intermission"
 	L.sons_left = "%d Sons Left"
 	L.engulfing_close = "Close %s"
@@ -87,7 +88,7 @@ local function intermissionEnd()
 	if phase == 2 and not intermission1warned then
 		smashCD = 40 -- need to confirm
 		intermission1warned = true
-		mod:Bar(98498, moltenSeed, 15, 98498)
+		mod:Bar(98498, moltenSeed, 24, 98498)
 		mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
 		mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
 		mod:OpenProximity(6)
@@ -169,6 +170,7 @@ do
 			self:ScheduleTimer(moltenSeedWarned, 5)
 			self:Message(98498, spellName, "Urgent", spellId, "Alarm")
 			self:Bar(98498, spellName, 60, spellId)
+			self:Bar(98498, L["seed_explosion"], 10, spellId)
 			seedWarned = true
 		end
 	end
