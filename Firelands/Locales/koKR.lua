@@ -28,8 +28,8 @@ if L then
 	L.no_stacks_message = "당신은 깃털이 없습니다. 생각을 가지세요..."
 	L.moonkin_message = "깃털을 줍는등의 헛짓은 그만~!"
 
-	L.worm_emote = "Fiery Lava Worms erupt from the ground!"	--Check
-	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"	--Check
+	L.worm_emote = "녹아내린 알이 부화하려고 합니다!"
+	L.phase2_soon_emote = "알리스라조르가 빠른 속도로 원을 그림 날아다닙니다!"
 	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
 	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
 	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
@@ -56,6 +56,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
+	L.seed_explosion = "타오르는 씨앗!"
 	L.intermission = "라그 휴식"
 	L.sons_left = "자손 %d 마리 남음"
 	L.engulfing_close = "가까운 지역에 %s"
