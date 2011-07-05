@@ -26,6 +26,7 @@ if L then
 	L.devastate_bar = "~Next devastation"
 	L.drone_bar = "Next Cinderweb Drone"
 	L.drone_message = "Big drone incoming!"
+	L.kiss_message = "Kiss"
 end
 L = mod:GetLocale()
 
@@ -122,7 +123,7 @@ function mod:Frenzy()
 end
 
 function mod:Kiss(player, spellId, _, _, spellName)
-	self:TargetMessage(99506, spellName, player, "Urgent", spellId)
+	self:TargetMessage(99506, L["kiss_message"], player, "Urgent", spellId)
 	-- We play the sound manually because TargetMessage strips it unless the target is the player
 	self:PlaySound(99506, "Info")
 end
