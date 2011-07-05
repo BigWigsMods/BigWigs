@@ -51,12 +51,12 @@ end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "koKR")
 if L then
-	L.seed_explosion = "곧 불타는 씨앗!"
+	L.seed_explosion = "곧 씨앗 폭발!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
-	L.seed_explosion = "타오르는 씨앗!"
+	L.seed_explosion = "씨앗 폭발!"
 	L.intermission = "라그 휴식"
 	L.sons_left = "자손 %d 마리 남음"
 	L.engulfing_close = "가까운 지역에 %s"
