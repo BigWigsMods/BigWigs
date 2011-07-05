@@ -52,6 +52,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhTW")
 if L then
+	L.seed_explosion = "熔岩晶粒爆炸！"
 	L.intermission = "中場"
 	L.sons_left = ">%d< 烈焰之子剩餘！"
 	L.engulfing_close = "近點：>%s<！"

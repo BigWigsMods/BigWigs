@@ -52,6 +52,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhCN")
 if L then
+	L.seed_explosion = "Seed Explosion!"
 	L.intermission = "Intermission"
 	L.sons_left = "%d Sons Left"
 	L.engulfing_close = "Close %s"
