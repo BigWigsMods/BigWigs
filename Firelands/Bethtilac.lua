@@ -42,7 +42,7 @@ end
 
 function mod:GetOptions(CL)
 	return {
-		99052, "ej:2773",
+		{99052, "FLASHSHAKE"}, "ej:2773",
 		99506, 99497,
 		{99559, "FLASHSHAKE", "WHISPER"}, {99990, "FLASHSHAKE", "SAY"},
 		"bosskill"
@@ -107,7 +107,7 @@ do
 end
 
 function mod:Fixate(player, spellId, _, _, spellName)
-	self:TargetMessage(99559, spellName, player, "Important", spellId, "Alarm")
+	self:TargetMessage(99559, spellName, player, "Attention", spellId, "Alarm")
 	if UnitIsUnit("player", player) then
 		self:FlashShake(99559)
 		self:Whisper(99559, player, CL["you"]:format(spellName))
@@ -127,8 +127,16 @@ function mod:Kiss(player, spellId, _, _, spellName)
 	self:PlaySound(99506, "Info")
 end
 
-function mod:Devastate(_, spellId)
-	self:Message(99052, L["devastate_message"]:format(devastateCount), "Important", spellId, "Long")
+function mod:Devastate(_, spellId, _, _, spellName)
+	local name = GetSpellInfo(100048) --Fiery Web Silk
+	local hasDebuff = UnitDebuff("player", name)
+	if hasDebuff then
+		self:Message(99052, L["devastate_message"]:format(devastateCount), "Important", spellId, "Long")
+		self:FlashShake(99052)
+		self:Bar(99052, spellName, 8, spellId)
+	else
+		self:Message(99052, L["devastate_message"]:format(devastateCount), "Attention", spellId)
+	end
 	devastateCount = devastateCount + 1
 	-- This timer is only accurate if you dont fail with the Drones
 	-- Might need to use the bosses power bar or something to adjust this
