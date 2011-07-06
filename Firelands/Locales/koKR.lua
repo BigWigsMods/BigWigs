@@ -5,6 +5,7 @@ if L then
 	L.devastate_bar = "~다음 그을리는 유린"
 	L.drone_bar = "다음 수거미"
 	L.drone_message = "곧 수거미!"
+	L.kiss_message = "입맞춤"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "koKR")
