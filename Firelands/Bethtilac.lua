@@ -96,8 +96,6 @@ do
 					mod:Say(99990, CL["say"]:format(burst))
 				end
 			end
-		else
-			mod:ScheduleTimer(broodlingWarn, 0.1)
 		end
 	end
 	function mod:BroodlingWatcher()
