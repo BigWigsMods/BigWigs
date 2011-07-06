@@ -12,3 +12,4 @@ if not L then return end
 if L then
 	L.destruction_bar = "~폭발"
 end
+

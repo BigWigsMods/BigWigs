@@ -7,3 +7,9 @@ if L then
 	L.meteor_bar = "~Meteorschlag"
 end
 
+L = BigWigs:NewBossLocale("Occu'thar", "deDE")
+if not L then return end
+if L then
+	L.destruction_bar = "Explosion kommt"
+end
+

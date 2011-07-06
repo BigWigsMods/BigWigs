@@ -12,3 +12,4 @@ if not L then return end
 if L then
 	L.destruction_bar = "Arrivée de l'explosion"
 end
+

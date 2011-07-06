@@ -7,3 +7,9 @@ if L then
 	L.meteor_bar = "<流星猛击>"
 end
 
+L = BigWigs:NewBossLocale("Occu'thar", "zhCN")
+if not L then return end
+if L then
+
+end
+
