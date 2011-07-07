@@ -10,6 +10,6 @@ end
 L = BigWigs:NewBossLocale("Occu'thar", "zhTW")
 if not L then return end
 if L then
-
+	L.destruction_bar = "爆炸到來！"
 end
 
