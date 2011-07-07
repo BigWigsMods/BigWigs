@@ -92,6 +92,7 @@ end
 function mod:Stomp(_, spellId, _, _, spellName)
 	self:Message(97282, L["stomp_message"], "Urgent",  spellId, "Alert")
 	self:Bar(97282, L["stomp_message"], 3, spellId)
+	self:Bar(97282, spellName, 30, spellId)
 end
 
 function mod:MoltenArmor(player, spellId, _, _, spellName, stack, _, _, _, dGUID)
