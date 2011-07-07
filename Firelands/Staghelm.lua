@@ -11,12 +11,11 @@ mod:RegisterEnableMob(52571)
 --
 
 local leapingFlames, flameScythe = (GetSpellInfo(98476)), (GetSpellInfo(100213))
-local adrenaline = "%s %s x%d"
-local catForm, scorpionForm = (GetSpellInfo(98374)), (GetSpellInfo(98379))
 -- got data up to 15 stacks, after 11 its 3.7
 local specialCD = {17.5, 13.4, 10.9, 8.6, 7.4, 7.3, 6.1, 6.1, 4.9, 4.9, 4.9}
 local specialCounter = 1
 local leapWarned = nil
+local form = "cat"
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -25,7 +24,9 @@ local leapWarned = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.seed_explosion = "Seed explosion soon!"
+	L.seed_explosion = "You explode soon!"
+	L.seed_bar = "You explode!"
+	L.adrenaline_message = "Adrenaline x%d!"
 end
 L = mod:GetLocale()
 
@@ -40,9 +41,9 @@ function mod:GetOptions(CL)
 		{98450, "FLASHSHAKE", "PROXIMITY"},
 		97238, "berserk", "bosskill"
 	}, {
-		[98379] = scorpionForm,
-		[98374] = catForm,
-		[98450] = (EJ_GetSectionInfo(2922)),
+		[98379] = 98379,
+		[98374] = 98374,
+		[98450] = "ej:2922",
 		[97238] = "general"
 	}
 end
@@ -65,6 +66,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600) -- assumed
 	specialCounter = 1
 	leapWarned = nil
+	form = "cat"
 end
 
 --------------------------------------------------------------------------------
@@ -72,22 +74,19 @@ end
 --
 
 function mod:Adrenaline(_, spellId, _, _, spellName, stack)
-	local form = (UnitBuff("boss1", catForm)) or (UnitBuff("boss1", scorpionForm)) or ""
-	self:Message(97238, adrenaline:format(form, spellName, stack or 1), "Attention", spellId)
+	self:Message(97238, L["adrenaline_message"]:format(stack), "Attention", spellId)
 	 -- this is power based, not time. Power regen is affected by adrenaline
 	 -- adrenaline gets stacked every special
 	specialCounter = specialCounter + 1
-	if form == catForm then
+	if form == "cat" then
 		self:Bar(98476, leapingFlames, specialCD[specialCounter] or 3.7, 98476)
-	elseif form == scorpionForm then
+	elseif form == "scorpion" then
 		self:Bar(100213, flameScythe, specialCD[specialCounter] or 3.7, 100213)
 	end
 end
 
 do
-	local function LeapWarned()
-		leapWarned = nil
-	end
+	local function reset() leapWarned = nil end
 	local function checkTarget()
 		local mobId = mod:GetUnitIdByGUID(52571)
 		if mobId then
@@ -105,12 +104,13 @@ do
 	function mod:LeapingFlames(...)
 		if leapWarned then return end
 		leapWarned = true
-		self:ScheduleTimer(LeapWarned, 2)
+		self:ScheduleTimer(reset, 2)
 		self:ScheduleTimer(checkTarget, 0.2)
 	end
 end
 
 function mod:CatForm(_, spellId, _, _, spellName)
+	form = "cat"
 	self:Message(98374, spellName, "Important", spellId, "Alert")
 	self:OpenProximity(10, 98374)
 	specialCounter = 1
@@ -118,6 +118,7 @@ function mod:CatForm(_, spellId, _, _, spellName)
 end
 
 function mod:ScorpionForm(_, spellId, _, _, spellName)
+	form = "scorpion"
 	self:Message(98379, spellName, "Important", spellId, "Alert")
 	self:CloseProximity(98374)
 	specialCounter = 1
@@ -140,11 +141,11 @@ do
 		self:SendMessage("BigWigs_StopBar", self, leapingFlames)
 		if not UnitIsUnit(player, "player") then return end
 		local remaining = (select(7, UnitDebuff("player", spellName))) - GetTime()
-		self:Bar(98450, spellName, remaining, 98450)
-		if remaining < 6 then
+		self:Bar(98450, L["seed_bar"], remaining, 98450)
+		if remaining < 5 then
 			searingSeed()
 		else
-			self:ScheduleTimer(searingSeed, remaining - 6)
+			self:ScheduleTimer(searingSeed, remaining - 5)
 		end
 	end
 end
