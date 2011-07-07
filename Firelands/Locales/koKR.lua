@@ -4,19 +4,19 @@ if L then
 	L.devastate_message = "그을리는 유린 #%d!"
 	L.devastate_bar = "~다음 그을리는 유린"
 	L.drone_bar = "다음 잿그물 수거미"
-	L.drone_message = "잿그물 수거미가 올것입니다!"
+	L.drone_message = "곧 잿그물 수거미!"
 	L.kiss_message = "입맞춤"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "koKR")
 if L then
-	L.molten_message = "보스 %dx 중첩!"
-	L.armor_message = "갑옷 %d%% 남음"
-	L.armor_gone_message = "갑옷이 없어졌습니다!"
+	L.molten_message = "보스 공격 증가 %dx !"
+	L.armor_message = "흑요석 갑옷 - %d%%"
+	L.armor_gone_message = "흑요석 갑옷 사라짐!"
 	L.phase2_soon_message = "곧 2 단계!"
 	L.stomp_message = "진탕 발길! 발구르기! 발구르기!"
-	L.big_add_message = "큰 부하가 등장했습니다!"
-	L.small_adds_message = "작은 부하가 올것입니다!"
+	L.big_add_message = "큰 쫄 등장!"
+	L.small_adds_message = "곧 작은 쫄 등장!"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "koKR")
@@ -25,9 +25,9 @@ if L then
 	L.claw_message = "타오르는 발톱 x%2$d : %1$s"
 	L.fullpower_soon_message = "곧 최대 힘!"
 	L.halfpower_soon_message = "곧 4 단계!"
-	L.encounter_restart = "최대 힘! 다시 반복합니다..."
-	L.no_stacks_message = "당신은 깃털이 없습니다."
-	L.moonkin_message = "헛짓은 그만하고 진짜 깃털을 주으세요."
+	L.encounter_restart = "최대 힘! 다시 단계 반복..."
+	L.no_stacks_message = "당신은 깃털이 없습니다. 생각을 가지세요..."
+	L.moonkin_message = "헛짓은 그만~! 깃털을 주우세요!"
 
 	L.worm_emote = "녹아내린 알이 부화하려고 합니다!"
 	L.phase2_soon_emote = "알리스라조르가 빠른 속도로 원을 그리며 날아다닙니다!"
@@ -39,8 +39,8 @@ end
 
 L = BigWigs:NewBossLocale("Shannox", "koKR")
 if L then
-	L.safe = "%s 안전"
-	L.immolation_trap = "%s님에게 얼굴 강타!"
+	L.safe = "%s 안전함"
+	L.immolation_trap = "얼굴 강타 : %s!"
 	L.crystaltrap = "수정 감옥 덫"
 end
 
@@ -59,7 +59,7 @@ L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
 	L.seed_explosion = "씨앗 폭발!"
 	L.intermission = "휴식"
-	L.sons_left = "자손 %d마리 남음"
+	L.sons_left = "자손 %d 마리 남음"
 	L.engulfing_close = "가까운 지역에 %s"
 	L.engulfing_middle = "중간 지역에 %s"
 	L.engulfing_far = "먼 지역에 %s"
