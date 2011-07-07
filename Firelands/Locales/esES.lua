@@ -1,10 +1,11 @@
-﻿local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
+local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
 if not L then return end
 if L then
 	L.devastate_message = "¡Devastación #%d!"
 	L.devastate_bar = "~Próxima devastación"
 	L.drone_bar = "Próximo Zángano telaceniza"
 	L.drone_message = "¡Atención zángano aparece!"
+	L.kiss_message = "Beso"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "esES")
