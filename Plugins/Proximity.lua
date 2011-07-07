@@ -162,7 +162,7 @@ do
 	if mySpells then
 		for i, spell in next, mySpells do
 			local name, _, _, _, _, _, _, minRange, range = GetSpellInfo(spell)
-			if name and range then
+			if name and type(range) == "number" then
 				local works = IsSpellInRange(name, "player")
 				if type(works) == "number" then
 					range = math.floor(range + 0.5)
@@ -212,10 +212,12 @@ local function findClosest(toRange)
 	local closest = 15
 	local closestDiff = math.abs(toRange - 15)
 	for range, func in pairs(ranges) do
-		local diff = math.abs(toRange - range)
-		if diff < closestDiff then
-			closest = range
-			closestDiff = diff
+		if type(range) == "number" then
+			local diff = math.abs(toRange - range)
+			if diff < closestDiff then
+				closest = range
+				closestDiff = diff
+			end
 		end
 	end
 	return ranges[closest], closest
