@@ -18,6 +18,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.torment_message = "%2$dx torment on %1$s"
 	L.blade = "~Blade"
+	L.focus_message = "Your focus has %d stacks!"
 end
 L = mod:GetLocale()
 
@@ -96,9 +97,9 @@ function mod:TormentTimer(_, spellId, _, _, spellName)
 end
 
 function mod:Torment(player, spellId, _, _, _, stack)
-	local diff = self:Difficulty()
-	if (stack == 5 and (diff == 2 or diff == 4)) or (stack == 6 and (diff == 1 or diff == 3)) then
-		self:TargetMessage(100230, L["torment_message"], player, "Important", 100230, nil, stack)
+	local focus = UnitName("focus")
+	if focus and UnitIsUnit(focus, player) and stack > 5 then
+		self:Message(100230, L["focus_message"]:format(stack), "Personal", spellId, "Info")
 	end
 end
 
