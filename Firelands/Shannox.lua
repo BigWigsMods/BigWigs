@@ -27,7 +27,7 @@ function mod:GetOptions(CL)
 	return {
 		100002, 101209, {99836, "SAY", "FLASHSHAKE"},
 		{100129, "ICON"},
-		"bosskill"
+		"berserk", "bosskill"
 	}, {
 		[100002] = "general"
 	}
@@ -47,6 +47,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(100002, (GetSpellInfo(100002)), 23, 100002) -- Hurl Spear
+	self:Berserk(600)
 end
 
 --------------------------------------------------------------------------------
