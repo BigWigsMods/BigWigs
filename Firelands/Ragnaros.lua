@@ -103,7 +103,6 @@ local function intermissionEnd()
 end
 
 function mod:HandofRagnaros(_, spellId, _, _, spellName)
-	self:Message(98237, spellName, "Attention", spellId)
 	self:Bar(98237, spellName, 25, spellId)
 end
 
