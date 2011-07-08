@@ -44,11 +44,17 @@ L = BigWigs:NewBossLocale("Baleroc", "deDE")
 if L then
 	L.torment_message = "%2$dx Qual: %1$s"
 	L.blade = "Nächste Klinge"
+	L.shard_message = "Splitter kommen!"
+	L.focus_message = "Dein Fokus hat %d Stapel!"
+	L.countdown_bar = "Nächste Verbindung"
+	L.link_message = "Verbunden"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "deDE")
 if L then
-	L.seed_explosion = "Samenexplosion bald!"
+	L.seed_explosion = "Du explodierst gleich!"
+	L.seed_bar = "Du explodierst!"
+	L.adrenaline_message = "%dx Adrenalin!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "deDE")
