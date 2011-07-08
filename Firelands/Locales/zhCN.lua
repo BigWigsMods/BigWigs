@@ -43,11 +43,14 @@ L = BigWigs:NewBossLocale("Baleroc", "zhCN")
 if L then
 	L.torment_message = "%2$dx torment on %1$s"
 	L.blade = "~Blade"
+	L.focus_message = "Your focus has %d stacks!"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "zhCN")
 if L then
 	L.seed_explosion = "Seed explosion soon!"
+	L.seed_bar = "<你：灼熱種子爆炸>"
+	L.adrenaline_message = "Adrenaline x%d!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhCN")

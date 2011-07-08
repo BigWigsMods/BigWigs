@@ -71,8 +71,8 @@ if L then
 
 	L.egg_vulnerable = "集中火力攻擊！"
 
-	L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
-	L.omelet_trigger = "You mistake this for weakness?  Fool!"
+	L.whelps_trigger = "吃吧，孩子們!好好享用他們肥嫩的軀殼吧!"
+	L.omelet_trigger = "你以為這樣就佔了上風?愚蠢!"
 
 	L.phase13 = "第一和第三階段"
 	L.phase = "階段"

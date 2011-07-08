@@ -20,7 +20,7 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "zhTW")
 if L then
-	L.tornado_trigger = "天空是屬於我的!"
+	L.tornado_trigger = "這片天空屬於我。"
 	L.claw_message = "熾炎爪擊%2$d層：>%1$s<！"
 	L.fullpower_soon_message = "即將 完全的力量！"
 	L.halfpower_soon_message = "第四階段！"
@@ -29,7 +29,7 @@ if L then
 	L.moonkin_message = "去拿一些羽毛！"
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
-	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
+	L.phase2_soon_emote = "艾里絲拉卓開始快速地在空中盤旋!"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhTW")
@@ -43,11 +43,14 @@ L = BigWigs:NewBossLocale("Baleroc", "zhTW")
 if L then
 	L.torment_message = "折磨%2$d層：>%1$s<！"
 	L.blade = "<虐殺之刃>"
+	L.focus_message = "焦點目標已有 >%d< 層折磨！"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "zhTW")
 if L then
-	L.seed_explosion = "即將 灼熱種子爆炸！"
+	L.seed_explosion = ">你< 即將灼熱種子爆炸！"
+	L.seed_bar = "<你：灼熱種子爆炸>"
+	L.adrenaline_message = "激奮腺素：%d層！"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhTW")
