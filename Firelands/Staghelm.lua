@@ -74,7 +74,7 @@ end
 --
 
 function mod:Adrenaline(_, spellId, _, _, spellName, stack)
-	self:Message(97238, L["adrenaline_message"]:format(stack), "Attention", spellId)
+	self:Message(97238, L["adrenaline_message"]:format(stack or 1), "Attention", spellId)
 	 -- this is power based, not time. Power regen is affected by adrenaline
 	 -- adrenaline gets stacked every special
 	specialCounter = specialCounter + 1
