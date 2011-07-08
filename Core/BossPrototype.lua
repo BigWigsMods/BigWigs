@@ -353,11 +353,13 @@ do
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
 	local nilKeyError      = "Module %s tried to check the bitflags for a nil option key."
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
+	local noDBError        = "Module %s does not have a .db property, which is weird."
 	checkFlag = function(self, key, flag)
 		if type(key) == "nil" then error(nilKeyError:format(self.name)) end
 		if type(flag) ~= "number" then error(invalidFlagError:format(self.name, type(flag), tostring(flag))) end
 		if silencedOptions[key] then return end
 		if type(key) == "number" then key = GetSpellInfo(key) end
+		if type(self.db) ~= "table" then error(noDBError:format(self.name)) end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
 				error(noDefaultError:format(self.name, key))
@@ -551,5 +553,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss)
 	-- Brutallus is da bomb.
 	local berserk = GetSpellInfo(26662)
 	self:Bar("berserk", berserk, seconds, 26662)
+	-- XXX "Interface\\EncounterJournal\\UI-EJ-Icons" ?
+	-- http://static.wowhead.com/images/icons/ej-enrage.png
 end
 

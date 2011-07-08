@@ -18,7 +18,10 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.torment_message = "%2$dx torment on %1$s"
 	L.blade = "~Blade"
+	L.shard_message = "Purple shards incoming!"
 	L.focus_message = "Your focus has %d stacks!"
+	L.countdown_bar = "Next link"
+	L.link_message = "Linked"
 end
 L = mod:GetLocale()
 
@@ -38,7 +41,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Countdown", 99516)
-	self:Log("SPELL_CAST_START", "TormentTimer", 99259)
+	self:Log("SPELL_CAST_START", "Shards", 99259)
 	self:Log("SPELL_CAST_START", "Blades", 99405, 99350)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230, 100231, 100232)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -67,12 +70,12 @@ end
 
 do
 	local scheduled = nil
-	local function countdownWarn(spellName)
-		mod:TargetMessage(99516, spellName, countdownTargets, "Important", 99516)
+	local function countdownWarn()
+		mod:TargetMessage(99516, L["link_message"], countdownTargets, "Important", 99516, "Alarm")
 		scheduled = nil
 	end
-	function mod:Countdown(player, spellId, _, _, spellName)
-		self:Bar(99516, spellName, 47.6, spellId)
+	function mod:Countdown(player, spellId)
+		self:Bar(99516, L["countdown_bar"], 47.6, spellId)
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(99516)
 		end
@@ -86,13 +89,13 @@ do
 		countdownTargets[#countdownTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(countdownWarn, 0.1, spellName)
+			self:ScheduleTimer(countdownWarn, 0.1)
 		end
 	end
 end
 
-function mod:TormentTimer(_, spellId, _, _, spellName)
-	self:Message(99259, spellName, "Important", spellId, "Alert")
+function mod:Shards(_, spellId, _, _, spellName)
+	self:Message(99259, L["shard_message"], "Urgent", spellId, "Alert")
 	self:Bar(99259, spellName, 34, spellId)
 end
 
