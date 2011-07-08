@@ -48,11 +48,17 @@ L = BigWigs:NewBossLocale("Baleroc", "frFR")
 if L then
 	L.torment_message = "%2$dx Tourments sur %1$s"
 	L.blade = "~Lame"
+	L.shard_message = "Arrivée d'éclats de tourment !"
+	L.focus_message = "Votre focalisation a %d cumuls !"
+	L.countdown_bar = "Prochain lien"
+	L.link_message = "Liés"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "frFR")
 if L then
-	L.seed_explosion = "Explosion des graîne imminente !"
+	L.seed_explosion = "Vous explosez bientôt !"
+	L.seed_bar = "Vous explosez !"
+	L.adrenaline_message = "Adrenaline x%d !"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
