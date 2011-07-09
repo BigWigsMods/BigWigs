@@ -10,7 +10,7 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "koKR")
 if L then
-	L.molten_message = "보스 공격 증가 %dx !"
+	L.molten_message = "보스 공격 증가 x%d !"
 	L.armor_message = "흑요석 갑옷 - %d%%"
 	L.armor_gone_message = "흑요석 갑옷 사라짐!"
 	L.phase2_soon_message = "곧 2 단계!"
@@ -48,11 +48,17 @@ L = BigWigs:NewBossLocale("Baleroc", "koKR")
 if L then
 	L.torment_message = "고통 x%2$d : %1$s"
 	L.blade = "~칼날"
+	L.shard_message = "곧 고문의 파편!"
+	L.focus_message = "당신의 주시 대상 - 고문 x%d !"
+	L.countdown_bar = "다음 고리"
+	L.link_message = "고리 연결"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "koKR")
 if L then
 	L.seed_explosion = "곧 씨앗 폭발!"
+	L.seed_bar = "당신은 폭발!"
+	L.adrenaline_message = "아드레날린 x%d!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
