@@ -42,7 +42,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Countdown", 99516)
 	self:Log("SPELL_CAST_START", "Shards", 99259)
-	self:Log("SPELL_CAST_START", "Blades", 99405, 99350)
+	self:Log("SPELL_CAST_START", "Blades", 99405, 99352, 99350)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230, 100231, 100232)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -54,7 +54,7 @@ function mod:OnEngage(diff)
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
 	self:Bar(99352, L["blade"], 30, 99352)
 	if diff > 2 then
-		self:Bar(99516, (GetSpellInfo(99516)), 25, 99516) -- Countdown
+		self:Bar(99516, L["countdown_bar"], 25, 99516) -- Countdown
 		countdownCounter = 1
 	end
 end

@@ -11,8 +11,6 @@ mod:RegisterEnableMob(52498)
 --
 
 local devastateCount = 1
-local burst = (GetSpellInfo(99990))
-local droneIcon = "INV_Misc_Head_Nerubian_01"
 local lastBroodlingTarget = ""
 
 --------------------------------------------------------------------------------
@@ -29,13 +27,6 @@ if L then
 	L.kiss_message = "Kiss"
 end
 L = mod:GetLocale()
-
--- untested
-local function droneWarning()
-	mod:Message("ej:2773", L["drone_message"], "Attention", droneIcon, "Info")
-	mod:Bar("ej:2773", L["drone_bar"], 60, droneIcon)
-	mod:ScheduleTimer(droneWarning, 60)
-end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -69,14 +60,24 @@ function mod:OnBossEnable()
 	self:Death("Win", 52498)
 end
 
-function mod:OnEngage(diff)
-	devastateCount = 1
-	if diff > 2 then
-		lastBroodlingTarget = ""
+do
+	local droneIcon = "INV_Misc_Head_Nerubian_01"
+	local scheduled = nil
+
+	local function droneWarning()
+		mod:Message("ej:2773", L["drone_message"], "Attention", droneIcon, "Info")
+		mod:Bar("ej:2773", L["drone_bar"], 60, droneIcon)
+		scheduled = mod:ScheduleTimer(droneWarning, 60)
 	end
-	self:Bar(99052, L["devastate_bar"], 80, 99052)
-	self:Bar("ej:2773", L["drone_bar"], 45, droneIcon)
-	self:ScheduleTimer(droneWarning, 45)
+
+	function mod:OnEngage(diff)
+		devastateCount = 1
+		lastBroodlingTarget = ""
+		self:Bar(99052, L["devastate_bar"], 80, 99052)
+		self:Bar("ej:2773", L["drone_bar"], 45, droneIcon)
+		self:CancelTimer(scheduled, true)
+		scheduled = self:ScheduleTimer(droneWarning, 45)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -84,23 +85,19 @@ end
 --
 
 do
-	local function broodlingWarn()
-		local broodling = mod:GetUnitIdByGUID(53745)
+	local burst = GetSpellInfo(99990)
+
+	function mod:BroodlingWatcher()
+		if self:Difficulty() < 3 then return end
+		local broodling = self:GetUnitIdByGUID(53745)
 		if broodling and UnitExists(broodling.."target") and UnitExists(lastBroodlingTarget) then
 			if UnitIsUnit(broodling.."target", lastBroodlingTarget) then return end
 			lastBroodlingTarget = UnitName(broodling.."target")
-			if UnitExists(lastBroodlingTarget) then
-				mod:TargetMessage(99990, burst, lastBroodlingTarget, "Important", 99990, "Alert")
-				if UnitIsUnit(lastBroodlingTarget, "player") then
-					mod:FlashShake(99990)
-					mod:Say(99990, CL["say"]:format(burst))
-				end
+			self:TargetMessage(99990, burst, lastBroodlingTarget, "Important", 99990, "Alert")
+			if UnitIsUnit(lastBroodlingTarget, "player") then
+				self:FlashShake(99990)
+				self:Say(99990, CL["say"]:format(burst))
 			end
-		end
-	end
-	function mod:BroodlingWatcher()
-		if self:Difficulty() > 2 then
-			broodlingWarn()
 		end
 	end
 end
