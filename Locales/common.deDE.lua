@@ -13,9 +13,8 @@ L.heroic = "Heroischer Modus"
 L.hard = "Hard Mode"
 L.general = "Allgemein" -- General settings, i.e. things that apply to both normal and hard mode.
 
-L.berserk_start = "%s angegriffen - Berserker in %d min"
-L.berserk_end = "%s wird zum Berserker!"
-L.berserk_min = "Berserker in %d min"
-L.berserk_sec = "Berserker in %d sek!"
-L.berserk = "Berserker"
+L.custom_start = "%s angegriffen - %s in %d min"
+L.custom_end = "%s wird zum %s!"
+L.custom_min = "%s in %d min"
+L.custom_sec = "%s in %d sek!"
 

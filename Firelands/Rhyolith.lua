@@ -37,7 +37,7 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		98632, 98552, 98136, 97282, 98255, 99846,
-		"bosskill"
+		101305, "bosskill"
 	}, {
 		[98632] = "general"
 	}
@@ -57,6 +57,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	if diff > 2 then
+		self:Berserk(300, nil, nil, 101305)
+	end
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	lastFragments = GetTime()
 end

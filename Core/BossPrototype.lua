@@ -530,30 +530,39 @@ function boss:AddSyncListener(sync)
 	core:AddSyncListener(self, sync)
 end
 
-function boss:Berserk(seconds, noEngageMessage, customBoss)
+function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 	local boss = customBoss or self.displayName
+	local key = "berserk"
+
+	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
+	-- Brutallus is da bomb.
+	local berserk, icon = (GetSpellInfo(26662)), 26662
+	-- XXX "Interface\\EncounterJournal\\UI-EJ-Icons" ?
+	-- http://static.wowhead.com/images/icons/ej-enrage.png
+	if type(customBerserk) == "number" then
+		key = customBerserk
+		berserk, icon = (GetSpellInfo(customBerserk)), customBerserk
+	elseif type(customBerserk) == "string" then
+		berserk = customBerserk
+	end
+
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message("berserk", fmt(L["berserk_start"], boss, seconds / 60), "Attention")
+		self:Message(key, fmt(L["custom_start"], boss, berserk, seconds / 60), "Attention")
 	end
 
 	-- Half-way to enrage warning.
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage("berserk", half + m, fmt(L["berserk_min"], halfMin), "Positive")
+	self:DelayedMessage(key, half + m, fmt(L["custom_min"], berserk, halfMin), "Positive")
 
-	self:DelayedMessage("berserk", seconds - 60, fmt(L["berserk_min"], 1), "Positive")
-	self:DelayedMessage("berserk", seconds - 30, fmt(L["berserk_sec"], 30), "Urgent")
-	self:DelayedMessage("berserk", seconds - 10, fmt(L["berserk_sec"], 10), "Urgent")
-	self:DelayedMessage("berserk", seconds - 5, fmt(L["berserk_sec"], 5), "Important")
-	self:DelayedMessage("berserk", seconds, fmt(L["berserk_end"], boss), "Important", nil, "Alarm")
+	self:DelayedMessage(key, seconds - 60, fmt(L["custom_min"], berserk, 1), "Positive")
+	self:DelayedMessage(key, seconds - 30, fmt(L["custom_sec"], berserk, 30), "Urgent")
+	self:DelayedMessage(key, seconds - 10, fmt(L["custom_sec"], berserk, 10), "Urgent")
+	self:DelayedMessage(key, seconds - 5, fmt(L["custom_sec"], berserk, 5), "Important")
+	self:DelayedMessage(key, seconds, fmt(L["custom_end"], boss, berserk), "Important", icon, "Alarm")
 
-	-- There are many Berserks, but we use 26662 because Brutallus uses this one.
-	-- Brutallus is da bomb.
-	local berserk = GetSpellInfo(26662)
-	self:Bar("berserk", berserk, seconds, 26662)
-	-- XXX "Interface\\EncounterJournal\\UI-EJ-Icons" ?
-	-- http://static.wowhead.com/images/icons/ej-enrage.png
+	self:Bar(key, berserk, seconds, icon)
 end
 
