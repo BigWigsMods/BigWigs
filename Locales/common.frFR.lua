@@ -12,7 +12,7 @@ L.hard = "Mode difficile"
 L.general = "Général" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.custom_start = "%s engagé - %s dans %d min."
---L.custom_end = "%s devient fou furieux"
+L.custom_end = "%s devient %s !"
 L.custom_min = "%s dans %d min."
 L.custom_sec = "%s dans %d sec."
 
