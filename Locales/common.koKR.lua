@@ -13,9 +13,7 @@ L.heroic = "영웅(하드) 모드"
 L.hard = "도전 모드"
 L.general = "일반 경고" -- General settings, i.e. things that apply to both normal and hard mode.
 
---L.berserk_start = "%s 전투 개시 - %d분 후 광폭화"
---L.berserk_end = "%s 광폭화!"
---L.berserk_min = "%d분 후 광폭화"
---L.berserk_sec = "%d초 후 광폭화!"
---L.berserk = "광폭화"
-
+L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
+L.custom_end = "%s - %s!"
+L.custom_min = "%2$d분 후 %1$s"
+L.custom_sec = "%2$d초 후 %1$s!"

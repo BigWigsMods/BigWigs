@@ -58,7 +58,7 @@ if L then
 	L.breath_message = "곧 숨결!"
 	L.breath_bar = "~숨결"
 
-	L.engage_yell = "Cho'gall will have your heads"
+	L.engage_yell = "초갈 님께 네놈들의 머리를 바치겠다"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "koKR")
