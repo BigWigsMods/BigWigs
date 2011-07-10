@@ -10,7 +10,7 @@ mod:RegisterEnableMob(52409)
 -- Locals
 --
 
-local seedWarned, intermission1warned, intermission2warned = false, false, false
+local seedWarned = false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
@@ -31,6 +31,7 @@ if L then
 	L.engulfing_close = "Close %s"
 	L.engulfing_middle = "Middle %s"
 	L.engulfing_far = "Far %s"
+	L.hand_bar = "Next knockback"
 end
 L = mod:GetLocale()
 
@@ -73,7 +74,7 @@ function mod:OnEngage(diff)
 	self:OpenProximity(6)
 	self:Berserk(600)
 	smashCD = 30
-	seedWarned, intermission1warned, intermission2warned = false, false, false
+	seedWarned = false
 	sons = 8
 	phase = 1
 	lastTransitionTime = nil
@@ -89,51 +90,45 @@ local function intermissionEnd()
 	mod:CancelAllTimers()
 	phase = phase + 1
 	mod:SendMessage("BigWigs_StopBar", mod, L["intermission"])
-	if phase == 2 and not intermission1warned then
+	if phase == 2 then
 		smashCD = 40 -- need to confirm
-		intermission1warned = true
 		mod:Bar(98498, moltenSeed, 24, 98498)
-		mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
-		mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
 		mod:OpenProximity(6)
-	elseif phase == 3 and not intermission2warned then
-		intermission2warned = true
+	elseif phase == 3 then
 		mod:OpenProximity(5)
 		-- this is just guesswork
 		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317) -- Living Meteor
-		mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
-		mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
 	end
+	mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
+	mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
 end
 
 function mod:HandofRagnaros(_, spellId, _, _, spellName)
-	self:Bar(98237, spellName, 25, spellId)
+	self:Bar(98237, L["hand_bar"], 25, spellId)
 end
 
 function mod:SplittingBlow(_, spellId, _, _, spellName)
-	self:Message(98953, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(98953, spellName, 7, spellId)
+	self:Message(98953, spellName, "Positive", spellId, "Long")
 	self:Bar(98953, L["intermission"], 45, spellId)
 	self:ScheduleTimer(intermissionEnd, 45)
 	self:CloseProximity()
 	sons = 8
-	self:SendMessage("BigWigs_StopBar", self, handOfRagnaros)
 	self:SendMessage("BigWigs_StopBar", self, sulfurasSmash)
 	self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 end
 
 function mod:SulfurasSmash(_, spellId, _, _, spellName)
-	self:Message(98710, spellName, "Urgent", spellId, "Alarm")
+	self:Message(98710, spellName, "Attention", spellId, "Info")
 	self:Bar(98710, spellName, smashCD, spellId)
 end
 
 function mod:EngulfingFlames(_, spellId, _, _, spellName)
 	if spellId == 100175 then -- correct
-		self:Message(100178, L["engulfing_close"]:format(spellName), "Urgent", spellId, "Alarm")
+		self:Message(100178, L["engulfing_close"]:format(spellName), "Important", spellId, "Alert")
 	elseif spellId == 100171 or spellId == 100178 then
-		self:Message(100178, L["engulfing_middle"]:format(spellName), "Urgent", spellId, "Alarm")
+		self:Message(100178, L["engulfing_middle"]:format(spellName), "Important", spellId, "Alert")
 	elseif spellId == 100181 then -- correct
-		self:Message(100178, L["engulfing_far"]:format(spellName), "Urgent", spellId, "Alarm")
+		self:Message(100178, L["engulfing_far"]:format(spellName), "Important", spellId, "Alert")
 	end
 end
 
@@ -182,6 +177,7 @@ end
 function mod:Deaths(mobId)
 	if mobId == 53140 then
 		sons = sons - 1
+		if sons < 0 then return end
 		if sons == 0 then
 			intermissionEnd()
 		elseif sons < 4 then
