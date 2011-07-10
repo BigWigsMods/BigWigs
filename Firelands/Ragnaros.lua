@@ -15,6 +15,7 @@ local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
 local smashCD = 30
+local lastTransitionTime = nil
 local moltenSeed, handOfRagnaros, sulfurasSmash = (GetSpellInfo(98498)), (GetSpellInfo(98237)), (GetSpellInfo(98710))
 
 --------------------------------------------------------------------------------
@@ -75,6 +76,7 @@ function mod:OnEngage(diff)
 	seedWarned, intermission1warned, intermission2warned = false, false, false
 	sons = 8
 	phase = 1
+	lastTransitionTime = nil
 end
 
 --------------------------------------------------------------------------------
@@ -82,6 +84,8 @@ end
 --
 
 local function intermissionEnd()
+	if lastTransitionTime and GetTime() < (lastTransitionTime + 30) then return end
+	lastTransitionTime = GetTime()
 	mod:CancelAllTimers()
 	phase = phase + 1
 	mod:SendMessage("BigWigs_StopBar", mod, L["intermission"])
@@ -178,10 +182,10 @@ end
 function mod:Deaths(mobId)
 	if mobId == 53140 then
 		sons = sons - 1
-		if sons < 3 and sons > 0 then
-			self:Message(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
-		elseif sons == 0 then
+		if sons == 0 then
 			intermissionEnd()
+		elseif sons < 4 then
+			self:Message(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
 		end
 	elseif mobId == 52409 then
 		self:Win()
