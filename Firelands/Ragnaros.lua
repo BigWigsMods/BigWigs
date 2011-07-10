@@ -25,13 +25,15 @@ local moltenSeed, handOfRagnaros, sulfurasSmash = (GetSpellInfo(98498)), (GetSpe
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.seed_explosion = "Seed Explosion!"
-	L.intermission = "Intermission"
-	L.sons_left = "%d Sons Left"
-	L.engulfing_close = "Close %s"
-	L.engulfing_middle = "Middle %s"
-	L.engulfing_far = "Far %s"
+	L.seed_explosion = "Seed explosion!"
+	L.intermission_bar = "Intermission!"
+	L.intermission_message = "Intermission... Got cookies?"
+	L.sons_left = "%d sons left"
+	L.engulfing_close = "Close quarters Engulfed!"
+	L.engulfing_middle = "Middle section Engulfed!"
+	L.engulfing_far = "Far side Engulfed!"
 	L.hand_bar = "Next knockback"
+	L.ragnaros_back_message = "Raggy is back, party on!"
 end
 L = mod:GetLocale()
 
@@ -97,19 +99,19 @@ local function intermissionEnd()
 	elseif phase == 3 then
 		mod:OpenProximity(5)
 		-- this is just guesswork
-		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317) -- Living Meteor
+		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317)
 	end
 	mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
-	mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
+	mod:Message(98953, L["ragnaros_back_message"], "Positive", 98953) -- XXX should use raggy icon
 end
 
 function mod:HandofRagnaros(_, spellId, _, _, spellName)
 	self:Bar(98237, L["hand_bar"], 25, spellId)
 end
 
-function mod:SplittingBlow(_, spellId, _, _, spellName)
-	self:Message(98953, spellName, "Positive", spellId, "Long")
-	self:Bar(98953, L["intermission"], 45, spellId)
+function mod:SplittingBlow(_, spellId)
+	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
+	self:Bar(98953, L["intermission_bar"], 45, spellId)
 	self:ScheduleTimer(intermissionEnd, 45)
 	self:CloseProximity()
 	sons = 8
@@ -122,13 +124,13 @@ function mod:SulfurasSmash(_, spellId, _, _, spellName)
 	self:Bar(98710, spellName, smashCD, spellId)
 end
 
-function mod:EngulfingFlames(_, spellId, _, _, spellName)
+function mod:EngulfingFlames(_, spellId)
 	if spellId == 100175 then -- correct
-		self:Message(100178, L["engulfing_close"]:format(spellName), "Important", spellId, "Alert")
-	elseif spellId == 100171 or spellId == 100178 then
-		self:Message(100178, L["engulfing_middle"]:format(spellName), "Important", spellId, "Alert")
+		self:Message(100178, L["engulfing_close"], "Important", spellId, "Alert")
+	elseif spellId == 100171 or spellId == 100178 then -- Correct on 25man normal at least
+		self:Message(100178, L["engulfing_middle"], "Important", spellId, "Alert")
 	elseif spellId == 100181 then -- correct
-		self:Message(100178, L["engulfing_far"]:format(spellName), "Important", spellId, "Alert")
+		self:Message(100178, L["engulfing_far"], "Important", spellId, "Alert")
 	end
 end
 
