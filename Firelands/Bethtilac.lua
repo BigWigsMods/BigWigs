@@ -21,7 +21,7 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.devastate_message = "Devastation #%d!"
-	L.devastate_bar = "~Next devastation"
+	L.devastate_bar = "~Next Devastation"
 	L.drone_bar = "Next Drone"
 	L.drone_message = "Drone incoming!"
 	L.kiss_message = "Kiss"
@@ -103,6 +103,7 @@ do
 end
 
 function mod:Fixate(player, spellId, _, _, spellName)
+	if not UnitIsPlayer(player) then return end --Affects the NPC and a player
 	self:TargetMessage(99559, spellName, player, "Attention", spellId, "Alarm")
 	if UnitIsUnit("player", player) then
 		self:FlashShake(99559)
