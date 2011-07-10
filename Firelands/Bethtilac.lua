@@ -22,8 +22,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.devastate_message = "Devastation #%d!"
 	L.devastate_bar = "~Next devastation"
-	L.drone_bar = "Next Cinderweb Drone"
-	L.drone_message = "Big drone incoming!"
+	L.drone_bar = "Next Drone"
+	L.drone_message = "Drone incoming!"
 	L.kiss_message = "Kiss"
 end
 L = mod:GetLocale()
