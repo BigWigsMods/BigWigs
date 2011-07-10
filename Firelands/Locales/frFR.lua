@@ -15,6 +15,7 @@ if L then
 	L.armor_gone_message = "Armure détruite !"
 	L.phase2_soon_message = "Phase 2 imminente !"
 	L.stomp_message = "Piétinement ! Piétinement ! Piétinement !"
+	L.stomp_warning = "Next Stomp"
 	L.big_add_message = "Étincelle de Rhyolith apparue !"
 	L.small_adds_message = "Arrivée de fragments de Rhyolith !"
 end

@@ -15,6 +15,7 @@ if L then
 	L.armor_gone_message = "흑요석 갑옷 사라짐!"
 	L.phase2_soon_message = "곧 2 단계!"
 	L.stomp_message = "진탕 발길! 발구르기! 발구르기!"
+	L.stomp_warning = "Next Stomp"
 	L.big_add_message = "큰 쫄 등장!"
 	L.small_adds_message = "곧 작은 쫄 등장!"
 end

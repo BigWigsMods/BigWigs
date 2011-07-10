@@ -15,6 +15,7 @@ if L then
 	L.armor_gone_message = "¡Armadura destruida!"
 	L.phase2_soon_message = "Fase 2 inminente!"
 	L.stomp_message = "¡Pisotón! ¡Pisotón! ¡Pisotón!"
+	L.stomp_warning = "Next Stomp"
 	L.big_add_message = "¡Atención add aparece!"
 	L.small_adds_message = "¡Aparecen fragmentos pequeños!"
 end

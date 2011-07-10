@@ -15,6 +15,7 @@ if L then
 	L.armor_gone_message = "Rüstung weg!"
 	L.phase2_soon_message = "Phase 2 bald!"
 	L.stomp_message = "Stampfen! Stampfen! Stampfen!"
+	L.stomp_warning = "Next Stomp"
 	L.big_add_message = "Funke kommt!"
 	L.small_adds_message = "Fragmente kommen!"
 end

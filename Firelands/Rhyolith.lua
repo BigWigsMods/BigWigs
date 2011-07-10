@@ -25,6 +25,7 @@ if L then
 	L.armor_gone_message = "Armor go bye-bye!"
 	L.phase2_soon_message = "Phase 2 soon!"
 	L.stomp_message = "Stomp! Stomp! Stomp!"
+	L.stomp_warning = "Next Stomp"
 	L.big_add_message = "Big add spawned!"
 	L.small_adds_message = "Small adds inc!"
 end
@@ -60,6 +61,7 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		self:Berserk(300, nil, nil, 101305)
 	end
+	self:Bar(97282, L["stomp_warning"], 15, 97282)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	lastFragments = GetTime()
 end
@@ -95,7 +97,7 @@ end
 function mod:Stomp(_, spellId, _, _, spellName)
 	self:Message(97282, L["stomp_message"], "Urgent",  spellId, "Alert")
 	self:Bar(97282, L["stomp_message"], 3, spellId)
-	self:Bar(97282, spellName, 30, spellId)
+	self:Bar(97282, L["stomp_warning"], 30, spellId)
 end
 
 function mod:MoltenArmor(player, spellId, _, _, spellName, stack, _, _, _, dGUID)

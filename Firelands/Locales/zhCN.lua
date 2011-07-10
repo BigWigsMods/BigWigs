@@ -14,6 +14,7 @@ if L then
 	L.armor_gone_message = "Armor go bye-bye!"
 	L.phase2_soon_message = "Phase 2 soon!"
 	L.stomp_message = "Stomp! Stomp! Stomp!"
+	L.stomp_warning = "Next Stomp"
 	L.big_add_message = "Big add spawned!"
 	L.small_adds_message = "Small adds inc!"
 end
