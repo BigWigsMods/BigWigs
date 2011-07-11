@@ -15,7 +15,7 @@ if L then
 	L.armor_gone_message = "Armure détruite !"
 	L.phase2_soon_message = "Phase 2 imminente !"
 	L.stomp_message = "Piétinement ! Piétinement ! Piétinement !"
-	L.stomp_warning = "Next Stomp"
+	L.stomp_warning = "Prochain piétinement"
 	L.big_add_message = "Étincelle de Rhyolith apparue !"
 	L.small_adds_message = "Arrivée de fragments de Rhyolith !"
 end
@@ -65,9 +65,12 @@ end
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
 if L then
 	L.seed_explosion = "Explosion des graînes !"
-	L.intermission = "Intervalle"
-	L.sons_left = "Il reste %d Fils"
-	L.engulfing_close = "%s proches"
-	L.engulfing_middle = "%s au milieu"
-	L.engulfing_far = "%s éloignées"
+	L.intermission_bar = "Intervalle"
+	L.intermission_message = "Intervalle !"
+	L.sons_left = "Il reste %d fils"
+	L.engulfing_close = "Section proche engloutie !"
+	L.engulfing_middle = "Section centrale engloutie !"
+	L.engulfing_far = "Section éloignée engloutie !"
+	L.hand_bar = "Prochain \"knockback\""
+	L.ragnaros_back_message = "Raggy est de retour, c'est la fête !"
 end
