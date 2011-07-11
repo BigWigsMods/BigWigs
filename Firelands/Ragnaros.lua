@@ -50,7 +50,7 @@ function mod:GetOptions(CL)
 		98710, "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
-		[98953] = L["intermission"],
+		[98953] = L["intermission_bar"],
 		[98498] = "ej:2640",
 		[99317] = "ej:2655",
 		[98710] = "general"
