@@ -4,7 +4,7 @@ if L then
 	L.devastate_message = "그을리는 유린 #%d!"
 	L.devastate_bar = "~다음 그을리는 유린"
 	L.drone_bar = "다음 잿그물 수거미"
-	L.drone_message = "곧 잿그물 수거미!"
+	L.drone_message = "잿그물 수거미 등장!"
 	L.kiss_message = "입맞춤"
 end
 
@@ -15,9 +15,9 @@ if L then
 	L.armor_gone_message = "흑요석 갑옷 사라짐!"
 	L.phase2_soon_message = "곧 2 단계!"
 	L.stomp_message = "진탕 발길! 발구르기! 발구르기!"
-	L.stomp_warning = "Next Stomp"
+	L.stomp_warning = "다음 발구르기"
 	L.big_add_message = "큰 쫄 등장!"
-	L.small_adds_message = "곧 작은 쫄 등장!"
+	L.small_adds_message = "작은 쫄 등장!"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "koKR")
@@ -65,10 +65,13 @@ end
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
 	L.seed_explosion = "씨앗 폭발!"
-	L.intermission = "휴식"
+	L.intermission_bar = "휴식"
+	L.intermission_message = "휴식... 과자 있으세요?..."
 	L.sons_left = "자손 %d 마리 남음"
-	L.engulfing_close = "가까운 지역에 %s"
-	L.engulfing_middle = "중간 지역에 %s"
-	L.engulfing_far = "먼 지역에 %s"
+	L.engulfing_close = "가까운 지역에 휘몰아치는 불길"
+	L.engulfing_middle = "중간 지역에 휘몰아치는 불길"
+	L.engulfing_far = "먼 지역에 휘몰아치는 불길"
+	L.hand_bar = "다음 넉백"
+	L.ragnaros_back_message = "라그 돌아옴, 파티 정비!"
 end
 
