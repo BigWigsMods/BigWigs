@@ -144,7 +144,7 @@ function mod:Firestorm(_, spellId, _, _, spellName)
 	self:FlashShake(100744)
 	self:Message(100744, spellName, "Urgent", spellId, "Alert")
 	self:Bar(100744, "~"..spellName, 86, spellId)
-	self:Bar(100744, spellName, 15, spellId)
+	self:Bar(100744, spellName, 10, spellId)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
