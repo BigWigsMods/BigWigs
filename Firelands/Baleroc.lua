@@ -103,7 +103,7 @@ end
 
 function mod:Torment(player, spellId, _, _, _, stack)
 	if UnitIsUnit("focus", player) and stack > 5 then
-		self:Message(100230, L["focus_message"]:format(stack), "Personal", spellId, "Info")
+		self:LocalMessage(100230, L["focus_message"]:format(stack), "Personal", spellId, "Info")
 	end
 end
 
