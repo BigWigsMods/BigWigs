@@ -16,7 +16,7 @@ local sons = 8
 local phase = 1
 local smashCD = 30
 local lastTransitionTime = nil
-local moltenSeed, handOfRagnaros, sulfurasSmash = (GetSpellInfo(98498)), (GetSpellInfo(98237)), (GetSpellInfo(98710))
+local moltenSeed, sulfurasSmash = (GetSpellInfo(98498)), (GetSpellInfo(98710))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(98237, handOfRagnaros, 25, 98237)
+	self:Bar(98237, L["hand_bar"], 25, 98237)
 	self:Bar(98710, sulfurasSmash, 30, 98710)
 	self:OpenProximity(6)
 	self:Berserk(600)
