@@ -64,9 +64,9 @@ if L then
 	L.intermission_bar = "Phasenübergang"
 	L.intermission_message = "Phasenübergang!"
 	L.sons_left = "%d Söhne noch"
-	L.engulfing_close = "Nahes Drittel entflammt!"
-	L.engulfing_middle = "Mittleres Drittel entflammt!"
-	L.engulfing_far = "Weites Drittel entflammt!"
+	L.engulfing_close = "Innen entflammt!"
+	L.engulfing_middle = "Mitte entflammt!"
+	L.engulfing_far = "Außen entflammt!"
 	L.hand_bar = "Nächster Rückstoß"
 	L.ragnaros_back_message = "Raggy wieder da, auf geht's!"
 end
