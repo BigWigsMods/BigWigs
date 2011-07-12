@@ -45,7 +45,7 @@ L = BigWigs:NewBossLocale("Baleroc", "deDE")
 if L then
 	L.torment_message = "%2$dx Qual: %1$s"
 	L.blade = "Nächste Klinge"
-	L.shard_message = "Splitter kommen!"
+	L.shard_message = "Splitter kommen (%d)!"
 	L.focus_message = "Dein Fokus hat %d Stapel!"
 	L.countdown_bar = "Nächste Verbindung"
 	L.link_message = "Verbunden"

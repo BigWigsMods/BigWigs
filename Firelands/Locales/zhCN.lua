@@ -45,7 +45,7 @@ L = BigWigs:NewBossLocale("Baleroc", "zhCN")
 if L then
 	L.torment_message = "%2$dx torment on %1$s"
 	L.blade = "~Blade"
-	L.shard_message = "Purple shards incoming!"
+	L.shard_message = "Purple shards (%d)!"
 	L.focus_message = "Your focus has %d stacks!"
 	L.countdown_bar = "Next link"
 	L.link_message = "Linked"

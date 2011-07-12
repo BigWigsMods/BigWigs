@@ -7,7 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(53494)
 
 local countdownTargets = mod:NewTargetList()
-local countdownCounter = 1
+local countdownCounter, count = 1, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -18,7 +18,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.torment_message = "%2$dx torment on %1$s"
 	L.blade = "~Blade"
-	L.shard_message = "Purple shards incoming!"
+	L.shard_message = "Purple shards (%d)!"
 	L.focus_message = "Your focus has %d stacks!"
 	L.countdown_bar = "Next link"
 	L.link_message = "Linked"
@@ -57,6 +57,7 @@ function mod:OnEngage(diff)
 		self:Bar(99516, L["countdown_bar"], 25, 99516) -- Countdown
 		countdownCounter = 1
 	end
+	count = 0
 end
 
 --------------------------------------------------------------------------------
@@ -95,13 +96,13 @@ do
 end
 
 function mod:Shards(_, spellId, _, _, spellName)
-	self:Message(99259, L["shard_message"], "Urgent", spellId, "Alert")
+	count = count + 1
+	self:Message(99259, L["shard_message"]:format(count), "Urgent", spellId, "Alert")
 	self:Bar(99259, spellName, 34, spellId)
 end
 
 function mod:Torment(player, spellId, _, _, _, stack)
-	local focus = UnitName("focus")
-	if focus and UnitIsUnit(focus, player) and stack > 5 then
+	if UnitIsUnit("focus", player) and stack > 5 then
 		self:Message(100230, L["focus_message"]:format(stack), "Personal", spellId, "Info")
 	end
 end

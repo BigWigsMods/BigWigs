@@ -49,7 +49,7 @@ L = BigWigs:NewBossLocale("Baleroc", "koKR")
 if L then
 	L.torment_message = "고통 x%2$d : %1$s"
 	L.blade = "~칼날"
-	L.shard_message = "곧 고문의 파편!"
+	L.shard_message = "곧 고문의 파편(%d)!"
 	L.focus_message = "당신의 주시 대상 - 고문 x%d !"
 	L.countdown_bar = "다음 고리"
 	L.link_message = "고리 연결"
