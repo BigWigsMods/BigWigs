@@ -6,8 +6,9 @@ local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530)
 
-local fieryTornado, firestorm = (GetSpellInfo(99816)), (GetSpellInfo(101659))
+local fieryTornado, firestorm, cataclysm = (GetSpellInfo(99816)), (GetSpellInfo(101659)), (GetSpellInfo(100761))
 local woundTargets = mod:NewTargetList()
+local cataclysmCount = 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -71,7 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Burnout", 99432)
 
 	-- Heroic only
-	self:Log("SPELL_CAST_START", "Cataclysm", 100761)
+	self:Log("SPELL_CAST_START", "Cataclysm", 100761, 102111)
 	self:Log("SPELL_CAST_START", "Firestorm", 100744)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -81,9 +82,11 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(900) -- assumed
+	cataclysmCount = 0
 	if diff > 2 then
 		self:Bar(99816, fieryTornado, 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
+		self:Bar(100761, cataclysm, 37, 100761)
 	else
 		self:Bar(99816, fieryTornado, 190, 99816)
 		self:Bar(99464, (GetSpellInfo(99464)), 60, 99464) -- Molting
@@ -143,12 +146,21 @@ end
 function mod:Firestorm(_, spellId, _, _, spellName)
 	self:FlashShake(100744)
 	self:Message(100744, spellName, "Urgent", spellId, "Alert")
-	self:Bar(100744, "~"..spellName, 86, spellId)
 	self:Bar(100744, spellName, 10, spellId)
+	-- Only show a bar for next if we have seen less than 3 Cataclysms
+	if cataclysmCount < 3 then
+		self:Bar(100744, "~"..spellName, 82, spellId)
+	end
+	self:Bar(100761, cataclysm, 10, 100761)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
 	self:Message(100761, spellName, "Attention", spellId, "Alarm")
+	-- Only show a bar if this is the first or third Cataclysm this phase
+	cataclysmCount = cataclysmCount + 1
+	if cataclysmCount == 1 or cataclysmCount == 3 then
+		self:Bar(100761, spellName, 32, 100761)
+	end
 end
 
 function mod:FieryTornado()
@@ -194,8 +206,15 @@ In case we need to rebase this on emotes instead of unit power, here's a few not
 			fullWarned = true
 		elseif power == 100 then
 			self:Message(99925, L["encounter_restart"], "Positive", 99925, "Alert")
-			self:Bar(99816, fieryTornado, 165, 99816)
 			self:UnregisterEvent("UNIT_POWER")
+			if self:Difficulty() > 2 then
+				cataclysmCount = 0
+				self:Bar(100761, cataclysm, 18, 100761)
+				self:Bar(100744, firestorm, 72, 100744)
+				self:Bar(99816, fieryTornado, 225, 99816) -- Just adding 60s like OnEngage
+			else
+				self:Bar(99816, fieryTornado, 165, 99816)
+			end
 		end
 	end
 end
