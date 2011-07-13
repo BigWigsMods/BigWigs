@@ -74,7 +74,7 @@ function mod:OnEngage(diff)
 	self:Bar(98237, L["hand_bar"], 25, 98237)
 	self:Bar(98710, sulfurasSmash, 30, 98710)
 	self:OpenProximity(6)
-	self:Berserk(600)
+	self:Berserk(1080)
 	smashCD = 30
 	seedWarned = false
 	sons = 8
