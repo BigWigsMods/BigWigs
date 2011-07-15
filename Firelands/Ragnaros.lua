@@ -66,6 +66,7 @@ function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190)
 
+
 	-- Normal
 	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100254)
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
@@ -106,10 +107,12 @@ do
 	end
 
 	function mod:LivingMeteor(_, spellId, _, _, spellName)
-		meteorWarned = true
-		self:Message(99317, spellName, "Attention", spellId)
-		self:Bar(99317, spellName, 45, spellId)
-		self:ScheduleTimer(setMeteorWarned, 5)
+		if not meteorWarned then
+			meteorWarned = true
+			self:Message(99317, spellName, "Attention", spellId)
+			self:Bar(99317, spellName, 45, spellId)
+			self:ScheduleTimer(setMeteorWarned, 5)
+		end
 	end
 end
 
