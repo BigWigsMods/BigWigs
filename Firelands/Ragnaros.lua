@@ -101,7 +101,7 @@ local function intermissionEnd()
 		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317)
 	end
 	mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
-	mod:Message(98953, L["ragnaros_back_message"], "Positive", 98953) -- XXX should use raggy icon
+	mod:Message(98953, L["ragnaros_back_message"], "Positive", "achievement_boss_ragnaros")
 end
 
 function mod:HandofRagnaros(_, spellId, _, _, spellName)

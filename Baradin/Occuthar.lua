@@ -27,9 +27,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "SearingShadows", 96913, 101007) -- EJ, 25m
-	self:Log("SPELL_CAST_START", "Eyes", 96920, 101006) -- EJ, 25m
-	self:Log("SPELL_CAST_SUCCESS", "FocusedFire", 96882, 96883, 96884) -- unknown, unknown, EJ/25m
+	self:Log("SPELL_CAST_START", "SearingShadows", 96913, 101007) -- EJ/10m, 25m
+	self:Log("SPELL_CAST_START", "Eyes", 96920, 101006) -- EJ/10m, 25m
+	self:Log("SPELL_CAST_SUCCESS", "FocusedFire", 96884) -- EJ/10m/25m
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -37,7 +37,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(96920, L["eyes_bar"], 30, 96920) -- XXX confirm
+	self:Bar(96920, L["eyes_bar"], 25, 96920)
 	self:Berserk(300) -- XXX guestimate
 end
 
