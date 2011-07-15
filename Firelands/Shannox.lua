@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Shannox", 800, 195)
 if not mod then return end
-mod:RegisterEnableMob(53691)
+mod:RegisterEnableMob(53691, 53695, 53694) --Shannox, Rageface, Riplimb
 
 --------------------------------------------------------------------------------
 -- Localization

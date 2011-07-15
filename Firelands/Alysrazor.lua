@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
-mod:RegisterEnableMob(52530)
+mod:RegisterEnableMob(52530, 53898) --Alysrazor, Voracious Hatchling
 
 local fieryTornado, firestorm, cataclysm = (GetSpellInfo(99816)), (GetSpellInfo(101659)), (GetSpellInfo(100761))
 local woundTargets = mod:NewTargetList()
