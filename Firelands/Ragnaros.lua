@@ -16,6 +16,7 @@ local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD = 30, 40
 local moltenSeed, lavaWaves, fixate, livingMeteor = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317))
+local meteorCounter = 0
 local fixateTable = {}
 local fixateList = mod:NewTargetList()
 local intermissionHandle = nil
@@ -94,6 +95,7 @@ function mod:OnEngage(diff)
 	sons = 8
 	phase = 1
 	wipe(fixateList)
+	meteorCounter = 0
 	intermissionHandle = nil
 end
 
@@ -107,9 +109,10 @@ do
 	end
 
 	function mod:LivingMeteor(_, spellId, _, _, spellName)
+		meteorCounter = meteorCounter + 1
 		if not meteorWarned then
 			meteorWarned = true
-			self:Message(99317, spellName, "Attention", spellId)
+			self:Message(99317, ("%s (%d)"):format(spellName, meteorCounter), "Attention", spellId)
 			self:Bar(99317, spellName, 45, spellId)
 			self:ScheduleTimer(setMeteorWarned, 5)
 		end
@@ -219,7 +222,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	sons = 8
 	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
 	self:SendMessage("BigWigs_StopBar", self, lavaWaves)
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100115)) -- Wrath of Ragnaros
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100115))) -- Wrath of Ragnaros
 	self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 end
 
