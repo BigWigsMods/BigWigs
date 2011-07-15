@@ -10,13 +10,15 @@ mod:RegisterEnableMob(52409)
 -- Locals
 --
 
-local seedWarned = false
+local seedWarned, intermissionwarned, infernoWarned, wrathWarned, meteorWarned = false, false, false, false, false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
-local smashCD = 30
-local lastTransitionTime = nil
-local moltenSeed, sulfurasSmash = (GetSpellInfo(98498)), (GetSpellInfo(98710))
+local lavaWavesCD, engulfingCD = 30, 40
+local moltenSeed, lavaWaves, fixate, livingMeteor = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317))
+local fixateTable = {}
+local fixateList = mod:NewTargetList()
+local intermissionHandle = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -25,6 +27,7 @@ local moltenSeed, sulfurasSmash = (GetSpellInfo(98498)), (GetSpellInfo(98710))
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.phase4_trigger = "Too soon..."
 	L.seed_explosion = "Seed explosion!"
 	L.intermission_bar = "Intermission!"
 	L.intermission_message = "Intermission... Got cookies?"
@@ -43,27 +46,38 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		98237,
+		98237, 100115,
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},
-		98498, 100178,
-		99317,
+		{98498, "FLASHSHAKE"}, 100178,
+		99317, {99849, "FLASHSHAKE"},
+		100190,
 		98710, "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
 		[98953] = L["intermission_bar"],
 		[98498] = "ej:2640",
 		[99317] = "ej:2655",
+		[100190] = "heroic",
 		[98710] = "general"
 	}
 end
 
 function mod:OnBossEnable()
+	-- Heroic
+	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190)
+
+	-- Normal
+	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100254)
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
-	self:Log("SPELL_CAST_START", "EngulfingFlames", 100175, 100171, 100178, 100181)
+	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
+	self:Log("SPELL_CAST_SUCCESS", "WrathOfRagnaros", 98263, 100113, 100114, 100115)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
-	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877)
+	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877, 100885, 100882, 100879, 100884, 100881, 100878)
+	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 100250)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Fixate", 100250)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Deaths", 52409, 53140) -- Ragnaros, Son of Flame
@@ -71,64 +85,157 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(98237, L["hand_bar"], 25, 98237)
-	self:Bar(98710, sulfurasSmash, 30, 98710)
+	self:Bar(98710, lavaWaves, 30, 98710)
 	self:OpenProximity(6)
 	self:Berserk(1080)
-	smashCD = 30
-	seedWarned = false
+	lavaWavesCD, engulfingCD = 30, 40
+	seedWarned, intermissionwarned, infernoWarned, wrathWarned, meteorWarned = false, false, false, false, false
 	sons = 8
 	phase = 1
-	lastTransitionTime = nil
+	wipe(fixateList)
+	intermissionHandle = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-local function intermissionEnd()
-	if lastTransitionTime and GetTime() < (lastTransitionTime + 30) then return end
-	lastTransitionTime = GetTime()
-	mod:CancelAllTimers()
-	phase = phase + 1
-	mod:SendMessage("BigWigs_StopBar", mod, L["intermission"])
-	if phase == 2 then
-		smashCD = 40 -- need to confirm
-		mod:Bar(98498, moltenSeed, 24, 98498)
-		mod:OpenProximity(6)
-	elseif phase == 3 then
-		mod:OpenProximity(5)
-		-- this is just guesswork
-		mod:Bar(99317, (GetSpellInfo(99317)), 15, 99317)
+do
+	local function setMeteorWarned()
+		meteorWarned = false
 	end
-	mod:Bar(98710, sulfurasSmash, 55, 98710) -- not sure if timer actually starts here
-	mod:Message(98953, L["ragnaros_back_message"], "Positive", "achievement_boss_ragnaros")
+
+	function mod:LivingMeteor(_, spellId, _, _, spellName)
+		meteorWarned = true
+		self:Message(99317, spellName, "Attention", spellId)
+		self:Bar(99317, spellName, 45, spellId)
+		self:ScheduleTimer(setMeteorWarned, 5)
+	end
 end
 
-function mod:HandofRagnaros(_, spellId, _, _, spellName)
+do
+	local function fixateWarn()
+		if fixateList[1] then
+			mod:TargetMessage(99849, fixate, fixateList, "Important", 99849, "Info")
+		end
+	end
+
+	-- Need to verify how fast a fixate gets applied after a knockback
+	function mod:Fixate()
+		for i=1, GetNumRaidMembers() do
+			local unit = GetRaidRosterInfo(i)
+			if UnitDebuff(unit, fixate) then
+				if not fixateTable[i] then
+					if UnitIsUnit(unit, "player") then
+						self:FlashShake(99849)
+					end
+					fixateList[#fixateList+1] = unit
+					fixateTable[i] = true
+					self:ScheduleTimer(fixateWarn, 0.1) -- increase this if you want it less spammy
+				end
+			else
+				fixateTable[i] = false
+			end
+		end
+	end
+end
+
+local function moltenInferno()
+	-- don't overwrite an accurate timer with a scheduled timer
+	if not seedWarned then
+		mod:Bar(98498, L["seed_explosion"], 10, 100252)
+	end
+end
+
+do
+	local function setWrathWarned()
+		wrathWarned = false
+	end
+
+	function mod:WrathOfRagnaros(_, spellId, _, _, spellName)
+		if not wrathWarned then
+			mod:Bar(100115, spellName, 30, spellId)
+			mod:ScheduleTimer(setWrathWarned, 5)
+			wrathWarned = true
+		end
+	end
+end
+
+local function intermissionSpamControl()
+	intermissionwarned = false
+end
+
+local function intermissionEnd()
+	if intermissionHandle then
+		mod:CancelTimer(intermissionHandle, true)
+	end
+	mod:SendMessage("BigWigs_StopBar", mod, L["intermission_bar"])
+	if phase == 1 and not intermissionwarned then
+		phase = phase + 1
+		lavaWavesCD = 40
+		intermissionwarned = true
+		mod:ScheduleTimer(intermissionSpamControl, 10)
+		mod:OpenProximity(6)
+		if mod:Difficulty() > 2 then
+			mod:ScheduleTimer(moltenInferno, 18)
+			mod:Bar(98498, "~"..moltenSeed, 18, 98498)
+			mod:Bar(98710, lavaWaves, 7.5, 98710)
+		else
+			mod:Bar(98498, moltenSeed, 24, 98498)
+			mod:Bar(98710, lavaWaves, 55, 98710)
+		end
+	elseif phase == 2 and not intermissionwarned then
+		phase = phase + 1
+		intermissionwarned = true
+		engulfingCD = 30
+		mod:Bar(99317, "~"..livingMeteor, 52, 99317)
+		mod:Bar(98710, lavaWaves, 55, 98710)
+
+		for i=1, GetNumRaidMembers() do
+			fixateTable[i] = false
+		end
+	end
+	mod:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
+end
+
+function mod:HandofRagnaros(_, spellId)
 	self:Bar(98237, L["hand_bar"], 25, spellId)
 end
 
-function mod:SplittingBlow(_, spellId)
+function mod:SplittingBlow(_, spellId, _, _, spellName)
+	if phase == 2 then
+		self:CancelAllTimers()
+		self:SendMessage("BigWigs_StopBar", self, L["seed_explosion"])
+		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
+	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
+	self:Bar(98953, spellName, 7, spellId)
 	self:Bar(98953, L["intermission_bar"], 45, spellId)
-	self:ScheduleTimer(intermissionEnd, 45)
+	intermissionHandle = self:ScheduleTimer(intermissionEnd, 45)
 	self:CloseProximity()
 	sons = 8
-	self:SendMessage("BigWigs_StopBar", self, sulfurasSmash)
+	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
+	self:SendMessage("BigWigs_StopBar", self, lavaWaves)
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100115)) -- Wrath of Ragnaros
 	self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 end
 
-function mod:SulfurasSmash(_, spellId, _, _, spellName)
-	self:Message(98710, spellName, "Attention", spellId, "Info")
-	self:Bar(98710, spellName, smashCD, spellId)
+function mod:SulfurasSmash(_, spellId)
+	self:Message(98710, lavaWaves, "Attention", spellId, "Info")
+	self:Bar(98710, lavaWaves, lavaWavesCD, spellId)
+end
+
+function mod:WorldInFlames(_, spellId, _, _, spellName)
+	self:Message(100190, spellName, "Important", spellId, "Alert")
+	self:Bar(100190, spellName, engulfingCD, spellId)
 end
 
 function mod:EngulfingFlames(_, spellId)
-	if spellId == 100175 then -- correct
+	if spellId == 100175 then
 		self:Message(100178, L["engulfing_close"], "Important", spellId, "Alert")
-	elseif spellId == 100171 or spellId == 100178 then -- Correct on 25man normal at least
+	elseif spellId == 100171 or spellId == 100178 then
 		self:Message(100178, L["engulfing_middle"], "Important", spellId, "Alert")
-	elseif spellId == 100181 then -- correct
+	elseif spellId == 100181 then
 		self:Message(100178, L["engulfing_far"], "Important", spellId, "Alert")
 	end
 end
@@ -143,7 +250,7 @@ do
 	function mod:BlazingHeat(player, spellID, _, _, spellName)
 		blazingHeatTargets[#blazingHeatTargets + 1] = player
 		if UnitIsUnit(player, "player") then
-			self:Say(100460, CL["say"]:format(spellName)) -- not 100% sure if we need a say
+			self:Say(100460, CL["say"]:format(spellName))
 			self:FlashShake(100460)
 		end
 		if iconCounter == 1 then
@@ -165,12 +272,28 @@ do
 		seedWarned = false
 	end
 	function mod:MoltenSeed(_, spellId, _, _, spellName)
+		-- This might not always trigger, since if you play correctly you can compeltely avoid damage taken from this
 		if not seedWarned then
 			self:ScheduleTimer(moltenSeedWarned, 5)
 			self:Message(98498, spellName, "Urgent", spellId, "Alarm")
-			self:Bar(98498, spellName, 60, spellId)
 			self:Bar(98498, L["seed_explosion"], 10, spellId)
 			seedWarned = true
+		end
+	end
+end
+
+do
+	local function moltenInfernoWarned()
+		infernoWarned = false
+	end
+	function mod:MoltenInferno(_, spellId)
+		-- This is more reliable, because you always take damage from this
+		if not infernoWarned then
+			self:ScheduleTimer(moltenInfernoWarned, 5)
+			self:ScheduleTimer(moltenInferno, 50)
+			self:Message(98498, L["seed_explosion"], "Urgent", spellId, "Alarm")
+			self:Bar(98498, moltenSeed, 50, 98498)
+			infernoWarned = true
 		end
 	end
 end
@@ -178,11 +301,10 @@ end
 function mod:Deaths(mobId)
 	if mobId == 53140 then
 		sons = sons - 1
-		if sons < 0 then return end
-		if sons == 0 then
-			intermissionEnd()
-		elseif sons < 4 then
+		if sons < 3 and sons > 0 then
 			self:Message(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
+		elseif sons == 0 then
+			intermissionEnd()
 		end
 	elseif mobId == 52409 then
 		self:Win()
