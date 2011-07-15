@@ -58,14 +58,13 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579)
+	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 100175, 100171, 100178, 100181)
-	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383)
-	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460)
-	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890)
+	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
+	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
+	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
 	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877)
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus") -- Not yet implemented for the boss
-	--self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Deaths", 52409, 53140) -- Ragnaros, Son of Flame
 end
