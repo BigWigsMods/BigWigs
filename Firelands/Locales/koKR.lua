@@ -41,7 +41,7 @@ end
 L = BigWigs:NewBossLocale("Shannox", "koKR")
 if L then
 	L.safe = "%s 안전함"
-	L.immolation_trap = "얼굴 강타 : %s!"
+	L.immolation_trap = "제물의 덫 : %s!"
 	L.crystaltrap = "수정 감옥 덫"
 end
 

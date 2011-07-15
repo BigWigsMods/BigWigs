@@ -81,7 +81,7 @@ end
 function mod:ImmolationTrap(player, spellId, _, _, spellName, _, _, _, _, dGUID)
 	local unitId = tonumber(dGUID:sub(7, 10), 16)
 	if unitId == 53695 or unitId == 53694 then
-		self:Message(100129, L["immolation_trap"]:format(player), "Attention", spellId)
+		self:Message(101209, L["immolation_trap"]:format(player), "Attention", spellId)
 	end
 end
 
