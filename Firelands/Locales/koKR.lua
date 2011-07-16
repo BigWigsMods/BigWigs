@@ -64,6 +64,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
+	L.phase4_trigger = "너무"	--Check(너무 일러...)
 	L.seed_explosion = "씨앗 폭발!"
 	L.intermission_bar = "휴식"
 	L.intermission_message = "휴식... 과자 있으세요?..."
