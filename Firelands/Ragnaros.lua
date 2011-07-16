@@ -16,7 +16,7 @@ local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD = 30, 40
 local moltenSeed, lavaWaves, fixate, livingMeteor = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317))
-local meteorCounter = 0
+local meteorCounter, meteorIncrementer = 0, 1
 local fixateTable = {}
 local fixateList = mod:NewTargetList()
 local intermissionHandle = nil
@@ -37,7 +37,7 @@ if L then
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
 	L.hand_bar = "Next knockback"
-	L.ragnaros_back_message = "Raggy is back, party on!"
+	L.ragnaros_back_message = "Raggy is back, parry on!" -- yeah thats right PARRY ON!
 end
 L = mod:GetLocale()
 
@@ -95,7 +95,7 @@ function mod:OnEngage(diff)
 	sons = 8
 	phase = 1
 	wipe(fixateList)
-	meteorCounter = 0
+	meteorCounter, meteorIncrementer = 0, 1
 	intermissionHandle = nil
 end
 
@@ -110,13 +110,15 @@ do
 	end
 
 	function mod:LivingMeteor(_, spellId, _, _, spellName)
-		meteorCounter = meteorCounter + 1
 		if not meteorWarned then
 			meteorWarned = true
+			meteorCounter = meteorCounter + meteorIncrementer
+			meteorIncrementer = meteorIncrementer + 1
 			self:Message(99317, ("%s (%d)"):format(spellName, meteorCounter), "Attention", spellId)
 			self:Bar(99317, spellName, 45, spellId)
 			self:ScheduleTimer(setMeteorWarned, 5)
 		end
+		print(meteorCounter, meteorIncrementer, meteorIncrementer+meteorCounter)
 	end
 end
 
@@ -180,7 +182,7 @@ local function intermissionEnd()
 	if not intermissionwarned then
 		if phase == 1 then
 			lavaWavesCD = 40
-			mod:ScheduleTimer(intermissionSpamControl, 10)
+			mod:ScheduleTimer(intermissionSpamControl, 45)
 			mod:OpenProximity(6)
 			if mod:Difficulty() > 2 then
 				mod:ScheduleTimer(moltenInferno, 18)
