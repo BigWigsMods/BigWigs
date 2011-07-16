@@ -118,7 +118,6 @@ do
 			self:Bar(99317, spellName, 45, spellId)
 			self:ScheduleTimer(setMeteorWarned, 5)
 		end
-		print(meteorCounter, meteorIncrementer, meteorIncrementer+meteorCounter)
 	end
 end
 
