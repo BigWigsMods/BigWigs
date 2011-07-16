@@ -64,6 +64,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
 if L then
+	L.phase4_trigger = "Trop tôt..." -- à vérifier
 	L.seed_explosion = "Explosion des graînes !"
 	L.intermission_bar = "Intervalle"
 	L.intermission_message = "Intervalle !"
@@ -72,5 +73,5 @@ if L then
 	L.engulfing_middle = "Section centrale engloutie !"
 	L.engulfing_far = "Section éloignée engloutie !"
 	L.hand_bar = "Prochain \"knockback\""
-	L.ragnaros_back_message = "Raggy est de retour, c'est la fête !"
+	L.ragnaros_back_message = "Ragnaros est de retour !"
 end
