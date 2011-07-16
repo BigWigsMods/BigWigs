@@ -103,6 +103,7 @@ end
 -- Event Handlers
 --
 
+
 do
 	local function setMeteorWarned()
 		meteorWarned = false
@@ -176,32 +177,31 @@ local function intermissionEnd()
 		mod:CancelTimer(intermissionHandle, true)
 	end
 	mod:SendMessage("BigWigs_StopBar", mod, L["intermission_bar"])
-	if phase == 1 and not intermissionwarned then
-		phase = phase + 1
-		lavaWavesCD = 40
-		intermissionwarned = true
-		mod:ScheduleTimer(intermissionSpamControl, 10)
-		mod:OpenProximity(6)
-		if mod:Difficulty() > 2 then
-			mod:ScheduleTimer(moltenInferno, 18)
-			mod:Bar(98498, "~"..moltenSeed, 18, 98498)
-			mod:Bar(98710, lavaWaves, 7.5, 98710)
-		else
-			mod:Bar(98498, moltenSeed, 24, 98498)
+	if not intermissionwarned then
+		if phase == 1 then
+			lavaWavesCD = 40
+			mod:ScheduleTimer(intermissionSpamControl, 10)
+			mod:OpenProximity(6)
+			if mod:Difficulty() > 2 then
+				mod:ScheduleTimer(moltenInferno, 18)
+				mod:Bar(98498, "~"..moltenSeed, 18, 98498)
+				mod:Bar(98710, lavaWaves, 7.5, 98710)
+			else
+				mod:Bar(98498, moltenSeed, 24, 98498)
+				mod:Bar(98710, lavaWaves, 55, 98710)
+			end
+		elseif phase == 2 then
+			engulfingCD = 30
+			mod:Bar(99317, "~"..livingMeteor, 52, 99317)
 			mod:Bar(98710, lavaWaves, 55, 98710)
+			for i=1, GetNumRaidMembers() do
+				fixateTable[i] = false
+			end
 		end
-	elseif phase == 2 and not intermissionwarned then
 		phase = phase + 1
 		intermissionwarned = true
-		engulfingCD = 30
-		mod:Bar(99317, "~"..livingMeteor, 52, 99317)
-		mod:Bar(98710, lavaWaves, 55, 98710)
-
-		for i=1, GetNumRaidMembers() do
-			fixateTable[i] = false
-		end
+		mod:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
 	end
-	mod:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
 end
 
 function mod:HandofRagnaros(_, spellId)
@@ -216,8 +216,13 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
 	self:Bar(98953, spellName, 7, spellId)
-	self:Bar(98953, L["intermission_bar"], 45, spellId)
-	intermissionHandle = self:ScheduleTimer(intermissionEnd, 45)
+	if self:Difficulty() > 2 then
+		self:Bar(98953, L["intermission_bar"], 60, spellId)
+		intermissionHandle = self:ScheduleTimer(intermissionEnd, 60)
+	else
+		self:Bar(98953, L["intermission_bar"], 45, spellId)
+		intermissionHandle = self:ScheduleTimer(intermissionEnd, 45)
+	end
 	self:CloseProximity()
 	sons = 8
 	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
