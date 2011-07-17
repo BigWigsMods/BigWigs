@@ -10,7 +10,7 @@ mod:RegisterEnableMob(52409)
 -- Locals
 --
 
-local seedWarned, intermissionwarned, infernoWarned, wrathWarned, meteorWarned = false, false, false, false, false
+local seedWarned, intermissionwarned, infernoWarned, meteorWarned = false, false, false, false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
@@ -67,7 +67,6 @@ function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190)
 
-
 	-- Normal
 	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100254)
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
@@ -90,11 +89,11 @@ function mod:OnEngage(diff)
 	self:OpenProximity(6)
 	self:Berserk(1080)
 	lavaWavesCD, engulfingCD = 30, 40
-	seedWarned, intermissionwarned, infernoWarned, wrathWarned, meteorWarned = false, false, false, false, false
+	seedWarned, intermissionwarned, infernoWarned, meteorWarned = false, false, false, false
 	sons = 8
 	phase = 1
 	wipe(fixateList)
-	meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
+	meteorCounter = 1
 	intermissionHandle = nil
 end
 
