@@ -15,8 +15,8 @@ local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD = 30, 40
-local moltenSeed, lavaWaves, fixate, livingMeteor = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317))
-local meteorCounter, meteorIncrementer = 0, 1
+local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
+local meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
 local fixateTable = {}
 local fixateList = mod:NewTargetList()
 local intermissionHandle = nil
@@ -74,7 +74,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
-	self:Log("SPELL_CAST_SUCCESS", "WrathOfRagnaros", 98263, 100113, 100114, 100115)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
 	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877, 100885, 100882, 100879, 100884, 100881, 100878)
 	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
@@ -95,14 +94,13 @@ function mod:OnEngage(diff)
 	sons = 8
 	phase = 1
 	wipe(fixateList)
-	meteorCounter, meteorIncrementer = 0, 1
+	meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
 	intermissionHandle = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
 
 do
 	local function setMeteorWarned()
@@ -112,9 +110,8 @@ do
 	function mod:LivingMeteor(_, spellId, _, _, spellName)
 		if not meteorWarned then
 			meteorWarned = true
-			meteorCounter = meteorCounter + meteorIncrementer
-			meteorIncrementer = meteorIncrementer + 1
-			self:Message(99317, ("%s (%d)"):format(spellName, meteorCounter), "Attention", spellId)
+			self:Message(99317, ("%s (%d)"):format(spellName, meteorNumber[meteorCounter]), "Attention", spellId)
+			meteorCounter = meteorCounter + 1
 			self:Bar(99317, spellName, 45, spellId)
 			self:ScheduleTimer(setMeteorWarned, 5)
 		end
@@ -152,20 +149,6 @@ local function moltenInferno()
 	-- don't overwrite an accurate timer with a scheduled timer
 	if not seedWarned then
 		mod:Bar(98498, L["seed_explosion"], 10, 100252)
-	end
-end
-
-do
-	local function setWrathWarned()
-		wrathWarned = false
-	end
-
-	function mod:WrathOfRagnaros(_, spellId, _, _, spellName)
-		if not wrathWarned then
-			mod:Bar(100115, spellName, 30, spellId)
-			mod:ScheduleTimer(setWrathWarned, 5)
-			wrathWarned = true
-		end
 	end
 end
 
@@ -228,11 +211,14 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	sons = 8
 	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
 	self:SendMessage("BigWigs_StopBar", self, lavaWaves)
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100115))) -- Wrath of Ragnaros
+	self:SendMessage("BigWigs_StopBar", self, wrathOfRagnaros)
 	self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 end
 
 function mod:SulfurasSmash(_, spellId)
+	if phase == 1 then
+		self:Bar(100115, wrathOfRagnaros, 12, 100115)
+	end
 	self:Message(98710, lavaWaves, "Attention", spellId, "Info")
 	self:Bar(98710, lavaWaves, lavaWavesCD, spellId)
 end
