@@ -7,11 +7,11 @@ if L then
 	L.air_phase = "空中阶段"
 	L.air_phase_desc = "当艾卓曼德斯起飞时发出警报。"
 
-	L.air_phase_trigger = "Yes, run! With every step your heart quickens. The beating, loud and thunderous... Almost deafening. You cannot escape!"
+	L.air_phase_trigger = "对，跑吧！每跑一步你的心跳都会加快。这心跳声轰亮如雷……震耳欲聋。你逃不掉的！"
 
 	L.obnoxious_soon = "即将 喧闹恶鬼！"
 
-	L.searing_soon = "10秒後，灼热烈焰！"
+	L.searing_soon = "10秒后，灼热烈焰！"
 	L.sonicbreath_cooldown = "<音波吐息>"
 end
 
@@ -109,24 +109,24 @@ if L then
 
 	L.discharge_bar = "<闪电倾泻 冷却>"
 
-	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
+	L.phase_two_trigger = "诅咒你们，凡人！你们丝毫不尊重他人财产的行为必须受到严厉处罚！"
 
-	L.phase_three_trigger = "I have tried to be an accommodating host"
+	L.phase_three_trigger = "我一直在尝试扮演好客的主人，可你们就是不肯受死！该卸下伪装了……杀光你们！"
 
 	L.crackle_trigger = "The air crackles with electricity!"
-	L.crackle_message = "Electrocute soon!"
+	L.crackle_message = "即将 通电！"
 
 	L.shadowblaze_message = ">你< 暗影爆燃！"
 
 	L.onyxia_power_message = "即将 电荷过载！"
 
-	L.chromatic_prototype = "Chromatic Prototype" -- 3 adds name
+	L.chromatic_prototype = "原型多彩龙人" -- 3 adds name
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "zhCN")
 if L then
-	L.nef = "维克多·奈法里奥斯"
-	L.nef_desc = "当维克多·奈法里奥斯施放技能时发出警报。"
+	L.nef = "维克多·奈法里奥斯勋爵"
+	L.nef_desc = "当维克多·奈法里奥斯勋爵施放技能时发出警报。"
 
 	L.pool = "奥术反冲"
 
