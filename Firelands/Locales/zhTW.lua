@@ -30,7 +30,7 @@ if L then
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
 
-	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
+	L.worm_emote = "熾炎熔岩蟲從地上鑽了出來!"
 	L.phase2_soon_emote = "艾里絲拉卓開始快速地在空中盤旋!"
 end
 
@@ -45,7 +45,7 @@ L = BigWigs:NewBossLocale("Baleroc", "zhTW")
 if L then
 	L.torment_message = "折磨%2$d層：>%1$s<！"
 	L.blade = "<虐殺之刃>"
-	L.shard_message = "即將 折磨碎片(%d)！"
+	L.shard_message = "折磨碎片：>%d<！"
 	L.focus_message = "焦點目標已有 >%d< 層折磨！"
 	L.countdown_bar = "<下一魔法連結>"
 	L.link_message = "魔法連結！"
