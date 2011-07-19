@@ -8,7 +8,7 @@ if L then
 	L.stormling_bar = "<下一风暴火花>"
 	L.stormling_yell = "Storms! I summon you to my side!"
 
-	L.acid_rain = "酸雨（%d）！"
+	L.acid_rain = "酸雨：>%d<！"
 
 	L.phase3_yell = "Enough! I will no longer be contained!"
 
@@ -26,8 +26,8 @@ if L then
 	L.storm_shield = "风暴护盾"
 	L.storm_shield_desc = "当风暴护盾吸收伤害时发出警报。"
 
-	L.full_power = "满能量"
-	L.full_power_desc = "当首领获得满能量并开始施放特殊技能时发出警报。"
+	L.full_power = "全部能量"
+	L.full_power_desc = "当首领获得全部能量并开始施放特殊技能时发出警报。"
 	L.gather_strength_emote = "%s begins to gather strength from the remaining Wind Lords!"
 
 	L.wind_chill = ">你< %sx风寒！"

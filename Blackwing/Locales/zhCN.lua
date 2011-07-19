@@ -17,45 +17,45 @@ end
 
 L = BigWigs:NewBossLocale("Chimaeron", "zhCN")
 if L then
-	L.bileotron_engage = "The Bile-O-Tron springs to life and begins to emit a foul smelling substance."
+	L.bileotron_engage = "胆汁喷洒机"
 
-	L.next_system_failure = "<下一系统故障>"
-	L.break_message = "破坏%2$dx：>%1$s<！"
+	L.next_system_failure = "<下一系统当机>"
+	L.break_message = "突破%2$dx：>%1$s<！"
 
 	L.phase2_message = "即将 至死方休阶段！"
 
-	L.warmup = "热身"
-	L.warmup_desc = "热身计时器。"
+	L.warmup = "屠杀"
+	L.warmup_desc = "屠杀计时器。"
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "zhCN")
 if L then
 	-- heroic
 	L.blazing = "Skeleton Adds"
-	L.blazing_desc = "当召唤Blazing Bone Construct时发出警报。"
-	L.blazing_message = "即將 Blazing Bone Construct！"
-	L.blazing_bar = "<下一Blazing Bone Construct>"
+	L.blazing_desc = "当召唤npc#49416时发出警报。"
+	L.blazing_message = "即將 npc#49416！"
+	L.blazing_bar = "<下一npc#49416>"
 
 	L.armageddon = "末日降临"
 	L.armageddon_desc = "当头部阶段施放末日降临时发出警报。"
 
-	L.phase2 = "第二階段"
-	L.phase2_desc = "當第二階段時顯示距離檢查。"
-	L.phase2_message = "第二階段！"
+	L.phase2 = "第二阶段"
+	L.phase2_desc = "当第二阶段时显示距离检查。"
+	L.phase2_message = "第二阶段！"
 	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
 
 	-- normal
 	L.pillar_of_flame_cd = "<烈焰火柱>"
 
-	L.slump = "扑倒（骑乘）"
-	L.slump_desc = "当熔喉扑倒并暴露时发出警报。"
-	L.slump_bar = "<下一骑乘>"
+	L.slump = "弱点（骑乘）"
+	L.slump_desc = "当熔喉扑倒并暴露后脑时发出警报。需要骑乘。"
+	L.slump_bar = "<下一弱点>"
 	L.slump_message = "嘿，快骑上它！"
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
 	L.infection_message = ">你< 寄生感染！"
 
-	L.expose_trigger = "头部"
+	L.expose_trigger = "头"
 	L.expose_message = "头部暴露！"
 
 	L.spew_bar = "<下一熔岩喷涌>"
@@ -116,6 +116,7 @@ if L then
 	L.crackle_trigger = "The air crackles with electricity!"
 	L.crackle_message = "即将 通电！"
 
+	L.shadowblaze_trigger = "Flesh turns to ash!"
 	L.shadowblaze_message = ">你< 暗影爆燃！"
 
 	L.onyxia_power_message = "即将 电荷过载！"
@@ -146,7 +147,7 @@ if L then
 
 	L.bomb_message = ">你< 毒液炸弹追击！"
 	L.cloud_message = ">你< 化学云雾！"
-	L.protocol_message = "毒液炸弹！"
+	L.protocol_message = "自动毒弹！"
 
 	L.iconomnotron = "标记激活首领"
 	L.iconomnotron_desc = "为激活的首领打上主团队标记。（需要权限）"

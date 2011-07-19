@@ -116,6 +116,7 @@ if L then
 	L.crackle_trigger = "響起了電流霹啪作響的聲音!"
 	L.crackle_message = "即將 電擊！"
 
+	L.shadowblaze_trigger = "化為灰燼吧!"
 	L.shadowblaze_message = ">你< 暗影炎！"
 
 	L.onyxia_power_message = "即將 電荷超載！"
@@ -146,7 +147,7 @@ if L then
 
 	L.bomb_message = ">你< 毒泥炸彈追擊！"
 	L.cloud_message = ">你< 化學毒霧！"
-	L.protocol_message = "毒炸彈！"
+	L.protocol_message = "毒殺計畫！"
 
 	L.iconomnotron = "標記啟動首領"
 	L.iconomnotron_desc = "為啟動的首領打上主團隊標記。（需要權限）"

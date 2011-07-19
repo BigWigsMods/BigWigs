@@ -8,7 +8,7 @@ if L then
 	L.stormling_bar = "<下一小風暴>"
 	L.stormling_yell = "風暴啊!我召喚你們來我身邊!"
 
-	L.acid_rain = "酸雨（%d）！"
+	L.acid_rain = "酸雨：>%d<！"
 
 	L.phase3_yell = "夠了!我不要再被束縛住了!"
 
@@ -21,7 +21,7 @@ end
 
 L = BigWigs:NewBossLocale("Conclave of Wind", "zhTW")
 if L then
-	L.gather_strength = "%正在聚集力量！"
+	L.gather_strength = "%s正在聚集力量！"
 
 	L.storm_shield = "風暴之盾"
 	L.storm_shield_desc = "當風暴之盾吸收傷害時發出警報。"

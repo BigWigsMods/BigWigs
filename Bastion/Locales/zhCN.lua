@@ -7,16 +7,16 @@ if L then
 
 	L.worship_cooldown = "<膜拜>"
 
-	L.adherent_bar = "<腐蚀中的信徒：#%d>"
-	L.adherent_message = "即将 腐蚀中信徒：>%d<！"
-	L.ooze_bar = "<聚集古神之血：%d>"
-	L.ooze_message = "即将聚集古神之血：>%d<！"
+	L.adherent_bar = "<腐蚀信徒：#%d>"
+	L.adherent_message = "即将 腐蚀信徒：>%d<！"
+	L.ooze_bar = "<古神血雨：%d>"
+	L.ooze_message = "即将 古神血雨：>%d<！"
 
-	L.tentacles_bar = "<Darkened Creations出现>"
-	L.tentacles_message = "大量Darkened Creations！"
+	L.tentacles_bar = "<黑暗的造物出现>"
+	L.tentacles_message = "大量黑暗的造物！"
 
 	L.sickness_message = ">你< 快要呕吐了!"
-	L.blaze_message = ">你< 燃炎！"
+	L.blaze_message = ">你< 光芒！"
 	L.crash_say = ">我< 腐蚀碾压！"
 
 	L.fury_bar = "<下一古加尔之怒>"
@@ -37,7 +37,7 @@ if L then
 
 	L.phase_bar = "<%s落地>"
 	L.breath_message = "即将 深呼吸！"
-	L.dazzling_message = "即将 暮光世界！"
+	L.dazzling_message = "即将 暮光领域！"
 
 	L.blast_message = "暮光冲击波！"
 	L.engulfingmagic_say = ">我< 噬体魔法！"
@@ -54,7 +54,7 @@ end
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "zhCN")
 if L then
 	L.paralysis_bar = "<下一麻痹>"
-	L.strikes_message = "致死打击%2$dx：>%1$s<！"
+	L.strikes_message = "致伤打击%2$dx：>%1$s<！"
 
 	L.breath_message = "即将 灼热气息！"
 	L.breath_bar = "<灼热气息>"
@@ -67,7 +67,7 @@ if L then
 	L.whelps = "暮光幼龙"
 	L.whelps_desc = "当每波暮光幼龙到来时发出警报。"
 
-	L.slicer_message = "可能烈焰吐息目标！"
+	L.slicer_message = "可能暮光切割射线目标！"
 
 	L.egg_vulnerable = "集中火力攻击！"
 
