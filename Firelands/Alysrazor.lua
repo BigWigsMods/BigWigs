@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530, 53898, 54015) --Alysrazor, Voracious Hatchling, Majordomo Staghelm
 
-local fieryTornado, firestorm, cataclysm = (GetSpellInfo(99816)), (GetSpellInfo(101659)), (GetSpellInfo(100761))
+local firestorm, cataclysm = (GetSpellInfo(101659)), (GetSpellInfo(100761))
 local woundTargets = mod:NewTargetList()
 local cataclysmCount = 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
 
@@ -24,6 +24,8 @@ if L then
 	L.encounter_restart = "Full power! Here we go again ..."
 	L.no_stacks_message = "Dunno if you care, but you have no feathers"
 	L.moonkin_message = "Stop pretending and get some real feathers"
+
+	L.stage_message = "Stage %d"
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
@@ -84,11 +86,11 @@ function mod:OnEngage(diff)
 	self:Berserk(900) -- assumed
 	cataclysmCount = 0
 	if diff > 2 then
-		self:Bar(99816, fieryTornado, 250, 99816)
+		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
 		self:Bar(100761, cataclysm, 37, 100761)
 	else
-		self:Bar(99816, fieryTornado, 190, 99816)
+		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, (GetSpellInfo(99464)), 60, 99464) -- Molting
 	end
 end
@@ -129,9 +131,8 @@ end
 
 function mod:Tantrum(_, spellId, _, _, spellName, _, _, _, _, _, sGUID)
 	local target = UnitGUID("target")
-	if not target then return end
+	if not target or sGUID ~= target then return end
 	-- Just warn for the tank
-	if sGUID ~= target then return end
 	self:Message(99362, spellName, "Important", spellId)
 end
 
@@ -164,9 +165,10 @@ function mod:Cataclysm(_, spellId, _, _, spellName)
 end
 
 function mod:FieryTornado()
+	local fieryTornado = GetSpellInfo(99816)
 	self:SendMessage("BigWigs_StopBar", self, firestorm)
 	self:Bar(99816, fieryTornado, 35, 99816)
-	self:Message(99816, fieryTornado, "Important", 99816, "Alarm")
+	self:Message(99816, (L["stage_message"]:format(2))..": "..fieryTornado, "Important", 99816, "Alarm")
 end
 
 function mod:BlazingClaw(player, spellId, _, _, _, stack)
@@ -211,9 +213,9 @@ In case we need to rebase this on emotes instead of unit power, here's a few not
 				cataclysmCount = 0
 				self:Bar(100761, cataclysm, 18, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
-				self:Bar(99816, fieryTornado, 225, 99816) -- Just adding 60s like OnEngage
+				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else
-				self:Bar(99816, fieryTornado, 165, 99816)
+				self:Bar(99816, L["stage_message"]:format(2), 165, 99816)
 			end
 		end
 	end
