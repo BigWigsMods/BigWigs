@@ -58,23 +58,29 @@ do
 	local timer, fired = nil, 0
 	local function trapWarn()
 		fired = fired + 1
-		if UnitExists("boss1target") then
+		if UnitExists("boss1target") and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
 			--If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			if not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13 then
-				mod:TargetMessage(99836, L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
-				mod:CancelTimer(timer, true)
-				if UnitIsUnit("boss1target", "player") then
-					mod:FlashShake(99836)
-					mod:Say(99836, CL["say"]:format(L["crystaltrap"]))
-				end
-				return
+			mod:TargetMessage(99836, L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
+			mod:CancelTimer(timer, true)
+			timer = nil
+			if UnitIsUnit("boss1target", "player") then
+				mod:FlashShake(99836)
+				mod:Say(99836, CL["say"]:format(L["crystaltrap"]))
 			end
+			return
 		end
-		if fired > 18 then mod:CancelTimer(timer, true) end --Safety check if the unit doesn't exist
+		-- 19 == 0.95sec
+		-- Safety check if the unit doesn't exist
+		if fired > 18 then
+			mod:CancelTimer(timer, true)
+			timer = nil
+		end
 	end
 	function mod:CrystalTrap()
 		fired = 0
-		timer = self:ScheduleRepeatingTimer(trapWarn, 0.05)
+		if not timer then
+			timer = self:ScheduleRepeatingTimer(trapWarn, 0.05)
+		end
 	end
 end
 
