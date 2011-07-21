@@ -37,6 +37,7 @@ if L then
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
 	L.hand_bar = "Next knockback"
+	L.wound_bar = "Wound on %s"
 	L.ragnaros_back_message = "Raggy is back, parry on!" -- yeah thats right PARRY ON!
 end
 L = mod:GetLocale()
@@ -52,7 +53,7 @@ function mod:GetOptions(CL)
 		{98498, "FLASHSHAKE"}, 100178,
 		99317, {99849, "FLASHSHAKE"},
 		100190,
-		98710, "proximity", "berserk", "bosskill"
+		98710, 99399, "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
 		[98953] = L["intermission_bar"],
@@ -78,6 +79,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 100250)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Fixate", 100250)
+
+	self:Log("SPELL_AURA_APPLIED", "Wound", 101238, 101239, 101240, 99399)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Wound", 101238, 101239, 101240, 99399)
+
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Deaths", 52409, 53140) -- Ragnaros, Son of Flame
@@ -100,6 +105,10 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Wound(player, spellId, _, _, _, buffStack, _, _, _, dGUID)
+	self:Bar(99399, L["wound_bar"]:format(player), 20, spellId)
+end
 
 do
 	local function setMeteorWarned()
