@@ -107,7 +107,7 @@ end
 --
 
 function mod:Wound(player, spellId, _, _, _, buffStack, _, _, _, dGUID)
-	self:Bar(99399, L["wound_bar"]:format(player), 20, spellId)
+	self:Bar(99399, L["wound_bar"]:format(player), 21, spellId)
 end
 
 do
