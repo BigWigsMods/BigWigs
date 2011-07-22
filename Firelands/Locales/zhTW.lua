@@ -30,6 +30,8 @@ if L then
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
 
+	L.stage_message = "階段：>%d<！"
+
 	L.worm_emote = "熾炎熔岩蟲從地上鑽了出來!"
 	L.phase2_soon_emote = "艾里絲拉卓開始快速地在空中盤旋!"
 end
@@ -68,6 +70,7 @@ if L then
 	L.engulfing_middle = "侵噬烈焰>中場<！"
 	L.engulfing_far = "侵噬烈焰>遠場<！"
 	L.hand_bar = "<下一拉格納羅斯之手>"
+	L.wound_bar = "燃燒傷口：>%s<！"
 	L.ragnaros_back_message = "拉格納羅斯返回，集合！"
 end
 

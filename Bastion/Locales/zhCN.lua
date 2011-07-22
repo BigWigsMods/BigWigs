@@ -45,7 +45,7 @@ if L then
 
 	L.devouringflames_cooldown = "<噬体烈焰>"
 
-	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
+	L.valiona_trigger = "瑟纳利昂，我去包抄门厅。堵住他们的退路！ "
 	L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "暮光位移%2$dx：>%1$s<！"
@@ -59,7 +59,7 @@ if L then
 	L.breath_message = "即将 灼热气息！"
 	L.breath_bar = "<灼热气息>"
 
-	L.engage_yell = "Cho'gall will have your heads"
+	L.engage_yell = "古加尔想要你们全部的脑袋！"
 end
 
 L = BigWigs:NewBossLocale("Sinestra", "zhCN")

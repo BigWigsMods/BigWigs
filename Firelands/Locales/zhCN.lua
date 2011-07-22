@@ -30,6 +30,8 @@ if L then
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
 
+	L.stage_message = "Stage：>%d<！"
+
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
 end
@@ -68,6 +70,7 @@ if L then
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
 	L.hand_bar = "Next knockback"
+	L.wound_bar = "Wound：>%s<！"
 	L.ragnaros_back_message = "Raggy is back, party on!"
 end
 
