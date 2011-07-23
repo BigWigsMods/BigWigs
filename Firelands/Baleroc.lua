@@ -43,7 +43,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Countdown", 99516)
 	self:Log("SPELL_CAST_START", "Shards", 99259)
 	self:Log("SPELL_CAST_START", "Blades", 99405, 99352, 99350)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 100230, 100231, 100232)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 99256, 100230, 100231, 100232)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 53494)
