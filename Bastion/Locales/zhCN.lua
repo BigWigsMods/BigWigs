@@ -46,7 +46,7 @@ if L then
 	L.devouringflames_cooldown = "<噬体烈焰>"
 
 	L.valiona_trigger = "瑟纳利昂，我去包抄门厅。堵住他们的退路！"
-	L.win_trigger = "At least... Theralion dies with me..."
+	L.win_trigger = "至少……瑟纳利昂和我一起倒下……"
 
 	L.twilight_shift = "暮光位移%2$dx：>%1$s<！"
 end
@@ -71,8 +71,8 @@ if L then
 
 	L.egg_vulnerable = "集中火力攻击！"
 
-	L.whelps_trigger = "Feed, children!  Take your fill from their meaty husks!"
-	L.omelet_trigger = "You mistake this for weakness?  Fool!"
+	L.whelps_trigger = "吃吧，孩子们！尽情享用他们肥美的躯壳吧！"
+	L.omelet_trigger = "你以为就这么简单？愚蠢！"
 
 	L.phase13 = "第一和第三阶段"
 	L.phase = "阶段"

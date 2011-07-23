@@ -42,7 +42,7 @@ if L then
 	L.phase2 = "第二阶段"
 	L.phase2_desc = "当第二阶段时显示距离检查。"
 	L.phase2_message = "第二阶段！"
-	L.phase2_yell = "Inconceivable! You may actually defeat my lava worm! Perhaps I can help... tip the scales."
+	L.phase2_yell = "难以置信"
 
 	-- normal
 	L.pillar_of_flame_cd = "<烈焰火柱>"
@@ -97,7 +97,7 @@ if L then
 	L.green_phase_trigger = "这个有点儿不稳定，但不经过失败怎么会进步？"
 	L.green_phase_emote_trigger = "绿瓶"
 	L.green_phase = "|cFF33FF00绿瓶|r阶段"
-	L.dark_phase_trigger = "Your mixtures are weak, Maloriak! They need a bit more... kick!"
+	L.dark_phase_trigger = "你的混合剂太弱了"
 	L.dark_phase_emote_trigger = "黑瓶" --verify
 	L.dark_phase = "|cFF660099黑瓶|r阶段"
 end
@@ -116,7 +116,7 @@ if L then
 	L.crackle_trigger = "空气中激荡的电流噼啪作响！"
 	L.crackle_message = "即将 通电！"
 
-	L.shadowblaze_trigger = "Flesh turns to ash!"
+	L.shadowblaze_trigger = "血肉化为灰烬！"
 	L.shadowblaze_message = ">你< 暗影爆燃！"
 
 	L.onyxia_power_message = "即将 电荷过载！"
