@@ -51,7 +51,7 @@ if L then
 	L.slump_desc = "当熔喉扑倒并暴露后脑时发出警报。需要骑乘。"
 	L.slump_bar = "<下一弱点>"
 	L.slump_message = "嘿，快骑上它！"
-	L.slump_trigger = "%s熔喉向前倒下，暴露出他的钳子！"
+	L.slump_trigger = "%s向前倒下，暴露出他的钳子！"
 
 	L.infection_message = ">你< 寄生感染！"
 
