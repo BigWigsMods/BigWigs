@@ -45,7 +45,7 @@ if L then
 
 	L.devouringflames_cooldown = "<噬体烈焰>"
 
-	L.valiona_trigger = "瑟纳利昂，我去包抄门厅。堵住他们的退路！ "
+	L.valiona_trigger = "瑟纳利昂，我去包抄门厅。堵住他们的退路！"
 	L.win_trigger = "At least... Theralion dies with me..."
 
 	L.twilight_shift = "暮光位移%2$dx：>%1$s<！"
@@ -91,15 +91,15 @@ if L then
 	L.shield_down_message = "烈火之盾 消失！"
 	L.shield_bar = "<下一烈火之盾>"
 
-	L.switch_trigger = "We will handle them!"
+	L.switch_trigger = "我们会解决他们！"
 
 	L.thundershock_quake_soon = "约10秒后，%s！"
 
-	L.quake_trigger = "The ground beneath you rumbles ominously...."
-	L.thundershock_trigger = "The surrounding air crackles with energy...."
+	L.quake_trigger = "你脚下的地面发出不祥的“隆隆”声……"
+	L.thundershock_trigger = "周围的空气因为充斥着强大的能量而发出“噼啪”声……"
 
 	L.thundershock_quake_spam = ">%s< %d！"
 
-	L.last_phase_trigger = "An impressive display..."
+	L.last_phase_trigger = "令人印象深刻……"
 end
 
