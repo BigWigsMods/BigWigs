@@ -8,7 +8,7 @@ mod:RegisterEnableMob(52530, 53898, 54015) --Alysrazor, Voracious Hatchling, Maj
 
 local firestorm, cataclysm = (GetSpellInfo(101659)), (GetSpellInfo(100761))
 local woundTargets = mod:NewTargetList()
-local cataclysmCount = 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
+local cataclysmCount, molted = 0, 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,9 +21,10 @@ if L then
 	L.claw_message = "%2$dx Claw on %1$s"
 	L.fullpower_soon_message = "Full power soon!"
 	L.halfpower_soon_message = "Phase 4 soon!"
-	L.encounter_restart = "Full power! Here we go again ..."
+	L.encounter_restart = "Here we go again..."
 	L.no_stacks_message = "Dunno if you care, but you have no feathers"
 	L.moonkin_message = "Stop pretending and get some real feathers"
+	L.molt_bar = "Next Molt"
 
 	L.stage_message = "Stage %d"
 
@@ -33,6 +34,9 @@ if L then
 	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
 	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
 	L.restart_emote = "99925" -- Full Power spell ID used in the emote
+
+	L.flight = "Flight Assist"
+	L.flight_desc = "Show a bar with the duration of 'Wings of Flame' on you, ideally used with the Super Emphasize feature."
 end
 L = mod:GetLocale()
 
@@ -42,7 +46,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		99362, 100723, 97128,
+		99362, 100723, 97128, "flight",
 		99816, 99464,
 		99844, 99925,
 		{100744, "FLASHSHAKE"}, 100761,
@@ -60,6 +64,8 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "Molting", 99464, 99465, 100698)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazingClaw", 99844, 101729, 101730, 101731)
+	self:Log("SPELL_AURA_APPLIED", "StartFlying", 98619)
+	self:Log("SPELL_AURA_REMOVED", "StopFlying", 98619)
 
 	-- Phase 1
 	self:Log("SPELL_AURA_APPLIED", "Wound", 100723, 100722, 100721, 100720, 100719, 100718, 100024, 99308)
@@ -84,7 +90,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(900) -- assumed
-	cataclysmCount = 0
+	cataclysmCount, molted = 0, 0
 	if diff > 2 then
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
@@ -98,6 +104,29 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local flying = GetSpellInfo(98619)
+	local lastCheck = 0
+	function mod:UNIT_AURA(_, unit)
+		if unit ~= "player" then return end
+		local _, _, _, _, _, _, expires = UnitBuff("player", flying)
+		if expires ~= lastCheck then
+			lastCheck = expires
+			self:Bar("flight", flying, expires-GetTime(), 98619)
+		end
+	end
+	function mod:StartFlying(player)
+		if UnitIsUnit(player, "player") then
+			self:RegisterEvent("UNIT_AURA")
+		end
+	end
+	function mod:StopFlying(player)
+		if UnitIsUnit(player, "player") then
+			self:UnregisterEvent("UNIT_AURA")
+		end
+	end
+end
 
 do
 	local feather = GetSpellInfo(97128)
@@ -121,6 +150,7 @@ do
 		scheduled = nil
 	end
 	function mod:Wound(player, spellId, _, _, spellName)
+		if not UnitIsPlayer(player) then return end --Avoid those shadowfiends
 		woundTargets[#woundTargets + 1] = player
 		if not scheduled then
 			scheduled = true
@@ -139,8 +169,11 @@ end
 -- don't need molting warning for heroic because molting happens at every firestorm
 function mod:Molting(_, spellId, _, _, spellName)
 	if self:Difficulty() < 3 then
+		molted = molted + 1
 		self:Message(99464, spellName, "Positive", spellId)
-		self:Bar(99464, spellName, 60, spellId)
+		if molted < 2 then
+			self:Bar(99464, L["molt_bar"], 60, spellId)
+		end
 	end
 end
 
@@ -166,7 +199,10 @@ end
 
 function mod:FieryTornado()
 	local fieryTornado = GetSpellInfo(99816)
+	local feather = GetSpellInfo(98619)
+	molted = 0
 	self:SendMessage("BigWigs_StopBar", self, firestorm)
+	self:SendMessage("BigWigs_StopBar", self, feather)
 	self:Bar(99816, fieryTornado, 35, 99816)
 	self:Message(99816, (L["stage_message"]:format(2))..": "..fieryTornado, "Important", 99816, "Alarm")
 end
@@ -207,7 +243,7 @@ In case we need to rebase this on emotes instead of unit power, here's a few not
 			self:Message(99925, L["fullpower_soon_message"], "Attention", 99925)
 			fullWarned = true
 		elseif power == 100 then
-			self:Message(99925, L["encounter_restart"], "Positive", 99925, "Alert")
+			self:Message(99925, (L["stage_message"]:format(1))..": "..(L["encounter_restart"]), "Positive", 99925, "Alert")
 			self:UnregisterEvent("UNIT_POWER")
 			if self:Difficulty() > 2 then
 				cataclysmCount = 0
