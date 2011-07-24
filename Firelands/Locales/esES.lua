@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
+﻿local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
 if not L then return end
 if L then
 	L.devastate_message = "¡Devastación #%d!"
@@ -72,6 +72,7 @@ if L then
 	L.engulfing_middle = "¡Sección central sumergida!"
 	L.engulfing_far = "¡Sección lejana sumergida"
 	L.hand_bar = "Próximo rebote"
+	L.wound_bar = "Herida en %s"
 	L.ragnaros_back_message = "¡Raggy ha vuelto, fiesta!"
 end
 
