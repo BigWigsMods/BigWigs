@@ -8,7 +8,7 @@ mod:RegisterEnableMob(52530, 53898, 54015) --Alysrazor, Voracious Hatchling, Maj
 
 local firestorm, cataclysm = (GetSpellInfo(101659)), (GetSpellInfo(100761))
 local woundTargets = mod:NewTargetList()
-local cataclysmCount, molted = 0, 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
+local cataclysmCount, moltCount = 0, 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -90,14 +90,14 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(900) -- assumed
-	cataclysmCount, molted = 0, 0
+	cataclysmCount, moltCount = 0, 0
 	if diff > 2 then
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
 		self:Bar(100761, cataclysm, 37, 100761)
 	else
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
-		self:Bar(99464, (GetSpellInfo(99464)), 60, 99464) -- Molting
+		self:Bar(99464, L["molt_bar"], 12.5, 99464)
 	end
 end
 
@@ -169,9 +169,9 @@ end
 -- don't need molting warning for heroic because molting happens at every firestorm
 function mod:Molting(_, spellId, _, _, spellName)
 	if self:Difficulty() < 3 then
-		molted = molted + 1
+		moltCount = moltCount + 1
 		self:Message(99464, spellName, "Positive", spellId)
-		if molted < 2 then
+		if moltCount < 3 then
 			self:Bar(99464, L["molt_bar"], 60, spellId)
 		end
 	end
@@ -200,7 +200,7 @@ end
 function mod:FieryTornado()
 	local fieryTornado = GetSpellInfo(99816)
 	local feather = GetSpellInfo(98619)
-	molted = 0
+	moltCount = 0
 	self:SendMessage("BigWigs_StopBar", self, firestorm)
 	self:SendMessage("BigWigs_StopBar", self, feather)
 	self:Bar(99816, fieryTornado, 35, 99816)
