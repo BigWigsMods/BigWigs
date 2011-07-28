@@ -29,9 +29,15 @@ if L then
 	L.encounter_restart = "Volle Kraft! Es geht wieder los..."
 	L.no_stacks_message = "Du hast keine Federn!"
 	L.moonkin_message = "Beschaff' dir richtige Federn!"
+	L.molt_bar = "Nächste Mauser"
+
+	L.stage_message = "Phase %d"
 
 	L.worm_emote = "Feurige Lavawürmer brechen aus dem Boden hervor!"
 	L.phase2_soon_emote = "Alysrazar beginnt, in einem schnellen Kreis zu fliegen!"
+
+	L.flight = "Flughilfe"
+	L.flight_desc = "Zeigt eine Timerleiste mit deiner verbleibenden Restdauer von 'Flammenschwingen', sollte am besten mit der 'Stark hervorgehoben'-Funktion verwendet werden."
 end
 
 L = BigWigs:NewBossLocale("Shannox", "deDE")
@@ -60,6 +66,7 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "deDE")
 if L then
+	--L.phase4_trigger = "Too soon..."
 	L.seed_explosion = "Samenexplosion!"
 	L.intermission_bar = "Phasenübergang"
 	L.intermission_message = "Phasenübergang!"
@@ -68,6 +75,7 @@ if L then
 	L.engulfing_middle = "Mitte entflammt!"
 	L.engulfing_far = "Außen entflammt!"
 	L.hand_bar = "Nächster Rückstoß"
+	L.wound_bar = "Wunde: %s"
 	L.ragnaros_back_message = "Raggy wieder da, auf geht's!"
 end
 
