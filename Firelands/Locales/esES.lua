@@ -4,7 +4,7 @@ if L then
 	L.devastate_message = "¡Devastación #%d!"
 	L.devastate_bar = "~Próxima devastación"
 	L.drone_bar = "Próximo Zángano"
-	L.drone_message = "¡Atención zángano aparece!"
+	L.drone_message = "¡Zángano aparece!"
 	L.kiss_message = "Beso"
 end
 
@@ -16,7 +16,7 @@ if L then
 	L.phase2_soon_message = "Fase 2 inminente!"
 	L.stomp_message = "¡Pisotón! ¡Pisotón! ¡Pisotón!"
 	L.stomp_warning = "Próximo pisotón"
-	L.big_add_message = "¡Atención add aparece!"
+	L.big_add_message = "¡Aparece una Chispa!"
 	L.small_adds_message = "¡Aparecen fragmentos pequeños!"
 end
 
@@ -26,16 +26,22 @@ if L then
 	L.claw_message = "%2$dx Garra en %1$s"
 	L.fullpower_soon_message = "¡Poder máximo inminente!"
 	L.halfpower_soon_message = "¡Fase 4 inminente!"
-	L.encounter_restart = "¡Poder máximo! Aquí vamos otra vez ..."
+	L.encounter_restart = "Aquí vamos otra vez ..."
 	L.no_stacks_message = "No sé si te importa, pero no tienes plumas"
 	L.moonkin_message = "Deja de fingir y consigue algunas plumas reales"
+	L.molt_bar = "Siguiente Muda"
 
+	L.stage_message = "Fase %d"
+	
 	L.worm_emote = "¡Gusanos de lava ígneos surgen del suelo!"
 	L.phase2_soon_emote = "Alysrazor empieza a volar rápido en círculos."
 	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
 	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
 	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
 	L.restart_emote = "99925" -- Full Power spell ID used in the emote
+	
+	L.flight = "Asistente de vuelo"
+	L.flight_desc = "Muestra una barra con la duración de 'Alas de llamas' en ti, es ideal usarlo con la opción de Super Enfatizar."
 end
 
 L = BigWigs:NewBossLocale("Shannox", "esES")
@@ -49,7 +55,7 @@ L = BigWigs:NewBossLocale("Baleroc", "esES")
 if L then
 	L.torment_message = "%2$dx Tormento en %1$s"
 	L.blade = "~Hoja"
-	L.shard_message = "¡Fragmento morado inminente!"
+	L.shard_message = "¡Fragmento morado (%d)!"
 	L.focus_message = "¡Tu foco tiene %d stacks!"
 	L.countdown_bar = "Próximo enlace"
 	L.link_message = "Enlazado"
