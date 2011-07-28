@@ -20,7 +20,7 @@ if L then
 	L.tornado_trigger = "These skies are MINE!"
 	L.claw_message = "%2$dx Claw on %1$s"
 	L.fullpower_soon_message = "Full power soon!"
-	L.halfpower_soon_message = "Phase 4 soon!"
+	L.halfpower_soon_message = "Stage 4 soon!"
 	L.encounter_restart = "Here we go again..."
 	L.no_stacks_message = "Dunno if you care, but you have no feathers"
 	L.moonkin_message = "Stop pretending and get some real feathers"
@@ -48,13 +48,15 @@ function mod:GetOptions(CL)
 	return {
 		99362, 100723, 97128, "flight",
 		99816, 99464,
+		99432,
 		99844, 99925,
 		{100744, "FLASHSHAKE"}, 100761,
 		"berserk", "bosskill"
 	}, {
-		[99362] = "ej:2820",
-		[99816] = "ej:2821",
-		[99844] = "ej:2823",
+		[99362] = "ej:2820", --Stage 1: Flight
+		[99816] = "ej:2821", --Stage 2: Tornadoes
+		[99432] = "ej:2822", --Stage 3: Burnout
+		[99844] = "ej:2823", --Stage 4: Re-Ignite
 		[100744] = "heroic",
 		berserk = "general"
 	}
@@ -67,17 +69,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StartFlying", 98619)
 	self:Log("SPELL_AURA_REMOVED", "StopFlying", 98619)
 
-	-- Phase 1
+	-- Stage 1: Flight
 	self:Log("SPELL_AURA_APPLIED", "Wound", 100723, 100722, 100721, 100720, 100719, 100718, 100024, 99308)
 	self:Log("SPELL_AURA_APPLIED", "Tantrum", 99362)
 
 	self:Emote("BuffCheck", L["worm_emote"], L["phase2_soon_emote"])
 
-	-- Phase 2
+	-- Stage 2: Tornadoes
 	self:Yell("FieryTornado", L["tornado_trigger"])
 
-	-- Phase 3
+	-- Stage 3: Burnout
 	self:Log("SPELL_AURA_APPLIED", "Burnout", 99432)
+
+	-- Stage 4: Re-Ignite
+	self:Log("SPELL_AURA_REMOVED", "ReIgnite", 99432)
 
 	-- Heroic only
 	self:Log("SPELL_CAST_START", "Cataclysm", 100761, 102111)
@@ -118,6 +123,7 @@ do
 	end
 	function mod:StartFlying(player)
 		if UnitIsUnit(player, "player") then
+			self:Bar("flight", flying, 20, 98619)
 			self:RegisterEvent("UNIT_AURA")
 		end
 	end
@@ -200,7 +206,6 @@ end
 function mod:FieryTornado()
 	local fieryTornado = GetSpellInfo(99816)
 	local feather = GetSpellInfo(98619)
-	moltCount = 0
 	self:SendMessage("BigWigs_StopBar", self, firestorm)
 	self:SendMessage("BigWigs_StopBar", self, feather)
 	self:Bar(99816, fieryTornado, 35, 99816)
@@ -213,16 +218,6 @@ function mod:BlazingClaw(player, spellId, _, _, _, stack)
 	end
 end
 
-do
-	local halfWarned = false
-	local fullWarned = false
-
-	-- Alysrazor crashes to the ground
-	function mod:Burnout()
-		halfWarned, fullWarned = false, false
-		self:RegisterEvent("UNIT_POWER")
-	end
-
 --[[
 In case we need to rebase this on emotes instead of unit power, here's a few noteworthy events
 "<2329.1> RAID_BOSS_EMOTE#Fiery Lava Worms erupt from the ground!#Plump Lava Worm#0#false", -- [17]
@@ -233,6 +228,17 @@ In case we need to rebase this on emotes instead of unit power, here's a few not
 "<2515.6> RAID_BOSS_EMOTE#|TInterface\\Icons\\inv_elemental_primal_fire.blp:20|t Alysrazor's firey core |cFFFF0000|Hspell:99922|h[Re-Ignites]|h|r!#Alysrazor#0#false", -- [22]
 "<2542.8> RAID_BOSS_EMOTE#|TInterface\\Icons\\spell_shaman_improvedfirenova.blp:20|t Alysrazor is at |cFFFF0000|Hspell:99925|h[Full Power]|h|r!#Alysrazor#0#false", -- [23]
 ]]
+do
+	local halfWarned = false
+	local fullWarned = false
+
+	-- Alysrazor crashes to the ground
+	function mod:Burnout(_, spellId, _, _, spellName)
+		self:Message(99432, (L["stage_message"]:format(3))..": "..spellName, "Positive", spellId, "Alert")
+		self:Bar(99432, "~"..spellName, 33, spellId)
+		halfWarned, fullWarned = false, false
+		self:RegisterEvent("UNIT_POWER")
+	end
 
 	function mod:UNIT_POWER(_, unit)
 		local power = UnitPower("boss1", 0)
@@ -252,8 +258,16 @@ In case we need to rebase this on emotes instead of unit power, here's a few not
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else
 				self:Bar(99816, L["stage_message"]:format(2), 165, 99816)
+				moltCount = 1
+				self:Bar(99464, L["molt_bar"], 55, 99464)
 			end
 		end
 	end
+end
+
+function mod:ReIgnite(_, spellId, _, _, spellName)
+	self:Message(99925, (L["stage_message"]:format(4))..": "..(GetSpellInfo(99922)), "Positive", 99922, "Alert")
+	self:Bar(99925, GetSpellInfo(99925), 25, 99925)
+	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(99432))
 end
 
