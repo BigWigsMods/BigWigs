@@ -69,7 +69,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190)
 
 	-- Normal
-	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100254)
+	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100253, 100254)
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
