@@ -16,6 +16,14 @@ if L then
 	L.safe = "%s safe"
 	L.immolation_trap = "Immolation on %s!"
 	L.crystaltrap = "Crystal Trap"
+
+	L.traps_header = "Traps"
+	L.immolation = "Immolation Trap"
+	L.immolation_desc = "Alert when someone steps on an Immolation Trap."
+	L.immolation_icon = 99838
+	L.crystal = "Crystal Trap"
+	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
+	L.crystal_icon = 99836
 end
 L = mod:GetLocale()
 
@@ -25,11 +33,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		100002, 101209, {99836, "SAY", "FLASHSHAKE"},
-		{100129, "ICON"},
-		"berserk", "bosskill"
+		100002, {100129, "ICON"}, "berserk", "bosskill",
+		"immolation", {"crystal", "SAY", "FLASHSHAKE"},
 	}, {
-		[100002] = "general"
+		[100002] = "general",
+		["immolation"] = L["traps_header"],
 	}
 end
 
@@ -60,12 +68,12 @@ do
 		fired = fired + 1
 		if UnitExists("boss1target") and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
 			--If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:TargetMessage(99836, L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
+			mod:TargetMessage("crystal", L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit("boss1target", "player") then
-				mod:FlashShake(99836)
-				mod:Say(99836, CL["say"]:format(L["crystaltrap"]))
+				mod:FlashShake("crystal")
+				mod:Say("crystal", CL["say"]:format(L["crystaltrap"]))
 			end
 			return
 		end
@@ -87,7 +95,7 @@ end
 function mod:ImmolationTrap(player, spellId, _, _, spellName, _, _, _, _, dGUID)
 	local unitId = tonumber(dGUID:sub(7, 10), 16)
 	if unitId == 53695 or unitId == 53694 then
-		self:Message(101209, L["immolation_trap"]:format(player), "Attention", spellId)
+		self:Message("immolation", L["immolation_trap"]:format(player), "Attention", spellId)
 	end
 end
 

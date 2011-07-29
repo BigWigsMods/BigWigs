@@ -51,6 +51,14 @@ if L then
 	L.safe = "%s 안전함"
 	L.immolation_trap = "제물의 덫 : %s!"
 	L.crystaltrap = "수정 감옥 덫"
+
+	L.traps_header = "Traps"
+	L.immolation = "Immolation Trap"
+	L.immolation_desc = "Alert when someone steps on an Immolation Trap."
+	L.immolation_icon = 99838
+	L.crystal = "Crystal Trap"
+	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
+	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "koKR")
