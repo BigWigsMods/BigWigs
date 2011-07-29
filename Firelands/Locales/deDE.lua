@@ -10,8 +10,8 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "deDE")
 if L then
-	L.armor = "Obsidian Armor"
-	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
+	L.armor = "Obsidianrüstung"
+	L.armor_desc = "Warnt, wenn Rüstungsstapel von Lord Rhyolith entfernt werden."
 	L.armor_icon = 98632
 	L.armor_message = "%d%% Rüstung noch"
 	L.armor_gone_message = "Rüstung weg!"
