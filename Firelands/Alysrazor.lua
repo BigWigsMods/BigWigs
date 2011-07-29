@@ -47,8 +47,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		99362, 100723, 97128, "flight",
-		99816, 99464,
+		99362, 100723, 97128, 99464, "flight",
+		99816,
 		99432,
 		99844, 99925,
 		{100744, "FLASHSHAKE"}, 100761,

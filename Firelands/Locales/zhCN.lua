@@ -10,14 +10,22 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "zhCN")
 if L then
-	L.molten_message = "%dx stacks on boss!"
+	L.armor = "Obsidian Armor"
+	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
+	L.armor_icon = 98632
 	L.armor_message = "%d%% armor left"
 	L.armor_gone_message = "Armor go bye-bye!"
-	L.phase2_soon_message = "Phase 2 soon!"
-	L.stomp_message = "Stomp! Stomp! Stomp!"
-	L.stomp_warning = "Next Stomp"
+
+	L.adds_header = "Adds"
 	L.big_add_message = "Big add spawned!"
 	L.small_adds_message = "Small adds inc!"
+
+	L.phase2_warning = "Phase 2 soon!"
+
+	L.molten_message = "%dx stacks on boss!"
+
+	L.stomp_message = "Stomp! Stomp! Stomp!"
+	L.stomp_warning = "Next Stomp"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "zhCN")

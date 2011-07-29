@@ -10,14 +10,22 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "zhTW")
 if L then
-	L.molten_message = "首領炎甲術堆疊：>%d<層！"
+	L.armor = "Obsidian Armor"
+	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
+	L.armor_icon = 98632
 	L.armor_message = "%d%% 黑曜石護甲剩餘！"
 	L.armor_gone_message = "黑曜石護甲消失！"
-	L.phase2_soon_message = "第二階段！"
-	L.stomp_message = "烈焰踐踏！"
-	L.stomp_warning = "下一 烈焰踐踏！"
+
+	L.adds_header = "Adds"
 	L.big_add_message = "萊爾利斯火花 出現！"
 	L.small_adds_message = "即將 萊爾利斯碎片！"
+
+	L.phase2_warning = "第二階段！"
+
+	L.molten_message = "首領炎甲術堆疊：>%d<層！"
+
+	L.stomp_message = "烈焰踐踏！"
+	L.stomp_warning = "下一 烈焰踐踏！"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "zhTW")

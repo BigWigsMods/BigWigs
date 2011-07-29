@@ -20,14 +20,22 @@ local lastFragments = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.molten_message = "%dx stacks on boss!"
+	L.armor = "Obsidian Armor"
+	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
+	L.armor_icon = 98632
 	L.armor_message = "%d%% armor left"
 	L.armor_gone_message = "Armor go bye-bye!"
-	L.phase2_soon_message = "Phase 2 soon!"
-	L.stomp_message = "Stomp! Stomp! Stomp!"
-	L.stomp_warning = "Next Stomp"
+
+	L.adds_header = "Adds"
 	L.big_add_message = "Big add spawned!"
 	L.small_adds_message = "Small adds inc!"
+
+	L.phase2_warning = "Phase 2 soon!"
+
+	L.molten_message = "%dx stacks on boss!"
+
+	L.stomp_message = "Stomp! Stomp! Stomp!"
+	L.stomp_warning = "Next Stomp"
 end
 L = mod:GetLocale()
 
@@ -37,10 +45,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		98632, 98552, 98136, 97282, 98255, 99846,
-		101305, "bosskill"
+		"armor", 97282, 98255, "ej:2537", "bosskill",
+		98552, 98136,
+		101305,
 	}, {
-		[98632] = "general"
+		[98632] = "general",
+		[98552] = L["adds_header"],
+		[101305] = "heroic"
 	}
 end
 
@@ -111,7 +122,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" or unitId == "boss2" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 30 then -- phase starts at 25
-			self:Message(99846, L["phase2_soon_message"], "Positive", 99846, "Info")
+			self:Message("ej:2537", L["phase2_warning"], "Positive", 99846, "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 			local stack = select(4, UnitBuff(unitId, moltenArmor))
 			if stack then

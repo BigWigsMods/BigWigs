@@ -10,14 +10,22 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "koKR")
 if L then
-	L.molten_message = "보스 공격 증가 x%d !"
+	L.armor = "Obsidian Armor"
+	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
+	L.armor_icon = 98632
 	L.armor_message = "흑요석 갑옷 - %d%%"
 	L.armor_gone_message = "흑요석 갑옷 사라짐!"
-	L.phase2_soon_message = "곧 2 단계!"
-	L.stomp_message = "진탕 발길! 발구르기! 발구르기!"
-	L.stomp_warning = "다음 발구르기"
+
+	L.adds_header = "Adds"
 	L.big_add_message = "큰 쫄 등장!"
 	L.small_adds_message = "작은 쫄 등장!"
+
+	L.phase2_warning = "곧 2 단계!"
+
+	L.molten_message = "보스 공격 증가 x%d !"
+
+	L.stomp_message = "진탕 발길! 발구르기! 발구르기!"
+	L.stomp_warning = "다음 발구르기"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "koKR")
