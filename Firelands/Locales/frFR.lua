@@ -49,8 +49,11 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "frFR")
 if L then
+	L.torment = "Torment stacks on Focus"
+	L.torment_desc = "Warn when your /focus gains another torment stack."
 	L.torment_message = "%2$dx tourments sur %1$s"
-	L.blade = "~Lame"
+
+	L.blade_bar = "~Lame"
 	L.shard_message = "Éclats de tourment (%d) !"
 	L.focus_message = "Votre focalisation a %d cumuls !"
 	L.countdown_bar = "Prochain lien"

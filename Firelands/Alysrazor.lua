@@ -265,7 +265,7 @@ do
 	end
 end
 
-function mod:ReIgnite(_, spellId, _, _, spellName)
+function mod:ReIgnite()
 	self:Message(99925, (L["stage_message"]:format(4))..": "..(GetSpellInfo(99922)), "Positive", 99922, "Alert")
 	self:Bar(99925, GetSpellInfo(99925), 25, 99925)
 	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(99432))

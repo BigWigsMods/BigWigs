@@ -45,8 +45,12 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "zhTW")
 if L then
+	L.torment = "Torment stacks on Focus"
+	L.torment_desc = "Warn when your /focus gains another torment stack."
 	L.torment_message = "折磨%2$d層：>%1$s<！"
-	L.blade = "<虐殺之刃>"
+
+
+	L.blade_bar = "<虐殺之刃>"
 	L.shard_message = "折磨碎片：>%d<！"
 	L.focus_message = "焦點目標已有 >%d< 層折磨！"
 	L.countdown_bar = "<下一魔法連結>"

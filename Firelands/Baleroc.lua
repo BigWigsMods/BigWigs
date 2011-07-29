@@ -16,8 +16,11 @@ local countdownCounter, count = 1, 0
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.torment = "Torment stacks on Focus"
+	L.torment_desc = "Warn when your /focus gains another torment stack."
 	L.torment_message = "%2$dx torment on %1$s"
-	L.blade = "~Blade"
+
+	L.blade_bar = "~Next Blade"
 	L.shard_message = "Purple shards (%d)!"
 	L.focus_message = "Your focus has %d stacks!"
 	L.countdown_bar = "Next link"
@@ -31,7 +34,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		99259, 100230, 99352, "berserk", "bosskill",
+		99259, "torment", "ej:2598", --Blades of Baleroc
+		"berserk", "bosskill",
 		{99516, "FLASHSHAKE", "ICON"}
 	}, {
 		[99259] = "general",
@@ -52,7 +56,7 @@ end
 function mod:OnEngage(diff)
 	self:Berserk(360)
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
-	self:Bar(99352, L["blade"], 30, 99352)
+	self:Bar(99352, L["blade_bar"], 30, 99352)
 	if diff > 2 then
 		self:Bar(99516, L["countdown_bar"], 25, 99516) -- Countdown
 		countdownCounter = 1
@@ -65,8 +69,8 @@ end
 --
 
 function mod:Blades(_, spellId, _, _, spellName)
-	self:Message(99352, spellName, "Attention", spellId)
-	self:Bar(99352, L["blade"], 47, spellId)
+	self:Message("ej:2598", spellName, "Attention", spellId)
+	self:Bar("ej:2598", L["blade_bar"], 47, spellId)
 end
 
 do
@@ -103,7 +107,7 @@ end
 
 function mod:Torment(player, spellId, _, _, _, stack)
 	if UnitIsUnit("focus", player) and stack > 5 then
-		self:LocalMessage(100230, L["focus_message"]:format(stack), "Personal", spellId, "Info")
+		self:LocalMessage("torment", L["focus_message"]:format(stack), "Personal", spellId, "Info")
 	end
 end
 

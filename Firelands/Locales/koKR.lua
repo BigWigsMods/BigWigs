@@ -47,8 +47,11 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "koKR")
 if L then
+	L.torment = "Torment stacks on Focus"
+	L.torment_desc = "Warn when your /focus gains another torment stack."
 	L.torment_message = "고통 x%2$d : %1$s"
-	L.blade = "~칼날"
+
+	L.blade_bar = "~칼날"
 	L.shard_message = "고문의 파편(%d)!"
 	L.focus_message = "당신의 주시 대상 - 고문 x%d !"
 	L.countdown_bar = "다음 고리"
