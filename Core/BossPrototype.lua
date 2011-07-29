@@ -46,8 +46,8 @@ function boss:Reboot()
 	self:Enable()
 end
 
-function boss:NewLocale(locale, default) return AL:NewLocale(self.name, locale, default) end
-function boss:GetLocale() return AL:GetLocale(self.name) end
+function boss:NewLocale(locale, default) return AL:NewLocale(self.name, locale, default, "raw") end
+function boss:GetLocale(state) return AL:GetLocale(self.name, state) end
 
 -------------------------------------------------------------------------------
 -- Enable triggers

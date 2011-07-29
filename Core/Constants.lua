@@ -108,7 +108,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 	local bf = module.toggleDefaults[option]
 	if t == "string" then
 		if customBossOptions[option] then
-			return option, customBossOptions[option][1], customBossOptions[option][2]
+			local icon = customBossOptions[option][4] and select(3, GetSpellInfo(customBossOptions[option][4])) or nil
+			return option, customBossOptions[option][1], customBossOptions[option][2], icon
 		else
 			local ejID = option:match("^ej:(%d+)$")
 			if tonumber(ejID) then
@@ -127,8 +128,9 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				-- So the magic is the, if <icon> is a number, it should be a portrait.
 				return option, title, description, icon
 			else
-				local L = module:GetLocale()
-				return option, L[option], L[option .. "_desc"]
+				local L = module:GetLocale(true)
+				local icon = L[option .. "_icon"] and select(3, GetSpellInfo(L[option .. "_icon"])) or nil
+				return option, L[option], L[option .. "_desc"], icon
 			end
 		end
 	elseif t == "number" then

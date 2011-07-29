@@ -292,7 +292,7 @@ function addon:OnInitialize()
 	end
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
-	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
+	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, 26662)
 
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads
@@ -339,18 +339,18 @@ function addon:Translate(boss)
 	return boss
 end
 
-function addon:RegisterBossOption(key, name, desc, func)
+function addon:RegisterBossOption(key, name, desc, func, icon)
 	if customBossOptions[key] then
 		error("The custom boss option %q has already been registered."):format(key)
 	end
-	customBossOptions[key] = { name, desc, func }
+	customBossOptions[key] = { name, desc, func, icon }
 end
 
 function addon:GetCustomBossOptions()
 	return customBossOptions
 end
 
-function addon:NewBossLocale(name, locale, default) return AL:NewLocale(string.format("%s_%s", self.bossCore.name, name), locale, default) end
+function addon:NewBossLocale(name, locale, default) return AL:NewLocale(string.format("%s_%s", self.bossCore.name, name), locale, default, true) end
 
 -------------------------------------------------------------------------------
 -- Module handling
