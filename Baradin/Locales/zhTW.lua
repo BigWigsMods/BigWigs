@@ -13,5 +13,8 @@ if L then
 	L.shadows_bar = "<灼熱暗影>"
 	L.destruction_bar = "<歐庫薩的毀滅>"
 	L.eyes_bar = "<歐庫薩之眼>"
+
+	L.fire_message = "Lazer, Pew Pew"
+	L.fire_bar = "~Next Lazer"
 end
 

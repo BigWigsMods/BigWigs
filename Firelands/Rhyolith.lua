@@ -49,7 +49,7 @@ function mod:GetOptions(CL)
 		98552, 98136,
 		101305,
 	}, {
-		[98632] = "general",
+		["armor"] = "general",
 		[98552] = L["adds_header"],
 		[101305] = "heroic"
 	}

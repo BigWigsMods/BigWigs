@@ -13,5 +13,8 @@ if L then
 	L.shadows_bar = "~Sombras abrasadoras"
 	L.destruction_bar = "Explosión inminente"
 	L.eyes_bar = "~Próximos Ojos"
+
+	L.fire_message = "Lazer, Pew Pew"
+	L.fire_bar = "~Next Lazer"
 end
 
