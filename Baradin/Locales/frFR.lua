@@ -14,7 +14,7 @@ if L then
 	L.destruction_bar = "Explosion des yeux"
 	L.eyes_bar = "~Prochains yeux"
 
-	L.fire_message = "Lazer, Pew Pew"
-	L.fire_bar = "~Next Lazer"
+	L.fire_message = "Feu focalisé"
+	L.fire_bar = "~Prochain Feu focalisé"
 end
 
