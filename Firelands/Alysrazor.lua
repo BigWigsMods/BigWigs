@@ -37,6 +37,7 @@ if L then
 
 	L.flight = "Flight Assist"
 	L.flight_desc = "Show a bar with the duration of 'Wings of Flame' on you, ideally used with the Super Emphasize feature."
+	L.flight_icon = 98619
 end
 L = mod:GetLocale()
 
