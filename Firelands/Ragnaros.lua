@@ -10,15 +10,13 @@ mod:RegisterEnableMob(52409)
 -- Locals
 --
 
-local seedWarned, intermissionwarned, infernoWarned, meteorWarned = false, false, false, false
+local seedWarned, intermissionwarned, infernoWarned, meteorWarned, fixateWarned = false, false, false, false, false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD = 30, 40
 local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
 local meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
-local fixateTable = {}
-local fixateList = mod:NewTargetList()
 local intermissionHandle = nil
 
 --------------------------------------------------------------------------------
@@ -51,8 +49,8 @@ function mod:GetOptions(CL)
 		98237, 100115,
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},
 		{98498, "FLASHSHAKE"}, 100178,
-		99317, {99849, "FLASHSHAKE"},
-		100190,
+		99317, {99849, "FLASHSHAKE", "SAY"},
+		100190, 100479, 100646, 100714, 100997,
 		98710, 99399, "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
@@ -68,6 +66,12 @@ function mod:OnBossEnable()
 	-- Heroic
 	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190)
 
+	self:Yell("Phase4", L["phase4_trigger"])
+	self:Log("SPELL_CAST_START", "BreadthofFrost", 100479)
+	self:Log("SPELL_CAST_START", "EntrappingRoots", 100646)
+	self:Log("SPELL_CAST_START", "Cloudburst", 100714)
+	self:Log("SPELL_CAST_START", "EmpowerSulfuras", 100997)
+
 	-- Normal
 	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100253, 100254)
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
@@ -77,8 +81,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
 	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877, 100885, 100882, 100879, 100884, 100881, 100878)
 	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
-	self:Log("SPELL_AURA_APPLIED", "Fixate", 100250)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Fixate", 100250)
 
 	self:Log("SPELL_AURA_APPLIED", "Wound", 101238, 101239, 101240, 99399)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Wound", 101238, 101239, 101240, 99399)
@@ -94,10 +96,9 @@ function mod:OnEngage(diff)
 	self:OpenProximity(6)
 	self:Berserk(1080)
 	lavaWavesCD, engulfingCD = 30, 40
-	seedWarned, intermissionwarned, infernoWarned, meteorWarned = false, false, false, false
+	seedWarned, intermissionwarned, infernoWarned, meteorWarned, fixateWarned = false, false, false, false, false
 	sons = 8
 	phase = 1
-	wipe(fixateList)
 	meteorCounter = 1
 	intermissionHandle = nil
 end
@@ -105,6 +106,38 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Phase4()
+	self:SendMessage("BigWigs_StopBar", self, livingMeteor)
+	phase = 4
+	self:OpenProximity(6)
+	 -- not sure if we want a different option key or different icon
+	mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
+	self:Bar(100479, (GetSpellInfo(100479)), 34, 100479) -- Breadth of Frost
+	self:Bar(100714, (GetSpellInfo(100714)), 51, 100714) -- Cloudburst
+	self:Bar(100646, (GetSpellInfo(100646)), 68, 100646) -- Entraping Roots
+	self:Bar(100997, (GetSpellInfo(100997)), 90, 100997) -- EmpowerSulfuras
+end
+
+function mod:EmpowerSulfuras(_, spellId, _, _, spellName)
+	self:Message(100997, spellName, "Urgent", spellId)
+	self:Bar(100997, "~"..spellName, 56, spellId)
+	self:Bar(100997, spellName, 5, spellId)
+end
+
+function mod:Cloudburst(_, spellId, _, _, spellName)
+	self:Message(100714, spellName, "Positive", spellId)
+end
+
+function mod:EntrappingRoots(_, spellId, _, _, spellName)
+	self:Message(100646, spellName, "Positive", spellId)
+	self:Bar(100646, spellName, 56, spellId)
+end
+
+function mod:BreadthofFrost(_, spellId, _, _, spellName)
+	self:Message(100479, spellName, "Positive", spellId)
+	self:Bar(100479, spellName, 45, spellId)
+end
 
 function mod:Wound(player, spellId, _, _, _, buffStack, _, _, _, dGUID)
 	self:Bar(99399, L["wound_bar"]:format(player), 21, spellId)
@@ -127,28 +160,17 @@ do
 end
 
 do
-	local function fixateWarn()
-		if fixateList[1] then
-			mod:TargetMessage(99849, fixate, fixateList, "Important", 99849, "Info")
-		end
-	end
-
-	-- Need to verify how fast a fixate gets applied after a knockback
-	function mod:Fixate()
-		for i=1, GetNumRaidMembers() do
-			local unit = GetRaidRosterInfo(i)
-			if UnitDebuff(unit, fixate) then
-				if not fixateTable[i] then
-					if UnitIsUnit(unit, "player") then
-						self:FlashShake(99849)
-					end
-					fixateList[#fixateList+1] = unit
-					fixateTable[i] = true
-					self:ScheduleTimer(fixateWarn, 0.1) -- increase this if you want it less spammy
-				end
-			else
-				fixateTable[i] = false
-			end
+	local prev = 0
+	function mod:UNIT_AURA(_, unit)
+		if unit ~= "player" then return end
+		local fixated = UnitDebuff("player", fixate)
+		if fixated and not fixateWarned then
+			fixateWarned = true
+			self:LocalMessage(99849, CL["you"]:format(fixate), "Personal", 99849, "Long")
+			self:Say(99849, CL["say"]:format(fixate))
+			self:FlashShake(99849)
+		elseif not fixated and fixateWarned then
+			fixateWarned = false
 		end
 	end
 end
@@ -175,8 +197,8 @@ local function intermissionEnd()
 			mod:ScheduleTimer(intermissionSpamControl, 45)
 			mod:OpenProximity(6)
 			if mod:Difficulty() > 2 then
-				mod:ScheduleTimer(moltenInferno, 18)
-				mod:Bar(98498, "~"..moltenSeed, 18, 98498)
+				mod:ScheduleTimer(moltenInferno, 15)
+				mod:Bar(98498, "~"..moltenSeed, 15, 98498)
 				mod:Bar(98710, lavaWaves, 7.5, 98710)
 			else
 				mod:Bar(98498, moltenSeed, 24, 98498)
@@ -186,9 +208,7 @@ local function intermissionEnd()
 			engulfingCD = 30
 			mod:Bar(99317, "~"..livingMeteor, 52, 99317)
 			mod:Bar(98710, lavaWaves, 55, 98710)
-			for i=1, GetNumRaidMembers() do
-				fixateTable[i] = false
-			end
+			mod:RegisterEvent("UNIT_AURA")
 		end
 		phase = phase + 1
 		intermissionwarned = true
@@ -219,13 +239,13 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	sons = 8
 	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
 	self:SendMessage("BigWigs_StopBar", self, lavaWaves)
-	self:SendMessage("BigWigs_StopBar", self, wrathOfRagnaros)
+	self:SendMessage("BigWigs_StopBar", self, "~"..wrathOfRagnaros)
 	self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 end
 
 function mod:SulfurasSmash(_, spellId)
 	if phase == 1 then
-		self:Bar(100115, wrathOfRagnaros, 12, 100115)
+		self:Bar(100115, "~"..wrathOfRagnaros, 12, 100115)
 	end
 	self:Message(98710, lavaWaves, "Attention", spellId, "Info")
 	self:Bar(98710, lavaWaves, lavaWavesCD, spellId)
