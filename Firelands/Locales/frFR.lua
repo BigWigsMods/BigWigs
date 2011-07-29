@@ -26,11 +26,12 @@ if L then
 	L.claw_message = "%2$dx Griffes sur %1$s"
 	L.fullpower_soon_message = "Pleine puissance imminente !"
 	L.halfpower_soon_message = "Phase 4 imminente !"
-	L.encounter_restart = "Pleine puissance ! Et c'est reparti..."
+	L.encounter_restart = "Et c'est reparti..."
 	L.no_stacks_message = "Juste au cas où : vous n'avez pas de plumes."
 	L.moonkin_message = "Arrêtez de faire genre et récupérez de vraies plumes."
+	L.molt_bar = "Prochaine mue"
 
-	L.stage_message = "Stage %d"
+	L.stage_message = "Phase %d"
 
 	L.worm_emote = "Des vers de lave embrasés surgissent du sol !"
 	L.phase2_soon_emote = "Alysrazor commence à voler en cercles rapides !"
@@ -38,6 +39,10 @@ if L then
 	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
 	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
 	L.restart_emote = "99925" -- Full Power spell ID used in the emote
+
+	L.flight = "Assistance en vol"
+	L.flight_desc = "Affiche une barre indiquant la durée de vos Ailes de flamme. Idéal si utilisé avec la fonctionnalité de super mise en évidence."
+	L.flight_icon = 98619
 end
 
 L = BigWigs:NewBossLocale("Shannox", "frFR")
@@ -49,11 +54,12 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "frFR")
 if L then
-	L.torment = "Torment stacks on Focus"
-	L.torment_desc = "Warn when your /focus gains another torment stack."
-	L.torment_message = "%2$dx tourments sur %1$s"
+	L.torment = "Cumuls de Torment sur la focalisation"
+	L.torment_desc = "Prévient quand votre /focus gagne un autre cumul de tourment."
+	L.torment_icon = 99256
+	--L.torment_message = "%2$dx tourments sur %1$s"
 
-	L.blade_bar = "~Lame"
+	L.blade_bar = "~Prochaine Lame"
 	L.shard_message = "Éclats de tourment (%d) !"
 	L.focus_message = "Votre focalisation a %d cumuls !"
 	L.countdown_bar = "Prochain lien"
