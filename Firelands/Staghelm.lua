@@ -135,8 +135,8 @@ function mod:SearingSeedsRemoved(player)
 	seedTimer = nil
 end
 
-function mod:BurningOrbs(_, _, _, _, spellName)
-	self:Bar(98451, spellName, 64, 98451)
+function mod:BurningOrbs(_, spellId, _, _, spellName)
+	self:Bar(98451, spellName, 64, spellId)
 end
 
 do
@@ -150,7 +150,7 @@ do
 		self:SendMessage("BigWigs_StopBar", self, leapingFlames)
 		if not UnitIsUnit(player, "player") then return end
 		local remaining = (select(7, UnitDebuff("player", spellName))) - GetTime()
-		self:Bar(98450, L["seed_bar"], remaining, 98450)
+		self:Bar(98450, L["seed_bar"], remaining, spellId)
 		if remaining < 5 then
 			searingSeed()
 		else

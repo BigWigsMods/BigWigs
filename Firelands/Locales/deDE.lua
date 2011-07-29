@@ -49,8 +49,8 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "deDE")
 if L then
-	L.torment = "Torment stacks on Focus"
-	L.torment_desc = "Warn when your /focus gains another torment stack."
+	L.torment = "Anzahl der 'Qual'-Stapel auf deinem Fokusziel"
+	L.torment_desc = "Warnt, wenn dein /focus weitere 'Qual'-Stapel erhält."
 	L.torment_message = "%2$dx Qual: %1$s"
 
 	L.blade_bar = "Nächste Klinge"
