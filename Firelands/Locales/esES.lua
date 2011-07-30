@@ -40,14 +40,14 @@ if L then
 	L.molt_bar = "Siguiente Muda"
 
 	L.stage_message = "Fase %d"
-	
+
 	L.worm_emote = "¡Gusanos de lava ígneos surgen del suelo!"
 	L.phase2_soon_emote = "Alysrazor empieza a volar rápido en círculos."
 	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
 	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
 	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
 	L.restart_emote = "99925" -- Full Power spell ID used in the emote
-	
+
 	L.flight = "Asistente de vuelo"
 	L.flight_desc = "Muestra una barra con la duración de 'Alas de llamas' en ti, es ideal usarlo con la opción de Super Enfatizar."
 end
@@ -89,6 +89,10 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "esES")
 if L then
+	--L.intermission_end_trigger1 = "Sulfuras will be your end."
+	--L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
+	--L.intermission_end_trigger3 = "Enough! I will finish this."
+	--L.phase4_trigger = "Too soon..."
 	L.seed_explosion = "¡Explosión de semillas!"
 	L.intermission_bar = "¡Intermisión!"
 	L.intermission_message = "¡Intermisión!"

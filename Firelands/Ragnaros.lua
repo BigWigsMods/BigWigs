@@ -26,6 +26,9 @@ local intermissionHandle = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.intermission_end_trigger1 = "Sulfuras will be your end."
+	L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
+	L.intermission_end_trigger3 = "Enough! I will finish this."
 	L.phase4_trigger = "Too soon..."
 	L.seed_explosion = "Seed explosion!"
 	L.intermission_bar = "Intermission!"
@@ -73,6 +76,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EmpowerSulfuras", 100997)
 
 	-- Normal
+	self:Yell("IntermissionEnd", L["intermission_end_trigger1"], L["intermission_end_trigger2"], L["intermission_end_trigger3"])
+
 	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100253, 100254)
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
@@ -182,38 +187,27 @@ local function moltenInferno()
 	end
 end
 
-local function intermissionSpamControl()
-	intermissionwarned = false
-end
-
-local function intermissionEnd()
-	if intermissionHandle then
-		mod:CancelTimer(intermissionHandle, true)
-	end
-	mod:SendMessage("BigWigs_StopBar", mod, L["intermission_bar"])
-	if not intermissionwarned then
-		if phase == 1 then
-			lavaWavesCD = 40
-			mod:ScheduleTimer(intermissionSpamControl, 45)
-			mod:OpenProximity(6)
-			if mod:Difficulty() > 2 then
-				mod:ScheduleTimer(moltenInferno, 15)
-				mod:Bar(98498, "~"..moltenSeed, 15, 98498)
-				mod:Bar(98710, lavaWaves, 7.5, 98710)
-			else
-				mod:Bar(98498, moltenSeed, 24, 98498)
-				mod:Bar(98710, lavaWaves, 55, 98710)
-			end
-		elseif phase == 2 then
-			engulfingCD = 30
-			mod:Bar(99317, "~"..livingMeteor, 52, 99317)
-			mod:Bar(98710, lavaWaves, 55, 98710)
-			mod:RegisterEvent("UNIT_AURA")
+function mod:IntermissionEnd()
+	self:SendMessage("BigWigs_StopBar", self, L["intermission_bar"])
+	if phase == 1 then
+		lavaWavesCD = 40
+		self:OpenProximity(6)
+		if self:Difficulty() > 2 then
+			self:ScheduleTimer(moltenInferno, 15)
+			self:Bar(98498, "~"..moltenSeed, 15, 98498)
+			self:Bar(98710, lavaWaves, 7.5, 98710)
+		else
+			self:Bar(98498, moltenSeed, 24, 98498)
+			self:Bar(98710, lavaWaves, 55, 98710)
 		end
-		phase = phase + 1
-		intermissionwarned = true
-		mod:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
+	elseif phase == 2 then
+		engulfingCD = 30
+		self:Bar(99317, "~"..livingMeteor, 52, 99317)
+		self:Bar(98710, lavaWaves, 55, 98710)
+		self:RegisterEvent("UNIT_AURA")
 	end
+	phase = phase + 1
+	self:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
 end
 
 function mod:HandofRagnaros(_, spellId)
@@ -230,10 +224,8 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	self:Bar(98953, spellName, 7, spellId)
 	if self:Difficulty() > 2 then
 		self:Bar(98953, L["intermission_bar"], 60, spellId)
-		intermissionHandle = self:ScheduleTimer(intermissionEnd, 60)
 	else
 		self:Bar(98953, L["intermission_bar"], 45, spellId)
-		intermissionHandle = self:ScheduleTimer(intermissionEnd, 45)
 	end
 	self:CloseProximity()
 	sons = 8
@@ -329,8 +321,6 @@ function mod:Deaths(mobId)
 		sons = sons - 1
 		if sons < 3 and sons > 0 then
 			self:Message(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
-		elseif sons == 0 then
-			intermissionEnd()
 		end
 	elseif mobId == 52409 then
 		self:Win()

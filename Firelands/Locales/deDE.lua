@@ -85,6 +85,9 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "deDE")
 if L then
+	--L.intermission_end_trigger1 = "Sulfuras will be your end."
+	--L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
+	--L.intermission_end_trigger3 = "Enough! I will finish this."
 	--L.phase4_trigger = "Too soon..."
 	L.seed_explosion = "Samenexplosion!"
 	L.intermission_bar = "Phasenübergang"

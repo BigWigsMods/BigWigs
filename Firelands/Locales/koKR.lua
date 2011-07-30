@@ -83,6 +83,9 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
+	--L.intermission_end_trigger1 = "Sulfuras will be your end."
+	--L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
+	--L.intermission_end_trigger3 = "Enough! I will finish this."
 	L.phase4_trigger = "너무"	--Check(너무 일러...)
 	L.seed_explosion = "씨앗 폭발!"
 	L.intermission_bar = "휴식"
