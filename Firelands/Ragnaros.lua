@@ -26,9 +26,9 @@ local intermissionHandle = nil
 local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.intermission_end_trigger1 = "Sulfuras will be your end."
-	L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
-	L.intermission_end_trigger3 = "Enough! I will finish this."
+	L.intermission_end_trigger1 = "Sulfuras will be your end"
+	L.intermission_end_trigger2 = "Fall to your knees"
+	L.intermission_end_trigger3 = "I will finish this"
 	L.phase4_trigger = "Too soon..."
 	L.seed_explosion = "Seed explosion!"
 	L.intermission_bar = "Intermission!"
