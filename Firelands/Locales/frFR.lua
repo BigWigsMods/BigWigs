@@ -59,12 +59,12 @@ if L then
 	L.immolation_trap = "Immolation sur %s !"
 	L.crystal_trap = "Prison de cristal"
 
-	L.traps_header = "Traps"
-	L.immolation = "Immolation Trap"
-	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
+	L.traps_header = "Pièges"
+	L.immolation = "Piège d'immolation"
+	L.immolation_desc = "Prévient quand Croquepatte ou Ragegueule marche sur un piège d'immolation."
 	L.immolation_icon = 99838
-	L.crystal = "Crystal Trap"
-	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
+	L.crystal = "Piège de cristal"
+	L.crystal_desc = "Prévient en dessous de qui Shannox incante un piège de cristal."
 	L.crystal_icon = 99836
 end
 
@@ -91,9 +91,9 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
 if L then
-	--L.intermission_end_trigger1 = "Sulfuras will be your end."
-	--L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
-	--L.intermission_end_trigger3 = "Enough! I will finish this."
+	L.intermission_end_trigger1 = "Sulfuras sera votre fin."
+	L.intermission_end_trigger2 = "À genoux, mortels !"
+	L.intermission_end_trigger3 = "Assez ! Je vais en finir."
 	L.phase4_trigger = "Trop tôt..." -- à vérifier
 	L.seed_explosion = "Explosion des graînes !"
 	L.intermission_bar = "Intervalle"
