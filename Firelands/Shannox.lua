@@ -15,11 +15,11 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.safe = "%s safe"
 	L.immolation_trap = "Immolation on %s!"
-	L.crystaltrap = "Crystal Trap"
+	L.crystal_trap = "Crystal Trap"
 
 	L.traps_header = "Traps"
 	L.immolation = "Immolation Trap"
-	L.immolation_desc = "Alert when someone steps on an Immolation Trap."
+	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
 	L.immolation_icon = 99838
 	L.crystal = "Crystal Trap"
 	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
@@ -68,12 +68,12 @@ do
 		fired = fired + 1
 		if UnitExists("boss1target") and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
 			--If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:TargetMessage("crystal", L["crystaltrap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
+			mod:TargetMessage("crystal", L["crystal_trap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit("boss1target", "player") then
 				mod:FlashShake("crystal")
-				mod:Say("crystal", CL["say"]:format(L["crystaltrap"]))
+				mod:Say("crystal", CL["say"]:format(L["crystal_trap"]))
 			end
 			return
 		end

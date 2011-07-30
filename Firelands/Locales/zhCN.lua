@@ -48,11 +48,11 @@ L = BigWigs:NewBossLocale("Shannox", "zhCN")
 if L then
 	L.safe = "%s safe"
 	L.immolation_trap = "Immolation on %s!"
-	L.crystaltrap = "水晶囚牢陷阱！"
+	L.crystal_trap = "水晶囚牢陷阱！"
 
 	L.traps_header = "Traps"
 	L.immolation = "Immolation Trap"
-	L.immolation_desc = "Alert when someone steps on an Immolation Trap."
+	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
 	L.immolation_icon = 99838
 	L.crystal = "Crystal Trap"
 	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
