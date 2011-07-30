@@ -84,14 +84,14 @@ end
 function mod:Obsidian(_, spellId, _, _, _, _, _, _, _, dGUID)
 	local unitId = tonumber(dGUID:sub(7, 10), 16)
 	if unitId ~= 52558 then return end
-	self:Message(98632, L["armor_gone_message"], "Positive", spellId)
+	self:Message("armor", L["armor_gone_message"], "Positive", spellId)
 end
 
 function mod:ObsidianStack(_, spellId, _, _, _, buffStack, _, _, _, dGUID)
 	local unitId = tonumber(dGUID:sub(7, 10), 16)
 	if unitId ~= 52558 then return end
 	if buffStack % 20 ~= 0 then return end -- Only warn every 20
-	self:Message(98632, L["armor_message"]:format(buffStack), "Positive", spellId)
+	self:Message("armor", L["armor_message"]:format(buffStack), "Positive", spellId)
 end
 
 function mod:Spark(_, spellId)
