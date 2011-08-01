@@ -248,7 +248,7 @@ function mod:WorldInFlames(_, spellId, _, _, spellName)
 	self:Bar(100190, spellName, engulfingCD, spellId)
 end
 
-function mod:EngulfingFlames(_, spellId)
+function mod:EngulfingFlames(_, spellId, _, _, spellName)
 	if spellId == 100175 or spellId == 99172 then
 		self:Message(100178, L["engulfing_close"], "Important", spellId, "Alert")
 	elseif spellId == 100171 or spellId == 100178 or spellId == 99235 then
@@ -256,6 +256,7 @@ function mod:EngulfingFlames(_, spellId)
 	elseif spellId == 100181 or spellId == 99236 then
 		self:Message(100178, L["engulfing_far"], "Important", spellId, "Alert")
 	end
+	self:Bar(100178, spellName, engulfingCD, spellId)
 end
 
 do
