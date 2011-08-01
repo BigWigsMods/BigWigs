@@ -249,11 +249,11 @@ function mod:WorldInFlames(_, spellId, _, _, spellName)
 end
 
 function mod:EngulfingFlames(_, spellId)
-	if spellId == 100175 then
+	if spellId == 100175 or spellId == 99172 then
 		self:Message(100178, L["engulfing_close"], "Important", spellId, "Alert")
-	elseif spellId == 100171 or spellId == 100178 then
+	elseif spellId == 100171 or spellId == 100178 or spellId == 99235 then
 		self:Message(100178, L["engulfing_middle"], "Important", spellId, "Alert")
-	elseif spellId == 100181 then
+	elseif spellId == 100181 or spellId == 99236 then
 		self:Message(100178, L["engulfing_far"], "Important", spellId, "Alert")
 	end
 end
