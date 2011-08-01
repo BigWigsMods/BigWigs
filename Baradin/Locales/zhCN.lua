@@ -14,7 +14,7 @@ if L then
 	L.destruction_bar = "<欧库塔尔的毁灭>"
 	L.eyes_bar = "<欧库塔尔之眼>"
 
-	L.fire_message = "Lazer, Pew Pew"
-	L.fire_bar = "~Next Lazer"
+	L.fire_message = "集火！"
+	L.fire_bar = "<下一集火>"
 end
 

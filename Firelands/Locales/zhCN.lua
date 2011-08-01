@@ -12,7 +12,6 @@ L = BigWigs:NewBossLocale("Lord Rhyolith", "zhCN")
 if L then
 	L.armor = "Obsidian Armor"
 	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
-	L.armor_icon = 98632
 	L.armor_message = "%d%% armor left"
 	L.armor_gone_message = "Armor go bye-bye!"
 
@@ -37,33 +36,34 @@ if L then
 	L.encounter_restart = "完全的力量"
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
+	L.molt_bar = "<下一脱毛>"
 
-	L.stage_message = "Stage：>%d<！"
+	L.stage_message = "阶段：>%d<！"
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
+	L.flight = "飞行助手"
+	L.flight_desc = "当你“火焰之翼”持续时显示计时条，使用超级醒目功能。"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhCN")
 if L then
-	L.safe = "%s safe"
-	L.immolation_trap = "Immolation on %s!"
+	L.safe = ">%s< 安全！"
+	L.immolation_trap = "献祭陷阱：>%s<！"
 	L.crystal_trap = "水晶囚牢陷阱！"
 
-	L.traps_header = "Traps"
-	L.immolation = "Immolation Trap"
+	L.traps_header = "陷阱"
+	L.immolation = "献祭陷阱"
 	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
-	L.immolation_icon = 99838
 	L.crystal = "Crystal Trap"
 	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
-	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "zhCN")
 if L then
-	L.torment = "Torment stacks on Focus"
+	L.torment = "焦点Torment堆叠"
 	L.torment_desc = "Warn when your /focus gains another torment stack."
-	L.torment_message = "%2$dx torment on %1$s"
+	-- L.torment_message = "Torment%2$d层：>%1$s<！"
 
 	L.blade_bar = "~Next Blade"
 	L.shard_message = "Purple shards (%d)!"

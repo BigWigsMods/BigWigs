@@ -10,13 +10,12 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "zhTW")
 if L then
-	L.armor = "Obsidian Armor"
-	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
-	L.armor_icon = 98632
+	L.armor = "黑曜石護甲"
+	L.armor_desc = "當黑曜石護甲堆疊從萊爾利斯領主身上移除時發出警報。"
 	L.armor_message = "%d%% 黑曜石護甲剩餘！"
 	L.armor_gone_message = "黑曜石護甲消失！"
 
-	L.adds_header = "Adds"
+	L.adds_header = "增援"
 	L.big_add_message = "萊爾利斯火花 出現！"
 	L.small_adds_message = "即將 萊爾利斯碎片！"
 
@@ -37,11 +36,15 @@ if L then
 	L.encounter_restart = "完全的力量"
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
+	L.molt_bar = "<下一脫毛>"
 
 	L.stage_message = "階段：>%d<！"
 
 	L.worm_emote = "熾炎熔岩蟲從地上鑽了出來!"
 	L.phase2_soon_emote = "艾里絲拉卓開始快速地在空中盤旋!"
+
+	L.flight = "飛行助手"
+	L.flight_desc = "當你“火焰之翼”持續時顯示計時條，使用超級醒目功能。"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhTW")
@@ -50,21 +53,18 @@ if L then
 	L.immolation_trap = "獻祭陷阱：>%s<！"
 	L.crystal_trap = "水晶囚牢陷阱！"
 
-	L.traps_header = "Traps"
-	L.immolation = "Immolation Trap"
-	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
-	L.immolation_icon = 99838
-	L.crystal = "Crystal Trap"
-	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
-	L.crystal_icon = 99836
+	L.traps_header = "陷阱"
+	L.immolation = "獻祭陷阱"
+	L.immolation_desc = "當怒面或裂軀階段獻祭陷阱時發出警報。"
+	L.crystal = "投擲水晶"
+	L.crystal_desc = "當夏諾克斯施放水晶囚牢陷阱時發出警報。"
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "zhTW")
 if L then
-	L.torment = "Torment stacks on Focus"
-	L.torment_desc = "Warn when your /focus gains another torment stack."
-	L.torment_message = "折磨%2$d層：>%1$s<！"
-
+	L.torment = "焦點折磨堆疊"
+	L.torment_desc = "當焦點受到折磨堆疊時發出警報。"
+	-- L.torment_message = "折磨%2$d層：>%1$s<！"
 
 	L.blade_bar = "<虐殺之刃>"
 	L.shard_message = "折磨碎片：>%d<！"
@@ -77,22 +77,22 @@ L = BigWigs:NewBossLocale("Majordomo Staghelm", "zhTW")
 if L then
 	L.seed_explosion = ">你< 即將灼熱種子爆炸！"
 	L.seed_bar = "<你：灼熱種子爆炸>"
-	L.adrenaline_message = "激奮腺素：%d層！"
+	L.adrenaline_message = "激奮腺素：>%d層<！"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhTW")
 if L then
-	--L.intermission_end_trigger1 = "Sulfuras will be your end."
-	--L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
-	--L.intermission_end_trigger3 = "Enough! I will finish this."
-	--L.phase4_trigger = "Too soon..."
+	L.intermission_end_trigger1 = "薩弗拉斯將終結你。"
+	L.intermission_end_trigger2 = "跪下吧，凡人們!一切都將結束。"
+	L.intermission_end_trigger3 = "夠了!我將結束這一切。"
+	L.phase4_trigger = "太快"
 	L.seed_explosion = "熔岩晶粒爆炸！"
 	L.intermission_bar = "<中場>"
 	L.intermission_message = "中場！"
 	L.sons_left = ">%d< 烈焰之子剩餘！"
-	L.engulfing_close = "侵噬烈焰>近場<！"
-	L.engulfing_middle = "侵噬烈焰>中場<！"
-	L.engulfing_far = "侵噬烈焰>遠場<！"
+	L.engulfing_close = "侵噬烈焰：>近場<！"
+	L.engulfing_middle = "侵噬烈焰：>中場<！"
+	L.engulfing_far = "侵噬烈焰：>遠場<！"
 	L.hand_bar = "<下一拉格納羅斯之手>"
 	L.wound_bar = "燃燒傷口：>%s<！"
 	L.ragnaros_back_message = "拉格納羅斯返回，集合！"
