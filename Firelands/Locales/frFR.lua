@@ -13,16 +13,16 @@ if L then
 	L.armor = "Armure en obsidienne"
 	L.armor_desc = "Prévient quand des cumuls d'armure sont enlevés de Rhyolith."
 	L.armor_icon = 98632
-	L.armor_message = "%d%% d'armure restantes"
+	L.armor_message = "Il reste %d%% d'armure"
 	L.armor_gone_message = "Armure détruite !"
 
-	L.adds_header = "Adds"
+	L.adds_header = "Étincelles/Fragments"
 	L.big_add_message = "Étincelle de Rhyolith apparue !"
 	L.small_adds_message = "Arrivée de fragments de Rhyolith !"
 
 	L.phase2_warning = "Phase 2 imminente !"
 
-	L.molten_message = "%dx cumuls sur le boss !"
+	L.molten_message = "%d cumuls de fournaise sur le boss !"
 
 	L.stomp_message = "Piétinement ! Piétinement ! Piétinement !"
 	L.stomp_warning = "Prochain piétinement"
@@ -91,9 +91,9 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
 if L then
-	L.intermission_end_trigger1 = "Sulfuras sera votre fin."
-	L.intermission_end_trigger2 = "À genoux, mortels !"
-	L.intermission_end_trigger3 = "Assez ! Je vais en finir."
+	L.intermission_end_trigger1 = "Sulfuras sera votre fin"
+	L.intermission_end_trigger2 = "À genoux, mortels"
+	L.intermission_end_trigger3 = "Je vais en finir"
 	L.phase4_trigger = "Trop tôt..." -- à vérifier
 	L.seed_explosion = "Explosion des graînes !"
 	L.intermission_bar = "Intervalle"
