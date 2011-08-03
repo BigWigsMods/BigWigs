@@ -9,7 +9,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f火源之界|r]
 ## Title-koKR: Big Wigs [|cffeda55f불의 땅|r]
 ## Notes: Big Wigs Modules for Firelands
-## Notes-ruRU: Модуль Big Wigs для Огненные Просторы
+## Notes-ruRU: Модуль Big Wigs для Огненных Просторов
 ## Notes-deDE: Big Wigs Module für die Feuerlande.
 ## Notes-esES: Módulos de las Tierras de Fuego para Big Wigs.
 ## Notes-frFR: Modules Big Wigs concernant les Terres de Feu.
