@@ -37,13 +37,20 @@ if L then
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
 	L.molt_bar = "<下一脱毛>"
+	L.cataclysm_bar = "Next Cataclysm"
 
 	L.stage_message = "阶段：>%d<！"
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
+	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
+	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
+	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
+	L.restart_emote = "99925" -- Full Power spell ID used in the emote
+
 	L.flight = "飞行助手"
 	L.flight_desc = "当你“火焰之翼”持续时显示计时条，使用超级醒目功能。"
+	L.flight_icon = 98619
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhCN")

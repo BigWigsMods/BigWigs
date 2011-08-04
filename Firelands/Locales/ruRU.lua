@@ -38,6 +38,7 @@ if L then
 	L.no_stacks_message = "У тебя нет ни 1 пера, дружище"
 	L.moonkin_message = "У пингвинов тоже есть крылья...собери три пера и лети!"
 	L.molt_bar = "След. линька"
+	L.cataclysm_bar = "Next Cataclysm"
 
 	L.stage_message = "Фаза %d"
 

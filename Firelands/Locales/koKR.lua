@@ -37,6 +37,10 @@ if L then
 	L.encounter_restart = "최대 힘! 다시 단계 반복..."
 	L.no_stacks_message = "당신은 깃털이 없습니다. 생각을 가지세요..."
 	L.moonkin_message = "헛짓은 그만~! 깃털을 주우세요!"
+	L.molt_bar = "Next Molt"
+	L.cataclysm_bar = "Next Cataclysm"
+
+	L.stage_message = "Phase %d"
 
 	L.worm_emote = "녹아내린 알이 부화하려고 합니다!"
 	L.phase2_soon_emote = "알리스라조르가 빠른 속도로 원을 그리며 날아다닙니다!"
@@ -44,6 +48,10 @@ if L then
 	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
 	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
 	L.restart_emote = "99925" -- Full Power spell ID used in the emote
+
+	L.flight = "Flight Assist"
+	L.flight_desc = "Show a bar with the duration of 'Wings of Flame' on you, ideally used with the Super Emphasize feature."
+	L.flight_icon = 98619
 end
 
 L = BigWigs:NewBossLocale("Shannox", "koKR")

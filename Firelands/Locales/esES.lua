@@ -38,6 +38,7 @@ if L then
 	L.no_stacks_message = "No sé si te importa, pero no tienes plumas"
 	L.moonkin_message = "Deja de fingir y consigue algunas plumas reales"
 	L.molt_bar = "Siguiente Muda"
+	L.cataclysm_bar = "Next Cataclysm"
 
 	L.stage_message = "Fase %d"
 

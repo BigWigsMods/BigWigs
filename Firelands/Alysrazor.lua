@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchling, Majordomo Staghelm, Molten Feather
 
-local firestorm, cataclysm = (GetSpellInfo(101659)), (GetSpellInfo(100761))
+local firestorm, cataclysm = GetSpellInfo(101659)
 local woundTargets = mod:NewTargetList()
 local cataclysmCount, moltCount = 0, 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
 
@@ -25,6 +25,7 @@ if L then
 	L.no_stacks_message = "Dunno if you care, but you have no feathers"
 	L.moonkin_message = "Stop pretending and get some real feathers"
 	L.molt_bar = "Next Molt"
+	L.cataclysm_bar = "Next Cataclysm"
 
 	L.stage_message = "Stage %d"
 
@@ -100,7 +101,7 @@ function mod:OnEngage(diff)
 	if diff > 2 then
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
-		self:Bar(100761, cataclysm, 37, 100761)
+		self:Bar(100761, L["cataclysm_bar"], 37, 100761)
 	else
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, L["molt_bar"], 12.5, 99464)
@@ -187,12 +188,11 @@ end
 function mod:Firestorm(_, spellId, _, _, spellName)
 	self:FlashShake(100744)
 	self:Message(100744, spellName, "Urgent", spellId, "Alert")
-	self:Bar(100744, spellName, 10, spellId)
 	-- Only show a bar for next if we have seen less than 3 Cataclysms
 	if cataclysmCount < 3 then
 		self:Bar(100744, "~"..spellName, 82, spellId)
 	end
-	self:Bar(100761, cataclysm, 10, 100761)
+	self:Bar(100761, L["cataclysm_bar"], 10, 100761)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
@@ -200,7 +200,7 @@ function mod:Cataclysm(_, spellId, _, _, spellName)
 	-- Only show a bar if this is the first or third Cataclysm this phase
 	cataclysmCount = cataclysmCount + 1
 	if cataclysmCount == 1 or cataclysmCount == 3 then
-		self:Bar(100761, spellName, 32, 100761)
+		self:Bar(100761, L["cataclysm_bar"], 32, 100761)
 	end
 end
 
@@ -254,7 +254,7 @@ do
 			self:UnregisterEvent("UNIT_POWER")
 			if self:Difficulty() > 2 then
 				cataclysmCount = 0
-				self:Bar(100761, cataclysm, 18, 100761)
+				self:Bar(100761, L["cataclysm_bar"], 18, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else

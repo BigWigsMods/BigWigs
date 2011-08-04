@@ -38,6 +38,7 @@ if L then
 	L.no_stacks_message = "Du hast keine Federn!"
 	L.moonkin_message = "Beschaff' dir richtige Federn!"
 	L.molt_bar = "Nächste Mauser"
+	L.cataclysm_bar = "Next Cataclysm"
 
 	L.stage_message = "Phase %d"
 
