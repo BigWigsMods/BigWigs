@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchling, Majordomo Staghelm, Molten Feather
 
-local firestorm, cataclysm = GetSpellInfo(101659)
+local firestorm = GetSpellInfo(101659)
 local woundTargets = mod:NewTargetList()
 local cataclysmCount, moltCount = 0, 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
 
