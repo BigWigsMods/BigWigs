@@ -38,9 +38,9 @@ if L then
 	L.no_stacks_message = "Juste au cas où : vous n'avez pas de plumes."
 	L.moonkin_message = "Arrêtez de faire genre et récupérez de vraies plumes."
 	L.molt_bar = "Prochaine mue"
-	L.cataclysm_bar = "Next Cataclysm"
+	L.cataclysm_bar = "Prochain cataclysme"
 
-	L.stage_message = "Phase %d"
+	L.stage_message = "Phase %d "
 
 	L.worm_emote = "Des vers de lave embrasés surgissent du sol !"
 	L.phase2_soon_emote = "Alysrazor commence à voler en cercles rapides !"
