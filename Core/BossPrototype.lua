@@ -265,6 +265,12 @@ do
 	end
 	boss.GetInstanceDifficulty = boss.Difficulty
 
+	-- XXX Maybe expand this to accept guid and unitId.
+	function boss:GetCID(guid)
+		local creatureId = tonumber(guid:sub(7, 10), 16)
+		return creatureId
+	end
+
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
 		CombatLogClearEntries()
