@@ -49,7 +49,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		98237, 100115,
+		98237, 100115, 98164,
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},
 		{98498, "FLASHSHAKE"}, 100178,
 		99317, {99849, "FLASHSHAKE", "SAY"},
@@ -84,6 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
+	self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 98164)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
 	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877, 100885, 100882, 100879, 100884, 100881, 100878)
 	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
@@ -147,6 +148,10 @@ end
 
 function mod:Wound(player, spellId, _, _, _, buffStack, _, _, _, dGUID)
 	self:Bar(99399, L["wound_bar"]:format(player), 21, spellId)
+end
+
+function mod:MagmaTrap(player, spellId, _, _, spellName)
+	self:Bar(98164, "~"..spellName, 25, spellId)
 end
 
 do
