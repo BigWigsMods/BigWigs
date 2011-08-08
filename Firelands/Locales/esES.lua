@@ -10,8 +10,8 @@ end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "esES")
 if L then
-	L.armor = "Obsidian Armor"
-	L.armor_desc = "Warn when armor stacks are being removed from Rhyolith."
+	L.armor = "Armadura obsidiana"
+	L.armor_desc = "Avisar cuando los stacs de armadura estén desapareciendo de Piroclaso."
 	L.armor_icon = 98632
 	L.armor_message = "%d%% armadura restante"
 	L.armor_gone_message = "¡Armadura destruida!"
@@ -38,7 +38,7 @@ if L then
 	L.no_stacks_message = "No sé si te importa, pero no tienes plumas"
 	L.moonkin_message = "Deja de fingir y consigue algunas plumas reales"
 	L.molt_bar = "Siguiente Muda"
-	L.cataclysm_bar = "Next Cataclysm"
+	L.cataclysm_bar = "Próximo cataclismo"
 
 	L.stage_message = "Fase %d"
 
@@ -59,19 +59,19 @@ if L then
 	L.immolation_trap = "¡Inmolación en %s!"
 	L.crystal_trap = "Prisión de cristal"
 
-	L.traps_header = "Traps"
-	L.immolation = "Immolation Trap"
-	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
+	L.traps_header = "Trampas"
+	L.immolation = "Trampa de inmolación"
+	L.immolation_desc = "Alerta cuando Rostrofuria o Desmembrador pasen por una trampa de inmolación."
 	L.immolation_icon = 99838
-	L.crystal = "Crystal Trap"
-	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
+	L.crystal = "Trampa de cristal"
+	L.crystal_desc = "Avisa a quien Shannox lance una trampa de cristal debajo."
 	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "esES")
 if L then
-	L.torment = "Torment stacks on Focus"
-	L.torment_desc = "Warn when your /focus gains another torment stack."
+	L.torment = "Stacs de Tormento en Foco"
+	L.torment_desc = "Avisa cuando tu /focus gana otro stac de Tormento."
 	L.torment_message = "%2$dx Tormento en %1$s"
 
 	L.blade_bar = "~Hoja"
