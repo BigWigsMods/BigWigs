@@ -82,16 +82,15 @@ end
 --
 
 function mod:Obsidian(_, spellId, _, _, _, _, _, _, _, dGUID)
-	local unitId = tonumber(dGUID:sub(7, 10), 16)
-	if unitId ~= 52558 then return end
-	self:Message("armor", L["armor_gone_message"], "Positive", spellId)
+	if self:GetCID(dGUID) == 52558 then
+		self:Message("armor", L["armor_gone_message"], "Positive", spellId)
+	end
 end
 
 function mod:ObsidianStack(_, spellId, _, _, _, buffStack, _, _, _, dGUID)
-	local unitId = tonumber(dGUID:sub(7, 10), 16)
-	if unitId ~= 52558 then return end
-	if buffStack % 20 ~= 0 then return end -- Only warn every 20
-	self:Message("armor", L["armor_message"]:format(buffStack), "Positive", spellId)
+	if buffStack % 20 == 0 and self:GetCID(dGUID) == 52558 then -- Only warn every 20
+		self:Message("armor", L["armor_message"]:format(buffStack), "Positive", spellId)
+	end
 end
 
 function mod:Spark(_, spellId)
@@ -112,9 +111,9 @@ function mod:Stomp(_, spellId, _, _, spellName)
 end
 
 function mod:MoltenArmor(player, spellId, _, _, spellName, stack, _, _, _, dGUID)
-	local unitId = tonumber(dGUID:sub(7, 10), 16)
-	if stack < 4 or stack % 2 ~= 0 or unitId ~= 52558 then return end
-	self:Message(98255, L["molten_message"]:format(stack), "Attention", spellId)
+	if stack > 3 and stack % 2 == 0 and self:GetCID(dGUID) == 52558 then
+		self:Message(98255, L["molten_message"]:format(stack), "Attention", spellId)
+	end
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
