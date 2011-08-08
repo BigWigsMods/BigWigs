@@ -92,10 +92,10 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "ruRU")
 if L then
-	L.intermission_end_trigger1 = "Сульфурас уничтожит вас!"
-	L.intermission_end_trigger2 = "На колени, смертные!"
-	L.intermission_end_trigger3 = "Пора покончить с этим."
-	L.phase4_trigger = "Слишком рано..."
+	L.intermission_end_trigger1 = "Сульфурас уничтожит вас"
+	L.intermission_end_trigger2 = "На колени, смертные"
+	L.intermission_end_trigger3 = "Пора покончить с этим"
+	L.phase4_trigger = "Слишком рано"
 	L.seed_explosion = "Взрыв семян!"
 	L.intermission_bar = "Переходная фаза!"
 	L.intermission_message = "Переходная фаза"
