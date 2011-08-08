@@ -2,6 +2,7 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "enUS", true, "
 
 -- Prototype.lua common words
 L.you = "%s on YOU!"
+L.underyou = "%s under YOU!"
 L.other = "%s: %s"
 L.say = "%s on ME!"
 

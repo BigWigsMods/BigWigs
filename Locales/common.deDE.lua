@@ -4,6 +4,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "%s auf DIR!"
+L.underyou = "%s under YOU!"
 L.other = "%s: %s"
 L.say = "%s auf MIR!"
 

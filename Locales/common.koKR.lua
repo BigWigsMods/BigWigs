@@ -4,6 +4,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "당신은 %s!"
+L.underyou = "%s under YOU!"
 L.other = "%s: %s"
 L.say = "나에게 %s!"
 
