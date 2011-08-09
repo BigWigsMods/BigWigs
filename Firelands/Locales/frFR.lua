@@ -99,7 +99,7 @@ if L then
 	L.seed_explosion = "Explosion des graînes !"
 	L.intermission_bar = "Intervalle"
 	L.intermission_message = "Intervalle !"
-	L.sons_left = "%d |4fils restants:fils restant;"
+	L.sons_left = "%d |4fils restant:fils restants;"
 	L.engulfing_close = "Section proche engloutie !"
 	L.engulfing_middle = "Section centrale engloutie !"
 	L.engulfing_far = "Section éloignée engloutie !"
