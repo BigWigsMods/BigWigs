@@ -31,10 +31,10 @@ end
 L = BigWigs:NewBossLocale("Magmaw", "zhCN")
 if L then
 	-- heroic
-	L.blazing = "Skeleton Adds"
-	L.blazing_desc = "当召唤npc#49416时发出警报。"
-	L.blazing_message = "即將 npc#49416！"
-	L.blazing_bar = "<下一npc#49416>"
+	L.blazing = "炽焰白骨结构体"
+	L.blazing_desc = "当召唤炽焰白骨结构体时发出警报。"
+	L.blazing_message = "即將 炽焰白骨结构体！"
+	L.blazing_bar = "<下一炽焰白骨结构体>"
 
 	L.armageddon = "末日降临"
 	L.armageddon_desc = "当头部阶段施放末日降临时发出警报。"
