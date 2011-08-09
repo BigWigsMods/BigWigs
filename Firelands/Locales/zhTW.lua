@@ -37,7 +37,7 @@ if L then
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
 	L.molt_bar = "<下一脫毛>"
-	L.cataclysm_bar = "Next Cataclysm"
+	L.cataclysm_bar = "<下一災變>"
 
 	L.stage_message = "階段：>%d<！"
 

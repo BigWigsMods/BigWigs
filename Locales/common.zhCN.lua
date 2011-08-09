@@ -4,7 +4,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = ">你< %s！"
-L.underyou = "%s under YOU!"
+L.underyou = ">你<脚下：%s！"
 L.other = "%s：>%s<！"
 L.say = ">我< %s！"
 
