@@ -115,15 +115,20 @@ end
 --
 
 function mod:Phase4()
-	self:SendMessage("BigWigs_StopBar", self, livingMeteor)
-	phase = 4
-	self:OpenProximity(6)
-	 -- not sure if we want a different option key or different icon
-	mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
-	self:Bar(100479, (GetSpellInfo(100479)), 34, 100479) -- Breadth of Frost
-	self:Bar(100714, (GetSpellInfo(100714)), 51, 100714) -- Cloudburst
-	self:Bar(100646, (GetSpellInfo(100646)), 68, 100646) -- Entraping Roots
-	self:Bar(100997, (GetSpellInfo(100997)), 90, 100997) -- EmpowerSulfuras
+	--10% Yell is Phase 4 for heroic, and victory for normal
+	if self:Difficulty() > 2 then
+		self:SendMessage("BigWigs_StopBar", self, livingMeteor)
+		phase = 4
+		self:OpenProximity(6)
+		 -- not sure if we want a different option key or different icon
+		mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
+		self:Bar(100479, (GetSpellInfo(100479)), 34, 100479) -- Breadth of Frost
+		self:Bar(100714, (GetSpellInfo(100714)), 51, 100714) -- Cloudburst
+		self:Bar(100646, (GetSpellInfo(100646)), 68, 100646) -- Entraping Roots
+		self:Bar(100997, (GetSpellInfo(100997)), 90, 100997) -- EmpowerSulfuras
+	else
+		self:Win()
+	end
 end
 
 function mod:EmpowerSulfuras(_, spellId, _, _, spellName)
