@@ -4,7 +4,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "%s на ВАС"
-L.underyou = "%s under YOU!"
+L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
 L.say = "%s on ME!"
 
