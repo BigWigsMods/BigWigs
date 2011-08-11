@@ -64,6 +64,10 @@ if L then
 	L.immolation = "제물의 덫"
 	L.immolation_desc = "제물의 덫에 대해 알립니다."
 	L.immolation_icon = 99838
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_icon = 99838
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "수정 감옥 덫"
 	L.crystal_desc = "수정 감옥 덫에 대해 알립니다."
 	L.crystal_icon = 99836

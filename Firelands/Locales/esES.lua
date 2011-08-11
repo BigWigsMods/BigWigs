@@ -63,6 +63,10 @@ if L then
 	L.immolation = "Trampa de inmolación"
 	L.immolation_desc = "Alerta cuando Rostrofuria o Desmembrador pasen por una trampa de inmolación."
 	L.immolation_icon = 99838
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_icon = 99838
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Trampa de cristal"
 	L.crystal_desc = "Avisa a quien Shannox lance una trampa de cristal debajo."
 	L.crystal_icon = 99836

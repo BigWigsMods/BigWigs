@@ -64,6 +64,10 @@ if L then
 	L.immolation = "Обжигающая ловушка"
 	L.immolation_desc = "Объявлять, когда Лютогрыз или Косоморд попадают в обжигающую ловушку."
 	L.immolation_icon = 99838
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_icon = 99838
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Кристаллическая ловушка"
 	L.crystal_desc = "Объявлять, когда Шэннокс бросает кристаллическую ловушку."
 	L.crystal_icon = 99836

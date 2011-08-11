@@ -64,6 +64,10 @@ if L then
 	L.immolation = "Piège d'immolation"
 	L.immolation_desc = "Prévient quand Croquepatte ou Ragegueule marche sur un piège d'immolation."
 	L.immolation_icon = 99838
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_icon = 99838
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Piège de cristal"
 	L.crystal_desc = "Prévient en dessous de qui Shannox incante un piège de cristal."
 	L.crystal_icon = 99836

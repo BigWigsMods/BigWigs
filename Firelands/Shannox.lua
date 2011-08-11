@@ -18,9 +18,13 @@ if L then
 	L.crystal_trap = "Crystal Trap"
 
 	L.traps_header = "Traps"
-	L.immolation = "Immolation Trap"
+	L.immolation = "Immolation Trap on Dog"
 	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
 	L.immolation_icon = 99838
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_icon = 99838
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Crystal Trap"
 	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
 	L.crystal_icon = 99836
@@ -34,7 +38,7 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		100002, {100129, "ICON"}, "berserk", "bosskill",
-		"immolation", {"crystal", "SAY", "FLASHSHAKE"},
+		"immolation", {"immolationyou", "FLASHSHAKE"}, {"crystal", "SAY", "FLASHSHAKE"},
 	}, {
 		[100002] = "general",
 		["immolation"] = L["traps_header"],
@@ -46,7 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FaceRage", 99945, 99947)
 	self:Log("SPELL_AURA_REMOVED", "FaceRageRemoved", 99945, 99947)
 	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978)
-	self:Log("SPELL_SUMMON", "CrystalTrap", 99836)
+	self:Log("SPELL_SUMMON", "Traps", 99836, 99839)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -64,16 +68,23 @@ end
 
 do
 	local timer, fired = nil, 0
-	local function trapWarn()
+	local function trapWarn(spellId)
 		fired = fired + 1
 		if UnitExists("boss1target") and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
-			--If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:TargetMessage("crystal", L["crystal_trap"], (UnitName("boss1target")), "Urgent", 99836, "Alarm")
+			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
+			if spellId == 99836 then
+				mod:TargetMessage("crystal", L["crystal_trap"], (UnitName("boss1target")), "Urgent", spellId, "Alarm")
+			end
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit("boss1target", "player") then
-				mod:FlashShake("crystal")
-				mod:Say("crystal", CL["say"]:format(L["crystal_trap"]))
+				if spellId == 99836 then
+					mod:FlashShake("crystal")
+					mod:Say("crystal", CL["say"]:format(L["crystal_trap"]))
+				else
+					mod:FlashShake("immolationyou")
+					mod:LocalMessage("immolationyou", CL["underyou"]:format(L["immolationyou_message"]), "Personal", spellId, "Alarm")
+				end
 			end
 			return
 		end
@@ -84,17 +95,17 @@ do
 			timer = nil
 		end
 	end
-	function mod:CrystalTrap()
+	function mod:Traps(_, spellId)
 		fired = 0
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(trapWarn, 0.05)
+			timer = self:ScheduleRepeatingTimer(trapWarn, 0.05, spellId)
 		end
 	end
 end
 
 function mod:ImmolationTrap(player, spellId, _, _, spellName, _, _, _, _, dGUID)
-	local unitId = tonumber(dGUID:sub(7, 10), 16)
-	if unitId == 53695 or unitId == 53694 then
+	local creatureId = self:GetCID(dGUID)
+	if creatureId == 53695 or creatureId == 53694 then
 		self:Message("immolation", L["immolation_trap"]:format(player), "Attention", spellId)
 	end
 end

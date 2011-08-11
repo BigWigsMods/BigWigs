@@ -59,6 +59,10 @@ if L then
 	L.immolation = "Feuerbrandfalle"
 	L.immolation_desc = "Warnt, wenn Augenkratzer oder Wadenbeißer auf eine Feuerbrandfalle tritt."
 	L.immolation_icon = 99838
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_icon = 99838
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Kristallgefängnisfalle"
 	L.crystal_desc = "Warnt, unter wen Shannox die Kristallgefängnisfalle ablegt."
 	L.crystal_icon = 99836

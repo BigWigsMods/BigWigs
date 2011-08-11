@@ -57,6 +57,9 @@ if L then
 	L.traps_header = "陷阱"
 	L.immolation = "献祭陷阱"
 	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
+	L.immolationyou = "Immolation Trap under You"
+	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
+	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Crystal Trap"
 	L.crystal_desc = "Warn whom Shannox casts a Crystal Trap under."
 end
