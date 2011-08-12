@@ -57,9 +57,9 @@ if L then
 	L.traps_header = "陷阱"
 	L.immolation = "獻祭陷阱"
 	L.immolation_desc = "當怒面或裂軀階段獻祭陷阱時發出警報。"
-	L.immolationyou = "Immolation Trap under You"
-	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
-	L.immolationyou_message = "Immolation Trap"
+	L.immolationyou = ">你<脚下 獻祭陷阱！"
+	L.immolationyou_desc = "當你腳下獻祭陷阱被召喚時發出警報。"
+	L.immolationyou_message = "獻祭陷阱！"
 	L.crystal = "投擲水晶"
 	L.crystal_desc = "當夏諾克斯施放水晶囚牢陷阱時發出警報。"
 end
