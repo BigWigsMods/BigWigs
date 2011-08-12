@@ -41,6 +41,8 @@ if L then
 	L.cataclysm_bar = "다음 재앙"
 
 	L.stage_message = "%d 단계"
+	L.kill_message = "It's now or never - Kill her!"
+	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
 
 	L.worm_emote = "녹아내린 알이 부화하려고 합니다!"
 	L.phase2_soon_emote = "알리스라조르가 빠른 속도로 원을 그리며 날아다닙니다!"

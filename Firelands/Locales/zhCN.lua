@@ -40,6 +40,8 @@ if L then
 	L.cataclysm_bar = "<下一灾变>"
 
 	L.stage_message = "阶段：>%d<！"
+	L.kill_message = "It's now or never - Kill her!"
+	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"

@@ -40,6 +40,8 @@ if L then
 	L.cataclysm_bar = "<下一災變>"
 
 	L.stage_message = "階段：>%d<！"
+	L.kill_message = "It's now or never - Kill her!"
+	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
 
 	L.worm_emote = "熾炎熔岩蟲從地上鑽了出來!"
 	L.phase2_soon_emote = "艾里絲拉卓開始快速地在空中盤旋!"
@@ -59,7 +61,7 @@ if L then
 	L.immolation_desc = "當怒面或裂軀階段獻祭陷阱時發出警報。"
 	L.immolationyou = ">你<脚下 獻祭陷阱！"
 	L.immolationyou_desc = "當你腳下獻祭陷阱被召喚時發出警報。"
-	L.immolationyou_message = "獻祭陷阱！"
+	L.immolationyou_message = "獻祭陷阱"
 	L.crystal = "投擲水晶"
 	L.crystal_desc = "當夏諾克斯施放水晶囚牢陷阱時發出警報。"
 end

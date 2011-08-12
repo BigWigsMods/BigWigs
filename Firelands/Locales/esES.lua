@@ -41,6 +41,8 @@ if L then
 	L.cataclysm_bar = "Próximo cataclismo"
 
 	L.stage_message = "Fase %d"
+	L.kill_message = "It's now or never - Kill her!"
+	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
 
 	L.worm_emote = "¡Gusanos de lava ígneos surgen del suelo!"
 	L.phase2_soon_emote = "Alysrazor empieza a volar rápido en círculos."

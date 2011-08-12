@@ -8,7 +8,7 @@ mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchli
 
 local firestorm = GetSpellInfo(101659)
 local woundTargets = mod:NewTargetList()
-local cataclysmCount, moltCount = 0, 0 -- So that Cataclysm knows when to create bars for the next Cataclysm
+local cataclysmCount, moltCount, burnCount = 0, 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,6 +28,8 @@ if L then
 	L.cataclysm_bar = "Next Cataclysm"
 
 	L.stage_message = "Stage %d"
+	L.kill_message = "It's now or never - Kill her!"
+	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
@@ -53,14 +55,14 @@ function mod:GetOptions(CL)
 		99432,
 		99844, 99925,
 		{100744, "FLASHSHAKE"}, 100761,
-		"berserk", "bosskill"
+		"bosskill"
 	}, {
 		[99362] = "ej:2820", --Stage 1: Flight
 		[99816] = "ej:2821", --Stage 2: Tornadoes
 		[99432] = "ej:2822", --Stage 3: Burnout
 		[99844] = "ej:2823", --Stage 4: Re-Ignite
 		[100744] = "heroic",
-		berserk = "general"
+		bosskill = "general"
 	}
 end
 
@@ -96,13 +98,14 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Berserk(900) -- assumed
-	cataclysmCount, moltCount = 0, 0
+	cataclysmCount, moltCount, burnCount = 0, 0, 0
 	if diff > 2 then
+		self:Message(99816, L["engage_message"]:format(4), "Attention", 98725) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
 		self:Bar(100761, L["cataclysm_bar"], 37, 100761)
 	else
+		self:Message(99816, L["engage_message"]:format(3), "Attention", 98725) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, L["molt_bar"], 12.5, 99464)
 	end
@@ -219,16 +222,6 @@ function mod:BlazingClaw(player, spellId, _, _, _, stack)
 	end
 end
 
---[[
-In case we need to rebase this on emotes instead of unit power, here's a few noteworthy events
-"<2329.1> RAID_BOSS_EMOTE#Fiery Lava Worms erupt from the ground!#Plump Lava Worm#0#false", -- [17]
-"<2391.0> RAID_BOSS_EMOTE#Fiery Lava Worms erupt from the ground!#Plump Lava Worm#0#false", -- [18]
-"<2454.5> RAID_BOSS_EMOTE#Alysrazor begins to fly in a rapid circle!  The harsh winds will remove Wings of Flame!#Alysrazor#0#false", -- [19]
-"<2461.0> RAID_BOSS_EMOTE#|TInterface\\Icons\\ability_mage_firestarter.blp:20|t The harsh winds form a |cFFFF0000|Hspell:99794|h[Fiery Vortex]|h|r!#Fiery Vortex#0#false", -- [20]
-"<2485.0> RAID_BOSS_EMOTE#|TInterface\\Icons\\spell_holiday_tow_spicecloud.blp:20|t Alysrazor's fire |cFFFF0000|Hspell:99432|h[Burns Out]|h|r!#Alysrazor#0#false", -- [21]
-"<2515.6> RAID_BOSS_EMOTE#|TInterface\\Icons\\inv_elemental_primal_fire.blp:20|t Alysrazor's firey core |cFFFF0000|Hspell:99922|h[Re-Ignites]|h|r!#Alysrazor#0#false", -- [22]
-"<2542.8> RAID_BOSS_EMOTE#|TInterface\\Icons\\spell_shaman_improvedfirenova.blp:20|t Alysrazor is at |cFFFF0000|Hspell:99925|h[Full Power]|h|r!#Alysrazor#0#false", -- [23]
-]]
 do
 	local halfWarned = false
 	local fullWarned = false
@@ -238,7 +231,10 @@ do
 		self:Message(99432, (L["stage_message"]:format(3))..": "..spellName, "Positive", spellId, "Alert")
 		self:Bar(99432, "~"..spellName, 33, spellId)
 		halfWarned, fullWarned = false, false
-		self:RegisterEvent("UNIT_POWER")
+		burnCount = burnCount + 1
+		if burnCount < 3 then
+			self:RegisterEvent("UNIT_POWER")
+		end
 	end
 
 	function mod:UNIT_POWER(_, unit)
@@ -264,11 +260,15 @@ do
 			end
 		end
 	end
-end
 
-function mod:ReIgnite()
-	self:Message(99925, (L["stage_message"]:format(4))..": "..(GetSpellInfo(99922)), "Positive", 99922, "Alert")
-	self:Bar(99925, GetSpellInfo(99925), 25, 99925)
-	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(99432))
+	function mod:ReIgnite()
+		if burnCount < 3 then
+			self:Message(99925, (L["stage_message"]:format(4))..": "..(GetSpellInfo(99922)), "Positive", 99922, "Alert")
+			self:Bar(99925, GetSpellInfo(99925), 25, 99925)
+		else
+			self:Message(99925, L["kill_message"], "Positive", 99922, "Alert")
+		end
+		self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(99432))
+	end
 end
 
