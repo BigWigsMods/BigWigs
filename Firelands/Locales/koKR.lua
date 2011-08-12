@@ -12,7 +12,6 @@ L = BigWigs:NewBossLocale("Lord Rhyolith", "koKR")
 if L then
 	L.armor = "흑요석 갑옷"
 	L.armor_desc = "라이올라스의 흑요석 갑옷에 대한 중첩 & 사라짐을 알립니다."
-	L.armor_icon = 98632
 	L.armor_message = "흑요석 갑옷 - %d%%"
 	L.armor_gone_message = "흑요석 갑옷 사라짐!"
 
@@ -53,7 +52,6 @@ if L then
 
 	L.flight = "날개 지속"
 	L.flight_desc = "'화염의 날개'의 지속 타이머 바를 표시합니다. 특수 강조바와 카운트 기능을 이용한다면 더 효율적입니다."
-	L.flight_icon = 98619
 end
 
 L = BigWigs:NewBossLocale("Shannox", "koKR")
@@ -65,14 +63,11 @@ if L then
 	L.traps_header = "덫"
 	L.immolation = "제물의 덫"
 	L.immolation_desc = "제물의 덫에 대해 알립니다."
-	L.immolation_icon = 99838
 	L.immolationyou = "Immolation Trap under You"
 	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
-	L.immolationyou_icon = 99838
 	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "수정 감옥 덫"
 	L.crystal_desc = "수정 감옥 덫에 대해 알립니다."
-	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "koKR")
@@ -109,7 +104,10 @@ if L then
 	L.engulfing_middle = "중간 지역에 휘몰아치는 불길"
 	L.engulfing_far = "먼 지역에 휘몰아치는 불길"
 	L.hand_bar = "다음 넉백"
-	L.wound_bar = "상처: %s"
 	L.ragnaros_back_message = "라그 돌아옴, 파티 정비!"
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 

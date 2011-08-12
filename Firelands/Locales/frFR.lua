@@ -12,7 +12,6 @@ L = BigWigs:NewBossLocale("Lord Rhyolith", "frFR")
 if L then
 	L.armor = "Armure en obsidienne"
 	L.armor_desc = "Prévient quand des cumuls d'armure sont enlevés de Rhyolith."
-	L.armor_icon = 98632
 	L.armor_message = "Il reste %d%% d'armure"
 	L.armor_gone_message = "Armure détruite !"
 
@@ -53,7 +52,6 @@ if L then
 
 	L.flight = "Assistance en vol"
 	L.flight_desc = "Affiche une barre indiquant la durée de vos Ailes de flamme. Idéal si utilisé avec la fonctionnalité de super mise en évidence."
-	L.flight_icon = 98619
 end
 
 L = BigWigs:NewBossLocale("Shannox", "frFR")
@@ -65,21 +63,17 @@ if L then
 	L.traps_header = "Pièges"
 	L.immolation = "Piège d'immolation"
 	L.immolation_desc = "Prévient quand Croquepatte ou Ragegueule marche sur un piège d'immolation."
-	L.immolation_icon = 99838
 	L.immolationyou = "Piège d'immolation en dessous de vous"
 	L.immolationyou_desc = "Prévient quand un piège d'immolation est invoqué en dessous de vous."
-	L.immolationyou_icon = 99838
 	L.immolationyou_message = "Piège d'immolation"
 	L.crystal = "Piège de cristal"
 	L.crystal_desc = "Prévient en dessous de qui Shannox incante un piège de cristal."
-	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "frFR")
 if L then
 	L.torment = "Cumuls de Torment sur la focalisation"
 	L.torment_desc = "Prévient quand votre /focus gagne un autre cumul de tourment."
-	L.torment_icon = 99256
 	--L.torment_message = "%2$dx tourments sur %1$s"
 
 	L.blade_bar = "~Prochaine Lame"
@@ -110,6 +104,9 @@ if L then
 	L.engulfing_middle = "Section centrale engloutie !"
 	L.engulfing_far = "Section éloignée engloutie !"
 	L.hand_bar = "Prochain \"knockback\""
-	L.wound_bar = "Blessure sur %s"
 	L.ragnaros_back_message = "Ragnaros est de retour !"
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end

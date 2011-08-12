@@ -38,8 +38,12 @@ if L then
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
 	L.hand_bar = "Next knockback"
-	L.wound_bar = "Wound on %s"
 	L.ragnaros_back_message = "Raggy is back, parry on!" -- yeah thats right PARRY ON!
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_icon = 99399
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 L = mod:GetLocale()
 
@@ -54,7 +58,7 @@ function mod:GetOptions(CL)
 		{98498, "FLASHSHAKE"}, 100178,
 		99317, {99849, "FLASHSHAKE", "SAY"},
 		100190, 100479, 100646, 100714, 100997,
-		98710, 99399, "proximity", "berserk", "bosskill"
+		98710, "wound", "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
 		[98953] = L["intermission_bar"],
@@ -151,8 +155,12 @@ function mod:BreadthofFrost(_, spellId, _, _, spellName)
 	self:Bar(100479, spellName, 45, spellId)
 end
 
-function mod:Wound(player, spellId, _, _, _, buffStack, _, _, _, dGUID)
-	self:Bar(99399, L["wound_bar"]:format(player), 21, spellId)
+function mod:Wound(player, spellId, _, _, _, buffStack)
+	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
+	self:Bar("wound", L["wound_message"]:format(player, buffStack), 21, spellId)
+	if buffStack > 4 then
+		self:TargetMessage("wound", L["wound_message"], player, "Urgent", spellId, "Info", buffStack)
+	end
 end
 
 function mod:MagmaTrap(player, spellId, _, _, spellName)

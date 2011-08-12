@@ -12,7 +12,6 @@ L = BigWigs:NewBossLocale("Lord Rhyolith", "deDE")
 if L then
 	L.armor = "Obsidianrüstung"
 	L.armor_desc = "Warnt, wenn Rüstungsstapel von Lord Rhyolith entfernt werden."
-	L.armor_icon = 98632
 	L.armor_message = "%d%% Rüstung noch"
 	L.armor_gone_message = "Rüstung weg!"
 
@@ -60,21 +59,17 @@ if L then
 	L.traps_header = "Fallen"
 	L.immolation = "Feuerbrandfalle"
 	L.immolation_desc = "Warnt, wenn Augenkratzer oder Wadenbeißer auf eine Feuerbrandfalle tritt."
-	L.immolation_icon = 99838
 	L.immolationyou = "Immolation Trap under You"
 	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
-	L.immolationyou_icon = 99838
 	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Kristallgefängnisfalle"
 	L.crystal_desc = "Warnt, unter wen Shannox die Kristallgefängnisfalle ablegt."
-	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "deDE")
 if L then
 	L.torment = "Anzahl der 'Qual'-Stapel auf deinem Fokusziel"
 	L.torment_desc = "Warnt, wenn dein /focus weitere 'Qual'-Stapel erhält."
-	L.torment_icon = 99256
 
 	L.blade_bar = "Nächste Klinge"
 	L.shard_message = "Splitter %d!"
@@ -104,7 +99,10 @@ if L then
 	L.engulfing_middle = "Mitte entflammt!"
 	L.engulfing_far = "Außen entflammt!"
 	L.hand_bar = "Nächster Rückstoß"
-	L.wound_bar = "Wunde: %s"
 	L.ragnaros_back_message = "Raggy wieder da, auf geht's!"
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 

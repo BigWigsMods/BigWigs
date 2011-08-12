@@ -12,7 +12,6 @@ L = BigWigs:NewBossLocale("Lord Rhyolith", "ruRU")
 if L then
 	L.armor = "Обсидиановые доспехи"
 	L.armor_desc = "Предупрежать, когда с босса спадают стаки доспехов."
-	L.armor_icon = 98632
 	L.armor_message = "Осталось брони: %d%%"
 	L.armor_gone_message = "Брони больше нет!"
 
@@ -53,7 +52,6 @@ if L then
 
 	L.flight = "Помощник летчика"
 	L.flight_desc = "Отсчитывать время действия бафа 'Огненные крылья'. Советую использовать вместе с функцией 'Супер увеличение'."
-	L.flight_icon = 98619
 end
 
 L = BigWigs:NewBossLocale("Shannox", "ruRU")
@@ -65,22 +63,17 @@ if L then
 	L.traps_header = "Ловушки"
 	L.immolation = "Обжигающая ловушка"
 	L.immolation_desc = "Объявлять, когда Лютогрыз или Косоморд попадают в обжигающую ловушку."
-	L.immolation_icon = 99838
 	L.immolationyou = "Immolation Trap under You"
 	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
-	L.immolationyou_icon = 99838
 	L.immolationyou_message = "Immolation Trap"
 	L.crystal = "Кристаллическая ловушка"
 	L.crystal_desc = "Объявлять, когда Шэннокс бросает кристаллическую ловушку."
-	L.crystal_icon = 99836
 end
 
 L = BigWigs:NewBossLocale("Baleroc", "ruRU")
 if L then
 	L.torment = "Стаки 'мучения' на фокусе"
 	L.torment_desc = "Объявлять, когда ваш /фокус получает стаки мучения."
-	L.torment_icon = 99256
-	-- L.torment_message = "%2$dx torment on %1$s"
 
 	L.blade_bar = "~След. лезвие"
 	L.shard_message = "Кристаллы (%d)!"
@@ -110,7 +103,10 @@ if L then
 	L.engulfing_middle = "Пламя по центру!"
 	L.engulfing_far = "Пламя с краю!"
 	L.hand_bar = "След. отбрасывание"
-	L.wound_bar = "Рана на %s"
 	L.ragnaros_back_message = "Рагнарос вернулся!" -- yeah thats right PARRY ON!
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 

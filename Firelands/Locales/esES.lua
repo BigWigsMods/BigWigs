@@ -108,7 +108,10 @@ if L then
 	L.engulfing_middle = "¡Sección central sumergida!"
 	L.engulfing_far = "¡Sección lejana sumergida"
 	L.hand_bar = "Próximo rebote"
-	L.wound_bar = "Herida en %s"
 	L.ragnaros_back_message = "¡Raggy ha vuelto, fiesta!"
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 

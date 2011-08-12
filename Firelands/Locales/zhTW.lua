@@ -100,7 +100,10 @@ if L then
 	L.engulfing_middle = "侵噬烈焰：>中場<！"
 	L.engulfing_far = "侵噬烈焰：>遠場<！"
 	L.hand_bar = "<下一拉格納羅斯之手>"
-	L.wound_bar = "燃燒傷口：>%s<！"
 	L.ragnaros_back_message = "拉格納羅斯返回，集合！"
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 

@@ -70,7 +70,6 @@ L = BigWigs:NewBossLocale("Baleroc", "zhCN")
 if L then
 	L.torment = "焦点Torment堆叠"
 	L.torment_desc = "Warn when your /focus gains another torment stack."
-	-- L.torment_message = "Torment%2$d层：>%1$s<！"
 
 	L.blade_bar = "~Next Blade"
 	L.shard_message = "Purple shards (%d)!"
@@ -100,7 +99,10 @@ if L then
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
 	L.hand_bar = "Next knockback"
-	L.wound_bar = "Wound：>%s<！"
 	L.ragnaros_back_message = "Raggy is back, party on!"
+
+	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
+	L.wound_message = "%2$dx Wound on %1$s"
 end
 
