@@ -40,8 +40,8 @@ if L then
 	L.cataclysm_bar = "Prochain cataclysme"
 
 	L.stage_message = "Phase %d "
-	L.kill_message = "It's now or never - Kill her!"
-	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
+	L.kill_message = "C'est maintenant ou jamais - tuez-la !"
+	L.engage_message = "Alysrazor engagée - Phase 2 dans ~%d min."
 
 	L.worm_emote = "Des vers de lave embrasés surgissent du sol !"
 	L.phase2_soon_emote = "Alysrazor commence à voler en cercles rapides !"
@@ -74,7 +74,7 @@ L = BigWigs:NewBossLocale("Baleroc", "frFR")
 if L then
 	L.torment = "Cumuls de Torment sur la focalisation"
 	L.torment_desc = "Prévient quand votre /focus gagne un autre cumul de tourment."
-	--L.torment_message = "%2$dx tourments sur %1$s"
+	--L.torment_message = "%2$dx Tourment sur %1$s"
 
 	L.blade_bar = "~Prochaine Lame"
 	L.shard_message = "Éclats de tourment (%d) !"
@@ -106,7 +106,7 @@ if L then
 	L.hand_bar = "Prochain \"knockback\""
 	L.ragnaros_back_message = "Ragnaros est de retour !"
 
-	L.wound = "Burning Wound "..INLINE_TANK_ICON
-	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
-	L.wound_message = "%2$dx Wound on %1$s"
+	L.wound = "Blessure brûlante "..INLINE_TANK_ICON
+	L.wound_desc = "Alerte pour tanks uniquement. Compte les cumuls de blessure brûlante et affiche une barre de durée."
+	L.wound_message = "%2$dx Blessure sur %1$s"
 end
