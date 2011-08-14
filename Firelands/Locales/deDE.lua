@@ -40,8 +40,8 @@ if L then
 	L.cataclysm_bar = "Nächster Kataklysmus"
 
 	L.stage_message = "Phase %d"
-	L.kill_message = "It's now or never - Kill her!"
-	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
+	L.kill_message = "Jetzt oder nie - tötet das Biest!"
+	L.engage_message = "Alysrazar angegriffen - Phase 2 in ~%d min"
 
 	L.worm_emote = "Feurige Lavawürmer brechen aus dem Boden hervor!"
 	L.phase2_soon_emote = "Alysrazar beginnt, in einem schnellen Kreis zu fliegen!"
@@ -57,11 +57,11 @@ if L then
 	L.crystal_trap = "Kristallfalle"
 
 	L.traps_header = "Fallen"
-	L.immolation = "Feuerbrandfalle"
+	L.immolation = "Feuerbrandfalle auf Hunden"
 	L.immolation_desc = "Warnt, wenn Augenkratzer oder Wadenbeißer auf eine Feuerbrandfalle tritt."
-	L.immolationyou = "Immolation Trap under You"
-	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
-	L.immolationyou_message = "Immolation Trap"
+	L.immolationyou = "Feuerbrandfalle unter Dir"
+	L.immolationyou_desc = "Warnt, wenn unter Dir eine Feuerbrandfalle erscheint."
+	L.immolationyou_message = "Brandfalle"
 	L.crystal = "Kristallgefängnisfalle"
 	L.crystal_desc = "Warnt, unter wen Shannox die Kristallgefängnisfalle ablegt."
 end
@@ -101,8 +101,8 @@ if L then
 	L.hand_bar = "Nächster Rückstoß"
 	L.ragnaros_back_message = "Raggy wieder da, auf geht's!"
 
-	L.wound = "Burning Wound "..INLINE_TANK_ICON
-	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
-	L.wound_message = "%2$dx Wound on %1$s"
+	L.wound = "Brennende Wunde "..INLINE_TANK_ICON
+	L.wound_desc = "Nur für Tanks. Zählt die Stapel und zeigt eine Timerleiste an."
+	L.wound_message = "%2$dx Wunde: %1$s"
 end
 
