@@ -70,7 +70,6 @@ L = BigWigs:NewBossLocale("Baleroc", "zhTW")
 if L then
 	L.torment = "焦點折磨堆疊"
 	L.torment_desc = "當焦點受到折磨堆疊時發出警報。"
-	-- L.torment_message = "折磨%2$d層：>%1$s<！"
 
 	L.blade_bar = "<虐殺之刃>"
 	L.shard_message = "折磨碎片：>%d<！"
@@ -102,8 +101,8 @@ if L then
 	L.hand_bar = "<下一拉格納羅斯之手>"
 	L.ragnaros_back_message = "拉格納羅斯返回，集合！"
 
-	L.wound = "Burning Wound "..INLINE_TANK_ICON
-	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
-	L.wound_message = "%2$dx Wound on %1$s"
+	L.wound = "燃燒傷口 "..INLINE_TANK_ICON
+	L.wound_desc = "只對坦克警報。燃燒傷口堆疊計數並顯示持續計時條。"
+	L.wound_message = "燃燒傷口%2$d層：>%1$s<！"
 end
 
