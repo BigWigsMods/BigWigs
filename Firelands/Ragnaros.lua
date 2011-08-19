@@ -328,11 +328,7 @@ do
 			self:ScheduleTimer(moltenInfernoWarned, 5)
 			self:ScheduleTimer(moltenInferno, 50)
 			self:Message(98498, L["seed_explosion"], "Urgent", spellId, "Alarm")
-			if self:Difficulty() > 2 then
-				self:Bar(98498, moltenSeed, 49, 98498)
-			else
-				self:Bar(98498, moltenSeed, 50, 98498)
-			end
+			self:Bar(98498, moltenSeed, 50, 98498)
 			infernoWarned = true
 		end
 	end
