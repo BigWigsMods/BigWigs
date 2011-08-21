@@ -157,8 +157,10 @@ end
 
 function mod:Wound(player, spellId, _, _, _, buffStack)
 	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
-	self:Bar("wound", L["wound_message"]:format(player, buffStack or 1), 21, spellId)
-	self:TargetMessage("wound", L["wound_message"], player, "Urgent", spellId, "Info", buffStack or 1)
+	if not buffStack then buffStack = 1 end
+	self:SendMessage("BigWigs_StopBar", self, L["wound_message"]:format(player, buffStack - 1))
+	self:Bar("wound", L["wound_message"]:format(player, buffStack), 21, spellId)
+	self:TargetMessage("wound", L["wound_message"], player, "Urgent", spellId, "Info", buffStack)
 end
 
 function mod:MagmaTrap(player, spellId, _, _, spellName)
