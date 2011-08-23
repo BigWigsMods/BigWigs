@@ -33,7 +33,7 @@ if L then
 	L.seed_explosion = "Seed explosion!"
 	L.intermission_bar = "Intermission!"
 	L.intermission_message = "Intermission... Got cookies?"
-	L.sons_left = "%d sons left"
+	L.sons_left = "%d |4son left:sons left;"
 	L.engulfing_close = "Close quarters Engulfed!"
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
@@ -339,7 +339,7 @@ end
 function mod:Deaths(mobId)
 	if mobId == 53140 then
 		sons = sons - 1
-		if sons < 3 and sons > 0 then
+		if sons < 4 then
 			self:Message(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
 		end
 	elseif mobId == 52409 then
