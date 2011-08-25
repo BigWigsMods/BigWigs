@@ -97,9 +97,9 @@ if L then
 	L.green_phase_trigger = "这个有点儿不稳定，但不经过失败怎么会进步？"
 	L.green_phase_emote_trigger = "绿瓶"
 	L.green_phase = "|cFF33FF00绿瓶|r阶段"
-	L.dark_phase_trigger = "你的混合剂太弱了"
-	L.dark_phase_emote_trigger = "黑瓶" --verify
-	L.dark_phase = "|cFF660099黑瓶|r阶段"
+	L.dark_phase_trigger = "你的混合剂太弱了，马洛拉克！他们需要更多的……“催化”！"
+	L.dark_phase_emote_trigger = "黑暗"
+	L.dark_phase = "|cFF660099黑暗|r阶段"
 end
 
 L = BigWigs:NewBossLocale("Nefarian", "zhCN")
