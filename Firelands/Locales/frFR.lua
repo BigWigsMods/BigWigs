@@ -88,7 +88,7 @@ if L then
 	L.seed_explosion = "Vous explosez bientôt !"
 	L.seed_bar = "Vous explosez !"
 	L.adrenaline_message = "Adrenaline x%d !"
-	L.leap_say = "Leap on ME!"
+	L.leap_say = "Bond sur MOI !"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
