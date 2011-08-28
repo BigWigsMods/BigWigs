@@ -14,7 +14,6 @@ local cataclysmCount, moltCount, burnCount = 0, 0, 0
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.tornado_trigger = "These skies are MINE!"
@@ -48,7 +47,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		99362, 100723, 97128, 99464, "flight",
 		99816,

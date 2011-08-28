@@ -51,7 +51,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		98237, 100115, 98164,
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},

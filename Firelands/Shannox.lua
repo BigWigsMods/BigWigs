@@ -35,7 +35,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		100002, {100129, "ICON"}, "berserk", "bosskill",
 		"immolation", {"immolationyou", "FLASHSHAKE"}, {"crystal", "SAY", "FLASHSHAKE"},

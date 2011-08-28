@@ -32,7 +32,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		{99052, "FLASHSHAKE"}, "ej:2773",
 		99506, 99497,

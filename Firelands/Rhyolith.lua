@@ -17,7 +17,6 @@ local lastFragments = nil
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.armor = "Obsidian Armor"
@@ -43,7 +42,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		98552, 98136,
 		"armor", 97282, 98255, "ej:2537", 101305, "bosskill"

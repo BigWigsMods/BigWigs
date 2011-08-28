@@ -22,12 +22,12 @@ local seedTimer = nil
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.seed_explosion = "You explode soon!"
 	L.seed_bar = "You explode!"
 	L.adrenaline_message = "Adrenaline x%d!"
+	L.leap_say = "Leap on ME!"
 end
 L = mod:GetLocale()
 
@@ -35,7 +35,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		98379, 100213,
 		{98374, "PROXIMITY"}, {98476, "FLASHSHAKE", "ICON", "SAY"},
@@ -96,7 +96,7 @@ do
 			if not player then return end
 			leapWarned = true
 			if UnitIsUnit("player", player) then
-				mod:Say(98476, CL["say"]:format(leapingFlames))
+				mod:Say(98476, L["leap_say"])
 				mod:FlashShake(98476)
 			end
 			mod:TargetMessage(98476, leapingFlames, player, "Urgent", 98476, "Long")

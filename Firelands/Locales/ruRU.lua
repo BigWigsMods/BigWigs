@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Beth'tilac", "ruRU")
+local L = BigWigs:NewBossLocale("Beth'tilac", "ruRU")
 if not L then return end
 if L then
 	L.devastate_message = "Разрушение #%d!"
@@ -86,7 +86,8 @@ L = BigWigs:NewBossLocale("Majordomo Staghelm", "ruRU")
 if L then
 	L.seed_explosion = "Скоро взрыв!"
 	L.seed_bar = "Взрыв!"
-	L.adrenaline_message = "Адреналин x%d!"	
+	L.adrenaline_message = "Адреналин x%d!"
+	L.leap_say = "Leap on ME!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "ruRU")

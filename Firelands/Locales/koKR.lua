@@ -88,6 +88,7 @@ if L then
 	L.seed_explosion = "곧 씨앗 폭발!"
 	L.seed_bar = "당신은 폭발!"
 	L.adrenaline_message = "아드레날린 x%d!"
+	L.leap_say = "Leap on ME!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")

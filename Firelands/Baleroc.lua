@@ -13,7 +13,6 @@ local countdownCounter, count = 1, 0
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.torment = "Torment stacks on Focus"
@@ -32,7 +31,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		99259, "torment", "ej:2598", --Blades of Baleroc
 		"berserk", "bosskill",
