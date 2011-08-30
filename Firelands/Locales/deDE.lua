@@ -102,7 +102,7 @@ if L then
 	L.hand_bar = "Nächster Rückstoß"
 	L.ragnaros_back_message = "Raggy wieder da, auf geht's!"
 
-	L.wound = "Brennende Wunde "..INLINE_TANK_ICON
+	L.wound = "Brennende Wunde"
 	L.wound_desc = "Nur für Tanks. Zählt die Stapel und zeigt eine Timerleiste an."
 	L.wound_message = "%2$dx Wunde: %1$s"
 end

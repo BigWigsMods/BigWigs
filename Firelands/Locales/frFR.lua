@@ -107,7 +107,7 @@ if L then
 	L.hand_bar = "Prochain \"knockback\""
 	L.ragnaros_back_message = "Ragnaros est de retour !"
 
-	L.wound = "Blessure brûlante "..INLINE_TANK_ICON
+	L.wound = "Blessure brûlante"
 	L.wound_desc = "Alerte pour tanks uniquement. Compte les cumuls de blessure brûlante et affiche une barre de durée."
 	L.wound_message = "%2$dx Blessure sur %1$s"
 end

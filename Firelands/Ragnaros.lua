@@ -40,12 +40,13 @@ if L then
 	L.hand_bar = "Next knockback"
 	L.ragnaros_back_message = "Raggy is back, parry on!" -- yeah thats right PARRY ON!
 
-	L.wound = "Burning Wound "..INLINE_TANK_ICON
+	L.wound = "Burning Wound"
 	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
 	L.wound_icon = 99399
 	L.wound_message = "%2$dx Wound on %1$s"
 end
 L = mod:GetLocale()
+L.wound = L.wound.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -244,7 +245,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	if self:Difficulty() > 2 then
 		self:Bar(98953, L["intermission_bar"], 60, spellId)
 	else
-		self:Bar(98953, L["intermission_bar"], 45, spellId)
+		self:Bar(98953, L["intermission_bar"], 55, spellId)
 	end
 	self:CloseProximity()
 	sons = 8
