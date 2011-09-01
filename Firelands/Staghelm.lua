@@ -14,7 +14,6 @@ local leapingFlames, flameScythe = (GetSpellInfo(98476)), (GetSpellInfo(100213))
 -- got data up to 15 stacks, after 11 its 3.7
 local specialCD = {17.5, 13.4, 10.9, 8.6, 7.4, 7.3, 6.1, 6.1, 4.9, 4.9, 4.9}
 local specialCounter = 1
-local leapWarned = nil
 local form = "cat"
 local seedTimer = nil
 
@@ -55,6 +54,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CatForm", 98374)
 	self:Log("SPELL_AURA_APPLIED", "ScorpionForm", 98379)
 	self:Log("SPELL_CAST_SUCCESS", "LeapingFlames", 98476, 100206)
+	self:Log("SPELL_CAST_START", "RecklessLeap", 99629)
 	self:Log("SPELL_AURA_APPLIED", "SearingSeeds", 98450)
 	self:Log("SPELL_AURA_REMOVED", "SearingSeedsRemoved", 98450)
 	self:Log("SPELL_CAST_START", "BurningOrbs", 98451)
@@ -67,7 +67,6 @@ end
 function mod:OnEngage(diff)
 	self:Berserk(600) -- assumed
 	specialCounter = 1
-	leapWarned = nil
 	form = "cat"
 end
 
@@ -88,26 +87,53 @@ function mod:Adrenaline(_, spellId, _, _, spellName, stack)
 end
 
 do
-	local function reset() leapWarned = nil end
+	local prev, fired, timer = 0, 0, nil
 	local function checkTarget()
-		local mobId = mod:GetUnitIdByGUID(52571)
-		if mobId then
-			local player = UnitName(mobId.."target")
-			if not player then return end
-			leapWarned = true
-			if UnitIsUnit("player", player) then
+		fired = fired + 1
+		local player = UnitName("boss1target")
+		if player and not UnitDetailedThreatSituation("boss1target", "boss1") then
+			mod:CancelTimer(timer, true)
+			timer = nil
+			if UnitIsUnit("player", "boss1target") then
 				mod:Say(98476, L["leap_say"])
 				mod:FlashShake(98476)
 			end
 			mod:TargetMessage(98476, leapingFlames, player, "Urgent", 98476, "Long")
 			mod:PrimaryIcon(98476, player)
+			return
+		end
+		if fired > 18 then
+			mod:CancelTimer(timer, true)
+			timer = nil
 		end
 	end
-	function mod:LeapingFlames(...)
-		if leapWarned then return end
-		leapWarned = true
-		self:ScheduleTimer(reset, 2)
-		self:ScheduleTimer(checkTarget, 0.2)
+	function mod:LeapingFlames()
+		local t = GetTime() --Throttle as it's sometimes casted twice in the log
+		if t-prev > 2 then
+			prev, fired = t, 0
+			fired = 0
+			if not timer then
+				timer = self:ScheduleRepeatingTimer(checkTarget, 0.05)
+			end
+		end
+	end
+end
+
+do
+	local function checkTarget(guid)
+		for i=1, GetNumRaidMembers() do
+			local leapTarget = ("%s%d%s"):format("raid", i, "target")
+			if UnitGUID(leapTarget) == guid and UnitIsUnit("player", leapTarget.."target") then
+				mod:Say(98476, L["leap_say"])
+				mod:FlashShake(98476)
+				break
+			end
+		end
+	end
+	function mod:RecklessLeap(...)
+		local sGUID = select(11, ...)
+		--3sec cast so we have room to balance accuracy vs reaction time
+		self:ScheduleTimer(checkTarget, 0.6, sGUID)
 	end
 end
 
