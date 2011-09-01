@@ -99,12 +99,12 @@ end
 function mod:OnEngage(diff)
 	cataclysmCount, moltCount, burnCount = 0, 0, 0
 	if diff > 2 then
-		self:Message(99816, L["engage_message"]:format(4), "Attention", 98725) --fire hawk icon
+		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
 		self:Bar(100761, L["cataclysm_bar"], 37, 100761)
 	else
-		self:Message(99816, L["engage_message"]:format(3), "Attention", 98725) --fire hawk icon
+		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, L["molt_bar"], 12.5, 99464)
 	end
