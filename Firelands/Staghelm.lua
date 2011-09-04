@@ -68,6 +68,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600) -- assumed
 	specialCounter = 1
 	form = "cat"
+	seedTimer = nil
 end
 
 --------------------------------------------------------------------------------
@@ -140,7 +141,10 @@ end
 function mod:CatForm(_, spellId, _, _, spellName)
 	form = "cat"
 	self:Message(98374, spellName, "Important", spellId, "Alert")
-	self:OpenProximity(10, 98374)
+	if not seedTimer then
+		--Don't open if already opened from seed
+		self:OpenProximity(10, 98374)
+	end
 	specialCounter = 1
 	self:Bar(98476, leapingFlames, specialCD[specialCounter], 98476)
 end
@@ -156,7 +160,11 @@ end
 function mod:SearingSeedsRemoved(player)
 	if not UnitIsUnit(player, "player") then return end
 	self:SendMessage("BigWigs_StopBar", self, L["seed_bar"])
-	self:CloseProximity(98450)
+	if form == "cat" then
+		self:OpenProximity(10, 98374)
+	else
+		self:CloseProximity(98450)
+	end
 	self:CancelTimer(seedTimer, true)
 	seedTimer = nil
 end
