@@ -109,10 +109,9 @@ do
 		end
 	end
 	function mod:LeapingFlames()
-		local t = GetTime() --Throttle as it's sometimes casted twice in the log
+		local t = GetTime() --Throttle as it's sometimes casted twice in a row
 		if t-prev > 2 then
 			prev, fired = t, 0
-			fired = 0
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(checkTarget, 0.05)
 			end
