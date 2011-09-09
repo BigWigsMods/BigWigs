@@ -72,14 +72,14 @@ end
 local function populateOrbList()
 	wipe(orbList)
 	for i = 1, GetNumRaidMembers() do
+		local n, _, g = GetRaidRosterInfo(i)
 		-- do some checks for 25/10 man raid size so we don't warn for ppl who are not in the instance
-		if GetInstanceDifficulty() == 3 and i > 10 then return end
-		if GetInstanceDifficulty() == 4 and i > 25 then return end
-		local n = GetRaidRosterInfo(i)
-		-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
-		if UnitThreatSituation(n) == 3 and isTargetableByOrb(n) then
-			if UnitIsUnit(n, "player") then playerInList = true end
-			orbList[#orbList + 1] = n
+		if (GetInstanceDifficulty() == 3 and g < 3) or (GetInstanceDifficulty() == 4 and g < 6) then
+			-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
+			if UnitThreatSituation(n) == 3 and isTargetableByOrb(n) then
+				if UnitIsUnit(n, "player") then playerInList = true end
+				orbList[#orbList + 1] = n
+			end
 		end
 	end
 end

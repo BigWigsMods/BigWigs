@@ -88,6 +88,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
+	self:Log("SPELL_CAST_SUCCESS", "WrathofRagnaros", 100114) -- only 10 man heroic spellId!
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
 	self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 98164)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
@@ -234,6 +235,10 @@ function mod:HandofRagnaros(_, spellId)
 	self:Bar(98237, L["hand_bar"], 25, spellId)
 end
 
+function mod:WrathofRagnaros(_, spellId, _, _, spellName)
+	self:Bar(100115, "~"..spellName, 25, spellId)
+end
+
 function mod:SplittingBlow(_, spellId, _, _, spellName)
 	if phase == 2 then
 		self:CancelAllTimers()
@@ -256,7 +261,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 end
 
 function mod:SulfurasSmash(_, spellId)
-	if phase == 1 then
+	if phase == 1 and self:Difficulty() ~= 3 then
 		self:Bar(100115, "~"..wrathOfRagnaros, 12, 100115)
 	end
 	self:Message(98710, lavaWaves, "Attention", spellId, "Info")
