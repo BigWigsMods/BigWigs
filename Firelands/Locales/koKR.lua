@@ -15,7 +15,7 @@ if L then
 	L.armor_message = "흑요석 갑옷 - %d%%"
 	L.armor_gone_message = "흑요석 갑옷 사라짐!"
 
-	L.adds_header = "Adds"
+	L.adds_header = "쫄 추가"
 	L.big_add_message = "큰 쫄 등장!"
 	L.small_adds_message = "작은 쫄 등장!"
 
@@ -40,8 +40,8 @@ if L then
 	L.cataclysm_bar = "다음 재앙"
 
 	L.stage_message = "%d 단계"
-	L.kill_message = "It's now or never - Kill her!"
-	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
+	L.kill_message = "바로 지금! - 그녀를 죽이세요!"
+	L.engage_message = "알리스라조르 전투시작 - ~%d분 후 2 단계"
 
 	L.worm_emote = "녹아내린 알이 부화하려고 합니다!"
 	L.phase2_soon_emote = "알리스라조르가 빠른 속도로 원을 그리며 날아다닙니다!"
@@ -61,11 +61,11 @@ if L then
 	L.crystal_trap = "수정 감옥 덫"
 
 	L.traps_header = "덫"
-	L.immolation = "제물의 덫"
-	L.immolation_desc = "제물의 덫에 대해 알립니다."
-	L.immolationyou = "Immolation Trap under You"
-	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
-	L.immolationyou_message = "Immolation Trap"
+	L.immolation = "개에게 제물의 덫"
+	L.immolation_desc = "개들의 제물의 덫에 대해 알립니다."
+	L.immolationyou = "당신의 아래에 제물의 덫"
+	L.immolationyou_desc = "당신의 아래에 제물의 덫이 소환되는 것을 알립니다."
+	L.immolationyou_message = "제물의 덫"
 	L.crystal = "수정 감옥 덫"
 	L.crystal_desc = "수정 감옥 덫에 대해 알립니다."
 end
@@ -88,7 +88,7 @@ if L then
 	L.seed_explosion = "곧 씨앗 폭발!"
 	L.seed_bar = "당신은 폭발!"
 	L.adrenaline_message = "아드레날린 x%d!"
-	L.leap_say = "Leap on ME!"
+	L.leap_say = "나에게 도약!"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
@@ -107,8 +107,8 @@ if L then
 	L.hand_bar = "다음 넉백"
 	L.ragnaros_back_message = "라그 돌아옴, 파티 정비!"
 
-	L.wound = "Burning Wound"
-	L.wound_desc = "Tank alert only. Count the stacks of burning wound and show a duration bar."
-	L.wound_message = "%2$dx Wound on %1$s"
+	L.wound = "불타는 상처"
+	L.wound_desc = "!탱거만 경고! 불타는 상처의 지속바와 중첩 횟수를 표시합니다."
+	L.wound_message = "상처 x%2$d : %1$s"
 end
 

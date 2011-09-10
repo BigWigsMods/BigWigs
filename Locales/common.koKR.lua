@@ -3,8 +3,8 @@ local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "koKR")
 if not L then return end
 
 -- Prototype.lua common words
-L.you = "당신은 %s!"
-L.underyou = "%s under YOU!"
+L.you = "당신에게 %s!"
+L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
 L.say = "나에게 %s!"
 
