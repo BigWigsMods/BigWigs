@@ -140,12 +140,14 @@ end
 function mod:CatForm(_, spellId, _, _, spellName)
 	form = "cat"
 	self:Message(98374, spellName, "Important", spellId, "Alert")
-	if not seedTimer then
-		--Don't open if already opened from seed
-		self:OpenProximity(10, 98374)
-	end
 	specialCounter = 1
 	self:Bar(98476, leapingFlames, specialCD[specialCounter], 98476)
+	--Don't open if already opened from seed
+	local spell = GetSpellInfo(98450)
+	local hasDebuff, _, _, _, _, _, remaining = UnitDebuff("player", spell)
+	if not hasDebuff or (remaining - GetTime() > 6) then
+		self:OpenProximity(10, 98374)
+	end
 end
 
 function mod:ScorpionForm(_, spellId, _, _, spellName)
