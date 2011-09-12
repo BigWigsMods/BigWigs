@@ -346,7 +346,7 @@ function mod:Deaths(mobId)
 	if mobId == 53140 then
 		sons = sons - 1
 		if sons < 4 then
-			self:Message(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
+			self:LocalMessage(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
 		end
 	elseif mobId == 52409 then
 		self:Win()
