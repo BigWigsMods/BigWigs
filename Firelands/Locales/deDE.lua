@@ -95,7 +95,7 @@ if L then
 	L.seed_explosion = "Samenexplosion!"
 	L.intermission_bar = "Phasenübergang"
 	L.intermission_message = "Phasenübergang!"
-	L.sons_left = "%d Söhne noch"
+	L.sons_left = "%d |4Sohn noch:Söhne noch;"
 	L.engulfing_close = "Innen entflammt!"
 	L.engulfing_middle = "Mitte entflammt!"
 	L.engulfing_far = "Außen entflammt!"
