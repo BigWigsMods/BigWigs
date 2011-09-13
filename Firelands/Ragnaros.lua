@@ -14,8 +14,9 @@ local seedWarned, intermissionwarned, infernoWarned, meteorWarned, fixateWarned 
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
-local lavaWavesCD, engulfingCD = 30, 40
+local lavaWavesCD, engulfingCD, dreadflameCD = 30, 40, 40
 local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
+local dreadflame, cloudburst = (GetSpellInfo(100675)), (GetSpellInfo(100714))
 local meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
 local intermissionHandle = nil
 
@@ -58,7 +59,7 @@ function mod:GetOptions()
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},
 		{98498, "FLASHSHAKE"}, 100178,
 		99317, {99849, "FLASHSHAKE", "SAY"},
-		100190, 100479, 100646, 100714, 100997,
+		100190, 100479, 100646, 100714, 100997, 100675,
 		98710, "wound", "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
@@ -94,6 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
 	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877, 100885, 100882, 100879, 100884, 100881, 100878)
 	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
+	self:Emote("Dreadflame", dreadflame)
 
 	self:Log("SPELL_AURA_APPLIED", "Wound", 101238, 101239, 101240, 99399)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Wound", 101238, 101239, 101240, 99399)
@@ -108,7 +110,12 @@ function mod:OnEngage(diff)
 	self:Bar(98710, lavaWaves, 30, 98710)
 	self:OpenProximity(6)
 	self:Berserk(1080)
-	lavaWavesCD, engulfingCD = 30, 40
+	lavaWavesCD, dreadflameCD = 30, 40
+	if diff > 2 then
+		engulfingCD = 60
+	else
+		engulfingCD = 40
+	end
 	seedWarned, intermissionwarned, infernoWarned, meteorWarned, fixateWarned = false, false, false, false, false
 	sons = 8
 	phase = 1
@@ -124,16 +131,27 @@ function mod:Phase4()
 	--10% Yell is Phase 4 for heroic, and victory for normal
 	if self:Difficulty() > 2 then
 		self:SendMessage("BigWigs_StopBar", self, livingMeteor)
+		self:SendMessage("BigWigs_StopBar", self, lavaWaves)
+		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 		phase = 4
 		self:OpenProximity(6)
 		 -- not sure if we want a different option key or different icon
-		mod:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
+		self:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
 		self:Bar(100479, (GetSpellInfo(100479)), 34, 100479) -- Breadth of Frost
-		self:Bar(100714, (GetSpellInfo(100714)), 51, 100714) -- Cloudburst
+		self:Bar(100714, cloudburst, 51, 100714) -- Cloudburst
 		self:Bar(100646, (GetSpellInfo(100646)), 68, 100646) -- Entraping Roots
 		self:Bar(100997, (GetSpellInfo(100997)), 90, 100997) -- EmpowerSulfuras
 	else
 		self:Win()
+	end
+end
+
+function mod:Dreadflame()
+	if not UnitDebuff("player", cloudburst) then return end
+	self:Message(100675, dreadflame, "Important", 100675, "Alarm")
+	self:Bar(100675, dreadflame, dreadflameCD, 100675)
+	if dreadflameCD > 10 then
+		dreadflameCD = dreadflameCD - 5
 	end
 end
 
@@ -244,6 +262,8 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 		self:CancelAllTimers()
 		self:SendMessage("BigWigs_StopBar", self, L["seed_explosion"])
 		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100190))) -- World in Flames
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100178))) -- Engulfing Flames
 	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
 	self:Bar(98953, spellName, 7, spellId)
