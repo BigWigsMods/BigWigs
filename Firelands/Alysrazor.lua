@@ -8,7 +8,8 @@ mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchli
 
 local firestorm = GetSpellInfo(101659)
 local woundTargets = mod:NewTargetList()
-local cataclysmCount, moltCount, burnCount = 0, 0, 0
+local cataclysmCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
+local initiateTimes = {31, 31, 21, 21, 21}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -40,6 +41,14 @@ if L then
 	L.flight = "Flight Assist"
 	L.flight_desc = "Show a bar with the duration of 'Wings of Flame' on you, ideally used with the Super Emphasize feature."
 	L.flight_icon = 98619
+
+	L.initiate = "Initiate Spawn"
+	L.initiate_desc = "Show timer bars for initiate spawns."
+	L.initiate_icon = 97062
+	L.initiate_name = "Blazing Talon Initiate"
+	L.initiate_both = "Both Initiates"
+	L.initiate_west = "West Initiate"
+	L.initiate_east = "East Initiate"
 end
 L = mod:GetLocale()
 
@@ -49,7 +58,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		99362, 100723, 97128, 99464, "flight",
+		99362, 100723, 97128, 99464, "flight", "initiate",
 		99816,
 		99432,
 		99844, 99925,
@@ -92,22 +101,27 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Firestorm", 100744)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Initiates")
 
 	self:Death("Win", 52530)
 end
 
 function mod:OnEngage(diff)
-	cataclysmCount, moltCount, burnCount = 0, 0, 0
+	cataclysmCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
+	wipe(initiateTimes)
 	if diff > 2 then
+		initiateTimes = {22, 63, 21, 21, 40}
 		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
 		self:Bar(100761, L["cataclysm_bar"], 37, 100761)
 	else
+		initiateTimes = {31, 31, 21, 21, 21}
 		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, L["molt_bar"], 12.5, 99464)
 	end
+	self:Bar("initiate", L["initiate_both"], 27, 97062)
 end
 
 --------------------------------------------------------------------------------
@@ -134,6 +148,17 @@ do
 	function mod:StopFlying(player)
 		if UnitIsUnit(player, "player") then
 			self:UnregisterEvent("UNIT_AURA")
+		end
+	end
+end
+
+do
+	local initiateLocation = {L["initiate_both"], L["initiate_east"], L["initiate_west"], L["initiate_east"], L["initiate_west"]}
+	function mod:Initiates(_, _, unit)
+		if unit == L["initiate_name"] then
+			initiateCount = initiateCount + 1
+			if initiateCount > 5 then return end
+			self:Bar("initiate", initiateLocation[initiateCount], initiateTimes[initiateCount], 97062) --Night Elf head
 		end
 	end
 end
@@ -247,6 +272,8 @@ do
 		elseif power == 100 then
 			self:Message(99925, (L["stage_message"]:format(1))..": "..(L["encounter_restart"]), "Positive", 99925, "Alert")
 			self:UnregisterEvent("UNIT_POWER")
+			initiateCount = 0
+			self:Bar("initiate", L["initiate_both"], 13.5, 97062)
 			if self:Difficulty() > 2 then
 				cataclysmCount = 0
 				self:Bar(100761, L["cataclysm_bar"], 18, 100761)
