@@ -52,6 +52,13 @@ if L then
 
 	L.flight = "Assistance en vol"
 	L.flight_desc = "Affiche une barre indiquant la durée de vos Ailes de flamme. Idéal si utilisé avec la fonctionnalité de super mise en évidence."
+
+	L.initiate = "Apparitions des initiés"
+	L.initiate_desc = "Affiche des barres de délai concernant les apparitions des initiés."
+	L.initiate_name = "Initié de la Serre flamboyante"
+	L.initiate_both = "Les deux initiés"
+	L.initiate_west = "Initié de l'ouest"
+	L.initiate_east = "Initié de l'est"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "frFR")
