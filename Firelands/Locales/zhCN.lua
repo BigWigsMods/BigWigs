@@ -48,6 +48,13 @@ if L then
 
 	L.flight = "飞行助手"
 	L.flight_desc = "当你“火焰之翼”持续时显示计时条，使用超级醒目功能。"
+
+	L.initiate = "熾炎猛禽學徒出现"
+	L.initiate_desc = "熾炎猛禽學徒計時條。"
+	L.initiate_name = "熾炎猛禽學徒"
+	L.initiate_both = "熾炎猛禽學徒：>雙向<！"
+	L.initiate_west = "熾炎猛禽學徒：>西<！"
+	L.initiate_east = "熾炎猛禽學徒：>東<！"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhCN")

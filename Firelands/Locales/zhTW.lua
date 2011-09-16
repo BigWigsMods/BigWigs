@@ -40,14 +40,21 @@ if L then
 	L.cataclysm_bar = "<下一災變>"
 
 	L.stage_message = "階段：>%d<！"
-	L.kill_message = "It's now or never - Kill her!"
-	L.engage_message = "Alysrazor engaged - Stage 2 in ~%d min"
+	L.kill_message = "就是現在 - 殺了她！"
+	L.engage_message = "艾里絲拉卓開戰 - 約%d分鐘後第二階段！"
 
 	L.worm_emote = "熾炎熔岩蟲從地上鑽了出來!"
 	L.phase2_soon_emote = "艾里絲拉卓開始快速地在空中盤旋!"
 
 	L.flight = "飛行助手"
 	L.flight_desc = "當你“火焰之翼”持續時顯示計時條，使用超級醒目功能。"
+
+	L.initiate = "熾炎猛禽學徒出现"
+	L.initiate_desc = "熾炎猛禽學徒計時條。"
+	L.initiate_name = "熾炎猛禽學徒"
+	L.initiate_both = "熾炎猛禽學徒：>雙向<！"
+	L.initiate_west = "熾炎猛禽學徒：>西<！"
+	L.initiate_east = "熾炎猛禽學徒：>東<！"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "zhTW")
@@ -83,7 +90,7 @@ if L then
 	L.seed_explosion = ">你< 即將灼熱種子爆炸！"
 	L.seed_bar = "<你：灼熱種子爆炸>"
 	L.adrenaline_message = "激奮腺素：>%d層<！"
-	L.leap_say = "Leap on ME!"
+	L.leap_say = ">我< 跳躍火焰斬！"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhTW")
@@ -91,7 +98,7 @@ if L then
 	L.intermission_end_trigger1 = "薩弗拉斯將終結你。"
 	L.intermission_end_trigger2 = "跪下吧，凡人們!一切都將結束。"
 	L.intermission_end_trigger3 = "夠了!我將結束這一切。"
-	L.phase4_trigger = "太快"
+	L.phase4_trigger = "太早了!...你們來的太早了..."
 	L.seed_explosion = "熔岩晶粒爆炸！"
 	L.intermission_bar = "<中場>"
 	L.intermission_message = "中場！"
