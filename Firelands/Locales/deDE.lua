@@ -53,7 +53,7 @@ end
 L = BigWigs:NewBossLocale("Shannox", "deDE")
 if L then
 	L.safe = "%s ist sicher!"
-	L.immolation_trap = "Brandfalle auf %s!"
+	L.wary_dog = "%s is Wary!"
 	L.crystal_trap = "Kristallfalle"
 
 	L.traps_header = "Fallen"

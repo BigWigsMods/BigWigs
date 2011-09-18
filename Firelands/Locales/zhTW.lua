@@ -60,7 +60,7 @@ end
 L = BigWigs:NewBossLocale("Shannox", "zhTW")
 if L then
 	L.safe = ">%s< 安全！"
-	L.immolation_trap = "獻祭陷阱：>%s<！"
+	L.wary_dog = "%s is Wary!"
 	L.crystal_trap = "水晶囚牢陷阱！"
 
 	L.traps_header = "陷阱"

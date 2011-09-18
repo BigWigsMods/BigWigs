@@ -14,13 +14,13 @@ local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.safe = "%s safe"
-	L.immolation_trap = "Immolation on %s!"
+	L.wary_dog = "%s is Wary!"
 	L.crystal_trap = "Crystal Trap"
 
 	L.traps_header = "Traps"
 	L.immolation = "Immolation Trap on Dog"
-	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap."
-	L.immolation_icon = 99838
+	L.immolation_desc = "Alert when Rageface or Riplimb steps on an Immolation Trap, gaining the 'Wary' buff."
+	L.immolation_icon = 100167
 	L.immolationyou = "Immolation Trap under You"
 	L.immolationyou_desc = "Alert when an Immolation Trap is summoned under you."
 	L.immolationyou_icon = 99838
@@ -46,7 +46,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "ImmolationTrap", 101209, 99838)
+	self:Log("SPELL_AURA_APPLIED", "WaryDog", 101208, 101209, 101210, 99838)
 	self:Log("SPELL_CAST_SUCCESS", "FaceRage", 99945, 99947)
 	self:Log("SPELL_AURA_REMOVED", "FaceRageRemoved", 99945, 99947)
 	self:Log("SPELL_CAST_SUCCESS", "HurlSpear", 99978)
@@ -103,10 +103,13 @@ do
 	end
 end
 
-function mod:ImmolationTrap(player, spellId, _, _, spellName, _, _, _, _, dGUID)
+function mod:WaryDog(player, spellId, _, _, spellName, _, _, _, _, dGUID)
+	--We use the Immolation Trap IDs because we only want to warn for Wary after an Immolation
+	--Trap not a Crystal Trap, which also applies Wary.
 	local creatureId = self:GetCID(dGUID)
 	if creatureId == 53695 or creatureId == 53694 then
-		self:Message("immolation", L["immolation_trap"]:format(player), "Attention", spellId)
+		self:Message("immolation", L["wary_dog"]:format(player), "Attention", 100167)
+		self:Bar("immolation", L["wary_dog"]:format(player), self:Difficulty() > 2 and 25 or 15, 100167)
 	end
 end
 
