@@ -70,10 +70,11 @@ do
 	local timer, fired = nil, 0
 	local function trapWarn(spellId)
 		fired = fired + 1
-		if UnitExists("boss1target") and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
+		local player = UnitName("boss1target")
+		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 13) then
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if spellId == 99836 then
-				mod:TargetMessage("crystal", L["crystal_trap"], (UnitName("boss1target")), "Urgent", spellId, "Alarm")
+				mod:TargetMessage("crystal", L["crystal_trap"], player, "Urgent", spellId, "Alarm")
 			end
 			mod:CancelTimer(timer, true)
 			timer = nil
@@ -104,8 +105,8 @@ do
 end
 
 function mod:WaryDog(player, spellId, _, _, spellName, _, _, _, _, dGUID)
-	--We use the Immolation Trap IDs because we only want to warn for Wary after an Immolation
-	--Trap not a Crystal Trap, which also applies Wary.
+	-- We use the Immolation Trap IDs as we only want to warn for Wary after a
+	-- Immolation Trap not a Crystal Trap, which also applies Wary.
 	local creatureId = self:GetCID(dGUID)
 	if creatureId == 53695 or creatureId == 53694 then
 		self:Message("immolation", L["wary_dog"]:format(player), "Attention", 100167)
