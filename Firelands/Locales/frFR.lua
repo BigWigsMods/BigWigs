@@ -64,12 +64,12 @@ end
 L = BigWigs:NewBossLocale("Shannox", "frFR")
 if L then
 	L.safe = "%s sauvé"
-	L.wary_dog = "%s is Wary!"
+	L.wary_dog = "%s est prudent !"
 	L.crystal_trap = "Prison de cristal"
 
 	L.traps_header = "Pièges"
-	L.immolation = "Piège d'immolation"
-	L.immolation_desc = "Prévient quand Croquepatte ou Ragegueule marche sur un piège d'immolation."
+	L.immolation = "Piège d'immolation sur les chiens"
+	L.immolation_desc = "Prévient quand Croquepatte ou Ragegueule marche sur un piège d'immolation, gagnant de ce fait l'amélioration 'Prudence'."
 	L.immolationyou = "Piège d'immolation en dessous de vous"
 	L.immolationyou_desc = "Prévient quand un piège d'immolation est invoqué en dessous de vous."
 	L.immolationyou_message = "Piège d'immolation"
