@@ -60,12 +60,12 @@ end
 L = BigWigs:NewBossLocale("Shannox", "zhTW")
 if L then
 	L.safe = ">%s< 安全！"
-	L.wary_dog = "%s is Wary!"
+	L.wary_dog = "小心翼翼：>%s<！"
 	L.crystal_trap = "水晶囚牢陷阱！"
 
 	L.traps_header = "陷阱"
 	L.immolation = "獻祭陷阱"
-	L.immolation_desc = "當怒面或裂軀階段獻祭陷阱時發出警報。"
+	L.immolation_desc = "當怒面或裂軀階段獻祭陷阱時發出警報，獲得“小心翼翼”狀態。"
 	L.immolationyou = ">你<脚下 獻祭陷阱！"
 	L.immolationyou_desc = "當你腳下獻祭陷阱被召喚時發出警報。"
 	L.immolationyou_message = "獻祭陷阱"
