@@ -141,7 +141,7 @@ do
 	end
 	function mod:StartFlying(player)
 		if UnitIsUnit(player, "player") then
-			self:Bar("flight", flying, 20, 98619)
+			self:Bar("flight", flying, 30, 98619)
 			self:RegisterEvent("UNIT_AURA")
 		end
 	end
