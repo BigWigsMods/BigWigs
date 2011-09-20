@@ -161,7 +161,10 @@ function mod:PhaseTwo()
 end
 
 local function nextBlaze()
-	if shadowBlazeTimer > 10 then
+	local diff = mod:Difficulty()
+	if shadowBlazeTimer > 10 and diff > 2 then
+		shadowBlazeTimer = shadowBlazeTimer - 5
+	elseif shadowBlazeTimer > 15 and diff < 3 then
 		shadowBlazeTimer = shadowBlazeTimer - 5
 	end
 	mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
