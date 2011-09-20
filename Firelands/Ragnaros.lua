@@ -326,11 +326,19 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
-	if spellName ~= moltenSeed then return end
-	self:Message(98498, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(98498, L["seed_explosion"], 12, spellId)
-	self:Bar(98498, spellName, 60, spellId)
+do
+	local function moltenSeedWarned()
+		seedWarned = false
+	end
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
+		if spellName == moltenSeed and not seedWarned then return end
+			self:Message(98498, spellName, "Urgent", spellId, "Alarm")
+			self:Bar(98498, L["seed_explosion"], 12, spellId)
+			self:Bar(98498, spellName, 60, spellId)
+			self:ScheduleTimer(moltenSeedWarned, 5)
+			seedWarned = true
+		end
+	end
 end
 
 function mod:Deaths(mobId)
