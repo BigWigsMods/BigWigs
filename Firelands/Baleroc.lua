@@ -105,8 +105,9 @@ function mod:Shards(_, spellId, _, _, spellName)
 end
 
 function mod:Torment(player, spellId, _, _, _, stack)
-	if UnitIsUnit("focus", player) and stack > 5 then
-		self:LocalMessage("torment", L["focus_message"]:format(stack), "Personal", spellId, "Info")
+	if UnitIsUnit("focus", player) and stack > 1 then
+		local sound = stack > 5 and "Info" or nil
+		self:LocalMessage("torment", L["focus_message"]:format(stack), "Personal", spellId, sound)
 	end
 end
 

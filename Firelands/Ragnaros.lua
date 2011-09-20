@@ -178,7 +178,7 @@ function mod:Wound(player, spellId, _, _, _, buffStack)
 	if not buffStack then buffStack = 1 end
 	self:SendMessage("BigWigs_StopBar", self, L["wound_message"]:format(player, buffStack - 1))
 	self:Bar("wound", L["wound_message"]:format(player, buffStack), 21, spellId)
-	self:TargetMessage("wound", L["wound_message"], player, "Urgent", spellId, "Info", buffStack)
+	self:TargetMessage("wound", L["wound_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
 end
 
 function mod:MagmaTrap(player, spellId, _, _, spellName)
