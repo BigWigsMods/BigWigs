@@ -856,6 +856,7 @@ do
 	function plugin:SetBarStyle(style)
 		if type(style) ~= "string" or not barStyles[style] then
 			error(errorNoStyle:format(tostring(style)))
+			db.barStyle = "Default"
 			style = "Default"
 		end
 		local newBarStyler = barStyles[style]
