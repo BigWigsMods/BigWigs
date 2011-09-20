@@ -267,11 +267,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
 	self:Bar(98953, spellName, 7, spellId)
-	if self:Difficulty() > 2 then
-		self:Bar(98953, L["intermission_bar"], 60, spellId)
-	else
-		self:Bar(98953, L["intermission_bar"], 55, spellId)
-	end
+	self:Bar(98953, L["intermission_bar"], self:Difficulty() > 2 and 60 or 57, spellId) -- They are probably both 60
 	self:CloseProximity()
 	sons = 8
 	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
