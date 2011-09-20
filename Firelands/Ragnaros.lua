@@ -327,7 +327,7 @@ do
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
-	if spellName ~= (GetSpellInfo(98498)) then return end
+	if spellName ~= moltenSeed then return end
 	self:Message(98498, spellName, "Urgent", spellId, "Alarm")
 	self:Bar(98498, L["seed_explosion"], 12, spellId)
 	self:Bar(98498, spellName, 60, spellId)
