@@ -147,7 +147,7 @@ function mod:Phase4()
 end
 
 function mod:Dreadflame()
-	if not UnitDebuff("player", cloudburst) then return end
+	if not UnitDebuff("player", (GetSpellInfo(101015))) then return end -- No Deluge on you = you don't care
 	self:Message(100675, dreadflame, "Important", 100675, "Alarm")
 	self:Bar(100675, dreadflame, dreadflameCD, 100675)
 	if dreadflameCD > 10 then
