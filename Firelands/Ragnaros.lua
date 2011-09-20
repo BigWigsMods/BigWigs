@@ -10,7 +10,7 @@ mod:RegisterEnableMob(52409)
 -- Locals
 --
 
-local seedWarned, intermissionwarned, infernoWarned, meteorWarned, fixateWarned = false, false, false, false, false
+local intermissionwarned, infernoWarned, fixateWarned = false, false, false
 local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
@@ -114,7 +114,7 @@ function mod:OnEngage(diff)
 	else
 		engulfingCD = 40
 	end
-	seedWarned, intermissionwarned, infernoWarned, meteorWarned, fixateWarned = false, false, false, false, false
+	intermissionwarned, infernoWarned, fixateWarned = false, false, false
 	sons = 8
 	phase = 1
 	meteorCounter = 1
@@ -186,17 +186,14 @@ function mod:MagmaTrap(player, spellId, _, _, spellName)
 end
 
 do
-	local function setMeteorWarned()
-		meteorWarned = false
-	end
-
+	local prev = 0
 	function mod:LivingMeteor(_, spellId, _, _, spellName)
-		if not meteorWarned then
-			meteorWarned = true
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
 			self:Message(99317, ("%s (%d)"):format(spellName, meteorNumber[meteorCounter]), "Attention", spellId)
 			meteorCounter = meteorCounter + 1
 			self:Bar(99317, spellName, 45, spellId)
-			self:ScheduleTimer(setMeteorWarned, 5)
 		end
 	end
 end
@@ -217,20 +214,12 @@ do
 	end
 end
 
-local function moltenInferno()
-	-- don't overwrite an accurate timer with a scheduled timer
-	if not seedWarned then
-		mod:Bar(98498, L["seed_explosion"], 10, 100252)
-	end
-end
-
 function mod:IntermissionEnd()
 	self:SendMessage("BigWigs_StopBar", self, L["intermission_bar"])
 	if phase == 1 then
 		lavaWavesCD = 40
 		self:OpenProximity(6)
 		if self:Difficulty() > 2 then
-			self:ScheduleTimer(moltenInferno, 15)
 			self:Bar(98498, "~"..moltenSeed, 15, 98498)
 			self:Bar(98710, lavaWaves, 7.5, 98710)
 		else
@@ -327,16 +316,16 @@ do
 end
 
 do
-	local function moltenSeedWarned()
-		seedWarned = false
-	end
+	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
-		if spellName == moltenSeed and not seedWarned then
-			self:Message(98498, spellName, "Urgent", spellId, "Alarm")
-			self:Bar(98498, L["seed_explosion"], 12, spellId)
-			self:Bar(98498, spellName, 60, spellId)
-			self:ScheduleTimer(moltenSeedWarned, 5)
-			seedWarned = true
+		if spellName == moltenSeed then
+			local t = GetTime()
+			if t-prev > 5 then
+				prev = t
+				self:Message(98498, spellName, "Urgent", spellId, "Alarm")
+				self:Bar(98498, L["seed_explosion"], 12, spellId)
+				self:Bar(98498, spellName, 60, spellId)
+			end
 		end
 	end
 end
