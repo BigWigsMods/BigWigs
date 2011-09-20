@@ -242,6 +242,7 @@ function mod:IntermissionEnd()
 		self:Bar(99317, "~"..livingMeteor, 52, 99317)
 		self:Bar(98710, lavaWaves, 55, 98710)
 		self:RegisterEvent("UNIT_AURA")
+		self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	end
 	phase = phase + 1
 	self:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
