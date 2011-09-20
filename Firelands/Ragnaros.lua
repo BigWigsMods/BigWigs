@@ -84,9 +84,7 @@ function mod:OnBossEnable()
 	-- Normal
 	self:Yell("IntermissionEnd", L["intermission_end_trigger1"], L["intermission_end_trigger2"], L["intermission_end_trigger3"])
 
-	self:Log("SPELL_DAMAGE", "MoltenInferno", 98518, 100252, 100253, 100254)
-	self:Log("SPELL_MISSED", "MoltenInferno", 98518, 100252, 100253, 100254)
-	self:Log("SPELL_DAMAGE", "MoltenSeed", 98498, 100579, 100580, 100581)
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
 	self:Log("SPELL_CAST_SUCCESS", "WrathofRagnaros", 100114) -- only 10 man heroic spellId!
@@ -327,35 +325,11 @@ do
 	end
 end
 
-do
-	local function moltenSeedWarned()
-		seedWarned = false
-	end
-	function mod:MoltenSeed(_, spellId, _, _, spellName)
-		-- This might not always trigger, since if you play correctly you can compeltely avoid damage taken from this
-		if not seedWarned then
-			self:ScheduleTimer(moltenSeedWarned, 5)
-			self:Message(98498, spellName, "Urgent", spellId, "Alarm")
-			self:Bar(98498, L["seed_explosion"], 10, spellId)
-			seedWarned = true
-		end
-	end
-end
-
-do
-	local function moltenInfernoWarned()
-		infernoWarned = false
-	end
-	function mod:MoltenInferno(_, spellId)
-		-- This is more reliable, because you always take damage from this
-		if not infernoWarned then
-			self:ScheduleTimer(moltenInfernoWarned, 5)
-			self:ScheduleTimer(moltenInferno, 50)
-			self:Message(98498, L["seed_explosion"], "Urgent", spellId, "Alarm")
-			self:Bar(98498, moltenSeed, 50, 98498)
-			infernoWarned = true
-		end
-	end
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
+	if spellName ~= (GetSpellInfo(98498)) then return end
+	self:Message(98498, spellName, "Urgent", spellId, "Alarm")
+	self:Bar(98498, L["seed_explosion"], 12, spellId)
+	self:Bar(98498, spellName, 60, spellId)
 end
 
 function mod:Deaths(mobId)
