@@ -80,6 +80,7 @@ local coloredNames = setmetatable({}, {__index =
 local GetPlayerMapPosition = GetPlayerMapPosition
 local GetPlayerFacing = GetPlayerFacing
 local format = string.format
+local GetRaidTargetIndex = GetRaidTargetIndex
 local UnitInRange = UnitInRange
 local UnitIsDead = UnitIsDead
 local UnitIsUnit = UnitIsUnit
@@ -487,12 +488,13 @@ local graphicalUpdater, textUpdater = nil, nil
 do
 	local proxDots = {}
 	local cacheDots = {}
+	local cacheMarks = {}
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
 	-- dx and dy are in yards
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
-	setDot = function(dx, dy, class)
+	setDot = function(dx, dy, class, mark)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
@@ -520,6 +522,21 @@ do
 		dot:SetPoint("CENTER", anchor, "CENTER", x, y)
 		dot:SetVertexColor(unpack(vertexColors[class]))
 		dot:Show()
+
+		-- add icon if marked
+		if mark and mark > 0 and mark < 9 then
+			if not cacheMarks[mark] then
+				local markFrame = anchor:CreateTexture(nil, "OVERLAY")
+				markFrame:SetTexture(format([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_%d.blp]], mark))
+				markFrame:SetSize(24, 24)
+				cacheMarks[mark] = markFrame
+			end
+			local markFrame = cacheMarks[mark]
+			markFrame:ClearAllPoints()
+			markFrame:SetPoint("CENTER", anchor, "CENTER", x, y)
+			markFrame:SetDrawLayer("OVERLAY", 1)
+			markFrame:Show()
+		end
 	end
 
 	hideDots = function()
@@ -528,6 +545,13 @@ do
 		while #proxDots > 0 do
 			proxDots[1]:Hide()
 			cacheDots[#cacheDots + 1] = tremove(proxDots, 1)
+		end
+
+		-- hide marks
+		for i=1,8 do
+			if cacheMarks[i] then
+				cacheMarks[i]:Hide()
+			end
 		end
 	end
 
@@ -615,7 +639,7 @@ do
 				local dy = (unitY - srcY) * id[2]
 				local range = (dx * dx + dy * dy) ^ 0.5
 				if range < (activeRange * 1.5) then
-					setDot(dx, dy, classCache[i])
+					setDot(dx, dy, classCache[i], GetRaidTargetIndex(n))
 					if range <= activeRange*1.1 then  -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = true
 					end
