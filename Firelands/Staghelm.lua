@@ -133,7 +133,7 @@ do
 	function mod:RecklessLeap(...)
 		local sGUID = select(11, ...)
 		--3sec cast so we have room to balance accuracy vs reaction time
-		self:ScheduleTimer(checkTarget, 0.6, sGUID)
+		self:ScheduleTimer(checkTarget, 1.5, sGUID)
 	end
 end
 
