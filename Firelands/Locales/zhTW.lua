@@ -49,7 +49,7 @@ if L then
 	L.flight = "飛行助手"
 	L.flight_desc = "當你“火焰之翼”持續時顯示計時條，使用超級醒目功能。"
 
-	L.initiate = "熾炎猛禽學徒出现"
+	L.initiate = "熾炎猛禽學徒出現"
 	L.initiate_desc = "熾炎猛禽學徒計時條。"
 	L.initiate_name = "熾炎猛禽學徒"
 	L.initiate_both = "熾炎猛禽學徒：>雙向<！"
@@ -66,7 +66,7 @@ if L then
 	L.traps_header = "陷阱"
 	L.immolation = "獻祭陷阱"
 	L.immolation_desc = "當怒面或裂軀階段獻祭陷阱時發出警報，獲得“小心翼翼”狀態。"
-	L.immolationyou = ">你<脚下 獻祭陷阱！"
+	L.immolationyou = ">你<腳下 獻祭陷阱！"
 	L.immolationyou_desc = "當你腳下獻祭陷阱被召喚時發出警報。"
 	L.immolationyou_message = "獻祭陷阱"
 	L.crystal = "投擲水晶"
@@ -81,15 +81,15 @@ if L then
 	L.blade_bar = "<虐殺之刃>"
 	L.shard_message = "折磨碎片：>%d<！"
 	L.focus_message = "焦點目標已有 >%d< 層折磨！"
-	L.countdown_bar = "<下一魔法連結>"
-	L.link_message = "魔法連結！"
+	L.countdown_bar = "<下一倒數>"
+	L.link_message = "倒數！"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "zhTW")
 if L then
 	L.seed_explosion = ">你< 即將灼熱種子爆炸！"
 	L.seed_bar = "<你：灼熱種子爆炸>"
-	L.adrenaline_message = "激奮腺素：>%d層<！"
+	L.adrenaline_message = "激奮腺素：>%d<層！"
 	L.leap_say = ">我< 跳躍火焰斬！"
 end
 
