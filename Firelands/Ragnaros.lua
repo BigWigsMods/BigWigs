@@ -79,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BreadthofFrost", 100479)
 	self:Log("SPELL_CAST_START", "EntrappingRoots", 100646)
 	self:Log("SPELL_CAST_START", "Cloudburst", 100714)
-	self:Log("SPELL_CAST_START", "EmpowerSulfuras", 100997)
+	self:Log("SPELL_CAST_SUCCESS", "EmpowerSulfuras", 100997)
 
 	-- Normal
 	self:Yell("IntermissionEnd", L["intermission_end_trigger1"], L["intermission_end_trigger2"], L["intermission_end_trigger3"])
