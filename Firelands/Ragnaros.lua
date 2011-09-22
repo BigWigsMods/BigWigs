@@ -199,7 +199,6 @@ do
 end
 
 do
-	local prev = 0
 	function mod:UNIT_AURA(_, unit)
 		if unit ~= "player" then return end
 		local fixated = UnitDebuff("player", fixate)
