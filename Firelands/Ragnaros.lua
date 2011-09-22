@@ -57,7 +57,7 @@ function mod:GetOptions()
 	return {
 		98237, 100115, 98164,
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},
-		{98498, "FLASHSHAKE"}, 100178,
+		98498, 100178,
 		99317, {99849, "FLASHSHAKE", "SAY"},
 		100190, 100479, 100646, 100714, 100997, 100675,
 		98710, "wound", "proximity", "berserk", "bosskill"
