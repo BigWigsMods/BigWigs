@@ -29,7 +29,7 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "zhCN")
 if L then
-	L.tornado_trigger = "These skies are MINE!"
+	L.tornado_trigger = "天空，归我统治！"
 	L.claw_message = "炽热之爪%2$d层：>%1$s<！"
 	L.fullpower_soon_message = "即将 完全的力量！"
 	L.halfpower_soon_message = "第四阶段！"
@@ -43,8 +43,8 @@ if L then
 	L.kill_message = "就是现在 - 杀了她！"
 	L.engage_message = "奥利瑟拉佐尔激活 - 约%d分钟后第二阶段！"
 
-	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
-	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
+	L.worm_emote = "熔岩火虫从地下涌出来了！"
+	L.phase2_soon_emote = "奥利瑟拉佐尔开始高速盘旋！狂风将移除火焰之翼的效果！"
 
 	L.flight = "飞行助手"
 	L.flight_desc = "当你“烈焰之翼”持续时显示计时条，使用超级醒目功能。"
@@ -95,10 +95,10 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "zhCN")
 if L then
-	L.intermission_end_trigger1 = "Sulfuras will be your end."
-	L.intermission_end_trigger2 = "Fall to your knees, mortals!  This ends now."
-	L.intermission_end_trigger3 = "Enough! I will finish this."
-	L.phase4_trigger = "Too soon..."
+	L.intermission_end_trigger1 = "萨弗拉斯将会是你的末日。"
+	L.intermission_end_trigger2 = "跪下吧，凡人们！一切都结束了。"
+	L.intermission_end_trigger3 = "够了！我会亲自解决。"
+	L.phase4_trigger = "太早了……"
 	L.seed_explosion = "熔火之种爆炸！"
 	L.intermission_bar = "<中场>"
 	L.intermission_message = "中场！"
