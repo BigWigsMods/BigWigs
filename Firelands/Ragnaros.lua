@@ -16,7 +16,7 @@ local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD, dreadflameCD = 30, 40, 40
 local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
-local dreadflame, cloudburst = (GetSpellInfo(100675)), (GetSpellInfo(100714))
+local dreadflame, cloudburst, worldInFlames = (GetSpellInfo(100675)), (GetSpellInfo(100714)), (GetSpellInfo(100190))
 local meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
 local intermissionHandle = nil
 
@@ -73,7 +73,7 @@ end
 
 function mod:OnBossEnable()
 	-- Heroic
-	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190)
+	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190, 100171)
 
 	self:Yell("Phase4", L["phase4_trigger"])
 	self:Log("SPELL_CAST_START", "BreadthofFrost", 100479)
@@ -221,12 +221,16 @@ function mod:IntermissionEnd()
 		if self:Difficulty() > 2 then
 			self:Bar(98498, "~"..moltenSeed, 15, 98498)
 			self:Bar(98710, lavaWaves, 7.5, 98710)
+			self:Bar(100190, worldInFlames, 40, 100190)
 		else
 			self:Bar(98498, moltenSeed, 24, 98498)
 			self:Bar(98710, lavaWaves, 55, 98710)
 		end
 	elseif phase == 2 then
 		engulfingCD = 30
+		if self:Difficulty() > 2 then
+			self:Bar(100190, worldInFlames, engulfingCD, 100190)
+		end
 		self:Bar(99317, "~"..livingMeteor, 52, 99317)
 		self:Bar(98710, lavaWaves, 55, 98710)
 		self:RegisterEvent("UNIT_AURA")
@@ -249,7 +253,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 		self:CancelAllTimers()
 		self:SendMessage("BigWigs_StopBar", self, L["seed_explosion"])
 		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
-		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100190))) -- World in Flames
+		self:SendMessage("BigWigs_StopBar", self, worldInFlames)
 		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100178))) -- Engulfing Flames
 	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
