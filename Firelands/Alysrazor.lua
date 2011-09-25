@@ -17,7 +17,7 @@ local initiateTimes = {31, 31, 21, 21, 21}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.tornado_trigger = "These skies are MINE!"
+	L.tornado_trigger = "^These skies"
 	L.claw_message = "%2$dx Claw on %1$s"
 	L.fullpower_soon_message = "Full power soon!"
 	L.halfpower_soon_message = "Stage 4 soon!"
