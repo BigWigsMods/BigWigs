@@ -528,7 +528,7 @@ do
 			if not cacheMarks[mark] then
 				local markFrame = anchor:CreateTexture(nil, "OVERLAY")
 				markFrame:SetTexture(format([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_%d.blp]], mark))
-				markFrame:SetSize(24, 24)
+				markFrame:SetSize(16, 16)
 				cacheMarks[mark] = markFrame
 			end
 			local markFrame = cacheMarks[mark]
