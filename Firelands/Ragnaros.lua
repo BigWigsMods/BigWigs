@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Ragnaros", 800, 198)
 if not mod then return end
-mod:RegisterEnableMob(52409)
+mod:RegisterEnableMob(52409, 53231) --Ragnaros, Lava Scion
 
 --------------------------------------------------------------------------------
 -- Locals
