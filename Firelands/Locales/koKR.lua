@@ -29,7 +29,6 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "koKR")
 if L then
-	L.tornado_trigger = "이 하늘은 나의 것이다!"
 	L.claw_message = "타오르는 발톱 x%2$d : %1$s"
 	L.fullpower_soon_message = "곧 최대 힘!"
 	L.halfpower_soon_message = "곧 4 단계!"
@@ -37,7 +36,11 @@ if L then
 	L.no_stacks_message = "당신은 깃털이 없습니다. 생각을 가지세요..."
 	L.moonkin_message = "헛짓은 그만~! 깃털을 주우세요!"
 	L.molt_bar = "다음 털갈이"
-	L.cataclysm_bar = "다음 재앙"
+
+	L.meteor = "Meteor"
+	L.meteor_desc = "Warn when a Molten Meteor is summoned."
+	L.meteor_bar = "Next Meteor"
+	L.meteor_message = "Meteor!"
 
 	L.stage_message = "%d 단계"
 	L.kill_message = "바로 지금! - 그녀를 죽이세요!"
@@ -45,10 +48,6 @@ if L then
 
 	L.worm_emote = "녹아내린 알이 부화하려고 합니다!"
 	L.phase2_soon_emote = "알리스라조르가 빠른 속도로 원을 그리며 날아다닙니다!"
-	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
-	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
-	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
-	L.restart_emote = "99925" -- Full Power spell ID used in the emote
 
 	L.flight = "날개 지속"
 	L.flight_desc = "'화염의 날개'의 지속 타이머 바를 표시합니다. 특수 강조바와 카운트 기능을 이용한다면 더 효율적입니다."

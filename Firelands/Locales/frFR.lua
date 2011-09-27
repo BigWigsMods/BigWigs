@@ -29,7 +29,6 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "frFR")
 if L then
-	L.tornado_trigger = "Ce ciel est à MOI."
 	L.claw_message = "%2$dx Griffes sur %1$s"
 	L.fullpower_soon_message = "Pleine puissance imminente !"
 	L.halfpower_soon_message = "Phase 4 imminente !"
@@ -37,7 +36,11 @@ if L then
 	L.no_stacks_message = "Juste au cas où : vous n'avez pas de plumes."
 	L.moonkin_message = "Arrêtez de faire genre et récupérez de vraies plumes."
 	L.molt_bar = "Prochaine mue"
-	L.cataclysm_bar = "Prochain cataclysme"
+
+	L.meteor = "Meteor"
+	L.meteor_desc = "Warn when a Molten Meteor is summoned."
+	L.meteor_bar = "Next Meteor"
+	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Phase %d "
 	L.kill_message = "C'est maintenant ou jamais - tuez-la !"
@@ -45,10 +48,6 @@ if L then
 
 	L.worm_emote = "Des vers de lave embrasés surgissent du sol !"
 	L.phase2_soon_emote = "Alysrazor commence à voler en cercles rapides !"
-	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
-	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
-	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
-	L.restart_emote = "99925" -- Full Power spell ID used in the emote
 
 	L.flight = "Assistance en vol"
 	L.flight_desc = "Affiche une barre indiquant la durée de vos Ailes de flamme. Idéal si utilisé avec la fonctionnalité de super mise en évidence."

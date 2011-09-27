@@ -29,7 +29,6 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "ruRU")
 if L then
-	L.tornado_trigger = "Небо над вами принадлежит МНЕ!"
 	L.claw_message = "%2$dx Claw on %1$s"--need check
 	L.fullpower_soon_message = "У Алисразор почти 100 энергии!"
 	L.halfpower_soon_message = "Скоро 4 фаза!"
@@ -37,7 +36,11 @@ if L then
 	L.no_stacks_message = "У тебя нет ни 1 пера, дружище"
 	L.moonkin_message = "У пингвинов тоже есть крылья...собери три пера и лети!"
 	L.molt_bar = "След. линька"
-	L.cataclysm_bar = "Next Cataclysm"
+
+	L.meteor = "Meteor"
+	L.meteor_desc = "Warn when a Molten Meteor is summoned."
+	L.meteor_bar = "Next Meteor"
+	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Фаза %d"
 	L.kill_message = "It's now or never - Kill her!"
@@ -45,10 +48,6 @@ if L then
 
 	L.worm_emote = "На поверхность вылезают огненные лавовые паразиты!"
 	L.phase2_soon_emote = "Алисразор начинает летать по кругу!"
-	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
-	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
-	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
-	L.restart_emote = "99925" -- Full Power spell ID used in the emote
 
 	L.flight = "Помощник летчика"
 	L.flight_desc = "Отсчитывать время действия бафа 'Огненные крылья'. Советую использовать вместе с функцией 'Супер увеличение'."

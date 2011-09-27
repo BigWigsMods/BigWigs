@@ -29,7 +29,6 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "zhCN")
 if L then
-	L.tornado_trigger = "天空，归我统治！"
 	L.claw_message = "炽热之爪%2$d层：>%1$s<！"
 	L.fullpower_soon_message = "即将 完全的力量！"
 	L.halfpower_soon_message = "第四阶段！"
@@ -37,7 +36,11 @@ if L then
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
 	L.molt_bar = "<下一羽蜕>"
-	L.cataclysm_bar = "<下一灾变流星>"
+
+	L.meteor = "Meteor"
+	L.meteor_desc = "Warn when a Molten Meteor is summoned."
+	L.meteor_bar = "Next Meteor"
+	L.meteor_message = "Meteor!"
 
 	L.stage_message = "阶段：>%d<！"
 	L.kill_message = "就是现在 - 杀了她！"

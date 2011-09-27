@@ -8,7 +8,7 @@ mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchli
 
 local firestorm = GetSpellInfo(101659)
 local woundTargets = mod:NewTargetList()
-local cataclysmCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
+local meteorCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
 local initiateTimes = {31, 31, 21, 21, 21}
 
 --------------------------------------------------------------------------------
@@ -17,7 +17,6 @@ local initiateTimes = {31, 31, 21, 21, 21}
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.tornado_trigger = "^These skies"
 	L.claw_message = "%2$dx Claw on %1$s"
 	L.fullpower_soon_message = "Full power soon!"
 	L.halfpower_soon_message = "Stage 4 soon!"
@@ -25,7 +24,12 @@ if L then
 	L.no_stacks_message = "Dunno if you care, but you have no feathers"
 	L.moonkin_message = "Stop pretending and get some real feathers"
 	L.molt_bar = "Next Molt"
-	L.cataclysm_bar = "Next Cataclysm"
+
+	L.meteor = "Meteor"
+	L.meteor_desc = "Warn when a Molten Meteor is summoned."
+	L.meteor_icon = 100761
+	L.meteor_bar = "Next Meteor"
+	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Stage %d"
 	L.kill_message = "It's now or never - Kill her!"
@@ -33,10 +37,6 @@ if L then
 
 	L.worm_emote = "Fiery Lava Worms erupt from the ground!"
 	L.phase2_soon_emote = "Alysrazor begins to fly in a rapid circle!"
-	L.phase2_emote = "99794" -- Fiery Vortex spell ID used in the emote
-	L.phase3_emote = "99432" -- Burns Out spell ID used in the emote
-	L.phase4_emote = "99922" -- Re-Ignites spell ID used in the emote
-	L.restart_emote = "99925" -- Full Power spell ID used in the emote
 
 	L.flight = "Flight Assist"
 	L.flight_desc = "Show a bar with the duration of 'Wings of Flame' on you, ideally used with the Super Emphasize feature."
@@ -62,7 +62,7 @@ function mod:GetOptions()
 		99816,
 		99432,
 		99844, 99925,
-		{100744, "FLASHSHAKE"}, 100761,
+		{100744, "FLASHSHAKE"}, "meteor",
 		"bosskill"
 	}, {
 		[99362] = "ej:2820", --Stage 1: Flight
@@ -85,10 +85,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Wound", 100723, 100722, 100721, 100720, 100719, 100718, 100024, 99308)
 	self:Log("SPELL_AURA_APPLIED", "Tantrum", 99362)
 
-	self:Emote("BuffCheck", L["worm_emote"], L["phase2_soon_emote"])
+	self:Emote("BuffCheck", L["worm_emote"])
 
 	-- Stage 2: Tornadoes
-	self:Yell("FieryTornado", L["tornado_trigger"])
+	self:Emote("FieryTornado", L["phase2_soon_emote"])
 
 	-- Stage 3: Burnout
 	self:Log("SPELL_AURA_APPLIED", "Burnout", 99432)
@@ -97,7 +97,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ReIgnite", 99432)
 
 	-- Heroic only
-	self:Log("SPELL_CAST_START", "Cataclysm", 100761, 102111)
+	self:Log("SPELL_CAST_START", "Meteor", 100761, 102111)
 	self:Log("SPELL_CAST_START", "Firestorm", 100744)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -107,14 +107,14 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	cataclysmCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
+	meteorCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
 	wipe(initiateTimes)
 	if diff > 2 then
 		initiateTimes = {22, 63, 21, 21, 40}
 		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
-		self:Bar(100761, L["cataclysm_bar"], 37, 100761)
+		self:Bar(100761, L["meteor_bar"], 37, 100761)
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
 		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
@@ -215,27 +215,26 @@ end
 function mod:Firestorm(_, spellId, _, _, spellName)
 	self:FlashShake(100744)
 	self:Message(100744, spellName, "Urgent", spellId, "Alert")
-	-- Only show a bar for next if we have seen less than 3 Cataclysms
-	if cataclysmCount < 3 then
+	-- Only show a bar for next if we have seen less than 3 meteors
+	if meteorCount < 3 then
 		self:Bar(100744, "~"..spellName, 82, spellId)
 	end
-	self:Bar(100761, L["cataclysm_bar"], 10, 100761)
+	self:Bar(100761, L["meteor_bar"], 10, 100761)
 end
 
-function mod:Cataclysm(_, spellId, _, _, spellName)
-	self:Message(100761, spellName, "Attention", spellId, "Alarm")
-	-- Only show a bar if this is the first or third Cataclysm this phase
-	cataclysmCount = cataclysmCount + 1
-	if cataclysmCount == 1 or cataclysmCount == 3 then
-		self:Bar(100761, L["cataclysm_bar"], 32, 100761)
+function mod:Meteor(_, spellId)
+	self:Message("meteor", L["meteor_message"], "Attention", spellId, "Alarm")
+	-- Only show a bar if this is the first or third meteor this phase
+	meteorCount = meteorCount + 1
+	if meteorCount == 1 or meteorCount == 3 then
+		self:Bar("meteor", L["meteor_bar"], 32, spellId)
 	end
 end
 
 function mod:FieryTornado()
-	local fieryTornado = GetSpellInfo(99816)
-	local feather = GetSpellInfo(98619)
+	self:BuffCheck()
 	self:SendMessage("BigWigs_StopBar", self, firestorm)
-	self:SendMessage("BigWigs_StopBar", self, feather)
+	local fieryTornado = GetSpellInfo(99816)
 	self:Bar(99816, fieryTornado, 35, 99816)
 	self:Message(99816, (L["stage_message"]:format(2))..": "..fieryTornado, "Important", 99816, "Alarm")
 end
@@ -275,8 +274,8 @@ do
 			initiateCount = 0
 			self:Bar("initiate", L["initiate_both"], 13.5, 97062)
 			if self:Difficulty() > 2 then
-				cataclysmCount = 0
-				self:Bar(100761, L["cataclysm_bar"], 18, 100761)
+				meteorCount = 0
+				self:Bar(100761, L["meteor_bar"], 18, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else

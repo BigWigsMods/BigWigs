@@ -29,7 +29,6 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "deDE")
 if L then
-	L.tornado_trigger = "Dieser Himmel ist MEIN."
 	L.claw_message = "%2$dx Klauen: %1$s"
 	L.fullpower_soon_message = "Volle Kraft bald!"
 	L.halfpower_soon_message = "Phase 4 bald!"
@@ -37,7 +36,11 @@ if L then
 	L.no_stacks_message = "Du hast keine Federn!"
 	L.moonkin_message = "Beschaff' dir richtige Federn!"
 	L.molt_bar = "Nächste Mauser"
-	L.cataclysm_bar = "Nächster Kataklysmus"
+
+	L.meteor = "Meteor"
+	L.meteor_desc = "Warn when a Molten Meteor is summoned."
+	L.meteor_bar = "Next Meteor"
+	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Phase %d"
 	L.kill_message = "Jetzt oder nie - tötet das Biest!"
