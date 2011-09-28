@@ -38,8 +38,8 @@ if L then
 	L.molt_bar = "Nächste Mauser"
 
 	L.meteor = "Meteor"
-	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_bar = "Next Meteor"
+	L.meteor_desc = "Warnt, wenn ein Geschmolzener Meteor beschworen wird."
+	L.meteor_bar = "Nächster Meteor"
 	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Phase %d"
@@ -51,6 +51,13 @@ if L then
 
 	L.flight = "Flughilfe"
 	L.flight_desc = "Zeigt eine Timerleiste mit deiner verbleibenden Restdauer von 'Flammenschwingen', sollte am besten mit der 'Stark hervorgehoben'-Funktion verwendet werden."
+
+	L.initiate = "Erscheinen der Initianden"
+	L.initiate_desc = "Zeigt Timerleisten für das Auftauchen der Initianden an."
+	L.initiate_name = "Kralleninitiand"
+	L.initiate_both = "Beide Initianden"
+	L.initiate_west = "Westlicher Initiand"
+	L.initiate_east = "Östlicher Initiand"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "deDE")
