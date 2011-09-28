@@ -114,7 +114,7 @@ function mod:OnEngage(diff)
 		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 93, 100744)
-		self:Bar(100761, L["meteor_bar"], 37, 100761)
+		self:Bar("meteor", L["meteor_bar"], 37, 100761)
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
 		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
@@ -219,7 +219,7 @@ function mod:Firestorm(_, spellId, _, _, spellName)
 	if meteorCount < 3 then
 		self:Bar(100744, "~"..spellName, 82, spellId)
 	end
-	self:Bar(100761, L["meteor_bar"], 10, 100761)
+	self:Bar("meteor", L["meteor_bar"], 10, 100761)
 end
 
 function mod:Meteor(_, spellId)
@@ -275,7 +275,7 @@ do
 			self:Bar("initiate", L["initiate_both"], 13.5, 97062)
 			if self:Difficulty() > 2 then
 				meteorCount = 0
-				self:Bar(100761, L["meteor_bar"], 18, 100761)
+				self:Bar("meteor", L["meteor_bar"], 18, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else
