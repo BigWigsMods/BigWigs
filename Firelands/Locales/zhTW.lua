@@ -37,10 +37,10 @@ if L then
 	L.moonkin_message = "去拿一些羽毛！"
 	L.molt_bar = "<下一脫毛>"
 
-	L.meteor = "Meteor"
-	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_bar = "Next Meteor"
-	L.meteor_message = "Meteor!"
+	L.meteor = "熔岩隕石"
+	L.meteor_desc = "當熔岩隕石被召喚時發出警報。"
+	L.meteor_bar = "<下一熔岩隕石>"
+	L.meteor_message = "熔岩隕石！"
 
 	L.stage_message = "階段：>%d<！"
 	L.kill_message = "就是現在 - 殺了她！"

@@ -37,10 +37,10 @@ if L then
 	L.moonkin_message = "去拿一些羽毛！"
 	L.molt_bar = "<下一羽蜕>"
 
-	L.meteor = "Meteor"
-	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_bar = "Next Meteor"
-	L.meteor_message = "Meteor!"
+	L.meteor = "熔火流星"
+	L.meteor_desc = "当熔火流星被召唤时发出警报。"
+	L.meteor_bar = "<下一熔火流星>"
+	L.meteor_message = "熔火流星！"
 
 	L.stage_message = "阶段：>%d<！"
 	L.kill_message = "就是现在 - 杀了她！"
