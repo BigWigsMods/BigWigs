@@ -37,10 +37,10 @@ if L then
 	L.moonkin_message = "Arrêtez de faire genre et récupérez de vraies plumes."
 	L.molt_bar = "Prochaine mue"
 
-	L.meteor = "Meteor"
-	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_bar = "Next Meteor"
-	L.meteor_message = "Meteor!"
+	L.meteor = "Météore"
+	L.meteor_desc = "Prévient quand un météore en fusion est invoqué."
+	L.meteor_bar = "Prochain météore"
+	L.meteor_message = "Météore !"
 
 	L.stage_message = "Phase %d "
 	L.kill_message = "C'est maintenant ou jamais - tuez-la !"
