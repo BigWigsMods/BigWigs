@@ -31,6 +31,7 @@ move-folders:
     BigWigs/Throne: BigWigs_Throne
     BigWigs/Baradin: BigWigs_Baradin
     BigWigs/Firelands: BigWigs_Firelands
+    BigWigs/DragonSoul: BigWigs_DragonSoul
 
 ignore:
 	- globals.sh

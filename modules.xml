@@ -21,6 +21,9 @@
 
 <Include file="Firelands\locales.xml"/>
 <Include file="Firelands\modules.xml"/>
+
+<Include file="DragonSoul\locales.xml"/>
+<Include file="DragonSoul\modules.xml"/>
 <!--@end-debug@-->
 </Ui>
 

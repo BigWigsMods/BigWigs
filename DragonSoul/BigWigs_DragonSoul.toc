@@ -1,0 +1,28 @@
+## Interface: 40300
+
+## Title: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-ruRU: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-deDE: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-esES: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-frFR: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-zhCN: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-zhTW: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-koKR: Big Wigs [|cffeda55fDragon Soul|r]
+## Notes: Big Wigs Modules for Dragon Soul
+## Notes-ruRU: Big Wigs Modules for Dragon Soul
+## Notes-deDE: Big Wigs Modules for Dragon Soul
+## Notes-esES: Big Wigs Modules for Dragon Soul
+## Notes-frFR: Big Wigs Modules for Dragon Soul
+## Notes-zhCN: Big Wigs Modules for Dragon Soul
+## Notes-zhTW: Big Wigs Modules for Dragon Soul
+## Notes-koKR: Big Wigs Modules for Dragon Soul
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-ZoneId: 824
+
+locales.xml
+modules.xml
+

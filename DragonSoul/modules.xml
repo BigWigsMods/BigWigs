@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Morchok.lua" />
+<Script file="Zonozz.lua" />
+<Script file="Yorsahj.lua" />
+<Script file="Hagara.lua" />
+<Script file="Ultraxion.lua" />
+<Script file="Blackthorn.lua" />
+<Script file="DeathwingSpine.lua" />
+<Script file="DeathwingMadness.lua" />
+
+</Ui>
