@@ -103,9 +103,21 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 
 --[[
 function GetMapID(name)
-	for i=1,800 do
+	for i=1,900 do
 		local fetchedName = GetMapNameByID(i)
 		if name == fetchedName then return i end
+	end
+end
+function GetBossID(name)
+	for i=1,300 do
+		local fetchedName, _, id = EJ_GetEncounterInfo(i)
+		if name == fetchedName then return fetchedName, i end
+	end
+end
+function PrintAllNewIDs() 
+	for i=200,300 do
+		local n,_,id = EJ_GetEncounterInfo(i)
+		if n then print(n,id) end
 	end
 end
 ]]
