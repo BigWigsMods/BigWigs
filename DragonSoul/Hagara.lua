@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Hagara the Stormbinder", 824, EJBossId)
+local mod = BigWigs:NewBoss("Hagara the Stormbinder", 824, 317)
 if not mod then return end
 mod:RegisterEnableMob(npcId)
 

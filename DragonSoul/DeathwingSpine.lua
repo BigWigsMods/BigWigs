@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Spine of Deathwing", 824, EJBossId)
+local mod = BigWigs:NewBoss("Spine of Deathwing", 824, 318)
 if not mod then return end
 mod:RegisterEnableMob(npcId)
 

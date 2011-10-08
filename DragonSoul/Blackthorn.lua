@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Warmaster Blackthorn", 824, EJBossId)
+local mod = BigWigs:NewBoss("Warmaster Blackthorn", 824, 332)
 if not mod then return end
 mod:RegisterEnableMob(npcId)
 
