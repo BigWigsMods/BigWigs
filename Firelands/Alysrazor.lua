@@ -113,7 +113,7 @@ function mod:OnEngage(diff)
 		initiateTimes = {22, 63, 21, 21, 40}
 		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
-		self:Bar(100744, firestorm, 93, 100744)
+		self:Bar(100744, firestorm, 95, 100744)
 		self:Bar("meteor", L["meteor_bar"], 37, 100761)
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
