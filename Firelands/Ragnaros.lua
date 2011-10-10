@@ -223,7 +223,7 @@ function mod:IntermissionEnd()
 			self:Bar(98710, lavaWaves, 7.5, 98710)
 			self:Bar(100190, worldInFlames, 40, 100190)
 		else
-			self:Bar(98498, moltenSeed, 24, 98498)
+			self:Bar(98498, moltenSeed, 22.7, 98498)
 			self:Bar(98710, lavaWaves, 55, 98710)
 		end
 	elseif phase == 2 then
