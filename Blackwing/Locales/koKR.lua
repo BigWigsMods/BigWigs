@@ -118,7 +118,7 @@ if L then
 
 	L.shadowblaze_trigger = "살을 재로 만들어 주마!"
 	L.shadowblaze_message = "당신은 타오르는중!"
-	
+
 	L.onyxia_power_message = "곧 폭발!"
 
 	L.chromatic_prototype = "오색 실험체" -- 3 adds name
