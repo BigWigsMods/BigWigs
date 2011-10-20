@@ -24,7 +24,7 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("Warmaster Blackthorn", "krKR")
+L = BigWigs:NewBossLocale("Warmaster Blackhorn", "krKR")
 if L then
 
 end
