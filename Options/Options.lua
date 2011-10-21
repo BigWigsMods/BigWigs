@@ -188,8 +188,15 @@ local function translateZoneID(id)
 		name = GetMapNameByID(id)
 	end
 	-- XXX temp until 4.3
-	if id == 820 then name = "End Time - 4.3 PTR" end
-	if id == 824 then name = "Dragon Soul - 4.3 PTR" end
+	if id == 820 then
+		name = "End Time - 4.3 PTR"
+	elseif id == 824 then
+		name = "Dragon Soul - 4.3 PTR"
+	elseif id == 816 then
+		name = "Well of Eternity - 4.3 PTR"
+	elseif if == 819 then
+		name = "Hour of Twilight - 4.3 PTR"
+	end
 	if not name then
 		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
 	end
