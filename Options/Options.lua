@@ -194,7 +194,7 @@ local function translateZoneID(id)
 		name = "Dragon Soul - 4.3 PTR"
 	elseif id == 816 then
 		name = "Well of Eternity - 4.3 PTR"
-	elseif if == 819 then
+	elseif id == 819 then
 		name = "Hour of Twilight - 4.3 PTR"
 	end
 	if not name then
