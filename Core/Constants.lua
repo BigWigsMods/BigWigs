@@ -129,7 +129,12 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				return option, title, description, icon
 			else
 				local L = module:GetLocale(true)
-				local icon = L[option .. "_icon"] and select(3, GetSpellInfo(L[option .. "_icon"])) or nil
+				local icon = L[option .. "_icon"]
+				if type(icon) == "number" then
+					icon = select(3, GetSpellInfo(icon))
+				elseif type(icon) == "string" then
+					icon = "Interface\\Icons\\" .. icon
+				end
 				return option, L[option], L[option .. "_desc"], icon
 			end
 		end
