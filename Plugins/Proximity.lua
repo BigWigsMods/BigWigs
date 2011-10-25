@@ -51,6 +51,22 @@ local maxPlayers = 0
 local classCache = nil
 local anchor = nil
 
+--Radial upvalues
+local GetPlayerMapPosition = GetPlayerMapPosition
+local GetPlayerFacing = GetPlayerFacing
+local format = string.format
+local GetRaidTargetIndex = GetRaidTargetIndex
+local UnitInRange = UnitInRange
+local UnitIsDead = UnitIsDead
+local UnitIsUnit = UnitIsUnit
+local GetTime = GetTime
+local min = math.min
+local pi = math.pi
+local cos = math.cos
+local sin = math.sin
+local tremove = table.remove
+local unpack = unpack
+
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 local setDot, hideDots, testDots -- funcs defined later
@@ -58,7 +74,7 @@ local setDot, hideDots, testDots -- funcs defined later
 local hexColors = {}
 local vertexColors = {}
 for k, v in pairs(RAID_CLASS_COLORS) do
-	hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
+	hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 	vertexColors[k] = { v.r, v.g, v.b }
 end
 
@@ -75,22 +91,6 @@ local coloredNames = setmetatable({}, {__index =
 		end
 	end
 })
-
---Radial upvalues
-local GetPlayerMapPosition = GetPlayerMapPosition
-local GetPlayerFacing = GetPlayerFacing
-local format = string.format
-local GetRaidTargetIndex = GetRaidTargetIndex
-local UnitInRange = UnitInRange
-local UnitIsDead = UnitIsDead
-local UnitIsUnit = UnitIsUnit
-local GetTime = GetTime
-local min = math.min
-local pi = math.pi
-local cos = math.cos
-local sin = math.sin
-local tremove = table.remove
-local unpack = unpack
 
 -------------------------------------------------------------------------------
 -- Range functions
@@ -398,12 +398,12 @@ local function ensureDisplay()
 	display.sound = sound
 
 	local header = display:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-	header:SetText(L["%d yards"]:format(0))
+	header:SetFormattedText(L["%d yards"], 0)
 	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 	display.title = header
 
 	local abilityName = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	abilityName:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
+	abilityName:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
 	abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
 	display.ability = abilityName
 
@@ -545,6 +545,7 @@ do
 			markFrame:SetPoint("CENTER", anchor, "CENTER", x, y)
 			markFrame:SetDrawLayer("OVERLAY", 1)
 			markFrame:Show()
+			dot:Hide()
 		end
 	end
 
@@ -735,7 +736,7 @@ function plugin:OnRegister()
 		local function update()
 			wipe(coloredNames)
 			for k, v in pairs(CUSTOM_CLASS_COLORS) do
-				hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
+				hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 				vertexColors[k] = { v.r, v.g, v.b }
 			end
 		end
@@ -1002,8 +1003,8 @@ function plugin:Close()
 		classCache = nil
 	end
 	if anchor then
-		anchor.title:SetText(L["%d yards"]:format(0))
-		anchor.ability:SetText(L["|T%s:20:20:-5|tAbility name"]:format("Interface\\Icons\\spell_nature_chainlightning"))
+		anchor.title:SetFormattedText(L["%d yards"], 0)
+		anchor.ability:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
 		-- Just in case we were the last target of
 		-- configure mode, reset the background color.
 		anchor.background:SetTexture(0, 0, 0, 0.3)
@@ -1050,12 +1051,12 @@ function plugin:Open(range, module, key)
 	end
 
 	-- Update the header to reflect the actual range we're checking
-	anchor.title:SetText(L["%d yards"]:format(actualRange))
+	anchor.title:SetFormattedText(L["%d yards"], actualRange)
 	-- Update the ability name display
 	if module and key then
 		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
 		if type(icon) == "string" then
-			anchor.ability:SetText(abilityNameFormat:format(icon, name))
+			anchor.ability:SetFormattedText(abilityNameFormat, icon, name)
 		else
 			anchor.ability:SetText(name)
 		end
