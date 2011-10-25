@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Maloriak", 754, 173)
+local mod, CL = BigWigs:NewBoss("Maloriak", 754, 173)
 if not mod then return end
 mod:RegisterEnableMob(41378)
 
@@ -10,7 +10,6 @@ mod:RegisterEnableMob(41378)
 -- Locals
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local aberrations = 18
 local phaseCounter = 0
 local maloriak = BigWigs:Translate("Maloriak")
@@ -63,7 +62,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity",
 		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968,

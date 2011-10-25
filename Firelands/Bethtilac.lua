@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Beth'tilac", 800, 192)
+local mod, CL = BigWigs:NewBoss("Beth'tilac", 800, 192)
 if not mod then return end
 mod:RegisterEnableMob(52498)
 
@@ -17,7 +17,6 @@ local lastBroodlingTarget = ""
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.devastate_message = "Devastation #%d!"

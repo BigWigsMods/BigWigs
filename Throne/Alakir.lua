@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Al'Akir", 773, 155)
+local mod, CL = BigWigs:NewBoss("Al'Akir", 773, 155)
 if not mod then return end
 mod:RegisterEnableMob(46753)
 
@@ -14,7 +14,6 @@ local phase, lastWindburst = 1, 0
 local cloud = GetSpellInfo(89588)
 local windburst = GetSpellInfo(87770)
 local shock = nil
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local acidRainCounter, acidRainCounted = 1, nil
 
 --------------------------------------------------------------------------------

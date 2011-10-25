@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Omnotron Defense System", 754, 169)
+local mod, CL = BigWigs:NewBoss("Omnotron Defense System", 754, 169)
 if not mod then return end
 mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron, Magmatron, Toxitron, Lord Victor Nefarius
 
@@ -10,7 +10,6 @@ mod:RegisterEnableMob(42166, 42179, 42178, 42180, 49226) -- Arcanotron, Electron
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.nef = "Lord Victor Nefarius"
@@ -45,7 +44,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},

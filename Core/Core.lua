@@ -380,7 +380,7 @@ do
 			local m = core:NewModule(module, ...)
 			m.zoneId = zone
 			m.encounterId = encounterId
-			return m
+			return m, CL
 		end
 	end
 

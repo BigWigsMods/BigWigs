@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Ascendant Council", 758, 158)
+local mod, CL = BigWigs:NewBoss("Ascendant Council", 758, 158)
 if not mod then return end
 mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, Arion, Terrastra, Elementium Monstrosity
 
@@ -10,7 +10,6 @@ mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, 
 -- Locals
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
 local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(92541)
@@ -52,7 +51,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		-- Ignacious
 		82631, {82660, "FLASHSHAKE"},

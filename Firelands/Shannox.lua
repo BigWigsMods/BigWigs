@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Shannox", 800, 195)
+local mod, CL = BigWigs:NewBoss("Shannox", 800, 195)
 if not mod then return end
 mod:RegisterEnableMob(53691, 53695, 53694) --Shannox, Rageface, Riplimb
 
@@ -10,7 +10,6 @@ mod:RegisterEnableMob(53691, 53695, 53694) --Shannox, Rageface, Riplimb
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.safe = "%s safe"

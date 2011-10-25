@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Ragnaros", 800, 198)
+local mod, CL = BigWigs:NewBoss("Ragnaros", 800, 198)
 if not mod then return end
 mod:RegisterEnableMob(52409, 53231) --Ragnaros, Lava Scion
 
@@ -24,7 +24,6 @@ local intermissionHandle = nil
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.intermission_end_trigger1 = "Sulfuras will be your end"

@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Valiona and Theralion", 758, 157)
+local mod, CL = BigWigs:NewBoss("Valiona and Theralion", 758, 157)
 if not mod then return end
 mod:RegisterEnableMob(45992, 45993)
 
@@ -15,7 +15,6 @@ local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), G
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local emTargets = mod:NewTargetList()
 local markWarned = false
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 
 --------------------------------------------------------------------------------
 -- Localization

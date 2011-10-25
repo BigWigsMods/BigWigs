@@ -2,15 +2,10 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Atramedes", 754, 171)
+local mod, CL = BigWigs:NewBoss("Atramedes", 754, 171)
 if not mod then return end
 mod:RegisterEnableMob(41442)
 
---------------------------------------------------------------------------------
--- Locals
---
-
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local searingFlame = GetSpellInfo(77840)
 
 --------------------------------------------------------------------------------
@@ -37,7 +32,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions(CL)
+function mod:GetOptions()
 	return {
 		"ground_phase", 78075, 77840,
 		"air_phase",

@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Sinestra", 758, 168)
+local mod, CL = BigWigs:NewBoss("Sinestra", 758, 168)
 if not mod then return end
 mod:RegisterEnableMob(45213)
 
@@ -10,7 +10,6 @@ mod:RegisterEnableMob(45213)
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.whelps = "Whelps"
@@ -139,7 +138,7 @@ end
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
 	-- Phase 1 and 3
 		92944, -- Breath

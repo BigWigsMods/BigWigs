@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Nefarian", 754, 174)
+local mod, CL = BigWigs:NewBoss("Nefarian", 754, 174)
 if not mod then return end
 mod:RegisterEnableMob(41270, 41376)
 
@@ -15,7 +15,6 @@ local cinderTargets = mod:NewTargetList()
 local powerTargets = mod:NewTargetList()
 local shadowblaze = GetSpellInfo(94085)
 local phase3warned = false
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local shadowblazeHandle, lastBlaze = nil, 0
 
 --------------------------------------------------------------------------------
