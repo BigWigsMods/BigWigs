@@ -3,7 +3,7 @@ if tonumber((select(4, GetBuildInfo()))) < 40300 then return end
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Warlord Zon'ozz", 824, 324)
+local mod, CL = BigWigs:NewBoss("Warlord Zon'ozz", 824, 324)
 if not mod then return end
 mod:RegisterEnableMob(55308)
 
@@ -18,7 +18,6 @@ local disruptingShadowsTargets = mod:NewTargetList()
 -- Localization
 --
 
-local CL = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Common")
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.ball = "Void ball"
@@ -73,21 +72,21 @@ end
 -- Event Handlers
 --
 
-function mod:VoidDiffusion(_, spellID, _, _, spellName, stack)
+function mod:VoidDiffusion(_, spellId, _, _, spellName, stack)
 	self:Message("bounce", ("%s (%d)"):format(L["bounce"], stack or 1), "Important", spellId)
 end
 
-function mod:PsychicDrain(_, spellID, _, _, spellName)
+function mod:PsychicDrain(_, spellId, _, _, spellName)
 	self:Bar(104322, "~"..spellName, 20, spellId)
 	--self:Message(104322, spellName, "Urgent", spellId) -- do we need this, it's for tanks only
 end
 
-function mod:VoidoftheUnmaking(_, spellID, _, _, spellName)
+function mod:VoidoftheUnmaking(_, spellId, _, _, spellName)
 	self:Bar("ball", "~"..L["ball"], 20, spellId)
 	self:Message("ball", L["ball"], "Urgent", spellId, "Alarm")
 end
 
-function mod:Darkness(_, spellID, _, _, spellName)
+function mod:Darkness(_, spellId, _, _, spellName)
 	self:Bar("darkness", L["darkness"], 30, spellId) -- EJ says 30 sec, heroic timing is probably different
 	self:Message("darkness", L["darkness"], "Important", spellId, "Info") -- can use info, no conflict here
 end
@@ -98,7 +97,7 @@ do
 		mod:TargetMessage(103434, spellName, disruptingShadowsTargets, "Attention", 103434, "Info")
 		scheduled = nil
 	end
-	function mod:DisruptingShadowsApplied(player, spellID, _, _, spellName)
+	function mod:DisruptingShadowsApplied(player, spellId, _, _, spellName)
 		disruptingShadowsTargets[#disruptingShadowsTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:Say(103434, CL["say"]:format(spellName))
