@@ -42,7 +42,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
-	self:Log("SPELL_CAST_START", "Stomp", 108571)
+	self:Log("SPELL_CAST_START", "Stomp", 108571, 109033)
 	self:Log("SPELL_CAST_START", "BlackBlood", 103851)
 	self:Log("SPELL_AURA_APPLIED", "Furious", 103846)
 	self:Log("SPELL_AURA_APPLIED", "Crush", 103687)
@@ -86,9 +86,14 @@ function mod:BlackBlood(_, spellId, _, _, spellName)
 	self:Message(103851, spellName, "Personal", spellId, "Long") -- not really personal, but we tend to associate personal with fns
 end
 
-function mod:ResonatingCrystal(_, spellId, _, _, spellName)
-	self:Message(103640, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(103640, L["explosion"], 12, spellId)
+function mod:ResonatingCrystal(_, spellId, source, _, spellName)
+	if self:Difficulty() > 2 then
+		self:Message(103640, ("%s - %s"):format(source, spellName), "Urgent", spellId, "Alarm")
+		self:Bar(103640, ("%s - %s"):format(source, L["explosion"]), 12, spellId)
+	else
+		self:Message(103640, spellName, "Urgent", spellId, "Alarm")
+		self:Bar(103640, L["explosion"], 12, spellId)
+	end
 end
 
 function mod:Crush(player, spellId, _, _, spellName, buffStack)

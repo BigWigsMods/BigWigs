@@ -40,7 +40,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		105248, 109457, { 105834, "FLASHSHAKE" }, "roll",
+		105248, 109457, { 105845, "FLASHSHAKE" }, {"roll", "FLASHSHAKE" },
 		"bosskill",
 	}, {
 		[105248] = "general",
@@ -51,9 +51,9 @@ function mod:OnBossEnable()
 	self:Emote("AboutToRoll", L["left_start"], L["right_start"])
 	self:Emote("Rolls", L["left"], L["right"])
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AbsorbedBlood", 105248)
-	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457)
-	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457)
-	self:Log("SPELL_AURA_APPLIED", "Superheated", 105834)
+	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457, 109458)
+	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458)
+	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 53879) -- this is most likely not how you win
@@ -75,14 +75,15 @@ local function graspCheck()
 end
 
 function mod:AboutToRoll()
-	self:Bar("roll", L["roll"], 5, rollIcon)
-	self:Message("roll", L["roll_soon"], "Positive", L["roll_icon"])
+	self:Bar("roll", L["roll"], 5, L["roll_icon"])
+	self:Message("roll", L["roll_soon"], "Positive", roll_icon, "Long")
+	self:FlashShake("roll")
 	graspCheck()
 end
 
 
 function mod:Rolls()
-	self:Message("roll", L["roll"], "Positive", L["roll_icon"])
+	self:Message("roll", L["roll"], "Positive", roll_icon)
 	allowGraspCheck = false
 end
 
@@ -97,9 +98,9 @@ function mod:FieryGripCast(_, spellId, _, _, spellName)
 	self:Bar(109457, "~"..spellName, 28, spellId)
 end
 
-function mod:Superheated(_, spellId, _, _, spellName)
-	self:Message(105834, spellName, player, "Important", spellId, "Long")
-	self:FlashShake(105834)
+function mod:Nuclear(_, spellId, _, _, spellName)
+	self:Message(105845, spellName, player, "Important", spellId, "Long")
+	self:FlashShake(105845)
 end
 
 do
@@ -116,3 +117,4 @@ do
 		end
 	end
 end
+
