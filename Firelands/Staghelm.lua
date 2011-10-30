@@ -4,7 +4,7 @@
 
 local mod = BigWigs:NewBoss("Majordomo Staghelm", 800, 197)
 if not mod then return end
-mod:RegisterEnableMob(52571)
+mod:RegisterEnableMob(52571, 53619) --Staghelm, Druid of the Flame
 
 --------------------------------------------------------------------------------
 -- Locales
