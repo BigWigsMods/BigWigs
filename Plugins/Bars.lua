@@ -1064,7 +1064,7 @@ do
 	empUpdate:SetScript("OnUpdate", function(self, elapsed)
 		if dirty then return end
 		for k in pairs(normalAnchor.bars) do
-			if not k:Get("bigwigs:emphasized") and k.remaining <= 10 then
+			if k.remaining <= 10 and not k:Get("bigwigs:emphasized") then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
@@ -1081,9 +1081,11 @@ local function countdown(bar)
 	if bar.remaining <= bar:Get("bigwigs:count") then
 		local count = bar:Get("bigwigs:count")
 		bar:Set("bigwigs:count", count - 1)
-		PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3", "Master")
-		if count > 0.9 then
-			plugin:SendMessage("BigWigs_EmphasizedMessage", floor(count), 1, 0, 0)
+		if bar.remaining < 6 then
+			PlaySoundFile("Interface\\AddOns\\BigWigs\\Sounds\\"..floor(count)..".mp3", "Master")
+			if count > 0.9 then
+				plugin:SendMessage("BigWigs_EmphasizedMessage", floor(count), 1, 0, 0)
+			end
 		end
 	end
 end
@@ -1092,17 +1094,19 @@ local function flash(bar)
 	if bar.remaining <= bar:Get("bigwigs:flashcount") then
 		local count = bar:Get("bigwigs:flashcount")
 		bar:Set("bigwigs:flashcount", count - 1)
-		plugin:SendMessage("BigWigs_FlashShake")
+		if bar.remaining < 4 then
+			plugin:SendMessage("BigWigs_FlashShake")
+		end
 	end
 end
 
-local function actuallyEmphasize(bar, time)
-	if time > 5 and superemp.db.profile.countdown then
-		bar:Set("bigwigs:count", math.min(5, floor(time)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
+local function actuallyEmphasize(bar, t)
+	if superemp.db.profile.countdown then
+		bar:Set("bigwigs:count", math.min(t, floor(t)) + .3) -- sounds last approx .3 seconds this makes them right on the ball
 		bar:AddUpdateFunction(countdown)
 	end
-	if time > 3 and superemp.db.profile.flash then
-		bar:Set("bigwigs:flashcount", math.min(3, floor(time)) + .3)
+	if superemp.db.profile.flash then
+		bar:Set("bigwigs:flashcount", math.min(t, floor(t)) + .3)
 		bar:AddUpdateFunction(flash)
 	end
 end
