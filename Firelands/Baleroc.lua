@@ -72,29 +72,19 @@ function mod:Blades(_, spellId, _, _, spellName)
 	self:Bar("ej:2598", L["blade_bar"], 47, spellId)
 end
 
-do
-	local scheduled = nil
-	local function countdownWarn()
-		mod:TargetMessage(99516, L["link_message"], countdownTargets, "Important", 99516, "Alarm")
-		scheduled = nil
+function mod:Countdown(player, spellId)
+	countdownTargets[#countdownTargets + 1] = player
+	if UnitIsUnit(player, "player") then
+		self:FlashShake(99516)
 	end
-	function mod:Countdown(player, spellId)
+	if countdownCounter == 1 then
+		self:PrimaryIcon(99516, player)
+		countdownCounter = 2
+	else
 		self:Bar(99516, L["countdown_bar"], 47.6, spellId)
-		if UnitIsUnit(player, "player") then
-			self:FlashShake(99516)
-		end
-		if countdownCounter == 1 then
-			self:PrimaryIcon(99516, player)
-			countdownCounter = 2
-		else
-			self:SecondaryIcon(99516, player)
-			countdownCounter = 1
-		end
-		countdownTargets[#countdownTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(countdownWarn, 0.1)
-		end
+		self:TargetMessage(99516, L["link_message"], countdownTargets, "Important", 99516, "Alarm")
+		self:SecondaryIcon(99516, player)
+		countdownCounter = 1
 	end
 end
 

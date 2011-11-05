@@ -495,6 +495,9 @@ do
 	end
 end
 
+-- Examples of API use in a module:
+-- self:Sync("abilityPrefix", playerName)
+-- self:Sync("ability")
 function boss:Sync(...) core:Transmit(...) end
 
 do
