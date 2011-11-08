@@ -4,7 +4,7 @@
 ## Title-ruRU: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-deDE: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-esES: Big Wigs [|cffeda55fDragon Soul|r]
-## Title-frFR: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-frFR: Big Wigs [|cffeda55fL'Âme des dragons|r]
 ## Title-zhCN: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-zhTW: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-koKR: Big Wigs [|cffeda55fDragon Soul|r]
@@ -12,7 +12,7 @@
 ## Notes-ruRU: Big Wigs Modules for Dragon Soul
 ## Notes-deDE: Big Wigs Modules for Dragon Soul
 ## Notes-esES: Big Wigs Modules for Dragon Soul
-## Notes-frFR: Big Wigs Modules for Dragon Soul
+## Notes-frFR: Modules Big Wigs concernant l'Âme des dragons.
 ## Notes-zhCN: Big Wigs Modules for Dragon Soul
 ## Notes-zhTW: Big Wigs Modules for Dragon Soul
 ## Notes-koKR: Big Wigs Modules for Dragon Soul
