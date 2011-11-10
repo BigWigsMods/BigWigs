@@ -112,6 +112,11 @@ L["Outline"] = true
 L["Monochrome"] = true
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = true
 
+L["Display time"] = true
+L["How long to display a message, in seconds"] = true
+L["Fade time"] = true
+L["How long to fade out a message, in seconds"] = true
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --

@@ -130,6 +130,8 @@ plugin.defaultDB = {
 	emphasizedMessages = {
 		sink20OutputSink = "BigWigsEmphasized",
 	},
+	displaytime = 3,
+	fadetime = 2,
 }
 
 local fakeEmphasizeMessageAddon = {}
@@ -291,6 +293,24 @@ do
 						desc = L["Show icons next to messages, only works for Raid Warning."],
 						order = 8,
 					},
+					displaytime = {
+						type = "range",
+						name = L["Display time"],
+						desc = L["How long to display a message, in seconds"],
+						min=1,
+						max=30,
+						step=0.5,
+						order=9
+					},
+					fadetime = {
+						type = "range",
+						name = L["Fade time"],
+						desc = L["How long to fade out a message, in seconds"],
+						min=1,
+						max=30,
+						step=0.5,
+						order=10
+					},
 				},
 			}
 		end
@@ -317,6 +337,10 @@ local function newFontString(frame, i)
 end
 
 local function onUpdate(self, elapsed)
+
+	local msgDisplayTime = db.displaytime
+	local msgFadeTime = db.fadetime
+
 	local show = nil
 	for i, v in next, labels do
 		if v:IsShown() then
@@ -335,8 +359,8 @@ local function onUpdate(self, elapsed)
 			elseif v:GetAlpha() == 0 then
 				v:Hide()
 				v.icon:Hide()
-			elseif v.elapsed > 7 then
-				local a = math.max(1 - ((v.elapsed - 7) / 3), 0)
+			elseif v.elapsed > msgDisplayTime then
+				local a = math.max(1 - ((v.elapsed - msgDisplayTime) / msgFadeTime), 0)
 				v:SetAlpha(a)
 				v.icon:SetAlpha(a)
 			end
