@@ -7,6 +7,7 @@ L.you = ">你< %s！"
 L.underyou = ">你<腳下：%s！"
 L.other = "%s：>%s<！"
 L.say = ">我< %s！"
+L.next = "Next %s"
 
 L.phase = "階段%d"
 L.normal = "普通模式"

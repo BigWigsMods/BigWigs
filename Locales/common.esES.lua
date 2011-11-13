@@ -5,6 +5,7 @@ L.you = "%s en TI"
 L.underyou = "%s debajo de TI!"
 L.other = "%s: %s"
 L.say = "¡%s en MI!"
+L.next = "Next %s"
 
 L.phase = "Fase %d"
 L.normal = "Modo normal"

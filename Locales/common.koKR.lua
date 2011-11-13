@@ -7,6 +7,7 @@ L.you = "당신에게 %s!"
 L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
 L.say = "나에게 %s!"
+L.next = "Next %s"
 
 L.phase = "%d 단계"
 L.normal = "일반 모드"

@@ -5,6 +5,7 @@ L.you = "%s sur VOUS !"
 L.underyou = "%s en dessous de VOUS !"
 L.other = "%s : %s"
 L.say = "%s sur MOI !"
+L.next = "Next %s"
 
 L.phase = "Phase %d"
 L.normal = "Mode normal"

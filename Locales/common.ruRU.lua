@@ -7,6 +7,7 @@ L.you = "%s на ВАС"
 L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
 L.say = "%s on ME!"
+L.next = "Next %s"
 
 L.phase = "Фаза %d"
 L.normal = "Обычный режим"
