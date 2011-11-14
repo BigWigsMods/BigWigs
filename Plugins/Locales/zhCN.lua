@@ -114,6 +114,11 @@ L["Outline"] = "轮廓"
 L["Monochrome"] = "单一颜色"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "在全部信息切换为单一颜色，移除全部字体边缘平滑。"
 
+L["Display time"] = "显示时间"
+L["How long to display a message, in seconds"] = "以秒计信息显示时间。"
+L["Fade time"] = "消退时间"
+L["How long to fade out a message, in seconds"] = "以秒计信息消退时间。"
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --
