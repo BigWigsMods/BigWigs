@@ -3,7 +3,6 @@ if not L then return end
 if L then
 	L.crush = "Ecraser armure"
 	L.crush_desc = "Alerte pour tanks uniquement. Compte les cumuls d'écraser armure et affiche une barre de durée."
-	L.crush_icon = 103687
 	L.crush_message = "%2$dx Ecraser sur %1$s"
 
 	L.explosion = "Explosion"
@@ -13,22 +12,18 @@ L = BigWigs:NewBossLocale("Warlord Zon'ozz", "frFR")
 if L then
 	L.ball = "Boule de Vide"
 	L.ball_desc = "Boule de Vide qui rebondit contre les joueurs et le boss."
-	L.ball_icon = 28028 -- void sphere icon
 
 	L.bounce = "Rebond de la boule de Vide"
 	L.bounce_desc = "Compteur des rebonds de la boule de Vide."
-	L.bounce_icon = 73981 -- some bouncing bullet like icon
 
 	L.darkness = "Tentacle disco party!"
 	L.darkness_desc = "Cette phase commence quand la boule de Vide touche le boss."
-	L.darkness_icon = 109413
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "frFR")
 if L then
 	L.bolt = "Éclair de Vide"
 	L.bolt_desc = "Alerte pour tanks uniquement. Compte les cumuls d'éclairs de Vide et affiche une barre de durée."
-	L.bolt_icon = 108383
 	L.bolt_message = "%2$dx Éclairs sur %1$s"
 
 	L.blue = "Bleu"
@@ -63,11 +58,9 @@ if L then
 
 	L.rush = "Volée de lames"
 	L.rush_desc = select(2, EJ_GetSectionInfo(4198))
-	L.rush_icon = 100 -- charge icon
 
 	L.sunder = "Fracasser armure"
 	L.sunder_desc = "Alerte pour tanks uniquement. Compte les cumuls de fracasser armure et affiche une barre de durée."
-	L.sunder_icon = 108043
 	L.sunder_message = "%2$dx Fracasser sur %1$s"
 end
 
