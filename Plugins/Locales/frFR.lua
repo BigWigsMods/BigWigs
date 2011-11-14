@@ -112,6 +112,11 @@ L["Outline"] = "Contour"
 L["Monochrome"] = "Monochrome"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Active ou non le marqueur monochrome sur tous les messages, enlevant tout lissage des bords de la police d'écriture."
 
+L["Display time"] = "Durée d'affichage"
+L["How long to display a message, in seconds"] = "Définit pendant combien de temps un message doit rester affiché (en secondes)."
+L["Fade time"] = "Durée d'estompe"
+L["How long to fade out a message, in seconds"] = "Définit pendant combien de temps un message doit s'estomper (en secondes)."
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --
