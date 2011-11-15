@@ -12,9 +12,10 @@ mod:RegisterEnableMob(41378)
 
 local aberrations = 18
 local phaseCounter = 0
-local maloriak = BigWigs:Translate("Maloriak")
 local chillTargets = mod:NewTargetList()
 local isChilled, currentPhase = nil, nil
+local scorchingBlast = "~"..GetSpellInfo(77679)
+local flashFreeze = "~"..GetSpellInfo(77699)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,10 +34,6 @@ if L then
 
 	L.release_aberration_message = "%d adds left!"
 	L.release_all = "%d adds released!"
-
-	L.flashfreeze = "~Flash Freeze"
-	L.next_blast = "~Scorching Blast"
-	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Phase"
 	L.phase_desc = "Warning for phase changes."
@@ -161,8 +158,8 @@ end
 function mod:Red()
 	if currentPhase == "red" then return end
 	currentPhase = "red"
-	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
-	self:Bar(92968, L["next_blast"], 25, 92968)
+	self:SendMessage("BigWigs_StopBar", self, flashFreeze)
+	self:Bar(92968, scorchingBlast, 25, 92968)
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Long")
 	if not isChilled then
 		self:CloseProximity()
@@ -173,8 +170,8 @@ end
 function mod:Blue()
 	if currentPhase == "blue" then return end
 	currentPhase = "blue"
-	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
-	self:Bar(77699, L["flashfreeze"], 28, 77699)
+	self:SendMessage("BigWigs_StopBar", self, scorchingBlast)
+	self:Bar(77699, flashFreeze, 28, 77699)
 	self:Message("phase", L["blue_phase"], "Positive", "Interface\\Icons\\INV_POTION_20", "Long")
 	self:OpenProximity(5)
 	nextPhase(47)
@@ -183,8 +180,8 @@ end
 function mod:Green()
 	if currentPhase == "green" then return end
 	currentPhase = "green"
-	self:SendMessage("BigWigs_StopBar", self, L["next_blast"])
-	self:SendMessage("BigWigs_StopBar", self, L["flashfreeze"])
+	self:SendMessage("BigWigs_StopBar", self, scorchingBlast)
+	self:SendMessage("BigWigs_StopBar", self, flashFreeze)
 	self:Message("phase", L["green_phase"], "Positive", "Interface\\Icons\\INV_POTION_162", "Long")
 	if not isChilled then
 		self:CloseProximity()
@@ -205,7 +202,7 @@ function mod:Dark()
 end
 
 function mod:FlashFreezeTimer(_, spellId, _, _, spellName)
-	self:Bar(77699, L["flashfreeze"], 15, spellId)
+	self:Bar(77699, flashFreeze, 15, spellId)
 end
 
 function mod:FlashFreeze(player, spellId, _, _, spellName)
@@ -217,8 +214,8 @@ function mod:FlashFreezeRemoved()
 	self:PrimaryIcon(77699)
 end
 
-function mod:Remedy(unit, spellId, _, _, spellName)
-	if unit == maloriak then
+function mod:Remedy(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
+	if self:GetCID(dGUID) == 41378 then
 		self:Message(77912, spellName, "Important", spellId, "Alarm")
 	end
 end
@@ -254,12 +251,12 @@ end
 
 function mod:ScorchingBlast(_, spellId, _, _, spellName)
 	self:Message(92968, spellName, "Attention", spellId)
-	self:Bar(92968, L["next_blast"], 10, 92968)
+	self:Bar(92968, scorchingBlast, 10, 92968)
 end
 
 function mod:ReleaseAll(_, spellId)
 	self:Message(77991, L["release_all"]:format(aberrations + 2), "Important", spellId, "Alert")
-	self:Bar(78194, L["jets_bar"], 12.5, 78194)
+	self:Bar(78194, "~"..GetSpellInfo(78194), 12.5, 78194)
 end
 
 do
@@ -295,8 +292,8 @@ function mod:ArcaneStorm(_, spellId, _, _, spellName)
 	self:Message(77896, spellName, "Urgent", spellId)
 end
 
-function mod:Jets(_, spellId)
-	self:Bar(78194, L["jets_bar"], 10, spellId)
+function mod:Jets(_, spellId, _, _, spellName)
+	self:Bar(78194, spellName, 10, spellId)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unit)

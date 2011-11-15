@@ -12,7 +12,6 @@ if L then
 	L.obnoxious_soon = "即将 喧闹恶鬼！"
 
 	L.searing_soon = "10秒后，灼热烈焰！"
-	L.sonicbreath_cooldown = "<音波吐息>"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "zhCN")
@@ -34,7 +33,7 @@ if L then
 	L.blazing = "炽焰白骨结构体"
 	L.blazing_desc = "当召唤炽焰白骨结构体时发出警报。"
 	L.blazing_message = "即將 炽焰白骨结构体！"
-	L.blazing_bar = "<下一炽焰白骨结构体>"
+	L.blazing_bar = "炽焰白骨结构体"
 
 	L.armageddon = "末日降临"
 	L.armageddon_desc = "当头部阶段施放末日降临时发出警报。"
@@ -45,11 +44,9 @@ if L then
 	L.phase2_yell = "难以置信"
 
 	-- normal
-	L.pillar_of_flame_cd = "<烈焰火柱>"
-
 	L.slump = "弱点（骑乘）"
 	L.slump_desc = "当熔喉扑倒并暴露后脑时发出警报。需要骑乘。"
-	L.slump_bar = "<下一弱点>"
+	L.slump_bar = "弱点"
 	L.slump_message = "嘿，快骑上它！"
 	L.slump_trigger = "%s向前倒下，暴露出他的钳子！"
 
@@ -58,11 +55,7 @@ if L then
 	L.expose_trigger = "将自己钉在刺上，露出了他的头"
 	L.expose_message = "头部暴露！"
 
-	L.spew_bar = "<下一熔岩喷涌>"
 	L.spew_warning = "即將 熔岩喷涌！"
-
-	L.mangle_bar = "裂伤：>%s<！"
-	L.mangle_cooldown = "<下一裂伤>"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "zhCN")
@@ -78,10 +71,6 @@ if L then
 
 	L.release_aberration_message = ">%s< 畸变怪剩余！"
 	L.release_all = ">%s< 释放畸变怪！"
-
-	L.flashfreeze = "<快速冻结>"
-	L.next_blast = "<灼热爆破>"
-	L.jets_bar = "<下一熔岩喷射>"
 
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段时发出警报。"
@@ -137,11 +126,7 @@ if L then
 
 	L.next_switch = "<下一转换>"
 
-	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
-	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
-
-	L.nef_next = "<下一暗影灌注>"
+	L.nef_next = "暗影灌注"
 
 	L.acquiring_target = "获取目标"
 

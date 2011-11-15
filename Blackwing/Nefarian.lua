@@ -26,7 +26,7 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Warnings for the Phase changes."
 
-	L.discharge_bar = "~Discharge CD"
+	L.discharge_bar = "~Discharge"
 
 	L.phase_two_trigger = "Curse you, mortals! Such a callous disregard for one's possessions must be met with extreme force!"
 

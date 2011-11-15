@@ -5,7 +5,7 @@ if L then
 	L.stormling = "Sturmling"
 	L.stormling_desc = "Warnt vor dem Beschwören der Sturmlinge."
 	L.stormling_message = "Sturmling kommt!"
-	L.stormling_bar = "Nächster Sturmling"
+	L.stormling_bar = "Sturmling"
 	L.stormling_yell = "Stürme! Ich rufe euch an meine Seite!" -- check
 
 	L.acid_rain = "Säureregen (%d)"

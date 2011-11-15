@@ -23,11 +23,7 @@ if L then
 
 	L.next_switch = "Next activation"
 
-	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
-	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
-
-	L.nef_next = "~Next ability buff"
+	L.nef_next = "~Ability buff"
 
 	L.acquiring_target = "Acquiring target"
 

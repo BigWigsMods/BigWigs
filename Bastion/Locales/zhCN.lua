@@ -19,7 +19,6 @@ if L then
 	L.blaze_message = ">你< 光芒！"
 	L.crash_say = ">我< 腐蚀碾压！"
 
-	L.fury_bar = "<下一古加尔之怒>"
 	L.fury_message = "古加尔之怒！"
 	L.first_fury_soon = "即将 古加尔之怒！"
 	L.first_fury_message = "85% - 开始古加尔之怒！"
@@ -41,9 +40,6 @@ if L then
 
 	L.blast_message = "暮光冲击波！"
 	L.engulfingmagic_say = ">我< 噬体魔法！"
-	L.engulfingmagic_cooldown = "<噬体魔法>"
-
-	L.devouringflames_cooldown = "<噬体烈焰>"
 
 	L.valiona_trigger = "瑟纳利昂，我去包抄门厅。堵住他们的退路！"
 	L.win_trigger = "至少……瑟纳利昂和我一起倒下……"
@@ -53,7 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "zhCN")
 if L then
-	L.paralysis_bar = "<下一麻痹>"
 	L.strikes_message = "致伤打击%2$dx：>%1$s<！"
 
 	L.breath_message = "即将 灼热气息！"
@@ -89,7 +84,7 @@ if L then
 
 	L.shield_up_message = "烈火之盾 出现！"
 	L.shield_down_message = "烈火之盾 消失！"
-	L.shield_bar = "<下一烈火之盾>"
+	L.shield_bar = "烈火之盾"
 
 	L.switch_trigger = "我们会解决他们！"
 

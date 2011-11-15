@@ -12,7 +12,6 @@ if L then
 	L.obnoxious_soon = "곧 불쾌한 마귀!"
 
 	L.searing_soon = "10초 후 이글거리는 불길!"
-	L.sonicbreath_cooldown = "~음파 숨결"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "koKR")
@@ -34,7 +33,7 @@ if L then
 	L.blazing = "이글거리는 지옥불"
 	L.blazing_desc = "이글거리는 지옥불 소환을 알립니다."
 	L.blazing_message = "해골 추가!"
-	L.blazing_bar = "다음 해골"
+	L.blazing_bar = "해골"
 
 	L.armageddon = "아마겟돈"
 	L.armageddon_desc = "머리 노출 단계에서 아마겟돈을 사용시 알립니다."
@@ -45,11 +44,9 @@ if L then
 	L.phase2_yell = "이런 곤란한 데가! 이러다간 내 용암"
 
 	-- normal
-	L.pillar_of_flame_cd = "~불꽃 기둥 대기시간"
-
 	L.slump = "슬럼프 (로데오)"
 	L.slump_desc = "슬럼프 상태를 알립니다."
-	L.slump_bar = "다음 슬럼프"
+	L.slump_bar = "슬럼프"
 	L.slump_message = "올라타세요~!"
 	L.slump_trigger = "%s|1이;가; 집게를 드러내며 앞으로 몸을 기울입니다!"
 
@@ -58,11 +55,7 @@ if L then
 	L.expose_trigger = "%s|1이;가; 창에 꽂혀 머리가 노출되었습니다!"
 	L.expose_message = "머리 노출!"
 
-	L.spew_bar = "~다음 용암 내뿜기"
 	L.spew_warning = "곧 용암 내뿜기!"
-
-	L.mangle_bar = "짓이기기: %s"
-	L.mangle_cooldown = "~다음 짓이기기"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "koKR")
@@ -78,10 +71,6 @@ if L then
 
 	L.release_aberration_message = "돌연변이 %d 남음"
 	L.release_all = "모든 실험체 %d!"
-
-	L.flashfreeze = "~순간 빙결"
-	L.next_blast = "~맹렬한 폭발"
-	L.jets_bar = "다음 마그마 분출"
 
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
@@ -137,10 +126,7 @@ if L then
 
 	L.next_switch = "다음 활성화"
 
-	--L.nef_trigger1 = "맹독골렘의 화학 물질로 다른 골렘에 피해를 줄 생각이었겠지? 영리한 계획이다만, 그렇게 둘 수는 없지."
-	--L.nef_trigger2 = "멍청한 드워프 놈들은 왜 그렇게 룬을 좋아하는지! 적을 도울 수도 있는 걸 도대체 왜 만들었는지 모르겠군."
-
-	L.nef_next = "~다음 기술 버프"
+	L.nef_next = "~기술 버프"
 
 	L.acquiring_target = "대상 획득"
 

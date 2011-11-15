@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Halfus Wyrmbreaker", 758, 156)
+local mod, CL = BigWigs:NewBoss("Halfus Wyrmbreaker", 758, 156)
 if not mod then return end
 mod:RegisterEnableMob(44600)
 
@@ -12,7 +12,6 @@ mod:RegisterEnableMob(44600)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.paralysis_bar = "Next paralysis"
 	L.strikes_message = "%2$dx Strikes on %1$s"
 
 	L.breath_message = "Breath incoming!"
@@ -59,8 +58,8 @@ end
 -- Next Stone Touch after 23 sec, hence delaying Furious Roar if less then 12 sec left
 function mod:Paralysis(_, spellId, _, _, spellName)
 	self:Message(83603, spellName, "Attention", spellId)
-	self:Bar(83603, spellName, 12, spellId)
-	self:Bar(83603, L["paralysis_bar"], 35, spellId)
+	self:Bar(83603, CL["cast"]:format(spellName), 12, spellId)
+	self:Bar(83603, spellName, 35, spellId)
 end
 
 function mod:MalevolentStrikes(player, spellId, _, _, spellName, stack)

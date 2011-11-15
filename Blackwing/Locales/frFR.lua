@@ -12,7 +12,6 @@ if L then
 	L.obnoxious_soon = "Démon odieux imminent !"
 
 	L.searing_soon = "Flamme incendiaire dans 10 sec. !"
-	L.sonicbreath_cooldown = "~Souffle sonique"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "frFR")
@@ -34,7 +33,7 @@ if L then
 	L.blazing = "Assemblage d'os flamboyant"
 	L.blazing_desc = "Prévient quand un Assemblage d'os flamboyant est invoqué."
 	L.blazing_message = "Arrivée d'un Assemblage !"
-	L.blazing_bar = "Prochain Assemblage"
+	L.blazing_bar = "Assemblage"
 
 	L.armageddon = "Armageddon"
 	L.armageddon_desc = "Prévient si Armageddon est incanté durant la phase de la tête."
@@ -45,11 +44,9 @@ if L then
 	L.phase2_yell = "Inconcevable ! Vous pourriez vraiment vaincre mon ver de lave !"
 
 	-- normal
-	L.pillar_of_flame_cd = "~Pilier de flammes"
-
 	L.slump = "Affalement (rodéo)"
 	L.slump_desc = "Prévient quand le boss s'affale vers l'avant et s'expose, permettant ainsi au rodéo de commencer."
-	L.slump_bar = "Prochain rodéo"
+	L.slump_bar = "Rodéo"
 	L.slump_message = "Yeehaw, chevauchez !"
 	L.slump_trigger = "%s s'affale vers l'avant et expose ses pinces !"
 
@@ -58,11 +55,7 @@ if L then
 	L.expose_trigger = "expose sa tête"
 	L.expose_message = "Tête exposée !"
 
-	L.spew_bar = "~Prochain Crachement"
 	L.spew_warning = "Crachement de magma imminent !"
-
-	L.mangle_bar = "Mutilation : %s"
-	L.mangle_cooldown = "~Prochain Mutilation"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "frFR")
@@ -78,10 +71,6 @@ if L then
 
 	L.release_aberration_message = "%d aberrations restantes !"
 	L.release_all = "%d aberrations libérées !"
-
-	L.flashfreeze = "~Gel instantané"
-	L.next_blast = "~Déflagration brûlante"
-	L.jets_bar = "Prochains Jets de magma"
 
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
@@ -137,10 +126,7 @@ if L then
 
 	L.next_switch = "Prochaine activation"
 
-	--L.nef_trigger1 = "Vous aviez l'intention d'utiliser les attaques chimiques de Toxitron contre les autres assemblages ?" -- à compléter
-	--L.nef_trigger2 = "Ces nains stupides et leur fascination pour les runes !" -- à compléter
-
-	L.nef_next = "~Prochain buff de technique"
+	L.nef_next = "~Buff de technique"
 
 	L.acquiring_target = "Acquisition d'une cible"
 

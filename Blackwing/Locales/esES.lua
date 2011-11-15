@@ -12,7 +12,6 @@ if L then
 	L.obnoxious_soon = "¡Maligno Execrable inminente!"
 
 	L.searing_soon = "¡Llamas abrasadoras en 10 seg!"
-	L.sonicbreath_cooldown = "~Aliento sónico"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "esES")
@@ -34,7 +33,7 @@ if L then
 	L.blazing = "Esqueletos"
 	L.blazing_desc = "Invoca Ensamblaje osario llameante."
 	L.blazing_message = "¡Add inminente!"
-	L.blazing_bar = "Siguiente esqueleto"
+	L.blazing_bar = "Esqueleto"
 
 	L.armageddon = "Armageddon"
 	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
@@ -45,11 +44,9 @@ if L then
 	L.phase2_yell = "¡Inconcebible! ¡Existe la posibilidad de que venzáis a mi gusano de lava! Quizás yo pueda... desequilibrar la balanza."
 
 	-- normal
-	L.pillar_of_flame_cd = "~Columna de llamas"
-
 	L.slump = "Cae (Rodeo)"
 	L.slump_desc = "Cae hacia delante exponiendose a sí mismo, permitiendo que el rodeo empiece."
-	L.slump_bar = "Próximo rodeo"
+	L.slump_bar = "Rodeo"
 	L.slump_message = "¡Yeepah, móntalo!"
 	L.slump_trigger = "¡%s cae hacia delante y deja expuestas sus tenazas!"
 
@@ -58,11 +55,7 @@ if L then
 	L.expose_trigger = "cabeza"
 	L.expose_message = "¡Cabeza expuesta!"
 
-	L.spew_bar = "~Próximo Vómito"
 	L.spew_warning = "¡Vómito de lava pronto!"
-
-	L.mangle_bar = "Destrozar: %s"
-	L.mangle_cooldown = "~Próximo Destrozar"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "esES")
@@ -80,10 +73,6 @@ if L then
 	L.release_all = "¡%s adds liberados!"
 
 	L.bitingchill_say = "¡Escalofrío cortante en MI!"
-
-	L.flashfreeze = "~Congelación apresurada"
-	L.next_blast = "~Explosión agostadora"
-	L.jets_bar = "Siguiente Chorros de magma"
 
 	L.phase = "Fase"
 	L.phase_desc = "Avisa los cambios de fase."
@@ -138,10 +127,7 @@ if L then
 
 	L.next_switch = "Siguiente activación"
 
-	-- L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	-- L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
-
-	L.nef_next = "~Siguiente bufo de habilidad"
+	L.nef_next = "~Bufo de habilidad"
 
 	L.acquiring_target = "Eligiendo objetivo"
 

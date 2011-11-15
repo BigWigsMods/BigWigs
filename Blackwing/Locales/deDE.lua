@@ -12,7 +12,6 @@ if L then
 	L.obnoxious_soon = "Nerviges Scheusal bald!"
 
 	L.searing_soon = "Sengende Flamme in 10 sek!"
-	L.sonicbreath_cooldown = "~Schallatem"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "deDE")
@@ -34,7 +33,7 @@ if L then
 	L.blazing = "Loderndes Knochenkonstrukt"
 	L.blazing_desc = "Warnt vor dem Auftauchen der Lodernden Knochenkonstrukte."
 	L.blazing_message = "Skelett kommt!"
-	L.blazing_bar = "Nächstes Skelett"
+	L.blazing_bar = "Skelett"
 
 	L.armageddon = "Armageddon"
 	L.armageddon_desc = "Warnt, wenn Armageddon während der Kopfphase gewirkt wird."
@@ -45,11 +44,9 @@ if L then
 	L.phase2_yell = "Ihr könntet tatsächlich meinen Lavawurm besiegen" -- check
 
 	-- normal
-	L.pillar_of_flame_cd = "~Flammensäule"
-
 	L.slump = "Nach vorne schlittern (Rodeo)"
 	L.slump_desc = "Warnt vor dem nach vorne Schlittern, das das Rodeo erlaubt zu starten."
-	L.slump_bar = "Nächstes Rodeo"
+	L.slump_bar = "Rodeo"
 	L.slump_message = "Yeehaa, Rodeo!"
 	L.slump_trigger = "%s schlittert nach vorne und entblößt seine Zangen!" -- check
 
@@ -58,11 +55,7 @@ if L then
 	L.expose_trigger = "Kopf" -- check
 	L.expose_message = "Kopf freigelegt!"
 
-	L.spew_bar = "~Lavafontäne"
 	L.spew_warning = "Lavafontäne bald!"
-
-	L.mangle_bar = "Zerfleischen: %s"
-	L.mangle_cooldown = "~Zerfleischen"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "deDE")
@@ -78,10 +71,6 @@ if L then
 
 	L.release_aberration_message = "%s Adds noch!"
 	L.release_all = "%s Adds freigelassen!"
-
-	L.flashfreeze = "~Blitzeis"
-	L.next_blast = "~Sengende Explosion"
-	L.jets_bar = "Nächste Magmastrahlen"
 
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt vor Phasenwechsel."
@@ -136,10 +125,6 @@ if L then
 	L.switch_message = "%s %s"
 
 	L.next_switch = "Nächster Wechsel"
-
-	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
-	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
 
 	L.nef_next = "~Fähigkeiten Buff"
 

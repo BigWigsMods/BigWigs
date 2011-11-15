@@ -4,7 +4,7 @@ if L then
 	L.stormling = "Помощники"
 	L.stormling_desc = "Призыв помощников."
 	L.stormling_message = "Прибытие помощника!"
-	L.stormling_bar = "След. помощники"
+	L.stormling_bar = "помощники"
 	L.stormling_yell = "Буря! Приди мне на помощь!"
 
 	L.acid_rain = "Кислотный дождь (%d)"

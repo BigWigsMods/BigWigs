@@ -19,7 +19,6 @@ if L then
 	L.blaze_message = "Brasier sur vous !"
 	L.crash_say = "Déferlante sur moi !"
 
-	L.fury_bar = "Prochaine Fureur"
 	L.fury_message = "Fureur !"
 	L.first_fury_soon = "Fureur imminente !"
 	L.first_fury_message = "85% - Fureur commence !"
@@ -41,9 +40,6 @@ if L then
 
 	L.blast_message = "Déflagration"
 	L.engulfingmagic_say = "Magie sur moi !"
-	L.engulfingmagic_cooldown = "~Magie enveloppante"
-
-	L.devouringflames_cooldown = "~Flammes dévorantes"
 
 	L.valiona_trigger = "Theralion, je m'occupe du vestibule. Couvre leur fuite !" -- à vérifier
 	L.win_trigger = "Au moins... Theralion meurt avec moi..." -- à vérifier
@@ -53,7 +49,6 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "frFR")
 if L then
-	L.paralysis_bar = "Prochaine paralysie"
 	L.strikes_message = "%2$dx Frappes sur %1$s"
 
 	L.breath_message = "Arrivée d'un Souffle !"
@@ -89,7 +84,7 @@ if L then
 
 	L.shield_up_message = "Bouclier en place !"
 	L.shield_down_message = "Bouclier dissipé !"
-	L.shield_bar = "Prochain Bouclier"
+	L.shield_bar = "Bouclier"
 
 	L.switch_trigger = "Nous allons nous occuper d'eux !" -- à vérifier
 

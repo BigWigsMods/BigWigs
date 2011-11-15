@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(41442)
 
 local searingFlame = GetSpellInfo(77840)
+local sonicBreath = "~"..GetSpellInfo(78075)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,7 +25,6 @@ if L then
 	L.obnoxious_soon = "Obnoxious Fiend soon!"
 
 	L.searing_soon = "Searing Flame in 10sec!"
-	L.sonicbreath_cooldown = "~Sonic Breath"
 end
 L = mod:GetLocale()
 
@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(78075, L["sonicbreath_cooldown"], 23, 78075)
+	self:Bar(78075, sonicBreath, 23, 78075)
 	self:Bar(77840, searingFlame, 45, 77840)
 	self:DelayedMessage(77840, 35, L["searing_soon"], "Attention", 77840)
 	self:Bar("air_phase", L["air_phase"], 92, 5740) -- Rain of Fire Icon
@@ -74,20 +74,21 @@ end
 -- Event Handlers
 --
 
-local function FiendCheck(dGUID)
-	local fiend = mod:GetUnitIdByGUID(dGUID)
-	if not fiend then
-		mod:ScheduleTimer(FiendCheck, 0.1, dGUID)
-	else
-		mod:SecondaryIcon(92702, fiend)
+do
+	local function FiendCheck(dGUID)
+		local fiend = mod:GetUnitIdByGUID(dGUID)
+		if not fiend then
+			mod:ScheduleTimer(FiendCheck, 0.1, dGUID)
+		else
+			mod:SecondaryIcon(92702, fiend)
+		end
 	end
-end
-
-function mod:ObnoxiousPhaseShift(...)
-	self:Message(92677, L["obnoxious_soon"], "Attention", 92677) -- do we really need this?
-	local dGUID = select(10, ...)
-	FiendCheck(dGUID)
-	self:RegisterEvent("UNIT_AURA")
+	function mod:ObnoxiousPhaseShift(...)
+		self:Message(92677, L["obnoxious_soon"], "Attention", 92677) -- do we really need this?
+		local dGUID = select(10, ...)
+		FiendCheck(dGUID)
+		self:RegisterEvent("UNIT_AURA")
+	end
 end
 
 do
@@ -113,8 +114,8 @@ function mod:Tracking(player, spellId, _, _, spellName)
 	self:PrimaryIcon(78092, player)
 end
 
-function mod:SonicBreath(_, spellId, _, _, spellName)
-	self:Bar(78075, L["sonicbreath_cooldown"], 42, spellId)
+function mod:SonicBreath(_, spellId)
+	self:Bar(78075, sonicBreath, 42, spellId)
 end
 
 function mod:SearingFlame(_, spellId, _, _, spellName)
@@ -125,13 +126,13 @@ do
 	local function groundPhase()
 		mod:Message("ground_phase", L["ground_phase"], "Attention", 61882) -- Earthquake Icon
 		mod:Bar("air_phase", L["air_phase"], 90, 5740) -- Rain of Fire Icon
-		mod:Bar(78075, L["sonicbreath_cooldown"], 25, 78075)
+		mod:Bar(78075, sonicBreath, 25, 78075)
 		-- XXX need a good trigger for ground phase start to make this even more accurate
 		mod:Bar(77840, searingFlame, 48.5, 77840)
 		mod:DelayedMessage(77840, 38.5, L["searing_soon"], "Attention", 77840)
 	end
 	function mod:AirPhase()
-		self:SendMessage("BigWigs_StopBar", self, L["sonicbreath_cooldown"])
+		self:SendMessage("BigWigs_StopBar", self, sonicBreath)
 		self:Message("air_phase", L["air_phase"], "Attention", 5740) -- Rain of Fire Icon
 		self:Bar("ground_phase", L["ground_phase"], 30, 61882) -- Earthquake Icon
 		self:ScheduleTimer(groundPhase, 30)

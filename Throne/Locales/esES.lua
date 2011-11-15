@@ -5,7 +5,7 @@ if L then
 	L.stormling = "Tormentillas"
 	L.stormling_desc = "Invoca Tormentillas."
 	L.stormling_message = "¡Tormentilla inminente!"
-	L.stormling_bar = "Siguiente Tormentilla"
+	L.stormling_bar = "Tormentilla"
 	L.stormling_yell = "¡Tormentas! ¡Os convoco a mi lado!"
 
 	L.acid_rain = "Lluvia ácida (%d)"

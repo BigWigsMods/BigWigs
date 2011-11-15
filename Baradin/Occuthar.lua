@@ -14,12 +14,12 @@ local fireCount = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.shadows_bar = "~Next Shadows"
-	L.destruction_bar = "Explosion incoming"
-	L.eyes_bar = "~Next Eyes"
+	L.shadows_bar = "~Shadows"
+	L.destruction_bar = "Explosion!"
+	L.eyes_bar = "~Eyes"
 
 	L.fire_message = "Lazer, Pew Pew"
-	L.fire_bar = "~Next Lazer"
+	L.fire_bar = "~Lazer"
 end
 L = mod:GetLocale()
 

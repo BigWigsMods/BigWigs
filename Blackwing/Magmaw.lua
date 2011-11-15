@@ -2,16 +2,14 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Magmaw", 754, 170)
+local mod, CL = BigWigs:NewBoss("Magmaw", 754, 170)
 if not mod then return end
 mod:RegisterEnableMob(41570)
 
---------------------------------------------------------------------------------
--- Locals
---
-
 local phase = 1
 local isHeadPhase = nil
+local lavaSpew = "~"..GetSpellInfo(77690)
+local pillarOfFlame = "~"..GetSpellInfo(78006)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,7 +21,7 @@ if L then
 	L.blazing = "Skeleton Adds"
 	L.blazing_desc = "Summons Blazing Bone Construct."
 	L.blazing_message = "Add incoming!"
-	L.blazing_bar = "Next skeleton"
+	L.blazing_bar = "Skeleton"
 
 	L.armageddon = "Armageddon"
 	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
@@ -34,11 +32,9 @@ if L then
 	L.phase2_yell = "You may actually defeat my lava worm"
 
 	-- normal
-	L.pillar_of_flame_cd = "~Pillar of Flame"
-
 	L.slump = "Slump (Rodeo)"
 	L.slump_desc = "Warn for when Magmaw slumps forward and exposes himself, allowing the riding rodeo to start."
-	L.slump_bar = "Next rodeo"
+	L.slump_bar = "Rodeo"
 	L.slump_message = "Yeehaw, ride on!"
 	L.slump_trigger = "%s slumps forward, exposing his pincers!"
 
@@ -47,11 +43,7 @@ if L then
 	L.expose_trigger = "head"
 	L.expose_message = "Head exposed!"
 
-	L.spew_bar = "~Next Spew"
 	L.spew_warning = "Lava Spew Soon!"
-
-	L.mangle_bar = "Mangle: %s"
-	L.mangle_cooldown = "~Next Mangle"
 end
 L = mod:GetLocale()
 
@@ -99,8 +91,8 @@ function mod:OnEngage(diff)
 	self:Berserk(600)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
 	self:Bar(78006, GetSpellInfo(78006), 30, 78006) --Pillar of Flame
-	self:Bar(91931, L["spew_bar"], 24, 91931)
-	self:Bar(89773, L["mangle_cooldown"], 90, 89773)
+	self:Bar(91931, lavaSpew, 24, 91931)
+	self:Bar(89773, "~"..GetSpellInfo(89773), 90, 89773)
 	self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
 	phase = 1
 	isHeadPhase = nil
@@ -119,15 +111,15 @@ end
 do
 	local function rebootTimers()
 		isHeadPhase = nil
-		mod:Bar(78006, L["pillar_of_flame_cd"], 9.5, 78006)
-		mod:Bar(91931, L["spew_bar"], 4.5, 91931)
+		mod:Bar(78006, pillarOfFlame, 9.5, 78006)
+		mod:Bar(91931, lavaSpew, 4.5, 91931)
 	end
 	function mod:Vulnerability()
 		isHeadPhase = true
 		self:Message(79011, L["expose_message"], "Positive", 79011)
 		self:Bar(79011, L["expose_message"], 30, 79011)
-		self:SendMessage("BigWigs_StopBar", self, L["pillar_of_flame_cd"])
-		self:SendMessage("BigWigs_StopBar", self, L["spew_bar"])
+		self:SendMessage("BigWigs_StopBar", self, pillarOfFlame)
+		self:SendMessage("BigWigs_StopBar", self, lavaSpew)
 		self:CancelDelayedMessage(L["spew_warning"])
 		self:ScheduleTimer(rebootTimers, 30)
 	end
@@ -140,7 +132,7 @@ do
 		if time - prev > 10 then
 			prev = time
 			self:Message(91931, spellName, "Important", spellId)
-			self:Bar(91931, L["spew_bar"], 26, spellId)
+			self:Bar(91931, lavaSpew, 26, spellId)
 			self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
 		end
 	end
@@ -160,7 +152,7 @@ end
 
 function mod:PillarOfFlame(_, spellId, _, _, spellName)
 	self:Message(78006, spellName, "Urgent", spellId, "Alert")
-	self:Bar(78006, L["pillar_of_flame_cd"], 32, spellId)
+	self:Bar(78006, pillarOfFlame, 32, spellId)
 end
 
 function mod:Infection(player, spellId, _, _, spellName)
@@ -180,7 +172,7 @@ function mod:InfectionRemoved(player)
 end
 
 function mod:Slump()
-	self:SendMessage("BigWigs_StopBar", self,  L["pillar_of_flame_cd"])
+	self:SendMessage("BigWigs_StopBar", self,  pillarOfFlame)
 	self:Bar("slump", L["slump_bar"], 95, 36702)
 	self:Message("slump", L["slump_message"], "Positive", 36702, "Info")
 end
@@ -190,12 +182,12 @@ do
 	function mod:Mangle(player, spellId, _, _, spellName)
 		mangleTarget = player
 		self:TargetMessage(89773, spellName, player, "Personal", spellId, "Info")
-		self:Bar(89773, L["mangle_bar"]:format(player), 30, spellId)
-		self:Bar(89773, L["mangle_cooldown"], 95, spellId)
+		self:Bar(89773, CL["other"]:format(spellName, player), 30, spellId)
+		self:Bar(89773, "~"..spellName, 95, spellId)
 	end
 
-	function mod:MangleRemoved(player, spellId, _, _, spellName)
-		self:SendMessage("BigWigs_StopBar", self,  L["mangle_bar"]:format(mangleTarget))
+	function mod:MangleRemoved(player, _, _, _, spellName)
+		self:SendMessage("BigWigs_StopBar", self, CL["other"]:format(spellName, player))
 	end
 end
 

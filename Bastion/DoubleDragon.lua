@@ -12,6 +12,7 @@ mod:RegisterEnableMob(45992, 45993)
 
 local phaseCount = 0
 local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), GetSpellInfo(86059)
+local devouringFlames = "~"..GetSpellInfo(86840)
 local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
 local emTargets = mod:NewTargetList()
 local markWarned = false
@@ -31,9 +32,6 @@ if L then
 
 	L.blast_message = "Falling Blast" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "Engulf on ME!"
-	L.engulfingmagic_cooldown = "~Engulfing Magic"
-
-	L.devouringflames_cooldown = "~Devouring Flames"
 
 	L.valiona_trigger = "Theralion, I will engulf the hallway. Cover their escape!"
 	L.win_trigger = "At least... Theralion dies with me..."
@@ -86,7 +84,7 @@ end
 
 function mod:OnEngage(diff)
 	markWarned = false
-	self:Bar(86840, L["devouringflames_cooldown"], 25, 86840)
+	self:Bar(86840, devouringFlames, 25, 86840)
 	self:Bar(86788, blackout, 11, 86788)
 	self:Bar("phase_switch", L["phase_bar"]:format(theralion), 103, 60639)
 	self:OpenProximity(8)
@@ -113,16 +111,16 @@ do
 end
 
 local function valionaHasLanded()
-	mod:SendMessage("BigWigs_StopBar", mod, L["engulfingmagic_cooldown"])
+	mod:SendMessage("BigWigs_StopBar", mod, "~"..GetSpellInfo(86622))
 	mod:Message("phase_switch", L["phase_bar"]:format(valiona), "Positive", 60639)
-	mod:Bar(86840, L["devouringflames_cooldown"], 26, 86840)
+	mod:Bar(86840, devouringFlames, 26, 86840)
 	mod:Bar(86788, blackout, 11, 86788)
 	mod:OpenProximity(8)
 end
 
 local function theralionHasLanded()
 	mod:SendMessage("BigWigs_StopBar", mod, blackout)
-	mod:SendMessage("BigWigs_StopBar", mod, L["devouringflames_cooldown"])
+	mod:SendMessage("BigWigs_StopBar", mod, devouringFlames)
 	mod:Bar("phase_switch", L["phase_bar"]:format(valiona), 130, 60639)
 	mod:CloseProximity()
 end
@@ -195,7 +193,7 @@ function mod:UNIT_AURA(event, unit)
 end
 
 function mod:DevouringFlames(_, spellId, _, _, spellName)
-	self:Bar(86840, L["devouringflames_cooldown"], 42, spellId) -- make sure to remove bar when it takes off
+	self:Bar(86840, devouringFlames, 42, spellId) -- make sure to remove bar when it takes off
 	self:Message(86840, spellName, "Important", spellId, "Alert")
 end
 
@@ -203,7 +201,7 @@ do
 	local scheduled = nil
 	local function emWarn(spellName)
 		mod:TargetMessage(86622, spellName, emTargets, "Personal", 86622, "Alarm")
-		mod:Bar(86622, L["engulfingmagic_cooldown"], 37, 86622)
+		mod:Bar(86622, "~"..spellName, 37, 86622)
 		scheduled = nil
 	end
 	function mod:EngulfingMagicApplied(player, spellId, _, _, spellName)

@@ -17,7 +17,6 @@ if L then
 
 	L.blaze_message = "¡Fuego en TI!"
 
-	L.fury_bar = "Próxima furia"
 	L.fury_message = "¡Furia!"
 	L.first_fury_soon = "¡Furia inminente!"
 	L.first_fury_message = "¡85% - comienza la Furia!"
@@ -39,9 +38,6 @@ if L then
 
 	L.blast_message = "Explosión en caída" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "¡Trago de magia en MI!"
-	L.engulfingmagic_cooldown = "~Trago de magia"
-
-	L.devouringflames_cooldown = "~Llamas devoradoras"
 
 	L.valiona_trigger = "Theralion, voy a incendiar el corredor. ¡Que no escapen!"
 
@@ -50,7 +46,6 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "esES")
 if L then
-	L.paralysis_bar = "Próxima parálisis"
 	L.strikes_message = "%2$dx Golpes malévolos en %1$s"
 
 	L.breath_message = "¡Aliento inminente!"
@@ -84,7 +79,7 @@ if L then
 
 	L.shield_up_message = "¡El escudo está ALTO!"
 	L.shield_down_message = "¡El escudo está BAJO!"
-	L.shield_bar = "Próximo escudo"
+	L.shield_bar = "Escudo"
 
 	L.switch_trigger = "¡Nos ocuparemos de ellos!"
 

@@ -19,7 +19,6 @@ if L then
 	L.blaze_message = "당신은 불꽃!"
 	L.crash_say = "나에게 부패의 충돌!"
 
-	L.fury_bar = "다음 격노"
 	L.fury_message = "격노!"
 	L.first_fury_soon = "곧 격노!"
 	L.first_fury_message = "85% - 격노 시작 & 곧 코끼리!"
@@ -41,9 +40,6 @@ if L then
 
 	L.blast_message = "황혼 폭발"
 	L.engulfingmagic_say = "나에게 사로잡힌 마법!"
-	L.engulfingmagic_cooldown = "다음 사로잡힌 마법"
-
-	L.devouringflames_cooldown = "다음 파멸의 불길"
 
 	L.valiona_trigger = "테랄리온, 내가 전당에 불을 뿜겠다. 놈들의 퇴로를 막아라!"
 
@@ -52,7 +48,6 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "koKR")
 if L then
-	L.paralysis_bar = "다음 마비"
 	L.strikes_message = "악의의 일격 x%2$d : %1$s"
 
 	L.breath_message = "곧 숨결!"

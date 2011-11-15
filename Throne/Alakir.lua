@@ -25,7 +25,7 @@ if L then
 	L.stormling = "Stormling adds"
 	L.stormling_desc = "Summons Stormling."
 	L.stormling_message = "Stormling incoming!"
-	L.stormling_bar = "Next stormling"
+	L.stormling_bar = "Stormling"
 	L.stormling_yell = "Storms! I summon you to my side!"
 
 	L.acid_rain = "Acid Rain (%d)"

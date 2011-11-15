@@ -20,7 +20,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.darkness_message = "Darkness"
 	L.firestorm_message = "Firestorm soon!"
-	L.meteor_bar = "~Meteor Slash"
 end
 L = mod:GetLocale()
 
@@ -44,7 +43,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(300)
-	self:Bar(88942, L["meteor_bar"], 10, 88942)
+	self:Bar(88942, "~"..GetSpellInfo(95172), 10, 88942)
 	fireStorm = 100
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
@@ -55,7 +54,7 @@ end
 
 function mod:MeteorSlash(_, spellId, _, _, spellName)
 	self:Message(88942, spellName, "Important", spellId)
-	self:Bar(88942, L["meteor_bar"], 17, spellId)
+	self:Bar(88942, "~"..spellName, 17, spellId)
 end
 
 do
@@ -77,7 +76,7 @@ function mod:FelFirestorm(_, spellId, _, _, spellName)
 	self:SendMessage("BigWigs_StopBar", self, L["meteor_bar"])
 	self:Message(88972, fireStorm.."% - "..spellName, "Urgent", spellId, "Alert")
 	self:FlashShake(88972)
-	self:Bar(88942, L["meteor_bar"], 32, 88942)
+	self:Bar(88942, "~"..GetSpellInfo(95172), 32, 88942)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unit)

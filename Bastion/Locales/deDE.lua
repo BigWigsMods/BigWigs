@@ -19,7 +19,6 @@ if L then
 	L.blaze_message = "Lohe auf DIR!"
 	L.crash_say = "Schmettern auf MIR!"
 
-	L.fury_bar = "Nächster Furor"
 	L.fury_message = "Furor!"
 	L.first_fury_soon = "Furor bald!"
 	L.first_fury_message = "85% - Furor kommt!"
@@ -41,9 +40,6 @@ if L then
 
 	L.blast_message = "Druckwelle"
 	L.engulfingmagic_say = "Einhüllende Magie auf MIR!"
-	L.engulfingmagic_cooldown = "~Einhüllende Magie"
-
-	L.devouringflames_cooldown = "~Verschlingende Flammen"
 
 	L.valiona_trigger = "Theralion, ich werde den Gang einhüllen. Deck ihre Flucht!"
 
@@ -52,7 +48,6 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "deDE")
 if L then
-	L.paralysis_bar = "Nächste Paralyse"
 	L.strikes_message = "%2$dx Stöße auf %1$s"
 
 	L.breath_message = "Atem kommt!"
@@ -88,7 +83,7 @@ if L then
 
 	L.shield_up_message = "Schild ist OBEN!"
 	L.shield_down_message = "Schild ist UNTEN!"
-	L.shield_bar = "Nächstes Schild"
+	L.shield_bar = "Schild"
 
 	L.switch_trigger = "Wir kümmern uns um sie!"
 

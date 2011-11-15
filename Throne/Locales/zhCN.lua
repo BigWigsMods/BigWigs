@@ -5,7 +5,7 @@ if L then
 	L.stormling = "风暴火花"
 	L.stormling_desc = "当召唤风暴火花时发出警报。"
 	L.stormling_message = "即将 风暴火花！"
-	L.stormling_bar = "<下一风暴火花>"
+	L.stormling_bar = "风暴火花"
 	L.stormling_yell = "暴风啊！到我的身边来！"
 
 	L.acid_rain = "酸雨：>%d<！"

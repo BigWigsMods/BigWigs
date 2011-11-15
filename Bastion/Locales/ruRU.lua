@@ -20,7 +20,6 @@ if L then
 	L.blaze_message = "На вас - Пламень!"
 	L.crash_say = "На мне - Оскверняющее сокрушение!"
 
-	L.fury_bar = "След. Неистовство"
 	L.fury_message = "Неистовство!"
 	L.first_fury_soon = "Скоро Неистовство!"
 	L.first_fury_message = "85% - Неистовство Чо'Галла!"
@@ -42,9 +41,6 @@ if L then
 
 	L.blast_message = "Сумеречный взрыв" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
 	L.engulfingmagic_say = "Избыточная магия на МНЕ!"
-	L.engulfingmagic_cooldown = "~Избыточная магия"
-
-	L.devouringflames_cooldown = "~Всепоглощающее пламя"
 
 	L.valiona_trigger = "Тералион, я подожгу коридор. Не дай им уйти!"
 	L.win_trigger = "Одно утешает... Тералион погиб вместе со мной..."
@@ -54,7 +50,6 @@ end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "ruRU")
 if L then
-	L.paralysis_bar = "След. Паралич"
 	L.strikes_message = "%2$dx удар(а) на |3-3(%1$s)"
 
 	L.breath_message = "Обжигающее дыхание!"
@@ -73,7 +68,7 @@ if L then
 
 	L.shield_up_message = "ЩИТ!"
 	L.shield_down_message = "Щит СПАЛ!"
-	L.shield_bar = "След. щит"
+	L.shield_bar = "щит"
 
 	L.switch_trigger = "Мы займемся ими!"
 

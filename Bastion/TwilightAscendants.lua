@@ -32,7 +32,7 @@ if L then
 
 	L.shield_up_message = "Shield is UP!"
 	L.shield_down_message = "Shield is DOWN!"
-	L.shield_bar = "Next shield"
+	L.shield_bar = "Shield"
 
 	L.switch_trigger = "We will handle them!"
 

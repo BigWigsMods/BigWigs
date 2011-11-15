@@ -41,7 +41,6 @@ if L then
 	L.blaze_message = "Fire under YOU!"
 	L.crash_say = "Crash on ME!"
 
-	L.fury_bar = "Next Fury"
 	L.fury_message = "Fury!"
 	L.first_fury_soon = "Fury Soon!"
 	L.first_fury_message = "85% - Fury Begins!"
@@ -171,7 +170,7 @@ function mod:FuryOfChogall(_, spellId, _, _, spellName)
 	else
 		self:Message(82524, L["fury_message"], "Attention", spellId)
 	end
-	self:Bar(82524, L["fury_bar"], 47, spellId)
+	self:Bar(82524, spellName, 47, spellId)
 end
 
 function mod:Orders(_, spellId, _, _, spellName)

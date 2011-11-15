@@ -12,7 +12,6 @@ if L then
 	L.obnoxious_soon = "Скоро Несносность Беса!"
 
 	L.searing_soon = "Жгучее пламя через 10сек!"
-	L.sonicbreath_cooldown = "~Волновое дыхание"
 end
 
 L = BigWigs:NewBossLocale("Chimaeron", "ruRU")
@@ -34,7 +33,7 @@ if L then
 	L.blazing = "Помощник - скелет"
 	L.blazing_desc = "Призывает Пыляющее костяное создание."
 	L.blazing_message = "Надвигается помощник!"
-	L.blazing_bar = "След. скелет"
+	L.blazing_bar = "скелет"
 
 	L.armageddon = "Armageddon"
 	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
@@ -45,11 +44,9 @@ if L then
 	L.phase2_yell = "Непостижимо! Вы, кажется, можете уничтожить моего лавового червяка! Пожалуй, я помогу ему."
 
 	-- normal
-	L.pillar_of_flame_cd = "~Огненный столп"
-
 	L.slump = "Падение (Родео)"
 	L.slump_desc = "Магмарь падает вперед открывая себя, позволяя начать родео."
-	L.slump_bar = "След. родео"
+	L.slump_bar = "родео"
 	L.slump_message = "Йихо, погнали!"
 	L.slump_trigger = "%s внезапно падает, выставляя клешки!"
 
@@ -58,11 +55,7 @@ if L then
 	L.expose_trigger = "голову"
 	L.expose_message = "Голова обнажена!"
 
-	L.spew_bar = "~Изрыгание лавы"
 	L.spew_warning = "Скоро Изрыгание лавы!"
-
-	L.mangle_bar = "Увечье: %s"
-	L.mangle_cooldown = "~Увечье"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
@@ -78,10 +71,6 @@ if L then
 
 	L.release_aberration_message = "%s осталось аберрации!"
 	L.release_all = "%s аберрации!"
-
-	L.flashfreeze = "~Ледяная вспышка"
-	L.next_blast = "~Обжигающий поток"
-	L.jets_bar = "Next Magma Jets"
 
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
@@ -136,11 +125,7 @@ if L then
 
 	L.next_switch = "След. Смена"
 
-	-- not using these but lets not just remove them yet who knows what will 4.0.6 break
-	--L.nef_trigger1 = "Were you planning on using Toxitron's chemicals to damage the other constructs? Clever plan, let me ruin that for you."
-	--L.nef_trigger2 = "Stupid Dwarves and your fascination with runes! Why would you create something that would help your enemy?"
-
-	L.nef_next = "~След. Вливание Тьмы"
+	L.nef_next = "~Вливание Тьмы"
 
 	L.acquiring_target = "Выбор цели"
 
