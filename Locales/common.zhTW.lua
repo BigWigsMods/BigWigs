@@ -7,7 +7,6 @@ L.you = ">你< %s！"
 L.underyou = ">你<腳下：%s！"
 L.other = "%s：>%s<！"
 L.say = ">我< %s！"
-L.cd = "~%s CD" -- Used for bars, use the long version "cooldown" if you language doesn't have a short version "CD"
 L.cast = "Casting %s"
 
 L.phase = "階段%d"

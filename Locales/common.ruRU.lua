@@ -7,7 +7,6 @@ L.you = "%s на ВАС"
 L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
 L.say = "%s on ME!"
-L.cd = "~%s CD" -- Used for bars, use the long version "cooldown" if you language doesn't have a short version "CD"
 L.cast = "Casting %s"
 
 L.phase = "Фаза %d"

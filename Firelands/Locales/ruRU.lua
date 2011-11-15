@@ -1,9 +1,8 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "ruRU")
 if not L then return end
 if L then
-	L.devastate_message = "Разрушение #%d!"
-	L.devastate_bar = "~След. разрушение"
-	L.drone_bar = "След. дрон"
+	L.devastate_message = "Разрушение #%d"
+	L.drone_bar = "дрон"
 	L.drone_message = "Появился дрон!"
 	L.kiss_message = "Поцелуй"
 end
@@ -24,7 +23,7 @@ if L then
 	L.molten_message = "Стаков на боссе: %d!"
 
 	L.stomp_message = "Огненная поступь!"
-	L.stomp_warning = "След. поступь"
+	L.stomp = "поступь"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "ruRU")
@@ -39,7 +38,6 @@ if L then
 
 	L.meteor = "Meteor"
 	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_bar = "Next Meteor"
 	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Фаза %d"
@@ -77,7 +75,6 @@ if L then
 	L.blade_bar = "~След. лезвие"
 	L.shard_message = "Кристаллы (%d)!"
 	L.focus_message = "У вашего фокуса %d стаков!"
-	L.countdown_bar = "След. линк"
 	L.link_message = "Связан"
 end
 
@@ -102,7 +99,7 @@ if L then
 	L.engulfing_close = "Пламя в мили!"
 	L.engulfing_middle = "Пламя по центру!"
 	L.engulfing_far = "Пламя с краю!"
-	L.hand_bar = "След. отбрасывание"
+	L.hand_bar = "отбрасывание"
 	L.ragnaros_back_message = "Рагнарос вернулся!" -- yeah thats right PARRY ON!
 
 	L.wound = "Burning Wound"

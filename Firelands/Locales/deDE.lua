@@ -1,9 +1,8 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "deDE")
 if not L then return end
 if L then
-	L.devastate_message = "Verwüstung #%d!"
-	L.devastate_bar = "~Verwüstung"
-	L.drone_bar = "Nächste Drohne"
+	L.devastate_message = "Verwüstung #%d"
+	L.drone_bar = "Drohne"
 	L.drone_message = "Drohne kommt!"
 	L.kiss_message = "Kuss"
 end
@@ -24,7 +23,7 @@ if L then
 	L.molten_message = "%dx Stapel auf Rhyolith!"
 
 	L.stomp_message = "Stampfen! Stampfen! Stampfen!"
-	L.stomp_warning = "Nächstes Stampfen"
+	L.stomp = "Stampfen"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "deDE")
@@ -39,7 +38,6 @@ if L then
 
 	L.meteor = "Meteor"
 	L.meteor_desc = "Warnt, wenn ein Geschmolzener Meteor beschworen wird."
-	L.meteor_bar = "Nächster Meteor"
 	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Phase %d"
@@ -84,7 +82,6 @@ if L then
 	L.blade_bar = "Nächste Klinge"
 	L.shard_message = "Splitter %d!"
 	L.focus_message = "Dein Fokus hat %d Stapel!"
-	L.countdown_bar = "Nächste Verbindung"
 	L.link_message = "Verbunden"
 end
 
@@ -109,7 +106,7 @@ if L then
 	L.engulfing_close = "Innen entflammt!"
 	L.engulfing_middle = "Mitte entflammt!"
 	L.engulfing_far = "Außen entflammt!"
-	L.hand_bar = "Nächster Rückstoß"
+	L.hand_bar = "Rückstoß"
 	L.ragnaros_back_message = "Raggy wieder da, auf geht's!"
 
 	L.wound = "Brennende Wunde"

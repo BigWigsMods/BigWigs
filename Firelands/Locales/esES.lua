@@ -1,9 +1,8 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "esES")
 if not L then return end
 if L then
-	L.devastate_message = "¡Devastación #%d!"
-	L.devastate_bar = "~Próxima devastación"
-	L.drone_bar = "Próximo Zángano"
+	L.devastate_message = "Devastación #%d"
+	L.drone_bar = "Zángano"
 	L.drone_message = "¡Zángano aparece!"
 	L.kiss_message = "Beso"
 end
@@ -24,7 +23,7 @@ if L then
 	L.molten_message = "%dx stacks en el jefe!"
 
 	L.stomp_message = "¡Pisotón! ¡Pisotón! ¡Pisotón!"
-	L.stomp_warning = "Próximo pisotón"
+	L.stomp = "Pisotón"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "esES")
@@ -39,7 +38,6 @@ if L then
 
 	L.meteor = "Meteorito"
 	L.meteor_desc = "Avisa cuando un meteorito de lava es invocado."
-	L.meteor_bar = "Próximo Meteorito"
 	L.meteor_message = "¡Meteorito!"
 
 	L.stage_message = "Fase %d"
@@ -84,7 +82,6 @@ if L then
 	L.blade_bar = "~Siguiente Hoja"
 	L.shard_message = "¡Fragmento morado (%d)!"
 	L.focus_message = "¡Tu foco tiene %d stacks!"
-	L.countdown_bar = "Próximo enlace"
 	L.link_message = "Enlazado"
 end
 
@@ -109,7 +106,7 @@ if L then
 	L.engulfing_close = "¡Sección cercana sumergida!"
 	L.engulfing_middle = "¡Sección central sumergida!"
 	L.engulfing_far = "¡Sección lejana sumergida"
-	L.hand_bar = "Próximo rebote"
+	L.hand_bar = "Rebote"
 	L.ragnaros_back_message = "¡Raggy ha vuelto, fiesta!"
 
 	L.wound = "Herida ardiente"

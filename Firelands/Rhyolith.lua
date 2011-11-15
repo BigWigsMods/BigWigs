@@ -34,7 +34,7 @@ if L then
 	L.molten_message = "%dx stacks on boss!"
 
 	L.stomp_message = "Stomp! Stomp! Stomp!"
-	L.stomp_warning = "Next Stomp"
+	L.stomp = "Stomp"
 end
 L = mod:GetLocale()
 
@@ -67,7 +67,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(diff > 2 and 300 or 360, nil, nil, 101305)
-	self:Bar(97282, L["stomp_warning"], 15, 97282)
+	self:Bar(97282, L["stomp"], 15, 97282)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	lastFragments = GetTime()
 end
@@ -101,8 +101,8 @@ end
 
 function mod:Stomp(_, spellId, _, _, spellName)
 	self:Message(97282, L["stomp_message"], "Urgent",  spellId, "Alert")
-	self:Bar(97282, L["stomp_message"], 3, spellId)
-	self:Bar(97282, L["stomp_warning"], 30, spellId)
+	self:Bar(97282, L["stomp"], 30, spellId)
+	self:Bar(97282, CL["cast"]:format(L["stomp"]), 3, spellId)
 end
 
 function mod:MoltenArmor(player, spellId, _, _, spellName, stack, _, _, _, dGUID)

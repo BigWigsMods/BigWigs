@@ -1,8 +1,7 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "koKR")
 if not L then return end
 if L then
-	L.devastate_message = "그을리는 유린 #%d!"
-	L.devastate_bar = "~다음 그을리는 유린"
+	L.devastate_message = "그을리는 유린 #%d"
 	L.drone_bar = "다음 잿그물 수거미"
 	L.drone_message = "잿그물 수거미 등장!"
 	L.kiss_message = "입맞춤"
@@ -24,7 +23,7 @@ if L then
 	L.molten_message = "보스 공격 증가 x%d !"
 
 	L.stomp_message = "진탕 발길! 발구르기! 발구르기!"
-	L.stomp_warning = "다음 발구르기"
+	L.stomp = "발구르기"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "koKR")
@@ -39,7 +38,6 @@ if L then
 
 	L.meteor = "Meteor"
 	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_bar = "Next Meteor"
 	L.meteor_message = "Meteor!"
 
 	L.stage_message = "%d 단계"
@@ -73,12 +71,10 @@ L = BigWigs:NewBossLocale("Baleroc", "koKR")
 if L then
 	L.torment = "주시 대상 고문 파편 중첩"
 	L.torment_desc = "당신이 주시 대상으로 설정한 플레이어에 대한 고문의 파편 중첩을 알립니다."
-	L.torment_message = "고통 x%2$d : %1$s"
 
 	L.blade_bar = "~칼날"
 	L.shard_message = "고문의 파편(%d)!"
 	L.focus_message = "당신의 주시 대상 - 고문 x%d !"
-	L.countdown_bar = "다음 고리"
 	L.link_message = "고리 연결"
 end
 
@@ -103,7 +99,7 @@ if L then
 	L.engulfing_close = "가까운 지역에 휘몰아치는 불길"
 	L.engulfing_middle = "중간 지역에 휘몰아치는 불길"
 	L.engulfing_far = "먼 지역에 휘몰아치는 불길"
-	L.hand_bar = "다음 넉백"
+	L.hand_bar = "넉백"
 	L.ragnaros_back_message = "라그 돌아옴, 파티 정비!"
 
 	L.wound = "불타는 상처"

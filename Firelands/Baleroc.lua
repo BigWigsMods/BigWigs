@@ -22,8 +22,7 @@ if L then
 	L.blade_bar = "~Next Blade"
 	L.shard_message = "Purple shards (%d)!"
 	L.focus_message = "Your focus has %d stacks!"
-	L.countdown_bar = "Next link"
-	L.link_message = "Linked"
+	L.link_message = "Link"
 end
 L = mod:GetLocale()
 
@@ -81,7 +80,7 @@ function mod:Countdown(player, spellId)
 		self:PrimaryIcon(99516, player)
 		countdownCounter = 2
 	else
-		self:Bar(99516, L["countdown_bar"], 47.6, spellId)
+		self:Bar(99516, L["link_message"], 47.6, spellId)
 		self:TargetMessage(99516, L["link_message"], countdownTargets, "Important", 99516, "Alarm")
 		self:SecondaryIcon(99516, player)
 		countdownCounter = 1

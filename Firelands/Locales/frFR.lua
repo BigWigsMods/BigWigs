@@ -1,9 +1,8 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "frFR")
 if not L then return end
 if L then
-	L.devastate_message = "Dévastation #%d !"
-	L.devastate_bar = "~Prochaine dévastation"
-	L.drone_bar = "Prochaine ouvrière"
+	L.devastate_message = "Dévastation #%d"
+	L.drone_bar = "Ouvrière"
 	L.drone_message = "Arrivée d'une ouvrière !"
 	L.kiss_message = "Baiser"
 end
@@ -24,7 +23,7 @@ if L then
 	L.molten_message = "%d cumuls de fournaise sur le boss !"
 
 	L.stomp_message = "Piétinement ! Piétinement ! Piétinement !"
-	L.stomp_warning = "Prochain piétinement"
+	L.stomp = "Piétinement"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "frFR")
@@ -39,7 +38,6 @@ if L then
 
 	L.meteor = "Météore"
 	L.meteor_desc = "Prévient quand un météore en fusion est invoqué."
-	L.meteor_bar = "Prochain météore"
 	L.meteor_message = "Météore !"
 
 	L.stage_message = "Phase %d "
@@ -80,12 +78,10 @@ L = BigWigs:NewBossLocale("Baleroc", "frFR")
 if L then
 	L.torment = "Cumuls de Torment sur la focalisation"
 	L.torment_desc = "Prévient quand votre /focus gagne un autre cumul de tourment."
-	--L.torment_message = "%2$dx Tourment sur %1$s"
 
 	L.blade_bar = "~Prochaine Lame"
 	L.shard_message = "Éclats de tourment (%d) !"
 	L.focus_message = "Votre focalisation a %d cumuls !"
-	L.countdown_bar = "Prochain lien"
 	L.link_message = "Liés"
 end
 
@@ -110,7 +106,7 @@ if L then
 	L.engulfing_close = "Section proche engloutie !"
 	L.engulfing_middle = "Section centrale engloutie !"
 	L.engulfing_far = "Section éloignée engloutie !"
-	L.hand_bar = "Prochain \"knockback\""
+	L.hand_bar = "\"Knockback\""
 	L.ragnaros_back_message = "Ragnaros est de retour !"
 
 	L.wound = "Blessure brûlante"

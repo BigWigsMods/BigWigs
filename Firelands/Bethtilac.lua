@@ -21,7 +21,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.devastate_message = "Devastation #%d!"
 	L.devastate_bar = "~Next Devastation"
-	L.drone_bar = "Next Drone"
+	L.drone_bar = "Drone"
 	L.drone_message = "Drone incoming!"
 	L.kiss_message = "Kiss"
 end
@@ -72,7 +72,7 @@ do
 	function mod:OnEngage(diff)
 		devastateCount = 1
 		lastBroodlingTarget = ""
-		self:Bar(99052, L["devastate_bar"], 80, 99052)
+		self:Bar(99052, L["devastate_message"]:format(1), 80, 99052)
 		self:Bar("ej:2773", L["drone_bar"], 45, droneIcon)
 		self:CancelTimer(scheduled, true)
 		scheduled = self:ScheduleTimer(droneWarning, 45)
@@ -137,6 +137,6 @@ function mod:Devastate(_, spellId, _, _, spellName)
 	-- This timer is only accurate if you dont fail with the Drones
 	-- Might need to use the bosses power bar or something to adjust this
 	if devastateCount > 3 then return end
-	self:Bar(99052, L["devastate_bar"], 90, spellId)
+	self:Bar(99052, L["devastate_message"]:format(devastateCount), 90, spellId)
 end
 

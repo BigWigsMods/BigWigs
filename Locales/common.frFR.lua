@@ -5,7 +5,6 @@ L.you = "%s sur VOUS !"
 L.underyou = "%s en dessous de VOUS !"
 L.other = "%s : %s"
 L.say = "%s sur MOI !"
-L.cd = "~%s CD" -- Used for bars, use the long version "cooldown" if you language doesn't have a short version "CD"
 L.cast = "Casting %s"
 
 L.phase = "Phase %d"

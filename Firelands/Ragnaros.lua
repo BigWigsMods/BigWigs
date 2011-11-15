@@ -37,7 +37,7 @@ if L then
 	L.engulfing_close = "Close quarters Engulfed!"
 	L.engulfing_middle = "Middle section Engulfed!"
 	L.engulfing_far = "Far side Engulfed!"
-	L.hand_bar = "Next knockback"
+	L.hand_bar = "Knockback"
 	L.ragnaros_back_message = "Raggy is back, parry on!" -- yeah thats right PARRY ON!
 
 	L.wound = "Burning Wound"

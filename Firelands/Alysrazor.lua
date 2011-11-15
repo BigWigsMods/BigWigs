@@ -23,12 +23,11 @@ if L then
 	L.encounter_restart = "Here we go again..."
 	L.no_stacks_message = "Dunno if you care, but you have no feathers"
 	L.moonkin_message = "Stop pretending and get some real feathers"
-	L.molt_bar = "Next Molt"
+	L.molt_bar = "Molt"
 
 	L.meteor = "Meteor"
 	L.meteor_desc = "Warn when a Molten Meteor is summoned."
 	L.meteor_icon = 100761
-	L.meteor_bar = "Next Meteor"
 	L.meteor_message = "Meteor!"
 
 	L.stage_message = "Stage %d"
@@ -114,7 +113,7 @@ function mod:OnEngage(diff)
 		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 95, 100744)
-		self:Bar("meteor", CL["cd"]:format(L["meteor"]), 30, 100761)
+		self:Bar("meteor", "~"..L["meteor"], 30, 100761)
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
 		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
@@ -220,7 +219,7 @@ function mod:Firestorm(_, spellId, _, _, spellName)
 		self:Bar(100744, "~"..spellName, 82, spellId)
 	end
 	self:Bar(100744, CL["cast"]:format(spellName), 10, spellId)
-	self:Bar("meteor", CL["cd"]:format(L["meteor"]), 20, 100761)
+	self:Bar("meteor", "~"..L["meteor"], 20, 100761)
 end
 
 function mod:Meteor(_, spellId)

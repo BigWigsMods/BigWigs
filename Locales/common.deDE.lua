@@ -7,7 +7,6 @@ L.you = "%s auf DIR!"
 L.underyou = "%s unter DIR!"
 L.other = "%s: %s"
 L.say = "%s auf MIR!"
-L.cd = "~%s CD" -- Used for bars, use the long version "cooldown" if you language doesn't have a short version "CD"
 L.cast = "Casting %s"
 
 L.phase = "Phase %d"

@@ -103,13 +103,13 @@ do
 	end
 end
 
-function mod:WaryDog(player, spellId, _, _, spellName, _, _, _, _, dGUID)
+function mod:WaryDog(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
 	-- We use the Immolation Trap IDs as we only want to warn for Wary after a
 	-- Immolation Trap not a Crystal Trap, which also applies Wary.
 	local creatureId = self:GetCID(dGUID)
 	if creatureId == 53695 or creatureId == 53694 then
-		self:Message("immolation", L["wary_dog"]:format(player), "Attention", 100167)
-		self:Bar("immolation", L["wary_dog"]:format(player), self:Difficulty() > 2 and 25 or 15, 100167)
+		self:Message("immolation", L["wary_dog"]:format(unit), "Attention", 100167)
+		self:Bar("immolation", L["wary_dog"]:format(unit), self:Difficulty() > 2 and 25 or 15, 100167)
 	end
 end
 
