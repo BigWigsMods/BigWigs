@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Alysrazor", 800, 194)
+local mod, CL = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchling, Majordomo Staghelm, Molten Feather
 
@@ -114,7 +114,7 @@ function mod:OnEngage(diff)
 		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 95, 100744)
-		self:Bar("meteor", L["meteor_bar"], 37, 100761)
+		self:Bar("meteor", CL["cd"]:format(L["meteor"]), 30, 100761)
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
 		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
@@ -219,7 +219,8 @@ function mod:Firestorm(_, spellId, _, _, spellName)
 	if meteorCount < 3 then
 		self:Bar(100744, "~"..spellName, 82, spellId)
 	end
-	self:Bar("meteor", L["meteor_bar"], 10, 100761)
+	self:Bar(100744, CL["cast"]:format(spellName), 10, spellId)
+	self:Bar("meteor", CL["cd"]:format(L["meteor"]), 20, 100761)
 end
 
 function mod:Meteor(_, spellId)
