@@ -84,7 +84,7 @@ if L then
 
 	L.shield_up_message = "烈火之盾 出现！"
 	L.shield_down_message = "烈火之盾 消失！"
-	L.shield_bar = "烈火之盾"
+	L.shield_bar = "<烈火之盾>"
 
 	L.switch_trigger = "我们会解决他们！"
 

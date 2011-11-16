@@ -33,7 +33,7 @@ if L then
 	L.blazing = "熾炎骸骨傀儡"
 	L.blazing_desc = "當召喚熾炎骸骨傀儡時發出警報。"
 	L.blazing_message = "即將 熾炎骸骨傀儡！"
-	L.blazing_bar = "熾炎骸骨傀儡"
+	L.blazing_bar = "<熾炎骸骨傀儡>"
 
 	L.armageddon = "末日風暴"
 	L.armageddon_desc = "當頭部階段施放末日風暴時發出警報。"
@@ -46,7 +46,7 @@ if L then
 	-- normal
 	L.slump = "撲倒（騎乘）"
 	L.slump_desc = "當熔喉撲倒並暴露時發出警報。"
-	L.slump_bar = "騎乘"
+	L.slump_bar = "<騎乘>"
 	L.slump_message = "嘿，快騎上它！"
 	L.slump_trigger = "%s往前撲倒，露出他的鉗子!"
 
@@ -126,7 +126,7 @@ if L then
 
 	L.next_switch = "<下一轉換>"
 
-	L.nef_next = "闇能灌注"
+	L.nef_next = "<闇能灌注>"
 
 	L.acquiring_target = "鎖定目標"
 

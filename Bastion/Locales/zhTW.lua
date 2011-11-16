@@ -84,7 +84,7 @@ if L then
 
 	L.shield_up_message = "火焰之禦 出現！"
 	L.shield_down_message = "火焰之禦 消失！"
-	L.shield_bar = "火焰之禦"
+	L.shield_bar = "<火焰之禦>"
 
 	L.switch_trigger = "我們會解決他們!"
 

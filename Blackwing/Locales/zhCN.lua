@@ -33,7 +33,7 @@ if L then
 	L.blazing = "炽焰白骨结构体"
 	L.blazing_desc = "当召唤炽焰白骨结构体时发出警报。"
 	L.blazing_message = "即將 炽焰白骨结构体！"
-	L.blazing_bar = "炽焰白骨结构体"
+	L.blazing_bar = "<炽焰白骨结构体>"
 
 	L.armageddon = "末日降临"
 	L.armageddon_desc = "当头部阶段施放末日降临时发出警报。"
@@ -46,7 +46,7 @@ if L then
 	-- normal
 	L.slump = "弱点（骑乘）"
 	L.slump_desc = "当熔喉扑倒并暴露后脑时发出警报。需要骑乘。"
-	L.slump_bar = "弱点"
+	L.slump_bar = "<弱点>"
 	L.slump_message = "嘿，快骑上它！"
 	L.slump_trigger = "%s向前倒下，暴露出他的钳子！"
 
@@ -126,7 +126,7 @@ if L then
 
 	L.next_switch = "<下一转换>"
 
-	L.nef_next = "暗影灌注"
+	L.nef_next = "<暗影灌注>"
 
 	L.acquiring_target = "获取目标"
 
