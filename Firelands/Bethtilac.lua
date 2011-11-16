@@ -20,7 +20,6 @@ local lastBroodlingTarget = ""
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.devastate_message = "Devastation #%d!"
-	L.devastate_bar = "~Next Devastation"
 	L.drone_bar = "Drone"
 	L.drone_message = "Drone incoming!"
 	L.kiss_message = "Kiss"
@@ -113,7 +112,6 @@ end
 function mod:Frenzy()
 	self:CancelAllTimers()
 	self:SendMessage("BigWigs_StopBar", self, L["drone_bar"])
-	self:SendMessage("BigWigs_StopBar", self, L["devastate_bar"])
 	self:Message(99497, CL["phase"]:format(2), "Positive", 99497, "Alarm")
 end
 
@@ -129,7 +127,7 @@ function mod:Devastate(_, spellId, _, _, spellName)
 	if hasDebuff then
 		self:Message(99052, L["devastate_message"]:format(devastateCount), "Important", spellId, "Long")
 		self:FlashShake(99052)
-		self:Bar(99052, spellName, 8, spellId)
+		self:Bar(99052, CL["cast"]:format(spellName), 8, spellId)
 	else
 		self:Message(99052, L["devastate_message"]:format(devastateCount), "Attention", spellId)
 	end
