@@ -13,7 +13,8 @@ mod:RegisterEnableMob(45992, 45993)
 local phaseCount = 0
 local marked, blackout, deepBreath = GetSpellInfo(88518), GetSpellInfo(86788), GetSpellInfo(86059)
 local devouringFlames = "~"..GetSpellInfo(86840)
-local theralion, valiona = BigWigs:Translate("Theralion"), BigWigs:Translate("Valiona")
+local theralion = EJ_GetSectionInfo(2994)
+local valiona = EJ_GetSectionInfo(2985)
 local emTargets = mod:NewTargetList()
 local markWarned = false
 
@@ -50,8 +51,8 @@ function mod:GetOptions()
 		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 92898, 93051,
 		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
-		[86788] = "Valiona",
-		[86622] = "Theralion",
+		[86788] = valiona,
+		[86622] = theralion,
 		[93051] = "heroic",
 		proximity = "general",
 	}

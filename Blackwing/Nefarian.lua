@@ -54,7 +54,7 @@ function mod:GetOptions()
 		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, "berserk",
 		"phase", "bosskill"
 	}, {
-		[94115] = "Onyxia",
+		[94115] = "ej:3283", -- Onyxia
 		[78999] = "normal",
 		[79339] = "heroic",
 		phase = "general"
@@ -221,9 +221,9 @@ function mod:ExplosiveCindersRemoved(player)
 end
 
 do
-	local onyxia = BigWigs:Translate("Onyxia")
+	local onyxia = EJ_GetSectionInfo(3283)
 	function mod:UNIT_POWER()
-		if UnitName("boss1") == onyxia then
+		if UnitIsUnit("boss1", onyxia) then
 			local power = UnitPower("boss1", ALTERNATE_POWER_INDEX)
 			if power > 80 then
 				self:Message(78999, L["onyxia_power_message"], "Attention", 78999)

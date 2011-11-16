@@ -45,9 +45,9 @@ function mod:GetOptions()
 		85422, 86281, 86205,
 		86307, "full_power", "berserk", "bosskill"
 	}, {
-		[86193] = "Rohash",
-		[84645] = "Nezir",
-		[85422] = "Anshal",
+		[86193] = "ej:3172", -- Rohash
+		[84645] = "ej:3178", -- Nezir
+		[85422] = "ej:3166", -- Anshal
 		[86307] = "general",
 	}
 end

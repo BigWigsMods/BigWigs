@@ -70,11 +70,11 @@ function mod:GetOptions()
 		-- General
 		"proximity", "switch", "bosskill"
 	}, {
-		[82631] = "Ignacious",
-		[82746] = "Feludius",
-		[83067] = "Arion",
-		[83565] = "Terrastra",
-		[92488] = "Elementium Monstrosity",
+		[82631] = "ej:3118", -- Ignacious
+		[82746] = "ej:3110", -- Feludius
+		[83067] = "ej:3123", -- Arion
+		[83565] = "ej:3125", -- Terrastra
+		[92488] = "ej:3145", --Elementium Monstrosity
 		[92067] = "heroic",
 		proximity = "general",
 	}
@@ -221,7 +221,8 @@ function mod:FrostBeacon(player, spellId, _, _, spellName)
 end
 
 do
-	local terrastra, arion = BigWigs:Translate("Terrastra"), BigWigs:Translate("Arion")
+	local terrastra = EJ_GetSectionInfo(3125)
+	local arion = EJ_GetSectionInfo(3123)
 	function mod:UNIT_HEALTH_FREQUENT(_, unit)
 		if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
 			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
