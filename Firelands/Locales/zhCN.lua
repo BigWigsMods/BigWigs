@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "zhCN")
 if not L then return end
 if L then
-	L.devastate_message = "阴燃毁灭：>#%d<！"
+	L.devastate_message = "阴燃毁灭：>#%d<"
 	L.drone_bar = "<下一烬网工虫>"
 	L.drone_message = "即将 烬网工虫！"
 	L.kiss_message = "寡妇蛛之吻！"
@@ -23,7 +23,7 @@ if L then
 	L.molten_message = "首领熔岩护甲堆叠：>%d<层！"
 
 	L.stomp_message = "震荡践踏！"
-	L.stomp = "<震荡践踏>"
+	L.stomp = "震荡践踏"
 end
 
 L = BigWigs:NewBossLocale("Alysrazor", "zhCN")
@@ -82,7 +82,7 @@ if L then
 	L.blade_bar = "<毁灭之刃>"
 	L.shard_message = "磨难碎片：>%d<！"
 	L.focus_message = "焦点目标已有 >%d< 层磨难！"
-	L.link_message = "倒计时！"
+	L.link_message = "倒计时"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "zhCN")
@@ -106,7 +106,7 @@ if L then
 	L.engulfing_close = "噬体烈焰：>近场<！"
 	L.engulfing_middle = "噬体烈焰：>中场<！"
 	L.engulfing_far = "噬体烈焰：>远场<！"
-	L.hand_bar = "<拉格纳罗斯之手>"
+	L.hand_bar = "拉格纳罗斯之手"
 	L.ragnaros_back_message = "拉格纳罗斯返回，集合！"
 
 	L.wound = "灼烧之伤"

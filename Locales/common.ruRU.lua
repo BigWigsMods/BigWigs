@@ -7,7 +7,7 @@ L.you = "%s на ВАС"
 L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
 L.say = "%s on ME!"
-L.cast = "Casting %s"
+L.cast = "<Casting %s>"
 
 L.phase = "Фаза %d"
 L.normal = "Обычный режим"
