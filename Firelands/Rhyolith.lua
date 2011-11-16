@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Lord Rhyolith", 800, 193)
+local mod, CL = BigWigs:NewBoss("Lord Rhyolith", 800, 193)
 if not mod then return end
 mod:RegisterEnableMob(52577, 53087, 52558) -- Left foot, Right Foot, Lord Rhyolith
 
