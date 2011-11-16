@@ -114,6 +114,11 @@ L["Outline"] = "Kontur"
 L["Monochrome"] = "Monochrom"
 L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Schaltet den Monochrom-Filter in allen Nachrichten an/aus, der die Schriftenkantenglättung entfernt."
 
+L["Display time"] = "Anzeigedauer"
+L["How long to display a message, in seconds"] = "Bestimmt, wie lange (in Sekunden) Nachrichten angezeigt werden."
+L["Fade time"] = "Ausblendedauer"
+L["How long to fade out a message, in seconds"] = "Bestimmt, wie lange (in Sekunden) das Ausblenden der Nachrichten dauert."
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --
