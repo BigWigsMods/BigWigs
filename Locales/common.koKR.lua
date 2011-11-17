@@ -16,6 +16,7 @@ L.hard = "도전 모드"
 L.general = "일반 경고" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
+L.custom_start_s = "%s engaged - %s in %ds"
 L.custom_end = "%s - %s!"
 L.custom_min = "%2$d분 후 %1$s"
 L.custom_sec = "%2$d초 후 %1$s!"

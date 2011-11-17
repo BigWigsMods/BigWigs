@@ -16,6 +16,7 @@ L.general = "General" -- General settings, i.e. things that apply to both normal
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "%s engaged - %s in %d min"
+L.custom_start_s = "%s engaged - %s in %d sec"
 L.custom_end = "%s goes %s!"
 L.custom_min = "%s in %d min"
 L.custom_sec = "%s in %d sec!"

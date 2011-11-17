@@ -18,6 +18,7 @@ L.general = "通用" -- General settings, i.e. things that apply to both normal 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = ">%s<激活 - %s將在%d分後！"
+L.custom_start_s = "%s engaged - %s in %ds"
 L.custom_end = ">%s<將%s！"
 L.custom_min = ">%s<分後%d！"
 L.custom_sec = ">%s<秒後%d！"
