@@ -56,7 +56,7 @@ function mod:OnEngage(diff)
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
 	self:Bar("ej:2598", L["blade_bar"], 30, 99352)
 	if diff > 2 then
-		self:Bar(99516, L["countdown_bar"], 25, 99516) -- Countdown
+		self:Bar(99516, L["link_message"], 25, 99516) -- Countdown
 		countdownCounter = 1
 	end
 	count = 0
