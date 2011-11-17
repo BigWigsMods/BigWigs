@@ -19,7 +19,7 @@ local lastBroodlingTarget = ""
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.devastate_message = "Devastation #%d!"
+	L.devastate_message = "Devastate #%d"
 	L.drone_bar = "Drone"
 	L.drone_message = "Drone incoming!"
 	L.kiss_message = "Kiss"
@@ -71,7 +71,9 @@ do
 	function mod:OnEngage(diff)
 		devastateCount = 1
 		lastBroodlingTarget = ""
-		self:Bar(99052, L["devastate_message"]:format(1), 80, 99052)
+		local devastate = L["devastate_message"]:format(1)
+		self:Message(99052, CL["custom_start_s"]:format(self.displayName, devastate, 80), "Positive")
+		self:Bar(99052, devastate, 80, 99052)
 		self:Bar("ej:2773", L["drone_bar"], 45, droneIcon)
 		self:CancelTimer(scheduled, true)
 		scheduled = self:ScheduleTimer(droneWarning, 45)
@@ -121,13 +123,14 @@ function mod:Kiss(player, spellId, _, _, spellName)
 	self:PlaySound(99506, "Info")
 end
 
-function mod:Devastate(_, spellId, _, _, spellName)
+function mod:Devastate(_, spellId)
 	local name = GetSpellInfo(100048) --Fiery Web Silk
 	local hasDebuff = UnitDebuff("player", name)
 	if hasDebuff then
-		self:Message(99052, L["devastate_message"]:format(devastateCount), "Important", spellId, "Long")
+		local devastate = L["devastate_message"]:format(devastateCount)
+		self:Message(99052, devastate, "Important", spellId, "Long")
+		self:Bar(99052, CL["cast"]:format(devastate), 8, spellId)
 		self:FlashShake(99052)
-		self:Bar(99052, CL["cast"]:format(spellName), 8, spellId)
 	else
 		self:Message(99052, L["devastate_message"]:format(devastateCount), "Attention", spellId)
 	end
