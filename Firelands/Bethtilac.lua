@@ -19,6 +19,10 @@ local lastBroodlingTarget = ""
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.flare = GetSpellInfo(100936)
+	L.flare_desc = "Show a timer bar for AoE flare."
+	L.flare_icon = 100936
+
 	L.devastate_message = "Devastate #%d"
 	L.drone_bar = "Drone"
 	L.drone_message = "Drone incoming!"
@@ -33,7 +37,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{99052, "FLASHSHAKE"}, "ej:2773",
-		99506, 99497,
+		99506, 99497, "flare",
 		{99559, "FLASHSHAKE", "WHISPER"}, {99990, "FLASHSHAKE", "SAY"},
 		"bosskill"
 	}, {
@@ -52,6 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 99497)
 	self:Log("SPELL_AURA_APPLIED", "Kiss", 99506)
 	self:Log("SPELL_CAST_START", "Devastate", 99052)
+	self:Log("SPELL_CAST_SUCCESS", "Flare", 99859, 100935, 100936, 100649)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -139,5 +144,9 @@ function mod:Devastate(_, spellId)
 	-- Might need to use the bosses power bar or something to adjust this
 	if devastateCount > 3 then return end
 	self:Bar(99052, L["devastate_message"]:format(devastateCount), 90, spellId)
+end
+
+function mod:Flare(_, spellId, _, _, spellName)
+	self:Bar("flare", spellName, 6, spellId)
 end
 
