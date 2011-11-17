@@ -227,7 +227,7 @@ function mod:Meteor(_, spellId)
 	-- Only show a bar if this is the first or third meteor this phase
 	meteorCount = meteorCount + 1
 	if meteorCount == 1 or meteorCount == 3 then
-		self:Bar("meteor", L["meteor_bar"], 32, spellId)
+		self:Bar("meteor", L["meteor"], 32, spellId)
 	end
 end
 
@@ -275,7 +275,7 @@ do
 			self:Bar("initiate", L["initiate_both"], 13.5, 97062)
 			if self:Difficulty() > 2 then
 				meteorCount = 0
-				self:Bar("meteor", L["meteor_bar"], 18, 100761)
+				self:Bar("meteor", L["meteor"], 18, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else
