@@ -5,7 +5,7 @@ L.you = "%s sur VOUS !"
 L.underyou = "%s en dessous de VOUS !"
 L.other = "%s : %s"
 L.say = "%s sur MOI !"
-L.cast = "<Casting %s>"
+L.cast = "<%s en incant.>"
 
 L.phase = "Phase %d"
 L.normal = "Mode normal"

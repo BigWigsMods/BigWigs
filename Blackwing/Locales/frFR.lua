@@ -63,7 +63,7 @@ if L then
 	--heroic
 	L.sludge = "Sombre vase"
 	L.sludge_desc = "Prévient quand vous vous trouvez dans une Sombre vase."
-	L.sludge_message = "Sombre vase sur vous !"
+	L.sludge_message = "Sombre vase sur VOUS !"
 
 	--normal
 	L.final_phase = "Phase finale"
@@ -96,7 +96,7 @@ if L then
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
-	L.discharge_bar = "~Recharge Décharge"
+	L.discharge_bar = "~Décharge"
 
 	L.phase_two_trigger = "Soyez maudits, mortels ! Un tel mépris pour les possessions d'autrui doit être traité avec une extrême fermeté !"
 
@@ -106,7 +106,7 @@ if L then
 	L.crackle_message = "Electrocuter imminent !"
 
 	L.shadowblaze_trigger = "Que la chair se transforme en cendres !"
-	L.shadowblaze_message = "Ombrase sur vous !"
+	L.shadowblaze_message = "Ombrase en dessous de VOUS !"
 
 	L.onyxia_power_message = "Explosion imminente !"
 
@@ -130,8 +130,8 @@ if L then
 
 	L.acquiring_target = "Acquisition d'une cible"
 
-	L.bomb_message = "Une Bombe de poison vous poursuit !"
-	L.cloud_message = "Nuage chimique sur vous !"
+	L.bomb_message = "Une Bombe de poison VOUS poursuit !"
+	L.cloud_message = "Nuage chimique sur VOUS !"
 	L.protocol_message = "Arrivée de Bombes de poison !"
 
 	L.iconomnotron = "Icône sur le boss actif"

@@ -2,7 +2,8 @@ local L = BigWigs:NewBossLocale("Beth'tilac", "frFR")
 if not L then return end
 if L then
 	L.flare = GetSpellInfo(100936)
-	L.flare_desc = "Show a timer bar for AoE flare."
+	L.flare_desc = "Affiche une barre de délai pour les Braises incandescentes à effet de zone."
+
 	L.devastate_message = "Dévastation #%d"
 	L.drone_bar = "Ouvrière"
 	L.drone_message = "Arrivée d'une ouvrière !"
@@ -24,7 +25,7 @@ if L then
 
 	L.molten_message = "%d cumuls de fournaise sur le boss !"
 
-	L.stomp_message = "Piétinement ! Piétinement ! Piétinement !"
+	L.stomp_message = "Piétinement !"
 	L.stomp = "Piétinement"
 end
 
@@ -36,7 +37,7 @@ if L then
 	L.encounter_restart = "Et c'est reparti..."
 	L.no_stacks_message = "Juste au cas où : vous n'avez pas de plumes."
 	L.moonkin_message = "Arrêtez de faire genre et récupérez de vraies plumes."
-	L.molt_bar = "Prochaine mue"
+	L.molt_bar = "Mue"
 
 	L.meteor = "Météore"
 	L.meteor_desc = "Prévient quand un météore en fusion est invoqué."
