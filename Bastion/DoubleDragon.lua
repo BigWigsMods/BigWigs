@@ -177,7 +177,8 @@ end
 
 function mod:BlackoutRemoved(player, spellId, _, _, spellName)
 	self:OpenProximity(8)
-	self:Bar(86788, spellName, 40, spellId) -- make sure to remove bar when it takes off
+	self:PrimaryIcon(86788)
+	self:Bar(86788, spellName, 40, spellId) -- make sure to remove bar when it's removed
 end
 
 local function markRemoved()

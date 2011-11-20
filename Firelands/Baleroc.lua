@@ -43,6 +43,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Countdown", 99516)
+	self:Log("SPELL_AURA_REMOVED", "CountdownRemoved", 99516)
 	self:Log("SPELL_CAST_START", "Shards", 99259)
 	self:Log("SPELL_CAST_START", "Blades", 99405, 99352, 99350)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 99256, 100230, 100231, 100232)
@@ -85,6 +86,11 @@ function mod:Countdown(player, spellId)
 		self:SecondaryIcon(99516, player)
 		countdownCounter = 1
 	end
+end
+
+function mod:CountdownRemoved()
+	self:PrimaryIcon(99516)
+	self:SecondaryIcon(99516)
 end
 
 function mod:Shards(_, spellId, _, _, spellName)

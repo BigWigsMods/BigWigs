@@ -153,6 +153,7 @@ end
 function mod:ScorpionForm(_, spellId, _, _, spellName)
 	form = "scorpion"
 	self:Message(98379, spellName, "Important", spellId, "Alert")
+	self:PrimaryIcon(98476)
 	self:CloseProximity(98374)
 	specialCounter = 1
 	self:Bar(100213, flameScythe, specialCD[specialCounter], 100213)

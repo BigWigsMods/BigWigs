@@ -125,5 +125,6 @@ end
 
 function mod:FaceRageRemoved(player, spellId)
 	self:Message(100129, L["safe"]:format(player), "Positive", spellId)
+	self:PrimaryIcon(100129)
 end
 
