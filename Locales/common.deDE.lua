@@ -8,6 +8,7 @@ L.underyou = "%s unter DIR!"
 L.other = "%s: %s"
 L.say = "%s auf MIR!"
 L.cast = "<Wirkt %s>"
+L.soon = "%s soon!"
 
 L.phase = "Phase %d"
 L.normal = "Normaler Modus"

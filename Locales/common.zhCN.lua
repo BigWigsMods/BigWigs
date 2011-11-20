@@ -8,6 +8,7 @@ L.underyou = ">你<脚下：%s！"
 L.other = "%s：>%s<！"
 L.say = ">我< %s！"
 L.cast = "<正在施放 %s>"
+L.soon = "%s soon!"
 
 L.phase = "阶段%d"
 L.normal = "普通模式"

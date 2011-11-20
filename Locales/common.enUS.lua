@@ -6,6 +6,7 @@ L.underyou = "%s under YOU!"
 L.other = "%s: %s"
 L.say = "%s on ME!"
 L.cast = "<Casting %s>"
+L.soon = "%s soon!"
 
 L.phase = "Phase %d"
 L.normal = "Normal mode"
