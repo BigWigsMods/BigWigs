@@ -10,7 +10,7 @@ L = BigWigs:NewBossLocale("Occu'thar", "koKR")
 if not L then return end
 if L then
 	L.shadows_bar = "~암흑"
-	L.destruction_bar = "~폭발"
+	L.destruction_bar = "<폭발>"
 	L.eyes_bar = "~눈"
 
 	L.fire_message = "레이저, 퓨~ 퓨~"

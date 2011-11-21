@@ -4,7 +4,7 @@ if L then
 	L.flare = GetSpellInfo(100936)
 	L.flare_desc = "Show a timer bar for AoE flare."
 	L.devastate_message = "阴燃毁灭：>#%d<"
-	L.drone_bar = "<下一烬网工虫>"
+	L.drone_bar = "下一烬网工虫"
 	L.drone_message = "即将 烬网工虫！"
 	L.kiss_message = "寡妇蛛之吻！"
 end
@@ -36,7 +36,7 @@ if L then
 	L.encounter_restart = "蓄满力量"
 	L.no_stacks_message = "你沒有羽毛！"
 	L.moonkin_message = "去拿一些羽毛！"
-	L.molt_bar = "<下一羽蜕>"
+	L.molt_bar = "下一羽蜕"
 
 	L.meteor = "熔火流星"
 	L.meteor_desc = "当熔火流星被召唤时发出警报。"
@@ -81,7 +81,7 @@ if L then
 	L.torment = "焦点磨难堆叠"
 	L.torment_desc = "当焦点受到磨难堆叠时发出警报。"
 
-	L.blade_bar = "<毁灭之刃>"
+	L.blade_bar = "毁灭之刃"
 	L.shard_message = "磨难碎片：>%d<！"
 	L.focus_message = "焦点目标已有 >%d< 层磨难！"
 	L.link_message = "倒计时"
@@ -90,7 +90,7 @@ end
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "zhCN")
 if L then
 	L.seed_explosion = ">你< 即将灼热之种爆炸！"
-	L.seed_bar = "<你：灼热之种爆炸>"
+	L.seed_bar = "你：灼热之种爆炸"
 	L.adrenaline_message = "肾上腺素：>%d<层！"
 	L.leap_say = ">我< 烈焰镰刀！"
 end
@@ -102,7 +102,7 @@ if L then
 	L.intermission_end_trigger3 = "够了！我会亲自解决。"
 	L.phase4_trigger = "太早了……"
 	L.seed_explosion = "熔火之种爆炸！"
-	L.intermission_bar = "<中场>"
+	L.intermission_bar = "中场"
 	L.intermission_message = "中场！"
 	L.sons_left = ">%d< 烈焰之子剩餘！"
 	L.engulfing_close = "噬体烈焰：>近场<！"

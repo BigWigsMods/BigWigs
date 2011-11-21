@@ -5,14 +5,14 @@ if L then
 	L.orders = "形態轉換"
 	L.orders_desc = "當丘加利改變暗影/烈焰之令形態時發出警報。"
 
-	L.worship_cooldown = "<信奉>"
+	L.worship_cooldown = "信奉"
 
-	L.adherent_bar = "<腐化中的擁護者：#%d>"
+	L.adherent_bar = "腐化中的擁護者：#%d"
 	L.adherent_message = "即将 腐化中的擁護者：>%d<！"
-	L.ooze_bar = "<聚集古神之血：%d>"
+	L.ooze_bar = "聚集古神之血：%d"
 	L.ooze_message = "即將 聚集古神之血：>%d<！"
 
-	L.tentacles_bar = "<暗色觸鬚出現>"
+	L.tentacles_bar = "暗色觸鬚出現"
 	L.tentacles_message = "大量暗色觸鬚！"
 
 	L.sickness_message = ">你< 快要嘔吐了!"
@@ -34,7 +34,7 @@ if L then
 	L.phase_switch = "階段轉換"
 	L.phase_switch_desc = "當進入不同階段時發出警報。"
 
-	L.phase_bar = "<%s落地>"
+	L.phase_bar = "%s落地"
 	L.breath_message = "即將 深呼吸！"
 	L.dazzling_message = "即將！暮光之境！"
 
@@ -52,7 +52,7 @@ if L then
 	L.strikes_message = "致死打擊%2$dx：>%1$s<！"
 
 	L.breath_message = "即將 灼燒之息！"
-	L.breath_bar = "<灼燒之息>"
+	L.breath_bar = "灼燒之息"
 
 	L.engage_yell = "丘加利會砍下你們的頭!全部的人!"
 end

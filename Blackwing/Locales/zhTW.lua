@@ -18,7 +18,7 @@ L = BigWigs:NewBossLocale("Chimaeron", "zhTW")
 if L then
 	L.bileotron_engage = "「好膽」機器人開始活動，並且噴出一種惡臭的物質。"
 
-	L.next_system_failure = "<下一系統失效>"
+	L.next_system_failure = "下一系統失效"
 	L.break_message = "破壞%2$dx：>%1$s<！"
 
 	L.phase2_message = "即將 致命性階段！"
@@ -75,7 +75,7 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"
 	L.next_phase = "下一階段！"
-	L.green_phase_bar = "<綠色階段>"
+	L.green_phase_bar = "綠色階段"
 
 	L.red_phase_trigger = "混合攪拌，然後加熱..."
 	L.red_phase_emote_trigger = "紅色"
@@ -96,7 +96,7 @@ if L then
 	L.phase = "階段"
 	L.phase_desc = "當進入不同階段時發出警報。"
 
-	L.discharge_bar = "<閃電釋放 冷卻>"
+	L.discharge_bar = "閃電釋放 冷卻"
 
 	L.phase_two_trigger = "詛咒你們，凡人!如此冷酷地漠視他人的所有物必須受到嚴厲的懲罰!"
 
@@ -124,7 +124,7 @@ if L then
 	L.switch_desc = "當轉換時發出警報。"
 	L.switch_message = ">%s< %s！"
 
-	L.next_switch = "<下一轉換>"
+	L.next_switch = "下一轉換"
 
 	L.nef_next = "闇能灌注"
 

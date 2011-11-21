@@ -5,14 +5,14 @@ if L then
 	L.orders = "形态转换"
 	L.orders_desc = "当古加尔改变暗影/火焰援助令形态时发出警报。"
 
-	L.worship_cooldown = "<膜拜>"
+	L.worship_cooldown = "膜拜"
 
-	L.adherent_bar = "<腐蚀信徒：#%d>"
+	L.adherent_bar = "腐蚀信徒：#%d"
 	L.adherent_message = "即将 腐蚀信徒：>%d<！"
-	L.ooze_bar = "<古神血雨：%d>"
+	L.ooze_bar = "古神血雨：%d"
 	L.ooze_message = "即将 古神血雨：>%d<！"
 
-	L.tentacles_bar = "<黑暗的造物出现>"
+	L.tentacles_bar = "黑暗的造物出现"
 	L.tentacles_message = "大量黑暗的造物！"
 
 	L.sickness_message = ">你< 快要呕吐了!"
@@ -34,7 +34,7 @@ if L then
 	L.phase_switch = "阶段转换"
 	L.phase_switch_desc = "当进入不同阶段时发出警报。"
 
-	L.phase_bar = "<%s落地>"
+	L.phase_bar = "%s落地"
 	L.breath_message = "即将 深呼吸！"
 	L.dazzling_message = "即将 暮光领域！"
 
@@ -52,7 +52,7 @@ if L then
 	L.strikes_message = "致伤打击%2$dx：>%1$s<！"
 
 	L.breath_message = "即将 灼热气息！"
-	L.breath_bar = "<灼热气息>"
+	L.breath_bar = "灼热气息"
 
 	L.engage_yell = "古加尔想要你们全部的脑袋！"
 end

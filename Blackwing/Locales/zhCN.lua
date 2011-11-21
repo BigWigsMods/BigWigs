@@ -18,7 +18,7 @@ L = BigWigs:NewBossLocale("Chimaeron", "zhCN")
 if L then
 	L.bileotron_engage = "胆汁喷洒机"
 
-	L.next_system_failure = "<下一系统当机>"
+	L.next_system_failure = "下一系统当机"
 	L.break_message = "突破%2$dx：>%1$s<！"
 
 	L.phase2_message = "即将 至死方休阶段！"
@@ -75,7 +75,7 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段时发出警报。"
 	L.next_phase = "下一阶段！"
-	L.green_phase_bar = "<绿色阶段>"
+	L.green_phase_bar = "绿色阶段"
 
 	L.red_phase_trigger = "混合、搅拌、加热……"
 	L.red_phase_emote_trigger = "红瓶"
@@ -96,7 +96,7 @@ if L then
 	L.phase = "阶段"
 	L.phase_desc = "当进入不同阶段时发出警报。"
 
-	L.discharge_bar = "<闪电倾泻 冷却>"
+	L.discharge_bar = "闪电倾泻 冷却"
 
 	L.phase_two_trigger = "诅咒你们，凡人！你们丝毫不尊重他人财产的行为必须受到严厉处罚！"
 
@@ -124,7 +124,7 @@ if L then
 	L.switch_desc = "当转换时发出警报。"
 	L.switch_message = ">%s< %s！"
 
-	L.next_switch = "<下一转换>"
+	L.next_switch = "下一转换"
 
 	L.nef_next = "暗影灌注"
 

@@ -10,7 +10,7 @@ L = BigWigs:NewBossLocale("Occu'thar", "frFR")
 if not L then return end
 if L then
 	L.shadows_bar = "~Ombres incendiaires"
-	L.destruction_bar = "Explosion des yeux"
+	L.destruction_bar = "<Explosion des yeux>"
 	L.eyes_bar = "~Yeux"
 
 	L.fire_message = "Feu focalisé"

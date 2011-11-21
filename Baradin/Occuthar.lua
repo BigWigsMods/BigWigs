@@ -15,7 +15,7 @@ local fireCount = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.shadows_bar = "~Shadows"
-	L.destruction_bar = "Explosion!"
+	L.destruction_bar = "<Explosion>"
 	L.eyes_bar = "~Eyes"
 
 	L.fire_message = "Lazer, Pew Pew"
