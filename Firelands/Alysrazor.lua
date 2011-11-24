@@ -219,7 +219,7 @@ function mod:Firestorm(_, spellId, _, _, spellName)
 		self:Bar(100744, "~"..spellName, 82, spellId)
 	end
 	self:Bar(100744, CL["cast"]:format(spellName), 10, spellId)
-	self:Bar("meteor", "~"..L["meteor"], 20, 100761)
+	self:Bar("meteor", L["meteor"], meteorCount == 2 and 22 or 32, 100761)
 end
 
 function mod:Meteor(_, spellId)
@@ -275,7 +275,7 @@ do
 			self:Bar("initiate", L["initiate_both"], 13.5, 97062)
 			if self:Difficulty() > 2 then
 				meteorCount = 0
-				self:Bar("meteor", L["meteor"], 18, 100761)
+				self:Bar("meteor", L["meteor"], 19, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
 			else
