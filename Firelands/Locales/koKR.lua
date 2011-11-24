@@ -51,6 +51,12 @@ if L then
 
 	L.flight = "날개 지속"
 	L.flight_desc = "'화염의 날개'의 지속 타이머 바를 표시합니다. 특수 강조바와 카운트 기능을 이용한다면 더 효율적입니다."
+
+	L.initiate = "Initiate Spawn"
+	L.initiate_desc = "Show timer bars for initiate spawns."
+	L.initiate_both = "Both Initiates"
+	L.initiate_west = "West Initiate"
+	L.initiate_east = "East Initiate"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "koKR")

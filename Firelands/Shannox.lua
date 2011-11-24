@@ -113,18 +113,18 @@ function mod:WaryDog(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
 	end
 end
 
-function mod:HurlSpear(_, spellId, _, _, spellName)
-	self:Message(100002, spellName, "Attention", spellId, "Info")
-	self:Bar(100002, spellName, 41, spellId)
+function mod:HurlSpear(_, _, _, _, spellName)
+	self:Message(100002, spellName, "Attention", 100002, "Info")
+	self:Bar(100002, spellName, 41, 100002)
 end
 
-function mod:FaceRage(player, spellId, _, _, spellName)
-	self:TargetMessage(100129, spellName, player, "Important", spellId, "Alert")
+function mod:FaceRage(player, _, _, _, spellName)
+	self:TargetMessage(100129, spellName, player, "Important", 100129, "Alert")
 	self:PrimaryIcon(100129, player)
 end
 
-function mod:FaceRageRemoved(player, spellId)
-	self:Message(100129, L["safe"]:format(player), "Positive", spellId)
+function mod:FaceRageRemoved(player)
+	self:Message(100129, L["safe"]:format(player), "Positive", 100129)
 	self:PrimaryIcon(100129)
 end
 

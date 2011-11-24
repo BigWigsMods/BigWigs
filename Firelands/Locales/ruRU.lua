@@ -51,6 +51,12 @@ if L then
 
 	L.flight = "Помощник летчика"
 	L.flight_desc = "Отсчитывать время действия бафа 'Огненные крылья'. Советую использовать вместе с функцией 'Супер увеличение'."
+
+	L.initiate = "Initiate Spawn"
+	L.initiate_desc = "Show timer bars for initiate spawns."
+	L.initiate_both = "Both Initiates"
+	L.initiate_west = "West Initiate"
+	L.initiate_east = "East Initiate"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "ruRU")

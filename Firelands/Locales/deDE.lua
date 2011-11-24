@@ -54,7 +54,6 @@ if L then
 
 	L.initiate = "Erscheinen der Initianden"
 	L.initiate_desc = "Zeigt Timerleisten für das Auftauchen der Initianden an."
-	L.initiate_name = "Kralleninitiand"
 	L.initiate_both = "Beide Initianden"
 	L.initiate_west = "Westlicher Initiand"
 	L.initiate_east = "Östlicher Initiand"

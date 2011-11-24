@@ -54,7 +54,6 @@ if L then
 
 	L.initiate = "Iniciado aparece"
 	L.initiate_desc = "Muestra contadores para reaparición de iniciados."
-	L.initiate_name = "Blazing Talon Initiate"
 	L.initiate_both = "Ambos iniciados"
 	L.initiate_west = "Iniciado al Oeste"
 	L.initiate_east = "Iniciado al Este"

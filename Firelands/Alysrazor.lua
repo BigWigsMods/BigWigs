@@ -44,10 +44,12 @@ if L then
 	L.initiate = "Initiate Spawn"
 	L.initiate_desc = "Show timer bars for initiate spawns."
 	L.initiate_icon = 97062
-	L.initiate_name = "Blazing Talon Initiate"
 	L.initiate_both = "Both Initiates"
 	L.initiate_west = "West Initiate"
 	L.initiate_east = "East Initiate"
+
+	L.eggs, L.eggs_desc = EJ_GetSectionInfo(2836)
+	L.eggs_icon = "inv_trinket_firelands_02"
 end
 L = mod:GetLocale()
 
@@ -57,7 +59,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		99362, 100723, 97128, 99464, "flight", "initiate",
+		99362, 100723, 97128, 99464, "flight", "initiate", "eggs",
 		99816,
 		99432,
 		99844, 99925,
@@ -98,6 +100,7 @@ function mod:OnBossEnable()
 	-- Heroic only
 	self:Log("SPELL_CAST_START", "Meteor", 100761, 102111)
 	self:Log("SPELL_CAST_START", "Firestorm", 100744)
+	self:Log("SPELL_AURA_REMOVED", "FirestormOver", 100744)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "Initiates")
@@ -114,11 +117,13 @@ function mod:OnEngage(diff)
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 95, 100744)
 		self:Bar("meteor", "~"..L["meteor"], 30, 100761)
+		self:Bar("eggs", "~"..GetSpellInfo(58542), 42, "inv_trinket_firelands_02")
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
 		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, L["molt_bar"], 12.5, 99464)
+		--self:Bar("eggs", "~"..GetSpellInfo(58542), 42, "inv_trinket_firelands_02")
 	end
 	self:Bar("initiate", L["initiate_both"], 27, 97062)
 end
@@ -153,8 +158,9 @@ end
 
 do
 	local initiateLocation = {L["initiate_both"], L["initiate_east"], L["initiate_west"], L["initiate_east"], L["initiate_west"]}
+	local initiate = EJ_GetSectionInfo(2834)
 	function mod:Initiates(_, _, unit)
-		if unit == L["initiate_name"] then
+		if unit == initiate then
 			initiateCount = initiateCount + 1
 			if initiateCount > 5 then return end
 			self:Bar("initiate", initiateLocation[initiateCount], initiateTimes[initiateCount], 97062) --Night Elf head
@@ -214,12 +220,16 @@ end
 function mod:Firestorm(_, spellId, _, _, spellName)
 	self:FlashShake(100744)
 	self:Message(100744, spellName, "Urgent", spellId, "Alert")
+	self:Bar(100744, CL["cast"]:format(spellName), 10, spellId)
+end
+
+function mod:FirestormOver(_, spellId, _, _, spellName)
 	-- Only show a bar for next if we have seen less than 3 meteors
 	if meteorCount < 3 then
-		self:Bar(100744, "~"..spellName, 82, spellId)
+		self:Bar(100744, "~"..spellName, 72, spellId)
 	end
-	self:Bar(100744, CL["cast"]:format(spellName), 10, spellId)
-	self:Bar("meteor", L["meteor"], meteorCount == 2 and 22 or 32, 100761)
+	self:Bar("meteor", L["meteor"], meteorCount == 2 and 11.5 or 21.5, 100761)
+	self:Bar("eggs", "~"..GetSpellInfo(58542), 22.5, "inv_trinket_firelands_02")
 end
 
 function mod:Meteor(_, spellId)
@@ -278,10 +288,12 @@ do
 				self:Bar("meteor", L["meteor"], 19, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
+				self:Bar("eggs", "~"..GetSpellInfo(58542), 30, "inv_trinket_firelands_02")
 			else
 				self:Bar(99816, L["stage_message"]:format(2), 165, 99816)
 				moltCount = 1
 				self:Bar(99464, L["molt_bar"], 55, 99464)
+				--self:Bar("eggs", "~"..GetSpellInfo(58542), 22.5, "inv_trinket_firelands_02")
 			end
 		end
 	end

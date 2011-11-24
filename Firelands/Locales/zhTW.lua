@@ -54,7 +54,6 @@ if L then
 
 	L.initiate = "熾炎猛禽學徒出現"
 	L.initiate_desc = "熾炎猛禽學徒計時條。"
-	L.initiate_name = "熾炎猛禽學徒"
 	L.initiate_both = "熾炎猛禽學徒：>雙向<！"
 	L.initiate_west = "熾炎猛禽學徒：>西<！"
 	L.initiate_east = "熾炎猛禽學徒：>東<！"

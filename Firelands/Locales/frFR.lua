@@ -55,7 +55,6 @@ if L then
 
 	L.initiate = "Apparitions des initiés"
 	L.initiate_desc = "Affiche des barres de délai concernant les apparitions des initiés."
-	L.initiate_name = "Initié de la Serre flamboyante"
 	L.initiate_both = "Les deux initiés"
 	L.initiate_west = "Initié de l'ouest"
 	L.initiate_east = "Initié de l'est"
