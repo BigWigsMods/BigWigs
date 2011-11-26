@@ -62,12 +62,12 @@ end
 L = BigWigs:NewBossLocale("Shannox", "esES")
 if L then
 	L.safe = "%s a salvo"
-	L.wary_dog = "%s is Wary!"
+	L.wary_dog = "¡%s es cauteloso!"
 	L.crystal_trap = "Prisión de cristal"
 
 	L.traps_header = "Trampas"
 	L.immolation = "Trampa de inmolación en Perro"
-	L.immolation_desc = "Alerta cuando Rostrofuria o Desmembrador pasen por una trampa de inmolación."
+	L.immolation_desc = "Alerta cuando Rostrofuria o Desmembrador pisen una trampa de inmolación, ganando el bufo 'Cautela'."
 	L.immolationyou = "Trampa de inmolación debajo de TI"
 	L.immolationyou_desc = "Alerta cuando una trampa de inmolación aparezca debajo de ti."
 	L.immolationyou_message = "Trampa de inmolación"
@@ -88,7 +88,7 @@ end
 
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "esES")
 if L then
-	L.seed_explosion = "¡Semilla explota pronto!"
+	L.seed_explosion = "¡Explotarás pronto!"
 	L.seed_bar = "¡Explotas!"
 	L.adrenaline_message = "¡Adrenalina x%d!"
 	L.leap_say = "¡Salto en MI!"
@@ -99,7 +99,7 @@ if L then
 	L.intermission_end_trigger1 = "Sulfuras será vuestro fin."
 	L.intermission_end_trigger2 = "¡De rodillas, mortales! Esto termina ahora."
 	L.intermission_end_trigger3 = "¡Basta! Yo terminaré esto."
-	--L.phase4_trigger = "Too soon..."
+	L.phase4_trigger = "¡Pronto!... Habéis venido demasiado pronto..." --verificar
 	L.seed_explosion = "¡Explosión de semillas!"
 	L.intermission_bar = "¡Intermisión!"
 	L.intermission_message = "Intermisión... ¿Tienes galletas?"
