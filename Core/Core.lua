@@ -476,7 +476,13 @@ do
 		elseif LOCALE ~= "enUS" and BB and module.displayName and BB[module.displayName] then
 			module.displayName = BB[module.displayName]
 		end
-		enablezones[module.zoneId] = true
+		if not enablezones[module.zoneId] then
+			enablezones[module.zoneId] = true
+			-- We fire zoneChanged() as a backup for LoD users. In rare cases,
+			-- ZONE_CHANGED_NEW_AREA fires before the first module can add its Id into the table,
+			-- resulting in a failed check to enable UPDATE_MOUSEOVER_UNIT, etc.
+			zoneChanged()
+		end
 
 		module.SetupOptions = function(self)
 			if self.GetOptions then
