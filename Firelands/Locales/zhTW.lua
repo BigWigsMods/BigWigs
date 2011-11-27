@@ -7,6 +7,7 @@ if L then
 	L.drone_bar = "下一燼網雄蛛"
 	L.drone_message = "即將 燼網雄蛛！"
 	L.kiss_message = "寡婦之吻！"
+	L.spinner_warn = "Spinners #%d"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "zhTW")

@@ -23,10 +23,17 @@ if L then
 	L.flare_desc = "Show a timer bar for AoE flare."
 	L.flare_icon = 100936
 
+	L.drone, L.drone_desc = EJ_GetSectionInfo(2773)
+	L.drone_icon = "INV_Misc_Head_Nerubian_01"
+
+	L.spinner, L.spinner_desc = EJ_GetSectionInfo(2770)
+	L.spinner_icon = "spell_fire_moltenblood"
+
 	L.devastate_message = "Devastate #%d"
 	L.drone_bar = "Drone"
 	L.drone_message = "Drone incoming!"
 	L.kiss_message = "Kiss"
+	L.spinner_warn = "Spinners #%d"
 end
 L = mod:GetLocale()
 
@@ -36,7 +43,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{99052, "FLASHSHAKE"}, "ej:2773",
+		{99052, "FLASHSHAKE"}, "drone", "spinner",
 		99506, 99497, "flare",
 		{99559, "FLASHSHAKE", "WHISPER"}, {99990, "FLASHSHAKE", "SAY"},
 		"bosskill"
@@ -64,12 +71,11 @@ function mod:OnBossEnable()
 end
 
 do
-	local droneIcon = "INV_Misc_Head_Nerubian_01"
 	local scheduled = nil
 
 	local function droneWarning()
-		mod:Message("ej:2773", L["drone_message"], "Attention", droneIcon, "Info")
-		mod:Bar("ej:2773", L["drone_bar"], 60, droneIcon)
+		mod:Message("drone", L["drone_message"], "Attention", L["drone_icon"], "Info")
+		mod:Bar("drone", L["drone_bar"], 60, L["drone_icon"])
 		scheduled = mod:ScheduleTimer(droneWarning, 60)
 	end
 
@@ -77,9 +83,15 @@ do
 		devastateCount = 1
 		lastBroodlingTarget = ""
 		local devastate = L["devastate_message"]:format(1)
-		self:Message(99052, CL["custom_start_s"]:format(self.displayName, devastate, 80), "Positive")
+		self:Message(99052, CL["custom_start_s"]:format(self.displayName, devastate, 80), "Positive", "inv_misc_monsterspidercarapace_01")
 		self:Bar(99052, devastate, 80, 99052)
-		self:Bar("ej:2773", L["drone_bar"], 45, droneIcon)
+		self:Bar("drone", L["drone_bar"], 45, L["drone_icon"])
+		self:Bar("spinner", L["spinner_warn"]:format(1), 12, L["spinner_icon"])
+		self:Bar("spinner", L["spinner_warn"]:format(2), 24, L["spinner_icon"])
+		self:Bar("spinner", L["spinner_warn"]:format(3), 35, L["spinner_icon"])
+		self:DelayedMessage("spinner", 12, L["spinner_warn"]:format(1), "Positive", L["spinner_icon"])
+		self:DelayedMessage("spinner", 24, L["spinner_warn"]:format(2), "Positive", L["spinner_icon"])
+		self:DelayedMessage("spinner", 35, L["spinner_warn"]:format(3), "Positive", L["spinner_icon"])
 		self:CancelTimer(scheduled, true)
 		scheduled = self:ScheduleTimer(droneWarning, 45)
 	end
@@ -144,6 +156,12 @@ function mod:Devastate(_, spellId)
 	-- Might need to use the bosses power bar or something to adjust this
 	if devastateCount > 3 then return end
 	self:Bar(99052, L["devastate_message"]:format(devastateCount), 90, spellId)
+	self:Bar("spinner", L["spinner_warn"]:format(1), 20, L["spinner_icon"])
+	self:Bar("spinner", L["spinner_warn"]:format(2), 29, L["spinner_icon"])
+	self:Bar("spinner", L["spinner_warn"]:format(3), 40, L["spinner_icon"])
+	self:DelayedMessage("spinner", 20, L["spinner_warn"]:format(1), "Positive", L["spinner_icon"])
+	self:DelayedMessage("spinner", 29, L["spinner_warn"]:format(2), "Positive", L["spinner_icon"])
+	self:DelayedMessage("spinner", 40, L["spinner_warn"]:format(3), "Positive", L["spinner_icon"])
 end
 
 function mod:Flare(_, spellId, _, _, spellName)
