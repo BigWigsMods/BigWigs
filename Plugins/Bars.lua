@@ -1236,7 +1236,7 @@ local function startCustomBar(bar, nick, localOnly)
 		end
 		plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 	else
-		messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly }
+		messages[id] = { L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly, nil, nil, "Interface\\Icons\\INV_Misc_PocketWatch_01" }
 		timers[id] = plugin:ScheduleTimer(sendCustomMessage, seconds, id)
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 	end

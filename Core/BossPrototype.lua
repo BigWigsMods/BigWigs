@@ -322,6 +322,7 @@ end
 -------------------------------------------------------------------------------
 -- Boss module APIs for messages, bars, icons, etc.
 --
+
 local silencedOptions = {}
 do
 	local bwOptionSilencer = CreateFrame("Frame")
@@ -379,6 +380,17 @@ do
 	end
 end
 
+local icons = setmetatable({}, {__index =
+	function(self, key)
+		if not key then return end
+		local value = nil
+		if type(key) == "number" then value = select(3, GetSpellInfo(key))
+		else value = "Interface\\Icons\\" .. key end
+		self[key] = value
+		return value
+	end
+})
+
 -- XXX the monitor should probably also get a button to turn off the proximity bitflag
 -- XXX for the given key.
 function boss:OpenProximity(range, key)
@@ -392,13 +404,13 @@ end
 
 function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
 	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icon)
+	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icons[icon])
 end
 
 -- Outputs a local message only, no raid warning.
 function boss:LocalMessage(key, text, color, icon, sound)
 	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon)
+	self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
 end
 
 do
@@ -434,16 +446,16 @@ do
 			local list = table.concat(player, ", ")
 			if not (list):find(UnitName("player")) then sound = nil end
 			local text = fmt(L["other"], spellName, list)
-			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icon)
+			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icons[icon])
 			wipe(player)
 		else
 			if UnitIsUnit(player, "player") then
 				if ... then
 					local text = fmt(spellName, coloredNames[player], ...)
-					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
 					self:SendMessage("BigWigs_Message", self, key, text, nil, nil, nil, true)
 				else
-					self:SendMessage("BigWigs_Message", self, key, fmt(L["you"], spellName), "Personal", true, sound, nil, icon)
+					self:SendMessage("BigWigs_Message", self, key, fmt(L["you"], spellName), "Personal", true, sound, nil, icons[icon])
 					self:SendMessage("BigWigs_Message", self, key, fmt(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
@@ -455,7 +467,7 @@ do
 				else
 					text = fmt(L["other"], spellName, coloredNames[player])
 				end
-				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icon)
+				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icons[icon])
 			end
 		end
 	end
@@ -476,22 +488,10 @@ function boss:PlaySound(key, sound)
 	self:SendMessage("BigWigs_Sound", sound)
 end
 
-do
-	local icons = setmetatable({}, {__index =
-		function(self, key)
-			if not key then return end
-			local value = nil
-			if type(key) == "number" then value = select(3, GetSpellInfo(key))
-			else value = "Interface\\Icons\\" .. key end
-			self[key] = value
-			return value
-		end
-	})
 
-	function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
-		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, text, length, icons[icon], ...)
-		end
+function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
+	if checkFlag(self, key, C.BAR) then
+		self:SendMessage("BigWigs_StartBar", self, key, text, length, icons[icon], ...)
 	end
 end
 

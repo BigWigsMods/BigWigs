@@ -492,12 +492,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		end
 	end
 
-	if icon and db.useicons then
-		local _, _, gsiIcon = GetSpellInfo(icon)
-		icon = gsiIcon or icon
-	else
-		icon = nil
-	end
+	if not db.useicons then icon = nil end
 
 	if seModule and module and key and seModule:IsSuperEmphasized(module, key) then
 		if seModule.db.profile.upper then
