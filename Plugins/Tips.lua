@@ -484,7 +484,7 @@ do
 	function plugin:ShowTip(tipString)
 		local player, class, text, footerInput = strsplit("#", tipString, 4)
 		if not player or not text then return end
-		local c = RAID_CLASS_COLORS[class] or DEVELOPER_COLOR
+		local c = (CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class]) or RAID_CLASS_COLORS[class] or DEVELOPER_COLOR
 		local header = headerFormat:format(string.format("%02x%02x%02x", c.r * 255, c.g * 255, c.b * 255), player)
 		local footer = nil
 		if tonumber(footerInput) then

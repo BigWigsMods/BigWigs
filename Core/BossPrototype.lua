@@ -415,7 +415,7 @@ end
 
 do
 	local hexColors = {}
-	for k, v in pairs(RAID_CLASS_COLORS) do
+	for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
 		hexColors[k] = "|cff" .. fmt("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 	end
 	local coloredNames = setmetatable({}, {__index =
