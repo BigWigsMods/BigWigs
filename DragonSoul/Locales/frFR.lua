@@ -16,7 +16,7 @@ if L then
 	L.bounce = "Rebond de la boule de Vide"
 	L.bounce_desc = "Compteur des rebonds de la boule de Vide."
 
-	L.darkness = "Tentacle disco party!"
+	L.darkness = "La boum des tentacules !"
 	L.darkness_desc = "Cette phase commence quand la boule de Vide touche le boss."
 end
 
@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "frFR")
 if L then
-	L.engage_trigger = "I sense a great disturbance in the balance approaching. The chaos of it burns my mind"
+	L.engage_trigger = "Je sens un grand trouble dans l'équilibre qui s'approche. Un chaos tel qu'il me brûle l'esprit !"
 
 	L.warmup = "Échauffement"
 	L.warmup_desc = "Délai indiquant le temps restant avant le début de la rencontre."
