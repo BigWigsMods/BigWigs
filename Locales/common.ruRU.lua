@@ -17,7 +17,7 @@ L.hard = "Сложный режим"
 L.general = "Общие способности" -- General settings, i.e. things that apply to both normal and hard mode.
 
 L.custom_start = "%s вступает в бой - %s через %d минут"
-L.custom_start_s = "%s engaged - %s in %ds"
+L.custom_start_s = "%s вступает в бой - %s через %d секунд"
 L.custom_end = "%s goes %s!"--need check
 L.custom_min = "%s через %d минут"
 L.custom_sec = "%s через %d секунд!"
