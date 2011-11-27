@@ -72,7 +72,6 @@ end
 
 do
 	local scheduled = nil
-
 	local function droneWarning()
 		mod:Message("drone", L["drone_message"], "Attention", L["drone_icon"], "Info")
 		mod:Bar("drone", L["drone_bar"], 60, L["drone_icon"])
@@ -136,6 +135,7 @@ end
 
 function mod:Kiss(player, spellId, _, _, spellName)
 	self:TargetMessage(99506, L["kiss_message"], player, "Urgent", spellId)
+	self:Bar(99506, L["kiss_message"], 31.5, spellId)
 	-- We play the sound manually because TargetMessage strips it unless the target is the player
 	self:PlaySound(99506, "Info")
 end

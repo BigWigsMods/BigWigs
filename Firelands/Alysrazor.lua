@@ -113,17 +113,19 @@ function mod:OnEngage(diff)
 	wipe(initiateTimes)
 	if diff > 2 then
 		initiateTimes = {22, 63, 21, 21, 40}
-		self:Message(99816, L["engage_message"]:format(4), "Attention", 55709) --fire hawk icon
+		self:Message(99816, L["engage_message"]:format(4), "Attention", "inv_misc_pheonixpet_01")
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
 		self:Bar(100744, firestorm, 95, 100744)
 		self:Bar("meteor", "~"..L["meteor"], 30, 100761)
-		self:Bar("eggs", "~"..GetSpellInfo(58542), 42, "inv_trinket_firelands_02")
+		self:Bar("eggs", "~"..GetSpellInfo(58542), 42, L["eggs_icon"])
+		self:DelayedMessage("eggs", 41.5, GetSpellInfo(58542), "Positive", L["eggs_icon"])
 	else
 		initiateTimes = {31, 31, 21, 21, 21}
-		self:Message(99816, L["engage_message"]:format(3), "Attention", 55709) --fire hawk icon
+		self:Message(99816, L["engage_message"]:format(3), "Attention", "inv_misc_pheonixpet_01")
 		self:Bar(99816, L["stage_message"]:format(2), 188.5, 99816)
 		self:Bar(99464, L["molt_bar"], 12.5, 99464)
-		--self:Bar("eggs", "~"..GetSpellInfo(58542), 42, "inv_trinket_firelands_02")
+		--self:Bar("eggs", "~"..GetSpellInfo(58542), 42, L["eggs_icon"])
+		--self:DelayedMessage("eggs", 41.5, GetSpellInfo(58542), "Positive", L["eggs_icon"])
 	end
 	self:Bar("initiate", L["initiate_both"], 27, 97062)
 end
@@ -229,7 +231,8 @@ function mod:FirestormOver(_, spellId, _, _, spellName)
 		self:Bar(100744, "~"..spellName, 72, spellId)
 	end
 	self:Bar("meteor", L["meteor"], meteorCount == 2 and 11.5 or 21.5, 100761)
-	self:Bar("eggs", "~"..GetSpellInfo(58542), 22.5, "inv_trinket_firelands_02")
+	self:Bar("eggs", "~"..GetSpellInfo(58542), 22.5, L["eggs_icon"])
+	self:DelayedMessage("eggs", 22, GetSpellInfo(58542), "Positive", L["eggs_icon"])
 end
 
 function mod:Meteor(_, spellId)
@@ -288,12 +291,14 @@ do
 				self:Bar("meteor", L["meteor"], 19, 100761)
 				self:Bar(100744, firestorm, 72, 100744)
 				self:Bar(99816, L["stage_message"]:format(2), 225, 99816) -- Just adding 60s like OnEngage
-				self:Bar("eggs", "~"..GetSpellInfo(58542), 30, "inv_trinket_firelands_02")
+				self:Bar("eggs", "~"..GetSpellInfo(58542), 30, L["eggs_icon"])
+				self:DelayedMessage("eggs", 29.5, GetSpellInfo(58542), "Positive", L["eggs_icon"])
 			else
 				self:Bar(99816, L["stage_message"]:format(2), 165, 99816)
 				moltCount = 1
 				self:Bar(99464, L["molt_bar"], 55, 99464)
-				--self:Bar("eggs", "~"..GetSpellInfo(58542), 22.5, "inv_trinket_firelands_02")
+				--self:Bar("eggs", "~"..GetSpellInfo(58542), 22.5, L["eggs_icon"])
+				--self:DelayedMessage("eggs", 22, GetSpellInfo(58542), "Positive", L["eggs_icon"])
 			end
 		end
 	end
