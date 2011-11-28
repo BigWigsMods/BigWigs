@@ -34,7 +34,7 @@ if L then
 	L.red = "紅"
 
 	L.blobs = "血珠"
-	L.blobs_bar = "下一血珠。"
+	L.blobs_bar = "下一血珠"
 	L.blobs_desc = "當血珠向首領移動時發出警報。"
 end
 
@@ -53,7 +53,7 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhTW")
 if L then
-	L.harpooning = "魚叉"
+	L.harpooning = "魚叉獵槍"
 
 	L.rush = "刃突"
 

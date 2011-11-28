@@ -5,16 +5,16 @@
 ## Title-deDE: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-esES: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-frFR: Big Wigs [|cffeda55fL'Âme des dragons|r]
-## Title-zhCN: Big Wigs [|cffeda55fDragon Soul|r]
-## Title-zhTW: Big Wigs [|cffeda55fDragon Soul|r]
+## Title-zhCN: Big Wigs [|cffeda55f巨龙之魂|r]
+## Title-zhTW: Big Wigs [|cffeda55f巨龍之魂|r]
 ## Title-koKR: Big Wigs [|cffeda55fDragon Soul|r]
 ## Notes: Big Wigs Modules for Dragon Soul
 ## Notes-ruRU: Big Wigs Modules for Dragon Soul
 ## Notes-deDE: Big Wigs Modules for Dragon Soul
 ## Notes-esES: Big Wigs Modules for Dragon Soul
 ## Notes-frFR: Modules Big Wigs concernant l'Âme des dragons.
-## Notes-zhCN: Big Wigs Modules for Dragon Soul
-## Notes-zhTW: Big Wigs Modules for Dragon Soul
+## Notes-zhCN: Big Wigs 巨龙之魂模块
+## Notes-zhTW: Big Wigs 巨龍之魂模組
 ## Notes-koKR: Big Wigs Modules for Dragon Soul
 
 ## LoadOnDemand: 1

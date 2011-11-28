@@ -1,13 +1,12 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "zhCN")
 if not L then return end
 if L then
-	L.flare = GetSpellInfo(100936)
-	L.flare_desc = "Show a timer bar for AoE flare."
-	L.devastate_message = "阴燃毁灭：>#%d<"
+	L.flare_desc = "当余烬之火范围伤害时显示计时条。"
+	L.devastate_message = "阴燃毁灭：>#%d<！"
 	L.drone_bar = "下一烬网工虫"
 	L.drone_message = "即将 烬网工虫！"
 	L.kiss_message = "寡妇蛛之吻！"
-	L.spinner_warn = "Spinners #%d"
+	L.spinner_warn = "烬网织网蛛：>#%d<！"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "zhCN")
