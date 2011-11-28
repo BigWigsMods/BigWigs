@@ -18,5 +18,6 @@
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
 
+libs.xml
 modules.xml
 
