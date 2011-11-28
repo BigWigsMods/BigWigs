@@ -193,23 +193,22 @@ do
 			"boss1", "boss2", "boss3", "boss4",
 			"target", "targettarget",
 			"focus", "focustarget",
-			"mouseover", "mouseovertarget",
-			"party1target", "party2target", "party3target", "party4target"
+			"party1target", "party2target", "party3target", "party4target",
+			"mouseover", "mouseovertarget"
 		}
 		for i = 1, 25 do t[#t+1] = fmt("raid%dtarget", i) end
 	end
 	local function findTargetByGUID(id)
-		local idType = type(id)
 		if not t then buildTable() end
 		for i, unit in next, t do
-			if UnitExists(unit) and not UnitIsPlayer(unit) then
-				local unitId = UnitGUID(unit)
-				if idType == "number" then unitId = tonumber(unitId:sub(7, 10), 16) end
-				if unitId == id then return unit end
+			local guid = UnitGUID(unit)
+			if guid and not UnitIsPlayer(unit) then
+				if type(id) == "number" then guid = tonumber(guid:sub(7, 10), 16) end
+				if guid == id then return unit end
 			end
 		end
 	end
-	function boss:GetUnitIdByGUID(mob) return findTargetByGUID(mob) end
+	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
 	local function scan(self)
 		for mobId, entry in pairs(core:GetEnableMobs()) do
