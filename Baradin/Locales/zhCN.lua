@@ -17,3 +17,8 @@ if L then
 	L.fire_bar = "下一集火"
 end
 
+L = BigWigs:NewBossLocale("Alizabal", "zhCN")
+if L then
+	L.first_ability = "Skewer or Hate"
+end
+

@@ -17,3 +17,8 @@ if L then
 	L.fire_bar = "~Feu focalisé"
 end
 
+L = BigWigs:NewBossLocale("Alizabal", "frFR")
+if L then
+	L.first_ability = "Skewer or Hate"
+end
+

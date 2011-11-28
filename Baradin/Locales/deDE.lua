@@ -17,3 +17,8 @@ if L then
 	L.fire_bar = "~Laserz"
 end
 
+L = BigWigs:NewBossLocale("Alizabal", "deDE")
+if L then
+	L.first_ability = "Skewer or Hate"
+end
+
