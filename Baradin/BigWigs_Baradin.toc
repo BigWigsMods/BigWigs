@@ -1,4 +1,4 @@
-## Interface: 40200
+## Interface: 40300
 
 ## Title: Big Wigs [|cffeda55fBaradin Hold|r]
 ## Title-ruRU: Big Wigs [|cffeda55fКрепость Барадин|r]
