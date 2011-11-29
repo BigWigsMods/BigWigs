@@ -1,9 +1,8 @@
-if tonumber((select(4, GetBuildInfo()))) < 40300 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Hagara the Stormbinder", 824, 317)
+local mod = BigWigs:NewBoss("Hagara the Stormbinder", 824, 317)
 if not mod then return end
 mod:RegisterEnableMob(55689)
 
@@ -11,8 +10,8 @@ mod:RegisterEnableMob(55689)
 -- Locales
 --
 
-local waterShield = (GetSpellInfo(105409))
 local iceLanceTargets, blocks = mod:NewTargetList(), mod:NewTargetList()
+local nextPhase, nextPhaseIcon
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -20,7 +19,13 @@ local iceLanceTargets, blocks = mod:NewTargetList(), mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.lightning_or_frost = "Lightning or Frost"
+	L.ice_next = "Ice phase"
+	L.lightning_next = "Lightning phase"
 
+	L.nextphase = "Next Phase"
+	L.nextphase_desc = "Warnings for next phase"
+	L.nextphase_icon = 2139 -- random icon (counterspell)
 end
 L = mod:GetLocale()
 
@@ -30,10 +35,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{105316, "PROXIMITY"}, 105409, 104448,
-		"bosskill",
+		104448, 109553, 105316,
+		109561,
+		108934, "nextphase", "proximity", "berserk", "bosskill",
 	}, {
-		[105316] = "general",
+		[104448] = L["ice_next"],
+		[109561] = L["lightning_next"],
+		[108934] = "general",
 	}
 end
 
@@ -41,7 +49,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IceTombStart", 104448)
 	self:Log("SPELL_AURA_APPLIED", "IceTombApplied", 104451)
 	self:Log("SPELL_AURA_APPLIED", "IceLanceApplied", 105285)
-	self:Log("SPELL_AURA_REMOVED", "IceLanceRemowed", 105285)
+	self:Log("SPELL_AURA_REMOVED", "IceLanceRemoved", 105285)
+	self:Log("SPELL_AURA_APPLIED", "Feedback", 108934)
+	self:Log("SPELL_CAST_START", "FrozenTempest", 109553, 109554, 105256, 109552)
+	self:Log("SPELL_CAST_START", "WaterShield", 109561, 109562, 105409, 109560)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -49,12 +60,36 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(105409, waterShield, 82, 105409)
+	self:Berserk(480) -- 10 man heroic confirmed
+	-- need to find a way to determine which one is at first after engage
+	-- apart from looking at her weapon enchants
+	if diff > 2 then
+		self:Bar("nextphase", L["lightning_or_frost"], 32, 2139)
+	else
+		self:Bar("nextphase", L["lightning_or_frost"], 82, 2139)
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:WaterShield(_, spellId, _, _, spellName)
+	self:Message(109561, spellName, "Attention", spellId)
+	nextPhase = L["ice_next"]
+	nextPhaseIcon = 105409
+end
+
+function mod:FrozenTempest(_, spellId, _, _, spellName)
+	self:Message(109553, spellName, "Attention", spellId)
+	nextPhase = L["lightning_next"]
+	nextPhaseIcon = 109561
+end
+
+function mod:Feedback(_, spellId, _, _, spellName)
+	self:Message(108934, spellName, "Attention", spellId)
+	self:Bar("nextphase", nextPhase, 63, nextPhaseIcon)
+end
 
 function mod:IceTombStart(_, spellId, _, _, spellName)
 	self:Message(104448, spellName, "Attention", spellId)
@@ -85,7 +120,7 @@ do
 	function mod:IceLanceApplied(player, _, _, _, spellName)
 		iceLanceTargets[#iceLanceTargets + 1] = player
 		if UnitIsUnit(player, "player") then
-			self:OpenProximity(105316, 3)
+			self:OpenProximity(3)
 		end
 		if not scheduled then
 			scheduled = true
@@ -94,9 +129,9 @@ do
 	end
 end
 
-function mod:IceLanceRemowed(player)
+function mod:IceLanceRemoved(player)
 	if UnitIsUnit(player, "player") then
-		self:CloseProximity(105316)
+		self:CloseProximity()
 	end
 end
 

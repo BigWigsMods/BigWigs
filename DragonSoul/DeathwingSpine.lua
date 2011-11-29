@@ -1,4 +1,3 @@
-if tonumber((select(4, GetBuildInfo()))) < 40300 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -51,12 +50,12 @@ function mod:OnBossEnable()
 	self:Emote("AboutToRoll", L["left_start"], L["right_start"])
 	self:Emote("Rolls", L["left"], L["right"])
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AbsorbedBlood", 105248)
-	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457, 109458)
-	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458)
+	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457, 109458, 109459, 105490)
+	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 53879) -- this is most likely not how you win
+	--self:Death("Win", 53879) -- this is most likely not how you win
 end
 
 function mod:OnEngage(diff)
@@ -74,11 +73,17 @@ local function graspCheck()
 	end
 end
 
-function mod:AboutToRoll()
-	self:Bar("roll", L["roll"], 5, L["roll_icon"])
-	self:Message("roll", L["roll_soon"], "Positive", roll_icon, "Long")
-	self:FlashShake("roll")
-	graspCheck()
+do
+	local function disallowGraspCheck()
+		allowGraspCheck = false
+	end
+	function mod:AboutToRoll()
+		self:Bar("roll", L["roll"], 5, L["roll_icon"])
+		self:Message("roll", L["roll_soon"], "Positive", roll_icon, "Long")
+		self:FlashShake("roll")
+		self:ScheduleTimer(disallowGraspCheck, 6)
+		graspCheck()
+	end
 end
 
 
@@ -99,7 +104,7 @@ function mod:FieryGripCast(_, spellId, _, _, spellName)
 end
 
 function mod:Nuclear(_, spellId, _, _, spellName)
-	self:Message(105845, spellName, player, "Important", spellId, "Long")
+	self:Message(105845, spellName, "Important", spellId, "Long")
 	self:FlashShake(105845)
 end
 

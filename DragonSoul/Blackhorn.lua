@@ -1,11 +1,10 @@
-if tonumber((select(4, GetBuildInfo()))) < 40300 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Warmaster Blackhorn", 824, 332)
+local mod, CL = BigWigs:NewBoss("Warmaster Blackhorn", 824, 332)
 if not mod then return end
-mod:RegisterEnableMob(56427, 56598, 42288) -- Blackhorn, The Skyfire, Ka'anu Reevs
+mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870 ) -- Boss engage npc, Blackhorn, The Skyfire, Ka'anu Reevs, Sky Captain Swayze
 
 --------------------------------------------------------------------------------
 -- Locales
@@ -29,6 +28,11 @@ if L then
 	L.sunder_desc = "Tank alert only. Count the stacks of sunder armor and show a duration bar."
 	L.sunder_icon = 108043
 	L.sunder_message = "%2$dx Sunder on %1$s"
+
+	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!"
+	L.sapper = "Sapper"
+	L.sapper_desc = "Sapper dealing damage to the ship"
+	L.sapper_icon = 73457
 end
 L = mod:GetLocale()
 L.sunder = L.sunder.." "..INLINE_TANK_ICON
@@ -39,42 +43,36 @@ L.sunder = L.sunder.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		"sunder", 108038, "rush", 108862, {108076, "SAY", "FLASHSHAKE", "ICON" }, "bosskill",
+		"sunder", 108862, {108076, "SAY", "FLASHSHAKE", "ICON" }, "sapper", "bosskill",
 	}, {
 		sunder = "general"
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:Log("SPELL_SUMMON", "TwilightFlames", 108076)
-	self:Log("SPELL_CAST_START", "TwilightOnslaught", 107589)
-	self:Log("SPELL_CAST_START", "Harpoon", 108038)
+	self:Log("SPELL_SUMMON", "TwilightFlames", 108076) -- did they just remove this?
+	self:Log("SPELL_CAST_START", "TwilightOnslaught", 107588)
 	self:Log("SPELL_AURA_APPLIED", "Sunder", 108043)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sunder", 108043)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE", "Sapper")
 
 	self:Death("Win", 56427)
 end
 
 function mod:OnEngage(diff)
 	self:Bar(108862, (GetSpellInfo(108862)), 42, 108862) -- Twilight Onslaught
+	self:Bar("sapper", L["sapper"], 70, 73457)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
-		if spellName == bladeRush then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:Message(107594, spellName, "Attention", spellId)
-			end
-		end
+function mod:Sapper(_, msg)
+	if msg:find(L["sapper_trigger"]) then
+		self:Message("sapper", L["sapper"], "Important", 73457, "Info")
+		self:Bar("sapper", L["sapper"], 40, 73457)
 	end
 end
 
@@ -87,7 +85,7 @@ do
 			if UnitIsUnit("player", player) then
 				mod:Say(108076, CL["say"]:format(twilightFlames))
 				mod:FlashShake(108076)
-				mod:LocalMessage(108076, twilightFlames, "Personal", spellId, "Long")
+				mod:LocalMessage(108076, twilightFlames, "Personal", 108076, "Long")
 			end
 			mod:PrimaryIcon(108076, player)
 		end
@@ -101,10 +99,6 @@ end
 function mod:TwilightOnslaught(_, spellId, _, _, spellName)
 	self:Message(108862, spellName, "Urgent", spellId, "Alarm")
 	self:Bar(108862, spellName, 35, spellId)
-end
-
-function mod:Harpoon(_, spellId, _, _, spellName)
-	self:Message(108038, spellName, "Attention", spellId)
 end
 
 function mod:Sunder(player, spellId, _, _, spellName, buffStack)

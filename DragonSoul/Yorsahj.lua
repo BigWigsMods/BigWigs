@@ -1,4 +1,3 @@
-if tonumber((select(4, GetBuildInfo()))) < 40300 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -41,12 +40,13 @@ L.bolt = L.bolt.." "..INLINE_TANK_ICON
 
 local bolt = (GetSpellInfo(108383))
 
-local blue = ("|cFF0080FFL%s|r"):format(L["blue"])
-local green = ("|cFF088A08L%s|r"):format(L["green"])
-local purple = ("|cFF9932CDL%s|r"):format(L["purple"])
-local yellow = ("|cFFFFA901L%s|r"):format(L["yellow"])
-local black = ("|cFF424242L%s|r"):format(L["black"])
-local red = ("|cFFFF0404L%s|r"):format(L["red"])
+local blue = ("|cFF0080FF%s|r"):format(L["blue"])
+local green = ("|cFF088A08%s|r"):format(L["green"])
+local purple = ("|cFF9932CD%s|r"):format(L["purple"])
+local yellow = ("|cFFFFA901%s|r"):format(L["yellow"])
+local black = ("|cFF424242%s|r"):format(L["black"])
+local red = ("|cFFFF0404%s|r"):format(L["red"])
+
 
 local colorCombinations = {
 	[105420] = { purple, green, blue },
@@ -64,26 +64,23 @@ local colorCombinations = {
 
 function mod:GetOptions()
 	return {
-		"blobs", "bolt", "proximity", "bosskill"
-	}, {
-		blobs = "general"
+		"blobs", "bolt", "proximity", "berserk", "bosskill"
 	}
 end
 
 function mod:OnBossEnable()
-
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_AURA_APPLIED", "AcidicApplied", 104898)
-	self:Log("SPELL_AURA_REMOWED", "AcidicRemowed", 104898)
-	self:Log("SPELL_AURA_APPLIED", "Bolt", 108383)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Bolt", 108383)
+	self:Log("SPELL_AURA_REMOVED", "AcidicRemoved", 104898)
+	self:Log("SPELL_AURA_APPLIED", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 55312)
 end
 
-function mod:OnEngage(diff)
-
+function mod:OnEngage()
+	self:Berserk(600) --complete guess
 end
 
 --------------------------------------------------------------------------------
@@ -100,17 +97,18 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
+		if not (unit):find("boss") then return end -- For PTR's take untill we know it's always boss 1
 		if colorCombinations[spellId] then
 			local t = GetTime()
 			if t-prev > 5 then
 				prev = t
 				if self:Difficulty() > 2 then
-					self:Message("blobs", ("%s %s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3]. colorCombinations[spellId][4]), "Urgent", blobs_icon, "Alarm")
+					self:Message("blobs", ("%s %s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3], colorCombinations[spellId][4]), "Urgent", blobs_icon, "Alarm")
 				else
 					self:Message("blobs", ("%s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3]), "Urgent", blobs_icon, "Alarm")
 				end
-				self:Bar("blobs", L["blobs_bar"], 75, blobs_icon)
+				self:Bar("blobs", L["blobs_bar"], 75, "achievement_doublerainbow" )
 			end
 		end
 	end
@@ -129,7 +127,7 @@ function mod:AcidicApplied()
 	self:OpenProximity(4)
 end
 
-function mod:AcidicRemowed()
+function mod:AcidicRemoved()
 	self:CloseProximity(4)
 end
 

@@ -1,4 +1,3 @@
-if tonumber((select(4, GetBuildInfo()))) < 40300 then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
