@@ -250,8 +250,8 @@ do
 		local go = scan(self)
 		if not go then
 			if debug then dbg(self, "Wipe scan found no active boss entities, rebooting module.") end
-			if self.OnWipe then self:OnWipe() end
 			self:Reboot()
+			if self.OnWipe then self:OnWipe() end
 		else
 			if debug then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. "). Re-scheduling another wipe check in 2 seconds.") end
 			self:ScheduleTimer("CheckForWipe", 2)
