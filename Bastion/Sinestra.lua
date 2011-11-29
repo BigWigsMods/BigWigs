@@ -76,9 +76,9 @@ local function populateOrbList()
 			-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
 			if UnitThreatSituation(n) == 3 and isTargetableByOrb(n) then
 				if UnitIsUnit(n, "player") then playerInList = true end
-				-- orbList is not createed by :NewTargetList
-				-- so we don't have to decolorize when we set icons
-				-- instead we colorize ourselve in the module
+				-- orbList is not created by :NewTargetList
+				-- so we don't have to decolorize when we set icons,
+				-- instead we colorize targets in the module
 				orbList[#orbList + 1] = n
 			end
 		end
@@ -91,7 +91,7 @@ local function wipeWhelpList(resetWarning)
 	wipe(whelpGUIDs)
 end
 
--- since we don't use :NewTargetList we have to color ourselve
+-- since we don't use :NewTargetList we have to color the targets
 local hexColors = {}
 for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
 	hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
