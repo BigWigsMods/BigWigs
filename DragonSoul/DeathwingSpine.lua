@@ -55,7 +55,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	--self:Death("Win", 53879) -- this is most likely not how you win
+	self:Death("Win", 53879) -- this is most likely not how you win
 end
 
 function mod:OnEngage(diff)
