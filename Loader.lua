@@ -296,11 +296,6 @@ function loader:OnInitialize()
 			if meta then
 				loadOnZoneAddons[#loadOnZoneAddons + 1] = name
 			end
-			-- XXX remove at some point
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Zone")
-			if meta then
-				sysprint(("The addon %q is using the old way of registering when to load its content, please tell the author to fix it and update your copy."):format(name))
-			end
 		elseif not enabled and reqFuncAddons[name] then
 			sysprint(L["coreAddonDisabled"])
 		end
