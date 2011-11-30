@@ -11,7 +11,6 @@ mod:RegisterEnableMob(53879, 56598, 55870) -- Deathwing, The Skyfire, Sky Captai
 --
 
 local gripTargets = mod:NewTargetList()
-local rollIcon = select(4, EJ_GetSectionInfo(4050))
 local allowGraspCheck = true
 
 --------------------------------------------------------------------------------
@@ -29,7 +28,7 @@ if L then
 	L.roll_icon = "ACHIEVEMENT_BG_RETURNXFLAGS_DEF_WSG"
 	L.roll_soon = "Barrel roll soon!"
 
-	L.not_hooked = "You are NOT hooked!"
+	L.not_hooked = "YOU are >NOT< hooked!"
 end
 L = mod:GetLocale()
 
@@ -66,20 +65,21 @@ end
 -- Event Handlers
 --
 
-local function graspCheck()
-	if not UnitDebuff("player", (GetSpellInfo(109454))) and allowGraspCheck then -- Grasping Tendrils
-		mod:TargetMessage("roll", L["not_hooked"], (UnitName("player")), "Personal", 109454, "Info")
-		mod:ScheduleTimer(graspCheck, 1)
-	end
-end
-
 do
+	local tendrils = GetSpellInfo(109454)
+	local function graspCheck()
+		if not UnitDebuff("player", tendrils) and allowGraspCheck then -- Grasping Tendrils
+			mod:LocalMessage("roll", L["not_hooked"], "Personal", 109454, "Info")
+			mod:ScheduleTimer(graspCheck, 1)
+		end
+	end
+
 	local function disallowGraspCheck()
 		allowGraspCheck = false
 	end
 	function mod:AboutToRoll()
 		self:Bar("roll", L["roll"], 5, L["roll_icon"])
-		self:Message("roll", L["roll_soon"], "Positive", roll_icon, "Long")
+		self:Message("roll", L["roll_soon"], "Positive", L["roll_icon"], "Long")
 		self:FlashShake("roll")
 		self:ScheduleTimer(disallowGraspCheck, 6)
 		graspCheck()
@@ -88,7 +88,7 @@ end
 
 
 function mod:Rolls()
-	self:Message("roll", L["roll"], "Positive", roll_icon)
+	self:Message("roll", L["roll"], "Positive", L["roll_icon"])
 	allowGraspCheck = false
 end
 
