@@ -14,6 +14,8 @@ local blobs_icon = (select(10, GetAchievementInfo(6129)))
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
+
 	L.bolt = "Void Bolt"
 	L.bolt_desc = "Tank alert only. Count the stacks of void bolt and show a duration bar."
 	L.bolt_icon = 108383

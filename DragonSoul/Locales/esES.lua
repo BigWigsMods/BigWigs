@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Morchok", "esES")
 if not L then return end
 if L then
+	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+
 	L.crush = "Machacar armadura"
 	L.crush_desc = "Alerta solo para tanques. Muestra los stacs de Machacar armadura y una barra con su duración."
 	L.crush_message = "%2$dx Machacar en %1$s"
@@ -12,6 +14,8 @@ end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "esES")
 if L then
+	L.engage_trigger = "Zzof Shuul'wah. Thoq fssh N'Zoth!"
+
 	L.ball = "Esfera de vacío"
 	L.ball_desc = "Una esfera de vacío que rebota entre jugadores y el jefe."
 
@@ -24,6 +28,8 @@ end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES")
 if L then
+	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
+
 	L.bolt = "Descarga del Vacío"
 	L.bolt_desc = "Alerta para tanques. Cuenta los stacs de Descarga de Vacío y muestra una barra con su duración."
 	L.bolt_message = "%2$dx Descarga en %1$s"
@@ -42,6 +48,8 @@ end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "esES")
 if L then
+	L.engage_trigger = "You cross the Stormbinder! I'll slaughter you all."
+
 	L.lightning_or_frost = "Relámpago o Hielo"
 	L.ice_next = "Fase de Hielo"
 	L.lightning_next = "Fase de Relámpago"

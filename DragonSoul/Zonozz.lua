@@ -19,6 +19,8 @@ local disruptingShadowsTargets = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "Zzof Shuul'wah. Thoq fssh N'Zoth!"
+
 	L.ball = "Void ball"
 	L.ball_desc = "Void ball that bounces off of players and the boss."
 	L.ball_icon = 28028 -- void sphere icon

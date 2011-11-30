@@ -12,6 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "frFR")
 if L then
+	L.engage_trigger = "Zzof Shuul'wah. Thoq fssh N'Zoth!"
+
 	L.ball = "Boule de Vide"
 	L.ball_desc = "Boule de Vide qui rebondit contre les joueurs et le boss."
 
@@ -24,6 +26,8 @@ end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "frFR")
 if L then
+	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
+
 	L.bolt = "Éclair de Vide"
 	L.bolt_desc = "Alerte pour tanks uniquement. Compte les cumuls d'éclairs de Vide et affiche une barre de durée."
 	L.bolt_message = "%2$dx Éclairs sur %1$s"

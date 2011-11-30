@@ -12,6 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "zhTW")
 if L then
+	L.engage_trigger = "Zzof Shuul'wah. Thoq fssh N'Zoth!"
+
 	L.ball = "壞滅虛無"
 	L.ball_desc = "壞滅虛無在玩家和首領之間來回彈跳時發出警報。"
 
@@ -24,6 +26,8 @@ end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "zhTW")
 if L then
+	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
+
 	L.bolt = "虛無箭"
 	L.bolt_desc = "只警報坦克。虛無箭堆疊計數並顯示持續條。"
 	L.bolt_message = "%2$d層虛無箭：>%1$s<！"

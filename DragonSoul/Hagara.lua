@@ -19,6 +19,8 @@ local nextPhase, nextPhaseIcon
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "You cross the Stormbinder! I'll slaughter you all."
+
 	L.lightning_or_frost = "Lightning or Frost"
 	L.ice_next = "Ice phase"
 	L.lightning_next = "Lightning phase"
