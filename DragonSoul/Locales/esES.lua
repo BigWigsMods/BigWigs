@@ -42,7 +42,7 @@ if L then
 	L.red = "Rojo"
 
 	L.blobs = "Manchas"
-	L.blobs_bar = "Próxima Mancha aparece"
+	L.blobs_bar = "Próxima Mancha"
 	L.blobs_desc = "Las Manchas se mueven hacia el jefe"
 end
 
