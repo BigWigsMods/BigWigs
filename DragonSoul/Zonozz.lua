@@ -66,7 +66,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Berserk(360) -- confirmed 10 man heroic
+	if not self:LFR() then
+		self:Berserk(360) -- confirmed 10 man heroic
+	end
 	if diff > 2 then
 		self:Bar("ball", voidoftheUnmaking, 6, 28028)
 		self:Bar(104322, psychicDrain, 12, 104322)
