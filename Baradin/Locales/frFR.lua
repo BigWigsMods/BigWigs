@@ -19,6 +19,6 @@ end
 
 L = BigWigs:NewBossLocale("Alizabal", "frFR")
 if L then
-	L.first_ability = "Skewer or Hate"
+	L.first_ability = "Embrocher ou Haine"
 end
 

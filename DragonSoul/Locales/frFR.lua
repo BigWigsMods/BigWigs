@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Morchok", "frFR")
 if not L then return end
 if L then
-	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+	L.engage_trigger = "Vous cherchez à arrêter l'avalanche. Je vais vous ensevelir."
 
 	L.crush = "Ecraser armure"
 	L.crush_desc = "Alerte pour tanks uniquement. Compte les cumuls d'écraser armure et affiche une barre de durée."
