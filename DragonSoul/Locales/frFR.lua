@@ -78,9 +78,9 @@ if L then
 	L.sunder_desc = "Alerte pour tanks uniquement. Compte les cumuls de fracasser armure et affiche une barre de durée."
 	L.sunder_message = "%2$dx Fracasser sur %1$s"
 
-	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!" -- à traduire
+	L.sapper_trigger = "Un drake plonge et dépose un sapeur du Crépuscule sur le pont !" -- à vérifier
 	L.sapper = "Sapeur"
-	L.sapper_desc = "Sappeur infligeant des dégâts au vaisseau."
+	L.sapper_desc = "Sapeur infligeant des dégâts au vaisseau."
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "frFR")
