@@ -51,8 +51,9 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_CAST_SUCCESS", "PsychicDrain", 104322, 104607, 104608, 104606)
-	self:Log("SPELL_AURA_APPLIED", "DisruptingShadowsApplied", 103434, 104600, 104601, 104599)
-	self:Log("SPELL_AURA_REMOVED", "DisruptingShadowsRemowed", 103434, 104600, 104601, 104599)
+	self:Log("SPELL_AURA_APPLIED", "ShadowsApplied", 103434, 104600, 104601, 104599)
+	self:Log("SPELL_AURA_REMOVED", "ShadowsRemoved", 103434, 104600, 104601, 104599)
+	self:Log("SPELL_CAST_SUCCESS", "ShadowsCast", 104599) --LFR id
 	self:Log("SPELL_CAST_SUCCESS", "VoidoftheUnmaking", 103627)
 	self:Log("SPELL_AURA_APPLIED", "VoidDiffusion", 106836)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidDiffusion", 106836)
@@ -106,13 +107,20 @@ function mod:VoidoftheUnmaking(_, spellId, _, _, spellName)
 	self:Message("ball", L["ball"], "Urgent", 28028, "Alarm") -- void sphere icon
 end
 
+function mod:ShadowsCast(_, spellId, _, _, spellName)
+	if self:LFR() then
+		self:Message(103434, spellName, "Attention", spellId, "Info")
+	end
+end
+
 do
 	local scheduled = nil
 	local function disruptingShadows(spellName)
 		mod:TargetMessage(103434, spellName, disruptingShadowsTargets, "Attention", 103434, "Info")
 		scheduled = nil
 	end
-	function mod:DisruptingShadowsApplied(player, spellId, _, _, spellName)
+	function mod:ShadowsApplied(player, spellId, _, _, spellName)
+		if self:LFR() then return end
 		disruptingShadowsTargets[#disruptingShadowsTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:Say(103434, CL["say"]:format(spellName))
@@ -128,7 +136,7 @@ do
 	end
 end
 
-function mod:DisruptingShadowsRemowed(player)
+function mod:ShadowsRemoved(player)
 	if UnitIsUnit(player, "player") then
 		self:CloseProximity()
 	end
