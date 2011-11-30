@@ -18,6 +18,8 @@ local kohcrom = EJ_GetSectionInfo(4262)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+
 	L.crush = "Crush Armor"
 	L.crush_desc = "Tank alert only. Count the stacks of crush armor and show a duration bar."
 	L.crush_icon = 103687
@@ -57,9 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BlackBloodStacks", 110287)
 	self:Log("SPELL_SUMMON", "ResonatingCrystal", 103639)
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	--self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus") -- boss is missing engage trigger on ptr
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 55265)
 end

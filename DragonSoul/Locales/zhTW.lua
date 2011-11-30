@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Morchok", "zhTW")
 if not L then return end
 if L then
+	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+
 	L.crush = "擊碎護甲"
 	L.crush_desc = "只警報坦克。擊碎護甲堆疊計數並顯示持續條。"
 	L.crush_message = "%2$d層擊碎護甲：>%1$s<！"
