@@ -4,34 +4,34 @@ if L then
 	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
 
 	L.crush = "Machacar armadura"
-	L.crush_desc = "Alerta solo para tanques. Muestra los stacs de Machacar armadura y una barra con su duración."
+	L.crush_desc = "Alerta solo para tanques. Muestra los stacs de Machacar armadura y una barra con su duraciÃ³n."
 	L.crush_message = "%2$dx Machacar en %1$s"
 
 	L.blood = "Sangre"
 
-	L.explosion = "Explosión"
+	L.explosion = "ExplosiÃ³n"
 end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "esES")
 if L then
 	L.engage_trigger = "Zzof Shuul'wah. Thoq fssh N'Zoth!"
 
-	L.ball = "Esfera de vacío"
-	L.ball_desc = "Una esfera de vacío que rebota entre jugadores y el jefe."
+	L.ball = "Esfera de vacÃ­o"
+	L.ball_desc = "Una esfera de vacÃ­o que rebota entre jugadores y el jefe."
 
-	L.bounce = "Rebotar Esfera de vacío"
-	L.bounce_desc = "Contador para el rebote de la Esfera de vacío."
+	L.bounce = "Rebotar Esfera de vacÃ­o"
+	L.bounce_desc = "Contador para el rebote de la Esfera de vacÃ­o."
 
-	L.darkness = "¡Fiesta de tentáculos!"
-	L.darkness_desc = "Esta fase comienza, cuando la esfera de vacío golpea al jefe."
+	L.darkness = "Â¡Fiesta de tentÃ¡culos!"
+	L.darkness_desc = "Esta fase comienza, cuando la esfera de vacÃ­o golpea al jefe."
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES")
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = "Descarga del Vacío"
-	L.bolt_desc = "Alerta para tanques. Cuenta los stacs de Descarga de Vacío y muestra una barra con su duración."
+	L.bolt = "Descarga del VacÃ­o"
+	L.bolt_desc = "Alerta para tanques. Cuenta los stacs de Descarga de VacÃ­o y muestra una barra con su duraciÃ³n."
 	L.bolt_message = "%2$dx Descarga en %1$s"
 
 	L.blue = "Azul"
@@ -42,7 +42,7 @@ if L then
 	L.red = "Rojo"
 
 	L.blobs = "Manchas"
-	L.blobs_bar = "Próxima Mancha aparece"
+	L.blobs_bar = "PrÃ³xima Mancha aparece"
 	L.blobs_desc = "Las Manchas se mueven hacia el jefe"
 end
 
@@ -50,9 +50,9 @@ L = BigWigs:NewBossLocale("Hagara the Stormbinder", "esES")
 if L then
 	L.engage_trigger = "You cross the Stormbinder! I'll slaughter you all."
 
-	L.lightning_or_frost = "Relámpago o Hielo"
+	L.lightning_or_frost = "RelÃ¡mpago o Hielo"
 	L.ice_next = "Fase de Hielo"
-	L.lightning_next = "Fase de Relámpago"
+	L.lightning_next = "Fase de RelÃ¡mpago"
 
 	L.nextphase = "Siguiente Fase"
 	L.nextphase_desc = "Avisos para la siguiente fase"
@@ -73,12 +73,12 @@ if L then
 	L.rush = "Carga de hojas"
 
 	L.sunder = "Hender armadura"
-	L.sunder_desc = "Alerta para tanques. Muestra los stacs de Hender armadura y una barra con su duración."
+	L.sunder_desc = "Alerta para tanques. Muestra los stacs de Hender armadura y una barra con su duraciÃ³n."
 	L.sunder_message = "%2$dx Hender en %1$s"
 
 	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!" -- translate
 	L.sapper = "Zapador"
-	L.sapper_desc = "El Zapador intenta dañar la nave"
+	L.sapper_desc = "El Zapador intenta daÃ±ar la nave"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "esES")
@@ -88,9 +88,9 @@ if L then
 	L.left = "rueda a la izquierda"
 	L.right = "rueda a la derecha"
 
-	L.roll_soon = "¡Barril rodará pronto!"
+	L.roll_soon = "Â¡Barril rodarÃ¡ pronto!"
 
-	L.not_hooked = "¡NO ESTAS enganchado!"
+	L.not_hooked = "Â¡NO ESTAS enganchado!"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES")
