@@ -14,6 +14,16 @@ local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
 local emoteMap = setmetatable({}, metaMap)
 local deathMap = setmetatable({}, metaMap)
+local icons = setmetatable({}, {__index =
+	function(self, key)
+		if not key then return end
+		local value = nil
+		if type(key) == "number" then value = select(3, GetSpellInfo(key))
+		else value = "Interface\\Icons\\" .. key end
+		self[key] = value
+		return value
+	end
+})
 
 local boss = {}
 core.bossCore:SetDefaultModulePrototype(boss)
@@ -286,6 +296,7 @@ do
 		if debug then dbg(self, ":Win") end
 		if self.OnWin then self:OnWin() end
 		self:Sync("Death", self.moduleName)
+		wipe(icons) -- Wipe icon cache
 	end
 end
 
@@ -382,17 +393,6 @@ do
 	end
 end
 
-local icons = setmetatable({}, {__index =
-	function(self, key)
-		if not key then return end
-		local value = nil
-		if type(key) == "number" then value = select(3, GetSpellInfo(key))
-		else value = "Interface\\Icons\\" .. key end
-		self[key] = value
-		return value
-	end
-})
-
 -- XXX the monitor should probably also get a button to turn off the proximity bitflag
 -- XXX for the given key.
 function boss:OpenProximity(range, key)
@@ -425,7 +425,7 @@ do
 			if type(key) == "nil" then return nil end
 			local class = select(2, UnitClass(key))
 			if class then
-				self[key] = hexColors[class]  .. key .. "|r"
+				self[key] = hexColors[class]  .. gsub(key, "%-.+", "*") .. "|r" -- Replace server names with *
 			else
 				return key
 			end
