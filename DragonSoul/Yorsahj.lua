@@ -128,6 +128,6 @@ function mod:AcidicApplied()
 end
 
 function mod:AcidicRemoved()
-	self:CloseProximity(4)
+	self:CloseProximity()
 end
 
