@@ -24,6 +24,8 @@ if L then
 
 	L.darkness = "¡Fiesta de tentáculos!"
 	L.darkness_desc = "Esta fase comienza, cuando la esfera de vacío golpea al jefe."
+
+	L.shadows = "Shadows"
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES")

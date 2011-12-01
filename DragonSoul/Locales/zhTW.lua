@@ -22,6 +22,8 @@ if L then
 
 	L.darkness = "觸鬚迪斯可聚會！"
 	L.darkness_desc = "當此階段開始，壞滅虛無撞擊首領。"
+
+	L.shadows = "Shadows"
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "zhTW")

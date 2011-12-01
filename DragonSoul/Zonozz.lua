@@ -11,7 +11,6 @@ mod:RegisterEnableMob(55308)
 --
 
 local psychicDrain, voidoftheUnmaking, darkness = (GetSpellInfo(104322)), (GetSpellInfo(103627)), (GetSpellInfo(109413))
-local disruptingShadowsTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +31,8 @@ if L then
 	L.darkness = "Tentacle disco party!"
 	L.darkness_desc = "This phase starts, when the void ball hits the boss."
 	L.darkness_icon = 109413
+
+	L.shadows = "Shadows"
 end
 L = mod:GetLocale()
 
@@ -42,7 +43,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"ball", "bounce", "darkness",
-		104322, {103434, "FLASHSHAKE", "SAY" }, "proximity",
+		104322, {103434, "FLASHSHAKE", "SAY", "PROXIMITY"},
 		"berserk", "bosskill",
 	}, {
 		["ball"] = "ej:3973",
@@ -51,7 +52,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Darkness")
 	self:Log("SPELL_CAST_SUCCESS", "PsychicDrain", 104322, 104607, 104608, 104606)
 	self:Log("SPELL_AURA_APPLIED", "ShadowsApplied", 103434, 104600, 104601, 104599)
 	self:Log("SPELL_AURA_REMOVED", "ShadowsRemoved", 103434, 104600, 104601, 104599)
@@ -82,18 +83,11 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-		if not (unit):find("boss") then return end -- For PTR's take untill we know it's always boss 1
-		if spellName == darkness then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:Bar("darkness", L["darkness"], 30, spellId) -- EJ says 30 sec, heroic timing is probably different
-				self:Message("darkness", L["darkness"], "Important", spellId, "Info") -- can use info, no conflict here
-			end
-		end
+
+function mod:Darkness(_, unit, spellName, _, _, spellId)
+	if unit == "boss1" and spellName == darkness then
+		self:Bar("darkness", L["darkness"], 30, spellId) -- EJ says 30 sec, heroic timing is probably different
+		self:Message("darkness", L["darkness"], "Important", spellId, "Info") -- can use info, no conflict here
 	end
 end
 
@@ -112,37 +106,23 @@ function mod:VoidoftheUnmaking(_, spellId, _, _, spellName)
 end
 
 function mod:ShadowsCast(_, spellId, _, _, spellName)
-	if self:LFR() then
-		self:Message(103434, spellName, "Attention", spellId, "Info")
-	end
+	self:Message(103434, spellName, "Attention", spellId)
 end
 
-do
-	local scheduled = nil
-	local function disruptingShadows(spellName)
-		mod:TargetMessage(103434, spellName, disruptingShadowsTargets, "Attention", 103434, "Info")
-		scheduled = nil
-	end
-	function mod:ShadowsApplied(player, spellId, _, _, spellName)
-		if self:LFR() then return end
-		disruptingShadowsTargets[#disruptingShadowsTargets + 1] = player
-		if UnitIsUnit(player, "player") then
-			self:Say(103434, CL["say"]:format(spellName))
-			self:FlashShake(103434)
-			if self:Difficulty() > 2 then
-				self:OpenProximity(10)
-			end
-		end
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(disruptingShadows, 0.1, spellName)
+function mod:ShadowsApplied(player, spellId)
+	if UnitIsUnit(player, "player") then
+		self:LocalMessage(103434, CL["you"]:format(L["shadows"]), "Personal", spellId, "Alert")
+		self:Say(103434, CL["say"]:format(L["shadows"]))
+		self:FlashShake(103434)
+		if self:Difficulty() > 2 then
+			self:OpenProximity(10, 103434)
 		end
 	end
 end
 
 function mod:ShadowsRemoved(player)
 	if UnitIsUnit(player, "player") then
-		self:CloseProximity()
+		self:CloseProximity(103434)
 	end
 end
 
