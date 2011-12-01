@@ -37,9 +37,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		104448, 109553, 105316,
+		104448, 109553, {105316, "PROXIMITY"},
 		109561,
-		108934, "nextphase", "proximity", "berserk", "bosskill",
+		108934, "nextphase", "berserk", "bosskill",
 	}, {
 		[104448] = L["ice_next"],
 		[109561] = L["lightning_next"],
@@ -115,25 +115,25 @@ end
 
 do
 	local scheduled = nil
-	local function iceLance(spellName)
-		mod:TargetMessage(105316, spellName, iceLanceTargets, "Urgent", 105316, "Info")
+	local function iceLance()
+		mod:TargetMessage(105316, GetSpellInfo(105316), iceLanceTargets, "Urgent", 105316, "Info")
 		scheduled = nil
 	end
-	function mod:IceLanceApplied(player, _, _, _, spellName)
+	function mod:IceLanceApplied(player)
 		iceLanceTargets[#iceLanceTargets + 1] = player
 		if UnitIsUnit(player, "player") then
-			self:OpenProximity(3)
+			self:OpenProximity(3, 105316)
 		end
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(iceLance, 0.1, spellName)
+			self:ScheduleTimer(iceLance, 0.2)
 		end
 	end
 end
 
 function mod:IceLanceRemoved(player)
 	if UnitIsUnit(player, "player") then
-		self:CloseProximity()
+		self:CloseProximity(105316)
 	end
 end
 
