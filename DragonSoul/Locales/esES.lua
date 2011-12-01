@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Morchok", "esES")
 if not L then return end
 if L then
-	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+	L.engage_trigger = "Pretendéis detener una avalancha. Os sepultaré."
 
 	L.crush = "Machacar armadura"
 	L.crush_desc = "Alerta solo para tanques. Muestra los stacs de Machacar armadura y una barra con su duración."
@@ -60,7 +60,7 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "esES")
 if L then
-	L.engage_trigger = "I am the beginning of the end...the shadow which blots out the sun" -- translate
+	L.engage_trigger = "Soy el principio del fin, la sombra que eclipsa el Sol, la campana que tañe por tu muerte."
 
 	L.warmup = "Calentamiento"
 	L.warmup_desc = "Tiempo de calentamiento"
