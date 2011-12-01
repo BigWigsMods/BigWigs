@@ -10,8 +10,6 @@ mod:RegisterEnableMob(55312)
 -- Localization
 --
 
-local blobs_icon = (select(10, GetAchievementInfo(6129)))
-
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
@@ -83,6 +81,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600) --complete guess
+	self:Bar("blobs", L["blobs_bar"], 21, L["blobs_icon"])
 end
 
 --------------------------------------------------------------------------------
@@ -106,11 +105,11 @@ do
 			if t-prev > 5 then
 				prev = t
 				if self:Difficulty() > 2 then
-					self:Message("blobs", ("%s %s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3], colorCombinations[spellId][4]), "Urgent", blobs_icon, "Alarm")
+					self:Message("blobs", ("%s %s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3], colorCombinations[spellId][4]), "Urgent", L["blobs_icon"], "Alarm")
 				else
-					self:Message("blobs", ("%s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3]), "Urgent", blobs_icon, "Alarm")
+					self:Message("blobs", ("%s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3]), "Urgent", L["blobs_icon"], "Alarm")
 				end
-				self:Bar("blobs", L["blobs_bar"], 75, "achievement_doublerainbow" )
+				self:Bar("blobs", L["blobs_bar"], 90, L["blobs_icon"])
 			end
 		end
 	end
