@@ -10,7 +10,6 @@ mod:RegisterEnableMob(55294, 56667) -- Ultraxion, Thrall
 -- Locales
 --
 
-local hour, fadingLight = (GetSpellInfo(106371)), (GetSpellInfo(105925))
 local hourCounter = 1
 local lightTargets = mod:NewTargetList()
 
@@ -55,7 +54,7 @@ end
 function mod:OnEngage(diff)
 	self:SendMessage("BigWigs_StopBar", self, self.displayName)
 	self:Berserk(360)
-	self:Bar(106371, hour, 45, 106371)
+	self:Bar(106371, GetSpellInfo(106371), 45, 106371) -- Hour of Twilight
 	hourCounter = 1
 end
 
@@ -65,7 +64,7 @@ end
 
 function mod:HourofTwilight(_, spellId, _, _, spellName)
 	if hourCounter == 1 then
-		self:Bar(105925, fadingLight, 45, 105925)
+		self:Bar(105925, GetSpellInfo(105925), 45, 105925) -- Fading Light
 	end
 	self:FlashShake(106371)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Urgent", spellId, "Alert")

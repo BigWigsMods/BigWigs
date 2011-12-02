@@ -7,12 +7,6 @@ if not mod then return end
 mod:RegisterEnableMob(55308)
 
 --------------------------------------------------------------------------------
--- Locales
---
-
-local psychicDrain, voidoftheUnmaking, darkness = (GetSpellInfo(104322)), (GetSpellInfo(103627)), (GetSpellInfo(109413))
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -67,15 +61,17 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	local psychicDrain = GetSpellInfo(104322)
+	local voidoftheUnmaking = GetSpellInfo(103627)
 	if not self:LFR() then
 		self:Berserk(360) -- confirmed 10 man heroic
 	end
 	if diff > 2 then
-		self:Bar("ball", voidoftheUnmaking, 6, 28028)
+		self:Bar("ball", voidoftheUnmaking, 6, L["ball_icon"])
 		self:Bar(104322, psychicDrain, 12, 104322)
 	else
 		self:Bar(104322, psychicDrain, 16, 104322)
-		self:Bar("ball", voidoftheUnmaking, 26, 28028)
+		self:Bar("ball", voidoftheUnmaking, 26, L["ball_icon"])
 	end
 end
 
@@ -85,7 +81,7 @@ end
 
 
 function mod:Darkness(_, unit, spellName, _, _, spellId)
-	if unit == "boss1" and spellName == darkness then
+	if unit == "boss1" and spellId == L["darkness_icon"] then
 		self:Bar("darkness", L["darkness"], 30, spellId) -- EJ says 30 sec, heroic timing is probably different
 		self:Message("darkness", L["darkness"], "Important", spellId, "Info") -- can use info, no conflict here
 	end
@@ -101,8 +97,8 @@ function mod:PsychicDrain(_, spellId, _, _, spellName)
 end
 
 function mod:VoidoftheUnmaking(_, spellId, _, _, spellName)
-	self:Bar("ball", "~"..L["ball"], 20, 28028) -- void sphere icon
-	self:Message("ball", L["ball"], "Urgent", 28028, "Alarm") -- void sphere icon
+	self:Bar("ball", "~"..L["ball"], 20, L["ball_icon"]) -- void sphere icon
+	self:Message("ball", L["ball"], "Urgent", L["ball_icon"], "Alarm") -- void sphere icon
 end
 
 function mod:ShadowsCast(_, spellId, _, _, spellName)

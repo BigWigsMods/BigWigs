@@ -14,7 +14,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = "Void Bolt"
+	L.bolt = GetSpellInfo(108383)
 	L.bolt_desc = "Tank alert only. Count the stacks of void bolt and show a duration bar."
 	L.bolt_icon = 108383
 	L.bolt_message = "%2$dx Bolt on %1$s"
@@ -35,10 +35,8 @@ L = mod:GetLocale()
 L.bolt = L.bolt.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
--- Locales
+-- Locals
 --
-
-local bolt = (GetSpellInfo(108383))
 
 local blue = ("|cFF0080FF%s|r"):format(L["blue"])
 local green = ("|cFF088A08%s|r"):format(L["green"])
@@ -47,14 +45,13 @@ local yellow = ("|cFFFFA901%s|r"):format(L["yellow"])
 local black = ("|cFF424242%s|r"):format(L["black"])
 local red = ("|cFFFF0404%s|r"):format(L["red"])
 
-
 local colorCombinations = {
-	[105420] = { purple, green, blue },
-	[105435] = { green, red, black },
-	[105436] = { green, yellow, red },
-	[105437] = { blue, purple, yellow },
-	[105439] = { blue, black, yellow },
-	[105440] = { purple, red, black },
+	[105420] = { purple, green, blue, black },
+	[105435] = { green, red, black, blue },
+	[105436] = { green, yellow, red, black },
+	[105437] = { blue, purple, yellow, green },
+	[105439] = { blue, black, yellow, purple },
+	[105440] = { purple, red, black, yellow },
 	--[105441] this is some generic thing, don't use it
 }
 
@@ -69,7 +66,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Blobs")
 	self:Log("SPELL_AURA_APPLIED", "AcidicApplied", 104898)
 	self:Log("SPELL_AURA_REMOVED", "AcidicRemoved", 104898)
 	self:Log("SPELL_AURA_APPLIED", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549)
@@ -98,9 +95,8 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-		if not (unit):find("boss") then return end -- For PTR's take untill we know it's always boss 1
-		if colorCombinations[spellId] then
+	function mod:Blobs(_, unit, spellName, _, _, spellId)
+		if unit == "boss1" and colorCombinations[spellId] then
 			local t = GetTime()
 			if t-prev > 5 then
 				prev = t
@@ -114,15 +110,6 @@ do
 		end
 	end
 end
-
--- $ cat WoWCombatLog.txt | grep "APPLIED.*Yor.*,BUFF" | cut -d , -f 10,11 | sort | uniq
---104894,"Black Blood of Shu'ma"
---104896,"Shadowed Blood of Shu'ma"
---104897,"Crimson Blood of Shu'ma"
---104898,"Acidic Blood of Shu'ma"
---104901,"Glowing Blood of Shu'ma"
---105027,"Cobalt Blood of Shu'ma"
---108221,"Glowing Blood of Shu'ma"
 
 function mod:AcidicApplied()
 	self:OpenProximity(4)

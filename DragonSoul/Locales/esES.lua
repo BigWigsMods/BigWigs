@@ -32,7 +32,6 @@ L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES")
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = "Descarga del Vacío"
 	L.bolt_desc = "Alerta para tanques. Cuenta los stacs de Descarga de Vacío y muestra una barra con su duración."
 	L.bolt_message = "%2$dx Descarga en %1$s"
 

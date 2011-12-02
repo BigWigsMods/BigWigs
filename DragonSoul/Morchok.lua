@@ -6,7 +6,8 @@ local mod, CL = BigWigs:NewBoss("Morchok", 824, 311)
 if not mod then return end
 mod:RegisterEnableMob(55265)
 
-local stomp, crystal, blackBlood = (GetSpellInfo(108571)), (GetSpellInfo(103640)), (GetSpellInfo(103851))
+local stomp = GetSpellInfo(108571)
+local crystal = GetSpellInfo(103640)
 local kohcrom = EJ_GetSectionInfo(4262)
 local fmtStr = "~%s - %s"
 
@@ -36,7 +37,7 @@ L.crush = L.crush.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		108571, "crush", 103640, { 103851, "FLASHSHAKE" }, 103846, 109017, "berserk", "bosskill",
+		108571, "crush", 103640, {103851, "FLASHSHAKE"}, 103846, 109017, "berserk", "bosskill",
 	}, {
 		[108571] = "general",
 	}
@@ -47,7 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SummonKohcrom", 109017)
 
 	--Normal
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", "Blood")
 	self:Log("SPELL_CAST_START", "Stomp", 108571, 109033, 109034, 103414)
 	self:Log("SPELL_CAST_START", "BlackBlood", 103851)
 	self:Log("SPELL_AURA_APPLIED", "Furious", 103846)
@@ -77,9 +78,9 @@ function mod:SummonKohcrom(_, spellId)
 	self:Bar(109017, (fmtStr):format(kohcrom, stomp), 12, spellId)
 end
 
--- I know it is ugly to use this, but if we were to start bars at :BlackBlood then we are subject to BlackBlood duration changes
-function mod:UNIT_SPELLCAST_CHANNEL_STOP(_, _, spellName)
-	if spellName == blackBlood then
+-- I know it's ugly to use this, but if we were to start bars at :BlackBlood then we are subject to BlackBlood duration changes
+function mod:Blood(_, unit, _, _, _, spellId)
+	if unit == "boss1" and spellId == 103851 then
 		if self:Difficulty() > 2 then
 			self:Bar(108571, (fmtStr):format(self.displayName, stomp), 15, 108571)
 			self:Bar(108571, (fmtStr):format(kohcrom, stomp), 20, 108571)

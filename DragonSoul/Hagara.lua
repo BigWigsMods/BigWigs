@@ -10,7 +10,7 @@ mod:RegisterEnableMob(55689)
 -- Locales
 --
 
-local iceLanceTargets, blocks = mod:NewTargetList(), mod:NewTargetList()
+local playerTbl = mod:NewTargetList()
 local nextPhase, nextPhaseIcon
 
 --------------------------------------------------------------------------------
@@ -66,9 +66,9 @@ function mod:OnEngage(diff)
 	-- need to find a way to determine which one is at first after engage
 	-- apart from looking at her weapon enchants
 	if diff > 2 then
-		self:Bar("nextphase", L["lightning_or_frost"], 32, 2139)
+		self:Bar("nextphase", L["lightning_or_frost"], 32, L["nextphase_icon"])
 	else
-		self:Bar("nextphase", L["lightning_or_frost"], 82, 2139)
+		self:Bar("nextphase", L["lightning_or_frost"], 82, L["nextphase_icon"])
 	end
 end
 
@@ -101,11 +101,11 @@ end
 do
 	local scheduled = nil
 	local function iceTomb(spellName)
-		mod:TargetMessage(104448, spellName, blocks, "Important", 104448)
+		mod:TargetMessage(104448, spellName, playerTbl, "Important", 104448)
 		scheduled = nil
 	end
 	function mod:IceTombApplied(player, _, _, _, spellName)
-		blocks[#blocks + 1] = player
+		playerTbl[#playerTbl + 1] = player
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(iceTomb, 0.1, spellName)
@@ -116,11 +116,11 @@ end
 do
 	local scheduled = nil
 	local function iceLance()
-		mod:TargetMessage(105316, GetSpellInfo(105316), iceLanceTargets, "Urgent", 105316, "Info")
+		mod:TargetMessage(105316, GetSpellInfo(105316), playerTbl, "Urgent", 105316, "Info")
 		scheduled = nil
 	end
 	function mod:IceLanceApplied(player)
-		iceLanceTargets[#iceLanceTargets + 1] = player
+		playerTbl[#playerTbl + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:OpenProximity(3, 105316)
 		end

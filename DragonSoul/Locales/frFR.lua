@@ -32,7 +32,6 @@ L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "frFR")
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = "Éclair de Vide"
 	L.bolt_desc = "Alerte pour tanks uniquement. Compte les cumuls d'éclairs de Vide et affiche une barre de durée."
 	L.bolt_message = "%2$dx Éclairs sur %1$s"
 
@@ -46,7 +45,6 @@ if L then
 	L.blobs = "Globules"
 	L.blobs_bar = "Proch. globules"
 	L.blobs_desc = "Globules se déplacant en direction du boss."
-	L.blobs_icon = "achievement_doublerainbow"
 end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "frFR")
@@ -74,7 +72,6 @@ if L then
 	L.harpooning = "Harponnage"
 
 	L.rush = "Volée de lames"
-	L.rush_desc = select(2, EJ_GetSectionInfo(4198))
 
 	L.sunder = "Fracasser armure"
 	L.sunder_desc = "Alerte pour tanks uniquement. Compte les cumuls de fracasser armure et affiche une barre de durée."
@@ -92,8 +89,6 @@ if L then
 	L.left = "fait un tonneau à gauche"
 	L.right = "fait un tonneau à droite"
 
-	L.roll, L.roll_desc = EJ_GetSectionInfo(4050)
-	L.roll_icon = "ACHIEVEMENT_BG_RETURNXFLAGS_DEF_WSG"
 	L.roll_soon = "Tonneau imminent !"
 
 	L.not_hooked = "Vous n'êtes >PAS< accroché !"

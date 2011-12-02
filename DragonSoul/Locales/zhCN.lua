@@ -30,7 +30,6 @@ L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "zhCN")
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = "虚空箭"
 	L.bolt_desc = "只警报坦克。虚空箭堆叠计数并显示持续条。"
 	L.bolt_message = "%2$d层虚空箭：>%1$s<！"
 
