@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Morchok", "esES")
+﻿local L = BigWigs:NewBossLocale("Morchok", "esES")
 if not L then return end
 if L then
 	L.engage_trigger = "Pretendéis detener una avalancha. Os sepultaré."
@@ -77,7 +77,7 @@ if L then
 	L.sunder_desc = "Alerta para tanques. Muestra los stacs de Hender armadura y una barra con su duración."
 	L.sunder_message = "%2$dx Hender en %1$s"
 
-	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!" -- translate
+	L.sapper_trigger = "¡Un draco desciende para dejar a un zapador Crepuscular en la cubierta!"
 	L.sapper = "Zapador"
 	L.sapper_desc = "El Zapador intenta dañar la nave"
 end
