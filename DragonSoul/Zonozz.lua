@@ -106,6 +106,7 @@ function mod:ShadowsCast(_, spellId, _, _, spellName)
 end
 
 function mod:ShadowsApplied(player, spellId)
+	if self:LFR() then return end
 	if UnitIsUnit(player, "player") then
 		self:LocalMessage(103434, CL["you"]:format(L["shadows"]), "Personal", spellId, "Alert")
 		self:Say(103434, CL["say"]:format(L["shadows"]))
@@ -117,6 +118,7 @@ function mod:ShadowsApplied(player, spellId)
 end
 
 function mod:ShadowsRemoved(player)
+	if self:LFR() then return end
 	if UnitIsUnit(player, "player") then
 		self:CloseProximity(103434)
 	end
