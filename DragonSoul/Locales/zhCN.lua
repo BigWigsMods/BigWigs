@@ -33,12 +33,12 @@ if L then
 	L.bolt_desc = "只警报坦克。虚空箭堆叠计数并显示持续条。"
 	L.bolt_message = "%2$d层虚空箭：>%1$s<！"
 
-	L.blue = "蓝"
-	L.green = "绿"
-	L.purple = "粉"
-	L.yellow = "黄"
-	L.black = "黑"
-	L.red = "红"
+	L.blue = "|cFF0080FF蓝|r"
+	L.green = "|cFF088A08绿|r"
+	L.purple = "|cFF9932CD粉|r"
+	L.yellow = "|cFFFFA901黄|r"
+	L.black = "|cFF424242黑|r"
+	L.red = "|cFFFF0404红|r"
 
 	L.blobs = "血球"
 	L.blobs_bar = "下一血球"

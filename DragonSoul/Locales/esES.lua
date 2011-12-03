@@ -35,12 +35,12 @@ if L then
 	L.bolt_desc = "Alerta para tanques. Cuenta los stacs de Descarga de Vacío y muestra una barra con su duración."
 	L.bolt_message = "%2$dx Descarga en %1$s"
 
-	L.blue = "Azul"
-	L.green = "Verde"
-	L.purple = "Morado"
-	L.yellow = "Amarillo"
-	L.black = "Negro"
-	L.red = "Rojo"
+	L.blue = "|cFF0080FFAzul|r"
+	L.green = "|cFF088A08Verde|r"
+	L.purple = "|cFF9932CDMorado|r"
+	L.yellow = "|cFFFFA901Amarillo|r"
+	L.black = "|cFF424242Negro|r"
+	L.red = "|cFFFF0404Rojo|r"
 
 	L.blobs = "Manchas"
 	L.blobs_bar = "Próxima Mancha"

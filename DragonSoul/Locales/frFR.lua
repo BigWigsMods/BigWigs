@@ -35,12 +35,12 @@ if L then
 	L.bolt_desc = "Alerte pour tanks uniquement. Compte les cumuls d'éclairs de Vide et affiche une barre de durée."
 	L.bolt_message = "%2$dx Éclairs sur %1$s"
 
-	L.blue = "Bleu"
-	L.green = "Vert"
-	L.purple = "Violet"
-	L.yellow = "Jaune"
-	L.black = "Noir"
-	L.red = "Rouge"
+	L.blue = "|cFF0080FFBleu|r"
+	L.green = "|cFF088A08Vert|r"
+	L.purple = "|cFF9932CDViolet|r"
+	L.yellow = "|cFFFFA901Jaune|r"
+	L.black = "|cFF424242Noir|r"
+	L.red = "|cFFFF0404Rouge|r"
 
 	L.blobs = "Globules"
 	L.blobs_bar = "Proch. globules"

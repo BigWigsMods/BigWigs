@@ -19,12 +19,12 @@ if L then
 	L.bolt_icon = 108383
 	L.bolt_message = "%2$dx Bolt on %1$s"
 
-	L.blue = "Blue"
-	L.green = "Green"
-	L.purple = "Purple"
-	L.yellow = "Yellow"
-	L.black = "Black"
-	L.red = "Red"
+	L.blue = "|cFF0080FFBlue|r"
+	L.green = "|cFF088A08Green|r"
+	L.purple = "|cFF9932CDPurple|r"
+	L.yellow = "|cFFFFA901Yellow|r"
+	L.black = "|cFF424242Black|r"
+	L.red = "|cFFFF0404Red|r"
 
 	L.blobs = "Blobs"
 	L.blobs_bar = "Next blob spawn"
@@ -38,20 +38,13 @@ L.bolt = L.bolt.." "..INLINE_TANK_ICON
 -- Locals
 --
 
-local blue = ("|cFF0080FF%s|r"):format(L["blue"])
-local green = ("|cFF088A08%s|r"):format(L["green"])
-local purple = ("|cFF9932CD%s|r"):format(L["purple"])
-local yellow = ("|cFFFFA901%s|r"):format(L["yellow"])
-local black = ("|cFF424242%s|r"):format(L["black"])
-local red = ("|cFFFF0404%s|r"):format(L["red"])
-
 local colorCombinations = {
-	[105420] = { purple, green, blue, black },
-	[105435] = { green, red, black, blue },
-	[105436] = { green, yellow, red, black },
-	[105437] = { blue, purple, yellow, green },
-	[105439] = { blue, black, yellow, purple },
-	[105440] = { purple, red, black, yellow },
+	[105420] = { L.purple, L.green, L.blue, L.black },
+	[105435] = { L.green, L.red, L.black, L.blue },
+	[105436] = { L.green, L.yellow, L.red, L.black },
+	[105437] = { L.blue, L.purple, L.yellow, L.green },
+	[105439] = { L.blue, L.black, L.yellow, L.purple },
+	[105440] = { L.purple, L.red, L.black, L.yellow },
 	--[105441] this is some generic thing, don't use it
 }
 

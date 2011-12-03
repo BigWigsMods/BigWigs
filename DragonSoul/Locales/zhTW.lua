@@ -33,12 +33,12 @@ if L then
 	L.bolt_desc = "只警報坦克。虛無箭堆疊計數並顯示持續條。"
 	L.bolt_message = "%2$d層虛無箭：>%1$s<！"
 
-	L.blue = "藍"
-	L.green = "綠"
-	L.purple = "粉"
-	L.yellow = "黃"
-	L.black = "黑"
-	L.red = "紅"
+	L.blue = "|cFF0080FF藍|r"
+	L.green = "|cFF088A08綠|r"
+	L.purple = "|cFF9932CD粉|r"
+	L.yellow = "|cFFFFA901黃|r"
+	L.black = "|cFF424242黑|r"
+	L.red = "|cFFFF0404紅|r"
 
 	L.blobs = "血珠"
 	L.blobs_bar = "下一血珠"
