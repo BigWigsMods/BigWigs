@@ -33,7 +33,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"bigtentacle", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
-		"last_phase",
+		{106794, "FLASHSHAKE"}, "last_phase",
 		"bosskill",
 	}, {
 		bigtentacle = "ej:4040",
@@ -50,6 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
 	self:Log("SPELL_CAST_START", "Cataclysm", 110044, 106523, 110042, 110043)
 	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- corrupted blood
+	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139, 109599, 109598, 106794, 106791, 106789, 106818) -- 106794 10N
 
 	self:Death("Win", 56173)
 end
@@ -68,6 +69,7 @@ do
 			if t-prev > 5 then
 				prev = t
 				self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
+				self:Bar("hemorrhage", "~"..spellName, 150, spellId) -- Might be an event more accurate to use
 			end
 		end
 	end
@@ -99,6 +101,15 @@ do
 			prev = t
 			self:Message("smalltentacles", unit, "Urgent", spellId, "Alarm")
 		end
+	end
+end
+
+function mod:Shrapnel(player, spellId, _, _, spellName)
+	if UnitIsUnit(player, "player") then
+		local you = CL["you"]:format(spellName)
+		self:LocalMessage(106794, you, "Important", spellId, "Long")
+		self:FlashShake(106794)
+		self:Bar(106794, you, 7, spellId)
 	end
 end
 
