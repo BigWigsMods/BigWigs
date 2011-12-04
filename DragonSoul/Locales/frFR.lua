@@ -61,10 +61,17 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "frFR")
 if L then
-	L.engage_trigger = "Je suis le début de la fin" -- à compléter
+	L.engage_trigger = "Now is the hour of twilight!"
 
 	L.warmup = "Échauffement"
 	L.warmup_desc = "Délai indiquant le temps restant avant le début de la rencontre."
+	L.warmup_trigger = "Je suis le début de la fin" -- à compléter
+
+	L.crystal = "Buff Crystals"
+	L.crystal_desc = "Timers for the various buff crystals the NPC's summon."
+	L.crystal_red = "Red Crystal"
+	L.crystal_green = "Green Crystal"
+	L.crystal_blue = "Blue Crystal"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")

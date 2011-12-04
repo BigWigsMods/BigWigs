@@ -52,10 +52,17 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "zhTW")
 if L then
-	L.engage_trigger = "I sense a great disturbance in the balance approaching. The chaos of it burns my mind"
+	L.engage_trigger = "Now is the hour of twilight!"
 
 	L.warmup = "暮光之時"
 	L.warmup_desc = "暮光之時计时器。"
+	L.warmup_trigger = "I sense a great disturbance in the balance approaching. The chaos of it burns my mind"
+
+	L.crystal = "Buff Crystals"
+	L.crystal_desc = "Timers for the various buff crystals the NPC's summon."
+	L.crystal_red = "Red Crystal"
+	L.crystal_green = "Green Crystal"
+	L.crystal_blue = "Blue Crystal"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhTW")
