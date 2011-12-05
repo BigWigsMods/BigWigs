@@ -26,7 +26,7 @@ if L then
 	L.warmup_trigger = "I am the beginning of the end...the shadow which blots out the sun"
 
 	L.crystal = "Buff Crystals"
-	L.crystal_desc = "Timers for the various buff crystals the NPC's summon."
+	L.crystal_desc = "Timers for the various buff crystals the NPCs summon."
 	L.crystal_icon = "inv_misc_head_dragon_01"
 	L.crystal_red = "Red Crystal"
 	L.crystal_green = "Green Crystal"
