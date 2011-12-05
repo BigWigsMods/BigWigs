@@ -109,7 +109,8 @@ function mod:Shrapnel(player, spellId, _, _, spellName)
 		local you = CL["you"]:format(spellName)
 		self:LocalMessage(106794, you, "Important", spellId, "Long")
 		self:FlashShake(106794)
-		self:Bar(106794, you, 7, spellId)
+		local duration = select(6, UnitDebuff("player", spellName))
+		self:Bar(106794, you, duration, spellId)
 	end
 end
 

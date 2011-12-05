@@ -112,8 +112,8 @@ do
 	function mod:FadingLight(player, spellId, _, _, spellName)
 		lightTargets[#lightTargets + 1] = player
 		if UnitIsUnit(player, "player") then
-			local remaining = (select(6, UnitDebuff(player, spellName)))
-			self:Bar(105925, CL["you"]:format(spellName), remaining, spellId)
+			local duration = select(6, UnitDebuff("player", spellName))
+			self:Bar(105925, CL["you"]:format(spellName), duration, spellId)
 			self:FlashShake(105925)
 		end
 		if not scheduled then
