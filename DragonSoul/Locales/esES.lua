@@ -25,7 +25,7 @@ if L then
 	L.darkness = "¡Fiesta de tentáculos!"
 	L.darkness_desc = "Esta fase comienza, cuando la esfera de vacío golpea al jefe."
 
-	L.shadows = "Shadows"
+	L.shadows = "Sombras"
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES")
@@ -61,19 +61,19 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "esES")
 if L then
-	L.engage_trigger = "Now is the hour of twilight!"
+	L.engage_trigger = "¡Ha llegado la Hora del Crepúsculo!"
 
 	L.warmup = "Calentamiento"
 	L.warmup_desc = "Tiempo de calentamiento"
 	L.warmup_trigger = "Soy el principio del fin, la sombra que eclipsa el Sol, la campana que tañe por tu muerte."
 
-	L.crystal = "Buff Crystals"
-	L.crystal_desc = "Timers for the various buff crystals the NPC's summon."
-	L.crystal_red = "Red Crystal"
-	L.crystal_green = "Green Crystal"
-	L.crystal_blue = "Blue Crystal"
+	L.crystal = "Cristales de mejora"
+	L.crystal_desc = "Contadores para varios cristales de mejora que invocan los NPC's."
+	L.crystal_red = "Cristal rojo"
+	L.crystal_green = "Cristal verde"
+	L.crystal_blue = "Cristal azul"
 
-	L.twilight = "Twilight"
+	L.twilight = "Crepúsculo"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")
