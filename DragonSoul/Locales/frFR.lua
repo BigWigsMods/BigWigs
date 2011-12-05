@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Morchok", "frFR")
 if not L then return end
 if L then
-	L.engage_trigger = "Vous cherchez à arrêter l'avalanche. Je vais vous ensevelir." -- à vérifier
+	L.engage_trigger = "Vous cherchez à arrêter l'avalanche. Je vais vous ensevelir."
 
 	L.crush = "Ecraser armure"
 	L.crush_desc = "Alerte pour tanks uniquement. Compte les cumuls d'écraser armure et affiche une barre de durée."
@@ -25,7 +25,7 @@ if L then
 	L.darkness = "La boum des tentacules !"
 	L.darkness_desc = "Cette phase commence quand la boule de Vide touche le boss."
 
-	L.shadows = "Shadows"
+	L.shadows = "Ombres"
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "frFR")
@@ -49,7 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "frFR")
 if L then
-	L.engage_trigger = "Vous êtes face à la Lieuse des tempêtes ! Je vais tous vous massacrer." -- à vérifier
+	L.engage_trigger = "Vous êtes face à la Lieuse des tempêtes ! Je vais tous vous massacrer."
 
 	L.lightning_or_frost = "Foudre ou Glace"
 	L.ice_next = "Phase de glace"
@@ -61,17 +61,17 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "frFR")
 if L then
-	L.engage_trigger = "Now is the hour of twilight!"
+	L.engage_trigger = "L'heure du Crépuscule a sonné !"
 
 	L.warmup = "Échauffement"
-	L.warmup_desc = "Délai indiquant le temps restant avant le début de la rencontre."
-	L.warmup_trigger = "Je suis le début de la fin" -- à compléter
+	L.warmup_desc = "Délai avant le début de la rencontre."
+	L.warmup_trigger = "Je suis le début de la fin, l'ombre qui cache le soleil, le beffroi qui sonne votre glas."
 
-	L.crystal = "Buff Crystals"
-	L.crystal_desc = "Timers for the various buff crystals the NPC's summon."
-	L.crystal_red = "Red Crystal"
-	L.crystal_green = "Green Crystal"
-	L.crystal_blue = "Blue Crystal"
+	L.crystal = "Cristaux d'amélioration"
+	L.crystal_desc = "Délais pour les divers cristaux d'amélioration que les PNJs invoquent."
+	L.crystal_red = "Cristal rouge"
+	L.crystal_green = "Cristal vert"
+	L.crystal_blue = "Cristal bleu"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
