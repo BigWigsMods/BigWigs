@@ -33,7 +33,9 @@ if L then
 	L.crystal_green_icon = "inv_misc_head_dragon_green"
 	L.crystal_blue = "Blue Crystal"
 	L.crystal_blue_icon = "inv_misc_head_dragon_blue"
-	L.crystal_red_icon = "inv_misc_head_dragon_bronze"
+	L.crystal_bronze_icon = "inv_misc_head_dragon_bronze"
+
+	L.twilight = "Twilight"
 end
 L = mod:GetLocale()
 
@@ -57,7 +59,7 @@ function mod:OnBossEnable()
 	self:Emote("Gift", L["crystal_icon"])
 	self:Emote("Dreams", L["crystal_green_icon"])
 	self:Emote("Magic", L["crystal_blue_icon"])
-	self:Emote("Loop", L["crystal_red_icon"])
+	self:Emote("Loop", L["crystal_bronze_icon"])
 
 	self:Death("Win", 55294)
 end
@@ -88,12 +90,12 @@ function mod:Dreams()
 end
 
 function mod:Magic()
-	self:Bar("crystal", EJ_GetSectionInfo(4241), 75, L["crystal_red_icon"]) -- Timeloop
+	self:Bar("crystal", EJ_GetSectionInfo(4241), 75, L["crystal_bronze_icon"]) -- Timeloop
 	self:Message("crystal", L["crystal_blue"], "Positive", L["crystal_blue_icon"], "Info")
 end
 
 function mod:Loop()
-	self:Message("crystal", EJ_GetSectionInfo(4241), "Positive", L["crystal_red_icon"], "Info") -- Timeloop
+	self:Message("crystal", EJ_GetSectionInfo(4241), "Positive", L["crystal_bronze_icon"], "Info") -- Timeloop
 end
 
 function mod:HourofTwilight(_, spellId, _, _, spellName)
@@ -101,6 +103,7 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Important", spellId, "Alert")
 	hourCounter = hourCounter + 1
 	self:Bar(106371, ("%s (%d)"):format(spellName, hourCounter), 45, spellId)
+	self:Bar(106371, CL["cast"]:format(L["twilight"]), 5, spellId)
 end
 
 do
@@ -118,7 +121,7 @@ do
 		end
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(fadingLight, 0.1, spellName)
+			self:ScheduleTimer(fadingLight, 0.2, spellName)
 		end
 	end
 end

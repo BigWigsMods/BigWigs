@@ -72,6 +72,8 @@ if L then
 	L.crystal_red = "Cristal rouge"
 	L.crystal_green = "Cristal vert"
 	L.crystal_blue = "Cristal bleu"
+
+	L.twilight = "Twilight"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
