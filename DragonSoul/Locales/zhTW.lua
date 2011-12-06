@@ -67,6 +67,10 @@ if L then
 	L.twilight = "Twilight"
 	L.cast = "Twilight Cast Bar"
 	L.cast_desc = "Show a 5 second bar for Twilight being cast."
+
+	L.lightyou = "Fading Light on You"
+	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
+	L.lightyou_bar = "<You Explode>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhTW")

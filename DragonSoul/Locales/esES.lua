@@ -76,6 +76,10 @@ if L then
 	L.twilight = "Crepúsculo"
 	L.cast = "Crepúsculo barra de casteo"
 	L.cast_desc = "Mostrar una barra de 5 segundos cuando se esté casteando Crepúsculo."
+
+	L.lightyou = "Fading Light on You"
+	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
+	L.lightyou_bar = "<You Explode>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")

@@ -22,7 +22,8 @@ if L then
 	L.engage_trigger = "Now is the hour of twilight!"
 
 	L.warmup = "Warmup"
-	L.warmup_desc = "Warmup timer"
+	L.warmup_desc = "Time until combat with the boss starts."
+	L.warmup_icon = "achievment_boss_ultraxion"
 	L.warmup_trigger = "I am the beginning of the end...the shadow which blots out the sun"
 
 	L.crystal = "Buff Crystals"
@@ -39,6 +40,11 @@ if L then
 	L.cast = "Twilight Cast Bar"
 	L.cast_desc = "Show a 5 second bar for Twilight being cast."
 	L.cast_icon = 106371
+
+	L.lightyou = "Fading Light on You"
+	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
+	L.lightyou_bar = "<You Explode>"
+	L.lightyou_icon = 105925
 end
 L = mod:GetLocale()
 
@@ -49,9 +55,11 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		{106371, "FLASHSHAKE"}, "cast",
-		"warmup", {105925, "FLASHSHAKE"}, "crystal", "berserk", "bosskill",
+		{105925, "FLASHSHAKE"}, "lightyou",
+		"warmup", "crystal", "berserk", "bosskill",
 	}, {
 		[106371] = L["twilight"],
+		[105925] = GetSpellInfo(105925),
 		warmup = CL["general"],
 	}
 end
@@ -104,11 +112,11 @@ function mod:Loop()
 end
 
 function mod:HourofTwilight(_, spellId, _, _, spellName)
-	self:FlashShake(106371)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Important", spellId, "Alert")
 	hourCounter = hourCounter + 1
 	self:Bar(106371, ("%s (%d)"):format(spellName, hourCounter), 45, spellId)
 	self:Bar("cast", CL["cast"]:format(L["twilight"]), 5, spellId)
+	self:FlashShake(106371)
 end
 
 do
@@ -121,7 +129,7 @@ do
 		lightTargets[#lightTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			local duration = select(6, UnitDebuff("player", spellName))
-			self:Bar(105925, CL["you"]:format(spellName), duration, spellId)
+			self:Bar("lightyou", L["lightyou_bar"], duration, spellId)
 			self:FlashShake(105925)
 		end
 		if not scheduled then
