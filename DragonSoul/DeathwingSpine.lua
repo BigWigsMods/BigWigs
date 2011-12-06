@@ -100,7 +100,7 @@ end
 
 function mod:FieryGripCast(_, spellId, _, _, spellName)
 	-- very random, not sure if there is even a point to this
-	self:Bar(109457, "~"..spellName, 28, spellId)
+	self:Bar(109457, "~"..spellName, 23, spellId)
 end
 
 function mod:Nuclear(_, spellId, _, _, spellName)
