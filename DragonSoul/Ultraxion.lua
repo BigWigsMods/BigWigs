@@ -37,7 +37,7 @@ if L then
 
 	L.twilight = "Twilight"
 	L.cast = "Twilight Cast Bar"
-	L.cast_bar = "Show a 5 second bar for Twilight being cast."
+	L.cast_desc = "Show a 5 second bar for Twilight being cast."
 	L.cast_icon = 106371
 end
 L = mod:GetLocale()
@@ -51,7 +51,7 @@ function mod:GetOptions(CL)
 		{106371, "FLASHSHAKE"}, "cast",
 		"warmup", {105925, "FLASHSHAKE"}, "crystal", "berserk", "bosskill",
 	}, {
-		106371 = L["twilight"],
+		[106371] = L["twilight"],
 		warmup = CL["general"],
 	}
 end
