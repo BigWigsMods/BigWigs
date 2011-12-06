@@ -29,6 +29,7 @@ local colorModule
 local showToggleOptions = nil
 local advancedOptions = {}
 local zoneModules = {}
+local panels = {}
 
 local pluginOptions = {
 	name = L["Customize ..."],
@@ -320,25 +321,28 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
-	local zones = BigWigsLoader:GetZoneMenus()
-	local tmp = {}
-	local sorted = {}
-	for zone in pairs(zones) do tmp[zone] = true end
-	for zone in pairs(zoneModules) do tmp[zone] = true end
-	for zone in pairs(tmp) do sorted[#sorted + 1] = zone end
-	table.sort(sorted)
-	for i, zone in next, sorted do self:GetZonePanel(zone) end
-	tmp = nil
-	sorted = nil
+	local tmp, tmpZone = {}, {}
+	for k in pairs(BigWigsLoader:GetZoneMenus()) do
+		local zone = translateZoneID(k)
+		tmp[zone] = k
+		tmpZone[#tmpZone+1] = zone
+	end
+	table.sort(tmpZone)
+	for i=1, #tmpZone do
+		local zone = tmpZone[i]
+		self:GetZonePanel(zone, tmp[zone])
+	end
+	wipe(tmp)
+	wipe(tmpZone)
+	tmp, tmpZone = nil, nil
 end
-
 
 function options:Open()
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
 			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
 			if not menu then return end
-			InterfaceOptionsFrame_OpenToCategory(menu)
+			InterfaceOptionsFrame_OpenToCategory(panels[menu])
 		end
 	end
 	if not InterfaceOptionsFrame:IsShown() then
@@ -836,7 +840,6 @@ local function onZoneHide(frame)
 end
 
 do
-	local panels = {}
 	local noop = function() end
 	function options:GetPanel(id, parent, zoneId)
 		if not panels[id] then
@@ -857,9 +860,8 @@ do
 		return panels[id]
 	end
 
-	function options:GetZonePanel(zoneId)
-		local zoneName = translateZoneID(zoneId)
-		if not zoneName then return end
+	function options:GetZonePanel(zoneName, zoneId)
+		if not zoneName or not zoneId then return end
 		local panel, created = self:GetPanel(zoneName, L["Big Wigs Encounters"], zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
