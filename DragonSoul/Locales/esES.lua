@@ -74,6 +74,8 @@ if L then
 	L.crystal_blue = "Cristal azul"
 
 	L.twilight = "Crepúsculo"
+	L.cast = "Twilight Cast Bar"
+	L.cast_bar = "Show a 5 second bar for Twilight being cast."
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")

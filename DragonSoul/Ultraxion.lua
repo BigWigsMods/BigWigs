@@ -36,6 +36,9 @@ if L then
 	L.crystal_bronze_icon = "inv_misc_head_dragon_bronze"
 
 	L.twilight = "Twilight"
+	L.cast = "Twilight Cast Bar"
+	L.cast_bar = "Show a 5 second bar for Twilight being cast."
+	L.cast_icon = 106371
 end
 L = mod:GetLocale()
 
@@ -43,11 +46,13 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
-		"warmup", {106371, "FLASHSHAKE"}, {105925, "FLASHSHAKE"}, "crystal", "berserk", "bosskill",
+		{106371, "FLASHSHAKE"}, "cast",
+		"warmup", {105925, "FLASHSHAKE"}, "crystal", "berserk", "bosskill",
 	}, {
-		warmup = "general",
+		106371 = L["twilight"],
+		warmup = CL["general"],
 	}
 end
 
@@ -103,7 +108,7 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Important", spellId, "Alert")
 	hourCounter = hourCounter + 1
 	self:Bar(106371, ("%s (%d)"):format(spellName, hourCounter), 45, spellId)
-	self:Bar(106371, CL["cast"]:format(L["twilight"]), 5, spellId)
+	self:Bar("cast", CL["cast"]:format(L["twilight"]), 5, spellId)
 end
 
 do
