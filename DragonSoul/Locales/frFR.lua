@@ -75,7 +75,7 @@ if L then
 
 	L.twilight = "Crépuscule"
 	L.cast = "Barre d'incantation d'Heure du Crépuscule"
-	L.cast_bar = "Affiche une barre de 5 secondes pour l'incantation d'Heure du Crépuscule."
+	L.cast_desc = "Affiche une barre de 5 secondes pour l'incantation d'Heure du Crépuscule."
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
