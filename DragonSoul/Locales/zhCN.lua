@@ -7,6 +7,8 @@ if L then
 	L.crush_desc = "只警报坦克。破甲堆叠计数并显示持续条。"
 	L.crush_message = "%2$d层破甲：>%1$s<！"
 
+	L.blood = "大地黑血"
+
 	L.explosion = "爆裂水晶"
 end
 
@@ -23,7 +25,7 @@ if L then
 	L.darkness = "触手迪斯科聚会！"
 	L.darkness_desc = "当此阶段开始，末日黑洞撞击首领。"
 
-	L.shadows = "Shadows"
+	L.shadows = "干扰之影"
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "zhCN")
@@ -47,6 +49,14 @@ end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "zhCN")
 if L then
+	L.engage_trigger = "You cross the Stormbinder! I'll slaughter you all."
+
+	L.lightning_or_frost = "闪电或寒冰"
+	L.ice_next = "寒冰阶段"
+	L.lightning_next = "闪电阶段"
+
+	L.nextphase = "下一阶段"
+	L.nextphase_desc = "当下一阶段时发出警报。"
 
 end
 
@@ -56,21 +66,21 @@ if L then
 
 	L.warmup = "暮光审判"
 	L.warmup_desc = "暮光审判计时器。"
-	L.warmup_trigger = "I sense a great disturbance in the balance approaching. The chaos of it burns my mind"
+	L.warmup_trigger = "I am the beginning of the end...the shadow which blots out the sun"
 
-	L.crystal = "Buff Crystals"
-	L.crystal_desc = "Timers for the various buff crystals the NPC's summon."
-	L.crystal_red = "Red Crystal"
-	L.crystal_green = "Green Crystal"
-	L.crystal_blue = "Blue Crystal"
+	L.crystal = "增益水晶"
+	L.crystal_desc = "守护巨龙召唤各种增益水晶计时器。"
+	L.crystal_red = "生命赐福红水晶"
+	L.crystal_green = "梦境精华绿水晶"
+	L.crystal_blue = "魔力之源蓝水晶"
 
-	L.twilight = "Twilight"
-	L.cast = "Twilight Cast Bar"
-	L.cast_desc = "Show a 5 second bar for Twilight being cast."
+	L.twilight = "暮光审判"
+	L.cast = "暮光审判施法条"
+	L.cast_desc = "显示暮光审判5秒施法条。"
 
-	L.lightyou = "Fading Light on You"
-	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
-	L.lightyou_bar = "<You Explode>"
+	L.lightyou = "自身黯淡之光"
+	L.lightyou_desc = "显示自身黯淡之光爆炸剩余计时条。"
+	L.lightyou_bar = "<你将爆炸>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhCN")
@@ -82,6 +92,9 @@ if L then
 	L.sunder = "破甲攻击"
 	L.sunder_desc = "只警报坦克。破甲攻击堆叠计数并显示持续条。"
 	L.sunder_message = "%2$d层破甲攻击：>%1$s<！"
+	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!"
+	L.sapper = "暮光工兵"
+	L.sapper_desc = "暮光工兵对天火号造成伤害。"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "zhCN")
