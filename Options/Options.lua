@@ -29,7 +29,6 @@ local colorModule
 local showToggleOptions = nil
 local advancedOptions = {}
 local zoneModules = {}
-local panels = {}
 
 local pluginOptions = {
 	name = L["Customize ..."],
@@ -340,9 +339,9 @@ end
 function options:Open()
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
-			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
-			if not menu then return end
-			InterfaceOptionsFrame_OpenToCategory(panels[menu])
+			local zoneName = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
+			if not zoneName then return end
+			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(zoneName, module.otherMenu or module.zoneId))
 		end
 	end
 	if not InterfaceOptionsFrame:IsShown() then
@@ -840,6 +839,7 @@ local function onZoneHide(frame)
 end
 
 do
+	local panels = {}
 	local noop = function() end
 	function options:GetPanel(id, parent, zoneId)
 		if not panels[id] then
