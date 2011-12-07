@@ -90,6 +90,7 @@ end
 
 function mod:Feedback(_, spellId, _, _, spellName)
 	self:Message(108934, spellName, "Attention", spellId)
+	self:Bar(108934, spellName, 15, spellId)
 	self:Bar("nextphase", nextPhase, 63, nextPhaseIcon)
 end
 
