@@ -9,16 +9,16 @@ end
 L = BigWigs:NewBossLocale("Occu'thar", "ruRU")
 if not L then return end
 if L then
-	L.shadows_bar = "тени"
+	L.shadows_bar = "~Тени"
 	L.destruction_bar = "<Взрыв>"
-	L.eyes_bar = "глаза"
+	L.eyes_bar = "~Глаза"
 
 	L.fire_message = "Лазер, пиу-пиу!"
-	L.fire_bar = "~лазер"
+	L.fire_bar = "~Лазер"
 end
 
 L = BigWigs:NewBossLocale("Alizabal", "ruRU")
 if L then
-	L.first_ability = "Skewer or Hate"
+	L.first_ability = "Вертел или Ненависть"
 end
 
