@@ -56,7 +56,9 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(108862, (GetSpellInfo(108862)), 42, 108862) -- Twilight Onslaught
-	self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
+	if not self:LFR() then
+		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
+	end
 end
 
 --------------------------------------------------------------------------------
