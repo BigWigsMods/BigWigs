@@ -58,7 +58,7 @@ function mod:Hate(_, spellId, _, _, spellName)
 	self:Message(105067, spellName, "Important", spellId)
 end
 
-function mod:Skewer(_, spellId)
+function mod:Skewer(_, spellId, _, _, spellName)
 	if not firstAbility then
 		firstAbility = true
 		self:Bar(105067, hate, 8, 105067)
