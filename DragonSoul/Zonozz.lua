@@ -62,16 +62,14 @@ end
 
 function mod:OnEngage(diff)
 	local psychicDrain = GetSpellInfo(104322)
-	local voidoftheUnmaking = GetSpellInfo(103627)
 	if not self:LFR() then
 		self:Berserk(360) -- confirmed 10 man heroic
 	end
+	self:Bar("ball", L["ball"], 6, L["ball_icon"])
 	if diff > 2 then
-		self:Bar("ball", voidoftheUnmaking, 6, L["ball_icon"])
 		self:Bar(104322, psychicDrain, 12, 104322)
 	else
 		self:Bar(104322, psychicDrain, 16, 104322)
-		self:Bar("ball", voidoftheUnmaking, 26, L["ball_icon"])
 	end
 end
 
