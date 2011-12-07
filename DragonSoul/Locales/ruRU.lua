@@ -31,7 +31,16 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
 if L then
+	L.left_start = "скоро крен слева"
+	L.right_start = "скоро крен справа"
+	L.left = "крен налево"
+	L.right = "крен направо"
 
+
+
+	L.roll_soon = "Бочка скоро!"
+
+	L.not_hooked = "Вы >НЕ< зацеплены!"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
