@@ -37,7 +37,7 @@ L.sunder = L.sunder.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		"sunder", 108862, {108076, "SAY", "FLASHSHAKE", "ICON" }, "sapper", "bosskill",
+		"sunder", 108862, {108076, "SAY", "FLASHSHAKE", "ICON"}, "sapper", {108046, "SAY", "FLASHSHAKE"}, "bosskill",
 	}, {
 		sunder = "general"
 	}
@@ -46,11 +46,12 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "TwilightFlames", 108076) -- did they just remove this?
 	self:Log("SPELL_CAST_START", "TwilightOnslaught", 107588)
+	self:Log("SPELL_CAST_START", "Shockwave", 108046)
 	self:Log("SPELL_AURA_APPLIED", "Sunder", 108043)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sunder", 108043)
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE", "Sapper")
+	self:Emote("Sapper", L["sapper_trigger"])
 
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 56427)
 end
 
@@ -65,11 +66,9 @@ end
 -- Event Handlers
 --
 
-function mod:Sapper(_, msg)
-	if msg:find(L["sapper_trigger"]) then
-		self:Message("sapper", L["sapper"], "Important", L["sapper_icon"], "Info")
-		self:Bar("sapper", L["sapper"], 40, L["sapper_icon"])
-	end
+function mod:Sapper()
+	self:Message("sapper", L["sapper"], "Important", L["sapper_icon"], "Info")
+	self:Bar("sapper", L["sapper"], 40, L["sapper_icon"])
 end
 
 do
@@ -96,6 +95,38 @@ end
 function mod:TwilightOnslaught(_, spellId, _, _, spellName)
 	self:Message(108862, spellName, "Urgent", spellId, "Alarm")
 	self:Bar(108862, spellName, 35, spellId)
+end
+
+do
+	local timer, fired = nil, 0
+	local function shockWarn()
+		fired = fired + 1
+		local player = UnitName("boss1target")
+		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 11) then
+			-- If we've done 12 (0.6s) checks and still not passing the threat check, it's probably being cast on the tank
+			local shockwave = GetSpellInfo(108046)
+			mod:TargetMessage(108046, shockwave, player, "Urgent", 108046, "Alarm")
+			mod:CancelTimer(timer, true)
+			timer = nil
+			if UnitIsUnit("boss1target", "player") then
+				mod:FlashShake(108046)
+				mod:Say(108046, CL["say"]:format(shockwave))
+			end
+			return
+		end
+		-- 19 == 0.95sec
+		-- Safety check if the unit doesn't exist
+		if fired > 18 then
+			mod:CancelTimer(timer, true)
+			timer = nil
+		end
+	end
+	function mod:Shockwave()
+		fired = 0
+		if not timer then
+			timer = self:ScheduleRepeatingTimer(shockWarn, 0.05)
+		end
+	end
 end
 
 function mod:Sunder(player, spellId, _, _, spellName, buffStack)
