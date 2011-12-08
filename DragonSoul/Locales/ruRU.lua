@@ -11,12 +11,37 @@ end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "ruRU")
 if L then
+	L.engage_trigger = "Ззоф Шуул'уах. Ток фшш Н'Зот!"
+	
+	L.ball = "Сфера"
+	L.ball_desc = "Сфера, которая отскакивает от игроков и босса."
 
+	L.bounce = "Отскок Сферы"
+	L.bounce_desc = "Счетчик для отскакиваний сферы."
+
+	L.darkness = "Диско пати Щупалец!"
+	L.darkness_desc = "Эта фаза начинается, когда сфера попадает в босса."
+
+	L.shadows = "Тени"
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "ruRU")
 if L then
+	L.engage_trigger = "Иилт ки'уотк шн'ма йе'глу Шат'Яр! Х'ИУН ИИЛТ!"
 
+	L.bolt_desc = "Только для танков. Считает стаки стрел тьмы и показывает их таймер."
+	L.bolt_message = "%2$dx Стрел на %1$s"
+
+	L.blue = "|cFF0080FFСиняя|r"
+	L.green = "|cFF088A08Зеленая|r"
+	L.purple = "|cFF9932CDФиолетовая|r"
+	L.yellow = "|cFFFFA901Желтая|r"
+	L.black = "|cFF424242Черная|r"
+	L.red = "|cFFFF0404Красная|r"
+
+	L.blobs = "Капли"
+	L.blobs_bar = "След.Капли"
+	L.blobs_desc = "Капли ползут к боссу"
 end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "ruRU")
@@ -31,12 +56,40 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "ruRU")
 if L then
+	L.engage_trigger = "Настало Время Сумерек!"
 
+	L.warmup = "Разминка"
+	L.warmup_desc = "Время до начала боя с боссом."
+	L.warmup_trigger = "Я - начало конца... Тень, что заслоняет солнце... Звонящий по вам колокол…"
+
+	L.crystal = "Бафф Кристаллов"
+	L.crystal_desc = "Таймеры для различных кристаллов, даруемых Аспектами."
+	L.crystal_red = "Красный Кристалл"
+	L.crystal_green = "Зелёный Кристалл"
+	L.crystal_blue = "Синий Кристалл"
+
+	L.twilight = "Сумерки"
+	L.cast = "Полоса каста Сумерек"
+	L.cast_desc = "Показывает 5 секундную полосу для начала каста Сумерек."
+
+	L.lightyou = "Гаснущий свет на ТЕБЕ"
+	L.lightyou_desc = "Показывает полосу с таймером взрыва Гаснущего света."
+	L.lightyou_bar = "<Ты Взорвешься>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
 if L then
+	L.harpooning = "Гарпун"
 
+	L.rush = "Натиск Клинка"
+
+	L.sunder = "Раскол брони"
+	L.sunder_desc = "Только для танков. Считает стаки раскола брони и показывает их таймер."
+	L.sunder_message = "%2$dx Раскол на %1$s"
+
+	L.sapper_trigger = "Дракон пикирует на палубу, чтобы сбросить на нее сумеречного сапера!"
+	L.sapper = "Сапер"
+	L.sapper_desc = "Сапер наносит повреждения кораблю"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
@@ -46,11 +99,11 @@ if L then
 	L.left = "наклоняется влево"
 	L.right = "наклоняется вправо"
 	L.not_hooked = "Вы >НЕ< зацеплены!"
-	L.roll_message = "He's rolling, rolling, rolling!"
-	L.level_trigger = "levels out"
-	L.level_message = "Nevermind, he leveled out!"
+	L.roll_message = "Он вращается, вращается, вращается!"
+	L.level_trigger = "выравнивается"
+	L.level_message = "Неважно, он выравнивается!"
 
-	L.exposed = "Armor Exposed"
+	L.exposed = "Броня Вскрыта"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
