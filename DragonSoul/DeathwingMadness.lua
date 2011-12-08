@@ -12,6 +12,10 @@ mod:RegisterEnableMob(56173, 56168, 56103) -- Deathwing, Wing Tentacle, Thrall
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.impale = EJ_GetSectionInfo(4114)
+	L.impale_desc = "Tank alert only. "..select(2,EJ_GetSectionInfo(4114))
+	L.imaple_icon = 106400
+
 	L.last_phase, L.last_phase_desc = EJ_GetSectionInfo(4046)
 	L.last_phase_icon = 109592
 
@@ -25,6 +29,7 @@ if L then
 	L.hemorrhage_icon = "SPELL_FIRE_MOLTENBLOOD"
 end
 L = mod:GetLocale()
+L.impale = L.impale.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -32,7 +37,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"bigtentacle", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
+		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
 		{106794, "FLASHSHAKE"}, "last_phase",
 		"bosskill",
 	}, {
@@ -45,6 +50,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Hemorrhage")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageUnit")
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", "Impale")
 	self:Log("SPELL_AURA_APPLIED", "BlisteringTentacle", 109588, 109589, 109590, 105444)
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
@@ -58,6 +64,18 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+do
+	local prev = 0
+	function mod:Impale(_, _, spellName, _, _, spellId)
+		if UnitGroupRolesAssigned("player") ~= "TANK" then return end
+		if spellName == L["impale"] then
+			local t = GetTime()
+			if t-prev > 5 then
+				self:Message("impale", spellName, "Urgent", spellId, "Alarm")
+			end
+		end
+	end
+end
 
 -- XXX maybe too much sound? All of them are for adds tho that you have to kill ASAP.
 do
