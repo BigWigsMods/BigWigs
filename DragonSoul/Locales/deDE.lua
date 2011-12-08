@@ -1,7 +1,7 @@
 ﻿local L = BigWigs:NewBossLocale("Morchok", "deDE")
 if not L then return end
 if L then
-	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+	L.engage_trigger = "Ihr versucht, eine Lawine aufzuhalten. Ich werde Euch begraben."
 
 	L.crush = "Rüstung zerschmettern"
 	L.crush_desc = "Nur für Tanks. Zählt die Stapel von Rüstung zerschmettern und zeigt eine Timerleiste an."
@@ -49,7 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "deDE")
 if L then
-	L.engage_trigger = "You cross the Stormbinder! I'll slaughter you all."
+	L.engage_trigger = "Ihr legt euch mit der Sturmbinderin an! Ich werde euch alle vernichten."
 
 	L.lightning_or_frost = "Blitz oder Frost"
 	L.ice_next = "Eisphase"
@@ -61,11 +61,11 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "deDE")
 if L then
-	L.engage_trigger = "Now is the hour of twilight!"
+	L.engage_trigger = "Jetzt ist die Stunde des Zwielichts!"
 
 	L.warmup = "Warmup"
 	L.warmup_desc = "Zeit bis zum Starten des Bosskampfes."
-	L.warmup_trigger = "I am the beginning of the end...the shadow which blots out the sun"
+	L.warmup_trigger = "Ich bin der Anfang des Endes, der Schatten, der die Sonne verdunkelt"
 
 	L.crystal = "Buff-Kristalle"
 	L.crystal_desc = "Zeigt Timer für die verschiedenen Buff-Kristalle der NPCs an."
@@ -84,7 +84,7 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "deDE")
 if L then
-	L.harpooning = "Harpooning"
+	L.harpooning = "Harpune"
 
 	L.rush = "Klingenansturm"
 
@@ -92,20 +92,20 @@ if L then
 	L.sunder_desc = "Nur für Tanks. Zählt die Stapel von Rüstung zerreißen und zeigt eine Timerleiste an."
 	L.sunder_message = "%2$dx Rüstung zerreißen auf %1$s"
 
-	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!"
+	L.sapper_trigger = "Ein Drache stürzt herab, um einen Zwielichtpionier auf dem Deck abzusetzen!"
 	L.sapper = "Pionier"
 	L.sapper_desc = "Der Pionier (Schurke) spawnt und fügt dem Schiff Schaden zu."
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "deDE")
 if L then
-	L.left_start = "rollt bald nach links"
-	L.right_start = "rollt bald nach rechts"
-	L.left = "Rolle nach links"
-	L.right = "Rolle nach rechts"
+	L.left_start = "gleich nach links rollen"
+	L.right_start = "gleich nach rechts rollen"
+	L.left = "rollt nach links"
+	L.right = "rollt nach rechts"
 	L.not_hooked = "DU bist >NICHT< befestigt!"
 	L.roll_message = "Er rollt, rollt, rollt!"
-	L.level_trigger = "beruhigt sich"
+	L.level_trigger = "levels out"
 	L.level_message = "Wieder ausgeglichen!"
 
 	L.exposed = "Rüstung freigelegt"
