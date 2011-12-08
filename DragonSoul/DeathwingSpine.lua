@@ -82,12 +82,14 @@ do
 	end
 	function mod:Rolls()
 		self:Message("roll", L["roll_message"], "Positive", L["roll_icon"])
-		self:CancelTimer(timer)
+		self:CancelTimer(timer, true)
+		timer = nil
 	end
 	function mod:Level()
 		self:Message("roll", L["level_message"], "Attention", L["roll_icon"])
 		self:SendMessage("BigWigs_StopBar", self, L["roll"])
-		self:CancelTimer(timer)
+		self:CancelTimer(timer, true)
+		timer = nil
 	end
 end
 
