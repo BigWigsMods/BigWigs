@@ -316,13 +316,13 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
 	local zones = BigWigsLoader:GetZoneMenus()
-	local tmp = {}
+	local tmp = setmetatable({}, {__newindex=function(t,k) rawset(t, translateZoneID(k), k) end})
 	local sorted = {}
 	for zone in pairs(zones) do tmp[zone] = true end
 	for zone in pairs(zoneModules) do tmp[zone] = true end
 	for zone in pairs(tmp) do sorted[#sorted + 1] = zone end
 	table.sort(sorted)
-	for i, zone in next, sorted do self:GetZonePanel(zone) end
+	for i, zone in next, sorted do self:GetZonePanel(tmp[zone]) end
 	tmp = nil
 	sorted = nil
 end
