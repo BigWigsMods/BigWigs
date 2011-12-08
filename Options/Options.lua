@@ -181,12 +181,7 @@ end
 
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
-	local name
-	if id < 10 then
-		name = select(id, GetMapContinents())
-	else
-		name = GetMapNameByID(id)
-	end
+	local name = GetMapNameByID(id) or select(id, GetMapContinents())
 	if not name then
 		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
 	end
@@ -320,28 +315,24 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
-	local tmp, tmpZone = {}, {}
-	for k in pairs(BigWigsLoader:GetZoneMenus()) do
-		local zone = translateZoneID(k)
-		tmp[zone] = k
-		tmpZone[#tmpZone+1] = zone
-	end
-	table.sort(tmpZone)
-	for i=1, #tmpZone do
-		local zone = tmpZone[i]
-		self:GetZonePanel(zone, tmp[zone])
-	end
-	wipe(tmp)
-	wipe(tmpZone)
-	tmp, tmpZone = nil, nil
+	local zones = BigWigsLoader:GetZoneMenus()
+	local tmp = {}
+	local sorted = {}
+	for zone in pairs(zones) do tmp[zone] = true end
+	for zone in pairs(zoneModules) do tmp[zone] = true end
+	for zone in pairs(tmp) do sorted[#sorted + 1] = zone end
+	table.sort(sorted)
+	for i, zone in next, sorted do self:GetZonePanel(zone) end
+	tmp = nil
+	sorted = nil
 end
 
 function options:Open()
 	for name, module in BigWigs:IterateBossModules() do
 		if module:IsEnabled() then
-			local zoneName = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
-			if not zoneName then return end
-			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(zoneName, module.otherMenu or module.zoneId))
+			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
+			if not menu then return end
+			InterfaceOptionsFrame_OpenToCategory(menu)
 		end
 	end
 	if not InterfaceOptionsFrame:IsShown() then
@@ -860,8 +851,8 @@ do
 		return panels[id]
 	end
 
-	function options:GetZonePanel(zoneName, zoneId)
-		if not zoneName or not zoneId then return end
+	function options:GetZonePanel(zoneId)
+		local zoneName = translateZoneID(zoneId)
 		local panel, created = self:GetPanel(zoneName, L["Big Wigs Encounters"], zoneId)
 		if created then
 			panel:SetScript("OnShow", onZoneShow)
