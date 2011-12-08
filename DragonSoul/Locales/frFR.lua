@@ -77,9 +77,9 @@ if L then
 	L.cast = "Barre d'incantation d'Heure du Crépuscule"
 	L.cast_desc = "Affiche une barre de 5 secondes pour l'incantation d'Heure du Crépuscule."
 
-	L.lightyou = "Fading Light on You"
-	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
-	L.lightyou_bar = "<You Explode>"
+	L.lightyou = "Lumière faiblissante sur vous"
+	L.lightyou_desc = "Affiche une barre indiquant le temps restant avant que Lumière faiblissante ne vous fasse exploser."
+	L.lightyou_bar = "<Vous explosez>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
@@ -104,11 +104,11 @@ if L then
 	L.left = "fait un tonneau à gauche"
 	L.right = "fait un tonneau à droite"
 	L.not_hooked = "Vous n'êtes >PAS< accroché !"
-	L.roll_message = "He's rolling, rolling, rolling!"
-	L.level_trigger = "levels out"
-	L.level_message = "Nevermind, he leveled out!"
+	L.roll_message = "Et il tourne, tourne, tourne !"
+	L.level_trigger = "se redresse"
+	L.level_message = "Pas grave, il s'est redressé !"
 
-	L.exposed = "Armor Exposed"
+	L.exposed = "Armure exposée"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
