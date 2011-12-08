@@ -103,10 +103,12 @@ if L then
 	L.right_start = "即将右侧翻滚"
 	L.left = "左侧翻滚"
 	L.right = "右侧翻滚"
-
-	L.roll_soon = "即将翻滚！"
-
 	L.not_hooked = ">你< 没有抓牢！"
+	L.roll_message = "He's rolling, rolling, rolling!"
+	L.level_trigger = "levels out"
+	L.level_message = "Nevermind, he leveled out!"
+
+	L.exposed = "Armor Exposed"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhCN")

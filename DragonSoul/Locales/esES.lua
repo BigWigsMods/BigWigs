@@ -103,10 +103,12 @@ if L then
 	L.right_start = "a punto de rodar a la derecha"
 	L.left = "rueda a la izquierda"
 	L.right = "rueda a la derecha"
-
-	L.roll_soon = "¡Barril rodará pronto!"
-
 	L.not_hooked = "¡>NO< estás enganchado!"
+	L.roll_message = "He's rolling, rolling, rolling!"
+	L.level_trigger = "levels out"
+	L.level_message = "Nevermind, he leveled out!"
+
+	L.exposed = "Armor Exposed"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES")

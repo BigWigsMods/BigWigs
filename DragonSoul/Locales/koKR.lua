@@ -103,10 +103,12 @@ if L then
 	L.right_start = "오른쪽으로 회전합니다!"
 	L.left = "왼쪽으로 회전"
 	L.right = "오른쪽으로 회전"
-
-	L.roll_soon = "곧 회전!"
-
 	L.not_hooked = "접착되지 않았음!"
+	L.roll_message = "He's rolling, rolling, rolling!"
+	L.level_trigger = "levels out"
+	L.level_message = "Nevermind, he leveled out!"
+
+	L.exposed = "Armor Exposed"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "koKR")
