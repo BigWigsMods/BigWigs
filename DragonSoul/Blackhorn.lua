@@ -37,7 +37,7 @@ L.sunder = L.sunder.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		"sunder", 108862, {108076, "SAY", "FLASHSHAKE", "ICON"}, "sapper", {108046, "SAY", "FLASHSHAKE"}, "bosskill",
+		"sunder", 108862, {108076, "SAY", "FLASHSHAKE", "ICON"}, "sapper", {108046, "SAY", "FLASHSHAKE"}, "berserk", "bosskill",
 	}, {
 		sunder = "general"
 	}
@@ -59,6 +59,9 @@ function mod:OnEngage(diff)
 	self:Bar(108862, (GetSpellInfo(108862)), 42, 108862) -- Twilight Onslaught
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
+	end
+	if self:Difficulty() > 2 then
+		self:Berserk(420)
 	end
 end
 
