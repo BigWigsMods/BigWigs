@@ -19,12 +19,12 @@ if L then
 	L.bileotron_engage = "Желче-трон оживает и начинает извергать из себя некое вонючее вещество."
 
 	L.next_system_failure = "~Системная ошибка"
-	L.break_message = "%2$dx Разлом на |3-3(%1$s)"
+	L.break_message = "%2$dx Разлом(а) на %1$s"
 
 	L.phase2_message = "Скоро фаза Смертности!"
 
-	L.warmup = "Warmup"
-	L.warmup_desc = "Warmup timer"
+	L.warmup = "Разминка"
+	L.warmup_desc = "Таймер Разминки"
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "ruRU")
@@ -33,10 +33,10 @@ if L then
 	L.blazing = "Помощник - скелет"
 	L.blazing_desc = "Призывает Пыляющее костяное создание."
 	L.blazing_message = "Надвигается помощник!"
-	L.blazing_bar = "скелет"
+	L.blazing_bar = "Скелет"
 
-	L.armageddon = "Armageddon"
-	L.armageddon_desc = "Warn if Armageddon is cast during the head phase."
+	L.armageddon = "Армагеддон"
+	L.armageddon_desc = "Предупреждать, если Армагеддон начинается на фазе головы."
 
 	L.phase2 = "2-ая фаза"
 	L.phase2_desc = "Сообщить о переходе во 2-ую фазу и показать проверку близости."
@@ -46,7 +46,7 @@ if L then
 	-- normal
 	L.slump = "Падение (Родео)"
 	L.slump_desc = "Магмарь падает вперед открывая себя, позволяя начать родео."
-	L.slump_bar = "родео"
+	L.slump_bar = "Родео"
 	L.slump_message = "Йихо, погнали!"
 	L.slump_trigger = "%s внезапно падает, выставляя клешки!"
 
@@ -67,7 +67,7 @@ if L then
 
 	--normal
 	L.final_phase = "Финальная фаза"
-	L.final_phase_soon = "Final phase soon!"
+	L.final_phase_soon = "Скоро Финальная фаза!"
 
 	L.release_aberration_message = "%s осталось аберрации!"
 	L.release_all = "%s аберрации!"
@@ -80,7 +80,7 @@ if L then
 	L.red_phase_trigger = "Помешивая, довести до кипения..."
 	L.red_phase_emote_trigger = "красный" --проверить
 	L.red_phase = "|cFFFF0000Красная|r фаза"
-	L.blue_phase_trigger = "синий|r пузырек в котел!" --How well does the mortal shell handle extreme temperature change? Must find out! For science!
+	L.blue_phase_trigger = "синий|r пузырек в котел!"
 	L.blue_phase_emote_trigger = "синий" --проверить
 	L.blue_phase = "|cFF809FFEСиняя|r фаза"
 	L.green_phase_trigger = "Некак не удается стабилизировать, но без ошибок нет прогресса!"
@@ -109,7 +109,7 @@ if L then
 
 	L.onyxia_power_message = "Скоро Взрыв!"
 
-	L.chromatic_prototype = "Хроматический прообраз" -- 3 adds name
+	L.chromatic_prototype = "Хроматический прообраз"
 end
 
 L = BigWigs:NewBossLocale("Omnotron Defense System", "ruRU")
@@ -130,7 +130,7 @@ if L then
 	L.acquiring_target = "Выбор цели"
 
 	L.bomb_message = "ВАС преследует Слизнюк!"
-	L.cloud_message = "Вы в Облаке!"
+	L.cloud_message = "ВЫ в Облаке!"
 	L.protocol_message = "Химическая бомба!"
 
 	L.iconomnotron = "Иконка на активного босса"

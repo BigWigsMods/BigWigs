@@ -8,17 +8,17 @@ if L then
 
 	L.worship_cooldown = "~Поклонение"
 
-	L.adherent_bar = "Помощник #%d"
-	L.adherent_message = "Надвигается помощник %d!"
+	L.adherent_bar = "Адепт #%d"
+	L.adherent_message = "Призыв Адепта %d!"
 	L.ooze_bar = "Слизнюки %d"
 	L.ooze_message = "Надвигаются Слизнюки %d!"
 
-	L.tentacles_bar = "Смутные творения"
-	L.tentacles_message = "Смутные творения!"
+	L.tentacles_bar = "Щупальца"
+	L.tentacles_message = "Диско пати Щупалец!"
 
 	L.sickness_message = "Вы больны, и вас сейчас стошнит!"
-	L.blaze_message = "На вас - Пламень!"
-	L.crash_say = "На мне - Оскверняющее сокрушение!"
+	L.blaze_message = "Пламя под ТОБОЙ!"
+	L.crash_say = "Сокрушение на МНЕ!"
 
 	L.fury_message = "Неистовство!"
 	L.first_fury_soon = "Скоро Неистовство!"
@@ -39,36 +39,36 @@ if L then
 	L.breath_message = "Надвигается Глубокий вдох!"
 	L.dazzling_message = "Надвигается Шокирующее разрушение!"
 
-	L.blast_message = "Сумеречный взрыв" --Sounds better and makes more sense than Twilight Blast (the user instantly knows something is coming from the sky at them)
+	L.blast_message = "Сумеречный взрыв"
 	L.engulfingmagic_say = "Избыточная магия на МНЕ!"
 
 	L.valiona_trigger = "Тералион, я подожгу коридор. Не дай им уйти!"
 	L.win_trigger = "Одно утешает... Тералион погиб вместе со мной..."
 
-	L.twilight_shift = "%2$dx Сумеречный сдвиг на |3-3(%1$s)"
+	L.twilight_shift = "%2$dx сдвиг(а) на %1$s"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "ruRU")
 if L then
-	L.strikes_message = "%2$dx удар(а) на |3-3(%1$s)"
+	L.strikes_message = "%2$dx удар(а) на %1$s"
 
 	L.breath_message = "Обжигающее дыхание!"
 	L.breath_bar = "~Дыхание"
 
-	L.engage_yell = "Cho'gall will have your heads"
+	L.engage_yell = "Чо'Галлу принесут ваши головы! Все до единой!"
 end
 
 L = BigWigs:NewBossLocale("Ascendant Council", "ruRU")
 if L then
-	L.static_overload_say = "На МНЕ - Статическая перегрузка!"
-	L.gravity_core_say = "На МНЕ - Гравитационное ядро!"
+	L.static_overload_say = "Перегрузка на МНЕ!"
+	L.gravity_core_say = "Гравитация на МНЕ!"
 	L.health_report = "%s имеет %d%% здоровья, скоро смена!"
 	L.switch = "Смена"
 	L.switch_desc = "Сообщать о смене боссов"
 
 	L.shield_up_message = "ЩИТ!"
 	L.shield_down_message = "Щит СПАЛ!"
-	L.shield_bar = "щит"
+	L.shield_bar = "Щит"
 
 	L.switch_trigger = "Мы займемся ими!"
 
@@ -77,7 +77,7 @@ if L then
 	L.quake_trigger = "Земля уходит у вас из-под ног..."
 	L.thundershock_trigger = "Воздух потрескивает от скопившейся энергии..."
 
-	L.thundershock_quake_spam = "%s in %d"
+	L.thundershock_quake_spam = "%s через %d"
 
 	L.last_phase_trigger = "Ваше упорство..."
 end
