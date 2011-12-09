@@ -104,15 +104,15 @@ if L then
 	L.left = "左側翻滾"
 	L.right = "右側翻滾"
 	L.not_hooked = ">你< 沒有抓牢！"
-	L.roll_message = "He's rolling, rolling, rolling!"
+	L.roll_message = "他開始滾了，滾了，滾啦！"
 	L.level_trigger = "levels out"
-	L.level_message = "Nevermind, he leveled out!"
+	L.level_message = "別急，他已經平穩了！"
 
-	L.exposed = "Armor Exposed"
+	L.exposed = "裝甲暴露"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhTW")
 if L then
-
+	L.impale_desc = "只警報坦克。"..select(2,EJ_GetSectionInfo(4114))
 end
 

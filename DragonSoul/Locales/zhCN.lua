@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Morchok", "zhCN")
 if not L then return end
 if L then
-	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
+	L.engage_trigger = "你妄想阻止雪崩。我只会埋葬你。"
 
 	L.crush = "破甲"
 	L.crush_desc = "只警报坦克。破甲堆叠计数并显示持续条。"
@@ -49,7 +49,7 @@ end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "zhCN")
 if L then
-	L.engage_trigger = "You cross the Stormbinder! I'll slaughter you all."
+	L.engage_trigger = "你们竟敢挑战缚风者！我要杀光你们。"
 
 	L.lightning_or_frost = "闪电或寒冰"
 	L.ice_next = "寒冰阶段"
@@ -62,7 +62,7 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "zhCN")
 if L then
-	L.engage_trigger = "Now is the hour of twilight!"
+	L.engage_trigger = "暮光审判降临了！"
 
 	L.warmup = "暮光审判"
 	L.warmup_desc = "暮光审判计时器。"
@@ -104,15 +104,15 @@ if L then
 	L.left = "左侧翻滚"
 	L.right = "右侧翻滚"
 	L.not_hooked = ">你< 没有抓牢！"
-	L.roll_message = "He's rolling, rolling, rolling!"
+	L.roll_message = "他开始滚了！滚了，滚啦！"
 	L.level_trigger = "levels out"
-	L.level_message = "Nevermind, he leveled out!"
+	L.level_message = "别急，他已经平稳了！"
 
-	L.exposed = "Armor Exposed"
+	L.exposed = "装甲暴露"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhCN")
 if L then
-
+	L.impale_desc = "只警报坦克。"..select(2,EJ_GetSectionInfo(4114))
 end
 
