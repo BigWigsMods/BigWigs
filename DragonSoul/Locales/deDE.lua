@@ -105,7 +105,7 @@ if L then
 	L.right = "rollt nach rechts"
 	L.not_hooked = "DU bist >NICHT< befestigt!"
 	L.roll_message = "Er rollt, rollt, rollt!"
-	L.level_trigger = "levels out"
+	L.level_trigger = "stabilisiert sich"
 	L.level_message = "Wieder ausgeglichen!"
 
 	L.exposed = "Rüstung freigelegt"
