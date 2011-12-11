@@ -83,6 +83,7 @@ do
 	end
 	function mod:Rolls()
 		self:Message("roll", L["roll_message"], "Positive", L["roll_icon"])
+		self:Bar("roll", CL["cast"]:format(L["roll"]), 5, L["roll_icon"])
 		self:CancelTimer(timer, true)
 		timer = nil
 	end
@@ -126,7 +127,7 @@ do
 		gripTargets[#gripTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(grip, 0.2, spellName)
+			self:ScheduleTimer(grip, 0.3, spellName)
 		end
 	end
 end
