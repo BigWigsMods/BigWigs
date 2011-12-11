@@ -58,7 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- corrupted blood
 	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139, 109599, 109598, 106794, 106791, 106789, 106818) -- 106794 10N, 110141 LFR
 
-	self:Death("Win", 56173)
+	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
 end
 
 --------------------------------------------------------------------------------

@@ -4,7 +4,8 @@
 
 local mod, CL = BigWigs:NewBoss("Warmaster Blackhorn", 824, 332)
 if not mod then return end
-mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870) -- Boss engage npc, Blackhorn, The Skyfire, Ka'anu Reevs, Sky Captain Swayze
+-- Goriona, Blackhorn, The Skyfire, Ka'anu Reevs, Sky Captain Swayze
+mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870)
 
 local canEnable = true
 

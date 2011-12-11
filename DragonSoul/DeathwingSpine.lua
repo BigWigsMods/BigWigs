@@ -128,7 +128,7 @@ do
 		gripTargets[#gripTargets + 1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(grip, 0.3, spellName)
+			self:ScheduleTimer(grip, 0.2, spellName)
 		end
 	end
 end
