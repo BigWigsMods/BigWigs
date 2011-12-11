@@ -56,7 +56,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(108862, (GetSpellInfo(108862)), 42, 108862) -- Twilight Onslaught
+	self:Bar(108862, (GetSpellInfo(108862)), 47, 108862) -- Twilight Onslaught
+	--self:Bar(108862, self.displayName, 264, "achievment_boss_blackhorn") -- Maybe use an approximate?
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
 	end
@@ -104,8 +105,8 @@ do
 	local timer, fired = nil, 0
 	local function shockWarn()
 		fired = fired + 1
-		local player = UnitName("boss1target")
-		if player and (not UnitDetailedThreatSituation("boss1target", "boss1") or fired > 11) then
+		local player = UnitName("boss2target")
+		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 11) then
 			-- If we've done 12 (0.6s) checks and still not passing the threat check, it's probably being cast on the tank
 			local shockwave = GetSpellInfo(108046)
 			mod:TargetMessage(108046, shockwave, player, "Urgent", 108046, "Alarm")
