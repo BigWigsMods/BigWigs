@@ -4,7 +4,9 @@
 
 local mod, CL = BigWigs:NewBoss("Warmaster Blackhorn", 824, 332)
 if not mod then return end
-mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870 ) -- Boss engage npc, Blackhorn, The Skyfire, Ka'anu Reevs, Sky Captain Swayze
+mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870) -- Boss engage npc, Blackhorn, The Skyfire, Ka'anu Reevs, Sky Captain Swayze
+
+local canEnable = true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,6 +45,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	return canEnable
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "TwilightFlames", 108076) -- did they just remove this?
 	self:Log("SPELL_CAST_START", "TwilightOnslaught", 107588)
@@ -64,6 +70,10 @@ function mod:OnEngage(diff)
 	if self:Difficulty() > 2 then
 		self:Berserk(420)
 	end
+end
+
+function mod:OnWin()
+	canEnable = false
 end
 
 --------------------------------------------------------------------------------
