@@ -99,16 +99,16 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "esES")
 if L then
-	L.left_start = "a punto de rodar a la izquierda"
-	L.right_start = "a punto de rodar a la derecha"
-	L.left = "rueda a la izquierda"
-	L.right = "rueda a la derecha"
+	L.left_start = "a punto de girar a la izquierda" -- check
+	L.right_start = "a punto de girar a la derecha" -- check
+	L.left = "gira a la izquierda"
+	L.right = "gira a la derecha"
 	L.not_hooked = "¡>NO< estás enganchado!"
-	L.roll_message = "He's rolling, rolling, rolling!"
-	L.level_trigger = "levels out"
-	L.level_message = "Nevermind, he leveled out!"
+	L.roll_message = "¡Está girando, girando, girando!"
+	L.level_trigger = "levels out" -- translate
+	L.level_message = "¡No importa, se ha recuperado!"
 
-	L.exposed = "Armor Exposed"
+	L.exposed = "Armadura expuesta"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES")
