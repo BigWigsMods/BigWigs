@@ -65,11 +65,7 @@ function mod:OnEngage(diff)
 	self:Berserk(480) -- 10 man heroic confirmed
 	-- need to find a way to determine which one is at first after engage
 	-- apart from looking at her weapon enchants
-	if diff > 2 then
-		self:Bar("nextphase", L["lightning_or_frost"], 32, L["nextphase_icon"])
-	else
-		self:Bar("nextphase", L["lightning_or_frost"], 82, L["nextphase_icon"])
-	end
+	self:Bar("nextphase", L["lightning_or_frost"], 30, L["nextphase_icon"])
 end
 
 --------------------------------------------------------------------------------
