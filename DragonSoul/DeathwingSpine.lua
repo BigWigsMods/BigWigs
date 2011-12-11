@@ -4,7 +4,8 @@
 
 local mod, CL = BigWigs:NewBoss("Spine of Deathwing", 824, 318)
 if not mod then return end
-mod:RegisterEnableMob(53879, 56598, 55870) -- Deathwing, The Skyfire, Sky Captain Swayze
+-- Deathwing, Burning Tendons, Burning Tendons, Corruption, Corruption, Corruption
+mod:RegisterEnableMob(53879, 56575, 56341, 53891, 56161, 56162)
 
 --------------------------------------------------------------------------------
 -- Locales
@@ -55,7 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457, 109458, 109459, 105490)
 	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
-	self:Log("SPELL_CAST_START", "Seal", 105848)
+	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 53879)
