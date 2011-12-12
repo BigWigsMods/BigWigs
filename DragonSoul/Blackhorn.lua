@@ -38,11 +38,15 @@ L.sunder = L.sunder.." "..INLINE_TANK_ICON
 -- Initialization
 --
 
-function mod:GetOptions()
+function mod:GetOptions(CL)
 	return {
-		"sunder", 108862, {108076, "SAY", "FLASHSHAKE", "ICON"}, "sapper", {108046, "SAY", "FLASHSHAKE"}, "berserk", "bosskill",
+		108862, "sapper",
+		"sunder", {108046, "SAY", "FLASHSHAKE"}, {108076, "SAY", "FLASHSHAKE", "ICON"}, 109228,
+		"berserk", "bosskill",
 	}, {
-		sunder = "general"
+		[108862] = "ej:4027",
+		sunder = "ej:4033",
+		berserk = CL["general"],
 	}
 end
 
@@ -56,6 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Shockwave", 108046)
 	self:Log("SPELL_AURA_APPLIED", "Sunder", 108043)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sunder", 108043)
+	self:Log("SPELL_CAST_SUCCESS", "Roar", 109228, 108044, 109229, 109230) --LFR/25N, 10N, ??, ??
 	self:Emote("Sapper", L["sapper_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -120,7 +125,7 @@ do
 		if player and (not UnitDetailedThreatSituation("boss2target", "boss2") or fired > 11) then
 			-- If we've done 12 (0.6s) checks and still not passing the threat check, it's probably being cast on the tank
 			local shockwave = GetSpellInfo(108046)
-			mod:TargetMessage(108046, shockwave, player, "Urgent", 108046, "Alarm")
+			mod:TargetMessage(108046, shockwave, player, "Attention", 108046, "Alarm")
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit("boss1target", "player") then
@@ -151,5 +156,10 @@ function mod:Sunder(player, spellId, _, _, spellName, buffStack)
 	self:SendMessage("BigWigs_StopBar", self, L["sunder_message"]:format(player, buffStack - 1))
 	self:Bar("sunder", L["sunder_message"]:format(player, buffStack), 30, spellId)
 	self:TargetMessage("sunder", L["sunder_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+end
+
+function mod:Roar(_, spellId, _, _, spellName)
+	self:Bar(109228, "~"..spellName, 20, spellId) -- 20-23
+	self:Message(109228, spellName, "Positive", spellId, "Alert")
 end
 
