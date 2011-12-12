@@ -136,7 +136,8 @@ do
 			timer = nil
 		end
 	end
-	function mod:Shockwave()
+	function mod:Shockwave(_, spellId, _, _, spellName)
+		self:Bar(108046, "~"..spellName, 23, spellId) -- 23-26
 		fired = 0
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(shockWarn, 0.05)

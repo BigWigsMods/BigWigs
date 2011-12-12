@@ -38,7 +38,7 @@ if L then
 
 	L.twilight = "Twilight"
 	L.cast = "Twilight Cast Bar"
-	L.cast_desc = "Show a 5 or 3 second bar for Twilight being cast."
+	L.cast_desc = "Show a 5 (Normal) or 3 (Heroic) second bar for Twilight being cast."
 	L.cast_icon = 106371
 
 	L.lightyou = "Fading Light on You"
@@ -61,7 +61,7 @@ L.lighttank = L.lighttank.." "..INLINE_TANK_ICON
 function mod:GetOptions(CL)
 	return {
 		{106371, "FLASHSHAKE"}, "cast",
-		105925, {"lightyou", "FLASHSHAKE"}, {"lighttank", "FLASHSHAKE"},
+		{105925, "FLASHSHAKE"}, "lightyou", {"lighttank", "FLASHSHAKE"},
 		"warmup", "crystal", "berserk", "bosskill",
 	}, {
 		[106371] = L["twilight"],
@@ -122,11 +122,7 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Important", spellId, "Alert")
 	hourCounter = hourCounter + 1
 	self:Bar(106371, ("%s (%d)"):format(spellName, hourCounter), 45, spellId)
-	if self:Difficulty() > 2 then
-		self:Bar("cast", CL["cast"]:format(L["twilight"]), 3, spellId)
-	else
-		self:Bar("cast", CL["cast"]:format(L["twilight"]), 5, spellId)
-	end
+	self:Bar("cast", CL["cast"]:format(L["twilight"]), self:Difficulty() > 2 and 3 or 5, spellId)
 	self:FlashShake(106371)
 end
 
@@ -155,7 +151,7 @@ do
 		if UnitIsUnit(player, "player") then
 			local duration = select(6, UnitDebuff("player", spellName))
 			self:Bar("lightyou", L["lightyou_bar"], duration, spellId)
-			self:FlashShake("lightyou")
+			self:FlashShake(105925)
 		end
 		if not scheduled then
 			scheduled = true

@@ -90,10 +90,11 @@ function mod:Blobs(_, unit, spellName, _, _, spellId)
 	if unit == "boss1" and colorCombinations[spellId] then
 		if self:Difficulty() > 2 then
 			self:Message("blobs", ("%s %s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3], colorCombinations[spellId][4]), "Urgent", L["blobs_icon"], "Alarm")
+			self:Bar("blobs", L["blobs_bar"], 75, L["blobs_icon"])
 		else
 			self:Message("blobs", ("%s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][3]), "Urgent", L["blobs_icon"], "Alarm")
+			self:Bar("blobs", L["blobs_bar"], 90, L["blobs_icon"])
 		end
-		self:Bar("blobs", L["blobs_bar"], 90, L["blobs_icon"])
 	end
 end
 
