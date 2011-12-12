@@ -81,13 +81,13 @@ end
 do
 	local prev = 0
 	local hemorrhage = GetSpellInfo(105853)
-	function mod:Hemorrhage(_, _, spellName, _, _, spellId)
+	function mod:Hemorrhage(_, _, spellName)
 		if spellName == hemorrhage then
 			local t = GetTime()
 			if t-prev > 5 then
 				prev = t
 				self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
-				self:Bar("hemorrhage", "~"..spellName, 150, spellId) -- Might be an event more accurate to use
+				self:Bar("hemorrhage", "~"..spellName, 150, 105863) -- Might be an event more accurate to use
 			end
 		end
 	end
