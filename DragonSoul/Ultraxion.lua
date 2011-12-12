@@ -38,15 +38,21 @@ if L then
 
 	L.twilight = "Twilight"
 	L.cast = "Twilight Cast Bar"
-	L.cast_desc = "Show a 5 second bar for Twilight being cast."
+	L.cast_desc = "Show a 5 or 3 second bar for Twilight being cast."
 	L.cast_icon = 106371
 
 	L.lightyou = "Fading Light on You"
 	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
 	L.lightyou_bar = "<You Explode>"
 	L.lightyou_icon = 105925
+
+	L.lighttank = "Fading Light on Tanks"
+	L.lighttank_desc = "Show a bar displaying the time left until Fading Light causes the tank to explode."
+	L.lighttank_bar = "<%s Explode>"
+	L.lighttank_icon = 105925
 end
 L = mod:GetLocale()
+L.lighttank = L.lighttank.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -55,7 +61,7 @@ L = mod:GetLocale()
 function mod:GetOptions(CL)
 	return {
 		{106371, "FLASHSHAKE"}, "cast",
-		{105925, "FLASHSHAKE"}, "lightyou",
+		105925, {"lightyou", "FLASHSHAKE"}, {"lighttank", "FLASHSHAKE"},
 		"warmup", "crystal", "berserk", "bosskill",
 	}, {
 		[106371] = L["twilight"],
@@ -66,7 +72,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HourofTwilight", 106371, 109415, 109416, 109417)
-	self:Log("SPELL_AURA_APPLIED", "FadingLight", 105925, 109075, 110068, 110069, 110078, 110079, 110070, 110080)
+	self:Log("SPELL_AURA_APPLIED", "FadingLight", 109075, 110078, 110079, 110080)
+	self:Log("SPELL_AURA_APPLIED", "TankFadingLight", 110070, 110069, 105925, 110068)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Yell("Warmup", L["warmup_trigger"])
 	self:Emote("Gift", L["crystal_icon"])
@@ -115,8 +122,25 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Important", spellId, "Alert")
 	hourCounter = hourCounter + 1
 	self:Bar(106371, ("%s (%d)"):format(spellName, hourCounter), 45, spellId)
-	self:Bar("cast", CL["cast"]:format(L["twilight"]), 5, spellId)
+	if self:Difficulty() > 2 then
+		self:Bar("cast", CL["cast"]:format(L["twilight"]), 3, spellId)
+	else
+		self:Bar("cast", CL["cast"]:format(L["twilight"]), 5, spellId)
+	end
 	self:FlashShake(106371)
+end
+
+-- it's fine for this to be he here, since tanks gets the debuff first at least according to my logs (caleb)
+function mod:TankFadingLight(player, spellId, _, _, spellName)
+	lightTargets[#lightTargets + 1] = player
+	self:FlashShake("lighttank")
+	if UnitIsUnit(player, "player") then
+		local duration = select(6, UnitDebuff("player", spellName))
+		self:Bar("lighttank", L["lightyou_bar"], duration, spellId)
+	else
+		local duration = select(6, UnitDebuff(player, spellName))
+		self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
+	end
 end
 
 do
@@ -130,7 +154,7 @@ do
 		if UnitIsUnit(player, "player") then
 			local duration = select(6, UnitDebuff("player", spellName))
 			self:Bar("lightyou", L["lightyou_bar"], duration, spellId)
-			self:FlashShake(105925)
+			self:FlashShake("lightyou")
 		end
 		if not scheduled then
 			scheduled = true
