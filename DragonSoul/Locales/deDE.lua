@@ -75,11 +75,15 @@ if L then
 
 	L.twilight = "Zwielicht"
 	L.cast = "Zwielicht Zauberleiste"
-	L.cast_desc = "Zeigt eine 5 sekündige Leiste, wenn Stunde des Zwielichts gewirkt wird."
+	L.cast_desc = "Zeigt eine 5 (Normal) oder 3 (Heroisch) sekündige Leiste, wenn Stunde des Zwielichts gewirkt wird."
 
 	L.lightyou = "Schwindendes Licht auf Dir"
 	L.lightyou_desc = "Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht Dich explodieren lässt."
 	L.lightyou_bar = "<Du Explodierst>"
+
+	L.lighttank = "Schwindendes Licht auf Tanks"
+	L.lighttank_desc = "Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht den Tank explodieren lässt."
+	L.lighttank_bar = "<%s Explodiert>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "deDE")
