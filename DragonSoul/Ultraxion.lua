@@ -133,6 +133,7 @@ end
 -- it's fine for this to be he here, since tanks gets the debuff first at least according to my logs (caleb)
 function mod:TankFadingLight(player, spellId, _, _, spellName)
 	lightTargets[#lightTargets + 1] = player
+	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
 	self:FlashShake("lighttank")
 	if UnitIsUnit(player, "player") then
 		local duration = select(6, UnitDebuff("player", spellName))
