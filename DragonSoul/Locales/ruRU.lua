@@ -70,11 +70,15 @@ if L then
 
 	L.twilight = "Сумерки"
 	L.cast = "Полоса каста Сумерек"
-	L.cast_desc = "Показывает 5-ти секундную полосу для начала каста Сумерек."
+	L.cast_desc = "Показывает 5-ти (Нормал) или 3-х (Героик) секундную полосу начала каста Сумерек."
 
 	L.lightyou = "Гаснущий свет на ТЕБЕ"
-	L.lightyou_desc = "Показывает полосу с таймером взрыва Гаснущего света."
+	L.lightyou_desc = "Показывает полосу с таймером взрыва Гаснущего света на тебе."
 	L.lightyou_bar = "<Ты Взорвешься>"
+	
+	L.lighttank = "Гаснущий свет на Танках"
+	L.lighttank_desc = "Показывает полосу с таймером взрыва Гаснущего света на танках."
+	L.lighttank_bar = "<%s Взорвется>"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
@@ -98,7 +102,7 @@ if L then
 	L.right_start = "собирается накрениться вправо"
 	L.left = "наклоняется влево"
 	L.right = "наклоняется вправо"
-	L.not_hooked = "Вы >НЕ< зацеплены!"
+	L.not_hooked = "ТЫ >НЕ< зацеплен!"
 	L.roll_message = "Он вращается, вращается, вращается!"
 	L.level_trigger = "выравнивается"
 	L.level_message = "Неважно, он выравнивается!"
@@ -109,5 +113,7 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 
+	L.impale_desc = "Только для танков. "..select(2,EJ_GetSectionInfo(4114))
+	
 end
 
