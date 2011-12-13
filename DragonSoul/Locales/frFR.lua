@@ -80,6 +80,11 @@ if L then
 	L.lightyou = "Lumière faiblissante sur vous"
 	L.lightyou_desc = "Affiche une barre indiquant le temps restant avant que Lumière faiblissante ne vous fasse exploser."
 	L.lightyou_bar = "<Vous explosez>"
+
+	L.lighttank = "Fading Light on Tanks"
+	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
+	L.lighttank_bar = "<%s Explodes>"
+	L.lighttank_message = "Exploding Tank"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")

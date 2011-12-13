@@ -47,8 +47,9 @@ if L then
 	L.lightyou_icon = 105925
 
 	L.lighttank = "Fading Light on Tanks"
-	L.lighttank_desc = "Show a bar displaying the time left until Fading Light causes the tank to explode."
-	L.lighttank_bar = "<%s Explode>"
+	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
+	L.lighttank_bar = "<%s Explodes>"
+	L.lighttank_message = "Exploding Tank"
 	L.lighttank_icon = 105925
 end
 L = mod:GetLocale()
@@ -72,7 +73,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HourofTwilight", 106371, 109415, 109416, 109417)
-	self:Log("SPELL_AURA_APPLIED", "FadingLight", 109075, 110078, 110079, 110080)
+	self:Log("SPELL_AURA_APPLIED", "FadingLight", 109075, 110078, 110079, 110080, 110070, 110069, 105925, 110068)
 	self:Log("SPELL_AURA_APPLIED", "TankFadingLight", 110070, 110069, 105925, 110068)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Yell("Warmup", L["warmup_trigger"])
@@ -126,18 +127,14 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:FlashShake(106371)
 end
 
--- it's fine for this to be he here, since tanks gets the debuff first at least according to my logs (caleb)
+-- This is mainly a tanking assist
 function mod:TankFadingLight(player, spellId, _, _, spellName)
-	lightTargets[#lightTargets + 1] = player
-	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
+	if UnitGroupRolesAssigned("player") ~= "TANK" or UnitIsUnit(player, "player") then return end
 	self:FlashShake("lighttank")
-	if UnitIsUnit(player, "player") then
-		local duration = select(6, UnitDebuff("player", spellName))
-		self:Bar("lighttank", L["lightyou_bar"], duration, spellId)
-	else
-		local duration = select(6, UnitDebuff(player, spellName))
-		self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
-	end
+	local duration = select(6, UnitDebuff(player, spellName))
+	self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
+	self:TargetMessage("lighttank", L["lighttank_message"], player, "Attention", spellId)
+	self:PlaySound("lighttank", "Alarm")
 end
 
 do

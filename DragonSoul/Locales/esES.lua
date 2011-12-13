@@ -80,6 +80,11 @@ if L then
 	L.lightyou = "Luz mortecina en TI"
 	L.lightyou_desc = "Mostrar una barra que visualice el tiempo restante hasta que Luz mortecina te haga explotar."
 	L.lightyou_bar = "<Explotas>"
+
+	L.lighttank = "Fading Light on Tanks"
+	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
+	L.lighttank_bar = "<%s Explodes>"
+	L.lighttank_message = "Exploding Tank"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")

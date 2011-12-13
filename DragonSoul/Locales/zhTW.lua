@@ -81,6 +81,11 @@ if L then
 	L.lightyou = "自身凋零之光"
 	L.lightyou_desc = "顯示自身凋零之光爆炸剩餘計時條。"
 	L.lightyou_bar = "<你將爆炸>"
+
+	L.lighttank = "Fading Light on Tanks"
+	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
+	L.lighttank_bar = "<%s Explodes>"
+	L.lighttank_message = "Exploding Tank"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhTW")

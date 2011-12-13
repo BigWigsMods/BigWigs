@@ -82,8 +82,9 @@ if L then
 	L.lightyou_bar = "<Du Explodierst>"
 
 	L.lighttank = "Schwindendes Licht auf Tanks"
-	L.lighttank_desc = "Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht den Tank explodieren lässt."
+	L.lighttank_desc = "Nur für Tanks. Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht den Tank explodieren lässt."
 	L.lighttank_bar = "<%s Explodiert>"
+	L.lighttank_message = "Exploding Tank"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "deDE")

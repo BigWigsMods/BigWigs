@@ -12,7 +12,7 @@ end
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "ruRU")
 if L then
 	L.engage_trigger = "Ззоф Шуул'уах. Ток фшш Н'Зот!"
-	
+
 	L.ball = "Сфера"
 	L.ball_desc = "Сфера, которая отскакивает от игроков и босса."
 
@@ -75,10 +75,11 @@ if L then
 	L.lightyou = "Гаснущий свет на ТЕБЕ"
 	L.lightyou_desc = "Показывает полосу с таймером взрыва Гаснущего света на тебе."
 	L.lightyou_bar = "<Ты Взорвешься>"
-	
+
 	L.lighttank = "Гаснущий свет на Танках"
-	L.lighttank_desc = "Показывает полосу с таймером взрыва Гаснущего света на танках."
+	L.lighttank_desc = "Только для танков. Показывает полосу с таймером взрыва Гаснущего света на танках."
 	L.lighttank_bar = "<%s Взорвется>"
+	L.lighttank_message = "Exploding Tank"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
@@ -116,6 +117,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 
 	L.impale_desc = "Только для танков. "..select(2,EJ_GetSectionInfo(4114))
-	
+
 end
 
