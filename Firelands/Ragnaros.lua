@@ -173,7 +173,7 @@ function mod:BreadthofFrost(_, spellId, _, _, spellName)
 end
 
 function mod:Wound(player, spellId, _, _, _, buffStack)
-	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
+	if UnitGroupRolesAssigned("player") ~= "TANK" and not GetPartyAssignment("MAINTANK", "player") then return end
 	if not buffStack then buffStack = 1 end
 	self:SendMessage("BigWigs_StopBar", self, L["wound_message"]:format(player, buffStack - 1))
 	self:Bar("wound", L["wound_message"]:format(player, buffStack), 21, spellId)
