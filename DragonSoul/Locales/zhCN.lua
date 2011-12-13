@@ -95,6 +95,8 @@ if L then
 	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!"
 	L.sapper = "暮光工兵"
 	L.sapper_desc = "暮光工兵对天火号造成伤害。"
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "zhCN")

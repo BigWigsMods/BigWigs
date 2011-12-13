@@ -95,6 +95,8 @@ if L then
 	L.sapper_trigger = "비룡이 빠르게 날아와 황혼의 폭파병을 갑판에 떨어뜨립니다!"
 	L.sapper = "폭파병"
 	L.sapper_desc = "배에 큰 피해를 입히는 폭파병입니다."
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "koKR")

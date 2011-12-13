@@ -95,6 +95,8 @@ if L then
 	L.sapper_trigger = "¡Un draco desciende para dejar a un zapador Crepuscular en la cubierta!"
 	L.sapper = "Zapador"
 	L.sapper_desc = "El Zapador intenta dañar la nave"
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "esES")

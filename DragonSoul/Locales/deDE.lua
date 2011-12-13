@@ -99,6 +99,8 @@ if L then
 	L.sapper_trigger = "Ein Drache stürzt herab, um einen Zwielichtpionier auf dem Deck abzusetzen!"
 	L.sapper = "Pionier"
 	L.sapper_desc = "Der Pionier (Schurke) spawnt und fügt dem Schiff Schaden zu."
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "deDE")

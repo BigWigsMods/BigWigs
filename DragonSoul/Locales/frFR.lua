@@ -95,6 +95,8 @@ if L then
 	L.sapper_trigger = "Un drake plonge et dépose un sapeur du Crépuscule sur le pont !" -- à vérifier
 	L.sapper = "Sapeur"
 	L.sapper_desc = "Sapeur infligeant des dégâts au vaisseau."
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "frFR")

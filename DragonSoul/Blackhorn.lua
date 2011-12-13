@@ -30,6 +30,8 @@ if L then
 	L.sapper = "Sapper"
 	L.sapper_desc = "Sapper dealing damage to the ship"
 	L.sapper_icon = 73457
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 L = mod:GetLocale()
 L.sunder = L.sunder.." "..INLINE_TANK_ICON
@@ -62,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sunder", 108043)
 	self:Log("SPELL_CAST_SUCCESS", "Roar", 109228, 108044, 109229, 109230) --LFR/25N, 10N, ??, ??
 	self:Emote("Sapper", L["sapper_trigger"])
+	self:Yell("Stage2", L["stage2_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 56427)
@@ -89,6 +92,13 @@ end
 function mod:Sapper()
 	self:Message("sapper", L["sapper"], "Important", L["sapper_icon"], "Info")
 	self:Bar("sapper", L["sapper"], 40, L["sapper_icon"])
+end
+
+function mod:Stage2()
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(108862))) -- Twilight Onslaught
+	self:SendMessage("BigWigs_StopBar", self, L["sapper"])
+	self:Bar(108046, "~"..GetSpellInfo(108046), 14, 108046) -- Shockwave
+	self:Message("bosskill", self.displayName, "Positive", "achievment_boss_blackhorn")
 end
 
 do
@@ -128,7 +138,7 @@ do
 			mod:TargetMessage(108046, shockwave, player, "Attention", 108046, "Alarm")
 			mod:CancelTimer(timer, true)
 			timer = nil
-			if UnitIsUnit("boss1target", "player") then
+			if UnitIsUnit("boss2target", "player") then
 				mod:FlashShake(108046)
 				mod:Say(108046, CL["say"]:format(shockwave))
 			end

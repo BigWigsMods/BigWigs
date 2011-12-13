@@ -94,6 +94,8 @@ if L then
 	L.sapper_trigger = "Дракон пикирует на палубу, чтобы сбросить на нее сумеречного сапера!"
 	L.sapper = "Сапер"
 	L.sapper_desc = "Сапер наносит повреждения кораблю"
+
+	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
