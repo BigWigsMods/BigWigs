@@ -20,6 +20,6 @@ end
 L = BigWigs:NewBossLocale("Alizabal", "frFR")
 if L then
 	L.first_ability = "Embrocher ou Haine"
-	L.dance_message = "Blade Dance %d of 3"
+	L.dance_message = "Danse des lames %d sur 3"
 end
 

@@ -81,10 +81,10 @@ if L then
 	L.lightyou_desc = "Affiche une barre indiquant le temps restant avant que Lumière faiblissante ne vous fasse exploser."
 	L.lightyou_bar = "<Vous explosez>"
 
-	L.lighttank = "Fading Light on Tanks"
-	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
-	L.lighttank_bar = "<%s Explodes>"
-	L.lighttank_message = "Exploding Tank"
+	L.lighttank = "Lumière faiblissante sur tanks"
+	L.lighttank_desc = "Alerte pour tank uniquement. Si un tank a Lumière faiblissante, affiche une barre d'explosion et Flash/Shake."
+	L.lighttank_bar = "<%s explose>"
+	L.lighttank_message = "Tank explosif"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
@@ -97,11 +97,11 @@ if L then
 	L.sunder_desc = "Alerte pour tanks uniquement. Compte les cumuls de fracasser armure et affiche une barre de durée."
 	L.sunder_message = "%2$dx Fracasser sur %1$s"
 
-	L.sapper_trigger = "Un drake plonge et dépose un sapeur du Crépuscule sur le pont !" -- à vérifier
+	L.sapper_trigger = "Un drake plonge et dépose un sapeur du Crépuscule sur le pont !"
 	L.sapper = "Sapeur"
 	L.sapper_desc = "Sapeur infligeant des dégâts au vaisseau."
 
-	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
+	L.stage2_trigger = "Donc je dois le faire moi-même. Bien !"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "frFR")
@@ -120,6 +120,6 @@ end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
 if L then
-
+	L.impale_desc = "Alerte pour tank uniquement. "..select(2,EJ_GetSectionInfo(4114))
 end
 
