@@ -181,7 +181,12 @@ end
 
 local function translateZoneID(id)
 	if not id or type(id) ~= "number" then return end
-	local name = GetMapNameByID(id) or select(id, GetMapContinents())
+	local name
+	if id < 10 then
+		name = select(id, GetMapContinents())
+	else
+		name = GetMapNameByID(id)
+	end
 	if not name then
 		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))
 	end
@@ -315,16 +320,25 @@ function options:OnEnable()
 	self:RegisterMessage("BigWigs_StartConfigureMode")
 	self:RegisterMessage("BigWigs_StopConfigureMode")
 
-	local zones = BigWigsLoader:GetZoneMenus()
-	local tmp = setmetatable({}, {__newindex=function(t,k) rawset(t, translateZoneID(k), k) end})
-	local sorted = {}
-	for zone in pairs(zones) do tmp[zone] = true end
-	for zone in pairs(zoneModules) do tmp[zone] = true end
-	for zone in pairs(tmp) do sorted[#sorted + 1] = zone end
-	table.sort(sorted)
-	for i, zone in next, sorted do self:GetZonePanel(tmp[zone]) end
-	tmp = nil
-	sorted = nil
+	local tmp, tmpZone = {}, {}
+	for k in pairs(BigWigsLoader:GetZoneMenus()) do
+		local zone = translateZoneID(k)
+		tmp[zone] = k
+		tmpZone[#tmpZone+1] = zone
+	end
+	for k in pairs(zoneModules) do
+		local zone = translateZoneID(k)
+		tmp[zone] = k
+		tmpZone[#tmpZone+1] = zone
+	end
+	table.sort(tmpZone)
+	for i=1, #tmpZone do
+		local zone = tmpZone[i]
+		self:GetZonePanel(tmp[zone])
+	end
+	wipe(tmp)
+	wipe(tmpZone)
+	tmp, tmpZone = nil, nil
 end
 
 function options:Open()
@@ -332,7 +346,7 @@ function options:Open()
 		if module:IsEnabled() then
 			local menu = translateZoneID(module.otherMenu) or translateZoneID(module.zoneId)
 			if not menu then return end
-			InterfaceOptionsFrame_OpenToCategory(menu)
+			InterfaceOptionsFrame_OpenToCategory(self:GetZonePanel(module.otherMenu or module.zoneId))
 		end
 	end
 	if not InterfaceOptionsFrame:IsShown() then
@@ -679,7 +693,7 @@ do
 				abilities[#abilities + 1] = l
 				currentSize = currentSize + #l + 1
 			elseif type(o) == "string" then
-				local ejID = option:match("^ej:(%d+)$")
+				local ejID = o:match("^ej:(%d+)$")
 				if tonumber(ejID) then
 					local l = select(9, EJ_GetSectionInfo(tonumber(ejID)))
 					if currentSize + #l + 1 > 255 then
@@ -832,10 +846,10 @@ end
 do
 	local panels = {}
 	local noop = function() end
-	function options:GetPanel(id, parent, zoneId)
-		if not panels[id] then
+	function options:GetPanel(zone, parent, zoneId)
+		if not panels[zone] then
 			local frame = CreateFrame("Frame", nil, InterfaceOptionsFramePanelContainer)
-			frame.name = id
+			frame.name = zone
 			frame.id = zoneId
 			frame.parent = parent
 			frame.addonname = "BigWigs"
@@ -845,10 +859,10 @@ do
 			frame.refresh = noop
 			frame:Hide()
 			InterfaceOptions_AddCategory(frame)
-			panels[id] = frame
-			return panels[id], true
+			panels[zone] = frame
+			return panels[zone], true
 		end
-		return panels[id]
+		return panels[zone]
 	end
 
 	function options:GetZonePanel(zoneId)
