@@ -1,4 +1,4 @@
-
+﻿
 local L = BigWigs:NewBossLocale("Argaloth", "deDE")
 if not L then return end
 if L then
@@ -20,6 +20,6 @@ end
 L = BigWigs:NewBossLocale("Alizabal", "deDE")
 if L then
 	L.first_ability = "Spießen oder Hass"
-	L.dance_message = "Blade Dance %d of 3"
+	L.dance_message = "Klingentanz %d von 3"
 end
 

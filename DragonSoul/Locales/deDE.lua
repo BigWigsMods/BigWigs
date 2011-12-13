@@ -82,9 +82,9 @@ if L then
 	L.lightyou_bar = "<Du Explodierst>"
 
 	L.lighttank = "Schwindendes Licht auf Tanks"
-	L.lighttank_desc = "Nur für Tanks. Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht den Tank explodieren lässt."
+	L.lighttank_desc = "Nur für Tanks. Wenn ein Tank von schwindendem Licht betroffen ist, werden eine Timerleiste sowie Flash & Shake für die Explosion angezeigt."
 	L.lighttank_bar = "<%s Explodiert>"
-	L.lighttank_message = "Exploding Tank"
+	L.lighttank_message = "Explodierender Tank"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "deDE")
@@ -101,7 +101,7 @@ if L then
 	L.sapper = "Pionier"
 	L.sapper_desc = "Der Pionier (Schurke) spawnt und fügt dem Schiff Schaden zu."
 
-	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
+	L.stage2_trigger = "Scheint, als ob ich mich selbst drum kümmern muss. Gut!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "deDE")
