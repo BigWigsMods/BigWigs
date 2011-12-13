@@ -61,16 +61,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	local psychicDrain = GetSpellInfo(104322)
 	if not self:LFR() then
 		self:Berserk(360) -- confirmed 10 man heroic
 	end
 	self:Bar("ball", L["ball"], 6, L["ball_icon"])
-	if diff > 2 then
-		self:Bar(104322, psychicDrain, 12, 104322)
-	else
-		self:Bar(104322, psychicDrain, 16, 104322)
-	end
+	self:Bar(103434, "~"..GetSpellInfo(103434), 23, 103434) -- Shadows
+	self:Bar(104322, GetSpellInfo(104322), 17, 104322) -- Psychic Drain
 end
 
 --------------------------------------------------------------------------------
@@ -80,8 +76,9 @@ end
 
 function mod:Darkness(_, unit, spellName, _, _, spellId)
 	if unit == "boss1" and spellId == L["darkness_icon"] then
-		self:Bar("darkness", L["darkness"], 30, spellId) -- EJ says 30 sec, heroic timing is probably different
-		self:Message("darkness", L["darkness"], "Important", spellId, "Info") -- can use info, no conflict here
+		self:Bar("darkness", L["darkness"], 30, spellId)
+		self:Message("darkness", L["darkness"], "Important", spellId, "Info")
+		self:Bar(103434, "~"..GetSpellInfo(103434), 37, 103434) -- Shadows
 	end
 end
 
@@ -95,12 +92,13 @@ function mod:PsychicDrain(_, spellId, _, _, spellName)
 end
 
 function mod:VoidoftheUnmaking(_, spellId, _, _, spellName)
-	self:Bar("ball", "~"..L["ball"], 20, L["ball_icon"]) -- void sphere icon
-	self:Message("ball", L["ball"], "Urgent", L["ball_icon"], "Alarm") -- void sphere icon
+	self:Bar("ball", "~"..L["ball"], 20, L["ball_icon"])
+	self:Message("ball", L["ball"], "Urgent", L["ball_icon"], "Alarm")
 end
 
 function mod:ShadowsCast(_, spellId, _, _, spellName)
 	self:Message(103434, spellName, "Attention", spellId)
+	self:Bar(103434, "~"..spellName, 26, spellId) -- 26-29
 end
 
 function mod:ShadowsApplied(player, spellId)
