@@ -79,7 +79,7 @@ if L then
 	L.lighttank = "Гаснущий свет на Танках"
 	L.lighttank_desc = "Только для танков. Показывает полосу с таймером взрыва Гаснущего света на танках."
 	L.lighttank_bar = "<%s Взорвется>"
-	L.lighttank_message = "Exploding Tank"
+	L.lighttank_message = "Взрыв Танка"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
@@ -96,7 +96,7 @@ if L then
 	L.sapper = "Сапер"
 	L.sapper_desc = "Сапер наносит повреждения кораблю"
 
-	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
+	L.stage2_trigger = "Похоже, мне придется заняться этим самому. Чудесно!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
