@@ -68,7 +68,7 @@ function mod:OnEngage(diff)
 	self:Berserk(420) -- confirmed
 	self:Bar(108571, stomp, 11, 108571)
 	self:Bar(103640, crystal, 16, 103640)
-	crystalCount = 1--Superficously incriment it to 1 since there is 1 less before first vortex
+	crystalCount = 0
 end
 
 --------------------------------------------------------------------------------
