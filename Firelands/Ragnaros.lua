@@ -78,7 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BreadthofFrost", 100479)
 	self:Log("SPELL_CAST_START", "EntrappingRoots", 100646)
 	self:Log("SPELL_CAST_START", "Cloudburst", 100714)
-	self:Log("SPELL_CAST_SUCCESS", "EmpowerSulfuras", 100997)
+	self:Log("SPELL_CAST_SUCCESS", "EmpowerSulfuras", 100997, 100604)
 
 	-- Normal
 	self:Yell("IntermissionEnd", L["intermission_end_trigger1"], L["intermission_end_trigger2"], L["intermission_end_trigger3"])
@@ -131,7 +131,6 @@ function mod:Phase4()
 		self:SendMessage("BigWigs_StopBar", self, lavaWaves)
 		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 		phase = 4
-		self:OpenProximity(6)
 		 -- not sure if we want a different option key or different icon
 		self:Message(98953, CL["phase"]:format(phase), "Positive", 98953)
 		self:Bar(100479, (GetSpellInfo(100479)), 34, 100479) -- Breadth of Frost
