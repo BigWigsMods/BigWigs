@@ -96,9 +96,9 @@ end
 
 function mod:Stomp(_, spellId, source, _, spellName)
 	if self:Difficulty() > 2 then
-		if UnitExists("boss2") and source ~= kohcrom then--Since we trigger kohcrom bar off morchok for more accuracy, we gotta make sure he exists and he isn't caster to avoid bad timers.
-			self:Bar(108571, (fmtStr):format(kohcrom, spellName), (self:Difficulty() == 3) and 6 or 5, 108571)--6sec after on 10 man, 5 sec on 25
-		else--It's not kohcrom casting, start morchoks normal bar.
+		if UnitExists("boss2") and source ~= kohcrom then -- Since we trigger kohcrom bar off morchok for more accuracy, we gotta make sure he exists and he isn't caster to avoid bad timers.
+			self:Bar(108571, (fmtStr):format(kohcrom, spellName), (self:Difficulty() == 3) and 6 or 5, 108571) -- 6sec after on 10 man, 5 sec on 25
+		else -- It's not kohcrom casting, start morchoks normal bar.
 			self:Bar(108571, (fmtStr):format(source, spellName), 12, spellId)
 		end
 	else
@@ -134,12 +134,12 @@ do
 end
 
 function mod:ResonatingCrystal(_, spellId, source, _, spellName)
-	if source ~= kohcrom then crystalCount = crystalCount + 1 end--Only incriment count off morchok casts.
+	if source ~= kohcrom then crystalCount = crystalCount + 1 end -- Only incriment count off morchok casts.
 	if self:Difficulty() > 2 then
 		self:Message(103640, source.." - "..spellName, "Urgent", spellId, "Alarm")
 		self:Bar(103640, source.." - "..(L["explosion"]), 12, spellId)
-		if UnitExists("boss2") and crystalCount == 2 then--The CD bar will only start off morchok's 2nd crystal, if kohcrom is already summoned. Explosion bar will be CD for kohcrom's 3rd so redundant to have both.
-			self:Bar(103640, (fmtStr):format(kohcrom, crystal), (self:Difficulty() == 3) and 6 or 5, 103640)--Same as stomp, 6/5
+		if UnitExists("boss2") and crystalCount == 2 then -- The CD bar will only start off morchok's 2nd crystal, if kohcrom is already summoned. Explosion bar will be CD for kohcrom's 3rd so redundant to have both.
+			self:Bar(103640, (fmtStr):format(kohcrom, crystal), (self:Difficulty() == 3) and 6 or 5, 103640) -- Same as stomp, 6/5
 		end
 	else
 		self:Message(103640, spellName, "Urgent", spellId, "Alarm")

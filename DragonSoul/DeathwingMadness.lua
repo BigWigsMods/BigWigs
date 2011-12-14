@@ -16,7 +16,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.impale = EJ_GetSectionInfo(4114)
 	L.impale_desc = "Tank alert only. "..select(2,EJ_GetSectionInfo(4114))
-	L.imaple_icon = 106400
+	L.impale_icon = 106400
 
 	L.last_phase, L.last_phase_desc = EJ_GetSectionInfo(4046)
 	L.last_phase_icon = 109592
@@ -40,7 +40,6 @@ L.impale = L.impale.." "..INLINE_TANK_ICON
 function mod:GetOptions()
 	return {
 		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
-		
 		{106794, "FLASHSHAKE"}, "last_phase",
 		"bosskill",
 	}, {
