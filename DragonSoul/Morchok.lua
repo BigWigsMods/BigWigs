@@ -10,6 +10,7 @@ local stomp = GetSpellInfo(108571)
 local crystal = GetSpellInfo(103640)
 local kohcrom = EJ_GetSectionInfo(4262)
 local fmtStr = "~%s - %s"
+local crystalCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -67,6 +68,7 @@ function mod:OnEngage(diff)
 	self:Berserk(420) -- confirmed
 	self:Bar(108571, stomp, 11, 108571)
 	self:Bar(103640, crystal, 16, 103640)
+	crystalCount = 1--Superficously incriment it to 1 since there is 1 less before first vortex
 end
 
 --------------------------------------------------------------------------------
@@ -81,11 +83,10 @@ end
 -- I know it's ugly to use this, but if we were to start bars at :BlackBlood then we are subject to BlackBlood duration changes
 function mod:Blood(_, unit, _, _, _, spellId)
 	if unit == "boss1" and spellId == 103851 then
+		crystalCount = 0
 		if self:Difficulty() > 2 then
 			self:Bar(108571, (fmtStr):format(self.displayName, stomp), 15, 108571)
-			self:Bar(108571, (fmtStr):format(kohcrom, stomp), 20, 108571)
 			self:Bar(103640, (fmtStr):format(self.displayName, crystal), 22, 103640)
-			self:Bar(103640, (fmtStr):format(kohcrom, crystal), 40, 103640)
 		else
 			self:Bar(108571, "~"..stomp, 5, 108571)
 			self:Bar(103640, crystal, 29, 103640)
@@ -95,7 +96,11 @@ end
 
 function mod:Stomp(_, spellId, source, _, spellName)
 	if self:Difficulty() > 2 then
-		self:Bar(108571, (fmtStr):format(source, spellName), 12, spellId)
+		if UnitExists("boss2") and source ~= kohcrom then--Since we trigger kohcrom bar off morchok for more accuracy, we gotta make sure he exists and he isn't caster to avoid bad timers.
+			self:Bar(108571, (fmtStr):format(kohcrom, spellName), (self:Difficulty() == 3) and 6 or 5, 108571)--6sec after on 10 man, 5 sec on 25
+		else--It's not kohcrom casting, start morchoks normal bar.
+			self:Bar(108571, (fmtStr):format(source, spellName), 12, spellId)
+		end
 	else
 		self:Bar(108571, "~"..spellName, 12, spellId)
 	end
@@ -129,9 +134,13 @@ do
 end
 
 function mod:ResonatingCrystal(_, spellId, source, _, spellName)
+	if source ~= kohcrom then crystalCount = crystalCount + 1 end--Only incriment count off morchok casts.
 	if self:Difficulty() > 2 then
 		self:Message(103640, source.." - "..spellName, "Urgent", spellId, "Alarm")
 		self:Bar(103640, source.." - "..(L["explosion"]), 12, spellId)
+		if UnitExists("boss2") and crystalCount == 2 then--The CD bar will only start off morchok's 2nd crystal, if kohcrom is already summoned. Explosion bar will be CD for kohcrom's 3rd so redundant to have both.
+			self:Bar(103640, (fmtStr):format(kohcrom, crystal), (self:Difficulty() == 3) and 6 or 5, 103640)--Same as stomp, 6/5
+		end
 	else
 		self:Message(103640, spellName, "Urgent", spellId, "Alarm")
 		self:Bar(103640, L["explosion"], 12, spellId)
