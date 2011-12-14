@@ -81,10 +81,10 @@ if L then
 	L.lightyou_desc = "Mostrar una barra que visualice el tiempo restante hasta que Luz mortecina te haga explotar."
 	L.lightyou_bar = "<Explotas>"
 
-	L.lighttank = "Fading Light on Tanks"
-	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
-	L.lighttank_bar = "<%s Explodes>"
-	L.lighttank_message = "Exploding Tank"
+	L.lighttank = "Luz mortecina en tanques"
+	L.lighttank_desc = "Alerta para tanques. Si un tanque tiene Luz mortecina, muestra una barra y un Flash para la explosión."
+	L.lighttank_bar = "<%s Explota>"
+	L.lighttank_message = "Tanque explotando"
 end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")
@@ -101,13 +101,13 @@ if L then
 	L.sapper = "Zapador"
 	L.sapper_desc = "El Zapador intenta dañar la nave"
 
-	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
+	L.stage2_trigger = "Parece que voy a tener que hacerlo yo. ¡Bien!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "esES")
 if L then
-	L.left_start = "a punto de girar a la izquierda" -- check
-	L.right_start = "a punto de girar a la derecha" -- check
+	L.left_start = "a punto de girar a la izquierda"
+	L.right_start = "a punto de girar a la derecha"
 	L.left = "gira a la izquierda"
 	L.right = "gira a la derecha"
 	L.not_hooked = "¡>NO< estás enganchado!"
