@@ -74,7 +74,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HourofTwilight", 106371, 109415, 109416, 109417)
 	self:Log("SPELL_AURA_APPLIED", "FadingLight", 109075, 110078, 110079, 110080, 110070, 110069, 105925, 110068)
-	self:Log("SPELL_AURA_APPLIED", "TankFadingLight", 110070, 110069, 105925, 110068)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Yell("Warmup", L["warmup_trigger"])
 	self:Emote("Gift", L["crystal_icon"])
@@ -127,16 +126,6 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:FlashShake(106371)
 end
 
--- This is mainly a tanking assist
-function mod:TankFadingLight(player, spellId, _, _, spellName)
-	if UnitGroupRolesAssigned("player") ~= "TANK" or UnitIsUnit(player, "player") then return end
-	self:FlashShake("lighttank")
-	local duration = select(6, UnitDebuff(player, spellName))
-	self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
-	self:TargetMessage("lighttank", L["lighttank_message"], player, "Attention", spellId)
-	self:PlaySound("lighttank", "Alarm")
-end
-
 do
 	local scheduled = nil
 	local function fadingLight(spellName)
@@ -149,6 +138,14 @@ do
 			local duration = select(6, UnitDebuff("player", spellName))
 			self:Bar("lightyou", L["lightyou_bar"], duration, spellId)
 			self:FlashShake(105925)
+		else -- This is mainly a tanking assist
+			if (spellId == 110070 or spellId == 110069 or spellId == 105925 or spellId == 110068) and UnitGroupRolesAssigned("player") == "TANK" then
+				self:FlashShake("lighttank")
+				local duration = select(6, UnitDebuff(player, spellName))
+				self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
+				self:TargetMessage("lighttank", L["lighttank_message"], player, "Attention", spellId)
+				self:PlaySound("lighttank", "Alarm")
+			end
 		end
 		if not scheduled then
 			scheduled = true
