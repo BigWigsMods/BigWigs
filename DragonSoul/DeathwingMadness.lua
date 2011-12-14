@@ -40,6 +40,7 @@ L.impale = L.impale.." "..INLINE_TANK_ICON
 function mod:GetOptions()
 	return {
 		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
+		
 		{106794, "FLASHSHAKE"}, "last_phase",
 		"bosskill",
 	}, {
@@ -58,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
 	self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
 	self:Log("SPELL_CAST_START", "Cataclysm", 110044, 106523, 110042, 110043)
-	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- corrupted blood
+	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- Corrupted Blood
 	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139, 109599, 109598, 106794, 106791, 106789, 106818) -- 106794 10N, 110141 LFR
 
 	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
@@ -106,16 +107,16 @@ end
 
 function mod:AssaultAspects(_, spellId)
 	if not self.isEngaged then self:Engage() end
-	if firstAspect then--The abilities all come earlier for first platform only
+	if firstAspect then -- The abilities all come earlier for first platform only
 		firstAspect = false
-		self:Bar(106400, impale, 22, 106400)
+		self:Bar("impale", impale, 22, 106400)
 		self:Bar(105651, elementiumbolt, 40.5, 105651)
-		self:Bar(105863, hemorrhage, 85.5, 105863)
+		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
 		self:Bar(110044, cataclysm, 175.5, 110044)
 	else
-		self:Bar(106400, impale, 27.5, 106400)
+		self:Bar("impale", impale, 27.5, 106400)
 		self:Bar(105651, elementiumbolt, 55.5, 105651)
-		self:Bar(105863, hemorrhage, 100.5, 105863)
+		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
 		self:Bar(110044, cataclysm, 190.5, 110044)
 	end
 end
@@ -128,11 +129,10 @@ end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
 	self:Message(110044, spellName, "Attention", spellId)
---	self:Bar(110044, spellName, 60, spellId)--Don't have to start here, can accurately be started at assault aspects
 end
 
 function mod:AgonizingPain()
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(110044))) -- cataclysm
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(110044))) -- Cataclysm
 end
 
 do
