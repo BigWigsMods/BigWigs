@@ -101,7 +101,7 @@ end
 
 function mod:AssaultAspects()
 	if not self.isEngaged then
-		self:Engage() end
+		self:Engage()
 		-- The abilities all come earlier for first platform only
 		self:Bar("impale", L["impale"], 22, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
