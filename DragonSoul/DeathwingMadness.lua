@@ -6,7 +6,9 @@ local mod, CL = BigWigs:NewBoss("Madness of Deathwing", 824, 333)
 if not mod then return end
 mod:RegisterEnableMob(56173, 56168, 56103) -- Deathwing, Wing Tentacle, Thrall
 
-local hemorrhage, cataclysm = GetSpellInfo(105863), GetSpellInfo(106523)
+local hemorrhage = GetSpellInfo(105863)
+local cataclysm = GetSpellInfo(110044)
+local impale = GetSpellInfo(106400)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -56,10 +58,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlisteringTentacle", 109588, 109589, 109590, 105444)
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
-	self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
+	--self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
 	self:Log("SPELL_CAST_START", "Cataclysm", 110044, 106523, 110042, 110043)
 	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- Corrupted Blood
-	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139, 109599, 109598, 106794, 106791, 106789, 106818) -- 106794 10N, 110141 LFR
+	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139) -- 106794 10N, 110141 LFR
 
 	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
 end
@@ -72,7 +74,7 @@ do
 	local prev = 0
 	function mod:Impale(_, _, spellName, _, _, spellId)
 		if UnitGroupRolesAssigned("player") ~= "TANK" then return end
-		if spellName == L["impale"] then
+		if spellName == impale then
 			local t = GetTime()
 			if t-prev > 5 then
 				self:Message("impale", spellName, "Urgent", spellId, "Alarm")
@@ -98,23 +100,23 @@ end
 function mod:LastPhase(_, spellId)
 	self:Message("last_phase", L["last_phase"], "Attention", spellId)
 end
-
+--[[
 function mod:AssaultAspects()
 	if not self.isEngaged then
 		self:Engage()
 		-- The abilities all come earlier for first platform only
-		self:Bar("impale", L["impale"], 22, 106400)
+		self:Bar("impale", impale, 22, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
 		self:Bar(110044, cataclysm, 175.5, 110044)
 	else
-		self:Bar("impale", L["impale"], 27.5, 106400)
+		self:Bar("impale", impale, 27.5, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
 		self:Bar(110044, cataclysm, 190.5, 110044)
 	end
 end
-
+]]
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
 	self:FlashShake(105651)
 	self:Message(105651, spellName, "Important", spellId, "Long")
