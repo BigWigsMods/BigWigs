@@ -6,8 +6,6 @@ local mod, CL = BigWigs:NewBoss("Madness of Deathwing", 824, 333)
 if not mod then return end
 mod:RegisterEnableMob(56173, 56168, 56103) -- Deathwing, Wing Tentacle, Thrall
 
-local firstAspect = true
-local hemorrhage, cataclysm, elementiumbolt, impale = GetSpellInfo(105863), GetSpellInfo(106523), GetSpellInfo(105651), GetSpellInfo(106400)
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -16,7 +14,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.impale = EJ_GetSectionInfo(4114)
 	L.impale_desc = "Tank alert only. "..select(2,EJ_GetSectionInfo(4114))
-	L.impale_icon = 106400
+	L.imaple_icon = 106400
 
 	L.last_phase, L.last_phase_desc = EJ_GetSectionInfo(4046)
 	L.last_phase_icon = 109592
@@ -56,16 +54,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlisteringTentacle", 109588, 109589, 109590, 105444)
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
-	self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
 	self:Log("SPELL_CAST_START", "Cataclysm", 110044, 106523, 110042, 110043)
-	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- Corrupted Blood
+	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- corrupted blood
 	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139, 109599, 109598, 106794, 106791, 106789, 106818) -- 106794 10N, 110141 LFR
 
 	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
-end
-
-function mod:OnEngage(diff)
-	firstAspect = true
 end
 
 --------------------------------------------------------------------------------
@@ -95,6 +88,7 @@ do
 			if t-prev > 5 then
 				prev = t
 				self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
+				self:Bar("hemorrhage", "~"..spellName, 150, 105863) -- Might be an event more accurate to use
 			end
 		end
 	end
@@ -102,22 +96,6 @@ end
 
 function mod:LastPhase(_, spellId)
 	self:Message("last_phase", L["last_phase"], "Attention", spellId)
-end
-
-function mod:AssaultAspects(_, spellId)
-	if not self.isEngaged then self:Engage() end
-	if firstAspect then -- The abilities all come earlier for first platform only
-		firstAspect = false
-		self:Bar("impale", impale, 22, 106400)
-		self:Bar(105651, elementiumbolt, 40.5, 105651)
-		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
-		self:Bar(110044, cataclysm, 175.5, 110044)
-	else
-		self:Bar("impale", impale, 27.5, 106400)
-		self:Bar(105651, elementiumbolt, 55.5, 105651)
-		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
-		self:Bar(110044, cataclysm, 190.5, 110044)
-	end
 end
 
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
@@ -128,10 +106,11 @@ end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
 	self:Message(110044, spellName, "Attention", spellId)
+	self:Bar(110044, spellName, 60, spellId)
 end
 
 function mod:AgonizingPain()
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(110044))) -- Cataclysm
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(110044))) -- cataclysm
 end
 
 do
