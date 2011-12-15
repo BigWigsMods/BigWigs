@@ -6,8 +6,8 @@ local mod, CL = BigWigs:NewBoss("Madness of Deathwing", 824, 333)
 if not mod then return end
 mod:RegisterEnableMob(56173, 56168, 56103) -- Deathwing, Wing Tentacle, Thrall
 
-local firstAspect = true
-local hemorrhage, cataclysm, elementiumbolt, impale = GetSpellInfo(105863), GetSpellInfo(106523), GetSpellInfo(105651), GetSpellInfo(106400)
+local hemorrhage, cataclysm = GetSpellInfo(105863), GetSpellInfo(106523)
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -64,10 +64,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
 end
 
-function mod:OnEngage(diff)
-	firstAspect = true
-end
-
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -104,16 +100,16 @@ function mod:LastPhase(_, spellId)
 end
 
 function mod:AssaultAspects()
-	if not self.isEngaged then self:Engage() end
-	if firstAspect then -- The abilities all come earlier for first platform only
-		firstAspect = false
-		self:Bar("impale", impale, 22, 106400)
-		self:Bar(105651, elementiumbolt, 40.5, 105651)
+	if not self.isEngaged then
+		self:Engage() end
+		-- The abilities all come earlier for first platform only
+		self:Bar("impale", L["impale"], 22, 106400)
+		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
 		self:Bar(110044, cataclysm, 175.5, 110044)
 	else
-		self:Bar("impale", impale, 27.5, 106400)
-		self:Bar(105651, elementiumbolt, 55.5, 105651)
+		self:Bar("impale", L["impale"], 27.5, 106400)
+		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
 		self:Bar(110044, cataclysm, 190.5, 110044)
 	end
