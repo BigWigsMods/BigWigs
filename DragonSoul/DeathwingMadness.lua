@@ -95,12 +95,12 @@ function mod:AssaultAspects()
 		self:Bar("impale", impale, 22, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
-		self:Bar(110044, cataclysm, 175, 110044)
+		self:Bar(110044, cataclysm, 115, 110044)
 	else
 		self:Bar("impale", impale, 27.5, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
-		self:Bar(110044, cataclysm, 190, 110044)
+		self:Bar(110044, cataclysm, 130, 110044)
 	end
 end
 
