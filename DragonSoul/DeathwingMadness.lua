@@ -4,7 +4,8 @@
 
 local mod, CL = BigWigs:NewBoss("Madness of Deathwing", 824, 333)
 if not mod then return end
-mod:RegisterEnableMob(56173, 56168, 56103) -- Deathwing, Wing Tentacle, Thrall
+-- Thrall, Deathwing, Arm Tentacle, Arm Tentacle, Wing Tentacle, Mutated Corruption
+mod:RegisterEnableMob(56103, 56173, 56167, 56846, 56168, 56471)
 
 local hemorrhage = GetSpellInfo(105863)
 local cataclysm = GetSpellInfo(110044)
@@ -54,11 +55,11 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Hemorrhage")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageUnit")
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", "Impale")
 	self:Log("SPELL_AURA_APPLIED", "BlisteringTentacle", 109588, 109589, 109590, 105444)
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
+	self:Log("SPELL_CAST_SUCCESS", "Impale", 106400)
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
-	--self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
+	self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
 	self:Log("SPELL_CAST_START", "Cataclysm", 110044, 106523, 110042, 110043)
 	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- Corrupted Blood
 	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139) -- 106794 10N, 110141 LFR
@@ -70,53 +71,39 @@ end
 -- Event Handlers
 --
 
-do
-	local prev = 0
-	function mod:Impale(_, _, spellName, _, _, spellId)
-		if UnitGroupRolesAssigned("player") ~= "TANK" then return end
-		if spellName == impale then
-			local t = GetTime()
-			if t-prev > 5 then
-				self:Message("impale", spellName, "Urgent", spellId, "Alarm")
-			end
-		end
+function mod:Impale(_, spellId, _, _, spellName)
+	if UnitGroupRolesAssigned("player") == "TANK" then
+		self:Message("impale", spellName, "Urgent", spellId, "Alarm")
+		self:Bar("impale", spellName, 35, spellId)
 	end
 end
 
 -- XXX maybe too much sound? All of them are for adds tho that you have to kill ASAP.
-do
-	local prev = 0
-	function mod:Hemorrhage(_, _, spellName)
-		if spellName == hemorrhage then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
-			end
-		end
+function mod:Hemorrhage(_, unit, spellName)
+	if (unit):find("^boss%d$") and spellName == hemorrhage then
+		self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
 	end
 end
 
 function mod:LastPhase(_, spellId)
 	self:Message("last_phase", L["last_phase"], "Attention", spellId)
 end
---[[
+
 function mod:AssaultAspects()
 	if not self.isEngaged then
-		self:Engage()
 		-- The abilities all come earlier for first platform only
 		self:Bar("impale", impale, 22, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
-		self:Bar(110044, cataclysm, 175.5, 110044)
+		self:Bar(110044, cataclysm, 175, 110044)
 	else
 		self:Bar("impale", impale, 27.5, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
-		self:Bar(110044, cataclysm, 190.5, 110044)
+		self:Bar(110044, cataclysm, 190, 110044)
 	end
 end
-]]
+
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
 	self:FlashShake(105651)
 	self:Message(105651, spellName, "Important", spellId, "Long")
@@ -125,11 +112,12 @@ end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
 	self:Message(110044, spellName, "Attention", spellId)
+	self:SendMessage("BigWigs_StopBar", self, spellName)
 	self:Bar(110044, CL["cast"]:format(spellName), 60, spellId)
 end
 
 function mod:AgonizingPain()
-	self:SendMessage("BigWigs_StopBar", self, cataclysm)
+	self:SendMessage("BigWigs_StopBar", self, CL["cast"]:format(cataclysm))
 end
 
 do

@@ -115,7 +115,7 @@ end
 
 function mod:Seal(_, spellId)
 	self:Message(105848, L["exposed"], "Important", spellId)
-	self:Bar(105848, L["exposed"], 23, spellId)
+	self:Bar(105848, L["exposed"], self:LFR() and 33 or 23, spellId) -- 33 is a guess
 end
 
 do
