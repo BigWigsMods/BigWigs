@@ -7,6 +7,7 @@ if L then
 end
 
 L = BigWigs:NewBossLocale("Occu'thar", "zhTW")
+if not L then return end
 if L then
 	L.shadows_bar = "灼熱暗影"
 	L.destruction_bar = "歐庫薩的毀滅"
@@ -18,7 +19,7 @@ end
 
 L = BigWigs:NewBossLocale("Alizabal", "zhTW")
 if L then
-	L.first_ability = "Skewer or Hate"
-	L.dance_message = "Blade Dance %d of 3"
+	L.first_ability = "烤肉釘或沸騰憎恨"
+	L.dance_message = "劍刃之舞：>%d - 3<！"
 end
 
