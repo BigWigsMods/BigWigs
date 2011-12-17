@@ -2,9 +2,10 @@ local L = BigWigs:NewBossLocale("Beth'tilac", "ruRU")
 if not L then return end
 if L then
 	L.flare_desc = "Показать таймер для АоЕ."
+	
 	L.devastate_message = "Разрушение #%d"
-	L.drone_bar = "Дрон"
-	L.drone_message = "Появился дрон!"
+	L.drone_bar = "Трутень"
+	L.drone_message = "Появился Трутень!"
 	L.kiss_message = "Поцелуй"
 	L.spinner_warn = "Ткачи #%d"
 end
@@ -24,7 +25,7 @@ if L then
 
 	L.molten_message = "Стаков на боссе: %d!"
 
-	L.stomp_message = "Огненная поступь!"
+	L.stomp_message = "Поступь! Поступь! Поступь!"
 	L.stomp = "Поступь"
 end
 
@@ -81,7 +82,7 @@ if L then
 	L.torment_desc = "Объявлять, когда ваш /фокус получает стаки мучения."
 
 	L.blade_bar = "~След. лезвие"
-	L.shard_message = "Кристаллы (%d)!"
+	L.shard_message = "Осколки (%d)!"
 	L.focus_message = "У вашего фокуса %d стаков!"
 	L.link_message = "Связан"
 end
@@ -96,10 +97,10 @@ end
 
 L = BigWigs:NewBossLocale("Ragnaros", "ruRU")
 if L then
-	L.intermission_end_trigger1 = "Сульфурас уничтожит вас"
-	L.intermission_end_trigger2 = "На колени, смертные"
-	L.intermission_end_trigger3 = "Пора покончить с этим"
-	L.phase4_trigger = "Слишком рано"
+	L.intermission_end_trigger1 = "Сульфурас уничтожит вас!"
+	L.intermission_end_trigger2 = "На колени, смертные!"
+	L.intermission_end_trigger3 = "Пора покончить с этим."
+	L.phase4_trigger = "Слишком рано…"
 	L.seed_explosion = "Взрыв семян!"
 	L.intermission_bar = "Переходная фаза!"
 	L.intermission_message = "Переходная фаза... Получил печеньки?"
@@ -108,7 +109,7 @@ if L then
 	L.engulfing_middle = "Пламя по центру!"
 	L.engulfing_far = "Пламя с краю!"
 	L.hand_bar = "Отбрасывание"
-	L.ragnaros_back_message = "Рагнарос вернулся!" -- yeah thats right PARRY ON!
+	L.ragnaros_back_message = "Рагнарос вернулся!"
 
 	L.wound = "Жгучая рана"
 	L.wound_desc = "Только для танков. Считает стаки жгучей раны и показывает их таймер."

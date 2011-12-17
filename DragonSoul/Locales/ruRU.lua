@@ -2,10 +2,13 @@ local L = BigWigs:NewBossLocale("Morchok", "ruRU")
 if not L then return end
 if L then
 	L.engage_trigger = "Попробуйте остановить лавину и умрете."
+	
 	L.crush = "Сокрушение доспеха"
 	L.crush_desc = "Только для танков. Считает стаки сокрушения доспеха и показывает их таймер."
 	L.crush_message = "%2$dx Сокрушение на %1$s"
+	
 	L.blood = "Кровь"
+	
 	L.explosion = "Взрыв"
 end
 
@@ -40,16 +43,18 @@ if L then
 	L.red = "|cFFFF0404Красная|r"
 
 	L.blobs = "Капли"
-	L.blobs_bar = "След. Капли"
+	L.blobs_bar = "Новые капли"
 	L.blobs_desc = "Йор'садж Неспящий обращается к мощи Шу'мы и призывает разноцветные капли его крови. Эти капли медленно движутся к Йор'саджу. Если капля достигает его, она дарует ему заключенную в ней мощь."
 end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "ruRU")
 if L then
 	L.engage_trigger = "Вы осмелились бросить вызов владычице штормов?!"
+	
 	L.lightning_or_frost = "Грозовая или Ледяная"
 	L.ice_next = "Ледяная фаза"
 	L.lightning_next = "Грозовая фаза"
+	
 	L.nextphase = "След. Фаза"
 	L.nextphase_desc = "Предупреждения для следующей фазы"
 end
@@ -58,7 +63,7 @@ L = BigWigs:NewBossLocale("Ultraxion", "ruRU")
 if L then
 	L.engage_trigger = "Настало Время Сумерек!"
 
-	L.warmup = "Разминка"
+	L.warmup = "Начало боя"
 	L.warmup_desc = "Время до начала боя с боссом."
 	L.warmup_trigger = "Я - начало конца... Тень, что заслоняет солнце... Звонящий по вам колокол…"
 

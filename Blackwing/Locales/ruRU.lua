@@ -23,8 +23,8 @@ if L then
 
 	L.phase2_message = "Скоро фаза Смертности!"
 
-	L.warmup = "Разминка"
-	L.warmup_desc = "Таймер Разминки"
+	L.warmup = "Начало боя"
+	L.warmup_desc = "Время до начала боя с боссом"
 end
 
 L = BigWigs:NewBossLocale("Magmaw", "ruRU")
@@ -134,6 +134,6 @@ if L then
 	L.protocol_message = "Химическая бомба!"
 
 	L.iconomnotron = "Иконка на активного босса"
-	L.iconomnotron_desc = "Помечает активного босса основной иконкой (требуется быть лидером или уполномоченным)."
+	L.iconomnotron_desc = "Помечает активного босса основной иконкой (требуется быть лидером или помощником)."
 end
 
