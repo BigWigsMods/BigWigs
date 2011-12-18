@@ -49,6 +49,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IceTombStart", 104448)
+	self:Log("SPELL_AURA_APPLIED", "Assault", 107851, 110898, 110899, 110900)
 	self:Log("SPELL_AURA_APPLIED", "IceTombApplied", 104451)
 	self:Log("SPELL_AURA_APPLIED", "IceLanceApplied", 105285)
 	self:Log("SPELL_AURA_REMOVED", "IceLanceRemoved", 105285)
@@ -72,13 +73,22 @@ end
 -- Event Handlers
 --
 
+function mod:Assault(_, spellId, _, _, spellName)
+	if UnitExists("boss1") and UnitDetailedThreatSituation("player", "boss1") then
+		self:Message(107851, spellName, "Attention", spellId)
+		self:Bar(107851, spellName, 15, spellId)
+	end
+end
+
 function mod:WaterShield(_, spellId, _, _, spellName)
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(107851))) -- Focused Assault
 	self:Message(109561, spellName, "Attention", spellId)
 	nextPhase = L["ice_next"]
 	nextPhaseIcon = 105409
 end
 
 function mod:FrozenTempest(_, spellId, _, _, spellName)
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(107851))) -- Focused Assault
 	self:Message(109553, spellName, "Attention", spellId)
 	nextPhase = L["lightning_next"]
 	nextPhaseIcon = 109561
@@ -88,6 +98,9 @@ function mod:Feedback(_, spellId, _, _, spellName)
 	self:Message(108934, spellName, "Attention", spellId)
 	self:Bar(108934, spellName, 15, spellId)
 	self:Bar("nextphase", nextPhase, 63, nextPhaseIcon)
+	if UnitExists("boss1") and UnitDetailedThreatSituation("player", "boss1") then
+		self:Bar(107851, GetSpellInfo(107851), 20, 107851)--Focused Assault
+	end
 end
 
 function mod:IceTombStart(_, spellId, _, _, spellName)
