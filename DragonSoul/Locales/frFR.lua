@@ -55,6 +55,8 @@ if L then
 	L.ice_next = "Phase de glace"
 	L.lightning_next = "Phase de foudre"
 
+	L.assault_desc = "Alerte pour tank uniquement. "..select(2, EJ_GetSectionInfo(4159))
+
 	L.nextphase = "Prochaine phase"
 	L.nextphase_desc = "Prévient quand arrive la phase suivante."
 end

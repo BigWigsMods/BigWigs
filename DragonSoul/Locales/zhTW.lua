@@ -55,9 +55,10 @@ if L then
 	L.ice_next = "寒冰階段"
 	L.lightning_next = "閃電階段"
 
+	L.assault_desc = "只警報坦克。"..select(2, EJ_GetSectionInfo(4159))
+
 	L.nextphase = "下一階段"
 	L.nextphase_desc = "當下一階段時發出警報。"
-
 end
 
 L = BigWigs:NewBossLocale("Ultraxion", "zhTW")

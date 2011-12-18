@@ -25,11 +25,16 @@ if L then
 	L.ice_next = "Ice phase"
 	L.lightning_next = "Lightning phase"
 
+	L.assault = EJ_GetSectionInfo(4159)
+	L.assault_desc = "Tank alert only. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_icon = 107851
+
 	L.nextphase = "Next Phase"
 	L.nextphase_desc = "Warnings for next phase"
 	L.nextphase_icon = 2139 -- random icon (counterspell)
 end
 L = mod:GetLocale()
+L.assault = L.assault.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -39,11 +44,11 @@ function mod:GetOptions()
 	return {
 		104448, 109553, {105316, "PROXIMITY"},
 		109561,
-		108934, "nextphase", "berserk", "bosskill",
+		"assault", 108934, "nextphase", "berserk", "bosskill",
 	}, {
 		[104448] = L["ice_next"],
 		[109561] = L["lightning_next"],
-		[108934] = "general",
+		assault = "general",
 	}
 end
 
@@ -75,8 +80,9 @@ end
 
 function mod:Assault(_, spellId, _, _, spellName)
 	if UnitExists("boss1") and UnitDetailedThreatSituation("player", "boss1") then
-		self:Message(107851, spellName, "Attention", spellId)
-		self:Bar(107851, spellName, 15, spellId)
+		self:Message("assault", spellName, "Urgent", spellId)
+		self:Bar("assault", "~"..spellName, 15, spellId)
+		self:Bar("assault", "<"..spellName..">", 5, spellId)
 	end
 end
 
