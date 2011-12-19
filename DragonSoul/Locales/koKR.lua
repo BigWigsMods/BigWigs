@@ -108,13 +108,13 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "koKR")
 if L then
-	L.left_start = "왼쪽으로 회전합니다!"
-	L.right_start = "오른쪽으로 회전합니다!"
+	L.left_start = "왼쪽으로 회전하려고 합니다!"
+	L.right_start = "오른쪽으로 회전하려고 합니다!"
 	L.left = "왼쪽으로 회전"
 	L.right = "오른쪽으로 회전"
 	L.not_hooked = "접착되지 않았음!"
 	L.roll_message = "He's rolling, rolling, rolling!"
-	L.level_trigger = "levels out"
+	L.level_trigger = "수평으로 균형을 잡습니다."
 	L.level_message = "Nevermind, he leveled out!"
 
 	L.exposed = "Armor Exposed"
