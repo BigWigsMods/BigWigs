@@ -79,9 +79,9 @@ if L then
 	L.cast = "Zwielicht Zauberleiste"
 	L.cast_desc = "Zeigt eine 5 (Normal) oder 3 (Heroisch) sekündige Leiste, wenn Stunde des Zwielichts gewirkt wird."
 
-	L.lightyou = "Schwindendes Licht auf Dir"
-	L.lightyou_desc = "Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht Dich explodieren lässt."
-	L.lightyou_bar = "<Du Explodierst>"
+	L.lightself = "Schwindendes Licht auf Dir"
+	L.lightself_desc = "Zeigt eine Leiste mit der verbleibenden Zeit, bis schwindendes Licht Dich explodieren lässt."
+	L.lightself_bar = "<Du Explodierst>"
 
 	L.lighttank = "Schwindendes Licht auf Tanks"
 	L.lighttank_desc = "Nur für Tanks. Wenn ein Tank von schwindendem Licht betroffen ist, werden eine Timerleiste sowie Flash & Shake für die Explosion angezeigt."

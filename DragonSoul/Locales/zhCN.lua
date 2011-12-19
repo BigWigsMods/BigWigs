@@ -79,9 +79,9 @@ if L then
 	L.cast = "暮光审判施法条"
 	L.cast_desc = "显示暮光审判5秒施法条。"
 
-	L.lightyou = "自身黯淡之光"
-	L.lightyou_desc = "显示自身黯淡之光爆炸剩余计时条。"
-	L.lightyou_bar = "<你将爆炸>"
+	L.lightself = "自身黯淡之光"
+	L.lightself_desc = "显示自身黯淡之光爆炸剩余计时条。"
+	L.lightself_bar = "<你将爆炸>"
 
 	L.lighttank = "坦克黯淡之光"
 	L.lighttank_desc = "只警报坦克。如果坦克中了黯淡之光，显示一个爆炸计时条及闪屏震动。"

@@ -79,9 +79,9 @@ if L then
 	L.cast = "황혼의 시간 시전 바"
 	L.cast_desc = "황혼의 시간 시전 5초전 바를 표시합니다."
 
-	L.lightyou = "당신에 사그라지는 빛"
-	L.lightyou_desc = "사그라지는 빛의 폭발까지 남은 시간을 바에 표시합니다."
-	L.lightyou_bar = "<폭발>"
+	L.lightself = "당신에 사그라지는 빛"
+	L.lightself_desc = "사그라지는 빛의 폭발까지 남은 시간을 바에 표시합니다."
+	L.lightself_bar = "<폭발>"
 
 	L.lighttank = "Fading Light on Tanks"
 	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."

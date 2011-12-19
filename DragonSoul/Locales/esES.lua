@@ -79,9 +79,9 @@ if L then
 	L.cast = "Crepúsculo barra de casteo"
 	L.cast_desc = "Mostrar una barra de 5 segundos cuando se esté casteando Crepúsculo."
 
-	L.lightyou = "Luz mortecina en TI"
-	L.lightyou_desc = "Mostrar una barra que visualice el tiempo restante hasta que Luz mortecina te haga explotar."
-	L.lightyou_bar = "<Explotas>"
+	L.lightself = "Luz mortecina en TI"
+	L.lightself_desc = "Mostrar una barra que visualice el tiempo restante hasta que Luz mortecina te haga explotar."
+	L.lightself_bar = "<Explotas>"
 
 	L.lighttank = "Luz mortecina en tanques"
 	L.lighttank_desc = "Alerta para tanques. Si un tanque tiene Luz mortecina, muestra una barra y un Flash para la explosión."

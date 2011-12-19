@@ -79,9 +79,9 @@ if L then
 	L.cast = "暮光之時施法條"
 	L.cast_desc = "顯示暮光之時5秒施法條。"
 
-	L.lightyou = "自身凋零之光"
-	L.lightyou_desc = "顯示自身凋零之光爆炸剩餘計時條。"
-	L.lightyou_bar = "<你將爆炸>"
+	L.lightself = "自身凋零之光"
+	L.lightself_desc = "顯示自身凋零之光爆炸剩餘計時條。"
+	L.lightself_bar = "<你將爆炸>"
 
 	L.lighttank = "坦克凋零之光"
 	L.lighttank_desc = "只警報坦克。如果坦克中了凋零之光，顯示一個爆炸計時條及閃爍震動。"

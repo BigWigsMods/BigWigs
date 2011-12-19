@@ -79,9 +79,9 @@ if L then
 	L.cast = "Barre d'incantation d'Heure du Crépuscule"
 	L.cast_desc = "Affiche une barre de 5 secondes pour l'incantation d'Heure du Crépuscule."
 
-	L.lightyou = "Lumière faiblissante sur vous"
-	L.lightyou_desc = "Affiche une barre indiquant le temps restant avant que Lumière faiblissante ne vous fasse exploser."
-	L.lightyou_bar = "<Vous explosez>"
+	L.lightself = "Lumière faiblissante sur vous"
+	L.lightself_desc = "Affiche une barre indiquant le temps restant avant que Lumière faiblissante ne vous fasse exploser."
+	L.lightself_bar = "<Vous explosez>"
 
 	L.lighttank = "Lumière faiblissante sur tanks"
 	L.lighttank_desc = "Alerte pour tank uniquement. Si un tank a Lumière faiblissante, affiche une barre d'explosion et Flash/Shake."

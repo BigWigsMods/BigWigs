@@ -41,10 +41,10 @@ if L then
 	L.cast_desc = "Show a 5 (Normal) or 3 (Heroic) second bar for Twilight being cast."
 	L.cast_icon = 106371
 
-	L.lightyou = "Fading Light on You"
-	L.lightyou_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
-	L.lightyou_bar = "<You Explode>"
-	L.lightyou_icon = 105925
+	L.lightself = "Fading Light on You"
+	L.lightself_desc = "Show a bar displaying the time left until Fading Light causes you to explode."
+	L.lightself_bar = "<You Explode>"
+	L.lightself_icon = 105925
 
 	L.lighttank = "Fading Light on Tanks"
 	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
@@ -62,7 +62,7 @@ L.lighttank = L.lighttank.." "..INLINE_TANK_ICON
 function mod:GetOptions(CL)
 	return {
 		{106371, "FLASHSHAKE"}, "cast",
-		{105925, "FLASHSHAKE"}, "lightyou", {"lighttank", "FLASHSHAKE"},
+		105925, {"lightself", "FLASHSHAKE"}, {"lighttank", "FLASHSHAKE"},
 		"warmup", "crystal", "berserk", "bosskill",
 	}, {
 		[106371] = L["twilight"],
@@ -136,8 +136,8 @@ do
 		lightTargets[#lightTargets + 1] = player
 		if UnitIsUnit(player, "player") then
 			local duration = select(6, UnitDebuff("player", spellName))
-			self:Bar("lightyou", L["lightyou_bar"], duration, spellId)
-			self:FlashShake(105925)
+			self:Bar("lightself", L["lightself_bar"], duration, spellId)
+			self:FlashShake("lightself")
 		else -- This is mainly a tanking assist
 			if (spellId == 110070 or spellId == 110069 or spellId == 105925 or spellId == 110068) and UnitGroupRolesAssigned("player") == "TANK" then
 				self:FlashShake("lighttank")
