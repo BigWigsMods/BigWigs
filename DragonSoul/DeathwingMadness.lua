@@ -65,6 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139) -- 106794 10N, 110141 LFR
 
 	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
+	self:Death("StopImpale", 56471)
 end
 
 --------------------------------------------------------------------------------
@@ -76,6 +77,10 @@ function mod:Impale(_, spellId, _, _, spellName)
 		self:Message("impale", spellName, "Urgent", spellId, "Alarm")
 		self:Bar("impale", spellName, 35, spellId)
 	end
+end
+
+function mod:StopImpale()
+	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(106400)))
 end
 
 -- XXX maybe too much sound? All of them are for adds tho that you have to kill ASAP.
@@ -92,12 +97,16 @@ end
 function mod:AssaultAspects()
 	if not self.isEngaged then
 		-- The abilities all come earlier for first platform only
-		self:Bar("impale", impale, 22, 106400)
+		if UnitGroupRolesAssigned("player") == "TANK" then
+			self:Bar("impale", impale, 22, 106400)
+		end
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
 		self:Bar(110044, cataclysm, 175, 110044)
 	else
-		self:Bar("impale", impale, 27.5, 106400)
+		if UnitGroupRolesAssigned("player") == "TANK" then
+			self:Bar("impale", impale, 27.5, 106400)
+		end
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
 		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
 		self:Bar(110044, cataclysm, 190, 110044)
@@ -107,7 +116,7 @@ end
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
 	self:FlashShake(105651)
 	self:Message(105651, spellName, "Important", spellId, "Long")
-	self:Bar(105651, spellName, UnitBuff("player", (GetSpellInfo(109624))) and 20 or 10, spellId)
+	self:Bar(105651, spellName, UnitBuff("player", (GetSpellInfo(109624))) and 19 or 9, spellId)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
