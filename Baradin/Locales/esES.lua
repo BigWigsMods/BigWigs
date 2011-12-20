@@ -13,13 +13,13 @@ if L then
 	L.destruction_bar = "<Explosión inminente>"
 	L.eyes_bar = "~Ojos"
 
-	L.fire_message = "Lazer, Pew Pew"
-	L.fire_bar = "~Lazer"
+	L.fire_message = "Láser, Piu Piu"
+	L.fire_bar = "~Láser"
 end
 
 L = BigWigs:NewBossLocale("Alizabal", "esES")
 if L then
-	L.first_ability = "Skewer or Hate"
-	L.dance_message = "Blade Dance %d of 3"
+	L.first_ability = "Odio o Ensartar"
+	L.dance_message = "Danza de hojas %d of 3"
 end
 
