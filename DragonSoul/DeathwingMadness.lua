@@ -32,6 +32,8 @@ if L then
 
 	L.hemorrhage, L.hemorrhage_desc = EJ_GetSectionInfo(4108)
 	L.hemorrhage_icon = "SPELL_FIRE_MOLTENBLOOD"
+
+	L.bolt_explode = "<Bolt Explodes>"
 end
 L = mod:GetLocale()
 L.impale = L.impale.." "..INLINE_TANK_ICON
@@ -116,7 +118,7 @@ end
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
 	self:FlashShake(105651)
 	self:Message(105651, spellName, "Important", spellId, "Long")
-	self:Bar(105651, spellName, UnitBuff("player", (GetSpellInfo(109624))) and 19 or 9, spellId)
+	self:Bar(105651, L["bolt_explode"], UnitBuff("player", (GetSpellInfo(109624))) and 19 or 9, spellId)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)

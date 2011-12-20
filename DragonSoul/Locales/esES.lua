@@ -122,6 +122,8 @@ end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES")
 if L then
+	L.impale_desc = "Alerta para tanques. "..select(2,EJ_GetSectionInfo(4114))
 
+	L.bolt_explode = "<Bolt Explodes>"
 end
 

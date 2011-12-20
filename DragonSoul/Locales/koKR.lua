@@ -84,7 +84,7 @@ if L then
 	L.lightself_bar = "<폭발>"
 
 	L.lighttank = "Fading Light on Tanks"
-	L.lighttank_desc = "Tank alert only. If a tank has Fading Light, show an explode bar and Flash/Shake."
+	L.lighttank_desc = "탱커 전용 경고입니다. If a tank has Fading Light, show an explode bar and Flash/Shake."
 	L.lighttank_bar = "<%s Explodes>"
 	L.lighttank_message = "Exploding Tank"
 end
@@ -122,6 +122,8 @@ end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "koKR")
 if L then
+	L.impale_desc = "탱커 전용 경고입니다. "..select(2,EJ_GetSectionInfo(4114))
 
+	L.bolt_explode = "<Bolt Explodes>"
 end
 

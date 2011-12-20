@@ -123,5 +123,7 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhCN")
 if L then
 	L.impale_desc = "只警报坦克。"..select(2,EJ_GetSectionInfo(4114))
+
+	L.bolt_explode = "<Bolt Explodes>"
 end
 
