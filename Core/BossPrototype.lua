@@ -301,6 +301,56 @@ do
 end
 
 -------------------------------------------------------------------------------
+-- Role checking
+--
+
+function boss:Tank()
+	local tree = GetPrimaryTalentTree()
+	local role = GetTalentTreeRoles(tree)
+	local _, class = UnitClass("player")
+	if class == "DRUID" and tree == 2 then
+		local _,_,_,_,talent = GetTalentInfo(2, 20)
+		if talent > 0 then
+			role = "TANK"
+		else
+			role = "DAMAGER"
+		end
+	end
+	if role == "TANK" then return true end
+end
+
+--[[
+function boss:Healer()
+	local tree = GetPrimaryTalentTree()
+	local role = GetTalentTreeRoles(tree)
+	if role == "HEALER" then return true end
+end
+
+function boss:Damager()
+	local tree = GetPrimaryTalentTree()
+	local role
+	local _, class = UnitClass("player")
+	if class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and t == 1) or (class == "PRIEST" and t == 3) then
+		role = "RANGED"
+	elseif class == "ROGUE" or (class == "WARRIOR" and tree ~= 3) or (class == "DEATHKNIGHT" and tree ~= 1) or (class == "PALADIN" and tree == 3) then
+		role = "MELEE"
+	elseif class == "DRUID" and t == 2 then
+		local _,_,_,_,talent = GetTalentInfo(2, 20)
+		if talent == 0 then
+			role = "MELEE"
+		end
+	elseif class == "SHAMAN" then
+		if t == 1 then
+			role = "RANGED"
+		elseif t == 2 then
+			role = "MELEE"
+		end
+	end
+	return role
+end
+]]
+
+-------------------------------------------------------------------------------
 -- Delayed message handling
 --
 
