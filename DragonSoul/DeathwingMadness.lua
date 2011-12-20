@@ -10,6 +10,7 @@ mod:RegisterEnableMob(56103, 56173, 56167, 56846, 56168, 56471)
 local hemorrhage = GetSpellInfo(105863)
 local cataclysm = GetSpellInfo(110044)
 local impale = GetSpellInfo(106400)
+local block = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -17,6 +18,8 @@ local impale = GetSpellInfo(106400)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "You have done NOTHING. I will tear your world APART."
+
 	L.impale = EJ_GetSectionInfo(4114)
 	L.impale_desc = "Tank alert only. "..select(2,EJ_GetSectionInfo(4114))
 	L.impale_icon = 106400
@@ -46,7 +49,7 @@ function mod:GetOptions()
 	return {
 		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
 		{106794, "FLASHSHAKE"}, "last_phase",
-		"bosskill",
+		"berserk", "bosskill",
 	}, {
 		bigtentacle = "ej:4040",
 		last_phase = "ej:4046",
@@ -56,7 +59,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Hemorrhage")
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageUnit")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Log("SPELL_AURA_APPLIED", "BlisteringTentacle", 109588, 109589, 109590, 105444)
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
 	self:Log("SPELL_CAST_SUCCESS", "Impale", 106400)
@@ -66,8 +69,22 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592) -- Corrupted Blood
 	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139) -- 106794 10N, 110141 LFR
 
+	self:Yell("Engage", L["engage_trigger"])
 	self:Log("SPELL_CAST_SUCCESS", "Win", 110063) -- Astral Recall
 	self:Death("StopImpale", 56471)
+end
+
+function mod:OnEngage()
+	block = true
+	if self:Tank() then
+		self:Bar("impale", impale, 27, 106400)
+	end
+	self:Bar(105651, GetSpellInfo(105651), 45.5, 105651) -- Elementium Bolt
+	self:Bar("hemorrhage", hemorrhage, 90.5, 105863)
+	self:Bar(110044, cataclysm, 180, 110044)
+	self:Bar("bigtentacle", L["bigtentacle"], 16.2, L["bigtentacle_icon"])
+	self:DelayedMessage("bigtentacle", 16.2, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
+	self:Berserk(900)
 end
 
 --------------------------------------------------------------------------------
@@ -75,7 +92,7 @@ end
 --
 
 function mod:Impale(_, spellId, _, _, spellName)
-	if UnitGroupRolesAssigned("player") == "TANK" then
+	if self:Tank() then
 		self:Message("impale", spellName, "Urgent", spellId, "Alarm")
 		self:Bar("impale", spellName, 35, spellId)
 	end
@@ -97,28 +114,21 @@ function mod:LastPhase(_, spellId)
 end
 
 function mod:AssaultAspects()
-	if not self.isEngaged then
-		-- The abilities all come earlier for first platform only
-		if UnitGroupRolesAssigned("player") == "TANK" then
-			self:Bar("impale", impale, 22, 106400)
-		end
-		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
-		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
-		self:Bar(110044, cataclysm, 175, 110044)
-	else
-		if UnitGroupRolesAssigned("player") == "TANK" then
-			self:Bar("impale", impale, 27.5, 106400)
-		end
-		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
-		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
-		self:Bar(110044, cataclysm, 190, 110044)
+	if block then block = nil return end
+	if self:Tank() then
+		self:Bar("impale", impale, 27.5, 106400)
 	end
+	self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
+	self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
+	self:Bar(110044, cataclysm, 190, 110044)
+	self:Bar("bigtentacle", L["bigtentacle"], 16.7, L["bigtentacle_icon"])
+	self:DelayedMessage("bigtentacle", 16.7, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
 end
 
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
 	self:FlashShake(105651)
 	self:Message(105651, spellName, "Important", spellId, "Long")
-	self:Bar(105651, L["bolt_explode"], UnitBuff("player", (GetSpellInfo(109624))) and 19 or 9, spellId)
+	self:Bar(105651, L["bolt_explode"], UnitBuff("player", (GetSpellInfo(109624))) and 18 or 8, spellId)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
@@ -150,15 +160,5 @@ function mod:Shrapnel(player, spellId, _, _, spellName)
 		local duration = select(6, UnitDebuff("player", spellName))
 		self:Bar(106794, you, duration, spellId)
 	end
-end
-
-function mod:EngageUnit()
-	if UnitExists("boss2") then
-		local guid = UnitGUID("boss1")
-		if guid and self:GetCID(guid) == 56471 then
-			self:Message("bigtentacle", L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
-		end
-	end
-	self:CheckBossStatus()
 end
 
