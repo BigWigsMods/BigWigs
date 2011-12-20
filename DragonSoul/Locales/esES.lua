@@ -114,8 +114,8 @@ if L then
 	L.right = "gira a la derecha"
 	L.not_hooked = "¡>NO< estás enganchado!"
 	L.roll_message = "¡Está girando, girando, girando!"
-	L.level_trigger = "levels out" -- translate
-	L.level_message = "¡No importa, se ha recuperado!"
+	L.level_trigger = "se estabiliza."
+	L.level_message = "¡Bueno, se ha estabilizado!"
 
 	L.exposed = "Armadura expuesta"
 end
