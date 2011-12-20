@@ -22,7 +22,7 @@ if L then
 	L.bounce = "Отскок Сферы"
 	L.bounce_desc = "Счетчик для отскакиваний сферы."
 
-	L.darkness = "Диско пати Щупалец!"
+	L.darkness = "Дискотека Щупалец!"
 	L.darkness_desc = "Эта фаза начинается, когда сфера попадает в босса."
 
 	L.shadows = "Тени"
@@ -81,7 +81,7 @@ if L then
 
 	L.lightself = "Гаснущий свет на Тебе"
 	L.lightself_desc = "Показывает полосу с таймером взрыва Гаснущего света на тебе."
-	L.lightself_bar = "<Ты Взорвешься>"
+	L.lightself_bar = "<Ты Взорвёшься>"
 
 	L.lighttank = "Гаснущий свет на Танках"
 	L.lighttank_desc = "Только для танков. Если Гаснущий свет на танке, показывет полосу взрыва и Мигание/Тряску."
@@ -100,8 +100,8 @@ if L then
 	L.sunder_message = "%2$dx Раскол на %1$s"
 
 	L.sapper_trigger = "Дракон пикирует на палубу, чтобы сбросить на нее сумеречного сапера!"
-	L.sapper = "Сапер"
-	L.sapper_desc = "Сапер наносит повреждения кораблю"
+	L.sapper = "Сапёр"
+	L.sapper_desc = "Сапёр наносит повреждения кораблю, если достигнет каюты"
 
 	L.stage2_trigger = "Похоже, мне придется заняться этим самому. Чудесно!"
 end
@@ -124,6 +124,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 	L.impale_desc = "Только для танков. "..select(2,EJ_GetSectionInfo(4114))
 
-	L.bolt_explode = "<Bolt Explodes>"
+	L.bolt_explode = "<Взрыв Стрелы>"
 end
 
