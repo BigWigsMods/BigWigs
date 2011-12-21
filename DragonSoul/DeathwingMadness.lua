@@ -10,7 +10,7 @@ mod:RegisterEnableMob(56103, 56173, 56167, 56846, 56168, 56471)
 local hemorrhage = GetSpellInfo(105863)
 local cataclysm = GetSpellInfo(110044)
 local impale = GetSpellInfo(106400)
-local block = nil
+local first = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,9 +58,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Hemorrhage")
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-	self:Log("SPELL_AURA_APPLIED", "BlisteringTentacle", 109588, 109589, 109590, 105444)
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
 	self:Log("SPELL_CAST_SUCCESS", "Impale", 106400)
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
@@ -75,15 +74,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	block = true
-	if self:Tank() then
-		self:Bar("impale", impale, 27, 106400)
-	end
-	self:Bar(105651, GetSpellInfo(105651), 45.5, 105651) -- Elementium Bolt
-	self:Bar("hemorrhage", hemorrhage, 90.5, 105863)
-	self:Bar(110044, cataclysm, 180, 110044)
-	self:Bar("bigtentacle", L["bigtentacle"], 16.2, L["bigtentacle_icon"])
-	self:DelayedMessage("bigtentacle", 16.2, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
+	first = true
 	self:Berserk(900)
 end
 
@@ -103,9 +94,14 @@ function mod:StopImpale()
 end
 
 -- XXX maybe too much sound? All of them are for adds tho that you have to kill ASAP.
-function mod:Hemorrhage(_, unit, spellName)
-	if (unit):find("^boss%d$") and spellName == hemorrhage then
-		self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
+	if (unit):find("^boss%d$") then
+		if spellName == hemorrhage then
+			self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
+		elseif spellId == 105551 then
+			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+			self:Message("smalltentacles", ("%d%% - %s"):format(hp > 50 and 70 or 40, L["smalltentacles"]), "Urgent", spellId, "Alarm")
+		end
 	end
 end
 
@@ -114,15 +110,26 @@ function mod:LastPhase(_, spellId)
 end
 
 function mod:AssaultAspects()
-	if block then block = nil return end
-	if self:Tank() then
-		self:Bar("impale", impale, 27.5, 106400)
+	if first then
+		first = nil
+		if self:Tank() then
+			self:Bar("impale", impale, 22, 106400)
+		end
+		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
+		self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
+		self:Bar(110044, cataclysm, 175, 110044)
+		self:Bar("bigtentacle", L["bigtentacle"], 11.2, L["bigtentacle_icon"])
+		self:DelayedMessage("bigtentacle", 11.2, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
+	else
+		if self:Tank() then
+			self:Bar("impale", impale, 27.5, 106400)
+		end
+		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
+		self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
+		self:Bar(110044, cataclysm, 190, 110044)
+		self:Bar("bigtentacle", L["bigtentacle"], 16.7, L["bigtentacle_icon"])
+		self:DelayedMessage("bigtentacle", 16.7, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
 	end
-	self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
-	self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
-	self:Bar(110044, cataclysm, 190, 110044)
-	self:Bar("bigtentacle", L["bigtentacle"], 16.7, L["bigtentacle_icon"])
-	self:DelayedMessage("bigtentacle", 16.7, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
 end
 
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
@@ -139,17 +146,6 @@ end
 
 function mod:AgonizingPain()
 	self:SendMessage("BigWigs_StopBar", self, CL["cast"]:format(cataclysm))
-end
-
-do
-	local prev = 0
-	function mod:BlisteringTentacle(unit, spellId)
-		local t = GetTime()
-		if t-prev > 5 then
-			prev = t
-			self:Message("smalltentacles", unit, "Urgent", spellId, "Alarm")
-		end
-	end
 end
 
 function mod:Shrapnel(player, spellId, _, _, spellName)
