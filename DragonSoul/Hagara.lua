@@ -42,7 +42,7 @@ L.assault = L.assault.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		104448, 109553, {105316, "PROXIMITY"},
+		104448, 109553, {105316, "PROXIMITY"}, { 109325, "ICON", "FLASHSHAKE", "PROXIMITY" },
 		109561,
 		"assault", 108934, "nextphase", "berserk", "bosskill",
 	}, {
@@ -61,6 +61,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 108934)
 	self:Log("SPELL_CAST_START", "FrozenTempest", 109553, 109554, 105256, 109552)
 	self:Log("SPELL_CAST_START", "WaterShield", 109561, 109562, 105409, 109560)
+	self:Log("SPELL_AURA_APPLIED", "FrostFlakeApplied", 109325)
+	self:Log("SPELL_AURA_REMOVED", "FrostFlakeRemoved", 109325)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -86,15 +88,31 @@ function mod:Assault(_, spellId, _, _, spellName)
 	end
 end
 
+function mod:FrostFlakeApplied(player, spellId, _, _, spellName)
+	self:PrimaryIcon(109325, player)
+	if UnitIsUnit("player", player) then
+		self:LocalMessage(109325, spellName, "Personal", spellId, Long)
+		self:FlashShake(109325)
+		self:OpenProximity(10, 109325)
+	end
+end
+
+function mod:FrostFlakeRemoved(player)
+	SetRaidTarget(player, 0)
+	if UnitIsUnit("player", player) then
+		self:CloseProximity(109325)
+	end
+end
+
 function mod:WaterShield(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(107851)) -- Focused Assault
+	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(107851))) -- Focused Assault
 	self:Message(109561, spellName, "Attention", spellId)
 	nextPhase = L["ice_next"]
 	nextPhaseIcon = 105409
 end
 
 function mod:FrozenTempest(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(107851)) -- Focused Assault
+	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(107851))) -- Focused Assault
 	self:Message(109553, spellName, "Attention", spellId)
 	nextPhase = L["lightning_next"]
 	nextPhaseIcon = 109561
@@ -105,7 +123,7 @@ function mod:Feedback(_, spellId, _, _, spellName)
 	self:Bar(108934, spellName, 15, spellId)
 	self:Bar("nextphase", nextPhase, 63, nextPhaseIcon)
 	if self:Tank() then
-		self:Bar(107851, GetSpellInfo(107851), 20, 107851) -- Focused Assault
+		self:Bar("assault", GetSpellInfo(107851), 20, 107851) -- Focused Assault
 	end
 end
 
