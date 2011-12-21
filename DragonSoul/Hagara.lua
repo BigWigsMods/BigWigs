@@ -79,7 +79,7 @@ end
 --
 
 function mod:Assault(_, spellId, _, _, spellName)
-	if UnitExists("boss1") and UnitDetailedThreatSituation("player", "boss1") then
+	if self:Tank() then
 		self:Message("assault", spellName, "Urgent", spellId)
 		self:Bar("assault", "~"..spellName, 15, spellId)
 		self:Bar("assault", "<"..spellName..">", 5, spellId)
@@ -87,14 +87,14 @@ function mod:Assault(_, spellId, _, _, spellName)
 end
 
 function mod:WaterShield(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(107851))) -- Focused Assault
+	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(107851)) -- Focused Assault
 	self:Message(109561, spellName, "Attention", spellId)
 	nextPhase = L["ice_next"]
 	nextPhaseIcon = 105409
 end
 
 function mod:FrozenTempest(_, spellId, _, _, spellName)
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(107851))) -- Focused Assault
+	self:SendMessage("BigWigs_StopBar", self, "~"..GetSpellInfo(107851)) -- Focused Assault
 	self:Message(109553, spellName, "Attention", spellId)
 	nextPhase = L["lightning_next"]
 	nextPhaseIcon = 109561
@@ -104,8 +104,8 @@ function mod:Feedback(_, spellId, _, _, spellName)
 	self:Message(108934, spellName, "Attention", spellId)
 	self:Bar(108934, spellName, 15, spellId)
 	self:Bar("nextphase", nextPhase, 63, nextPhaseIcon)
-	if UnitExists("boss1") and UnitDetailedThreatSituation("player", "boss1") then
-		self:Bar(107851, GetSpellInfo(107851), 20, 107851)--Focused Assault
+	if self:Tank() then
+		self:Bar(107851, GetSpellInfo(107851), 20, 107851) -- Focused Assault
 	end
 end
 

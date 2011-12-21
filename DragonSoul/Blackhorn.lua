@@ -161,11 +161,12 @@ do
 end
 
 function mod:Sunder(player, spellId, _, _, spellName, buffStack)
-	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
-	if not buffStack then buffStack = 1 end
-	self:SendMessage("BigWigs_StopBar", self, L["sunder_message"]:format(player, buffStack - 1))
-	self:Bar("sunder", L["sunder_message"]:format(player, buffStack), 30, spellId)
-	self:TargetMessage("sunder", L["sunder_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+	if self:Tank() then
+		buffStack = buffStack or 1
+		self:SendMessage("BigWigs_StopBar", self, L["sunder_message"]:format(player, buffStack - 1))
+		self:Bar("sunder", L["sunder_message"]:format(player, buffStack), 30, spellId)
+		self:TargetMessage("sunder", L["sunder_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+	end
 end
 
 function mod:Roar(_, spellId, _, _, spellName)

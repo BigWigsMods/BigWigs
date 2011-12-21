@@ -79,11 +79,12 @@ end
 --
 
 function mod:Bolt(player, spellId, _, _, spellName, buffStack)
-	if UnitGroupRolesAssigned("player") ~= "TANK" then return end
-	if not buffStack then buffStack = 1 end
-	self:SendMessage("BigWigs_StopBar", self, L["bolt_message"]:format(player, buffStack - 1))
-	self:Bar("bolt", L["bolt_message"]:format(player, buffStack), 30, spellId)
-	self:TargetMessage("bolt", L["bolt_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+	if self:Tank() then
+		buffStack = buffStack or 1
+		self:SendMessage("BigWigs_StopBar", self, L["bolt_message"]:format(player, buffStack - 1))
+		self:Bar("bolt", L["bolt_message"]:format(player, buffStack), 30, spellId)
+		self:TargetMessage("bolt", L["bolt_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+	end
 end
 
 function mod:Blobs(_, unit, spellName, _, _, spellId)

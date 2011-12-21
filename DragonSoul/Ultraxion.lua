@@ -139,7 +139,7 @@ do
 			self:Bar("lightself", L["lightself_bar"], duration, spellId)
 			self:FlashShake("lightself")
 		else -- This is mainly a tanking assist
-			if (spellId == 110070 or spellId == 110069 or spellId == 105925 or spellId == 110068) and UnitGroupRolesAssigned("player") == "TANK" then
+			if (spellId == 110070 or spellId == 110069 or spellId == 105925 or spellId == 110068) and self:Tank() then
 				self:FlashShake("lighttank")
 				local duration = select(6, UnitDebuff(player, spellName))
 				self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
