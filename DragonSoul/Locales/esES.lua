@@ -122,8 +122,8 @@ end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES")
 if L then
-	L.engage_trigger = "You have done NOTHING. I will tear your world APART."
+	L.engage_trigger = "No habéis hecho nada. Destruiré vuestro mundo."
 	L.impale_desc = "Alerta para tanques. "..select(2,EJ_GetSectionInfo(4114))
-	L.bolt_explode = "<Bolt Explodes>"
+	L.bolt_explode = "<Descarga Explota>"
 end
 
