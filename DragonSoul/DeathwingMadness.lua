@@ -24,7 +24,8 @@ if L then
 	L.impale_desc = "Tank alert only. "..select(2,EJ_GetSectionInfo(4114))
 	L.impale_icon = 106400
 
-	L.last_phase, L.last_phase_desc = EJ_GetSectionInfo(4046)
+	L.last_phase = GetSpellInfo(106708)
+	L.last_phase_desc = EJ_GetSectionInfo(4046)
 	L.last_phase_icon = 109592
 
 	L.bigtentacle, L.bigtentacle_desc = EJ_GetSectionInfo(4112)
@@ -35,6 +36,12 @@ if L then
 
 	L.hemorrhage, L.hemorrhage_desc = EJ_GetSectionInfo(4108)
 	L.hemorrhage_icon = "SPELL_FIRE_MOLTENBLOOD"
+
+	L.fragment, L.fragment_desc = EJ_GetSectionInfo(4115)
+	L.fragment_icon = 105563
+
+	L.terror, L.terror_desc = EJ_GetSectionInfo(4117)
+	L.terror_icon = "ability_tetanus"
 
 	L.bolt_explode = "<Bolt Explodes>"
 end
@@ -48,7 +55,7 @@ L.impale = L.impale.." "..INLINE_TANK_ICON
 function mod:GetOptions()
 	return {
 		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
-		{106794, "FLASHSHAKE"}, "last_phase",
+		"last_phase", "fragment", {106794, "FLASHSHAKE"}, "terror",
 		"berserk", "bosskill",
 	}, {
 		bigtentacle = "ej:4040",
@@ -101,12 +108,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		elseif spellId == 105551 then
 			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 			self:Message("smalltentacles", ("%d%% - %s"):format(hp > 50 and 70 or 40, L["smalltentacles"]), "Urgent", spellId, "Alarm")
+		elseif spellId == 109568 then
+			self:Message("fragment", L["fragment"], "Urgent", L["fragment_icon"], "Alarm")
+			self:Bar("fragment", L["fragment"], 90, L["fragment_icon"])
+		elseif spellId == 106765 then
+			self:Message("terror", L["terror"], "Important", L["terror_icon"])
+			self:Bar("terror", L["terror"], 90, L["terror_icon"])
 		end
 	end
 end
 
 function mod:LastPhase(_, spellId)
-	self:Message("last_phase", L["last_phase"], "Attention", spellId)
+	self:Message("last_phase", EJ_GetSectionInfo(4046), "Attention", spellId) -- Stage 2: The Last Stand
+	self:Bar("fragment", L["fragment"], 10.5, L["fragment_icon"])
+	self:Bar("terror", L["terror"], 35.5, L["terror_icon"])
 end
 
 function mod:AssaultAspects()
