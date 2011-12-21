@@ -59,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 53879)
+	self:Death("Deaths", 53879, 56575, 56341)
 end
 
 --------------------------------------------------------------------------------
@@ -130,6 +130,14 @@ do
 			scheduled = true
 			self:ScheduleTimer(grip, 0.2, spellName)
 		end
+	end
+end
+
+function mod:Deaths(mobId)
+	if mobId == 53879 then
+		self:Win()
+	else
+		self:SendMessage("BigWigs_StopBar", self, L["exposed"])
 	end
 end
 

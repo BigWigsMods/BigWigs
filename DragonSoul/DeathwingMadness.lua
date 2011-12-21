@@ -10,6 +10,7 @@ mod:RegisterEnableMob(56103, 56173, 56167, 56846, 56168, 56471)
 local hemorrhage = GetSpellInfo(105863)
 local cataclysm = GetSpellInfo(110044)
 local impale = GetSpellInfo(106400)
+local canEnable = true
 local first = nil
 
 --------------------------------------------------------------------------------
@@ -64,6 +65,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	return canEnable
+end
+
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -83,6 +88,10 @@ end
 function mod:OnEngage()
 	first = true
 	self:Berserk(900)
+end
+
+function mod:OnWin()
+	canEnable = false
 end
 
 --------------------------------------------------------------------------------
@@ -107,7 +116,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 			self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
 		elseif spellId == 105551 then
 			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-			self:Message("smalltentacles", ("%d%% - %s"):format(hp > 50 and 70 or 40, L["smalltentacles"]), "Urgent", spellId, "Alarm")
+			self:Message("smalltentacles", ("%d%% - %s"):format(hp > 50 and 70 or 40, L["smalltentacles"]), "Urgent", L["smalltentacles_icon"], "Alarm")
 		elseif spellId == 109568 then
 			self:Message("fragment", L["fragment"], "Urgent", L["fragment_icon"], "Alarm")
 			self:Bar("fragment", L["fragment"], 90, L["fragment_icon"])
