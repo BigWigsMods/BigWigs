@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("Hagara the Stormbinder", "deDE")
 if L then
 	L.engage_trigger = "Ihr legt euch mit der Sturmbinderin an! Ich werde euch alle vernichten."
 
-	L.lightning_or_frost = "Blitz oder Frost"
+	L.lightning_or_frost = "Blitz oder Eis"
 	L.ice_next = "Eisphase"
 	L.lightning_next = "Blitzphase"
 
