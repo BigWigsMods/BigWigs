@@ -103,7 +103,7 @@ if L then
 	L.sapper = "Sapeur"
 	L.sapper_desc = "Sapeur infligeant des dégâts au vaisseau."
 
-	L.stage2_trigger = "Donc je dois le faire moi-même. Bien !"
+	L.stage2_trigger = "Donc je dois le faire moi-même. Bien !" -- pas d'espace insécable ici
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "frFR")
