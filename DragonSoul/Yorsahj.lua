@@ -100,10 +100,14 @@ function mod:Blobs(_, unit, spellName, _, _, spellId)
 end
 
 function mod:AcidicApplied()
-	self:OpenProximity(4)
+	if not self:LFR() then
+		self:OpenProximity(4)
+	end
 end
 
 function mod:AcidicRemoved()
-	self:CloseProximity()
+	if not self:LFR() then
+		self:CloseProximity()
+	end
 end
 
