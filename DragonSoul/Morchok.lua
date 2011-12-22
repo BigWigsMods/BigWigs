@@ -33,7 +33,7 @@ if L then
 	L.crush_icon = 103687
 	L.crush_message = "%2$dx Crush on %1$s"
 
-	L.blood = "Blood"
+	L.blood = "Black Blood"
 
 	L.explosion = "Explosion"
 end
@@ -130,6 +130,7 @@ do
 		if t-prev > 5 then
 			prev = t
 			self:Message(103851, spellName, "Personal", spellId, "Long") -- not really personal, but we tend to associate personal with fns
+			self:Bar(103851, CL["cast"]:format(L["blood"]), 17, spellId)
 		end
 	end
 end
@@ -141,7 +142,7 @@ do
 		if t-prev > 2 and UnitIsUnit("player", player) then
 			prev = t
 			self:FlashShake(103851)
-			self:LocalMessage(103851, CL["you"]:format(L["blood"]), "Personal", spellId, "Long")
+			self:LocalMessage(103851, CL["underyou"]:format(L["blood"]), "Personal", spellId, "Long")
 		end
 	end
 end
