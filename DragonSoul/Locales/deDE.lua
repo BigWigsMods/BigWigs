@@ -7,7 +7,7 @@ if L then
 	L.crush_desc = "Nur für Tanks. Zählt die Stapel von Rüstung zerschmettern und zeigt eine Timerleiste an."
 	L.crush_message = "%2$dx Rüstung zerschmettern auf %1$s"
 
-	L.blood = "Blut"
+	L.blood = "Schwarzes Blut"
 
 	L.explosion = "Explosion"
 end
