@@ -50,7 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "PsychicDrain", 104322, 104607, 104608, 104606)
 	self:Log("SPELL_AURA_APPLIED", "ShadowsApplied", 103434, 104600, 104601, 104599)
 	self:Log("SPELL_AURA_REMOVED", "ShadowsRemoved", 103434, 104600, 104601, 104599)
-	self:Log("SPELL_CAST_SUCCESS", "ShadowsCast", 104599) --LFR id
+	self:Log("SPELL_CAST_SUCCESS", "ShadowsCast", 103434, 104600, 104601, 104599)
 	self:Log("SPELL_CAST_SUCCESS", "VoidoftheUnmaking", 103627)
 	self:Log("SPELL_AURA_APPLIED", "VoidDiffusion", 106836)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidDiffusion", 106836)
@@ -102,8 +102,7 @@ function mod:ShadowsCast(_, spellId, _, _, spellName)
 end
 
 function mod:ShadowsApplied(player, spellId)
-	if self:LFR() then return end
-	if UnitIsUnit(player, "player") then
+	if UnitIsUnit(player, "player") and not self:LFR() then
 		self:LocalMessage(103434, CL["you"]:format(L["shadows"]), "Personal", spellId, "Alert")
 		self:Say(103434, CL["say"]:format(L["shadows"]))
 		self:FlashShake(103434)
@@ -114,8 +113,7 @@ function mod:ShadowsApplied(player, spellId)
 end
 
 function mod:ShadowsRemoved(player)
-	if self:LFR() then return end
-	if UnitIsUnit(player, "player") then
+	if UnitIsUnit(player, "player") and not self:LFR() then
 		self:CloseProximity(103434)
 	end
 end
