@@ -461,12 +461,6 @@ function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
 	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icons[icon])
 end
 
--- Outputs a local message only, no raid warning.
-function boss:LocalMessage(key, text, color, icon, sound)
-	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
-end
-
 do
 	local hexColors = {}
 	for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
@@ -492,6 +486,19 @@ do
 	}
 	function boss:NewTargetList()
 		return setmetatable({}, mt)
+	end
+
+	-- Outputs a local message only, no raid warning.
+	function boss:LocalMessage(key, text, color, icon, sound, player, stack)
+		if not checkFlag(self, key, C.MESSAGE) then return end
+		if player then
+			if stack then
+				text = fmt(text, coloredNames[player], stack)
+			else
+				text = fmt(text, coloredNames[player])
+			end
+		end
+		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
 	end
 
 	function boss:TargetMessage(key, spellName, player, color, icon, sound, ...)
