@@ -166,7 +166,7 @@ function mod:Crush(player, spellId, _, _, spellName, buffStack)
 		buffStack = buffStack or 1
 		self:SendMessage("BigWigs_StopBar", self, L["crush_message"]:format(player, buffStack - 1))
 		self:Bar("crush", L["crush_message"]:format(player, buffStack), 20, spellId)
-		self:TargetMessage("crush", L["crush_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+		self:LocalMessage("crush", L["crush_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 	end
 end
 

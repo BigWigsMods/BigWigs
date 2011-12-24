@@ -143,7 +143,7 @@ do
 				self:FlashShake("lighttank")
 				local duration = select(6, UnitDebuff(player, spellName))
 				self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)
-				self:TargetMessage("lighttank", L["lighttank_message"], player, "Attention", spellId)
+				self:LocalMessage("lighttank", L["lighttank_message"], "Attention", spellId, player)
 				self:PlaySound("lighttank", "Alarm")
 			end
 		end

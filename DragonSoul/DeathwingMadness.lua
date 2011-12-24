@@ -100,7 +100,7 @@ end
 
 function mod:Impale(_, spellId, _, _, spellName)
 	if self:Tank() then
-		self:Message("impale", spellName, "Urgent", spellId, "Alarm")
+		self:LocalMessage("impale", spellName, "Urgent", spellId, "Alarm")
 		self:Bar("impale", spellName, 35, spellId)
 	end
 end

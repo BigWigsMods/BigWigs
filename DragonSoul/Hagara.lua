@@ -82,7 +82,7 @@ end
 
 function mod:Assault(_, spellId, _, _, spellName)
 	if self:Tank() then
-		self:Message("assault", spellName, "Urgent", spellId)
+		self:LocalMessage("assault", spellName, "Urgent", spellId)
 		self:Bar("assault", "~"..spellName, 15, spellId)
 		self:Bar("assault", "<"..spellName..">", 5, spellId)
 	end

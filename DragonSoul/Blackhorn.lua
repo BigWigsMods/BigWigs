@@ -165,7 +165,7 @@ function mod:Sunder(player, spellId, _, _, spellName, buffStack)
 		buffStack = buffStack or 1
 		self:SendMessage("BigWigs_StopBar", self, L["sunder_message"]:format(player, buffStack - 1))
 		self:Bar("sunder", L["sunder_message"]:format(player, buffStack), 30, spellId)
-		self:TargetMessage("sunder", L["sunder_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+		self:LocalMessage("sunder", L["sunder_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 	end
 end
 
