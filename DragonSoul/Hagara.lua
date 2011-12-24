@@ -42,7 +42,7 @@ L.assault = L.assault.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		104448, 109553, {105316, "PROXIMITY"}, { 109325, "ICON", "FLASHSHAKE", "PROXIMITY" },
+		{104448, "FLASHSHAKE"}, 109553, {105316, "PROXIMITY"}, {109325, "ICON", "FLASHSHAKE", "PROXIMITY"},
 		109561,
 		"assault", 108934, "nextphase", "berserk", "bosskill",
 	}, {
@@ -98,7 +98,7 @@ function mod:FrostFlakeApplied(player, spellId, _, _, spellName)
 end
 
 function mod:FrostFlakeRemoved(player)
-	SetRaidTarget(player, 0)
+	self:PrimaryIcon(109325)
 	if UnitIsUnit("player", player) then
 		self:CloseProximity(109325)
 	end
@@ -130,6 +130,7 @@ end
 function mod:IceTombStart(_, spellId, _, _, spellName)
 	self:Message(104448, spellName, "Attention", spellId)
 	self:Bar(104448, spellName, 8, spellId)
+	self:FlashShake(104448)
 end
 
 do
