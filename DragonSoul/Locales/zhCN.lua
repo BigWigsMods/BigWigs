@@ -67,7 +67,7 @@ if L then
 
 	L.warmup = "暮光审判"
 	L.warmup_desc = "暮光审判计时器。"
-	L.warmup_trigger = "I am the beginning of the end...the shadow which blots out the sun"
+	L.warmup_trigger = "我即是末日的开端……蔽日的阴影……毁灭的丧钟……"
 
 	L.crystal = "增益水晶"
 	L.crystal_desc = "守护巨龙召唤各种增益水晶计时器。"
@@ -103,7 +103,7 @@ if L then
 	L.sapper = "暮光工兵"
 	L.sapper_desc = "暮光工兵对天火号造成伤害。"
 
-	L.stage2_trigger = "Looks like I'm doing this myself. Good!"
+	L.stage2_trigger = "看来我得亲自动手了。很好！"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "zhCN")
