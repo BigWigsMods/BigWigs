@@ -21,5 +21,5 @@ L.general = "通用" -- General settings, i.e. things that apply to both normal 
 L.custom_start = ">%s<激活 - %s將在%d分後！"
 L.custom_start_s = ">%s<激活 - %s將在%d秒後！"
 L.custom_end = ">%s<將%s！"
-L.custom_min = ">%s<分後%d！"
-L.custom_sec = ">%s<秒後%d！"
+L.custom_min = ">%s<%d分後！"
+L.custom_sec = ">%s<%d秒後！"
