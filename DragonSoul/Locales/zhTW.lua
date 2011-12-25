@@ -37,7 +37,7 @@ if L then
 
 	L.blue = "|cFF0080FF藍|r"
 	L.green = "|cFF088A08綠|r"
-	L.purple = "|cFF9932CD粉|r"
+	L.purple = "|cFF9932CD紫|r"
 	L.yellow = "|cFFFFA901黃|r"
 	L.black = "|cFF424242黑|r"
 	L.red = "|cFFFF0404紅|r"
@@ -124,6 +124,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "zhTW")
 if L then
 	L.engage_trigger = "You have done NOTHING. I will tear your world APART."
 	L.impale_desc = "只警報坦克。"..select(2,EJ_GetSectionInfo(4114))
-	L.bolt_explode = "<Bolt Explodes>"
+	L.bolt_explode = "<源质箭爆炸>"
 end
 
