@@ -99,7 +99,7 @@ if L then
 	L.sunder_desc = "只警报坦克。破甲攻击堆叠计数并显示持续条。"
 	L.sunder_message = "%2$d层破甲攻击：>%1$s<！"
 
-	L.sapper_trigger = "A drake swoops down to drop a Twilight Sapper onto the deck!"
+	L.sapper_trigger = "一条幼龙俯冲下来，往甲板上投放了一个暮光工兵！"
 	L.sapper = "暮光工兵"
 	L.sapper_desc = "暮光工兵对天火号造成伤害。"
 
