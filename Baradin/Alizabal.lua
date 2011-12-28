@@ -27,7 +27,7 @@ L = mod:GetLocale()
 --
 
 function mod:GetOptions()
-	return {105067, 104936, 105784, "bosskill"}
+	return {105067, 104936, 105784, "berserk", "bosskill"}
 end
 
 function mod:OnBossEnable()
@@ -42,6 +42,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Berserk(300)
 	self:Bar(104936, L["first_ability"], 7, 104936)
 	self:Bar(105784, GetSpellInfo(105784), 35, 105784) -- Blade Dance
 	firstAbility = nil
