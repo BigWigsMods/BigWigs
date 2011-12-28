@@ -140,11 +140,7 @@ function mod:AssaultAspects()
 			self:Bar("impale", impale, 22, 106400)
 		end
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
-		if self:Difficulty() > 2 then
-			self:Bar("hemorrhage", hemorrhage, 55.5, 105863)
-		else
-			self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
-		end
+		self:Bar("hemorrhage", hemorrhage, self:Difficulty() > 2 and 55.5 or 85.5, 105863)
 		self:Bar(110044, cataclysm, 175, 110044)
 		self:Bar("bigtentacle", L["bigtentacle"], 11.2, L["bigtentacle_icon"])
 		self:DelayedMessage("bigtentacle", 11.2, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
@@ -153,11 +149,7 @@ function mod:AssaultAspects()
 			self:Bar("impale", impale, 27.5, 106400)
 		end
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
-		if self:Difficulty() > 2 then
-			self:Bar("hemorrhage", hemorrhage, 70.5, 105863)
-		else
-			self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
-		end
+		self:Bar("hemorrhage", hemorrhage, self:Difficulty() > 2 and 70.5 or 100.5, 105863)
 		self:Bar(110044, cataclysm, 190, 110044)
 		self:Bar("bigtentacle", L["bigtentacle"], 16.7, L["bigtentacle_icon"])
 		self:DelayedMessage("bigtentacle", 16.7, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
