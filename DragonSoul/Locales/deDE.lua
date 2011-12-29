@@ -123,9 +123,9 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "deDE")
 if L then
 	L.engage_trigger = "Ihr habt NICHTS erreicht. Ich werde Eure Welt in STÜCKE reißen."
-
 	L.impale_desc = "Nur für Tanks. "..select(2,EJ_GetSectionInfo(4114))
-
 	L.bolt_explode = "<Blitz Explodiert>"
+	L.parasite = "Parasite"
+	L.blobs_soon = "%d%% - Congealing Blood soon!"
 end
 

@@ -125,5 +125,7 @@ if L then
 	L.engage_trigger = "Vous n'avez RIEN fait. Je vais mettre votre monde en PIÈCES."
 	L.impale_desc = "Alerte pour tank uniquement. "..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<Explosion de l'éclair>"
+	L.parasite = "Parasite"
+	L.blobs_soon = "%d%% - Congealing Blood soon!"
 end
 

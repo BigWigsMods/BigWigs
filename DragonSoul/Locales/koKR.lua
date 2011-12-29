@@ -125,5 +125,7 @@ if L then
 	L.engage_trigger = "You have done NOTHING. I will tear your world APART."
 	L.impale_desc = "탱커 전용 경고입니다. "..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<Bolt Explodes>"
+	L.parasite = "Parasite"
+	L.blobs_soon = "%d%% - Congealing Blood soon!"
 end
 

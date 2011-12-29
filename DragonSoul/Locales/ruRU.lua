@@ -125,5 +125,7 @@ if L then
 	L.engage_trigger = "У вас НИЧЕГО не вышло. Я РАЗОРВУ ваш мир на куски."
 	L.impale_desc = "Только для танков. "..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<Взрыв Стрелы>"
+	L.parasite = "Parasite"
+	L.blobs_soon = "%d%% - Congealing Blood soon!"
 end
 
