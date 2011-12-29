@@ -126,6 +126,6 @@ if L then
 	L.impale_desc = "Alerte pour tank uniquement. "..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<Explosion de l'éclair>"
 	L.parasite = "Parasite"
-	L.blobs_soon = "%d%% - Congealing Blood soon!"
+	L.blobs_soon = "%d%% - Sang coagulant imminent !"
 end
 
