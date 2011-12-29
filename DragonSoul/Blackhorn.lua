@@ -76,9 +76,6 @@ function mod:OnEngage(diff)
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
 	end
-	if self:Difficulty() > 2 then
-		self:Berserk(420)
-	end
 end
 
 function mod:OnWin()
@@ -99,6 +96,9 @@ function mod:Stage2()
 	self:SendMessage("BigWigs_StopBar", self, L["sapper"])
 	self:Bar(108046, "~"..GetSpellInfo(108046), 14, 108046) -- Shockwave
 	self:Message("bosskill", self.displayName, "Positive", "achievment_boss_blackhorn")
+	if self:Difficulty() > 2 then
+		self:Berserk(240)
+	end
 end
 
 do
