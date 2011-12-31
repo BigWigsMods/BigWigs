@@ -91,6 +91,10 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhCN")
 if L then
+	L.warmup = "热身"
+	L.warmup_desc = "首领战斗开始之前的计时器。"
+	L.warmup_trigger = "全速前进。一切都取决于我们的速度了！不能让灭世者跑了。"
+
 	L.harpooning = "鱼叉炮"
 
 	L.rush = "邪刃冲击"
@@ -114,8 +118,8 @@ if L then
 	L.right = "右侧翻滚"
 	L.not_hooked = ">你< 没有抓牢！"
 	L.roll_message = "他开始滚了！滚了，滚啦！"
-	L.level_trigger = "levels out"
-	L.level_message = "别急，他已经平稳了！"
+	L.level_trigger = "平衡"
+	L.level_message = "别急，他已经平衡了！"
 
 	L.exposed = "装甲暴露"
 end
@@ -125,7 +129,7 @@ if L then
 	L.engage_trigger = "你们什么都没做到。我要撕碎你们的世界。"
 	L.impale_desc = "只警报坦克。"..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<源质箭爆炸>"
-	L.parasite = "Parasite"
-	L.blobs_soon = "%d%% - Congealing Blood soon!"
+	L.parasite = "腐蚀寄生虫"
+	L.blobs_soon = "%d%% - 即将凝固之血！"
 end
 
