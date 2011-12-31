@@ -91,10 +91,6 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
 if L then
-	L.harpooning = "Гарпун"
-
-	L.rush = "Натиск Клинка"
-
 	L.sunder = "Раскол брони"
 	L.sunder_desc = "Только для танков. Считает стаки раскола брони и показывает их таймер."
 	L.sunder_message = "%2$dx Раскол на %1$s"

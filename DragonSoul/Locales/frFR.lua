@@ -91,10 +91,6 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
 if L then
-	L.harpooning = "Harponnage"
-
-	L.rush = "Volée de lames"
-
 	L.sunder = "Fracasser armure"
 	L.sunder_desc = "Alerte pour tanks uniquement. Compte les cumuls de fracasser armure et affiche une barre de durée."
 	L.sunder_message = "%2$dx Fracasser sur %1$s"

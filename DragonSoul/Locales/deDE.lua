@@ -95,10 +95,6 @@ if L then
 	L.warmup_desc = "Zeit bis zum Starten des Bosskampfes."
 	L.warmup_trigger = "Volle Kraft voraus. Alles hängt von unserer Geschwindigkeit ab! Der Zerstörer darf nicht entkommen."
 
-	L.harpooning = "Harpune"
-
-	L.rush = "Klingenansturm"
-
 	L.sunder = "Rüstung zerreißen"
 	L.sunder_desc = "Nur für Tanks. Zählt die Stapel von Rüstung zerreißen und zeigt eine Timerleiste an."
 	L.sunder_message = "%2$dx Rüstung zerreißen auf %1$s"

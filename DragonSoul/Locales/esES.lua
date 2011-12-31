@@ -91,10 +91,6 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")
 if L then
-	L.harpooning = "Arponear"
-
-	L.rush = "Carga de hojas"
-
 	L.sunder = "Hender armadura"
 	L.sunder_desc = "Alerta para tanques. Muestra los stacs de Hender armadura y una barra con su duración."
 	L.sunder_message = "%2$dx Hender en %1$s"

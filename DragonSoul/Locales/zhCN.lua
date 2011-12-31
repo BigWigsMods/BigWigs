@@ -95,10 +95,6 @@ if L then
 	L.warmup_desc = "首领战斗开始之前的计时器。"
 	L.warmup_trigger = "全速前进。一切都取决于我们的速度了！不能让灭世者跑了。"
 
-	L.harpooning = "鱼叉炮"
-
-	L.rush = "邪刃冲击"
-
 	L.sunder = "破甲攻击"
 	L.sunder_desc = "只警报坦克。破甲攻击堆叠计数并显示持续条。"
 	L.sunder_message = "%2$d层破甲攻击：>%1$s<！"
