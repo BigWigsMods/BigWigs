@@ -15,6 +15,11 @@ local canEnable = true
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.warmup = "Warmup"
+	L.warmup_desc = "Time until combat with the boss starts."
+	L.warmup_icon = "achievment_boss_blackhorn"
+	L.warmup_trigger = "All ahead full. Everything depends on our speed! We can't let the Destroyer get away."
+
 	L.harpooning = "Harpooning"
 
 	L.rush = "Blade Rush"
@@ -44,11 +49,11 @@ function mod:GetOptions(CL)
 	return {
 		108862, "sapper",
 		"sunder", {108046, "SAY", "FLASHSHAKE"}, {108076, "SAY", "FLASHSHAKE", "ICON"}, 109228,
-		"berserk", "bosskill",
+		"warmup", "berserk", "bosskill",
 	}, {
 		[108862] = "ej:4027",
 		sunder = "ej:4033",
-		berserk = CL["general"],
+		warmup = CL["general"],
 	}
 end
 
@@ -65,9 +70,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Roar", 109228, 108044, 109229, 109230) --LFR/25N, 10N, ??, ??
 	self:Emote("Sapper", L["sapper_trigger"])
 	self:Yell("Stage2", L["stage2_trigger"])
+	self:Yell("Warmup", L["warmup_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 56427)
+end
+
+function mod:Warmup()
+	self:Bar("warmup", self.displayName, 20, L["warmup_icon"])
 end
 
 function mod:OnEngage(diff)
