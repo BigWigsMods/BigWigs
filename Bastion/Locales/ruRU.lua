@@ -2,7 +2,6 @@
 local L = BigWigs:NewBossLocale("Cho'gall", "ruRU")
 if not L then return end
 if L then
-	--heroic
 	L.orders = "Смена приказа"
 	L.orders_desc = "Сообщать когда Чо'Галл сменяет приказы огня/тьмы"
 
@@ -14,7 +13,7 @@ if L then
 	L.ooze_message = "Надвигаются Слизнюки %d!"
 
 	L.tentacles_bar = "Щупальца"
-	L.tentacles_message = "Диско пати Щупалец!"
+	L.tentacles_message = "Дискотека Щупалец!"
 
 	L.sickness_message = "Вы больны, и вас сейчас стошнит!"
 	L.blaze_message = "Пламя под ТОБОЙ!"
@@ -35,9 +34,9 @@ if L then
 	L.phase_switch = "Смена фаз"
 	L.phase_switch_desc = "Сообщать о смене фаз"
 
-	L.phase_bar = "%s приземление"
-	L.breath_message = "Надвигается Глубокий вдох!"
-	L.dazzling_message = "Надвигается Шокирующее разрушение!"
+	L.phase_bar = "%s приземляется"
+	L.breath_message = "Глубокий вдох!"
+	L.dazzling_message = "Шокирующее разрушение!"
 
 	L.blast_message = "Сумеречный взрыв"
 	L.engulfingmagic_say = "Избыточная магия на МНЕ!"
@@ -45,12 +44,12 @@ if L then
 	L.valiona_trigger = "Тералион, я подожгу коридор. Не дай им уйти!"
 	L.win_trigger = "Одно утешает... Тералион погиб вместе со мной..."
 
-	L.twilight_shift = "%2$dx сдвиг(а) на %1$s"
+	L.twilight_shift = "%2$dx Сдвиг на |3-5(%1$s)"
 end
 
 L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "ruRU")
 if L then
-	L.strikes_message = "%2$dx удар(а) на %1$s"
+	L.strikes_message = "%2$dx Удары на |3-5(%1$s)"
 
 	L.breath_message = "Обжигающее дыхание!"
 	L.breath_bar = "~Дыхание"

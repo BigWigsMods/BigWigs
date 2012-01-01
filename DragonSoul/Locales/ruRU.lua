@@ -5,7 +5,7 @@ if L then
 
 	L.crush = "Сокрушение доспеха"
 	L.crush_desc = "Только для танков. Считает стаки сокрушения доспеха и показывает их таймер."
-	L.crush_message = "%2$dx Сокрушение на %1$s"
+	L.crush_message = "%2$dx Сокрушение на |3-5(%1$s)"
 
 	L.blood = "Черная кровь"
 
@@ -33,7 +33,7 @@ if L then
 	L.engage_trigger = "Иилт ки'уотк шн'ма йе'глу Шат'Яр! Х'ИУН ИИЛТ!"
 
 	L.bolt_desc = "Только для танков. Считает стаки стрел тьмы и показывает их таймер."
-	L.bolt_message = "%2$dx Стрела на %1$s"
+	L.bolt_message = "%2$dx Стрела на |3-5(%1$s)"
 
 	L.blue = "|cFF0080FFСиняя|r"
 	L.green = "|cFF088A08Зеленая|r"
@@ -91,9 +91,13 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
 if L then
+    L.warmup = "Начало боя"
+	L.warmup_desc = "Время до начала боя."
+	L.warmup_trigger = "Быстрее! Полный вперед! Мы не должны упустить его!"
+	
 	L.sunder = "Раскол брони"
 	L.sunder_desc = "Только для танков. Считает стаки раскола брони и показывает их таймер."
-	L.sunder_message = "%2$dx Раскол на %1$s"
+	L.sunder_message = "%2$dx Раскол на |3-5(%1$s)"
 
 	L.sapper_trigger = "Дракон пикирует на палубу, чтобы сбросить на нее сумеречного сапера!"
 	L.sapper = "Сапёр"
@@ -119,9 +123,11 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 	L.engage_trigger = "У вас НИЧЕГО не вышло. Я РАЗОРВУ ваш мир на куски."
+	
 	L.impale_desc = "Только для танков. "..select(2,EJ_GetSectionInfo(4114))
+	
 	L.bolt_explode = "<Взрыв Стрелы>"
-	L.parasite = "Parasite"
-	L.blobs_soon = "%d%% - Congealing Blood soon!"
+	L.parasite = "Паразит"
+	L.blobs_soon = "%d%% - Капли крови скоро!"
 end
 

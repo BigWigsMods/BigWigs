@@ -117,13 +117,13 @@ L["Toggles the monochrome flag on all messages, removing any smoothing of the fo
 -- RaidIcon.lua
 --
 
-L["Icons"] = "Иконки"
+L["Icons"] = "Метки"
 
 L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
 L["Primary"] = "Основная"
-L["The first raid target icon that a encounter script should use."] = "Основная иконка рейда которая будет первой использоваться скриптом события."
+L["The first raid target icon that a encounter script should use."] = "Первая метка рейда, которая будет использоваться скриптом события."
 L["Secondary"] = "Второстепенная"
-L["The second raid target icon that a encounter script should use."] = "Второстепенная иконка рейда которая будет использоваться скриптом события."
+L["The second raid target icon that a encounter script should use."] = "Вторая метка рейда, которая будет использоваться скриптом события."
 
 L["Star"] = "Звезда"
 L["Circle"] = "Круг"
@@ -133,7 +133,7 @@ L["Moon"] = "Луна"
 L["Square"] = "Квадрат"
 L["Cross"] = "Крест"
 L["Skull"] = "Череп"
-L["|cffff0000Disable|r"] = "|cffff0000Disable|r"
+L["|cffff0000Disable|r"] = "|cffff0000Отключить|r"
 
 -----------------------------------------------------------------------
 -- Sound.lua
@@ -157,7 +157,7 @@ L["Default only"] = "Только стандартные"
 --
 
 L["|T%s:20:20:-5|tAbility name"] = "|T%s:20:20:-5|tНазвание способности"
-L["Custom range indicator"] = "Клиентский индикатор досягаемости"
+L["Custom range indicator"] = "Пользовательский индикатор досягаемости"
 L["%d yards"] = "%d метров"
 L["Proximity"] = "Близость"
 L["Sound"] = "Звук"

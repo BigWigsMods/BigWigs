@@ -29,7 +29,7 @@ L["Up to date:"] = "Текущий:"
 L["Out of date:"] = "Устаревший:"
 L["No Big Wigs 3.x:"] = "Нет Big Wigs 3.x:"
 
-L.coreAddonDisabled = "Big Wigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
+L.coreAddonDisabled = "Big Wigs не будет работать правильно, пока аддон %s выключен. Вы можете включить его из панели управления модификациями в окне выбора персонажа."
 
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs Encounters"
@@ -87,7 +87,7 @@ L["Advanced options"] = "Расширенные опции"
 L["<< Back"] = "<< Назад"
 
 L["About"] = "О Big Wigs"
-L["Main Developers"] = "Основ.разработчики"
+L["Main Developers"] = "Основ. разработчики"
 L["Developers"] = "Разработчики"
 L["Maintainers"] = "Помощники"
 L["License"] = "Лицензия"
