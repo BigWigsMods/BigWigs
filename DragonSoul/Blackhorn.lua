@@ -1,4 +1,4 @@
---------------------------------------------------------------------------------
+﻿--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -7,7 +7,12 @@ if not mod then return end
 -- Goriona, Blackhorn, The Skyfire, Ka'anu Reevs, Sky Captain Swayze
 mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870)
 
+--------------------------------------------------------------------------------
+-- Locales
+--
+
 local canEnable = true
+local onslaughtCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -79,6 +84,7 @@ function mod:OnEngage(diff)
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
 	end
+    onslaughtCounter = 1
 end
 
 function mod:OnWin()
@@ -127,7 +133,8 @@ end
 
 function mod:TwilightOnslaught(_, spellId, _, _, spellName)
 	self:Message(108862, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(108862, spellName, 35, spellId)
+	onslaughtCounter = onslaughtCounter + 1
+    self:Bar(108862, ("%s (%d)"):format(spellName, onslaughtCounter), 35, spellId)
 end
 
 do
