@@ -62,8 +62,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Blobs")
 	self:Log("SPELL_AURA_APPLIED", "AcidicApplied", 104898)
 	self:Log("SPELL_AURA_REMOVED", "AcidicRemoved", 104898)
-	self:Log("SPELL_AURA_APPLIED", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549)
+	self:Log("SPELL_AURA_APPLIED", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549, 109550, 109551)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549, 109550, 109551)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 55312)
@@ -82,7 +82,7 @@ function mod:Bolt(player, spellId, _, _, spellName, buffStack)
 	if self:Tank() then
 		buffStack = buffStack or 1
 		self:SendMessage("BigWigs_StopBar", self, L["bolt_message"]:format(player, buffStack - 1))
-		self:Bar("bolt", L["bolt_message"]:format(player, buffStack), 30, spellId)
+		self:Bar("bolt", L["bolt_message"]:format(player, buffStack), 22, spellId)
 		self:LocalMessage("bolt", L["bolt_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 	end
 end
