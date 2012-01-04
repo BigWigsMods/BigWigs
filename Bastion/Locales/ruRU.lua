@@ -9,8 +9,8 @@ if L then
 
 	L.adherent_bar = "Адепт #%d"
 	L.adherent_message = "Призыв Адепта %d!"
-	L.ooze_bar = "Слизнюки %d"
-	L.ooze_message = "Надвигаются Слизнюки %d!"
+	L.ooze_bar = "Слизни %d"
+	L.ooze_message = "Призыв Слизней %d!"
 
 	L.tentacles_bar = "Щупальца"
 	L.tentacles_message = "Дискотека Щупалец!"
@@ -25,8 +25,8 @@ if L then
 
 	L.unleashed_shadows = "Освобожденные тени"
 
-	L.phase2_message = "2-ая фаза!"
-	L.phase2_soon = "Скоро 2-ая фаза!"
+	L.phase2_message = "2-я фаза!"
+	L.phase2_soon = "Скоро 2-я фаза!"
 end
 
 L = BigWigs:NewBossLocale("Valiona and Theralion", "ruRU")

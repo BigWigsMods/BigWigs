@@ -3,7 +3,7 @@
 ## Title: Big Wigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Notes-deDE: Modulare und einfache Boss Encounter Warnungen.
-## Notes-ruRU: Модульный, лёгкий, ненавязчиво оповещает о способностях/действиях боссов.
+## Notes-ruRU: Помощник в битвах с боссами, который ненавязчиво оповещает о событиях, при этом сохраняя легкость и удобство управления.
 ## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
 ## Notes-koKR: 각종 보스에 대하여 간략하고 시각적으로 경고합니다.

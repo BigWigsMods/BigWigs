@@ -21,7 +21,7 @@ if L then
 	L.big_add_message = "Появилась искра!"
 	L.small_adds_message = "Появились фрагменты!"
 
-	L.phase2_warning = "Скоро 2 фаза!"
+	L.phase2_warning = "Скоро 2-я фаза!"
 
 	L.molten_message = "Стаков на боссе: %d!"
 
@@ -31,9 +31,9 @@ end
 
 L = BigWigs:NewBossLocale("Alysrazor", "ruRU")
 if L then
-	L.claw_message = "%2$dx Коготь на %1$s"
-	L.fullpower_soon_message = "У Алисразор почти 100 энергии!"
-	L.halfpower_soon_message = "Скоро 4 фаза!"
+	L.claw_message = "%2$dx Коготь на |3-5(%1$s)"
+	L.fullpower_soon_message = "Скоро Полная мощь!"
+	L.halfpower_soon_message = "Скоро 4-я фаза!"
 	L.encounter_restart = "Начинаем заново..."
 	L.no_stacks_message = "У тебя нет ни 1 пера, дружище"
 	L.moonkin_message = "У пингвинов тоже есть крылья...собери три пера и лети!"
@@ -67,9 +67,9 @@ if L then
 	L.crystal_trap = "Кристаллическая ловушка"
 
 	L.traps_header = "Ловушки"
-	L.immolation = "Обжигающая ловушка на Собаке"
-	L.immolation_desc = "Объявлять, когда Лютогрыз или Косоморд попадают в обжигающую ловушку, получая бафф Осторожности."
-	L.immolationyou = "Обжигающая ловушка под ТОБОЙ"
+	L.immolation = "Обжигающая ловушка на собаке"
+	L.immolation_desc = "Объявлять, когда Лютогрыз или Косоморд попадают в обжигающую ловушку, получая бафф 'Осторожности'."
+	L.immolationyou = "Обжигающая ловушка под Тобой"
 	L.immolationyou_desc = "Предупреждать, когда обжигающая ловушка появляется под вами."
 	L.immolationyou_message = "Обжигающая ловушка"
 	L.crystal = "Кристаллическая ловушка"
@@ -78,7 +78,7 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "ruRU")
 if L then
-	L.torment = "Стаки 'мучения' на фокусе"
+	L.torment = "Стаки 'Мучения' на фокусе"
 	L.torment_desc = "Объявлять, когда ваш /фокус получает стаки мучения."
 
 	L.blade_bar = "~След. лезвие"
@@ -113,6 +113,6 @@ if L then
 
 	L.wound = "Жгучая рана"
 	L.wound_desc = "Только для танков. Считает стаки жгучей раны и показывает их таймер."
-	L.wound_message = "%2$dx Рана на %1$s"
+	L.wound_message = "%2$dx Рана на |3-5(%1$s)"
 end
 

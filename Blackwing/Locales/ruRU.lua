@@ -38,9 +38,9 @@ if L then
 	L.armageddon = "Армагеддон"
 	L.armageddon_desc = "Предупреждать, если Армагеддон начинается на фазе головы."
 
-	L.phase2 = "Фаза 2"
-	L.phase2_desc = "Сообщить о переходе во 2-ую фазу и показать проверку близости."
-	L.phase2_message = "Фаза 2!"
+	L.phase2 = "2-я фаза"
+	L.phase2_desc = "Сообщить о переходе на 2-ю фазу и показать проверку близости."
+	L.phase2_message = "2-я фаза!"
 	L.phase2_yell = "Непостижимо! Вы, кажется, можете уничтожить моего лавового червяка! Пожалуй, я помогу ему."
 
 	-- normal
@@ -55,7 +55,7 @@ if L then
 	L.expose_trigger = "голову"
 	L.expose_message = "Голова обнажена!"
 
-	L.spew_warning = "Изрыгание лавы скоро!"
+	L.spew_warning = "Скоро Изрыгание лавы!"
 end
 
 L = BigWigs:NewBossLocale("Maloriak", "ruRU")
@@ -67,7 +67,7 @@ if L then
 
 	--normal
 	L.final_phase = "Финальная фаза"
-	L.final_phase_soon = "Финальная фаза скоро!"
+	L.final_phase_soon = "Скоро финальная фаза!"
 
 	L.release_aberration_message = "%s аберраций осталось!"
 	L.release_all = "%s аберрации!"

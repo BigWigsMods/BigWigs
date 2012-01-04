@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.stormling = "Буревики"
 	L.stormling_desc = "Призыв Буревиков."
-	L.stormling_message = "Прибытие Буревика!"
+	L.stormling_message = "Призыв Буревика!"
 	L.stormling_bar = "Буревик"
 	L.stormling_yell = "Буря! Приди мне на помощь!"
 
