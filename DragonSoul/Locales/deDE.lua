@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("Morchok", "deDE")
+local L = BigWigs:NewBossLocale("Morchok", "deDE")
 if not L then return end
 if L then
 	L.engage_trigger = "Ihr versucht, eine Lawine aufzuhalten. Ich werde Euch begraben."
@@ -10,6 +10,7 @@ if L then
 	L.blood = "Schwarzes Blut"
 
 	L.explosion = "Explosion"
+	L.crystal = "Crystal"
 end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "deDE")

@@ -84,7 +84,7 @@ function mod:OnEngage(diff)
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
 	end
-    onslaughtCounter = 1
+	onslaughtCounter = 1
 end
 
 function mod:OnWin()
@@ -134,7 +134,7 @@ end
 function mod:TwilightOnslaught(_, spellId, _, _, spellName)
 	self:Message(108862, spellName, "Urgent", spellId, "Alarm")
 	onslaughtCounter = onslaughtCounter + 1
-    self:Bar(108862, ("%s (%d)"):format(spellName, onslaughtCounter), 35, spellId)
+	self:Bar(108862, ("%s (%d)"):format(spellName, onslaughtCounter), 35, spellId)
 end
 
 do
