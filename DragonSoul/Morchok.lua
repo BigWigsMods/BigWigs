@@ -91,6 +91,8 @@ function mod:SummonKohcrom(_, spellId)
 	self:Bar("stomp_boss", (fmtStr):format(self.displayName, L["stomp_boss"]), 6, L["stomp_boss_icon"])
 	self:Bar("stomp_add", (fmtStr):format(kohcrom, L["stomp_add"]), 12, L["stomp_add_icon"])
 	self:Message(109017, spellName, "Positive", spellId)
+	self:SendMessage("BigWigs_StopBar", self, L["crystal_boss"])
+	self:SendMessage("BigWigs_StopBar", self, L["stomp_boss"])
 end
 
 -- I know it's ugly to use this, but if we were to start bars at :BlackBlood then we are subject to BlackBlood duration changes
