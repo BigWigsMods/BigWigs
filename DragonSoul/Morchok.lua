@@ -108,13 +108,12 @@ function mod:Blood(_, unit, _, _, _, spellId)
 end
 
 function mod:Stomp(_, spellId, source, _, spellName)
-	if self:Difficulty() > 2 then
-		if UnitExists("boss2") and source ~= kohcrom then -- Since we trigger kohcrom bar off morchok for more accuracy, we gotta make sure he exists and he isn't caster to avoid bad timers.
+	if self:Difficulty() > 2 and UnitExists("boss2") then--Check if heroic and if kohncrom has spawned yet.
+		if source ~= kohcrom then -- Since we trigger bars off morchok casts, we gotta make sure kohcrom isn't caster to avoid bad timers.
 			self:Bar("stomp_add", (fmtStr):format(kohcrom, spellName), (self:Difficulty() == 3) and 6 or 5, spellId) -- 6sec after on 10 man, 5 sec on 25
-		else -- It's not kohcrom casting, start morchoks normal bar.
 			self:Bar("stomp_boss", (fmtStr):format(source, spellName), 12, spellId)
 		end
-	else
+	else--Not heroic, or Kohcrom isn't out yet, just do normal bar.
 		self:Bar("stomp_boss", "~"..spellName, 12, spellId)
 	end
 end
