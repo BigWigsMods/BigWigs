@@ -11,7 +11,7 @@
 ## Notes: Non English Language Pack for Big Wigs
 ## Notes-deDE: Nicht-englisches Sprachpaket für Big Wigs.
 ## Notes-esES: Paquete de idiomas para Big Wigs.
-## Notes-ruRU: Языковый пакет для Big Wigs
+## Notes-ruRU: Языковой пакет для Big Wigs
 ## Notes-frFR: Paquet linguistique pour Big Wigs.
 ## Notes-zhCN: Big Wigs 非英语模块
 ## Notes-zhTW: Big Wigs 非英語模組

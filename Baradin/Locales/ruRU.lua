@@ -9,7 +9,7 @@ end
 L = BigWigs:NewBossLocale("Occu'thar", "ruRU")
 if not L then return end
 if L then
-	L.shadows_bar = "~Тени"
+	L.shadows_bar = "~Тень"
 	L.destruction_bar = "<Взрыв>"
 	L.eyes_bar = "~Глаза"
 
