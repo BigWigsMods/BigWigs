@@ -1,8 +1,8 @@
-local L = BigWigs:NewBossLocale("Beth'tilac", "deDE")
+﻿local L = BigWigs:NewBossLocale("Beth'tilac", "deDE")
 if not L then return end
 if L then
-	L.flare = GetSpellInfo(100936)
 	L.flare_desc = "Zeigt eine Timerleiste für Funkenleuchtfeuer."
+
 	L.devastate_message = "Verwüstung #%d"
 	L.drone_bar = "Drohne"
 	L.drone_message = "Drohne kommt!"
@@ -14,7 +14,7 @@ L = BigWigs:NewBossLocale("Lord Rhyolith", "deDE")
 if L then
 	L.armor = "Obsidianrüstung"
 	L.armor_desc = "Warnt, wenn Rüstungsstapel von Lord Rhyolith entfernt werden."
-	L.armor_message = "%d%% Rüstung noch"
+	L.armor_message = "Noch %d%% Rüstung"
 	L.armor_gone_message = "Rüstung weg!"
 
 	L.adds_header = "Adds"
@@ -78,8 +78,8 @@ end
 
 L = BigWigs:NewBossLocale("Baleroc", "deDE")
 if L then
-	L.torment = "Anzahl der 'Qual'-Stapel auf deinem Fokusziel"
-	L.torment_desc = "Warnt, wenn dein /focus weitere 'Qual'-Stapel erhält."
+	L.torment = "Anzahl der 'Qual'-Stapel auf Deinem Fokusziel"
+	L.torment_desc = "Warnt, wenn Dein /focus weitere 'Qual'-Stapel erhält."
 
 	L.blade_bar = "Nächste Klinge"
 	L.shard_message = "Splitter %d!"

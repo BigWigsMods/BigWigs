@@ -13,8 +13,8 @@ if L then
 	L.destruction_bar = "<Zerstörung>"
 	L.eyes_bar = "~Augen"
 
-	L.fire_message = "Laserz, pew-pew!"
-	L.fire_bar = "~Laserz"
+	L.fire_message = "Fokussiertes Feuer!"
+	L.fire_bar = "~Feuer"
 end
 
 L = BigWigs:NewBossLocale("Alizabal", "deDE")

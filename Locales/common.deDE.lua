@@ -16,9 +16,9 @@ L.heroic = "Heroischer Modus"
 L.hard = "Hard Mode"
 L.general = "Allgemein"
 
-L.custom_start = "%s angegriffen - %s in %d min"
-L.custom_start_s = "%s angegriffen - %s in %d sek"
+L.custom_start = "%s angegriffen - %s in %d Min"
+L.custom_start_s = "%s angegriffen - %s in %d Sek"
 L.custom_end = "%s wird zum %s!"
-L.custom_min = "%s in %d min"
-L.custom_sec = "%s in %d sek!"
+L.custom_min = "%s in %d Min"
+L.custom_sec = "%s in %d Sek!"
 
