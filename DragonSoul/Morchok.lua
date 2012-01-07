@@ -7,8 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(55265)
 
 local kohcrom = EJ_GetSectionInfo(4262)
-local fmtStr = "~%s - %s"
-local crystalCount, stompCount = 0, 0
+local crystalCount, stompCount = 0, 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,7 +80,7 @@ function mod:OnEngage(diff)
 	self:Berserk(420) -- confirmed
 	self:Bar("stomp_boss", L["stomp_boss"], 11, L["stomp_boss_icon"])
 	self:Bar("crystal_boss", L["crystal"], 16, L["crystal_boss_icon"])
-	crystalCount, stompCount = 0, 0
+	crystalCount, stompCount = 0, 1
 end
 
 --------------------------------------------------------------------------------
@@ -89,8 +88,8 @@ end
 --
 
 function mod:SummonKohcrom(_, spellId, _, _, spellName)
-	self:Bar("stomp_boss", (fmtStr):format(self.displayName, L["stomp_boss"]), 6, L["stomp_boss_icon"])
-	self:Bar("stomp_add", (fmtStr):format(kohcrom, L["stomp_add"]), 12, L["stomp_add_icon"])
+	self:Bar("stomp_boss", "~"..self.displayName.." - "..L["stomp_boss"], 6, L["stomp_boss_icon"])
+	self:Bar("stomp_add", "~"..kohcrom.." - "..L["stomp_add"], 12, L["stomp_add_icon"])
 	self:Message(109017, spellName, "Positive", spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["crystal"])
 	self:SendMessage("BigWigs_StopBar", self, "~"..L["stomp_boss"])
@@ -99,10 +98,10 @@ end
 -- I know it's ugly to use this, but if we were to start bars at :BlackBlood then we are subject to BlackBlood duration changes
 function mod:BloodOver(_, unit, _, _, _, spellId)
 	if unit == "boss1" and spellId == 103851 then
-		crystalCount, stompCount = 0, 0
+		crystalCount, stompCount = 0, 1
 		if self:Difficulty() > 2 then
-			self:Bar("stomp_boss", (fmtStr):format(self.displayName, L["stomp_boss"]), 15, L["stomp_boss_icon"])
-			self:Bar("crystal_boss", (fmtStr):format(self.displayName, L["crystal"]), 22, L["crystal_boss_icon"])
+			self:Bar("stomp_boss", "~"..self.displayName.." - "..L["stomp_boss"], 15, L["stomp_boss_icon"])
+			self:Bar("crystal_boss", "~"..self.displayName.." - "..L["crystal"], 22, L["crystal_boss_icon"])
 		else
 			self:Bar("stomp_boss", "~"..L["stomp_boss"], 5, L["stomp_boss_icon"])
 			self:Bar("crystal_boss", L["crystal"], 29, L["crystal_boss_icon"])
@@ -113,12 +112,15 @@ end
 function mod:Stomp(_, spellId, source, _, spellName)
 	if self:Difficulty() > 2 and UnitExists("boss2") then -- Check if heroic and if kohncrom has spawned yet.
 		if source ~= kohcrom and stompCount < 4 then -- Since we trigger bars off morchok casts, we gotta make sure kohcrom isn't caster to avoid bad timers.
-			self:Bar("stomp_add", (fmtStr):format(kohcrom, spellName), (self:Difficulty() == 3) and 6 or 5, spellId) -- 6sec after on 10 man, 5 sec on 25
-			self:Bar("stomp_boss", (fmtStr):format(source, spellName), 12, spellId)
+			self:Bar("stomp_add", "~"..kohcrom.." - "..spellName, (self:Difficulty() == 3) and 6 or 5, spellId) -- 6sec after on 10 man, 5 sec on 25
+			self:Bar("stomp_boss", "~"..source.." - "..spellName, 12, spellId)
 			stompCount = stompCount + 1
 		end
 	else -- Not heroic, or Kohcrom isn't out yet, just do normal bar.
-		self:Bar("stomp_boss", "~"..spellName, 12, spellId)
+		if stompCount < 4 then
+			self:Bar("stomp_boss", "~"..spellName, 12, spellId)
+			stompCount = stompCount + 1
+		end
 	end
 end
 
@@ -156,7 +158,7 @@ function mod:ResonatingCrystal(_, spellId, source, _, spellName)
 		self:Message((source == kohcrom) and "crystal_add" or "crystal_boss", source.." - "..L["crystal"], "Urgent", spellId, "Alarm")
 		self:Bar((source == kohcrom) and "crystal_add" or "crystal_boss", source.." - "..(L["explosion"]), 12, spellId)
 		if UnitExists("boss2") and crystalCount == 2 then -- The CD bar will only start off morchok's 2nd crystal, if kohcrom is already summoned. Explosion bar will be CD for kohcrom's 3rd so redundant to have both.
-			self:Bar("crystal_add", (fmtStr):format(kohcrom, L["crystal"]), (self:Difficulty() == 3) and 6 or 5, spellId) -- Same as stomp, 6/5
+			self:Bar("crystal_add", "~"..kohcrom.." - "..L["crystal"], (self:Difficulty() == 3) and 6 or 5, spellId) -- Same as stomp, 6/5
 		end
 	else
 		self:Message("crystal_boss", spellName, "Urgent", spellId, "Alarm")

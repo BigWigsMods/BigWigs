@@ -505,10 +505,10 @@ do
 		if not checkFlag(self, key, C.MESSAGE) then return end
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
+			wipe(player)
 			if not (list):find(UnitName("player")) then sound = nil end
 			local text = fmt(L["other"], spellName, list)
 			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icons[icon])
-			wipe(player)
 		else
 			if UnitIsUnit(player, "player") then
 				if ... then
