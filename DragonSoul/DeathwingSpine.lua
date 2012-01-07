@@ -12,6 +12,10 @@ mod:RegisterEnableMob(53879, 56575, 56341, 53891, 56161, 56162)
 --
 
 local gripTargets = mod:NewTargetList()
+local fieryGrip = GetSpellInfo(109457)
+
+-- Locals for Fiery Grip, described in comments below
+local corruptionStatus, lastBar = {}, true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,12 +58,21 @@ function mod:OnBossEnable()
 	self:Emote("Level", L["level_trigger"])
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AbsorbedBlood", 105248)
 	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457, 109458, 109459, 105490)
+	self:Log("SPELL_CAST_START", "SearingPlasmaCast", 109379) -- Only one id in both modes
+	self:Death("CorruptionDeath", 56161, 56162, 53891)
 	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Deaths", 53879, 56575, 56341)
+end
+
+function mod:OnWipe()
+	-- We have to clear variables OnWipe because OnEngage doesn't trigger
+	-- sometimes until several seconds into the fight due to no boss1 unit
+	wipe(corruptionStatus)
+	lastBar = true
 end
 
 --------------------------------------------------------------------------------
@@ -102,9 +115,52 @@ function mod:AbsorbedBlood(_, spellId, _, _, spellName, stack)
 	end
 end
 
-function mod:FieryGripCast(_, spellId, _, _, spellName)
-	-- very random, not sure if there is even a point to this
-	self:Bar(109457, "~"..spellName, 23, spellId)
+--[[ 
+	Notes on Fiery Grip:
+	* corruptionStatus is a map from Corruption GUID to a flag. We set the flag
+	  to true and show a timer on Searing Plasma cast. Since grip happens every
+	  2/4 plasma casts, we use this flag to prevent a bar happening again. When
+	  the grip is casted, we reset the flag so we can make a new bar.
+	* lastBar holds the GUID of the Corruption that triggered the bar. This
+	  way, if it dies, we can kill the bar. This also serves as a throttle so
+	  that we have at most one bar up at any time, which should be good enough.
+	  We set it to true initially because we miss the first plasma cast for some 
+	  reason (likely because of the zone change).
+]]
+function mod:FieryGripCast(_, spellId, _, _, spellName, _, _, _, _, _, sGUID)
+	-- Reset flag
+	corruptionStatus[sGUID] = nil
+	if lastBar == sGUID or lastBar == true then
+		lastBar = nil
+		self:SendMessage("BigWigs_StopBar", self, fieryGrip)
+	end
+end
+
+function mod:SearingPlasmaCast(_, spellId, _, _, spellName, _, _, _, _, _, sGUID)
+	-- Set flag and maybe show bar, ignore if already set
+	if not corruptionStatus[sGUID] then
+		corruptionStatus[sGUID] = true
+		-- Only showing the bar if one isn't already up
+		if not lastBar then
+			lastBar = sGUID
+			if self:Difficulty() % 2 == 0 then
+				-- 25 man has 2 casts of 8s
+				self:Bar(109457, fieryGrip, 16, 109457)
+			else
+				-- 10 man has 4 casts of 8s
+				self:Bar(109457, fieryGrip, 32, 109457)
+			end
+		end
+	end
+end
+
+function mod:CorruptionDeath(_, GUID)
+	if lastBar == GUID then
+		-- Cancel bar
+		corruptionStatus[GUID] = nil
+		lastBar = nil
+		self:SendMessage("BigWigs_StopBar", self, fieryGrip)
+	end
 end
 
 function mod:Nuclear(_, spellId, _, _, spellName)
