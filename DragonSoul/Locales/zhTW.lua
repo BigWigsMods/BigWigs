@@ -94,7 +94,6 @@ L = BigWigs:NewBossLocale("Warmaster Blackhorn", "zhTW")
 if L then
 	L.warmup = "熱身"
 	L.warmup_desc = "首領戰鬥開始之前的計時器。"
-	L.warmup_trigger = "全速前進。一切都仰賴我們的速度!不能讓毀滅者逃走。"
 
 	L.sunder = "破甲攻擊"
 	L.sunder_desc = "只警報坦克。破甲攻擊堆疊計數並顯示持續條。"

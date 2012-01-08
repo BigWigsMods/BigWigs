@@ -92,6 +92,9 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "koKR")
 if L then
+	L.warmup = "Warmup"
+	L.warmup_desc = "Time until combat starts."
+
 	L.sunder = "방어구 가르기"
 	L.sunder_desc = "탱커 전용 경고입니다. 방어구 가르기 중첩과 지속시간 바를 표시합니다."
 	L.sunder_message = "방어구 가르기 : x%2$d : %1$s"

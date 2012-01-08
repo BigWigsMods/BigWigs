@@ -94,7 +94,6 @@ L = BigWigs:NewBossLocale("Warmaster Blackhorn", "deDE")
 if L then
 	L.warmup = "Warmup"
 	L.warmup_desc = "Zeit bis zum Starten des Bosskampfes."
-	L.warmup_trigger = "Volle Kraft voraus. Alles hängt von unserer Geschwindigkeit ab! Der Zerstörer darf nicht entkommen."
 
 	L.sunder = "Rüstung zerreißen"
 	L.sunder_desc = "Nur für Tanks. Zählt die Stapel von Rüstung zerreißen und zeigt eine Timerleiste an."

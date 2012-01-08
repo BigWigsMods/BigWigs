@@ -23,7 +23,6 @@ if L then
 	L.warmup = "Warmup"
 	L.warmup_desc = "Time until combat starts."
 	L.warmup_icon = "achievment_boss_blackhorn"
-	L.warmup_trigger = "All ahead full. Everything depends on our speed! We can't let the Destroyer get away."
 
 	L.sunder = "Sunder Armor"
 	L.sunder_desc = "Tank alert only. Count the stacks of sunder armor and show a duration bar."
@@ -69,14 +68,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Roar", 109228, 108044, 109229, 109230) --LFR/25N, 10N, ??, ??
 	self:Emote("Sapper", L["sapper_trigger"])
 	self:Yell("Stage2", L["stage2_trigger"])
-	self:Yell("Warmup", L["warmup_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 56427)
-end
-
-function mod:Warmup()
-	self:Bar("warmup", _G["COMBAT"], 20, L["warmup_icon"])
 end
 
 function mod:OnEngage(diff)
@@ -85,6 +79,8 @@ function mod:OnEngage(diff)
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
 	end
 	onslaughtCounter = 1
+	self:Bar("warmup", _G["COMBAT"], 20, L["warmup_icon"])
+	self:DelayedMessage("warmup", 20, CL["phase"]:format(1), "Positive", L["warmup_icon"])
 end
 
 function mod:OnWin()
@@ -104,8 +100,8 @@ function mod:Stage2()
 	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(108862))) -- Twilight Onslaught
 	self:SendMessage("BigWigs_StopBar", self, L["sapper"])
 	self:Bar(108046, "~"..GetSpellInfo(108046), 14, 108046) -- Shockwave
-	self:Message("bosskill", self.displayName, "Positive", "achievment_boss_blackhorn")
-	if self:Difficulty() > 2 then
+	self:Message("warmup", CL["phase"]:format(2) .. ": " .. self.displayName, "Positive", L["warmup_icon"])
+	if not self:LFR() then
 		self:Berserk(240)
 	end
 end

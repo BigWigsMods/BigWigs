@@ -94,7 +94,6 @@ L = BigWigs:NewBossLocale("Warmaster Blackhorn", "frFR")
 if L then
 	L.warmup = "Échauffement"
 	L.warmup_desc = "Délai avant que le combat ne commence."
-	L.warmup_trigger = "En avant toute ! Tout dépend de notre vitesse ! Nous ne devons pas laisser le Destructeur s'échapper." -- à vérifier
 
 	L.sunder = "Fracasser armure"
 	L.sunder_desc = "Alerte pour tanks uniquement. Compte les cumuls de fracasser armure et affiche une barre de durée."

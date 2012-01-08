@@ -94,7 +94,6 @@ L = BigWigs:NewBossLocale("Warmaster Blackhorn", "ruRU")
 if L then
     L.warmup = "Начало боя"
 	L.warmup_desc = "Время до начала боя."
-	L.warmup_trigger = "Быстрее! Полный вперед! Мы не должны упустить его!"
 
 	L.sunder = "Раскол брони"
 	L.sunder_desc = "Только для танков. Считает стаки раскола брони и показывает их таймер."
