@@ -610,9 +610,9 @@ do
 			if type(key) == "nil" then return nil end
 			local class = select(2, UnitClass(key))
 			if class then
-				self[key] = hexColors[class]  .. key .. "|r"
+				self[key] = hexColors[class]  .. gsub(key, "%-.+", "*") .. "|r" -- Replace server names with *
 			else
-				self[key] = "|cffcccccc"..key.."|r"
+				self[key] = "|cffcccccc" .. gsub(key, "%-.+", "*") .. "|r" -- Replace server names with *
 			end
 			return self[key]
 		end
