@@ -10,7 +10,7 @@ if L then
 	L.blood = "大地黑血"
 
 	L.explosion = "爆裂水晶"
-	L.crystal = "Crystal"
+	L.crystal = "共鸣水晶"
 end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "zhCN")
