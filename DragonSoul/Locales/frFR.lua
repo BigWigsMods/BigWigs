@@ -7,10 +7,10 @@ if L then
 	L.crush_desc = "Alerte pour tanks uniquement. Compte les cumuls d'écraser armure et affiche une barre de durée."
 	L.crush_message = "%2$dx Ecraser sur %1$s"
 
-	L.blood = "Sang"
+	L.blood = "Sang noir"
 
 	L.explosion = "Explosion"
-	L.crystal = "Crystal"
+	L.crystal = "Cristal"
 end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "frFR")
@@ -78,7 +78,7 @@ if L then
 
 	L.twilight = "Crépuscule"
 	L.cast = "Barre d'incantation d'Heure du Crépuscule"
-	L.cast_desc = "Affiche une barre de 5 secondes pour l'incantation d'Heure du Crépuscule."
+	L.cast_desc = "Affiche une barre de 5 (Normal) ou 3 (Héroïque) secondes pour l'incantation d'Heure du Crépuscule."
 
 	L.lightself = "Lumière faiblissante sur vous"
 	L.lightself_desc = "Affiche une barre indiquant le temps restant avant que Lumière faiblissante ne vous fasse exploser."
@@ -123,7 +123,9 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
 if L then
 	L.engage_trigger = "Vous n'avez RIEN fait. Je vais mettre votre monde en PIÈCES."
+
 	L.impale_desc = "Alerte pour tank uniquement. "..select(2,EJ_GetSectionInfo(4114))
+
 	L.bolt_explode = "<Explosion de l'éclair>"
 	L.parasite = "Parasite"
 	L.blobs_soon = "%d%% - Sang coagulant imminent !"
