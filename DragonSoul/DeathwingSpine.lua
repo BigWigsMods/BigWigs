@@ -64,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:Death("Deaths", 53879, 56575, 56341)
 end
