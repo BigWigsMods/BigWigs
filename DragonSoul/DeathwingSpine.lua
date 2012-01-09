@@ -69,8 +69,8 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 53879, 56575, 56341)
 end
 
-function mod:OnWipe()
-	-- We have to clear variables OnWipe because OnEngage doesn't trigger
+function mod:OnBossDisable()
+	-- We have to clear variables OnBossDisable because OnEngage doesn't trigger
 	-- sometimes until several seconds into the fight due to no boss1 unit
 	wipe(corruptionStatus)
 	lastBar = true
