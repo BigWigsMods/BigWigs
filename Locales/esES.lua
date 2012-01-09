@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "esES")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "esES") or LibStub("AceLocale-3.0"):NewLocale("Big Wigs", "esMX")
 if not L then return end
 -- Core.lua
 L["%s has been defeated"] = "%s ha sido derrotado"

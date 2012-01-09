@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Cho'gall", "esES")
+local L = BigWigs:NewBossLocale("Cho'gall", "esES") or BigWigs:NewBossLocale("Cho'gall", "esMX")
 if not L then return end
 if L then
 	L.orders = "Cambios de posición"
@@ -27,7 +27,7 @@ if L then
 	L.phase2_soon = "¡Fase 2 inminente!"
 end
 
-L = BigWigs:NewBossLocale("Valiona and Theralion", "esES")
+L = BigWigs:NewBossLocale("Valiona and Theralion", "esES") or BigWigs:NewBossLocale("Valiona and Theralion", "esMX")
 if L then
 	L.phase_switch = "Cambio de fase"
 	L.phase_switch_desc = "Avisa los cambios de fase"
@@ -44,7 +44,7 @@ if L then
 	L.twilight_shift = "%2$dx Cambio en %1$s"
 end
 
-L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "esES")
+L = BigWigs:NewBossLocale("Halfus Wyrmbreaker", "esES") or BigWigs:NewBossLocale("Halfus Wyrmbreaker", "esMX")
 if L then
 	L.strikes_message = "%2$dx Golpes malévolos en %1$s"
 
@@ -54,7 +54,7 @@ if L then
 	L.engage_yell = "¡Cho'gall acabará con vosotros! ¡CON TODOS!"
 end
 
-L = BigWigs:NewBossLocale("Sinestra", "esES")
+L = BigWigs:NewBossLocale("Sinestra", "esES") or BigWigs:NewBossLocale("Sinestra", "esMX")
 if L then
 	L.whelps = "Crías"
 	L.whelps_desc = "Aviso para la oleada de crías."
@@ -69,7 +69,7 @@ if L then
 	L.phase_desc = "Avisa los cambios de fase"
 end
 
-L = BigWigs:NewBossLocale("Ascendant Council", "esES")
+L = BigWigs:NewBossLocale("Ascendant Council", "esES") or BigWigs:NewBossLocale("Ascendant Council", "esMX")
 if L then
 	L.static_overload_say = "¡Sobrecarga estática en MI!"
 	L.gravity_core_say = "¡Núcleo de gravedad en MI!"

@@ -9,6 +9,7 @@
 <Script file="Locales\zhTW.lua"/>
 <Script file="Locales\esES.lua"/>
 <Script file="Locales\ruRU.lua"/>
+<Script file="Locales\ptBR.lua"/>
 <Script file="Locales\common.enUS.lua"/>
 <Script file="Locales\common.deDE.lua"/>
 <Script file="Locales\common.frFR.lua"/>
@@ -17,6 +18,7 @@
 <Script file="Locales\common.zhTW.lua"/>
 <Script file="Locales\common.esES.lua"/>
 <Script file="Locales\common.ruRU.lua"/>
+<Script file="Locales\common.ptBR.lua"/>
 
 </Ui>
 

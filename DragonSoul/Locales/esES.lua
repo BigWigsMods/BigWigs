@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Morchok", "esES")
+local L = BigWigs:NewBossLocale("Morchok", "esES") or BigWigs:NewBossLocale("Morchok", "esMX")
 if not L then return end
 if L then
 	L.engage_trigger = "Pretendéis detener una avalancha. Os sepultaré."
@@ -13,7 +13,7 @@ if L then
 	L.crystal = "Cristal"
 end
 
-L = BigWigs:NewBossLocale("Warlord Zon'ozz", "esES")
+L = BigWigs:NewBossLocale("Warlord Zon'ozz", "esES") or BigWigs:NewBossLocale("Warlord Zon'ozz", "esMX")
 if L then
 	L.engage_trigger = "Zzof Shuul'wah. ¡Thoq fssh N'Zoth!"
 
@@ -29,7 +29,7 @@ if L then
 	L.shadows = "Sombras"
 end
 
-L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES")
+L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES") or BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esMX")
 if L then
 	L.engage_trigger = "¡Iilth qi'uothk shn'ma yeh'glu Shath'Yar! ¡H'IWN IILTH!"
 
@@ -48,7 +48,7 @@ if L then
 	L.blobs_desc = "Las Manchas se mueven hacia el jefe"
 end
 
-L = BigWigs:NewBossLocale("Hagara the Stormbinder", "esES")
+L = BigWigs:NewBossLocale("Hagara the Stormbinder", "esES") or BigWigs:NewBossLocale("Hagara the Stormbinder", "esMX")
 if L then
 	L.engage_trigger = "¡Os enfrentáis a la Vinculatormentas! Os mataré a todos."
 
@@ -62,7 +62,7 @@ if L then
 	L.nextphase_desc = "Avisos para la siguiente fase"
 end
 
-L = BigWigs:NewBossLocale("Ultraxion", "esES")
+L = BigWigs:NewBossLocale("Ultraxion", "esES") or BigWigs:NewBossLocale("Ultraxion", "esMX")
 if L then
 	L.engage_trigger = "¡Ha llegado la Hora del Crepúsculo!"
 
@@ -90,7 +90,7 @@ if L then
 	L.lighttank_message = "Tanque explotando"
 end
 
-L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES")
+L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES") or BigWigs:NewBossLocale("Warmaster Blackhorn", "esMX")
 if L then
 	L.warmup = "Warmup"
 	L.warmup_desc = "Time until combat starts."
@@ -106,7 +106,7 @@ if L then
 	L.stage2_trigger = "Parece que voy a tener que hacerlo yo. ¡Bien!"
 end
 
-L = BigWigs:NewBossLocale("Spine of Deathwing", "esES")
+L = BigWigs:NewBossLocale("Spine of Deathwing", "esES") or BigWigs:NewBossLocale("Spine of Deathwing", "esMX")
 if L then
 	L.left_start = "a punto de girar a la izquierda"
 	L.right_start = "a punto de girar a la derecha"
@@ -120,7 +120,7 @@ if L then
 	L.exposed = "Armadura expuesta"
 end
 
-L = BigWigs:NewBossLocale("Madness of Deathwing", "esES")
+L = BigWigs:NewBossLocale("Madness of Deathwing", "esES") or BigWigs:NewBossLocale("Madness of Deathwing", "esMX")
 if L then
 	L.engage_trigger = "No habéis hecho nada. Destruiré vuestro mundo."
 	L.impale_desc = "Alerta para tanques. "..select(2,EJ_GetSectionInfo(4114))

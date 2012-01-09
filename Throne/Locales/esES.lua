@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Al'Akir", "esES")
+local L = BigWigs:NewBossLocale("Al'Akir", "esES") or BigWigs:NewBossLocale("Al'Akir", "esMX")
 if not L then return end
 if L then
 	L.stormling = "Tormentillas"
@@ -19,7 +19,7 @@ if L then
 	L.feedback_message = "%dx Rebote"
 end
 
-L = BigWigs:NewBossLocale("Conclave of Wind", "esES")
+L = BigWigs:NewBossLocale("Conclave of Wind", "esES") or BigWigs:NewBossLocale("Conclave of Wind", "esMX")
 if L then
 	L.gather_strength = "%s empieza a extraer fuerza"
 

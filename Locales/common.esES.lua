@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "esES")
+local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "esES") or LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "esMX")
 if not L then return end
 -- Prototype.lua common words
 L.you = "%s en TI"

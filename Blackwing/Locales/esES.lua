@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Atramedes", "esES")
+local L = BigWigs:NewBossLocale("Atramedes", "esES") or BigWigs:NewBossLocale("Atramedes", "esMX")
 if not L then return end
 if L then
 	L.ground_phase = "Fase en tierra"
@@ -14,7 +14,7 @@ if L then
 	L.searing_soon = "¡Llamas abrasadoras en 10 seg!"
 end
 
-L = BigWigs:NewBossLocale("Chimaeron", "esES")
+L = BigWigs:NewBossLocale("Chimaeron", "esES") or BigWigs:NewBossLocale("Chimaeron", "esMX")
 if L then
 	L.bileotron_engage = "El Bilistrón se activa y empieza a emitir una sustancia de olor asqueroso."
 
@@ -27,7 +27,7 @@ if L then
 	L.warmup_desc = "Temporizador para Calentamiento"
 end
 
-L = BigWigs:NewBossLocale("Magmaw", "esES")
+L = BigWigs:NewBossLocale("Magmaw", "esES") or BigWigs:NewBossLocale("Magmaw", "esMX")
 if L then
 	-- heroic
 	L.blazing = "Esqueletos"
@@ -58,7 +58,7 @@ if L then
 	L.spew_warning = "¡Vómito de lava pronto!"
 end
 
-L = BigWigs:NewBossLocale("Maloriak", "esES")
+L = BigWigs:NewBossLocale("Maloriak", "esES") or BigWigs:NewBossLocale("Maloriak", "esMX")
 if L then
 	--heroic
 	L.sludge = "Fango oscuro"
@@ -93,7 +93,7 @@ if L then
 	L.dark_phase = "Fase |cFF660099Oscura|r"
 end
 
-L = BigWigs:NewBossLocale("Nefarian", "esES")
+L = BigWigs:NewBossLocale("Nefarian", "esES") or BigWigs:NewBossLocale("Nefarian", "esMX")
 if L then
 	L.phase = "Fases"
 	L.phase_desc = "Avisa los cambios de fase."
@@ -114,7 +114,7 @@ if L then
 	L.chromatic_prototype = "Prototipo cromático" -- 3 adds name
 end
 
-L = BigWigs:NewBossLocale("Omnotron Defense System", "esES")
+L = BigWigs:NewBossLocale("Omnotron Defense System", "esES") or BigWigs:NewBossLocale("Omnotron Defense System", "esMX")
 if L then
 	L.nef = "Lord Victor Nefarius"
 	L.nef_desc = "Avisos para las abilidades de Lord Victor Nefarius"
