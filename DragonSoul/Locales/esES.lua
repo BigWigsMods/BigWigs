@@ -92,8 +92,8 @@ end
 
 L = BigWigs:NewBossLocale("Warmaster Blackhorn", "esES") or BigWigs:NewBossLocale("Warmaster Blackhorn", "esMX")
 if L then
-	L.warmup = "Warmup"
-	L.warmup_desc = "Time until combat starts."
+	L.warmup = "Calentamiento"
+	L.warmup_desc = "Tiempo hasta que el combate comience."
 
 	L.sunder = "Hender armadura"
 	L.sunder_desc = "Alerta para tanques. Muestra los stacs de Hender armadura y una barra con su duración."
