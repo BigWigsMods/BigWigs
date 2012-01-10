@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SearingPlasmaCast", 109379) -- Only one id in both modes
 	self:Death("CorruptionDeath", 56161, 56162, 53891)
 	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
-	self:Log("SPELL_CAST_SUCCESS", "ResidueChange", 109373, 105248) -- Burst, Absorbed Blood
+	self:Log("SPELL_CAST_SUCCESS", "ResidueChange", 105248, 109371, 109372, 109373, 105219) -- Absorbed Blood, Burst (x4)
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -107,7 +107,7 @@ end
 do
 	local tendrils = GetSpellInfo(109454)
 	local function graspCheck()
-		if not UnitDebuff("player", tendrils) then -- Grasping Tendrils
+		if not UnitDebuff("player", tendrils) and not UnitIsDead("player") then -- Grasping Tendrils
 			mod:LocalMessage("roll", L["not_hooked"], "Personal", 109454, "Alert")
 		end
 	end
@@ -207,7 +207,7 @@ do
 	local haltPrinting = true
 	function mod:ResidueChange(_, spellId, _, _, spellName)
 		local condPrint
-		if spellId == 109373 then
+		if spellId == 109371 or spellId == 109372 or spellId == 109373 or spellId == 105219 then
 			-- Burst (+1)
 			bloodCount = bloodCount + 1
 			condPrint = true
