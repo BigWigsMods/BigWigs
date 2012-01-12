@@ -37,7 +37,7 @@ if L then
 	L.bolt_message = "%2$dx Blitz: %1$s"
 
 	L.blue = "|cFF0080FFBlau|r"
-	L.green = "|cFF088A08Grünn|r"
+	L.green = "|cFF088A08Grün|r"
 	L.purple = "|cFF9932CDViolett|r"
 	L.yellow = "|cFFFFA901Gelb|r"
 	L.black = "|cFF424242Schwarz|r"
