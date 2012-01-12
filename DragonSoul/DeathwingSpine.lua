@@ -106,13 +106,17 @@ end
 
 do
 	local tendrils = GetSpellInfo(109454)
+	local timer = nil
 	local function graspCheck()
+        if not mod.isEngaged then
+            -- Timer should not be spamming
+            mod:CancelTimer(timer, true)
+        end
 		if not UnitDebuff("player", tendrils) and not UnitIsDead("player") then -- Grasping Tendrils
 			mod:LocalMessage("roll", L["not_hooked"], "Personal", 109454, "Alert")
 		end
 	end
 
-	local timer = nil
 	function mod:AboutToRoll()
 		self:Bar("roll", L["roll"], 5, L["roll_icon"])
 		self:Message("roll", CL["custom_sec"]:format(L["roll"], 5), "Attention", L["roll_icon"], "Long")
@@ -206,15 +210,12 @@ do
 	end
 	local haltPrinting = true
 	function mod:ResidueChange(_, spellId, _, _, spellName)
-		local condPrint
 		if spellId == 109371 or spellId == 109372 or spellId == 109373 or spellId == 105219 then
 			-- Burst (+1)
 			bloodCount = bloodCount + 1
-			condPrint = true
 		elseif spellId == 105248 then
 			-- Absorbed Blood (-1)
 			bloodCount = bloodCount - 1
-			condPrint = false
 		end
 
 		-- start printing if we're over 3
@@ -222,9 +223,8 @@ do
 			haltPrinting = false
 		end
 
-		-- check the number up for printing on +1 only
-		-- additionally, don't print when you just go 0 -> 1 -> 0
-		if (not haltPrinting) and (not condPrint or bloodCount > 3) then
+		-- We are only printing if the haltPrinting flag has been turned off
+		if not haltPrinting then
 			if scheduled then
 				self:CancelTimer(scheduled, true)
 			end
