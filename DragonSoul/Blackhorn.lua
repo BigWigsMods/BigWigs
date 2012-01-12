@@ -11,7 +11,7 @@ mod:RegisterEnableMob(56781, 56427, 56598, 42288, 55870)
 -- Locales
 --
 
-local canEnable = true
+local canEnable, warned = true, false
 local onslaughtCounter = 1
 
 --------------------------------------------------------------------------------
@@ -64,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TwilightOnslaught", 107588)
 	self:Log("SPELL_CAST_START", "Shockwave", 108046)
 	self:Log("SPELL_AURA_APPLIED", "Sunder", 108043)
+	self:Log("SPELL_AURA_APPLIED", "PreStage2", 108040)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sunder", 108043)
 	self:Log("SPELL_CAST_SUCCESS", "Roar", 109228, 108044, 109229, 109230) --LFR/25N, 10N, ??, ??
 	self:Emote("Sapper", L["sapper_trigger"])
@@ -81,6 +82,7 @@ function mod:OnEngage(diff)
 	onslaughtCounter = 1
 	self:Bar("warmup", _G["COMBAT"], 20, L["warmup_icon"])
 	self:DelayedMessage("warmup", 20, CL["phase"]:format(1), "Positive", L["warmup_icon"])
+	warned = false
 end
 
 function mod:OnWin()
@@ -96,13 +98,22 @@ function mod:Sapper()
 	self:Bar("sapper", L["sapper"], 40, L["sapper_icon"])
 end
 
-function mod:Stage2()
-	self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(108862))) -- Twilight Onslaught
-	self:SendMessage("BigWigs_StopBar", self, L["sapper"])
-	self:Bar(108046, "~"..GetSpellInfo(108046), 14, 108046) -- Shockwave
-	self:Message("warmup", CL["phase"]:format(2) .. ": " .. self.displayName, "Positive", L["warmup_icon"])
-	if not self:LFR() then
-		self:Berserk(240)
+do
+	function mod:PreStage2()
+		if not warned then
+			warned = true
+			self:Bar("warmup", self.displayName, 9, L["warmup_icon"])
+			self:Message("warmup", CL["custom_sec"]:format(self.displayName, 9), "Positive", L["warmup_icon"])
+		end
+	end
+	function mod:Stage2()
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(108862))) -- Twilight Onslaught
+		self:SendMessage("BigWigs_StopBar", self, L["sapper"])
+		self:Bar(108046, "~"..GetSpellInfo(108046), 14, 108046) -- Shockwave
+		self:Message("warmup", CL["phase"]:format(2) .. ": " .. self.displayName, "Positive", L["warmup_icon"])
+		if not self:LFR() then
+			self:Berserk(240, true)
+		end
 	end
 end
 
