@@ -95,6 +95,7 @@ end
 
 function mod:Sapper()
 	self:Message("sapper", L["sapper"], "Important", L["sapper_icon"], "Info")
+	if warned then return end
 	self:Bar("sapper", L["sapper"], 40, L["sapper_icon"])
 end
 
@@ -141,6 +142,7 @@ end
 function mod:TwilightOnslaught(_, spellId, _, _, spellName)
 	self:Message(108862, spellName, "Urgent", spellId, "Alarm")
 	onslaughtCounter = onslaughtCounter + 1
+	if warned then return end
 	self:Bar(108862, ("%s (%d)"):format(spellName, onslaughtCounter), 35, spellId)
 end
 

@@ -108,10 +108,10 @@ do
 	local tendrils = GetSpellInfo(109454)
 	local timer = nil
 	local function graspCheck()
-        if not mod.isEngaged then
-            -- Timer should not be spamming
-            mod:CancelTimer(timer, true)
-        end
+		if not mod.isEngaged then
+			-- Timer should not be spamming
+			mod:CancelTimer(timer, true)
+		end
 		if not UnitDebuff("player", tendrils) and not UnitIsDead("player") then -- Grasping Tendrils
 			mod:LocalMessage("roll", L["not_hooked"], "Personal", 109454, "Alert")
 		end
