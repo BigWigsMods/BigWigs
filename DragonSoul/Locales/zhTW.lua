@@ -108,6 +108,8 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "zhTW")
 if L then
+	L.engage_trigger = "他的護甲!他正在崩壞!破壞他的護甲，我們就有機會打贏他了!"
+
 	L.left_start = "即將左側翻滾"
 	L.right_start = "即將右側翻滾"
 	L.left = "左側翻滾"

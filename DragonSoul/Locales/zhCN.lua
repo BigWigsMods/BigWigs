@@ -108,6 +108,8 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "zhCN")
 if L then
+	L.engage_trigger = "看那些装甲！他正在解体！摧毁那些装甲，我们就能给他最后一击！"
+
 	L.left_start = "即将左侧翻滚"
 	L.right_start = "即将右侧翻滚"
 	L.left = "左侧翻滚"
