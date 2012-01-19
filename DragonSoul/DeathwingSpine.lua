@@ -12,7 +12,7 @@ mod:RegisterEnableMob(53879, 56575, 56341, 53891, 56161, 56162)
 --
 
 local gripTargets = mod:NewTargetList()
-local fieryGrip, residue = GetSpellInfo(109457), GetSpellInfo(105223)
+local fieryGrip = GetSpellInfo(109457)
 local bloodCount = 0
 
 -- Locals for Fiery Grip, described in comments below
@@ -26,7 +26,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "The plates! He's coming apart! Tear up the plates and we've got a shot at bringing him down!"
 	L.roll, L.roll_desc = EJ_GetSectionInfo(4050)
-	L.roll_icon = "ACHIEVEMENT_BG_RETURNXFLAGS_DEF_WSG"
+	L.roll_icon = "achievement_bg_returnxflags_def_wsg"
 
 	L.left_start = "about to roll left"
 	L.right_start = "about to roll right"
@@ -38,6 +38,11 @@ if L then
 	L.level_message = "Nevermind, he leveled out!"
 
 	L.exposed = "Armor Exposed"
+
+	L.residue = "Unabsorbed Residue"
+	L.residue_desc = "Messages informing you of how much blood residue is remaining on the floor."
+	L.residue_icon = 105223
+	L.residue_message = "Unabsorbed Residue: %d"
 end
 L = mod:GetLocale()
 
@@ -47,10 +52,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		105248, 105223, 109457, {105845, "FLASHSHAKE"}, {"roll", "FLASHSHAKE"},
+		105248, "residue", 109457, {105845, "FLASHSHAKE"}, {"roll", "FLASHSHAKE"},
 		105848, "bosskill",
-	}, {
-		[105248] = "general",
 	}
 end
 
@@ -206,7 +209,7 @@ do
 	-- many are up to prevent spamming when the mob picks up a bunch
 	local scheduled = nil
 	local function reportBloods()
-		mod:Message(105223, ("%s (%d)"):format(residue, bloodCount), "Attention", 105223)
+		mod:Message("residue", L["residue_message"]:format(bloodCount), "Attention", 105223)
 		scheduled = nil
 	end
 	local haltPrinting = true

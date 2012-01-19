@@ -120,6 +120,10 @@ if L then
 	L.level_message = "别急，他已经平衡了！"
 
 	L.exposed = "装甲暴露"
+
+	L.residue = "Unabsorbed Residue"
+	L.residue_desc = "Messages informing you of how much blood residue is remaining on the floor."
+	L.residue_message = "Unabsorbed Residue: %d"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhCN")
