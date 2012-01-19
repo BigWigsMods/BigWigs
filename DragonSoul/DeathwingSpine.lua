@@ -64,6 +64,7 @@ function mod:OnBossEnable()
 	self:Death("CorruptionDeath", 56161, 56162, 53891)
 	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
 	self:Log("SPELL_CAST_SUCCESS", "ResidueChange", 105248, 109371, 109372, 109373, 105219) -- Absorbed Blood, Burst (x4)
+	self:Log("SPELL_AURA_APPLIED", "BloodCheck", 6343, 77758, 59921, 26017)-- Thunder Clap, Thrash, Frost Fever, Vindication
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -209,15 +210,8 @@ do
 		scheduled = nil
 	end
 	local haltPrinting = true
-	function mod:ResidueChange(_, spellId, _, _, spellName)
-		if spellId == 109371 or spellId == 109372 or spellId == 109373 or spellId == 105219 then
-			-- Burst (+1)
-			bloodCount = bloodCount + 1
-		elseif spellId == 105248 then
-			-- Absorbed Blood (-1)
-			bloodCount = bloodCount - 1
-		end
-
+	local deadBlood = {}
+	local function residuePrint()
 		-- start printing if we're over 3
 		if bloodCount > 3 then
 			haltPrinting = false
@@ -226,15 +220,41 @@ do
 		-- We are only printing if the haltPrinting flag has been turned off
 		if not haltPrinting then
 			if scheduled then
-				self:CancelTimer(scheduled, true)
+				mod:CancelTimer(scheduled, true)
 			end
-			scheduled = self:ScheduleTimer(reportBloods, 1) 
+			scheduled = mod:ScheduleTimer(reportBloods, 1) 
 		end
 
 		-- once we reach 0, we will hold until we pass the threshold again
-		-- this must be after the print so we know when we drop to 0
+		-- this must be after the print so we print the (0) warning
 		if bloodCount == 0 then
 			haltPrinting = true
+		end
+	end
+	local function residueDecrease(GUID)
+		bloodCount = bloodCount - 1
+		deadBlood[GUID] = nil
+	end
+	function mod:ResidueChange(_, spellId, _, _, _, _, _, _, _, _, sGUID)
+		if spellId == 109371 or spellId == 109372 or spellId == 109373 or spellId == 105219 then
+			-- Burst (+1)
+			bloodCount = bloodCount + 1
+			-- Mark this blood as dead so we know if he revives
+			deadBlood[sGUID] = GetTime()
+		elseif spellId == 105248 then
+			residueDecrease(sGUID)
+		end
+
+		residuePrint()
+	end
+	-- Here we're using the four common tank AoE threat auras: Thunder Clap,
+	-- Thrash, Frost Fever, and Vindication. At some point one of these should
+	-- be applied to a blood, and if it is at least 5s after death, we know that
+	-- it revived.
+	function mod:BloodCheck(_, _, _, _, _, _, _, _, _, dGUID)
+		if deadBlood[dGUID] and GetTime() - deadBlood[dGUID] > 5 then
+			residueDecrease(dGUID)
+			residuePrint()
 		end
 	end
 end
