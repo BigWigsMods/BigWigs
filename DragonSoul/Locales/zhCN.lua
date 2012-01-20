@@ -121,9 +121,9 @@ if L then
 
 	L.exposed = "装甲暴露"
 
-	L.residue = "Unabsorbed Residue"
-	L.residue_desc = "Messages informing you of how much blood residue is remaining on the floor."
-	L.residue_message = "Unabsorbed Residue: %d"
+	L.residue = "未吸收的残渣"
+	L.residue_desc = "当地面上还有剩余未吸收的残渣时发出警报。"
+	L.residue_message = "未吸收的残渣：>%d<！"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhCN")
