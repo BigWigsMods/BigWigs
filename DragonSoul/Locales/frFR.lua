@@ -119,9 +119,9 @@ if L then
 
 	L.exposed = "Armure exposée"
 
-	L.residue = "Unabsorbed Residue"
-	L.residue_desc = "Messages informing you of how much blood residue is remaining on the floor."
-	L.residue_message = "Unabsorbed Residue: %d"
+	L.residue = "Résidus non absorbés"
+	L.residue_desc = "Messages indiquant combien de résidus de sang se trouvent sur le dos."
+	L.residue_message = "Résidus non absorbés : %d"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
