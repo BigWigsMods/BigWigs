@@ -88,8 +88,7 @@ end
 --
 
 function mod:SummonKohcrom(_, spellId, _, _, spellName)
-	self:Bar("stomp_boss", "~"..self.displayName.." - "..L["stomp_boss"], 6, L["stomp_boss_icon"])
-	self:Bar("stomp_add", "~"..kohcrom.." - "..L["stomp_add"], 12, L["stomp_add_icon"])
+	self:Bar("stomp_boss", "~"..self.displayName.." - "..L["stomp_boss"], 6, L["stomp_boss_icon"]) -- 6-12s
 	self:Message(109017, spellName, "Positive", spellId)
 	self:SendMessage("BigWigs_StopBar", self, L["crystal"])
 	self:SendMessage("BigWigs_StopBar", self, "~"..L["stomp_boss"])
@@ -111,14 +110,20 @@ end
 
 function mod:Stomp(_, spellId, source, _, spellName)
 	if self:Difficulty() > 2 and UnitExists("boss2") then -- Check if heroic and if kohncrom has spawned yet.
-		if source ~= kohcrom and stompCount < 4 then -- Since we trigger bars off morchok casts, we gotta make sure kohcrom isn't caster to avoid bad timers.
+		if source == kohcrom then
+			self:Message("stomp_add", source.." - "..spellName, "Important", spellId)
+		else -- Since we trigger bars off morchok casts, we gotta make sure kohcrom isn't caster to avoid bad timers.
 			self:Bar("stomp_add", "~"..kohcrom.." - "..spellName, (self:Difficulty() == 3) and 6 or 5, spellId) -- 6sec after on 10 man, 5 sec on 25
-			self:Bar("stomp_boss", "~"..source.." - "..spellName, 12, spellId)
+			self:Message("stomp_boss", source.." - "..spellName, "Important", spellId)
+			if stompCount < 4 then
+				self:Bar("stomp_boss", "~"..source.." - "..spellName, 12, spellId)
+			end
 			stompCount = stompCount + 1
 		end
 	else -- Not heroic, or Kohcrom isn't out yet, just do normal bar.
 		if stompCount < 4 then
 			self:Bar("stomp_boss", "~"..spellName, 12, spellId)
+			self:Message("stomp_boss", spellName, "Important", spellId)
 			stompCount = stompCount + 1
 		end
 	end
