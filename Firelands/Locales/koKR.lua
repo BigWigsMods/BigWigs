@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "koKR")
 if not L then return end
 if L then
-	L.flare = GetSpellInfo(100936)
-	L.flare_desc = "Show a timer bar for AoE flare."
+	L.flare_desc = "화염 광역에 대한 타이머 바를 표시합니다."
+	
 	L.devastate_message = "그을리는 유린 #%d"
-	L.drone_bar = "다음 잿그물 수거미"
-	L.drone_message = "잿그물 수거미 등장!"
+	L.drone_bar = "잿그물 수거미"
+	L.drone_message = "수거미 등장!"
 	L.kiss_message = "입맞춤"
-	L.spinner_warn = "Spinners #%d"
+	L.spinner_warn = "실거미 #%d"
 end
 
 L = BigWigs:NewBossLocale("Lord Rhyolith", "koKR")
@@ -39,9 +39,9 @@ if L then
 	L.moonkin_message = "헛짓은 그만~! 깃털을 주우세요!"
 	L.molt_bar = "다음 털갈이"
 
-	L.meteor = "Meteor"
-	L.meteor_desc = "Warn when a Molten Meteor is summoned."
-	L.meteor_message = "Meteor!"
+	L.meteor = "유성"
+	L.meteor_desc = "타오르는 유성 소환을 알립니다."
+	L.meteor_message = "유 성!"
 
 	L.stage_message = "%d 단계"
 	L.kill_message = "바로 지금! - 그녀를 죽이세요!"
@@ -53,17 +53,17 @@ if L then
 	L.flight = "날개 지속"
 	L.flight_desc = "'화염의 날개'의 지속 타이머 바를 표시합니다. 특수 강조바와 카운트 기능을 이용한다면 더 효율적입니다."
 
-	L.initiate = "Initiate Spawn"
-	L.initiate_desc = "Show timer bars for initiate spawns."
-	L.initiate_both = "Both Initiates"
-	L.initiate_west = "West Initiate"
-	L.initiate_east = "East Initiate"
+	L.initiate = "수습생 소환"
+	L.initiate_desc = "타오르는 발톱 수습생 소환에 대한 타이머 바를 표시합니다."
+	L.initiate_both = "양쪽 수습생"
+	L.initiate_west = "왼쪽 수습생"
+	L.initiate_east = "오른쪽 수습생"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "koKR")
 if L then
 	L.safe = "%s 안전함"
-	L.wary_dog = "%s is Wary!"
+	L.wary_dog = "%s 조심!"
 	L.crystal_trap = "수정 감옥 덫"
 
 	L.traps_header = "덫"
@@ -81,7 +81,7 @@ if L then
 	L.torment = "주시 대상 고문 파편 중첩"
 	L.torment_desc = "당신이 주시 대상으로 설정한 플레이어에 대한 고문의 파편 중첩을 알립니다."
 
-	L.blade_bar = "~칼날"
+	L.blade_bar = "~다음 칼날"
 	L.shard_message = "고문의 파편(%d)!"
 	L.focus_message = "당신의 주시 대상 - 고문 x%d !"
 	L.link_message = "고리 연결"
