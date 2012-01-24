@@ -67,7 +67,9 @@ function mod:OnBossEnable()
 	self:Death("CorruptionDeath", 56161, 56162, 53891)
 	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
 	self:Log("SPELL_CAST_SUCCESS", "ResidueChange", 105248, 109371, 109372, 109373, 105219) -- Absorbed Blood, Burst (x4)
-	self:Log("SPELL_AURA_APPLIED", "BloodCheck", 6343, 77758, 59921, 26017)-- Thunder Clap, Thrash, Frost Fever, Vindication
+	self:Log("SPELL_AURA_APPLIED", "BloodCheckDest", 6343, 77758, 55095, 26017) -- Thunder Clap, Thrash, Frost Fever, Vindication
+	self:Log("SWING_DAMAGE", "BloodCheckSource", "*")
+	self:Log("SWING_MISSED", "BloodCheckSource", "*")
 	self:Log("SPELL_CAST_START", "Nuclear", 105845)
 	self:Log("SPELL_CAST_START", "Seal", 105847, 105848) -- Left, Right
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -254,11 +256,17 @@ do
 	-- Thrash, Frost Fever, and Vindication. At some point one of these should
 	-- be applied to a blood, and if it is at least 5s after death, we know that
 	-- it revived.
-	function mod:BloodCheck(_, _, _, _, _, _, _, _, _, dGUID)
-		if deadBlood[dGUID] and GetTime() - deadBlood[dGUID] > 5 then
-			residueDecrease(dGUID)
+	local function bloodCheck(GUID, debug)
+		if deadBlood[GUID] and GetTime() - deadBlood[GUID] > 5 then
+			residueDecrease(GUID)
 			residuePrint()
 		end
+	end
+	function mod:BloodCheckDest(_, _, _, _, spellName, _, _, _, _, dGUID)
+		bloodCheck(dGUID, spellName)
+	end
+	function mod:BloodCheckSource(_, _, _, _, _, _, _, _, _, _, sGUID)
+		bloodCheck(sGUID, "Melee")
 	end
 end
 
