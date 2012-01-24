@@ -43,7 +43,8 @@ function plugin:RWAddMessage(frame, message, colorInfo)
 end
 
 function plugin:IsSpam(text)
-	if BigWigs.db.profile.showBossmodChat then return end
-	if type(text) ~= "string" then return end
-	if fnd(text, "%*%*%*") then return true end
+	if not BigWigs.db.profile.showBossmodChat and type(text) == "string" and fnd(text, "%*%*%*") then
+		return true
+	end
 end
+
