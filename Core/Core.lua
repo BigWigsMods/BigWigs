@@ -116,6 +116,38 @@ do
 end
 
 -------------------------------------------------------------------------------
+-- Movie Blocking
+--
+
+do
+	local knownMovies = {
+		[73] = true, -- Ultraxion death
+		[74] = true, -- DeathwingSpine engage
+		[75] = true, -- DeathwingSpine death
+		[76] = true, -- DeathwingMadness death
+	}
+
+	-- We can't :HookScript as we need to prevent the movie starting to play in the first place
+	local origMovieHandler = MovieFrame:GetScript("OnEvent")
+	MovieFrame:SetScript("OnEvent", function(frame, event, id, ...)
+		if event == "PLAY_MOVIE" and knownMovies[id] and addon.db.profile.blockmovies then
+			if not addon.db.profile.seenmovies then
+				addon.db.profile.seenmovies = {}
+			end
+			if addon.db.profile.seenmovies[id] then
+				addon:Print(L["Prevented boss movie '%d' from playing."]:format(id)) -- XXX Temporary print or permanent?
+				return MovieFrame_OnMovieFinished(frame)
+			else
+				addon.db.profile.seenmovies[id] = true
+				return origMovieHandler(frame, event, id, ...)
+			end
+		else
+			return origMovieHandler(frame, event, id, ...)
+		end
+	end)
+end
+
+-------------------------------------------------------------------------------
 -- Testing
 --
 
@@ -271,6 +303,7 @@ function addon:OnInitialize()
 			raidwarning = false,
 			broadcast = false,
 			showBlizzardWarnings = false,
+			blockmovies = true,
 		},
 		global = {
 			optionShiftIndexes = {},

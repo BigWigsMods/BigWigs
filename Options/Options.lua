@@ -95,7 +95,6 @@ local acOptions = {
 			name = L["Shake"],
 			desc = L.fnsDesc,
 			order = 23,
-			--width = "full",
 		},
 		raidicon = {
 			type = "toggle",
@@ -103,6 +102,25 @@ local acOptions = {
 			desc = L.raidiconDesc,
 			order = 24,
 			width = "full",
+		},
+		broadcast = {
+			type = "toggle",
+			name = L["Broadcast"],
+			desc = L.broadcastDesc,
+			order = 25,
+		},
+		useraidchannel = {
+			type = "toggle",
+			name = L["Raid channel"],
+			desc = L["Use the raid channel instead of raid warning for broadcasting messages."],
+			order = 26,
+			disabled = function() return not BigWigs.db.profile.broadcast end,
+		},
+		whisper = {
+			type = "toggle",
+			name = L["Whisper warnings"],
+			desc = L.whisperDesc,
+			order = 27,
 		},
 		separator2 = {
 			type = "description",
@@ -124,25 +142,11 @@ local acOptions = {
 			order = 32,
 			width = "full",
 		},
-		whisper = {
+		blockmovies = {
 			type = "toggle",
-			name = L["Whisper warnings"],
-			desc = L.whisperDesc,
+			name = L["Block Boss Movies"],
+			desc = L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."],
 			order = 33,
-			width = "full",
-		},
-		broadcast = {
-			type = "toggle",
-			name = L["Broadcast"],
-			desc = L.broadcastDesc,
-			order = 34,
-		},
-		useraidchannel = {
-			type = "toggle",
-			name = L["Raid channel"],
-			desc = L["Use the raid channel instead of raid warning for broadcasting messages."],
-			order = 35,
-			disabled = function() return not BigWigs.db.profile.broadcast end,
 		},
 		separator3 = {
 			type = "description",

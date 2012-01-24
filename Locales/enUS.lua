@@ -62,6 +62,9 @@ L["Reset positions"] = true
 L["Colors"] = true
 L["Select encounter"] = true
 L["List abilities in group chat"] = true
+L["Block Boss Movies"] = true
+L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = true
+L["Prevented boss movie '%d' from playing."] = true
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"
