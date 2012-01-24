@@ -40,9 +40,9 @@ if L then
 	L.exposed = "Armor Exposed"
 
 	L.residue = "Unabsorbed Residue"
-	L.residue_desc = "Messages informing you of how much blood residue is remaining on the floor."
+	L.residue_desc = "Messages informing you of how much blood residue is remaining on the floor, waiting to be absorbed."
 	L.residue_icon = 105223
-	L.residue_message = "Unabsorbed Residue: %d"
+	L.residue_message = "Residue: %d"
 end
 L = mod:GetLocale()
 
