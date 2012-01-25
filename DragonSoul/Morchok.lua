@@ -80,6 +80,7 @@ function mod:OnEngage(diff)
 	self:Berserk(420) -- confirmed
 	self:Bar("stomp_boss", L["stomp_boss"], 11, L["stomp_boss_icon"])
 	self:Bar("crystal_boss", L["crystal"], 16, L["crystal_boss_icon"])
+	self:Bar(103851, "~"..L["blood"], 56, 103851)
 	crystalCount, stompCount = 0, 1
 end
 
@@ -97,6 +98,7 @@ end
 -- I know it's ugly to use this, but if we were to start bars at :BlackBlood then we are subject to BlackBlood duration changes
 function mod:BloodOver(_, unit, _, _, _, spellId)
 	if unit == "boss1" and spellId == 103851 then
+		self:Bar(spellId, L["blood"], 75, spellId)
 		crystalCount, stompCount = 0, 1
 		if self:Difficulty() > 2 then
 			self:Bar("stomp_boss", "~"..self.displayName.." - "..L["stomp_boss"], 15, L["stomp_boss_icon"])
