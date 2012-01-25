@@ -64,7 +64,7 @@ L["Reset positions"] = "Positionen zurücksetzen"
 L["Colors"] = "Farben"
 L["Select encounter"] = "Wähle Begegnung"
 L["List abilities in group chat"] = "Fähigkeiten im Chat auflisten"
-L["Block Boss Movies"] = "Boss-Videosequenzen blockieren"
+L["Block Boss Movies"] = "Videos blockieren"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Nachdem Sie eine Boss-Videosequenz einmal gesehen haben, wird diese zukünftig von BigWigs blockiert."
 L["Prevented boss movie '%d' from playing."] = "Videosequenz '%d' wurde blockiert."
 
