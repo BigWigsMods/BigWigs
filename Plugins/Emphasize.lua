@@ -111,12 +111,13 @@ local function endEmphasize(data)
 	local module, key = unpack(data)
 	temporaryEmphasizes[key] = nil
 	plugin:SendMessage("BigWigs_SuperEmphasizeEnd", module, key)
+	wipe(data)
 end
 
 function plugin:Emphasize(module, key, timeSpan)
 	if not module or not key then return end
 	temporaryEmphasizes[key] = true
-	self:ScheduleTimer(endEmphasize, timeSpan, {module, key}) -- XXX wts one table per emphasize
+	self:ScheduleTimer(endEmphasize, timeSpan, {module, key}) -- WTS one table per emphasize
 	self:SendMessage("BigWigs_SuperEmphasizeStart", module, key, timeSpan)
 end
 

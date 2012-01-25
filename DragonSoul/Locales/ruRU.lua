@@ -108,6 +108,8 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
 if L then
+	L.engage_trigger = "The plates! He's coming apart! Tear up the plates and we've got a shot at bringing him down!"
+
 	L.left_start = "собирается накрениться влево"
 	L.right_start = "собирается накрениться вправо"
 	L.left = "наклоняется влево"

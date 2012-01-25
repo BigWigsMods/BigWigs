@@ -57,7 +57,7 @@ if L then
 	L.lightning_next = "번개 단계"
 
 	L.assault_desc = "!탱거만 경고! "..select(2, EJ_GetSectionInfo(4159))
-	
+
 	L.nextphase = "다음 단계"
 	L.nextphase_desc = "다음 단계에 대하여 알립니다."
 end
@@ -83,7 +83,7 @@ if L then
 	L.lightyou = "당신에 대한 사그라지는 빛"
 	L.lightyou_desc = "당신이 사그라지는 빛일때 폭발까지 남은 시간을 바에 표시합니다."
 	L.lightyou_bar = "<폭발>"
-	
+
 	L.lighttank = "탱커에 대한 사그라지는 빛"
 	L.lighttank_desc = "!탱거만 경고! 탱커일경우 사그라지는 빛일때 번쩍임과 진동, 폭발까지 남은 시간을 바에 표시합니다."
 	L.lighttank_bar = "<%s 폭발>"
@@ -94,22 +94,22 @@ L = BigWigs:NewBossLocale("Warmaster Blackhorn", "koKR")
 if L then
 	L.warmup = "전투 준비"
 	L.warmup_desc = "전투가 시작되기까지의 타이머입니다."
-	
+
 	L.sunder = "방어구 가르기"
 	L.sunder_desc = "!탱거만 경고! 방어구 가르기의 지속시간 바와 중첩 횟수를 표시합니다."
 	L.sunder_message = "방어구 가르기 x%2$d : %1$s"
-	
+
 	L.sapper_trigger = "비룡이 빠르게 날아와 황혼의 폭파병을 갑판에 떨어뜨립니다!"
 	L.sapper = "폭파병"
 	L.sapper_desc = "배에 큰 피해를 입히는 폭파병입니다."
-	
+
 	L.stage2_trigger = "내가 직접 나서야겠군. 좋지!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "koKR")
 if L then
 	L.engage_trigger = "저 갑옷! 놈의 갑옷이 벗겨지는군! 갑옷을 뜯어내면 놈을 쓰러뜨릴 기회가 생길 거요!"
-	
+
 	L.left_start = "왼쪽으로 회전합니다"
 	L.right_start = "오른쪽으로 회전합니다"
 	L.left = "왼쪽으로 회전"
@@ -131,7 +131,7 @@ if L then
 	L.engage_trigger = "넌 아무것도 못 했다. 내가 이 세상을 조각내주마."
 
 	L.impale_desc = "!탱거만 경고! "..select(2,EJ_GetSectionInfo(4114))
-	
+
 	L.bolt_explode = "<화살 폭발>"
 	L.parasite = "기생충"
 	L.blobs_soon = "%d%% - 곧 엉키는 피!"

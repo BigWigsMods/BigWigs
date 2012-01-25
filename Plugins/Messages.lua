@@ -503,7 +503,8 @@ function plugin:BigWigs_Message(event, module, key, text, color, _, sound, broad
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end
 	if db.chat then
-		print("|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. text .. "|r")
+		if icon then text = "|T"..icon..":15|t"..text end
+		ChatFrame1:AddMessage(text, r, g, b)
 	end
 end
 
