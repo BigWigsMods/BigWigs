@@ -309,7 +309,7 @@ function boss:Tank()
 	local role = GetTalentTreeRoles(tree)
 	local _, class = UnitClass("player")
 	if class == "DRUID" and tree == 2 then
-		local _,_,_,_,talent = GetTalentInfo(2, 20)
+		local _,_,_,_,talent = GetTalentInfo(2, 18) -- Natural Reaction
 		if talent > 0 then
 			role = "TANK"
 		else
