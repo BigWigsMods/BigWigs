@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "Ледяная фаза"
 	L.lightning_next = "Грозовая фаза"
 
-	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Только для танков/лекарей. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "Следующая Фаза"
 	L.nextphase_desc = "Предупреждения для следующей фазы"
@@ -108,7 +108,7 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
 if L then
-	L.engage_trigger = "The plates! He's coming apart! Tear up the plates and we've got a shot at bringing him down!"
+	L.engage_trigger = "Смотрите, он разваливается! Оторвите пластины, и у нас появится шанс сбить его!"
 
 	L.left_start = "собирается накрениться влево"
 	L.right_start = "собирается накрениться вправо"
