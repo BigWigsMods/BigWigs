@@ -144,9 +144,29 @@ do
 	end
 end
 
-function mod:AbsorbedBlood(_, spellId, _, _, spellName, stack)
-	if stack > 5 then
-		self:Message(105248, ("%s (%d)"):format(spellName, stack), "Urgent", spellId)
+do
+	local timers = {}
+	function mod:AbsorbedBlood(_, spellId, _, _, spellName, stack, _, _, _, dGUID)
+		if stack > 5 then
+			-- Cancel old timer
+			if timers[dGUID] ~= nil then
+				self:CancelTimer(timers[dGUID], true)
+				timers[dGUID] = nil
+			end
+
+			-- Create closure to retain stack count, spell name, and GUID
+			local printStacks = function()
+				self:Message(105248, ("%s (%d)"):format(spellName, stack), "Urgent", spellId)
+				timers[dGUID] = nil
+			end
+
+			-- Throttle message by 0.25s, or print immediately if we hit 9 stacks
+			if stack < 9 then
+				timers[dGUID] = self:ScheduleTimer(printStacks, 0.25)
+			else
+				printStacks()
+			end
+		end
 	end
 end
 
