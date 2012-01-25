@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "Fase de Hielo"
 	L.lightning_next = "Fase de Relámpago"
 
-	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Alerta solo para Tanques & Sanadores. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "Siguiente Fase"
 	L.nextphase_desc = "Avisos para la siguiente fase"
@@ -108,7 +108,7 @@ end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "esES") or BigWigs:NewBossLocale("Spine of Deathwing", "esMX")
 if L then
-	L.engage_trigger = "The plates! He's coming apart! Tear up the plates and we've got a shot at bringing him down!"
+	L.engage_trigger = "¡Las placas! ¡Se está deshaciendo! ¡Destrozad las placas y tendremos una oportunidad de derribarlo!"
 
 	L.left_start = "a punto de girar a la izquierda"
 	L.right_start = "a punto de girar a la derecha"
