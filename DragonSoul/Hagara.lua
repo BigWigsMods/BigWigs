@@ -26,7 +26,7 @@ if L then
 	L.lightning_next = "Lightning phase"
 
 	L.assault = EJ_GetSectionInfo(4159)
-	L.assault_desc = "Tank alert only. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
 	L.assault_icon = 107851
 
 	L.nextphase = "Next Phase"
@@ -34,7 +34,7 @@ if L then
 	L.nextphase_icon = 2139 -- random icon (counterspell)
 end
 L = mod:GetLocale()
-L.assault = L.assault.." "..INLINE_TANK_ICON
+L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -81,7 +81,7 @@ end
 --
 
 function mod:Assault(_, spellId, _, _, spellName)
-	if self:Tank() then
+	if self:Tank() or self:Healer() then
 		self:LocalMessage("assault", spellName, "Urgent", spellId)
 		self:Bar("assault", "~"..spellName, 15, spellId)
 		self:Bar("assault", "<"..spellName..">", 5, spellId)

@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "Fase de Hielo"
 	L.lightning_next = "Fase de Relámpago"
 
-	L.assault_desc = "Alerta para tanques. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "Siguiente Fase"
 	L.nextphase_desc = "Avisos para la siguiente fase"

@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "寒冰阶段"
 	L.lightning_next = "闪电阶段"
 
-	L.assault_desc = "只警报坦克。"..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "下一阶段"
 	L.nextphase_desc = "当下一阶段时发出警报。"

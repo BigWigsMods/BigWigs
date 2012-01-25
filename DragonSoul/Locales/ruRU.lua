@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "Ледяная фаза"
 	L.lightning_next = "Грозовая фаза"
 
-	L.assault_desc = "Только для танков. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "Следующая Фаза"
 	L.nextphase_desc = "Предупреждения для следующей фазы"

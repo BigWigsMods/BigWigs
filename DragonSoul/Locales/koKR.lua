@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "얼음 단계"
 	L.lightning_next = "번개 단계"
 
-	L.assault_desc = "!탱거만 경고! "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "다음 단계"
 	L.nextphase_desc = "다음 단계에 대하여 알립니다."

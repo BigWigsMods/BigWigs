@@ -319,13 +319,13 @@ function boss:Tank()
 	if role == "TANK" then return true end
 end
 
---[[
 function boss:Healer()
 	local tree = GetPrimaryTalentTree()
 	local role = GetTalentTreeRoles(tree)
 	if role == "HEALER" then return true end
 end
 
+--[[
 function boss:Damager()
 	local tree = GetPrimaryTalentTree()
 	local role
