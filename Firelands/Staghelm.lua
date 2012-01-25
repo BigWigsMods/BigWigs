@@ -11,8 +11,10 @@ mod:RegisterEnableMob(52571, 53619) --Staghelm, Druid of the Flame
 --
 
 local leapingFlames, flameScythe = (GetSpellInfo(98476)), (GetSpellInfo(100213))
--- got data up to 15 stacks, after 11 its 3.7
-local specialCD = {17.5, 13.4, 10.9, 8.6, 7.4, 7.3, 6.1, 6.1, 4.9, 4.9, 4.9}
+-- Update, in 4.3 the rate at which his energy is affected by Adrenaline is nerfed considerbly. (Despite what tooltip says)
+-- I don't have data to determine if/when it caps at 3.7, but if it does, it's somewhere much later then it used to be.
+-- So stack beyond 11-12 may falsely report 3.7 until data for more specials can be determined (although it was already wrong to begin with post 4.3 so this is unchanged)
+local specialCD = {17.3, 14.4, 12, 10.9, 9.6, 8.4, 8.4, 7.2, 7.2, 6.0, 6.0}
 local specialCounter = 1
 local form = "cat"
 local seedTimer = nil
