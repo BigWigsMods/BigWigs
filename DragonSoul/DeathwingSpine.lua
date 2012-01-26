@@ -157,16 +157,16 @@ do
 			end
 
 			-- Create closure to retain stack count, spell name, and GUID
-			local printStacks = function()
-				self:Message(105248, ("%s (%d)"):format(spellName, stack), "Urgent", spellId)
+			local printStacks = function(level)
+				self:Message(105248, ("%s (%d)"):format(spellName, stack), level, spellId)
 				timers[dGUID] = nil
 			end
 
 			-- Throttle message by 0.25s, or print immediately if we hit 9 stacks
 			if stack < 9 then
-				timers[dGUID] = self:ScheduleTimer(printStacks, 0.25)
+				timers[dGUID] = self:ScheduleTimer(printStacks, 0.25, "Urgent")
 			else
-				printStacks()
+				printStacks("Important")
 			end
 		end
 	end
