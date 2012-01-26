@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "寒冰階段"
 	L.lightning_next = "閃電階段"
 
-	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "只警報坦克和治療。 "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "下一階段"
 	L.nextphase_desc = "當下一階段時發出警報。"
@@ -122,8 +122,8 @@ if L then
 	L.exposed = "裝甲暴露"
 
 	L.residue = "未吸收的殘液"
-	L.residue_desc = "當地面上還有剩餘未吸收的殘液時發出警報。"
-	L.residue_message = "未吸收的殘液：>%d<！"
+	L.residue_desc = "當地面上還有剩餘未吸收的殘液時發出警報，等待被吸收。"
+	L.residue_message = "殘液：>%d<！"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhTW")
