@@ -19,7 +19,7 @@ end
 
 L = BigWigs:NewBossLocale("Alizabal", "koKR")
 if L then
-	L.first_ability = "Skewer or Hate"
-	L.dance_message = "Blade Dance %d of 3"
+	L.first_ability = "꿰기 또는 증오"
+	L.dance_message = "칼춤 %d / 3"
 end
 
