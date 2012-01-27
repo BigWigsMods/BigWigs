@@ -116,20 +116,22 @@ function mod:TentacleKilled()
 	self:SendMessage("BigWigs_StopBar", self, L["parasite"])
 end
 
--- XXX maybe too much sound? All of them are for adds tho that you have to kill ASAP.
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if (unit):find("^boss%d$") then
-		if spellName == hemorrhage then
-			self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
-		elseif spellId == 105551 then
-			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-			self:Message("smalltentacles", ("%d%% - %s"):format(hp > 50 and 70 or 40, L["smalltentacles"]), "Urgent", L["smalltentacles_icon"], "Alarm")
-		elseif spellId == 109568 then
-			self:Message("fragment", L["fragment"], "Urgent", L["fragment_icon"], "Alarm")
-			self:Bar("fragment", L["fragment"], 90, L["fragment_icon"])
-		elseif spellId == 106765 then
-			self:Message("terror", L["terror"], "Important", L["terror_icon"])
-			self:Bar("terror", L["terror"], 90, L["terror_icon"])
+do
+	local fragment = GetSpellInfo(109568)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
+		if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
+			if spellName == hemorrhage then
+				self:Message("hemorrhage", spellName, "Urgent", L["hemorrhage_icon"], "Alarm")
+			elseif spellName == fragment then
+				self:Message("fragment", L["fragment"], "Urgent", L["fragment_icon"], "Alarm")
+				self:Bar("fragment", L["fragment"], 90, L["fragment_icon"])
+			elseif spellId == 105551 then
+				local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+				self:Message("smalltentacles", ("%d%% - %s"):format(hp > 50 and 70 or 40, L["smalltentacles"]), "Urgent", L["smalltentacles_icon"], "Alarm")
+			elseif spellId == 106765 then
+				self:Message("terror", L["terror"], "Important", L["terror_icon"])
+				self:Bar("terror", L["terror"], 90, L["terror_icon"])
+			end
 		end
 	end
 end

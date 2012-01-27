@@ -88,7 +88,7 @@ function mod:Bolt(player, spellId, _, _, spellName, buffStack)
 end
 
 function mod:Blobs(_, unit, spellName, _, _, spellId)
-	if (unit):find("^boss%d$") and colorCombinations[spellId] then
+	if (unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4") and colorCombinations[spellId] then
 		if self:Difficulty() > 2 then
 			self:Message("blobs", ("%s %s %s %s"):format(colorCombinations[spellId][1], colorCombinations[spellId][2], colorCombinations[spellId][4], colorCombinations[spellId][3]), "Urgent", L["blobs_icon"], "Alarm")
 			self:Bar("blobs", L["blobs_bar"], 75, L["blobs_icon"])
