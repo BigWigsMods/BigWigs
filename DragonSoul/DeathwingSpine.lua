@@ -82,7 +82,9 @@ end
 
 -- Note: Engage is not called as early as you may expect. It is about 4s from the start of combat
 function mod:OnEngage()
-	self:Reset()
+	wipe(corruptionStatus)
+	lastBar = true
+	bloodCount = 0
 
 	if not self:LFR() then
 		-- Initial bars for grip since we cannot trigger off of it (pad by -5s)
@@ -94,18 +96,6 @@ function mod:OnEngage()
 			self:Bar(109457, "~"..fieryGrip, 27, 109457)
 		end
 	end
-end
-
-function mod:OnBossDisable()
-	-- OnEngage triggers on a yell, which needs to be localized, and this must
-	-- be run or else much of the module will not run as expected
-	self:Reset()
-end
-
-function mod:Reset()
-	wipe(corruptionStatus)
-	lastBar = true
-	bloodCount = 0
 end
 
 --------------------------------------------------------------------------------
@@ -139,7 +129,7 @@ do
 		timer = nil
 	end
 	function mod:Level()
-		self:Message("roll", L["level_message"], "Attention", L["roll_icon"])
+		self:Message("roll", L["level_message"], "Positive", L["roll_icon"])
 		self:SendMessage("BigWigs_StopBar", self, L["roll"])
 		self:CancelTimer(timer, true)
 		timer = nil
@@ -149,25 +139,23 @@ end
 do
 	local timers = {}
 	function mod:AbsorbedBlood(_, spellId, _, _, spellName, stack, _, _, _, dGUID)
-		if stack > 5 then
-			-- Cancel old timer
-			if timers[dGUID] ~= nil then
-				self:CancelTimer(timers[dGUID], true)
-				timers[dGUID] = nil
-			end
+		-- Cancel old timer
+		if timers[dGUID] ~= nil then
+			self:CancelTimer(timers[dGUID], true)
+			timers[dGUID] = nil
+		end
 
-			-- Create closure to retain stack count, spell name, and GUID
-			local printStacks = function(level)
-				self:Message(105248, ("%s (%d)"):format(spellName, stack), level, spellId)
-				timers[dGUID] = nil
-			end
+		-- Create closure to retain stack count, spell name, and GUID
+		local printStacks = function(level)
+			self:Message(105248, ("%s (%d)"):format(spellName, stack), level, spellId)
+			timers[dGUID] = nil
+		end
 
-			-- Throttle message by 0.25s, or print immediately if we hit 9 stacks
-			if stack < 9 then
-				timers[dGUID] = self:ScheduleTimer(printStacks, 0.25, "Urgent")
-			else
-				printStacks("Important")
-			end
+		-- Throttle message by 0.5s, or print immediately if we hit 9 stacks
+		if stack < 9 then
+			timers[dGUID] = self:ScheduleTimer(printStacks, 0.5, "Urgent")
+		else
+			printStacks("Important")
 		end
 	end
 end
