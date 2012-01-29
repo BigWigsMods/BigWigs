@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Hagara the Stormbinder", 824, 317)
+local mod, CL = BigWigs:NewBoss("Hagara the Stormbinder", 824, 317)
 if not mod then return end
 mod:RegisterEnableMob(55689)
 
@@ -42,7 +42,7 @@ L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
 
 function mod:GetOptions()
 	return {
-		{104448, "FLASHSHAKE"}, 109553, {105316, "PROXIMITY"}, {109325, "ICON", "FLASHSHAKE", "PROXIMITY"},
+		{104448, "FLASHSHAKE"}, 109553, {105316, "PROXIMITY"}, {109325, "ICON", "FLASHSHAKE", "PROXIMITY", "SAY"},
 		109561,
 		"assault", 108934, "nextphase", "berserk", "bosskill",
 	}, {
@@ -91,7 +91,8 @@ end
 function mod:FrostFlakeApplied(player, spellId, _, _, spellName)
 	self:PrimaryIcon(109325, player)
 	if UnitIsUnit("player", player) then
-		self:LocalMessage(109325, spellName, "Personal", spellId, Long)
+		self:LocalMessage(109325, CL["you"]:format(spellName), "Personal", spellId, Long)
+		self:Say(109325, CL["say"]:format(spellName))
 		self:FlashShake(109325)
 		self:OpenProximity(10, 109325)
 	end
@@ -104,16 +105,16 @@ function mod:FrostFlakeRemoved(player)
 	end
 end
 
-function mod:WaterShield(_, spellId, _, _, spellName)
+function mod:WaterShield(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(107851))) -- Focused Assault
-	self:Message(109561, spellName, "Attention", spellId)
+	self:Message(109561, L["lightning_next"], "Attention", spellId)
 	nextPhase = L["ice_next"]
 	nextPhaseIcon = 105409
 end
 
-function mod:FrozenTempest(_, spellId, _, _, spellName)
+function mod:FrozenTempest(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(107851))) -- Focused Assault
-	self:Message(109553, spellName, "Attention", spellId)
+	self:Message(109553, L["ice_next"], "Attention", spellId)
 	nextPhase = L["lightning_next"]
 	nextPhaseIcon = 109561
 end
