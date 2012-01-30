@@ -22,7 +22,7 @@ if L then
 	L.engage_trigger = "You have done NOTHING. I will tear your world APART."
 
 	L.impale = EJ_GetSectionInfo(4114)
-	L.impale_desc = "Tank alert only. "..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "Tank & Healer alert only. "..select(2,EJ_GetSectionInfo(4114))
 	L.impale_icon = 106400
 
 	L.last_phase = GetSpellInfo(106708)
@@ -49,7 +49,7 @@ if L then
 	L.blobs_soon = "%d%% - Congealing Blood soon!"
 end
 L = mod:GetLocale()
-L.impale = L.impale.." "..INLINE_TANK_ICON
+L.impale = L.impale.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -105,7 +105,7 @@ end
 --
 
 function mod:Impale(_, spellId, _, _, spellName)
-	if self:Tank() then
+	if self:Tank() or self:Healer() then
 		self:LocalMessage("impale", spellName, "Urgent", spellId, "Alarm")
 		self:Bar("impale", spellName, 35, spellId)
 	end

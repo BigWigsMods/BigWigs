@@ -129,7 +129,7 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES") or BigWigs:NewBossLocale("Madness of Deathwing", "esMX")
 if L then
 	L.engage_trigger = "No habéis hecho nada. Destruiré vuestro mundo."
-	L.impale_desc = "Alerta para tanques. "..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "Alerta solo para Tanques & Sanadores. "..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<Descarga Explota>"
 	L.parasite = "Parásito"
 	L.blobs_soon = "%d%% - Sangre coagulante inminente!"

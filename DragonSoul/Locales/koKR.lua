@@ -130,7 +130,7 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "koKR")
 if L then
 	L.engage_trigger = "넌 아무것도 못 했다. 내가 이 세상을 조각내주마."
 
-	L.impale_desc = "!탱거만 경고! "..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "탱커 & 힐러만 경고합니다. "..select(2,EJ_GetSectionInfo(4114))
 
 	L.bolt_explode = "<화살 폭발>"
 	L.parasite = "기생충"

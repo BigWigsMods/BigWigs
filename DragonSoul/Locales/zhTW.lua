@@ -129,7 +129,7 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhTW")
 if L then
 	L.engage_trigger = "你們都徒勞無功。我會撕裂你們的世界。"
-	L.impale_desc = "只警報坦克。"..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "只警報坦克和治療。 "..select(2,EJ_GetSectionInfo(4114))
 	L.bolt_explode = "<源質箭爆炸>"
 	L.parasite = "腐化寄生體"
 	L.blobs_soon = "%d%% - 即將凝結之血！"

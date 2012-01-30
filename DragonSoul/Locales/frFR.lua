@@ -130,7 +130,7 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
 if L then
 	L.engage_trigger = "Vous n'avez RIEN fait. Je vais mettre votre monde en PIÈCES."
 
-	L.impale_desc = "Alerte pour tank uniquement. "..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "Tank & Healer alert only. "..select(2,EJ_GetSectionInfo(4114))
 
 	L.bolt_explode = "<Explosion de l'Eclair>"
 	L.parasite = "Parasite"

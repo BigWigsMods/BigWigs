@@ -130,7 +130,7 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 	L.engage_trigger = "У вас НИЧЕГО не вышло. Я РАЗОРВУ ваш мир на куски."
 
-	L.impale_desc = "Только для танков. "..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "Только для танков/лекарей. "..select(2,EJ_GetSectionInfo(4114))
 
 	L.bolt_explode = "<Взрыв Стрелы>"
 	L.parasite = "Паразит"
