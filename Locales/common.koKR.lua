@@ -7,7 +7,7 @@ L.you = "당신에게 %s!"
 L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
 L.say = "나에게 %s!"
-L.cast = "<Casting %s>"
+L.cast = "<%s 시전중>"
 L.soon = "%s soon!"
 
 L.phase = "%d 단계"
