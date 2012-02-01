@@ -220,7 +220,7 @@ end
 function mod:ParasiteRemoved(player)
 	self:PrimaryIcon("ej:4347")
 	if UnitIsUnit(player, "player") then
-		self:CloseProximity()
+		self:CloseProximity("ej:4347")
 	end
 end
 
