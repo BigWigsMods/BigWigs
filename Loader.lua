@@ -403,9 +403,9 @@ do
 				warnedOutOfDate = true
 				-- Adapt the out-of-date nag according to release type
 				if BIGWIGS_RELEASE_TYPE == RELEASE then
-					sysprint(L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
+					sysprint(L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."])
 				elseif BIGWIGS_RELEASE_TYPE == ALPHA then
-					sysprint(L["Your alpha version of Big Wigs is out of date(/bwv)."])
+					sysprint(L["Your alpha version of Big Wigs is out of date (/bwv)."])
 				end
 			end
 		elseif prefix == "VR" then

@@ -305,6 +305,7 @@ end
 --
 
 function boss:Tank()
+	if core.db.profile.ignorerole then return true end
 	local tree = GetPrimaryTalentTree()
 	local role = GetTalentTreeRoles(tree)
 	local _, class = UnitClass("player")
@@ -320,6 +321,7 @@ function boss:Tank()
 end
 
 function boss:Healer()
+	if core.db.profile.ignorerole then return true end
 	local tree = GetPrimaryTalentTree()
 	local role = GetTalentTreeRoles(tree)
 	if role == "HEALER" then return true end

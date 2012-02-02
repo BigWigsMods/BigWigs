@@ -128,6 +128,13 @@ local acOptions = {
 			order = 30,
 			width = "full",
 		},
+		ignorerole = {
+			type = "toggle",
+			name = L["Ignore my role"],
+			desc = L.ignoreroleDesc,
+			order = 30.5,
+			width = "full",
+		},
 		showBlizzardWarnings = {
 			type = "toggle",
 			name = L["Show Blizzard warnings"],
@@ -144,7 +151,7 @@ local acOptions = {
 		},
 		blockmovies = {
 			type = "toggle",
-			name = L["Block Boss Movies"],
+			name = L["Block boss movies"],
 			desc = L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."],
 			order = 33,
 		},

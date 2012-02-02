@@ -14,8 +14,8 @@ L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) alr
 L["You are running an official release of Big Wigs %s (revision %d)"] = true
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = true
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = true
-L["There is a new release of Big Wigs available(/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = true
-L["Your alpha version of Big Wigs is out of date(/bwv)."] = true
+L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = true
+L["Your alpha version of Big Wigs is out of date (/bwv)."] = true
 
 L.tooltipHint = "|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fRight-Click|r to access options."
 L["Active boss modules:"] = true
@@ -62,9 +62,11 @@ L["Reset positions"] = true
 L["Colors"] = true
 L["Select encounter"] = true
 L["List abilities in group chat"] = true
-L["Block Boss Movies"] = true
+L["Block boss movies"] = true
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = true
 L["Prevented boss movie '%d' from playing."] = true
+L["Ignore my role"] = true
+L.ignoreroleDesc = "|cffff4411Not recommended.|r Enabling this will show you all warnings no matter what role you play, which can be spammy on some bosses."
 
 L["BAR"] = "Bars"
 L["MESSAGE"] = "Messages"

@@ -304,6 +304,7 @@ function addon:OnInitialize()
 			broadcast = false,
 			showBlizzardWarnings = false,
 			blockmovies = true,
+			ignorerole = false,
 		},
 		global = {
 			optionShiftIndexes = {},
