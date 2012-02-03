@@ -56,7 +56,7 @@ if L then
 	L.ice_next = "Phase de glace"
 	L.lightning_next = "Phase de foudre"
 
-	L.assault_desc = "Tank & Healer alert only. "..select(2, EJ_GetSectionInfo(4159))
+	L.assault_desc = "Alerte pour tanks & soigneurs uniquement. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "Prochaine phase"
 	L.nextphase_desc = "Prévient quand arrive la phase suivante."
@@ -130,7 +130,7 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
 if L then
 	L.engage_trigger = "Vous n'avez RIEN fait. Je vais mettre votre monde en PIÈCES."
 
-	L.impale_desc = "Tank & Healer alert only. "..select(2,EJ_GetSectionInfo(4114))
+	L.impale_desc = "Alerte pour tanks & soigneurs uniquement. "..select(2,EJ_GetSectionInfo(4114))
 
 	L.bolt_explode = "<Explosion de l'Eclair>"
 	L.parasite = "Parasite"

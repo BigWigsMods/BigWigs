@@ -65,8 +65,8 @@ L["List abilities in group chat"] = "Lister les techniques dans la discussion de
 L["Block boss movies"] = "Bloquer les cinématiques de boss"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Après avoir visionné une cinématique de boss une première fois, Big Wigs empêchera qu'elle soit jouée à nouveau."
 L["Prevented boss movie '%d' from playing."] = "Lecture de la cinématique de boss '%d' évitée."
-L["Ignore my role"] = "Ignore my role"
-L.ignoreroleDesc = "|cffff4411Not recommended.|r Enabling this will show you all warnings no matter what role you play, which can be spammy on some bosses."
+L["Ignore my role"] = "Ignorer mon rôle"
+L.ignoreroleDesc = "|cffff4411Non recommandé.|r L'activation de ceci affichera tous les avertissements sans se soucier du rôle que vous jouez, et vous risquez d'être submergé d'informations sur certains boss."
 
 L["BAR"] = "Barres"
 L["MESSAGE"] = "Messages"

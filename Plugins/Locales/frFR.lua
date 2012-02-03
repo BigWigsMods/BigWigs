@@ -8,7 +8,7 @@ L["Style"] = "Style"
 L.bigWigsBarStyleName_Default = "Défaut"
 
 L["Clickable Bars"] = "Barres cliquables"
-L.clickableBarsDesc = "Par défaut, les barres de Big Wigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, etc. tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne fonctionnera plus.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
+L.clickableBarsDesc = "Par défaut, les barres de Big Wigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, ... tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne sera plus d'application.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
 L["Enables bars to receive mouse clicks."] = "Permet aux barres de recevoir les clics de la souris."
 L["Modifier"] = "Modificateur"
 L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Maintenez enfoncée la touche modificatrice sélectionnée pour activer les actions des clics sur les barres."
