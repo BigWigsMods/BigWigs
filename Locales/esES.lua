@@ -66,7 +66,7 @@ L["Block boss movies"] = "Bloquear cinemáticas de Jefe"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "Después de ver la cinemática de un jefe una vez, Big Wigs evitará que se vuelva a reproducir."
 L["Prevented boss movie '%d' from playing."] = "Evitada la cinemática del jefe '%d'."
 L["Ignore my role"] = "Ignore my role"
-L.ignoreroleDesc = "|cffff4411Not recommended.|r Enabling this will show you all warnings no matter what role you play, which can be spammy on some bosses."
+L.ignoreroleDesc = "|cffff4411No recomendado.|r Activar esta opción mostrará todas las advertencias sin tener en cuenta tu rol, pudiendo crear spam en algunos jefes."
 
 L["BAR"] = "Barras"
 L["MESSAGE"] = "Mensajes"
