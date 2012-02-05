@@ -119,8 +119,9 @@ do
 		self:Bar("roll", L["roll"], 5, L["roll_icon"])
 		self:Message("roll", CL["custom_sec"]:format(L["roll"], 5), "Attention", L["roll_icon"], "Long")
 		self:FlashShake("roll")
-		if timer then self:CancelTimer(timer, true) end
+		if timer then self:CancelTimer(timer, true)
 		timer = self:ScheduleRepeatingTimer(graspCheck, 0.8)
+		end
 	end
 	function mod:Rolls()
 		self:Message("roll", L["roll_message"], "Positive", L["roll_icon"])

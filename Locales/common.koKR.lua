@@ -8,7 +8,7 @@ L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
 L.say = "나에게 %s!"
 L.cast = "<%s 시전중>"
-L.soon = "%s soon!"
+L.soon = "곧 %s!"
 
 L.phase = "%d 단계"
 L.normal = "일반 모드"
