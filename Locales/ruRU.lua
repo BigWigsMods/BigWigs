@@ -67,8 +67,8 @@ L["List abilities in group chat"] = "Вывести способности в г
 L["Block boss movies"] = "Блокировать видео ролики"
 L["After you've seen a boss movie once, Big Wigs will prevent it from playing again."] = "После того, как вы увидели ролик один раз, Big Wigs не позволит ему играть снова."
 L["Prevented boss movie '%d' from playing."] = "Пропущен видео ролик '%d'."
-L["Ignore my role"] = "Ignore my role"
-L.ignoreroleDesc = "|cffff4411Not recommended.|r Enabling this will show you all warnings no matter what role you play, which can be spammy on some bosses."
+L["Ignore my role"] = "Игнорировать мою роль"
+L.ignoreroleDesc = "|cffff4411Не рекомендуется.|r Включив опцию, вы будете видеть все предупреждения, вне зависимости от вашей роли. Может привести к излишнему спаму."
 
 L["BAR"] = "Полосы"
 L["MESSAGE"] = "Сообщения"

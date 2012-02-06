@@ -4,7 +4,7 @@ if L then
 	L.engage_trigger = "Попробуйте остановить лавину и умрете."
 
 	L.crush = "Сокрушение доспеха"
-	L.crush_desc = "Только для танков. Считает стаки сокрушения доспеха и показывает их таймер."
+	L.crush_desc = "Только для танков. Считает стаки сокрушения доспеха и показывает таймер."
 	L.crush_message = "%2$dx Сокрушение на |3-5(%1$s)"
 
 	L.blood = "Черная кровь"
@@ -33,7 +33,7 @@ L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "ruRU")
 if L then
 	L.engage_trigger = "Иилт ки'уотк шн'ма йе'глу Шат'Яр! Х'ИУН ИИЛТ!"
 
-	L.bolt_desc = "Только для танков. Считает стаки стрел тьмы и показывает их таймер."
+	L.bolt_desc = "Только для танков. Считает стаки стрел тьмы и показывает таймер."
 	L.bolt_message = "%2$dx Стрела на |3-5(%1$s)"
 
 	L.blue = "|cFF0080FFСиняя|r"
@@ -59,7 +59,7 @@ if L then
 	L.assault_desc = "Только для танков/лекарей. "..select(2, EJ_GetSectionInfo(4159))
 
 	L.nextphase = "Следующая Фаза"
-	L.nextphase_desc = "Предупреждения для следующей фазы"
+	L.nextphase_desc = "Предупреждать о следующей фазе"
 end
 
 L = BigWigs:NewBossLocale("Ultraxion", "ruRU")
@@ -96,7 +96,7 @@ if L then
 	L.warmup_desc = "Время до начала боя."
 
 	L.sunder = "Раскол брони"
-	L.sunder_desc = "Только для танков. Считает стаки раскола брони и показывает их таймер."
+	L.sunder_desc = "Только для танков. Считает стаки раскола брони и показывает таймер."
 	L.sunder_message = "%2$dx Раскол на |3-5(%1$s)"
 
 	L.sapper_trigger = "Дракон пикирует на палубу, чтобы сбросить на нее сумеречного сапера!"
@@ -123,7 +123,7 @@ if L then
 
 	L.residue = "Непоглощенный Осадок"
 	L.residue_desc = "Сообщения, информирующие вас о том, сколько ещё осадков крови осталось на полу."
-	L.residue_message = "Осадков осталось: %d"
+	L.residue_message = "Осадков: %d"
 end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
@@ -134,6 +134,6 @@ if L then
 
 	L.bolt_explode = "<Взрыв Стрелы>"
 	L.parasite = "Паразит"
-	L.blobs_soon = "%d%% - Капли крови скоро!"
+	L.blobs_soon = "%d%% - Свертывающаяся кровь скоро!"
 end
 
