@@ -82,7 +82,7 @@ function mod:Bolt(player, spellId, _, _, spellName, buffStack)
 	if self:Tank() then
 		buffStack = buffStack or 1
 		self:SendMessage("BigWigs_StopBar", self, L["bolt_message"]:format(player, buffStack - 1))
-		self:Bar("bolt", L["bolt_message"]:format(player, buffStack), 22, spellId)
+		self:Bar("bolt", L["bolt_message"]:format(player, buffStack), 12, spellId)
 		self:LocalMessage("bolt", L["bolt_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 	end
 end
