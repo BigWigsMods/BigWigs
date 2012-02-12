@@ -12,6 +12,7 @@ local cataclysm = GetSpellInfo(110044)
 local impale = GetSpellInfo(106400)
 local canEnable = true
 local curPercent = 100
+local paraCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -146,6 +147,7 @@ function mod:LastPhase(_, spellId)
 end
 
 function mod:AssaultAspects()
+	paraCount = 0
 	if curPercent == 100 then
 		curPercent = 20
 		if self:Tank() then
@@ -204,9 +206,9 @@ function mod:Shrapnel(player, spellId, _, _, spellName)
 end
 
 function mod:Parasite(player, spellId)
+	paraCount = paraCount + 1
 	self:TargetMessage("ej:4347", L["parasite"], player, "Urgent", spellId)
 	self:PrimaryIcon("ej:4347", player)
-	self:Bar("ej:4347", L["parasite"], 60, 108649)
 	if UnitIsUnit(player, "player") then
 		self:FlashShake("ej:4347")
 		self:Bar("ej:4347", CL["you"]:format(L["parasite"]), 10, spellId)
@@ -214,6 +216,9 @@ function mod:Parasite(player, spellId)
 		self:Say("ej:4347", CL["say"]:format(L["parasite"]))
 	else
 		self:Bar("ej:4347", CL["other"]:format(L["parasite"], player), 10, spellId)
+	end
+	if paraCount < 2 then
+		self:Bar("ej:4347", L["parasite"], 60, 108649)
 	end
 end
 
