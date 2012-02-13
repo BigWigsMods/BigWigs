@@ -135,7 +135,7 @@ if L then
 	L.impale_desc = "Alerte pour tanks & soigneurs uniquement. "..select(2,EJ_GetSectionInfo(4114))
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
-	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
+	L.smalltentacles_desc = "À 70% et 40% de points de vie restants au Tentacule membre, plusieurs Tentacules caustiques surgissent de lui. Ils sont insensibles aux techniques à zone d'effet."
 
 	L.bolt_explode = "<Explosion de l'Eclair>"
 	L.parasite = "Parasite"
