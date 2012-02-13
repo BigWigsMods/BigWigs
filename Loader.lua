@@ -110,7 +110,13 @@ function GetMapID(name)
 end
 function GetBossID(name)
 	for i=1,1000 do
-		local fetchedName, _, id = EJ_GetEncounterInfo(i)
+		local fetchedName = EJ_GetEncounterInfo(i)
+		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
+	end
+end
+function GetSectionID(name)
+	for i=1,10000 do
+		local fetchedName = EJ_GetSectionInfo(i)
 		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
 	end
 end
