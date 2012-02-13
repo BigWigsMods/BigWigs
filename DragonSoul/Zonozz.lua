@@ -7,7 +7,6 @@ if not mod then return end
 mod:RegisterEnableMob(55308)
 
 local ballTimer = 0
-local psychicDrain = GetSpellInfo(104322)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,12 +31,10 @@ if L then
 
 	L.shadows = "Shadows"
 
-	L.drain = psychicDrain
-	L.drain_desc = "Tank & Healer alert only. "..select(2,EJ_GetSectionInfo(3971))
+	L.drain, L.drain_desc = EJ_GetSectionInfo(3971)
 	L.drain_icon = 104322
 end
 L = mod:GetLocale()
-L.drain = L.drain.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -75,7 +72,7 @@ function mod:OnEngage(diff)
 	end
 	self:Bar("ball", L["ball"], 6, L["ball_icon"])
 	self:Bar(103434, "~"..GetSpellInfo(103434), 23, 103434) -- Shadows
-	self:Bar("drain", psychicDrain, 17, 104322)
+	self:Bar("drain", L["drain"], 17, 104322)
 	ballTimer = 0
 end
 
@@ -92,7 +89,7 @@ function mod:Darkness(_, unit, spellName, _, _, spellId)
 		if (GetTime() - ballTimer) > isHC then
 			self:Bar("ball", L["ball"], isHC == 45 and isHC or 36, L["ball_icon"])
 		end
-		self:SendMessage("BigWigs_StopBar", self, "~"..psychicDrain)
+		self:SendMessage("BigWigs_StopBar", self, "~"..L["drain"])
 	end
 end
 
@@ -101,15 +98,13 @@ function mod:VoidDiffusion(_, spellId, _, _, spellName, stack)
 end
 
 function mod:PsychicDrain(_, spellId, _, _, spellName)
-	if self:Tank() or self:Healer() then
-		self:Bar("drain", "~"..spellName, 20, spellId)
-		self:Message("drain", spellName, "Urgent", spellId)
-	end
+	self:Bar("drain", "~"..spellName, 20, spellId)
+	self:Message("drain", spellName, "Urgent", spellId)
 end
 
 function mod:VoidoftheUnmaking()
-	if ballTimer ~= 0 and (self:Tank() or self:Healer()) then
-		self:Bar("drain", psychicDrain, 8.3, L["drain_icon"])
+	if ballTimer ~= 0 then
+		self:Bar("drain", L["drain"], 8.3, L["drain_icon"])
 	end
 	ballTimer = GetTime()
 	self:Bar("ball", L["ball"], 90, L["ball_icon"])

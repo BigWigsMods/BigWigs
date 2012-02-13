@@ -27,8 +27,6 @@ if L then
 	L.darkness_desc = "Эта фаза начинается, когда сфера попадает в босса."
 
 	L.shadows = "Тени"
-
-	L.drain_desc = "Только для танков/лекарей. "..select(2,EJ_GetSectionInfo(3971))
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "ruRU")

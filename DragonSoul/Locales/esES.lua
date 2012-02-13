@@ -27,8 +27,6 @@ if L then
 	L.darkness_desc = "Esta fase comienza, cuando la esfera de vacío golpea al jefe."
 
 	L.shadows = "Sombras"
-
-	L.drain_desc = "Alerta solo para Tanques & Sanadores. "..select(2,EJ_GetSectionInfo(3971))
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esES") or BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "esMX")

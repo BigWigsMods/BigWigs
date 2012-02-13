@@ -27,8 +27,6 @@ if L then
 	L.darkness_desc = "Cette phase commence quand la Boule de Vide touche le boss."
 
 	L.shadows = "Ombres"
-
-	L.drain_desc = "Alerte pour tanks & soigneurs uniquement. "..select(2,EJ_GetSectionInfo(3971))
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "frFR")
