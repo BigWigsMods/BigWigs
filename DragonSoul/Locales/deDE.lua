@@ -19,6 +19,7 @@ if L then
 
 	L.ball = "Leere der Apokalypse"
 	L.ball_desc = "Leere der Apokalypse, welche von den Spielern abprallt und den Boss schwächt."
+	L.ball_yell = "Gul'kafh an'qov N'Zoth."
 
 	L.bounce = "Abprallen der Leerenkugel"
 	L.bounce_desc = "Zählt, wie häufig die Leerenkugel abprallt."
@@ -132,8 +133,7 @@ if L then
 
 	L.impale_desc = "Nur für Tanks & Heiler. "..select(2,EJ_GetSectionInfo(4114))
 
-	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
-	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
+	L.smalltentacles_desc = "Bei 70% und 40% verbleibender Gesundheit sprießen aus den Tentakeln mehrere blasige Tentakel, die gegen Flächenschadenfertigkeiten immun sind."
 
 	L.bolt_explode = "<Blitz Explodiert>"
 	L.parasite = "Parasit"
