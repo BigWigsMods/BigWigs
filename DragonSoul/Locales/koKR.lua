@@ -19,6 +19,7 @@ if L then
 
 	L.ball = "공허 구슬"
 	L.ball_desc = "플레이어와 보스 사이를 오가는 공허 구슬입니다."
+	L.ball_yell = "굴카와스 언고브 느조스."
 
 	L.bounce = "공허 구슬 튕김"
 	L.bounce_desc = "구슬이 튕긴 횟수를 카운트합니다."
@@ -133,7 +134,7 @@ if L then
 	L.impale_desc = "탱커 & 힐러만 경고합니다. "..select(2,EJ_GetSectionInfo(4114))
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
-	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
+	L.smalltentacles_desc = "체력이 70% 그리고 40% 가 남았을시 촉수에 대하여 알립니다."
 
 	L.bolt_explode = "<화살 폭발>"
 	L.parasite = "기생충"
