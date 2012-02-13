@@ -33,7 +33,9 @@ if L then
 	L.bigtentacle, L.bigtentacle_desc = EJ_GetSectionInfo(4112)
 	L.bigtentacle_icon = 105563
 
-	L.smalltentacles, L.smalltentacles_desc = EJ_GetSectionInfo(4103)
+	L.smalltentacles = EJ_GetSectionInfo(4103)
+	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
+	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
 	L.smalltentacles_icon = 109588
 
 	L.hemorrhage, L.hemorrhage_desc = EJ_GetSectionInfo(4108)

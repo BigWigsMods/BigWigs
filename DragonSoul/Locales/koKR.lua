@@ -132,6 +132,9 @@ if L then
 
 	L.impale_desc = "탱커 & 힐러만 경고합니다. "..select(2,EJ_GetSectionInfo(4114))
 
+	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
+	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
+
 	L.bolt_explode = "<화살 폭발>"
 	L.parasite = "기생충"
 	L.blobs_soon = "%d%% - 곧 엉키는 피!"
