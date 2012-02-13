@@ -27,6 +27,8 @@ if L then
 	L.darkness_desc = "구슬이 보스에게 닿으면 이 단계가 시작 됩니다."
 
 	L.shadows = "그림자"
+
+	L.drain_desc = "탱커 & 힐러만 경고합니다. "..select(2,EJ_GetSectionInfo(3971))
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "koKR")

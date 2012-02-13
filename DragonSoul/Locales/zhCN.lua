@@ -27,6 +27,8 @@ if L then
 	L.darkness_desc = "当此阶段开始，末日黑洞撞击首领。"
 
 	L.shadows = "干扰之影"
+
+	L.drain_desc = "只警报坦克和治疗。"..select(2,EJ_GetSectionInfo(3971))
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "zhCN")

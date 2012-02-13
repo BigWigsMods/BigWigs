@@ -27,6 +27,8 @@ if L then
 	L.darkness_desc = "Diese Phase beginnt, sobald die Leerenkugel auf den Boss trifft."
 
 	L.shadows = "Schatten"
+
+	L.drain_desc = "Nur für Tanks & Heiler. "..select(2,EJ_GetSectionInfo(3971))
 end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "deDE")
