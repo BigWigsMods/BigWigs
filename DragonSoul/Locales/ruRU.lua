@@ -19,7 +19,7 @@ if L then
 
 	L.ball = "Сфера"
 	L.ball_desc = "Сфера, которая отскакивает от игроков и босса."
-	L.ball_yell = "Gul'kafh an'qov N'Zoth."
+	L.ball_yell = "Гул'каф ан'ков Н'Зот."
 
 	L.bounce = "Отскок Сферы"
 	L.bounce_desc = "Счетчик для отскакиваний сферы."
