@@ -114,7 +114,7 @@ if L then
 	L.right_start = "собирается накрениться вправо"
 	L.left = "наклоняется влево"
 	L.right = "наклоняется вправо"
-	L.not_hooked = "ТЫ >НЕ< зацеплен!"
+	L.not_hooked = "ВЫ >НЕ< зацеплены!"
 	L.roll_message = "Он вращается, вращается, вращается!"
 	L.level_trigger = "выравнивается"
 	L.level_message = "Неважно, он выравнивается!"
@@ -133,7 +133,7 @@ if L then
 	L.impale_desc = "Только для танков/лекарей. "..select(2,EJ_GetSectionInfo(4114))
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
-	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
+	L.smalltentacles_desc = "На 70% и 40% из конечности показываются раскаленные щупальца, на которые не действуют способности, наносящие урон по площади."
 
 	L.bolt_explode = "<Взрыв Стрелы>"
 	L.parasite = "Паразит"
