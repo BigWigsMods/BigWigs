@@ -19,6 +19,7 @@ if L then
 
 	L.ball = "末日黑洞"
 	L.ball_desc = "末日黑洞在玩家和首领之间来回弹跳时发出警报。"
+	L.ball_yell = "Gul'kafh an'qov N'Zoth."
 
 	L.bounce = "末日黑洞弹跳"
 	L.bounce_desc = "末日黑洞弹跳计数。"

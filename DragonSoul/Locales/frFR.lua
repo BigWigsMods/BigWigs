@@ -19,6 +19,7 @@ if L then
 
 	L.ball = "Boule de Vide"
 	L.ball_desc = "Boule de Vide qui rebondit contre les joueurs et le boss."
+	L.ball_yell = "Gul'kafh an'qov N'Zoth."
 
 	L.bounce = "Rebond de la Boule de Vide"
 	L.bounce_desc = "Compteur des rebonds de la Boule de Vide."

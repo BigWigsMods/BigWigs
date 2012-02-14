@@ -19,6 +19,7 @@ if L then
 
 	L.ball = "壞滅虛無"
 	L.ball_desc = "壞滅虛無在玩家和首領之間來回彈跳時發出警報。"
+	L.ball_yell = "Gul'kafh an'qov N'Zoth."
 
 	L.bounce = "壞滅虛無彈跳"
 	L.bounce_desc = "壞滅虛無彈跳計數。"

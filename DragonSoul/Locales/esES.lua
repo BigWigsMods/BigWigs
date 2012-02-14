@@ -19,6 +19,7 @@ if L then
 
 	L.ball = "Esfera de vacío"
 	L.ball_desc = "Una esfera de vacío que rebota entre jugadores y el jefe."
+	L.ball_yell = "Gul'kafh an'qov N'Zoth."
 
 	L.bounce = "Rebotar Esfera de vacío"
 	L.bounce_desc = "Contador para el rebote de la Esfera de vacío."
