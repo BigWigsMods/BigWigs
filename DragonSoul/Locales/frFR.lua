@@ -131,8 +131,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "frFR")
 if L then
 	L.engage_trigger = "Vous n'avez RIEN fait. Je vais mettre votre monde en PIÈCES."
 
-	L.impale_desc = "Alerte pour tanks & soigneurs uniquement. "..select(2,EJ_GetSectionInfo(4114))
-
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "À 70% et 40% de points de vie restants au Tentacule membre, plusieurs Tentacules caustiques surgissent de lui. Ils sont insensibles aux techniques à zone d'effet."
 

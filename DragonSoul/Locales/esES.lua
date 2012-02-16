@@ -130,7 +130,6 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "esES") or BigWigs:NewBossLocale("Madness of Deathwing", "esMX")
 if L then
 	L.engage_trigger = "No habéis hecho nada. Destruiré vuestro mundo."
-	L.impale_desc = "Alerta solo para Tanques & Sanadores. "..select(2,EJ_GetSectionInfo(4114))
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."

@@ -131,8 +131,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 	L.engage_trigger = "У вас НИЧЕГО не вышло. Я РАЗОРВУ ваш мир на куски."
 
-	L.impale_desc = "Только для танков/лекарей. "..select(2,EJ_GetSectionInfo(4114))
-
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "На 70% и 40% из конечности показываются раскаленные щупальца, на которые не действуют способности, наносящие урон по площади."
 

@@ -131,8 +131,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "deDE")
 if L then
 	L.engage_trigger = "Ihr habt NICHTS erreicht. Ich werde Eure Welt in STÜCKE reißen."
 
-	L.impale_desc = "Nur für Tanks & Heiler. "..select(2,EJ_GetSectionInfo(4114))
-
 	L.smalltentacles_desc = "Bei 70% und 40% verbleibender Gesundheit sprießen aus den Tentakeln mehrere blasige Tentakel, die gegen Flächenschadenfertigkeiten immun sind."
 
 	L.bolt_explode = "<Blitz Explodiert>"

@@ -131,8 +131,6 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "koKR")
 if L then
 	L.engage_trigger = "넌 아무것도 못 했다. 내가 이 세상을 조각내주마."
 
-	L.impale_desc = "탱커 & 힐러만 경고합니다. "..select(2,EJ_GetSectionInfo(4114))
-
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "체력이 70% 그리고 40% 가 남았을시 촉수에 대하여 알립니다."
 

@@ -130,7 +130,6 @@ end
 L = BigWigs:NewBossLocale("Madness of Deathwing", "zhCN")
 if L then
 	L.engage_trigger = "你们什么都没做到。我要撕碎你们的世界。"
-	L.impale_desc = "只警报坦克和治疗。"..select(2,EJ_GetSectionInfo(4114))
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
