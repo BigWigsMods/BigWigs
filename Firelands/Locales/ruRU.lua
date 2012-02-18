@@ -23,7 +23,7 @@ if L then
 
 	L.phase2_warning = "Скоро 2-я фаза!"
 
-	L.molten_message = "Стаков на боссе: %d!"
+	L.molten_message = "Обсидиановые доспехи: %d!"
 
 	L.stomp_message = "Поступь! Поступь! Поступь!"
 	L.stomp = "Поступь"
