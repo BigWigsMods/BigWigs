@@ -111,10 +111,8 @@ L = BigWigs:NewBossLocale("Spine of Deathwing", "ruRU")
 if L then
 	L.engage_trigger = "Смотрите, он разваливается! Оторвите пластины, и у нас появится шанс сбить его!"
 
-	L.left_start = "собирается накрениться влево"
-	L.right_start = "собирается накрениться вправо"
-	L.left = "наклоняется влево"
-	L.right = "наклоняется вправо"
+	L.about_to_roll = "собирается накрениться"
+	L.rolling = "наклоняется"
 	L.not_hooked = "ВЫ >НЕ< зацеплены!"
 	L.roll_message = "Он вращается, вращается, вращается!"
 	L.level_trigger = "выравнивается"

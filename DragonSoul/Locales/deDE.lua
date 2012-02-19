@@ -111,10 +111,8 @@ L = BigWigs:NewBossLocale("Spine of Deathwing", "deDE")
 if L then
 	L.engage_trigger = "Die Platten! Es zerreißt ihn! Zerlegt die Platten und wir können ihn vielleicht runterbringen."
 
-	L.left_start = "gleich nach links rollen"
-	L.right_start = "gleich nach rechts rollen"
-	L.left = "rollt nach links"
-	L.right = "rollt nach rechts"
+	L.about_to_roll = "gleich nach"
+	L.rolling = "rollt nach"
 	L.not_hooked = "DU bist >NICHT< befestigt!"
 	L.roll_message = "Er rollt, rollt, rollt!"
 	L.level_trigger = "stabilisiert sich"

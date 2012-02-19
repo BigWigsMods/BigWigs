@@ -111,10 +111,8 @@ L = BigWigs:NewBossLocale("Spine of Deathwing", "frFR")
 if L then
 	L.engage_trigger = "Les plaques ! Il tombe en morceaux ! Arrachez les plaques et on aura une chance de le descendre !"
 
-	L.left_start = "va faire un tonneau à gauche"
-	L.right_start = "va faire un tonneau à droite"
-	L.left = "fait un tonneau à gauche"
-	L.right = "fait un tonneau à droite"
+	L.about_to_roll = "va faire un tonneau"
+	L.rolling = "fait un tonneau"
 	L.not_hooked = "Vous n'êtes >PAS< accroché !"
 	L.roll_message = "Et il tourne, tourne, tourne !"
 	L.level_trigger = "se redresse"

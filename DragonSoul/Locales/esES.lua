@@ -111,10 +111,8 @@ L = BigWigs:NewBossLocale("Spine of Deathwing", "esES") or BigWigs:NewBossLocale
 if L then
 	L.engage_trigger = "¡Las placas! ¡Se está deshaciendo! ¡Destrozad las placas y tendremos una oportunidad de derribarlo!"
 
-	L.left_start = "a punto de girar a la izquierda"
-	L.right_start = "a punto de girar a la derecha"
-	L.left = "gira a la izquierda"
-	L.right = "gira a la derecha"
+	L.about_to_roll = "a punto de girar"
+	L.rolling = "gira a la"
 	L.not_hooked = "¡>NO< estás enganchado!"
 	L.roll_message = "¡Está girando, girando, girando!"
 	L.level_trigger = "se estabiliza."

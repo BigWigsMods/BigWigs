@@ -28,10 +28,8 @@ if L then
 	L.roll, L.roll_desc = EJ_GetSectionInfo(4050)
 	L.roll_icon = "achievement_bg_returnxflags_def_wsg"
 
-	L.left_start = "about to roll left"
-	L.right_start = "about to roll right"
-	L.left = "rolls left"
-	L.right = "rolls right"
+	L.about_to_roll = "about to roll"
+	L.rolling = "rolls"
 	L.not_hooked = "YOU are >NOT< hooked!"
 	L.roll_message = "He's rolling, rolling, rolling!"
 	L.level_trigger = "levels out"
@@ -58,8 +56,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Emote("AboutToRoll", L["left_start"], L["right_start"])
-	self:Emote("Rolls", L["left"], L["right"])
+	self:Emote("AboutToRoll", L["about_to_roll"])
+	self:Emote("Rolls", L["rolling"])
 	self:Emote("Level", L["level_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AbsorbedBlood", 105248)
