@@ -15,11 +15,11 @@ end
 
 L = BigWigs:NewBossLocale("Warlord Zon'ozz", "zhCN")
 if L then
-	L.engage_trigger = "Zzof Shuul'wah. Thoq fssh N'Zoth!"
+	L.engage_trigger = "Zzof Shuul'wah。Thoq fssh N'Zoth！"
 
 	L.ball = "末日黑洞"
 	L.ball_desc = "末日黑洞在玩家和首领之间来回弹跳时发出警报。"
-	L.ball_yell = "Gul'kafh an'qov N'Zoth."
+	L.ball_yell = "Gul'kafh an'qov N'Zoth。"
 
 	L.bounce = "末日黑洞弹跳"
 	L.bounce_desc = "末日黑洞弹跳计数。"
@@ -32,7 +32,7 @@ end
 
 L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "zhCN")
 if L then
-	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
+	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar！H'IWN IILTH！"
 
 	L.bolt_desc = "只警报坦克。虚空箭堆叠计数并显示持续条。"
 	L.bolt_message = "%2$d层虚空箭：>%1$s<！"
@@ -132,7 +132,7 @@ if L then
 	L.engage_trigger = "你们什么都没做到。我要撕碎你们的世界。"
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
-	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
+	L.smalltentacles_desc = "在生命值降至70%和25%时，肢体触须会衍生出许多灼疮触须，这些触须对具有范围效果的技能免疫。"
 
 	L.bolt_explode = "<源质箭爆炸>"
 	L.parasite = "腐蚀寄生虫"
