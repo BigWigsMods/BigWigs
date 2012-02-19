@@ -132,7 +132,7 @@ if L then
 	L.engage_trigger = "你们什么都没做到。我要撕碎你们的世界。"
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
-	L.smalltentacles_desc = "在生命值降至70%和25%时，肢体触须会衍生出许多灼疮触须，这些触须对具有范围效果的技能免疫。"
+	L.smalltentacles_desc = "在生命值降至70%和40%时，肢体触须会衍生出许多灼疮触须，这些触须对具有范围效果的技能免疫。"
 
 	L.bolt_explode = "<源质箭爆炸>"
 	L.parasite = "腐蚀寄生虫"
