@@ -111,8 +111,8 @@ L = BigWigs:NewBossLocale("Spine of Deathwing", "zhTW")
 if L then
 	L.engage_trigger = "他的護甲!他正在崩壞!破壞他的護甲，我們就有機會打贏他了!"
 
-	L.about_to_roll = "%s感覺到玩家在他的"
-	L.rolling = "%s往[左右]+侧"
+	L.about_to_roll = "感覺到玩家在他的"
+	L.rolling = "%%s往[左右]+侧"
 	L.not_hooked = ">你< 沒有抓牢！"
 	L.roll_message = "他開始滾了，滾了，滾啦！"
 	L.level_trigger = "平衡"
