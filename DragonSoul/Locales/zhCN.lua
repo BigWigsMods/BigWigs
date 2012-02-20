@@ -111,10 +111,8 @@ L = BigWigs:NewBossLocale("Spine of Deathwing", "zhCN")
 if L then
 	L.engage_trigger = "看那些装甲！他正在解体！摧毁那些装甲，我们就能给他最后一击！"
 
-	L.about_to_roll = "即将[左右]+侧翻滚"
-	-- You can't use '右侧翻滚' as a trigger for L.rolling because that word is in the L.about_to_roll trigger "即将'右侧翻滚'"
-	-- You will need to use the FULL line for the L.rolling trigger, I took a guess at what the full line might be, you will need to fix it
-	L.rolling = "%%s[左右]+侧翻滚"
+	L.about_to_roll = "%s感觉到玩家在他的"
+	L.rolling = "%s往[左右]+侧"
 	L.not_hooked = ">你< 没有抓牢！"
 	L.roll_message = "他开始滚了！滚了，滚啦！"
 	L.level_trigger = "平衡"
