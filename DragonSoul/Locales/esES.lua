@@ -112,7 +112,7 @@ if L then
 	L.engage_trigger = "¡Las placas! ¡Se está deshaciendo! ¡Destrozad las placas y tendremos una oportunidad de derribarlo!"
 
 	L.about_to_roll = "a punto de girar"
-	L.rolling = "gira a la"
+	L.rolling = "rueda hacia la"
 	L.not_hooked = "¡>NO< estás enganchado!"
 	L.roll_message = "¡Está girando, girando, girando!"
 	L.level_trigger = "se estabiliza."
