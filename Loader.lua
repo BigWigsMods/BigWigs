@@ -390,10 +390,6 @@ do
 			else
 				SendAddonMessage("BigWigs", "VRA:"..BIGWIGS_RELEASE_REVISION, "RAID")
 			end
-			-- Hack to make the zone ID available when reloading/relogging inside an instance.
-			-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force a delayed update.
-			SetMapToCurrentZone()
-			loader:ZoneChanged()
 		end
 	end)
 
@@ -449,6 +445,11 @@ end
 
 function loader:ZoneChanged()
 	if not grouped then return end
+	-- Hack to make the zone ID available when reloading/relogging inside an instance.
+	-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
+	if IsInInstance() then
+		SetMapToCurrentZone()
+	end
 	local id = GetCurrentMapAreaID()
 	-- load party content in raid, but don't load raid content in a party...
 	if enableZones[id] and enableZones[id] <= grouped then
