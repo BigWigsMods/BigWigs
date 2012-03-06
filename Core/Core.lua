@@ -76,8 +76,9 @@ local function zoneChanged()
 		for _, module in addon:IterateBossModules() do
 			if module.isEngaged then module:Reboot() end
 		end
+	else
+		SetMapToCurrentZone() -- Hack because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
 	end
-	SetMapToCurrentZone() -- Hack because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
 	if enablezones[GetCurrentMapAreaID()] then
 		if not monitoring then
 			monitoring = true
