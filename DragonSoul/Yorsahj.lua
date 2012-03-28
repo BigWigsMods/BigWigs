@@ -128,7 +128,7 @@ do
 		if GetTime() - prev > 1.5 then
 			prev = GetTime()
 			-- Time when it's actually going to hit you
-			self:Bar("ej:4320", L["acid"], 8, L["acid_icon"])
+			self:Bar("acid", L["acid"], 8, L["acid_icon"])
 		end
 	end
 end
