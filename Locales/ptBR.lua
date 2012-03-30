@@ -5,8 +5,8 @@ L["%s has been defeated"] = "%s foi derrotado"
 
 L.bosskill = "Chefe morto"
 L.bosskill_desc = "Avisa quando um chefe for derrotado."
-L.berserk = "Raiva"
-L.berserk_desc = "Mostra um contador de quando o chefe entrará em raiva"
+L.berserk = "Frênese"
+L.berserk_desc = "Mostra um contador de quando o chefe entrará em frênese"
 
 L.already_registered = "|cffff0000ATENCAO:|r |cff00ff00%s|r (|cffffff00%s|r) ja existe este módulo BigWigs, isso normalmente significa que voce tem 2 cópias desse módulo em sua pasta de addons.O que pode ter sido porcausa de uma atualização mal sucedida, recomendo deletar as pastas do BigWigs e reinstalar."
 

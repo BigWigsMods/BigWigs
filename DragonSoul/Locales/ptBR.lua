@@ -4,7 +4,7 @@ if L then
 	L.engage_trigger = "Vocês querem deter uma avalanche. Mas eu vou soterrar vocês."
 
 	L.crush = "Esmagar armadura"
-	L.crush_desc = "Alerta somente para tanques. Mostra os stacks de \"Esmagar armadura\" e uma barra com sua duração."
+	L.crush_desc = "Alerta somente para tanques. Mostra os stacks de Esmagar armadura e uma barra com sua duração."
 	L.crush_message = "%2$dx Esmagar em %1$s"
 
 	L.blood = "Sangue"
@@ -51,7 +51,7 @@ end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "ptBR")
 if L then
-	L.engage_trigger = "Vocês cruzaram o caminho da tempestigadora! Vou arrasar com vocês."
+	L.engage_trigger = "Vocês cruzaram o caminho da Tempestigadora! Vou arrasar com vocês"
 
 	L.lightning_or_frost = "Relâmpago ou Gelo"
 	L.ice_next = "Fase de Gelo"
@@ -65,11 +65,11 @@ end
 
 L = BigWigs:NewBossLocale("Ultraxion", "ptBR")
 if L then
-	L.engage_trigger = "Agora é a hora do crepúsculo!"
+	L.engage_trigger = "Agora é a Hora do Crepúsculo!"
 
 	L.warmup = "Aquecimento"
 	L.warmup_desc = "Tempo de aquecimento"
-	L.warmup_trigger = "Eu sou o início do fim, a sombra que oculta o Sol, o sino que anúncia a sua perdição."
+	L.warmup_trigger = "Eu sou o Início do Fim, a sombra que oculta o sol, o sino que anuncia a sua perdição."
 
 	L.crystal = "Cristais de bônus"
 	L.crystal_desc = "Contadores para vários cristais de bônus que os PNJ's invocam."
@@ -83,11 +83,11 @@ if L then
 
 	L.lightself = "Luz efêmera em VOCÊ"
 	L.lightself_desc = "Mostrar uma barra que visualiza o tempo restante para que a Luz efêmera exploda você."
-	L.lightself_bar = "<Você explodiu!>"
+	L.lightself_bar = "<Você explode!>"
 
 	L.lighttank = "Luz efêmera em tanquer"
 	L.lighttank_desc = "Alerta para tanques. Se um tanque está com a Luz efêmera, mostrará uma barra e piscará para a explosão."
-	L.lighttank_bar = "<%s explodiu!>"
+	L.lighttank_bar = "<%s explode!>"
 	L.lighttank_message = "Tanque explodindo"
 end
 
@@ -97,14 +97,14 @@ if L then
 	L.warmup_desc = "Tempo até que o combate comece."
 
 	L.sunder = "Fender armadura"
-	L.sunder_desc = "Alerta para tanques. Mostra os stacks de \"Fender armadura\" e uma barra com sua duração."
+	L.sunder_desc = "Alerta para tanques. Mostra os stacks de Fender armadura e uma barra com sua duração."
 	L.sunder_message = "%2$dx Fender em %1$s"
 
-	L.sapper_trigger = "Um draco desceu para deixar um sapador do crepúsculo no convés!"
+	L.sapper_trigger = "Um draco mergulha para lançar um Sapador do Crepúsculo ao convés!"
 	L.sapper = "Sapador"
 	L.sapper_desc = "Um Sapador tenta causar danos a nave"
 
-	L.stage2_trigger = "Pelo jeito vou ter que fazer isso sozinho. Ótimo!"
+	L.stage2_trigger = "Pelo jeito, vou ter que fazer isso sozinho. Ótimo!"
 end
 
 L = BigWigs:NewBossLocale("Spine of Deathwing", "ptBR")
@@ -115,7 +115,7 @@ if L then
 	L.rolling = "girou"
 	L.not_hooked = "VOCÊ >NÃO< está enganchado!"
 	L.roll_message = "Ele está girando, girando, girando!"
-	L.level_trigger = "se estabiliza."
+	L.level_trigger = "Asa da Morte nivela."
 	L.level_message = "Ótimo, ele se estabilizou!"
 
 	L.exposed = "Armadura exposta"
@@ -127,13 +127,13 @@ end
 
 L = BigWigs:NewBossLocale("Madness of Deathwing", "ptBR")
 if L then
-	L.engage_trigger = "Vocês não fizeram nada. Eu destruirei o seu mundo."
+	L.engage_trigger = "Vocês não fizeram NADA. Seu mundo será DESTRUÍDO."
 
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
 
 	L.bolt_explode = "<Raio Explode>"
-	L.parasite = "Paraspita"
+	L.parasite = "Parasita"
 	L.blobs_soon = "%d%% - Sangue corrupto iminente!"
 end
 

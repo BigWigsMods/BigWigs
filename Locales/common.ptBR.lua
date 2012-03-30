@@ -6,7 +6,7 @@ L.underyou = "%s debaixo de VOCÊ!"
 L.other = "%s: %s"
 L.say = "%s em MIM!"
 L.cast = "<Castando %s>"
-L.soon = "%s em breve!"
+L.soon = "%s iminente!"
 
 L.phase = "Fase %d"
 L.normal = "Modo normal"
