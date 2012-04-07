@@ -148,9 +148,7 @@ function mod:AssaultAspects()
 	paraCount = 0
 	if curPercent == 100 then
 		curPercent = 20
-		if self:Tank() then
-			self:Bar("impale", impale, 22, 106400)
-		end
+		self:Bar("impale", impale, 22, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
 		if self:Difficulty() > 2 then
 			self:Bar("hemorrhage", hemorrhage, 55.5, 105863)
@@ -162,9 +160,7 @@ function mod:AssaultAspects()
 		self:Bar("bigtentacle", L["bigtentacle"], 11.2, L["bigtentacle_icon"])
 		self:DelayedMessage("bigtentacle", 11.2, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
 	else
-		if self:Tank() then
-			self:Bar("impale", impale, 27.5, 106400)
-		end
+		self:Bar("impale", impale, 27.5, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
 		if self:Difficulty() > 2 then
 			self:Bar("hemorrhage", hemorrhage, 70.5, 105863)
