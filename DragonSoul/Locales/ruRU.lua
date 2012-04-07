@@ -129,10 +129,11 @@ L = BigWigs:NewBossLocale("Madness of Deathwing", "ruRU")
 if L then
 	L.engage_trigger = "У вас НИЧЕГО не вышло. Я РАЗОРВУ ваш мир на куски."
 
-	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "На 70% и 40% из конечности показываются раскаленные щупальца, на которые не действуют способности, наносящие урон по площади."
 
 	L.bolt_explode = "<Взрыв Стрелы>"
 	L.parasite = "Паразит"
 	L.blobs_soon = "%d%% - Свертывающаяся кровь скоро!"
+	
+	L.bigtentacle  = "Большое щупальце"
 end
