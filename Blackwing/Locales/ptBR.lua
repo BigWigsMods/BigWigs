@@ -48,7 +48,7 @@ if L then
 	L.slump_desc = "Magorja cai e fica exposto, permitindo que o rodeio começe."
 	L.slump_bar = "Rodeio"
 	L.slump_message = "Yeeeha!!! MONTA NELE!!!"
-	L.slump_trigger = "%s caiu e deixou suas entranhas expostas!"
+	L.slump_trigger = "%s cai para frente, expondo as pinças!"
 
 	L.infection_message = "Você está infectado!"
 
@@ -100,11 +100,11 @@ if L then
 
 	L.discharge_bar = "~Descarga elétrica"
 
-	L.phase_two_trigger = "Malditos sejam mortais! Um descaso tão grande pelos bens de alguém, merece ser recebido com extrema violência!"
+	L.phase_two_trigger = "Malditos sejam, mortais! Um descaso tão grande pelos bens de alguém merece ser recebido violência extrema!"
 
-	L.phase_three_trigger = "Eu tentei ser um anfitrião afável, mas vocês se recusaram a morrer, está na hora de acabar com o fingimento e simplesmente matar todos vocês!"
+	L.phase_three_trigger = "Eu tentei ser um anfitrião afável, mas vocês se recusaram a morrer! Está na hora de acabar com o fingimento e simplesmente... MATAR TODOS VOCÊS!"
 
-	L.crackle_trigger = "O ar está carregado de eletricidade!"
+	L.crackle_trigger = "O ar estala com eletricidade!"
 	L.crackle_message = "Eletrecutação iminente!"
 
 	L.shadowblaze_message = "Fogo abaixo de VOCÊ"

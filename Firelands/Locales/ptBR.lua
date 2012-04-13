@@ -54,21 +54,21 @@ if L then
 	L.flight_desc = "Mostra uma barra com a duração das 'Asas de Fogo' em você, é ideal usar isso com a opção de Super Enfatizar."
 
 	L.initiate = "Iniciante apareceu"
-	L.initiate_desc = "Mostra contadores para reaparição dos iniciantes."
-	L.initiate_both = "Ambos iniciantes"
-	L.initiate_west = "Iniciante a Oeste"
-	L.initiate_east = "Iniciante a Leste"
+	L.initiate_desc = "Mostra contadores para reaparição dos novatos flamejantes."
+	L.initiate_both = "Ambos novatos flamejantes"
+	L.initiate_west = "Novato Flamejante a Oeste"
+	L.initiate_east = "Novato Flamejante a Leste"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "ptBR")
 if L then
 	L.safe = "%s está salvo"
-	L.wary_dog = "%s é cauteloso!"
+	L.wary_dog = "%s está desconfiado!"
 	L.crystal_trap = "Prisão de cristal"
 
 	L.traps_header = "Armadilhas"
 	L.immolation = "Armadilha Imolante no cachorro"
-	L.immolation_desc = "Alerta quando Face da Fúria pisar numa armadilha imolante, ganhando o bônus 'Cautela'."
+	L.immolation_desc = "Alerta quando Face da Fúria pisar numa armadilha imolante, ganhando o bônus 'Desconfiado'."
 	L.immolationyou = "Armadilha Imolante debaixo de VOCÊ"
 	L.immolationyou_desc = "Alerta quando uma armadilha imolante aparece debaixo de você."
 	L.immolationyou_message = "Armadilha Imolante"
@@ -90,7 +90,7 @@ end
 L = BigWigs:NewBossLocale("Majordomo Staghelm", "ptBR")
 if L then
 	L.seed_explosion = "Você explodirá em instantes!"
-	L.seed_bar = "Você explodiu!"
+	L.seed_bar = "Você explode!"
 	L.adrenaline_message = "Adrenalina x%d!"
 	L.leap_say = "Salto em MIM!"
 end

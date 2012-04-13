@@ -12,7 +12,7 @@ if L then
 	L.destruction_bar = "<Explosão>"
 	L.eyes_bar = "~Olhos"
 
-	L.fire_message = "Laser, Piu Piu"
+	L.fire_message = "Laser, Pew Pew"
 	L.fire_bar = "~Laser"
 end
 
