@@ -24,6 +24,12 @@
 
 <Include file="DragonSoul\locales.xml"/>
 <Include file="DragonSoul\modules.xml"/>
+
+<Include file="Mogushan\locales.xml"/>
+<Include file="Mogushan\modules.xml"/>
+
+<Include file="HeartOfFear\locales.xml"/>
+<Include file="HeartOfFear\modules.xml"/>
 <!--@end-debug@-->
 </Ui>
 
