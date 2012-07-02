@@ -97,6 +97,10 @@ local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the cor
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 
+-- XXX MOP
+local GetNumSubgroupMembers = GetNumSubgroupMembers or GetRealNumPartyMembers
+local GetNumGroupMembers = GetNumGroupMembers or GetRealNumRaidMembers
+
 -----------------------------------------------------------------------
 -- Utility
 --
@@ -135,8 +139,8 @@ local getGroupMembers = nil
 do
 	local members = {}
 	function getGroupMembers()
-		local raid = GetRealNumRaidMembers()
-		local party = GetRealNumPartyMembers()
+		local raid = GetNumGroupMembers()
+		local party = GetNumSubgroupMembers()
 		if raid == 0 and party == 0 then return end
 		wipe(members)
 		if raid > 0 then
@@ -464,8 +468,8 @@ function loader:ZoneChanged()
 end
 
 function loader:CheckRoster()
-	local raid = GetRealNumRaidMembers()
-	local party = GetRealNumPartyMembers()
+	local raid = GetNumGroupMembers()
+	local party = GetNumSubgroupMembers()
 	if not grouped and raid > 0 then
 		grouped = BWRAID
 		self:SendMessage("BigWigs_JoinedGroup", grouped)
