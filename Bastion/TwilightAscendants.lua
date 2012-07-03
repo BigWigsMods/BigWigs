@@ -12,8 +12,8 @@ mod:RegisterEnableMob(43686, 43687, 43688, 43689, 43735) --Ignacious, Feludius, 
 
 local lrTargets, gcTargets = mod:NewTargetList(), mod:NewTargetList()
 local glaciate = GetSpellInfo(82746)
-local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(92541)
-local gravityCrush = GetSpellInfo(92488)
+local quake, thundershock, hardenSkin = GetSpellInfo(83565), GetSpellInfo(83067), GetSpellInfo(83718)
+local gravityCrush = GetSpellInfo(84948)
 local crushMarked = false
 local timeLeft = 8
 local first = nil
@@ -60,9 +60,9 @@ function mod:GetOptions()
 		-- Arion
 		83067, {83099, "SAY", "FLASHSHAKE"},
 		-- Terrastra
-		83565, 92541,
+		83565, 83718,
 		-- Monstrosity
-		{92488, "ICON"},
+		{84948, "ICON"},
 		-- Heroic
 		{92067, "FLASHSHAKE", "SAY", "ICON"},
 		{92075, "FLASHSHAKE", "SAY", "ICON"},
@@ -74,7 +74,7 @@ function mod:GetOptions()
 		[82746] = "ej:3110", -- Feludius
 		[83067] = "ej:3123", -- Arion
 		[83565] = "ej:3125", -- Terrastra
-		[92488] = "ej:3145", --Elementium Monstrosity
+		[84948] = "ej:3145", -- Elementium Monstrosity
 		[92067] = "heroic",
 		proximity = "general",
 	}
@@ -96,7 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FlameShield", 82631, 92513, 92512, 92514)
 	self:Log("SPELL_AURA_REMOVED", "FlameShieldRemoved", 82631, 92513, 92512, 92514)
 
-	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543)
+	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543, 83718)
 	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
@@ -158,7 +158,7 @@ end
 do
 	local scheduled = nil
 	local function gcWarn(spellName)
-		mod:TargetMessage(92488, spellName, gcTargets, "Important", 92488, "Alert")
+		mod:TargetMessage(84948, spellName, gcTargets, "Important", 84948, "Alert")
 		scheduled = nil
 	end
 	local function marked()
@@ -167,7 +167,7 @@ do
 	function mod:GravityCrush(player, spellId, _, _, spellName)
 		gcTargets[#gcTargets + 1] = player
 		if not crushMarked  then
-			self:PrimaryIcon(92488, player)
+			self:PrimaryIcon(84948, player)
 			crushMarked = true
 			self:ScheduleTimer(marked, 5)
 		end
@@ -175,7 +175,7 @@ do
 			scheduled = true
 			self:ScheduleTimer(gcWarn, 0.2, spellName)
 		end
-		self:Bar(92488, spellName, 25, spellId)
+		self:Bar(84948, spellName, 25, spellId)
 	end
 end
 
@@ -251,8 +251,8 @@ function mod:FlameShieldRemoved(_, spellId)
 end
 
 function mod:HardenSkinStart(_, spellId, _, _, spellName)
-	self:Bar(92541, spellName, 44, spellId)
-	self:Message(92541, spellName, "Urgent", spellId, "Info")
+	self:Bar(83718, spellName, 44, spellId)
+	self:Message(83718, spellName, "Urgent", spellId, "Info")
 end
 
 function mod:Glaciate(_, spellId, _, _, spellName)
@@ -285,7 +285,7 @@ function mod:Switch()
 	self:SendMessage("BigWigs_StopBar", self, glaciate)
 	self:Bar(83565, quake, 33, 83565)
 	self:Bar(83067, thundershock, 70, 83067)
-	self:Bar(92541, hardenSkin, 25.5, 92541)
+	self:Bar(83718, hardenSkin, 25.5, 83718)
 	self:CancelAllTimers()
 	-- XXX this needs to be delayed
 end
@@ -349,7 +349,7 @@ function mod:LastPhase()
 	self:SendMessage("BigWigs_StopBar", self, thundershock)
 	self:SendMessage("BigWigs_StopBar", self, hardenSkin)
 	self:CancelAllTimers()
-	self:Bar(92488, gravityCrush, 43, 92488)
+	self:Bar(84948, gravityCrush, 43, 84948)
 	self:OpenProximity(9)
 	self:UnregisterEvent("UNIT_HEALTH")
 end

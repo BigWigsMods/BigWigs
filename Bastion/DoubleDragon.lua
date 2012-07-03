@@ -48,7 +48,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{86788, "ICON", "FLASHSHAKE", "WHISPER"}, {88518, "FLASHSHAKE"}, 86059, 86840,
-		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 92898, 93051,
+		{86622, "FLASHSHAKE", "SAY", "WHISPER"}, 86408, 86369, 93051,
 		"proximity", "phase_switch", "berserk", "bosskill"
 	}, {
 		[86788] = valiona,
@@ -102,7 +102,7 @@ do
 		local bossId = UnitGUID("boss2") == sGUID and "boss2target" or "boss1target"
 		if not UnitName(bossId) then return end --The first is sometimes delayed longer than 0.3
 		if UnitIsUnit(bossId, "player") then
-			mod:LocalMessage(92898, CL["you"]:format(L["blast_message"]), "Personal", 92898, "Long")
+			mod:LocalMessage(86369, CL["you"]:format(L["blast_message"]), "Personal", 86369, "Long")
 		end
 	end
 	function mod:TwilightBlast(...)

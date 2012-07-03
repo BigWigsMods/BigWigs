@@ -32,7 +32,7 @@ L = mod:GetLocale()
 -- Locals
 --
 
-local breath, slicer = (GetSpellInfo(92944)), (GetSpellInfo(92954))
+local breath, slicer = (GetSpellInfo(90125)), (GetSpellInfo(92852))
 local roleCheckWarned = nil
 local eggs = 0
 local orbList = {}
@@ -108,23 +108,23 @@ local function colorize(tbl)
 end
 
 local function orbWarning(source)
-	if playerInList then mod:FlashShake(92954) end
+	if playerInList then mod:FlashShake(92852) end
 
 	-- this is why orbList can't be created by :NewTargetList
-	if orbList[1] then mod:PrimaryIcon(92954, orbList[1]) end
-	if orbList[2] then mod:SecondaryIcon(92954, orbList[2]) end
+	if orbList[1] then mod:PrimaryIcon(92852, orbList[1]) end
+	if orbList[2] then mod:SecondaryIcon(92852, orbList[2]) end
 
 	if source == "spawn" then
 		if #orbList > 0 then
-			mod:TargetMessage(92954, L["slicer_message"], colorize(orbList), "Personal", 92954, "Alarm")
+			mod:TargetMessage(92852, L["slicer_message"], colorize(orbList), "Personal", 92852, "Alarm")
 			-- if we could guess orb targets lets wipe the whelpGUIDs in 5 sec
 			-- if not then we might as well just save them for next time
 			mod:ScheduleTimer(wipeWhelpList, 5) -- might need to adjust this
 		else
-			mod:Message(92954, slicer, "Personal", 92954)
+			mod:Message(92852, slicer, "Personal", 92852)
 		end
 	elseif source == "damage" then
-		mod:TargetMessage(92954, L["slicer_message"], colorize(orbList), "Personal", 92954, "Alarm")
+		mod:TargetMessage(92852, L["slicer_message"], colorize(orbList), "Personal", 92852, "Alarm")
 		mod:ScheduleTimer(wipeWhelpList, 10, true) -- might need to adjust this
 	end
 end
@@ -132,7 +132,7 @@ end
 -- this gets run every 30 sec
 -- need to change it once there is a proper trigger for orbs
 local function nextOrbSpawned()
-	mod:Bar(92954, "~"..slicer, 28, 92954)
+	mod:Bar(92852, "~"..slicer, 28, 92852)
 	populateOrbList()
 	orbWarning("spawn")
 	mod:ScheduleTimer(nextOrbSpawned, 28)
@@ -145,20 +145,20 @@ end
 function mod:GetOptions(CL)
 	return {
 	-- Phase 1 and 3
-		92944, -- Breath
-		{92954, "FLASHSHAKE", "ICON"}, -- Twilight Slicer
+		90125, -- Breath
+		{92852, "FLASHSHAKE", "ICON"}, -- Twilight Slicer
 		86227, -- Extinction
 		"whelps",
 
 	-- Phase 2
 		87654, -- Omelet Time
-		{92946, "FLASHSHAKE"}, -- Indomitable
+		{90045, "FLASHSHAKE"}, -- Indomitable
 
 	-- General
 		"phase",
 		"bosskill",
 	}, {
-		[92944] = L["phase13"],
+		[90125] = L["phase13"],
 		[87654] = CL["phase"]:format(2),
 		phase = "general",
 	}
@@ -189,8 +189,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(92944, "~"..breath, 24, 92944)
-	self:Bar(92954, "~"..slicer, 29, 92954)
+	self:Bar(90125, "~"..breath, 24, 90125)
+	self:Bar(92852, "~"..slicer, 29, 92852)
 	self:Bar("whelps", L["whelps"], 16, 69005) -- whelp like icon
 	self:ScheduleTimer(nextOrbSpawned, 29)
 	eggs = 0
@@ -257,11 +257,11 @@ function mod:EggTrigger()
 end
 
 function mod:Indomitable(player, spellId, _, _, spellName)
-	self:Message(92946, spellName, "Urgent", spellId)
+	self:Message(90045, spellName, "Urgent", spellId)
 	local _, class = UnitClass("player")
 	if class == "HUNTER" or class == "ROGUE" then
-		self:PlaySound(92946, "Info")
-		self:FlashShake(92946)
+		self:PlaySound(90045, "Info")
+		self:FlashShake(90045)
 	end
 end
 
@@ -278,8 +278,8 @@ function mod:UNIT_HEALTH_FREQUENT(_, unit)
 end
 
 function mod:Breath(_, spellId, _, _, spellName)
-	self:Bar(92944, "~"..spellName, 24, spellId)
-	self:Message(92944, spellName, "Urgent", spellId)
+	self:Bar(90125, "~"..spellName, 24, spellId)
+	self:Message(90125, spellName, "Urgent", spellId)
 end
 
 function mod:Deaths(mobId)
@@ -288,8 +288,8 @@ function mod:Deaths(mobId)
 		if eggs == 2 then
 			self:Message("phase", CL["phase"]:format(3), "Positive", 51070, "Info") -- broken egg icon
 			self:Bar("whelps", L["whelps"], 50, 69005)
-			self:Bar(92954, "~"..slicer, 30, 92954)
-			self:Bar(92944, "~"..breath, 24, 92944)
+			self:Bar(92852, "~"..slicer, 30, 92852)
+			self:Bar(90125, "~"..breath, 24, 90125)
 			self:ScheduleTimer(nextOrbSpawned, 30)
 		end
 	elseif mobId == 45213 then

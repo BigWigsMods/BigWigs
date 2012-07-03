@@ -25,7 +25,7 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:GetOptions() return {83908, 83603, 83707, 86169, "berserk", "bosskill"} end
+function mod:GetOptions() return {83908, 83603, 83707, 83710, "berserk", "bosskill"} end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170, 86171, 83710)
@@ -50,8 +50,8 @@ end
 --
 
 function mod:FuriousRoar(_, spellId, _, _, spellName)
-	self:Message(86169, spellName, "Important", spellId)
-	self:Bar(86169, spellName, 25, spellId)
+	self:Message(83710, spellName, "Important", spellId)
+	self:Bar(83710, spellName, 25, spellId)
 end
 
 -- Slate Dragon: Stone Touch (83603), 35 sec internal cd, resulting in Paralysis, 12 sec stun

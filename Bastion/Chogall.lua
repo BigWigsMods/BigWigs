@@ -14,7 +14,7 @@ local worshipTargets = mod:NewTargetList()
 local worshipCooldown = 24
 local firstFury = 0
 local counter = 1
-local corruptingCrash = GetSpellInfo(93180)
+local corruptingCrash = GetSpellInfo(81685)
 local bigcount = 1
 local oozecount = 1
 
@@ -58,7 +58,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions(CL)
 	return {
-		91303, {81538, "FLASHSHAKE"}, {93180, "FLASHSHAKE", "ICON", "SAY"}, 93223, 82524, 81628, 82299,
+		91303, {81538, "FLASHSHAKE"}, {81685, "FLASHSHAKE", "ICON", "SAY"}, 81571, 82524, 81628, 82299,
 		82630, 82414,
 		"orders", {82235, "FLASHSHAKE", "PROXIMITY"}, "berserk", "bosskill"
 	}, {
@@ -124,14 +124,14 @@ do
 			local player = UnitName(mobId.."target")
 			if not player then return end
 			if UnitIsUnit("player", player) then
-				mod:Say(93180, L["crash_say"])
-				mod:FlashShake(93180)
+				mod:Say(81685, L["crash_say"])
+				mod:FlashShake(81685)
 			end
-			mod:TargetMessage(93180, corruptingCrash, player, "Urgent", 93180, "Long")
+			mod:TargetMessage(81685, corruptingCrash, player, "Urgent", 81685, "Long")
 			if counter == 1 then
-				mod:PrimaryIcon(93180, player)
+				mod:PrimaryIcon(81685, player)
 			else
-				mod:SecondaryIcon(93180, player)
+				mod:SecondaryIcon(81685, player)
 			end
 			if mod:Difficulty() == 4 then counter = counter + 1 end
 		end
@@ -177,9 +177,9 @@ function mod:Orders(_, spellId, _, _, spellName)
 	self:Message("orders", spellName, "Urgent", spellId)
 	if spellId == 81556 then
 		if self:Difficulty() > 2 then
-			self:Bar(93223, L["unleashed_shadows"], 24, 93223) -- verified for 25man heroic
+			self:Bar(81571, L["unleashed_shadows"], 24, 81571) -- verified for 25man heroic
 		else
-			self:Bar(93223, L["unleashed_shadows"], 15, 93223) -- verified for 10man normal
+			self:Bar(81571, L["unleashed_shadows"], 15, 81571) -- verified for 10man normal
 		end
 	end
 end
