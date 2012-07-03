@@ -224,6 +224,7 @@ end
 
 local function loadAndEnableCore()
 	load(BigWigs, "BigWigs_Core")
+	load(IsAddOnLoaded("BigWigs_Plugins"), "BigWigs_Plugins") --XXX MoP TEMP
 	if not BigWigs then return end
 	BigWigs:Enable()
 end
