@@ -49,15 +49,15 @@ function mod:GetOptions(CL)
 		87770,
 		87904,
 		"stormling",
-		93279,
-		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 93286, "proximity",
-		93257,
+		88301,
+		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 87770, "proximity",
+		95764, --XXX this is probably the WRONG id, need a log to find the right MoP new one
 		88427, "phase", "berserk", "bosskill"
 	}, {
 		[87770] = CL["phase"]:format(1),
 		[87904] = CL["phase"]:format(2),
 		[89668] = CL["phase"]:format(3),
-		[93257] = "heroic",
+		[95764] = "heroic",
 		[88427] = "general",
 	}
 end
@@ -99,7 +99,7 @@ end
 do
 	local function Shocker(spellName)
 		if phase == 1 then
-			mod:Bar(93257, spellName, 10, 93257)
+			mod:Bar(95764, spellName, 10, 95764)
 			mod:ScheduleTimer(Shocker, 10, spellName)
 		end
 	end
@@ -149,8 +149,8 @@ end
 
 function mod:Phase3()
 	if phase >= 3 then return end
-	self:Message("phase", CL["phase"]:format(3), "Positive", 93279)
-	self:Bar(93286, windburst, 24, 93286)
+	self:Message("phase", CL["phase"]:format(3), "Positive", 88301)
+	self:Bar(87770, windburst, 24, 87770)
 	self:Bar(89588, cloud, 16, 89588)
 	self:ScheduleTimer(CloudSpawn, 16)
 	self:SendMessage("BigWigs_StopBar", self, L["stormling_bar"])
@@ -177,8 +177,8 @@ do
 		if acidRainCounted then return end
 		acidRainCounter, acidRainCounted = acidRainCounter + 1, true
 		self:ScheduleTimer(clearCount, 12) -- 15 - 3
-		self:Bar(93279, L["acid_rain"]:format(acidRainCounter), 15, spellId) -- do we really want counter on bar too?
-		self:Message(93279, L["acid_rain"]:format(acidRainCounter), "Attention", spellId)
+		self:Bar(88301, L["acid_rain"]:format(acidRainCounter), 15, spellId) -- do we really want counter on bar too?
+		self:Message(88301, L["acid_rain"]:format(acidRainCounter), "Attention", spellId)
 	end
 end
 
@@ -193,8 +193,8 @@ end
 
 function mod:WindBurst3(_, spellId, _, _, spellName)
 	if (GetTime() - lastWindburst) > 5 then
-		self:Bar(93286, spellName, 19, spellId) -- 22 was too long, 19 should work
-		self:Message(93286, spellName, "Attention", spellId)
+		self:Bar(87770, spellName, 19, spellId) -- 22 was too long, 19 should work
+		self:Message(87770, spellName, "Attention", spellId)
 	end
 	lastWindburst = GetTime()
 end
