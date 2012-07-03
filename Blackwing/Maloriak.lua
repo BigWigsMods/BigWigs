@@ -62,7 +62,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		{77699, "ICON"}, {77760, "FLASHSHAKE", "WHISPER", "SAY"}, "proximity",
-		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 92968,
+		{77786, "FLASHSHAKE", "WHISPER", "ICON"}, 77679,
 		77991, 78194,
 		{"sludge", "FLASHSHAKE"},
 		"phase", 77912, 77569, 77896, "berserk", "bosskill"
@@ -159,7 +159,7 @@ function mod:Red()
 	if currentPhase == "red" then return end
 	currentPhase = "red"
 	self:SendMessage("BigWigs_StopBar", self, flashFreeze)
-	self:Bar(92968, scorchingBlast, 25, 92968)
+	self:Bar(77679, scorchingBlast, 25, 77679)
 	self:Message("phase", L["red_phase"], "Positive", "Interface\\Icons\\INV_POTION_24", "Long")
 	if not isChilled then
 		self:CloseProximity()
@@ -250,8 +250,8 @@ function mod:ConsumingFlames(player, spellId, _, _, spellName)
 end
 
 function mod:ScorchingBlast(_, spellId, _, _, spellName)
-	self:Message(92968, spellName, "Attention", spellId)
-	self:Bar(92968, scorchingBlast, 10, 92968)
+	self:Message(77679, spellName, "Attention", spellId)
+	self:Bar(77679, scorchingBlast, 10, 77679)
 end
 
 function mod:ReleaseAll(_, spellId)

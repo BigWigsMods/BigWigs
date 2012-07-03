@@ -44,8 +44,8 @@ function mod:GetOptions()
 	return {
 		{79501, "ICON", "FLASHSHAKE"},
 		{79888, "ICON", "FLASHSHAKE", "PROXIMITY"},
-		{80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 91513, {80094, "FLASHSHAKE", "WHISPER"},
-		"nef", 91849, 91880, {92048, "ICON"}, 92023, {"switch", "ICON"},
+		{80161, "FLASHSHAKE"}, {80157, "FLASHSHAKE", "SAY"}, 80053, {80094, "FLASHSHAKE", "WHISPER"},
+		"nef", 91849, 91879, {92048, "ICON"}, 92023, {"switch", "ICON"},
 		"berserk", "bosskill"
 	}, {
 		[79501] = "ej:3207", -- Electron
@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Grip", 91849)
 	self:Log("SPELL_CAST_SUCCESS", "PoolExplosion", 91857)
 
-	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 91499, 91514, 91515)
+	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 80053, 91514, 91515)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094)
 
 	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479, 91473, 91471) --91471 for 25norm, not sure about the rest, obviously 1 is wrong
@@ -106,9 +106,9 @@ do
 end
 
 function mod:PoolExplosion()
-	self:Message(91880, L["pool"], "Urgent", 91880)
+	self:Message(91879, L["pool"], "Urgent", 91879)
 	self:Bar("nef", L["nef_next"], 35, 69005)
-	self:Bar(91880, L["pool"], 8, 91880)
+	self:Bar(91879, L["pool"], 8, 91879)
 end
 
 do
@@ -183,8 +183,8 @@ function mod:LightningConductorRemoved(player)
 end
 
 function mod:PoisonProtocol(_, spellId, _, _, spellName)
-	self:Bar(91513, spellName, 45, spellId)
-	self:Message(91513, L["protocol_message"], "Important", spellId, "Alert")
+	self:Bar(80053, spellName, 45, spellId)
+	self:Message(80053, L["protocol_message"], "Important", spellId, "Alert")
 end
 
 do

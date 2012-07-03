@@ -13,7 +13,7 @@ mod:RegisterEnableMob(41270, 41376)
 local phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 local cinderTargets = mod:NewTargetList()
 local powerTargets = mod:NewTargetList()
-local shadowblaze = GetSpellInfo(94085)
+local shadowblaze = GetSpellInfo(81007)
 local phase3warned = false
 local shadowblazeHandle, lastBlaze = nil, 0
 
@@ -50,11 +50,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		94115, 78999, 81272, {94085, "FLASHSHAKE"},
+		77939, 78999, 81272, {81007, "FLASHSHAKE"},
 		{79339, "FLASHSHAKE", "SAY", "PROXIMITY"}, "berserk",
 		"phase", "bosskill"
 	}, {
-		[94115] = "ej:3283", -- Onyxia
+		[77939] = "ej:3283", -- Onyxia
 		[78999] = "normal",
 		[79339] = "heroic",
 		phase = "general"
@@ -83,7 +83,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Berserk(630) -- is it really?
-	self:Bar(94115, L["discharge_bar"], 30, 94115)
+	self:Bar(77939, L["discharge_bar"], 30, 77939)
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
 	phase3warned = false
 	self:RegisterEvent("UNIT_POWER")
@@ -96,13 +96,13 @@ end
 
 do
 	local prev = 0
-	local discharge = GetSpellInfo(94115)
+	local discharge = GetSpellInfo(77939)
 	function mod:LightningDischarge(_, spellId, _, _, spellName)
 		if spellName ~= discharge then return end
 		local t = GetTime()
 		if (t - prev) > 10 then
 			prev = t
-			self:Bar(94115, L["discharge_bar"], 21, spellId)
+			self:Bar(77939, L["discharge_bar"], 21, spellId)
 		end
 	end
 end
@@ -113,8 +113,8 @@ do
 		local t = GetTime()
 		if (t - prev) > 1 and UnitIsUnit(player, "player") then
 			prev = t
-			self:LocalMessage(94085, L["shadowblaze_message"], "Personal", spellId, "Info")
-			self:FlashShake(94085)
+			self:LocalMessage(81007, L["shadowblaze_message"], "Personal", spellId, "Info")
+			self:FlashShake(81007)
 		end
 	end
 end
@@ -166,8 +166,8 @@ local function nextBlaze()
 	elseif shadowBlazeTimer > 15 and diff < 3 then
 		shadowBlazeTimer = shadowBlazeTimer - 5
 	end
-	mod:Message(94085, shadowblaze, "Important", 94085, "Alarm")
-	mod:Bar(94085, shadowblaze, shadowBlazeTimer, 94085)
+	mod:Message(81007, shadowblaze, "Important", 81007, "Alarm")
+	mod:Bar(81007, shadowblaze, shadowBlazeTimer, 81007)
 	lastBlaze = GetTime()
 	shadowblazeHandle = mod:ScheduleTimer(nextBlaze, shadowBlazeTimer)
 end
@@ -189,7 +189,7 @@ function mod:PhaseThree()
 		self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
 		phase3warned = true
 	end
-	self:Bar(94085, shadowblaze, 12, 94085)
+	self:Bar(81007, shadowblaze, 12, 81007)
 	shadowblazeHandle = self:ScheduleTimer(nextBlaze, 12)
 end
 

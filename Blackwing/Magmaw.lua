@@ -53,7 +53,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"slump", 79011, 89773, 78006, {94679, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 91931,
+		"slump", 79011, 89773, 78006, {78941, "FLASHSHAKE", "WHISPER", "PROXIMITY"}, 77690,
 		"blazing", "armageddon", {"phase2", "PROXIMITY"},
 		"berserk", "bosskill"
 	}, {
@@ -91,9 +91,9 @@ function mod:OnEngage(diff)
 	self:Berserk(600)
 	self:Bar("slump", L["slump_bar"], 100, 36702)
 	self:Bar(78006, GetSpellInfo(78006), 30, 78006) --Pillar of Flame
-	self:Bar(91931, lavaSpew, 24, 91931)
+	self:Bar(77690, lavaSpew, 24, 77690)
 	self:Bar(89773, "~"..GetSpellInfo(89773), 90, 89773)
-	self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
+	self:DelayedMessage(77690, 24, L["spew_warning"], "Attention")
 	phase = 1
 	isHeadPhase = nil
 end
@@ -112,7 +112,7 @@ do
 	local function rebootTimers()
 		isHeadPhase = nil
 		mod:Bar(78006, pillarOfFlame, 9.5, 78006)
-		mod:Bar(91931, lavaSpew, 4.5, 91931)
+		mod:Bar(77690, lavaSpew, 4.5, 77690)
 	end
 	function mod:Vulnerability()
 		isHeadPhase = true
@@ -131,9 +131,9 @@ do
 		local time = GetTime()
 		if time - prev > 10 then
 			prev = time
-			self:Message(91931, spellName, "Important", spellId)
-			self:Bar(91931, lavaSpew, 26, spellId)
-			self:DelayedMessage(91931, 24, L["spew_warning"], "Attention")
+			self:Message(77690, spellName, "Important", spellId)
+			self:Bar(77690, lavaSpew, 26, spellId)
+			self:DelayedMessage(77690, 24, L["spew_warning"], "Attention")
 		end
 	end
 end
@@ -157,17 +157,17 @@ end
 
 function mod:Infection(player, spellId, _, _, spellName)
 	if UnitIsUnit(player, "player") then
-		self:LocalMessage(94679, L["infection_message"], "Personal", spellId, "Alarm")
-		self:FlashShake(94679)
-		self:OpenProximity(8, 94679)
+		self:LocalMessage(78941, L["infection_message"], "Personal", spellId, "Alarm")
+		self:FlashShake(78941)
+		self:OpenProximity(8, 78941)
 	else
-		self:Whisper(94679, player, L["infection_message"], true)
+		self:Whisper(78941, player, L["infection_message"], true)
 	end
 end
 
 function mod:InfectionRemoved(player)
 	if phase == 1 and UnitIsUnit(player, "player") then
-		self:CloseProximity(94679)
+		self:CloseProximity(78941)
 	end
 end
 

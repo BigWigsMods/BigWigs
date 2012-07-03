@@ -36,12 +36,12 @@ function mod:GetOptions()
 	return {
 		"ground_phase", 78075, 77840,
 		"air_phase",
-		{92702, "ICON", "SAY"},
+		{92677, "ICON", "SAY"},
 		{78092, "FLASHSHAKE", "ICON", "SAY"}, "berserk", "bosskill"
 	}, {
 		ground_phase = L["ground_phase"],
 		air_phase = L["air_phase"],
-		[92702] = "heroic",
+		[92677] = "heroic",
 		[78092] = "general"
 	}
 end
@@ -80,7 +80,7 @@ do
 		if not fiend then
 			mod:ScheduleTimer(FiendCheck, 0.1, dGUID)
 		else
-			mod:SecondaryIcon(92702, fiend)
+			mod:SecondaryIcon(92677, fiend)
 		end
 	end
 	function mod:ObnoxiousPhaseShift(...)
@@ -93,7 +93,7 @@ end
 
 do
 	local pestered = GetSpellInfo(92685)
-	local obnoxious = GetSpellInfo(92702)
+	local obnoxious = GetSpellInfo(92677)
 	function mod:UNIT_AURA(_, unit)
 		if UnitDebuff(unit, pestered) then
 			if unit == "player" then
