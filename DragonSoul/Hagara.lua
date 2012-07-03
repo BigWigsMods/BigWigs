@@ -42,12 +42,12 @@ L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
 
 function mod:GetOptions()
 	return {
-		{104448, "FLASHSHAKE"}, 109553, {105316, "PROXIMITY"}, {109325, "ICON", "FLASHSHAKE", "PROXIMITY", "SAY"},
-		109561,
+		{104448, "FLASHSHAKE"}, 105256, {105316, "PROXIMITY"}, {109325, "ICON", "FLASHSHAKE", "PROXIMITY", "SAY"},
+		105409,
 		"assault", 108934, "nextphase", "berserk", "bosskill",
 	}, {
 		[104448] = L["ice_next"],
-		[109561] = L["lightning_next"],
+		[105409] = L["lightning_next"],
 		assault = "general",
 	}
 end
@@ -107,16 +107,16 @@ end
 
 function mod:WaterShield(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(107851))) -- Focused Assault
-	self:Message(109561, L["lightning_next"], "Attention", spellId)
+	self:Message(105409, L["lightning_next"], "Attention", spellId)
 	nextPhase = L["ice_next"]
 	nextPhaseIcon = 105409
 end
 
 function mod:FrozenTempest(_, spellId)
 	self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(107851))) -- Focused Assault
-	self:Message(109553, L["ice_next"], "Attention", spellId)
+	self:Message(105256, L["ice_next"], "Attention", spellId)
 	nextPhase = L["lightning_next"]
-	nextPhaseIcon = 109561
+	nextPhaseIcon = 105409
 end
 
 function mod:Feedback(_, spellId, _, _, spellName)

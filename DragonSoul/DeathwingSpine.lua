@@ -12,7 +12,7 @@ mod:RegisterEnableMob(53879, 56575, 56341, 53891, 56161, 56162)
 --
 
 local gripTargets = mod:NewTargetList()
-local fieryGrip = GetSpellInfo(109457)
+local fieryGrip = GetSpellInfo(105490)
 local bloodCount = 0
 
 -- Locals for Fiery Grip, described in comments below
@@ -50,7 +50,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		105248, "residue", 109457, {105845, "FLASHSHAKE"}, {"roll", "FLASHSHAKE"},
+		105248, "residue", 105490, {105845, "FLASHSHAKE"}, {"roll", "FLASHSHAKE"},
 		105848, "bosskill",
 	}
 end
@@ -88,10 +88,10 @@ function mod:OnEngage()
 		-- Initial bars for grip since we cannot trigger off of it (pad by -5s)
 		if self:Difficulty() % 2 == 0 then
 			-- 25 man has 2 casts of 8s
-			self:Bar(109457, "~"..fieryGrip, 11, 109457)
+			self:Bar(105490, "~"..fieryGrip, 11, 105490)
 		else
 			-- 10 man has 4 casts of 8s
-			self:Bar(109457, "~"..fieryGrip, 27, 109457)
+			self:Bar(105490, "~"..fieryGrip, 27, 105490)
 		end
 	end
 end
@@ -201,7 +201,7 @@ function mod:SearingPlasmaCast(_, spellId, _, _, spellName, _, _, _, _, _, sGUID
 	if not lastBar or (lastBar == sGUID and math.abs(nextGrip - nextGripNew) > 0.5) then
 		lastBar = sGUID
 		nextGrip = nextGripNew
-		self:Bar(109457, fieryGrip, gripTime, 109457)
+		self:Bar(105490, fieryGrip, gripTime, 105490)
 	end
 end
 
@@ -292,7 +292,7 @@ end
 do
 	local scheduled = nil
 	local function grip(spellName)
-		mod:TargetMessage(109457, spellName, gripTargets, "Urgent", 109457)
+		mod:TargetMessage(105490, spellName, gripTargets, "Urgent", 105490)
 		scheduled = nil
 	end
 	function mod:FieryGripApplied(player, spellId, _, _, spellName)

@@ -18,12 +18,12 @@ if L then
 	L.engage_trigger = "You seek to halt an avalanche. I will bury you."
 
 	L.stomp_boss, L.stomp_boss_desc = EJ_GetSectionInfo(3879)
-	L.stomp_boss_icon = 108571
+	L.stomp_boss_icon = 103414
 	L.crystal_boss, L.crystal_boss_desc = EJ_GetSectionInfo(3876)
 	L.crystal_boss_icon = 103640
 
 	L.stomp_add, L.stomp_add_desc =  EJ_GetSectionInfo(3879)
-	L.stomp_add_icon = 108571
+	L.stomp_add_icon = 103414
 	L.crystal_add, L.crystal_add_desc = EJ_GetSectionInfo(3876)
 	L.crystal_add_icon = 103640
 

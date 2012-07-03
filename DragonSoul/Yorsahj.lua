@@ -14,9 +14,9 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = GetSpellInfo(108383)
+	L.bolt = GetSpellInfo(105416)
 	L.bolt_desc = "Tank alert only. Count the stacks of void bolt and show a duration bar."
-	L.bolt_icon = 108383
+	L.bolt_icon = 105416
 	L.bolt_message = "%2$dx Bolt on %1$s"
 
 	L.blue = "|cFF0080FFBlue|r"

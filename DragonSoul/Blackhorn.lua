@@ -45,11 +45,11 @@ L.sunder = L.sunder.." "..INLINE_TANK_ICON
 
 function mod:GetOptions(CL)
 	return {
-		108862, "sapper",
-		"sunder", {108046, "SAY", "FLASHSHAKE"}, {108076, "SAY", "FLASHSHAKE", "ICON"}, 109228,
+		107588, "sapper",
+		"sunder", {108046, "SAY", "FLASHSHAKE"}, {108076, "SAY", "FLASHSHAKE", "ICON"}, 108044,
 		"warmup", "berserk", "bosskill",
 	}, {
-		[108862] = "ej:4027",
+		[107588] = "ej:4027",
 		sunder = "ej:4033",
 		warmup = CL["general"],
 	}
@@ -75,7 +75,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(108862, (GetSpellInfo(108862)), 47, 108862) -- Twilight Onslaught
+	self:Bar(107588, (GetSpellInfo(107588)), 47, 107588) -- Twilight Onslaught
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])
 	end
@@ -108,7 +108,7 @@ do
 		end
 	end
 	function mod:Stage2()
-		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(108862))) -- Twilight Onslaught
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(107588))) -- Twilight Onslaught
 		self:SendMessage("BigWigs_StopBar", self, L["sapper"])
 		self:Bar(108046, "~"..GetSpellInfo(108046), 14, 108046) -- Shockwave
 		self:Message("warmup", CL["phase"]:format(2) .. ": " .. self.displayName, "Positive", L["warmup_icon"])
@@ -140,10 +140,10 @@ do
 end
 
 function mod:TwilightOnslaught(_, spellId, _, _, spellName)
-	self:Message(108862, spellName, "Urgent", spellId, "Alarm")
+	self:Message(107588, spellName, "Urgent", spellId, "Alarm")
 	onslaughtCounter = onslaughtCounter + 1
 	if warned then return end
-	self:Bar(108862, ("%s (%d)"):format(spellName, onslaughtCounter), 35, spellId)
+	self:Bar(107588, ("%s (%d)"):format(spellName, onslaughtCounter), 35, spellId)
 end
 
 do
@@ -189,7 +189,7 @@ function mod:Sunder(player, spellId, _, _, spellName, buffStack)
 end
 
 function mod:Roar(_, spellId, _, _, spellName)
-	self:Bar(109228, "~"..spellName, 20, spellId) -- 20-23
-	self:Message(109228, spellName, "Positive", spellId, "Alert")
+	self:Bar(108044, "~"..spellName, 20, spellId) -- 20-23
+	self:Message(108044, spellName, "Positive", spellId, "Alert")
 end
 

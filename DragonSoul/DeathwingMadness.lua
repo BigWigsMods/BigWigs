@@ -8,7 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(56103, 56173, 56167, 56846, 56168, 56471)
 
 local hemorrhage = GetSpellInfo(105863)
-local cataclysm = GetSpellInfo(110044)
+local cataclysm = GetSpellInfo(106523)
 local impale = GetSpellInfo(106400)
 local canEnable = true
 local curPercent = 100
@@ -27,7 +27,7 @@ if L then
 
 	L.last_phase = GetSpellInfo(106708)
 	L.last_phase_desc = EJ_GetSectionInfo(4046)
-	L.last_phase_icon = 109592
+	L.last_phase_icon = 106834
 
 	L.bigtentacle, L.bigtentacle_desc = EJ_GetSectionInfo(4112)
 	L.bigtentacle_icon = 105563
@@ -35,7 +35,7 @@ if L then
 	L.smalltentacles = EJ_GetSectionInfo(4103)
 	-- Copy & Paste from Encounter Journal with correct health percentages (type '/dump EJ_GetSectionInfo(4103)' in the game)
 	L.smalltentacles_desc = "At 70% and 40% remaining health the Limb Tentacle sprouts several Blistering Tentacles that are immune to Area of Effect abilities."
-	L.smalltentacles_icon = 109588
+	L.smalltentacles_icon = 105444
 
 	L.hemorrhage, L.hemorrhage_desc = EJ_GetSectionInfo(4108)
 	L.hemorrhage_icon = "SPELL_FIRE_MOLTENBLOOD"
@@ -58,7 +58,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 110044,
+		"bigtentacle", "impale", "smalltentacles", {105651, "FLASHSHAKE"}, "hemorrhage", 106523,
 		"last_phase", "fragment", {106794, "FLASHSHAKE"}, "terror",
 		{"ej:4347", "FLASHSHAKE", "ICON", "PROXIMITY", "SAY"}, "ej:4351",
 		"berserk", "bosskill",
@@ -156,7 +156,7 @@ function mod:AssaultAspects()
 		else
 			self:Bar("hemorrhage", hemorrhage, 85.5, 105863)
 		end
-		self:Bar(110044, cataclysm, 175, 110044)
+		self:Bar(106523, cataclysm, 175, 106523)
 		self:Bar("bigtentacle", L["bigtentacle"], 11.2, L["bigtentacle_icon"])
 		self:DelayedMessage("bigtentacle", 11.2, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
 	else
@@ -168,7 +168,7 @@ function mod:AssaultAspects()
 		else
 			self:Bar("hemorrhage", hemorrhage, 100.5, 105863)
 		end
-		self:Bar(110044, cataclysm, 190, 110044)
+		self:Bar(106523, cataclysm, 190, 106523)
 		self:Bar("bigtentacle", L["bigtentacle"], 16.7, L["bigtentacle_icon"])
 		self:DelayedMessage("bigtentacle", 16.7, L["bigtentacle"] , "Urgent", L["bigtentacle_icon"], "Alert")
 	end
@@ -181,9 +181,9 @@ function mod:ElementiumBolt(_, spellId, _, _, spellName)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
-	self:Message(110044, spellName, "Attention", spellId)
+	self:Message(106523, spellName, "Attention", spellId)
 	self:SendMessage("BigWigs_StopBar", self, spellName)
-	self:Bar(110044, CL["cast"]:format(spellName), 60, spellId)
+	self:Bar(106523, CL["cast"]:format(spellName), 60, spellId)
 end
 
 function mod:AgonizingPain()
