@@ -45,7 +45,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		98552, 98136,
-		"armor", 97282, 98255, "ej:2537", 101305, "bosskill"
+		"armor", 97282, 98255, "ej:2537", 101304, "bosskill"
 	}, {
 		[98552] = L["adds_header"],
 		["armor"] = "general"
@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Berserk(diff > 2 and 300 or 360, nil, nil, 101305)
+	self:Berserk(diff > 2 and 300 or 360, nil, nil, 101304)
 	self:Bar(97282, L["stomp"], 15, 97282)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	lastFragments = GetTime()

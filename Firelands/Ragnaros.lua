@@ -16,7 +16,7 @@ local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD, dreadflameCD = 30, 40, 40
 local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
-local dreadflame, cloudburst, worldInFlames = (GetSpellInfo(100675)), (GetSpellInfo(100714)), (GetSpellInfo(100190))
+local dreadflame, cloudburst, worldInFlames = (GetSpellInfo(100675)), (GetSpellInfo(100714)), (GetSpellInfo(100171))
 local meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
 local intermissionHandle = nil
 
@@ -54,18 +54,18 @@ L.wound = L.wound.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		98237, 100115, 98164,
+		98237, 98263, 98164,
 		98953, {100460, "ICON", "FLASHSHAKE", "SAY"},
-		98498, 100178,
+		98498, 99172,
 		99317, {99849, "FLASHSHAKE", "SAY"},
-		100190, 100479, 100646, 100714, 100997, 100675,
+		100171, 100479, 100646, 100714, 100604, 100675,
 		98710, "wound", "proximity", "berserk", "bosskill"
 	}, {
 		[98237] = "ej:2629",
 		[98953] = L["intermission_bar"],
 		[98498] = "ej:2640",
 		[99317] = "ej:2655",
-		[100190] = "heroic",
+		[100171] = "heroic",
 		[98710] = "general"
 	}
 end
@@ -136,7 +136,7 @@ function mod:Phase4()
 		self:Bar(100479, (GetSpellInfo(100479)), 34, 100479) -- Breadth of Frost
 		self:Bar(100714, cloudburst, 51, 100714) -- Cloudburst
 		self:Bar(100646, (GetSpellInfo(100646)), 68, 100646) -- Entraping Roots
-		self:Bar(100997, (GetSpellInfo(100997)), 90, 100997) -- EmpowerSulfuras
+		self:Bar(100604, (GetSpellInfo(100604)), 90, 100604) -- EmpowerSulfuras
 	else
 		self:Win()
 	end
@@ -152,9 +152,9 @@ function mod:Dreadflame()
 end
 
 function mod:EmpowerSulfuras(_, spellId, _, _, spellName)
-	self:Message(100997, spellName, "Urgent", spellId)
-	self:Bar(100997, "~"..spellName, 56, spellId)
-	self:Bar(100997, spellName, 5, spellId)
+	self:Message(100604, spellName, "Urgent", spellId)
+	self:Bar(100604, "~"..spellName, 56, spellId)
+	self:Bar(100604, spellName, 5, spellId)
 end
 
 function mod:Cloudburst(_, spellId, _, _, spellName)
@@ -220,7 +220,7 @@ function mod:IntermissionEnd()
 		if self:Difficulty() > 2 then
 			self:Bar(98498, "~"..moltenSeed, 15, 98498)
 			self:Bar(98710, lavaWaves, 7.5, 98710)
-			self:Bar(100190, worldInFlames, 40, 100190)
+			self:Bar(100171, worldInFlames, 40, 100171)
 		else
 			self:Bar(98498, moltenSeed, 22.7, 98498)
 			self:Bar(98710, lavaWaves, 55, 98710)
@@ -228,7 +228,7 @@ function mod:IntermissionEnd()
 	elseif phase == 2 then
 		engulfingCD = 30
 		if self:Difficulty() > 2 then
-			self:Bar(100190, worldInFlames, engulfingCD, 100190)
+			self:Bar(100171, worldInFlames, engulfingCD, 100171)
 		end
 		self:Bar(99317, "~"..livingMeteor, 52, 99317)
 		self:Bar(98710, lavaWaves, 55, 98710)
@@ -244,7 +244,7 @@ function mod:HandofRagnaros(_, spellId)
 end
 
 function mod:WrathofRagnaros(_, spellId, _, _, spellName)
-	self:Bar(100115, "~"..spellName, 25, spellId)
+	self:Bar(98263, "~"..spellName, 25, spellId)
 end
 
 function mod:SplittingBlow(_, spellId, _, _, spellName)
@@ -253,7 +253,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 		self:SendMessage("BigWigs_StopBar", self, L["seed_explosion"])
 		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
 		self:SendMessage("BigWigs_StopBar", self, worldInFlames)
-		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(100178))) -- Engulfing Flames
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(99172))) -- Engulfing Flames
 	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
 	self:Bar(98953, spellName, 7, spellId)
@@ -268,26 +268,26 @@ end
 
 function mod:SulfurasSmash(_, spellId)
 	if phase == 1 and self:Difficulty() ~= 3 then
-		self:Bar(100115, "~"..wrathOfRagnaros, 12, 100115)
+		self:Bar(98263, "~"..wrathOfRagnaros, 12, 98263)
 	end
 	self:Message(98710, lavaWaves, "Attention", spellId, "Info")
 	self:Bar(98710, lavaWaves, lavaWavesCD, spellId)
 end
 
 function mod:WorldInFlames(_, spellId, _, _, spellName)
-	self:Message(100190, spellName, "Important", spellId, "Alert")
-	self:Bar(100190, spellName, engulfingCD, spellId)
+	self:Message(100171, spellName, "Important", spellId, "Alert")
+	self:Bar(100171, spellName, engulfingCD, spellId)
 end
 
 function mod:EngulfingFlames(_, spellId, _, _, spellName)
 	if spellId == 100175 or spellId == 99172 then
-		self:Message(100178, L["engulfing_close"], "Important", spellId, "Alert")
+		self:Message(99172, L["engulfing_close"], "Important", spellId, "Alert")
 	elseif spellId == 100171 or spellId == 100178 or spellId == 99235 then
-		self:Message(100178, L["engulfing_middle"], "Important", spellId, "Alert")
+		self:Message(99172, L["engulfing_middle"], "Important", spellId, "Alert")
 	elseif spellId == 100181 or spellId == 99236 then
-		self:Message(100178, L["engulfing_far"], "Important", spellId, "Alert")
+		self:Message(99172, L["engulfing_far"], "Important", spellId, "Alert")
 	end
-	self:Bar(100178, spellName, engulfingCD, spellId)
+	self:Bar(99172, spellName, engulfingCD, spellId)
 end
 
 do

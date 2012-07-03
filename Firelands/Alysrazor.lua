@@ -59,7 +59,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		99362, 100723, 97128, 99464, "flight", "initiate", "eggs",
+		99362, 100024, 97128, 99464, "flight", "initiate", "eggs",
 		99816,
 		99432,
 		99844, 99925,
@@ -188,7 +188,7 @@ end
 do
 	local scheduled = nil
 	local function woundWarn(spellName)
-		mod:TargetMessage(100723, spellName, woundTargets, "Personal", 100723)
+		mod:TargetMessage(100024, spellName, woundTargets, "Personal", 100024)
 		scheduled = nil
 	end
 	function mod:Wound(player, spellId, _, _, spellName)

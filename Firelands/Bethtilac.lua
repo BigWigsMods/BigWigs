@@ -19,9 +19,9 @@ local lastBroodlingTarget = ""
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.flare = GetSpellInfo(100936)
+	L.flare = GetSpellInfo(99859)
 	L.flare_desc = "Show a timer bar for AoE flare."
-	L.flare_icon = 100936
+	L.flare_icon = 99859
 
 	L.drone, L.drone_desc = EJ_GetSectionInfo(2773)
 	L.drone_icon = "INV_Misc_Head_Nerubian_01"

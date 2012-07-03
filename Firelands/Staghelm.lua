@@ -10,7 +10,7 @@ mod:RegisterEnableMob(52571, 53619) --Staghelm, Druid of the Flame
 -- Locales
 --
 
-local leapingFlames, flameScythe = (GetSpellInfo(98476)), (GetSpellInfo(100213))
+local leapingFlames, flameScythe = (GetSpellInfo(98476)), (GetSpellInfo(98474))
 -- Update, in 4.3 the rate at which his energy is affected by Adrenaline is nerfed considerbly. (Despite what tooltip says)
 -- I don't have data to determine if/when it caps at 3.7, but if it does, it's somewhere much later then it used to be.
 -- So stack beyond 11-12 may falsely report 3.7 until data for more specials can be determined (although it was already wrong to begin with post 4.3 so this is unchanged)
@@ -38,7 +38,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		98379, 100213,
+		98379, 98474,
 		{98374, "PROXIMITY"}, {98476, "FLASHSHAKE", "ICON", "SAY"},
 		{98450, "FLASHSHAKE", "PROXIMITY"}, 98451,
 		97238, "berserk", "bosskill"
@@ -85,7 +85,7 @@ function mod:Adrenaline(_, spellId, _, _, spellName, stack)
 	if form == "cat" then
 		self:Bar(98476, leapingFlames, specialCD[specialCounter] or 3.7, 98476)
 	elseif form == "scorpion" then
-		self:Bar(100213, flameScythe, specialCD[specialCounter] or 3.7, 100213)
+		self:Bar(98474, flameScythe, specialCD[specialCounter] or 3.7, 98474)
 	end
 end
 
@@ -158,7 +158,7 @@ function mod:ScorpionForm(_, spellId, _, _, spellName)
 	self:PrimaryIcon(98476)
 	self:CloseProximity(98374)
 	specialCounter = 1
-	self:Bar(100213, flameScythe, specialCD[specialCounter], 100213)
+	self:Bar(98474, flameScythe, specialCD[specialCounter], 98474)
 end
 
 function mod:SearingSeedsRemoved(player)
