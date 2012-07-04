@@ -1,3 +1,4 @@
+if not GetNumGroupMembers then return end
 local L = BigWigs:NewBossLocale("The Stone Guard", "koKR")
 if not L then return end
 if L then
