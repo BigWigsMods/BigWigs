@@ -107,13 +107,13 @@ local GetNumGroupMembers = GetNumGroupMembers or GetRealNumRaidMembers
 
 --[[
 function GetMapID(name)
-	for i=1,1000 do
+	for i=1,1500 do
 		local fetchedName = GetMapNameByID(i)
-		if name == fetchedName then return i end
+		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
 	end
 end
 function GetBossID(name)
-	for i=1,1000 do
+	for i=1,1500 do
 		local fetchedName = EJ_GetEncounterInfo(i)
 		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
 	end
@@ -125,7 +125,7 @@ function GetSectionID(name)
 	end
 end
 function PrintNewBossIDs() 
-	for i=200,1000 do
+	for i=200,1500 do
 		local n,_,id = EJ_GetEncounterInfo(i)
 		if n then print(n,id) end
 	end
