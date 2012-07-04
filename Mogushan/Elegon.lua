@@ -1,12 +1,11 @@
-if tonumber((select(4, GetBuildInfo()))) < 50001 then return end
+if not GetNumGroupMembers then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod, CL = BigWigs:NewBoss("Elegon", 896, 726)
 if not mod then return end
-mod:RegisterEnableMob(0)
-
+mod:RegisterEnableMob(10000000)
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,7 +33,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 0)
+	self:Death("Win", 10000000)
 end
 
 function mod:OnEngage(diff)

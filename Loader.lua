@@ -225,7 +225,6 @@ end
 local function loadAndEnableCore()
 	load(BigWigs, "BigWigs_Core")
 	if not BigWigs then return end
-	load(BigWigs:GetPlugin("Colors", true), "BigWigs_Plugins") --XXX MoP TEMP
 	BigWigs:Enable()
 end
 
