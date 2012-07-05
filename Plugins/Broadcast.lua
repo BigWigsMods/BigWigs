@@ -6,8 +6,8 @@ local plugin = BigWigs:NewPlugin("Broadcast")
 if not plugin then return end
 
 --XXX MoP temp
-local IsGroupLeader = IsGroupLeader or IsRaidLeader
-local IsGroupAssistant = IsGroupAssistant or IsRaidOfficer
+local UnitIsGroupLeader = UnitIsGroupLeader or IsRaidLeader
+local UnitIsGroupAssistant = UnitIsGroupAssistant or IsRaidOfficer
 
 -------------------------------------------------------------------------------
 -- Locals
@@ -35,7 +35,7 @@ function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 	local inRaid = GetRealNumRaidMembers() > 0
 	if not inRaid and GetRealNumPartyMembers() == 0 then
 		return
-	elseif inRaid and not IsGroupLeader() and not IsGroupAssistant() then
+	elseif inRaid and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then
 		return
 	end
 

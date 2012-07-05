@@ -17,8 +17,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 --XXX MoP temp
 local UnitIsGroupLeader = UnitIsGroupLeader or UnitIsRaidOfficer
 local UnitIsGroupAssistant = UnitIsGroupAssistant or UnitIsRaidOfficer
-local IsGroupLeader = IsGroupLeader or IsRaidLeader
-local IsGroupAssistant = IsGroupAssistant or IsRaidOfficer
 
 local colorize = nil
 do
@@ -446,7 +444,11 @@ end
 local function check()
 	if not InCombatLockdown() and GetNumRaidMembers() > 9 and select(2, IsInInstance()) == "raid" then
 		plugin:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		plugin:UnregisterEvent("RAID_ROSTER_UPDATE")
+		if GetSpecialization then
+			plugin:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		else
+			plugin:UnregisterEvent("RAID_ROSTER_UPDATE")
+		end
 		plugin:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		if plugin.db.profile.show and plugin.db.profile.automatic then
 			plugin:RandomTip()
@@ -456,8 +458,12 @@ end
 
 function plugin:OnPluginEnable()
 	if not neverShowTip then
+		if GetSpecialization then
+			self:RegisterEvent("GROUP_ROSTER_UPDATE", check)
+		else
+			self:RegisterEvent("RAID_ROSTER_UPDATE", check)
+		end
 		self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
-		self:RegisterEvent("RAID_ROSTER_UPDATE", check)
 		self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
 	end
 	self:RegisterMessage("BigWigs_AddonMessage")
@@ -518,7 +524,7 @@ local pName = UnitName("player")
 local _, pClass = UnitClass("player")
 SlashCmdList.BigWigs_SendRaidTip = function(input)
 	input = input:trim()
-	if not UnitInRaid("player") or (not IsGroupLeader() and not IsGroupAssistant()) or (not tonumber(input) and #input < 10) then
+	if not UnitInRaid("player") or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) or (not tonumber(input) and #input < 10) then
 		print(L["Usage: /sendtip <index|\"Custom tip\">"])
 		print(L["You must be an officer in the raid to broadcast a tip."])
 		return

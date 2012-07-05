@@ -354,8 +354,12 @@ function loader:OnEnable()
 	end
 
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
-	self:RegisterEvent("RAID_ROSTER_UPDATE", "CheckRoster")
-	self:RegisterEvent("PARTY_MEMBERS_CHANGED", "CheckRoster")
+	if GetSpecialization then
+		self:RegisterEvent("GROUP_ROSTER_UPDATE", "CheckRoster")
+	else
+		self:RegisterEvent("RAID_ROSTER_UPDATE", "CheckRoster")
+		self:RegisterEvent("PARTY_MEMBERS_CHANGED", "CheckRoster")
+	end
 
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterMessage("BigWigs_AddonMessage")
