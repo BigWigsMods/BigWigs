@@ -32,5 +32,8 @@
 
 <Include file="HeartOfFear\locales.xml"/>
 <Include file="HeartOfFear\modules.xml"/>
+
+<Include file="EndlessSpring\locales.xml"/>
+<Include file="EndlessSpring\modules.xml"/>
 </Ui>
 
