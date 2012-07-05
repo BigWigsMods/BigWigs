@@ -32,9 +32,6 @@ move-folders:
     BigWigs/Baradin: BigWigs_Baradin
     BigWigs/Firelands: BigWigs_Firelands
     BigWigs/DragonSoul: BigWigs_DragonSoul
-    BigWigs/Mogushan: BigWigs_Mogushan
-    BigWigs/HeartOfFear: BigWigs_HeartOfFear
-    BigWigs/EndlessSpring: EndlessSpring
 
 ignore:
 	- globals.sh
