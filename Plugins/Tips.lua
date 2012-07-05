@@ -14,6 +14,12 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 -- Options
 --
 
+--XXX MoP temp
+local UnitIsGroupLeader = UnitIsGroupLeader or UnitIsRaidOfficer
+local UnitIsGroupAssistant = UnitIsGroupAssistant or UnitIsRaidOfficer
+local IsGroupLeader = IsGroupLeader or IsRaidLeader
+local IsGroupAssistant = IsGroupAssistant or IsRaidOfficer
+
 local colorize = nil
 do
 	local r, g, b
@@ -462,8 +468,9 @@ end
 --
 
 function plugin:BigWigs_AddonMessage(event, prefix, message, sender)
-	if prefix ~= "TIP" or not UnitIsRaidOfficer(sender) or not self.db.profile.manual then return end
-	self:ShowTip(message)
+	if prefix == "TIP" and self.db.profile.manual and (UnitIsGroupLeader(sender) or UnitIsGroupAssistant(sender)) then
+		self:ShowTip(message)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -511,7 +518,7 @@ local pName = UnitName("player")
 local _, pClass = UnitClass("player")
 SlashCmdList.BigWigs_SendRaidTip = function(input)
 	input = input:trim()
-	if not UnitInRaid("player") or not IsRaidOfficer() or (not tonumber(input) and #input < 10) then
+	if not UnitInRaid("player") or (not IsGroupLeader() and not IsGroupAssistant()) or (not tonumber(input) and #input < 10) then
 		print(L["Usage: /sendtip <index|\"Custom tip\">"])
 		print(L["You must be an officer in the raid to broadcast a tip."])
 		return

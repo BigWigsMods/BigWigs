@@ -15,6 +15,9 @@ do
 	})
 end
 
+--XXX MoP temp
+local GetNumSubgroupMembers = GetNumSubgroupMembers or GetNumPartyMembers
+
 local C = BigWigs.C
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
@@ -679,7 +682,7 @@ do
 		local module = widget:GetUserData("module")
 		local channel = nil
 		if UnitInRaid("player") then channel = "RAID"
-		elseif GetNumPartyMembers() > 0 then channel = "PARTY" end
+		elseif GetNumSubgroupMembers() > 0 then channel = "PARTY" end
 		local abilities = {}
 		local header = nil
 		output(channel, module.displayName or module.moduleName or module.name)

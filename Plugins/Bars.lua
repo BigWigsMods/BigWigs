@@ -15,6 +15,11 @@ if not plugin then return end
 -- Locals
 --
 
+--XXX MoP temp
+local UnitIsGroupLeader = UnitIsGroupLeader or UnitIsRaidOfficer
+local UnitIsGroupAssistant = UnitIsGroupAssistant or UnitIsRaidOfficer
+local GetNumSubgroupMembers = GetNumSubgroupMembers or GetNumPartyMembers
+
 local colorize = nil
 do
 	local r, g, b
@@ -1006,7 +1011,7 @@ do
 			channel = "BATTLEGROUND"
 		elseif UnitInRaid("player") then
 			channel = "RAID"
-		elseif GetNumPartyMembers() > 1 then
+		elseif GetNumSubgroupMembers() > 1 then
 			channel = "PARTY"
 		end
 		local text = ("%s: %s"):format(bar.candyBarLabel:GetText(), timeDetails(bar.remaining))
@@ -1244,8 +1249,9 @@ end
 
 function plugin:OnSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick then return end
-	if not UnitIsRaidOfficer(nick) then return end
-	startCustomBar(rest, nick, false)
+	if UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick) then
+		startCustomBar(rest, nick, false)
+	end
 end
 
 -------------------------------------------------------------------------------
