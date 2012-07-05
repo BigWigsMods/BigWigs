@@ -17,6 +17,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 --XXX MoP temp
 local UnitIsGroupLeader = UnitIsGroupLeader or UnitIsRaidOfficer
 local UnitIsGroupAssistant = UnitIsGroupAssistant or UnitIsRaidOfficer
+local GetNumGroupMembers = GetNumGroupMembers or GetNumRaidMembers
 
 local colorize = nil
 do
@@ -442,7 +443,7 @@ if select(2, IsInInstance()) == "raid" then
 end
 
 local function check()
-	if not InCombatLockdown() and GetNumRaidMembers() > 9 and select(2, IsInInstance()) == "raid" then
+	if not InCombatLockdown() and GetNumGroupMembers() > 9 and select(2, IsInInstance()) == "raid" then
 		plugin:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		if GetSpecialization then
 			plugin:UnregisterEvent("GROUP_ROSTER_UPDATE")

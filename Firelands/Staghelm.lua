@@ -6,6 +6,9 @@ local mod = BigWigs:NewBoss("Majordomo Staghelm", 800, 197)
 if not mod then return end
 mod:RegisterEnableMob(52571, 53619) --Staghelm, Druid of the Flame
 
+--XXX MoP temp
+local GetNumGroupMembers = GetNumGroupMembers or GetNumRaidMembers
+
 --------------------------------------------------------------------------------
 -- Locales
 --
@@ -123,7 +126,7 @@ end
 
 do
 	local function checkTarget(guid)
-		for i=1, GetNumRaidMembers() do
+		for i=1, GetNumGroupMembers() do
 			local leapTarget = ("%s%d%s"):format("raid", i, "target")
 			if UnitGUID(leapTarget) == guid and UnitIsUnit("player", leapTarget.."target") then
 				mod:Say(98476, L["leap_say"])

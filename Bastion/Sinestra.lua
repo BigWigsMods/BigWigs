@@ -6,6 +6,9 @@ local mod, CL = BigWigs:NewBoss("Sinestra", 758, 168)
 if not mod then return end
 mod:RegisterEnableMob(45213)
 
+--XXX MoP temp
+local GetNumGroupMembers = GetNumGroupMembers or GetNumRaidMembers
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -69,7 +72,7 @@ end
 
 local function populateOrbList()
 	wipe(orbList)
-	for i = 1, GetNumRaidMembers() do
+	for i = 1, GetNumGroupMembers() do
 		local n, _, g = GetRaidRosterInfo(i)
 		-- do some checks for 25/10 man raid size so we don't warn for ppl who are not in the instance
 		if (GetInstanceDifficulty() == 3 and g < 3) or (GetInstanceDifficulty() == 4 and g < 6) then
