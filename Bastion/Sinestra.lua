@@ -165,7 +165,11 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	if not roleCheckWarned and (IsRaidLeader() or IsRaidOfficer()) then
+	--XXX MoP temp
+	local IsGroupLeader = IsGroupLeader or IsRaidLeader
+	local IsGroupAssistant = IsGroupAssistant or IsRaidOfficer
+
+	if not roleCheckWarned and (IsGroupLeader() or IsGroupAssistant()) then
 		BigWigs:Print("It is recommended that your raid has proper main tanks set for this encounter to improve orb target detection.")
 		roleCheckWarned = true
 	end

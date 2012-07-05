@@ -2,6 +2,10 @@
 -- Prototype
 --
 
+--XXX MoP temp
+local IsGroupLeader = IsGroupLeader or IsRaidLeader
+local IsGroupAssistant = IsGroupAssistant or IsRaidOfficer
+
 local debug = false -- Set to true to get (very spammy) debug messages.
 local dbgStr = "[DBG:%s] %s"
 local function dbg(self, msg) print(dbgStr:format(self.displayName, msg)) end
@@ -575,7 +579,7 @@ do
 		local msg = noName and spellName or fmt(L["you"], spellName)
 		sentWhispers[msg] = true
 		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
-		if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
+		if UnitInRaid("player") and not IsGroupLeader() and not IsGroupAssistant () then return end
 		SendChatMessage("<BW> " .. msg, "WHISPER", nil, player)
 	end
 end
