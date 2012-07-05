@@ -139,8 +139,8 @@ local getGroupMembers = nil
 do
 	local members = {}
 	function getGroupMembers()
-		local raid = GetNumGroupMembers()
-		local party = GetNumSubgroupMembers()
+		local raid = GetNumGroupMembers(1)
+		local party = GetNumSubgroupMembers(1)
 		if raid == 0 and party == 0 then return end
 		wipe(members)
 		if raid > 0 then
@@ -472,8 +472,8 @@ function loader:ZoneChanged()
 end
 
 function loader:CheckRoster()
-	local raid = GetNumGroupMembers()
-	local party = GetNumSubgroupMembers()
+	local raid = GetNumGroupMembers(1)
+	local party = GetNumSubgroupMembers(1)
 	if not grouped and raid > 0 then
 		grouped = BWRAID
 		self:SendMessage("BigWigs_JoinedGroup", grouped)

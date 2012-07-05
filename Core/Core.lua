@@ -17,6 +17,10 @@ local CL = AL:GetLocale("Big Wigs: Common")
 local customBossOptions = {}
 local pName = UnitName("player")
 
+--XXX MoP temp
+local GetNumSubgroupMembers = GetNumSubgroupMembers or GetRealNumPartyMembers
+local GetNumGroupMembers = GetNumGroupMembers or GetRealNumRaidMembers
+
 -------------------------------------------------------------------------------
 -- Target monitoring
 --
@@ -280,7 +284,7 @@ do
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
-		if GetRealNumRaidMembers() == 0 and GetRealNumPartyMembers() == 0 then return end
+		if GetNumGroupMembers(1) == 0 and GetNumSubgroupMembers(1) == 0 then return end
 		if not sync then return end
 		if not times[sync] or GetTime() > (times[sync] + 2) then
 			times[sync] = GetTime()
