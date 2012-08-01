@@ -16,8 +16,8 @@ mod:RegisterEnableMob(60143)
 -- Locales
 --
 
-local voodooDolllist = mod:NewTargetList()
-local spiritTotem, voodooDolls = (GetSpellInfo(116174)), (GetSpellInfo(122151))
+local voodooDollList = mod:NewTargetList()
+local spiritTotem, voodooDoll = (GetSpellInfo(116174)), (GetSpellInfo(122151))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -50,7 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
 	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161)
 
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:AddSyncListener("VoodooDolls")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -67,28 +67,29 @@ end
 -- Event Handlers
 --
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:OnSync(sync, rest, nick)
 	if sync == "VoodooDolls" and rest then
-		local voodooDolllist = {}
 		for player in string.gmatch(rest, "%a+") do
-			voodooDolllist[#voodooDolllist] = player
+			voodooDollList[#voodooDollList+1] = player
 		end
-		self:TargetMessage(122151, voodooDolls, voodooDolllist, "Important", 122151)
+		self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
 	end
 end
 
 do
 	local scheduled = nil
-	local function voodooDolls(spellName)
-		local voodooDolllistString = table.concat(voodooDolllist, ", ")
-		mod:Sync("VoodooDolls", voodooDolllistString)
+	local listTbl = {}
+	local function createList(spellName)
+		local playerString = table.concat(listTbl, ", ")
+		mod:Sync("VoodooDolls", playerString)
+		wipe(listTbl)
 		scheduled = nil
 	end
 	function mod:VoodooDollsApplied(player, _, _, _, spellName)
-		voodooDolllist[#voodooDolllist + 1] = player
+		listTbl[#listTbl+1] = player
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(voodooDolls, 0.1, spellName)
+			self:ScheduleTimer(createList, 0.1, spellName)
 		end
 	end
 end
