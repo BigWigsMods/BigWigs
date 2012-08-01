@@ -70,7 +70,7 @@ end
 do
 	local function printList()
 		scheduled = nil
-		self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
+		mod:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
 	end
 	function mod:OnSync(sync, rest, nick)
 		if sync == "doll" and rest then
