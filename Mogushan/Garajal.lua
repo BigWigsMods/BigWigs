@@ -50,7 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
 	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161)
 
-	self:AddSyncListener("VoodooDolls")
+	self:AddSyncListener("doll")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -67,31 +67,24 @@ end
 -- Event Handlers
 --
 
-function mod:OnSync(sync, rest, nick)
-	if sync == "VoodooDolls" and rest then
-		for player in string.gmatch(rest, "%a+") do
-			voodooDollList[#voodooDollList+1] = player
-		end
+do
+	local function printList()
+		scheduled = nil
 		self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
+	end
+	function mod:OnSync(sync, rest, nick)
+		if sync == "doll" and rest then
+			voodooDollList[#voodooDollList+1] = rest
+			if not scheduled then
+				scheduled = true
+				self:ScheduleTimer(printList, 0.2)
+			end
+		end
 	end
 end
 
-do
-	local scheduled = nil
-	local listTbl = {}
-	local function createList(spellName)
-		local playerString = table.concat(listTbl, ", ")
-		mod:Sync("VoodooDolls", playerString)
-		wipe(listTbl)
-		scheduled = nil
-	end
-	function mod:VoodooDollsApplied(player, _, _, _, spellName)
-		listTbl[#listTbl+1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(createList, 0.1, spellName)
-		end
-	end
+function mod:VoodooDollsApplied(player)
+	self:Sync("doll", player)
 end
 
 function mod:CrossedOver(player, _, _, _, spellName)
