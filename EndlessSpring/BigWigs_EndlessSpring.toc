@@ -1,0 +1,14 @@
+## Interface: 50001
+
+## Title: Big Wigs [|cffeda55fTerrace of Endless Spring|r]
+## Notes: Big Wigs Modules for the Terrace of Endless Spring.
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-ZoneId: 886
+
+locales.xml
+modules.xml
+
