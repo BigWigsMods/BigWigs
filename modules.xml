@@ -24,8 +24,6 @@
 
 <Include file="DragonSoul\locales.xml"/>
 <Include file="DragonSoul\modules.xml"/>
-<!--@end-debug@-->
-<Include file="temp.lua"/>
 
 <Include file="Mogushan\locales.xml"/>
 <Include file="Mogushan\modules.xml"/>
@@ -35,5 +33,6 @@
 
 <Include file="EndlessSpring\locales.xml"/>
 <Include file="EndlessSpring\modules.xml"/>
+<!--@end-debug@-->
 </Ui>
 
