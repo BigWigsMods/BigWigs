@@ -1,7 +1,9 @@
 ## Interface: 50001
 
 ## Title: Big Wigs [|cffeda55fMogu'shan Vaults|r]
+## Title-frFR: Big Wigs [|cffeda55fCaveaux Mogu'shan|r]
 ## Notes: Big Wigs Modules for the Mogu'shan Vaults.
+## Notes-frFR: Modules Big Wigs concernant les caveaux Mogu'shan.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

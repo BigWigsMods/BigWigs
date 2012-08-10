@@ -1,7 +1,9 @@
 ## Interface: 50001
 
 ## Title: Big Wigs [|cffeda55fHeart of Fear|r]
+## Title-frFR: Big Wigs [|cffeda55fCœur de la Peur|r]
 ## Notes: Big Wigs Modules for the Heart of Fear.
+## Notes-frFR: Modules Big Wigs concernant le Cœur de la Peur.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

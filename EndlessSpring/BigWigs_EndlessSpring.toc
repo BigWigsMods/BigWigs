@@ -1,7 +1,9 @@
 ## Interface: 50001
 
 ## Title: Big Wigs [|cffeda55fTerrace of Endless Spring|r]
+## Title-frFR: Big Wigs [|cffeda55fTerrasse Printanière|r]
 ## Notes: Big Wigs Modules for the Terrace of Endless Spring.
+## Notes-frFR: Modules Big Wigs concernant la terrasse Printanière.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
