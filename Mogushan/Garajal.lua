@@ -2,7 +2,6 @@ if not GetNumGroupMembers then return end
 --[[ TO DO
 
 might want to try and report people with debuff closest to totem when it is about to die
-sync the voodoo dolls, or maybe have a bar with the 3 names on it like Dolls: Pupper, Master, String
 
 --]]
 --------------------------------------------------------------------------------
@@ -35,7 +34,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		122151, 116174, "ej:5759", 116272, 116161,
+		122151, 116174, 116272, 116161,
+		"ej:5759",
 		"berserk", "bosskill",
 	}, {
 		[122151] = CL["phase"]:format(1),
@@ -58,7 +58,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(116174, spiritTotem, 40, 116174)
+	self:Bar(116174, spiritTotem, 36, 116174)
 	self:Berserk(480) -- assume
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
@@ -73,6 +73,9 @@ function mod:OnSync(sync, rest, nick)
 			voodooDollList[#voodooDollList+1] = player
 		end
 		self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
+	elseif sync == "Totem" and rest then
+		self:Bar(116174, rest, 36, 116174)
+		self:Message(116174, rest, "Attention", 116174)
 	end
 end
 
@@ -100,8 +103,7 @@ function mod:CrossedOver(player, _, _, _, spellName)
 end
 
 function mod:SpiritTotem(_, _, _, _, spellName)
-	self:Bar(116174, spellName, 36, 116174)
-	self:Message(116174, spellName, "Attention", 116174)
+	self:Sync("Totem", spellName)
 end
 
 function mod:Banishment(player, _, _, _, spellName)
