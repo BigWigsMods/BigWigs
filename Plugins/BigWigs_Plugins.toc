@@ -15,7 +15,7 @@
 ## Notes-koKR: Big Wigs 플러그인
 
 ## LoadOnDemand: 1
-## Dependencies: BigWigs
+## Dependencies: BigWigs, BigWigs_Core
 ## OptionalDeps: Tukui
 
 ## X-Category: Raid
