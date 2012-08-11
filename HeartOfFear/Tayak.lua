@@ -36,7 +36,7 @@ L.assault = L.assault.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		"ej:6346", "assault", "proximity", "ej:6350",
+		{ "ej:6346", "ICON" }, "assault", "proximity", 122842, "ej:6350",
 		"berserk", "bosskill",
 	}, {
 		["ej:6346"] = "general",
@@ -55,7 +55,7 @@ end
 function mod:OnEngage(diff)
 	self:OpenProximity(8)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:Bar("ej:6346", spellName, 30, 122994)
+	self:Bar("ej:6346", unseenStrike, 30, 122994)
 end
 
 --------------------------------------------------------------------------------
@@ -63,16 +63,27 @@ end
 --
 
 do
+	local function warnStrike(spellName)
+		local player = UnitName("boss1target") -- because this event does not supply unit with UNIT_SPELLCAST_SUCCEEDED
+		mod:TargetMessage("ej:6346", spellName, player, "Urgent", 122994, "Alarm")
+		mod:PrimaryIcon("ej:6346", player)
+	end
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
 		if spellName == unseenStrike then
 			local t = GetTime()
-			if t-prev > 5 then
+			if t-prev > 3 then
 				prev = t
-				local player = UnitName("boss1target") -- because this event does not supply unit with UNIT_SPELLCAST_SUCCEEDED
-				self:TargetMessage("ej:6346", spellName, player, "Urgent", 122994, "Alarm")
 				self:Bar("ej:6346", L["unseenstrike_cone"], 5, 122994)
 				self:Bar("ej:6346", spellName, 60, 122994)
+				self:ScheduleTimer(warnStrike, 0.5, spellName) -- still faster than using boss emote (0.4 needs testing)
+			end
+		elseif spellId == 122839 then -- correct spellId
+			local t = GetTime()
+			if t-prev > 3 then
+				prev = t
+				self:Bar(122842, "~"..spellName, 15.6, 122842)
+				-- don't think this needs a message
 			end
 		end
 	end

@@ -10,6 +10,7 @@ mod:RegisterEnableMob(60009)
 
 local epicenter, drawflame, arcanevelocity = (GetSpellInfo(116018)), (GetSpellInfo(116711)), (GetSpellInfo(116364))
 local allowBarrier = true
+local markUsedOn
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -42,7 +43,7 @@ function mod:GetOptions()
 		116295, 116018,
 		{116784, "ICON", "FLASHSHAKE"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
-		"phases", 115856, "berserk", "bosskill",
+		"phases", 115856, {115911, "ICON" }, "berserk", "bosskill",
 	}, {
 		[116295] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
@@ -59,11 +60,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "WildfireSparkRemoved", 116784)
 	self:Log("SPELL_AURA_APPLIED", "DrawFlame", 116711)
 
-	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417)
-	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417)
+	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417, 116574)
+	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417, 116574)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVelocity", 116364)
 
 	self:Log("SPELL_CAST_SUCCESS", "NullificationBarrier", 115856)
+
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 
 	-- needed so we can have bars up for abilities used straight after phase switches
 	self:Yell("FlamePhase", L["phase_flame_trigger"])
@@ -78,13 +81,24 @@ end
 
 function mod:OnEngage(diff)
 	allowBarrier = true
-	self:Berserk(360) -- assume
-
+	self:Berserk(480) -- assume
+	markUsedOn = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_CHANNEL_START(_, unitId, spellName, rank, lineId, spellId)
+	if spellId == 115911 then
+		local channelTarget = UnitName(unitId.."target")
+		self:TargetMessage(115911, CL["cast"]:format(spellName), channelTarget, "Urgent", 115911, "Alert")
+		self:SecondaryIcon(115911, channelTarget) -- probably conflicts with other arcane resonance markers
+		if UnitIsUnit("player", channelTarget) then
+			self:FlashShake(115911)
+		end
+	end
+end
 
 do
 	local function resetAllowBarrier()
@@ -95,6 +109,7 @@ do
 		if allowBarrier then
 			allowBarrier = false
 			self:Message(115856, spellName, "Positive", 115856, "Info") -- maybe want to use Personal to separte the color from phase switches
+			self:Bar(115856, spellName, 6, 115856)
 			self:ScheduleTimer(resetAllowBarrier, 10)
 		end
 	end
@@ -148,7 +163,12 @@ end
 
 function mod:ArcaneResonanceApplied(player, _, _, _, spellName)
 	self:TargetMessage(116417, spellName, player, "Urgent", 116417, "Alert")
-	self:PrimaryIcon(116417, player)
+	if not markUsedOn then
+		self:PrimaryIcon(116417, player)
+		markUsedOn = player
+	else
+		self:SecondaryIcon(116417, player)
+	end
 	if UnitIsUnit("player", player) then
 		self:FlashShake(116417)
 		self:OpenProximity(6, 116417)
@@ -159,6 +179,9 @@ end
 function mod:ArcaneResonanceRemoved(player)
 	SetRaidTarget(player, 0)
 	self:CloseProximity(116417)
+	if player == markUsedOn then
+		markUsedOn = nil
+	end
 end
 
 function mod:ArcaneVelocity(_, _, _, _, spellName)

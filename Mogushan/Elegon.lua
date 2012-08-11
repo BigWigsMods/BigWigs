@@ -49,8 +49,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "UnstableEnergyApplied", 116994)
 	self:Log("SPELL_AURA_REMOVED", "UnstableEnergyRemoved", 116994)
 	--cat WoWCombatLog.txt | grep "APPLIED.*Draw Power" | cut -d , -f 10 | sort | uniq
-	self:Log("SPELL_AURA_APPLIED", "DrawPower", 119360, 119387, 124967)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "DrawPower", 119360, 119387, 124967)
+	self:Log("SPELL_AURA_APPLIED", "DrawPower", 119387)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DrawPower", 119387)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -59,7 +59,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(117960, celestialBreath, 8.5, 117960)
-	self:Berserk(480) -- assume
+	self:Berserk(570)
 	drawPowerCounter = 0
 end
 
@@ -83,14 +83,15 @@ end
 
 function mod:MaterializeProtector(_, _, _, _, spellName)
 	self:Message("ej:6177", spellName, "Attention", 117954)
+	self:Bar("ej:6177", spellName, 36, 117954)
 end
 
 function mod:UnstableEnergyApplied()
 	self:Message("ej:6176", CL["phase"]:format(3), "Positive", 116994)
-	self:Bar("ej:6176", L["floor_despawn"], 10, 116994)
+	self:Bar("ej:6176", L["floor_despawn"], 4, 116994)
 end
 
-function mod:UnstableEnergyApplied()
+function mod:UnstableEnergyRemoved()
 	drawPowerCounter = 0
 	self:Message("ej:6176", CL["phase"]:format(1), "Positive", 116994)
 end
