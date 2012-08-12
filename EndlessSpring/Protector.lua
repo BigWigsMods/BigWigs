@@ -27,11 +27,7 @@ local lightningPrsionList = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.storm_him = "Storm 10 Yard!"
-	L.storm_20 = "Storm 20 Yard!"
-	L.storm_40 = "Storm 40 Yard!"
-	L.storm_60 = "Storm 60 Yard!"
-	L.storm_80 = "Storm 80 Yard!"
+
 end
 L = mod:GetLocale()
 
@@ -59,15 +55,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DefiledGround", 117989, 117988, 118091, 117986)
 
 	-- Elder Regail
-	self:Log("SPELL_AURA_APPLIED", "LightningPrisonApplied", 122874, 117398, 117436, 111850)
-	self:Log("SPELL_AURA_REMOVED", "LightningPrisonRemoved", 122874, 117398, 117436, 111850)
+	self:Log("SPELL_AURA_APPLIED", "LightningPrisonApplied", 111850)
+	self:Log("SPELL_AURA_REMOVED", "LightningPrisonRemoved", 111850)
 	-- Storm
-	self:Log("SPELL_CAST_START", "LightningStormStart", 118077) -- at himself -- need combatlog for this
-	-- not sure about the usefulness of these vv
-	self:Log("SPELL_CAST_SUCCESS", "LightningStorm20", 118003) -- 20 Yard
-	self:Log("SPELL_CAST_SUCCESS", "LightningStorm40", 118004) -- 40 Yard
-	self:Log("SPELL_CAST_SUCCESS", "LightningStorm60", 118005) -- 60 Yard
-
+	self:Log("SPELL_CAST_START", "LightningStormStart", 118077)
 	-- Elder Asani
 	self:Log("SPELL_CAST_START", "CleansingWaterStart", 117309) -- Spawn Watter Bubble
 	self:Log("SPELL_CAST_SUCCESS", "CleansingPool", 117309) -- the good one
@@ -80,7 +71,9 @@ end
 
 function mod:OnEngage(diff)
 	bossDead = 0
-	self:Berserk(360) -- assume
+	if diff > 2 then
+		self:Berserk(480)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -114,12 +107,12 @@ end
 
 do
 	local last = 0
-	function mod:DefiledGround(player, spellId, _, _, spellName)
+	function mod:DefiledGround(player, _, _, _, spellName)
 		local time = GetTime()
 		if (time - last) > 2 then
 			last = time
 			if UnitIsUnit(player, "player") then
-				self:LocalMessage(117988, CL["underyou"]:format(spellName), "Personal", spellId, "Info")
+				self:LocalMessage(117988, CL["underyou"]:format(spellName), "Personal", 117988, "Info")
 				self:FlashShake(117988)
 			end
 		end
@@ -131,7 +124,7 @@ end
 do
 	local scheduled = nil
 	local function Prison(spellName)
-		mod:TargetMessage(117436, spellName, lightningPrsionList, "Important", 117436)
+		mod:TargetMessage(117436, spellName, lightningPrsionList, "Important", 117436, "Alert")
 		scheduled = nil
 	end
 	function mod:LightningPrisonApplied(player, _, _, _, spellName)
@@ -154,27 +147,15 @@ function mod:LightningPrisonRemoved(player)
 	end
 end
 
--- Big AOE - he start the AOE at Himself, then a Circuit at 20 Yard (10 Yrd + 10 Trigger) then 40 Yard, then 60 Yard then 80 Yard (you get dmg if you 10 Yard near at this. First Spell Cast has Casttime rest is "instant"
-
-function mod:LightningStormStart(_, spellId)
-	self:Message(118077, L["storm_him"], "Important", 118077, "Alarm")
-end
-
-function mod:LightningStorm20(_, spellId)
-	self:Message(118077, L["storm_20"], "Important", 118003, "Alarm")
-end
-function mod:LightningStorm40(_, spellId)
-	self:Message(118077, L["storm_40"], "Important", 118004, "Alarm")
-end
-function mod:LightningStorm60(_, spellId)
-	self:Message(118077, L["storm_60"], "Important", 118005, "Alarm")
+function mod:LightningStormStart(_, _, _, _, spellName)
+	self:Message(118077, spellName, "Urgent", 118077, "Alarm")
 end
 
 -- Elder Asani
 
 function mod:CleansingWaterStart(_, _, _, _, spellName)
 	self:Message(117309, CL["soon"]:format(spellName), "Attention")
-	self:Bar(117309, CL["soon"]:format(spellName), 5, 117309)
+	self:Bar(117309, CL["soon"]:format(spellName), 7, 117309) -- 5+2 so it is exact for dispell
 end
 
 function mod:CleansingPool(_, _, _, _, spellName)
@@ -183,8 +164,8 @@ function mod:CleansingPool(_, _, _, _, spellName)
 end
 
 -- Globe BAD
-function mod:CorruptedWater(_, spellId, _, _, spellName)
-	self:Message(117227, spellName, "Important", 117227, "Alarm")
+function mod:CorruptedWater(_, _, _, _, spellName)
+	self:Message(117227, spellName, "Attention", 117227)
 end
 
 function mod:Deaths(mobId)

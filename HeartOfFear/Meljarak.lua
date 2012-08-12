@@ -5,13 +5,13 @@ if not GetNumGroupMembers then return end
 
 local mod, CL = BigWigs:NewBoss("Wind Lord Mel'jarak", 897, 741)
 if not mod then return end
-mod:RegisterEnableMob(62397)
+mod:RegisterEnableMob(62397, 62408, 62402, 62405) -- boss, mender, battlemaster, trapper
 
 --------------------------------------------------------------------------------
 -- Locales
 --
 
-local whirlingBlade, korthikStrike = (GetSpellInfo(121896)), (GetSpellInfo(122409))
+local whirlingBlade, korthikStrike, rainOfBlades = (GetSpellInfo(121896)), (GetSpellInfo(122409)), (GetSpellInfo(122406))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,12 +34,14 @@ function mod:GetOptions()
 	return {
 		{ 122064, "FLASHSHAKE", "SAY" },
 		{ 122409, "ICON", "SAY" },
-		{ 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, "next_pack",
+		122149,
+		122406, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, "next_pack",
 		"proximity", "berserk", "bosskill",
 	}, {
 		[122064] = "ej:6300",
 		[122409] = "ej:6334",
-		[121896] = "general",
+		[122149] = "ej:6305",
+		[122406] = "general",
 	}
 end
 
@@ -49,6 +51,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
 	self:Log("SPELL_CAST_START", "KorthikStrike", 122409)
+	self:Log("SPELL_CAST_START", "Quickening", 122149)
+	self:Log("SPELL_CAST_START", "RainOfBlades", 122406)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -57,13 +61,23 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(121896, whirlingBlade, 36, 121896)
+	self:Bar(122406, "~"..rainOfBlades, 60, 122406)
 	self:OpenProximity(2) -- for amber prison EJ says 2 yards, but it might be bigger range
-	self:Berserk(360) -- assume
+	self:Berserk(600) -- assume
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:RainOfBlades(_, _, _, _, spellName)
+	self:Message(122406, spellName, "Important", 122406, "Alert")
+	self:Bar(122406, "~"..spellName, 60, 122406)
+end
+
+function mod:Quickening(_, _, _, _, spellName)
+	self:Message(122149, spellName, "Attention", 122149)
+end
 
 do
 	local function checkTarget(sGUID)
@@ -104,8 +118,8 @@ do
 	end
 end
 
-function mod:WindBomb(player, _, _, _, spellName)
-	self:TargetMessage(131830, spellName, player, "Urgent", 131830, "Alert")
+function mod:WindBomb(_, _, player, _, spellName)
+	self:TargetMessage(131830, spellName, player, "Urgent", 131830, "Alarm")
 	if UnitIsUnit("player", player) then
 		self:FlashShake(131830)
 		self:Say(131830, CL["say"]:format(spellName))
