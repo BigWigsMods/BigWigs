@@ -79,16 +79,9 @@ function mod:Attenuation(_, _, _, _, spellName)
 	self:Message(127834, spellName, "Urgent", 127834, "Alert")
 end
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
-		if spellName == clearThroat then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:Message("ej:6427", CL["soon"]:format(forceAndVerve), "Important", spellId, "Alarm")
-			end
-		end
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
+	if spellName == clearThroat and unit:match("boss") then -- adds might be casting it too so this might be simpler than CID check on bossIds
+		self:Message("ej:6427", CL["soon"]:format(forceAndVerve), "Important", spellId, "Alarm")
 	end
 end
 

@@ -19,6 +19,7 @@ local hiding
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage = "Wh-what are you doing here?! G-go away!"
 	L.hp_to_go = "%d%% to go"
 	L.end_hide = "Hiding ended"
 
@@ -46,8 +47,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GetAwayRemoved", 123461)
 	self:Log("SPELL_AURA_APPLIED", "Protect", 123250)
 	self:Log("SPELL_CAST_START", "Hide", 123244)
+	self:Yell("CheckForEngage", L["engage"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- use this to detect him coming out of hide
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:Death("Win", 62983)
 end
@@ -55,8 +58,7 @@ end
 function mod:OnEngage(diff)
 	hiding = false
 	self:Bar("special", "~"..L["special"], 33, 123263)
-	self:Berserk(360) -- assume
-
+	self:Berserk(360)
 end
 
 --------------------------------------------------------------------------------
@@ -70,8 +72,6 @@ function mod:EngageCheck()
 		hiding = false
 		self:Bar("special", "~"..L["special"], 20, 123263)
 		self:Message(123244, L["end_hide"], "Attention", 123244)
-	else
-		self:CheckBossStatus()
 	end
 end
 
@@ -87,10 +87,12 @@ end
 
 do
 	local getAwayStartHP
-	function mod:GetAwayApplied(_, _, _, _, spellName)
-		getAwayStartHP = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		self:Message(123461, spellName, "Important", 123461, "Alarm")
-		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	function mod:GetAwayApplied(unitId, _, _, _, spellName)
+		if UnitHealthMax(unitId) > 0 then
+			getAwayStartHP = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+			self:Message(123461, spellName, "Important", 123461, "Alarm")
+			self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+		end
 	end
 
 	local prev = 0

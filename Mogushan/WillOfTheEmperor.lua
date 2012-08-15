@@ -78,6 +78,7 @@ end
 --
 
 function mod:Rage()
+	self:Message("ej:5678", CL["custom_sec"]:format(rage, 13), "Attention", 124019)
 	self:Bar("ej:5678", rage, 13, 124019) -- rage like icon
 	self:DelayedMessage("ej:5678", 13, rage, "Attention", 124019)
 end
@@ -90,30 +91,26 @@ function mod:FocusedAssault(player, _, _, _, spellName)
 end
 
 function mod:Strength()
-	self:Bar("ej:5677", strength, 13, 80471) -- strength like icon
-	self:DelayedMessage("ej:5677", 13, strength, "Attention", 80471)
+	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
+	self:Bar("ej:5677", strength, 8, 80471) -- strength like icon
+	self:DelayedMessage("ej:5677", 8, strength, "Attention", 80471)
 end
 
 function mod:Courage()
+	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
 	self:Bar("ej:5676", courage, 13, 93435) -- courage like icon
-	self:DelayedMessage("ej:5676", 13, courage, "Attention", 93435)
+	self:DelayedMessage("ej:5676", 11, courage, "Attention", 93435)
 end
 
 function mod:Bosses()
+	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
 	self:Bar("ej:5726", bosses, 13, 118327)
 	self:DelayedMessage("ej:5726", 13, bosses, "Attention", 118327)
 end
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-		if spellId == 116968 or spellId == 116971 or spellId == 116972 then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:Message(116835, ("%s %s"):format((UnitName(unitId)), spellName), "Urgent", 116835)
-			end
-		end
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
+	if (spellId == 116968 or spellId == 116971 or spellId == 116972) and unitId:match("boss") then -- arc attacks
+		self:Message(116835, ("%s %s"):format((UnitName(unitId)), spellName), "Urgent", 116835)
 	end
 end
 

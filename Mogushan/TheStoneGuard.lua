@@ -11,7 +11,6 @@ mod:RegisterEnableMob(60051, 60043, 59915) --Cobalt Jade Jasper
 -- Locals
 --
 
-local cobaltMine = (GetSpellInfo(129424))
 local jasperChainsTargets = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -20,6 +19,10 @@ local jasperChainsTargets = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.petrifications = "Petrification"
+	L.petrifications_desc = "Warning for when bosses start petrification"
+	L.petrifications_icon = 125092
+
 	L.overload = "Overload" -- maybe should use a spellId that says exactly "Overload"
 	L.overload_desc = "Warning for all types of overloads."
 	L.overload_icon = 77222 -- overload like icon
@@ -32,8 +35,8 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:5772", "FLASHSHAKE", "SAY"}, {130395, "FLASHSHAKE", "PROXIMITY"},
-		"overload", "berserk", "bosskill",
+		"ej:5772", {130395, "FLASHSHAKE", "PROXIMITY"},
+		"petrifications", "overload", "berserk", "bosskill",
 	}, {
 		["ej:5772"] = "ej:5771",
 		[130395] = "ej:5774",
@@ -54,7 +57,7 @@ end
 
 function mod:OnEngage(diff)
 
-	self:Berserk(360) -- assume
+	self:Berserk(480) -- assume
 
 end
 
@@ -93,35 +96,21 @@ function mod:JasperChainsRemoved(player, _, _, _, spellName)
 	end
 end
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, _, spellId)
-		if spellName == cobaltMine then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				local player
-				for i=1, 4 do
-					if UnitName("boss"..i) == "Cobalt Guardian" then
-						player = UnitExists("boss"..i.."target")
-						if player then
-							-- still does not work, gives tank as target all the time
-							player = UnitName("boss"..i.."target")
-						end
-					end
-				end
-				if player then
-					if UnitIsUnit("player", player) then
-						self:FlashShake("ej:5772")
-						self:Say("ej:5772", CL["say"]:format(spellName))
-						self:Bar("ej:5772", ("%s (%s)"):format(spellName, player), 3, spellId) -- so you can get super emphasize countdown before explosion
-					end
-					self:TargetMessage("ej:5772", spellName, player, "Urgent", spellId, "Alarm")
-				end
-				--self:Bar("ej:5772", spellName, 11, spellId) -- this is the cooldown on the spell, it is too frequent to be useful
-			end
-		end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
+	if not unitId:match("boss") then return end
+	-- we could be using the same colors as blizzard but they are too "faint" imo
+	if spellId == 115852 then -- cobalt
+		self:Message("petrifications", ("|c001E90FF%s|r"):format(spellName), nil, 115852, "Alert") -- blue
+	elseif spellId == 116006 then -- jade
+		self:Message("petrifications", ("|c00008000%s|r"):format(spellName), nil, 116006, "Alert") -- green
+	elseif spellId == 116036 then -- jasper
+		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, 116036, "Alert") -- red
+	elseif spellId == 116057 then -- amethyst
+		self:Message("petrifications", ("|c00800080%s|r"):format(spellName), nil, 116057, "Alert") -- purple
+	elseif spellId == 116057 then -- 116057
+		-- too frequent for a bar
+		self:Message("ej:5772", spellName, "Urgent", spellId)
 	end
 end
-
 

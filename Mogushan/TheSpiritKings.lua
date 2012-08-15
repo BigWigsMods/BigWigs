@@ -11,7 +11,7 @@ mod:RegisterEnableMob(60701, 60708, 60709, 60710) -- Zian of the Endless Shadows
 -- Locales
 --
 
-local annihilate, flankingOrders, pillage, cowardice = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756))
+local annihilate, flankingOrders, pillage, cowardice, imperviousShield = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756)), (GetSpellInfo(117961))
 local meng, qiang, subetai, zian = (EJ_GetSectionInfo(5835)), (EJ_GetSectionInfo(5841)), (EJ_GetSectionInfo(5846)), (EJ_GetSectionInfo(5852)) -- bosses
 local undyingShadows = (EJ_GetSectionInfo(5853))
 local pinnedTargets = mod:NewTargetList()
@@ -22,7 +22,7 @@ local pinnedTargets = mod:NewTargetList()
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.shield_removed = "Shield removed!"
 end
 L = mod:GetLocale()
 
@@ -32,7 +32,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 119521, 117910, -- qiang
+		"ej:5841", 119521, 117910, 117961, -- qiang
 		"ej:5852", 118303, -- zian
 		"ej:5846", 118047, 118122, -- subetai
 		"ej:5835", 117708, -- meng
@@ -48,8 +48,10 @@ end
 
 function mod:OnBossEnable()
 	-- qiang
-	self:Log("SPELL_CAST_START", "Annihilate", 119521)
+	self:Log("SPELL_CAST_START", "Annihilate", 119521, 117948)
 	self:Log("SPELL_CAST_SUCCESS", "FlankingOrders", 117910)
+	self:Log("SPELL_CAST_START", "Shield", 117961)
+	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 117961)
 
 	-- zian
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 118303)
@@ -99,12 +101,13 @@ function mod:CowardiceRemoved()
 end
 
 function mod:UNIT_POWER(unitId)
-	local id = tonumber((UnitGUID(unitId)):sub(7, 10), 16)
+	if not UnitExists(unitId) then return end
+	local id = self:GetCID(UnitGUID(unitId))
 	if id == 60708 then
 		local power = UnitPower(unitId)
 		if power > 75 then
 			self:UnregisterEvent("UNIT_POWER")
-			self:Message(117756, ("%s (%d)"):format(spellName, power), "Attention", 117756)
+			self:Message(117756, ("%s (%d)"):format(cowardice), power), "Attention", 117756)
 		end
 	end
 end
@@ -161,9 +164,16 @@ function mod:Annihilate(_, _, _, _, spellName)
 	self:Bar(119521, spellName, 35, 119521)
 end
 
-function mod:EngageCheck()
-	self:CheckBossStatus()
+function mod:Shield(_, _, _, _, spellName)
+	self:Message(117961, spellName, "Important", 117961, "Alert")
+	self:Bar(117961, spellName, 42, 117961)
+end
 
+function mod:ShieldRemoved()
+	self:Message(117961, L["shield_removed"], "Positive", 117961, "Info")
+end
+
+function mod:EngageCheck(diff)
 	for i=1, 4 do
 		if UnitExists("boss"..i) then
 			local id = tonumber((UnitGUID("boss"..i)):sub(7, 10), 16)
@@ -171,6 +181,9 @@ function mod:EngageCheck()
 			local hp = UnitHealth("boss"..i) / UnitHealthMax("boss"..i) * 100
 			if hp < 35 then return end --35 to be safe EJ says 30
 			if id == 60709 then -- qiang
+				if diff > 2 then
+					self:Bar(117961, imperviousShield, 40, 117961)
+				end
 				self:Bar(119521, annihilate, 10, 119521)
 				self:Bar(117910, flankingOrders, 26, 117910)
 				self:Message("ej:5841", qiang, "Positive", 117920)
@@ -187,20 +200,14 @@ function mod:EngageCheck()
 			end
 		end
 	end
+	self:CheckBossStatus()
 end
 
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-		if spellId == 118219 then
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				local id = tonumber((UnitGUID(unitId)):sub(7, 10), 16)
-				if id == 60701 or id == 60710 then
-					self:CloseProximity()
-				end
-			end
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
+	if spellId == 118219 and unitId:match("boss") then
+		local id = self:GetCID(UnitGUID(unitId))
+		if id == 60701 or id == 60710 then
+			self:CloseProximity()
 		end
 	end
 end

@@ -21,7 +21,8 @@ local amberMonstrosoty = EJ_GetSectionInfo(6254)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.explosion_boss = "Explosion on BOSS!"
+	L.explosion_you = "Explosion on YOU!"
 end
 L = mod:GetLocale()
 
@@ -73,8 +74,11 @@ function mod:AmberExplosionMonstrosity(_, _, _, _, spellName)
 	if UnitDebuff("player", reshapeLife) then
 		self:FlashShake(122402)
 	end
-	self:Bar(122402, "~"..spellName, 45, 122402) -- cooldown, don't move this
-	self:Message(122402, spellName, "Important", 122402, "Alert") -- might want to move this next to FNS, so it only warns for people who can do something about it
+	self:DelayedMessage(122402, 25, CL["custom_sec"]:format(L["explosion_boss"],20), "Attention", 122402)
+	self:DelayedMessage(122402, 30, CL["custom_sec"]:format(L["explosion_boss"],15), "Attention", 122402)
+	self:DelayedMessage(122402, 35, CL["custom_sec"]:format(L["explosion_boss"],10), "Attention", 122402)
+	self:Bar(122402, "~"..L["explosion_boss"], 45, 122402) -- cooldown, don't move this
+	self:Message(122402, L["explosion_boss"], "Important", 122402, "Alert") -- might want to move this next to FNS, so it only warns for people who can do something about it
 end
 
 function mod:ConcentratedMutation(_, _, _, _, spellName)
@@ -85,7 +89,10 @@ end
 function mod:AmberCarapace()
 	phase = 2
 	self:Message("ej:6246", amberMonstrosoty, "Attention", 122540)
-	self:Bar(122402, amberExplosion, 25, 122402) -- this is for the Monstrosity
+	self:DelayedMessage(122402, 38,CL["custom_sec"]:format(L["explosion_boss"],20), "Attention", 122402)
+	self:DelayedMessage(122402, 43,CL["custom_sec"]:format(L["explosion_boss"],15), "Attention", 122402)
+	self:DelayedMessage(122402, 48,CL["custom_sec"]:format(L["explosion_boss"],10), "Attention", 122402)
+	self:Bar(122402, L["explosion_boss"], 58, 122402) -- this is for the Monstrosity
 end
 
 function mod:ReshapeLife(player, _, _, _, spellName)
@@ -96,7 +103,7 @@ function mod:ReshapeLife(player, _, _, _, spellName)
 		self:Bar(122784, spellName, 15, 122784) -- might be too short for a bar
 	end
 	if UnitIsUnit("player", player) then
-		self:Bar(122398, ("%s (%s)"):format(amberExplosion, player), 13, 122398)
+		self:Bar(122398, ("%s (%s)"):format(L["explosion_you"], player), 13, 122398)
 	end
 end
 
@@ -108,9 +115,8 @@ end
 function mod:AmberExplosion(_, _, player, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(122398)
-		self:Bar(122398, ("%s (%s)"):format(spellName, player), 13, 122398) -- cooldown
-		self:Bar(122398, CL["cast"]:format(CL["you"]:format(spellName)), 2.5, 122398) -- too long text? need to distinguish this and Monstrosity cast
-		self:LocalMessage(122398, CL["you"]:format(spellName), "Personal", 122398, "Info")
+		self:Bar(122398, ("%s (%s)"):format(L["explosion_you"], player), 13, 122398) -- cooldown
+		self:LocalMessage(122398, CL["you"]:format(L["explosion_you"]), "Personal", 122398, "Info")
 	end
 end
 
@@ -124,6 +130,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	elseif unitId == "player" then
 		if not UnitDebuff("player", reshapeLife) then return end
 		local hp = UnitHealth("player") / UnitHealthMax("player") * 100
+		-- don't know how useful, since your hp might bounce up and down
 		if hp < 20 and not breakFreeWarned then
 			breakFreeWarned = true
 			self:LocalMessage(123060, breakFree, "Personal", 123060)

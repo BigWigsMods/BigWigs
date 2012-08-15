@@ -33,7 +33,7 @@ function mod:GetOptions()
 	return {
 		122752, 122768, 122789, { 122777, "PROXIMITY", "FLASHSHAKE", "SAY" },
 		122855, "ej:6320",
-		"berserk", "bosskill",
+		"berserk", "phases", "bosskill",
 	}, {
 		[122752] = "ej:6310",
 		["ej:6320"] = "ej:6315",
@@ -58,6 +58,7 @@ function mod:OnEngage(diff)
 	self:OpenProximity(8, 122777)
 	self:Berserk(360) -- assume
 	self:Bar("phases", day, 121, 122789)
+	self:Bar(122777, nightmares, 15.6, 122777)
 end
 
 --------------------------------------------------------------------------------
@@ -65,8 +66,14 @@ end
 --
 
 function mod:DreadShadows(player, _, _, _, spellName, stack)
-	if UnitIsUnit("player", player) and stack > 11 and stack % 3 == 0 then -- might need adjusting
-		self:LocalMessage(122768, ("%s (%d)"):format(spellName, stack), "Personal", 122768)
+	if self:Difficulty() > 2 then
+		if UnitIsUnit("player", player) and stack > 5 and stack % 3 == 0 then -- might need adjusting
+			self:LocalMessage(122768, ("%s (%d)"):format(spellName, stack), "Personal", 122768, "Info")
+		end
+	else
+		if UnitIsUnit("player", player) and stack > 11 and stack % 3 == 0 then -- might need adjusting
+			self:LocalMessage(122768, ("%s (%d)"):format(spellName, stack), "Personal", 122768, "Info")
+		end
 	end
 end
 
@@ -110,40 +117,25 @@ do
 			end
 		end
 	end
-	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
+		if not unitId:match("boss") then return end
 		if spellId == 123252 then -- end of night phase
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:CloseProximity(122777)
-				self:Message("phases", day, "Positive", 122789)
-				self:Bar("phases", night, 121, 122768)
-				self:Bar("ej:6320", summonUnstableSha, 18, 122938)
-			end
+			self:CloseProximity(122777)
+			self:Message("phases", day, "Positive", 122789)
+			self:Bar("phases", night, 121, 122768)
+			self:Bar("ej:6320", summonUnstableSha, 18, 122938)
 		elseif spellId == 122767 then -- start of night phase
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:OpenProximity(8, 122777)
-				self:Message("phases", night, "Positive", 122768)
-				self:Bar("phases", day, 121, 122789)
-				self:SendMessage("BigWigs_StopBar", self, summonUnstableSha)
-				self:SendMessage("BigWigs_StopBar", self, sunBreath)
-			end
+			self:OpenProximity(8, 122777)
+			self:Message("phases", night, "Positive", 122768)
+			self:Bar("phases", day, 121, 122789)
+			self:SendMessage("BigWigs_StopBar", self, summonUnstableSha)
+			self:SendMessage("BigWigs_StopBar", self, sunBreath)
 		elseif spellId == 122953 then -- summon unstable sha
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				self:Message("ej:6320", spellName, "Important", 122938, "Alert")
-				self:Bar("ej:6320", spellName, 18, 122938)
-			end
-		elseif spellId == 122770 then -- Nightmares
-			local t = GetTime()
-			if t-prev > 5 then
-				prev = t
-				getNightmaresTarget() -- probably won't work
-			end
+			self:Message("ej:6320", spellName, "Important", 122938, "Alert")
+			self:Bar("ej:6320", spellName, 18, 122938)
+		elseif spellId == 122770 or spellId ==122775 then -- Nightmares
+			self:Bar(122777, spellName, 15, 122777)
+			getNightmaresTarget() -- probably won't work
 		end
 	end
 end
