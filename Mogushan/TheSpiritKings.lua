@@ -107,7 +107,7 @@ function mod:UNIT_POWER(unitId)
 		local power = UnitPower(unitId)
 		if power > 75 then
 			self:UnregisterEvent("UNIT_POWER")
-			self:Message(117756, ("%s (%d)"):format(cowardice), power), "Attention", 117756)
+			self:Message(117756, ("%s (%d)"):format(cowardice, power), "Attention", 117756)
 		end
 	end
 end
