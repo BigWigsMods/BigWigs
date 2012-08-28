@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 50001
 
 ## Title: Big Wigs [|cffeda55fDragon Soul|r]
 ## Title-ruRU: Big Wigs [|cffeda55fДуша Дракона|r]
