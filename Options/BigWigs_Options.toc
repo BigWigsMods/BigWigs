@@ -17,7 +17,7 @@
 ## Notes-koKR: Big Wigs 구성 옵션
 
 ## LoadOnDemand: 1
-## Dependencies: BigWigs
+## Dependencies: BigWigs, BigWigs_Core, BigWigs_Plugins
 
 libs.xml
 modules.xml
