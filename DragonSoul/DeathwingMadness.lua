@@ -177,7 +177,7 @@ end
 function mod:ElementiumBolt(_, spellId, _, _, spellName)
 	self:FlashShake(105651)
 	self:Message(105651, spellName, "Important", spellId, "Long")
-	self:Bar(105651, L["bolt_explode"], UnitBuff("player", (GetSpellInfo(109624))) and 18 or 8, spellId)
+	self:Bar(105651, L["bolt_explode"], UnitBuff("player", (GetSpellInfo(110628))) and 18 or 8, spellId)
 end
 
 function mod:Cataclysm(_, spellId, _, _, spellName)
