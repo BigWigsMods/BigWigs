@@ -76,7 +76,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 55265)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(420) -- confirmed
 	self:Bar("stomp_boss", L["stomp_boss"], 11, L["stomp_boss_icon"])
 	self:Bar("crystal_boss", L["crystal"], 16, L["crystal_boss_icon"])
@@ -100,7 +100,7 @@ function mod:BloodOver(_, unit, _, _, _, spellId)
 	if unit == "boss1" and spellId == 103851 then
 		self:Bar(spellId, L["blood"], 75, spellId)
 		crystalCount, stompCount = 0, 1
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:Bar("stomp_boss", "~"..self.displayName.." - "..L["stomp_boss"], 15, L["stomp_boss_icon"])
 			self:Bar("crystal_boss", "~"..self.displayName.." - "..L["crystal"], 22, L["crystal_boss_icon"])
 		else
@@ -111,11 +111,11 @@ function mod:BloodOver(_, unit, _, _, _, spellId)
 end
 
 function mod:Stomp(_, spellId, source, _, spellName)
-	if self:Difficulty() > 2 and UnitExists("boss2") then -- Check if heroic and if kohncrom has spawned yet.
+	if self:Heroic() and UnitExists("boss2") then -- Check if heroic and if kohncrom has spawned yet.
 		if source == kohcrom then
 			self:Message("stomp_add", source.." - "..spellName, "Important", spellId)
 		else -- Since we trigger bars off morchok casts, we gotta make sure kohcrom isn't caster to avoid bad timers.
-			self:Bar("stomp_add", "~"..kohcrom.." - "..spellName, (self:Difficulty() == 3) and 6 or 5, spellId) -- 6sec after on 10 man, 5 sec on 25
+			self:Bar("stomp_add", "~"..kohcrom.." - "..spellName, (self:Difficulty() == 5) and 6 or 5, spellId) -- 6sec after on 10 man hc, 5 sec on 25
 			self:Message("stomp_boss", source.." - "..spellName, "Important", spellId)
 			if stompCount < 4 then
 				self:Bar("stomp_boss", "~"..source.." - "..spellName, 12, spellId)
@@ -161,11 +161,11 @@ end
 
 function mod:ResonatingCrystal(_, spellId, source, _, spellName)
 	if source == self.displayName then crystalCount = crystalCount + 1 end -- Only increment count off morchok casts.
-	if self:Difficulty() > 2 then
+	if self:Heroic() then
 		self:Message((source == kohcrom) and "crystal_add" or "crystal_boss", source.." - "..L["crystal"], "Urgent", spellId, "Alarm")
 		self:Bar((source == kohcrom) and "crystal_add" or "crystal_boss", source.." - "..(L["explosion"]), 12, spellId)
 		if UnitExists("boss2") and crystalCount > 1 and source == self.displayName then -- The CD bar will only start off morchok's 2nd crystal, if kohcrom is already summoned.
-			self:Bar("crystal_add", "~"..kohcrom.." - "..L["crystal"], (self:Difficulty() == 3) and 6 or 5, spellId) -- Same as stomp, 6/5
+			self:Bar("crystal_add", "~"..kohcrom.." - "..L["crystal"], (self:Difficulty() == 5) and 6 or 5, spellId) -- Same as stomp, 6/5
 		end
 	else
 		self:Message("crystal_boss", spellName, "Urgent", spellId, "Alarm")

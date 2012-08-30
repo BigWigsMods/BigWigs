@@ -52,11 +52,11 @@ function mod:OnBossEnable()
 	self:Death("Win", 53494)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(360)
 	self:Bar(99259, (GetSpellInfo(99259)), 5, 99259) -- Shard of Torment
 	self:Bar("ej:2598", L["blade_bar"], 30, 99352)
-	if diff > 2 then
+	if self:Heroic() then
 		self:Bar(99516, L["link_message"], 25, 99516) -- Countdown
 		countdownCounter = 1
 	end

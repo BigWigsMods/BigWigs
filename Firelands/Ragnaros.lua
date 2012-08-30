@@ -102,13 +102,13 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 52409, 53140) -- Ragnaros, Son of Flame
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Bar(98237, L["hand_bar"], 25, 98237)
 	self:Bar(98710, lavaWaves, 30, 98710)
 	self:OpenProximity(6)
 	self:Berserk(1080)
 	lavaWavesCD, dreadflameCD = 30, 40
-	if diff > 2 then
+	if self:Heroic() then
 		engulfingCD = 60
 	else
 		engulfingCD = 40
@@ -126,7 +126,7 @@ end
 
 function mod:Phase4()
 	--10% Yell is Phase 4 for heroic, and victory for normal
-	if self:Difficulty() > 2 then
+	if self:Heroic() then
 		self:SendMessage("BigWigs_StopBar", self, livingMeteor)
 		self:SendMessage("BigWigs_StopBar", self, lavaWaves)
 		self:SendMessage("BigWigs_StopBar", self, moltenSeed)
@@ -217,7 +217,7 @@ function mod:IntermissionEnd()
 	if phase == 1 then
 		lavaWavesCD = 40
 		self:OpenProximity(6)
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:Bar(98498, "~"..moltenSeed, 15, 98498)
 			self:Bar(98710, lavaWaves, 7.5, 98710)
 			self:Bar(100171, worldInFlames, 40, 100171)
@@ -227,7 +227,7 @@ function mod:IntermissionEnd()
 		end
 	elseif phase == 2 then
 		engulfingCD = 30
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:Bar(100171, worldInFlames, engulfingCD, 100171)
 		end
 		self:Bar(99317, "~"..livingMeteor, 52, 99317)
@@ -257,7 +257,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 	end
 	self:Message(98953, L["intermission_message"], "Positive", spellId, "Long")
 	self:Bar(98953, spellName, 7, spellId)
-	self:Bar(98953, L["intermission_bar"], self:Difficulty() > 2 and 60 or 57, spellId) -- They are probably both 60
+	self:Bar(98953, L["intermission_bar"], self:Heroic() and 60 or 57, spellId) -- They are probably both 60
 	self:CloseProximity()
 	sons = 8
 	self:SendMessage("BigWigs_StopBar", self, L["hand_bar"])
@@ -267,7 +267,7 @@ function mod:SplittingBlow(_, spellId, _, _, spellName)
 end
 
 function mod:SulfurasSmash(_, spellId)
-	if phase == 1 and self:Difficulty() ~= 3 then
+	if phase == 1 and self:Difficulty() ~= 5 then
 		self:Bar(98263, "~"..wrathOfRagnaros, 12, 98263)
 	end
 	self:Message(98710, lavaWaves, "Attention", spellId, "Info")

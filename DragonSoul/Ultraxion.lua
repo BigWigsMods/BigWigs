@@ -88,7 +88,7 @@ function mod:Warmup()
 	self:Bar("warmup", self.displayName, 30, "achievment_boss_ultraxion")
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(360)
 	self:Bar(106371, GetSpellInfo(106371), 45, 106371) -- Hour of Twilight
 	self:Bar("crystal", L["crystal_red"], 80, L["crystal_icon"])
@@ -122,7 +122,7 @@ function mod:HourofTwilight(_, spellId, _, _, spellName)
 	self:Message(106371, ("%s (%d)"):format(spellName, hourCounter), "Important", spellId, "Alert")
 	hourCounter = hourCounter + 1
 	self:Bar(106371, ("%s (%d)"):format(spellName, hourCounter), 45, spellId)
-	self:Bar("cast", CL["cast"]:format(L["twilight"]), self:Difficulty() > 2 and 3 or 5, spellId)
+	self:Bar("cast", CL["cast"]:format(L["twilight"]), self:Heroic() and 3 or 5, spellId)
 	self:FlashShake(106371)
 end
 

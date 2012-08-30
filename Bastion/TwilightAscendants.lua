@@ -118,8 +118,8 @@ function mod:OnBossEnable()
 	self:Death("Win", 43735) -- Elementium Monstrosity
 end
 
-function mod:OnEngage(diff)
-	if diff > 2 then
+function mod:OnEngage()
+	if self:Heroic() then
 		self:OpenProximity(10)
 	end
 

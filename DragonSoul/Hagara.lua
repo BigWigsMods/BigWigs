@@ -69,7 +69,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 55689)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(480) -- 10 man heroic confirmed
 	-- need to find a way to determine which one is at first after engage
 	-- apart from looking at her weapon enchants

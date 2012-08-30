@@ -69,7 +69,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 52571)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(600) -- assumed
 	specialCounter = 1
 	form = "cat"

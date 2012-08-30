@@ -60,10 +60,10 @@ function mod:Warmup(_, msg)
 	end
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:SendMessage("BigWigs_StopBar", self, self.displayName)
 	self:Berserk(450)
-	if diff < 3 then
+	if not self:Heroic() then
 		self:Bar(88853, L["next_system_failure"], 90, 88853) --happens randomly at either 60 or 90 on heroic
 	end
 	self:Bar(82848, GetSpellInfo(82848), 30, 82848) --Massacre
@@ -84,7 +84,7 @@ end
 
 function mod:SystemFailureEnd(_, spellId)
 	if self.isEngaged then --To prevent firing after a wipe
-		if self:Difficulty() < 3 then
+		if not self:Heroic() then
 			self:Bar(88853, L["next_system_failure"], 65, spellId)
 		end
 		self:FlashShake(88853)

@@ -85,11 +85,10 @@ function mod:OnBossEnable()
 	self:Death("Win", 43324)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	bigcount = 1
 	oozecount = 1
 	self:Bar(91303, L["worship_cooldown"], 11, 91303)
-	-- self:Bar(81628, L["adherent_bar"]:format(bigcount), diff > 2 and 75 or 58, 81628)
 	self:Berserk(600)
 	worshipCooldown = 24 -- its not 40 sec till the 1st add
 	firstFury = 0
@@ -133,7 +132,7 @@ do
 			else
 				mod:SecondaryIcon(81685, player)
 			end
-			if mod:Difficulty() == 4 then counter = counter + 1 end
+			if mod:Difficulty() == 6 then counter = counter + 1 end
 		end
 		if counter > 2 then counter = 1 end
 	end
@@ -176,7 +175,7 @@ end
 function mod:Orders(_, spellId, _, _, spellName)
 	self:Message("orders", spellName, "Urgent", spellId)
 	if spellId == 81556 then
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:Bar(81571, L["unleashed_shadows"], 24, 81571) -- verified for 25man heroic
 		else
 			self:Bar(81571, L["unleashed_shadows"], 15, 81571) -- verified for 10man normal

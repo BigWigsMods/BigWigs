@@ -81,7 +81,7 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 41376, 41948)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(630) -- is it really?
 	self:Bar(77939, L["discharge_bar"], 30, 77939)
 	phase, deadAdds, shadowBlazeTimer = 1, 0, 35
@@ -127,7 +127,7 @@ end
 function mod:Deaths(mobId)
 	if mobId == 41948 then
 		deadAdds = deadAdds + 1
-		if self:Difficulty() > 2 and not phase3warned then
+		if self:Heroic() and not phase3warned then
 			self:SendMessage("BigWigs_StopBar", self, CL["phase"]:format(phase))
 			phase = 3
 			self:Message("phase", CL["phase"]:format(phase), "Attention", 81007)
@@ -147,8 +147,7 @@ end
 function mod:PhaseTwo()
 	phase = 2
 	self:Message("phase", CL["phase"]:format(phase), "Attention", 78621)
-	local d = self:Difficulty()
-	if d == 4 then
+	if self:Difficulty() == 6 then
 		-- Heroic 25man (diff 4) probably 4 minutes
 		self:Bar("phase", CL["phase"]:format(phase), 240, 78621) -- random guessed number
 	else
@@ -160,10 +159,9 @@ function mod:PhaseTwo()
 end
 
 local function nextBlaze()
-	local diff = mod:Difficulty()
-	if shadowBlazeTimer > 10 and diff > 2 then
+	if shadowBlazeTimer > 10 and mod:Heroic() then
 		shadowBlazeTimer = shadowBlazeTimer - 5
-	elseif shadowBlazeTimer > 15 and diff < 3 then
+	elseif shadowBlazeTimer > 15 and not mod:Heroic() then
 		shadowBlazeTimer = shadowBlazeTimer - 5
 	end
 	mod:Message(81007, shadowblaze, "Important", 81007, "Alarm")

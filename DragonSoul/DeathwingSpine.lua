@@ -79,14 +79,14 @@ function mod:OnBossEnable()
 end
 
 -- Note: Engage is not called as early as you may expect. It is about 4s from the start of combat
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	wipe(corruptionStatus)
 	lastBar = true
 	bloodCount = 0
 
 	if not self:LFR() then
 		-- Initial bars for grip since we cannot trigger off of it (pad by -5s)
-		if self:Difficulty() % 2 == 0 then
+		if diff % 2 == 0 then
 			-- 25 man has 2 casts of 8s
 			self:Bar(105490, "~"..fieryGrip, 11, 105490)
 		else

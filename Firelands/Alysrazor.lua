@@ -108,10 +108,10 @@ function mod:OnBossEnable()
 	self:Death("Win", 52530)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	meteorCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
 	wipe(initiateTimes)
-	if diff > 2 then
+	if self:Heroic() then
 		initiateTimes = {22, 63, 21, 21, 40}
 		self:Message(99816, L["engage_message"]:format(4), "Attention", "inv_misc_pheonixpet_01")
 		self:Bar(99816, L["stage_message"]:format(2), 250, 99816)
@@ -210,7 +210,7 @@ end
 
 -- don't need molting warning for heroic because molting happens at every firestorm
 function mod:Molting(_, spellId, _, _, spellName)
-	if self:Difficulty() < 3 then
+	if not self:Heroic() then
 		moltCount = moltCount + 1
 		self:Message(99464, spellName, "Positive", spellId)
 		if moltCount < 3 then
@@ -286,7 +286,7 @@ do
 			self:UnregisterEvent("UNIT_POWER")
 			initiateCount = 0
 			self:Bar("initiate", L["initiate_both"], 13.5, 97062)
-			if self:Difficulty() > 2 then
+			if self:Heroic() then
 				meteorCount = 0
 				self:Bar("meteor", L["meteor"], 19, 100761)
 				self:Bar(100744, firestorm, 72, 100744)

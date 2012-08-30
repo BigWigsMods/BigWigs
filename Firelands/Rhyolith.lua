@@ -65,8 +65,8 @@ function mod:OnBossEnable()
 	self:Death("Win", 52558)
 end
 
-function mod:OnEngage(diff)
-	self:Berserk(diff > 2 and 300 or 360, nil, nil, 101304)
+function mod:OnEngage()
+	self:Berserk(self:Heroic() and 300 or 360, nil, nil, 101304)
 	self:Bar(97282, L["stomp"], 15, 97282)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	lastFragments = GetTime()

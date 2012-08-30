@@ -139,7 +139,7 @@ function mod:LastPhase(_, spellId)
 	self:Message("last_phase", EJ_GetSectionInfo(4046), "Attention", spellId) -- Stage 2: The Last Stand
 	self:Bar("fragment", L["fragment"], 10.5, L["fragment_icon"])
 	self:Bar("terror", L["terror"], 35.5, L["terror_icon"])
-	if self:Difficulty() > 2 then
+	if self:Heroic() then
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	end
 end
@@ -150,7 +150,7 @@ function mod:AssaultAspects()
 		curPercent = 20
 		self:Bar("impale", impale, 22, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 40.5, 105651) -- Elementium Bolt
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:Bar("hemorrhage", hemorrhage, 55.5, 105863)
 			self:Bar("ej:4347", L["parasite"], 11, 108649)
 		else
@@ -162,7 +162,7 @@ function mod:AssaultAspects()
 	else
 		self:Bar("impale", impale, 27.5, 106400)
 		self:Bar(105651, GetSpellInfo(105651), 55.5, 105651) -- Elementium Bolt
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:Bar("hemorrhage", hemorrhage, 70.5, 105863)
 			self:Bar("ej:4347", L["parasite"], 22.5, 108649)
 		else

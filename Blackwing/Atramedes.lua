@@ -59,12 +59,12 @@ function mod:OnBossEnable()
 	self:Death("Win", 41442)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Bar(78075, sonicBreath, 23, 78075)
 	self:Bar(77840, searingFlame, 45, 77840)
 	self:DelayedMessage(77840, 35, L["searing_soon"], "Attention", 77840)
 	self:Bar("air_phase", L["air_phase"], 92, 5740) -- Rain of Fire Icon
-	if diff > 2 then
+	if self:Heroic() then
 		self:RegisterEvent("UNIT_AURA")
 		self:Berserk(600)
 	end

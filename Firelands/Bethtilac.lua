@@ -78,7 +78,7 @@ do
 		scheduled = mod:ScheduleTimer(droneWarning, 60)
 	end
 
-	function mod:OnEngage(diff)
+	function mod:OnEngage()
 		devastateCount = 1
 		lastBroodlingTarget = ""
 		local devastate = L["devastate_message"]:format(1)
@@ -104,7 +104,7 @@ do
 	local burst = GetSpellInfo(99990)
 
 	function mod:BroodlingWatcher()
-		if self:Difficulty() < 3 then return end
+		if not self:Heroic() then return end
 		local broodling = self:GetUnitIdByGUID(53745)
 		if broodling and UnitExists(broodling.."target") and UnitExists(lastBroodlingTarget) then
 			if UnitIsUnit(broodling.."target", lastBroodlingTarget) then return end

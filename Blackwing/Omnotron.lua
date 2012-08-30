@@ -78,8 +78,8 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 42166, 42179, 42178, 42180)
 end
 
-function mod:OnEngage(diff)
-	if diff > 2 then
+function mod:OnEngage()
+	if self:Heroic() then
 		self:Berserk(600)
 	end
 end
@@ -114,7 +114,7 @@ end
 do
 	local prev = 0
 	function mod:Switch(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
-		local timer = self:Difficulty() > 2 and 27 or 42
+		local timer = self:Heroic() and 27 or 42
 		local t = GetTime()
 		if (t - prev) > timer then
 			prev = t

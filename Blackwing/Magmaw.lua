@@ -84,8 +84,8 @@ function mod:OnBossEnable()
 	self:Death("Win", 41570)
 end
 
-function mod:OnEngage(diff)
-	if diff > 2 then
+function mod:OnEngage()
+	if self:Heroic() then
 		self:Bar("blazing", L["blazing_bar"], 30, "SPELL_SHADOW_RAISEDEAD")
 	end
 	self:Berserk(600)

@@ -56,7 +56,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 53691)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Bar(100002, (GetSpellInfo(100002)), 23, 100002) -- Hurl Spear
 	self:Berserk(600)
 end
@@ -109,7 +109,7 @@ function mod:WaryDog(unit, spellId, _, _, spellName, _, _, _, _, dGUID)
 	local creatureId = self:GetCID(dGUID)
 	if creatureId == 53695 or creatureId == 53694 then
 		self:Message("immolation", L["wary_dog"]:format(unit), "Attention", 100167)
-		self:Bar("immolation", L["wary_dog"]:format(unit), self:Difficulty() > 2 and 25 or 15, 100167)
+		self:Bar("immolation", L["wary_dog"]:format(unit), self:Heroic() and 25 or 15, 100167)
 	end
 end
 

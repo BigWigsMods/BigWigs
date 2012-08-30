@@ -74,7 +74,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 56427)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Bar(107588, (GetSpellInfo(107588)), 47, 107588) -- Twilight Onslaught
 	if not self:LFR() then
 		self:Bar("sapper", L["sapper"], 70, L["sapper_icon"])

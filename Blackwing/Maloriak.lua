@@ -115,8 +115,8 @@ function mod:OnBossEnable()
 	self:Death("Win", 41378)
 end
 
-function mod:OnEngage(diff)
-	if diff > 2 then
+function mod:OnEngage()
+	if self:Heroic() then
 		self:Bar("phase", L["next_phase"], 16, "INV_ELEMENTAL_PRIMAL_SHADOW")
 		self:Berserk(720)
 	else
@@ -147,8 +147,7 @@ end
 
 local function nextPhase(timeToNext)
 	phaseCounter = phaseCounter + 1
-	local diff = mod:Difficulty()
-	if (diff < 3 and phaseCounter == 2) or (diff > 2 and phaseCounter == 3) then
+	if (not mod:Heroic() and phaseCounter == 2) or (mod:Heroic() and phaseCounter == 3) then
 		mod:Bar("phase", L["green_phase_bar"], timeToNext, "INV_POTION_162")
 	else
 		mod:Bar("phase", L["next_phase"], timeToNext, "INV_ALCHEMY_ELIXIR_EMPTY")

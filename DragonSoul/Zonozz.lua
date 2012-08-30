@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 55308)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	if not self:LFR() then
 		self:Berserk(360) -- confirmed 10 man heroic
 	end
@@ -85,7 +85,7 @@ function mod:Darkness(_, unit, spellName, _, _, spellId)
 		self:Bar("darkness", L["darkness"], 30, spellId)
 		self:Message("darkness", L["darkness"], "Important", spellId, "Info")
 		self:Bar(103434, "~"..GetSpellInfo(103434), 37, 103434) -- Shadows
-		local isHC = self:Difficulty() > 2 and 45 or 54
+		local isHC = self:Heroic() and 45 or 54
 		if (GetTime() - ballTimer) > isHC then
 			self:Bar("ball", L["ball"], isHC == 45 and isHC or 36, L["ball_icon"])
 		end
@@ -121,7 +121,7 @@ function mod:ShadowsApplied(player, spellId)
 		self:LocalMessage(103434, CL["you"]:format(L["shadows"]), "Personal", spellId, "Alert")
 		self:Say(103434, CL["say"]:format(L["shadows"]))
 		self:FlashShake(103434)
-		if self:Difficulty() > 2 then
+		if self:Heroic() then
 			self:OpenProximity(10, 103434)
 		end
 	end

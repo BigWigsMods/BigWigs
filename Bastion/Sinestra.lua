@@ -75,7 +75,7 @@ local function populateOrbList()
 	for i = 1, GetNumGroupMembers() do
 		local n, _, g = GetRaidRosterInfo(i)
 		-- do some checks for 25/10 man raid size so we don't warn for ppl who are not in the instance
-		if (GetInstanceDifficulty() == 3 and g < 3) or (GetInstanceDifficulty() == 4 and g < 6) then
+		if (mod:Difficulty() == 5 and g < 3) or (mod:Difficulty() == 6 and g < 6) then
 			-- Tanking something, but not a tank (aka not tanking Sinestra or Whelps)
 			if UnitThreatSituation(n) == 3 and isTargetableByOrb(n) then
 				if UnitIsUnit(n, "player") then playerInList = true end

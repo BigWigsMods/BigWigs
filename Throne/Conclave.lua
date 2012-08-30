@@ -69,7 +69,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 45872) -- They die at the same time, enough to check for one
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(480)
 	firstWindBlast = true
 	toxicSporesWarned = false

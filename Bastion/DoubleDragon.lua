@@ -83,7 +83,7 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 45992, 45993)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	markWarned = false
 	self:Bar(86840, devouringFlames, 25, 86840)
 	self:Bar(86788, blackout, 11, 86788)
