@@ -281,7 +281,13 @@ do
 	boss.GetInstanceDifficulty = boss.Difficulty
 
 	function boss:LFR()
-		if IsPartyLFG() and IsInLFGDungeon() then return true end
+		local _, _, diff = GetInstanceInfo()
+		return diff == 7
+	end
+
+	function boss:Heroic()
+		local _, _, diff = GetInstanceInfo()
+		return diff == 5 or diff == 6
 	end
 
 	function boss:GetCID(guid)
