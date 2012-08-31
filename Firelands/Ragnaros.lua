@@ -244,7 +244,9 @@ function mod:HandofRagnaros(_, spellId)
 end
 
 function mod:WrathofRagnaros(_, spellId, _, _, spellName)
-	self:Bar(98263, "~"..spellName, 25, spellId)
+	if self:Difficulty() == 5 then
+		self:Bar(98263, "~"..spellName, 25, spellId)
+	end
 end
 
 function mod:SplittingBlow(_, spellId, _, _, spellName)
