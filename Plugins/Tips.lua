@@ -376,7 +376,7 @@ do
 		nextButton:SetPushedTexture("Interface\\Buttons\\UI-GroupLoot-Dice-Down")
 		nextButton:SetHighlightTexture("Interface\\Buttons\\UI-GroupLoot-Dice-Highlight")
 
-		coolButton = CreateFrame("Button", "BWTipCloseButton", window, "UIPanelButtonTemplate2")
+		coolButton = CreateFrame("Button", "BWTipCloseButton", window, "UIPanelButtonTemplate")
 		coolButton:SetPoint("BOTTOMLEFT", nextButton, "BOTTOMRIGHT", 4, 0)
 		coolButton:SetPoint("RIGHT", window, "RIGHT", -16, 0)
 		coolButton:SetHeight(22)
