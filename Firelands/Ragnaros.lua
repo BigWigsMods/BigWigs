@@ -15,7 +15,7 @@ local blazingHeatTargets = mod:NewTargetList()
 local sons = 8
 local phase = 1
 local lavaWavesCD, engulfingCD, dreadflameCD = 30, 40, 40
-local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(100292)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
+local moltenSeed, lavaWaves, fixate, livingMeteor, wrathOfRagnaros = (GetSpellInfo(98498)), (GetSpellInfo(98928)), (GetSpellInfo(99849)), (GetSpellInfo(99317)), (GetSpellInfo(98263))
 local dreadflame, cloudburst, worldInFlames = (GetSpellInfo(100675)), (GetSpellInfo(100714)), (GetSpellInfo(100171))
 local meteorCounter, meteorNumber = 1, {1, 2, 4, 6, 8}
 local intermissionHandle = nil
@@ -86,7 +86,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
-	self:Log("SPELL_CAST_SUCCESS", "WrathofRagnaros", 100114) -- only 10 man heroic spellId!
+	self:Log("SPELL_CAST_SUCCESS", "WrathofRagnaros", 98263)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
 	self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 98164)
 	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
@@ -143,7 +143,7 @@ function mod:Phase4()
 end
 
 function mod:Dreadflame()
-	if not UnitDebuff("player", (GetSpellInfo(101015))) then return end -- No Deluge on you = you don't care
+	if not UnitDebuff("player", (GetSpellInfo(100757))) then return end -- No Deluge on you = you don't care
 	self:Message(100675, dreadflame, "Important", 100675, "Alarm")
 	self:Bar(100675, dreadflame, dreadflameCD, 100675)
 	if dreadflameCD > 10 then
