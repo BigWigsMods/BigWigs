@@ -20,6 +20,7 @@ mod:RegisterEnableMob(60583, 60585, 60586) -- Kaolan, Regail, Asani
 
 local defiledGround = (GetSpellInfo(117988))
 local lightningPrsionList = mod:NewTargetList()
+local bossDead
 
 --------------------------------------------------------------------------------
 -- Localization
