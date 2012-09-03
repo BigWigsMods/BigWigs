@@ -856,11 +856,11 @@ do
 end
 
 do
-	local errorNoStyle = "No style with the ID %q has been registered. Reverting to default style."
+	local errorNoStyle = "Big Wigs: No style with the ID %q has been registered. Reverting to default style."
 	local function noop() end
 	function plugin:SetBarStyle(style)
 		if type(style) ~= "string" or not barStyles[style] then
-			error(errorNoStyle:format(tostring(style)))
+			print(errorNoStyle:format(tostring(style)))
 			db.barStyle = "Default"
 			style = "Default"
 		end
