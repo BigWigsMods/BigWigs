@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 
 	self:Emote("GatherStrength", L["gather_strength_emote"])
 
-	self:Log("SPELL_AURA_APPLIED", "StormShield", 95865, 93059)
+	self:Log("SPELL_AURA_APPLIED", "StormShield", 93059)
 	self:Log("SPELL_CAST_SUCCESS", "WindBlast", 86193)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WindChill", 84645)
 	self:Log("SPELL_CAST_SUCCESS", "Nurture", 85422)
@@ -77,13 +77,13 @@ function mod:OnEngage()
 	self:Bar(86205, soothingBreeze, 16.2, 86205)
 
 	local flag = BigWigs.C.BAR
-	local stormShield, nurture, windBlast = GetSpellInfo(95865), GetSpellInfo(85422), GetSpellInfo(86193)
+	local stormShield, nurture, windBlast = GetSpellInfo(93059), GetSpellInfo(85422), GetSpellInfo(86193)
 	if bit.band(self.db.profile.storm_shield, flag) == flag and bit.band(self.db.profile[nurture], flag) == flag and bit.band(self.db.profile[windBlast], flag) == flag then
 		self:Bar(85422, nurture.."/"..windBlast.."/"..stormShield, 30, "achievement_boss_murmur")
 	else
 		self:Bar(85422, nurture, 30, 85422)
 		self:Bar(86193, windBlast, 30, 86193)
-		self:Bar("storm_shield", stormShield, 30, 95865)
+		self:Bar("storm_shield", stormShield, 30, 93059)
 	end
 end
 
