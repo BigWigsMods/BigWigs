@@ -11,7 +11,8 @@ mod:RegisterEnableMob(60701, 60708, 60709, 60710) -- Zian of the Endless Shadows
 -- Locales
 --
 
-local annihilate, flankingOrders, pillage, cowardice, imperviousShield = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756)), (GetSpellInfo(117961))
+local annihilate, flankingOrders, pillage, cowardice = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756))
+local imperviousShield, shieldOfDarkness, sleightOfHand = (GetSpellInfo(117961)), (GetSpellInfo(117697)), (GetSpellInfo(118162))
 local meng, qiang, subetai, zian = (EJ_GetSectionInfo(5835)), (EJ_GetSectionInfo(5841)), (EJ_GetSectionInfo(5846)), (EJ_GetSectionInfo(5852)) -- bosses
 local undyingShadows = (EJ_GetSectionInfo(5853))
 local pinnedTargets = mod:NewTargetList()
@@ -32,9 +33,9 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 119521, 117910, 117961, -- qiang
-		"ej:5852", 118303, -- zian
-		"ej:5846", 118047, 118122, -- subetai
+		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"},   -- qiang
+		"ej:5852", 118303, {117697, "FLASHSHAKE"}, -- zian
+		"ej:5846", 118047, 118122, {118162, "FLASHSHAKE"}, -- subetai
 		"ej:5835", 117708, -- meng
 		"proximity", "berserk", "bosskill",
 	}, {
@@ -55,10 +56,12 @@ function mod:OnBossEnable()
 
 	-- zian
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 118303)
+	self:Log("SPELL_CAST_START", "ShieldofDarkness", 117697)
 
 	-- subetai
 	self:Log("SPELL_CAST_SUCCESS", "Pillage", 118047)
 	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 118135)
+	self:Log("SPELL_CAST_START", "SleightofHand", 118162)
 
 	-- meng
 	self:Log("SPELL_CAST_START", "MaddeningShout", 117708)
@@ -113,12 +116,18 @@ function mod:UNIT_POWER(unitId)
 end
 
 function mod:MaddeningShout(_, _, _, _, spellName)
-	self:Message(117708, spellName, "Important", 119521, "Alert")
+	self:Message(117708, spellName, "Urgent", 119521, "Alarm")
 	if isBossActiveById(60708) then
 		self:Bar(117708, "~"..spellName, 45, 117708)
 	else
 		self:Bar(117708, "~"..spellName, 76, 117708)
 	end
+end
+
+function mod:ShieldofDarkness(_, _, _, _, spellName)
+	self:Message(117697, spellName, "Important", 117697, "Alert")
+	self:Bar(117697, spellName.."~", 42.5, 117697)
+	self:FlashShake(117697)
 end
 
 -- subetai
@@ -142,6 +151,12 @@ function mod:Pillage(_, _, _, _, spellName)
 	self:Bar(118047, spellName, 41, 118047)
 end
 
+function mod:SleightofHand(_, _, _, _, spellName)
+	self:Message(118162, spellName, "Important", 118162, "Alert")
+	self:Bar(118162, spellName, 42, 118162)
+	self:FlashShake(118162)
+end
+
 -- zian
 function mod:Fixate(player, _, _, _, spellName)
 	if UnitIsUnit("player", player) then
@@ -160,20 +175,22 @@ function mod:FlankingOrders(_, _, _, _, spellName)
 end
 
 function mod:Annihilate(_, _, _, _, spellName)
-	self:Message(119521, spellName, "Important", 119521, "Alert")
+	self:Message(119521, spellName, "Urgent", 119521, "Alarm")
 	self:Bar(119521, spellName, 35, 119521)
 end
 
 function mod:Shield(_, _, _, _, spellName)
 	self:Message(117961, spellName, "Important", 117961, "Alert")
 	self:Bar(117961, spellName, 42, 117961)
+	self:FlashShake(117961)
 end
 
 function mod:ShieldRemoved()
 	self:Message(117961, L["shield_removed"], "Positive", 117961, "Info")
 end
 
-function mod:EngageCheck(diff)
+function mod:EngageCheck()
+	local isHeroic = self:Heroic()
 	for i=1, 4 do
 		if UnitExists("boss"..i) then
 			local id = tonumber((UnitGUID("boss"..i)):sub(7, 10), 16)
@@ -181,16 +198,22 @@ function mod:EngageCheck(diff)
 			local hp = UnitHealth("boss"..i) / UnitHealthMax("boss"..i) * 100
 			if hp < 35 then return end --35 to be safe EJ says 30
 			if id == 60709 then -- qiang
-				if diff > 2 then
+				if isHeroic then
 					self:Bar(117961, imperviousShield, 40, 117961)
 				end
 				self:Bar(119521, annihilate, 10, 119521)
 				self:Bar(117910, flankingOrders, 26, 117910)
 				self:Message("ej:5841", qiang, "Positive", 117920)
 			elseif id == 60701 then -- zian
+				if isHeroic then
+					self:Bar(117697, shieldOfDarkness, 40, 117697)
+				end
 				self:OpenProximity(8)
 				self:Message("ej:5852", zian, "Positive", 117628)
 			elseif id == 60710 then -- subetai
+				if isHeroic then
+					self:Bar(118162, sleightOfHand, 40, 118162)
+				end
 				self:OpenProximity(8)
 				self:Bar(118047, pillage, 26, 118047)
 				self:Message("ej:5846", subetai, "Positive", 118122)

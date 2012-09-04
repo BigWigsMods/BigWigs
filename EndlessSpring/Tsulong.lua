@@ -8,7 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(62442)
 
 local day, night = (EJ_GetSectionInfo(6315)), (EJ_GetSectionInfo(6310))
-local summonUnstableSha, sunBreath, nightmares = (GetSpellInfo(122953)), (GetSpellInfo(122855)), (GetSpellInfo(122777))
+local summonUnstableSha, sunBreath, nightmares, darkOfNight = (GetSpellInfo(122953)), (GetSpellInfo(122855)), (GetSpellInfo(122777)), (GetSpellInfo(123813))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,10 +33,12 @@ function mod:GetOptions()
 	return {
 		122752, 122768, 122789, { 122777, "PROXIMITY", "FLASHSHAKE", "SAY" },
 		122855, "ej:6320",
+		123813,
 		"berserk", "phases", "bosskill",
 	}, {
 		[122752] = "ej:6310",
 		["ej:6320"] = "ej:6315",
+		[123813] = "heroic",
 		berserk = "general",
 	}
 end
@@ -136,6 +138,9 @@ do
 		elseif spellId == 122770 or spellId ==122775 then -- Nightmares
 			self:Bar(122777, spellName, 15, 122777)
 			getNightmaresTarget() -- probably won't work
+		elseif spellId == 123813 then -- dark of night- heroic
+			self:Bar(123813, darkOfNight, 30, 130013)
+			self:Message(123813, darkOfNight, "Urgent", 130013, "Alarm")
 		end
 	end
 end

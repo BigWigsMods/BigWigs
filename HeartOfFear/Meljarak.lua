@@ -23,6 +23,7 @@ if L then
 	L.next_pack_desc = "Warning for when a new pack will land after you killed a pack."
 	L.next_pack_icon = 125873
 
+	L.spear_removed = "Your Impaling Spear was removed!"
 end
 L = mod:GetLocale()
 
@@ -32,10 +33,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{ 122064, "FLASHSHAKE", "SAY" },
+		{ 122064, "FLASHSHAKE", "SAY" },  {122125, "FLASHSHAKE"},
 		{ 122409, "ICON", "SAY" },
-		122149,
-		122406, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, "next_pack",
+		122149, 122193,
+		122406, {122224, "FLASHSHAKE"}, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, 125873, "next_pack",
 		"proximity", "berserk", "bosskill",
 	}, {
 		[122064] = "ej:6300",
@@ -47,12 +48,17 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Resin", 122064)
-	self:Log("SPELL_AURA_APPLIED", "NextPack", 125873)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ResinPoolDamage", 122125)
+	self:Log("SPELL_AURA_APPLIED", "Recklessness", 125873)
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
 	self:Log("SPELL_CAST_START", "KorthikStrike", 122409)
 	self:Log("SPELL_CAST_START", "Quickening", 122149)
+	self:Log("SPELL_CAST_START", "Mending", 122193)
 	self:Log("SPELL_CAST_START", "RainOfBlades", 122406)
+	self:Log("SPELL_AURA_APPLIED", "ImpalingSpear", 122224)
+	self:Log("SPELL_AURA_REFRESH", "ImpalingSpear", 122224)
+	self:Log("SPELL_AURA_REMOVED", "ImpalingSpearRemoved", 122224)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -77,6 +83,13 @@ end
 
 function mod:Quickening(_, _, _, _, spellName)
 	self:Message(122149, spellName, "Attention", 122149)
+end
+
+function mod:Mending(_, _, source, _, spellName)
+	if UnitIsUnit("focus", source) then
+		self:LocalMessage(122193, CL["cast"]:format(spellName), "Personal", 122193, "Info")
+		self:Bar(122193, spellName, 37, 122193)
+	end
 end
 
 do
@@ -126,9 +139,24 @@ function mod:WindBomb(_, _, player, _, spellName)
 	end
 end
 
-function mod:NextPack()
+function mod:Recklessness(_, _, _, _, spellName)
+	self:Message(125873, spellName, "Attention", 125873)
+	self:Bar(125873, spellName, 30, 125873)
 	self:Bar("next_pack", L["next_pack"], 50, 125873)
 	self:DelayedMessage("next_pack", 50, L["next_pack"], "Attention", 125873)
+end
+
+do
+	local prev = 0
+	function mod:ResinPoolDamage(player, _, _, _, spellName)
+		if not UnitIsUnit(player, "player") then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:LocalMessage(122125, CL["underyou"]:format(spellName), "Personal", 122125, "Info")
+			self:FlashShake(122125)
+		end
+	end
 end
 
 function mod:Resin(player, _, _, _, spellName)
@@ -139,3 +167,16 @@ function mod:Resin(player, _, _, _, spellName)
 	end
 end
 
+function mod:ImpalingSpear(_, spellId, source, _, spellName)
+	if UnitIsUnit(source, "player") then
+		self:Bar(122224, spellName, 50, 122224)
+	end
+end
+
+function mod:ImpalingSpearRemoved(_, _, source, _, spellName)
+	if UnitIsUnit(source, "player") then
+		self:SendMessage("BigWigs_StopBar", self, spellName)
+		self:LocalMessage(122224, L["spear_removed"], "Personal", 122224, "Info")
+		self:FlashShake(122224)
+	end
+end

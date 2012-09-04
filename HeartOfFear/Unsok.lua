@@ -84,6 +84,7 @@ end
 function mod:ConcentratedMutation(_, _, _, _, spellName)
 	phase = 3
 	self:Message(122556, spellName, "Attention", 122556)
+	self:SendMessage("BigWigs_StopBar", self, "~"..L["explosion_boss"])
 end
 
 function mod:AmberCarapace()

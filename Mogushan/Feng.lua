@@ -41,7 +41,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		116295, 116018,
-		{116784, "ICON", "FLASHSHAKE"}, 116711,
+		{116784, "ICON", "FLASHSHAKE"}, 116711, {116793, "FLASHSHAKE"},
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
 		"phases", 115856, {115911, "ICON" }, "berserk", "bosskill",
 	}, {
@@ -59,6 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WildfireSparkApplied", 116784)
 	self:Log("SPELL_AURA_REMOVED", "WildfireSparkRemoved", 116784)
 	self:Log("SPELL_AURA_APPLIED", "DrawFlame", 116711)
+	self:Log("SPELL_DAMAGE", "Wildfire", 116793)
 
 	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417, 116574)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417, 116574)
@@ -155,6 +156,18 @@ function mod:DrawFlame(_, _, _, _, spellName)
 	self:Bar(116711, "~"..spellName, 35, 116711)
 end
 
+do
+	local prev = 0
+	function mod:Wildfire(player, _, _, _, spellName)
+		if not UnitIsUnit(player, "player") then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:LocalMessage(116793, CL["underyou"]:format(spellName), "Personal", 116793, "Info")
+			self:FlashShake(116793)
+		end
+	end
+end
 
 -- ARCANE
 function mod:ArcanePhase()

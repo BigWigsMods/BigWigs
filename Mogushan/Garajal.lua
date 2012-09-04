@@ -45,6 +45,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 117752)
 	self:Log("SPELL_AURA_APPLIED", "VoodooDollsApplied", 122151)
 	self:Log("SPELL_CAST_SUCCESS", "SpiritTotem", 116174)
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
@@ -122,5 +123,10 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
+end
+
+function mod:Frenzy()
+	self:Message("ej:5759", CL["phase"]:format(2), "Positive", 117752, "Long")
+	self:SendMessage("BigWigs_StopBar", self, spiritTotem)
 end
 

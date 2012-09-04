@@ -35,10 +35,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5772", {130395, "FLASHSHAKE", "PROXIMITY"},
-		"petrifications", "overload", "berserk", "bosskill",
+		"ej:5772",
+		130774,
+		{130395, "FLASHSHAKE", "PROXIMITY"},
+		"overload", "petrifications", "berserk", "bosskill",
 	}, {
 		["ej:5772"] = "ej:5771",
+		[130774] = "ej:5691",
 		[130395] = "ej:5774",
 		overload = "general",
 	}
@@ -48,6 +51,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_AURA_APPLIED", "JasperChainsApplied", 130395)
 	self:Log("SPELL_AURA_REMOVED", "JasperChainsRemoved", 130395)
+	self:Log("SPELL_CAST_SUCCESS", "AmethystPool", 130774)
 	self:Emote("Overload", L["overload"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -96,6 +100,17 @@ function mod:JasperChainsRemoved(player, _, _, _, spellName)
 	end
 end
 
+do
+	local prev = 0
+	function mod:AmethystPool(player, _, _, _, spellName)
+		if not UnitIsUnit(player, "player") then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:LocalMessage(130774, CL["underyou"]:format(spellName), "Personal", 130774, "Alert")
+		end
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	if not unitId:match("boss") then return end
@@ -108,9 +123,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, 116036, "Alert") -- red
 	elseif spellId == 116057 then -- amethyst
 		self:Message("petrifications", ("|c00800080%s|r"):format(spellName), nil, 116057, "Alert") -- purple
-	elseif spellId == 116057 then -- 116057
-		-- too frequent for a bar
-		self:Message("ej:5772", spellName, "Urgent", spellId)
 	end
 end
 
