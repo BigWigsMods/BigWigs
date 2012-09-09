@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Alysrazor", 800, 194)
 if not mod then return end
 mod:RegisterEnableMob(52530, 53898, 54015, 53089) --Alysrazor, Voracious Hatchling, Majordomo Staghelm, Molten Feather
 
-local firestorm = GetSpellInfo(101659)
+local firestorm = GetSpellInfo(100744)
 local woundTargets = mod:NewTargetList()
 local meteorCount, moltCount, burnCount, initiateCount = 0, 0, 0, 0
 local initiateTimes = {31, 31, 21, 21, 21}
