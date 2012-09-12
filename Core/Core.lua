@@ -284,7 +284,7 @@ do
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
-		if GetNumGroupMembers(1) == 0 and GetNumSubgroupMembers(1) == 0 then return end
+		if GetNumGroupMembers() == 0 and GetNumSubgroupMembers() == 0 then return end
 		if not sync then return end
 		if not times[sync] or GetTime() > (times[sync] + 2) then
 			times[sync] = GetTime()
