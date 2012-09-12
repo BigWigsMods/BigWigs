@@ -12,22 +12,22 @@ L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) 
 
 -- Loader / Options.lua
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Stai usando una versione ufficiale di BigWigs %s (revision %d)"
-L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Estás usando la VERSION ALPHA de Big Wigs %s (revisión %d)"
-L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Estás usando la versión de Big Wigs %s directamente del repositorio."
-L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "Existe una nueva versión de Big Wigs disponible (/bwv). Puedes visitar curse.com, wowinterface.com, wowace.com o usar el cliente de Curse para adquirirla."
-L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Tu versión alpha de Big Wigs está desactualizada (/bwv)."
+L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usando una versione ALPHA di BigWigs %s (Revisione %d)"
+L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Stai usando una versione di Big Wigs %s presa direttamente dal repository."
+L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "C'e' una nuova versione di Big Wigs disponibile (/bwv). Puoi prenderla da  curse.com, wowinterface.com, wowace.com o usare il client di Curse per scaricarla."
+L["Your alpha version of Big Wigs is out of date (/bwv)."] = "La tua versione Alpha di Big Wigs è obsoleta (/bwv)."
 
-L.tooltipHint = "|cffeda55fClic|r para reiniciar todos los módulos. |cffeda55fAlt-Clic|r para desactivarlos. |cffeda55fRight-Clic|r para acceder a las opciones."
-L["Active boss modules:"] = "Módulos de jefes activos:"
-L["All running modules have been reset."] = "Todos los módulos han sido reiniciados."
-L["All running modules have been disabled."] = "Todos los módulos han sido desactivados."
+L.tooltipHint = "|cffeda55fClic|r per reinizializzare tutti i moduli. |cffeda55fAlt-Clic|r per Disattivarli. |cffeda55fRight-Clic|r per aprire le Opzioni."
+L["Active boss modules:"] = "Moduli dei Combattimenti Attivi:"
+L["All running modules have been reset."] = "Tutti i moduli sono stati riavviati."
+L["All running modules have been disabled."] = "Tutti i moduli sono stati disattivati."
 
-L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Hay gente en tu grupo con versiones antiguas o sin Big Wigs. Más detalles con /bwv."
-L["Up to date:"] = "Al día:"
-L["Out of date:"] = "Desactualizado"
-L["No Big Wigs 3.x:"] = "Sin Big Wigs 3.x:"
+L["There are people in your group with older versions or without Big Wigs. You can get more details with /bwv."] = "Hai giocatori nel tuo gruppo con versioni obsolete di Big Wigs. Puoi avere maggiori dettagli /bwv."
+L["Up to date:"] = "Aggiornati :"
+L["Out of date:"] = "Obsoleti :"
+L["No Big Wigs 3.x:"] = "Senza Big Wigs 3.x:"
 
-L.coreAddonDisabled = "Big Wigs no puede funcionar debidamente ya que el addon %s está desactivado. Puedes activarlo desde el addon Control panel o en la pantalla de selección de personaje."
+L.coreAddonDisabled = "Big Wigs non puo' funzionare correttamente perchè l'addon %s e' disattivato. Puoi attivarlo nel pannello di controllo degli Addon nella schermata di login dei personaggi."
 
 -- Options.lua
 L["Big Wigs Encounters"] = "Big Wigs Encounters"
