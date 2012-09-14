@@ -2,8 +2,10 @@
 
 ## Title: Big Wigs [|cffeda55fHeart of Fear|r]
 ## Title-frFR: Big Wigs [|cffeda55fCœur de la Peur|r]
+## Title-ruRU: Big Wigs [|cffeda55fСердце Страха|r]
 ## Notes: Big Wigs Modules for the Heart of Fear.
 ## Notes-frFR: Modules Big Wigs concernant le Cœur de la Peur.
+## Notes-ruRU: Модуль Big Wigs для Сердца Страха.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
@@ -13,4 +15,3 @@
 
 locales.xml
 modules.xml
-

@@ -2,8 +2,10 @@
 
 ## Title: Big Wigs [|cffeda55fMogu'shan Vaults|r]
 ## Title-frFR: Big Wigs [|cffeda55fCaveaux Mogu'shan|r]
+## Title-ruRU: Big Wigs [|cffeda55fПодземелья Могу'шан|r]
 ## Notes: Big Wigs Modules for the Mogu'shan Vaults.
 ## Notes-frFR: Modules Big Wigs concernant les caveaux Mogu'shan.
+## Notes-ruRU: Модуль Big Wigs для Подземелий Могу'шан.
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
@@ -13,4 +15,3 @@
 
 locales.xml
 modules.xml
-
