@@ -7,24 +7,24 @@ end
 
 L = BigWigs:NewBossLocale("Tsulong", "ruRU")
 if L then
-	L.phases = "Фазы"
-	L.phases_desc = "Предупреждать о смене фаз."
+	L.phases = "Р¤Р°Р·С‹"
+	L.phases_desc = "РџСЂРµРґСѓРїСЂРµР¶РґР°С‚СЊ Рѕ СЃРјРµРЅРµ С„Р°Р·."
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "ruRU")
 if L then
 	L.engage_trigger = "Wh-what are you doing here?! G-go away!"	-- Needs review
 	L.hp_to_go = "%d%% to go"	-- Needs review
-	L.end_hide = "Спрятаться"
+	L.end_hide = "РЎРїСЂСЏС‚Р°С‚СЊСЃСЏ"
 
-	L.special = "След. спец. способность"
-	L.special_desc = "Предупредать о следующей особой способности"
+	L.special = "РЎР»РµРґ. СЃРїРµС†. СЃРїРѕСЃРѕР±РЅРѕСЃС‚СЊ"
+	L.special_desc = "РџСЂРµРґСѓРїСЂРµРґР°С‚СЊ Рѕ СЃР»РµРґСѓСЋС‰РµР№ РѕСЃРѕР±РѕР№ СЃРїРѕСЃРѕР±РЅРѕСЃС‚Рё"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "ruRU")
 if L then
 	L.fading_soon = "%s fading soon"	-- Needs review
 
-	L.swing = "Замах"
-	L.swing_desc = "Считает количество замахов перед Взбучкой."
+	L.swing = "Р—Р°РјР°С…"
+	L.swing_desc = "РЎС‡РёС‚Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РјР°С…РѕРІ РїРµСЂРµРґ Р’Р·Р±СѓС‡РєРѕР№."
 end
