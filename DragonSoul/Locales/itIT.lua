@@ -48,7 +48,7 @@ if L then
 	L.blobs = "Globuli"
 	L.blobs_bar = "Prossimi Globuli"
 	L.blobs_desc = "I Globuli si muovono verso il Boss."
-	
+
 end
 
 L = BigWigs:NewBossLocale("Hagara the Stormbinder", "itIT")
@@ -82,11 +82,11 @@ if L then
 	L.twilight = "Crepuscolo"
 	L.cast = "Barra del Crepuscolo"
 	L.cast_desc = "Mostra una barra per l'Ora del Crepuscolo 5 (in Normale) o 3 (in Eroico) secondi prima dell'inizio del Cast."
-	
+
 	L.lightself = "Luce Calante su di TE"
 	L.lightself_desc = "Mostra una barra che visualizza il tempo rimamente prima che Luce Calante esploda."
 	L.lightself_bar = "<TU ESPLODI>"
-	
+
 	L.lighttank = "Luce Calante sui Difensori"
 	L.lighttank_desc = "Avviso per i Difensori. Se un tank ha Luce Calante, visualizza una barra di esplosione che lampeggia e vibra."
 	L.lighttank_bar = "<%s Esplode>"
@@ -97,7 +97,7 @@ L = BigWigs:NewBossLocale("Warmaster Blackhorn", "itIT")
 if L then
 	L.warmup = "Preparazione"
 	L.warmup_desc = "Tempo all'avvio del Combattimento."
-	
+
 	L.sunder = "Sfondamento"
 	L.sunder_desc = "Avviso per i Difensori. Conteggia le stack di Sfondamento e visualizza una Timer di durata."
 	L.sunder_message = "%2$dx Sfondamento su %1$s"
@@ -112,12 +112,12 @@ end
 L = BigWigs:NewBossLocale("Spine of Deathwing", "itIT")
 if L then
 	L.engage_trigger = "Le Piastre! Sta Arrivando! Distruggiamo le Piastre e avremo una possibilita' di Colpirlo!"
-	
-	L.about_to_roll = "Sta per Avvitarsi"
-	L.rolling = "Avvitamento"
+
+	L.about_to_roll = "effettuare un avvitamento"
+	L.rolling = "effettua un avvitamento"
 	L.not_hooked = "TU >NON< SEI armpionato!"
 	L.roll_message = "Si sta Avvitando, Avvitamento! Avvitamento!"
-	L.level_trigger = "Si Stabilizza"
+	L.level_trigger = "si stabilizza"
 	L.level_message = "Ottimo, si e' Stabilizzato!"
 
 	L.exposed = "Armatura Esposta"
