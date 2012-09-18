@@ -24,8 +24,14 @@ local icons = setmetatable({}, {__index =
 	function(self, key)
 		if not key then return end
 		local value = nil
-		if type(key) == "number" then value = select(3, GetSpellInfo(key))
-		else value = "Interface\\Icons\\" .. key end
+		if type(key) == "number" then
+			value = select(3, GetSpellInfo(key))
+			if not value then
+				print(("Big Wigs: An invalid spell id (%d) is being used in a bar/message."):format(key))
+			end
+		else
+			value = "Interface\\Icons\\" .. key
+		end
 		self[key] = value
 		return value
 	end
@@ -90,6 +96,7 @@ do
 	local modMissingFunction = "Module %q got the event %q (%d), but it doesn't know how to handle it."
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
+	local invalidId = "Module %q tried to register an invalid spell id (%d) to event %q."
 
 	function boss:CHAT_MSG_MONSTER_YELL(_, msg, ...)
 		if yellMap[self][msg] then
@@ -155,7 +162,11 @@ do
 		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
 		if not combatLogMap[self][event] then combatLogMap[self][event] = {} end
 		for i = 1, select("#", ...) do
-			combatLogMap[self][event][(select(i, ...))] = func
+			local id = (select(i, ...))
+			combatLogMap[self][event][id] = func
+			if not GetSpellInfo(id) then
+				print(invalidId:format(self.moduleName, id, event))
+			end
 		end
 		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
