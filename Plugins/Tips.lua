@@ -14,11 +14,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs: Plugins")
 -- Options
 --
 
---XXX MoP temp
-local UnitIsGroupLeader = UnitIsGroupLeader or UnitIsRaidOfficer
-local UnitIsGroupAssistant = UnitIsGroupAssistant or UnitIsRaidOfficer
-local GetNumGroupMembers = GetNumGroupMembers or GetNumRaidMembers
-
 local colorize = nil
 do
 	local r, g, b

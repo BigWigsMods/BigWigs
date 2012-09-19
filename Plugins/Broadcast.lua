@@ -5,12 +5,6 @@
 local plugin = BigWigs:NewPlugin("Broadcast")
 if not plugin then return end
 
---XXX MoP temp
-local UnitIsGroupLeader = UnitIsGroupLeader or IsRaidLeader
-local UnitIsGroupAssistant = UnitIsGroupAssistant or IsRaidOfficer
-local GetNumSubgroupMembers = GetNumSubgroupMembers or GetRealNumPartyMembers
-local GetNumGroupMembers = GetNumGroupMembers or GetRealNumRaidMembers
-
 -------------------------------------------------------------------------------
 -- Locals
 --

@@ -97,10 +97,6 @@ local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the cor
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
 
--- XXX MOP
-local GetNumSubgroupMembers = GetNumSubgroupMembers or GetRealNumPartyMembers
-local GetNumGroupMembers = GetNumGroupMembers or GetRealNumRaidMembers
-
 -----------------------------------------------------------------------
 -- Utility
 --

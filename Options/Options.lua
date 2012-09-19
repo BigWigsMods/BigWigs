@@ -15,9 +15,6 @@ do
 	})
 end
 
---XXX MoP temp
-local GetNumSubgroupMembers = GetNumSubgroupMembers or GetNumPartyMembers
-
 local C = BigWigs.C
 
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
@@ -200,16 +197,6 @@ local function translateZoneID(id)
 		name = select(id, GetMapContinents())
 	else
 		name = GetMapNameByID(id)
-	end
-	--XXX MoP temp
-	if not name then
-		if id == 886 then
-			name = "Terrace of Endless Spring"
-		elseif id == 897 then
-			name = "Heart of Fear"
-		elseif id == 896 then
-			name = "Mogu'shan Vaults"
-		end
 	end
 	if not name then
 		print(("Big Wigs: Tried to translate %q as a zone ID, but it could not be resolved into a name."):format(tostring(id)))

@@ -6,9 +6,6 @@ local mod, CL = BigWigs:NewBoss("Sinestra", 758, 168)
 if not mod then return end
 mod:RegisterEnableMob(45213)
 
---XXX MoP temp
-local GetNumGroupMembers = GetNumGroupMembers or GetNumRaidMembers
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -168,10 +165,6 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	--XXX MoP temp
-	local UnitIsGroupLeader = UnitIsGroupLeader or IsRaidLeader
-	local UnitIsGroupAssistant = UnitIsGroupAssistant or IsRaidOfficer
-
 	if not roleCheckWarned and (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) then
 		BigWigs:Print("It is recommended that your raid has proper main tanks set for this encounter to improve orb target detection.")
 		roleCheckWarned = true

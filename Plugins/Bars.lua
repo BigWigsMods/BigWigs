@@ -15,11 +15,6 @@ if not plugin then return end
 -- Locals
 --
 
---XXX MoP temp
-local UnitIsGroupLeader = UnitIsGroupLeader or UnitIsRaidOfficer
-local UnitIsGroupAssistant = UnitIsGroupAssistant or UnitIsRaidOfficer
-local GetNumSubgroupMembers = GetNumSubgroupMembers or GetNumPartyMembers
-
 local colorize = nil
 do
 	local r, g, b

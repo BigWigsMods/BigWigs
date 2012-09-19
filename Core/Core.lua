@@ -17,10 +17,6 @@ local CL = AL:GetLocale("Big Wigs: Common")
 local customBossOptions = {}
 local pName = UnitName("player")
 
---XXX MoP temp
-local GetNumSubgroupMembers = GetNumSubgroupMembers or GetRealNumPartyMembers
-local GetNumGroupMembers = GetNumGroupMembers or GetRealNumRaidMembers
-
 -------------------------------------------------------------------------------
 -- Target monitoring
 --
