@@ -77,13 +77,13 @@ end
 
 function mod:OnBossEnable()
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "Molting", 99464, 99465, 100698)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazingClaw", 99844, 101729, 101730, 101731)
+	self:Log("SPELL_AURA_APPLIED", "Molting", 99464, 99465)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BlazingClaw", 99844)
 	self:Log("SPELL_AURA_APPLIED", "StartFlying", 98619)
 	self:Log("SPELL_AURA_REMOVED", "StopFlying", 98619)
 
 	-- Stage 1: Flight
-	self:Log("SPELL_AURA_APPLIED", "Wound", 100723, 100722, 100721, 100720, 100719, 100718, 100024, 99308)
+	self:Log("SPELL_AURA_APPLIED", "Wound", 100024, 99308)
 	self:Log("SPELL_AURA_APPLIED", "Tantrum", 99362)
 
 	self:Emote("BuffCheck", L["worm_emote"])
