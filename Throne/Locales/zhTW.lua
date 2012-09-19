@@ -15,7 +15,6 @@ if L then
 	L.phase = "階段轉換"
 	L.phase_desc = "當進入不同階段時發出警報。"
 
-	L.cloud_message = "落雷之雲！"
 	L.feedback_message = "%dx 回饋！"
 end
 

@@ -14,7 +14,6 @@ if L then
 	L.phase = "Смена фаз"
 	L.phase_desc = "Сообщать о смене фаз."
 
-	L.cloud_message = "Грозовые облака!"
 	L.feedback_message = "%dx Ответная реакция"
 end
 

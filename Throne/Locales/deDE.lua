@@ -15,7 +15,6 @@ if L then
 	L.phase = "Phasenwechsel"
 	L.phase_desc = "Warnt vor Phasenwechsel."
 
-	L.cloud_message = "Gewitter auf DIR!"
 	L.feedback_message = "%dx Rückkopplung"
 end
 

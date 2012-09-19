@@ -32,9 +32,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "SearingShadows", 96913, 101007) -- EJ/10m, 25m
-	self:Log("SPELL_CAST_START", "Eyes", 96920, 101006) -- EJ/10m, 25m
-	self:Log("SPELL_CAST_SUCCESS", "FocusedFire", 96884) -- EJ/10m/25m
+	self:Log("SPELL_AURA_APPLIED", "SearingShadows", 96913)
+	self:Log("SPELL_CAST_START", "Eyes", 96920)
+	self:Log("SPELL_CAST_SUCCESS", "FocusedFire", 96884)
 
 	--No CheckBossStatus() here as event does not fire.
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")

@@ -35,7 +35,6 @@ if L then
 	L.phase = "Phase change"
 	L.phase_desc = "Announce phase changes."
 
-	L.cloud_message = "Franklin would be proud!"
 	L.feedback_message = "%dx Feedback"
 end
 L = mod:GetLocale()
@@ -51,26 +50,26 @@ function mod:GetOptions(CL)
 		"stormling",
 		88301,
 		{89668, "ICON", "FLASHSHAKE", "WHISPER"}, 89588, 87770, "proximity",
-		95764, --XXX this is probably the WRONG id, need a log to find the right MoP new one
+		87873,
 		88427, "phase", "berserk", "bosskill"
 	}, {
 		[87770] = CL["phase"]:format(1),
 		[87904] = CL["phase"]:format(2),
 		[89668] = CL["phase"]:format(3),
-		[95764] = "heroic",
+		[87873] = "heroic",
 		[88427] = "general",
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Electrocute", 88427)
-	self:Log("SPELL_CAST_START", "WindBurst1", 87770, 93261, 93262, 93263)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904, 101458, 101459, 101460)
-	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904, 101458, 101459, 101460)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301, 93279, 93280, 93281)
-	self:Log("SPELL_DAMAGE", "Shock", 93257)
+	self:Log("SPELL_CAST_START", "WindBurst1", 87770)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
+	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301)
+	self:Log("SPELL_DAMAGE", "Shock", 87873)
 	-- Acid Rain is applied at P2 transition
-	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301, 93279, 93280, 93281)
+	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301)
 
 	self:Yell("Stormling", L["stormling_yell"])
 	self:Yell("Phase3", L["phase3_yell"])
@@ -78,7 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LightningRod", 89668)
 	self:Log("SPELL_AURA_REMOVED", "RodRemoved", 89668)
 	self:Log("SPELL_DAMAGE", "WindBurst3", 93286)
-	self:Log("SPELL_DAMAGE", "Cloud", 89588, 93299, 93298, 93297)
+	self:Log("SPELL_DAMAGE", "Cloud", 89588)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Win", 46753)
@@ -99,7 +98,7 @@ end
 do
 	local function Shocker(spellName)
 		if phase == 1 then
-			mod:Bar(95764, spellName, 10, 95764)
+			mod:Bar(87873, spellName, 10, 87873)
 			mod:ScheduleTimer(Shocker, 10, spellName)
 		end
 	end
@@ -112,9 +111,9 @@ do
 	end
 end
 
-function mod:Cloud(player, spellId)
+function mod:Cloud(player, spellId, _, _, spelName)
 	if not UnitIsUnit(player, "player") then return end
-	self:LocalMessage(89588, L["cloud_message"], "Urgent", spellId, "Alarm")
+	self:LocalMessage(89588, CL["you"]:format(spellName), "Urgent", spellId, "Alarm")
 end
 
 function mod:LightningRod(player, spellId, _, _, spellName)

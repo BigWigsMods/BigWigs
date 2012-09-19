@@ -32,8 +32,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "MeteorSlash", 88942, 95172)
-	self:Log("SPELL_AURA_APPLIED", "ConsumingDarkness", 88954, 95173)
+	self:Log("SPELL_CAST_START", "MeteorSlash", 88942)
+	self:Log("SPELL_AURA_APPLIED", "ConsumingDarkness", 88954)
 	self:Log("SPELL_CAST_START", "FelFirestorm", 88972)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")

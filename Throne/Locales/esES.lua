@@ -15,7 +15,6 @@ if L then
 	L.phase = "Cambio de fase"
 	L.phase_desc = "Anuncia los cambios de fase."
 
-	L.cloud_message = "¡Franklin estaría orgulloso!"
 	L.feedback_message = "%dx Rebote"
 end
 
