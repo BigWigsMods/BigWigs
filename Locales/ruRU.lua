@@ -92,7 +92,7 @@ L["Advanced options"] = "Расширенные опции"
 L["<< Back"] = "<< Назад"
 
 L["About"] = "О Big Wigs"
-L["Main Developers"] = "Основ. разработчики"
+L["Main Developers"] = "Основатели"
 L["Developers"] = "Разработчики"
 L["Maintainers"] = "Помощники"
 L["License"] = "Лицензия"
@@ -101,4 +101,3 @@ L["Contact"] = "Связь"
 L["See license.txt in the main Big Wigs folder."] = "Смотрите license.txt в основной папке Big Wigs."
 L["irc.freenode.net in the #wowace channel"] = "irc.freenode.net на канале #wowace"
 L["Thanks to the following for all their help in various fields of development"] = "Благодарим следующих лиц за их помощь в различных областях развития"
-

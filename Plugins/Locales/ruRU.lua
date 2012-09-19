@@ -8,8 +8,8 @@ if not L then return end
 L["Style"] = "Стиль"
 L.bigWigsBarStyleName_Default = "По умолчанию"
 
-L["Clickable Bars"] = "Полосы, реагирующие на щелчки мыши"
-L.clickableBarsDesc = "Полосы Big Wigs по умолчанию не реагируют на щелчки мыши в их области. Таким образом, можно целиться в объекты или запускать АОЕ заклинания за ними, изменять ракурс камеры и т.д., в то время, как курсор находится в области полос. |cffff4411Если вы включите полосы, реагирующие на щелчки мыши, всё это не будет возможно.|r Полосы будут перехватывать любые щелчки мыши выполняемые в их области.\n"
+L["Clickable Bars"] = "Взаимодействие с полосами"
+L.clickableBarsDesc = "Полосы Big Wigs по умолчанию не реагируют на щелчки мыши в их области. Таким образом, можно выделять объекты или применять АОЕ заклинания за ними, изменять ракурс камеры и т.д., в то время, как курсор находится в области полос. |cffff4411Если вы включите полосы, реагирующие на щелчки мыши, всё это будет невозможно.|r Полосы будут перехватывать любые щелчки мыши в пределах их области.\n"
 L["Enables bars to receive mouse clicks."] = "Включает реагирование на щелчки мыши в области полос."
 L["Modifier"] = "Модификатор"
 L["Hold down the selected modifier key to enable click actions on the timer bars."] = "Удерживайте выбранную клавишу, чтобы разрешить нажатие по полоске таймера."
@@ -28,14 +28,14 @@ L["Permanently disables the boss encounter ability option that spawned this bar.
 
 L["Scale"] = "Масштаб"
 L["Grow upwards"] = "Рост вверх"
-L["Toggle bars grow upwards/downwards from anchor."] = "Переключение роста полос от якоря вверх или вниз."
+L["Toggle bars grow upwards/downwards from anchor."] = "Переключение направления роста полос вверх или вниз."
 L["Texture"] = "Текстуры"
 L["Emphasize"] = "Увеличение"
 L["Enable"] = "Включить"
 L["Move"] = "Перемещение"
-L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Перемещение увеличенных полос. Если эта опция отключена, увеличенным полосам просто можно будет изменить масштаб, окраску, и задать мигание."
+L["Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change scale and color, and maybe start flashing."] = "Перемещение увеличенных полос. Если эта опция отключена, увеличенные полосы просто будут изменять масштаб, окраску, и возможно мигать."
 L["Flash"] = "Мигание"
-L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Мигание фона увеличенных полос, что поможет вам легче их увидеть."
+L["Flashes the background of emphasized bars, which could make it easier for you to spot them."] = "Мигание фона увеличенных полос, которое поможет вам легче их увидеть."
 L["Regular bars"] = "Обычные полосы"
 L["Emphasized bars"] = "Увеличенные полосы"
 L["Align"] = "Выравнивание"
@@ -50,11 +50,11 @@ L["Font"] = "Шрифт"
 L["Restart"] = "Перезапуск"
 L["Restarts emphasized bars so they start from the beginning and count from 10."] = "Перезапуск увеличенных полос так, что они стартуют с самого начала, отсчитывая от 10."
 L["Fill"] = "Заполнение"
-L["Fills the bars up instead of draining them."] = "Заполнение полос вместо убывания."
+L["Fills the bars up instead of draining them."] = "Заполнение полос, вместо убывания."
 
 L["Local"] = "Локальный"
 L["%s: Timer [%s] finished."] = "%s: Таймер [%s] готов."
-L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, М:С парный, или Мм. К примеру 5, 1:20 или 2м."
+L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, мин:сек, или Мин. К примеру 5, 1:20 или 2м."
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -79,7 +79,7 @@ L["Important"] = "Важные"
 L["Personal"] = "Личные"
 L["Urgent"] = "Экстренные"
 L["Attention"] = "Внимание"
-L["Positive"] = "Позитивные"
+L["Positive"] = "Положительные"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -139,14 +139,14 @@ L["|cffff0000Disable|r"] = "|cffff0000Отключить|r"
 -- Sound.lua
 --
 
-L.soundDefaultDescription = "При выборе данной опции Big Wigs будет использовать только стандартные звуки объявления рейду для тех сообщений которые будут сопровождаться звуковым сигналом. Помните, что только некоторые сообщения из скриптов сражений соппровождаются звуковым сигналом."
+L.soundDefaultDescription = "При выборе данной опции Big Wigs будет использовать только стандартные звуки объявления рейду для тех сообщений, которые будут сопровождаться звуковым сигналом. Помните, что только некоторые сообщения из скриптов сражений соппровождаются звуковым сигналом."
 
 L["Sounds"] = "Звуки"
 
 L["Alarm"] = "Тревога"
-L["Info"] = "Информация"
-L["Alert"] = "Предупреждения"
-L["Long"] = "Длинный"
+L["Info"] = "Информирование"
+L["Alert"] = "Предупреждение"
+L["Long"] = "Долгий"
 L["Victory"] = "Победа"
 
 L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Установите звук для использования в %q.\n\n[Ctrl-Клик] для предварительного прослушивания звука."
@@ -204,7 +204,7 @@ L["Tip of the raid will show by default when you zone in to a raid instance, you
 L["If you don't want to see any tips, ever, you can toggle them off here. Tips sent by your raid officers will also be blocked by this, so be careful."] = "Если вы не хотите видеть какие-либо советы, здесь вы можете отключить их. Советы присланные вашыми офицерами рейда также будет заблокированы, так что будьте осторожны."
 L["Automatic tips"] = "Авто-советы"
 L["If you don't want to see the awesome tips we have, contributed by some of the best PvE players in the world, pop up when you zone in to a raid instance, you can disable this option."] = "Если вы не хотите видеть потрясающие советы, которые всплывают при входе в рейд, предоставленные одними из лучших PvE игроков в мире, вы можете смело отключить эту опцию."
-L["Manual tips"] = "Советы в ручную"
+L["Manual tips"] = "Советы вручную"
 L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Офицеры рейда имеют возможность показать игрокам в рейде свои советы командой /sendtip. Если ваш офицер использует данную команду и спамит советы, или вы по какой-то другой причине просто не хотите их видеть, вы можете отключить это с помощью этой опции."
 L["Output to chat frame"] = "Вывод в окно чата"
 L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "По умолчанию советы будут показаны в их собственном окно в центре экрана. Если вы переключите, советы будут отображаться только в чате как простой текст, и окно никогда не будет беспокоить вас снова."
