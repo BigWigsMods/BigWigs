@@ -84,7 +84,7 @@ function mod:OnBossEnable()
 	self:Yell("IntermissionEnd", L["intermission_end_trigger1"], L["intermission_end_trigger2"], L["intermission_end_trigger3"])
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235) -- don't add heroic spellIds!
+	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235)
 	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237)
 	self:Log("SPELL_CAST_SUCCESS", "WrathofRagnaros", 98263)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460)
@@ -282,9 +282,10 @@ function mod:WorldInFlames(_, spellId, _, _, spellName)
 end
 
 function mod:EngulfingFlames(_, spellId, _, _, spellName)
+	if self:Heroic() then return end
 	if spellId == 99172 then
 		self:Message(99172, L["engulfing_close"], "Important", spellId, "Alert")
-	elseif spellId == 100171 or spellId == 99235 then
+	elseif spellId == 99235 then
 		self:Message(99172, L["engulfing_middle"], "Important", spellId, "Alert")
 	elseif spellId == 99236 then
 		self:Message(99172, L["engulfing_far"], "Important", spellId, "Alert")
