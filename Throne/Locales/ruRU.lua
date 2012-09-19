@@ -21,7 +21,6 @@ L = BigWigs:NewBossLocale("Conclave of Wind", "ruRU")
 if L then
 	L.gather_strength = "%s Набирает Силу!"
 
-	L.storm_shield = "Щит бури"
 	L.storm_shield_desc = "Щит поглощает урон"
 
 	L.full_power = "Полная сила"

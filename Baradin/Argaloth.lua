@@ -43,7 +43,7 @@ end
 
 function mod:OnEngage()
 	self:Berserk(300)
-	self:Bar(88942, "~"..GetSpellInfo(95172), 10, 88942)
+	self:Bar(88942, "~"..GetSpellInfo(88942), 10, 88942)
 	fireStorm = 100
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
@@ -76,7 +76,7 @@ function mod:FelFirestorm(_, spellId, _, _, spellName)
 	self:SendMessage("BigWigs_StopBar", self, L["meteor_bar"])
 	self:Message(88972, fireStorm.."% - "..spellName, "Urgent", spellId, "Alert")
 	self:FlashShake(88972)
-	self:Bar(88942, "~"..GetSpellInfo(95172), 32, 88942)
+	self:Bar(88942, "~"..GetSpellInfo(88942), 32, 88942)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unit)

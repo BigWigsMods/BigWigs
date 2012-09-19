@@ -117,7 +117,7 @@ function mod:TentacleKilled()
 end
 
 do
-	local fragment = GetSpellInfo(109568)
+	local fragment = GetSpellInfo(106775)
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		if unit == "boss1" or unit == "boss2" or unit == "boss3" or unit == "boss4" then
 			if spellName == hemorrhage then

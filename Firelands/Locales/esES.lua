@@ -1,7 +1,6 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "esES") or BigWigs:NewBossLocale("Beth'tilac", "esMX")
 if not L then return end
 if L then
-	L.flare = GetSpellInfo(100936)
 	L.flare_desc = "Show a timer bar for AoE flare."
 	L.devastate_message = "Devastación #%d"
 	L.drone_bar = "Zángano"

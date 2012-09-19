@@ -22,7 +22,6 @@ L = BigWigs:NewBossLocale("Conclave of Wind", "zhCN")
 if L then
 	L.gather_strength = "%s即将获得全部力量！"
 
-	L.storm_shield = "风暴护盾"
 	L.storm_shield_desc = "当风暴护盾吸收伤害时发出警报。"
 
 	L.full_power = "全部能量"

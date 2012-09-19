@@ -57,21 +57,21 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501, 92035, 92036, 92037)
+	self:Log("SPELL_AURA_APPLIED", "AcquiringTarget", 79501)
 
 	self:Log("SPELL_CAST_START", "Grip", 91849)
 	self:Log("SPELL_CAST_SUCCESS", "PoolExplosion", 91857)
 
-	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 91513, 80053, 91514, 91515)
+	self:Log("SPELL_CAST_SUCCESS", "PoisonProtocol", 80053)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 80094)
 
-	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161, 91480, 91479, 91473, 91471) --91471 for 25norm, not sure about the rest, obviously 1 is wrong
+	self:Log("SPELL_AURA_APPLIED", "ChemicalCloud", 80161)
 	self:Log("SPELL_CAST_SUCCESS", "ChemicalCloudCast", 80157)
 	self:Log("SPELL_AURA_APPLIED", "ShadowInfusion", 92048)
 	self:Log("SPELL_AURA_APPLIED", "EncasingShadows", 92023)
-	self:Log("SPELL_AURA_APPLIED", "LightningConductor", 79888, 91433, 91431, 91432)
-	self:Log("SPELL_AURA_REMOVED", "LightningConductorRemoved", 79888, 91433, 91431, 91432)
-	self:Log("SPELL_AURA_APPLIED", "Switch", 78740, 95016, 95017, 95018)
+	self:Log("SPELL_AURA_APPLIED", "LightningConductor", 79888)
+	self:Log("SPELL_AURA_REMOVED", "LightningConductorRemoved", 79888)
+	self:Log("SPELL_AURA_APPLIED", "Switch", 78740)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 

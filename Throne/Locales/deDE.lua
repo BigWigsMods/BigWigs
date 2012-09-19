@@ -22,7 +22,6 @@ L = BigWigs:NewBossLocale("Conclave of Wind", "deDE")
 if L then
 	L.gather_strength = "%s sammelt Stärke"
 
-	L.storm_shield = "Sturmschild"
 	L.storm_shield_desc = "Warnt, wenn Rohash Sturmschild wirkt."
 
 	L.full_power = "Volle Stärke"

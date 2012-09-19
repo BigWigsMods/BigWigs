@@ -77,21 +77,21 @@ end
 
 function mod:OnBossEnable()
 	--heroic
-	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92987, 92988)
-	self:Log("SPELL_PERIODIC_DAMAGE", "DarkSludge", 92987, 92988)
+	self:Log("SPELL_AURA_APPLIED", "DarkSludge", 92930) -- [May be wrong since MoP id changes]
+	self:Log("SPELL_PERIODIC_DAMAGE", "DarkSludge", 92930) -- [May be wrong since MoP id changes]
 
 	--normal
 	self:Log("SPELL_CAST_START", "ReleaseAberrations", 77569)
 	self:Log("SPELL_INTERRUPT", "Interrupt", "*")
 
-	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699, 92979, 92978, 92980)
-	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699, 92979, 92978, 92980)
-	self:Log("SPELL_AURA_REMOVED", "FlashFreezeRemoved", 77699, 92979, 92978, 92980)
+	self:Log("SPELL_CAST_SUCCESS", "FlashFreezeTimer", 77699)
+	self:Log("SPELL_AURA_APPLIED", "FlashFreeze", 77699)
+	self:Log("SPELL_AURA_REMOVED", "FlashFreezeRemoved", 77699)
 	self:Log("SPELL_AURA_APPLIED", "BitingChill", 77760)
 	self:Log("SPELL_AURA_REMOVED", "BitingChillRemoved", 77760)
-	self:Log("SPELL_AURA_APPLIED", "ConsumingFlames", 77786, 92972, 92971, 92973)
-	self:Log("SPELL_CAST_SUCCESS", "ScorchingBlast", 77679, 92968, 92969, 92970)
-	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912, 92965, 92966, 92967)
+	self:Log("SPELL_AURA_APPLIED", "ConsumingFlames", 77786)
+	self:Log("SPELL_CAST_SUCCESS", "ScorchingBlast", 77679)
+	self:Log("SPELL_AURA_APPLIED", "Remedy", 77912)
 	self:Log("SPELL_CAST_START", "ReleaseAll", 77991)
 	self:Log("SPELL_CAST_START", "ArcaneStorm", 77896)
 	self:Log("SPELL_CAST_START", "Jets", 78194)

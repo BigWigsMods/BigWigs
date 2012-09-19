@@ -145,7 +145,7 @@ function mod:CatForm(_, spellId, _, _, spellName)
 	specialCounter = 1
 	self:Bar(98476, leapingFlames, specialCD[specialCounter], 98476)
 	--Don't open if already opened from seed
-	local spell = GetSpellInfo(98450)
+	local spell = GetSpellInfo(98450) -- Searing Seeds
 	local hasDebuff, _, _, _, _, _, remaining = UnitDebuff("player", spell)
 	if not hasDebuff or (remaining - GetTime() > 6) then
 		self:OpenProximity(10, 98374)

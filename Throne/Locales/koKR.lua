@@ -22,7 +22,6 @@ L = BigWigs:NewBossLocale("Conclave of Wind", "koKR")
 if L then
 	L.gather_strength = "힘 모으기: %s"
 
-	L.storm_shield = GetSpellInfo(95865)
 	L.storm_shield_desc = "폭풍 방패"
 
 	L.full_power = "극의 힘"

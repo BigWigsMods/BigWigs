@@ -22,7 +22,6 @@ L = BigWigs:NewBossLocale("Conclave of Wind", "frFR")
 if L then
 	L.gather_strength = "%s rassemble ses forces"
 
-	L.storm_shield = GetSpellInfo(95865)
 	L.storm_shield_desc = "Bouclier d'absorption"
 
 	L.full_power = "Puissance maximale"

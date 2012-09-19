@@ -66,13 +66,13 @@ function mod:OnBossEnable()
 	self:Yell("PhaseThree", L["phase_three_trigger"])
 	self:Yell("ShadowblazeCorrection", L["shadowblaze_trigger"])
 
-	--Not bad enough that there is no cast trigger, there's also over 9 thousand Id's
+	--Not bad enough that there is no cast trigger, there's also OVER NINE THOUSAND id's
 	self:Log("SPELL_DAMAGE", "LightningDischarge", "*")
 	self:Log("SPELL_MISSED", "LightningDischarge", "*")
 
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCindersApplied", 79339)
 	self:Log("SPELL_AURA_REMOVED", "ExplosiveCindersRemoved", 79339)
-	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007, 94085, 94086, 94087)
+	self:Log("SPELL_DAMAGE", "PersonalShadowBlaze", 81007)
 
 	self:Emote("Electrocute", L["crackle_trigger"])
 
@@ -221,7 +221,7 @@ end
 do
 	local onyxia = EJ_GetSectionInfo(3283)
 	function mod:UNIT_POWER()
-		if UnitIsUnit("boss1", onyxia) then
+		if UnitName("boss1") == onyxia then
 			local power = UnitPower("boss1", ALTERNATE_POWER_INDEX)
 			if power > 80 then
 				self:Message(78999, L["onyxia_power_message"], "Attention", 78999)

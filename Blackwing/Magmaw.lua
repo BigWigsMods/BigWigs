@@ -65,16 +65,16 @@ end
 
 function mod:OnBossEnable()
 	--heroic
-	self:Log("SPELL_SUMMON", "BlazingInferno", 92154, 92190, 92191, 92192)
+	self:Log("SPELL_SUMMON", "BlazingInferno", 92154)
 	self:Yell("Phase2", L["phase2_yell"])
 
 	--normal
-	self:Log("SPELL_AURA_APPLIED", "Infection", 94679, 78097, 78941, 91913, 94678)
-	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 94679, 78097, 78941, 91913, 94678)
+	self:Log("SPELL_AURA_APPLIED", "Infection", 78097, 78941)
+	self:Log("SPELL_AURA_REMOVED", "InfectionRemoved", 78097, 78941)
 	self:Log("SPELL_AURA_APPLIED", "PillarOfFlame", 78006)
-	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773, 91912, 94616, 94617)
-	self:Log("SPELL_AURA_REMOVED", "MangleRemoved", 89773, 91912, 94616, 94617)
-	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690, 91919, 91931, 91932)
+	self:Log("SPELL_AURA_APPLIED", "Mangle", 89773)
+	self:Log("SPELL_AURA_REMOVED", "MangleRemoved", 89773)
+	self:Log("SPELL_CAST_SUCCESS", "LavaSpew", 77690)
 	self:Log("SPELL_AURA_APPLIED", "Armageddon", 92177)
 	self:Emote("Slump", L["slump_trigger"])
 	self:Emote("Vulnerability", L["expose_trigger"])

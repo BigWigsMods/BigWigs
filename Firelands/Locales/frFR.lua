@@ -1,7 +1,6 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "frFR")
 if not L then return end
 if L then
-	L.flare = GetSpellInfo(100936)
 	L.flare_desc = "Affiche une barre de délai pour les Braises incandescentes à effet de zone."
 
 	L.devastate_message = "Dévastation #%d"

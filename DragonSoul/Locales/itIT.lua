@@ -34,7 +34,6 @@ L = BigWigs:NewBossLocale("Yor'sahj the Unsleeping", "itIT")
 if L then
 	L.engage_trigger = "Iilth qi'uothk shn'ma yeh'glu Shath'Yar! H'IWN IILTH!"
 
-	L.bolt = GetSpellInfo(105416)
 	L.bolt_desc = "Avviso per i Difensori. Conteggia le stack di Dardo del Vuoto e mostra un timer di durata."
 	L.bolt_message = "%2$dx Dardo %1$s"
 

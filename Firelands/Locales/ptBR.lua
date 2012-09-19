@@ -1,7 +1,6 @@
 local L = BigWigs:NewBossLocale("Beth'tilac", "ptBR")
 if not L then return end
 if L then
-	L.flare = GetSpellInfo(100936)
 	L.flare_desc = "Mostra uma barra de tempo para o AoE."
 	L.devastate_message = "Devastação #%d"
 	L.drone_bar = "Soldade de Teia"
