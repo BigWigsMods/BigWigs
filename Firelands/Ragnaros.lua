@@ -72,30 +72,30 @@ end
 
 function mod:OnBossEnable()
 	-- Heroic
-	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100190, 100171)
+	self:Log("SPELL_AURA_APPLIED", "WorldInFlames", 100171)
 
 	self:Yell("Phase4", L["phase4_trigger"])
 	self:Log("SPELL_CAST_START", "BreadthofFrost", 100479)
 	self:Log("SPELL_CAST_START", "EntrappingRoots", 100646)
 	self:Log("SPELL_CAST_START", "Cloudburst", 100714)
-	self:Log("SPELL_CAST_SUCCESS", "EmpowerSulfuras", 100997, 100604)
+	self:Log("SPELL_CAST_SUCCESS", "EmpowerSulfuras", 100604)
 
 	-- Normal
 	self:Yell("IntermissionEnd", L["intermission_end_trigger1"], L["intermission_end_trigger2"], L["intermission_end_trigger3"])
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235, 100175, 100171, 100178, 100181) -- don't add heroic spellIds!
-	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237, 100383, 100384, 100387)
+	self:Log("SPELL_CAST_START", "EngulfingFlames", 99236, 99172, 99235) -- don't add heroic spellIds!
+	self:Log("SPELL_CAST_SUCCESS", "HandofRagnaros", 98237)
 	self:Log("SPELL_CAST_SUCCESS", "WrathofRagnaros", 98263)
-	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460, 100981, 100982, 100983)
+	self:Log("SPELL_CAST_SUCCESS", "BlazingHeat", 100460)
 	self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 98164)
-	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710, 100890, 100891, 100892)
-	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951, 100880, 100883, 100877, 100885, 100882, 100879, 100884, 100881, 100878)
-	self:Log("SPELL_SUMMON", "LivingMeteor", 99317, 100989, 100990, 100991)
+	self:Log("SPELL_CAST_START", "SulfurasSmash", 98710)
+	self:Log("SPELL_CAST_START", "SplittingBlow", 98953, 98952, 98951)
+	self:Log("SPELL_SUMMON", "LivingMeteor", 99317)
 	self:Emote("Dreadflame", dreadflame)
 
-	self:Log("SPELL_AURA_APPLIED", "Wound", 101238, 101239, 101240, 99399)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Wound", 101238, 101239, 101240, 99399)
+	self:Log("SPELL_AURA_APPLIED", "Wound", 99399)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Wound", 99399)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -282,11 +282,11 @@ function mod:WorldInFlames(_, spellId, _, _, spellName)
 end
 
 function mod:EngulfingFlames(_, spellId, _, _, spellName)
-	if spellId == 100175 or spellId == 99172 then
+	if spellId == 99172 then
 		self:Message(99172, L["engulfing_close"], "Important", spellId, "Alert")
-	elseif spellId == 100171 or spellId == 100178 or spellId == 99235 then
+	elseif spellId == 100171 or spellId == 99235 then
 		self:Message(99172, L["engulfing_middle"], "Important", spellId, "Alert")
-	elseif spellId == 100181 or spellId == 99236 then
+	elseif spellId == 99236 then
 		self:Message(99172, L["engulfing_far"], "Important", spellId, "Alert")
 	end
 	self:Bar(99172, spellName, engulfingCD, spellId)

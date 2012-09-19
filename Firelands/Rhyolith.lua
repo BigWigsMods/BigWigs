@@ -53,10 +53,10 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED_DOSE", "MoltenArmor", 98255, 101157)
-	self:Log("SPELL_CAST_START", "Stomp", 97282, 100411, 100968, 100969)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MoltenArmor", 98255)
+	self:Log("SPELL_CAST_START", "Stomp", 97282)
 	self:Log("SPELL_SUMMON", "Spark", 98552)
-	self:Log("SPELL_SUMMON", "Fragments", 100392, 98136)
+	self:Log("SPELL_SUMMON", "Fragments", 98136)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "ObsidianStack", 98632)
 	self:Log("SPELL_AURA_REMOVED", "Obsidian", 98632)
 
