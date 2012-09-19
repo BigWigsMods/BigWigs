@@ -136,8 +136,8 @@ local acceptedGlobals = {
 	IsInGuild = true,
 	GetGuildInfo = true,
 	UnitInBattleground = true,
-	GetNumPartyMembers = true,
-	GetNumRaidMembers = true,
+	GetNumSubgroupMembers = true,
+	GetNumGroupMembers = true,
 }
 
 local hasPrintedFileName = nil
