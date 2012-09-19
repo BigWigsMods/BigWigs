@@ -164,7 +164,7 @@ do
 		for i = 1, select("#", ...) do
 			local id = (select(i, ...))
 			combatLogMap[self][event][id] = func
-			if not GetSpellInfo(id) then
+			if type(id) == "number" and not GetSpellInfo(id) then
 				print(invalidId:format(self.moduleName, id, event))
 			end
 		end

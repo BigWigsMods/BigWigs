@@ -62,13 +62,13 @@ function mod:OnBossEnable()
 
 	--Normal
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", "BloodOver")
-	self:Log("SPELL_CAST_START", "Stomp", 108571, 109033, 109034, 103414)
+	self:Log("SPELL_CAST_START", "Stomp", 103414)
 	self:Log("SPELL_CAST_START", "BlackBlood", 103851)
 	self:Log("SPELL_AURA_APPLIED", "Furious", 103846)
 	self:Log("SPELL_AURA_APPLIED", "Crush", 103687)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Crush", 103687)
-	self:Log("SPELL_AURA_APPLIED", "BlackBloodStacks", 110287, 110288, 103785, 108570)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BlackBloodStacks", 110287, 110288, 103785, 108570)
+	self:Log("SPELL_AURA_APPLIED", "BlackBloodStacks", 103785)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BlackBloodStacks", 103785)
 	self:Log("SPELL_SUMMON", "ResonatingCrystal", 103639)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")

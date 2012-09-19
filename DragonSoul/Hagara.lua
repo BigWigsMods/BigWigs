@@ -54,13 +54,13 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IceTombStart", 104448)
-	self:Log("SPELL_AURA_APPLIED", "Assault", 107851, 110898, 110899, 110900)
+	self:Log("SPELL_AURA_APPLIED", "Assault", 107851)
 	self:Log("SPELL_AURA_APPLIED", "IceTombApplied", 104451)
 	self:Log("SPELL_AURA_APPLIED", "IceLanceApplied", 105285)
 	self:Log("SPELL_AURA_REMOVED", "IceLanceRemoved", 105285)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 108934)
-	self:Log("SPELL_CAST_START", "FrozenTempest", 109553, 109554, 105256, 109552)
-	self:Log("SPELL_CAST_START", "WaterShield", 109561, 109562, 105409, 109560)
+	self:Log("SPELL_CAST_START", "FrozenTempest", 105256)
+	self:Log("SPELL_CAST_START", "WaterShield", 105409)
 	self:Log("SPELL_AURA_APPLIED", "FrostFlakeApplied", 109325)
 	self:Log("SPELL_AURA_REMOVED", "FrostFlakeRemoved", 109325)
 

@@ -66,12 +66,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AcidicApplied", 104898)
 	self:Log("SPELL_AURA_REMOVED", "AcidicRemoved", 104898)
 	self:Log("SPELL_CAST_SUCCESS", "DeepCorruption", 105171)
-	self:Log("SPELL_AURA_APPLIED", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549, 109550, 109551)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "Bolt", 108383, 108384, 108385, 104849, 105416, 109549, 109550, 109551)
+	self:Log("SPELL_AURA_APPLIED", "Bolt", 104849, 105416)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Bolt", 104849, 105416)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_DAMAGE", "AcidPulse", 108350, 108351, 108352, 105573)
-	self:Log("SPELL_MISSED", "AcidPulse", 108350, 108351, 108352, 105573)
+	self:Log("SPELL_DAMAGE", "AcidPulse", 105573)
+	self:Log("SPELL_MISSED", "AcidPulse", 105573)
 
 	self:Death("Win", 55312)
 end

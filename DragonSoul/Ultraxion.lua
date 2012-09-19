@@ -72,8 +72,8 @@ function mod:GetOptions(CL)
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "HourofTwilight", 106371, 109415, 109416, 109417)
-	self:Log("SPELL_AURA_APPLIED", "FadingLight", 109075, 110078, 110079, 110080, 110070, 110069, 105925, 110068)
+	self:Log("SPELL_CAST_START", "HourofTwilight", 106371)
+	self:Log("SPELL_AURA_APPLIED", "FadingLight", 109075, 105925) -- Normal/Tank
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Yell("Warmup", L["warmup_trigger"])
 	self:Emote("Gift", L["crystal_icon"])
@@ -139,7 +139,7 @@ do
 			self:Bar("lightself", L["lightself_bar"], duration, spellId)
 			self:FlashShake("lightself")
 		else -- This is mainly a tanking assist
-			if (spellId == 110070 or spellId == 110069 or spellId == 105925 or spellId == 110068) and self:Tank() then
+			if spellId == 105925 and self:Tank() then
 				self:FlashShake("lighttank")
 				local duration = select(6, UnitDebuff(player, spellName))
 				self:Bar("lighttank", L["lighttank_bar"]:format(player), duration, spellId)

@@ -77,13 +77,14 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+
 	self:Log("SPELL_CAST_SUCCESS", "ElementiumBolt", 105651)
 	self:Log("SPELL_CAST_SUCCESS", "Impale", 106400)
 	self:Log("SPELL_CAST_SUCCESS", "AgonizingPain", 106548)
 	self:Log("SPELL_CAST_START", "AssaultAspects", 107018)
-	self:Log("SPELL_CAST_START", "Cataclysm", 110044, 106523, 110042, 110043)
-	self:Log("SPELL_AURA_APPLIED", "LastPhase", 109592, 109593, 106834, 109594) -- 25/LFR, 10HC, 10N, 25HC (Phase 2: Corrupted Blood)
-	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794, 110141, 110140, 110139) -- 106794 10N, 110141 LFR
+	self:Log("SPELL_CAST_START", "Cataclysm", 106523)
+	self:Log("SPELL_AURA_APPLIED", "LastPhase", 106834) -- Phase 2: Corrupted Blood
+	self:Log("SPELL_AURA_APPLIED", "Shrapnel", 106794)
 	self:Log("SPELL_AURA_APPLIED", "Parasite", 108649)
 	self:Log("SPELL_AURA_REMOVED", "ParasiteRemoved", 108649)
 

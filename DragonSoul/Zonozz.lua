@@ -53,10 +53,10 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED", "Darkness")
-	self:Log("SPELL_CAST_SUCCESS", "PsychicDrain", 104322, 104607, 104608, 104606)
-	self:Log("SPELL_AURA_APPLIED", "ShadowsApplied", 103434, 104600, 104601, 104599)
-	self:Log("SPELL_AURA_REMOVED", "ShadowsRemoved", 103434, 104600, 104601, 104599)
-	self:Log("SPELL_CAST_SUCCESS", "ShadowsCast", 103434, 104600, 104601, 104599)
+	self:Log("SPELL_CAST_SUCCESS", "PsychicDrain", 104322)
+	self:Log("SPELL_AURA_APPLIED", "ShadowsApplied", 103434)
+	self:Log("SPELL_AURA_REMOVED", "ShadowsRemoved", 103434)
+	self:Log("SPELL_CAST_SUCCESS", "ShadowsCast", 103434)
 	self:Log("SPELL_AURA_APPLIED", "VoidDiffusion", 106836)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidDiffusion", 106836)
 

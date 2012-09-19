@@ -61,12 +61,12 @@ function mod:OnBossEnable()
 	self:Emote("Level", L["level_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AbsorbedBlood", 105248)
-	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 109457, 109458, 109459, 105490)
+	self:Log("SPELL_CAST_SUCCESS", "FieryGripCast", 105490)
 	self:Log("SPELL_CAST_START", "SearingPlasmaCast", 109379) -- Only one id in both modes
 	self:Death("CorruptionDeath", 56161, 56162, 53891)
 
-	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 109457, 109458, 109459, 105490)
-	self:Log("SPELL_CAST_SUCCESS", "ResidueChange", 105248, 109371, 109372, 109373, 105219) -- Absorbed Blood, Burst (x4)
+	self:Log("SPELL_AURA_APPLIED", "FieryGripApplied", 105490)
+	self:Log("SPELL_CAST_SUCCESS", "ResidueChange", 105248, 105219) -- Absorbed Blood/Burst
 	self:Log("SPELL_AURA_APPLIED", "BloodCheckDest", 6343, 77758, 55095, 26017) -- Thunder Clap, Thrash, Frost Fever, Vindication
 	self:Log("SWING_DAMAGE", "BloodCheckSource", "*")
 	self:Log("SWING_MISSED", "BloodCheckSource", "*")

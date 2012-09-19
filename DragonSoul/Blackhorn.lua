@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Sunder", 108043)
 	self:Log("SPELL_AURA_APPLIED", "PreStage2", 108040)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sunder", 108043)
-	self:Log("SPELL_CAST_SUCCESS", "Roar", 109228, 108044, 109229, 109230) --LFR/25N, 10N, ??, ??
+	self:Log("SPELL_CAST_SUCCESS", "Roar", 108044)
 	self:Emote("Sapper", L["sapper_trigger"])
 	self:Yell("Stage2", L["stage2_trigger"])
 
