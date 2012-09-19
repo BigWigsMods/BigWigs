@@ -170,14 +170,14 @@ function mod:OnBossEnable()
 		roleCheckWarned = true
 	end
 
-	self:Log("SPELL_DAMAGE", "OrbDamage", 92954, 92959) -- twilight slicer, twlight pulse 25 man heroic spellIds
+	self:Log("SPELL_DAMAGE", "OrbDamage", 92852, 92958) -- twilight slicer, twilight pulse [May be wrong since MoP id changes]
 	self:Log("SWING_DAMAGE", "WhelpWatcher", "*")
 	self:Log("SWING_MISS", "WhelpWatcher", "*")
 
-	self:Log("SPELL_CAST_START", "Breath", 90125, 92944)
+	self:Log("SPELL_CAST_START", "Breath", 90125)
 
 	self:Log("SPELL_AURA_REMOVED", "Egg", 87654)
-	self:Log("SPELL_AURA_APPLIED", "Indomitable", 90045, 92946)
+	self:Log("SPELL_AURA_APPLIED", "Indomitable", 90045)
 	self:Log("SPELL_CAST_START", "Extinction", 86227)
 
 	self:Yell("EggTrigger", L["omelet_trigger"])

@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED", "Feedback", 87904)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AcidRain", 88301)
-	self:Log("SPELL_DAMAGE", "Shock", 87873)
+	self:Log("SPELL_DAMAGE", "Shock", 87873) -- [May be wrong since MoP id changes]
 	-- Acid Rain is applied at P2 transition
 	self:Log("SPELL_AURA_APPLIED", "Phase2", 88301)
 

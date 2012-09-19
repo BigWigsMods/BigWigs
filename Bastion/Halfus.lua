@@ -28,9 +28,9 @@ L = mod:GetLocale()
 function mod:GetOptions() return {83908, 83603, 83707, 83710, "berserk", "bosskill"} end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "FuriousRoar", 86169, 86170, 86171, 83710)
+	self:Log("SPELL_CAST_START", "FuriousRoar", 83710)
 	self:Log("SPELL_AURA_APPLIED", "Paralysis", 84030) -- used with Slate Dragon active
-	self:Log("SPELL_AURA_APPLIED_DOSE", "MalevolentStrikes", 83908, 86158, 86157, 86159) -- used with Slate Dragon ready
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MalevolentStrikes", 83908) -- used with Slate Dragon ready
 	self:Log("SPELL_CAST_START", "Breath", 83707) -- used by Proto-Behemoth with whelps ready
 
 	--No CheckBossStatus() here as event does not fire, GM confirms "known" issue.

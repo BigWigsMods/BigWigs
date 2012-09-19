@@ -67,14 +67,14 @@ function mod:OnBossEnable()
 	self:Yell("DeepBreath", L["valiona_trigger"])
 	self:Emote("DeepBreathCast", deepBreath)
 
-	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788, 92877, 92876, 92878)
-	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788, 92877, 92876, 92878)
+	self:Log("SPELL_AURA_APPLIED", "BlackoutApplied", 86788)
+	self:Log("SPELL_AURA_REMOVED", "BlackoutRemoved", 86788)
 	self:Log("SPELL_CAST_START", "DevouringFlames", 86840)
 
-	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622, 95640, 95639, 95641)
-	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622, 95640, 95639, 95641)
+	self:Log("SPELL_AURA_APPLIED", "EngulfingMagicApplied", 86622)
+	self:Log("SPELL_AURA_REMOVED", "EngulfingMagicRemoved", 86622)
 
-	self:Log("SPELL_CAST_START", "TwilightBlast", 86369, 95416, 92898, 92899, 92900)
+	self:Log("SPELL_CAST_START", "TwilightBlast", 86369)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 

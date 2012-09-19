@@ -71,14 +71,14 @@ end
 function mod:OnBossEnable()
 	--normal
 	self:Log("SPELL_CAST_SUCCESS", "Orders", 81171, 81556)
-	self:Log("SPELL_AURA_APPLIED", "Worship", 91317, 93365, 93366, 93367)
+	self:Log("SPELL_AURA_APPLIED", "Worship", 91317)
 	self:Log("SPELL_CAST_START", "SummonCorruptingAdherent", 81628)
 	self:Log("SPELL_CAST_START", "FuryOfChogall", 82524)
 	self:Log("SPELL_CAST_START", "FesterBlood", 82299)
 	self:Log("SPELL_CAST_SUCCESS", "LastPhase", 82630)
-	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414, 93160, 93162)
-	self:Log("SPELL_CAST_SUCCESS", "CorruptingCrash", 81685, 93178, 93179, 93180)
-	self:Log("SPELL_DAMAGE", "Blaze", 81538, 93212, 93213, 93214)
+	self:Log("SPELL_CAST_SUCCESS", "DarkenedCreations", 82414)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptingCrash", 81685)
+	self:Log("SPELL_DAMAGE", "Blaze", 81538)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 

@@ -93,20 +93,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "LightningRodRemoved", 83099)
 
 	--Shield
-	self:Log("SPELL_CAST_START", "FlameShield", 82631, 92513, 92512, 92514)
-	self:Log("SPELL_AURA_REMOVED", "FlameShieldRemoved", 82631, 92513, 92512, 92514)
+	self:Log("SPELL_CAST_START", "FlameShield", 82631)
+	self:Log("SPELL_AURA_REMOVED", "FlameShieldRemoved", 82631)
 
-	self:Log("SPELL_CAST_START", "HardenSkinStart", 92541, 92542, 92543, 83718)
-	self:Log("SPELL_CAST_START", "Glaciate", 82746, 92507, 92506, 92508)
+	self:Log("SPELL_CAST_START", "HardenSkinStart", 83718)
+	self:Log("SPELL_CAST_START", "Glaciate", 82746)
 	self:Log("SPELL_AURA_APPLIED", "Waterlogged", 82762)
 	self:Log("SPELL_CAST_SUCCESS", "HeartofIce", 82665)
 	self:Log("SPELL_CAST_SUCCESS", "BurningBlood", 82660)
-	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 84948, 92486, 92487, 92488)
+	self:Log("SPELL_AURA_APPLIED", "GravityCrush", 84948)
 
 	self:Yell("Switch", L["switch_trigger"])
 
-	self:Log("SPELL_CAST_START", "Quake", 83565, 92544, 92545, 92546)
-	self:Log("SPELL_CAST_START", "Thundershock", 83067, 92469, 92470, 92471)
+	self:Log("SPELL_CAST_START", "Quake", 83565)
+	self:Log("SPELL_CAST_START", "Thundershock", 83067)
 
 	self:Emote("QuakeTrigger", L["quake_trigger"])
 	self:Emote("ThundershockTrigger", L["thundershock_trigger"])
