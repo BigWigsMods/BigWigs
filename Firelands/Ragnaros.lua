@@ -236,7 +236,7 @@ function mod:IntermissionEnd()
 		self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	end
 	phase = phase + 1
-	self:Message(98953, L["ragnaros_back_message"], "Positive", 101228) -- ragnaros icon
+	self:Message(98953, L["ragnaros_back_message"], "Positive", 100593) -- ragnaros icon
 end
 
 function mod:HandofRagnaros(_, spellId)
@@ -339,7 +339,7 @@ function mod:Deaths(mobId)
 	if mobId == 53140 then
 		sons = sons - 1
 		if sons < 4 then
-			self:LocalMessage(98953, L["sons_left"]:format(sons), "Positive", 100308) -- the speed buff icon on the sons
+			self:LocalMessage(98953, L["sons_left"]:format(sons), "Positive", 98473) -- the speed buff icon on the sons
 		end
 	elseif mobId == 52409 then
 		self:Win()
