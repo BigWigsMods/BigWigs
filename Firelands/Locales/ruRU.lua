@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Beth'tilac", "ruRU")
 if not L then return end
 if L then
 	L.flare_desc = "Показать таймер для АоЕ."
-	
+
 	L.devastate_message = "Разрушение #%d"
 	L.drone_bar = "Трутень"
 	L.drone_message = "Появился Трутень!"
@@ -51,13 +51,13 @@ if L then
 	L.phase2_soon_emote = "Алисразор начинает летать по кругу!"
 
 	L.flight = "Помощник летчика"
-	L.flight_desc = "Отсчитывать время действия бафа 'Огненные крылья'. Советую использовать вместе с функцией 'Супер увеличение'."
+	L.flight_desc = "Отсчитывать время действия эффекта 'Огненные крылья'. Отлично сочетается с функцией 'Супер увеличение'."
 
 	L.initiate = "Появление Друида"
 	L.initiate_desc = "Показывать таймер для появления друида."
 	L.initiate_both = "Два Друида"
-	L.initiate_west = "Друид на Востоке"
-	L.initiate_east = "Друид на Западе"
+	L.initiate_west = "Друид на Западе"
+	L.initiate_east = "Друид на Востоке"
 end
 
 L = BigWigs:NewBossLocale("Shannox", "ruRU")
@@ -105,7 +105,7 @@ if L then
 	L.intermission_bar = "Переходная фаза!"
 	L.intermission_message = "Переходная фаза... Получил печеньки?"
 	L.sons_left = "Осталось адов: %d"
-	L.engulfing_close = "Пламя в мили!"
+	L.engulfing_close = "Пламя у босса!"
 	L.engulfing_middle = "Пламя по центру!"
 	L.engulfing_far = "Пламя с краю!"
 	L.hand_bar = "Отбрасывание"
