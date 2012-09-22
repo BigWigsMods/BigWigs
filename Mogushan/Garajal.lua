@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 --[[ TO DO
 
 might want to try and report people with debuff closest to totem when it is about to die
@@ -17,6 +16,7 @@ mod:RegisterEnableMob(60143)
 
 local voodooDollList = mod:NewTargetList()
 local spiritTotem, voodooDoll = (GetSpellInfo(116174)), (GetSpellInfo(122151))
+local totemCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -47,19 +47,28 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 117752)
 	self:Log("SPELL_AURA_APPLIED", "VoodooDollsApplied", 122151)
+	-- third party modules need it
+	self:Log("SPELL_AURA_REMOVED", "VoodooDollsRemoved", 122151)
 	self:Log("SPELL_CAST_SUCCESS", "SpiritTotem", 116174)
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
 	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161)
 
-	self:AddSyncListener("Dolls")
+	self:AddSyncListener("DollsApplied")
+	self:AddSyncListener("DollsRemoved")
+	self:AddSyncListener("Totem")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 60143)
 end
 
-function mod:OnEngage(diff)
-	self:Bar(116174, spiritTotem, 36, 116174)
+function mod:OnEngage()
+	totemCounter = 1
+	if self:Heroic() then
+		self:Bar(116174, spiritTotem, 20, 116174)
+	else
+		self:Bar(116174, spiritTotem, 36, 116174)
+	end
 	self:Berserk(480) -- assume
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
@@ -68,15 +77,20 @@ end
 -- Event Handlers
 --
 
-function mod:OnSync(sync, rest, nick)
-	if sync == "Dolls" and rest then
+function mod:OnSync(sync, rest)
+	if sync == "DollsApplied" and rest then
 		for player in string.gmatch(rest, "%S+") do
 			voodooDollList[#voodooDollList+1] = player
 		end
 		self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
 	elseif sync == "Totem" and rest then
-		self:Bar(116174, rest, 36, 116174)
-		self:Message(116174, rest, "Attention", 116174)
+		self:Message(116174, ("%s (%d)"):format(rest, totemCounter), "Attention", 116174)
+		totemCounter = totemCounter + 1
+		if self:Heroic() then
+			self:Bar(116174, ("%s (%d)"):format(rest, totemCounter), 20, 116174)
+		else
+			self:Bar(116174, ("%s (%d)"):format(rest, totemCounter), 36, 116174)
+		end
 	end
 end
 
@@ -84,11 +98,28 @@ do
 	local scheduled = nil
 	local listTbl = {}
 	local function createList()
-		mod:Sync("Dolls", unpack(listTbl))
+		mod:Sync("DollsApplied", unpack(listTbl))
 		wipe(listTbl)
 		scheduled = nil
 	end
-	function mod:VoodooDollsApplied(player, _, _, _, spellName)
+	function mod:VoodooDollsApplied(player)
+		listTbl[#listTbl+1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(createList, 0.1)
+		end
+	end
+end
+
+do
+	local scheduled = nil
+	local listTbl = {}
+	local function createList()
+		mod:Sync("DollsRemoved", unpack(listTbl))
+		wipe(listTbl)
+		scheduled = nil
+	end
+	function mod:VoodooDollsRemoved(player)
 		listTbl[#listTbl+1] = player
 		if not scheduled then
 			scheduled = true
