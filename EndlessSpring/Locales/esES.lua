@@ -1,4 +1,4 @@
-if not GetNumGroupMembers then return end
+
 local L = BigWigs:NewBossLocale("Protector of the Endless", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
 if not L then return end
 if L then

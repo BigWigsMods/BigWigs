@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 local L = BigWigs:NewBossLocale("The Stone Guard", "deDE")
 if not L then return end
 if L then
@@ -29,3 +28,4 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "deDE")
 if L then
 
 end
+

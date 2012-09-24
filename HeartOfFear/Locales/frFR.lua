@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "frFR")
 if not L then return end
 if L then
@@ -43,3 +42,4 @@ if L then
 	L.eyes_desc = "Alerte pour tanks uniquement. Compte les cumuls d'Yeux de l'impératrice et affiche une barre de durée."
 	L.eyes_message = "%2$dx yeux sur %1$s"
 end
+

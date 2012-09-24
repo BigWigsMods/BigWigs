@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "ruRU")
 if not L then return end
 if L then
@@ -41,3 +40,4 @@ if L then
 	L.eyes_desc = "Только для танков. Считает стаки взгляда императрицы и показывает таймер."
 	L.eyes_message = "%2$dx взгляд на %1$s"
 end
+

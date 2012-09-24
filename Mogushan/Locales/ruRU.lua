@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 local L = BigWigs:NewBossLocale("The Stone Guard", "ruRU")
 if not L then return end
 if L then
@@ -47,3 +46,4 @@ if L then
 	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"			-- Needs review
 	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"	-- Needs review
 end
+

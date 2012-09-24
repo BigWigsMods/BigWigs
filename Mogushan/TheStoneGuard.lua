@@ -1,4 +1,4 @@
-if not GetNumGroupMembers then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --

@@ -1,4 +1,4 @@
-if not GetNumGroupMembers then return end
+
 local L = BigWigs:NewBossLocale("Protector of the Endless", "ruRU")
 if not L then return end
 if L then
@@ -28,3 +28,4 @@ if L then
 	L.swing = "Замах"
 	L.swing_desc = "Считает количество замахов перед Взбучкой."
 end
+

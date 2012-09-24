@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 --[[ TO DO
 
 figure out how defile works

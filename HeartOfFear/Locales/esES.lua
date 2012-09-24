@@ -1,4 +1,3 @@
-if not GetNumGroupMembers then return end
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "esES")
 if not L then return end
 if L then
@@ -29,3 +28,4 @@ L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "esES")
 if L then
 
 end
+
