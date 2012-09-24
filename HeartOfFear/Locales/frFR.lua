@@ -24,6 +24,8 @@ L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "frFR")
 if L then
 	L.next_pack = "Prochain groupe"
 	L.next_pack_desc = "Prévient quand un prochain groupe atterrit après que vous ayez tué un autre."
+
+	L.spear_removed = "Votre Lance de perforation a été enlevée !"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "frFR")
