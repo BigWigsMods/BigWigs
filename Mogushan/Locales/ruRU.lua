@@ -13,9 +13,9 @@ if L then
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз."
 
-	L.phase_flame_trigger = "Oh exalted one! Through me you shall melt flesh from bone!"	-- Needs review
+	L.phase_flame_trigger = "О, превозносимый! Моими руками ты отделишь их плоть от костей!"
 	L.phase_lightning_trigger = "О, великий дух! Даруй мне силу земли!"
-	L.phase_arcane_trigger =  "Oh sage of the ages! Instill to me your arcane wisdom!"		-- Needs review
+	L.phase_arcane_trigger =  "О, великий мыслитель! Да снизойдет на меня твоя древняя мудрость!"
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"		-- Needs review
 
 	L.phase_flame = "Фаза огня!"
