@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.petrifications = "Pietrificazione"
 	L.petrifications_desc = "Avvertimento quando il boss comincia la pietrificazione"
-	L.overload = "Sovraccarico" -- maybe should use a spellId that says exactly "Overload"
+	L.overload = "Sovraccarico"
 	L.overload_desc = "Avviso per tutti i tipi di Sovraccarico."
 end
 
@@ -12,13 +12,13 @@ if L then
 	L.phases = "Fasi"
 	L.phases_desc = "Avvertimento per il cambiamento di Fase"
 
-	L.phase_flame_trigger = "Oh, potente! Attraverso me scioglierai la carne dalle ossa!"
 	L.phase_lightning_trigger = "Oh, grande spirito ... concedimi il potere della terra!"
+	L.phase_flame_trigger = "Oh, potente! Attraverso me scioglierai la carne dalle ossa!"
 	L.phase_arcane_trigger =  "Oh, saggio delle ere! Concedimi la tua saggezza arcana!"
 	L.phase_shadow_trigger = "Grande spirito dei campioni del passato! concedimi il tuo scudo!"
 
-	L.phase_flame = "Fase Fuoco!"
 	L.phase_lightning = "Fase Fulmini!"
+	L.phase_flame = "Fase Fuoco!"
 	L.phase_arcane = "Fase Arcana!"
 	L.phase_shadow = "Fase Ombra!"
 end

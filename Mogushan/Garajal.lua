@@ -69,7 +69,7 @@ function mod:OnEngage()
 	else
 		self:Bar(116174, spiritTotem, 36, 116174)
 	end
-	self:Berserk(480) -- assume
+	self:Berserk(360)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 

@@ -13,13 +13,13 @@ if L then
 	L.phases = "Phases"
 	L.phases_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
-	L.phase_flame_trigger = "Ô être exalté ! Grâce à moi vous ferez fondre la chair et les os !" -- à vérifier
 	L.phase_lightning_trigger = "Ô grand esprit ! Accorde-moi le pouvoir de la terre !" -- à vérifier
+	L.phase_flame_trigger = "Ô être exalté ! Grâce à moi vous ferez fondre la chair et les os !" -- à vérifier
 	L.phase_arcane_trigger =  "Ô sagesse ancestrale ! Distille en moi ta sagesse arcanique !" -- à vérifier
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!" -- à traduire
 
-	L.phase_flame = "Phase des Flammes !"
 	L.phase_lightning = "Phase de Foudre !"
+	L.phase_flame = "Phase des Flammes !"
 	L.phase_arcane = "Phase des Arcanes !"
 	L.phase_shadow = "Phase d'Ombre !"
 end

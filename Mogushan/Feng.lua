@@ -22,13 +22,13 @@ if L then
 	L.phases_desc = "Warning for phase changes"
 	L.phases_icon = 116363
 
-	L.phase_flame_trigger = "Oh exalted one! Through me you shall melt flesh from bone!"
 	L.phase_lightning_trigger = "Oh great spirit! Grant me the power of the earth!"
+	L.phase_flame_trigger = "Oh exalted one! Through me you shall melt flesh from bone!"
 	L.phase_arcane_trigger =  "Oh sage of the ages! Instill to me your arcane wisdom!"
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"
 
-	L.phase_flame = "Flame phase!"
 	L.phase_lightning = "Lightning phase!"
+	L.phase_flame = "Flame phase!"
 	L.phase_arcane = "Arcane phase!"
 	L.phase_shadow = "Shadow phase!"
 end
@@ -70,8 +70,8 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 
 	-- needed so we can have bars up for abilities used straight after phase switches
-	self:Yell("FlamePhase", L["phase_flame_trigger"])
 	self:Yell("LightningPhase", L["phase_lightning_trigger"])
+	self:Yell("FlamePhase", L["phase_flame_trigger"])
 	self:Yell("ArcanePhase", L["phase_arcane_trigger"])
 	self:Yell("ShadowPhase", L["phase_shadow_trigger"]) -- heroic only
 

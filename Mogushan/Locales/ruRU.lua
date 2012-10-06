@@ -11,15 +11,15 @@ end
 L = BigWigs:NewBossLocale("Feng the Accursed", "ruRU")
 if L then
 	L.phases = "Фазы"
-	L.phases_desc = "Предупреждать о смене фаз."
+	L.phases_desc = "Предупреждать о смене фаз"
 
-	L.phase_flame_trigger = "О, превозносимый! Моими руками ты отделишь их плоть от костей!"
 	L.phase_lightning_trigger = "О, великий дух! Даруй мне силу земли!"
+	L.phase_flame_trigger = "О, превозносимый! Моими руками ты отделишь их плоть от костей!"
 	L.phase_arcane_trigger =  "О, великий мыслитель! Да снизойдет на меня твоя древняя мудрость!"
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"		-- Needs review
 
-	L.phase_flame = "Фаза огня!"
 	L.phase_lightning = "Фаза молний!"
+	L.phase_flame = "Фаза огня!"
 	L.phase_arcane = "Фаза тайной магии!"
 	L.phase_shadow = "Фаза тьмы!"
 end
