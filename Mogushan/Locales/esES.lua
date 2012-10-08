@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("The Stone Guard", "esES")
+﻿local L = BigWigs:NewBossLocale("The Stone Guard", "esES")
 if not L then return end
 if L then
 
@@ -22,7 +22,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esES")
 if L then
-
+	L.frenzy = "¡Fresení inminente!"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "esES")
