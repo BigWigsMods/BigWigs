@@ -36,14 +36,14 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
 if L then
-	L.floor_despawn = "Исчезновение пола"
+	L.floor_despawn = "Пол исчезает"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
 if L then
-	L.rage_trigger = "The Emperor's Rage echoes through the hills."				-- Needs review
-	L.strength_trigger = "The Emperor's Strength appears in the alcoves!"		-- Needs review
-	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"			-- Needs review
+	L.rage_trigger = "Ярость Императора эхом звучит среди холмов."
+	L.strength_trigger = "Сила Императора сжимает эти земли в железных тисках!"
+	L.courage_trigger = "Смелость Императора безгранична!"
 	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"	-- Needs review
 end
 
