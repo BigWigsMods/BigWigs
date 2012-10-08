@@ -26,12 +26,6 @@ move-folders:
     BigWigs/Options: BigWigs_Options
     BigWigs/Foreign: BigWigs_Foreign
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Blackwing: BigWigs_Blackwing
-    BigWigs/Bastion: BigWigs_Bastion
-    BigWigs/Throne: BigWigs_Throne
-    BigWigs/Baradin: BigWigs_Baradin
-    BigWigs/Firelands: BigWigs_Firelands
-    BigWigs/DragonSoul: BigWigs_DragonSoul
     BigWigs/Mogushan: BigWigs_Mogushan
     BigWigs/HeartOfFear: BigWigs_HeartOfFear
     BigWigs/EndlessSpring: BigWigs_EndlessSpring
