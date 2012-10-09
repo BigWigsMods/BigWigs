@@ -154,8 +154,8 @@ function mod:LightningPhase()
 end
 
 function mod:LightningFists(_, _, _, _, spellName)
-	self:Message(116295, spellName, "Urgent", 118077)
-	self:Bar(116295, "~"..spellName, 11, 116295) -- might need to disable this if it feels unnecesary
+	self:Message(116295, spellName, "Urgent", 116295)
+	self:Bar(116295, "~"..spellName, 14, 116295) -- might need to disable this if it feels unnecesary
 end
 
 function mod:Epicenter(_, _, _, _, spellName)
