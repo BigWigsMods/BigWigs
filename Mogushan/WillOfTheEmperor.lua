@@ -24,6 +24,9 @@ if L then
 	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"
 	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"
 
+	L.arc = EJ_GetSectionInfo(5673)
+	L.arc_desc = "|cFFFF0000This warning will only show for the boss you're targetting.|r " .. (select(2, EJ_GetSectionInfo(5673)))
+	L.arc_icon = 116835
 end
 L = mod:GetLocale()
 
@@ -36,7 +39,7 @@ function mod:GetOptions()
 		"ej:5678", { 116525, "FLASHSHAKE" },
 		"ej:5677",
 		"ej:5676",
-		"ej:5726", 116835,
+		"ej:5726", "arc",
 		"berserk", "bosskill",
 	}, {
 		["ej:5678"] = rage,
@@ -109,8 +112,9 @@ function mod:Bosses()
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-	if (spellId == 116968 or spellId == 116971 or spellId == 116972) and unitId:match("boss") then -- arc attacks
-		self:Message(116835, ("%s %s"):format((UnitName(unitId)), spellName), "Urgent", 116835)
+	if unitId == "target" and (spellId == 116968 or spellId == 116971 or spellId == 116972) then -- arc attacks
+		local boss = UnitName(unitId)
+		self:Message("arc", CL["other"]:format(spellName, boss), "Urgent", 116835)
 	end
 end
 
