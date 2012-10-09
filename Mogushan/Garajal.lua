@@ -47,8 +47,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", 117752)
 	self:Log("SPELL_AURA_APPLIED", "VoodooDollsApplied", 122151)
-	-- third party modules need it
-	self:Log("SPELL_AURA_REMOVED", "VoodooDollsRemoved", 122151)
+	self:Log("SPELL_AURA_REMOVED", "VoodooDollsRemoved", 122151) -- Used in 3rd party modules
 	self:Log("SPELL_CAST_SUCCESS", "SpiritTotem", 116174)
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
 	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161)
@@ -120,6 +119,7 @@ do
 		scheduled = nil
 	end
 	function mod:VoodooDollsRemoved(player)
+		-- Used in 3rd party modules
 		listTbl[#listTbl+1] = player
 		if not scheduled then
 			scheduled = true
@@ -128,9 +128,9 @@ do
 	end
 end
 
-function mod:CrossedOver(player, _, _, _, spellName)
+function mod:CrossedOver(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:Bar(116161, spellName, 30, 116161)
+		self:Bar(116161, spellName, 30, spellId)
 	end
 end
 
@@ -138,12 +138,18 @@ function mod:SpiritTotem(_, _, _, _, spellName)
 	self:Sync("Totem", spellName)
 end
 
-function mod:Banishment(player, _, _, _, spellName)
-	-- maybe this should be a tank only warning
-	if UnitIsUnit("player", player) then
-		self:Bar(116272, spellName, 30, 116272) -- this is rather soul sever, but not sure if timer starts exactly when banishment starts
+do
+	local function fireNext(spellName)
+		mod:Bar(116272, spellName, 35, 116272)
 	end
-	self:TargetMessage(116272, spellName, player, "Urgent", 116272)  -- maybe this should be just :Message with a sound, so the other tank gets sound notification too
+	function mod:Banishment(player, spellId, _, _, spellName)
+		-- maybe this should be a tank only warning
+		if UnitIsUnit("player", player) then
+			self:Bar(116272, CL["you"]:format(spellName), 30, spellId) -- this is rather soul sever, but not sure if timer starts exactly when banishment starts
+		end
+		self:ScheduleTimer(fireNext, 30, spellName)
+		self:TargetMessage(116272, spellName, player, "Urgent", spellId)  -- maybe this should be just :Message with a sound, so the other tank gets sound notification too
+	end
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
