@@ -168,15 +168,15 @@ end
 function mod:FlankingOrders(_, _, _, _, spellName)
 	self:Message(117910, spellName, "Attention", 117910, "Long")
 	if isBossActiveById(60709) then
-		self:Bar(117910, "~"..spellName, 45, 117910)
+		self:Bar(117910, spellName, 40, 117910)
 	else
-		self:Bar(117910, "~"..spellName, 76, 117910)
+		self:Bar(117910, spellName, 75, 117910)
 	end
 end
 
 function mod:Annihilate(_, _, _, _, spellName)
 	self:Message(119521, spellName, "Urgent", 119521, "Alarm")
-	self:Bar(119521, spellName, 35, 119521)
+	self:Bar(119521, spellName, 39, 119521)
 end
 
 function mod:Shield(_, _, _, _, spellName)
