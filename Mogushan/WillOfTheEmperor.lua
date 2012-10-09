@@ -112,7 +112,7 @@ function mod:Bosses()
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-	if unitId == "target" and (spellId == 116968 or spellId == 116971 or spellId == 116972) then -- arc attacks
+	if unitId == "target" and (spellId == 116968 or spellId == 116971 or spellId == 116972 or spellId == 116969) then -- arc attacks
 		local boss = UnitName(unitId)
 		self:Message("arc", CL["other"]:format(spellName, boss), "Urgent", 116835)
 	end
