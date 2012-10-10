@@ -22,6 +22,14 @@ if L then
 	L.phase_flame = "Phase des Flammes !"
 	L.phase_arcane = "Phase des Arcanes !"
 	L.phase_shadow = "Phase d'Ombre !"
+
+	-- Tanks
+	L.tank = "Alertes tank"
+	L.tank_desc = "Alertes pour tank uniquement. Compte les cumuls de Fouet foudroyant, Lance enflammée, Horion des Arcanes & Brûlure de l'ombre (héroïque)."
+	L.lash_message = "%2$dx Fouet(s) sur %1$s"
+	L.spear_message = "%2$dx Lance(s) sur %1$s"
+	L.shock_message = "%2$dx Horion(s) sur %1$s"
+	L.burn_message = "%2$dx Brûlure(s) sur %1$s"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "frFR")
@@ -36,7 +44,9 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "frFR")
 if L then
+	L.last_phase = "Dernière phase"
 	L.floor_despawn = "Disparition du sol"
+	L.overcharged_total_annihilation = "Vous avez (%d) %s, réinitialisez votre affaiblissement !"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "frFR")
@@ -45,5 +55,7 @@ if L then
 	L.strength_trigger = "La Force de l'empereur apparaît dans les alcôves !" -- à vérifier
 	L.courage_trigger = "Le Courage de l'empereur apparaît dans les alcôves !" -- à vérifier
 	L.bosses_trigger = "Deux assemblages titanesques apparaissent dans les grandes alcôves !" -- à vérifier
+
+	L.arc_desc = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 
