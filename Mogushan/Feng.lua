@@ -95,7 +95,7 @@ end
 
 function mod:OnEngage(diff)
 	allowBarrier = true
-	self:Berserk(480) -- assume
+	self:Berserk(600)
 	markUsedOn = nil
 end
 
