@@ -158,7 +158,7 @@ end
 
 -- FLAME
 function mod:FlamePhase()
-	self:Message("phases", L["flame_lightning"], "Positive", 116363)
+	self:Message("phases", L["phase_flame"], "Positive", 116363)
 	self:Bar(116711, "~"..drawflame, 35, 116711)
 end
 
