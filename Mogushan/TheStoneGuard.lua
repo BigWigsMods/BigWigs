@@ -122,7 +122,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	elseif spellId == 116036 then -- jasper
 		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, 116036, "Alert") -- red
 	elseif spellId == 116057 then -- amethyst
-		self:Message("petrifications", ("|c00800080%s|r"):format(spellName), nil, 116057, "Alert") -- purple
+		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, 116057, "Alert") -- purple
 	end
 end
 
