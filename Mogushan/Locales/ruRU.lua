@@ -22,6 +22,13 @@ if L then
 	L.phase_flame = "Фаза огня!"
 	L.phase_arcane = "Фаза тайной магии!"
 	L.phase_shadow = "Фаза тьмы!"
+
+	L.tank = "Предупреждения для танков"
+	L.tank_desc = "Только для танков. Считает стаки: Искрящаяся плеть, Пылающее копье, Чародейское потрясение и Ожог Тьмы (Героик)."
+	L.lash_message = "%2$dx Плеть на |3-5(%%s)"
+	L.spear_message = "%2$dx Копье на |3-5(%%s)"
+	L.shock_message = "%2$dx Потрясение на |3-5(%%s)"
+	L.burn_message = "%2$dx Ожог на |3-5(%%s)"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "ruRU")
@@ -36,7 +43,9 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
 if L then
+	L.last_phase = "Последняя фаза"
 	L.floor_despawn = "Пол исчезает"
+	L.overcharged_total_annihilation = "На вас (%d) %s, снимите дебафф!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
