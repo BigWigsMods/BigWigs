@@ -10,6 +10,7 @@ mod:RegisterEnableMob(60009)
 
 local epicenter, drawflame, arcanevelocity = (GetSpellInfo(116018)), (GetSpellInfo(116711)), (GetSpellInfo(116364))
 local allowBarrier = true
+local allowShroud = true
 local markUsedOn
 
 --------------------------------------------------------------------------------
@@ -103,13 +104,23 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_CHANNEL_START(_, unitId, spellName, rank, lineId, spellId)
-	if spellId == 115911 then
-		local channelTarget = UnitName(unitId.."target")
-		self:TargetMessage(115911, CL["cast"]:format(spellName), channelTarget, "Urgent", 115911, "Alert")
-		self:SecondaryIcon(115911, channelTarget) -- probably conflicts with other arcane resonance markers
-		if UnitIsUnit("player", channelTarget) then
-			self:FlashShake(115911)
+do
+	local function resetAllowShroud()
+		allowShroud = true
+	end
+	
+	function mod:UNIT_SPELLCAST_CHANNEL_START(_, unitId, spellName, rank, lineId, spellId)
+		if spellId == 115911 then
+			if allowShroud then
+				allowShroud = false
+				local channelTarget = UnitName(unitId.."target")
+				self:TargetMessage(115911, CL["cast"]:format(spellName), channelTarget, "Urgent", 115911, "Alert")
+				self:SecondaryIcon(115911, channelTarget) -- probably conflicts with other arcane resonance markers
+				if UnitIsUnit("player", channelTarget) then
+					self:FlashShake(115911)
+				end
+				self:ScheduleTimer(resetAllowShroud, 10)
+			end
 		end
 	end
 end
