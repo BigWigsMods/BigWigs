@@ -22,6 +22,14 @@ if L then
 	L.phase_flame = "Feuerphase!"
 	L.phase_arcane = "Arkanphase!"
 	L.phase_shadow = "(Heroisch) Schattenphase!"
+
+	-- Tanks
+	L.tank = "Tankwarnungen"
+	L.tank_desc = "Nur für Tanks. Zählt die Stapel von Blitzpeitsche, Flammender Speer, Arkanschock und Schattenbrand (heroisch)."
+	L.lash_message = "%2$dx Blitzpeitsche auf %1$s"
+	L.spear_message = "%2$dx Flammender Speer auf %1$s"
+	L.shock_message = "%2$dx Arkanschock auf %1$s"
+	L.burn_message = "%2$dx Schattenbrand auf %1$s"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "deDE")
