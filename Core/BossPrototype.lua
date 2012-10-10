@@ -337,24 +337,20 @@ end
 
 --[[
 function boss:Damager()
+	if core.db.profile.ignorerole then return true end
 	local tree = GetSpecialization()
 	local role
 	local _, class = UnitClass("player")
-	if class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and t == 1) or (class == "PRIEST" and t == 3) then
+	if
+		class == "MAGE" or class == "WARLOCK" or class == "HUNTER" or (class == "DRUID" and tree == 1) or
+		(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
+	then
 		role = "RANGED"
-	elseif class == "ROGUE" or (class == "WARRIOR" and tree ~= 3) or (class == "DEATHKNIGHT" and tree ~= 1) or (class == "PALADIN" and tree == 3) then
+	elseif
+		class == "ROGUE" or (class == "WARRIOR" and tree ~= 3) or (class == "DEATHKNIGHT" and tree ~= 1) or
+		(class == "PALADIN" and tree == 3) or (class == "DRUID" and tree == 2) or (class == "SHAMAN" and tree == 2)
+	then
 		role = "MELEE"
-	elseif class == "DRUID" and t == 2 then
-		local _,_,_,_,talent = GetTalentInfo(2, 20)
-		if talent == 0 then
-			role = "MELEE"
-		end
-	elseif class == "SHAMAN" then
-		if t == 1 then
-			role = "RANGED"
-		elseif t == 2 then
-			role = "MELEE"
-		end
 	end
 	return role
 end

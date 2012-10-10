@@ -33,31 +33,15 @@ if L then
 	L.phase_shadow = "(Heroic) Shadow phase!"
 
 	-- Tanks
-	L.lash = GetSpellInfo(131788)
-	L.lash_desc = "Tank alert only. Count the stacks of Lightning Lash."
-	L.lash_icon = 131788
+	L.tank = "Tank Alerts"
+	L.tank_desc = "Tank alerts only. Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
 	L.lash_message = "%2$dx Lash on %1$s"
-
-	L.spear = GetSpellInfo(116942)
-	L.spear_desc = "Tank alert only. Count the stacks of Flaming Spear."
-	L.spear_icon = 116942
 	L.spear_message = "%2$dx Spear on %1$s"
-
-	L.shock = GetSpellInfo(131790)
-	L.shock_desc = "Tank alert only. Count the stacks of Arcane Shock."
-	L.shock_icon = 131790
 	L.shock_message = "%2$dx Shock on %1$s"
-
-	L.burn = GetSpellInfo(131792)
-	L.burn_desc = "Tank alert only. Count the stacks of Shadowburn."
-	L.burn_icon = 131792
 	L.burn_message = "%2$dx Burn on %1$s"
 end
 L = mod:GetLocale()
-L.lash = L.lash.." "..INLINE_TANK_ICON
-L.spear = L.spear.." "..INLINE_TANK_ICON
-L.shock = L.shock.." "..INLINE_TANK_ICON
-L.burn = L.burn.." "..INLINE_TANK_ICON
+L.tank = L.tank.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -65,16 +49,14 @@ L.burn = L.burn.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		116295, 116018, "lash",
-		{116784, "ICON", "FLASHSHAKE"}, 116711, {116793, "FLASHSHAKE"}, "spear",
-		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364, "shock",
-		"burn",
-		"phases", 115856, {115911, "ICON" }, "berserk", "bosskill",
+		116295, 116018,
+		{116784, "ICON", "FLASHSHAKE"}, 116711, {116793, "FLASHSHAKE"},
+		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
+		"phases", 115856, {115911, "ICON"}, "tank", "berserk", "bosskill",
 	}, {
 		[116295] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
 		[116417] = L["phase_arcane"],
-		burn = L["phase_shadow"],
 		phases = "general",
 	}
 end
@@ -248,7 +230,7 @@ do
 	function mod:TankAlerts(player, spellId, _, _, _, stack)
 		if self:Tank() then
 			stack = stack or 1
-			self:TargetMessage(spellId, msgTbl[spellId], player, "Urgent", spellId, "Info", stack)
+			self:TargetMessage("tank", msgTbl[spellId], player, "Urgent", spellId, "Info", stack)
 		end
 	end
 end
