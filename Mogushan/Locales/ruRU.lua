@@ -16,7 +16,7 @@ if L then
 	L.phase_lightning_trigger = "О, великий дух! Даруй мне силу земли!"
 	L.phase_flame_trigger = "О, превозносимый! Моими руками ты отделишь их плоть от костей!"
 	L.phase_arcane_trigger =  "О, великий мыслитель! Да снизойдет на меня твоя древняя мудрость!"
-	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"		-- Needs review
+	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!" -- Needs review
 
 	L.phase_lightning = "Фаза молний!"
 	L.phase_flame = "Фаза огня!"
@@ -53,6 +53,6 @@ if L then
 	L.rage_trigger = "Ярость Императора эхом звучит среди холмов."
 	L.strength_trigger = "Сила Императора сжимает эти земли в железных тисках!"
 	L.courage_trigger = "Смелость Императора безгранична!"
-	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"	-- Needs review
+	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!" -- Needs review
 end
 
