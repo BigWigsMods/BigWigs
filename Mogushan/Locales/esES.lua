@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("The Stone Guard", "esES")
+﻿local L = BigWigs:NewBossLocale("The Stone Guard", "esES") or BigWigs:NewBossLocale("The Stone Guard", "esMX")
 if not L then return end
 if L then
 	L.petrifications = "Petrificación"
@@ -8,7 +8,7 @@ if L then
 	L.overload_desc = "Aviso para todo tipo de sobrecargas."
 end
 
-L = BigWigs:NewBossLocale("Feng the Accursed", "esES")
+L = BigWigs:NewBossLocale("Feng the Accursed", "esES") or BigWigs:NewBossLocale("Feng the Accursed", "esMX")
 if L then
 	L.phases = "Fases"
 	L.phases_desc = "Aviso para cambios de fase"
@@ -24,24 +24,24 @@ if L then
 	L.phase_shadow = "¡Fase de sombras!"
 end
 
-L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esES")
+L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esES") or BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esMX")
 if L then
 	L.frenzy = "¡Fresení inminente!"
 end
 
-L = BigWigs:NewBossLocale("The Spirit Kings", "esES")
+L = BigWigs:NewBossLocale("The Spirit Kings", "esES") or BigWigs:NewBossLocale("The Spirit Kings", "esMX")
 if L then
 	L.shield_removed = "¡Escudo eliminado!"
 end
 
-L = BigWigs:NewBossLocale("Elegon", "esES")
+L = BigWigs:NewBossLocale("Elegon", "esES") or BigWigs:NewBossLocale("Elegon", "esMX")
 if L then
 	L.last_phase = "Última fase"
 	L.floor_despawn = "Desaparece el suelo"
 	L.overcharged_total_annihilation = "¡Tienes (%d) %s, resetea tu debuff!"
 end
 
-L = BigWigs:NewBossLocale("Will of the Emperor", "esES")
+L = BigWigs:NewBossLocale("Will of the Emperor", "esES") or BigWigs:NewBossLocale("Will of the Emperor", "esMX")
 if L then
 	L.rage_trigger = "The Emperor's Rage echoes through the hills." -- tradudcir
 	L.strength_trigger = "The Emperor's Strength appears in the alcoves!" -- traducir
