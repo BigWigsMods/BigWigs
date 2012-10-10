@@ -21,7 +21,15 @@ if L then
 	L.phase_flame = "¡Fase de llamas!"
 	L.phase_lightning = "¡Fase de rayos!"
 	L.phase_arcane = "¡Fase arcana!"
-	L.phase_shadow = "¡Fase de sombras!"
+	L.phase_shadow = "(Heroico) ¡Fase de sombras!"
+	
+	-- Tanks
+	L.tank = "Alertas de tanques"
+	L.tank_desc = "Solo alertas de tanques. Cuenta los stacs de Latigazo de relámpagos, Lanza flamígera, Choque arcano y Quemadura de las sombras (Heroico)."
+	L.lash_message = "%2$dx Latigazo en %1$s"
+	L.spear_message = "%2$dx Lanza en %1$s"
+	L.shock_message = "%2$dx Choque en %1$s"
+	L.burn_message = "%2$dx Quemadura en %1$s"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esES") or BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esMX")
