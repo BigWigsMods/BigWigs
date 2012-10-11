@@ -9,18 +9,18 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "itIT")
 if L then
-	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+	L.engage_yell = "Offrite le vostre anime, mortali! Queste sono le sale dei morti!"
 
 	L.phases = "Fasi"
 	L.phases_desc = "Avvertimento per il cambiamento di Fase"
 
-	L.phase_lightning_trigger = "Oh, grande spirito ... concedimi il potere della terra!"
+	L.phase_lightning_trigger = "Oh, grande spirito... concedimi il potere della terra!"
 	L.phase_flame_trigger = "Oh, potente! Attraverso me scioglierai la carne dalle ossa!"
 	L.phase_arcane_trigger =  "Oh, saggio delle ere! Concedimi la tua saggezza arcana!"
 	L.phase_shadow_trigger = "Grande spirito dei campioni del passato! concedimi il tuo scudo!"
 
-	L.shroud_message = "%2$s cast Shroud on %1$s"
-	L.barrier_message = "Barrier UP!"
+	L.shroud_message = "%2$s attiva Manto su %1$s"
+	L.barrier_message = "Barriera Attiva!"
 
 	L.phase_lightning = "Fase Fulmini!"
 	L.phase_flame = "Fase Fuoco!"
@@ -30,7 +30,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "itIT")
 if L then
-	engage_yell = "It be dyin' time, now!"
+	engage_yell = "È giunta l'ora di schiattare!" -- From ChatLog
 
 	L.totem = "Totem"
 	L.frenzy = "Frenesia Imminente!"
