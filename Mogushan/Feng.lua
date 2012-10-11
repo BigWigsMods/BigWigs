@@ -49,12 +49,12 @@ L.tank = L.tank.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		116295, 116018,
+		116157, 116018,
 		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
 		"phases", 115817, 115911, "tank", "berserk", "bosskill",
 	}, {
-		[116295] = L["phase_lightning"],
+		[116157] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
 		[116417] = L["phase_arcane"],
 		phases = "general",
@@ -62,7 +62,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "LightningFists", 116295)
+	self:Log("SPELL_CAST_START", "LightningFists", 116157)
 	self:Log("SPELL_CAST_START", "Epicenter", 116018)
 
 	self:Log("SPELL_AURA_APPLIED", "WildfireSparkApplied", 116784)
@@ -128,7 +128,7 @@ end
 
 function mod:Epicenter(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 32, spellId)
+	self:Bar(spellId, spellName, 30, spellId)
 end
 
 -- FLAME
