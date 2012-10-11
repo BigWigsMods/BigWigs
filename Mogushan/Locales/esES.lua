@@ -10,7 +10,7 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "esES") or BigWigs:NewBossLocale("Feng the Accursed", "esMX")
 if L then
-	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+	L.engage_yell = "Preparad vuestras almas, mortales. ¡Os adentráis en las cámaras de los muertos!"
 
 	L.phases = "Fases"
 	L.phases_desc = "Aviso para cambios de fase"
@@ -39,7 +39,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esES") or BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "esMX")
 if L then
-	engage_yell = "It be dyin' time, now!"
+	engage_yell = "¡Ya es hora de morir!"
 
 	L.totem = "Totem"
 	L.frenzy = "¡Fresení inminente!"
