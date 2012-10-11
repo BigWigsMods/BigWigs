@@ -177,7 +177,8 @@ end
 do
 	local arcanevelocity = GetSpellInfo(116364)
 	function mod:ArcanePhase()
-		self:Bar(116364, "~"..arcanevelocity, 13, 116364)
+		self:Message("phases", L["phase_arcane"], "Positive", 116363)
+		self:DelayedMessage(116364, 10, CL["soon"]:format(arcanevelocity), "Attention")
 	end
 end
 
@@ -213,7 +214,8 @@ end
 
 function mod:ArcaneVelocity(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 30, spellId)
+	self:Bar(spellId, "~"..spellName, 28, spellId)
+	self:DelayedMessage(spellId, 25.5, CL["soon"]:format(spellName), "Attention")
 end
 
 -- SHADOW
