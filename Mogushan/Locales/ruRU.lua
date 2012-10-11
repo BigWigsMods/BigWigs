@@ -25,7 +25,7 @@ if L then
 	L.phase_arcane = "Фаза тайной магии!"
 	L.phase_shadow = "Фаза тьмы!"
 
-	L.shroud_message = "%2$s Покров на |3-5(%1$s)"
+	L.shroud_message = "%2$s Покров на %1$s"
 	L.barrier_message = "Барьер АКТИВЕН!"
 
 	L.tank = "Предупреждения для танков"
