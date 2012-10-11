@@ -7,12 +7,6 @@ local mod, CL = BigWigs:NewBoss("Feng the Accursed", 896, 689)
 if not mod then return end
 mod:RegisterEnableMob(60009)
 
-
-local epicenter, drawflame, arcanevelocity = (GetSpellInfo(116018)), (GetSpellInfo(116711)), (GetSpellInfo(116364))
-local allowBarrier = true
-local allowShroud = true
-local markUsedOn
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -33,6 +27,9 @@ if L then
 	L.phase_arcane = "Arcane phase!"
 	L.phase_shadow = "(Heroic) Shadow phase!"
 
+	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.barrier_message = "Barrier UP!"
+
 	-- Tanks
 	L.tank = "Tank Alerts"
 	L.tank_desc = "Tank alerts only. Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
@@ -51,9 +48,9 @@ L.tank = L.tank.." "..INLINE_TANK_ICON
 function mod:GetOptions()
 	return {
 		116295, 116018,
-		{116784, "ICON", "FLASHSHAKE"}, 116711, {116793, "FLASHSHAKE"},
+		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
-		"phases", 115856, {115911, "ICON"}, "tank", "berserk", "bosskill",
+		"phases", 115817, 115911, "tank", "berserk", "bosskill",
 	}, {
 		[116295] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
@@ -71,17 +68,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DrawFlame", 116711)
 	self:Log("SPELL_DAMAGE", "Wildfire", 116793)
 
-	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417, 116574)
-	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417, 116574)
+	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417)
+	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVelocity", 116364)
 
-	self:Log("SPELL_CAST_SUCCESS", "NullificationBarrier", 115856)
+	self:Log("SPELL_CAST_SUCCESS", "NullificationBarrier", 115817)
 
 	-- Tanks
 	self:Log("SPELL_AURA_APPLIED", "TankAlerts", 131788, 116942, 131790, 131792) -- Lash, Spear, Shock, Burn
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankAlerts", 131788, 116942, 131790, 131792)
 
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+	self:Log("SPELL_CAST_SUCCESS", "Shroud", 115911)
 
 	-- needed so we can have bars up for abilities used straight after phase switches
 	self:Yell("LightningPhase", L["phase_lightning_trigger"])
@@ -94,136 +91,127 @@ function mod:OnBossEnable()
 	self:Death("Win", 60009)
 end
 
-function mod:OnEngage(diff)
-	allowBarrier = true
+function mod:OnEngage()
 	self:Berserk(600)
-	markUsedOn = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local function resetAllowShroud()
-		allowShroud = true
-	end
-	
-	function mod:UNIT_SPELLCAST_CHANNEL_START(_, unitId, spellName, rank, lineId, spellId)
-		if spellId == 115911 then
-			if allowShroud then
-				allowShroud = false
-				local channelTarget = UnitName(unitId.."target")
-				self:TargetMessage(115911, CL["cast"]:format(spellName), channelTarget, "Urgent", 115911, "Alert")
-				self:SecondaryIcon(115911, channelTarget) -- probably conflicts with other arcane resonance markers
-				if UnitIsUnit("player", channelTarget) then
-					self:FlashShake(115911)
-				end
-				self:ScheduleTimer(resetAllowShroud, 10)
-			end
-		end
+function mod:Shroud(player, spellId, source)
+	if not self:LFR() then
+		self:TargetMessage(spellId, L["shroud_message"], player, "Urgent", spellId, nil, source)
 	end
 end
 
-do
-	local function resetAllowBarrier()
-		allowBarrier = true
-	end
-
-	function mod:NullificationBarrier(_, _, _, _, spellName)
-		if allowBarrier then
-			allowBarrier = false
-			self:Message(115856, spellName, "Positive", 115856, "Info") -- maybe want to use Personal to separte the color from phase switches
-			self:Bar(115856, spellName, 6, 115856)
-			self:ScheduleTimer(resetAllowBarrier, 10)
-		end
-	end
+function mod:NullificationBarrier(_, spellId)
+	self:Message(spellId, L["barrier_message"], "Urgent", spellId, "Info")
+	self:Bar(spellId, L["barrier_message"], 6, spellId)
 end
 
 -- LIGHTNING
-function mod:LightningPhase()
-	self:Message("phases", L["phase_lightning"], "Positive", 116363)
-	self:Bar(116018, "~"..epicenter, 32, 116018)
-end
-
-function mod:LightningFists(_, _, _, _, spellName)
-	self:Message(116295, spellName, "Urgent", 116295)
-	self:Bar(116295, "~"..spellName, 14, 116295) -- might need to disable this if it feels unnecesary
-end
-
-function mod:Epicenter(_, _, _, _, spellName)
-	self:Message(116018, spellName, "Important", 116018, "Alarm")
-	self:Bar(116018, "~"..spellName, 32, 116018)
-end
-
--- FLAME
-function mod:FlamePhase()
-	self:Message("phases", L["phase_flame"], "Positive", 116363)
-	self:Bar(116711, "~"..drawflame, 35, 116711)
-end
-
-function mod:WildfireSparkApplied(player, _, _, _, spellName)
-	self:TargetMessage(116784, spellName, player, "Urgent", 116784, "Alert")
-	self:PrimaryIcon(116784, player)
-	if UnitIsUnit("player", player) then
-		self:FlashShake(116784)
-		self:Bar(116784, spellName, 5, 116784)
+do
+	local epicenter = GetSpellInfo(116018)
+	function mod:LightningPhase()
+		self:Message("phases", L["phase_lightning"], "Positive", 116363)
+		self:Bar(116018, "~"..epicenter, 32, 116018)
 	end
 end
 
-function mod:WildfireSparkRemoved(player)
-	self:PrimaryIcon(116784)
+function mod:LightningFists(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Urgent", spellId)
+	self:Bar(spellId, "~"..spellName, 14, spellId) -- might need to disable this if it feels unnecesary
 end
 
-function mod:DrawFlame(_, _, _, _, spellName)
-	self:Message(116711, spellName, "Important", 116711, "Alarm")
-	self:Bar(116711, "~"..spellName, 35, 116711)
+function mod:Epicenter(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alarm")
+	self:Bar(spellId, "~"..spellName, 32, spellId)
+end
+
+-- FLAME
+do
+	local drawflame = GetSpellInfo(116711)
+	function mod:FlamePhase()
+		self:Message("phases", L["phase_flame"], "Positive", 116363)
+		self:Bar(116711, "~"..drawflame, 35, 116711)
+	end
 end
 
 do
+	local wildfire = GetSpellInfo(116793)
+	function mod:WildfireSparkApplied(player, spellId)
+		self:TargetMessage(spellId, wildfire, player, "Urgent", spellId, "Alert")
+		self:PrimaryIcon(spellId, player)
+		if UnitIsUnit("player", player) then
+			self:FlashShake(spellId)
+			self:Bar(spellId, CL["you"]:format(wildfire), 5, spellId)
+			self:Say(spellId, CL["say"]:format(wildfire))
+		end
+	end
+	function mod:WildfireSparkRemoved(player, spellId)
+		self:PrimaryIcon(spellId)
+	end
+
+	-- Standing on the Wildfire
 	local prev = 0
-	function mod:Wildfire(player, _, _, _, spellName)
+	function mod:Wildfire(player)
 		if not UnitIsUnit(player, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(116793, CL["underyou"]:format(spellName), "Personal", 116793, "Info")
-			self:FlashShake(116793)
+			self:LocalMessage(116784, CL["underyou"]:format(wildfire), "Personal", 116784, "Info")
+			self:FlashShake(116784)
 		end
 	end
 end
 
+function mod:DrawFlame(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alarm")
+	self:Bar(spellId, "~"..spellName, 35, spellId)
+end
+
 -- ARCANE
-function mod:ArcanePhase()
-	self:Bar(116364, "~"..arcanevelocity, 13, 116364)
-end
-
-function mod:ArcaneResonanceApplied(player, _, _, _, spellName)
-	self:TargetMessage(116417, spellName, player, "Urgent", 116417, "Alert")
-	if not markUsedOn then
-		self:PrimaryIcon(116417, player)
-		markUsedOn = player
-	else
-		self:SecondaryIcon(116417, player)
-	end
-	if UnitIsUnit("player", player) then
-		self:FlashShake(116417)
-		self:OpenProximity(6, 116417)
-		self:Say(116417, CL["say"]:format(spellName))
+do
+	local arcanevelocity = GetSpellInfo(116364)
+	function mod:ArcanePhase()
+		self:Bar(116364, "~"..arcanevelocity, 13, 116364)
 	end
 end
 
-function mod:ArcaneResonanceRemoved(player)
-	self:SecondaryIcon(116417)
-	self:CloseProximity(116417)
-	if player == markUsedOn then
-		markUsedOn = nil
+do
+	local resonance = GetSpellInfo(33657)
+	local markUsedOn = nil
+	function mod:ArcaneResonanceApplied(player, spellId)
+		self:TargetMessage(spellId, resonance, player, "Urgent", spellId, "Alert")
+		if not markUsedOn then
+			self:PrimaryIcon(spellId, player)
+			markUsedOn = player
+		else
+			self:SecondaryIcon(spellId, player)
+		end
+		if UnitIsUnit("player", player) then
+			self:FlashShake(spellId)
+			self:OpenProximity(6, spellId)
+			self:Say(spellId, CL["say"]:format(resonance))
+		end
+	end
+	function mod:ArcaneResonanceRemoved(player, spellId)
+		if UnitIsUnit("player", player) then
+			self:CloseProximity(spellId)
+		end
+		if player == markUsedOn then
+			self:PrimaryIcon(spellId)
+			markUsedOn = nil
+		else
+			self:SecondaryIcon(spellId)
+		end
 	end
 end
 
-function mod:ArcaneVelocity(_, _, _, _, spellName)
-	self:Message(116364, spellName, "Important", 116364, "Alarm")
-	self:Bar(116364, "~"..spellName, 30, 116364)
+function mod:ArcaneVelocity(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alarm")
+	self:Bar(spellId, "~"..spellName, 30, spellId)
 end
 
 -- SHADOW

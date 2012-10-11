@@ -22,7 +22,10 @@ if L then
 	L.phase_lightning = "¡Fase de rayos!"
 	L.phase_arcane = "¡Fase arcana!"
 	L.phase_shadow = "(Heroico) ¡Fase de sombras!"
-	
+
+	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.barrier_message = "Barrier UP!"
+
 	-- Tanks
 	L.tank = "Alertas de tanques"
 	L.tank_desc = "Solo alertas de tanques. Cuenta los stacs de Latigazo de relámpagos, Lanza flamígera, Choque arcano y Quemadura de las sombras (Heroico)."

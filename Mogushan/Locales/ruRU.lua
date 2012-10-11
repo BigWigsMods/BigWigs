@@ -23,6 +23,9 @@ if L then
 	L.phase_arcane = "Фаза тайной магии!"
 	L.phase_shadow = "Фаза тьмы!"
 
+	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.barrier_message = "Barrier UP!"
+
 	L.tank = "Предупреждения для танков"
 	L.tank_desc = "Только для танков. Считает стаки: Искрящаяся плеть, Пылающее копье, Чародейское потрясение и Ожог Тьмы (Героик)."
 	L.lash_message = "%2$dx Плеть на |3-5(%1$s)"

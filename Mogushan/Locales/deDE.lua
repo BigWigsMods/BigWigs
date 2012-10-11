@@ -23,6 +23,9 @@ if L then
 	L.phase_arcane = "Arkanphase!"
 	L.phase_shadow = "(Heroisch) Schattenphase!"
 
+	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.barrier_message = "Barrier UP!"
+
 	-- Tanks
 	L.tank = "Tankwarnungen"
 	L.tank_desc = "Nur für Tanks. Zählt die Stapel von Blitzpeitsche, Flammender Speer, Arkanschock und Schattenbrand (heroisch)."

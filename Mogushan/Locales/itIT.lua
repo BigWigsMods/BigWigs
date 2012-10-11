@@ -17,6 +17,9 @@ if L then
 	L.phase_arcane_trigger =  "Oh, saggio delle ere! Concedimi la tua saggezza arcana!"
 	L.phase_shadow_trigger = "Grande spirito dei campioni del passato! concedimi il tuo scudo!"
 
+	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.barrier_message = "Barrier UP!"
+
 	L.phase_lightning = "Fase Fulmini!"
 	L.phase_flame = "Fase Fuoco!"
 	L.phase_arcane = "Fase Arcana!"

@@ -23,6 +23,9 @@ if L then
 	L.phase_arcane = "Phase des Arcanes !"
 	L.phase_shadow = "Phase d'Ombre !"
 
+	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.barrier_message = "Barrier UP!"
+
 	-- Tanks
 	L.tank = "Alertes tank"
 	L.tank_desc = "Alertes pour tank uniquement. Compte les cumuls de Fouet foudroyant, Lance enflammée, Horion des Arcanes & Brûlure de l'ombre (héroïque)."
