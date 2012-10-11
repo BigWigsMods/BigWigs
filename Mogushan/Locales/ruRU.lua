@@ -10,7 +10,7 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "ruRU")
 if L then
-	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+	L.engage_yell = "Трепещите, пока живы. Это обитель мертвых."
 
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз"
@@ -25,8 +25,8 @@ if L then
 	L.phase_arcane = "Фаза тайной магии!"
 	L.phase_shadow = "Фаза тьмы!"
 
-	L.shroud_message = "%2$s cast Shroud on %1$s"
-	L.barrier_message = "Barrier UP!"
+	L.shroud_message = "%2$s Покров на |3-5(%1$s)"
+	L.barrier_message = "Барьер АКТИВЕН!"
 
 	L.tank = "Предупреждения для танков"
 	L.tank_desc = "Только для танков. Считает стаки: Искрящаяся плеть, Пылающее копье, Чародейское потрясение и Ожог Тьмы (Героик)."
@@ -38,9 +38,9 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "ruRU")
 if L then
-	engage_yell = "It be dyin' time, now!"
+	engage_yell = "Пора умирать!"
 
-	L.totem = "Totem"
+	L.totem = "Тотем"
 	L.frenzy = "Бешенство скоро!"
 end
 
