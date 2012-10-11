@@ -9,6 +9,8 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "itIT")
 if L then
+	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+
 	L.phases = "Fasi"
 	L.phases_desc = "Avvertimento per il cambiamento di Fase"
 
@@ -28,6 +30,9 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "itIT")
 if L then
+	engage_yell = "It be dyin' time, now!"
+
+	L.totem = "Totem"
 	L.frenzy = "Frenesia Imminente!"
 end
 

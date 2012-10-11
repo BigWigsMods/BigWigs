@@ -10,12 +10,7 @@ might want to try and report people with debuff closest to totem when it is abou
 local mod, CL = BigWigs:NewBoss("Gara'jal the Spiritbinder", 896, 682)
 mod:RegisterEnableMob(60143)
 
---------------------------------------------------------------------------------
--- Locales
---
-
 local voodooDollList = mod:NewTargetList()
-local spiritTotem, voodooDoll = (GetSpellInfo(116174)), (GetSpellInfo(122151))
 local totemCounter = 1
 
 --------------------------------------------------------------------------------
@@ -24,6 +19,9 @@ local totemCounter = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	engage_yell = "It be dyin' time, now!"
+
+	L.totem = "Totem"
 	L.frenzy = "Frenzy soon!"
 end
 L = mod:GetLocale()
@@ -58,17 +56,16 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- LFR Spirit totem
 	self:Death("Win", 60143)
 end
 
 function mod:OnEngage()
 	totemCounter = 1
-	if self:Heroic() then
-		self:Bar(116174, spiritTotem, 20, 116174)
-	else
-		self:Bar(116174, spiritTotem, 36, 116174)
+	self:Bar(116174, L["totem"], self:Heroic() and 20 or 36, 116174)
+	if not self:LFR() then
+		self:Berserk(360)
 	end
-	self:Berserk(360)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
@@ -76,19 +73,25 @@ end
 -- Event Handlers
 --
 
-function mod:OnSync(sync, rest)
-	if sync == "DollsApplied" and rest then
-		for player in string.gmatch(rest, "%S+") do
-			voodooDollList[#voodooDollList+1] = player
-		end
-		self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
-	elseif sync == "Totem" and rest then
-		self:Message(116174, ("%s (%d)"):format(rest, totemCounter), "Attention", 116174)
-		totemCounter = totemCounter + 1
-		if self:Heroic() then
-			self:Bar(116174, ("%s (%d)"):format(rest, totemCounter), 20, 116174)
-		else
-			self:Bar(116174, ("%s (%d)"):format(rest, totemCounter), 36, 116174)
+-- LFR only, no combat log event for some reason
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
+	if spellId == 116964 and unit == "boss1" then
+		self:Sync("Totem")
+	end
+end
+
+do
+	local voodooDoll = GetSpellInfo(122151)
+	function mod:OnSync(sync, rest)
+		if sync == "DollsApplied" and rest then
+			for player in string.gmatch(rest, "%S+") do
+				voodooDollList[#voodooDollList+1] = player
+			end
+			self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
+		elseif sync == "Totem" then
+			self:Message(116174, ("%s (%d)"):format(L["totem"], totemCounter), "Attention", 116174)
+			totemCounter = totemCounter + 1
+			self:Bar(116174, ("%s (%d)"):format(L["totem"], totemCounter), self:Heroic() and 20 or 36, 116174)
 		end
 	end
 end
@@ -134,8 +137,8 @@ function mod:CrossedOver(player, spellId, _, _, spellName)
 	end
 end
 
-function mod:SpiritTotem(_, _, _, _, spellName)
-	self:Sync("Totem", spellName)
+function mod:SpiritTotem()
+	self:Sync("Totem")
 end
 
 do
@@ -164,6 +167,6 @@ end
 
 function mod:Frenzy()
 	self:Message("ej:5759", CL["phase"]:format(2), "Positive", 117752, "Long")
-	self:SendMessage("BigWigs_StopBar", self, spiritTotem)
+	self:SendMessage("BigWigs_StopBar", self, L["totem"])
 end
 

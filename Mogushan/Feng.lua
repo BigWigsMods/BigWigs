@@ -13,6 +13,8 @@ mod:RegisterEnableMob(60009)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes"
 	L.phases_icon = 116363
