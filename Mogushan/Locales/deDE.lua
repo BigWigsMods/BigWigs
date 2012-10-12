@@ -10,7 +10,7 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "deDE")
 if L then
-	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+	L.engage_yell = "Ah, ja! Bietet Eure Seelen dar, Sterbliche! Dies sind die Hallen der Toten!"
 
 	L.phases = "Phasen"
 	L.phases_desc = "Warnungen für Phasenwechsel"
@@ -18,15 +18,15 @@ if L then
 	L.phase_lightning_trigger = "Oh, großer Geist! Gewährt mir die Macht der Erde!"
 	L.phase_flame_trigger = "Oh, Erhabener! Durch mich sollt Ihr das Fleisch von den Knochen schmelzen!"
 	L.phase_arcane_trigger =  "Oh, Weiser der Zeitalter! Vertraut mir Euer arkanes Wissen an!"
-	L.phase_shadow_trigger = "Große Seele vergangener Helden! Reicht mir euer Schild!" -- ATTENTION! Guessed translation since I did not see the hardmode with the german client. Most probably wrong! Review!
+	L.phase_shadow_trigger = "Große Seele vergangener Helden! Gewährt mir Euren Schild!" -- this is the right one :o
 
 	L.phase_lightning = "Blitzphase!"
 	L.phase_flame = "Feuerphase!"
 	L.phase_arcane = "Arkanphase!"
 	L.phase_shadow = "(Heroisch) Schattenphase!"
 
-	L.shroud_message = "%2$s cast Shroud on %1$s"
-	L.barrier_message = "Barrier UP!"
+	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
+	L.barrier_message = "Nullifikationsbarriere AN!"
 
 	-- Tanks
 	L.tank = "Tankwarnungen"
@@ -39,7 +39,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "deDE")
 if L then
-	engage_yell = "It be dyin' time, now!"
+	engage_yell = "Jetzt is' Sterbenszeit!"
 
 	L.totem = "Totem"
 	L.frenzy = "Raserei bald!"
