@@ -162,7 +162,7 @@ do
 		if unitId == "target" and arcs[spellId] then
 			comboCounter = comboCounter + 1
 			local boss = UnitName(unitId)
-			self:Message("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
+			self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
 		end
 	end
 
@@ -171,7 +171,7 @@ do
 		if unitId:match("boss%d") and UnitIsUnit("target", unitId) and UnitPower(unitId) == 17 and comboCounter > 0 then
 			comboCounter = 0
 			local boss = UnitName(unitId)
-			self:Message("arc", CL["soon"]:format(CL["other"]:format(boss, combo)), "Important", 116835, "Long")
+			self:LocalMessage("arc", CL["soon"]:format(CL["other"]:format(boss, combo)), "Personal", 116835, "Long")
 		end
 	end
 end
