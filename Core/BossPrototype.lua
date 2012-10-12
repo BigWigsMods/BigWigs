@@ -2,13 +2,26 @@
 -- Prototype
 --
 
-local debug = false -- Set to true to get (very spammy) debug messages.
-local dbgStr = "[DBG:%s] %s"
-local function dbg(self, msg) print(dbgStr:format(self.displayName, msg)) end
-
 local AL = LibStub("AceLocale-3.0")
+local L = AL:GetLocale("Big Wigs: Common")
+local UnitExists = UnitExists
+local UnitAffectingCombat = UnitAffectingCombat
+local GetSpellInfo = GetSpellInfo
+local format = string.format
 local core = BigWigs
 local C = core.C
+
+-------------------------------------------------------------------------------
+-- Debug
+--
+
+local debug = false -- Set to true to get (very spammy) debug messages.
+local dbg = function(self, msg) print(format("[DBG:%s] %s", self.displayName, msg)) end
+
+-------------------------------------------------------------------------------
+-- Metatables
+--
+
 local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
 local combatLogMap = setmetatable({}, metaMap)
 local yellMap = setmetatable({}, metaMap)
@@ -17,11 +30,11 @@ local deathMap = setmetatable({}, metaMap)
 local icons = setmetatable({}, {__index =
 	function(self, key)
 		if not key then return end
-		local value = nil
+		local _, value
 		if type(key) == "number" then
-			value = select(3, GetSpellInfo(key))
+			_, _, value = GetSpellInfo(key)
 			if not value then
-				print(("Big Wigs: An invalid spell id (%d) is being used in a bar/message."):format(key))
+				print(format("Big Wigs: An invalid spell id (%d) is being used in a bar/message.", key))
 			end
 		else
 			value = "Interface\\Icons\\" .. key
@@ -30,6 +43,17 @@ local icons = setmetatable({}, {__index =
 		return value
 	end
 })
+local spells = setmetatable({}, {__index =
+	function(self, key)
+		local value = GetSpellInfo(key)
+		self[key] = value
+		return value
+	end
+})
+
+-------------------------------------------------------------------------------
+-- Core module functionality
+--
 
 local boss = {}
 core.bossCore:SetDefaultModulePrototype(boss)
@@ -54,7 +78,7 @@ function boss:OnDisable()
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
 function boss:GetOption(spellId)
-	return self.db.profile[(GetSpellInfo(spellId))]
+	return self.db.profile[spells[spellId]]
 end
 function boss:Reboot()
 	if debug then dbg(self, ":Reboot()") end
@@ -71,16 +95,6 @@ function boss:GetLocale(state) return AL:GetLocale(self.name, state) end
 
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
 function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
-
--------------------------------------------------------------------------------
--- Locals
---
-
-local L = AL:GetLocale("Big Wigs: Common")
-local UnitExists = UnitExists
-local UnitAffectingCombat = UnitAffectingCombat
-local GetSpellInfo = GetSpellInfo
-local fmt = string.format
 
 -------------------------------------------------------------------------------
 -- Combat log related code
@@ -136,37 +150,37 @@ do
 	end
 
 	function boss:Emote(func, ...)
-		if not func then error(missingArgument:format(self.moduleName)) end
-		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if not func then error(format(missingArgument, self.moduleName)) end
+		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
 		for i = 1, select("#", ...) do
 			emoteMap[self][(select(i, ...))] = func
 		end
 		self:RegisterEvent("RAID_BOSS_EMOTE")
 	end
 	function boss:Yell(func, ...)
-		if not func then error(missingArgument:format(self.moduleName)) end
-		if not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if not func then error(format(missingArgument, self.moduleName)) end
+		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
 		for i = 1, select("#", ...) do
 			yellMap[self][(select(i, ...))] = func
 		end
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 	function boss:Log(event, func, ...)
-		if not event or not func then error(missingArgument:format(self.moduleName)) end
-		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if not event or not func then error(format(missingArgument, self.moduleName)) end
+		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
 		if not combatLogMap[self][event] then combatLogMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local id = (select(i, ...))
 			combatLogMap[self][event][id] = func
 			if type(id) == "number" and not GetSpellInfo(id) then
-				print(invalidId:format(self.moduleName, id, event))
+				print(format(invalidId, self.moduleName, id, event))
 			end
 		end
 		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function boss:Death(func, ...)
-		if not func then error(missingArgument:format(self.moduleName)) end
-		if type(func) ~= "function" and not self[func] then error(missingFunction:format(self.moduleName, func)) end
+		if not func then error(format(missingArgument, self.moduleName)) end
+		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
 		for i = 1, select("#", ...) do
 			deathMap[self][(select(i, ...))] = func
 		end
@@ -217,7 +231,7 @@ do
 			"party1target", "party2target", "party3target", "party4target",
 			"mouseover", "mouseovertarget"
 		}
-		for i = 1, 25 do t[#t+1] = fmt("raid%dtarget", i) end
+		for i = 1, 25 do t[#t+1] = format("raid%dtarget", i) end
 	end
 	local function findTargetByGUID(id)
 		if not t then buildTable() end
@@ -311,9 +325,9 @@ do
 
 	function boss:Win()
 		if debug then dbg(self, ":Win") end
-		if self.OnWin then self:OnWin() end
 		self:Sync("Death", self.moduleName)
 		wipe(icons) -- Wipe icon cache
+		wipe(spells)
 	end
 end
 
@@ -381,7 +395,7 @@ do
 
 	-- ... = color, icon, sound, noraidsay, broadcastonly
 	function boss:DelayedMessage(key, delay, text, ...)
-		if type(delay) ~= "number" then error(fmt("Module '%s' tried to schedule a delayed message with delay as type %q, but it must be a number.", self.moduleName, type(delay))) end
+		if type(delay) ~= "number" then error(format("Module '%s' tried to schedule a delayed message with delay as type %q, but it must be a number.", self.moduleName, type(delay))) end
 		self:CancelDelayedMessage(text)
 
 		local id = self:ScheduleTimer("ProcessDelayedMessage", delay, text)
@@ -433,17 +447,17 @@ do
 	local invalidFlagError = "Module %s tried to check for an invalid flag type %q (%q). Flags must be bits."
 	local noDBError        = "Module %s does not have a .db property, which is weird."
 	checkFlag = function(self, key, flag)
-		if type(key) == "nil" then error(nilKeyError:format(self.name)) end
-		if type(flag) ~= "number" then error(invalidFlagError:format(self.name, type(flag), tostring(flag))) end
+		if type(key) == "nil" then error(format(nilKeyError, self.name)) end
+		if type(flag) ~= "number" then error(format(invalidFlagError, self.name, type(flag), tostring(flag))) end
 		if silencedOptions[key] then return end
-		if type(key) == "number" then key = GetSpellInfo(key) end
-		if type(self.db) ~= "table" then error(noDBError:format(self.name)) end
+		if type(key) == "number" then key = spells[key] end
+		if type(self.db) ~= "table" then error(format(noDBError, self.name)) end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
-				error(noDefaultError:format(self.name, key))
+				error(format(noDefaultError, self.name, key))
 			end
 			if debug then
-				error(notNumberError:format(self.name, key, type(self.db.profile[key])))
+				error(format(notNumberError, self.name, key, type(self.db.profile[key])))
 			end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
@@ -470,7 +484,7 @@ end
 do
 	local hexColors = {}
 	for k, v in pairs(CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS) do
-		hexColors[k] = "|cff" .. fmt("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+		hexColors[k] = "|cff" .. format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
 	end
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
@@ -499,9 +513,9 @@ do
 		if not checkFlag(self, key, C.MESSAGE) then return end
 		if player then
 			if stack then
-				text = fmt(text, coloredNames[player], stack)
+				text = format(text, coloredNames[player], stack)
 			else
-				text = fmt(text, coloredNames[player])
+				text = format(text, coloredNames[player])
 			end
 		end
 		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
@@ -513,26 +527,26 @@ do
 			local list = table.concat(player, ", ")
 			wipe(player)
 			if not (list):find(UnitName("player")) then sound = nil end
-			local text = fmt(L["other"], spellName, list)
+			local text = format(L["other"], spellName, list)
 			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icons[icon])
 		else
 			if UnitIsUnit(player, "player") then
 				if ... then
-					local text = fmt(spellName, coloredNames[player], ...)
+					local text = format(spellName, coloredNames[player], ...)
 					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
 					self:SendMessage("BigWigs_Message", self, key, text, nil, nil, nil, true)
 				else
-					self:SendMessage("BigWigs_Message", self, key, fmt(L["you"], spellName), "Personal", true, sound, nil, icons[icon])
-					self:SendMessage("BigWigs_Message", self, key, fmt(L["other"], spellName, player), nil, nil, nil, true)
+					self:SendMessage("BigWigs_Message", self, key, format(L["you"], spellName), "Personal", true, sound, nil, icons[icon])
+					self:SendMessage("BigWigs_Message", self, key, format(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
 				-- Change color and remove sound when warning about effects on other players
 				if color == "Personal" then color = "Important" end
 				local text = nil
 				if ... then
-					text = fmt(spellName, coloredNames[player], ...)
+					text = format(spellName, coloredNames[player], ...)
 				else
-					text = fmt(L["other"], spellName, coloredNames[player])
+					text = format(L["other"], spellName, coloredNames[player])
 				end
 				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icons[icon])
 			end
@@ -576,7 +590,7 @@ do
 	function boss:Whisper(key, player, spellName, noName)
 		self:SendMessage("BigWigs_Whisper", self, key, player, spellName, noName)
 		if not checkFlag(self, key, C.WHISPER) then return end
-		local msg = noName and spellName or fmt(L["you"], spellName)
+		local msg = noName and spellName or format(L["you"], spellName)
 		sentWhispers[msg] = true
 		if UnitIsUnit(player, "player") or not UnitIsPlayer(player) or not core.db.profile.whisper then return end
 		if UnitInRaid("player") and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player") then return end
@@ -624,20 +638,20 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk)
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, fmt(L["custom_start"], boss, berserk, seconds / 60), "Attention")
+		self:Message(key, format(L["custom_start"], boss, berserk, seconds / 60), "Attention")
 	end
 
 	-- Half-way to enrage warning.
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, fmt(L["custom_min"], berserk, halfMin), "Positive")
+	self:DelayedMessage(key, half + m, format(L["custom_min"], berserk, halfMin), "Positive")
 
-	self:DelayedMessage(key, seconds - 60, fmt(L["custom_min"], berserk, 1), "Positive")
-	self:DelayedMessage(key, seconds - 30, fmt(L["custom_sec"], berserk, 30), "Urgent")
-	self:DelayedMessage(key, seconds - 10, fmt(L["custom_sec"], berserk, 10), "Urgent")
-	self:DelayedMessage(key, seconds - 5, fmt(L["custom_sec"], berserk, 5), "Important")
-	self:DelayedMessage(key, seconds, fmt(L["custom_end"], boss, berserk), "Important", icon, "Alarm")
+	self:DelayedMessage(key, seconds - 60, format(L["custom_min"], berserk, 1), "Positive")
+	self:DelayedMessage(key, seconds - 30, format(L["custom_sec"], berserk, 30), "Urgent")
+	self:DelayedMessage(key, seconds - 10, format(L["custom_sec"], berserk, 10), "Urgent")
+	self:DelayedMessage(key, seconds - 5, format(L["custom_sec"], berserk, 5), "Important")
+	self:DelayedMessage(key, seconds, format(L["custom_end"], boss, berserk), "Important", icon, "Alarm")
 
 	self:Bar(key, berserk, seconds, icon)
 end

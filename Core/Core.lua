@@ -225,6 +225,7 @@ local function coreSync(sync, moduleName, sender)
 		local mod = addon:GetBossModule(moduleName, true)
 		if mod and mod:IsEnabled() then
 			mod:Message("bosskill", L["%s has been defeated"]:format(mod.displayName), "Positive", nil, "Victory")
+			if mod.OnWin then mod:OnWin() end
 			mod:Disable()
 		end
 	end
