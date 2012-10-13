@@ -31,8 +31,8 @@ function plugin:OnPluginEnable()
 	self:RawHook("RaidNotice_AddMessage", "RWAddMessage", true)
 end
 
-local rwf = _G.RaidWarningFrame
-local rbe = _G.RaidBossEmoteFrame
+local rwf = RaidWarningFrame
+local rbe = RaidBossEmoteFrame
 function plugin:RWAddMessage(frame, message, colorInfo)
 	if frame == rwf and self:IsSpam(message) then
 		return

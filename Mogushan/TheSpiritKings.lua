@@ -6,14 +6,10 @@
 local mod, CL = BigWigs:NewBoss("The Spirit Kings", 896, 687)
 if not mod then return end
 mod:RegisterEnableMob(
-	60701, -- Zian of the Endless Shadows
-	61421, -- Zian of the Endless Shadows
-	60708, -- Meng the Demented
-	61429, -- Meng the Demented
-	60709, -- Qiang the Merciless
-	61423, -- Qiang the Merciless
-	60710  -- Subetai the Swift
-	61427  -- Subetai the Swift
+	60701, 61421, -- Zian of the Endless Shadows
+	60708, 61429, -- Meng the Demented
+	60709, 61423, -- Qiang the Merciless
+	60710, 61427, -- Subetai the Swift
 )
 --------------------------------------------------------------------------------
 -- Locales
