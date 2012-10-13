@@ -13,6 +13,7 @@ mod:RegisterEnableMob(60396) --Emperor's Rage
 
 local rage, strength, courage, bosses, gas = (EJ_GetSectionInfo(5678)), (EJ_GetSectionInfo(5677)), (EJ_GetSectionInfo(5676)), (EJ_GetSectionInfo(5726)), (EJ_GetSectionInfo(5670))
 local gasCounter = 0
+local strengthCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -20,6 +21,10 @@ local gasCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.energizing = "%s is energizing!"
+	L.combo = "%s: combo in progress"
+
+	L.heroic_trigger = "Destroying the pipes leaks"
 	L.rage_trigger = "The Emperor's Rage echoes through the hills."
 	L.strength_trigger = "The Emperor's Strength appears in the alcoves!"
 	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"
@@ -41,7 +46,7 @@ function mod:GetOptions()
 		"ej:5678", { 116525, "FLASHSHAKE" },
 		"ej:5677",
 		"ej:5676",
-		"ej:5726", "arc",
+		"ej:5726", "ej:5672", "arc",
 		{116829, "FLASHSHAKE", "SAY"},
 		"ej:5670", "berserk", "bosskill",
 	}, {
@@ -55,6 +60,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	-- Heroic
+	self:Emote("Engage", L["heroic_trigger"])
+
 	-- Rage
 	self:Yell("Rage", L["rage_trigger"])
 	self:Log("SPELL_AURA_APPLIED", "FocusedAssault", 116525)
@@ -81,8 +89,10 @@ function mod:OnBossEnable()
 	self:Death("Win", 60399) -- Qin-xi they share hp
 end
 
-function mod:OnEngage(diff)
-	gasCounter = 0
+function mod:OnEngage()
+	-- XXX need normal mode engage trigger and adjusted timer
+	self:Berserk(785) -- this is from heroic trigger
+	strengthCounter = 0
 end
 
 --------------------------------------------------------------------------------
@@ -111,7 +121,8 @@ function mod:FocusedEnergy(player, _, _, _, spellName)
 end
 
 function mod:Strength()
-	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
+	strengthCounter = strengthCounter + 1
+	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8)..((" (%d)"):format(strengthCounter)), "Attention", 80471)
 	self:Bar("ej:5677", strength, 8, 80471) -- strength like icon
 	self:DelayedMessage("ej:5677", 8, strength, "Attention", 80471)
 end
@@ -124,8 +135,8 @@ end
 
 function mod:Bosses()
 	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
-	self:Bar("ej:5726", bosses, 9, 118327)
-	self:DelayedMessage("ej:5726", 9, bosses, "Attention", 118327)
+	self:Bar("ej:5726", bosses, 13, 118327)
+	self:DelayedMessage("ej:5726", 13, bosses, "Attention", 118327)
 	self:Bar("ej:5670", "~"..gas, 120, 118327) --XXX varied a bit
 end
 
@@ -159,10 +170,13 @@ do
 	}
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
+		local boss = UnitName(unitId)
 		if unitId == "target" and arcs[spellId] then
 			comboCounter = comboCounter + 1
-			local boss = UnitName(unitId)
 			self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
+		elseif spellId == 118365 then -- enegyze 1/s
+			self:Message("ej:5672", L["energizing"]:format(boss), "Important")
+			self:Bar("ej:5672", L["energizing"]:format(boss), 20)
 		end
 	end
 
@@ -175,3 +189,4 @@ do
 		end
 	end
 end
+

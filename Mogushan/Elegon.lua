@@ -34,7 +34,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		117960, "ej:6177", "ej:6186", {117878, "FLASHSHAKE"},
+		117960, "ej:6177", 117911, "ej:6186", {117878, "FLASHSHAKE"},
 		119360,
 		"ej:6176",
 		"berserk", "bosskill",
@@ -50,6 +50,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_AURA_APPLIED", "Overcharged", 117878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Overcharged", 117878)
+	self:Log("SPELL_AURA_APPLIED", "StabilityFlux", 117911)
 	self:Log("SPELL_CAST_START", "CelestialBreath", 117960)
 	self:Log("SPELL_CAST_START", "TotalAnnihilation", 129711)
 	self:Log("SPELL_CAST_START", "MaterializeProtector", 117954)
@@ -80,12 +81,12 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 	-- Trigger Phase A when the spark hits the conduit
 	if spellId == 118189 and unit:match("boss") then
-		self:Bar("ej:6176", L["floor_despawn"], 7, 116994)
+		self:Bar("ej:6176", L["floor_despawn"], 6, 116994)
 	end
 end
 
-function mod:Overcharged(player, spellId, _, _, spellName, buffStack)
-	if UnitIsUnit(player, "player") then
+function mod:Overcharged(player, _, _, _, spellName, buffStack)
+	if UnitIsUnit(player, "player") and InCombatLockdown() then
 		if (buffStack or 1) >= 6 and buffStack % 2 == 0 then
 			self:LocalMessage(117878, ("%s (%d)"):format(spellName, buffStack), "Personal", 117878)
 		end
@@ -102,23 +103,31 @@ end
 
 function mod:CelestialBreath(_, _, _, _, spellName)
 	self:Bar(117960, spellName, 18, 117960)
-	self:Message(117960, spellName, "Urgent", 117960)
+end
+
+function mod:StabilityFlux(_, _, _, _, spellName)
+	-- this gives an 1 sec warning before damage, might want to check hp for a
+	self:Message(117911, spellName, "Urgent", 117911, "Alarm")
+	local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
+	if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
+		self:FlashShake(117878)
+		self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(buffStack, overcharged), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
+	end
 end
 
 function mod:TotalAnnihilation(_, _, _, _, spellName)
 	totalAnnihilationCounter = totalAnnihilationCounter + 1
 	self:Message("ej:6186", ("%s (%d)"):format(spellName, totalAnnihilationCounter), "Important", 129711, "Alert")
 	self:Bar("ej:6186", CL["cast"]:format(spellName), 4, 129711)
-	local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
-	if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
-		self:FlashShake(117878)
-		self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(buffStack, overcharged), "Personal", 117878) -- needs no sound since total annihilaiton has one already
-	end
 end
 
 function mod:MaterializeProtector(_, _, _, _, spellName)
 	self:Message("ej:6177", spellName, "Attention", 117954)
-	self:Bar("ej:6177", spellName, 36, 117954)
+	if self:Heroic() then
+		self:Bar("ej:6177", spellName, 26, 117954)
+	else
+		self:Bar("ej:6177", spellName, 36, 117954)
+	end
 end
 
 function mod:UnstableEnergyRemoved()
