@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Will of the Emperor", 896, 677)
 if not mod then return end
-mod:RegisterEnableMob(60396) --Emperor's Rage
+--mod:RegisterEnableMob(60396) --Emperor's Rage
 
 --------------------------------------------------------------------------------
 -- Locals
