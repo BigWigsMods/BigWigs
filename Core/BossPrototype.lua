@@ -194,13 +194,13 @@ end
 --
 
 function boss:CheckBossStatus()
-	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100
+	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
 	if not hasBoss and self.isEngaged then
 		if debug then dbg(self, ":CheckBossStatus Reboot called.") end
 		self:Reboot()
 	elseif not self.isEngaged and hasBoss then
 		if debug then dbg(self, ":CheckBossStatus Engage called.") end
-		local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4")
+		local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
 		local module = core:GetEnableMobs()[tonumber(guid:sub(7, 10), 16)]
 		local modType = type(module)
 		if modType == "string" then
@@ -226,7 +226,7 @@ do
 	local t = nil
 	local function buildTable()
 		t = {
-			"boss1", "boss2", "boss3", "boss4",
+			"boss1", "boss2", "boss3", "boss4", "boss5",
 			"target", "targettarget",
 			"focus", "focustarget",
 			"party1target", "party2target", "party3target", "party4target",
