@@ -6,6 +6,7 @@ if not L then return end
 L.you = "%s auf DIR!"
 L.underyou = "%s unter DIR!"
 L.other = "%s: %s"
+L.onother = "%s on %s!"
 L.say = "%s auf MIR!"
 L.cast = "<Wirkt %s>"
 L.soon = "%s bald!"
@@ -16,7 +17,7 @@ L.heroic = "Heroischer Modus"
 L.hard = "Hard Mode"
 L.general = "Allgemein"
 
-L.duration = "%s for %d sec"
+L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
 L.custom_start = "%s angegriffen - %s in %d Min"

@@ -6,6 +6,7 @@ if not L then return end
 L.you = "%s на ТЕБЕ"
 L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
+L.onother = "%s on %s!"
 L.say = "%s на МНЕ!"
 L.cast = "<Каст %s>"
 L.soon = "%s скоро!"
@@ -16,7 +17,7 @@ L.heroic = "Героический режим"
 L.hard = "Сложный режим"
 L.general = "Общее"
 
-L.duration = "%s for %d sec"
+L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
 L.custom_start = "%s вступает в бой - %s через %d мин"

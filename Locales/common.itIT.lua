@@ -6,6 +6,7 @@ if not L then return end
 L.you = "%s su di TE!"
 L.underyou = "%s sotto di TE!"
 L.other = "%s: %s"
+L.onother = "%s on %s!"
 L.say = "%s su di ME!"
 L.cast = "<Esecuzione di %s>"
 L.soon = "%s tra poco!"
@@ -16,7 +17,7 @@ L.heroic = "Modalità Eroica"
 L.hard = "Modalità Hard"
 L.general = "Generali" -- General settings, i.e. things that apply to both normal and hard mode.
 
-L.duration = "%s for %d sec"
+L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
 -- Localizers note:

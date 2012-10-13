@@ -6,6 +6,7 @@ if not L then return end
 L.you = "당신에게 %s!"
 L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
+L.onother = "%s on %s!"
 L.say = "나에게 %s!"
 L.cast = "<%s 시전중>"
 L.soon = "곧 %s!"
@@ -16,7 +17,7 @@ L.heroic = "영웅(하드) 모드"
 L.hard = "도전 모드"
 L.general = "일반 경고" -- General settings, i.e. things that apply to both normal and hard mode.
 
-L.duration = "%s for %d sec"
+L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
 L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
