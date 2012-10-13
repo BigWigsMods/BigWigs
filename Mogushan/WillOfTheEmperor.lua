@@ -14,6 +14,7 @@ mod:RegisterEnableMob(60396) --Emperor's Rage
 local rage, strength, courage, bosses, gas = (EJ_GetSectionInfo(5678)), (EJ_GetSectionInfo(5677)), (EJ_GetSectionInfo(5676)), (EJ_GetSectionInfo(5726)), (EJ_GetSectionInfo(5670))
 local gasCounter = 0
 local strengthCounter = 0
+local firstEnable = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,7 +25,9 @@ if L then
 	L.energizing = "%s is energizing!"
 	L.combo = "%s: combo in progress"
 
-	L.heroic_trigger = "Destroying the pipes leaks"
+	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
+
 	L.rage_trigger = "The Emperor's Rage echoes through the hills."
 	L.strength_trigger = "The Emperor's Strength appears in the alcoves!"
 	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"
@@ -59,9 +62,18 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self:RegisterEnableEmote(L["heroic_start_trigger"], L["normal_start_trigger"])
+end
+
 function mod:OnBossEnable()
+	if not firstEnable then
+		firstEnable = true
+		self:Engage()
+	end
+
 	-- Heroic
-	self:Emote("Engage", L["heroic_trigger"])
+	self:Emote("Engage", L["heroic_start_trigger"], L["normal_start_trigger"])
 
 	-- Rage
 	self:Yell("Rage", L["rage_trigger"])
