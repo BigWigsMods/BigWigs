@@ -14,6 +14,9 @@ L.heroic = "Modo heroico"
 L.hard = "Modo difícil"
 L.general = "General" -- General settings, i.e. things that apply to both normal and hard mode.
 
+L.duration = "%s for %d sec"
+L.over = "%s Over!"
+
 L.custom_start = "%s iniciado - %s en %d min"
 L.custom_start_s = "%s iniciado - %s en %d seg"
 L.custom_end = "¡%s entra en %s!"

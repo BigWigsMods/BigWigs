@@ -14,6 +14,9 @@ L.heroic = "Heroic mode"
 L.hard = "Hard mode"
 L.general = "General" -- General settings, i.e. things that apply to both normal and hard mode.
 
+L.duration = "%s for %d sec"
+L.over = "%s Over!"
+
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "%s engaged - %s in %d min"

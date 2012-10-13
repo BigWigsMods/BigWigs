@@ -16,6 +16,9 @@ L.heroic = "Героический режим"
 L.hard = "Сложный режим"
 L.general = "Общее"
 
+L.duration = "%s for %d sec"
+L.over = "%s Over!"
+
 L.custom_start = "%s вступает в бой - %s через %d мин"
 L.custom_start_s = "%s вступает в бой - %s через %d сек"
 L.custom_end = "%s входит в %s!"
