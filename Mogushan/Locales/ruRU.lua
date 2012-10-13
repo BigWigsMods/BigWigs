@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "ruRU")
 if L then
-	engage_yell = "Пора умирать!"
+	L.engage_yell = "Пора умирать!"
 
 	L.totem = "Тотем"
 	L.frenzy = "Бешенство скоро!"

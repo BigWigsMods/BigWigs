@@ -39,7 +39,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "frFR")
 if L then
-	engage_yell = "L'heure de mourir elle est arrivée maintenant !" -- à vérifier
+	L.engage_yell = "L'heure de mourir elle est arrivée maintenant !" -- à vérifier
 
 	L.totem = "Totem"
 	L.frenzy = "Frénésie imminente !"

@@ -19,7 +19,7 @@ local totemCounter = 1
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	engage_yell = "It be dyin' time, now!"
+	L.engage_yell = "It be dyin' time, now!"
 
 	L.totem = "Totem"
 	L.frenzy = "Frenzy soon!"
