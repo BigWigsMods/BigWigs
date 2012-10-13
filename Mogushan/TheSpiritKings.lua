@@ -11,7 +11,9 @@ mod:RegisterEnableMob(
 	60708, -- Meng the Demented
 	61429, -- Meng the Demented
 	60709, -- Qiang the Merciless
+	61423, -- Qiang the Merciless
 	60710  -- Subetai the Swift
+	61427  -- Subetai the Swift
 )
 --------------------------------------------------------------------------------
 -- Locales
@@ -212,17 +214,14 @@ function mod:ShieldRemoved()
 end
 
 function mod:EngageCheck()
-	if not self.isEngaged then
-		self:Engage()
-	end
-	local isHeroic = self:Heroic()
 	for i=1, 5 do
-		if UnitExists("boss"..i) then
-			local id = tonumber((UnitGUID("boss"..i)):sub(7, 10), 16)
+		local unitId = ("boss%d"):format(i)
+		if UnitExists(unitId) then
+			local id = self:GetCID(UnitGUID(unitId))
 			-- this is needed because of heroic
 			if id == 60709 and not bossActivated[60709] then -- qiang
 				bossActivated[60709] = true
-				if isHeroic then
+				if self:Heroic() then
 					self:Bar(117961, imperviousShield, 40, 117961)
 				end
 				self:Bar(119521, annihilate, 10, 119521)
@@ -230,14 +229,14 @@ function mod:EngageCheck()
 				self:Message("ej:5841", qiang, "Positive", 117920)
 			elseif id == 60701 and not bossActivated[60701] then -- zian
 				bossActivated[60701] = true
-				if isHeroic then
+				if self:Heroic() then
 					self:Bar(117697, shieldOfDarkness, 40, 117697)
 				end
 				self:OpenProximity(8)
 				self:Message("ej:5852", zian, "Positive", 117628)
 			elseif id == 60710 and not bossActivated[60710] then -- subetai
 				bossActivated[60710] = true
-				if isHeroic then
+				if self:Heroic() then
 					self:Bar(118162, sleightOfHand, 40, 118162)
 				end
 				self:OpenProximity(8)
@@ -250,6 +249,7 @@ function mod:EngageCheck()
 			end
 		end
 	end
+	self:CheckBossStatus()
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
