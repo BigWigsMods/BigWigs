@@ -10,7 +10,7 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "frFR")
 if L then
-	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+	L.engage_yell = "Offrez vos âmes, mortels ! Vous êtes dans le séjour des morts !" -- à vérifier
 
 	L.phases = "Phases"
 	L.phases_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
@@ -23,10 +23,10 @@ if L then
 	L.phase_lightning = "Phase de Foudre !"
 	L.phase_flame = "Phase des Flammes !"
 	L.phase_arcane = "Phase des Arcanes !"
-	L.phase_shadow = "Phase d'Ombre !"
+	L.phase_shadow = "Phase d'Ombre (héroïque) !"
 
-	L.shroud_message = "%2$s cast Shroud on %1$s"
-	L.barrier_message = "Barrier UP!"
+	L.shroud_message = "%2$s incante Voile sur %1$s"
+	L.barrier_message = "Barrière EN PLACE !"
 
 	-- Tanks
 	L.tank = "Alertes tank"
@@ -39,7 +39,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "frFR")
 if L then
-	engage_yell = "It be dyin' time, now!"
+	engage_yell = "L'heure de mourir elle est arrivée maintenant !" -- à vérifier
 
 	L.totem = "Totem"
 	L.frenzy = "Frénésie imminente !"
@@ -48,6 +48,8 @@ end
 L = BigWigs:NewBossLocale("The Spirit Kings", "frFR")
 if L then
 	L.shield_removed = "Bouclier enlevé !"
+	L.casting_shields = "Incantations de boucliers"
+	L.casting_shields_desc = "Prévient quand des boucliers sont incantés pour tous les boss."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "frFR")
@@ -59,6 +61,12 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "frFR")
 if L then
+	L.energizing = "%s s'énergise !"
+	L.combo = "%s : combo en cours"
+
+	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.normal_start_trigger = "La machine s'anime" -- The machine hums to life!  Get to the lower level!
+
 	L.rage_trigger = "La rage de l'empereur se répercute dans les collines." -- à vérifier
 	L.strength_trigger = "La Force de l'empereur apparaît dans les alcôves !" -- à vérifier
 	L.courage_trigger = "Le Courage de l'empereur apparaît dans les alcôves !" -- à vérifier
