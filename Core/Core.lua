@@ -21,7 +21,7 @@ local pName = UnitName("player")
 -- Target monitoring
 --
 
-local enablezones, enablemobs, enableyells = {}, {}, {}
+local enablezones, enablemobs, enableyells, enableemotes = {}, {}, {}, {}
 local monitoring = nil
 
 local function enableBossModule(module, noSync)
@@ -59,9 +59,16 @@ local function targetCheck(unit)
 		targetSeen(unit, enablemobs[id])
 	end
 end
-local function chatMsgMonsterYell(event, msg, source)
+local function chatMsgMonsterYell(event, msg)
 	for yell, mod in pairs(enableyells) do
 		if yell == msg or msg:find(yell) then
+			targetSeen("player", mod)
+		end
+	end
+end
+local function raidBossEmote(event, msg)
+	for emote, mod in pairs(enableemotes) do
+		if emote == msg or msg:find(emote) then
 			targetSeen("player", mod)
 		end
 	end
@@ -83,12 +90,14 @@ local function zoneChanged()
 		if not monitoring then
 			monitoring = true
 			addon:RegisterEvent("CHAT_MSG_MONSTER_YELL", chatMsgMonsterYell)
+			addon:RegisterEvent("RAID_BOSS_EMOTE", raidBossEmote)
 			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
 			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
 		end
 	elseif monitoring then
 		monitoring = nil
 		addon:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+		addon:UnregisterEvent("RAID_BOSS_EMOTE")
 		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 		addon:UnregisterEvent("UNIT_TARGET")
 	end
@@ -113,8 +122,10 @@ do
 	end
 	function addon:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
 	function addon:RegisterEnableYell(module, ...) add(module.moduleName, enableyells, ...) end
+	function addon:RegisterEnableEmote(module, ...) add(module.moduleName, enableemotes, ...) end
 	function addon:GetEnableMobs() return enablemobs end
 	function addon:GetEnableYells() return enableyells end
+	function addon:GetEnableEmotes() return enableemotes end
 end
 
 -------------------------------------------------------------------------------
