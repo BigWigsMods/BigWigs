@@ -52,11 +52,13 @@ function mod:GetOptions()
 		116157, 116018,
 		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
+		118071,
 		"phases", 115817, 115911, "tank", "berserk", "bosskill",
 	}, {
 		[116157] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
 		[116417] = L["phase_arcane"],
+		[118071] = L["phase_shadow"],
 		phases = "general",
 	}
 end
@@ -73,6 +75,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVelocity", 116364)
+
+	self:Log("SPELL_CAST_SUCCESS", "SiphoningShield", 118071)
 
 	self:Log("SPELL_CAST_SUCCESS", "NullificationBarrier", 115817)
 
@@ -219,8 +223,16 @@ function mod:ArcaneVelocity(_, spellId, _, _, spellName)
 end
 
 -- SHADOW
-function mod:ShadowPhase()
+do
+	local siphoningShield = (GetSpellInfo(118071))
+	function mod:ShadowPhase()
+		self:Bar(118071, "~"..siphoningShield, 4, 118071)
+	end
+end
 
+function mod:SiphoningShield(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alarm")
+	self:Bar(spellId, "~"..spellName, 29, spellId) -- XXX need more logs
 end
 
 do
