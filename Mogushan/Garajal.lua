@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Gara'jal the Spiritbinder", 896, 682)
 mod:RegisterEnableMob(60143)
 
 local voodooDollList = mod:NewTargetList()
-local totemCounter, shadowCounter = 1, 1
+local totemCounter, shadowCounter = 1, 2
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -57,6 +57,7 @@ function mod:OnBossEnable()
 	self:AddSyncListener("DollsApplied")
 	self:AddSyncListener("DollsRemoved")
 	self:AddSyncListener("Totem")
+	self:AddSyncListener("Shadowy")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -65,7 +66,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	totemCounter, shadowCounter = 1, 1
+	totemCounter, shadowCounter = 1, 2
 	self:Bar(116174, L["totem"], self:Heroic() and 20 or 36, 116174)
 	if not self:LFR() then
 		self:Bar("shadowy", ("%s 1"):format(L["shadowy"]), 6.7, 117222)
@@ -83,8 +84,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 		if spellId == 116964 then
 			self:Sync("Totem") -- LFR only, no combat log event for some reason
 		elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and not self:LFR() then
-			shadowCounter = shadowCounter + 1
 			self:Bar("shadowy", ("%s %d"):format(L["shadowy"], shadowCounter), 8.3, 117222)
+			self:Sync("Shadowy")
 		end
 	end
 end
@@ -101,6 +102,8 @@ do
 			self:Message(116174, ("%s (%d)"):format(L["totem"], totemCounter), "Attention", 116174)
 			totemCounter = totemCounter + 1
 			self:Bar(116174, ("%s (%d)"):format(L["totem"], totemCounter), self:Heroic() and 20 or 36, 116174)
+		elseif sync == "Shadowy" then
+			shadowCounter = shadowCounter + 1
 		end
 	end
 end
