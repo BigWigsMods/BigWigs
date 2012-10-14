@@ -64,6 +64,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_CAST_START", "LightningFists", 116157)
 	self:Log("SPELL_CAST_START", "Epicenter", 116018)
 
@@ -75,8 +76,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417)
 	self:Log("SPELL_AURA_APPLIED", "ArcaneVelocity", 116364)
-
-	self:Log("SPELL_CAST_SUCCESS", "SiphoningShield", 118071)
 
 	self:Log("SPELL_CAST_SUCCESS", "NullificationBarrier", 115817)
 
@@ -230,9 +229,12 @@ do
 	end
 end
 
-function mod:SiphoningShield(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 29, spellId) -- XXX need more logs
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
+	if spellId == 117203 and unit:match("boss") then
+		self:Message(118071, spellName, "Important", 118071, "Alarm")
+		self:Bar(118071, "~"..spellName, 35, 118071)
+	end
 end
 
 do
