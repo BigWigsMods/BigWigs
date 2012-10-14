@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Gara'jal the Spiritbinder", 896, 682)
 mod:RegisterEnableMob(60143)
 
 local voodooDollList = mod:NewTargetList()
-local totemCounter = 1
+local totemCounter, shadowCounter = 1, 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,6 +23,10 @@ if L then
 
 	L.totem = "Totem"
 	L.frenzy = "Frenzy soon!"
+
+	L.shadowy = "Shadowy Attack" -- Singular not plural
+	L.shadowy_desc = select(2, EJ_GetSectionInfo(6698))
+	L.shadowy_icon = 117222
 end
 L = mod:GetLocale()
 
@@ -34,11 +38,11 @@ function mod:GetOptions()
 	return {
 		122151, 116174, 116272, 116161,
 		"ej:5759",
-		"berserk", "bosskill",
+		"shadowy", "berserk", "bosskill",
 	}, {
 		[122151] = CL["phase"]:format(1),
 		["ej:5759"] = CL["phase"]:format(2),
-		berserk = "general",
+		shadowy = "general",
 	}
 end
 
@@ -56,14 +60,15 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- LFR Spirit totem
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Death("Win", 60143)
 end
 
 function mod:OnEngage()
-	totemCounter = 1
+	totemCounter, shadowCounter = 1, 1
 	self:Bar(116174, L["totem"], self:Heroic() and 20 or 36, 116174)
 	if not self:LFR() then
+		self:Bar("shadowy", ("%s 1"):format(L["shadowy"]), 6.7, 117222)
 		self:Berserk(360)
 	end
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
@@ -73,10 +78,14 @@ end
 -- Event Handlers
 --
 
--- LFR only, no combat log event for some reason
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
-	if spellId == 116964 and unit == "boss1" then
-		self:Sync("Totem")
+	if unit == "boss1" then
+		if spellId == 116964 then
+			self:Sync("Totem") -- LFR only, no combat log event for some reason
+		elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and not self:LFR() then
+			shadowCounter = shadowCounter + 1
+			self:Bar("shadowy", ("%s %d"):format(L["shadowy"], shadowCounter), 8.3, 117222)
+		end
 	end
 end
 
