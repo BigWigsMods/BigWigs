@@ -6,7 +6,7 @@ if not L then return end
 L.you = "%s на ТЕБЕ"
 L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
-L.onother = "%s on %s!"
+L.onother = "%s на %s!"
 L.say = "%s на МНЕ!"
 L.cast = "<Каст %s>"
 L.soon = "%s скоро!"

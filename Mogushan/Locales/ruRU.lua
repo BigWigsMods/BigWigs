@@ -47,6 +47,8 @@ end
 L = BigWigs:NewBossLocale("The Spirit Kings", "ruRU")
 if L then
 	L.shield_removed = "Щит убран!"
+	L.casting_shields = "Наложение щита"
+	L.casting_shields_desc = "Предупреждать, когда вешается щит для всех боссов"
 end
 
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
@@ -58,9 +60,18 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
 if L then
+	L.energizing = "%s is energizing!" -- Needs review
+	L.combo = "%s: combo in progress" -- Needs review
+
+	L.heroic_start_trigger = "Destroying the pipes" -- Needs review
+	L.normal_start_trigger = "Машина гудит"
+
 	L.rage_trigger = "Ярость Императора эхом звучит среди холмов."
 	L.strength_trigger = "Сила Императора сжимает эти земли в железных тисках!"
 	L.courage_trigger = "Смелость Императора безгранична!"
-	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!" -- Needs review
+	L.bosses_trigger = "В больших нишах появляются два голема!"
+	L.gas_trigger = "Древняя машина могу ломается!"
+
+	L.arc_desc = "|cFFFF0000Это предупреждение показывается только для выбранного в цель босса.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 
