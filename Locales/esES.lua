@@ -7,8 +7,8 @@ L.bosskill = "Jefe muerto"
 L.bosskill_desc = "Avisa cuando el jefe ha sido derrotado."
 L.berserk = "Rabia"
 L.berserk_desc = "Muestra un contador que avisa cuando el jefe entrará en rabia"
-L.stages = "Stages"
-L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
+L.stages = "Etapas"
+L.stages_desc = "Habilita funciones relacionadas con varias etapas/fases del jefe como proximidad, barras, etc."
 
 L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de Big Wigs y lo reinstales por completo."
 
