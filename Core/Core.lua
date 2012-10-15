@@ -341,6 +341,7 @@ function addon:OnInitialize()
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"], nil, 26662)
+	self:RegisterBossOption("stages", L["stages"], L["stages_desc"])
 
 	-- this should ALWAYS be the last action of OnInitialize, it will trigger the loader to
 	-- enable the foreign language pack, and other packs that want to be loaded when the core loads

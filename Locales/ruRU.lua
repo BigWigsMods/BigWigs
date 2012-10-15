@@ -9,6 +9,8 @@ L.bosskill = "Смерть босса"
 L.bosskill_desc = "Объявлять о смерти босса."
 L.berserk = "Берсерк"
 L.berserk_desc = "Предупреждать и отсчитывать время до берсерка."
+L.stages = "Stages"
+L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 
 L.already_registered = "|cffff0000ВНИМАНИЕ:|r |cff00ff00%s|r (|cffffff00%s|r) уже загружен как модуль Big Wigs, но что-то пытается зарегистрировать его ещё раз. Обычно, это означает, что у вас две копии этого модуля в папке с модификациями (возможно, из-за ошибки программы для обновления модификаций). Мы рекомендуем вам удалить все папки Big Wigs и установить его с нуля."
 

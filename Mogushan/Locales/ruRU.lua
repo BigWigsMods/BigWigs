@@ -12,9 +12,6 @@ L = BigWigs:NewBossLocale("Feng the Accursed", "ruRU")
 if L then
 	L.engage_yell = "Трепещите, пока живы. Это обитель мертвых."
 
-	L.phases = "Фазы"
-	L.phases_desc = "Предупреждать о смене фаз"
-
 	L.phase_lightning_trigger = "О, великий дух! Даруй мне силу земли!"
 	L.phase_flame_trigger = "О, превозносимый! Моими руками ты отделишь их плоть от костей!"
 	L.phase_arcane_trigger =  "О, великий мыслитель! Да снизойдет на меня твоя древняя мудрость!"

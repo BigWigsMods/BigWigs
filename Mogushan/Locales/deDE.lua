@@ -12,9 +12,6 @@ L = BigWigs:NewBossLocale("Feng the Accursed", "deDE")
 if L then
 	L.engage_yell = "Ah, ja! Bietet Eure Seelen dar, Sterbliche! Dies sind die Hallen der Toten!"
 
-	L.phases = "Phasen"
-	L.phases_desc = "Warnungen für Phasenwechsel"
-
 	L.phase_lightning_trigger = "Oh, großer Geist! Gewährt mir die Macht der Erde!"
 	L.phase_flame_trigger = "Oh, Erhabener! Durch mich sollt Ihr das Fleisch von den Knochen schmelzen!"
 	L.phase_arcane_trigger =  "Oh, Weiser der Zeitalter! Vertraut mir Euer arkanes Wissen an!"

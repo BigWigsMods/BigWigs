@@ -9,6 +9,8 @@ L.bosskill = "보스 사망"
 L.bosskill_desc = "보스를 물리쳤을 때 알림니다."
 L.berserk = "광폭화"
 L.berserk_desc = "보스가 언제 광폭화가 되는지 경고합니다."
+L.stages = "Stages"
+L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%d|r) 이미 Big Wigs 에서 보스 모듈로 존재하지만, 다시 등록이 필요합니다 (revision에 |cffffff00%d|r). 이 것은 일반적으로 애드온 업데이트 실패로 인하여 이 모듈이 당신의 애드온 폴더에 두개의 사본이 있는 것을 뜻합니다. 당신이 가지고 있는 Big Wigs 폴더의 삭제와 재설치를 권장합니다."
 

@@ -11,9 +11,6 @@ L = BigWigs:NewBossLocale("Feng the Accursed", "itIT")
 if L then
 	L.engage_yell = "Offrite le vostre anime, mortali! Queste sono le sale dei morti!"
 
-	L.phases = "Fasi"
-	L.phases_desc = "Avvertimento per il cambiamento di Fase"
-
 	L.phase_lightning_trigger = "Oh, grande spirito... concedimi il potere della terra!"
 	L.phase_flame_trigger = "Oh, potente! Attraverso me scioglierai la carne dalle ossa!"
 	L.phase_arcane_trigger =  "Oh, saggio delle ere! Concedimi la tua saggezza arcana!"

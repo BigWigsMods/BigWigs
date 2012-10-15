@@ -9,6 +9,8 @@ L.bosskill = "首領死亡"
 L.bosskill_desc = "首領被擊敗時發出提示。"
 L.berserk = "狂暴"
 L.berserk_desc = "當首領狂暴時發出警報。"
+L.stages = "Stages"
+L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已經存在模組，但存在模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議刪除所有 Big Wigs 檔案夾並重新安裝。"
 

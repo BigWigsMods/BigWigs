@@ -12,9 +12,6 @@ L = BigWigs:NewBossLocale("Feng the Accursed", "esES") or BigWigs:NewBossLocale(
 if L then
 	L.engage_yell = "Preparad vuestras almas, mortales. ¡Os adentráis en las cámaras de los muertos!"
 
-	L.phases = "Fases"
-	L.phases_desc = "Aviso para cambios de fase"
-
 	L.phase_flame_trigger = "¡Oh, exaltado! ¡Soy tu herramienta para desgarrar la carne de los huesos!"
 	L.phase_lightning_trigger = "¡Oh, gran espíritu! ¡Otórgame el poder de la tierra!"
 	L.phase_arcane_trigger =  "¡Oh, sabio eterno! ¡Transmíteme tu sapiencia Arcana!"

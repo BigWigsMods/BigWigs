@@ -7,6 +7,8 @@ L.bosskill = "Morte del Boss"
 L.bosskill_desc ="Annuncia quando il boss viene ucciso."
 L.berserk = "Infuriato"
 L.berserk_desc =  "Visualizza un timer e un alert quando il boss si infuriera'."
+L.stages = "Stages"
+L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste gia' come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai 2 copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. E' consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
 

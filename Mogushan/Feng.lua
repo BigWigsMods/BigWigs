@@ -15,10 +15,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
 
-	L.phases = "Phases"
-	L.phases_desc = "Warning for phase changes"
-	L.phases_icon = 116363
-
 	L.phase_lightning_trigger = "Oh great spirit! Grant me the power of the earth!"
 	L.phase_flame_trigger = "Oh exalted one! Through me you shall melt flesh from bone!"
 	L.phase_arcane_trigger =  "Oh sage of the ages! Instill to me your arcane wisdom!"
@@ -53,13 +49,13 @@ function mod:GetOptions()
 		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
 		118071,
-		"phases", 115817, 115911, "tank", "berserk", "bosskill",
+		"stages", 115817, 115911, "tank", "berserk", "bosskill",
 	}, {
 		[116157] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
 		[116417] = L["phase_arcane"],
 		[118071] = L["phase_shadow"],
-		phases = "general",
+		stages = "general",
 	}
 end
 
@@ -72,6 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "WildfireSparkRemoved", 116784)
 	self:Log("SPELL_AURA_APPLIED", "DrawFlame", 116711)
 	self:Log("SPELL_DAMAGE", "Wildfire", 116793)
+	self:Log("SPELL_MISSED", "Wildfire", 116793)
 
 	self:Log("SPELL_AURA_APPLIED", "ArcaneResonanceApplied", 116417)
 	self:Log("SPELL_AURA_REMOVED", "ArcaneResonanceRemoved", 116417)
@@ -119,7 +116,7 @@ end
 do
 	local epicenter = GetSpellInfo(116018)
 	function mod:LightningPhase()
-		self:Message("phases", L["phase_lightning"], "Positive", 116363)
+		self:Message("stages", L["phase_lightning"], "Positive", 116363)
 		self:Bar(116018, "~"..epicenter, 32, 116018)
 	end
 end
@@ -138,7 +135,7 @@ end
 do
 	local drawflame = GetSpellInfo(116711)
 	function mod:FlamePhase()
-		self:Message("phases", L["phase_flame"], "Positive", 116363)
+		self:Message("stages", L["phase_flame"], "Positive", 116363)
 		self:Bar(116711, "~"..drawflame, 35, 116711)
 	end
 end
@@ -180,7 +177,7 @@ end
 do
 	local arcanevelocity = GetSpellInfo(116364)
 	function mod:ArcanePhase()
-		self:Message("phases", L["phase_arcane"], "Positive", 116363)
+		self:Message("stages", L["phase_arcane"], "Positive", 116363)
 		self:DelayedMessage(116364, 10, CL["soon"]:format(arcanevelocity), "Attention")
 	end
 end
