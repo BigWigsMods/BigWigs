@@ -101,33 +101,6 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 -- Utility
 --
 
---[[
-function GetMapID(name)
-	for i=1,1500 do
-		local fetchedName = GetMapNameByID(i)
-		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
-	end
-end
-function GetBossID(name)
-	for i=1,1500 do
-		local fetchedName = EJ_GetEncounterInfo(i)
-		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
-	end
-end
-function GetSectionID(name)
-	for i=1,10000 do
-		local fetchedName = EJ_GetSectionInfo(i)
-		if fetchedName and (fetchedName):find(name) then print(fetchedName, i) end
-	end
-end
-function PrintNewBossIDs() 
-	for i=200,1500 do
-		local n,_,id = EJ_GetEncounterInfo(i)
-		if n then print(n,id) end
-	end
-end
-]]
-
 local printFormat = "|cffffff00%s|r"
 local function sysprint(msg) print(printFormat:format(msg)) end
 
