@@ -40,14 +40,14 @@ local icons = setmetatable({}, {__index =
 			value = "Interface\\Icons\\" .. key
 		end
 		self[key] = value
-		return value
+		return self[key]
 	end
 })
 local spells = setmetatable({}, {__index =
 	function(self, key)
 		local value = GetSpellInfo(key)
 		self[key] = value
-		return value
+		return self[key]
 	end
 })
 
@@ -193,33 +193,41 @@ end
 -- Engage / wipe checking + unit scanning
 --
 
-function boss:CheckBossStatus()
-	local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
-	if not hasBoss and self.isEngaged then
-		if debug then dbg(self, ":CheckBossStatus Reboot called.") end
-		self:Reboot()
-	elseif not self.isEngaged and hasBoss then
-		if debug then dbg(self, ":CheckBossStatus Engage called.") end
-		local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
-		local module = core:GetEnableMobs()[tonumber(guid:sub(7, 10), 16)]
-		local modType = type(module)
-		if modType == "string" then
-			if module == self.moduleName then
-				self:Engage()
-			else
-				self:Disable()
-			end
-		elseif modType == "table" then
-			for i = 1, #module do
-				if module[i] == self.moduleName then
-					self:Engage()
-					break
-				end
-			end
-			if not self.isEngaged then self:Disable() end
+do
+	local function wipeCheck(module)
+		if not IsEncounterInProgress() then
+			if debug then dbg(module, "Wipe!") end
+			module:Reboot()
 		end
 	end
-	if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
+	function boss:CheckBossStatus()
+		local hasBoss = UnitHealth("boss1") > 100 or UnitHealth("boss2") > 100 or UnitHealth("boss3") > 100 or UnitHealth("boss4") > 100 or UnitHealth("boss5") > 100
+		if not hasBoss and self.isEngaged then
+			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
+			self:ScheduleTimer(wipeCheck, 2, self)
+		elseif not self.isEngaged and hasBoss then
+			if debug then dbg(self, ":CheckBossStatus Engage called.") end
+			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
+			local module = core:GetEnableMobs()[tonumber(guid:sub(7, 10), 16)]
+			local modType = type(module)
+			if modType == "string" then
+				if module == self.moduleName then
+					self:Engage()
+				else
+					self:Disable()
+				end
+			elseif modType == "table" then
+				for i = 1, #module do
+					if module[i] == self.moduleName then
+						self:Engage()
+						break
+					end
+				end
+				if not self.isEngaged then self:Disable() end
+			end
+		end
+		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
+	end
 end
 
 do
