@@ -10,12 +10,12 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "frFR")
 if L then
-	L.engage_yell = "Offrez vos âmes, mortels ! Vous êtes dans le séjour des morts !" -- à vérifier
+	L.engage_yell = "Offrez vos âmes, mortels ! Vous êtes dans le séjour des morts !"
 
-	L.phase_lightning_trigger = "Ô grand esprit ! Accorde-moi le pouvoir de la terre !" -- à vérifier
-	L.phase_flame_trigger = "Ô être exalté ! Grâce à moi vous ferez fondre la chair et les os !" -- à vérifier
-	L.phase_arcane_trigger =  "Ô sagesse ancestrale ! Distille en moi ta sagesse arcanique !" -- à vérifier
-	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!" -- à traduire
+	L.phase_lightning_trigger = "Ô grand esprit ! Accorde-moi le pouvoir de la terre !"
+	L.phase_flame_trigger = "Ô être exalté ! Grâce à moi vous ferez fondre la chair et les os !"
+	L.phase_arcane_trigger =  "Ô sagesse ancestrale ! Distille en moi ta sagesse arcanique !"
+	L.phase_shadow_trigger = "Grandes âmes des champions du passé ! Confiez-moi votre bouclier !" -- à vérifier
 
 	L.phase_lightning = "Phase de Foudre !"
 	L.phase_flame = "Phase des Flammes !"
@@ -40,6 +40,8 @@ if L then
 
 	L.totem = "Totem"
 	L.frenzy = "Frénésie imminente !"
+
+	L.shadowy = "Attaque ombreuse" -- Singular not plural
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "frFR")
