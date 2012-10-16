@@ -175,7 +175,7 @@ do
 	local arcs = {
 		[116968] = "misc_arrowleft", --arc left
 		[116971] = "misc_arrowright", --arc right
-		[116972] = "misc_arrowup", --arc center
+		[116972] = "misc_arrowlup", --arc center
 		--stomp triggers on the actual stomp, not at the start
 		[132425] = 132425, --boss1 stomp
 		[116969] = 132425, --boss2 stomp
