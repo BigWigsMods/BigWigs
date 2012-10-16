@@ -27,3 +27,7 @@ L.custom_start_s = ">%s<參戰 - %s將在%d秒後！"
 L.custom_end = ">%s<將%s！"
 L.custom_min = ">%s<%d分後！"
 L.custom_sec = ">%s<%d秒後！"
+
+L.tank = "Tank alerts only. "
+L.healer = "Healer alerts only. "
+

@@ -26,3 +26,6 @@ L.custom_end = "%s wird zum %s!"
 L.custom_min = "%s in %d Min"
 L.custom_sec = "%s in %d Sek!"
 
+L.tank = "Tank alerts only. "
+L.healer = "Healer alerts only. "
+

@@ -25,3 +25,7 @@ L.custom_start_s = "%1$s 전투 개시 - %3$d초 후 %2$s"
 L.custom_end = "%s - %s!"
 L.custom_min = "%2$d분 후 %1$s"
 L.custom_sec = "%2$d초 후 %1$s!"
+
+L.tank = "Tank alerts only. "
+L.healer = "Healer alerts only. "
+

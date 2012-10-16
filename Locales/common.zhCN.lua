@@ -27,3 +27,7 @@ L.custom_start_s = ">%s<激活 - %s将在%d秒后！"
 L.custom_end = ">%s<将%s！"
 L.custom_min = ">%s<%d分后！"
 L.custom_sec = ">%s<%d秒后！"
+
+L.tank = "Tank alerts only. "
+L.healer = "Healer alerts only. "
+

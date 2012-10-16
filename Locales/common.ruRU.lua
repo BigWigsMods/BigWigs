@@ -25,3 +25,6 @@ L.custom_start_s = "%s вступает в бой - %s через %d сек"
 L.custom_end = "%s входит в %s!"
 L.custom_min = "%s через %d мин"
 L.custom_sec = "%s через %d сек!"
+L.tank = "Tank alerts only. "
+L.healer = "Healer alerts only. "
+
