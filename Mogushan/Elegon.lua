@@ -41,12 +41,12 @@ function mod:GetOptions()
 		117960, "ej:6177", 117911, "ej:6186", {117878, "FLASHSHAKE"},
 		119360,
 		{"floor", "FLASHSHAKE"},
-		"berserk", "bosskill",
+		"stages", "berserk", "bosskill",
 	}, {
 		[117960] = "ej:6174",
 		[119360] = "ej:6175",
 		["floor"] = "ej:6176",
-		berserk = "general",
+		stages = "general",
 	}
 end
 
@@ -138,11 +138,11 @@ end
 
 function mod:UnstableEnergyRemoved()
 	if phase2SoonWarned2ndTime then
-		self:Message("ej:6176", L["last_phase"], "Positive", 116994)
+		self:Message("stages", L["last_phase"], "Positive", 116994)
 	else
 		drawPowerCounter = 0
 		totalAnnihilationCounter = 0
-		self:Message("ej:6176", CL["phase"]:format(1), "Positive", 116994)
+		self:Message("stages", CL["phase"]:format(1), "Positive", 116994)
 		self:Bar("ej:6177", materializeProtector, 15, 117954)
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	end
