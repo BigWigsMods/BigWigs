@@ -33,6 +33,7 @@ if L then
 	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"
 	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
+	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
 	L.arc = EJ_GetSectionInfo(5673)
 	L.arc_desc = "|cFFFF0000This warning will only show for the boss you're targetting.|r " .. (select(2, EJ_GetSectionInfo(5673)))
@@ -95,6 +96,7 @@ function mod:OnBossEnable()
 
 	--Titan Gas
 	self:Emote("TitanGas", L["gas_trigger"])
+	self:Emote("TitanGasOverdrive", L["gas_overdrive_trigger"])
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -105,6 +107,7 @@ function mod:OnEngage()
 	-- XXX need normal mode engage trigger and adjusted timer
 	self:Berserk(785) -- this is from heroic trigger
 	strengthCounter = 0
+	gasCounter = 0
 end
 
 --------------------------------------------------------------------------------
@@ -158,15 +161,14 @@ do
 	end
 	function mod:TitanGas()
 		gasCounter = gasCounter + 1
-		if gasCounter < 4 then
-			self:ScheduleTimer(fireNext, 30)
-			self:Bar("ej:5670", gas, 30, 118327)
-			self:Message("ej:5670", ("%s (%d)"):format(gas, gasCounter), "Attention", 118327)
-		else
-			--soft enrage! perma gas
-			self:Message("ej:5670", ("%s (%s)"):format(gas, (GetSpellInfo(26662))), "Important", 118327, "Alarm") --Berserk
-		end
+		self:ScheduleTimer(fireNext, 30)
+		self:Bar("ej:5670", gas, 30, 118327)
+		self:Message("ej:5670", ("%s (%d)"):format(gas, gasCounter), "Attention", 118327)
 	end
+end
+
+function mod:TitanGasOverdrive()
+	self:Message("ej:5670", ("%s (%s)"):format(gas, (GetSpellInfo(26662))), "Important", 118327, "Alarm") --Berserk
 end
 
 do
@@ -182,18 +184,20 @@ do
 	}
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-		local boss = UnitName(unitId)
-		if unitId == "target" and arcs[spellId] then
-			comboCounter = comboCounter + 1
-			self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
-		elseif spellId == 118365 then -- enegyze 1/s
-			self:Message("ej:5672", L["energizing"]:format(boss), "Important")
-			self:Bar("ej:5672", L["energizing"]:format(boss), 20)
+		if unitId == "target" then
+			local boss = UnitName(unitId)
+			if arcs[spellId] then
+				comboCounter = comboCounter + 1
+				self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
+			elseif spellId == 118365 then -- Energize 1/s
+				self:Message("ej:5672", L["energizing"]:format(boss), "Important")
+				self:Bar("ej:5672", L["energizing"]:format(boss), 20)
+			end
 		end
 	end
 
 	function mod:UNIT_POWER(_, unitId)
-		--they build power until 20, use 4 power (2 on heroic) an action until they're back at 0, cast "Energize 1/s" (118365), then repeat
+		--they build power until 20, use 4 power (2 on heroic) an action until they're back at 0, then repeat
 		if unitId:match("boss%d") and UnitIsUnit("target", unitId) and UnitPower(unitId) == 17 and comboCounter > 0 then
 			comboCounter = 0
 			local boss = UnitName(unitId)
