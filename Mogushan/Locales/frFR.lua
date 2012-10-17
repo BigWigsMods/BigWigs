@@ -54,8 +54,12 @@ end
 L = BigWigs:NewBossLocale("Elegon", "frFR")
 if L then
 	L.last_phase = "Dernière phase"
-	L.floor_despawn = "Disparition du sol"
 	L.overcharged_total_annihilation = "Vous avez (%d) %s, réinitialisez votre affaiblissement !"
+
+	L.floor = "Floor Despawn"
+	L.floor_desc = "Warnings for when the floor is about to despawn."
+	L.floor_icon = "ability_vehicle_launchplayer"
+	L.floor_message = "The floor is falling!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "frFR")

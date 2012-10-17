@@ -23,8 +23,12 @@ local phase2SoonWarned, phase2SoonWarned2ndTime
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.last_phase = "Last Phase"
-	L.floor_despawn = "Floor despawn"
 	L.overcharged_total_annihilation = "You have (%d) %s, reset your debuff!"
+
+	L.floor = "Floor Despawn"
+	L.floor_desc = "Warnings for when the floor is about to despawn."
+	L.floor_icon = "ability_vehicle_launchplayer"
+	L.floor_message = "The floor is falling!!"
 end
 L = mod:GetLocale()
 
@@ -36,12 +40,12 @@ function mod:GetOptions()
 	return {
 		117960, "ej:6177", 117911, "ej:6186", {117878, "FLASHSHAKE"},
 		119360,
-		"ej:6176",
+		{"floor", "FLASHSHAKE"},
 		"berserk", "bosskill",
 	}, {
 		[117960] = "ej:6174",
 		[119360] = "ej:6175",
-		["ej:6176"] = "ej:6176",
+		["floor"] = "ej:6176",
 		berserk = "general",
 	}
 end
@@ -81,7 +85,9 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 	-- Trigger Phase A when the spark hits the conduit
 	if spellId == 118189 and unit:match("boss") then
-		self:Bar("ej:6176", L["floor_despawn"], 6, 116994)
+		self:Bar("floor", L["floor"], 6, "ability_vehicle_launchplayer")
+		self:Message("floor", L["floor_message"], "Personal", "ability_vehicle_launchplayer", "Alarm")
+		self:FlashShake("floor")
 	end
 end
 

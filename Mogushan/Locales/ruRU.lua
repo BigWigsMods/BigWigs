@@ -51,8 +51,11 @@ end
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
 if L then
 	L.last_phase = "Последняя фаза"
-	L.floor_despawn = "Пол исчезает"
 	L.overcharged_total_annihilation = "На вас (%d) %s, снимите дебафф!"
+
+	L.floor = "Floor Despawn"
+	L.floor_desc = "Warnings for when the floor is about to despawn."
+	L.floor_message = "The floor is falling!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")

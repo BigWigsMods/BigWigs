@@ -40,7 +40,10 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")
 if L then
-	L.floor_despawn = "Il Suolo scompare!"
+	L.floor = "Floor Despawn"
+	L.floor_desc = "Warnings for when the floor is about to despawn."
+	L.floor_icon = "ability_vehicle_launchplayer"
+	L.floor_message = "The floor is falling!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
