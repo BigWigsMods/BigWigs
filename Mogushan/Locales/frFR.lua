@@ -56,15 +56,15 @@ if L then
 	L.last_phase = "Dernière phase"
 	L.overcharged_total_annihilation = "Vous avez (%d) %s, réinitialisez votre affaiblissement !"
 
-	L.floor = "Floor Despawn"
+	L.floor = "Disparition du sol"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
 	L.floor_icon = "ability_vehicle_launchplayer"
-	L.floor_message = "The floor is falling!!"
+	L.floor_message = "Le sol est en train de s'effondrer !"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "frFR")
 if L then
-	L.enable_zone = "Forge of the Endless"
+	L.enable_zone = "Forge des Éternels"
 
 	L.energizing = "%s s'énergise !"
 	L.combo = "%s : combo en cours"
