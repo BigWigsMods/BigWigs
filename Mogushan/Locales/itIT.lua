@@ -45,6 +45,8 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
 if L then
+	L.enable_zone = "Forge of the Endless"
+
 	L.rage_trigger = "Rabbia dell'Imperatore echeggia tra le colline."
 	L.strength_trigger = "Forza dell'Imperatore appare nelle alcove!"
 	L.courage_trigger = "Coraggio dell'Imperatore appare nelle alcove!"

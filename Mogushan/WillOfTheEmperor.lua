@@ -5,7 +5,6 @@
 
 local mod, CL = BigWigs:NewBoss("Will of the Emperor", 896, 677)
 if not mod then return end
---mod:RegisterEnableMob(60396) --Emperor's Rage
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -14,7 +13,7 @@ if not mod then return end
 local rage, strength, courage, bosses, gas = (EJ_GetSectionInfo(5678)), (EJ_GetSectionInfo(5677)), (EJ_GetSectionInfo(5676)), (EJ_GetSectionInfo(5726)), (EJ_GetSectionInfo(5670))
 local gasCounter = 0
 local strengthCounter = 0
-local firstEnable = false
+local canEnable = true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -22,6 +21,8 @@ local firstEnable = false
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.enable_zone = "Forge of the Endless"
+
 	L.energizing = "%s is energizing!"
 	L.combo = "%s: combo in progress"
 
@@ -64,15 +65,24 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
-	self:RegisterEnableEmote(L["heroic_start_trigger"], L["normal_start_trigger"])
+	-- Kel'Thuzad v2
+	local f = CreateFrame("Frame")
+	local func = function()
+		if mod:IsEnabled() or not canEnable then return end
+		if GetSubZoneText() == L["enable_zone"] then
+			mod:Enable()
+		end
+	end
+	f:SetScript("OnEvent", func)
+	f:RegisterEvent("ZONE_CHANGED_INDOORS")
+	func()
+end
+
+function mod:VerifyEnable()
+	return canEnable
 end
 
 function mod:OnBossEnable()
-	if not firstEnable then
-		firstEnable = true
-		self:Engage()
-	end
-
 	-- Heroic
 	self:Emote("Engage", L["heroic_start_trigger"], L["normal_start_trigger"])
 
@@ -101,6 +111,10 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 60399) -- Qin-xi they share hp
+end
+
+function mod:OnWin()
+	canEnable = false
 end
 
 function mod:OnEngage()

@@ -57,6 +57,8 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
 if L then
+	L.enable_zone = "Forge of the Endless"
+
 	L.energizing = "%s is energizing!" -- Needs review
 	L.combo = "%s: combo in progress" -- Needs review
 

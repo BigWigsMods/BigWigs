@@ -95,7 +95,6 @@ function boss:GetLocale(state) return AL:GetLocale(self.name, state) end
 
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
 function boss:RegisterEnableYell(...) core:RegisterEnableYell(self, ...) end
-function boss:RegisterEnableEmote(...) core:RegisterEnableEmote(self, ...) end
 
 -------------------------------------------------------------------------------
 -- Combat log related code
