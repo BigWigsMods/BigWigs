@@ -43,7 +43,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"},   -- qiang
-		"ej:5852", 118303, {117697, "FLASHSHAKE"}, -- zian
+		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- zian
 		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- subetai
 		"ej:5835", 117708, -- meng
 		"proximity", "casting_shields", "berserk", "bosskill",
@@ -176,9 +176,11 @@ function mod:SleightofHand(_, _, _, _, spellName)
 end
 
 -- zian
-function mod:Fixate(player, _, _, _, spellName)
+function mod:Fixate(player, spellId, _, _, spellName)
+	self:PrimaryIcon(spellId, player)
 	if UnitIsUnit("player", player) then
-		self:LocalMessage(118303, spellName, "Personal", 118303, "Info")
+		self:LocalMessage(spellId, spellName, "Personal", spellId, "Info")
+		self:Say(spellId, CL["say"]:format(spellName))
 	end
 end
 
