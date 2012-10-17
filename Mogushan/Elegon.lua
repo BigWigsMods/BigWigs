@@ -84,9 +84,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 	-- Trigger Phase A when the spark hits the conduit
-	if spellId == 118189 and unit:match("boss") then
-		self:Bar("floor", L["floor"], 6, "ability_vehicle_launchplayer")
-		self:Message("floor", L["floor_message"], "Personal", "ability_vehicle_launchplayer", "Alarm")
+	if spellId == 118189 and unit == "boss1" then
+		self:Bar("floor", L["floor"], 6, L.floor_icon)
+		self:Message("floor", L["floor_message"], "Personal", L.floor_icon, "Alarm")
 		self:FlashShake("floor")
 	end
 end

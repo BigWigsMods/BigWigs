@@ -54,7 +54,6 @@ if L then
 
 	L.floor = "Floor Despawn"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_icon = "ability_vehicle_launchplayer"
 	L.floor_message = "The floor is falling!!"
 end
 

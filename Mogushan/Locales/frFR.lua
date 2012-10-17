@@ -58,7 +58,6 @@ if L then
 
 	L.floor = "Disparition du sol"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_icon = "ability_vehicle_launchplayer"
 	L.floor_message = "Le sol est en train de s'effondrer !"
 end
 
