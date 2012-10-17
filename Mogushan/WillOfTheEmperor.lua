@@ -189,7 +189,7 @@ do
 			if arcs[spellId] then
 				comboCounter = comboCounter + 1
 				self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
-			elseif spellId == 118365 then -- Energize 1/s
+			elseif spellId == 118365 and unitId:match("boss%d") then -- Energize 1/s
 				self:Message("ej:5672", L["energizing"]:format(boss), "Important")
 				self:Bar("ej:5672", L["energizing"]:format(boss), 20)
 			end
