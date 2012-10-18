@@ -53,7 +53,7 @@ if L then
 	L.overcharged_total_annihilation = "¡Tienes (%d) %s, resetea tu debuff!"
 
 	L.floor = "Desaparece el suelo"
-	L.floor_desc = "Warnings for when the floor is about to despawn."
+	L.floor_desc = "Aviso para cuando el suelo esté a punto de desaparecer."
 	L.floor_message = "¡El suelo está desapareciendo!!"
 end
 
