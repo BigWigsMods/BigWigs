@@ -39,6 +39,8 @@ if L then
 
 	L.totem = "Тотем"
 	L.frenzy = "Бешенство скоро!"
+
+	L.shadowy = "Теневая атака"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ruRU")
@@ -51,28 +53,29 @@ end
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
 if L then
 	L.last_phase = "Последняя фаза"
-	L.overcharged_total_annihilation = "На вас (%d) %s, снимите дебафф!"
+	L.overcharged_total_annihilation = "На вас (%d) %s, срочно сбросьте!"
 
-	L.floor = "Floor Despawn"
-	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "The floor is falling!!"
+	L.floor = "Пол исчезает"
+	L.floor_desc = "Предупреждать, когда пол готовится исчезнуть."
+	L.floor_message = "Пол падает!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
 if L then
-	L.enable_zone = "Forge of the Endless"
+	L.enable_zone = "Кузня Бесконечности"
 
-	L.energizing = "%s is energizing!" -- Needs review
-	L.combo = "%s: combo in progress" -- Needs review
+	L.energizing = "%s наполняется энергией!"
+	L.combo = "%s: череда ударов"
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Needs review
 	L.normal_start_trigger = "Машина гудит"
 
 	L.rage_trigger = "Ярость Императора эхом звучит среди холмов."
-	L.strength_trigger = "Сила Императора сжимает эти земли в железных тисках!"
-	L.courage_trigger = "Смелость Императора безгранична!"
+	L.strength_trigger = "В нишах появляется Сила императора!"
+	L.courage_trigger = "В нишах появляется Смелость императора!"
 	L.bosses_trigger = "В больших нишах появляются два голема!"
 	L.gas_trigger = "Древняя машина могу ломается!"
+	L.gas_overdrive_trigger = "Древняя машина могу перегружена!"
 
 	L.arc_desc = "|cFFFF0000Это предупреждение показывается только для выбранного в цель босса.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
