@@ -71,7 +71,7 @@ if L then
 	L.strength_trigger = "¡La fuerza del Emperador aparece en la habitación!"
 	L.courage_trigger = "¡El coraje del Emperador aparece en la habitación!"
 	L.bosses_trigger = "¡Aparecen dos construcciones titánicas en las enormes habitaciones!"
-	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
+	L.gas_trigger = "¡La Antigua Máquina Mogu se rompe!"
 	L.gas_overdrive_trigger = "¡La Antigua Máquina Mogu se sobrecarga!"
 
 	L.arc_desc = "|cFFFF0000Este aviso solo se mostrará para el jefe que estés targeteando.|r " .. (select(2, EJ_GetSectionInfo(5673)))
