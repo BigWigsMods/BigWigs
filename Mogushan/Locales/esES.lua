@@ -65,14 +65,14 @@ if L then
 	L.combo = "%s: combo en progreso"
 	
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
-	L.normal_start_trigger = "¡La máquina vuelve a la vida!" -- The machine hums to life!  Get to the lower level!
+	L.normal_start_trigger = "¡La máquina vuelve a la vida! ¡Baja el nivel inferior!" -- The machine hums to life!  Get to the lower level!
 
 	L.rage_trigger = "La ira del Emperador resuena por las colinas."
 	L.strength_trigger = "¡La fuerza del Emperador aparece en la habitación!"
 	L.courage_trigger = "¡El coraje del Emperador aparece en la habitación!"
 	L.bosses_trigger = "¡Aparecen dos construcciones titánicas en las enormes habitaciones!"
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
-	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
+	L.gas_overdrive_trigger = "¡La Antigua Máquina Mogu se sobrecarga!"
 
 	L.arc_desc = "|cFFFF0000Este aviso solo se mostrará para el jefe que estés targeteando.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
