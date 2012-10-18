@@ -40,11 +40,14 @@ if L then
 
 	L.totem = "Totem"
 	L.frenzy = "Frênesi iminente!"
+	L.shadowy = "Ataque Sombrio"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ptBR")
 if L then
 	L.shield_removed = "Escudo removido!"
+	L.casting_shields = "Conjurando escudos!"
+	L.casting_shields_desc = "Avisa quando os escudos são conjurados para todos os chefes."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "ptBR")
@@ -61,9 +64,17 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "ptBR")
 if L then
 	L.enable_zone = "Forge of the Endless"
 
-	L.rage_trigger = "A ira do imperador ecoa pelas colinas."
-	L.strength_trigger = "A força do imperador prende esta terra com punhos de ferro!"
-	L.courage_trigger = "A coragem do imperador queima eternamente!"
-	L.bosses_trigger = "Dois constructos titânicos aparecem na grandes alcovas!"
+	L.rage_trigger = "A Ira do Imperador ecoa pelas colinas."
+	L.strength_trigger = "A Força do Imperador prende esta terra com punhos de ferro."
+	L.courage_trigger = "A Coragem do Imperador queima eternamente."
+	L.bosses_trigger = "Dois construtos titânicos aparecem nas grandes alcovas!"
+	L.energizing = "%s está energizando!"
+	L.combo = "%s: combo em progresso"
+
+	L.heroic_start_trigger = "Destruindo os canos"
+	L.normal_start_trigger = "A máquina toma vida! Vá para o nível inferior!"
+	L.arc = EJ_GetSectionInfo(5673)
+	L.arc_desc = "|cFFFF0000Este aviso só será mostrado para o chefe que você estiver com alvo.|r " .. (select(2, EJ_GetSectionInfo(5673)))
+	L.gas_trigger = "A Máquina Mogu Ancestral quebrou!"
 end
 
