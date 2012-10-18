@@ -52,9 +52,9 @@ if L then
 	L.last_phase = "Última fase"
 	L.overcharged_total_annihilation = "¡Tienes (%d) %s, resetea tu debuff!"
 
-	L.floor = "Floor Despawn"
+	L.floor = "Desaparece el suelo"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "The floor is falling!!"
+	L.floor_message = "¡El suelo está desapareciendo!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "esES") or BigWigs:NewBossLocale("Will of the Emperor", "esMX")
