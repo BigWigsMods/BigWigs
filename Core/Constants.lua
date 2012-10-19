@@ -132,7 +132,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				local icon = L[option .. "_icon"]
 				if icon == option .. "_icon" then icon = nil end
 				if type(icon) == "number" then
-					icon = select(3, GetSpellInfo(icon))
+					local _
+					_, _, icon = GetSpellInfo(icon)
 					if not icon then
 						print("|cFF33FF99BigWigs|r:", "No icon found for", module, L[option .. "_icon"])
 					end

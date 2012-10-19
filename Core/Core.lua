@@ -268,9 +268,8 @@ do
 
 	function chatMsgAddon(event, prefix, message, sender)
 		if prefix ~= "T" then return end
-		local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
-		if not sync then return end
-		if not times[sync] or GetTime() > (times[sync] + 2) then
+		local _, _, sync, rest = message:find("(%S+)%s*(.*)$")
+		if sync and (not times[sync] or GetTime() > (times[sync] + 2)) then
 			times[sync] = GetTime()
 			onSync(sync, rest, sender)
 		end
@@ -281,9 +280,7 @@ do
 		registered[sync][module] = true
 	end
 	function addon:Transmit(sync, ...)
-		if GetNumGroupMembers() == 0 and GetNumSubgroupMembers() == 0 then return end
-		if not sync then return end
-		if not times[sync] or GetTime() > (times[sync] + 2) then
+		if sync and (IsInRaid() or IsInGroup()) and (not times[sync] or GetTime() > (times[sync] + 2)) then
 			times[sync] = GetTime()
 			SendAddonMessage("BigWigs", "T:"..strjoin(" ", sync, ...), "RAID")
 			onSync(sync, strjoin(" ", ...), pName)

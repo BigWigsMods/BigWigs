@@ -497,9 +497,9 @@ do
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
 			if type(key) == "nil" then return nil end
-			local class = select(2, UnitClass(key))
+			local _, class = UnitClass(key)
 			if class then
-				self[key] = hexColors[class]  .. gsub(key, "%-.+", "*") .. "|r" -- Replace server names with *
+				self[key] = hexColors[class]  .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
 			else
 				return key
 			end

@@ -1202,11 +1202,12 @@ local function parseTime(input)
 	if type(input) == "string" then
 		input = input:trim()
 		if input:find(":") then
-			local m, s = select(3, input:find("^(%d+):(%d+)$"))
+			local _, _, m, s = input:find("^(%d+):(%d+)$")
 			if not tonumber(m) or not tonumber(s) then return end
 			return (tonumber(m) * 60) + tonumber(s)
 		elseif input:find("^%d+mi?n?$") then
-			return tonumber(select(3, input:find("^(%d+)mi?n?$"))) * 60
+			local _, _, t = input:find("^(%d+)mi?n?$")
+			return tonumber(t) * 60
 		end
 	end
 end
@@ -1219,7 +1220,7 @@ local function sendCustomMessage(msg)
 end
 
 local function startCustomBar(bar, nick, localOnly)
-	local time, barText = select(3, bar:find("(%S+) (.*)"))
+	local _, _, time, barText = bar:find("(%S+) (.*)")
 	local seconds = parseTime(time)
 	if type(seconds) ~= "number" or type(barText) ~= "string" then
 		print(L["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."]:format(tostring(time), nick or UnitName("player")))

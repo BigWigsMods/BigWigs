@@ -162,7 +162,7 @@ end
 local function load(obj, name)
 	if obj then return true end
 	-- Verify that the addon isn't disabled
-	local enabled = select(4, GetAddOnInfo(name))
+	local _, _, _, enabled = GetAddOnInfo(name)
 	if not enabled then
 		sysprint("Error loading " .. name .. " ("..name.." is not enabled)")
 		return
@@ -436,19 +436,19 @@ function loader:ZoneChanged()
 end
 
 function loader:CheckRoster()
-	local raid = GetNumGroupMembers()
-	local party = GetNumSubgroupMembers()
-	if not grouped and raid > 0 then
+	local raid = IsInRaid()
+	local party = IsInGroup()
+	if not grouped and raid then
 		grouped = BWRAID
 		self:SendMessage("BigWigs_JoinedGroup", grouped)
-	elseif not grouped and party > 0 then
+	elseif not grouped and party then
 		grouped = BWPARTY
 		self:SendMessage("BigWigs_JoinedGroup", grouped)
 	elseif grouped then
-		if grouped == BWPARTY and raid > 0 then
+		if grouped == BWPARTY and raid then
 			grouped = BWRAID
 			self:SendMessage("BigWigs_JoinedGroup", grouped)
-		elseif raid == 0 and party == 0 then
+		elseif not raid and not party then
 			grouped = nil
 			self:SendMessage("BigWigs_LeftGroup")
 		end
@@ -588,11 +588,11 @@ do
 	local coloredNames = setmetatable({}, {__index =
 		function(self, key)
 			if type(key) == "nil" then return nil end
-			local class = select(2, UnitClass(key))
+			local _, class = UnitClass(key)
 			if class then
-				self[key] = hexColors[class]  .. gsub(key, "%-.+", "*") .. "|r" -- Replace server names with *
+				self[key] = hexColors[class]  .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
 			else
-				self[key] = "|cffcccccc" .. gsub(key, "%-.+", "*") .. "|r" -- Replace server names with *
+				self[key] = "|cffcccccc" .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
 			end
 			return self[key]
 		end
