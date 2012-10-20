@@ -107,20 +107,20 @@ end
 
 -- meng
 function mod:CowardiceApplied()
-	self:RegisterEvent("UNIT_POWER")
+	self:RegisterEvent("UNIT_POWER_FREQUENT")
 end
 
 function mod:CowardiceRemoved()
-	self:UnregisterEvent("UNIT_POWER")
+	self:UnregisterEvent("UNIT_POWER_FREQUENT")
 end
 
-function mod:UNIT_POWER(unitId)
-	if not UnitExists(unitId) then return end
+function mod:UNIT_POWER_FREQUENT(_, unitId)
+	if not unitId:find("boss", nil, true) then return end
 	local id = self:GetCID(UnitGUID(unitId))
 	if id == 60708 then
 		local power = UnitPower(unitId)
 		if power > 75 then
-			self:UnregisterEvent("UNIT_POWER")
+			self:UnregisterEvent("UNIT_POWER_FREQUENT")
 			self:Message(117756, ("%s (%d)"):format(cowardice, power), "Attention", 117756)
 		end
 	end
