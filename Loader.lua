@@ -344,7 +344,7 @@ end
 
 function loader:CHAT_MSG_ADDON(_, prefix, msg, _, sender)
 	if prefix ~= "BigWigs" then return end
-	local _, _, bwPrefix, bwMsg = (msg):find("^(%u-):(.+)")
+	local _, _, bwPrefix, bwMsg = msg:find("^(%u-):(.+)")
 	if bwPrefix then
 		self:SendMessage("BigWigs_AddonMessage", bwPrefix, bwMsg, sender)
 	end
@@ -416,15 +416,15 @@ do
 end
 
 function loader:ZoneChanged()
-	if not grouped then return end
 	-- Hack to make the zone ID available when reloading/relogging inside an instance.
 	-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
-	if IsInInstance() then
+	local inside = IsInInstance()
+	if inside then
 		SetMapToCurrentZone()
 	end
 	local id = GetCurrentMapAreaID()
-	-- load party content in raid, but don't load raid content in a party...
-	if enableZones[id] and enableZones[id] <= grouped then
+	-- Always load content in an instance, otherwise require a group (world bosses)
+	if enableZones[id] and (inside or enableZones[id] <= grouped) then
 		if load(BigWigs, "BigWigs_Core") then
 			if BigWigs:IsEnabled() and loadOnZone[id] then
 				loadZone(id)
