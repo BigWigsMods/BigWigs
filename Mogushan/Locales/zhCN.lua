@@ -12,11 +12,11 @@ end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "zhCN")
 if L then
-	L.engage_yell = "Tender your souls, mortals! These are the halls of the dead!"
+	L.engage_yell = "å•Šï¼Œæ²¡é”™ã€‚äº¤å‡ºä½ ä»¬çš„çµé­‚å§ï¼Œå‡¡äººï¼è¿™é‡Œæ˜¯äº¡è€…çš„æ®¿å ‚ï¼"
 
-	L.phase_lightning_trigger = "àŞ£¬Î°´óµÄÉñÁé£¡´ÍÓèÎÒ´óµØµÄÁ¦Á¿£¡"
-	L.phase_flame_trigger = "àŞ£¬ÖÁ¸ßµÄÉñ£¡½èÎÒÖ®ÊÖÈÚ»¯ËûÃÇµÄÑªÈâ°É£¡"
-	L.phase_arcane_trigger =  "àŞ£¬ÉÏ¹ÅµÄÏÍÕß£¡´ÍÓèÎÒÄ§·¨µÄÖÇ»Û°É£¡"
+	L.phase_lightning_trigger = "å™¢ï¼Œä¼Ÿå¤§çš„ç¥çµï¼èµäºˆæˆ‘å¤§åœ°çš„åŠ›é‡ï¼"
+	L.phase_flame_trigger = "å™¢ï¼Œè‡³é«˜çš„ç¥ï¼å€Ÿæˆ‘ä¹‹æ‰‹èåŒ–ä»–ä»¬çš„è¡€è‚‰å§ï¼"
+	L.phase_arcane_trigger =  "å™¢ï¼Œä¸Šå¤çš„è´¤è€…ï¼èµäºˆæˆ‘é­”æ³•çš„æ™ºæ…§å§ï¼"
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"
 
 	L.phase_lightning = "Lightning phase!"
@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhCN")
 if L then
-	L.engage_yell = "ËÀÍöÊ±¼äµ½£¡"
+	L.engage_yell = "æ­»äº¡æ—¶é—´åˆ°ï¼"
 
 	L.totem = "Totem"
 	L.frenzy = "Frenzy soon!"
@@ -65,7 +65,7 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "zhCN")
 if L then
-	L.enable_zone = "ÎŞ¾¡ÈÛÂ¯"
+	L.enable_zone = "æ— å°½ç†”ç‚‰"
 
 	L.energizing = "%s is energizing!"
 	L.combo = "%s: combo in progress"
