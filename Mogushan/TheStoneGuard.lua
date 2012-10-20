@@ -8,12 +8,6 @@ if not mod then return end
 mod:RegisterEnableMob(60051, 60047, 60043, 59915) -- Cobalt, Amethyst, Jade, Jasper
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local jasperChainsTargets = mod:NewTargetList()
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -26,6 +20,8 @@ if L then
 	L.overload = "Overload" -- maybe should use a spellId that says exactly "Overload"
 	L.overload_desc = "Warning for all types of overloads."
 	L.overload_icon = 77222 -- overload like icon
+
+	L.jasper_removed = "Jasper Chains REMOVED"
 end
 L = mod:GetLocale()
 
@@ -35,12 +31,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5772",
+		--"ej:5772",
 		130774,
-		{130395, "FLASHSHAKE", "PROXIMITY"},
+		{130395, "FLASHSHAKE", "PROXIMITY", "SAY"},
 		"overload", "petrifications", "berserk", "bosskill",
 	}, {
-		["ej:5772"] = "ej:5771",
+		--["ej:5772"] = "ej:5771",
 		[130774] = "ej:5691",
 		[130395] = "ej:5774",
 		overload = "general",
@@ -73,16 +69,19 @@ end
 
 do
 	local scheduled = nil
+	local jasperChainsTargets = mod:NewTargetList()
 	local function jasperChains(spellName)
 		mod:TargetMessage(130395, spellName, jasperChainsTargets, "Attention", 130395, "Info")
 		scheduled = nil
 	end
-	function mod:JasperChainsApplied(player, _, _, _, spellName)
+	function mod:JasperChainsApplied(player, spellId, _, _, spellName)
 		jasperChainsTargets[#jasperChainsTargets + 1] = player
 		if UnitIsUnit(player, "player") then
-			self:FlashShake(130395)
+			self:FlashShake(spellId)
+			self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId)
+			self:Say(spellId, CL["say"]:format(spellName))
 			-- this is kind of a reverse proximity now, it should help to know when you are actually close as you are supposed to be
-			self:OpenProximity(10, 130395)
+			self:OpenProximity(10, spellId)
 		end
 		if not scheduled then
 			scheduled = true
@@ -91,21 +90,21 @@ do
 	end
 end
 
-function mod:JasperChainsRemoved(player, _, _, _, spellName)
+function mod:JasperChainsRemoved(player, spellId)
 	if UnitIsUnit("player", player) then
-		self:LocalMessage(130395, CL["you"]:format(spellName), "Personal", 130395)
-		self:CloseProximity(130395)
+		self:LocalMessage(spellId, L["jasper_removed"], "Personal", spellId)
+		self:CloseProximity(spellId)
 	end
 end
 
 do
 	local prev = 0
-	function mod:AmethystPool(player, _, _, _, spellName)
+	function mod:AmethystPool(player, spellId, _, _, spellName)
 		if not UnitIsUnit(player, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(130774, CL["underyou"]:format(spellName), "Personal", 130774, "Alert")
+			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Alert")
 		end
 	end
 end
@@ -114,13 +113,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	if not unitId:match("boss") then return end
 	-- we could be using the same colors as blizzard but they are too "faint" imo
 	if spellId == 115852 then -- cobalt
-		self:Message("petrifications", ("|c001E90FF%s|r"):format(spellName), nil, 115852, "Alert") -- blue
+		self:Message("petrifications", ("|c001E90FF%s|r"):format(spellName), nil, spellId, "Alert") -- blue
 	elseif spellId == 116006 then -- jade
-		self:Message("petrifications", ("|c00008000%s|r"):format(spellName), nil, 116006, "Alert") -- green
+		self:Message("petrifications", ("|c00008000%s|r"):format(spellName), nil, spellId, "Alert") -- green
 	elseif spellId == 116036 then -- jasper
-		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, 116036, "Alert") -- red
+		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, spellId, "Alert") -- red
 	elseif spellId == 116057 then -- amethyst
-		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, 116057, "Alert") -- purple
+		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, spellId, "Alert") -- purple
 	end
 end
 

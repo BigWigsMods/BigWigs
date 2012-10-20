@@ -220,7 +220,7 @@ end
 
 -- SHADOW
 do
-	local siphoningShield = (GetSpellInfo(118071))
+	local siphoningShield = GetSpellInfo(118071)
 	function mod:ShadowPhase()
 		self:Bar(118071, "~"..siphoningShield, 4, 118071)
 	end
@@ -228,7 +228,7 @@ end
 
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if spellId == 117203 and unit:match("boss") then
+	if spellId == 117203 and unit == "boss1" then
 		self:Message(118071, spellName, "Important", 118071, "Alarm")
 		self:Bar(118071, "~"..spellName, 35, 118071)
 	end
