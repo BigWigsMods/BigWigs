@@ -9,8 +9,8 @@ L.bosskill = "首領死亡"
 L.bosskill_desc = "首領被擊敗時發出提示。"
 L.berserk = "狂暴"
 L.berserk_desc = "當首領狂暴時發出警報。"
-L.stages = "Stages"
-L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
+L.stages = "階段"
+L.stages_desc = "啟用首領不同階段的相關功能，如近距離顯示、計時條等。"
 
 L.already_registered = "|cffff0000警告：|r |cff00ff00%s|r（|cffffff00%s|r）在 Big Wigs 中已經存在模組，但存在模組仍試圖重新註冊。可能由於更新失敗的原因，通常表示您有兩份模組拷貝在您插件的檔案夾中。建議刪除所有 Big Wigs 檔案夾並重新安裝。"
 
@@ -19,7 +19,7 @@ L["You are running an official release of Big Wigs %s (revision %d)"] = "你所�
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "你所使用的 Big Wigs %s 為“α測試版”（修訂號%d）"
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "你所使用的 Big Wigs %s 為從源直接檢出的。"
 L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "有新的 Big Wigs 正式版可用。（/bwv）你可以訪問 curse.com，wowinterface.com，wowace.com 或使用 Curse 更新器來更新到新的正式版。"
-L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Big Wigs α測試版已過期。（/bwv）。"
+L["Your alpha version of Big Wigs is out of date (/bwv)."] = "Big Wigs α 測試版已過期。（/bwv）。"
 
 L.tooltipHint = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt-點擊|r可以禁用所有首領模組。"
 L["Active boss modules:"] = "啟動首領模組："
