@@ -95,8 +95,9 @@ end
 
 local function isBossActiveById(bossId)
 	for i=1, 5 do
-		if UnitExists("boss"..i) then
-			local id = tonumber((UnitGUID("boss"..i)):sub(7, 10), 16)
+		local unitId = ("boss%d"):format(i)
+		if UnitExists(unitId) then
+			local id = mod:GetCID(UnitGUID(unitId))
 			if id == bossId then
 				return true
 			end

@@ -68,8 +68,7 @@ function mod:OnRegister()
 	-- Kel'Thuzad v2
 	local f = CreateFrame("Frame")
 	local func = function()
-		if mod:IsEnabled() or not canEnable then return end
-		if GetSubZoneText() == L["enable_zone"] then
+		if not mod:IsEnabled() and canEnable and GetSubZoneText() == L["enable_zone"] then
 			mod:Enable()
 		end
 	end

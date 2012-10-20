@@ -8,7 +8,7 @@ might want to try and report people with debuff closest to totem when it is abou
 --
 
 local mod, CL = BigWigs:NewBoss("Gara'jal the Spiritbinder", 896, 682)
-mod:RegisterEnableMob(60143)
+mod:RegisterEnableMob(60143, 60385) -- Gara'jal, Zandalari War Wyvern
 
 local voodooDollList = mod:NewTargetList()
 local totemCounter, shadowCounter = 1, 2

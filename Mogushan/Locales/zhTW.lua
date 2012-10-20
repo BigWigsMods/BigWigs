@@ -26,6 +26,6 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "zhTW")
 if L then
-
+	L.enable_zone = DUNGEON_FLOOR_MOGUSHANVAULTS3 -- translate me
 end
 

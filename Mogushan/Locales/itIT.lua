@@ -47,7 +47,7 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
 if L then
-	L.enable_zone = "Forge of the Endless"
+	L.enable_zone = DUNGEON_FLOOR_MOGUSHANVAULTS3 -- translate me
 
 	L.rage_trigger = "Rabbia dell'Imperatore echeggia tra le colline."
 	L.strength_trigger = "Forza dell'Imperatore appare nelle alcove!"

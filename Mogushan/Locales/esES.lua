@@ -60,10 +60,10 @@ end
 L = BigWigs:NewBossLocale("Will of the Emperor", "esES") or BigWigs:NewBossLocale("Will of the Emperor", "esMX")
 if L then
 	L.enable_zone = "Forja del Infinito"
-	
+
 	L.energizing = "¡%s se está energizando!"
 	L.combo = "%s: combo en progreso"
-	
+
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "¡La máquina vuelve a la vida! ¡Baja el nivel inferior!" -- The machine hums to life!  Get to the lower level!
 
