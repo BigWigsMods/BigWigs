@@ -15,12 +15,12 @@ if L then
 	L.phase_lightning_trigger = "О, великий дух! Даруй мне силу земли!"
 	L.phase_flame_trigger = "О, превозносимый! Моими руками ты отделишь их плоть от костей!"
 	L.phase_arcane_trigger =  "О, великий мыслитель! Да снизойдет на меня твоя древняя мудрость!"
-	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!" -- Needs review
+	L.phase_shadow_trigger = "Великие души защитников! Охраняйте меня!"
 
-	L.phase_lightning = "Фаза молний!"
-	L.phase_flame = "Фаза огня!"
-	L.phase_arcane = "Фаза тайной магии!"
-	L.phase_shadow = "Фаза тьмы!"
+	L.phase_lightning = "Фаза молний"
+	L.phase_flame = "Фаза огня"
+	L.phase_arcane = "Фаза тайной магии"
+	L.phase_shadow = "Фаза тьмы"
 
 	L.shroud_message = "%2$s вешает Покров на %1$s"
 	L.barrier_message = "Барьер АКТИВЕН!"
@@ -67,7 +67,7 @@ if L then
 	L.energizing = "%s наполняется энергией!"
 	L.combo = "%s: череда ударов"
 
-	L.heroic_start_trigger = "Destroying the pipes" -- Needs review
+	L.heroic_start_trigger = "Трубы разрушены"
 	L.normal_start_trigger = "Машина гудит"
 
 	L.rage_trigger = "Ярость Императора эхом звучит среди холмов."
