@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("The Stone Guard", 896, 679)
 if not mod then return end
-mod:RegisterEnableMob(60051, 60043, 59915) --Cobalt Jade Jasper
+mod:RegisterEnableMob(60051, 60047, 60043, 59915) -- Cobalt, Amethyst, Jade, Jasper
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -56,13 +56,11 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 60051) -- they share HP
+	self:Death("Deaths", 60051, 60047, 60043, 59915)
 end
 
 function mod:OnEngage(diff)
-
 	self:Berserk(420) -- assume
-
 end
 
 --------------------------------------------------------------------------------
@@ -123,6 +121,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, 116036, "Alert") -- red
 	elseif spellId == 116057 then -- amethyst
 		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, 116057, "Alert") -- purple
+	end
+end
+
+do
+	local count = 0
+	function mod:Deaths()
+		count = count + 1
+		if count > 2 then
+			self:Win()
+		end
 	end
 end
 
