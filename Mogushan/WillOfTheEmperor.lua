@@ -101,7 +101,6 @@ function mod:OnBossEnable()
 	-- Bosses
 	self:Emote("Bosses", L["bosses_trigger"])
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:RegisterEvent("UNIT_POWER")
 
 	--Titan Gas
 	self:Emote("TitanGas", L["gas_trigger"])
@@ -121,6 +120,7 @@ function mod:OnEngage()
 	self:Berserk(785) -- this is from heroic trigger
 	strengthCounter = 0
 	gasCounter = 0
+	self:RegisterEvent("UNIT_POWER_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -209,9 +209,9 @@ do
 		end
 	end
 
-	function mod:UNIT_POWER(_, unitId)
+	function mod:UNIT_POWER_FREQUENT(_, unitId)
 		--they build power until 20, use 4 power (2 on heroic) an action until they're back at 0, then repeat
-		if unitId:match("boss%d") and UnitIsUnit("target", unitId) and UnitPower(unitId) == 17 and comboCounter > 0 then
+		if UnitIsUnit("target", unitId) and unitId:find("boss", nil, true) and UnitPower(unitId) == 17 and comboCounter > 0 then
 			comboCounter = 0
 			local boss = UnitName(unitId)
 			self:LocalMessage("arc", CL["soon"]:format(CL["other"]:format(boss, combo)), "Personal", 116835, "Long")
