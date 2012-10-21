@@ -211,12 +211,6 @@ function mod:ShieldRemoved()
 	self:Message(117961, L["shield_removed"], "Positive", 117961, "Info")
 end
 
-	60701, 61421, -- Zian of the Endless Shadows
-	60708, 61429, -- Meng the Demented
-	60709, 61423, -- Qiang the Merciless
-	60710, 61427 -- Subetai the Swift
-
-
 function mod:EngageCheck()
 	for i=1, 5 do
 		local unitId = ("boss%d"):format(i)
