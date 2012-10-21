@@ -45,7 +45,7 @@ function mod:GetOptions()
 		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"},   -- qiang
 		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- zian
 		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- subetai
-		"ej:5835", 117708, -- meng
+		"ej:5835", 117756, 117708, -- meng
 		"proximity", "casting_shields", "berserk", "bosskill",
 	}, {
 		["ej:5841"] = qiang,
