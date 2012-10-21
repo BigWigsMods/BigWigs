@@ -3,6 +3,7 @@ if not L then return end
 if L then
 	L.petrifications = "Pietrificazione"
 	L.petrifications_desc = "Avvertimento quando il boss comincia la pietrificazione"
+
 	L.overload = "Sovraccarico"
 	L.overload_desc = "Avviso per tutti i tipi di Sovraccarico."
 end

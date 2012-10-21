@@ -20,8 +20,6 @@ if L then
 	L.overload = "Overload" -- maybe should use a spellId that says exactly "Overload"
 	L.overload_desc = "Warning for all types of overloads."
 	L.overload_icon = 77222 -- overload like icon
-
-	L.jasper_removed = "Jasper Chains REMOVED"
 end
 L = mod:GetLocale()
 
@@ -85,15 +83,14 @@ do
 		end
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(jasperChains, 0.1, spellName)
+			self:ScheduleTimer(jasperChains, 0.2, spellName)
 		end
 	end
-end
-
-function mod:JasperChainsRemoved(player, spellId)
-	if UnitIsUnit("player", player) then
-		self:LocalMessage(spellId, L["jasper_removed"], "Personal", spellId)
-		self:CloseProximity(spellId)
+	function mod:JasperChainsRemoved(player, spellId, _, _, spellName)
+		if UnitIsUnit("player", player) then
+			self:LocalMessage(spellId, CL["over"]:format(spellName), "Personal", spellId)
+			self:CloseProximity(spellId)
+		end
 	end
 end
 

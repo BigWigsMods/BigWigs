@@ -6,8 +6,6 @@ if L then
 
 	L.overload = "Overload" -- maybe should use a spellId that says exactly "Overload"
 	L.overload_desc = "Warning for all types of overloads."
-
-	L.jasper_removed = "Jasper Chains REMOVED"
 end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "zhCN")

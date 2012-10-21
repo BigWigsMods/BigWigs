@@ -3,9 +3,9 @@ if not L then return end
 if L then
 	L.petrifications = "Petrificação"
 	L.petrifications_desc = "Avisa quando o chefe vai petrificar"
+
 	L.overload = "Sobrecarregar"
 	L.overload_desc = "Avisa todos os tipos de sobrecarregamento."
-
 end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "ptBR")
