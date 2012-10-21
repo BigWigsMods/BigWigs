@@ -15,7 +15,7 @@ mod:RegisterEnableMob(
 -- Locales
 --
 
-local annihilate, flankingOrders, pillage, cowardice = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756))
+local annihilate, flankingOrders, pillage, cowardice, maddening = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756)), (GetSpellInfo(117708))
 local imperviousShield, shieldOfDarkness, sleightOfHand = (GetSpellInfo(117961)), (GetSpellInfo(117697)), (GetSpellInfo(118162))
 local meng, qiang, subetai, zian = (EJ_GetSectionInfo(5835)), (EJ_GetSectionInfo(5841)), (EJ_GetSectionInfo(5846)), (EJ_GetSectionInfo(5852)) -- bosses
 local undyingShadows = (EJ_GetSectionInfo(5853))
