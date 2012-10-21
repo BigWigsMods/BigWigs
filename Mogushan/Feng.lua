@@ -185,11 +185,16 @@ end
 do
 	local resonance = GetSpellInfo(33657)
 	local markUsedOn = nil
+	local resonanceTargets = mod:NewTargetList()
+	local function warnResonance(spellId)
+		mod:TargetMessage(spellId, resonance, resonanceTargets, "Urgent", spellId, "Alert")
+	end
 	function mod:ArcaneResonanceApplied(player, spellId)
-		self:TargetMessage(spellId, resonance, player, "Urgent", spellId, "Alert")
+		resonanceTargets[#resonanceTargets + 1] = player
 		if not markUsedOn then
 			self:PrimaryIcon(spellId, player)
 			markUsedOn = player
+			self:ScheduleTimer(warnResonance, 0.2, spellId)
 		else
 			self:SecondaryIcon(spellId, player)
 		end
