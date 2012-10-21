@@ -211,13 +211,19 @@ function mod:ShieldRemoved()
 	self:Message(117961, L["shield_removed"], "Positive", 117961, "Info")
 end
 
+	60701, 61421, -- Zian of the Endless Shadows
+	60708, 61429, -- Meng the Demented
+	60709, 61423, -- Qiang the Merciless
+	60710, 61427 -- Subetai the Swift
+
+
 function mod:EngageCheck()
 	for i=1, 5 do
 		local unitId = ("boss%d"):format(i)
 		if UnitExists(unitId) then
 			local id = self:GetCID(UnitGUID(unitId))
 			-- this is needed because of heroic
-			if id == 60709 and not bossActivated[60709] then -- qiang
+			if (id == 60709 or id == 61423) and not bossActivated[60709] then -- qiang
 				bossActivated[60709] = true
 				if self:Heroic() then
 					self:Bar(117961, imperviousShield, 40, 117961)
@@ -225,14 +231,14 @@ function mod:EngageCheck()
 				self:Bar(119521, annihilate, 10, 119521)
 				self:Bar(117910, flankingOrders, 26, 117910)
 				self:Message("ej:5841", qiang, "Positive", 117920)
-			elseif id == 60701 and not bossActivated[60701] then -- zian
+			elseif (id == 60701 or id == 61421) and not bossActivated[60701] then -- zian
 				bossActivated[60701] = true
 				if self:Heroic() then
 					self:Bar(117697, shieldOfDarkness, 40, 117697)
 				end
 				self:OpenProximity(8)
 				self:Message("ej:5852", zian, "Positive", 117628)
-			elseif id == 60710 and not bossActivated[60710] then -- subetai
+			elseif (id == 60710 or id == 61427) and not bossActivated[60710] then -- subetai
 				bossActivated[60710] = true
 				if self:Heroic() then
 					self:Bar(118162, sleightOfHand, 40, 118162)
@@ -240,7 +246,7 @@ function mod:EngageCheck()
 				self:OpenProximity(8)
 				self:Bar(118047, pillage, 26, 118047)
 				self:Message("ej:5846", subetai, "Positive", 118122)
-			elseif id == 60708 and not bossActivated[60708] then
+			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then
 				bossActivated[60708] = true
 				self:Bar(117708, maddening, 21, 117708)
 				self:Message("ej:5835", meng, "Positive", 117833)
