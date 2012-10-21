@@ -128,7 +128,7 @@ function mod:UNIT_POWER_FREQUENT(_, unitId)
 end
 
 function mod:MaddeningShout(_, _, _, _, spellName)
-	self:Message(117708, spellName, "Urgent", 119521, "Alarm")
+	self:Message(117708, spellName, "Urgent", 117708, "Alarm")
 	if isBossActiveById(60708) then
 		self:Bar(117708, "~"..spellName, 45, 117708)
 	else
