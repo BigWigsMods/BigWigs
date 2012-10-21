@@ -203,7 +203,7 @@ end
 function mod:Shield(_, _, _, _, spellName)
 	self:Message(117961, spellName, "Important", 117961, "Alert")
 	self:Bar(117961, spellName, 42, 117961)
-	self:Bar("casting_shields", CL["cast"]:format(spellname), 2, 117961)
+	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, 117961)
 	self:FlashShake(117961)
 end
 
