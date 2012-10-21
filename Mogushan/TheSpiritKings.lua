@@ -139,7 +139,7 @@ end
 function mod:ShieldofDarkness(_, _, _, _, spellName)
 	self:Message(117697, spellName, "Important", 117697, "Alert")
 	self:Bar(117697, spellName.."~", 42.5, 117697)
-	self:Bar("casting_shields", CL["cast"]:format(spellname), 2, 117697)
+	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, 117697)
 	self:FlashShake(117697)
 end
 
