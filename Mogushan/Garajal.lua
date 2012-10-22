@@ -67,6 +67,7 @@ end
 function mod:OnEngage()
 	totemCounter, shadowCounter = 1, 1
 	self:Bar(116174, L["totem"]:format(totemCounter), self:Heroic() and 20 or 30, 116174)
+	self:Bar(116272, L["banish_message"], 65, 116272)
 	if not self:LFR() then
 		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
 		self:Berserk(360)
@@ -157,7 +158,7 @@ function mod:Banishment(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:Bar(spellId, CL["you"]:format(spellName), 30, spellId)
 	end
-	self:Bar(spellId, L["banish_message"], 75, spellId)
+	self:Bar(spellId, L["banish_message"], 65, spellId)
 	if self:Tank() then
 		self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", player)
 	end
