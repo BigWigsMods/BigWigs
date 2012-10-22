@@ -6,6 +6,8 @@ if L then
 
 	L.overload = "Surcharge"
 	L.overload_desc = "Prévient de l'arrivée de chaque type de surcharge."
+
+	L.jasper_removed = "Chaînes de jaspe ENLEVÉES"
 end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "frFR")
@@ -40,7 +42,7 @@ if L then
 
 	L.totem = "Totem %d"
 	L.shadowy_message = "Attaque %d"
-	L.banish_message = "Tank Banished"
+	L.banish_message = "Tank banni"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "frFR")
@@ -56,7 +58,7 @@ if L then
 	L.overcharged_total_annihilation = "Vous avez (%d) %s, réinitialisez votre affaiblissement !"
 
 	L.floor = "Disparition du sol"
-	L.floor_desc = "Warnings for when the floor is about to despawn."
+	L.floor_desc = "Prévient quand le sol est sur le point de s'effondrer."
 	L.floor_message = "Le sol est en train de s'effondrer !"
 end
 
@@ -74,6 +76,8 @@ if L then
 	L.strength_trigger = "La Force de l'empereur apparaît dans les alcôves !" -- à vérifier
 	L.courage_trigger = "Le Courage de l'empereur apparaît dans les alcôves !" -- à vérifier
 	L.bosses_trigger = "Deux assemblages titanesques apparaissent dans les grandes alcôves !" -- à vérifier
+	L.gas_trigger = "The Ancient Mogu Machine breaks down!" -- à traduire
+	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!" -- à traduire
 
 	L.arc_desc = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
