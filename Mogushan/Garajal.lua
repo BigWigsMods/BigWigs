@@ -1,8 +1,4 @@
---[[ TO DO
 
-might want to try and report people with debuff closest to totem when it is about to die
-
---]]
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -10,8 +6,7 @@ might want to try and report people with debuff closest to totem when it is abou
 local mod, CL = BigWigs:NewBoss("Gara'jal the Spiritbinder", 896, 682)
 mod:RegisterEnableMob(60143, 60385) -- Gara'jal, Zandalari War Wyvern
 
-local voodooDollList = mod:NewTargetList()
-local totemCounter, shadowCounter = 1, 2
+local totemCounter, shadowCounter = 1, 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,12 +16,16 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_yell = "It be dyin' time, now!"
 
-	L.totem = "Totem"
-	L.frenzy = "Frenzy soon!"
+	L.totem = "Totem %d"
 
-	L.shadowy = "Shadowy Attack" -- Singular not plural
-	L.shadowy_desc = select(2, EJ_GetSectionInfo(6698))
+	L.frenzy, L.frenzy_desc = EJ_GetSectionInfo(5759)
+	L.frenzy_icon = 117752
+
+	L.shadowy, L.shadowy_desc = EJ_GetSectionInfo(6698)
 	L.shadowy_icon = 117222
+	L.shadowy_message = "Attack %d"
+
+	L.banish_message = "Tank Banished"
 end
 L = mod:GetLocale()
 
@@ -37,11 +36,11 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		122151, 116174, 116272, 116161,
-		"ej:5759",
+		"frenzy",
 		"shadowy", "berserk", "bosskill",
 	}, {
 		[122151] = CL["phase"]:format(1),
-		["ej:5759"] = CL["phase"]:format(2),
+		frenzy = CL["phase"]:format(2),
 		shadowy = "general",
 	}
 end
@@ -52,7 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "VoodooDollsRemoved", 122151) -- Used in 3rd party modules
 	self:Log("SPELL_CAST_SUCCESS", "SpiritTotem", 116174)
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
-	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161)
+	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161, 116260) -- Norm/Hc, LFR
 
 	self:AddSyncListener("DollsApplied")
 	self:AddSyncListener("DollsRemoved")
@@ -66,10 +65,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	totemCounter, shadowCounter = 1, 2
-	self:Bar(116174, L["totem"], self:Heroic() and 20 or 36, 116174)
+	totemCounter, shadowCounter = 1, 1
+	self:Bar(116174, L["totem"]:format(totemCounter), self:Heroic() and 20 or 30, 116174)
 	if not self:LFR() then
-		self:Bar("shadowy", ("%s 1"):format(L["shadowy"]), 6.7, 117222)
+		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
 		self:Berserk(360)
 	end
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
@@ -84,7 +83,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 		if spellId == 116964 then
 			self:Sync("Totem") -- LFR only, no combat log event for some reason
 		elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and not self:LFR() then
-			self:Bar("shadowy", ("%s %d"):format(L["shadowy"], shadowCounter), 8.3, 117222)
 			self:Sync("Shadowy")
 		end
 	end
@@ -92,6 +90,7 @@ end
 
 do
 	local voodooDoll = GetSpellInfo(122151)
+	local voodooDollList = mod:NewTargetList()
 	function mod:OnSync(sync, rest)
 		if sync == "DollsApplied" and rest then
 			for player in string.gmatch(rest, "%S+") do
@@ -99,11 +98,12 @@ do
 			end
 			self:TargetMessage(122151, voodooDoll, voodooDollList, "Important", 122151)
 		elseif sync == "Totem" then
-			self:Message(116174, ("%s (%d)"):format(L["totem"], totemCounter), "Attention", 116174)
+			self:Message(116174, L["totem"]:format(totemCounter), "Attention", 116174)
 			totemCounter = totemCounter + 1
-			self:Bar(116174, ("%s (%d)"):format(L["totem"], totemCounter), self:Heroic() and 20 or 36, 116174)
+			self:Bar(116174, L["totem"]:format(totemCounter), self:Heroic() and 20 or 30, 116174)
 		elseif sync == "Shadowy" then
 			shadowCounter = shadowCounter + 1
+			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
 		end
 	end
 end
@@ -153,17 +153,13 @@ function mod:SpiritTotem()
 	self:Sync("Totem")
 end
 
-do
-	local function fireNext(spellName)
-		mod:Bar(116272, spellName, 35, 116272)
+function mod:Banishment(player, spellId, _, _, spellName)
+	if UnitIsUnit("player", player) then
+		self:Bar(spellId, CL["you"]:format(spellName), 30, spellId)
 	end
-	function mod:Banishment(player, spellId, _, _, spellName)
-		-- maybe this should be a tank only warning
-		if UnitIsUnit("player", player) then
-			self:Bar(116272, CL["you"]:format(spellName), 30, spellId) -- this is rather soul sever, but not sure if timer starts exactly when banishment starts
-		end
-		self:ScheduleTimer(fireNext, 30, spellName)
-		self:TargetMessage(116272, spellName, player, "Urgent", spellId)  -- maybe this should be just :Message with a sound, so the other tank gets sound notification too
+	self:Bar(spellId, L["banish_message"], 75, spellId)
+	if self:Tank() then
+		self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", player)
 	end
 end
 
@@ -171,14 +167,16 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 25 then -- phase starts at 20
-			self:Message("ej:5759", L["frenzy"], "Positive", 55663, "Info") -- the corrent icon
+			self:Message("frenzy", CL["soon"]:format(L["frenzy"]), "Positive", L["frenzy_icon"], "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
 end
 
 function mod:Frenzy()
-	self:Message("ej:5759", CL["phase"]:format(2), "Positive", 117752, "Long")
-	self:SendMessage("BigWigs_StopBar", self, L["totem"])
+	self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
+	if not self:LFR() then
+		self:SendMessage("BigWigs_StopBar", self, L["totem"]:format(totemCounter))
+	end
 end
 

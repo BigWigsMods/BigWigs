@@ -38,9 +38,9 @@ L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "ptBR")
 if L then
 	L.engage_yell = "É hora de morrer!"
 
-	L.totem = "Totem"
-	L.frenzy = "Frênesi iminente!"
-	L.shadowy = "Ataque Sombrio"
+	L.totem = "Totem %d"
+	L.shadowy_message = "Ataque %d"
+	L.banish_message = "Tank Banished"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ptBR")

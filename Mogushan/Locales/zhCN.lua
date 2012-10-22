@@ -38,10 +38,9 @@ L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhCN")
 if L then
 	L.engage_yell = "死亡时间到！"
 
-	L.totem = "Totem"
-	L.frenzy = "Frenzy soon!"
-
-	L.shadowy = "Shadowy Attack" -- Singular not plural
+	L.totem = "Totem %d"
+	L.shadowy_message = "Attack %d"
+	L.banish_message = "Tank Banished"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhCN")
