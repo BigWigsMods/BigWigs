@@ -424,7 +424,7 @@ function loader:ZoneChanged()
 	end
 	local id = GetCurrentMapAreaID()
 	-- Always load content in an instance, otherwise require a group (world bosses)
-	if enableZones[id] and (inside or enableZones[id] <= grouped) then
+	if enableZones[id] and (inside or (grouped and enableZones[id] <= grouped)) then
 		if load(BigWigs, "BigWigs_Core") then
 			if BigWigs:IsEnabled() and loadOnZone[id] then
 				loadZone(id)
