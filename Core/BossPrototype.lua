@@ -29,7 +29,6 @@ local emoteMap = setmetatable({}, metaMap)
 local deathMap = setmetatable({}, metaMap)
 local icons = setmetatable({}, {__index =
 	function(self, key)
-		if not key then return end
 		local _, value
 		if type(key) == "number" then
 			_, _, value = GetSpellInfo(key)
@@ -486,7 +485,7 @@ end
 
 function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
 	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icons[icon])
+	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icon and icons[icon])
 end
 
 do
@@ -523,10 +522,10 @@ do
 			if stack then
 				text = format(text, coloredNames[player], stack)
 			else
-				text = format(text, coloredNames[player])
+				text = format(L["other"], text, coloredNames[player])
 			end
 		end
-		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
+		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon and icons[icon])
 	end
 
 	function boss:TargetMessage(key, spellName, player, color, icon, sound, ...)
@@ -536,15 +535,15 @@ do
 			wipe(player)
 			if not (list):find(UnitName("player")) then sound = nil end
 			local text = format(L["other"], spellName, list)
-			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icons[icon])
+			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icon and icons[icon])
 		else
 			if UnitIsUnit(player, "player") then
 				if ... then
 					local text = format(spellName, coloredNames[player], ...)
-					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icons[icon])
+					self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon and icons[icon])
 					self:SendMessage("BigWigs_Message", self, key, text, nil, nil, nil, true)
 				else
-					self:SendMessage("BigWigs_Message", self, key, format(L["you"], spellName), "Personal", true, sound, nil, icons[icon])
+					self:SendMessage("BigWigs_Message", self, key, format(L["you"], spellName), "Personal", true, sound, nil, icon and icons[icon])
 					self:SendMessage("BigWigs_Message", self, key, format(L["other"], spellName, player), nil, nil, nil, true)
 				end
 			else
@@ -556,7 +555,7 @@ do
 				else
 					text = format(L["other"], spellName, coloredNames[player])
 				end
-				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icons[icon])
+				self:SendMessage("BigWigs_Message", self, key, text, color, nil, nil, nil, icon and icons[icon])
 			end
 		end
 	end
@@ -580,7 +579,7 @@ end
 
 function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
 	if checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, text, length, icons[icon], ...)
+		self:SendMessage("BigWigs_StartBar", self, key, text, length, icon and icons[icon], ...)
 	end
 end
 
