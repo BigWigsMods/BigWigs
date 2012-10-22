@@ -257,16 +257,16 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	if spellId == 118219 and unitId:match("boss") then -- Cancel Activation
 		local id = self:GetCID(UnitGUID(unitId))
-		if id == 60709 then -- qiang
+		if (id == 60709 or id == 61423) then -- qiang
 			self:SendMessage("BigWigs_StopBar", self, annihilate)
 			self:SendMessage("BigWigs_StopBar", self, imperviousShield)
 			self:Bar(117910, flankingOrders, 30, 117910)
-		elseif id == 60701 then -- zian
+		elseif (id == 60701 or id == 61421) then -- zian
 			self:SendMessage("BigWigs_StopBar", self, shieldOfDarkness)
 			if isBossActiveById(60710) then -- don't close if subetai is active
 				self:CloseProximity()
 			end
-		elseif id == 60710 then -- subetai
+		elseif (id == 60710 or id == 61427) then -- subetai
 			self:SendMessage("BigWigs_StopBar", self, sleightOfHand)
 			self:SendMessage("BigWigs_StopBar", self, volley)
 			self:SendMessage("BigWigs_StopBar", self, pinnedDown)
@@ -274,7 +274,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 			if isBossActiveById(60701) then -- don't close if zian is active
 				self:CloseProximity()
 			end
-		elseif id == 60708 then -- meng
+		elseif (id == 60708 or id == 61429) then -- meng
 			self:Bar(117708, maddening, 30, 117708)
 		end
 	end
