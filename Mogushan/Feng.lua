@@ -113,13 +113,28 @@ function mod:NullificationBarrier(_, spellId)
 	self:Bar(spellId, L["barrier_message"], 6, spellId)
 end
 
--- LIGHTNING
 do
-	local epicenter = GetSpellInfo(116018)
-	function mod:LightningPhase()
-		self:Message("stages", L["phase_lightning"], "Positive", 116363)
-		self:Bar(116018, "~"..epicenter, 32, 116018)
+	local msgTbl = {
+		[131788] = L["lash_message"],
+		[116942] = L["spear_message"],
+		[131790] = L["shock_message"],
+		[131792] = L["burn_message"],
+	}
+	function mod:TankAlerts(player, spellId, _, _, _, stack)
+		if self:Tank() then
+			stack = stack or 1
+			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, stack > 2 and "Info" or nil, player, stack)
+		end
 	end
+end
+
+--------------------------------------------------------------------------------
+-- LIGHTNING
+--
+
+function mod:LightningPhase()
+	self:Message("stages", L["phase_lightning"], "Positive", 116363)
+	self:Bar(116018, "~"..self:SpellName(116018), 32, 116018) -- Epicenter
 end
 
 function mod:LightningFists(_, spellId, _, _, spellName)
@@ -132,19 +147,19 @@ function mod:Epicenter(_, spellId, _, _, spellName)
 	self:Bar(spellId, spellName, 30, spellId)
 end
 
+--------------------------------------------------------------------------------
 -- FLAME
-do
-	local drawflame = GetSpellInfo(116711)
-	function mod:FlamePhase()
-		self:Message("stages", L["phase_flame"], "Positive", 116363)
-		self:Bar(116711, "~"..drawflame, 35, 116711)
-		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(116018))) -- Epicenter
-		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(116157))) -- Fists
-	end
+--
+
+function mod:FlamePhase()
+	self:Message("stages", L["phase_flame"], "Positive", 116363)
+	self:Bar(116711, "~"..self:SpellName(116711), 35, 116711) -- Draw Flame
+	self:SendMessage("BigWigs_StopBar", self, self:SpellName(116018)) -- Epicenter
+	self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(116157)) -- Fists
 end
 
 do
-	local wildfire = GetSpellInfo(116793)
+	local wildfire = mod:SpellName(116793)
 	function mod:WildfireSparkApplied(player, spellId)
 		self:TargetMessage(spellId, wildfire, player, "Urgent", spellId, "Alert")
 		self:PrimaryIcon(spellId, player)
@@ -176,18 +191,18 @@ function mod:DrawFlame(_, spellId, _, _, spellName)
 	self:Bar(spellId, "~"..spellName, 35, spellId)
 end
 
+--------------------------------------------------------------------------------
 -- ARCANE
-do
-	local arcanevelocity = GetSpellInfo(116364)
-	function mod:ArcanePhase()
-		self:Message("stages", L["phase_arcane"], "Positive", 116363)
-		self:DelayedMessage(116364, 10, CL["soon"]:format(arcanevelocity), "Attention")
-		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(116711))) -- Draw flame
-	end
+--
+
+function mod:ArcanePhase()
+	self:Message("stages", L["phase_arcane"], "Positive", 116363)
+	self:DelayedMessage(116364, 10, CL["soon"]:format(self:SpellName(116364)), "Attention") -- Arcane Velocity
+	self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(116711)) -- Draw flame
 end
 
 do
-	local resonance = GetSpellInfo(33657)
+	local resonance = mod:SpellName(33657)
 	local markUsedOn = nil
 	local resonanceTargets = mod:NewTargetList()
 	local function warnResonance(spellId)
@@ -227,34 +242,18 @@ function mod:ArcaneVelocity(_, spellId, _, _, spellName)
 	self:DelayedMessage(spellId, 25.5, CL["soon"]:format(spellName), "Attention")
 end
 
--- SHADOW
-do
-	local siphoningShield = GetSpellInfo(118071)
-	function mod:ShadowPhase()
-		self:Bar(118071, "~"..siphoningShield, 4, 118071)
-	end
-end
+--------------------------------------------------------------------------------
+-- SHADOW (HEROIC)
+--
 
+function mod:ShadowPhase()
+	self:Bar(118071, "~"..self:SpellName(118071), 4, 118071) -- Siphoning Shield
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 	if spellId == 117203 and unit == "boss1" then
 		self:Message(118071, spellName, "Important", 118071, "Alarm")
 		self:Bar(118071, "~"..spellName, 35, 118071)
-	end
-end
-
-do
-	local msgTbl = {
-		[131788] = L["lash_message"],
-		[116942] = L["spear_message"],
-		[131790] = L["shock_message"],
-		[131792] = L["burn_message"],
-	}
-	function mod:TankAlerts(player, spellId, _, _, _, stack)
-		if self:Tank() then
-			stack = stack or 1
-			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, stack > 2 and "Info" or nil, player, stack)
-		end
 	end
 end
 
