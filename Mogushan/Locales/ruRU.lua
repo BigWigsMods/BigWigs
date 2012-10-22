@@ -45,7 +45,7 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ruRU")
 if L then
-	L.shield_removed = "Щит убран!"
+	L.shield_removed = "Щит убран! (%s)"
 	L.casting_shields = "Наложение щита"
 	L.casting_shields_desc = "Предупреждать, когда вешается щит для всех боссов"
 end

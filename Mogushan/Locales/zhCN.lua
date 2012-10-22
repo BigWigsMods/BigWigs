@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhCN")
 if L then
-	L.shield_removed = "Shield removed!"
+	L.shield_removed = "Shield removed! (%s)"
 	L.casting_shields = "Casting shields"
 	L.casting_shields_desc = "Warning for when shields are casted for all bosses"
 end

@@ -36,7 +36,7 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "itIT")
 if L then
-	L.shield_removed = "Scudo Rimosso!"
+	L.shield_removed = "Scudo Rimosso! (%s)"
 end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")

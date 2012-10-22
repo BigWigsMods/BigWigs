@@ -44,7 +44,7 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "esES") or BigWigs:NewBossLocale("The Spirit Kings", "esMX")
 if L then
-	L.shield_removed = "¡Escudo eliminado!"
+	L.shield_removed = "¡Escudo eliminado! (%s)"
 end
 
 L = BigWigs:NewBossLocale("Elegon", "esES") or BigWigs:NewBossLocale("Elegon", "esMX")

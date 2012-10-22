@@ -45,7 +45,7 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ptBR")
 if L then
-	L.shield_removed = "Escudo removido!"
+	L.shield_removed = "Escudo removido! (%s)"
 	L.casting_shields = "Conjurando escudos!"
 	L.casting_shields_desc = "Avisa quando os escudos são conjurados para todos os chefes."
 end

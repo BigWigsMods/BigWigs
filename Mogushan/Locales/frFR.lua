@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "frFR")
 if L then
-	L.shield_removed = "Bouclier enlevé !"
+	L.shield_removed = "Bouclier enlevé ! (%s)"
 	L.casting_shields = "Incantations de boucliers"
 	L.casting_shields_desc = "Prévient quand des boucliers sont incantés pour tous les boss."
 end
