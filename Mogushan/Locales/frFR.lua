@@ -6,8 +6,6 @@ if L then
 
 	L.overload = "Surcharge"
 	L.overload_desc = "Prévient de l'arrivée de chaque type de surcharge."
-
-	L.jasper_removed = "Chaînes de jaspe ENLEVÉES"
 end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "frFR")

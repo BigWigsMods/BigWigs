@@ -62,7 +62,7 @@ end
 --
 
 function mod:Overload(msg, boss)
-	self:Message("overload", msg:format(boss), "Important", L["overload_icon"], "Alarm")
+	self:Message("overload", msg:format(boss), "Important", L["overload_icon"], "Long")
 end
 
 do
@@ -101,7 +101,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Alert")
+			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Alarm")
 		end
 	end
 end
