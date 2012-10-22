@@ -31,6 +31,7 @@ if L then
 	-- Tanks
 	L.tank = "Tank Alerts"
 	L.tank_desc = "Tank alerts only. Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
+	L.tank_icon = "inv_shield_05"
 	L.lash_message = "%2$dx Lash on %1$s"
 	L.spear_message = "%2$dx Spear on %1$s"
 	L.shock_message = "%2$dx Shock on %1$s"
@@ -49,13 +50,13 @@ function mod:GetOptions()
 		{116784, "ICON", "FLASHSHAKE", "SAY"}, 116711,
 		{116417, "ICON", "SAY", "FLASHSHAKE", "PROXIMITY"}, 116364,
 		118071,
-		"stages", 115817, 115911, "tank", "berserk", "bosskill",
+		115817, 115911, "tank", "stages", "berserk", "bosskill",
 	}, {
 		[116157] = L["phase_lightning"],
 		[116784] = L["phase_flame"],
 		[116417] = L["phase_arcane"],
 		[118071] = L["phase_shadow"],
-		stages = "general",
+		[115817] = "general",
 	}
 end
 
@@ -137,6 +138,8 @@ do
 	function mod:FlamePhase()
 		self:Message("stages", L["phase_flame"], "Positive", 116363)
 		self:Bar(116711, "~"..drawflame, 35, 116711)
+		self:SendMessage("BigWigs_StopBar", self, (GetSpellInfo(116018))) -- Epicenter
+		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(116157))) -- Fists
 	end
 end
 
@@ -179,6 +182,7 @@ do
 	function mod:ArcanePhase()
 		self:Message("stages", L["phase_arcane"], "Positive", 116363)
 		self:DelayedMessage(116364, 10, CL["soon"]:format(arcanevelocity), "Attention")
+		self:SendMessage("BigWigs_StopBar", self, "~"..(GetSpellInfo(116711))) -- Draw flame
 	end
 end
 
@@ -249,7 +253,7 @@ do
 	function mod:TankAlerts(player, spellId, _, _, _, stack)
 		if self:Tank() then
 			stack = stack or 1
-			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, "Info", player, stack)
+			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, stack > 2 and "Info" or nil, player, stack)
 		end
 	end
 end
