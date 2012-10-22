@@ -68,13 +68,13 @@ if L then
 	L.combo = "%s : combo en cours"
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
-	L.normal_start_trigger = "La machine s'anime" -- The machine hums to life!  Get to the lower level!
+	L.normal_start_trigger = "La machine s’anime en bourdonnant"
 
-	L.rage_trigger = "La rage de l'empereur se répercute dans les collines." -- à vérifier
-	L.strength_trigger = "La Force de l'empereur apparaît dans les alcôves !" -- à vérifier
-	L.courage_trigger = "Le Courage de l'empereur apparaît dans les alcôves !" -- à vérifier
-	L.bosses_trigger = "Deux assemblages titanesques apparaissent dans les grandes alcôves !" -- à vérifier
-	L.gas_trigger = "The Ancient Mogu Machine breaks down!" -- à traduire
+	L.rage_trigger = "La rage de l'empereur se répercute dans les collines."
+	L.strength_trigger = "La Force de l'empereur apparaît dans les alcôves !"
+	L.courage_trigger = "Le Courage de l'empereur apparaît dans les alcôves !"
+	L.bosses_trigger = "Deux assemblages titanesques apparaissent dans les grandes alcôves !"
+	L.gas_trigger = "La machine mogu antique s’effondre !"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!" -- à traduire
 
 	L.arc_desc = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r " .. (select(2, EJ_GetSectionInfo(5673)))
