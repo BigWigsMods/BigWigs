@@ -300,27 +300,6 @@ do
 		end
 	end
 
-	function boss:Difficulty()
-		local _, _, diff = GetInstanceInfo()
-		return diff
-	end
-	boss.GetInstanceDifficulty = boss.Difficulty
-
-	function boss:LFR()
-		local _, _, diff = GetInstanceInfo()
-		return diff == 7
-	end
-
-	function boss:Heroic()
-		local _, _, diff = GetInstanceInfo()
-		return diff == 5 or diff == 6
-	end
-
-	function boss:GetCID(guid)
-		local creatureId = tonumber(guid:sub(7, 10), 16)
-		return creatureId
-	end
-
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
 		CombatLogClearEntries()
@@ -335,6 +314,47 @@ do
 		self:Sync("Death", self.moduleName)
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Misc utility functions
+--
+
+function boss:Difficulty()
+	local _, _, diff = GetInstanceInfo()
+	return diff
+end
+boss.GetInstanceDifficulty = boss.Difficulty
+
+function boss:LFR()
+	local _, _, diff = GetInstanceInfo()
+	return diff == 7
+end
+
+function boss:Heroic()
+	local _, _, diff = GetInstanceInfo()
+	return diff == 5 or diff == 6
+end
+
+function boss:GetCID(guid)
+	local creatureId = tonumber(guid:sub(7, 10), 16)
+	return creatureId
+end
+
+do
+	local t = {}
+	function boss:SpellName(spellId, ...)
+		if ... then
+			wipe(t)
+			for i=1, select("#", ...) do
+				local id = select(i, ...)
+				tinsert(t, spells[id])
+			end
+			return unpack(t)
+		else
+			return spells[spellId]
+		end
 	end
 end
 
