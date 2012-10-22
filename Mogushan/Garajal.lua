@@ -51,7 +51,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "VoodooDollsRemoved", 122151) -- Used in 3rd party modules
 	self:Log("SPELL_CAST_SUCCESS", "SpiritTotem", 116174)
 	self:Log("SPELL_CAST_SUCCESS", "Banishment", 116272)
+	self:Log("SPELL_AURA_REMOVED", "SoulSeverRemoved", 116278)
 	self:Log("SPELL_AURA_APPLIED", "CrossedOver", 116161, 116260) -- Norm/Hc, LFR
+	self:Log("SPELL_AURA_REMOVED", "CrossedOverRemoved", 116161, 116260)
 
 	self:AddSyncListener("DollsApplied")
 	self:AddSyncListener("DollsRemoved")
@@ -67,7 +69,7 @@ end
 function mod:OnEngage()
 	totemCounter, shadowCounter = 1, 1
 	self:Bar(116174, L["totem"]:format(totemCounter), self:Heroic() and 20 or 30, 116174)
-	self:Bar(116272, L["banish_message"], 65, 116272)
+	self:Bar(116272, L["banish_message"], self:Heroic() and 71 or 65, 116272)
 	if not self:LFR() then
 		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
 		self:Berserk(360)
@@ -150,6 +152,12 @@ function mod:CrossedOver(player, spellId, _, _, spellName)
 	end
 end
 
+function mod:CrossedOverRemoved(player, spellId, _, _, spellName)
+	if UnitIsUnit("player", player) then
+		self:SendMessage("BigWigs_StopBar", self, spellName)
+	end
+end
+
 function mod:SpiritTotem()
 	self:Sync("Totem")
 end
@@ -161,6 +169,12 @@ function mod:Banishment(player, spellId, _, _, spellName)
 	self:Bar(spellId, L["banish_message"], 65, spellId)
 	if self:Tank() then
 		self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", player)
+	end
+end
+
+function mod:SoulSeverRemoved(player)
+	if UnitIsUnit("player", player) then
+		self:SendMessage("BigWigs_StopBar", self, CL["you"]:format(self:SpellName(116272)))
 	end
 end
 
