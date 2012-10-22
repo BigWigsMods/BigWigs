@@ -39,8 +39,8 @@ if L then
 	L.engage_yell = "¡Ya es hora de morir!"
 
 	L.totem = "Totem %d"
-	L.shadowy_message = "Attack %d"
-	L.banish_message = "Tank Banished"
+	L.shadowy_message = "Ataque %d"
+	L.banish_message = "Tanque desterrado"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "esES") or BigWigs:NewBossLocale("The Spirit Kings", "esMX")
