@@ -166,7 +166,7 @@ function mod:Banishment(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:Bar(spellId, CL["you"]:format(spellName), 30, spellId)
 	end
-	self:Bar(spellId, L["banish_message"], 65, spellId)
+	self:Bar(spellId, L["banish_message"], self:Heroic() and 70 or 65, spellId)
 	if self:Tank() then
 		self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", player)
 	end
