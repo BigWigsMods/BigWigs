@@ -156,13 +156,13 @@ function mod:Strength()
 end
 
 function mod:Courage()
-	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
+	self:Message("ej:5676", CL["custom_sec"]:format(courage, 8), "Attention", 93435)
 	self:Bar("ej:5676", courage, 13, 93435) -- courage like icon
 	self:DelayedMessage("ej:5676", 11, courage, "Attention", 93435)
 end
 
 function mod:Bosses()
-	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
+	self:Message("ej:5726", CL["custom_sec"]:format(bosses, 8), "Attention", 118327)
 	self:Bar("ej:5726", bosses, 13, 118327)
 	self:DelayedMessage("ej:5726", 13, bosses, "Attention", 118327)
 	if not self:Heroic() then

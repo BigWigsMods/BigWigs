@@ -75,7 +75,7 @@ if L then
 	L.gas_trigger = "La machine mogu antique s’effondre !"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!" -- à traduire
 
-	L.combo_message = "%s: Combo soon!"
+	L.combo_message = "%s : combo imminent !"
 
 	L.arc_desc = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
