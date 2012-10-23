@@ -39,7 +39,7 @@ if L then
 
 	L.totem = "Тотем (%d)"
 	L.shadowy_message = "Атака (%d)"
-	L.banish_message = "Tank Banished"
+	L.banish_message = "Танк изгнан"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ruRU")
@@ -54,9 +54,9 @@ if L then
 	L.last_phase = "Последняя фаза"
 	L.overcharged_total_annihilation = "На вас (%d) %s, срочно сбросьте!"
 
-	L.floor = "Пол исчезает"
+	L.floor = "Исчезание пола"
 	L.floor_desc = "Предупреждать, когда пол готовится исчезнуть."
-	L.floor_message = "Пол падает!!"
+	L.floor_message = "Пол пропадает!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
@@ -73,7 +73,7 @@ if L then
 	L.gas_trigger = "Древняя машина могу ломается!"
 	L.gas_overdrive_trigger = "Древняя машина могу перегружена!"
 
-	L.combo_message = "%s: Combo soon!"
+	L.combo_message = "%s: Череда ударов скоро!"
 
 	L.arc_desc = "|cFFFF0000Это предупреждение показывается только для выбранного в цель босса.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
