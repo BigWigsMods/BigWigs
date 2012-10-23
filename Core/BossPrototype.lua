@@ -8,6 +8,7 @@ local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local GetSpellInfo = GetSpellInfo
 local format = string.format
+local type = type
 local core = BigWigs
 local C = core.C
 
@@ -599,7 +600,7 @@ end
 
 function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
 	if checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, text, length, icon and icons[icon], ...)
+		self:SendMessage("BigWigs_StartBar", self, key, type(text) == "number" and spells[text] or text, length, icon and icons[icon], ...)
 	end
 end
 
