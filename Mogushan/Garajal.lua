@@ -16,14 +16,14 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_yell = "It be dyin' time, now!"
 
-	L.totem = "Totem %d"
+	L.totem = "Totem (%d)"
 
 	L.frenzy, L.frenzy_desc = EJ_GetSectionInfo(5759)
 	L.frenzy_icon = 117752
 
 	L.shadowy, L.shadowy_desc = EJ_GetSectionInfo(6698)
 	L.shadowy_icon = 117222
-	L.shadowy_message = "Attack %d"
+	L.shadowy_message = "Attack (%d)"
 
 	L.banish_message = "Tank Banished"
 end

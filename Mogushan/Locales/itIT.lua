@@ -30,8 +30,8 @@ L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "itIT")
 if L then
 	L.engage_yell = "È giunta l'ora di schiattare!" -- From ChatLog
 
-	L.totem = "Totem %d"
-	L.shadowy_message = "Attack %d"
+	L.totem = "Totem (%d)"
+	L.shadowy_message = "Attack (%d)"
 	L.banish_message = "Tank Banished"
 end
 
