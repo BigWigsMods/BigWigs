@@ -8,6 +8,12 @@ if not mod then return end
 mod:RegisterEnableMob(60009)
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local counter, p2, p3 = 1, nil, nil
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -25,6 +31,7 @@ if L then
 	L.phase_arcane = "Arcane phase!"
 	L.phase_shadow = "(Heroic) Shadow phase!"
 
+	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s cast Shroud on %1$s"
 	L.barrier_message = "Barrier UP!"
 
@@ -62,6 +69,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+
 	self:Log("SPELL_CAST_START", "LightningFists", 116157)
 	self:Log("SPELL_CAST_START", "Epicenter", 116018)
 
@@ -95,6 +103,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	p2, p3 = nil, nil
+	counter = 1
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	self:Berserk(600)
 end
 
@@ -128,13 +139,39 @@ do
 	end
 end
 
+function mod:UNIT_HEALTH_FREQUENT(_, unitId)
+	if unitId == "boss1" then
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		--a 5% warning is like forever away from the actual transition (especially in LFR, lol)
+		if not self:Heroic() then
+			if (hp < 68 and not p2) or (hp < 35) then --66/33
+				self:Message("stages", L["phase_message"], "Positive", nil, "Info")
+				if not p2 then
+					p2 = true
+				else
+					self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+				end
+			end
+		elseif (hp < 77 and not p2) or (hp < 52 and not p3) or (hp < 27) then --75/50/25
+			self:Message("stages", L["phase_message"], "Positive", nil, "Info")
+			if not p2 then
+				p2 = true
+			elseif not p3 then
+				p3 = true
+			else
+				self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+			end
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 -- LIGHTNING
 --
 
 function mod:LightningPhase()
 	self:Message("stages", L["phase_lightning"], "Positive", 116363)
-	self:Bar(116018, "~"..self:SpellName(116018), 32, 116018) -- Epicenter
+	self:Bar(116018, "~"..("%s (%d)"):format(self:SpellName(116018), counter), 32, 116018) -- Epicenter
 end
 
 function mod:LightningFists(_, spellId, _, _, spellName)
@@ -143,8 +180,9 @@ function mod:LightningFists(_, spellId, _, _, spellName)
 end
 
 function mod:Epicenter(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, spellName, 30, spellId)
+	self:Message(spellId, ("%s (%d)"):format(spellName, counter), "Important", spellId, "Alarm")
+	counter = counter + 1
+	self:Bar(spellId, "~"..("%s (%d)"):format(spellName, counter), 30, spellId)
 end
 
 --------------------------------------------------------------------------------
@@ -153,9 +191,7 @@ end
 
 function mod:FlamePhase()
 	self:Message("stages", L["phase_flame"], "Positive", 116363)
-	self:Bar(116711, "~"..self:SpellName(116711), 35, 116711) -- Draw Flame
-	self:SendMessage("BigWigs_StopBar", self, self:SpellName(116018)) -- Epicenter
-	self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(116157)) -- Fists
+	self:Bar(116711, "~"..("%s (%d)"):format(self:SpellName(116711), counter), 35, 116711) -- Draw Flame
 end
 
 do
@@ -187,8 +223,9 @@ do
 end
 
 function mod:DrawFlame(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 35, spellId)
+	self:Message(spellId, ("%s (%d)"):format(spellName, counter), "Important", spellId, "Alarm")
+	counter = counter + 1
+	self:Bar(spellId, "~"..("%s (%d)"):format(spellName, counter), 35, spellId)
 end
 
 --------------------------------------------------------------------------------
@@ -198,7 +235,6 @@ end
 function mod:ArcanePhase()
 	self:Message("stages", L["phase_arcane"], "Positive", 116363)
 	self:DelayedMessage(116364, 10, CL["soon"]:format(self:SpellName(116364)), "Attention") -- Arcane Velocity
-	self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(116711)) -- Draw flame
 end
 
 do
@@ -237,9 +273,10 @@ do
 end
 
 function mod:ArcaneVelocity(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 28, spellId)
-	self:DelayedMessage(spellId, 25.5, CL["soon"]:format(spellName), "Attention")
+	self:Message(spellId, ("%s (%d)"):format(spellName, counter), "Important", spellId, "Alarm")
+	counter = counter + 1
+	self:Bar(spellId, "~"..("%s (%d)"):format(spellName, counter), 28, spellId)
+	self:DelayedMessage(spellId, 25.5, CL["soon"]:format(("%s (%d)"):format(spellName, counter)), "Attention")
 end
 
 --------------------------------------------------------------------------------
@@ -247,13 +284,25 @@ end
 --
 
 function mod:ShadowPhase()
-	self:Bar(118071, "~"..self:SpellName(118071), 4, 118071) -- Siphoning Shield
+	self:Bar(118071, "~"..("%s (%d)"):format(self:SpellName(118071), counter), 4, 118071) -- Siphoning Shield
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if spellId == 117203 and unit == "boss1" then
-		self:Message(118071, spellName, "Important", 118071, "Alarm")
-		self:Bar(118071, "~"..spellName, 35, 118071)
+	if unit ~= "boss1" then return end
+
+	if spellId == 117203 then -- Siphoning Shield
+		self:Message(118071, ("%s (%d)"):format(spellName, counter), "Important", 118071, "Alarm")
+		counter = counter + 1
+		self:Bar(118071, "~"..("%s (%d)"):format(spellName, counter), 35, 118071)
+	elseif spellId == 122410 then -- Throw Mainhand (end of phase)
+		--SHUT. DOWN. EVERYTHING.
+		self:CancelDelayedMessage(CL["soon"]:format(("%s (%d)"):format(self:SpellName(116364), counter)))
+		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116364), counter)) -- Arcane Velocity
+		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(118071), counter)) -- Siphoning Shield
+		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116018), counter)) -- Epicenter
+		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116157), counter)) -- Lightning Fists
+		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116711), counter)) -- Draw flame
+		counter = 1
 	end
 end
 

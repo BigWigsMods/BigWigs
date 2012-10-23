@@ -22,6 +22,7 @@ if L then
 	L.phase_arcane = "祕法階段！"
 	L.phase_shadow = "暗影階段！(英雄)"
 
+	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s 施放護罩在 %1$s"
 	L.barrier_message = "阻擋!"
 

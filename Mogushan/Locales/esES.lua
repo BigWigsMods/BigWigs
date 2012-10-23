@@ -22,6 +22,7 @@ if L then
 	L.phase_arcane = "¡Fase arcana!"
 	L.phase_shadow = "(Heroico) ¡Fase de sombras!"
 
+	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s castea Embozo en %1$s"
 	L.barrier_message = "¡Barrera Activa!"
 

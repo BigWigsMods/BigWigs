@@ -22,6 +22,7 @@ if L then
 	L.phase_arcane = "Arkanphase!"
 	L.phase_shadow = "(Heroisch) Schattenphase!"
 
+	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
 	L.barrier_message = "Nullifikationsbarriere AN!"
 

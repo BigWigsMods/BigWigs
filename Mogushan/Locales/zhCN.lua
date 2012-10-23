@@ -22,6 +22,7 @@ if L then
 	L.phase_arcane = "Arcane phase!"
 	L.phase_shadow = "(Heroic) Shadow phase!"
 
+	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s cast Shroud on %1$s"
 	L.barrier_message = "Barrier UP!"
 
