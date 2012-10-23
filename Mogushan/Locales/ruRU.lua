@@ -63,9 +63,6 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
 if L then
 	L.enable_zone = "Кузня Бесконечности"
 
-	L.energizing = "%s наполняется энергией!"
-	L.combo = "%s: череда ударов"
-
 	L.heroic_start_trigger = "Трубы разрушены"
 	L.normal_start_trigger = "Машина гудит"
 
@@ -75,6 +72,8 @@ if L then
 	L.bosses_trigger = "В больших нишах появляются два голема!"
 	L.gas_trigger = "Древняя машина могу ломается!"
 	L.gas_overdrive_trigger = "Древняя машина могу перегружена!"
+
+	L.combo_message = "%s: Combo soon!"
 
 	L.arc_desc = "|cFFFF0000Это предупреждение показывается только для выбранного в цель босса.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end

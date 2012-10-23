@@ -67,6 +67,8 @@ if L then
 	L.courage_trigger = "Der Mut des Kaisers erscheint in den Erkern!"
 	L.bosses_trigger = "In den riesigen Erkern erscheinen zwei Titanenkonstrukte!"
 
+	L.combo_message = "%s: Combo soon!"
+
 	L.arc_desc = "|cFFFF0000Diese Warnung wird nur für den Boss angezeigt, welchen du anvisierst.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 

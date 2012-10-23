@@ -23,9 +23,6 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.enable_zone = "Forge of the Endless"
 
-	L.energizing = "%s is energizing!"
-	L.combo = "%s: combo in progress"
-
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
 
@@ -35,6 +32,10 @@ if L then
 	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
+
+	L.combo, L.combo_desc = EJ_GetSectionInfo(5672)
+	L.combo_icon = 116835
+	L.combo_message = "%s: Combo soon!"
 
 	L.arc = EJ_GetSectionInfo(5673)
 	L.arc_desc = "|cFFFF0000This warning will only show for the boss you're targetting.|r " .. (select(2, EJ_GetSectionInfo(5673)))
@@ -51,7 +52,7 @@ function mod:GetOptions()
 		"ej:5678", { 116525, "FLASHSHAKE" },
 		"ej:5677",
 		"ej:5676",
-		"ej:5726", "ej:5672", "arc",
+		"ej:5726", "combo", "arc",
 		{116829, "FLASHSHAKE", "SAY"},
 		"ej:5670", "berserk", "bosskill",
 	}, {
@@ -120,7 +121,6 @@ function mod:OnEngage()
 	self:Berserk(785) -- this is from heroic trigger
 	strengthCounter = 0
 	gasCounter = 0
-	self:RegisterEvent("UNIT_POWER_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
@@ -150,9 +150,9 @@ end
 
 function mod:Strength()
 	strengthCounter = strengthCounter + 1
-	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8)..((" (%d)"):format(strengthCounter)), "Attention", 80471)
-	self:Bar("ej:5677", strength, 8, 80471) -- strength like icon
-	self:DelayedMessage("ej:5677", 8, strength, "Attention", 80471)
+	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
+	self:Bar("ej:5677", ("%s (%d)"):format(strength, strengthCounter), 8, 80471) -- strength like icon
+	self:DelayedMessage("ej:5677", 8, ("%s (%d)"):format(strength, strengthCounter), "Attention", 80471)
 end
 
 function mod:Courage()
@@ -165,7 +165,9 @@ function mod:Bosses()
 	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
 	self:Bar("ej:5726", bosses, 13, 118327)
 	self:DelayedMessage("ej:5726", 13, bosses, "Attention", 118327)
-	self:Bar("ej:5670", "~"..gas, 120, 118327) --XXX varied a bit
+	if not self:Heroic() then
+		self:Bar("ej:5670", "~"..gas, 120, 118327)
+	end
 end
 
 do
@@ -181,12 +183,10 @@ do
 end
 
 function mod:TitanGasOverdrive()
-	self:Message("ej:5670", ("%s (%s)"):format(gas, (GetSpellInfo(26662))), "Important", 118327, "Alarm") --Berserk
+	self:Message("ej:5670", ("%s (%s)"):format(gas, self:SpellName(26662)), "Important", 118327, "Alarm") --Berserk
 end
 
 do
-	local combo = EJ_GetSectionInfo(5672)
-	local comboCounter = 1
 	local arcs = {
 		[116968] = "misc_arrowleft", --arc left
 		[116971] = "misc_arrowright", --arc right
@@ -195,27 +195,29 @@ do
 		[132425] = 132425, --boss1 stomp
 		[116969] = 132425, --boss2 stomp
 	}
+	local comboCounter = {boss1 = 1, boss2 = 1}
+	local energizePrev = {boss1 = 0, boss2 = 0}
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-		if unitId == "target" then
-			local boss = UnitName(unitId)
-			if arcs[spellId] then
-				comboCounter = comboCounter + 1
-				self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter), "Urgent", arcs[spellId])
-			elseif spellId == 118365 then -- Energize 1/s
-				self:Message("ej:5672", L["energizing"]:format(boss), "Important")
-				self:Bar("ej:5672", L["energizing"]:format(boss), 20)
+		if not unitId:find("boss", nil, true) then return end
+
+		if arcs[spellId] then
+			comboCounter[unitId] = comboCounter[unitId] + 1
+			if UnitIsUnit("target", unitId) then
+				local boss = UnitName(unitId)
+				self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter[unitId]), "Urgent", arcs[spellId])
+			end
+		elseif spellId == 118365 then -- Energize
+			local t = GetTime()
+			if t-energizePrev[unitId] > 3 then
+				energizePrev[unitId] = t
+				comboCounter[unitId] = 0
+
+				local boss = UnitName(unitId)
+				self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, 118365)
+				--should probably schedule a function to check your target for the sound when it fires?
+				self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", 116835, UnitIsUnit("target", unitId) and "Long")
 			end
 		end
 	end
-
-	function mod:UNIT_POWER_FREQUENT(_, unitId)
-		--they build power until 20, use 4 power (2 on heroic) an action until they're back at 0, then repeat
-		if UnitIsUnit("target", unitId) and unitId:find("boss", nil, true) and UnitPower(unitId) == 17 and comboCounter > 0 then
-			comboCounter = 0
-			local boss = UnitName(unitId)
-			self:LocalMessage("arc", CL["soon"]:format(CL["other"]:format(boss, combo)), "Personal", 116835, "Long")
-		end
-	end
 end
-

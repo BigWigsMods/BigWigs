@@ -55,5 +55,9 @@ if L then
 	L.strength_trigger = "Forza dell'Imperatore appare nelle alcove!"
 	L.courage_trigger = "Coraggio dell'Imperatore appare nelle alcove!"
 	L.bosses_trigger = "Due costrutti titanici appaiono nelle grandi alcove!"
+
+	L.combo_message = "%s: Combo soon!"
+
+	L.arc_desc = "|cFFFF0000This warning will only show for the boss you're targetting.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 

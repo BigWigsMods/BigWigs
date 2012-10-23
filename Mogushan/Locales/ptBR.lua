@@ -68,13 +68,13 @@ if L then
 	L.strength_trigger = "A Força do Imperador prende esta terra com punhos de ferro."
 	L.courage_trigger = "A Coragem do Imperador queima eternamente."
 	L.bosses_trigger = "Dois construtos titânicos aparecem nas grandes alcovas!"
-	L.energizing = "%s está energizando!"
-	L.combo = "%s: combo em progresso"
 
 	L.heroic_start_trigger = "Destruindo os canos"
 	L.normal_start_trigger = "A máquina toma vida! Vá para o nível inferior!"
-	L.arc = EJ_GetSectionInfo(5673)
-	L.arc_desc = "|cFFFF0000Este aviso só será mostrado para o chefe que você estiver com alvo.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 	L.gas_trigger = "A Máquina Mogu Ancestral quebrou!"
+
+	L.combo_message = "%s: Combo soon!"
+
+	L.arc_desc = "|cFFFF0000Este aviso só será mostrado para o chefe que você estiver com alvo.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 

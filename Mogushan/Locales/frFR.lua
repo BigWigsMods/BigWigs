@@ -64,9 +64,6 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "frFR")
 if L then
 	L.enable_zone = "Forge des Éternels"
 
-	L.energizing = "%s s'énergise !"
-	L.combo = "%s : combo en cours"
-
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "La machine s’anime en bourdonnant"
 
@@ -76,6 +73,8 @@ if L then
 	L.bosses_trigger = "Deux assemblages titanesques apparaissent dans les grandes alcôves !"
 	L.gas_trigger = "La machine mogu antique s’effondre !"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!" -- à traduire
+
+	L.combo_message = "%s: Combo soon!"
 
 	L.arc_desc = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
