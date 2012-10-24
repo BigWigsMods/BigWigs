@@ -10,7 +10,7 @@ if not mod then return end
 -- Locals
 --
 
-local rage, strength, courage, bosses, gas = (EJ_GetSectionInfo(5678)), (EJ_GetSectionInfo(5677)), (EJ_GetSectionInfo(5676)), (EJ_GetSectionInfo(5726)), (EJ_GetSectionInfo(5670))
+local rage, strength, courage, bosses = (EJ_GetSectionInfo(5678)), (EJ_GetSectionInfo(5677)), (EJ_GetSectionInfo(5676)), (EJ_GetSectionInfo(5726))
 local gasCounter = 0
 local strengthCounter = 0
 local canEnable = true
@@ -33,15 +33,20 @@ if L then
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
+	L.target_only = "|cFFFF0000This warning will only show for the boss you are targeting.|r"
+
 	L.combo, L.combo_desc = EJ_GetSectionInfo(5672)
-	L.combo_icon = 116835
 	L.combo_message = "%s: Combo soon!"
 
-	L.arc = EJ_GetSectionInfo(5673)
-	L.arc_desc = "|cFFFF0000This warning will only show for the boss you're targetting.|r " .. (select(2, EJ_GetSectionInfo(5673)))
+	L.arc, L.arc_desc = EJ_GetSectionInfo(5673)
 	L.arc_icon = 116835
+
+	L.gas, L.gas_desc = EJ_GetSectionInfo(5670)
+	L.gas_icon = 118327
 end
 L = mod:GetLocale()
+L.combo_desc = L.target_only.." "..L.combo_desc
+L.arc_desc = L.target_only.." "..L.arc_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -54,14 +59,14 @@ function mod:GetOptions()
 		"ej:5676",
 		"ej:5726", "combo", "arc",
 		{116829, "FLASHSHAKE", "SAY"},
-		"ej:5670", "berserk", "bosskill",
+		"gas", "berserk", "bosskill",
 	}, {
 		["ej:5678"] = rage,
 		["ej:5677"] = strength,
 		["ej:5676"] = courage,
 		["ej:5726"] = bosses,
 		[116829] = "heroic",
-		["ej:5670"] = "general",
+		["gas"] = "general",
 	}
 end
 
@@ -128,9 +133,9 @@ end
 --
 
 function mod:Rage()
-	self:Message("ej:5678", CL["custom_sec"]:format(rage, 13), "Attention", 124019)
-	self:Bar("ej:5678", rage, 13, 124019) -- rage like icon
-	self:DelayedMessage("ej:5678", 13, rage, "Attention", 124019)
+	self:Message("ej:5678", CL["custom_sec"]:format(rage, 13), "Attention", 38771)
+	self:Bar("ej:5678", rage, 13, 38771) -- rage like icon
+	self:DelayedMessage("ej:5678", 13, rage, "Attention", 38771)
 end
 
 function mod:FocusedAssault(player, _, _, _, spellName)
@@ -156,34 +161,34 @@ function mod:Strength()
 end
 
 function mod:Courage()
-	self:Message("ej:5676", CL["custom_sec"]:format(courage, 8), "Attention", 93435)
-	self:Bar("ej:5676", courage, 13, 93435) -- courage like icon
-	self:DelayedMessage("ej:5676", 11, courage, "Attention", 93435)
+	self:Message("ej:5676", CL["custom_sec"]:format(courage, 13), "Attention", 126030)
+	self:Bar("ej:5676", courage, 13, 126030) -- shield like icon
+	self:DelayedMessage("ej:5676", 13, courage, "Attention", 126030)
 end
 
 function mod:Bosses()
-	self:Message("ej:5726", CL["custom_sec"]:format(bosses, 8), "Attention", 118327)
-	self:Bar("ej:5726", bosses, 13, 118327)
-	self:DelayedMessage("ej:5726", 13, bosses, "Attention", 118327)
+	self:Message("ej:5726", CL["custom_sec"]:format(strength, 13), "Attention", "achievement_moguraid_06")
+	self:Bar("ej:5726", bosses, 13, "achievement_moguraid_06")
+	self:DelayedMessage("ej:5726", 13, bosses, "Attention", "achievement_moguraid_06")
 	if not self:Heroic() then
-		self:Bar("ej:5670", "~"..gas, 120, 118327)
+		self:Bar("gas", "~"..L["gas"], 120, 118327)
 	end
 end
 
 do
 	local function fireNext()
-		mod:Bar("ej:5670", "~"..gas, 120, 118327)
+		mod:Bar("gas", "~"..L["gas"], 120, 118327)
 	end
 	function mod:TitanGas()
 		gasCounter = gasCounter + 1
 		self:ScheduleTimer(fireNext, 30)
-		self:Bar("ej:5670", gas, 30, 118327)
-		self:Message("ej:5670", ("%s (%d)"):format(gas, gasCounter), "Attention", 118327)
+		self:Bar("gas", L["gas"], 30, 118327)
+		self:Message("gas", ("%s (%d)"):format(L["gas"], gasCounter), "Attention", 118327)
 	end
 end
 
 function mod:TitanGasOverdrive()
-	self:Message("ej:5670", ("%s (%s)"):format(gas, self:SpellName(26662)), "Important", 118327, "Alarm") --Berserk
+	self:Message("gas", ("%s (%s)"):format(L["gas"], self:SpellName(26662)), "Important", 118327, "Alarm") --Berserk
 end
 
 do
@@ -213,10 +218,11 @@ do
 				energizePrev[unitId] = t
 				comboCounter[unitId] = 0
 
-				local boss = UnitName(unitId)
-				self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, 118365)
-				--should probably schedule a function to check your target for the sound when it fires?
-				self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", 116835, UnitIsUnit("target", unitId) and "Long")
+				if UnitIsUnit("target", unitId) then
+					local boss = UnitName(unitId)
+					self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, 118365)
+					self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", 116835, "Long")
+				end
 			end
 		end
 	end

@@ -52,13 +52,17 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
 if L then
 	L.enable_zone = DUNGEON_FLOOR_MOGUSHANVAULTS3 -- translate me
 
+	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
+
 	L.rage_trigger = "Rabbia dell'Imperatore echeggia tra le colline."
 	L.strength_trigger = "Forza dell'Imperatore appare nelle alcove!"
 	L.courage_trigger = "Coraggio dell'Imperatore appare nelle alcove!"
 	L.bosses_trigger = "Due costrutti titanici appaiono nelle grandi alcove!"
+	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
+	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
+	L.target_only = "|cFFFF0000This warning will only show for the boss you're targeting.|r"
 	L.combo_message = "%s: Combo soon!"
-
-	L.arc_desc = "|cFFFF0000This warning will only show for the boss you're targetting.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 

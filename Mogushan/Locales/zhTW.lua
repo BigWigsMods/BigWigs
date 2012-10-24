@@ -75,8 +75,7 @@ if L then
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
+	L.target_only = "|cFFFF0000這個警告只會顯示你設為目標的首領。|r"
 	L.combo_message = "%s: Combo soon!"
-
-	L.arc_desc = "|cFFFF0000這個警告只會顯示你設為目標的首領。|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 

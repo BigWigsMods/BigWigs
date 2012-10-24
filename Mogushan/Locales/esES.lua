@@ -73,8 +73,7 @@ if L then
 	L.gas_trigger = "¡La Antigua Máquina Mogu se rompe!"
 	L.gas_overdrive_trigger = "¡La Antigua Máquina Mogu se sobrecarga!"
 
+	L.target_only = "|cFFFF0000Este aviso solo se mostrará para el jefe que estés targeteando.|r"
 	L.combo_message = "¡%s: Combo inminente!"
-
-	L.arc_desc = "|cFFFF0000Este aviso solo se mostrará para el jefe que estés targeteando.|r " .. (select(2, EJ_GetSectionInfo(5673)))
 end
 
