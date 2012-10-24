@@ -250,6 +250,7 @@ do
 		if secondary then
 			self:SecondaryIcon(spellId, secondary)
 		end
+		wipe(tbl)
 	end
 	function mod:ArcaneResonanceApplied(player, spellId)
 		self:Bar(spellId, "~"..resonance, 15.4, spellId) --15.4 - 21.5
