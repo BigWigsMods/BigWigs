@@ -29,12 +29,12 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		--"ej:5772",
+		{"ej:5772", "SAY"},
 		130774,
 		{130395, "FLASHSHAKE", "PROXIMITY", "SAY"},
 		"overload", "petrifications", "berserk", "bosskill",
 	}, {
-		--["ej:5772"] = "ej:5771",
+		["ej:5772"] = "ej:5771",
 		[130774] = "ej:5691",
 		[130395] = "ej:5774",
 		overload = "general",
@@ -106,6 +106,38 @@ do
 	end
 end
 
+do
+	local timer, fired = nil, 0
+	local mine = mod:SpellName(129424) -- Cobalt Mine
+	local function mineWarn(unitId)
+		fired = fired + 1
+		local unitIdTarget = unitId.."target"
+		local player = UnitName(unitIdTarget)
+		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
+			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
+			mod:TargetMessage("ej:5772", mine, player, "Urgent", 129424, "Alarm")
+			mod:CancelTimer(timer, true)
+			timer = nil
+			if UnitIsUnit(unitIdTarget, "player") then
+				mod:Say("ej:5772", CL["say"]:format(mine))
+			end
+			return
+		end
+		-- 19 == 0.95sec
+		-- Safety check if the unit doesn't exist
+		if fired > 18 then
+			mod:CancelTimer(timer, true)
+			timer = nil
+		end
+	end
+	function mod:Mine(unitId)
+		fired = 0
+		if not timer then
+			timer = self:ScheduleRepeatingTimer(mineWarn, 0.05, unitId)
+		end
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	if not unitId:match("boss") then return end
 	-- we could be using the same colors as blizzard but they are too "faint" imo
@@ -117,6 +149,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		self:Message("petrifications", ("|c00FF0000%s|r"):format(spellName), nil, spellId, "Alert") -- red
 	elseif spellId == 116057 then -- amethyst
 		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, spellId, "Alert") -- purple
+	elseif spellId == 129424 then
+		self:Bar("ej:5772", spellName, 10.7, spellId)
+		self:Mine(unitId)
 	end
 end
 
