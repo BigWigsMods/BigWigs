@@ -41,7 +41,7 @@ if L then
 
 	L.totem = "Totem (%d)"
 	L.shadowy_message = "Ataque (%d)"
-	L.banish_message = "Tank Banished"
+	L.banish_message = "Tanque Banido!"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "ptBR")
@@ -56,9 +56,9 @@ if L then
 	L.last_phase = "Última Fase!"
 	L.overcharged_total_annihilation = "Você tem (%d) %s, reinicie sua penalidade!"
 
-	L.floor = "Floor Despawn"
-	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "The floor is falling!!"
+	L.floor = "O Vórtice de Energia está descarregando!"
+	L.floor_desc = "Avisa quando o chão está prestes a desaparecer."
+	L.floor_message = "O chão está desaparecendo!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ptBR")
@@ -69,13 +69,12 @@ if L then
 	L.strength_trigger = "A Força do Imperador prende esta terra com punhos de ferro."
 	L.courage_trigger = "A Coragem do Imperador queima eternamente."
 	L.bosses_trigger = "Dois construtos titânicos aparecem nas grandes alcovas!"
+	L.energizing = "%s está energizando!"
+	L.combo = "%s: combo em progresso"
 
 	L.heroic_start_trigger = "Destruindo os canos"
 	L.normal_start_trigger = "A máquina toma vida! Vá para o nível inferior!"
-	L.gas_trigger = "A Máquina Mogu Ancestral quebrou!"
-
-	L.combo_message = "%s: Combo soon!"
-
 	L.arc_desc = "|cFFFF0000Este aviso só será mostrado para o chefe que você estiver com alvo.|r " .. (select(2, EJ_GetSectionInfo(5673)))
+	L.gas_trigger = "A Máquina Mogu Ancestral quebrou!"
 end
 

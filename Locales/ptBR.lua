@@ -7,8 +7,8 @@ L.bosskill = "Chefe morto"
 L.bosskill_desc = "Avisa quando um chefe for derrotado."
 L.berserk = "Frênese"
 L.berserk_desc = "Mostra um contador de quando o chefe entrará em frênese"
-L.stages = "Stages"
-L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
+L.stages = "Estágios"
+L.stages_desc = "Habilita funções relacionadas a vários estágios/fases do chefe, como proximidade, barras, etc."
 
 L.already_registered = "|cffff0000ATENCAO:|r |cff00ff00%s|r (|cffffff00%s|r) ja existe este módulo BigWigs, isso normalmente significa que voce tem 2 cópias desse módulo em sua pasta de addons.O que pode ter sido porcausa de uma atualização mal sucedida, recomendo deletar as pastas do BigWigs e reinstalar."
 
@@ -32,7 +32,7 @@ L["No Big Wigs 3.x:"] = "Sem Big Wigs 3.x:"
 L.coreAddonDisabled = "O Big Wigs não pôde funcionar devidamente ja que o addon %s está desativado. Você pode ativálo no Painel de Controle de addons ou na tela de seleção de personagens."
 
 -- Options.lua
-L["Big Wigs Encounters"] = "Encontros Big Wigs"
+L["Big Wigs Encounters"] = "Lutas - Big Wigs"
 L["Customize ..."] = "Personalizar..."
 L["Profiles"] = "Perfis"
 L.introduction = "Bem-vindo ao Big Wigs. Coloque os cintos e pegue um lanche enquanto desfruta do passeio. De maneira não-instrusa iremos lhe preparar para esses novos encontros de chefes."
