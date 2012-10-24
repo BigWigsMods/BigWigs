@@ -22,7 +22,7 @@ if L then
 	L.phase_arcane = "Фаза тайной магии"
 	L.phase_shadow = "Фаза тьмы"
 
-	L.phase_message = "New phase soon!"
+	L.phase_message = "Новая фаза скоро!"
 	L.shroud_message = "%2$s вешает Покров на %1$s"
 	L.barrier_message = "Барьер АКТИВЕН!"
 
