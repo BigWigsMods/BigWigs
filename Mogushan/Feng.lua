@@ -238,24 +238,21 @@ function mod:ArcanePhase()
 end
 
 do
-	local scheduled = nil
-	local resonance = mod:SpellName(33657)
-	local resonanceTargets = mod:NewTargetList()
-	local tbl = {}
+	local resonance, resonanceTargets, resonanceMarkers, scheduled = mod:SpellName(33657), mod:NewTargetList(), {}, nil
 	local function warnResonance(spellId)
 		scheduled = nil
-		mod:TargetMessage(spellId, resonance, resonanceTargets, "Urgent", spellId, "Alert")
-		local primary, secondary = unpack(tbl)
-		self:PrimaryIcon(spellId, primary)
-		if secondary then
-			self:SecondaryIcon(spellId, secondary)
+		self:PrimaryIcon(spellId, resonanceMarkers[1])
+		resonanceTargets[1] = resonanceMarkers[1]
+		if resonanceMarkers[2] then
+			self:SecondaryIcon(spellId, resonanceMarkers[2])
+			resonanceTargets[2] = resonanceMarkers[2]
 		end
-		wipe(tbl)
+		mod:TargetMessage(spellId, resonance, resonanceTargets, "Urgent", spellId, "Alert")
+		wipe(resonanceMarkers)
 	end
 	function mod:ArcaneResonanceApplied(player, spellId)
 		self:Bar(spellId, "~"..resonance, 15.4, spellId) --15.4 - 21.5
-		resonanceTargets[#resonanceTargets + 1] = player
-		tinsert(tbl, player)
+		resonanceMarkers[#resonanceMarkers+1] = player
 		if UnitIsUnit("player", player) then
 			self:FlashShake(spellId)
 			self:OpenProximity(6, spellId)

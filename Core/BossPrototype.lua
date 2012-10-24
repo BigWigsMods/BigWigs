@@ -344,15 +344,15 @@ function boss:GetCID(guid)
 end
 
 do
-	local t = {}
+	local spellList = {}
 	function boss:SpellName(spellId, ...)
 		if ... then
-			wipe(t)
+			wipe(spellList)
 			for i=1, select("#", ...) do
 				local id = select(i, ...)
-				tinsert(t, spells[id])
+				spellList[#spellList+1] = spells[id]
 			end
-			return unpack(t)
+			return unpack(spellList)
 		else
 			return spells[spellId]
 		end
