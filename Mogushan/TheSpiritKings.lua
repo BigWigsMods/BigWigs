@@ -275,7 +275,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 				self:CloseProximity()
 			end
 		elseif (id == 60708 or id == 61429) then -- meng
-			self:Bar(117708, maddening, 30, 117708)
+			self:Bar(117708, "~"..maddening, 30, 117708)
 		end
 	end
 end
