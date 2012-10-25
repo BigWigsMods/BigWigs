@@ -200,14 +200,16 @@ do
 		[132425] = 132425, --boss1 stomp
 		[116969] = 132425, --boss2 stomp
 	}
-	local comboCounter = {boss1 = 1, boss2 = 1}
+	local comboCounter = {boss1 = 0, boss2 = 0}
 	local energizePrev = {boss1 = 0, boss2 = 0}
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if not unitId:find("boss", nil, true) then return end
 
+		--don't check for target until later so our counter is always correct for each boss
 		if arcs[spellId] then
 			comboCounter[unitId] = comboCounter[unitId] + 1
+
 			if UnitIsUnit("target", unitId) then
 				local boss = UnitName(unitId)
 				self:LocalMessage("arc", ("%s: %s (%d)"):format(boss, spellName, comboCounter[unitId]), "Urgent", arcs[spellId])
@@ -218,7 +220,7 @@ do
 				energizePrev[unitId] = t
 				comboCounter[unitId] = 0
 
-				if UnitIsUnit("target", unitId) then
+				if UnitIsUnit("target", unitId) or self:Healer() then
 					local boss = UnitName(unitId)
 					self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, 118365)
 					self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", 116835, "Long")
