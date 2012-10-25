@@ -1,3 +1,5 @@
+-- Translated By Kaliad @ EU-Pozzo dell'Eternità
+
 local L = BigWigs:NewBossLocale("The Stone Guard", "itIT")
 if not L then return end
 if L then
@@ -43,26 +45,26 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")
 if L then
-	L.floor = "Floor Despawn"
-	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "The floor is falling!!"
+	L.floor = "Scomparsa del Pavimento"
+	L.floor_desc = "Avviso Speciale prima che il vortice svanisca."
+	L.floor_message = "Il Pavimento sta Scomparendo!!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
 if L then
 	L.enable_zone = DUNGEON_FLOOR_MOGUSHANVAULTS3 -- translate me
 
-	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
-	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
+	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!  MANCA ANCORA QUESTO
+	L.normal_start_trigger = " La macchina si mette in moto" -- The machine hums to life!  Get to the lower level!
 
-	L.rage_trigger = "Rabbia dell'Imperatore echeggia tra le colline."
-	L.strength_trigger = "Forza dell'Imperatore appare nelle alcove!"
-	L.courage_trigger = "Coraggio dell'Imperatore appare nelle alcove!"
-	L.bosses_trigger = "Due costrutti titanici appaiono nelle grandi alcove!"
-	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
-	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
+	L.rage_trigger = "La Rabbia dell'Imperatore risuona tra le colline."
+	L.strength_trigger = "La Forza dell'Imperatore appare nelle volte!"
+	L.courage_trigger = "Il Coraggio dell'Imperatore appare nelle volte!"
+	L.bosses_trigger = "Due Costrutti Titanici appaiono nelle alcove più grandi!"
+	L.gas_trigger = "La Macchina Antica dei Mogu si rompe!"
+	L.gas_overdrive_trigger = "La Macchina Antica dei Mogu va in sovraccarico!"
 
-	L.target_only = "|cFFFF0000This warning will only show for the boss you're targeting.|r"
-	L.combo_message = "%s: Combo soon!"
+	L.target_only = "|cFFFF0000Questo messaggio verra' visualizzato solo per il boss che stai targettando.|r"
+	L.combo_message = "%s: Combo in ARRIVO!"
 end
 
