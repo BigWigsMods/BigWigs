@@ -16,7 +16,7 @@ mod:RegisterEnableMob(
 --
 
 local annihilate, flankingOrders, pillage, cowardice = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756))
-local maddening, volley, pinnedDown = (GetSpellInfo(117708)), (GetSpellInfo(118094)), (GetSpellInfo(118122))
+local maddening, volley, rainOfArrows = (GetSpellInfo(117708)), (GetSpellInfo(118094)), (GetSpellInfo(118122))
 local imperviousShield, shieldOfDarkness, sleightOfHand = (GetSpellInfo(117961)), (GetSpellInfo(117697)), (GetSpellInfo(118162))
 local meng, qiang, subetai, zian = (EJ_GetSectionInfo(5835)), (EJ_GetSectionInfo(5841)), (EJ_GetSectionInfo(5846)), (EJ_GetSectionInfo(5852)) -- bosses
 local undyingShadows = (EJ_GetSectionInfo(5853))
@@ -61,7 +61,7 @@ function mod:OnBossEnable()
 	-- qiang
 	self:Log("SPELL_CAST_START", "Annihilate", 119521, 117948)
 	self:Log("SPELL_CAST_SUCCESS", "FlankingOrders", 117910)
-	self:Log("SPELL_CAST_START", "Shield", 117961)
+	self:Log("SPELL_CAST_START", "ImperviousShield", 117961)
 	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 117961)
 
 	-- zian
@@ -89,6 +89,12 @@ end
 function mod:OnEngage(diff)
 	self:Berserk(600)
 	wipe(bossActivated)
+	if self:Heroic() then
+		self:Bar(117961, imperviousShield, 40, 117961)
+	end
+	self:Bar(119521, annihilate, 10, 119521)
+	self:Bar(117910, flankingOrders, 26, 117910)
+	self:Message("ej:5841", qiang, "Positive", 117920)
 end
 
 --------------------------------------------------------------------------------
@@ -132,7 +138,7 @@ end
 function mod:MaddeningShout(_, _, _, _, spellName)
 	self:Message(117708, spellName, "Urgent", 117708, "Alarm")
 	if isBossActiveById(60708) then
-		self:Bar(117708, "~"..spellName, 45, 117708)
+		self:Bar(117708, "~"..spellName, self:Heroic() and 47 or 48.3, 117708)
 	else
 		self:Bar(117708, "~"..spellName, 76, 117708)
 	end
@@ -153,7 +159,6 @@ do
 		scheduled = nil
 	end
 	function mod:PinnedDown(player, _, _, _, spellName)
-		self:Bar(118122, spellName, 41, 118122)
 		pinnedTargets[#pinnedTargets + 1] = player
 		if not scheduled then
 			scheduled = true
@@ -191,7 +196,7 @@ end
 function mod:FlankingOrders(_, _, _, _, spellName)
 	self:Message(117910, spellName, "Attention", 117910, "Long")
 	if isBossActiveById(60709) then
-		self:Bar(117910, spellName, 40, 117910)
+		self:Bar(117910, spellName,  self:Heroic() and 46 or 41, 117910)
 	else
 		self:Bar(117910, spellName, 75, 117910)
 	end
@@ -199,10 +204,10 @@ end
 
 function mod:Annihilate(_, _, _, _, spellName)
 	self:Message(119521, spellName, "Urgent", 119521, "Alarm")
-	self:Bar(119521, spellName, 39, 119521)
+	self:Bar(119521, spellName, self:Heroic() and 32 or 39, 119521)
 end
 
-function mod:Shield(_, _, _, _, spellName)
+function mod:ImperviousShield(_, _, _, _, spellName)
 	self:Message(117961, spellName, "Important", 117961, "Alert")
 	self:Bar(117961, spellName, 42, 117961)
 	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, 117961)
@@ -214,20 +219,13 @@ function mod:ShieldRemoved(_, spellId, _, _, spellName)
 end
 
 function mod:EngageCheck()
+	self:CheckBossStatus()
 	for i=1, 5 do
 		local unitId = ("boss%d"):format(i)
 		if UnitExists(unitId) then
 			local id = self:GetCID(UnitGUID(unitId))
 			-- this is needed because of heroic
-			if (id == 60709 or id == 61423) and not bossActivated[60709] then -- qiang
-				bossActivated[60709] = true
-				if self:Heroic() then
-					self:Bar(117961, imperviousShield, 40, 117961)
-				end
-				self:Bar(119521, annihilate, 10, 119521)
-				self:Bar(117910, flankingOrders, 26, 117910)
-				self:Message("ej:5841", qiang, "Positive", 117920)
-			elseif (id == 60701 or id == 61421) and not bossActivated[60701] then -- zian
+			if (id == 60701 or id == 61421) and not bossActivated[60701] then -- zian
 				bossActivated[60701] = true
 				if self:Heroic() then
 					self:Bar(117697, shieldOfDarkness, 40, 117697)
@@ -242,40 +240,43 @@ function mod:EngageCheck()
 				self:OpenProximity(8)
 				self:Bar(118094, volley, 5, 118094)
 				self:Bar(118047, pillage, 26, 118047)
-				self:Bar(118122, pinnedDown, 40, 118122)
+				self:Bar(118122, rainOfArrows, self:Heroic() and 40 or 21, 118122)
 				self:Message("ej:5846", subetai, "Positive", 118122)
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- meng
 				bossActivated[60708] = true
-				self:Bar(117708, maddening, 21, 117708)
+				self:Bar(117708, "~"..maddening, self:Heroic() and 40 or 21, 117708) -- on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
 				self:Message("ej:5835", meng, "Positive", 117833)
 			end
 		end
 	end
-	self:CheckBossStatus()
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-	if spellId == 118219 and unitId:match("boss") then -- Cancel Activation
-		local id = self:GetCID(UnitGUID(unitId))
-		if (id == 60709 or id == 61423) then -- qiang
-			self:SendMessage("BigWigs_StopBar", self, annihilate)
-			self:SendMessage("BigWigs_StopBar", self, imperviousShield)
-			self:Bar(117910, flankingOrders, 30, 117910)
-		elseif (id == 60701 or id == 61421) then -- zian
-			self:SendMessage("BigWigs_StopBar", self, shieldOfDarkness)
-			if isBossActiveById(60710) then -- don't close if subetai is active
-				self:CloseProximity()
+	if unitId:match("boss")  then
+		if spellId == 118205 then -- Inactive Visual
+			local id = self:GetCID(UnitGUID(unitId))
+			if (id == 60709 or id == 61423) then -- qiang
+				self:SendMessage("BigWigs_StopBar", self, annihilate)
+				self:SendMessage("BigWigs_StopBar", self, imperviousShield)
+				self:Bar(117910, flankingOrders, 30, 117910)
+			elseif (id == 60701 or id == 61421) then -- zian
+				self:SendMessage("BigWigs_StopBar", self, "~"..shieldOfDarkness)
+				if isBossActiveById(60710) then -- don't close if subetai is active
+					self:CloseProximity()
+				end
+			elseif (id == 60710 or id == 61427) then -- subetai
+				self:SendMessage("BigWigs_StopBar", self, sleightOfHand)
+				self:SendMessage("BigWigs_StopBar", self, volley)
+				self:SendMessage("BigWigs_StopBar", self, rainOfArrows)
+				self:Bar(118047, pillage, 30, 118047)
+				if isBossActiveById(60701) then -- don't close if zian is active
+					self:CloseProximity()
+				end
+			elseif (id == 60708 or id == 61429) then -- meng
+				self:Bar(117708, "~"..maddening, 30, 117708)
 			end
-		elseif (id == 60710 or id == 61427) then -- subetai
-			self:SendMessage("BigWigs_StopBar", self, sleightOfHand)
-			self:SendMessage("BigWigs_StopBar", self, volley)
-			self:SendMessage("BigWigs_StopBar", self, pinnedDown)
-			self:Bar(118047, pillage, 30, 118047)
-			if isBossActiveById(60701) then -- don't close if zian is active
-				self:CloseProximity()
-			end
-		elseif (id == 60708 or id == 61429) then -- meng
-			self:Bar(117708, "~"..maddening, 30, 117708)
+		elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
+			self:Bar(118122, rainOfArrows, self:Heroic() and 41 or 50, 118122)
 		end
 	end
 end
