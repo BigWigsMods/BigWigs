@@ -296,6 +296,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		--SHUT. DOWN. EVERYTHING.
 		self:CancelDelayedMessage(CL["soon"]:format(("%s (%d)"):format(self:SpellName(116364), counter)))
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116364), counter)) -- Arcane Velocity
+		self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(33657)) -- Resonance
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(118071), counter)) -- Siphoning Shield
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116018), counter)) -- Epicenter
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116157), counter)) -- Lightning Fists
