@@ -241,10 +241,10 @@ do
 	local resonance, resonanceTargets, resonanceMarkers, scheduled = mod:SpellName(33657), mod:NewTargetList(), {}, nil
 	local function warnResonance(spellId)
 		scheduled = nil
-		self:PrimaryIcon(spellId, resonanceMarkers[1])
+		mod:PrimaryIcon(spellId, resonanceMarkers[1])
 		resonanceTargets[1] = resonanceMarkers[1]
 		if resonanceMarkers[2] then
-			self:SecondaryIcon(spellId, resonanceMarkers[2])
+			mod:SecondaryIcon(spellId, resonanceMarkers[2])
 			resonanceTargets[2] = resonanceMarkers[2]
 		end
 		mod:TargetMessage(spellId, resonance, resonanceTargets, "Urgent", spellId, "Alert")
