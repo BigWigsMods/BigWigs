@@ -44,7 +44,7 @@ do
 	_G.BIGWIGS_RELEASE_TYPE = releaseType
 	_G.BIGWIGS_RELEASE_REVISION = releaseRevision
 	_G.BIGWIGS_RELEASE_STRING = releaseString
-	-- END:   MAGIC WOWACE VOODOO VERSION STUFF
+	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
 
 BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
@@ -590,7 +590,7 @@ do
 			if type(key) == "nil" then return nil end
 			local _, class = UnitClass(key)
 			if class then
-				self[key] = hexColors[class]  .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
+				self[key] = hexColors[class] .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
 			else
 				self[key] = "|cffcccccc" .. key:gsub("%-.+", "*") .. "|r" -- Replace server names with *
 			end

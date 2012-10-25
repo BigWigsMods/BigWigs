@@ -6,7 +6,7 @@ L["%s has been defeated"] = "%s e' stato Sconfitto!"
 L.bosskill = "Morte del Boss"
 L.bosskill_desc ="Annuncia quando il boss viene ucciso."
 L.berserk = "Infuriato"
-L.berserk_desc =  "Visualizza un timer e un alert quando il boss si infuriera'."
+L.berserk_desc = "Visualizza un timer e un alert quando il boss si infuriera'."
 L.stages = "Stages"
 L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 
@@ -16,7 +16,7 @@ L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) 
 L["You are running an official release of Big Wigs %s (revision %d)"] = "Stai usando una versione ufficiale di BigWigs %s (revision %d)"
 L["You are running an ALPHA RELEASE of Big Wigs %s (revision %d)"] = "Stai usando una versione ALPHA di BigWigs %s (Revisione %d)"
 L["You are running a source checkout of Big Wigs %s directly from the repository."] = "Stai usando una versione di Big Wigs %s presa direttamente dal repository."
-L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "C'e' una nuova versione di Big Wigs disponibile (/bwv). Puoi prenderla da  curse.com, wowinterface.com, wowace.com o usare il client di Curse per scaricarla."
+L["There is a new release of Big Wigs available (/bwv). You can visit curse.com, wowinterface.com, wowace.com or use the Curse Updater to get the new release."] = "C'e' una nuova versione di Big Wigs disponibile (/bwv). Puoi prenderla da curse.com, wowinterface.com, wowace.com o usare il client di Curse per scaricarla."
 L["Your alpha version of Big Wigs is out of date (/bwv)."] = "La tua versione Alpha di Big Wigs è obsoleta (/bwv)."
 
 L.tooltipHint = "|cffeda55fClic|r per reinizializzare tutti i moduli. |cffeda55fAlt-Clic|r per Disattivarli. |cffeda55fRight-Clic|r per aprire le Opzioni."

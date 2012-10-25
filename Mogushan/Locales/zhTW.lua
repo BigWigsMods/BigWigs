@@ -14,7 +14,7 @@ if L then
 
 	L.phase_lightning_trigger = "噢，偉大的靈魂!賜予我大地之力!"
 	L.phase_flame_trigger = "噢，至高的神啊!藉由我來融化他們的血肉吧!"
-	L.phase_arcane_trigger =  "噢，上古的賢者!賜予我秘法的智慧!"
+	L.phase_arcane_trigger = "噢，上古的賢者!賜予我秘法的智慧!"
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"
 
 	L.phase_lightning = "雷震階段！"

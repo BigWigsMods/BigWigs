@@ -14,7 +14,7 @@ if L then
 
 	L.phase_flame_trigger = "¡Oh, exaltado! ¡Soy tu herramienta para desgarrar la carne de los huesos!"
 	L.phase_lightning_trigger = "¡Oh, gran espíritu! ¡Otórgame el poder de la tierra!"
-	L.phase_arcane_trigger =  "¡Oh, sabio eterno! ¡Transmíteme tu sapiencia Arcana!"
+	L.phase_arcane_trigger = "¡Oh, sabio eterno! ¡Transmíteme tu sapiencia Arcana!"
 	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!" -- traducir
 
 	L.phase_flame = "¡Fase de llamas!"

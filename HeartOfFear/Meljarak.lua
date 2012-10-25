@@ -33,7 +33,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{ 122064, "FLASHSHAKE", "SAY" },  {122125, "FLASHSHAKE"},
+		{ 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"},
 		{ 122409, "ICON", "SAY" },
 		122149, 122193,
 		122406, {122224, "FLASHSHAKE"}, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, 125873, "next_pack",

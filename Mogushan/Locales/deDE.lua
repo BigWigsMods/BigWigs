@@ -14,7 +14,7 @@ if L then
 
 	L.phase_lightning_trigger = "Oh, großer Geist! Gewährt mir die Macht der Erde!"
 	L.phase_flame_trigger = "Oh, Erhabener! Durch mich sollt Ihr das Fleisch von den Knochen schmelzen!"
-	L.phase_arcane_trigger =  "Oh, Weiser der Zeitalter! Vertraut mir Euer arkanes Wissen an!"
+	L.phase_arcane_trigger = "Oh, Weiser der Zeitalter! Vertraut mir Euer arkanes Wissen an!"
 	L.phase_shadow_trigger = "Große Seele vergangener Helden! Gewährt mir Euren Schild!" -- this is the right one :o
 
 	L.phase_lightning = "Blitzphase!"

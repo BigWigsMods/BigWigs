@@ -43,7 +43,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"},   -- qiang
+		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"}, -- qiang
 		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- zian
 		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- subetai
 		"ej:5835", 117756, 117708, -- meng
@@ -196,7 +196,7 @@ end
 function mod:FlankingOrders(_, _, _, _, spellName)
 	self:Message(117910, spellName, "Attention", 117910, "Long")
 	if isBossActiveById(60709) then
-		self:Bar(117910, spellName,  self:Heroic() and 46 or 41, 117910)
+		self:Bar(117910, spellName, self:Heroic() and 46 or 41, 117910)
 	else
 		self:Bar(117910, spellName, 75, 117910)
 	end
@@ -252,7 +252,7 @@ function mod:EngageCheck()
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-	if unitId:match("boss")  then
+	if unitId:find("boss", nil, true) then
 		if spellId == 118205 then -- Inactive Visual
 			local id = self:GetCID(UnitGUID(unitId))
 			if (id == 60709 or id == 61423) then -- qiang

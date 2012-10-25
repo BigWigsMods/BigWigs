@@ -586,7 +586,7 @@ do
 		setDot(0, 10, "WARLOCK", 0)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = min(width, height) / 30
-		anchor.rangeCircle:SetSize(pixperyard * 20,  pixperyard * 20)
+		anchor.rangeCircle:SetSize(pixperyard * 20, pixperyard * 20)
 		anchor.rangeCircle:SetVertexColor(1,0,0)
 		anchor.rangeCircle:Show()
 		anchor.playerDot:Show()
@@ -662,7 +662,7 @@ do
 				local range = (dx * dx + dy * dy) ^ 0.5
 				if range < (activeRange * 1.5) then
 					setDot(dx, dy, classCache[i], GetRaidTargetIndex(n))
-					if range <= activeRange*1.1 then  -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+					if range <= activeRange*1.1 then - add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = true
 					end
 				end

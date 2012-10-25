@@ -90,7 +90,7 @@ do
 		if cache[spellId] then return cache[spellId] end
 		scanner:ClearLines()
 		scanner:SetHyperlink("spell:"..spellId)
-		for i = scanner:NumLines(), 1, -1  do
+		for i = scanner:NumLines(), 1, -1 do
 			local desc = lcache[i] and lcache[i]:GetText()
 			if desc then
 				cache[spellId] = desc

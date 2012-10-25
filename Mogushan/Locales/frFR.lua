@@ -14,7 +14,7 @@ if L then
 
 	L.phase_lightning_trigger = "Ô grand esprit ! Accorde-moi le pouvoir de la terre !"
 	L.phase_flame_trigger = "Ô être exalté ! Grâce à moi vous ferez fondre la chair et les os !"
-	L.phase_arcane_trigger =  "Ô sagesse ancestrale ! Distille en moi ta sagesse arcanique !"
+	L.phase_arcane_trigger = "Ô sagesse ancestrale ! Distille en moi ta sagesse arcanique !"
 	L.phase_shadow_trigger = "Grandes âmes des champions du passé ! Confiez-moi votre bouclier !" -- à vérifier
 
 	L.phase_lightning = "Phase de Foudre !"

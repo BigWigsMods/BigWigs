@@ -807,7 +807,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_SuperEmphasizeStart")
 
-	--  custom bars
+	-- custom bars
 	BigWigs:AddSyncListener(self, "BWCustomBar")
 
 	self:RefixClickIntercepts()
