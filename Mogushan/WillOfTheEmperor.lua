@@ -161,9 +161,9 @@ function mod:Strength()
 end
 
 function mod:Courage()
-	self:Message("ej:5676", CL["custom_sec"]:format(courage, 13), "Attention", 126030)
-	self:Bar("ej:5676", courage, 13, 126030) -- shield like icon
-	self:DelayedMessage("ej:5676", 13, courage, "Attention", 126030)
+	self:Message("ej:5676", CL["custom_sec"]:format(courage, 11), "Attention", 126030)
+	self:Bar("ej:5676", courage, 11, 126030) -- shield like icon
+	self:DelayedMessage("ej:5676", 11, courage, "Attention", 126030)
 end
 
 function mod:Bosses()
