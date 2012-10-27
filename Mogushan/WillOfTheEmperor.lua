@@ -10,7 +10,6 @@ if not mod then return end
 -- Locals
 --
 
-local rage, strength, courage, bosses = (EJ_GetSectionInfo(5678)), (EJ_GetSectionInfo(5677)), (EJ_GetSectionInfo(5676)), (EJ_GetSectionInfo(5726))
 local gasCounter = 0
 local strengthCounter = 0
 local canEnable = true
@@ -43,6 +42,18 @@ if L then
 
 	L.gas, L.gas_desc = EJ_GetSectionInfo(5670)
 	L.gas_icon = 118327
+
+	L.rage, L.rage_desc = EJ_GetSectionInfo(5678)
+	L.rage_icon = 38771 -- rage like icon
+
+	L.strength, L.strength_desc = EJ_GetSectionInfo(5677)
+	L.strength_icon = 80471 -- strength like icon
+
+	L.courage, L.courage_desc = EJ_GetSectionInfo(5676)
+	L.courage_icon = 126030 -- shield like icon
+
+	L.bosses, L.bosses_desc = EJ_GetSectionInfo(5726)
+	L.bosses_icon = "achievement_moguraid_06"
 end
 L = mod:GetLocale()
 L.combo_desc = L.target_only.." "..L.combo_desc
@@ -54,19 +65,19 @@ L.arc_desc = L.target_only.." "..L.arc_desc
 
 function mod:GetOptions()
 	return {
-		"ej:5678", { 116525, "FLASHSHAKE" },
-		"ej:5677",
-		"ej:5676",
-		"ej:5726", "combo", "arc",
+		"rage", {116525, "FLASHSHAKE"},
+		"strength",
+		"courage",
+		"bosses", "combo", "arc",
 		{116829, "FLASHSHAKE", "SAY"},
 		"gas", "berserk", "bosskill",
 	}, {
-		["ej:5678"] = rage,
-		["ej:5677"] = strength,
-		["ej:5676"] = courage,
-		["ej:5726"] = bosses,
+		rage = L["rage"],
+		strength = L["strength"],
+		courage = L["courage"],
+		bosses = L["bosses"],
 		[116829] = "heroic",
-		["gas"] = "general",
+		gas = "general",
 	}
 end
 
@@ -74,7 +85,7 @@ function mod:OnRegister()
 	-- Kel'Thuzad v2
 	local f = CreateFrame("Frame")
 	local func = function()
-		if not mod:IsEnabled() and canEnable and GetSubZoneText() == L["enable_zone"] then
+		if canEnable and not mod:IsEnabled() and GetSubZoneText() == L["enable_zone"] then
 			mod:Enable()
 		end
 	end
@@ -133,62 +144,62 @@ end
 --
 
 function mod:Rage()
-	self:Message("ej:5678", CL["custom_sec"]:format(rage, 13), "Attention", 38771)
-	self:Bar("ej:5678", rage, 13, 38771) -- rage like icon
-	self:DelayedMessage("ej:5678", 13, rage, "Attention", 38771)
+	self:Message("rage", CL["custom_sec"]:format(L["rage"], 13), "Attention", L.rage_icon)
+	self:Bar("rage", L["rage"], 13, L.rage_icon)
+	self:DelayedMessage("rage", 13, L["rage"], "Attention", L.rage_icon)
 end
 
-function mod:FocusedAssault(player, _, _, _, spellName)
+function mod:FocusedAssault(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:FlashShake(116525)
-		self:LocalMessage(116525, CL["you"]:format(spellName), "Personal", 116525, "Info")
+		self:FlashShake(spellId)
+		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
 	end
 end
 
-function mod:FocusedEnergy(player, _, _, _, spellName)
+function mod:FocusedEnergy(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:FlashShake(116829)
-		self:Say(116829, CL["say"]:format(spellName))
+		self:FlashShake(spellId)
+		self:Say(spellId, CL["say"]:format(spellName))
 	end
-	self:TargetMessage(116829, spellName, player, "Attention", 116829, "Info")
+	self:TargetMessage(spellId, spellName, player, "Attention", spellId, "Info")
 end
 
 function mod:Strength()
 	strengthCounter = strengthCounter + 1
-	self:Message("ej:5677", CL["custom_sec"]:format(strength, 8), "Attention", 80471)
-	self:Bar("ej:5677", ("%s (%d)"):format(strength, strengthCounter), 8, 80471) -- strength like icon
-	self:DelayedMessage("ej:5677", 8, ("%s (%d)"):format(strength, strengthCounter), "Attention", 80471)
+	self:Message("strength", CL["custom_sec"]:format(L["strength"], 8), "Attention", L.strength_icon)
+	self:Bar("strength", ("%s (%d)"):format(L["strength"], strengthCounter), 8, L.strength_icon)
+	self:DelayedMessage("strength", 8, ("%s (%d)"):format(L["strength"], strengthCounter), "Attention", L.strength_icon)
 end
 
 function mod:Courage()
-	self:Message("ej:5676", CL["custom_sec"]:format(courage, 11), "Attention", 126030)
-	self:Bar("ej:5676", courage, 11, 126030) -- shield like icon
-	self:DelayedMessage("ej:5676", 11, courage, "Attention", 126030)
+	self:Message("courage", CL["custom_sec"]:format(L["courage"], 11), "Attention", L.courage_icon)
+	self:Bar("courage", L["courage"], 11, L.courage_icon) -- shield like icon
+	self:DelayedMessage("courage", 11, L["courage"], "Attention", L.courage_icon)
 end
 
 function mod:Bosses()
-	self:Message("ej:5726", CL["custom_sec"]:format(strength, 13), "Attention", "achievement_moguraid_06")
-	self:Bar("ej:5726", bosses, 13, "achievement_moguraid_06")
-	self:DelayedMessage("ej:5726", 13, bosses, "Attention", "achievement_moguraid_06")
+	self:Message("bosses", CL["custom_sec"]:format(L["bosses"], 13), "Attention", L.bosses_icon)
+	self:Bar("bosses", L["bosses"], 13, L.bosses_icon)
+	self:DelayedMessage("bosses", 13, L["bosses"], "Attention", L.bosses_icon)
 	if not self:Heroic() then
-		self:Bar("gas", "~"..L["gas"], 120, 118327)
+		self:Bar("gas", "~"..L["gas"], 120, L.gas_icon)
 	end
 end
 
 do
 	local function fireNext()
-		mod:Bar("gas", "~"..L["gas"], 120, 118327)
+		mod:Bar("gas", "~"..L["gas"], 120, L.gas_icon)
 	end
 	function mod:TitanGas()
 		gasCounter = gasCounter + 1
 		self:ScheduleTimer(fireNext, 30)
-		self:Bar("gas", L["gas"], 30, 118327)
-		self:Message("gas", ("%s (%d)"):format(L["gas"], gasCounter), "Attention", 118327)
+		self:Bar("gas", L["gas"], 30, L.gas_icon)
+		self:Message("gas", ("%s (%d)"):format(L["gas"], gasCounter), "Attention", L.gas_icon)
 	end
 end
 
 function mod:TitanGasOverdrive()
-	self:Message("gas", ("%s (%s)"):format(L["gas"], self:SpellName(26662)), "Important", 118327, "Alarm") --Berserk
+	self:Message("gas", ("%s (%s)"):format(L["gas"], self:SpellName(26662)), "Important", L.gas_icon, "Alarm") --Berserk
 end
 
 do
@@ -222,8 +233,8 @@ do
 
 				if UnitIsUnit("target", unitId) or self:Healer() then
 					local boss = UnitName(unitId)
-					self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, 118365)
-					self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", 116835, "Long")
+					self:Bar("combo", CL["other"]:format(boss, L["combo"]), 20, spellId)
+					self:DelayedMessage("combo", 17, L["combo_message"]:format(boss), "Personal", L.arc_icon, "Long")
 				end
 			end
 		end
