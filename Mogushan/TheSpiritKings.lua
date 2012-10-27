@@ -15,12 +15,11 @@ mod:RegisterEnableMob(
 -- Locales
 --
 
-local annihilate, flankingOrders, pillage, cowardice = (GetSpellInfo(119521)), (GetSpellInfo(117910)), (GetSpellInfo(118047)), (GetSpellInfo(117756))
+local spellReflect = mod:SpellName(69901)
 local maddening, volley, rainOfArrows = (GetSpellInfo(117708)), (GetSpellInfo(118094)), (GetSpellInfo(118122))
 local imperviousShield, shieldOfDarkness, sleightOfHand = (GetSpellInfo(117961)), (GetSpellInfo(117697)), (GetSpellInfo(118162))
 local meng, qiang, subetai, zian = (EJ_GetSectionInfo(5835)), (EJ_GetSectionInfo(5841)), (EJ_GetSectionInfo(5846)), (EJ_GetSectionInfo(5852)) -- bosses
 local undyingShadows = (EJ_GetSectionInfo(5853))
-local pinnedTargets = mod:NewTargetList()
 
 local bossActivated = {}
 
@@ -34,6 +33,10 @@ if L then
 	L.casting_shields = "Casting shields"
 	L.casting_shields_desc = "Warning for when shields are casted for all bosses"
 	L.casting_shields_icon = 871
+
+	L.cowardice = EJ_GetSectionInfo(5838) .." (".. spellReflect ..")"
+	L.cowardice_desc = select(2, EJ_GetSectionInfo(5838))
+	L.cowardice_icon = 117756
 end
 L = mod:GetLocale()
 
@@ -46,7 +49,7 @@ function mod:GetOptions()
 		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"}, -- qiang
 		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- zian
 		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- subetai
-		"ej:5835", 117756, 117708, -- meng
+		"ej:5835", "cowardice", 117708, -- meng
 		"proximity", "casting_shields", "berserk", "bosskill",
 	}, {
 		["ej:5841"] = qiang,
@@ -92,8 +95,8 @@ function mod:OnEngage(diff)
 	if self:Heroic() then
 		self:Bar(117961, imperviousShield, 40, 117961)
 	end
-	self:Bar(119521, annihilate, 10, 119521)
-	self:Bar(117910, flankingOrders, 26, 117910)
+	self:Bar(119521, 119521, 10, 119521) -- Annihilate
+	self:Bar(117910, 117910, 26, 117910) -- Flanking Orders
 	self:Message("ej:5841", qiang, "Positive", 117920)
 end
 
@@ -115,72 +118,87 @@ local function isBossActiveById(bossId)
 end
 
 -- meng
-function mod:CowardiceApplied()
-	self:RegisterEvent("UNIT_POWER_FREQUENT")
-end
-
-function mod:CowardiceRemoved()
-	self:UnregisterEvent("UNIT_POWER_FREQUENT")
-end
-
-function mod:UNIT_POWER_FREQUENT(_, unitId)
-	if not unitId:find("boss", nil, true) then return end
-	local id = self:GetCID(UnitGUID(unitId))
-	if id == 60708 then
-		local power = UnitPower(unitId)
-		if power > 75 then
-			self:UnregisterEvent("UNIT_POWER_FREQUENT")
-			self:Message(117756, ("%s (%d)"):format(cowardice, power), "Attention", 117756)
+do
+	local prevPower = 0
+	function mod:CowardiceApplied()
+		self:RegisterEvent("UNIT_POWER_FREQUENT")
+	end
+	function mod:CowardiceRemoved(_, spellId)
+		self:UnregisterEvent("UNIT_POWER_FREQUENT")
+		prevPower = 0
+		self:Message("cowardice", CL["over"]:format(spellReflect), "Positive", spellId)
+	end
+	function mod:UNIT_POWER_FREQUENT(_, unitId)
+		if not unitId:find("boss", nil, true) then return end
+		local id = self:GetCID(UnitGUID(unitId))
+		if id == 60708 then
+			local power = UnitPower(unitId)
+			if power > 74 and prevPower == 0 then
+				prevPower = 75
+				self:Message("cowardice", ("%s (%d%%)"):format(spellReflect, power), "Attention", 117756)
+			elseif power > 84 and prevPower == 75 then
+				prevPower = 85
+				self:Message("cowardice", ("%s (%d%%)"):format(spellReflect, power), "Urgent", 117756)
+			elseif power > 89 and prevPower == 85 then
+				prevPower = 90
+				self:Message("cowardice", ("%s (%d%%)"):format(spellReflect, power), "Personal", 117756)
+			elseif power > 92 and prevPower == 90 then
+				prevPower = 93
+				self:Message("cowardice", ("%s (%d%%)"):format(spellReflect, power), "Personal", 117756)
+			elseif power > 96 and prevPower == 93 then
+				prevPower = 97
+				self:Message("cowardice", ("%s (%d%%)"):format(spellReflect, power), "Personal", 117756)
+			end
 		end
 	end
 end
 
-function mod:MaddeningShout(_, _, _, _, spellName)
-	self:Message(117708, spellName, "Urgent", 117708, "Alarm")
+function mod:MaddeningShout(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
 	if isBossActiveById(60708) then
-		self:Bar(117708, "~"..spellName, self:Heroic() and 47 or 48.3, 117708)
+		self:Bar(spellId, "~"..spellName, self:Heroic() and 47 or 48.3, spellId)
 	else
-		self:Bar(117708, "~"..spellName, 76, 117708)
+		self:Bar(spellId, "~"..spellName, 76, spellId)
 	end
 end
 
-function mod:ShieldofDarkness(_, _, _, _, spellName)
-	self:Message(117697, spellName, "Important", 117697, "Alert")
-	self:Bar(117697, "~"..spellName, 42.5, 117697)
-	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, 117697)
-	self:FlashShake(117697)
+function mod:ShieldofDarkness(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alert")
+	self:Bar(spellId, "~"..spellName, 42.5, spellId)
+	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, spellId)
+	self:FlashShake(spellId)
 end
 
 -- subetai
 do
-	local scheduled = nil
+	local timer = nil
+	local pinnedTargets = mod:NewTargetList()
 	local function warnPinned(spellName)
 		mod:TargetMessage(118122, spellName, pinnedTargets, "Important", 118122, "Alarm")
-		scheduled = nil
+		timer = nil
 	end
 	function mod:PinnedDown(player, _, _, _, spellName)
 		pinnedTargets[#pinnedTargets + 1] = player
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(warnPinned, 0.1, spellName)
+		if not timer then
+			timer = self:ScheduleTimer(warnPinned, 0.1, spellName)
 		end
 	end
 end
 
-function mod:Pillage(_, _, _, _, spellName)
-	self:Message(118047, spellName, "Urgent", 118047, "Alarm")
-	self:Bar(118047, spellName, 41, 118047)
+function mod:Pillage(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
+	self:Bar(spellId, spellName, 41, spellId)
 end
 
-function mod:Volley(_, _, _, _, spellName)
-	self:Message(118094, spellName, "Urgent", 118094)
-	self:Bar(118094, spellName, 37, 118094)
+function mod:Volley(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Urgent", spellId)
+	self:Bar(spellId, spellName, 37, spellId)
 end
 
-function mod:SleightofHand(_, _, _, _, spellName)
-	self:Message(118162, spellName, "Important", 118162, "Alert")
-	self:Bar(118162, spellName, 42, 118162)
-	self:FlashShake(118162)
+function mod:SleightofHand(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alert")
+	self:Bar(spellId, spellName, 42, spellId)
+	self:FlashShake(spellId)
 end
 
 -- zian
@@ -193,12 +211,12 @@ function mod:Fixate(player, spellId, _, _, spellName)
 end
 
 -- qiang
-function mod:FlankingOrders(_, _, _, _, spellName)
-	self:Message(117910, spellName, "Attention", 117910, "Long")
+function mod:FlankingOrders(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Attention", spellId, "Long")
 	if isBossActiveById(60709) then
-		self:Bar(117910, spellName, self:Heroic() and 46 or 41, 117910)
+		self:Bar(spellId, spellName, self:Heroic() and 46 or 41, spellId)
 	else
-		self:Bar(117910, spellName, 75, 117910)
+		self:Bar(spellId, spellName, 75, spellId)
 	end
 end
 
@@ -207,11 +225,11 @@ function mod:Annihilate(_, _, _, _, spellName)
 	self:Bar(119521, spellName, self:Heroic() and 32 or 39, 119521)
 end
 
-function mod:ImperviousShield(_, _, _, _, spellName)
-	self:Message(117961, spellName, "Important", 117961, "Alert")
-	self:Bar(117961, spellName, 42, 117961)
-	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, 117961)
-	self:FlashShake(117961)
+function mod:ImperviousShield(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alert")
+	self:Bar(spellId, spellName, 42, spellId)
+	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, spellId)
+	self:FlashShake(spellId)
 end
 
 function mod:ShieldRemoved(_, spellId, _, _, spellName)
@@ -239,7 +257,7 @@ function mod:EngageCheck()
 				end
 				self:OpenProximity(8)
 				self:Bar(118094, volley, 5, 118094)
-				self:Bar(118047, pillage, 26, 118047)
+				self:Bar(118047, 118047, 26, 118047) -- Pillage
 				self:Bar(118122, rainOfArrows, self:Heroic() and 40 or 21, 118122)
 				self:Message("ej:5846", subetai, "Positive", 118122)
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- meng
@@ -256,9 +274,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if spellId == 118205 then -- Inactive Visual
 			local id = self:GetCID(UnitGUID(unitId))
 			if (id == 60709 or id == 61423) then -- qiang
-				self:SendMessage("BigWigs_StopBar", self, annihilate)
+				self:SendMessage("BigWigs_StopBar", self, self:SpellName(119521)) -- Annihilate
 				self:SendMessage("BigWigs_StopBar", self, imperviousShield)
-				self:Bar(117910, flankingOrders, 30, 117910)
+				self:Bar(117910, 117910, 30, 117910) -- Flanking Orders
 			elseif (id == 60701 or id == 61421) then -- zian
 				self:SendMessage("BigWigs_StopBar", self, "~"..shieldOfDarkness)
 				if isBossActiveById(60710) then -- don't close if subetai is active
@@ -268,7 +286,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 				self:SendMessage("BigWigs_StopBar", self, sleightOfHand)
 				self:SendMessage("BigWigs_StopBar", self, volley)
 				self:SendMessage("BigWigs_StopBar", self, rainOfArrows)
-				self:Bar(118047, pillage, 30, 118047)
+				self:Bar(118047, 118047, 30, 118047) -- Pillage
 				if isBossActiveById(60701) then -- don't close if zian is active
 					self:CloseProximity()
 				end
