@@ -1,5 +1,3 @@
--- Translated By Kaliad @ EU-Pozzo dell'Eternità
-
 local L = BigWigs:NewBossLocale("The Stone Guard", "itIT")
 if not L then return end
 if L then
@@ -64,7 +62,7 @@ if L then
 	L.gas_trigger = "La Macchina Antica dei Mogu si rompe!"
 	L.gas_overdrive_trigger = "La Macchina Antica dei Mogu va in sovraccarico!"
 
-	L.target_only = "|cFFFF0000Questo messaggio verra' visualizzato solo per il boss che stai targettando.|r"
+	L.target_only = "|cFFFF0000Questo messaggio verra' visualizzato solo per il boss che stai targettando.|r "
 	L.combo_message = "%s: Combo in ARRIVO!"
 end
 

@@ -32,7 +32,7 @@ if L then
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
-	L.target_only = "|cFFFF0000This warning will only show for the boss you are targeting.|r"
+	L.target_only = "|cFFFF0000This warning only shows for the boss you're targeting.|r "
 
 	L.combo, L.combo_desc = EJ_GetSectionInfo(5672)
 	L.combo_message = "%s: Combo soon!"
@@ -56,8 +56,8 @@ if L then
 	L.bosses_icon = "achievement_moguraid_06"
 end
 L = mod:GetLocale()
-L.combo_desc = L.target_only.." "..L.combo_desc
-L.arc_desc = L.target_only.." "..L.arc_desc
+L.combo_desc = L.target_only .. L.combo_desc
+L.arc_desc = L.target_only .. L.arc_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -240,3 +240,4 @@ do
 		end
 	end
 end
+

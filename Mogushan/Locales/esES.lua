@@ -1,4 +1,4 @@
-﻿local L = BigWigs:NewBossLocale("The Stone Guard", "esES") or BigWigs:NewBossLocale("The Stone Guard", "esMX")
+local L = BigWigs:NewBossLocale("The Stone Guard", "esES") or BigWigs:NewBossLocale("The Stone Guard", "esMX")
 if not L then return end
 if L then
 	L.petrifications = "Petrificación"
@@ -73,7 +73,7 @@ if L then
 	L.gas_trigger = "¡La Antigua Máquina Mogu se rompe!"
 	L.gas_overdrive_trigger = "¡La Antigua Máquina Mogu se sobrecarga!"
 
-	L.target_only = "|cFFFF0000Este aviso solo se mostrará para el jefe que estés targeteando.|r"
+	L.target_only = "|cFFFF0000Este aviso solo se mostrará para el jefe que estés targeteando.|r "
 	L.combo_message = "¡%s: Combo inminente!"
 end
 

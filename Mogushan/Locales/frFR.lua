@@ -75,7 +75,7 @@ if L then
 	L.gas_trigger = "La machine mogu antique s’effondre !"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!" -- à traduire
 
-	L.target_only = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r"
+	L.target_only = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r "
 	L.combo_message = "%s : combo imminent !"
 end
 

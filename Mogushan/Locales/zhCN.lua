@@ -75,7 +75,7 @@ if L then
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
-	L.target_only = "|cFFFF0000This warning will only show for the boss you're targeting.|r"
+	L.target_only = "|cFFFF0000This warning will only show for the boss you're targeting.|r "
 	L.combo_message = "%s: Combo soon!"
 end
 
