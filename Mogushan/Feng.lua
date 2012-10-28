@@ -134,7 +134,7 @@ do
 	function mod:TankAlerts(player, spellId, _, _, _, stack)
 		if self:Tank() then
 			stack = stack or 1
-			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, stack > 2 and "Info" or nil, player, stack)
+			self:LocalMessage("tank", msgTbl[spellId], "Urgent", spellId, stack > 1 and "Info", player, stack)
 		end
 	end
 end
