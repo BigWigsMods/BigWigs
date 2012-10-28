@@ -299,7 +299,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(33657)) -- Resonance
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(118071), counter)) -- Siphoning Shield
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116018), counter)) -- Epicenter
-		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116157), counter)) -- Lightning Fists
+		self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(116157)) -- Lightning Fists
 		self:SendMessage("BigWigs_StopBar", self, "~"..("%s (%d)"):format(self:SpellName(116711), counter)) -- Draw flame
 		counter = 1
 	end
