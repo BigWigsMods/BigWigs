@@ -85,7 +85,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 	if unit == "boss1" then
 		if spellId == 116964 then
 			self:Sync("Totem") -- LFR only, no combat log event for some reason
-		elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and not self:LFR() then
+		elseif (spellId == 117215 or spellId == 117218 or spellId == 117219 or spellId == 117222) and self:Heroic() then
 			self:Sync("Shadowy")
 		end
 	end
