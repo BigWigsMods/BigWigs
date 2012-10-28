@@ -117,7 +117,7 @@ function mod:StabilityFlux(_, _, _, _, spellName)
 	local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 	if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
 		self:FlashShake(117878)
-		self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(buffStack, overcharged), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
+		self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack, overcharged), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
 	end
 end
 
