@@ -16,10 +16,11 @@ mod:RegisterEnableMob(
 --
 
 local spellReflect = mod:SpellName(69901)
-local maddening, volley, rainOfArrows = (GetSpellInfo(117708)), (GetSpellInfo(118094)), (GetSpellInfo(118122))
-local imperviousShield, shieldOfDarkness, sleightOfHand = (GetSpellInfo(117961)), (GetSpellInfo(117697)), (GetSpellInfo(118162))
-local meng, qiang, subetai, zian = (EJ_GetSectionInfo(5835)), (EJ_GetSectionInfo(5841)), (EJ_GetSectionInfo(5846)), (EJ_GetSectionInfo(5852)) -- bosses
-local undyingShadows = (EJ_GetSectionInfo(5853))
+
+local meng = EJ_GetSectionInfo(5835)
+local qiang = EJ_GetSectionInfo(5841)
+local subetai = EJ_GetSectionInfo(5846)
+local zian = EJ_GetSectionInfo(5852)
 
 local bossActivated = {}
 
@@ -93,7 +94,7 @@ function mod:OnEngage(diff)
 	self:Berserk(600)
 	wipe(bossActivated)
 	if self:Heroic() then
-		self:Bar(117961, imperviousShield, 40, 117961)
+		self:Bar(117961, 117961, 40, 117961) -- Impervious Shield
 	end
 	self:Bar(119521, 119521, 10, 119521) -- Annihilate
 	self:Bar(117910, 117910, 26, 117910) -- Flanking Orders
@@ -246,23 +247,23 @@ function mod:EngageCheck()
 			if (id == 60701 or id == 61421) and not bossActivated[60701] then -- zian
 				bossActivated[60701] = true
 				if self:Heroic() then
-					self:Bar(117697, shieldOfDarkness, 40, 117697)
+					self:Bar(117697, 117697, 40, 117697) -- Shield of Darkness
 				end
 				self:OpenProximity(8)
 				self:Message("ej:5852", zian, "Positive", 117628)
 			elseif (id == 60710 or id == 61427) and not bossActivated[60710] then -- subetai
 				bossActivated[60710] = true
 				if self:Heroic() then
-					self:Bar(118162, sleightOfHand, 40, 118162)
+					self:Bar(118162, 118162, 40, 118162) -- Sleight of Hand
 				end
 				self:OpenProximity(8)
-				self:Bar(118094, volley, 5, 118094)
+				self:Bar(118094, 118094, 5, 118094) -- Volley
 				self:Bar(118047, 118047, 26, 118047) -- Pillage
-				self:Bar(118122, rainOfArrows, self:Heroic() and 40 or 21, 118122)
+				self:Bar(118122, 118122, self:Heroic() and 40 or 21, 118122) -- Rain of Arrows
 				self:Message("ej:5846", subetai, "Positive", 118122)
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- meng
 				bossActivated[60708] = true
-				self:Bar(117708, "~"..maddening, self:Heroic() and 40 or 21, 117708) -- on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
+				self:Bar(117708, "~"..self:SpellInfo(117708), self:Heroic() and 40 or 21, 117708) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
 				self:Message("ej:5835", meng, "Positive", 117833)
 			end
 		end
@@ -275,26 +276,26 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 			local id = self:GetCID(UnitGUID(unitId))
 			if (id == 60709 or id == 61423) then -- qiang
 				self:SendMessage("BigWigs_StopBar", self, self:SpellName(119521)) -- Annihilate
-				self:SendMessage("BigWigs_StopBar", self, imperviousShield)
+				self:SendMessage("BigWigs_StopBar", self, self:SpellName(117961)) -- Impervious Shield
 				self:Bar(117910, 117910, 30, 117910) -- Flanking Orders
 			elseif (id == 60701 or id == 61421) then -- zian
-				self:SendMessage("BigWigs_StopBar", self, "~"..shieldOfDarkness)
+				self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(117697)) -- Shield of Darkness
 				if isBossActiveById(60710) then -- don't close if subetai is active
 					self:CloseProximity()
 				end
 			elseif (id == 60710 or id == 61427) then -- subetai
-				self:SendMessage("BigWigs_StopBar", self, sleightOfHand)
-				self:SendMessage("BigWigs_StopBar", self, volley)
-				self:SendMessage("BigWigs_StopBar", self, rainOfArrows)
+				self:SendMessage("BigWigs_StopBar", self, self:SpellName(118162)) -- Sleight of Hand
+				self:SendMessage("BigWigs_StopBar", self, self:SpellName(118094)) -- Volley
+				self:SendMessage("BigWigs_StopBar", self, self:SpellName(118122)) -- Rain of Arrows
 				self:Bar(118047, 118047, 30, 118047) -- Pillage
 				if isBossActiveById(60701) then -- don't close if zian is active
 					self:CloseProximity()
 				end
 			elseif (id == 60708 or id == 61429) then -- meng
-				self:Bar(117708, "~"..maddening, 30, 117708)
+				self:Bar(117708, "~"..self:SpellInfo(117708), 30, 117708) -- Maddening Shout
 			end
 		elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
-			self:Bar(118122, rainOfArrows, self:Heroic() and 41 or 50, 118122)
+			self:Bar(118122, 118122, self:Heroic() and 41 or 50, 118122) -- Rain of Arrows
 		end
 	end
 end
