@@ -171,7 +171,8 @@ end
 
 function mod:LightningPhase()
 	self:Message("stages", L["phase_lightning"], "Positive", 116363)
-	self:Bar(116018, "~"..("%s (%d)"):format(self:SpellName(116018), counter), 32, 116018) -- Epicenter
+	self:Bar(116018, "~"..("%s (%d)"):format(self:SpellName(116018), counter), 18, 116018) -- Epicenter
+	self:Bar(116157, "~"..self:SpellName(116157), 12, 116157) -- Lightning Fists
 end
 
 function mod:LightningFists(_, spellId, _, _, spellName)
