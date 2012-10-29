@@ -34,6 +34,9 @@ if L then
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s cast Shroud on %1$s"
 	L.barrier_message = "Barrier UP!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Tank Alerts"
@@ -90,6 +93,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "TankAlerts", 131788, 116942, 131790, 131792)
 
 	self:Log("SPELL_CAST_SUCCESS", "Shroud", 115911)
+	self:Log("SPELL_AURA_APPLIED", "LightningFistsReversal", 118302)
+	self:Log("SPELL_AURA_APPLIED", "LightningFistsReversalOnBoss", 115730)
 
 	-- needed so we can have bars up for abilities used straight after phase switches
 	self:Yell("LightningPhase", L["phase_lightning_trigger"])
@@ -113,6 +118,18 @@ end
 -- Event Handlers
 --
 
+function mod:LightningFistsReversalOnBoss(_, _, source)
+	if not self:LFR() then
+		self:Message(115911, L["epicenter_interrupted"]:format(self:SpellName(116018)), "Urgent", 118302)
+	end
+end
+
+function mod:LightningFistsReversal(player)
+	if not self:LFR() then
+		self:Message(115911, L["can_interrupt_epicenter"]:format(player, self:SpellName(116018)), "Urgent", 118302)
+	end
+end
+
 function mod:Shroud(player, spellId, source)
 	if not self:LFR() then
 		self:TargetMessage(spellId, L["shroud_message"], player, "Urgent", spellId, nil, source)
@@ -122,6 +139,7 @@ end
 function mod:NullificationBarrier(_, spellId)
 	self:Message(spellId, L["barrier_message"], "Urgent", spellId, "Info")
 	self:Bar(spellId, L["barrier_message"], 6, spellId)
+	self:Bar(spellId, L["barrier_cooldown"], 55, spellId)
 end
 
 do
