@@ -139,7 +139,9 @@ end
 function mod:NullificationBarrier(_, spellId)
 	self:Message(spellId, L["barrier_message"], "Urgent", spellId, "Info")
 	self:Bar(spellId, L["barrier_message"], 6, spellId)
-	self:Bar(spellId, L["barrier_cooldown"], 55, spellId)
+	if not self:LFR() then
+		self:Bar(spellId, L["barrier_cooldown"], 55, spellId)
+	end
 end
 
 do
