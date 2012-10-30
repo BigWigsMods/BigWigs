@@ -263,7 +263,7 @@ function mod:EngageCheck()
 				self:Message("ej:5846", subetai, "Positive", 118122)
 			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- meng
 				bossActivated[60708] = true
-				self:Bar(117708, "~"..(GetSpellInfo(117708)), self:Heroic() and 40 or 21, 117708) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
+				self:Bar(117708, "~"..self:SpellName(117708), self:Heroic() and 40 or 21, 117708) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
 				self:Message("ej:5835", meng, "Positive", 117833)
 			end
 		end
@@ -292,7 +292,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 					self:CloseProximity()
 				end
 			elseif (id == 60708 or id == 61429) then -- meng
-				self:Bar(117708, "~"..(GetSpellInfo(117708)), 30, 117708) -- Maddening Shout
+				self:Bar(117708, "~"..self:SpellName(117708), 30, 117708) -- Maddening Shout
 			end
 		elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
 			self:Bar(118122, 118122, self:Heroic() and 41 or 50, 118122) -- Rain of Arrows
