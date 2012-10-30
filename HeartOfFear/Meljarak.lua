@@ -142,8 +142,10 @@ end
 do
 	local timer, fired = nil, 0
 	local whirlingBlade = mod:SpellName(121896)
-	local function bladeWarn(unitId)
+	local function bladeWarn(sGUID)
 		fired = fired + 1
+		local unitId = mod:GetUnitIdByGUID(sGUID)
+		if not unitId then return end
 		local unitIdTarget = unitId.."target"
 		local player = UnitName(unitIdTarget)
 		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
@@ -166,10 +168,11 @@ do
 			timer = nil
 		end
 	end
-	function mod:WhirlingBlade(_, _, unitId)
+	function mod:WhirlingBlade(...)
+		local sGUID = select(11, ...)
 		fired = 0
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(bladeWarn, 0.05, unitId)
+			timer = self:ScheduleRepeatingTimer(bladeWarn, 0.05, sGUID)
 		end
 	end
 end
