@@ -11,7 +11,7 @@ mod:RegisterEnableMob(62543)
 -- Locals
 --
 
-local unseenStrike = (GetSpellInfo(122994))
+local unseenStrike, bladeTempest = (GetSpellInfo(122994)), (GetSpellInfo(125310))
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,6 +54,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	if self:Heroic() then
+		self:Bar(125310, bladeTempest, 60, 125310)
+	end
 	self:OpenProximity(8)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	self:Bar("ej:6346", unseenStrike, 30, 122994)

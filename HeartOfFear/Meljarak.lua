@@ -12,6 +12,7 @@ mod:RegisterEnableMob(62397, 62408, 62402, 62405) -- boss, mender, battlemaster,
 --
 
 local whirlingBlade, korthikStrike, rainOfBlades = (GetSpellInfo(121896)), (GetSpellInfo(122409)), (GetSpellInfo(122406))
+local prisonList = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,6 +25,7 @@ if L then
 	L.next_pack_icon = 125873
 
 	L.spear_removed = "Your Impaling Spear was removed!"
+	L.residue_removed = "%s removed!"
 end
 L = mod:GetLocale()
 
@@ -33,11 +35,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{ 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"},
+		{ 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY"}, 122055,
 		{ 122409, "ICON", "SAY" },
 		122149, 122193,
 		122406, {122224, "FLASHSHAKE"}, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, 125873, "next_pack",
-		"proximity", "berserk", "bosskill",
+		"berserk", "bosskill",
 	}, {
 		[122064] = "ej:6300",
 		[122409] = "ej:6334",
@@ -47,6 +49,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "AmberPrison", 121881) -- initial cast only
+	self:Log("SPELL_AURA_REMOVED", "ResidueRemoved", 122055)
 	self:Log("SPELL_AURA_APPLIED", "Resin", 122064)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ResinPoolDamage", 122125)
 	self:Log("SPELL_AURA_APPLIED", "Recklessness", 125873)
@@ -68,13 +72,37 @@ end
 function mod:OnEngage(diff)
 	self:Bar(121896, whirlingBlade, 36, 121896)
 	self:Bar(122406, "~"..rainOfBlades, 60, 122406)
-	self:OpenProximity(2) -- for amber prison EJ says 2 yards, but it might be bigger range
+	self:OpenProximity(2, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range
 	self:Berserk(600) -- assume
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:ResidueRemoved(player, _, _, _, spellName)
+	if UnitIsUnit("player", player) then
+		self:LocalMessage(122055, L["residue_removed"]:format(spellName), "Positive", 122055)
+	end
+end
+
+do
+	local scheduled = nil
+	local function prison(spellName)
+		mod:TargetMessage(121881, spellName, prisonList, "Important", 122740, "Info")
+		scheduled = nil
+	end
+	function mod:AmberPrison(player, _, _, _, spellName)
+		if UnitIsUnit("player", player) then
+			self:Say(121881, CL["say"]:format(spellName))
+		end
+		prisonList[#prisonList + 1] = player
+		if not scheduled then
+			scheduled = true
+			self:ScheduleTimer(prison, 0.1, spellName)
+		end
+	end
+end
 
 function mod:RainOfBlades(_, _, _, _, spellName)
 	self:Message(122406, spellName, "Important", 122406, "Alert")
@@ -112,22 +140,37 @@ do
 end
 
 do
-	local function checkTarget(spellName)
-		local player = UnitName("boss1target")
-		if not player then return end
-		if UnitIsUnit("player", player) then
-			mod:Say(121896, CL["say"]:format(spellName))
-			mod:FlashShake(121896)
+	local timer, fired = nil, 0
+	local whirlingBlade = mod:SpellName(121896)
+	local function bladeWarn(unitId)
+		fired = fired + 1
+		local unitIdTarget = unitId.."target"
+		local player = UnitName(unitIdTarget)
+		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
+			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
+			mod:Bar(121896, "~"..whirlingBlade, 45, 121896)
+			mod:TargetMessage(121896, whirlingBlade, player, "Urgent", 121896, "Alarm")
+			mod:PrimaryIcon(121896, player)
+			mod:CancelTimer(timer, true)
+			timer = nil
+			if UnitIsUnit(unitIdTarget, "player") then
+				mod:Say(121896, CL["say"]:format(whirlingBlade))
+				mod:FlashShake(121896)
+			end
+			return
 		end
-		mod:TargetMessage(121896, spellName, player, "Important", 121896, "Alert")
-		mod:PrimaryIcon(121896, player)
+		-- 19 == 0.95sec
+		-- Safety check if the unit doesn't exist
+		if fired > 18 then
+			mod:CancelTimer(timer, true)
+			timer = nil
+		end
 	end
-
-	function mod:WhirlingBlade(_, _, _, _, spellName)
-		-- I know it is double message, but leave this here for debug purpose for now
-		self:Message(121896, spellName, "Important", 121896, "Alert")
-		self:Bar(121896, "~"..spellName, 45, 121896)
-		self:ScheduleTimer(checkTarget, 0.2, spellName) -- might need to adjust this
+	function mod:WhirlingBlade(unitId)
+		fired = 0
+		if not timer then
+			timer = self:ScheduleRepeatingTimer(bladeWarn, 0.05, unitId)
+		end
 	end
 end
 
