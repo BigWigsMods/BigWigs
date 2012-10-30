@@ -422,6 +422,8 @@ do
 						for i, v in next, media:List("font") do
 							if v == db.font then return i end
 						end
+					elseif key == "outline" then
+						return db.outline or "NONE"
 					end
 					return db[key]
 				end,
@@ -435,6 +437,9 @@ do
 						db.font = list[value]
 					elseif key == "barStyle" then
 						plugin:SetBarStyle(value)
+					elseif key == "outline" then
+						if value == "NONE" then value = nil end
+						db.outline = value
 					else
 						db[key] = value
 					end
@@ -456,10 +461,21 @@ do
 						width = "full",
 						itemControl = "DDI-Font",
 					},
+					outline = {
+						type = "select",
+						name = L["Outline"],
+						order = 2.1,
+						values = {
+							NONE = L["None"],
+							OUTLINE = L["Thin"],
+							THICKOUTLINE = L["Thick"],
+						},
+						width = "full",
+					},
 					barStyle = {
 						type = "select",
 						name = L["Style"],
-						order = 2,
+						order = 2.2,
 						values = barStyleRegister,
 						width = "full",
 					},
@@ -546,25 +562,24 @@ do
 								order = 3,
 								width = "half",
 							},
-							emphasizeGrowup = {
-								type = "toggle",
-								name = L["Grow upwards"],
-								desc = L["Toggle bars grow upwards/downwards from anchor."],
-								order = 4,
-								width = "half",
-							},
 							emphasizeRestart = {
 								type = "toggle",
 								name = L["Restart"],
 								desc = L["Restarts emphasized bars so they start from the beginning and count from 10."],
-								order = 6,
+								order = 4,
 								width = "half",
 								disabled = function() return not db.emphasizeMove end,
+							},
+							emphasizeGrowup = {
+								type = "toggle",
+								name = L["Grow upwards"],
+								desc = L["Toggle bars grow upwards/downwards from anchor."],
+								order = 5,
 							},
 							emphasizeScale = {
 								type = "range",
 								name = L["Scale"],
-								order = 7,
+								order = 6,
 								min = 0.2,
 								max = 2.0,
 								step = 0.1,
@@ -1134,8 +1149,8 @@ function plugin:BigWigs_StartBar(message, module, key, text, time, icon)
 	bar.candyBarLabel:SetTextColor(colors:GetColor("barText", module, key))
 	bar.candyBarLabel:SetJustifyH(db.align)
 	local f = media:Fetch("font", db.font)
-	bar.candyBarLabel:SetFont(f, 10)
-	bar.candyBarDuration:SetFont(f, 10)
+	bar.candyBarLabel:SetFont(f, 10, db.outline)
+	bar.candyBarDuration:SetFont(f, 10, db.outline)
 	bar:SetLabel(text)
 	bar:SetClampedToScreen(true)
 	bar:SetDuration(time)

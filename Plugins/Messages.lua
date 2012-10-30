@@ -218,7 +218,7 @@ do
 							if v == db.font then return i end
 						end
 					elseif key == "outline" then
-						return plugin.db.profile[key] or "NONE"
+						return db.outline or "NONE"
 					end
 					return plugin.db.profile[key]
 				end,
@@ -422,7 +422,7 @@ do
 
 		local flags = nil
 		if db.monochrome and db.outline then flags = "MONOCHROME," .. db.outline
-		elseif db.monochrome then flags = "MONOCHROME"
+		elseif db.monochrome then flags = nil --"MONOCHROME", monochrome only is disabled for now due to a client crash
 		elseif db.outline then flags = db.outline
 		end
 		slot:SetFont(media:Fetch("font", db.font), db.fontSize, flags)

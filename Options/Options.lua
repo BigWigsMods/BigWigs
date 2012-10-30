@@ -393,7 +393,7 @@ do
 		if frame then return end
 		frame = AceGUI:Create("Window")
 		frame:EnableResize(nil)
-		frame:SetWidth(320)
+		frame:SetWidth(350)
 		frame:SetHeight(515)
 		frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 12, -12)
 		frame:SetTitle(L["Configure"])
