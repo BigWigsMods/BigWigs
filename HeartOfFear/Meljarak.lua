@@ -166,7 +166,7 @@ do
 			timer = nil
 		end
 	end
-	function mod:WhirlingBlade(unitId)
+	function mod:WhirlingBlade(_, _, unitId)
 		fired = 0
 		if not timer then
 			timer = self:ScheduleRepeatingTimer(bladeWarn, 0.05, unitId)
