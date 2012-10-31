@@ -21,7 +21,7 @@ do
 	colorize = setmetatable({}, { __index =
 		function(self, key)
 			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = "|cff" .. string.format("%02x%02x%02x", r * 255, g * 255, b * 255) .. key .. "|r"
+			self[key] = "|cff" .. ("%02x%02x%02x"):format(r * 255, g * 255, b * 255) .. key .. "|r"
 			return self[key]
 		end
 	})
@@ -33,6 +33,7 @@ local colors = nil
 local superemp = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
+local pairs = pairs
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local empUpdate = nil -- emphasize updater frame
@@ -599,40 +600,43 @@ end
 -- Bar arrangement
 --
 
-local function barSorter(a, b)
-	return a.remaining < b.remaining and true or false
-end
-local tmp = {}
-local function rearrangeBars(anchor)
-	if not anchor then return end
-	if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
-		if next(anchor.bars) and db.emphasize then
-			empUpdate:Show()
-		else
-			empUpdate:Hide()
+local rearrangeBars
+do
+	local function barSorter(a, b)
+		return a.remaining < b.remaining and true or false
+	end
+	local tmp = {}
+	rearrangeBars = function(anchor)
+		if not anchor then return end
+		if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
+			if next(anchor.bars) and db.emphasize then
+				empUpdate:Play()
+			else
+				empUpdate:Stop()
+			end
 		end
-	end
-	if not next(anchor.bars) then return end
+		if not next(anchor.bars) then return end
 
-	wipe(tmp)
-	for bar in pairs(anchor.bars) do
-		tmp[#tmp + 1] = bar
-	end
-	table.sort(tmp, barSorter)
-	local lastDownBar, lastUpBar = nil, nil
-	local up = nil
-	if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
-	for i, bar in next, tmp do
-		local spacing = currentBarStyler.GetSpacing(bar) or 0
-		bar:ClearAllPoints()
-		if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-			bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT", 0, spacing)
-			bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT", 0, spacing)
-			lastUpBar = bar
-		else
-			bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT", 0, -spacing)
-			bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT", 0, -spacing)
-			lastDownBar = bar
+		wipe(tmp)
+		for bar in pairs(anchor.bars) do
+			tmp[#tmp + 1] = bar
+		end
+		table.sort(tmp, barSorter)
+		local lastDownBar, lastUpBar = nil, nil
+		local up = nil
+		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
+		for i, bar in next, tmp do
+			local spacing = currentBarStyler.GetSpacing(bar) or 0
+			bar:ClearAllPoints()
+			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+				bar:SetPoint("BOTTOMLEFT", lastUpBar or anchor, "TOPLEFT", 0, spacing)
+				bar:SetPoint("BOTTOMRIGHT", lastUpBar or anchor, "TOPRIGHT", 0, spacing)
+				lastUpBar = bar
+			else
+				bar:SetPoint("TOPLEFT", lastDownBar or anchor, "BOTTOMLEFT", 0, -spacing)
+				bar:SetPoint("TOPRIGHT", lastDownBar or anchor, "BOTTOMRIGHT", 0, -spacing)
+				lastDownBar = bar
+			end
 		end
 	end
 end
@@ -1072,14 +1076,11 @@ end
 --
 
 do
-	empUpdate = CreateFrame("Frame")
-	empUpdate:Hide()
-	local total = 0
 	local dirty = nil
-	empUpdate:SetScript("OnUpdate", function(self, elapsed)
-		if dirty then return end
+	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
+	empUpdate:SetScript("OnLoop", function()
 		for k in pairs(normalAnchor.bars) do
-			if k.remaining <= 10 and not k:Get("bigwigs:emphasized") then
+			if k.remaining < 10 and not k:Get("bigwigs:emphasized") then
 				plugin:EmphasizeBar(k)
 				dirty = true
 			end
@@ -1090,6 +1091,10 @@ do
 			dirty = nil
 		end
 	end)
+	empUpdate:SetLooping("REPEAT")
+
+	local anim = empUpdate:CreateAnimation()
+	anim:SetDuration(0.2)
 end
 
 local function countdown(bar)

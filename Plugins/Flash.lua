@@ -74,32 +74,35 @@ function mod:BigWigs_FlashShake(event, module, key)
 	if BigWigs.db.profile.flash then
 		local r, g, b = colors:GetColor("flashshake", module, key)
 		if not flasher then --frame creation
-			flasher = CreateFrame("Frame", "BWFlash", UIParent)
-			flasher:SetFrameStrata("BACKGROUND")
-			flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-			flasher:SetAllPoints(UIParent)
-			flasher:SetScript("OnShow", function(self)
-				self.elapsed = 0
-				self:SetAlpha(0)
-			end)
-			flasher:SetScript("OnUpdate", function(self, elapsed)
-				elapsed = self.elapsed + elapsed
-				if elapsed >= 0.8 then
-					self:Hide()
-					self:SetAlpha(0)
-					return
+			local flashFrame = CreateFrame("Frame", nil, UIParent)
+			flashFrame:SetFrameStrata("BACKGROUND")
+			flashFrame:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"})
+			flashFrame:SetAllPoints(UIParent)
+			flashFrame:SetBackdropColor(r, g, b, 0.55)
+			flashFrame:SetAlpha(0)
+			flashFrame:Hide()
+
+			flasher = flashFrame:CreateAnimationGroup()
+			flasher:SetScript("OnLoop", function(frame)
+				frame.count = frame.count + 1
+				if frame.count > 3 then
+					frame:Stop()
+					flashFrame:Hide()
 				end
-				local alpha = elapsed % 0.4
-				if elapsed > 0.2 then
-					alpha = 0.4 - alpha
-				end
-				self:SetAlpha(alpha * 5)
-				self.elapsed = elapsed
 			end)
-			flasher:Hide()
+			flasher:SetScript("OnPlay", function(frame)
+				frame.count = 0
+				flashFrame:SetBackdropColor(r, g, b, 0.55)
+				flashFrame:Show()
+			end)
+			flasher:SetLooping("BOUNCE")
+			flasher.count = 0
+
+			local fade = flasher:CreateAnimation("Alpha")
+			fade:SetDuration(0.2)
+			fade:SetChange(1)
 		end
-		flasher:SetBackdropColor(r, g, b, 0.55)
-		flasher:Show()
+		flasher:Play()
 	end
 	if not WorldFrame:IsProtected() and BigWigs.db.profile.shake then
 		if not shaker then
