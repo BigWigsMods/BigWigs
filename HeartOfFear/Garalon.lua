@@ -13,6 +13,7 @@ mod:RegisterEnableMob(62164, 63191)
 
 local mendleg = (GetSpellInfo(123495))
 local legCounter, mendLegTimerRunning, mendLegCD = 4, false, 44
+local crushCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -47,6 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Pungency", 123081)
 	self:Log("SPELL_CAST_SUCCESS", "MendLeg", 123495)
 	self:Log("SPELL_CAST_SUCCESS", "BrokenLeg", 122786)
+	self:Log("SPELL_CAST_START", "FuriousSwipe", 122735)
 
 	-- not sure if a CL.underyou type warning should be added for Pheromone Trail, you aren't really supposed to be near it unless you have Pheromones on
 
@@ -57,6 +59,7 @@ end
 
 function mod:OnEngage(diff)
 	legCounter, mendLegTimerRunning = 4, false
+	crushCounter = 0
 	self:Berserk(360) -- assume
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
@@ -68,7 +71,8 @@ end
 
 function mod:Crush(a)
 	local t = GetTime()
-	print(a, t)
+	crushCounter = crushCounter + 1
+	print(a, crushCounter, t)
 end
 
 function mod:PheromonesApplied(player, _, _, _, spellName)
@@ -116,6 +120,9 @@ function mod:BrokenLeg()
 	end
 end
 
+function mod:FuriousSwipe()
+	self:Bar(122735, 122735, 8, 122735)
+end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" then
