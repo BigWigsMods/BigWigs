@@ -75,7 +75,7 @@ function mod:PheromonesApplied(player, _, _, _, spellName)
 	self:PrimaryIcon(122835, player)
 	if UnitIsUnit("player", player) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
-		self:LocalMessage(122835, CL["you"]:format(player), "Personal", 116417, "Info")
+		self:LocalMessage(122835, CL["you"]:format(spellName), "Personal", 116417, "Info")
 	end
 end
 
@@ -87,7 +87,7 @@ function mod:PheromonesRemoved(player, _, _, _, spellName)
 	end
 end
 
-function mod:Pungency(player, _, _, _, _, buffStack)
+function mod:Pungency(player, _, _, _, spellName, buffStack)
 	-- warn for every 3rd stack once we reach 12 stacks, this might needs some adjusting see what works best
 	if buffStack > 11 and buffStack % 3 == 0 and UnitIsUnit("player", player) then
 		-- this can't be important or personal because those are already used for these people
