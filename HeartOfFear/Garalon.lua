@@ -11,9 +11,7 @@ mod:RegisterEnableMob(62164, 63191)
 -- Locals
 --
 
-local mendleg = (GetSpellInfo(123495))
 local legCounter, mendLegTimerRunning, mendLegCD = 4, false, 44
-local crushCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,7 +19,8 @@ local crushCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-
+	L.crush_stun = "Crush stun"
+	L.crush_trigger = "Garalon prepares to"
 end
 L = mod:GetLocale()
 
@@ -31,7 +30,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		122774, {122835, "ICON"}, 123081, 123495, "ej:6294",
+		122774, {122835, "ICON"}, 123081, 123495, "ej:6294", 122735,
 		"berserk", "bosskill",
 	}, {
 		[122774] = "general",
@@ -39,9 +38,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- need to figure out which is faster
-	self:Log("SPELL_CAST_SUCCESS", "Crush", 122774)
-	self:Emote("Crush", "Crush")
+	self:Emote("Crush", L["crush_trigger"])
 
 	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835, 123811)
 	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835, 123811)
@@ -69,10 +66,9 @@ end
 --
 
 
-function mod:Crush(a)
-	local t = GetTime()
-	crushCounter = crushCounter + 1
-	print(a, crushCounter, t)
+function mod:Crush()
+	self:Bar(122774, L["crush_stun"], 4, 122082)
+	self:Message(122774, 122082, "Important", 122082, "Alarm")
 end
 
 function mod:PheromonesApplied(player, _, _, _, spellName)
@@ -115,7 +111,7 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..mendleg, mendLegCD, 123495) -- need logs of longer attempts to verify if it is CD or not
+		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- need logs of longer attempts to verify if it is CD or not
 		mendLegTimerRunning = true
 	end
 end
@@ -125,7 +121,8 @@ function mod:FuriousSwipe()
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if unitId == "boss1" then
+	local id = tonumber((UnitGUID(unitId)):sub(7, 10), 16)
+	if id == 62164 or id == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33
 			self:Message("ej:6294", CL["soon"]:format(CL["phase"]:format(2)), "Positive", 108201, "Long") -- the corrent icon
