@@ -506,7 +506,7 @@ end
 
 function boss:Message(key, text, color, icon, sound, noraidsay, broadcastonly)
 	if not checkFlag(self, key, C.MESSAGE) then return end
-	self:SendMessage("BigWigs_Message", self, key, text, color, noraidsay, sound, broadcastonly, icon and icons[icon])
+	self:SendMessage("BigWigs_Message", self, key, type(text) == "number" and spells[text] or text, color, noraidsay, sound, broadcastonly, icon and icons[icon])
 end
 
 do
