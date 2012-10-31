@@ -30,7 +30,7 @@ function mod:GetOptions()
 	return {
 		127834, "force", 122740,
 		"ej:6429",
-		"berserk", "bosskill",
+		"bosskill",
 	}, {
 		[127834] = "general",
 	}
