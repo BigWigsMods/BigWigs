@@ -11,9 +11,8 @@ mod:RegisterEnableMob(60410)
 -- Locales
 --
 
-local drawPowerCounter
-local totalAnnihilationCounter = 0
-local phase2SoonWarned, phase2SoonWarned2ndTime
+local drawPowerCounter, annihilateCounter = 0, 0
+local phase2SoonWarned, phase2SoonWarned2ndTime = nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -71,10 +70,9 @@ function mod:OnEngage(diff)
 	self:Bar(117960, 117960, 8.5, 117960) -- Celestial Breath
 	self:Bar("ej:6177", 117954, 12, 117954) -- Materialize Protector
 	self:Berserk(570)
-	drawPowerCounter = 0
-	totalAnnihilationCounter = 0
+	drawPowerCounter, annihilateCounter = 0, 0
+	phase2SoonWarned, phase2SoonWarned2ndTime = nil, nil
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	phase2SoonWarned, phase2SoonWarned2ndTime = false, false
 end
 
 --------------------------------------------------------------------------------
@@ -124,8 +122,8 @@ do
 end
 
 function mod:TotalAnnihilation(_, spellId, _, _, spellName)
-	totalAnnihilationCounter = totalAnnihilationCounter + 1
-	self:Message("ej:6186", ("%s (%d)"):format(spellName, totalAnnihilationCounter), "Important", spellId, "Alert")
+	annihilateCounter = annihilateCounter + 1
+	self:Message("ej:6186", ("%s (%d)"):format(spellName, annihilateCounter), "Important", spellId, "Alert")
 	self:Bar("ej:6186", CL["cast"]:format(spellName), 4, spellId)
 end
 
@@ -142,8 +140,7 @@ function mod:UnstableEnergyRemoved()
 	if phase2SoonWarned2ndTime then
 		self:Message("stages", L["last_phase"], "Positive")
 	else
-		drawPowerCounter = 0
-		totalAnnihilationCounter = 0
+		drawPowerCounter, annihilateCounter = 0, 0
 		self:Message("stages", CL["phase"]:format(1), "Positive")
 		self:Bar("ej:6177", 117954, 15, 117954) -- Materialize Protector
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
