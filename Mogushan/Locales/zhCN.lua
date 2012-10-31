@@ -25,6 +25,9 @@ if L then
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s cast Shroud on %1$s"
 	L.barrier_message = "Barrier UP!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Tank Alerts"
@@ -54,11 +57,11 @@ end
 L = BigWigs:NewBossLocale("Elegon", "zhCN")
 if L then
 	L.last_phase = "Last Phase"
-	L.overcharged_total_annihilation = "You have (%d) %s, reset your debuff!"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "Floor Despawn"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "The floor is falling!!"
+	L.floor_message = "The floor is falling!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "zhCN")

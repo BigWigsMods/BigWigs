@@ -20,6 +20,9 @@ if L then
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s conjurou mortalha em %1$s"
 	L.barrier_message = "Barreira ATIVADA!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	L.phase_flame = "Fase das chamas!"
 	L.phase_lightning = "Fase dos raios!"
@@ -54,11 +57,11 @@ end
 L = BigWigs:NewBossLocale("Elegon", "ptBR")
 if L then
 	L.last_phase = "Última Fase!"
-	L.overcharged_total_annihilation = "Você tem (%d) %s, reinicie sua penalidade!"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "O Vórtice de Energia está descarregando!"
 	L.floor_desc = "Avisa quando o chão está prestes a desaparecer."
-	L.floor_message = "O chão está desaparecendo!!"
+	L.floor_message = "O chão está desaparecendo!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ptBR")

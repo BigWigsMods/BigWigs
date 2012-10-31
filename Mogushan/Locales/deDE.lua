@@ -25,6 +25,9 @@ if L then
 	L.phase_message = "Neue Phase bald!"
 	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
 	L.barrier_message = "Nullifikationsbarriere AN!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Tankwarnungen"
@@ -52,7 +55,7 @@ end
 L = BigWigs:NewBossLocale("Elegon", "deDE")
 if L then
 	L.last_phase = "Letzte Phase"
-	L.overcharged_total_annihilation = "Du hast (%d) %s, werde deinen Debuff los!"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "Verschwinden des Bodens"
 	L.floor_desc = "Warnungen, wenn der Boden verschwindet."

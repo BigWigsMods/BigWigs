@@ -25,6 +25,9 @@ if L then
 	L.phase_message = "¡Nueva fase pronto!"
 	L.shroud_message = "%2$s castea Embozo en %1$s"
 	L.barrier_message = "¡Barrera Activa!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Alertas de tanques"
@@ -52,11 +55,11 @@ end
 L = BigWigs:NewBossLocale("Elegon", "esES") or BigWigs:NewBossLocale("Elegon", "esMX")
 if L then
 	L.last_phase = "Última fase"
-	L.overcharged_total_annihilation = "¡Tienes (%d) %s, resetea tu debuff!"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "Desaparece el suelo"
 	L.floor_desc = "Aviso para cuando el suelo esté a punto de desaparecer."
-	L.floor_message = "¡El suelo está desapareciendo!!"
+	L.floor_message = "¡El suelo está desapareciendo!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "esES") or BigWigs:NewBossLocale("Will of the Emperor", "esMX")

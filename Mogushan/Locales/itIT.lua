@@ -20,6 +20,9 @@ if L then
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s attiva Manto su %1$s"
 	L.barrier_message = "Barriera Attiva!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	L.phase_lightning = "Fase Fulmini!"
 	L.phase_flame = "Fase Fuoco!"
@@ -45,7 +48,7 @@ L = BigWigs:NewBossLocale("Elegon", "itIT")
 if L then
 	L.floor = "Scomparsa del Pavimento"
 	L.floor_desc = "Avviso Speciale prima che il vortice svanisca."
-	L.floor_message = "Il Pavimento sta Scomparendo!!"
+	L.floor_message = "Il Pavimento sta Scomparendo!"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")

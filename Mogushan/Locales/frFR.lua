@@ -25,6 +25,9 @@ if L then
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s incante Voile sur %1$s"
 	L.barrier_message = "Barrière EN PLACE !"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Alertes tank"
@@ -54,7 +57,7 @@ end
 L = BigWigs:NewBossLocale("Elegon", "frFR")
 if L then
 	L.last_phase = "Dernière phase"
-	L.overcharged_total_annihilation = "Vous avez (%d) %s, réinitialisez votre affaiblissement !"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "Disparition du sol"
 	L.floor_desc = "Prévient quand le sol est sur le point de s'effondrer."

@@ -11,7 +11,6 @@ mod:RegisterEnableMob(60410)
 -- Locales
 --
 
-local celestialBreath, materializeProtector, overcharged = (GetSpellInfo(117960)), (GetSpellInfo(117954)), (GetSpellInfo(117878))
 local drawPowerCounter
 local totalAnnihilationCounter = 0
 local phase2SoonWarned, phase2SoonWarned2ndTime
@@ -23,12 +22,12 @@ local phase2SoonWarned, phase2SoonWarned2ndTime
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.last_phase = "Last Phase"
-	L.overcharged_total_annihilation = "You have (%d) %s, reset your debuff!"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "Floor Despawn"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
 	L.floor_icon = "ability_vehicle_launchplayer"
-	L.floor_message = "The floor is falling!!"
+	L.floor_message = "The floor is falling!"
 end
 L = mod:GetLocale()
 
@@ -69,8 +68,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(117960, celestialBreath, 8.5, 117960)
-	self:Bar("ej:6177", materializeProtector, 12, 117954)
+	self:Bar(117960, 117960, 8.5, 117960) -- Celestial Breath
+	self:Bar("ej:6177", 117954, 12, 117954) -- Materialize Protector
 	self:Berserk(570)
 	drawPowerCounter = 0
 	totalAnnihilationCounter = 0
@@ -91,10 +90,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, _, _, spellId)
 	end
 end
 
-function mod:Overcharged(player, _, _, _, spellName, buffStack)
+function mod:Overcharged(player, spellId, _, _, spellName, buffStack)
 	if UnitIsUnit(player, "player") and InCombatLockdown() then
 		if (buffStack or 1) >= 6 and buffStack % 2 == 0 then
-			self:LocalMessage(117878, ("%s (%d)"):format(spellName, buffStack), "Personal", 117878)
+			self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Personal", spellId)
 		end
 	end
 end
@@ -103,47 +102,50 @@ function mod:DrawPower(_, _, _, _, spellName)
 	drawPowerCounter = drawPowerCounter + 1
 	self:Message(119360, ("%s (%d)"):format(spellName, drawPowerCounter), "Attention", 119360)
 	-- XXX need to check for another event that is also called Draw Power and cancell bars there, that should be better
-	self:SendMessage("BigWigs_StopBar", self, materializeProtector)
-	self:SendMessage("BigWigs_StopBar", self, celestialBreath)
+	self:SendMessage("BigWigs_StopBar", self, self:SpellName(117954)) -- Materialize Protector
+	self:SendMessage("BigWigs_StopBar", self, self:SpellName(117960)) -- Celestial Breath
 end
 
-function mod:CelestialBreath(_, _, _, _, spellName)
-	self:Bar(117960, spellName, 18, 117960)
+function mod:CelestialBreath(_, spellId, _, _, spellName)
+	self:Bar(spellId, spellName, 18, spellId)
 end
 
-function mod:StabilityFlux(_, _, _, _, spellName)
-	-- this gives an 1 sec warning before damage, might want to check hp for a
-	self:Message(117911, spellName, "Urgent", 117911, "Alarm")
-	local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
-	if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
-		self:FlashShake(117878)
-		self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack, overcharged), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
+do
+	local overcharged = mod:SpellName(117878)
+	function mod:StabilityFlux(_, spellId, _, _, spellName)
+		-- this gives an 1 sec warning before damage, might want to check hp for a
+		self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
+		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
+		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
+			self:FlashShake(117878)
+			self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
+		end
 	end
 end
 
-function mod:TotalAnnihilation(_, _, _, _, spellName)
+function mod:TotalAnnihilation(_, spellId, _, _, spellName)
 	totalAnnihilationCounter = totalAnnihilationCounter + 1
-	self:Message("ej:6186", ("%s (%d)"):format(spellName, totalAnnihilationCounter), "Important", 129711, "Alert")
-	self:Bar("ej:6186", CL["cast"]:format(spellName), 4, 129711)
+	self:Message("ej:6186", ("%s (%d)"):format(spellName, totalAnnihilationCounter), "Important", spellId, "Alert")
+	self:Bar("ej:6186", CL["cast"]:format(spellName), 4, spellId)
 end
 
-function mod:MaterializeProtector(_, _, _, _, spellName)
-	self:Message("ej:6177", spellName, "Attention", 117954)
+function mod:MaterializeProtector(_, spellId, _, _, spellName)
+	self:Message("ej:6177", spellName, "Attention", spellId)
 	if self:Heroic() then
-		self:Bar("ej:6177", spellName, 26, 117954)
+		self:Bar("ej:6177", spellName, 26, spellId)
 	else
-		self:Bar("ej:6177", spellName, 36, 117954)
+		self:Bar("ej:6177", spellName, 36, spellId)
 	end
 end
 
 function mod:UnstableEnergyRemoved()
 	if phase2SoonWarned2ndTime then
-		self:Message("stages", L["last_phase"], "Positive", 116994)
+		self:Message("stages", L["last_phase"], "Positive")
 	else
 		drawPowerCounter = 0
 		totalAnnihilationCounter = 0
-		self:Message("stages", CL["phase"]:format(1), "Positive", 116994)
-		self:Bar("ej:6177", materializeProtector, 15, 117954)
+		self:Message("stages", CL["phase"]:format(1), "Positive")
+		self:Bar("ej:6177", 117954, 15, 117954) -- Materialize Protector
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	end
 end

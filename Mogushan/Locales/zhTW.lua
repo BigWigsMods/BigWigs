@@ -25,6 +25,9 @@ if L then
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s 施放護罩在 %1$s"
 	L.barrier_message = "阻擋!"
+	L.barrier_cooldown = "Barrier cooldown"
+	L.can_interrupt_epicenter = "%s can interrupt %s"
+	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "坦克警報"
@@ -54,7 +57,7 @@ end
 L = BigWigs:NewBossLocale("Elegon", "zhTW")
 if L then
 	L.last_phase = "最後階段"
-	L.overcharged_total_annihilation = "你有 (%d) %s, 消除你的debuff!"
+	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
 	L.floor = "地板消失"
 	L.floor_desc = "警報當地板將要消失。"
