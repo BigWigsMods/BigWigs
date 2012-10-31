@@ -46,6 +46,8 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "itIT")
 if L then
+	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+
 	L.floor = "Scomparsa del Pavimento"
 	L.floor_desc = "Avviso Speciale prima che il vortice svanisca."
 	L.floor_message = "Il Pavimento sta Scomparendo!"

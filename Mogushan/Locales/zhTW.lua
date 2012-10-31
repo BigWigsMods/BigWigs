@@ -56,6 +56,8 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "zhTW")
 if L then
+	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+
 	L.last_phase = "最後階段"
 	L.overcharged_total_annihilation = "超載 %d! 太多了喔?"
 

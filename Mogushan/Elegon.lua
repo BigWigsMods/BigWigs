@@ -20,6 +20,8 @@ local phase2SoonWarned, phase2SoonWarned2ndTime = nil, nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+
 	L.last_phase = "Last Phase"
 	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 

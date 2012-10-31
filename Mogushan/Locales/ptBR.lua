@@ -56,6 +56,8 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "ptBR")
 if L then
+	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+
 	L.last_phase = "Última Fase!"
 	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
 
