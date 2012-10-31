@@ -1069,7 +1069,7 @@ function plugin:Open(range, module, key)
 	makeThingsWork()
 	-- Start the show!
 	anchor:Show()
-	updater:Start()
+	updater:Play()
 end
 
 function plugin:Test()
