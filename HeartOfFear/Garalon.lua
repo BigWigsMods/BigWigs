@@ -11,7 +11,7 @@ mod:RegisterEnableMob(62164, 63191) -- Verify id
 -- Locals
 --
 
-local legCounter, mendLegTimerRunning, mendLegCD = 4, false, 44
+local legCounter, mendLegTimerRunning, mendLegCD = 4, false, 30
 
 --------------------------------------------------------------------------------
 -- Localization
