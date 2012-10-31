@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Garalon", 897, 713)
 if not mod then return end
-mod:RegisterEnableMob(62164, 63191)
+mod:RegisterEnableMob(62164, 63191) -- Verify id
 
 -----------------------------------------------------------------------------------------
 -- Locals
@@ -68,7 +68,7 @@ end
 
 function mod:Crush()
 	self:Bar(122774, L["crush_stun"], 4, 122082)
-	self:Message(122774, 122082, "Important", 122082, "Alarm")
+	self:Message(122774, 122082, "Important", 122082, "Alarm") -- Crush
 end
 
 function mod:PheromonesApplied(player, _, _, _, spellName)
@@ -87,20 +87,20 @@ function mod:PheromonesRemoved(player, _, _, _, spellName)
 	end
 end
 
-function mod:Pungency(player, _, _, _, spellName, buffStack)
+function mod:Pungency(player, spellId, _, _, spellName, buffStack)
 	-- warn for every 3rd stack once we reach 12 stacks, this might needs some adjusting see what works best
 	if buffStack > 11 and buffStack % 3 == 0 and UnitIsUnit("player", player) then
 		-- this can't be important or personal because those are already used for these people
-		self:LocalMessage(123081, ("%s (%d)"):format(spellName, buffStack), "Attention", 123081)
+		self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Attention", spellId)
 	end
 end
 
 
-function mod:MendLeg(_, _, _, _, spellName)
+function mod:MendLeg(_, spellId, _, _, spellName)
 	legCounter = legCounter + 1
 	if legCounter < 4 then -- don't start a timer if it has all 4 legs
-		self:Message(123495, spellName, "Urgent", 123495)
-		self:Bar(123495, "~"..spellName, mendLegCD, 123495) -- need logs of longer attempts to verify if it is on a CD or not, assume it is on one for now
+		self:Message(spellId, spellName, "Urgent", spellId)
+		self:Bar(spellId, "~"..spellName, mendLegCD, spellId) -- need logs of longer attempts to verify if it is on a CD or not, assume it is on one for now
 	else
 		-- all legs grew back, no need to start a bar, :BrokenLeg will start it
 		mendLegTimerRunning = false
@@ -111,17 +111,17 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- need logs of longer attempts to verify if it is CD or not
+		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- Mend Leg, need logs of longer attempts to verify if it is CD or not
 		mendLegTimerRunning = true
 	end
 end
 
-function mod:FuriousSwipe()
-	self:Bar(122735, 122735, 8, 122735)
+function mod:FuriousSwipe(_, spellId, _, _, spellName)
+	self:Bar(spellId, spellName, 8, spellId)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	local id = tonumber((UnitGUID(unitId)):sub(7, 10), 16)
+	local id = self:GetCID(UnitGUID(unitId)) -- Fix this, not a great idea to call it every health update
 	if id == 62164 or id == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33
