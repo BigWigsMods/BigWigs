@@ -21,6 +21,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.crush_stun = "Crush stun"
 	L.crush_trigger = "Garalon prepares to"
+	L.crush_trigger1 = "Garalon senses"
 end
 L = mod:GetLocale()
 
@@ -38,7 +39,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Emote("Crush", L["crush_trigger"])
+	self:Emote("Crush", L["crush_trigger"], L["crush_trigger1"])
 
 	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835, 123811)
 	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835, 123811)
@@ -56,9 +57,10 @@ end
 
 function mod:OnEngage(diff)
 	legCounter, mendLegTimerRunning = 4, false
-	crushCounter = 0
-	self:Berserk(360) -- assume
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:Berserk(420)
+	if self:Heroic() then
+		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -68,7 +70,7 @@ end
 
 function mod:Crush()
 	self:Bar(122774, L["crush_stun"], 4, 122082)
-	self:Message(122774, 122082, "Important", 122082, "Alarm") -- Crush
+	self:Message(122774, 122774, "Important", 122082, "Alarm") -- Crush
 end
 
 function mod:PheromonesApplied(player, _, _, _, spellName)
@@ -88,10 +90,14 @@ function mod:PheromonesRemoved(player, _, _, _, spellName)
 end
 
 function mod:Pungency(player, spellId, _, _, spellName, buffStack)
-	-- warn for every 3rd stack once we reach 12 stacks, this might needs some adjusting see what works best
-	if buffStack > 11 and buffStack % 3 == 0 and UnitIsUnit("player", player) then
-		-- this can't be important or personal because those are already used for these people
-		self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Attention", spellId)
+	if self:Heroic() then
+		if buffStack > 3 and buffStack % 2 == 0 then
+			self:TargetMessage(spellId, ("%s (%d)"):format(spellName, buffStack), player, "Attention", spellId)
+		end
+	else
+		if buffStack > 7 and buffStack % 2 == 0 then
+			self:TargetMessage(spellId, ("%s (%d)"):format(spellName, buffStack), player, "Attention", spellId)
+		end
 	end
 end
 
@@ -100,7 +106,7 @@ function mod:MendLeg(_, spellId, _, _, spellName)
 	legCounter = legCounter + 1
 	if legCounter < 4 then -- don't start a timer if it has all 4 legs
 		self:Message(spellId, spellName, "Urgent", spellId)
-		self:Bar(spellId, "~"..spellName, mendLegCD, spellId) -- need logs of longer attempts to verify if it is on a CD or not, assume it is on one for now
+		self:Bar(spellId, "~"..spellName, mendLegCD, spellId)
 	else
 		-- all legs grew back, no need to start a bar, :BrokenLeg will start it
 		mendLegTimerRunning = false
@@ -111,7 +117,7 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- Mend Leg, need logs of longer attempts to verify if it is CD or not
+		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- need logs of longer attempts to verify if it is CD or not
 		mendLegTimerRunning = true
 	end
 end
@@ -121,7 +127,10 @@ function mod:FuriousSwipe(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	local id = self:GetCID(UnitGUID(unitId)) -- Fix this, not a great idea to call it every health update
+	if not unitId then return end
+	local GUID = UnitGUID(unitId)
+	if not GUID then return end
+	local id = tonumber(GUID:sub(7, 10), 16)
 	if id == 62164 or id == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33
