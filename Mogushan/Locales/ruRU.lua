@@ -25,9 +25,9 @@ if L then
 	L.phase_message = "Новая фаза скоро!"
 	L.shroud_message = "%2$s вешает Покров на %1$s"
 	L.barrier_message = "Барьер АКТИВЕН!"
-	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
+	L.barrier_cooldown = "Перезарядка барьера"
+	L.can_interrupt_epicenter = "%s может прервать %s"
+	L.epicenter_interrupted = "%s прерван!"
 
 	L.tank = "Предупреждения для танков"
 	L.tank_desc = "Только для танков. Считает стаки: Искрящаяся плеть, Пылающее копье, Чародейское потрясение и Ожог Тьмы (Героик)."
@@ -56,7 +56,7 @@ end
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
 if L then
 	L.last_phase = "Последняя фаза"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "Перезарядка %d! Многовато?"
 
 	L.floor = "Исчезание пола"
 	L.floor_desc = "Предупреждать, когда пол готовится исчезнуть."
