@@ -69,7 +69,7 @@ local unpack = unpack
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
-local setDot, hideDots, testDots -- funcs defined later
+local hideDots, testDots -- funcs defined later
 
 local hexColors = {}
 local vertexColors = {}
@@ -515,7 +515,7 @@ do
 	-- dx and dy are in yards
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
-	setDot = function(dx, dy, class, mark)
+	local setDot = function(dx, dy, class, mark)
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
@@ -593,7 +593,7 @@ do
 	end
 
 	local tooClose = {} -- List of players who are too close.
-	local function updateProximityText()
+	function textUpdater()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
@@ -623,7 +623,7 @@ do
 		end
 	end
 
-	local function updateProximityRadar()
+	function graphicalUpdater()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
@@ -642,7 +642,9 @@ do
 
 		-- Fall back to text
 		if not id then
-			updater:SetScript("OnUpdate", textUpdater)
+			updater:Stop()
+			updater:SetScript("OnLoop", textUpdater)
+			updater:Play()
 			anchor.text:Show()
 			anchor.rangeCircle:Hide()
 			anchor.playerDot:Hide()
@@ -683,26 +685,10 @@ do
 		end
 	end
 
-	updater = CreateFrame("Frame")
-	updater:Hide()
-	local total = 0
-
-	-- 20x per second for radar mode
-	function graphicalUpdater(self, elapsed)
-		total = total + elapsed
-		if total >= .05 then
-			total = 0
-			updateProximityRadar()
-		end
-	end
-	-- 2 times per second for text mode
-	function textUpdater(self, elapsed)
-		total = total + elapsed
-		if total >= .5 then
-			total = 0
-			updateProximityText()
-		end
-	end
+	updater = CreateFrame("Frame"):CreateAnimationGroup()
+	updater:SetLooping("REPEAT")
+	local anim = updater:CreateAnimation()
+	anim:SetDuration(0.1)
 end
 
 local function updateProfile()
@@ -1022,8 +1008,7 @@ function plugin:Close()
 		anchor.background:SetTexture(0, 0, 0, 0.3)
 		anchor:Hide()
 	end
-	updater:SetScript("OnUpdate", nil)
-	updater:Hide()
+	updater:Stop()
 end
 
 local abilityNameFormat = "|T%s:20:20:-5|t%s"
@@ -1054,12 +1039,12 @@ function plugin:Open(range, module, key)
 		anchor.playerDot:Show()
 		anchor.rangeCircle:Show()
 		anchor.text:Hide()
-		updater:SetScript("OnUpdate", graphicalUpdater)
+		updater:SetScript("OnLoop", graphicalUpdater)
 	else
 		anchor.rangeCircle:Hide()
 		anchor.playerDot:Hide()
 		anchor.text:Show()
-		updater:SetScript("OnUpdate", textUpdater)
+		updater:SetScript("OnLoop", textUpdater)
 	end
 
 	-- Update the header to reflect the actual range we're checking
@@ -1084,7 +1069,7 @@ function plugin:Open(range, module, key)
 	makeThingsWork()
 	-- Start the show!
 	anchor:Show()
-	updater:Show()
+	updater:Start()
 end
 
 function plugin:Test()

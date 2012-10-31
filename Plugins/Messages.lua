@@ -448,28 +448,32 @@ do
 	end
 end
 do
-	local emphasizedText = nil
-	local frame = nil
+	local emphasizedText, updater, frame = nil, nil, nil
 	function plugin:EmphasizedPrint(addon, text, r, g, b, font, size, _, _, _, icon)
 		if createAnchors then createAnchors() end
-		if not emphasizedText then
+		if not updater then
 			frame = CreateFrame("Frame", "BWEmphasizeMessageFrame", UIParent)
 			frame:SetFrameStrata("HIGH")
 			frame:SetPoint("TOP", emphasizeAnchor, "BOTTOM")
 			frame:SetWidth(UIParent:GetWidth())
 			frame:SetHeight(80)
-			frame:SetScript("OnUpdate", FadingFrame_OnUpdate)
-			FadingFrame_OnLoad(frame)
-			FadingFrame_SetFadeInTime(frame, 0.2)
-			-- XXX is 1.5 + 3.5 fade enough for a super emphasized message?
-			FadingFrame_SetHoldTime(frame, 1.5)
-			FadingFrame_SetFadeOutTime(frame, 3.5)
+
 			emphasizedText = frame:CreateFontString(nil, "OVERLAY", "ZoneTextFont")
 			emphasizedText:SetPoint("TOP")
+
+			updater = frame:CreateAnimationGroup()
+			updater:SetScript("OnFinished", function() frame:Hide() end)
+
+			local anim = updater:CreateAnimation("Alpha")
+			anim:SetChange(-1)
+			anim:SetDuration(3.5)
+			anim:SetStartDelay(1.5)
 		end
 		emphasizedText:SetText(text)
 		emphasizedText:SetTextColor(r, g, b)
-		FadingFrame_Show(frame)
+		updater:Stop()
+		frame:Show()
+		updater:Play()
 	end
 	function plugin:BigWigs_EmphasizedMessage(event, ...)
 		fakeEmphasizeMessageAddon:Pour(...)

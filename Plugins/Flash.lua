@@ -96,7 +96,6 @@ function mod:BigWigs_FlashShake(event, module, key)
 				flashFrame:Show()
 			end)
 			flasher:SetLooping("BOUNCE")
-			flasher.count = 0
 
 			local fade = flasher:CreateAnimation("Alpha")
 			fade:SetDuration(0.2)
