@@ -22,12 +22,12 @@ if L then
 	L.phase_arcane = "祕法階段！"
 	L.phase_shadow = "暗影階段！(英雄)"
 
-	L.phase_message = "New phase soon!"
+	L.phase_message = "快要轉換階段!"
 	L.shroud_message = "%2$s 施放護罩在 %1$s"
 	L.barrier_message = "阻擋!"
-	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
+	L.barrier_cooldown = "屏障冷卻中"
+	L.can_interrupt_epicenter = "%s 可以中斷 %s"
+	L.epicenter_interrupted = "%s 已中斷!"
 
 	-- Tanks
 	L.tank = "坦克警報"
@@ -42,9 +42,9 @@ L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhTW")
 if L then
 	L.engage_yell = "受死吧，你們!"
 
-	L.totem = "Totem (%d)"
-	L.shadowy_message = "Attack (%d)"
-	L.banish_message = "Tank Banished"
+	L.totem = "靈魂圖騰 (%d)"
+	L.shadowy_message = "暗影攻擊 (%d)"
+	L.banish_message = "坦克被放逐"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhTW")
@@ -57,11 +57,11 @@ end
 L = BigWigs:NewBossLocale("Elegon", "zhTW")
 if L then
 	L.last_phase = "最後階段"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "超載 %d! 太多了喔?"
 
 	L.floor = "地板消失"
 	L.floor_desc = "警報當地板將要消失。"
-	L.floor_message = "地板落下了！"
+	L.floor_message = "地板要落下了！"
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "zhTW")
@@ -69,16 +69,16 @@ if L then
 	L.enable_zone = "無盡熔爐"
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
-	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
+	L.normal_start_trigger = "這台機器啟動了!" -- The machine hums to life!  Get to the lower level!
 
-	L.rage_trigger = "The Emperor's Rage echoes through the hills."
-	L.strength_trigger = "The Emperor's Strength appears in the alcoves!"
-	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"
-	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"
-	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
+	L.rage_trigger = "大帝之怒響徹群山。"
+	L.strength_trigger = "大帝之力以鐵拳掌握大地。"
+	L.courage_trigger = "大帝之勇永久不滅。"
+	L.bosses_trigger = "無盡的大軍會碾碎大帝的敵人。"
+	L.gas_trigger = "古代魔古機器崩毀了!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
 	L.target_only = "|cFFFF0000這個警告只會顯示你設為目標的首領。|r "
-	L.combo_message = "%s: Combo soon!"
+	L.combo_message = "%s: 毀滅連擊快要來了!"
 end
 
