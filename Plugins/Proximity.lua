@@ -688,7 +688,7 @@ do
 	updater = CreateFrame("Frame"):CreateAnimationGroup()
 	updater:SetLooping("REPEAT")
 	local anim = updater:CreateAnimation()
-	anim:SetDuration(0.1)
+	anim:SetDuration(0.05)
 end
 
 local function updateProfile()
