@@ -68,7 +68,7 @@ end
 
 function mod:OnEngage()
 	totemCounter, shadowCounter = 1, 1
-	self:Bar(116174, L["totem"]:format(totemCounter), self:Heroic() and 20 or 30, 116174)
+	self:Bar(116174, L["totem"]:format(totemCounter), (self:Heroic() and 20) or (self:LFR() and 30) or 37, 116174) -- Verify
 	self:Bar(116272, L["banish_message"], self:Heroic() and 71 or 65, 116272)
 	if not self:LFR() then
 		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
