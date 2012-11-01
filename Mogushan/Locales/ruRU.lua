@@ -55,7 +55,7 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "ruRU")
 if L then
-	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+	L.engage_yell = "Переход в защитный режим. Отключение предохранителей."
 
 	L.last_phase = "Последняя фаза"
 	L.overcharged_total_annihilation = "Перезарядка %d! Многовато?"

@@ -8,8 +8,7 @@ L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "ruRU")
 if L then
 	L.unseenstrike_cone = "Невидимый удар"
 
-	L.assault = "Сокрушительный выпад"
-	L.assault_desc = "Только для танков. The attack leaves the target's defenses exposed, increasing the target's damage taken when an Overwhelming Assault lands by 100% for 45 sec."
+	L.assault_message = "%2$dx Выпад на |3-5(%1$s)"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "ruRU")
