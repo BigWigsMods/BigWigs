@@ -22,12 +22,12 @@ if L then
 	L.phase_arcane = "Phase des Arcanes !"
 	L.phase_shadow = "Phase d'Ombre (héroïque) !"
 
-	L.phase_message = "New phase soon!"
+	L.phase_message = "Nouvelle phase imminente !"
 	L.shroud_message = "%2$s incante Voile sur %1$s"
 	L.barrier_message = "Barrière EN PLACE !"
-	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
+	L.barrier_cooldown = "Recharge Barrière"
+	L.can_interrupt_epicenter = "%s peut interrompre %s"
+	L.epicenter_interrupted = "%s interrompu !"
 
 	-- Tanks
 	L.tank = "Alertes tank"
@@ -56,10 +56,10 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "frFR")
 if L then
-	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+	L.engage_yell = "Passage en mode défensif. Désactivation des sécurités intégrées." -- à vérifier
 
 	L.last_phase = "Dernière phase"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "Surcharge %d ! Un peu trop ?"
 
 	L.floor = "Disparition du sol"
 	L.floor_desc = "Prévient quand le sol est sur le point de s'effondrer."
@@ -78,7 +78,7 @@ if L then
 	L.courage_trigger = "Le Courage de l'empereur apparaît dans les alcôves !"
 	L.bosses_trigger = "Deux assemblages titanesques apparaissent dans les grandes alcôves !"
 	L.gas_trigger = "La machine mogu antique s’effondre !"
-	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!" -- à traduire
+	L.gas_overdrive_trigger = "La machine mogu antique s’emballe !" -- à vérifier
 
 	L.target_only = "|cFFFF0000Cette alerte ne s'affichera que pour le boss que vous ciblez.|r "
 	L.combo_message = "%s : combo imminent !"
