@@ -14,7 +14,9 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "deDE")
 if L then
-
+	L.crush_stun = "Zermalmen STUN"
+	L.crush_trigger = "Garalon macht sich bereit" -- heroic trigger  
+	L.crush_trigger1 = "Garalon spürt" -- normalmode trigger
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "deDE")
@@ -34,16 +36,15 @@ if L then
 	L.explosion_casting = "Amberexplosionen"
 	L.explosion_casting_desc = "Warnungen für alle Arten von Amberexplosionen. Hervorheben dieser Warnung wird strengstens empfohlen!"
 
-	L.willpower = "Willen" -- Willenskraft" would be a so much nicer translation, but the dungeonjournal calls it "Willen". Might change it.
-	L.willpower_desc = "Wenn der Willen erschöpft ist, stirbt der Spieler und das mutierte Konstrukt beginnt unkontrolliert zu handeln.When Willpower runs out, the player dies and the Mutated Construct continues to act, uncontrolled."
-	L.willpower_message = "Dein Wille ist bei: %d (%d)"
+	L.willpower = "Willenskraft" 
+	L.willpower_desc = "Wenn die Willenskraft erschöpft ist, stirbt der Spieler und das mutierte Konstrukt beginnt unkontrolliert zu handeln."
+	L.willpower_message = "Deine Willenskraft ist bei: %d (%d)"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "deDE")
 if L then
 	L.phases = "Phasen"
 	L.phases_desc = "Warnung bei Phasenwechsel."
-	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Augen der Kaiserin"
 	L.eyes_desc = "Nur für Tanks. Zählt die Stapel von -Augen der Kaiserin- und zeigt eine Leiste mit der verbleibenden Dauer an."

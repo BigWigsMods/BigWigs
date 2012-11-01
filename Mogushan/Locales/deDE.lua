@@ -26,8 +26,8 @@ if L then
 	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
 	L.barrier_message = "Nullifikationsbarriere AN!"
 	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
+	L.can_interrupt_epicenter = "%s kann %s unterbrechen"
+	L.epicenter_interrupted = "%s unterbrochen!"
 
 	-- Tanks
 	L.tank = "Tankwarnungen"
@@ -50,14 +50,17 @@ end
 L = BigWigs:NewBossLocale("The Spirit Kings", "deDE")
 if L then
 	L.shield_removed = "Schild entfernt! (%s)"
+	
+	L.casting_shields = "Wirke Schild"
+	L.casting_shields_desc = "Warnung für alle Bosse, wenn Schilde aktiviert werden."
 end
 
 L = BigWigs:NewBossLocale("Elegon", "deDE")
 if L then
-	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+	L.engage_yell = "Aktiviere Verteidigungsmodus. Notausschaltung deaktiviert."
 
 	L.last_phase = "Letzte Phase"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "%d Überladungen! Ein bisschen viel?"
 
 	L.floor = "Verschwinden des Bodens"
 	L.floor_desc = "Warnungen, wenn der Boden verschwindet."
