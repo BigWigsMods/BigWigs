@@ -217,7 +217,7 @@ do
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if not unitId:find("boss", nil, true) then return end
 
-		--don't check for target until later so our counter is always correct for each boss
+		-- Don't check for target until later so our counter is always correct for each boss, covers target swapping
 		if arcs[spellId] then
 			comboCounter[unitId] = comboCounter[unitId] + 1
 

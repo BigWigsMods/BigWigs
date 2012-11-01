@@ -63,7 +63,7 @@ end
 
 function mod:OnBossEnable()
 	-- qiang
-	self:Log("SPELL_CAST_START", "Annihilate", 119521, 117948)
+	self:Log("SPELL_CAST_START", "Annihilate", 119521, 117948) -- Heroic, Norm/LFR
 	self:Log("SPELL_CAST_SUCCESS", "FlankingOrders", 117910)
 	self:Log("SPELL_CAST_START", "ImperviousShield", 117961)
 	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 117961)
@@ -122,6 +122,7 @@ end
 do
 	local prevPower = 0
 	function mod:CowardiceApplied()
+		prevPower = 0
 		self:RegisterEvent("UNIT_POWER_FREQUENT")
 	end
 	function mod:CowardiceRemoved(_, spellId)

@@ -41,8 +41,8 @@ end
 function mod:OnBossEnable()
 	self:Emote("Crush", L["crush_trigger"], L["crush_trigger1"])
 
-	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835, 123811)
-	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835, 123811)
+	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835)
+	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Pungency", 123081)
 	self:Log("SPELL_CAST_SUCCESS", "MendLeg", 123495)
 	self:Log("SPELL_CAST_SUCCESS", "BrokenLeg", 122786)
@@ -69,35 +69,29 @@ end
 
 
 function mod:Crush()
-	self:Bar(122774, L["crush_stun"], 4, 122082)
-	self:Message(122774, 122774, "Important", 122082, "Alarm") -- Crush
+	self:Bar(122774, L["crush_stun"], 4, 122774)
+	self:Message(122774, 122774, "Important", 122774, "Alarm") -- Crush
 end
 
-function mod:PheromonesApplied(player, _, _, _, spellName)
-	self:PrimaryIcon(122835, player)
+function mod:PheromonesApplied(player, spellId, _, _, spellName)
+	self:PrimaryIcon(spellId, player)
 	if UnitIsUnit("player", player) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
-		self:LocalMessage(122835, CL["you"]:format(spellName), "Personal", 116417, "Info")
+		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
 	end
 end
 
-function mod:PheromonesRemoved(player, _, _, _, spellName)
-	SetRaidTarget(player, 0)
+function mod:PheromonesRemoved(player, spellId, _, _, spellName)
+	self:PrimaryIcon(spellId)
 	if UnitIsUnit("player", player) then
 		-- Local message with important and alarm for when you loose the debuff, others don't care that you lost it
-		self:LocalMessage(122835, CL["other"]:format(spellName, player), "Important", 116417, "Alarm")
+		self:LocalMessage(spellId, CL["other"]:format(spellName, player), "Important", spellId, "Alarm")
 	end
 end
 
 function mod:Pungency(player, spellId, _, _, spellName, buffStack)
-	if self:Heroic() then
-		if buffStack > 3 and buffStack % 2 == 0 then
-			self:TargetMessage(spellId, ("%s (%d)"):format(spellName, buffStack), player, "Attention", spellId)
-		end
-	else
-		if buffStack > 7 and buffStack % 2 == 0 then
-			self:TargetMessage(spellId, ("%s (%d)"):format(spellName, buffStack), player, "Attention", spellId)
-		end
+	if (buffStack > 3 and buffStack % 2 == 0 and self:Heroic()) or (buffStack > 7 and buffStack % 2 == 0) then
+		self:TargetMessage(spellId, ("%s (%d)"):format(spellName, buffStack), player, "Attention", spellId)
 	end
 end
 
@@ -117,7 +111,7 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- need logs of longer attempts to verify if it is CD or not
+		self:Bar(123495, "~"..self:SpellName(123495), mendLegCD, 123495) -- Mend Leg, need logs of longer attempts to verify if it is CD or not
 		mendLegTimerRunning = true
 	end
 end
@@ -127,10 +121,8 @@ function mod:FuriousSwipe(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-	if not unitId then return end
-	local GUID = UnitGUID(unitId)
-	if not GUID then return end
-	local id = tonumber(GUID:sub(7, 10), 16)
+	if not unitId:find("boss", nil, true) then return end
+	local id = self:GetCID(UnitGUID(unitId))
 	if id == 62164 or id == 63191 then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 38 then -- phase starts at 33
