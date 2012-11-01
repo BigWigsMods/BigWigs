@@ -73,7 +73,7 @@ function mod:OnEngage(diff)
 	self:Bar(121896, whirlingBlade, 36, 121896)
 	self:Bar(122406, "~"..rainOfBlades, 60, 122406)
 	self:OpenProximity(2, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range
-	self:Berserk(600) -- assume
+	self:Berserk(480)
 end
 
 --------------------------------------------------------------------------------
