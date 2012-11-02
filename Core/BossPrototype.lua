@@ -345,20 +345,8 @@ function boss:GetCID(guid)
 	return creatureId
 end
 
-do
-	local spellList = {}
-	function boss:SpellName(spellId, ...)
-		if ... then
-			wipe(spellList)
-			for i=1, select("#", ...) do
-				local id = select(i, ...)
-				spellList[#spellList+1] = spells[id]
-			end
-			return unpack(spellList)
-		else
-			return spells[spellId]
-		end
-	end
+function boss:SpellName(spellId)
+	return spells[spellId]
 end
 
 -------------------------------------------------------------------------------
