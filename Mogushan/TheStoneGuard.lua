@@ -54,7 +54,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Berserk(420) -- assume
+	self:Berserk(480)
 end
 
 --------------------------------------------------------------------------------
