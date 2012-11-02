@@ -15,8 +15,9 @@ end
 L = BigWigs:NewBossLocale("Garalon", "deDE")
 if L then
 	L.crush_stun = "Zermalmen STUN"
-	L.crush_trigger = "Garalon macht sich bereit" -- heroic trigger  
-	L.crush_trigger1 = "Garalon spürt" -- normalmode trigger
+	L.crush_trigger1 = "Garalon macht sich bereit" -- heroic trigger  
+	L.crush_trigger2 = "Garalon spürt" -- normalmode trigger
+	L.crush_trigger3 = "Garalon detects"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "deDE")

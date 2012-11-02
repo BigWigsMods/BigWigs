@@ -15,8 +15,9 @@ end
 L = BigWigs:NewBossLocale("Garalon", "frFR")
 if L then
 	L.crush_stun = "Étourdissement de Crabouille"
-	L.crush_trigger = "Garalon détecte la présence" -- à vérifier
-	L.crush_trigger1 = "Garalon sent le passage" -- à vérifier
+	L.crush_trigger1 = "Garalon détecte la présence" -- à vérifier
+	L.crush_trigger2 = "Garalon sent le passage" -- à vérifier
+	L.crush_trigger3 = "Garalon detects"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "frFR")

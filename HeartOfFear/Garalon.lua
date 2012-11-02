@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Garalon", 897, 713)
 if not mod then return end
-mod:RegisterEnableMob(62164, 63191) -- Verify id
+mod:RegisterEnableMob(62164, 63191) -- 63191 you interact with, 62164 casts all the abilities
 
 -----------------------------------------------------------------------------------------
 -- Locals
@@ -72,20 +72,16 @@ end
 function mod:Crush()
 	self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
 	--self:Bar(122774, L["crush_stun"], 4, 122774)
-	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 4, 122774) --Crush
+	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) --Crush
 
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
 end
 
-do
-	local prev = 0
-	function mod:Fury(_, spellId, _, _, spellName, buffStack)
-		local t = GetTime()
-		if t-prev > 1 then
-			prev = t
-			self:Bar(spellId, spellName, 30, 119622) --Rage like icon (swipe and fury have the same)
-			self:Message(spellId, ("%s (%d)"):format(spellName, buffStack or 1), "Urgent", 119622)
-		end
+function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
+	--Garalon-62164 gains the buff, then casts Fury, which gives the buff to Garalon-63191
+	if self:GetCID(dGUID) == 62164 then
+		self:Bar(spellId, spellName, 30, 119622) --Rage like icon (swipe and fury have the same)
+		self:Message(spellId, ("%s (%d)"):format(spellName, buffStack or 1), "Urgent", 119622)
 	end
 end
 
