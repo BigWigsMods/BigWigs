@@ -13,7 +13,10 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "ruRU")
 if L then
-
+	L.crush_stun = "Сокрушение"
+	L.crush_trigger1 = "Garalon prepares to"
+	L.crush_trigger2 = "Гаралон чувствует"
+	L.crush_trigger3 = "Garalon detects"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")
@@ -22,12 +25,20 @@ if L then
 	L.next_pack_desc = "Предупреждать, когда новая группа появится, после убийства предыдущей."
 
 	L.spear_removed = "Ваше Пронзающее копье снялось!"
+	L.residue_removed = "%s снято!"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
 if L then
 	L.explosion_boss = "Взрыв на БОССЕ!"
 	L.explosion_you = "Взрыв на ТЕБЕ!"
+
+	L.explosion_casting = "Янтарный взрыв"
+	L.explosion_casting_desc = "Warning for when any of the Amber Explosions are being casted. Cast start message warnings are associated to this option. Emphasizing this is highly recommended!"
+
+	L.willpower = "Сила воли"
+	L.willpower_desc = "When Willpower runs out, the player dies and the Mutated Construct continues to act, uncontrolled."
+	L.willpower_message = "Ваша сила воли: %d (%d)"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")
