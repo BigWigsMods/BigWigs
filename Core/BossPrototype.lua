@@ -11,6 +11,7 @@ local format = string.format
 local type = type
 local core = BigWigs
 local C = core.C
+local difficulty = 3
 
 -------------------------------------------------------------------------------
 -- Debug
@@ -64,6 +65,8 @@ function boss:OnEnable()
 	if self.SetupOptions then self:SetupOptions() end
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 	self:SendMessage("BigWigs_OnBossEnable", self)
+	local _, _, diff = GetInstanceInfo()
+	difficulty = diff
 end
 function boss:OnDisable()
 	if debug then dbg(self, "OnDisable()") end
@@ -303,10 +306,12 @@ do
 
 	function boss:Engage()
 		if debug then dbg(self, ":Engage") end
+		local _, _, diff = GetInstanceInfo()
+		difficulty = diff
 		CombatLogClearEntries()
 		self.isEngaged = true
 		if self.OnEngage then
-			self:OnEngage(self:Difficulty())
+			self:OnEngage(diff)
 		end
 	end
 
@@ -323,19 +328,16 @@ end
 --
 
 function boss:Difficulty()
-	local _, _, diff = GetInstanceInfo()
-	return diff
+	return difficulty
 end
 boss.GetInstanceDifficulty = boss.Difficulty
 
 function boss:LFR()
-	local _, _, diff = GetInstanceInfo()
-	return diff == 7
+	return difficulty == 7
 end
 
 function boss:Heroic()
-	local _, _, diff = GetInstanceInfo()
-	return diff == 5 or diff == 6
+	return difficulty == 5 or difficulty == 6
 end
 
 function boss:GetCID(guid)
