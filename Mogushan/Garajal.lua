@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Gara'jal the Spiritbinder", 896, 682)
 mod:RegisterEnableMob(60143, 60385) -- Gara'jal, Zandalari War Wyvern
 
 local totemCounter, shadowCounter = 1, 1
+local totemTime = 36.5
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -66,13 +67,22 @@ function mod:OnBossEnable()
 	self:Death("Win", 60143)
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	totemCounter, shadowCounter = 1, 1
-	self:Bar(116174, L["totem"]:format(totemCounter), (self:Heroic() and 20) or (self:LFR() and 30) or 37, 116174) -- Verify
+	if diff == 3 or diff == 5 then
+		totemTime = 36.5 -- 10
+	elseif diff == 4 or diff == 6 then
+		totemTime = 20.5 -- 25
+	elseif diff == 7 then
+		totemTime = 30 -- LFR
+	end
+	self:Bar(116174, L["totem"]:format(totemCounter), totemTime, 116174)
 	self:Bar(116272, L["banish_message"], self:Heroic() and 71 or 65, 116272)
 	if not self:LFR() then
-		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
 		self:Berserk(360)
+	end
+	if self:Heroic() then
+		self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 6.7, 117222)
 	end
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
@@ -103,8 +113,8 @@ do
 		elseif sync == "Totem" then
 			self:Message(116174, L["totem"]:format(totemCounter), "Attention", 116174)
 			totemCounter = totemCounter + 1
-			self:Bar(116174, L["totem"]:format(totemCounter), self:Heroic() and 20 or 30, 116174)
-		elseif sync == "Shadowy" then
+			self:Bar(116174, L["totem"]:format(totemCounter), totemTime, 116174)
+		elseif sync == "Shadowy" and self:Heroic() then -- XXX temp heroic check for out of date users transmitting
 			shadowCounter = shadowCounter + 1
 			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
 		end
