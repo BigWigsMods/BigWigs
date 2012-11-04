@@ -32,7 +32,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		122774, 122735, 122754, {122835, "ICON"}, 123081, 123495, "ej:6294",
+		122774, 122735, 122754, {122835, "ICON"}, 123120, 123081, 123495, "ej:6294",
 		"berserk", "bosskill",
 	}, {
 		[122774] = "general",
@@ -50,6 +50,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuriousSwipe", 122735)
 	self:Log("SPELL_AURA_APPLIED", "Fury", 122754)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Fury", 122754)
+	self:Log("SPELL_DAMAGE", "PheromoneTrail", 123120)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -68,6 +69,18 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:PheromoneTrail(player, _, _, _, spellName)
+		if not UnitIsUnit(player, "player") then return end
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:LocalMessage(123120, CL["underyou"]:format(spellName), "Personal", 123120, "Alert") -- even tho we usually use Alarm, Alarm has been sued too much in the module
+		end
+	end
+end
 
 function mod:Crush()
 	self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
@@ -90,6 +103,8 @@ function mod:PheromonesApplied(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
 		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
+	elseif self:Healer() then
+		selt:TargetMessage(spellId, spellName, player, "Attention", spellId)
 	end
 end
 

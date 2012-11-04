@@ -38,7 +38,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		117960, "ej:6177", 117911, "ej:6186", {117878, "FLASHSHAKE"},
+		117960, "ej:6177", "ej:6186", {117878, "FLASHSHAKE"},
 		119360,
 		{"floor", "FLASHSHAKE"},
 		"stages", "berserk", "bosskill",
@@ -55,6 +55,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Overcharged", 117878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Overcharged", 117878)
 	self:Log("SPELL_AURA_APPLIED", "StabilityFlux", 117911)
+	self:Log("SPELL_DAMAGE", "StabilityFluxDamage", 117912)
 	self:Log("SPELL_CAST_START", "CelestialBreath", 117960)
 	self:Log("SPELL_CAST_START", "TotalAnnihilation", 129711)
 	self:Log("SPELL_CAST_START", "MaterializeProtector", 117954)
@@ -119,6 +120,14 @@ do
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
 			self:FlashShake(117878)
 			self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878) -- needs no sound since total StabilityFlux has one already
+		end
+	end
+	-- This will spam, but it is apparantly needed for some people
+	function mod:StabilityFluxDamage(_, spellId, _, _, spellName)
+		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
+		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
+			self:FlashShake(117878)
+			self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!
 		end
 	end
 end
