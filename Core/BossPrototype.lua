@@ -588,9 +588,20 @@ function boss:PlaySound(key, sound)
 end
 
 
-function boss:Bar(key, text, length, icon, barColor, barEmphasized, barText, barBackground, ...)
+function boss:Bar(key, text, length, icon)
 	if checkFlag(self, key, C.BAR) then
-		self:SendMessage("BigWigs_StartBar", self, key, type(text) == "number" and spells[text] or text, length, icon and icons[icon], ...)
+		self:SendMessage("BigWigs_StartBar", self, key, type(text) == "number" and spells[text] or text, length, icon and icons[icon])
+	end
+end
+
+function boss:TargetBar(key, text, player, length, icon)
+	if checkFlag(self, key, C.BAR) then
+		text = type(text) == "number" and spells[text] or text
+		if UnitIsUnit(player, "player") then
+			self:SendMessage("BigWigs_StartBar", self, key, format(L["you"], text), length, icon and icons[icon])
+		else
+			self:SendMessage("BigWigs_StartBar", self, key, format(L["other"], text, player:gsub("%-.+", "*")), length, icon and icons[icon])
+		end
 	end
 end
 
