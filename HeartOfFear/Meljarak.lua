@@ -35,7 +35,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{ 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY"}, 122055,
+		{ 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		{ 122409, "ICON", "SAY" },
 		122149, 122193,
 		122406, {122224, "FLASHSHAKE"}, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, 125873, "next_pack",
@@ -72,7 +72,7 @@ end
 function mod:OnEngage(diff)
 	self:Bar(121896, whirlingBlade, 36, 121896)
 	self:Bar(122406, "~"..rainOfBlades, 60, 122406)
-	self:OpenProximity(2, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range
+	self:OpenProximity(4, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range -- 4 should be more than safe
 	self:Berserk(480)
 end
 
@@ -97,6 +97,11 @@ do
 			self:Say(121881, CL["say"]:format(spellName))
 		end
 		prisonList[#prisonList + 1] = player
+		if #prisonList < 2 then
+			self:PrimaryIcon(121881, player)
+		else
+			self:SecondaryIcon(121881, player)
+		end
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(prison, 0.1, spellName)
@@ -130,7 +135,7 @@ do
 				mod:Say(122409, CL["say"]:format(korthikStrike))
 			end
 			mod:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm")
-			mod:SecondaryIcon(122409, player)
+			--mod:SecondaryIcon(122409, player)  -- lets not use it till the warning is not working properly
 		end
 	end
 	function mod:KorthikStrike(...)
@@ -152,7 +157,7 @@ do
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			mod:Bar(121896, "~"..whirlingBlade, 45, 121896)
 			mod:TargetMessage(121896, whirlingBlade, player, "Urgent", 121896, "Alarm")
-			mod:PrimaryIcon(121896, player)
+			--mod:PrimaryIcon(121896, player) -- lets not use it till the warning is not working properly
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit(unitIdTarget, "player") then
