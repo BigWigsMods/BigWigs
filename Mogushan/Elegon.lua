@@ -115,7 +115,6 @@ do
 	local overcharged = mod:SpellName(117878)
 	function mod:StabilityFlux(_, spellId, _, _, spellName)
 		-- this gives an 1 sec warning before damage, might want to check hp for a
-		self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
 			self:FlashShake(117878)
