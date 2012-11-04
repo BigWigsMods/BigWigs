@@ -159,7 +159,12 @@ do
 	local _, class = UnitClass("player")
 	local mySpells = spells[class]
 	-- Gift of the Naaru
-	if r == "Draenei" then mySpells[#mySpells+1] = 28880 end
+	if r == "Draenei" then
+		if not mySpells then
+			mySpells = {}
+		end
+		mySpells[#mySpells+1] = 28880
+	end
 	if mySpells then
 		for i, spell in next, mySpells do
 			local name, _, _, _, _, _, _, minRange, range = GetSpellInfo(spell)
