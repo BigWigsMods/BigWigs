@@ -20,6 +20,9 @@ L.general = "Allgemein"
 L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
+L.add_spawned = "Add Spawned!"
+L.next_add = "Next Add"
+
 L.custom_start = "%s angegriffen - %s in %d Min"
 L.custom_start_s = "%s angegriffen - %s in %d Sek"
 L.custom_end = "%s wird zum %s!"

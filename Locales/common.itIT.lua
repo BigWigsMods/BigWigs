@@ -20,6 +20,9 @@ L.general = "Generali" -- General settings, i.e. things that apply to both norma
 L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
+L.add_spawned = "Add Spawned!"
+L.next_add = "Next Add"
+
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
 L.custom_start = "Combattimento con %s cominciato - %s in %d min"

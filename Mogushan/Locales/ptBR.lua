@@ -64,6 +64,9 @@ if L then
 	L.floor = "O Vórtice de Energia está descarregando!"
 	L.floor_desc = "Avisa quando o chão está prestes a desaparecer."
 	L.floor_message = "O chão está desaparecendo!"
+
+	L.adds = "Adds"
+	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ptBR")

@@ -18,6 +18,9 @@ L.general = "Général" -- General settings, i.e. things that apply to both norm
 L.duration = "%s pendant %s sec."
 L.over = "%s terminé !"
 
+L.add_spawned = "Add Spawned!"
+L.next_add = "Next Add"
+
 L.custom_start = "%s engagé - %s dans %d min."
 L.custom_start_s = "%s engagé - %s dans %d sec."
 L.custom_end = "%s devient %s !"

@@ -20,6 +20,9 @@ L.general = "일반 경고" -- General settings, i.e. things that apply to both 
 L.duration = "%s for %s sec"
 L.over = "%s Over!"
 
+L.add_spawned = "Add Spawned!"
+L.next_add = "Next Add"
+
 L.custom_start = "%1$s 전투 개시 - %3$d분 후 %2$s"
 L.custom_start_s = "%1$s 전투 개시 - %3$d초 후 %2$s"
 L.custom_end = "%s - %s!"

@@ -29,6 +29,10 @@ if L then
 	L.floor_desc = "Warnings for when the floor is about to despawn."
 	L.floor_icon = "ability_vehicle_launchplayer"
 	L.floor_message = "The floor is falling!"
+
+	L.adds = "Adds"
+	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
+	L.adds_icon = 117954
 end
 L = mod:GetLocale()
 
@@ -38,7 +42,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		117960, "ej:6177", "ej:6186", {117878, "FLASHSHAKE"},
+		117960, "adds", "ej:6186", {117878, "FLASHSHAKE"},
 		119360,
 		{"floor", "FLASHSHAKE"},
 		"stages", "berserk", "bosskill",
@@ -51,7 +55,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_AURA_APPLIED", "Overcharged", 117878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Overcharged", 117878)
 	self:Log("SPELL_AURA_APPLIED", "StabilityFlux", 117911)
@@ -60,10 +63,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TotalAnnihilation", 129711)
 	self:Log("SPELL_CAST_START", "MaterializeProtector", 117954)
 	self:Log("SPELL_AURA_REMOVED", "UnstableEnergyRemoved", 116994)
-	--cat WoWCombatLog.txt | grep "APPLIED.*Draw Power" | cut -d , -f 10 | sort | uniq
 	self:Log("SPELL_AURA_APPLIED", "DrawPower", 119387)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DrawPower", 119387)
 
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 60410)
@@ -71,7 +74,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(117960, 117960, 8.5, 117960) -- Celestial Breath
-	self:Bar("ej:6177", 117954, 12, 117954) -- Materialize Protector
+	self:Bar("adds", CL["next_add"], 12, 117954)
 	self:Berserk(570)
 	drawPowerCounter, annihilateCounter = 0, 0
 	phase2SoonWarned, phase2SoonWarned2ndTime = nil, nil
@@ -138,11 +141,11 @@ function mod:TotalAnnihilation(_, spellId, _, _, spellName)
 end
 
 function mod:MaterializeProtector(_, spellId, _, _, spellName)
-	self:Message("ej:6177", spellName, "Attention", spellId)
+	self:Message("adds", CL["add_spawned"], "Attention", spellId)
 	if self:Heroic() then
-		self:Bar("ej:6177", spellName, 26, spellId)
+		self:Bar("adds", CL["next_add"], 26, spellId)
 	else
-		self:Bar("ej:6177", spellName, 36, spellId)
+		self:Bar("adds", CL["next_add"], 36, spellId)
 	end
 end
 
@@ -152,7 +155,7 @@ function mod:UnstableEnergyRemoved()
 	else
 		drawPowerCounter, annihilateCounter = 0, 0
 		self:Message("stages", CL["phase"]:format(1), "Positive")
-		self:Bar("ej:6177", 117954, 15, 117954) -- Materialize Protector
+		self:Bar("adds", CL["next_add"], 15, 117954)
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	end
 end

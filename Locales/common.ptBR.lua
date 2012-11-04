@@ -18,6 +18,9 @@ L.general = "Geral" -- General settings, i.e. things that apply to both normal a
 L.duration = "%s durante %s seg"
 L.over = "%s Acabou!"
 
+L.add_spawned = "Add Spawned!"
+L.next_add = "Next Add"
+
 L.custom_start = "%s iniciado - %s em %d min"
 L.custom_start_s = "%s iniciado - %s em %d seg"
 L.custom_end = "%s começa em %s!"

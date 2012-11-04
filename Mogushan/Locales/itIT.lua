@@ -51,6 +51,9 @@ if L then
 	L.floor = "Scomparsa del Pavimento"
 	L.floor_desc = "Avviso Speciale prima che il vortice svanisca."
 	L.floor_message = "Il Pavimento sta Scomparendo!"
+
+	L.adds = "Adds"
+	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")

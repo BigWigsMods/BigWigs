@@ -53,7 +53,6 @@ function mod:OnPluginEnable()
 			frame.count = frame.count + 1
 			if frame.count > 15 then
 				frame:Stop()
-				flashFrame:Hide()
 				frame.count = nil
 			else
 				x, y = math.random(-10,10), math.random(-10,10)
