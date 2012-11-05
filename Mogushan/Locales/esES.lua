@@ -54,17 +54,17 @@ end
 
 L = BigWigs:NewBossLocale("Elegon", "esES") or BigWigs:NewBossLocale("Elegon", "esMX")
 if L then
-	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
+	L.engage_yell = "Activando modo defensivo. Desactivando mecanismos de prevención."
 
 	L.last_phase = "Última fase"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.overcharged_total_annihilation = "¡Sobrecarga %d! ¿Un poco excesivo?"
 
 	L.floor = "Desaparece el suelo"
 	L.floor_desc = "Aviso para cuando el suelo esté a punto de desaparecer."
 	L.floor_message = "¡El suelo está desapareciendo!"
 
 	L.adds = "Adds"
-	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
+	L.adds_desc = "Aviso para cuando un Protector Celestial esta a punto de aparecer."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "esES") or BigWigs:NewBossLocale("Will of the Emperor", "esMX")
