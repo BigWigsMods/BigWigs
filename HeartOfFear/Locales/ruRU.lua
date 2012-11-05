@@ -22,7 +22,7 @@ end
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")
 if L then
 	L.next_pack = "Следующая группа"
-	L.next_pack_desc = "Предупреждать, когда новая группа появится, после убийства предыдущей."
+	L.next_pack_desc = "Предупреждать, когда появится новая группа после убийства предыдущей."
 
 	L.spear_removed = "Ваше Пронзающее копье снялось!"
 	L.residue_removed = "%s снято!"
@@ -45,6 +45,6 @@ if L then
 
 	L.eyes = "Взгляд императрицы"
 	L.eyes_desc = "Только для танков. Считает стаки взгляда императрицы и показывает таймер."
-	L.eyes_message = "%2$dx взгляд на %1$s"
+	L.eyes_message = "%2$dx Взгляд на |3-5(%1$s)"
 end
 

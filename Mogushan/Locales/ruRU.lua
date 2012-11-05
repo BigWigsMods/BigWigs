@@ -64,8 +64,8 @@ if L then
 	L.floor_desc = "Предупреждать, когда пол готовится исчезнуть."
 	L.floor_message = "Пол пропадает!"
 
-	L.adds = "Adds"
-	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
+	L.adds = "Защитники"
+	L.adds_desc = "Предупреждать о скором появлении небесного защитника."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "ruRU")
@@ -83,6 +83,7 @@ if L then
 	L.gas_overdrive_trigger = "Древняя машина могу перегружена!"
 
 	L.target_only = "|cFFFF0000Это предупреждение показывается только для выбранного в цель босса.|r "
+	L.combo = "Череда ударов"
 	L.combo_message = "%s: Череда ударов скоро!"
 end
 
