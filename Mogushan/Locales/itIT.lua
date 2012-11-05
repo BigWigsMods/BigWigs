@@ -58,7 +58,7 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
 if L then
-	L.enable_zone = DUNGEON_FLOOR_MOGUSHANVAULTS3 -- translate me
+	L.enable_zone = "Forgia dell'Eternità" -- translate me
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!  MANCA ANCORA QUESTO
 	L.normal_start_trigger = " La macchina si mette in moto" -- The machine hums to life!  Get to the lower level!
