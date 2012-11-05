@@ -4,7 +4,7 @@ if not L then return end
 L.you = "%s en TI"
 L.underyou = "¡%s debajo de TI!"
 L.other = "%s: %s"
-L.onother = "¡%s en %s!"
+L.onboss = "%s on BOSS!"
 L.say = "¡%s en MI!"
 L.cast = "<Casteando %s>"
 L.soon = "¡%s inminente!"

@@ -6,7 +6,7 @@ if not L then return end
 L.you = "%s su di TE!"
 L.underyou = "%s sotto di TE!"
 L.other = "%s: %s"
-L.onother = "%s on %s!"
+L.onboss = "%s on BOSS!"
 L.say = "%s su di ME!"
 L.cast = "<Esecuzione di %s>"
 L.soon = "%s tra poco!"

@@ -6,7 +6,7 @@ if not L then return end
 L.you = "당신에게 %s!"
 L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
-L.onother = "%s on %s!"
+L.onboss = "%s on BOSS!"
 L.say = "나에게 %s!"
 L.cast = "<%s 시전중>"
 L.soon = "곧 %s!"
