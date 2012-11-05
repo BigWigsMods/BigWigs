@@ -18,8 +18,8 @@ L.general = "General" -- General settings, i.e. things that apply to both normal
 L.duration = "%s durante %s sec"
 L.over = "¡%s terminado!"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
+L.add_spawned = "¡Add aparece!"
+L.next_add = "Siguiente Add"
 
 L.custom_start = "%s iniciado - %s en %d min"
 L.custom_start_s = "%s iniciado - %s en %d seg"
