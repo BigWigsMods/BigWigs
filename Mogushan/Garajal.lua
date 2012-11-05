@@ -164,7 +164,7 @@ end
 
 function mod:CrossedOverRemoved(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:SendMessage("BigWigs_StopBar", self, spellName)
+		self:StopBar(spellName)
 	end
 end
 
@@ -184,7 +184,7 @@ end
 
 function mod:SoulSeverRemoved(player)
 	if UnitIsUnit("player", player) then
-		self:SendMessage("BigWigs_StopBar", self, CL["you"]:format(self:SpellName(116272)))
+		self:StopBar(116272, player) -- Banish
 	end
 end
 
@@ -201,7 +201,7 @@ end
 function mod:Frenzy()
 	self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
 	if not self:LFR() then
-		self:SendMessage("BigWigs_StopBar", self, L["totem"]:format(totemCounter))
+		self:StopBar(L["totem"]:format(totemCounter))
 	end
 end
 

@@ -276,18 +276,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if spellId == 118205 then -- Inactive Visual
 			local id = self:GetCID(UnitGUID(unitId))
 			if (id == 60709 or id == 61423) then -- qiang
-				self:SendMessage("BigWigs_StopBar", self, self:SpellName(119521)) -- Annihilate
-				self:SendMessage("BigWigs_StopBar", self, self:SpellName(117961)) -- Impervious Shield
+				self:StopBar(119521) -- Annihilate
+				self:StopBar(117961) -- Impervious Shield
 				self:Bar(117910, 117910, 30, 117910) -- Flanking Orders
 			elseif (id == 60701 or id == 61421) then -- zian
-				self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(117697)) -- Shield of Darkness
+				self:StopBar("~"..self:SpellName(117697)) -- Shield of Darkness
 				if isBossActiveById(60710) then -- don't close if subetai is active
 					self:CloseProximity()
 				end
 			elseif (id == 60710 or id == 61427) then -- subetai
-				self:SendMessage("BigWigs_StopBar", self, self:SpellName(118162)) -- Sleight of Hand
-				self:SendMessage("BigWigs_StopBar", self, self:SpellName(118094)) -- Volley
-				self:SendMessage("BigWigs_StopBar", self, self:SpellName(118122)) -- Rain of Arrows
+				self:StopBar(118162) -- Sleight of Hand
+				self:StopBar(118094) -- Volley
+				self:StopBar(118122) -- Rain of Arrows
 				self:Bar(118047, 118047, 30, 118047) -- Pillage
 				if isBossActiveById(60701) then -- don't close if zian is active
 					self:CloseProximity()

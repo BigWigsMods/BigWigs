@@ -31,9 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "frFR")
 if L then
-	L.explosion_boss = "Explosion sur le BOSS !"
-	L.explosion_you = "Explosion sur VOUS !"
-
 	L.explosion_casting = "Incantation d'explosion"
 	L.explosion_casting_desc = "Prévient quand n'importe laquelle des Explosions d'ambre est en cours d'incantation. Les messages d'alerte de début d'incantation sont associés à cette option. Mettre en évidence ceci est vivement recommandé !"
 

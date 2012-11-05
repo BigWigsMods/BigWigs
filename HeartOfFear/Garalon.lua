@@ -157,7 +157,7 @@ do
 		self:Bar(122735, spellName, 5.5, 122735)
 	end
 	function mod:FuriousSwipe(_, spellId, _, _, spellName)
-		self:SendMessage("BigWigs_StopBar", self, spellName)
+		self:StopBar(spellName)
 		self:Bar(122735, CL["cast"]:format(spellName), 2.5, spellId) --use "cast" to help distinguish the two bars
 		self:ScheduleTimer(nextSwipe, 2.5, spellName)
 	end

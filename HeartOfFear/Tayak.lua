@@ -101,10 +101,10 @@ do
 				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
 				self:Message("storm", CL["phase"]:format(2), "Positive", L["storm_icon"], "Info")
-				self:SendMessage("BigWigs_StopBar", self, self:SpellName(125310)) --Blade Tempest
-				self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(122839)) --Tempest Slash
-				self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(122949)) --Unseen Strike
-				self:SendMessage("BigWigs_StopBar", self, "~"..self:SpellName(123175)) --Wind Step
+				self:StopBar(125310) --Blade Tempest
+				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
+				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
+				self:StopBar("~"..self:SpellName(123175)) --Wind Step
 			end
 		end
 	end

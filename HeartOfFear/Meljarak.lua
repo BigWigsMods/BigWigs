@@ -226,7 +226,7 @@ end
 
 function mod:ImpalingSpearRemoved(_, _, source, _, spellName)
 	if UnitIsUnit(source, "player") then
-		self:SendMessage("BigWigs_StopBar", self, spellName)
+		self:StopBar(spellName)
 		self:LocalMessage(122224, L["spear_removed"], "Personal", 122224, "Info")
 		self:FlashShake(122224)
 	end

@@ -30,9 +30,6 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
 if L then
-	L.explosion_boss = "Взрыв на БОССЕ!"
-	L.explosion_you = "Взрыв на ТЕБЕ!"
-
 	L.explosion_casting = "Янтарный взрыв"
 	L.explosion_casting_desc = "Warning for when any of the Amber Explosions are being casted. Cast start message warnings are associated to this option. Emphasizing this is highly recommended!"
 

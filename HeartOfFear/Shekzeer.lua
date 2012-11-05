@@ -147,7 +147,7 @@ end
 
 function mod:Eyes(player, spellId, _, _, _, buffStack)
 	if self:Tank() then
-		self:SendMessage("BigWigs_StopBar", self, L["eyes_message"]:format(player, buffStack - 1))
+		self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
 		self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, spellId)
 		self:TargetMessage("eyes", L["eyes_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
 	end

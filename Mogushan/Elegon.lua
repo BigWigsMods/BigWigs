@@ -106,8 +106,8 @@ function mod:DrawPower(_, _, _, _, spellName)
 	drawPowerCounter = drawPowerCounter + 1
 	self:Message(119360, ("%s (%d)"):format(spellName, drawPowerCounter), "Attention", 119360)
 	-- XXX need to check for another event that is also called Draw Power and cancell bars there, that should be better
-	self:SendMessage("BigWigs_StopBar", self, self:SpellName(117954)) -- Materialize Protector
-	self:SendMessage("BigWigs_StopBar", self, self:SpellName(117960)) -- Celestial Breath
+	self:StopBar(117954) -- Materialize Protector
+	self:StopBar(117960) -- Celestial Breath
 end
 
 function mod:CelestialBreath(_, spellId, _, _, spellName)

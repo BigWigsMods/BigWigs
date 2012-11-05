@@ -12,6 +12,7 @@ mod:RegisterEnableMob(62511)
 --
 
 local reshapeLife, amberExplosion, breakFree = (GetSpellInfo(122784)), (GetSpellInfo(122398)), (GetSpellInfo(123060))
+local explosion = mod:SpellName(106966)
 local phase, phase2warned
 local amberMonstrosoty = EJ_GetSectionInfo(6254)
 
@@ -21,9 +22,6 @@ local amberMonstrosoty = EJ_GetSectionInfo(6254)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.explosion_boss = "Explosion on BOSS!"
-	L.explosion_you = "Explosion on YOU!"
-
 	L.explosion_casting = "Explosion casting"
 	L.explosion_casting_desc = "Warning for when any of the Amber Explosions are being casted. Cast start message warnings are associated to this option. Emphasizing this is highly recommended!"
 	L.explosion_casting_icon = 122398
@@ -96,9 +94,9 @@ end
 
 function mod:ExplosionInterrupt(player)
 	if UnitIsUnit("player", player) then
-		self:SendMessage("BigWigs_StopBar", self, CL["cast"]:format(L["explosion_you"]))
+		self:StopBar(CL["cast"]:format(CL["you"]:format(explosion)))
 	elseif UnitIsUnit("boss2", player) then -- Monstrosity ( double check if it is always boss2 )
-		self:SendMessage("BigWigs_StopBar", self, CL["cast"]:format(L["explosion_boss"]))
+		self:StopBar(CL["onboss"]:format(explosion))
 	end
 end
 
@@ -106,27 +104,27 @@ function mod:AmberExplosionMonstrosity(_, _, _, _, spellName)
 	if UnitDebuff("player", reshapeLife) then
 		self:FlashShake(122402)
 	end
-	self:DelayedMessage(122402, 25, CL["custom_sec"]:format(L["explosion_boss"],20), "Attention", 122402)
-	self:DelayedMessage(122402, 30, CL["custom_sec"]:format(L["explosion_boss"],15), "Attention", 122402)
-	self:DelayedMessage(122402, 35, CL["custom_sec"]:format(L["explosion_boss"],10), "Attention", 122402)
-	self:Bar("explosion_casting", CL["cast"]:format(L["explosion_boss"]), 6, 122398)
-	self:Bar(122402, "~"..L["explosion_boss"], 45, 122402) -- cooldown, don't move this
-	self:Message("explosion_casting", L["explosion_boss"], "Important", 122402, "Alert") -- associate the message with the casting toggle option
+	self:DelayedMessage(122402, 25, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
+	self:DelayedMessage(122402, 30, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
+	self:DelayedMessage(122402, 35, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
+	self:Bar("explosion_casting", CL["cast"]:format(explosion), 6, 122398)
+	self:Bar(122402, "~"..CL["onboss"]:format(explosion), 45, 122402) -- cooldown, don't move this
+	self:Message("explosion_casting", CL["onboss"]:format(explosion), "Important", 122402, "Alert") -- associate the message with the casting toggle option
 end
 
 function mod:ConcentratedMutation(_, _, _, _, spellName)
 	phase = 3
 	self:Message(122556, spellName, "Attention", 122556)
-	self:SendMessage("BigWigs_StopBar", self, "~"..L["explosion_boss"])
+	self:StopBar("~"..CL["onboss"]:format(explosion))
 end
 
 function mod:AmberCarapace()
 	phase = 2
 	self:Message("ej:6246", amberMonstrosoty, "Attention", 122540)
-	self:DelayedMessage(122402, 38,CL["custom_sec"]:format(L["explosion_boss"],20), "Attention", 122402)
-	self:DelayedMessage(122402, 43,CL["custom_sec"]:format(L["explosion_boss"],15), "Attention", 122402)
-	self:DelayedMessage(122402, 48,CL["custom_sec"]:format(L["explosion_boss"],10), "Attention", 122402)
-	self:Bar(122402, L["explosion_boss"], 58, 122402) -- this is for the Monstrosity
+	self:DelayedMessage(122402, 38, CL["custom_sec"]:format(explosion, 20), "Attention", 122402)
+	self:DelayedMessage(122402, 43, CL["custom_sec"]:format(explosion, 15), "Attention", 122402)
+	self:DelayedMessage(122402, 48, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
+	self:Bar(122402, CL["onboss"]:format(explosion), 58, 122402) -- this is for the Monstrosity
 end
 
 function mod:ReshapeLife(player, _, _, _, spellName)
@@ -138,14 +136,14 @@ function mod:ReshapeLife(player, _, _, _, spellName)
 	end
 	if UnitIsUnit("player", player) then
 		self:RegisterEvent("UNIT_POWER")
-		self:Bar(122398, ("%s (%s)"):format(L["explosion_you"], player), 15, 122398)
+		self:Bar(122398, CL["you"]:format(explosion), 15, 122398)
 	end
 end
 
 function mod:ReshapeLifeRemoved(player)
 	if UnitIsUnit("player", player) then
 		self:UnregisterEvent("UNIT_POWER")
-		self:SendMessage("BigWigs_StopBar", self, CL["cast"]:format(L["explosion_you"]))
+		self:StopBar(CL["you"]:format(explosion))
 	end
 end
 
@@ -157,9 +155,9 @@ end
 function mod:AmberExplosion(_, _, player, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(122398)
-		self:Bar("explosion_casting", CL["cast"]:format(L["explosion_you"]), 2.5, 122398)
-		self:Bar(122398, ("%s (%s)"):format(L["explosion_you"], player), 13, 122398) -- cooldown
-		self:LocalMessage("explosion_casting", CL["you"]:format(L["explosion_you"]), "Personal", 122398, "Info") -- associate the message with the casting toggle option
+		self:Bar("explosion_casting", CL["cast"]:format(CL["you"]:format(explosion)), 2.5, 122398)
+		self:Bar(122398, CL["you"]:format(explosion), 13, 122398) -- cooldown
+		self:LocalMessage("explosion_casting", CL["you"]:format(explosion), "Personal", 122398, "Info") -- associate the message with the casting toggle option
 	end
 end
 

@@ -31,9 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "deDE")
 if L then
-	L.explosion_boss = "Explosion auf BOSS!"
-	L.explosion_you = "Explosion auf DIR!"
-
 	L.explosion_casting = "Amberexplosionen"
 	L.explosion_casting_desc = "Warnungen für alle Arten von Amberexplosionen. Hervorheben dieser Warnung wird strengstens empfohlen!"
 
