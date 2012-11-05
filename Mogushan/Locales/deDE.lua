@@ -31,7 +31,7 @@ if L then
 
 	-- Tanks
 	L.tank = "Tankwarnungen"
-	L.tank_desc = "Nur für Tanks. Zählt die Stapel von Blitzpeitsche, Flammender Speer, Arkanschock und Schattenbrand (heroisch)."
+	L.tank_desc = "Zählt die Stapel von Blitzpeitsche, Flammender Speer, Arkanschock und Schattenbrand (heroisch)."
 	L.lash_message = "%2$dx Blitzpeitsche auf %1$s"
 	L.spear_message = "%2$dx Flammender Speer auf %1$s"
 	L.shock_message = "%2$dx Arkanschock auf %1$s"

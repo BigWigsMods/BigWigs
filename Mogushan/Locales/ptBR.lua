@@ -31,7 +31,7 @@ if L then
 
 	-- Tanks
 	L.tank = "Alertas de tanquers"
-	L.tank_desc = "Alertas somente para tanquers. Conta as pilhas de Açoite de raios, Lança flamejante, Choque arcano e Sombra Ardente (Heróico)."
+	L.tank_desc = "Conta as pilhas de Açoite de raios, Lança flamejante, Choque arcano e Sombra Ardente (Heróico)."
 	L.lash_message = "%2$dx Açoite em %1$s"
 	L.spear_message = "%2$dx Lança em %1$s"
 	L.shock_message = "%2$dx Choque em %1$s"

@@ -40,7 +40,7 @@ if L then
 
 	-- Tanks
 	L.tank = "Tank Alerts"
-	L.tank_desc = "Tank alerts only. Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
+	L.tank_desc = "Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
 	L.tank_icon = "inv_shield_05"
 	L.lash_message = "%2$dx Lash on %1$s"
 	L.spear_message = "%2$dx Spear on %1$s"
@@ -49,6 +49,7 @@ if L then
 end
 L = mod:GetLocale()
 L.tank = L.tank.." "..INLINE_TANK_ICON
+L.tank_desc = CL.tank..L.tank_desc
 
 --------------------------------------------------------------------------------
 -- Initialization

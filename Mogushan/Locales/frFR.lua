@@ -31,7 +31,7 @@ if L then
 
 	-- Tanks
 	L.tank = "Alertes tank"
-	L.tank_desc = "Alertes pour tank uniquement. Compte les cumuls de Fouet foudroyant, Lance enflammée, Horion des Arcanes & Brûlure de l'ombre (héroïque)."
+	L.tank_desc = "Compte les cumuls de Fouet foudroyant, Lance enflammée, Horion des Arcanes & Brûlure de l'ombre (héroïque)."
 	L.lash_message = "%2$dx Fouet(s) sur %1$s"
 	L.spear_message = "%2$dx Lance(s) sur %1$s"
 	L.shock_message = "%2$dx Horion(s) sur %1$s"

@@ -31,7 +31,7 @@ if L then
 
 	-- Tanks
 	L.tank = "Alertas de tanques"
-	L.tank_desc = "Solo alertas de tanques. Cuenta los stacs de Latigazo de relámpagos, Lanza flamígera, Choque arcano y Quemadura de las sombras (Heroico)."
+	L.tank_desc = "Cuenta los stacs de Latigazo de relámpagos, Lanza flamígera, Choque arcano y Quemadura de las sombras (Heroico)."
 	L.lash_message = "%2$dx Latigazo en %1$s"
 	L.spear_message = "%2$dx Lanza en %1$s"
 	L.shock_message = "%2$dx Choque en %1$s"

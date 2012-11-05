@@ -31,7 +31,7 @@ if L then
 
 	-- Tanks
 	L.tank = "坦克警報"
-	L.tank_desc = "只有坦克警報。計數堆疊閃電鞭笞，火焰長矛，奧術衝擊與暗影灼燒（英雄）。"
+	L.tank_desc = "計數堆疊閃電鞭笞，火焰長矛，奧術衝擊與暗影灼燒（英雄）。"
 	L.lash_message = "%2$dx 鞭笞在 %1$s"
 	L.spear_message = "%2$dx 長矛在 %1$s"
 	L.shock_message = "%2$dx 衝擊在 %1$s"

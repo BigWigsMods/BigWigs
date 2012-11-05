@@ -31,7 +31,7 @@ if L then
 
 	-- Tanks
 	L.tank = "Tank Alerts"
-	L.tank_desc = "Tank alerts only. Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
+	L.tank_desc = "Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
 	L.lash_message = "%2$dx Lash on %1$s"
 	L.spear_message = "%2$dx Spear on %1$s"
 	L.shock_message = "%2$dx Shock on %1$s"

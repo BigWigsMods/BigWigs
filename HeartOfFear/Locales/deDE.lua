@@ -45,7 +45,7 @@ if L then
 	L.phases_desc = "Warnung bei Phasenwechsel."
 
 	L.eyes = "Augen der Kaiserin"
-	L.eyes_desc = "Nur für Tanks. Zählt die Stapel von -Augen der Kaiserin- und zeigt eine Leiste mit der verbleibenden Dauer an."
+	L.eyes_desc = "Zählt die Stapel von -Augen der Kaiserin- und zeigt eine Leiste mit der verbleibenden Dauer an."
 	L.eyes_message = "%2$dx Augen auf %1$s"
 end
 

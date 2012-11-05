@@ -17,6 +17,11 @@ if L then
 	L.phase_arcane_trigger = "Oh, saggio delle ere! Concedimi la tua saggezza arcana!"
 	L.phase_shadow_trigger = "Grande spirito dei campioni del passato! concedimi il tuo scudo!"
 
+	L.phase_lightning = "Fase Fulmini!"
+	L.phase_flame = "Fase Fuoco!"
+	L.phase_arcane = "Fase Arcana!"
+	L.phase_shadow = "Fase Ombra!"
+
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s attiva Manto su %1$s"
 	L.barrier_message = "Barriera Attiva!"
@@ -24,10 +29,13 @@ if L then
 	L.can_interrupt_epicenter = "%s can interrupt %s"
 	L.epicenter_interrupted = "%s interrupted!"
 
-	L.phase_lightning = "Fase Fulmini!"
-	L.phase_flame = "Fase Fuoco!"
-	L.phase_arcane = "Fase Arcana!"
-	L.phase_shadow = "Fase Ombra!"
+	-- Tanks
+	L.tank = "Tank Alerts"
+	L.tank_desc = "Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
+	L.lash_message = "%2$dx Lash on %1$s"
+	L.spear_message = "%2$dx Spear on %1$s"
+	L.shock_message = "%2$dx Shock on %1$s"
+	L.burn_message = "%2$dx Burn on %1$s"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "itIT")
@@ -58,7 +66,7 @@ end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "itIT")
 if L then
-	L.enable_zone = "Forgia dell'Eternità" -- translate me
+	L.enable_zone = "Forgia dell'Eternità"
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!  MANCA ANCORA QUESTO
 	L.normal_start_trigger = " La macchina si mette in moto" -- The machine hums to life!  Get to the lower level!

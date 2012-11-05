@@ -104,7 +104,7 @@ function mod:PheromonesApplied(player, spellId, _, _, spellName)
 		-- Local message with personal and info for when you gain the debuff, others don't care that you got it
 		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
 	elseif self:Healer() then
-		selt:TargetMessage(spellId, spellName, player, "Attention", spellId)
+		selt:LocalMessage(spellId, spellName, "Attention", spellId, nil, player)
 	end
 end
 

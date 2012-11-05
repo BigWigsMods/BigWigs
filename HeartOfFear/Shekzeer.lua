@@ -26,12 +26,13 @@ if L then
 	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Eyes of the Empress"
-	L.eyes_desc = "Tank alert only. Count the stacks of eyes of the empress and show a duration bar."
+	L.eyes_desc = "Count the stacks of eyes of the empress and show a duration bar."
 	L.eyes_icon = 30307
 	L.eyes_message = "%2$dx eyes on %1$s"
 end
 L = mod:GetLocale()
 L.eyes = L.eyes.." "..INLINE_TANK_ICON
+L.eyes_desc = CL.tank..L.eyes_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -149,7 +150,7 @@ function mod:Eyes(player, spellId, _, _, _, buffStack)
 	if self:Tank() then
 		self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
 		self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, spellId)
-		self:TargetMessage("eyes", L["eyes_message"], player, "Urgent", spellId, buffStack > 2 and "Info" or nil, buffStack)
+		self:LocalMessage("eyes", L["eyes_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 	end
 end
 
