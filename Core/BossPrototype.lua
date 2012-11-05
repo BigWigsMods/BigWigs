@@ -596,12 +596,23 @@ end
 
 function boss:TargetBar(key, text, player, length, icon)
 	if checkFlag(self, key, C.BAR) then
-		text = type(text) == "number" and spells[text] or text
 		if UnitIsUnit(player, "player") then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L["you"], text), length, icon and icons[icon])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L["you"], type(text) == "number" and spells[text] or text), length, icon and icons[icon])
 		else
-			self:SendMessage("BigWigs_StartBar", self, key, format(L["other"], text, player:gsub("%-.+", "*")), length, icon and icons[icon])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L["other"], type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")), length, icon and icons[icon])
 		end
+	end
+end
+
+function boss:StopBar(text, player)
+	if player then
+		if UnitIsUnit(player, "player") then
+			self:SendMessage("BigWigs_StopBar", self, format(L["you"], type(text) == "number" and spells[text] or text))
+		else
+			self:SendMessage("BigWigs_StopBar", self, format(L["other"], type(text) == "number" and spells[text] or text, player:gsub("%-.+", "*")))
+		end
+	else
+		self:SendMessage("BigWigs_StopBar", self, type(text) == "number" and spells[text] or text)
 	end
 end
 
