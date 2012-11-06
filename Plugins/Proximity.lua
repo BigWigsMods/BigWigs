@@ -619,7 +619,7 @@ do
 		else
 			anchor.text:SetText(table.concat(tooClose, "\n"))
 			wipe(tooClose)
-			if not db.sound then return end
+			if (not db.sound) or (not UnitAffectingCombat("player")) then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
@@ -681,7 +681,7 @@ do
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
-			if not db.sound then return end
+			if (not db.sound) or (not UnitAffectingCombat("player")) then return end
 			local t = GetTime()
 			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
 				lastplayed = t
