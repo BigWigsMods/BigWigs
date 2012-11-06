@@ -73,7 +73,7 @@ end
 do
 	local convertList, scheduled = mod:NewTargetList(), nil
 	local function convert(spellId)
-		mod:TargetMessage(spellId, mod:SpellName(spellId), convertList, "Important", spellId)
+		mod:TargetMessage(spellId, mod:SpellName(spellId), convertList, "Attention", spellId)
 		scheduled = nil
 	end
 	function mod:Convert(player, spellId)
@@ -92,7 +92,7 @@ function mod:Attenuation(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
-	if spellId == 122933 and unit == "boss1" then
+	if spellId == 122933 and unit == "boss1" then -- Clear Throat
 		self:Message("force", CL["soon"]:format(L["force_message"]), "Important", L.force_icon, "Long")
 	end
 end
