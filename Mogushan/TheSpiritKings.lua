@@ -90,7 +90,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 60701, 60708, 60709, 60710)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Berserk(600)
 	wipe(bossActivated)
 	if self:Heroic() then

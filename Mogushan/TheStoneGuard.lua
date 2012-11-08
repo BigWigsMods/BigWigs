@@ -7,6 +7,8 @@ local mod, CL = BigWigs:NewBoss("The Stone Guard", 896, 679)
 if not mod then return end
 mod:RegisterEnableMob(60051, 60047, 60043, 59915) -- Cobalt, Amethyst, Jade, Jasper
 
+local cobaltTimer = 10.7
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -54,6 +56,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
+	if diff == 3 or diff == 5 then
+		cobaltTimer = 8.7 -- 10 man
+	else
+		cobaltTimer = 10.7
+	end
 	self:Berserk(480)
 end
 
@@ -150,7 +157,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	elseif spellId == 116057 then -- amethyst
 		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, spellId, "Alert") -- purple
 	elseif spellId == 129424 then
-		self:Bar("ej:5772", spellName, 10.7, spellId)
+		self:Bar("ej:5772", spellName, cobaltTimer, spellId)
 		self:CobaltMine(unitId)
 	end
 end

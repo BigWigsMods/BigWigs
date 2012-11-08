@@ -72,7 +72,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 60410)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:Bar(117960, 117960, 8.5, 117960) -- Celestial Breath
 	self:Bar("adds", CL["next_add"], 12, 117954)
 	self:Berserk(570)
