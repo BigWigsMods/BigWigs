@@ -13,7 +13,7 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "deDE")
 if L then
-	L.unseenstrike_cone = "Unsichtbarer Stoß"
+	L.unseenstrike_inc = "Incoming Strike!"
 
 	L.assault = "Überwältigender Angriff"
 	L.assault_desc = "Nur für Tanks. Dieser Angriff legt die Verteidigung des Ziels offen und erhöht dadurch für 45 Sekunden den erlittenen Schaden des Ziels um 100%."

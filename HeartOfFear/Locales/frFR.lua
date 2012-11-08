@@ -13,7 +13,7 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "frFR")
 if L then
-	L.unseenstrike_cone = "Cône de Frappe invisible"
+	L.unseenstrike_inc = "Incoming Strike!"
 
 	L.assault = "Assaut accablant"
 	L.assault_desc = "Alerte pour tanks uniquement. L'attaque laisse les défenses de la cible exposées, augmentant les dégâts subis par la cible quand un Assaut accablant la touche de 100% pendant 45 sec."

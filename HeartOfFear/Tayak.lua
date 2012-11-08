@@ -19,7 +19,7 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.unseenstrike, L.unseenstrike_desc = EJ_GetSectionInfo(6346)
 	L.unseenstrike_icon = 122994
-	L.unseenstrike_cone = "Cone of Unseen Strike" --maybe should be something like "Knockback Incoming!" ?
+	L.unseenstrike_inc = "Incoming Strike!"
 
 	L.assault, L.assault_desc = EJ_GetSectionInfo(6349)
 	L.assault_icon = 123474
@@ -39,7 +39,7 @@ L.assault_desc = CL.tank..L.assault_desc
 function mod:GetOptions()
 	return {
 		{125310, "FLASHSHAKE"}, 
-		122842, {"unseenstrike", "ICON"}, 123175, "assault", "storm",
+		122842, {"unseenstrike", "ICON", "SAY"}, 123175, "assault", "storm",
 		"proximity", "berserk", "bosskill",
 	}, {
 		[125310] = "heroic",
@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 	self:Death("Win", 62543)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	if self:Heroic() then
 		self:Bar(125310, 125310, 60, 125310) --Blade Tempest
 	end
@@ -68,7 +68,9 @@ function mod:OnEngage(diff)
 	self:Bar("unseenstrike", 122994, 30, 122994) --Unseen Strike
 	self:OpenProximity(8, 123175)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:Berserk(480)
+	if not self:LFR() then
+		self:Berserk(480)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -86,17 +88,22 @@ function mod:WindStep(_, spellId, _, _, spellName)
 end
 
 do
+	local function removeIcon()
+		mod:PrimaryIcon("unseenstrike")
+	end
 	local function warnStrike(spellName)
 		local player = UnitName("boss1target") -- because this event does not supply destName with UNIT_SPELLCAST_SUCCEEDED
-		mod:TargetMessage("unseenstrike", spellName, player, "Urgent", L["unseenstrike_icon"], "Alarm")
+		mod:TargetMessage("unseenstrike", spellName, player, "Urgent", L.unseenstrike_icon, "Alarm")
 		mod:PrimaryIcon("unseenstrike", player)
+		if UnitIsUnit(player, "player") then mod:Say("unseenstrike", CL["say"]:format(spellName)) end
 	end
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		if unit == "boss1" then
 			if spellId == 122949 then --Unseen Strike
-				self:Bar("unseenstrike", L["unseenstrike_cone"], 5, L["unseenstrike_icon"])
-				self:Bar("unseenstrike", "~"..spellName, 60, L["unseenstrike_icon"])
+				self:Bar("unseenstrike", L["unseenstrike_inc"], 5, L.unseenstrike_icon)
+				self:Bar("unseenstrike", "~"..spellName, 60, L.unseenstrike_icon)
 				self:ScheduleTimer(warnStrike, 0.5, spellName) -- still faster than using boss emote (0.4 needs testing)
+				self:ScheduleTimer(removeIcon, 10)
 			elseif spellId == 122839 then --Tempest Slash
 				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)

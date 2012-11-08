@@ -13,8 +13,8 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "itIT")
 if L then
+	L.unseenstrike_inc = "Incoming Strike!"
 
-	L.unseenstrike_cone = "Cono dell'Assalto Invisibile!"
 	L.assault_message = "%2$dx Assalto su %1$s"
 	L.assault = "Assalto Opprimente"
 	L.assault_desc = "Avviso solo per i Difensori. L'attacco lascia il Difensore esposto ai danni dei prossimi Attacchi Opprimenti del 100% per 45 secondi."

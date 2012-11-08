@@ -13,7 +13,7 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "ruRU")
 if L then
-	L.unseenstrike_cone = "Невидимый удар"
+	L.unseenstrike_inc = "Incoming Strike!"
 
 	L.assault_message = "%2$dx Выпад на |3-5(%1$s)"
 end
