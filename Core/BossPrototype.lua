@@ -535,12 +535,15 @@ do
 			else
 				text = format(L["other"], text, coloredNames[player])
 			end
+		elseif type(text) == "number" then
+			text = spells[text]
 		end
 		self:SendMessage("BigWigs_Message", self, key, text, color, true, sound, nil, icon and icons[icon])
 	end
 
 	function boss:TargetMessage(key, spellName, player, color, icon, sound, ...)
 		if not checkFlag(self, key, C.MESSAGE) then return end
+		if type(spellName) == "number" then spellName = spells[spellName] end
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
 			wipe(player)

@@ -8,6 +8,7 @@ L.underyou = "%s sotto di TE!"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "%s su di ME!"
+L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<Esecuzione di %s>"
 L.soon = "%s tra poco!"
 

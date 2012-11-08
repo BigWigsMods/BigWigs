@@ -8,6 +8,7 @@ L.underyou = "%s unter DIR!"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "%s auf MIR!"
+L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<Wirkt %s>"
 L.soon = "%s bald!"
 

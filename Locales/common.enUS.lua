@@ -6,6 +6,7 @@ L.underyou = "%s under YOU!"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "%s on ME!"
+L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<Casting %s>"
 L.soon = "%s soon!"
 

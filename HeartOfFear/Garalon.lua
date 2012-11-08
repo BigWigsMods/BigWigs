@@ -118,8 +118,8 @@ function mod:PheromonesRemoved(player, spellId, _, _, spellName)
 end
 
 function mod:Pungency(player, spellId, _, _, spellName, buffStack)
-	if buffStack > (self:Heroic() and 3 or 7) and buffStack % 2 == 0 then
-		self:TargetMessage(spellId, ("%s (%d)"):format(spellName, buffStack), player, "Attention", spellId)
+	if buffStack > ((self:LFR() and 20) or (self:Heroic() and 3) or 7) and buffStack % 2 == 0 then
+		self:TargetMessage(spellId, CL["stack"], player, "Attention", spellId, nil, buffStack, spellName)
 	end
 end
 

@@ -8,6 +8,7 @@ L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
 L.onboss = "%s на БОССЕ!"
 L.say = "%s на МНЕ!"
+L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<Каст %s>"
 L.soon = "%s скоро!"
 

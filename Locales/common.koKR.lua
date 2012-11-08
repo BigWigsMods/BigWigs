@@ -8,6 +8,7 @@ L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "나에게 %s!"
+L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<%s 시전중>"
 L.soon = "곧 %s!"
 
