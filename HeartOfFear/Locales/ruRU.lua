@@ -1,14 +1,14 @@
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "ruRU")
 if not L then return end
 if L then
-	L.force_message = "AoE Pulse"
+	L.force_message = "AoE импульс"
 
-	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
-	L.attenuation_message = "Incoming Discs, Dance!"
+	L.attenuation = "Звуковые кольца"
+	L.attenuation_message = "Появляются кольца, танцуем!"
 
-	L.platform_emote = "platforms" -- Imperial Vizier Zor'lok flies to one of his platforms!
-	L.platform_emote_final = "inhales"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
-	L.platform_message = "Swapping Platform"
+	L.platform_emote = "платформ"
+	L.platform_emote_final = "вдыхает"
+	L.platform_message = "Смена платформы"
 end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "ruRU")
@@ -21,9 +21,9 @@ end
 L = BigWigs:NewBossLocale("Garalon", "ruRU")
 if L then
 	L.crush_stun = "Сокрушение"
-	L.crush_trigger1 = "Garalon prepares to"
+	L.crush_trigger1 = "Гаралон готовится"
 	L.crush_trigger2 = "Гаралон чувствует"
-	L.crush_trigger3 = "Garalon detects"
+	L.crush_trigger3 = "Гаралон обнаруживает"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")
