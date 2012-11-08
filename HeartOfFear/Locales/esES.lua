@@ -1,7 +1,14 @@
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "esES") or BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "esMX")
 if not L then return end
 if L then
+	L.force_message = "Pulso AoE"
+	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discos)"
 
+	L.attenuation_message = "¡Discos inminentes, baila!"
+
+	L.platform_emote = "¡El visir imperial Zor'lok vuela hacia una de las plataformas!" -- Imperial Vizier Zor'lok flies to one of his platforms!
+	L.platform_emote_final = "¡El visir imperial Zor'lok inhala las feromonas de celo!"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
+	L.platform_message = "Cambio de plataforma"
 end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "esES") or BigWigs:NewBossLocale("Blade Lord Ta'yak", "esMX")
