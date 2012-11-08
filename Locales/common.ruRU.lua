@@ -1,5 +1,4 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "ruRU")
-
 if not L then return end
 
 -- Prototype.lua common words
@@ -8,7 +7,7 @@ L.underyou = "%s под ТОБОЙ!"
 L.other = "%s: %s"
 L.onboss = "%s на БОССЕ!"
 L.say = "%s на МНЕ!"
-L.stack = "%2$dx %3$s on %1$s"
+L.stack = "%2$dx %3$s на %1$s"
 L.cast = "<Каст %s>"
 L.soon = "%s скоро!"
 
@@ -19,7 +18,7 @@ L.hard = "Сложный режим"
 L.general = "Общее"
 
 L.duration = "%s для %s сек"
-L.over = "%s Over!"
+L.over = "%s закончился!"
 
 L.add_spawned = "Помощник появился!"
 L.next_add = "Следующий помощник"

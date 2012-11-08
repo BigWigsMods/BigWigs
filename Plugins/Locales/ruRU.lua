@@ -1,10 +1,9 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Plugins", "ruRU")
-
 if not L then return end
-
 -----------------------------------------------------------------------
 -- Bars.lua
 --
+
 L["Style"] = "Стиль"
 L.bigWigsBarStyleName_Default = "По умолчанию"
 
@@ -85,8 +84,8 @@ L["Positive"] = "Положительные"
 -- Messages.lua
 --
 
-L.sinkDescription = "Route output from this addon through the Big Wigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
-L.emphasizedSinkDescription = "Route output from this addon through the Big Wigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
+L.sinkDescription = "Пути вывода сообщений. Отображение поддерживает иконки, цвета и позволяет вывести до 4х сообщений на экран. Новые сообщения будут расти в размерах, и вновь сокращатся, чтобы уведомить игрока."
+L.emphasizedSinkDescription = "Пути вывода увеличенных сообщений. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
 
 L["Messages"] = "Сообщения"
 L["Normal messages"] = "Обычные сообщения"
@@ -111,7 +110,12 @@ L["Thin"] = "Тонкий"
 L["Thick"] = "Толстый"
 L["Outline"] = "Контур"
 L["Monochrome"] = "Монохромный"
-L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Переключение монохромного флага на всех сообщениях, удаляя все сглаживание края шрифта."
+L["Toggles the monochrome flag on all messages, removing any smoothing of the font edges."] = "Переключение монохромного флага на всех сообщениях, удаляя все сглаживание краев шрифта."
+
+L["Display time"] = "Время отображения"
+L["How long to display a message, in seconds"] = "Сколько секунд будет показываться сообщение"
+L["Fade time"] = "Время затухания"
+L["How long to fade out a message, in seconds"] = "Сколько секунд будет затухать сообщение"
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -119,7 +123,7 @@ L["Toggles the monochrome flag on all messages, removing any smoothing of the fo
 
 L["Icons"] = "Метки"
 
-L.raidIconDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, Big Wigs will never change his icon.|r"
+L.raidIconDescription = "Некоторые битвы могут включать способности типа 'бомба', накладываемые на определенного игрока или способности преследования. Здесь вы можете настроить рейдовые метки, используемые для обозначения таких игроков.\n\nЕсли в битве имется только одна такая способность, будет использована только первая метка. Одна метка никогда не будет использована для разных способностей, в следующий раз будет использована одна и та же иконка.\n\n|cffff4411Заметка, если игрок был отмечен вручную, Big Wigs не будет менять его метку.|r"
 L["Primary"] = "Основная"
 L["The first raid target icon that a encounter script should use."] = "Первая метка рейда, которая будет использоваться скриптом события."
 L["Secondary"] = "Второстепенная"
@@ -164,7 +168,7 @@ L["Sound"] = "Звук"
 L["Disabled"] = "Отключить"
 L["Disable the proximity display for all modules that use it."] = "Отключить отображение окна близости для всех модулей использующих его."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "Модуль близости будет показан в следующий раз. Чтобы полностью его отключить для данного боя, вам нужно зайти в опции этого боя и отключить его там."
-L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = "Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."
+L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = "Отображение близости будет показываться как графический радар, вместо обычного списка имен. Работает только для тех зон, где Big Wigs получил информацию о размере; для других зон будут выводиться списки имен."
 L["Graphical display"] = "Графическое отображение"
 L["Sound delay"] = "Задержка звука"
 L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Определяет как долго Big Wigs должен подождать между повторением заданного звука, когда кто-то слишком близко к вам."
@@ -197,7 +201,7 @@ L["Shows or hides a spell tooltip if the Proximity display is currently tied dir
 --
 
 L["|cff%s%s|r says:"] = "|cff%s%s|r говорит:"
-L["Cool!"] = "Cool!"
+L["Cool!"] = "Класс!"
 L["Tips"] = "Советы"
 L["Tip of the Raid"] = "Советы рейда"
 L["Tip of the raid will show by default when you zone in to a raid instance, you are not in combat, and your raid group has more than 9 players in it. Only one tip will be shown per session, typically.\n\nHere you can tweak how to display that tip, either using the pimped out window (default), or outputting it to chat. If you play with raid leaders who overuse the |cffff4411/sendtip command|r, you might want to show them in chat frame instead!"] = "Советы рейда будет показыны по умолчанию, когда вы входите в рейдовую зону, когда вы вне боя, и ваша рейд группа состоит более чем из 9 игроков. За сессию будет показан всего один совет.\n\nЗдесь вы можете настроить способ отображения советов, либо с помощью всплываючего окна (по умолчанию), или выводить их в чате. Если ваш рейд лидером, злоупотребляет командой |cffff4411/sendtip command|r, вы можете выводить их в окно чата!"
@@ -208,7 +212,7 @@ L["Manual tips"] = "Советы вручную"
 L["Raid officers have the ability to show manual tips with the /sendtip command. If you have an officer who spams these things, or for some other reason you just don't want to see them, you can disable it with this option."] = "Офицеры рейда имеют возможность показать игрокам в рейде свои советы командой /sendtip. Если ваш офицер использует данную команду и спамит советы, или вы по какой-то другой причине просто не хотите их видеть, вы можете отключить это с помощью этой опции."
 L["Output to chat frame"] = "Вывод в окно чата"
 L["By default the tips will be shown in their own, awesome window in the middle of your screen. If you toggle this, however, the tips will ONLY be shown in your chat frame as pure text, and the window will never bother you again."] = "По умолчанию советы будут показаны в их собственном окно в центре экрана. Если вы переключите, советы будут отображаться только в чате как простой текст, и окно никогда не будет беспокоить вас снова."
-L["Usage: /sendtip <index|\"Custom tip\">"] = "Используйте: /sendtip <index|\"свот совет\">"
+L["Usage: /sendtip <index|\"Custom tip\">"] = "Используйте: /sendtip <index|\"Свой совет\">"
 L["You must be an officer in the raid to broadcast a tip."] = "Вы должны быть офицером в рейде для передачи советов."
 L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Индекс совета выходит за пределы поля, допустимый деапазон индекса от 1 до %d."
 
