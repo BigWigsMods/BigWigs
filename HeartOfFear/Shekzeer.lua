@@ -61,7 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Visions", 124862)
 	self:Log("SPELL_AURA_APPLIED", "CryOfTerror", 123788)
 
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 62837)
 end
@@ -77,12 +77,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:EngageCheck()
-	if phase ~= 2 then
-		self:CheckBossStatus()
-	end
-end
 
 function mod:CryOfTerror(player, _, _, _, spellName)
 	self:TargetMessage(123788,spellName, player, "Attention", 123788, "Long")
