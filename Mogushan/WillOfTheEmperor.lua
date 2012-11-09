@@ -12,8 +12,6 @@ if not mod then return end
 
 local gasCounter = 0
 local strengthCounter = 0
-local canEnable = true
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -85,17 +83,13 @@ function mod:OnRegister()
 	-- Kel'Thuzad v2
 	local f = CreateFrame("Frame")
 	local func = function()
-		if canEnable and not mod:IsEnabled() and GetSubZoneText() == L["enable_zone"] then
+		if not mod:IsEnabled() and GetSubZoneText() == L["enable_zone"] then
 			mod:Enable()
 		end
 	end
 	f:SetScript("OnEvent", func)
 	f:RegisterEvent("ZONE_CHANGED_INDOORS")
 	func()
-end
-
-function mod:VerifyEnable()
-	return canEnable
 end
 
 function mod:OnBossEnable()
@@ -126,10 +120,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 60399) -- Qin-xi they share hp
-end
-
-function mod:OnWin()
-	canEnable = false
 end
 
 function mod:OnEngage()
