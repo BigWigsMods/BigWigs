@@ -42,7 +42,7 @@ L.force = L.force .." (".. L.force_message ..")"
 function mod:GetOptions()
 	return {
 		{"attenuation", "FLASHSHAKE"}, {"force", "FLASHSHAKE"}, 122740, {122761, "ICON"},
-		"stages", "bosskill",
+		"stages", "berserk", "bosskill",
 	}
 end
 
@@ -61,9 +61,12 @@ function mod:OnBossEnable()
 	self:Death("Win", 62980)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	forceCount, platform = 0, 0
+	if not self:LFR() then
+		self:Berserk(self:Heroic() and 660 or 600) -- Verify
+	end
 end
 
 --------------------------------------------------------------------------------
