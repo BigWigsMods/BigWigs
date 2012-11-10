@@ -5,11 +5,11 @@ if L then
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (кольца)"
 	L.attenuation_bar = "Появляются кольца, танцуем!"
-	L.attenuation_message = "%s Dancing %s"
-	L.echo = "|c001cc986Echo|r"
-	L.zorlok = "|c00ed1ffaZor'lok|r"
-	L.left = "|c00008000<- Left <-|r"
-	L.right = "|c00FF0000-> Right ->|r"
+	L.attenuation_message = "%s Танцуем %s"
+	L.echo = "|c001cc986Эхо|r"
+	L.zorlok = "|c00ed1ffaЗор'лок|r"
+	L.left = "|c00008000<- Влево <-|r"
+	L.right = "|c00FF0000-> Направо ->|r"
 
 	L.platform_emote = "платформ"
 	L.platform_emote_final = "вдыхает"
@@ -43,10 +43,10 @@ end
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
 if L then
 	L.explosion_casting = "Янтарный взрыв"
-	L.explosion_casting_desc = "Warning for when any of the Amber Explosions are being casted. Cast start message warnings are associated to this option. Emphasizing this is highly recommended!"
+	L.explosion_casting_desc = "Предупреждать о начале применения Янтарного взрыва. Крайне рекомендуется включить 'Увеличение'!"
 
 	L.willpower = "Сила воли"
-	L.willpower_desc = "When Willpower runs out, the player dies and the Mutated Construct continues to act, uncontrolled."
+	L.willpower_desc = "Когда иссякнет Сила воли - игрок умрет, а Мутировавший организм продолжит бесконтрольное существовавание."
 	L.willpower_message = "Ваша сила воли: %d (%d)"
 end
 
