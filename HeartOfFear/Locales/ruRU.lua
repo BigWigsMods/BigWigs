@@ -3,8 +3,13 @@ if not L then return end
 if L then
 	L.force_message = "AoE импульс"
 
-	L.attenuation = "Звуковые кольца"
-	L.attenuation_message = "Появляются кольца, танцуем!"
+	L.attenuation = EJ_GetSectionInfo(6426) .. " (кольца)"
+	L.attenuation_bar = "Появляются кольца, танцуем!"
+	L.attenuation_message = "%s Dancing %s"
+	L.echo = "|c001cc986Echo|r"
+	L.zorlok = "|c00ed1ffaZor'lok|r"
+	L.left = "|c00008000<- Left <-|r"
+	L.right = "|c00FF0000-> Right ->|r"
 
 	L.platform_emote = "платформ"
 	L.platform_emote_final = "вдыхает"

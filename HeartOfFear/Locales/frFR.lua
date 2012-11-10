@@ -4,7 +4,12 @@ if L then
 	L.force_message = "Impulsion de zone"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (anneaux)"
-	L.attenuation_message = "Arrivée des anneaux, dansez !"
+	L.attenuation_bar = "Arrivée des anneaux, dansez !"
+	L.attenuation_message = "%s Dancing %s"
+	L.echo = "|c001cc986Echo|r"
+	L.zorlok = "|c00ed1ffaZor'lok|r"
+	L.left = "|c00008000<- Left <-|r"
+	L.right = "|c00FF0000-> Right ->|r"
 
 	L.platform_emote = "plateformes" -- Le vizir impérial Zor'lok s'envole vers l'une de ses plateformes !
 	L.platform_emote_final = "inhale"-- Le vizir impérial Zor'lok inhale les Phéromones de zèle !

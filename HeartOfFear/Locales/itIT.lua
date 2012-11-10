@@ -4,7 +4,12 @@ if L then
 	L.force_message = "AoE Pulse"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
-	L.attenuation_message = "Dischi in Arrivo, Corri!"
+	L.attenuation_bar = "Dischi in Arrivo, Corri!"
+	L.attenuation_message = "%s Dancing %s"
+	L.echo = "|c001cc986Echo|r"
+	L.zorlok = "|c00ed1ffaZor'lok|r"
+	L.left = "|c00008000<- Left <-|r"
+	L.right = "|c00FF0000-> Right ->|r"
 
 	L.platform_emote = "piattaforme" -- Imperial Vizier Zor'lok flies to one of his platforms!
 	L.platform_emote_final = "inala"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
@@ -16,8 +21,6 @@ if L then
 	L.unseenstrike_inc = "Incoming Strike!"
 
 	L.assault_message = "%2$dx Assalto su %1$s"
-	L.assault = "Assalto Opprimente"
-	L.assault_desc = "Avviso solo per i Difensori. L'attacco lascia il Difensore esposto ai danni dei prossimi Attacchi Opprimenti del 100% per 45 secondi."
 end
 
 L = BigWigs:NewBossLocale("Garalon", "itIT")

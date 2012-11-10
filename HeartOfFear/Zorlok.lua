@@ -27,10 +27,10 @@ if L then
 	L.attenuation_desc = select(2, EJ_GetSectionInfo(6426))
 	L.attenuation_icon = 127834
 	L.attenuation_bar = "Incoming Discs, Dance!"
-	L.attenuation_message = "%s dance %s"
+	L.attenuation_message = "%s Dancing %s"
 	L.echo = "|c001cc986Echo|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
-	L.left = "|c00008000<- LEFT <-|r"
+	L.left = "|c00008000<- Left <-|r"
 	L.right = "|c00FF0000-> Right ->|r"
 
 	L.platform_emote = "platforms" -- Imperial Vizier Zor'lok flies to one of his platforms!
@@ -53,7 +53,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Force and Verse pre-warn
-	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497, 122479, 122474)
+	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497, 122474, 122479, 123721, 123722)
 	self:Log("SPELL_AURA_APPLIED", "Convert", 122740)
 	self:Log("SPELL_AURA_APPLIED", "Exhale", 122761)
 	self:Log("SPELL_AURA_REMOVED", "ExhaleOver", 122761)
@@ -84,7 +84,7 @@ do
 		mod:TargetMessage(spellId, mod:SpellName(spellId), convertList, "Attention", spellId)
 		scheduled = nil
 	end
-	function mod:Convert(player, spellId,  _, _, spellName)
+	function mod:Convert(player, spellId, _, _, spellName)
 		self:Bar(spellId, "~"..spellName, 36, spellId)
 		convertList[#convertList + 1] = player
 		if not scheduled then
@@ -101,9 +101,9 @@ function mod:Attenuation(_, spellId, source, _, spellName)
 	else
 		target = L["echo"]
 	end
-	if spellId == 122497 or spellId == 122479 then -- right
+	if spellId == 122497 or spellId == 122479 or spellId == 123722 then -- right
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")
-	elseif spellId == 122496 or spellId == 122474 then -- left
+	elseif spellId == 122496 or spellId == 122474 or spellId == 123721 then -- left
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["left"]), "Attention", "misc_arrowleft", "Alert")
 	end
 	self:Bar("attenuation", L["attenuation_bar"], 14, spellId)
