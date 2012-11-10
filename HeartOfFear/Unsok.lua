@@ -42,7 +42,7 @@ function mod:GetOptions()
 		122784, { 122398, "FLASHSHAKE" }, 123060, "willpower",
 		"ej:6246", { 122402, "FLASHSHAKE" },
 		122556,
-		121995, "explosion_casting", 123020,
+		{121995, "FLASHSHAKE", "SAY"}, "explosion_casting", 123020,
 		"berserk", "bosskill",
 	}, {
 		[122784] = "ej:6248",
