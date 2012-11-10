@@ -26,7 +26,12 @@ if L then
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
 	L.attenuation_desc = select(2, EJ_GetSectionInfo(6426))
 	L.attenuation_icon = 127834
-	L.attenuation_message = "Incoming Discs, Dance!"
+	L.attenuation_bar = "Incoming Discs, Dance!"
+	L.attenuation_message = "%s dance %s"
+	L.echo = "|c001cc986Echo|r"
+	L.zorlok = "|c00ed1ffaZor'lok|r"
+	L.left = "|c00008000<- LEFT <-|r"
+	L.right = "|c00FF0000-> Right ->|r"
 
 	L.platform_emote = "platforms" -- Imperial Vizier Zor'lok flies to one of his platforms!
 	L.platform_emote_final = "inhales"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
@@ -48,7 +53,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Force and Verse pre-warn
-	self:Log("SPELL_CAST_START", "Attenuation", 127834)
+	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497)
 	self:Log("SPELL_AURA_APPLIED", "Convert", 122740)
 	self:Log("SPELL_AURA_APPLIED", "Exhale", 122761)
 	self:Log("SPELL_AURA_REMOVED", "ExhaleOver", 122761)
@@ -62,6 +67,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Berserk(720)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	forceCount, platform = 0, 0
 	if not self:LFR() then
@@ -79,7 +85,8 @@ do
 		mod:TargetMessage(spellId, mod:SpellName(spellId), convertList, "Attention", spellId)
 		scheduled = nil
 	end
-	function mod:Convert(player, spellId)
+	function mod:Convert(player, spellId,  _, _, spellName)
+		self:Bar(spellId, "~"..spellName, 36, spellId)
 		convertList[#convertList + 1] = player
 		if not scheduled then
 			scheduled = true
@@ -88,9 +95,19 @@ do
 	end
 end
 
-function mod:Attenuation(_, spellId, _, _, spellName)
-	self:Message("attenuation", L["attenuation_message"], "Urgent", spellId, "Alert")
-	self:Bar("attenuation", L["attenuation_message"], 14, spellId)
+function mod:Attenuation(_, spellId, source, _, spellName)
+	local target
+	if source == UnitName("boss1") then
+		target = L["zorlok"]
+	else
+		target = L["echo"]
+	end
+	if spellId == 122497 then -- right
+		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")
+	elseif spellId == 122496  then -- left
+		self:Message("attenuation", L["attenuation_message"]:format(target, L["left"]), "Attention", "misc_arrowleft", "Alert")
+	end
+	self:Bar("attenuation", L["attenuation_bar"], 14, spellId)
 	self:FlashShake("attenuation")
 end
 
@@ -102,7 +119,7 @@ end
 
 function mod:ForceAndVerse(_, spellId, _, _, spellName)
 	forceCount = forceCount + 1
-	self:Message("force", ("%s (%d)"):format(L["force_message"], forceCount), "Urgent", spellId, "Alert")
+	self:Message("force", ("%s (%d)"):format(L["force_message"], forceCount), "Urgent", spellId)
 	self:Bar("force", CL["cast"]:format(L["force_message"]), 12, spellId)
 	self:FlashShake("force")
 end
