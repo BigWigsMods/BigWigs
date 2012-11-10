@@ -33,7 +33,7 @@ function mod:GetOptions()
 	return {
 		{"ej:5772", "SAY"},
 		130774,
-		{130395, "FLASHSHAKE", "PROXIMITY", "SAY"},
+		{130395, "FLASHSHAKE", "PROXIMITY"},
 		"overload", "petrifications", "berserk", "bosskill",
 	}, {
 		["ej:5772"] = "ej:5771",
@@ -73,30 +73,22 @@ function mod:Overload(msg, boss)
 end
 
 do
-	local scheduled = nil
 	local jasperChainsTargets = mod:NewTargetList()
-	local proximityTbl = {}
-	local function jasperChains(spellName)
-		if UnitIsUnit("player", proximityTbl[1]) then
-			self:OpenProximity(10, spellId, proximityTbl[2], true)
-		elseif UnitIsUnit("player", proximityTbl[2]) then
-			self:OpenProximity(10, spellId, proximityTbl[1], true)
-		end
-		wipe(proximityTbl)
-		mod:TargetMessage(130395, spellName, jasperChainsTargets, "Attention", 130395, "Info")
-		scheduled = nil
-	end
+	local prevPlayer = nil
 	function mod:JasperChainsApplied(player, spellId, _, _, spellName)
-		jasperChainsTargets[#jasperChainsTargets + 1] = player
-		proximityTbl[#proximityTbl+1] = player
-		if UnitIsUnit(player, "player") then
-			self:FlashShake(spellId)
-			self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId)
-			self:Say(spellId, CL["say"]:format(spellName))
-		end
-		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(jasperChains, 0.2, spellName)
+		if not prevPlayer then
+			prevPlayer = player
+			jasperChainsTargets[1] = player
+		elseif prevPlayer then
+			jasperChainsTargets[2] = player
+			if UnitIsUnit(player, "player") or UnitIsUnit(prevPlayer, "player") then
+				self:FlashShake(spellId)
+				self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId)
+				self:OpenProximity(10, spellId, UnitIsUnit(prevPlayer, "player") and player or prevPlayer, true)
+			else
+				self:TargetMessage(spellId, spellName, jasperChainsTargets, "Attention", spellId)
+			end
+			prevPlayer = nil
 		end
 	end
 	function mod:JasperChainsRemoved(player, spellId, _, _, spellName)
