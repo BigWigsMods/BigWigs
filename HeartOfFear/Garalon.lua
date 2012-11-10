@@ -65,6 +65,7 @@ function mod:OnEngage(diff)
 	self:Bar(122735, 122735, 11, 122735) --Furious Swipe
 	if self:Heroic() then
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+		self:Bar(122774, 122774, 28, 122082) -- Crush
 	end
 end
 
@@ -90,6 +91,9 @@ function mod:Crush()
 	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) --Crush
 
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
+	if self:Heroic() then
+		self:Bar(122774, 122774, 36, 122082) -- crush
+	end
 end
 
 function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
