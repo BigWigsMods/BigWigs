@@ -53,7 +53,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Force and Verse pre-warn
-	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497)
+	self:Log("SPELL_CAST_START", "Attenuation", 122496, 122497, 122479, 122474)
 	self:Log("SPELL_AURA_APPLIED", "Convert", 122740)
 	self:Log("SPELL_AURA_APPLIED", "Exhale", 122761)
 	self:Log("SPELL_AURA_REMOVED", "ExhaleOver", 122761)
@@ -67,11 +67,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Berserk(720)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	forceCount, platform = 0, 0
 	if not self:LFR() then
-		self:Berserk(self:Heroic() and 660 or 600) -- Verify
+		self:Berserk(self:Heroic() and 720 or 600) -- Verify
 	end
 end
 
@@ -97,14 +96,14 @@ end
 
 function mod:Attenuation(_, spellId, source, _, spellName)
 	local target
-	if source == UnitName("boss1") then
+	if spellName == UnitCastingInfo("boss1") then
 		target = L["zorlok"]
 	else
 		target = L["echo"]
 	end
-	if spellId == 122497 then -- right
+	if spellId == 122497 or spellId == 122479 then -- right
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")
-	elseif spellId == 122496  then -- left
+	elseif spellId == 122496 or spellId == 122474 then -- left
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["left"]), "Attention", "misc_arrowleft", "Alert")
 	end
 	self:Bar("attenuation", L["attenuation_bar"], 14, spellId)
