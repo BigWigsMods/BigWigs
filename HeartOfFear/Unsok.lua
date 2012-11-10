@@ -147,9 +147,34 @@ function mod:ReshapeLifeRemoved(player)
 	end
 end
 
-function mod:Beam(_, _, _, _, spellName)
-	-- don't think this needs a bar
-	self:TargetMessage(121995, spellName, "Attention", 121995)
+do
+	local timer, fired = nil, 0
+	local function beamWarn(spellName)
+		fired = fired + 1
+		local player = UnitName("boss1targettarget")--Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
+		if player and not UnitIsUnit("boss1targettarget", "boss1") then--target target is himself, so he's not targeting off scalple mob yet
+			mod:CancelTimer(timer, true)
+			timer = nil
+			if UnitIsUnit("boss1targettarget", "player") then
+				mod:FlashShake(121995)
+				mod:Say(121995, CL["say"]:format(spellName))
+			end
+			return
+		end
+		-- 19 == 0.95sec
+		-- Safety check if the unit doesn't exist or boss never targets anything but himself
+		if fired > 18 then
+			mod:CancelTimer(timer, true)
+			timer = nil
+			self:TargetMessage(121995, spellName, "Attention", 121995)--Give generic warning as a backup
+		end
+	end
+	function mod:Beam(_, _, _, _, spellName)
+		fired = 0
+		if not timer then
+			timer = self:ScheduleRepeatingTimer(beamWarn, 0.05, spellName)
+		end
+	end
 end
 
 function mod:AmberExplosion(_, _, player, _, spellName)
