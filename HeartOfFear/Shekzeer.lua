@@ -11,7 +11,7 @@ mod:RegisterEnableMob(62837)
 -- Locals
 --
 
-local field = (GetSpellInfo(123627))
+local field = mod:SpellName(123627)
 local visionsList = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -53,7 +53,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
 	self:RegisterEvent("UNIT_POWER", "CheapMansTimers")
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Eyes", 123707)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 125390)
@@ -62,7 +61,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CryOfTerror", 123788)
 	self:Log("SPELL_CAST_START", "ConsumingTerror", 124849)
 
-	self:Yell("OnEngage", L["engage_trigger"])
+	self:Yell("OnEngage", L["engage_trigger"]) -- XXX Check ENGAGE results
 
 	self:Death("Win", 62837)
 end
@@ -72,6 +71,7 @@ function mod:OnEngage(diff)
 	self:Berserk(480) -- assume
 	self:Bar("ej:6325", field, 20, 123627)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") -- XXX Check ENGAGE results
 end
 
 --------------------------------------------------------------------------------
