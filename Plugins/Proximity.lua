@@ -514,9 +514,8 @@ do
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
-			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+			if t > (lastplayed + 1) then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
@@ -965,6 +964,7 @@ function plugin:Open(range, module, key, player, isReverse)
 
 	if not player and not isReverse then
 		updater:SetScript("OnLoop", normalProximity)
+		makeThingsWork()
 	elseif player and isReverse then
 		for i = 1, GetNumGroupMembers() do
 			if UnitIsUnit(player, raidList[i]) then
@@ -972,6 +972,7 @@ function plugin:Open(range, module, key, player, isReverse)
 			end
 		end
 		updater:SetScript("OnLoop", reverseTargetProximity)
+		breakThings()
 	else
 		print("Current range functionality not implemented, aborting.")
 		return
@@ -1005,8 +1006,7 @@ function plugin:Open(range, module, key, player, isReverse)
 	else
 		activeSpellID = nil
 	end
-	-- Unbreak the sound+close buttons
-	makeThingsWork()
+
 	-- Start the show!
 	anchor:Show()
 	updater:Play()
