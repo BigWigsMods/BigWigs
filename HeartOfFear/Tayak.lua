@@ -38,8 +38,8 @@ L.assault_desc = CL.tank..L.assault_desc
 
 function mod:GetOptions()
 	return {
-		{125310, "FLASHSHAKE"}, 
-		122842, {"unseenstrike", "ICON", "SAY", "PROXIMITY"}, 123175, "assault", "storm",
+		{125310, "FLASHSHAKE"},
+		122842, {"unseenstrike", "ICON", "SAY", "PROXIMITY"}, {123175, "PROXIMITY"}, "assault", "storm",
 		"proximity", "berserk", "bosskill",
 	}, {
 		[125310] = "heroic",
@@ -66,7 +66,7 @@ function mod:OnEngage()
 	end
 	self:Bar(123175, "~"..self:SpellName(123175), 20.5, 123175) --Wind Step
 	self:Bar("unseenstrike", 122994, 30, 122994) --Unseen Strike
-	self:OpenProximity(8, 123175)
+	self:OpenProximity(8, 123175) -- close this in last phase
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	if not self:LFR() then
 		self:Berserk(480)
