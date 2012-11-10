@@ -956,12 +956,12 @@ local abilityNameFormat = "|T%s:20:20:-5|t%s"
 function plugin:Open(range, module, key, player, isReverse)
 	if type(range) ~= "number" then print("Range needs to be a number!") return end
 	if not IsInRaid() and not IsInGroup() then return end -- Solo runs of old content?
+	self:Close()
+
 	SetMapToCurrentZone()
 	local mapName = GetMapInfo()
 	activeMap = mapData[mapName]
 	if not activeMap then print("No map data!") return end
-
-	self:Close()
 
 	if not player and not isReverse then
 		updater:SetScript("OnLoop", normalProximity)
