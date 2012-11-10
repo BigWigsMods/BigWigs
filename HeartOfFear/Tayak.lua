@@ -89,7 +89,7 @@ end
 
 do
 	local function removeIcon()
-		mod:CloseProximity("unseenstrike")
+		mod:OpenProximity(8, 123175) -- Re-open normal proximity
 		mod:PrimaryIcon("unseenstrike")
 	end
 	local function warnStrike(spellName)
@@ -114,6 +114,7 @@ do
 				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
 				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
 				self:StopBar("~"..self:SpellName(123175)) --Wind Step
+				self:CloseProximity(123175)
 			end
 		end
 	end
