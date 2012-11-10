@@ -6,7 +6,7 @@ L.underyou = "%s en dessous de VOUS !"
 L.other = "%s : %s"
 L.onboss = "%s on BOSS!"
 L.say = "%s sur MOI !"
-L.stack = "%2$dx %3$s on %1$s"
+L.stack = "%2$dx %3$s sur %1$s"
 L.cast = "<%s en incant.>"
 L.soon = "%s imminent !"
 
@@ -19,8 +19,8 @@ L.general = "Général" -- General settings, i.e. things that apply to both norm
 L.duration = "%s pendant %s sec."
 L.over = "%s terminé !"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
+L.add_spawned = "Add apparu !"
+L.next_add = "Prochain Add"
 
 L.custom_start = "%s engagé - %s dans %d min."
 L.custom_start_s = "%s engagé - %s dans %d sec."

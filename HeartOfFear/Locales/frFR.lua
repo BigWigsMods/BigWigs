@@ -1,30 +1,29 @@
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "frFR")
 if not L then return end
 if L then
-	L.force_message = "AoE Pulse"
+	L.force_message = "Impulsion de zone"
 
-	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
-	L.attenuation_message = "Incoming Discs, Dance!"
+	L.attenuation = EJ_GetSectionInfo(6426) .. " (anneaux)"
+	L.attenuation_message = "Arrivée des anneaux, dansez !"
 
-	L.platform_emote = "platforms" -- Imperial Vizier Zor'lok flies to one of his platforms!
-	L.platform_emote_final = "inhales"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
-	L.platform_message = "Swapping Platform"
+	L.platform_emote = "plateformes" -- Le vizir impérial Zor'lok s'envole vers l'une de ses plateformes !
+	L.platform_emote_final = "inhale"-- Le vizir impérial Zor'lok inhale les Phéromones de zèle !
+	L.platform_message = "Changement de plateforme"
 end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "frFR")
 if L then
-	L.unseenstrike_inc = "Incoming Strike!"
+	L.unseenstrike_inc = "Arrivée d'une Frappe !"
 
-	L.assault = "Assaut accablant"
-	L.assault_desc = "Alerte pour tanks uniquement. L'attaque laisse les défenses de la cible exposées, augmentant les dégâts subis par la cible quand un Assaut accablant la touche de 100% pendant 45 sec."
+	L.assault_message = "%2$dx Assauts sur %1$s"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "frFR")
 if L then
 	L.crush_stun = "Étourdissement de Crabouille"
-	L.crush_trigger1 = "Garalon détecte la présence" -- à vérifier
+	L.crush_trigger1 = "Garalon se prépare" -- à vérifier
 	L.crush_trigger2 = "Garalon sent le passage" -- à vérifier
-	L.crush_trigger3 = "Garalon detects"
+	L.crush_trigger3 = "Garalon détecte la présence" -- à vérifier
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "frFR")
