@@ -166,8 +166,6 @@ L["Sound"] = "효과음"
 L["Disabled"] = "미사용"
 L["Disable the proximity display for all modules that use it."] = "모든 모듈의 근접 표시를 비활성화 합니다."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "다음 표시때 근접 표시를 표시하도록 합니다. 이것을 비활성화 하려면 옵션을 통해 전환하세요."
-L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = "근접한 플레이어를 그래픽 효과로 표시하여 나타냅니다."
-L["Graphical display"] = "그래픽 표시"
 L["Sound delay"] = "효과음 딜레이"
 L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "누군가가 근접해 있을때 나오는 효과음의 반복되는 사이의 딜레이를 설정합니다."
 

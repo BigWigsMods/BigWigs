@@ -75,18 +75,24 @@ end
 do
 	local scheduled = nil
 	local jasperChainsTargets = mod:NewTargetList()
+	local proximityTbl = {}
 	local function jasperChains(spellName)
+		if UnitIsUnit("player", proximityTbl[1]) then
+			self:OpenProximity(10, spellId, proximityTbl[2], true)
+		elseif UnitIsUnit("player", proximityTbl[2]) then
+			self:OpenProximity(10, spellId, proximityTbl[1], true)
+		end
+		wipe(proximityTbl)
 		mod:TargetMessage(130395, spellName, jasperChainsTargets, "Attention", 130395, "Info")
 		scheduled = nil
 	end
 	function mod:JasperChainsApplied(player, spellId, _, _, spellName)
 		jasperChainsTargets[#jasperChainsTargets + 1] = player
+		proximityTbl[#proximityTbl+1] = player
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(spellId)
 			self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId)
 			self:Say(spellId, CL["say"]:format(spellName))
-			-- this is kind of a reverse proximity now, it should help to know when you are actually close as you are supposed to be
-			self:OpenProximity(10, spellId)
 		end
 		if not scheduled then
 			scheduled = true

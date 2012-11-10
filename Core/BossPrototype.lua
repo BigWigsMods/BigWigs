@@ -485,9 +485,9 @@ end
 
 -- XXX the monitor should probably also get a button to turn off the proximity bitflag
 -- XXX for the given key.
-function boss:OpenProximity(range, key)
+function boss:OpenProximity(range, key, player, isReverse)
 	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end
-	self:SendMessage("BigWigs_ShowProximity", self, range, key or "proximity")
+	self:SendMessage("BigWigs_ShowProximity", self, range, key or "proximity", player, isReverse)
 end
 function boss:CloseProximity(key)
 	if not checkFlag(self, key or "proximity", C.PROXIMITY) then return end

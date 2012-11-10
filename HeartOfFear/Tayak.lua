@@ -39,7 +39,7 @@ L.assault_desc = CL.tank..L.assault_desc
 function mod:GetOptions()
 	return {
 		{125310, "FLASHSHAKE"}, 
-		122842, {"unseenstrike", "ICON", "SAY"}, 123175, "assault", "storm",
+		122842, {"unseenstrike", "ICON", "SAY", "PROXIMITY"}, 123175, "assault", "storm",
 		"proximity", "berserk", "bosskill",
 	}, {
 		[125310] = "heroic",
@@ -89,12 +89,14 @@ end
 
 do
 	local function removeIcon()
+		mod:CloseProximity("unseenstrike")
 		mod:PrimaryIcon("unseenstrike")
 	end
 	local function warnStrike(spellName)
 		local player = UnitName("boss1target") -- because this event does not supply destName with UNIT_SPELLCAST_SUCCEEDED
 		mod:TargetMessage("unseenstrike", spellName, player, "Urgent", L.unseenstrike_icon, "Alarm")
 		mod:PrimaryIcon("unseenstrike", player)
+		mod:OpenProximity(5, "unseenstrike", player, true)
 		if UnitIsUnit(player, "player") then mod:Say("unseenstrike", CL["say"]:format(spellName)) end
 	end
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
@@ -103,7 +105,7 @@ do
 				self:Bar("unseenstrike", L["unseenstrike_inc"], 5, L.unseenstrike_icon)
 				self:Bar("unseenstrike", "~"..spellName, 60, L.unseenstrike_icon)
 				self:ScheduleTimer(warnStrike, 0.5, spellName) -- still faster than using boss emote (0.4 needs testing)
-				self:ScheduleTimer(removeIcon, 10)
+				self:ScheduleTimer(removeIcon, 8)
 			elseif spellId == 122839 then --Tempest Slash
 				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)

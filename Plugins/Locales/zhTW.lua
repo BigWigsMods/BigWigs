@@ -170,8 +170,6 @@ L["Sound"] = "音效"
 L["Disabled"] = "禁用"
 L["Disable the proximity display for all modules that use it."] = "禁止所有首領模组使用近距離。"
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "近距離顯示將在下次顯示。要完全禁用此功能，需要關閉此功能選項。"
-L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = "近距離監視器以圖形化方式顯示誰可能過於接近你，而不是僅僅是名稱的列表。Big Wigs 只在區域符合實際大小訊息時顯示名稱列表。"
-L["Graphical display"] = "圖形化顯示"
 L["Sound delay"] = "音效延遲"
 L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "當有人太靠近你時指定多長時間 Big Wigs 重複間隔等待指定的音效。"
 

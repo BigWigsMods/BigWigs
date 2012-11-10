@@ -168,8 +168,6 @@ L["Sound"] = "Son"
 L["Disabled"] = "Désactivé"
 L["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité pour tous les modules l'utilisant."
 L["The proximity display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."] = "L'affichage de proximité sera affiché la prochaine fois. Pour le désactiver complètement, rendez-vous dans les options du boss et décochez \"Proximité\"."
-L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."] = "Permet au moniteur de proximité d'afficher une représentation graphique des personnages qui pourraient être trop proches de vous au lieu de juste afficher une liste de noms. Ceci ne fonctionne que dans les zones dont Big Wigs a accès aux informations de taille ; pour les autres zones seule la liste de noms sera affichée."
-L["Graphical display"] = "Affichage graphique"
 L["Sound delay"] = "Délai du son"
 L["Specify how long Big Wigs should wait between repeating the specified sound when someone is too close to you."] = "Spécifie combien de temps Big Wigs doit attendre entre chaque répétition du son indiquant qu'au moins une personne est trop proche de vous."
 

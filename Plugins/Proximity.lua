@@ -26,7 +26,6 @@ plugin.defaultDB = {
 	proximity = true,
 	font = nil,
 	fontSize = nil,
-	graphical = true,
 }
 
 -------------------------------------------------------------------------------
@@ -43,12 +42,13 @@ local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
 local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
-local activeProximityFunction = nil
 local activeRange = nil
 local activeSpellID = nil
 local activeMap = nil
+local proximityPlayer = nil
 local maxPlayers = 0
-local classCache = nil
+local raidList = {}
+local blipList = {}
 local anchor = nil
 
 --Radial upvalues
@@ -56,7 +56,6 @@ local GetPlayerMapPosition = GetPlayerMapPosition
 local GetPlayerFacing = GetPlayerFacing
 local format = string.format
 local GetRaidTargetIndex = GetRaidTargetIndex
-local UnitInRange = UnitInRange
 local UnitIsDead = UnitIsDead
 local UnitIsUnit = UnitIsUnit
 local GetTime = GetTime
@@ -64,211 +63,185 @@ local min = math.min
 local pi = math.pi
 local cos = math.cos
 local sin = math.sin
-local tremove = table.remove
-local unpack = unpack
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
-local hideDots, testDots -- funcs defined later
-
-local hexColors = {}
-local vertexColors = {}
-for k, v in pairs(RAID_CLASS_COLORS) do
-	hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
-	vertexColors[k] = { v.r, v.g, v.b }
-end
-
--- Helper table to cache colored player names.
-local coloredNames = setmetatable({}, {__index =
-	function(self, key)
-		if type(key) == "nil" then return nil end
-		local _, class = UnitClass(key)
-		if class then
-			self[key] = hexColors[class] .. key .. "|r"
-			return self[key]
-		else
-			return key
-		end
-	end
-})
+local normalProximity, reverseTargetProximity, testDots -- funcs defined later
 
 -------------------------------------------------------------------------------
--- Range functions
+-- Map Data
 --
-
-local bandages = {
-	53051, -- Dense Embersilk Bandage
-	53050, -- Heavy Embersilk Bandage
-	53049, -- Embersilk Bandage
-	34722, -- Heavy Frostweave Bandage
-	34721, -- Frostweave Bandage
-	21991, -- Heavy Netherweave Bandage
-	21990, -- Netherweave Bandage
-	14530, -- Heavy Runecloth Bandage
-	14529, -- Runecloth Bandage
-	8545, -- Heavy Mageweave Bandage
-	8544, -- Mageweave Bandage
-	6451, -- Heavy Silk Bandage
-	6450, -- Silk Bandage
-	3531, -- Heavy Wool Bandage
-	3530, -- Wool Bandage
-	2581, -- Heavy Linen Bandage
-	1251, -- Linen Bandage
-}
-
-local ranges = {
-	[15] = function(unit)
-		for i, v in next, bandages do
-			local r = IsItemInRange(v, unit)
-			if type(r) == "number" then
-				if r == 1 then return true end
-				break
-			end
-		end
-	end,
-}
-
-
-do
-	local checkInteractDistance = nil
-	local _, r = UnitRace("player")
-	if r == "Tauren" then
-		checkInteractDistance = { [3] = 6, [2] = 7, [4] = 25 }
-	elseif r == "Scourge" then
-		checkInteractDistance = { [3] = 7, [2] = 8, [4] = 27 }
-	else
-		checkInteractDistance = { [3] = 8, [2] = 9, [4] = 28 }
-	end
-	for index, range in pairs(checkInteractDistance) do
-		ranges[range] = function(unit) return CheckInteractDistance(unit, index) end
-	end
-
-	local spells = {
-		DEATHKNIGHT = { 49016 },
-		DRUID = { 5185, 467 },
-		-- HUNTER = { 34477 }, -- Misdirect is like 100y range, so forget it!
-		HUNTER = {},
-		MAGE = { 475, 1459 },
-		PALADIN = { 635, 19740, 20473 },
-		PRIEST = { 2050, 6346 },
-		ROGUE = { 57934 },
-		SHAMAN = { 331, 546 },
-		WARRIOR = { 50720, 3411 },
-		WARLOCK = { 5697 },
-	}
-	local _, class = UnitClass("player")
-	local mySpells = spells[class]
-	-- Gift of the Naaru
-	if r == "Draenei" then
-		if not mySpells then
-			mySpells = {}
-		end
-		mySpells[#mySpells+1] = 28880
-	end
-	if mySpells then
-		for i, spell in next, mySpells do
-			local name, _, _, _, _, _, _, minRange, range = GetSpellInfo(spell)
-			if name and type(range) == "number" then
-				local works = IsSpellInRange(name, "player")
-				if type(works) == "number" then
-					range = math.floor(range + 0.5)
-					if range == 0 then range = 5 end
-					if not ranges[range] then
-						ranges[range] = function(unit)
-							if IsSpellInRange(name, unit) == 1 then return true end
-						end
-					end
-				end
-			end
-		end
-	end
-end
 
 -- Copied from LibMapData-1.0 (All Rights Reserved) with permission from kagaro
 local mapData = {
+	--[[ Testing ]]--
 	StormwindCity = {
-		{ 1737.499958992, 1158.3330078125},
+		{ 1737.4999589920044,1158.3330078125 },
 	},
 	Orgrimmar = {
-		{ 1739.375, 1159.58349609375 },
+		{ 1739.375,1159.58349609375 },
 	},
+
+	--[[ Classic ]]--
+	MoltenCore = {
+		{ 1264.800064086914,843.1990661621094 },
+	},
+	BlackwingLair = {
+		{ 499.42803955078125,332.94970703125 },
+		{ 649.4270629882812,432.94970703125 },
+		{ 649.4270629882812,432.94970703125 },
+		{ 649.4270629882812,432.94970703125 },
+	},
+	RuinsofAhnQiraj = {
+		{ 2512.4998779296875,1675.0 },
+	},
+	AhnQiraj = {
+		{ 2777.5441131591797,1851.6962890625 },
+		{ 977.5599365234375,651.70654296875 },
+		{ 577.56005859375,385.0400390625 },
+	},
+
+	--[[ The Burning Crusade ]]--
+	GruulsLair = {
+		{ 525.0,350.0 },
+	},
+	Karazhan = {
+		{ 550.048828125,366.69921875 },
+		{ 257.85986328125,171.90625 },
+		{ 345.1494140625,230.099609375 },
+		{ 520.048828125,346.69921875 },
+		{ 234.14990234375,156.099609375 },
+		{ 581.548828125,387.69921875 },
+		{ 191.548828125,127.69921875 },
+		{ 139.3505859375,92.900390625 },
+		{ 760.048828125,506.69921875 },
+		{ 450.25,300.166015625 },
+		{ 271.050048828125,180.69921875 },
+		{ 595.048828125,396.69921875 },
+		{ 529.048828125,352.69921875 },
+		{ 245.25,163.5 },
+		{ 211.14990234375,140.765625 },
+		{ 101.25,67.5 },
+		{ 341.25,227.5 },
+	},
+	CoilfangReservoir = {
+		{ 1575.0029754638672,1050.0020141601562 },
+	},
+	TempestKeep = {
+		{ 1575.0,1050.0 },
+	},
+	BlackTemple = {
+		{ 1252.2495784759521,834.8330078125 },
+		{ 975.0,650.0 },
+		{ 1005.0,670.0 },
+		{ 440.0009765625,293.333984375 },
+		{ 670.0,446.66668701171875 },
+		{ 705.0,470.0 },
+		{ 355.0,236.6666259765625 },
+	},
+	CoTMountHyjal = {
+		{ 2499.999755859375,1666.66650390625 }
+	},
+	MagtheridonsLair = {
+		{ 556.0,370.6666946411133 }
+	},
+	SunwellPlateau = {
+		{ 906.25,604.1666259765625 },
+		{ 465.0,310.0 },
+	},
+
+	--[[ Wrath of the Lich King ]]--
+	VaultofArchavon = {
+		{ 1398.2550048828125,932.1700134277344 },
+	},
+	TheEyeofEternity = {
+		{ 430.070068359375,286.7130126953125 },
+	},
+	Naxxramas = {
+		{ 1093.830078125,729.219970703125 },
+		{ 1093.830078125,729.219970703125 },
+		{ 1200.0,800.0 },
+		{ 1200.330078125,800.219970703125 },
+		{ 2069.809814453125,1379.8798828125 },
+		{ 655.93994140625,437.2900390625 },
+	},
+	TheObsidianSanctum = {
+		{ 1162.4999179840088,775.0 },
+	},
+	Ulduar = {
+		{ 3287.4998779296875,2191.6666259765625 },
+		{ 669.4509887695312,446.300048828125 },
+		{ 1328.4609985351562,885.639892578125 },
+		{ 910.5,607.0 },
+		{ 1569.4599609375,1046.300048828125 },
+		{ 619.468994140625,412.97998046875 },
+	},
+	TheArgentColiseum = {
+		{ 369.9861869812012,246.65798950195312 },
+		{ 739.9960174560547,493.33001708984375 },
+	},
+	IcecrownCitadel = {
+		{ 1355.4700927734375,903.6470336914062 },
+		{ 1067.0,711.3336906433105 },
+		{ 195.469970703125,130.31500244140625 },
+		{ 773.7100830078125,515.810302734375 },
+		{ 1148.739990234375,765.820068359375 },
+		{ 373.7099609375,249.1298828125 },
+		{ 293.260009765625,195.50701904296875 },
+		{ 247.929931640625,165.28799438476562 },
+	},
+	OnyxiasLair = {
+		{ 483.1179885864258,322.0787887573242 },
+	},
+	TheRubySanctum = {
+		{ 752.0833129882812,502.083251953125 },
+	},
+
+	--[[ Cataclysm ]]--
 	TheBastionofTwilight = {
-		{ 1078.33499908447, 718.889984130859 },
-		{ 778.343017578125, 518.894958496094 },
-		{ 1042.34202575684, 694.894958496094 },
+		{ 1078.3349990844727,718.8899841308594 },
+		{ 778.343017578125,518.8949584960938 },
+		{ 1042.342025756836,694.8949584960938 },
 	},
 	BaradinHold = {
-		{ 585.0, 390.0 },
+		{ 585.0,390.0 },
 	},
 	BlackwingDescent = {
-		{ 849.69401550293, 566.462341070175 },
-		{ 999.692977905273, 666.462005615234 },
+		{ 849.6940155029297,566.4623410701752 },
+		{ 999.6929779052734,666.4620056152344 },
 	},
 	ThroneoftheFourWinds = {
-		{ 1500.0, 1000.0 },
+		{ 1500.0,1000.0 },
 	},
 	Firelands = {
-		{ 1587.49993896484, 1058.3332824707 },
-		{ 375.0, 250.0 },
-		{ 1440.0, 960.0 },
+		{ 1587.4999389648438,1058.3332824707031 },
+		{ 375.0,250.0 },
+		{ 1440.0,960.0 },
 	},
 	DragonSoul = {
-		{ 3106.70849609375, 2063.065185546875 },
-		{ 397.5, 265 },
-		{ 427.5, 285 },
-		{ 185.19921875, 123.466796875 },
-		{ 1.5, 1 },
-		{ 1.5, 1 },
-		{ 1108.3515625, 738.900390625 },
+		{ 3106.70849609375,2063.065185546875 },
+		{ 397.5,265.0 },
+		{ 427.5,285.0 },
+		{ 185.19921875,123.466796875 },
+		{ 1.5,1.0 },
+		{ 1.5,1.0 },
+		{ 1108.3515625,738.900390625 },
 	},
+
+	--[[ Mists of Pandaria ]]--
 	HeartofFear = {
-		{ 700.0, 466.666748046875 },
-		{ 1440.0043802261353, 960.0029296875 },
+		{ 700.0,466.666748046875 },
+		{ 1440.0043802261353,960.0029296875 },
 	},
 	MogushanVaults = {
-		{ 687.509765625, 458.33984375 },
-		{ 432.509765625, 288.33984375 },
-		{ 750.0, 500.0 },
+		{ 687.509765625,458.33984375 },
+		{ 432.509765625,288.33984375 },
+		{ 750.0,500.0 },
 	},
 	TerraceOfEndlessSpring = {
-		{ 702.083984375, 468.75 },
+		{ 702.083984375,468.75 },
 	},
 }
-
-local function findClosest(toRange)
-	local closest = 15
-	local closestDiff = math.abs(toRange - 15)
-	for range, func in pairs(ranges) do
-		if type(range) == "number" then
-			local diff = math.abs(toRange - range)
-			if diff < closestDiff then
-				closest = range
-				closestDiff = diff
-			end
-		end
-	end
-	return ranges[closest], closest
-end
-
-local function getClosestRangeFunction(toRange)
-	if ranges[toRange] then return ranges[toRange], toRange end
-	SetMapToCurrentZone()
-	local floors = mapData[(GetMapInfo())]
-	if not floors then return findClosest(toRange) end
-	local currentFloor = GetCurrentMapDungeonLevel()
-	if currentFloor == 0 then currentFloor = 1 end
-	local id = floors[currentFloor]
-	if id == false then return findClosest(toRange) end -- handle if a floor has no data
-	if not ranges[id] then	-- note to the confused: id is a tableref here, not an integer
-		ranges[id] = function(unit, srcX, srcY)
-			local dstX, dstY = GetPlayerMapPosition(unit)
-			local x = (dstX - srcX) * id[1]
-			local y = (dstY - srcY) * id[2]
-			return (x*x + y*y) ^ 0.5 < activeRange*1.1	-- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
-		end
-	end
-	return ranges[id], toRange
-end
 
 --------------------------------------------------------------------------------
 -- Options
@@ -380,110 +353,6 @@ local function makeThingsWork()
 	anchor.close:SetScript("OnClick", onNormalClose)
 end
 
-local function ensureDisplay()
-	if anchor then return end
-
-	local display = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
-	display:SetWidth(db.width or plugin.defaultDB.width)
-	display:SetHeight(db.height or plugin.defaultDB.height)
-	display:SetMinResize(100, 30)
-	display:SetClampedToScreen(true)
-	display:EnableMouse(true)
-	display:SetScript("OnEnter", onDisplayEnter)
-	display:SetScript("OnLeave", onControlLeave)
-	local bg = display:CreateTexture(nil, "BACKGROUND")
-	bg:SetAllPoints(display)
-	bg:SetBlendMode("BLEND")
-	bg:SetTexture(0, 0, 0, 0.3)
-	display.background = bg
-
-	local close = CreateFrame("Button", nil, display)
-	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-	close:SetHeight(16)
-	close:SetWidth(16)
-	close.tooltipHeader = L["Close"]
-	close.tooltipText = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."]
-	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
-	display.close = close
-
-	local sound = CreateFrame("Button", nil, display)
-	sound:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
-	sound:SetHeight(16)
-	sound:SetWidth(16)
-	sound.tooltipHeader = L["Toggle sound"]
-	sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
-	display.sound = sound
-
-	local header = display:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-	header:SetFormattedText(L["%d yards"], 0)
-	header:SetPoint("BOTTOM", display, "TOP", 0, 4)
-	display.title = header
-
-	local abilityName = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	abilityName:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
-	abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
-	display.ability = abilityName
-
-	local text = display:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-	text:SetText("")
-	text:SetAllPoints(display)
-	display.text = text
-	display:SetScript("OnShow", function()
-		if inConfigMode then
-			text:SetText("|cffaad372Legolasftw|r\n|cfff48cbaTirionman|r\n|cfffff468Sneakystab|r\n|cffc69b6dIamconanok|r")
-		else
-			text:SetText("|cff777777:-)|r")
-		end
-	end)
-
-	local rangeCircle = display:CreateTexture(nil, "ARTWORK")
-	rangeCircle:SetPoint("CENTER")
-	rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])
-	rangeCircle:SetBlendMode("ADD")
-	display.rangeCircle = rangeCircle
-
-	local playerDot = display:CreateTexture(nil, "OVERLAY")
-	playerDot:SetSize(32, 32)
-	playerDot:SetTexture([[Interface\Minimap\MinimapArrow]])
-	playerDot:SetBlendMode("ADD")
-	playerDot:SetPoint("CENTER")
-	display.playerDot = playerDot
-
-	local drag = CreateFrame("Frame", nil, display)
-	drag.frame = display
-	drag:SetFrameLevel(display:GetFrameLevel() + 10) -- place this above everything
-	drag:SetWidth(16)
-	drag:SetHeight(16)
-	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
-	drag:EnableMouse(true)
-	drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
-	drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
-	drag:SetAlpha(0.5)
-	display.drag = drag
-
-	local tex = drag:CreateTexture(nil, "OVERLAY")
-	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
-	tex:SetWidth(16)
-	tex:SetHeight(16)
-	tex:SetBlendMode("ADD")
-	tex:SetPoint("CENTER", drag)
-
-	anchor = display
-
-	local x = db.posx
-	local y = db.posy
-	if x and y then
-		local s = display:GetEffectiveScale()
-		display:ClearAllPoints()
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	else
-		display:ClearAllPoints()
-		display:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	end
-
-	plugin:RestyleWindow()
-end
-
 function plugin:RestyleWindow()
 	updateSoundButton()
 	for k, v in pairs(db.objects) do
@@ -495,7 +364,6 @@ function plugin:RestyleWindow()
 			end
 		end
 	end
-	anchor.text:SetFont(media:Fetch("font", db.font), db.fontSize)
 	if db.lock then
 		locked = nil
 		lockDisplay()
@@ -510,17 +378,15 @@ end
 --
 
 local updater = nil
-local graphicalUpdater, textUpdater = nil, nil
 do
-	local proxDots = {}
-	local cacheDots = {}
-	local cacheMarks = {}
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
 	-- dx and dy are in yards
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
-	local setDot = function(dx, dy, class, mark)
+	local setDot = function(dx, dy, n, blip)
+		blip.isShown = true
+
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
@@ -534,61 +400,33 @@ do
 		x = x * pixperyard
 		y = y * pixperyard
 
-		local dot = nil
-		if #cacheDots > 0 then
-			dot = tremove(cacheDots)
-		else
-			dot = anchor:CreateTexture(nil, "OVERLAY")
-			dot:SetSize(16, 16)
-			dot:SetTexture([[Interface\AddOns\BigWigs\Textures\blip]])
+		blip:ClearAllPoints()
+		-- Clamp to frame if out-of-bounds, mainly for reverse proximity
+		if x < -(width / 2) then
+			x = -(width / 2)
+		elseif x > (width / 2) then
+			x = (width / 2)
 		end
-		proxDots[#proxDots + 1] = dot
-
-		dot:ClearAllPoints()
-		dot:SetPoint("CENTER", anchor, "CENTER", x, y)
-		dot:SetVertexColor(unpack(vertexColors[class]))
-		dot:Show()
-
-		-- add icon if marked
-		if mark and mark > 0 and mark < 9 then
-			if not cacheMarks[mark] then
-				local markFrame = anchor:CreateTexture(nil, "OVERLAY")
-				markFrame:SetTexture(format([[Interface\TARGETINGFRAME\UI-RaidTargetingIcon_%d.blp]], mark))
-				markFrame:SetSize(16, 16)
-				cacheMarks[mark] = markFrame
-			end
-			local markFrame = cacheMarks[mark]
-			markFrame:ClearAllPoints()
-			markFrame:SetPoint("CENTER", anchor, "CENTER", x, y)
-			markFrame:SetDrawLayer("OVERLAY", 1)
-			markFrame:Show()
-			dot:Hide()
+		if y < -(height / 2) then
+			y = -(height / 2)
+		elseif y > (height / 2) then
+			y = (height / 2)
 		end
-	end
-
-	hideDots = function()
-		-- shuffle existing dots into cacheDots
-		-- hide those cacheDots
-		while #proxDots > 0 do
-			proxDots[1]:Hide()
-			cacheDots[#cacheDots + 1] = tremove(proxDots, 1)
-		end
-
-		-- hide marks
-		for i=1,8 do
-			if cacheMarks[i] then
-				cacheMarks[i]:Hide()
-			end
-		end
+		blip:SetPoint("CENTER", anchor, "CENTER", x, y)
+		blip:Show()
 	end
 
 	testDots = function()
-		hideDots()
-		setDot(10, 10, "WARLOCK", 0)
-		setDot(5, 0, "HUNTER", 0)
-		setDot(3, 10, "MAGE", 0)
-		setDot(-9, -7, "PRIEST", 0)
-		setDot(0, 10, "WARLOCK", 0)
+		for i = 1, 40 do
+			blipList[raidList[i]].isShown = nil
+			blipList[raidList[i]]:Hide()
+		end
+
+		setDot(10, 10, "raid1", blipList["raid1"])
+		setDot(5, 0, "raid2", blipList["raid2"])
+		setDot(3, 10, "raid3", blipList["raid3"])
+		setDot(-9, -7, "raid4", blipList["raid4"])
+		setDot(0, 10, "raid5", blipList["raid5"])
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local pixperyard = min(width, height) / 30
 		anchor.rangeCircle:SetSize(pixperyard * 20, pixperyard * 20)
@@ -597,82 +435,41 @@ do
 		anchor.playerDot:Show()
 	end
 
-	local tooClose = {} -- List of players who are too close.
-	function textUpdater()
-		local srcX, srcY = GetPlayerMapPosition("player")
-		if srcX == 0 and srcY == 0 then
-			SetMapToCurrentZone()
-			srcX, srcY = GetPlayerMapPosition("player")
-		end
-		for i = 1, maxPlayers do
-			local n = format("raid%d", i)
-			if UnitInRange(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") and activeProximityFunction(n, srcX, srcY) then
-				local nextIndex = #tooClose + 1
-				tooClose[nextIndex] = coloredNames[UnitName(n)]
-				if nextIndex > 4 then break end
-			end
-		end
-
-		if #tooClose == 0 then
-			anchor.text:SetText("|cff777777:-)|r")
-			lastplayed = 0
-		else
-			anchor.text:SetText(table.concat(tooClose, "\n"))
-			wipe(tooClose)
-			if (not db.sound) or (not UnitAffectingCombat("player")) then return end
-			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
-				lastplayed = t
-				plugin:SendMessage("BigWigs_Sound", db.soundName)
-			end
-		end
-	end
-
-	function graphicalUpdater()
+	function normalProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
 			srcX, srcY = GetPlayerMapPosition("player")
 		end
 
-		-- XXX This could probably be checked and set when the proximity
-		-- XXX display is opened? We won't change dungeon floors while
-		-- XXX it is open, surely.
-		local id = nil
-		if activeMap then
-			local currentFloor = GetCurrentMapDungeonLevel()
-			if currentFloor == 0 then currentFloor = 1 end
-			id = activeMap[currentFloor]
-		end
+		local currentFloor = GetCurrentMapDungeonLevel()
+		if currentFloor == 0 then currentFloor = 1 end
+		local id = activeMap[currentFloor]
 
-		-- Fall back to text
 		if not id then
-			updater:Stop()
-			updater:SetScript("OnLoop", textUpdater)
-			updater:Play()
-			anchor.text:Show()
-			anchor.rangeCircle:Hide()
-			anchor.playerDot:Hide()
-			return updateProximityText()
+			print("No floor id, closing proximity.")
+			plugin:Close()
+			return
 		end
 
 		local anyoneClose = nil
 
-		-- XXX We can't show/hide dots every update, that seems excessive.
-		hideDots()
 		for i = 1, maxPlayers do
-			local n = format("raid%d", i)
-			if UnitInRange(n) and not UnitIsDead(n) and not UnitIsUnit(n, "player") then
-				local unitX, unitY = GetPlayerMapPosition(n)
-				local dx = (unitX - srcX) * id[1]
-				local dy = (unitY - srcY) * id[2]
-				local range = (dx * dx + dy * dy) ^ 0.5
-				if range < (activeRange * 1.5) then
-					setDot(dx, dy, classCache[i], GetRaidTargetIndex(n))
+			local n = raidList[i]
+			local unitX, unitY = GetPlayerMapPosition(n)
+			local dx = (unitX - srcX) * id[1]
+			local dy = (unitY - srcY) * id[2]
+			local range = (dx * dx + dy * dy) ^ 0.5
+			if range < (activeRange * 1.5) then
+				if not UnitIsUnit("player", n) and not UnitIsDead(n) then
+					setDot(dx, dy, n, blipList[n])
 					if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = true
 					end
 				end
+			elseif blipList[n].isShown then
+				blipList[n]:Hide()
+				blipList[n].isShown = nil
 			end
 		end
 
@@ -681,9 +478,45 @@ do
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
 			anchor.rangeCircle:SetVertexColor(1, 0, 0)
-			if (not db.sound) or (not UnitAffectingCombat("player")) then return end
+			if not db.sound then return end
 			local t = GetTime()
-			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") then
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName)
+			end
+		end
+	end
+
+	function reverseTargetProximity()
+		local srcX, srcY = GetPlayerMapPosition("player")
+		if srcX == 0 and srcY == 0 then
+			SetMapToCurrentZone()
+			srcX, srcY = GetPlayerMapPosition("player")
+		end
+
+		local currentFloor = GetCurrentMapDungeonLevel()
+		if currentFloor == 0 then currentFloor = 1 end
+		local id = activeMap[currentFloor]
+
+		if not id then
+			print("No floor id, closing proximity.")
+			plugin:Close()
+			return
+		end
+
+		local unitX, unitY = GetPlayerMapPosition(proximityPlayer)
+		local dx = (unitX - srcX) * id[1]
+		local dy = (unitY - srcY) * id[2]
+		local range = (dx * dx + dy * dy) ^ 0.5
+		setDot(dx, dy, proximityPlayer, blipList[proximityPlayer])
+		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+			lastplayed = 0
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		else
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			if not db.sound then return end
+			local t = GetTime()
+			if t > (lastplayed + db.soundDelay) and not UnitIsDead("player") and InCombatLockdown() then
 				lastplayed = t
 				plugin:SendMessage("BigWigs_Sound", db.soundName)
 			end
@@ -696,10 +529,51 @@ do
 	anim:SetDuration(0.05)
 end
 
+local function updateBlipIcons()
+	for i = 1, maxPlayers do
+		local n = raidList[i]
+		local blip = blipList[n]
+		local icon = GetRaidTargetIndex(n)
+		if icon then
+			blip:SetTexture(format("Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d.blp", icon))
+			blip:SetDrawLayer("OVERLAY", 1)
+			blip.hasIcon = true
+		elseif blip.hasIcon then
+			blip.hasIcon = nil
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			local _, class = UnitClass(n)
+			if class then
+				local c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+				blip:SetVertexColor(c.r, c.g, c.b)
+			else
+				blip:SetVertexColor(0.5, 0.5, 0.5) -- Gray if UnitClass returns nil
+			end
+			blip:SetDrawLayer("OVERLAY", 0)
+		end
+	end
+end
+
+local function updateBlipColors()
+	maxPlayers = GetNumGroupMembers()
+	for i = 1, maxPlayers do
+		local n = raidList[i]
+		if not GetRaidTargetIndex(n) then
+			local blip = blipList[n]
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			local _, class = UnitClass(n)
+			if class then
+				local c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
+				blip:SetVertexColor(c.r, c.g, c.b)
+			else
+				blip:SetVertexColor(0.5, 0.5, 0.5) -- Gray if UnitClass returns nil
+			end
+			blip:SetDrawLayer("OVERLAY", 0)
+		end
+	end
+end
+
 local function updateProfile()
 	db = plugin.db.profile
-
-	if not anchor then return end
 
 	anchor:SetWidth(db.width)
 	anchor:SetHeight(db.height)
@@ -734,43 +608,8 @@ end
 function plugin:OnRegister()
 	db = self.db.profile
 
-	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
-	if CUSTOM_CLASS_COLORS then
-		local function update()
-			wipe(coloredNames)
-			for k, v in pairs(CUSTOM_CLASS_COLORS) do
-				hexColors[k] = format("|cff%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
-				vertexColors[k] = { v.r, v.g, v.b }
-			end
-		end
-		CUSTOM_CLASS_COLORS:RegisterCallback(update)
-		update()
-	end
+	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled, "inv_misc_map02")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-
-	local function iterateFloors(map, ...)
-		for i = 1, select("#", ...), 2 do
-			local w, h = select(i, ...)
-			table.insert(mapData[map], { tonumber(w), tonumber(h) })
-		end
-	end
-	local function iterateMaps(addonIndex, ...)
-		for i = 1, select("#", ...) do
-			local map = select(i, ...)
-			local meta = GetAddOnMetadata(addonIndex, "X-BigWigs-MapSize-" .. map)
-			if meta then
-				if not mapData[map] then mapData[map] = {} end
-				iterateFloors(map, strsplit(",", meta))
-			end
-		end
-	end
-
-	for i = 1, GetNumAddOns() do
-		local meta = GetAddOnMetadata(i, "X-BigWigs-Maps")
-		if meta then
-			iterateMaps(i, strsplit(",", meta))
-		end
-	end
 
 	if not db.font then
 		db.font = media:GetDefault("font")
@@ -778,6 +617,104 @@ function plugin:OnRegister()
 	if not db.fontSize then
 		local _, size = GameFontNormalHuge:GetFont()
 		db.fontSize = size
+	end
+
+	if not anchor then
+		anchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+		anchor:SetWidth(db.width or plugin.defaultDB.width)
+		anchor:SetHeight(db.height or plugin.defaultDB.height)
+		anchor:SetMinResize(100, 30)
+		anchor:SetClampedToScreen(true)
+		anchor:EnableMouse(true)
+		anchor:SetScript("OnEnter", onDisplayEnter)
+		anchor:SetScript("OnLeave", onControlLeave)
+		local bg = anchor:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(anchor)
+		bg:SetBlendMode("BLEND")
+		bg:SetTexture(0, 0, 0, 0.3)
+		anchor.background = bg
+
+		local close = CreateFrame("Button", nil, anchor)
+		close:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", -2, 2)
+		close:SetHeight(16)
+		close:SetWidth(16)
+		close.tooltipHeader = L["Close"]
+		close.tooltipText = L["Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."]
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+		anchor.close = close
+
+		local sound = CreateFrame("Button", nil, anchor)
+		sound:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT", 2, 2)
+		sound:SetHeight(16)
+		sound:SetWidth(16)
+		sound.tooltipHeader = L["Toggle sound"]
+		sound.tooltipText = L["Toggle whether or not the proximity window should beep when you're too close to another player."]
+		anchor.sound = sound
+
+		local header = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		header:SetFormattedText(L["%d yards"], 0)
+		header:SetPoint("BOTTOM", anchor, "TOP", 0, 4)
+		anchor.title = header
+
+		local abilityName = anchor:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		abilityName:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
+		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
+		anchor.ability = abilityName
+
+		local rangeCircle = anchor:CreateTexture(nil, "ARTWORK")
+		rangeCircle:SetPoint("CENTER")
+		rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])
+		rangeCircle:SetBlendMode("ADD")
+		anchor.rangeCircle = rangeCircle
+
+		local playerDot = anchor:CreateTexture(nil, "OVERLAY")
+		playerDot:SetSize(32, 32)
+		playerDot:SetTexture([[Interface\Minimap\MinimapArrow]])
+		playerDot:SetBlendMode("ADD")
+		playerDot:SetPoint("CENTER")
+		anchor.playerDot = playerDot
+
+		local drag = CreateFrame("Frame", nil, anchor)
+		drag.frame = anchor
+		drag:SetFrameLevel(anchor:GetFrameLevel() + 10) -- place this above everything
+		drag:SetWidth(16)
+		drag:SetHeight(16)
+		drag:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
+		drag:EnableMouse(true)
+		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
+		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
+		drag:SetAlpha(0.5)
+		anchor.drag = drag
+
+		local tex = drag:CreateTexture(nil, "OVERLAY")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
+		tex:SetWidth(16)
+		tex:SetHeight(16)
+		tex:SetBlendMode("ADD")
+		tex:SetPoint("CENTER", drag)
+
+		local x = db.posx
+		local y = db.posy
+		if x and y then
+			local s = anchor:GetEffectiveScale()
+			anchor:ClearAllPoints()
+			anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		else
+			anchor:ClearAllPoints()
+			anchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+		end
+
+		self:RestyleWindow()
+	end
+
+	anchor:Hide()
+
+	for i = 1, 40 do
+		local n = format("raid%d", i)
+		raidList[i] = n
+		blipList[n] = anchor:CreateTexture(nil, "OVERLAY")
+		blipList[n]:SetSize(16, 16)
+		blipList[n]:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
 	end
 end
 
@@ -802,6 +739,10 @@ end
 --
 
 function plugin:BigWigs_StartConfigureMode()
+	if anchor:IsShown() then
+		print("Cannot enter configure mode whilst proximity is active.")
+		return
+	end
 	inConfigMode = true
 	self:Test()
 end
@@ -812,7 +753,6 @@ function plugin:BigWigs_StopConfigureMode()
 end
 
 function plugin:BigWigs_SetConfigureTarget(event, module)
-	ensureDisplay()
 	if module == self then
 		anchor.background:SetTexture(0.2, 1, 0.2, 0.3)
 	else
@@ -865,13 +805,6 @@ do
 						desc = L["Locks the display in place, preventing moving and resizing."],
 						order = 2,
 						width = "half",
-					},
-					graphical = {
-						type = "toggle",
-						name = L["Graphical display"],
-						desc = L["Let the Proximity monitor display a graphical representation of people who might be too close to you instead of just a list of names. This only works for zones where Big Wigs has access to actual size information; for other zones it will fall back to the list of names."],
-						order = 3,
-						width = "full",
 					},
 					font = {
 						type = "select",
@@ -980,10 +913,10 @@ end
 
 do
 	local opener = nil
-	function plugin:BigWigs_ShowProximity(event, module, range, optionKey)
+	function plugin:BigWigs_ShowProximity(event, module, range, ...)
 		if db.disabled or type(range) ~= "number" then return end
 		opener = module
-		self:Open(range, module, optionKey)
+		self:Open(range, module, ...)
 	end
 
 	function plugin:BigWigs_OnBossDisable(event, module, optionKey)
@@ -997,63 +930,65 @@ end
 --
 
 function plugin:Close()
-	activeProximityFunction = nil
+	updater:Stop()
+
+	for i = 1, 40 do
+		if blipList[raidList[i]].isShown then
+			blipList[raidList[i]].isShown = nil
+			blipList[raidList[i]]:Hide()
+		end
+	end
+
 	activeRange = nil
 	activeSpellID = nil
 	activeMap = nil
-	if classCache then
-		wipe(classCache)
-		classCache = nil
-	end
-	if anchor then
-		anchor.title:SetFormattedText(L["%d yards"], 0)
-		anchor.ability:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
-		-- Just in case we were the last target of
-		-- configure mode, reset the background color.
-		anchor.background:SetTexture(0, 0, 0, 0.3)
-		anchor:Hide()
-	end
-	updater:Stop()
+	proximityPlayer = nil
+
+	anchor.title:SetFormattedText(L["%d yards"], 0)
+	anchor.ability:SetFormattedText(L["|T%s:20:20:-5|tAbility name"], "Interface\\Icons\\spell_nature_chainlightning")
+	-- Just in case we were the last target of
+	-- configure mode, reset the background color.
+	anchor.background:SetTexture(0, 0, 0, 0.3)
+	anchor:Hide()
 end
 
 local abilityNameFormat = "|T%s:20:20:-5|t%s"
-function plugin:Open(range, module, key)
-	if type(range) ~= "number" then error("Range needs to be a number!") end
-	-- Make sure the anchor is there
-	ensureDisplay()
-	-- Get the best range function for the given range
-	local func, actualRange = getClosestRangeFunction(range)
-	activeProximityFunction = func
-	activeRange = actualRange
-	maxPlayers = select(5, GetInstanceInfo())
-
-	if not classCache then classCache = {} end
-	for i=1, maxPlayers do
-		local _, class = UnitClass(format("raid%d", i))
-		classCache[i] = class
-	end
-
+function plugin:Open(range, module, key, player, isReverse)
+	if type(range) ~= "number" then print("Range needs to be a number!") return end
+	if not IsInRaid() and not IsInGroup() then return end -- Solo runs of old content?
 	SetMapToCurrentZone()
-	activeMap = mapData[(GetMapInfo())]
-	hideDots()
+	local mapName = GetMapInfo()
+	activeMap = mapData[mapName]
+	if not activeMap then print("No map data!") return end
 
-	if activeMap and db.graphical then
-		local width, height = anchor:GetWidth(), anchor:GetHeight()
-		local ppy = min(width, height) / (actualRange * 3)
-		anchor.rangeCircle:SetSize(ppy * actualRange * 2, ppy * actualRange * 2)
-		anchor.playerDot:Show()
-		anchor.rangeCircle:Show()
-		anchor.text:Hide()
-		updater:SetScript("OnLoop", graphicalUpdater)
+	self:Close()
+
+	if not player and not isReverse then
+		updater:SetScript("OnLoop", normalProximity)
+	elseif player and isReverse then
+		for i = 1, GetNumGroupMembers() do
+			if UnitIsUnit(player, raidList[i]) then
+				proximityPlayer = raidList[i]
+			end
+		end
+		updater:SetScript("OnLoop", reverseTargetProximity)
 	else
-		anchor.rangeCircle:Hide()
-		anchor.playerDot:Hide()
-		anchor.text:Show()
-		updater:SetScript("OnLoop", textUpdater)
+		print("Current range functionality not implemented, aborting.")
+		return
 	end
+	activeRange = range
+
+	self:RegisterEvent("GROUP_ROSTER_CHANGED", updateBlipColors)
+	self:RegisterEvent("RAID_TARGET_UPDATE", updateBlipIcons)
+	updateBlipColors()
+	updateBlipIcons()
+
+	local width, height = anchor:GetWidth(), anchor:GetHeight()
+	local ppy = min(width, height) / (range * 3)
+	anchor.rangeCircle:SetSize(ppy * range * 2, ppy * range * 2)
 
 	-- Update the header to reflect the actual range we're checking
-	anchor.title:SetFormattedText(L["%d yards"], actualRange)
+	anchor.title:SetFormattedText(L["%d yards"], range)
 	-- Update the ability name display
 	if module and key then
 		local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, key)
@@ -1078,21 +1013,11 @@ function plugin:Open(range, module, key)
 end
 
 function plugin:Test()
-	-- Make sure the anchor is there
-	ensureDisplay()
 	-- Close ourselves in case we entered configure mode DURING a boss fight.
 	self:Close()
 	-- Break the sound+close buttons
 	breakThings()
-	if db.graphical then
-		testDots()
-		anchor.text:Hide()
-	else
-		hideDots()
-		anchor.rangeCircle:Hide()
-		anchor.playerDot:Hide()
-		anchor.text:Show()
-	end
+	testDots()
 	anchor:Show()
 end
 
