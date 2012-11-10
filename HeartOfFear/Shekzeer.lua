@@ -13,7 +13,6 @@ mod:RegisterEnableMob(62837)
 
 local field = (GetSpellInfo(123627))
 local visionsList = mod:NewTargetList()
-local phase
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,13 +20,14 @@ local phase
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_trigger = "Death to all who dare challenge my empire!"
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes."
 	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Eyes of the Empress"
 	L.eyes_desc = "Count the stacks of eyes of the empress and show a duration bar."
-	L.eyes_icon = 30307
+	L.eyes_icon = 123707
 	L.eyes_message = "%2$dx eyes on %1$s"
 end
 L = mod:GetLocale()
@@ -42,7 +42,7 @@ function mod:GetOptions()
 	return {
 		"ej:6325", "eyes", {123788, "FLASHSHAKE"}, "proximity",
 		{125390, "FLASHSHAKE"}, 124097,
-		{124862, "FLASHSHAKE", "SAY"},
+		{124862, "FLASHSHAKE", "SAY"}, { 124849, "FLASHSHAKE" },
 		"phases", "berserk", "bosskill",
 	}, {
 		["ej:6325"] = "ej:6336",
@@ -60,14 +60,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Resin", 124097)
 	self:Log("SPELL_AURA_APPLIED", "Visions", 124862)
 	self:Log("SPELL_AURA_APPLIED", "CryOfTerror", 123788)
+	self:Log("SPELL_CAST_START", "ConsumingTerror", 124849)
 
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Yell("OnEngage", L["engage_trigger"])
 
 	self:Death("Win", 62837)
 end
 
 function mod:OnEngage(diff)
-	phase = 1
 	self:OpenProximity(5)
 	self:Berserk(480) -- assume
 	self:Bar("ej:6325", field, 20, 123627)
@@ -77,6 +77,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:ConsumingTerror(_, _, _, _, spellName)
+	self:Message(124849, spellName, "Important", 124849, "Alert")
+	self:Bar(124849, "~"..spellName, 32, 124849)
+	self:FlashShake(124849)
+end
 
 function mod:CryOfTerror(player, _, _, _, spellName)
 	self:TargetMessage(123788,spellName, player, "Attention", 123788, "Long")
@@ -123,17 +129,15 @@ function mod:CheapMansTimers(_, unit)
 	if UnitIsUnit(unit, "boss1") then
 		local power = UnitPower("boss1")
 		if power == 149 then
-			phase = 1
 			self:OpenProximity(5)
-			self:Bar("ej:6325", field, 19, 123627)
+			self:Bar("ej:6325", field, 19, 128353)
 			self:Bar("phases", CL["phase"]:format(2), 149, L["phases_icon"])
 		elseif power == 130 then
-			self:Bar("ej:6325", field, 65, 123627)
-			self:Message("ej:6325", field, "Attention", 123627)
+			self:Bar("ej:6325", field, 65, 128353)
+			self:Message("ej:6325", field, "Attention", 128353)
 		elseif power == 65 then
-			self:Message("ej:6325", field, "Attention", 123627)
+			self:Message("ej:6325", field, "Attention", 128353)
 		elseif power == 2 then
-			phase = 2
 			self:CloseProximity()
 			self:Bar("phases", CL["phase"]:format(1), 158, L["phases_icon"])
 		end
@@ -152,8 +156,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 35 then -- phase starts at 30
-			phase = 3
-			self:Message("phases", CL["soon"]:format(CL["phase"]:format(phase)), "Positive", L["phases_icon"], "Info")
+			self:Message("phases", CL["soon"]:format(CL["phase"]:format(3)), "Positive", L["phases_icon"], "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
