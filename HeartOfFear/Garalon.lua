@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Garalon", 897, 713)
 if not mod then return end
-mod:RegisterEnableMob(62164, 63191) -- 63191 you interact with, 62164 casts all the abilities
+mod:RegisterEnableMob(62164, 63191, 63053) -- 62164 casts all the abilities, 63191 you interact with, 63053 the legs
 
 -----------------------------------------------------------------------------------------
 -- Locals
