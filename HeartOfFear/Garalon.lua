@@ -67,7 +67,7 @@ function mod:OnEngage(diff)
 	self:Bar(122735, 122735, 11, 122735) --Furious Swipe
 	if self:Heroic() then
 		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-		self:Bar(122774, 122774, 28, 122082) -- Crush
+		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), 1), 28, 122082) -- Crush
 	end
 end
 
