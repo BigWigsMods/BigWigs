@@ -12,6 +12,7 @@ mod:RegisterEnableMob(62164, 63191, 63053) -- 62164 casts all the abilities, 631
 --
 
 local legCounter, mendLegTimerRunning = 4, nil
+local crushCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -59,6 +60,7 @@ end
 
 function mod:OnEngage(diff)
 	legCounter, mendLegTimerRunning = 4, nil
+	crushCounter = 0
 	if not self:LFR() then
 		self:Berserk(420)
 	end
@@ -86,10 +88,11 @@ do
 end
 
 function mod:Crush()
-	self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
+	crushCounter = crushCounter + 1
+	self:Message(122774, CL["soon"]:format(("%s (%d)"):format(self:SpellName(122774), crushCounter)), "Important", 122774, "Alarm") -- Crush
 	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) --Crush
 	if self:Heroic() then
-		self:Bar(122774, 122774, 36, 122082) -- crush
+		self:Bar(122774, ("%s (%d)"):format(self:SpellName(122774), crushCounter+1), 36, 122082) -- crush
 	end
 
 	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
@@ -134,7 +137,7 @@ function mod:MendLeg(_, spellId, _, _, spellName)
 	legCounter = legCounter + 1
 	if legCounter < 4 then -- don't start a timer if it has all 4 legs
 		self:Message(spellId, spellName, "Urgent", spellId)
-		self:Bar(spellId, spellName, 30, spellId)
+		self:Bar(spellId, "~"..spellName, 30, spellId)
 	else
 		-- all legs grew back, no need to start a bar, :BrokenLeg will start it
 		mendLegTimerRunning = nil
@@ -145,7 +148,7 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, 123495, 30, 123495) --Mend Leg
+		self:Bar(123495, "~"..self:SpellName(123495), 30, 123495) --Mend Leg
 		mendLegTimerRunning = true
 	end
 end
@@ -159,18 +162,6 @@ do
 		--delay the bar so it ends when the damage occurs
 		self:ScheduleTimer(nextSwipe, 2.5, spellName)
 	end
-
-	--[[
-	--another idea is we have one bar for the cd and one bar for the cast, but they're both pretty short
-	local function nextSwipe(spellName)
-		self:Bar(122735, spellName, 5.5, 122735)
-	end
-	function mod:FuriousSwipe(_, spellId, _, _, spellName)
-		self:StopBar(spellName)
-		self:Bar(122735, CL["cast"]:format(spellName), 2.5, spellId) --use "cast" to help distinguish the two bars
-		self:ScheduleTimer(nextSwipe, 2.5, spellName)
-	end
-	--]]
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
