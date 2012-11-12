@@ -11,8 +11,6 @@ mod:RegisterEnableMob(62397, 62408, 62402, 62405) -- boss, mender, battlemaster,
 -- Locales
 --
 
-local whirlingBlade, korthikStrike, rainOfBlades = (GetSpellInfo(121896)), (GetSpellInfo(122409)), (GetSpellInfo(122406))
-local prisonList = mod:NewTargetList()
 local korthikStrikeWarned = {}
 local primaryAmberIcon, secondaryAmberIcon, phase
 local firstKorthikStrikeDone
@@ -23,9 +21,11 @@ local firstKorthikStrikeDone
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.next_pack = "Next pack"
-	L.next_pack_desc = "Warning for when a new pack will land after you killed a pack."
-	L.next_pack_icon = 125873
+	L.next_pack, L.next_pack_desc = EJ_GetSectionInfo(6554) --reinforcements
+	L.next_pack_icon = "ACHIEVEMENT_RAID_MANTIDRAID04"
+
+	L.recklessness, L.recklessness_desc = EJ_GetSectionInfo(6331)
+	L.recklessness_icon = 125873
 
 	L.spear_removed = "Your Impaling Spear was removed!"
 	L.residue_removed = "%s removed!"
@@ -33,6 +33,8 @@ if L then
 	L.trapper = "The Sra'thik" -- name on the boss frame for the trappers
 end
 L = mod:GetLocale()
+--same spell name with different EJ entries for normal/heroic
+L.recklessness_desc = ("%s\n\n(%s) %s"):format(L.recklessness_desc, CL.heroic, select(2, EJ_GetSectionInfo(6555)))
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -43,7 +45,7 @@ function mod:GetOptions()
 		"next_pack", { 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
 		{ 122409 },
 		122149, 122193,
-		122406, {122224, "FLASHSHAKE"}, { 121896, "FLASHSHAKE" }, { 131830, "SAY", "FLASHSHAKE", "PROXIMITY" }, 125873,
+		122406, {122224, "FLASHSHAKE"}, { 121896, "FLASHSHAKE" }, { 131830, "SAY", "FLASHSHAKE", "PROXIMITY" }, "recklessness",
 		"berserk", "bosskill",
 	}, {
 		["next_pack"] = "heroic",
@@ -51,7 +53,6 @@ function mod:GetOptions()
 		[122409] = "ej:6334",
 		[122149] = "ej:6305",
 		[122406] = "general",
-
 	}
 end
 
@@ -61,7 +62,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ResidueRemoved", 122055)
 	self:Log("SPELL_AURA_APPLIED", "Resin", 122064)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ResinPoolDamage", 122125)
-	self:Log("SPELL_AURA_APPLIED", "Recklessness", 125873)
+	self:Log("SPELL_AURA_APPLIED", "Recklessness", 122354)
+	self:Log("SPELL_AURA_APPLIED", "RecklessnessHeroic", 125873)
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
 	self:Log("SPELL_CAST_START", "Quickening", 122149)
@@ -81,9 +83,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(121896, whirlingBlade, 36, 121896)
-	self:Bar(122406, "~"..rainOfBlades, 60, 122406)
-	self:Bar(122409, "~"..korthikStrike, 19, 122409)
+	self:Bar(121896, 121896, 36, 121896) --Whirling Blade
+	self:Bar(122406, "~"..mod:SpellName(122406), 60, 122406) --Rain of Blades
+	self:Bar(122409, "~"..mod:SpellName(122409), 19, 122409) --Korthik Strike
 	self:Berserk(480)
 	wipe(korthikStrikeWarned)
 	primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, nil
@@ -111,8 +113,9 @@ function mod:WhirlingBladeDamage(player, spellId, _, _, spellName)
 end
 
 do
-	function allowKortikStrike(player)
-		korthikStrikeWarned[player] = false
+	local korthikStrike = mod:SpellName(122409)
+	local function allowKortikStrike(player)
+		korthikStrikeWarned[player] = nil
 	end
 	function mod:UNIT_AURA(_, unitId)
 		local player = UnitName(unitId)
@@ -133,7 +136,7 @@ function mod:ResidueRemoved(player, _, _, _, spellName)
 end
 
 do
-	local scheduled = nil
+	local prisonList, scheduled = mod:NewTargetList(), nil
 	local function prison(spellName)
 		mod:TargetMessage(121881, spellName, prisonList, "Important", 122740, "Info")
 		scheduled = nil
@@ -174,8 +177,8 @@ function mod:Quickening(_, _, _, _, spellName)
 	self:Message(122149, spellName, "Attention", 122149)
 end
 
-function mod:Mending(_, _, source, _, spellName)
-	if UnitIsUnit("focus", source) then
+function mod:Mending(_, _, source, _, spellName, _, _, _, _, _, sGUID)
+	if UnitGUID("focus") == sGUID then
 		self:LocalMessage(122193, CL["cast"]:format(spellName), "Personal", 122193, "Info")
 		self:Bar(122193, spellName, 37, 122193)
 	end
@@ -196,11 +199,15 @@ function mod:WindBomb(_, _, player, _, spellName)
 	end
 end
 
-function mod:Recklessness(_, _, _, _, spellName)
-	self:Message(125873, spellName, "Attention", 125873)
-	self:Bar(125873, spellName, 30, 125873)
-	self:Bar("next_pack", L["next_pack"], 50, 125873)
-	self:DelayedMessage("next_pack", 50, L["next_pack"], "Attention", 125873)
+function mod:Recklessness(_, spellId, _, _, spellName, buffStacks)
+	self:Message("recklessness", ("%s (%d)"):format(spellName, buffStacks or 1), "Attention", spellId)
+end
+
+function mod:RecklessnessHeroic(_, spellId, _, _, spellName)
+	self:Message("recklessness", spellName, "Attention", spellId)
+	self:Bar("recklessness", spellName, 30, spellId)
+	self:Bar("next_pack", L["next_pack"], 50, L["next_pack_icon"]) --cd isn't 45 like the ej says?
+	self:DelayedMessage("next_pack", 50, L["next_pack"], "Attention", L["next_pack_icon"])
 end
 
 do
