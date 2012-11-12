@@ -25,10 +25,7 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "ruRU")
 if L then
-	L.crush_stun = "Сокрушение"
-	L.crush_trigger1 = "Гаралон готовится"
-	L.crush_trigger2 = "Гаралон чувствует"
-	L.crush_trigger3 = "Гаралон обнаруживает"
+	L.removed = "%s снято!"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")

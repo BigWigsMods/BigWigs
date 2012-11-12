@@ -25,10 +25,7 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "itIT")
 if L then
-	L.crush_stun = "Schiacciamento"
-	L.crush_trigger1 = "Garalon si prepara a "
-	L.crush_trigger2 = "Garalon senses" --Garalon senses the passage of Pheromones and begins to cast [Crush]! -- DA TRADURRE
-	L.crush_trigger3 = "Garalon detects" --Garalon detects Baddie under him and begins to cast [Crush]! -- DA TRADURRE
+	L.removed = "%s Rimosso!"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "itIT")

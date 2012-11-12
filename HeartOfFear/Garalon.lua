@@ -20,9 +20,7 @@ local crushCounter = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.crush_trigger1 = "Garalon prepares to"
-	L.crush_trigger2 = "Garalon senses" --Garalon senses the passage of Pheromones and begins to cast |cFFFF0000|Hspell:122774|h[Crush]|h|r!
-	L.crush_trigger3 = "Garalon detects" --Garalon detects Baddie under him and begins to cast |cFFFF0000|Hspell:122774|h[Crush]|h|r!
+	L.removed = "%s removed!"
 end
 L = mod:GetLocale()
 
@@ -40,7 +38,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Emote("Crush", L["crush_trigger1"], L["crush_trigger2"], L["crush_trigger3"])
+	self:Emote("Crush", "spell:122774")
 	self:Emote("MassiveCrush", "spell:128555")
 
 	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835)
@@ -123,7 +121,7 @@ end
 function mod:PheromonesRemoved(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		-- Local message with important and alarm for when you loose the debuff, others don't care that you lost it
-		self:LocalMessage(spellId, CL["other"]:format(spellName, player), "Important", spellId, "Alarm")
+		self:LocalMessage(spellId, L["removed"]:format(spellName), "Important", spellId, "Alarm")
 	end
 end
 
