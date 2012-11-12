@@ -88,24 +88,42 @@ function mod:WindStep(_, spellId, _, _, spellName)
 end
 
 do
+	local timer = nil
+	local strike = mod:SpellName(122949)
 	local function removeIcon()
 		mod:OpenProximity(8, 123175) -- Re-open normal proximity
 		mod:PrimaryIcon("unseenstrike")
+		mod:CancelTimer(timer, true) -- Should never last this long, but no harm in it
 	end
-	local function warnStrike(spellName)
-		local player = UnitName("boss1target") -- because this event does not supply destName with UNIT_SPELLCAST_SUCCEEDED
-		mod:TargetMessage("unseenstrike", spellName, player, "Urgent", L.unseenstrike_icon, "Alarm")
-		mod:PrimaryIcon("unseenstrike", player)
-		mod:OpenProximity(5, "unseenstrike", player, true)
-		if UnitIsUnit(player, "player") then mod:Say("unseenstrike", CL["say"]:format(spellName)) end
+	local function warnStrike()
+		local player = UnitDebuff("boss1target", strike) and "boss1target"
+		if not player then -- Most of the time this won't run as boss1target works
+			for i=1, GetNumGroupMembers() do
+				local id = ("raid%d"):format(i)
+				player = UnitDebuff(id, strike) and id
+				if player then break end
+			end
+		end
+		if player then
+			mod:CancelTimer(timer, true)
+			local name, server = UnitName(player)
+			if server then name = name .."-".. server end
+			if UnitIsUnit(player, "player") then
+				mod:Say("unseenstrike", CL["say"]:format(strike))
+			else
+				mod:OpenProximity(5, "unseenstrike", name, true)
+			end
+			mod:TargetMessage("unseenstrike", strike, name, "Urgent", L.unseenstrike_icon, "Alarm")
+			mod:PrimaryIcon("unseenstrike", name)
+		end
 	end
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		if unit == "boss1" then
 			if spellId == 122949 then --Unseen Strike
-				self:Bar("unseenstrike", L["unseenstrike_inc"], 5, L.unseenstrike_icon)
+				self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
 				self:Bar("unseenstrike", "~"..spellName, 60, L.unseenstrike_icon)
-				self:ScheduleTimer(warnStrike, 0.5, spellName) -- still faster than using boss emote (0.4 needs testing)
-				self:ScheduleTimer(removeIcon, 8)
+				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
+				self:ScheduleTimer(removeIcon, 7)
 			elseif spellId == 122839 then --Tempest Slash
 				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
