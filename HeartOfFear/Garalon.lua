@@ -19,10 +19,9 @@ local legCounter, mendLegTimerRunning = 4, nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.crush_stun = "Crush stun"
 	L.crush_trigger1 = "Garalon prepares to"
-	L.crush_trigger2 = "Garalon senses" --Garalon senses the passage of Pheromones and begins to cast [Crush]!
-	L.crush_trigger3 = "Garalon detects" --Garalon detects Baddie under him and begins to cast [Crush]!
+	L.crush_trigger2 = "Garalon senses" --Garalon senses the passage of Pheromones and begins to cast |cFFFF0000|Hspell:122774|h[Crush]|h|r!
+	L.crush_trigger3 = "Garalon detects" --Garalon detects Baddie under him and begins to cast |cFFFF0000|Hspell:122774|h[Crush]|h|r!
 end
 L = mod:GetLocale()
 
@@ -41,6 +40,7 @@ end
 
 function mod:OnBossEnable()
 	self:Emote("Crush", L["crush_trigger1"], L["crush_trigger2"], L["crush_trigger3"])
+	self:Emote("MassiveCrush", "spell:128555")
 
 	self:Log("SPELL_AURA_APPLIED", "PheromonesApplied", 122835)
 	self:Log("SPELL_AURA_REMOVED", "PheromonesRemoved", 122835)
@@ -87,13 +87,16 @@ end
 
 function mod:Crush()
 	self:Message(122774, CL["soon"]:format(self:SpellName(122774)), "Important", 122774, "Alarm") -- Crush
-	--self:Bar(122774, L["crush_stun"], 4, 122774)
 	self:Bar(122774, CL["cast"]:format(self:SpellName(122774)), 3.6, 122774) --Crush
-
-	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
 	if self:Heroic() then
 		self:Bar(122774, 122774, 36, 122082) -- crush
 	end
+
+	self:Bar(122735, 122735, 9, 122735) --Furious Swipe
+end
+
+function mod:MassiveCrush()
+	self:Bar("berserk", CL["cast"]:format(self:SpellName(128555)), 3.6, 128555) --Massive Crush (no message, happens at berserk)
 end
 
 function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
@@ -131,7 +134,7 @@ function mod:MendLeg(_, spellId, _, _, spellName)
 	legCounter = legCounter + 1
 	if legCounter < 4 then -- don't start a timer if it has all 4 legs
 		self:Message(spellId, spellName, "Urgent", spellId)
-		self:Bar(spellId, "~"..spellName, 30, spellId)
+		self:Bar(spellId, spellName, 30, spellId)
 	else
 		-- all legs grew back, no need to start a bar, :BrokenLeg will start it
 		mendLegTimerRunning = nil
@@ -142,8 +145,8 @@ function mod:BrokenLeg()
 	legCounter = legCounter - 1
 	-- this is just a way to start the bar after 1st legs death
 	if not mendLegTimerRunning then
-		self:Bar(123495, "~"..self:SpellName(123495), 30, 123495)
-		mendLegTimerRunning = nil
+		self:Bar(123495, 123495, 30, 123495) --Mend Leg
+		mendLegTimerRunning = true
 	end
 end
 
