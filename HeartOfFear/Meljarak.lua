@@ -13,6 +13,9 @@ mod:RegisterEnableMob(62397, 62408, 62402, 62405) -- boss, mender, battlemaster,
 
 local whirlingBlade, korthikStrike, rainOfBlades = (GetSpellInfo(121896)), (GetSpellInfo(122409)), (GetSpellInfo(122406))
 local prisonList = mod:NewTargetList()
+local korthikStrikeWarned = {}
+local primaryAmberIcon, secondaryAmberIcon, phase
+local firstKorthikStrikeDone
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,6 +29,8 @@ if L then
 
 	L.spear_removed = "Your Impaling Spear was removed!"
 	L.residue_removed = "%s removed!"
+
+	L.trapper = "The Sra'thik" -- name on the boss frame for the trappers
 end
 L = mod:GetLocale()
 
@@ -35,50 +40,91 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{ 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
-		{ 122409, "ICON", "SAY" },
+		"next_pack", { 122064, "FLASHSHAKE", "SAY" }, {122125, "FLASHSHAKE"}, {121881, "SAY", "PROXIMITY", "ICON"}, 122055,
+		{ 122409 },
 		122149, 122193,
-		122406, {122224, "FLASHSHAKE"}, { 121896, "SAY", "FLASHSHAKE", "ICON" }, { 131830, "SAY", "FLASHSHAKE" }, 125873, "next_pack",
+		122406, {122224, "FLASHSHAKE"}, { 121896, "FLASHSHAKE" }, { 131830, "SAY", "FLASHSHAKE", "PROXIMITY" }, 125873,
 		"berserk", "bosskill",
 	}, {
+		["next_pack"] = "heroic",
 		[122064] = "ej:6300",
 		[122409] = "ej:6334",
 		[122149] = "ej:6305",
 		[122406] = "general",
+
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AmberPrison", 121881) -- initial cast only
+	self:Log("SPELL_AURA_REMOVED", "AmberPrisonRemoved", 121881) -- initial cast only
 	self:Log("SPELL_AURA_REMOVED", "ResidueRemoved", 122055)
 	self:Log("SPELL_AURA_APPLIED", "Resin", 122064)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ResinPoolDamage", 122125)
 	self:Log("SPELL_AURA_APPLIED", "Recklessness", 125873)
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
-	self:Log("SPELL_CAST_START", "KorthikStrike", 122409)
 	self:Log("SPELL_CAST_START", "Quickening", 122149)
 	self:Log("SPELL_CAST_START", "Mending", 122193)
 	self:Log("SPELL_CAST_START", "RainOfBlades", 122406)
 	self:Log("SPELL_AURA_APPLIED", "ImpalingSpear", 122224)
 	self:Log("SPELL_AURA_REFRESH", "ImpalingSpear", 122224)
 	self:Log("SPELL_AURA_REMOVED", "ImpalingSpearRemoved", 122224)
+	self:Log("SPELL_DAMAGE", "WhirlingBladeDamage", 121898)
 
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Death("Win", 62397)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MyEngage")
+	self:RegisterEvent("UNIT_AURA")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+
+	self:Death("Deaths", 62397, 62405) -- Boss, Trapper
 end
 
 function mod:OnEngage(diff)
 	self:Bar(121896, whirlingBlade, 36, 121896)
 	self:Bar(122406, "~"..rainOfBlades, 60, 122406)
-	self:OpenProximity(4, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range -- 4 should be more than safe
+	self:Bar(122409, "~"..korthikStrike, 19, 122409)
 	self:Berserk(480)
+	wipe(korthikStrikeWarned)
+	primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, nil
+	firstKorthikStrikeDone = nil
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:MyEngage()
+	self:CheckBossStatus()
+	for i = 2, MAX_BOSS_FRAMES do
+		if UnitName("boss"..i) == L["trapper"] then
+			self:OpenProximity(4, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range -- 4 should be more than safe
+		end
+	end
+end
+
+function mod:WhirlingBladeDamage(player, spellId, _, _, spellName)
+	if UnitIsUnit("player", player) then
+		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
+		self:FlashShake(spellId) -- we FNS on cast too, but some more can't hurt
+	end
+end
+
+do
+	function allowKortikStrike(player)
+		korthikStrikeWarned[player] = false
+	end
+	function mod:UNIT_AURA(_, unitId)
+		local player = UnitName(unitId)
+		if UnitDebuff(unitId, korthikStrike) and not korthikStrikeWarned[player] then
+			korthikStrikeWarned[player] = true
+			self:ScheduleTimer(allowKortikStrike, 10, player)
+			self:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm") -- does this need a bar? (2nd one ~30, then cooldown 50 sec)
+			self:Bar(122409, "~"..korthikStrike, firstKorthikStrikeDone and 50 or 30, 122409)
+			firstKorthikStrikeDone = true
+		end
+	end
+end
 
 function mod:ResidueRemoved(player, _, _, _, spellName)
 	if UnitIsUnit("player", player) then
@@ -97,15 +143,25 @@ do
 			self:Say(121881, CL["say"]:format(spellName))
 		end
 		prisonList[#prisonList + 1] = player
-		if #prisonList < 2 then
+		if not primaryAmberIcon then
 			self:PrimaryIcon(121881, player)
+			primaryAmberIcon = player
 		else
 			self:SecondaryIcon(121881, player)
+			secondaryAmberIcon = player
 		end
 		if not scheduled then
 			scheduled = true
 			self:ScheduleTimer(prison, 0.1, spellName)
 		end
+	end
+end
+
+function mod:AmberPrisonRemoved(player)
+	if UnitIsUnit(player, primaryAmberIcon) then
+		self:PrimaryIcon(121881)
+	elseif UnitIsUnit(player, secondaryAmberIcon) then
+		self:SecondaryIcon(121881)
 	end
 end
 
@@ -125,62 +181,12 @@ function mod:Mending(_, _, source, _, spellName)
 	end
 end
 
-do
-	local function checkTarget(sGUID)
-		local mobId = mod:GetUnitIdByGUID(sGUID)
-		if mobId then
-			local player = UnitName(mobId.."target")
-			if not player then return end
-			if UnitIsUnit("player", player) then
-				mod:Say(122409, CL["say"]:format(korthikStrike))
-			end
-			mod:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm")
-			--mod:SecondaryIcon(122409, player)  -- lets not use it till the warning is not working properly
-		end
-	end
-	function mod:KorthikStrike(...)
-		local sGUID = select(11, ...)
-		self:ScheduleTimer(checkTarget, 0.2, sGUID)
-	end
+function mod:WhirlingBlade(_, _, _, _, spellName)
+	self:Message(121896, spellName, "Urgent", 121896, "Alarm")
+	self:Bar(121896, "~"..spellName, 45, 121896)
+	self:FlashShake(121896)
 end
 
-do
-	local timer, fired = nil, 0
-	local whirlingBlade = mod:SpellName(121896)
-	local function bladeWarn(sGUID)
-		fired = fired + 1
-		local unitId = mod:GetUnitIdByGUID(sGUID)
-		if not unitId then return end
-		local unitIdTarget = unitId.."target"
-		local player = UnitName(unitIdTarget)
-		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
-			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:Bar(121896, "~"..whirlingBlade, 45, 121896)
-			mod:TargetMessage(121896, whirlingBlade, player, "Urgent", 121896, "Alarm")
-			--mod:PrimaryIcon(121896, player) -- lets not use it till the warning is not working properly
-			mod:CancelTimer(timer, true)
-			timer = nil
-			if UnitIsUnit(unitIdTarget, "player") then
-				mod:Say(121896, CL["say"]:format(whirlingBlade))
-				mod:FlashShake(121896)
-			end
-			return
-		end
-		-- 19 == 0.95sec
-		-- Safety check if the unit doesn't exist
-		if fired > 18 then
-			mod:CancelTimer(timer, true)
-			timer = nil
-		end
-	end
-	function mod:WhirlingBlade(...)
-		local sGUID = select(11, ...)
-		fired = 0
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(bladeWarn, 0.05, sGUID)
-		end
-	end
-end
 
 function mod:WindBomb(_, _, player, _, spellName)
 	self:TargetMessage(131830, spellName, player, "Urgent", 131830, "Alarm")
@@ -229,5 +235,43 @@ function mod:ImpalingSpearRemoved(_, _, source, _, spellName)
 		self:StopBar(spellName)
 		self:LocalMessage(122224, L["spear_removed"], "Personal", 122224, "Info")
 		self:FlashShake(122224)
+	end
+end
+
+function mod:UNIT_HEALTH_FREQUENT(_, unitId)
+	if unitId == "boss1" then -- hopefully always the boss
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < 78 and not phase then -- phase starts at 75
+			self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
+			phase = "warned"
+		elseif hp < 75 then
+			self:Message(131830, CL["phase"]:format(2), "Positive", 131830, "Info")
+			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+			phase = 2
+			local trappersNotPresent = true
+			for i = 2, MAX_BOSS_FRAMES do
+				if UnitName("boss"..i) == L["trapper"] then
+					trappersNotPresent = false
+				end
+			end
+			if trappersNotPresent then
+				self:OpenProximity(5, 131830)
+			end
+		end
+	end
+end
+
+function mod:Deaths(unitId)
+	if unitId == 62397 then -- boss
+		self:Win()
+	elseif unitId == 62405 then -- trapper
+		if phase == 2 then
+			self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
+		else
+			self:CloseProximity(121881)
+		end
+	elseif unitId == 62408 then
+		self:StopBar(self:SpellName(122193)) -- mending
+		self:StopBar(self:SpellName(122149)) -- quickening
 	end
 end
