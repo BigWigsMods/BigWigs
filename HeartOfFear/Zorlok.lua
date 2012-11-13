@@ -98,7 +98,7 @@ end
 
 function mod:Attenuation(_, spellId, source, _, spellName)
 	local target
-	if self:Heroic()
+	if self:Heroic() then
 		-- Figure out a way to do this that works for heroic
 		if spellName == UnitCastingInfo("boss1") then
 			target = L["zorlok"]
