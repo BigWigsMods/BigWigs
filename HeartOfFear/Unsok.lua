@@ -22,20 +22,20 @@ local primaryIcon
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.explosion_by_other = "Amber Explosion by anything but you"
+	L.explosion_by_other = "Amber Explosion on others"
 	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
 	L.explosion_by_other_icon = 122398
 
-	L.explosion_casting_by_other = "Amber Explosion casts by anything but you"
-	L.explosion_casting_by_other_desc = "Warnings for Amber Explosions cast by Amber Monstrosity or your focus target. Cast start messages and casting bars are associated to this option. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Amber Explosion cast by others"
+	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
 	L.explosion_casting_by_other_icon = 122398
 
-	L.explosion_by_you = "Amber Explosion by you"
-	L.explosion_by_you_desc = "Cooldown warning for Amber Explosions cast by you."
+	L.explosion_by_you = "Amber Explosion on you"
+	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
 	L.explosion_by_you_icon = 122398
 
 	L.explosion_casting_by_you = "Amber Explosion cast by you"
-	L.explosion_casting_by_you_desc = "Warnings for Amber Explosion cast by you. Cast start messages and casting bars are associated to this option. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 	L.explosion_casting_by_you_icon = 122398
 
 	L.monstrosity, L.monstrosity_desc = EJ_GetSectionInfo(6254)
@@ -67,7 +67,7 @@ function mod:GetOptions()
 		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASHSHAKE" }, 122413, 122408,
 		122556,
 		{121995, "FLASHSHAKE", "SAY"}, 123020, {121949, "FLASHSHAKE"},
-		"proximity", "berserk", "bosskill",
+		"berserk", "bosskill", --"proximity", 
 	}, {
 		["ej:6548"] = "heroic",
 		[122784] = "ej:6249",
@@ -334,7 +334,9 @@ function mod:AmberCarapace(_, spellId)
 	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
 	self:Bar("explosion_by_other", "~"..CL["onboss"]:format(explosion), 55, 122402) -- Monstrosity Explosion
 
-	self:OpenProximity(8) --8yds for Fling
+	--TIL you can dodge fling! is like rotface's explosion, you have ~3s to move after it picks a player
+	--(0) Grab -> (2.4-4.4) Fling -> (5.7) Rough Landing -> (6.1) damage/stun -> (8.7) stun off
+	--self:OpenProximity(8) --8yds for Fling
 	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) --Massive Stomp
 	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) --Fling
 end
@@ -383,7 +385,7 @@ end
 
 function mod:ConcentratedMutation(_, _, _, _, spellName)
 	self:StopBar("~"..CL["onboss"]:format(explosion))
-	self:CloseProximity()
+	--self:CloseProximity()
 	phase = 3
 	self:Message(122556, spellName, "Attention", 122556)
 end
