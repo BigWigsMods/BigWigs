@@ -243,7 +243,7 @@ do
 	local function warningSpam(spellName)
 		if UnitCastingInfo("player") == spellName then
 			mod:LocalMessage("explosion_casting_by_you", L["you_are_casting"], "Personal", 122398, "Info")
-			mod:ScheduleTimer(warningSpam, 0.5)
+			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
 	function mod:AmberExplosion(_, spellId, player, _, spellName)
@@ -345,7 +345,7 @@ do
 	local function warningSpam(spellName)
 		if UnitCastingInfo("boss2") == spellName then
 			mod:LocalMessage("explosion_casting_by_other", L["boss_is_casting"], "Important", 122398, "Alert")
-			mod:ScheduleTimer(warningSpam, 0.5)
+			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
 	function mod:AmberExplosionMonstrosity(_, _, _, _, spellName)
