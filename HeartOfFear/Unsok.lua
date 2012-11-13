@@ -219,8 +219,7 @@ function mod:ReshapeLife(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:Bar("explosion_by_you", CL["you"]:format(explosion), 15, 122398)
 	elseif UnitIsUnit("focus", player) then
-		local name = UnitName(player)
-		self:Bar("explosion_by_other", CL["other"]:format(name, explosion), 15, 122398)
+		self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 15, 122398)
 	end
 end
 
@@ -243,10 +242,9 @@ do
 			warningSpam(spellName)
 		elseif UnitIsUnit("focus", player) then
 			self:FlashShake("explosion_casting_by_other")
-			local name = UnitName(player)
-			self:Bar("explosion_by_other", CL["other"]:format(name, spellName), 13, spellId) -- cooldown
-			self:Bar("explosion_casting_by_other", CL["cast"]:format(CL["other"]:format(name, spellName)), 2.5, spellId)
-			self:LocalMessage("explosion_casting_by_other", CL["other"]:format(name, spellName), "Important", spellId, "Alert") -- associate the message with the casting toggle option
+			self:Bar("explosion_by_other", CL["other"]:format(player, spellName), 13, spellId) -- cooldown
+			self:Bar("explosion_casting_by_other", CL["cast"]:format(CL["other"]:format(player, spellName)), 2.5, spellId)
+			self:LocalMessage("explosion_casting_by_other", CL["other"]:format(player, spellName), "Important", spellId, "Alert") -- associate the message with the casting toggle option
 		end
 	end
 end
