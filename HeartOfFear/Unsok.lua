@@ -179,7 +179,7 @@ do
 		fired = fired + 1
 		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
 		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
-			mod:TargetMessage(121994, spellName, player, "Attention", 121995, "Long")
+			mod:TargetMessage(121994, spellName, player, "Attention", 121994, "Long")
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
@@ -193,7 +193,7 @@ do
 		if fired > 18 then
 			mod:CancelTimer(timer, true)
 			timer = nil
-			mod:TargetMessage(121994, spellName, "Attention", 121994) --Give generic warning as a backup
+			mod:Message(121994, spellName, "Attention", 121994) --Give generic warning as a backup
 		end
 	end
 	function mod:Beam(_, _, _, _, spellName)

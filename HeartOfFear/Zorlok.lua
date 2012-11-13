@@ -19,6 +19,8 @@ local forceCount, platform = 0, 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_yell = "The Divine chose us to give mortal voice to Her divine will. We are but the vessel that enacts Her will."
+
 	L.force, L.force_desc = EJ_GetSectionInfo(6427)
 	L.force_icon = 122713
 	L.force_message = "AoE Pulse"

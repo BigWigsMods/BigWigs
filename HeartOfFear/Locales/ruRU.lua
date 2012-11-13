@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "ruRU")
 if not L then return end
 if L then
+	L.engage_yell = "The Divine chose us to give mortal voice to Her divine will. We are but the vessel that enacts Her will."
+
 	L.force_message = "AoE импульс"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (кольца)"
@@ -18,6 +20,8 @@ end
 
 L = BigWigs:NewBossLocale("Blade Lord Ta'yak", "ruRU")
 if L then
+	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
+
 	L.unseenstrike_inc = "Близится Удар!"
 
 	L.assault_message = "%2$dx Выпад на |3-5(%1$s)"

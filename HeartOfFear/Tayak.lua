@@ -17,6 +17,8 @@ mod:RegisterEnableMob(62543)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.engage_yell = "On your guard, invaders. I, Ta'yak, Lord of Blades, will be your opponent."
+
 	L.unseenstrike, L.unseenstrike_desc = EJ_GetSectionInfo(6346)
 	L.unseenstrike_icon = 122994
 	L.unseenstrike_inc = "Incoming Strike!"

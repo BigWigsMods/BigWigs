@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "esES") or BigWigs:NewBossLocale("Imperial Vizier Zor'lok", "esMX")
 if not L then return end
 if L then
+	L.engage_yell = "The Divine chose us to give mortal voice to Her divine will. We are but the vessel that enacts Her will."
+
 	L.force_message = "Pulso AoE"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discos)"
