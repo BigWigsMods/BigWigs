@@ -28,7 +28,7 @@ if L then
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
 	L.attenuation_desc = select(2, EJ_GetSectionInfo(6426))
 	L.attenuation_icon = 127834
-	L.attenuation_bar = "Incoming Discs, Dance!"
+	L.attenuation_bar = "Discs... Dance!"
 	L.attenuation_message = "%s Dancing %s"
 	L.echo = "|c001cc986Echo|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
@@ -98,10 +98,15 @@ end
 
 function mod:Attenuation(_, spellId, source, _, spellName)
 	local target
-	if spellName == UnitCastingInfo("boss1") then
-		target = L["zorlok"]
+	if self:Heroic()
+		-- Figure out a way to do this that works for heroic
+		if spellName == UnitCastingInfo("boss1") then
+			target = L["zorlok"]
+		else
+			target = L["echo"]
+		end
 	else
-		target = L["echo"]
+		target = L["zorlok"]
 	end
 	if spellId == 122497 or spellId == 122479 or spellId == 123722 then -- right
 		self:Message("attenuation", L["attenuation_message"]:format(target, L["right"]), "Urgent", "misc_arrowright", "Alarm")

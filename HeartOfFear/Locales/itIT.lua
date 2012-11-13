@@ -6,7 +6,7 @@ if L then
 	L.force_message = "AoE Pulse"
 
 	L.attenuation = EJ_GetSectionInfo(6426) .. " (Discs)"
-	L.attenuation_bar = "Dischi in Arrivo, Corri!"
+	L.attenuation_bar = "Dischi... Corri!"
 	L.attenuation_message = "%s Dancing %s"
 	L.echo = "|c001cc986Echo|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
