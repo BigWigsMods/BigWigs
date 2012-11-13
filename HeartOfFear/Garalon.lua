@@ -103,7 +103,7 @@ end
 function mod:Fury(_, spellId, _, _, spellName, buffStack, _, _, _, dGUID)
 	--Garalon-62164 gains the buff, then casts Fury, which gives the buff to Garalon-63191
 	if self:GetCID(dGUID) == 62164 then
-		self:Bar(spellId, spellName, 30, 119622) --Rage like icon (swipe and fury have the same)
+		self:Bar(spellId, spellName, self:LFR() and 15 or 30, 119622) --Rage like icon (swipe and fury have the same)
 		self:Message(spellId, ("%s (%d)"):format(spellName, buffStack or 1), "Urgent", 119622)
 	end
 end
