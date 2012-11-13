@@ -230,7 +230,7 @@ function mod:BreakFree(_, _, source)
 		self:StopBar(CL["cast"]:format(CL["you"]:format(explosion)))
 		self:StopBar(CL["you"]:format(explosion))
 	elseif UnitIsUnit("focus", source) then
-		self:StopBar(CL["cast"]:format(CL["other"]:format(source, spellName)))
+		self:StopBar(CL["cast"]:format(CL["other"]:format(source, explosion)))
 		self:StopBar(CL["other"]:format(source, explosion))
 	end
 end
