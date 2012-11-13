@@ -79,6 +79,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ReshapeLife", 122784)
+	self:Log("SPELL_CAST_SUCCESS", "BreakFree", 123060)
 	self:Log("SPELL_CAST_SUCCESS", "Beam", 121994)
 	self:Log("SPELL_AURA_APPLIED", "Destabilize", 123059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Destabilize", 123059)
@@ -110,7 +111,6 @@ function mod:OnEngage(diff)
 	primaryIcon = nil
 
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:RegisterEvent("UNIT_POWER_FREQUENT")
 	--self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
 	self:RegisterEvent("UNIT_SPELLCAST_STOP")
@@ -215,11 +215,23 @@ function mod:ReshapeLife(player, spellId, _, _, spellName)
 	else
 		self:Bar(spellId, spellName, 15, spellId) -- might be too short for a bar
 	end
-	--Amber Explosion CDs
+
 	if UnitIsUnit("player", player) then
 		self:Bar("explosion_by_you", CL["you"]:format(explosion), 15, 122398)
+		self:RegisterEvent("UNIT_POWER_FREQUENT")
 	elseif UnitIsUnit("focus", player) then
 		self:Bar("explosion_by_other", CL["other"]:format(player, explosion), 15, 122398)
+	end
+end
+
+function mod:BreakFree(_, _, source)
+	if UnitIsUnit("player", source) then
+		self:UnregisterEvent("UNIT_POWER_FREQUENT")
+		self:StopBar(CL["cast"]:format(CL["you"]:format(explosion)))
+		self:StopBar(CL["you"]:format(explosion))
+	elseif UnitIsUnit("focus", source) then
+		self:StopBar(CL["cast"]:format(CL["other"]:format(source, spellName)))
+		self:StopBar(CL["other"]:format(source, explosion))
 	end
 end
 
@@ -261,7 +273,7 @@ function mod:ExplosionInterrupted(player, spellId, source, _, spellName)
 end
 
 function mod:UNIT_SPELLCAST_INTERRUPTED(_, unitId, spellName, _, _, spellId)
-	--Mutated Construct's Struggle for Control doesn't fire a SPELL_INTERRUPT (Break Free does)
+	--Mutated Construct's Struggle for Control doesn't fire a SPELL_INTERRUPT
 	if spellId == 122398 then
 		if unitId == "player" then --You interrupting your own Amber Explosion
 			self:StopBar(CL["cast"]:format(CL["you"]:format(spellName)))
@@ -274,15 +286,14 @@ end
 
 --Willpower
 do
-	--AURA_APPLIED/AURA_REMOVED for reshape life fires on the start/end of the boss's channel, not start/end of being transformed
 	local prev = 0
 	function mod:UNIT_POWER_FREQUENT(_, unitId, powerType)
 		if unitId == "player" and powerType == "ALTERNATE" then
 			local t = GetTime()
 			if t-prev > 1 then
-				prev = t
 				local willpower = UnitPower("player", 10)
 				if willpower < 20 and willpower > 0 then
+					prev = t
 					self:LocalMessage("willpower", L["willpower_message"]:format(willpower), "Personal", 124824)
 				end
 			end
@@ -293,13 +304,13 @@ end
 do
 	local prev = 0
 	function mod:UNIT_HEALTH_FREQUENT(_, unitId)
-		if unitId == "boss1" then -- Phase
+		if unitId == "boss1" and not phase2warned then
 			local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-			if hp < 75 and not phase2warned then -- phase starts at 70
+			if hp < 75 then -- phase starts at 70
 				phase2warned = true
 				self:Message("monstrosity", CL["soon"]:format(L["monstrosity"]), "Positive", 122540, "Long")
 			end
-		elseif unitId == "player" and UnitDebuff("player", reshapeLife) then --Break Free
+		elseif unitId == "player" and UnitDebuff("player", reshapeLife) then --Break Free Warning
 			local t = GetTime()
 			if t-prev > 1 then
 				local hp = UnitHealth("player") / UnitHealthMax("player") * 100
