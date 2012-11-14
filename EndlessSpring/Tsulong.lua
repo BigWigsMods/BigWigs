@@ -58,7 +58,7 @@ end
 
 function mod:OnEngage(diff)
 	self:OpenProximity(8, 122777)
-	self:Berserk(360) -- assume
+	self:Berserk(480)
 	self:Bar("phases", day, 121, 122789)
 	self:Bar(122777, nightmares, 15.6, 122777)
 end
