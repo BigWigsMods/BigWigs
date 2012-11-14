@@ -11,9 +11,6 @@ mod:RegisterEnableMob(62837)
 -- Locals
 --
 
-local field = mod:SpellName(123627)
-local visionsList = mod:NewTargetList()
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -26,9 +23,9 @@ if L then
 	L.phases_icon = "achievement_raid_mantidraid07"
 
 	L.eyes = "Eyes of the Empress"
-	L.eyes_desc = "Count the stacks of eyes of the empress and show a duration bar."
+	L.eyes_desc = "Count the stacks and show a duration bar for Eyes of the Empress."
 	L.eyes_icon = 123707
-	L.eyes_message = "%2$dx eyes on %1$s"
+	L.eyes_message = "%2$dx Eyes on %1$s"
 end
 L = mod:GetLocale()
 L.eyes = L.eyes.." "..INLINE_TANK_ICON
@@ -53,7 +50,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_POWER", "CheapMansTimers")
+	self:Log("SPELL_AURA_APPLIED", "Eyes", 123707)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Eyes", 123707)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 125390)
 	self:Log("SPELL_AURA_APPLIED", "Resin", 124097)
@@ -68,9 +65,12 @@ end
 
 function mod:OnEngage(diff)
 	self:OpenProximity(5)
-	self:Berserk(480) -- assume
-	self:Bar("ej:6325", field, 20, 123627)
+	if not self:LFR() then
+		self:Berserk(480) -- assume
+	end
+	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterEvent("UNIT_POWER", "PoorMansDissonanceTimers")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") -- XXX Check ENGAGE results
 end
 
@@ -92,7 +92,7 @@ function mod:CryOfTerror(player, _, _, _, spellName)
 end
 
 do
-	local scheduled = nil
+	local visionsList, scheduled = mod:NewTargetList(), nil
 	local function warnVisions(spellName)
 		mod:TargetMessage(124862, spellName, visionsList, "Important", 124862, "Alarm")
 		scheduled = nil
@@ -125,18 +125,18 @@ function mod:Resin(player, _, _, _, spellName)
 	end
 end
 
-function mod:CheapMansTimers(_, unit)
-	if UnitIsUnit(unit, "boss1") then
+function mod:PoorMansDissonanceTimers(_, unitId)
+	if unitId == "boss1" then
 		local power = UnitPower("boss1")
 		if power == 149 then
 			self:OpenProximity(5)
-			self:Bar("ej:6325", field, 19, 128353)
+			self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
 			self:Bar("phases", CL["phase"]:format(2), 149, L["phases_icon"])
 		elseif power == 130 then
-			self:Bar("ej:6325", field, 65, 128353)
-			self:Message("ej:6325", field, "Attention", 128353)
+			self:Bar("ej:6325", 123627, 65, 128353)
+			self:Message("ej:6325", 123627, "Attention", 128353)
 		elseif power == 65 then
-			self:Message("ej:6325", field, "Attention", 128353)
+			self:Message("ej:6325", 123627, "Attention", 128353)
 		elseif power == 2 then
 			self:CloseProximity()
 			self:Bar("phases", CL["phase"]:format(1), 158, L["phases_icon"])
@@ -146,6 +146,7 @@ end
 
 function mod:Eyes(player, spellId, _, _, _, buffStack)
 	if self:Tank() then
+		buffStack = buffStack or 1
 		self:StopBar(L["eyes_message"]:format(player, buffStack - 1))
 		self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, spellId)
 		self:LocalMessage("eyes", L["eyes_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
@@ -161,5 +162,4 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 		end
 	end
 end
-
 
