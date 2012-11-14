@@ -5,12 +5,14 @@
 -- (or at least the lxp lua module, but I haven't tested it with 5.0 or earlier)
 --
 -- 1. svn log --xml svn://svn.wowace.com/wow/big-wigs/mainline > svn-log.xml
--- 2. lua authors.lua svn-log.xml ../author-list.lua
+-- 2. remove "<?xml version="1.0" encoding="UTF-8"?>" from the top of the xml file
+-- 2. lua authors.lua [OR] dofile(".\\authors.lua")
 -- 3. rm svn-log.xml
+-- 4. copy newly generated author-list.lua file
 --
 
 require("lxp")
-local file = assert(io.open(arg[1], "r"))
+local file = assert(io.open("svn-log.xml", "r"))
 if not file then return end
 local data = file:read("*all")
 
@@ -43,6 +45,7 @@ numberOfCommits.root = nil
 numberOfCommits.rabbit = nil
 numberOfCommits.ammo = nil
 numberOfCommits.funkydude = nil
+numberOfCommits.nebula169 = nil
 -- Maat uses two logins, wtf?
 numberOfCommits.Maat = nil
 numberOfCommits.maat = nil
@@ -53,7 +56,7 @@ for k, v in pairs(numberOfCommits) do
 end
 table.sort(sorted, function(a, b) return numberOfCommits[a] > numberOfCommits[b] end)
 
-local output = assert(io.open(arg[2], "w"))
+local output = assert(io.open("author-list.lua", "w"))
 output:write("_G.BIGWIGS_AUTHORS = \"")
 output:write(table.concat(sorted, ", "))
 output:write(".\"\n")

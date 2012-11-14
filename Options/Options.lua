@@ -249,7 +249,7 @@ function options:OnInitialize()
 		}
 		local fieldData = {
 			"Ammo, Rabbit",
-			"Maat, Funkydude",
+			"Funkydude, Maat, Nebula169",
 			L["See license.txt in the main Big Wigs folder."],
 			"http://www.wowace.com/addons/big-wigs/",
 			L["irc.freenode.net in the #wowace channel"],
