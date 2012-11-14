@@ -21,8 +21,8 @@ L.general = "通用" -- General settings, i.e. things that apply to both normal 
 L.duration = ">%s< %s秒"
 L.over = "%s 结束！"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
+L.add_spawned = "小怪刷新!"
+L.next_add = "下一波小怪"
 
 -- Localizers note:
 -- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
