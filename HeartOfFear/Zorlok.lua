@@ -11,7 +11,7 @@ mod:RegisterEnableMob(62980)
 -- Locals
 --
 
-local forceCount, platform = 0, 0
+local forceCount, platform, danceTracker = 0, 0, true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -70,7 +70,7 @@ end
 
 function mod:OnEngage()
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	forceCount, platform = 0, 0
+	forceCount, platform, danceTracker = 0, 0, true
 	if not self:LFR() then
 		self:Berserk(self:Heroic() and 720 or 600) -- Verify
 	end
@@ -99,8 +99,22 @@ end
 function mod:Attenuation(_, spellId, source, _, spellName)
 	local target
 	if self:Heroic() then
+		if platform == 3 then -- this is code section is untested
+			if danceTracker then
+				if type(danceTracker) == "number" then
+					if danceTracker == 2 then -- there have been two dances from boss in start of p2
+						danceTracker = false -- it is now the echos turn then rotation starts
+					end
+					danceTracker = danceTracker + 1
+				else
+					danceTracker = false
+				end
+			else -- assuming echo does not cast two dances in between the two dances of the boss
+				danceTracker = true
+			end
+		end
 		-- Figure out a way to do this that works for heroic
-		if spellName == UnitCastingInfo("boss1") then
+		if danceTracker then
 			target = L["zorlok"]
 		else
 			target = L["echo"]
@@ -159,8 +173,12 @@ end
 
 function mod:PlatformSwap()
 	forceCount = 0
+	if platform == 2 then
+		danceTracker = false
+	end
 	if platform == 3 then
 		self:Message("stages", CL["phase"]:format(2), "Positive", "ability_vehicle_launchplayer", "Info")
+		danceTracker = 1 -- start a counter here because there are 2 dances from boss before echo does one
 	else
 		self:Message("stages", L["platform_message"], "Positive", "ability_vehicle_launchplayer", "Info")
 	end
