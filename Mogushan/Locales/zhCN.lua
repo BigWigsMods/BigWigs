@@ -83,7 +83,7 @@ if L then
 	L.gas_trigger = "上古魔古机器损坏了！"
 	L.gas_overdrive_trigger = "皇帝之息渐灭。"
 
-	L.target_only = "|cFFFF0000This warning will only show for the boss you're targeting.|r "
-	L.combo_message = "%s: Combo soon!"
+	L.target_only = "|cFFFF0000该提示信息仅在你为首领目标时显示。|r "
+	L.combo_message = "%s: 即将连击！"
 end
 
