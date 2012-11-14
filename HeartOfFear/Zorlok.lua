@@ -139,7 +139,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 		elseif platform == 1 and hp < 63 then
 			self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
 			platform = 2
-		elseif platform == 2 and hp < 43 then
+		elseif platform == 2 and hp < 47 then
 			self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", "ability_vehicle_launchplayer", "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 			platform = 3
