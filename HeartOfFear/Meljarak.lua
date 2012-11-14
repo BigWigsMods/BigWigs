@@ -74,10 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ImpalingSpearRemoved", 122224)
 	self:Log("SPELL_DAMAGE", "WhirlingBladeDamage", 121898)
 
-
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MyEngage")
-	self:RegisterEvent("UNIT_AURA")
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	self:Death("Deaths", 62397, 62405) -- Boss, Trapper
 end
@@ -90,13 +87,16 @@ function mod:OnEngage(diff)
 	wipe(korthikStrikeWarned)
 	primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, nil
 	firstKorthikStrikeDone = nil
+
+	self:RegisterEvent("UNIT_AURA")
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:MyEngage()
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:CheckBossStatus()
 	for i = 2, MAX_BOSS_FRAMES do
 		if UnitName("boss"..i) == L["trapper"] then
@@ -250,7 +250,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 78 and not phase then -- phase starts at 75
 			self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
-			phase = "warned"
+			phase = 1
 		elseif hp < 75 then
 			self:Message(131830, CL["phase"]:format(2), "Positive", 131830, "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
