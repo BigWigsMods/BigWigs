@@ -58,14 +58,14 @@ L = BigWigs:NewBossLocale("Elegon", "zhCN")
 if L then
 	L.engage_yell = "Entering defensive mode.  Disabling output failsafes."
 
-	L.last_phase = "Last Phase"
-	L.overcharged_total_annihilation = "Overcharge %d! A bit much?"
+	L.last_phase = "最后阶段"
+	L.overcharged_total_annihilation = "超载 %d! 太多了？"
 
-	L.floor = "Floor Despawn"
+	L.floor = "地板消失"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "The floor is falling!"
+	L.floor_message = "地板即将消失！"
 
-	L.adds = "Adds"
+	L.adds = "小怪刷新"
 	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
 end
 
