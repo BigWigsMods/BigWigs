@@ -74,14 +74,14 @@ if L then
 	L.enable_zone = "无尽熔炉"
 
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
-	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
+	L.normal_start_trigger = "机器开始嗡嗡作响了！到下层去！" -- The machine hums to life!  Get to the lower level!
 
 	L.rage_trigger = "皇帝之怒响彻群山。"
 	L.strength_trigger = "皇帝的力量出现在壁龛中！"
 	L.courage_trigger = "皇帝的勇气出现在壁龛中！"
 	L.bosses_trigger = "两个巨型构造体出现在大型的壁龛中！"
-	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
-	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
+	L.gas_trigger = "上古魔古机器损坏了！"
+	L.gas_overdrive_trigger = "皇帝之息渐灭。"
 
 	L.target_only = "|cFFFF0000This warning will only show for the boss you're targeting.|r "
 	L.combo_message = "%s: Combo soon!"

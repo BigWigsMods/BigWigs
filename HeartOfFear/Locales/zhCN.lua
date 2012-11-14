@@ -3,10 +3,10 @@ if not L then return end
 if L then
 	L.engage_yell = "我们不会向黑暗虚空的绝望屈服。如果女皇要我们去死，我们便照做。"
 
-	L.force_message = "AoE Pulse"
+	L.force_message = "力与魄"
 
-	L.attenuation_bar = "Discs... Dance!"
-	L.attenuation_message = "%s Dancing %s"
+	L.attenuation_bar = "音波衰减"
+	L.attenuation_message = "%s 音波衰减 %s"
 	L.echo = "|c001cc986Echo|r"
 	L.zorlok = "|c00ed1ffaZor'lok|r"
 	L.left = "|c00008000<- 左 <-|r"
