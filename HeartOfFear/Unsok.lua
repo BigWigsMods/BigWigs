@@ -236,7 +236,7 @@ function mod:BreakFree(_, _, source)
 end
 
 function mod:Destabilize(player, spellId, _, _, spellName)
-	self:Bar(spellId, CL["other"]:format(spellName, player), 15, spellId)
+	self:Bar(spellId, CL["other"]:format(spellName, player), self:LFR() and 60 or 15, spellId)
 end
 
 do
