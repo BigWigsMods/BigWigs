@@ -65,7 +65,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(119414, breathOfFear, 33.3, 119414)
-	self:Berserk(480) -- assume
+	self:Berserk(900) -- needs testing 
 	swingCounter = 0
 	atSha = true
 end
