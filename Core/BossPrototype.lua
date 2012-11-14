@@ -147,6 +147,7 @@ do
 					func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
 				else
 					self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
+					if debug then dbg(self, "Firing func: "..func) end
 				end
 			end
 		end
