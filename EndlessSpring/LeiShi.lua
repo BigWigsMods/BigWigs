@@ -58,7 +58,7 @@ end
 function mod:OnEngage(diff)
 	hiding = false
 	self:Bar("special", "~"..L["special"], 33, 123263)
-	self:Berserk(360)
+	self:Berserk(480)
 end
 
 --------------------------------------------------------------------------------
