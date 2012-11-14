@@ -15,22 +15,22 @@ if L then
 	L.phase_lightning_trigger = "噢，伟大的神灵！赐予我大地的力量！"
 	L.phase_flame_trigger = "噢，至高的神！借我之手融化他们的血肉吧！"
 	L.phase_arcane_trigger = "噢，上古的贤者！赐予我魔法的智慧吧！"
-	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!"
+	L.phase_shadow_trigger = "先烈的英灵！用你的盾保护我吧！"
 
-	L.phase_lightning = "Lightning phase!"
-	L.phase_flame = "Flame phase!"
-	L.phase_arcane = "Arcane phase!"
-	L.phase_shadow = "(Heroic) Shadow phase!"
+	L.phase_lightning = "闪电阶段！"
+	L.phase_flame = "火焰阶段！"
+	L.phase_arcane = "奥术阶段！"
+	L.phase_shadow = "（英雄）暗影阶段！"
 
-	L.phase_message = "New phase soon!"
+	L.phase_message = "即将下一阶段！"
 	L.shroud_message = "%2$s cast Shroud on %1$s"
 	L.barrier_message = "Barrier UP!"
 	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
+	L.can_interrupt_epicenter = "%s 可打断 %s"
+	L.epicenter_interrupted = "%s 已打断！"
 
 	-- Tanks
-	L.tank = "Tank Alerts"
+	L.tank = "坦克警报"
 	L.tank_desc = "Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
 	L.lash_message = "%2$dx Lash on %1$s"
 	L.spear_message = "%2$dx Spear on %1$s"
@@ -61,9 +61,9 @@ if L then
 	L.last_phase = "最后阶段"
 	L.overcharged_total_annihilation = "超载 %d! 太多了？"
 
-	L.floor = "地板消失"
+	L.floor = "平台消失"
 	L.floor_desc = "Warnings for when the floor is about to despawn."
-	L.floor_message = "地板即将消失！"
+	L.floor_message = "平台即将消失！"
 
 	L.adds = "小怪刷新"
 	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
@@ -76,10 +76,10 @@ if L then
 	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
 	L.normal_start_trigger = "The machine hums" -- The machine hums to life!  Get to the lower level!
 
-	L.rage_trigger = "The Emperor's Rage echoes through the hills."
-	L.strength_trigger = "The Emperor's Strength appears in the alcoves!"
-	L.courage_trigger = "The Emperor's Courage appears in the alcoves!"
-	L.bosses_trigger = "Two titanic constructs appear in the large alcoves!"
+	L.rage_trigger = "皇帝之怒响彻群山。"
+	L.strength_trigger = "皇帝的力量出现在壁龛中！"
+	L.courage_trigger = "皇帝的勇气出现在壁龛中！"
+	L.bosses_trigger = "两个巨型构造体出现在大型的壁龛中！"
 	L.gas_trigger = "The Ancient Mogu Machine breaks down!"
 	L.gas_overdrive_trigger = "The Ancient Mogu Machine goes into overdrive!"
 
