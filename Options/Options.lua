@@ -1,3 +1,6 @@
+
+local BIGWIGS_AUTHORS = "7destiny, pettigrow, ananhaid, mojosdojo, tekkub, fenlis, jongt23, shyva, StingerSoft, cwdg, gamefaq, yoshimo, sayclub, saroz, nevcairiel, s8095324, Wetxius, handdol, chuanhsing, scorpio0920, kebinusan, flyflame, durcyn, onyxmaster, grimwald, zhTW, lcf_hell, chinkuwaila, arrowmaster, next96, starinnia, ackis, Leialyn, moonsorrow, jerry, fryguy, xinsonic, beerke, hk2717, tsigo, wetxius, ulic, pigmonkey, Carlos, mecdemort, stanzilla, a9012456, cremor, cronan, Dynaletik, Cybersea, mysticalos, neriak, darchon, hyperactiveChipmunk, nirek, darkwings, hshh, gnarfoz, mikk, otravi, dynaletik, kergoth, yhpdoit, tnt2ray, AnarkiQ3, kjheng, Swix, Gothwin, dessa, erwanoops, nymbia, profalbert, phyber, oojoo, oxman, kyahx, Zidomo, Anadale, 8timer, silverwind, kemayo, archarodim, Traeumer, coalado, zealotonastick, thiana, Adam77, tain, tazmanyak, ckknight, lucen."
+
 local BigWigs = BigWigs
 BigWigsOptions = BigWigs:NewModule("Options", "AceEvent-3.0")
 local options = BigWigsOptions

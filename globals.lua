@@ -105,7 +105,6 @@ local acceptedGlobals = {
 	bit = true,
 	error = true,
 	UIParent = true,
-	BIGWIGS_AUTHORS = true,
 	UnitPower = true,
 	UnitHealth = true,
 	UnitHealthMax = true,

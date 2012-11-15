@@ -57,7 +57,7 @@ end
 table.sort(sorted, function(a, b) return numberOfCommits[a] > numberOfCommits[b] end)
 
 local output = assert(io.open("author-list.lua", "w"))
-output:write("_G.BIGWIGS_AUTHORS = \"")
+output:write("local BIGWIGS_AUTHORS = \"")
 output:write(table.concat(sorted, ", "))
 output:write(".\"\n")
 output:close()
