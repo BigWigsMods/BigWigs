@@ -1,11 +1,11 @@
 local L = BigWigs:NewBossLocale("The Stone Guard", "zhCN")
 if not L then return end
 if L then
-	L.petrifications = "Petrification"
-	L.petrifications_desc = "Warning for when bosses start petrification"
+	L.petrifications = "石化"
+	L.petrifications_desc = "守卫试图将自己的敌人转化为各色晶石，使其受到的相应伤害降低90%，但是会逐渐降低其移动速度。身上石化效果达到100层的敌人将变成石头，无法移动或执行任何动作。"
 
-	L.overload = "Overload" -- maybe should use a spellId that says exactly "Overload"
-	L.overload_desc = "Warning for all types of overloads."
+	L.overload = "过载" -- maybe should use a spellId that says exactly "Overload"
+	L.overload_desc = "能量值全满时守卫会过载，对所有敌人造成250000点伤害，并中断相应石化。过载不会释放被完全石化的敌人。"
 end
 
 L = BigWigs:NewBossLocale("Feng the Accursed", "zhCN")
