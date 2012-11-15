@@ -11,7 +11,7 @@ mod:RegisterEnableMob(62511)
 -- Locales
 --
 
-local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(106966)
+local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398)
 local phase, phase2warned
 local parasiteAllowed = true
 local primaryIcon
@@ -85,7 +85,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Destabilize", 123059)
 	self:Log("SPELL_CAST_START", "AmberExplosion", 122398)
 	self:Log("SPELL_CAST_START", "AmberExplosionMonstrosity", 122402)
-	self:Log("SPELL_INTERRUPT", "ExplosionInterrupted", 122398, 122402)
 	self:Log("SPELL_CAST_SUCCESS", "AmberCarapace", 122540)
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedMutation", 122556)
 	self:Log("SPELL_AURA_APPLIED", "ParasiticGrowth", 121949)
@@ -261,23 +260,12 @@ do
 	end
 end
 
---just incase these start working.
-function mod:ExplosionInterrupted(player, spellId, source, _, spellName)
-	if UnitIsUnit("player", source) then --Break Free interrupt
-		self:StopBar(CL["cast"]:format(CL["you"]:format(spellName)))
-	elseif UnitIsUnit("focus", player) then --player interrupting another player (your focus)
-		self:StopBar(CL["cast"]:format(CL["other"]:format(player, spellName)))
-	elseif UnitName("boss2") == player then
-		self:StopBar(L["boss_is_casting"])
-	end
-end
-
 function mod:UNIT_SPELLCAST_INTERRUPTED(_, unitId, spellName, _, _, spellId)
 	--Mutated Construct's Struggle for Control doesn't fire a SPELL_INTERRUPT
 	if spellId == 122398 then
-		if unitId == "player" then --You interrupting your own Amber Explosion
+		if unitId == "player" then
 			self:StopBar(CL["cast"]:format(CL["you"]:format(spellName)))
-		elseif unitId == "focus" then --Your focus interrupting their own Amber Explosion
+		elseif unitId == "focus" then
 			local player = UnitName(unitId)
 			self:StopBar(CL["cast"]:format(CL["other"]:format(player, spellName)))
 		end
@@ -335,7 +323,6 @@ function mod:AmberCarapace(_, spellId)
 	self:Bar("explosion_by_other", "~"..CL["onboss"]:format(explosion), 55, 122402) -- Monstrosity Explosion
 
 	--TIL you can dodge fling! is like rotface's explosion, you have ~3s to move after it picks a player
-	--(0) Grab -> (2.4-4.4) Fling -> (5.7) Rough Landing -> (6.1) damage/stun -> (8.7) stun off
 	--self:OpenProximity(8) --8yds for Fling
 	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) --Massive Stomp
 	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) --Fling
@@ -369,6 +356,7 @@ function mod:UNIT_SPELLCAST_STOP(_, _, _, _, _, spellId)
 end
 
 function mod:Fling(player)
+	--(0) Grab -> (2.4-4.4) Fling -> (5.7) Rough Landing -> (6.1) damage/stun -> (8.7) stun off
 	--cd is usually 35, but can be 27.8 (cast early when explosion is near the same time normally?)
 	self:Bar(122413, "~"..mod:SpellName(122413), 35, 122413) --Fling
 	self:TargetMessage(122413, mod:SpellName(122413), player, "Urgent", 122413, "Alarm") --Fling
