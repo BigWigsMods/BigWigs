@@ -119,6 +119,7 @@ do
 			end
 		end
 	end
+	local last = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if not unitId:match("boss") then return end
 		if spellId == 123252 then -- end of night phase
@@ -133,8 +134,12 @@ do
 			self:SendMessage("BigWigs_StopBar", self, summonUnstableSha)
 			self:SendMessage("BigWigs_StopBar", self, sunBreath)
 		elseif spellId == 122953 then -- summon unstable sha
-			self:Message("ej:6320", spellName, "Important", 122938, "Alert")
-			self:Bar("ej:6320", spellName, 18, 122938)
+			local time = GetTime()
+			if (time - last) > 2 then
+				last = time
+				self:Message("ej:6320", spellName, "Important", 122938, "Alert")
+				self:Bar("ej:6320", spellName, 18, 122938)
+			end
 		elseif spellId == 122770 or spellId ==122775 then -- Nightmares
 			self:Bar(122777, spellName, 15, 122777)
 			getNightmaresTarget() -- probably won't work
