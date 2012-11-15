@@ -20,31 +20,31 @@ if L then
 	L.phase_lightning = "闪电阶段！"
 	L.phase_flame = "火焰阶段！"
 	L.phase_arcane = "奥术阶段！"
-	L.phase_shadow = "（英雄）暗影阶段！"
+	L.phase_shadow = "（英雄模式）暗影阶段！"
 
 	L.phase_message = "即将下一阶段！"
-	L.shroud_message = "%2$s cast Shroud on %1$s"
-	L.barrier_message = "Barrier UP!"
-	L.barrier_cooldown = "Barrier cooldown"
+	L.shroud_message = "%2$s 对 %1$s 施放反射罩"
+	L.barrier_message = "废灵壁垒！"
+	L.barrier_cooldown = "废灵壁垒冷却"
 	L.can_interrupt_epicenter = "%s 可打断 %s"
 	L.epicenter_interrupted = "%s 已打断！"
 
 	-- Tanks
 	L.tank = "坦克警报"
-	L.tank_desc = "Count the stacks of Lightning Lash, Flaming Spear, Arcane Shock & Shadowburn (Heroic)."
-	L.lash_message = "%2$dx Lash on %1$s"
-	L.spear_message = "%2$dx Spear on %1$s"
-	L.shock_message = "%2$dx Shock on %1$s"
-	L.burn_message = "%2$dx Burn on %1$s"
+	L.tank_desc = "闪电之拳、野性火花、奥术震击、暗影灼烧（英雄模式）的计数"
+	L.lash_message = "%2$dx 闪电之拳 %1$s"
+	L.spear_message = "%2$dx 野性火花 %1$s"
+	L.shock_message = "%2$dx 奥术震击 %1$s"
+	L.burn_message = "%2$dx 暗影灼烧 %1$s"
 end
 
 L = BigWigs:NewBossLocale("Gara'jal the Spiritbinder", "zhCN")
 if L then
 	L.engage_yell = "死亡时间到！"
 
-	L.totem = "Totem (%d)"
-	L.shadowy_message = "Attack (%d)"
-	L.banish_message = "Tank Banished"
+	L.totem = "图腾 (%d)"
+	L.shadowy_message = "暗影攻击 (%d)"
+	L.banish_message = "坦克已被放逐"
 end
 
 L = BigWigs:NewBossLocale("The Spirit Kings", "zhCN")
