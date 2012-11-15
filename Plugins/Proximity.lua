@@ -385,8 +385,6 @@ do
 	-- class is player class
 	-- facing is radians with 0 being north, counting up clockwise
 	local setDot = function(dx, dy, n, blip)
-		blip.isShown = true
-
 		local width, height = anchor:GetWidth(), anchor:GetHeight()
 		local range = activeRange and activeRange or 10
 		-- range * 3, so we have 3x radius space
@@ -413,7 +411,10 @@ do
 			y = (height / 2)
 		end
 		blip:SetPoint("CENTER", anchor, "CENTER", x, y)
-		blip:Show()
+		if not blip.isShown then
+			blip.isShown = true
+			blip:Show()
+		end
 	end
 
 	testDots = function()
@@ -466,6 +467,9 @@ do
 					if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
 						anyoneClose = true
 					end
+				elseif blipList[n].isShown then -- A unit may die next to us
+					blipList[n]:Hide()
+					blipList[n].isShown = nil
 				end
 			elseif blipList[n].isShown then
 				blipList[n]:Hide()
