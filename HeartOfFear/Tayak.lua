@@ -58,6 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 123474)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:AddSyncListener("Strike")
 
 	self:Death("Win", 62543)
 end
@@ -93,7 +94,9 @@ do
 	local timer = nil
 	local strike = mod:SpellName(122949)
 	local function removeIcon()
-		mod:OpenProximity(8, 123175) -- Re-open normal proximity
+		if mod.isEngaged then
+			mod:OpenProximity(8, 123175) -- Re-open normal proximity
+		end
 		mod:PrimaryIcon("unseenstrike")
 		mod:CancelTimer(timer, true) -- Should never last this long, but no harm in it
 	end
@@ -136,6 +139,15 @@ do
 				self:StopBar("~"..self:SpellName(123175)) --Wind Step
 				self:CloseProximity(123175)
 			end
+		elseif spellId == 122949 and unit == "target" and not self.isEngaged then
+			self:Sync("Strike") -- Instructor Maltik
+		end
+	end
+	function mod:OnSync(sync)
+		if sync == "Strike" then
+			self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
+			timer = self:ScheduleRepeatingTimer(warnStrike, 0.05)
+			self:ScheduleTimer(removeIcon, 7)
 		end
 	end
 end
