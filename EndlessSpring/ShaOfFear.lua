@@ -26,6 +26,9 @@ if L then
 
 	L.swing = "Swing"
 	L.swing_desc = "Counts the number of swings before Trash"
+
+	L.damage = "Damage"
+	L.miss = "Miss"
 end
 L = mod:GetLocale()
 
@@ -65,7 +68,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(119414, breathOfFear, 33.3, 119414)
-	self:Berserk(900) -- needs testing 
+	self:Berserk(900) -- needs testing
 	swingCounter = 0
 	atSha = true
 end
@@ -92,11 +95,11 @@ function mod:DeathBlossom(_, _, _, _, spellName)
 	end
 end
 
-function mod:Swing(_, source)
-	if source == self.moduleName then
+function mod:Swing(_, damage, _, _, _, _, _, _, _, _, sGUID)
+	if self:GetCID(sGUID) == 60999 then
 		swingCounter = swingCounter + 1
 		if atSha then
-			self:Message("ej:6699", ("%s (%d)"):format(L["swing"], swingCounter), "Positive", 5547)
+			self:Message("ej:6699", ("%s (%d){%s}"):format(L["swing"], swingCounter, type(damage) == "number" and L["damage"] or L["miss"]), "Positive", 5547)
 		end
 	end
 end
