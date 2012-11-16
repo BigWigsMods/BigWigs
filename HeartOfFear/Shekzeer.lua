@@ -70,7 +70,7 @@ function mod:OnEngage(diff)
 	end
 	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:RegisterEvent("UNIT_POWER", "PoorMansDissonanceTimers")
+	self:RegisterEvent("UNIT_POWER_FREQUENT", "PoorMansDissonanceTimers")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") -- XXX Check ENGAGE results
 end
 
@@ -132,6 +132,7 @@ function mod:PoorMansDissonanceTimers(_, unitId)
 			self:OpenProximity(5)
 			self:Bar("ej:6325", 123627, 19, 128353) --Dissonance Field
 			self:Bar("phases", CL["phase"]:format(2), 149, L["phases_icon"])
+			self:StopBar(CL["phase"]:format(1))
 		elseif power == 130 then
 			self:Bar("ej:6325", 123627, 65, 128353)
 			self:Message("ej:6325", 123627, "Attention", 128353)
