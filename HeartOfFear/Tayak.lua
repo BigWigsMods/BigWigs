@@ -98,7 +98,10 @@ do
 			mod:OpenProximity(8, 123175) -- Re-open normal proximity
 		end
 		mod:PrimaryIcon("unseenstrike")
-		mod:CancelTimer(timer, true) -- Should never last this long, but no harm in it
+		if timer then
+			mod:CancelTimer(timer, true) -- Should never last this long, but no harm in it
+			timer = nil
+		end
 	end
 	local function warnStrike()
 		local player = UnitDebuff("boss1target", strike) and "boss1target"
@@ -111,6 +114,7 @@ do
 		end
 		if player then
 			mod:CancelTimer(timer, true)
+			timer = nil
 			local name, server = UnitName(player)
 			if server then name = name .."-".. server end
 			if UnitIsUnit(player, "player") then
@@ -127,7 +131,9 @@ do
 			if spellId == 122949 then --Unseen Strike
 				self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
 				self:Bar("unseenstrike", "~"..spellName, 60, L.unseenstrike_icon)
-				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
+				if not timer then
+					timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
+				end
 				self:ScheduleTimer(removeIcon, 7)
 			elseif spellId == 122839 then --Tempest Slash
 				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
@@ -146,7 +152,9 @@ do
 	function mod:OnSync(sync)
 		if sync == "Strike" then
 			self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
-			timer = self:ScheduleRepeatingTimer(warnStrike, 0.05)
+			if not timer then
+				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05)
+			end
 			self:ScheduleTimer(removeIcon, 7)
 		end
 	end
