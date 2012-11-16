@@ -178,7 +178,8 @@ function mod:PlatformSwap()
 	end
 	if platform == 3 then
 		self:Message("stages", CL["phase"]:format(2), "Positive", "ability_vehicle_launchplayer", "Info")
-		danceTracker = 1 -- start a counter here because there are 2 dances from boss before echo does one
+		self:StopBar("~"..self:SpellName(122740)) -- Convert
+		danceTracker = 1 -- Start a counter here because there are 2 dances from boss before echo does one
 	else
 		self:Message("stages", L["platform_message"], "Positive", "ability_vehicle_launchplayer", "Info")
 	end
