@@ -37,11 +37,13 @@ L.eyes_desc = CL.tank..L.eyes_desc
 
 function mod:GetOptions()
 	return {
-		"ej:6325", "eyes", {123788, "FLASHSHAKE"}, "proximity",
-		{125390, "FLASHSHAKE"}, 124097,
+		{123845, "FLASHSHAKE", "ICON", "SAY"},
+		"ej:6325", "eyes", {123788, "FLASHSHAKE", "ICON"}, "proximity", 123735,
+		{125390, "FLASHSHAKE"}, 124097, 124827, {124077, "FLASHSHAKE"},
 		{124862, "FLASHSHAKE", "SAY"}, { 124849, "FLASHSHAKE" },
 		"phases", "berserk", "bosskill",
 	}, {
+		[123845] = "heroic",
 		["ej:6325"] = "ej:6336",
 		[125390] = "ej:6340",
 		[124862] = "ej:6341",
@@ -50,13 +52,21 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "HeartOfFearApplied", 123845)
+	self:Log("SPELL_AURA_REMOVED", "HeartOfFearRemoved", 123845)
 	self:Log("SPELL_AURA_APPLIED", "Eyes", 123707)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Eyes", 123707)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 125390)
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 125390)
 	self:Log("SPELL_AURA_APPLIED", "Resin", 124097)
 	self:Log("SPELL_AURA_APPLIED", "Visions", 124862)
+	self:Log("SPELL_AURA_APPLIED", "Poison", 124827)
+	self:Log("SPELL_AURA_REFRESH", "Poison", 124827)
 	self:Log("SPELL_AURA_APPLIED", "CryOfTerror", 123788)
+	self:Log("SPELL_AURA_REMOVED", "CryOfTerrorRemoved", 123788)
 	self:Log("SPELL_CAST_START", "ConsumingTerror", 124849)
+	self:Log("SPELL_AURA_APPLIED", "Dispatch", 124077)
+	self:Log("SPELL_CAST_SUCCESS", "DreadScreech", 123735)
 
 	self:Yell("OnEngage", L["engage_trigger"]) -- XXX Check ENGAGE results
 
@@ -78,6 +88,36 @@ end
 -- Event Handlers
 --
 
+function mod:HeartOfFearRemoved()
+	self:PrimaryIcon(123845)
+end
+
+function mod:HeartOfFearApplied(player, _, _, _, spellName)
+	self:TargetMessage(123845, spellName, player, "Important", 123845, "Info")
+	self:PrimaryIcon(123845, player)
+	if UnitIsUnit("player", player) then
+		self:FlashShake(123845)
+		self:Say(123845, CL["say"]:format(spellName))
+	end
+end
+
+function mod:Dispatch(player, _, _, _, spellName) -- this is for interrupting, maybe check if the person can interrupt
+	if UnitBuff("target", self:SpellName(124077)) or UnitBuff("focus", self:SpellName(124077)) then
+		self:LocalMessage(124077, CL["cast"]:format(spellName), "Personal", 124077, "Long")
+		self:FlashShake(124077)
+	end
+end
+
+function mod:Poison(player, _, _, _, spellName)
+	if UnitIsUnit("player", player) then
+		self:Bar(124827, CL["you"]:format(spellName), 30, 124827)
+	end
+end
+
+function mod:DreadScreech(_, _, _, _, spellName)
+	self:Bar(123735, "~"..spellName, 6, 123735) -- healers wanted it, think it is useless
+end
+
 function mod:ConsumingTerror(_, _, _, _, spellName)
 	self:Message(124849, spellName, "Important", 124849, "Alert")
 	self:Bar(124849, "~"..spellName, 32, 124849)
@@ -85,10 +125,16 @@ function mod:ConsumingTerror(_, _, _, _, spellName)
 end
 
 function mod:CryOfTerror(player, _, _, _, spellName)
-	self:TargetMessage(123788,spellName, player, "Attention", 123788, "Long")
+	self:TargetMessage(123788, spellName, player, "Attention", 123788, "Long")
+	self:PrimaryIcon(123788, player)
+	self:Bar(123788, spellName, 25, 123788)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(123788)
 	end
+end
+
+function mod:CryOfTerrorRemoved(player)
+	self:PrimaryIcon(123788)
 end
 
 do
@@ -112,10 +158,17 @@ do
 end
 
 function mod:Fixate(player, _, _, _, spellName)
+	self:TargetMessage(125390, spellName, player, "Attention", 125390, "Info")
 	if UnitIsUnit("player", player) then
 		self:FlashShake(125390)
 		self:LocalMessage(125390, CL["you"]:format(spellName), "Personal", 125390, "Info")
-		self:Bar(125390, spellName, 30, 125390) -- EJ sais 30, in game tooltip sais 20
+		self:Bar(125390, spellName, 20, 125390)
+	end
+end
+
+function mod:FixateRemoved(player, _, _, _, spellName)
+	if UnitIsUnit("player", player) then
+		self:StopBar(CL["you"]:format(spellName))
 	end
 end
 
