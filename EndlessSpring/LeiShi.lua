@@ -87,9 +87,9 @@ end
 
 do
 	local getAwayStartHP
-	function mod:GetAwayApplied(unitId, _, _, _, spellName)
-		if UnitHealthMax(unitId) > 0 then
-			getAwayStartHP = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+	function mod:GetAwayApplied(_, _, _, _, spellName)
+		if UnitHealthMax("boss1") > 0 then
+			getAwayStartHP = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
 			self:Message(123461, spellName, "Important", 123461, "Alarm")
 			self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 		end
