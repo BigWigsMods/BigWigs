@@ -125,11 +125,16 @@ do
 		end
 	end
 	-- This will spam, but it is apparantly needed for some people
+	local prev = 0
 	function mod:StabilityFluxDamage(_, spellId, _, _, spellName)
 		local playerOvercharged, _, _, stack = UnitDebuff("player", overcharged)
 		if playerOvercharged and stack > 10 then -- stack count might need adjustment based on difficulty
-			self:FlashShake(117878)
-			self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!
+			local t = GetTime()
+			if t-prev > 1 then --getting like 30 messages a second was *glasses* a bit much
+				prev = t
+				self:FlashShake(117878)
+				self:LocalMessage(117878, L["overcharged_total_annihilation"]:format(stack), "Personal", 117878, "Info") -- Does need the sound spam too!	
+			end
 		end
 	end
 end
