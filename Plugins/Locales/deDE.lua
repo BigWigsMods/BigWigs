@@ -222,7 +222,7 @@ L["Tip index out of bounds, accepted indexes range from 1 to %d."] = "Tip Index 
 
 L["Super Emphasize"] = "Stark hervorheben"
 L.superEmphasizeDesc = "Verstärkt zugehörige Nachrichten oder Leisten einer bestimmten Begegnung.\n\nHier kannst du genau bestimmen, was passieren soll, wenn du in den erweiterten Optionen einer Bossfähigkeit 'Stark hervorheben' aktivierst.\n\n|cffff4411Beachte, dass 'Stark hervorheben' standardmäßig für alle Fähigkeiten deaktiviert ist.|r\n"
-L["UPPERCASE"] = "GROßBUCHSTABEN"
+L["UPPERCASE"] = "GROSSBUCHSTABEN"
 L["Uppercases all messages related to a super emphasized option."] = "Schreibt alle Nachrichten in Großbuchstaben, die die zugehörige 'Stark hervorheben'-Option aktiviert haben."
 L["Double size"] = "Doppelte Größe"
 L["Doubles the size of super emphasized bars and messages."] = "Verdoppelt die Größe von 'Stark hervorgehobenen' Leisten und Nachrichten."

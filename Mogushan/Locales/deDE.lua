@@ -25,7 +25,7 @@ if L then
 	L.phase_message = "Neue Phase bald!"
 	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
 	L.barrier_message = "Nullifikationsbarriere AN!"
-	L.barrier_cooldown = "Barrier cooldown"
+	L.barrier_cooldown = "Barriere bereit"
 	L.can_interrupt_epicenter = "%s kann %s unterbrechen"
 	L.epicenter_interrupted = "%s unterbrochen!"
 
@@ -51,7 +51,7 @@ L = BigWigs:NewBossLocale("The Spirit Kings", "deDE")
 if L then
 	L.shield_removed = "Schild entfernt! (%s)"
 	
-	L.casting_shields = "Wirke Schild"
+	L.casting_shields = "Schilde"
 	L.casting_shields_desc = "Warnung für alle Bosse, wenn Schilde aktiviert werden."
 end
 
@@ -60,14 +60,14 @@ if L then
 	L.engage_yell = "Aktiviere Verteidigungsmodus. Notausschaltung deaktiviert."
 
 	L.last_phase = "Letzte Phase"
-	L.overcharged_total_annihilation = "%d Überladungen! Ein bisschen viel?"
+	L.overcharged_total_annihilation = "%dx Überladen! Etwas viel?"
 
-	L.floor = "Verschwinden des Bodens"
+	L.floor = "Boden verschwindet"
 	L.floor_desc = "Warnungen, wenn der Boden verschwindet."
 	L.floor_message = "Der Boden verschwindet!"
 
-	L.adds = "Adds"
-	L.adds_desc = "Warnings for when a Celestial Protector is about to spawn."
+	L.adds = "Himmlische Beschützer"
+	L.adds_desc = "Warnungen kurz bevor ein Himmlischer Beschützer erscheint."
 end
 
 L = BigWigs:NewBossLocale("Will of the Emperor", "deDE")

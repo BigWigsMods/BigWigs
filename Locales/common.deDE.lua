@@ -19,10 +19,10 @@ L.hard = "Hard Mode"
 L.general = "Allgemein"
 
 L.duration = "%s for %s sec"
-L.over = "%s Over!"
+L.over = "%s vorbei!"
 
-L.add_spawned = "Add Spawned!"
-L.next_add = "Next Add"
+L.add_spawned = "Add gespawnt!"
+L.next_add = "Nächstes Add"
 
 L.custom_start = "%s angegriffen - %s in %d Min"
 L.custom_start_s = "%s angegriffen - %s in %d Sek"
@@ -30,6 +30,6 @@ L.custom_end = "%s wird zum %s!"
 L.custom_min = "%s in %d Min"
 L.custom_sec = "%s in %d Sek!"
 
-L.tank = "Tank alerts only. "
-L.healer = "Healer alerts only. "
+L.tank = "Warnungen nur für Tanks. "
+L.healer = "Warnungen nur für Heiler. "
 
