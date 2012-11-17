@@ -23,7 +23,6 @@ if L then
 	L.breath_icon = 122752
 end
 L = mod:GetLocale()
-L.breath = L.breath.." "..INLINE_TANK_ICON
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -31,12 +30,12 @@ L.breath = L.breath.." "..INLINE_TANK_ICON
 
 function mod:GetOptions()
 	return {
-		122752, 122768, 122789, { 122777, "PROXIMITY", "FLASHSHAKE", "SAY" },
+		"breath", 122768, 122789, { 122777, "PROXIMITY", "FLASHSHAKE", "SAY" },
 		122855, "ej:6320",
 		123813,
 		"berserk", "phases", "bosskill",
 	}, {
-		[122752] = "ej:6310",
+		["breath"] = "ej:6310",
 		["ej:6320"] = "ej:6315",
 		[123813] = "heroic",
 		berserk = "general",
@@ -45,7 +44,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SunBreath", 122855)
-	self:Log("SPELL_AURA_APPLIED", "ShadowBreath", 122752)
+	self:Log("SPELL_CAST_SUCCESS", "ShadowBreath", 122752)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreadShadows", 122768)
 	self:Log("SPELL_AURA_APPLIED", "Sunbeam", 122789)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -91,10 +90,8 @@ function mod:SunBreath(player, _, _, _, spellName)
 end
 
 function mod:ShadowBreath(player, _, _, _, spellName)
-	if self:Tank() then
-		self:Bar("breath", ("%s (%s)"):format(player, spellName), 30, 122752)
-		self:TargetMessage("breath", spellName, player, "Urgent", 122752)
-	end
+	self:Bar("breath", "~"..spellName, 25, 122752)
+	self:Message("breath", spellName, "Urgent", 122752)
 end
 
 do
