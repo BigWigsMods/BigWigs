@@ -96,6 +96,8 @@ do
 	local function removeIcon()
 		if mod.isEngaged then
 			mod:OpenProximity(8, 123175) -- Re-open normal proximity
+		else
+			mod:CloseProximity("unseenstrike") -- Close proximity for Instructor Maltik
 		end
 		mod:PrimaryIcon("unseenstrike")
 		if timer then
