@@ -37,7 +37,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{117988, "FLASHSHAKE", "SAY", "WHISPER"},
+		{117988, "FLASHSHAKE", "SAY", "WHISPER"}, 117975,
 		{117436, "SAY", "PROXIMITY", "FLASHSHAKE"} , 118077,
 		117309, 117227,
 		"berserk", "bosskill",
@@ -53,6 +53,7 @@ function mod:OnBossEnable()
 	-- Protector Kaolan
 	self:Log("SPELL_CAST_SUCCESS", "DefiledGroundCast", 117989, 117988, 118091, 117986)
 	self:Log("SPELL_AURA_APPLIED", "DefiledGround", 117989, 117988, 118091, 117986)
+	self:Log("SPELL_CAST_START", "ExpelCorruption", 117975)
 
 	-- Elder Regail
 	self:Log("SPELL_AURA_APPLIED", "LightningPrisonApplied", 111850)
@@ -64,6 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CleansingPool", 117309) -- the good one
 
 	self:Log("SPELL_CAST_START", "CorruptedWater", 117227) -- Spawn Watter Bubble -- need combatlog for this
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ShaCorruption", 117052)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:Death("Deaths", 60583, 60585, 60586)
@@ -80,7 +82,20 @@ end
 -- Event Handlers
 --
 
+-- boss death start 1st bars
+function mod:ShaCorruption(_, _, _, _, _, _, _, _, _, dGUID) -- don't know if bossX is always same for the bosses regardles of kill order, so do CID check till we are sure
+	if self:GetCID(dGUID) == 60583 then -- protector has 2 stacks
+		self:Bar(117975, 117975, 6, 117975) -- expel corruption
+	end
+end
+
+
 --Protector Kaolan
+
+function mod:ExpelCorruption(_, spellId)
+	self:Message(spellId, spellId, "Urgent", spellId)
+	self:Bar(spellId, spellId, 38, spellId)
+end
 
 do
 	local function checkTarget(sGUID)
@@ -147,31 +162,33 @@ function mod:LightningPrisonRemoved(player)
 	end
 end
 
-function mod:LightningStormStart(_, _, _, _, spellName)
-	self:Message(118077, spellName, "Urgent", 118077, "Alarm")
+function mod:LightningStormStart(_, spellId)
+	self:Message(spellId, spellId, "Urgent", spellId, "Alarm")
 end
 
 -- Elder Asani
 
-function mod:CleansingWaterStart(_, _, _, _, spellName)
-	self:Message(117309, CL["soon"]:format(spellName), "Attention")
-	self:Bar(117309, CL["soon"]:format(spellName), 7, 117309) -- 5+2 so it is exact for dispell
+function mod:CleansingWaterStart(_, spellId, _, _, spellName)
+	self:Message(spellId, CL["soon"]:format(spellName), "Attention")
+	self:Bar(spellId, CL["soon"]:format(spellName), 7, spellId) -- 5+2 so it is exact for dispell
 end
 
-function mod:CleansingPool(_, _, _, _, spellName)
-	self:Message(117309, spellName, "Urgent")
-	self:Bar(117309, "~"..spellName , 32, 117309)
+function mod:CleansingPool(_, spellId, _, _, spellName)
+	self:Message(spellId, spellId, "Urgent", spellId)
+	self:Bar(spellId, "~"..spellName , 32, spellId)
 end
 
 -- Globe BAD
-function mod:CorruptedWater(_, _, _, _, spellName)
-	self:Message(117227, spellName, "Attention", 117227)
+function mod:CorruptedWater(_, spellId)
+	self:Message(spellId, spellId, "Attention", spellId)
 end
 
 function mod:Deaths(mobId)
-	bossDead = bossDead + 1
-	if bossDead > 3 then
-		self:Win()
+	if mobId == 60583 or mobId == 60585 or mobId == 60586 then
+		bossDead = bossDead + 1
+		if bossDead > 3 then
+			self:Win()
+		end
 	end
 end
 
