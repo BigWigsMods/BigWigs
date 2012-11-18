@@ -132,7 +132,7 @@ do
 		if unit == "boss1" then
 			if spellId == 122949 then --Unseen Strike
 				self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
-				self:Bar("unseenstrike", "~"..spellName, 60, L.unseenstrike_icon)
+				self:Bar("unseenstrike", "~"..spellName, 55, L.unseenstrike_icon)
 				if not timer then
 					timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
 				end
