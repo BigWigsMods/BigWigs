@@ -66,8 +66,6 @@ local sin = math.sin
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
-local normalProximity, reverseTargetProximity, testDots -- funcs defined later
-
 -------------------------------------------------------------------------------
 -- Map Data
 --
@@ -378,6 +376,7 @@ end
 --
 
 local updater = nil
+local normalProximity, reverseTargetProximity, targetProximity, testDots
 do
 	local lastplayed = 0 -- When we last played an alarm sound for proximity.
 
@@ -491,7 +490,7 @@ do
 		end
 	end
 
-	function reverseTargetProximity()
+	function targetProximity()
 		local srcX, srcY = GetPlayerMapPosition("player")
 		if srcX == 0 and srcY == 0 then
 			SetMapToCurrentZone()
@@ -514,6 +513,41 @@ do
 		local range = (dx * dx + dy * dy) ^ 0.5
 		setDot(dx, dy, proximityPlayer, blipList[proximityPlayer])
 		if range <= activeRange*1.1 then -- add 10% because of mapData inaccuracies, e.g. 6 yards actually testing for 5.5 on chimaeron = ouch
+			anchor.rangeCircle:SetVertexColor(1, 0, 0)
+			local t = GetTime()
+			if t > (lastplayed + 1) then
+				lastplayed = t
+				plugin:SendMessage("BigWigs_Sound", db.soundName)
+			end
+		else
+			lastplayed = 0
+			anchor.rangeCircle:SetVertexColor(0, 1, 0)
+		end
+	end
+
+	function reverseTargetProximity()
+		local srcX, srcY = GetPlayerMapPosition("player")
+		if srcX == 0 and srcY == 0 then
+			SetMapToCurrentZone()
+			srcX, srcY = GetPlayerMapPosition("player")
+		end
+
+		local currentFloor = GetCurrentMapDungeonLevel()
+		if currentFloor == 0 then currentFloor = 1 end
+		local id = activeMap[currentFloor]
+
+		if not id then
+			print("No floor id, closing proximity.")
+			plugin:Close()
+			return
+		end
+
+		local unitX, unitY = GetPlayerMapPosition(proximityPlayer)
+		local dx = (unitX - srcX) * id[1]
+		local dy = (unitY - srcY) * id[2]
+		local range = (dx * dx + dy * dy) ^ 0.5
+		setDot(dx, dy, proximityPlayer, blipList[proximityPlayer])
+		if range <= activeRange then
 			lastplayed = 0
 			anchor.rangeCircle:SetVertexColor(0, 1, 0)
 		else
@@ -969,14 +1003,18 @@ function plugin:Open(range, module, key, player, isReverse)
 	if not player and not isReverse then
 		updater:SetScript("OnLoop", normalProximity)
 		makeThingsWork()
-	elseif player and isReverse then
+	elseif player then
 		for i = 1, GetNumGroupMembers() do
 			if UnitIsUnit(player, raidList[i]) then
 				proximityPlayer = raidList[i]
 			end
 		end
-		updater:SetScript("OnLoop", reverseTargetProximity)
 		breakThings()
+		if isReverse then
+			updater:SetScript("OnLoop", reverseTargetProximity)
+		else
+			updater:SetScript("OnLoop", targetProximity)
+		end
 	else
 		print("Current range functionality not implemented, aborting.")
 		return
