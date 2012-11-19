@@ -44,27 +44,27 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
 if L then
-	L.explosion_by_other = "Amber Explosion on others"
-	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
+	L.explosion_by_other = "Янтарный взрыв на других"
+	L.explosion_by_other_desc = "Предупреждение о восстановлении Янтарного взрыва, используемого Янтарным чудовищем или целью вашего фокуса."
 
-	L.explosion_casting_by_other = "Amber Explosion cast by others"
-	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_other = "Чужое чтение Янтарного взрыва"
+	L.explosion_casting_by_other_desc = "Предупреждение о чтении Янтарного взрыва чудовищем или целью вашего фокуса. Крайне рекомендуется включить Увеличение.!"
 
-	L.explosion_by_you = "Amber Explosion on you"
-	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+	L.explosion_by_you = "Янтарный взрыв на вас"
+	L.explosion_by_you_desc = "Предупреждение о восстановлении вашего Янтарного взрыва."
 
-	L.explosion_casting_by_you = "Amber Explosion cast by you"
-	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+	L.explosion_casting_by_you = "Ваше чтение Янтарного взрыва"
+	L.explosion_casting_by_you_desc = "Предупреждение о вашем чтении Янтарного взрыва. Крайне рекомендуется включить Увеличение!"
 
 	L.willpower = "Сила воли"
 	L.willpower_message = "Ваша сила воли %d"
 
-	L.break_free_message = "Health at %d%%!"
-	L.fling_message = "Getting tossed!"
-	L.parasite = "Parasite"
+	L.break_free_message = "Здоровье у %d%%!"
+	L.fling_message = "Бросок!"
+	L.parasite = "Паразит"
 
-	L.boss_is_casting = "BOSS is casting!"
-	L.you_are_casting = "YOU are casting!"
+	L.boss_is_casting = "БОСС произносит!"
+	L.you_are_casting = "ВЫ произносите!"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "ruRU")
@@ -74,9 +74,9 @@ if L then
 	L.phases_desc = "Предупредать о смене фаз."
 
 	L.eyes = "Взгляд императрицы"
-	L.eyes_desc = "Считает стаки взгляда императрицы и показывает таймер."
+	L.eyes_desc = "Считает стаки Взгляда императрицы и показывает таймер."
 	L.eyes_message = "%2$dx Взгляд на |3-5(%1$s)"
 
-	L.fumes_bar = "Your fumes buff"
+	L.fumes_bar = "Ваш эффект паров"
 end
 
