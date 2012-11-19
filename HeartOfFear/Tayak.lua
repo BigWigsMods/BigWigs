@@ -31,8 +31,8 @@ if L then
 	L.storm_icon = 106996
 end
 L = mod:GetLocale()
-L.assault = L.assault.." "..INLINE_TANK_ICON
-L.assault_desc = CL.tank..L.assault_desc
+L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
+--L.assault_desc = CL.tank..L.assault_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -163,9 +163,9 @@ do
 end
 
 function mod:Assault(player, spellId, _, _, spellName, stack)
-	if self:Tank() then
+	if self:Tank() or self:Healer() then
 		stack = stack or 1
-		self:Bar("assault", spellName, 21, spellId) --might be helpful for healers, too
+		self:Bar("assault", spellName, 21, spellId)
 		--self:Bar("assault", ("%s (%s)"):format(player, spellName), 45, spellId) --not terribly useful?
 		self:LocalMessage("assault", L["assault_message"], "Urgent", spellId, stack > 1 and "Info", player, stack)
 	end
