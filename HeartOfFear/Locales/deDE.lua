@@ -24,7 +24,8 @@ if L then
 
 	L.unseenstrike_inc = "Unsichtbarer Stoß!"
 
-	L.assault_message = "%2$dx Angriff auf %1$s"
+	L.assault_message = "Angriff"
+	L.side_swap = "Side Swap"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "deDE")

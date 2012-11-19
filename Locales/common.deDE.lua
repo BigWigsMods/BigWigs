@@ -32,4 +32,5 @@ L.custom_sec = "%s in %d Sek!"
 
 L.tank = "Warnungen nur für Tanks. "
 L.healer = "Warnungen nur für Heiler. "
+L.tankhealer = "Tank & Healer alerts only. "
 

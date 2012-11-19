@@ -34,4 +34,5 @@ L.custom_sec = ">%s<%d秒后！"
 
 L.tank = "只警报坦克。"
 L.healer = "只警报治疗。"
+L.tankhealer = "Tank & Healer alerts only. "
 

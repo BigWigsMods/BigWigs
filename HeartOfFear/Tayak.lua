@@ -11,6 +11,8 @@ mod:RegisterEnableMob(62543)
 -- Locals
 --
 
+local phase = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -25,14 +27,16 @@ if L then
 
 	L.assault, L.assault_desc = EJ_GetSectionInfo(6349)
 	L.assault_icon = 123474
-	L.assault_message = "%2$dx Assault on %1$s"
+	L.assault_message = "Assault"
 
 	L.storm, L.storm_desc = EJ_GetSectionInfo(6350)
 	L.storm_icon = 106996
+
+	L.side_swap = "Side Swap"
 end
 L = mod:GetLocale()
 L.assault = L.assault.." "..INLINE_TANK_ICON..INLINE_HEALER_ICON
---L.assault_desc = CL.tank..L.assault_desc
+L.assault_desc = CL.tankhealer..L.assault_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -69,11 +73,15 @@ function mod:OnEngage()
 	end
 	self:Bar(123175, "~"..self:SpellName(123175), 20.5, 123175) --Wind Step
 	self:Bar("unseenstrike", 122994, 30, 122994) --Unseen Strike
+	if self:Tank() or self:Healer() then
+		self:Bar("assault", L["assault_message"], 15, 123474)
+	end
 	self:OpenProximity(8, 123175) -- close this in last phase
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	if not self:LFR() then
 		self:Berserk(480)
 	end
+	phase = 1
 end
 
 --------------------------------------------------------------------------------
@@ -140,7 +148,7 @@ do
 			elseif spellId == 122839 then --Tempest Slash
 				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
-				self:Message("storm", CL["phase"]:format(2), "Positive", L["storm_icon"], "Info")
+				self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L["storm_icon"], "Info")
 				self:StopBar(125310) --Blade Tempest
 				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
 				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
@@ -165,18 +173,24 @@ end
 function mod:Assault(player, spellId, _, _, spellName, stack)
 	if self:Tank() or self:Healer() then
 		stack = stack or 1
-		self:Bar("assault", spellName, 21, spellId)
-		--self:Bar("assault", ("%s (%s)"):format(player, spellName), 45, spellId) --not terribly useful?
-		self:LocalMessage("assault", L["assault_message"], "Urgent", spellId, stack > 1 and "Info", player, stack)
+		self:Bar("assault", "~"..L["assault_message"], 21, spellId)
+		self:LocalMessage("assault", CL["stack"], "Urgent", spellId, stack > 1 and "Info", player, stack, L["assault_message"])
+		if self:Tank() then
+			self:Bar("assault", CL["stack"]:format(player, stack, L["assault_message"]), 45, spellId)
+		end
 	end
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if hp < 25 then -- phase starts at 20
+		if hp < 25 and phase == 1 then -- phase starts at 20
 			self:Message("storm", CL["soon"]:format(CL["phase"]:format(2)), "Positive", L["storm_icon"], "Info")
+			phase = 2
+		elseif hp < 14 and phase == 2 then
+			self:Message("storm", CL["soon"]:format(L["side_swap"]), "Positive", L["storm_icon"], "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
 end
+

@@ -32,4 +32,5 @@ L.custom_sec = "%2$d초 후 %1$s!"
 
 L.tank = "Tank alerts only. "
 L.healer = "Healer alerts only. "
+L.tankhealer = "Tank & Healer alerts only. "
 

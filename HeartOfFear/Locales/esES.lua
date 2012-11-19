@@ -24,7 +24,8 @@ if L then
 
 	L.unseenstrike_inc = "¡Golpe inminente!"
 
-	L.assault_message = "%2$dx Asalto en %1$s"
+	L.assault_message = "Asalto"
+	L.side_swap = "Side Swap"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "esES") or BigWigs:NewBossLocale("Garalon", "esMX")

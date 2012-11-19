@@ -31,4 +31,5 @@ L.custom_sec = "%s через %d сек!"
 
 L.tank = "Только для танков. "
 L.healer = "Только для лекарей. "
+L.tankhealer = "Tank & Healer alerts only. "
 
