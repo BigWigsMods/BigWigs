@@ -43,12 +43,27 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "frFR")
 if L then
-	L.explosion_casting = "Incantation d'explosion"
-	L.explosion_casting_desc = "Prévient quand n'importe laquelle des Explosions d'ambre est en cours d'incantation. Les messages d'alerte de début d'incantation sont associés à cette option. Mettre en évidence ceci est vivement recommandé !"
+	L.explosion_by_other = "Amber Explosion on others"
+	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
+
+	L.explosion_casting_by_other = "Amber Explosion cast by others"
+	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+
+	L.explosion_by_you = "Amber Explosion on you"
+	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+
+	L.explosion_casting_by_you = "Amber Explosion cast by you"
+	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
 
 	L.willpower = "Points de Volonté"
-	L.willpower_desc = "Quand tous les points de Volonté ont été utilisés, le joueur meurt et l'Assemblage muté continue à agir, hors de tout contrôle."
-	L.willpower_message = "Vos points de Volonté sont à %d (%d)"
+	L.willpower_message = "Vos points de Volonté sont à %d"
+
+	L.break_free_message = "Health at %d%%!"
+	L.fling_message = "Getting tossed!"
+	L.parasite = "Parasite"
+
+	L.boss_is_casting = "BOSS is casting!"
+	L.you_are_casting = "YOU are casting!"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "frFR")

@@ -43,12 +43,27 @@ end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "deDE")
 if L then
-	L.explosion_casting = "Amberexplosionen"
-	L.explosion_casting_desc = "Warnungen für alle Arten von Amberexplosionen. Hervorheben dieser Warnung wird strengstens empfohlen!"
+	L.explosion_by_other = "Amber Explosion on others"
+	L.explosion_by_other_desc = "Cooldown warning for Amber Explosions cast by Amber Monstrosity or your focus target."
 
-	L.willpower = "Willenskraft" 
-	L.willpower_desc = "Wenn die Willenskraft erschöpft ist, stirbt der Spieler und das mutierte Konstrukt beginnt unkontrolliert zu handeln."
-	L.willpower_message = "Deine Willenskraft ist bei: %d (%d)"
+	L.explosion_casting_by_other = "Amber Explosion cast by others"
+	L.explosion_casting_by_other_desc = "Casting warnings for Amber Explosions started by Amber Monstrosity or your focus target. Emphasizing this is highly recommended!"
+
+	L.explosion_by_you = "Amber Explosion on you"
+	L.explosion_by_you_desc = "Cooldown warning for your Amber Explosions."
+
+	L.explosion_casting_by_you = "Amber Explosion cast by you"
+	L.explosion_casting_by_you_desc = "Casting warnings for Amber Explosions started by you. Emphasizing this is highly recommended!"
+
+	L.willpower = "Willenskraft"
+	L.willpower_message = "Deine Willenskraft ist bei %d"
+
+	L.break_free_message = "Health at %d%%!"
+	L.fling_message = "Getting tossed!"
+	L.parasite = "Parasite"
+
+	L.boss_is_casting = "BOSS is casting!"
+	L.you_are_casting = "YOU are casting!"
 end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "deDE")

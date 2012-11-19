@@ -51,7 +51,6 @@ if L then
 
 	L.boss_is_casting = "BOSS is casting!"
 	L.you_are_casting = "YOU are casting!"
-	L.other_is_casting = "%s is casting!"
 end
 L = mod:GetLocale()
 
@@ -375,3 +374,4 @@ function mod:AmberGlobuleRemoved(player)
 		self:SecondaryIcon("ej:6548")
 	end
 end
+
