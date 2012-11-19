@@ -8,13 +8,11 @@ if not mod then return end
 mod:RegisterEnableMob(60999)
 
 --------------------------------------------------------------------------------
--- Locales
+-- Locals
 --
 
-local cackleTargets = mod:NewTargetList()
-local breathOfFear, thrash = (GetSpellInfo(119414)), (GetSpellInfo(131996))
-local swingCounter
-local atSha
+local swingCounter = 0
+local atSha = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -67,7 +65,7 @@ end
 
 
 function mod:OnEngage(diff)
-	self:Bar(119414, breathOfFear, 33.3, 119414)
+	self:Bar(119414, 119414, 33.3, 119414) -- Breath of Fear
 	self:Berserk(900) -- needs testing
 	swingCounter = 0
 	atSha = true
@@ -77,9 +75,9 @@ end
 -- Event Handlers
 --
 
-function mod:ThrashApplied()
+function mod:ThrashApplied(_, spellId, _, _, spellName)
 	if atSha then
-		self:Message("ej:6699", CL["soon"]:format(thrash), "Important", 131996)
+		self:Message("ej:6699", CL["soon"]:format(spellName), "Important", spellId)
 	end
 end
 
@@ -87,11 +85,11 @@ function mod:ThrashRemoved()
 	swingCounter = 0
 end
 
-function mod:DeathBlossom(_, _, _, _, spellName)
+function mod:DeathBlossom(_, spellId, _, _, spellName)
 	if not atSha then
-		self:FlashShake(119888)
-		self:Bar(119888, spellName, 2.25, 119888) -- so it can be emphasized for countdown
-		self:Message(119888, spellName, "Important", 119888, "Alert")
+		self:FlashShake(spellId)
+		self:Bar(spellId, spellName, 2.25, spellId) -- so it can be emphasized for countdown
+		self:Message(spellId, spellName, "Important", spellId, "Alert")
 	end
 end
 
@@ -104,37 +102,38 @@ function mod:Swing(_, damage, _, _, _, _, _, _, _, _, sGUID)
 	end
 end
 
-function mod:Fearless(player, _, _, _, spellName)
+function mod:Fearless(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		atSha = true
-		self:Bar(118977, spellName, 30, 118977)
-		self:DelayedMessage(118977, 22, L["fading_soon"]:format(spellName), "Attention", 118977)
+		self:Bar(spellId, spellName, 30, spellId)
+		self:DelayedMessage(spellId, 22, L["fading_soon"]:format(spellName), "Attention", spellId)
 	end
 end
 
-function mod:BreathOfFear(_, _, _, _, spellName)
-	self:Bar(119414, spellName, 33.3, 119414)
+function mod:BreathOfFear(_, spellId, _, _, spellName)
+	self:Bar(spellId, spellName, 33.3, spellId)
 	if atSha then
-		self:DelayedMessage(119414, 25, CL["soon"]:format(spellName), "Attention", 119414)
+		self:DelayedMessage(spellId, 25, CL["soon"]:format(spellName), "Attention", spellId)
 	end
 end
 
 do
 	local scheduled = nil
-	local function warnCackle(spellName)
+	local cackleTargets = mod:NewTargetList()
+	local function warnCackle(spellId)
 		if atSha then
-			mod:TargetMessage(129147, spellName, cackleTargets, "Urgent", 129147)
+			mod:TargetMessage(spellId, spellId, cackleTargets, "Urgent", spellId)
 		end
 		scheduled = nil
 	end
-	function mod:OminousCackle(player, _, _, _, spellName)
+	function mod:OminousCackle(player, spellId)
 		cackleTargets[#cackleTargets + 1] = player
 		if UnitIsUnit("player", player) then
 			atSha = false
 		end
 		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(warnCackle, 2, spellName)
+			scheduled = self:ScheduleTimer(warnCackle, 2, spellId)
 		end
 	end
 end
+

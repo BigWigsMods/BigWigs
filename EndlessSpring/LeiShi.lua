@@ -8,10 +8,10 @@ if not mod then return end
 mod:RegisterEnableMob(62983)
 
 --------------------------------------------------------------------------------
--- Locales
+-- Locals
 --
 
-local hiding
+local hiding = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -75,9 +75,9 @@ function mod:EngageCheck()
 	end
 end
 
-function mod:Hide(_, _, _, _, spellName)
+function mod:Hide(_, spellId, _, _, spellName)
 	hiding = true
-	self:Message(123244, spellName, "Attention", 123244)
+	self:Message(spellId, spellName, "Attention", spellId)
 end
 
 function mod:GetAwayRemoved()
@@ -87,10 +87,10 @@ end
 
 do
 	local getAwayStartHP
-	function mod:GetAwayApplied(_, _, _, _, spellName)
+	function mod:GetAwayApplied(_, spellId, _, _, spellName)
 		if UnitHealthMax("boss1") > 0 then
 			getAwayStartHP = UnitHealth("boss1") / UnitHealthMax("boss1") * 100
-			self:Message(123461, spellName, "Important", 123461, "Alarm")
+			self:Message(spellId, spellName, "Important", spellId, "Alarm")
 			self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
@@ -112,8 +112,7 @@ do
 	end
 end
 
-function mod:Protect(_, _, _, _, spellName)
-	self:Message(123250, spellName, "Important", 123250, "Alarm")
+function mod:Protect(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alarm")
 end
-
 

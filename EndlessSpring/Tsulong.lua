@@ -79,9 +79,9 @@ function mod:EngageCheck()
 	end
 end
 
-function mod:Terrorize(_, spellId)
-	self:Message(spellId, spellId, "Important", spellId)
-	self:Bar(spellId, spellId, 41, spellId) -- stop this when add dies, might be tricky if more than one add can be up
+function mod:Terrorize(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId)
+	self:Bar(spellId, spellName, 41, spellId) -- stop this when add dies, might be tricky if more than one add can be up
 end
 
 function mod:DreadShadows(player, spellId, _, _, spellName, buffStack)
@@ -90,20 +90,20 @@ function mod:DreadShadows(player, spellId, _, _, spellName, buffStack)
 	end
 end
 
-function mod:Sunbeam(player, spellId)
+function mod:Sunbeam(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:LocalMessage(spellId, spellId, "Positive", spellId)
+		self:LocalMessage(spellId, spellName, "Positive", spellId)
 	end
 end
 
-function mod:SunBreath(_, spellId)
-	self:Bar(spellId, spellId, 29, spellId)
-	self:Message(spellId, spellId, "Urgent", spellId)
+function mod:SunBreath(_, spellId, _, _, spellName)
+	self:Bar(spellId, spellName, 29, spellId)
+	self:Message(spellId, spellName, "Urgent", spellId)
 end
 
-function mod:ShadowBreath(player, _, _, _, spellName)
-	self:Bar("breath", "~"..spellName, 25, 122752)
-	self:Message("breath", spellName, "Urgent", 122752)
+function mod:ShadowBreath(player, spellId, _, _, spellName)
+	self:Bar("breath", "~"..spellName, 25, spellId)
+	self:Message("breath", spellName, "Urgent", spellId)
 end
 
 do

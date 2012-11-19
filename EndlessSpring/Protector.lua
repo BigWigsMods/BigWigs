@@ -17,7 +17,7 @@ mod:RegisterEnableMob(60583, 60585, 60586) -- Kaolan, Regail, Asani
 -- Locals
 --
 
-local bossDead
+local bossDead = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -89,10 +89,10 @@ end
 
 --Protector Kaolan
 
-function mod:ExpelCorruption(_, spellId)
-	self:Message(spellId, spellId, "Urgent", spellId)
-	self:Bar(spellId, spellId, 38, spellId)
-	self:Bar(117988, 117988, 12, 117988) --Defiled Ground
+function mod:ExpelCorruption(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Urgent", spellId)
+	self:Bar(spellId, spellName, 38, spellId)
+	self:Bar(117988, 117988, 12, 117988) -- Defiled Ground
 end
 
 do
@@ -161,8 +161,8 @@ function mod:LightningPrisonRemoved(player)
 	end
 end
 
-function mod:LightningStormStart(_, spellId)
-	self:Message(spellId, spellId, "Urgent", spellId, "Alarm")
+function mod:LightningStormStart(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
 end
 
 -- Elder Asani
@@ -178,8 +178,8 @@ function mod:CleansingPool(_, spellId, _, _, spellName)
 end
 
 -- Globe BAD
-function mod:CorruptedWater(_, spellId)
-	self:Message(spellId, spellId, "Attention", spellId)
+function mod:CorruptedWater(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Attention", spellId)
 end
 
 function mod:Deaths(mobId)
