@@ -12,8 +12,7 @@ mod:RegisterEnableMob(62511)
 --
 
 local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398) --106966
-local phase, phase2warned
-local primaryIcon
+local phase, phase2warned, primaryIcon = 1, nil, nil
 
 --------------------------------------------------------------------------------
 -- Localization
