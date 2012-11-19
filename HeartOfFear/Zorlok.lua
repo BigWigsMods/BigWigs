@@ -83,15 +83,14 @@ end
 do
 	local convertList, scheduled = mod:NewTargetList(), nil
 	local function convert(spellId)
-		mod:TargetMessage(spellId, mod:SpellName(spellId), convertList, "Attention", spellId)
+		mod:TargetMessage(spellId, spellId, convertList, "Attention", spellId)
 		scheduled = nil
 	end
 	function mod:Convert(player, spellId, _, _, spellName)
 		self:Bar(spellId, "~"..spellName, 36, spellId)
 		convertList[#convertList + 1] = player
 		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(convert, 0.1, spellId)
+			scheduled = self:ScheduleTimer(convert, 0.1, spellId)
 		end
 	end
 end

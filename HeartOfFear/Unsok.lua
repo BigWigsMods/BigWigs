@@ -145,16 +145,16 @@ end
 
 do
 	local timer, fired = nil, 0
-	local function beamWarn(spellName)
+	local function beamWarn(spellId)
 		fired = fired + 1
 		local player = UnitName("boss1targettarget") --Boss targets an invisible mob, which targets player. Calling boss1targettarget allows us to see it anyways
 		if player and not UnitIsUnit("boss1targettarget", "boss1") then --target target is himself, so he's not targeting off scalple mob yet
-			mod:TargetMessage(121994, spellName, player, "Attention", 121994, "Long")
+			mod:TargetMessage(spellId, spellId, player, "Attention", spellId, "Long")
 			mod:CancelTimer(timer, true)
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
-				mod:FlashShake(121994)
-				mod:Say(121994, CL["say"]:format(spellName))
+				mod:FlashShake(spellId)
+				mod:Say(spellId, CL["say"]:format(mod:SpellName(spellId)))
 			end
 			return
 		end
@@ -163,13 +163,13 @@ do
 		if fired > 18 then
 			mod:CancelTimer(timer, true)
 			timer = nil
-			mod:Message(121994, spellName, "Attention", 121994) --Give generic warning as a backup
+			mod:Message(spellId, spellId, "Attention", spellId) -- Give generic warning as a backup
 		end
 	end
-	function mod:Beam(_, _, _, _, spellName)
+	function mod:Beam(_, spellId)
 		fired = 0
 		if not timer then
-			timer = self:ScheduleRepeatingTimer(beamWarn, 0.05, spellName)
+			timer = self:ScheduleRepeatingTimer(beamWarn, 0.05, spellId)
 		end
 	end
 end
@@ -306,12 +306,12 @@ do
 			mod:ScheduleTimer(warningSpam, 0.5, spellName)
 		end
 	end
-	function mod:AmberExplosionMonstrosity(_, _, _, _, spellName)
-		self:DelayedMessage("explosion_by_other", 25, CL["custom_sec"]:format(spellName, 20), "Attention", 122402)
-		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(spellName, 15), "Attention", 122402)
-		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(spellName, 10), "Attention", 122402)
+	function mod:AmberExplosionMonstrosity(_, spellId, _, _, spellName)
+		self:DelayedMessage("explosion_by_other", 25, CL["custom_sec"]:format(spellName, 20), "Attention", spellId)
+		self:DelayedMessage("explosion_by_other", 30, CL["custom_sec"]:format(spellName, 15), "Attention", spellId)
+		self:DelayedMessage("explosion_by_other", 35, CL["custom_sec"]:format(spellName, 10), "Attention", spellId)
 		self:Bar("explosion_casting_by_other", L["boss_is_casting"], 2.5, 122398)
-		self:Bar("explosion_by_other", "~"..CL["onboss"]:format(spellName), 45, 122402) -- cooldown, don't move this
+		self:Bar("explosion_by_other", "~"..CL["onboss"]:format(spellName), 45, spellId) -- cooldown, don't move this
 		if UnitDebuff("player", reshapeLife) then
 			self:FlashShake("explosion_casting_by_other")
 			warningSpam(spellName)
@@ -345,15 +345,15 @@ end
 ------------
 -- Phase 3
 
-function mod:ConcentratedMutation(_, _, _, _, spellName)
+function mod:ConcentratedMutation(_, spellId, _, _, spellName)
 	self:StopBar("~"..CL["onboss"]:format(explosion))
 	--self:CloseProximity()
 	phase = 3
-	self:Message(122556, spellName, "Attention", 122556)
+	self:Message(spellId, spellName, "Attention", spellId)
 end
 
-function mod:AmberGlobule(player, _, _, _, spellName)
-	self:TargetMessage("ej:6548", spellName, player, "Important", 125502, "Alert")
+function mod:AmberGlobule(player, spellId, _, _, spellName)
+	self:TargetMessage("ej:6548", spellName, player, "Important", spellId, "Alert")
 	if UnitIsUnit(player, "player") then
 		self:FlashShake("ej:6548")
 	end

@@ -75,12 +75,12 @@ end
 
 do
 	local prev = 0
-	function mod:PheromoneTrail(player, _, _, _, spellName)
+	function mod:PheromoneTrail(player, spellId, _, _, spellName)
 		if not UnitIsUnit(player, "player") then return end
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:LocalMessage(123120, CL["underyou"]:format(spellName), "Personal", 123120, "Alert") -- even tho we usually use Alarm, Alarm has been sued too much in the module
+			self:LocalMessage(spellId, CL["underyou"]:format(spellName), "Personal", spellId, "Alert") -- even tho we usually use Alarm, Alarm has been sued too much in the module
 		end
 	end
 end
@@ -153,12 +153,12 @@ end
 
 do
 	--Furious Swipe's cast time is 2.5ish seconds, with 8s between SPELL_CAST_STARTs
-	local function nextSwipe(spellName)
-		mod:Bar(122735, spellName, 8, 122735)
+	local function nextSwipe(spellId)
+		mod:Bar(spellId, spellId, 8, spellId)
 	end
-	function mod:FuriousSwipe(_, spellId, _, _, spellName)
+	function mod:FuriousSwipe(_, spellId)
 		--delay the bar so it ends when the damage occurs
-		self:ScheduleTimer(nextSwipe, 2.5, spellName)
+		self:ScheduleTimer(nextSwipe, 2.5, spellId)
 	end
 end
 

@@ -76,7 +76,7 @@ function mod:OnEngage()
 	if self:Tank() or self:Healer() then
 		self:Bar("assault", L["assault_message"], 15, 123474)
 	end
-	self:OpenProximity(8, 123175) -- close this in last phase
+	self:OpenProximity(8, 123175)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	if not self:LFR() then
 		self:Berserk(480)
