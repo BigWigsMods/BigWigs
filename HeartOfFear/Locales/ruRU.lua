@@ -25,7 +25,7 @@ if L then
 	L.unseenstrike_inc = "Близится Удар!"
 
 	L.assault_message = "Выпад"
-	L.side_swap = "Side Swap"
+	L.side_swap = "Смена стороны"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "ruRU")
