@@ -24,10 +24,9 @@ if L then
 
 	L.phase_message = "Новая фаза скоро!"
 	L.shroud_message = "%2$s вешает Покров на %1$s"
+	L.shroud_can_interrupt = "%s может прервать %s!"
 	L.barrier_message = "Барьер АКТИВЕН!"
 	L.barrier_cooldown = "Перезарядка барьера"
-	L.can_interrupt_epicenter = "%s может прервать %s"
-	L.epicenter_interrupted = "%s прерван!"
 
 	L.tank = "Предупреждения для танков"
 	L.tank_desc = "Считает стаки: Искрящаяся плеть, Пылающее копье, Чародейское потрясение и Ожог Тьмы (Героик)."

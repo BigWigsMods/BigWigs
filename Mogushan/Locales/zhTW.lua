@@ -24,10 +24,9 @@ if L then
 
 	L.phase_message = "快要轉換階段!"
 	L.shroud_message = "%2$s 施放護罩在 %1$s"
+	L.shroud_can_interrupt = "%s 可以中斷 %s！"
 	L.barrier_message = "阻擋!"
 	L.barrier_cooldown = "屏障冷卻中"
-	L.can_interrupt_epicenter = "%s 可以中斷 %s"
-	L.epicenter_interrupted = "%s 已中斷!"
 
 	-- Tanks
 	L.tank = "坦克警報"

@@ -24,10 +24,9 @@ if L then
 
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s attiva Manto su %1$s"
+	L.shroud_can_interrupt = "%s can interrupt %s!"
 	L.barrier_message = "Barriera Attiva!"
 	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Tank Alerts"

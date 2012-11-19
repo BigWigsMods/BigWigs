@@ -24,10 +24,9 @@ if L then
 
 	L.phase_message = "即将下一阶段！"
 	L.shroud_message = "%2$s 对 %1$s 施放反射罩"
+	L.shroud_can_interrupt = "%s 可打断 %s！"
 	L.barrier_message = "废灵壁垒！"
 	L.barrier_cooldown = "废灵壁垒冷却"
-	L.can_interrupt_epicenter = "%s 可打断 %s"
-	L.epicenter_interrupted = "%s 已打断！"
 
 	-- Tanks
 	L.tank = "坦克警报"

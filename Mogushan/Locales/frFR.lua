@@ -24,10 +24,9 @@ if L then
 
 	L.phase_message = "Nouvelle phase imminente !"
 	L.shroud_message = "%2$s incante Voile sur %1$s"
+	L.shroud_can_interrupt = "%s peut interrompre %s !"
 	L.barrier_message = "Barrière EN PLACE !"
 	L.barrier_cooldown = "Recharge Barrière"
-	L.can_interrupt_epicenter = "%s peut interrompre %s"
-	L.epicenter_interrupted = "%s interrompu !"
 
 	-- Tanks
 	L.tank = "Alertes tank"

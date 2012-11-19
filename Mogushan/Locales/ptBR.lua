@@ -19,10 +19,9 @@ if L then
 
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s conjurou mortalha em %1$s"
+	L.shroud_can_interrupt = "%s can interrupt %s!"
 	L.barrier_message = "Barreira ATIVADA!"
 	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
 
 	L.phase_flame = "Fase das chamas!"
 	L.phase_lightning = "Fase dos raios!"

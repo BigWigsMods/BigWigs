@@ -33,10 +33,9 @@ if L then
 
 	L.phase_message = "New phase soon!"
 	L.shroud_message = "%2$s cast Shroud on %1$s"
+	L.shroud_can_interrupt = "%s can interrupt %s!"
 	L.barrier_message = "Barrier UP!"
 	L.barrier_cooldown = "Barrier cooldown"
-	L.can_interrupt_epicenter = "%s can interrupt %s"
-	L.epicenter_interrupted = "%s interrupted!"
 
 	-- Tanks
 	L.tank = "Tank Alerts"
@@ -119,15 +118,17 @@ end
 -- Event Handlers
 --
 
-function mod:LightningFistsReversalOnBoss(_, _, source)
+function mod:LightningFistsReversalOnBoss(_, spellId, source, _, spellName)
 	if not self:LFR() then
-		self:Message(115911, L["epicenter_interrupted"]:format(self:SpellName(116018)), "Urgent", 118302)
+		self:StopBar(CL["other"]:format(source, spellName))
+		self:Message(115911, CL["onboss"]:format(spellName), "Urgent", spellId, "Info")
 	end
 end
 
-function mod:LightningFistsReversal(player)
+function mod:LightningFistsReversal(player, spellId, _, _, spellName)
 	if not self:LFR() then
-		self:Message(115911, L["can_interrupt_epicenter"]:format(player, self:SpellName(116018)), "Urgent", 118302)
+		self:Message(115911, L["shroud_can_interrupt"]:format(player, self:SpellName(116018)), "Urgent", spellId)
+		self:Bar(115911, CL["other"]:format(player, spellName), 20, spellId)
 	end
 end
 
@@ -198,7 +199,7 @@ end
 
 function mod:LightningFists(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Urgent", spellId)
-	self:Bar(spellId, "~"..spellName, 14, spellId) -- might need to disable this if it feels unnecesary
+	self:Bar(spellId, "~"..spellName, 14, spellId)
 end
 
 function mod:Epicenter(_, spellId, _, _, spellName)

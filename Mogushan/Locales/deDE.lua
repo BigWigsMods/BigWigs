@@ -24,10 +24,9 @@ if L then
 
 	L.phase_message = "Neue Phase bald!"
 	L.shroud_message = "%2$s wirkt Wolke der Umkehrung auf %1$s"
+	L.shroud_can_interrupt = "%s kann %s unterbrechen!"
 	L.barrier_message = "Nullifikationsbarriere AN!"
 	L.barrier_cooldown = "Barriere bereit"
-	L.can_interrupt_epicenter = "%s kann %s unterbrechen"
-	L.epicenter_interrupted = "%s unterbrochen!"
 
 	-- Tanks
 	L.tank = "Tankwarnungen"
