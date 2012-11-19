@@ -11,9 +11,8 @@ mod:RegisterEnableMob(62511)
 -- Locales
 --
 
-local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398)
+local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398) --106966
 local phase, phase2warned
-local parasiteAllowed = true
 local primaryIcon
 
 --------------------------------------------------------------------------------
@@ -47,7 +46,7 @@ if L then
 	L.willpower_message = "Willpower at %d!"
 
 	L.break_free_message = "Health at %d%%!"
-
+	L.fling_message = "Getting tossed!"
 	L.parasite = "Parasite"
 
 	L.boss_is_casting = "BOSS is casting!"
@@ -103,14 +102,13 @@ end
 function mod:OnEngage(diff)
 	self:Bar(122784, 122784, 20, 122784) --Reshape Life
 	self:Bar(121949, 121949, 24, 121949) --Parasitic Growth
-	self:Berserk(480) -- assume
+	self:Berserk(540) -- assume
 
 	phase = 1
 	phase2warned = nil
 	primaryIcon = nil
 
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	--self:RegisterEvent("UNIT_AURA")
 	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
 	self:RegisterEvent("UNIT_SPELLCAST_STOP")
 end
@@ -134,31 +132,6 @@ function mod:ParasiticGrowthRemoved(player, _, _, _, spellName)
 	--for bubble/ice block/cloak/etc
 	self:StopBar(spellName, player)
 end
-
---[[
-do --craziness for heroic? destabilize and parastic growth not working with normal CLEU events?
-	local prev = 0
-	local function allowParasiteWarning()
-		parasiteAllowed = true
-	end
-	function mod:UNIT_AURA(_, unitId)
-		if unitId:match("boss") then
-			local _, _, _, _, _, _, expires = UnitDebuff(unitId, self:SpellName(123059)) -- Destabilize
-			if expires and prev ~= expires then
-				prev = expires
-				local duration = expires - GetTime()
-				local name = UnitName(unitId)
-				self:TargetBar(123059, self:SpellName(123059), name, duration, 123059)
-			end
-		elseif UnitIsUnit("player", unitId) and UnitDebuff("player", self:SpellName(121949)) and parasiteAllowed then -- Parasitic Growth
-			parasiteAllowed = nil
-			self:LocalMessage(121949, CL["you"]:format(L["parasite"]), "Personal", 121949, "Long")
-			self:FlashShake(121949)
-			self:ScheduleTimer(allowParasiteWarning, 35)
-		end
-	end
-end
---]]
 
 do
 	local prev = 0
@@ -357,6 +330,9 @@ end
 
 function mod:Fling(player)
 	--(0) Grab -> (2.4-4.4) Fling -> (5.7) Rough Landing -> (6.1) damage/stun -> (8.7) stun off
+	if UnitIsUnit("player", player) then
+		self:Bar(122413, L["fling_message"], 6, 68659)
+	end
 	--cd is usually 35, but can be 27.8 (cast early when explosion is near the same time normally?)
 	self:Bar(122413, "~"..mod:SpellName(122413), 35, 122413) --Fling
 	self:TargetMessage(122413, mod:SpellName(122413), player, "Urgent", 122413, "Alarm") --Fling
