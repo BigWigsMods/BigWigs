@@ -7,10 +7,6 @@ local mod, CL = BigWigs:NewBoss("Grand Empress Shek'zeer", 897, 743)
 if not mod then return end
 mod:RegisterEnableMob(62837)
 
------------------------------------------------------------------------------------------
--- Locals
---
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -26,6 +22,8 @@ if L then
 	L.eyes_desc = "Count the stacks and show a duration bar for Eyes of the Empress."
 	L.eyes_icon = 123707
 	L.eyes_message = "%2$dx Eyes on %1$s"
+
+	L.fumes_bar = "Your fumes buff"
 end
 L = mod:GetLocale()
 L.eyes = L.eyes.." "..INLINE_TANK_ICON
@@ -108,9 +106,9 @@ function mod:Dispatch(player, _, _, _, spellName) -- this is for interrupting, m
 	end
 end
 
-function mod:Poison(player, _, _, _, spellName)
+function mod:Poison(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:Bar(124827, CL["you"]:format(spellName), 30, 124827)
+		self:Bar(spellId, L["fumes_bar"], 30, spellId)
 	end
 end
 

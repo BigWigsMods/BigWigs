@@ -76,5 +76,7 @@ if L then
 	L.eyes = "Взгляд императрицы"
 	L.eyes_desc = "Считает стаки взгляда императрицы и показывает таймер."
 	L.eyes_message = "%2$dx Взгляд на |3-5(%1$s)"
+
+	L.fumes_bar = "Your fumes buff"
 end
 

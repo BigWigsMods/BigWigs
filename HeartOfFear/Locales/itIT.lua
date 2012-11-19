@@ -76,5 +76,7 @@ if L then
 	L.eyes = "Occhi dell'Imperatrice"
 	L.eyes_desc = "Conta le stack di Occhi dell'Imeratrice e mostra una barra di durata."
 	L.eyes_message = "%2$dx Occhi su %1$s"
+
+	L.fumes_bar = "Your fumes buff"
 end
 

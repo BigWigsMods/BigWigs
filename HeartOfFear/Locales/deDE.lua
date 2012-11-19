@@ -75,5 +75,7 @@ if L then
 	L.eyes = "Augen der Kaiserin"
 	L.eyes_desc = "Zählt die Stapel von -Augen der Kaiserin- und zeigt eine Leiste mit der verbleibenden Dauer an."
 	L.eyes_message = "%2$dx Augen auf %1$s"
+
+	L.fumes_bar = "Your fumes buff"
 end
 

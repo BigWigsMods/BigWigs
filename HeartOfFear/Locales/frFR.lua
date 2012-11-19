@@ -75,5 +75,7 @@ if L then
 	L.eyes = "Yeux de l'impératrice"
 	L.eyes_desc = "Compte les cumuls d'Yeux de l'impératrice et affiche une barre de durée."
 	L.eyes_message = "%2$dx yeux sur %1$s"
+
+	L.fumes_bar = "Your fumes buff"
 end
 
