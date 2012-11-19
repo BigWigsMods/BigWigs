@@ -17,8 +17,6 @@ mod:RegisterEnableMob(60583, 60585, 60586) -- Kaolan, Regail, Asani
 -- Locals
 --
 
-local defiledGround = (GetSpellInfo(117988))
-local lightningPrsionList = mod:NewTargetList()
 local bossDead
 
 --------------------------------------------------------------------------------
@@ -51,19 +49,18 @@ end
 
 function mod:OnBossEnable()
 	-- Protector Kaolan
-	self:Log("SPELL_CAST_SUCCESS", "DefiledGroundCast", 117989, 117988, 118091, 117986)
-	self:Log("SPELL_AURA_APPLIED", "DefiledGround", 117989, 117988, 118091, 117986)
+	self:Log("SPELL_CAST_SUCCESS", "DefiledGroundCast", 117989, 117988, 118091, 117986) --117986 is the winner
+	self:Log("SPELL_AURA_APPLIED", "DefiledGround", 117989, 117988, 118091, 117986) --118091 wins here
 	self:Log("SPELL_CAST_START", "ExpelCorruption", 117975)
 
 	-- Elder Regail
 	self:Log("SPELL_AURA_APPLIED", "LightningPrisonApplied", 111850)
 	self:Log("SPELL_AURA_REMOVED", "LightningPrisonRemoved", 111850)
-	-- Storm
 	self:Log("SPELL_CAST_START", "LightningStormStart", 118077)
+
 	-- Elder Asani
 	self:Log("SPELL_CAST_START", "CleansingWaterStart", 117309) -- Spawn Watter Bubble
 	self:Log("SPELL_CAST_SUCCESS", "CleansingPool", 117309) -- the good one
-
 	self:Log("SPELL_CAST_START", "CorruptedWater", 117227) -- Spawn Watter Bubble -- need combatlog for this
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShaCorruption", 117052)
 
@@ -71,10 +68,10 @@ function mod:OnBossEnable()
 	self:Death("Deaths", 60583, 60585, 60586)
 end
 
-function mod:OnEngage(diff)
+function mod:OnEngage()
 	bossDead = 0
-	if diff > 2 then
-		self:Berserk(480)
+	if not self:LFR() then
+		self:Berserk(490)
 	end
 end
 
@@ -95,9 +92,11 @@ end
 function mod:ExpelCorruption(_, spellId)
 	self:Message(spellId, spellId, "Urgent", spellId)
 	self:Bar(spellId, spellId, 38, spellId)
+	self:Bar(117988, 117988, 12, 117988) --Defiled Ground
 end
 
 do
+	local defiledGround = mod:SpellName(117988)
 	local function checkTarget(sGUID)
 		for i = 1, 4 do
 			local bossId = ("boss%d"):format(i)
@@ -114,18 +113,18 @@ do
 			end
 		end
 	end
-	function mod:DefiledGroundCast(...)
-		local sGUID = select(11, ...)
+	function mod:DefiledGroundCast(_, _, _, _, spellName, _, _, _, _, _, sGUID)
+		self:Bar(117988, spellName, 16, 117988)
 		self:ScheduleTimer(checkTarget, 0.1, sGUID)
 	end
 end
 
 do
-	local last = 0
+	local prev = 0
 	function mod:DefiledGround(player, _, _, _, spellName)
-		local time = GetTime()
-		if (time - last) > 2 then
-			last = time
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
 			if UnitIsUnit(player, "player") then
 				self:LocalMessage(117988, CL["underyou"]:format(spellName), "Personal", 117988, "Info")
 				self:FlashShake(117988)
@@ -137,13 +136,13 @@ end
 -- Elder Regail
 
 do
-	local scheduled = nil
-	local function Prison(spellName)
-		mod:TargetMessage(117436, spellName, lightningPrsionList, "Important", 117436, "Alert")
+	local lightningPrisonList, scheduled = mod:NewTargetList(), nil
+	local function prisonWarn(spellName)
+		mod:TargetMessage(117436, spellName, lightningPrisonList, "Important", 117436, "Alert")
 		scheduled = nil
 	end
 	function mod:LightningPrisonApplied(player, _, _, _, spellName)
-		lightningPrsionList[#lightningPrsionList + 1] = player
+		lightningPrisonList[#lightningPrisonList + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(117436)
 			self:Say(117436, CL["say"]:format(spellName))
@@ -151,7 +150,7 @@ do
 		end
 		if not scheduled then
 			scheduled = true
-			self:ScheduleTimer(Prison, 0.2, spellName)
+			self:ScheduleTimer(prisonWarn, 0.2, spellName)
 		end
 	end
 end
