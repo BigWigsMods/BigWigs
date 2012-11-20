@@ -48,7 +48,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BreathOfFear", 119414)
-	self:Log("SPELL_CAST_START", "OminousCackle", 119692, 119693)
+	self:Log("SPELL_CAST_START", "OminousCackle", 119692, 119693, 119593)
 	self:Log("SPELL_AURA_APPLIED", "OminousCackleApplied", 129147)
 	self:Log("SPELL_AURA_APPLIED", "Thrash", 131996)
 	self:Log("SPELL_AURA_APPLIED", "DreadThrash", 132007)
@@ -133,6 +133,7 @@ end
 
 function mod:OminousCackle(_, spellId, _, _, spellName)
 	self:Bar(spellId, spellName, 90, spellId)
+	--2s cast, then a 10s flight to the shrine
 end
 
 do
@@ -148,7 +149,7 @@ do
 			atSha = false
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnCackle, 2, spellId)
+			scheduled = self:ScheduleTimer(warnCackle, 0.1, spellId)
 		end
 	end
 end
