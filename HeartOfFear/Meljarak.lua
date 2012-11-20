@@ -114,17 +114,23 @@ end
 
 do
 	local korthikStrike = mod:SpellName(122409)
-	local function allowKortikStrike(player)
+	local UnitDebuff = UnitDebuff
+	local function allowKorthikStrike(player)
 		korthikStrikeWarned[player] = nil
 	end
 	function mod:UNIT_AURA(_, unitId)
-		local player = UnitName(unitId)
-		if UnitDebuff(unitId, korthikStrike) and not korthikStrikeWarned[player] then
-			korthikStrikeWarned[player] = true
-			self:ScheduleTimer(allowKortikStrike, 10, player)
-			self:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm") -- does this need a bar? (2nd one ~30, then cooldown 50 sec)
-			self:Bar(122409, "~"..korthikStrike, firstKorthikStrikeDone and 50 or 30, 122409)
-			firstKorthikStrikeDone = true
+		if UnitDebuff(unitId, korthikStrike) then
+			local player, server = UnitName(unitId)
+			if server then
+				player = player .. "-" .. server
+			end
+			if not korthikStrikeWarned[player] then
+				korthikStrikeWarned[player] = true
+				self:ScheduleTimer(allowKorthikStrike, 10, player)
+				self:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm") -- does this need a bar? (2nd one ~30, then cooldown 50 sec)
+				self:Bar(122409, "~"..korthikStrike, firstKorthikStrikeDone and 50 or 30, 122409)
+				firstKorthikStrikeDone = true
+			end
 		end
 	end
 end
