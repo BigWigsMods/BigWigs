@@ -162,6 +162,7 @@ end
 function mod:AmberPrisonRemoved(player, spellId)
 	if UnitIsUnit(player, primaryAmberIcon) then
 		self:PrimaryIcon(spellId)
+		primaryAmberIcon = nil
 	elseif UnitIsUnit(player, secondaryAmberIcon) then
 		self:SecondaryIcon(spellId)
 	end
