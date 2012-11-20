@@ -49,11 +49,12 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BreathOfFear", 119414)
-	self:Log("SPELL_AURA_APPLIED", "OminousCackle", 129147)
+	self:Log("SPELL_CAST_START", "OminousCackle", 119692, 119693)
+	self:Log("SPELL_AURA_APPLIED", "OminousCackleApplied", 129147)
 	self:Log("SPELL_AURA_APPLIED", "ThrashApplied", 131996)
 	self:Log("SPELL_AURA_REMOVED", "ThrashRemoved", 131996)
 	self:Log("SPELL_AURA_APPLIED", "Fearless", 118977)
-	self:Log("SPELL_AURA_APPLIED", "DeathBlossom", 119888)
+	self:Log("SPELL_CAST_START", "DeathBlossom", 119888)
 
 	self:Log("SWING_DAMAGE", "Swing", "*")
 	self:Log("SWING_MISS", "Swing", "*")
@@ -65,8 +66,9 @@ end
 
 
 function mod:OnEngage(diff)
-	self:Bar(119414, 119414, 33.3, 119414) -- Breath of Fear
-	self:Berserk(900) -- needs testing
+	self:Bar(119414, 119414, 33, 119414) -- Breath of Fear
+	self:Bar(129147, 129147, 41, 129147) -- Ominous Cackle
+	self:Berserk(900)
 	swingCounter = 0
 	atSha = true
 end
@@ -117,18 +119,20 @@ function mod:BreathOfFear(_, spellId, _, _, spellName)
 	end
 end
 
+function mod:OminousCackle(_, spellId, _, _, spellName)
+	self:Bar(spellId, spellName, 90, spellId)
+end
+
 do
-	local scheduled = nil
-	local cackleTargets = mod:NewTargetList()
+	local cackleTargets, scheduled = mod:NewTargetList(), nil
 	local function warnCackle(spellId)
-		if atSha then
-			mod:TargetMessage(spellId, spellId, cackleTargets, "Urgent", spellId)
-		end
+		mod:TargetMessage(spellId, spellId, cackleTargets, "Urgent", spellId)
 		scheduled = nil
 	end
-	function mod:OminousCackle(player, spellId)
+	function mod:OminousCackleApplied(player, spellId)
 		cackleTargets[#cackleTargets + 1] = player
 		if UnitIsUnit("player", player) then
+			self:Bar(119888, 119888, 71, 119888) -- Death Blossom
 			atSha = false
 		end
 		if not scheduled then
