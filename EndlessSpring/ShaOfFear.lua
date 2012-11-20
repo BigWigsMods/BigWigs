@@ -11,7 +11,7 @@ mod:RegisterEnableMob(60999)
 -- Locals
 --
 
-local swingCounter = 0
+local swingCounter, thrashCounter, resetNext = 0, 0, nil
 local atSha = false
 
 --------------------------------------------------------------------------------
@@ -36,14 +36,13 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		119414, 129147, "ej:6699",
-		118977, { 119888, "FLASHSHAKE" },
+		"ej:6699", 119414, 129147,
+		{ 119888, "FLASHSHAKE" }, 118977,
 		"berserk", "bosskill",
 	}, {
-		[119414] = "ej:6086",
-		[118977] = "ej:6089",
+		["ej:6699"] = "ej:6086",
+		[119888] = "ej:6089",
 		berserk = "general",
-
 	}
 end
 
@@ -51,13 +50,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BreathOfFear", 119414)
 	self:Log("SPELL_CAST_START", "OminousCackle", 119692, 119693)
 	self:Log("SPELL_AURA_APPLIED", "OminousCackleApplied", 129147)
-	self:Log("SPELL_AURA_APPLIED", "ThrashApplied", 131996)
-	self:Log("SPELL_AURA_REMOVED", "ThrashRemoved", 131996)
+	self:Log("SPELL_AURA_APPLIED", "Thrash", 131996)
+	self:Log("SPELL_AURA_APPLIED", "DreadThrash", 132007)
 	self:Log("SPELL_AURA_APPLIED", "Fearless", 118977)
 	self:Log("SPELL_CAST_START", "DeathBlossom", 119888)
 
 	self:Log("SWING_DAMAGE", "Swing", "*")
-	self:Log("SWING_MISS", "Swing", "*")
+	self:Log("SWING_MISSED", "Swing", "*")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -68,8 +67,9 @@ end
 function mod:OnEngage(diff)
 	self:Bar(119414, 119414, 33, 119414) -- Breath of Fear
 	self:Bar(129147, 129147, 41, 129147) -- Ominous Cackle
+	self:Bar("ej:6699", 131996, 10, 131996) -- Thrash
 	self:Berserk(900)
-	swingCounter = 0
+	swingCounter, thrashCounter, resetNext = 0, 0, nil
 	atSha = true
 end
 
@@ -77,30 +77,42 @@ end
 -- Event Handlers
 --
 
-function mod:ThrashApplied(_, spellId, _, _, spellName)
+function mod:Thrash(_, spellId, _, _, spellName)
+	thrashCounter = thrashCounter + 1
+	resetNext = 2
 	if atSha then
-		self:Message("ej:6699", CL["soon"]:format(spellName), "Important", spellId)
+		self:Message("ej:6699", CL["soon"]:format(("%s (%d)"):format(spellName, thrashCounter)), "Important", spellId)
+		self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, spellId)
 	end
 end
 
-function mod:ThrashRemoved()
-	swingCounter = 0
+function mod:DreadThrash(_, spellId, _, _, spellName)
+	thrashCounter = 0
+	resetNext = 5
+	if atSha then
+		self:Message("ej:6699", CL["soon"]:format(spellName), "Important", spellId, self:Tank() or self:Healer() and "Alarm" or nil)
+		self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, 131996)
+	end
+end
+
+function mod:Swing(player, damage, _, _, _, _, _, _, _, _, sGUID)
+	if self:GetCID(sGUID) == 60999 then
+		swingCounter = swingCounter + 1
+		if swingCounter > 0 and UnitIsUnit("player", player) then --just the current tank
+			self:Message("ej:6699", ("%s (%d){%s}"):format(L["swing"], swingCounter, tonumber(damage) and L["damage"] or L["miss"]), "Positive", 5547)
+		end
+		if resetNext then
+			swingCounter = -resetNext -- ignore the thrash hits
+			resetNext = nil
+		end
+	end
 end
 
 function mod:DeathBlossom(_, spellId, _, _, spellName)
 	if not atSha then
 		self:FlashShake(spellId)
-		self:Bar(spellId, spellName, 2.25, spellId) -- so it can be emphasized for countdown
+		self:Bar(spellId, CL["cast"]:format(spellName), 2.25, spellId) -- so it can be emphasized for countdown
 		self:Message(spellId, spellName, "Important", spellId, "Alert")
-	end
-end
-
-function mod:Swing(_, damage, _, _, _, _, _, _, _, _, sGUID)
-	if self:GetCID(sGUID) == 60999 then
-		swingCounter = swingCounter + 1
-		if atSha then
-			self:Message("ej:6699", ("%s (%d){%s}"):format(L["swing"], swingCounter, type(damage) == "number" and L["damage"] or L["miss"]), "Positive", 5547)
-		end
 	end
 end
 
