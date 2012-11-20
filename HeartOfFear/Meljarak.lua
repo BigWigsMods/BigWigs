@@ -100,7 +100,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:CheckBossStatus()
 	for i = 2, MAX_BOSS_FRAMES do
 		if UnitName("boss"..i) == L["trapper"] then
-			self:OpenProximity(4, 121881) -- for amber prison EJ says 2 yards, but it might be bigger range -- 4 should be more than safe
+			self:OpenProximity(2.5, 121881)
 		end
 	end
 end
