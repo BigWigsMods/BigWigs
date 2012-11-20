@@ -106,7 +106,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 function mod:WhirlingBladeDamage(player, spellId, _, _, spellName)
-	if self:Heroic() and UnitIsUnit("player", player) then
+	if not self:LFR() and UnitIsUnit("player", player) then
 		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
 		self:FlashShake(spellId) -- we FNS on cast too, but some more can't hurt
 	end
