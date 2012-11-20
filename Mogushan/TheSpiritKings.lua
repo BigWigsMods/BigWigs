@@ -9,7 +9,7 @@ mod:RegisterEnableMob(
 	60701, -- Zian of the Endless Shadows
 	60708, -- Meng the Demented
 	60709, -- Qiang the Merciless
-	60710, -- Subetai the Swift
+	60710  -- Subetai the Swift
 )
 --------------------------------------------------------------------------------
 -- Locales
