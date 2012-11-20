@@ -47,7 +47,7 @@ function mod:OnPluginEnable()
 		fade:SetDuration(0.2)
 		fade:SetChange(1)
 
-		shaker = flashFrame:CreateAnimationGroup()
+		shaker = CreateFrame("Frame"):CreateAnimationGroup()
 		shaker:SetScript("OnLoop", function(frame)
 			local x, y = 0, 0
 			frame.count = frame.count + 1
@@ -79,13 +79,15 @@ end
 
 function mod:BigWigs_FlashShake(event, module, key)
 	if BigWigs.db.profile.flash then
+		flasher:Stop()
 		local r, g, b = colors:GetColor("flashshake", module, key)
-		flashFrame:SetBackdropColor(r, g, b, 0.55)
+		flashFrame:SetBackdropColor(r, g, b, 0.8)
 		flashFrame:Show()
 		flasher.count = 0
 		flasher:Play()
 	end
 	if not WorldFrame:IsProtected() and BigWigs.db.profile.shake then
+		shaker:Stop()
 		shaker.count = 0
 		shaker:Play()
 	end
