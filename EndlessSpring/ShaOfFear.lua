@@ -78,11 +78,23 @@ end
 --
 
 function mod:Thrash(_, spellId, _, _, spellName)
-	thrashCounter = thrashCounter + 1
 	resetNext = 2
 	if atSha then
-		self:Message("ej:6699", CL["soon"]:format(("%s (%d)"):format(spellName, thrashCounter)), "Important", spellId)
-		self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, spellId)
+		--[[ don't really need a counter until Dread Expanse (120289) I'll fancy this up after I get some logs
+		if phase2 then
+			thrashCounter = thrashCounter + 1
+			if thrashCounter == 3 then
+				self:DelayedMessage("ej:6699", 4, CL["custom_sec"]:format(self:SpellName(132007), 6), "Attention", 132007, self:Tank() or self:Healer() and "Info" or nil) -- Dread Thrash
+				self:Bar("ej:6699", 132007, 10, 132007)
+			else
+				self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, spellId)
+			end
+			self:Message("ej:6699", ("%s (%d)"):format(spellName, thrashCounter), "Important", spellId)
+		else
+		end
+		--]]
+		self:Message("ej:6699", spellName, "Important", spellId)
+		self:Bar("ej:6699", spellName, 10, spellId)
 	end
 end
 
@@ -90,8 +102,9 @@ function mod:DreadThrash(_, spellId, _, _, spellName)
 	thrashCounter = 0
 	resetNext = 5
 	if atSha then
-		self:Message("ej:6699", CL["soon"]:format(spellName), "Important", spellId, self:Tank() or self:Healer() and "Alarm" or nil)
-		self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, 131996)
+		self:Message("ej:6699", spellName, "Important", spellId, self:Tank() or self:Healer() and "Alarm" or nil)
+		--self:Bar("ej:6699", ("%s (%d)"):format(self:SpellName(131996), thrashCounter + 1), 10, 131996) -- Thrash
+		self:Bar("ej:6699", 131996, 10, 131996) -- Thrash
 	end
 end
 
