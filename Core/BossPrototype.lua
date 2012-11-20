@@ -75,11 +75,11 @@ function boss:OnEnable()
 	offDispel, defDispel = "", ""
 	if IsSpellKnown(19801) or IsSpellKnown(2908) or IsSpellKnown(5938) then
 		-- Tranq (Hunter), Soothe (Druid), Shiv (Rogue)
-		offensiveDispeller = offensiveDispeller .. "enrage,"
+		offDispel = offDispel .. "enrage,"
 	end
 	if IsSpellKnown(19801) or IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(110707) or IsSpellKnown(110802) then
 		-- Tranq (Hunter), Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Mass Dispel (Symbiosis), Purge (Symbiosis)
-		offensiveDispeller = offensiveDispeller .. "magic,"
+		offDispel = offDispel .. "magic,"
 	end
 	if IsSpellKnown(527) or IsSpellKnown(77130) or (IsSpellKnown(115450) and IsSpellKnown(115451)) or (IsSpellKnown(4987) and IsSpellKnown(53551)) or IsSpellKnown(88423) then
 		-- Purify (Priest), Purify Spirit (Shaman), Detox (Monk-Modifier), Cleanse (Paladin-Modifier), Nature's Cure (Resto Druid)
@@ -355,11 +355,11 @@ do
 		offDispel, defDispel = "", ""
 		if IsSpellKnown(19801) or IsSpellKnown(2908) or IsSpellKnown(5938) then
 			-- Tranq (Hunter), Soothe (Druid), Shiv (Rogue)
-			offensiveDispeller = offensiveDispeller .. "enrage,"
+			offDispel = offDispel .. "enrage,"
 		end
 		if IsSpellKnown(19801) or IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(110707) or IsSpellKnown(110802) then
 			-- Tranq (Hunter), Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Mass Dispel (Symbiosis), Purge (Symbiosis)
-			offensiveDispeller = offensiveDispeller .. "magic,"
+			offDispel = offDispel .. "magic,"
 		end
 		if IsSpellKnown(527) or IsSpellKnown(77130) or (IsSpellKnown(115450) and IsSpellKnown(115451)) or (IsSpellKnown(4987) and IsSpellKnown(53551)) or IsSpellKnown(88423) then
 			-- Purify (Priest), Purify Spirit (Shaman), Detox (Monk-Modifier), Cleanse (Paladin-Modifier), Nature's Cure (Resto Druid)
