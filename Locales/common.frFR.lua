@@ -22,6 +22,8 @@ L.over = "%s terminé !"
 L.add_spawned = "Add apparu !"
 L.next_add = "Prochain Add"
 
+
+
 L.custom_start = "%s engagé - %s dans %d min."
 L.custom_start_s = "%s engagé - %s dans %d sec."
 L.custom_end = "%s devient %s !"
@@ -30,5 +32,5 @@ L.custom_sec = "%s dans %d sec."
 
 L.tank = "Alertes pour tank uniquement. "
 L.healer = "Alertes pour soigneur uniquement. "
-L.tankhealer = "Tank & Healer alerts only. "
+L.tankhealer = "Alertes pour tank & soigneur uniquement. "
 

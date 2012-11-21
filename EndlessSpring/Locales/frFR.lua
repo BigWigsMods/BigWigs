@@ -31,5 +31,8 @@ if L then
 
 	L.swing = "Frappe"
 	L.swing_desc = "Compte le nombre de Frappes avant Rosser."
+
+	L.damage = "Dégâts"
+	L.miss = "Raté"
 end
 
