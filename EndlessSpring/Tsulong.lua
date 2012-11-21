@@ -8,12 +8,6 @@ if not mod then return end
 mod:RegisterEnableMob(62442)
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-local killed = nil
-
---------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -63,7 +57,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
-	self:Yell("Freed", L["disable_trigger"])
+	self:Yell("Win", L["disable_trigger"])
 	self:Death("Deaths", 62969)
 end
 
@@ -74,8 +68,8 @@ function mod:OnEngage(diff)
 	self:Bar(122777, 122777, 15.6, 122777) --Nightmares
 end
 
-function mod:VerifyEnable()
-	return not killed
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
 end
 
 --------------------------------------------------------------------------------
@@ -159,7 +153,3 @@ function mod:Deaths(mobId)
 	self:StopBar(123011) -- Terrorize
 end
 
-function mod:Freed()
-	killed = true
-	self:Win()
-end
