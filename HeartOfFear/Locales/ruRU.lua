@@ -23,6 +23,7 @@ if L then
 	L.engage_yell = "К бою, чужаки. Вам предстоит сразиться со мной, повелителем клинков Та'яком."
 
 	L.unseenstrike_inc = "Близится Удар!"
+	L.unseenstrike_soon = "Strike in ~5-10 sec!"
 
 	L.assault_message = "Выпад"
 	L.side_swap = "Смена стороны"

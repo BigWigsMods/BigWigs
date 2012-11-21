@@ -24,6 +24,7 @@ if L then
 	L.unseenstrike, L.unseenstrike_desc = EJ_GetSectionInfo(6346)
 	L.unseenstrike_icon = 122994
 	L.unseenstrike_inc = "Incoming Strike!"
+	L.unseenstrike_soon = "Strike in ~5-10 sec!"
 
 	L.assault, L.assault_desc = EJ_GetSectionInfo(6349)
 	L.assault_icon = 123474
@@ -72,10 +73,11 @@ end
 
 function mod:OnEngage()
 	if self:Heroic() then
-		self:Bar(125310, 125310, 60, 125310) --Blade Tempest
+		self:Bar(125310, 125310, 60, 125310) -- Blade Tempest
 	end
-	self:Bar(123175, "~"..self:SpellName(123175), 20.5, 123175) --Wind Step
-	self:Bar("unseenstrike", 122994, 30, 122994) --Unseen Strike
+	self:Bar(122842, "~"..self:SpellName(122842), 9.8, 122842) -- Tempest Slash
+	self:Bar(123175, "~"..self:SpellName(123175), 20.5, 123175) -- Wind Step
+	self:Bar("unseenstrike", 122994, 30, 122994) -- Unseen Strike
 	if self:Tank() or self:Healer() then
 		self:Bar("assault", L["assault_message"], 15, 123474)
 	end
@@ -98,7 +100,7 @@ function mod:BladeTempest(_, spellId, _, _, spellName)
 end
 
 function mod:WindStep(_, spellId, _, _, spellName)
-	self:Bar(spellId, "~"..spellName, 29, spellId) --28.9-30.2
+	self:Bar(spellId, "~"..spellName, 26.5, spellId) --26.5-30.2
 end
 
 do
@@ -136,20 +138,21 @@ do
 				mod:OpenProximity(5, "unseenstrike", name, true)
 			end
 			mod:TargetMessage("unseenstrike", strike, name, "Urgent", L.unseenstrike_icon, "Alarm")
+			mod:TargetBar("unseenstrike", strike, name, 5.6, L.unseenstrike_icon)
 			mod:PrimaryIcon("unseenstrike", name)
 		end
 	end
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		if unit == "boss1" then
 			if spellId == 122949 then --Unseen Strike
-				self:Bar("unseenstrike", L["unseenstrike_inc"], 6, L.unseenstrike_icon)
-				self:Bar("unseenstrike", "~"..spellName, 55, L.unseenstrike_icon)
+				self:Bar("unseenstrike", "~"..spellName, 53, L.unseenstrike_icon) -- 53-60
+				self:DelayedMessage("unseenstrike", 48, L["unseenstrike_soon"], "Attention")
 				if not timer then
 					timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
 				end
-				self:ScheduleTimer(removeIcon, 7)
+				self:ScheduleTimer(removeIcon, 6.2)
 			elseif spellId == 122839 then --Tempest Slash
-				self:Bar(122842, "~"..spellName, self:Heroic() and 15.6 or 20.5, 122842)
+				self:Bar(122842, "~"..spellName, self:LFR() and 20.5 or 15.6, 122842) -- XXX verify LFR
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
 				self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L["storm_icon"], "Info")
 				self:StopBar(125310) --Blade Tempest
@@ -192,7 +195,7 @@ end
 function mod:AssaultCast(_, spellId)
 	if self:Tank() or self:Healer() then
 		-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
-		self:Bar("assault", "~"..L["assault_message"], 21, spellId)
+		self:Bar("assault", "~"..L["assault_message"], 20.4, spellId)
 	end
 end
 

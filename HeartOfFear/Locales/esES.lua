@@ -23,6 +23,7 @@ if L then
 	L.engage_yell = "¡En guardia, invasores! Yo, Ta'yak, Señor de las Espadas, seré vuestro contrincante."
 
 	L.unseenstrike_inc = "¡Golpe inminente!"
+	L.unseenstrike_soon = "Strike in ~5-10 sec!"
 
 	L.assault_message = "Asalto"
 	L.side_swap = "Side Swap"
