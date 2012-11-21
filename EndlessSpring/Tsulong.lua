@@ -140,7 +140,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:Bar(122777, 122777, 15, 122777) -- Nightmares
-				self:Message(122777, 122777, 15, 122777)
+				self:Message(122777, 122777, "Attention", 122777)
 			end
 		elseif spellId == 123813 then -- dark of night- heroic
 			self:Bar("ej:6550", spellId, 30, 130013) -- dark of night
