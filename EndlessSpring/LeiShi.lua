@@ -21,6 +21,8 @@ local nextProtectWarning = 85
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_trigger = "Wh-what are you doing here?! G-go away!"
+	L.win_trigger = "I...ah...oh! Did I...? Was I...? It was so cloudy."
+
 	L.hp_to_go = "%d%% to go"
 	L.end_hide = "Hiding ended"
 
@@ -54,7 +56,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 
-	self:Death("Win", 62983)
+	Self:Yell("Win", L["win_trigger"])
 end
 
 function mod:OnEngage(diff)
@@ -62,6 +64,10 @@ function mod:OnEngage(diff)
 	nextProtectWarning = 85
 	self:Bar("special", "~"..L["special"], 33, 123263)
 	self:Berserk(480)
+end
+
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
 end
 
 --------------------------------------------------------------------------------

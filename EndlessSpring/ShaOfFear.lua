@@ -78,6 +78,10 @@ function mod:OnEngage(diff)
 	atSha = true
 end
 
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --

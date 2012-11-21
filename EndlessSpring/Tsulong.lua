@@ -13,6 +13,8 @@ mod:RegisterEnableMob(62442)
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.win_trigger = "I thank you, strangers. I have been freed."
+
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes"
 
@@ -24,8 +26,6 @@ if L then
 
 	L.day = EJ_GetSectionInfo(6315)
 	L.night = EJ_GetSectionInfo(6310)
-
-	L.disable_trigger = "I thank you, strangers. I have been freed."
 end
 L = mod:GetLocale()
 
@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
-	self:Yell("Win", L["disable_trigger"])
+	self:Yell("Win", L["win_trigger"])
 	self:Death("Deaths", 62969)
 end
 
