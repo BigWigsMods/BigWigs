@@ -135,7 +135,7 @@ do
 			else
 				mod:OpenProximity(5, "unseenstrike", name, true)
 			end
-			mod:TargetMessage("unseenstrike", strike, name, "Urgent", L.unseenstrike_icon, "Alarm")
+			mod:TargetMessage("unseenstrike", strike, name, "Urgent", L.unseenstrike_icon, "Alert")
 			mod:TargetBar("unseenstrike", strike, name, 5.6, L.unseenstrike_icon)
 			mod:PrimaryIcon("unseenstrike", name)
 		end
@@ -144,15 +144,15 @@ do
 		if unit == "boss1" then
 			if spellId == 122949 then --Unseen Strike
 				self:Bar("unseenstrike", "~"..spellName, 53, L.unseenstrike_icon) -- 53-60
-				self:DelayedMessage("unseenstrike", 48, L["unseenstrike_soon"], "Attention")
+				self:DelayedMessage("unseenstrike", 48, L["unseenstrike_soon"], "Attention", L.unseenstrike_icon, "Alarm")
 				if not timer then
 					timer = self:ScheduleRepeatingTimer(warnStrike, 0.05) -- ~1s faster than boss emote
 				end
 				self:ScheduleTimer(removeIcon, 6.2)
 			elseif spellId == 122839 then --Tempest Slash
-				self:Bar(122842, "~"..spellName, self:LFR() and 20.5 or 15.6, 122842) -- XXX verify LFR
+				self:Bar(122842, "~"..spellName, self:LFR() and 20.5 or 15.6, 122842)
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
-				self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L["storm_icon"], "Info")
+				self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L.storm_icon, "Long")
 				self:StopBar(125310) --Blade Tempest
 				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
 				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
@@ -177,7 +177,7 @@ end
 function mod:Assault(player, spellId, _, _, _, stack)
 	if self:Tank() or self:Healer() then
 		stack = stack or 1
-		self:LocalMessage("assault", CL["stack"], "Urgent", spellId, stack > 1 and "Info", player, stack, L["assault_message"])
+		self:LocalMessage("assault", CL["stack"], "Urgent", spellId, "Info", player, stack, L["assault_message"])
 		if self:Tank() then
 			self:TargetBar("assault", L["assault_message"], player, 45, spellId)
 		end
@@ -201,10 +201,10 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
 		if hp < 25 and phase == 1 then -- phase starts at 20
-			self:Message("storm", CL["soon"]:format(CL["phase"]:format(2)), "Positive", L["storm_icon"], "Info")
+			self:Message("storm", CL["soon"]:format(CL["phase"]:format(2)), "Positive", L.storm_icon, "Long")
 			phase = 2
 		elseif hp < 14 and phase == 2 then
-			self:Message("storm", CL["soon"]:format(L["side_swap"]), "Positive", L["storm_icon"], "Info")
+			self:Message("storm", CL["soon"]:format(L["side_swap"]), "Positive", L.storm_icon, "Long")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 		end
 	end
