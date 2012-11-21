@@ -12,7 +12,12 @@ mod:RegisterEnableMob(60999)
 --
 
 local swingCounter, thrashCounter, resetNext = 0, 0, nil
-local atSha = false
+local atSha = true
+
+local function is25man() -- having to test two values is annoying
+	local diff = mod:Difficulty()
+	return diff == 4 or diff == 5
+end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -66,7 +71,7 @@ end
 
 function mod:OnEngage(diff)
 	self:Bar(119414, 119414, 33, 119414) -- Breath of Fear
-	self:Bar(129147, 129147, 41, 129147) -- Ominous Cackle
+	self:Bar(129147, 129147, is25man() and 25 or 41, 129147) -- Ominous Cackle
 	self:Bar("ej:6699", 131996, 10, 131996) -- Thrash
 	self:Berserk(900)
 	swingCounter, thrashCounter, resetNext = 0, 0, nil
@@ -123,6 +128,7 @@ end
 
 function mod:DeathBlossom(_, spellId, _, _, spellName)
 	if not atSha then
+		self:CancelDelayedMessage(CL["soon"]:format(spellName))
 		self:FlashShake(spellId)
 		self:Bar(spellId, CL["cast"]:format(spellName), 2.25, spellId) -- so it can be emphasized for countdown
 		self:Message(spellId, spellName, "Important", spellId, "Alert")
@@ -132,21 +138,21 @@ end
 function mod:Fearless(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		atSha = true
+		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119888))) -- Death Blossom
 		self:Bar(spellId, spellName, 30, spellId)
 		self:DelayedMessage(spellId, 22, L["fading_soon"]:format(spellName), "Attention", spellId)
 	end
 end
 
 function mod:BreathOfFear(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 33.3, spellId)
-	if atSha then
+	if atSha then -- Don't care about Sha while at a shrine and you have Fearless when you come back
+		self:Bar(spellId, spellName, 33.3, spellId)
 		self:DelayedMessage(spellId, 25, CL["soon"]:format(spellName), "Attention", spellId)
 	end
 end
 
 function mod:OminousCackle(_, spellId, _, _, spellName)
-	self:Bar(spellId, spellName, 90, spellId)
-	--2s cast, then a 10s flight to the shrine
+	self:Bar(spellId, spellName, is25man() and 45 or 90, spellId)
 end
 
 do
@@ -158,8 +164,11 @@ do
 	function mod:OminousCackleApplied(player, spellId)
 		cackleTargets[#cackleTargets + 1] = player
 		if UnitIsUnit("player", player) then
-			self:Bar(119888, 119888, 71, 119888) -- Death Blossom
-			atSha = false
+			--self:Bar(119888, "~"..self:SpellName(119888), 71, 119888) -- XXX Death Blossom is kind of wonky. consistent for our group, but different for others
+			self:DelayedMessage(119888, is25man() and 50 or 60, CL["soon"]:format(self:SpellName(119888)), "Attention", 119888) -- 25m usually around 60, 10m 71-74ish
+			self:StopBar(119414) -- Breath of Fear
+			self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119414)))
+			atSha = nil
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnCackle, 0.1, spellId)
