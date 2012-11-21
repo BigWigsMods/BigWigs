@@ -58,8 +58,11 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "BladeTempest", 125310)
 	self:Log("SPELL_CAST_SUCCESS", "WindStep", 123175)
+
 	self:Log("SPELL_AURA_APPLIED", "Assault", 123474)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 123474)
+	self:Log("SPELL_AURA_REMOVED", "AssaultRemoved", 123474)
+	self:Log("SPELL_CAST_SUCCESS", "AssaultCast", 123474)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 	self:AddSyncListener("Strike")
@@ -170,14 +173,26 @@ do
 	end
 end
 
-function mod:Assault(player, spellId, _, _, spellName, stack)
+function mod:Assault(player, spellId, _, _, _, stack)
 	if self:Tank() or self:Healer() then
 		stack = stack or 1
-		self:Bar("assault", "~"..L["assault_message"], 21, spellId)
 		self:LocalMessage("assault", CL["stack"], "Urgent", spellId, stack > 1 and "Info", player, stack, L["assault_message"])
 		if self:Tank() then
-			self:Bar("assault", CL["stack"]:format(player, stack, L["assault_message"]), 45, spellId)
+			self:TargetBar("assault", L["assault_message"], player, 45, spellId)
 		end
+	end
+end
+
+function mod:AssaultRemoved(player)
+	if self:Tank() then
+		self:StopBar(L["assault_message"], player) -- Tank died
+	end
+end
+
+function mod:AssaultCast(_, spellId)
+	if self:Tank() or self:Healer() then
+		-- If a tank dies from an assault, it will never apply, and the CD bar won't show. Show it on cast instead.
+		self:Bar("assault", "~"..L["assault_message"], 21, spellId)
 	end
 end
 
