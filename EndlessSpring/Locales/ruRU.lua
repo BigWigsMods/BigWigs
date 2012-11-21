@@ -9,6 +9,7 @@ L = BigWigs:NewBossLocale("Tsulong", "ruRU")
 if L then
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз."
+	L.disable_trigger = "I thank you, strangers. I have been freed."
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "ruRU")
