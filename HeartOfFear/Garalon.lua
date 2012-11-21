@@ -49,7 +49,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FuriousSwipe", 122735)
 	self:Log("SPELL_AURA_APPLIED", "Fury", 122754)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Fury", 122754)
+
 	self:Log("SPELL_DAMAGE", "PheromoneTrail", 123120)
+	self:Log("SPELL_MISSED", "PheromoneTrail", 123120)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 

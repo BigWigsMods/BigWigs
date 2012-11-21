@@ -72,7 +72,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ImpalingSpear", 122224)
 	self:Log("SPELL_AURA_REFRESH", "ImpalingSpear", 122224)
 	self:Log("SPELL_AURA_REMOVED", "ImpalingSpearRemoved", 122224)
+
 	self:Log("SPELL_DAMAGE", "WhirlingBladeDamage", 121898)
+	self:Log("SPELL_MISSED", "WhirlingBladeDamage", 121898)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 

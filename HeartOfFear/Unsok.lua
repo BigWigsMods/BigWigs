@@ -86,11 +86,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedMutation", 122556)
 	self:Log("SPELL_AURA_APPLIED", "ParasiticGrowth", 121949)
 	self:Log("SPELL_AURA_REMOVED", "ParasiticGrowthRemoved", 121949)
-	self:Log("SPELL_DAMAGE", "BurningAmber", 122504)
 	self:Log("SPELL_CAST_SUCCESS", "AmberGlobule", 125502)
 	self:Log("SPELL_CAST_REMOVED", "AmberGlobuleRemoved", 125502)
 	self:Log("SPELL_CAST_SUCCESS", "Fling", 122415) --122415 is actually Grab, the precursor to Fling
 	self:Log("SPELL_CAST_START", "MassiveStomp", 122408)
+
+	self:Log("SPELL_DAMAGE", "BurningAmber", 122504)
+	self:Log("SPELL_MISSED", "BurningAmber", 122504)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
