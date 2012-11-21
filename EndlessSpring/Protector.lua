@@ -182,12 +182,10 @@ function mod:CorruptedWater(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Attention", spellId)
 end
 
-function mod:Deaths(mobId)
-	if mobId == 60583 or mobId == 60585 or mobId == 60586 then
-		bossDead = bossDead + 1
-		if bossDead > 3 then
-			self:Win()
-		end
+function mod:Deaths()
+	bossDead = bossDead + 1
+	if bossDead > 2 then
+		self:Win()
 	end
 end
 
