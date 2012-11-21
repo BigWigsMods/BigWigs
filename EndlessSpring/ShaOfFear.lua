@@ -16,7 +16,7 @@ local atSha = true
 
 local function is25man() -- having to test two values is annoying
 	local diff = mod:Difficulty()
-	return diff == 4 or diff == 5
+	return diff == 4 or diff == 6
 end
 
 --------------------------------------------------------------------------------
