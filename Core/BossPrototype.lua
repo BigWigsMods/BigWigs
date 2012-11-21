@@ -603,11 +603,11 @@ do
 	end
 
 	-- Outputs a local message only, no raid warning.
-	function boss:LocalMessage(key, text, color, icon, sound, player, stack)
+	function boss:LocalMessage(key, text, color, icon, sound, player, ...)
 		if not checkFlag(self, key, C.MESSAGE) then return end
 		if player then
-			if stack then
-				text = format(text, coloredNames[player], stack)
+			if ... then
+				text = format(text, coloredNames[player], ...)
 			else
 				text = format(L["other"], text, coloredNames[player])
 			end
