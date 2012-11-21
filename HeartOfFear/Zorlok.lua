@@ -71,9 +71,7 @@ end
 function mod:OnEngage()
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	forceCount, platform, danceTracker = 0, 0, true
-	if not self:LFR() then
-		self:Berserk(self:Heroic() and 720 or 600) -- Verify
-	end
+	self:Berserk(self:Heroic() and 720 or 600) -- Verify
 end
 
 --------------------------------------------------------------------------------
