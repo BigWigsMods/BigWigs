@@ -83,9 +83,7 @@ function mod:OnEngage()
 	end
 	self:OpenProximity(8, 123175)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	if not self:LFR() then
-		self:Berserk(490)
-	end
+	self:Berserk(self:LFR() and 600 or 490)
 	phase = 1
 end
 
