@@ -56,7 +56,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 
-	Self:Yell("Win", L["win_trigger"])
+	self:Yell("Win", L["win_trigger"])
 end
 
 function mod:OnEngage(diff)
