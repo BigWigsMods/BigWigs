@@ -13,6 +13,7 @@ mod:RegisterEnableMob(62511)
 
 local reshapeLife, explosion = mod:SpellName(122784), mod:SpellName(122398) --106966
 local phase, phase2warned, primaryIcon = 1, nil, nil
+local reshapeLifeCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,7 +65,7 @@ function mod:GetOptions()
 		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASHSHAKE" }, 122413, 122408,
 		122556,
 		{121995, "FLASHSHAKE", "SAY"}, 123020, {121949, "FLASHSHAKE"},
-		"berserk", "bosskill", --"proximity", 
+		"berserk", "bosskill", --"proximity",
 	}, {
 		["ej:6548"] = "heroic",
 		[122784] = "ej:6249",
@@ -100,7 +101,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	self:Bar(122784, 122784, 20, 122784) --Reshape Life
+	reshapeLifeCounter = 1
+	self:Bar(122784, ("%s (%d)"):format(self:SpellName(122784), reshapeLifeCounter), 20, 122784) --Reshape Life
 	self:Bar(121949, 121949, 24, 121949) --Parasitic Growth
 	self:Berserk(540) -- assume
 
@@ -181,10 +183,15 @@ end
 -- Construct
 
 function mod:ReshapeLife(player, spellId, _, _, spellName)
-	self:TargetMessage(spellId, spellName, player, "Urgent", spellId, "Alarm")
-	if phase < 3 then
+	if phase < 2 then
+		self:TargetMessage(spellId, ("%s (%d"):format(spellName, reshapeLifeCounter), player, "Urgent", spellId, "Alarm")
+		reshapeLifeCounter = reshapeLifeCounter + 1
+		self:Bar(spellId, ("%s (%d)"):format(spellName, reshapeLifeCounter), 50, spellId)
+	elseif phase < 3 then
+		self:TargetMessage(spellId, spellName, player, "Urgent", spellId, "Alarm")
 		self:Bar(spellId, spellName, 50, spellId)
 	else
+		self:TargetMessage(spellId, spellName, player, "Urgent", spellId, "Alarm")
 		self:Bar(spellId, spellName, 15, spellId) -- might be too short for a bar
 	end
 
