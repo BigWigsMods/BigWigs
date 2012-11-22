@@ -13,7 +13,7 @@ mod:RegisterEnableMob(62442)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.win_trigger = "I thank you, strangers. I have been freed."
+	L.win_trigger = "I thank you, strangers" -- I thank you, strangers. I have been freed.
 
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes"

@@ -20,8 +20,8 @@ local nextProtectWarning = 85
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.engage_trigger = "Wh-what are you doing here?! G-go away!"
-	L.win_trigger = "I...ah...oh! Did I...? Was I...? It was so cloudy."
+	L.engage_trigger = "what are you doing here" -- Wh-what are you doing here?! G-go away!
+	L.win_trigger = "It was so cloudy" -- I...ah...oh! Did I...? Was I...? It was so cloudy.
 
 	L.hp_to_go = "%d%% to go"
 	L.end_hide = "Hiding ended"
@@ -51,11 +51,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Protect", 123250)
 	self:Log("SPELL_CAST_START", "Hide", 123244)
 
-	self:Yell("Engage", L["engage_trigger"])
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- use this to detect him coming out of hide
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 
+	self:Yell("Engage", L["engage_trigger"])
 	self:Yell("Win", L["win_trigger"])
 end
 
