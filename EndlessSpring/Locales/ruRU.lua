@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Tsulong", "ruRU")
 if L then
-	L.win_trigger = "Спасибо вам, незнакомцы"
+	L.win_trigger = "Спасибо вам, незнакомцы. Я свободен."
 
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз."
@@ -15,8 +15,8 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shi", "ruRU")
 if L then
-	L.engage_trigger = "что вы здесь делаете"
-	L.win_trigger = "It was so cloudy" -- I...ah...oh! Did I...? Was I...? It was so cloudy.
+	L.engage_trigger = "Ч-что вы здесь делаете?! П-п-прочь!"
+	L.win_trigger = "I...ah...oh! Did I...? Was I...? It was so cloudy."
 
 	L.hp_to_go = "%d%% to go" -- Needs review
 	L.end_hide = "Прятки закончились"

@@ -13,7 +13,7 @@ mod:RegisterEnableMob(62442)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.win_trigger = "I thank you, strangers" -- I thank you, strangers. I have been freed.
+	L.win_trigger = "I thank you, strangers. I have been freed."
 
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes"
@@ -65,7 +65,8 @@ function mod:OnEngage(diff)
 	self:OpenProximity(8, 122777)
 	self:Berserk(self:LFR() and 600 or 490)
 	self:Bar("phases", L["day"], 121, 122789)
-	self:Bar(122777, 122777, 15.6, 122777) --Nightmares
+	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
+	self:Bar(122752, 122752, 10, 122752) -- Shadow Breath
 end
 
 function mod:VerifyEnable(unit)
@@ -113,38 +114,36 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, _, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if not unitId:match("boss") then return end
 
-		if spellId == 123252 then -- end of night phase
+		if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
 			self:CloseProximity(122777)
-			self:StopBar(122752) -- shadow breath
+			self:StopBar(122752) -- Shadow Breath
 			self:Message("phases", L["day"], "Positive", 122789)
 			self:Bar("phases", L["night"], 121, 122768)
+			self:Bar(122855, 122855, 32, 122855) -- Sun Breath
 			self:Bar("unstable_sha", 122953, 18, 122938)
-		elseif spellId == 122767 then -- start of night phase
+		elseif spellId == 122767 then -- Dread Shadows (start of night phase)
+			self:StopBar(122953) -- Summon Unstable Sha
+			self:StopBar(122855) -- Sun Breath
 			self:OpenProximity(8, 122777)
 			self:Message("phases", L["night"], "Positive", 122768)
 			self:Bar("phases", L["day"], 121, 122789)
-			self:StopBar(122953) -- summon unstable sha
-			self:StopBar(122855) -- sun breath
-		elseif spellId == 122953 then -- summon unstable sha
+			self:Bar(122752, 122752, 10, 122752) -- Shadow Breath
+		elseif spellId == 122953 then -- Summon Unstable Sha
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message("unstable_sha", spellId, "Important", 122938, "Alert") -- summon unstable sha
-				self:Bar("unstable_sha", spellId, 18, 122938) -- summon unstable sha
+				self:Message("unstable_sha", spellName, "Important", 122938, "Alert")
+				self:Bar("unstable_sha", spellName, 18, 122938)
 			end
-		elseif spellId == 122770 or spellId == 122775 then -- Nightmares
-			local t = GetTime()
-			if t-prev > 2 then
-				prev = t
-				self:Bar(122777, 122777, 15, 122777) -- Nightmares
-				self:Message(122777, 122777, "Attention", 122777)
-			end
-		elseif spellId == 123813 then -- dark of night- heroic
-			self:Bar("ej:6550", spellId, 30, 130013) -- dark of night
-			self:Message("ej:6550", spellId, "Urgent", 130013, "Alarm") -- dark of night
+		elseif spellId == 122775 then -- Nightmares
+			self:Bar(122777, spellName, 15, 122777)
+			self:Message(122777, spellName, "Attention", 122777)
+		elseif spellId == 123813 then -- The Dark of Night (heroic)
+			self:Bar("ej:6550", spellName, 30, 130013)
+			self:Message("ej:6550", spellName, "Urgent", 130013, "Alarm")
 		end
 	end
 end

@@ -20,8 +20,8 @@ local nextProtectWarning = 85
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.engage_trigger = "what are you doing here" -- Wh-what are you doing here?! G-go away!
-	L.win_trigger = "It was so cloudy" -- I...ah...oh! Did I...? Was I...? It was so cloudy.
+	L.engage_trigger = "Wh-what are you doing here?! G-go away!"
+	L.win_trigger = "I...ah...oh! Did I...? Was I...? It was so cloudy."
 
 	L.hp_to_go = "%d%% to go"
 	L.end_hide = "Hiding ended"
