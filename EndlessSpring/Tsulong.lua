@@ -13,7 +13,7 @@ mod:RegisterEnableMob(62442)
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.win_trigger = "I thank you, strangers. I have been freed."
+	L.engage_yell = "You do not belong here! The waters must be protected... I will cast you out, or slay you!"
 
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes"
@@ -36,7 +36,7 @@ L = mod:GetLocale()
 function mod:GetOptions()
 	return {
 		"ej:6550",
-		"breath", 122768, 122789, { 122777, "PROXIMITY", "FLASHSHAKE", "SAY" },
+		"breath", 122768, 122789, {122777, "PROXIMITY", "FLASHSHAKE", "SAY"},
 		122855, "unstable_sha", 123011,
 		"berserk", "phases", "bosskill",
 	}, {
@@ -47,17 +47,24 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp > 8 and UnitCanAttack("player", unit) then
+		return true
+	end
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SunBreath", 122855)
 	self:Log("SPELL_CAST_SUCCESS", "ShadowBreath", 122752)
 	self:Log("SPELL_CAST_SUCCESS", "Terrorize", 123011)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreadShadows", 122768)
 	self:Log("SPELL_AURA_APPLIED", "Sunbeam", 122789)
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
-	self:Yell("Win", L["win_trigger"])
+	self:Log("SPELL_CAST_SUCCESS", "Win", 124176)
 	self:Death("Deaths", 62969)
 end
 
@@ -67,10 +74,6 @@ function mod:OnEngage(diff)
 	self:Bar("phases", L["day"], 121, 122789)
 	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
 	self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
-end
-
-function mod:VerifyEnable(unit)
-	return UnitCanAttack("player", unit)
 end
 
 --------------------------------------------------------------------------------
@@ -87,7 +90,7 @@ end
 
 function mod:Terrorize(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId)
-	self:Bar(spellId, spellName, 41, spellId) -- stop this when add dies, might be tricky if more than one add can be up
+	self:Bar(spellId, spellName, 41, spellId)
 end
 
 function mod:DreadShadows(player, spellId, _, _, spellName, buffStack)
@@ -148,7 +151,7 @@ do
 	end
 end
 
-function mod:Deaths(mobId)
-	self:StopBar(123011) -- Terrorize
+function mod:Deaths()
+	self:StopBar(123011) -- Terrorize, might be tricky if more than one add can be up
 end
 

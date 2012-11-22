@@ -42,6 +42,13 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp > 8 and UnitCanAttack("player", unit) then
+		return true
+	end
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GetAwayApplied", 123461)
 	self:Log("SPELL_AURA_REMOVED", "GetAwayRemoved", 123461)
@@ -58,10 +65,6 @@ function mod:OnEngage(diff)
 	self:Bar("special", "~"..L["special"], 33, 123263)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	self:Berserk(480)
-end
-
-function mod:VerifyEnable(unit)
-	return UnitCanAttack("player", unit)
 end
 
 --------------------------------------------------------------------------------
