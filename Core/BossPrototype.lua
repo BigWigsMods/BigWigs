@@ -144,7 +144,7 @@ do
 			self[yellMap[self][msg]](self, msg, ...)
 		else
 			for yell, func in pairs(yellMap[self]) do
-				if msg:find(yell) then
+				if msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 2nd check
 					self[func](self, msg, ...)
 				end
 			end
@@ -155,7 +155,7 @@ do
 			self[emoteMap[self][msg]](self, msg, ...)
 		else
 			for emote, func in pairs(emoteMap[self]) do
-				if msg:find(emote) then
+				if msg:find(emote, nil, true) or msg:find(emote) then -- Preserve backwards compat by leaving in the 2nd check
 					self[func](self, msg, ...)
 				end
 			end

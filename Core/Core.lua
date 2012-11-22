@@ -61,7 +61,7 @@ local function targetCheck(unit)
 end
 local function chatMsgMonsterYell(event, msg)
 	for yell, mod in pairs(enableyells) do
-		if yell == msg or msg:find(yell) then
+		if yell == msg or msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 3rd check
 			targetSeen("player", mod)
 		end
 	end
