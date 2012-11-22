@@ -62,7 +62,6 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "Assault", 123474)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Assault", 123474)
-	self:Log("SPELL_AURA_REMOVED", "AssaultRemoved", 123474)
 	self:Log("SPELL_CAST_SUCCESS", "AssaultCast", 123474)
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -178,15 +177,6 @@ function mod:Assault(player, spellId, _, _, _, stack)
 	if self:Tank() or self:Healer() then
 		stack = stack or 1
 		self:LocalMessage("assault", CL["stack"], "Urgent", spellId, "Info", player, stack, L["assault_message"])
-		if self:Tank() then
-			self:TargetBar("assault", L["assault_message"], player, 45, spellId)
-		end
-	end
-end
-
-function mod:AssaultRemoved(player)
-	if self:Tank() then
-		self:StopBar(L["assault_message"], player) -- Tank died
 	end
 end
 
