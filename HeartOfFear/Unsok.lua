@@ -184,7 +184,7 @@ end
 
 function mod:ReshapeLife(player, spellId, _, _, spellName)
 	if phase < 2 then
-		self:TargetMessage(spellId, ("%s (%d"):format(spellName, reshapeLifeCounter), player, "Urgent", spellId, "Alarm")
+		self:TargetMessage(spellId, ("%s (%d)"):format(spellName, reshapeLifeCounter), player, "Urgent", spellId, "Alarm")
 		reshapeLifeCounter = reshapeLifeCounter + 1
 		self:Bar(spellId, ("%s (%d)"):format(spellName, reshapeLifeCounter), 50, spellId)
 	elseif phase < 3 then
