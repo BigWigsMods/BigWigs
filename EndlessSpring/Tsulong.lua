@@ -66,7 +66,7 @@ function mod:OnEngage(diff)
 	self:Berserk(self:LFR() and 600 or 490)
 	self:Bar("phases", L["day"], 121, 122789)
 	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
-	self:Bar(122752, 122752, 10, 122752) -- Shadow Breath
+	self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
 end
 
 function mod:VerifyEnable(unit)
@@ -119,7 +119,7 @@ do
 
 		if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
 			self:CloseProximity(122777)
-			self:StopBar(122752) -- Shadow Breath
+			self:StopBar("~"..self:SpellName(122752)) -- Shadow Breath
 			self:Message("phases", L["day"], "Positive", 122789)
 			self:Bar("phases", L["night"], 121, 122768)
 			self:Bar(122855, 122855, 32, 122855) -- Sun Breath
@@ -130,7 +130,7 @@ do
 			self:OpenProximity(8, 122777)
 			self:Message("phases", L["night"], "Positive", 122768)
 			self:Bar("phases", L["day"], 121, 122789)
-			self:Bar(122752, 122752, 10, 122752) -- Shadow Breath
+			self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
 		elseif spellId == 122953 then -- Summon Unstable Sha
 			local t = GetTime()
 			if t-prev > 2 then
