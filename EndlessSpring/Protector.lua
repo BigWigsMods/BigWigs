@@ -35,7 +35,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{117988, "FLASHSHAKE", "SAY", "WHISPER"}, 117975,
+		{117988, "FLASHSHAKE"}, 117975,
 		{117436, "SAY", "PROXIMITY", "FLASHSHAKE"} , {118077, "FLASHSHAKE"},
 		117309, 117227,
 		"berserk", "bosskill",
@@ -49,8 +49,9 @@ end
 
 function mod:OnBossEnable()
 	-- Protector Kaolan
-	self:Log("SPELL_CAST_SUCCESS", "DefiledGroundCast", 117989, 117988, 118091, 117986) --117986 is the winner
-	self:Log("SPELL_AURA_APPLIED", "DefiledGround", 117989, 117988, 118091, 117986) --118091 wins here
+	self:Log("SPELL_CAST_SUCCESS", "DefiledGround", 117986)
+	self:Log("SPELL_DAMAGE", "DefiledGroundDamage", 117988)
+	self:Log("SPELL_MISSED", "DefiledGroundDamage", 117988)
 	self:Log("SPELL_CAST_START", "ExpelCorruption", 117975)
 
 	-- Elder Regail
@@ -81,8 +82,8 @@ end
 
 -- boss death start 1st bars
 function mod:ShaCorruption(_, _, _, _, _, _, _, _, _, dGUID) -- don't know if bossX is always same for the bosses regardles of kill order, so do CID check till we are sure
-	if self:GetCID(dGUID) == 60583 then -- protector has 2 stacks
-		self:Bar(117975, 117975, 6, 117975) -- expel corruption
+	if self:GetCID(dGUID) == 60583 then -- Protector Kaolan has 2 stacks
+		self:Bar(117975, 117975, 6, 117975) -- Expel Corruption
 	end
 end
 
@@ -95,37 +96,17 @@ function mod:ExpelCorruption(_, spellId, _, _, spellName)
 	self:Bar(117988, 117988, 12, 117988) -- Defiled Ground
 end
 
-do
-	local defiledGround = mod:SpellName(117988)
-	local function checkTarget(sGUID)
-		for i = 1, 4 do
-			local bossId = ("boss%d"):format(i)
-			if UnitGUID(bossId) == sGUID then
-				local player = UnitName(bossId.."target")
-				if player then
-					mod:Whisper(117988, player, defiledGround)
-				end
-				if UnitIsUnit(bossId.."target", "player") then
-					mod:FlashShake(117988)
-					mod:Say(117988, CL["say"]:format(defiledGround))
-					return
-				end
-			end
-		end
-	end
-	function mod:DefiledGroundCast(_, _, _, _, spellName, _, _, _, _, _, sGUID)
-		self:Bar(117988, spellName, 16, 117988)
-		self:ScheduleTimer(checkTarget, 0.1, sGUID)
-	end
+function mod:DefiledGround(_, _, _, _, spellName)
+	self:Bar(117988, spellName, 16, 117988)
 end
 
 do
 	local prev = 0
-	function mod:DefiledGround(player, _, _, _, spellName)
-		local t = GetTime()
-		if t-prev > 2 then
-			prev = t
-			if UnitIsUnit(player, "player") then
+	function mod:DefiledGroundDamage(player, _, _, _, spellName)
+		if UnitIsUnit(player, "player") then
+			local t = GetTime()
+			if t-prev > 1 then
+				prev = t
 				self:LocalMessage(117988, CL["underyou"]:format(spellName), "Personal", 117988, "Info")
 				self:FlashShake(117988)
 			end
@@ -149,8 +130,7 @@ do
 			self:OpenProximity(7, 117436)
 		end
 		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(prisonWarn, 0.2, spellName)
+			scheduled = self:ScheduleTimer(prisonWarn, 0.2, spellName)
 		end
 	end
 end
@@ -170,11 +150,11 @@ end
 
 function mod:CleansingWaterStart(_, spellId, _, _, spellName)
 	self:Message(spellId, CL["soon"]:format(spellName), "Attention")
-	self:Bar(spellId, CL["soon"]:format(spellName), 7, spellId) -- 5+2 so it is exact for dispell
+	self:Bar(spellId, spellName, 7, spellId) -- 5+2 so it is exact for dispell
 end
 
 function mod:CleansingPool(_, spellId, _, _, spellName)
-	self:Message(spellId, spellId, "Urgent", spellId)
+	self:Message(spellId, spellName, "Urgent", spellId)
 	self:Bar(spellId, "~"..spellName , 32, spellId)
 end
 
