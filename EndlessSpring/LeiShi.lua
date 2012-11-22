@@ -132,7 +132,7 @@ function mod:Protect(_, spellId, _, _, spellName)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, _, _, _, spellId)
-	if spellId == 127524 and unit == "boss1" and -- Transform
+	if spellId == 127524 and unit == "boss1" then -- Transform
 		self:Win()
 	end
 end
