@@ -5,8 +5,10 @@
 
 local mod, CL = BigWigs:NewBoss("Wind Lord Mel'jarak", 897, 741)
 if not mod then return end
-mod:RegisterEnableMob(62397, 62408, 62402, 62405) -- boss, mender, battlemaster, trapper
-
+mod:RegisterEnableMob(
+	62397, 62408, 62402, 62405, -- Mel'jarak, Zar'thik Battle-Mender, Kor'thik Elite Blademaster, Sra'thik Amber-Trapper
+	62452, 62447, 62451 -- The Zar'thik, The Kor'thik, The Sra'thik
+)
 --------------------------------------------------------------------------------
 -- Locales
 --
@@ -29,8 +31,6 @@ if L then
 
 	L.spear_removed = "Your Impaling Spear was removed!"
 	L.residue_removed = "%s removed!"
-
-	L.trapper = "The Sra'thik" -- name on the boss frame for the trappers
 end
 L = mod:GetLocale()
 --same spell name with different EJ entries for normal/heroic
@@ -100,9 +100,11 @@ end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	self:CheckBossStatus()
-	for i = 2, MAX_BOSS_FRAMES do
-		if UnitName("boss"..i) == L["trapper"] then
-			self:OpenProximity(2.5, 121881)
+	for i = 1, 5 do
+		-- Random spawn, check for unit
+		local guid = UnitGUID(("boss%d"):format(i))
+		if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+			self:OpenProximity(2, 121881)
 		end
 	end
 end

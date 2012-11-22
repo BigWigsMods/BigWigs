@@ -41,8 +41,6 @@ if L then
 
 	L.spear_removed = "Votre Lance de perforation a été enlevée !"
 	L.residue_removed = "%s enlevé !"
-
-	L.trapper = "Le sra'thik"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "frFR")
