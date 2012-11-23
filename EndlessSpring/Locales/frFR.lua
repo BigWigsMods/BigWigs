@@ -2,7 +2,9 @@
 local L = BigWigs:NewBossLocale("Protector of the Endless", "frFR")
 if not L then return end
 if L then
-
+	L.on = "%s sur %s!"
+	L.under = "%s en dessous de %s!"
+	L.heal = "%s heal"
 end
 
 L = BigWigs:NewBossLocale("Tsulong", "frFR")

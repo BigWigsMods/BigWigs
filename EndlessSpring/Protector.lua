@@ -20,7 +20,9 @@ local firstDeath = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.death = "%s dies!"
+	L.on = "%s on %s!"
+	L.under = "%s under %s!"
+	L.heal = "%s heal"
 end
 L = mod:GetLocale()
 
@@ -56,6 +58,8 @@ function mod:OnBossEnable()
 
 	-- Elder Asani
 	self:Log("SPELL_SUMMON", "CleansingWaters", 117309)
+	self:Log("SPELL_AURA_APPLIED", "CleansingWatersDispel", 117283)
+	self:Log("SPELL_PERIODIC_HEAL", "CleansingWatersDispel", 117283) -- every 3s
 	self:Log("SPELL_SUMMON", "CorruptedWaters", 117227)
 
 	self:Log("SPELL_AURA_APPLIED", "ShaCorruptionFirst", 117052)
@@ -66,10 +70,14 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Bar(117309, "~"..self:SpellName(117309), 11, 117309) -- Cleansing Waters
+	self:Bar(111850, "~"..self:SpellName(111850), 15, 111850) -- Lightning Prison
 	bossDead = 0
 	firstDeath = nil
-	if not self:LFR() then
-		self:Berserk(490)
+	self:Berserk(self:LFR() and 600 or 490)
+
+	if self:Tank() then
+		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Cleansing Waters target
 	end
 end
 
@@ -84,14 +92,13 @@ function mod:ShaCorruptionFirst(_, spellId, source, _, spellName, _, _, _, _, dG
 	if mobId == 60583 then -- Kaolan
 		self:Bar(117986, 117986, 11, 117986) -- Defiled Ground
 	elseif mobId == 60585 then -- Regail
-		self:Bar(118077, 118077, 20, 118077) -- Lightning Storm
+		self:Bar(118077, "~"..self:SpellName(118077), 26, 118077) -- Lightning Storm
 	elseif mobId == 60586 then -- Asani
-		self:Bar(117227, 117227, 11, 117227) -- Courrupted Waters
+		self:Bar(117227, "~"..self:SpellName(117227), 11, 117227) -- Corrupted Waters
 	end
 
 	if not firstDeath then
 		firstDeath = true
-		--self:Message(spellId, L["death"]:format(source), "Positive", spellId, "Info")
 		self:Message(spellId, ("%s (%d)"):format(spellName, 1), "Attention", spellId, "Info")
 	end
 end
@@ -100,9 +107,12 @@ function mod:ShaCorruptionSecond(_, spellId, source, _, spellName, _, _, _, _, d
 	local mobId = self:GetCID(dGUID)
 	if mobId == 60583 then -- Kaolan
 		self:Bar(117975, 117975, 6, 117975) -- Expel Corruption
+	elseif mobId == 60585 then -- Regail
+		self:Bar(118077, "~"..self:SpellName(118077), 11, 118077) -- Lightning Storm
+	elseif mobId == 60586 then -- Asani
+		self:Bar(117227, "~"..self:SpellName(117227), 15, 117227) -- Corrupted Waters
 	end
 
-	--self:Message(spellId, L["death"]:format(source), "Positive", spellId, "Info")
 	self:Message(spellId, ("%s (%d)"):format(spellName, 2), "Attention", spellId, "Info")
 end
 
@@ -162,16 +172,48 @@ end
 
 function mod:LightningStorm(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
-	self:Bar(spellId, "~"..spellName, 42, spellId)
+	self:Bar(spellId, "~"..spellName, bossDead < 3 and 42 or 32, spellId)
 	self:FlashShake(spellId)
 end
 
 -- Elder Asani
 
 function mod:CleansingWaters(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Urgent", spellId, self:Dispeller("magic", true) and "Alert" or nil)
-	self:Bar(spellId, spellName, 6, spellId) -- orb hitting the ground
+	self:Message(spellId, CL["soon"]:format(spellName), "Attention", spellId, self:Dispeller("magic", true) and "Alert" or nil)
+	self:Bar(spellId, L["heal"]:format(spellName), 6, 55888) -- orb hitting the ground (water orb icon)
 	self:Bar(spellId, "~"..spellName, 32, spellId)
+end
+
+do
+	-- assume your kill target is the boss with the lowest health and ignore cleansing waters on others
+	local function getKillTarget()
+		local lowest, lowestHP = nil, 100
+		for i=1,3 do
+			local unit = "boss"..i
+			local hp = UnitHealth(unit) / UnitHealthMax(unit)
+			if hp < lowestHP then
+				lowestHP = hp
+				lowest = unit
+			end
+		end
+		return lowest
+	end
+
+	-- Dispeller warning
+	function mod:CleansingWatersDispel(player, _, _, _, spellName, _, _, _, _, dGUID)
+		local mobId = self:GetCID(dGUID)
+		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and dGUID == UnitGUID(getKillTarget()) then
+			self:LocalMessage(117309, L["on"]:format(spellName, player), "Important", 117309, "Info") --onboss
+		end
+	end
+
+	-- Tank warning
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, _, _, _, spellId)
+		if spellId == 122851 and unitId == "target" and UnitIsUnit(unitId, getKillTarget()) then -- Raid Warning: I'm Standing In Cleansing Waters
+			local bossName = UnitName(unitId)
+			self:LocalMessage(117309, L["under"]:format(self:SpellName(117309), bossName), "Urgent", 117309, "Alert")
+		end
+	end
 end
 
 function mod:CorruptedWaters(_, spellId, _, _, spellName)
@@ -179,15 +221,16 @@ function mod:CorruptedWaters(_, spellId, _, _, spellName)
 	self:Bar(spellId, "~"..spellName, 42, spellId)
 end
 
-function mod:Deaths(mobId, _, mob)
+
+function mod:Deaths(mobId)
 	if mobId == 60583 then --Kaolan
 		self:StopBar(117986) -- Defiled Ground
 	elseif mobId == 60585 then -- Regail
-		self:StopBar(111850) -- Lightning Prison
-		self:StopBar(118077) -- Lightning Storm
+		self:StopBar("~"..self:SpellName(111850)) -- Lightning Prison
+		self:StopBar("~"..self:SpellName(118077)) -- Lightning Storm
 	elseif mobId == 60586 then -- Asani
-		self:StopBar(117309) -- Cleansing Waters
-		self:StopBar(117227) -- Courrupted Waters
+		self:StopBar("~"..self:SpellName(117309)) -- Cleansing Waters
+		self:StopBar("~"..self:SpellName(117227)) -- Corrupted Waters
 	end
 
 	bossDead = bossDead + 1
