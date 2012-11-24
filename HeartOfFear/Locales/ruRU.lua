@@ -60,7 +60,7 @@ if L then
 	L.willpower = "Сила воли"
 	L.willpower_message = "Ваша сила воли %d"
 
-	L.break_free_message = "Здоровье у %d%%!"
+	L.break_free_message = "Здоровье %d%%!"
 	L.fling_message = "Бросок!"
 	L.parasite = "Паразит"
 

@@ -9,7 +9,7 @@ end
 
 L = BigWigs:NewBossLocale("Tsulong", "ruRU")
 if L then
-	L.engage_yell = "You do not belong here! The waters must be protected... I will cast you out, or slay you!"
+	L.engage_yell = "Здесь вам не место! Нужно защитить священные воды... Я прогоню вас или убью вас!"
 
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз."
