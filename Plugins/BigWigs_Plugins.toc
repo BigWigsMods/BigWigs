@@ -16,10 +16,9 @@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs, BigWigs_Core
-## OptionalDeps: Tukui
+## LoadWith: BigWigs_Core
 
 ## X-Category: Raid
-## X-BigWigs-LoadOn-CoreEnabled: 1
 
 locales.xml
 modules.xml
