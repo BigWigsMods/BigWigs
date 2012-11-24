@@ -1,9 +1,5 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Big Wigs")
 
--- XXX Awful, awful hack to prevent the TotR from showing right after login in a
--- XXX LoD setup.
-_G.BIGWIGS_LOADER_TIME = GetTime()
-
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
@@ -66,6 +62,12 @@ local ldb = nil
 local pName = UnitName("player")
 
 local tooltipFunctions = {}
+
+-- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
+local GetCurrentMapAreaID = GetCurrentMapAreaID
+local SetMapToCurrentZone = SetMapToCurrentZone
+loader.GetCurrentMapAreaID = GetCurrentMapAreaID
+loader.SetMapToCurrentZone = SetMapToCurrentZone
 
 -- Grouping
 local BWRAID = 2
@@ -322,6 +324,11 @@ function loader:OnEnable()
 		loadOnZoneAddons = nil
 	end
 
+	-- XXX Awful, awful hack to prevent the TotR from showing right after login in a LoD setup.
+	if not self.time then
+		self.time = GetTime()
+	end
+
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 	self:RegisterEvent("GROUP_ROSTER_UPDATE", "CheckRoster")
 
@@ -415,21 +422,49 @@ do
 	end
 end
 
-function loader:ZoneChanged()
-	-- Hack to make the zone ID available when reloading/relogging inside an instance.
-	-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
-	local inside = IsInInstance()
-	if inside then
-		SetMapToCurrentZone()
-	end
-	local id = GetCurrentMapAreaID()
-	-- Always load content in an instance, otherwise require a group (world bosses)
-	if enableZones[id] and (inside or (grouped and enableZones[id] <= grouped)) then
+do
+	local queueLoad = {}
+	function loader:PLAYER_REGEN_ENABLED()
+		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		print("BigWigs: Loading Finished")
 		if load(BigWigs, "BigWigs_Core") then
-			if BigWigs:IsEnabled() and loadOnZone[id] then
-				loadZone(id)
+			for k,v in pairs(queueLoad) do
+				if v == "unloaded" then
+					queueLoad[k] = "loaded"
+					if BigWigs:IsEnabled() and loadOnZone[k] then
+						loadZone(k)
+					else
+						BigWigs:Enable()
+					end
+				end
+			end
+		end
+	end
+	function loader:ZoneChanged()
+		-- Hack to make the zone ID available when reloading/relogging inside an instance.
+		-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
+		local inside = IsInInstance()
+		if inside then
+			SetMapToCurrentZone()
+		end
+		local id = GetCurrentMapAreaID()
+		-- Always load content in an instance, otherwise require a group (world bosses)
+		if enableZones[id] and (inside or (grouped and enableZones[id] <= grouped)) then
+			if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
+				if not queueLoad[id] then
+					queueLoad[id] = "unloaded"
+					self:RegisterEvent("PLAYER_REGEN_ENABLED")
+					print("BigWigs: Currently in combat, waiting until combat ends to finish loading due to Blizzard combat restrictions.")
+				end
 			else
-				BigWigs:Enable()
+				queueLoad[id] = "loaded"
+				if load(BigWigs, "BigWigs_Core") then
+					if BigWigs:IsEnabled() and loadOnZone[id] then
+						loadZone(id)
+					else
+						BigWigs:Enable()
+					end
+				end
 			end
 		end
 	end

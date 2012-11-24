@@ -428,7 +428,7 @@ if select(2, IsInInstance()) == "raid" then
 	if not standalone then
 		-- We logged in to a raid, let's never show the tip automatically this session.
 		neverShowTip = true
-	elseif standalone and (GetTime() - _G.BIGWIGS_LOADER_TIME) < 10 then
+	elseif standalone and (GetTime() - BigWigsLoader.time) < 10 then
 		-- Jesus christ this is hacky.
 		-- So, if we are loaded now and it's less than 10 seconds since Loader.lua
 		-- fired up, we won't show a tip this session.
@@ -440,11 +440,7 @@ end
 local function check()
 	if not InCombatLockdown() and GetNumGroupMembers() > 9 and select(2, IsInInstance()) == "raid" then
 		plugin:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		if GetSpecialization then
-			plugin:UnregisterEvent("GROUP_ROSTER_UPDATE")
-		else
-			plugin:UnregisterEvent("RAID_ROSTER_UPDATE")
-		end
+		plugin:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		plugin:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		if plugin.db.profile.show and plugin.db.profile.automatic then
 			plugin:RandomTip()
@@ -454,11 +450,7 @@ end
 
 function plugin:OnPluginEnable()
 	if not neverShowTip then
-		if GetSpecialization then
-			self:RegisterEvent("GROUP_ROSTER_UPDATE", check)
-		else
-			self:RegisterEvent("RAID_ROSTER_UPDATE", check)
-		end
+		self:RegisterEvent("GROUP_ROSTER_UPDATE", check)
 		self:RegisterEvent("PLAYER_REGEN_ENABLED", check)
 		self:RegisterEvent("PLAYER_ENTERING_WORLD", check)
 	end

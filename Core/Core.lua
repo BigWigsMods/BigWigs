@@ -17,6 +17,10 @@ local CL = AL:GetLocale("Big Wigs: Common")
 local customBossOptions = {}
 local pName = UnitName("player")
 
+-- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
+local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
+local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
+
 -------------------------------------------------------------------------------
 -- Target monitoring
 --

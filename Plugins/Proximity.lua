@@ -63,6 +63,7 @@ local min = math.min
 local pi = math.pi
 local cos = math.cos
 local sin = math.sin
+local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
