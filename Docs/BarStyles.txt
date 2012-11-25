@@ -1,19 +1,18 @@
   HOW TO REGISTER CUSTOM BAR STYLERS FROM OUTSIDE BIGWIGS
 
-Note that if you're applying anything custom to a LibCandyBar that is
+If you're applying anything custom to a LibCandyBar that is
 not available as a function directly on the bar (i.e. :SetIcon), you
 need to reset that in your BarStopped function manually. If not, other
 addons using LibCandyBar will be screwed.
 
-Also note that you should not be creating new frames every time a bar
+You should not be creating new frames every time a bar
 is spawned - you should free up unused frames when a bar is stopped,
-and reuse those same frames again on the next bar. The code for the
-"Beauty Case" style has an example of how that works.
+and reuse those same frames again on the next bar.
+>> The code for the "Beauty Case" style has an example of how that works. <<
 
 Note that if you're putting your bar style in a 3rd party addon - so
 that you don't have to edit BigWigs every time you update it - you
-need to put the following in your addons .toc file;
-OptionalDeps: BigWigs, BigWigs_Plugins
+>> should follow the TOC file guide below and set the correct fields. <<
 
 When reusing a frame it's important to re-parent it to something else
 when a bar stops, and to clear all points and such. And :Hide it.
@@ -43,6 +42,42 @@ Bar style table properties;
   GetStyleName
     Must be a function reference or nil, and return the name you want
     your bar style to have in the user interface.
+
+The following 2 examples assume you want to create a whole separate addon
+to handle skins:
+
+========================================
+==   Example MyBigWigsSkin.lua file   ==
+========================================
+
+BigWigs:GetPlugin("Bars"):RegisterBarStyle("MyBigWigsSkin", {
+	apiVersion = 1,
+	version = 1,
+	GetSpacing = function(bar) return 4 end,
+	ApplyStyle = function(bar) end,
+	BarStopped = function(bar) end,
+	GetStyleName = function() return "My Big Wigs Skin" end,
+})
+
+========================================
+==   Example MyBigWigsSkin.toc file   ==
+========================================
+
+## Interface: 50001
+## Title: MyBigWigsSkin
+## Notes: My Big Wigs Skin
+## Author: Me
+## LoadOnDemand: 1
+## Dependencies: BigWigs, BigWigs_Core, BigWigs_Plugins
+## LoadWith: BigWigs_Plugins
+MyBigWigsSkin.lua
+
+
+
+
+
+The following example assumes you >>DON'T<< want to create a new addon
+for skins and just want to add the code to one of your current addons:
 
 local f = CreateFrame("Frame")
 local function registerMyStyle()
