@@ -15,7 +15,7 @@ if L then
 	L.phase_flame_trigger = "¡Oh, exaltado! ¡Soy tu herramienta para desgarrar la carne de los huesos!"
 	L.phase_lightning_trigger = "¡Oh, gran espíritu! ¡Otórgame el poder de la tierra!"
 	L.phase_arcane_trigger = "¡Oh, sabio eterno! ¡Transmíteme tu sapiencia Arcana!"
-	L.phase_shadow_trigger = "Great soul of champions past! Bear to me your shield!" -- traducir
+	L.phase_shadow_trigger = "¡Almas de campeones antiguos! ¡Concededme vuestro escudo!"
 
 	L.phase_flame = "¡Fase de llamas!"
 	L.phase_lightning = "¡Fase de rayos!"
@@ -24,9 +24,9 @@ if L then
 
 	L.phase_message = "¡Nueva fase pronto!"
 	L.shroud_message = "%2$s castea Embozo en %1$s"
-	L.shroud_can_interrupt = "%s can interrupt %s!"
+	L.shroud_can_interrupt = "¡%s se puede interrumpir %s!"
 	L.barrier_message = "¡Barrera Activa!"
-	L.barrier_cooldown = "Barrier cooldown"
+	L.barrier_cooldown = "Barrera disponible"
 
 	-- Tanks
 	L.tank = "Alertas de tanques"

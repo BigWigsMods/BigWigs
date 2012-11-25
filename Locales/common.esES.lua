@@ -6,7 +6,7 @@ L.underyou = "¡%s debajo de TI!"
 L.other = "%s: %s"
 L.onboss = "¡%s en el JEFE!"
 L.say = "¡%s en MI!"
-L.stack = "%2$dx %3$s on %1$s"
+L.stack = "%2$dx %3$s en %1$s"
 L.cast = "<Casteando %s>"
 L.soon = "¡%s inminente!"
 
@@ -30,5 +30,5 @@ L.custom_sec = "¡%s en %d seg!"
 
 L.tank = "Solo alertas para tanques. "
 L.healer = "Solo alertas para sanadores. "
-L.tankhealer = "Tank & Healer alerts only. "
+L.tankhealer = " Solo alertas para tanque y sanador. "
 
