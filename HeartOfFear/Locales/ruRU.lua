@@ -31,7 +31,7 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "ruRU")
 if L then
-	L.removed = "%s снято!"
+	L.removed = "%s снялись!"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")
@@ -40,7 +40,7 @@ if L then
 	L.next_pack_desc = "Предупреждать, когда появится новая группа после убийства предыдущей."
 
 	L.spear_removed = "Ваше Пронзающее копье снялось!"
-	L.residue_removed = "%s снято!"
+	L.residue_removed = "%s снялся!"
 end
 
 L = BigWigs:NewBossLocale("Amber-Shaper Un'sok", "ruRU")
