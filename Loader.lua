@@ -324,6 +324,25 @@ function loader:OnEnable()
 		loadOnZoneAddons = nil
 	end
 
+	-- XXX hopefully remove this some day, try to teach people not to force load our modules.
+	for i = 1, GetNumAddOns() do
+		local name, _, _, enabled = GetAddOnInfo(i)
+		if enabled and not IsAddOnLoadOnDemand(i) then
+			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
+				local meta = select(j, GetAddOnOptionalDependencies(i))
+				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+					print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+				end
+			end
+			for j = 1, select("#", GetAddOnDependencies(i)) do
+				local meta = select(j, GetAddOnDependencies(i))
+				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins") then
+					print("|cFF33FF99Big Wigs|r: The addon '|cffffff00"..name.."|r' is forcing Big Wigs to load prematurely, notify the Big Wigs authors!")
+				end
+			end
+		end
+	end
+
 	-- XXX Awful, awful hack to prevent the TotR from showing right after login in a LoD setup.
 	if not self.time then
 		self.time = GetTime()
