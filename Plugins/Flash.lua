@@ -34,18 +34,22 @@ function mod:OnPluginEnable()
 		flashFrame:Hide()
 
 		flasher = flashFrame:CreateAnimationGroup()
-		flasher:SetScript("OnLoop", function(frame)
-			frame.count = frame.count + 1
-			if frame.count > 3 then
-				frame:Stop()
-				flashFrame:Hide()
-				frame.count = nil
-			end
-		end)
-		flasher:SetLooping("BOUNCE")
-		local fade = flasher:CreateAnimation("Alpha")
-		fade:SetDuration(0.2)
-		fade:SetChange(1)
+		local fade1 = flasher:CreateAnimation("Alpha")
+		fade1:SetDuration(0.2)
+		fade1:SetChange(1)
+		fade1:SetOrder(1)
+		local fade2 = flasher:CreateAnimation("Alpha")
+		fade2:SetDuration(0.2)
+		fade2:SetChange(-1)
+		fade2:SetOrder(2)
+		local fade3 = flasher:CreateAnimation("Alpha")
+		fade3:SetDuration(0.2)
+		fade3:SetChange(1)
+		fade3:SetOrder(3)
+		local fade4 = flasher:CreateAnimation("Alpha")
+		fade4:SetDuration(0.2)
+		fade4:SetChange(-1)
+		fade4:SetOrder(4)
 
 		shaker = CreateFrame("Frame"):CreateAnimationGroup()
 		shaker:SetScript("OnLoop", function(frame)
@@ -82,8 +86,8 @@ function mod:BigWigs_FlashShake(event, module, key)
 		flasher:Stop()
 		local r, g, b = colors:GetColor("flashshake", module, key)
 		flashFrame:SetBackdropColor(r, g, b, 0.8)
+		flashFrame:SetAlpha(0)
 		flashFrame:Show()
-		flasher.count = 0
 		flasher:Play()
 	end
 	if not WorldFrame:IsProtected() and BigWigs.db.profile.shake then
