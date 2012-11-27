@@ -159,7 +159,7 @@ function mod:Fixate(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(spellId)
 		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
-		self:Bar(spellId, spellName, 20, spellId)
+		self:TargetBar(spellId, spellName, player, 20, spellId)
 	end
 end
 

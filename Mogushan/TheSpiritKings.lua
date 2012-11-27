@@ -11,8 +11,9 @@ mod:RegisterEnableMob(
 	60709, 61423, -- Qiang the Merciless
 	60710, 61427 -- Subetai the Swift
 )
+
 --------------------------------------------------------------------------------
--- Locales
+-- Locals
 --
 
 local spellReflect = mod:SpellName(69901)

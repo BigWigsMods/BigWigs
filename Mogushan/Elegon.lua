@@ -8,7 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(60410)
 
 --------------------------------------------------------------------------------
--- Locales
+-- Locals
 --
 
 local drawPowerCounter, annihilateCounter = 0, 0

@@ -357,6 +357,7 @@ function boss:Heroic()
 end
 
 function boss:GetCID(guid)
+	if not guid then return -1 end
 	local creatureId = tonumber(guid:sub(7, 10), 16)
 	return creatureId
 end

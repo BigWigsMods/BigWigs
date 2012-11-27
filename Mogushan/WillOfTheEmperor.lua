@@ -12,6 +12,7 @@ if not mod then return end
 
 local gasCounter = 0
 local strengthCounter = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --

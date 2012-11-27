@@ -103,11 +103,11 @@ end
 do
 	local timer = nil
 	local strike = mod:SpellName(122949)
-	local function removeIcon()
-		if mod.isEngaged then
-			mod:OpenProximity(8, 123175) -- Re-open normal proximity
-		else
+	local function removeIcon(notBoss)
+		if notBoss then
 			mod:CloseProximity("unseenstrike") -- Close proximity for Instructor Maltik
+		else
+			mod:OpenProximity(8, 123175) -- Re-open normal proximity
 		end
 		mod:PrimaryIcon("unseenstrike")
 		if timer then
@@ -158,7 +158,7 @@ do
 				self:StopBar("~"..self:SpellName(123175)) --Wind Step
 				self:CloseProximity(123175)
 			end
-		elseif spellId == 122949 and unit == "target" and not self.isEngaged then
+		elseif spellId == 122949 and unit == "target" and self:GetCID(UnitGUID("target")) == 64340 then
 			self:Sync("Strike") -- Instructor Maltik
 		end
 	end
@@ -168,7 +168,7 @@ do
 			if not timer then
 				timer = self:ScheduleRepeatingTimer(warnStrike, 0.05)
 			end
-			self:ScheduleTimer(removeIcon, 7)
+			self:ScheduleTimer(removeIcon, 6.2, "notboss")
 		end
 	end
 end

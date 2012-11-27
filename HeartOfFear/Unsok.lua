@@ -126,7 +126,7 @@ function mod:ParasiticGrowth(player, spellId, _, _, spellName)
 		self:FlashShake(spellId)
 	end
 	if self:Healer() then
-		self:TargetBar(spellId, spellName, player, 30, spellId)
+		self:TargetBar(spellId, L["parasite"], player, 30, spellId)
 	end
 end
 

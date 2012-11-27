@@ -288,8 +288,8 @@ function mod:Deaths(unitId)
 			self:CloseProximity(121881)
 		end
 	elseif unitId == 62408 then
-		self:StopBar(self:SpellName(122193)) -- mending
-		self:StopBar(self:SpellName(122149)) -- quickening
+		self:StopBar(122193) -- mending
+		self:StopBar(122149) -- quickening
 	end
 end
 

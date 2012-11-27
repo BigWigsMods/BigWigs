@@ -132,8 +132,7 @@ do
 	function mod:VoodooDollsApplied(player)
 		listTbl[#listTbl+1] = player
 		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(createList, 0.1)
+			scheduled = self:ScheduleTimer(createList, 0.1)
 		end
 	end
 end
@@ -150,8 +149,7 @@ do
 		-- Used in 3rd party modules
 		listTbl[#listTbl+1] = player
 		if not scheduled then
-			scheduled = true
-			self:ScheduleTimer(createList, 0.1)
+			scheduled = self:ScheduleTimer(createList, 0.1)
 		end
 	end
 end
