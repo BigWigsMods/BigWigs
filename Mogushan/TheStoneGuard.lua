@@ -8,6 +8,7 @@ if not mod then return end
 mod:RegisterEnableMob(60051, 60047, 60043, 59915) -- Cobalt, Amethyst, Jade, Jasper
 
 local cobaltTimer = 10.7
+local deathCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -56,11 +57,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	if diff == 3 or diff == 5 then
-		cobaltTimer = 8.7 -- 10 man
-	else
-		cobaltTimer = 10.7
-	end
+	cobaltTimer = (diff == 3 or diff == 5) and 8.5 or 10.7
+	deathCount = (diff == 4 or diff == 6) and -1 or 0
 	self:Berserk(480)
 end
 
@@ -160,13 +158,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	end
 end
 
-do
-	local count = 0
-	function mod:Deaths()
-		count = count + 1
-		if count > 2 then
-			self:Win()
-		end
+function mod:Deaths()
+	deathCount = deathCount + 1
+	if deathCount > 2 then
+		self:Win()
 	end
 end
 
