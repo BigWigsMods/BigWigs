@@ -384,9 +384,9 @@ do
 		if self.elapsed > 5 then
 			self:Hide()
 			if BIGWIGS_RELEASE_TYPE == RELEASE then
-				SendAddonMessage("BigWigs", "VR:"..BIGWIGS_RELEASE_REVISION, "RAID")
+				SendAddonMessage("BigWigs", "VR:"..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 			else
-				SendAddonMessage("BigWigs", "VRA:"..BIGWIGS_RELEASE_REVISION, "RAID")
+				SendAddonMessage("BigWigs", "VRA:"..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 			end
 		end
 	end)
@@ -536,7 +536,7 @@ end
 
 function loader:BigWigs_JoinedGroup()
 	self:ZoneChanged()
-	SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, "RAID")
+	SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
 end
 
 function loader:BigWigs_LeftGroup()

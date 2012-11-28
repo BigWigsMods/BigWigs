@@ -515,7 +515,7 @@ local pName = UnitName("player")
 local _, pClass = UnitClass("player")
 SlashCmdList.BigWigs_SendRaidTip = function(input)
 	input = input:trim()
-	if not UnitInRaid("player") or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) or (not tonumber(input) and #input < 10) then
+	if IsPartyLFG() or not IsInRaid() or (not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) or (not tonumber(input) and #input < 10) then
 		print(L["Usage: /sendtip <index|\"Custom tip\">"])
 		print(L["You must be an officer in the raid to broadcast a tip."])
 		return
