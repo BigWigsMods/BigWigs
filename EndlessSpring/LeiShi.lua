@@ -11,7 +11,7 @@ mod:RegisterEnableMob(62983)
 -- Locals
 --
 
-local hiding = false
+local hiding = nil
 local nextProtectWarning = 85
 
 --------------------------------------------------------------------------------
@@ -60,11 +60,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	hiding = false
+	hiding = nil
 	nextProtectWarning = 85
 	self:Bar("special", "~"..L["special"], 33, 123263)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:Berserk(480)
+	self:Berserk(self:LFR() and 600 or 480)
 end
 
 --------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ end
 function mod:EngageCheck()
 	self:CheckBossStatus()
 	if hiding then
-		hiding = false
+		hiding = nil
 		self:Bar("special", "~"..L["special"], 20, 123263)
 		self:Message(123244, L["end_hide"], "Attention", 123244)
 	end
