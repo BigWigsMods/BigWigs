@@ -59,7 +59,7 @@ end
 function mod:OnEngage(diff)
 	cobaltTimer = (diff == 3 or diff == 5) and 8.5 or 10.7
 	deathCount = (diff == 4 or diff == 6) and -1 or 0
-	self:Berserk(480)
+	self:Berserk(self:Heroic() and 420 or 480)
 end
 
 --------------------------------------------------------------------------------
