@@ -197,9 +197,10 @@ end
 function mod:WhirlingBlade(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Urgent", spellId, "Alarm")
 	self:Bar(spellId, "~"..spellName, 45, spellId)
-	self:FlashShake(spellId)
+	if not self:LFR() then
+		self:FlashShake(spellId)
+	end
 end
-
 
 function mod:WindBomb(_, _, player, _, spellName)
 	self:TargetMessage(131830, spellName, player, "Urgent", 131830, "Alarm")
