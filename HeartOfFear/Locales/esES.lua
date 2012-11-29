@@ -26,7 +26,7 @@ if L then
 	L.unseenstrike_soon = "¡Golpe en ~5-10 seg!"
 
 	L.assault_message = "Asalto"
-	L.side_swap = "Side Swap"
+	L.side_swap = "Cambia de lado"
 end
 
 L = BigWigs:NewBossLocale("Garalon", "esES") or BigWigs:NewBossLocale("Garalon", "esMX")
@@ -67,7 +67,7 @@ end
 
 L = BigWigs:NewBossLocale("Grand Empress Shek'zeer", "esES") or BigWigs:NewBossLocale("Grand Empress Shek'zeer", "esMX")
 if L then
-	L.engage_trigger = "Death to all who dare challenge my empire!" -- traducir
+	L.engage_trigger = "¡Muerte a todo aquel que desafíe a mi imperio!"
 	L.phases = "Fases"
 	L.phases_desc = "Aviso para cambios de fase."
 
