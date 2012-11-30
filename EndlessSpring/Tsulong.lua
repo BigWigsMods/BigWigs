@@ -8,6 +8,11 @@ if not mod then return end
 mod:RegisterEnableMob(62442)
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+local bigAddCounter = 0
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -37,7 +42,7 @@ function mod:GetOptions()
 	return {
 		"ej:6550",
 		"breath", 122768, 122789, {122777, "PROXIMITY", "FLASHSHAKE", "SAY"},
-		122855, "unstable_sha", 123011,
+		122855, "unstable_sha", 123011, "ej:6316",
 		"berserk", "phases", "bosskill",
 	}, {
 		["ej:6550"] = "heroic",
@@ -60,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Terrorize", 123011)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DreadShadows", 122768)
 	self:Log("SPELL_AURA_APPLIED", "Sunbeam", 122789)
-
+	self:Emote("SunbeamSpawn", "122789")
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
@@ -74,16 +79,29 @@ function mod:OnEngage(diff)
 	self:Bar("phases", L["day"], 121, 122789)
 	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
 	self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
+	bigAddCounter = 0
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:SunbeamSpawn()
+	self:Message(122789, spellName, "Positive", 122789)
+	self:Bar(122789, 122789, 42, 122789)
+end
+
 function mod:EngageCheck()
 	self:CheckBossStatus()
 	-- assume only 1 Embodied Terror is up at a time, else you wipe
 	if UnitExists("boss2") and self:GetCID(UnitGUID("boss2")) == 62969 then
+		bigAddCounter = bigAddCounter + 1
+		if bigAddCounter > 2 then
+			bigAddCounter = 0
+		else
+			self:Bar("ej:6316", ("~%s (%d)"):format((UnitName("boss2")), bigAddCounter+1), 40, 123011) -- Not sure if cd also needs proper icon
+		end
+		self:Message("ej:6316", ("%s (%d)"):format((UnitName("boss2")), bigAddCounter), "Attention", 123011) -- needs proper icon
 		self:Bar(123011, "~"..self:SpellName(123011), 5, 123011) -- Terrorize
 	end
 end
