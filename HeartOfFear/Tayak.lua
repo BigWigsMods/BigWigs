@@ -155,6 +155,7 @@ do
 				self:StopBar(125310) --Blade Tempest
 				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
 				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
+				self:CancelDelayedMessage(L["unseenstrike_soon"])
 				self:StopBar("~"..self:SpellName(123175)) --Wind Step
 				self:CloseProximity(123175)
 			end
