@@ -63,6 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Resin", 122064)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ResinPoolDamage", 122125)
 	self:Log("SPELL_AURA_APPLIED", "Recklessness", 122354)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Recklessness", 122354)
 	self:Log("SPELL_AURA_APPLIED", "RecklessnessHeroic", 125873)
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
@@ -78,14 +79,14 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
-	self:Death("Deaths", 62397, 62405) -- Boss, Trapper
+	self:Death("Deaths", 62397, 62452, 62447, 62451) -- Boss, The Zar'thik, The Kor'thik, The Sra'thik
 end
 
 function mod:OnEngage(diff)
-	self:Bar(121896, 121896, 36, 121896) --Whirling Blade
-	self:Bar(122406, "~"..mod:SpellName(122406), 60, 122406) --Rain of Blades
-	self:Bar(122409, "~"..mod:SpellName(122409), 19, 122409) --Korthik Strike
-	self:Berserk(480)
+	self:Bar(121896, 121896, 36, 121896) -- Whirling Blade
+	self:Bar(122406, "~"..self:SpellName(122406), 60, 122406) -- Rain of Blades
+	self:Bar(122409, "~"..self:SpellName(122409), 19, 122409) -- Korthik Strike
+	self:Berserk(self:LFR() and 600 or 480)
 	wipe(korthikStrikeWarned)
 	primaryAmberIcon, secondaryAmberIcon, phase = nil, nil, nil
 	firstKorthikStrikeDone = nil
@@ -105,6 +106,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		local guid = UnitGUID(("boss%d"):format(i))
 		if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
 			self:OpenProximity(2, 121881)
+			break
 		end
 	end
 end
@@ -131,8 +133,8 @@ do
 			if not korthikStrikeWarned[player] then
 				korthikStrikeWarned[player] = true
 				self:ScheduleTimer(allowKorthikStrike, 10, player)
-				self:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm") -- does this need a bar? (2nd one ~30, then cooldown 50 sec)
-				self:Bar(122409, "~"..korthikStrike, firstKorthikStrikeDone and 50 or 30, 122409)
+				self:TargetMessage(122409, korthikStrike, player, "Urgent", 122409, "Alarm")
+				self:Bar(122409, "~"..korthikStrike, firstKorthikStrikeDone and 50 or 30, 122409) -- 2nd one ~30, then cooldown 50 sec
 				firstKorthikStrikeDone = true
 			end
 		end
@@ -159,7 +161,7 @@ do
 		if not primaryAmberIcon then
 			self:PrimaryIcon(spellId, player)
 			primaryAmberIcon = player
-		else
+		elseif not secondaryAmberIcon then -- leave the icon on the second person hit
 			self:SecondaryIcon(spellId, player)
 			secondaryAmberIcon = player
 		end
@@ -170,11 +172,12 @@ do
 end
 
 function mod:AmberPrisonRemoved(player, spellId)
-	if primaryAmberIcon and UnitIsUnit(player, primaryAmberIcon) then
+	if player == primaryAmberIcon then
 		self:PrimaryIcon(spellId)
 		primaryAmberIcon = nil
-	elseif secondaryAmberIcon and UnitIsUnit(player, secondaryAmberIcon) then
+	elseif player == secondaryAmberIcon then
 		self:SecondaryIcon(spellId)
+		secondaryAmberIcon = nil
 	end
 end
 
@@ -264,33 +267,37 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 			phase = 1
 		elseif hp < 75 then
 			self:Message(131830, CL["phase"]:format(2), "Positive", 131830, "Info")
+			self:Bar(121896, "~"..self:SpellName(121896), 45, 121896) -- Whirling Blade (reset cd)
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 			phase = 2
 			local trappersNotPresent = true
-			for i = 2, MAX_BOSS_FRAMES do
-				if UnitName("boss"..i) == L["trapper"] then
-					trappersNotPresent = false
+			for i = 2, 5 do
+				local guid = UnitGUID(("boss%d"):format(i))
+				if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
+					trappersNotPresent = nil
+					break
 				end
 			end
 			if trappersNotPresent then
-				self:OpenProximity(5, 131830)
+				self:OpenProximity(5, 131830) -- Wind Bomb
 			end
 		end
 	end
 end
 
-function mod:Deaths(unitId)
-	if unitId == 62397 then -- boss
+function mod:Deaths(mobId)
+	if mobId == 62397 then -- boss
 		self:Win()
-	elseif unitId == 62405 then -- trapper
+	elseif mobId == 62451 then -- The Sra'thik
 		if phase == 2 then
 			self:OpenProximity(5, 131830) -- if in phase 2 open the wind bomb proximity meter back up
 		else
 			self:CloseProximity(121881)
 		end
-	elseif unitId == 62408 then
-		self:StopBar(122193) -- mending
-		self:StopBar(122149) -- quickening
+	elseif mobId == 62452 then -- The Zar'thik
+		self:StopBar(122193) -- Mending
+	elseif mobId == 62447 then -- The Kor'thik
+		self:StopBar("~"..self:SpellName(122409)) -- Kor'thik Strike
 	end
 end
 
