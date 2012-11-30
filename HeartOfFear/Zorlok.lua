@@ -99,10 +99,10 @@ function mod:Attenuation(_, spellId, source, _, spellName)
 		if platform == 3 then -- this is code section is untested
 			if danceTracker then
 				if type(danceTracker) == "number" then
-					if danceTracker == 2 then -- there have been two dances from boss in start of p2
+					danceTracker = danceTracker + 1
+					if danceTracker == 1 then -- there have been two dances from boss in start of p2
 						danceTracker = false -- it is now the echos turn then rotation starts
 					end
-					danceTracker = danceTracker + 1
 				else
 					danceTracker = false
 				end
@@ -176,7 +176,7 @@ function mod:PlatformSwap()
 	if platform == 3 then
 		self:Message("stages", CL["phase"]:format(2), "Positive", "ability_vehicle_launchplayer", "Info")
 		self:StopBar("~"..self:SpellName(122740)) -- Convert
-		danceTracker = 1 -- Start a counter here because there are 2 dances from boss before echo does one
+		danceTracker = 0 -- Start a counter here because there are 2 dances from boss before echo does one
 	else
 		self:Message("stages", L["platform_message"], "Positive", "ability_vehicle_launchplayer", "Info")
 	end
