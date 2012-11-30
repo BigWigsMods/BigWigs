@@ -32,7 +32,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:5772", "SAY"},
+		"ej:5772",
 		130774,
 		{130395, "FLASHSHAKE", "PROXIMITY"},
 		"overload", "petrifications", "berserk", "bosskill",
@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage(diff)
-	cobaltTimer = (diff == 3 or diff == 5) and 8.5 or 10.7
+	cobaltTimer = (diff == 3 or diff == 5) and 8.4 or 10.7
 	deathCount = (diff == 4 or diff == 6) and -1 or 0
 	self:Berserk(self:Heroic() and 420 or 480)
 end
@@ -109,38 +109,6 @@ do
 	end
 end
 
-do
-	local timer, fired = nil, 0
-	local cobaltMine = mod:SpellName(129424)
-	local function mineWarn(unitId)
-		fired = fired + 1
-		local unitIdTarget = unitId.."target"
-		local player = UnitName(unitIdTarget)
-		if player and (not UnitDetailedThreatSituation(unitIdTarget, unitId) or fired > 13) then
-			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
-			mod:TargetMessage("ej:5772", cobaltMine, player, "Urgent", 129424, "Alarm")
-			mod:CancelTimer(timer, true)
-			timer = nil
-			if UnitIsUnit(unitIdTarget, "player") then
-				mod:Say("ej:5772", CL["say"]:format(cobaltMine))
-			end
-			return
-		end
-		-- 19 == 0.95sec
-		-- Safety check if the unit doesn't exist
-		if fired > 18 then
-			mod:CancelTimer(timer, true)
-			timer = nil
-		end
-	end
-	function mod:CobaltMine(unitId)
-		fired = 0
-		if not timer then
-			timer = self:ScheduleRepeatingTimer(mineWarn, 0.05, unitId)
-		end
-	end
-end
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	if not unitId:match("boss") then return end
 	-- we could be using the same colors as blizzard but they are too "faint" imo
@@ -154,7 +122,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		self:Message("petrifications", ("|c00FF44FF%s|r"):format(spellName), nil, spellId, "Alert") -- purple
 	elseif spellId == 129424 then
 		self:Bar("ej:5772", spellName, cobaltTimer, spellId)
-		self:CobaltMine(unitId)
 	end
 end
 
