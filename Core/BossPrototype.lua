@@ -140,7 +140,7 @@ do
 
 	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
 		if event == "UNIT_DIED" then
-			local numericId = tonumber(dGUID:sub(7, 10), 16)
+			local numericId = tonumber(dGUID:sub(6, 10), 16)
 			local d = deathMap[self][numericId]
 			if not d then return end
 			if type(d) == "function" then d(numericId, dGUID, player, dFlags)
@@ -217,7 +217,7 @@ do
 		elseif not self.isEngaged and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
-			local module = core:GetEnableMobs()[tonumber(guid:sub(7, 10), 16)]
+			local module = core:GetEnableMobs()[tonumber(guid:sub(6, 10), 16)]
 			local modType = type(module)
 			if modType == "string" then
 				if module == self.moduleName then
@@ -256,7 +256,7 @@ do
 		for i, unit in next, t do
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
-				if type(id) == "number" then guid = tonumber(guid:sub(7, 10), 16) end
+				if type(id) == "number" then guid = tonumber(guid:sub(6, 10), 16) end
 				if guid == id then return unit end
 			end
 		end
@@ -358,7 +358,7 @@ end
 
 function boss:GetCID(guid)
 	if not guid then return -1 end
-	local creatureId = tonumber(guid:sub(7, 10), 16)
+	local creatureId = tonumber(guid:sub(6, 10), 16)
 	return creatureId
 end
 

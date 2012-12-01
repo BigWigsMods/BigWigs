@@ -58,7 +58,7 @@ end
 
 local function targetCheck(unit)
 	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	local id = tonumber((UnitGUID(unit)):sub(7, 10), 16)
+	local id = tonumber((UnitGUID(unit)):sub(6, 10), 16)
 	if id and enablemobs[id] then
 		targetSeen(unit, enablemobs[id])
 	end
