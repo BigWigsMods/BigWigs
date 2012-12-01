@@ -62,7 +62,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{120519, "FLASHSHAKE"}, {120629, "SAY"}, 120669, {120268, "FLASHSHAKE", "PROXIMITY", "ICON"}, 120455, 120672, {"ej:6109", "FLASHSHAKE"}, "ej:6107", 129378, "ability_cd",
+		{120519, "FLASHSHAKE"}, {120629, "SAY"}, 120669, {120268, "FLASHSHAKE", "PROXIMITY"}, 120455, 120672, {"ej:6109", "FLASHSHAKE"}, "ej:6107", 129378, "ability_cd",
 		"ej:6699", 119414, 129147, {119519, "FLASHSHAKE", "SAY"},
 		{ 119888, "FLASHSHAKE" }, 118977,
 		"berserk", "proximity", "bosskill",
@@ -241,7 +241,6 @@ end
 
 function mod:ChampionOfTheLight(player, spellId, _, _, spellName)
 	self:TargetMessage(spellId, L["ball"], player, "Positive", spellId, "Long")
-	self:PrimaryIcon(spellId, player) -- the idea is to keep track of who has it and who had it
 	--self:CloseProximity(spellId) -- uncomment when mapdata becomes available for last phase
 	if UnitIsUnit("player", player) then
 		--self:LocalMessage(spellId, L["ball_you"], "Personal", spellId, "Long") -- should maybe have a name like "Ball on you PASS IT!"
@@ -256,7 +255,6 @@ do
 		end
 	end
 	function mod:ChampionOfTheLightRemoved(player, spellId)
-		self:SecondaryIcon(spellId, player) -- the idea is to keep track of who has it and who had it
 		self:ScheduleTimer(checkForDead, 0.1, player)
 		--self:OpenProximity(40, spellId, player, true) -- does not really work due to some map data issues in last phase -- uncomment when mapdata becomes available
 	end
