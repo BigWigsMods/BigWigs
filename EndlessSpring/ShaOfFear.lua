@@ -33,7 +33,7 @@ if L then
 	L.fading_soon = "%s fading soon"
 
 	L.swing = "Swing"
-	L.swing_desc = "Counts the number of swings before Trash"
+	L.swing_desc = "Counts the number of swings before Thrash"
 
 	L.damage = "Damage"
 	L.miss = "Miss"
@@ -43,7 +43,7 @@ if L then
 	L.ball_you = "You have the ball!"
 	L.ball = "Ball"
 
-	L.cooldown_reset = "Your cooldowns reseted!"
+	L.cooldown_reset = "Your cooldowns reset!"
 
 	L.ability_cd = "Ability cooldown"
 	L.ability_cd_desc = "Try and guess in which order abilities will be used after an Emerge"
@@ -276,7 +276,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		self:CloseProximity()
 		self:StopBar(self:SpellName(119414)) -- breath of fear
 		self:StopBar(("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- ominous cackle
-		if Skada and (UnitName("player")) == "Calebh" then Skada:NewSegment() end
 	elseif spellId == 120638 then -- Waterspout and Huddle Timing
 		--self:Bar(120629, 120629, 10, 120629) -- Huddle in terror
 		--self:StopBar("~"..self:SpellName(120519)) -- waterspout
