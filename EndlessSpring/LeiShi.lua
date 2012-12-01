@@ -88,18 +88,8 @@ end
 
 do
 	local scheduled = nil
-	local highestStack, highestStackPlayer = 0
 	local function reportFog(spellName)
-		mod:Message(123705, ("%s: %s (%d)"):format(spellName, UnitName(highestStackPlayer), highestStack), "Attention", 123705)
-		scheduled = nil
-	end
-
-	function mod:ScaryFog(player, spellId, _, _, spellName)
-		highestStack, highestStackPlayer = 0
-		if UnitIsUnit("player", player) and not self:Tank() then
-			self:OpenProximity(4) -- could be less than 4 but still experimenting
-		end
-
+		local highestStack, highestStackPlayer = 0
 		for i=1, GetNumGroupMembers() do
 			local unit = ("raid%d"):format(i)
 			local _, _, _, stack = UnitDebuff(unit, spellName)
@@ -107,6 +97,14 @@ do
 				highestStack = stack
 				highestStackPlayer = unit
 			end
+		end
+		mod:Message(123705, ("%s: %s (%d)"):format(spellName, UnitName(highestStackPlayer), highestStack), "Attention", 123705)
+		scheduled = nil
+	end
+
+	function mod:ScaryFog(player, spellId, _, _, spellName)
+		if UnitIsUnit("player", player) and not self:Tank() then
+			self:OpenProximity(4) -- could be less than 4 but still experimenting
 		end
 		self:Bar(spellId, "~"..spellName, 19, spellId)
 		if not scheduled then
