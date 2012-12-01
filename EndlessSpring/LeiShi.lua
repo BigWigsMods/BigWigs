@@ -58,6 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ScaryFog", 123705)
 	self:Log("SPELL_AURA_REMOVED", "ScaryFogRemoved", 123705)
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck") -- use this to detect him coming out of hide
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
 
 function mod:OnEngage(diff)
