@@ -99,12 +99,12 @@ do
 				highestStackPlayer = unit
 			end
 		end
-		mod:Message(123705, ("%s: %s (%d)"):format(spellName, UnitName(highestStackPlayer), highestStack), "Attention", 123705)
+		mod:TargetMessage(123705, ("%s (%d)"):format(spellName, highestStack), (UnitName(highestStackPlayer)), "Attention", 123705)
 		scheduled = nil
 	end
 
 	function mod:ScaryFog(player, spellId, _, _, spellName)
-		if UnitIsUnit("player", player) and not self:Tank() then
+		if UnitIsUnit("player", player) then
 			self:OpenProximity(4) -- could be less than 4 but still experimenting
 		end
 		self:Bar(spellId, "~"..spellName, 19, spellId)
