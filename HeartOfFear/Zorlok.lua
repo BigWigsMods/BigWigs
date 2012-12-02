@@ -144,13 +144,13 @@ end
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 	if unitId == "boss1" then
 		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
-		if platform == 0 and hp < 82 then
+		if platform == 0 and hp < 83 then
 			self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
 			platform = 1
 		elseif platform == 1 and hp < 63 then
 			self:Message("stages", CL["soon"]:format(L["platform_message"]), "Positive", "ability_vehicle_launchplayer", "Info")
 			platform = 2
-		elseif platform == 2 and hp < 47 then
+		elseif platform == 2 and ((self:Heroic() and hp < 47) or hp < 43) then
 			self:Message("stages", CL["soon"]:format(CL["phase"]:format(2)), "Positive", "ability_vehicle_launchplayer", "Info")
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 			platform = 3
