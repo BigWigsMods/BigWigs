@@ -29,7 +29,7 @@ function plugin:BigWigs_Message(event, module, key, msg, color, nobroadcast)
 
 	-- only allowed to broadcast if we're in a party or raidleader/assistant
 	local inRaid = IsInRaid()
-	if (not inRaid and not IsInGroup()) or (inRaid and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then
+	if IsPartyLFG() or (not inRaid and not IsInGroup()) or (inRaid and not UnitIsGroupLeader("player") and not UnitIsGroupAssistant("player")) then
 		return
 	end
 
