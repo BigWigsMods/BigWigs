@@ -73,9 +73,7 @@ end
 
 function mod:OnEngage(diff)
 	self:OpenProximity(5)
-	if not self:LFR() then
-		self:Berserk(900)
-	end
+	self:Berserk(900)
 	self:Bar("ej:6325", 123627, 20, 123627) --Dissonance Field
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 	self:RegisterEvent("UNIT_POWER_FREQUENT", "PoorMansDissonanceTimers")
