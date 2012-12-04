@@ -302,7 +302,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if UnitIsUnit("player", player) then
 				mod:LocalMessage(119519, CL["you"]:format(eerieSkull), "Urgent", 119519, "Alarm")
-				mod:Say(119519, CL["say"]:format(eerieSkull))
+				if not self:LFR() then mod:Say(119519, CL["say"]:format(eerieSkull)) end
 				mod:FlashShake(119519)
 			end
 			mod:CancelTimer(timer, true)
