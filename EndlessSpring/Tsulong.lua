@@ -140,6 +140,7 @@ do
 
 		if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
 			self:CloseProximity(122777)
+			self:StopBar(122777) -- Nightmares
 			self:StopBar("~"..self:SpellName(122752)) -- Shadow Breath
 			self:Message("phases", L["day"], "Positive", 122789)
 			self:Bar("phases", L["night"], 121, 122768)
@@ -149,6 +150,7 @@ do
 			self:StopBar(122953) -- Summon Unstable Sha
 			self:StopBar(122855) -- Sun Breath
 			self:OpenProximity(8, 122777)
+			self:Bar(122777, 122777, 15, 122777) -- Nightmares
 			self:Message("phases", L["night"], "Positive", 122768)
 			self:Bar("phases", L["day"], 121, 122789)
 			self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
