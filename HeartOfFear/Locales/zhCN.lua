@@ -29,7 +29,7 @@ end
 
 L = BigWigs:NewBossLocale("Garalon", "zhCN")
 if L then
-
+	L.removed = "%s 已移除！"
 end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "zhCN")
