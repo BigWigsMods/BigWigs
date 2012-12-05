@@ -8,12 +8,12 @@ if L then
 	L.attenuation_bar = "音波衰减"
 	L.attenuation_message = "%s 音波衰减 %s"
 	L.echo = "|c001cc986Echo|r"
-	L.zorlok = "|c00ed1ffaZor'lok|r"
+	L.zorlok = "|c00ed1ffa佐尔洛克|r"
 	L.left = "|c00008000<- 左 <-|r"
 	L.right = "|c00FF0000-> 右 ->|r"
 
 	L.platform_emote = "朝他其中一个平台飞去了！" -- Imperial Vizier Zor'lok flies to one of his platforms!
-	L.platform_emote_final = "inhales"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
+	L.platform_emote_final = "皇家宰相佐尔洛克吸入狂热信息素！"-- Imperial Vizier Zor'lok inhales the Pheromones of Zeal!
 	L.platform_message = "换平台"
 
 end
