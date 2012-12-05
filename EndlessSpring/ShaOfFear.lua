@@ -302,7 +302,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 			-- If we've done 14 (0.7s) checks and still not passing the threat check, it's probably being cast on the tank
 			if UnitIsUnit("player", player) then
 				mod:LocalMessage(119519, CL["you"]:format(eerieSkull), "Urgent", 119519, "Alarm")
-				if not self:LFR() then mod:Say(119519, CL["say"]:format(eerieSkull)) end
+				mod:Say(119519, CL["say"]:format(eerieSkull))
 				mod:FlashShake(119519)
 			end
 			mod:CancelTimer(timer, true)
@@ -318,7 +318,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 	end
 	function mod:EerieSkull()
 		fired = 0
-		if not timer then
+		if not timer and not self:LFR() then
 			timer = self:ScheduleRepeatingTimer(skullWarn, 0.05, "boss1")
 		end
 	end

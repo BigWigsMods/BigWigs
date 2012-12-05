@@ -96,9 +96,7 @@ function mod:EngageCheck()
 	-- assume only 1 Embodied Terror is up at a time, else you wipe
 	if UnitExists("boss2") and self:GetCID(UnitGUID("boss2")) == 62969 then
 		bigAddCounter = bigAddCounter + 1
-		if self:LFR() and bigAddCounter > 3 then
-			bigAddCounter = 0
-		elseif (not self:LFR()) and bigAddCounter > 2 then
+		if bigAddCounter > (self:LFR() and 3 or 2) then
 			bigAddCounter = 0
 		else
 			self:Bar("ej:6316", ("~%s (%d)"):format((UnitName("boss2")), bigAddCounter+1), 40, 123011) -- Not sure if cd also needs proper icon
