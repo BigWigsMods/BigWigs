@@ -14,41 +14,41 @@ if L then
 	L.phases = "Fases"
 	L.phases_desc = "Aviso para cambios de fases."
 
-	L.sunbeam_spawn = "New Sunbeam!"
+	L.sunbeam_spawn = "¡Nuevo Rayo de Sol!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
 if L then
-	L.hp_to_go = "%d%% to go"
-	L.end_hide = "Ocultando terminó"
+	L.hp_to_go = "%d%% para acabar"
+	L.end_hide = "Deja de ocultarse"
 
 	L.special = "Próxima habilidad especial"
-	L.special_desc = "Aviso para la siguiente habilidad especial"
+	L.special_desc = "Siguiente habilidad especial"
 end
 
 L = BigWigs:NewBossLocale("Sha of Fear", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
 if L then
-	L.fading_soon = "%s fading soon"
+	L.fading_soon = "%s se disipa pronto"
 
-	L.swing = "Swing"
-	L.swing_desc = "Counts the number of swings before Thrash"
+	L.swing = "Golpea"
+	L.swing_desc = "Cuenta el número de golpes antes de Vapulear"
 
 	L.damage = "Daño"
 	L.miss = "Fallo"
 
 	L.throw = "¡Lanzar!"
-	L.ball_dropped = "¡Bola a tierra!"
+	L.ball_dropped = "¡Bola al suelo!"
 	L.ball_you = "¡Tienes la bola!"
 	L.ball = "Bola"
 
 	L.cooldown_reset = "¡Tus CDs se reinician!"
 
 	L.ability_cd = "CD de la habilidad"
-	L.ability_cd_desc = "Try and guess in which order abilities will be used after an Emerge"
+	L.ability_cd_desc = "Intenta adivinar en que orden se usarán las habilidades después de Emerger"
 
-	L.huddle_or_spout = "Huddle or Spout"
-	L.huddle_or_strike = "Huddle or Strike"
-	L.strike_or_spout = "Strike or Spout"
-	L.huddle_or_spout_or_strike =  "Huddle or Spout or Strike"
+	L.huddle_or_spout = "Encogeros o Aspersor"
+	L.huddle_or_strike = "Encogeros o Golpe"
+	L.strike_or_spout = "Golpe o Aspersor"
+	L.huddle_or_spout_or_strike =  "Encogeros o Aspersor o Golpe"
 end
 
