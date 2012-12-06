@@ -66,7 +66,7 @@ function mod:OnEngage(diff)
 	nextProtectWarning = 85
 	self:Bar("special", "~"..L["special"], 33, 123263)
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:Berserk(self:LFR() and 600 or self:Heroic() and 420 or 480)
+	self:Berserk(self:LFR() and 600 or self:Heroic() and 420 or 600)
 	if self:Tank() then
 		self:OpenProximity(3)
 	end
