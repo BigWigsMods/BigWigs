@@ -60,6 +60,7 @@ function mod:OnBossEnable()
 	self:AddSyncListener("DollsRemoved")
 	self:AddSyncListener("Totem")
 	self:AddSyncListener("Shadowy")
+	self:AddSyncListener("Frenzy")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -117,6 +118,12 @@ do
 		elseif sync == "Shadowy" and self:Heroic() then -- XXX temp heroic check for out of date users transmitting
 			shadowCounter = shadowCounter + 1
 			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
+		elseif sync == "Frenzy" then
+			self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
+			if not self:LFR() then
+				self:StopBar(L["totem"]:format(totemCounter))
+				self:StopBar(L["banish_message"])
+			end
 		end
 	end
 end
@@ -197,9 +204,6 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 end
 
 function mod:Frenzy()
-	self:Message("frenzy", CL["phase"]:format(2) ..": ".. L["frenzy"], "Positive", L["frenzy_icon"], "Long")
-	if not self:LFR() then
-		self:StopBar(L["totem"]:format(totemCounter))
-	end
+	self:Sync("Frenzy")
 end
 
