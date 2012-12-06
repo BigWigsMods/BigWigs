@@ -61,6 +61,7 @@ function mod:OnBossEnable()
 	self:AddSyncListener("Totem")
 	self:AddSyncListener("Shadowy")
 	self:AddSyncListener("Frenzy")
+	self:AddSyncListener("Banish")
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
@@ -115,7 +116,7 @@ do
 			self:Message(116174, L["totem"]:format(totemCounter), "Attention", 116174)
 			totemCounter = totemCounter + 1
 			self:Bar(116174, L["totem"]:format(totemCounter), totemTime, 116174)
-		elseif sync == "Shadowy" and self:Heroic() then -- XXX temp heroic check for out of date users transmitting
+		elseif sync == "Shadowy" then
 			shadowCounter = shadowCounter + 1
 			self:Bar("shadowy", L["shadowy_message"]:format(shadowCounter), 8.3, L["shadowy_icon"])
 		elseif sync == "Frenzy" then
@@ -123,6 +124,11 @@ do
 			if not self:LFR() then
 				self:StopBar(L["totem"]:format(totemCounter))
 				self:StopBar(L["banish_message"])
+			end
+		elseif sync == "Banish" and rest then
+			self:Bar(spellId, L["banish_message"], self:Heroic() and 70 or 65, spellId)
+			if self:Tank() then
+				self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", rest)
 			end
 		end
 	end
@@ -181,10 +187,7 @@ function mod:Banishment(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:Bar(spellId, CL["you"]:format(spellName), 30, spellId)
 	end
-	self:Bar(spellId, L["banish_message"], self:Heroic() and 70 or 65, spellId)
-	if self:Tank() then
-		self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", player)
-	end
+	self:Sync("Banish", player)
 end
 
 function mod:SoulSeverRemoved(player)
