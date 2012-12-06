@@ -13,6 +13,8 @@ if L then
 
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз."
+
+	L.sunbeam_spawn = "New Sunbeam!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "ruRU")
@@ -30,8 +32,5 @@ if L then
 
 	L.swing = "Замах"
 	L.swing_desc = "Считает количество замахов перед Взбучкой."
-
-	L.damage = "Урон"
-	L.miss = "Промах"
 end
 

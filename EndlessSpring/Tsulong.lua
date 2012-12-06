@@ -21,7 +21,7 @@ if L then
 	L.engage_yell = "You do not belong here! The waters must be protected... I will cast you out, or slay you!"
 
 	L.phases = "Phases"
-	L.phases_desc = "Warning for phase changes"
+	L.phases_desc = "Warning for phase changes."
 
 	L.unstable_sha, L.unstable_sha_desc = EJ_GetSectionInfo(6320)
 	L.unstable_sha_icon = 122938
@@ -29,8 +29,12 @@ if L then
 	L.breath, L.breath_desc = EJ_GetSectionInfo(6313)
 	L.breath_icon = 122752
 
+	L.embodied_terror, L.embodied_terror_desc = EJ_GetSectionInfo(6316)
+	L.embodied_terror_icon = 130142 -- white and black sha-y icon
+
 	L.day = EJ_GetSectionInfo(6315)
 	L.night = EJ_GetSectionInfo(6310)
+	L.sunbeam_spawn = "New Sunbeam!"
 end
 L = mod:GetLocale()
 
@@ -42,13 +46,13 @@ function mod:GetOptions()
 	return {
 		"ej:6550",
 		"breath", 122768, 122789, {122777, "PROXIMITY", "FLASHSHAKE", "SAY"},
-		122855, "unstable_sha", 123011, "ej:6316",
-		"berserk", "phases", "bosskill",
+		122855, "unstable_sha", 123011, "embodied_terror",
+		"phases", "berserk", "bosskill",
 	}, {
 		["ej:6550"] = "heroic",
 		["breath"] = L["night"],
 		[122855] = L["day"],
-		berserk = "general",
+		phases = "general",
 	}
 end
 
@@ -87,28 +91,25 @@ end
 --
 
 function mod:SunbeamSpawn()
-	self:Message(122789, spellName, "Positive", 122789)
+	self:Message(122789, L["sunbeam_spawn"], "Positive", 122789)
 	self:Bar(122789, 122789, 42, 122789)
 end
 
 function mod:EngageCheck()
 	self:CheckBossStatus()
-	-- assume only 1 Embodied Terror is up at a time, else you wipe
 	if UnitExists("boss2") and self:GetCID(UnitGUID("boss2")) == 62969 then
 		bigAddCounter = bigAddCounter + 1
-		if bigAddCounter > (self:Heroic() and 2 or 3) then
-			bigAddCounter = 0
-		else
-			self:Bar("ej:6316", ("~%s (%d)"):format((UnitName("boss2")), bigAddCounter+1), 40, 123011) -- Not sure if cd also needs proper icon
+		if bigAddCounter < 3 then
+			self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], bigAddCounter+1), 40, L.embodied_terror_icon)
 		end
-		self:Message("ej:6316", ("%s (%d)"):format((UnitName("boss2")), bigAddCounter), "Attention", 123011) -- needs proper icon
-		self:Bar(123011, "~"..self:SpellName(123011), 5, 123011) -- Terrorize
+		self:Message("embodied_terror", ("%s (%d)"):format(L["embodied_terror"], bigAddCounter), "Attention", L.embodied_terror_icon)
+		self:Bar(123011, "~"..self:SpellName(123011), 5, 123011) -- Terrorize (overwrites the previous bar)
 	end
 end
 
 function mod:Terrorize(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Important", spellId)
-	self:Bar(spellId, spellName, 41, spellId)
+	self:Bar(spellId, "~"..spellName, 41, spellId)
 end
 
 function mod:DreadShadows(player, spellId, _, _, spellName, buffStack)
@@ -139,6 +140,7 @@ do
 		if not unitId:match("boss") then return end
 
 		if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
+			bigAddCounter = 0
 			self:CloseProximity(122777)
 			self:StopBar(122777) -- Nightmares
 			self:StopBar("~"..self:SpellName(122752)) -- Shadow Breath
@@ -146,6 +148,8 @@ do
 			self:Bar("phases", L["night"], 121, 122768)
 			self:Bar(122855, 122855, 32, 122855) -- Sun Breath
 			self:Bar("unstable_sha", 122953, 18, 122938)
+			self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], 1), 11, L.embodied_terror_icon)
+			--self:Bar(123011, "~"..self:SpellName(123011), 16, 123011) -- Terrorize
 		elseif spellId == 122767 then -- Dread Shadows (start of night phase)
 			self:StopBar(122953) -- Summon Unstable Sha
 			self:StopBar(122855) -- Sun Breath

@@ -35,9 +35,6 @@ if L then
 	L.swing = "Swing"
 	L.swing_desc = "Counts the number of swings before Thrash"
 
-	L.damage = "Damage"
-	L.miss = "Miss"
-
 	L.throw = "Throw!"
 	L.ball_dropped = "Ball dropped!"
 	L.ball_you = "You have the ball!"
@@ -359,7 +356,7 @@ function mod:Swing(player, damage, _, _, _, _, _, _, _, _, sGUID)
 	if self:GetCID(sGUID) == 60999 then
 		swingCounter = swingCounter + 1
 		if swingCounter > 0 and UnitIsUnit("player", player) then --just the current tank
-			self:Message("ej:6699", ("%s (%d){%s}"):format(L["swing"], swingCounter, tonumber(damage) and L["damage"] or L["miss"]), "Positive", 5547)
+			self:Message("ej:6699", ("%s (%d){%s}"):format(L["swing"], swingCounter, tonumber(damage) and _G["DAMAGE"] or _G["MISS"]), "Positive", 5547)
 		end
 		if resetNext then
 			swingCounter = -resetNext -- ignore the thrash hits

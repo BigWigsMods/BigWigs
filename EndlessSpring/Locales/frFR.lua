@@ -13,6 +13,8 @@ if L then
 
 	L.phases = "Phases"
 	L.phases_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
+
+	L.sunbeam_spawn = "New Sunbeam!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "frFR")
@@ -30,8 +32,5 @@ if L then
 
 	L.swing = "Frappe"
 	L.swing_desc = "Compte le nombre de Frappes avant Rosser."
-
-	L.damage = "Dégâts"
-	L.miss = "Raté"
 end
 

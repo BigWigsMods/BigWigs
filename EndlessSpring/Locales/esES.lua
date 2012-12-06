@@ -12,7 +12,9 @@ if L then
 	L.engage_yell = "¡No debéis estar aquí! He de proteger el agua... ¡Si no puedo expulsaros, os mataré!"
 
 	L.phases = "Fases"
-	L.phases_desc = "Aviso para cambios de fases"
+	L.phases_desc = "Aviso para cambios de fases."
+
+	L.sunbeam_spawn = "New Sunbeam!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
