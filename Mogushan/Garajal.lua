@@ -126,9 +126,9 @@ do
 				self:StopBar(L["banish_message"])
 			end
 		elseif sync == "Banish" and rest then
-			self:Bar(spellId, L["banish_message"], self:Heroic() and 70 or 65, spellId)
+			self:Bar(116272, L["banish_message"], self:Heroic() and 70 or 65, 116272)
 			if self:Tank() then
-				self:LocalMessage(spellId, L["banish_message"], "Urgent", spellId, "Alarm", rest)
+				self:LocalMessage(116272, L["banish_message"], "Urgent", 116272, "Alarm", rest)
 			end
 		end
 	end
