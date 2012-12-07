@@ -19,7 +19,7 @@ end
 
 L = BigWigs:NewBossLocale("Lei Shi", "ruRU")
 if L then
-	L.hp_to_go = "%d%% to go" -- Needs review
+	L.hp_to_go = "%d%% осталось"
 	L.end_hide = "Прятки закончились"
 
 	L.special = "След. спец. способность"
