@@ -14,7 +14,7 @@ if L then
 	L.phases = "Фазы"
 	L.phases_desc = "Предупреждать о смене фаз."
 
-	L.sunbeam_spawn = "New Sunbeam!"
+	L.sunbeam_spawn = "Новый луч солнца!"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "ruRU")
