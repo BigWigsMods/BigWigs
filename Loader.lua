@@ -200,6 +200,10 @@ local function loadAndEnableCore()
 end
 
 local function loadCoreAndOpenOptions()
+	if not BigWigsOptions and (InCombatLockdown() or UnitAffectingCombat("player")) then
+		print("|cFF33FF99Big Wigs|r: ", ERR_NOT_IN_COMBAT)
+		return
+	end
 	loadAndEnableCore()
 	load(BigWigsOptions, "BigWigs_Options")
 	if not BigWigsOptions then return end
