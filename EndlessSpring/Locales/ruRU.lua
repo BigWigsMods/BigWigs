@@ -32,5 +32,20 @@ if L then
 
 	L.swing = "Замах"
 	L.swing_desc = "Считает количество замахов перед Взбучкой."
+	
+	L.throw = "Throw!"
+	L.ball_dropped = "Ball dropped!"
+	L.ball_you = "You have the ball!"
+	L.ball = "Ball"
+
+	L.cooldown_reset = "Ваши перезарядки сброшены!"
+
+	L.ability_cd = "Перезарядка способности"
+	L.ability_cd_desc = "Попытка угадать, в каком порядке способности будут использоваться после Появления"
+
+	L.huddle_or_spout = "Оцепенение или Изводень"
+	L.huddle_or_strike = "Оцепенение или Удар"
+	L.strike_or_spout = "Удар или Изводень"
+	L.huddle_or_spout_or_strike =  "Оцепенение или Изводень или Удар"
 end
 
