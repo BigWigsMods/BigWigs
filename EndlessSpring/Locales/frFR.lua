@@ -2,19 +2,19 @@
 local L = BigWigs:NewBossLocale("Protector of the Endless", "frFR")
 if not L then return end
 if L then
-	L.on = "%s sur %s!"
-	L.under = "%s en dessous de %s!"
-	L.heal = "%s heal"
+	L.on = "%s sur %s !"
+	L.under = "%s en dessous de %s !"
+	L.heal = "Soin |2 %s"
 end
 
 L = BigWigs:NewBossLocale("Tsulong", "frFR")
 if L then
-	L.engage_yell = "You do not belong here! The waters must be protected... I will cast you out, or slay you!"
+	L.engage_yell = "Vous n'avez pas votre place ici ! Les eaux doivent être protégées... je vais vous renvoyer, ou vous tuer !" -- à vérifier
 
 	L.phases = "Phases"
 	L.phases_desc = "Prévient quand la rencontre entre dans une nouvelle phase."
 
-	L.sunbeam_spawn = "New Sunbeam!"
+	L.sunbeam_spawn = "Nouveau Rayon de soleil !"
 end
 
 L = BigWigs:NewBossLocale("Lei Shi", "frFR")
@@ -32,5 +32,20 @@ if L then
 
 	L.swing = "Frappe"
 	L.swing_desc = "Compte le nombre de Frappes avant Rosser."
+
+	L.throw = "Lancer !"
+	L.ball_dropped = "Boule à terre !"
+	L.ball_you = "Vous avez la boule !"
+	L.ball = "Boule"
+
+	L.cooldown_reset = "Vos temps de recharge sont réinitialisés !"
+
+	L.ability_cd = "Recharge des techniques"
+	L.ability_cd_desc = "Tente de deviner dans quel ordre les techniques seront utilisées après un Emerger."
+
+	L.huddle_or_spout = "Recroquevillement ou Geysérit"
+	L.huddle_or_strike = "Recroquevillement ou Frappe"
+	L.strike_or_spout = "Frappe ou Geysérit"
+	L.huddle_or_spout_or_strike =  "Recroquevillement ou Geysérit ou Frappe"
 end
 
