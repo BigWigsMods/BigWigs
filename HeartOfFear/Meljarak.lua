@@ -192,7 +192,7 @@ end
 
 function mod:Mending(_, spellId, source, _, spellName, _, _, _, _, _, sGUID)
 	if UnitGUID("focus") == sGUID then
-		self:LocalMessage(spellId, CL["cast"]:format(spellName), "Personal", spellId, "Info")
+		self:LocalMessage(spellId, CL["cast"]:format(spellName), "Personal", spellId, "Alert")
 		self:Bar(spellId, spellName, 37, spellId)
 	end
 end
@@ -266,7 +266,7 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 			self:Message(131830, CL["soon"]:format(CL["phase"]:format(2)), "Positive", 131830, "Info") -- should it maybe have it's own option key?
 			phase = 1
 		elseif hp < 75 then
-			self:Message(131830, CL["phase"]:format(2), "Positive", 131830, "Info")
+			self:Message(131830, "75% - "..CL["phase"]:format(2), "Positive", 131830, "Info")
 			self:Bar(121896, "~"..self:SpellName(121896), 45, 121896) -- Whirling Blade (reset cd)
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 			phase = 2

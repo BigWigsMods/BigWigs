@@ -153,6 +153,7 @@ do
 			elseif spellId == 123814 then --Storm Unleashed (Phase 2)
 				self:Message("storm", "20% - "..CL["phase"]:format(2), "Positive", L.storm_icon, "Long")
 				self:StopBar(125310) --Blade Tempest
+				self:StopBar("~"..L["assault_message"])
 				self:StopBar("~"..self:SpellName(122839)) --Tempest Slash
 				self:StopBar("~"..self:SpellName(122949)) --Unseen Strike
 				self:CancelDelayedMessage(L["unseenstrike_soon"])
