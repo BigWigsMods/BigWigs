@@ -324,7 +324,7 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 end
 
 function mod:Thrash(_, spellId, _, _, spellName)
-	if not self:Tank() or self:Healer() then return end
+	if not self:Tank() and not self:Healer() then return end
 	thrashNext = 2
 	if phase == 2 then
 		thrashCounter = thrashCounter + 1
@@ -343,7 +343,7 @@ function mod:Thrash(_, spellId, _, _, spellName)
 end
 
 function mod:DreadThrash(_, spellId, _, _, spellName)
-	if not self:Tank() or self:Healer() then return end
+	if not self:Tank() and not self:Healer() then return end
 	thrashCounter = 0
 	thrashNext = 5
 	self:Message("ej:6700", spellName, "Important", spellId, "Alarm")
