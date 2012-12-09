@@ -273,9 +273,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 		self:StopBar(("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
 		self:StopBar(131996) -- Thrash
 		swingCounter = 0
-		
+
 		-- start Submerge timer using the current power and the new regen rate
-		local left = UnitPower("boss1") / UnitPowerMax("boss1") * 52
+		local left = 1 - (UnitPower("boss1") / UnitPowerMax("boss1")) * 52
 		self:Bar(120455, ("%s (%d)"):format(self:SpellName(120455), 1), left, 120455)
 	elseif spellId == 62535 then -- 2nd phase Berserk for that 1 sec accuraccy
 		self:Berserk(900)
