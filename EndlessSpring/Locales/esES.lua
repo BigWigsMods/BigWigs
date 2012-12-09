@@ -31,7 +31,7 @@ if L then
 	L.fading_soon = "%s se disipa pronto"
 
 	L.swing = "Golpea"
-	L.swing_desc = "Cuenta el número de golpes antes de Vapulear"
+	L.swing_desc = "Cuenta el número de golpes antes de Vapulear."
 
 	L.damage = "Daño"
 	L.miss = "Fallo"
@@ -44,7 +44,7 @@ if L then
 	L.cooldown_reset = "¡Tus CDs se reinician!"
 
 	L.ability_cd = "CD de la habilidad"
-	L.ability_cd_desc = "Intenta adivinar en que orden se usarán las habilidades después de Emerger"
+	L.ability_cd_desc = "Intenta adivinar en que orden se usarán las habilidades después de Emerger."
 
 	L.huddle_or_spout = "Encogeros o Aspersor"
 	L.huddle_or_strike = "Encogeros o Golpe"

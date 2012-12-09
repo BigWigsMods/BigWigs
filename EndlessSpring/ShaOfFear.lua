@@ -11,18 +11,13 @@ mod:RegisterEnableMob(60999, 61003) -- Sha of Fear, Dread Spawn
 -- Locals
 --
 
-local swingCounter, thrashCounter, resetNext = 0, 0, nil
+local swingCounter, thrashCounter, thrashNext = 0, 0, nil
 local atSha = true
 local nextFear = 0
 local submergeCounter = 0
 local cackleCounter = 1
 local phase = 1
 local dreadSpawns = {}
-
-local function is25man() -- having to test two values is annoying
-	local diff = mod:Difficulty()
-	return diff == 4 or diff == 6
-end
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -33,17 +28,17 @@ if L then
 	L.fading_soon = "%s fading soon"
 
 	L.swing = "Swing"
-	L.swing_desc = "Counts the number of swings before Thrash"
+	L.swing_desc = "Counts the swings preceeding Thrash."
 
 	L.throw = "Throw!"
 	L.ball_dropped = "Ball dropped!"
 	L.ball_you = "You have the ball!"
 	L.ball = "Ball"
 
-	L.cooldown_reset = "Your cooldowns reset!"
+	L.cooldown_reset = "Your cooldowns have been reset!"
 
 	L.ability_cd = "Ability cooldown"
-	L.ability_cd_desc = "Try and guess in which order abilities will be used after an Emerge"
+	L.ability_cd_desc = "Try and guess in which order abilities will be used after an Emerge."
 	L.ability_cd_icon = 120458
 
 	L.huddle_or_spout = "Huddle or Spout"
@@ -52,6 +47,8 @@ if L then
 	L.huddle_or_spout_or_strike =  "Huddle or Spout or Strike"
 end
 L = mod:GetLocale()
+--L.swing = L.swing.." "..INLINE_TANK_ICON -- the string is used in messages so ;[
+L.swing_desc = CL.tank..L.swing_desc
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -59,15 +56,15 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{120519, "FLASHSHAKE"}, {120629, "SAY"}, 120669, {120268, "FLASHSHAKE", "PROXIMITY"}, 120455, 120672, {"ej:6109", "FLASHSHAKE"}, "ej:6107", 129378, "ability_cd",
 		"ej:6699", 119414, 129147, {119519, "FLASHSHAKE", "SAY"},
 		{ 119888, "FLASHSHAKE" }, 118977,
-		"berserk", "proximity", "bosskill",
+		129378, "ej:6700", 120669, {120629, "SAY"}, {120519, "FLASHSHAKE"}, 120672, "ability_cd", 120455, {120268, "FLASHSHAKE", "PROXIMITY"}, {"ej:6109", "FLASHSHAKE"}, "ej:6107",
+		"swing", "berserk", "proximity", "bosskill",
 	}, {
-		[120519] = "heroic",
 		["ej:6699"] = "ej:6086",
 		[119888] = "ej:6089",
-		berserk = "general",
+		[129378] = ("%s (%s)"):format(self:SpellName(120289), CL["heroic"]),
+		swing = "general",
 	}
 end
 
@@ -82,6 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FearlessRemoved", 118977)
 	self:Log("SPELL_CAST_START", "DeathBlossom", 119888)
 	self:Log("SPELL_CAST_SUCCESS", "EerieSkull", 119519)
+	-- Heroic
 	self:Log("SPELL_CAST_START", "Waterspout", 120519)
 	self:Log("SPELL_AURA_APPLIED", "WaterspoutApplied", 120519)
 	self:Log("SPELL_AURA_APPLIED", "HuddleInTerror", 120629)
@@ -108,10 +106,10 @@ end
 function mod:OnEngage(diff)
 	cackleCounter = 1
 	self:Bar(119414, 119414, 33, 119414) -- Breath of Fear
-	self:Bar(129147, ("%s (%d)"):format(self:SpellName(129147), cackleCounter), is25man() and 25 or 41, 129147) -- Ominous Cackle
+	self:Bar(129147, ("%s (%d)"):format(self:SpellName(129147), cackleCounter), (diff == 4 or diff == 6) and 25 or 41, 129147) -- Ominous Cackle
 	self:Bar("ej:6699", 131996, 10, 131996) -- Thrash
 	--self:Berserk(900) -- we start in UNIT_SPELLCAST_SUCCEEDED need to check if commenting it out here does not brake non heroic
-	swingCounter, thrashCounter, resetNext = 0, 0, nil
+	swingCounter, thrashCounter, thrashNext = 0, 0, nil
 	self:OpenProximity(5) -- might be less
 	atSha = true
 	nextFear = 0
@@ -182,6 +180,7 @@ function mod:Submerge(_, spellId, _, _, spellName)
 	submergeCounter = submergeCounter + 1
 	self:Message(spellId, ("%s (%d)"):format(spellName, submergeCounter), "Attention", spellId)
 	self:Bar(spellId, ("%s (%d)"):format(spellName, submergeCounter+1), 52, spellId)
+	--self:Bar(spellId, 120458, 6, spellId) -- Emerge
 end
 
 function mod:FadingLight(player, spellId)
@@ -192,21 +191,19 @@ end
 
 do
 	local scheduled = nil
-	local function anndounceDreadSpawnCount(source)
-		local dreadpSpawnCounter = 0
-		for k, v in pairs(dreadSpawns) do
-			if v then
-				dreadpSpawnCounter = dreadpSpawnCounter + 1
-			end
+	local function announceDreadSpawnCount(source)
+		local dreadSpawnCounter = 0
+		for guid in next, dreadSpawns do
+			dreadSpawnCounter = dreadSpawnCounter + 1
 		end
-		mod:Message("ej:6107", ("%s (%d)"):format(source, dreadpSpawnCounter), "Positive", 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
+		mod:Message("ej:6107", ("%s (%d)"):format(source, dreadSpawnCounter), "Positive", 128419) -- positive, tho we are not really happy about it (gathering speed the adds ability icon)
 		scheduled = nil
 	end
 	function mod:DreadSpawnSingleCast(_, _, source, _, _, _, _, _, _, _, sGUID)
 		if not dreadSpawns[sGUID] then
 			dreadSpawns[sGUID] = true
 			if not scheduled then
-				scheduled = self:ScheduleTimer(anndounceDreadSpawnCount, 0.2, source)
+				scheduled = self:ScheduleTimer(announceDreadSpawnCount, 0.2, source)
 			end
 		end
 	end
@@ -214,9 +211,9 @@ do
 		if mobId == 60999 then -- boss
 			self:Win()
 		elseif mobId == 61003 then -- dread spawn
-			dreadSpawns[guid] = nil -- is this even needed?
+			dreadSpawns[guid] = nil
 			if not scheduled then
-				scheduled = self:ScheduleTimer(anndounceDreadSpawnCount, 0.2, player)
+				scheduled = self:ScheduleTimer(announceDreadSpawnCount, 0.2, player)
 			end
 		end
 	end
@@ -224,8 +221,9 @@ end
 
 do
 	local prev = 0
+	local champion = mod:SpellName(120268) -- Champion of the Light
 	function mod:EternalDarkness(_, spellId, _, _, spellName)
-		if UnitBuff("player", self:SpellName(120268)) then -- champion of the light
+		if UnitBuff("player", champion) then
 			local t = GetTime()
 			if t-prev > 1 then
 				self:Message("ej:6109", L["throw"], "Personal", spellId, "Long")
@@ -260,6 +258,7 @@ end
 function mod:NakedAndAfraid(player, spellId, _, _, spellName)
 	if self:Tank() then
 		self:TargetMessage(spellId, spellName, player, "Urgent", spellId)
+		self:PlaySound(spellId, "Info") -- use TargetMessage for name coloring and play the sound for all tanks
 		self:Bar(spellId, spellName, 31, spellId)
 	end
 end
@@ -269,12 +268,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, spellName, _, _, spellId)
 	if spellId == 114936 then -- Heroic Transition
 		phase = 2
 		self:CloseProximity()
-		self:StopBar(self:SpellName(119414)) -- breath of fear
-		self:StopBar(("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- ominous cackle
-	elseif spellId == 120638 then -- Waterspout and Huddle Timing
-		--self:Bar(120629, 120629, 10, 120629) -- Huddle in terror
-		--self:StopBar("~"..self:SpellName(120519)) -- waterspout
-		--self:Bar(120519, 120519, 30, 120519) -- waterspout
+		self:StopBar(119414) -- Breath of Fear
+		self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119414))) -- Breath of Fear
+		self:StopBar(("%s (%d)"):format(self:SpellName(129147), cackleCounter)) -- Ominous Cackle
+		self:StopBar(131996) -- Thrash
+		swingCounter = 0
+		
+		-- start Submerge timer using the current power and the new regen rate
+		local left = UnitPower("boss1") / UnitPowerMax("boss1") * 52
+		self:Bar(120455, ("%s (%d)"):format(self:SpellName(120455), 1), left, 120455)
 	elseif spellId == 62535 then -- 2nd phase Berserk for that 1 sec accuraccy
 		self:Berserk(900)
 	end
@@ -322,45 +324,51 @@ do -- COPY PASTE ACTION FROM COBALT MINE! see if this works
 end
 
 function mod:Thrash(_, spellId, _, _, spellName)
-	resetNext = 2
-	if atSha and (self:Healer() or self:Tank()) then
-		--[[ don't really need a counter until Dread Expanse (120289) I'll fancy this up after I get some logs
-		if phase2 then
-			thrashCounter = thrashCounter + 1
-			if thrashCounter == 3 then
-				self:DelayedMessage("ej:6699", 4, CL["custom_sec"]:format(self:SpellName(132007), 6), "Attention", 132007, self:Tank() or self:Healer() and "Info" or nil) -- Dread Thrash
-				self:Bar("ej:6699", 132007, 10, 132007)
-			else
-				self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, spellId)
-			end
-			self:Message("ej:6699", ("%s (%d)"):format(spellName, thrashCounter), "Important", spellId)
+	if not self:Tank() or self:Healer() then return end
+	thrashNext = 2
+	if phase == 2 then
+		thrashCounter = thrashCounter + 1
+		self:Message("ej:6699", ("%s (%d)"):format(spellName, thrashCounter), "Urgent", spellId)
+		if thrashCounter == 3 then
+			local dreadThrash = self:SpellName(132007)
+			--self:DelayedMessage("ej:6700", 4, CL["soon"]:format(dreadThrash), "Attention", 132007)
+			self:Bar("ej:6700", dreadThrash, 10, 132007)
 		else
+			self:Bar("ej:6699", ("%s (%d)"):format(spellName, thrashCounter + 1), 10, spellId)
 		end
-		--]]
+	elseif atSha then
 		self:Message("ej:6699", spellName, "Important", spellId)
 		self:Bar("ej:6699", spellName, 10, spellId)
 	end
 end
 
 function mod:DreadThrash(_, spellId, _, _, spellName)
+	if not self:Tank() or self:Healer() then return end
 	thrashCounter = 0
-	resetNext = 5
-	if self:Healer() or self:Tank() then
-		self:Message("ej:6699", spellName, "Important", spellId, "Alarm")
-		--self:Bar("ej:6699", ("%s (%d)"):format(self:SpellName(131996), thrashCounter + 1), 10, 131996) -- Thrash
-		self:Bar("ej:6699", 131996, 10, 131996) -- Thrash
-	end
+	thrashNext = 5
+	self:Message("ej:6700", spellName, "Important", spellId, "Alarm")
+	self:Bar("ej:6699", ("%s (%d)"):format(self:SpellName(131996), thrashCounter + 1), 10, 131996) -- Thrash
 end
 
-function mod:Swing(player, damage, _, _, _, _, _, _, _, _, sGUID)
-	if self:GetCID(sGUID) == 60999 then
+do
+	local thrashSwings = ""
+	function mod:Swing(player, damage, _, _, _, _, _, _, _, _, sGUID)
+		if not self:Tank() or self:GetCID(sGUID) ~= 60999 then return end
+
 		swingCounter = swingCounter + 1
-		if swingCounter > 0 and UnitIsUnit("player", player) then --just the current tank
-			self:Message("ej:6699", ("%s (%d){%s}"):format(L["swing"], swingCounter, tonumber(damage) and _G["DAMAGE"] or _G["MISS"]), "Positive", 5547)
-		end
-		if resetNext then
-			swingCounter = -resetNext -- ignore the thrash hits
-			resetNext = nil
+		local hitType = tonumber(damage) and _G["DAMAGE"] or _G["MISS"] --or _G["ACTION_SPELL_MISSED_"..damage] --
+		if thrashNext then -- thrash triggering swing
+			thrashSwings = ("%s (%d){%s}"):format(L["swing"], swingCounter, hitType)
+			swingCounter = -thrashNext
+			thrashNext = nil
+		elseif UnitIsUnit("player", player) then --just the current tank
+			if swingCounter > 0 then -- normal swing
+				self:Message("swing", ("%s (%d){%s}"):format(L["swing"], swingCounter, hitType), "Positive", 5547) -- hammer icon (meeeeh)
+			elseif swingCounter < 0 then -- extra swing
+				thrashSwings = ("%s{%s}"):format(thrashSwings, hitType)
+			else -- (swingCounter==0) last extra swing
+				self:Message("swing", ("%s{%s}"):format(thrashSwings, hitType), "Positive", 12972) -- thrashy icon
+			end
 		end
 	end
 end
@@ -399,7 +407,8 @@ end
 
 function mod:OminousCackle(_, spellId, _, _, spellName)
 	cackleCounter = cackleCounter + 1
-	self:Bar(spellId, ("%s (%d)"):format(spellName, cackleCounter), is25man() and 45 or 90, spellId)
+	local diff = self:Difficulty()
+	self:Bar(spellId, ("%s (%d)"):format(spellName, cackleCounter), (diff == 4 or diff == 6) and 45 or 90, spellId)
 end
 
 function mod:OminousCackleRemoved(player) -- set it here, because at this point we are surely out of range of the other platforms
@@ -419,8 +428,9 @@ do
 		cackleTargets[#cackleTargets + 1] = player
 		if UnitIsUnit("player", player) then
 			self:CloseProximity()
+			self:StopBar(131996) -- Thrash
 			self:StopBar(119414) -- Breath of Fear
-			self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119414)))
+			self:CancelDelayedMessage(CL["soon"]:format(self:SpellName(119414))) -- Breath of Fear
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnCackle, 0.1, spellId)
