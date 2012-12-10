@@ -48,7 +48,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 119521, 117910, {117961, "FLASHSHAKE"}, -- qiang
+		"ej:5841", 117921, 119521, 117910, {117961, "FLASHSHAKE"}, -- qiang
 		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- zian
 		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- subetai
 		"ej:5835", "cowardice", 117708, -- meng
@@ -68,6 +68,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "FlankingOrders", 117910)
 	self:Log("SPELL_CAST_START", "ImperviousShield", 117961)
 	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 117961)
+	self:Log("SPELL_DAMAGE", "MassiveAttack", 117921)
+	self:Log("SPELL_MISSED", "MassiveAttack", 117921)
 
 	-- zian
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 118303)
@@ -230,6 +232,11 @@ end
 function mod:Annihilate(_, _, _, _, spellName)
 	self:Message(119521, spellName, "Urgent", 119521, "Alarm")
 	self:Bar(119521, spellName, self:Difficulty() == 6 and 32 or 39, 119521)
+	self:Bar(117921, 117921, 8, 117921) -- Massive Attack
+end
+
+function mod:MassiveAttack(_, spellId, _, _, spellName)
+	self:Bar(spellId, spellName, 5, spellId)
 end
 
 function mod:ImperviousShield(_, spellId, _, _, spellName)
