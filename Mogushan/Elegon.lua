@@ -98,7 +98,8 @@ end
 
 function mod:Overcharged(player, spellId, _, _, spellName, buffStack)
 	if UnitIsUnit(player, "player") and InCombatLockdown() then
-		if (buffStack or 1) >= 6 and buffStack % 2 == 0 then
+		buffStack = buffStack or 1
+		if buffStack >= 6 and buffStack % 2 == 0 then
 			self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Personal", spellId)
 		end
 	end
@@ -149,11 +150,7 @@ end
 
 function mod:MaterializeProtector(_, spellId, _, _, spellName)
 	self:Message("adds", CL["add_spawned"], "Attention", spellId)
-	if self:Heroic() then
-		self:Bar("adds", CL["next_add"], 26, spellId)
-	else
-		self:Bar("adds", CL["next_add"], 36, spellId)
-	end
+	self:Bar("adds", CL["next_add"], self:Heroic() and 26 or 36, spellId)
 end
 
 function mod:UnstableEnergyRemoved()
