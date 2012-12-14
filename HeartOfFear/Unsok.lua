@@ -95,6 +95,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "BurningAmber", 122504)
 	self:Log("SPELL_MISSED", "BurningAmber", 122504)
 
+	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+	self:RegisterEvent("UNIT_SPELLCAST_STOP")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
 	self:Death("Win", 62511)
@@ -109,10 +112,6 @@ function mod:OnEngage(diff)
 	phase = 1
 	phase2warned = nil
 	primaryIcon = nil
-
-	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
-	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-	self:RegisterEvent("UNIT_SPELLCAST_STOP")
 end
 
 --------------------------------------------------------------------------------
@@ -302,8 +301,6 @@ function mod:AmberCarapace(_, spellId)
 	self:DelayedMessage("explosion_by_other", 45, CL["custom_sec"]:format(explosion, 10), "Attention", 122402)
 	self:Bar("explosion_by_other", "~"..CL["onboss"]:format(explosion), 55, 122402) -- Monstrosity Explosion
 
-	--TIL you can dodge fling! is like rotface's explosion, you have ~3s to move after it picks a player
-	--self:OpenProximity(8) --8yds for Fling
 	self:Bar(122408, "~"..mod:SpellName(122408), 22, 122408) --Massive Stomp
 	self:Bar(122413, "~"..mod:SpellName(122413), 30, 122413) --Fling
 end
@@ -356,7 +353,9 @@ end
 
 function mod:ConcentratedMutation(_, spellId, _, _, spellName)
 	self:StopBar("~"..CL["onboss"]:format(explosion))
-	--self:CloseProximity()
+	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 20))
+	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 15))
+	self:CancelDelayedMessage(CL["custom_sec"]:format(explosion, 10))
 	phase = 3
 	self:Message(spellId, spellName, "Attention", spellId)
 end
