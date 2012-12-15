@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Protector of the Endless", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
+local L = BigWigs:NewBossLocale("Protectors of the Endless", "esES") or BigWigs:NewBossLocale("Protectors of the Endless", "esMX")
 if not L then return end
 if L then
 	L.on = "¡%s en %s!"

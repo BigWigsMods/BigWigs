@@ -1,5 +1,5 @@
 
-local L = BigWigs:NewBossLocale("Protector of the Endless", "ptBR")
+local L = BigWigs:NewBossLocale("Protectors of the Endless", "ptBR")
 if not L then return end
 if L then
 
