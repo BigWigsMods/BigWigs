@@ -38,7 +38,7 @@ function mod:GetOptions()
 		{123845, "FLASHSHAKE", "ICON", "SAY"},
 		"ej:6325", "eyes", {123788, "FLASHSHAKE", "ICON"}, "proximity", 123735,
 		{125390, "FLASHSHAKE"}, 124097, 124827, {124077, "FLASHSHAKE"},
-		{124862, "FLASHSHAKE", "SAY"}, { 124849, "FLASHSHAKE" },
+		{124862, "FLASHSHAKE", "SAY", "PROXIMITY"}, { 124849, "FLASHSHAKE" },
 		"phases", "berserk", "bosskill",
 	}, {
 		[123845] = "heroic",
@@ -58,6 +58,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 125390)
 	self:Log("SPELL_AURA_APPLIED", "Resin", 124097)
 	self:Log("SPELL_AURA_APPLIED", "Visions", 124862)
+	self:Log("SPELL_AURA_REMOVED", "VisionsRemoved", 124862)
+	self:Log("SPELL_AURA_APPLIED", "VisionsDispel", 124868)
 	self:Log("SPELL_AURA_APPLIED", "Poison", 124827)
 	self:Log("SPELL_AURA_REFRESH", "Poison", 124827)
 	self:Log("SPELL_AURA_APPLIED", "CryOfTerror", 123788)
@@ -65,6 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ConsumingTerror", 124849)
 	self:Log("SPELL_AURA_APPLIED", "Dispatch", 124077)
 	self:Log("SPELL_CAST_SUCCESS", "DreadScreech", 123735)
+	self:Log("SPELL_AURA_APPLIED", "UltimateCorruption", 125451)
 
 	self:Yell("OnEngage", L["engage_trigger"]) -- XXX Check ENGAGE results
 
@@ -134,17 +137,34 @@ function mod:CryOfTerrorRemoved(_, spellId)
 end
 
 do
+	local prev = 0
+	function mod:VisionsDispel(player, spellId, _, _, spellName)
+		if self:Dispeller("magic") or select(2, UnitClass("player")) == "SHAMAN" then -- shamans too because of tremor totem
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:LocalMessage(124862, spellName, "Attention", spellId, "Alert")
+			end
+		end
+	end
+end
+
+function mod:VisionsRemoved(player, spellId)
+	self:CloseProximity(spellId)
+end
+
+do
 	local visionsList, scheduled = mod:NewTargetList(), nil
 	local function warnVisions(spellId)
 		mod:TargetMessage(spellId, spellId, visionsList, "Important", spellId, "Alarm")
 		scheduled = nil
 	end
-	function mod:Visions(player, spellId, _, _, spellName) -- if this is dispellable then we can remove the say and flashshake
+	function mod:Visions(player, spellId, _, _, spellName)
 		visionsList[#visionsList + 1] = player
 		if UnitIsUnit("player", player) then
-			-- EJ talks about 8 yard damage, but it is useless to have proximity meter because you are feared
-			self:Say(spellId, CL["say"]:format(spellName))
+			self:Say(spellId, CL["say"]:format(spellName)) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
 			self:FlashShake(spellId)
+			self:OpenProximity(8, spellId)
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warnVisions, 0.1, spellId)
@@ -200,6 +220,11 @@ function mod:Eyes(player, spellId, _, _, _, buffStack)
 		self:Bar("eyes", L["eyes_message"]:format(player, buffStack), 30, spellId)
 		self:LocalMessage("eyes", L["eyes_message"], "Urgent", spellId, buffStack > 2 and "Info" or nil, player, buffStack)
 	end
+end
+
+function mod:UltimateCorruption(_, spellId)
+	self:Message("phases", CL["phase"]:format(3), "Positive", spellId, "Info")
+	self:CloseProximity()
 end
 
 function mod:UNIT_HEALTH_FREQUENT(_, unitId)

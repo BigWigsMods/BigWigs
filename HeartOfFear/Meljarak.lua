@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RecklessnessHeroic", 125873)
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
-	self:Log("SPELL_CAST_START", "Quickening", 122149)
+	self:Log("SPELL_AURA_APPLIED", "Quickening", 122149)
 	self:Log("SPELL_CAST_START", "Mending", 122193)
 	self:Log("SPELL_CAST_START", "RainOfBlades", 122406)
 	self:Log("SPELL_AURA_APPLIED", "ImpalingSpear", 122224)
@@ -186,8 +186,17 @@ function mod:RainOfBlades(_, spellId, _, _, spellName)
 	self:Bar(spellId, "~"..spellName, 60, spellId)
 end
 
-function mod:Quickening(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Attention", spellId)
+do
+	local prev = 0
+	function mod:Quickening(_, spellId, _, _, spellName) -- You really only care about this anyways when you can dispel
+		if self:Dispeller("magic", true) then
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:LocalMessage(spellId, spellName, "Attention", spellId, "Alert")
+			end
+		end
+	end
 end
 
 function mod:Mending(_, spellId, source, _, spellName, _, _, _, _, _, sGUID)

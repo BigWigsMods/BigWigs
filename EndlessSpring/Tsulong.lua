@@ -11,6 +11,7 @@ mod:RegisterEnableMob(62442)
 -- Locals
 --
 local bigAddCounter = 0
+local _ = _ -- don't taint
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -108,7 +109,7 @@ function mod:EngageCheck()
 end
 
 function mod:Terrorize(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId)
+	self:Message(spellId, spellName, "Important", spellId, self:Dispeller("magic") and "Alert" or nil)
 	self:Bar(spellId, "~"..spellName, 41, spellId)
 end
 
@@ -135,6 +136,19 @@ function mod:ShadowBreath(player, spellId, _, _, spellName)
 end
 
 do
+	local function checkForHoTs() -- well any magic actually not just HoTs
+		if mod:Dispeller("magic", true) then
+			local dispellable, spellId = false, nil
+			for i=1, 40 do
+				if select(5, UnitBuff("boss1", i)) == "Magic" then
+					dispellable, _, _, _, _, _, _, _, _, _, spellId = UnitBuff("boss1", i)
+				end
+			end
+			if dispellable then
+				mod:LocalMessage("phases", ("%s - %s"):format((UnitName("boss1")), dispellable), "Attention", spellId, "Alert") -- maybe should not be tied to "phases" option
+			end
+		end
+	end
 	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 		if not unitId:match("boss") then return end
@@ -158,6 +172,7 @@ do
 			self:Message("phases", L["night"], "Positive", 122768)
 			self:Bar("phases", L["day"], 121, 122789)
 			self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
+			checkForHoTs()
 		elseif spellId == 122953 then -- Summon Unstable Sha
 			local t = GetTime()
 			if t-prev > 2 then

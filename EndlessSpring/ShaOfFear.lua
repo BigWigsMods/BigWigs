@@ -129,7 +129,7 @@ end
 do
 	-- intelligent ability warning for last phase
 	local huddleUsed, strikeUsed, spoutUsed = nil, nil, nil
-	local huddleList, scheduled, huddleTimer = mod:NewTargetList(), nil, nil
+	local huddleList, scheduled = mod:NewTargetList(), nil
 	local function warnNext()
 		if huddleUsed and spoutUsed and not strikeUsed then
 			mod:Bar(120672, 120672, 10, 120672) -- strike
