@@ -11,7 +11,6 @@ mod:RegisterEnableMob(62442)
 -- Locals
 --
 local bigAddCounter = 0
-local _ = _ -- don't taint
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -137,15 +136,11 @@ end
 
 do
 	local function checkForHoTs() -- well any magic actually not just HoTs
-		if mod:Dispeller("magic", true) then
-			local dispellable, spellId = false, nil
-			for i=1, 40 do
-				if select(5, UnitBuff("boss1", i)) == "Magic" then
-					dispellable, _, _, _, _, _, _, _, _, _, spellId = UnitBuff("boss1", i)
-				end
-			end
-			if dispellable then
-				mod:LocalMessage("phases", ("%s - %s"):format((UnitName("boss1")), dispellable), "Attention", spellId, "Alert") -- maybe should not be tied to "phases" option
+		for i=1, 40 do
+			local name, _, _, _, buffType, _, _, _, _, _, spellId = UnitBuff("boss1", i)
+			if name and buffType == "Magic" then
+				mod:LocalMessage("phases", ("%s - %s"):format((UnitName("boss1")), name), "Attention", spellId, "Alert") -- maybe should not be tied to "phases" option
+				break
 			end
 		end
 	end
@@ -172,7 +167,9 @@ do
 			self:Message("phases", L["night"], "Positive", 122768)
 			self:Bar("phases", L["day"], 121, 122789)
 			self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
-			checkForHoTs()
+			if self:Dispeller("magic", true) then
+				checkForHoTs()
+			end
 		elseif spellId == 122953 then -- Summon Unstable Sha
 			local t = GetTime()
 			if t-prev > 2 then
