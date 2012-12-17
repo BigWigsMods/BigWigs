@@ -24,6 +24,7 @@ local subetai = EJ_GetSectionInfo(5846)
 local zian = EJ_GetSectionInfo(5852)
 
 local bossActivated = {}
+local bossWarned = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -48,10 +49,10 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"ej:5841", 117921, 119521, 117910, {117961, "FLASHSHAKE"}, -- qiang
-		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- zian
-		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- subetai
-		"ej:5835", "cowardice", 117708, -- meng
+		"ej:5841", 117921, 119521, 117910, {117961, "FLASHSHAKE"}, -- Qiang
+		"ej:5852", {118303, "SAY", "ICON"}, {117697, "FLASHSHAKE"}, -- Zian
+		"ej:5846", 118047, 118122, 118094, {118162, "FLASHSHAKE"}, -- Subetai
+		"ej:5835", "cowardice", 117708, 117837, -- Meng
 		"proximity", "casting_shields", "berserk", "bosskill",
 	}, {
 		["ej:5841"] = qiang,
@@ -63,7 +64,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- qiang
+	-- Qiang
 	self:Log("SPELL_CAST_START", "Annihilate", 119521, 117948) -- Heroic, Norm/LFR
 	self:Log("SPELL_CAST_SUCCESS", "FlankingOrders", 117910)
 	self:Log("SPELL_CAST_START", "ImperviousShield", 117961)
@@ -71,21 +72,22 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "MassiveAttack", 117921)
 	self:Log("SPELL_MISSED", "MassiveAttack", 117921)
 
-	-- zian
+	-- Zian
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 118303)
 	self:Log("SPELL_CAST_START", "ShieldofDarkness", 117697)
 	self:Log("SPELL_AURA_REMOVED", "ShieldRemoved", 117697)
 
-	-- subetai
+	-- Subetai
 	self:Log("SPELL_CAST_SUCCESS", "Pillage", 118047)
 	self:Log("SPELL_AURA_APPLIED", "PinnedDown", 118135)
 	self:Log("SPELL_CAST_START", "SleightofHand", 118162)
 	self:Log("SPELL_CAST_START", "Volley", 118094)
 
-	-- meng
+	-- Meng
 	self:Log("SPELL_CAST_START", "MaddeningShout", 117708)
-	self:Log("SPELL_AURA_APPLIED", "CowardiceApplied", 117756) -- only add spellId that is on the Boss
-	self:Log("SPELL_AURA_REMOVED", "CowardiceRemoved", 117756) -- only add spellId that is on the Boss
+	self:Log("SPELL_AURA_APPLIED", "CowardiceApplied", 117756)
+	self:Log("SPELL_AURA_REMOVED", "CowardiceRemoved", 117756)
+	self:Log("SPELL_AURA_APPLIED", "Delirious", 117837)
 
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
@@ -98,6 +100,8 @@ function mod:OnEngage()
 	wipe(bossActivated)
 	if self:Heroic() then
 		self:Bar(117961, 117961, 40, 117961) -- Impervious Shield
+		self:RegisterEvent("UNIT_HEALTH_FREQUENT")
+		bossWarned = 0
 	end
 	self:Bar(119521, 119521, 10, 119521) -- Annihilate
 	self:Bar(117910, 117910, 25, 117910) -- Flanking Orders
@@ -167,25 +171,24 @@ function mod:MaddeningShout(_, spellId, _, _, spellName)
 	end
 end
 
-function mod:ShieldofDarkness(_, spellId, _, _, spellName)
-	self:Message(spellId, spellName, "Important", spellId, "Alert")
-	self:Bar(spellId, spellName, 42, spellId)
-	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, spellId)
-	self:FlashShake(spellId)
+function mod:Delirious(_, spellId, _, _, spellName)
+	if self:Dispeller("enrage", true) then
+		self:LocalMessage(spellId, spellName, "Urgent", spellId, "Alert")
+		self:Bar(spellId, spellName, 20, spellId)
+	end
 end
 
--- subetai
+-- Subetai
 do
-	local timer = nil
-	local pinnedTargets = mod:NewTargetList()
+	local pinnedTargets, scheduled = mod:NewTargetList(), nil
 	local function warnPinned(spellName)
 		mod:TargetMessage(118122, spellName, pinnedTargets, "Important", 118122, "Alarm")
-		timer = nil
+		scheduled = nil
 	end
 	function mod:PinnedDown(player, _, _, _, spellName)
 		pinnedTargets[#pinnedTargets + 1] = player
-		if not timer then
-			timer = self:ScheduleTimer(warnPinned, 0.1, spellName)
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warnPinned, 0.1, spellName)
 		end
 	end
 end
@@ -210,7 +213,7 @@ function mod:SleightofHand(_, spellId, _, _, spellName)
 	self:FlashShake(spellId)
 end
 
--- zian
+-- Zian
 function mod:Fixate(player, spellId, _, _, spellName)
 	self:PrimaryIcon(spellId, player)
 	if UnitIsUnit("player", player) then
@@ -219,7 +222,14 @@ function mod:Fixate(player, spellId, _, _, spellName)
 	end
 end
 
--- qiang
+function mod:ShieldofDarkness(_, spellId, _, _, spellName)
+	self:Message(spellId, spellName, "Important", spellId, "Alert")
+	self:Bar(spellId, spellName, 42, spellId)
+	self:Bar("casting_shields", CL["cast"]:format(spellName), 2, spellId)
+	self:FlashShake(spellId)
+end
+
+-- Qiang
 function mod:FlankingOrders(_, spellId, _, _, spellName)
 	self:Message(spellId, spellName, "Attention", spellId, "Long")
 	if isBossActiveById(60709, 61423) then
@@ -257,14 +267,14 @@ function mod:EngageCheck()
 		if UnitExists(unitId) then
 			local id = self:GetCID(UnitGUID(unitId))
 			-- this is needed because of heroic
-			if (id == 60701 or id == 61421) and not bossActivated[60701] then -- zian
+			if (id == 60701 or id == 61421) and not bossActivated[60701] then -- Zian
 				bossActivated[60701] = true
 				if self:Heroic() then
 					self:Bar(117697, 117697, 40, 117697) -- Shield of Darkness
 				end
 				self:OpenProximity(8)
 				self:Message("ej:5852", zian, "Positive", 117628)
-			elseif (id == 60710 or id == 61427) and not bossActivated[60710] then -- subetai
+			elseif (id == 60710 or id == 61427) and not bossActivated[60710] then -- Subetai
 				bossActivated[60710] = true
 				if self:Heroic() then
 					self:Bar(118162, 118162, 15, 118162) -- Sleight of Hand
@@ -274,9 +284,12 @@ function mod:EngageCheck()
 				self:Bar(118047, 118047, 26, 118047) -- Pillage
 				self:Bar(118122, 118122, self:Heroic() and 40 or 15, 118122) -- Rain of Arrows
 				self:Message("ej:5846", subetai, "Positive", 118122)
-			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- meng
+			elseif (id == 60708 or id == 61429) and not bossActivated[60708] then -- Meng
 				bossActivated[60708] = true
 				self:Bar(117708, "~"..self:SpellName(117708), self:Heroic() and 40 or 21, 117708) -- Maddening Shout, on heroic: 44.2, 19.8, 48.7, 49.2, 40.2
+				if self:Heroic() and self:Dispeller("enrage", true) then
+					self:Bar(117837, 117837, 20, 117837) -- Delirious
+				end
 				self:Message("ej:5835", meng, "Positive", 117833)
 			end
 		end
@@ -287,30 +300,51 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
 	if unitId:find("boss", nil, true) then
 		if spellId == 118205 then -- Inactive Visual
 			local id = self:GetCID(UnitGUID(unitId))
-			if (id == 60709 or id == 61423) then -- qiang
+			if (id == 60709 or id == 61423) then -- Qiang
 				self:StopBar(119521) -- Annihilate
 				self:StopBar(117961) -- Impervious Shield
+				self:StopBar(117921) -- Massive Attack
 				self:Bar(117910, 117910, 30, 117910) -- Flanking Orders
-			elseif (id == 60701 or id == 61421) then -- zian
+			elseif (id == 60701 or id == 61421) then -- Zian
 				self:StopBar(117697) -- Shield of Darkness
-				if not isBossActiveById(60710, 61427) then -- don't close if subetai is active
+				if not isBossActiveById(60710, 61427) then -- don't close if Subetai is active
 					self:CloseProximity()
 				end
-			elseif (id == 60710 or id == 61427) then -- subetai
+			elseif (id == 60710 or id == 61427) then -- Subetai
 				self:StopBar(118162) -- Sleight of Hand
 				self:StopBar(118094) -- Volley
 				self:StopBar(self:Heroic() and 118122 or ("~"..self:SpellName(118122))) -- Rain of Arrows
 				self:StopBar("~"..self:SpellName(118047)) -- Pillage
 				self:Bar(118047, 118047, 30, 118047) -- Pillage
-				if not isBossActiveById(60701, 61421) then -- don't close if zian is active
+				if not isBossActiveById(60701, 61421) then -- don't close if Zian is active
 					self:CloseProximity()
 				end
-			elseif (id == 60708 or id == 61429) then -- meng
+			elseif (id == 60708 or id == 61429) then -- Meng
+				self:StopBar(117837)
 				self:Bar(117708, "~"..self:SpellName(117708), 30, 117708) -- Maddening Shout
 			end
 		elseif spellId == 118121 then -- Rain of Arrows for Pinned Down
 			local hc = self:Heroic()
 			self:Bar(118122, hc and 118122 or ("~"..self:SpellName(118122)), hc and 41 or 51, 118122) -- Rain of Arrows, exact on heroic, 50-60 on norm
+		end
+	end
+end
+
+function mod:UNIT_HEALTH_FREQUENT(_, unitId)
+	if unitId:find("boss", nil, true) then
+		local hp = UnitHealth(unitId) / UnitHealthMax(unitId) * 100
+		if hp < 38 then -- next boss at 30% (Qiang -> Subetai -> Zian -> Meng)
+			local id = self:GetCID(UnitGUID(unitId))
+			if bossWarned == 0 and (id == 60709 or id == 61423) then -- Qiang
+				self:Message("ej:5846", CL["soon"]:format(subetai), "Positive", nil, "Info")
+				bossWarned = 1
+			elseif bossWarned == 1 and (id == 60710 or id == 61427) then -- Subetai
+				self:Message("ej:5852", CL["soon"]:format(zian), "Positive", nil, "Info")
+				bossWarned = 2
+			elseif bossWarned == 2 and (id == 60701 or id == 61421) then -- Zian
+				self:Message("ej:5835", CL["soon"]:format(meng), "Positive", nil, "Info")
+				self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
+			end
 		end
 	end
 end

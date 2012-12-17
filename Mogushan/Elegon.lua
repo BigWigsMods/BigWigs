@@ -98,8 +98,7 @@ end
 
 function mod:Overcharged(player, spellId, _, _, spellName, buffStack)
 	if UnitIsUnit(player, "player") and InCombatLockdown() then
-		buffStack = buffStack or 1
-		if buffStack >= 6 and buffStack % 2 == 0 then
+		if (buffStack or 1) >= 6 and buffStack % 2 == 0 then
 			self:LocalMessage(spellId, ("%s (%d)"):format(spellName, buffStack), "Personal", spellId)
 		end
 	end
