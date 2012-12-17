@@ -68,6 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_SUMMON", "WindBomb", 131814)
 	self:Log("SPELL_CAST_START", "WhirlingBlade", 121896)
 	self:Log("SPELL_AURA_APPLIED", "Quickening", 122149)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Quickening", 122149)
 	self:Log("SPELL_CAST_START", "Mending", 122193)
 	self:Log("SPELL_CAST_START", "RainOfBlades", 122406)
 	self:Log("SPELL_AURA_APPLIED", "ImpalingSpear", 122224)
@@ -279,17 +280,13 @@ function mod:UNIT_HEALTH_FREQUENT(_, unitId)
 			self:Bar(121896, "~"..self:SpellName(121896), 45, 121896) -- Whirling Blade (reset cd)
 			self:UnregisterEvent("UNIT_HEALTH_FREQUENT")
 			phase = 2
-			local trappersNotPresent = true
 			for i = 2, 5 do
 				local guid = UnitGUID(("boss%d"):format(i))
 				if guid and self:GetCID(guid) == 62451 then -- The Sra'thik
-					trappersNotPresent = nil
-					break
+					return
 				end
 			end
-			if trappersNotPresent then
-				self:OpenProximity(5, 131830) -- Wind Bomb
-			end
+			self:OpenProximity(5, 131830) -- Wind Bomb
 		end
 	end
 end
