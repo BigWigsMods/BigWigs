@@ -51,6 +51,8 @@ if L then
 	L.courage, L.courage_desc = EJ_GetSectionInfo(5676)
 	L.courage_icon = 126030 -- shield like icon
 
+	L.titan_spark = EJ_GetSectionInfo(5674)
+
 	L.bosses, L.bosses_desc = EJ_GetSectionInfo(5726)
 	L.bosses_icon = "achievement_moguraid_06"
 end
@@ -64,18 +66,18 @@ L.arc_desc = L.target_only .. L.arc_desc
 
 function mod:GetOptions()
 	return {
+		{116829, "FLASHSHAKE", "SAY"},
 		"rage", {116525, "FLASHSHAKE"},
 		"strength",
 		"courage",
 		"bosses", "combo", "arc",
-		{116829, "FLASHSHAKE", "SAY"},
 		"gas", "berserk", "bosskill",
 	}, {
+		[116829] = ("%s (%s)"):format(L["titan_spark"], CL["heroic"]),
 		rage = L["rage"],
 		strength = L["strength"],
 		courage = L["courage"],
 		bosses = L["bosses"],
-		[116829] = "heroic",
 		gas = "general",
 	}
 end
@@ -151,7 +153,7 @@ end
 function mod:FocusedEnergy(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(spellId)
-		self:Say(spellId, CL["say"]:format(spellName))
+		self:Say(spellId, CL["say"]:format(L["titan_spark"]))
 	end
 	self:TargetMessage(spellId, spellName, player, "Attention", spellId, "Info")
 end
