@@ -36,9 +36,6 @@ end
 
 L = BigWigs:NewBossLocale("Wind Lord Mel'jarak", "ruRU")
 if L then
-	L.next_pack = "Следующая группа"
-	L.next_pack_desc = "Предупреждать, когда появится новая группа после убийства предыдущей."
-
 	L.spear_removed = "Ваше Пронзающее копье снялось!"
 	L.residue_removed = "%s снялся!"
 end
