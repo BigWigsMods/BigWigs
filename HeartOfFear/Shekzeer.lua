@@ -224,6 +224,7 @@ end
 
 function mod:UltimateCorruption(_, spellId)
 	self:Message("phases", CL["phase"]:format(3), "Positive", spellId, "Info")
+	self:StopBar(CL["phase"]:format(2))
 	self:CloseProximity()
 end
 
