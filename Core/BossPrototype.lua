@@ -11,6 +11,8 @@ local format = string.format
 local type = type
 local core = BigWigs
 local C = core.C
+local bwUtilityFrame = CreateFrame("Frame")
+local enabledModules = {}
 local difficulty = 3
 local UpdateDispelStatus = nil
 
@@ -67,6 +69,9 @@ function boss:OnEnable()
 	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 	self:SendMessage("BigWigs_OnBossEnable", self)
 
+	-- Update enabled modules list
+	enabledModules[#enabledModules+1] = self
+
 	-- Update Difficulty
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
@@ -77,6 +82,16 @@ end
 function boss:OnDisable()
 	if debug then dbg(self, "OnDisable()") end
 	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
+
+	-- Update enabled modules list
+	for i = 1, #enabledModules do
+		if self == enabledModules[i] then
+			tremove(enabledModules, i)
+		end
+	end
+	if #enabledModules == 0 then
+		bwUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 
 	wipe(combatLogMap[self])
 	wipe(yellMap[self])
@@ -115,17 +130,6 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local invalidId = "Module %q tried to register an invalid spell id (%d) to event %q."
 
-	function boss:CHAT_MSG_MONSTER_YELL(_, msg, ...)
-		if yellMap[self][msg] then
-			self[yellMap[self][msg]](self, msg, ...)
-		else
-			for yell, func in pairs(yellMap[self]) do
-				if msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 2nd check
-					self[func](self, msg, ...)
-				end
-			end
-		end
-	end
 	function boss:RAID_BOSS_EMOTE(_, msg, ...)
 		if emoteMap[self][msg] then
 			self[emoteMap[self][msg]](self, msg, ...)
@@ -137,28 +141,6 @@ do
 			end
 		end
 	end
-
-	function boss:COMBAT_LOG_EVENT_UNFILTERED(_, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
-		if event == "UNIT_DIED" then
-			local numericId = tonumber(dGUID:sub(6, 10), 16)
-			local d = deathMap[self][numericId]
-			if not d then return end
-			if type(d) == "function" then d(numericId, dGUID, player, dFlags)
-			else self[d](self, numericId, dGUID, player, dFlags) end
-		else
-			local m = combatLogMap[self][event]
-			if m and (m[spellId] or m["*"]) then
-				local func = m[spellId] or m["*"]
-				if type(func) == "function" then
-					func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
-				else
-					self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
-					if debug then dbg(self, "Firing func: "..func) end
-				end
-			end
-		end
-	end
-
 	function boss:Emote(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
 		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
@@ -166,6 +148,18 @@ do
 			emoteMap[self][(select(i, ...))] = func
 		end
 		self:RegisterEvent("RAID_BOSS_EMOTE")
+	end
+
+	function boss:CHAT_MSG_MONSTER_YELL(_, msg, ...)
+		if yellMap[self][msg] then
+			self[yellMap[self][msg]](self, msg, ...)
+		else
+			for yell, func in pairs(yellMap[self]) do
+				if msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 2nd check
+					self[func](self, msg, ...)
+				end
+			end
+		end
 	end
 	function boss:Yell(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
@@ -175,6 +169,30 @@ do
 		end
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
+
+	bwUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
+		for i = 1, #enabledModules do
+			local self = enabledModules[i]
+			if event == "UNIT_DIED" then
+				local numericId = tonumber(dGUID:sub(6, 10), 16)
+				local d = deathMap[self][numericId]
+				if not d then return end
+				if type(d) == "function" then d(numericId, dGUID, player, dFlags)
+				else self[d](self, numericId, dGUID, player, dFlags) end
+			else
+				local m = combatLogMap[self][event]
+				if m and (m[spellId] or m["*"]) then
+					local func = m[spellId] or m["*"]
+					if type(func) == "function" then
+						func(player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
+					else
+						self[func](self, player, spellId, source, secSpellId, spellName, buffStack, event, sFlags, dFlags, dGUID, sGUID)
+						if debug then dbg(self, "Firing func: "..func) end
+					end
+				end
+			end
+		end
+	end)
 	function boss:Log(event, func, ...)
 		if not event or not func then error(format(missingArgument, self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
@@ -186,7 +204,7 @@ do
 				print(format(invalidId, self.moduleName, id, event))
 			end
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		bwUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 	function boss:Death(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
@@ -194,7 +212,7 @@ do
 		for i = 1, select("#", ...) do
 			deathMap[self][(select(i, ...))] = func
 		end
-		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		bwUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
 
@@ -487,17 +505,17 @@ end
 
 local silencedOptions = {}
 do
-	local bwOptionSilencer = CreateFrame("Frame")
-	bwOptionSilencer:Hide()
-	LibStub("AceEvent-3.0"):Embed(bwOptionSilencer)
-	bwOptionSilencer:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
+	bwUtilityFrame:Hide()
+	local dummyMod = {}
+	LibStub("AceEvent-3.0"):Embed(dummyMod)
+	dummyMod:RegisterMessage("BigWigs_SilenceOption", function(event, key, time)
 		if key ~= nil then -- custom bars have a nil key
 			silencedOptions[key] = time
-			bwOptionSilencer:Show()
+			bwUtilityFrame:Show()
 		end
 	end)
 	local total = 0
-	bwOptionSilencer:SetScript("OnUpdate", function(self, elapsed)
+	bwUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
 		total = total + elapsed
 		if total >= 0.5 then
 			for k, t in pairs(silencedOptions) do
