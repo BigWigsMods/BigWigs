@@ -60,7 +60,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{"ej:6548", "FLASHSHAKE", "ICON"},
+		{"ej:6548", "FLASHSHAKE", "ICON", "SAY"},
 		122784, 123059, { "explosion_by_you" }, { "explosion_casting_by_you", "FLASHSHAKE" }, 123060, "willpower",
 		"monstrosity", "explosion_by_other", { "explosion_casting_by_other", "FLASHSHAKE" }, 122413, 122408,
 		122556,
@@ -364,6 +364,7 @@ function mod:AmberGlobule(player, spellId, _, _, spellName)
 	self:TargetMessage("ej:6548", spellName, player, "Important", spellId, "Alert")
 	if UnitIsUnit(player, "player") then
 		self:FlashShake("ej:6548")
+		self:Say("ej:6548", CL["say"]:format(spellName))
 	end
 	if not primaryIcon then
 		self:PrimaryIcon("ej:6548", player)
