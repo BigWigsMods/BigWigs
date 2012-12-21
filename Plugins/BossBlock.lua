@@ -2,21 +2,14 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("BossBlock", "AceHook-3.0")
+local plugin = BigWigs:NewPlugin("BossBlock")
 if not plugin then return end
-
--------------------------------------------------------------------------------
--- Locals
---
-
-local fnd = string.find
-local type = type
 
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-local function filter(self, event, msg)
+local function filter(_, _, msg)
 	if plugin:IsSpam(msg) then return true end
 end
 
@@ -27,23 +20,27 @@ function plugin:OnRegister()
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
 end
 
-function plugin:OnPluginEnable()
-	self:RawHook("RaidNotice_AddMessage", "RWAddMessage", true)
-end
-
-local rwf = RaidWarningFrame
-local rbe = RaidBossEmoteFrame
-function plugin:RWAddMessage(frame, message, colorInfo)
-	if frame == rwf and self:IsSpam(message) then
-		return
-	elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
-		return
+do
+	local rwf = RaidWarningFrame
+	local rbe = RaidBossEmoteFrame
+	local hook = nil
+	function plugin:OnPluginEnable()
+		if not hook then
+			hook = RaidNotice_AddMessage
+			RaidNotice_AddMessage = function(frame, msg, ...)
+				if frame == rwf and self:IsSpam(msg) then
+					return
+				elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
+					return
+				end
+				hook(frame, msg, ...)
+			end
+		end
 	end
-	self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
 end
 
 function plugin:IsSpam(text)
-	if not BigWigs.db.profile.showBossmodChat and type(text) == "string" and fnd(text, "%*%*%*") then
+	if not BigWigs.db.profile.showBossmodChat and type(text) == "string" and text:find("***", nil, true) then
 		return true
 	end
 end
