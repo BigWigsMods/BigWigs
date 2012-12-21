@@ -647,7 +647,6 @@ function plugin:OnRegister()
 	db = self.db.profile
 
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled, "inv_misc_map02")
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
 	if not db.font then
 		db.font = media:GetDefault("font")
@@ -656,7 +655,9 @@ function plugin:OnRegister()
 		local _, size = GameFontNormalHuge:GetFont()
 		db.fontSize = size
 	end
+end
 
+function plugin:OnPluginEnable()
 	if not anchor then
 		anchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
 		anchor:SetWidth(db.width or plugin.defaultDB.width)
@@ -701,13 +702,13 @@ function plugin:OnRegister()
 
 		local rangeCircle = anchor:CreateTexture(nil, "ARTWORK")
 		rangeCircle:SetPoint("CENTER")
-		rangeCircle:SetTexture([[Interface\AddOns\BigWigs\Textures\alert_circle]])
+		rangeCircle:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\alert_circle")
 		rangeCircle:SetBlendMode("ADD")
 		anchor.rangeCircle = rangeCircle
 
 		local playerDot = anchor:CreateTexture(nil, "OVERLAY")
 		playerDot:SetSize(32, 32)
-		playerDot:SetTexture([[Interface\Minimap\MinimapArrow]])
+		playerDot:SetTexture("Interface\\Minimap\\MinimapArrow")
 		playerDot:SetBlendMode("ADD")
 		playerDot:SetPoint("CENTER")
 		anchor.playerDot = playerDot
@@ -743,20 +744,18 @@ function plugin:OnRegister()
 		end
 
 		self:RestyleWindow()
+
+		anchor:Hide()
+
+		for i = 1, 40 do
+			local n = format("raid%d", i)
+			raidList[i] = n
+			blipList[n] = anchor:CreateTexture(nil, "OVERLAY")
+			blipList[n]:SetSize(16, 16)
+			blipList[n]:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+		end
 	end
 
-	anchor:Hide()
-
-	for i = 1, 40 do
-		local n = format("raid%d", i)
-		raidList[i] = n
-		blipList[n] = anchor:CreateTexture(nil, "OVERLAY")
-		blipList[n]:SetSize(16, 16)
-		blipList[n]:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
-	end
-end
-
-function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowProximity")
 	self:RegisterMessage("BigWigs_HideProximity", "Close")
 	self:RegisterMessage("BigWigs_OnBossDisable")
