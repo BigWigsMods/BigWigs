@@ -170,7 +170,7 @@ do
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
 
-	bwUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack, ...)
+	bwUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sGUID, source, sFlags, _, dGUID, player, dFlags, _, spellId, spellName, _, secSpellId, buffStack)
 		for i = 1, #enabledModules do
 			local self = enabledModules[i]
 			if event == "UNIT_DIED" then

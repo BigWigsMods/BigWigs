@@ -43,8 +43,7 @@ do
 	-- END: MAGIC WOWACE VOODOO VERSION STUFF
 end
 
-BigWigsLoader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
-local loader = BigWigsLoader
+local loader = LibStub("AceAddon-3.0"):NewAddon("BigWigsLoader", "AceEvent-3.0")
 
 local LOCALE = GetLocale()
 if LOCALE == "enGB" then
@@ -68,11 +67,6 @@ local GetCurrentMapAreaID = GetCurrentMapAreaID
 local SetMapToCurrentZone = SetMapToCurrentZone
 loader.GetCurrentMapAreaID = GetCurrentMapAreaID
 loader.SetMapToCurrentZone = SetMapToCurrentZone
-
--- Grouping
-local BWRAID = 2
-local BWPARTY = 1
-local grouped = nil
 
 -- Version
 local usersAlpha = {}
@@ -98,6 +92,7 @@ local loadOnCoreLoaded = {} -- BigWigs modulepacks that should load when the cor
 -- XXX shouldn't really be named "menus", it's actually panels in interface options now
 local menus = {} -- contains the main menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
+local loaderUtilityFrame = CreateFrame("Frame")
 
 -----------------------------------------------------------------------
 -- Utility
@@ -130,14 +125,6 @@ do
 	end
 end
 
-local function registerEnableZone(zone, groupsize)
-	-- only update enablezones if content is of lower level than before.
-	-- if someone adds a party module to a zone that is already in the table as a raid, set the level of that zone to party
-	if not enableZones[zone] or (enableZones[zone] and enableZones[zone] > groupsize) then
-		enableZones[zone] = tonumber(groupsize) -- needs to be a number.
-	end
-end
-
 local errorInvalidZoneID = "The zone ID %q from the addon %q was not parsable."
 local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
@@ -145,7 +132,7 @@ local function iterateZones(addon, override, partyContent, ...)
 		local zone = tonumber(rawZone:trim())
 		if zone then
 			-- register the zone for enabling.
-			registerEnableZone(zone, partyContent and BWPARTY or BWRAID)
+			enableZones[zone] = true
 
 			if not loadOnZone[zone] then loadOnZone[zone] = {} end
 			loadOnZone[zone][#loadOnZone[zone] + 1] = addon
@@ -352,27 +339,29 @@ function loader:OnEnable()
 		self.time = GetTime()
 	end
 
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
-	self:RegisterEvent("GROUP_ROSTER_UPDATE", "CheckRoster")
+	loaderUtilityFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	loaderUtilityFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 
-	self:RegisterEvent("CHAT_MSG_ADDON")
+	loaderUtilityFrame:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterMessage("BigWigs_AddonMessage")
 	RegisterAddonMessagePrefix("BigWigs")
 
-	self:RegisterMessage("BigWigs_JoinedGroup")
-	self:RegisterMessage("BigWigs_LeftGroup")
 	self:RegisterMessage("BigWigs_CoreEnabled")
 	self:RegisterMessage("BigWigs_CoreDisabled")
 
-	self:CheckRoster()
-	self:ZoneChanged()
+	self:GROUP_ROSTER_UPDATE()
+	self:ZONE_CHANGED_NEW_AREA()
 end
 
 -----------------------------------------------------------------------
 -- Events
 --
 
-function loader:CHAT_MSG_ADDON(_, prefix, msg, _, sender)
+loaderUtilityFrame:SetScript("OnEvent", function(_, event, ...)
+	loader[event](loader, ...)
+end)
+
+function loader:CHAT_MSG_ADDON(prefix, msg, _, sender)
 	if prefix ~= "BigWigs" then return end
 	local _, _, bwPrefix, bwMsg = msg:find("^(%u-):(.+)")
 	if bwPrefix then
@@ -381,9 +370,8 @@ function loader:CHAT_MSG_ADDON(_, prefix, msg, _, sender)
 end
 
 do
-	local delayTransmitter = CreateFrame("Frame")
-	delayTransmitter:Hide()
-	delayTransmitter:SetScript("OnUpdate", function(self, elapsed)
+	loaderUtilityFrame:Hide()
+	loaderUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.elapsed = self.elapsed + elapsed
 		if self.elapsed > 5 then
 			self:Hide()
@@ -400,8 +388,8 @@ do
 			if not usersRelease[sender] and not usersAlpha[sender] then
 				usersUnknown[sender] = true
 			end
-			delayTransmitter.elapsed = 0
-			delayTransmitter:Show()
+			loaderUtilityFrame.elapsed = 0
+			loaderUtilityFrame:Show()
 		elseif prefix == "OOD" then
 			if not tonumber(message) or warnedOutOfDate then return end
 			if tonumber(message) > BIGWIGS_RELEASE_REVISION then
@@ -446,9 +434,10 @@ do
 end
 
 do
+	local grouped = nil
 	local queueLoad = {}
 	function loader:PLAYER_REGEN_ENABLED()
-		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		loaderUtilityFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		print("BigWigs: Loading Finished")
 		if load(BigWigs, "BigWigs_Core") then
 			for k,v in pairs(queueLoad) do
@@ -463,7 +452,7 @@ do
 			end
 		end
 	end
-	function loader:ZoneChanged()
+	function loader:ZONE_CHANGED_NEW_AREA()
 		-- Hack to make the zone ID available when reloading/relogging inside an instance.
 		-- This was moved from OnEnable to here because Astrolabe likes to screw with map setting in rare situations, so we need to force an update.
 		local inside = IsInInstance()
@@ -472,11 +461,11 @@ do
 		end
 		local id = GetCurrentMapAreaID()
 		-- Always load content in an instance, otherwise require a group (world bosses)
-		if enableZones[id] and (inside or (grouped and enableZones[id] <= grouped)) then
+		if enableZones[id] and (inside or grouped) then
 			if not IsEncounterInProgress() and (InCombatLockdown() or UnitAffectingCombat("player")) then
 				if not queueLoad[id] then
 					queueLoad[id] = "unloaded"
-					self:RegisterEvent("PLAYER_REGEN_ENABLED")
+					loaderUtilityFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 					print("BigWigs: Currently in combat, waiting until combat ends to finish loading due to Blizzard combat restrictions.")
 				end
 			else
@@ -491,30 +480,27 @@ do
 			end
 		end
 	end
-end
-
-function loader:CheckRoster()
-	local raid = IsInRaid()
-	local party = IsInGroup()
-	if not grouped and raid then
-		grouped = BWRAID
-		self:SendMessage("BigWigs_JoinedGroup", grouped)
-	elseif not grouped and party then
-		grouped = BWPARTY
-		self:SendMessage("BigWigs_JoinedGroup", grouped)
-	elseif grouped then
-		if grouped == BWPARTY and raid then
-			grouped = BWRAID
-			self:SendMessage("BigWigs_JoinedGroup", grouped)
-		elseif not raid and not party then
+	function loader:GROUP_ROSTER_UPDATE()
+		local groupType = (IsPartyLFG() and 3) or (IsInRaid() and 2) or (IsInGroup() and 1)
+		if (not grouped and groupType) or (grouped and grouped ~= groupType) then
+			grouped = groupType
+			self:ZONE_CHANGED_NEW_AREA()
+			SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, groupType == 3 and "INSTANCE_CHAT" or "RAID")
+		elseif grouped and not groupType then
 			grouped = nil
-			self:SendMessage("BigWigs_LeftGroup")
+			wipe(usersRelease)
+			wipe(usersAlpha)
+			wipe(usersUnknown)
+			-- BigWigs might not have loaded yet, fringe case, but better prevent errors
+			if BigWigs then
+				BigWigs:Disable()
+			end
 		end
 	end
 end
 
-function loader:BigWigs_BossModuleRegistered(message, name, module)
-	registerEnableZone(module.zoneId, module.partyContent and BWPARTY or BWRAID)
+function loader:BigWigs_BossModuleRegistered(_, _, module)
+	enableZones[module.zoneId] = true
 end
 
 function loader:BigWigs_CoreEnabled()
@@ -536,21 +522,6 @@ end
 
 function loader:BigWigs_CoreLoaded()
 	loadAddons(loadOnCoreLoaded)
-end
-
-function loader:BigWigs_JoinedGroup()
-	self:ZoneChanged()
-	SendAddonMessage("BigWigs", "VQ:"..BIGWIGS_RELEASE_REVISION, IsPartyLFG() and "INSTANCE_CHAT" or "RAID")
-end
-
-function loader:BigWigs_LeftGroup()
-	wipe(usersRelease)
-	wipe(usersAlpha)
-	wipe(usersUnknown)
-	-- BigWigs might not have loaded yet, fringe case, but better prevent errors
-	if BigWigs then
-		BigWigs:Disable()
-	end
 end
 
 -----------------------------------------------------------------------
@@ -695,6 +666,7 @@ do
 		if #good > 0 then print(L["Up to date:"], unpack(good)) end
 		if #ugly > 0 then print(L["Out of date:"], unpack(ugly)) end
 		if #bad > 0 then print(L["No Big Wigs 3.x:"], unpack(bad)) end
+		wipe(good) wipe(bad) wipe(ugly)
 		good, bad, ugly = nil, nil, nil
 	end
 
@@ -728,4 +700,6 @@ do
 	InterfaceOptions_AddCategory(frame)
 	loader.RemoveInterfaceOptions = removeFrame
 end
+
+BigWigsLoader = loader -- Set global
 
