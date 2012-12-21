@@ -1,5 +1,5 @@
-BigWigs = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
-local addon = BigWigs
+
+local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceEvent-3.0")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
@@ -579,4 +579,6 @@ function pluginCore:OnEnable()
 		mod:Enable()
 	end
 end
+
+BigWigs = addon -- Set global
 
