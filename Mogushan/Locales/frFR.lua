@@ -72,7 +72,7 @@ L = BigWigs:NewBossLocale("Will of the Emperor", "frFR")
 if L then
 	L.enable_zone = "Forge des Éternels"
 
-	L.heroic_start_trigger = "Destroying the pipes" -- Destroying the pipes leaks |cFFFF0000|Hspell:116779|h[Titan Gas]|h|r into the room!
+	L.heroic_start_trigger = "La destruction des tuyaux"
 	L.normal_start_trigger = "La machine s’anime en bourdonnant"
 
 	L.rage_trigger = "La rage de l'empereur se répercute dans les collines."
