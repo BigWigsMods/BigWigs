@@ -74,7 +74,7 @@ function mod:OnEngage()
 	self:Bar(111850, "~"..self:SpellName(111850), 15, 111850) -- Lightning Prison
 	bossDead = 0
 	firstDeath = nil
-	self:Berserk(self:LFR() and 600 or 490)
+	self:Berserk(self:LFR() and 660 or 490)
 
 	if self:Tank() then
 		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED") -- Cleansing Waters target
