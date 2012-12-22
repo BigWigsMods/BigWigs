@@ -2,7 +2,6 @@
 local L = BigWigs:NewBossLocale("Protectors of the Endless", "ruRU")
 if not L then return end
 if L then
-	L.on = "%s на %s!"
 	L.under = "%s под %s!"
 	L.heal = "%s исцеление"
 end

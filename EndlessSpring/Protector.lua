@@ -20,7 +20,6 @@ local firstDeath = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.on = "%s on %s!"
 	L.under = "%s under %s!"
 	L.heal = "%s heal"
 end
@@ -203,7 +202,7 @@ do
 	function mod:CleansingWatersDispel(player, _, _, _, spellName, _, _, _, _, dGUID)
 		local mobId = self:GetCID(dGUID)
 		if self:Dispeller("magic", true) and (mobId == 60583 or mobId == 60585 or mobId == 60586) and dGUID == UnitGUID(getKillTarget()) then
-			self:LocalMessage(117309, L["on"]:format(spellName, player), "Important", 117309, "Info") --onboss
+			self:LocalMessage(117309, CL["on"]:format(spellName, player), "Important", 117309, "Info") --onboss
 		end
 	end
 
