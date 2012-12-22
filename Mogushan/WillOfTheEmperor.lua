@@ -153,7 +153,7 @@ end
 function mod:FocusedEnergy(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(spellId)
-		self:Say(spellId, CL["say"]:format(L["titan_spark"]))
+		self:SaySelf(spellId, L["titan_spark"])
 	end
 	self:TargetMessage(spellId, spellName, player, "Attention", spellId, "Info")
 end

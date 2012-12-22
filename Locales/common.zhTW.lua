@@ -1,13 +1,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "zhTW")
-
 if not L then return end
-
 -- Prototype.lua common words
 L.you = ">你< %s！"
 L.underyou = ">你<腳下：%s！"
 L.other = "%s：>%s<！"
 L.onboss = "%s on BOSS!"
 L.say = ">我< %s！"
+L.on = "%s on %s"
 L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<正在施放：%s>"
 L.soon = "即將 >%s<！"

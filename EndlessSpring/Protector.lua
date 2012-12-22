@@ -155,7 +155,7 @@ do
 		lightningPrisonList[#lightningPrisonList + 1] = player
 		if UnitIsUnit(player, "player") then
 			self:FlashShake(117436)
-			self:Say(117436, CL["say"]:format(spellName))
+			self:SaySelf(117436, spellName)
 			self:OpenProximity(7, 117436)
 		end
 		if not scheduled then

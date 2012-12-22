@@ -11,6 +11,7 @@ local format = string.format
 local type = type
 local core = BigWigs
 local C = core.C
+local pName = UnitName("player")
 local bwUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
 local difficulty = 3
@@ -624,7 +625,7 @@ do
 		if type(player) == "table" then
 			local list = table.concat(player, ", ")
 			wipe(player)
-			if not (list):find(UnitName("player")) then sound = nil end
+			if not list:find(pName) then sound = nil end
 			local text = format(L["other"], spellName, list)
 			self:SendMessage("BigWigs_Message", self, key, text, color, nil, sound, nil, icon and icons[icon])
 		else
@@ -660,6 +661,11 @@ end
 function boss:Say(key, msg)
 	if not checkFlag(self, key, C.SAY) then return end
 	SendChatMessage(msg, "SAY")
+end
+
+function boss:SaySelf(key, msg)
+	if not checkFlag(self, key, C.SAY) then return end
+	SendChatMessage(L["on"]:format(msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
 end
 
 function boss:PlaySound(key, sound)

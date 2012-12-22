@@ -156,7 +156,7 @@ do
 	end
 	function mod:AmberPrison(player, spellId, _, _, spellName)
 		if UnitIsUnit("player", player) then
-			self:Say(spellId, CL["say"]:format(spellName))
+			self:SaySelf(spellId, spellName)
 		end
 		prisonList[#prisonList + 1] = player
 		if not primaryAmberIcon then
@@ -219,7 +219,7 @@ function mod:WindBomb(_, _, player, _, spellName)
 	self:TargetMessage(131830, spellName, player, "Urgent", 131830, "Alarm")
 	if UnitIsUnit("player", player) then
 		self:FlashShake(131830)
-		self:Say(131830, CL["say"]:format(spellName))
+		self:SaySelf(131830, spellName)
 	end
 end
 
@@ -249,7 +249,7 @@ end
 
 function mod:Resin(player, spellId, _, _, spellName)
 	if UnitIsUnit("player", player) then
-		self:Say(spellId, CL["say"]:format(spellName))
+		self:SaySelf(spellId, spellName)
 		self:FlashShake(spellId)
 		self:LocalMessage(spellId, CL["you"]:format(spellName), "Personal", spellId, "Info")
 	end

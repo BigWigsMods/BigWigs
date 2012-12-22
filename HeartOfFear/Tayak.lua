@@ -130,7 +130,7 @@ do
 			local name, server = UnitName(player)
 			if server then name = name .."-".. server end
 			if UnitIsUnit(player, "player") then
-				mod:Say("unseenstrike", CL["say"]:format(strike))
+				mod:SaySelf("unseenstrike", strike)
 			else
 				mod:OpenProximity(5, "unseenstrike", name, true)
 			end

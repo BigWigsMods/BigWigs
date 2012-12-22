@@ -157,7 +157,7 @@ do
 			timer = nil
 			if UnitIsUnit("boss1targettarget", "player") then
 				mod:FlashShake(spellId)
-				mod:Say(spellId, CL["say"]:format(mod:SpellName(spellId)))
+				mod:SaySelf(spellId)
 			end
 			return
 		end
@@ -364,7 +364,7 @@ function mod:AmberGlobule(player, spellId, _, _, spellName)
 	self:TargetMessage("ej:6548", spellName, player, "Important", spellId, "Alert")
 	if UnitIsUnit(player, "player") then
 		self:FlashShake("ej:6548")
-		self:Say("ej:6548", CL["say"]:format(spellName))
+		self:SaySelf("ej:6548", spellName)
 	end
 	if not primaryIcon then
 		self:PrimaryIcon("ej:6548", player)

@@ -96,7 +96,7 @@ function mod:HeartOfFearApplied(player, spellId, _, _, spellName)
 	self:PrimaryIcon(spellId, player)
 	if UnitIsUnit("player", player) then
 		self:FlashShake(spellId)
-		self:Say(spellId, CL["say"]:format(spellName))
+		self:SaySelf(spellId, spellName)
 	end
 end
 
@@ -162,7 +162,7 @@ do
 	function mod:Visions(player, spellId, _, _, spellName)
 		visionsList[#visionsList + 1] = player
 		if UnitIsUnit("player", player) then
-			self:Say(spellId, CL["say"]:format(spellName)) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
+			self:SaySelf(spellId, spellName) -- not sure if this is needed, I think most people bunch up for healing, say bubble spam is not really helpful
 			self:FlashShake(spellId)
 			self:OpenProximity(8, spellId)
 		end

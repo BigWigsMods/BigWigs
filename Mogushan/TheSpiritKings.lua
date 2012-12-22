@@ -218,7 +218,7 @@ function mod:Fixate(player, spellId, _, _, spellName)
 	self:PrimaryIcon(spellId, player)
 	if UnitIsUnit("player", player) then
 		self:LocalMessage(spellId, spellName, "Personal", spellId, "Info")
-		self:Say(spellId, CL["say"]:format(spellName))
+		self:SaySelf(spellId, spellName)
 	end
 end
 

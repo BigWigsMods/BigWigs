@@ -1,13 +1,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "deDE")
-
 if not L then return end
-
 -- Prototype.lua common words
 L.you = "%s auf DIR!"
 L.underyou = "%s unter DIR!"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "%s auf MIR!"
+L.on = "%s on %s"
 L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<Wirkt %s>"
 L.soon = "%s bald!"

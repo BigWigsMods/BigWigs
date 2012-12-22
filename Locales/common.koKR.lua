@@ -1,13 +1,12 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Common", "koKR")
-
 if not L then return end
-
 -- Prototype.lua common words
 L.you = "당신에게 %s!"
 L.underyou = "당신의 아래에 %s!"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS!"
 L.say = "나에게 %s!"
+L.on = "%s on %s"
 L.stack = "%2$dx %3$s on %1$s"
 L.cast = "<%s 시전중>"
 L.soon = "곧 %s!"
