@@ -157,7 +157,7 @@ do
 			self:Say(spellId, CL["say"]:format(spellName))
 		end
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warnhuddle, 0.1, spellName)
+			scheduled = self:ScheduleTimer(warnhuddle, 0.3, spellName)
 		end
 	end
 	function mod:Waterspout(_, spellId, _, _, spellName)
