@@ -19,6 +19,7 @@ local bigAddCounter = 0
 local L = mod:NewLocale("enUS", true)
 if L then
 	L.engage_yell = "You do not belong here! The waters must be protected... I will cast you out, or slay you!"
+	L.kill_yell = "I thank you, strangers. I have been freed."
 
 	L.phases = "Phases"
 	L.phases_desc = "Warning for phase changes."
@@ -73,7 +74,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "EngageCheck")
 
-	self:Log("SPELL_CAST_SUCCESS", "Win", 124176)
+	self:Yell("Win", L["kill_yell"])
 	self:Death("Deaths", 62969)
 end
 
@@ -146,43 +147,45 @@ do
 	end
 	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, unitId, spellName, _, _, spellId)
-		if not unitId:match("boss") then return end
-
-		if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
-			bigAddCounter = 0
-			self:CloseProximity(122777)
-			self:StopBar(122777) -- Nightmares
-			self:StopBar("~"..self:SpellName(122752)) -- Shadow Breath
-			self:Message("phases", L["day"], "Positive", 122789)
-			self:Bar("phases", L["night"], 121, 122768)
-			self:Bar(122855, 122855, 32, 122855) -- Sun Breath
-			self:Bar("unstable_sha", 122953, 18, 122938)
-			self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], 1), 11, L.embodied_terror_icon)
-			--self:Bar(123011, "~"..self:SpellName(123011), 16, 123011) -- Terrorize
-		elseif spellId == 122767 then -- Dread Shadows (start of night phase)
-			self:StopBar(122953) -- Summon Unstable Sha
-			self:StopBar(122855) -- Sun Breath
-			self:OpenProximity(8, 122777)
-			self:Bar(122777, 122777, 15, 122777) -- Nightmares
-			self:Message("phases", L["night"], "Positive", 122768)
-			self:Bar("phases", L["day"], 121, 122789)
-			self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
-			if self:Dispeller("magic", true) then
-				checkForHoTs()
+		if spellId == 124176 then
+			self:Win() -- Gold Active
+		elseif unitId:find("boss", nil, true) then
+			if spellId == 123252 then -- Dread Shadows Cancel (end of night phase)
+				bigAddCounter = 0
+				self:CloseProximity(122777)
+				self:StopBar(122777) -- Nightmares
+				self:StopBar("~"..self:SpellName(122752)) -- Shadow Breath
+				self:Message("phases", L["day"], "Positive", 122789)
+				self:Bar("phases", L["night"], 121, 122768)
+				self:Bar(122855, 122855, 32, 122855) -- Sun Breath
+				self:Bar("unstable_sha", 122953, 18, 122938)
+				self:Bar("embodied_terror", ("~%s (%d)"):format(L["embodied_terror"], 1), 11, L.embodied_terror_icon)
+				--self:Bar(123011, "~"..self:SpellName(123011), 16, 123011) -- Terrorize
+			elseif spellId == 122767 then -- Dread Shadows (start of night phase)
+				self:StopBar(122953) -- Summon Unstable Sha
+				self:StopBar(122855) -- Sun Breath
+				self:OpenProximity(8, 122777)
+				self:Bar(122777, 122777, 15, 122777) -- Nightmares
+				self:Message("phases", L["night"], "Positive", 122768)
+				self:Bar("phases", L["day"], 121, 122789)
+				self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
+				if self:Dispeller("magic", true) then
+					checkForHoTs()
+				end
+			elseif spellId == 122953 then -- Summon Unstable Sha
+				local t = GetTime()
+				if t-prev > 2 then
+					prev = t
+					self:Message("unstable_sha", spellName, "Important", 122938, "Alert")
+					self:Bar("unstable_sha", spellName, 18, 122938)
+				end
+			elseif spellId == 122775 then -- Nightmares
+				self:Bar(122777, spellName, 15, 122777)
+				self:Message(122777, spellName, "Attention", 122777)
+			elseif spellId == 123813 then -- The Dark of Night (heroic)
+				self:Bar("ej:6550", spellName, 30, 130013)
+				self:Message("ej:6550", spellName, "Urgent", 130013, "Alarm")
 			end
-		elseif spellId == 122953 then -- Summon Unstable Sha
-			local t = GetTime()
-			if t-prev > 2 then
-				prev = t
-				self:Message("unstable_sha", spellName, "Important", 122938, "Alert")
-				self:Bar("unstable_sha", spellName, 18, 122938)
-			end
-		elseif spellId == 122775 then -- Nightmares
-			self:Bar(122777, spellName, 15, 122777)
-			self:Message(122777, spellName, "Attention", 122777)
-		elseif spellId == 123813 then -- The Dark of Night (heroic)
-			self:Bar("ej:6550", spellName, 30, 130013)
-			self:Message("ej:6550", spellName, "Urgent", 130013, "Alarm")
 		end
 	end
 end

@@ -26,7 +26,6 @@ if L then
 	L.special = "Next special ability"
 	L.special_desc = "Warning for next special ability"
 	L.special_icon = 123263 -- I know it is icon for "Afraid", but since we don't warn for that, might as well use it
-
 end
 L = mod:GetLocale()
 
