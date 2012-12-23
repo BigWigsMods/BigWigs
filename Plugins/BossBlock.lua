@@ -23,17 +23,17 @@ end
 do
 	local rwf = RaidWarningFrame
 	local rbe = RaidBossEmoteFrame
-	local hook = nil
+	local oldAddMessage = nil
 	function plugin:OnPluginEnable()
-		if not hook then
-			hook = RaidNotice_AddMessage
-			RaidNotice_AddMessage = function(frame, msg, ...)
+		if not oldAddMessage then
+			oldAddMessage = RaidNotice_AddMessage
+			function RaidNotice_AddMessage(frame, msg, ...)
 				if frame == rwf and self:IsSpam(msg) then
 					return
 				elseif frame == rbe and not BigWigs.db.profile.showBlizzardWarnings then
 					return
 				end
-				hook(frame, msg, ...)
+				oldAddMessage(frame, msg, ...)
 			end
 		end
 	end
