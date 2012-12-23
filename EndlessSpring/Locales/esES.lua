@@ -9,7 +9,7 @@ end
 L = BigWigs:NewBossLocale("Tsulong", "esES") or BigWigs:NewBossLocale("Protector of the Endless", "esMX")
 if L then
 	L.engage_yell = "¡No debéis estar aquí! He de proteger el agua... ¡Si no puedo expulsaros, os mataré!"
-	L.kill_yell = "I thank you, strangers. I have been freed."
+	L.kill_yell = "Gracias, forasteros. Me habéis liberado."
 
 	L.phases = "Fases"
 	L.phases_desc = "Aviso para cambios de fases."
