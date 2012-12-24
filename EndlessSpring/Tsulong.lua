@@ -80,7 +80,9 @@ end
 
 function mod:OnEngage(diff)
 	self:OpenProximity(8, 122777)
-	self:Berserk(self:LFR() and 600 or 490)
+	if not self:LFR() then
+		self:Berserk(490)
+	end
 	self:Bar("phases", L["day"], 121, 122789)
 	self:Bar(122777, 122777, 15.6, 122777) -- Nightmares
 	self:Bar("breath", 122752, 10, 122752) -- Shadow Breath
