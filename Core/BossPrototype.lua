@@ -243,6 +243,7 @@ end
 do
 	local noEvent = "Module %q tried to register/unregister a unit event without specifying which event."
 	local noUnit = "Module %q tried to register/unregister a unit event without specifying any units."
+	local noFunc = "Module %q tried to register a unit event with the function '%s' which doesn't exist in the module."
 
 	local frameTbl = {}
 	local eventFunc = function(_, event, unit, ...)
@@ -258,6 +259,7 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
 		if not ... then error(format(noUnit, self.moduleName)) end
+		if (not func and not self[event]) or (func and not self[func]) then error(format(noFunc, self.moduleName, func or event)) end
 		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
