@@ -28,11 +28,9 @@ local dbg = function(self, msg) print(format("[DBG:%s] %s", self.displayName, ms
 -- Metatables
 --
 
-local metaMap = {__index = function(t, k) t[k] = {} return t[k] end}
-local combatLogMap = setmetatable({}, metaMap)
-local yellMap = setmetatable({}, metaMap)
-local emoteMap = setmetatable({}, metaMap)
-local deathMap = setmetatable({}, metaMap)
+local metaMap = {__index = function(self, key) self[key] = {} return self[key] end}
+local eventMap = setmetatable({}, metaMap)
+local unitEventMap = setmetatable({}, metaMap)
 local icons = setmetatable({}, {__index =
 	function(self, key)
 		local _, value
@@ -90,16 +88,29 @@ function boss:OnDisable()
 			tremove(enabledModules, i)
 		end
 	end
+
+	-- Empty the event map for this module
+	for _,v in pairs(eventMap[self]) do
+		wipe(v)
+	end
+	wipe(eventMap[self])
+	eventMap[self] = nil
+
+	-- Remove the Unit Events for this module
+	for a,b in pairs(unitEventMap[self]) do
+		for k in pairs(b) do
+			self:UnregisterUnitEvent(a, k)
+		end
+	end
+	wipe(unitEventMap[self])
+	unitEventMap[self] = nil
+
+	-- No enabled modules? Unregister the combat log!
 	if #enabledModules == 0 then
 		bwUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 
-	wipe(combatLogMap[self])
-	wipe(yellMap[self])
-	wipe(emoteMap[self])
-	wipe(deathMap[self])
 	self.isEngaged = nil
-
 	self:SendMessage("BigWigs_OnBossDisable", self)
 end
 function boss:GetOption(spellId)
@@ -131,11 +142,11 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local invalidId = "Module %q tried to register an invalid spell id (%d) to event %q."
 
-	function boss:RAID_BOSS_EMOTE(_, msg, ...)
-		if emoteMap[self][msg] then
-			self[emoteMap[self][msg]](self, msg, ...)
+	function boss:RAID_BOSS_EMOTE(event, msg, ...)
+		if eventMap[self][event][msg] then
+			self[eventMap[self][event][msg]](self, msg, ...)
 		else
-			for emote, func in pairs(emoteMap[self]) do
+			for emote, func in pairs(eventMap[self][event]) do
 				if msg:find(emote, nil, true) or msg:find(emote) then -- Preserve backwards compat by leaving in the 2nd check
 					self[func](self, msg, ...)
 				end
@@ -145,17 +156,18 @@ do
 	function boss:Emote(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
 		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not eventMap[self].RAID_BOSS_EMOTE then eventMap[self].RAID_BOSS_EMOTE = {} end
 		for i = 1, select("#", ...) do
-			emoteMap[self][(select(i, ...))] = func
+			eventMap[self]["RAID_BOSS_EMOTE"][(select(i, ...))] = func
 		end
 		self:RegisterEvent("RAID_BOSS_EMOTE")
 	end
 
-	function boss:CHAT_MSG_MONSTER_YELL(_, msg, ...)
-		if yellMap[self][msg] then
-			self[yellMap[self][msg]](self, msg, ...)
+	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)
+		if eventMap[self][event][msg] then
+			self[eventMap[self][event][msg]](self, msg, ...)
 		else
-			for yell, func in pairs(yellMap[self]) do
+			for yell, func in pairs(eventMap[self][event]) do
 				if msg:find(yell, nil, true) or msg:find(yell) then -- Preserve backwards compat by leaving in the 2nd check
 					self[func](self, msg, ...)
 				end
@@ -165,8 +177,9 @@ do
 	function boss:Yell(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
 		if not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not eventMap[self].CHAT_MSG_MONSTER_YELL then eventMap[self].CHAT_MSG_MONSTER_YELL = {} end
 		for i = 1, select("#", ...) do
-			yellMap[self][(select(i, ...))] = func
+			eventMap[self]["CHAT_MSG_MONSTER_YELL"][(select(i, ...))] = func
 		end
 		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	end
@@ -176,12 +189,17 @@ do
 			local self = enabledModules[i]
 			if event == "UNIT_DIED" then
 				local numericId = tonumber(dGUID:sub(6, 10), 16)
-				local d = deathMap[self][numericId]
-				if not d then return end
-				if type(d) == "function" then d(numericId, dGUID, player, dFlags)
-				else self[d](self, numericId, dGUID, player, dFlags) end
+				local m = eventMap[self][event]
+				if m and m[numericId] then
+					local func = m[numericId]
+					if type(func) == "function" then
+						func(numericId, dGUID, player, dFlags)
+					else
+						self[func](self, numericId, dGUID, player, dFlags)
+					end
+				end
 			else
-				local m = combatLogMap[self][event]
+				local m = eventMap[self][event]
 				if m and (m[spellId] or m["*"]) then
 					local func = m[spellId] or m["*"]
 					if type(func) == "function" then
@@ -197,10 +215,10 @@ do
 	function boss:Log(event, func, ...)
 		if not event or not func then error(format(missingArgument, self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
-		if not combatLogMap[self][event] then combatLogMap[self][event] = {} end
+		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local id = (select(i, ...))
-			combatLogMap[self][event][id] = func
+			eventMap[self][event][id] = func
 			if type(id) == "number" and not GetSpellInfo(id) then
 				print(format(invalidId, self.moduleName, id, event))
 			end
@@ -210,10 +228,66 @@ do
 	function boss:Death(func, ...)
 		if not func then error(format(missingArgument, self.moduleName)) end
 		if type(func) ~= "function" and not self[func] then error(format(missingFunction, self.moduleName, func)) end
+		if not eventMap[self].UNIT_DIED then eventMap[self].UNIT_DIED = {} end
 		for i = 1, select("#", ...) do
-			deathMap[self][(select(i, ...))] = func
+			eventMap[self]["UNIT_DIED"][(select(i, ...))] = func
 		end
 		bwUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Unit-specific event update management
+--
+
+do
+	local noEvent = "Module %q tried to register/unregister a unit event without specifying which event."
+	local noUnit = "Module %q tried to register/unregister a unit event without specifying any units."
+
+	local frameTbl = {}
+	local eventFunc = function(_, event, unit, ...)
+		for i = 1, #enabledModules do
+			local self = enabledModules[i]
+			local m = unitEventMap[self][event]
+			if m and m[unit] then
+				self[m[unit]](self, unit, ...)
+			end
+		end
+	end
+
+	function boss:RegisterUnitEvent(event, func, ...)
+		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
+		if not ... then error(format(noUnit, self.moduleName)) end
+		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
+		for i = 1, select("#", ...) do
+			local unit = select(i, ...)
+			if not frameTbl[unit] then
+				frameTbl[unit] = CreateFrame("Frame")
+				frameTbl[unit]:SetScript("OnEvent", eventFunc)
+			end
+			unitEventMap[self][event][unit] = func or event
+			frameTbl[unit]:RegisterUnitEvent(event, unit)
+			if debug then dbg(self, "Adding: "..event..", "..unit) end
+		end
+	end
+	function boss:UnregisterUnitEvent(event, ...)
+		if type(event) ~= "string" then error(format(noEvent, self.moduleName)) end
+		if not ... then error(format(noUnit, self.moduleName)) end
+		for i = 1, select("#", ...) do
+			local unit = select(i, ...)
+			unitEventMap[self][event][unit] = nil
+			local keepRegistered
+			for i = 1, #enabledModules do
+				local m = unitEventMap[enabledModules[i]][event]
+				if m and m[unit] then
+					keepRegistered = true
+				end
+			end
+			if not keepRegistered then
+				if debug then dbg(self, "Removing: "..event..", "..unit) end
+				frameTbl[unit]:UnregisterEvent(event)
+			end
+		end
 	end
 end
 
